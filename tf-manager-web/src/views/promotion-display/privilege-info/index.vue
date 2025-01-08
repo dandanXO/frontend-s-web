@@ -79,6 +79,19 @@
       append-to-body
       width="700px"
     >
+      <el-steps
+        class="steps"
+        :space="200"
+        :active="active"
+        finish-status="success"
+        align-center
+      >
+        <el-step :title="t('fields.priviBasicInfo')" />
+        <el-step :title="t('fields.priviRewardSetup')" />
+        <el-step :title="t('fields.priviVipSetup')" />
+        <el-step :title="t('fields.priviPaymentSetup')" />
+        <el-step :title="t('fields.priviOther')" />
+      </el-steps>
       <el-form
         ref="privilegeInfoForm"
         :model="form"
@@ -87,384 +100,406 @@
         size="small"
         label-width="150px"
       >
-        <el-form-item :label="t('fields.name')" prop="name">
-          <el-input v-model="form.name" style="width: 450px" maxlength="100" />
-        </el-form-item>
-        <el-form-item :label="t('fields.alias')" prop="alias">
-          <el-input v-model="form.alias" style="width: 450px" maxlength="100" />
-        </el-form-item>
-        <el-form-item :label="t('fields.code')" prop="code">
-          <el-input v-model="form.code" style="width: 450px" maxlength="50" />
-        </el-form-item>
-        <el-form-item :label="t('fields.site')" prop="siteId">
-          <el-select
-            v-model="form.siteId"
-            size="small"
-            :placeholder="t('fields.site')"
-            class="filter-item"
-            style="width: 450px"
-            default-first-option
-            @focus="loadSites"
-            @change="changeSite"
-          >
-            <el-option
-              v-for="item in siteList.list"
-              :key="item.id"
-              :label="item.siteName"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="t('fields.startTime')" prop="startTime">
-          <el-date-picker
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            v-model="form.startTime"
-            style="width: 450px"
-            :disabled-date="disabledStartDate"
-          />
-        </el-form-item>
-        <el-form-item :label="t('fields.endTime')" prop="endTime">
-          <el-date-picker
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            v-model="form.endTime"
-            style="width: 450px"
-            :disabled-date="disabledEndDate"
-          />
-        </el-form-item>
-        <el-form-item :label="t('fields.frequency')" prop="frequency">
-          <el-select
-            v-model="form.frequency"
-            style="width: 250px"
-            filterable
-            default-first-option
-          >
-            <el-option
-              v-for="f in uiControl.frequency"
-              :key="f.key"
-              :label="f.displayName"
-              :value="f.value"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item
-          :label="t('fields.bonusDays')"
-          prop="bonusDays"
-          v-if="
-            form.frequency === 'DAILY' && form.triggerType === 'DEPOSITBONUSES'
-          "
-        >
-          <el-checkbox
-            v-model="checkboxes.bonusDays.checkAll"
-            :indeterminate="checkboxes.bonusDays.isIndeterminate"
-            @change="handleBonusDaysCheckAllChange"
-          >
-            {{ t('fields.checkall') }}
-          </el-checkbox>
-          <el-checkbox-group
-            v-model="selectedBonusDays.bonusDaysChecked"
-            @change="handleCheckedChange('BONUSDAYS')"
-            style="width: 450px"
-          >
-            <el-checkbox v-for="v in uiControl.day" :label="v.key" :key="v.key">
-              {{ v.displayName }}
-            </el-checkbox>
-          </el-checkbox-group>
-        </el-form-item>
-        <el-form-item :label="t('fields.bonusType')" prop="bonusType">
-          <el-radio-group v-model="form.bonusType">
-            <el-radio
-              v-for="b in uiControl.bonusType"
-              :key="b.key"
-              :label="b.value"
-            >
-              {{ b.displayName }}
-            </el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-row>
-          <el-col>
-            <el-form-item :label="t('fields.bonusAmount')" prop="bonusAmount">
-              <span v-if="form.bonusType === 'FIXED'">
-                $
-                <el-input-number
-                  v-model="form.bonusAmount"
-                  style="width: 135px"
-                  :min="1"
-                  :max="999999999999999"
-                  :controls="false"
-                  @keypress="restrictInput($event)"
-                />
-              </span>
-              <span v-if="form.bonusType === 'RATIO'">
-                <el-input
-                  v-model="form.bonusAmountRatio"
-                  style="width: 135px"
-                  :maxlength="uiControl.bonusAmountRatioMax"
-                  @keypress="restrictDecimalInput($event)"
-                />
-                %
-              </span>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item :label="t('fields.rolloverType')" prop="rolloverType">
-              <el-select
-                v-model="selectedRolloverType"
-                style="width: 100%;"
-                filterable
-                default-first-option
-                @change="checkRolloverType"
-              >
-                <el-option
-                  v-for="f in uiControl.rolloverType"
-                  :key="f.key"
-                  :label="f.displayName"
-                  :value="f.value"
-                />
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col v-if="uiControl.selectedGameTypeRolloverType !== 'GAME_TYPE'" :span="12">
-            <el-form-item prop="rollover">
-              <el-input-number
-                v-model="uiControl.rollOverAmt"
-                style="width: 145px"
-                :min="1"
-                :max="selectedRolloverType === 'MULTIPLE' ? 100 : 999999999999999"
-                :controls="false"
-                @keypress="restrictInput($event)"
-              />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-form-item
-            class="is-required"
-            :label="t('fields.gameTypeRollover')"
-            prop="gameTypeRollover"
-          >
+        <div v-if="active === 0">
+          <el-form-item :label="t('fields.name')" prop="name">
+            <el-input v-model="form.name" style="width: 450px" maxlength="100" />
+          </el-form-item>
+          <el-form-item :label="t('fields.alias')" prop="alias">
+            <el-input v-model="form.alias" style="width: 450px" maxlength="100" />
+          </el-form-item>
+          <el-form-item :label="t('fields.code')" prop="code">
+            <el-input v-model="form.code" style="width: 450px" maxlength="50" />
+          </el-form-item>
+          <el-form-item :label="t('fields.site')" prop="siteId">
             <el-select
-              v-model="uiControl.selectedGameTypeRolloverType"
-              style="width: 250px"
-              filterable
+              v-model="form.siteId"
+              size="small"
+              :placeholder="t('fields.site')"
+              class="filter-item"
+              style="width: 450px"
+              default-first-option
+              @focus="loadSites"
+              @change="changeSite"
             >
               <el-option
-                v-for="f in uiControl.gameTypeRolloverTypes"
+                v-for="item in siteList.list"
+                :key="item.id"
+                :label="item.siteName"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item :label="t('fields.startTime')" prop="startTime">
+            <el-date-picker
+              type="datetime"
+              value-format="YYYY-MM-DD HH:mm:ss"
+              v-model="form.startTime"
+              style="width: 450px"
+              :disabled-date="disabledStartDate"
+            />
+          </el-form-item>
+          <el-form-item :label="t('fields.endTime')" prop="endTime">
+            <el-date-picker
+              type="datetime"
+              value-format="YYYY-MM-DD HH:mm:ss"
+              v-model="form.endTime"
+              style="width: 450px"
+              :disabled-date="disabledEndDate"
+            />
+          </el-form-item>
+          <el-form-item :label="t('fields.frequency')" prop="frequency">
+            <el-select
+              v-model="form.frequency"
+              style="width: 250px"
+              filterable
+              default-first-option
+            >
+              <el-option
+                v-for="f in uiControl.frequency"
                 :key="f.key"
                 :label="f.displayName"
                 :value="f.value"
               />
             </el-select>
-            <div v-if="uiControl.selectedGameTypeRolloverType !== null && uiControl.selectedGameTypeRolloverType !== 'ALL_TYPES'">
-              <div v-for="(item, index) in gameTypes" :key="index">
-                <el-select
-                  v-model="item.key"
-                  size="small"
-                  :placeholder="t('fields.gameType')"
-                  class="filter-item"
-                  style="width: 170px; margin-top: 5px"
-                >
-                  <el-option
-                    v-for="gameType in uiControl.gameTypeRollover"
-                    :key="gameType.key"
-                    :label="t(`gameType.${gameType.displayName}`)"
-                    :value="gameType.value"
-                  />
-                </el-select>
-                <span v-if="uiControl.selectedGameTypeRolloverType === 'GAME_TYPE'">
-                  :
-                  <el-input-number v-if="item.key" :controls="false" style="width: 170px " v-model="item.value" :min="1" :max="selectedRolloverType === 'MULTIPLE'? 100 : 999999999999999" />
-                  <el-input-number v-else :controls="false" style="width: 170px " v-model="item.value" />
-                </span>
-                <el-button
-                  v-if="index === gameTypes.length - 1"
-                  icon="el-icon-plus"
-                  size="mini"
-                  type="primary"
-                  style="margin-left: 20px"
-                  @click="addRollover()"
-                  plain
-                >
-                  {{ t('fields.add') }}
-                </el-button>
-                <el-button
-                  v-else
-                  icon="el-icon-remove"
-                  size="mini"
-                  type="danger"
-                  style="margin-left: 20px"
-                  @click="delRollover(index)"
-                  plain
-                >
-                  {{ t('fields.delete') }}
-                </el-button>
-              </div>
-            </div>
           </el-form-item>
-        </el-row>
-        <el-row>
-          <el-col>
-            <el-form-item :label="t('fields.minBalance')" prop="minBalance">
-              $
-              <el-input-number
-                v-model="form.minBalance"
-                style="width: 145px"
-                :min="0"
-                :controls="false"
-                @keypress="restrictInput($event)"
-              />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col>
-            <el-form-item :label="t('fields.minDeposit')" prop="depositMin">
-              $
-              <el-input-number
-                v-model="form.depositMin"
-                style="width: 135px"
-                :min="1"
-                :controls="false"
-                @keypress="restrictInput($event)"
-              />
-            </el-form-item>
-            <el-form-item :label="t('fields.maxBonus')" prop="bonusMax">
-              $
-              <el-input-number
-                v-model="form.bonusMax"
-                style="width: 135px"
-                :controls="false"
-                @keypress="restrictInput($event)"
-              />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-form-item :label="t('fields.status')" prop="status">
-          <el-radio-group v-model="form.status">
-            <el-radio
-              v-for="c in uiControl.status"
-              :label="c.value"
-              :key="c.key"
-              v-model="form.status"
-            >
-              {{ c.displayName }}
-            </el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="VIP" prop="vips">
-          <el-checkbox
-            v-model="checkboxes.vip.checkAll"
-            :indeterminate="checkboxes.vip.isIndeterminate"
-            @change="handleVIPCheckAllChange"
-          >
-            {{ t('fields.checkall') }}
-          </el-checkbox>
-          <el-checkbox-group
-            v-model="selectedVIPs.vipChecked"
-            @change="handleCheckedChange('VIP')"
-            style="width: 300px"
-          >
-            <el-checkbox v-for="v in vipList.list" :label="v.id" :key="v.id">
-              {{ v.name }}
-            </el-checkbox>
-          </el-checkbox-group>
-        </el-form-item>
-        <el-form-item :label="t('fields.paymentType')" prop="payTypes">
-          <el-checkbox
-            v-model="checkboxes.paymentType.checkAll"
-            :indeterminate="checkboxes.paymentType.isIndeterminate"
-            @change="handlePaymentTypeCheckAllChange"
-          >
-            {{ t('fields.checkall') }}
-          </el-checkbox>
-          <el-checkbox-group
-            v-model="selectedPayTypes.payTypeChecked"
-            @change="handleCheckedChange('PAYTYPE')"
+          <el-form-item
+            :label="t('fields.bonusDays')"
+            prop="bonusDays"
+            v-if="
+              form.frequency === 'DAILY' && form.triggerType === 'DEPOSITBONUSES'
+            "
           >
             <el-checkbox
-              v-for="p in paymentTypeList.list"
-              :label="p.code"
-              :key="p.id"
+              v-model="checkboxes.bonusDays.checkAll"
+              :indeterminate="checkboxes.bonusDays.isIndeterminate"
+              @change="handleBonusDaysCheckAllChange"
             >
-              {{ p.name }}
+              {{ t('fields.checkall') }}
             </el-checkbox>
-          </el-checkbox-group>
-        </el-form-item>
-        <el-form-item :label="t('fields.triggerType')" prop="triggerType">
-          <el-select
-            v-model="form.triggerType"
-            style="width: 450px"
-            filterable
-            default-first-option
-            @change="onChange($event)"
+            <el-checkbox-group
+              v-model="selectedBonusDays.bonusDaysChecked"
+              @change="handleCheckedChange('BONUSDAYS')"
+              style="width: 450px"
+            >
+              <el-checkbox v-for="v in uiControl.day" :label="v.key" :key="v.key">
+                {{ v.displayName }}
+              </el-checkbox>
+            </el-checkbox-group>
+          </el-form-item>
+          <el-form-item :label="t('fields.status')" prop="status">
+            <el-radio-group v-model="form.status">
+              <el-radio
+                v-for="c in uiControl.status"
+                :label="c.value"
+                :key="c.key"
+                v-model="form.status"
+              >
+                {{ c.displayName }}
+              </el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item :label="t('fields.triggerType')" prop="triggerType">
+            <el-select
+              v-model="form.triggerType"
+              style="width: 450px"
+              filterable
+              default-first-option
+              @change="onChange($event)"
+            >
+              <el-option
+                v-for="tt in uiControl.triggerType"
+                :key="tt.key"
+                :label="tt.displayName"
+                :value="tt.value"
+              />
+            </el-select>
+          </el-form-item>
+        </div>
+        <div v-if="active === 1">
+          <el-form-item :label="t('fields.bonusType')" prop="bonusType">
+            <el-radio-group v-model="form.bonusType">
+              <el-radio
+                v-for="b in uiControl.bonusType"
+                :key="b.key"
+                :label="b.value"
+              >
+                {{ b.displayName }}
+              </el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-row>
+            <el-col>
+              <el-form-item :label="t('fields.bonusAmount')" prop="bonusAmount">
+                <span v-if="form.bonusType === 'FIXED'">
+                  $
+                  <el-input-number
+                    v-model="form.bonusAmount"
+                    style="width: 135px"
+                    :min="1"
+                    :max="999999999999999"
+                    :controls="false"
+                    @keypress="restrictInput($event)"
+                  />
+                </span>
+                <span v-if="form.bonusType === 'RATIO'">
+                  <el-input
+                    v-model="form.bonusAmountRatio"
+                    style="width: 135px"
+                    :maxlength="uiControl.bonusAmountRatioMax"
+                    @keypress="restrictDecimalInput($event)"
+                  />
+                  %
+                </span>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item :label="t('fields.rolloverType')" prop="rolloverType">
+                <el-select
+                  v-model="selectedRolloverType"
+                  style="width: 100%;"
+                  filterable
+                  default-first-option
+                  @change="checkRolloverType"
+                >
+                  <el-option
+                    v-for="f in uiControl.rolloverType"
+                    :key="f.key"
+                    :label="f.displayName"
+                    :value="f.value"
+                  />
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col v-if="uiControl.selectedGameTypeRolloverType !== 'GAME_TYPE'" :span="12">
+              <el-form-item prop="rollover">
+                <el-input-number
+                  v-model="uiControl.rollOverAmt"
+                  style="width: 145px"
+                  :min="1"
+                  :max="selectedRolloverType === 'MULTIPLE' ? 100 : 999999999999999"
+                  :controls="false"
+                  @keypress="restrictInput($event)"
+                />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-form-item
+              class="is-required"
+              :label="t('fields.gameTypeRollover')"
+              prop="gameTypeRollover"
+            >
+              <el-select
+                v-model="uiControl.selectedGameTypeRolloverType"
+                style="width: 250px"
+                filterable
+              >
+                <el-option
+                  v-for="f in uiControl.gameTypeRolloverTypes"
+                  :key="f.key"
+                  :label="f.displayName"
+                  :value="f.value"
+                />
+              </el-select>
+              <div v-if="uiControl.selectedGameTypeRolloverType !== null && uiControl.selectedGameTypeRolloverType !== 'ALL_TYPES'">
+                <div v-for="(item, index) in gameTypes" :key="index">
+                  <el-select
+                    v-model="item.key"
+                    size="small"
+                    :placeholder="t('fields.gameType')"
+                    class="filter-item"
+                    style="width: 170px; margin-top: 5px"
+                  >
+                    <el-option
+                      v-for="gameType in uiControl.gameTypeRollover"
+                      :key="gameType.key"
+                      :label="t(`gameType.${gameType.displayName}`)"
+                      :value="gameType.value"
+                    />
+                  </el-select>
+                  <span v-if="uiControl.selectedGameTypeRolloverType === 'GAME_TYPE'">
+                    :
+                    <el-input-number v-if="item.key" :controls="false" style="width: 170px " v-model="item.value" :min="1" :max="selectedRolloverType === 'MULTIPLE'? 100 : 999999999999999" />
+                    <el-input-number v-else :controls="false" style="width: 170px " v-model="item.value" />
+                  </span>
+                  <el-button
+                    v-if="index === gameTypes.length - 1"
+                    icon="el-icon-plus"
+                    size="mini"
+                    type="primary"
+                    style="margin-left: 20px"
+                    @click="addRollover()"
+                    plain
+                  >
+                    {{ t('fields.add') }}
+                  </el-button>
+                  <el-button
+                    v-else
+                    icon="el-icon-remove"
+                    size="mini"
+                    type="danger"
+                    style="margin-left: 20px"
+                    @click="delRollover(index)"
+                    plain
+                  >
+                    {{ t('fields.delete') }}
+                  </el-button>
+                </div>
+              </div>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-col>
+              <el-form-item :label="t('fields.minBalance')" prop="minBalance">
+                $
+                <el-input-number
+                  v-model="form.minBalance"
+                  style="width: 145px"
+                  :min="0"
+                  :controls="false"
+                  @keypress="restrictInput($event)"
+                />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col>
+              <el-form-item :label="t('fields.minDeposit')" prop="depositMin">
+                $
+                <el-input-number
+                  v-model="form.depositMin"
+                  style="width: 135px"
+                  :min="1"
+                  :controls="false"
+                  @keypress="restrictInput($event)"
+                />
+              </el-form-item>
+              <el-form-item :label="t('fields.maxBonus')" prop="bonusMax">
+                $
+                <el-input-number
+                  v-model="form.bonusMax"
+                  style="width: 135px"
+                  :controls="false"
+                  @keypress="restrictInput($event)"
+                />
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </div>
+        <div v-if="active === 2">
+          <el-form-item label="VIP" prop="vips">
+            <el-checkbox
+              v-model="checkboxes.vip.checkAll"
+              :indeterminate="checkboxes.vip.isIndeterminate"
+              @change="handleVIPCheckAllChange"
+            >
+              {{ t('fields.checkall') }}
+            </el-checkbox>
+            <el-checkbox-group
+              v-model="selectedVIPs.vipChecked"
+              @change="handleCheckedChange('VIP')"
+              style="width: 300px"
+            >
+              <el-checkbox v-for="v in vipList.list" :label="v.id" :key="v.id">
+                {{ v.name }}
+              </el-checkbox>
+            </el-checkbox-group>
+          </el-form-item>
+        </div>
+        <div v-if="active === 3">
+          <el-form-item :label="t('fields.paymentType')" prop="payTypes">
+            <el-checkbox
+              v-model="checkboxes.paymentType.checkAll"
+              :indeterminate="checkboxes.paymentType.isIndeterminate"
+              @change="handlePaymentTypeCheckAllChange"
+            >
+              {{ t('fields.checkall') }}
+            </el-checkbox>
+            <el-checkbox-group
+              v-model="selectedPayTypes.payTypeChecked"
+              @change="handleCheckedChange('PAYTYPE')"
+            >
+              <el-checkbox
+                v-for="p in paymentTypeList.list"
+                :label="p.code"
+                :key="p.id"
+              >
+                {{ p.name }}
+              </el-checkbox>
+            </el-checkbox-group>
+          </el-form-item>
+        </div>
+        <div v-if="active === 4">
+          <el-form-item
+            :label="t('fields.pgroup')"
+            prop="pgroup"
+            v-if="uiControl.pgroup"
           >
-            <el-option
-              v-for="tt in uiControl.triggerType"
-              :key="tt.key"
-              :label="tt.displayName"
-              :value="tt.value"
+            <el-input
+              v-model="form.pgroup"
+              style="width: 450px"
+              maxlength="100"
             />
-          </el-select>
-        </el-form-item>
-        <el-form-item
-          :label="t('fields.pgroup')"
-          prop="pgroup"
-          v-if="uiControl.pgroup"
-        >
-          <el-input
-            v-model="form.pgroup"
-            style="width: 450px"
-            maxlength="100"
-          />
-        </el-form-item>
-        <el-form-item :label="t('fields.param')" prop="param">
-          <JsonEditor
-            class="editor"
-            v-model="editorValue"
-            currentMode="code"
-            :modeList="[]"
-            @update:modelValue="updataModel"
-          />
-          <div v-if="editorValueError">
-            {{ editorValueError }}
-          </div>
-          <el-input
-            v-if="editorValueError"
-            type="textarea"
-            v-model="form.param"
-            :rows="20"
-            style="width: 450px; white-space: pre-line"
-            placeholder="{'abc':'xyz'}"
-            @change="json"
-          />
-          <el-input
-            v-else
-            type="hidden"
-            v-model="form.param"
-            style="width: 450px; white-space: pre-line"
-          />
-        </el-form-item>
-        <el-form-item :label="t('fields.remark')" prop="remark">
-          <el-input
-            type="textarea"
-            v-model="form.remark"
-            :rows="6"
-            style="width: 350px;"
-            maxlength="500"
-            show-word-limit
-          />
-        </el-form-item>
-        <div class="dialog-footer">
+          </el-form-item>
+          <el-form-item :label="t('fields.param')" prop="param">
+            <JsonEditor
+              class="editor"
+              v-model="editorValue"
+              currentMode="code"
+              :modeList="[]"
+              @update:modelValue="updataModel"
+            />
+            <div v-if="editorValueError">
+              {{ editorValueError }}
+            </div>
+            <el-input
+              v-if="editorValueError"
+              type="textarea"
+              v-model="form.param"
+              :rows="20"
+              style="width: 450px; white-space: pre-line"
+              placeholder="{'abc':'xyz'}"
+              @change="json"
+            />
+            <el-input
+              v-else
+              type="hidden"
+              v-model="form.param"
+              style="width: 450px; white-space: pre-line"
+            />
+          </el-form-item>
+          <el-form-item :label="t('fields.remark')" prop="remark">
+            <el-input
+              type="textarea"
+              v-model="form.remark"
+              :rows="6"
+              style="width: 350px;"
+              maxlength="500"
+              show-word-limit
+            />
+          </el-form-item>
+        </div>
+        <!-- <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">
             {{ t('fields.cancel') }}
           </el-button>
           <el-button type="primary" @click="submit">
             {{ t('fields.confirm') }}
           </el-button>
+        </div> -->
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
+          <el-button v-if="active > 0" @click="active -= 1">{{ t('fields.priviClickPreviousStep') }}</el-button>
+          <el-button
+            v-if="active < 4"
+            type="primary"
+            @click="validateAndNext"
+          >
+            {{ t('fields.priviClickNextStep') }}
+          </el-button>
+          <el-button v-if="active === 4" type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
     </el-dialog>
@@ -524,7 +559,7 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="status" :label="t('fields.status')" width="150">
+      <!-- <el-table-column prop="status" :label="t('fields.status')" width="150">
         <template #default="scope">
           <el-tag v-if="scope.row.status === 'OPEN'" type="success">
             {{ scope.row.status }}
@@ -535,6 +570,19 @@
           <el-tag v-if="scope.row.status === 'TEST'">
             {{ scope.row.status }}
           </el-tag>
+        </template>
+      </el-table-column> -->
+      <el-table-column prop="status" :label="t('fields.status')" min-width="150">
+        <template #default="scope">
+          <el-radio-group
+            v-model="scope.row.status"
+            size="mini"
+            @change="changePrivilegeStatus(scope.row.id, scope.row.status)"
+          >
+            <el-radio-button label="OPEN">OPEN</el-radio-button>
+            <el-radio-button label="CLOSE">CLOSE</el-radio-button>
+            <el-radio-button label="TEST">TEST</el-radio-button>
+          </el-radio-group>
         </template>
       </el-table-column>
       <el-table-column prop="site" :label="t('fields.site')" width="120" />
@@ -587,6 +635,7 @@ import {
   createPrivilegeInfo,
   updatePrivilegeInfo,
   getPrivilegeInfo,
+  updatePrivilegeInfoState,
 } from '../../../api/privilege-info'
 import { getVipList } from '../../../api/vip'
 import { getActivePaymentTypes } from '../../../api/payment-type'
@@ -609,6 +658,7 @@ const privilegeInfoForm = ref(null)
 const siteList = reactive({
   list: [],
 })
+const active = ref(0)
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -927,6 +977,7 @@ function changePage(page) {
 function showDialog(type) {
   clearCheckAll()
   if (type === 'CREATE') {
+    active.value = 0
     if (privilegeInfoForm.value) {
       privilegeInfoForm.value.resetFields()
       selectedVIPs.vipChecked = []
@@ -947,6 +998,7 @@ function showDialog(type) {
     uiControl.dialogTitle = t('fields.addPrivilegeInfo')
     uiControl.isNewRollover = true;
   } else if (type === 'EDIT') {
+    active.value = 0
     uiControl.dialogTitle = t('fields.editPrivilegeInfo')
   }
   uiControl.dialogType = type
@@ -1391,6 +1443,20 @@ function removeJsonEditorElement() {
   })
 }
 
+async function changePrivilegeStatus(id, status) {
+  await updatePrivilegeInfoState(id, status)
+  ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+  await loadPrivilegeInfo()
+}
+
+function validateAndNext() {
+  privilegeInfoForm.value.validate(async valid => {
+    if (valid) {
+      active.value += 1;
+    }
+  });
+}
+
 onMounted(async () => {
   await loadSites()
   request.siteId = store.state.user.siteId
@@ -1434,5 +1500,15 @@ onMounted(async () => {
 
 .full-screen {
   right: 20px !important;
+}
+
+.el-radio-button--mini .el-radio-button__inner{
+  padding: 7px 10px !important;
+}
+
+.steps {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  justify-content: center;
 }
 </style>

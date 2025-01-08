@@ -1869,6 +1869,13 @@ export default {
     fromPlatform: 'Từ Nền tảng',
     fromGameCode: 'Từ Game Code',
     toGameCode: 'Để chơi mã',
+    priviClickNextStep: 'Bước tiếp theo',
+    priviClickPreviousStep: 'Bước trước',
+    priviBasicInfo: 'Thông tin cơ bản',
+    priviRewardSetup: 'Cài đặt tiền thưởng',
+    priviVipSetup: 'cài đặt vip',
+    priviPaymentSetup: 'chi trả',
+    priviOther: 'khác'
   },
   message: {
     startenddatemore3months:

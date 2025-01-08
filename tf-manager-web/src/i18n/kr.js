@@ -1916,6 +1916,13 @@ export default {
     fromPlatform: '플랫폼에서',
     fromGameCode: '게임 코드에서',
     toGameCode: '게임 코드로',
+    priviClickNextStep: '다음 단계',
+    priviClickPreviousStep: '이전 단계',
+    priviBasicInfo: '기본정보',
+    priviRewardSetup: '보너스 설정',
+    priviVipSetup: 'VIP 설정',
+    priviPaymentSetup: '지불하다',
+    priviOther: '다른'
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3 개월 이상일 수 없습니다',
