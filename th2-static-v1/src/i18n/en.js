@@ -227,7 +227,12 @@ export default {
     downloadApp: "Download App",
     downloadNow: "Download Now",
     recharge: "Recharge",
-    getInterestProfit: "Get Interest Profit"
+    getInterestProfit: "Get Interest Profit",
+    update: "Update",
+    notAMember: "Not a member?",
+    createAccount: "Create Account",
+    copy: "Copy",
+    joinNow: "Join Now!"
   },
   notify: {
     noRecord: "No Record",
@@ -238,7 +243,21 @@ export default {
     feedbackSentSuccess: "Your feedback has been sent successfully!",
     quitGameMessage: "Are you sure want to quit? Click Confirm to quit the game.",
     signOutMessage: "Are you sure you want to sign out?",
-    plsLoginToContinue: "Please login to continue"
+    plsLoginToContinue: "Please login to continue",
+    copiedtoClipboard: "Copied to clipboard",
+    addSucceed: "Added successfully",
+    loggingIn: "Logging in",
+    loggingOut: "Logging out...",
+    registeredSuccessfully: "Registered successfully",
+    registeringInProgress: "Registering in progress",
+    refreshing: "Refreshing...",
+    pleaseLoginToOperate: "Please log in to proceed",
+    pleaseFillInPersonalDetails: "Please fill in your personal details",
+    failed: "Failed",
+    updateSucceed: "Updated successfully",
+    unbindSucceed: "Unbound successfully",
+    withdrawalSubmitSucceed: "Withdrawal submitted successfully",
+    newPasswordUpdatedSuccess: "New password updated successfully"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -292,7 +311,24 @@ export default {
     selectAmount: "Select Amount",
     depositTutorial: "Deposit Tutorial",
     select_privilege: "Select Privilege",
-    incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again."
+    incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again.",
+    depositMethod: "Deposit Method",
+    paymentChannels: "Payment Channels",
+    wagerRequirement: "Wager Requirement (for withdrawal): 1x your deposit amount and 20x your bonus amount",
+    wagerExample: "Example: Deposit 1,000 Rp, you must wager 21,000 Rp",
+    deposited: "Deposited",
+    youWillBeRedirect: "You will be redirected to your bank's page to complete the deposit process",
+    afterDepositSuccessfully: "After a successful deposit, the balance will appear here",
+    bank: "Bank",
+    bankName: "Bank Name",
+    bankAccount: "Bank Account",
+    bankCardNumber: "Bank Card Number",
+    depositAmount: "Deposit Amount",
+    amount: "Amount",
+    depositAmountMustInBetween: "Deposit amount must be between",
+    extra: "Extra",
+    understood: "Understood",
+    noMatchingFound: "No payment channels matching the amount were found"
   },
   withdraw: {
     cashBalance: "Cash Balance",
@@ -303,15 +339,31 @@ export default {
     remainWagers: "Remain Wagers",
     withdrawTutorial: "Withdraw Tutorial",
     withdrawalMethodInMaintenance:
-      "This channel is currently under maintenance from {startTime} to {endTime}. Please use other channels for withdrawal operations. Thank you!"
+      "This channel is currently under maintenance from {startTime} to {endTime}. Please use other channels for withdrawal operations. Thank you!",
+    withdrawCurrency: "Withdrawable Currency",
+    paymentChannels: "Payment Channels",
+    bankName: "Bank Name",
+    choose: "Choose",
+    account: "Account",
+    addNewAccount: "Add New Account",
+    withdrawalAmount: "Withdrawal Amount",
+    available: "Available",
+    bank: "Bank",
+    ewallet: "eWallet",
+    crypto: "Crypto"
   },
   bank: {
     virtualWallet: "eWallet",
-    virtualAccount: "eWallet Account"
+    virtualAccount: "eWallet Account",
+    addBank: "Add Bank",
+    addEWallet: "Add eWallet",
+    areYouSureUnbind: "Are you sure you want to unbind?",
+    account: "Account"
   },
   order: {
     withdrawal: "Withdrawal",
-    recharge: "Recharge"
+    recharge: "Recharge",
+    orderNo: "Order Number"
   },
   interestProfit: {
     depositOverview: "Deposit overview",
@@ -354,7 +406,17 @@ export default {
     dailyWithdrawalTimes: "Daily Withdrawal Frequency",
     rewards: "Rewards",
     vipTable_txt:
-      "Once your deposits meet the upgrade requirements, your VIP level will be immediately upgraded, increasing your number of withdrawals."
+      "Once your deposits meet the upgrade requirements, your VIP level will be immediately upgraded, increasing your number of withdrawals.",
+    monthlyCumulative: "Monthly cumulative deposit to upgrade VIP level",
+    deposit: "Deposit",
+    afterTheRecharge:
+      "After reaching the recharge threshold on that day, your VIP level will be upgraded the next day and the related upgrade rewards will be issued",
+    promotionBonus: "Promotion Bonus: Every time you progress, you can directly receive a promotion bonus",
+    vipMonthCashBonus: "VIP Monthly Cash Bonus",
+    cashBonus:
+      "Cash Bonus: This reward will be sent to you at 10:00 AM on the 1st of the following month, based on your VIP level at the end of this month",
+    vipDailyWithdrawalLimit: "VIP Daily Withdrawal Limit",
+    dailyWithdrwalLimits: "Daily withdrawal limits depend on your VIP level"
   },
   earnMoney: {
     title: "Bonus Pot Arrived",
@@ -362,7 +424,110 @@ export default {
       reward: "Reward",
       teamManagement: "Team management",
       teamBetting: "Team betting",
-      profitAndLoss: "User profit and loss"
+      profitAndLoss: "User profit and loss",
+      about: "About",
+      history: "History",
+      daily: "Daily",
+      earn: "Rewards"
+    },
+    about: {
+      invitetoEarn: "Invite to earn rewards",
+      simplyShare: "Simply share your special QR code",
+      inviteMoreFriends:
+        "Invite more friends and you will earn more rewards. Everyone who joins the Skyace Club will become both a player and an agent",
+      weAdvocateBenefits: "We advocate benefits and bonuses for everyone",
+      agencyPolicy: "Agent Policy",
+      theTableBelowShows: "The table below shows how rewards are set",
+      point_01: "Active users: Daily betting amount of 2,000 Baht",
+      point_02:
+        "Your reward will be calculated based on the total betting amount of your members. The reward can be withdrawn or used for the next bet",
+      point_03: "Invite as many friends as you can to earn a higher commission percentage",
+      point_04: "Earn lifetime income from the players you refer",
+      faq: "FAQ",
+      faq_01: "1. How to earn commissions?",
+      faq_01_01:
+        "You can earn up to 1.5% commission from the daily betting amount of the players you refer. The higher your level, the higher the commission percentage",
+      faq_01_02:
+        "If your referrer or their referrer becomes an agent and they are at a lower level than their superior, you can earn up to 1.2% of the betting amount from those referrers. The commission depends on the level difference between you and your referrer. The larger the difference, the more commission you will earn",
+      faq_02: "2. How to invite friends?",
+      faq_02_01: "Share this game via social media or share the referral link with your friends",
+      faq_02_02:
+        "Friends must click your promotion link, download the app, install the game, and register to start betting to earn commissions",
+      faq_02_03: "Registration must be done via the referral link",
+      faq_03: "3. What is the purpose of the levels?",
+      faq_03_01: "We have divided levels into 13 tiers based on the number of referrals and betting performance",
+      faq_03_02:
+        "Level upgrades require your betting amount and team size to meet the requirements simultaneously. The higher your level, the higher the commission percentage you will receive from your members' betting amounts",
+      faq_03_03:
+        "Level difference: When your superior subtracts the level of directly related members by ≥ 1, there will be a difference in levels. Otherwise, there will be no difference between levels",
+      faq_03_04:
+        "The higher your level, the higher the commission percentage you will earn from the level difference betting",
+      faq_04: "4. How to upgrade your level?",
+      faq_04_01: "Invite more members and get them to place more bets to level up",
+      faq_04_02: "If you have excellent promotion abilities, contact customer service to verify",
+      faq_05: "5. How to convert your friends into members?",
+      faq_05_01:
+        "Log into 55Ace, share your referral link with friends on the referral page, guide them to register via that link, and they will become your direct members",
+      faq_05_02:
+        "Encourage your members to invite their friends to play the game, and those friends will become your indirect members",
+      faq_05_03:
+        "When a friend of your direct member becomes your indirect member, they can also grow their own members this way. Every sub-member they have will be considered an indirect sub-member of yours",
+      faq_06: "6. How to earn commissions from your members?",
+      faq_06_01:
+        "There must be a level difference between you and all the lower-level members. Otherwise, you cannot earn commissions from the level difference",
+      faq_06_02:
+        "The commission ratio will be determined by the level difference between you and your lower-level members",
+      faq_06_example: "Example",
+      faq_06_table_name: "Name",
+      faq_06_table_level: "Level",
+      faq_06_table_betting: "Betting",
+      faq_06_table_members: "Members",
+      faq_06_table_you: "You",
+      faq_06_dot_01: "You cannot earn commission from betting A",
+      faq_06_dot_02: "You can earn a 0.2% commission from betting amount B",
+      faq_06_dot_03: "You can earn a 0.7% commission from betting amount C",
+      table_col_levelDifference: "Level Difference",
+      table_col_rebate: "Commission (%)",
+      table_col_level: "Level",
+      table_col_betAmount: "Bet Amount",
+      table_col_activeMember: "Active Members",
+      table_col_rate: "Rate (%)"
+    },
+    history: {
+      totalRebates: "Total Commission",
+      month: "Month",
+      week: "Week",
+      date: "Date",
+      rebateAmount: "Commission Amount"
+    },
+    daily: {
+      myTeamYesterday: "My Team (Yesterday)",
+      member: "Member",
+      betAmount: "Bet Amount",
+      rate: "Rate",
+      yesterdayReportTotal: "Yesterday's Report (Total)",
+      level: "Level",
+      myselfBettingAmount: "My Betting Amount",
+      myselfRebate: "My Commission",
+      teamBettingamount: "Team Betting Amount",
+      teamRebate: "Team Commission",
+      totalRebate: "Total Commission",
+      teamDetailsYesterday: "Team Details (Yesterday)",
+      teamMember: "Team Member",
+      income: "Income"
+    },
+    earn: {
+      inviteToEarn: "Invite to earn rewards",
+      point_01_title: "Share your referral link or QR code below",
+      point_01_desc: "Copy or take a screenshot and send it to your friends",
+      point_02_title: "Encourage your friends to start playing",
+      point_02_desc: "You can track the friends you referred who registered using your code",
+      point_03_title: "Start earning daily commissions",
+      point_03_desc:
+        "You will earn rewards whether you win or lose. The more friends you invite to join Skyace Club, the more your daily rewards will increase. Start earning daily commissions",
+      myReferralLink: "My referral link",
+      save: "Save",
+      copiedtoClipboard: "Copied to clipboard"
     },
     reward: {
       myTotalIncome: "My Total Income",
@@ -465,6 +630,13 @@ export default {
         },
         searchButton: "Search"
       },
+      userInfo: {
+        username: "Username",
+        deposit: "Deposit Amount",
+        withdraw: "Withdraw Amount",
+        bet: "Bet Amount",
+        winning: "Winning Amount"
+      },
       table: {
         username: "Username",
         deposit: "Deposit",
@@ -527,7 +699,17 @@ export default {
     bytoday: "By Today",
     byyesterday: "By Yesterday",
     all: "All",
-    turnover_requi: "TurnOver Requirement"
+    turnover_requi: "TurnOver Requirement",
+    noMember: "No Members",
+    noMessage: "No Messages",
+    level: "Level",
+    turnover: "Turnover Rate",
+    serialNumber: "Serial Number",
+    vipUpgradeBonus: "VIP Upgrade Bonus",
+    to: "To",
+    sending: "Sending",
+    profit: "Profit",
+    loss: "Loss"
   },
   appUpdate: {
     updateHeader: "Update Announcement",
@@ -552,7 +734,9 @@ export default {
     sports: "SPORTS",
     live: "LIVE",
     slot: "SLOT",
-    vip: "VIP"
+    vip: "VIP",
+    promotionEnds: "Promotion has ended",
+    promotion: "Promotion"
   },
   hotPromo: {
     aviatorWheel: {
@@ -575,6 +759,26 @@ export default {
     to: "To",
     content02: "During this period, all games and services will be unavailable.",
     content03: "We sincerely apologize for any inconvenience this may cause and appreciate your patience!"
+  },
+  promo_activitiesDetails: {
+    activitiesContent: "The more consecutive deposit requirements you meet, the more special bonuses you will receive.",
+    depositOftheDay: "Daily Deposit",
+    numberOfDailyWager: "Number of Daily Wagers",
+    day: "Day",
+    free: "Free",
+    received: "Received",
+    wagerX5: "Wager x5",
+    deposit: "Deposit",
+    noticeDesc: "Note: This promotion is not valid for casino bets and sports betting!",
+    rules_01:
+      "1. Example: On the first day, if you deposit 1,000 IDR, you will receive 88 IDR after the turnover is completed. If you don't deposit on day 2 but deposit on day 3, the system will recalculate from day 1.",
+    rules_02:
+      "2. The daily bonus can only be claimed once, for example, each account can only receive 88 IDR on the first day.",
+    rules_03:
+      "3. After meeting the deposit requirements, you must play the slot machine to start calculating the turnover, and the bonus will be granted after the turnover is completed."
+  },
+  promo_ph1SlotFtd: {
+    sorryDesc: "Sorry, your account has already received the bonus. Please join other activities with us."
   },
   error: {
     101: "Platform not found",
