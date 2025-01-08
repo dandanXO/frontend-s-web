@@ -22,7 +22,7 @@
             </div>
             <div class="reward-info-content">
               上月累计存款：
-              <span class="amount">{{ highestSingleValidBet }}元</span>
+              <span class="amount">{{ depositAmount }}元</span>
             </div>
           </div>
           <div class="reward-info">
