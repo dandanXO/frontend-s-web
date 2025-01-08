@@ -252,10 +252,10 @@
 
         <div class="flex flex-center">
           <div>
-            <q-btn style="width: 100px;" @click="isShowWithdrawErrorBlock = false;" class="q-mr-md" label="取消" />
+            <q-btn style="width: 100px" @click="isShowWithdrawErrorBlock = false" class="q-mr-md" label="取消" />
           </div>
           <router-link to="/account/records/withdraw">
-            <q-btn style="width: 100px;" color="brightbtn" label="前往确认" />
+            <q-btn style="width: 100px" color="brightbtn" label="前往确认" />
           </router-link>
         </div>
       </q-card>
@@ -451,9 +451,9 @@ export default defineComponent({
     };
 
     const loadCards = () => {
+      withdrawState.bankCardList = [];
       api.get("/session/bankCard").then((response) => {
         isLoaded.value = true;
-        withdrawState.bankCardList = [];
         if (response.code === 0) {
           // response.data = [{"id":381,"cardNumber":"234567","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"Maybank","bankType":"BANK, GCASH"},{"id":384,"cardNumber":"789456","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"},{"id":385,"cardNumber":"654987","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"CIMB Bank","bankType":"BANK"},{"id":386,"cardNumber":"963852","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"}]
           response.data.forEach(element => {

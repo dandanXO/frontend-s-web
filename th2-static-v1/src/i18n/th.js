@@ -59,7 +59,8 @@ export default {
     financeFeedback: "ข้อเสนอแนะด้านการเงิน",
     helpRecord: "บันทึกการช่วยเหลือเงินทุน",
     reminderRecords: "บันทึกเตือนความจำ",
-    forgotPassword: "ลืมรหัสผ่าน"
+    forgotPassword: "ลืมรหัสผ่าน",
+    promo: "โปรโม"
   },
   bottomNav: {
     home: "บ้าน",
@@ -72,7 +73,7 @@ export default {
     phone: "โทรศัพท์",
     phone_placeholder: "โปรดป้อนหมายเลขโทรศัพท์มือถือของคุณ",
     phone_rules_01: "โปรดใส่หมายเลขโทรศัพท์",
-    phone_rules_02: "หมายเลขโทรศัพท์จะต้องมี 11 หลัก",
+    phone_rules_02: "หมายเลขโทรศัพท์จะต้องมี 10 หลัก",
     phone_rules_03: "หมายเลขโทรศัพท์จะต้องเริ่มต้นด้วย '03'",
     phone_rules_04: "โปรดป้อนหมายเลขโทรศัพท์ที่ถูกต้อง",
     prependNumber: "+66",
@@ -258,7 +259,8 @@ export default {
     failed: "ล้มเหลว",
     updateSucceed: "อัปเดตสำเร็จแล้ว",
     unbindSucceed: "ยกเลิกการผูกสำเร็จแล้ว",
-    withdrawalSubmitSucceed: "ส่งการถอนสำเร็จแล้ว"
+    withdrawalSubmitSucceed: "ส่งการถอนสำเร็จแล้ว",
+    newPasswordUpdatedSuccess: "อัปเดตรหัสผ่านใหม่สำเร็จแล้ว"
   },
   sideNav: {
     inviteToEarn: "เชิญชวนเพื่อรับเงินรายได้",
@@ -349,7 +351,10 @@ export default {
     account: "บัญชี",
     addNewAccount: "เพิ่มบัญชีใหม่",
     withdrawalAmount: "จำนวนเงินที่ถอน",
-    available: "มีอยู่"
+    available: "มีอยู่",
+    bank: "ธนาคาร",
+    ewallet: "eWallet",
+    crypto: "คริปโต"
   },
   bank: {
     virtualWallet: "eWallet",
@@ -660,7 +665,11 @@ export default {
     level: "เลเวล",
     turnover: "อัตราการเทิร์นโอเวอร์",
     serialNumber: "หมายเลขซีเรียล",
-    vipUpgradeBonus: "โบนัสอัปเกรด VIP"
+    vipUpgradeBonus: "โบนัสอัปเกรด VIP",
+    to: "ถึง",
+    sending: "การส่ง",
+    profit: "กำไร",
+    loss: "การสูญเสีย"
   },
   appUpdate: {
     updateHeader: "ประกาศอัปเดต",

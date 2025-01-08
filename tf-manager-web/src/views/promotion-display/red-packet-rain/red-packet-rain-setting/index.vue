@@ -290,6 +290,29 @@
             @keypress="restrictInput($event)"
           />
         </el-form-item>
+        <el-form-item :label="t('fields.numberLimitPerRain')" prop="numberLimitPerRain">
+          <el-input-number
+            v-if="form.numberLimitPerRain >= 0"
+            v-model="form.numberLimitPerRain"
+            style="width: 135px"
+            :min="1"
+          />
+          <el-tag
+            v-else
+          >
+            {{ t('fields.noLimit') }}
+          </el-tag>
+          <el-button v-if="form.numberLimitPerRain >= 0" type="warning" class="button-new-tag ml-1 el-button--success" @click="form.numberLimitPerRain = -1"
+                     style="display:block;margin-top:4px;"
+          >
+            {{ t('fields.noLimit') }}
+          </el-button>
+          <el-button v-else type="success" class="button-new-tag ml-1 el-button--success" @click="form.numberLimitPerRain = 1"
+                     style="display:block;margin-top:4px;"
+          >
+            {{ t('fields.addLimit') }}
+          </el-button>
+        </el-form-item>
         <el-form-item
           :label="t('fields.redPacketAmountAfterReachingLimit')"
           prop="redPacketAmountAfterReachingLimit"
@@ -486,6 +509,24 @@
               style="display:block;margin-top:4px;"
             >
               {{ t('fields.addLimit') }}
+            </el-button>
+          </el-form-item>
+          <el-form-item v-if="form.redPacketMinTotalDepositDays >= 0 || form.redPacketMinTotalDepositWeeks >= 0" :label="t('fields.totalDepositDaysEndDate')" prop="totalDepositDaysEndDate" style="width: 300px;">
+            <el-date-picker
+              v-if="form.totalDepositDaysEndDate !== null"
+              type="date"
+              value-format="YYYY-MM-DD"
+              v-model="form.totalDepositDaysEndDate"
+              style="width: 135px"
+            />
+            <el-button v-if="form.totalDepositDaysEndDate !== null" type="warning" class="button-new-tag ml-1 el-button--success" @click="form.totalDepositDaysEndDate = null"
+                       style="display:block;margin-top:4px;"
+            >
+              {{ t('fields.fromClaimDate') }}
+            </el-button>
+            <el-button v-else type="success" class="button-new-tag ml-1 el-button--success" @click="form.totalDepositDaysEndDate = new Date()"
+                       style="display:block;margin-top:4px;"
+            >{{ t('fields.addLimit') }}
             </el-button>
           </el-form-item>
         </el-row>
@@ -913,6 +954,7 @@ const form = reactive({
   maxMemberClaimCountPerRain: 1,
   maxMemberClaimCountPerDay: 1,
   amountLimitPerRain: 0,
+  numberLimitPerRain: -1,
   redPacketAmountAfterReachingLimit: 0,
   vipRules: [],
   lastDigitMinDayDeposit: 0,
@@ -924,6 +966,7 @@ const form = reactive({
   eligibleWays: [],
   status: null,
   minDayBetAmount: 0,
+  totalDepositDaysEndDate: null,
 })
 
 const vipRuleForm = reactive({

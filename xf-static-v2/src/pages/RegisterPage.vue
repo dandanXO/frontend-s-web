@@ -28,10 +28,7 @@
       v-model="regForm.password"
       label="密码"
       :type="isPwd ? 'password' : 'text'"
-      :rules="[
-        (val) => (val && val.length > 0) || '请输入密码',
-        (val) => (val.length > 5 && val.length <= 12) || ''
-      ]"
+      :rules="[(val) => (val && val.length > 0) || '请输入密码', (val) => (val.length > 5 && val.length <= 12) || '']"
       rounded
       outlined
       color="white"
@@ -89,7 +86,7 @@
           <div
             class="text-req"
             :class="{
-              correct: pwdStrength == 'normal' || pwdStrength == 'strong'
+              correct: /[a-zA-Z]/.test(regForm.password)
             }"
           >
             至少包含一个字母
@@ -97,7 +94,7 @@
           <div
             class="text-req"
             :class="{
-              correct: pwdStrength == 'strong'
+              correct: /\d/.test(regForm.password)
             }"
           >
             至少包含一个数字
@@ -451,34 +448,38 @@ export default defineComponent({
       () => {
         pwdStrength.value = "";
 
-        var pwd = regForm.password;
-        var result = 0;
-        for (var i = 0, len = pwd.length; i < len; ++i) {
-          result |= charType(pwd.charCodeAt(i));
-        }
+        let pwd = regForm.password;
+        let result = 0;
 
-        var level = 0;
-        for (var i = 0; i <= 4; i++) {
-          if (result & 1) {
-            level++;
+        if (pwd) {
+          let level = 0;
+
+          // Combining character types
+          for (let i = 0, len = pwd.length; i < len; ++i) {
+            result |= charType(pwd.charCodeAt(i));
           }
-          result = result >>> 1;
-        }
-        if (pwd.length >= 6) {
-          switch (level) {
-            case 1:
-              pwdStrength.value = "weak";
-              break;
-            case 2:
-              pwdStrength.value = "normal";
-              break;
-            case 3:
-            case 4:
+
+          // Count ticks
+          let ticks = 0;
+          for (let i = 0; i <= 4; i++) {
+            if (result & 1) {
+              ticks++;
+            }
+            result = result >>> 1;
+          }
+
+          // Determine password strength
+          if (pwd.length >= 6) {
+            if (ticks >= 3) {
               pwdStrength.value = "strong";
-              break;
+            } else if (ticks === 2) {
+              pwdStrength.value = "normal";
+            } else {
+              pwdStrength.value = "weak";
+            }
+          } else {
+            pwdStrength.value = "weak";
           }
-        } else {
-          pwdStrength.value = "weak";
         }
       }
     );
@@ -567,17 +568,18 @@ export default defineComponent({
   }
 });
 
-function charType(num) {
-  if (num >= 48 && num <= 57) {
-    return 1;
-  }
-  if (num >= 97 && num <= 122) {
-    return 2;
-  }
-  if (num >= 65 && num <= 90) {
-    return 4;
-  }
-  return 8;
+function charType(code) {
+  if (code >= 48 && code <= 57) return 1;
+  if (code >= 65 && code <= 90) return 2;
+  if (code >= 97 && code <= 122) return 4;
+  if (
+    (code >= 33 && code <= 47) ||
+    (code >= 58 && code <= 64) ||
+    (code >= 91 && code <= 96) ||
+    (code >= 123 && code <= 126)
+  )
+    return 8;
+  return 0;
 }
 </script>
 <style lang="scss">

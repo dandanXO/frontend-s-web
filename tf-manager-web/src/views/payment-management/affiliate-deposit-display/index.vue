@@ -363,7 +363,7 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.channelName')" prop="channelName" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD')">
-          <el-input v-model="form.channelName" style="width: 240px" placeholder="Please input" size="small" />
+          <el-input v-model="form.channelName" style="width: 240px" placeholder="Please input" size="small" :disabled="uiControl.dialogType==='ITEM'" />
         </el-form-item>
         <el-form-item :label="t('fields.eta')" prop="eta" v-if="(uiControl.dialogType === 'ITEM' || uiControl.dialogType === 'ADD') && form.order !== 101">
           <el-input v-model="form.eta" style="width: 240px" placeholder="Please input" size="small" />

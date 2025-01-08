@@ -4,7 +4,7 @@
     class="imptann-modal"
     v-model="isImportantAnnoucementModal"
     v-if="!isImpt"
-    width="820px"
+    width=""
   >
     <div style="position: relative;">
       <SitePopout />
@@ -272,8 +272,7 @@ watch(
 
 .close-btn {
   position: absolute;
-  right: -60px;
-  top: 45px;
+  bottom: -55px;
   cursor: pointer;
 }
 </style>

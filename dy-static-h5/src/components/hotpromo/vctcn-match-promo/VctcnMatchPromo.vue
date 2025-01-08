@@ -34,7 +34,7 @@
               />
             </div>
             <div class="reward-info-content">
-              昨日DY有效投注:
+              昨日东赢有效投注:
               <span class="amount">{{ platformValidBet }}元</span>
             </div>
           </div>
