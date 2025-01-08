@@ -206,7 +206,9 @@ const fetchData = async () => {
 
 const handleClaimBonus = () => {
   loadingClaim.value = true;
-  claimDailyRainItem(promoCode.value)
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  eventapi
+    .get(`/redPacketVip/claim?promoCode=${props.promoCode}&v=${randNum}`)
     .then((res) => {
       if (res.code === 0) {
         isClaimModal.value = true;
