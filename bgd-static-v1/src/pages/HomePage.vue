@@ -93,13 +93,16 @@
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
       <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef" @click="toggleCSTab">
         <div class="cs-icon-wrapper" :class="{ active: isCsTabVisible }">
-          <a class="cs-icon youtube" :href="ui.youtubeUrl" target="_blank">
+          <a v-if="ui.tiktokUrl" class="cs-icon youtube" :href="ui.tiktokUrl" target="_blank">
+            <img src="../assets/images/index/tiktok.png" />
+          </a>
+          <a v-if="ui.youtubeUrl" class="cs-icon youtube" :href="ui.youtubeUrl" target="_blank">
             <img src="../assets/images/index/youtube-icon.png" />
           </a>
-          <a class="cs-icon instagram" :href="ui.instagramUrl" target="_blank">
+          <a v-if="ui.instagramUrl"  class="cs-icon instagram" :href="ui.instagramUrl" target="_blank">
             <img src="../assets/images/index/insta-icon.png" />
           </a>
-          <a class="cs-icon whatsapp" :href="ui.whatsappUrl" target="_blank">
+          <a v-if="ui.whatsappUrl"  class="cs-icon whatsapp" :href="ui.whatsappUrl" target="_blank">
             <img src="../assets/images/index/cs-whatsapp.png" />
           </a>
           <a class="cs-icon cs" :href="ui.CSAUrl" target="_blank">
