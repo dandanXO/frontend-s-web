@@ -442,7 +442,7 @@ onMounted(() => {
     font-weight: 400;
     line-height: 25px;
     color: #ffffff67;
-    width: 80%;
+    // width: 80%;
   }
 
   .forgot-password-form-field-label {
