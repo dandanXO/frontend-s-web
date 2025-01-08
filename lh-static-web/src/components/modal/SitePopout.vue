@@ -10,7 +10,7 @@
           class="left-item"
           :class="index === selectedItemIndex ? 'active' : ''"
           v-for="(popoutListItem, index) in popoutList"
-          @click="() => onSelectItem(index)"
+          @click="selectedItemIndex = index"
         >
           <div class="title">{{ popoutListItem.title }}</div>
           <div class="period" v-if="popoutListItem.displayStartTime && popoutListItem.displayEndTime">
@@ -25,7 +25,7 @@
             :spaceBetween="20"
             :loop="false"
             @swiper="onSwiper"
-            @slideChange=""
+            @slideChange="onSlideChange"
             class="swiper-wrapper"
             :direction="'vertical'"
           >
@@ -47,7 +47,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, watch, onUnmounted } from "vue";
 import { loadHomePopups } from "@/api/index/promo";
 import { useLocalStorage } from "@vueuse/core";
 import moment from "moment";
@@ -60,14 +60,22 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 const $swiper = ref(null);
+const swiperInterval = ref();
 
 const onSwiper = (swiper) => {
   $swiper.value = swiper;
 };
 
-const onSelectItem = (index) => {
-  selectedItemIndex.value = index;
-  $swiper.value.slideTo(index);
+const nextSlide = () => {
+  const newIndex = (() => {
+    if(selectedItemIndex.value === (popoutList.value.length - 1)) {
+      return 0;
+    } else if(selectedItemIndex.value < popoutList.value.length) {
+      return selectedItemIndex.value + 1;
+    }
+  })();
+  
+  selectedItemIndex.value = newIndex;
 }
 
 const EDITION = {
@@ -102,10 +110,26 @@ onMounted(() => {
 
       if (res.data.length > 0) {
         selectedItemIndex.value = 0;
+
+        if(!swiperInterval.value) {
+          swiperInterval.value = setInterval(() => {
+            nextSlide();
+          },3000);
+        }
       }
     }
   });
 });
+
+onUnmounted(() => {
+  clearInterval(swiperInterval.value);
+})
+
+watch(() => selectedItemIndex.value, () => {
+  if($swiper.value) {
+    $swiper.value.slideTo(selectedItemIndex.value);
+  }
+})
 </script>
 
 <style lang="scss">
