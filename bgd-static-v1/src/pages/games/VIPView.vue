@@ -179,7 +179,7 @@
               <br />
               {{ $t("vip.experience") }}
             </q-td>
-            <q-td style="">
+            <q-td style="    white-space: normal;">
               {{ $t("vip.dailyWithdrawalTimes") }}
             </q-td>
             <!-- <q-td>
@@ -195,6 +195,71 @@
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <template v-if="colIndex === 1 || colIndex === 3">
                 <div style="justify-content: flex-end; display: flex; align-items: center; gap: 4px">
+                  <img src="../../assets/images/vip/vip-coins.png" />
+                  <span>{{ col.value }}</span>
+                </div>
+              </template>
+
+              <template v-else>{{ col.value }}</template>
+            </q-td>
+          </q-tr>
+        </template>
+
+        <template v-slot:bottom-row>
+          <q-tr style="display: none">
+            <q-td colspan="100%" class="bottom-note text-left">
+              {{ $t("vip.vipTable_txt") }}
+            </q-td>
+          </q-tr>
+        </template>
+      </q-table>
+
+      <q-table
+        flat
+        :hide-pagination="true"
+        :columns="columnsinvite"
+        :rows="rows"
+        row-key="name"
+        :rows-per-page-options="[0]"
+        style="overflow-x: scroll"
+        class="monthly-deposit-table"
+      >
+        <template v-slot:header="props">
+          <q-tr :props="props" style="display: none">
+            <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
+              <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
+              <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;</div>
+              <!-- unable to adjust table width... -->
+              <template v-else>
+                <div style="white-space: normal; text-align: center">
+                  Monthly Cumulative Deposit An Upgrade Vip Level
+                </div>
+              </template>
+            </q-th>
+          </q-tr>
+
+          <q-tr class="top-header">
+            <q-td>
+              <div><img src="../../assets/images/vip/vip-col-level.png" /></div>
+            </q-td>
+            <q-td>
+              {{ $t("vip.accumulate") }}
+              <br />
+              {{ $t("vip.invites") }}
+            </q-td>
+            <q-td style="">
+              {{ $t("vip.extra") }}
+              <br />
+              {{ $t("vip.rewardss") }}
+            </q-td>
+          </q-tr>
+        </template>
+
+        <template v-slot:body="props">
+          <q-tr :props="props">
+            <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
+              <template v-if="colIndex === 2">
+                <div style="justify-content: center; display: flex; align-items: center; gap: 4px">
                   <img src="../../assets/images/vip/vip-coins.png" />
                   <span>{{ col.value }}</span>
                 </div>
@@ -280,97 +345,123 @@ const columns = [
   // { name: "flow", field: "flow", align: "center" }
 ];
 
-// 1	5000	20	38
-// 2	10000	25	88
-// 3	20000	50	188
-// 4	50000	100	388
-// 5	100000	200	588
-// 6	200000	300	888
-// 7	500000	1000	1888
-// 8	1000000	2000	3888
-// 9	2000000	3000	8888
-// 10	5000000	10000	28888
-// 11	10000000	20000	58888
-// 12	20000000	30000	88888
+const columnsinvite = [
+  {
+    name: "vip",
+    required: true,
+    label: "",
+    align: "center",
+    field: (row) => row.name
+  },
+  { name: "invitee", field: "invitee", align: "center" },
+  { name: "extrareward", field: "extrareward", align: "center" }
+  // { name: "flow", field: "flow", align: "center" }
+];
 
 const rows = [
   {
     name: "VIP 0",
     ugprade: "0",
     reward: "3",
-    flow: "0"
+    flow: "0",
+    invitee: 0,
+    extrareward: 0
   },
   {
     name: "VIP 1",
     ugprade: "1,000",
     reward: "3",
-    flow: "38"
+    flow: "38",
+    invitee: 3,
+    extrareward: 100
   },
   {
     name: "VIP 2",
     ugprade: "3,000",
     reward: "3",
-    flow: "88"
+    flow: "88",
+    invitee: 5,
+    extrareward: 200
   },
   {
     name: "VIP 3",
     ugprade: "5,000",
     reward: "3",
-    flow: "188"
+    flow: "188",
+    invitee: 10,
+    extrareward: 300
   },
   {
     name: "VIP 4",
     ugprade: "10,000",
     reward: "4",
-    flow: "388"
+    flow: "388",
+    invitee: 20,
+    extrareward: 400
   },
   {
     name: "VIP 5",
     ugprade: "30,000",
     reward: "5",
-    flow: "588"
+    flow: "588",
+    invitee: 30,
+    extrareward: 500
   },
   {
     name: "VIP 6",
     ugprade: "50,000",
     reward: "6",
-    flow: "888"
+    flow: "888",
+    invitee: 40,
+    extrareward: 600
   },
   {
     name: "VIP 7",
     ugprade: "100,000",
     reward: "7",
-    flow: "1,888"
+    flow: "1,888",
+    invitee: 50,
+    extrareward: 700
   },
   {
     name: "VIP 8",
     ugprade: "300,000",
     reward: "8",
-    flow: "3,888"
+    flow: "3,888",
+    invitee: 60,
+    extrareward: 800
   },
   {
     name: "VIP 9",
     ugprade: "500,000",
     reward: "9",
-    flow: "8,888"
+    flow: "8,888",
+    invitee: 70,
+    extrareward: 900
   },
   {
     name: "VIP 10",
     ugprade: "1,000,000",
     reward: "10",
-    flow: "28,888"
+    flow: "28,888",
+    invitee: 80,
+    extrareward: 1000
   },
   {
     name: "VIP 11",
     ugprade: "3,000,000",
     reward: "Unlimited",
-    flow: "58,888"
+    flow: "58,888",
+    invitee: 90,
+    extrareward: "1,188"
   },
   {
     name: "VIP 12",
     ugprade: "5,000,000",
     reward: "Unlimited",
-    flow: "88,888"
+    flow: "88,888",
+    invitee: 100,
+    extrareward: "2,888"
   }
 ];
 

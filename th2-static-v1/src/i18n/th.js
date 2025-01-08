@@ -351,7 +351,10 @@ export default {
     account: "บัญชี",
     addNewAccount: "เพิ่มบัญชีใหม่",
     withdrawalAmount: "จำนวนเงินที่ถอน",
-    available: "มีอยู่"
+    available: "มีอยู่",
+    bank: "ธนาคาร",
+    ewallet: "eWallet",
+    crypto: "คริปโต"
   },
   bank: {
     virtualWallet: "eWallet",
@@ -662,7 +665,11 @@ export default {
     level: "เลเวล",
     turnover: "อัตราการเทิร์นโอเวอร์",
     serialNumber: "หมายเลขซีเรียล",
-    vipUpgradeBonus: "โบนัสอัปเกรด VIP"
+    vipUpgradeBonus: "โบนัสอัปเกรด VIP",
+    to: "ถึง",
+    sending: "การส่ง",
+    profit: "กำไร",
+    loss: "การสูญเสีย"
   },
   appUpdate: {
     updateHeader: "ประกาศอัปเดต",

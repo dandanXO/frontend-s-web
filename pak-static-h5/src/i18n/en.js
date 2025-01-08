@@ -345,7 +345,11 @@ export default {
     dailyWithdrawalTimes: "Daily Withdrawal Frequency",
     rewards: "Rewards",
     vipTable_txt:
-      "Once your deposits meet the upgrade requirements, your VIP level will be immediately upgraded, increasing your number of withdrawals."
+      "Once your deposits meet the upgrade requirements, your VIP level will be immediately upgraded, increasing your number of withdrawals.",
+    accumulate: "Accumulate",
+    invites: "Invites",
+    extra: "Extra",
+    rewardss: "Rewards"
   },
   earnMoney: {
     title: "Bonus Pot Arrived",
