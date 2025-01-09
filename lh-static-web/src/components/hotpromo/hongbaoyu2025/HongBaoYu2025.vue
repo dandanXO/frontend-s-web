@@ -108,6 +108,8 @@
 </template>
 
 <script setup>
+import { ResponseCode } from "@/api/response";
+import { useNotify } from "@/hooks/notify";
 import { ref, defineProps } from "vue";
 import { claimDailyRainItem } from "@/api/index/promo";
 import { userStore } from "@/store";
@@ -116,6 +118,7 @@ const props = defineProps(["promoCode", "params"]);
 const promoCode = ref(props.promoCode);
 
 const store = userStore();
+const notify = useNotify();
 
 const privilegeClaimedModalVisible = ref(false);
 const winAmount = ref(0);
@@ -128,8 +131,20 @@ const getPromotion = () => {
       if (res.code === 0) {
         winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;
         privilegeClaimedModalVisible.value = true;
-
         store.getBalance();
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
+        notify({
+          type: "error",
+          message: res.message
+        });
       }
     })
     .catch(() => {})
