@@ -1,12 +1,12 @@
 <template>
   <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
-    <div class="top-bar-wrapper">
+    <!-- <div class="top-bar-wrapper">
       <div class="top-bar-inner">
         <div class="timebox">{{ headTimeTxt }}</div>
         <div class="station-notice-container">
           <div class="station-notice-box">
-            <!-- Since svg icons do not carry any attributes by default -->
-            <!-- You need to provide attributes directly -->
+            <!- Since svg icons do not carry any attributes by default ->
+            <!- You need to provide attributes directly ->
             <div>
               <RiVolumeUpFill style="fill: #2db9e2; width: 20px !important" @click="openPopup(announcementList)" />
             </div>
@@ -31,11 +31,6 @@
               </div>
             </template>
           </div>
-        </div>
-        <div v-if="!store.token" class="right-contents">
-          <a class="common-btn grey" @click="openUsernameLogin()">登录</a>
-          <a class="common-btn" @click="registerDialogVisible = true">开设账户</a>
-          <a class="common-link" @click="openForgotDialog">忘记账号？</a>
         </div>
         <div class="details" v-if="store.token">
           <el-dropdown @command="handleCommand" trigger="click">
@@ -88,7 +83,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
       <div class="top-nav-inner">
         <router-link to="/home">
@@ -105,21 +100,78 @@
               <span>{{ nav.enName }}</span>
             </a> -->
 
-            <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
+            <router-link :class="nav.icon" @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
+              <span v-if="nav.icon"><img :src="require(`@/assets/images/index/menu/menuicon_${nav.icon}.png`)"></span>
               <span>{{ nav.name }}</span>
-              <span>{{ nav.enName }}</span>
+              <!-- <span>{{ nav.enName }}</span> -->
             </router-link>
           </div>
           <div @mouseleave="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">
             <GameMenu :list="slotPlatform" ref="el" v-if="selectedMenu === 'Game'" />
             <SportsMenu ref="el" v-if="selectedMenu === 'Sports'" @load-modal="openGame" />
             <EsportsMenu ref="el" v-if="selectedMenu === 'Esports'" @load-modal="openGame" />
+            <EsportsCasualMenu ref="el" v-if="selectedMenu === 'Casual'" @load-modal="openGame" />
             <LiveCasinoMenu ref="el" v-if="selectedMenu === 'Live Casino'" @load-modal="openGame" />
             <LotteryMenu ref="el" v-if="selectedMenu === 'Lottery'" @load-modal="openGame" />
             <PokerMenu ref="el" v-if="selectedMenu === 'Poker'" @load-modal="openGame" />
             <FishingMenu ref="el" v-if="selectedMenu === 'Fishing'" @load-modal="openGame" />
             <PromotionMenu ref="el" v-if="selectedMenu === 'Promotion'" />
             <AppMenu ref="el" v-if="selectedMenu === 'App'" />
+          </div>
+        </div>
+        <div v-if="!store.token" class="right-contents">
+          <a class="common-btn" @click="openUsernameLogin()">登录</a>
+          <a class="common-btn grey" @click="registerDialogVisible = true">开设账户</a>
+          <a class="common-link" @click="openForgotDialog">忘记账号？</a>
+        </div>
+        <div class="details" v-if="store.token">
+          <el-dropdown @command="handleCommand" trigger="click">
+            <span class="el-dropdown-link">
+              <el-tag size="medium" type="warning" effect="dark" style="margin-right: 10px; font-weight: bold">
+                {{ store.vip }}
+              </el-tag>
+              {{ store.nickName }}
+              <el-icon class="el-icon--right">
+                <arrow-down style="height: 0.8em" />
+              </el-icon>
+            </span>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item command="a">
+                  <RiAccountCircleLine style="width: 20px; fill: #a8b5c3" />
+                  个人信息
+                </el-dropdown-item>
+                <el-dropdown-item command="b">
+                  <RiMoneyCnyCircleLine style="width: 20px; fill: #a8b5c3" />
+                  充值中心
+                </el-dropdown-item>
+                <el-dropdown-item command="c">
+                  <RiBankCardLine style="width: 20px; fill: #a8b5c3" />
+                  快速转账
+                </el-dropdown-item>
+                <el-dropdown-item command="d">
+                  <RiCouponLine style="width: 20px; fill: #a8b5c3" />
+                  优惠领取
+                </el-dropdown-item>
+                <el-dropdown-item divided command="e">
+                  <RiLogoutBoxLine style="width: 20px; fill: #a8b5c3" />
+                  退出登录
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+          <a @click="refreshBalance" class="balance-amt">
+            <span>余额</span>
+            <span class="amount">
+              <span v-if="isLoadingBalance">Loading...</span>
+              <span v-if="!isLoadingBalance">￥{{ store.balance }}</span>
+            </span>
+            <el-icon>
+              <Refresh />
+            </el-icon>
+          </a>
+          <div class="top-deposit">
+            <router-link to="/center/deposit" class="common-btn">充值</router-link>
           </div>
         </div>
       </div>
@@ -783,6 +835,7 @@ import {
 import GameMenu from '@/components/menu/GameMenu.vue'
 import SportsMenu from '@/components/menu/SportsMenu.vue'
 import EsportsMenu from '@/components/menu/EsportsMenu.vue'
+import EsportsCasualMenu from '@/components/menu/EsportsCasualMenu.vue'
 import LiveCasinoMenu from '@/components/menu/LiveCasinoMenu.vue'
 import LotteryMenu from '@/components/menu/LotteryMenu.vue'
 import PokerMenu from '@/components/menu/PokerMenu.vue'
@@ -812,6 +865,7 @@ export default defineComponent({
     GameMenu,
     SportsMenu,
     EsportsMenu,
+    EsportsCasualMenu,
     LiveCasinoMenu,
     LotteryMenu,
     PokerMenu,
@@ -844,7 +898,7 @@ export default defineComponent({
 				if(data[i] === "E-sports") {
           this.navigations.push({code: "Esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true});
         } else if(data[i] === "Casual"){
-            this.navigations.push({code: "Esports", name: "小游戏", enName: "Casual", path: "/esportsCasual", submenu: false});
+            this.navigations.push({code: "Casual", name: "小游戏", enName: "Casual", path: "/esportsCasual", submenu: true});
 				} else if (data[i] === "Fishing"){
 					this.navigations.push({code: "Fishing", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true});
 				} else if (data[i] === "Live Casino"){
@@ -859,18 +913,18 @@ export default defineComponent({
 					this.navigations.push({code: "Poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true});
 				}
 			}
-			this.navigations.push({code: "Agent", name: "代理加盟", enName: "Agent", path: "/agent"});
-			this.navigations.push({code: "Promotion", name: "优惠活动", enName: "Promotion", path: "/promotion", submenu: true});
-			this.navigations.push({code: "App", name: "手机APP", enName: "App", path: "/app", submenu: true});
-			this.navigations.push({code: "VIP", name: "VIP", enName: "VIP", path: "/vip"});
+			this.navigations.push({code: "Agent", name: "代理", enName: "Agent", path: "/agent", icon: "agent"});
+			this.navigations.push({code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", icon: "promo", submenu: true});
+			this.navigations.push({code: "VIP", name: "VIP", enName: "VIP", path: "/vip", icon: "vip"});
+			this.navigations.push({code: "App", name: "APP", enName: "App", path: "/app", icon: "app", submenu: true});
 	  }).catch((err) => {
 		console.log(err)
 		this.navigations.splice(0);
 		this.navigations.push({code: "Home", name: "首页", enName: "Home", path: "/home"})
 		this.navigations.push({code: "Agent", name: "代理加盟", enName: "Agent", path: "/agent"});
 		this.navigations.push({code: "Promotion", name: "优惠活动", enName: "Promotion", path: "/promotion", submenu: true});
-		this.navigations.push({code: "App", name: "手机 APP", enName: "App", path: "/app", submenu: true});
 		this.navigations.push({code: "VIP", name: "VIP", enName: "VIP", path: "/vip"});
+		this.navigations.push({code: "App", name: "APP", enName: "App", path: "/app", submenu: true});
         });
 	}
 	getSiteParam();
@@ -1622,7 +1676,14 @@ export default defineComponent({
 				slotPlatform.value = data.filter(element => element.gameType.includes("SLOT"));
       })
     }
-    onMounted(() => {
+    const getSummonCode = () => {
+        const summonCode = sessionStorage.getItem("SUMMON_CODE");
+        // && route.query && route.query.refer
+        if (summonCode) {
+            loginForm.summoner = summonCode;
+        }
+    };
+    onMounted(async () => {
       sortMenu();
       if (regCountdown.value > 0)
         countdownTimer('REGISTER')
@@ -1650,6 +1711,33 @@ export default defineComponent({
       } else {
         headTimer = setInterval(todayDate, 1000);
       }
+      try {
+          // Step 1: Load Geetest script
+          await loadScript("https://static.geetest.com/v4/gt4.js");
+
+          // Step 2: Call your backend to get Geetest configuration (fake config for demo)
+          const geetestConfig = {
+              config: {
+                  captchaId: "49cbcb1424a170f03f8c38648a1b2b31",
+                  language: "zh",
+                  nativeButton: {
+                      width: '100%',
+                      height: '48px',
+                  },
+                  nextWidth: '200px',
+                  product: 'float',
+              },
+              handler: captchaHandler
+          };
+
+          // Step 3: Initialize Geetest with the config
+          await initGeetest(geetestConfig);
+      } catch (error) {
+          message.value = "Error loading Geetest!";
+          console.error("Geetest loading error:", error);
+      }
+
+      getSummonCode();
     });
 
     onBeforeUnmount(() => {
@@ -2035,6 +2123,7 @@ export default defineComponent({
                 loginName: loginForm.loginName,
                 password: loginForm.password,
                 sid: sidParam,
+                summoner: loginForm.summoner,
                 // captchaCode: loginForm.captchaCode,
                 // codeId: loginForm.codeId,
                 lotNumber: loginForm.lot_number,
@@ -2050,6 +2139,9 @@ export default defineComponent({
                   loginDialogVisible.value = false;
 
                   sessionStorage.removeItem("REFERRAL_CODE");
+                  sessionStorage.removeItem("SUMMON_CODE");
+                  loginForm.loginName = null;
+                  loginForm.password = null;
                 } else {
                   loginForm.captchaCode = null
                   getCode();
@@ -2422,6 +2514,21 @@ body {
     background: #3a4550;
     color: #e1e9ee;
   }
+  
+  header {
+
+    .top-nav-wrapper {
+     .el-input__wrapper {
+      
+      width: 100px;
+      height: 28px;
+      gap: 0px;
+      border-radius: 93px 0px 0px 0px;
+      background: #FFFFFF33;
+      border: 0;
+    }
+  }
+  }
 }
 </style>
 <style scoped lang="scss">
@@ -2445,6 +2552,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 5px;
+    color: #b8b8b8;
+    font-size: 14px;
 
     span {
       min-width: 40px;
@@ -2452,18 +2562,20 @@ body {
     }
 
     .amount {
-      color: #faea81;
+      color: #ffffff;
+      font-size: 20px;
       font-weight: bold;
     }
 
     .el-icon {
-      height: 2em;
-      width: 2em;
-      line-height: 2em;
+      // height: 2em;
+      // width: 2em;
+      // line-height: 2em;
 
       svg {
         width: 1.3em;
         height: 1.3em;
+        color: #32CEED;
       }
     }
   }
@@ -2471,6 +2583,8 @@ body {
   .top-deposit {
     a {
       text-decoration: none;
+      background: linear-gradient(180deg, #32CEED 0%, #1C7587 100%);
+      border-radius: 100px;
     }
   }
 }
@@ -2479,7 +2593,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 12px;
+  font-size: 18px;
 }
 
 .hamburger {
@@ -2539,9 +2653,6 @@ body {
           justify-content: flex-end;
           align-items: center;
 
-          .common-link {
-            cursor: pointer;
-          }
         }
       }
     }
@@ -2549,10 +2660,18 @@ body {
 
   .top-nav {
     &-wrapper {
-      padding: 20px;
-      background: $primary;
+      padding: 13px;
       position: relative;
-
+      width: calc(100% - 26px);
+      backdrop-filter: blur(60px);
+      background: #ffffff1a;
+      .common-link {
+        cursor: pointer;
+        font-size: 12px;
+      }
+      .common-btn {
+        border-radius: 100px;
+      }
       .top-nav-inner {
         max-width: $maxwidth;
         margin: 0 auto;
@@ -2561,7 +2680,7 @@ body {
         // justify-content: center;
         justify-content: space-between;
         align-items: center;
-        gap: 80px;
+        gap: 20px;
 
         .logo {
           width: 107px;
@@ -2575,8 +2694,9 @@ body {
         .navigations {
           display: flex;
           justify-content: space-between;
-          width: 100%;
-          gap: 40px;
+          align-items: center;
+          // width: 100%;
+          gap: 20px;
           text-align: center;
 
           a {
@@ -2584,16 +2704,34 @@ body {
             flex-direction: column;
             text-decoration: none;
             gap: 5px;
-
+            font-family: PingFang SC;
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 24px;
             span:first-child {
-              color: $color-white;
-              font-size: 1rem;
+              color: #B8B8B8;
+              // font-size: 1rem;
+            }
+            &.agent, &.promo, &.app, &.vip {
+              align-items: center;
+              &:after {
+                content: unset;
+              }
+            }
+            &.agent {
+              margin-left: 50px;
+            }
+
+            img { 
+              height: 30px;
+              filter: grayscale(1);
+              display: block;
             }
 
             span:last-child {
-              color: $link-hover;
+              color: #B8B8B8;
               text-transform: uppercase;
-              font-size: 0.75rem;
+              // font-size: 0.75rem;
             }
 
             &:after {
@@ -2605,6 +2743,11 @@ body {
 
             &:hover,
             &.router-link-active {
+
+              img { 
+              filter: unset;
+            }
+              font-weight: 600;
               span:first-child {
                 color: $link-active;
               }
@@ -3031,7 +3174,7 @@ body {
   }
   .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box .geetest_header .geetest_title,
   .geetest_popup_wrap.geetest_dark .geetest_box_wrap .geetest_box .geetest_header .geetest_title {
-    color: #a0bcd6;
+    color: #b8b8b8;
   }
 
   .geetest_captcha.geetest_dark .geetest_box_wrap .geetest_box,
@@ -3041,7 +3184,7 @@ body {
 
   .geetest_captcha.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content .geetest_gradient_bar,
   .geetest_popup_wrap.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content .geetest_gradient_bar {
-    background-color: #a0bcd6;
+    background-color: #b8b8b8;
   }
 
   .geetest_captcha.geetest_dark .geetest_holder .geetest_content .geetest_tip_container .geetest_tip {

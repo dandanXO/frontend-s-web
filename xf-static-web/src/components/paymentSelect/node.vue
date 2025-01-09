@@ -3,7 +3,8 @@
     <div class="" v-if="level === 1"><strong>支付方式</strong></div>
     <!-- <div class="title" v-else>{{ name }}</div> -->
     <div class="account-title-container" v-else>
-      <span class="account-title">{{ name }}</span>
+      <!-- <span class="account-title">{{ name }}</span> -->
+       <span class="account-title"><strong>支付通道</strong></span>
     </div>
     <div class="node-content payment-method-wrapper">
       <div
@@ -213,8 +214,22 @@ $node-color: #45fefa;
     &.active {
       // background: rgba(255,255,255, .2);
       .node-text {
+        &:after {
+          content:"";
+          background: url(@/assets/images/account/depotick.png)no-repeat bottom right;
+          position: absolute;
+          background-size: contain;
+          right: 0px;
+          bottom: 0px;
+          width: 30px;
+          height: 30px;
+        }
+        border-color: $node-color;
         .node-txt-img {
           border-color: $node-color;
+        }
+        & > div {
+          color: #45fefa;
         }
         img {
           // border-color: $node-color;
@@ -262,13 +277,18 @@ $node-color: #45fefa;
   padding: 500px;
 }
 .node:not(.node) {
-  border-bottom: 1px solid #484460;
+  border-bottom: 1px solid #FFFFFF1A;
   // .node  {
   //   border-bottom: 1px solid #484460;
   //   padding: 0 25px;
   //   margin: 0 -25px;
 }
 .node {
+    font-family: PingFang SC;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 22.4px;
+    color: #ffffff;
   .node {
     margin: 0 -30px;
     padding: 0 30px;
@@ -286,7 +306,7 @@ $node-color: #45fefa;
       // flex-wrap: wrap;
       display: block;
       .account-title-container {
-        margin: 0 15px 0 10px;
+        margin: 0 15px 0 0;
         font-weight: bold;
         display: block;
         // float: left;
@@ -320,11 +340,11 @@ $node-color: #45fefa;
     }
   }
   .node-content {
-    gap: 0 10px;
+    gap: 20px;
     padding: 0px 0 0;
+    margin: 15px 0;
     .payment-method-item {
       text-align: center;
-      padding: 10px 8px;
       cursor: pointer;
       // background: #2b2b4b;
       // box-shadow: 6px 6px #161b23;
@@ -353,6 +373,10 @@ $node-color: #45fefa;
       align-items: center;
       gap: 5px;
       flex-direction: column;
+      border: 1px solid #323233;
+      border-radius: 8px;
+      min-width: 120px;
+      padding: 15px 0;
       & > div {
         font-size: 12px;
         color: #ffffff;
@@ -366,15 +390,15 @@ $node-color: #45fefa;
         justify-content: center;
         // box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
         width: 4rem;
-        height: 4rem;
-        margin-bottom: 5px;
-        border: 2px solid transparent;
+        // height: 4rem;
+        // margin-bottom: 5px;
         // padding: 5px 15px;
         border-radius: 3px;
 
         img {
           // max-width: 2.3rem;
           width: 100%;
+          max-width: 25px;
           height: auto;
           // max-width: 1.5rem;
           margin-bottom: 0;
@@ -450,15 +474,18 @@ $node-color: #45fefa;
     position: relative;
     .promo {
       position: absolute;
-      left: 0;
-      right: 0;
-      top: 58%;
+      // left: 0;
+      // right: 0;
+      // top: 58%;
+      bottom: -10px;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
       img {
         padding: 0;
         border: 0;
+        margin: 0;
+        display: block;
         background-color: transparent;
       }
       // top: -5px;

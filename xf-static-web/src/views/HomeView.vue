@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <el-carousel height="500px">
+    <el-carousel class="home-carousel" height="500px">
       <el-carousel-item v-for="banner in banners" :key="banner">
         <a @click="goBannerPage(banner.redirectUrl)">
           <div
@@ -11,33 +11,19 @@
         </a>
       </el-carousel-item>
     </el-carousel>
+    <AnnouncementBar />
     <div class="index-container">
-      <div class="avg-fox">
-        <img class="game-title" src="../assets/home/hot_game.png" alt="热门游戏" />
-        <div class="game-item">
-          <div class="game-left">
-            <img src="../assets/home/game_left.png" alt="" />
-          </div>
-          <div class="game-content">
-            <router-link class="quick-plat" to="/eSports">
-              <!-- <router-link class="quick-plat" to="/" @click="checkMaintenance"> -->
-              <img src="../assets/home/index_quick_plat_esports.png" alt="" />
-            </router-link>
-            <router-link class="quick-plat" to="/sports">
-              <!-- <router-link class="quick-plat" to="/" @click="checkMaintenance"> -->
-              <img src="../assets/home/index_quick_plat_sport.png" alt="" />
-            </router-link>
-            <router-link class="quick-plat" to="/live-casino">
-              <img src="../assets/home/index_quick_plat_live.png" alt="" />
-            </router-link>
-            <router-link class="quick-plat" to="/game">
-              <img src="../assets/home/index_quick_plat_slot.png" alt="" />
-            </router-link>
-          </div>
-          <div class="game-right">
-            <img src="../assets/home/game_right.png" alt="" />
-          </div>
+      <div class="hotgames-wrapper">
+        <div class="hotgames-title">
+          <img class="game-title" src="../assets/home/hotgames-title.png" alt="热门游戏" />
         </div>
+        <HotGamesCarousel />
+      </div>
+      <div class="avg-fox">
+        <div class="inner-contents">
+        <img class="game-title" src="../assets/home/hotplatforms-title.png" alt="热门游戏" />
+        <HotPlatforms />
+      </div>
       </div>
       <!-- <div class="avg-list">
         <img src="../assets/home/list_money.png" alt="" />
@@ -74,215 +60,15 @@
           <img class="serve-bg" src="../assets/home/server_bg.png" alt="" />
         </div>
       </div> -->
-      <div class="avg-container">
-        <div>
-          <div class="avg-time-nv-box">
-            <div class="avg-time-content-box">
-              <span class="avg-advantage avg-dep-box">
-                <Vue3autocounter
-                  ref="counter"
-                  :startAmount="0"
-                  :endAmount="Math.floor(Math.random() * 31) + 50"
-                  :duration="1"
-                  separator=","
-                  :autoinit="true"
-                />
-              </span>
-              秒
-            </div>
-            <img src="../assets/home/avg_time_active_bg.png" class="avg-active-bg" />
-            <div class="avg-circle-container">
-              <div class="avg-schedule avg-schedule-container avg-schedule-left">
-                <div id="avgDepAni" class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-dep">
-                  <div class="avg-circle avg-circle-left"></div>
-                </div>
-              </div>
-              <div class="avg-schedule avg-schedule-container avg-schedule-right">
-                <div class="avg-schedule avg-schedule-box avg-schedule-left">
-                  <div class="avg-circle avg-circle-right"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="avg-container-en">
-            XF
-            <br />
-            ADVANTAGE
-          </div>
-          <div>
-            <span class="date_color sky_blue"></span>
-            平均存款时间
-          </div>
-        </div>
-        <div>
-          <div class="avg-time-nv-box">
-            <div class="avg-time-content-box">
-              <span class="avg-advantage avg-with-box">
-                <Vue3autocounter
-                  ref="counter"
-                  :startAmount="0"
-                  :endAmount="Math.floor(Math.random() * 31) + 70"
-                  :duration="2"
-                  separator=","
-                  :autoinit="true"
-                />
-              </span>
-              秒
-            </div>
-            <img src="../assets/home/avg_wit_time_active_bg.png" class="avg-active-bg" />
-            <div class="avg-circle-container">
-              <div class="avg-schedule avg-schedule-container avg-schedule-left">
-                <div id="avgWithdrawAni" class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-withdraw">
-                  <div class="avg-circle avg-circle-left"></div>
-                </div>
-              </div>
-              <div class="avg-schedule avg-schedule-container avg-schedule-right">
-                <div class="avg-schedule avg-schedule-box avg-schedule-left">
-                  <div class="avg-circle avg-circle-right"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="avg-container-en">
-            XF
-            <br />
-            ADVANTAGE
-          </div>
-          <div>
-            <span class="date_color blue"></span>
-            平均取款时间
-          </div>
-        </div>
-        <div>
-          <div class="avg-time-nv-box">
-            <div class="avg-time-content-box">
-              <span class="avg-advantage avg-pay-box">
-                <Vue3autocounter
-                  ref="counter"
-                  :startAmount="0"
-                  :endAmount="14"
-                  :duration="3"
-                  separator=","
-                  :autoinit="true"
-                />
-              </span>
-              家
-            </div>
-            <img src="../assets/home/avg_pay_active_bg.png" class="avg-active-bg" />
-            <div class="avg-circle-container">
-              <div class="avg-schedule avg-schedule-container avg-schedule-left">
-                <div id="avgPayFullAni" class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-full">
-                  <div class="avg-circle avg-circle-left"></div>
-                </div>
-              </div>
-              <div class="avg-schedule avg-schedule-container avg-schedule-right">
-                <div id="avgPayAni" class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-pay">
-                  <div class="avg-circle avg-circle-right"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="avg-container-en">
-            XF
-            <br />
-            ADVANTAGE
-          </div>
-          <div>
-            <span class="date_color yellow"></span>
-            合作支付平台
-          </div>
-        </div>
-        <div>
-          <div class="avg-time-nv-box">
-            <div class="avg-time-content-box">
-              <span class="avg-advantage avg-down-box">
-                <Vue3autocounter
-                  ref="counter"
-                  :startAmount="0"
-                  :endAmount="90"
-                  :duration="3"
-                  separator=","
-                  :autoinit="true"
-                />
-              </span>
-              万
-            </div>
-            <img src="../assets/home/avg_down_active_bg.png" class="avg-active-bg" />
-            <div class="avg-circle-container">
-              <div class="avg-schedule avg-schedule-container avg-schedule-left">
-                <div id="avgDownFullAni" class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-full">
-                  <div class="avg-circle avg-circle-left"></div>
-                </div>
-              </div>
-              <div class="avg-schedule avg-schedule-container avg-schedule-right">
-                <div id="avgDownAni" class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-down">
-                  <div class="avg-circle avg-circle-right"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="avg-container-en">
-            XF
-            <br />
-            ADVANTAGE
-          </div>
-          <div>
-            <span class="date_color purple"></span>
-            客户端下载数量
-          </div>
-        </div>
+      <div class="app-container">
+        <img class="game-title" src="../assets/home/app-title.png" alt="APP下载" />
+        <AppDownload />
       </div>
-      <div class="index-bottom-container">
-        <div class="index-bottom-box">
-          <div class="index-our-tc">
-            <div>
-              <img src="../assets/home/index_bottom_profession.png" />
-            </div>
-            <div>
-              <div class="serve_tip">更专业</div>
-              <div class="index-tc-desc">
-                每天为您提供近千场精彩赛事，更有真人、彩票、电子游戏等多种娱乐，让您拥有完美游戏体验。
-              </div>
-            </div>
-          </div>
-          <div class="index-our-tc">
-            <div>
-              <img src="../assets/home/index_bottom_safe.png" />
-            </div>
-            <div>
-              <div class="serve_tip">更安全</div>
-              <div class="index-tc-desc">
-                独家开发，采用128位加密技术和严格的安全管理体系，客户资金得到最完善的保障，让您全情尽享娱乐、赛事投注，无后顾之忧！
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="index-bottom-box">
-          <div class="index-our-tc">
-            <div>
-              <img src="../assets/home/index_bottom_easy.png" />
-            </div>
-            <div>
-              <div class="serve_tip">更便捷</div>
-              <div class="index-tc-desc">
-                引领市场的卓越技术，自主研发了全套终端应用，让您畅享
-                Web、H5，更有iOS、Android原生App，让您随时随地，娱乐投注随心所欲！7×24小时在线客服提供最贴心、最优质的服务。
-              </div>
-            </div>
-          </div>
-          <div class="index-our-tc">
-            <div>
-              <img src="../assets/home/index_bottom_fast.png" />
-            </div>
-            <div>
-              <div class="serve_tip">更快速</div>
-              <div class="index-tc-desc">
-                最新技术自主研发的财务处理系统，真正做到极速存、取、转。独家网络优化技术，为您提供一流的游戏体验，最大优化网络延迟。
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="svc-container">
+        <img class="game-title" src="../assets/home/service-title.png" alt="APP下载" />
+        <HomeServiceSection />
+    </div>  
+      
     </div>
   </div>
   <GameModal ref="gameMenu"></GameModal>
@@ -309,6 +95,11 @@ import { defineComponent, ref, onMounted, watch } from "vue";
 import { loadPromoBanner, loadHomePromoBanner } from "@/api/index/promo";
 import { useLocalStorage } from "@vueuse/core";
 import Vue3autocounter from "vue3-autocounter";
+import AnnouncementBar from "@/components/home/AnnouncementBar.vue";
+import HotGamesCarousel from "@/components/home/HotGamesCarousel.vue";
+import HotPlatforms from "@/components/home/HotPlatforms.vue";
+import AppDownload from "@/components/home/AppDownload.vue";
+import HomeServiceSection from "@/components/home/HomeService.vue";
 import { ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
 import { userStore } from "@/store";
@@ -318,9 +109,15 @@ export default defineComponent({
   //   "number-counter": numberCounter
   // },
   components: {
-    Vue3autocounter
+    Vue3autocounter,
+    AnnouncementBar,
+    HotGamesCarousel,
+    HotPlatforms,
+    AppDownload,
+    HomeServiceSection
   },
   setup() {
+
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
     const gameMenu = ref(null);
     const banners = ref([
@@ -524,44 +321,62 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+
 .demonstration {
   color: var(--el-text-color-secondary);
 }
+.home-carousel {
 
-.el-carousel__item {
-  color: #475669;
-  margin: 0;
-  text-align: center;
-  img {
-    height: unset;
-    width: 100%;
+  .el-carousel__item {
+    color: #475669;
+    margin: 0;
+    text-align: center;
+    img {
+      height: unset;
+      width: 100%;
+    }
+  }
+
+  .el-carousel__item:nth-child(2n) {
+    background-color: #0e121b;
   }
 }
-
-.el-carousel__item:nth-child(2n) {
-  background-color: #0e121b;
-}
 .index-container {
+  background: url(../assets/home/wavy_bg.png)no-repeat center center;
+  background-size: cover;
+  .hotgames-wrapper {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 50px 0;
+    .hotgames-title {
+      img {
+        width: 100%;
+      }
+    }
+  }
   .avg-earth,
   .avg-fox {
     background-repeat: no-repeat;
   }
   .avg-fox {
-    width: 1300px;
-    height: 400px;
     margin: 0 auto;
-    background-image: url(../assets/home/huli_bg.png);
+    background-image: url(../assets/home/hotplatforms.png);
     background-repeat: no-repeat;
     background-position: right;
     text-align: left;
+    min-height: 800px;
+    .inner-contents {
+      max-width: 1400px;
+      margin: 20px auto;
+      img {
+        width: 100%;
+      }
+    }
     .game-title {
-      margin: 50px 0 50px 100px;
+      margin: 50px 0;
     }
-    .game-item {
-      display: flex;
-      gap: 5px;
-      margin: 80px 40px;
-    }
+    
     .game-content {
       height: 180px;
       display: flex;
@@ -592,6 +407,26 @@ export default defineComponent({
         width: 40px;
         height: 50px;
       }
+    }
+  }
+  .app-container {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    .game-title{ 
+      width: 100%;
+      margin: 50px auto;
+    }
+    
+  }
+  
+  .svc-container {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    .game-title{ 
+      width: 100%;
+      margin: 50px auto;
     }
   }
   .avg-list,

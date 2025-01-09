@@ -90,3 +90,11 @@ export function claimDailyRainItem(item) {
 export function getDailyRainListing(item) {
   return server.EVENT.get(`/redPacketVip/list?promoCode=${item}`);
 }
+export function getHotPlatformGames() {
+  return server.REST.get("/platformGamesByLabelV1", {
+    params: {
+      gameLabel: "HOT",
+      device: "WEB"
+    }
+  })
+}
