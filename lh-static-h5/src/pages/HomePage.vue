@@ -674,34 +674,7 @@
       </q-card-section>
     </q-card>
   </q-dialog>
-
-  <q-dialog width="100%" v-model="isImportantAnnoucementModal" @update:model-value="offPopupModal()">
-    <q-card flat style="width: 70%; max-width: 500px; background-color: transparent; margin: 0 auto" class="text-white">
-      <q-card-section style="background-color: transparent">
-        <div class="close-alert" @click="setExpiryBanner()">
-          <q-icon size="24px" name="close"></q-icon>
-        </div>
-        <q-carousel
-          animated
-          v-model="popupSlide"
-          navigation
-          infinite
-          swipeable
-          height="100%"
-          style="background: transparent"
-        >
-          <q-carousel-slide v-for="(item, index) in popupList" :key="index" :name="index" class="carousel-slide" style="padding: 0">
-            <div class="promo-banner-container">
-              <div class="promo-banner-content" v-if="item.type === 'TEXT'" v-html="item.content"></div>
-              <div class="promo-banner-img" @click="clickHomePopupImg(item.path)" v-else>
-                <img :src="formatHomePopupImg(item.mobileImgUrl)" class="alert-img" draggable="false" />
-              </div>
-            </div>
-          </q-carousel-slide>
-        </q-carousel>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
+  <SitePopup @go-game="playGame" />
 </template>
 
 <script>
@@ -730,6 +703,7 @@ import LinkGroup from "components/home/drawer/LinkGroup.vue";
 import SystemConfig from "components/home/drawer/SystemConfig.vue";
 import { onMounted } from "vue";
 import { convertToCommaAmount } from "src/boot/utils";
+import SitePopup from "src/components/modal/SitePopup.vue";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
@@ -745,7 +719,8 @@ export default defineComponent({
     LinkGroup,
     SystemConfig,
     // PlatformBlock
-    AnnouncementModal
+    AnnouncementModal,
+    SitePopup
   },
   setup() {
     const isFirstView = ref(false);
@@ -1055,121 +1030,6 @@ export default defineComponent({
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const imgURLFloat = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
     // Pop out ads banner
-    const isImportantAnnoucementModal = ref(false);
-    const popupList = ref([]);
-    const popupSlide = ref(0)
-    const homePopupFrequencyNum = ref(0);
-
-    const setExpiryBanner = () => {
-      if (homePopupFrequencyNum.value !== 0) {
-        setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
-      }
-      isImportantAnnoucementModal.value = false;
-    };
-
-    const offPopupModal = () => {
-      setExpiryBanner();
-    };
-
-    const setWithExpiry = (key, value, interval) => {
-      const now = new Date();
-      const item = {
-        value: value,
-        expiry: now.getTime() + interval,
-        id: popupList.value[0]?.id,
-        frequency: popupList.value[0]?.frequency,
-      };
-      localStorage.setItem(key, JSON.stringify(item));
-    };
-    const getWithExpiry = (key) => {
-      const itemStr = localStorage.getItem(key);
-      if (!itemStr) {
-        return null;
-      }
-      const item = JSON.parse(itemStr);
-      const now = new Date();
-      if (now.getTime() > item.expiry) {
-        localStorage.removeItem(key);
-        return null;
-      }
-      return item.value;
-    };
-
-    const isImpt = getWithExpiry("isImpt");
-    const clickHomePopupImg = (urlString) => {
-      // debugger;
-      const openPattern = /^\/open\/(.*)/;
-      if (urlString.match(openPattern)) {
-        const extractedUrl = urlString.match(openPattern)[1];
-        const [gameName, platformCode, gameCode] = extractedUrl.split("/");
-        // /open/FB体育/FB/XXXX-123/OPEN
-
-        allGames.value.open(gameName, platformCode, gameCode, "OPEN");
-        return;
-      }
-
-      let regexUrl = new RegExp(/^(https:\/\/)/g);
-      if (regexUrl.test(urlString)) {
-        // 跳轉
-        location.href = urlString;
-        return;
-      }
-      let regexName = new RegExp(/^(name|\?name)/g);
-      if (regexName.test(urlString)) {
-        //去優惠
-        router.push(`/promo${urlString}`);
-        return;
-      }
-
-      router.push(`/promo?name=${urlString}`);
-    };
-    const checkShowImgTop = () => {
-      const lastTime = sessionStorage.getItem("indexImgTop");
-      if (lastTime) {
-        const diff = new Date().getTime() - Number(lastTime);
-        if (diff > 1000 * 60 * 60 * 12) {
-          isFirstView.value = true;
-        }
-      } else {
-        api
-          .get("/member/site-popout-list")
-          .then((res) => {
-            // if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {
-            //   res = apiMockData
-            // }
-            if (res.code === 0) {
-              popupList.value = res.data;
-              // if (res.data[id] !== null) {
-              if (isImpt === null) {
-                switch (res.data[0]["frequency"]) {
-                  case "EVERYTIME":
-                    homePopupFrequencyNum.value = 0;
-                    break;
-                  case "EVERYDAY":
-                    homePopupFrequencyNum.value = 86400000; // 24hrs
-                    break;
-                  case "SESSION":
-                    homePopupFrequencyNum.value = 7866432000; // 3months
-                    break;
-                  default:
-                    homePopupFrequencyNum.value = 10000;
-                    break;
-                }
-                isImportantAnnoucementModal.value = true;
-                isFirstView.value = true;
-                // }
-              }
-              // } else {
-              // isImportantAnnoucementModal.value = false;
-              // }
-            }
-          })
-          .catch(() => {});
-      }
-    };
-    const formatHomePopupImg = (path) => {
-      return useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/" + path;
-    }
 
     function loadData() {
       api
@@ -1718,7 +1578,6 @@ export default defineComponent({
       }
 
       if (store.token) {
-        checkShowImgTop();
         setTimeout(() => {
           initFloating();
         }, 750);
@@ -1732,7 +1591,6 @@ export default defineComponent({
     return {
       imageLoading,
       slide: ref(0),
-      clickHomePopupImg,
       tab,
       selectTab,
       imgNotFound,
@@ -1790,15 +1648,6 @@ export default defineComponent({
       openDownloadAppLink,
       getAppDownloadUrl,
       downloadUrl,
-      getWithExpiry,
-      setWithExpiry,
-      setExpiryBanner,
-      homePopupFrequencyNum,
-      isImpt,
-      isImportantAnnoucementModal,
-      popupList,
-      popupSlide,
-      offPopupModal,
       getImgPlatformLogo,
       getImgPlatformBg,
       moment,
@@ -1838,8 +1687,7 @@ export default defineComponent({
       domainSlide: ref(0),
       rocketSlide: ref(0),
       promoSlide: ref(0),
-      convertToCommaAmount,
-      formatHomePopupImg
+      convertToCommaAmount
     };
   }
 });
