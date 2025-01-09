@@ -112,7 +112,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.status')" prop="status">
+        <!-- <el-form-item :label="t('fields.status')" prop="status">
           <el-select
             clearable
             v-model="form.status"
@@ -128,6 +128,23 @@
               :value="item.value"
             />
           </el-select>
+        </el-form-item> -->
+        <el-form-item :label="t('fields.status')" prop="status">
+          <el-radio-group
+            v-model="form.status"
+            size="small"
+            style="width: 300px"
+          >
+            <el-radio-button label="OPEN">
+              {{ t('common.status.OPEN') }}
+            </el-radio-button>
+            <el-radio-button label="CLOSE">
+              {{ t('common.status.CLOSE') }}
+            </el-radio-button>
+            <el-radio-button label="TEST">
+              {{ t('common.status.TEST') }}
+            </el-radio-button>
+          </el-radio-group>
         </el-form-item>
         <el-row>
           <el-col>
@@ -698,7 +715,7 @@
       <el-table-column type="selection" />
       <el-table-column prop="name" :label="t('fields.name')" />
       <el-table-column prop="code" :label="t('fields.code')" />
-      <el-table-column prop="status" :label="t('fields.status')" width="150">
+      <!-- <el-table-column prop="status" :label="t('fields.status')" width="150">
         <template #default="scope">
           <el-tag v-if="scope.row.status === 'OPEN'" type="success">
             {{ scope.row.status }}
@@ -709,6 +726,19 @@
           <el-tag v-if="scope.row.status === 'TEST'">
             {{ scope.row.status }}
           </el-tag>
+        </template>
+      </el-table-column> -->
+      <el-table-column prop="status" :label="t('fields.status')" min-width="150">
+        <template #default="scope">
+          <el-radio-group
+            v-model="scope.row.status"
+            size="mini"
+            @change="changeRedPacketSettingStatus(scope.row.privilegeId, scope.row.status)"
+          >
+            <el-radio-button label="OPEN">{{ t('common.status.OPEN') }}</el-radio-button>
+            <el-radio-button label="CLOSE">{{ t('common.status.CLOSE') }}</el-radio-button>
+            <el-radio-button label="TEST">{{ t('common.status.TEST') }}</el-radio-button>
+          </el-radio-group>
         </template>
       </el-table-column>
       <el-table-column prop="startTime" :label="t('fields.startTime')">
@@ -805,7 +835,8 @@ import {
   getRedPacketRains,
   createRedPacketRain,
   updateRedPacketRain,
-  getWays
+  getWays,
+  updateRedPacketRainState
 } from '../../../../api/privilege-red-packet-rain'
 import {getSiteListSimple} from '../../../../api/site'
 import {required} from '../../../../utils/validate'
@@ -818,6 +849,7 @@ import moment from "moment/moment";
 import { useRouter } from 'vue-router'
 import { isXF, isThai } from '@/utils/site'
 import { formatTimeZone } from "@/utils/format-timeZone";
+import { updatePrivilegeInfoState } from '../../../../api/privilege-info'
 
 const router = useRouter()
 const {t} = useI18n();
@@ -870,9 +902,9 @@ const uiControl = reactive({
   removeBtn: true,
   dateRangeType: "1",
   status: [
-    { key: 1, displayName: 'Open', value: 'OPEN' },
-    { key: 2, displayName: 'Close', value: 'CLOSE' },
-    { key: 3, displayName: 'Test', value: 'TEST' },
+    { key: 1, displayName: t('common.status.OPEN'), value: 'OPEN' },
+    { key: 2, displayName: t('common.status.CLOSE'), value: 'CLOSE' },
+    { key: 3, displayName: t('common.status.TEST'), value: 'TEST' },
   ],
   rules: [
     { key: 1, displayName: 'VIP', value: 'VIP' },
@@ -1392,6 +1424,12 @@ function submit() {
   } else {
     edit()
   }
+}
+
+async function changeRedPacketSettingStatus(id, status) {
+  await updateRedPacketRainState(id, status)
+  ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+  await loadRedPacketRain()
 }
 
 onMounted(async () => {

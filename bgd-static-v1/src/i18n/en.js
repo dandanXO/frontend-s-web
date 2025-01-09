@@ -369,7 +369,7 @@ export default {
     accumulate: "Accumulate",
     invites: "Invites",
     extra: "Extra",
-    rewardss: "Rewards",
+    rewards: "Rewards"
   },
   nameAuth: {
     title: "Real Name Authentication",

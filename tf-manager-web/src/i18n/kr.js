@@ -2661,6 +2661,7 @@ export default {
     'ID Verification': 'ID Verification',
     'Privi Spin Event Record': '프리비 스핀 이벤트 기록',
     'Top Ranking': '최고 순위 기록',
+    'Top Bonus Ranking': '최고 보너스 순위',
   },
   google: {
     google_auth_menu: 'Google 인증자',

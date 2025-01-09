@@ -2,15 +2,15 @@
   <div class="deposit-wrapper" :class="isInputFocus && 'input-btm'">
     <div class="method-title q-mb-sm">{{ $t("deposit.depositMethod") }}</div>
     <template v-if="isLoadingInitPay">
-      <div class="deposit-methods-container">
-        <div v-for="index in 4" :key="index">
+      <div class="deposit-methods-container col-three">
+        <div v-for="index in 3" :key="index">
           <q-skeleton style="height: 96px" />
         </div>
       </div>
     </template>
 
     <template v-else>
-      <div class="deposit-methods-container">
+      <div class="deposit-methods-container col-three">
         <template v-for="(item, index) in paymentMethodsItems" :key="index">
           <div class="content-item" @click="goSelectedMethod(item)" :class="{ active: selectedItem === item }">
             <div class="item-img">
@@ -1241,6 +1241,7 @@ onMounted(() => {
         width: 100%;
         max-width: max-content;
         border-radius: 6px;
+        max-height:60px;
       }
     }
 

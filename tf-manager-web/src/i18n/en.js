@@ -3050,6 +3050,7 @@ export default {
     'ID Verification': 'ID Verification',
     'Privi Spin Event Record': 'Privi Spin Event Record',
     'Top Ranking': 'Top Ranking',
+    'Top Bonus Ranking': 'Top Bonus Ranking',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

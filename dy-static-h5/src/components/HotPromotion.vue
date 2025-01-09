@@ -121,6 +121,7 @@
     <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
     <DreamLeagueS25 v-if="list.redirectUrl === 'dy2-dream-league-s25'" :promo-code="list.promoCode" />
     <HongBaoYu2025 v-if="list.redirectUrl === 'dy2-cny2025-red-envelope'" :promo-code="list.promoCode" />
+    <Monthly20HongBaoYu v-if="list.redirectUrl === 'dy2-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -148,6 +149,7 @@ import moment from "moment";
 import { useRouter } from "vue-router";
 import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
 import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
+import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongbaoYu.vue";
 
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
 const TigerCardPromo = defineAsyncComponent(() => import("../components/hotpromo/tigercard/tigerCardPromo.vue"));
@@ -336,7 +338,8 @@ export default defineComponent({
     VctcnMatchPromo,
     Belgrade2025Promo,
     DreamLeagueS25,
-    HongBaoYu2025
+    HongBaoYu2025,
+    Monthly20HongBaoYu
   },
   props: {
     list: {
