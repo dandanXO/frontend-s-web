@@ -148,6 +148,8 @@
 </template>
 
 <script setup>
+import { ResponseCode } from "@/api/response";
+import { useNotify } from "@/hooks/notify";
 import { onMounted, ref, defineProps } from "vue";
 import { userStore } from "@/store";
 import { initDepositRedPacket, claimDailyRainItem } from "@/api/index/promo";
@@ -155,7 +157,7 @@ import { initDepositRedPacket, claimDailyRainItem } from "@/api/index/promo";
 const props = defineProps(["promoCode", "params"]);
 const promoCode = ref(props.promoCode);
 const store = userStore();
-
+const notify = useNotify();
 const depositAmount = ref(0);
 const draw = ref(0);
 const winAmount = ref(0);
@@ -188,6 +190,19 @@ const handleClaimBonus = () => {
         winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;
         store.getBalance();
         fetchData();
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
+        notify({
+          type: "error",
+          message: res.message
+        });
       }
     })
     .catch(() => {})
