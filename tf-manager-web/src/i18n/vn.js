@@ -2620,6 +2620,7 @@ export default {
     'ID Verification': 'ID Verification',
     'Privi Spin Event Record': 'Ghi chép sự kiện quay thưởng Privi',
     'Top Ranking': 'Ghi chép xếp hạng cao nhất',
+    'Top Bonus Ranking': 'Xếp Hạng Thưởng Hàng Đầu',
   },
   google: {
     google_auth_menu: 'Google Xác thực',

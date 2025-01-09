@@ -2974,7 +2974,8 @@ export default {
     'Site Domain': '站点域名管理',
     'Privi Spin Event Record': '优惠抽奖/轮盘记录',
     'ID Verification': '身份认证',
-    'Top Ranking': '优惠排行榜记录',
+    'Top Ranking': '优惠游戏排行榜记录',
+    'Top Bonus Ranking': '优惠奖金排行榜记录',
   },
   google: {
     google_auth_menu: '谷歌验证',
