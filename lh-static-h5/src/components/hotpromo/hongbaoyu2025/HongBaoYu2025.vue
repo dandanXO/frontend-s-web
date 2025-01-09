@@ -108,7 +108,7 @@
           <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/red-packet-opened.png`)" />
 
           <span class="grats">恭喜获得奖金</span>
-          <span class="amount">{{ winAmount }}</span>
+          <span class="amount">{{ winAmount }}元</span>
           <div class="get-btn" @click="getPromotionPrize">点击领取</div>
         </div>
       </q-card-section>
@@ -449,7 +449,7 @@ const getPromotionPrize = () => {
     color: #f23b1d;
     font-size: 36px;
     font-weight: bold;
-    padding-right: 15px;
+    padding-right: 10px;
   }
 
   .get-btn {
