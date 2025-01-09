@@ -118,7 +118,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.status')" prop="status">
+        <!-- <el-form-item :label="t('fields.status')" prop="status">
           <el-select
             clearable
             v-model="form.status"
@@ -134,6 +134,23 @@
               :value="item.value"
             />
           </el-select>
+        </el-form-item> -->
+        <el-form-item :label="t('fields.status')" prop="status">
+          <el-radio-group
+            v-model="form.status"
+            size="small"
+            style="width: 300px"
+          >
+            <el-radio-button label="OPEN">
+              {{ t('common.status.OPEN') }}
+            </el-radio-button>
+            <el-radio-button label="CLOSE">
+              {{ t('common.status.CLOSE') }}
+            </el-radio-button>
+            <el-radio-button label="TEST">
+              {{ t('common.status.TEST') }}
+            </el-radio-button>
+          </el-radio-group>
         </el-form-item>
         <el-row>
           <el-col>
@@ -508,9 +525,9 @@
             size="mini"
             @change="changePromoCodeRedeemConfigStatus(scope.row.privilegeId, scope.row.status)"
           >
-            <el-radio-button label="OPEN">OPEN</el-radio-button>
-            <el-radio-button label="CLOSE">CLOSE</el-radio-button>
-            <el-radio-button label="TEST">TEST</el-radio-button>
+            <el-radio-button label="OPEN">{{ t('common.status.OPEN') }}</el-radio-button>
+            <el-radio-button label="CLOSE">{{ t('common.status.CLOSE') }}</el-radio-button>
+            <el-radio-button label="TEST">{{ t('common.status.TEST') }}</el-radio-button>
           </el-radio-group>
         </template>
       </el-table-column>
@@ -638,9 +655,9 @@ const uiControl = reactive({
   removeBtn: true,
   dateRangeType: "1",
   status: [
-    { key: 1, displayName: 'Open', value: 'OPEN' },
-    { key: 2, displayName: 'Close', value: 'CLOSE' },
-    { key: 3, displayName: 'Test', value: 'TEST' },
+    { key: 1, displayName: t('common.status.OPEN'), value: 'OPEN' },
+    { key: 2, displayName: t('common.status.CLOSE'), value: 'CLOSE' },
+    { key: 3, displayName: t('common.status.TEST'), value: 'TEST' },
   ],
   bonusType: [
     { key: 1, displayName: 'Fixed', value: 'FIXED' },

@@ -147,9 +147,9 @@
             size="mini"
             style="width: 300px"
           >
-            <el-radio-button label="OPEN">OPEN</el-radio-button>
-            <el-radio-button label="CLOSE">CLOSE</el-radio-button>
-            <el-radio-button label="TEST">TEST</el-radio-button>
+            <el-radio-button label="OPEN">{{ t('common.status.OPEN') }}</el-radio-button>
+            <el-radio-button label="CLOSE">{{ t('common.status.CLOSE') }}</el-radio-button>
+            <el-radio-button label="TEST">{{ t('common.status.TEST') }}</el-radio-button>
           </el-radio-group>
         </el-form-item>
         <div class="dialog-footer">
@@ -191,9 +191,9 @@
             size="mini"
             @change="changeSiteInterestPlanStatus(scope.row.id, scope.row.status)"
           >
-            <el-radio-button label="OPEN">OPEN</el-radio-button>
-            <el-radio-button label="CLOSE">CLOSE</el-radio-button>
-            <el-radio-button label="TEST">TEST</el-radio-button>
+            <el-radio-button label="OPEN">{{ t('common.status.OPEN') }}</el-radio-button>
+            <el-radio-button label="CLOSE">{{ t('common.status.CLOSE') }}</el-radio-button>
+            <el-radio-button label="TEST">{{ t('common.status.TEST') }}</el-radio-button>
           </el-radio-group>
         </template>
       </el-table-column>
