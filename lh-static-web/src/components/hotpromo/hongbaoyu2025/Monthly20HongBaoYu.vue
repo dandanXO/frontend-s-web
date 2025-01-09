@@ -12,21 +12,21 @@
             </div>
             <div class="reward-info-content">
               上月累计存款:
-              <span class="amount">{{ highestSingleValidBet }}元</span>
+              <span class="amount">{{ depositAmount }}元</span>
             </div>
           </div>
           <div class="reward-info">
             <div class="reward-info-icon claim-gift-icon">
             </div>
             <div class="reward-info-content">
-              可领取红包礼金：
-              <span class="amount">{{ bonus }}元</span>
+              可领取红包次数：
+              <span class="amount">{{ draw }}次</span>
             </div>
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
-            <img v-if="bonus <= 0" src="@/assets/promo/hongbaoyu/reward-btn-disabled.png" alt="" width="100%" />
+          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: draw <= 0, loading: loadingClaim }">
+            <img v-if="draw <= 0" src="@/assets/promo/hongbaoyu/reward-btn-disabled.png" alt="" width="100%" />
             <img v-else src="@/assets/promo/hongbaoyu/reward-btn.png" alt="" width="100%" />
           </div>
         </div>
@@ -126,25 +126,79 @@
       </div>
     </div>
   </div>
+
+  <el-dialog
+    class="award-modal hongbaoyu-modal"
+    :close-on-click-modal="false"
+    :modal="false"
+    v-model="privilegeClaimedModalVisible"
+    align-center
+  >
+    <div class="modal-div">
+      <div class="red-packet-opened">
+        <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu2024/red-packet-opened.png`)" />
+        <div class="grats">恭喜中奖！</div>
+        <div class="amount">{{ winAmount }}元</div>
+
+        <div class="get-btn" @click="getPromotionPrize">点击领取</div>
+      </div>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, defineProps } from "vue";
 import { userStore } from "@/store";
-// import { useNotify } from "@/hooks/notify";
-// import { ElMessageBox } from "element-plus";
-// import { ResponseCode } from "@/api/response";
-// const props = defineProps(["promoCode"]);
-// const { promoCode } = toRefs(props);
-// const notify = useNotify();
+import { initDepositRedPacket, claimDailyRainItem } from "@/api/index/promo";
 
+const props = defineProps(["promoCode", "params"]);
+const promoCode = ref(props.promoCode);
 const store = userStore();
-const highestSingleValidBet = ref(0);
-const bonus = ref(0);
 
-const handleClaimBonus = () => {};
+const depositAmount = ref(0);
+const draw = ref(0);
+const winAmount = ref(0);
+const loadingClaim = ref(false);
+const privilegeClaimedModalVisible = ref(false);
 
-const fetchData = async () => {};
+const fetchData = async () => {
+  loadingClaim.value = true;
+  initDepositRedPacket(promoCode.value)
+    .then((res) => {
+      if (res.code === 0) {
+        depositAmount.value = res.data.depositAmount;
+        draw.value = res.data.draw;
+
+        store.getBalance();
+      }
+    })
+    .catch(() => {})
+    .finally(() => {
+      loadingClaim.value = false;
+    });
+};
+
+const handleClaimBonus = () => {
+  loadingClaim.value = true;
+  claimDailyRainItem(promoCode.value)
+    .then((res) => {
+      if (res.code === 0) {
+        privilegeClaimedModalVisible.value = true;
+        winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;
+        store.getBalance();
+        fetchData();
+      }
+    })
+    .catch(() => {})
+    .finally(() => {
+      loadingClaim.value = false;
+    });
+};
+
+const getPromotionPrize = () => {
+  store.getBalance();
+  privilegeClaimedModalVisible.value = false;
+};
 
 onMounted(() => {
   if (!store.token) {
@@ -499,6 +553,69 @@ onMounted(() => {
     }
     td {
       color: white;
+    }
+  }
+}
+
+.modal-div {
+  width: 100%;
+}
+
+.red-packet-opened {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  img {
+    width: 500px;
+  }
+
+  .grats {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    margin-top: 100px;
+
+    color: #fffbfb;
+
+    text-align: center;
+    font-family: PingFang SC;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+
+  .amount {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    margin-top: 250px;
+    left: -10px;
+    color: #f23b1d;
+    font-size: 50px;
+    font-weight: bold;
+  }
+
+  .get-btn {
+    color: #f23b1d;
+    border-radius: 30px;
+    background: linear-gradient(180deg, #fdf4ee 0%, #fff3c0 100%);
+    position: absolute;
+    margin-top: 270px;
+    margin-left: -15px;
+    font-size: 20px;
+    padding: 12px 24px;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(0.9);
     }
   }
 }

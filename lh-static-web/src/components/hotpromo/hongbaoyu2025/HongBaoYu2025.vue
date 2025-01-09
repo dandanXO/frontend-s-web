@@ -100,7 +100,7 @@
       <div class="red-packet-opened">
         <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu2024/red-packet-opened.png`)" />
         <div class="grats">恭喜中奖！</div>
-        <div class="amount">{{ winAmount }}</div>
+        <div class="amount">{{ winAmount }}元</div>
 
         <div class="get-btn" @click="getPromotionPrize">点击领取</div>
       </div>
@@ -183,9 +183,9 @@ const getPromotionPrize = () => {
       pointer-events: none;
     }
     &.loading {
-      filter: grayscale(100%);
+      //filter: grayscale(100%);
       cursor: not-allowed;
-      opacity: 0.6;
+      opacity: 0.8;
     }
   }
 }
@@ -430,7 +430,7 @@ const getPromotionPrize = () => {
     justify-content: center;
     top: 0;
     margin-top: 250px;
-    left: -15px;
+    left: -10px;
     color: #f23b1d;
     font-size: 50px;
     font-weight: bold;

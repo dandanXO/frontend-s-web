@@ -128,6 +128,7 @@
     <VctBangkok v-if="list.redirectUrl === 'lh1-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
     <Dota2BlastSlamS25 v-if="list.redirectUrl === 'lh1-dream-league-s25'" :promo-code="list.promoCode" />
     <Dota2BlastSlam2025 v-if="list.redirectUrl === 'lh1-blast-slam-2025'" :promo-code="list.promoCode"/>
+    <DarkModePromo v-if="list.redirectUrl === 'lh1-dark-mode'" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -254,6 +255,7 @@ import Dota2BlastSlamS25 from "../components/hotpromo/dream-league-s25/DreamLeag
 import Lh1Vctcn from "./hotpromo/lh1-vctcn/lh1Vctcn.vue";
 import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue";
 import Dota2BlastSlam2025 from "../components/hotpromo/dota2-blast-slam-2025/Dota2BlastSlam2025.vue";
+import DarkModePromo from "../components/hotpromo/dark-mode/DarkModePromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -362,7 +364,8 @@ export default defineComponent({
     Lh1Vctcn,
     Dota2BlastSlamS25,
     VctBangkok,
-    Dota2BlastSlam2025
+    Dota2BlastSlam2025,
+    DarkModePromo
   },
   props: {
     list: {
@@ -646,7 +649,7 @@ export default defineComponent({
   box-shadow: none;
 
   .el-dialog__header .el-dialog__headerbtn {
-    font-size: 40px;
+    font-size: 20px;
     background: #3d8183;
     border-radius: 50%;
     display: flex;
