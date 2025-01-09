@@ -30,7 +30,7 @@
       <div class="content-card-title">
         <img src="../../../assets/images/promotion/hotpromo/signin-1mth/reward-mech-title.png" />
       </div>
-      <div class="q-mb-sm">Progressive Reward System + Dynamic Treasure Chest Incentives</div>
+      <div class="q-mb-sm">PROGRESSIVE REWARD SYSTEM + DYNAMIC TREASURE CHEST INCENTIVES</div>
       <div class="reward-day-range" v-for="(item, index) in rewardProbability" :key="index">
         <img
           class="day-range-img"
@@ -39,7 +39,8 @@
         <span>
           Day
           <b>{{ item.dayRange }}</b>
-          Rewards: Claim the Welfare Chest with a random maximum bonus of {{ convertToCommaAmount(item.maxReward) }}BDT
+          {{ index === 3 ? "Super" : "" }} Rewards: Claim the {{ item.chestType }} Chest with a random maximum bonus of
+          <span style="color: #eaff00cc; font-weight: 700">{{ convertToCommaAmount(item.maxReward) }}BDT</span>
         </span>
       </div>
       <div class="missed-rules-txt">
@@ -52,20 +53,20 @@
       <table class="content-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
         <thead>
           <tr>
-            <th>{{ $t("earnMoney.reward.grade") }}</th>
-            <th>{{ $t("earnMoney.reward.totalNoOfValidPlayersInvited") }}</th>
+            <th>Day Range</th>
+            <th>Max Reward</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(item, index) in rewardProbability" :key="index">
-            <td>Days {{ item.dayRange }}</td>
+            <td>Days {{ item.dayRange }}{{ index === 3 ? " Super Chest" : "" }}</td>
             <td>
               <div class="reward-coin-container">
                 <img
                   class="reward-coin"
                   src="../../../assets/images/promotion/hotpromo/signin-1mth/reward-probability-coin.png"
                 />
-                {{ convertToCommaAmount(item.maxReward, false) }} BDT
+                <div class="reward-coin-txt">{{ convertToCommaAmount(item.maxReward, false) }} BDT</div>
               </div>
             </td>
           </tr>
@@ -172,7 +173,10 @@
       </ul>
     </div>
     <div class="ranking-list-container">
-      <img src="../../../assets/images/promotion/hotpromo/signin-1mth/ranking-list-title.png" />
+      <img
+        class="ranking-list-title"
+        src="../../../assets/images/promotion/hotpromo/signin-1mth/ranking-list-title.png"
+      />
       <div class="podium-div">
         <img class="podium" src="../../../assets/images/promotion/hotpromo/signin-1mth/podium.png" />
         <div class="medal medal-1">
@@ -228,18 +232,22 @@ import { convertToCommaAmount } from "src/boot/utils";
 const rewardProbability = [
   {
     dayRange: "1-7",
+    chestType: "Welfare",
     maxReward: 999
   },
   {
     dayRange: "8-13",
+    chestType: "Good Fortune",
     maxReward: 9999
   },
   {
     dayRange: "14-29",
+    chestType: "Lucky",
     maxReward: 99999
   },
   {
     dayRange: "30",
+    chestType: "Super",
     maxReward: 999999
   }
 ];
@@ -257,7 +265,7 @@ const getChestDesign = (i) => {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .content-card {
   background-color: #1e371f;
   border: 1px solid #337e3a;
@@ -274,6 +282,59 @@ const getChestDesign = (i) => {
     img {
       width: 80%;
       margin-top: -2%;
+    }
+  }
+}
+.content-table {
+  text-align: center;
+  font-family: "Manrope", sans-serif;
+  font-size: 10px;
+  color: #000;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+
+  thead {
+    background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+
+    th {
+      color: #076b2c;
+      font-weight: 700;
+      font-size: 12px;
+      min-width: 100px;
+    }
+  }
+
+  tbody {
+    td {
+      color: #fff;
+      padding: 10px 4px;
+      font-size: 12px;
+      border: 1px solid #ffffff1a;
+    }
+
+    tr {
+      background: none !important;
+      &:nth-child(even) {
+        td {
+          background-color: #70bc621a !important;
+        }
+      }
+      &:nth-child(odd) {
+        td {
+          background-color: transparent !important;
+        }
+      }
+
+      .player-details {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
     }
   }
 }
@@ -300,7 +361,8 @@ const getChestDesign = (i) => {
     gap: 10px;
     margin-top: 20px;
     padding: 0 14px;
-    height: 80px;
+    height: 90px;
+    margin-bottom: 10px;
     .day-card {
       display: flex;
       position: relative;
@@ -309,7 +371,7 @@ const getChestDesign = (i) => {
       border-radius: 8px;
       width: 50px;
       min-width: 50px;
-      height: 60px;
+      height: 70px;
       justify-content: center;
       span {
         position: absolute;
@@ -407,14 +469,19 @@ const getChestDesign = (i) => {
   }
 
   .reward-coin-container {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 6fr 10fr;
     align-items: center;
     padding: 4px;
     .reward-coin {
       height: 16px;
       width: 16px !important;
       margin-right: 8px;
+      place-self: flex-end;
+    }
+    .reward-coin-txt {
+      place-self: flex-start;
+      color: #00ff80;
     }
   }
 
@@ -440,11 +507,17 @@ const getChestDesign = (i) => {
   .activity-rule-list {
     li {
       color: #fff !important;
+      margin-bottom: 4px !important;
     }
   }
 }
 
 .ranking-list-container {
+  margin-top: 30px;
+  .ranking-list-title {
+    width: 80% !important;
+    place-self: center;
+  }
   .podium-div {
     margin-top: 5%;
     padding-top: 100px;
@@ -537,60 +610,6 @@ const getChestDesign = (i) => {
     }
     .ranking-list-item:nth-child(even) {
       background-color: #1e371f;
-    }
-  }
-}
-
-.content-table {
-  text-align: center;
-  font-family: "Manrope", sans-serif;
-  font-size: 10px;
-  color: #000;
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  overflow: hidden;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-
-  thead {
-    background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
-
-    th {
-      color: #076b2c;
-      font-weight: 700;
-      font-size: 12px;
-      min-width: 100px;
-    }
-  }
-
-  tbody {
-    td {
-      color: #fff;
-      padding: 10px 4px;
-      font-size: 12px;
-      border: 1px solid #ffffff1a;
-    }
-
-    tr {
-      background: none !important;
-      &:nth-child(even) {
-        td {
-          background-color: #70bc621a !important;
-        }
-      }
-      &:nth-child(odd) {
-        td {
-          background-color: transparent !important;
-        }
-      }
-
-      .player-details {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-      }
     }
   }
 }
