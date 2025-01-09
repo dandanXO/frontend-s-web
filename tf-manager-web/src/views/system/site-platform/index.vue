@@ -236,15 +236,15 @@
       <el-table-column
         prop="platformName"
         :label="t('fields.platformName')"
-        width="200"
+        width="180"
       />
       <el-table-column
         prop="platformAccountName"
         :label="t('fields.platformAccount')"
-        width="200"
+        width="180"
       />
-      <el-table-column prop="alias" :label="t('fields.alias')" width="180" />
-      <el-table-column prop="status" :label="t('fields.status')" width="200">
+      <el-table-column prop="alias" :label="t('fields.alias')" width="150" />
+      <!-- <el-table-column prop="status" :label="t('fields.status')" width="200">
         <template #default="scope">
           <el-tag v-if="scope.row.status === 'OPEN'" type="success">
             OPEN
@@ -254,11 +254,24 @@
           </el-tag>
           <el-tag v-if="scope.row.status === 'TEST'">TEST</el-tag>
         </template>
+      </el-table-column> -->
+      <el-table-column prop="status" :label="t('fields.status')" min-width="180">
+        <template #default="scope">
+          <el-radio-group
+            v-model="scope.row.status"
+            size="mini"
+            @change="changeSitePlatformStatus(scope.row.id, scope.row.status)"
+          >
+            <el-radio-button label="OPEN">OPEN</el-radio-button>
+            <el-radio-button label="CLOSE">CLOSE</el-radio-button>
+            <el-radio-button label="TEST">TEST</el-radio-button>
+          </el-radio-group>
+        </template>
       </el-table-column>
       <el-table-column
         prop="followType"
         :label="t('fields.followType')"
-        width="200"
+        width="150"
       >
         <template #default="scope">
           <div v-if="scope.row.followType === 'FOLLOW'" type="success">
@@ -272,13 +285,13 @@
       <el-table-column
         prop="createBy"
         :label="t('fields.createBy')"
-        width="200"
+        width="150"
       />
       <el-table-column
         prop="createTime"
         :label="t('fields.createTime')"
         align="center"
-        min-width="180"
+        min-width="150"
       >
         <template #default="scope">
           <span v-if="scope.row.createTime === null">-</span>
@@ -296,7 +309,7 @@
         :label="t('fields.operate')"
         align="right"
         fixed="right"
-        width="200"
+        width="150"
       >
         <template #default="scope">
           <el-button
@@ -327,6 +340,7 @@ import {
   createSitePlatform,
   getSitePlatforms,
   updateSitePlatform,
+  updateStatus,
 } from '../../../api/site-platform'
 import { getSiteListSimple } from '../../../api/site'
 import { getPlatformNames } from '../../../api/platform'
@@ -562,6 +576,12 @@ function submit() {
   } else if (uiControl.dialogType === 'EDIT') {
     edit()
   }
+}
+
+async function changeSitePlatformStatus(id, status) {
+  await updateStatus(id, status)
+  ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+  await loadSitePlatform()
 }
 
 onMounted(async () => {

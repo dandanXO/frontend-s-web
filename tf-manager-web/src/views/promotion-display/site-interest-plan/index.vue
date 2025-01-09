@@ -183,7 +183,20 @@
       <el-table-column prop="limitMin" :label="t('fields.planLimitMin')" min-width="150" />
       <el-table-column prop="limitMax" :label="t('fields.planLimitMax')" min-width="150" />
       <el-table-column prop="timeLimit" :label="t('fields.planTimeLimit')" min-width="150" />
-      <el-table-column prop="status" :label="t('fields.status')" min-width="150" />
+      <!-- <el-table-column prop="status" :label="t('fields.status')" min-width="150" /> -->
+      <el-table-column prop="status" :label="t('fields.status')" min-width="150">
+        <template #default="scope">
+          <el-radio-group
+            v-model="scope.row.status"
+            size="mini"
+            @change="changeSiteInterestPlanStatus(scope.row.id, scope.row.status)"
+          >
+            <el-radio-button label="OPEN">OPEN</el-radio-button>
+            <el-radio-button label="CLOSE">CLOSE</el-radio-button>
+            <el-radio-button label="TEST">TEST</el-radio-button>
+          </el-radio-group>
+        </template>
+      </el-table-column>
       <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150">
         <template #default="scope">
           <span v-if="scope.row.updateTime === null">-</span>
@@ -233,7 +246,7 @@
 import { computed, nextTick, onMounted, reactive, ref } from 'vue'
 import { required } from '../../../utils/validate'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { getSiteInterestPlan, createSiteInterestPlan, updateSiteInterestPlan, deleteSiteInterestPlan } from '../../../api/site-interest-plan';
+import { getSiteInterestPlan, createSiteInterestPlan, updateSiteInterestPlan, deleteSiteInterestPlan, updateSiteInterestPlanState } from '../../../api/site-interest-plan';
 import { getSiteListSimple } from '../../../api/site'
 import { hasRole, hasPermission } from '../../../utils/util'
 import { useStore } from '../../../store';
@@ -465,6 +478,12 @@ function submit() {
 
 function handleChangeSite(value) {
   form.siteId = value
+}
+
+async function changeSiteInterestPlanStatus(id, status) {
+  await updateSiteInterestPlanState(id, status)
+  ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+  await loadSiteInterestPlan()
 }
 
 onMounted(async () => {
