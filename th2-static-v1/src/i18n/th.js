@@ -263,7 +263,7 @@ export default {
     newPasswordUpdatedSuccess: "อัปเดตรหัสผ่านใหม่สำเร็จแล้ว"
   },
   sideNav: {
-    inviteToEarn: "เชิญชวนเพื่อรับรายได้",
+    inviteToEarn: "เชิญชวนเพื่อรับเงินรายได้",
     shareYourExclusiveQRCode: "แชร์รหัส QR เฉพาะของคุณ",
     slots: "สล็อต",
     livecasino: "คาสิโนสด",
@@ -435,8 +435,8 @@ export default {
       earn: "รางวัล"
     },
     about: {
-      invitetoEarn: "เชิญชวนเพื่อรับรายได้",
-      simplyShare: "แค่แชร์รหัส QR พิเศษของคุณ",
+      invitetoEarn: "เชิญชวนเพื่อรับเงินรายได้",
+      simplyShare: "แชร์รหัส QR เฉพาะของคุณ",
       inviteMoreFriends:
         "เชิญชวนเพื่อนมากขึ้นและคุณจะได้รับมากขึ้น สมาชิกทุกคนที่เข้าร่วม Skyace Club เป็นทั้งผู้เล่นและตัวแทน",
       weAdvocateBenefits: "เราส่งเสริมผลประโยชน์และโบนัสสำหรับทุกคน",
@@ -481,7 +481,7 @@ export default {
       faq_06_02: "สัดส่วนของค่าคอมมิชชั่นถูกกำหนดโดยความแตกต่างระหว่างระดับของคุณและระดับของสมาชิกที่อยู่ใต้คุณ",
       faq_06_example: "ตัวอย่าง",
       faq_06_table_name: "ชื่อ",
-      faq_06_table_level: "ระดับ",
+      faq_06_table_level: "เลเวล",
       faq_06_table_betting: "การเดิมพัน",
       faq_06_table_members: "สมาชิก",
       faq_06_table_you: "คุณ",
@@ -489,9 +489,9 @@ export default {
       faq_06_dot_02: "คุณสามารถรับค่าคอมมิชชั่น 0.2% จากจำนวนเงินเดิมพันของ B",
       faq_06_dot_03: "คุณสามารถรับค่าคอมมิชชั่น 0.7% จากจำนวนเงินเดิมพันของ C",
       table_col_levelDifference: "ความแตกต่างของระดับ",
-      table_col_rebate: "เงินคืน (%)",
-      table_col_level: "ระดับ",
-      table_col_betAmount: "จำนวนเงินที่เดิมพัน",
+      table_col_rebate: "เงินคืนผู้เล่น (%)",
+      table_col_level: "เลเวล",
+      table_col_betAmount: "จำนวนเงินเดิมพัน",
       table_col_activeMember: "สมาชิกที่ใช้งาน",
       table_col_rate: "อัตรา %"
     },
@@ -508,7 +508,7 @@ export default {
       betAmount: "จำนวนเงินเดิมพัน",
       rate: "อัตรา",
       yesterdayReportTotal: "รายงานเมื่อวานนี้ (ทั้งหมด)",
-      level: "ระดับ",
+      level: "เลเวล",
       myselfBettingAmount: "จำนวนเงินเดิมพันของฉัน",
       myselfRebate: "เงินคืนของฉัน",
       teamBettingamount: "จำนวนเงินเดิมพันของทีม",
@@ -519,7 +519,7 @@ export default {
       income: "รายได้"
     },
     earn: {
-      inviteToEarn: "เชิญชวนเพื่อรับรายได้",
+      inviteToEarn: "เชิญชวนเพื่อรับเงินรายได้",
       point_01_title: "แชร์ลิงก์แนะนำหรือรหัส QR ของคุณด้านล่าง",
       point_01_desc: "แค่คัดลอกหรือจับภาพหน้าจอแล้วส่งให้เพื่อนของคุณ",
       point_02_title: "ทำให้เพื่อนของคุณเริ่มเล่น",
