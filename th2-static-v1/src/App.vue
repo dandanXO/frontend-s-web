@@ -148,7 +148,7 @@ export default defineComponent({
       };
 
       const isRefreshed = sessionStorage.getItem("PWA_REFRESH_PAGE");
-      if(isInPwa() && !isRefreshed) {
+      if (isInPwa() && !isRefreshed) {
         document.addEventListener(
           "pwaEvent",
           () => {
@@ -216,7 +216,9 @@ export default defineComponent({
       if (Platform.is.capacitor && Platform.is.android) {
         // console.log("STATUSBARR");
         await StatusBar.hide();
-        await StatusBar.setOverlaysWebView({ overlay: true });
+        setTimeout(async () => {
+          await StatusBar.setOverlaysWebView({ overlay: true });
+        }, 500);
         await StatusBar.setBackgroundColor({ color: "#3E1474" });
         await StatusBar.setStyle({ style: Style.Dark });
         // setTimeout(() => {
@@ -290,8 +292,6 @@ export default defineComponent({
     };
 
     onMounted(async () => {
-      console.log("THA App.Vue OnMOunted")
-
       checkServerStatus();
       getAppInfo();
       initOrientation();
@@ -303,6 +303,7 @@ export default defineComponent({
           () => {
             onDeviceReady();
             setTimeout(() => {
+              console.log("ABABAAA1");
               setStatusBarColor();
             }, 1000);
           },
