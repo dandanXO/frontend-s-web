@@ -105,6 +105,7 @@
     />
     <DreamLeagueS25 v-if="list.redirectUrl === 'dy2-dream-league-s25'" :promo-code="list.promoCode" />
     <HongBaoYu2025 v-if="list.redirectUrl === 'dy2-cny2025-red-envelope'" :promo-code="list.promoCode" />
+    <Monthly20HongBaoYu v-if="list.redirectUrl === 'dy2-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
 
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
@@ -208,6 +209,7 @@ import Dota2Pgl from "./hotpromo/dota2-pgl/Dota2Pgl.vue";
 import PullbackTide from "./hotpromo/pullback-tide/PullbackTide.vue";
 import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
 import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
+import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -285,7 +287,8 @@ export default defineComponent({
     VctcnMatchPromo,
     Belgrade2025Promo,
     DreamLeagueS25,
-    HongBaoYu2025
+    HongBaoYu2025,
+    Monthly20HongBaoYu
   },
   props: {
     list: {
