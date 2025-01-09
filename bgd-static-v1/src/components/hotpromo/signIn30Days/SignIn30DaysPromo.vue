@@ -207,11 +207,29 @@
       </div>
     </div>
   </div>
+  <q-dialog v-model="isShowCongratsDialog" @hide="handleReceiveBonus" persistent>
+    <div class="congrats-container">
+      <!-- <q-btn icon="close" round dense v-close-popup class="congrats-close" /> -->
+      <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header.png" /></div>
+      <div class="congrats-chest"><img src="../../../assets/images/index/modal/congrats-chest.png" /></div>
+      <div class="congrats-title">Get sign-in bonus</div>
+      <div class="congrats-highlight">{{ convertToCommaAmount(bonusAmount) }}BDT</div>
+
+      <div class="congrats-button">
+        <q-btn no-caps unelevated class="receive-btn" @click="handleReceiveBonus">
+          {{ $t("btn.receive") }}
+        </q-btn>
+      </div>
+    </div>
+  </q-dialog>
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
+import { userStore } from "src/stores";
 import { eventapi } from "src/boot/axios";
 import { convertToCommaAmount } from "src/boot/utils";
+
+const store = userStore();
 
 const rewardProbability = [
   {
@@ -241,16 +259,26 @@ const chestTotalDays = ref(0);
 const hasClaimedToday = ref(false);
 const rankingList = ref([]);
 const isLoadingClaim = ref(true);
+const bonusAmount = ref(0);
+const isShowCongratsDialog = ref(false);
 
 const getChestDesign = (i) => {
   if (i < 8) {
     return 1;
   } else if (i < 14) {
     return 2;
-  } else if (i < 30) {
+  } else if (i < chestTotalDays.value) {
     return 3;
   }
   return 4;
+};
+
+const handleReceiveBonus = async () => {
+  store.getBalance();
+  isShowCongratsDialog.value = false;
+
+  getDailyCheckInData();
+  getRankingList();
 };
 
 const getDailyCheckInData = () => {
@@ -258,6 +286,7 @@ const getDailyCheckInData = () => {
     todayCheckInDay.value = res.data.todayCheckInDay;
     chestTotalDays.value = res.data.thisMonthTotalDays;
     hasClaimedToday.value = res.data.todayClaimed;
+    isLoadingClaim.value = false;
 
     rewardProbability[rewardProbability.length - 2].dayRange = `14-${chestTotalDays.value - 1}`;
     rewardProbability[rewardProbability.length - 1].dayRange = chestTotalDays.value.toString();
@@ -276,8 +305,8 @@ const claimReward = () => {
     .post("/session/bgd-daily-check-in/check-in")
     .then((res) => {
       if (res.code === 0) {
-        getDailyCheckInData();
-        getRankingList();
+        bonusAmount.value = res.data;
+        isShowCongratsDialog.value = true;
       }
     })
     .catch(() => {})
@@ -643,5 +672,98 @@ onMounted(() => {
       background-color: #1e371f;
     }
   }
+}
+
+.congrats-container {
+  background-color: #1e371f;
+  border: 1px solid #337e3a;
+  border-radius: 10px !important;
+  max-width: 400px;
+  width: 100%;
+  padding: 16px;
+  position: relative;
+  overflow: visible;
+  border-radius: 12px;
+  margin: 0 20px;
+
+  &:before {
+    content: "";
+    background-image: url(../../../assets/images/index/modal/congrats-container-light.png);
+    background-size: 100% 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 150px;
+    position: absolute;
+    left: 0;
+    top: -150px;
+  }
+
+  .congrats-header {
+    display: flex;
+    justify-content: center;
+    margin-top: -18px;
+    z-index: 2;
+
+    img {
+      display: block;
+      width: 100%;
+      max-width: 320px;
+    }
+  }
+
+  .congrats-chest {
+    img {
+      display: block;
+      width: 90%;
+      margin: auto;
+      max-width: 190px;
+    }
+  }
+
+  .congrats-title {
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .congrats-highlight {
+    color: #fff96f;
+    font-size: 2.75rem;
+    text-align: center;
+    background-image: url(../../../assets/images/index/modal/congrats-highlight-bg.png);
+    padding: 0 12px;
+    background-repeat: no-repeat;
+    background-size: 70% 100%;
+    background-position: center;
+    margin-top: 16px;
+    font-weight: 900;
+  }
+}
+
+.congrats-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.congrats-button {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.receive-btn {
+  background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000a01;
 }
 </style>
