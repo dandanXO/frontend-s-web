@@ -70,6 +70,8 @@ const currentPopup = computed(() => {
 });
 
 const clickHomePopupImg = (urlString) => {
+  displayPopup.value = false;
+
   const openPattern = /^\/open\/(.*)/;
   if (urlString.match(openPattern)) {
     const extractedUrl = urlString.match(openPattern)[1];
