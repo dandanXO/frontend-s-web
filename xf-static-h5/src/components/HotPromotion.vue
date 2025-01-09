@@ -862,4 +862,101 @@ export default defineComponent({
     }
   }
 }
+
+.section-bg {
+  border: 1px solid rgba(172, 212, 246, 1);
+  border-radius: 12px;
+  padding: 30px;
+  font-family: "PingFang";
+  background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%) !important;
+  border: 1px solid #be9457 !important;
+  color: #fff;
+
+  .section-table {
+    th {
+      height: 56px;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 28px;
+      color: #fff !important;
+      box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
+        0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) !important;
+      white-space: pre-wrap;
+
+      &:not(:last-child) {
+        border-right: 1px solid #dcdce8;
+      }
+    }
+
+    td {
+      border: 1px solid #484c5770;
+      color: #fff;
+      background-color: transparent !important;
+    }
+  }
+
+  .element-bg {
+    color: #fff !important;
+    box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
+      0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+    background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) !important;
+  }
+
+  .ribbon {
+    clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
+    background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%);
+    padding-right: 10px;
+    font-family: "PingFang";
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    width: fit-content;
+    padding: 0px 20px 0px 10px;
+    white-space: nowrap;
+    height: fit-content;
+  }
+
+  .title-img {
+    aspect-ratio: 960 / 80;
+    background: url("../assets/images/promotion/hotpromo/common/promo-details-title-bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 290px 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  .item {
+    color: #fff;
+    padding-left: 24px;
+    display: flex;
+    gap: 10px;
+    font-size: 1rem;
+
+    .item-num {
+      font-size: 1rem;
+      line-height: 1;
+      border-radius: 50%;
+      height: 28px !important;
+      width: 28px !important;
+      min-width: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2px;
+      color: #fff !important;
+      box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
+        0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) !important;
+    }
+  }
+}
 </style>
