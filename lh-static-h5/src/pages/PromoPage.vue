@@ -49,7 +49,7 @@
                     v-if="tab.name === 'all' || promo.promoType.toLowerCase().split(',').includes(tab.name)"
                   >
                     <a @click="showPromoDetails(promo)">
-                      <div>
+                      <div class="promo-item-inner">
                         <div class="promo-label">
                           <div class="promo-ribbon" v-if="promo.labelType !== -1 && promo.labelType !== 2">
                             {{ getPromoLabel(promo.labelType) }}
@@ -698,6 +698,17 @@ export default defineComponent({
           position: relative;
           border-radius: 12px;
 
+          .promo-item-inner {
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            .promo-item-deal {
+              margin-bottom: auto;
+            }
+          }
+
           .promo-label {
             height: 24px;
             display: flex;
@@ -1276,10 +1287,14 @@ export default defineComponent({
         .promo-list-wrapper {
           .promo-item {
             background-image: url(../assets/images/promo/promo-item-bg-dark.png);
-            border-radius: unset;
             // aspect-ratio: 702/208;
             border-radius: 8px;
             overflow: hidden;
+
+            .promo-item-inner {
+              min-height: 120px;
+            }
+
             .promo-label {
               top: 0px;
               left: 0px;
