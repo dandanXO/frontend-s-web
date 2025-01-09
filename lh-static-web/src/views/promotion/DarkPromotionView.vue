@@ -331,7 +331,7 @@ export default defineComponent({
       loadPromo()
         .then((res) => {
           if (res.code === 0) {
-            const processedData = res.data.map(promo => ({
+            const processedData = res.data.filter(promo => !['lh1-dark-mode'].includes(promo.redirectUrl)).map(promo => ({
               ...promo,
               displayDesktopBannerUrl: promo.desktopBannerUrlDark ?? promo.desktopBannerUrl,
               displayDesktopImgBackgroundUrl: promo.desktopImgBackgroundUrlDark ?? promo.desktopImgBackgroundUrl,

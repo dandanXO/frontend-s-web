@@ -448,7 +448,7 @@ export default defineComponent({
             var promoItems = res.data;
             // promoState.promoList.push(...res.data);
 
-            promoItems.forEach((element) => {
+            promoItems.filter(promo => !($q.dark.isActive && ['lh1-dark-mode'].includes(promo.redirectUrl))).forEach((element) => {
               // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
               // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
               // } else {
