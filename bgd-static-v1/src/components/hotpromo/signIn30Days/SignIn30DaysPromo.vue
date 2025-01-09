@@ -9,7 +9,7 @@
             class="day-card-img"
             :class="{ closed: n >= checkInDay }"
             :src="
-              require(`../../../assets/images/promotion/hotpromo/signin-1mth/day-range-${getChestDesign(n)}-icon${
+              require(`../../../assets/images/promotion/hotpromo/signin-30days/day-range-${getChestDesign(n)}-icon${
                 n < checkInDay ? '-open' : ''
               }.png`)
             "
@@ -28,13 +28,13 @@
     </div>
     <div class="reward-mech-container content-card">
       <div class="content-card-title">
-        <img src="../../../assets/images/promotion/hotpromo/signin-1mth/reward-mech-title.png" />
+        <img src="../../../assets/images/promotion/hotpromo/signin-30days/reward-mech-title.png" />
       </div>
       <div class="q-mb-sm">PROGRESSIVE REWARD SYSTEM + DYNAMIC TREASURE CHEST INCENTIVES</div>
       <div class="reward-day-range" v-for="(item, index) in rewardProbability" :key="index">
         <img
           class="day-range-img"
-          :src="require(`../../../assets/images/promotion/hotpromo/signin-1mth/day-range-${index + 1}-icon.png`)"
+          :src="require(`../../../assets/images/promotion/hotpromo/signin-30days/day-range-${index + 1}-icon.png`)"
         />
         <span>
           Day
@@ -48,7 +48,7 @@
       </div>
       <img
         class="subtitle-img"
-        src="../../../assets/images/promotion/hotpromo/signin-1mth/reward-probability-dist-title.png"
+        src="../../../assets/images/promotion/hotpromo/signin-30days/reward-probability-dist-title.png"
       />
       <table class="content-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
         <thead>
@@ -64,7 +64,7 @@
               <div class="reward-coin-container">
                 <img
                   class="reward-coin"
-                  src="../../../assets/images/promotion/hotpromo/signin-1mth/reward-probability-coin.png"
+                  src="../../../assets/images/promotion/hotpromo/signin-30days/reward-probability-coin.png"
                 />
                 <div class="reward-coin-txt">{{ convertToCommaAmount(item.maxReward, false) }} BDT</div>
               </div>
@@ -75,7 +75,7 @@
 
       <img
         class="subtitle-img"
-        src="../../../assets/images/promotion/hotpromo/signin-1mth/reward-claim-conditions-title.png"
+        src="../../../assets/images/promotion/hotpromo/signin-30days/reward-claim-conditions-title.png"
       />
       <div class="q-mb-sm" style="text-transform: uppercase">
         Users must meet the daily betting minimum to claim rewards:
@@ -162,7 +162,7 @@
     <div class="activity-rule-container">
       <img
         class="activity-rule-img"
-        src="../../../assets/images/promotion/hotpromo/signin-1mth/activity-rule-title.png"
+        src="../../../assets/images/promotion/hotpromo/signin-30days/activity-rule-title.png"
       />
       <ul class="activity-rule-list">
         <li>Activity time: January 1 - January 31, 2025</li>
@@ -175,49 +175,49 @@
     <div class="ranking-list-container">
       <img
         class="ranking-list-title"
-        src="../../../assets/images/promotion/hotpromo/signin-1mth/ranking-list-title.png"
+        src="../../../assets/images/promotion/hotpromo/signin-30days/ranking-list-title.png"
       />
       <div class="podium-div">
-        <img class="podium" src="../../../assets/images/promotion/hotpromo/signin-1mth/podium.png" />
+        <img class="podium" src="../../../assets/images/promotion/hotpromo/signin-30days/podium.png" />
         <div class="medal medal-1">
-          <img src="../../../assets/images/promotion/hotpromo/signin-1mth/medal-1.png" />
+          <img src="../../../assets/images/promotion/hotpromo/signin-30days/medal-1.png" />
           <div class="medal-txt">phone no or email</div>
           <div class="ranking-win-coin">
-            <img src="../../../assets/images/promotion/hotpromo/signin-1mth/ranking-coin.png" />
+            <img src="../../../assets/images/promotion/hotpromo/signin-30days/ranking-coin.png" />
             <div>88,888</div>
           </div>
         </div>
 
         <div class="medal medal-2">
-          <img src="../../../assets/images/promotion/hotpromo/signin-1mth/medal-2.png" />
+          <img src="../../../assets/images/promotion/hotpromo/signin-30days/medal-2.png" />
           <div class="medal-txt">phone no or email</div>
           <div class="ranking-win-coin">
-            <img src="../../../assets/images/promotion/hotpromo/signin-1mth/ranking-coin.png" />
+            <img src="../../../assets/images/promotion/hotpromo/signin-30days/ranking-coin.png" />
             <div>88,888</div>
           </div>
         </div>
 
         <div class="medal medal-3">
-          <img src="../../../assets/images/promotion/hotpromo/signin-1mth/medal-3.png" />
+          <img src="../../../assets/images/promotion/hotpromo/signin-30days/medal-3.png" />
           <div class="medal-txt">phone no or email</div>
           <div class="ranking-win-coin">
-            <img src="../../../assets/images/promotion/hotpromo/signin-1mth/ranking-coin.png" />
+            <img src="../../../assets/images/promotion/hotpromo/signin-30days/ranking-coin.png" />
             <div>88,888</div>
           </div>
         </div>
 
-        <!-- <img class="medal-2" src="../../../assets/images/promotion/hotpromo/signin-1mth/medal-2.png" />
-        <img class="medal-3" src="../../../assets/images/promotion/hotpromo/signin-1mth/medal-3.png" /> -->
+        <!-- <img class="medal-2" src="../../../assets/images/promotion/hotpromo/signin-30days/medal-2.png" />
+        <img class="medal-3" src="../../../assets/images/promotion/hotpromo/signin-30days/medal-3.png" /> -->
       </div>
       <div class="ranking-list">
         <div class="ranking-list-item" v-for="n in 7" :key="n">
           <div class="ranking-index">{{ n + 3 }}</div>
           <div class="icon-txt">
-            <img src="../../../assets/images/promotion/hotpromo/signin-1mth/ranking-badge.png" />
+            <img src="../../../assets/images/promotion/hotpromo/signin-30days/ranking-badge.png" />
             <span>phone no or email</span>
           </div>
           <div class="icon-txt">
-            <img src="../../../assets/images/promotion/hotpromo/signin-1mth/ranking-coin.png" />
+            <img src="../../../assets/images/promotion/hotpromo/signin-30days/ranking-coin.png" />
             <span>88,888</span>
           </div>
         </div>
@@ -344,7 +344,7 @@ const getChestDesign = (i) => {
   .header-amt {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    background-image: url("../../../assets/images/promotion/hotpromo/signin-1mth/check-in-header-bg.png");
+    background-image: url("../../../assets/images/promotion/hotpromo/signin-30days/check-in-header-bg.png");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
