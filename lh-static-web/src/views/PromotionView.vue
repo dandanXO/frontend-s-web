@@ -96,7 +96,7 @@
           ></div>
         </div>
         <BlastPremierMarquee
-          :type="selectedPromo?.redirectUrl === 'bounty-blast-premier' ? 'bounty': null"
+          :type="selectedPromo?.redirectUrl === 'bounty-blast-premier' ? 'bounty' : null"
           v-if="
             selectedPromo?.redirectUrl === 'lh-cs2-blast-2024' ||
             selectedPromo?.redirectUrl === 'lh1-blast-premier-treasure' ||
@@ -142,9 +142,9 @@
               selectedPromo.promoCode === 'lh-eurocup-manual' ||
               selectedPromo.promoCode === 'lh-lpl-summer24' ||
               selectedPromo.promoCode === 'lh1-intel-esl' ||
-              selectedPromo.promoCode === 'lh1-aijiasu' ||
               selectedPromo.promoCode === 'lh1-eurocup-regen' ||
               selectedPromo.redirectUrl === 'lh1-christmas-gashapon',
+            aijiasubg: selectedPromo.promoCode === 'lh1-aijiasu',
             'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
             shoutouxinxiu: selectedPromo.promoCode === 'lh1-shoutouxinxiu',
             bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024',
@@ -886,6 +886,23 @@ export default defineComponent({
           max-width: 100%;
           margin: 0;
           padding: 0;
+
+          .hot-promo {
+            border-radius: 0px;
+          }
+
+          .promo-view-container {
+            display: none;
+          }
+        }
+
+        &.aijiasubg {
+          width: 100%;
+          max-width: 100%;
+          margin: 0;
+          padding: 0;
+          background-size: 100% auto;
+          background-attachment: fixed;
 
           .hot-promo {
             border-radius: 0px;
