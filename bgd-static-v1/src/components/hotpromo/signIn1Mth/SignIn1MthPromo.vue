@@ -49,7 +49,7 @@
         class="subtitle-img"
         src="../../../assets/images/promotion/hotpromo/signin-1mth/reward-probability-dist-title.png"
       />
-      <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+      <table class="content-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
         <thead>
           <tr>
             <th>{{ $t("earnMoney.reward.grade") }}</th>
@@ -171,15 +171,54 @@
         </li>
       </ul>
     </div>
-    <!-- <div class="ranking-list-container">
+    <div class="ranking-list-container">
       <img src="../../../assets/images/promotion/hotpromo/signin-1mth/ranking-list-title.png" />
       <div class="podium-div">
         <img class="podium" src="../../../assets/images/promotion/hotpromo/signin-1mth/podium.png" />
-        <img class="medal-1" src="../../../assets/images/promotion/hotpromo/signin-1mth/medal-1.png" />
-        <img class="medal-2" src="../../../assets/images/promotion/hotpromo/signin-1mth/medal-2.png" />
-        <img class="medal-3" src="../../../assets/images/promotion/hotpromo/signin-1mth/medal-3.png" />
+        <div class="medal medal-1">
+          <img src="../../../assets/images/promotion/hotpromo/signin-1mth/medal-1.png" />
+          <div class="medal-txt">phone no or email</div>
+          <div class="ranking-win-coin">
+            <img src="../../../assets/images/promotion/hotpromo/signin-1mth/ranking-coin.png" />
+            <div>88,888</div>
+          </div>
+        </div>
+
+        <div class="medal medal-2">
+          <img src="../../../assets/images/promotion/hotpromo/signin-1mth/medal-2.png" />
+          <div class="medal-txt">phone no or email</div>
+          <div class="ranking-win-coin">
+            <img src="../../../assets/images/promotion/hotpromo/signin-1mth/ranking-coin.png" />
+            <div>88,888</div>
+          </div>
+        </div>
+
+        <div class="medal medal-3">
+          <img src="../../../assets/images/promotion/hotpromo/signin-1mth/medal-3.png" />
+          <div class="medal-txt">phone no or email</div>
+          <div class="ranking-win-coin">
+            <img src="../../../assets/images/promotion/hotpromo/signin-1mth/ranking-coin.png" />
+            <div>88,888</div>
+          </div>
+        </div>
+
+        <!-- <img class="medal-2" src="../../../assets/images/promotion/hotpromo/signin-1mth/medal-2.png" />
+        <img class="medal-3" src="../../../assets/images/promotion/hotpromo/signin-1mth/medal-3.png" /> -->
       </div>
-    </div> -->
+      <div class="ranking-list">
+        <div class="ranking-list-item" v-for="n in 7" :key="n">
+          <div class="ranking-index">{{ n + 3 }}</div>
+          <div class="icon-txt">
+            <img src="../../../assets/images/promotion/hotpromo/signin-1mth/ranking-badge.png" />
+            <span>phone no or email</span>
+          </div>
+          <div class="icon-txt">
+            <img src="../../../assets/images/promotion/hotpromo/signin-1mth/ranking-coin.png" />
+            <span>88,888</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script setup>
@@ -235,52 +274,6 @@ const getChestDesign = (i) => {
     img {
       width: 80%;
       margin-top: -2%;
-    }
-  }
-
-  .card-table {
-    text-align: center;
-    font-family: "Manrope", sans-serif;
-    font-size: 10px;
-    color: #000;
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    overflow: hidden;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-
-    thead {
-      background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
-
-      th {
-        color: #076b2c;
-        font-weight: 700;
-        font-size: 12px;
-        min-width: 100px;
-      }
-    }
-
-    tbody {
-      td {
-        color: #fff;
-        padding: 10px 4px;
-        font-size: 12px;
-        border: 1px solid #ffffff1a;
-      }
-
-      tr {
-        &:nth-child(odd) {
-          background: #ffffff0d;
-        }
-
-        .player-details {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-        }
-      }
     }
   }
 }
@@ -453,6 +446,7 @@ const getChestDesign = (i) => {
 
 .ranking-list-container {
   .podium-div {
+    margin-top: 5%;
     padding-top: 100px;
     position: relative;
     display: flex;
@@ -460,22 +454,143 @@ const getChestDesign = (i) => {
     .podium {
       width: 70% !important;
     }
-    .medal-1 {
-      width: 10% !important;
+    .medal {
+      width: 22% !important;
+      flex-direction: column;
+      display: flex;
+      text-align: center;
+      align-items: center;
       position: absolute;
-      top: 10%;
-      left: 18%;
+      img {
+        width: 50% !important;
+      }
+    }
+    .medal-1 {
+      top: 14px;
     }
     .medal-2 {
-      width: 10% !important;
-      position: absolute;
-      top: 0;
+      top: calc(15% + 14px);
+      left: 10%;
     }
     .medal-3 {
-      width: 10% !important;
-      position: absolute;
-      top: 10%;
-      right: 18%;
+      top: calc(21% + 14px);
+      right: 12%;
+    }
+    @media (max-width: 375px) {
+      .medal-1 {
+        top: calc(7% + 14px);
+      }
+      .medal-2 {
+        top: calc(22% + 14px);
+      }
+      .medal-3 {
+        top: calc(28% + 14px);
+      }
+    }
+    .medal-txt {
+      width: 100%;
+      font-size: 0.7rem;
+    }
+    .ranking-win-coin {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      overflow-wrap: anywhere;
+      font-size: 0.7rem;
+      img {
+        width: 20% !important;
+        margin-right: 8px;
+      }
+    }
+  }
+  .ranking-list {
+    z-index: 2;
+    background-color: #042403;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 2px solid #49634a66;
+    margin-top: -10%;
+    position: relative;
+    font-size: 0.9rem;
+    .ranking-list-item {
+      min-height: 30px;
+      display: grid;
+      grid-template-columns: 30px 1fr 1fr;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      img {
+        height: 15%;
+        width: 15% !important;
+        margin-right: 6px;
+      }
+      .ranking-index {
+        padding: 0 10px;
+      }
+      .icon-txt {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    .ranking-list-item:nth-child(even) {
+      background-color: #1e371f;
+    }
+  }
+}
+
+.content-table {
+  text-align: center;
+  font-family: "Manrope", sans-serif;
+  font-size: 10px;
+  color: #000;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+
+  thead {
+    background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+
+    th {
+      color: #076b2c;
+      font-weight: 700;
+      font-size: 12px;
+      min-width: 100px;
+    }
+  }
+
+  tbody {
+    td {
+      color: #fff;
+      padding: 10px 4px;
+      font-size: 12px;
+      border: 1px solid #ffffff1a;
+    }
+
+    tr {
+      background: none !important;
+      &:nth-child(even) {
+        td {
+          background-color: #70bc621a !important;
+        }
+      }
+      &:nth-child(odd) {
+        td {
+          background-color: transparent !important;
+        }
+      }
+
+      .player-details {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
     }
   }
 }
