@@ -18,26 +18,26 @@
             :value="item.id"
           />
         </el-select>
-        <el-select
-          clearable
-          v-model="request.type"
+        <el-input
+          v-model="request.loginName"
+          style="width: 200px; margin-left: 10px"
           size="small"
-          :placeholder="t('fields.type')"
-          style="width: 120px; margin-left: 5px"
-        >
-          <el-option
-            v-for="item in topRankingTypes.list"
-            :key="item"
-            :label="item"
-            :value="item"
-          />
-        </el-select>
+          maxlength="50"
+          :placeholder="t('fields.loginName')"
+        />
+        <el-input
+          v-model="request.privilegeCode"
+          style="width: 200px; margin-left: 10px"
+          size="small"
+          maxlength="50"
+          :placeholder="t('fields.privilegeCode')"
+        />
         <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadTopRanking">
           {{ t('fields.search') }}
         </el-button>
       </div>
       <div class="btn-group">
-        <el-button icon="el-icon-plus" size="mini" type="primary" v-permission="['sys:privi:top-ranking:add']" @click="showDialog('CREATE')">{{ t('fields.add') }}</el-button>
+        <el-button icon="el-icon-plus" size="mini" type="primary" v-permission="['sys:privi:top-bonus-ranking:add']" @click="showDialog('CREATE')">{{ t('fields.add') }}</el-button>
       </div>
     </div>
     <el-dialog
@@ -74,63 +74,14 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.platform')" prop="platform">
-          <el-select
-            v-model="form.platform"
-            value-key="id"
-            :placeholder="t('fields.pleaseChoose')"
-            style="width: 350px"
-            filterable
-            @focus="loadSearchPlatforms"
-          >
-            <el-option
-              v-for="item in list.platform"
-              :key="item.id"
-              :label="item.name"
-              :value="item.code"
-            />
-          </el-select>
-        </el-form-item>
         <el-form-item :label="t('fields.memberName')" prop="loginName">
           <el-input v-model="form.loginName" style="width: 350px;" maxlength="50" :disabled="uiControl.dialogType === 'EDIT'" />
         </el-form-item>
-        <el-form-item :label="t('fields.gameType')" prop="gameType">
-          <el-select
-            v-model="form.gameType"
-            value-key="id"
-            :placeholder="t('fields.pleaseChoose')"
-            style="width: 350px"
-            filterable
-          >
-            <el-option
-              v-for="item in gameTypes.list"
-              :key="item"
-              :label="item"
-              :value="item"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="t('fields.gameName')" prop="gameName">
-          <el-input v-model="form.gameName" style="width: 350px;" maxlength="50" />
+        <el-form-item :label="t('fields.code')" prop="privilegeCode">
+          <el-input v-model="form.privilegeCode" style="width: 350px;" maxlength="50" />
         </el-form-item>
         <el-form-item :label="t('fields.amount')" prop="amount">
           <el-input v-model="form.amount" style="width: 350px;" maxlength="50" />
-        </el-form-item>
-        <el-form-item :label="t('fields.type')" prop="type">
-          <el-select
-            v-model="form.type"
-            value-key="id"
-            :placeholder="t('fields.type')"
-            style="width: 350px"
-            filterable
-          >
-            <el-option
-              v-for="item in topRankingTypes.list"
-              :key="item"
-              :label="item"
-              :value="item"
-            />
-          </el-select>
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
@@ -140,18 +91,15 @@
     </el-dialog>
     <el-table :data="page.records" v-loading="page.loading" ref="table" row-key="id" size="small" highlight-current-row>
       <!-- <el-table-column prop="siteId" :label="t('fields.site')" width="50" /> -->
-      <el-table-column prop="type" :label="t('fields.type')" width="50" />
-      <el-table-column prop="platform" :label="t('fields.platform')" width="100" />
-      <el-table-column prop="gameType" :label="t('fields.gameType')" width="100" />
-      <el-table-column prop="gameName" :label="t('fields.gameName')" width="100" />
+      <el-table-column prop="privilegeCode" :label="t('fields.code')" width="100" />
       <el-table-column prop="loginName" :label="t('fields.memberName')" width="120" />
       <el-table-column prop="amount" :label="t('fields.amount')" width="100" />
       <el-table-column prop="createTime" :label="t('fields.createTime')" />
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
-      <el-table-column :label="t('fields.action')" align="right" v-if="hasPermission(['sys:privi:top-ranking:update']) || hasPermission(['sys:privi:top-ranking:delete'])">
+      <el-table-column :label="t('fields.action')" align="right" v-if="hasPermission(['sys:privi:top-bonus-ranking:update']) || hasPermission(['sys:privi:top-bonus-ranking:delete'])">
         <template #default="scope">
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:privi:top-ranking:update']" @click="showEdit(scope.row)" />
-          <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:privi:top-ranking:delete']" @click="remove(scope.row)" />
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:privi:top-bonus-ranking:update']" @click="showEdit(scope.row)" />
+          <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:privi:top-bonus-ranking:delete']" @click="remove(scope.row)" />
         </template>
       </el-table-column>
     </el-table>
@@ -175,12 +123,11 @@ import { nextTick, reactive, ref, watch } from "vue";
 import { required } from "../../../utils/validate";
 import { getSiteListSimple } from "@/api/site";
 import { getPlatformsBySite } from "../../../api/platform";
-import { createTopRanking, updateTopRanking, getTopRankingList, delTopRanking } from "@/api/top-ranking";
+import { createTopRanking, updateTopRanking, getTopRankingList, delTopRanking } from "@/api/top-bonus-ranking";
 import { hasRole, hasPermission } from "@/utils/util";
 import { onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
 import { useI18n } from "vue-i18n";
-import { getGameTypes } from '../../../api/game'
 import { ElMessage, ElMessageBox } from "element-plus";
 
 const { t } = useI18n();
@@ -195,17 +142,13 @@ const request = reactive({
   size: 20,
   current: 1,
   siteId: null,
-  type: null,
+  loginName: null,
+  privilegeCode: null,
   orderBy: "amount"
 });
 
 const topRankingForm = ref(null);
-const topRankingTypes = reactive({
-  list: ["BET", "WIN", "LOSS"],
-});
-const gameTypes = reactive({
-  list: [],
-});
+
 const uiControl = reactive({
   dialogVisible: false,
   checkDialogVisible: false,
@@ -223,22 +166,17 @@ const page = reactive({
 const form = reactive({
   id: null,
   siteId: null,
-  platform: null,
   memberId: null,
   loginName: null,
-  gameType: null,
-  gameName: null,
-  amount: null,
-  type: null
+  privilegeCode: null,
+  amount: null
 });
 
 const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
   loginName: [required(t('message.validateLoginNameRequired'))],
-  platform: [required(t('message.validatePlatformRequired'))],
-  gameType: [required(t('message.validateGameTypeRequired'))],
   amount: [required(t('message.validateAmountRequired'))],
-  type: [required(t('message.validateTypeRequired'))],
+  privilegeCode: [required(t('message.validateCodeRequired'))],
 });
 
 async function loadTopRanking() {
@@ -248,10 +186,6 @@ async function loadTopRanking() {
   page.records = ret.records;
   page.total = ret.total;
   page.loading = false;
-}
-async function loadGameTypes() {
-  const { data: ret } = await getGameTypes()
-  gameTypes.list = ret
 }
 
 function showDialog(type) {
@@ -351,7 +285,6 @@ watch(() => request.siteId, () => {
   form.siteId = request.siteId
 })
 onMounted(async () => {
-  await loadGameTypes();
   await loadSites();
   site.value = list.site.find(s => s.siteName === store.state.user.siteName);
   request.siteId = site.value.id;
