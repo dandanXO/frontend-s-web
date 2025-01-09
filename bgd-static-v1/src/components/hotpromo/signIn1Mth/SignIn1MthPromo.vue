@@ -373,10 +373,11 @@ const getChestDesign = (i) => {
       min-width: 50px;
       height: 70px;
       justify-content: center;
+      font-size: 18px;
       span {
         position: absolute;
         top: 0;
-        transform: translateY(70%);
+        transform: translateY(30%);
       }
       .day-card-img {
         position: absolute;
@@ -393,6 +394,7 @@ const getChestDesign = (i) => {
         span {
           font-weight: 700;
           font-size: 11px;
+          transform: translateY(80%);
         }
       }
     }
