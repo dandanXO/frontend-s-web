@@ -3,7 +3,13 @@
     <div class="check-in-container content-card">
       <div class="header-amt">300,000,000BDT</div>
       <div class="check-in-days-visual">
-        <div class="day-card" v-for="n in chestTotalDays" :key="n" :class="{ active: todayCheckInDay === n }">
+        <div
+          class="day-card"
+          v-for="n in chestTotalDays"
+          :key="n"
+          :class="{ active: todayCheckInDay === n }"
+          :ref="setDayItemRef(n)"
+        >
           <span>{{ todayCheckInDay === n ? "TODAY" : n }}</span>
           <img
             class="day-card-img"
@@ -261,6 +267,7 @@ const rankingList = ref([]);
 const isLoadingClaim = ref(true);
 const bonusAmount = ref(0);
 const isShowCongratsDialog = ref(false);
+const itemRefs = ref([]);
 
 const getChestDesign = (i) => {
   if (i < 8) {
@@ -271,6 +278,23 @@ const getChestDesign = (i) => {
     return 3;
   }
   return 4;
+};
+
+const setDayItemRef = (index) => {
+  return (el) => {
+    itemRefs.value[index] = el;
+  };
+};
+
+const scrollToTodayItem = (index) => {
+  const item = itemRefs.value[index];
+  if (item) {
+    item.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+      inline: "center"
+    });
+  }
 };
 
 const handleReceiveBonus = async () => {
@@ -290,6 +314,10 @@ const getDailyCheckInData = () => {
 
     rewardProbability[rewardProbability.length - 2].dayRange = `14-${chestTotalDays.value - 1}`;
     rewardProbability[rewardProbability.length - 1].dayRange = chestTotalDays.value.toString();
+
+    setTimeout(() => {
+      scrollToTodayItem(todayCheckInDay.value);
+    }, 100);
   });
 };
 
