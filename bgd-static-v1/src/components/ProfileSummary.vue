@@ -85,21 +85,21 @@
         {{ $t("sideNav.feedback") }}
       </div> -->
 
-      <a class="side-menu-item side-menu-item__transparent" :href="ui.youtubeUrl" target="_blank">
+      <a v-if="ui.youtubeUrl" class="side-menu-item side-menu-item__transparent" :href="ui.youtubeUrl" target="_blank">
         <div class="item-icon">
           <img src="../assets/images/index/youtube-web-icon.png" />
         </div>
         Youtube
       </a>
 
-      <a class="side-menu-item side-menu-item__transparent" :href="ui.instagramUrl" target="_blank">
+      <a v-if="ui.instagramUrl" class="side-menu-item side-menu-item__transparent" :href="ui.instagramUrl" target="_blank">
         <div class="item-icon">
           <img src="../assets/images/index/insta-web-icon.png" />
         </div>
         Instagram
       </a>
 
-      <a class="side-menu-item side-menu-item__transparent" :href="ui.whatsappUrl" target="_blank">
+      <a v-if="ui.whatsappUrl" class="side-menu-item side-menu-item__transparent" :href="ui.whatsappUrl" target="_blank">
         <div class="item-icon"><img src="../assets/images/auth/menu-whatsapp.png" /></div>
         Whatsapp
       </a>

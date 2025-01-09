@@ -83,7 +83,9 @@
 
   <q-dialog v-model="showCaptchaDialog" width="100%">
     <q-card width="100%">
-      <q-card-section style="padding: 10px 20px" class="q-pa-md bg-dark text-white">{{ $t('form.otp') }}</q-card-section>
+      <q-card-section style="padding: 10px 20px" class="q-pa-md bg-dark text-white">
+        {{ $t("form.otp") }}
+      </q-card-section>
       <div style="padding: 20px">
         <q-card-section class="q-mb-md q-pa-md">
           <q-input v-model="captchaRef" label="OTP">
@@ -116,7 +118,7 @@
 
         <div class="pc-form">
           <div class="pc-form-item">
-            <div class="pc-form-label">{{ $t('form.fullName') }}</div>
+            <div class="pc-form-label">{{ $t("form.fullName") }}</div>
             <div class="pc-form-input">
               <q-input
                 filled
@@ -130,7 +132,7 @@
           </div>
 
           <div class="pc-form-item">
-            <div class="pc-form-label">{{ $t('form.phone') }}</div>
+            <div class="pc-form-label">{{ $t("form.phone") }}</div>
             <div class="pc-form-input">
               <q-input
                 type="number"
@@ -219,11 +221,11 @@
         v-close-popup
       />
       <div class="popout-dialog-container">
-        <div class="txt-title">{{ $t('header.changePassword') }}</div>
+        <div class="txt-title">{{ $t("header.changePassword") }}</div>
 
         <div class="pc-form">
           <div class="pc-form-item">
-            <div class="pc-form-label">{{ $t('form.password') }}</div>
+            <div class="pc-form-label">{{ $t("form.password") }}</div>
             <div class="pc-form-input">
               <q-input
                 filled
@@ -248,7 +250,7 @@
             </div>
           </div>
           <div class="pc-form-item">
-            <div class="pc-form-label">{{ $t('form.newPassword') }}</div>
+            <div class="pc-form-label">{{ $t("form.newPassword") }}</div>
             <div class="pc-form-input">
               <q-input
                 filled
@@ -261,8 +263,7 @@
                 :type="isPwd ? 'password' : 'text'"
                 :rules="[
                   (val) => (val && val.length > 0) || $t('form.newPassword_rules_01'),
-                  (val) =>
-                    (val.length >= 6 && val.length <= 11) || $t('form.newPassword_rules_02'),
+                  (val) => (val.length >= 6 && val.length <= 11) || $t('form.newPassword_rules_02'),
                   () => isAlphanumeric(updatePwdInfo.password, $t('form.newPassword'))
                 ]"
               >
@@ -278,7 +279,7 @@
             </div>
           </div>
           <div class="pc-form-item">
-            <div class="pc-form-label">{{ $t('form.confirmNewPassword') }}</div>
+            <div class="pc-form-label">{{ $t("form.confirmNewPassword") }}</div>
             <div class="pc-form-input">
               <q-input
                 filled
@@ -308,7 +309,9 @@
         </div>
 
         <div class="q-mt-md q-pl-lg q-pr-lg">
-          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="submitUpdatePwd">{{ $t('btn.confirm') }}</q-btn>
+          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="submitUpdatePwd">
+            {{ $t("btn.confirm") }}
+          </q-btn>
         </div>
       </div>
     </div>
@@ -318,10 +321,10 @@
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">
-        <div class="txt-title">{{ $t('form.changeNewpassword') }}</div>
+        <div class="txt-title">{{ $t("form.changeNewpassword") }}</div>
         <div class="pc-form">
           <div class="pc-form-item">
-            <div class="pc-form-label">{{ $t('form.loginName') }}</div>
+            <div class="pc-form-label">{{ $t("form.loginName") }}</div>
             <div class="pc-form-input">
               <q-input
                 filled
@@ -344,7 +347,7 @@
           </div>
 
           <div class="pc-form-item">
-            <div class="pc-form-label">{{ $t('form.newPassword') }}</div>
+            <div class="pc-form-label">{{ $t("form.newPassword") }}</div>
             <div class="pc-form-input">
               <q-input
                 filled
@@ -374,7 +377,7 @@
             </div>
           </div>
           <div class="pc-form-item">
-            <div class="pc-form-label">{{ $t('form.confirmNewPassword') }}</div>
+            <div class="pc-form-label">{{ $t("form.confirmNewPassword") }}</div>
             <div class="pc-form-input">
               <q-input
                 filled
@@ -448,7 +451,9 @@
         </div>
 
         <div class="q-mt-md q-pl-lg q-pr-lg">
-          <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup @click="onCaptchaSubmit">{{ $t('btn.confirm') }}</q-btn>
+          <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup @click="onCaptchaSubmit">
+            {{ $t("btn.confirm") }}
+          </q-btn>
         </div>
       </div>
     </div>
@@ -458,9 +463,9 @@
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">
-        <div class="txt-title">{{ $t('btn.signOut') }}</div>
+        <div class="txt-title">{{ $t("btn.signOut") }}</div>
 
-        <div class="txt-content q-mt-md text-center">{{ $t('notify.signOutMessage') }}</div>
+        <div class="txt-content q-mt-md text-center">{{ $t("notify.signOutMessage") }}</div>
 
         <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
           <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
@@ -966,9 +971,12 @@ const updatePwdInfo = reactive({
 
 const isAlphanumeric = (value, translation) => {
   const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
-  return passwordPattern.test(value) || t('form.mustBeAlphaNumeric', {
-    field: translation
-  });
+  return (
+    passwordPattern.test(value) ||
+    t("form.mustBeAlphaNumeric", {
+      field: translation
+    })
+  );
 };
 
 const submitUpdatePwd = () => {
@@ -991,19 +999,12 @@ const submitUpdatePwd = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "New password updated successfully",
+            message: t("notify.newPasswordUpdatedSuccess"),
             icon: "check_circle_outline"
           });
           // router.go("/account");
           resetChangePasswordInfo();
           changePasswordDialog.value = false;
-        } else {
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: response.message,
-            icon: "report_problem"
-          });
         }
       })
       .catch((error) => {
@@ -1030,7 +1031,7 @@ const submitUpdateNewPwd = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "New password updated successfully",
+            message: t("notify.newPasswordUpdatedSuccess"),
             icon: "check_circle_outline"
           });
           // router.go("/account");

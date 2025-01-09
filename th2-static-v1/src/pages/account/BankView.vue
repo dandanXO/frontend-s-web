@@ -5,10 +5,10 @@
         <q-icon name="add" size="20px" />
         <div class="card-label">{{ $t("bank.addBank") }}</div>
       </div>
-      <div class="bank-card-add" @click="onAddUSDTClick()">
+      <!-- <div class="bank-card-add" @click="onAddUSDTClick()">
         <q-icon name="add" size="20px" />
         <div class="card-label">{{ $t("bank.addEWallet") }}</div>
-      </div>
+      </div> -->
     </div>
 
     <!-- unbind dialog -->
@@ -444,6 +444,11 @@ onActivated(() => {
     font-weight: 700;
     line-height: 2.25rem; /* 100% */
     text-transform: capitalize;
+  }
+  .dialog-title {
+    width: calc(100% - 40px) !important;
+    font-size: 20px;
+    padding-left: 20px;
   }
 
   .dialog-input {

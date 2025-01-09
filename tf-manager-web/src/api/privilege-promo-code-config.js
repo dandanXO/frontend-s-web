@@ -16,3 +16,7 @@ export const updatePromoCodeConfig = (rain) => {
 export const getWays = () => {
   return https().request("/privilege/ways", Method.GET);
 };
+
+export const updatePromoCodeConfigStatus = (id, state) => {
+  return https().request(`/privilege/promo-code-redeem-config/${id}/state?_method=PUT`, Method.POST, { state: state }, ContentType.form);
+};

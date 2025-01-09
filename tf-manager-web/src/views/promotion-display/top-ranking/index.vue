@@ -195,7 +195,8 @@ const request = reactive({
   size: 20,
   current: 1,
   siteId: null,
-  type: null
+  type: null,
+  orderBy: "amount"
 });
 
 const topRankingForm = ref(null);
@@ -356,7 +357,6 @@ onMounted(async () => {
   request.siteId = site.value.id;
   loadSearchPlatforms();
   await loadTopRanking();
-  console.log(page)
 });
 
 </script>

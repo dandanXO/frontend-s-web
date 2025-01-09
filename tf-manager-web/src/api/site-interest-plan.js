@@ -36,3 +36,7 @@ export const deleteSiteInterestPlan = async ids => {
     ContentType.form
   )
 }
+
+export const updateSiteInterestPlanState = (id, state) => {
+  return https().request(`/site-interest-plan/${id}/state?_method=PUT`, Method.POST, { state: state }, ContentType.form);
+};

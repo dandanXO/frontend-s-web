@@ -24,15 +24,15 @@
 
     <div class="method-title q-mb-sm">{{ $t("withdraw.withdrawCurrency") }}</div>
     <template v-if="isLoadingWithdrawalMethod">
-      <div class="withdraw-methods-currency">
-        <div v-for="index in 4" :key="index">
+      <div class="withdraw-methods-currency col-three">
+        <div v-for="index in 3" :key="index">
           <q-skeleton style="height: 96px" />
         </div>
       </div>
     </template>
 
     <template v-else>
-      <div class="withdraw-methods-currency">
+      <div class="withdraw-methods-currency col-three">
         <div
           class="currency-item"
           v-for="(item, index) in paymentMethodsItems"
@@ -112,7 +112,7 @@
         <!-- bank options -->
         <div class="bank-account-container" v-if="bankCardList.length > 0 && !isAddNewAccount">
           <div class="method-title q-mb-sm">
-            {{ $t("withdraw.choose") }} {{ displayCardType }} {{ $t("withdraw.account") }}
+            {{ $t("form.accountNumber") }}
           </div>
           <div class="mid-wrapper">
             <div class="w-form-item w-form-item--bankcard">
@@ -263,7 +263,7 @@
                     class="minmax-btn"
                     rounded
                     color="black"
-                    label="Max"
+                    label="max"
                     dense
                     no-caps
                     @click="toggleAmount('max')"
@@ -505,20 +505,20 @@ const bankCardList = ref([]);
 
 const displayCardType = computed(() => {
   if (selectedMethodItem.value.payType === "EWALLET") {
-    return "eWallet";
+    return t("withdraw.ewallet");
   } else if (selectedMethodItem.value.payType === "CRYPTO") {
-    return "Crypto";
+    return t("withdraw.crypto");
   }
-  return "Bank";
+  return t("withdraw.bank");
 });
 
 const validateBankCardError = () => {
   if (selectedMethodItem.value.payType === "EWALLET") {
-    return "Please Select eWallet Card";
+    return `${t("withdraw.choose")} ${displayCardType.value} ${t("withdraw.account")}`;
   } else if (selectedMethodItem.value.payType === "CRYPTO") {
-    return "Please Select Crypto Card";
+    return `${t("withdraw.choose")} ${displayCardType.value} ${t("withdraw.account")}`;
   }
-  return "Please Select Bank Card";
+  return `${t("withdraw.choose")} ${displayCardType.value} ${t("withdraw.account")}`;
 };
 
 const isNoBankCard = ref(false);
@@ -970,6 +970,10 @@ const refreshRemainWager = () => {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 12px;
+
+    &.col-three {
+      grid-template-columns: repeat(3, 1fr);
+    }
 
     .currency-item {
       padding: 8px 0;

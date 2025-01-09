@@ -99,7 +99,7 @@
       <div class="red-packet-opened">
         <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu2024/red-packet-opened.png`)" />
         <div class="grats">恭喜中奖！</div>
-        <div class="amount">{{ winAmount }}</div>
+        <div class="amount">{{ winAmount }}元</div>
 
         <div class="get-btn" @click="getPromotionPrize">点击领取</div>
       </div>
@@ -108,6 +108,8 @@
 </template>
 
 <script setup>
+import { ResponseCode } from "@/api/response";
+import { useNotify } from "@/hooks/notify";
 import { ref, defineProps } from "vue";
 import { claimDailyRainItem } from "@/api/index/promo";
 import { userStore } from "@/store";
@@ -116,6 +118,7 @@ const props = defineProps(["promoCode", "params"]);
 const promoCode = ref(props.promoCode);
 
 const store = userStore();
+const notify = useNotify();
 
 const privilegeClaimedModalVisible = ref(false);
 const winAmount = ref(0);
@@ -128,8 +131,20 @@ const getPromotion = () => {
       if (res.code === 0) {
         winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;
         privilegeClaimedModalVisible.value = true;
-
         store.getBalance();
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
+        notify({
+          type: "error",
+          message: res.message
+        });
       }
     })
     .catch(() => {})
@@ -182,9 +197,9 @@ const getPromotionPrize = () => {
       pointer-events: none;
     }
     &.loading {
-      filter: grayscale(100%);
+      //filter: grayscale(100%);
       cursor: not-allowed;
-      opacity: 0.6;
+      opacity: 0.8;
     }
   }
 }
@@ -429,7 +444,7 @@ const getPromotionPrize = () => {
     justify-content: center;
     top: 0;
     margin-top: 250px;
-    left: -15px;
+    left: -10px;
     color: #f23b1d;
     font-size: 50px;
     font-weight: bold;

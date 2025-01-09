@@ -24,3 +24,7 @@ export const updateAccountNeedRegister = async (id, needRegister) => {
 export const getPlatformAccountList = () => {
   return https().request("/system-platform-account/platformAccList", Method.GET, ContentType.form);
 };
+
+export const updatePlatformAccountState = (id, state) => {
+  return https().request(`/system-platform-account/${id}/state?_method=PUT`, Method.POST, { state: state }, ContentType.form);
+};

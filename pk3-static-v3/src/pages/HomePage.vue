@@ -105,7 +105,11 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <img style=" width: 24px; height: 24px" class="filter-purple" src="../assets/images/index/volume-up-line.svg" />
+          <img
+            style="width: 24px; height: 24px"
+            class="filter-purple"
+            src="../assets/images/index/volume-up-line.svg"
+          />
         </div>
         <div class="marquee-container">
           <marquee-text :repeat="5" :duration="announcementList.length * 120">
@@ -1022,14 +1026,7 @@ import MarqueeText from "vue-marquee-text-component";
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
-const categoriesList = ref([
-  { title: "Hot", icon: "hot", active: true },
-  { title: "Lobby", icon: "lobby", active: false },
-  { title: "Slot", icon: "slot", active: false },
-  { title: "Casino", icon: "casino", active: false },
-  { title: "Fishing", icon: "fishing", active: false },
-  { title: "Sport", icon: "sport", active: false }
-]);
+const categoriesList = ref([]);
 
 const activateSlide = (clickedItem) => {
   categoriesList.value.forEach((item) => {
@@ -1622,7 +1619,408 @@ const openHotGame = (hotGameList) => {
   hotGameOn.value = true;
 };
 
-const hotGameList = ref([{"id":271,"name":"Aviator","code":"aviator","status":"OPEN","icon":"5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png","sequence":1,"siteName":null,"platformId":93,"platformName":"Spribe","platformCode":"Spribe","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"Spribe"},{"id":277,"name":"7up7down","code":"124","status":"OPEN","icon":"5/JILI/9d163d59-27cc-4df7-8709-d2a2ecc0e65e.png","sequence":2,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":279,"name":"Mines","code":"229","status":"OPEN","icon":"11/JILI/c77236e7-a298-488a-975d-c1fd7f8e30f2.jpg","sequence":3,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":280,"name":"Dragon & Tiger","code":"123","status":"OPEN","icon":"5/JILI/d3ec422a-bb04-4d7a-b9a9-e54fbdcae042.png","sequence":4,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":281,"name":"Color Game","code":"197","status":"OPEN","icon":"11/JILI/86ae93d2-1e8d-4eb8-8b67-ce9db4e74ea6.png","sequence":5,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":282,"name":"Money Coming","code":"51","status":"OPEN","icon":"5/JILI/51.png","sequence":6,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":283,"name":"Fortune Gems 2","code":"223","status":"OPEN","icon":"5/JILI/223.png","sequence":7,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":284,"name":"Andar Bahar","code":"79","status":"OPEN","icon":"5/JILI/5d214dcd-08fb-4c54-b808-12c55ac19473.png","sequence":8,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":285,"name":"Bombing Fishing","code":"20","status":"OPEN","icon":"5/JILI/20.png","sequence":9,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":286,"name":"Dinosaur Tycoon","code":"42","status":"OPEN","icon":"5/JILI/42.png","sequence":10,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":287,"name":"Happy Fishing","code":"82","status":"OPEN","icon":"5/JILI/82.png","sequence":11,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":288,"name":"Jackpot Fishing","code":"32","status":"OPEN","icon":"5/JILI/32.png","sequence":12,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":289,"name":"Mega Fishing","code":"74","status":"OPEN","icon":"5/JILI/74.png","sequence":13,"siteName":null,"platformId":8,"platformName":"JiliGames","platformCode":"JILI","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JILI"},{"id":290,"name":"Cai Shen Fishing","code":"7003","status":"OPEN","icon":"13/JDB/7003.png","sequence":14,"siteName":null,"platformId":31,"platformName":"JDB","platformCode":"JDB","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JDB"},{"id":291,"name":"Shade Dragons Fishing","code":"7004","status":"OPEN","icon":"13/JDB/7004.png","sequence":15,"siteName":null,"platformId":31,"platformName":"JDB","platformCode":"JDB","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JDB"},{"id":292,"name":"Dragon Fishing","code":"7001","status":"OPEN","icon":"5/JDB/7001.png","sequence":16,"siteName":null,"platformId":31,"platformName":"JDB","platformCode":"JDB","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JDB"},{"id":293,"name":"Dragon Master","code":"7006","status":"OPEN","icon":"13/JDB/7006.png","sequence":17,"siteName":null,"platformId":31,"platformName":"JDB","platformCode":"JDB","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"JDB"},{"id":294,"name":"GOLDEN GENIE","code":"22047","status":"OPEN","icon":"16/FC/22047.png","sequence":18,"siteName":null,"platformId":36,"platformName":"FC","platformCode":"FC","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"FC"},{"id":295,"name":"Bao Chuan Fishing","code":"21004","status":"OPEN","icon":"16/FC/21004.png","sequence":19,"siteName":null,"platformId":36,"platformName":"FC","platformCode":"FC","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"FC"},{"id":296,"name":"SUGAR BANG BANG","code":"22043","status":"OPEN","icon":"16/FC/22043.png","sequence":20,"siteName":null,"platformId":36,"platformName":"FC","platformCode":"FC","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","showLogo":0,"platform":"FC"}]);
+const hotGameList = ref([
+  {
+    id: 271,
+    name: "Aviator",
+    code: "aviator",
+    status: "OPEN",
+    icon: "5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png",
+    sequence: 1,
+    siteName: null,
+    platformId: 93,
+    platformName: "Spribe",
+    platformCode: "Spribe",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "Spribe"
+  },
+  {
+    id: 277,
+    name: "7up7down",
+    code: "124",
+    status: "OPEN",
+    icon: "5/JILI/9d163d59-27cc-4df7-8709-d2a2ecc0e65e.png",
+    sequence: 2,
+    siteName: null,
+    platformId: 8,
+    platformName: "JiliGames",
+    platformCode: "JILI",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JILI"
+  },
+  {
+    id: 279,
+    name: "Mines",
+    code: "229",
+    status: "OPEN",
+    icon: "11/JILI/c77236e7-a298-488a-975d-c1fd7f8e30f2.jpg",
+    sequence: 3,
+    siteName: null,
+    platformId: 8,
+    platformName: "JiliGames",
+    platformCode: "JILI",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JILI"
+  },
+  {
+    id: 280,
+    name: "Dragon & Tiger",
+    code: "123",
+    status: "OPEN",
+    icon: "5/JILI/d3ec422a-bb04-4d7a-b9a9-e54fbdcae042.png",
+    sequence: 4,
+    siteName: null,
+    platformId: 8,
+    platformName: "JiliGames",
+    platformCode: "JILI",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JILI"
+  },
+  {
+    id: 281,
+    name: "Color Game",
+    code: "197",
+    status: "OPEN",
+    icon: "11/JILI/86ae93d2-1e8d-4eb8-8b67-ce9db4e74ea6.png",
+    sequence: 5,
+    siteName: null,
+    platformId: 8,
+    platformName: "JiliGames",
+    platformCode: "JILI",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JILI"
+  },
+  {
+    id: 282,
+    name: "Money Coming",
+    code: "51",
+    status: "OPEN",
+    icon: "5/JILI/51.png",
+    sequence: 6,
+    siteName: null,
+    platformId: 8,
+    platformName: "JiliGames",
+    platformCode: "JILI",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JILI"
+  },
+  {
+    id: 283,
+    name: "Fortune Gems 2",
+    code: "223",
+    status: "OPEN",
+    icon: "5/JILI/223.png",
+    sequence: 7,
+    siteName: null,
+    platformId: 8,
+    platformName: "JiliGames",
+    platformCode: "JILI",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JILI"
+  },
+  {
+    id: 284,
+    name: "Andar Bahar",
+    code: "79",
+    status: "OPEN",
+    icon: "5/JILI/5d214dcd-08fb-4c54-b808-12c55ac19473.png",
+    sequence: 8,
+    siteName: null,
+    platformId: 8,
+    platformName: "JiliGames",
+    platformCode: "JILI",
+    gameType: "POKER",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JILI"
+  },
+  {
+    id: 285,
+    name: "Bombing Fishing",
+    code: "20",
+    status: "OPEN",
+    icon: "5/JILI/20.png",
+    sequence: 9,
+    siteName: null,
+    platformId: 8,
+    platformName: "JiliGames",
+    platformCode: "JILI",
+    gameType: "FISH",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JILI"
+  },
+  {
+    id: 286,
+    name: "Dinosaur Tycoon",
+    code: "42",
+    status: "OPEN",
+    icon: "5/JILI/42.png",
+    sequence: 10,
+    siteName: null,
+    platformId: 8,
+    platformName: "JiliGames",
+    platformCode: "JILI",
+    gameType: "FISH",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JILI"
+  },
+  {
+    id: 287,
+    name: "Happy Fishing",
+    code: "82",
+    status: "OPEN",
+    icon: "5/JILI/82.png",
+    sequence: 11,
+    siteName: null,
+    platformId: 8,
+    platformName: "JiliGames",
+    platformCode: "JILI",
+    gameType: "FISH",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JILI"
+  },
+  {
+    id: 288,
+    name: "Jackpot Fishing",
+    code: "32",
+    status: "OPEN",
+    icon: "5/JILI/32.png",
+    sequence: 12,
+    siteName: null,
+    platformId: 8,
+    platformName: "JiliGames",
+    platformCode: "JILI",
+    gameType: "FISH",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JILI"
+  },
+  {
+    id: 289,
+    name: "Mega Fishing",
+    code: "74",
+    status: "OPEN",
+    icon: "5/JILI/74.png",
+    sequence: 13,
+    siteName: null,
+    platformId: 8,
+    platformName: "JiliGames",
+    platformCode: "JILI",
+    gameType: "FISH",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JILI"
+  },
+  {
+    id: 290,
+    name: "Cai Shen Fishing",
+    code: "7003",
+    status: "OPEN",
+    icon: "13/JDB/7003.png",
+    sequence: 14,
+    siteName: null,
+    platformId: 31,
+    platformName: "JDB",
+    platformCode: "JDB",
+    gameType: "FISH",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JDB"
+  },
+  {
+    id: 291,
+    name: "Shade Dragons Fishing",
+    code: "7004",
+    status: "OPEN",
+    icon: "13/JDB/7004.png",
+    sequence: 15,
+    siteName: null,
+    platformId: 31,
+    platformName: "JDB",
+    platformCode: "JDB",
+    gameType: "FISH",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JDB"
+  },
+  {
+    id: 292,
+    name: "Dragon Fishing",
+    code: "7001",
+    status: "OPEN",
+    icon: "5/JDB/7001.png",
+    sequence: 16,
+    siteName: null,
+    platformId: 31,
+    platformName: "JDB",
+    platformCode: "JDB",
+    gameType: "FISH",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JDB"
+  },
+  {
+    id: 293,
+    name: "Dragon Master",
+    code: "7006",
+    status: "OPEN",
+    icon: "13/JDB/7006.png",
+    sequence: 17,
+    siteName: null,
+    platformId: 31,
+    platformName: "JDB",
+    platformCode: "JDB",
+    gameType: "FISH",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "JDB"
+  },
+  {
+    id: 294,
+    name: "GOLDEN GENIE",
+    code: "22047",
+    status: "OPEN",
+    icon: "16/FC/22047.png",
+    sequence: 18,
+    siteName: null,
+    platformId: 36,
+    platformName: "FC",
+    platformCode: "FC",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "FC"
+  },
+  {
+    id: 295,
+    name: "Bao Chuan Fishing",
+    code: "21004",
+    status: "OPEN",
+    icon: "16/FC/21004.png",
+    sequence: 19,
+    siteName: null,
+    platformId: 36,
+    platformName: "FC",
+    platformCode: "FC",
+    gameType: "FISH",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "FC"
+  },
+  {
+    id: 296,
+    name: "SUGAR BANG BANG",
+    code: "22043",
+    status: "OPEN",
+    icon: "16/FC/22043.png",
+    sequence: 20,
+    siteName: null,
+    platformId: 36,
+    platformName: "FC",
+    platformCode: "FC",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    type: "game",
+    showLogo: 0,
+    platform: "FC"
+  }
+]);
 
 const filteredHotGameList = computed(() => {
   if (searchText.value) {
@@ -1699,7 +2097,7 @@ const loadHotGameList = () => {
           });
 
           console.log("End");
-          console.log(JSON.stringify(hotGameList.value))
+          console.log(JSON.stringify(hotGameList.value));
           isHotGameLoading.value = false;
         });
     });
@@ -2015,8 +2413,8 @@ function loadData() {
     })
     .finally(() => {
       setTimeout(() => {
-          bannerLoading.value = false;
-        }, 1000);
+        bannerLoading.value = false;
+      }, 1000);
     });
 }
 
@@ -2364,6 +2762,24 @@ const loadCustomerAddress = () => {
 };
 
 const loadAppTabs = () => {
+  const localStorageKey = "appTabs";
+  const savedTabs = JSON.parse(localStorage.getItem(localStorageKey));
+  if (savedTabs && savedTabs.length > 0) {
+    categoriesList.value = savedTabs;
+    categoriesList.value.forEach((tab, index) => {
+      tab.active = index === 0;
+    });
+  } else {
+    categoriesList.value = [
+      { title: "Hot", icon: "hot", active: true },
+      { title: "Lobby", icon: "lobby", active: false },
+      { title: "Slot", icon: "slot", active: false },
+      { title: "Casino", icon: "casino", active: false },
+      { title: "Fishing", icon: "fishing", active: false },
+      { title: "Sport", icon: "sport", active: false }
+    ];
+  }
+
   api
     .get("/opt-session/getAppTabs")
     .then((res) => {
@@ -2371,7 +2787,10 @@ const loadAppTabs = () => {
       if (res.code === 0) {
         const { data } = res;
         if (data && data.tabs) {
-          categoriesList.value = data.tabs;
+          const { tabs } = res.data;
+          if (tabs.length > 0) {
+            localStorage.setItem(localStorageKey, JSON.stringify(res.data.tabs));
+          }
         }
         if (data && data.deposit) {
           store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
@@ -2380,22 +2799,10 @@ const loadAppTabs = () => {
         if (data && data.hasOwnProperty("ftd")) {
           store.ftd = data.ftd;
         }
-
-        if (categoriesList.value.length > 0) {
-          categoriesList.value.forEach(function (category, index) {
-            if (index === 0) {
-              category.active = true;
-            } else {
-              category.active = false;
-            }
-          });
-        }
       }
     })
     .catch((e) => {
-      if (categoriesList.value.length > 0) {
-        categoriesList.value[0].active = true;
-      }
+      console.error("Failed to fetch tabs:", e);
     });
 };
 
@@ -2656,8 +3063,9 @@ onBeforeUnmount(() => {
       width: 28px;
     }
 
-    .filter-purple{
-      filter: brightness(0) saturate(100%) invert(30%) sepia(17%) saturate(1379%) hue-rotate(223deg) brightness(98%) contrast(96%);
+    .filter-purple {
+      filter: brightness(0) saturate(100%) invert(30%) sepia(17%) saturate(1379%) hue-rotate(223deg) brightness(98%)
+        contrast(96%);
     }
 
     .marquee-container {
