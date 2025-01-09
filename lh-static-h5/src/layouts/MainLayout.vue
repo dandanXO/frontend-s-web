@@ -333,7 +333,7 @@ export default defineComponent({
         } else if (route.path === "/account/inbox") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "消息提醒";
+          pageName.value = "消息中心";
 
           if (route.query.type && route.query.id) {
             const currentTab = MAILBOX_TYPES.find((type) => type.type === route.query.type);
