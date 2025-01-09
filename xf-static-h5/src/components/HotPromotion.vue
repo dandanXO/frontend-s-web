@@ -11,6 +11,7 @@
     <HongBaoYuPromo v-if="list.redirectUrl === 'hongbaoyu'" />
     <WelcomeTaskPromo v-if="list.redirectUrl === 'welcomenewuser'" />
     <PrivilegeInvite v-if="store.token && list.redirectUrl === 'invitefriend'" />
+    <HongBaoYu2025 v-if="list.redirectUrl === 'xf1-cny2025-red-envelope'" :promo-code="list.promoCode" />
     <SlotLacky8 v-if="list.redirectUrl === 'xf-lucky-slot' && store.token" :promo-code="list.promoCode" />
     <BonusSpinWheelPromo v-if="list.redirectUrl === 'cny-spinwheel'" />
     <ReturnPromo v-if="list.redirectUrl === 'xf-return-promo'" />
@@ -195,7 +196,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, defineAsyncComponent } from "vue";
 import { userStore } from "stores/index";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -218,6 +219,8 @@ import DepositAwardPromo from "../components/hotpromo/depositAward/DepositAwardP
 import SlotsRebatePromo from "../components/hotpromo/slotsrebate/SlotsRebatePromo.vue";
 import SlotsBonusPromo from "../components/hotpromo/slotsbonus/SlotsBonusPromo.vue";
 
+const HongBaoYu2025 = defineAsyncComponent(() => import("../components/hotpromo/hongbaoyu2025/HongBaoYu2025.vue"));
+
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -235,6 +238,7 @@ export default defineComponent({
     BonusSpinWheelPromo,
     ReturnPromo,
     SlotLacky8,
+    HongBaoYu2025,
     DepositAwardPromo,
     SlotsRebatePromo,
     SlotsBonusPromo
