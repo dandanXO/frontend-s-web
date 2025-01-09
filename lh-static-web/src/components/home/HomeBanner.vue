@@ -157,7 +157,7 @@ const clickHomePopupImg = (urlString) => {
     return;
   }
 
-  router.push(`${urlString}`);
+  router.push(`/promotion?name=${urlString}`);
 };
 
 const checkShowImgTop = () => {
