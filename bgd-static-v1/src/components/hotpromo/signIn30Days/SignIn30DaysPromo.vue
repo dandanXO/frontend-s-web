@@ -3,22 +3,22 @@
     <div class="check-in-container content-card">
       <div class="header-amt">300,000,000BDT</div>
       <div class="check-in-days-visual">
-        <div class="day-card" v-for="n in 30" :key="n" :class="{ active: checkInDay === n }">
-          <span>{{ checkInDay === n ? "TODAY" : n }}</span>
+        <div class="day-card" v-for="n in chestTotalDays" :key="n" :class="{ active: todayCheckInDay === n }">
+          <span>{{ todayCheckInDay === n ? "TODAY" : n }}</span>
           <img
             class="day-card-img"
-            :class="{ closed: n >= checkInDay }"
+            :class="{ closed: !(n < todayCheckInDay || (todayCheckInDay === n && hasClaimedToday)) }"
             :src="
               require(`../../../assets/images/promotion/hotpromo/signin-30days/day-range-${getChestDesign(n)}-icon${
-                n < checkInDay ? '-open' : ''
+                n < todayCheckInDay || (todayCheckInDay === n && hasClaimedToday) ? '-open' : ''
               }.png`)
             "
           />
         </div>
       </div>
       <div class="check-in-btm">
-        <div class="sign-in-btn">
-          <span>SIGN IN NOW</span>
+        <div class="sign-in-btn" @click="claimReward" :class="{ 'is-disabled': hasClaimedToday || isLoadingClaim }">
+          <span>{{ hasClaimedToday ? "CLAIMED" : "SIGN IN NOW" }}</span>
         </div>
         <div class="bonus-progress-bar">
           <div class="bonus-progress-bar-fill" :style="{ width: 20 + '%' }"></div>
@@ -40,7 +40,7 @@
           Day
           <b>{{ item.dayRange }}</b>
           {{ index === 3 ? "Super" : "" }} Rewards: Claim the {{ item.chestType }} Chest with a random maximum bonus of
-          <span style="color: #eaff00cc; font-weight: 700">{{ convertToCommaAmount(item.maxReward) }}BDT</span>
+          <span style="color: #eaff00cc; font-weight: 700">{{ item.maxReward }}BDT</span>
         </span>
       </div>
       <div class="missed-rules-txt">
@@ -66,7 +66,7 @@
                   class="reward-coin"
                   src="../../../assets/images/promotion/hotpromo/signin-30days/reward-probability-coin.png"
                 />
-                <div class="reward-coin-txt">{{ convertToCommaAmount(item.maxReward, false) }} BDT</div>
+                <div class="reward-coin-txt">{{ item.maxReward }} BDT</div>
               </div>
             </td>
           </tr>
@@ -142,14 +142,18 @@
         </div>
         <div class="reward-claim-condition-item">
           <span>
-            <span style="font-size: 14px; color: #ffb700">Day 14-29</span>
+            <span style="font-size: 14px; color: #ffb700">
+              Day {{ rewardProbability[rewardProbability.length - 2].dayRange }}
+            </span>
             : Minimum cumulative bets of
             <span style="font-size: 14px; color: #11ff00">600 BDT</span>
           </span>
         </div>
         <div class="reward-claim-condition-item">
           <span>
-            <span style="font-size: 14px; color: #ffb700">Day 30</span>
+            <span style="font-size: 14px; color: #ffb700">
+              Day {{ rewardProbability[rewardProbability.length - 1].dayRange }}
+            </span>
             : Minimum cumulative bets of
             <span style="font-size: 14px; color: #11ff00">1,000 BDT</span>
           </span>
@@ -179,46 +183,25 @@
       />
       <div class="podium-div">
         <img class="podium" src="../../../assets/images/promotion/hotpromo/signin-30days/podium.png" />
-        <div class="medal medal-1">
-          <img src="../../../assets/images/promotion/hotpromo/signin-30days/medal-1.png" />
-          <div class="medal-txt">phone no or email</div>
+        <div v-for="n in 3" :key="n" class="medal" :class="'medal-' + n">
+          <img :src="require(`../../../assets/images/promotion/hotpromo/signin-30days/medal-${n}.png`)" />
+          <div class="medal-txt">{{ rankingList[n - 1]?.loginName }}</div>
           <div class="ranking-win-coin">
             <img src="../../../assets/images/promotion/hotpromo/signin-30days/ranking-coin.png" />
-            <div>88,888</div>
+            <div>{{ rankingList[n - 1]?.amount ? convertToCommaAmount(rankingList[n - 1].amount, false) : "" }}</div>
           </div>
         </div>
-
-        <div class="medal medal-2">
-          <img src="../../../assets/images/promotion/hotpromo/signin-30days/medal-2.png" />
-          <div class="medal-txt">phone no or email</div>
-          <div class="ranking-win-coin">
-            <img src="../../../assets/images/promotion/hotpromo/signin-30days/ranking-coin.png" />
-            <div>88,888</div>
-          </div>
-        </div>
-
-        <div class="medal medal-3">
-          <img src="../../../assets/images/promotion/hotpromo/signin-30days/medal-3.png" />
-          <div class="medal-txt">phone no or email</div>
-          <div class="ranking-win-coin">
-            <img src="../../../assets/images/promotion/hotpromo/signin-30days/ranking-coin.png" />
-            <div>88,888</div>
-          </div>
-        </div>
-
-        <!-- <img class="medal-2" src="../../../assets/images/promotion/hotpromo/signin-30days/medal-2.png" />
-        <img class="medal-3" src="../../../assets/images/promotion/hotpromo/signin-30days/medal-3.png" /> -->
       </div>
       <div class="ranking-list">
         <div class="ranking-list-item" v-for="n in 7" :key="n">
           <div class="ranking-index">{{ n + 3 }}</div>
           <div class="icon-txt">
             <img src="../../../assets/images/promotion/hotpromo/signin-30days/ranking-badge.png" />
-            <span>phone no or email</span>
+            <span>{{ rankingList[n + 2]?.loginName }}</span>
           </div>
           <div class="icon-txt">
             <img src="../../../assets/images/promotion/hotpromo/signin-30days/ranking-coin.png" />
-            <span>88,888</span>
+            <span>{{ rankingList[n + 2]?.amount ? convertToCommaAmount(rankingList[n + 2].amount, false) : "" }}</span>
           </div>
         </div>
       </div>
@@ -227,32 +210,38 @@
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
+import { eventapi } from "src/boot/axios";
 import { convertToCommaAmount } from "src/boot/utils";
 
 const rewardProbability = [
   {
     dayRange: "1-7",
     chestType: "Welfare",
-    maxReward: 999
+    maxReward: "999"
   },
   {
     dayRange: "8-13",
     chestType: "Good Fortune",
-    maxReward: 9999
+    maxReward: "9,999"
   },
   {
     dayRange: "14-29",
     chestType: "Lucky",
-    maxReward: 99999
+    maxReward: "99,999"
   },
   {
     dayRange: "30",
     chestType: "Super",
-    maxReward: 999999
+    maxReward: "999,999"
   }
 ];
 
-const checkInDay = ref(3);
+const todayCheckInDay = ref(0);
+const chestTotalDays = ref(0);
+const hasClaimedToday = ref(false);
+const rankingList = ref([]);
+const isLoadingClaim = ref(true);
+
 const getChestDesign = (i) => {
   if (i < 8) {
     return 1;
@@ -263,6 +252,44 @@ const getChestDesign = (i) => {
   }
   return 4;
 };
+
+const getDailyCheckInData = () => {
+  eventapi.get("/session/bgd-daily-check-in/init").then((res) => {
+    todayCheckInDay.value = res.data.todayCheckInDay;
+    chestTotalDays.value = res.data.thisMonthTotalDays;
+    hasClaimedToday.value = res.data.todayClaimed;
+
+    rewardProbability[rewardProbability.length - 2].dayRange = `14-${chestTotalDays.value - 1}`;
+    rewardProbability[rewardProbability.length - 1].dayRange = chestTotalDays.value.toString();
+  });
+};
+
+const getRankingList = () => {
+  eventapi.post("/session/bgd-daily-check-in/top-ranking?promoCode=bgd-daily-check-in-bonus").then((res) => {
+    rankingList.value = res.data;
+  });
+};
+
+const claimReward = () => {
+  isLoadingClaim.value = true;
+  eventapi
+    .post("/session/bgd-daily-check-in/check-in")
+    .then((res) => {
+      if (res.code === 0) {
+        getDailyCheckInData();
+        getRankingList();
+      }
+    })
+    .catch(() => {})
+    .finally(() => {
+      isLoadingClaim.value = false;
+    });
+};
+
+onMounted(() => {
+  getDailyCheckInData();
+  getRankingList();
+});
 </script>
 
 <style scoped lang="scss">
@@ -417,8 +444,10 @@ const getChestDesign = (i) => {
       font-weight: 700;
     }
     &.is-disabled {
+      filter: grayscale(100%);
+      cursor: not-allowed;
       pointer-events: none;
-      filter: brightness(0.4);
+      color: gray;
     }
     &:active {
       transform: translate(0px, 1px);
