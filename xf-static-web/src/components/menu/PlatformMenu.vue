@@ -263,6 +263,12 @@ onMounted(() => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-bottom: 4px solid transparent;
+    height: calc(100% - 45px);
+    &:hover {
+      background: linear-gradient(180deg, rgba(50, 206, 237, 0) 35.39%, rgba(50, 206, 237, 0.3) 100%);
+      border-bottom: 4px solid #32CEED;
+    }
 }
 .platform-top {
   display: flex;

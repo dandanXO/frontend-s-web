@@ -113,6 +113,7 @@ import {
     }
 
     .station-notice {
+      color: #B8B8B8;
     padding-top: 4px;
     width: 100%;
 

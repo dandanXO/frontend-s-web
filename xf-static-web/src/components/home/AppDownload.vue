@@ -32,7 +32,13 @@
             全部移动设备
           </span>
           <el-button class="common-btn bottom-bar__btn">
-            立即下载
+            <a
+             style="color: #ffffff;"
+          :href="`${downloadUrl}?url=${downloadUrl}&amp;agentCode=`"
+          class="download-url"
+        >
+        立即下载
+          </a>
           </el-button>
         </div>
         <div class="bottominner bottom-bar__rgt">
