@@ -1182,7 +1182,13 @@ export default defineComponent({
         .get("/opt-session/promo/banner?category=HOME")
         .then((res) => {
           if (res.code === 0) {
-            banners.value = res.data;
+            banners.value = res.data.filter(promo => {
+              if($q.dark.isActive) {
+                return !['lh1-dark-mode'].includes(promo.redirectUrl) && promo.mobileImageUrlDark
+              }
+
+              return promo;
+            });
           } else {
           }
         })
