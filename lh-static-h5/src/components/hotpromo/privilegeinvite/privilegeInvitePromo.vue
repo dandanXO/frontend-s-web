@@ -30,8 +30,8 @@
               </div>
               <div class="copy-sec">
                 <div class="copy-sec-inner">
-                  <div>{{ referralLink }}</div>
-                  <div @click="copyText">复制</div>
+                  <div class="copy-link">{{ referralLink }}</div>
+                  <div class="copy-btn" @click="copyText">复制</div>
                 </div>
                 <div @click="shareInvite" class="tab active" style="margin-top: 12px; height: 40px">立即分享</div>
               </div>
@@ -184,8 +184,8 @@
               </div>
               <div class="copy-sec">
                 <div class="copy-sec-inner">
-                  <div style="overflow: auto">{{ referralLink }}</div>
-                  <div @click="copyText">复制</div>
+                  <div class="copy-link">{{ referralLink }}</div>
+                  <div class="copy-btn" @click="copyText">复制</div>
                 </div>
                 <div @click="shareInvite" class="tab active" style="margin-top: 12px; height: 40px">立即分享</div>
               </div>
@@ -350,8 +350,8 @@
               </div>
               <div class="copy-sec">
                 <div class="copy-sec-inner">
-                  <div style="overflow: auto">{{ referralLink }}</div>
-                  <div @click="copyText">复制</div>
+                  <div class="copy-link">{{ referralLink }}</div>
+                  <div class="copy-btn" @click="copyText">复制</div>
                 </div>
                 <div @click="shareInvite" class="tab active" style="margin-top: 12px; height: 40px">立即分享</div>
               </div>
@@ -890,11 +890,22 @@ export default defineComponent({
       padding-left: 10px;
       padding-right: 10px;
       border-radius: 8px;
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 1fr auto;
       line-height: 2.5rem;
       height: 40px;
       width: 100%;
+      white-space: nowrap;
+
+      .copy-link {
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+
+      .copy-btn {
+        padding-left: 5px;
+      }
 
       > div {
         cursor: pointer;
