@@ -14,7 +14,7 @@
         <span v-else class="amount">
           {{
             selectedMethodItem.withdrawableBalance >= 0
-              ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, false)
+              ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, 2)
               : "0.00"
           }}
         </span>
