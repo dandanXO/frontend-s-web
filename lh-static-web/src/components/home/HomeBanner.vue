@@ -30,7 +30,7 @@
           <div
             class="promo-bg isDesktop"
             :style="
-              'background-image: url(' + imgURL + (isDark ? banner.desktopImageUrlDark : banner.desktopImageUrl) + ')'
+              'background-image: url(' + imgURL + (isDark ? (banner.desktopImageUrlDark || banner.desktopImageUrl) : banner.desktopImageUrl) + ')'
             "
           ></div>
           <!--          <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"></div>-->
@@ -84,7 +84,7 @@ const loadBanners = () => {
       isFetchingBanners.value = false;
 
       if (res.code === 0) {
-        banners.value = res.data;
+        banners.value = res.data.filter(promo => !['lh1-dark-mode'].includes(promo.redirectUrl));
 
         console.log(banners.value);
 
