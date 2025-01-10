@@ -7,7 +7,7 @@
     align-center
   >
     <div style="position: relative;">
-      <SitePopout />
+      <SitePopout @popup-click="clickHomePopupImg"/>
       <img class="close-btn" src="../../assets/images/home/site-popout/close-btn.png" alt="" @click="handleClose">
     </div>
   </el-dialog>
@@ -165,7 +165,7 @@ const clickHomePopupImg = (urlString) => {
   let regexName = new RegExp(/^(name|\?name)/g);
   if (regexName.test(urlString)) {
     //去優惠
-    router.push(`/promotion${urlString}`);
+    router.push(`/promotion?${urlString}`);
     return;
   }
 
