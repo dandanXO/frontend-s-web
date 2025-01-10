@@ -84,9 +84,13 @@ const loadBanners = () => {
       isFetchingBanners.value = false;
 
       if (res.code === 0) {
-        banners.value = res.data.filter(promo => !['lh1-dark-mode'].includes(promo.redirectUrl));
+        banners.value = res.data.filter(promo => {
+          if(isDark.value) {
+            return !['lh1-dark-mode'].includes(promo.redirectUrl) && promo.desktopImageUrlDark
+          }
 
-        console.log(banners.value);
+          return promo;
+        });
 
         //No Need liao.
         // if (store.token && (store.memberType === "TEST" || store.memberType === "PROMO_TEST")) {
