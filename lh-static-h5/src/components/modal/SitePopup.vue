@@ -49,7 +49,8 @@
 import { useLocalStorage } from "@vueuse/core";
 import moment from "moment";
 import { api } from "src/boot/axios";
-import { computed, onMounted, ref } from "vue";
+import { userStore } from "src/stores";
+import { computed, onMounted, ref, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
@@ -57,6 +58,7 @@ const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/pro
 const emit = defineEmits(["go-game"]);
 
 const router = useRouter();
+const store = userStore();
 
 const displayPopup = ref(false);
 const popupList = ref([]);
@@ -175,7 +177,15 @@ const getPopups = () => {
 };
 
 onMounted(() => {
-  getPopups();
+  if (store.token) {
+    getPopups();
+  }
+});
+
+onUnmounted(() => {
+  if (swiperInterval.value) {
+    clearInterval(swiperInterval.value);
+  }
 });
 </script>
 <style scoped lang="scss">

@@ -4,7 +4,7 @@
     class="imptann-modal"
     v-model="isImportantAnnoucementModal"
     v-if="!isImpt"
-    width=""
+    align-center
   >
     <div style="position: relative;">
       <SitePopout />
