@@ -26,12 +26,14 @@
         <div class="sign-in-btn" @click="claimReward" :class="{ 'is-disabled': hasClaimedToday || isLoadingClaim }">
           <span>{{ hasClaimedToday ? "CLAIMED" : "SIGN IN NOW" }}</span>
         </div>
-        <div class="bonus-progress-bar">
-          <div class="bonus-progress-bar-fill" :style="{ width: progressBarWidth + '%' }"></div>
-        </div>
-        <div class="total-bet-txt">
-          TOTAL BET：{{ convertToCommaAmount(totalValidBet) }}/{{ convertToCommaAmount(minValidBet) }} BDT
-        </div>
+        <template v-if="minValidBet > 0">
+          <div class="bonus-progress-bar">
+            <div class="bonus-progress-bar-fill" :style="{ width: progressBarWidth + '%' }"></div>
+          </div>
+          <div class="total-bet-txt">
+            TOTAL BET：{{ convertToCommaAmount(totalValidBet) }}/{{ convertToCommaAmount(minValidBet) }} BDT
+          </div>
+        </template>
       </div>
     </div>
     <div class="reward-mech-container content-card">
