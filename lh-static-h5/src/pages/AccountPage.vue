@@ -696,7 +696,13 @@ export default defineComponent({
         .get("/opt-session/promo/banner?category=CENTERPROMO")
         .then((res) => {
           if (res.code === 0) {
-            btm_banners.value = res.data;
+            btm_banners.value = res.data.filter(promo => {
+              if($q.dark.isActive) {
+                return !['lh1-dark-mode'].includes(promo.redirectUrl) && promo.mobileImageUrlDark
+              }
+
+              return promo;
+            });
             if (btm_banners.value.length === 1) {
               btm_banners.value.push(res.data[0]);
             }
