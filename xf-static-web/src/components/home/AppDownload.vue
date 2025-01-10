@@ -43,17 +43,17 @@
         </div>
         <div class="bottominner bottom-bar__rgt">
           <span class="bottom-bar__title">
-            扫码下载APP
+            手机访问网页端
           </span>
           <span class="bottom-bar__qr">
-            <VueQRCodeComponent :size="140" text="https://www.xf9698.com/home" class="dl-frame" />
+            <VueQRCodeComponent :size="140" text="downloadUrl" class="dl-frame" />
           </span>
           <span class="bottom-bar__bottxt">
-            <a href="https://www.xf9698.com/home" target="_blank">www.xingfa.com</a>
+            <a href="downloadUrl" target="_blank">{{downloadUrl}}</a>
           </span>
           <el-button class="common-btn bottom-bar__btn">
             
-            <a style="color: #ffffff;" href="https://www.xf9698.com/home" target="_blank">直接访问</a>
+            <a style="color: #ffffff;" :href="downloadUrl" target="_blank">直接访问</a>
           
           </el-button>
         </div>
