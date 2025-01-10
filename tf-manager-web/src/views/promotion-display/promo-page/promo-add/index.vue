@@ -82,6 +82,25 @@
 
         </el-row>
         <el-row>
+          <el-form-item :label="t('fields.siteType')" prop="siteType">
+            <el-select
+              v-model="form.siteType"
+              size="small"
+              class="filter-item"
+              :placeholder="t('fields.siteType')"
+              style="width: 240px;margin-bottom:10px"
+              @change="loadPromoTypes"
+            >
+              <el-option
+                v-for="item in siteType.list"
+                :key="item.value"
+                :label="item.displayName"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
+        </el-row>
+        <el-row>
           <el-form-item :label="t('fields.promoType')" prop="promoType">
             <el-col :span="12">
               <el-checkbox-group
@@ -712,7 +731,7 @@
                   size="mini"
                   type="primary"
                   v-permission="['sys:site:image:add']"
-                  @click="showDialog('DESKTOP_IMAGE', true)"
+                  @click="showDialog('DESKTOP_IMAGE')"
                 >
                   {{ t('fields.upload') }}
                 </el-button>
