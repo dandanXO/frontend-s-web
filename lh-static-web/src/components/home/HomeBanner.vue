@@ -4,7 +4,7 @@
     class="imptann-modal"
     v-model="isImportantAnnoucementModal"
     v-if="!isImpt"
-    width=""
+    align-center
   >
     <div style="position: relative;">
       <SitePopout />
@@ -157,7 +157,7 @@ const clickHomePopupImg = (urlString) => {
     return;
   }
 
-  router.push(`${urlString}`);
+  router.push(`/promotion?name=${urlString}`);
 };
 
 const checkShowImgTop = () => {

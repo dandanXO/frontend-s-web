@@ -33,7 +33,7 @@
               <div class="promo-banner-wrapper">
                 <img
                   class="promo-banner"
-                  @click="onClickPopoutImg(`/promotion?name=${selectedItem.path}`)"
+                  @click="$emit('popup-click', selectedItem.path)"
                   :src="`${imgURL}${popoutListItem.desktopImgUrl}`"
                 />
               </div>
@@ -41,7 +41,7 @@
           </swiper>
           <!-- <router-link :to="`/promotion?name=${selectedItem.path}`" class="check-details-btn">{{ $t('sitePopout.checkDetails') }}</router-link> -->
         </div>
-      </div>    
+      </div>
     </div>
   </div>
 </template>
@@ -59,6 +59,8 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
 
+defineEmits(['popup-click'])
+
 const $swiper = ref(null);
 const swiperInterval = ref();
 
@@ -74,7 +76,7 @@ const nextSlide = () => {
       return selectedItemIndex.value + 1;
     }
   })();
-  
+
   selectedItemIndex.value = newIndex;
 }
 
@@ -94,9 +96,9 @@ const selectedItem = computed(() =>
 );
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
-const onClickPopoutImg = (path) => {
-  router.push(path);
-};
+const onSlideChange = (_swiper) => {
+  selectedItemIndex.value = _swiper.activeIndex;
+}
 
 onMounted(() => {
   let siteType = "main";
@@ -149,10 +151,12 @@ watch(() => selectedItemIndex.value, () => {
   font-family: "PingFang SC";
   background: url("../../assets/images/home/site-popout/popout-bg2.png") no-repeat center center;
   background-size: 100% 100%;
-  width: 1131px;
-  height: 687px;
+  width: 904px;
+  height: 550px;
   gap: 16px;
   padding: 45px;
+  // max-width: 50vw;
+  aspect-ratio: 904 / 550;
 
   .header {
     width: 100%;
@@ -175,7 +179,7 @@ watch(() => selectedItemIndex.value, () => {
     gap: 10px;
     overflow: auto;
     display: grid;
-    grid-template-columns: 689px 342px;
+    grid-template-columns: 2fr 1fr;
 
     .left {
       flex: 2;
@@ -253,7 +257,7 @@ watch(() => selectedItemIndex.value, () => {
       overflow: hidden;
       flex: 5;
       text-align: right;
-      
+
       .banner-section {
         width: 100%;
         height: 100%;
@@ -317,11 +321,10 @@ watch(() => selectedItemIndex.value, () => {
   .container {
     width: 800px;
     height: 570px;
-    margin-top: 35%;
 
-    .content {
-      grid-template-columns: 435px 265px;
-    }
+    // .content {
+    //   grid-template-columns: 435px 265px;
+    // }
   }
 }
 
@@ -329,11 +332,10 @@ watch(() => selectedItemIndex.value, () => {
   .container {
     width: 600px;
     height: 500px;
-    margin-top: 50%;
 
-    .content {
-      grid-template-columns: 335px 165px;
-    }
+    // .content {
+    //   grid-template-columns: 335px 165px;
+    // }
   }
 }
 </style>
