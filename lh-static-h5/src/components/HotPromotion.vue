@@ -704,8 +704,8 @@ export default defineComponent({
     color: #fff;
 
     .claim-title-icon, .claim-coin-icon, .claim-gift-icon {
-      width: 28px;
-      height: 28px;
+      width: 32px;
+      height: 32px;
       display: flex;
       justify-content: center;
       align-items: center;
