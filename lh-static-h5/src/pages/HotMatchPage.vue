@@ -1,75 +1,101 @@
 <template>
+  <div v-if="hotMatchesByType.length > 0" class="hot-match-container">
+    <div class="competition-items">
+      <div
+        class="competition-item"
+        v-for="competitionType in competitionTypes"
+        :class="{ active: competitionType === selectedCompetitionType }"
+        @click="selectedCompetitionType = competitionType"
+        :key="competitionType"
+      >
+        <img
+          class="competition-item-img"
+          :src="
+            competitionType === selectedCompetitionType
+              ? require(`../assets/images/hotmatch/${competitionType.toLowerCase()}-active-bg.png`)
+              : require(`../assets/images/hotmatch/${competitionType.toLowerCase()}-bg.png`)
+          "
+        />
+      </div>
+    </div>
+  </div>
+  <div class="hot-match-items">
     <div
-        v-if="hotMatchesByType.length > 0"
-        class="hot-match-container"
+      :class="selectedCompetitionType"
+      class="hot-match-item"
+      v-for="hotMatch in hotMatchesByType"
+      :key="hotMatch.id"
     >
-        <div class="competition-items">
-            <div
-                class="competition-item"
-                v-for="competitionType in competitionTypes"
-                :class="{ active: competitionType === selectedCompetitionType }"
-                @click="selectedCompetitionType = competitionType"
-                :key="competitionType"
-            >
-            <img
-                class="competition-item-img"
-                :src="competitionType === selectedCompetitionType ? require(`../assets/images/hotmatch/${competitionType.toLowerCase()}-active-bg.png`) : require(`../assets/images/hotmatch/${competitionType.toLowerCase()}-bg.png`)"
-            />
-            </div>
+      <div class="hot-match-info">
+        <div class="hot-match-name">
+          {{ hotMatch.competitionName }}
         </div>
+        <div class="hot-match-scores">
+          <div class="hot-match-team">
+            <img class="hot-match-img" :src="`${imgUrl}/promo/${hotMatch.teamOneLogo}`" />
+            <span>{{ hotMatch.teamOneName }}</span>
+          </div>
+          <div class="hot-match-time">
+            {{ hotMatch.competitionTime }}
+            <div class="bet-btn" @click="openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)">
+              立即投注
+            </div>
+          </div>
+          <div class="hot-match-team">
+            <img class="hot-match-img" :src="`${imgUrl}/promo/${hotMatch.teamTwoLogo}`" />
+            <span>{{ hotMatch.teamTwoName }}</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="hot-match-items">
-        <div class="hot-match-item" v-for="hotMatch in hotMatchesByType" :key="hotMatch.id">
-        <div class="hot-match-info">
-            <div class="hot-match-name">
-            {{ hotMatch.competitionName }}
-            </div>
-            <div class="hot-match-scores">
-            <div class="hot-match-team">
-                <img class="hot-match-img" :src="`${imgUrl}/promo/${hotMatch.teamOneLogo}`" />
-                <span>{{ hotMatch.teamOneName }}</span>
-            </div>
-            <div class="hot-match-time">{{ hotMatch.competitionTime }}</div>
-            <div class="hot-match-team">
-                <img class="hot-match-img" :src="`${imgUrl}/promo/${hotMatch.teamTwoLogo}`" />
-                <span>{{ hotMatch.teamTwoName }}</span>
-            </div>
-            </div>
-        </div>
-        </div>
-    </div>
+  </div>
+
+  <GameModal ref="gameRef" />
 </template>
 
 <script setup>
 import { onMounted, ref, computed } from "vue";
+import moment from "moment";
 import { api } from "boot/axios";
+import GameModal from "../components/modal/GameModal.vue";
 
 const hotMatches = ref([]);
 const competitionTypes = ref([]);
 const selectedCompetitionType = ref();
 const imgUrl = process.env.IMAGE_CDN;
 
+const now = moment().format("YYYY-MM-DD HH:mm:ss");
+
 const hotMatchesByType = computed(() => {
   if (hotMatches.value.length > 0 && selectedCompetitionType.value) {
-    return hotMatches.value.filter(({ competitionType }) => competitionType === selectedCompetitionType.value)
+    return hotMatches.value.filter(
+      ({ competitionType, displayStartTime, displayEndTime }) =>
+        competitionType === selectedCompetitionType.value && now >= displayStartTime && now <= displayEndTime
+    );
   }
 
   return [];
 });
 
-onMounted(() => {
-    api.get("/platform-competition").then((res) => {
-        if (res.code === 0) {
-        const uniqueCompetitionTypes = Array.from(new Set(res.data.map(({ competitionType }) => competitionType)));
-        competitionTypes.value = uniqueCompetitionTypes;
+const gameRef = ref();
 
-        if (uniqueCompetitionTypes.length > 0) {
-            selectedCompetitionType.value = uniqueCompetitionTypes[0];
-            hotMatches.value = res.data;
-        }
-        }
-    });
-})
+const openGame = (gameName, code, gameCode) => {
+  gameRef.value.open(gameName, code, gameCode);
+};
+
+onMounted(() => {
+  api.get("/platform-competition").then((res) => {
+    if (res.code === 0) {
+      const uniqueCompetitionTypes = Array.from(new Set(res.data.map(({ competitionType }) => competitionType)));
+      competitionTypes.value = uniqueCompetitionTypes.reverse();
+
+      if (uniqueCompetitionTypes.length > 0) {
+        selectedCompetitionType.value = uniqueCompetitionTypes[0];
+        hotMatches.value = res.data;
+      }
+    }
+  });
+});
 </script>
 
 <style lang="scss" scoped>
@@ -87,7 +113,7 @@ onMounted(() => {
     cursor: pointer;
 
     img {
-        width: 100%;
+      width: 100%;
     }
 
     .competition-item-name {
@@ -104,69 +130,104 @@ onMounted(() => {
 }
 
 .hot-match-items {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    height: 100%;
-    padding: 0 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  height: 100%;
+  padding: 0 20px 20px 20px;
 
-    .hot-match-item {
-      background: url("../assets/images/hotmatch/hotmatch-item-bg-dark.png") no-repeat center center;
+  .hot-match-item {
+    background: url("../assets/images/hotmatch/hotmatch-item-bg-dark.png") no-repeat center center;
+    background-size: 100% 100%;
+    aspect-ratio: 351 / 139;
+    width: 100%;
+    height: 150px;
+
+    &.ESport {
+      background: url("../assets/images/hotmatch/hotmatch-item-bg-dark-esport.png") no-repeat center center;
       background-size: 100% 100%;
-      aspect-ratio: 351 / 139;
-      width: 100%;
-      height: 150px;
+    }
 
-      .hot-match-info {
-        height: 100%;
-        padding: 10px;
+    &.Basketball {
+      background: url("../assets/images/hotmatch/hotmatch-item-bg-dark-basketball.png") no-repeat center center;
+      background-size: 100% 100%;
+    }
+
+    &.Football {
+      background: url("../assets/images/hotmatch/hotmatch-item-bg-dark-soccer.png") no-repeat center center;
+      background-size: 100% 100%;
+    }
+
+    .hot-match-info {
+      height: 100%;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      position: relative;
+
+      .hot-match-name,
+      .hot-match-time {
+        font-family: "PingFang";
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 15px;
+        color: #fff;
+        text-align: center;
+      }
+
+      .hot-match-scores {
         display: flex;
-        flex-direction: column;
         align-items: center;
-        justify-content: flex-start;
         gap: 10px;
 
-        .hot-match-name,
         .hot-match-time {
+          width: 85px;
+
+          .bet-btn {
+            position: absolute;
+            left: 50%;
+            bottom: 0%;
+            transform: translate(-50%, -50%);
+            padding: 3px 8px;
+            background: linear-gradient(to bottom, #5d7dbf 0%, #242d6f 100%);
+            border-radius: 5px;
+            cursor: pointer;
+
+            &:hover {
+              filter: brightness(1.1);
+            }
+          }
+        }
+
+        .hot-match-team {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
           font-family: "PingFang";
           font-size: 14px;
           font-weight: 400;
           line-height: 15px;
           color: #fff;
           text-align: center;
+          gap: 5px;
+          width: 120px;
         }
 
-        .hot-match-scores {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-
-          .hot-match-time {
-            width: 85px;
-          }
-
-          .hot-match-team {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            font-family: "PingFang";
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 15px;
-            color: #fff;
-            text-align: center;
-            gap: 5px;
-            width: 120px;
-          }
-
-          .hot-match-img {
-            width: 70px;
-          }
+        .hot-match-img {
+          width: 70px;
+          background-color: #27385b;
+          border-radius: 100px;
+          padding: 5px;
+          aspect-ratio: 1 / 1;
         }
       }
     }
   }
-  </style>
+}
+</style>

@@ -109,6 +109,7 @@ const transitList = ref([
   .transit-buttons {
     .btn {
       @include content-block-dark-with-border;
+      color: #e1e1e1;
     }
   }
 }

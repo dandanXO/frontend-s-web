@@ -323,6 +323,14 @@ svg {
         display: block;
       }
     }
+
+    .inactive {
+      display: none;
+    }
+
+    .hover {
+      display: block;
+    }
   }
 }
 
@@ -690,24 +698,65 @@ svg {
 
   .q-layout,
   .q-header,
-  .q-footer,
   .q-page {
     background: $background-dark;
   }
 
   .q-header {
-    background: #212B43;
+    background: #212b43;
     &.with-shadow {
       box-shadow: none;
     }
   }
 
   .q-footer {
+    background: #0f182e;
+  }
+
+  .q-footer .q-tab img {
+    width: 1.5rem;
+  }
+  .q-footer .q-tab span {
+    font-size: 0.9rem;
+  }
+
+  .q-footer {
     box-shadow: none;
+    height: 4rem;
+    overflow: visible;
+
+    .q-tabs {
+      background: linear-gradient(to bottom, transparent 0%, transparent 32%, #0f182e 32%, #0f182e 100%);
+      margin-top: -1.4rem;
+    }
     .q-tab {
-      background: #0F182E;
+      height: 4em;
+      align-self: flex-end;
+      background: transparent;
+      .q-tab__content {
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+        align-self: center;
+        padding: 0px;
+        margin-top: 0px;
+      }
+      &:nth-child(3) {
+        height: 5.2rem;
+      }
       &--active {
         color: #fff;
+      }
+      &.q-hoverable {
+        .q-focus-helper {
+          height: unset;
+          top: 1.7rem;
+          bottom: 0;
+          visibility: hidden;
+        }
+      }
+
+      img {
+        margin-bottom: 5px;
       }
     }
   }
@@ -724,8 +773,16 @@ svg {
   }
 
   .station-notice-wrapper {
+    font-size: 12px;
     span {
       color: #fff;
+    }
+
+    .volume {
+      img {
+        width: 20px;
+        height: auto;
+      }
     }
   }
 
@@ -768,6 +825,7 @@ svg {
 
   .q-field--standout.q-field--highlighted .q-field__control {
     color: $font-3-dark;
+    background: #2a3346;
   }
 
   .q-field--standout.q-field--highlighted .q-field__native,
@@ -787,16 +845,16 @@ svg {
   }
 
   .common-sm-btn {
-    background: url('../assets/images/account/primary-btn.svg') no-repeat center center;
+    background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
     background-size: cover;
     box-shadow: none;
     border-radius: 4px;
-    border: 1px solid #3A93CE;
+    border: 1px solid #3a93ce;
     color: $white;
   }
 
   .common-sm-white-btn {
-    background: url('../assets/images/account/secondary-btn.svg') no-repeat center center;
+    background: url("../assets/images/account/secondary-btn.svg") no-repeat center center;
     background-size: cover;
     box-shadow: none;
     border-radius: 4px;
@@ -805,29 +863,29 @@ svg {
   }
 
   .common-large-btn {
-    background: url('../assets/images/account/primary-btn.svg') no-repeat center center;
+    background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
     background-size: cover;
     box-shadow: none;
     border-radius: 4px;
-    border: 1px solid #3A93CE;
+    border: 1px solid #3a93ce;
     color: $white;
   }
 
   .common-md-white-btn {
-    background: url('../assets/images/account/primary-btn.svg') no-repeat center center;
+    background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
     background-size: cover;
     box-shadow: none;
     border-radius: 4px;
-    border: 1px solid #3A93CE;
+    border: 1px solid #3a93ce;
     color: $white;
   }
 
   .common-md-btn {
-    background: url('../assets/images/account/primary-btn.svg') no-repeat center center;
+    background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
     background-size: cover;
     box-shadow: none;
     border-radius: 4px;
-    border: 1px solid #3A93CE;
+    border: 1px solid #3a93ce;
     color: $white;
   }
 
@@ -836,12 +894,65 @@ svg {
   }
 
   .bg-brightbtn {
-    background: url('../assets/images/account/secondary-btn.svg') no-repeat center center;
+    background: url("../assets/images/account/secondary-btn.svg") no-repeat center center;
     background-size: cover;
     box-shadow: none;
     border-radius: 4px;
     border: 1px solid #ffffff4d;
     color: $white;
+  }
+
+  .livepoker-rebate-section {
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%) !important;
+
+    div {
+      color: #fff !important;
+    }
+  }
+
+  .livepoker-rebate-section-title {
+    color: #fff !important;
+  }
+
+  .reward-info-content {
+    color: #fff !important;
+  }
+
+  .livepoker-rebate-game-info {
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%) !important;
+
+    div,
+    td,
+    font {
+      color: #fff !important;
+    }
+  }
+
+  .slot {
+    div {
+      background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%) !important;
+      color: #fff !important;
+    }
+  }
+
+  .livepoker-rebate-game-bottom-rule {
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%) !important;
+
+    div {
+      color: #fff !important;
+    }
+  }
+
+  .container,
+  .container2 {
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%) !important;
+
+    p {
+      color: #fff !important;
+    }
+    div {
+      color: #fff !important;
+    }
   }
 }
 

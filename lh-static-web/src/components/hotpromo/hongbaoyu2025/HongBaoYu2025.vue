@@ -10,19 +10,19 @@
           :class="{ loading: loadingClaim }"
         />
       </div>
-      <div class="livepoker-rebate-game-info">
-        <div class="title"></div>
+      <div class="livepoker-rebate-game-info section-bg">
+        <div class="title-img">活动详情</div>
         <div class="little-title">
-          <div class="left">活动时间</div>
+          <div class="ribbon">活动时间</div>
           <div class="right">2025年1月29日至2025年2月4日</div>
         </div>
         <div class="little-title">
-          <div class="left">活动内容</div>
+          <div class="ribbon">活动内容</div>
           <div class="right">
             VIP1及以上会员当天累计存款达到200元，即可在当天活动时间内领新年红包，单个红包最高888元。
           </div>
         </div>
-        <table class="livepoker-rebate-game-info-table">
+        <table class="livepoker-rebate-game-info-table section-table">
           <tbody>
             <tr>
               <th>当天累计存款</th>
@@ -52,8 +52,9 @@
         </div>
       </div>
 
-      <div class="livepoker-rebate-game-bottom-rule">
-        <div class="title"></div>
+      <div class="livepoker-rebate-game-bottom-rule section-bg">
+        <div class="title-img">活动规则</div>
+        <br/>
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
@@ -99,7 +100,7 @@
       <div class="red-packet-opened">
         <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu2024/red-packet-opened.png`)" />
         <div class="grats">恭喜中奖！</div>
-        <div class="amount">{{ winAmount }}</div>
+        <div class="amount">{{ winAmount }}元</div>
 
         <div class="get-btn" @click="getPromotionPrize">点击领取</div>
       </div>
@@ -108,6 +109,8 @@
 </template>
 
 <script setup>
+import { ResponseCode } from "@/api/response";
+import { useNotify } from "@/hooks/notify";
 import { ref, defineProps } from "vue";
 import { claimDailyRainItem } from "@/api/index/promo";
 import { userStore } from "@/store";
@@ -116,6 +119,7 @@ const props = defineProps(["promoCode", "params"]);
 const promoCode = ref(props.promoCode);
 
 const store = userStore();
+const notify = useNotify();
 
 const privilegeClaimedModalVisible = ref(false);
 const winAmount = ref(0);
@@ -128,8 +132,20 @@ const getPromotion = () => {
       if (res.code === 0) {
         winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;
         privilegeClaimedModalVisible.value = true;
-
         store.getBalance();
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
+        notify({
+          type: "error",
+          message: res.message
+        });
       }
     })
     .catch(() => {})
@@ -182,9 +198,9 @@ const getPromotionPrize = () => {
       pointer-events: none;
     }
     &.loading {
-      filter: grayscale(100%);
+      //filter: grayscale(100%);
       cursor: not-allowed;
-      opacity: 0.6;
+      opacity: 0.8;
     }
   }
 }
@@ -207,13 +223,13 @@ const getPromotionPrize = () => {
     font-size: 16px;
     font-weight: 500;
     line-height: 22.4px;
-    color: #ff0000;
+    color: #ff3333;
   }
   .livepoker-rebate-game-bottom-left-btn {
     font-size: 16px;
     font-weight: 600;
     line-height: 22.4px;
-    color: #ff0000;
+    color: #ff3333;
     cursor: pointer;
     display: flex;
     justify-content: flex-start;
@@ -350,7 +366,7 @@ const getPromotionPrize = () => {
       display: flex;
       margin-left: 64px;
       > span {
-        color: #ff0000;
+        color: #ff3333;
         display: contents;
         line-height: 2.5;
       }
@@ -379,7 +395,7 @@ const getPromotionPrize = () => {
         font-size: 18px;
         font-weight: 400;
         line-height: 22.4px;
-        color: #ff0000;
+        color: #ff3333;
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -429,7 +445,7 @@ const getPromotionPrize = () => {
     justify-content: center;
     top: 0;
     margin-top: 250px;
-    left: -15px;
+    left: -10px;
     color: #f23b1d;
     font-size: 50px;
     font-weight: bold;

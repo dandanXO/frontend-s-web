@@ -387,7 +387,7 @@
           size="mini"
           :key="item.orderIndex"
         >
-          <el-input class="disable-input" v-model="item.code" />
+          <el-input data-highlight-target class="disable-input" v-model="item.code" />
           -
           <el-input class="disable-input" v-model="item.value" />
           <el-button
@@ -577,6 +577,7 @@ import { required } from '../../../../utils/validate'
 import JsonEditor from 'json-editor-vue3'
 import { getValueRulesList } from '../../../../api/value-rules'
 import { Plus } from "@element-plus/icons-vue";
+import bus from '../../../../utils/bus'
 
 const { t } = useI18n()
 const siteId = ref()
@@ -1212,11 +1213,38 @@ function switchText(val, type) {
   }
 }
 
+function searchCode(searchTerm) {
+  const contentElements = document.querySelectorAll('[data-highlight-target]');
+  contentElements.forEach((el) => {
+    el.style.backgroundColor = ''; // Clear existing highlights
+  });
+
+  const matchedElements = Array.from(contentElements).filter((el) => {
+    const content = el.value || el.textContent || '';
+    return content.toLowerCase().includes(searchTerm.toLowerCase());
+  });
+
+  matchedElements.forEach((el) => {
+    el.style.backgroundColor = 'yellow';
+  });
+
+  const groups = configs.customGroup
+    .filter(group => group.items.some(item => item.code.includes(searchTerm)))
+    .filter(group => !uiControl.activeGroups.includes(group.group));
+
+  uiControl.activeGroups = [...new Set([...uiControl.activeGroups, ...groups.map(group => group.group)])];
+
+  nextTick(() => {
+    matchedElements[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+}
+
 onMounted(() => {
   loadSites()
   loadFinancialLevelInfos()
   loadRiskLevels()
   loadValueRules()
+  bus.on('search', searchCode)
 })
 </script>
 

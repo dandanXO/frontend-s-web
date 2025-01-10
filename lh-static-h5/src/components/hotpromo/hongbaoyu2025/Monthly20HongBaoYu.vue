@@ -1,63 +1,49 @@
 <template>
   <div class="livepoker-rebate-wrapper">
     <div class="livepoker-rebate-container">
-      <div class="livepoker-rebate-section">
+      <div class="livepoker-rebate-section section-bg">
         <div class="livepoker-rebate-section-left">
           <div class="livepoker-rebate-section-title">
-            <div>
-              <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-title-img.png"
-                style="width: 20px; height: 20px; margin-bottom: 0px"
-              />
+            <div class="claim-title-icon">
             </div>
             投注礼金
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon">
-              <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon1.png"
-                alt=""
-                width="100%"
-              />
+            <div class="reward-info-icon claim-coin-icon">
             </div>
             <div class="reward-info-content">
               上月累计存款：
-              <span class="amount">{{ highestSingleValidBet }}元</span>
+              <span class="amount">{{ depositAmount }}元</span>
             </div>
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon">
-              <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon2.png"
-                alt=""
-                width="100%"
-              />
+            <div class="reward-info-icon claim-gift-icon">
             </div>
             <div class="reward-info-content">
-              可领取红包礼金：
-              <span class="amount">{{ bonus }}元</span>
+              可领取红包次数：
+              <span class="amount">{{ draw }}次</span>
             </div>
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
+          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: draw <= 0, loading: loadingClaim }">
             <img src="../../../assets/images/promotion/hotpromo/hongbaoyu/claim-btn-1.png" alt="" width="100%" />
           </div>
         </div>
       </div>
-      <div class="livepoker-rebate-game-info">
-        <div class="title"></div>
+      <div class="livepoker-rebate-game-info section-bg">
+        <div class="title-img">活动详情</div>
         <div class="little-title">
-          <div class="left">活动时间</div>
+          <div class="ribbon">活动时间</div>
           <div class="right">自2025年1月1日起</div>
         </div>
         <div class="little-title">
-          <div class="left">活动内容</div>
+          <div class="ribbon">活动内容</div>
           <div class="right">
             会员在每月最后一天前累计存款达到5000元，即可在次月20日晚6点-晚10点拆红包，单个红包最高888元。
           </div>
         </div>
-        <table class="livepoker-rebate-game-info-table">
+        <table class="livepoker-rebate-game-info-table section-table">
           <thead>
             <tr>
               <th>上月累计存款</th>
@@ -109,8 +95,9 @@
         </div>
       </div>
 
-      <div class="livepoker-rebate-game-bottom-rule">
-        <div class="title"></div>
+      <div class="livepoker-rebate-game-bottom-rule section-bg">
+        <div class="title-img">活动规则</div>
+        <br/>
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
@@ -144,30 +131,89 @@
       </div>
     </div>
   </div>
+
+  <q-dialog v-model="isClaimModal" persistent>
+    <q-card class="win-rebate-model">
+      <div class="close-btn">
+        <q-btn
+          @click="isClaimModal = false"
+          v-close-popup
+          rounded
+          icon="close"
+          color="white"
+          height="40"
+          width="40"
+        ></q-btn>
+      </div>
+
+      <q-card-section class="row items-center">
+        <div class="red-packet-opened">
+          <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/red-packet-opened.png`)" />
+
+          <span class="grats">恭喜获得奖金</span>
+          <span class="amount">{{ winAmount }}元</span>
+          <div class="get-btn" @click="getPromotionPrize">点击领取</div>
+        </div>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
 import { onMounted, ref } from "vue";
 import { userStore } from "src/stores";
-// import { useNotify } from "src/hooks/notify";
-// import { useQuasar } from "quasar";
-// import { useRouter } from "vue-router";
+import { eventapi } from "src/boot/axios";
 
 const props = defineProps(["promoCode"]);
-// const { promoCode } = toRefs(props);
-
 const store = userStore();
-// const notify = useNotify();
-// const $q = useQuasar();
-// const router = useRouter();
-// const isClaiming = ref(false);
+const draw = ref(0);
+const depositAmount = ref(0);
+const isClaimModal = ref(false);
+const loadingClaim = ref(false);
+const winAmount = ref(0);
 
-const bonus = ref(0);
-const highestSingleValidBet = ref(0);
+const fetchData = async () => {
+  loadingClaim.value = true;
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  eventapi
+    .get(`/session/redPacketVip/initDepositRedPacket?promoCode=${props.promoCode}&v=${randNum}`)
+    .then((res) => {
+      if (res.code === 0) {
+        depositAmount.value = res.data.depositAmount;
+        draw.value = res.data.draw;
 
-const handleClaimBonus = () => {};
+        store.getBalance();
+      }
+    })
+    .catch(() => {})
+    .finally(() => {
+      loadingClaim.value = false;
+    });
+};
 
-const fetchData = async () => {};
+const handleClaimBonus = () => {
+  loadingClaim.value = true;
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  eventapi
+    .get(`/redPacketVip/claim?promoCode=${props.promoCode}&v=${randNum}`)
+    .then((res) => {
+      if (res.code === 0) {
+        isClaimModal.value = true;
+        winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;
+        store.getBalance();
+        fetchData();
+      }
+    })
+    .catch(() => {})
+    .finally(() => {
+      loadingClaim.value = false;
+    });
+};
+
+const getPromotionPrize = () => {
+  store.getBalance();
+  isClaimModal.value = false;
+};
 
 onMounted(() => {
   if (!store.token) {
@@ -263,13 +309,13 @@ onMounted(() => {
     font-size: 12px;
     font-weight: 600;
     line-height: 22.4px;
-    color: #ff0000;
+    color: #ff5f5f !important;
   }
   .livepoker-rebate-game-bottom-left-btn {
     font-size: 12px;
     font-weight: 600;
     line-height: 22.4px;
-    color: #ff0000;
+    color: #ff5f5f !important;
     cursor: pointer;
     display: flex;
     justify-content: flex-start;
@@ -408,26 +454,11 @@ onMounted(() => {
       gap: 10px;
       align-items: baseline;
 
-      .item-num {
-        color: #ffffff;
-        font-size: 12px;
-        line-height: 1;
-        border-radius: 50%;
-        height: 16px !important;
-        width: 16px !important;
-        min-width: 16px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 2px;
-        background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
-      }
-
       .hint {
         font-size: 12px;
         font-weight: 400;
         line-height: 22.4px;
-        color: #ff0000;
+        color: #ff5f5f!important;
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -478,15 +509,15 @@ onMounted(() => {
   .livepoker-rebate-section::before,
   .livepoker-rebate-game-info::before,
   .livepoker-rebate-game-bottom-rule::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 12px;
-    padding: 1.5px;
-    background: linear-gradient(170deg, #be9457 1.91%, rgba(190, 148, 87, 0) 33.82%);
-    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    mask-composite: exclude;
-    pointer-events: none;
+    // content: "";
+    // position: absolute;
+    // inset: 0;
+    // border-radius: 12px;
+    // padding: 1.5px;
+    // background: linear-gradient(170deg, #be9457 1.91%, rgba(190, 148, 87, 0) 33.82%);
+    // mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    // mask-composite: exclude;
+    // pointer-events: none;
   }
 
   .livepoker-rebate-section {
@@ -526,6 +557,67 @@ onMounted(() => {
     td {
       color: white;
       background: transparent !important;
+    }
+  }
+}
+
+.red-packet-opened {
+  position: relative;
+  img {
+    display: block;
+    width: 100%;
+  }
+
+  .grats {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    margin-top: 20%;
+    color: #fffbfb;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding-right: 10px;
+  }
+
+  .amount {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    margin-top: 45%;
+    // left: -15px;
+    color: #f23b1d;
+    font-size: 36px;
+    font-weight: bold;
+    padding-right: 10px;
+  }
+
+  .get-btn {
+    color: #f23b1d;
+    border-radius: 30px;
+    background: linear-gradient(180deg, #fdf4ee 0%, #fff3c0 100%);
+    position: absolute;
+
+    font-size: 16px;
+    padding: 4px 16px;
+    bottom: 17%;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    width: 100px;
+    left: 0;
+    right: 10px;
+
+    &:hover {
+      filter: brightness(0.9);
     }
   }
 }

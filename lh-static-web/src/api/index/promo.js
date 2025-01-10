@@ -308,6 +308,10 @@ export const submitQuestionnaire = (formData) => {
     });
 };
 
+export function initDepositRedPacket(item) {
+  return server.EVENT.get(`/session/redPacketVip/initDepositRedPacket?promoCode=${item}`);
+}
+
 export function claimDailyRainItem(item) {
   return server.EVENT.get(`/redPacketVip/claim?promoCode=${item}`);
 }

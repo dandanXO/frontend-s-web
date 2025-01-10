@@ -8,24 +8,15 @@
 
       <template v-if="tabValue === 1">
         <div>
-          <div class="livepoker-rebate-section">
+          <div class="livepoker-rebate-section section-bg">
             <div class="livepoker-rebate-section-left">
               <div class="livepoker-rebate-section-title">
-                <div>
-                  <img
-                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-title-img.png"
-                    style="width: 20px; height: 20px; margin-bottom: 0px"
-                  />
+                <div class="claim-title-icon">
                 </div>
                 投注嘉奖
               </div>
               <div class="reward-info">
-                <div class="reward-info-icon">
-                  <img
-                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon1.png"
-                    alt=""
-                    width="100%"
-                  />
+                <div class="reward-info-icon claim-coin-icon">
                 </div>
                 <div class="reward-info-content">
                   昨日累计有效投注：
@@ -33,12 +24,7 @@
                 </div>
               </div>
               <div class="reward-info">
-                <div class="reward-info-icon">
-                  <img
-                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon2.png"
-                    alt=""
-                    width="100%"
-                  />
+                <div class="reward-info-icon claim-gift-icon">
                 </div>
                 <div class="reward-info-content">
                   可领取彩金：
@@ -56,20 +42,20 @@
               </div>
             </div>
           </div>
-          <div class="livepoker-rebate-game-info">
-            <div class="title"></div>
+          <div class="livepoker-rebate-game-info section-bg">
+            <div class="title-img">活动详情</div>
             <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
-              <div class="left">活动时间</div>
+              <div class="ribbon">活动时间</div>
               <div class="right">2024年11月11日至2024年12月15日</div>
             </div>
             <div
               class="little-title"
               style="flex-direction: column; justify-content: flex-start; align-items: flex-start"
             >
-              <div class="left">活动内容</div>
+              <div class="ribbon">活动内容</div>
               <div class="right">活动期间，当日完美世界Major 2024有效投注≥1,500 元即可获得 最高1,588元的奖励金</div>
             </div>
-            <table class="livepoker-rebate-game-info-table">
+            <table class="livepoker-rebate-game-info-table section-table">
               <tbody>
                 <tr>
                   <th>有效投注</th>
@@ -130,8 +116,8 @@
             </div>
           </div>
 
-          <div class="livepoker-rebate-game-bottom-rule">
-            <div class="title"></div>
+          <div class="livepoker-rebate-game-bottom-rule section-bg">
+            <div class="title-img">活动规则</div><br/>
             <div class="content">
               <div class="item">
                 <div class="item-num">1</div>
@@ -167,24 +153,15 @@
 
       <template v-if="tabValue === 2">
         <div>
-          <div class="livepoker-rebate-section">
+          <div class="livepoker-rebate-section section-bg">
             <div class="livepoker-rebate-section-left">
               <div class="livepoker-rebate-section-title">
-                <div>
-                  <img
-                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-title-img.png"
-                    style="width: 20px; height: 20px; margin-bottom: 0px"
-                  />
+                <div class="claim-title-icon">
                 </div>
                 救援礼金
               </div>
               <div class="reward-info">
-                <div class="reward-info-icon">
-                  <img
-                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon1.png"
-                    alt=""
-                    width="100%"
-                  />
+                <div class="reward-info-icon claim-coin-icon">
                 </div>
                 <div class="reward-info-content">
                   昨日累计负盈利：
@@ -192,12 +169,7 @@
                 </div>
               </div>
               <div class="reward-info">
-                <div class="reward-info-icon">
-                  <img
-                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon2.png"
-                    alt=""
-                    width="100%"
-                  />
+                <div class="reward-info-icon claim-gift-icon">
                 </div>
                 <div class="reward-info-content">
                   可领取彩金：
@@ -215,20 +187,20 @@
               </div>
             </div>
           </div>
-          <div class="livepoker-rebate-game-info">
-            <div class="title"></div>
+          <div class="livepoker-rebate-game-info section-bg">
+            <div class="title-img">活动详情</div>
             <div
               class="little-title"
               style="justify-content: flex-start; align-items: flex-start"
             >
-              <div class="left">活动时间</div>
+              <div class="ribbon">活动时间</div>
               <div class="right">2024年11月11日至2024年12月15日</div>
             </div>
             <div
               class="little-title"
               style="justify-content: flex-start; align-items: flex-start"
             >
-              <div class="left">活动内容</div>
+              <div class="ribbon">活动内容</div>
               <div class="right">
                 投注完美世界 Major 2024的会员(电竞)
               </div>
@@ -237,12 +209,12 @@
               class="little-title"
               style="flex-direction: column; justify-content: flex-start; align-items: flex-start"
             >
-              <div class="left">优惠详情</div>
+              <div class="ribbon">优惠详情</div>
               <div class="right">
                 会员在本站电竞场馆中，北京时间当日负盈利达到1,000元及以上，次日即可领取救援金，最高可达1,288元！
               </div>
             </div>
-            <table class="livepoker-rebate-game-info-table">
+            <table class="livepoker-rebate-game-info-table section-table">
               <tbody>
                 <tr>
                   <th>电竞负盈利</th>
@@ -299,8 +271,8 @@
             </div>
           </div>
 
-          <div class="livepoker-rebate-game-bottom-rule">
-            <div class="title"></div>
+          <div class="livepoker-rebate-game-bottom-rule section-bg">
+            <div class="title-img">活动规则</div>
             <div class="content">
               <div class="item">
                 <div class="item-num">1</div>
@@ -558,13 +530,13 @@ onMounted(() => {
     font-size: 12px;
     font-weight: 600;
     line-height: 22.4px;
-    color: #ff0000;
+    color: #ff5151 !important;
   }
   .livepoker-rebate-game-bottom-left-btn {
     font-size: 12px;
     font-weight: 600;
     line-height: 22.4px;
-    color: #ff0000;
+    color: #ff5151 !important;
     cursor: pointer;
     display: flex;
     justify-content: flex-start;
@@ -721,7 +693,7 @@ onMounted(() => {
         font-size: 12px;
         font-weight: 400;
         line-height: 22.4px;
-        color: #ff0000;
+        color: #ff5151 !important;
         display: flex;
         justify-content: flex-start;
         align-items: center;

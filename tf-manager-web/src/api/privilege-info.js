@@ -48,3 +48,7 @@ export const updatePrivilegeInfo = (privilegeInfo) => {
 export const deletePrivilegeInfo = (ids) => {
   return https().request(`/privilegeInfo?_method=DELETE`, Method.POST, { ids: ids.join(",") }, ContentType.form);
 };
+
+export const updatePrivilegeInfoState = (id, state) => {
+  return https().request(`/privilegeInfo/${id}/state?_method=PUT`, Method.POST, { state: state }, ContentType.form);
+};

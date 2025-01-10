@@ -398,16 +398,6 @@ export default defineComponent({
     const loadingBtn = ref(false);
     const store = userStore();
 
-    const checkToken = () => {
-      if (store.token) {
-        if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
-          return false;
-        }
-        return true;
-      } else {
-        return true;
-      }
-    };
     const navigations = reactive([
       { code: "home", name: "首页", enName: "Home", path: "/home" },
       { code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true, isTest: false },
@@ -1407,7 +1397,6 @@ export default defineComponent({
       timestamp,
       openMiniGame,
       navigations,
-      checkToken,
       loadIcon,
       accDialogImg
     };
@@ -1496,8 +1485,8 @@ body {
 
     .unread-count {
       position: absolute;
-      bottom: 2px;
-      right: 5px;
+      bottom: 9px;
+      right: 12px;
       width: 12px;
       height: 12px;
       opacity: 1;
@@ -2429,7 +2418,7 @@ body {
       box-shadow: none;
       border-bottom: 1px solid #be9457;
       .top-nav-inner {
-        padding: 10px 0 9px;
+        padding: 0px;
         max-width: 1400px;
         .navigations {
           .header-menu-item {

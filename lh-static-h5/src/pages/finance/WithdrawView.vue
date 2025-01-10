@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page :style="isShowRemainingDialog ? 'filter: blur(5px);': 'filter: none'">
     <div class="withdraw-section q-pa-md q-mx-sm q-my-md">
       <div class="title-wrapper q-pa-md" style="padding-bottom: 0px">
         <span>{{ isAutoWithdrawal ? "快速提款" : "提款" }}</span>

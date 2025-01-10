@@ -1,24 +1,15 @@
 <template>
   <div class="livepoker-rebate-wrapper">
     <div class="livepoker-rebate-container">
-      <div class="livepoker-rebate-section">
+      <div class="livepoker-rebate-section section-bg">
         <div class="livepoker-rebate-section-left">
           <div class="livepoker-rebate-section-title">
-            <div>
-              <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-title-img.png"
-                style="width: 20px; height: 20px; margin-bottom: 0px"
-              />
+            <div class="claim-title-icon">
             </div>
             投注礼金
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon">
-              <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon1.png"
-                alt=""
-                width="100%"
-              />
+            <div class="reward-info-icon claim-coin-icon">
             </div>
             <div class="reward-info-content">
               昨日累计有效投注:
@@ -26,12 +17,7 @@
             </div>
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon">
-              <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon2.png"
-                alt=""
-                width="100%"
-              />
+            <div class="reward-info-icon claim-gift-icon">
             </div>
             <div class="reward-info-content">
               今日领取彩金：
@@ -45,17 +31,17 @@
           </div>
         </div>
       </div>
-      <div class="livepoker-rebate-game-info">
-        <div class="title"></div>
+      <div class="livepoker-rebate-game-info section-bg">
+        <div class="title-img">活动详情</div>
         <div class="little-title">
-          <div class="left">活动时间</div>
+          <div class="ribbon">活动时间</div>
           <div class="right">2025年2月20日至3月2日</div>
         </div>
         <div class="little-title">
-          <div class="left">活动内容</div>
+          <div class="ribbon">活动内容</div>
           <div class="right">活动期间，当日VCT曼谷大师赛累计有效投注≥1,000 元即可获得最高1,388元的奖金。</div>
         </div>
-        <table class="livepoker-rebate-game-info-table">
+        <table class="livepoker-rebate-game-info-table section-table">
           <thead>
             <tr>
               <th>当日下注金额</th>
@@ -119,8 +105,9 @@
         </div>
       </div>
 
-      <div class="livepoker-rebate-game-bottom-rule">
-        <div class="title"></div>
+      <div class="livepoker-rebate-game-bottom-rule section-bg">
+        <div class="title-img">活动规则</div>
+        <br/>
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
@@ -337,13 +324,13 @@ onMounted(() => {
     font-size: 12px;
     font-weight: 600;
     line-height: 22.4px;
-    color: #ff0000;
+    color: #ff5d5d !important;
   }
   .livepoker-rebate-game-bottom-left-btn {
     font-size: 12px;
     font-weight: 600;
     line-height: 22.4px;
-    color: #ff0000;
+    color: #ff5d5d !important;
     cursor: pointer;
     display: flex;
     justify-content: flex-start;
@@ -501,7 +488,7 @@ onMounted(() => {
         font-size: 12px;
         font-weight: 400;
         line-height: 22.4px;
-        color: #ff0000;
+        color: #ff5d5d !important;
         display: flex;
         justify-content: flex-start;
         align-items: center;
