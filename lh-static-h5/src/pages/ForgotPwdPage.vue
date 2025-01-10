@@ -681,7 +681,12 @@ function charType(num) {
   }
 
   .common-large-btn {
-    background: $linear-bg-180-dark;
+    background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
+    background-size: cover;
+    box-shadow: none;
+    border-radius: 4px;
+    border: 1px solid #3a93ce;
+    color: $white;
   }
 }
 </style>

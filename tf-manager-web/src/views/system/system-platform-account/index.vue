@@ -132,12 +132,12 @@
             <el-col>
               <el-radio-group
                 v-model="form.status"
-                size="mini"
+                size="small"
                 style="width: 300px"
               >
-                <el-radio-button label="OPEN">OPEN</el-radio-button>
-                <el-radio-button label="CLOSE">CLOSE</el-radio-button>
-                <el-radio-button label="TEST">TEST</el-radio-button>
+                <el-radio-button label="OPEN">{{ t('common.status.OPEN') }}</el-radio-button>
+                <el-radio-button label="CLOSE">{{ t('common.status.CLOSE') }}</el-radio-button>
+                <el-radio-button label="TEST">{{ t('common.status.TEST') }}</el-radio-button>
               </el-radio-group>
             </el-col>
           </el-form-item>
@@ -311,9 +311,9 @@
       <el-table-column
         prop="platformName"
         :label="t('fields.platformName')"
-        width="150"
+        width="200"
       />
-      <el-table-column prop="name" :label="t('fields.name')" width="150" />
+      <el-table-column prop="name" :label="t('fields.name')" width="200" />
       <!--      <el-table-column prop="nextActivationTime" :label="t('fields.nextActivationTime')" width="180">-->
       <!--        <template #default="scope">-->
       <!--          <span v-if="scope.row.nextActivationTime === null">-</span>-->
@@ -347,7 +347,7 @@
         :label="t('fields.walletType')"
         width="150"
       />
-      <el-table-column prop="status" :label="t('fields.status')" width="120">
+      <!-- <el-table-column prop="status" :label="t('fields.status')" width="120">
         <template #default="scope">
           <el-tag v-if="scope.row.status === 'OPEN'" type="success">
             OPEN
@@ -356,6 +356,19 @@
             CLOSE
           </el-tag>
           <el-tag v-if="scope.row.status === 'TEST'">TEST</el-tag>
+        </template>
+      </el-table-column> -->
+      <el-table-column prop="status" :label="t('fields.status')" min-width="200">
+        <template #default="scope">
+          <el-radio-group
+            v-model="scope.row.status"
+            size="mini"
+            @change="changePlatformAccountStatus(scope.row.id, scope.row.status)"
+          >
+            <el-radio-button label="OPEN">{{ t('common.status.OPEN') }}</el-radio-button>
+            <el-radio-button label="CLOSE">{{ t('common.status.CLOSE') }}</el-radio-button>
+            <el-radio-button label="TEST">{{ t('common.status.TEST') }}</el-radio-button>
+          </el-radio-group>
         </template>
       </el-table-column>
       <el-table-column
@@ -410,6 +423,7 @@ import {
   getPlatformAccount,
   updatePlatformAccount,
   updateAccountNeedRegister,
+  updatePlatformAccountState,
 } from '../../../api/system-platform-account'
 import { getPlatformNames } from '../../../api/platform'
 import moment from 'moment'
@@ -697,6 +711,12 @@ function removeJsonEditorElement() {
       }
     })
   })
+}
+
+async function changePlatformAccountStatus(id, status) {
+  await updatePlatformAccountState(id, status)
+  ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+  await loadPlatfromAccount()
 }
 
 onMounted(async () => {

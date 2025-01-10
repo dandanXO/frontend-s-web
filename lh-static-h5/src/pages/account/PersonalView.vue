@@ -128,7 +128,7 @@
               :color="$q.dark.isActive ? '' : 'brightbtn'"
               label="验证"
               @click="goToPage('/account/verifyEmail')"
-              style="white-space: nowrap"
+              style="white-space: nowrap;height: 30px;min-height: 30px;padding: 0;font-size:1rem;"
             />
           </div>
         </template>
@@ -674,7 +674,7 @@ export default defineComponent({
       border-bottom: 1px solid #b1bad31a;
     }
     .web {
-      color: $primary-dark;
+      color: #a98f7c;
       padding: 10px;
     }
     .web, .profile-form {

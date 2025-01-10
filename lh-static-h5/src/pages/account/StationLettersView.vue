@@ -125,6 +125,7 @@ export default defineComponent({
     @include content-block-dark;
     .btn {
       border-color: #666666;
+      color: #e1e1e1;
       &:last-child {
         border-bottom: none;
       }

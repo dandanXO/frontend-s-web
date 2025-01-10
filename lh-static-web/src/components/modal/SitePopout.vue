@@ -154,7 +154,7 @@ watch(() => selectedItemIndex.value, () => {
   width: 904px;
   height: 550px;
   gap: 16px;
-  padding: 45px;
+  padding: 25px 20px;
   // max-width: 50vw;
   aspect-ratio: 904 / 550;
 
@@ -176,10 +176,11 @@ watch(() => selectedItemIndex.value, () => {
   .content {
     width: 100%;
     height: 100%;
-    gap: 10px;
+    gap: 0;
     overflow: auto;
     display: grid;
     grid-template-columns: 2fr 1fr;
+    padding: 0 15px;
 
     .left {
       flex: 2;
@@ -264,7 +265,7 @@ watch(() => selectedItemIndex.value, () => {
         display: flex;
         justify-content: center;
         align-items: center;
-        border: 1px solid #56a0eb5c;
+        // border: 1px solid #56a0eb5c;
 
         .promo-banner-wrapper {
           width: 100%;

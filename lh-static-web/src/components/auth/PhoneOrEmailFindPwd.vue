@@ -389,7 +389,7 @@ const submitPostVerifyForm = () => {
 };
 </script>
 
-<style scoped lang="scss" src="@/scss/pages/accountDialog.scss"/>
+<style scoped lang="scss" src="@/scss/pages/accountDialog.scss" />
 
 <style lang="scss">
 .form-field {
@@ -410,6 +410,19 @@ const submitPostVerifyForm = () => {
 
   .el-form-item.is-error {
     margin-bottom: 15px;
+  }
+}
+</style>
+
+<style scoped lang="scss">
+.dark {
+  .blue-bg {
+    background-image: none !important;
+    background: url("../../assets/images/home/standard-button-bg.svg") no-repeat center center !important;
+    background-size: cover !important;
+    box-shadow: none;
+    border-radius: 6px;
+    border: 1px solid #3A93CE;
   }
 }
 </style>

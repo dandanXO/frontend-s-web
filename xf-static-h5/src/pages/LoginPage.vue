@@ -259,6 +259,7 @@ export default defineComponent({
     };
 
     const isCheckRmb = ref(false);
+    const isLoading = ref(false);
 
     const phoneVerificationRef = ref();
     const telephoneRef = ref();

@@ -118,7 +118,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.status')" prop="status">
+        <!-- <el-form-item :label="t('fields.status')" prop="status">
           <el-select
             clearable
             v-model="form.status"
@@ -134,6 +134,23 @@
               :value="item.value"
             />
           </el-select>
+        </el-form-item> -->
+        <el-form-item :label="t('fields.status')" prop="status">
+          <el-radio-group
+            v-model="form.status"
+            size="small"
+            style="width: 300px"
+          >
+            <el-radio-button label="OPEN">
+              {{ t('common.status.OPEN') }}
+            </el-radio-button>
+            <el-radio-button label="CLOSE">
+              {{ t('common.status.CLOSE') }}
+            </el-radio-button>
+            <el-radio-button label="TEST">
+              {{ t('common.status.TEST') }}
+            </el-radio-button>
+          </el-radio-group>
         </el-form-item>
         <el-row>
           <el-col>
@@ -488,7 +505,7 @@
       <el-table-column prop="name" :label="t('fields.name')" />
       <el-table-column prop="code" :label="t('fields.code')" />
       <el-table-column prop="alias" :label="t('fields.redeemCode')" />
-      <el-table-column prop="status" :label="t('fields.status')" width="100">
+      <!-- <el-table-column prop="status" :label="t('fields.status')" width="100">
         <template #default="scope">
           <el-tag v-if="scope.row.status === 'OPEN'" type="success">
             {{ scope.row.status }}
@@ -499,6 +516,19 @@
           <el-tag v-if="scope.row.status === 'TEST'">
             {{ scope.row.status }}
           </el-tag>
+        </template>
+      </el-table-column> -->
+      <el-table-column prop="status" :label="t('fields.status')" min-width="150">
+        <template #default="scope">
+          <el-radio-group
+            v-model="scope.row.status"
+            size="mini"
+            @change="changePromoCodeRedeemConfigStatus(scope.row.privilegeId, scope.row.status)"
+          >
+            <el-radio-button label="OPEN">{{ t('common.status.OPEN') }}</el-radio-button>
+            <el-radio-button label="CLOSE">{{ t('common.status.CLOSE') }}</el-radio-button>
+            <el-radio-button label="TEST">{{ t('common.status.TEST') }}</el-radio-button>
+          </el-radio-group>
         </template>
       </el-table-column>
       <el-table-column prop="startTime" :label="t('fields.startTime')">
@@ -578,7 +608,7 @@ import moment from "moment/moment";
 import { useRouter } from 'vue-router'
 import { isXF, isThai } from '@/utils/site'
 import { formatTimeZone } from "@/utils/format-timeZone";
-import { createPromoCodeConfig, getPromoCodeConfigList, updatePromoCodeConfig } from '../../../api/privilege-promo-code-config'
+import { createPromoCodeConfig, getPromoCodeConfigList, updatePromoCodeConfig, updatePromoCodeConfigStatus } from '../../../api/privilege-promo-code-config'
 import { getGameTypes } from '../../../api/game'
 
 const router = useRouter()
@@ -625,9 +655,9 @@ const uiControl = reactive({
   removeBtn: true,
   dateRangeType: "1",
   status: [
-    { key: 1, displayName: 'Open', value: 'OPEN' },
-    { key: 2, displayName: 'Close', value: 'CLOSE' },
-    { key: 3, displayName: 'Test', value: 'TEST' },
+    { key: 1, displayName: t('common.status.OPEN'), value: 'OPEN' },
+    { key: 2, displayName: t('common.status.CLOSE'), value: 'CLOSE' },
+    { key: 3, displayName: t('common.status.TEST'), value: 'TEST' },
   ],
   bonusType: [
     { key: 1, displayName: 'Fixed', value: 'FIXED' },
@@ -714,6 +744,7 @@ function showDialog(type) {
       bannerForm.value.resetFields()
       resetAllBonusTypeAmount()
     }
+    bannerForm.gameTypes = null
     uiControl.dialogTitle = t('fields.addPromoConfig')
   } else {
     uiControl.dialogTitle = t('fields.editPromoConfig')
@@ -881,7 +912,9 @@ async function getVipBySiteId(siteId) {
 function create() {
   bannerForm.value.validate(async valid => {
     if (valid) {
-      form.gameTypes = form.gameTypes.join(",")
+      if(form.gameTypes){
+        form.gameTypes = form.gameTypes.join(",")
+      }
       await createPromoCodeConfig(form)
       uiControl.dialogVisible = false
       await loadPromoConfig()
@@ -994,6 +1027,12 @@ function submit() {
 async function loadGameTypes() {
   const { data: gameType } = await getGameTypes()
   gameTypes.list = gameType;
+}
+
+async function changePromoCodeRedeemConfigStatus(id, status) {
+  await updatePromoCodeConfigStatus(id, status)
+  ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+  await loadPromoConfig()
 }
 
 onMounted(async () => {

@@ -32,3 +32,7 @@ export const addRedPacketRain = (row, id) => {
 export const randomMember = (id) => {
   return https().request("/privilege/red-packet-rain/random?privilegeId=" + id, Method.GET);
 };
+
+export const updateRedPacketRainState = (id, state) => {
+  return https().request(`/privilege/red-packet-rain/${id}/state?_method=PUT`, Method.POST, { state: state }, ContentType.form);
+};

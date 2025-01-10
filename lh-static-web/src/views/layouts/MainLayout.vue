@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color: #e7f1fd">
+  <div>
     <keep-alive>
       <common-header v-if="!shouldHideHeaderAndFooter" />
     </keep-alive>

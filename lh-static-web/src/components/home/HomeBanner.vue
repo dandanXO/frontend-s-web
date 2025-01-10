@@ -7,12 +7,16 @@
     align-center
   >
     <div style="position: relative;">
-      <SitePopout />
+      <SitePopout @popup-click="clickHomePopupImg"/>
       <img class="close-btn" src="../../assets/images/home/site-popout/close-btn.png" alt="" @click="handleClose">
     </div>
   </el-dialog>
+
+  <div v-if="isFetchingBanners" class="banner-loading">
+    <img class="loading-img" src="@/assets/logo-1.png" />
+  </div>
   <el-carousel
-    v-if="banners?.length > 0"
+    v-else-if="banners?.length > 0"
     class="banner-slider"
     indicator-position="outside"
     :autoplay="true"
@@ -22,17 +26,12 @@
       <a @click="goBannerPage(banner.redirectUrl)">
         <div class="banner-background">
           <div
-            v-if="!banner.isLocal"
             class="promo-bg isDesktop"
-            :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'"
+            :style="
+              'background-image: url(' + imgURL + (isDark ? banner.desktopImageUrlDark : banner.desktopImageUrl) + ')'
+            "
           ></div>
-          <div
-            v-else
-            class="promo-bg isDesktop"
-            :style="'background-image: url(' + require(`../../assets/home/bannerTest/IM-img.png`) + ')'"
-          ></div>
-
-          <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"></div>
+          <!--          <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"></div>-->
         </div>
       </a>
     </el-carousel-item>
@@ -41,7 +40,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import { loadPromoBanner, loadHomePopups } from "@/api/index/promo";
 import { useDark, useLocalStorage } from "@vueuse/core";
 import { userStore } from "@/store";
@@ -58,6 +57,7 @@ const banners = ref([]);
 const isDark = useDark();
 const store = userStore();
 const router = useRouter();
+const isFetchingBanners = ref(false);
 
 const allGames = ref(null);
 const goBannerPage = (redirectUrl) => {
@@ -80,26 +80,38 @@ const handleClose = () => {
 }
 
 const loadBanners = () => {
-  loadPromoBanner("HOME").then((res) => {
-    if (res.code === 0) {
-      banners.value = res.data;
+  isFetchingBanners.value = true;
 
-      console.log(banners.value);
+  loadPromoBanner("HOME")
+    .then((res) => {
+      isFetchingBanners.value = false;
 
-      if (store.token && (store.memberType === "TEST" || store.memberType === "PROMO_TEST")) {
-        banners.value.unshift({
-          category: "HOME",
-          isLocal: true,
-          promoPageId: null,
-          redirectUrl: "lh1-im-sport"
+      if (res.code === 0) {
+        banners.value = res.data;
+
+        console.log(banners.value);
+
+        //No Need liao.
+        // if (store.token && (store.memberType === "TEST" || store.memberType === "PROMO_TEST")) {
+        //   banners.value.unshift({
+        //     category: "HOME",
+        //     isLocal: true,
+        //     promoPageId: null,
+        //     redirectUrl: "lh1-im-sport"
+        //   });
+        // }
+      } else
+        notify({
+          type: "error",
+          message: res.message
         });
-      }
-    } else
-      notify({
-        type: "error",
-        message: res.message
-      });
-  });
+    })
+    .catch(() => {
+      isFetchingBanners.value = false;
+    })
+    .finally(() => {
+      isFetchingBanners.value = false;
+    });
 };
 
 const setWithExpiry = (key, value, interval) => {
@@ -153,7 +165,7 @@ const clickHomePopupImg = (urlString) => {
   let regexName = new RegExp(/^(name|\?name)/g);
   if (regexName.test(urlString)) {
     //去優惠
-    router.push(`/promotion${urlString}`);
+    router.push(`/promotion?${urlString}`);
     return;
   }
 
@@ -173,7 +185,7 @@ const checkShowImgTop = () => {
         // }
         const { code, data } = res;
         popupList.value = data;
-        store.frequency = data[0]["frequency"]
+        store.frequency = data[0]["frequency"];
         if (code === 0) {
           if (isImpt === null) {
             switch (data[0]["frequency"]) {
@@ -228,6 +240,39 @@ watch(
 </script>
 
 <style scoped lang="scss">
+.banner-loading {
+  width: 100%;
+  height: 632px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+    to bottom,
+    rgba(240, 248, 255, 0.8196078431) 0%,
+    rgb(240 248 255 / 50%) 80%,
+    rgb(240 248 255 / 0%) 100%
+  );
+
+  .loading-img {
+    animation-name: fade-in-out;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    width: 100px;
+  }
+}
+
+@keyframes fade-in-out {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .banner-slider {
   width: 100%;
 
@@ -264,6 +309,7 @@ watch(
     padding-top: 70px;
     .banner-container {
       .banner-background {
+        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 80%, transparent 100%);
         // background-image: url(@/assets/images/home/banner/banner-background-dark.png);
       }
     }

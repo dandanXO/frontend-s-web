@@ -2169,6 +2169,9 @@ export default defineComponent({
           updateUserTypeForm.value.resetFields()
         }
         userTypeForm.memberType = userType.list[0].value
+        if (memberDetail.memberType !== null) {
+          userTypeForm.memberType = memberDetail.memberType
+        }
         uiControl.dialogTitle = t('fields.userType')
       } else if (type === 'CHANGE_AFF') {
         if (changeAffForm.value) {
@@ -2186,6 +2189,9 @@ export default defineComponent({
           updateWithdrawTypeForm.value.resetFields()
         }
         withdrawTypeForm.withdrawType = withdrawType.list[0].value
+        if (memberDetail.withdrawType !== null) {
+          withdrawTypeForm.withdrawType = memberDetail.withdrawType
+        }
         uiControl.dialogTitle = t('fields.withdrawType')
       }
       uiControl.dialogVisible = true

@@ -1,51 +1,49 @@
 <template>
   <div class="livepoker-rebate-wrapper">
     <div class="livepoker-rebate-container">
-      <div class="livepoker-rebate-section">
+      <div class="livepoker-rebate-section section-bg">
         <div class="livepoker-rebate-section-left">
           <div class="livepoker-rebate-section-title">
-            <div><img src="@/assets/promo/lh-livepoker-rebate/section-title-img.png" /></div>
+            <div class="claim-title-icon"></div>
             投注礼金
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon">
-              <img src="@/assets/promo/lh-livepoker-rebate/reward-icon1.png" alt="" width="100%" />
+            <div class="reward-info-icon claim-coin-icon">
             </div>
             <div class="reward-info-content">
               上月累计存款:
-              <span class="amount">{{ highestSingleValidBet }}元</span>
+              <span class="amount">{{ depositAmount }}元</span>
             </div>
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon">
-              <img src="@/assets/promo/lh-livepoker-rebate/reward-icon2.png" alt="" width="100%" />
+            <div class="reward-info-icon claim-gift-icon">
             </div>
             <div class="reward-info-content">
-              可领取红包礼金：
-              <span class="amount">{{ bonus }}元</span>
+              可领取红包次数：
+              <span class="amount">{{ draw }}次</span>
             </div>
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
-            <img v-if="bonus <= 0" src="@/assets/promo/hongbaoyu/reward-btn-disabled.png" alt="" width="100%" />
+          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: draw <= 0, loading: loadingClaim }">
+            <img v-if="draw <= 0" src="@/assets/promo/hongbaoyu/reward-btn-disabled.png" alt="" width="100%" />
             <img v-else src="@/assets/promo/hongbaoyu/reward-btn.png" alt="" width="100%" />
           </div>
         </div>
       </div>
-      <div class="livepoker-rebate-game-info">
-        <div class="title"></div>
+      <div class="livepoker-rebate-game-info section-bg">
+        <div class="title-img">活动详情</div>
         <div class="little-title">
-          <div class="left">活动时间</div>
+          <div class="ribbon">活动时间</div>
           <div class="right">自2025年1月1日起</div>
         </div>
         <div class="little-title">
-          <div class="left">活动内容</div>
+          <div class="ribbon">活动内容</div>
           <div class="right">
             会员在每月最后一天前累计存款达到5000元，即可在次月20日晚6点-晚10点拆红包，单个红包最高888元。
           </div>
         </div>
-        <table class="livepoker-rebate-game-info-table">
+        <table class="livepoker-rebate-game-info-table section-table">
           <thead>
             <tr>
               <th>上月累计存款</th>
@@ -92,8 +90,9 @@
         </div>
       </div>
 
-      <div class="livepoker-rebate-game-bottom-rule">
-        <div class="title"></div>
+      <div class="livepoker-rebate-game-bottom-rule section-bg">
+        <div class="title-img">活动规则</div>
+        <br/>
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
@@ -127,25 +126,94 @@
       </div>
     </div>
   </div>
+
+  <el-dialog
+    class="award-modal hongbaoyu-modal"
+    :close-on-click-modal="false"
+    :modal="false"
+    v-model="privilegeClaimedModalVisible"
+    align-center
+  >
+    <div class="modal-div">
+      <div class="red-packet-opened">
+        <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu2024/red-packet-opened.png`)" />
+        <div class="grats">恭喜中奖！</div>
+        <div class="amount">{{ winAmount }}元</div>
+
+        <div class="get-btn" @click="getPromotionPrize">点击领取</div>
+      </div>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { ResponseCode } from "@/api/response";
+import { useNotify } from "@/hooks/notify";
+import { onMounted, ref, defineProps } from "vue";
 import { userStore } from "@/store";
-// import { useNotify } from "@/hooks/notify";
-// import { ElMessageBox } from "element-plus";
-// import { ResponseCode } from "@/api/response";
-// const props = defineProps(["promoCode"]);
-// const { promoCode } = toRefs(props);
-// const notify = useNotify();
+import { initDepositRedPacket, claimDailyRainItem } from "@/api/index/promo";
 
+const props = defineProps(["promoCode", "params"]);
+const promoCode = ref(props.promoCode);
 const store = userStore();
-const highestSingleValidBet = ref(0);
-const bonus = ref(0);
+const notify = useNotify();
+const depositAmount = ref(0);
+const draw = ref(0);
+const winAmount = ref(0);
+const loadingClaim = ref(false);
+const privilegeClaimedModalVisible = ref(false);
 
-const handleClaimBonus = () => {};
+const fetchData = async () => {
+  loadingClaim.value = true;
+  initDepositRedPacket(promoCode.value)
+    .then((res) => {
+      if (res.code === 0) {
+        depositAmount.value = res.data.depositAmount;
+        draw.value = res.data.draw;
 
-const fetchData = async () => {};
+        store.getBalance();
+      }
+    })
+    .catch(() => {})
+    .finally(() => {
+      loadingClaim.value = false;
+    });
+};
+
+const handleClaimBonus = () => {
+  loadingClaim.value = true;
+  claimDailyRainItem(promoCode.value)
+    .then((res) => {
+      if (res.code === 0) {
+        privilegeClaimedModalVisible.value = true;
+        winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;
+        store.getBalance();
+        fetchData();
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
+        notify({
+          type: "error",
+          message: res.message
+        });
+      }
+    })
+    .catch(() => {})
+    .finally(() => {
+      loadingClaim.value = false;
+    });
+};
+
+const getPromotionPrize = () => {
+  store.getBalance();
+  privilegeClaimedModalVisible.value = false;
+};
 
 onMounted(() => {
   if (!store.token) {
@@ -238,13 +306,13 @@ onMounted(() => {
     font-size: 16px;
     font-weight: 500;
     line-height: 22.4px;
-    color: #ff0000;
+    color: #ff3333;
   }
   .livepoker-rebate-game-bottom-left-btn {
     font-size: 16px;
     font-weight: 600;
     line-height: 22.4px;
-    color: #ff0000;
+    color: #ff3333;
     cursor: pointer;
     display: flex;
     justify-content: flex-start;
@@ -401,7 +469,7 @@ onMounted(() => {
         font-size: 18px;
         font-weight: 400;
         line-height: 22.4px;
-        color: #ff0000;
+        color: #ff3333;
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -500,6 +568,69 @@ onMounted(() => {
     }
     td {
       color: white;
+    }
+  }
+}
+
+.modal-div {
+  width: 100%;
+}
+
+.red-packet-opened {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  img {
+    width: 500px;
+  }
+
+  .grats {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    margin-top: 100px;
+
+    color: #fffbfb;
+
+    text-align: center;
+    font-family: PingFang SC;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+
+  .amount {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    margin-top: 250px;
+    left: -10px;
+    color: #f23b1d;
+    font-size: 50px;
+    font-weight: bold;
+  }
+
+  .get-btn {
+    color: #f23b1d;
+    border-radius: 30px;
+    background: linear-gradient(180deg, #fdf4ee 0%, #fff3c0 100%);
+    position: absolute;
+    margin-top: 270px;
+    margin-left: -15px;
+    font-size: 20px;
+    padding: 12px 24px;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(0.9);
     }
   }
 }

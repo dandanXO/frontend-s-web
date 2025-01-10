@@ -36,3 +36,7 @@ export const deleteSiteMediaDisplaySettings = async ids => {
     ContentType.form
   )
 }
+
+export const updateSiteMediaDisplaySettingsStatus = (id, state) => {
+  return https().request(`/site-media-display-settings/${id}/state?_method=PUT`, Method.POST, { state: state }, ContentType.form);
+};

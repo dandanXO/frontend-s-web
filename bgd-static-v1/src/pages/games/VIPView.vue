@@ -179,7 +179,7 @@
               <br />
               {{ $t("vip.experience") }}
             </q-td>
-            <q-td style="    white-space: normal;">
+            <q-td style="white-space: normal">
               {{ $t("vip.dailyWithdrawalTimes") }}
             </q-td>
             <!-- <q-td>
@@ -250,7 +250,7 @@
             <q-td style="">
               {{ $t("vip.extra") }}
               <br />
-              {{ $t("vip.rewardss") }}
+              {{ $t("vip.rewards") }}
             </q-td>
           </q-tr>
         </template>

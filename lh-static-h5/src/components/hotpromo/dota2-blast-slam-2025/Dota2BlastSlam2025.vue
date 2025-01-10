@@ -1,24 +1,15 @@
 <template>
   <div class="livepoker-rebate-wrapper">
     <div class="livepoker-rebate-container">
-      <div class="livepoker-rebate-section">
+      <div class="livepoker-rebate-section section-bg">
         <div class="livepoker-rebate-section-left">
           <div class="livepoker-rebate-section-title">
-            <div>
-              <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-title-img.png"
-                style="width: 20px; height: 20px; margin-bottom: 0px"
-              />
+            <div class="claim-title-icon">
             </div>
             救援时刻
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon">
-              <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon1.png"
-                alt=""
-                width="100%"
-              />
+            <div class="reward-info-icon claim-coin-icon">
             </div>
             <div class="reward-info-content">
               累计周负盈利：
@@ -26,12 +17,7 @@
             </div>
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon">
-              <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon2.png"
-                alt=""
-                width="100%"
-              />
+            <div class="reward-info-icon claim-gift-icon">
             </div>
             <div class="reward-info-content">
               可领取彩金：
@@ -45,28 +31,28 @@
           </div>
         </div>
       </div>
-      <div class="livepoker-rebate-game-info">
-        <div class="title"></div>
+      <div class="livepoker-rebate-game-info section-bg">
+        <div class="title-img">活动详情</div>
         <div class="little-title">
-          <div class="left">活动时间</div>
+          <div class="ribbon">活动时间</div>
           <div class="right">2025年02月03日至2025年02月09日</div>
         </div>
         <div class="little-title">
-          <div class="left">活动对象</div>
+          <div class="ribbon">活动对象</div>
           <div class="right">投注BLAST Slam II的会员</div>
         </div>
         <div class="little-title">
-          <div class="left">活动平台</div>
+          <div class="ribbon">活动平台</div>
           <div class="right">电竞</div>
         </div>
         <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
-          <div class="left">优惠详情</div>
+          <div class="ribbon">优惠详情</div>
           <div class="right">
             会员在本站电竞场馆中，投注BLAST Slam
             II赛事在2月3日-2月9日的周总负盈利达到1,000元及以上，2月10日即可领取救援金，最高可达1,288元！
           </div>
         </div>
-        <table class="livepoker-rebate-game-info-table">
+        <table class="livepoker-rebate-game-info-table section-table">
           <thead>
             <tr>
               <th>周负盈利</th>
@@ -130,8 +116,9 @@
         </div>
       </div>
 
-      <div class="livepoker-rebate-game-bottom-rule">
-        <div class="title"></div>
+      <div class="livepoker-rebate-game-bottom-rule section-bg">
+        <div class="title-img">活动规则</div>
+        <br/>
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
@@ -348,13 +335,13 @@ onMounted(() => {
     font-size: 12px;
     font-weight: 600;
     line-height: 22.4px;
-    color: #ff0000;
+    color: #ff4c4c !important;
   }
   .livepoker-rebate-game-bottom-left-btn {
     font-size: 12px;
     font-weight: 600;
     line-height: 22.4px;
-    color: #ff0000;
+    color: #ff4c4c !important;
     cursor: pointer;
     display: flex;
     justify-content: flex-start;
@@ -512,7 +499,7 @@ onMounted(() => {
         font-size: 12px;
         font-weight: 400;
         line-height: 22.4px;
-        color: #ff0000;
+        color: #ff4c4c !important;
         display: flex;
         justify-content: flex-start;
         align-items: center;

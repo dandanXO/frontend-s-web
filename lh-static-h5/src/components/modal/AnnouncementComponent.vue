@@ -6,24 +6,24 @@
     :navigation="false"
     infinite
     :arrows="false"
-    @update:model-value="emits('chageSlide',$event)"
+    @update:model-value="emits('chageSlide', $event)"
   >
     <q-carousel-slide v-for="(item, index) in 6" :key="index" :name="index" class="column no-wrap flex-center">
       <div class="announcement-component">
         <div class="announcement-title">体育场馆维护公告 {{ index + 1 }}</div>
         <div class="announcement-content">
-          尊敬的会员，恭喜您于 2023/08/1
-          使用 PAY 钱包、USDT 进行提款，产生一笔幸运订单。彩金已经派发至您的游戏账户内请您当日内查收。恭喜您于 2023/08/1
-          使用 PAY 钱包、USDT 进行提款，产生一笔幸运订单。彩金已经派发至您的游戏账户内请您当日内查收。祝您好运连连！天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。
+          尊敬的会员，恭喜您于 2023/08/1 使用 PAY 钱包、USDT
+          进行提款，产生一笔幸运订单。彩金已经派发至您的游戏账户内请您当日内查收。恭喜您于 2023/08/1 使用 PAY 钱包、USDT
+          进行提款，产生一笔幸运订单。彩金已经派发至您的游戏账户内请您当日内查收。祝您好运连连！天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。天天爆米。祝您好运连连！天天爆米。祝您好运连连！天天爆米。
         </div>
         <div class="announcement-footer">
           <div class="footer-button" @click="handleService">
             联系客服
-            <img src="../../assets/images/home/announcement/arrow-right.svg" alt="">
+            <img src="../../assets/images/home/announcement/arrow-right.svg" alt="" />
           </div>
           <div class="footer-button" @click="handleDetail">
             查看详情
-            <img src="../../assets/images/home/announcement/arrow-right.svg" alt="">
+            <img src="../../assets/images/home/announcement/arrow-right.svg" alt="" />
           </div>
         </div>
       </div>
@@ -32,31 +32,34 @@
 </template>
 
 <script setup>
-import { ref,watch, defineEmits } from "vue";
+import { ref, watch, defineEmits } from "vue";
 
 const props = defineProps({
   slide: {
     type: Number,
     default: 1
   }
-})
-const emits = defineEmits(['chageSlide']);
-const innerSlide = ref(0)
-watch(()=>props.slide,(newV, oldV)=>{
-  innerSlide.value = newV
-  
-  if(newV!=oldV){
-    
-    
+});
+const emits = defineEmits(["chageSlide"]);
+const innerSlide = ref(0);
+watch(
+  () => props.slide,
+  (newV, oldV) => {
+    innerSlide.value = newV;
+
+    if (newV != oldV) {
+    }
+  },
+  { immediate: true }
+);
+watch(
+  () => innerSlide,
+  (newV) => {
+    console.log("inin");
+    emits("chageSlide", newV);
   }
-  
-},{immediate: true})
-watch(()=> innerSlide, (newV)=>{
-  console.log('inin')
-  emits('chageSlide',newV)
-})
-const handleService = () => {
-};
+);
+const handleService = () => {};
 
 const handleDetail = () => {
   console.log("handleDetail");
@@ -102,6 +105,12 @@ const handleDetail = () => {
     gap: 2px;
     padding: 8px 12px;
     color: white;
+  }
+}
+
+.body--dark {
+  :deep(.announcement-component) {
+    background: orange;
   }
 }
 </style>
