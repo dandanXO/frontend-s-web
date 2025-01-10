@@ -3,7 +3,7 @@
     <div class="withdrawal-summary" v-if="selectedMethodItem">
       <div class="balance">
         <q-skeleton v-if="isLoadingWithdrawalMethod" style="height: 20px" />
-        <span v-else class="amount">{{ convertToCommaAmount(store.balance, false) }}</span>
+        <span v-else class="amount">{{ convertToCommaAmount(store.balance, 2) }}</span>
         <div class="title">{{ $t("withdraw.cashBalance") }}</div>
       </div>
 
