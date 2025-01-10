@@ -288,7 +288,7 @@ const getChestDesign = (i) => {
 
 const progressBarWidth = computed(() => {
   if (minValidBet.value === 0) return 0;
-  return (totalValidBet.value / minValidBet.value) * 100;
+  return Math.min((totalValidBet.value / minValidBet.value) * 100, 100);
 });
 
 const setDayItemRef = (index) => {
