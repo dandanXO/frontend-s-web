@@ -102,7 +102,8 @@ body {
     padding: 1.2rem;
     border: 0;
     // text-align: center;
-    background: rgb(29, 33, 46);
+    // background: rgb(29, 33, 46);
+    background: #1b1b1c;
     &__header {
       padding: 0;
     }
@@ -121,7 +122,7 @@ body {
     .el-button--primary {
       // padding: 1.5em;
       // width: 200px;
-      background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000) !important;
+      // background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000) !important;
     }
   }
   header {
@@ -305,15 +306,21 @@ body {
     align-items: center;
   }
 }
+.el-button--large {
+  border-radius: 100px;
+  padding: 12px 40px;
+}
 .common-btn,
-.common-btn.el-button {
+.common-btn.el-button,
+.el-button {
   height: unset;
   padding: 9px;
   font-size: 0.7rem;
-  border-radius: 2px;
+  border-radius: 100px;
   color: $color-white;
   background: $blue-btn;
-  background-image: linear-gradient(90deg, #0ca9bc 0, #0a5e89 100%);
+  // background-image: linear-gradient(90deg, #0ca9bc 0, #0a5e89 100%);
+  background: linear-gradient(180deg, #32ceed 0%, #1c7587 100%);
   display: inline-block;
   cursor: pointer;
   text-align: center;
@@ -329,9 +336,9 @@ body {
   &--large {
     --el-button-size: 40px;
     height: var(--el-button-size);
-    padding: 12px 40px;
+    padding: 12px 40px !important;
     font-size: var(--el-font-size-base);
-    border-radius: 100px;
+    border-radius: 100px !important;
     letter-spacing: 3px;
   }
   &.grey {
