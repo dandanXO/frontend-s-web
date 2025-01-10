@@ -389,7 +389,7 @@
         >
           <el-input data-highlight-target class="disable-input" v-model="item.code" />
           -
-          <el-input class="disable-input" v-model="item.value" />
+          <el-input data-highlight-target class="disable-input" v-model="item.value" />
           <el-button
             icon="el-icon-edit"
             size="mini"
@@ -1228,11 +1228,15 @@ function searchCode(searchTerm) {
     el.style.backgroundColor = 'yellow';
   });
 
+  const key = matchedElements[0].value || matchedElements[0].textContent || '';
+  console.log(key);
+
   const groups = configs.customGroup
-    .filter(group => group.items.some(item => item.code.includes(searchTerm)))
+    .filter(group => group.items.some(item => item.code.includes(searchTerm) || item.value.includes(searchTerm)))
     .filter(group => !uiControl.activeGroups.includes(group.group));
 
   uiControl.activeGroups = [...new Set([...uiControl.activeGroups, ...groups.map(group => group.group)])];
+  console.log(uiControl.activeGroups);
 
   nextTick(() => {
     matchedElements[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1245,6 +1249,7 @@ onMounted(() => {
   loadRiskLevels()
   loadValueRules()
   bus.on('search', searchCode)
+  bus.on('add', () => showDialog('CREATE'))
 })
 </script>
 
