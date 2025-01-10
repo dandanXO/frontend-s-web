@@ -366,7 +366,7 @@ onMounted(() => {
   border: 1px solid #337e3a;
   border-radius: 10px;
   padding: 0 16px 16px;
-  margin-top: calc(2% + 16px);
+  margin-top: calc(12px);
   width: 100%;
 
   .content-card-title {
