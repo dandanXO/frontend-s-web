@@ -177,7 +177,7 @@ const initGeetest = (config) => {
                   : route.path;
                 if (store.token) {
                   router.push(jumpUrl);
-    
+
                   sessionStorage.removeItem("REFERRAL_CODE");
                   sessionStorage.removeItem("SUMMON_CODE");
                   loginForm.loginName = null;
@@ -288,7 +288,7 @@ const initGeetest = (config) => {
       console.error("Geetest loading error:", error);
     }
 
-    
+
     getCode();
     getSummonCode();
   });
@@ -298,7 +298,7 @@ const initGeetest = (config) => {
   
   <style lang="scss">
   .dark {
-    .el-overlay {
+    .el-overlay:has(.acc-dialog) {
       background: url("@/assets/home/auth/login-page-bg-dark.png");
       background-size: 100% auto;
     }

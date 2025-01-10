@@ -9,7 +9,7 @@
       </div>
       <div class="buttons">
         <div class="buttons">
-          <q-btn @click="openDownloadAppLink" label="立即下载" color="brightbtn" class="top-btn" />
+          <q-btn @click="openDownloadAppLink" label="立即下载" class="top-btn common-md-btn" />
         </div>
       </div>
     </div>
@@ -73,11 +73,11 @@
     </template>
 
     <q-carousel-slide
-      v-for="(banner, i) in banners"
+      v-for="(banner, i) in bannersWithImage"
       :key="i"
       :name="i"
       class="column no-wrap flex-center"
-      :img-src="imgURL + banner.mobileImageUrl"
+      :img-src="imgURL + banner.imgSrc"
       @click="gotoPromo(banner)"
     ></q-carousel-slide>
   </q-carousel>
@@ -112,7 +112,7 @@
           store.token ? (!isLoadingBalance ? "¥" + convertToCommaAmount(mainWallet, true) : "加载中...") : "您还未登录"
         }}
       </span>
-      <span>{{ store.token ? "中心钱包" : "登录/注册后查看" }}</span>
+      <span :class="!store.token ? 'main-loginregister' : ''">{{ store.token ? "中心钱包" : "登录/注册后查看" }}</span>
     </div>
     <div class="menulist">
       <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
@@ -630,7 +630,7 @@
   <q-dialog class="station-notice-dialog" width="100%" v-model="isStationNotice">
     <q-card
       style="width: 85%; border-radius: 12px; position: relative; padding: 20px 12px 12px 12px"
-      class="bg-[#0000001A] text-black"
+      class="bg-[#0000001A] text-black station-notice-content-wrapper"
     >
       <q-card-section class="q-mb-md" style="display: flex; flex-direction: column">
         <q-tabs
@@ -646,7 +646,7 @@
 
         <q-separator />
 
-        <q-tab-panels v-model="activeKey" animated>
+        <q-tab-panels v-model="activeKey" animated style="background: transparent">
           <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
             <q-list style="min-height: 65vh">
               <div v-for="(ann, idx) in announcementList" :key="idx">
@@ -658,7 +658,7 @@
                     icon="notifications_none"
                     :label="ann.title"
                   >
-                    <q-card>
+                    <q-card style="background: transparent">
                       <q-card-section style="color: #9f9f9f">
                         {{ ann.content }}
                       </q-card-section>
@@ -690,7 +690,13 @@
           height="100%"
           style="background: transparent"
         >
-          <q-carousel-slide v-for="(item, index) in popupList" :key="index" :name="index" class="carousel-slide" style="padding: 0">
+          <q-carousel-slide
+            v-for="(item, index) in popupList"
+            :key="index"
+            :name="index"
+            class="carousel-slide"
+            style="padding: 0"
+          >
             <div class="promo-banner-container">
               <div class="promo-banner-content" v-if="item.type === 'TEXT'" v-html="item.content"></div>
               <div class="promo-banner-img" @click="clickHomePopupImg(item.path)" v-else>
@@ -1057,7 +1063,7 @@ export default defineComponent({
     // Pop out ads banner
     const isImportantAnnoucementModal = ref(false);
     const popupList = ref([]);
-    const popupSlide = ref(0)
+    const popupSlide = ref(0);
     const homePopupFrequencyNum = ref(0);
 
     const setExpiryBanner = () => {
@@ -1077,7 +1083,7 @@ export default defineComponent({
         value: value,
         expiry: now.getTime() + interval,
         id: popupList.value[0]?.id,
-        frequency: popupList.value[0]?.frequency,
+        frequency: popupList.value[0]?.frequency
       };
       localStorage.setItem(key, JSON.stringify(item));
     };
@@ -1169,7 +1175,7 @@ export default defineComponent({
     };
     const formatHomePopupImg = (path) => {
       return useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/" + path;
-    }
+    };
 
     function loadData() {
       api
@@ -1182,6 +1188,13 @@ export default defineComponent({
         })
         .catch(() => {});
     }
+
+    const bannersWithImage = computed(() =>
+      banners.value.map((banner) => ({
+        ...banner,
+        imgSrc: $q.dark.isActive && banner.mobileImageUrlDark ? banner.mobileImageUrlDark : banner.mobileImageUrl
+      }))
+    );
 
     const platforms = ref([]);
     const selectedPlatId = ref();
@@ -1839,7 +1852,8 @@ export default defineComponent({
       rocketSlide: ref(0),
       promoSlide: ref(0),
       convertToCommaAmount,
-      formatHomePopupImg
+      formatHomePopupImg,
+      bannersWithImage
     };
   }
 });
@@ -1983,10 +1997,9 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: $box-width;
+  width: 100%;
+  padding: 4px 1rem;
   margin: 0 auto;
-  padding: 4px;
-
   .header-left {
     height: 45px;
 
@@ -2087,7 +2100,7 @@ export default defineComponent({
   }
 
   .menulist {
-    flex: 4;
+    flex: 6;
     padding-left: 8px;
     display: flex;
     justify-content: space-between;
@@ -2226,7 +2239,7 @@ export default defineComponent({
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap: 0px;
+    gap: 5px;
 
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
@@ -2235,7 +2248,6 @@ export default defineComponent({
     .game-platform {
       padding: 0;
       margin: 0;
-      margin-bottom: 8px;
 
       .platform-item {
         position: relative;
@@ -2271,6 +2283,7 @@ export default defineComponent({
     img {
       display: block;
       width: 100%;
+      max-width: 100%;
     }
   }
 
@@ -2372,6 +2385,7 @@ export default defineComponent({
         overflow: hidden;
         display: grid;
         grid-template-columns: 50% 50%;
+        min-height: 106px;
 
         .platform-content {
           width: 100%;
@@ -2482,6 +2496,30 @@ export default defineComponent({
 }
 
 .body--dark {
+  .station-notice-dialog {
+    .station-notice-content-wrapper {
+      background: #0f182e;
+    }
+  }
+
+  .mid-announcement-section {
+    height: 30px;
+    margin: 2px auto;
+  }
+
+  .home-header {
+    background: #212b43;
+    background-color: #212b43;
+    padding: 4px 1rem;
+    width: 100%;
+
+    .header-right {
+      .btn-pointer {
+        width: 20px;
+        height: auto;
+      }
+    }
+  }
   .download-top-container {
     background: $background-dark-light;
     .download-top-box {
@@ -2491,18 +2529,26 @@ export default defineComponent({
       .download-txt-container {
         color: $font-1-dark;
         .download-title {
-          color: $font-3-dark;
+          color: #fddf99;
         }
       }
     }
   }
 
   .details-bar {
+    padding: 0;
+
     .main-balance {
       color: $font-3-dark;
     }
+
+    .main-loginregister {
+      color: #a98f7c;
+    }
+
     .message {
       color: $font-1-dark;
+      text-align: left;
     }
     .menulist {
       img {
@@ -2518,27 +2564,62 @@ export default defineComponent({
   .home-game-section {
     .game-left-list {
       gap: 10px;
+      flex: 1.5;
+
+      img {
+        aspect-ratio: 45 / 53;
+      }
     }
     .game-right-platform {
       .platform-block {
+        min-height: 100px;
         .platform-img-frame {
           border-radius: unset;
           background-color: transparent;
-          aspect-ratio: 684/244;
+          aspect-ratio: 819/295;
           background-size: 100% 100%;
+          max-height: 150px;
           .platform-label {
             background-image: url(../assets/images/home/label-certified-dark.png);
             top: 1px;
             left: 1px;
             border-top-left-radius: 8px;
+            display: none;
+          }
+          .platform-title {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 400;
           }
           .platform-subtitle {
-            color: $font-1-dark;
+            color: #a98f7c;
+            font-size: 0.975rem;
+          }
+          .platform-logo {
+            display: none;
+          }
+          .platform-content {
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 1.5rem;
           }
         }
       }
     }
   }
+}
+
+:deep(.tabs-wrapper) {
+  background: transparent;
+  border-radius: 6px !important;
+  padding: 8px;
+  color: #737373;
+}
+
+.tab-active {
+  background: linear-gradient(180deg, #52acff 0%, #3559da 100%);
+  color: white;
+  border-radius: 6px;
 }
 
 @keyframes fadeIn {

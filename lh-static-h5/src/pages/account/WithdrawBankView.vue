@@ -60,7 +60,8 @@
           <span>+添加电子钱包</span>
         </div>
         <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/alipay')">
-          <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
+          <img v-if="$q.dark.isActive" class="bank-bind-img" src="../../assets/images/download/active-tab-bg-dark.png" />
+          <img v-else class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
           <span>+添加支付宝</span>
         </div>
       </div>
@@ -89,8 +90,12 @@
                 @click="copy(bankCard.cardNumber)"
               /> -->
             </div>
+            <div v-if="$q.dark.isActive" class="bank-type">银行卡</div>
           </div>
-          <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>
+          <div class="right-container" @click="onUnbindClick(bankCard)">
+            <img v-if="$q.dark.isActive" src="../../assets/images/account/unlink-icon.svg"/>
+            <span v-else>解绑</span>
+          </div>
         </div>
       </template>
 
@@ -118,8 +123,12 @@
                 @click="copy(bankCard.cardNumber)"
               /> -->
             </div>
+            <div v-if="$q.dark.isActive" class="bank-type">虚拟账户</div>
           </div>
-          <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>
+          <div class="right-container" @click="onUnbindClick(bankCard)">
+            <img v-if="$q.dark.isActive" src="../../assets/images/account/unlink-icon.svg"/>
+            <span v-else>解绑</span>
+          </div>
         </div>
       </template>
 
@@ -147,8 +156,12 @@
                 @click="copy(bankCard.cardNumber)"
               /> -->
             </div>
+            <div v-if="$q.dark.isActive" class="bank-type">电子钱包</div>
           </div>
-          <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>
+          <div class="right-container" @click="onUnbindClick(bankCard)">
+            <img v-if="$q.dark.isActive" src="../../assets/images/account/unlink-icon.svg"/>
+            <span v-else>解绑</span>
+          </div>
         </div>
       </template>
 
@@ -176,8 +189,12 @@
                 @click="copy(bankCard.cardNumber)"
               /> -->
             </div>
+            <div v-if="$q.dark.isActive" class="bank-type">支付宝</div>
           </div>
-          <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>
+          <div class="right-container" @click="onUnbindClick(bankCard)">
+            <img v-if="$q.dark.isActive" src="../../assets/images/account/unlink-icon.svg"/>
+            <span v-else>解绑</span>
+          </div>
         </div>
       </template>
     </div>
@@ -242,7 +259,7 @@ const onUnbindClick = (card) => {
 };
 
 const getTitleText = () => {
-  const { bankType, bankCode } = selectedUnbindBankCard.value;
+  const { bankType, bankCode } = selectedUnbindBankCard.value || {};
 
   if (isAlipay(bankCode)) return "请输入解绑支付宝号";
   else if (bankType === BANK_CARD) return "请输入解绑银行卡号";
@@ -272,7 +289,7 @@ const isAlipay = (bankID) => {
 };
 
 const unbindCardLabel = () => {
-  const { bankType, bankCode } = selectedUnbindBankCard.value;
+  const { bankType, bankCode } = selectedUnbindBankCard.value || {};
   if (isAlipay(bankCode)) return "支付宝号";
   else if (bankType === BANK_CARD) return "银行卡号";
   else if (bankType === CRYPTO) return "钱包地址";
@@ -451,8 +468,40 @@ onActivated(() => {
 .body--dark {
   .bank-detail-container {
     .bank-detail-wrapper {
+      .bank-detail-item {
+        background: #273354;
+        border-radius: 6px;
+        color: #fff;
+        margin: 0 auto 14px;
+        padding: 0.5rem 1rem;
+        box-shadow: none;
+      }
+      .bank-card {
+        background: url(../../assets/images/account/bank-card-bg-dark.png);
+        background-size: 100% 100%;
+        border-radius: 0;
+        aspect-ratio: 328/100;
+        align-items: flex-start;
+
+        .bank-type {
+          font-size: 10px;
+          color: #FFFFFFCC;
+        }
+
+        .left-container {
+          .bank-name, .bank-number-wrapper {
+            color: #fff;
+          }
+        }
+      }
       .bank-bind-item {
         @include content-block-dark;
+
+        .bank-bind-btn {
+          .bank-bind-img {
+            border-radius: 6px;
+          }
+        }
       }
     }
   }

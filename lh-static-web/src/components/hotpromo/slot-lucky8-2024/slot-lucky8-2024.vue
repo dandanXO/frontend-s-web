@@ -42,8 +42,8 @@
         <div class="little-title" style="margin-top: 20px">
           <div class="left">申请方式</div>
           <div class="right">
-            会员获得符合活动金额注单号，注单产生当日
-            23:59:59内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。
+            会员获得符合活动金额注单号，注单产生当日 23:59:59
+            内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。
           </div>
         </div>
         <div class="little-title" style="margin-bottom: 0px">
@@ -114,7 +114,8 @@
             (路径：电子幸运注单活动页->领取彩金)，逾期申请则视为自动放弃，彩金八倍流水即可提款；
           </div>
           <div class="item">
-            2.投注中奖注单只限北京时间当日有效，免费旋转注单、投注额小于5元的注单不可参与此优惠，每位会员每天仅限申请一次，每个注单仅限申请一种优惠，不可使用同一笔注单申请多种官网优惠；
+            2.投注中奖注单只限北京时间当日有效，免费旋转注单、投注额小于 5
+            元的注单不可参与此优惠，每位会员每天仅限申请一次，每个注单仅限申请一种优惠，不可使用同一笔注单申请多种官网优惠；
           </div>
           <div class="item">3.彩金不可购买免费旋转机会，不可投注捕鱼游戏；</div>
           <div class="item">
@@ -269,6 +270,537 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+.dark {
+  .luck8-box {
+    font-family: PingFang TC;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .luck8-container {
+    width: 1200px;
+    height: 100%;
+  }
+
+  .luck8-game {
+    width: 100%;
+    height: 302px;
+    border-radius: 12px;
+    border: 1px solid #51acff;
+    background-color: #fff;
+    position: relative;
+    margin-bottom: 12px;
+    .luck8-game-status {
+      width: 240px;
+      height: 40px;
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  .luck8-game-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    padding-bottom: 40px;
+
+    .luck8-game-content-left,
+    .luck8-game-content-right {
+      flex: 1;
+      .luck8-game-content-team {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .luck8-game-icon {
+          width: 80px;
+          height: 80px;
+        }
+        .luck8-game-content-team-name {
+          font-size: 20px;
+          font-weight: 600;
+          line-height: 28px;
+          margin-top: 12px;
+          margin-bottom: 24px;
+        }
+      }
+    }
+    .luck8-game-content-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+
+      .luck8-game-content-center-time {
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 33.6px;
+        color: #479af7;
+        border-radius: 30px;
+        padding: 8px 44px;
+        background: #edf4ff;
+        margin-bottom: 15px;
+      }
+      .luck8-game-content-center-schedule {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 28px;
+        color: #1b1b1b99;
+        margin-bottom: 33px;
+      }
+    }
+  }
+
+  .luck8-game-content-btn {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 28px;
+    color: #00000066;
+    background-image: url("../../../assets/promo/lh-luck8/btn.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 180px;
+    height: 58px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .nba2-match-game-content-btn__pseudo {
+    height: 58px;
+  }
+
+  .luck8-game-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .luck8-game-bottom-left-title {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 22.4px;
+      color: #000000;
+    }
+    .luck8-game-bottom-left-btn {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 22.4px;
+      color: #479af7;
+      cursor: pointer;
+    }
+  }
+  .luck8-game-money-info {
+    width: 100%;
+    height: 100%;
+    margin-top: 40px;
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+    border-radius: 12px;
+    padding: 40px;
+    border: 1px solid #acd4f6;
+    box-shadow: 0px 0px 4px 0px #01497b0f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .title {
+      background-image: url("../../../assets/promo/lh-luck8/title-caijin-dark.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      width: 738px;
+      height: 44px;
+      margin-bottom: 40px;
+    }
+
+    .little-title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      width: 100%;
+      .left {
+        background-image: url("../../../assets/promo/lh-luck8/info-little-title-bg.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        width: 120px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 23.33px;
+        color: #ffffff;
+        margin-right: 16px;
+      }
+      .right {
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 28px;
+        color: white;
+        width: 100%;
+
+        &.red-font {
+          color: #f53434;
+        }
+      }
+    }
+  }
+  .luck8-game-info {
+    width: 100%;
+    height: 100%;
+    margin-top: 40px;
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+    border-radius: 12px;
+    padding: 40px;
+    border: 1px solid #acd4f6;
+    box-shadow: 0px 0px 4px 0px #01497b0f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .little2-title {
+      width: 100%;
+      font-family: PingFang TC;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 28px;
+      letter-spacing: -0.02em;
+      text-align: left;
+      color: #4ba5ff;
+      margin-top: 20px;
+    }
+    .little2-content {
+      width: 100%;
+      font-family: PingFang TC;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 28px;
+      letter-spacing: -0.02em;
+      text-align: left;
+    }
+
+    .title {
+      background-image: url("../../../assets/promo/lh-luck8/info-title-black.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      width: 738px;
+      height: 44px;
+      margin-bottom: 40px;
+    }
+    .little-title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      width: 100%;
+      .left {
+        background-image: url("../../../assets/promo/lh-luck8/info-little-title-bg.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        width: 120px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 23.33px;
+        color: #ffffff;
+        margin-right: 16px;
+      }
+      .right {
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 28px;
+        color: white;
+        width: 100%;
+      }
+    }
+  }
+
+  .luck8-game-info-table-2 {
+    width: 100%;
+    height: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: center;
+    vertical-align: middle;
+    margin: 12px 0;
+    th {
+      height: 56px;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 28px;
+      color: #fff;
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+      &:first-child {
+        border-top-left-radius: 12px;
+      }
+      &:last-child {
+        border-top-right-radius: 12px;
+      }
+    }
+    tr {
+      &:last-child {
+        td {
+          &:first-child {
+            border-bottom-left-radius: 12px;
+          }
+        }
+      }
+      &:nth-child(2) {
+        td {
+          &:last-child {
+            border-bottom-right-radius: 12px;
+          }
+        }
+      }
+    }
+    td {
+      border: 1px solid #acd4f6;
+      height: 56px;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 28px;
+      color: white;
+    }
+  }
+  .luck8-game-info-table {
+    width: 100%;
+    height: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: center;
+    vertical-align: middle;
+    margin-top: 12px;
+    th {
+      height: 56px;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 28px;
+      color: #fff;
+      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%);
+      &:first-child {
+        border-top-left-radius: 12px;
+      }
+      &:last-child {
+        border-top-right-radius: 12px;
+      }
+    }
+    tr {
+      &:last-child {
+        td {
+          &:first-child {
+            border-bottom-left-radius: 12px;
+          }
+        }
+      }
+      &:last-child {
+        td {
+          &:last-child {
+            border-bottom-right-radius: 12px;
+          }
+        }
+      }
+    }
+    td {
+      border: 1px solid #acd4f6;
+      height: 56px;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 28px;
+      color: white;
+    }
+  }
+  .option-btn-active {
+    width: 120px;
+    height: 36px;
+    border-radius: 100px;
+    color: rgba(255, 255, 255, 1);
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+  }
+  .option-btn-redeemed {
+    width: 120px;
+    height: 36px;
+    border-radius: 100px;
+    color: rgba(255, 255, 255, 1);
+    background: linear-gradient(180deg, #48d179 0%, #00a63a 100%);
+    pointer-events: none;
+  }
+  .option-btn-disable {
+    width: 120px;
+    height: 36px;
+    border-radius: 100px;
+    background: rgba(217, 217, 217, 1);
+    color: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+  }
+
+  .luck8-game-bottom-rule {
+    width: 100%;
+    height: 100%;
+    margin-top: 40px;
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+    border-radius: 12px;
+    padding: 40px;
+    border: 1px solid #acd4f6;
+    box-shadow: 0px 0px 4px 0px #01497b0f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .title {
+      background-image: url("../../../assets/promo/lh-luck8/rule-title-black.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      width: 738px;
+      height: 44px;
+      margin-bottom: 20px;
+    }
+    .content {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 36px;
+      color: white;
+      .item {
+        text-indent: -16px;
+        padding-left: 24px;
+      }
+    }
+  }
+
+  :deep(.luck8-table-record-dialog) {
+    width: 1000px;
+    height: 652px;
+    .el-dialog__header {
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .el-dialog__header .el-dialog__headerbtn {
+      background: url(../../../assets/promo/lh-luck8/close-btn.png);
+      content-visibility: hidden;
+      background-size: contain;
+      width: 24px;
+      height: 24px;
+      top: 20px;
+      right: 24px;
+    }
+    .el-dialog__body {
+      padding: 20px;
+    }
+
+    .record-dialog-container {
+      width: 960px;
+      height: 100%;
+    }
+
+    .title {
+      background-image: url("../../../assets/promo/lh-luck8/record-title.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      width: 536px;
+      height: 32px;
+      margin-top: 20px;
+    }
+
+    .record-table {
+      width: 100%;
+      height: 100%;
+      th {
+        height: 56px;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 28px;
+        color: #fff;
+        background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+        vertical-align: middle;
+        text-align: left;
+
+        &:first-child {
+          border-top-left-radius: 6px;
+        }
+        &:last-child {
+          border-top-right-radius: 6px;
+        }
+      }
+      tr {
+        height: 56px;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 28px;
+        color: #7a8eb9;
+        vertical-align: middle;
+        text-align: left;
+        &:nth-child(odd) {
+          background: #f2f8fe;
+        }
+        &:nth-child(even) {
+          background: #fff;
+        }
+        th {
+          &:first-child {
+            padding-left: 20px;
+          }
+          &:last-child {
+            text-align: right;
+            padding-right: 14px;
+          }
+        }
+
+        td {
+          &:first-child {
+            padding-left: 20px;
+          }
+          &:last-child {
+            text-align: right;
+            padding-right: 14px;
+          }
+        }
+
+        &:last-child {
+          td {
+            &:first-child {
+              border-bottom-left-radius: 6px;
+            }
+          }
+        }
+        &:last-child {
+          td {
+            &:last-child {
+              border-bottom-right-radius: 6px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .dialog-header {
+    text-align: center;
+  }
+
+  .dialog-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+  }
+}
 .luck8-box {
   font-family: PingFang TC;
   width: 100%;

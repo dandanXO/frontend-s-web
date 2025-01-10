@@ -584,6 +584,37 @@ export default defineComponent({
   padding: 30px;
   font-family: "PingFang";
 
+  .claim-title-icon, .claim-coin-icon, .claim-gift-icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .claim-title-icon {
+    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/section-title-img.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
+
+  .claim-coin-icon {
+    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon1.png")  no-repeat center center;
+    background-size: 100% 100%;
+  }
+
+  .claim-gift-icon {
+    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon2.png")  no-repeat center center;
+    background-size: 100% 100%;
+  }
+
+  .claim-btn-img {
+    aspect-ratio: 762/630;
+    width: auto;
+    height: 100%;
+    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-btn.png")  no-repeat center center;
+    background-size: 100% 100%;
+  }
+
   .section-table {
     th {
       height: 56px;
@@ -602,6 +633,7 @@ export default defineComponent({
     td {
       border: 1px solid #dcdce8;
       color: #333;
+      background: transparent !important;
     }
   }
 
@@ -670,6 +702,29 @@ export default defineComponent({
     background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%) !important;
     border: 1px solid #be9457 !important;
     color: #fff;
+
+    .claim-title-icon, .claim-coin-icon, .claim-gift-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .claim-title-icon {
+      background: url("../assets/images/promotion/hotpromo/common/claim-title-icon.svg") no-repeat center center;
+      background-size: 100% 100%;
+    }
+
+    .claim-coin-icon {
+      background: url("../assets/images/promotion/hotpromo/common/claim-coin-icon.svg")  no-repeat center center;
+      background-size: 100% 100%;
+    }
+
+    .claim-gift-icon {
+      background: url("../assets/images/promotion/hotpromo/common/claim-gift-icon.svg")  no-repeat center center;
+      background-size: 100% 100%;
+    }
 
     .title-img {
       color: #fff;

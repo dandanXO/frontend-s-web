@@ -1,24 +1,15 @@
 <template>
   <div class="livepoker-rebate-wrapper">
     <div class="livepoker-rebate-container">
-      <div class="livepoker-rebate-section">
+      <div class="livepoker-rebate-section section-bg">
         <div class="livepoker-rebate-section-left">
           <div class="livepoker-rebate-section-title">
-            <div>
-              <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-title-img.png"
-                style="width: 20px; height: 20px; margin-bottom: 0px"
-              />
+            <div class="claim-title-icon">
             </div>
             下注即奖
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon">
-              <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon1.png"
-                alt=""
-                width="100%"
-              />
+            <div class="reward-info-icon claim-coin-icon">
             </div>
             <div class="reward-info-content">
               昨日累计有效投注：
@@ -26,12 +17,7 @@
             </div>
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon">
-              <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-icon2.png"
-                alt=""
-                width="100%"
-              />
+            <div class="reward-info-icon claim-gift-icon">
             </div>
             <div class="reward-info-content">
               今日可领取彩金：

@@ -20,15 +20,15 @@
 
       <template v-if="tabValue === 'lh1-live-daily-bonus'">
         <div>
-          <div class="livepoker-rebate-section">
+          <div class="livepoker-rebate-section section-bg">
             <div class="livepoker-rebate-section-left">
               <div class="livepoker-rebate-section-title">
-                <div><img src="../../../assets/promo/lh1-blast-premier/section-title-img.png" /></div>
+                <div class="claim-title-icon"></div>
                 每日礼金
               </div>
               <div class="reward-info">
                 <div class="reward-info-icon">
-                  <img src="../../../assets/promo/lh1-blast-premier/reward-icon1.png" alt="" width="100%" />
+                  <div class="claim-coin-icon"></div>
                 </div>
                 <div class="reward-info-content">
                   昨日累计有效投注：
@@ -37,7 +37,7 @@
               </div>
               <div class="reward-info">
                 <div class="reward-info-icon">
-                  <img src="../../../assets/promo/lh1-blast-premier/reward-icon2.png" alt="" width="100%" />
+                  <div class="claim-gift-icon"></div>
                 </div>
                 <div class="reward-info-content">
                   今日可领取彩金：
@@ -51,20 +51,20 @@
               </div>
             </div>
           </div>
-          <div class="livepoker-rebate-game-info">
-            <div class="title"></div>
+          <div class="livepoker-rebate-game-info section-bg">
+            <div class="title-img">活动详情</div>
             <div class="little-title">
-              <div class="left">活动对象</div>
+              <div class="ribbon">活动对象</div>
               <div class="right">全体会员</div>
             </div>
             <div class="little-title">
-              <div class="left">活动内容</div>
+              <div class="ribbon">活动内容</div>
               <div class="right">
                 活动期间，统计当日真人视讯场馆游戏总有效投注≥8,000 元或以上，次日 01:00 起，即可在本活动页面点击
                 [点击领取] 按钮领取彩金
               </div>
             </div>
-            <table class="livepoker-rebate-game-info-table">
+            <table class="livepoker-rebate-game-info-table section-table">
               <tbody>
                 <tr>
                   <th>当日真人有效投注</th>
@@ -104,8 +104,9 @@
             </table>
           </div>
 
-          <div class="livepoker-rebate-game-bottom-rule">
-            <div class="title"></div>
+          <div class="livepoker-rebate-game-bottom-rule section-bg">
+            <div class="title-img">活动规则</div>
+            <br/>
             <div class="content">
               <div class="item">
                 <div class="item-num">1</div>
@@ -139,15 +140,15 @@
 
       <template v-if="tabValue === 'lh1-live-weekly-bonus'">
         <div>
-          <div class="livepoker-rebate-section">
+          <div class="livepoker-rebate-section section-bg">
             <div class="livepoker-rebate-section-left">
               <div class="livepoker-rebate-section-title">
-                <div><img src="../../../assets/promo/lh1-blast-premier/section-title-img.png" /></div>
+                <div class="claim-title-icon"></div>
                 每日礼金
               </div>
               <div class="reward-info">
                 <div class="reward-info-icon">
-                  <img src="../../../assets/promo/lh1-blast-premier/reward-icon1.png" alt="" width="100%" />
+                  <div class="claim-coin-icon"></div>
                 </div>
                 <div class="reward-info-content">
                   上周期累计有效投注：
@@ -156,7 +157,7 @@
               </div>
               <div class="reward-info">
                 <div class="reward-info-icon">
-                  <img src="../../../assets/promo/lh1-blast-premier/reward-icon2.png" alt="" width="100%" />
+                  <div class="claim-gift-icon"></div>
                 </div>
                 <div class="reward-info-content">
                   可领取周彩金：
@@ -170,20 +171,20 @@
               </div>
             </div>
           </div>
-          <div class="livepoker-rebate-game-info">
-            <div class="title"></div>
+          <div class="livepoker-rebate-game-info section-bg">
+            <div class="title-img">活动详情</div>
             <div class="little-title">
-              <div class="left">活动对象</div>
+              <div class="ribbon">活动对象</div>
               <div class="right">全体会员</div>
             </div>
             <div class="little-title">
-              <div class="left">活动内容</div>
+              <div class="ribbon">活动内容</div>
               <div class="right">
                 每周五至隔周四，在真人视讯场馆投注，有效投注满足以下门槛，即可在下周期周五 23:59:59
                 点前在活动页领取周打码流水彩金
               </div>
             </div>
-            <table class="livepoker-rebate-game-info-table">
+            <table class="livepoker-rebate-game-info-table section-table">
               <tbody>
                 <tr>
                   <th>指定周期真人有效投注</th>
@@ -211,8 +212,9 @@
             </table>
           </div>
 
-          <div class="livepoker-rebate-game-bottom-rule">
-            <div class="title"></div>
+          <div class="livepoker-rebate-game-bottom-rule section-bg">
+            <div class="title-img">活动规则</div>
+            <br/>
             <div class="content">
               <div class="item">
                 <div class="item-num">1</div>
@@ -359,18 +361,16 @@ watch(
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 30px 40px;
   }
 
   .livepoker-rebate-section-right {
     margin-top: auto;
-    margin-right: 100px;
-    margin-bottom: 30px;
     width: 200px;
 
     .bonus-image {
       cursor: pointer;
       width: 100%;
+      max-width: 175px;
 
       &:hover {
         filter: brightness(0.9);
@@ -389,7 +389,6 @@ watch(
   }
 
   .livepoker-rebate-section-title {
-    color: #000000;
     font-size: 24px;
     line-height: 1;
     font-weight: 600;
@@ -479,7 +478,6 @@ watch(
       font-size: 20px;
       font-weight: 400;
       line-height: 28px;
-      color: #000000;
     }
   }
 }
@@ -528,7 +526,6 @@ watch(
     font-size: 20px;
     font-weight: 400;
     line-height: 28px;
-    color: #000000;
   }
 }
 
@@ -612,7 +609,6 @@ watch(
   justify-content: space-between;
   align-items: center;
   font-size: 20px;
-  color: black;
   gap: 24px;
 
   .amount {
