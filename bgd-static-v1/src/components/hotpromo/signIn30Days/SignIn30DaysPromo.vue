@@ -27,9 +27,11 @@
           <span>{{ hasClaimedToday ? "CLAIMED" : "SIGN IN NOW" }}</span>
         </div>
         <div class="bonus-progress-bar">
-          <div class="bonus-progress-bar-fill" :style="{ width: 20 + '%' }"></div>
+          <div class="bonus-progress-bar-fill" :style="{ width: progressBarWidth + '%' }"></div>
         </div>
-        <div class="total-bet-txt">TOTAL BET：100/1000 BDT</div>
+        <div class="total-bet-txt">
+          TOTAL BET：{{ convertToCommaAmount(totalValidBet) }}/{{ convertToCommaAmount(minValidBet) }} BDT
+        </div>
       </div>
     </div>
     <div class="reward-mech-container content-card">
@@ -230,7 +232,7 @@
   </q-dialog>
 </template>
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { userStore } from "src/stores";
 import { eventapi } from "src/boot/axios";
 import { convertToCommaAmount } from "src/boot/utils";
@@ -268,6 +270,8 @@ const isLoadingClaim = ref(true);
 const bonusAmount = ref(0);
 const isShowCongratsDialog = ref(false);
 const itemRefs = ref([]);
+const minValidBet = ref(0);
+const totalValidBet = ref(0);
 
 const getChestDesign = (i) => {
   if (i < 8) {
@@ -279,6 +283,11 @@ const getChestDesign = (i) => {
   }
   return 4;
 };
+
+const progressBarWidth = computed(() => {
+  if (minValidBet.value === 0) return 0;
+  return (totalValidBet.value / minValidBet.value) * 100;
+});
 
 const setDayItemRef = (index) => {
   return (el) => {
@@ -309,6 +318,8 @@ const getDailyCheckInData = () => {
   eventapi.get("/session/bgd-daily-check-in/init").then((res) => {
     todayCheckInDay.value = res.data.todayCheckInDay;
     chestTotalDays.value = res.data.thisMonthTotalDays;
+    totalValidBet.value = res.data.totalValidBet ?? 0;
+    minValidBet.value = res.data.minValidBet ?? 0;
     hasClaimedToday.value = res.data.todayClaimed;
     isLoadingClaim.value = false;
 
@@ -355,7 +366,7 @@ onMounted(() => {
   border: 1px solid #337e3a;
   border-radius: 10px;
   padding: 0 16px 16px;
-  margin-top: calc(2% + 16px);
+  margin-top: calc(12px);
   width: 100%;
 
   .content-card-title {
@@ -637,15 +648,37 @@ onMounted(() => {
       top: calc(21% + 14px);
       right: 12%;
     }
-    @media (max-width: 375px) {
+    @media (max-width: 450px) {
       .medal-1 {
-        top: calc(7% + 14px);
+        top: calc(3% + 14px);
       }
       .medal-2 {
-        top: calc(22% + 14px);
+        top: calc(17% + 14px);
       }
       .medal-3 {
-        top: calc(28% + 14px);
+        top: calc(23% + 14px);
+      }
+    }
+    @media (max-width: 400px) {
+      .medal-1 {
+        top: calc(5% + 14px);
+      }
+      .medal-2 {
+        top: calc(20% + 14px);
+      }
+      .medal-3 {
+        top: calc(26% + 14px);
+      }
+    }
+    @media (max-width: 350px) {
+      .medal-1 {
+        top: calc(10% + 14px);
+      }
+      .medal-2 {
+        top: calc(25% + 14px);
+      }
+      .medal-3 {
+        top: calc(31% + 14px);
       }
     }
     .medal-txt {

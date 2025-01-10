@@ -9,6 +9,7 @@
     "lint": "eslint --ext .js,.vue ./",
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0",
+    "serve:staging": "dotenv -e .staging.env quasar dev",
     "android": "quasar build -m capacitor -T android",
     "build:prod": "dotenv -e .prod.env quasar build",
     "build:staging": "dotenv -e .staging.env quasar build",

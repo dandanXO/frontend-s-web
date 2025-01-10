@@ -33,7 +33,10 @@
               <div class="promo-type-wrapper"></div>
               <div class="promo-list-wrapper">
                 <div v-for="(promo, i) in filteredArray" :key="i">
-                  <div class="promo-item" v-if="tab.name === 'all' ||  promo.promoType.toLowerCase().split(',').includes(tab.name)">
+                  <div
+                    class="promo-item"
+                    v-if="tab.name === 'all' || promo.promoType.toLowerCase().split(',').includes(tab.name)"
+                  >
                     <a @click="showPromoDetails(promo)">
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
@@ -47,7 +50,7 @@
                   </div>
                 </div>
               </div>
-<!--              <MediaSettingsComponent />-->
+              <!--              <MediaSettingsComponent />-->
             </div>
           </div>
           <div v-else class="selected-promo">
@@ -992,12 +995,12 @@ export default defineComponent({
               height: 40px;
               overflow: hidden;
               line-height: 40px;
-              padding: 0 100px 0 16px;
+              padding: 0 16px 0 16px;
 
               // background: linear-gradient(356.25deg, rgba(0, 0, 0, 0.6) -0.21%, rgba(0, 0, 0, 0.6) 93.65%);
               background: #2b2b2b;
-              font-family: Poppins;
-              font-size: 15.3px;
+              //font-family: Poppins;
+              font-size: 15px;
               font-weight: 700;
             }
 
