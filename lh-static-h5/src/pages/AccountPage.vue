@@ -698,7 +698,7 @@ export default defineComponent({
           if (res.code === 0) {
             btm_banners.value = res.data.filter(promo => {
               if($q.dark.isActive) {
-                return !['lh1-dark-mode'].includes(promo.redirectUrl) && promo.mobileImageUrlDark
+                return promo.mobileImageUrlDark
               }
 
               return promo;
