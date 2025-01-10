@@ -690,7 +690,7 @@ button {
     border: 1px solid #3a93ce;
   }
 
-  .cancel-btn {
+  .cancel-btn, .el-button.is-plain {
     background: url("../assets/images/home/secondary-button-bg.svg") no-repeat center center;
     background-size: cover;
     box-shadow: none;
