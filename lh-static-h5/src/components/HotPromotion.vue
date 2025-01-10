@@ -48,8 +48,12 @@
     <BountyBlastPremier v-if="list.redirectUrl === 'bounty-blast-premier'" :promo-code="list.promoCode" />
     <VctcnMatchPromo v-if="list.redirectUrl === 'lh1-vctcn'" :promo-code="list.promoCode" />
     <HongBaoYu2025 v-if="list.redirectUrl === 'hongbaoyu-2025'" :promo-code="list.promoCode" />
+    <Monthly20HongBaoYu v-if="list.redirectUrl === 'lh1-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
     <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
+    <VctBangkok v-if="list.redirectUrl === 'lh1-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
     <DreamLeagueS25 v-else-if="list.redirectUrl === 'lh1-dream-league-s25'" :promo-code="list.promoCode" />
+    <Dota2BlastSlam2025 v-else-if="list.redirectUrl === 'lh1-blast-slam-2025'" :promo-code="list.promoCode" />
+    <DarkModePromo v-else-if="list.redirectUrl === 'lh1-dark-mode'" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -78,7 +82,8 @@ import { useQuasar } from "quasar";
 import moment from "moment";
 import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
 import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
-import Lh1Vctcn from "./hotpromo/lh1-vctcn/lh1Vctcn.vue";
+import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue";
+import VctBangkok from "components/hotpromo/vct-bangkok/VctBangkok.vue";
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
 const DragonCardPromo = defineAsyncComponent(() => import("../components/hotpromo/dragoncard/dragonCardPromo.vue"));
 const FeedbackAwardPromo = defineAsyncComponent(() =>
@@ -109,7 +114,9 @@ const PerfectWorldMajor2024 = defineAsyncComponent(() =>
   import("./hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue")
 );
 const DemaciaCup1 = defineAsyncComponent(() => import("./hotpromo/demacia-cup-1/DemaciaCup1.vue"));
-const Lh1LplLck2025loss = defineAsyncComponent(() => import("./hotpromo/lh1-lpl-lck-2025-loss/lh1-lpl-lck-2025-loss.vue"));
+const Lh1LplLck2025loss = defineAsyncComponent(() =>
+  import("./hotpromo/lh1-lpl-lck-2025-loss/lh1-lpl-lck-2025-loss.vue")
+);
 const LiveDailyRebates = defineAsyncComponent(() => import("./hotpromo/live-daily-rebates/LiveDailyRebates.vue"));
 const NewVipRebate = defineAsyncComponent(() => import("../components/hotpromo/newVipRebate/newVipRebate.vue"));
 const LoLS14 = defineAsyncComponent(() => import("../components/hotpromo/lol-s14/LoLS14.vue"));
@@ -118,16 +125,26 @@ const DailiPromo = defineAsyncComponent(() => import("../components/hotpromo/dai
 const lh1Vip = defineAsyncComponent(() => import("./hotpromo/lh1-vip/lh1Vip.vue"));
 const SlotLossBonusPromo = defineAsyncComponent(() => import("./hotpromo/slot-loss-bonus/SlotLossBonusPromo.vue"));
 const ChristmasGachapon = defineAsyncComponent(() => import("./hotpromo/christmas-gachapon/ChristmasGachapon.vue"));
-const BountyBlastPremier = defineAsyncComponent(() => import("../components/hotpromo/bounty-blast/BountyBlastPremier.vue"));
-const VctcnMatchPromo = defineAsyncComponent(() => import("../components/hotpromo/vctcn-match-promo/VctcnMatchPromo.vue"));
-const Belgrade2025Promo = defineAsyncComponent(() => import("../components/hotpromo/belgrade-2025-promo/Belgrade2025Promo.vue"));
-const lh1Vctcn = defineAsyncComponent(()=>import("./hotpromo/lh1-vctcn/lh1Vctcn.vue"))
-const DreamLeagueS25 = defineAsyncComponent(() => import("../components/hotpromo/dream-league-s25/DreamLeagueS25.vue"))
+const BountyBlastPremier = defineAsyncComponent(() =>
+  import("../components/hotpromo/bounty-blast/BountyBlastPremier.vue")
+);
+const VctcnMatchPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/vctcn-match-promo/VctcnMatchPromo.vue")
+);
+const Belgrade2025Promo = defineAsyncComponent(() =>
+  import("../components/hotpromo/belgrade-2025-promo/Belgrade2025Promo.vue")
+);
+const lh1Vctcn = defineAsyncComponent(() => import("./hotpromo/lh1-vctcn/lh1Vctcn.vue"));
+const DreamLeagueS25 = defineAsyncComponent(() => import("../components/hotpromo/dream-league-s25/DreamLeagueS25.vue"));
+const Dota2BlastSlam2025 = defineAsyncComponent(() => import("../components/hotpromo/dota2-blast-slam-2025/Dota2BlastSlam2025.vue"));
+const DarkModePromo = defineAsyncComponent(() => import("../components/hotpromo/dark-mode/DarkModePromo.vue"));
+
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    VctBangkok,
     NewFootball,
     DailyCheckin,
     SlotLacky8,
@@ -161,9 +178,12 @@ export default defineComponent({
     BountyBlastPremier,
     VctcnMatchPromo,
     HongBaoYu2025,
+    Monthly20HongBaoYu,
     Belgrade2025Promo,
     lh1Vctcn,
-    DreamLeagueS25
+    DreamLeagueS25,
+    Dota2BlastSlam2025,
+    DarkModePromo
   },
   props: {
     list: {
@@ -559,10 +579,41 @@ export default defineComponent({
 
 .section-bg {
   border: 1px solid rgba(172, 212, 246, 1);
-  background: #F2F8FE;
+  background: #f2f8fe;
   border-radius: 12px;
   padding: 30px;
-  font-family: 'PingFang';
+  font-family: "PingFang";
+
+  .claim-title-icon, .claim-coin-icon, .claim-gift-icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .claim-title-icon {
+    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/section-title-img.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
+
+  .claim-coin-icon {
+    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon1.png")  no-repeat center center;
+    background-size: 100% 100%;
+  }
+
+  .claim-gift-icon {
+    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon2.png")  no-repeat center center;
+    background-size: 100% 100%;
+  }
+
+  .claim-btn-img {
+    aspect-ratio: 762/630;
+    width: auto;
+    height: 100%;
+    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-btn.png")  no-repeat center center;
+    background-size: 100% 100%;
+  }
 
   .section-table {
     th {
@@ -582,12 +633,14 @@ export default defineComponent({
     td {
       border: 1px solid #dcdce8;
       color: #333;
+      background: transparent !important;
     }
   }
 
   .element-bg {
     color: #fff !important;
-    box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset, 0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+    box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
+      0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
     background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%) !important;
   }
 
@@ -595,13 +648,13 @@ export default defineComponent({
     clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
     background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     padding-right: 10px;
-    font-family: 'PingFang';
+    font-family: "PingFang";
     color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 16px;
-    width:fit-content;
+    width: fit-content;
     padding: 0px 20px 0px 10px;
   }
 
@@ -646,9 +699,32 @@ export default defineComponent({
 
 .body--dark {
   .section-bg {
-    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%) !important;
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%) !important;
     border: 1px solid #be9457 !important;
     color: #fff;
+
+    .claim-title-icon, .claim-coin-icon, .claim-gift-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .claim-title-icon {
+      background: url("../assets/images/promotion/hotpromo/common/claim-title-icon.svg") no-repeat center center;
+      background-size: 100% 100%;
+    }
+
+    .claim-coin-icon {
+      background: url("../assets/images/promotion/hotpromo/common/claim-coin-icon.svg")  no-repeat center center;
+      background-size: 100% 100%;
+    }
+
+    .claim-gift-icon {
+      background: url("../assets/images/promotion/hotpromo/common/claim-gift-icon.svg")  no-repeat center center;
+      background-size: 100% 100%;
+    }
 
     .title-img {
       color: #fff;
@@ -657,8 +733,9 @@ export default defineComponent({
     .section-table {
       th {
         color: #fff !important;
-        box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset, 0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
-        background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%) !important;
+        box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
+          0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+        background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) !important;
       }
 
       td {
@@ -669,12 +746,13 @@ export default defineComponent({
 
     .element-bg {
       color: #fff !important;
-      box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset, 0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
-      background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%) !important;
+      box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
+        0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) !important;
     }
 
     .ribbon {
-      background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%);
     }
 
     .item {
@@ -682,8 +760,9 @@ export default defineComponent({
 
       .item-num {
         color: #fff !important;
-        box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset, 0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
-        background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%) !important;
+        box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
+          0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+        background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) !important;
       }
     }
   }

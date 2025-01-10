@@ -108,7 +108,7 @@
 <script setup>
 import { onMounted, defineProps, reactive } from 'vue';
 import moment from 'moment';
-import { getMemberPrivilegeRecord } from '../../../../../api/member';
+import { getMemberPrivilegeRecord, getMemberPrivilegeRecordTotal } from '../../../../../api/member';
 import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
@@ -201,9 +201,9 @@ async function loadMemberPrivilegeRecord() {
   page.records = patchRecord(ret.records);
   page.total = ret.total;
   page.loading = false;
-
+  const { data: ttl } = await getMemberPrivilegeRecordTotal(props.mbrId, query);
   // Calculate the total amount
-  page.totalPrivilegeAmount = page.records.reduce((sum, record) => sum + (record.amount || 0), 0);
+  page.totalPrivilegeAmount = ttl;
 }
 
 function patchRecord(records) {

@@ -427,7 +427,7 @@ const loadMenuItemIcon = (icon) => {
   }
 }
 </style>
-<style lang="scss">
+<style lang="scss" scoped>
 .account-container {
   background-size: cover;
   background-position: center center;

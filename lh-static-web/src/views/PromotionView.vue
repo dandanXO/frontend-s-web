@@ -11,7 +11,7 @@
         <div class="promo-type-wrapper">
           <div>
             <div class="type-list">
-              <img width="90%" src="../assets/promo/menu-title.png" />
+              <img src="../assets/promo/menu-title.png" />
               <div
                 class="type-item"
                 v-for="p in promoTypes"
@@ -96,7 +96,7 @@
           ></div>
         </div>
         <BlastPremierMarquee
-          :type="selectedPromo?.redirectUrl === 'bounty-blast-premier' ? 'bounty': null"
+          :type="selectedPromo?.redirectUrl === 'bounty-blast-premier' ? 'bounty' : null"
           v-if="
             selectedPromo?.redirectUrl === 'lh-cs2-blast-2024' ||
             selectedPromo?.redirectUrl === 'lh1-blast-premier-treasure' ||
@@ -142,9 +142,9 @@
               selectedPromo.promoCode === 'lh-eurocup-manual' ||
               selectedPromo.promoCode === 'lh-lpl-summer24' ||
               selectedPromo.promoCode === 'lh1-intel-esl' ||
-              selectedPromo.promoCode === 'lh1-aijiasu' ||
               selectedPromo.promoCode === 'lh1-eurocup-regen' ||
               selectedPromo.redirectUrl === 'lh1-christmas-gashapon',
+            aijiasubg: selectedPromo.promoCode === 'lh1-aijiasu',
             'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
             shoutouxinxiu: selectedPromo.promoCode === 'lh1-shoutouxinxiu',
             bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024',
@@ -188,7 +188,7 @@
             />
             <img
               v-if="selectedPromo.redirectUrl === 'lh-cs2-blast-2024'"
-              src="@/assets/images/promotion/hotpromo/blastpremier/bg.png"
+              src="../assets/images/promotion/hotpromo/blastpremier/bg.png"
             />
           </div>
         </div>
@@ -206,7 +206,7 @@ import { ElMessageBox } from "element-plus";
 import moment from "moment";
 import { useDark } from "@vueuse/core";
 
-import HotPromotion from "@/components/HotPromotion";
+import HotPromotion from "@/components/HotPromotion.vue";
 import { useLocalStorage } from "@vueuse/core";
 import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
@@ -242,7 +242,7 @@ export default defineComponent({
       // { code: "POKER", img: "poker", label: "棋牌优惠" },
       // { code: "FISH", img: 'fish', label: '捕鱼'},
       { code: "FTD", img: "deposit", label: "存款优惠" },
-      { code: "VIP", img: "vip", label: "VIP 特权" }
+      { code: "VIP", img: "vip", label: "VIP特权" }
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
@@ -451,11 +451,11 @@ export default defineComponent({
   }
 
   .all-promotions {
-    // background: url(../assets/promo/top-promo-banner.jpg) no-repeat center top;
+    // background: url(../../assets/promo/top-promo-banner.jpg) no-repeat center top;
     // background-size: 100% auto;
     // padding-top: max(110px, 16vw);
     width: 100%;
-    padding: 0px 50px 50px;
+    padding: 30px 50px 50px;
     position: relative;
     background-color: #e7f1fd;
   }
@@ -674,6 +674,7 @@ export default defineComponent({
           box-shadow: 0px 4px 26px 0px #00000026;
 
           border-radius: 20px;
+
           a {
             display: block;
           }
@@ -727,7 +728,6 @@ export default defineComponent({
                 font-size: 18px;
                 font-weight: 700;
                 padding-left: 30px;
-                font-family: "PingFang SC";
               }
             }
             .promo-type {
@@ -776,7 +776,7 @@ export default defineComponent({
                 color: #ffffff;
                 padding: 8px 30px;
                 background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-                font-family: "PingFang SC";
+
                 box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
 
                 box-shadow: 0px -1px 3.6640000343322754px 0px #5894ff inset;
@@ -896,6 +896,23 @@ export default defineComponent({
           }
         }
 
+        &.aijiasubg {
+          width: 100%;
+          max-width: 100%;
+          margin: 0;
+          padding: 0;
+          background-size: 100% auto;
+          background-attachment: fixed;
+
+          .hot-promo {
+            border-radius: 0px;
+          }
+
+          .promo-view-container {
+            display: none;
+          }
+        }
+
         &:has(.corner-decor) {
           position: relative;
         }
@@ -923,7 +940,29 @@ export default defineComponent({
               margin: 20px 0;
             }
           }
-
+          // background: #201f29;
+          // background-repeat: no-repeat;
+          // background-position: 95% 90%;
+          // padding: 20px;
+          // border-radius: 10px;
+          // &.welcome {
+          //   background-image: url("../../assets/images/promotion/hotpromo/common/welcome.png");
+          // }
+          // &.sport {
+          //   background-image: url("../../assets/images/promotion/hotpromo/common/sport.png");
+          // }
+          // &.esport {
+          //   background-image: url("../../assets/images/promotion/hotpromo/common/esport.png");
+          // }
+          // &.fish {
+          //   background-image: url("../../assets/images/promotion/hotpromo/common/fish.png");
+          // }
+          // &.livecasino {
+          //   background-image: url("../../assets/images/promotion/hotpromo/common/livecasino.png");
+          // }
+          // &.slot {
+          //   background-image: url("../../assets/images/promotion/hotpromo/common/slot.png");
+          // }
           &.olympicCheckin {
             border: 1px solid #acd4f6;
             border-radius: 10px;
@@ -952,7 +991,7 @@ export default defineComponent({
         }
 
         &.livepoker-rebate-bg {
-          background-image: url("../assets/promo/lh-livepoker-rebate/content-bg.png");
+          background-image: url("@/assets/promo/lh-livepoker-rebate/content-bg.png");
           background-size: contain;
           background-position: bottom center;
         }
@@ -1039,6 +1078,16 @@ export default defineComponent({
           }
         }
       }
+    }
+  }
+}
+</style>
+<style lang="scss">
+.football1 {
+  table {
+    th,
+    td {
+      border: 1px solid #dcdce8;
     }
   }
 }
@@ -1130,16 +1179,6 @@ export default defineComponent({
           }
         }
       }
-    }
-  }
-}
-</style>
-<style lang="scss">
-.football1 {
-  table {
-    th,
-    td {
-      border: 1px solid #dcdce8;
     }
   }
 }

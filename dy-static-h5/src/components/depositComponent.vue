@@ -386,6 +386,7 @@ function initPay() {
 
 async function loadPrivilege(val) {
   privilegeList.value = [];
+  freePrivilege.value = null;
   hasPrivilege.value = false;
   await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
     if (res.code === 0) {

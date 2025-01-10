@@ -160,6 +160,7 @@ export default {
       'A taxa de comissão de afiliados é determinada pelo lucro/perda mensal e o número de membros ativos. Quando ambas as condições forem atendidas, o afiliado receberá a taxa de comissão correspondente.',
     activeMemberRequirement:
       'Número de membros ativos: Depósito do mês >= 100 ou aposta válida >= 500;',
+    activeMemberRequirementDescription: '(Requisito: Adicionar membros ativos e atender às condições para distribuir comissões proporcionalmente.)',
     level: 'Nível',
     companyMonthlyProfit: 'Lucro Mensal da Empresa',
     activeNumberRequirement: 'Requisito Mínimo de Membros Ativos/Novos',

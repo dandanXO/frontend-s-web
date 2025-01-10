@@ -130,4 +130,18 @@ const handleDetail = (mail) => {
     }
   }
 }
+
+.body--dark {
+  .announcement-component {
+    background: #333;
+  }
+
+  .announcement-title {
+    color: #fff;
+  }
+
+  .announcement-content {
+    color: #d3d3d3;
+  }
+}
 </style>

@@ -20,7 +20,6 @@
     </div>
     <div class="sticky-sidebar-items">
       <div
-        v-if="memberType === 'TEST' || memberType === 'PROMO_TEST'"
         class="sticky-sidebar-item"
         @click="handleDarkModeClick"
       >

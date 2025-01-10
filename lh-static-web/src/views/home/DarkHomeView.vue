@@ -3,7 +3,7 @@
       <HomeBanner></HomeBanner>
       <div class="home-mid-section">
         <HomeAnnouncement></HomeAnnouncement>
-        <HotMatch></HotMatch>
+        <HotMatch :openGame="openGame"></HotMatch>
         <HomeHotGame></HomeHotGame>
         <HomeDownload></HomeDownload>
         <HomeService></HomeService>
@@ -43,8 +43,6 @@
   }
   
   .home-mid-section {
-    padding-top: 20px;
-    padding-bottom: 2.5rem;
   }
   </style>
   

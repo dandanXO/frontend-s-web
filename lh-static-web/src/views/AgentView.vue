@@ -139,10 +139,10 @@
               <div class="affiliate-inner">
                 <table>
                   <tr>
-                    <td style="background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%); color: white">
+                    <td>
                       平台输赢
                     </td>
-                    <td style="background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%); color: white">
+                    <td>
                       10,000
                     </td>
                   </tr>
@@ -584,5 +584,83 @@ export default defineComponent({
   position: absolute;
   top: -165px;
   right: -20px;
+}
+
+.dark {
+  .affiliate {
+    background:#15213E;
+
+    .buttons {
+      a {
+        background: url("../assets/images/home/standard-button-bg.svg") no-repeat center center;
+        background-size: cover;
+        box-shadow: none;
+        border-radius: 8px;
+        border: 1px solid #3a93ce;
+
+        &.outline {
+          background: url("../assets/images/home/secondary-button-bg.svg") no-repeat center center;
+          background-size: cover;
+          box-shadow: none;
+          border-radius: 8px;
+          border: 1px solid #ffffff4d;
+          color: #fff;
+        }
+      }
+    }
+
+    .affiliate-inner {
+      background: #17223E;
+      color: #fff;
+
+      .highlight {
+        color: #fff;
+      }
+
+      .result {
+        color: #fff;
+      }
+    }
+  }
+
+  .affiliate-sub {
+    background-color: #1624404D;
+    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0) 98.7%);
+    border: 1px solid #BE945733;
+
+    .affiliate-subtitle {
+      color: #fff;
+    }
+  }
+
+  .agent-content-item table th {
+    background: linear-gradient(180deg, #8DBBEC -42.2%, #3B4BA3 105.96%);
+    border-color: #17223E;
+  }
+  .agent-content-item table td {
+    background: #374569;
+    color: #fff;
+    border-color: #17223E;
+  }
+
+  .contact-box {
+    background: linear-gradient(180deg, #3E5384 0%, #3558AB 100%);
+    border: none;
+
+    .contact-text {
+      color: #fff;
+    }
+
+    .download-btn {
+      background: #4798E4;
+      border-radius: 4px;
+    }
+
+    .copy-btn {
+      background: #fff;
+      border-radius: 4px;
+      color: #000;
+    }
+  }
 }
 </style>

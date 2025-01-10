@@ -313,6 +313,7 @@ function initPay() {
 
 async function loadPrivilege(val) {
   privilegeList.value = [];
+  freePrivilege.value = null;
   await loadPrivileges(val.paymentId).then((d) => {
     if (d.code == 0) {
       privilegeList.value = d.data.privileges;

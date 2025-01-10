@@ -3,7 +3,10 @@ export default [
     path: "personal",
     name: "personal",
     meta: { requiresAuth: true },
-    component: () => import(/* webpackChunkName: "personal" */ "../views/account/personalview/PersonalView.vue")
+    component: () =>
+      import(
+        /* webpackChunkName: "personal" */ "../views/account/personalview/index.vue"
+      ),
   },
   {
     path: "mailbox",

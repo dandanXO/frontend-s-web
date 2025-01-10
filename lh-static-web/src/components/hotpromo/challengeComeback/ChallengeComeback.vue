@@ -1,14 +1,14 @@
 <template>
   <div class="challenge-comeback-container">
-    <div class="livepoker-rebate-section">
+    <div class="livepoker-rebate-section section-bg">
       <div class="livepoker-rebate-section-left">
         <div class="livepoker-rebate-section-title">
-          <div><img src="../../../assets/promo/lh1-blast-premier/section-title-img.png" /></div>
+          <div class="claim-title-icon"></div>
           每日礼金
         </div>
         <div class="reward-info">
           <div class="reward-info-icon">
-            <img src="../../../assets/promo/lh1-blast-premier/reward-icon1.png" alt="" width="100%" />
+            <div class="claim-coin-icon"></div>
           </div>
           <div class="reward-info-content">
             每周期负盈利：
@@ -17,7 +17,7 @@
         </div>
         <div class="reward-info">
           <div class="reward-info-icon">
-            <img src="../../../assets/promo/lh1-blast-premier/reward-icon2.png" alt="" width="100%" />
+            <div class="claim-gift-icon"></div>
           </div>
           <div class="reward-info-content">
             可领彩金：
@@ -31,16 +31,16 @@
         </div>
       </div>
     </div>
-    <div class="challenge-comeback-block detail-block">
-      <div class="challenge-comeback-block-title">活动详情</div>
+    <div class="challenge-comeback-block detail-block section-bg">
+      <div class="title-img">活动详情</div>
 
       <div class="detail-block-event-content">
-        <div class="detail-block-event-content-title">活动内容</div>
+        <div class="ribbon">活动内容</div>
         <span>活动期间，每周期负盈利≥500 即可在固定活动时间范围内领取对应档位彩金</span>
       </div>
 
       <div class="table-wrapper">
-        <table>
+        <table class="section-table">
           <thead>
             <tr>
               <th>负盈利</th>
@@ -87,7 +87,7 @@
         </table>
       </div>
       <div class="table-wrapper">
-        <table>
+        <table class="section-table">
           <thead>
             <tr>
               <th>活动时间</th>
@@ -116,26 +116,39 @@
       </div>
     </div>
 
-    <div class="challenge-comeback-block rule-block">
-      <div class="challenge-comeback-block-title">活动详情</div>
-      <ol class="rules-content">
-        <li>
-          活动周期为10天/周期，第一周期为1日-10日、第二周期为11日-20日、第三周期为21日-月底、达标后从1日、11日、21日开始连续5天前往活动页领取红包，每日红包领取时间为0点至23:59分，每日红包有效期24小时内，逾期未领取视为自动放弃，逾期不补，彩金仅需
-          8 倍流水即可提款。
-        </li>
-        <li>
-          活动说明：
-          <br />
-          ①周期输赢：只统计周期内投注的已结算并产生输赢结果所有注单的总输赢、任何提前结算或取消的注单不计算。
-          <br />
-          ②彩金不可购买免费旋转机会，不可投注捕鱼游戏；
-        </li>
-        <li>
-          同一手机号、姓名、邮箱地址、银行卡号、IP
-          地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
-        </li>
-        <li>为避免文字理解差异，如有疑问可联系在线客服，平台保留活动最终解释权。</li>
-      </ol>
+    <div class="challenge-comeback-block rule-block section-bg">
+      <div class="title-img">活动规则</div>
+      <div class="content" style="gap:10px;">
+        <div class="item">
+          <div class="item-num">1</div>
+          <div style="display: flex; flex-direction: column">
+            活动周期为10天/周期，第一周期为1日-10日、第二周期为11日-20日、第三周期为21日-月底、达标后从1日、11日、21日开始连续5天前往活动页领取红包，每日红包领取时间为0点至23:59分，每日红包有效期24小时内，逾期未领取视为自动放弃，逾期不补，彩金仅需 8 倍流水即可提款。 
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-num">2</div>
+          <div style="display: flex; flex-direction: column">
+            活动说明：
+            <br />
+            ①周期输赢：只统计周期内投注的已结算并产生输赢结果所有注单的总输赢、任何提前结算或取消的注单不计算。
+            <br />
+            ②彩金不可购买免费旋转机会，不可投注捕鱼游戏；
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-num">3</div>
+          <div style="display: flex; flex-direction: column">
+            同一手机号、姓名、邮箱地址、银行卡号、IP
+            地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-num">4</div>
+          <div style="display: flex; flex-direction: column">
+            为避免文字理解差异，如有疑问可联系在线客服，平台保留活动最终解释权。
+          </div>
+          </div>
+      </div>
     </div>
   </div>
 </template>
@@ -235,7 +248,6 @@ onMounted(() => {
 .challenge-comeback-container {
   max-width: 1200px;
   margin: 0 auto;
-  color: #000;
   > :not(:last-child) {
     margin-bottom: 40px;
   }
@@ -290,7 +302,6 @@ onMounted(() => {
 
 .rule-block {
   .rules-content {
-    color: #000;
     padding: 0;
     counter-reset: list-counter;
 
@@ -412,7 +423,6 @@ onMounted(() => {
   }
 
   .livepoker-rebate-section-title {
-    color: #000000;
     font-size: 24px;
     line-height: 1;
     font-weight: 600;
@@ -444,7 +454,6 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   font-size: 20px;
-  color: black;
   gap: 24px;
 
   .amount {

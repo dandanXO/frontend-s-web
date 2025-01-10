@@ -981,14 +981,7 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
-const categoriesList = ref([
-  { title: "Hot", icon: "hot", active: false },
-  { title: "Lobby", icon: "lobby", active: false },
-  { title: "Slot", icon: "slot", active: false },
-  { title: "Casino", icon: "casino", active: false },
-  { title: "Fishing", icon: "fishing", active: false },
-  { title: "Sport", icon: "sport", active: false }
-]);
+const categoriesList = ref([]);
 
 const activateSlide = (clickedItem) => {
   categoriesList.value.forEach((item) => {
@@ -2742,6 +2735,24 @@ const loadCustomerAddress = () => {
 };
 
 const loadAppTabs = () => {
+  const localStorageKey = "appTabs";
+  const savedTabs = JSON.parse(localStorage.getItem(localStorageKey));
+  if (savedTabs && savedTabs.length > 0) {
+    categoriesList.value = savedTabs;
+    categoriesList.value.forEach((tab, index) => {
+      tab.active = index === 0;
+    });
+  } else {
+    categoriesList.value = [
+      { title: "Hot", icon: "hot", active: true },
+      { title: "Lobby", icon: "lobby", active: false },
+      { title: "Slot", icon: "slot", active: false },
+      { title: "Casino", icon: "casino", active: false },
+      { title: "Fishing", icon: "fishing", active: false },
+      { title: "Sport", icon: "sport", active: false }
+    ];
+  }
+
   api
     .get("/opt-session/getAppTabs")
     .then((res) => {
@@ -2749,7 +2760,10 @@ const loadAppTabs = () => {
       if (res.code === 0) {
         const { data } = res;
         if (data && data.tabs) {
-          categoriesList.value = data.tabs;
+          const { tabs } = res.data;
+          if (tabs.length > 0) {
+            localStorage.setItem(localStorageKey, JSON.stringify(res.data.tabs));
+          }
         }
         if (data && data.deposit) {
           store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
@@ -2758,22 +2772,10 @@ const loadAppTabs = () => {
         if (data && data.hasOwnProperty("ftd")) {
           store.ftd = data.ftd;
         }
-
-        if (categoriesList.value.length > 0) {
-          categoriesList.value.forEach(function (category, index) {
-            if (index === 0) {
-              category.active = true;
-            } else {
-              category.active = false;
-            }
-          });
-        }
       }
     })
     .catch((e) => {
-      if (categoriesList.value.length > 0) {
-        categoriesList.value[0].active = true;
-      }
+      console.error("Failed to fetch tabs:", e);
     });
 };
 

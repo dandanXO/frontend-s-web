@@ -465,6 +465,10 @@ const loadMenuItemIcon = (icon) => {
       svg {
         color: #ffffff;
       }
+
+      img {
+        filter: brightness(0) invert(1);
+      }
     }
 
     .profile-actions {

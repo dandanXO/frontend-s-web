@@ -81,7 +81,7 @@
         style="padding: 20px"
       >
         <div class="light-bg form-field">
-          <img class="form-field-icon" src="@/assets/home/auth/verification-icon-dark.png" />
+          <img style="width:25px;" class="form-field-icon" src="@/assets/home/auth/verification-icon-dark.png" />
           <el-form-item tabindex="3" label="验证码" prop="captchaCode">
             <div style="display: flex; width: 100%">
               <el-input v-model="captchaForm.captchaCode" label="验证码" placeholder="验证码" @keyup.enter="sendOtp" />
