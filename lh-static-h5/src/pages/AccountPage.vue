@@ -409,7 +409,10 @@
             :key="i"
             :name="i"
             class="column no-wrap flex-center"
-            :img-src="imgURL + banner.mobileImageUrl"
+            :img-src="
+              imgURL +
+              ($q.dark.isActive && banner.mobileImageUrlDark ? banner.mobileImageUrlDark : banner.mobileImageUrl)
+            "
             @click="gotoPromo(banner)"
           ></q-carousel-slide>
         </q-carousel>
