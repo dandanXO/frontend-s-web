@@ -1695,7 +1695,6 @@ export default defineComponent({
       rocketSlide: ref(0),
       promoSlide: ref(0),
       convertToCommaAmount,
-      formatHomePopupImg,
       bannersWithImage
     };
   }
