@@ -278,7 +278,7 @@
               <span class="fund-title">{{ $t("withdraw.available") }}:</span>
               <q-spinner v-if="isRefreshRemainWager" />
               <span v-else>
-                {{ store.currency.value }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
+                {{ store.currency.value }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance, 2) }}
               </span>
             </div>
           </div>
