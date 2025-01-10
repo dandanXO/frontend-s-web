@@ -790,6 +790,7 @@ const form = reactive({
   title: null,
   desktopImageUrl: null,
   deskTopImageUrlDark: null,
+  desktopImageUrlDark: null,
   mobileImageUrl: null,
   mobileImageUrlDark: null,
   redirectUrl: null,
@@ -1020,6 +1021,7 @@ function autoSelectImage() {
   if (uiControl.imageSelectionType === 'DESKTOP_BANNER') {
     if (uiControl.supportDarkMode && uiControl.selectDarkImage) {
       form.deskTopImageUrlDark = imageForm.siteId + '/' + imageForm.path;
+      form.desktopImageUrlDark = imageForm.siteId + '/' + imageForm.path;
     } else {
       form.desktopImageUrl = imageForm.siteId + '/' + imageForm.path;
     }
@@ -1036,6 +1038,7 @@ function submitImage() {
   if (uiControl.imageSelectionType === 'DESKTOP') {
     if (uiControl.supportDarkMode && uiControl.selectDarkImage) {
       form.deskTopImageUrlDark = selectedImage.path
+      form.desktopImageUrlDark = selectedImage.path
     } else {
       form.desktopImageUrl = selectedImage.path
     }
