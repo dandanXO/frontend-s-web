@@ -211,7 +211,7 @@
         :label="t('fields.priority')"
         width="120"
       />
-      <el-table-column
+      <!-- <el-table-column
         prop="status"
         :label="t('fields.status')"
         width="150"
@@ -226,6 +226,21 @@
             <el-radio-button label="OPEN">OPEN</el-radio-button>
             <el-radio-button label="CLOSE">CLOSE</el-radio-button>
           </el-radio-group>
+        </template>
+      </el-table-column> -->
+      <el-table-column
+        prop="status"
+        :label="t('fields.status')"
+      >
+        <template #default="scope">
+          <el-switch
+            v-model="scope.row.status"
+            active-value="OPEN"
+            inactive-value="CLOSE"
+            active-color="#409EFF"
+            inactive-color="#F56C6C"
+            @change="updateState(scope.row.id, scope.row.status)"
+          />
         </template>
       </el-table-column>
       <el-table-column
@@ -572,6 +587,7 @@ function restrictInput(event) {
 
 async function updateState(id, status) {
   await updateStatus(id, status);
+  ElMessage({ message: t('message.updateSuccess'), type: 'success' })
   await loadSetting();
 }
 

@@ -482,16 +482,16 @@
           <el-tag v-else size="mini" type="danger" style="margin-left: 10px;">{{ t('common.status.CLOSE') }}</el-tag>
         </template>
       </el-table-column> -->
-      <el-table-column prop="state" :label="t('fields.status')" min-width="200">
+      <el-table-column prop="state" :label="t('fields.status')" min-width="120">
         <template #default="scope">
           <el-radio-group
             v-model="scope.row.state"
             size="mini"
             @change="changeBannerState(scope.row.id, scope.row.state)"
           >
-            <el-radio-button label="1">OPEN</el-radio-button>
-            <el-radio-button label="0">CLOSE</el-radio-button>
-            <el-radio-button label="2">TEST</el-radio-button>
+            <el-radio-button label="1">{{ t('common.status.OPEN') }}</el-radio-button>
+            <el-radio-button label="0">{{ t('common.status.CLOSE') }}</el-radio-button>
+            <el-radio-button label="2">{{ t('common.status.TEST') }}</el-radio-button>
           </el-radio-group>
         </template>
       </el-table-column>
