@@ -243,9 +243,6 @@ router.beforeEach((to, from, next) => {
     } else {
       if (store.nickName === "") {
         store.getMemberInfo().then(() => {
-          // TODO: Remove after testing is completed.
-          if (store.memberType !== "TEST" && store.memberType !== "PROMO_TEST") isDark.value = false;
-
           next({ ...to, replace: true });
         });
       } else {

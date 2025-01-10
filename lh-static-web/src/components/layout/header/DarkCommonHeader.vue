@@ -398,16 +398,6 @@ export default defineComponent({
     const loadingBtn = ref(false);
     const store = userStore();
 
-    const checkToken = () => {
-      if (store.token) {
-        if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
-          return false;
-        }
-        return true;
-      } else {
-        return true;
-      }
-    };
     const navigations = reactive([
       { code: "home", name: "首页", enName: "Home", path: "/home" },
       { code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true, isTest: false },
@@ -1407,7 +1397,6 @@ export default defineComponent({
       timestamp,
       openMiniGame,
       navigations,
-      checkToken,
       loadIcon,
       accDialogImg
     };
