@@ -625,7 +625,7 @@ export default defineComponent({
       background-attachment: scroll;
 
       .challenge-comeback1 {
-        background: transparent;
+        background: transparent !important;
       }
     }
 
