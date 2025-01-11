@@ -181,9 +181,7 @@
       <ul class="activity-rule-list">
         <li>Activity time: January 1 - January 31, 2025</li>
         <li>Bonus rollover requirement: 1x rollover</li>
-        <li>
-          Bonus distribution: After the event, the rewards will be automatically distributed to your wallet account.
-        </li>
+        <li>Bonus distribution: Immediately distributed to your wallet after receiving it</li>
       </ul>
     </div>
     <div class="ranking-list-container">
