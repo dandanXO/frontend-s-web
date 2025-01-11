@@ -170,7 +170,7 @@
         </div>
       </div>
       <div class="misuse-warning-txt">
-        Users must meet the betting requirements before claiming rewards to prevent misuse by low-value users.
+        Users must meet the betting requirements before claiming rewards.
       </div>
     </div>
     <div class="activity-rule-container">
