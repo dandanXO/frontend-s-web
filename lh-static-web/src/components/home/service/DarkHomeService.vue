@@ -4,7 +4,7 @@
       <!-- <HomeTitleV2 title="优质服务" subtitle="EXCELLENT SERVICE"/> -->
       <div class="service-container">
         <div  data-aos="fade-down">
-          <img style="display:flex;margin:auto;width:75%;" src="../../../assets//home/service/excellent-service-title.png" />
+          <img style="display:flex;margin:auto;width:850px;" src="../../../assets//home/service/excellent-service-title-dark.png" />
           <div class="top-container">
             <div class="counter">
               <div class="circle">
@@ -174,22 +174,24 @@
   <style scoped lang="scss">
   .service-section {
     width: 100%;
-    max-width: 1400px;
+    max-width: 1300px;
     margin: 0 auto;
+    margin-top: -50px;
 
     .service-container {
       margin: 0;
 
       .top-container {
         display: flex;
-        justify-content: space-between;
-        padding: 0 5rem;
+        justify-content: center;
+        padding: 0 6rem;
         margin: 0;
+        gap: 40px;
 
         .counter {
           .circle {
-            width: 17rem;
-            height: 17rem;
+            width: 13rem;
+            height: 13rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -200,7 +202,6 @@
             margin: 0 0 .5rem 0;
 
             .inner-circle {
-              margin-top: 20px;
               width: 19rem;
               height: 17rem;
               display: flex;
@@ -220,12 +221,12 @@
               .auto-counter {
                 // filter: drop-shadow(0px 2px #c4effa);
                 font-family: serif;
-                font-size: 4rem;
+                font-size: 3rem;
                 font-weight: 600;
                 line-height: normal;
                 letter-spacing: 0.14144rem;
                 color: #fff;
-                line-height: 72.66px;
+                line-height: 50px;
                 letter-spacing: 0.04em;
 
                 // background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
@@ -251,7 +252,7 @@
           .title {
             color: #fff;
             font-family: 'PingFang SC';
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 400;
             line-height: 30.8px;
             letter-spacing: 0.04em;
@@ -262,7 +263,7 @@
           .title-en {
             color: #fff;
             font-family: 'PingFang SC';
-            font-size: 16px;
+            font-size: 13px;
             font-weight: 400;
             line-height: 22.4px;
             text-align: center;
@@ -286,8 +287,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 4rem;
-            gap: 10px;
+            padding: 0px 10px;
+            gap: 5px;
 
             .left-container {
               .circle-wrapper {
@@ -297,7 +298,7 @@
                 position: relative;
 
                 .circle {
-                  width: 7.5rem;
+                  width: 100px;
                   visibility: hidden;
                 }
 
@@ -310,9 +311,9 @@
             .right-container {
               .title {
                 color: #fff;
-                margin-bottom: 15px;
+                margin-bottom: 10px;
                 font-family: "PingFang SC";
-                font-size: 24px;
+                font-size: 20px;
                 font-weight: 500;
                 line-height: 33.6px;
                 text-align: center;
@@ -321,9 +322,9 @@
               .desc {
                 color: #fff;
                 font-family: PingFang SC;
-                font-size: 18px;
+                font-size: 14px;
                 font-weight: 400;
-                line-height: 28px;
+                line-height: 20px;
                 letter-spacing: 0.03em;
                 text-align: left;
 
@@ -370,13 +371,13 @@
         }
 
         .bot-container {
-          padding: 30px 0;
           .item-wrapper {
             // @include content-block-dark;
             background: url("../../../assets/home/service/bg.png") no-repeat center center;
             background-size: 100% 100%;
-            width: 325px;
-            height: 530px;
+            width: 250px;
+            height: 365px;
+            padding: 40px;
           }
         }
       }

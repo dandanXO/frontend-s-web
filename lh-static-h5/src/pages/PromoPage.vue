@@ -11,7 +11,11 @@
         isPromoDetail
           ? 'background-image: url(' +
             imgURL +
-            (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
+            ($q.dark.isActive && selectedPromo.mobileImgBackgroundUrlDark
+              ? selectedPromo.mobileImgBackgroundUrlDark
+              : selectedPromo.mobileImgBackgroundUrl
+              ? selectedPromo.mobileImgBackgroundUrl
+              : '') +
             ')'
           : ''
       "
@@ -45,7 +49,7 @@
                     v-if="tab.name === 'all' || promo.promoType.toLowerCase().split(',').includes(tab.name)"
                   >
                     <a @click="showPromoDetails(promo)">
-                      <div>
+                      <div class="promo-item-inner">
                         <div class="promo-label">
                           <div class="promo-ribbon" v-if="promo.labelType !== -1 && promo.labelType !== 2">
                             {{ getPromoLabel(promo.labelType) }}
@@ -73,7 +77,12 @@
                         </div>
 
                         <div class="promo-item-side-img">
-                          <img loading="lazy" :src="imgURL + promo.mobileImgUrl" />
+                          <img
+                            v-if="$q.dark.isActive && promo.mobileImgUrlDark"
+                            loading="lazy"
+                            :src="imgURL + promo.mobileImgUrlDark"
+                          />
+                          <img v-else loading="lazy" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
                     </a>
@@ -106,7 +115,7 @@
                 class="banner-container"
                 v-if="
                   selectedPromo &&
-                  selectedPromo.mobileBannerUrl &&
+                  (selectedPromo.mobileBannerUrl || selectedPromo.mobileBannerUrlDark) &&
                   !isSpecialPromo &&
                   selectedPromo.promoCode !== 'lh1-ftd-promo' &&
                   selectedPromo.promoCode !== 'lh1-aijiasu' &&
@@ -117,11 +126,14 @@
                 <img
                   loading="lazy"
                   class="promo-content"
-                  :src="imgURL + selectedPromo.mobileBannerUrl"
+                  :src="imgURL + ($q.dark.isActive ? selectedPromo.mobileBannerUrlDark : selectedPromo.mobileBannerUrl)"
                   style="display: block; width: 100%"
                 />
               </div>
-              <BlastPremierMarquee :type="selectedPromo?.redirectUrl === 'bounty-blast-premier' ? 'bounty': null" v-if="selectedPromo?.redirectUrl === 'bounty-blast-premier'" />
+              <BlastPremierMarquee
+                :type="selectedPromo?.redirectUrl === 'bounty-blast-premier' ? 'bounty' : null"
+                v-if="selectedPromo?.redirectUrl === 'bounty-blast-premier'"
+              />
               <div
                 class="inner"
                 :class="{
@@ -136,6 +148,7 @@
                     selectedPromo.promoCode === 'lh1worldcupdota2' ||
                     selectedPromo.promoCode === 'lh1-football-fight',
                   lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl',
+                  lhinvite: selectedPromo.promoCode === 'lh1-invite',
                   lheuromanual:
                     selectedPromo.promoCode === 'lh-eurocup-manual' || selectedPromo.promoCode === 'lh1-daily-checkin',
                   meizhoubei:
@@ -180,7 +193,11 @@
                   <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
                     <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
                   </div>
-                  <div v-if="selectedPromo.redirectUrl !== 'lh1-christmas-gashapon'" v-html="selectedPromo.pageContent"></div>
+                  <div
+                    v-if="selectedPromo.redirectUrl !== 'lh1-christmas-gashapon'"
+                    :class="`content-` + selectedPromo.redirectUrl"
+                    v-html="selectedPromo.pageContent"
+                  ></div>
                 </div>
                 <div v-if="['lh-cs2-blast-2024'].includes(selectedPromo.promoCode)" class="corner-decor">
                   <img
@@ -318,7 +335,8 @@ export default defineComponent({
     const isDisplayLogin = ref(false);
 
     const selectedPromoWrapperClass = computed(() => ({
-      "challenge-comeback": ['lh1-cycle-loss-refund', 'lh-official-gift', 'lh1-olympic-fund'].includes(selectedPromo.value.promoCode),
+      "challenge-comeback": ['lh1-cycle-loss-refund', 'lh1-olympic-fund'].includes(selectedPromo.value.promoCode),
+      "challenge-comeback1": ['lh-official-gift'],
       "slot-lucky8": selectedPromo.value.promoCode === 'lh1-lucky-slot' || selectedPromo.value.promoCode === 'lh1-olympic-checkin',
       'livepoker-rebate': selectedPromo.value.promoCode === 'lh1-livepoker-rebate',
       'lh1-football': selectedPromo.value.promoCode === 'lh1-football',
@@ -430,7 +448,7 @@ export default defineComponent({
             var promoItems = res.data;
             // promoState.promoList.push(...res.data);
 
-            promoItems.forEach((element) => {
+            promoItems.filter(promo => !($q.dark.isActive && ['lh1-dark-mode'].includes(promo.redirectUrl))).forEach((element) => {
               // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
               // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
               // } else {
@@ -605,6 +623,10 @@ export default defineComponent({
 
     &.unfixed {
       background-attachment: scroll;
+
+      .challenge-comeback1 {
+        background: transparent !important;
+      }
     }
 
     &.lh1Vip {
@@ -679,6 +701,17 @@ export default defineComponent({
           padding: 32px 24px 16px;
           position: relative;
           border-radius: 12px;
+
+          .promo-item-inner {
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            .promo-item-deal {
+              margin-bottom: auto;
+            }
+          }
 
           .promo-label {
             height: 24px;
@@ -990,6 +1023,9 @@ export default defineComponent({
         &.meizhoubei {
           margin: 5px auto;
         }
+        &.lhinvite {
+          width: 100%;
+        }
 
         &.lheuromanual {
           margin: 0px;
@@ -1106,6 +1142,10 @@ export default defineComponent({
 
       &.slot-lucky8,
       &.challenge-comeback {
+        background: #e7f1fd;
+      }
+
+      &.challenge-comeback1 {
         background: #e7f1fd;
       }
 
@@ -1251,10 +1291,14 @@ export default defineComponent({
         .promo-list-wrapper {
           .promo-item {
             background-image: url(../assets/images/promo/promo-item-bg-dark.png);
-            border-radius: unset;
             // aspect-ratio: 702/208;
             border-radius: 8px;
             overflow: hidden;
+
+            .promo-item-inner {
+              min-height: 120px;
+            }
+
             .promo-label {
               top: 0px;
               left: 0px;
@@ -1328,6 +1372,10 @@ export default defineComponent({
               font-style: normal;
             }
           }
+        }
+
+        &.challenge-comeback1 {
+          background: transparent;
         }
       }
     }

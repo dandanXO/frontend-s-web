@@ -31,7 +31,7 @@
                 <span style="font-family: Times New Roman, Times, serif; margin: 0; padding: 0">
                   {{ store.currency.value }}
                 </span>
-                {{ isLoadingBalance ? $t("btn.loading") : convertToCommaAmount(store.balance, false) }}
+                {{ isLoadingBalance ? $t("btn.loading") : convertToCommaAmount(store.balance, 2) }}
               </span>
               <div class="btn-refresh">
                 <q-icon name="sync" size="16px" color="white-7"></q-icon>
@@ -477,7 +477,7 @@ onMounted(() => {
     align-items: center;
     padding-top: 10px;
     margin-bottom: auto;
-    width: 100%;
+    // width: 100%;
   }
 
   .logo-img {

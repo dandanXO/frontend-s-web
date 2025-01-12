@@ -369,7 +369,7 @@ export default {
     accumulate: "Accumulate",
     invites: "Invites",
     extra: "Extra",
-    rewardss: "Rewards",
+    rewards: "Rewards"
   },
   nameAuth: {
     title: "Real Name Authentication",
@@ -801,6 +801,8 @@ export default {
     53011: "Interest withdrawal turnover requirement is not completed, so you cannot deposit again",
     54000: "The collection time has not yet arrived.",
     54001: "The user has not bound a withdrawal account.",
-    54002: "The user's bank card is already bound to another account."
+    54002: "The user's bank card is already bound to another account.",
+    582300: "Today Not Within Event Stage Time Range",
+    582301: "Email Or Telephone Are Not Verified."
   }
 };

@@ -1,15 +1,15 @@
 <template>
   <div class="livepoker-rebate-wrapper">
     <div class="livepoker-rebate-container">
-      <div class="livepoker-rebate-section">
+      <div class="livepoker-rebate-section section-bg">
         <div class="livepoker-rebate-section-left">
           <div class="livepoker-rebate-section-title">
-            <div><img src="../../../assets/promo/lh-livepoker-rebate/section-title-img.png" /></div>
+            <div class="claim-title-icon"></div>
             每日彩金
           </div>
           <div class="reward-info">
             <div class="reward-info-icon">
-              <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon1.png" alt="" width="100%" />
+              <div class="claim-coin-icon"></div>
             </div>
             <div class="reward-info-content">
               今日体育场馆投注：
@@ -18,7 +18,7 @@
           </div>
           <div class="reward-info">
             <div class="reward-info-icon">
-              <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon2.png" alt="" width="100%" />
+              <div class="claim-gift-icon"></div>
             </div>
             <div class="reward-info-content">
               可领彩金：
@@ -32,24 +32,24 @@
           </div>
         </div>
       </div>
-      <div class="livepoker-rebate-game-info">
-        <div class="title"></div>
+      <div class="livepoker-rebate-game-info section-bg">
+        <div class="title-img">活动详情</div>
         <!--        <div class="little-title">-->
         <!--          <div class="left">活动平台</div>-->
         <!--          <div class="right">真人场馆、棋牌场馆</div>-->
         <!--        </div>-->
         <div class="little-title">
-          <div class="left">活动时间</div>
+          <div class="ribbon">活动时间</div>
           <div class="right">2024年8月16日起</div>
         </div>
         <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
-          <div class="left">活动内容</div>
+          <div class="ribbon">活动内容</div>
           <div class="right">
             活动期间，用户每日在体育场馆投注"五大联赛"累计有效投注≥1,000
             元，即可在次日24小时内点击活动页面的【点击领取】按钮领取对应彩金。
           </div>
         </div>
-        <table class="livepoker-rebate-game-info-table">
+        <table class="livepoker-rebate-game-info-table section-table">
           <tbody>
             <tr>
               <th>当日有效总流水</th>
@@ -107,8 +107,9 @@
         </div>
       </div>
 
-      <div class="livepoker-rebate-game-bottom-rule">
-        <div class="title"></div>
+      <div class="livepoker-rebate-game-bottom-rule section-bg">
+        <div class="title-img">活动规则</div>
+        <br/>
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
@@ -258,7 +259,6 @@ onMounted(() => {
   }
 
   .livepoker-rebate-section-title {
-    color: #000000;
     font-size: 24px;
     line-height: 1;
     font-weight: 600;
@@ -287,13 +287,13 @@ onMounted(() => {
     font-size: 16px;
     font-weight: 500;
     line-height: 22.4px;
-    color: #ff0000;
+    color: #ff3a3a;
   }
   .livepoker-rebate-game-bottom-left-btn {
     font-size: 16px;
     font-weight: 600;
     line-height: 22.4px;
-    color: #ff0000;
+    color: #ff3a3a;
     cursor: pointer;
     display: flex;
     justify-content: flex-start;
@@ -348,7 +348,6 @@ onMounted(() => {
       font-size: 20px;
       font-weight: 400;
       line-height: 28px;
-      color: #000000;
     }
   }
 }
@@ -397,7 +396,6 @@ onMounted(() => {
     font-size: 20px;
     font-weight: 400;
     line-height: 28px;
-    color: #000000;
   }
 }
 
@@ -425,7 +423,6 @@ onMounted(() => {
     font-size: 20px;
     font-weight: 400;
     line-height: 36px;
-    color: #000000;
     .item {
       padding-left: 24px;
       display: flex;
@@ -470,7 +467,6 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   font-size: 20px;
-  color: black;
   gap: 24px;
 
   .amount {

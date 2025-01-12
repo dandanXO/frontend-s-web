@@ -188,7 +188,7 @@
                   size="mini"
                   type="primary"
                   v-permission="['sys:site:image:add']"
-                  @click="showImageDialog('DESKTOP_BANNER')"
+                  @click="showImageDialog('DESKTOP_BANNER', true)"
                 >
                   {{ t('fields.upload') }}
                 </el-button>
@@ -222,7 +222,7 @@
                   size="mini"
                   type="primary"
                   v-permission="['sys:site:image:add']"
-                  @click="showImageDialog('MOBILE_BANNER')"
+                  @click="showImageDialog('MOBILE_BANNER', false)"
                 >
                   {{ t('fields.upload') }}
                 </el-button>
@@ -254,7 +254,7 @@
                   size="mini"
                   type="primary"
                   v-permission="['sys:site:image:add']"
-                  @click="showImageDialog('MOBILE_BANNER')"
+                  @click="showImageDialog('MOBILE_BANNER', true)"
                 >
                   {{ t('fields.upload') }}
                 </el-button>
@@ -790,6 +790,7 @@ const form = reactive({
   title: null,
   desktopImageUrl: null,
   deskTopImageUrlDark: null,
+  desktopImageUrlDark: null,
   mobileImageUrl: null,
   mobileImageUrlDark: null,
   redirectUrl: null,
@@ -931,42 +932,8 @@ async function browseImage(type, isDark) {
   }
   uiControl.imageSelectionType = type
   uiControl.imageSelectionVisible = true
+  uiControl.selectDarkImage = isDark;
 }
-
-// async function attachPhoto(event) {
-//   const files = event.target.files[0]
-//   const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
-//   const dir = 'promo'
-//   if (!allowFileType.find(ftype => ftype.includes(files.type))) {
-//     ElMessage({ message: t('message.invalidFileType'), type: 'error' })
-//   } else {
-//     var formData = new FormData()
-//     formData.append('files', files)
-//     formData.append('dir', dir)
-//     formData.append('overwrite', false)
-//     return await uploadImage(formData)
-//   }
-// }
-
-// async function attachDesktopImg(event) {
-//   const data = await attachPhoto(event)
-//   if (data.code === 0) {
-//     form.desktopImageUrl = data.data
-//     inputDesktop.value.value = ''
-//   } else {
-//     ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
-//   }
-// }
-
-// async function attachMobileImg(event) {
-//   const data = await attachPhoto(event)
-//   if (data.code === 0) {
-//     form.mobileImageUrl = data.data
-//     inputMobile.value.value = ''
-//   } else {
-//     ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
-//   }
-// }
 
 async function loadHomebanner() {
   const { data: ret } = await getHomeBannerList(request)
@@ -1050,6 +1017,23 @@ function submit() {
   }
 }
 
+function autoSelectImage() {
+  if (uiControl.imageSelectionType === 'DESKTOP_BANNER') {
+    if (uiControl.supportDarkMode && uiControl.selectDarkImage) {
+      form.deskTopImageUrlDark = imageForm.siteId + '/' + imageForm.path;
+      form.desktopImageUrlDark = imageForm.siteId + '/' + imageForm.path;
+    } else {
+      form.desktopImageUrl = imageForm.siteId + '/' + imageForm.path;
+    }
+  } else if (imageForm.promoType === 'MOBILE_BANNER') {
+    if (uiControl.supportDarkMode && uiControl.selectDarkImage) {
+      form.mobileImageUrlDark = imageForm.siteId + '/' + imageForm.path;
+    } else {
+      form.mobileImageUrl = imageForm.siteId + '/' + imageForm.path;
+    }
+  }
+}
+
 function submitImage() {
   if (uiControl.imageSelectionType === 'DESKTOP') {
     if (uiControl.supportDarkMode && uiControl.selectDarkImage) {
@@ -1068,7 +1052,7 @@ function submitImage() {
   uiControl.imageSelectionVisible = false
 }
 
-function showImageDialog(type) {
+function showImageDialog(type, isDark = false) {
   imageForm.siteId = request.siteId;
   if (imageFormRef.value) {
     imageFormRef.value.resetFields()
@@ -1084,11 +1068,15 @@ function showImageDialog(type) {
       imageForm.promoType = 'MOBILE_BANNER'
       break
   }
+
+  uiControl.imageSelectionType = type
   uiControl.imageDialogTitle = t('fields.addImage')
-  uiControl.imageDialogVisible = true
+  uiControl.imageDialogVisible = true;
+  uiControl.selectDarkImage = isDark;
 }
 
 async function attachImage(event) {
+  imageForm.name = generateRandomString(8);
   const data = await attachPhoto(event)
   if (data.code === 0) {
     imageForm.path = data.data
@@ -1096,6 +1084,16 @@ async function attachImage(event) {
   } else {
     ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
   }
+}
+
+function generateRandomString(charSize) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < charSize; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters[randomIndex];
+  }
+  return result;
 }
 
 async function attachPhoto(event) {
@@ -1133,11 +1131,7 @@ function submitImageUpload() {
       uiControl.imageDialogVisible = false
       ElMessage({ message: t('message.addSuccess'), type: 'success' })
 
-      if (imageForm.promoType === 'DESKTOP_BANNER') {
-        form.desktopImageUrl = imageForm.siteId + '/' + imageForm.path;
-      } else if (imageForm.promoType === 'MOBILE_BANNER') {
-        form.mobileImageUrl = imageForm.siteId + '/' + imageForm.path;
-      }
+      autoSelectImage()
     }
   })
 }

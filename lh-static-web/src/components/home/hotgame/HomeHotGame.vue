@@ -1293,6 +1293,12 @@ $transition_timer: 0.5s;
             height: 29rem;
           }
 
+          .character-casino-fblive {
+            position: relative;
+            right: 9.5rem;
+            height: 29rem;
+          }
+
           .character-casino-allbet {
             right: 6rem;
           }

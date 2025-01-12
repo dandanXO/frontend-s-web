@@ -58,7 +58,7 @@
         prize pool for the top 50 is 1,250,000PKR!
       </p>
       <p>
-        When betting in Aviator every day, when the effective betting amount reaches 3,000PKR, you can get the chance to
+        When betting in Aviator every day, when the effective betting amount reaches 888PKR, you can get the chance to
         smash the golden egg (SUNEHRI ANDY). Maximum reward: 88,888PKR, the probability of winning is 3.6%
       </p>
       <p style="color: #fff">

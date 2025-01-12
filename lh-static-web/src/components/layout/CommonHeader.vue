@@ -342,7 +342,7 @@
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-homelogo">
-            <img src="../../assets/logo-1.png" width="150" />
+            <img src="../../assets/lh-logo.svg" width="150" />
           </div>
           <div class="acc-dialog-content">
             <LoginDialog
@@ -462,7 +462,7 @@ import NewMemberGuide from '@/components/home/NewMemberGuide.vue'
 import "vue3-carousel/dist/carousel.css";
 import { defineComponent, onMounted, ref, reactive, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { userStore } from "@/store/index";
+import { userStore } from "@/store";
 import { getVerificationCode, register } from "@/api/index/login";
 import { findAccount } from "@/api/index/forgotPwd";
 import { sendSms } from "@/api/personal/personal";
@@ -479,7 +479,7 @@ import AppMenu from "@/components/menu/AppMenu.vue";
 import "vue3-marquee/dist/style.css";
 import { useDark, useElementSize, useLocalStorage } from "@vueuse/core";
 import { storeToRefs } from "pinia";
-import GameModal from "@/components/modal/GameModal";
+import GameModal from "@/components/modal/GameModal.vue";
 import moment from "moment";
 import { lsGet, lsStore, lsRemove, getTimeout } from "@/utils/utils";
 import { getUnreadTotal } from "@/api/personal/mailbox";
@@ -488,7 +488,6 @@ import { getUnreadTotal } from "@/api/personal/mailbox";
 import LoginDialog from "@/views/LoginDialog.vue";
 import RegisterAccount from "@/components/auth/register/index.vue";
 import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
-import { uploadImage, saveImage } from "@/api/personal/common";
 import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import floor from "lodash/floor";
 import { loadPromoBanner } from "@/api/index/promo";
@@ -540,16 +539,6 @@ export default defineComponent({
     const loadingBtn = ref(false);
     const store = userStore();
 
-    const checkToken = () => {
-      if (store.token) {
-        if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
-          return false;
-        }
-        return true;
-      } else {
-        return true;
-      }
-    };
     const navigations = reactive([
       { code: "home", name: "首页", enName: "Home", path: "/home" },
       { code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true, isTest: false },
@@ -584,7 +573,7 @@ export default defineComponent({
     const captchaDialogVisible = ref(false);
     const el = ref(null);
     const scroll = ref(0);
-    const selectedMenu = ref(false);
+    const selectedMenu = ref("");
     const { height } = useElementSize(el);
     const isDark = useDark();
 
@@ -1553,7 +1542,6 @@ export default defineComponent({
       timestamp,
       openMiniGame,
       navigations,
-      checkToken,
       loadIcon,
       accDialogImg
     };
@@ -2167,83 +2155,83 @@ body {
     background-position: center center;
 
     // &.slot-ag {
-    //   background-image: url("../../assets/game/header_slot_ag.png");
+    //   background-image: url("../../../assets/game/header_slot_ag.png");
     // }
 
     // &.slot-pt {
-    //   background-image: url("../../assets/game/header_slot_pt.png");
+    //   background-image: url("../../../assets/game/header_slot_pt.png");
     // }
 
     // &.slot-sw {
-    //   background-image: url("../../assets/game/header_slot_sw.png");
+    //   background-image: url("../../../assets/game/header_slot_sw.png");
     // }
 
     // &.slot-bbin {
-    //   background-image: url("../../assets/game/header_slot_bbin.png");
+    //   background-image: url("../../../assets/game/header_slot_bbin.png");
     // }
 
     // &.slot-pg {
-    //   background-image: url("../../assets/game/header_slot_pg.png");
+    //   background-image: url("../../../assets/game/header_slot_pg.png");
     // }
 
     // &.slot-mg {
-    //   background-image: url("../../assets/game/header_slot_mg.png");
+    //   background-image: url("../../../assets/game/header_slot_mg.png");
     // }
 
     // &.slot-cq {
-    //   background-image: url("../../assets/game/header_slot_cq.png");
+    //   background-image: url("../../../assets/game/header_slot_cq.png");
     // }
 
     // &.fish-ag {
-    //   background-image: url("../../assets/fishing/ag_fish_king.png");
+    //   background-image: url("../../../assets/fishing/ag_fish_king.png");
     // }
 
     // &.fish-sg {
-    //   background-image: url("../../assets/fishing/sg_fish_king.png");
+    //   background-image: url("../../../assets/fishing/sg_fish_king.png");
     // }
 
     // &.fish-at {
-    //   background-image: url("../../assets/fishing/at_fish_king.png");
+    //   background-image: url("../../../assets/fishing/at_fish_king.png");
     // }
 
     // &.fish-gps {
-    //   background-image: url("../../assets/fishing/gps_fish_king.png");
+    //   background-image: url("../../../assets/fishing/gps_fish_king.png");
     // }
 
     // &.live-ag {
-    //   background-image: url("../../assets/live/live_ag.png");
+    //   background-image: url("../../../assets/live/live_ag.png");
     // }
 
     // &.live-allbet {
-    //   background-image: url("../../assets/live/live_allbet.png");
+    //   background-image: url("../../../assets/live/live_allbet.png");
     // }
 
     // &.live-bbin {
-    //   background-image: url("../../assets/live/live_bbin.png");
+    //   background-image: url("../../../assets/live/live_bbin.png");
     // }
 
     // &.live-pm {
-    //   background-image: url("../../assets/live/live_pm.png");
+    //   background-image: url("../../../assets/live/live_pm.png");
     // }
 
     // &.live-bg {
-    //   background-image: url("../../assets/live/live_bg.png");
+    //   background-image: url("../../../assets/live/live_bg.png");
     // }
 
     // &.live-sexy {
-    //   background-image: url("../../assets/live/live_sexy.png");
+    //   background-image: url("../../../assets/live/live_sexy.png");
     // }
 
     // &.lottery-tcg {
-    //   background-image: url("../../assets/lottery/lottery_tcg.webp");
+    //   background-image: url("../../../assets/lottery/lottery_tcg.webp");
     // }
 
     // &.lottery-bbin {
-    //   background-image: url("../../assets/lottery/lottery_bbin.webp");
+    //   background-image: url("../../../assets/lottery/lottery_bbin.webp");
     // }
 
     // &.lottery-sgwin {
-    //   background-image: url("../../assets/lottery/lottery_sgwin.webp");
+    //   background-image: url("../../../assets/lottery/lottery_sgwin.webp");
     // }
   }
 
@@ -2515,6 +2503,8 @@ body {
 }
 
 .acc-dialog {
+  font-family: "PingFang SC";
+
   &.el-dialog {
     box-shadow: none;
     border-radius: 20px;
@@ -2543,10 +2533,12 @@ body {
           max-width: 963px;
           max-height: 896px;
           border-radius: 20px;
+          height: 100%;
 
           img {
             display: block;
             width: 100%;
+            height: 100%;
             object-fit: contain;
           }
         }

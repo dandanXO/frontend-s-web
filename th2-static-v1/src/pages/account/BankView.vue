@@ -445,6 +445,11 @@ onActivated(() => {
     line-height: 2.25rem; /* 100% */
     text-transform: capitalize;
   }
+  .dialog-title {
+    width: calc(100% - 40px) !important;
+    font-size: 20px;
+    padding-left: 20px;
+  }
 
   .dialog-input {
     border-radius: 8px;

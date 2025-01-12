@@ -37,6 +37,10 @@ export const deleteCompetition = async ids => {
   )
 }
 
+export const updateCompetitionState = (id, state) => {
+  return https().request(`/platform-competition/${id}/state?_method=PUT`, Method.POST, { state: state }, ContentType.form);
+};
+
 export const getCompetitionsCode = competitionCode => {
   return https().request(
     '/platform-competition-code',
