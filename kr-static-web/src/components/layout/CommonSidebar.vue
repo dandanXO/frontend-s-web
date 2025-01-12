@@ -19,11 +19,11 @@
         <img src="../../assets/images/home/sticky-sidebar-zalo-icon.png" />
         <span style="margin-left: 5px"> +63967 254 1561</span>
       </div> -->
-      <!-- <div class="additional-info-item" v-if="store.token">
+      <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-telegram-icon.png" />
-        <a href="https://t.me/Dia88help1" target="_blank">@Dia88help1</a>
-        <!- <span style="margin-left: 5px">@Diahelp7</span> ->
-      </div> -->
+        <a href="https://t.me/da9209 " target="_blank">@da9209</a>
+        <!-- <span style="margin-left: 5px">@Diahelp7</span> -->
+      </div>
     </div>
     <div class="sticky-sidebar-items">
       <!--      <router-link to="/promotion" class="sticky-sidebar-item" @mouseover="customerHovered = false">-->
