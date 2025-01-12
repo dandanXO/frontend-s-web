@@ -1210,7 +1210,7 @@ export default defineComponent({
     .personal-wrapper {
       .tbl-row {
         .basic-info-cell {
-          color: $font-3-dark;
+          color: #fff;
         }
       }
 

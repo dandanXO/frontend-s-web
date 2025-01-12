@@ -1869,6 +1869,13 @@ export default {
     fromPlatform: 'Từ Nền tảng',
     fromGameCode: 'Từ Game Code',
     toGameCode: 'Để chơi mã',
+    priviClickNextStep: 'Bước tiếp theo',
+    priviClickPreviousStep: 'Bước trước',
+    priviBasicInfo: 'Thông tin cơ bản',
+    priviRewardSetup: 'Cài đặt tiền thưởng',
+    priviVipSetup: 'cài đặt vip',
+    priviPaymentSetup: 'chi trả',
+    priviOther: 'khác'
   },
   message: {
     startenddatemore3months:
@@ -2371,6 +2378,8 @@ export default {
     validatePlanLimitMinRequired: 'Yêu cầu giới hạn đầu tư tối thiểu',
     validatePlanLimitMaxRequired: 'Yêu cầu giới hạn đầu tư tối đa',
     validateIsSeamlessTransferRequired: 'Nó là cần thiết để không chuyển nhượng',
+    validateVipSettingRequired: 'Yêu cầu cài đặt VIP',
+    validatePayementTypesSettingRequired: 'Yêu cầu cài đặt thanh toán'
   },
   menu: {
     undefined: '',
@@ -2620,6 +2629,7 @@ export default {
     'ID Verification': 'ID Verification',
     'Privi Spin Event Record': 'Ghi chép sự kiện quay thưởng Privi',
     'Top Ranking': 'Ghi chép xếp hạng cao nhất',
+    'Top Bonus Ranking': 'Xếp Hạng Thưởng Hàng Đầu',
   },
   google: {
     google_auth_menu: 'Google Xác thực',

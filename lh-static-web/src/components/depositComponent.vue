@@ -353,6 +353,7 @@ function initPay() {
 
 async function loadPrivilege(val) {
   privilegeList.value = [];
+  freePrivilege.value = null;
   await loadPrivileges(val.paymentId).then((d) => {
     if (d.code == 0) {
       privilegeList.value = d.data.privileges;
@@ -984,5 +985,18 @@ onMounted(() => {
       transform: translate(0px, 1px);
     }
   }
+}
+
+.dark {
+  .btn-confirm {
+    .el-button {
+      background: url("../assets/images/home/standard-button-bg.svg") no-repeat center center !important;
+      background-size: cover !important;
+      box-shadow: none;
+      border-radius: 8px;
+      border: 1px solid #3a93ce;
+    }
+  }
+
 }
 </style>

@@ -179,6 +179,15 @@ export default boot(({ app, router }) => {
       if (res.code === ResponseCode.EMPTY_PROMO_POPOUT) {
         return res;
       }
+      if (res.code === ResponseCode.ERROR_BAD_REQUEST){
+        Notify.create({
+          type: "negative",
+          timeout: 1000,
+          position: "top",
+          message: "用户或密码错误"
+        });
+        return;
+      }
       if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
         location.reload();
       } else {

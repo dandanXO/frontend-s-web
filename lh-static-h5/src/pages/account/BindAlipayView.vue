@@ -476,4 +476,21 @@ onMounted(() => {
     }
   }
 }
+
+.body--dark {
+  .bind-container {
+    .bind-wrapper {
+      .bind-item {
+        @include content-block-dark-with-border;
+        q-label {
+          color: white !important;
+        }
+        .q-field__control {
+          background: $background-dark;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}
 </style>

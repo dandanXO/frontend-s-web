@@ -1,15 +1,14 @@
 <template>
   <div class="livepoker-rebate-wrapper">
     <div class="livepoker-rebate-container">
-      <div class="livepoker-rebate-section">
+      <div class="livepoker-rebate-section section-bg">
         <div class="livepoker-rebate-section-left">
           <div class="livepoker-rebate-section-title">
-            <div><img src="@/assets/promo/lh-livepoker-rebate/section-title-img.png" /></div>
+            <div class="claim-title-icon"></div>
             投注礼金
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon">
-              <img src="@/assets/promo/lh-livepoker-rebate/reward-icon1.png" alt="" width="100%" />
+            <div class="reward-info-icon claim-coin-icon">
             </div>
             <div class="reward-info-content">
               昨日单笔最高有效投注:
@@ -17,8 +16,7 @@
             </div>
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon">
-              <img src="@/assets/promo/lh-livepoker-rebate/reward-icon2.png" alt="" width="100%" />
+            <div class="reward-info-icon claim-gift-icon">
             </div>
             <div class="reward-info-content">
               可领取彩金：
@@ -38,17 +36,17 @@
           </div>
         </div>
       </div>
-      <div class="livepoker-rebate-game-info">
-        <div class="title"></div>
+      <div class="livepoker-rebate-game-info section-bg">
+        <div class="title-img">活动详情</div>
         <div class="little-title">
-          <div class="left">活动时间</div>
+          <div class="ribbon">活动时间</div>
           <div class="right">2025年1月24日至2月2日</div>
         </div>
         <div class="little-title">
-          <div class="left">活动内容</div>
+          <div class="ribbon">活动内容</div>
           <div class="right">活动期间，当日贝尔格莱德 2025赛事中单笔最高有效投注≥500 元即可获得最高1588元的奖金。</div>
         </div>
-        <table class="livepoker-rebate-game-info-table">
+        <table class="livepoker-rebate-game-info-table section-table">
           <thead>
             <tr>
               <th>最高单笔有效投注</th>
@@ -102,28 +100,33 @@
               <img src="@/assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
               <span>示例</span>
             </div>
-            用户 在1月25日的贝尔格莱德 2025赛事中下注3次，有效投注分别为500元、5000元和100元，单笔最高有效投注金额为5000元，则次日会员可登录优惠页面点击领取108元投注金。
+            用户 在1月25日的贝尔格莱德
+            2025赛事中下注3次，有效投注分别为500元、5000元和100元，单笔最高有效投注金额为5000元，则次日会员可登录优惠页面点击领取108元投注金。
           </div>
         </div>
       </div>
 
-      <div class="livepoker-rebate-game-bottom-rule">
-        <div class="title"></div>
+      <div class="livepoker-rebate-game-bottom-rule section-bg">
+        <div class="title-img">活动规则</div>
+        <br/>
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              活动期间，活动仅计算电竞场馆中贝尔格莱德 2025赛事，会员在当日贝尔格莱德 2025赛事中单笔最高有效投注≥500 元即可获得对应彩金，单笔最高有效投注次日清零；
-            <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
-          </div>
+              活动期间，活动仅计算电竞场馆中贝尔格莱德 2025赛事，会员在当日贝尔格莱德 2025赛事中单笔最高有效投注≥500
+              元即可获得对应彩金，单笔最高有效投注次日清零；
+              <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
+            </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，活动仅计算当日 贝尔格莱德 2025赛事已结算的赛事的单笔最高有效投注，次日 24 小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 6倍流水即可出款；
+            活动期间，活动仅计算当日 贝尔格莱德 2025赛事已结算的赛事的单笔最高有效投注，次日 24
+            小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 6倍流水即可出款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为单笔最高有效投注内；
+            任何低于欧洲盘 1.7 或亚洲盘 0.7
+            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为单笔最高有效投注内；
           </div>
           <div class="item">
             <div class="item-num">4</div>
@@ -131,7 +134,8 @@
           </div>
           <div class="item">
             <div class="item-num">5</div>
-            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
+            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+            地址视为同一账户，若有违规者，将不享受此红利；
           </div>
           <div class="item">
             <div class="item-num">6</div>
@@ -157,7 +161,7 @@ const notify = useNotify();
 
 const store = userStore();
 const highestSingleValidBet = ref(0);
-const platformValidBet = ref(0);
+// const platformValidBet = ref(0);
 const bonus = ref(0);
 const isClaiming = ref(false);
 
@@ -210,7 +214,7 @@ const fetchData = async () => {
   try {
     const res = await getBelgrade2025Init(promoCode.value);
     highestSingleValidBet.value = res.data.highestSingleValidBet;
-    platformValidBet.value = res.data.platformValidBet;
+    // platformValidBet.value = res.data.platformValidBet;
     bonus.value = res.data.bonus;
   } catch (error) {
     console.log(error);
@@ -283,7 +287,6 @@ onMounted(() => {
   }
 
   .livepoker-rebate-section-title {
-    color: #000000;
     font-size: 24px;
     line-height: 1;
     font-weight: 600;
@@ -312,13 +315,13 @@ onMounted(() => {
     font-size: 16px;
     font-weight: 500;
     line-height: 22.4px;
-    color: #ff0000;
+    color: #ff3333;
   }
   .livepoker-rebate-game-bottom-left-btn {
     font-size: 16px;
     font-weight: 600;
     line-height: 22.4px;
-    color: #ff0000;
+    color: #ff3333;
     cursor: pointer;
     display: flex;
     justify-content: flex-start;
@@ -374,7 +377,6 @@ onMounted(() => {
       font-size: 20px;
       font-weight: 400;
       line-height: 28px;
-      color: #000000;
     }
   }
 }
@@ -476,7 +478,7 @@ onMounted(() => {
         font-size: 18px;
         font-weight: 400;
         line-height: 22.4px;
-        color: #ff0000;
+        color: #ff3333;
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -507,7 +509,6 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   font-size: 20px;
-  color: black;
   gap: 24px;
 
   .amount {

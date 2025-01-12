@@ -22,13 +22,9 @@
       </div>
 
       <div class="content">
-        <div class="longka-wrap">
-          <div class="longka-title">
-            <img
-              src="../../../assets/images/promotion/hotpromo/dragoncard/mycard-dragon2.png"
-              alt=""
-              style="width: 100%"
-            />
+        <div class="longka-wrap section-bg">
+          <div class="longka-title title-img">
+            我的龙卡
           </div>
           <div class="longka-content">
             <div class="longka-container">
@@ -62,16 +58,12 @@
             </div>
           </div>
         </div>
-        <div class="longka-ranking-wrap">
-          <div class="longka-ranking-title">
-            <img
-              src="../../../assets/images/promotion/hotpromo/dragoncard/dragon-rank2.png"
-              alt=""
-              style="width: 100%"
-            />
+        <div class="longka-ranking-wrap section-bg">
+          <div class="longka-ranking-title title-img">
+            龙卡排行榜
           </div>
 
-          <el-table :data="rankingRecord()" :loading="rankingPage.loading">
+          <el-table :data="rankingRecord()" :loading="rankingPage.loading" class="section-table">
             <template #empty>
               <p>没有数据</p>
             </template>
@@ -90,16 +82,16 @@
           />
         </div>
 
-        <div class="longka-ranking-wrap">
-          <div class="longka-ranking-title">
-            <img src="../../../assets/images/promotion/hotpromo/dragoncard/dragon-time2.png" style="width: 100%" />
+        <div class="longka-ranking-wrap section-bg">
+          <div class="longka-ranking-title title-img">
+            活动时间
           </div>
-          <table class="longka-ranking-table" v-if="cardInfo.cardDetail.setting">
+          <table class="longka-ranking-table section-table" v-if="cardInfo.cardDetail.setting">
             <thead>
               <tr>
-                <td>期数</td>
-                <td>集卡时间</td>
-                <td>开奖时间</td>
+                <th>期数</th>
+                <th>集卡时间</th>
+                <th>开奖时间</th>
               </tr>
             </thead>
             <tbody>
@@ -490,6 +482,82 @@ const submitRegisterForm = async (elForm) => {
   }
 }
 
+.dark {
+  .tigercard-container {
+
+  .el-table__inner-wrapper:before {
+    background-color: transparent;
+  }
+
+  .el-table {
+    margin: 0 auto;
+    border-radius: 0px;
+    background: transparent;
+    &__empty-text p {
+      color: #fff;
+    }
+
+    tr {
+      background-color: transparent;
+    }
+
+    th {
+      text-align: center;
+      line-height: 32px;
+
+      &.el-table__cell {
+        color: #fff;
+
+        &.is-leaf {
+          border-bottom: 0px solid #ecedf0;
+        }
+      }
+    }
+
+    td {
+      &.el-table__cell {
+        color: #fff;
+        text-align: center;
+      }
+    }
+  }
+
+  .el-pagination {
+    margin: 10px auto;
+    justify-content: center;
+
+    .el-pager {
+      pointer-events: none;
+    }
+
+    .el-pager li {
+      color: #fff;
+      min-width: unset;
+
+      &.btn-quicknext {
+        svg {
+          display: none;
+        }
+      }
+
+      &.is-active,
+      &:hover {
+        color: #fff;
+        &:after {
+          content: "/";
+          display: inline-block;
+          margin-left: 8px;
+        }
+      }
+    }
+
+    button:hover {
+      color: #fff;
+    }
+  }
+}
+}
+
 body {
   .wonlongkaBox {
     width: 500px;
@@ -749,7 +817,6 @@ body {
 }
 
 .longka-ranking-table {
-  background-color: #fff;
   margin: 0 auto;
   color: #7a8eb9;
   text-align: center;
@@ -759,11 +826,11 @@ body {
   border-radius: 8px;
   font-weight: 400;
   table-layout: fixed;
+  border-collapse: collapse;
 }
 
 .longka-ranking-table thead {
   line-height: 32px;
-  background: #e7f3ff;
   color: #424f72;
   font-weight: bold;
 }
@@ -792,5 +859,37 @@ body {
 .longka-ranking-pagination .next-page,
 .longka-ranking-pagination .prev-page {
   cursor: pointer;
+}
+
+.section-bg {
+  .title-img {
+    aspect-ratio: 2952 / 91;
+    background: url("../../../assets/images/promotion/hotpromo/dragoncard/promo-details-title-bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 1250px 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    font-weight: bold;
+    color: #333;
+  }
+}
+.dark {
+  .section-bg {
+    .title-img {
+      aspect-ratio: 2952 / 91;
+      background: url("../../../assets/images/promotion/hotpromo/dragoncard/promo-details-title-bg.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 1250px 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 40px;
+      font-weight: bold;
+    }
+  }
 }
 </style>

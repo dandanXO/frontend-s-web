@@ -61,7 +61,7 @@
                 @click="handleDotClick(index)"
               ></div>
             </div>
-            <q-checkbox v-model="checked" label="今天不再提醒" />
+            <q-checkbox v-model="checked" label="今天不再提醒" color="blue" />
           </div>
         </div>
         <div class="dialog-action">
@@ -315,5 +315,29 @@ watch(checked, (val) => {
 
 ::v-deep(.q-dialog__inner > div) {
   overflow: unset;
+}
+
+.body--dark {
+  .dialog-header {
+    &.only-inbox {
+      background: #333;
+    }
+
+    .bg-img {
+      filter: brightness(0) saturate(100%) invert(16%) sepia(0%) saturate(107%) hue-rotate(231deg) brightness(93%)
+        contrast(87%);
+    }
+  }
+
+  .dialog-header .dialog-tab-item.inbox.active .text {
+    color: #fff;
+  }
+  .dialog-header .dialog-tab-item.inbox.active .text img {
+    filter: brightness(0) invert(1);
+  }
+
+  .dialog-footer {
+    background: #444;
+  }
 }
 </style>

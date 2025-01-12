@@ -171,7 +171,7 @@
           提交答案
         </div>
       </div>
-      <div v-else class="prize-quiz-main prize-quiz-record-container" style="margin-top: 80px">
+      <div v-else class="prize-quiz-main prize-quiz-record-container section-bg" style="margin-top: 80px">
         <!-- <div class="title" id="title">
           {{ matchInfo.quizTitle || "答题区" }}
         </div> -->
@@ -220,8 +220,8 @@
         </div>
       </div>
 
-      <div class="prize-quiz-record-container">
-        <div class="title-img title-record"></div>
+      <div class="prize-quiz-record-container section-bg">
+        <div class="title-img">答题记录</div>
         <div>
           <table v-if="isHasRecord" class="record-table" id="record-table">
             <tr>
@@ -620,6 +620,521 @@ const submittedFormStatus = ref(false);
 </script>
 
 <style scoped lang="scss">
+.dark {
+  .prize-quiz-container {
+  font-size: 14px;
+  color: #87898a;
+  padding: 0 0 0 0;
+
+  .prize-quiz-content-container {
+    width: 1154px;
+    margin: 0 auto;
+
+    .prize-quiz-jc-container {
+      gap: 10px;
+      width: 780px;
+      height: 200px;
+      // background: url("../../../assets/images/promotion/hotpromo/esportquiz/bg_jc_8.png") center no-repeat;
+      background: linear-gradient(
+        90.02deg,
+        rgba(5, 210, 255, 0) 0.02%,
+        rgba(0, 117, 255, 0.14) 49.86%,
+        rgba(5, 210, 255, 0) 99.97%
+      );
+
+      padding-top: 10px;
+      margin: 30px auto 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+
+      .prize-quiz-jc-pool {
+        img {
+          width: 100%;
+        }
+      }
+
+      .prize-quiz-jc-txt {
+        font-size: 64px;
+        letter-spacing: 3px;
+        background: linear-gradient(180deg, #05d2ff 0%, #0009d9 100%);
+
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        height: 90px;
+        line-height: 90px;
+        font-family: fantasy;
+        filter: drop-shadow(2px 4px 6px white);
+      }
+    }
+
+    .prize-quiz-main {
+      // background-color: #e4f6ff;
+      box-shadow: 0px 5px 10px 0px rgba(12, 3, 7, 0.2);
+      border-radius: 40px;
+      // min-height: 315px;
+      position: relative;
+
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+
+      .flex-div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        div {
+          font-size: 20px;
+          color: white;
+        }
+
+        .team-div {
+          text-align: center;
+
+          .team-logo {
+            width: 80px;
+            height: auto;
+            max-height: 80px;
+
+            img {
+              width: 100%;
+              height: auto;
+            }
+          }
+        }
+      }
+
+      .start-answer-box {
+        width: calc(100% - 200px);
+        margin: 20px auto;
+
+        &.hide {
+          display: none;
+        }
+
+        .book-img {
+          text-align: center;
+          margin-bottom: 0px;
+
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .match-time {
+          color: white;
+          font-size: 26px;
+        }
+
+        .btn-start-answer {
+          display: flex;
+          text-align: center;
+          justify-content: center;
+          align-items: center;
+          color: #ffffff;
+          background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+          border-radius: 20px;
+          padding: 8px 15px;
+          cursor: pointer;
+          background-size: 214px;
+          width: 400px;
+
+          &:hover {
+            opacity: 0.9;
+          }
+
+          &:active {
+            filter: brightness(0.9);
+            transform: translate(0px, 1px);
+          }
+        }
+      }
+
+      .questions-box {
+        padding-top: 17px;
+        display: none;
+
+        &.show {
+          display: block;
+        }
+
+        .questions-container {
+          display: flex;
+          justify-content: space-between;
+
+          &::before,
+          &::after {
+            content: " ";
+            display: block;
+          }
+
+          .questions-item-box {
+            width: 270px;
+            letter-spacing: 0;
+
+            .item-question {
+              margin-bottom: 10px;
+              height: 42px;
+              color: #000000;
+              font-weight: bold;
+              text-align: center;
+              margin-top: 10px;
+            }
+
+            .question-options-box {
+              height: 84px;
+              color: #87898a;
+              overflow: hidden;
+
+              .question-fill-input {
+                border: 1px solid #0094ff;
+                border-radius: 6px;
+                background-color: transparent;
+                color: #87898a;
+                padding: 5px;
+                margin: 38px auto 40px;
+              }
+
+              .item-option > label {
+                font-weight: 400;
+              }
+            }
+
+            .btn-answer {
+              width: 180px;
+              height: 40px;
+              font-size: 16px;
+              color: #fff;
+              line-height: 40px;
+              text-align: center;
+              cursor: pointer;
+              // margin: 38px auto 40px;
+              border: none;
+              background-image: linear-gradient(255deg, #0094ff 0%, #18c5ff 100%), linear-gradient(#0084a4, #0084a4);
+              background-blend-mode: normal, normal;
+              border-radius: 4px;
+              margin: auto;
+
+              &.submitted-ans {
+                filter: brightness(0.8);
+                cursor: not-allowed;
+                pointer-events: all !important;
+              }
+
+              &:hover {
+                opacity: 0.9;
+              }
+
+              &:active {
+                filter: brightness(0.9);
+                transform: translate(0px, 1px);
+              }
+            }
+          }
+        }
+      }
+
+      .title {
+        font-size: 30px;
+        padding: 10px;
+        color: #ffffff;
+        // background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+        text-align: center;
+        border-radius: 10px 10px 0 0;
+      }
+    }
+
+    .title-img {
+      width: 850px;
+      height: 34px;
+    }
+
+    .title-record {
+      background: url("../../../assets/images/promotion/hotpromo/esportquiz/title_record.png") center no-repeat;
+      margin: 0 auto;
+    }
+
+    .record-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px auto;
+
+      th {
+        text-align: center;
+        color: #fff;
+        height: 48px;
+        border: solid 1px #dcdce8;
+        background-image: linear-gradient(0deg, #0094ff 0%, #19c6ff 100%), linear-gradient(#1d212e, #1d212e);
+        background-blend-mode: normal, normal;
+      }
+
+      tr td {
+        height: 50px;
+        text-align: center;
+        border: solid 1px #dcdce8;
+
+        .got-answer {
+          color: #00ff00;
+        }
+
+        .not-got {
+          color: #ff0000;
+        }
+      }
+    }
+
+    .page-list {
+      display: flex;
+      margin-top: 24px;
+      justify-content: center;
+    }
+
+    .page-item {
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+      text-align: center;
+      background-color: #fff;
+      margin: 0 4px;
+      cursor: pointer;
+      border: 1px solid #dcdce8;
+
+      &.active {
+        color: #fff;
+        background-color: #0094ff;
+      }
+    }
+  }
+}
+
+.questions-box {
+  display: block;
+
+  .title {
+    color: #4c4c6c;
+    font-size: 40px;
+    text-align: center;
+    padding: 30px 0px;
+  }
+
+  .questions-container {
+    display: flex;
+    justify-content: space-between;
+
+    .questions-item-box {
+      width: 270px;
+      letter-spacing: 0;
+      position: relative;
+
+      .item-question {
+        height: 42px;
+        font-weight: bold;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-image: url("../../../assets/images/promotion/hotpromo/esportquiz/quiz-flag.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        color: #fff;
+        position: absolute;
+        top: -24px;
+        width: fit-content;
+        padding: 12px 32px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .question-options-box {
+        color: #87898a;
+        background: linear-gradient(0deg, #ffffff 0%, #eaf3fced 100%);
+        border-radius: 20px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        padding: 50px 20px 20px;
+        font-weight: 700;
+        border: 1px solid #4da9f7;
+
+        .question-row {
+          color: #4c4c6c;
+          font-weight: 700;
+        }
+
+        .ans-row {
+          color: #7a8eb9;
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 16px;
+          border-radius: 10px;
+          background: #0000000d;
+
+          .ans {
+            color: #3981ff;
+          }
+        }
+
+        .question-fill-input {
+          border: 1px solid #0094ff;
+          border-radius: 6px;
+          background-color: transparent;
+          color: #87898a;
+          padding: 5px;
+        }
+
+        .item-option > label {
+          font-weight: 400;
+        }
+      }
+
+      .btn-answer {
+        width: 180px;
+        height: 40px;
+        font-size: 16px;
+        color: #fff;
+        line-height: 40px;
+        text-align: center;
+        cursor: pointer;
+        border: none;
+        margin: auto;
+
+        &.submitted-ans {
+          filter: brightness(0.8);
+          cursor: not-allowed;
+          pointer-events: all !important;
+        }
+
+        &:hover {
+          opacity: 0.9;
+        }
+
+        &:active {
+          filter: brightness(0.9);
+          transform: translate(0px, 1px);
+        }
+      }
+    }
+  }
+}
+
+.question-select-box {
+  width: 360px;
+  margin: 30px auto 10px;
+  font-size: 14px;
+  color: #bacef1;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  .question-select-type {
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    width: 100px;
+    color: red;
+  }
+
+  .question-select-option {
+    background-color: #e7f3ff;
+    border-radius: 15px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    cursor: pointer;
+    width: 170px;
+    color: #424f72;
+    font-size: 12px;
+
+    &.active {
+      color: #fff;
+      background-color: #3981ff;
+    }
+  }
+}
+
+.question-fill-box {
+  width: 264px;
+  margin: 80px auto;
+  font-size: 18px;
+  color: #bacef1;
+}
+
+.submit-btn {
+  display: flex;
+  width: 300px;
+  height: 45px;
+  margin: 20px auto;
+  font-size: 16px;
+  color: #fff;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  border-radius: 100px;
+
+  &.submitted-ans {
+    background: #cbdefe;
+    box-shadow: none;
+    cursor: not-allowed;
+    pointer-events: all !important;
+  }
+}
+
+.header {
+  color: #424f72;
+  font-size: 1.25rem;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  position: relative;
+
+  .close-btn {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+  }
+}
+
+.prize-quiz-record-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 60px;
+}
+
+.quiz-flag {
+  position: relative;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("../../../assets/images/promotion/hotpromo/esportquiz/quiz-flag.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  padding: 12px 32px;
+
+  p {
+    margin: 0;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+  }
+}
+}
 .prize-quiz-container {
   font-size: 14px;
   color: #87898a;
@@ -1110,7 +1625,6 @@ const submittedFormStatus = ref(false);
 .prize-quiz-record-container {
   width: 100%;
   height: 100%;
-  background-color: white;
   border-radius: 20px;
   padding: 20px;
   margin-top: 60px;

@@ -152,6 +152,7 @@ export default {
     commissionRateInfo: '커미션 비율 정보',
     commissionRateDescription: '대리 커미션 비율 이에 따라 두 조건을 모두 만족할 경우 제휴 관계에 참여하기로 결정합니다.',
     activeMemberRequirement: '활성 회원 수: 해당 월의 예치금 >= 100 또는 유효한 베팅 >= 500;',
+    activeMemberRequirementDescription: '(조건: 활성 회원을 추가하고 조건을 충족해야 비율에 따라 수수료를 분배할 수 있습니다.)',
     level: '수준',
     companyMonthlyProfit: '회사 월간 이익',
     activeNumberRequirement: '신규/활성 개수 최소 요구 사항',

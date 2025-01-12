@@ -1,12 +1,14 @@
 <template>
+  <div style="position: relative; display: flex; margin: 0 auto; width: 850px">
+    <img
+      class="title-img"
+      style="position: absolute; top: 0%; left: 50%; transform: translate(-50%, 50%); width: 100%; z-index: 1"
+      src="../../../assets//home/hotgame/hotgame-title-dark.png"
+    />
+  </div>
   <div class="hotgame-section">
     <div class="hotgame-tabs-wrapper">
-      <img class="separator-img" style="width: 100%" src="../../../assets/home/hotgame/home-separator.png" />
-      <img
-        class="title-img"
-        style="display: flex; margin: auto; width: 55%"
-        src="../../../assets//home/hotgame/hotgame-title.png"
-      />
+      <!-- <img class="separator-img" style="width:100%;" src="../../../assets/home/hotgame/home-separator.png" /> -->
       <el-tabs :tab-position="tabPosition" class="hotgame-tabs">
         <el-tab-pane
           :label="hotgame.title"
@@ -19,29 +21,70 @@
               <div class="title-wrapper">
                 <Transition :key="transitionDesc" name="fade" enter>
                   <div class="title" v-if="hotgame.currentProvider">
-                    {{
-                      hotgame.content &&
-                      hotgame.content[hotgame.currentProvider.toLowerCase()] &&
-                      hotgame.content[hotgame.currentProvider.toLowerCase()].title
-                    }}
+                    <span v-if="hotgame.type === 'esport'">电竞赛事</span>
+                    <span v-else-if="hotgame.type === 'sport'">体育赛事</span>
+                    <span v-else-if="hotgame.type === 'live'">真人娱乐</span>
+                    <span v-else-if="hotgame.type === 'lottery'">彩票</span>
+                    <span v-else-if="hotgame.type === 'slot'">电子游戏</span>
+                    <span v-else-if="hotgame.type === 'poker'">棋牌游戏</span>
+                    <span v-else-if="hotgame.type === 'fish'">捕鱼游戏</span>
+                    <span v-else>
+                      {{
+                        hotgame.content &&
+                        hotgame.content[hotgame.currentProvider.toLowerCase()] &&
+                        hotgame.content[hotgame.currentProvider.toLowerCase()].title
+                      }}
+                    </span>
                   </div>
                 </Transition>
                 <div class="subtitle">
-                  {{
-                    hotgame.content &&
-                    hotgame.content[hotgame.currentProvider.toLowerCase()] &&
-                    hotgame.content[hotgame.currentProvider.toLowerCase()].subtitle
-                  }}
+                  <span v-if="hotgame.type === 'esport'">E-SPORTS</span>
+                  <span v-else-if="hotgame.type === 'sport'">SPORTS</span>
+                  <span v-else-if="hotgame.type === 'live'">LIVE CASINO</span>
+                  <span v-else-if="hotgame.type === 'lottery'">LOTTERY</span>
+                  <span v-else-if="hotgame.type === 'slot'">SLOT GAMES</span>
+                  <span v-else-if="hotgame.type === 'poker'">POKER GAMES</span>
+                  <span v-else-if="hotgame.type === 'fish'">FISHING GAMES</span>
+                  <span v-else>
+                    {{
+                      hotgame.content &&
+                      hotgame.content[hotgame.currentProvider.toLowerCase()] &&
+                      hotgame.content[hotgame.currentProvider.toLowerCase()].subtitle
+                    }}
+                  </span>
                 </div>
                 <!-- <div class="subtitle">{{ hotgame.content[hotgame.currentProvider.toLowerCase()] }}</div> -->
               </div>
               <div class="description">
                 <div class="desc">
-                  {{
-                    hotgame.content &&
-                    hotgame.content[hotgame.currentProvider.toLowerCase()] &&
-                    hotgame.content[hotgame.currentProvider.toLowerCase()].desc
-                  }}
+                  <span v-if="hotgame.type === 'esport'">
+                    覆盖所有顶尖赛事，超过百场电竞对决及万种投注玩法。完美还原电竞赛场的紧张氛围，为您打造沉浸式体验，让您轻松上手，随时随地开启精彩对决！
+                  </span>
+                  <span v-else-if="hotgame.type === 'sport'">
+                    提供全球热门赛事，涵盖足球、篮球、网球等上千场实时投注选择。拥有直观的界面和实时数据更新，让您随时掌握赛事动态，轻松下注，畅享体育激情！
+                  </span>
+                  <span v-else-if="hotgame.type === 'live'">
+                    真实互动的在线娱乐体验，百种经典真人游戏应有尽有。高清直播与专业荷官，为您带来仿若亲临现场的感受，公平公正，轻松尽享真人魅力！
+                  </span>
+                  <span v-else-if="hotgame.type === 'lottery'">
+                    涵盖全球主流彩种，玩法丰富，奖金丰厚。操作简单，结果透明，让您轻松下注，体验中奖时刻的无限惊喜，随时随地实现梦想！
+                  </span>
+                  <span v-else-if="hotgame.type === 'slot'">
+                    汇聚全球经典与创新的电子游戏，千种主题万种乐趣。高清画质与流畅操作感，让您仿佛置身奇幻世界，享受极致娱乐体验，轻松畅玩不停！
+                  </span>
+                  <span v-else-if="hotgame.type === 'poker'">
+                    集合经典与创新的棋牌玩法，万人同场竞技，乐趣无穷。流畅的操作体验与智能匹配机制，让您一展身手，轻松赢取无限荣耀！
+                  </span>
+                  <span v-else-if="hotgame.type === 'fish'">
+                    深海探险的奇幻之旅，逼真场景与丰富玩法引爆指尖激情。上百种鱼类和多样武器选择，让您轻松捕获无尽奖励，享受捕鱼的无限乐趣！
+                  </span>
+                  <span v-else>
+                    {{
+                      hotgame.content &&
+                      hotgame.content[hotgame.currentProvider.toLowerCase()] &&
+                      hotgame.content[hotgame.currentProvider.toLowerCase()].desc
+                    }}
+                  </span>
                 </div>
                 <!-- <div class="desc">还有超多独家创新玩法，足够新颖，极易操作的游戏界面， 更是在您游戏过程中增光添彩！</div> -->
               </div>
@@ -932,6 +975,8 @@ $transition_timer: 0.5s;
     top: 2%;
     left: 50%;
     transform: translate(-50%, -50%);
+    aspect-ratio: 1933 / 45;
+    margin-top: 20px;
   }
 
   .title-img {
@@ -950,6 +995,9 @@ $transition_timer: 0.5s;
     align-items: center;
     justify-content: center;
     // background-color:lemonchiffon;
+    height: 971px;
+    width: 1903px;
+    margin: 0 auto;
 
     .hotgame-tabs {
       height: 700px;
@@ -966,12 +1014,17 @@ $transition_timer: 0.5s;
         margin-left: 15%;
       }
 
+      :deep(.el-tabs__nav) {
+        gap: 8px;
+      }
+
       :deep(.el-tabs__nav-wrap:after) {
         background-color: #d2d2d25c;
       }
 
       :deep(.el-tabs__item) {
         font-family: PingFang SC;
+        font-size: 18px;
       }
 
       :deep(.el-tabs__item.is-active),
@@ -1127,7 +1180,7 @@ $transition_timer: 0.5s;
                 color: #fff;
                 text-align: center;
                 font-family: PingFang SC;
-                font-size: 0.73363rem;
+                font-size: 0.83363rem;
                 font-weight: 700;
                 line-height: 1.46719rem;
                 white-space: nowrap;
@@ -1223,6 +1276,14 @@ $transition_timer: 0.5s;
               width: 90%;
             }
 
+            &.character-lottery-tcg {
+              bottom: 8%;
+            }
+
+            &.character-board-ky {
+              bottom: 10%;
+            }
+
             &.character-esports-tfgaming {
               margin-top: -2%;
               width: 97%;
@@ -1246,6 +1307,11 @@ $transition_timer: 0.5s;
             &.character-board-leg {
               margin-bottom: 7%;
               width: 89%;
+            }
+
+            &.character-slots-pp {
+              margin-bottom: 7%;
+              width: 91%
             }
           }
         }
@@ -1654,6 +1720,7 @@ $transition_timer: 0.5s;
           //lottery
           .character-lottery-tcg {
             right: 6rem;
+            bottom: 7%;
           }
 
           .character-lottery-lh {
@@ -1901,6 +1968,12 @@ $transition_timer: 0.5s;
 
 .dark {
   .hotgame-section {
+    overflow-x: auto;
+
+    &::-webkit-scrollbar {
+      visibility: hidden;
+    }
+
     .hotgame-container {
       .hotgame-wrapper {
         .hotgame-banner-wrapper {

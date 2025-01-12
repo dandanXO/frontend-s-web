@@ -173,7 +173,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.status')" prop="status">
+        <!-- <el-form-item :label="t('fields.status')" prop="status">
           <el-select
             v-model="form.status"
             size="small"
@@ -188,6 +188,23 @@
               :value="item.value"
             />
           </el-select>
+        </el-form-item> -->
+        <el-form-item :label="t('fields.status')" prop="status">
+          <el-radio-group
+            v-model="form.status"
+            size="small"
+            style="width: 300px"
+          >
+            <el-radio-button label="OPEN">
+              {{ t('common.status.OPEN') }}
+            </el-radio-button>
+            <el-radio-button label="CLOSE">
+              {{ t('common.status.CLOSE') }}
+            </el-radio-button>
+            <el-radio-button label="TEST">
+              {{ t('common.status.TEST') }}
+            </el-radio-button>
+          </el-radio-group>
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
@@ -244,7 +261,7 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="status" :label="t('fields.status')" :min-width="50">
+      <!-- <el-table-column prop="status" :label="t('fields.status')" :min-width="50">
         <template #default="scope">
           <el-tag v-if="scope.row.status === 'TEST'" size="mini">
             {{ t('common.status.'+scope.row.status) }}
@@ -263,6 +280,19 @@
           >
             {{ t('common.status.'+scope.row.status) }}
           </el-tag>
+        </template>
+      </el-table-column> -->
+      <el-table-column prop="status" :label="t('fields.status')" min-width="100">
+        <template #default="scope">
+          <el-radio-group
+            v-model="scope.row.status"
+            size="mini"
+            @change="changeMediaDisplaySettingStatus(scope.row.id, scope.row.status)"
+          >
+            <el-radio-button label="OPEN">{{ t('common.status.OPEN') }}</el-radio-button>
+            <el-radio-button label="CLOSE">{{ t('common.status.CLOSE') }}</el-radio-button>
+            <el-radio-button label="TEST">{{ t('common.status.TEST') }}</el-radio-button>
+          </el-radio-group>
         </template>
       </el-table-column>
       <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150">
@@ -324,7 +354,7 @@
 import { computed, nextTick, onMounted, reactive, ref } from 'vue'
 import { required } from '../../../utils/validate'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { getSiteMediaDisplaySettingsRecords, createSiteMediaDisplaySettings, updateSiteMediaDisplaySettings, deleteSiteMediaDisplaySettings } from "../../../api/site-media-display-settings";
+import { getSiteMediaDisplaySettingsRecords, createSiteMediaDisplaySettings, updateSiteMediaDisplaySettings, deleteSiteMediaDisplaySettings, updateSiteMediaDisplaySettingsStatus } from "../../../api/site-media-display-settings";
 import { getSiteListSimple } from '../../../api/site'
 import { hasRole, hasPermission } from '../../../utils/util'
 import { useStore } from '../../../store';
@@ -536,6 +566,12 @@ function submit() {
 
 function handleChangeSite(value) {
   form.siteId = value
+}
+
+async function changeMediaDisplaySettingStatus(id, status) {
+  await updateSiteMediaDisplaySettingsStatus(id, status)
+  ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+  await loadMediaDisplaySettings()
 }
 
 onMounted(async () => {

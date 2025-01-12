@@ -398,4 +398,8 @@ onMounted(async () => {
 .el-table--enable-row-transition .el-table__body td.el-table__cell {
   padding: 4px 0;
 }
+
+.el-radio-button--mini .el-radio-button__inner{
+  padding: 7px 10px !important;
+}
 </style>

@@ -179,6 +179,15 @@ export const getMemberPrivilegeRecord = (id, query) => {
   )
 }
 
+export const getMemberPrivilegeRecordTotal = (id, query) => {
+  return https().request(
+    `/member/${id}/memberPrivilegeRecordTotal`,
+    Method.GET,
+    query,
+    ContentType.form
+  )
+}
+
 export const getMemberMoneyChangeList = (id, query) => {
   return https().request(
     `/member/${id}/memberMoneyChange`,

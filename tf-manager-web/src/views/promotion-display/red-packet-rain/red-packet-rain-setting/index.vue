@@ -71,7 +71,7 @@
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
-      width="750px"
+      width="800px"
     >
       <el-form
         ref="bannerForm"
@@ -79,7 +79,7 @@
         :rules="formRules"
         :inline="true"
         size="small"
-        label-width="180px"
+        label-width="200px"
       >
         <el-form-item :label="t('fields.name')" prop="name">
           <el-input
@@ -112,7 +112,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.status')" prop="status">
+        <!-- <el-form-item :label="t('fields.status')" prop="status">
           <el-select
             clearable
             v-model="form.status"
@@ -128,6 +128,23 @@
               :value="item.value"
             />
           </el-select>
+        </el-form-item> -->
+        <el-form-item :label="t('fields.status')" prop="status">
+          <el-radio-group
+            v-model="form.status"
+            size="small"
+            style="width: 300px"
+          >
+            <el-radio-button label="OPEN">
+              {{ t('common.status.OPEN') }}
+            </el-radio-button>
+            <el-radio-button label="CLOSE">
+              {{ t('common.status.CLOSE') }}
+            </el-radio-button>
+            <el-radio-button label="TEST">
+              {{ t('common.status.TEST') }}
+            </el-radio-button>
+          </el-radio-group>
         </el-form-item>
         <el-row>
           <el-col>
@@ -162,7 +179,7 @@
               <el-input-number
                 v-if="form.maxMemberClaimCountPerRain >= 0"
                 v-model="form.maxMemberClaimCountPerRain"
-                style="width: 135px"
+                style="width: 150px"
                 :min="1"
               />
               <el-tag
@@ -185,7 +202,7 @@
               <el-input-number
                 v-if="form.maxMemberClaimCountPerDay >= 0"
                 v-model="form.maxMemberClaimCountPerDay"
-                style="width: 135px"
+                style="width: 150px"
                 :min="1"
               />
               <el-tag
@@ -241,7 +258,7 @@
                   + {{ t('fields.add_new') }}
                 </el-button>
                 <el-button class="button-new-tag ml-1" size="small" @click="setRefreshDurationSameAsRainDuration">
-                  Set Same As Rain Duration
+                  {{ t('fields.setSameAsRainDuration') }}
                 </el-button>
               </el-button-group>
             </el-form-item>
@@ -251,10 +268,33 @@
           $
           <el-input-number
             v-model="form.amountLimitPerRain"
-            style="width: 135px"
+            style="width: 150px"
             :controls="false"
             @keypress="restrictInput($event)"
           />
+        </el-form-item>
+        <el-form-item :label="t('fields.numberLimitPerRain')" prop="numberLimitPerRain">
+          <el-input-number
+            v-if="form.numberLimitPerRain >= 0"
+            v-model="form.numberLimitPerRain"
+            style="width: 150px"
+            :min="1"
+          />
+          <el-tag
+            v-else
+          >
+            {{ t('fields.noLimit') }}
+          </el-tag>
+          <el-button v-if="form.numberLimitPerRain >= 0" type="warning" class="button-new-tag ml-1 el-button--success" @click="form.numberLimitPerRain = -1"
+                     style="display:block;margin-top:4px;"
+          >
+            {{ t('fields.noLimit') }}
+          </el-button>
+          <el-button v-else type="success" class="button-new-tag ml-1 el-button--success" @click="form.numberLimitPerRain = 1"
+                     style="display:block;margin-top:4px;"
+          >
+            {{ t('fields.addLimit') }}
+          </el-button>
         </el-form-item>
         <el-form-item :label="t('fields.redPacketAmountAfterReachingLimit')" prop="redPacketAmountAfterReachingLimit"
                       style="width: 600px;"
@@ -262,12 +302,28 @@
           $
           <el-input-number
             v-model="form.redPacketAmountAfterReachingLimit"
-            style="width: 135px"
+            style="width: 150px"
             :controls="false"
             @keypress="restrictInput($event)"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.vipRules')" prop="vipRules" style="width: 600px;">
+        <el-form-item :label="t('fields.rule')" prop="rules" style="width: 600px;">
+          <el-select
+            v-model="form.rules"
+            size="small"
+            :placeholder="t('fields.rule')"
+            class="filter-item"
+            style="width: 200px; margin-left: 5px"
+          >
+            <el-option
+              v-for="item in uiControl.rules"
+              :key="item.key"
+              :label="t('redPacketRules.' + item.displayName)"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item v-if="form.rules === 'VIP'" :label="t('fields.vipRules')" prop="vipRules" style="width: 750px;">
           <el-tag
             v-for="item in form.vipRules"
             :key="item"
@@ -282,7 +338,7 @@
             ref="vipForm"
             :model="vipRuleForm"
             size="small"
-            label-width="50px"
+            label-width="80px"
             style="width:100%"
           >
             <el-form-item :label="t('fields.vipLevel')" prop="vipLevel" style="width: 600px;">
@@ -306,7 +362,7 @@
               $
               <el-input-number
                 v-model="vipRuleForm.minAmount"
-                style="width: 135px"
+                style="width: 150px"
                 :controls="false"
                 @keypress="restrictInput($event)"
               />
@@ -315,7 +371,7 @@
               $
               <el-input-number
                 v-model="vipRuleForm.maxAmount"
-                style="width: 135px"
+                style="width: 150px"
                 :controls="false"
                 @keypress="restrictInput($event)"
               />
@@ -331,11 +387,74 @@
             + {{ t('fields.add_new') }}
           </el-button>
         </el-form-item>
+        <el-form-item v-else-if="form.rules === 'DEPOSIT'" :label="t('fields.depositRules')" prop="depositRules" style="width: 750px;">
+          <el-tag
+            v-for="item in form.depositRules"
+            :key="item"
+            class="ml-1"
+            closable
+            @close="removeDepositRule(item)"
+          >
+            {{ displayDepositRule(item) }}
+          </el-tag>
+          <el-form
+            v-if="uiControl.depositRuleVisible"
+            ref="depositForm"
+            :model="depositRuleForm"
+            size="small"
+            label-width="80px"
+            style="width:100%"
+          >
+            <el-form-item :label="t('fields.totalDeposit')" prop="deposit">
+              $
+              <el-input-number
+                v-model="depositRuleForm.deposit"
+                style="width: 150px"
+                :controls="false"
+                @keypress="restrictInput($event)"
+              />
+            </el-form-item>
+            <el-form-item :label="t('fields.limitNumber')" prop="limit">
+              <el-input-number
+                v-model="depositRuleForm.limit"
+                style="width: 150px"
+                :min="1"
+              />
+            </el-form-item>
+            <el-form-item :label="t('fields.minAmount')" prop="minAmount">
+              $
+              <el-input-number
+                v-model="depositRuleForm.minAmount"
+                style="width: 150px"
+                :controls="false"
+                @keypress="restrictInput($event)"
+              />
+            </el-form-item>
+            <el-form-item :label="t('fields.maxAmount')" prop="maxAmount">
+              $
+              <el-input-number
+                v-model="depositRuleForm.maxAmount"
+                style="width: 150px"
+                :controls="false"
+                @keypress="restrictInput($event)"
+              />
+            </el-form-item>
+            <div class="dialog-footer">
+              <el-button @click="uiControl.depositRuleVisible = false">{{ t('fields.cancel') }}</el-button>
+              <el-button @click="addDepositRule">{{ t('fields.add') }}</el-button>
+            </div>
+          </el-form>
+          <el-button v-else class="button-new-tag ml-1 el-button--success" @click="uiControl.depositRuleVisible = true"
+                     style="display:block;margin-top:4px;"
+          >
+            + {{ t('fields.add_new') }}
+          </el-button>
+        </el-form-item>
         <el-form-item :label="t('fields.redPacketMinDayBetAmount')" prop="minDayBetAmount" style="width: 600px;">
           $
           <el-input-number
             v-model="form.minDayBetAmount"
-            style="width: 135px"
+            style="width: 150px"
             :controls="false"
             @keypress="restrictInput($event)"
           />
@@ -344,7 +463,7 @@
           $
           <el-input-number
             v-model="form.redPacketMinDayDeposit"
-            style="width: 135px"
+            style="width: 150px"
             :controls="false"
             @keypress="restrictInput($event)"
           />
@@ -353,7 +472,7 @@
           $
           <el-input-number
             v-model="form.redPacketMinTotalDeposit"
-            style="width: 135px"
+            style="width: 150px"
             :controls="false"
             @keypress="restrictInput($event)"
           />
@@ -363,7 +482,7 @@
             <el-input-number
               v-if="form.redPacketMinTotalDepositDays > -1"
               v-model="form.redPacketMinTotalDepositDays"
-              style="width: 135px"
+              style="width: 150px"
               :controls="false"
               @keypress="restrictInput($event)"
             />
@@ -387,7 +506,7 @@
             <el-input-number
               v-if="form.redPacketMinTotalDepositWeeks > -1"
               v-model="form.redPacketMinTotalDepositWeeks"
-              style="width: 135px"
+              style="width: 150px"
               :controls="false"
               @keypress="restrictInput($event)"
             />
@@ -407,12 +526,30 @@
               {{ t('fields.addLimit') }}
             </el-button>
           </el-form-item>
+          <el-form-item v-if="form.redPacketMinTotalDepositDays >= 0 || form.redPacketMinTotalDepositWeeks >= 0" :label="t('fields.totalDepositDaysEndDate')" prop="totalDepositDaysEndDate" style="width: 300px;">
+            <el-date-picker
+              v-if="form.totalDepositDaysEndDate !== null"
+              type="date"
+              value-format="YYYY-MM-DD"
+              v-model="form.totalDepositDaysEndDate"
+              style="width: 150px"
+            />
+            <el-button v-if="form.totalDepositDaysEndDate !== null" type="warning" class="button-new-tag ml-1 el-button--success" @click="form.totalDepositDaysEndDate = null"
+                       style="display:block;margin-top:4px;"
+            >
+              {{ t('fields.fromClaimDate') }}
+            </el-button>
+            <el-button v-else type="success" class="button-new-tag ml-1 el-button--success" @click="form.totalDepositDaysEndDate = new Date()"
+                       style="display:block;margin-top:4px;"
+            >{{ t('fields.addLimit') }}
+            </el-button>
+          </el-form-item>
         </el-row>
         <el-form-item :label="t('fields.lastDigitMinDayDeposit')" prop="lastDigitMinDayDeposit" style="width: 600px;">
           $
           <el-input-number
             v-model="form.lastDigitMinDayDeposit"
-            style="width: 135px"
+            style="width: 150px"
             :controls="false"
             @keypress="restrictInput($event)"
           />
@@ -445,7 +582,7 @@
               $
               <el-input-number
                 v-model="lastDigitRuleForm.amount"
-                style="width: 135px"
+                style="width: 150px"
                 :controls="false"
                 @keypress="restrictInput($event)"
               />
@@ -578,7 +715,7 @@
       <el-table-column type="selection" />
       <el-table-column prop="name" :label="t('fields.name')" />
       <el-table-column prop="code" :label="t('fields.code')" />
-      <el-table-column prop="status" :label="t('fields.status')" width="150">
+      <!-- <el-table-column prop="status" :label="t('fields.status')" width="150">
         <template #default="scope">
           <el-tag v-if="scope.row.status === 'OPEN'" type="success">
             {{ scope.row.status }}
@@ -589,6 +726,19 @@
           <el-tag v-if="scope.row.status === 'TEST'">
             {{ scope.row.status }}
           </el-tag>
+        </template>
+      </el-table-column> -->
+      <el-table-column prop="status" :label="t('fields.status')" min-width="150">
+        <template #default="scope">
+          <el-radio-group
+            v-model="scope.row.status"
+            size="mini"
+            @change="changeRedPacketSettingStatus(scope.row.privilegeId, scope.row.status)"
+          >
+            <el-radio-button label="OPEN">{{ t('common.status.OPEN') }}</el-radio-button>
+            <el-radio-button label="CLOSE">{{ t('common.status.CLOSE') }}</el-radio-button>
+            <el-radio-button label="TEST">{{ t('common.status.TEST') }}</el-radio-button>
+          </el-radio-group>
         </template>
       </el-table-column>
       <el-table-column prop="startTime" :label="t('fields.startTime')">
@@ -685,7 +835,8 @@ import {
   getRedPacketRains,
   createRedPacketRain,
   updateRedPacketRain,
-  getWays
+  getWays,
+  updateRedPacketRainState
 } from '../../../../api/privilege-red-packet-rain'
 import {getSiteListSimple} from '../../../../api/site'
 import {required} from '../../../../utils/validate'
@@ -698,6 +849,7 @@ import moment from "moment/moment";
 import { useRouter } from 'vue-router'
 import { isXF, isThai } from '@/utils/site'
 import { formatTimeZone } from "@/utils/format-timeZone";
+import { updatePrivilegeInfoState } from '../../../../api/privilege-info'
 
 const router = useRouter()
 const {t} = useI18n();
@@ -706,6 +858,7 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
 const bannerForm = ref(null)
 const vipForm = ref(null)
+const depositForm = ref(null)
 const digitForm = ref(null)
 const siteList = reactive({
   list: [],
@@ -741,6 +894,7 @@ const uiControl = reactive({
   addRangeType: null,
   refreshRangeVisible: false,
   vipRuleVisible: false,
+  depositRuleVisible: false,
   lastDigitRuleVisible: false,
   dialogTitle: '',
   dialogType: 'CREATE',
@@ -748,10 +902,14 @@ const uiControl = reactive({
   removeBtn: true,
   dateRangeType: "1",
   status: [
-    { key: 1, displayName: 'Open', value: 'OPEN' },
-    { key: 2, displayName: 'Close', value: 'CLOSE' },
-    { key: 3, displayName: 'Test', value: 'TEST' },
+    { key: 1, displayName: t('common.status.OPEN'), value: 'OPEN' },
+    { key: 2, displayName: t('common.status.CLOSE'), value: 'CLOSE' },
+    { key: 3, displayName: t('common.status.TEST'), value: 'TEST' },
   ],
+  rules: [
+    { key: 1, displayName: 'VIP', value: 'VIP' },
+    { key: 2, displayName: 'DEPOSIT', value: 'DEPOSIT' }
+  ]
 })
 
 const request = reactive({
@@ -774,7 +932,9 @@ const form = reactive({
   maxMemberClaimCountPerRain: 1,
   maxMemberClaimCountPerDay: 1,
   amountLimitPerRain: 0,
+  numberLimitPerRain: -1,
   redPacketAmountAfterReachingLimit: 0,
+  rules: 'VIP',
   vipRules: [],
   lastDigitMinDayDeposit: 0,
   redPacketMinDayDeposit: 0,
@@ -785,12 +945,21 @@ const form = reactive({
   eligibleWays: [],
   status: null,
   minDayBetAmount: 0,
+  totalDepositDaysEndDate: null,
+  depositRules: []
 })
 
 const vipRuleForm = reactive({
   vipLevel: 0,
   minAmount: 0,
   maxAmount: 0,
+})
+
+const depositRuleForm = reactive({
+  deposit: 0,
+  limit: 1,
+  minAmount: 0,
+  maxAmount: 0
 })
 
 const lastDigitRuleForm = reactive({
@@ -812,6 +981,7 @@ const formRules = reactive({
   dailyRainDuration: [required(t('message.validateDailyRainDurationRequired'))],
   dailyRefreshDuration: [required(t('message.validateDailyRefreshDurationRequired'))],
   vipRules: [required(t('message.validateVipRulesRequired'))],
+  depositRules: [required(t('message.validateDepositRulesRequired'))],
   status: [required(t('message.validateStatusRequired'))],
   eligibleWays: [required(t('message.validateEligibleWaysRequired'))],
 })
@@ -833,9 +1003,9 @@ function showDialog(type) {
       bannerForm.value.resetFields()
 
     }
-    uiControl.dialogTitle = t('fields.addBanner')
+    uiControl.dialogTitle = t('fields.addRedPacketRain')
   } else {
-    uiControl.dialogTitle = t('fields.editBanner')
+    uiControl.dialogTitle = t('fields.editRedPacketRain')
   }
   // singleRainRangeFrom.value = null
   // singleRainRangeTo.value = null
@@ -854,6 +1024,7 @@ function showEdit(banner) {
   if (!banner) {
     banner = chooseBanner[0]
   }
+
   nextTick(() => {
     for (const key in banner) {
       if (key === 'dailyRainDuration') {
@@ -862,6 +1033,14 @@ function showEdit(banner) {
         form.dailyRefreshDuration = JSON.parse(banner[key])
       } else if (key === 'vipRules') {
         form.vipRules = JSON.parse(banner[key])
+        if (form.vipRules.length > 0) {
+          form.rules = 'VIP'
+        }
+      } else if (key === 'depositRules') {
+        form.depositRules = JSON.parse(banner[key])
+        if (form.depositRules.length > 0) {
+          form.rules = 'DEPOSIT'
+        }
       } else if (key === 'lastDigitRules') {
         form.lastDigitRules = JSON.parse(banner[key])
       } else if (key === 'eligibleWays') {
@@ -898,6 +1077,10 @@ function displayVipRule(vipRule) {
   return name + '  $' + vipRule.minAmount + ' - $' + vipRule.maxAmount;
 }
 
+function displayDepositRule(depositRule) {
+  return '$' + depositRule.deposit + ' ' + t('fields.limitNumber') + ' ' + depositRule.limit + '  $' + depositRule.minAmount + ' - $' + depositRule.maxAmount;
+}
+
 function displayLastDigitRule(lastDigitRule) {
   return lastDigitRule.lastDigit + ' - $' + lastDigitRule.amount;
 }
@@ -913,6 +1096,10 @@ function removeDailyRefreshDuration(item) {
 function removeVipRule(item) {
   form.vipRules.splice(form.vipRules.indexOf(item), 1);
   getAvailableVip()
+}
+
+function removeDepositRule(item) {
+  form.depositRules.splice(form.depositRules.indexOf(item), 1);
 }
 
 function removeLastDigitRule(item) {
@@ -992,6 +1179,7 @@ function changeSite(siteId) {
     form.minBalance = 0
   }
   form.vipRules = []
+  form.depositRules = []
   getVipBySiteId(siteId)
   getAvailableVip()
 }
@@ -1025,6 +1213,11 @@ async function getVipBySiteId(siteId) {
 function create() {
   bannerForm.value.validate(async valid => {
     if (valid) {
+      if (form.rules === 'VIP') {
+        form.depositRules = []
+      } else if (form.rules === 'DEPOSIT') {
+        form.vipRules = []
+      }
       await createRedPacketRain(form)
       uiControl.dialogVisible = false
       await loadRedPacketRain()
@@ -1180,6 +1373,17 @@ function addVipRule() {
   vipForm.value.resetFields()
 }
 
+function addDepositRule() {
+  form.depositRules.push({
+    deposit: depositRuleForm.deposit,
+    limit: depositRuleForm.limit,
+    minAmount: depositRuleForm.minAmount,
+    maxAmount: depositRuleForm.maxAmount
+  })
+  uiControl.depositRuleVisible = false
+  depositForm.value.resetFields()
+}
+
 function addLastDigitRule() {
   form.lastDigitRules.push({
     lastDigit: lastDigitRuleForm.lastDigit,
@@ -1201,7 +1405,11 @@ function disabledEndDate(time) {
 function edit() {
   bannerForm.value.validate(async valid => {
     if (valid) {
-      console.log(form)
+      if (form.rules === 'VIP') {
+        form.depositRules = []
+      } else if (form.rules === 'DEPOSIT') {
+        form.vipRules = []
+      }
       await updateRedPacketRain(form)
       uiControl.dialogVisible = false
       await loadRedPacketRain()
@@ -1216,6 +1424,12 @@ function submit() {
   } else {
     edit()
   }
+}
+
+async function changeRedPacketSettingStatus(id, status) {
+  await updateRedPacketRainState(id, status)
+  ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+  await loadRedPacketRain()
 }
 
 onMounted(async () => {

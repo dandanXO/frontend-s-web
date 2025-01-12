@@ -32,7 +32,6 @@ if (isInApp()) {
   console.log("Normal");
   fullroutes = require("./routes").default;
 }
-console.log(fullroutes);
 
 export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER

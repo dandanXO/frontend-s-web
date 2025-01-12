@@ -32,33 +32,8 @@
                     data-aos-easing="ease-out"
                     data-aos-duration="1000" -->
                   <div v-for="(promo, i) in filteredArray" :key="i">
-                    <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
+                    <div class="promo-item" v-if="tab.name === 'all' || promo.promoType.toLowerCase().split(',').includes(tab.name)">
                       <a @click="showPromoDetails(promo)">
-                        <!-- <div class="pad-title">
-                        <span class="pad-right">查看详情&gt;&gt;</span>
-                      </div>
-                      <div class="promo-info">
-                        <span class="viewdetail">{{ promo.title }}</span>
-                      </div> -->
-                        <div class="promo-img-wrapper">
-                          <div class="promo-bg">
-                            <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
-                          </div>
-                        </div>
-                        <div v-if="promo.label" class="trapezium">
-                          {{ promo.label }}
-                        </div>
-                      </a>
-                    </div>
-
-                    <div class="promo-item" v-if="tab.name === 'all'">
-                      <a @click="showPromoDetails(promo)">
-                        <!-- <div class="pad-title">
-                        <span class="pad-right">查看详情&gt;&gt;</span>
-                      </div>
-                      <div class="promo-info">
-                        <span class="viewdetail">{{ promo.title }}</span>
-                      </div> -->
                         <div class="promo-img-wrapper">
                           <div class="promo-bg">
                             <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>MiniFun</title>
+    <meta name="title" content="MiniFun Technologies"/>
+    <meta
+            name="description"
+            content="MiniFun Technologies: A small company specializing in developing mobile mini-games. Turning creative ideas into engaging and fun mobile experiences."
+    />
+    <meta name="author" content="minigame"/>
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico"/>
+
+    <meta
+            name="twitter:description"
+            content="MiniFun Technologies: A small company specializing in developing mobile mini-games. Turning creative ideas into engaging and fun mobile experiences."
+    />
+    <meta name="twitter:image" content=""/>
+    <meta
+            name="keywords"
+            content="MiniFun Technologies: A small company specializing in developing mobile mini-games. Turning creative ideas into engaging and fun mobile experiences."
+    />
+
+    <!-- CSS -->
+    <link
+            href="assets/css/vendors/modern-normalize.min.css"
+            rel="stylesheet"
+    />
+    <link
+            href="assets/css/vendors/bootstrap.min.css"
+            rel="stylesheet"
+            crossorigin="anonymous"
+    />
+    <link href="assets/css/vendors/aos.css" rel="stylesheet"/>
+    <!--removeIf(production)-->
+    <link rel="stylesheet" href="assets/css/styles.css"/>
+    <!--endRemoveIf(production)-->
+    <link rel="stylesheet" href="assets/css/styles-ver.min.css"/>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700&display=swap"
+            rel="stylesheet"
+    />
+
+</head>
+
+<body>
+<!-- SEO H1 -->
+<h1 class="d-none">MINIGAME</h1>
+
+<!-- loading content / before page done loading -->
+<div id="fadeinContent"></div>
+<div id="loader-wrapper">
+    <div class="spinner-border mt-5" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<!-- navigation -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary minigame-nav">
+    <div class="container">
+        <a class="navbar-brand" href="/"
+        ><img
+                src="assets/images/minigame-logo.png"
+                alt="LOGO"
+                title="minigame"
+                width="99"
+        /></a>
+
+
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-open">
+            <img
+                    src="assets/images/hamburger-open.png"
+                    alt=""
+                    title=""
+                    width="30"
+            />
+          </span>
+            <span class="navbar-toggler-close">
+            <img
+                    src="assets/images/hamburger-close.png"
+                    alt=""
+                    title=""
+                    width="22"
+            />
+          </span>
+        </button>
+        <div
+                class="collapse navbar-collapse justify-content-center"
+                id="navbarNavDropdown"
+        >
+            <ul class="navbar-nav d-none d-lg-flex">
+                <li class="nav-item">
+                    <a class="nav-link" href="/#product"
+                    >About</a
+                    >
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#aos_anchor_contact"
+                    >Contact</a
+                    >
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#aos_anchor_games"
+                    >Games</a
+                    >
+                </li>
+
+                <li class="nav-item ml-lg-auto" style="opacity: 0;">
+                    <a
+                            class="btn btn-minigame-purple btn-download"
+                            href="#"
+                            role="button"
+                            data-i18n="nav.download"
+                    >
+                        Download
+                    </a>
+                </li>
+
+                <li class="nav-item dropdown" style="opacity: 0;">
+                    <a
+                            class="btn btn-lang dropdown-toggle dropdown-menu-lang"
+                            href="#"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                    >
+                        <span id="selected-language" data-i18n="nav.lang">En</span>
+                    </a>
+                    <ul class="dropdown-menu" id="language-toggle">
+                        <li>
+                            <a class="dropdown-item" href="#" data-lang="zh">中文</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" data-lang="en">English</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" data-lang="jp">日本語</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" data-lang="kr">한국어</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav d-lg-none d-flex position-relative">
+                <li class="nav-item-head" data-i18n="nav.title.company">COMPANY</li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/#about" data-i18n="nav.title.about"
+                    >About us</a
+                    >
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/join-us/" data-i18n="nav.title.joinus"
+                    >Join us</a
+                    >
+                </li>
+
+                <li class="nav-item-head" data-i18n="nav.title.product">PRODUCT</li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/product.html" data-i18n="">MiniGames</a>
+                </li>
+
+
+                <li class="nav-item ml-lg-auto mt-4">
+                    <a
+                            class="btn btn-minigame-purple btn-download"
+                            href="#"
+                            role="button"
+                            data-i18n="nav.download"
+                    >
+                        Download
+                    </a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a
+                            class="btn btn-lang dropdown-toggle dropdown-menu-lang"
+                            href="#"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                    >
+                        <span id="selected-language" data-i18n="nav.lang">En</span>
+                    </a>
+                    <ul class="dropdown-menu" id="language-toggle">
+                        <li>
+                            <a class="dropdown-item" href="#" data-lang="zh">中文</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" data-lang="en">English</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" data-lang="jp">日本語</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" data-lang="kr">한국어</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</nav>
+
+<main>
+    <section class="sec-texas-voice">
+        <div class="container">
+            <div class="row align-items-center flex-md-row-reverse">
+                <div
+                        class="col-md-6"
+                        data-aos="fade-left"
+                        data-aos-anchor="#aos_anchor_about"
+                        id="aos_anchor_about"
+                        data-aos-once="true"
+                >
+                    <div class="vv-txt">
+                        "Dive into the world of endless fun with MiniFun <br/>- where imagination meets play "
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="sec-texas-voice" style="background:#fff;color:#000 !important;">
+        <div class="container">
+            <div class="row align-items-center ">
+                <div
+                        class="col-md-6"
+                        data-aos="fade-left"
+                        data-aos-anchor="#aos_anchor_contact"
+                        id="aos_anchor_contact"
+
+                        data-aos-once="true"
+                >
+                    <div class="vv-txt">
+                        "MiniFun: Simple games, big happiness,<br/>unlimited possibilities
+                    </div>
+                </div>
+
+
+                <div class="contact-us-div">
+                    Official Email:
+                    <span>official@minigame-tech.com</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- texas Download for Device :: section -->
+    <section class="sec-texas-device" style="background: #069846;" id="about">
+        <div class="container">
+            <div class="texas-device-container">
+                <div
+                        class="vd-content"
+                        data-aos="fade-right"
+
+                        data-aos-once="true"
+                >
+                    <h2 class="vd-title">Get <span>MiniFun</span> for your device</h2>
+                    <p class="vd-desc">
+                        An adventure awaits. <br/>Hang out with your friends on our app
+                        <br/>and keep the conversation going on mobile. <br/>
+                    </p>
+                </div>
+
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us :: section -->
+    <section class="sec-contact" id="contact" >
+        <div class="contact-container">
+            <div
+                    class="container"
+                    data-aos="fade-in"
+                    data-aos-anchor="#aos_anchor_games"
+                    id="aos_anchor_games"
+                    data-aos-once="true"
+            >
+                <div class="row mt-lg-4">
+                    <h2 class="sec-title " >
+                        Mini games, mega smiles – discover joy in every click!
+                    </h2>
+
+
+                    <div class="col-lg-6 d-none d-lg-block">
+                        <p class="sec-desc">
+                  <span data-i18n="contact.desc.getInTouch"
+                  >We have a zero ad policy which means there are no commercial breaks to interrupt your gaming time.</span
+                  >
+                        </p>
+                    </div>
+
+
+                    <h3>Games</h3>
+                    <div class="games-lists">
+
+
+                        <div class="game-item">
+                            <img src="assets/images/2024.png" alt="2048" />
+                            <p>2048</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- footer -->
+<footer
+        data-aos="fade-in"
+        data-aos-easing="ease-in-sine"
+        data-aos-once="true"
+>
+    <div class="container pb-3 px-5 px-lg-0" style="padding-bottom: 50px !important;">
+        <div class="row justify-content-center py-4">
+            <div class="col">
+                <a href="/"
+                ><img
+                        src="assets/images/minigame-logo.png"
+                        alt="minigame Technologies"
+                        title="minigame Technologies"
+                        width="150"
+                /></a>
+            </div>
+        </div>
+
+        <div class="footer-divider d-none d-lg-block"></div>
+
+        <div class="row pb-lg-6">
+            <!-- footer directory -->
+            <div class="col">
+                <div class="footer-directory-container">
+                    <div class="footer-directory-col">
+                        <div
+                                class="footer-directory-title"
+                                data-i18n="footer.directory.company"
+                        >
+                            Company
+                        </div>
+                        <a
+                                class="footer-directory-link"
+                                href="/privacy.html"
+
+                        >Privacy Policy</a
+                        >
+                        <a
+                                class="footer-directory-link"
+                                href="/privacy.html"
+                        >Terms & Conditions</a
+                        >
+                    </div>
+                    <div class="footer-divider d-lg-none"></div>
+                    <!--                    <div class="footer-directory-col">-->
+                    <!--                        <div-->
+                    <!--                                class="footer-directory-title"-->
+                    <!--                                data-i18n="footer.directory.product"-->
+                    <!--                        >-->
+                    <!--                            Our Products-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                </div>
+            </div>
+
+            <!-- footer newsletter subscription -->
+            <!--            <div class="col-lg-4 d-none d-lg-flex">-->
+            <!--                <div class="newsletter-container">-->
+            <!--                    <div class="newsletter-txt" data-i18n="newsletter.desc">-->
+            <!--                        Join the newsletter and read the new posts first-->
+            <!--                    </div>-->
+            <!--                    <form id="subscribeFormId">-->
+            <!--                        <div class="form-group mt-3 mb-2">-->
+            <!--                            <input-->
+            <!--                                    type="email"-->
+            <!--                                    class="form-control input-newsletter"-->
+            <!--                                    id="emailInput"-->
+            <!--                                    placeholder="Email"-->
+            <!--                                    required-->
+            <!--                            />-->
+            <!--                        </div>-->
+            <!--                        <button-->
+            <!--                                class="btn btn-newsletter"-->
+            <!--                                data-i18n="newsletter.submit"-->
+            <!--                        >-->
+            <!--                            Submit-->
+            <!--                        </button>-->
+            <!--                    </form>-->
+            <!--                </div>-->
+            <!--            </div>-->
+        </div>
+    </div>
+</footer>
+
+
+<!-- JS -->
+<script
+        src="assets/js/vendors/jquery-3.6.4.min.js"
+        crossorigin="anonymous"
+></script>
+<script
+        src="assets/js/vendors/bootstrap.bundle.min.js"
+        crossorigin="anonymous"
+></script>
+<script src="assets/js/vendors/aos.js"></script>
+<script src="assets/js/vendors/i18next.min.js"></script>
+<script src="assets/js/vendors/jquery-i18next.min.js"></script>
+<script src="assets/js/vendors/i18nextBrowserLanguageDetector.min.js"></script>
+
+<!--removeIf(production)-->
+<script defer src="assets/js/scripts.js"></script>
+<script defer src="assets/js/i18n.js"></script>
+<!--endRemoveIf(production)-->
+<script defer src="assets/js/bundle-ver.min.js"></script>
+<script type="text/javascript">
+    setTimeout(() => {
+        document.getElementById("loader-wrapper").style.display = "none";
+    }, 1000);
+</script>
+</body>
+</html>
