@@ -623,6 +623,10 @@ export default defineComponent({
 
     &.unfixed {
       background-attachment: scroll;
+
+      .challenge-comeback1 {
+        background: transparent !important;
+      }
     }
 
     &.lh1Vip {

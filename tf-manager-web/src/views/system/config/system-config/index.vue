@@ -6,12 +6,6 @@
     class="config_form"
   >
     <div style="margin-bottom: 20px">
-      <el-input
-        v-model="searchTerm"
-        :placeholder="`${t('fields.defaultConfigSearchBarHint')}${t('fields.configGroup')}`"
-        :size="'mini'"
-        style="margin-right: 20px;"
-      />
       <el-button
         size="mini"
         type="success"
@@ -20,36 +14,86 @@
       >
         {{ t('fields.createConfig') }}
       </el-button>
+      <el-input
+        :hidden="true"
+        v-model="searchTerm"
+        :placeholder="`${t('fields.defaultConfigSearchBarHint')}${t('fields.configGroup')}`"
+        :size="'mini'"
+        style="margin-right: 20px;"
+      />
     </div>
-    <el-collapse v-model="activeCollapse" accordion>
-      <el-collapse-item v-for="(group, index) in groupedData" :key="index" :title="group[0].configGroup">
-        <el-table :data="group" style="width: 100%" :show-header="false">
-          <el-table-column prop="code" :label="t('fields.configCode')" />
-          <el-table-column prop="value" :label="t('fields.configValue')" />
-          <el-table-column prop="describes" :label="t('fields.configDescribes')" width="200" />
-          <el-table-column>
-            <template #default="{row}">
-              <el-button
-                icon="el-icon-edit"
-                size="mini"
-                type="success"
-                @click="showEdit(row)"
-                plain
-              >
-                {{ t('fields.edit') }}
-              </el-button>
-              <el-button
-                icon="el-icon-remove"
-                size="mini"
-                type="danger"
-                @click="delConfig(row.id)"
-                plain
-              >
-                {{ t('fields.delete') }}
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+    <el-collapse v-model="uiControl.activeGroups">
+      <el-collapse-item
+        v-for="groupConfig in configs.customGroup"
+        :title="groupConfig.group"
+        :name="groupConfig.group"
+        :key="groupConfig.group"
+      >
+        <template #title>
+          <span>{{ groupConfig.group }}</span>
+          <span
+            style="margin-left: 10px"
+            @click="addGroupConfig(groupConfig.group)"
+          >
+            <el-icon color="#409efc">
+              <Plus />
+            </el-icon>
+          </span>
+        </template>
+        <el-form-item
+          v-for="item in groupConfig.items"
+          border-color="#dcdcdc"
+          border-style="dashed"
+          label=""
+          size="mini"
+          :key="item.orderIndex"
+        >
+          <el-input data-highlight-target class="disable-input" v-model="item.code" />
+          -
+          <el-input data-highlight-target class="disable-input" v-model="item.value" />
+          <el-button
+            icon="el-icon-edit"
+            size="mini"
+            type="success"
+            style="margin-left: 20px"
+            @click="showEdit(item)"
+            plain
+          >
+            {{ t('fields.edit') }}
+          </el-button>
+          <el-button
+            icon="el-icon-remove"
+            size="mini"
+            type="danger"
+            style="margin-left: 20px"
+            @click="delConfig(item.id)"
+            plain
+          >
+            {{ t('fields.delete') }}
+          </el-button>
+          <el-button
+            :hidden="true"
+            circle
+            icon="el-icon-arrow-up"
+            size="mini"
+            type="primary"
+            style="margin-left: 20px"
+            plain
+            @click="moveUp(item, groupConfig)"
+            :disabled="!canClickMoveUpButton(item, groupConfig)"
+          />
+          <el-button
+            :hidden="true"
+            circle
+            icon="el-icon-arrow-down"
+            size="mini"
+            type="primary"
+            style="margin-left: 20px"
+            plain
+            @click="moveDown(item, groupConfig)"
+            :disabled="!canClickMoveDownButton(item, groupConfig)"
+          />
+        </el-form-item>
       </el-collapse-item>
     </el-collapse>
   </el-form>
@@ -155,7 +199,7 @@
 </template>
 
 <script setup>
-import { nextTick, onMounted, reactive, ref, computed } from 'vue'
+import { nextTick, onMounted, reactive, ref } from 'vue'
 import {
   createConfig,
   deleteById,
@@ -166,13 +210,15 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import { useI18n } from 'vue-i18n'
 import { required } from '../../../../utils/validate'
 import { getValueRulesList } from '../../../../api/value-rules'
+import { Plus } from "@element-plus/icons-vue";
+import bus from "@/utils/bus";
 
 const { t } = useI18n()
 
-const defaultConfigs = reactive({
+const configs = reactive({
   value: [],
+  customList: [],
   customGroup: [],
-  mergeItems: [],
 })
 
 const uiControl = reactive({
@@ -202,27 +248,6 @@ const checkedSelection = ref([])
 const checkBoxSelections = reactive([])
 const checkAll = ref(false)
 const isIndeterminate = ref(true)
-const activeCollapse = ref([]);
-
-const filteredData = computed(() => {
-  const term = searchTerm.value.toLowerCase();
-  return defaultConfigs.mergeItems.filter(item =>
-    item.configGroup.toLowerCase().includes(term)
-  );
-});
-
-const groupedData = computed(() => {
-  // Group the data by configGroup
-  return filteredData.value.reduce((acc, item) => {
-    const group = acc.find(g => g[0].configGroup === item.configGroup);
-    if (group) {
-      group.push(item);
-    } else {
-      acc.push([item]);
-    }
-    return acc;
-  }, []);
-});
 
 // const arraySpanMethod = ({ row, column, rowIndex, columnIndex }) => {
 //   if (columnIndex === 0) {
@@ -246,9 +271,9 @@ const formRules = reactive({
 })
 
 async function delConfig(id) {
-  for (let index = 0; index < defaultConfigs.value.length; index++) {
-    if (defaultConfigs.value[index].id === id) {
-      defaultConfigs.value.splice(index, 1)
+  for (let index = 0; index < configs.value.length; index++) {
+    if (configs.value[index].id === id) {
+      configs.value.splice(index, 1)
       if (typeof id === 'number') {
         ElMessageBox.confirm(t('message.confirmDelete'), {
           confirmButtonText: t('fields.confirm'),
@@ -267,8 +292,10 @@ async function delConfig(id) {
 
 async function loadDefaultConfigs() {
   const { data: ret } = await getDefaultConfigs({})
-  defaultConfigs.value = ret
-  defaultConfigs.value = defaultConfigs.value.sort((a, b) => {
+  configs.value = ret
+  configs.customList = configs.value
+
+  configs.customList = configs.customList.sort((a, b) => {
     if (a.configGroup < b.configGroup) {
       return -1
     } else if (a.configGroup > b.configGroup) {
@@ -281,36 +308,42 @@ async function loadDefaultConfigs() {
       }
     }
   })
+
   // group customList items by configGroup and store in customGroup as {group: configGroup, items: [customList]}
-  defaultConfigs.customGroup = []
+  configs.customGroup = []
   let group = null
   let items = []
-  for (let index = 0; index < defaultConfigs.value.length; index++) {
-    if (group !== defaultConfigs.value[index].configGroup) {
+  for (let index = 0; index < configs.customList.length; index++) {
+    if (group !== configs.customList[index].configGroup) {
       if (group !== null) {
-        defaultConfigs.customGroup.push({ group, items })
+        configs.customGroup.push({ group, items })
       }
-      group = defaultConfigs.value[index].configGroup
+      group = configs.customList[index].configGroup
       items = []
     }
-    items.push(defaultConfigs.value[index])
+    items.push(configs.customList[index])
     // handle last group
-    if (index === defaultConfigs.value.length - 1) {
-      defaultConfigs.customGroup.push({ group, items })
+    if (index === configs.customList.length - 1) {
+      configs.customGroup.push({ group, items })
     }
   }
 
-  // sort configs.customGroup.items by order index
-  for (let index = 0; index < defaultConfigs.customGroup.length; index++) {
-    defaultConfigs.customGroup[index].items = defaultConfigs.customGroup[index].items.sort(
-      (a, b) => a.orderIndex - b.orderIndex
+  // sort configs.customGroup.items by siteId and order index
+  for (let index = 0; index < configs.customGroup.length; index++) {
+    configs.customGroup[index].items = configs.customGroup[index].items.sort(
+      (a, b) => {
+        if (a.siteId !== b.siteId) {
+          return a.siteId - b.siteId;
+        } else {
+          return a.orderIndex - b.orderIndex;
+        }
+      }
     )
     // set item.orderIndex = item index
-    for (let i = 0; i < defaultConfigs.customGroup[index].items.length; i++) {
-      defaultConfigs.customGroup[index].items[i].orderIndex = i
+    for (let i = 0; i < configs.customGroup[index].items.length; i++) {
+      configs.customGroup[index].items[i].orderIndex = i
     }
   }
-  defaultConfigs.mergeItems = defaultConfigs.customGroup.flatMap(group => group.items);
 }
 
 function showEdit(customConfig) {
@@ -355,9 +388,8 @@ function showDialog(type) {
     if (configForm.value) {
       form.id = null
       form.rulesId = null
+      form.code = null
       form.value = null
-      selectedRule.value = valueRules.value[0]
-      configForm.value.resetFields()
     }
     uiControl.dialogTitle = t('fields.createConfig')
   } else if (type === 'EDIT') {
@@ -384,6 +416,11 @@ async function submit() {
       uiControl.dialogVisible = false
     }
   })
+}
+
+async function addGroupConfig(group) {
+  form.configGroup = group
+  showDialog('CREATE')
 }
 
 /* 加载值类型规则列表 */
@@ -452,9 +489,87 @@ function switchText(val, type) {
   }
 }
 
+function moveUp(item, groupConfig) {
+  const index = groupConfig.items.findIndex(config => config.id === item.id)
+  if (index > 0) {
+    const temp = groupConfig.items[index]
+
+    groupConfig.items[index] = groupConfig.items[index - 1]
+    groupConfig.items[index].orderIndex = index
+    groupConfig.items[index - 1] = temp
+    groupConfig.items[index - 1].code = temp.code
+    groupConfig.items[index - 1].orderIndex = index - 1
+  }
+}
+
+function moveDown(item, groupConfig) {
+  const index = groupConfig.items.findIndex(config => config.id === item.id)
+  if (index < groupConfig.items.length - 1) {
+    const temp = groupConfig.items[index]
+
+    groupConfig.items[index] = groupConfig.items[index + 1]
+    groupConfig.items[index].orderIndex = index
+    groupConfig.items[index + 1] = temp
+    groupConfig.items[index + 1].code = temp.code
+    groupConfig.items[index + 1].orderIndex = index + 1
+  }
+}
+
+const canClickMoveUpButton = (item, groupConfig) => {
+  const index = groupConfig.items.findIndex(config => config.id === item.id)
+  if (index === 0) {
+    return false;
+  }
+
+  if (groupConfig.items[index - 1].siteId === 0) {
+    return false;
+  }
+  return true;
+}
+
+const canClickMoveDownButton = (item, groupConfig) => {
+  const index = groupConfig.items.findIndex(config => config.id === item.id)
+  if (index === groupConfig.items.length - 1) {
+    return false;
+  }
+  return true;
+}
+
+function searchCode(searchTerm) {
+  const contentElements = document.querySelectorAll('[data-highlight-target]');
+  contentElements.forEach((el) => {
+    el.style.backgroundColor = ''; // Clear existing highlights
+  });
+
+  const matchedElements = Array.from(contentElements).filter((el) => {
+    const content = el.value || el.textContent || '';
+    return content.toLowerCase().includes(searchTerm.toLowerCase());
+  });
+
+  matchedElements.forEach((el) => {
+    el.style.backgroundColor = 'yellow';
+  });
+
+  const key = matchedElements[0].value || matchedElements[0].textContent || '';
+  console.log(key);
+
+  const groups = configs.customGroup
+    .filter(group => group.items.some(item => item.code.includes(searchTerm) || item.value.includes(searchTerm)))
+    .filter(group => !uiControl.activeGroups.includes(group.group));
+
+  uiControl.activeGroups = [...new Set([...uiControl.activeGroups, ...groups.map(group => group.group)])];
+  console.log(uiControl.activeGroups);
+
+  nextTick(() => {
+    matchedElements[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+}
+
 onMounted(async () => {
   await loadDefaultConfigs()
   await loadValueRules()
+  bus.on('search', searchCode)
+  bus.on('add', () => showDialog('CREATE'))
 })
 
 </script>

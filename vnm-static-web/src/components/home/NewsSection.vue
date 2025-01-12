@@ -48,7 +48,7 @@ const footballNewsList = computed(() => newsListArr.value.filter((news) => news.
 const soccerBettingList = computed(() => newsListArr.value.filter((news) => news.category.includes("Tin bóng đá")));
 const esportNewsList = computed(() => newsListArr.value.filter((news) => news.category.includes("Tin Esport")));
 const bettingGuideList = computed(() => newsListArr.value.filter((news) => news.category.includes("Hướng dẫn cá cược")));
-const weeklyTournamentList = computed(() => newsListArr.value.filter((news) => news.category.includes("Giải Đấu Baccarat hàng tuần")));
+const weeklyTournamentList = computed(() => newsListArr.value.filter((news) => news.category.includes("Công bố Kết quả")));
 
 watch(() => isNewsSectionVisible.value, () => {
   if (isNewsSectionVisible.value === true && !newsListArr.value.length) {
