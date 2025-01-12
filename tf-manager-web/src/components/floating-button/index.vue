@@ -33,7 +33,14 @@
             @keydown.enter="handleSearch"
           />
         </div>
-        <div class="float-button" type="button">4: 按钮功能还在制作中。</div>
+        <div
+          class="float-button"
+          type="button"
+          @mousedown.prevent
+          @click="handleAdd"
+        >
+          4: 新增
+        </div>
       </div>
     </div>
   </div>
@@ -68,6 +75,10 @@ const handleSearch = () => {
   if (searchText.value.trim()) {
     bus.emit('search', searchText.value)
   }
+};
+
+const handleAdd = () => {
+  bus.emit('add')
 };
 
 const startDrag = e => {

@@ -596,7 +596,6 @@ export default defineComponent({
           width: 100%;
           flex-direction: column;
           gap: 25px;
-          min-height: 818px;
           // position: sticky;
           // top: 100px;
           .type-item {
