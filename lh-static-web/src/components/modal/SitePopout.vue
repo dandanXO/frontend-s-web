@@ -169,7 +169,7 @@ watch(
     font-weight: 500;
     background: #e8f0fd;
     color: #2792fd;
-    height: 70px;
+    height: 80px;
     border-radius: 8px;
     gap: 4px;
     position: relative;
