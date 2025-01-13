@@ -21,8 +21,6 @@
     <EsportQuiz v-if="list.redirectUrl === 'lh1-quiz'" />
     <LotteryPromo v-if="list.redirectUrl === 'lh1-lottery'" />
     <GiftPromo v-if="list.redirectUrl === 'lh1-gift'" />
-    <Gift8Promo v-if="list.redirectUrl === 'lh1-gift8'" />
-    <UpgradeHongBao v-if="list.redirectUrl === 'lh1-upgrade-hongbaoz'" />
     <AppHongBao v-if="list.redirectUrl === 'lh1-app-hongbao'" :promo-code="list.promoCode" :params="list.param" />
     <FtdPromo v-if="list.redirectUrl === 'lh1-ftd-promo'" />
     <HongBaoPreEurocup v-if="listParam.type === 'hongbaoyu'" :promo-code="list.promoCode" :params="list.param" />
@@ -88,7 +86,6 @@
     <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao'" />
     <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24'" />
     <EurocupVotePromo v-if="list.redirectUrl === 'lh1-team-vote'" />
-    <S14VotePromo v-if="list.redirectUrl === 'lh1-s14-vote'" />
     <DepositRebates v-if="list.redirectUrl === 'lh1-deposit-rebates'" />
     <DepositRebate2 v-if="list.redirectUrl === 'lh1-deposit-rebate2'" />
     <WinLossPromo v-if="list.redirectUrl === 'lh1-eurocup-guess'" />
@@ -152,7 +149,6 @@ import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import DragonCardPromo from "../components/hotpromo/dragoncard/dragonCardPromo.vue";
 import MeiZhouBeiPromo from "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue";
 import EurocupVotePromo from "../components/hotpromo/eurocup-2024-vote/eurocupVotePromo.vue";
-import S14VotePromo from "../components/hotpromo/s14-vote/S14VotePromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
@@ -184,8 +180,6 @@ import LoLS14 from "../components/hotpromo/lol-s14/LoLS14.vue";
 import Dota2BlastSlam2024 from "../components/hotpromo/dota2-blast-slam-2024/Dota2BlastSlam2024.vue";
 import Dota2Ti13 from "../components/hotpromo/dota2-ti13/Dota2Ti13.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
-import Gift8Promo from "../components/hotpromo/gift8/Gift8Promo.vue";
-import UpgradeHongBao from "../components/hotpromo/upgradeHongBao/UpgradeHongBao.vue";
 import LPLSummer from "../components/hotpromo/lpl-summer/LPLSummer.vue";
 import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
 import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
@@ -262,7 +256,6 @@ export default defineComponent({
     intelEsl2024,
     ClaimPromo,
     EurocupVotePromo,
-    S14VotePromo,
     HongBaoYuPromo,
     InviteFriendPromo,
     WelcomeTaskPromo,
@@ -276,12 +269,10 @@ export default defineComponent({
     PrivilegeInvite,
     FootballFight,
     GiftPromo,
-    Gift8Promo,
     LPLSummer,
     Cny2024Promo,
     BbDacha2024Promo,
     CnyStepGame2024Promo,
-    UpgradeHongBao,
     DragonCardPromo,
     CS2Sign,
     BonusSpinWheel,
