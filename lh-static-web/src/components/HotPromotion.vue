@@ -6,9 +6,7 @@
       :loading-claim="loadingClaim"
       @daily-slot="handleSlot()"
     />
-    <TigerCardPromo v-if="list.redirectUrl === 'lh1-tiger-card'" />
     <DragonCardPromo v-if="list.redirectUrl === 'lh1-dragon-card'" :promo-code="list.promoCode" />
-    <GoldenEggPromo v-if="list.redirectUrl === 'lh1-goldenegg'" />
     <HongBaoYuPromo v-if="list.redirectUrl === 'lh1-hongbaoyu'" />
     <WelcomeTaskPromo v-if="list.redirectUrl === 'lh1-welcomenewuser'" />
     <InviteFriendPromo v-if="list.redirectUrl === 'lh1-invitefriend'" />
@@ -153,12 +151,10 @@ import { ElMessageBox } from "element-plus";
 
 import { claimBonusItem, submitLuckyNumber, luckyNumberList, winnerList } from "@/api/index/promo";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
-import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
 import DragonCardPromo from "../components/hotpromo/dragoncard/dragonCardPromo.vue";
 import MeiZhouBeiPromo from "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue";
 import EurocupVotePromo from "../components/hotpromo/eurocup-2024-vote/eurocupVotePromo.vue";
 import S14VotePromo from "../components/hotpromo/s14-vote/S14VotePromo.vue";
-import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
@@ -269,10 +265,8 @@ export default defineComponent({
     slotLucky8,
     intelEsl2024,
     ClaimPromo,
-    TigerCardPromo,
     EurocupVotePromo,
     S14VotePromo,
-    GoldenEggPromo,
     HongBaoYuPromo,
     InviteFriendPromo,
     WelcomeTaskPromo,
