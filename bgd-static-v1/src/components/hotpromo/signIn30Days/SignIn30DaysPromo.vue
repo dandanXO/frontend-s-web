@@ -26,12 +26,14 @@
         <div class="sign-in-btn" @click="claimReward" :class="{ 'is-disabled': hasClaimedToday || isLoadingClaim }">
           <span>{{ hasClaimedToday ? "CLAIMED" : "SIGN IN NOW" }}</span>
         </div>
-        <div class="bonus-progress-bar">
-          <div class="bonus-progress-bar-fill" :style="{ width: progressBarWidth + '%' }"></div>
-        </div>
-        <div class="total-bet-txt">
-          TOTAL BET：{{ convertToCommaAmount(totalValidBet) }}/{{ convertToCommaAmount(minValidBet) }} BDT
-        </div>
+        <template v-if="minValidBet > 0">
+          <div class="bonus-progress-bar">
+            <div class="bonus-progress-bar-fill" :style="{ width: progressBarWidth + '%' }"></div>
+          </div>
+          <div class="total-bet-txt">
+            TOTAL BET：{{ convertToCommaAmount(totalValidBet) }}/{{ convertToCommaAmount(minValidBet) }} BDT
+          </div>
+        </template>
       </div>
     </div>
     <div class="reward-mech-container content-card">
@@ -168,7 +170,7 @@
         </div>
       </div>
       <div class="misuse-warning-txt">
-        Users must meet the betting requirements before claiming rewards to prevent misuse by low-value users.
+        Users must meet the betting requirements before claiming rewards.
       </div>
     </div>
     <div class="activity-rule-container">
@@ -179,9 +181,7 @@
       <ul class="activity-rule-list">
         <li>Activity time: January 1 - January 31, 2025</li>
         <li>Bonus rollover requirement: 1x rollover</li>
-        <li>
-          Bonus distribution: After the event, the rewards will be automatically distributed to your wallet account.
-        </li>
+        <li>Bonus distribution: Immediately distributed to your wallet after receiving it</li>
       </ul>
     </div>
     <div class="ranking-list-container">
@@ -286,7 +286,7 @@ const getChestDesign = (i) => {
 
 const progressBarWidth = computed(() => {
   if (minValidBet.value === 0) return 0;
-  return (totalValidBet.value / minValidBet.value) * 100;
+  return Math.min((totalValidBet.value / minValidBet.value) * 100, 100);
 });
 
 const setDayItemRef = (index) => {

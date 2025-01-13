@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="header">
-      <img src="../../assets/images/home/site-popout/icon-hot.png" alt="">
+      <img src="../../assets/images/home/site-popout/icon-hot.png" alt="" />
       <span>热门活动</span>
     </div>
     <div class="content">
@@ -54,12 +54,11 @@ import moment from "moment";
 import { useRouter } from "vue-router";
 import { uiStore } from "@/store/ui";
 
-
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
 
-defineEmits(['popup-click'])
+defineEmits(["popup-click"]);
 
 const $swiper = ref(null);
 const swiperInterval = ref();
@@ -70,15 +69,15 @@ const onSwiper = (swiper) => {
 
 const nextSlide = () => {
   const newIndex = (() => {
-    if(selectedItemIndex.value === (popoutList.value.length - 1)) {
+    if (selectedItemIndex.value === popoutList.value.length - 1) {
       return 0;
-    } else if(selectedItemIndex.value < popoutList.value.length) {
+    } else if (selectedItemIndex.value < popoutList.value.length) {
       return selectedItemIndex.value + 1;
     }
   })();
 
   selectedItemIndex.value = newIndex;
-}
+};
 
 const EDITION = {
   NORMAL: "NORMAL",
@@ -98,7 +97,7 @@ const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value
 
 const onSlideChange = (_swiper) => {
   selectedItemIndex.value = _swiper.activeIndex;
-}
+};
 
 onMounted(() => {
   let siteType = "main";
@@ -113,10 +112,10 @@ onMounted(() => {
       if (res.data.length > 0) {
         selectedItemIndex.value = 0;
 
-        if(!swiperInterval.value) {
+        if (!swiperInterval.value) {
           swiperInterval.value = setInterval(() => {
             nextSlide();
-          },3000);
+          }, 3000);
         }
       }
     }
@@ -125,13 +124,16 @@ onMounted(() => {
 
 onUnmounted(() => {
   clearInterval(swiperInterval.value);
-})
+});
 
-watch(() => selectedItemIndex.value, () => {
-  if($swiper.value) {
-    $swiper.value.slideTo(selectedItemIndex.value);
+watch(
+  () => selectedItemIndex.value,
+  () => {
+    if ($swiper.value) {
+      $swiper.value.slideTo(selectedItemIndex.value);
+    }
   }
-})
+);
 </script>
 
 <style lang="scss">
@@ -153,8 +155,8 @@ watch(() => selectedItemIndex.value, () => {
   background-size: 100% 100%;
   width: 904px;
   height: 550px;
-  gap: 16px;
-  padding: 25px 20px;
+  gap: 6px;
+  padding: 25px 17px;
   // max-width: 50vw;
   aspect-ratio: 904 / 550;
 
@@ -165,9 +167,9 @@ watch(() => selectedItemIndex.value, () => {
     align-items: center;
     font-size: 20px;
     font-weight: 500;
-    background: #E8F0FD;
-    color: #2792FD;
-    height: 70px;
+    background: #e8f0fd;
+    color: #2792fd;
+    height: 80px;
     border-radius: 8px;
     gap: 4px;
     position: relative;

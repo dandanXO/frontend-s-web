@@ -112,7 +112,14 @@ export const convertToCommaAmount = (amount, isForceDecimal) => {
   if (isNonNumericString(amount)) {
     return amount;
   }
-  return parseFloat(amount).toLocaleString("en-US", { minimumFractionDigits: isForceDecimal ? 2 : 0 });
+
+  const parsedAmount = parseFloat(amount);
+  if (isForceDecimal) {
+    const truncatedAmount = Math.floor(parsedAmount * 100) / 100;
+    return truncatedAmount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  } else {
+    return parsedAmount.toLocaleString("en-US");
+  }
 };
 
 export const displayPlatform = (platform) => {

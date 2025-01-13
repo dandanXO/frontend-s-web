@@ -3,7 +3,7 @@
     <div class="withdrawal-summary" v-if="selectedMethodItem">
       <div class="balance">
         <q-skeleton v-if="isLoadingWithdrawalMethod" style="height: 20px" />
-        <span v-else class="amount">{{ convertToCommaAmount(store.balance, false) }}</span>
+        <span v-else class="amount">{{ convertToCommaAmount(store.balance, 2) }}</span>
         <div class="title">{{ $t("withdraw.cashBalance") }}</div>
       </div>
 
@@ -14,7 +14,7 @@
         <span v-else class="amount">
           {{
             selectedMethodItem.withdrawableBalance >= 0
-              ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, false)
+              ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, 2)
               : "0.00"
           }}
         </span>
@@ -278,7 +278,7 @@
               <span class="fund-title">{{ $t("withdraw.available") }}:</span>
               <q-spinner v-if="isRefreshRemainWager" />
               <span v-else>
-                {{ store.currency.value }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
+                {{ store.currency.value }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance, 2) }}
               </span>
             </div>
           </div>
@@ -288,14 +288,14 @@
               <div class="desc-wrapper">
                 <div class="desc">{{ $t("withdraw.withdrewAmount") }}</div>
               </div>
-              <div class="desc desc_white">{{ store.currency.label }}: {{ selectedMethodItem.withdrawAmount }}</div>
+              <div class="desc desc_white">{{ store.currency.value }}: {{ selectedMethodItem.withdrawAmount }}</div>
             </div>
             <div class="info">
               <div class="desc-wrapper">
                 <div class="desc">{{ store.vip }} {{ $t("withdraw.dailyLimit") }}</div>
               </div>
               <div class="desc desc_white">
-                {{ store.currency.label }}: {{ convertToCommaAmount(selectedMethodItem.withdrawMaxAmount) }}
+                {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.withdrawMaxAmount) }}
               </div>
             </div>
             <div class="info">
