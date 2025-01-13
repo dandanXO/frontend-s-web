@@ -12,7 +12,6 @@
     <MeiZhouBeiPromo v-if="list.redirectUrl === 'lh1meizhoubei'" />
     <OuZuLianPromo v-if="list.redirectUrl === 'ouzulian'" />
     <SubmitClaimPromo v-if="list.redirectUrl === 'LH1-UCL'" :promo-code="list.promoCode" />
-    <PredictionMatchPromo v-if="list.redirectUrl === 'lh1-s13-vote'" />
     <DailyLoginPromo v-if="list.redirectUrl === 'lh1-monthly-sign'" />
     <NbaGamePromo v-if="list.redirectUrl === 'lh1-nba-safety'" />
     <EsportQuiz v-if="list.redirectUrl === 'lh1-quiz'" />
@@ -75,7 +74,6 @@
     <Olympic24Match v-if="list.redirectUrl === 'lh1-olympic-match'" />
     <slotLucky8 v-if="list.redirectUrl === 'lh1-slot-lucky8'" :promo-code="list.promoCode" />
     <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24'" />
-    <intelEsl2024 v-if="list.redirectUrl === 'lh1-intel-esl'" />
     <LivepokerRebate v-if="list.redirectUrl === 'lh1-livepoker-rebate'" :promo-code="list.promoCode" />
     <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao'" />
     <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24'" />
@@ -144,7 +142,6 @@ import MeiZhouBeiPromo from "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.v
 import EurocupVotePromo from "../components/hotpromo/eurocup-2024-vote/eurocupVotePromo.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
-import PredictionMatchPromo from "../components/hotpromo/PredictionMatch/PredictionMatchPromo.vue";
 import DailyLoginPromo from "../components/hotpromo/DailyLogin/DailyLoginPromo.vue";
 import NbaGamePromo from "../components/hotpromo/nbagame/nbaGamePromo.vue";
 import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
@@ -191,7 +188,6 @@ import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao
 import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
 import slotLucky8 from "../components/hotpromo/slot-lucky8-2024/slot-lucky8-2024.vue";
 import LPLSummer2024 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
-import intelEsl2024 from "../components/hotpromo/intel-esl-2024/intel-esl-2024.vue";
 import DuanWuJiePromo from "../components/hotpromo/dragonboat/DragonBoat.vue";
 import HongBaoPreEurocup from "../components/hotpromo/hongbaoyu2024/HongBaoPreEurocup.vue";
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
@@ -239,12 +235,10 @@ export default defineComponent({
     Olympic24Match,
     newplayerGuide,
     slotLucky8,
-    intelEsl2024,
     ClaimPromo,
     EurocupVotePromo,
     InviteFriendPromo,
     WelcomeTaskPromo,
-    PredictionMatchPromo,
     DailyLoginPromo,
     NbaGamePromo,
     EsportQuiz,
