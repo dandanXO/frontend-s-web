@@ -784,7 +784,8 @@ const getWithdrawalMethods = () => {
     .get("/session/withdraw/entrance")
     .then((response) => {
       if (response.code === 0) {
-        withdrawalMethods.value = response.data;
+        // withdrawalMethods.value = response.data;
+        withdrawalMethods.value = response.data.filter((item) => item.status === true);
         //Remove this for real data
         // withdrawalMethods.value = [
         //   {"currencyId":6,"name":"withdraw_bank","code":"BANK","icon":"71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3},
