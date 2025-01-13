@@ -86,6 +86,7 @@
       :promo-param="listParam"
       :promo-code="list.promoCode"
     />
+    <VctBangkok v-if="list.redirectUrl === 'dy2-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
     <S14VotePromo v-if="list.redirectUrl === 'dy2-s14-vote'" :promo-code="list.promoCode" />
     <Dota2Pgl v-if="list.redirectUrl === 'dy2-dota2-pgl'" :promo-code="list.promoCode" />
     <IemMasterPromo v-if="list.redirectUrl === 'dy2-iem-master'" :promo-code="list.promoCode" />
@@ -96,6 +97,7 @@
     <DemaciaCup1 v-if="list.redirectUrl === 'dy2-demacia-cup-2024'" :promo-param="listParam" />
     <VctcnMatchPromo v-if="list.redirectUrl === 'dy2-vctcn'" :promo-code="list.promoCode" />
     <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
+    <Dota2BlastSlam2025 v-if="list.redirectUrl === 'dy2-blast-slam-2025'" :promo-code="list.promoCode"/>
 
     <ChristmasGachapon
       v-if="list.redirectUrl === 'dy2-christmas-gashapon'"
@@ -210,12 +212,16 @@ import PullbackTide from "./hotpromo/pullback-tide/PullbackTide.vue";
 import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
 import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
 import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue";
+import VctBangkok from "./hotpromo/vct-bangkok/VctBangkok.vue";
+import Dota2BlastSlam2025 from "./hotpromo/dota2-blast-slam-2025/Dota2BlastSlam2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    Dota2BlastSlam2025,
+    VctBangkok,
     LivepokerRebate,
     SportZhongChao,
     BlastPremierPromo,
