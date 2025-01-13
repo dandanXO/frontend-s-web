@@ -134,7 +134,19 @@
         const hostname = window.location.host.replace("www.", "");
         console.log(hostname, "dan");
 
-        const contactInfo = {};
+        const contactInfo = {
+          "47527.cc": {
+            group1Title: "大发特发",
+            group1Number: "1002516732",
+            group2Title: "福满多",
+            group2Number: "558193077",
+            landingPageLink: "https://am787.cc",
+            redirectUrl: "https://www.xf78597.com",
+            claimUrl: "https://www.xf78597.com",
+            agent1ID: "vip121",
+            agent2ID: "vip521"
+          }
+        };
 
         // Default content if no hostname matches
         const defaultInfo = {
@@ -182,6 +194,9 @@
     <script>
       var hostname = window.location.hostname;
       console.log(hostname);
+      if (hostname.indexOf("47527.cc") > -1) {
+        LA.init({ id: "KgmmDkkHLFf6kVeV", ck: "KgmmDkkHLFf6kVeV" });
+      }
     </script>
   </body>
 </html>
