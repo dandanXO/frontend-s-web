@@ -37,7 +37,6 @@
     <PrivilegeInvite v-if="list.redirectUrl === 'lh1-invite'" />
     <FootballFight v-if="list.redirectUrl === 'lh1-football-fight'" />
     <newFootballFight v-if="list.redirectUrl === 'lh1-football'" :promo-code="list.promoCode" />
-    <BbdachaCsgo2 v-if="list.redirectUrl === 'lh-bbdacha-csgo2'" :promo-code="list.promoCode" />
     <EslProCsgo2 v-if="list.redirectUrl === 'lh-eslpro-csgo2'" :promo-code="list.promoCode" />
     <BlastPremier v-if="list.redirectUrl === 'lh1-blast-premier'" :promo-code="list.promoCode" />
     <DreamLeagueS24 v-if="list.redirectUrl === 'lh1-dreamleague-s24'" :promo-code="list.promoCode" />
@@ -94,7 +93,6 @@
     <BlackMythWuKongPromo v-if="list.redirectUrl === 'lh-blackmyth-wukong'" />
     <DailiPromo v-if="list.redirectUrl === 'lh1-all-daili'" :params="list.param" />
     <IemMasterPromo v-if="list.redirectUrl === 'lh1-iem-master'" :promo-code="list.promoCode" />
-    <BbDachaBelgrade v-if="list.redirectUrl === 'lh1-bbdacha-belgrade'" :promo-code="list.promoCode" />
     <ElisaGift v-if="list.redirectUrl === 'lh1-elisa-gift'" :promo-code="list.promoCode" />
     <PokerWinningPromo v-if="list.redirectUrl === 'lh1-poker-winning'" />
     <SlotLossBonusPromo v-if="list.redirectUrl === 'lh1-weekly-slot-loss-bonus'" />
@@ -154,7 +152,6 @@ import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import PrivilegeInvite from "../components/hotpromo/privilegeInvite/PrivilegeInvite.vue";
 import FootballFight from "../components/hotpromo/footballfight/FootballFight.vue";
 import newFootballFight from "../components/hotpromo/newFootballfight/FootballFight.vue";
-import BbdachaCsgo2 from "../components/hotpromo/bbdacha-csgo2/BbdachaCsgo2.vue";
 import EslProCsgo2 from "../components/hotpromo/eslpro-csgo2/EslProCsgo2.vue";
 import BlastPremier from "../components/hotpromo/blast-premier/BlastPremier.vue";
 import DreamLeagueS24 from "../components/hotpromo/dream-league-s24/DreamLeagueS24.vue";
@@ -216,7 +213,6 @@ import BlackMythWuKongPromo from "@/components/hotpromo/blackMythWuKong/BlackMyt
 import SubmitClaimPromo from "@/components/hotpromo/submitclaim/SubmitClaimPromo.vue";
 import DailiPromo from "@/components/hotpromo/daili/DailiPromo.vue";
 import IemMasterPromo from "@/components/hotpromo/iem-master/IemMasterPromo.vue";
-import BbDachaBelgrade from "@/components/hotpromo/bb-dacha-belgrade/BbDachaBelgrade.vue";
 import ElisaGift from "@/components/hotpromo/elisa-gift/ElisaGift.vue";
 import PokerWinningPromo from "@/components/hotpromo/poker-winning/PokerWinningPromo.vue";
 import SlotLossBonusPromo from "@/components/hotpromo/slot-loss-bonus/SlotLossBonusPromo.vue";
@@ -295,7 +291,6 @@ export default defineComponent({
     OlympicFund,
     LPLLCK,
     LivepokerRebate,
-    BbdachaCsgo2,
     EslProCsgo2,
     BlastPremier,
     DreamLeagueS24,
@@ -314,7 +309,6 @@ export default defineComponent({
     BlackMythWuKongPromo,
     DailiPromo,
     IemMasterPromo,
-    BbDachaBelgrade,
     ElisaGift,
     PokerWinningPromo,
     SlotLossBonusPromo,
