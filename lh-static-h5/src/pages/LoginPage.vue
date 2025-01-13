@@ -19,7 +19,7 @@
       </div>
 
       <div v-if="$q.dark.isActive" class="login-banner-img-wrapper">
-        <img class="login-banner-img" :src="bannerImage" />
+        <img class="login-banner-img" :src="bannerImageDark" />
         <div class="login-banner-filter" />
       </div>
       <img v-else class="login-banner-img" :src="bannerImage" />
@@ -545,6 +545,7 @@ export default defineComponent({
     };
 
     const bannerImage = ref("");
+    const bannerImageDark = ref("")
 
     const getBannerImage = () => {
       api
@@ -552,6 +553,7 @@ export default defineComponent({
         .then((res) => {
           if (res.code === 0) {
             bannerImage.value = imageDir + res.data[0].mobileImageUrl;
+            bannerImageDark.value = imageDir + res.data[0].mobileImageUrlDark;
           }
         })
         .catch(() => {});
@@ -659,7 +661,8 @@ export default defineComponent({
       getInnerCode,
       isValidCnPhone,
       telephoneRef,
-      bannerImage
+      bannerImage,
+      bannerImageDark
     };
   }
 });
