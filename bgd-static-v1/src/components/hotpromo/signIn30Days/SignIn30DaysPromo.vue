@@ -217,7 +217,7 @@
   <q-dialog v-model="isShowCongratsDialog" @hide="handleReceiveBonus" persistent>
     <div class="congrats-container">
       <!-- <q-btn icon="close" round dense v-close-popup class="congrats-close" /> -->
-      <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header.png" /></div>
+      <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header-long.png" /></div>
       <div class="congrats-chest"><img src="../../../assets/images/index/modal/congrats-chest-dark.png" /></div>
 
       <div class="congrats-highlight">{{ convertToCommaAmount(bonusAmount) }}BDT</div>
