@@ -168,6 +168,13 @@ export function claimCheckInTreasure(promoCode, days) {
   return eventapi.post(`/event-check-in/open?v=${randNum}`, qs.stringify({ promoCode, days }));
 }
 
+export function getBountyInit(promoCode) {
+  return eventapi.get(`/session/event-check-in/can-claim?promoCode=${promoCode}`);
+}
+export function claimBountyBonus(promoCode) {
+  return eventapi.post(`/session/event-check-in/claim?promoCode=${promoCode}`);
+}
+
 export function getLOLMsiMatchRecord() {
   return eventapi.get("/game-match/upcoming/MSI");
 }
