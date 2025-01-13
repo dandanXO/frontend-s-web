@@ -241,8 +241,9 @@ router.beforeEach((to, from, next) => {
   } else if (
     window.location.href.indexOf("5svn88.com") > -1 ||
     window.location.href.indexOf("tfpromo88.com") > -1 ||
-    window.location.href.indexOf("tf88bof.com") > -1 || 
-    window.location.href.indexOf("tslotf88.com") > -1
+    window.location.href.indexOf("tf88bof.com") > -1 ||
+    window.location.href.indexOf("tslotf88.com") > -1 ||
+    window.location.href.indexOf("tfslot288.com") > -1
   ) {
     // console.log("5svn88.com 2")
     otag("init", "adv10336256983680");
