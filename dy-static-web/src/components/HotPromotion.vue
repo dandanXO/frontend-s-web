@@ -62,6 +62,7 @@
     <EurocupManual v-if="list.redirectUrl === 'dy2-eurocup-manual'" />
     <BlastPremierPromo v-if="list.redirectUrl === 'dy2-cs2-blast-2024'" :promo-code="list.promoCode" />
     <BlastPremierGlobalPromo v-if="list.redirectUrl === 'dy2-blast-premier-treasure'" :promo-code="list.promoCode" />
+    <BountyBlastPremier v-if="list.redirectUrl === 'bounty-blast-premier'" :promo-code="list.promoCode" />
     <DreamLeagueS24 v-if="list.redirectUrl === 'dy2-dreamleague-s24'" :promo-code="list.promoCode" />
     <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao'" />
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao'" />
@@ -212,6 +213,7 @@ import PullbackTide from "./hotpromo/pullback-tide/PullbackTide.vue";
 import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
 import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
 import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue";
+import BountyBlastPremier from "./hotpromo/bounty-blast/BountyBlastPremier.vue";
 import VctBangkok from "./hotpromo/vct-bangkok/VctBangkok.vue";
 import Dota2BlastSlam2025 from "./hotpromo/dota2-blast-slam-2025/Dota2BlastSlam2025.vue";
 
@@ -226,6 +228,7 @@ export default defineComponent({
     SportZhongChao,
     BlastPremierPromo,
     BlastPremierGlobalPromo,
+    BountyBlastPremier,
     DreamLeagueS24,
     fishHongbao,
     Olympic24Match,

@@ -6,30 +6,20 @@
       :loading-claim="loadingClaim"
       @daily-slot="handleSlot()"
     />
-    <TigerCardPromo v-if="list.redirectUrl === 'lh1-tiger-card'" />
     <DragonCardPromo v-if="list.redirectUrl === 'lh1-dragon-card'" :promo-code="list.promoCode" />
-    <GoldenEggPromo v-if="list.redirectUrl === 'lh1-goldenegg'" />
-    <HongBaoYuPromo v-if="list.redirectUrl === 'lh1-hongbaoyu'" />
     <WelcomeTaskPromo v-if="list.redirectUrl === 'lh1-welcomenewuser'" />
     <InviteFriendPromo v-if="list.redirectUrl === 'lh1-invitefriend'" />
-    <EsportSafetyPromo v-if="list.redirectUrl === 'lh1-esport-safety'" />
-    <SportSafetyPromo v-if="list.redirectUrl === 'lh1-sport-safety'" />
     <MeiZhouBeiPromo v-if="list.redirectUrl === 'lh1meizhoubei'" />
     <OuZuLianPromo v-if="list.redirectUrl === 'ouzulian'" />
     <SubmitClaimPromo v-if="list.redirectUrl === 'LH1-UCL'" :promo-code="list.promoCode" />
-    <PredictionMatchPromo v-if="list.redirectUrl === 'lh1-s13-vote'" />
     <DailyLoginPromo v-if="list.redirectUrl === 'lh1-monthly-sign'" />
     <NbaGamePromo v-if="list.redirectUrl === 'lh1-nba-safety'" />
     <EsportQuiz v-if="list.redirectUrl === 'lh1-quiz'" />
     <LotteryPromo v-if="list.redirectUrl === 'lh1-lottery'" />
     <GiftPromo v-if="list.redirectUrl === 'lh1-gift'" />
-    <Gift8Promo v-if="list.redirectUrl === 'lh1-gift8'" />
-    <UpgradeHongBao v-if="list.redirectUrl === 'lh1-upgrade-hongbaoz'" />
     <AppHongBao v-if="list.redirectUrl === 'lh1-app-hongbao'" :promo-code="list.promoCode" :params="list.param" />
     <FtdPromo v-if="list.redirectUrl === 'lh1-ftd-promo'" />
     <HongBaoPreEurocup v-if="listParam.type === 'hongbaoyu'" :promo-code="list.promoCode" :params="list.param" />
-    <AsianCup2024 v-if="list.redirectUrl === 'lh1-promo-application-A'" />
-    <BasketballHot v-if="list.redirectUrl === 'lh1-promo-basketball'" />
     <LPLSummer v-if="list.redirectUrl === 'lh1-lpl-game'" />
     <LPLLCK v-if="list.redirectUrl === 'lh1-lpl-lck'" />
     <Cny2024Promo v-if="list.redirectUrl === 'lh1-cny2024-promo'" />
@@ -46,11 +36,8 @@
     <PrivilegeInvite v-if="list.redirectUrl === 'lh1-invite'" />
     <FootballFight v-if="list.redirectUrl === 'lh1-football-fight'" />
     <newFootballFight v-if="list.redirectUrl === 'lh1-football'" :promo-code="list.promoCode" />
-    <BbdachaCsgo2 v-if="list.redirectUrl === 'lh-bbdacha-csgo2'" :promo-code="list.promoCode" />
     <EslProCsgo2 v-if="list.redirectUrl === 'lh-eslpro-csgo2'" :promo-code="list.promoCode" />
-    <EslOneBkk2024 v-if="list.redirectUrl === 'lh1-esl-one-bangkok-2024'" :promo-code="list.promoCode" />
     <BlastPremier v-if="list.redirectUrl === 'lh1-blast-premier'" :promo-code="list.promoCode" />
-    <Tpworld2024 v-if="list.redirectUrl === 'lh1-tpworld-2024'" :promo-code="list.promoCode" />
     <DreamLeagueS24 v-if="list.redirectUrl === 'lh1-dreamleague-s24'" :promo-code="list.promoCode" />
     <Cba30Dream v-if="list.redirectUrl === 'lh1-cba30-dream'" :promo-code="list.promoCode" />
     <PerfectWorldMajor2024 v-if="list.redirectUrl === 'lh1-perfect-world-major-2024'" :promo-param="listParam" />
@@ -87,12 +74,10 @@
     <Olympic24Match v-if="list.redirectUrl === 'lh1-olympic-match'" />
     <slotLucky8 v-if="list.redirectUrl === 'lh1-slot-lucky8'" :promo-code="list.promoCode" />
     <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24'" />
-    <intelEsl2024 v-if="list.redirectUrl === 'lh1-intel-esl'" />
     <LivepokerRebate v-if="list.redirectUrl === 'lh1-livepoker-rebate'" :promo-code="list.promoCode" />
     <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao'" />
     <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24'" />
     <EurocupVotePromo v-if="list.redirectUrl === 'lh1-team-vote'" />
-    <S14VotePromo v-if="list.redirectUrl === 'lh1-s14-vote'" />
     <DepositRebates v-if="list.redirectUrl === 'lh1-deposit-rebates'" />
     <DepositRebate2 v-if="list.redirectUrl === 'lh1-deposit-rebate2'" />
     <WinLossPromo v-if="list.redirectUrl === 'lh1-eurocup-guess'" />
@@ -106,7 +91,6 @@
     <BlackMythWuKongPromo v-if="list.redirectUrl === 'lh-blackmyth-wukong'" />
     <DailiPromo v-if="list.redirectUrl === 'lh1-all-daili'" :params="list.param" />
     <IemMasterPromo v-if="list.redirectUrl === 'lh1-iem-master'" :promo-code="list.promoCode" />
-    <BbDachaBelgrade v-if="list.redirectUrl === 'lh1-bbdacha-belgrade'" :promo-code="list.promoCode" />
     <ElisaGift v-if="list.redirectUrl === 'lh1-elisa-gift'" :promo-code="list.promoCode" />
     <PokerWinningPromo v-if="list.redirectUrl === 'lh1-poker-winning'" />
     <SlotLossBonusPromo v-if="list.redirectUrl === 'lh1-weekly-slot-loss-bonus'" />
@@ -153,18 +137,11 @@ import { ElMessageBox } from "element-plus";
 
 import { claimBonusItem, submitLuckyNumber, luckyNumberList, winnerList } from "@/api/index/promo";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
-import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
 import DragonCardPromo from "../components/hotpromo/dragoncard/dragonCardPromo.vue";
 import MeiZhouBeiPromo from "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue";
 import EurocupVotePromo from "../components/hotpromo/eurocup-2024-vote/eurocupVotePromo.vue";
-import S14VotePromo from "../components/hotpromo/s14-vote/S14VotePromo.vue";
-import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
-import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
-import EsportSafetyPromo from "../components/hotpromo/eSportSafety/eSportSafetyPromo.vue";
-import SportSafetyPromo from "../components/hotpromo/sportSafety/sportSafetyPromo.vue";
-import PredictionMatchPromo from "../components/hotpromo/PredictionMatch/PredictionMatchPromo.vue";
 import DailyLoginPromo from "../components/hotpromo/DailyLogin/DailyLoginPromo.vue";
 import NbaGamePromo from "../components/hotpromo/nbagame/nbaGamePromo.vue";
 import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
@@ -172,10 +149,8 @@ import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import PrivilegeInvite from "../components/hotpromo/privilegeInvite/PrivilegeInvite.vue";
 import FootballFight from "../components/hotpromo/footballfight/FootballFight.vue";
 import newFootballFight from "../components/hotpromo/newFootballfight/FootballFight.vue";
-import BbdachaCsgo2 from "../components/hotpromo/bbdacha-csgo2/BbdachaCsgo2.vue";
 import EslProCsgo2 from "../components/hotpromo/eslpro-csgo2/EslProCsgo2.vue";
 import BlastPremier from "../components/hotpromo/blast-premier/BlastPremier.vue";
-import Tpworld2024 from "../components/hotpromo/tpworld-2024/Tpworld2024.vue";
 import DreamLeagueS24 from "../components/hotpromo/dream-league-s24/DreamLeagueS24.vue";
 import Cba30Dream from "../components/hotpromo/cba30-dream/Cba30Dream.vue";
 import PerfectWorldMajor2024 from "../components/hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue";
@@ -190,10 +165,6 @@ import LoLS14 from "../components/hotpromo/lol-s14/LoLS14.vue";
 import Dota2BlastSlam2024 from "../components/hotpromo/dota2-blast-slam-2024/Dota2BlastSlam2024.vue";
 import Dota2Ti13 from "../components/hotpromo/dota2-ti13/Dota2Ti13.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
-import Gift8Promo from "../components/hotpromo/gift8/Gift8Promo.vue";
-import UpgradeHongBao from "../components/hotpromo/upgradeHongBao/UpgradeHongBao.vue";
-import AsianCup2024 from "../components/hotpromo/asian-cup-2024/AsianCup2024.vue";
-import BasketballHot from "../components/hotpromo/basketball-hot/BasketballHot.vue";
 import LPLSummer from "../components/hotpromo/lpl-summer/LPLSummer.vue";
 import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
 import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
@@ -217,7 +188,6 @@ import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao
 import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
 import slotLucky8 from "../components/hotpromo/slot-lucky8-2024/slot-lucky8-2024.vue";
 import LPLSummer2024 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
-import intelEsl2024 from "../components/hotpromo/intel-esl-2024/intel-esl-2024.vue";
 import DuanWuJiePromo from "../components/hotpromo/dragonboat/DragonBoat.vue";
 import HongBaoPreEurocup from "../components/hotpromo/hongbaoyu2024/HongBaoPreEurocup.vue";
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
@@ -239,13 +209,11 @@ import BlackMythWuKongPromo from "@/components/hotpromo/blackMythWuKong/BlackMyt
 import SubmitClaimPromo from "@/components/hotpromo/submitclaim/SubmitClaimPromo.vue";
 import DailiPromo from "@/components/hotpromo/daili/DailiPromo.vue";
 import IemMasterPromo from "@/components/hotpromo/iem-master/IemMasterPromo.vue";
-import BbDachaBelgrade from "@/components/hotpromo/bb-dacha-belgrade/BbDachaBelgrade.vue";
 import ElisaGift from "@/components/hotpromo/elisa-gift/ElisaGift.vue";
 import PokerWinningPromo from "@/components/hotpromo/poker-winning/PokerWinningPromo.vue";
 import SlotLossBonusPromo from "@/components/hotpromo/slot-loss-bonus/SlotLossBonusPromo.vue";
 import ValorantChampionTour2024 from "@/components/hotpromo/valorant-champion-tour-2024/ValorantChampionTour2024.vue";
 import ChristmasGachapon from "@/components/hotpromo/christmas-gachapon/ChristmasGachapon.vue";
-import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
 import BountyBlastPremier from "./hotpromo/bounty-blast/BountyBlastPremier.vue";
 import VctcnMatchPromo from "./hotpromo/vctcn-match-promo/VctcnMatchPromo.vue";
 import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
@@ -267,18 +235,10 @@ export default defineComponent({
     Olympic24Match,
     newplayerGuide,
     slotLucky8,
-    intelEsl2024,
     ClaimPromo,
-    TigerCardPromo,
     EurocupVotePromo,
-    S14VotePromo,
-    GoldenEggPromo,
-    HongBaoYuPromo,
     InviteFriendPromo,
     WelcomeTaskPromo,
-    EsportSafetyPromo,
-    SportSafetyPromo,
-    PredictionMatchPromo,
     DailyLoginPromo,
     NbaGamePromo,
     EsportQuiz,
@@ -286,14 +246,10 @@ export default defineComponent({
     PrivilegeInvite,
     FootballFight,
     GiftPromo,
-    Gift8Promo,
-    AsianCup2024,
-    BasketballHot,
     LPLSummer,
     Cny2024Promo,
     BbDacha2024Promo,
     CnyStepGame2024Promo,
-    UpgradeHongBao,
     DragonCardPromo,
     CS2Sign,
     BonusSpinWheel,
@@ -329,11 +285,8 @@ export default defineComponent({
     OlympicFund,
     LPLLCK,
     LivepokerRebate,
-    BbdachaCsgo2,
     EslProCsgo2,
-    EslOneBkk2024,
     BlastPremier,
-    Tpworld2024,
     DreamLeagueS24,
     Cba30Dream,
     PerfectWorldMajor2024,
@@ -350,7 +303,6 @@ export default defineComponent({
     BlackMythWuKongPromo,
     DailiPromo,
     IemMasterPromo,
-    BbDachaBelgrade,
     ElisaGift,
     PokerWinningPromo,
     SlotLossBonusPromo,

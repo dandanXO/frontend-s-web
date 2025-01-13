@@ -3308,6 +3308,8 @@ export default {
     1009: 'The Google verification code was entered incorrectly.',
     1100: 'Admin is restricted from logging in',
     1101: 'Login account does not belongs to this site',
+    1320: 'Withdrawal channel not configured',
+    1321: 'Duplicate order submission, please try again after five minutes',
     9000: 'Failed to create scheduled job',
     9001: 'Failed to update scheduled job',
     9002: 'Failed to delete scheduled job',
