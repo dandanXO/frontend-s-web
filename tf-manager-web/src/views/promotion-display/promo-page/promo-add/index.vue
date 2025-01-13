@@ -140,9 +140,9 @@
                 size="mini"
                 style="width: 300px"
               >
-                <el-radio-button label="0">Open</el-radio-button>
-                <el-radio-button label="1">Close</el-radio-button>
-                <el-radio-button label="2">Test</el-radio-button>
+                <el-radio-button label="0">{{ t('common.status.OPEN') }}</el-radio-button>
+                <el-radio-button label="1">{{ t('common.status.CLOSE') }}</el-radio-button>
+                <el-radio-button label="2">{{ t('common.status.TEST') }}</el-radio-button>
               </el-radio-group>
             </el-form-item>
           </el-col>

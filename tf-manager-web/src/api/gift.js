@@ -32,3 +32,7 @@ export const deliverGift = (gift) => {
 export const giftDelivered = (id) => {
   return https().request(`/gift-record/${id}/delivered?_method=PUT`, Method.POST);
 };
+
+export const updateGiftStatus = (id, state) => {
+  return https().request(`/gift/${id}/state?_method=PUT`, Method.POST, { state: state }, ContentType.form);
+};

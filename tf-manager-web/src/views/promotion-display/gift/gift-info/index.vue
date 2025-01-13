@@ -208,10 +208,32 @@
     >
       <el-table-column prop="name" :label="t('fields.name')" width="180" />
       <el-table-column prop="code" :label="t('fields.code')" width="180" />
-      <el-table-column prop="status" :label="t('fields.status')" width="120">
+      <!-- <el-table-column prop="status" :label="t('fields.status')" width="120">
         <template #default="scope">
           <el-tag v-if="scope.row.status === 'OPEN'" type="success" size="mini">{{ t('status.gift.' + scope.row.status) }}</el-tag>
           <el-tag v-if="scope.row.status === 'CLOSE'" type="danger" size="mini">{{ t('status.gift.' + scope.row.status) }}</el-tag>
+        </template>
+      </el-table-column> -->
+      <el-table-column
+        prop="status"
+        :label="t('fields.status')"
+        width="120"
+      >
+        <template #default="scope">
+          <div v-if="hasPermission(['sys:privi:gift:update:state'])">
+            <el-switch
+              v-model="scope.row.status"
+              active-value="OPEN"
+              inactive-value="CLOSE"
+              active-color="#409EFF"
+              inactive-color="#F56C6C"
+              @change="updateGiftInfoStatus(scope.row.id, scope.row.status)"
+            />
+          </div>
+          <div v-else>
+            <el-tag v-if="scope.row.status === 'OPEN'" type="success" size="mini">{{ t('status.gift.' + scope.row.status) }}</el-tag>
+            <el-tag v-if="scope.row.status === 'CLOSE'" type="danger" size="mini">{{ t('status.gift.' + scope.row.status) }}</el-tag>
+          </div>
         </template>
       </el-table-column>
       <el-table-column prop="type" :label="t('fields.type')" width="140">
@@ -377,7 +399,7 @@ import { computed, reactive, ref } from "vue";
 import { required } from "@/utils/validate";
 import { ElMessage } from "element-plus";
 import { getSiteListSimple } from "@/api/site";
-import { getGift, createGift, updateGift } from "@/api/gift";
+import { getGift, createGift, updateGift, updateGiftStatus } from "@/api/gift";
 import { hasRole, hasPermission } from "@/utils/util";
 import { nextTick, onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
@@ -641,6 +663,12 @@ function submitImage() {
       break
   }
   uiControl.imageSelectionVisible = false
+}
+
+async function updateGiftInfoStatus(id, status) {
+  await updateGiftStatus(id, status);
+  ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+  await loadGift();
 }
 
 onMounted(async () => {
