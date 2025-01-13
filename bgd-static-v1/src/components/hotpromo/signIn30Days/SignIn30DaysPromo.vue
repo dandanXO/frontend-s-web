@@ -169,9 +169,7 @@
           </span>
         </div>
       </div>
-      <div class="misuse-warning-txt">
-        Users must meet the betting requirements before claiming rewards.
-      </div>
+      <div class="misuse-warning-txt">Users must meet the betting requirements before claiming rewards.</div>
     </div>
     <div class="activity-rule-container">
       <img
@@ -219,10 +217,10 @@
     <div class="congrats-container">
       <!-- <q-btn icon="close" round dense v-close-popup class="congrats-close" /> -->
       <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header.png" /></div>
-      <div class="congrats-chest"><img src="../../../assets/images/index/modal/congrats-chest.png" /></div>
-      <div class="congrats-title">Get sign-in bonus</div>
-      <div class="congrats-highlight">{{ convertToCommaAmount(bonusAmount) }}BDT</div>
+      <div class="congrats-chest"><img src="../../../assets/images/index/modal/congrats-chest-dark.png" /></div>
 
+      <div class="congrats-highlight">{{ convertToCommaAmount(bonusAmount) }}BDT</div>
+      <div class="congrats-title">Congratulations on claiming your bonus</div>
       <div class="congrats-button">
         <q-btn no-caps unelevated class="receive-btn" @click="handleReceiveBonus">
           {{ $t("btn.receive") }}
@@ -230,14 +228,179 @@
       </div>
     </div>
   </q-dialog>
+
+  <q-dialog width="100%" v-model="bindEmailDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">{{ $t("form.bindEmail") }}</div>
+        <div class="pc-form">
+          <InputRowGrid>
+            <template #fields>
+              <InputField :label="$t('form.email')">
+                <template #input>
+                  <q-input
+                    outlined
+                    clearable
+                    :placeholder="$t('form.email_placeholder')"
+                    v-model="updateEmailInfo.email"
+                    ref="updateEmailRef"
+                    hide-bottom-space
+                    type="text"
+                    :rules="[(val) => /.+@.+\..+/.test(val) || $t('form.email_rules_02')]"
+                  >
+                    <template v-slot:append>
+                      <div class="pc-form-side-btn">
+                        <q-btn
+                          no-caps
+                          dense
+                          class="text-green"
+                          :label="!startCountdownResendOTP && $t('form.send')"
+                          :disable="startCountdownResendOTP"
+                          @click="openVerificationCodeDialog"
+                        />
+                      </div>
+                    </template>
+                  </q-input>
+                </template>
+              </InputField>
+
+              <InputField :label="$t('form.code')">
+                <template #input>
+                  <q-input
+                    outlined
+                    clearable
+                    :placeholder="$t('form.code_placeholder')"
+                    v-model="updateEmailInfo.code"
+                    ref="updateEmailCodeRef"
+                    hide-bottom-space
+                    type="text"
+                    :rules="[(val) => val.length !== 0 || $t('form.code_rules_01')]"
+                  >
+                    <template v-slot:append v-if="startCountdownResendOTP">{{ countdownOTP }}s</template>
+                  </q-input>
+                </template>
+              </InputField>
+            </template>
+          </InputRowGrid>
+        </div>
+
+        <div class="bottom-btn">
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="submitUpdateEmail">
+            {{ $t("btn.confirm") }}
+          </q-btn>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="verificationCodeDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">{{ $t("form.captchaCodeCheck") }}</div>
+
+        <div class="pc-form">
+          <div class="pc-form-item">
+            <div class="pc-form-label">{{ $t("form.captchaCode") }}</div>
+            <div class="pc-form-input">
+              <q-input
+                filled
+                hide-bottom-space
+                dense
+                clearable
+                :placeholder="$t('form.captchaCode_placeholder')"
+                v-model="captchaRef"
+                :rules="[
+                  (val) => (val && val.length > 0) || $t('form.captchaCode_rules_01'),
+                  (val) => (val && val.length > 3 && val.length < 5) || $t('form.captchaCode_rules_02')
+                ]"
+              >
+                <template v-slot:append>
+                  <img :src="verificationImg" @click="getCode" />
+                </template>
+              </q-input>
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-btn">
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onCaptchaSubmit">
+            {{ $t("btn.confirm") }}
+          </q-btn>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="changePhoneDialog">
+    <div class="popout-dialog">
+      <q-btn
+        dense
+        rounded
+        icon="close"
+        class="text-white popout-close"
+        @click="changePhoneDialog = false"
+        v-close-popup
+      />
+      <div class="popout-dialog-container">
+        <div class="txt-title">{{ $t("form.bindPhoneNumber") }}</div>
+        <div class="pc-form">
+          <InputRowGrid>
+            <template #fields>
+              <InputField :label="$t('form.phone')">
+                <template #input>
+                  <q-input
+                    type="tel"
+                    pattern="\d*"
+                    maxlength="11"
+                    hide-bottom-space
+                    ref="phoneRef"
+                    v-model="updatePhoneInfo.phone"
+                    :rules="[
+                      (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
+                      (val) => (val && val.length >= 10 && val.length <= 11) || $t('form.phone_rules_02'),
+                      (val) => val.startsWith('01') || $t('form.phone_rules_03')
+                    ]"
+                    label-color="brand"
+                    outlined
+                    color="green"
+                    :placeholder="$t('form.phone')"
+                  >
+                    <template v-slot:prepend>
+                      <FancyIcon name="smartphone" />
+                      <div class="prepend-number">+880</div>
+                    </template>
+                  </q-input>
+                </template>
+              </InputField>
+            </template>
+          </InputRowGrid>
+        </div>
+
+        <div class="bottom-btn">
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="submitUpdatePhone">
+            {{ $t("btn.confirm") }}
+          </q-btn>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
 </template>
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, reactive } from "vue";
 import { userStore } from "src/stores";
 import { eventapi } from "src/boot/axios";
 import { convertToCommaAmount } from "src/boot/utils";
+import { api } from "boot/axios";
+import { useQuasar } from "quasar";
+import { t } from "src/boot/lang";
+import InputRowGrid from "src/components/auth/InputRowGrid.vue";
+import InputField from "src/components/auth/InputField.vue";
 
 const store = userStore();
+const qs = require("qs");
+const $q = useQuasar();
 
 const rewardProbability = [
   {
@@ -338,6 +501,26 @@ const getRankingList = () => {
   });
 };
 
+const bindEmailDialog = ref(false);
+const formDetail = reactive([]);
+const phoneRef = ref();
+const updatePhoneRef = ref();
+const updateEmailRef = ref();
+const updateEmailCodeRef = ref();
+const captchaRef = ref();
+const showCaptchaDialog = ref(false);
+const changePhoneDialog = ref(false);
+const showVerificationTokenInput = ref(false);
+const updateSecurityVerified = reactive({
+  mobileNumber: "",
+  verificationCode: ""
+});
+const verificationModalVisible = ref(false);
+
+let verificationCodeID = "";
+const startCountdownResendOTP = ref(false);
+const countdownOTP = ref();
+
 const claimReward = () => {
   isLoadingClaim.value = true;
   eventapi
@@ -347,6 +530,25 @@ const claimReward = () => {
         bonusAmount.value = res.data;
         isShowCongratsDialog.value = true;
       }
+
+      if (res.code === 582301) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: res.message,
+          icon: "report_problem"
+        });
+
+        if (store.phone && !store.email) {
+          console.log("ASDasd1");
+          bindEmailDialog.value = true;
+        }
+
+        if (store.email && !store.phone) {
+          console.log("ASDasd2");
+          changePhoneDialog.value = true;
+        }
+      }
     })
     .catch(() => {})
     .finally(() => {
@@ -354,9 +556,206 @@ const claimReward = () => {
     });
 };
 
+const updateEmailInfo = reactive({
+  email: "",
+  code: "",
+  codeId: ""
+});
+
+const submitUpdateEmail = () => {
+  updateEmailRef.value.validate();
+  updateEmailCodeRef.value.validate();
+
+  if (updateEmailRef.value.hasError || updateEmailCodeRef.value.hasError) {
+  } else {
+    api
+      .post(
+        "/session/verifyAndUpdateEmail",
+        qs.stringify({
+          email: updateEmailInfo.email,
+          code: updateEmailInfo.code,
+          codeId: updateEmailInfo.codeId
+        })
+      )
+      .then((response) => {
+        if (response.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: "Email binded successfully",
+            icon: "check_circle_outline"
+          });
+          bindEmailDialog.value = false;
+          formDetail.email = updateEmailInfo.email;
+          formDetail.emailVerified = true;
+
+          // setTimeout(() => {
+          //   startRefresh();
+          // }, 2000);
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: response.message,
+            icon: "report_problem"
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }
+};
+
+const verificationCodeDialog = ref(false);
+const openVerificationCodeDialog = () => {
+  api
+    .get(`/member/checkEmailRegisterStatus?email=${updateEmailInfo.email}`)
+    .then((response) => {
+      if (response.code === 0) {
+        if (response.data) {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: "Email already used. Please try another email.",
+            icon: "report_problem"
+          });
+        } else {
+          verificationCodeDialog.value = !verificationCodeDialog.value;
+        }
+      }
+    })
+    .catch((e) => {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: e.message,
+        icon: "report_problem"
+      });
+    });
+
+  captchaRef.value = "";
+  getCode();
+};
+
+const onCaptchaSubmit = () => {
+  api
+    .post(
+      `/otp/sendNewEmail`,
+      qs.stringify({
+        email: updateEmailInfo.email,
+        captchaCode: captchaRef.value,
+        codeId: updateSecurityVerified.codeId
+      })
+    )
+    .then((res) => {
+      let message = res.message,
+        color = "positive";
+
+      if (res.code === 0) {
+        verificationCodeDialog.value = false;
+
+        updateEmailInfo.codeId = res.data.codeId;
+
+        showVerificationTokenInput.value = true;
+        verificationCodeID = res.data.codeId;
+        startCountdownResendOTP.value = true;
+
+        countdownOTP.value = 59;
+        let timer = setInterval(() => {
+          countdownOTP.value -= 1;
+          if (countdownOTP.value === 0) {
+            clearInterval(timer);
+            startCountdownResendOTP.value = false;
+          }
+        }, 1000);
+
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: t("notify.emailVerificationSent"),
+          icon: "check_circle_outline"
+        });
+      } else color = "negative";
+
+      if (message) $q.notify({ message, color });
+
+      console.log("onCaptchaSubmit", res);
+    });
+};
+
+const verificationImg = ref("");
+const getCode = () => {
+  api
+    .get("/member/verificationCode")
+    .then((response) => {
+      if (response.code === 0) {
+        verificationImg.value = "data:image/png;base64," + response.data.img;
+        updateSecurityVerified.codeId = response.data.id;
+      }
+    })
+    .catch((e) => {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: e.message,
+        icon: "report_problem"
+      });
+    });
+};
+
+const updatePhoneInfo = reactive({
+  phone: ""
+  // code: "",
+  // codeId: ""
+});
+
+const submitUpdatePhone = () => {
+  phoneRef.value.validate();
+
+  if (!phoneRef.value.hasError) {
+    api
+      .post(
+        "/session/account",
+        qs.stringify({
+          phone: updatePhoneInfo.phone
+        })
+      )
+      .then((res) => {
+        if (res.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: "Phone number updated successfully",
+            icon: "check_circle_outline"
+          });
+
+          store
+            .getMemberInfo()
+            .then(() => {
+              loadInfo();
+            })
+            .finally(() => {
+              changePhoneDialog.value = false;
+              updatePhoneInfo.phone = "";
+            });
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: res.message,
+            icon: "report_problem"
+          });
+        }
+      })
+      .catch((error) => {});
+  }
+};
+
 onMounted(() => {
   getDailyCheckInData();
   getRankingList();
+  getCode();
 });
 </script>
 
@@ -788,6 +1187,7 @@ onMounted(() => {
     justify-content: center;
     font-size: 1.5rem;
     font-weight: bold;
+    margin-top: 16px;
   }
 
   .congrats-highlight {
@@ -826,5 +1226,62 @@ onMounted(() => {
   font-size: 16px;
   line-height: 24px;
   color: #000a01;
+}
+
+.pc-form {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+
+  .pc-form-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+
+    &.item-click {
+      &:after {
+        content: "";
+        background: rgba(255, 255, 255, 0.05);
+        height: calc(100% - 36px);
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        border-radius: 8px;
+      }
+    }
+  }
+  .pc-form-label {
+    color: rgba(255, 255, 255, 1);
+  }
+  .pc-form-input {
+    border-radius: 5px;
+    position: relative;
+
+    :deep(.q-field__control) {
+      background: rgba(255, 255, 255, 0.15) !important;
+      border-radius: 4px;
+    }
+
+    :deep(.q-field__native) {
+      color: rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  .pc-form-side-btn {
+    position: relative;
+    right: -12px;
+
+    :deep(.q-btn-item) {
+      height: 38px;
+    }
+
+    &.copy-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
 }
 </style>
