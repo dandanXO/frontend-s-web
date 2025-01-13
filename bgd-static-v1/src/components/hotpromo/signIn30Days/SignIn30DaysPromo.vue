@@ -213,6 +213,7 @@
       </div>
     </div>
   </div>
+
   <q-dialog v-model="isShowCongratsDialog" @hide="handleReceiveBonus" persistent>
     <div class="congrats-container">
       <!-- <q-btn icon="close" round dense v-close-popup class="congrats-close" /> -->
@@ -220,7 +221,7 @@
       <div class="congrats-chest"><img src="../../../assets/images/index/modal/congrats-chest-dark.png" /></div>
 
       <div class="congrats-highlight">{{ convertToCommaAmount(bonusAmount) }}BDT</div>
-      <div class="congrats-title">Congratulations on claiming your bonus</div>
+      <div class="congrats-title">{{ randomWish }}</div>
       <div class="congrats-button">
         <q-btn no-caps unelevated class="receive-btn" @click="handleReceiveBonus">
           {{ $t("btn.receive") }}
@@ -528,6 +529,7 @@ const claimReward = () => {
     .then((res) => {
       if (res.code === 0) {
         bonusAmount.value = res.data;
+
         isShowCongratsDialog.value = true;
       }
 
@@ -540,12 +542,10 @@ const claimReward = () => {
         });
 
         if (store.phone && !store.email) {
-          console.log("ASDasd1");
           bindEmailDialog.value = true;
         }
 
         if (store.email && !store.phone) {
-          console.log("ASDasd2");
           changePhoneDialog.value = true;
         }
       }
@@ -588,10 +588,6 @@ const submitUpdateEmail = () => {
           bindEmailDialog.value = false;
           formDetail.email = updateEmailInfo.email;
           formDetail.emailVerified = true;
-
-          // setTimeout(() => {
-          //   startRefresh();
-          // }, 2000);
         } else {
           $q.notify({
             color: "negative",
@@ -706,8 +702,6 @@ const getCode = () => {
 
 const updatePhoneInfo = reactive({
   phone: ""
-  // code: "",
-  // codeId: ""
 });
 
 const submitUpdatePhone = () => {
@@ -752,10 +746,36 @@ const submitUpdatePhone = () => {
   }
 };
 
+const wishes = [
+  "May Allah bless you with endless Barakah.",
+  "May Allah open the doors of wealth and prosperity for you.",
+  "May Allah's blessings bring success and financial stability in your life.",
+  "Allah ka karam ho, aur har kaam mein barkat ho.",
+  "Tumhara har din taraqqi aur kamiyabi ka ho.",
+  "Khuda tumhein maal-o-doulat aur izzat se nawazay.",
+  "Best wishes for your success and financial growth.",
+  "May your business flourish and your earnings multiply.",
+  "Wishing you abundant wealth and endless happiness.",
+  "May this year bring you abundant wealth and prosperity.",
+  "May Allah bless you with immense wealth and endless prosperity.",
+  "Wishing you financial success and abundant blessings in all your endeavors.",
+  "May your earnings multiply and your wealth grow beyond measure.",
+  "May the doors of success and fortune always remain open for you.",
+  "May Allah’s blessings turn all your efforts into wealth and success.",
+  "On this special occasion, I pray for your financial growth and success."
+];
+
+const randomWish = ref("");
+const generateRandomWish = () => {
+  const randomIndex = Math.floor(Math.random() * wishes.length);
+  randomWish.value = wishes[randomIndex];
+};
+
 onMounted(() => {
   getDailyCheckInData();
   getRankingList();
   getCode();
+  generateRandomWish();
 });
 </script>
 
