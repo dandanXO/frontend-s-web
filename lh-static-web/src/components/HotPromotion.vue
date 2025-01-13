@@ -7,11 +7,8 @@
       @daily-slot="handleSlot()"
     />
     <DragonCardPromo v-if="list.redirectUrl === 'lh1-dragon-card'" :promo-code="list.promoCode" />
-    <HongBaoYuPromo v-if="list.redirectUrl === 'lh1-hongbaoyu'" />
     <WelcomeTaskPromo v-if="list.redirectUrl === 'lh1-welcomenewuser'" />
     <InviteFriendPromo v-if="list.redirectUrl === 'lh1-invitefriend'" />
-    <EsportSafetyPromo v-if="list.redirectUrl === 'lh1-esport-safety'" />
-    <SportSafetyPromo v-if="list.redirectUrl === 'lh1-sport-safety'" />
     <MeiZhouBeiPromo v-if="list.redirectUrl === 'lh1meizhoubei'" />
     <OuZuLianPromo v-if="list.redirectUrl === 'ouzulian'" />
     <SubmitClaimPromo v-if="list.redirectUrl === 'LH1-UCL'" :promo-code="list.promoCode" />
@@ -149,11 +146,8 @@ import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import DragonCardPromo from "../components/hotpromo/dragoncard/dragonCardPromo.vue";
 import MeiZhouBeiPromo from "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue";
 import EurocupVotePromo from "../components/hotpromo/eurocup-2024-vote/eurocupVotePromo.vue";
-import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
-import EsportSafetyPromo from "../components/hotpromo/eSportSafety/eSportSafetyPromo.vue";
-import SportSafetyPromo from "../components/hotpromo/sportSafety/sportSafetyPromo.vue";
 import PredictionMatchPromo from "../components/hotpromo/PredictionMatch/PredictionMatchPromo.vue";
 import DailyLoginPromo from "../components/hotpromo/DailyLogin/DailyLoginPromo.vue";
 import NbaGamePromo from "../components/hotpromo/nbagame/nbaGamePromo.vue";
@@ -256,11 +250,8 @@ export default defineComponent({
     intelEsl2024,
     ClaimPromo,
     EurocupVotePromo,
-    HongBaoYuPromo,
     InviteFriendPromo,
     WelcomeTaskPromo,
-    EsportSafetyPromo,
-    SportSafetyPromo,
     PredictionMatchPromo,
     DailyLoginPromo,
     NbaGamePromo,
