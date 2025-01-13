@@ -59,9 +59,9 @@ export default defineComponent({
         case "m.tslotf88.com":
         case "www.tslotf88.com":
         case "tslotf88.com":
-        case "m.tfslot288.com":
-        case "www.tfslot288.com":
-        case "tfslot288.com":
+        case "m.tfnohu18.com":
+        case "www.tfnohu18.com":
+        case "tfnohu18.com":
           trackingScriptUrl = "https://v1.cnzz.com/z.js?id=1281386211";
           break;
         default:

@@ -251,6 +251,7 @@ var qs = require("qs");
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
+import { isOperaPixelUrl } from "boot/utils";
 
 const store = userStore();
 const route = useRoute();
@@ -632,10 +633,7 @@ async function pDepo(deposit) {
       // console.log(res)
       if (res.code === 0) {
         if (
-          window.location.href.indexOf("5svn88.com") > -1 ||
-          window.location.href.indexOf("tfpromo88.com") > -1 ||
-          window.location.href.indexOf("tf88bof.com") > -1 ||
-          window.location.href.indexOf("tslotf88.com") > -1
+          isOperaPixelUrl()
         ) {
           otag("event", "deposit");
         }
