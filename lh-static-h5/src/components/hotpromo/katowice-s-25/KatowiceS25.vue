@@ -158,8 +158,6 @@
 <script setup>
 import { onMounted, ref, toRefs } from "vue";
 import {
-  getCompetitionLossInit,
-  claimCompetitionLoss,
   getCompetitionYesterday,
   claimCompetitionBonus
 } from "../../../api/index/promo";
@@ -168,8 +166,8 @@ import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
-const props = defineProps(["promoParam","promoCode"]);
-const { promoParam, promoCode } = toRefs(props);
+const props = defineProps(["promoCode"]);
+const { promoCode } = toRefs(props);
 
 const notify = useNotify();
 const store = userStore();
@@ -179,54 +177,8 @@ const router = useRouter();
 const totalValidBet = ref(0);
 const bonus1 = ref(0);
 
-const bonus2 = ref(0);
-const totalLoss = ref(0);
-
 const tabValue = ref(1);
 
-const handleClaimBonus2 = () => {
-  if (!store.token) {
-    $q.dialog({
-      class: "q-px-md q-pt-md",
-      title: "系统提示",
-      message: "请登录后再操作",
-      ok: {
-        push: true,
-        color: "primary",
-        label: "去登录",
-        tabindex: 1
-      },
-      cancel: {
-        push: true,
-        color: "warning",
-        label: "取消",
-        tabindex: 0
-      },
-      persistent: true
-    }).onOk(() => {
-      router.push("/login");
-    });
-    return;
-  }
-  claimCompetitionLoss(promoParam.value.promoCode2)
-    .then((res) => {
-      if (res.code === 0) {
-        notify({
-          type: "success",
-          message: `成功领取${res.data}元`
-        });
-        fetchData();
-      } else {
-        notify({
-          type: "error",
-          message: res.message
-        });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
 
 const handleClaimBonus1 = () => {
   if (!store.token) {
@@ -252,7 +204,7 @@ const handleClaimBonus1 = () => {
     });
     return;
   }
-  claimCompetitionBonus(promoParam.value.promoCode1)
+  claimCompetitionBonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
         notify({
