@@ -1,4 +1,4 @@
-package com.ind.appid1;
+package com.ind.appth2;
 
 import android.app.Application;
 
