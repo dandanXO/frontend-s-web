@@ -12,9 +12,28 @@
             Withdraw
           </div>
         </div>
-        <div class="achievement"></div>
+        <div class="achievement">
+          <div class="progress-section">
+            <div class="progress-bar">
+              <div class="progress-bar-full">
+                <div class="progress-bar-current">
+                </div>
+
+                <div class="achieved-bar">
+                  <div class="achieve-item" v-for="index in 5"  :key="index">
+                    <img class="achieved-icon"  src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/achieved-icon.svg" />
+                    <span>{{ (index - 1) * 25}}%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="remaining">
+              <span class="highlight">85/</span><span class="label">100</span>
+            </div>
+          </div>
+        </div>
         <div class="remaining">
-            <div>Withdrawal still takes</div><div class="amount">BDT 222.000</div>
+            <div>Withdrawal still takes</div><div class="highlight">BDT 222.000</div>
         </div>
       </div>
       <div class="spin-wheel-container">
@@ -84,11 +103,11 @@
       <div class="list-section">
         <div class="list-wrapper">
           <div class="list">
-            <div class="list-row" v-for="index in 10" :key="index">
-              <div class="list-item cyan">9**476543878 {{ index }}</div>
-              <div class="list-item">nscfd87348nr3</div>
+            <div class="list-row" v-for="winner, index in winnersList" :key="index">
+              <div class="list-item"><span class="cyan">{{ winner.loginName }}</span></div>
+              <div class="list-item"><span class="label">{{ winner.loginName }}</span></div>
               <div class="list-item">
-                <div class="center points"><span class="highlight">+2</span><img class="wheel-icon" src="../../../assets/images/promotion/hotpromo/refer-spinwheel/wheel-icon.svg" />
+                <div class="center points"><span class="highlight">+{{ winner.bonus }}</span><img class="wheel-icon" src="../../../assets/images/promotion/hotpromo/refer-spinwheel/wheel-icon.svg" />
                 </div>
               </div>
             </div>
@@ -125,7 +144,7 @@
         <q-btn icon="close" flat round dense v-close-popup class="q-ml-auto" />
         <div class="prize-gold">
           <img src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/prize-gold.png" width="80" />
-          <div>{{ $t("hotPromo.aviatorWheel.congratulations") }}</div>
+          <div>{{ $t("hotPromo.referWheel.congratulations") }}</div>
         </div>
   
         <div class="prize-amount">{{ store.currency.label }} {{ prizePopupBonusAmt }}</div>
@@ -193,7 +212,7 @@
   
   const getRecords = () => {
     eventapi
-      .get("/aviatorWheel/records")
+      .get("/session/refer-wheel/getRecords?promoCode=bgd-refer-wheel")
       .then((res) => {
         if (res.code == 0) {
           winnersList.value = res.data;
@@ -259,24 +278,24 @@
   
   const spinWheel = () => {
     //FOr TesTING START
-    const res = {
-      data: {
-        bonusAmount: 999999,
-        availableSpin: 0
-      }
-    }
-    var bonusIndex = res.data.bonusAmount;
-    if (res.data.type === "CONSOLATION") {
-      bonusIndex = -1;
-    }
-    const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
+    // const res = {
+    //   data: {
+    //     bonusAmount: 999999,
+    //     availableSpin: 0
+    //   }
+    // }
+    // var bonusIndex = res.data.bonusAmount;
+    // if (res.data.type === "CONSOLATION") {
+    //   bonusIndex = -1;
+    // }
+    // const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
     
-    spin(prizeIndex, () => {
-      showPrizePopup.value = true;
-      prizePopupBonusAmt.value = res.data.bonusAmount;
-      remainingDraws.value = res.data.availableSpin;
-    });
-    return;
+    // spin(prizeIndex, () => {
+    //   showPrizePopup.value = true;
+    //   prizePopupBonusAmt.value = res.data.bonusAmount;
+    //   remainingDraws.value = res.data.availableSpin;
+    // });
+    // return;
     //FOr TesTING END
   
     if (spinButtonDisable.value === true) {
@@ -287,14 +306,14 @@
       $q.notify({
         color: "negative",
         position: "top",
-        message: t("hotPromo.aviatorWheel.remainingDrawTimes") + `: 0`,
+        message: t("hotPromo.referWheel.remainingDrawTimes") + `: 0`,
         icon: "report_problem"
       });
       return;
     }
   
     eventapi
-      .post("/aviatorWheel/spin")
+      .post("/session/refer-wheel/spin?promoCode=bgd-refer-wheel")
       .then((res) => {
         if (res.code == 0) {
           var bonusIndex = res.data.bonusAmount;
@@ -316,7 +335,7 @@
   };
   
   const initSpinWheel = () => {
-    eventapi.get("/aviatorWheel/init").then((res) => {
+    eventapi.get("/session/refer-wheel/init?promoCode=bgd-refer-wheel").then((res) => {
       if (res.code == 0) {
         remainingDraws.value = res.data.availableSpin;
       }
@@ -384,13 +403,12 @@
       border: 1px solid #337E3A;
       box-shadow: 0px 0px 20px 0px #5FFF4640 inset;
       margin: 5px;
-      height: 150px;
       border-radius: 10px;
       padding: 15px;
 
       .top-wrapper {
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: 1fr 100px;
 
         .balance {
           display: flex;
@@ -417,6 +435,70 @@
           height: 35px;
           font-weight: 700;
         }
+      }
+
+      .achievement {
+        display: flex;
+        flex-direction: column;
+
+        .progress-section {
+          display: grid;
+          grid-template-columns: 1fr auto;
+          align-items: center;
+          gap: 10px;
+
+          .progress-bar {
+            display: flex;
+            align-items: flex-start;
+            padding-top: 10px;
+            height: 50px;
+            overflow: hidden;
+
+            .progress-bar-full {
+              height: 10px;
+              width: 100%;
+              border-radius: 35px;
+              background: #545454;
+              position: relative;
+            }
+
+            .progress-bar-current {
+              height: 10px;
+              border-radius: 35px;
+              background: linear-gradient(90deg, #24EE89 0%, #9FE871 100%);
+              width: 80px;
+              border-radius: 35px;
+            }
+
+            .achieved-bar {
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+              position: absolute;
+              top: calc(50% + 10px);
+              left: 50%;
+              transform: translate(-50%, -50%);
+
+              .achieve-item {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                .achieved-icon {
+                  width: 20px;
+                  margin-bottom: 0;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .remaining {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
       }
     }
 

@@ -643,6 +643,7 @@ export default {
     },
     referWheel: {
       remainingDrawTimes: "Remaining times",
+      congratulations: "Congratulations"
     },
     signIn7Days: {
       continuousSignIn: "Continuous sign-in:",
