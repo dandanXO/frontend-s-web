@@ -575,6 +575,437 @@ const getMatchTimeOnly = (matchTime) => {
 </script>
 
 <style scoped lang="scss">
+.body--dark {
+  .prize-quiz-container {
+    font-size: 14px;
+    color: #87898a;
+    padding: 0 0 0px 0;
+    position: relative;
+
+    .prize-quiz-content-container {
+      margin: 0 auto;
+
+      .questions-main-title {
+        display: flex;
+        justify-content: center;
+        margin-top: 16px;
+        font-size: 18px;
+        font-weight: 700;
+        color: #4c4c6c;
+        text-align: center;
+      }
+
+      .prize-quiz-jc-container {
+        background: url("../../../assets/images/promo/hotpromo/esportquiz/prize-pool-bg.png") center no-repeat;
+        background-size: contain;
+        padding-top: 30px;
+        margin: 16px auto 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .prize-quiz-jc-txt {
+          font-size: 32px;
+          letter-spacing: 3px;
+          background: linear-gradient(180deg, #05d2ff 0%, #0009d9 100%);
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          height: 128px;
+          line-height: 128px;
+          font-weight: 700;
+        }
+      }
+
+      .prize-quiz-main {
+        background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+        box-shadow: 0px 5px 10px 0px rgba(12, 3, 7, 0.2);
+        border-radius: 20px;
+        overflow: hidden;
+        // padding: 16px;
+        // min-height: 315px;
+
+        .start-answer-box {
+          margin: 0 auto;
+          display: flex;
+          width: 100%;
+          justify-content: center;
+          box-shadow: none;
+
+          .book-img {
+            text-align: center;
+            margin-bottom: 5px;
+            margin-top: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .btn-start-answer {
+            height: 90px;
+            background: url("../../../assets/images/promo/hotpromo/esportquiz/btn_start.png") center no-repeat;
+            cursor: pointer;
+            background-size: 214px;
+          }
+
+          .btn-start-ans {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            white-space: nowrap;
+          }
+
+          .team-action {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 16px;
+            margin-bottom: 16px;
+            text-align: center;
+            color: #4c4c6c;
+          }
+
+          .team-match-time {
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 1;
+            margin-bottom: 12px;
+          }
+
+          .team-content {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            font-weight: 600;
+            margin-top: 16px;
+            margin-bottom: 16px;
+            .team-logo {
+              height: 50px;
+              width: 50px;
+              background: #cccccc;
+              border-radius: 50%;
+              margin-bottom: 8px;
+            }
+          }
+        }
+        .title {
+          font-size: 16px;
+          padding: 4px 16px 6px;
+          text-align: center;
+          font-weight: 600;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #4c4c6c;
+          line-height: 1;
+
+          height: 40px;
+          background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+
+          color: #ffffff;
+          border-bottom: 2px solid #fff;
+        }
+      }
+
+      .title-img {
+        height: 34px;
+      }
+
+      .title-record {
+        background: url("../../../assets/images/promo/hotpromo/esportquiz/title_record.png") center no-repeat;
+        background-size: contain;
+        margin: 45px auto 22px auto;
+      }
+
+      .record-table {
+        // width: 100px !important;
+        border-collapse: collapse;
+        margin: 20px auto;
+        // overflow-x: scroll;
+
+        th {
+          text-align: center;
+          color: #fff;
+          height: 48px;
+          border: solid 1px #dcdce8;
+          background-image: linear-gradient(0deg, #0094ff 0%, #19c6ff 100%), linear-gradient(#1d212e, #1d212e);
+          background-blend-mode: normal, normal;
+        }
+
+        tr td {
+          height: 50px;
+          text-align: center;
+          border: solid 1px #dcdce8;
+
+          .got-answer {
+            color: #00ff00;
+          }
+
+          .not-got {
+            color: #ff0000;
+          }
+        }
+      }
+
+      .page-list {
+        display: flex;
+        margin-top: 24px;
+        justify-content: center;
+      }
+
+      .page-item {
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        text-align: center;
+        background-color: #fff;
+        margin: 0 4px;
+        cursor: pointer;
+        border: 1px solid #dcdce8;
+
+        &.active {
+          color: #fff;
+          background-color: #0094ff;
+        }
+      }
+    }
+  }
+
+  .questions-box {
+    padding-top: 17px;
+    display: none;
+
+    &.show {
+      display: block;
+    }
+
+    .questions-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      // padding: 16px;
+
+      &::before,
+      &::after {
+        content: " ";
+        display: block;
+      }
+
+      .questions-item-box {
+        width: 100%;
+        letter-spacing: 0;
+        // padding: 16px;
+        margin-bottom: 16px;
+        border-radius: 20px;
+        // border: 3px solid #fff;
+        overflow: hidden;
+
+        .item-title {
+          font-size: 12px;
+          color: #ffffff;
+          background: linear-gradient(180deg, #2095ff 0%, #7ebdf7 100%);
+          border-bottom: 3px solid #fff;
+          // background: #2095ff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 6px;
+          height: 42px;
+        }
+
+        .item-question {
+          margin-bottom: 10px;
+          margin-top: 10px;
+          text-align: center;
+          color: #4c4c6c;
+          font-size: 16px;
+          font-weight: 600;
+          // height: 42px;
+        }
+
+        .question-options-box {
+          padding: 0 16px 16px;
+          color: #87898a;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          background: linear-gradient(0deg, #ffffff 0%, #eaf3fced 100%);
+
+          .question-ans {
+            display: flex;
+            justify-content: flex-start;
+            width: 100%;
+            padding: 10px;
+            flex: 1;
+            color: #7A8EB9;
+
+            span {
+              font-weight: 700;
+              color: #3981FF;
+            }
+          }
+
+          .question-btn-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 25%;
+            max-width: 286px;
+
+            img {
+              margin: 0;
+            }
+          }
+
+          .question-fill-input {
+            border: 1px solid #0094ff;
+            border-radius: 6px;
+            background-color: transparent;
+            color: #87898a;
+            padding: 5px;
+            margin: 38px auto 40px;
+          }
+
+          .item-option > label {
+            font-weight: 400;
+          }
+        }
+
+        .btn-answer {
+          font-size: 12px;
+          color: #fff;
+          line-height: 1;
+          text-align: center;
+          cursor: pointer;
+          // margin: 0 auto 40px;
+          border-radius: 4px;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+
+  .question-select-box {
+    max-width: 360px;
+    margin: 20px auto;
+    font-size: 14px;
+    color: #bacef1;
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .question-select-type {
+      border-radius: 6px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      width: 100px;
+      color: red;
+    }
+
+    .question-select-option {
+      background-color: #e7f3ff;
+      border-radius: 10px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      cursor: pointer;
+      width: 120px;
+      color: #424f72;
+      font-size: 12px;
+
+      &.active {
+        color: #fff;
+        background-color: #3981ff;
+      }
+    }
+  }
+
+  .question-fill-box {
+    width: 264px;
+    margin: 80px auto;
+    font-size: 18px;
+    color: #bacef1;
+  }
+
+  .dialog-header {
+    // background: #0eb0ff;
+    color: white;
+    padding: 0.5rem;
+    color: #4c4c6c;
+    display: flex;
+    justify-content: center;
+  }
+
+  .dialog-body {
+    padding: 30px 20px;
+  }
+
+  .dialog-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    q-button {
+      background: #409eff;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 4px;
+      text-align: center;
+    }
+  }
+
+  #record-table {
+    white-space: wrap;
+  }
+
+  .hide {
+    display: none !important;
+  }
+
+  .btn-long-answer {
+    font-size: 16px;
+    background-image: url("../../../assets/images/promo/hotpromo/esportquiz/long-btn-bg.png");
+    background-size: 100% 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: #ffffff;
+    width: 100%;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #e1e1e1;
+    color: #ffffff;
+  }
+
+  .dialog-content {
+    border-radius: 20px;
+    background-image: url(../../../assets/images/promo/hotpromo/esportquiz/dialog-bg.png);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}
 .prize-quiz-container {
   font-size: 14px;
   color: #87898a;

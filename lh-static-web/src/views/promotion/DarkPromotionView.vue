@@ -80,7 +80,8 @@
             selectedPromo.promoCode !== 'lh1-game-steps' &&
             selectedPromo.promoCode !== 'lh1-ftd-promo' &&
             selectedPromo.promoCode !== 'lh1-aijiasu' &&
-            selectedPromo.promoCode !== 'lh1-eurocup-regen'
+            selectedPromo.promoCode !== 'lh1-eurocup-regen' &&
+            selectedPromo.redirectUrl !== 'lh1-christmas-gashapon'
           "
         >
           <div class="promo-bg isDesktop">
@@ -144,8 +145,9 @@
               selectedPromo.promoCode === 'lh-eurocup-manual' ||
               selectedPromo.promoCode === 'lh-lpl-summer24' ||
               selectedPromo.promoCode === 'lh1-intel-esl' ||
-              selectedPromo.promoCode === 'lh1-aijiasu' ||
-              selectedPromo.promoCode === 'lh1-eurocup-regen',
+              selectedPromo.promoCode === 'lh1-eurocup-regen' ||
+              selectedPromo.redirectUrl === 'lh1-christmas-gashapon',
+            aijiasubg: selectedPromo.promoCode === 'lh1-aijiasu',
             'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
             shoutouxinxiu: selectedPromo.promoCode === 'lh1-shoutouxinxiu',
             bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024'
@@ -167,7 +169,14 @@
             }"
             v-if="selectedPromo.promoCode !== 'lh-eurocup-manual' && selectedPromo.pageContent"
           >
-            <div v-html="selectedPromo.pageContent"></div>
+            <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
+              <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
+            </div>
+            <div
+              v-if="selectedPromo.redirectUrl !== 'lh1-christmas-gashapon'"
+              :class="`content-` + selectedPromo.redirectUrl"
+              v-html="selectedPromo.pageContent"
+            ></div>
           </div>
           <div
             v-if="['lh-cs2-copenhagen-major-2024', 'lh-cs2-blast-2024'].includes(selectedPromo.redirectUrl)"
@@ -202,11 +211,13 @@ import { useDark } from "@vueuse/core";
 import HotPromotion from "@/components/HotPromotion";
 import { useLocalStorage } from "@vueuse/core";
 import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
+import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
+    NBAWaterBattle,
     BlastPremierMarquee
   },
   setup() {
@@ -320,7 +331,7 @@ export default defineComponent({
       loadPromo()
         .then((res) => {
           if (res.code === 0) {
-            const processedData = res.data.map(promo => ({
+            const processedData = res.data.filter(promo => !['lh1-dark-mode'].includes(promo.redirectUrl)).map(promo => ({
               ...promo,
               displayDesktopBannerUrl: promo.desktopBannerUrlDark ?? promo.desktopBannerUrl,
               displayDesktopImgBackgroundUrl: promo.desktopImgBackgroundUrlDark ?? promo.desktopImgBackgroundUrl,
@@ -509,8 +520,14 @@ export default defineComponent({
         }
       }
     }
-  }
-  a {
+
+    .content-lh1-poker-refund {
+      //color: #fff;
+      padding: 0px 24px 30px;
+    }
+    .content-LH-baccarat-win {
+      padding: 0px 24px 30px;
+    }
   }
 }
 </style>
@@ -579,7 +596,6 @@ export default defineComponent({
           width: 100%;
           flex-direction: column;
           gap: 25px;
-          min-height: 818px;
           // position: sticky;
           // top: 100px;
           .type-item {
@@ -843,6 +859,7 @@ export default defineComponent({
             display: block;
             img {
               width: 100%;
+              display: block;
             }
           }
           &.isMobile {
@@ -870,6 +887,23 @@ export default defineComponent({
           max-width: 100%;
           margin: 0;
           padding: 0;
+
+          .hot-promo {
+            border-radius: 0px;
+          }
+
+          .promo-view-container {
+            display: none;
+          }
+        }
+
+        &.aijiasubg {
+          width: 100%;
+          max-width: 100%;
+          margin: 0;
+          padding: 0;
+          background-size: 100% auto;
+          background-attachment: fixed;
 
           .hot-promo {
             border-radius: 0px;
@@ -1100,7 +1134,7 @@ export default defineComponent({
                 }
 
                 .label-date {
-                  color: rgba($color-white, 20%);
+                  color: rgba($color-white, 90%);
                 }
               }
 

@@ -21,6 +21,10 @@ export function claimBonusItem(item) {
   return server.EVENT.put(`/bonus/claim/${item}`);
 }
 
+export function initDepositRedPacket(item) {
+  return server.EVENT.get(`/session/redPacketVip/initDepositRedPacket?promoCode=${item}`);
+}
+
 export function claimDailyRainItem(item) {
   return server.EVENT.get(`/redPacketVip/claim?promoCode=${item}`);
 }
@@ -521,7 +525,14 @@ export function getDrawRecord(promoCode, params) {
 }
 
 export function getLatestClaimedBonusList(promoCode) {
-  return server.EVENT.get(`/session/draw-event/getLatestClaimedBonusList?promoCode=${promoCode}`)
+  return server.EVENT.get(`/session/draw-event/getLatestClaimedBonusList?promoCode=${promoCode}`);
+}
+
+export function getBountyInit(promoCode) {
+  return server.EVENT.get(`/session/event-check-in/can-claim?promoCode=${promoCode}`);
+}
+export function claimBountyBonus(promoCode) {
+  return server.EVENT.post(`/session/event-check-in/claim?promoCode=${promoCode}`);
 }
 
 export function getVctcnInit(promoCode) {
@@ -529,4 +540,26 @@ export function getVctcnInit(promoCode) {
 }
 export function claimVctcnBonus(promoCode) {
   return server.EVENT.post(`/session/competition-bet-platform/claimBonus?promoCode=${promoCode}`);
+}
+export function getBelgrade2025Init(promoCode) {
+  return server.EVENT.get(`/session/competition-single-bet/init?promoCode=${promoCode}`);
+}
+export function claimBelgrade2025Bonus(promoCode) {
+  return server.EVENT.post(`/session/competition-single-bet/claimBonus?promoCode=${promoCode}`);
+}
+
+
+export function getVctBangkokInit(promoCode) {
+  return server.EVENT.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimVctBangkokBonus(promoCode) {
+  return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+
+export function getCompetitionLossWeeklyInit(promoCode) {
+  return server.EVENT.get(`/session/competition-loss-weekly/init?promoCode=${promoCode}`);
+}
+
+export function claimCompetitionLossWeekly(promoCode) {
+  return server.EVENT.post(`/session/competition-loss-weekly/claim?promoCode=${promoCode}`);
 }

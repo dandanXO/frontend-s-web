@@ -639,7 +639,20 @@
       <el-table-column prop="teamOneName" :label="t('fields.teamOne')" />
       <el-table-column prop="teamTwoName" :label="t('fields.teamTwo')" />
       <el-table-column prop="sequence" :label="t('fields.sequence')" />
-      <el-table-column prop="status" :label="t('fields.status')" />
+      <!-- <el-table-column prop="status" :label="t('fields.status')" /> -->
+      <el-table-column prop="status" :label="t('fields.status')" min-width="130">
+        <template #default="scope">
+          <el-radio-group
+            v-model="scope.row.status"
+            size="mini"
+            @change="changeCompetitionStatus(scope.row.id, scope.row.status)"
+          >
+            <el-radio-button label="OPEN">{{ t('common.status.OPEN') }}</el-radio-button>
+            <el-radio-button label="CLOSE">{{ t('common.status.CLOSE') }}</el-radio-button>
+            <el-radio-button label="TEST">{{ t('common.status.TEST') }}</el-radio-button>
+          </el-radio-group>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="displayStartTime"
         :label="t('fields.displayStartTime')"
@@ -796,6 +809,7 @@ import {
   deleteCompetition,
   getCompetitionGameList,
   bulkSyncCompetition,
+  updateCompetitionState,
 } from '../../../../api/platform-competition'
 import { TENANT } from '../../../../store/modules/user/action-types'
 import { uploadImage } from '../../../../api/image'
@@ -1341,6 +1355,12 @@ function submitImageUpload() {
       ElMessage({ message: t('message.addSuccess'), type: 'success' })
     }
   })
+}
+
+async function changeCompetitionStatus(id, state) {
+  await updateCompetitionState(id, state)
+  ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+  await loadCompetition()
 }
 
 onMounted(async () => {

@@ -199,7 +199,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <!-- <img :src="accDialogImg" /> -->
+            <img :src="accDialogImg" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -228,7 +228,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <!-- <img :src="accDialogImg" /> -->
+            <img :src="accDialogImg" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -398,16 +398,6 @@ export default defineComponent({
     const loadingBtn = ref(false);
     const store = userStore();
 
-    const checkToken = () => {
-      if (store.token) {
-        if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
-          return false;
-        }
-        return true;
-      } else {
-        return true;
-      }
-    };
     const navigations = reactive([
       { code: "home", name: "首页", enName: "Home", path: "/home" },
       { code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true, isTest: false },
@@ -1023,7 +1013,7 @@ export default defineComponent({
       loadPromoBanner("LOGIN").then((res) => {
         if (res.code === 0) {
           const promoImageDir = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
-          accDialogImg.value = promoImageDir + res.data[0].desktopImageUrl
+          accDialogImg.value = promoImageDir + res.data[0].desktopImageUrlDark
         }
       })
     }
@@ -1407,7 +1397,6 @@ export default defineComponent({
       timestamp,
       openMiniGame,
       navigations,
-      checkToken,
       loadIcon,
       accDialogImg
     };
@@ -1496,8 +1485,8 @@ body {
 
     .unread-count {
       position: absolute;
-      bottom: 2px;
-      right: 5px;
+      bottom: 9px;
+      right: 12px;
       width: 12px;
       height: 12px;
       opacity: 1;
@@ -2249,11 +2238,13 @@ body {
           max-width: 963px;
           max-height: 896px;
           border-radius: 20px;
-          background: url("@/assets/home/auth/test-login-banner.png") no-repeat center center;
-          background-size: 100% 100%;
           width: 100%;
           height: 100%;
           border-radius: 0px;
+
+          img {
+            object-fit: cover;
+          }
         }
       }
 
@@ -2429,7 +2420,7 @@ body {
       box-shadow: none;
       border-bottom: 1px solid #be9457;
       .top-nav-inner {
-        padding: 10px 0 9px;
+        padding: 0px;
         max-width: 1400px;
         .navigations {
           .header-menu-item {

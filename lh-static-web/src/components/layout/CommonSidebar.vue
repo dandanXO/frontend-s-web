@@ -20,13 +20,12 @@
     </div>
     <div class="sticky-sidebar-items">
       <div
-        v-if="memberType === 'TEST' || memberType === 'PROMO_TEST'"
         class="sticky-sidebar-item"
         @click="handleDarkModeClick"
       >
         <img v-if="isDark" src="@/assets/images/home/sticky-sidebar/light-mode-icon.svg" />
         <img v-else src="@/assets/images/home/sticky-sidebar/dark-mode-icon.svg" />
-        <div>{{ isDark ? "白天" : "黑暗" }}模式</div>
+        <div>{{ isDark ? "白天" : "夜间" }}模式</div>
       </div>
       <!-- <router-link to="/promotion" class="sticky-sidebar-item" @mouseover="customerHovered = false">
         <img src="../../assets/images/home/sticky-sidebar/hot-promo-icon.svg" />

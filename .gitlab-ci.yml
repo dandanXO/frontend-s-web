@@ -157,6 +157,13 @@ deploy-xf-landing-v6:
 
 #===============================================================================================
 
+deploy-xf-landing-v11:
+  extends: .s3-deploy
+  variables:
+    PROJECT: xf-landing-v11
+
+#===============================================================================================
+
 deploy-tha-download:
   extends: .s3-deploy
   variables:
@@ -210,6 +217,13 @@ deploy-dy-landing-v8:
   extends: .s3-deploy
   variables:
     PROJECT: dy-landing-v8
+
+#===============================================================================================
+
+deploy-dy-landing-v11:
+  extends: .s3-deploy
+  variables:
+    PROJECT: dy-landing-v11
 
 #===============================================================================================
 
@@ -710,6 +724,13 @@ deploy-lh-landing-v10:
 
 #===============================================================================================
 
+deploy-lh-landing-v11:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-landing-v11
+
+#===============================================================================================
+
 deploy-lh-redirect:
   extends: .s3-deploy
   variables:
@@ -1165,5 +1186,26 @@ deploy-br1-download-pwa:
     SITE_CODE: P8S1-BR1
   tags:
     - p8s1-br1-runners
+
+#===============================================================================================
+
+build-minigame-website:
+  extends: .build-projects
+  variables:
+    PROJECT: minigame-website
+
+build-image-minigame-website:
+  extends: .docker-build
+  variables:
+    PROJECT: minigame-website
+  needs:
+    - build-minigame-website
+
+#===============================================================================================
+
+deploy-th2-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: th2-download
 
 #===============================================================================================

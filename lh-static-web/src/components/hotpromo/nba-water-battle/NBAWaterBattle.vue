@@ -268,4 +268,13 @@ onMounted(() => {
     display: none !important;
   }
 }
+
+.dark {
+  .nba-water-battle-bg {
+    background-image: url("@/assets/images/promotion/hotpromo/nba-water-battle/nba-water-battle-widget-bg-dark.png");
+  }
+  .match-info-team {
+    color: #fff;
+  }
+}
 </style>

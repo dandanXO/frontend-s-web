@@ -19,7 +19,7 @@
       </div>
 
       <div v-if="$q.dark.isActive" class="login-banner-img-wrapper">
-        <img class="login-banner-img" :src="bannerImage" />
+        <img class="login-banner-img" :src="bannerImageDark" />
         <div class="login-banner-filter" />
       </div>
       <img v-else class="login-banner-img" :src="bannerImage" />
@@ -50,7 +50,8 @@
           >
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
-                <img class="input-icon" src="../assets/images/login/user-icon.svg" />
+                <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/user-icon-dark.svg" />
+                <img v-else class="input-icon" src="../assets/images/login/user-icon.svg" />
                 <label class="input-label">
                   <em>*</em>
                   用户名
@@ -73,7 +74,8 @@
           >
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
-                <img class="input-icon" src="../assets/images/login/password-icon.svg" />
+                <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/password-icon-dark.svg" />
+                <img v-else class="input-icon" src="../assets/images/login/password-icon.svg" />
                 <label class="input-label">
                   <em>*</em>
                   密码
@@ -121,7 +123,8 @@
             </template>
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
-                <img class="input-icon" src="../assets/images/login/veri-icon.svg" />
+                <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/veri-icon-dark.svg" />
+                <img v-else class="input-icon" src="../assets/images/login/veri-icon.svg" />
                 <label class="input-label">
                   <em>*</em>
                   验证码
@@ -145,7 +148,8 @@
           >
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
-                <img class="input-icon" src="../assets/images/login/phone-icon.svg" />
+                <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/phone-icon-dark.svg" />
+                <img v-else class="input-icon" src="../assets/images/login/phone-icon.svg" />
                 <label class="input-label">电话号码</label>
               </div>
             </template>
@@ -173,7 +177,8 @@
             </template>
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
-                <img class="input-icon" src="../assets/images/login/veri-icon.svg" />
+                <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/veri-icon-dark.svg" />
+                <img v-else class="input-icon" src="../assets/images/login/veri-icon.svg" />
                 <label class="input-label">验证码</label>
               </div>
             </template>
@@ -540,6 +545,7 @@ export default defineComponent({
     };
 
     const bannerImage = ref("");
+    const bannerImageDark = ref("")
 
     const getBannerImage = () => {
       api
@@ -547,6 +553,7 @@ export default defineComponent({
         .then((res) => {
           if (res.code === 0) {
             bannerImage.value = imageDir + res.data[0].mobileImageUrl;
+            bannerImageDark.value = imageDir + res.data[0].mobileImageUrlDark;
           }
         })
         .catch(() => {});
@@ -654,7 +661,8 @@ export default defineComponent({
       getInnerCode,
       isValidCnPhone,
       telephoneRef,
-      bannerImage
+      bannerImage,
+      bannerImageDark
     };
   }
 });
@@ -869,6 +877,11 @@ export default defineComponent({
         color: #b1bad3;
       }
 
+      .input-label {
+        font-size: 14px;
+        font-weight: 400;
+      }
+
       .tabs-wrapper {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -876,7 +889,7 @@ export default defineComponent({
         align-items: flex-start;
         text-align: center;
         background-color: transparent;
-        margin-top: -55px;
+        margin-top: -60px;
         padding-bottom: 30px;
 
         .tab-wrapper {
@@ -911,6 +924,17 @@ export default defineComponent({
           background: radial-gradient(#5e698800 25%, #5e6988);
           border-radius: 10px;
           border: 1px solid #969696;
+        }
+      }
+
+      .geetest-captcha-wrapper {
+        background: linear-gradient(180deg, #2e4166 0%, #1a263f 100%);
+
+        .input-icon {
+          filter: brightness(0) invert(1);
+        }
+        .input-label {
+          color: #fff;
         }
       }
 

@@ -1,7 +1,7 @@
 import { route, store } from "quasar/wrappers";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
-import { isAndroid } from "boot/utils";
+import { isAndroid, isOperaPixelUrl } from "boot/utils";
 import { SessionStorage } from "quasar";
 
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from "vue-router";
@@ -143,10 +143,7 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("track", "PageView");
       user.isAffiliateA = true;
     } else if (
-      window.location.href.indexOf("5svn88.com") > -1 ||
-      window.location.href.indexOf("tfpromo88.com") > -1 ||
-      window.location.href.indexOf("tf88bof.com") > -1 ||
-      window.location.href.indexOf("tslotf88.com") > -1
+      isOperaPixelUrl()
     ) {
       otag("init", "adv10336256983680");
     } else if (window.location.href.indexOf("tf68688.com") > -1) {

@@ -21,8 +21,26 @@
       <div class="floating-button-list" v-show="isShow">
         <div class="float-button" type="button">1: 跳转页面</div>
         <div class="float-button" type="button">2: 复制页面</div>
-        <div class="float-button" type="button">3: 请无视这个按钮。</div>
-        <div class="float-button" type="button">4: 按钮功能还在制作中。</div>
+        <div class="search-button" type="button">3: 搜索</div>
+        <div>
+          <el-input
+            v-model="searchText"
+            type="text"
+            placeholder="Search text..."
+            class="search-input"
+            @mousedown.stop
+            @click.stop
+            @keydown.enter="handleSearch"
+          />
+        </div>
+        <div
+          class="float-button"
+          type="button"
+          @mousedown.prevent
+          @click="handleAdd"
+        >
+          4: 新增
+        </div>
       </div>
     </div>
   </div>
@@ -30,6 +48,7 @@
 
 <script setup>
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
+import bus from '../../utils/bus'
 // defineProps
 
 // defineProps({
@@ -48,8 +67,19 @@ const position = reactive({
   x: 0,
   y: 0,
 })
+const searchText = ref('')
 
 // const buttonText = ref("+");
+
+const handleSearch = () => {
+  if (searchText.value.trim()) {
+    bus.emit('search', searchText.value)
+  }
+};
+
+const handleAdd = () => {
+  bus.emit('add')
+};
 
 const startDrag = e => {
   isDragging.value = true
@@ -112,6 +142,8 @@ const handleToggle = () => {
   // 如果在拖曳過程中移動了，則不觸發點擊事件
   if (!isMoving.value) {
     console.log('Button clicked!')
+    // if clicks on the div class = "floating-button"
+
     isShow.value = !isShow.value;
   }
 
@@ -148,6 +180,13 @@ onUnmounted(() => {
   height: 50px;
   font-size: 24px;
 }
+.search-input {
+  padding: 6px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 80%;
+}
 .floating-button-container {
   position: relative;
 }
@@ -178,6 +217,18 @@ onUnmounted(() => {
     transform: translate(0px, 1px);
   }
 }
+.search-button {
+  padding: 6px 10px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.search-button:hover {
+  background-color: #2563eb;
+}
+
 .floating-button {
   cursor: move;
   border-radius: 50%;

@@ -400,21 +400,52 @@ async function getInitApi(apiLinks, urlLsName, errorPrefix) {
         const isAppInitialized = !!sessionStorage.getItem("LH_APP_DOMAIN_INITIALIZED");
         if (isAppInitialized) {
           successRstUrl = localStorage.getItem(urlLsName);
-          return true;
+          if (successRstUrl) {
+            return "SUCCESS";
+          } else {
+            return "DOMAIN_NOT_FOUND";
+          }
         } else {
-          return false;
+          return "FAIL";
         }
       };
       const interval = setInterval(() => {
-        if (checkAppInitialStatus()) {
-          resolve(successRstUrl);
-          clearInterval(interval);
-        } else {
-          APP_INITIAL_TIME_OUT -= 100;
-          if (APP_INITIAL_TIME_OUT <= 0) {
-            clearInterval(interval);
+        const appInitialStatus = checkAppInitialStatus();
+        switch (appInitialStatus) {
+          case "SUCCESS":
             resolve(successRstUrl);
-          }
+            clearInterval(interval);
+            break;
+          case "DOMAIN_NOT_FOUND":
+            if (typeof apiLinks === "string" || apiLinks instanceof String) {
+              var initApi = apiLinks;
+            } else {
+              var apiLists = Object.values(apiLinks);
+              var initApi = apiLists[getRndInteger(0, apiLists.length)];
+              if (initApi.indexOf(REPLACEMENT_DOMAIN) > -1) {
+                const newDomain = replaceRndDomain(urlLsName);
+                initApi = initApi.replace(REPLACEMENT_DOMAIN, newDomain);
+                apiReplacementRecords.push({ errorPrefix, url: initApi });
+              }
+            }
+
+            axios.get(initApi + "/ping").then((res) => {
+              console.log(res);
+              if (res.status === 200) {
+                localStorage.setItem(urlLsName, initApi);
+              } else {
+                localStorage.removeItem(urlLsName);
+              }
+            });
+            resolve(initApi);
+            clearInterval(interval);
+            break;
+          case "FAIL":
+            APP_INITIAL_TIME_OUT -= 100;
+            if (APP_INITIAL_TIME_OUT <= 0) {
+              clearInterval(interval);
+              resolve(successRstUrl);
+            }
         }
       }, 100);
     });
@@ -506,16 +537,21 @@ function getErrorType(errorUrl) {
 }
 
 function isInApp() {
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  const isAndroidWebView = /wv/.test(userAgent);
+  const isiOSWebView = /WebView/.test(userAgent) && !/Safari/.test(userAgent);
+  const isWebView = isAndroidWebView || isiOSWebView;
   if (
-    window.location.pathname === "/vip" ||
-    window.location.pathname === "/viptest" ||
-    window.location.pathname === "/promotion" ||
-    window.location.pathname === "/promotiontest" ||
-    window.location.pathname === "/deposit" ||
-    window.location.pathname === "/deposittest" ||
-    window.location.pathname === "/invitefriend" ||
-    window.location.pathname === "/privilege/invite" ||
-    window.location.pathname === "/affiliatepage"
+    (window.location.pathname === "/vip" ||
+      window.location.pathname === "/viptest" ||
+      window.location.pathname === "/promotion" ||
+      window.location.pathname === "/promotiontest" ||
+      window.location.pathname === "/deposit" ||
+      window.location.pathname === "/deposittest" ||
+      window.location.pathname === "/invitefriend" ||
+      window.location.pathname === "/privilege/invite" ||
+      window.location.pathname === "/affiliatepage") &&
+    isWebView
   ) {
     return true;
   }

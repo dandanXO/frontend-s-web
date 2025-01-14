@@ -29,6 +29,7 @@
     <ReturnPromo v-if="list.redirectUrl === 'xf-return-promo'" />
     <DepositAwardPromo v-if="list.redirectUrl === 'xf-deposit-award'" />
     <SlotsBonusPromo v-if="list.redirectUrl === 'xf1-slots-bet-bonus'" :promo-code="list.promoCode" />
+    <HongBaoYu2025 v-if="list.redirectUrl === 'xf1-cny2025-red-envelope'" :promo-code="list.promoCode" />
     <SlotsRebatePromo v-if="list.redirectUrl === 'xf1-slots-rebate'" :promo-code="list.promoCode" />
     <div v-if="list.redirectUrl === 'fucaiiphone'" class="promo-4">
       <div class="tabs">
@@ -175,7 +176,7 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, defineAsyncComponent } from "vue";
 import { claimBonusItem, submitLuckyNumber, luckyNumberList, winnerList } from "@/api/index/promo";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
@@ -192,6 +193,8 @@ import slotLucky8 from "../components/hotpromo/slot-lucky8-2024/slot-lucky8-2024
 import DepositAwardPromo from "../components/hotpromo/depositAward/DepositAwardPromo.vue";
 import SlotsBonusPromo from "../components/hotpromo/slotsbonus/SlotsBonusPromo.vue";
 import SlotsRebatePromo from "../components/hotpromo/slotsrebate/SlotsRebatePromo.vue";
+const HongBaoYu2025 = defineAsyncComponent(() => import("@/components/hotpromo/hongbaoyu2025/HongBaoYu2025.vue"));
+
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -215,7 +218,8 @@ export default defineComponent({
     slotLucky8,
     HongBaoPreEurocupPromo,
     SlotsRebatePromo,
-    SlotsBonusPromo
+    SlotsBonusPromo,
+    HongBaoYu2025
     // DailyBonus
   },
   props: {
@@ -799,4 +803,93 @@ export default defineComponent({
     }
   }
 }
+
+.section-bg {
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%) !important;
+    border: 1px solid #be9457 !important;
+    color: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    font-family: "PingFang";
+
+    .section-table {
+      th {
+        color: #fff !important;
+        background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) !important;
+        border-radius: 0px !important;
+
+        &:not(:last-child) {
+          border-right: 1px solid #484c5770;
+        }
+      }
+
+      td {
+        border: 1px solid #484c5770 !important;
+        color: #fff;
+      }
+    }
+
+    .element-bg {
+      color: #fff !important;
+      box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
+        0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) !important;
+    }
+
+    .ribbon {
+      clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
+      padding-right: 10px;
+      font-family: "PingFang";
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      width: fit-content;
+      padding: 0px 20px 0px 10px;
+      aspect-ratio: 94/30;
+      white-space: nowrap;
+      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%);
+    }
+
+    .title-img {
+      aspect-ratio: 2952 / 176;
+      background: url("../assets/images/promotion/hotpromo/common/promo-details-title-bg.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 905px 55px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 35px;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
+
+    .item {
+      color: #fff;
+      padding-left: 24px;
+      display: flex;
+      gap: 10px;
+      font-size: 1rem;
+      padding: 3px 0;
+
+      .item-num {
+        font-size: 1rem;
+        line-height: 1;
+        border-radius: 50%;
+        height: 28px !important;
+        width: 28px !important;
+        min-width: 28px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2px;
+        color: #fff !important;
+        box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
+          0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+        background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) !important;
+      }
+    }
+  }
 </style>

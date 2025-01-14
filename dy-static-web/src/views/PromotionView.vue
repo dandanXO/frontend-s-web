@@ -109,7 +109,11 @@
           ></div>
         </div>
 
-        <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'dy2-cs2-blast-2024'" />
+        <BlastPremierMarquee
+          v-if="
+            selectedPromo?.redirectUrl === 'dy2-cs2-blast-2024' || selectedPromo?.redirectUrl === 'bounty-blast-premier'
+          "
+        />
         <div
           class="inner"
           :class="{
@@ -133,7 +137,7 @@
               selectedPromo.promoCode === 'dy2-midautumn-spinwheel' ||
               selectedPromo.promoCode === 'dy2-s14-vote' ||
               selectedPromo.promoCode === 'dy2-elisa-gift' ||
-              selectedPromo.promoCode === 'dy2-blast-premier-treasure' || 
+              selectedPromo.promoCode === 'dy2-blast-premier-treasure' ||
               selectedPromo.redirectUrl === 'dy2-christmas-gashapon',
             duanwujie:
               selectedPromo.promoCode === 'dy-duanwujie24' || selectedPromo.redirectUrl === 'lh-blackmyth-wukong',
@@ -295,7 +299,7 @@ export default defineComponent({
           router.push("/privilege/hongbaoyu");
         }else {
           console.log(promo)
-          if (promo.redirectUrl === 'dy2-cs2-copenhagen-major-2024' || promo.redirectUrl === 'dy2-msi-promo' || promo.redirectUrl === 'dy2-quiz' || promo.redirectUrl === 'dy2-christmas-gachapon') {
+          if (promo.redirectUrl === 'dy2-cs2-copenhagen-major-2024' || promo.redirectUrl === 'dy2-dream-league-s25' || promo.redirectUrl === 'dy2-msi-promo' || promo.redirectUrl === 'dy2-quiz' || promo.redirectUrl === 'dy2-christmas-gachapon') {
             isSpecialPromo.value = true;
           } else {
             isSpecialPromo.value = false;

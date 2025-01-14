@@ -10,6 +10,18 @@ export function claimBonusItem(item) {
 export function claimBonusItem2(item) {
   return eventapi.put(`/bonus/claim/${item}`);
 }
+export function getVctBangkokInit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition/yesterday?promoCode=${promoCode}&v=${randNum}`);
+}
+export function getCompetitionLossWeeklyInit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition-loss/init?v=${randNum}`, {
+    params: {
+      promoCode
+    }
+  });
+}
 
 export function getSportMatchQuizInfo() {
   return eventapi.get(`/quiz/upcoming`, {});
@@ -166,6 +178,13 @@ export function getCheckInRecord(promoCode) {
 export function claimCheckInTreasure(promoCode, days) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.post(`/event-check-in/open?v=${randNum}`, qs.stringify({ promoCode, days }));
+}
+
+export function getBountyInit(promoCode) {
+  return eventapi.get(`/session/event-check-in/can-claim?promoCode=${promoCode}`);
+}
+export function claimBountyBonus(promoCode) {
+  return eventapi.post(`/session/event-check-in/claim?promoCode=${promoCode}`);
 }
 
 export function getLOLMsiMatchRecord() {
@@ -432,4 +451,24 @@ export function getVctcnInit(promoCode) {
 export function claimVctcnBonus(promoCode) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.post(`/session/competition-bet-platform/claimBonus?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function getBelgrade2025Init(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition-single-bet/init?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function claimBelgrade2025Bonus(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition-single-bet/claimBonus?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function claimCompetitionLossWeekly(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition-loss/claim?v=${randNum}`, qs.stringify({ promoCode }));
+}
+
+export function claimVctBangkokBonus(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}&v=${randNum}`);
 }

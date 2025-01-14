@@ -69,7 +69,7 @@
         v-model="verificationForm.code"
         label="OTP"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || $t('form.otp_placeholder')]"
+        :rules="[(val) => (val && val.length > 0) || $t('form.otp_rules_01')]"
         rounded
         outlined
         label-color="brand"
@@ -88,7 +88,8 @@
         :rules="[
           (val) => (val && val.length > 0) || $t('form.newPassword_rules_01'),
           (val) => (val.length > 5 && val.length <= 12) || $t('form.newPassword_rules_02'),
-          (val) => (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) || $t('form.strongerPasswordRecommended')
+          (val) =>
+            (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) || $t('form.strongerPasswordRecommended')
         ]"
         rounded
         outlined
@@ -332,7 +333,7 @@ const onVerifyForgotPassword = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: t('form.passwordResetCompleted'),
+            message: t("form.passwordResetCompleted"),
             icon: "report_problem"
           });
 
@@ -441,7 +442,7 @@ onMounted(() => {
     font-weight: 400;
     line-height: 25px;
     color: #ffffff67;
-    width: 80%;
+    // width: 80%;
   }
 
   .forgot-password-form-field-label {
