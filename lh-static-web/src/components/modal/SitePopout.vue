@@ -12,6 +12,7 @@
           v-for="(popoutListItem, index) in popoutList"
           @click="selectRightSlide(index)"
           :id="`left-item-${index}`"
+          :key="`left-item-${index}`"
         >
           <div class="title">{{ popoutListItem.title }}</div>
           <div class="period" v-if="popoutListItem.displayStartTime && popoutListItem.displayEndTime">
@@ -30,7 +31,7 @@
             class="swiper-wrapper"
             :direction="'vertical'"
           >
-            <swiper-slide v-for="(popoutListItem, index) in popoutList">
+            <swiper-slide v-for="(popoutListItem, i) in popoutList" :key="i">
               <div class="promo-banner-wrapper">
                 <img
                   class="promo-banner"
@@ -48,11 +49,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch, onUnmounted } from "vue";
+import { ref, onMounted, computed, watch, onUnmounted, defineEmits } from "vue";
 import { loadHomePopups } from "@/api/index/promo";
 import { useLocalStorage } from "@vueuse/core";
 import moment from "moment";
-import { useRouter } from "vue-router";
+// import { useRouter } from "vue-router";
 import { uiStore } from "@/store/ui";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -96,7 +97,7 @@ const EDITION = {
   SLOT: "SLOT"
 };
 
-const router = useRouter();
+// const router = useRouter();
 const ui = uiStore();
 
 const popoutList = ref([]);
@@ -361,6 +362,34 @@ watch(
     // .content {
     //   grid-template-columns: 335px 165px;
     // }
+  }
+}
+.dark {
+  .container {
+    background: url("../../assets/images/home/site-popout/dark-popout-bg2.png") no-repeat center center !important;
+    background-size: 100% 100% !important;
+    .header {
+      background: linear-gradient(180deg, rgba(179, 217, 255, 0.2) 0%, rgba(179, 217, 255, 0.2) 100%);
+      color: #fff;
+      font-family: YouSheBiaoTiHei;
+    }
+    .left-item {
+      background: url("../../assets/images/home/site-popout/dark-list-item-bg.png") no-repeat center center !important;
+      background-size: 100% 100% !important;
+      margin: 0px 5px;
+
+      &.active {
+        background: url("../../assets/images/home/site-popout/dark-list-item-bg-active.png") no-repeat center center !important;
+        background-size: 100% 100% !important;
+        margin: 0px;
+        .title {
+          color: #2792fd;
+        }
+        .period {
+          color: #fff;
+        }
+      }
+    }
   }
 }
 </style>
