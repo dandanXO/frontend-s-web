@@ -115,6 +115,24 @@
     </el-row>
     <el-row>
       <el-col>
+        <el-form-item :label="t('fields.startTime')" prop="startTime">
+            <el-date-picker
+            type="datetime"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            v-model="form.startTime"
+            />
+        </el-form-item>
+        <el-form-item :label="t('fields.endTime')" prop="endTime">
+            <el-date-picker
+            type="datetime"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            v-model="form.endTime"
+            />
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col>
         <el-form-item :label="t('fields.sequence')" prop="sequence">
           <el-input-number
             type="number"
@@ -534,6 +552,8 @@ const form = reactive({
   siteType: null,
   displayStartTime: null,
   displayEndTime: null,
+  startTime: null,
+  endTime: null,
 })
 
 const uiControl = reactive({
