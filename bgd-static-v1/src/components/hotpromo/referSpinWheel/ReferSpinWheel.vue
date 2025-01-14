@@ -5,7 +5,17 @@
             <div class="balance">
               <div>当前额度(BDT)</div>
               <div class="balance-info">
-                  <div class="amount">95.13</div><img class="money-icon" src="../../../assets/images/promotion/hotpromo/refer-spinwheel/money-pile-icon.png"/>
+                  <div class="amount">
+                    <svg class="gradient-amount-wrapper" preserveAspectRatio='xMinYMin' xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                          <linearGradient id="gradientAmount" gradientTransform="rotate(90)">
+                              <stop offset="0%"  stop-color="#FDEE4F"/>
+                              <stop offset="100%" stop-color="#FF953E"/>
+                          </linearGradient>
+                      </defs>
+                      <text id="test"  x="0" y="45" class="amount">95.13</text>
+                  </svg>
+                  </div><img class="money-icon" src="../../../assets/images/promotion/hotpromo/refer-spinwheel/money-pile-icon.png"/>
               </div>
           </div>
           <div class="primary-bg withdraw-btn center">
@@ -140,17 +150,7 @@
     </div>
   
     <q-dialog v-model="showPrizePopup" backdrop-filter="none">
-      <div class="prize-popup">
-        <q-btn icon="close" flat round dense v-close-popup class="q-ml-auto" />
-        <div class="prize-gold">
-          <img src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/prize-gold.png" width="80" />
-          <div>{{ $t("hotPromo.referWheel.congratulations") }}</div>
-        </div>
-  
-        <div class="prize-amount">{{ store.currency.label }} {{ prizePopupBonusAmt }}</div>
-  
-        <q-btn no-caps unelevated class="btn-primary" @click="showPrizePopup = false">{{ $t("btn.confirm") }}</q-btn>
-      </div>
+      <PrizePopup />
     </q-dialog>
   </template>
   <script setup>
@@ -160,6 +160,7 @@
   import moment from "moment";
   import { useI18n } from "vue-i18n";
   import { userStore } from "src/stores";
+import PrizePopup from "./PrizePopup.vue";
   
   const { t } = useI18n();
   const $q = useQuasar();
@@ -179,7 +180,7 @@
   
   const spinButtonDisable = ref(false);
   const degreesToStopAt = ref([]);
-  const showPrizePopup = ref(false);
+  const showPrizePopup = ref(true);
   const prizePopupBonusAmt = ref();
   const remainingDraws = ref(0);
   const winnersList = ref([]);
@@ -278,24 +279,24 @@
   
   const spinWheel = () => {
     //FOr TesTING START
-    // const res = {
-    //   data: {
-    //     bonusAmount: 999999,
-    //     availableSpin: 0
-    //   }
-    // }
-    // var bonusIndex = res.data.bonusAmount;
-    // if (res.data.type === "CONSOLATION") {
-    //   bonusIndex = -1;
-    // }
-    // const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
+    const res = {
+      data: {
+        bonusAmount: 999999,
+        availableSpin: 0
+      }
+    }
+    var bonusIndex = res.data.bonusAmount;
+    if (res.data.type === "CONSOLATION") {
+      bonusIndex = -1;
+    }
+    const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
     
-    // spin(prizeIndex, () => {
-    //   showPrizePopup.value = true;
-    //   prizePopupBonusAmt.value = res.data.bonusAmount;
-    //   remainingDraws.value = res.data.availableSpin;
-    // });
-    // return;
+    spin(prizeIndex, () => {
+      showPrizePopup.value = true;
+      prizePopupBonusAmt.value = res.data.bonusAmount;
+      remainingDraws.value = res.data.availableSpin;
+    });
+    return;
     //FOr TesTING END
   
     if (spinButtonDisable.value === true) {
@@ -418,15 +419,23 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            
-            .amount {
-                color: #FE9D32;
-                font-size: 35px;
+
+            .gradient-amount-wrapper {
+              max-height: 55px;
+              max-width: 130px;
+
+              .amount {
+                font-size: 50px;
+                fill:url(#gradientAmount);
+                text-shadow: 3px 3px #A00022;
+                font-family: 'Poppins';
+                font-weight: 500;
+              }
+
             }
 
             .money-icon {
-              width: 42px;
-              height: 36px;
+              width: 55px;
             }
           }
         }
@@ -645,7 +654,7 @@
     margin: 0 auto;
     background: url(../../../assets/images/promotion/hotpromo/refer-spinwheel/spin-wheel-frame.png) no-repeat center
       center;
-    background-size: 115%;
+    background-size: 100%;
   }
   
   .wheel-frame {
@@ -671,10 +680,10 @@
   .spin-wheel {
     position: absolute;
     z-index: 2;
-    top: 0px;
-    left: 0px;
-    width: 330px;
-    height: 330px;
+    top: 35px;
+    left: 35px;
+    width: 260px;
+    height: 260px;
   }
   
   .wheel-bg {

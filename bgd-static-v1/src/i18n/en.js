@@ -643,7 +643,9 @@ export default {
     },
     referWheel: {
       remainingDrawTimes: "Remaining times",
-      congratulations: "Congratulations"
+      congratulations: "Congratulations",
+      withdrawSuccessfully: "Withdraw successfully",
+      recharge: "Recharge"
     },
     signIn7Days: {
       continuousSignIn: "Continuous sign-in:",
