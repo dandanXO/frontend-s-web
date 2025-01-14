@@ -388,9 +388,6 @@ watch(
         .period {
           color: #fff;
         }
-        // .title {
-        //   color: #2792fd;
-        // }
       }
     }
   }
