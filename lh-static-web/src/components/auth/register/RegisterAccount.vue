@@ -25,7 +25,7 @@
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
       <el-form-item label="用户名" prop="loginName">
-        <el-input class="wTip" v-model="regForm.loginName" placeholder="请输入6-11位非汉字字符" clearable>
+        <el-input class="wTip" v-model="regForm.loginName" placeholder="6~12位包含字母和数字" clearable>
           <template #append></template>
         </el-input>
       </el-form-item>
@@ -276,8 +276,8 @@ const regRules = {
     },
     {
       min: 6,
-      max: 11,
-      message: "长度应为 6 至 11",
+      max: 12,
+      message: "长度应为 6 至 12",
       trigger: "blur"
     },
     {
