@@ -641,6 +641,9 @@ export default {
       remainingDrawTimes: "Remaining draw times",
       congratulations: "Congratulations"
     },
+    referWheel: {
+      remainingDrawTimes: "Remaining times",
+    },
     signIn7Days: {
       continuousSignIn: "Continuous sign-in:",
       expired: "Expired",
