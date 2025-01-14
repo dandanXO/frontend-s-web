@@ -733,7 +733,13 @@ export function claimVctBangkokBonus(promoCode) {
 export function getCompetitionLossWeeklyInit(promoCode) {
   return server.EVENT.get(`/session/competition-loss-weekly/init?promoCode=${promoCode}`);
 }
-
 export function claimCompetitionLossWeekly(promoCode) {
   return server.EVENT.post(`/session/competition-loss-weekly/claim?promoCode=${promoCode}`);
+}
+
+export function getPGLOnFireBuenosAires2025(promoCode) {
+  return server.EVENT.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimPGLOnFireBuenosAires2025(promoCode) {
+  return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
 }
