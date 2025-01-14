@@ -142,9 +142,7 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("init", "3658633674357920");
       fbq("track", "PageView");
       user.isAffiliateA = true;
-    } else if (
-      isOperaPixelUrl()
-    ) {
+    } else if (isOperaPixelUrl()) {
       otag("init", "adv10336256983680");
     } else if (window.location.href.indexOf("tf68688.com") > -1) {
       fbq("init", "1123673335564806");
@@ -156,6 +154,10 @@ export default route(function (/* { store, ssrContext } */) {
       user.isAffiliateA = true;
     } else if (window.location.href.indexOf("q7yxpdxwxk.com") > -1) {
       fbq("init", "1862869640792398");
+      fbq("track", "PageView");
+      user.isAffiliateA = true;
+    } else if (window.location.href.indexOf("t145f338.com") > -1) {
+      fbq("init", "1672168757009623");
       fbq("track", "PageView");
       user.isAffiliateA = true;
     }
