@@ -54,6 +54,10 @@
     <DreamLeagueS25 v-else-if="list.redirectUrl === 'lh1-dream-league-s25'" :promo-code="list.promoCode" />
     <Dota2BlastSlam2025 v-else-if="list.redirectUrl === 'lh1-blast-slam-2025'" :promo-code="list.promoCode" />
     <DarkModePromo v-else-if="list.redirectUrl === 'lh1-dark-mode'" />
+    <PGLOnFireBuenosAires2025
+      v-else-if="list.redirectUrl === 'lh1-pgl-on-fire-buenos-aires-2025'"
+      :promo-code="list.promoCode"
+    />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -84,6 +88,7 @@ import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
 import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
 import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue";
 import VctBangkok from "components/hotpromo/vct-bangkok/VctBangkok.vue";
+import PGLOnFireBuenosAires2025 from "./hotpromo/pgl-on-fire-buenos-aires-2025/PGLOnFireBuenosAires2025.vue";
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
 const DragonCardPromo = defineAsyncComponent(() => import("../components/hotpromo/dragoncard/dragonCardPromo.vue"));
 const FeedbackAwardPromo = defineAsyncComponent(() =>
@@ -183,7 +188,8 @@ export default defineComponent({
     lh1Vctcn,
     DreamLeagueS25,
     Dota2BlastSlam2025,
-    DarkModePromo
+    DarkModePromo,
+    PGLOnFireBuenosAires2025
   },
   props: {
     list: {
