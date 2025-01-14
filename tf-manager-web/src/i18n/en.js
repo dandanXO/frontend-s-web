@@ -2226,7 +2226,7 @@ export default {
     priviRewardSetup: 'Reward Setup',
     priviVipSetup: 'Vip Setup',
     priviPaymentSetup: 'Payment Setup',
-    priviOther: 'Other'
+    priviOther: 'Other',
     betType_1: "Handicap",
     betType_2: "Over/Under",
     betType_3: "1x2",
