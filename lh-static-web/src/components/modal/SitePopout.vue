@@ -5,12 +5,13 @@
       <span>热门活动</span>
     </div>
     <div class="content">
-      <div class="left">
+      <div class="left" id="right-items">
         <div
           class="left-item"
           :class="index === selectedItemIndex ? 'active' : ''"
           v-for="(popoutListItem, index) in popoutList"
-          @click="selectedItemIndex = index"
+          @click="selectRightSlide(index)"
+          :id="`left-item-${index}`"
         >
           <div class="title">{{ popoutListItem.title }}</div>
           <div class="period" v-if="popoutListItem.displayStartTime && popoutListItem.displayEndTime">
@@ -76,7 +77,18 @@ const nextSlide = () => {
     }
   })();
 
+  document.getElementById(`left-item-${newIndex}`).scrollIntoView({
+    behavior: "smooth", // 平滑滚动
+    block: "center", // 元素滚动到视口的位置，可选值：'start', 'center', 'end', 'nearest'
+    inline: "nearest" // 水平滚动位置
+  });
+
   selectedItemIndex.value = newIndex;
+};
+
+const selectRightSlide = (index) => {
+  selectedItemIndex.value = index;
+  resetInterval();
 };
 
 const EDITION = {
@@ -113,14 +125,23 @@ onMounted(() => {
         selectedItemIndex.value = 0;
 
         if (!swiperInterval.value) {
-          swiperInterval.value = setInterval(() => {
-            nextSlide();
-          }, 3000);
+          startInterval();
         }
       }
     }
   });
 });
+
+const startInterval = () => {
+  swiperInterval.value = setInterval(() => {
+    nextSlide();
+  }, 3000);
+};
+
+const resetInterval = () => {
+  clearInterval(swiperInterval.value); // 清除当前的 interval
+  startInterval(); // 重新开始一个新的 interval
+};
 
 onUnmounted(() => {
   clearInterval(swiperInterval.value);
@@ -216,6 +237,7 @@ watch(
         justify-content: center;
         padding: 6%;
         font-weight: 700;
+        min-height: 68px;
         background: url("../../assets/images/home/site-popout/list-item-bg.png") no-repeat center center;
         background-size: 100% 100%;
         // aspect-ratio: 300 / 100;
