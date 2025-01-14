@@ -81,6 +81,22 @@
         <div class="qr primary-bg">Scan QR code<img class="icon qr-icon" src="../../../assets/images/promotion/hotpromo/refer-spinwheel/qr-icon.svg"/></div>
       </div>
 
+      <div class="list-section">
+        <div class="list-wrapper">
+          <div class="list">
+            <div class="list-row" v-for="index in 10" :key="index">
+              <div class="list-item cyan">9**476543878 {{ index }}</div>
+              <div class="list-item">nscfd87348nr3</div>
+              <div class="list-item">
+                <div class="center points"><span class="highlight">+2</span><img class="wheel-icon" src="../../../assets/images/promotion/hotpromo/refer-spinwheel/wheel-icon.svg" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="withdraw-order-btn btn-primary btn-primary__full center">Withdraw Orders</div>
+      </div>
+
 
       <div class="terms-conditions">
         <img src="../../../assets/images/promotion/hotpromo/refer-spinwheel/terms-conditions-title.svg" />
@@ -465,6 +481,52 @@
             width: 24px;
           }
         }
+      }
+    }
+
+    .list-section {
+      background: #70BC621A;
+      border: 1px solid #575D53;
+      border-radius: 10px;
+      position: relative;
+      margin-bottom: 50px;
+
+      .list-wrapper {
+        max-height: 120px;
+        overflow-y: scroll;
+        padding-bottom: 20px;
+
+        .list {
+          display: table;
+          width: 100%;
+          padding: 10px 20px;
+
+          .list-row {
+            display: table-row;
+
+            .list-item {
+              display: table-cell;
+
+              .cyan {
+                color: #00FFC3;
+              }
+
+              .points {
+                gap: 5px;
+                font-weight: 700;
+              }
+            }
+          }
+
+          .wheel-icon {
+            width: 22px;
+          }
+        }
+      }
+
+      .withdraw-order-btn {
+        position: absolute;
+        bottom: -16%;
       }
     }
 
