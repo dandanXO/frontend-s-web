@@ -506,4 +506,30 @@ onMounted(() => {
     font-weight: 600;
   }
 }
+
+.body--dark {
+  .claim-title-icon {
+    background: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/section-title-img.png") no-repeat
+      center center !important;
+    background-size: 100% 100% !important;
+  }
+
+  .claim-coin-icon {
+    background: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon1.png") no-repeat center
+      center !important;
+    background-size: 100% 100% !important;
+  }
+
+  .claim-gift-icon {
+    background: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon2.png") no-repeat center
+      center !important;
+    background-size: 100% 100% !important;
+  }
+
+  .claim-stacked-coins-icon {
+    background: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon3.png") no-repeat center
+      center !important;
+    background-size: 100% 100% !important;
+  }
+}
 </style>
