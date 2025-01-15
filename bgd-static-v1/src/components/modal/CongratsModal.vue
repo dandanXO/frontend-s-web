@@ -4,7 +4,7 @@
     <q-btn icon="close" round dense v-close-popup class="congrats-close" />
     <div class="congrats-header"><img src="../../assets/images/index/modal/congrats-header.png" /></div>
     <div class="congrats-coupons"><img src="../../assets/images/index/modal/congrats-money.png" /></div>
-    <div class="congrats-title">{{ $t("home.popup.getFreeLuckyDraw") }}</div>
+    <div class="congrats-title">{{ $t("home.popup.getFreeCashLuckyDraw") }}</div>
     <div class="congrats-highlight">{{ $t("home.popup.downloadAppLoginAcc") }}</div>
 
     <div class="congrats-button">
