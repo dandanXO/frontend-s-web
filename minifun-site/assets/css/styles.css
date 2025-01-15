@@ -1326,6 +1326,14 @@ footer .newsletter-container .input-newsletter::placeholder {
     font-size: 45px;
     justify-content: flex-end;
 }
+.sec-texas-device .vv-txt {
+    display: flex;
+    font-size: 45px;
+    justify-content: flex-start;
+}
+.download-google{
+    width: 150px;
+}
 @media (max-width: 992px) {
     .sec-texas-voice .vv-txt {
         font-size: 24px;
