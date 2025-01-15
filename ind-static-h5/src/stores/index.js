@@ -50,7 +50,8 @@ export const userStore = defineStore("userStore", {
       multipleBalance: [],
       paytypeWithPrivilege: "",
       extraPrivilegeId: "",
-      ftd: true
+      ftd: true,
+      isFbPixel: false
     };
   },
   actions: {
