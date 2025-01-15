@@ -384,7 +384,7 @@ export default defineComponent({
               });
             }
 
-            
+
           }
         })
         .catch((e) => {
@@ -726,7 +726,6 @@ export default defineComponent({
               height: 42px;
               gap: 60px;
               padding: 20px;
-              font-family: "PingFang SC";
 
               .label-type {
                 background: linear-gradient(89.92deg, #454bc2 0.06%, #b1a5f0 106.9%);
@@ -956,35 +955,14 @@ export default defineComponent({
           padding: 20px;
           color: #7a8eb9;
           font-size: 20px;
+          overflow: auto;
+
           ol {
             li {
               margin: 20px 0;
             }
           }
-          // background: #201f29;
-          // background-repeat: no-repeat;
-          // background-position: 95% 90%;
-          // padding: 20px;
-          // border-radius: 10px;
-          overflow: auto;
-          // &.welcome {
-          //   background-image: url("../../assets/images/promotion/hotpromo/common/welcome.png");
-          // }
-          // &.sport {
-          //   background-image: url("../../assets/images/promotion/hotpromo/common/sport.png");
-          // }
-          // &.esport {
-          //   background-image: url("../../assets/images/promotion/hotpromo/common/esport.png");
-          // }
-          // &.fish {
-          //   background-image: url("../../assets/images/promotion/hotpromo/common/fish.png");
-          // }
-          // &.livecasino {
-          //   background-image: url("../../assets/images/promotion/hotpromo/common/livecasino.png");
-          // }
-          // &.slot {
-          //   background-image: url("../../assets/images/promotion/hotpromo/common/slot.png");
-          // }
+
           &.olympicCheckin {
             border: 1px solid #acd4f6;
             border-radius: 10px;
@@ -1112,7 +1090,6 @@ export default defineComponent({
               background: linear-gradient(90deg, #2a3755 0%, #1a2338 100%);
               box-shadow: none;
               border-radius: 0px;
-              font-family: "PingFang SC";
 
               &.header {
                 background: linear-gradient(180deg, #18437c 0%, #182537 100%);
