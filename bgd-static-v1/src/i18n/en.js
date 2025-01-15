@@ -647,7 +647,9 @@ export default {
       withdrawSuccessfully: "Withdraw successfully",
       recharge: "Recharge",
       shareSocialText: "Invite friends to help withdraw coins",
-      save: "Save"
+      save: "Save",
+      currentAmount: "Current Amount",
+      withdrawalStillTakes: "Withdrawal still takes"
     },
     signIn7Days: {
       continuousSignIn: "Continuous sign-in:",

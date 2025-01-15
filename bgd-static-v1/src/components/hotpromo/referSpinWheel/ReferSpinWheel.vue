@@ -3,7 +3,7 @@
     <div class="top">
       <div class="top-wrapper">
         <div class="balance">
-          <div>当前额度(BDT)</div>
+          <div class="title">{{ $t("hotPromo.referWheel.currentAmount") }} ({{ store.currency.label }})</div>
           <div class="balance-info">
             <div class="amount">
               <svg class="gradient-amount-wrapper" preserveAspectRatio='xMinYMin' xmlns="http://www.w3.org/2000/svg">
@@ -27,26 +27,26 @@
         <div class="progress-section">
           <div class="progress-bar">
             <div class="progress-bar-full">
-              <div class="progress-bar-current">
+              <div class="progress-bar-current" :style="`width:${achievementProgress}%`">
               </div>
 
               <div class="achieved-bar">
                 <div class="achieve-item" v-for="index in 5" :key="index">
-                  <img class="achieved-icon"
+                  <img class="achieved-icon" :class="achievementProgress >= (index - 1) * 25 ? 'active' : ''"
                     src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/achieved-icon.svg" />
-                  <span>{{ (index - 1) * 25}}%</span>
+                  <span class="achieved-label">{{ (index - 1) * 25}}%</span>
                 </div>
               </div>
             </div>
           </div>
           <div class="remaining">
-            <span class="highlight">85/</span><span class="label">100</span>
+            <span class="highlight">{{accumulatedBonus}}/</span><span class="label">300</span>
           </div>
         </div>
       </div>
       <div class="remaining">
-        <div>Withdrawal still takes</div>
-        <div class="highlight">BDT 222.000</div>
+        <div>{{ $t('hotPromo.referWheel.withdrawalStillTakes') }}</div>
+        <div class="highlight">{{ store.currency.label }} {{ accumulatedBonus }}</div>
       </div>
     </div>
     <div class="spin-wheel-container">
@@ -201,6 +201,10 @@
     return {};
   });
 
+  const achievementProgress = computed(() => {
+    return accumulatedBonus.value / 300 * 100;
+  });
+
   const { t } = useI18n();
   const $q = useQuasar();
   const store = userStore();
@@ -228,6 +232,7 @@
   const winnersList = ref([]);
   const endDate = ref();
   const remainingTimeTimer = ref();
+  const accumulatedBonus = ref();
 
   let finalDegree = 0;
   let speed = 1;
@@ -384,6 +389,7 @@
       if (res.code == 0) {
         remainingDraws.value = res.data.availableSpin;
         endDate.value = res.data.endDate;
+        accumulatedBonus.value = res.data.accumulatedBonus;
 
         if(!remainingTimeTimer.value) {
           setInterval(() => {
@@ -482,6 +488,10 @@
         .balance {
           display: flex;
           flex-direction: column;
+          
+          .title {
+            font-size: 16px;
+          }
 
           .balance-info {
             display: flex;
@@ -543,7 +553,6 @@
               height: 10px;
               border-radius: 35px;
               background: linear-gradient(90deg, #24EE89 0%, #9FE871 100%);
-              width: 80px;
               border-radius: 35px;
             }
 
@@ -565,6 +574,15 @@
                 .achieved-icon {
                   width: 20px;
                   margin-bottom: 0;
+                  filter: grayscale(1);
+
+                  &.active {
+                    filter: grayscale(0);
+                  }
+                }
+
+                .achieved-label {
+                  letter-spacing: -1px;
                 }
               }
             }
