@@ -24,3 +24,7 @@ export const cancelAllRollover = (rollover) => {
 export const getRolloverBets = (siteId, memberId, rolloverId) => {
   return https().request(`/member/${memberId}/rollover-bet`, Method.GET, { siteId: siteId, rolloverId: rolloverId }, ContentType.form)
 }
+
+export const addRolloverRecord = (rollover) => {
+  return https().request(`/rolloverRecord/add`, Method.POST, rollover, ContentType.form)
+}

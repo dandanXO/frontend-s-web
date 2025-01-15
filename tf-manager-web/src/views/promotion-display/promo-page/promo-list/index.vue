@@ -128,18 +128,18 @@
             v-if="hasPermission(['sys:promo:page:update:state'])"
             @change="changePromoPagesState(scope.row.id, scope.row.status)"
           >
-            <el-radio-button label="0">OPEN</el-radio-button>
-            <el-radio-button label="1">CLOSE</el-radio-button>
-            <el-radio-button label="2">TEST</el-radio-button>
+            <el-radio-button label="0">{{ t('common.status.OPEN') }}</el-radio-button>
+            <el-radio-button label="1">{{ t('common.status.CLOSE') }}</el-radio-button>
+            <el-radio-button label="2">{{ t('common.status.TEST') }}</el-radio-button>
           </el-radio-group>
           <div v-else>
-            <div v-if="scope.row.status === 0" style="color: green;">OPEN</div>
-            <div v-if="scope.row.status === 1" style="color:red">CLOSED</div>
-            <div v-if="scope.row.status === 2">TEST</div>
+            <div v-if="scope.row.status === 0" style="color: green;">{{ t('common.status.OPEN') }}</div>
+            <div v-if="scope.row.status === 1" style="color:red">{{ t('common.status.CLOSE') }}</div>
+            <div v-if="scope.row.status === 2">{{ t('common.status.TEST') }}</div>
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="showFastAccess" :label="t('fields.showFastAccess')" min-width="200">
+      <!-- <el-table-column prop="showFastAccess" :label="t('fields.showFastAccess')" min-width="200">
         <template #default="scope">
           <el-radio-group
             v-model="scope.row.showFastAccess"
@@ -150,6 +150,28 @@
             <el-radio-button label="1">OPEN</el-radio-button>
             <el-radio-button label="0">CLOSE</el-radio-button>
           </el-radio-group>
+          <div v-else>
+            <div v-if="scope.row.showFastAccess === 1" style="color: green;">OPEN</div>
+            <div v-if="scope.row.showFastAccess === 0" style="color:red">CLOSED</div>
+          </div>
+        </template>
+      </el-table-column> -->
+      <el-table-column
+        prop="showFastAccess"
+        :label="t('fields.showFastAccess')"
+        min-width="100"
+      >
+        <template #default="scope">
+          <div v-if="hasPermission(['sys:promp:page:update:state'])">
+            <el-switch
+              v-model="scope.row.showFastAccess"
+              :active-value="1"
+              :inactive-value="0"
+              active-color="#409EFF"
+              inactive-color="#F56C6C"
+              @change="changeFastAccessState(scope.row.id, scope.row.showFastAccess)"
+            />
+          </div>
           <div v-else>
             <div v-if="scope.row.showFastAccess === 1" style="color: green;">OPEN</div>
             <div v-if="scope.row.showFastAccess === 0" style="color:red">CLOSED</div>

@@ -69,7 +69,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <div class="account-tip" style="margin-top: -15px;">
+            <div class="account-tip" style="margin-top: -15px">
               {{ $t("deposit.minAmt") }}: {{ calculatedMinDeposit ? calculatedMinDeposit.toLocaleString() : 0 }}
               {{ isUSDT ? "USDT" : store.currency.label }}
               <br />
@@ -91,7 +91,7 @@
           >
             <span style="color: #17cd27">1.00 USDT ≈ {{ activeMethod.currencyRate }} {{ store.currency.label }}</span>
           </el-form-item>
-          
+
           <el-form-item v-if="isUSDT && activeMethod.currencyRate" class="helptxt" :label="$t('deposit.estimatedRate')">
             <span style="color: #17cd27">
               {{
@@ -113,7 +113,7 @@
                 @selected="selectedBank"
               ></BankComponent>
             </el-form-item>
-            <div class="account-tip" style="margin-top: -15px;">
+            <div class="account-tip" style="margin-top: -15px">
               {{ $t("deposit.napas") }}
             </div>
             <div class="btn-confirm">
@@ -200,6 +200,7 @@ import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 import { doIt } from "@/utils/action";
 import { useI18n } from "vue-i18n";
+import { isOperaPixelUrl } from "@/utils/utils";
 
 const { t } = useI18n();
 const router = useRouter();
@@ -535,12 +536,7 @@ function doDeposit(data) {
   postDeposit(data)
     .then((d) => {
       if (d.code === 0) {
-        if (
-          window.location.href.indexOf("5svn88.com") > -1 ||
-          window.location.href.indexOf("tfpromo88.com") > -1 ||
-          window.location.href.indexOf("tf88bof.com") > -1 ||
-          window.location.href.indexOf("tslotf88.com") > -1 
-        ) {
+        if (isOperaPixelUrl()) {
           otag("event", "deposit");
         }
 
@@ -847,7 +843,7 @@ onMounted(() => {
   :deep(.el-form-item) {
     display: flex;
     // flex-direction: column;
-    align-items:center;
+    align-items: center;
   }
   :deep(.el-form-item__label) {
     // font-family: Poppins;

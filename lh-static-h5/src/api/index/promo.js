@@ -578,8 +578,14 @@ export function getCompetitionLossWeeklyInit(promoCode) {
     }
   });
 }
-
 export function claimCompetitionLossWeekly(promoCode) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.post(`/session/competition-loss/claim?v=${randNum}`, qs.stringify({ promoCode }));
+}
+
+export function getPGLOnFireBuenosAires2025(promoCode) {
+  return eventapi.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimPGLOnFireBuenosAires2025(promoCode) {
+  return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
 }

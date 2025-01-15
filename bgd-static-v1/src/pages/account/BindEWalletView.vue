@@ -398,7 +398,7 @@ const loadBankCards = () => {
         .get("/session/withdraw/card")
         .then((res) => {
           if (res.code === 0) {
-            const items = res.data.reverse();
+            const items = res.data.sort((a, b) => a.sequence - b.sequence);
 
             for (let i = 0, l = items.length; i < l; i++) {
               const data = items[i];

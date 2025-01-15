@@ -640,7 +640,7 @@
       <el-table-column prop="teamTwoName" :label="t('fields.teamTwo')" />
       <el-table-column prop="sequence" :label="t('fields.sequence')" />
       <!-- <el-table-column prop="status" :label="t('fields.status')" /> -->
-      <el-table-column prop="status" :label="t('fields.status')" min-width="100">
+      <el-table-column prop="status" :label="t('fields.status')" min-width="130">
         <template #default="scope">
           <el-radio-group
             v-model="scope.row.status"
