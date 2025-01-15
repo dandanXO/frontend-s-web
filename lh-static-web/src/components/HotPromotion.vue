@@ -106,6 +106,8 @@
     />
     <BountyBlastPremier v-if="list.redirectUrl === 'bounty-blast-premier'" :promo-code="list.promoCode" />
     <VctcnMatchPromo v-if="list.redirectUrl === 'lh1-vctcn'" :promo-code="list.promoCode" />
+    
+    <IemKatowice2025 v-if="list.redirectUrl === 'lh1-iem-katowice-2025'" :promo-code="list.promoCode" />
     <HongBaoYu2025 v-if="list.redirectUrl === 'hongbaoyu-2025'" :promo-code="list.promoCode" />
     <Monthly20HongBaoYu v-if="list.redirectUrl === 'lh1-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
     <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
@@ -220,6 +222,7 @@ import ValorantChampionTour2024 from "@/components/hotpromo/valorant-champion-to
 import ChristmasGachapon from "@/components/hotpromo/christmas-gachapon/ChristmasGachapon.vue";
 import BountyBlastPremier from "./hotpromo/bounty-blast/BountyBlastPremier.vue";
 import VctcnMatchPromo from "./hotpromo/vctcn-match-promo/VctcnMatchPromo.vue";
+import IemKatowice2025 from "./hotpromo/lh1-iem-katowice-2025/Iem-katowice-2025.vue";
 import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
 import Belgrade2025Promo from "./hotpromo/belgrade-2025-promo/Belgrade2025Promo.vue";
 import VctBangkok from "./hotpromo/vct-bangkok/VctBangkok.vue";
@@ -235,6 +238,7 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    IemKatowice2025,
     SubmitClaimPromo,
     newFootballFight,
     Olympic24Match,
