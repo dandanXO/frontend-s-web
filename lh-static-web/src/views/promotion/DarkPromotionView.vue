@@ -28,7 +28,7 @@
                   class="active-arrow"
                   :src="require('../../assets/promo/promo-type-active-arrow.png')"
                 />
-                <span style="width: 100px" class="label">{{ p.label }}</span>
+                <span style="width: 100px" class="label">{{ p.label.zh }}</span>
               </div>
             </div>
           </div>
@@ -207,7 +207,7 @@ import { userStore } from "@/store";
 import { ElMessageBox } from "element-plus";
 import moment from "moment";
 import { useDark } from "@vueuse/core";
-
+import { loadPromoTypes } from "@/api/index/promo.js";
 import HotPromotion from "@/components/HotPromotion";
 import { useLocalStorage } from "@vueuse/core";
 import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
@@ -327,43 +327,64 @@ export default defineComponent({
       }
     };
 
-    const loadAll = () => {
+    const loadAll = async () => {
+      await loadPromoTypes().then((res) => {
+        if (res.length > 0) {
+          promoTypes.value = [];
+          res.forEach(element => {
+            const obj = {
+              code: element.value,
+              img: 'all',
+              iconUrl: imgURL + element.iconUrl,
+              label: JSON.parse(element.name)
+            };
+            promoTypes.value.push(obj);
+          });
+          switchPromoType(promoTypes.value[0].code)
+        } else {
+          console.warn('No promo types loaded, using default promo types.');
+        }
+      });
       loadPromo()
         .then((res) => {
           if (res.code === 0) {
-            const processedData = res.data.filter(promo => !['lh1-dark-mode'].includes(promo.redirectUrl)).map(promo => ({
-              ...promo,
-              displayDesktopBannerUrl: promo.desktopBannerUrlDark ?? promo.desktopBannerUrl,
-              displayDesktopImgBackgroundUrl: promo.desktopImgBackgroundUrlDark ?? promo.desktopImgBackgroundUrl,
-              displayDesktopImgUrl: promo.desktopImgUrlDark ?? promo.desktopImgUrl,
-              displayMobileBannerUrl: promo.mobileBannerUrlDark ?? promo.mobileBannerUrl,
-              displayMobileImgBackgroundUrl: promo.mobileImgBackgroundUrlDark ?? promo.mobileImgBackgroundUrl,
-              displayMobileImgUrl: promo.mobileImgUrlDark ?? promo.mobileImgUrl,
-            }))
-
             if (promoState.promoList.length === 0) {
-              promoState.promoList.push(...processedData);
+              promoState.promoList.push(...res.data);
+              const processedData = res.data.filter(promo => !['lh1-dark-mode'].includes(promo.redirectUrl)).map(promo => ({
+                ...promo,
+                displayDesktopBannerUrl: promo.desktopBannerUrlDark ?? promo.desktopBannerUrl,
+                displayDesktopImgBackgroundUrl: promo.desktopImgBackgroundUrlDark ?? promo.desktopImgBackgroundUrl,
+                displayDesktopImgUrl: promo.desktopImgUrlDark ?? promo.desktopImgUrl,
+                displayMobileBannerUrl: promo.mobileBannerUrlDark ?? promo.mobileBannerUrl,
+                displayMobileImgBackgroundUrl: promo.mobileImgBackgroundUrlDark ?? promo.mobileImgBackgroundUrl,
+                displayMobileImgUrl: promo.mobileImgUrlDark ?? promo.mobileImgUrl,
+              }))
+              if (promoState.promoList.length === 0) {
+                promoState.promoList.push(...processedData);
+                promoState.promoList.push(...res.data);
+              }
+              promoState.promoList.forEach((element) => {
+                // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+                //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+                // } else {
+                if (route.query.name === "lh1-invite-2" || route.query.name === "lh1-invite-3") {
+                  if (element.redirectUrl === "lh1-invite") {
+                    showPromoDetails(element);
+                  }
+                }
+                if (route.query.name === "lh1-football-fight-2" || route.query.name === "lh1-football-fight-3") {
+                  if (element.redirectUrl === "lh1-football-fight") {
+                    showPromoDetails(element);
+                  }
+                }
+                if (element.redirectUrl === route.query.name) {
+                  showPromoDetails(element);
+                }
+                // }
+              });
             }
 
-            processedData.forEach((element) => {
-              // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-              //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-              // } else {
-              if (route.query.name === "lh1-invite-2" || route.query.name === "lh1-invite-3") {
-                if (element.redirectUrl === "lh1-invite") {
-                  showPromoDetails(element);
-                }
-              }
-              if (route.query.name === "lh1-football-fight-2" || route.query.name === "lh1-football-fight-3") {
-                if (element.redirectUrl === "lh1-football-fight") {
-                  showPromoDetails(element);
-                }
-              }
-              if (element.redirectUrl === route.query.name) {
-                showPromoDetails(element);
-              }
-              // }
-            });
+            
           }
         })
         .catch((e) => {
