@@ -743,3 +743,10 @@ export function getPGLOnFireBuenosAires2025(promoCode) {
 export function claimPGLOnFireBuenosAires2025(promoCode) {
   return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
 }
+
+export function getSkyesportsSouvenir2025Bonus(promoCode) {
+  return server.EVENT.get(`/session/competition-payout-deposit/init?promoCode=${promoCode}`);
+}
+export function claimSkyesportsSouvenir2025Bonus(promoCode) {
+  return server.EVENT.post(`/session/competition-payout-deposit/claimBonus?promoCode=${promoCode}`);
+}
