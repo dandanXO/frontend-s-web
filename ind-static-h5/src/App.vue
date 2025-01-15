@@ -137,6 +137,7 @@ export default defineComponent({
           console.log(res);
           const { affiliateCode, facebookId, pushId } = res.data;
           sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+          sessionStorage.setItem("PUSH_ID", pushId);
           console.log("Init FB");
           fbq("init", facebookId);
           fbq("track", "PageView");
@@ -351,8 +352,10 @@ export default defineComponent({
 
         console.log("TSET This 2");
         // Push initialization
+        let pushIdValue = sessionStorage.getItem("PUSH_ID");
         MTpushInterface.init({
-          appkey: "b5889158edb4a1de20f79367",
+          // get from api
+          appkey: pushIdValue,
           user_str: randomUid(),
           fail(err) {
             console.log("Failed to create an online push", err);
