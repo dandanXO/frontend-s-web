@@ -104,6 +104,14 @@
         {{ tfHomeTeamName }} vs {{ tfAwayTeamName }}
       </template>
 
+      <el-tabs v-model="selectedOddsType">
+        <el-tab-pane :label="t('fields.oddsType_1')" name="1" />
+        <el-tab-pane :label="t('fields.oddsType_2')" name="2" />
+        <el-tab-pane :label="t('fields.oddsType_3')" name="3" />
+        <el-tab-pane :label="t('fields.oddsType_4')" name="4" />
+        <el-tab-pane :label="t('fields.oddsType_6')" name="6" />
+      </el-tabs>
+
       <el-tabs v-model="activeTab">
         <el-tab-pane
           v-for="(marketLines, betType) in groupedMarketLines"
@@ -129,10 +137,14 @@
                   :key="selection.SelectionId"
                 >
                   <td class="selection-name">
-                    {{ translateSelectionName(selection.SelectionName, selection.Specifiers) }}
-                    {{ selection.Handicap || '' }}
+                    {{ formatHandicap(translateSelectionName(selection.SelectionName, selection.Specifiers), selection.Handicap) }}
                   </td>
-                  <td class="selection-odds">{{ selection.OddsList[0]?.OddsValues.A }}</td>
+                  <td class="selection-odds">
+                    {{
+                      selection.OddsList.find(odds => odds.OddsType === Number(selectedOddsType))?.OddsValues.A ||
+                        t('fields.noData')
+                    }}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -141,7 +153,12 @@
       </el-tabs>
 
       <div class="dialog-footer">
-        <el-button @click="uiControl.dialogVisible = false">关闭</el-button>
+        <el-button @click="refreshData" type="primary" icon="el-icon-refresh">
+          {{ t('fields.refresh') }}
+        </el-button>
+        <el-button @click="uiControl.dialogVisible = false">
+          {{ t('fields.close') }}
+        </el-button>
       </div>
     </el-dialog>
     <el-table :data="page.records" v-loading="page.loading" ref="table" row-key="id" size="small" highlight-current-row>
@@ -171,14 +188,15 @@
 <script setup>
 
 import { computed, onMounted, reactive, ref } from "vue";
-import { getSportTypes } from "../../../api/sport";
+import { getSportTypes } from "@/api/sport";
 import { useI18n } from "vue-i18n";
 import { useStore } from "@/store";
 import { getSiteTimeZoneById } from "@/api/site";
 import { getShortcuts, convertDateToStart, convertDateToEnd } from '@/utils/datetime';
-import { getEvents } from "../../../api/sport-event";
+import { getEvents } from "@/api/sport-event";
 
 const { t } = useI18n();
+const selectedOddsType = ref(1);
 const shortcuts = getShortcuts(t);
 const tfMarketLines = ref([]);
 const uiControl = reactive({
@@ -255,22 +273,53 @@ async function loadPlatform() {
   page.loading = false;
 }
 
+async function refreshData() {
+  try {
+    uiControl.dialogLoading = true;
+
+    await loadPlatform();
+
+    const record = page.records.find(r => r._id === uiControl.currentRecordId);
+    if (!record) {
+      console.warn('Current record not found after refresh.');
+      return;
+    }
+
+    tfHomeTeamName.value = record.tfHomeTeamName;
+    tfAwayTeamName.value = record.tfAwayTeamName;
+    tfMarketLines.value = record.tfMarketLines;
+    groupedMarketLines.value = groupMarketLinesByBetType(record.tfMarketLines || []);
+
+    console.log('Data refreshed successfully and popup updated.');
+  } catch (error) {
+    console.error('Failed to refresh data:', error);
+  } finally {
+    uiControl.dialogLoading = false;
+  }
+}
+
 function changePage(page) {
   request.current = page;
   loadPlatform();
 }
 
 function showDialog(id) {
-  const record = getRecordById(id);
+  const record = page.records.find(r => r._id === id);
+
+  if (!record) {
+    console.warn('Record not found.');
+    return;
+  }
+
+  uiControl.currentRecordId = id;
+
   tfHomeTeamName.value = record.tfHomeTeamName;
   tfAwayTeamName.value = record.tfAwayTeamName;
   tfMarketLines.value = record.tfMarketLines;
   groupedMarketLines.value = groupMarketLinesByBetType(record.tfMarketLines || []);
-  uiControl.dialogVisible = true;
-}
 
-function getRecordById(id) {
-  return page.records.find(record => record._id === id);
+  // 显示弹窗
+  uiControl.dialogVisible = true;
 }
 
 function translateBetType(betTypeId, wagerSelections = []) {
@@ -283,6 +332,27 @@ function translateBetType(betTypeId, wagerSelections = []) {
   const specifierValues = parseSpecifiers(combinedSpecifiers);
 
   return t(key, specifierValues);
+}
+
+function formatHandicap(translatedName, handicap) {
+  if (!handicap || (translatedName !== 'Home' && translatedName !== 'Away')) {
+    return translatedName;
+  }
+
+  const handicapValue = parseFloat(handicap);
+  if (isNaN(handicapValue)) return translatedName;
+
+  if (translatedName === 'Home' && handicapValue > 0) {
+    return `${translatedName} -${handicapValue}`;
+  } else if (translatedName === 'Home' && handicapValue < 0) {
+    return `${translatedName} +${Math.abs(handicapValue)}`;
+  } else if (translatedName === 'Away' && handicapValue > 0) {
+    return `${translatedName} +${handicapValue}`;
+  } else if (translatedName === 'Away' && handicapValue < 0) {
+    return `${translatedName} -${Math.abs(handicapValue)}`;
+  }
+
+  return translatedName;
 }
 
 function translateSelectionName(selectionName, specifiers = '') {

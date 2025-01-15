@@ -2433,7 +2433,12 @@ export default {
     priviRewardSetup: '奖金设置',
     priviVipSetup: 'vip设置',
     priviPaymentSetup: '支付',
-    priviOther: '其他'
+    priviOther: '其他',
+    oddsType_1: '马来盘',
+    oddsType_2: '香港盘',
+    oddsType_3: '欧洲盘',
+    oddsType_4: '印尼盘',
+    oddsType_6: '美式盘'
   },
   message: {
     adsStatusOpen: '开',
@@ -3625,7 +3630,6 @@ export default {
     45300: '玩家于此记录时间的虚拟数据已存在',
     45301: '玩家于此记录时间的虚拟数据不存在',
     45302: '玩家不属于任何代理',
-    50002: '已超过平账最大金额',
-    53000: '用户名不能为空',
+    50002: '已超过平账最大金额'
   },
 }

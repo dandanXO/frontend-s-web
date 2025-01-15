@@ -2433,7 +2433,11 @@ export default {
     tfEventStatusName: "event status",
     betTypeName: 'bet type name',
     betTypeId: 'bet type ID',
-    'Bet type setting': 'bet type setting'
+    oddsType_1: 'Malaysia',
+    oddsType_2: 'Hong Kong',
+    oddsType_3: 'Europe',
+    oddsType_4: 'Indonesia',
+    oddsType_6: 'US'
   },
   message: {
     adsStatusOpen: 'Open',
@@ -3261,7 +3265,8 @@ export default {
     'Top Bonus Ranking': 'Top Bonus Ranking',
     Competition: 'competition',
     Event: 'event',
-    Team: 'team'
+    Team: 'team',
+    'Bet type setting': 'bet type setting'
   },
   google: {
     google_auth_menu: 'Google Authenticator',
