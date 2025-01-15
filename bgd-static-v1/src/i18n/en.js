@@ -641,6 +641,22 @@ export default {
       remainingDrawTimes: "Remaining draw times",
       congratulations: "Congratulations"
     },
+    referWheel: {
+      remainingDrawTimes: "Remaining times",
+      congratulations: "Congratulations",
+      withdrawSuccessfully: "Withdraw successfully",
+      recharge: "Recharge",
+      shareSocialText: "Invite friends to help withdraw coins",
+      save: "Save",
+      currentAmount: "Current Amount",
+      withdrawalStillTakes: "Withdrawal still takes",
+      inviteFriendsHelp: "Invite friends to help withdraw coins",
+      shareThisReferralLink: "Share this referral link with you friends",
+      getForFree: "Get For Free",
+      inviteFriendsHelp: "Invite friends to help",
+      withdraw: "Withdraw",
+      claim: "Claim"
+    },
     signIn7Days: {
       continuousSignIn: "Continuous sign-in:",
       expired: "Expired",
