@@ -5,7 +5,7 @@ import { userStore } from "src/stores";
 import { ResponseCode } from "../api/response";
 import LocalStorage from "boot/local-storage";
 import axios from "axios";
-import { getRndInteger, isAndroid } from "boot/utils";
+import { getRndInteger, isAndroid, isInPwa } from "boot/utils";
 import { errorMessages } from "./error-messages";
 
 const rstArray = Object.values(process.env.RST_API);
@@ -75,7 +75,7 @@ export default boot(({ app, router }) => {
     }
 
     let token;
-    if (isAndroid()) {
+    if (isAndroid() || isInPwa()) {
       token = LocalStorage.getItem("TOKEN");
     } else {
       token = SessionStorage.getItem("TOKEN");
