@@ -106,13 +106,20 @@
     />
     <BountyBlastPremier v-if="list.redirectUrl === 'bounty-blast-premier'" :promo-code="list.promoCode" />
     <VctcnMatchPromo v-if="list.redirectUrl === 'lh1-vctcn'" :promo-code="list.promoCode" />
+
+    <IemKatowice2025 v-if="list.redirectUrl === 'lh1-iem-katowice-2025'" :promo-code="list.promoCode" />
     <HongBaoYu2025 v-if="list.redirectUrl === 'hongbaoyu-2025'" :promo-code="list.promoCode" />
     <Monthly20HongBaoYu v-if="list.redirectUrl === 'lh1-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
     <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
     <VctBangkok v-if="list.redirectUrl === 'lh1-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
     <Dota2BlastSlamS25 v-if="list.redirectUrl === 'lh1-dream-league-s25'" :promo-code="list.promoCode" />
-    <Dota2BlastSlam2025 v-if="list.redirectUrl === 'lh1-blast-slam-2025'" :promo-code="list.promoCode"/>
+    <Dota2BlastSlam2025 v-if="list.redirectUrl === 'lh1-blast-slam-2025'" :promo-code="list.promoCode" />
     <DarkModePromo v-if="list.redirectUrl === 'lh1-dark-mode'" />
+    <PGLOnFireBuenosAires2025
+      v-if="list.redirectUrl === 'lh1-pgl-on-fire-buenos-aires-2025'"
+      :promo-code="list.promoCode"
+    />
+    <SkyesportsSouvenir2025 v-if="list.redirectUrl === 'lh1-skyesports-souvenir-2025'" :promo-code="list.promoCode" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -216,6 +223,7 @@ import ValorantChampionTour2024 from "@/components/hotpromo/valorant-champion-to
 import ChristmasGachapon from "@/components/hotpromo/christmas-gachapon/ChristmasGachapon.vue";
 import BountyBlastPremier from "./hotpromo/bounty-blast/BountyBlastPremier.vue";
 import VctcnMatchPromo from "./hotpromo/vctcn-match-promo/VctcnMatchPromo.vue";
+import IemKatowice2025 from "./hotpromo/lh1-iem-katowice-2025/Iem-katowice-2025.vue";
 import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
 import Belgrade2025Promo from "./hotpromo/belgrade-2025-promo/Belgrade2025Promo.vue";
 import VctBangkok from "./hotpromo/vct-bangkok/VctBangkok.vue";
@@ -224,12 +232,15 @@ import Lh1Vctcn from "./hotpromo/lh1-vctcn/lh1Vctcn.vue";
 import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue";
 import Dota2BlastSlam2025 from "../components/hotpromo/dota2-blast-slam-2025/Dota2BlastSlam2025.vue";
 import DarkModePromo from "../components/hotpromo/dark-mode/DarkModePromo.vue";
+import PGLOnFireBuenosAires2025 from "./hotpromo/pgl-on-fire-buenos-aires-2025/PGLOnFireBuenosAires2025.vue";
+import SkyesportsSouvenir2025 from "./hotpromo/skyesports-souvenir-2025/SkyesportsSouvenir2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    IemKatowice2025,
     SubmitClaimPromo,
     newFootballFight,
     Olympic24Match,
@@ -317,7 +328,9 @@ export default defineComponent({
     Dota2BlastSlamS25,
     VctBangkok,
     Dota2BlastSlam2025,
-    DarkModePromo
+    DarkModePromo,
+    PGLOnFireBuenosAires2025,
+    SkyesportsSouvenir2025
   },
   props: {
     list: {
@@ -941,7 +954,8 @@ export default defineComponent({
 
   .claim-title-icon,
   .claim-coin-icon,
-  .claim-gift-icon {
+  .claim-gift-icon,
+  .claim-stacked-coins-icon {
     width: 32px;
     height: 32px;
     display: flex;
@@ -961,6 +975,11 @@ export default defineComponent({
 
   .claim-gift-icon {
     background: url("../assets/promo/lh-livepoker-rebate/reward-icon2.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
+
+  .claim-stacked-coins-icon {
+    background: url("../assets/promo/lh-livepoker-rebate/reward-icon3.png") no-repeat center center;
     background-size: 100% 100%;
   }
 

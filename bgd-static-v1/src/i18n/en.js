@@ -254,7 +254,7 @@ export default {
     cat_poker: "Poker",
     cat_sport: "Sport",
     popup: {
-      getFreeLuckyDraw: "Get a free lucky draw ticket",
+      getFreeCashLuckyDraw: "Get Free Cash Lucky Draw",
       downloadAppLoginAcc: "Download the app and log in to your account to get it",
       free100Bonus: "Congratulations! You have completed Stage 1 and unlocked 100 bonuses.",
       free100BonusAmount: "100BDT",

@@ -1101,6 +1101,7 @@ build-image-id1-static-v1:
     PROJECT: id1-static-v1
   needs:
     - build-id1-static-v1
+
 #===============================================================================================
 
 build-bgd-static-v1:
@@ -1200,5 +1201,12 @@ build-image-minigame-website:
     PROJECT: minigame-website
   needs:
     - build-minigame-website
+
+#===============================================================================================
+
+deploy-th2-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: th2-download
 
 #===============================================================================================

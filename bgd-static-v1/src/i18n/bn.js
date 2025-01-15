@@ -253,7 +253,7 @@ export default {
     cat_poker: "পোকার",
     cat_sport: "স্পোর্ট",
     popup: {
-      getFreeLuckyDraw: "একটি বিনামূল্যের লাকি ড্র টিকিট পান",
+      getFreeCashLuckyDraw: "ফ্রি ক্যাশ লাকি ড্র সেহেতু",
       downloadAppLoginAcc: "অ্যাপটি ডাউনলোড করুন এবং এটি পেতে আপনার অ্যাকাউন্টে লগ ইন করুন",
       free100Bonus: "অভিনন্দন! আপনি স্টেজ ১ সম্পন্ন করেছেন এবং ১০০ বোনাস আনলক করেছেন।",
       free100BonusAmount: "100BDT",

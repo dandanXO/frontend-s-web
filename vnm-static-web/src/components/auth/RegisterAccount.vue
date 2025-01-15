@@ -12,8 +12,14 @@
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
       <el-form-item :label="$t('login.password')" prop="password">
-        <el-input class="wTip" v-model="regForm.password" :placeholder="$t('login.password')" type="password"
-          show-password clearable>
+        <el-input
+          class="wTip"
+          v-model="regForm.password"
+          :placeholder="$t('login.password')"
+          type="password"
+          show-password
+          clearable
+        >
           <template #append></template>
         </el-input>
       </el-form-item>
@@ -21,8 +27,13 @@
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
       <el-form-item :label="$t('login.realName')" prop="realName">
-        <el-input class="wTip" v-model="regForm.realName" :placeholder="$t('login.realName')"
-          :rules="[{ required: true, message: t('placeholder.realName') }]" clearable>
+        <el-input
+          class="wTip"
+          v-model="regForm.realName"
+          :placeholder="$t('login.realName')"
+          :rules="[{ required: true, message: t('placeholder.realName') }]"
+          clearable
+        >
           <template #append></template>
         </el-input>
       </el-form-item>
@@ -38,10 +49,22 @@
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/referral-icon.png" />
       <el-form-item :label="t('login.codeAffiliate')" prop="codeAffiliate">
-        <el-input v-if="!hasAffiliate" class="half" v-model="regForm.codeAffiliate"
-          :placeholder="t('login.codeAffiliate')" clearable />
-        <el-input v-else class="half" v-model="regForm.codeAffiliate" :placeholder="t('login.codeAffiliate')" readonly
-          disabled clearable />
+        <el-input
+          v-if="!hasAffiliate"
+          class="half"
+          v-model="regForm.codeAffiliate"
+          :placeholder="t('login.codeAffiliate')"
+          clearable
+        />
+        <el-input
+          v-else
+          class="half"
+          v-model="regForm.codeAffiliate"
+          :placeholder="t('login.codeAffiliate')"
+          readonly
+          disabled
+          clearable
+        />
       </el-form-item>
     </div>
 
@@ -49,8 +72,12 @@
       <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
       <el-form-item :label="$t('login.captcha')" prop="captchaCode">
         <div style="display: flex; width: 100%">
-          <el-input @keyup.enter="submitRegisterForm(registerRef)" v-model="regForm.captchaCode"
-            :placeholder="$t('login.captcha')" clearable />
+          <el-input
+            @keyup.enter="submitRegisterForm(registerRef)"
+            v-model="regForm.captchaCode"
+            :placeholder="$t('login.captcha')"
+            clearable
+          />
           <img style="width: 90px" :src="verificationImg" @click="getCode" />
         </div>
       </el-form-item>
@@ -61,24 +88,32 @@
       {{ $t("login.register") }}
     </button>
 
-    <div style="margin-top:16px;padding-bottom:4px;text-align:center;">
+    <div style="margin-top: 16px; padding-bottom: 4px; text-align: center">
       {{ $t("login.registration_hints") }}
-      <span @click="openDialog('betrules')" style="white-space: nowrap; color: #0071ed;">
+      <span @click="openDialog('betrules')" style="white-space: nowrap; color: #0071ed">
         {{ $t("login.user_registration_protocol") }}
       </span>
     </div>
 
-    <div style="margin-top:16px;padding-bottom:4px;text-align:center;">
+    <div style="margin-top: 16px; padding-bottom: 4px; text-align: center">
       {{ $t("login.already_have_acc") }}
       <a @click="openLoginDialog">
         {{ $t("login.login_here") }}
       </a>
     </div>
   </div>
-  <el-dialog class="bettingruledialog" append-to-body align-center style="overflow: auto;
-    max-height: 790px; transform: scale(.9);" width="1260px" v-model="showBetRulesDialog">
+  <el-dialog
+    class="bettingruledialog"
+    append-to-body
+    align-center
+    style="overflow: auto; max-height: 790px; transform: scale(0.9)"
+    width="1260px"
+    v-model="showBetRulesDialog"
+  >
     <div style="padding: 10px">
-      <p><b style="font-size: 16px; color: #0071ed;">{{ $t("about.bettingRules") }}</b></p>
+      <p>
+        <b style="font-size: 16px; color: #0071ed">{{ $t("about.bettingRules") }}</b>
+      </p>
       <ul>
         <li>{{ $t("about.familyRestriction") }}</li>
         <li>{{ $t("about.entertainmentPurpose2") }}</li>
@@ -116,15 +151,14 @@
       </ul>
     </div>
   </el-dialog>
-  <div style="width: 100%; margin-top: 5px">
-  </div>
+  <div style="width: 100%; margin-top: 5px"></div>
 </template>
 
 <script setup>
 import { ref, onMounted, reactive, defineEmits } from "vue";
 import { userStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
-import { lsGet } from "@/utils/utils";
+import { isOperaPixelUrl, lsGet } from "@/utils/utils";
 import { ElMessage } from "element-plus";
 import { getVerificationCode, register } from "@/api/index/login";
 import { useI18n } from "vue-i18n";
@@ -164,7 +198,7 @@ let validatePhoneNumber = async (r, v) => {
     return Promise.reject(t("placeholder.onlyNumber"));
   } else if (v.length !== 10) {
     return Promise.reject(t("placeholder.invalidPhoneLength"));
-  } else if (v.charAt(0) !== '0') {
+  } else if (v.charAt(0) !== "0") {
     return Promise.reject(t("placeholder.invalidPhoneStartsWith0"));
   } else {
     return Promise.resolve();
@@ -372,13 +406,13 @@ const submitRegisterForm = async (elForm) => {
                 if (store.isAffiliateA) {
                   fbq("track", "signup-success");
                 }
-                if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("tf88bof.com") > -1 || window.location.href.indexOf("tslotf88.com") > -1) {
+                if (isOperaPixelUrl()) {
                   otag("event", "registration");
                 }
 
                 store.autoLogin(response.data);
                 emits("close-dialog");
-                emits("open-welcome-dialog")
+                emits("open-welcome-dialog");
 
                 sessionStorage.removeItem("REFERRAL_CODE");
                 sessionStorage.removeItem("AFFILIATE_CODE");
@@ -440,8 +474,8 @@ onMounted(() => {
 });
 const showBetRulesDialog = ref(false);
 const openDialog = (currentDialog) => {
-  showBetRulesDialog.value = true
-}
+  showBetRulesDialog.value = true;
+};
 </script>
 
 <style scoped lang="scss">
@@ -512,7 +546,8 @@ body .bettingruledialog .el-dialog__header .el-dialog__headerbtn .el-dialog__clo
   opacity: 0.5;
 }
 
-body .el-dialog.bettingruledialog .el-dialog__body {}
+body .el-dialog.bettingruledialog .el-dialog__body {
+}
 
 body .bettingruledialog .el-dialog__header .el-dialog__headerbtn {
   top: 10px;
