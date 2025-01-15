@@ -141,6 +141,8 @@ export default defineComponent({
           fbq("init", facebookId);
           fbq("track", "PageView");
           store.isFbPixel = true;
+
+          initEngageLabPush(pushId);
         });
       } else {
         var affiliateCode = "";
@@ -303,7 +305,7 @@ export default defineComponent({
     };
 
     // PWA
-    const initEngageLabPush = () => {
+    const initEngageLabPush = (appKeyId) => {
       // Supported versions: 2.1.9+
       console.log("initEngageLabPush");
 
@@ -324,7 +326,7 @@ export default defineComponent({
           }
         } else if (Notification.permission === "granted") {
           console.log("Notification permission already granted.");
-          initializePush();
+          initializePush(appKeyId);
         } else {
           console.log("Notification permission denied.");
           // alert("Please enable notifications in your browser settings.");
@@ -332,7 +334,7 @@ export default defineComponent({
       };
 
       // Push initialization logic
-      const initializePush = () => {
+      const initializePush = (appKeyId) => {
         function randomUid() {
           const keyStr = "mtWebPushRandomUid";
           let uid = window.localStorage.getItem(keyStr);
@@ -352,7 +354,8 @@ export default defineComponent({
         console.log("TSET This 2");
         // Push initialization
         MTpushInterface.init({
-          appkey: "b5889158edb4a1de20f79367",
+          // appkey: "b5889158edb4a1de20f79367",
+          appkey: appKeyId,
           user_str: randomUid(),
           fail(err) {
             console.log("Failed to create an online push", err);
@@ -406,15 +409,15 @@ export default defineComponent({
       }
 
       // PWA
-      const hostname = window.location.hostname;
-      if (
-        isInPwa()
-        // hostname.includes("7ffoz.cc") ||
-        // hostname.includes("0bmf0.cc")
-      ) {
-        console.log("Engagel labe here");
-        initEngageLabPush();
-      }
+      // const hostname = window.location.hostname;
+      // if (
+      //   isInPwa()
+      //   // hostname.includes("7ffoz.cc") ||
+      //   // hostname.includes("0bmf0.cc")
+      // ) {
+      //   console.log("Engagel labe here");
+      //   initEngageLabPush();
+      // }
 
       document.addEventListener("visibilitychange", handleVisibilityChange);
 
