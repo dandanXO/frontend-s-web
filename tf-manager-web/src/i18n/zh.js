@@ -2227,7 +2227,11 @@ export default {
     priviRewardSetup: '奖金设置',
     priviVipSetup: 'vip设置',
     priviPaymentSetup: '支付',
-    priviOther: '其他'
+    priviOther: '其他',
+    privilegeAmountRatio: '领取金额比例',
+    privilegeCountRatio: '领取人数比例',
+    table: '数据',
+    chart: '图表',
   },
   message: {
     adsStatusOpen: '开',
