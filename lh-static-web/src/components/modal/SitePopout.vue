@@ -236,7 +236,8 @@ watch(
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
-        padding: 6%;
+        padding: 4% 10%;
+        gap: 5px;
         font-weight: 700;
         min-height: 68px;
         background: url("../../assets/images/home/site-popout/list-item-bg.png") no-repeat center center;
@@ -378,15 +379,22 @@ watch(
       background-size: 100% 100% !important;
       margin: 0px 5px;
 
+      .title {
+        color: #ffffff99 !important;
+      }
+      .period {
+        color: #ffffff99 !important;
+      }
+
       &.active {
         background: url("../../assets/images/home/site-popout/dark-list-item-bg-active.png") no-repeat center center !important;
         background-size: 100% 100% !important;
         margin: 0px;
         .title {
-          color: #2792fd;
+          color: #fff !important;
         }
         .period {
-          color: #fff;
+          color: #fff !important;
         }
       }
     }
