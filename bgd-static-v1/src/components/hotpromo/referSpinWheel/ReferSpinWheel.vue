@@ -51,7 +51,8 @@
     </div>
     <div class="spin-wheel-container">
       <div :class="`draw-btn click-pointer ${spinButtonDisable ? 'disabled' : ''}`" @click="spinWheel">
-        <img src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/click-spin-btn.png" />
+        <img class="spin-btn" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/click-spin-btn.png" />
+        <img class="hand" v-if="!spinButtonDisable" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/hand.png" />
       </div>
       <div class="wheel-stage">
         <img src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/spin-wheel-stg.png" />
@@ -335,25 +336,25 @@
 
   const spinWheel = () => {
     //FOr TesTING START
-    // const res = {
-    //   data: {
-    //     bonus: 8,
-    //     availableSpin: 0,
-    //     spinType: 'FIXEDBONUS'
-    //   }
-    // }
-    // var bonusIndex = res.data.spinType === 'FIXEDBONUS' ? res.data.bonus : res.data.spinType;
+    const res = {
+      data: {
+        bonus: 8,
+        availableSpin: 0,
+        spinType: 'FIXEDBONUS'
+      }
+    }
+    var bonusIndex = res.data.spinType === 'FIXEDBONUS' ? res.data.bonus : res.data.spinType;
 
-    // const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
+    const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
 
 
-    // console.log('here', bonusIndex, prizeIndex)
-    // spin(prizeIndex, () => {
-    //   showPrizePopup.value = true;
-    //   prizePopupBonusAmt.value = res.data.spinType === 'FIXEDBONUS' ? res.data.bonus : res.data.spinType;
-    //   remainingDraws.value = res.data.availableSpin;
-    // });
-    // return;
+    console.log('here', bonusIndex, prizeIndex)
+    spin(prizeIndex, () => {
+      showPrizePopup.value = true;
+      prizePopupBonusAmt.value = res.data.spinType === 'FIXEDBONUS' ? res.data.bonus : res.data.spinType;
+      remainingDraws.value = res.data.availableSpin;
+    });
+    return;
     //FOr TesTING END
 
     if (spinButtonDisable.value === true) {
@@ -831,13 +832,13 @@
   }
 
   .draw-btn {
-    width: 110px;
+    width: 92px;
     height: auto;
-    aspect-ratio: 206/220;
+    aspect-ratio: 95 / 117;
     z-index: 25;
     position: absolute;
-    top: calc(49.5%);
-    left: 52.5%;
+    top: 47.5%;
+    left: 50%;
     transform: translate(-50%, -50%);
 
     &.disabled {
@@ -845,6 +846,21 @@
       opacity: 1 !important;
       pointer-events: none;
     }
+
+    img.hand {
+      width: 50px !important;
+      position: absolute;
+      top: 60%;
+      left: 66%;
+      animation: swipe-hand 3s infinite;
+      animation-delay: 1s;
+    }
+  }
+
+  @keyframes swipe-hand {
+    25% { transform: translate(20px) rotate(30deg);}
+    50% { transform: translate(-20px) rotate(-15deg); }
+    100% { transform: translate(0px) rotate(0); }
   }
 
   .click-pointer,
