@@ -290,6 +290,13 @@ deploy-id1-download-v2:
 
 #===============================================================================================
 
+deploy-minifun-site:
+  extends: .s3-deploy
+  variables:
+    PROJECT: minifun-site
+
+#===============================================================================================
+
 deploy-vnm-download:
   extends: .s3-deploy
   variables:
