@@ -200,7 +200,7 @@ import { ref, onMounted, computed } from "vue";
 import { useQuasar, Platform, SessionStorage } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
-import { convertToCommaAmount, isAndroid } from "src/boot/utils";
+import { convertToCommaAmount, isAndroid, isInPwa } from "src/boot/utils";
 import { api } from "boot/axios";
 
 const props = defineProps(["homeProfile"]);
@@ -372,7 +372,8 @@ const checkTopDownloadAppear = () => {
     if (
       ("standalone" in window.navigator && window.navigator.standalone) ||
       (Platform.is.capacitor && Platform.is.android) ||
-      omitSites.includes(location.host)
+      omitSites.includes(location.host) ||
+      isInPwa()
     ) {
       topDownload.value = false;
     } else {
