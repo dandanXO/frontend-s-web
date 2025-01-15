@@ -44,7 +44,7 @@
 
             <div class="remaining">
                 <div>{{ $t('hotPromo.referWheel.withdrawalStillTakes') }}</div>
-                <div class="highlight">{{ store.currency.label }} {{ accumulatedBonus }}</div>
+                <div class="highlight">{{ store.currency.label }} {{ (300 - props.accumulatedBonus).toFixed(2) }}</div>
             </div>
 
             <div class="timeline">
@@ -57,6 +57,22 @@
                     <div>Payment request submitted</div>
                     <div v-if="props.accumulatedBonus">Withdrawal is still required on {{ store.currency.label }} {{ (300 - props.accumulatedBonus).toFixed(2) }}</div>
                     <div v-if="props.accumulatedBonus">{{ store.currency.label }} {{ props.accumulatedBonus.toFixed(2) }} will be credited to your account</div>
+                </div>
+            </div>
+
+            <div class="list-section">
+                <div class="list-wrapper">
+                    <div class="list">
+                    <div class="list-row" v-for="invited, index in props.invitedList" :key="index">
+                        <div class="list-item"><span class="cyan">{{ invited.loginName }}</span></div>
+                        <div class="list-item"><span class="label">{{ invited.loginName }}</span></div>
+                        <div class="list-item">
+                        <div class="center points"><span class="highlight">+{{ invited.bonus }}</span><img class="wheel-icon"
+                            src="../../../assets/images/promotion/hotpromo/refer-spinwheel/wheel-icon.svg" />
+                        </div>
+                        </div>
+                    </div>
+                    </div>
                 </div>
             </div>
 
@@ -75,7 +91,7 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { userStore } from "src/stores";
-const props = defineProps(['prize', 'accumulatedBonus', 'closePopup', 'invitePopup']);
+const props = defineProps(['prize', 'accumulatedBonus', 'closePopup', 'invitePopup', 'invitedList']);
 
 const store = userStore();
 
@@ -217,6 +233,7 @@ const achievementProgress = computed(() => {
         gap: 20px;
 
         img {
+            width: 20px;
             height: 20px;
         }
     }
@@ -356,4 +373,51 @@ const achievementProgress = computed(() => {
     display: flex;
     margin: 20px auto 10px;
 }
+
+.list-section {
+      background: #70BC621A;
+      border: 1px solid #575D53;
+      border-radius: 10px;
+      position: relative;
+      margin-top: 20px;
+
+      .list-wrapper {
+        max-height: 120px;
+        overflow-y: scroll;
+        padding-bottom: 20px;
+
+        .list {
+          display: table;
+          width: 100%;
+          padding: 10px 20px;
+
+          .list-row {
+            display: table-row;
+
+            .list-item {
+              display: table-cell;
+
+              .cyan {
+                color: #00FFC3;
+              }
+
+              .points {
+                gap: 5px;
+                font-weight: 700;
+                display: flex;
+              }
+            }
+          }
+
+          .wheel-icon {
+            width: 22px;
+          }
+        }
+      }
+
+      .withdraw-order-btn {
+        position: absolute;
+        bottom: -16%;
+      }
+    }
 </style>

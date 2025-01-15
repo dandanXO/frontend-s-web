@@ -46,7 +46,7 @@
       </div>
       <div class="remaining">
         <div>{{ $t('hotPromo.referWheel.withdrawalStillTakes') }}</div>
-        <div class="highlight">{{ store.currency.label }} {{ accumulatedBonus }}</div>
+        <div class="highlight">{{ store.currency.label }} {{ (300 - accumulatedBonus).toFixed(2) }}</div>
       </div>
     </div>
     <div class="spin-wheel-container">
@@ -129,7 +129,7 @@
             <div class="list-item"><span class="cyan">{{ winner.loginName }}</span></div>
             <div class="list-item"><span class="label">{{ winner.loginName }}</span></div>
             <div class="list-item">
-              <div class="center points"><span class="highlight">+1</span><img class="wheel-icon"
+              <div class="center points"><span class="highlight">+{{ winner.bonus }}</span><img class="wheel-icon"
                   src="../../../assets/images/promotion/hotpromo/refer-spinwheel/wheel-icon.svg" />
               </div>
             </div>
@@ -178,7 +178,7 @@
   </q-dialog>
 
   <q-dialog v-model="showWithdrawPopup" backdrop-filter="none">
-    <WithdrawPopup v-if="accumulatedBonus < 300" :accumulatedBonus="accumulatedBonus" :closePopup="() => showWithdrawPopup = false" :invitePopup="() => showInvitePopup = true" />
+    <WithdrawPopup v-if="accumulatedBonus < 300" :accumulatedBonus="accumulatedBonus" :closePopup="() => showWithdrawPopup = false" :invitePopup="() => showInvitePopup = true" :invitedList="invitedList" />
     <PrizePopup v-else prize="300" :showRechargeBtn="true" />
   </q-dialog>
 </template>
@@ -238,6 +238,7 @@
   const prizePopupBonusAmt = ref();
   const remainingDraws = ref(0);
   const winnersList = ref([]);
+  const invitedList = ref([]);
   const endDate = ref();
   const remainingTimeTimer = ref();
   const accumulatedBonus = ref();
@@ -396,7 +397,8 @@
         remainingDraws.value = res.data.availableSpin;
         endDate.value = res.data.endDate;
         accumulatedBonus.value = res.data.accumulatedBonus;
-
+        invitedList.value = res.data.invitedList;
+        
         if(!remainingTimeTimer.value) {
           setInterval(() => {
             endDate.value = endDate.value - 1;
