@@ -2,7 +2,7 @@
     <div class="invite-popup">
         <img class="close-icon" v-close-popup
             src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/close-icon.svg" />
-        <div>1. Invite friends to help withdraw coins</div>
+        <div>{{ $t('hotPromo.referWheel.inviteFriendsHelp') }}</div>
         <div class="socials">
             <div class="social-item">
                 <a class="social-item"
@@ -54,7 +54,7 @@
                 <span class="social-label">Instagram</span>
             </div>
         </div>
-        <div>1. share this referral link with you friends</div>
+        <div>{{ $t('hotPromo.referWheel.shareThisReferralLink') }}</div>
         <div class="copy-section">
             <div class="referral-link">{{ selfTgurl }}</div>
             <img @click="copyHrefLink" class="copy-btn"

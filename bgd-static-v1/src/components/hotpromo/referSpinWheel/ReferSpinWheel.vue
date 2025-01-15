@@ -13,14 +13,14 @@
                     <stop offset="100%" stop-color="#FF953E" />
                   </linearGradient>
                 </defs>
-                <text id="test" x="0" y="45" class="amount">95.13</text>
+                <text id="test" x="0" y="45" class="amount">{{ accumulatedBonus }}</text>
               </svg>
             </div><img class="money-icon"
               src="../../../assets/images/promotion/hotpromo/refer-spinwheel/money-pile-icon.png" />
           </div>
         </div>
-        <div class="primary-bg withdraw-btn center">
-          Withdraw
+        <div class="primary-bg withdraw-btn center" @click="claimBonus">
+          {{ $t('hotPromo.referWheel.withdraw') }}
         </div>
       </div>
       <div class="achievement">
@@ -115,7 +115,7 @@
     </div>
 
     <div class="referral">
-      <div class="invite primary-bg" @click="showInvitePopup = true">Invite friends to help <img class="icon share-icon"
+      <div class="invite primary-bg" @click="showInvitePopup = true">{{ $t('hotPromo.referWheel.inviteFriendsHelp') }}<img class="icon share-icon"
           src="../../../assets/images/promotion/hotpromo/refer-spinwheel/share-icon.svg" /></div>
       <div class="qr primary-bg" @click="showQRPopup = true">Scan QR code<img class="icon qr-icon"
           src="../../../assets/images/promotion/hotpromo/refer-spinwheel/qr-icon.svg" /></div>
@@ -169,11 +169,16 @@
   </q-dialog>
 
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
-    <PrizePopup prize="FREE" />
+    <PrizePopup prize="300" />
   </q-dialog>
 
   <q-dialog v-model="showQRPopup" backdrop-filter="none">
     <QRPopup :selfTgurl="selfTgurl" />
+  </q-dialog>
+
+  <q-dialog v-model="showWithdrawPopup" backdrop-filter="none">
+    <WithdrawPopup v-if="accumulatedBonus < 300" :accumulatedBonus="accumulatedBonus" :closePopup="() => showWithdrawPopup = false" :invitePopup="() => showInvitePopup = true" />
+    <PrizePopup v-else prize="300" :showRechargeBtn="true" />
   </q-dialog>
 </template>
   <script setup>
@@ -185,6 +190,7 @@
   import PrizePopup from "./PrizePopup.vue";
   import InvitePopup from "./InvitePopup.vue";
   import QRPopup from "./QRPopup.vue";
+  import WithdrawPopup from "./WithdrawPopup.vue";
   import moment from 'moment';
 
   const remainingTime = computed(() => {
@@ -225,6 +231,7 @@
   const spinButtonDisable = ref(false);
   const degreesToStopAt = ref([]);
   const showPrizePopup = ref(false);
+  const showWithdrawPopup = ref(false);
   const showQRPopup = ref(false);
   const showInvitePopup = ref(false);
   const prizePopupBonusAmt = ref();
@@ -328,24 +335,24 @@
 
   const spinWheel = () => {
     //FOr TesTING START
-    const res = {
-      data: {
-        bonusAmount: 999999,
-        availableSpin: 0
-      }
-    }
-    var bonusIndex = res.data.bonusAmount;
-    if (res.data.type === "CONSOLATION") {
-      bonusIndex = -1;
-    }
-    const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
+    // const res = {
+    //   data: {
+    //     bonusAmount: 999999,
+    //     availableSpin: 0
+    //   }
+    // }
+    // var bonusIndex = res.data.bonusAmount;
+    // if (res.data.type === "CONSOLATION") {
+    //   bonusIndex = -1;
+    // }
+    // const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
 
-    spin(prizeIndex, () => {
-      showPrizePopup.value = true;
-      prizePopupBonusAmt.value = res.data.bonusAmount;
-      remainingDraws.value = res.data.availableSpin;
-    });
-    return;
+    // spin(prizeIndex, () => {
+    //   showPrizePopup.value = true;
+    //   prizePopupBonusAmt.value = res.data.bonusAmount;
+    //   remainingDraws.value = res.data.availableSpin;
+    // });
+    // return;
     //FOr TesTING END
 
     if (spinButtonDisable.value === true) {
@@ -400,6 +407,23 @@
     });
 
     getRecords();
+  };
+
+  const claimBonus = () => {
+    if(accumulatedBonus.value === 300) {
+      eventapi
+      .post("/session/refer-wheel/claimBonus?promoCode=bgd-refer-wheel")
+      .then((res) => {
+        if (res.code == 0) {
+          showWithdrawPopup.value = true;
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    } else {
+      showWithdrawPopup.value = true;
+    }
   };
 
   onMounted(() => {
@@ -500,7 +524,7 @@
 
             .gradient-amount-wrapper {
               max-height: 55px;
-              max-width: 130px;
+              max-width: 180px;
 
               .amount {
                 font-size: 50px;

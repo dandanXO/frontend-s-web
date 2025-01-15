@@ -649,7 +649,13 @@ export default {
       shareSocialText: "Invite friends to help withdraw coins",
       save: "Save",
       currentAmount: "Current Amount",
-      withdrawalStillTakes: "Withdrawal still takes"
+      withdrawalStillTakes: "Withdrawal still takes",
+      inviteFriendsHelp: "Invite friends to help withdraw coins",
+      shareThisReferralLink: "Share this referral link with you friends",
+      getForFree: "Get For Free",
+      inviteFriendsHelp: "Invite friends to help",
+      withdraw: "Withdraw",
+      claim: "Claim"
     },
     signIn7Days: {
       continuousSignIn: "Continuous sign-in:",

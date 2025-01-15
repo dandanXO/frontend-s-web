@@ -22,20 +22,18 @@
       </div>
     </div>
 
-    <div class="congrats-title">{{ $t("hotPromo.referWheel.withdrawSuccessfully") }}</div>
+    <div class="congrats-title" v-if="props.showRechargeBtn">{{ $t("hotPromo.referWheel.withdrawSuccessfully") }}</div>
 
-    <div class="congrats-button">
-      <router-link to="/promo?name=bgd-register-claim-bonus">
-        <q-btn no-caps unelevated class="recharge-btn" :loading="false">
-          {{ $t("hotPromo.referWheel.recharge") }}
+    <div class="congrats-button" v-if="props.showRechargeBtn">
+      <q-btn no-caps unelevated class="recharge-btn" :loading="false">
+          {{ $t("hotPromo.referWheel.claim") }}
         </q-btn>
-      </router-link>
     </div>
   </div>
 </template>
   
   <script setup>
-  const props = defineProps(['prize']);
+  const props = defineProps(['prize', 'showRechargeBtn']);
 </script>
   
   <style lang="scss" scoped>
