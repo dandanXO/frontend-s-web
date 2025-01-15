@@ -111,8 +111,12 @@
     <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
     <VctBangkok v-if="list.redirectUrl === 'lh1-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
     <Dota2BlastSlamS25 v-if="list.redirectUrl === 'lh1-dream-league-s25'" :promo-code="list.promoCode" />
-    <Dota2BlastSlam2025 v-if="list.redirectUrl === 'lh1-blast-slam-2025'" :promo-code="list.promoCode"/>
+    <Dota2BlastSlam2025 v-if="list.redirectUrl === 'lh1-blast-slam-2025'" :promo-code="list.promoCode" />
     <DarkModePromo v-if="list.redirectUrl === 'lh1-dark-mode'" />
+    <PGLOnFireBuenosAires2025
+      v-if="list.redirectUrl === 'lh1-pgl-on-fire-buenos-aires-2025'"
+      :promo-code="list.promoCode"
+    />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -224,6 +228,7 @@ import Lh1Vctcn from "./hotpromo/lh1-vctcn/lh1Vctcn.vue";
 import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue";
 import Dota2BlastSlam2025 from "../components/hotpromo/dota2-blast-slam-2025/Dota2BlastSlam2025.vue";
 import DarkModePromo from "../components/hotpromo/dark-mode/DarkModePromo.vue";
+import PGLOnFireBuenosAires2025 from "./hotpromo/pgl-on-fire-buenos-aires-2025/PGLOnFireBuenosAires2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -317,7 +322,8 @@ export default defineComponent({
     Dota2BlastSlamS25,
     VctBangkok,
     Dota2BlastSlam2025,
-    DarkModePromo
+    DarkModePromo,
+    PGLOnFireBuenosAires2025
   },
   props: {
     list: {
