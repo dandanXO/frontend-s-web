@@ -77,29 +77,38 @@
     <div class="expiry">
       <div class="days tertiary-bg center">
         <div class="label">Days</div>
-        <div class="highlight expiry-day">2</div>
+        <div class="highlight expiry-day">{{ remainingTime.days }}</div>
         <div class="label">Expires later</div>
       </div>
       <div class="countdown tertiary-bg center">
         <div class="timer-item">
           <div class="label">Hours</div>
           <div class="timer-value-wrapper">
-            <div class="timer-value">8</div>
-            <div class="timer-value">8</div>
+            <div class="timer-value" v-for="hour in remainingTime.hours?.toString().padStart(2, '0').split('')" :key="hour">{{ hour }}</div>
           </div>
         </div>
         <div class="timer-item">
-          <div class="label">Hours</div>
+          <div class="label" style="visibility: hidden;">|</div>
           <div class="timer-value-wrapper">
-            <div class="timer-value">8</div>
-            <div class="timer-value">8</div>
+            :
           </div>
         </div>
         <div class="timer-item">
-          <div class="label">Hours</div>
+          <div class="label">Minutes</div>
           <div class="timer-value-wrapper">
-            <div class="timer-value">8</div>
-            <div class="timer-value">8</div>
+            <div class="timer-value" v-for="minute in remainingTime.minutes?.toString().padStart(2, '0').split('')" :key="minute">{{ minute }}</div>
+          </div>
+        </div>
+        <div class="timer-item">
+          <div class="label" style="visibility: hidden;">|</div>
+          <div class="timer-value-wrapper">
+            :
+          </div>
+        </div>
+        <div class="timer-item">
+          <div class="label">Seconds</div>
+          <div class="timer-value-wrapper">
+            <div class="timer-value" v-for="second in remainingTime.seconds?.toString().padStart(2, '0').split('')" :key="second">{{ second }}</div>
           </div>
         </div>
       </div>
@@ -156,7 +165,7 @@
   </div>
 
   <q-dialog v-model="showInvitePopup" backdrop-filter="none" position="bottom">
-    <InvitePopup />
+    <InvitePopup :selfTgurl="selfTgurl" />
   </q-dialog>
 
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
@@ -164,11 +173,11 @@
   </q-dialog>
 
   <q-dialog v-model="showQRPopup" backdrop-filter="none">
-    <QRPopup />
+    <QRPopup :selfTgurl="selfTgurl" />
   </q-dialog>
 </template>
   <script setup>
-  import { ref, onMounted } from "vue";
+  import { ref, onMounted, computed, onUnmounted } from "vue";
   import { api, eventapi } from "src/boot/axios";
   import { useQuasar } from "quasar";
   import { useI18n } from "vue-i18n";
@@ -176,10 +185,26 @@
   import PrizePopup from "./PrizePopup.vue";
   import InvitePopup from "./InvitePopup.vue";
   import QRPopup from "./QRPopup.vue";
+  import moment from 'moment';
+
+  const remainingTime = computed(() => {
+    if(endDate.value) {
+      const total = Date.parse(moment(endDate.value).format()) - Date.parse(new Date());
+      const seconds = Math.floor( (total/1000) % 60 );
+      const minutes = Math.floor( (total/1000/60) % 60 );
+      const hours = Math.floor( (total/(1000*60*60)) % 24 );
+      const days = Math.floor( total/(1000*60*60*24) );
+      
+      return { days,hours,minutes,seconds };
+    }
+    
+    return {};
+  });
 
   const { t } = useI18n();
   const $q = useQuasar();
   const store = userStore();
+  const selfTgurl = ref("");
 
   // spin wheel constants
   const TOTAL_ITEMS = 10;
@@ -201,6 +226,8 @@
   const prizePopupBonusAmt = ref();
   const remainingDraws = ref(0);
   const winnersList = ref([]);
+  const endDate = ref();
+  const remainingTimeTimer = ref();
 
   let finalDegree = 0;
   let speed = 1;
@@ -356,6 +383,13 @@
     eventapi.get("/session/refer-wheel/init?promoCode=bgd-refer-wheel").then((res) => {
       if (res.code == 0) {
         remainingDraws.value = res.data.availableSpin;
+        endDate.value = res.data.endDate;
+
+        if(!remainingTimeTimer.value) {
+          setInterval(() => {
+            endDate.value = endDate.value - 1;
+          }, 1000);
+        }
       }
     });
 
@@ -386,6 +420,10 @@
       }
     });
   });
+
+  onUnmounted(() => {
+    clearInterval(remainingTimeTimer.value);
+  })
 </script>
   
   <style lang="scss" scoped>
@@ -545,11 +583,12 @@
       display: grid;
       grid-template-columns: 0.3fr 0.7fr;
       gap: 15px;
+      font-size: 15px;
 
       .days {
         display: flex;
         flex-direction: column;
-
+        text-align: center;
 
         .expiry-day {
           font-weight: bold;
@@ -559,20 +598,24 @@
       .countdown {
         display: flex;
         justify-content: space-evenly;
+        padding: 10px 0;
 
         .timer-item {
           display: flex;
           flex-direction: column;
           align-items: center;
+          gap: 5px;
 
           .timer-value-wrapper {
             display: flex;
-            gap: 5px;
+            gap: 8px;
 
             .timer-value {
               background: #4CEC8142;
-              padding: 2px 5px;
+              padding: 5px 5px;
               border-radius: 3px;
+              width: 25px;
+              text-align: center;
             }
           }
         }
@@ -584,6 +627,7 @@
       grid-template-columns: 1fr 1fr;
       gap: 10px;
       font-weight: 600;
+      font-size: 14px;
 
       .invite,
       .qr {

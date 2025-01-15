@@ -35,7 +35,8 @@ import html2canvas from "html2canvas";
 import { Filesystem, Directory } from "@capacitor/filesystem";
 
 const store = userStore();
-const selfTgurl = ref("");
+const props = defineProps(['selfTgurl']);
+const selfTgurl = props.selfTgurl;
 
 const downloadQRImg = async () => {
     if (Platform.is.capacitor && Platform.is.android) {
@@ -81,16 +82,6 @@ const downloadQRImg = async () => {
 };
 
 onMounted(() => {
-    let tgDomain = window.location.origin + "/";
-    if (store.isApp()) {
-        tgDomain = store.evip ? "https://" + store.evip + "/" : store.h5Url;
-    }
-
-    api.get("/session/member/referralCode").then((res) => {
-        if (res.code === 0) {
-            selfTgurl.value = tgDomain + "refer/" + res.data;
-        }
-    });
 });
 </script>
 

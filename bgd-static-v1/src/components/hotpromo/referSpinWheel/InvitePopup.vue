@@ -69,10 +69,11 @@ import { useQuasar, copyToClipboard } from "quasar";
 import { useI18n } from "vue-i18n";
 import { userStore } from "src/stores";
 
+const props = defineProps(['selfTgurl']);
+const selfTgurl = props.selfTgurl;
 const { t } = useI18n();
 const $q = useQuasar();
 const store = userStore();
-const selfTgurl = ref("");
 const tiktokRef = ref();
 
 const handleShareToTikTok = (url) => {
@@ -103,16 +104,6 @@ const copyHrefLink = () => {
 };
 
 onMounted(() => {
-    let tgDomain = window.location.origin + "/";
-    if (store.isApp()) {
-        tgDomain = store.evip ? "https://" + store.evip + "/" : store.h5Url;
-    }
-
-    api.get("/session/member/referralCode").then((res) => {
-        if (res.code === 0) {
-            selfTgurl.value = tgDomain + "refer/" + res.data;
-        }
-    });
 });
 </script>
 
