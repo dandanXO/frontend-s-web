@@ -350,27 +350,41 @@ export default defineComponent({
           if (res.code === 0) {
             if (promoState.promoList.length === 0) {
               promoState.promoList.push(...res.data);
+              const processedData = res.data.filter(promo => !['lh1-dark-mode'].includes(promo.redirectUrl)).map(promo => ({
+                ...promo,
+                displayDesktopBannerUrl: promo.desktopBannerUrlDark ?? promo.desktopBannerUrl,
+                displayDesktopImgBackgroundUrl: promo.desktopImgBackgroundUrlDark ?? promo.desktopImgBackgroundUrl,
+                displayDesktopImgUrl: promo.desktopImgUrlDark ?? promo.desktopImgUrl,
+                displayMobileBannerUrl: promo.mobileBannerUrlDark ?? promo.mobileBannerUrl,
+                displayMobileImgBackgroundUrl: promo.mobileImgBackgroundUrlDark ?? promo.mobileImgBackgroundUrl,
+                displayMobileImgUrl: promo.mobileImgUrlDark ?? promo.mobileImgUrl,
+              }))
+              if (promoState.promoList.length === 0) {
+                promoState.promoList.push(...processedData);
+                promoState.promoList.push(...res.data);
+              }
+              promoState.promoList.forEach((element) => {
+                // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+                //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+                // } else {
+                if (route.query.name === "lh1-invite-2" || route.query.name === "lh1-invite-3") {
+                  if (element.redirectUrl === "lh1-invite") {
+                    showPromoDetails(element);
+                  }
+                }
+                if (route.query.name === "lh1-football-fight-2" || route.query.name === "lh1-football-fight-3") {
+                  if (element.redirectUrl === "lh1-football-fight") {
+                    showPromoDetails(element);
+                  }
+                }
+                if (element.redirectUrl === route.query.name) {
+                  showPromoDetails(element);
+                }
+                // }
+              });
             }
 
-            res.data.forEach((element) => {
-              // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-              //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-              // } else {
-              if (route.query.name === "lh1-invite-2" || route.query.name === "lh1-invite-3") {
-                if (element.redirectUrl === "lh1-invite") {
-                  showPromoDetails(element);
-                }
-              }
-              if (route.query.name === "lh1-football-fight-2" || route.query.name === "lh1-football-fight-3") {
-                if (element.redirectUrl === "lh1-football-fight") {
-                  showPromoDetails(element);
-                }
-              }
-              if (element.redirectUrl === route.query.name) {
-                showPromoDetails(element);
-              }
-              // }
-            });
+            
           }
         })
         .catch((e) => {
