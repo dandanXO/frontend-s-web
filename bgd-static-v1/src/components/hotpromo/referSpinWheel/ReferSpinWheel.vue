@@ -1,216 +1,233 @@
 <template>
-    <div class="container">
-        <div class="top">
-          <div class="top-wrapper">
-            <div class="balance">
-              <div>当前额度(BDT)</div>
-              <div class="balance-info">
-                  <div class="amount">
-                    <svg class="gradient-amount-wrapper" preserveAspectRatio='xMinYMin' xmlns="http://www.w3.org/2000/svg">
-                      <defs>
-                          <linearGradient id="gradientAmount" gradientTransform="rotate(90)">
-                              <stop offset="0%"  stop-color="#FDEE4F"/>
-                              <stop offset="100%" stop-color="#FF953E"/>
-                          </linearGradient>
-                      </defs>
-                      <text id="test"  x="0" y="45" class="amount">95.13</text>
-                  </svg>
-                  </div><img class="money-icon" src="../../../assets/images/promotion/hotpromo/refer-spinwheel/money-pile-icon.png"/>
+  <div class="container">
+    <div class="top">
+      <div class="top-wrapper">
+        <div class="balance">
+          <div>当前额度(BDT)</div>
+          <div class="balance-info">
+            <div class="amount">
+              <svg class="gradient-amount-wrapper" preserveAspectRatio='xMinYMin' xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="gradientAmount" gradientTransform="rotate(90)">
+                    <stop offset="0%" stop-color="#FDEE4F" />
+                    <stop offset="100%" stop-color="#FF953E" />
+                  </linearGradient>
+                </defs>
+                <text id="test" x="0" y="45" class="amount">95.13</text>
+              </svg>
+            </div><img class="money-icon"
+              src="../../../assets/images/promotion/hotpromo/refer-spinwheel/money-pile-icon.png" />
+          </div>
+        </div>
+        <div class="primary-bg withdraw-btn center">
+          Withdraw
+        </div>
+      </div>
+      <div class="achievement">
+        <div class="progress-section">
+          <div class="progress-bar">
+            <div class="progress-bar-full">
+              <div class="progress-bar-current">
               </div>
-          </div>
-          <div class="primary-bg withdraw-btn center">
-            Withdraw
-          </div>
-        </div>
-        <div class="achievement">
-          <div class="progress-section">
-            <div class="progress-bar">
-              <div class="progress-bar-full">
-                <div class="progress-bar-current">
-                </div>
 
-                <div class="achieved-bar">
-                  <div class="achieve-item" v-for="index in 5"  :key="index">
-                    <img class="achieved-icon"  src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/achieved-icon.svg" />
-                    <span>{{ (index - 1) * 25}}%</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="remaining">
-              <span class="highlight">85/</span><span class="label">100</span>
-            </div>
-          </div>
-        </div>
-        <div class="remaining">
-            <div>Withdrawal still takes</div><div class="highlight">BDT 222.000</div>
-        </div>
-      </div>
-      <div class="spin-wheel-container">
-        <div :class="`draw-btn click-pointer ${spinButtonDisable ? 'disabled' : ''}`" @click="spinWheel">
-          <img src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/click-spin-btn.png" />
-        </div>
-        <div class="wheel-stage">
-          <img src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/spin-wheel-stg.png" />
-        </div>
-        <div class="spin-wheel-board">
-          <div class="spin-wheel-frame">
-            <div id="spin-wheel-id" class="spin-wheel">
-              <img
-                id="spin-wheel-bg"
-                class="wheel-bg"
-                src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/spin-wheel-bg1.png"
-              />
-              <div id="spin-wheel-number" class="spin-wheel-number" style="display: none"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-  
-      <div class="remaining-draw-wrapper">
-        <div class="remaining-draw-text">
-          {{ $t("hotPromo.referWheel.remainingDrawTimes") }}
-          <span id="remaning-draw-amt">: {{ remainingDraws }}</span>
-        </div>
-      </div>
-
-      <div class="expiry">
-        <div class="days tertiary-bg center">
-          <div class="label">Days</div>
-          <div class="highlight expiry-day">2</div>
-          <div class="label">Expires later</div>
-        </div>
-        <div class="countdown tertiary-bg center">
-          <div class="timer-item">
-            <div class="label">Hours</div>
-            <div class="timer-value-wrapper">
-              <div class="timer-value">8</div>
-              <div class="timer-value">8</div>
-            </div>
-          </div>
-          <div class="timer-item">
-            <div class="label">Hours</div>
-            <div class="timer-value-wrapper">
-              <div class="timer-value">8</div>
-              <div class="timer-value">8</div>
-            </div>
-          </div>
-          <div class="timer-item">
-            <div class="label">Hours</div>
-            <div class="timer-value-wrapper">
-              <div class="timer-value">8</div>
-              <div class="timer-value">8</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="referral">
-        <div class="invite primary-bg">Invite friends to help <img class="icon share-icon" src="../../../assets/images/promotion/hotpromo/refer-spinwheel/share-icon.svg"/></div>
-        <div class="qr primary-bg">Scan QR code<img class="icon qr-icon" src="../../../assets/images/promotion/hotpromo/refer-spinwheel/qr-icon.svg"/></div>
-      </div>
-
-      <div class="list-section">
-        <div class="list-wrapper">
-          <div class="list">
-            <div class="list-row" v-for="winner, index in winnersList" :key="index">
-              <div class="list-item"><span class="cyan">{{ winner.loginName }}</span></div>
-              <div class="list-item"><span class="label">{{ winner.loginName }}</span></div>
-              <div class="list-item">
-                <div class="center points"><span class="highlight">+{{ winner.bonus }}</span><img class="wheel-icon" src="../../../assets/images/promotion/hotpromo/refer-spinwheel/wheel-icon.svg" />
+              <div class="achieved-bar">
+                <div class="achieve-item" v-for="index in 5" :key="index">
+                  <img class="achieved-icon"
+                    src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/achieved-icon.svg" />
+                  <span>{{ (index - 1) * 25}}%</span>
                 </div>
               </div>
             </div>
           </div>
+          <div class="remaining">
+            <span class="highlight">85/</span><span class="label">100</span>
+          </div>
         </div>
-        <div class="withdraw-order-btn btn-primary btn-primary__full center">Withdraw Orders</div>
       </div>
-
-
-      <div class="terms-conditions">
-        <img src="../../../assets/images/promotion/hotpromo/refer-spinwheel/terms-conditions-title.svg" />
-        <div class="content">
-          <ul>
-            <li>When the accumulated amount reaches 300BDT, you can apply for withdrawal.</li>
-          
-            <li>Every time you invite a friend to register and the friend recharges once, you will get 1 free spin.</li>
-          
-            <li>The event lasts for 3 days. After the activity period ends, the accumulated rewards will be reset and the activity will start again.</li>
-          
-            <li>Each user can enjoy 1 free spin opportunity per day, and the number of spins will be reset at 24:00 every day.</li>
-          
-            <li>Once the application is approved, the bonus will be deposited directly into your wallet.</li>
-          
-            <li>The invitees must be qualified for the assistance to be successful.</li>
-          
-            <li>The right to interpret this activity belongs to our company. If you have any questions, please contact customer service.</li>
-          </ul>
+      <div class="remaining">
+        <div>Withdrawal still takes</div>
+        <div class="highlight">BDT 222.000</div>
+      </div>
+    </div>
+    <div class="spin-wheel-container">
+      <div :class="`draw-btn click-pointer ${spinButtonDisable ? 'disabled' : ''}`" @click="spinWheel">
+        <img src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/click-spin-btn.png" />
+      </div>
+      <div class="wheel-stage">
+        <img src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/spin-wheel-stg.png" />
+      </div>
+      <div class="spin-wheel-board">
+        <div class="spin-wheel-frame">
+          <div id="spin-wheel-id" class="spin-wheel">
+            <img id="spin-wheel-bg" class="wheel-bg"
+              src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/spin-wheel-bg1.png" />
+            <div id="spin-wheel-number" class="spin-wheel-number" style="display: none"></div>
+          </div>
         </div>
       </div>
     </div>
-  
-    <q-dialog v-model="showPrizePopup" backdrop-filter="none">
-      <PrizePopup />
-    </q-dialog>
-  </template>
+
+    <div class="remaining-draw-wrapper">
+      <div class="remaining-draw-text">
+        {{ $t("hotPromo.referWheel.remainingDrawTimes") }}
+        <span id="remaning-draw-amt">: {{ remainingDraws }}</span>
+      </div>
+    </div>
+
+    <div class="expiry">
+      <div class="days tertiary-bg center">
+        <div class="label">Days</div>
+        <div class="highlight expiry-day">2</div>
+        <div class="label">Expires later</div>
+      </div>
+      <div class="countdown tertiary-bg center">
+        <div class="timer-item">
+          <div class="label">Hours</div>
+          <div class="timer-value-wrapper">
+            <div class="timer-value">8</div>
+            <div class="timer-value">8</div>
+          </div>
+        </div>
+        <div class="timer-item">
+          <div class="label">Hours</div>
+          <div class="timer-value-wrapper">
+            <div class="timer-value">8</div>
+            <div class="timer-value">8</div>
+          </div>
+        </div>
+        <div class="timer-item">
+          <div class="label">Hours</div>
+          <div class="timer-value-wrapper">
+            <div class="timer-value">8</div>
+            <div class="timer-value">8</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="referral">
+      <div class="invite primary-bg" @click="showInvitePopup = true">Invite friends to help <img class="icon share-icon"
+          src="../../../assets/images/promotion/hotpromo/refer-spinwheel/share-icon.svg" /></div>
+      <div class="qr primary-bg" @click="showQRPopup = true">Scan QR code<img class="icon qr-icon"
+          src="../../../assets/images/promotion/hotpromo/refer-spinwheel/qr-icon.svg" /></div>
+    </div>
+
+    <div class="list-section">
+      <div class="list-wrapper">
+        <div class="list">
+          <div class="list-row" v-for="winner, index in winnersList" :key="index">
+            <div class="list-item"><span class="cyan">{{ winner.loginName }}</span></div>
+            <div class="list-item"><span class="label">{{ winner.loginName }}</span></div>
+            <div class="list-item">
+              <div class="center points"><span class="highlight">+{{ winner.bonus }}</span><img class="wheel-icon"
+                  src="../../../assets/images/promotion/hotpromo/refer-spinwheel/wheel-icon.svg" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="withdraw-order-btn btn-primary btn-primary__full center">Withdraw Orders</div>
+    </div>
+
+
+    <div class="terms-conditions">
+      <img src="../../../assets/images/promotion/hotpromo/refer-spinwheel/terms-conditions-title.svg" />
+      <div class="content">
+        <ul>
+          <li>When the accumulated amount reaches 300BDT, you can apply for withdrawal.</li>
+
+          <li>Every time you invite a friend to register and the friend recharges once, you will get 1 free spin.</li>
+
+          <li>The event lasts for 3 days. After the activity period ends, the accumulated rewards will be reset and the
+            activity will start again.</li>
+
+          <li>Each user can enjoy 1 free spin opportunity per day, and the number of spins will be reset at 24:00 every
+            day.</li>
+
+          <li>Once the application is approved, the bonus will be deposited directly into your wallet.</li>
+
+          <li>The invitees must be qualified for the assistance to be successful.</li>
+
+          <li>The right to interpret this activity belongs to our company. If you have any questions, please contact
+            customer service.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <q-dialog v-model="showInvitePopup" backdrop-filter="none" position="bottom">
+    <InvitePopup />
+  </q-dialog>
+
+  <q-dialog v-model="showPrizePopup" backdrop-filter="none">
+    <PrizePopup prize="FREE" />
+  </q-dialog>
+
+  <q-dialog v-model="showQRPopup" backdrop-filter="none">
+    <QRPopup />
+  </q-dialog>
+</template>
   <script setup>
   import { ref, onMounted } from "vue";
-  import { eventapi } from "src/boot/axios";
+  import { api, eventapi } from "src/boot/axios";
   import { useQuasar } from "quasar";
-  import moment from "moment";
   import { useI18n } from "vue-i18n";
   import { userStore } from "src/stores";
-import PrizePopup from "./PrizePopup.vue";
-  
+  import PrizePopup from "./PrizePopup.vue";
+  import InvitePopup from "./InvitePopup.vue";
+  import QRPopup from "./QRPopup.vue";
+
   const { t } = useI18n();
   const $q = useQuasar();
   const store = userStore();
-  
+
   // spin wheel constants
   const TOTAL_ITEMS = 10;
   const DEFAUL_SPEED = 1;
   const MAX_SPEED = 4;
   const FULL_DEGREE = 360;
   const SPIN_WHEEL_PRIZES = [8888, 28, 999999, 188, 888, 999998, 8, 88888, 388, 999997];
-  
+
   // spin wheel element refs
   const spinBoardRef = ref();
   const spinNumRef = ref();
   const drawBtnRef = ref();
-  
+
   const spinButtonDisable = ref(false);
   const degreesToStopAt = ref([]);
-  const showPrizePopup = ref(true);
+  const showPrizePopup = ref(false);
+  const showQRPopup = ref(false);
+  const showInvitePopup = ref(false);
   const prizePopupBonusAmt = ref();
   const remainingDraws = ref(0);
   const winnersList = ref([]);
-  
+
   let finalDegree = 0;
   let speed = 1;
   var spinSchedule;
   var degree;
-  
+
   const spin = (prizeIndex, stopCallback) => {
     spinButtonDisable.value = true;
     // drawBtnRef.value.style.filter = "brightness(0.85)";
-  
+
     reset();
-  
+
     spinSchedule = setInterval(() => {
       degree++;
       speed += 0.005;
       if (speed >= MAX_SPEED) speed = MAX_SPEED;
-  
+
       finalDegree = (degree * speed) % 360;
       const transformValue = `rotate(${finalDegree}deg)`;
       spinBoardRef.value.style.transform = transformValue;
       spinNumRef.value.style.transform = transformValue;
     }, 1);
-  
+
     // 5s + api return
     stopSpin(prizeIndex, stopCallback);
   };
-  
+
   const getRecords = () => {
     eventapi
       .get("/session/refer-wheel/getRecords?promoCode=bgd-refer-wheel")
@@ -223,43 +240,43 @@ import PrizePopup from "./PrizePopup.vue";
         console.log("here", err);
       });
   };
-  
+
   const stopSpin = (prizeIndex, stopCallback) => {
     // call api
-  
+
     let spinTimeEnd = false;
     let isApiReturned = true;
     setTimeout(() => {
       spinTimeEnd = true;
       attemptStopSpin();
     }, 5000);
-  
+
     // stop spin variables
     const stopTime = 3;
     const stopSpinRound = 3 * 360;
     const endDegree = degreesToStopAt.value[prizeIndex].degree;
-  
+
     const attemptStopSpin = () => {
       finalDegree = endDegree + stopSpinRound;
-  
+
       if (spinTimeEnd && isApiReturned) {
         clearInterval(spinSchedule);
-  
+
         const spinBoardRefStyle = spinBoardRef.value.style;
         const spinNumRefStyle = spinNumRef.value.style;
-  
+
         const transitionTime = `transform ${stopTime}s ease-out`;
         const transformValue = `rotate(${finalDegree}deg)`;
-  
+
         spinBoardRefStyle.transition = transitionTime;
         spinBoardRefStyle.transform = transformValue;
-  
+
         spinNumRefStyle.transition = transitionTime;
         spinNumRefStyle.transform = transformValue;
-  
+
         setTimeout(() => {
           spinButtonDisable.value = false;
-  
+
           setTimeout(() => {
             // drawBtnRef.value.style.filter = "none";
             stopCallback?.();
@@ -268,15 +285,15 @@ import PrizePopup from "./PrizePopup.vue";
       }
     };
   };
-  
+
   const reset = () => {
     degree = finalDegree % 360;
     speed = DEFAUL_SPEED;
-  
+
     spinBoardRef.value.style.transition = "";
     spinNumRef.value.style.transition = "";
   };
-  
+
   const spinWheel = () => {
     //FOr TesTING START
     const res = {
@@ -290,7 +307,7 @@ import PrizePopup from "./PrizePopup.vue";
       bonusIndex = -1;
     }
     const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
-    
+
     spin(prizeIndex, () => {
       showPrizePopup.value = true;
       prizePopupBonusAmt.value = res.data.bonusAmount;
@@ -298,11 +315,11 @@ import PrizePopup from "./PrizePopup.vue";
     });
     return;
     //FOr TesTING END
-  
+
     if (spinButtonDisable.value === true) {
       return;
     }
-  
+
     if (remainingDraws.value <= 0) {
       $q.notify({
         color: "negative",
@@ -312,7 +329,7 @@ import PrizePopup from "./PrizePopup.vue";
       });
       return;
     }
-  
+
     eventapi
       .post("/session/refer-wheel/spin?promoCode=bgd-refer-wheel")
       .then((res) => {
@@ -322,7 +339,7 @@ import PrizePopup from "./PrizePopup.vue";
             bonusIndex = -1;
           }
           const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
-  
+
           spin(prizeIndex, () => {
             showPrizePopup.value = true;
             prizePopupBonusAmt.value = res.data.bonusAmount;
@@ -334,31 +351,42 @@ import PrizePopup from "./PrizePopup.vue";
         console.log(err);
       });
   };
-  
+
   const initSpinWheel = () => {
     eventapi.get("/session/refer-wheel/init?promoCode=bgd-refer-wheel").then((res) => {
       if (res.code == 0) {
         remainingDraws.value = res.data.availableSpin;
       }
     });
-  
+
     getRecords();
   };
-  
+
   onMounted(() => {
     // calc no of spin wheel items and potential stops
     for (var i = 0; i < TOTAL_ITEMS; i++) {
       var the_degree = (FULL_DEGREE / TOTAL_ITEMS) * i * -1;
       degreesToStopAt.value.push({ degree: the_degree, prize: SPIN_WHEEL_PRIZES[i] });
     }
-  
+
     spinBoardRef.value = document.getElementById("spin-wheel-bg");
     spinNumRef.value = document.getElementById("spin-wheel-number");
     drawBtnRef.value = document.querySelector(".draw-btn");
-  
+
     initSpinWheel();
+
+    let tgDomain = window.location.origin + "/";
+    if (store.isApp()) {
+      tgDomain = store.evip ? "https://" + store.evip + "/" : store.h5Url;
+    }
+
+    api.get("/session/member/referralCode").then((res) => {
+      if (res.code === 0) {
+        selfTgurl.value = tgDomain + "refer/" + res.data;
+      }
+    });
   });
-  </script>
+</script>
   
   <style lang="scss" scoped>
 
@@ -376,7 +404,9 @@ import PrizePopup from "./PrizePopup.vue";
     background: #95E87321;
   }
 
-  .primary-bg, .secondary-bg, .tertiary-bg {
+  .primary-bg,
+  .secondary-bg,
+  .tertiary-bg {
     border-radius: 10px;
     padding: 5px 10px;
     margin-bottom: 15px;
@@ -426,7 +456,7 @@ import PrizePopup from "./PrizePopup.vue";
 
               .amount {
                 font-size: 50px;
-                fill:url(#gradientAmount);
+                fill: url(#gradientAmount);
                 text-shadow: 3px 3px #A00022;
                 font-family: 'Poppins';
                 font-weight: 500;
@@ -519,7 +549,7 @@ import PrizePopup from "./PrizePopup.vue";
       .days {
         display: flex;
         flex-direction: column;
-        
+
 
         .expiry-day {
           font-weight: bold;
@@ -555,11 +585,17 @@ import PrizePopup from "./PrizePopup.vue";
       gap: 10px;
       font-weight: 600;
 
-      .invite, .qr {
+      .invite,
+      .qr {
         display: flex;
         height: 50px;
         align-items: center;
         justify-content: space-around;
+        cursor: pointer;
+
+        &:hover {
+          filter: brightness(0.9);
+        }
 
         .icon {
           width: 22px;
@@ -641,22 +677,22 @@ import PrizePopup from "./PrizePopup.vue";
     color: #ffffff;
     font-weight: bold;
   }
+
   .spin-wheel-container {
     position: relative;
     margin: 25px 0px 25px;
     text-align: center;
   }
-  
+
   .spin-wheel-frame {
     position: relative;
     width: 330px;
     height: 330px;
     margin: 0 auto;
-    background: url(../../../assets/images/promotion/hotpromo/refer-spinwheel/spin-wheel-frame.png) no-repeat center
-      center;
+    background: url(../../../assets/images/promotion/hotpromo/refer-spinwheel/spin-wheel-frame.gif) no-repeat center center;
     background-size: 100%;
   }
-  
+
   .wheel-frame {
     position: relative;
     z-index: 3;
@@ -667,7 +703,7 @@ import PrizePopup from "./PrizePopup.vue";
     width: 100%;
     height: 100%;
   }
-  
+
   .chosen-color-bg {
     position: absolute;
     z-index: 3;
@@ -676,7 +712,7 @@ import PrizePopup from "./PrizePopup.vue";
     transform: translate(-50%, 0);
     width: 230px;
   }
-  
+
   .spin-wheel {
     position: absolute;
     z-index: 2;
@@ -685,16 +721,17 @@ import PrizePopup from "./PrizePopup.vue";
     width: 260px;
     height: 260px;
   }
-  
+
   .wheel-bg {
     width: 100%;
     height: 100%;
   }
+
   .spin-wheel-cny-hat {
     width: 100%;
     height: 100%;
   }
-  
+
   .spin-wheel-number {
     position: absolute;
     z-index: 5;
@@ -703,11 +740,12 @@ import PrizePopup from "./PrizePopup.vue";
     width: 550px;
     height: 550px;
   }
-  
+
   .spin-wheel-number img {
     width: 100%;
     height: 100%;
   }
+
   .draw-btn {
     width: 110px;
     height: auto;
@@ -717,34 +755,34 @@ import PrizePopup from "./PrizePopup.vue";
     top: calc(49.5%);
     left: 52.5%;
     transform: translate(-50%, -50%);
-  
+
     &.disabled {
       filter: brightness(0.85);
       opacity: 1 !important;
       pointer-events: none;
     }
   }
-  
+
   .click-pointer,
   .history-btn {
     cursor: pointer;
   }
-  
+
   .click-pointer:hover,
   .history-btn {
     filter: brightness(1);
   }
-  
+
   .history-btn:active {
     transform: translate(0px, 1px);
     filter: brightness(0.9);
   }
-  
+
   .click-pointer:active {
     transform: translate(-50%, calc(-50% + 1px));
     filter: brightness(0.9);
   }
-  
+
   .wheel-stage {
     width: 370px;
     height: 500px;
@@ -753,12 +791,12 @@ import PrizePopup from "./PrizePopup.vue";
     bottom: 24%;
     left: 50%;
     transform: translate(-50%, 50%);
-  
+
     img {
       width: 100%;
     }
   }
-  
+
   .cny-hat {
     width: 120px;
     height: auto;
@@ -767,55 +805,55 @@ import PrizePopup from "./PrizePopup.vue";
     top: -45px;
     left: 50%;
     transform: translate(-50%, 0%);
-  
+
     img {
       width: 100%;
     }
   }
-  
+
   .draw-btn img {
     width: 100%;
   }
-  
+
   .spin-wheel-board {
     position: relative;
     z-index: 20;
     background-size: contain;
   }
-  
+
   ::-webkit-scrollbar {
     width: 6px;
   }
-  
+
   /* Track */
   ::-webkit-scrollbar-track {
     background: #f1f1f1;
   }
-  
+
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background: #888;
   }
-  
+
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
-  
+
   .prize-popup {
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow: hidden !important;
   }
-  
+
   .prize-gold {
     display: flex;
     align-items: center;
     flex-direction: column;
     color: #c7c7c7;
   }
-  
+
   .prize-amount {
     font-size: 38px;
     color: #ffffff;
@@ -823,12 +861,12 @@ import PrizePopup from "./PrizePopup.vue";
     margin-top: 10px;
     margin-bottom: 20px;
   }
-  
+
   .prizePopupContainer {
     display: flex;
     justify-content: center;
     align-items: center;
-  
+
     .wrapper {
       display: flex;
       flex-direction: column;
@@ -839,6 +877,7 @@ import PrizePopup from "./PrizePopup.vue";
       // background: url("./../../../assets/images/promotion/hotpromo/refer-spinwheel/prize-popup.png");
       // background-size: 100% 100%;
       position: relative;
+
       .close {
         position: absolute;
         right: 0;
@@ -846,7 +885,7 @@ import PrizePopup from "./PrizePopup.vue";
         width: 20px;
         height: 20px;
       }
-  
+
       .bold-text {
         font-family: sans-serif;
         font-size: 20px;
@@ -855,7 +894,7 @@ import PrizePopup from "./PrizePopup.vue";
         text-align: center;
         color: #530102;
       }
-  
+
       .golden-text {
         font-size: 25px;
         letter-spacing: 2px;
@@ -864,15 +903,17 @@ import PrizePopup from "./PrizePopup.vue";
         background-clip: text;
         -webkit-text-fill-color: transparent;
       }
+
       .darkred-text {
         color: #8c3b00;
         font-size: 20px;
       }
+
       .red-text {
         color: #ff0000;
         font-size: 28px;
       }
-  
+
       .win-text {
         font-size: 28px;
         letter-spacing: 2px;
@@ -881,7 +922,7 @@ import PrizePopup from "./PrizePopup.vue";
         -webkit-text-fill-color: transparent;
         filter: drop-shadow(1px 1px #00000050);
       }
-  
+
       .popup-header {
         letter-spacing: normal;
         font-size: 25px;
@@ -890,7 +931,7 @@ import PrizePopup from "./PrizePopup.vue";
         justify-content: center;
         align-items: center;
       }
-  
+
       .content {
         height: 260px;
         display: flex;
@@ -899,7 +940,7 @@ import PrizePopup from "./PrizePopup.vue";
         align-items: center;
         padding: 20px;
         margin-right: 10px;
-  
+
         .action-btn {
           // background: url("./../../../assets/images/promotion/hotpromo/refer-spinwheel/prize-popup-action-btn.png")
           // no-repeat center center;
@@ -918,7 +959,7 @@ import PrizePopup from "./PrizePopup.vue";
       }
     }
   }
-  
+
   .remaining-draw-wrapper {
     .remaining-draw-text {
       color: #FFFFFF;
@@ -931,7 +972,7 @@ import PrizePopup from "./PrizePopup.vue";
       z-index: 23;
     }
   }
-  
+
   .evt-top-header {
     background: url("./../../../assets/images/promotion/hotpromo/refer-spinwheel/top-header.png") no-repeat center center;
     background-size: 100% auto;
@@ -945,7 +986,7 @@ import PrizePopup from "./PrizePopup.vue";
     max-width: 400px;
     margin: 0 auto 24px;
   }
-  
+
   .promo-info-container {
     display: grid;
     border: 1px solid #3f8cff;
@@ -954,7 +995,7 @@ import PrizePopup from "./PrizePopup.vue";
     max-width: 1200px;
     margin: 50px auto 0;
     //   margin-bottom: 150px;
-  
+
     .promo-info-banner {
       background-size: 100% 100%;
       width: 100%;
@@ -968,12 +1009,12 @@ import PrizePopup from "./PrizePopup.vue";
       background: #3f8cff0d;
       position: relative;
     }
-  
+
     .promo-info-content {
       height: 100%;
       max-height: 140px;
       overflow-y: auto;
-  
+
       .event-info-item {
         display: grid;
         grid-template-columns: 100px 1fr;
@@ -981,11 +1022,12 @@ import PrizePopup from "./PrizePopup.vue";
         align-items: center;
         padding: 7px;
         color: #530102;
-  
+
         .event-info-title {
           font-weight: bold;
         }
       }
+
       .nowinners-list {
         display: flex;
         width: 100%;
@@ -995,6 +1037,7 @@ import PrizePopup from "./PrizePopup.vue";
         color: #7a8eb9;
         font-size: 16px;
       }
+
       .winners-list-item {
         font-size: 12px;
         display: grid;
@@ -1004,21 +1047,21 @@ import PrizePopup from "./PrizePopup.vue";
         font-weight: bold;
         padding: 7px;
         text-align: center;
-  
+
         &:not(:last-child) {
           border-bottom: 0.58px dotted #53010233;
         }
-  
+
         .winner-date {
           font-weight: 700;
           color: #7a8eb9;
         }
-  
+
         .winner-loginName {
           font-weight: 700;
           color: #7a8eb9;
         }
-  
+
         .winner-prize {
           font-weight: 700;
           color: #3f8cff;
@@ -1026,5 +1069,5 @@ import PrizePopup from "./PrizePopup.vue";
       }
     }
   }
-  </style>
+</style>
   

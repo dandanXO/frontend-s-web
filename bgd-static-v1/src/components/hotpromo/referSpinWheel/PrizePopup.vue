@@ -1,51 +1,58 @@
 <template>
-    <div class="congrats-container">
-      <q-btn icon="close" round dense v-close-popup class="congrats-close" />
-      <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header.png" /></div>
-      <div class="congrats-coupons">
-        <img class="light-source" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/light-source.png" />
-        <div class="congrats-highlight">
-            <img class="money-icon" src="../../../assets/images/promotion/hotpromo/refer-spinwheel/money-pile-icon.png"/>
-            <svg class="gradient-amount-wrapper" preserveAspectRatio='xMinYMin' xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <linearGradient id="gradientAmount" gradientTransform="rotate(90)">
-                        <stop offset="0%"  stop-color="#FDEE4F"/>
-                        <stop offset="100%" stop-color="#FF953E"/>
-                    </linearGradient>
-                </defs>
-                <text id="test"  x="0" y="43" class="amount">300</text>
-            </svg>
-        </div>
-    </div>
-
-      <div class="congrats-title">{{ $t("hotPromo.referWheel.withdrawSuccessfully") }}</div>
-
-      <div class="congrats-button">
-        <router-link to="/promo?name=bgd-register-claim-bonus">
-          <q-btn no-caps unelevated class="recharge-btn" :loading="false">
-            {{ $t("hotPromo.referWheel.recharge") }}
-          </q-btn>
-        </router-link>
+  <div class="congrats-container">
+    <q-btn icon="close" round dense v-close-popup class="congrats-close" />
+    <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header.png" /></div>
+    <div class="congrats-coupons">
+      <img class="light-source" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/light-source.png" />
+      <div class="congrats-highlight">
+        <img v-if="props.prize === 'FREE'" class="money-icon"
+          src="../../../assets/images/promotion/hotpromo/refer-spinwheel/free-wheel-spin-icon.svg" />
+        <img v-else class="money-icon"
+          src="../../../assets/images/promotion/hotpromo/refer-spinwheel/money-pile-icon.png" />
+        <svg class="gradient-amount-wrapper" :width="props.prize === 'FREE' ? 60 : 120" height="100"
+          xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="gradientAmount" gradientTransform="rotate(90)">
+              <stop offset="0%" stop-color="#FDEE4F" />
+              <stop offset="100%" stop-color="#FF953E" />
+            </linearGradient>
+          </defs>
+          <text id="test" x="50%" y="50%" class="amount">{{ props.prize === 'FREE' ? 'X1' : props.prize }}</text>
+        </svg>
       </div>
     </div>
-  </template>
+
+    <div class="congrats-title">{{ $t("hotPromo.referWheel.withdrawSuccessfully") }}</div>
+
+    <div class="congrats-button">
+      <router-link to="/promo?name=bgd-register-claim-bonus">
+        <q-btn no-caps unelevated class="recharge-btn" :loading="false">
+          {{ $t("hotPromo.referWheel.recharge") }}
+        </q-btn>
+      </router-link>
+    </div>
+  </div>
+</template>
   
-  <script setup></script>
+  <script setup>
+  const props = defineProps(['prize']);
+</script>
   
   <style lang="scss" scoped>
 
-.gradient-amount-wrapper {
-    max-height: 55px;
-    max-width: 100px;
+  .gradient-amount-wrapper {
 
     .amount {
-        font-size: 50px;
-        fill:url(#gradientAmount);
-        text-shadow: 3px 3px #A00022;
-        font-family: 'Poppins';
-        font-weight: 700;
+      font-size: 50px;
+      fill: url(#gradientAmount);
+      text-shadow: 3px 3px #A00022;
+      font-family: 'Poppins';
+      font-weight: 700;
+      text-anchor: middle;
+      dominant-baseline: middle;
     }
-}
+  }
+
   .congrats-button {
     position: absolute;
     bottom: -60px;
@@ -53,6 +60,7 @@
     transform: translateX(-50%);
     white-space: nowrap;
   }
+
   .congrats-wrapper {
     overflow: hidden;
     display: flex;
@@ -60,6 +68,7 @@
     gap: 20px;
     align-items: center;
   }
+
   .congrats-container {
     background-color: #1e371f;
     border: 1px solid #337e3a;
@@ -70,7 +79,7 @@
     position: relative;
     overflow: visible;
     border-radius: 12px;
-  
+
     &:before {
       content: "";
       background-image: url(../../../assets/images/index/modal/congrats-container-light.png);
@@ -83,20 +92,20 @@
       left: 0;
       top: -150px;
     }
-  
+
     .congrats-header {
       display: flex;
       justify-content: center;
       margin-top: -18px;
       z-index: 2;
-  
+
       img {
         display: block;
         width: 100%;
         max-width: 320px;
       }
     }
-  
+
     .congrats-coupons {
       .light-source {
         display: block;
@@ -105,7 +114,7 @@
         max-width: 300px;
       }
     }
-  
+
     .congrats-title {
       color: #ffffff;
       display: flex;
@@ -113,7 +122,7 @@
       font-size: 18px;
       font-weight: bold;
     }
-  
+
     .congrats-highlight {
       color: #fff96f;
       font-size: 45px;
@@ -129,24 +138,24 @@
       justify-content: center;
       width: 100%;
       gap: 10px;
-        top: 55%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 10px 0;
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 10px 0;
 
-        .money-icon {
-            width: 80px;
-        }
+      .money-icon {
+        width: 80px;
+      }
     }
   }
-  
+
   .congrats-close {
     position: absolute;
     top: 10px;
     right: 10px;
     background: rgba(255, 255, 255, 0.1);
   }
-  
+
   .recharge-btn {
     background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
     border-radius: 10px;
@@ -155,5 +164,5 @@
     line-height: 24px;
     color: #000a01;
   }
-  </style>
+</style>
   

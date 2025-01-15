@@ -645,7 +645,9 @@ export default {
       remainingDrawTimes: "Remaining times",
       congratulations: "Congratulations",
       withdrawSuccessfully: "Withdraw successfully",
-      recharge: "Recharge"
+      recharge: "Recharge",
+      shareSocialText: "Invite friends to help withdraw coins",
+      save: "Save"
     },
     signIn7Days: {
       continuousSignIn: "Continuous sign-in:",
