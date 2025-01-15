@@ -128,7 +128,7 @@
             <div class="list-item"><span class="cyan">{{ winner.loginName }}</span></div>
             <div class="list-item"><span class="label">{{ winner.loginName }}</span></div>
             <div class="list-item">
-              <div class="center points"><span class="highlight">+{{ winner.bonus }}</span><img class="wheel-icon"
+              <div class="center points"><span class="highlight">+1</span><img class="wheel-icon"
                   src="../../../assets/images/promotion/hotpromo/refer-spinwheel/wheel-icon.svg" />
               </div>
             </div>
@@ -169,7 +169,7 @@
   </q-dialog>
 
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
-    <PrizePopup prize="300" />
+    <PrizePopup :prize="prizePopupBonusAmt" />
   </q-dialog>
 
   <q-dialog v-model="showQRPopup" backdrop-filter="none">
@@ -217,11 +217,11 @@
   const selfTgurl = ref("");
 
   // spin wheel constants
-  const TOTAL_ITEMS = 10;
+  const TOTAL_ITEMS = 8;
   const DEFAUL_SPEED = 1;
   const MAX_SPEED = 4;
   const FULL_DEGREE = 360;
-  const SPIN_WHEEL_PRIZES = [8888, 28, 999999, 188, 888, 999998, 8, 88888, 388, 999997];
+  const SPIN_WHEEL_PRIZES = ['ADDSPIN',8,'RANDBONUS','THANKS',5,10,'withdraw',2];
 
   // spin wheel element refs
   const spinBoardRef = ref();
@@ -337,19 +337,20 @@
     //FOr TesTING START
     // const res = {
     //   data: {
-    //     bonusAmount: 999999,
-    //     availableSpin: 0
+    //     bonus: 8,
+    //     availableSpin: 0,
+    //     spinType: 'FIXEDBONUS'
     //   }
     // }
-    // var bonusIndex = res.data.bonusAmount;
-    // if (res.data.type === "CONSOLATION") {
-    //   bonusIndex = -1;
-    // }
+    // var bonusIndex = res.data.spinType === 'FIXEDBONUS' ? res.data.bonus : res.data.spinType;
+
     // const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
 
+
+    // console.log('here', bonusIndex, prizeIndex)
     // spin(prizeIndex, () => {
     //   showPrizePopup.value = true;
-    //   prizePopupBonusAmt.value = res.data.bonusAmount;
+    //   prizePopupBonusAmt.value = res.data.spinType === 'FIXEDBONUS' ? res.data.bonus : res.data.spinType;
     //   remainingDraws.value = res.data.availableSpin;
     // });
     // return;
@@ -373,15 +374,12 @@
       .post("/session/refer-wheel/spin?promoCode=bgd-refer-wheel")
       .then((res) => {
         if (res.code == 0) {
-          var bonusIndex = res.data.bonusAmount;
-          if (res.data.type === "CONSOLATION") {
-            bonusIndex = -1;
-          }
+          var bonusIndex = res.data.spinType === 'FIXEDBONUS' ? res.data.bonus : res.data.spinType;
           const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
 
           spin(prizeIndex, () => {
             showPrizePopup.value = true;
-            prizePopupBonusAmt.value = res.data.bonusAmount;
+            prizePopupBonusAmt.value = res.data.spinType === 'FIXEDBONUS' ? res.data.bonus : res.data.spinType;
             remainingDraws.value = res.data.availableSpin;
           });
         }

@@ -5,11 +5,15 @@
     <div class="congrats-coupons">
       <img class="light-source" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/light-source.png" />
       <div class="congrats-highlight">
-        <img v-if="props.prize === 'FREE'" class="money-icon"
+        <img v-if="props.prize === 'ADDSPIN'" class="money-icon"
           src="../../../assets/images/promotion/hotpromo/refer-spinwheel/free-wheel-spin-icon.svg" />
+        <img v-else-if="props.prize === 'THANKS'" class="money-icon"
+          src="../../../assets/images/promotion/hotpromo/refer-spinwheel/thanks-icon.svg" />
+        <img v-else-if="props.prize === 'RANDBONUS'" class="money-icon"
+          src="../../../assets/images/promotion/hotpromo/refer-spinwheel/random-icon.svg" />
         <img v-else class="money-icon"
           src="../../../assets/images/promotion/hotpromo/refer-spinwheel/money-pile-icon.png" />
-        <svg class="gradient-amount-wrapper" :width="props.prize === 'FREE' ? 60 : 120" height="100"
+        <svg class="gradient-amount-wrapper" :width="250" height="50"
           xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="gradientAmount" gradientTransform="rotate(90)">
@@ -17,7 +21,7 @@
               <stop offset="100%" stop-color="#FF953E" />
             </linearGradient>
           </defs>
-          <text id="test" x="50%" y="50%" class="amount">{{ props.prize === 'FREE' ? 'X1' : props.prize }}</text>
+          <text id="test" x="50%" y="50%" class="amount">{{ props.prize === 'RANDBONUS' ? 'RANDOM' : props.prize === 'ADDSPIN' ? 'X1' : props.prize }}</text>
         </svg>
       </div>
     </div>
@@ -122,6 +126,7 @@
     }
 
     .congrats-highlight {
+      flex-direction: column;
       color: #fff96f;
       font-size: 45px;
       text-align: center;
@@ -135,7 +140,7 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      gap: 10px;
+      gap: 5px;
       top: 55%;
       left: 50%;
       transform: translate(-50%, -50%);
