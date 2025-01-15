@@ -84,7 +84,7 @@ const handleShareToTikTok = (url) => {
 
 const copyHrefLink = () => {
     navigator.clipboard
-        .writeText(selfTgurl.value)
+        .writeText(props.selfTgurl)
         .then(() => {
             $q.notify({
                 message: "Link copied to clipboard",
