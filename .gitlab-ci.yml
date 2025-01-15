@@ -1101,6 +1101,7 @@ build-image-id1-static-v1:
     PROJECT: id1-static-v1
   needs:
     - build-id1-static-v1
+
 #===============================================================================================
 
 build-bgd-static-v1:
