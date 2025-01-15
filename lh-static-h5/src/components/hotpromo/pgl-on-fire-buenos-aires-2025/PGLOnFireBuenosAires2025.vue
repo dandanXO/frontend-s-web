@@ -36,7 +36,9 @@
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
-          <div class="right">活动期间在PGL on FiRe布宜诺斯艾利斯2025总有效投注≥5,000元即可获得最高1888元的投注金。</div>
+          <div class="right">
+            活动期间在PGL on FiRe布宜诺斯艾利斯2025总有效投注≥5,000元即可获得最高1,888元的投注金。
+          </div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
           <thead>
