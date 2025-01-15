@@ -352,7 +352,7 @@ export default defineComponent({
         console.log("TSET This 2");
         // Push initialization
         MTpushInterface.init({
-          appkey: "b654a90b71ff849be7a40cf3",
+          appkey: "b5889158edb4a1de20f79367",
           user_str: randomUid(),
           fail(err) {
             console.log("Failed to create an online push", err);
