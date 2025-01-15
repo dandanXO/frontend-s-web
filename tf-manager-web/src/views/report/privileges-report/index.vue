@@ -44,7 +44,7 @@
           icon="el-icon-search"
           size="mini"
           type="success"
-          @click="loadPrivilegeReport(false)"
+          @click="uiControl.display === 'DATA' ? loadPrivilegeReport(false) : loadCharts() "
         >
           {{ t('fields.search') }}
         </el-button>
@@ -65,9 +65,23 @@
         >{{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
+      <div style="margin-top: 10px;">
+        <el-radio-group v-model="uiControl.display" size="small">
+          <el-radio-button label="DATA">{{ t('fields.table') }}</el-radio-button>
+          <el-radio-button label="CHART">{{ t('fields.chart') }}</el-radio-button>
+        </el-radio-group>
+      </div>
     </div>
 
+    <el-card v-if="uiControl.display === 'CHART'" v-loading="uiControl.chartLoading">
+      <Chart :options="amountPiechatOptions" />
+    </el-card>
+    <el-card v-if="uiControl.display === 'CHART'" v-loading="uiControl.chartLoading" style="margin-top: 10px;">
+      <Chart :options="countPiechatOptions" />
+    </el-card>
+
     <el-table
+      v-if="uiControl.display === 'DATA'"
       :data="page.records"
       ref="table"
       row-key="name"
@@ -180,13 +194,14 @@ import {
   getPrivilegeReport,
   getDailyReport,
   getTotalPrivilegeAmount,
-  getPrivilegeReportExport,
+  getPrivilegeReportExport, getPrivilegeReportAll,
 } from '../../../api/report-privilege'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
 import { hasPermission } from '../../../utils/util'
+import Chart from "@/components/charts/Charts.vue";
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -219,8 +234,122 @@ const request = reactive({
 })
 
 const uiControl = reactive({
-  messageVisible: false
+  display: "DATA",
+  messageVisible: false,
+  chartLoading: false,
 });
+
+function getAmountChart(summaryList, chartOptions) {
+  const dataset = chartOptions.dataset.source
+  const legendData = chartOptions.legend.data
+  if (summaryList.length > 0) {
+    summaryList.forEach((item, index) => {
+      const data = []
+      data.push(item.name)
+      data.push(Math.round(item.totalAmount * 100) / 100)
+      dataset.push(data)
+      legendData.push({ name: item.name })
+    })
+    chartOptions.dataset.source = dataset
+    chartOptions.legend.data = legendData
+  }
+}
+
+function getCountChart(summaryList, chartOptions) {
+  const dataset = chartOptions.dataset.source
+  const legendData = chartOptions.legend.data
+  if (summaryList.length > 0) {
+    summaryList.forEach((item, index) => {
+      const data = []
+      data.push(item.name)
+      data.push(item.totalCount)
+
+      dataset.push(data)
+      legendData.push({ name: item.name })
+    })
+    chartOptions.dataset.source = dataset
+    chartOptions.legend.data = legendData
+  }
+}
+
+const amountPiechatOptions = reactive({
+  title: {
+    text: t('fields.privilegeAmountRatio'),
+  },
+  legend: {
+    type: 'scroll',
+    orient: 'vertical',
+    right: 10,
+    top: 20,
+    bottom: 20,
+    data: []
+  },
+  height: '220px',
+  dataset: {
+    source: [['Privilege', 'Amount']],
+  },
+  series: [
+    {
+      type: 'pie',
+      top: '20px',
+      emphasis: {
+        focus: 'self',
+        label: {
+          show: true,
+          formatter: '{b}: [' + t('fields.amount') + ': {@Amount}] ({d}%)',
+        }
+      },
+      label: {
+        show: false,
+      },
+      encode: {
+        itemName: 'Privilege',
+        value: 'Amount',
+        tooltip: 'Amount',
+      },
+    },
+  ],
+})
+
+const countPiechatOptions = reactive({
+  title: {
+    text: t('fields.privilegeCountRatio'),
+  },
+  height: '220px',
+  dataset: {
+    source: [['Privilege', 'Count']],
+  },
+  legend: {
+    type: 'scroll',
+    orient: 'vertical',
+    right: 10,
+    top: 20,
+    bottom: 20,
+    data: []
+  },
+  series: [
+    {
+      type: 'pie',
+      top: '20px',
+      emphasis: {
+        focus: 'self',
+        label: {
+          show: true,
+          formatter: '{b}: [' + t('fields.count') + ': {@Count}] ({d}%)',
+        }
+      },
+      label: {
+        show: false,
+        formatter: '{b}: [' + t('fields.count') + ': {@Count}] ({d}%)',
+      },
+      encode: {
+        itemName: 'Privilege',
+        value: 'Count',
+        tooltip: 'Count',
+      },
+    },
+  ],
+})
 
 const shortcuts = getShortcuts(t)
 async function loadDaily(row, expandedRows) {
@@ -332,6 +461,34 @@ async function loadPrivilegeReport(first) {
   page.loading = false
 }
 
+async function loadCharts() {
+  uiControl.chartLoading = true
+  const requestCopy = { ...request }
+  const query = {}
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value
+    }
+  })
+  if (request.recordTime !== null) {
+    if (request.recordTime.length === 2) {
+      query.recordTime = request.recordTime.join(',')
+    }
+  }
+
+  const { data } = await getPrivilegeReportAll(query)
+  getAmountChart(
+    data,
+    amountPiechatOptions
+  )
+  getCountChart(
+    data,
+    countPiechatOptions
+  )
+
+  uiControl.chartLoading = false
+}
+
 function patchRecord(records) {
   if (records.length > 0) {
     records.forEach((item, index) => {
@@ -388,6 +545,7 @@ onMounted(async () => {
     request.siteId = site.value.id
   }
   await loadPrivilegeReport(true)
+  await loadCharts()
 })
 </script>
 
