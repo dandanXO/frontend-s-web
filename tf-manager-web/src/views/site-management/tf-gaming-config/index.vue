@@ -17,7 +17,7 @@
         <el-form-item :label="t('fields.code')" prop="code">
           <el-input v-model="form.code" style="width: 350px;" disabled />
         </el-form-item>
-        <el-form-item :label="t('fields.status')" prop="status">
+        <!-- <el-form-item :label="t('fields.status')" prop="status">
           <el-radio-group v-model="form.status">
             <el-radio
               v-for="c in uiControl.status"
@@ -27,6 +27,23 @@
             >
               {{ c.displayName }}
             </el-radio>
+          </el-radio-group>
+        </el-form-item> -->
+        <el-form-item :label="t('fields.status')" prop="status">
+          <el-radio-group
+            v-model="form.status"
+            size="mini"
+            style="width: 300px"
+          >
+            <el-radio-button label="OPEN">
+              {{ t('common.status.OPEN') }}
+            </el-radio-button>
+            <el-radio-button label="CLOSE">
+              {{ t('common.status.CLOSE') }}
+            </el-radio-button>
+            <el-radio-button label="TEST">
+              {{ t('common.status.TEST') }}
+            </el-radio-button>
           </el-radio-group>
         </el-form-item>
         <el-form-item :label="t('fields.startHour')" prop="startHour">
@@ -67,7 +84,7 @@
       :empty-text="t('fields.noData')"
     >
       <el-table-column prop="code" :label="t('fields.code')" />
-      <el-table-column prop="status" :label="t('fields.status')">
+      <!-- <el-table-column prop="status" :label="t('fields.status')">
         <template #default="scope">
           <el-tag v-if="scope.row.status === 'OPEN'" type="success">
             {{ scope.row.status }}
@@ -78,6 +95,19 @@
           <el-tag v-if="scope.row.status === 'TEST'">
             {{ scope.row.status }}
           </el-tag>
+        </template>
+      </el-table-column> -->
+      <el-table-column prop="status" :label="t('fields.status')" min-width="130">
+        <template #default="scope">
+          <el-radio-group
+            v-model="scope.row.status"
+            size="mini"
+            @change="changeUpdateStatus(scope.row.id, scope.row.status)"
+          >
+            <el-radio-button label="OPEN">{{ t('common.status.OPEN') }}</el-radio-button>
+            <el-radio-button label="CLOSE">{{ t('common.status.CLOSE') }}</el-radio-button>
+            <el-radio-button label="TEST">{{ t('common.status.TEST') }}</el-radio-button>
+          </el-radio-group>
         </template>
       </el-table-column>
       <el-table-column prop="startHour" :label="t('fields.startHour')" />
@@ -107,6 +137,7 @@ import { ElMessage } from 'element-plus'
 import {
   updateConfig,
   getConfigList,
+  updateConfigState,
 } from '../../../api/tf-gaming-config'
 import { getSiteListSimple } from '../../../api/site'
 import { hasPermission } from '../../../utils/util'
@@ -213,6 +244,12 @@ function edit() {
 
 function submit() {
   edit()
+}
+
+async function changeUpdateStatus(id, state) {
+  await updateConfigState(id, state)
+  ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+  await loadConfigList()
 }
 
 onMounted(async () => {

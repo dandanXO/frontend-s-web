@@ -199,7 +199,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <!-- <img :src="accDialogImg" /> -->
+            <img :src="accDialogImg" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -228,7 +228,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <!-- <img :src="accDialogImg" /> -->
+            <img :src="accDialogImg" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -1013,7 +1013,7 @@ export default defineComponent({
       loadPromoBanner("LOGIN").then((res) => {
         if (res.code === 0) {
           const promoImageDir = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
-          accDialogImg.value = promoImageDir + res.data[0].desktopImageUrl
+          accDialogImg.value = promoImageDir + res.data[0].desktopImageUrlDark
         }
       })
     }
@@ -2238,11 +2238,13 @@ body {
           max-width: 963px;
           max-height: 896px;
           border-radius: 20px;
-          background: url("@/assets/home/auth/test-login-banner.png") no-repeat center center;
-          background-size: 100% 100%;
           width: 100%;
           height: 100%;
           border-radius: 0px;
+
+          img {
+            object-fit: cover;
+          }
         }
       }
 

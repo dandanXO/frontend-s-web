@@ -186,7 +186,7 @@
               </el-checkbox>
             </el-checkbox-group>
           </el-form-item>
-          <el-form-item :label="t('fields.status')" prop="status">
+          <!-- <el-form-item :label="t('fields.status')" prop="status">
             <el-radio-group v-model="form.status">
               <el-radio
                 v-for="c in uiControl.status"
@@ -196,6 +196,22 @@
               >
                 {{ c.displayName }}
               </el-radio>
+            </el-radio-group>
+          </el-form-item> -->
+          <el-form-item :label="t('fields.status')" prop="status">
+            <el-radio-group
+              v-model="form.status"
+              style="width: 300px"
+            >
+              <el-radio-button label="OPEN">
+                {{ t('common.status.OPEN') }}
+              </el-radio-button>
+              <el-radio-button label="CLOSE">
+                {{ t('common.status.CLOSE') }}
+              </el-radio-button>
+              <el-radio-button label="TEST">
+                {{ t('common.status.TEST') }}
+              </el-radio-button>
             </el-radio-group>
           </el-form-item>
           <el-form-item :label="t('fields.triggerType')" prop="triggerType">
@@ -579,9 +595,9 @@
             size="mini"
             @change="changePrivilegeStatus(scope.row.id, scope.row.status)"
           >
-            <el-radio-button label="OPEN">OPEN</el-radio-button>
-            <el-radio-button label="CLOSE">CLOSE</el-radio-button>
-            <el-radio-button label="TEST">TEST</el-radio-button>
+            <el-radio-button label="OPEN">{{ t('common.status.OPEN') }}</el-radio-button>
+            <el-radio-button label="CLOSE">{{ t('common.status.CLOSE') }}</el-radio-button>
+            <el-radio-button label="TEST">{{ t('common.status.TEST') }}</el-radio-button>
           </el-radio-group>
         </template>
       </el-table-column>

@@ -1134,7 +1134,7 @@ export default defineComponent({
                 }
 
                 .label-date {
-                  color: rgba($color-white, 20%);
+                  color: rgba($color-white, 90%);
                 }
               }
 

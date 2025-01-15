@@ -37,7 +37,7 @@ default:
   image:
     name: sonarsource/sonar-scanner-cli:latest
     entrypoint: [""]
-  script: 
+  script:
     - sonar-scanner
   allow_failure: true
   only:
@@ -59,7 +59,7 @@ default:
     - cd $PROJECT
     - npm install
     - npm install -g @quasar/cli
-    - export NODE_OPTIONS="$NODE_OPTIONS" 
+    - export NODE_OPTIONS="$NODE_OPTIONS"
     - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "test" ]; then npm run build:test; else npm run build:prod; fi
   artifacts:
    untracked: true
@@ -1101,6 +1101,21 @@ build-image-id1-static-v1:
     PROJECT: id1-static-v1
   needs:
     - build-id1-static-v1
+
+#===============================================================================================
+
+build-ind-download-pwa:
+  extends: .build-projects
+  variables:
+    PROJECT: ind-download-pwa
+
+build-image-ind-download-pwa:
+  extends: .docker-build
+  variables:
+    PROJECT: ind-download-pwa
+  needs:
+    - build-ind-download-pwa
+
 #===============================================================================================
 
 build-bgd-static-v1:
