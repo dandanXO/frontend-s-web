@@ -51,7 +51,8 @@
     </div>
     <div class="spin-wheel-container">
       <div :class="`draw-btn click-pointer ${spinButtonDisable ? 'disabled' : ''}`" @click="spinWheel">
-        <img class="spin-btn" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/click-spin-btn.png" />
+        <img v-if="languageVal === 'en'" class="spin-btn" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/click-spin-btn-en.png" />
+        <img v-else class="spin-btn" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/click-spin-btn-bn.png" />
         <img class="hand" v-if="!spinButtonDisable"
           src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/hand.png" />
       </div>
@@ -690,6 +691,7 @@
         align-items: center;
         justify-content: space-around;
         cursor: pointer;
+        line-height: 15px;
 
         &:hover {
           filter: brightness(0.9);
@@ -714,7 +716,7 @@
       border: 1px solid #575D53;
       border-radius: 10px;
       position: relative;
-      margin-bottom: 50px;
+      margin-bottom: 20px;
 
       .list-wrapper {
         max-height: 120px;
@@ -750,6 +752,7 @@
       }
 
       .withdraw-order-btn {
+        visibility: hidden;
         position: absolute;
         bottom: -16%;
       }
