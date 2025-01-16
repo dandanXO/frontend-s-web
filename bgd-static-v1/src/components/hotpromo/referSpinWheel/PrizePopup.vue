@@ -1,7 +1,10 @@
 <template>
   <div class="congrats-container">
     <q-btn icon="close" round dense v-close-popup class="congrats-close" />
-    <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header.png" /></div>
+    <div class="congrats-header">
+      <img v-if="props.languageVal === 'en'" src="../../../assets/images/index/modal/congrats-header.png" />
+      <img v-else src="../../../assets/images/index/modal/congrats-header-bn.png" />
+    </div>
     <div class="congrats-coupons">
       <img class="light-source" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/light-source.png" />
       <div class="congrats-highlight">
@@ -19,7 +22,7 @@
               <stop offset="100%" stop-color="#FF953E" />
             </linearGradient>
           </defs>
-          <text id="test" x="50%" y="50%" class="amount">{{ props.prize === 'ADDSPIN' ? 'X1' : props.prize }}</text>
+          <text id="test" x="50%" y="50%" class="amount">{{ props.prize === 'ADDSPIN' ? 'X1' : props.prize === 'THANKS' ? $t("hotPromo.referWheel.thanks") : props.prize }}</text>
         </svg>
       </div>
     </div>
@@ -35,7 +38,7 @@
 </template>
   
   <script setup>
-  const props = defineProps(['prize', 'showRechargeBtn']);
+  const props = defineProps(['prize', 'showRechargeBtn', 'languageVal']);
 </script>
   
   <style lang="scss" scoped>

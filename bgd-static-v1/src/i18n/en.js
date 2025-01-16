@@ -696,11 +696,11 @@ export default {
         "Each user can enjoy 1 free spin opportunity per day, and the number of spins will be reset at 24:00 every day.",
       termsCondition5: "Once the application is approved, the bonus will be deposited directly into your wallet.",
       termsCondition6: "The invitees must be qualified for the assistance to be successful.",
-      termsCondition7:
-        "The right to interpret this activity belongs to our company. If you have any questions, please contact customer service.",
-      paymentRequestSubmmited: "Payment request submitted",
+      termsCondition7: "The right to interpret this activity belongs to our company. If you have any questions, please contact customer service.",
+      paymentRequestSubmitted: "Payment request submitted",
       withdrawalStillRequires: "Withdrawal is still required on",
-      willBeCreditedToAccount: "will be credited to your account"
+      willBeCreditedToAccount: "will be credited to your account",
+      thanks: "Thanks!"
     },
     signIn7Days: {
       continuousSignIn: "Continuous sign-in:",
