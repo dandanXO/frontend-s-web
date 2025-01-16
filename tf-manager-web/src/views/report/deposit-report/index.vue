@@ -513,15 +513,15 @@ const countOptions = reactive({
   series: {
     type: 'sunburst',
     data: [],
-    radius: [0, '95%'],
+    radius: ['0%', '99%'],
     emphasis: {
       focus: 'self'
     },
     levels: [
       {},
       {
-        r0: '15%',
-        r: '35%',
+        r0: '10%',
+        r: '30%',
         itemStyle: {
           borderWidth: 2
         },
@@ -532,8 +532,8 @@ const countOptions = reactive({
         },
       },
       {
-        r0: '35%',
-        r: '70%',
+        r0: '30%',
+        r: '55%',
         label: {
           position: 'outside',
           silent: false,
