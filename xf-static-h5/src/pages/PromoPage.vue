@@ -47,7 +47,7 @@
             <div class="loader" v-if="isFetchingPromo" />
 
             <div class="selected-promo-wrapper" :class="`bg__${selectedPromo.promoCode}`">
-              <div class="banner-container" v-if="!isSpecialPromo">
+              <div class="banner-container" v-if="selectedPromo && selectedPromo.mobileBannerUrl && !isSpecialPromo">
                 <img
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
@@ -59,7 +59,7 @@
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
-                  v-if="selectedPromo.promoCode !== 'xf-eurocup-hongbao'"
+                  v-if="selectedPromo.promoType && selectedPromo.promoCode !== 'xf-eurocup-hongbao'"
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
@@ -95,7 +95,7 @@
 </template>
 
 <script lang="js">
-import {ref, defineComponent, onMounted, reactive, watch} from "vue";
+import {ref, defineComponent, onMounted,onActivated , reactive, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
 import {AppFullscreen, useQuasar} from "quasar";
@@ -208,7 +208,6 @@ export default defineComponent({
 
       // debugger;
       if (extensionState.value) {
-
         if (promo.redirectUrl.includes("page-vip")) {
           router.push({path: '/account/vip'});
         } else {
@@ -289,6 +288,8 @@ export default defineComponent({
 
     const loadAll = () => {
       const key = "PROMOTION_TYPES"
+      isFetchingPromo.value = window.location.pathname === "/promotion";
+
       cached.get(key, () => api.get("/promo/type")).then((res) => {
         if (res.length > 0) {
           tabItems.value = [];
@@ -306,7 +307,7 @@ export default defineComponent({
       })
       const platformApiUrl = "/opt-session/promo/page";
 
-      isFetchingPromo.value = window.location.pathname === "/promotion";
+
 
       api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
@@ -329,8 +330,13 @@ export default defineComponent({
 
     }
     onMounted(() => {
-      //TODO:: 我觉得没有 Banner，所以我隐藏了
-      // loadBanner();
+      isPromoDetail.value = false;
+      selectedPromo.value = {};
+      // if promo name is present, do not show promo list on first load
+      if (route.query.name) {
+        isPromoDetail.value = true;
+      }
+
 
       checkExtension();
       loadAll();
@@ -924,11 +930,14 @@ export default defineComponent({
   border-radius: 50%;
   border-top: 16px solid #3498db;
   width: 120px;
+  left: 50%;
+  margin-left: -60px;
   height: 120px;
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
   position: absolute;
   top: 150px;
+  z-index: 999;
 }
 
 @-webkit-keyframes spin {
