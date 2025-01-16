@@ -289,7 +289,8 @@ export default defineComponent({
     const loadAll = () => {
       const key = "PROMOTION_TYPES"
       isFetchingPromo.value = window.location.pathname === "/promotion";
-
+      console.log(isFetchingPromo.value)
+      return
       cached.get(key, () => api.get("/promo/type")).then((res) => {
         if (res.length > 0) {
           tabItems.value = [];
@@ -930,14 +931,9 @@ export default defineComponent({
   border-radius: 50%;
   border-top: 16px solid #3498db;
   width: 120px;
-  left: 50%;
-  margin-left: -60px;
   height: 120px;
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
-  position: absolute;
-  top: 150px;
-  z-index: 999;
 }
 
 @-webkit-keyframes spin {
