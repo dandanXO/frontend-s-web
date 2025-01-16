@@ -787,7 +787,7 @@ export default {
     33001: "Must be a 3-digit number",
     34000: "Member's birthday is not in this month",
     34001: "Member's birthday not found",
-    35000: "Member cannot receive this privilege",
+    35000: "Member does not meet the requirements to receive this offer",
     35001: "Member has already received this privilege",
     35002: "No eligible special privileges can be received",
     35003: "Special privileges and members do not match",
