@@ -547,3 +547,19 @@ export function getBelgrade2025Init(promoCode) {
 export function claimBelgrade2025Bonus(promoCode) {
   return server.EVENT.post(`/session/competition-single-bet/claimBonus?promoCode=${promoCode}`);
 }
+
+
+export function getVctBangkokInit(promoCode) {
+  return server.EVENT.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimVctBangkokBonus(promoCode) {
+  return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+
+export function getCompetitionLossWeeklyInit(promoCode) {
+  return server.EVENT.get(`/session/competition-loss-weekly/init?promoCode=${promoCode}`);
+}
+
+export function claimCompetitionLossWeekly(promoCode) {
+  return server.EVENT.post(`/session/competition-loss-weekly/claim?promoCode=${promoCode}`);
+}

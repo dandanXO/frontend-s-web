@@ -265,7 +265,7 @@ import { userStore } from "stores/index";
 import qs from "qs";
 import { useI18n } from "vue-i18n";
 import { useUI } from "stores/ui";
-import { isAndroid } from "boot/utils";
+import { isAndroid, isOperaPixelUrl } from "boot/utils";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -491,7 +491,7 @@ export default defineComponent({
                 if (store.isAffiliateA) {
                   fbq("track", "signup-success");
                 }
-                if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("tf88bof.com") > -1 || window.location.href.indexOf("tslotf88.com") > -1) {
+                if (isOperaPixelUrl()) {
                   otag("event", "registration");
                 }
 

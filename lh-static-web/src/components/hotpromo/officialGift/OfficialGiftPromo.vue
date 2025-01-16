@@ -76,7 +76,7 @@ const reasons = ref([
   { icon: QuestionSvg, description: "优先解答您游戏中各种问题" },
   { icon: StackSvg, description: "提供各种优惠活动信息资料" },
   { icon: ClockSvg, description: "每日活动领取提醒专业引导" },
-  { icon: DateSvg, description: "各种游戏类型专业投资计划" },
+  { icon: DateSvg, description: "各种赛事推荐分析" },
   { icon: ThumbSvg, description: "体育电竞游戏专家赛事推荐" }
   // { icon: GiftLineSvg, description: "添加客服成功入群即领彩金" }
 ]);

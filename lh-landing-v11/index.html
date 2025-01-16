@@ -39,6 +39,9 @@
               style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
             />
             <img src="imgs/banner-img.png" alt="" style="width: 80%; margin: 0 auto; position: relative; z-index: 1" />
+            <div class="banner-btn-wrapper">
+              <img class="banner-btn" src="imgs/banner-btn.gif" alt="" />
+            </div>
           </a>
         </div>
 
@@ -134,7 +137,19 @@
         const hostname = window.location.host.replace("www.", "");
         console.log(hostname, "dan");
 
-        const contactInfo = {};
+        const contactInfo = {
+          "21894.cc": {
+            group1Title: "富力",
+            group1Number: "992359773",
+            group2Title: "满满福利",
+            group2Number: "983092106",
+            landingPageLink: "https://www.am787.cc",
+            redirectUrl: "https://www.lh57018.com",
+            claimUrl: "https://www.lh57018.com",
+            agent1ID: "vip116",
+            agent2ID: "vip120"
+          }
+        };
 
         // Default content if no hostname matches
         const defaultInfo = {
@@ -182,6 +197,9 @@
     <script>
       var hostname = window.location.hostname;
       console.log(hostname);
+      if (hostname.indexOf("21894.cc") > -1) {
+        LA.init({ id: "KgmmdOQZU51lev3x", ck: "KgmmdOQZU51lev3x" });
+      }
     </script>
   </body>
 </html>

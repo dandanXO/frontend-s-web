@@ -118,11 +118,14 @@
       :promo-code="list.promoCode"
       :promo-rules="list.pageContent"
     />
+    <Dota2BlastSlam2025 v-else-if="list.redirectUrl === 'dy2-blast-slam-2025'" :promo-code="list.promoCode" />
+    <VctBangkok v-if="list.redirectUrl === 'dy2-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
     <VctcnMatchPromo v-if="list.redirectUrl === 'dy2-vctcn'" :promo-code="list.promoCode" />
     <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
     <DreamLeagueS25 v-if="list.redirectUrl === 'dy2-dream-league-s25'" :promo-code="list.promoCode" />
     <HongBaoYu2025 v-if="list.redirectUrl === 'dy2-cny2025-red-envelope'" :promo-code="list.promoCode" />
     <Monthly20HongBaoYu v-if="list.redirectUrl === 'dy2-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
+    <OfficialGiftPromo v-else-if="list.redirectUrl === 'dy-official-gift'" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -151,7 +154,11 @@ import { useRouter } from "vue-router";
 import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
 import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
 import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue";
+import VctBangkok from "components/hotpromo/vct-bangkok/VctBangkok.vue";
 
+const OfficialGiftPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/officialGift/OfficialGiftPromo.vue")
+);
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
 const TigerCardPromo = defineAsyncComponent(() => import("../components/hotpromo/tigercard/tigerCardPromo.vue"));
 const PrizePoolVotePromo = defineAsyncComponent(() =>
@@ -266,12 +273,14 @@ const Belgrade2025Promo = defineAsyncComponent(() =>
   import("../components/hotpromo/belgrade-2025-promo/Belgrade2025Promo.vue")
 );
 const DreamLeagueS25 = defineAsyncComponent(() => import("./hotpromo/dream-league-s25/DreamLeagueS25.vue"));
+const Dota2BlastSlam2025 = defineAsyncComponent(() => import("../components/hotpromo/dota2-blast-slam-2025/Dota2BlastSlam2025.vue"));
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    OfficialGiftPromo,
     LivepokerRebate,
     SportZhongChao,
     BlastPremierPromo,
@@ -344,7 +353,9 @@ export default defineComponent({
     Belgrade2025Promo,
     DreamLeagueS25,
     HongBaoYu2025,
-    Monthly20HongBaoYu
+    Monthly20HongBaoYu,
+    VctBangkok,
+    Dota2BlastSlam2025
   },
   props: {
     list: {

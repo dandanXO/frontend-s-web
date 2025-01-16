@@ -4,14 +4,12 @@
     class="imptann-modal"
     v-model="isImportantAnnoucementModal"
     v-if="!isImpt"
+    align-center
   >
-    <el-carousel autoplay height="auto" :autoplay="false" style="padding: 0">
-      <el-carousel-item style="height: 500px" v-for="(item, index) in popupList" :key="index">
-        <a @click="clickHomePopupImg(item.path)" style="display: flex; justify-content: center">
-          <img :src="imgURL + item.desktopImgUrl" class="" draggable="false" />
-        </a>
-      </el-carousel-item>
-    </el-carousel>
+    <div style="position: relative;">
+      <SitePopout @popup-click="clickHomePopupImg"/>
+      <img class="close-btn" src="../../assets/images/home/site-popout/close-btn.png" alt="" @click="handleClose">
+    </div>
   </el-dialog>
 
   <div v-if="isFetchingBanners" class="banner-loading">
@@ -49,6 +47,7 @@ import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 import GameModal from "@/components/modal/GameModal.vue";
 import { useNotify } from "@/hooks/notify";
+import SitePopout from "@/components/modal/SitePopout.vue";
 
 const notify = useNotify();
 
@@ -75,6 +74,10 @@ const goBannerPage = (redirectUrl) => {
     router.push(`/promotion?name=${redirectUrl}`);
   }
 };
+
+const handleClose = () => {
+  isImportantAnnoucementModal.value = false
+}
 
 const loadBanners = () => {
   isFetchingBanners.value = true;
@@ -166,11 +169,11 @@ const clickHomePopupImg = (urlString) => {
   let regexName = new RegExp(/^(name|\?name)/g);
   if (regexName.test(urlString)) {
     //去優惠
-    router.push(`/promotion${urlString}`);
+    router.push(`/promotion?${urlString}`);
     return;
   }
 
-  router.push(`${urlString}`);
+  router.push(`/promotion?name=${urlString}`);
 };
 
 const checkShowImgTop = () => {
@@ -315,5 +318,11 @@ watch(
       }
     }
   }
+}
+
+.close-btn {
+  position: absolute;
+  bottom: -55px;
+  cursor: pointer;
 }
 </style>

@@ -8,7 +8,7 @@ import { StatusBar } from "@capacitor/status-bar";
 import { Platform, useQuasar } from "quasar";
 import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
-// import { useGtag } from "vue-gtag-next";
+import i18n from "../i18n/index";
 
 /*
  * If not building with SSR mode, you can
@@ -24,8 +24,8 @@ export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
-      ? createWebHistory
-      : createWebHashHistory;
+    ? createWebHistory
+    : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -149,7 +149,7 @@ export default route(function (/* { store, ssrContext } */) {
         $q.notify({
           color: "negative",
           position: "top",
-          message: "Please login to continue",
+          message: i18n.global.t("notify.plsLoginToContinue"),
           icon: "report_problem"
         });
       } else {

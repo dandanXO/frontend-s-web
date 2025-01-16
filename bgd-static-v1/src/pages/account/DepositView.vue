@@ -3,7 +3,8 @@
   <!-- <pre>{{ paymentNode.value }}</pre> -->
   <div class="deposit-wrapper">
     <div class="slot-ftd-section" v-if="isFtdPrivilege && isFtdPrivilegePayType">
-      <img src="../../assets/images/bonus/slot-ftd-img.png" />
+      <img v-if="languageVal === 'en'" src="../../assets/images/bonus/slot-ftd-img.png" />
+      <img v-else src="../../assets/images/bonus/slot-ftd-bn.png" />
     </div>
 
     <div class="node-wrapper">
@@ -223,65 +224,37 @@
       </template>
       <template v-else-if="isUSDT">
         <p>
-          1. Recharge tutorial:
-          <span class="tutorial-link" @click="openDepositPic">Picture</span>
+          {{ $t("deposit.depositTips1") }}
+          <span class="tutorial-link" @click="openDepositPic">{{ $t("deposit.picture") }}</span>
           /
-          <span class="tutorial-link" @click="openDepositVideo">Video</span>
+          <span class="tutorial-link" @click="openDepositVideo">{{ $t("deposit.video") }}</span>
         </p>
-        <p>2. Minimum deposit: 10USDT, deposits less than 10USDT will not be credited.</p>
-        <p>3. Do not deposit any non-currency assets to the above address, or the assets will not be recovered.</p>
+        <p>{{ $t("deposit.depositUsdtTip2") }}</p>
+        <p>{{ $t("deposit.depositUsdtTip3") }}</p>
         <p>
-          4. Please confirm that the operating environment is safe to avoid information being tampered with or leaked.
+          {{ $t("deposit.depositUsdtTip4") }}
         </p>
         <p>
-          5. The transfer amount must match the order you created, otherwise the money cannot be credited successfully.
+          {{ $t("deposit.depositUsdtTip5") }}
         </p>
-        <p>6. Note: do not cancel the deposit order after the money has been transferred.</p>
+        <p>{{ $t("deposit.depositUsdtTip6") }}</p>
       </template>
       <template v-else>
         <p>
-          1. Recharge tutorial:
-          <span class="tutorial-link" @click="openDepositPic">Picture</span>
+          {{ $t("deposit.depositTips1") }}
+          <span class="tutorial-link" @click="openDepositPic">{{ $t("deposit.picture") }}</span>
           /
-          <span class="tutorial-link" @click="openDepositVideo">Video</span>
+          <span class="tutorial-link" @click="openDepositVideo">{{ $t("deposit.video") }}</span>
         </p>
-        <p>2. Fill in the correct payment wallet account number.</p>
+        <p>{{ $t("deposit.depositTips2") }}</p>
         <p>
-          3. The submitted amount must match the payment amount; otherwise, it will not be automatically credited.
+          {{ $t("deposit.depositTips3") }}
           <br />
-          After completing the payment, please fill in the TrxID to avoid automatic credit failures.
+          {{ $t("deposit.depositTips33") }}
         </p>
         <p>
-          4. Only payments made using the wallet selected in the order are supported. Cross-wallet transfers are not
-          allowed.
+          {{ $t("deposit.depositTips4") }}
         </p>
-
-        <!--        <p>-->
-        <!--          1. Recharge tutorial:-->
-        <!--          <a-->
-        <!--            class="tutorial-link"-->
-        <!--            style="color: #70bc62; text-decoration: underline"-->
-        <!--            href="https://drive.google.com/file/d/1UCBOIAxRfBZoq56zv5Md-XO-6eAzunWJ/view?usp=drivesdk"-->
-        <!--            target="_blank"-->
-        <!--          >-->
-        <!--            Picture-->
-        <!--          </a>-->
-        <!--          /-->
-        <!--          <a-->
-        <!--            class="tutorial-link"-->
-        <!--            style="color: #70bc62; text-decoration: underline"-->
-        <!--            href="https://drive.google.com/file/d/1fCCJPAHm2frmzBk05jc4v-c19-Bn3vvx/view"-->
-        <!--            target="_blank"-->
-        <!--          >-->
-        <!--            Video-->
-        <!--          </a>-->
-        <!--        </p>-->
-        <!--        <p>-->
-        <!--          2. After payment is completed, you need to submit the last 5 digits of TID, otherwise it will not be-->
-        <!--          automatically credited.-->
-        <!--        </p>-->
-        <!--        <p>3. Fill in the correct wallet account.</p>-->
-        <!--        <p>4. The amount submitted must be consistent with the payment amount.</p>-->
       </template>
     </div>
     <!-- <MediaSettingsComponent /> -->
@@ -342,6 +315,7 @@
 </template>
 
 <script setup>
+import { i18nStore } from "src/router/language";
 import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, watch, computed } from "vue";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
@@ -399,6 +373,8 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
+
+const { languageVal } = storeToRefs(i18nStore());
 
 const copybtntxt0 = ref("复制");
 const copybtntxt1 = ref("复制");

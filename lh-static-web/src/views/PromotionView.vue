@@ -342,7 +342,7 @@ export default defineComponent({
             };
             promoTypes.value.push(obj);
           });
-          switchPromoType(promoTypes.value[0])
+          switchPromoType(promoTypes.value[0].code)
         } else {
           console.warn('No promo types loaded, using default promo types.');
         }

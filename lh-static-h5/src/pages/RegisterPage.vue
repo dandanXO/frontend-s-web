@@ -2,39 +2,64 @@
   <div class="login-container">
     <q-form @submit="onSubmit">
       <div class="login-form-container">
-        <q-input ref="realNameRef" standout clearable v-model="regForm.loginName" placeholder="6-11个字符，包含大小写字母"
-                 lazy-rules :rules="[
+        <q-input
+          ref="realNameRef"
+          standout
+          clearable
+          v-model="regForm.loginName"
+          placeholder="6~12位包含字母和数字"
+          lazy-rules
+          :rules="[
             (val) => (val && val.length > 0) || '请输入用户名',
-            (val) => (val && val.length >= 6 && val.length <= 11) || '用户名个数必须在6和11之间',
+            (val) => (val && val.length >= 6 && val.length <= 12) || '用户名个数必须在6和12之间',
             (val) => (val && /[a-zA-Z]/.test(val) && /[0-9]/.test(val)) || '用户名必须包含英文字母与数字',
             validLoginName
-          ]" color="white">
+          ]"
+          color="white"
+        >
           <template v-slot:prepend>
             <div class="input-icon-label-wrapper">
               <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/user-icon-dark.svg" />
               <img v-else class="input-icon" src="../assets/images/login/user-icon.svg" />
               <label class="input-label">
                 <em>*</em>
-                用户名</label>
+                用户名
+              </label>
             </div>
           </template>
         </q-input>
 
-        <q-input ref="pwdRef" standout clearable v-model="regForm.password" placeholder="请输入密码" lazy-rules
-                 :type="isPwd ? 'password' : 'text'" :rules="[
+        <q-input
+          ref="pwdRef"
+          standout
+          clearable
+          v-model="regForm.password"
+          placeholder="请输入密码"
+          lazy-rules
+          :type="isPwd ? 'password' : 'text'"
+          :rules="[
             (val) => (val && val.length > 0) || '请输入密码',
             (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
-          ]" color="white">
+          ]"
+          color="white"
+        >
           <template v-slot:prepend>
             <div class="input-icon-label-wrapper">
               <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/password-icon-dark.svg" />
               <img v-else class="input-icon" src="../assets/images/login/password-icon.svg" />
-              <label class="input-label"><em>*</em>密码</label>
+              <label class="input-label">
+                <em>*</em>
+                密码
+              </label>
             </div>
           </template>
           <template v-slot:append>
-            <q-icon color="dark" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
-                    @click="isPwd = !isPwd" />
+            <q-icon
+              color="dark"
+              :name="isPwd ? 'visibility_off' : 'visibility'"
+              class="cursor-pointer"
+              @click="isPwd = !isPwd"
+            />
           </template>
         </q-input>
         <!--        <div v-if="regForm.password" class="password-str-div">-->
@@ -54,45 +79,81 @@
         <!--          <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">强</span>-->
         <!--        </div>-->
 
-        <q-input ref="confirmPwdRef" standout clearable :type="isCfmPwd ? 'password' : 'text'"
-                 v-model="regForm.confirmPwd" placeholder="请再次输入密码" lazy-rules :rules="[
+        <q-input
+          ref="confirmPwdRef"
+          standout
+          clearable
+          :type="isCfmPwd ? 'password' : 'text'"
+          v-model="regForm.confirmPwd"
+          placeholder="请再次输入密码"
+          lazy-rules
+          :rules="[
             (val) => (val && val.length > 0) || '请输入确认密码',
             (val) => val === regForm.password || '密码不一样',
             (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
-          ]" color="white">
+          ]"
+          color="white"
+        >
           <template v-slot:prepend>
             <div class="input-icon-label-wrapper">
               <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/password-icon-dark.svg" />
               <img v-else class="input-icon" src="../assets/images/login/password-icon.svg" />
-              <label class="input-label"><em>*</em>确认密码</label>
+              <label class="input-label">
+                <em>*</em>
+                确认密码
+              </label>
             </div>
           </template>
           <template v-slot:append>
-            <q-icon color="dark" :name="isCfmPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
-                    @click="isCfmPwd = !isCfmPwd" />
+            <q-icon
+              color="dark"
+              :name="isCfmPwd ? 'visibility_off' : 'visibility'"
+              class="cursor-pointer"
+              @click="isCfmPwd = !isCfmPwd"
+            />
           </template>
         </q-input>
 
-        <q-input ref="loginNameRef" standout clearable v-model="regForm.realName" placeholder="姓名必须与提款银行卡账号一致"
-          lazy-rules :rules="[
+        <q-input
+          ref="loginNameRef"
+          standout
+          clearable
+          v-model="regForm.realName"
+          placeholder="姓名必须与提款银行卡账号一致"
+          lazy-rules
+          :rules="[
             (val) => (val && val.length > 0) || '请输入姓名',
             (val) => (val && val.length >= 2) || '姓名至少两个字符',
             isValidName
-          ]" color="white">
+          ]"
+          color="white"
+        >
           <template v-slot:prepend>
             <div class="input-icon-label-wrapper">
               <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/user-icon-dark.svg" />
               <img v-else class="input-icon" src="../assets/images/login/user-icon.svg" />
-              <label class="input-label"><em>*</em>姓名</label>
+              <label class="input-label">
+                <em>*</em>
+                姓名
+              </label>
             </div>
           </template>
         </q-input>
 
-        <q-input ref="verificationRef" standout clearable type="text" v-model="regForm.captchaCode" placeholder="验证码"
-                 lazy-rules color="white" :rules="[
+        <q-input
+          ref="verificationRef"
+          standout
+          clearable
+          type="text"
+          v-model="regForm.captchaCode"
+          placeholder="验证码"
+          lazy-rules
+          color="white"
+          :rules="[
             (val) => (val && val.length > 0) || '请输入验证码',
             (val) => (val && val.length > 3 && val.length < 5) || '验证码长度为4个'
-          ]">
+          ]"
+        >
           <template v-slot:append>
             <img class="veri-img" :src="verificationImg" @click="getCode()" />
           </template>
@@ -100,28 +161,51 @@
             <div class="input-icon-label-wrapper">
               <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/veri-icon-dark.svg" />
               <img v-else class="input-icon" src="../assets/images/login/veri-icon.svg" />
-              <label class="input-label"><em>*</em>验证码</label>
+              <label class="input-label">
+                <em>*</em>
+                验证码
+              </label>
             </div>
           </template>
         </q-input>
 
         <template v-if="!hasReferSummon">
-          <q-input v-if="!hasAffiliate" ref="affiliateCodeRef" standout clearable v-model="regForm.codeAffiliate"
-                   placeholder="如不是合营玩家不用填写">
+          <q-input
+            v-if="!hasAffiliate"
+            ref="affiliateCodeRef"
+            standout
+            clearable
+            v-model="regForm.codeAffiliate"
+            placeholder="如不是合营玩家不用填写"
+          >
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
                 <img v-if="$q.dark.isActive" class="input-icon" src="../assets/images/login/veri-icon-dark.svg" />
                 <img v-else class="input-icon" src="../assets/images/login/veri-icon.svg" />
-                <label class="input-label"><em>&nbsp;</em>推荐码</label>
+                <label class="input-label">
+                  <em>&nbsp;</em>
+                  推荐码
+                </label>
               </div>
             </template>
           </q-input>
-          <q-input v-else ref="affiliateCodeRef" standout clearable v-model="regForm.codeAffiliate"
-                   placeholder="如不是合营玩家不用填写" readonly disable>
+          <q-input
+            v-else
+            ref="affiliateCodeRef"
+            standout
+            clearable
+            v-model="regForm.codeAffiliate"
+            placeholder="如不是合营玩家不用填写"
+            readonly
+            disable
+          >
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
                 <img class="input-icon" src="../assets/images/login/veri-icon.svg" />
-                <label class="input-label"><em>&nbsp;</em>推荐码</label>
+                <label class="input-label">
+                  <em>&nbsp;</em>
+                  推荐码
+                </label>
               </div>
             </template>
           </q-input>
@@ -130,8 +214,15 @@
     </q-form>
 
     <div class="">
-      <q-btn @click.prevent="onSubmit" type="submit" class="bottom-btn common-large-btn" label="注册" width="100%"
-             color="brightbtn" style="width: 100%" />
+      <q-btn
+        @click.prevent="onSubmit"
+        type="submit"
+        class="bottom-btn common-large-btn"
+        label="注册"
+        width="100%"
+        color="brightbtn"
+        style="width: 100%"
+      />
       <router-link to="/login">
         <q-btn class="common-large-white-btn bottom-btn" flat label="登录" />
       </router-link>
@@ -140,7 +231,8 @@
     <div class="text-center q-pt-lg customer-service-link">
       <div class="decor-lines" />
       <router-link class="cs-web-id" id="cs-web-id" to="/liveChat">
-        <img width="18" src="../assets/images/login/cs-icon.svg" />联系客服
+        <img width="18" src="../assets/images/login/cs-icon.svg" />
+        联系客服
       </router-link>
       <div class="decor-lines" />
     </div>
@@ -158,8 +250,12 @@
         <q-card-section class="q-mb-md q-pa-md">
           <q-input v-model="innerCaptchaRef" placeholder="验证码">
             <template v-slot:append>
-              <img :src="phoneVerificationImg" title="点击刷新验证码" style="margin-top: 6px; cursor: pointer"
-                   @click="getInnerCode" />
+              <img
+                :src="phoneVerificationImg"
+                title="点击刷新验证码"
+                style="margin-top: 6px; cursor: pointer"
+                @click="getInnerCode"
+              />
             </template>
           </q-input>
         </q-card-section>
@@ -358,7 +454,7 @@ export default defineComponent({
               if (res.code === 0) {
                 notify({
                   type: "success",
-                  message: "注册成功",
+                  message: "注册成功"
                 });
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
@@ -368,11 +464,11 @@ export default defineComponent({
 
                 sessionStorage.removeItem("REFERRAL_CODE");
 
-                sessionStorage.setItem('regSuccessGuideVisible', true);
+                sessionStorage.setItem("regSuccessGuideVisible", true);
               } else {
                 notify({
                   type: "error",
-                  message: res.message,
+                  message: res.message
                 });
               }
               $q.loading.hide();
@@ -439,7 +535,7 @@ export default defineComponent({
       if (!regForm.telephone) {
         notify({
           type: "error",
-          message: "手机号码不能为空",
+          message: "手机号码不能为空"
         });
         getInnerCode();
         return;
@@ -530,19 +626,19 @@ function charType(num) {
   .q-field--standout .q-field__control {
     border-radius: 8px;
     background: #f7f8fb;
-    box-shadow: 0px 0px 4px 0px #A9C9EA inset;
+    box-shadow: 0px 0px 4px 0px #a9c9ea inset;
     height: 44px;
   }
 
-  .q-field__marginal{
+  .q-field__marginal {
     height: 44px;
   }
 
-  .q-input{
+  .q-input {
     height: 68px;
   }
 
-  .q-field__bottom{
+  .q-field__bottom {
     padding: 0px 12px 8px;
   }
 }
@@ -632,8 +728,8 @@ function charType(num) {
 
     .login-form-container {
       padding: 20px;
-      background: linear-gradient(180deg, #2E4166 0%, #1A263F 100%);
-      border: 1px solid #BE9457;
+      background: linear-gradient(180deg, #2e4166 0%, #1a263f 100%);
+      border: 1px solid #be9457;
       border-radius: 8px;
 
       .input-label {
@@ -643,21 +739,21 @@ function charType(num) {
     }
   }
   .common-large-btn {
-    background: url('../assets/images/login/login-btn-bg-dark.svg') no-repeat center center;
+    background: url("../assets/images/login/login-btn-bg-dark.svg") no-repeat center center;
     background-size: cover;
     box-shadow: none;
     border-radius: 4px;
-    border: 1px solid #3A93CE;
+    border: 1px solid #3a93ce;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   .common-large-white-btn {
-    background: url('../assets/images/login/register-btn-bg-dark.svg') no-repeat center center;
+    background: url("../assets/images/login/register-btn-bg-dark.svg") no-repeat center center;
     background-size: cover;
     box-shadow: none;
     border-radius: 4px;
-    border: 1px solid #BE9457;
+    border: 1px solid #be9457;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -681,13 +777,13 @@ function charType(num) {
 
   .input-label {
     font-weight: bold;
-    color: #424F72;
+    color: #424f72;
     font-size: 16px;
-    display:flex;
+    display: flex;
     align-items: center;
     gap: 5px;
 
-    em{
+    em {
       line-height: 22px;
       color: #f53434;
       display: inline-block;
@@ -697,7 +793,7 @@ function charType(num) {
 }
 
 .common-large-btn {
-  background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
   font-size: 1.2rem;
   font-weight: bold;
   color: $white;
@@ -717,7 +813,7 @@ function charType(num) {
   background: linear-gradient(180deg, rgba(115, 178, 255, 0.1) 0%, rgba(57, 129, 255, 0.1) 100%);
   font-size: 1.2rem;
   font-weight: bold;
-  color: #424F72;
+  color: #424f72;
   border-radius: 10px;
   box-shadow: none;
 
@@ -755,7 +851,7 @@ function charType(num) {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    color: #7A80A1;
+    color: #7a80a1;
     font-weight: bold;
   }
 }

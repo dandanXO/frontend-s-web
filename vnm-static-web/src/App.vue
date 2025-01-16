@@ -87,7 +87,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      console.log("GOGO");
+      console.log("VNM0106");
       checkSID();
 
       setTimeout(getOnlineStatApi, 2000);
