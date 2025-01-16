@@ -688,12 +688,16 @@ export default {
       seconds: "Seconds",
       scanQRCode: "Scan QR Code",
       termsCondition1: "When the accumulated amount reaches 300BDT, you can apply for withdrawal.",
-      termsCondition2: "Every time you invite a friend to register and the friend recharges once, you will get 1 free spin.",
-      termsCondition3: "The event lasts for 3 days. After the activity period ends, the accumulated rewards will be reset and the activity will start again.",
-      termsCondition4: "Each user can enjoy 1 free spin opportunity per day, and the number of spins will be reset at 24:00 every day.",
+      termsCondition2:
+        "Every time you invite a friend to register and the friend recharges once, you will get 1 free spin.",
+      termsCondition3:
+        "The event lasts for 3 days. After the activity period ends, the accumulated rewards will be reset and the activity will start again.",
+      termsCondition4:
+        "Each user can enjoy 1 free spin opportunity per day, and the number of spins will be reset at 24:00 every day.",
       termsCondition5: "Once the application is approved, the bonus will be deposited directly into your wallet.",
       termsCondition6: "The invitees must be qualified for the assistance to be successful.",
-      termsCondition7: "The right to interpret this activity belongs to our company. If you have any questions, please contact customer service.",
+      termsCondition7:
+        "The right to interpret this activity belongs to our company. If you have any questions, please contact customer service.",
       paymentRequestSubmmited: "Payment request submitted",
       withdrawalStillRequires: "Withdrawal is still required on",
       willBeCreditedToAccount: "will be credited to your account"
@@ -705,6 +709,45 @@ export default {
       days: "days",
       signIn: "Sign in",
       signedIn: "Signed in"
+    },
+    emailVerifyBonus: {
+      linkWithEmail: "Link with Email",
+      link: "Link",
+      eventDetails01: `<span style="color: #fff96f">win7.game</span> Special Offer for New Members: First Deposit Bonus Up to <span style="color: #ff0000">119%</span>!`,
+      eventDetails02: `Simply create a new member account at <span style="color: #fff96f">win7.game</span>, complete your first deposit, and you can claim your bonus. In addition, with a minimum deposit of <span style="color: #ff0000">100TK</span>, you can enjoy the first deposit bonus and an additional bonus of up to <span style="color: #ff0000">119%</span>, providing more fun.`,
+      eventDetails03: `In addition, there are additional offers for users with higher top-ups. Top up more, enjoy more rewards, and participate in <span style="color: #fff96f">win7.game</span> activities with your friends to experience higher benefits and services.`,
+      depositAmount: "Deposit Amount",
+      giveawayBonus: "Giveaway Bonus",
+      turnoverRequirements: "Turnover requirements",
+      applicableGames: "Applicable games",
+      conditionsForReceiving: "Conditions for receiving",
+      slotMachines: "Slot Machines",
+      depositPayment: "Deposit payment",
+      selectADepositChannel: "Select a deposit channel",
+      checkOffer: "Check the first deposit offer",
+      examplesPara01: `For example, member A tops up <span style="color: #ff0000">100 TK</span> for the first time and gets <span style="color: #ff0000">119 TK</span> as a reward. Before withdrawing, he needs to complete at least 10 times the turnover requirement, that is:`,
+      examplesPara02: "100 principal x 10 + 119 reward x 10 = 2190 turnover",
+      examHowPara01:
+        "Before making your first deposit, members need to verify their email address and bind a valid withdrawal account (supports Nagad, Rocket, Bkash, Upay).",
+      examHowPara02:
+        "Go to the deposit page > Select a deposit channel > Select a promotion > Click to receive the 119% first deposit bonus",
+
+      tnc01: "This bonus is only available for new member accounts and only for their first deposit.</li>",
+      tnc02:
+        "Withdrawal requirements: You need to complete the wagering requirement of at least 10 times the turnover. The calculation formula is: (Deposit amount + Bonus amount) × 10 times the turnover requirement.</li>",
+      tnc03: "This bonus is only applicable to the slot game category.</li>",
+      tnc04:
+        "If a member mistakenly participates in a non-specified game category, the bonus will be deemed invalid and win7.gam reserves the right to deduct the relevant bonus and the profits generated.</li>",
+      tnc05:
+        "Each member is limited to one account (including deposit account, withdrawal account, IP address). Multiple account behavior will result in the bonus being invalid. If violations are found, win7.gam reserves the right to cancel the bonus and freeze the account.</li>",
+      tnc06:
+        "Before the first withdrawal application, the bound bank account information and phone number cannot be changed. If the information is changed, the bonus will be cancelled and the bonus and the resulting profits will be deducted.</li>",
+      tnc07:
+        "This bonus is only applicable to players in the specified game category. The bonus cannot be used to accumulate betting turnover, calculate arbitrage behavior or be used in combination with other technical means. If violations are found, the bonus will be deemed invalid, all bonuses and profits will be cancelled, and win7.gam reserves the right to close the account.</li>",
+      tnc08:
+        "win7.gam reserves the right to change, suspend or terminate this activity at any time without prior notice.</li>",
+      tnc09:
+        "The final right of interpretation of all terms belongs to win7.gam. win7.gam reserves the right to refuse to deal with any disputes involving terms.</li>        "
     }
   },
   maintenance: {
