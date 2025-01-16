@@ -44,7 +44,7 @@
           icon="el-icon-search"
           size="mini"
           type="success"
-          @click="loadDepositReport(false)"
+          @click="loadCharts()"
         >
           {{ t('fields.search') }}
         </el-button>
@@ -57,6 +57,20 @@
           {{ t('fields.reset') }}
         </el-button>
       </div>
+      <div style="margin-top: 10px;">
+        <el-radio-group v-model="uiControl.display" size="small">
+          <el-radio-button label="DATA">{{ t('fields.table') }}</el-radio-button>
+          <el-radio-button label="CHART">{{ t('fields.chart') }}</el-radio-button>
+        </el-radio-group>
+      </div>
+    </div>
+
+    <div>
+      <el-card style="height: 1000px;">
+        <div class="chart-container" style="height: 100%; width: 100%;">
+          <Chart :options="countOptions" />
+        </div>
+      </el-card>
     </div>
 
     <div class="tables-container-wrap1">
@@ -301,7 +315,7 @@ import moment from 'moment'
 import {
   getDepositReport,
   getDailyReport,
-  getTotalDeposit,
+  getTotalDeposit, getDepositReportAll,
 } from '../../../api/report-deposit'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
@@ -309,6 +323,7 @@ import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
 import { hasPermission } from '../../../utils/util'
+import Chart from "@/components/charts/Charts.vue";
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -322,6 +337,10 @@ const site = ref(null)
 const siteList = reactive({
   list: [],
 })
+const uiControl = reactive({
+  display: "DATA",
+  chartLoading: false,
+});
 
 var expandrowkey = []
 
@@ -436,6 +455,95 @@ async function loadDepositReport(first) {
   page.loading = false
 }
 
+async function loadCharts() {
+  uiControl.chartLoading = true
+  const requestCopy = { ...request }
+  const query = {}
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value
+    }
+  })
+  if (request.recordTime !== null) {
+    if (request.recordTime.length === 2) {
+      query.recordTime = request.recordTime.join(',')
+    }
+  }
+
+  const { data } = await getDepositReportAll(query)
+  const paymentTypeData = data.reduce((acc, item) => {
+    if (!acc[item.paymentType]) {
+      acc[item.paymentType] = []
+    }
+    acc[item.paymentType].push(item)
+    return acc
+  }, {})
+  getCountChart(
+    paymentTypeData,
+    countOptions
+  )
+
+  uiControl.chartLoading = false
+}
+
+function getCountChart(data, options) {
+  const chartData = []
+  Object.keys(data).forEach((paymentType) => {
+    const children = data[paymentType].filter((item) => item.totalSuccessDeposit > 0).map((item) => {
+      return {
+        name: item.name,
+        value: Number(item.totalSuccessDeposit),
+      }
+    })
+    chartData.push({
+      name: paymentType,
+      children,
+    })
+  })
+  console.log("data", chartData)
+  options.series.data = chartData
+}
+
+const countOptions = reactive({
+  title: {
+    text: t('fields.depositCountRatio'),
+  },
+  height: '1000px',
+  width: '1000px',
+  series: {
+    type: 'sunburst',
+    data: [],
+    radius: [0, '95%'],
+    emphasis: {
+      focus: 'self'
+    },
+    levels: [
+      {},
+      {
+        r0: '15%',
+        r: '35%',
+        itemStyle: {
+          borderWidth: 2
+        },
+        label: {
+          position: 'outside',
+          silent: false,
+          formatter: '{b}-{c}'
+        },
+      },
+      {
+        r0: '35%',
+        r: '70%',
+        label: {
+          position: 'outside',
+          silent: false,
+          formatter: '{b}-{c}'
+        },
+      }
+    ]
+  },
+})
+
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
@@ -528,6 +636,7 @@ onMounted(async () => {
     request.siteId = site.value.id
   }
   await loadDepositReport(true)
+  await loadCharts()
 })
 </script>
 
@@ -677,6 +786,12 @@ onMounted(async () => {
 .refresh-platform-btn {
   margin-left: 5px;
   display: inline-block;
+}
+
+.chart-container {
+  position: relative;
+  height: 1000px; /* Force desired height */
+  width: 100%; /* Make it responsive */
 }
 </style>
 
