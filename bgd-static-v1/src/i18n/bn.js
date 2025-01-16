@@ -211,7 +211,8 @@ export default {
     deposit: "জমা",
     learnMore: "আরো জানুন",
     replaceImage: "চিত্র প্রতিস্থাপন",
-    details: "বিস্তারিত"
+    details: "বিস্তারিত",
+    proceed: "এগিয়ে যান"
   },
   notify: {
     noRecord: "কোনো রেকর্ড নেই",

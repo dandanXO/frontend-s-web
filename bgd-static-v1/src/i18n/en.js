@@ -211,7 +211,8 @@ export default {
     deposit: "Deposit",
     learnMore: "Learn More",
     replaceImage: "Replace Image",
-    details: "Details"
+    details: "Details",
+    proceed: "Proceed"
   },
   notify: {
     noRecord: "No Record",
