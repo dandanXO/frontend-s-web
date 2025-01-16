@@ -102,7 +102,7 @@
             <span v-else> {{ scope.row.loginName }} </span>
           </template>
         </el-table-column>
-        <el-table-column prop="privilegeName" :label="t('fields.privilegeName')" min-width="100" />
+        <el-table-column prop="privilegeName" :label="t('fields.privilegeName')" min-width="150" />
         <el-table-column prop="bonus" :label="t('fields.bonus')" min-width="100" />
         <el-table-column prop="bonusName" :label="t('fields.giftName')" min-width="100" />
         <el-table-column prop="status" :label="t('fields.status')" min-width="100">
@@ -114,7 +114,7 @@
             <el-tag v-if="scope.row.status === null" type="info" size="mini">-</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="recordTime" :label="t('fields.recordTime')" min-width="200">
+        <el-table-column prop="recordTime" :label="t('fields.recordTime')" min-width="150">
           <template #default="scope">
             <span v-if="scope.row.recordTime === null">-</span>
             <!-- eslint-disable -->
@@ -128,11 +128,40 @@
             />
           </template>
       </el-table-column>
+      <el-table-column prop="expiryTime" :label="t('fields.expiryTime')" min-width="150">
+          <template #default="scope">
+            <span v-if="scope.row.expiryTime === null">-</span>
+            <!-- eslint-disable -->
+            <span
+              v-if="scope.row.expiryTime !== null"
+              v-formatter="{
+                data: scope.row.expiryTime,
+                timeZone: timeZone,
+                type: 'date',
+              }"
+            />
+          </template>
+      </el-table-column>
+      <el-table-column prop="spinCount" :label="t('fields.spinCount')" min-width="100">
+          <template #default="scope">
+            <span v-if="scope.row.status !== 'SYSTEM'">-</span>
+            <!-- eslint-disable -->
+            <span v-else>{{ scope.row.spinCount }}</span>
+          </template>
+      </el-table-column>
+      <el-table-column prop="claimedCount" :label="t('fields.claimed')" min-width="100">
+          <template #default="scope">
+            <span v-if="scope.row.expiryTime === null">-</span>
+            <!-- eslint-disable -->
+            <span
+              v-if="scope.row.expiryTime !== null && scope.row.claimedCount !== null">{{ scope.row.claimedCount }}</span>
+          </template>
+      </el-table-column>
       <el-table-column
         :label="t('fields.operate')"
         align="right"
         fixed="right"
-        width="200"
+        width="100"
         v-permission="['sys:privi:spin-event-record:edit']"
       >
         <template #default="scope">
@@ -334,6 +363,8 @@ const form = reactive({
 function resetQuery() {
   request.loginName = null;
   request.bonusName = null;
+  request.privilegeName = null;
+  request.status = null;
 }
 
 function checkQuery() {
