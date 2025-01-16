@@ -123,6 +123,7 @@ export default {
     currentPassword_rules_01: "অনুগ্রহ করে বর্তমান পাসওয়ার্ড লিখুন",
     pleaseCompleteKYC: "অনুগ্রহ করে KYC সম্পূর্ণ করুন",
     bindEmail: "ইমেল যুক্ত করুন",
+    bindEmailDesc: 'ইমেল আবদ্ধ করতে এগিয়ে যান',
     code: "কোড",
     code_placeholder: "যাচাইকরণ কোড লিখুন",
     code_rules_01: "যাচাইকরণ কোড প্রয়োজন",
