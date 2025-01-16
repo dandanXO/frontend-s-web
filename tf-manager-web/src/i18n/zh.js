@@ -3169,6 +3169,7 @@ export default {
     DOWNLOAD: '下载页',
     AFFILIATE: '代理',
     HOME: '首页',
+    MANAGER: '后台',
   },
   pmStatus: {
     UNSENT: '未发送',

@@ -2806,6 +2806,7 @@ export default {
     DOWNLOAD: '다운로드 페이지',
     AFFILIATE: '연기',
     HOME: '첫 장',
+    MANAGER: '관리자',
   },
   affiliateShareRatio: {
     AGENT_SHARE_BET_RATIO_FISH: '배팅비율-FISH',

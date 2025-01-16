@@ -1895,6 +1895,7 @@ export default {
     DOWNLOAD: 'หน้าดาวน์โหลด',
     AFFILIATE: 'การแสดง',
     HOME: 'หน้าแรก',
+    MANAGER: 'ผู้จัดการ',
   },
   monitorTitle: {
     MEMBER_STATISTICS: 'ผู้ใช้ออนไลน์',
