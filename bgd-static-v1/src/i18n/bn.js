@@ -123,7 +123,7 @@ export default {
     currentPassword_rules_01: "অনুগ্রহ করে বর্তমান পাসওয়ার্ড লিখুন",
     pleaseCompleteKYC: "অনুগ্রহ করে KYC সম্পূর্ণ করুন",
     bindEmail: "ইমেল যুক্ত করুন",
-    bindEmailDesc: 'ইমেল আবদ্ধ করতে এগিয়ে যান',
+    bindEmailDesc: "ইমেল আবদ্ধ করতে এগিয়ে যান",
     code: "কোড",
     code_placeholder: "যাচাইকরণ কোড লিখুন",
     code_rules_01: "যাচাইকরণ কোড প্রয়োজন",
@@ -228,7 +228,12 @@ export default {
     uploadImageLargerThan1MbError: "আপলোড করা ছবি 1MB এর বেশি হতে পারে না",
     imageFormatError: "ছবি ফরম্যাট ত্রুটি",
     uploadFailedPleaseTryAgain: "আপলোড ব্যর্থ হয়েছে। দয়া করে আবার চেষ্টা করুন",
-    copiedSuccessfully: "সফলভাবে কপি করা হয়েছে"
+    copiedSuccessfully: "সফলভাবে কপি করা হয়েছে",
+    linkCopiedToClipboard: "লিঙ্ক ক্লিপবোর্ডে কপি করা হয়েছে",
+    failedToCopyLink: "লিঙ্ক কপি করতে ব্যর্থ",
+    registeringInProgress: "রেজিস্ট্রেশন চলছে",
+    loggingIn: "লগইন হচ্ছে",
+    loggingOut: "লগআউট হচ্ছে"
   },
   sideNav: {
     inviteToEarn: "আয় করার জন্য আমন্ত্রণ জানান",
