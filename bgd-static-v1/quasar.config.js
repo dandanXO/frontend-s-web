@@ -83,7 +83,6 @@ module.exports = configure(function (ctx) {
         if (process.env.NODE_ENV === "production" && isImageCompress) {
           chain.plugin("imagemin-webpack-plugin").use(ImageminPlugin, [
             {
-              disable: true,
               test: /\.(jpe?g|png|gif|svg)$/i,
               pngquant: {
                 quality: "70"
