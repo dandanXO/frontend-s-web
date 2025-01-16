@@ -337,25 +337,25 @@
 
   const spinWheel = () => {
     //FOr TesTING START
-    // const res = {
-    //   data: {
-    //     bonus: 8,
-    //     availableSpin: 0,
-    //     spinType: 'FIXEDBONUS'
-    //   }
-    // }
-    // var bonusIndex = res.data.spinType === 'FIXEDBONUS' ? res.data.bonus : res.data.spinType;
+    const res = {
+      data: {
+        bonus: 8,
+        availableSpin: 0,
+        spinType: 'ADDSPIN'
+      }
+    }
+    var bonusIndex = res.data.spinType === 'FIXEDBONUS' ? res.data.bonus : res.data.spinType;
 
-    // const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
+    const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
 
 
-    // console.log('here', bonusIndex, prizeIndex)
-    // spin(prizeIndex, () => {
-    //   showPrizePopup.value = true;
-    //   prizePopupBonusAmt.value = res.data.spinType === 'FIXEDBONUS' ? res.data.bonus : res.data.spinType;
-    //   remainingDraws.value = res.data.availableSpin;
-    // });
-    // return;
+    console.log('here', bonusIndex, prizeIndex)
+    spin(prizeIndex, () => {
+      showPrizePopup.value = true;
+      prizePopupBonusAmt.value = ['RANDBONUS', 'FIXEDBONUS'].includes(res.data.spinType) ? res.data.bonus : res.data.spinType;
+      remainingDraws.value = res.data.availableSpin;
+    });
+    return;
     //FOr TesTING END
 
     if (spinButtonDisable.value === true) {
@@ -376,7 +376,7 @@
       .post("/session/refer-wheel/spin?promoCode=bgd-refer-wheel")
       .then((res) => {
         if (res.code == 0) {
-          var bonusIndex = ['RANDBONUS', 'FIXEDBONUS'].includes(res.data.spinType) ? res.data.bonus : res.data.spinType;
+          var bonusIndex = res.data.spinType === 'FIXEDBONUS' ? res.data.bonus : res.data.spinType;
           const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
 
           spin(prizeIndex, () => {
@@ -396,7 +396,7 @@
       if (res.code == 0) {
         remainingDraws.value = res.data.availableSpin;
         endDate.value = res.data.endDate;
-        accumulatedBonus.value = 200 || res.data.accumulatedBonus;
+        accumulatedBonus.value = res.data.accumulatedBonus;
         invitedList.value = res.data.invitedList;
         
         if(!remainingTimeTimer.value) {

@@ -6,7 +6,7 @@
       <img class="light-source" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/light-source.png" />
       <div class="congrats-highlight">
         <img v-if="props.prize === 'ADDSPIN'" class="money-icon"
-          src="../../../assets/images/promotion/hotpromo/refer-spinwheel/free-wheel-spin-icon.svg" />
+          src="../../../assets/images/promotion/hotpromo/refer-spinwheel/free-wheel-spin-icon.png" />
         <img v-else-if="props.prize === 'THANKS'" class="money-icon"
           src="../../../assets/images/promotion/hotpromo/refer-spinwheel/thanks-icon.svg" />
         <img v-else class="money-icon"
