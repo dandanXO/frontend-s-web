@@ -48,15 +48,15 @@
             </div>
 
             <div class="timeline">
-                <div class="left" :style="props.accumulatedBonus ? 'height:100px;' : 'height:20px'">
+                <div class="left">
                     <img src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/achieved-icon-lightgreen.svg" />
-                    <img v-if="props.accumulatedBonus" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/achieved-icon-lightgreen.svg" />
-                    <img v-if="props.accumulatedBonus" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/achieved-icon-lightgreen.svg" />
+                    <img :style="props.accumulatedBonus !== 300 ? 'filter:grayscale(1)' : ''" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/achieved-icon-lightgreen.svg" />
+                    <img :style="props.accumulatedBonus !== 300 ? 'filter:grayscale(1)' : ''" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/achieved-icon-lightgreen.svg" />
                 </div>
                 <div class="right">
                     <div>{{ $t('hotPromo.referWheel.paymentRequestSubmitted') }}</div>
-                    <div v-if="props.accumulatedBonus">{{ $t('hotPromo.referWheel.withdrawalStillRequires') }} {{ store.currency.label }} {{ (300 - props.accumulatedBonus).toFixed(2) }}</div>
-                    <div v-if="props.accumulatedBonus">{{ store.currency.label }} {{ props.accumulatedBonus.toFixed(2) }} {{ $t('hotPromo.referWheel.willBeCreditedToAccount') }}</div>
+                    <div v-if="!isNaN(props.accumulatedBonus)">{{ $t('hotPromo.referWheel.withdrawalStillRequires') }} {{ store.currency.label }} {{ (300 - props.accumulatedBonus).toFixed(2) }}</div>
+                    <div v-if="!isNaN(props.accumulatedBonus)">{{ store.currency.label }} {{ props.accumulatedBonus.toFixed(2) }} {{ $t('hotPromo.referWheel.willBeCreditedToAccount') }}</div>
                 </div>
             </div>
 
