@@ -13,7 +13,7 @@
                     <stop offset="100%" stop-color="#FF953E" />
                   </linearGradient>
                 </defs>
-                <text id="test" x="0" y="45" class="amount">{{ accumulatedBonus }}</text>
+                <text id="test" x="0" y="45" class="amount">{{ (accumulatedBonus || 0)?.toFixed(2) }}</text>
               </svg>
             </div><img class="money-icon"
               src="../../../assets/images/promotion/hotpromo/refer-spinwheel/money-pile-icon.png" />
