@@ -403,7 +403,7 @@ export default defineComponent({
               //For Testing.
               // const tgDomain = "https://win7.game";
 
-              var preUrl = tgDomain + `/promotion?name=${promo.redirectUrl}&token=${store.token}`;
+              var preUrl = tgDomain + `/promotion?name=${promo.redirectUrl}&token=${store.token}&lang=${langVal.value}`;
               // alert(preUrl);
               console.log(preUrl);
               // promoSrc.value= preUrl;

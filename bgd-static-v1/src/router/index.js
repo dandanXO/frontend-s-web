@@ -8,7 +8,9 @@ import { StatusBar } from "@capacitor/status-bar";
 import { Platform, useQuasar } from "quasar";
 import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
-import i18n from "../i18n/index";
+import { i18nStore } from "./language";
+import { DEFAULT_LANG } from "src/constant/lang";
+import i18n from "src/i18n";
 
 /*
  * If not building with SSR mode, you can
@@ -41,6 +43,14 @@ export default route(function (/* { store, ssrContext } */) {
     const user = userStore();
     const ui = useUI();
     const $q = useQuasar();
+    const i18nStoreLanguage = i18nStore();
+    const { availableLocales } = i18n.global;
+
+    if (!i18nStoreLanguage.isLangInitialized) {
+      const { lang } = to.query;
+      const locale = availableLocales.includes(lang) ? lang : DEFAULT_LANG;
+      i18nStoreLanguage.initializeLang(locale);
+    }
 
     if (user.token && from && from.href) {
       user.getBalance();
