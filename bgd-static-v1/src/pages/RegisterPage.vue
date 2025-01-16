@@ -289,6 +289,7 @@ import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
+import { t } from "src/boot/lang";
 import qs from "qs";
 // import PrimaryButton from "../components/auth/PrimaryButton.vue";
 import InputField from "../components/auth/InputField.vue";
@@ -525,7 +526,7 @@ export default defineComponent({
       // nricRef.value.validate();
 
       $q.loading.show({
-        message: "Registering in progress"
+        message: t("notify.registeringInProgress")
       });
 
       isLoading.value = true;

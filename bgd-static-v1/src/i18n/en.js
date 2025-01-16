@@ -123,7 +123,7 @@ export default {
     currentPassword_rules_01: "Please insert current password",
     pleaseCompleteKYC: "Please Complete KYC",
     bindEmail: "Bind Email",
-    bindEmailDesc: 'Please proceed to bind email',
+    bindEmailDesc: "Please proceed to bind email",
     code: "Code",
     code_placeholder: "Enter verification code",
     code_rules_01: "Verification code is required",
@@ -228,7 +228,12 @@ export default {
     uploadImageLargerThan1MbError: "The uploaded image cannot be larger than 1MB",
     imageFormatError: "Image format error",
     uploadFailedPleaseTryAgain: "upload failed. Please try again",
-    copiedSuccessfully: "Copied Successfully"
+    copiedSuccessfully: "Copied Successfully",
+    linkCopiedToClipboard: "Link copied to clipboard",
+    failedToCopyLink: "Failed to copy link",
+    registeringInProgress: "Registering in progress",
+    loggingIn: "Logging in",
+    loggingOut: "Logging out"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",

@@ -777,24 +777,9 @@ const submitUpdatePhone = () => {
   }
 };
 
-const wishes = [
-  t("hotPromo.signIn30Days.wish01"),
-  t("hotPromo.signIn30Days.wish02"),
-  t("hotPromo.signIn30Days.wish03"),
-  t("hotPromo.signIn30Days.wish04"),
-  t("hotPromo.signIn30Days.wish05"),
-  t("hotPromo.signIn30Days.wish06"),
-  t("hotPromo.signIn30Days.wish07"),
-  t("hotPromo.signIn30Days.wish08"),
-  t("hotPromo.signIn30Days.wish09"),
-  t("hotPromo.signIn30Days.wish10"),
-  t("hotPromo.signIn30Days.wish11"),
-  t("hotPromo.signIn30Days.wish12"),
-  t("hotPromo.signIn30Days.wish13"),
-  t("hotPromo.signIn30Days.wish14"),
-  t("hotPromo.signIn30Days.wish15"),
-  t("hotPromo.signIn30Days.wish16")
-];
+const wishes = Array.from({ length: 16 }, (_, index) =>
+  t(`hotPromo.signIn30Days.wish${String(index + 1).padStart(2, "0")}`)
+);
 
 const randomWish = ref("");
 const generateRandomWish = () => {
