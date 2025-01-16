@@ -89,7 +89,7 @@
                   to="/earn-money"
                 >
                   <img src="../assets/images/bonus/share-icon.png" />
-                  <span>Earn Money</span>
+                  <span>{{ $t("header.earnMoney") }}</span>
                 </RouterLink>
                 <div class="content-title">{{ selectedPromo.title }}</div>
                 <div class="content-para" v-if="parsedParamSub">{{ parsedParamSub }}</div>

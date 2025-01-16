@@ -1430,7 +1430,9 @@
   <q-dialog v-model="isShowPrizeModal">
     <div class="congrats-container">
       <q-btn icon="close" round dense v-close-popup class="congrats-close" />
-      <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div>
+      <div class="congrats-header">
+        <img :src="require(`../assets/images/index/modal/congrats-header-${$t('lang.langVal')}.png`)" />
+      </div>
       <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-money.png" /></div>
       <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
       <div class="congrats-highlight">{{ store.currency.label }}28</div>

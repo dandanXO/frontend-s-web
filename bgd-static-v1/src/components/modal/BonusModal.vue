@@ -22,7 +22,9 @@
         </RouterLink>
       </div>
     </div>
-    <div class="bonus-header"><img src="../../assets/images/index/modal/bonus-header.png" /></div>
+    <div class="bonus-header">
+      <img :src="require(`../../assets/images/index/modal/bonus-header-${$t('lang.langVal')}.png`)" />
+    </div>
   </div>
 </template>
 

@@ -6,23 +6,22 @@
   <div class="rain-money-bg">
     <img src="../../assets/images/index/money-rain/money-content.png" />
   </div>
-  <div class="rain-money-title"><img src="../../assets/images/index/money-rain/money-rain-title.png" /></div>
+  <div class="rain-money-title">
+    <img :src="require(`../../assets/images/index/money-rain/money-rain-title-${$t('lang.langVal')}.png`)" />
+  </div>
 
   <div class="rain-money-tabs-wrapper">
     <div class="rain-money-tabs-container">
       <div class="logo-img"><img src="../../assets/images/auth/win-7-logo.png" /></div>
-      <div class="rain-money-header">
-        <span class="orange">700,000BDT&nbsp;</span>
-        <span class="green">every time maximum surplus</span>
-        <span class="orange">&nbsp;70,000BDT</span>
-      </div>
+
+      <div class="rain-money-header" v-html="$t('hotPromo.moneyRain.mainHeader')" />
 
       <div class="rain-money-tabs">
         <div class="tab-header" :class="{ active: moneyRainTab === 'events' }" @click="selectMoneyRainTab('events')">
-          Events
+          {{ $t("hotPromo.moneyRain.events") }}
         </div>
         <div class="tab-header" :class="{ active: moneyRainTab === 'records' }" @click="selectMoneyRainTab('records')">
-          Records
+          {{ $t("hotPromo.moneyRain.records") }}
         </div>
       </div>
 
@@ -30,11 +29,13 @@
         <div class="content-sec">
           <div class="treasure-img"><img src="../../assets/images/index/money-rain/baoxiang.gif" /></div>
           <div class="rewind-title">
-            Rewind time
+            {{ $t("hotPromo.moneyRain.rewindTime") }}
             <span>
-              <template v-if="nextRainTime.nowIsRain">starts now</template>
+              <template v-if="nextRainTime.nowIsRain">
+                {{ $t("hotPromo.moneyRain.startsNow") }}
+              </template>
 
-              <template v-else>starts at {{ nextRainTime.rainStartNext }}</template>
+              <template v-else>{{ $t("hotPromo.moneyRain.startsAt") }} {{ nextRainTime.rainStartNext }}</template>
             </span>
           </div>
 
@@ -51,7 +52,7 @@
           </div>
         </div>
         <div class="content-timing">
-          <div class="timing-head">Every Friday, Saturday, and Sunday</div>
+          <div class="timing-head">{{ $t("hotPromo.moneyRain.everyFriSatSun") }}</div>
           <div class="timing-body">
             <span>00:00-00:59</span>
             <span>12:00-12:59</span>
@@ -62,7 +63,7 @@
 
           <div class="timing-divider"></div>
 
-          <div class="timing-head">On Other Days, Three Times Daily</div>
+          <div class="timing-head">{{ $t("hotPromo.moneyRain.onOtherDays") }}</div>
           <div class="timing-body">
             <span>00:00-00:59</span>
             <span>12:00-12:59</span>
@@ -75,21 +76,9 @@
             Limited to
             <span>3000 Participants</span>
           </div> -->
-          <div class="footer-title q-mt-sm">Terms and Conditions:</div>
-          <div class="footer-content">
-            Each round of cash rain freely distributes 700,000 BDT.
-            <br />
-            Maximum cashback amount per round: 70,000 BDT.
-            <br />
-            Each round freely distributes cashback.
-            <br />
-            Maintain a historical deposit of ≥200 BDT and complete daily bets of ≥100+ BDT to claim your reward for
-            free.
-            <br />
-            The received money can be directly used for playing games or withdrawing.
-            <br />
-            The higher the VIP membership level, the greater the amount received.
-          </div>
+          <div class="footer-title q-mt-sm">{{ $t("hotPromo.moneyRain.tnc") }}:</div>
+          <div class="footer-content" v-html="$t('hotPromo.moneyRain.tncContent')" />
+          <!-- </div> -->
         </div>
       </div>
 
@@ -97,11 +86,11 @@
         <div class="content-sec">
           <div class="treasure-img"><img src="../../assets/images/index/money-rain/baoxiang.gif" /></div>
           <div class="rewind-title">
-            Rewind time
+            {{ $t("hotPromo.moneyRain.rewindTime") }}
             <span>
-              <template v-if="nextRainTime.nowIsRain">starts now</template>
+              <template v-if="nextRainTime.nowIsRain">{{ $t("hotPromo.moneyRain.startsNow") }}</template>
 
-              <template v-else>starts at {{ nextRainTime.rainStartNext }}</template>
+              <template v-else>{{ $t("hotPromo.moneyRain.startsAt") }} {{ nextRainTime.rainStartNext }}</template>
             </span>
           </div>
         </div>
@@ -130,15 +119,15 @@
         </div> -->
 
         <div class="content-table">
-          <div class="table-title">List of winners</div>
+          <div class="table-title">{{ $t("hotPromo.moneyRain.listOfWinners") }}</div>
 
           <div class="table-data">
             <table border="0" cellpadding="4" cellspacing="0" width="100%">
               <thead>
                 <tr>
-                  <td>Name</td>
-                  <td>Date</td>
-                  <td>Amount</td>
+                  <td>{{ $t("hotPromo.moneyRain.name") }}</td>
+                  <td>{{ $t("hotPromo.moneyRain.date") }}</td>
+                  <td>{{ $t("hotPromo.moneyRain.amount") }}</td>
                 </tr>
               </thead>
               <!-- <tbody>
@@ -179,9 +168,9 @@
               <table border="0" cellpadding="4" cellspacing="0" width="100%">
                 <thead style="opacity: 0">
                   <tr>
-                    <td>Name</td>
-                    <td>Date</td>
-                    <td>Amount</td>
+                    <td>{{ $t("hotPromo.moneyRain.name") }}</td>
+                    <td>{{ $t("hotPromo.moneyRain.date") }}</td>
+                    <td>{{ $t("hotPromo.moneyRain.amount") }}</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -204,7 +193,9 @@
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
     <div class="congrats-container">
-      <div class="congrats-header"><img src="../../assets/images/index/money-rain/congrats-header.png" /></div>
+      <div class="congrats-header">
+        <img :src="require(`../../assets/images/index/money-rain/congrats-header-${$t('lang.langVal')}.png`)" />
+      </div>
       <div class="congrats-coupons"><img src="../../assets/images/index/money-rain/congrats-money.png" /></div>
       <div class="congrats-highlight">{{ store.currency.label }} {{ prizeAmount }}</div>
 
@@ -623,24 +614,6 @@ onMounted(() => {
       font-size: 18px;
       font-weight: 900;
       margin-top: 5px;
-
-      span.orange {
-        font-family: "Arial", sans-serif;
-        background-clip: text;
-        font-weight: 900;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-image: linear-gradient(180deg, #ff7527 0%, #ffa011 100%);
-      }
-
-      span.green {
-        font-family: "Arial", sans-serif;
-        background-clip: text;
-        font-weight: 900;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-image: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-      }
     }
   }
 }
@@ -690,5 +663,25 @@ onMounted(() => {
     transform: translate(calc(100vw * var(--random-x)), 100vh) rotate(720deg) scale(1);
     left: 0px;
   }
+}
+</style>
+
+<style lang="scss">
+span.orange {
+  font-family: "Arial", sans-serif;
+  background-clip: text;
+  font-weight: 900;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(180deg, #ff7527 0%, #ffa011 100%);
+}
+
+span.green {
+  font-family: "Arial", sans-serif;
+  background-clip: text;
+  font-weight: 900;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
 }
 </style>
