@@ -9,6 +9,11 @@
           width="350"
           v-if="promoId === 567"
         />
+        <img
+          src="../../../assets/images/promotion/hotpromo/hongbaoyu2024/claimhongbao.png"
+          width="350"
+          v-else-if="promoId === 669"
+        />
         <img v-else src="../../../assets/images/promotion/hotpromo/hongbaoyu2024/red-packet.png" width="350" />
       </div>
     </div>
@@ -24,14 +29,19 @@
     <div class="modal-div">
       <div class="red-packet-opened">
         <img
-          v-if="promoId === 567"
+          v-if="promoId === 669"
+          :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu2024/getrecord.png`)"
+        />
+        <img
+          v-else-if="promoId === 567"
           :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu2024/popup2.png`)"
         />
         <img v-else :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu2024/red-packet-opened.png`)" />
         <!-- <img src="../../../assets/images/promotion/hotpromo/red-packet-opened.png" /> -->
-        <div v-if="promoId !== 567" class="grats">{{ $t("promo.congrats") }}</div>
+        <div v-if="promoId !== 567 && promoId !== 669" class="grats">{{ $t("promo.congrats") }}</div>
 
-        <div v-if="promoId !== 567" class="amount">{{ winAmount }}</div>
+        <div v-if="promoId !== 567 && promoId !== 669" class="amount">{{ winAmount }}</div>
+        <div v-else-if="promoId === 669" class="amount-halloween">{{ winAmount }}</div>
         <div v-else class="amount-halloween">{{ winAmount }}</div>
 
         <div class="get-btn" @click="getPromotionPrize">{{ $t("promo.claim") }}</div>
@@ -333,9 +343,9 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     top: 0;
-    margin-top: 142px;
-    color: #000;
-    font-size: 36px;
+    margin-top: 105px;
+    color: #fff;
+    font-size: 50px;
     font-weight: bold;
   }
 
