@@ -696,7 +696,8 @@ export default {
         "Each user can enjoy 1 free spin opportunity per day, and the number of spins will be reset at 24:00 every day.",
       termsCondition5: "Once the application is approved, the bonus will be deposited directly into your wallet.",
       termsCondition6: "The invitees must be qualified for the assistance to be successful.",
-      termsCondition7: "The right to interpret this activity belongs to our company. If you have any questions, please contact customer service.",
+      termsCondition7:
+        "The right to interpret this activity belongs to our company. If you have any questions, please contact customer service.",
       paymentRequestSubmitted: "Payment request submitted",
       withdrawalStillRequires: "Withdrawal is still required on",
       willBeCreditedToAccount: "will be credited to your account",
@@ -804,7 +805,23 @@ export default {
       usersMustMeetTheBettingReq: "Users must meet the betting requirements before claiming rewards.",
       activityRules01: "Activity time: January 1 - January 31, 2025",
       activityRules02: "Bonus rollover requirement: 1x rollover",
-      activityRules03: "Bonus distribution: Immediately distributed to your wallet after receiving it"
+      activityRules03: "Bonus distribution: Immediately distributed to your wallet after receiving it",
+      wish01: "May Allah bless you with endless Barakah.",
+      wish02: "May Allah open the doors of wealth and prosperity for you.",
+      wish03: "May Allah's blessings bring success and financial stability in your life.",
+      wish04: "Allah ka karam ho, aur har kaam mein barkat ho.",
+      wish05: "Tumhara har din taraqqi aur kamiyabi ka ho.",
+      wish06: "Khuda tumhein maal-o-doulat aur izzat se nawazay.",
+      wish07: "Best wishes for your success and financial growth.",
+      wish08: "May your business flourish and your earnings multiply.",
+      wish09: "Wishing you abundant wealth and endless happiness.",
+      wish10: "May this year bring you abundant wealth and prosperity.",
+      wish11: "May Allah bless you with immense wealth and endless prosperity.",
+      wish12: "Wishing you financial success and abundant blessings in all your endeavors.",
+      wish13: "May your earnings multiply and your wealth grow beyond measure.",
+      wish14: "May the doors of success and fortune always remain open for you.",
+      wish15: "May Allah’s blessings turn all your efforts into wealth and success.",
+      wish16: "On this special occasion, I pray for your financial growth and success."
     }
   },
   maintenance: {

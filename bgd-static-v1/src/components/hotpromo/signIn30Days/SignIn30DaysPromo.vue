@@ -246,7 +246,9 @@
   <q-dialog v-model="isShowCongratsDialog" @hide="handleReceiveBonus" persistent>
     <div class="congrats-container">
       <!-- <q-btn icon="close" round dense v-close-popup class="congrats-close" /> -->
-      <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header-long.png" /></div>
+      <div class="congrats-header">
+        <img :src="require(`../../../assets/images/index/modal/congrats-header-long-${$t('lang.langVal')}.png`)" />
+      </div>
       <div class="congrats-chest"><img src="../../../assets/images/index/modal/congrats-chest-dark.png" /></div>
 
       <div class="congrats-highlight">{{ convertToCommaAmount(bonusAmount) }}BDT</div>
@@ -776,22 +778,22 @@ const submitUpdatePhone = () => {
 };
 
 const wishes = [
-  "May Allah bless you with endless Barakah.",
-  "May Allah open the doors of wealth and prosperity for you.",
-  "May Allah's blessings bring success and financial stability in your life.",
-  "Allah ka karam ho, aur har kaam mein barkat ho.",
-  "Tumhara har din taraqqi aur kamiyabi ka ho.",
-  "Khuda tumhein maal-o-doulat aur izzat se nawazay.",
-  "Best wishes for your success and financial growth.",
-  "May your business flourish and your earnings multiply.",
-  "Wishing you abundant wealth and endless happiness.",
-  "May this year bring you abundant wealth and prosperity.",
-  "May Allah bless you with immense wealth and endless prosperity.",
-  "Wishing you financial success and abundant blessings in all your endeavors.",
-  "May your earnings multiply and your wealth grow beyond measure.",
-  "May the doors of success and fortune always remain open for you.",
-  "May Allah’s blessings turn all your efforts into wealth and success.",
-  "On this special occasion, I pray for your financial growth and success."
+  t("hotPromo.signIn30Days.wish01"),
+  t("hotPromo.signIn30Days.wish02"),
+  t("hotPromo.signIn30Days.wish03"),
+  t("hotPromo.signIn30Days.wish04"),
+  t("hotPromo.signIn30Days.wish05"),
+  t("hotPromo.signIn30Days.wish06"),
+  t("hotPromo.signIn30Days.wish07"),
+  t("hotPromo.signIn30Days.wish08"),
+  t("hotPromo.signIn30Days.wish09"),
+  t("hotPromo.signIn30Days.wish10"),
+  t("hotPromo.signIn30Days.wish11"),
+  t("hotPromo.signIn30Days.wish12"),
+  t("hotPromo.signIn30Days.wish13"),
+  t("hotPromo.signIn30Days.wish14"),
+  t("hotPromo.signIn30Days.wish15"),
+  t("hotPromo.signIn30Days.wish16")
 ];
 
 const randomWish = ref("");
