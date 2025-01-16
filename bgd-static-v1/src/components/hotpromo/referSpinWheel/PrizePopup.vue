@@ -36,11 +36,11 @@
     </div>
   </div>
 </template>
-  
+
   <script setup>
   const props = defineProps(['prize', 'showRechargeBtn', 'languageVal']);
 </script>
-  
+
   <style lang="scss" scoped>
 
   .gradient-amount-wrapper {
@@ -169,4 +169,3 @@
     color: #000a01;
   }
 </style>
-  
