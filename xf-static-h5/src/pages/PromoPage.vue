@@ -289,8 +289,7 @@ export default defineComponent({
     const loadAll = () => {
       const key = "PROMOTION_TYPES"
       isFetchingPromo.value = window.location.pathname === "/promotion";
-      console.log(isFetchingPromo.value)
-      return
+
       cached.get(key, () => api.get("/promo/type")).then((res) => {
         if (res.length > 0) {
           tabItems.value = [];
