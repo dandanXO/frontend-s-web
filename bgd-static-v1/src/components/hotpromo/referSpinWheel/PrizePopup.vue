@@ -9,8 +9,6 @@
           src="../../../assets/images/promotion/hotpromo/refer-spinwheel/free-wheel-spin-icon.svg" />
         <img v-else-if="props.prize === 'THANKS'" class="money-icon"
           src="../../../assets/images/promotion/hotpromo/refer-spinwheel/thanks-icon.svg" />
-        <img v-else-if="props.prize === 'RANDBONUS'" class="money-icon"
-          src="../../../assets/images/promotion/hotpromo/refer-spinwheel/random-icon.svg" />
         <img v-else class="money-icon"
           src="../../../assets/images/promotion/hotpromo/refer-spinwheel/money-pile-icon.png" />
         <svg class="gradient-amount-wrapper" :width="250" height="50"
@@ -21,7 +19,7 @@
               <stop offset="100%" stop-color="#FF953E" />
             </linearGradient>
           </defs>
-          <text id="test" x="50%" y="50%" class="amount">{{ props.prize === 'RANDBONUS' ? 'RANDOM' : props.prize === 'ADDSPIN' ? 'X1' : props.prize }}</text>
+          <text id="test" x="50%" y="50%" class="amount">{{ props.prize === 'ADDSPIN' ? 'X1' : props.prize }}</text>
         </svg>
       </div>
     </div>

@@ -48,10 +48,10 @@
             </div>
 
             <div class="timeline">
-                <div class="left">
+                <div class="left" :style="props.accumulatedBonus ? 'height:100px;' : 'height:20px'">
                     <img src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/achieved-icon-lightgreen.svg" />
-                    <img src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/achieved-icon-lightgreen.svg" />
-                    <img src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/achieved-icon-lightgreen.svg" />
+                    <img v-if="props.accumulatedBonus" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/achieved-icon-lightgreen.svg" />
+                    <img v-if="props.accumulatedBonus" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/achieved-icon-lightgreen.svg" />
                 </div>
                 <div class="right">
                     <div>Payment request submitted</div>
