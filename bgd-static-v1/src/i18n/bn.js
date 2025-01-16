@@ -670,7 +670,8 @@ export default {
       termsCondition7: "এই কার্যক্রমের ব্যাখ্যা করার অধিকার আমাদের কোম্পানির। যদি আপনার কোন প্রশ্ন থাকে, অনুগ্রহ করে গ্রাহক সেবার সাথে যোগাযোগ করুন।",
       paymentRequestSubmitted: "পেমেন্ট অনুরোধ জমা দেওয়া হয়েছে",
       withdrawalStillRequires: "উত্তোলনের জন্য এখনও প্রয়োজন",
-      willBeCreditedToAccount: "আপনার অ্যাকাউন্টে জমা হবে"
+      willBeCreditedToAccount: "আপনার অ্যাকাউন্টে জমা হবে",
+      thanks: "ধন্যবাদ!"
     },    
     signIn7Days: {
       continuousSignIn: "একটানা সাইন ইন:",

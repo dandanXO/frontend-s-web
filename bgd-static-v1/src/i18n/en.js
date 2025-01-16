@@ -671,7 +671,8 @@ export default {
       termsCondition7: "The right to interpret this activity belongs to our company. If you have any questions, please contact customer service.",
       paymentRequestSubmitted: "Payment request submitted",
       withdrawalStillRequires: "Withdrawal is still required on",
-      willBeCreditedToAccount: "will be credited to your account"
+      willBeCreditedToAccount: "will be credited to your account",
+      thanks: "Thanks!"
     },
     signIn7Days: {
       continuousSignIn: "Continuous sign-in:",

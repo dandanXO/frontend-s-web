@@ -22,7 +22,7 @@
               <stop offset="100%" stop-color="#FF953E" />
             </linearGradient>
           </defs>
-          <text id="test" x="50%" y="50%" class="amount">{{ props.prize === 'ADDSPIN' ? 'X1' : props.prize }}</text>
+          <text id="test" x="50%" y="50%" class="amount">{{ props.prize === 'ADDSPIN' ? 'X1' : props.prize === 'THANKS' ? $t("hotPromo.referWheel.thanks") : props.prize }}</text>
         </svg>
       </div>
     </div>
