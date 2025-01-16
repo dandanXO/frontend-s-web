@@ -12,7 +12,7 @@ export default {
     deposit: "জমা",
     bank: "ব্যাংক",
     addCrypto: "ক্রিপ্টো যোগ করুন",
-    addVirtualWallet: "ভার্চুয়াল ওয়ালেট যোগ করুন",
+    addVirtualWallet: "ওয়ালেট যোগ করুন",
     addBankCard: "ব্যাংক কার্ড যোগ করুন",
     message: "বার্তা",
     feedback: "প্রতিক্রিয়া",
@@ -167,7 +167,11 @@ export default {
     content: "কন্টেন্ট",
     content_placeholder: "অনুগ্রহ করে কন্টেন্ট লিখুন",
     content_rules_01: "অনুগ্রহ করে কন্টেন্ট লিখুন",
-    content_rules_02: "কন্টেন্টের দৈর্ঘ্য 500 শব্দ বা তার কম"
+    content_rules_02: "কন্টেন্টের দৈর্ঘ্য 500 শব্দ বা তার কম",
+    registerSuccess: "সফলভাবে নিবন্ধিত হয়েছে",
+    pleaseCompleteVerification: "অনুগ্রহ করে যাচাইকরণ কোড সম্পূর্ণ করুন",
+    uploadSuccess: "সফলভাবে আপলোড হয়েছে",
+    uploadFailedTryAgain: "আপলোড ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন"
   },
   btn: {
     login: "লগইন করুন",
@@ -178,7 +182,8 @@ export default {
     updated: "আপডেট করা হয়েছে",
     updating: "আপডেট হচ্ছে...",
     addCrypto: "ক্রিপ্টো যোগ করুন",
-    addVirtualWallet: "ভার্চুয়াল ওয়ালেট যোগ করুন",
+    addVirtualWallet: "ওয়ালেট যোগ করুন",
+    signinWithGoogle: "Google",
     addBankCard: "ব্যাংক কার্ড যোগ করুন",
     untie: "আনটাই",
     more: "আরো",

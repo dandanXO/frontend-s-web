@@ -167,7 +167,11 @@ export default {
     content: "Content",
     content_placeholder: "Please enter content",
     content_rules_01: "Please enter content",
-    content_rules_02: "Content length is 500 words or less"
+    content_rules_02: "Content length is 500 words or less",
+    registerSuccess: "Registered successfully",
+    pleaseCompleteVerification: "Please complete the verification code",
+    uploadSuccess: "uploaded successfully",
+    uploadFailedTryAgain: "upload failed. Please try again"
   },
   btn: {
     login: "Login",
@@ -313,7 +317,13 @@ export default {
       "4. Only payments made using the wallet selected in the order are supported. Cross-wallet transfers are not\n" +
       "          allowed.",
     video: "Video",
-    picture: "Picture"
+    picture: "Picture",
+    depositUsdtTip2: "২. ন্যূনতম জমা: ১০USDT, ১০USDT এর কম জমা ক্রেডিট করা হবে না।",
+    depositUsdtTip3: "৩. উপরের ঠিকানায় কোনো অ-মুদ্রা সম্পদ জমা করবেন না, অন্যথায় সম্পদ পুনরুদ্ধার করা যাবে না।",
+    depositUsdtTip4: "৪. তথ্য বিকৃত বা ফাঁস হওয়া এড়াতে অনুগ্রহ করে নিশ্চিত করুন যে অপারেটিং পরিবেশ নিরাপদ।",
+    depositUsdtTip5:
+      "৫. স্থানান্তর পরিমাণ অবশ্যই আপনার তৈরি করা অর্ডারের সাথে মিলতে হবে, অন্যথায় অর্থ সফলভাবে ক্রেডিট করা যাবে না।",
+    depositUsdtTip6: "৬. দ্রষ্টব্য: অর্থ স্থানান্তরের পরে জমা অর্ডার বাতিল করবেন না।"
   },
   withdraw: {
     cashBalance: "Cash Balance",
