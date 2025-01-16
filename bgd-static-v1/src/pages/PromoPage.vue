@@ -73,6 +73,7 @@
                 ></div> -->
                 <!-- <div class="promo-bg"> -->
                 <img
+                  v-if="selectedPromo.redirectUrl !== 'bgd-refer-wheel'"
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
                   style="display: block; width: 100%"
