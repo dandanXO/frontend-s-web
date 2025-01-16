@@ -206,6 +206,7 @@ const bonusImage = {
 const handleClaimClick = () => {
   claimDrawEvent(props.promoCode).then((res) => {
     if (res.code === 0) {
+      bonusModalVisible.value = true
       const { data } = res;
       bonus.value = data.bonus
       bonusName.value = data.bonusName
@@ -239,9 +240,10 @@ onMounted(() => {
   margin: 0 auto;
   padding: 20px 40px 40px;
   border-radius: 12px;
-  background-color: #f2f8fe;
   border: 1px solid #acd4f6;
   box-shadow: 0px 0px 4px 0px #01497b0f;
+  background: url('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/content-bg-top.png') top no-repeat, url('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/content-bg.png') center no-repeat, url('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/content-bg-bottom.png') bottom no-repeat;
+  background-size: 100%, 100% 90%, 100%;
 
   .title {
     max-width: 741px;
