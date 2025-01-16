@@ -694,8 +694,9 @@ export default {
       paymentRequestSubmitted: "পেমেন্ট অনুরোধ জমা দেওয়া হয়েছে",
       withdrawalStillRequires: "উত্তোলনের জন্য এখনও প্রয়োজন",
       willBeCreditedToAccount: "আপনার অ্যাকাউন্টে জমা হবে",
-      thanks: "ধন্যবাদ!"
-    },
+      thanks: "ধন্যবাদ!",
+      noInvitesYet: "এখনো কোন আমন্ত্রণ নেই!"
+    },    
     signIn7Days: {
       continuousSignIn: "একটানা সাইন ইন:",
       expired: "মেয়াদ শেষ",

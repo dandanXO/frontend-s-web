@@ -700,7 +700,8 @@ export default {
       paymentRequestSubmitted: "Payment request submitted",
       withdrawalStillRequires: "Withdrawal is still required on",
       willBeCreditedToAccount: "will be credited to your account",
-      thanks: "Thanks!"
+      thanks: "Thanks!",
+      noInvitesYet: "No invites yet!"
     },
     signIn7Days: {
       continuousSignIn: "Continuous sign-in:",

@@ -55,22 +55,27 @@
                 </div>
                 <div class="right">
                     <div>{{ $t('hotPromo.referWheel.paymentRequestSubmitted') }}</div>
-                    <div v-if="!isNaN(props.accumulatedBonus)">{{ $t('hotPromo.referWheel.withdrawalStillRequires') }} {{ store.currency.label }} {{ (300 - props.accumulatedBonus).toFixed(2) }}</div>
-                    <div v-if="!isNaN(props.accumulatedBonus)">{{ store.currency.label }} {{ props.accumulatedBonus.toFixed(2) }} {{ $t('hotPromo.referWheel.willBeCreditedToAccount') }}</div>
+                    <div v-if="!isNaN(props.accumulatedBonus)">{{ $t('hotPromo.referWheel.withdrawalStillRequires') }} {{ store.currency.label }}{{ (300 - props.accumulatedBonus).toFixed(2) }}</div>
+                    <div>{{ store.currency.label }}{{ '300.00' }} {{ $t('hotPromo.referWheel.willBeCreditedToAccount') }}</div>
                 </div>
             </div>
 
             <div class="list-section">
                 <div class="list-wrapper">
                     <div class="list">
-                    <div class="list-row" v-for="invited, index in props.invitedList" :key="index">
-                        <div class="list-item"><span class="cyan">{{ invited.loginName }}</span></div>
-                        <div class="list-item"><span class="label">{{ invited.loginName }}</span></div>
-                        <div class="list-item">
-                        <div class="center points"><span class="highlight">+{{ invited.bonus }}</span><img class="wheel-icon"
-                            src="../../../assets/images/promotion/hotpromo/refer-spinwheel/wheel-icon.svg" />
+                    <template v-if="Array.isArray(props.invitedList) && props.invitedList.length">
+                        <div class="list-row" v-for="invited, index in props.invitedList" :key="index">
+                            <div class="list-item"><span class="cyan">{{ invited.loginName }}</span></div>
+                            <div class="list-item"><span class="label">{{ invited.loginName }}</span></div>
+                            <div class="list-item">
+                            <div class="center points"><span class="highlight">+{{ invited.bonus }}</span><img class="wheel-icon"
+                                src="../../../assets/images/promotion/hotpromo/refer-spinwheel/wheel-icon.svg" />
+                            </div>
+                            </div>
                         </div>
-                        </div>
+                    </template>
+                    <div v-else class="list-row" >
+                        <div class="list-item" style="text-align: center;">{{ $t('hotPromo.referWheel.noInvitesYet') }}</div>
                     </div>
                     </div>
                 </div>
