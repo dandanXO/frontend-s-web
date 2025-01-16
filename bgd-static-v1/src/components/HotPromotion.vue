@@ -12,7 +12,10 @@
     <ReferSpinWheel v-if="list.redirectUrl === 'bgd-refer-wheel' && !isCommonPromo && store.token" />
     <SignIn7DaysPromo v-if="list.redirectUrl === 'bgd-signin-bonus' && !isCommonPromo && store.token" />
     <SignIn30DaysPromo v-if="list.redirectUrl === 'bgd-daily-signin-bonus' && !isCommonPromo && store.token" />
-
+    <EmailVerifyBonus
+      v-if="list.redirectUrl === 'bgd-email-verify-bonus' && !isCommonPromo && store.token"
+      :promocode="list.promoCode"
+    />
     <NewPlayerSpinWheelPromo
       v-if="list.redirectUrl === 'bgd-newplayer-welcome-spin' && !isCommonPromo && store.token"
     />
@@ -61,6 +64,7 @@ import NewPlayersPromo from "../components/hotpromo/newPlayers/NewPlayersPromo.v
 import SlotFtdPromo from "../components/hotpromo/slotFtdPromo/SlotFtdPromo.vue";
 import RegisterClaimBonus from "../components/hotpromo/registerClaimBonus/RegisterClaimBonus.vue";
 import SignIn30DaysPromo from "./hotpromo/signIn30Days/SignIn30DaysPromo.vue";
+import EmailVerifyBonus from "./hotpromo/emailVerifyBonus/EmailVerifyBonusPromo.vue";
 import ReferSpinWheel from "./hotpromo/referSpinWheel/ReferSpinWheel.vue";
 
 export default defineComponent({
@@ -74,6 +78,7 @@ export default defineComponent({
     ReferSpinWheel,
     SignIn7DaysPromo,
     SignIn30DaysPromo,
+    EmailVerifyBonus,
     NewPlayerSpinWheelPromo,
     RedPacketRainPromo,
     InterestProfitPromo,
@@ -141,6 +146,7 @@ export default defineComponent({
       this.list.redirectUrl === "bgd-new-players" ||
       this.list.redirectUrl === "bgd-slot-ftd" ||
       this.list.redirectUrl === "bgd-register-claim-bonus" ||
+      this.list.redirectUrl === "bgd-email-verify-bonus" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;
