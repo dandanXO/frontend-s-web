@@ -4,21 +4,18 @@
       <div class="livepoker-rebate-section section-bg">
         <div class="livepoker-rebate-section-left">
           <div class="livepoker-rebate-section-title">
-            <div class="claim-title-icon">
-            </div>
+            <div class="claim-title-icon"></div>
             救援时刻
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon claim-coin-icon">
-            </div>
+            <div class="reward-info-icon claim-coin-icon"></div>
             <div class="reward-info-content">
               累计周负盈利：
               <span class="amount">{{ totalLoss }}元</span>
             </div>
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon claim-gift-icon">
-            </div>
+            <div class="reward-info-icon claim-gift-icon"></div>
             <div class="reward-info-content">
               可领取彩金：
               <span class="amount">{{ bonus }}元</span>
@@ -118,7 +115,7 @@
 
       <div class="livepoker-rebate-game-bottom-rule section-bg">
         <div class="title-img">活动规则</div>
-        <br/>
+        <br />
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
@@ -149,7 +146,7 @@
           </div>
           <div class="item">
             <div class="item-num">6</div>
-            为避免文字理解差异，雷火电竞保留此活动最终解释权；
+            为避免文字理解差异，东赢电竞保留此活动最终解释权；
           </div>
         </div>
       </div>
