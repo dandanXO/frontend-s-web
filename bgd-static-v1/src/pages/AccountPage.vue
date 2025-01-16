@@ -955,6 +955,10 @@ const loadingLogout = ref(false);
 
 onActivated(() => {
   loadInfo();
+
+  if(route.query?.bindEmail === 'true') {
+    bindEmailDialog.value = true;
+  }
 });
 
 onMounted(() => {
@@ -965,7 +969,7 @@ onMounted(() => {
   window.location.search.includes("personal") && openPersonalCenterDialog();
 
   if(route.query?.bindEmail === 'true') {
-    openBindEmailDialog();
+    bindEmailDialog.value = true;
   }
 });
 
