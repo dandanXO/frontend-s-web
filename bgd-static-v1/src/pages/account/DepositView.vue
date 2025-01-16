@@ -183,6 +183,7 @@
           v-if="hasPrivilege && unselectedPrivileges.length > 0"
           :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
           clearable
+          @update:model-value="onChangePrivilege"
         >
           <template v-slot:option="scope">
             <q-item v-bind="scope.itemProps">
@@ -312,6 +313,13 @@
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
+
+  <q-dialog width="100%" v-model="showBindEmailDialog" persistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="popout-close" @click="() => showBindEmailDialog = false" v-close-popup />
+      <KYCBindEmail @closeBindEmailKYCDialog="() => showBindEmailDialog = false" />
+    </div>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -332,6 +340,7 @@ import { t } from "src/boot/lang";
 import { useCheckKYC } from "src/hooks/checkKYC";
 import { storeToRefs } from "pinia";
 import InputField from "src/components/auth/InputField.vue";
+import KYCBindEmail from "src/components/KYCBindEmail.vue";
 // import MediaSettingsComponent from "../../components/MediaSettingsComponent.vue";
 
 const imgURL = process.env.IMAGE_CDN;
@@ -373,6 +382,7 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
+const showBindEmailDialog = ref();
 
 const { languageVal } = storeToRefs(i18nStore());
 
@@ -457,6 +467,12 @@ const calculatedMaxDeposit = ref("");
 // ]);
 
 const depositItems = ref([]);
+
+const onChangePrivilege = (privilege) => {
+  if(privilege.code === 'bgd-email-verify-bonus' && (!store.email || store.emailVerified !== true)) {
+    showBindEmailDialog.value = true;
+  }
+}
 
 const handleDepositItemClick = (index) => {
   depositItems.value.forEach((item, i) => {
@@ -644,6 +660,11 @@ function clearInfo() {
 
 const depositAmtRef = ref("");
 async function confirmDeposit() {
+  if(selectedPrivilege.value.code === 'bgd-email-verify-bonus' && (!store.email || store.emailVerified !== true)) {
+    showBindEmailDialog.value = true;
+    return;
+  }
+
   btnLoading.value = true;
   depositAmtRef.value.validate();
   if (depositAmtRef.value.hasError) {

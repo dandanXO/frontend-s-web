@@ -698,7 +698,7 @@ import moment from "moment";
 import { api } from "boot/axios";
 import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "src/stores";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { App } from "@capacitor/app";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
@@ -719,6 +719,8 @@ let slideListPath = ref([
   "/account/message"
 ]);
 let currentSlide = ref(slideList.value[0]);
+
+const route = useRoute();
 
 const isActiveSlide = (e) => {
   if (e === currentSlide.value) return true;
@@ -953,6 +955,10 @@ const loadingLogout = ref(false);
 
 onActivated(() => {
   loadInfo();
+
+  if(route.query?.bindEmail === 'true') {
+    bindEmailDialog.value = true;
+  }
 });
 
 onMounted(() => {
@@ -961,6 +967,10 @@ onMounted(() => {
   getVersionNo();
 
   window.location.search.includes("personal") && openPersonalCenterDialog();
+
+  if(route.query?.bindEmail === 'true') {
+    bindEmailDialog.value = true;
+  }
 });
 
 const verificationImg = ref("");
