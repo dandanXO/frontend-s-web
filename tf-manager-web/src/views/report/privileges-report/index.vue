@@ -73,10 +73,10 @@
       </div>
     </div>
 
-    <el-card v-if="uiControl.display === 'CHART'" v-loading="uiControl.chartLoading">
+    <el-card class="chart-summary" v-if="uiControl.display === 'CHART'" v-loading="uiControl.chartLoading" style="gap: 10px;">
       <Chart :options="amountPiechatOptions" />
     </el-card>
-    <el-card v-if="uiControl.display === 'CHART'" v-loading="uiControl.chartLoading" style="margin-top: 10px;">
+    <el-card class="chart-summary" v-if="uiControl.display === 'CHART'" v-loading="uiControl.chartLoading" style="margin-top: 10px;">
       <Chart :options="countPiechatOptions" />
     </el-card>
 
@@ -166,6 +166,7 @@
       </el-table-column>
     </el-table>
     <el-pagination
+      v-if="uiControl.display === 'DATA'"
       class="pagination"
       @current-change="changePage"
       layout="prev, pager, next"
@@ -240,8 +241,8 @@ const uiControl = reactive({
 });
 
 function getAmountChart(summaryList, chartOptions) {
-  const dataset = chartOptions.dataset.source
-  const legendData = chartOptions.legend.data
+  const dataset = [['Privilege', 'Amount']]
+  const legendData = []
   if (summaryList.length > 0) {
     summaryList.forEach((item, index) => {
       const data = []
@@ -256,8 +257,8 @@ function getAmountChart(summaryList, chartOptions) {
 }
 
 function getCountChart(summaryList, chartOptions) {
-  const dataset = chartOptions.dataset.source
-  const legendData = chartOptions.legend.data
+  const dataset = [['Privilege', 'Count']]
+  const legendData = []
   if (summaryList.length > 0) {
     summaryList.forEach((item, index) => {
       const data = []
@@ -280,11 +281,11 @@ const amountPiechatOptions = reactive({
     type: 'scroll',
     orient: 'vertical',
     right: 10,
-    top: 20,
-    bottom: 20,
+    top: 10,
+    bottom: 10,
     data: []
   },
-  height: '220px',
+  height: '300px',
   dataset: {
     source: [['Privilege', 'Amount']],
   },
@@ -315,7 +316,7 @@ const countPiechatOptions = reactive({
   title: {
     text: t('fields.privilegeCountRatio'),
   },
-  height: '220px',
+  height: '300px',
   dataset: {
     source: [['Privilege', 'Count']],
   },
@@ -323,8 +324,8 @@ const countPiechatOptions = reactive({
     type: 'scroll',
     orient: 'vertical',
     right: 10,
-    top: 20,
-    bottom: 20,
+    top: 10,
+    bottom: 10,
     data: []
   },
   series: [
@@ -575,4 +576,5 @@ onMounted(async () => {
 .el-input-number:deep(.el-input__inner) {
   text-align: left;
 }
+
 </style>
