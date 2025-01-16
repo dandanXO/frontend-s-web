@@ -5,7 +5,7 @@
         <div class="icon-img">
           <img src="../../../assets/images/promotion/hotpromo/email-verify-bonus/link-email-img.png" alt="" />
         </div>
-        <div class="title-txt">Link with Email</div>
+        <div class="title-txt">{{ $t("hotPromo.emailVerifyBonus.linkWithEmail") }}</div>
         <div class="tick-img">
           <img
             :src="
@@ -18,56 +18,45 @@
         </div>
 
         <q-btn no-caps class="primary-bg link-btn center" @click="openBindEmailDialog" :disable="hadBindEmail">
-          Link
+          {{ $t("hotPromo.emailVerifyBonus.link") }}
         </q-btn>
       </div>
     </div>
 
     <div>
-      <img src="../../../assets/images/promotion/hotpromo/email-verify-bonus/header-event-details.png" alt="" />
+      <img
+        :src="
+          require(`../../../assets/images/promotion/hotpromo/email-verify-bonus/header-event-details-${$t(
+            'lang.langVal'
+          )}.png`)
+        "
+        alt=""
+      />
     </div>
 
     <div class="app-login-content">
-      <p>
-        <span style="color: #fff96f">win7.game</span>
-        Special Offer for New Members: First Deposit Bonus Up to
-        <span style="color: #ff0000">119%</span>
-        !
-      </p>
-      <p>
-        Simply create a new member account at
-        <span style="color: #fff96f">win7.game</span>
-        , complete your first deposit, and you can claim your bonus. In addition, with a minimum deposit of
-        <span style="color: #ff0000">100TK</span>
-        , you can enjoy the first deposit bonus and an additional bonus of up to
-        <span style="color: #ff0000">119%</span>
-        , providing more fun.
-      </p>
-      <p>
-        In addition, there are additional offers for users with higher top-ups. Top up more, enjoy more rewards, and
-        participate in
-        <span style="color: #fff96f">win7.game</span>
-        activities with your friends to experience higher benefits and services.
-      </p>
+      <p v-html="$t('hotPromo.emailVerifyBonus.eventDetails01')" />
+      <p v-html="$t('hotPromo.emailVerifyBonus.eventDetails02')" />
+      <p v-html="$t('hotPromo.emailVerifyBonus.eventDetails03')" />
     </div>
 
     <table border="0" width="100%" cellpadding="0" cellspacing="0">
       <tbody>
         <tr style="font-size: 90%">
           <th>
-            <b>Deposit Amount</b>
+            <b>{{ $t("hotPromo.emailVerifyBonus.depositAmount") }}</b>
           </th>
           <th>
-            <b>Giveaway Bonus</b>
+            <b>{{ $t("hotPromo.emailVerifyBonus.giveawayBonus") }}</b>
           </th>
           <th>
-            <b>Turnover requirements</b>
+            <b>{{ $t("hotPromo.emailVerifyBonus.turnoverRequirements") }}</b>
           </th>
           <th>
-            <b>Applicable games</b>
+            <b>{{ $t("hotPromo.emailVerifyBonus.applicableGames") }}</b>
           </th>
           <th>
-            <b>Conditions for receiving</b>
+            <b>{{ $t("hotPromo.emailVerifyBonus.conditionsForReceiving") }}</b>
           </th>
         </tr>
         <tr>
@@ -81,7 +70,7 @@
             <b>10X</b>
           </td>
           <td rowspan="6">
-            <b>Slot Machines</b>
+            <b>{{ $t("hotPromo.emailVerifyBonus.slotMachines") }}</b>
             <div>
               <img
                 src="../../../assets/images/promotion/hotpromo/email-verify-bonus/slot-machine-img.png"
@@ -92,15 +81,15 @@
           </td>
           <td rowspan="6">
             <div class="table-flow-deposit">
-              <b>Deposit payment</b>
+              <b>{{ $t("hotPromo.emailVerifyBonus.depositPayment") }}</b>
               <div>
                 <img src="../../../assets/images/promotion/hotpromo/email-verify-bonus/arrow-down.png" alt="" />
               </div>
-              <b>Select a deposit channel</b>
+              <b>{{ $t("hotPromo.emailVerifyBonus.selectADepositChannel") }}</b>
               <div>
                 <img src="../../../assets/images/promotion/hotpromo/email-verify-bonus/arrow-down.png" alt="" />
               </div>
-              <b>Check the first deposit offer</b>
+              <b>{{ $t("hotPromo.emailVerifyBonus.checkOffer") }}</b>
             </div>
           </td>
         </tr>
@@ -163,68 +152,54 @@
     </table>
 
     <div class="content-title-header">
-      <img src="../../../assets/images/promotion/hotpromo/email-verify-bonus/header-example.png" alt="" />
+      <img
+        :src="
+          require(`../../../assets/images/promotion/hotpromo/email-verify-bonus/header-example-${$t(
+            'lang.langVal'
+          )}.png`)
+        "
+      />
     </div>
-    <p>
-      For example, member A tops up
-      <span style="color: #ff0000">100 TK</span>
-      for the first time and gets
-      <span style="color: #ff0000">119 TK</span>
-      as a reward. Before withdrawing, he needs to complete at least 10 times the turnover requirement, that is:
-    </p>
-    <p style="color: #ccff00">100 principal x 10 + 119 reward x 10 = 2190 turnover</p>
+    <p v-html="$t('hotPromo.emailVerifyBonus.examplesPara01')" />
+
+    <p style="color: #ccff00">{{ $t("hotPromo.emailVerifyBonus.examplesPara02") }}</p>
 
     <div class="content-title-header">
-      <img src="../../../assets/images/promotion/hotpromo/email-verify-bonus/header-examhow.png" alt="" />
+      <img
+        :src="
+          require(`../../../assets/images/promotion/hotpromo/email-verify-bonus/header-examhow-${$t(
+            'lang.langVal'
+          )}.png`)
+        "
+      />
     </div>
     <p>
-      Before making your first deposit, members need to verify their email address and bind a valid withdrawal account
-      (supports Nagad, Rocket, Bkash, Upay).
+      {{ $t("hotPromo.emailVerifyBonus.examHowPara01") }}
     </p>
     <p style="color: #ccff00">
-      Go to the deposit page > Select a deposit channel > Select a promotion > Click to receive the 119% first deposit
-      bonus
+      {{ $t("hotPromo.emailVerifyBonus.examHowPara02") }}
     </p>
 
     <div class="q-pt-md">
-      <img src="../../../assets/images/promotion/hotpromo/email-verify-bonus/header-tnc.png" alt="" />
+      <img
+        :src="
+          require(`../../../assets/images/promotion/hotpromo/email-verify-bonus/header-tnc-${$t('lang.langVal')}.png`)
+        "
+        alt=""
+      />
     </div>
 
     <div class="q-pt-sm">
       <ul>
-        <li>This bonus is only available for new member accounts and only for their first deposit.</li>
-        <li>
-          Withdrawal requirements: You need to complete the wagering requirement of at least 10 times the turnover. The
-          calculation formula is: (Deposit amount + Bonus amount) × 10 times the turnover requirement.
-        </li>
-        <li>This bonus is only applicable to the slot game category.</li>
-        <li>
-          If a member mistakenly participates in a non-specified game category, the bonus will be deemed invalid and
-          win7.gam reserves the right to deduct the relevant bonus and the profits generated.
-        </li>
-        <li>
-          Each member is limited to one account (including deposit account, withdrawal account, IP address). Multiple
-          account behavior will result in the bonus being invalid. If violations are found, win7.gam reserves the right
-          to cancel the bonus and freeze the account.
-        </li>
-        <li>
-          Before the first withdrawal application, the bound bank account information and phone number cannot be
-          changed. If the information is changed, the bonus will be cancelled and the bonus and the resulting profits
-          will be deducted.
-        </li>
-        <li>
-          This bonus is only applicable to players in the specified game category. The bonus cannot be used to
-          accumulate betting turnover, calculate arbitrage behavior or be used in combination with other technical
-          means. If violations are found, the bonus will be deemed invalid, all bonuses and profits will be cancelled,
-          and win7.gam reserves the right to close the account.
-        </li>
-        <li>
-          win7.gam reserves the right to change, suspend or terminate this activity at any time without prior notice.
-        </li>
-        <li>
-          The final right of interpretation of all terms belongs to win7.gam. win7.gam reserves the right to refuse to
-          deal with any disputes involving terms.
-        </li>
+        <li v-html="$t('hotPromo.emailVerifyBonus.tnc01')" />
+        <li v-html="$t('hotPromo.emailVerifyBonus.tnc02')" />
+        <li v-html="$t('hotPromo.emailVerifyBonus.tnc03')" />
+        <li v-html="$t('hotPromo.emailVerifyBonus.tnc04')" />
+        <li v-html="$t('hotPromo.emailVerifyBonus.tnc05')" />
+        <li v-html="$t('hotPromo.emailVerifyBonus.tnc06')" />
+        <li v-html="$t('hotPromo.emailVerifyBonus.tnc07')" />
+        <li v-html="$t('hotPromo.emailVerifyBonus.tnc08')" />
+        <li v-html="$t('hotPromo.emailVerifyBonus.tnc09')" />
       </ul>
     </div>
   </div>
