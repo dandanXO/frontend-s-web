@@ -285,7 +285,7 @@ const amountPiechatOptions = reactive({
     bottom: 10,
     data: []
   },
-  height: '300px',
+  height: '380px',
   dataset: {
     source: [['Privilege', 'Amount']],
   },
@@ -316,7 +316,7 @@ const countPiechatOptions = reactive({
   title: {
     text: t('fields.privilegeCountRatio'),
   },
-  height: '300px',
+  height: '380px',
   dataset: {
     source: [['Privilege', 'Count']],
   },
