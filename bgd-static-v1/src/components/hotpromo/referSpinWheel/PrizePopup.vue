@@ -1,7 +1,10 @@
 <template>
   <div class="congrats-container">
     <q-btn icon="close" round dense v-close-popup class="congrats-close" />
-    <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header.png" /></div>
+    <div class="congrats-header">
+      <img v-if="props.languageVal === 'en'" src="../../../assets/images/index/modal/congrats-header.png" />
+      <img v-else src="../../../assets/images/index/modal/congrats-header-bn.png" />
+    </div>
     <div class="congrats-coupons">
       <img class="light-source" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/light-source.png" />
       <div class="congrats-highlight">
@@ -35,7 +38,7 @@
 </template>
   
   <script setup>
-  const props = defineProps(['prize', 'showRechargeBtn']);
+  const props = defineProps(['prize', 'showRechargeBtn', 'languageVal']);
 </script>
   
   <style lang="scss" scoped>

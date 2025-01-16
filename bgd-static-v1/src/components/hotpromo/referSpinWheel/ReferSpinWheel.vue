@@ -149,7 +149,8 @@
 
 
     <div class="terms-conditions">
-      <img src="../../../assets/images/promotion/hotpromo/refer-spinwheel/terms-conditions-title.svg" />
+      <img v-if="languageVal === 'en'" src="../../../assets/images/promotion/hotpromo/refer-spinwheel/terms-conditions-title-en.svg" />
+      <img v-else src="../../../assets/images/promotion/hotpromo/refer-spinwheel/terms-conditions-title-bn.svg" />
       <div class="content">
         <ul>
           <li>{{ $t('hotPromo.referWheel.termsCondition1') }}</li>
@@ -175,7 +176,7 @@
   </q-dialog>
 
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
-    <PrizePopup :prize="prizePopupBonusAmt" />
+    <PrizePopup :prize="prizePopupBonusAmt" :languageVal="languageVal" />
   </q-dialog>
 
   <q-dialog v-model="showQRPopup" backdrop-filter="none">
