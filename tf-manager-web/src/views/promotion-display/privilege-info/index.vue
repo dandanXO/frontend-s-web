@@ -293,7 +293,7 @@
                 <el-input-number
                   v-model="uiControl.rollOverAmt"
                   style="width: 145px"
-                  :min="1"
+                  :min="0"
                   :max="selectedRolloverType === 'MULTIPLE' ? 100 : 999999999999999"
                   :controls="false"
                   @keypress="restrictInput($event)"
