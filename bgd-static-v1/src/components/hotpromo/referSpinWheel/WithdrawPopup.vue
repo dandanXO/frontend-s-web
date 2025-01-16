@@ -54,9 +54,9 @@
                     <img v-if="props.accumulatedBonus" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/achieved-icon-lightgreen.svg" />
                 </div>
                 <div class="right">
-                    <div>Payment request submitted</div>
-                    <div v-if="props.accumulatedBonus">Withdrawal is still required on {{ store.currency.label }} {{ (300 - props.accumulatedBonus).toFixed(2) }}</div>
-                    <div v-if="props.accumulatedBonus">{{ store.currency.label }} {{ props.accumulatedBonus.toFixed(2) }} will be credited to your account</div>
+                    <div>{{ $t('hotPromo.referWheel.paymentRequestSubmitted') }}</div>
+                    <div v-if="props.accumulatedBonus">{{ $t('hotPromo.referWheel.withdrawalStillRequires') }} {{ store.currency.label }} {{ (300 - props.accumulatedBonus).toFixed(2) }}</div>
+                    <div v-if="props.accumulatedBonus">{{ store.currency.label }} {{ props.accumulatedBonus.toFixed(2) }} {{ $t('hotPromo.referWheel.willBeCreditedToAccount') }}</div>
                 </div>
             </div>
 

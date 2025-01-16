@@ -77,13 +77,13 @@
 
     <div class="expiry">
       <div class="days tertiary-bg center">
-        <div class="label">Days</div>
+        <div class="label">{{ $t('hotPromo.referWheel.days') }}</div>
         <div class="highlight expiry-day">{{ remainingTime.days }}</div>
-        <div class="label">Expires later</div>
+        <div class="label">{{ $t('hotPromo.referWheel.expiresLater') }}</div>
       </div>
       <div class="countdown tertiary-bg center">
         <div class="timer-item">
-          <div class="label">Hours</div>
+          <div class="label">{{ $t('hotPromo.referWheel.hours') }}</div>
           <div class="timer-value-wrapper">
             <div class="timer-value" v-for="hour in remainingTime.hours?.toString().padStart(2, '0').split('')" :key="hour">{{ hour }}</div>
           </div>
@@ -95,7 +95,7 @@
           </div>
         </div>
         <div class="timer-item">
-          <div class="label">Minutes</div>
+          <div class="label">{{ $t('hotPromo.referWheel.minutes') }}</div>
           <div class="timer-value-wrapper">
             <div class="timer-value" v-for="minute in remainingTime.minutes?.toString().padStart(2, '0').split('')" :key="minute">{{ minute }}</div>
           </div>
@@ -107,7 +107,7 @@
           </div>
         </div>
         <div class="timer-item">
-          <div class="label">Seconds</div>
+          <div class="label">{{ $t('hotPromo.referWheel.seconds') }}</div>
           <div class="timer-value-wrapper">
             <div class="timer-value" v-for="second in remainingTime.seconds?.toString().padStart(2, '0').split('')" :key="second">{{ second }}</div>
           </div>
@@ -118,7 +118,7 @@
     <div class="referral">
       <div class="invite primary-bg" @click="showInvitePopup = true">{{ $t('hotPromo.referWheel.inviteFriendsHelp') }}<img class="icon share-icon"
           src="../../../assets/images/promotion/hotpromo/refer-spinwheel/share-icon.svg" /></div>
-      <div class="qr primary-bg" @click="showQRPopup = true">Scan QR code<img class="icon qr-icon"
+      <div class="qr primary-bg" @click="showQRPopup = true">{{ $t('hotPromo.referWheel.scanQRCode') }}<img class="icon qr-icon"
           src="../../../assets/images/promotion/hotpromo/refer-spinwheel/qr-icon.svg" /></div>
     </div>
 
@@ -144,22 +144,19 @@
       <img src="../../../assets/images/promotion/hotpromo/refer-spinwheel/terms-conditions-title.svg" />
       <div class="content">
         <ul>
-          <li>When the accumulated amount reaches 300BDT, you can apply for withdrawal.</li>
+          <li>{{ $t('hotPromo.referWheel.termsCondition1') }}</li>
 
-          <li>Every time you invite a friend to register and the friend recharges once, you will get 1 free spin.</li>
+          <li>{{ $t('hotPromo.referWheel.termsCondition2') }}</li>
 
-          <li>The event lasts for 3 days. After the activity period ends, the accumulated rewards will be reset and the
-            activity will start again.</li>
+          <li>{{ $t('hotPromo.referWheel.termsCondition3') }}</li>
 
-          <li>Each user can enjoy 1 free spin opportunity per day, and the number of spins will be reset at 24:00 every
-            day.</li>
+          <li>{{ $t('hotPromo.referWheel.termsCondition4') }}</li>
 
-          <li>Once the application is approved, the bonus will be deposited directly into your wallet.</li>
+          <li>{{ $t('hotPromo.referWheel.termsCondition5') }}</li>
 
-          <li>The invitees must be qualified for the assistance to be successful.</li>
+          <li>{{ $t('hotPromo.referWheel.termsCondition6') }}</li>
 
-          <li>The right to interpret this activity belongs to our company. If you have any questions, please contact
-            customer service.</li>
+          <li>{{ $t('hotPromo.referWheel.termsCondition7') }}</li>
         </ul>
       </div>
     </div>
