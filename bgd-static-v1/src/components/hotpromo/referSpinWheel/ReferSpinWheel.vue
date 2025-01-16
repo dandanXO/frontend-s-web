@@ -6,7 +6,7 @@
           <div class="title">{{ $t("hotPromo.referWheel.currentAmount") }} ({{ store.currency.label }})</div>
           <div class="balance-info">
             <div class="amount">
-              <svg class="gradient-amount-wrapper" preserveAspectRatio='xMinYMin' xmlns="http://www.w3.org/2000/svg">
+              <svg class="gradient-amount-wrapper"  preserveAspectRatio='xMinYMin' xmlns="http://www.w3.org/2000/svg">
                 <defs>
                   <linearGradient id="gradientAmount" gradientTransform="rotate(90)">
                     <stop offset="0%" stop-color="#FDEE4F" />
@@ -34,13 +34,13 @@
                 <div class="achieve-item" v-for="index in 5" :key="index">
                   <img class="achieved-icon" :class="achievementProgress >= (index - 1) * 25 ? 'active' : ''"
                     src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/achieved-icon.svg" />
-                  <span class="achieved-label">{{ (index - 1) * 25}}%</span>
+                  <span class="achieved-label">{{ (index - 1) * 25 }}%</span>
                 </div>
               </div>
             </div>
           </div>
           <div class="remaining">
-            <span class="highlight">{{accumulatedBonus}}/</span><span class="label">300</span>
+            <span class="highlight">{{ accumulatedBonus }}/</span><span class="label">300</span>
           </div>
         </div>
       </div>
@@ -52,7 +52,8 @@
     <div class="spin-wheel-container">
       <div :class="`draw-btn click-pointer ${spinButtonDisable ? 'disabled' : ''}`" @click="spinWheel">
         <img class="spin-btn" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/click-spin-btn.png" />
-        <img class="hand" v-if="!spinButtonDisable" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/hand.png" />
+        <img class="hand" v-if="!spinButtonDisable"
+          src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/hand.png" />
       </div>
       <div class="wheel-stage">
         <img src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/spin-wheel-stg.png" />
@@ -60,8 +61,10 @@
       <div class="spin-wheel-board">
         <div class="spin-wheel-frame">
           <div id="spin-wheel-id" class="spin-wheel">
-            <img id="spin-wheel-bg" class="wheel-bg"
-              src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/spin-wheel-bg1.png" />
+            <img v-if="languageVal === 'en'" id="spin-wheel-bg" class="wheel-bg"
+              src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/spin-wheel-bg-en.png" />
+            <img v-else id="spin-wheel-bg" class="wheel-bg"
+              src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/spin-wheel-bg-bn.png" />
             <div id="spin-wheel-number" class="spin-wheel-number" style="display: none"></div>
           </div>
         </div>
@@ -85,7 +88,8 @@
         <div class="timer-item">
           <div class="label">{{ $t('hotPromo.referWheel.hours') }}</div>
           <div class="timer-value-wrapper">
-            <div class="timer-value" v-for="hour in remainingTime.hours?.toString().padStart(2, '0').split('')" :key="hour">{{ hour }}</div>
+            <div class="timer-value" v-for="hour in remainingTime.hours?.toString().padStart(2, '0').split('')"
+              :key="hour">{{ hour }}</div>
           </div>
         </div>
         <div class="timer-item">
@@ -97,7 +101,8 @@
         <div class="timer-item">
           <div class="label">{{ $t('hotPromo.referWheel.minutes') }}</div>
           <div class="timer-value-wrapper">
-            <div class="timer-value" v-for="minute in remainingTime.minutes?.toString().padStart(2, '0').split('')" :key="minute">{{ minute }}</div>
+            <div class="timer-value" v-for="minute in remainingTime.minutes?.toString().padStart(2, '0').split('')"
+              :key="minute">{{ minute }}</div>
           </div>
         </div>
         <div class="timer-item">
@@ -109,17 +114,19 @@
         <div class="timer-item">
           <div class="label">{{ $t('hotPromo.referWheel.seconds') }}</div>
           <div class="timer-value-wrapper">
-            <div class="timer-value" v-for="second in remainingTime.seconds?.toString().padStart(2, '0').split('')" :key="second">{{ second }}</div>
+            <div class="timer-value" v-for="second in remainingTime.seconds?.toString().padStart(2, '0').split('')"
+              :key="second">{{ second }}</div>
           </div>
         </div>
       </div>
     </div>
 
     <div class="referral">
-      <div class="invite primary-bg" @click="showInvitePopup = true">{{ $t('hotPromo.referWheel.inviteFriendsHelp') }}<img class="icon share-icon"
-          src="../../../assets/images/promotion/hotpromo/refer-spinwheel/share-icon.svg" /></div>
-      <div class="qr primary-bg" @click="showQRPopup = true">{{ $t('hotPromo.referWheel.scanQRCode') }}<img class="icon qr-icon"
-          src="../../../assets/images/promotion/hotpromo/refer-spinwheel/qr-icon.svg" /></div>
+      <div class="invite primary-bg" @click="showInvitePopup = true">{{ $t('hotPromo.referWheel.inviteFriendsHelp')
+        }}<img class="icon share-icon" src="../../../assets/images/promotion/hotpromo/refer-spinwheel/share-icon.svg" />
+      </div>
+      <div class="qr primary-bg" @click="showQRPopup = true">{{ $t('hotPromo.referWheel.scanQRCode') }}<img
+          class="icon qr-icon" src="../../../assets/images/promotion/hotpromo/refer-spinwheel/qr-icon.svg" /></div>
     </div>
 
     <div class="list-section">
@@ -175,7 +182,9 @@
   </q-dialog>
 
   <q-dialog v-model="showWithdrawPopup" backdrop-filter="none">
-    <WithdrawPopup v-if="accumulatedBonus < 300" :accumulatedBonus="accumulatedBonus" :closePopup="() => showWithdrawPopup = false" :invitePopup="() => showInvitePopup = true" :invitedList="invitedList" />
+    <WithdrawPopup v-if="accumulatedBonus < 300" :accumulatedBonus="accumulatedBonus"
+      :closePopup="() => showWithdrawPopup = false" :invitePopup="() => showInvitePopup = true"
+      :invitedList="invitedList" />
     <PrizePopup v-else prize="300" :showRechargeBtn="true" />
   </q-dialog>
 </template>
@@ -190,6 +199,11 @@
   import QRPopup from "./QRPopup.vue";
   import WithdrawPopup from "./WithdrawPopup.vue";
   import moment from 'moment';
+  import { i18nStore } from "src/router/language";
+  import { storeToRefs } from "pinia";
+
+  const { languageVal } = storeToRefs(i18nStore());
+
 
   const remainingTime = computed(() => {
     if(endDate.value) {
@@ -1164,6 +1178,55 @@
         .winner-prize {
           font-weight: 700;
           color: #3f8cff;
+        }
+      }
+    }
+  }
+
+
+  @media (max-width: 430px) {
+    .container {
+      .top {
+        .top-wrapper {
+          .withdraw-btn {
+            width: 80px;
+          }
+
+          .balance {
+            .balance-info {
+              gap: 5px;
+
+              .gradient-amount-wrapper {
+                max-width: 150px;
+
+                .amount {
+                  font-size: 35px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 350px) {
+    .container {
+      .top {
+        .top-wrapper {
+          .balance {
+            .balance-info {
+              gap: 5px;
+              
+              .gradient-amount-wrapper {
+                max-width: 130px;
+
+                .amount {
+                  font-size: 30px;
+                }
+              }
+            }
+          }
         }
       }
     }
