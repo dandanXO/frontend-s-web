@@ -270,7 +270,7 @@ onMounted(() => {
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 28px;
+            font-size: 14px;
             font-weight: 600;
             line-height: 40px;
             color: #0080ff;
@@ -293,27 +293,27 @@ onMounted(() => {
                 padding: 3px 0;
                 clip-path: polygon(0 50%, 12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%);
                 text-align: center;
-                font-size: 16px;
+                font-size: 12px;
                 font-weight: 600;
                 line-height: 23.33px;
                 color: #fff;
             }
 
             .rule-block-rule__description {
-                font-size: 20px;
+                font-size: 12px;
                 font-weight: 400;
                 line-height: 28px;
             }
         }
 
         .detail-description {
-            font-size: 20px;
+            font-size: 12px;
             font-weight: 400;
             line-height: 28px;
         }
 
         .hint {
-            font-size: 20px;
+            font-size: 12px;
             color: #FF0000;
         }
     }
@@ -328,7 +328,7 @@ onMounted(() => {
             align-items: center;
             margin-bottom: 8px;
             gap: 10px;
-            font-size: 24px;
+            font-size: 14px;
             font-weight: 600;
             line-height: 29.05px;
         }
@@ -361,7 +361,7 @@ onMounted(() => {
                     border-bottom: 1px solid #0000001a;
 
                     .mission-block-mission-upside-title {
-                        font-size: 18px;
+                        font-size: 14px;
                         font-weight: 400;
                         line-height: 18px;
                     }
@@ -395,7 +395,7 @@ onMounted(() => {
                             flex-direction: column;
 
                             .mission-block-mission-downside-description {
-                                font-size: 18px;
+                                font-size: 14px;
                                 font-weight: 400;
                                 line-height: 21.78px;
                             }
@@ -417,7 +417,7 @@ onMounted(() => {
                         width: max-content;
                         padding: 11px 16px;
                         border-radius: 8px;
-                        font-size: 24px;
+                        font-size: 12px;
                         font-weight: 600;
                         line-height: 18px;
                         text-align: center;
@@ -451,7 +451,7 @@ onMounted(() => {
                     counter-increment: list-counter;
                     margin-bottom: 4px;
                     list-style-type: none;
-                    font-size: 20px;
+                    font-size: 12px;
                     font-weight: 400;
                     line-height: 32px;
 
@@ -466,7 +466,7 @@ onMounted(() => {
                         margin-right: 10px;
                         background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
                         border-radius: 50%;
-                        font-size: 18px;
+                        font-size: 12px;
                         font-weight: 700;
                         line-height: 24px;
                         color: white;
