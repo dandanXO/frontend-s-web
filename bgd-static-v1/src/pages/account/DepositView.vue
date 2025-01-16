@@ -240,48 +240,20 @@
       </template>
       <template v-else>
         <p>
-          1. Recharge tutorial:
-          <span class="tutorial-link" @click="openDepositPic">Picture</span>
+          {{ $t("deposit.depositTips1") }}
+          <span class="tutorial-link" @click="openDepositPic">{{ $t("deposit.picture") }}</span>
           /
-          <span class="tutorial-link" @click="openDepositVideo">Video</span>
+          <span class="tutorial-link" @click="openDepositVideo">{{ $t("deposit.video") }}</span>
         </p>
-        <p>2. Fill in the correct payment wallet account number.</p>
+        <p>{{ $t("deposit.depositTips2") }}</p>
         <p>
-          3. The submitted amount must match the payment amount; otherwise, it will not be automatically credited.
+          {{ $t("deposit.depositTips3") }}
           <br />
-          After completing the payment, please fill in the TrxID to avoid automatic credit failures.
+          {{ $t("deposit.depositTips33") }}
         </p>
         <p>
-          4. Only payments made using the wallet selected in the order are supported. Cross-wallet transfers are not
-          allowed.
+          {{ $t("deposit.depositTips4") }}
         </p>
-
-        <!--        <p>-->
-        <!--          1. Recharge tutorial:-->
-        <!--          <a-->
-        <!--            class="tutorial-link"-->
-        <!--            style="color: #70bc62; text-decoration: underline"-->
-        <!--            href="https://drive.google.com/file/d/1UCBOIAxRfBZoq56zv5Md-XO-6eAzunWJ/view?usp=drivesdk"-->
-        <!--            target="_blank"-->
-        <!--          >-->
-        <!--            Picture-->
-        <!--          </a>-->
-        <!--          /-->
-        <!--          <a-->
-        <!--            class="tutorial-link"-->
-        <!--            style="color: #70bc62; text-decoration: underline"-->
-        <!--            href="https://drive.google.com/file/d/1fCCJPAHm2frmzBk05jc4v-c19-Bn3vvx/view"-->
-        <!--            target="_blank"-->
-        <!--          >-->
-        <!--            Video-->
-        <!--          </a>-->
-        <!--        </p>-->
-        <!--        <p>-->
-        <!--          2. After payment is completed, you need to submit the last 5 digits of TID, otherwise it will not be-->
-        <!--          automatically credited.-->
-        <!--        </p>-->
-        <!--        <p>3. Fill in the correct wallet account.</p>-->
-        <!--        <p>4. The amount submitted must be consistent with the payment amount.</p>-->
       </template>
     </div>
     <!-- <MediaSettingsComponent /> -->

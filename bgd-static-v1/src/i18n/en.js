@@ -303,7 +303,17 @@ export default {
     select_privilege: "Select Privilege",
     incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again.",
     useFtdPrivilege: "Use Slot First Deposit Privilege",
-    unlimited: "Unlimited"
+    unlimited: "Unlimited",
+    depositTips1: "1. Recharge tutorial:",
+    depositTips2: "2. Fill in the correct payment wallet account number.",
+    depositTips3:
+      "3. The submitted amount must match the payment amount; otherwise, it will not be automatically credited.",
+    depositTips33: "After completing the payment, please fill in the TrxID to avoid automatic credit failures.",
+    depositTips4:
+      "4. Only payments made using the wallet selected in the order are supported. Cross-wallet transfers are not\n" +
+      "          allowed.",
+    video: "Video",
+    picture: "Picture"
   },
   withdraw: {
     cashBalance: "Cash Balance",
@@ -314,7 +324,14 @@ export default {
     remainWagers: "Remain Wagers",
     withdrawTutorial: "Withdraw Tutorial",
     withdrawalMethodInMaintenance:
-      "This channel is currently under maintenance from {startTime} to {endTime}. Please use other channels for withdrawal operations. Thank you!"
+      "This channel is currently under maintenance from {startTime} to {endTime}. Please use other channels for withdrawal operations. Thank you!",
+    withdrawTips1: "1.Bind your wallet/bank card using the correct format.",
+    withdrawTips2:
+      "2.Daily wallet limit: BDT 50,000. Do not exceed this limit. You can add multiple wallets for withdrawals.",
+    withdrawTips3:
+      "3.Daily bank card limit: BDT 500,000. Do not exceed this limit. You can add multiple bank cards for\n" +
+      "          withdrawals.",
+    withdrawTips4: "4.For blockchain wallet (USDT) withdrawals, there is no limit, and transfers are very fast."
   },
   bank: {
     virtualWallet: "eWallet",
@@ -363,7 +380,6 @@ export default {
     upgrade: "Upgrade",
     experience: "Experience",
     dailyWithdrawalTimes: "Daily Withdrawal Frequency",
-    rewards: "Rewards",
     vipTable_txt:
       "Once your deposits meet the upgrade requirements, your VIP level will be immediately upgraded, increasing your number of withdrawals.",
     accumulate: "Accumulate",
@@ -650,7 +666,6 @@ export default {
       save: "Save",
       currentAmount: "Current Amount",
       withdrawalStillTakes: "Withdrawal still takes",
-      inviteFriendsHelp: "Invite friends to help withdraw coins",
       shareThisReferralLink: "Share this referral link with you friends",
       getForFree: "Get For Free",
       inviteFriendsHelp: "Invite friends to help",
