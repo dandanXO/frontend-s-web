@@ -3433,6 +3433,7 @@ export default {
     DOWNLOAD: 'Download',
     AFFILIATE: 'Affiliate',
     HOME: 'Home',
+    MANAGER: 'Manager',
   },
   pmStatus: {
     UNSENT: 'Unsent',
