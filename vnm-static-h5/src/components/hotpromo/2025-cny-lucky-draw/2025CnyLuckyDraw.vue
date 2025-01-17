@@ -4,6 +4,7 @@ s<template>
         <img src="@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bonus-title.png" class="bg-title" />
         <img src="@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bonus-egg.png" class="bg-egg"
             @click="handleClaimClick" />
+        <div class="egg-available-draw">Số lần còn lại: <span style="font-weight: 700;">{{ availableDraw }} </span> lần</div>
     </div>
     <div class="new-player-wrapper">
         <div style="display: flex; justify-content: center; align-items: center; gap: 12px;">
@@ -602,7 +603,13 @@ onMounted(() => {
     height: 355px;
     margin: 0 auto 20px;
     position: relative;
-
+    .egg-available-draw{
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+  }
     .bg-image {
         width: 100%;
         position: absolute;
