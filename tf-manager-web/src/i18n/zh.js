@@ -3213,7 +3213,6 @@ export default {
     'ID Verification': '身份认证',
     'Top Ranking': '优惠游戏排行榜记录',
     'Top Bonus Ranking': '优惠奖金排行榜记录',
-    'Top Ranking': '优惠排行榜记录',
     Competition: '联赛',
     Event: '赛事',
     Team: '队伍',
