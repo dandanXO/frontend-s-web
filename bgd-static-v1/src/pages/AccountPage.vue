@@ -1470,7 +1470,7 @@ const submitUpdateEmail = () => {
           bindEmailDialog.value = false;
           formDetail.email = updateEmailInfo.email;
           formDetail.emailVerified = true;
-
+          store.getMemberInfo();
           // setTimeout(() => {
           //   startRefresh();
           // }, 2000);
