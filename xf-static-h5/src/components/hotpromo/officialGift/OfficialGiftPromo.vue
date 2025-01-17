@@ -2,7 +2,7 @@
   <div class="official-gift-container">
     <div class="official-gift-block download-block">
       <div class="download-block-left-side">
-        <span class="download-block-title">添加兴发电竞指定管理账号，尽享全方位服务优待</span>
+        <span class="download-block-title">添加兴發娱乐指定管理账号，尽享全方位服务优待</span>
         <a :href="paramsObj.voxis_url" target="_blank">
           <button class="download-block-btn">点击进入</button>
         </a>
@@ -20,11 +20,11 @@
     <div class="official-gift-block detail-block">
       <div class="detail-block-title">
         <img src="../../../assets/images/promotion/hotpromo/official-gift/gift.svg" />
-        <span>认准兴发电竞官方 VIP 客服管理</span>
+        <span>认准兴發娱乐官方 VIP 客服管理</span>
       </div>
       <div class="detail-block-content">
         <span class="detail-block-content-description">
-          添加以下您的兴发专属 VIP 客服：福利咨询，专属服务，赛事推荐专属红包
+          添加以下您的兴發专属 VIP 客服：福利咨询，专属服务，赛事推荐专属红包
         </span>
         <div class="detail-block-content-voxis">
           <img src="../../../assets/images/promotion/hotpromo/official-gift/voxis.svg" />
