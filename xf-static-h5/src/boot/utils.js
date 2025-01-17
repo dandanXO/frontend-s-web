@@ -148,7 +148,8 @@ export const writeClipboard = async (content, useExecCommand = false) => {
     Notify.create({
       color: "positive",
       position: "top",
-      message: "复制成功"
+      message: "复制成功",
+      icon: "check_circle"
     });
   } catch (error) {
     if (!useExecCommand) {

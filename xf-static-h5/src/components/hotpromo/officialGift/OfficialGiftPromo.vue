@@ -51,6 +51,7 @@
 import { computed, ref } from "vue";
 import { writeClipboard } from "boot/utils";
 import { Platform } from "quasar";
+import { useQuasar } from "quasar";
 // import Clock24Svg from "../../../assets/images/promotion/hotpromo/official-gift/clock-24.svg";
 // import GiftLineSvg from "../../../assets/images/promotion/hotpromo/official-gift/gift-line.svg";
 import BeautySvg from "../../../assets/images/promotion/hotpromo/official-gift/beauty.svg";
@@ -67,6 +68,7 @@ const props = defineProps({
   params: String
 });
 
+const $q = useQuasar();
 const store = userStore();
 const { vip } = storeToRefs(store);
 
