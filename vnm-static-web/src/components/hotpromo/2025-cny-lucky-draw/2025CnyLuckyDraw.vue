@@ -154,27 +154,23 @@
       </p>
     </div>
   </div>
-  <el-dialog class="draw-modal" :modal="true"  v-model="bonusModalVisible" align-center>
+  <el-dialog class="draw-modal" :modal="true" v-model="bonusModalVisible" align-center>
     <div class="egg-dialog-container">
       <img class="bound-bg-top" :src="boundBgTop" />
-      <div class="bound-bg-mid" > 
-        <div>
-          Bốc thăm xổ số
-        </div>
+      <div class="bound-bg-mid">
+        <div>Bốc thăm xổ số</div>
       </div>
       <!-- <img class="bound-image" :src="bonusImage[18]" /> -->
       <img class="bound-image" :src="bonusImage[bonus]" />
       <div class="bound-cycle-light"></div>
-      <div class="bound-text" > 
+      <div class="bound-text">
         <div>
           {{ bonusText[bonus] }}
           <!-- {{bonusText[18]}} -->
         </div>
       </div>
-      <div class="bound-close" @click="bonusModalVisible = false"> 
-        <div>
-          nhận được
-        </div>
+      <div class="bound-close" @click="bonusModalVisible = false">
+        <div>nhận được</div>
       </div>
     </div>
   </el-dialog>
@@ -195,23 +191,23 @@ const availableDraw = ref(0);
 const usedDraw = ref(0);
 const totalDraw = ref(0);
 
-const bonus = ref(0)
-const bonusName = ref('')
-const boundBgTop = require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound-bg-top.png')
+const bonus = ref(0);
+const bonusName = ref("");
+const boundBgTop = require("../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound-bg-top.png");
 const bonusImage = {
-  18: require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound18.png'),
-  28: require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound28.png'),
-  38: require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound38.png'),
-  88: require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound88.png'),
-  888: require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound888.png'),
-}
+  18: require("../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound18.png"),
+  28: require("../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound28.png"),
+  38: require("../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound38.png"),
+  88: require("../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound88.png"),
+  888: require("../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound888.png")
+};
 const bonusText = {
   18: "18 VNDP",
   28: "28 VNDP",
   38: "38 VNDP",
   88: "88 VNDP",
   888: "888 VNDP"
-}
+};
 
 const handleClaimClick = () => {
   claimDrawEvent(props.promoCode).then((res) => {
@@ -227,7 +223,7 @@ const handleClaimClick = () => {
 };
 
 onMounted(() => {
-  drawEventInit().then((res) => {
+  drawEventInit(props.promoCode).then((res) => {
     if (res.code === 0) {
       const { data } = res;
       validBet.value = data.validBet;
@@ -242,20 +238,20 @@ onMounted(() => {
 });
 </script>
 <style lang="scss" scoped>
-.egg-dialog-container{
+.egg-dialog-container {
   background-image: url(../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound-bg.png);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   height: 500px;
   width: 560px;
   position: relative;
-  .bound-bg-top{
+  .bound-bg-top {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     top: -10%;
   }
-  .bound-bg-mid{
+  .bound-bg-mid {
     background-image: url(../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound-bg-close-btn.png);
     position: absolute;
     left: 50%;
@@ -267,9 +263,9 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     font-size: 26px;
-    color:#fFF;
+    color: #fff;
   }
-  .bound-image{
+  .bound-image {
     z-index: 2;
     position: absolute;
     left: 50%;
@@ -278,7 +274,7 @@ onMounted(() => {
     width: 266px;
     height: 266px;
   }
-  .bound-cycle-light{
+  .bound-cycle-light {
     z-index: 1;
     background-image: url(../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound-cycle-light.png);
     background-size: 100% 100%;
@@ -289,7 +285,7 @@ onMounted(() => {
     width: 271px;
     height: 229px;
   }
-  .bound-text{
+  .bound-text {
     background-image: url(../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound-money-bg.png);
     position: absolute;
     left: 50%;
@@ -303,7 +299,7 @@ onMounted(() => {
     font-size: 24px;
     color: rgba(248, 47, 6, 1);
   }
-  .bound-close{
+  .bound-close {
     background-image: url(../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound-bg-mid.png);
     position: absolute;
     left: 50%;
@@ -315,7 +311,7 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     font-size: 24px;
-    color:#fFF;
+    color: #fff;
   }
 }
 .new-player-wrapper {
@@ -583,6 +579,4 @@ onMounted(() => {
     cursor: pointer;
   }
 }
-
-
 </style>
