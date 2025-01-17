@@ -45,9 +45,9 @@ export default route(function (/* { store, ssrContext } */) {
     const $q = useQuasar();
     const i18nStoreLanguage = i18nStore();
     const { availableLocales } = i18n.global;
+    const { lang } = to.query;
 
-    if (!i18nStoreLanguage.isLangInitialized) {
-      const { lang } = to.query;
+    if (!i18nStoreLanguage.isLangInitialized && lang) {
       const locale = availableLocales.includes(lang) ? lang : DEFAULT_LANG;
       i18nStoreLanguage.initializeLang(locale);
     }
