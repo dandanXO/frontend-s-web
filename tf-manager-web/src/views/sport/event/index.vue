@@ -33,6 +33,13 @@
         </el-select>
 
         <el-input
+          v-model="request.eventId"
+          size="small"
+          style="width: 200px; margin-left: 5px"
+          :placeholder="t('fields.eventId')"
+        />
+
+        <el-input
           v-model="request.eventName"
           size="small"
           style="width: 200px; margin-left: 5px"
@@ -162,7 +169,7 @@
       </div>
     </el-dialog>
     <el-table :data="page.records" v-loading="page.loading" ref="table" row-key="id" size="small" highlight-current-row>
-      <el-table-column prop="_id" :label="t('fields.id')" width="200" />
+      <el-table-column prop="eventId" :label="t('fields.eventId')" width="200" />
       <el-table-column prop="tfSportName" :label="t('fields.sportType')" width="200" />
       <el-table-column prop="tfCompetitionName" :label="t('fields.tfCompetitionName')" width="200" />
       <el-table-column prop="tfEventName" :label="t('fields.eventName')" width="200" />
@@ -226,6 +233,7 @@ const request = reactive({
   orderBy: "_id",
   supplierName: null,
   sportType: null,
+  eventId: null,
   siteId: null,
   eventStatus: null,
   eventName: null,
@@ -250,6 +258,7 @@ function resetQuery() {
   request.sportType = null;
   request.siteId = null;
   request.eventStatus = null;
+  request.eventId = null;
   request.eventName = null;
   request.competitionName = null;
   request.createTime = [];

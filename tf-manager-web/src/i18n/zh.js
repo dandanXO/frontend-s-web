@@ -2438,7 +2438,8 @@ export default {
     oddsType_2: '香港盘',
     oddsType_3: '欧洲盘',
     oddsType_4: '印尼盘',
-    oddsType_6: '美式盘'
+    oddsType_6: '美式盘',
+    eventId: '赛事ID'
   },
   message: {
     adsStatusOpen: '开',
@@ -3212,7 +3213,6 @@ export default {
     'ID Verification': '身份认证',
     'Top Ranking': '优惠游戏排行榜记录',
     'Top Bonus Ranking': '优惠奖金排行榜记录',
-    'Top Ranking': '优惠排行榜记录',
     Competition: '联赛',
     Event: '赛事',
     Team: '队伍',
