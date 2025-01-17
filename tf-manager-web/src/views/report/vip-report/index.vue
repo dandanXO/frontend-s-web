@@ -108,10 +108,7 @@
       </el-table-column>
       <el-table-column prop="platform" :label="t('fields.platform')" />
 
-      <el-table-column
-        prop="bet"
-        :label="t('fields.bet')"
-      >
+      <el-table-column prop="bet" :label="t('fields.bet')">
         <template #default="scope1">
           $
           <span
@@ -124,10 +121,7 @@
       </el-table-column>
 
       <el-table-column prop="betCount" :label="t('fields.summaryTotalBet')" />
-      <el-table-column
-        prop="payout"
-        :label="t('fields.payout')"
-      >
+      <el-table-column prop="payout" :label="t('fields.payout')">
         <template #default="scope1">
           $
           <span
@@ -139,10 +133,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column
-        prop="profit"
-        :label="t('fields.profit')"
-      >
+      <el-table-column prop="profit" :label="t('fields.profit')">
         <template #default="scope1">
           $
           <span
@@ -153,7 +144,7 @@
           />
         </template>
       </el-table-column>
-      
+
       <el-table-column prop="ratio" :label="t('fields.return_ratio')">
         <template #default="scope">
           <span v-if="scope.row.ratio === null">0 %</span>
@@ -171,28 +162,35 @@
       :page-count="page.pages"
       :current-page="request.current"
     />
-    <div class="total-info-wrapper">
-      <div class="total-info">
-        {{ $t('fields.betTotal') }} :
-        {{ page.records.length > 0 ? totalBet.toFixed(2) : '--' }}
-      </div>
-      <div class="total-info">
-        {{ $t('fields.totalBetMemberCount') }} :
-        {{ page.records.length > 0 ? totalBetCount : '--' }}
-      </div>
-      <div class="total-info">
-        {{ $t('fields.payoutTotal') }} :
-        {{ page.records.length > 0 ? totalPayout.toFixed(2) : '--' }}
-      </div>
-      <div class="total-info">
-        {{ $t('fields.profit') }} :
-        {{ page.records.length > 0 ? totalProfit.toFixed(2) : '--' }}
-      </div>
-      <div class="total-info">
-        {{ $t('fields.return_ratio_total') }} :
-        {{ page.records.length > 0 ? totalRatio.toFixed(2) + '%' : '--' }}
-      </div>
+
+    <div class= "total-info-wrapper">
+      <span>
+        {{ t('fields.totalDepositAmount') }} :
+      </span>
+      <span style="margin-left: 10px">$</span>
+      <span v-formatter="{ data: totalBet, type: 'money' }" />
+
+      <span style="margin-left: 10px">{{ t('fields.totalBetMemberCount') }} :</span>
+      <span style="margin-left: 10px">{{ totalBetCount }}</span>
+
+      <span style="margin-left: 10px">
+        {{ t('fields.payoutTotal') }} :
+      </span>
+      <span style="margin-left: 10px">$</span>
+      <span v-formatter="{ data: totalBet, type: 'money' }" />
+
+      <span style="margin-left: 10px">
+        {{ t('fields.profit') }} :
+      </span>
+      <span style="margin-left: 10px">$</span>
+      <span v-formatter="{ data: totalBet, type: 'money' }" />
+
+      <span style="margin-left: 10px">
+        {{ t('fields.return_ratio_total') }} :
+      </span>
+      {{ page.records.length > 0 ? totalRatio.toFixed(2) + '%' : '--' }}
     </div>
+
     <el-dialog
       :title="t('fields.exportToExcel')"
       v-model="uiControl.messageVisible"
