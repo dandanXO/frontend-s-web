@@ -1,4 +1,4 @@
-<template>
+s<template>
     <div class="bonus-wrapper">
         <img src="@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bonus-bg.jpeg" class="bg-image" />
         <img src="@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bonus-title.png" class="bg-title" />
@@ -184,9 +184,30 @@
         </div>
     </div>
     <q-dialog v-model="bonusModalVisible" persistent>
-        <div class="dialog_inner">
-            <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
-            <img :src="bonusImage[18]" />
+        <div class="dialog_continaer">
+            <div class="dialog_inner">
+                <!-- <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup /> -->
+                <img class="bound-bg-top" :src="boundBgTop" />
+                <div class="bound-bg-mid" > 
+                    <div>
+                    Bốc thăm xổ số
+                    </div>
+                </div>
+                <img class="bound-image" :src="bonusImage[bonus]" />
+                <!-- <img class="bound-image" :src="bonusImage[18]" /> -->
+                <div class="bound-cycle-light"></div>
+                <div class="bound-text" > 
+                    <div>
+                    {{ bonusText[bonus] }}
+                    <!-- {{bonusText[18]}} -->
+                    </div>
+                </div>
+                <div class="bound-close" @click="bonusModalVisible = false"> 
+                    <div>
+                    nhận được
+                    </div>
+                </div>
+            </div>
         </div>
     </q-dialog>
 </template>
@@ -209,12 +230,21 @@ const totalDraw = ref(0)
 const bonus = ref(0)
 const bonusName = ref('')
 
+const boundBgTop = require('@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bound-bg-top.png')
+
 const bonusImage = {
-    18: require('@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bonus-18.png'),
-    28: require('@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bonus-28.png'),
-    38: require('@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bonus-38.png'),
-    88: require('@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bonus-88.png'),
-    888: require('@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bonus-888.png'),
+    18: require('@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bound18.png'),
+    28: require('@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bound28.png'),
+    38: require('@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bound38.png'),
+    88: require('@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bound88.png'),
+    888: require('@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bound888.png'),
+}
+const bonusText = {
+  18: "18 VNDP",
+  28: "28 VNDP",
+  38: "38 VNDP",
+  88: "88 VNDP",
+  888: "888 VNDP"
 }
 
 const handleClaimClick = () => {
@@ -246,6 +276,92 @@ onMounted(() => {
 });
 </script>
 <style lang="scss" scoped>
+.dialog_continaer{
+    height: 450px;
+    width: 95%;
+    position: relative;
+}
+.dialog_inner{
+    background-image: url(../../../assets/images/promo/hotpromo/2025-cny-lucky-draw/bound-bg.png) ;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    height: 360px;
+    width: 100%;
+    bottom: 0px;
+    position: absolute;
+    .bound-bg-top{
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: -24%;
+    }
+  .bound-bg-mid{
+    background-image: url(../../../assets/images/promo/hotpromo/2025-cny-lucky-draw/bound-bg-close-btn.png);
+    position: absolute;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 2%;
+    width: 70%;
+    // height: 62px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color:#fFF;
+  }
+  .bound-image{
+    z-index: 2;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 15%;
+    width: 160px;
+    height: 160px;
+  }
+  .bound-text{
+    background-image: url(../../../assets/images/promo/hotpromo/2025-cny-lucky-draw/bound-money-bg.png);
+    background-size: 100% 100%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 60%;
+    width: 80%;
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    color: rgba(248, 47, 6, 1);
+  }
+  .bound-cycle-light{
+    z-index: 1;
+    background-image: url(../../../assets/images/promo/hotpromo/2025-cny-lucky-draw/bound-cycle-light.png);
+    background-size: 100% 100%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 25%;
+    width: 160px;
+    height: 160px;
+  }
+  .bound-close{
+    background-image: url(../../../assets/images/promo/hotpromo/2025-cny-lucky-draw/bound-bg-mid.png);
+    background-size: 100% 100%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 76%;
+    width: 40%;
+    height: 43px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    color:#fFF;
+  }
+}
 .new-player-wrapper {
     display: flex;
     flex-direction: column;
@@ -509,9 +625,6 @@ onMounted(() => {
         top: 18%;
         cursor: pointer;
     }
-}
-.dialog_inner{
-    position: relative;
 }
 .popout-close{
     position: absolute;
