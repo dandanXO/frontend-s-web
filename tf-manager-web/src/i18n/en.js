@@ -2437,7 +2437,8 @@ export default {
     oddsType_2: 'Hong Kong',
     oddsType_3: 'Europe',
     oddsType_4: 'Indonesia',
-    oddsType_6: 'US'
+    oddsType_6: 'US',
+    eventId: 'event ID'
   },
   message: {
     adsStatusOpen: 'Open',

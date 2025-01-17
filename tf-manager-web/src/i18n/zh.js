@@ -2438,7 +2438,8 @@ export default {
     oddsType_2: '香港盘',
     oddsType_3: '欧洲盘',
     oddsType_4: '印尼盘',
-    oddsType_6: '美式盘'
+    oddsType_6: '美式盘',
+    eventId: '赛事ID'
   },
   message: {
     adsStatusOpen: '开',
