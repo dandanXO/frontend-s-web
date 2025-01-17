@@ -175,11 +175,11 @@
 
       <span style="margin-left: 10px">{{ t('fields.payoutTotal') }} :</span>
       <span style="margin-left: 10px">$</span>
-      <span v-formatter="{ data: totalBet, type: 'money' }" />
+      <span v-formatter="{ data: totalPayout, type: 'money' }" />
 
       <span style="margin-left: 10px">{{ t('fields.profit') }} :</span>
       <span style="margin-left: 10px">$</span>
-      <span v-formatter="{ data: totalBet, type: 'money' }" />
+      <span v-formatter="{ data: totalProfit, type: 'money' }" />
 
       <span style="margin-left: 10px">
         {{ t('fields.return_ratio_total') }} :
