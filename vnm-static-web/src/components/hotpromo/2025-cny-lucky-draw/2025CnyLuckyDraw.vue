@@ -226,12 +226,12 @@ const handleClaimClick = () => {
 onMounted(() => {
   drawEventInit(props.promoCode).then((res) => {
     if (res.code === 0) {
-      const { data } = res;
-      validBet.value = data.validBet;
-      minValidBet.value = data.minValidBet;
-      availableDraw.value = data.availableDraw;
-      usedDraw.value = data.usedDraw;
-      totalDraw.value = data.totalDraw;
+      
+      validBet.value = res.data[0].validBet;
+      minValidBet.value = res.data[0].minValidBet;
+      availableDraw.value = res.data[0].availableDraw;
+      usedDraw.value = res.data[0].usedDraw;
+      totalDraw.value = res.data[0].totalDraw;
     } else {
       ElMessage.error(res.message);
     }
