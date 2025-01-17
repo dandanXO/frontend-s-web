@@ -27,14 +27,15 @@
         <div class="progress-section">
           <div class="progress-bar">
             <div class="progress-bar-full">
+              <span class="achievement-percentage">{{ Math.round(achievementProgress || 0) }}%</span>
               <div class="progress-bar-current" :style="`width:${achievementProgress}%`">
               </div>
 
               <div class="achieved-bar">
                 <div class="achieve-item" v-for="index in 5" :key="index">
-                  <img class="achieved-icon" :class="achievementProgress >= (index - 1) * 25 ? 'active' : ''"
+                  <!-- <img class="achieved-icon" :class="achievementProgress >= (index - 1) * 25 ? 'active' : ''"
                     src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/achieved-icon.svg" />
-                  <span class="achieved-label">{{ (index - 1) * 25 }}%</span>
+                  <span class="achieved-label">{{ (index - 1) * 25 }}%</span> -->
                 </div>
               </div>
             </div>
@@ -396,6 +397,7 @@
             showPrizePopup.value = true;
             prizePopupBonusAmt.value = ['RANDBONUS', 'FIXEDBONUS'].includes(res.data.spinType) ? res.data.bonus : res.data.spinType;
             remainingDraws.value = res.data.availableSpin;
+            initSpinWheel();
           });
         }
       })
@@ -576,7 +578,7 @@
             display: flex;
             align-items: flex-start;
             padding-top: 10px;
-            height: 50px;
+            height: 30px;
             overflow: hidden;
 
             .progress-bar-full {
@@ -585,6 +587,14 @@
               border-radius: 35px;
               background: #545454;
               position: relative;
+
+              .achievement-percentage {
+                z-index: 1;
+                position: absolute;
+                right: 40%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+              }
             }
 
             .progress-bar-current {
@@ -592,6 +602,7 @@
               border-radius: 35px;
               background: linear-gradient(90deg, #24EE89 0%, #9FE871 100%);
               border-radius: 35px;
+              position: relative;
             }
 
             .achieved-bar {
