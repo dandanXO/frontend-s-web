@@ -282,7 +282,7 @@ onMounted(() => {
   drawEventInit(props.promoCode).then((res) => {
     if (res.code === 0) {
       const { data } = res;
-      validBet.value = res.data[0].validBet;
+      validBet.value = data.validBet;
       minValidBet.value = data.minValidBet;
       availableDraw.value = data.availableDraw;
       usedDraw.value = data.usedDraw;
