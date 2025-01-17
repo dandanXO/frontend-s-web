@@ -441,3 +441,19 @@ svg {
     display: inline-block;
   }
 }
+
+body.body-applinks {
+  .q-page-container {
+    &::before {
+      position: absolute;
+      left: 1px;
+      top: 1px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      content: "";
+      background-color: green;
+      z-index: 99;
+    }
+  }
+}
