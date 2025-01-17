@@ -6,18 +6,26 @@
     <PokerCashback v-if="list.redirectUrl === 'vi-poker-cashback'" />
     <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone'" :promo-code="list.promoCode" />
     <NewPlayerPromo v-if="list.redirectUrl === 'vnm-newplayer-welcome'" :promo-code="list.promoCode" />
-    <CnyLuckyDraw v-if="list.redirectUrl === 'vnm-2025-cny-lucky-draw'" />
+    <CnyLuckyDraw v-if="list.redirectUrl === 'vnm-2025-cny-lucky-draw'" :promo-code="list.promoCode" />
     <HongBaoYu2024
       v-if="listParam.type === 'redpacket' && store.token"
       :promo-id="list.id"
       :promo-code="list.promoCode"
       :params="list.param"
     />
-      <Asean2024 v-if="list.redirectUrl === 'dudoan-asean2024' || list.redirectUrl === 'trotaidudoan-asean2024' || list.redirectUrl === 'baohiemvon-20%asean'" />
-      <ChristmasNewYear
+    <Asean2024
+      v-if="
+        list.redirectUrl === 'dudoan-asean2024' ||
+        list.redirectUrl === 'trotaidudoan-asean2024' ||
+        list.redirectUrl === 'baohiemvon-20%asean'
+      "
+    />
+    <ChristmasNewYear
       :promo-code="list.promoCode"
-      :promo-rules="list.pageContent" v-if="list.redirectUrl === 'vnm-xmas-new-year-lucky-draw'" />
-      <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
+      :promo-rules="list.pageContent"
+      v-if="list.redirectUrl === 'vnm-xmas-new-year-lucky-draw'"
+    />
+    <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
           <div class="inner-contents">
@@ -46,7 +54,7 @@ import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
 import NewPlayerPromo from "@/components/hotpromo/newPlayer/NewPlayerPromo.vue";
-import CnyLuckyDraw from "@/components/hotpromo/2025-cny-lucky-draw/2025CnyLuckyDraw.vue"
+import CnyLuckyDraw from "@/components/hotpromo/2025-cny-lucky-draw/2025CnyLuckyDraw.vue";
 
 export default defineComponent({
   name: "HotPromo",
