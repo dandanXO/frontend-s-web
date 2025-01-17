@@ -72,19 +72,27 @@
     no-esc-dismiss
   >
     <div class="modal-div">
+      <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="red-packet-opened">
         <img
           v-if="promoId === 669"
           :src="require(`../../../assets/images/promo/hotpromo/upgradehongbao/getrecord.png`)"
         />
-        <img v-else-if="promoId === 567 " :src="require(`../../../assets/images/promo/hotpromo/upgradehongbao/popup2.png`)" />
+        <img
+          v-else-if="promoId === 567"
+          :src="require(`../../../assets/images/promo/hotpromo/upgradehongbao/popup2.png`)"
+        />
         <img v-else :src="require(`../../../assets/images/promo/hotpromo/upgradehongbao/red-packet-opened.png`)" />
 
         <div v-if="promoId !== 567 && promoId !== 669" class="grats">{{ $t("lang.hong_congrats") }}</div>
         <div v-if="promoId !== 567 && promoId !== 669" class="amount">{{ winAmount }}</div>
         <div v-else class="amount-halloween">{{ winAmount }}</div>
 
-        <div class="get-btn" :class="promoId === 567 || promoId === 669 ? 'get-btn-halloween' : ''" @click="getPromotionPrize">
+        <div
+          class="get-btn"
+          :class="promoId === 567 || promoId === 669 ? 'get-btn-halloween' : ''"
+          @click="getPromotionPrize"
+        >
           {{ $t("lang.claim") }}
         </div>
       </div>
@@ -342,6 +350,7 @@ onMounted(() => {
 
 .modal-div {
   width: 100%;
+  position: relative;
 }
 
 .red-packet-opened {
@@ -416,5 +425,12 @@ onMounted(() => {
       filter: brightness(0.9);
     }
   }
+}
+
+.popout-close {
+  margin-left: auto;
+  margin-right: 20px;
+  display: flex;
+  color: #787878;
 }
 </style>

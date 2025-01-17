@@ -21,12 +21,13 @@
 
   <el-dialog
     class="award-modal hongbaoyu-modal"
-    :close-on-click-modal="false"
+    :close-on-click-modal="true"
     :modal="false"
     v-model="privilegeClaimedModalVisible"
     align-center
   >
     <div class="modal-div">
+      <button class="text-white popout-close" @click="privilegeClaimedModalVisible = false">✕</button>
       <div class="red-packet-opened">
         <img
           v-if="promoId === 669"
@@ -44,7 +45,7 @@
         <div v-else-if="promoId === 669" class="amount-halloween">{{ winAmount }}</div>
         <div v-else class="amount-halloween">{{ winAmount }}</div>
 
-        <div class="get-btn" @click="getPromotionPrize">{{ $t("promo.claim") }}</div>
+        <!-- <div class="get-btn" @click="getPromotionPrize">{{ $t("promo.claim") }}</div> -->
       </div>
     </div>
   </el-dialog>
@@ -373,6 +374,18 @@ onMounted(() => {
   color: #7a8eb9;
   font-size: 20px;
   min-width: 60%;
+}
+
+.popout-close {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  margin-left: auto;
+  margin-right: 20%;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 3px 3px 3px rgba(0,0,0,0.3);
 }
 </style>
 
