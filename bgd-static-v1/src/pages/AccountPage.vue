@@ -956,7 +956,7 @@ const loadingLogout = ref(false);
 onActivated(() => {
   loadInfo();
 
-  if(route.query?.bindEmail === 'true') {
+  if (route.query?.bindEmail === "true") {
     bindEmailDialog.value = true;
   }
 });
@@ -968,7 +968,7 @@ onMounted(() => {
 
   window.location.search.includes("personal") && openPersonalCenterDialog();
 
-  if(route.query?.bindEmail === 'true') {
+  if (route.query?.bindEmail === "true") {
     bindEmailDialog.value = true;
   }
 });
@@ -1464,7 +1464,7 @@ const submitUpdateEmail = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "Email binded successfully",
+            message: t("notify.emailBindedSuccessfully"),
             icon: "check_circle_outline"
           });
           bindEmailDialog.value = false;
@@ -1507,7 +1507,7 @@ const submitUpdateNewPwd = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "New password updated successfully",
+            message: t("notify.newPasswordUpdatedSuccessfully"),
             icon: "check_circle_outline"
           });
           // router.go("/account");
