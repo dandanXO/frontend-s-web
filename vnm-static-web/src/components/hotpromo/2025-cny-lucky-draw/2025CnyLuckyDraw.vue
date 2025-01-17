@@ -173,7 +173,28 @@
     </div>
   </div>
   <el-dialog class="draw-modal" :modal="true"  v-model="bonusModalVisible" align-center>
-    <img :src="bonusImage[bonus]" />
+    <div class="egg-dialog-container">
+      <img class="bound-bg-top" :src="boundBgTop" />
+      <div class="bound-bg-mid" > 
+        <div>
+          Bốc thăm xổ số
+        </div>
+      </div>
+      <!-- <img class="bound-image" :src="bonusImage[18]" /> -->
+      <img class="bound-image" :src="bonusImage[bonus]" />
+      <div class="bound-cycle-light"></div>
+      <div class="bound-text" > 
+        <div>
+          {{ bonusText[bonus] }}
+          <!-- {{bonusText[18]}} -->
+        </div>
+      </div>
+      <div class="bound-close" @click="bonusModalVisible = false"> 
+        <div>
+          nhận được
+        </div>
+      </div>
+    </div>
   </el-dialog>
 </template>
 <script setup>
@@ -194,13 +215,20 @@ const totalDraw = ref(0)
 
 const bonus = ref(0)
 const bonusName = ref('')
-
+const boundBgTop = require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound-bg-top.png')
 const bonusImage = {
-  18: require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-18.png'),
-  28: require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-28.png'),
-  38: require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-38.png'),
-  88: require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-88.png'),
-  888: require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-888.png'),
+  18: require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound18.png'),
+  28: require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound28.png'),
+  38: require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound38.png'),
+  88: require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound88.png'),
+  888: require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound888.png'),
+}
+const bonusText = {
+  18: "18 VNDP",
+  28: "28 VNDP",
+  38: "38 VNDP",
+  88: "88 VNDP",
+  888: "888 VNDP"
 }
 
 const handleClaimClick = () => {
@@ -232,6 +260,82 @@ onMounted(() => {
 });
 </script>
 <style lang="scss" scoped>
+.egg-dialog-container{
+  background-image: url(../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound-bg.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  height: 500px;
+  width: 560px;
+  position: relative;
+  .bound-bg-top{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -10%;
+  }
+  .bound-bg-mid{
+    background-image: url(../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound-bg-close-btn.png);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 6%;
+    width: 392px;
+    height: 62px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 26px;
+    color:#fFF;
+  }
+  .bound-image{
+    z-index: 2;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 14%;
+    width: 266px;
+    height: 266px;
+  }
+  .bound-cycle-light{
+    z-index: 1;
+    background-image: url(../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound-cycle-light.png);
+    background-size: 100% 100%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 28%;
+    width: 271px;
+    height: 229px;
+  }
+  .bound-text{
+    background-image: url(../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound-money-bg.png);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 64%;
+    width: 428px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: rgba(248, 47, 6, 1);
+  }
+  .bound-close{
+    background-image: url(../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound-bg-mid.png);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 78%;
+    width: 230px;
+    height: 72px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color:#fFF;
+  }
+}
 .new-player-wrapper {
   display: flex;
   flex-direction: column;
@@ -495,4 +599,6 @@ onMounted(() => {
     cursor: pointer;
   }
 }
+
+
 </style>
