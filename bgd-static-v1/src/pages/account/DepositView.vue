@@ -1378,4 +1378,19 @@ onMounted(() => {
 :deep(.description-text p) {
   margin: 5px 0px !important;
 }
+
+
+@media (max-width: 400px) {
+  .deposit-item-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 280px) {
+  .deposit-item-container {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
 </style>
