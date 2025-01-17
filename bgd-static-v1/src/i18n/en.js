@@ -233,7 +233,11 @@ export default {
     failedToCopyLink: "Failed to copy link",
     registeringInProgress: "Registering in progress",
     loggingIn: "Logging in",
-    loggingOut: "Logging out"
+    loggingOut: "Logging out",
+    emailBindedSuccessfully: "Email binded successfully",
+    emailAlreadyUsed: "Email already used. Please try another email.",
+    phoneUpdatedSuccessfully: "Phone number updated successfully",
+    newPasswordUpdatedSuccessfully: "New password updated successfully"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
