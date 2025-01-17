@@ -92,7 +92,7 @@
       v-loading="page.loading"
       :empty-text="t('fields.noData')"
       style="margin-top:20px;"
-      :row-style="{width: '100px'}"
+      :row-style="{ width: '100px' }"
       height="450"
       :summary-method="getSummaries"
       show-summary
@@ -107,14 +107,59 @@
         </template>
       </el-table-column>
       <el-table-column prop="platform" :label="t('fields.platform')" />
-      <el-table-column prop="bet" :label="t('fields.bet')" />
+
+      <el-table-column
+        prop="bet"
+        :label="t('fields.bet')"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.bet,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+
       <el-table-column prop="betCount" :label="t('fields.summaryTotalBet')" />
-      <el-table-column prop="payout" :label="t('fields.payout')" />
-      <el-table-column prop="profit" :label="t('fields.profit')" />
+      <el-table-column
+        prop="payout"
+        :label="t('fields.payout')"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.payout,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+
+      <el-table-column
+        prop="profit"
+        :label="t('fields.profit')"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.profit,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      
       <el-table-column prop="ratio" :label="t('fields.return_ratio')">
         <template #default="scope">
           <span v-if="scope.row.ratio === null">0 %</span>
-          <span v-if="scope.row.ratio !== null">{{ scope.row.ratio.toFixed(2) }} %</span>
+          <span v-if="scope.row.ratio !== null">
+            {{ scope.row.ratio.toFixed(2) }} %
+          </span>
         </template>
       </el-table-column>
     </el-table>
@@ -128,23 +173,33 @@
     />
     <div class="total-info-wrapper">
       <div class="total-info">
-        {{ $t('fields.betTotal') }} : {{ page.records.length > 0 ? totalBet.toFixed(2) : '--' }}
+        {{ $t('fields.betTotal') }} :
+        {{ page.records.length > 0 ? totalBet.toFixed(2) : '--' }}
       </div>
       <div class="total-info">
-        {{ $t('fields.totalBetMemberCount') }} : {{ page.records.length > 0 ? totalBetCount : '--' }}
+        {{ $t('fields.totalBetMemberCount') }} :
+        {{ page.records.length > 0 ? totalBetCount : '--' }}
       </div>
       <div class="total-info">
-        {{ $t('fields.payoutTotal') }} : {{ page.records.length > 0 ? totalPayout.toFixed(2) : '--' }}
+        {{ $t('fields.payoutTotal') }} :
+        {{ page.records.length > 0 ? totalPayout.toFixed(2) : '--' }}
       </div>
       <div class="total-info">
-        {{ $t('fields.profit') }} : {{ page.records.length > 0 ? totalProfit.toFixed(2) : '--' }}
+        {{ $t('fields.profit') }} :
+        {{ page.records.length > 0 ? totalProfit.toFixed(2) : '--' }}
       </div>
       <div class="total-info">
-        {{ $t('fields.return_ratio_total') }} : {{ page.records.length > 0 ? totalRatio.toFixed(2) + "%" : '--' }}
+        {{ $t('fields.return_ratio_total') }} :
+        {{ page.records.length > 0 ? totalRatio.toFixed(2) + '%' : '--' }}
       </div>
     </div>
-    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
-               :close-on-click-modal="false" :close-on-press-escape="false"
+    <el-dialog
+      :title="t('fields.exportToExcel')"
+      v-model="uiControl.messageVisible"
+      append-to-body
+      width="500px"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
     >
       <span>{{ t('message.requestExportToExcelDone1') }}</span>
       <router-link :to="`/site-management/download-manager`">
@@ -216,7 +271,7 @@ const request = reactive({
   siteId: null,
   recordTime: [defaultStartDate, defaultEndDate],
   vipId: null,
-  gameName: null
+  gameName: null,
 })
 
 const totalRatio = computed(() => {
@@ -230,8 +285,8 @@ const totalRatio = computed(() => {
 function resetQuery() {
   request.recordTime = [defaultStartDate, defaultEndDate]
   request.siteId = store.state.user.siteId
-  request.vipId = null;
-  request.gameName = null;
+  request.vipId = null
+  request.gameName = null
 }
 
 async function loadVipReport() {
@@ -255,7 +310,7 @@ async function loadVipReport() {
     query.random = Math.random()
   }
   const { data: ret } = await getVipReport(query)
-  page.records = ret.records;
+  page.records = ret.records
   // page.columns = ret.data
 
   page.records = page.records.map(record => {
@@ -266,9 +321,9 @@ async function loadVipReport() {
 
     return {
       ...record,
-      ratio: (record.payout / record.bet).toFixed(5) * 100
-    };
-  });
+      ratio: (record.payout / record.bet).toFixed(5) * 100,
+    }
+  })
 
   // const { data: ret1 } = await getTotalFinanceReport(query)
   // totalPage.records = ret1.financeReportItemVOS
@@ -347,13 +402,12 @@ function getSummaries(param) {
           var prop = column.property
           sums[index] =
             '$' +
-            parseFloat(totalPage.records[0].data[prop.replace('data.', '')]).toLocaleString(
-              'en-US',
-              {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }
-            )
+            parseFloat(
+              totalPage.records[0].data[prop.replace('data.', '')]
+            ).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
         }
       })
     }
