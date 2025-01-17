@@ -2,7 +2,11 @@
   <div class="bonus-wrapper">
     <img src="../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-bg.png" class="bg-image" />
     <img src="../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-title.png" class="bg-title" />
-    <img src="../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-egg.png" class="bg-egg" @click="handleClaimClick"/>
+    <img
+      src="../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-egg.png"
+      class="bg-egg"
+      @click="handleClaimClick"
+    />
   </div>
   <div class="new-player-wrapper">
     <img class="title" src="@/assets/images/promotion/hotpromo/newPlayer/title.png" />
@@ -20,94 +24,70 @@
         <div class="rule-block-rule__title">Sản phẩm</div>
         <span class="rule-block-rule__description">Tất cả sản phẩm tại TF88</span>
       </div>
-      <div class="rule-block-rule" style="flex-direction: column; align-items: flex-start;">
+      <div class="rule-block-rule" style="flex-direction: column; align-items: flex-start">
         <div class="rule-block-rule__title">Chi tiết khuyến mãi</div>
-        <span class="rule-block-rule__description">Trong thời gian khuyến mãi, Thành viên đạt đủ doanh thu cược theo yêu
-          cầu sẽ có cơ hội tham gia đập trứng vàng để nhận thưởng hấp dẫn, bao gồm tiền mặt ngẫu nhiên từ 18 VNDP đến
-          888 VNDP và giải thưởng cao nhất là 1 lượng vàng SJC 999.9 cùng nhiều phần quà khác.</span>
+        <span class="rule-block-rule__description">
+          Trong thời gian khuyến mãi, Thành viên đạt đủ doanh thu cược theo yêu cầu sẽ có cơ hội tham gia đập trứng vàng
+          để nhận thưởng hấp dẫn, bao gồm tiền mặt ngẫu nhiên từ 18 VNDP đến 888 VNDP và giải thưởng cao nhất là 1 lượng
+          vàng SJC 999.9 cùng nhiều phần quà khác.
+        </span>
       </div>
       <div class="promo-view-container">
         <table>
           <colgroup>
-            <col>
-            <col>
+            <col />
+            <col />
           </colgroup>
           <tbody>
             <tr>
-              <td>
-                Tổng tiền cược hợp lệ
-              </td>
-              <td>
-                Lượt đập trứng
-              </td>
-              <td>
-                Số lần đập tối đa nhận
-                được mỗi ngày
-              </td>
-              <td>Thời gian hiệu lực của
-                cơ hội đập trứng vàng</td>
+              <td>Tổng tiền cược hợp lệ</td>
+              <td>Lượt đập trứng</td>
+              <td>Số lần đập tối đa nhận được mỗi ngày</td>
+              <td>Thời gian hiệu lực của cơ hội đập trứng vàng</td>
             </tr>
             <tr>
-              <td>
-                5,000 VNDP
-              </td>
-              <td>
-                1
-              </td>
+              <td>5,000 VNDP</td>
+              <td>1</td>
               <td rowspan="3">3 lượt</td>
               <td>3 ngày</td>
             </tr>
             <tr>
-              <td>
-                10,000 VNDP
-              </td>
-              <td>
-                1
-              </td>
+              <td>10,000 VNDP</td>
+              <td>1</td>
               <td>3 ngày</td>
             </tr>
             <tr>
-              <td>
-                15,000 VNDP
-              </td>
-              <td>
-                1
-              </td>
+              <td>15,000 VNDP</td>
+              <td>1</td>
               <td>3 ngày</td>
             </tr>
           </tbody>
         </table>
-        <div class="hint">*Khi tổng số tiền cược hợp lệ của Thành Viên trong ngày là 15,000 VNDP, sẽ nhận được ba cơ hội
-          đập trứng vàng.</div>
+        <div class="hint">
+          *Khi tổng số tiền cược hợp lệ của Thành Viên trong ngày là 15,000 VNDP, sẽ nhận được ba cơ hội đập trứng vàng.
+        </div>
       </div>
     </div>
 
     <div class="mission-block">
-      <h3 class="mission-block-title">
-        Cách thức tham gia:
-      </h3>
+      <h3 class="mission-block-title">Cách thức tham gia:</h3>
       <p style="margin: 0">
-        1. Thành Viên tham gia đặt cược và tích luỹ đủ số tiền cược hợp lệ tương ứng để nhận cơ hội đập trứng vàng.<br>
+        1. Thành Viên tham gia đặt cược và tích luỹ đủ số tiền cược hợp lệ tương ứng để nhận cơ hội đập trứng vàng.
+        <br />
         2. Lượt đập trứng sẽ được cập nhật vào ngày hôm sau, Thành Viên cần đăng nhập vào tài khoản, truy cập trang
         khuyến mãi và bấm đập trứng để nhận thưởng.
       </p>
-      <h3 class="mission-block-title">
-        Giải thưởng bao gồm:
-      </h3>
+      <h3 class="mission-block-title">Giải thưởng bao gồm:</h3>
       <div class="mission-block-mission-wrapper promo-view-container">
         <table>
           <colgroup>
-            <col>
-            <col>
+            <col />
+            <col />
           </colgroup>
           <tbody>
             <tr>
-              <td>
-                STT
-              </td>
-              <td>
-                Giải thưởng
-              </td>
+              <td>STT</td>
+              <td>Giải thưởng</td>
             </tr>
             <tr>
               <td>1</td>
@@ -153,26 +133,28 @@
         </table>
       </div>
 
-      <h3 class="mission-block-title">
-        Giải thưởng bao gồm:
-      </h3>
+      <h3 class="mission-block-title">Giải thưởng bao gồm:</h3>
       <p style="margin: 0">
         1. Lượt đập trứng vàng sẽ có hiệu lực 3 ngày kể từ khi cập nhật vào tài khoản. Lượt chưa sử dụng sẽ tự động hết
-        hạn khi quá thời gian.<br>
-        2. Tiền thưởng nhận được cần hoàn thành 5 vòng cược trước khi thực hiện rút tiền.<br>
+        hạn khi quá thời gian.
+        <br />
+        2. Tiền thưởng nhận được cần hoàn thành 5 vòng cược trước khi thực hiện rút tiền.
+        <br />
         3. Tất cả cược HÒA, cược HỦY, cược 2 BÊN, vé cược đặt tại tỷ lệ cược: DEC < 1.75, MY -0.6 đến 0.75, Thể thao ảo,
-          Đua ngựa, Number Game sẽ không được áp dụng cho chương trình này.<br>
-          4. Các tài khoản có cùng IP hoặc thông tin dữ liệu tương tự sẽ không được tham gia chương trình khuyến mãi
-          này.<br>
-          5. Chương trình không thể kết hợp cùng các khuyến mãi nạp khác tại TF88.<br>
-          6. TF88 có quyền chỉnh sửa, từ chối hoặc hủy bỏ chương trình Khuyến mãi này bất cứ thời gian nào mà không cần
-          báo trước.<br>
-          7. Điều khoản & Điều kiện khuyến mãi chung được áp dụng.
+        Đua ngựa, Number Game sẽ không được áp dụng cho chương trình này.
+        <br />
+        4. Các tài khoản có cùng IP hoặc thông tin dữ liệu tương tự sẽ không được tham gia chương trình khuyến mãi này.
+        <br />
+        5. Chương trình không thể kết hợp cùng các khuyến mãi nạp khác tại TF88.
+        <br />
+        6. TF88 có quyền chỉnh sửa, từ chối hoặc hủy bỏ chương trình Khuyến mãi này bất cứ thời gian nào mà không cần
+        báo trước.
+        <br />
+        7. Điều khoản & Điều kiện khuyến mãi chung được áp dụng.
       </p>
-
     </div>
   </div>
-  <el-dialog class="draw-modal" :modal="true"  v-model="bonusModalVisible" align-center>
+  <el-dialog class="draw-modal" :modal="true" v-model="bonusModalVisible" align-center>
     <img :src="bonusImage[bonus]" />
   </el-dialog>
 </template>
@@ -183,33 +165,33 @@ import { ElMessage } from "element-plus";
 import { drawEventInit, claimDrawEvent } from "@/api/promotion/drawEvent";
 
 const { t } = useI18n();
-const props = defineProps(['promoCode'])
+const props = defineProps(["promoCode"]);
 
-const bonusModalVisible = ref(false)
-const validBet = ref(0)
-const minValidBet = ref(0)
-const availableDraw = ref(0)
-const usedDraw = ref(0)
-const totalDraw = ref(0)
+const bonusModalVisible = ref(false);
+const validBet = ref(0);
+const minValidBet = ref(0);
+const availableDraw = ref(0);
+const usedDraw = ref(0);
+const totalDraw = ref(0);
 
-const bonus = ref(0)
-const bonusName = ref('')
+const bonus = ref(0);
+const bonusName = ref("");
 
 const bonusImage = {
-  18: require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-18.png'),
-  28: require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-28.png'),
-  38: require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-38.png'),
-  88: require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-88.png'),
-  888: require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-888.png'),
-}
+  18: require("../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-18.png"),
+  28: require("../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-28.png"),
+  38: require("../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-38.png"),
+  88: require("../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-88.png"),
+  888: require("../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-888.png")
+};
 
 const handleClaimClick = () => {
   claimDrawEvent(props.promoCode).then((res) => {
     if (res.code === 0) {
-      bonusModalVisible.value = true
+      bonusModalVisible.value = true;
       const { data } = res;
-      bonus.value = data.bonus
-      bonusName.value = data.bonusName
+      bonus.value = data.bonus;
+      bonusName.value = data.bonusName;
     } else {
       ElMessage.error(res.message);
     }
@@ -220,11 +202,11 @@ onMounted(() => {
   drawEventInit().then((res) => {
     if (res.code === 0) {
       const { data } = res;
-      validBet.value = data.validBet
-      minValidBet.value = data.minValidBet
-      availableDraw.value = data.availableDraw
-      usedDraw.value = data.usedDraw
-      totalDraw.value = data.totalDraw
+      validBet.value = data.validBet;
+      minValidBet.value = data.minValidBet;
+      availableDraw.value = data.availableDraw;
+      usedDraw.value = data.usedDraw;
+      totalDraw.value = data.totalDraw;
     } else {
       ElMessage.error(res.message);
     }
@@ -242,7 +224,9 @@ onMounted(() => {
   border-radius: 12px;
   border: 1px solid #acd4f6;
   box-shadow: 0px 0px 4px 0px #01497b0f;
-  background: url('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/content-bg-top.png') top no-repeat, url('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/content-bg.png') center no-repeat, url('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/content-bg-bottom.png') bottom no-repeat;
+  background: url("../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/content-bg-top.png") top no-repeat,
+    url("../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/content-bg.png") center no-repeat,
+    url("../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/content-bg-bottom.png") bottom no-repeat;
   background-size: 100%, 100% 90%, 100%;
 
   .title {
@@ -278,7 +262,7 @@ onMounted(() => {
       gap: 12px;
 
       .rule-block-rule__title {
-        width: 120px;
+        width: 180px;
         background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
         padding: 3px 0;
         clip-path: polygon(0 50%, 12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%);
@@ -304,7 +288,7 @@ onMounted(() => {
 
     .hint {
       font-size: 20px;
-      color: #FF0000;
+      color: #ff0000;
     }
   }
 
