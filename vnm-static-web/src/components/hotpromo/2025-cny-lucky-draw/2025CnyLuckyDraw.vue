@@ -195,7 +195,6 @@ const availableDraw = ref(0);
 const usedDraw = ref(0);
 const totalDraw = ref(0);
 
-<<<<<<< HEAD
 const bonus = ref(0)
 const bonusName = ref('')
 const boundBgTop = require('../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound-bg-top.png')
@@ -213,18 +212,6 @@ const bonusText = {
   88: "88 VNDP",
   888: "888 VNDP"
 }
-=======
-const bonus = ref(0);
-const bonusName = ref("");
-
-const bonusImage = {
-  18: require("../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-18.png"),
-  28: require("../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-28.png"),
-  38: require("../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-38.png"),
-  88: require("../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-88.png"),
-  888: require("../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-888.png")
-};
->>>>>>> d724f7c322260f1582defcb232952f12f3be89c0
 
 const handleClaimClick = () => {
   claimDrawEvent(props.promoCode).then((res) => {
