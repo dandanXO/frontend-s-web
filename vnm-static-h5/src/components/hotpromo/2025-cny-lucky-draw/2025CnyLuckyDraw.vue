@@ -220,6 +220,7 @@ const { t } = useI18n();
 const props = defineProps(['promoCode'])
 
 const bonusModalVisible = ref(false)
+
 const validBet = ref(0)
 const minValidBet = ref(0)
 const availableDraw = ref(0)
