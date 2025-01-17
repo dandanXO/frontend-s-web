@@ -8,6 +8,7 @@ s
       class="bg-egg"
       @click="handleClaimClick"
     />
+    <div class="egg-available-draw">Số lần còn lại: <span style="font-weight: 700;">{{ availableDraw }} </span> lần</div>
   </div>
   <div class="new-player-wrapper">
     <div style="display: flex; justify-content: center; align-items: center; gap: 12px">
@@ -621,6 +622,40 @@ onMounted(() => {
 
   .bg-image {
     width: 100%;
+    height: 355px;
+    margin: 0 auto 20px;
+    position: relative;
+    .egg-available-draw{
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+  }
+    .bg-image {
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .bg-title {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 30px;
+        width: 244px !important;
+    }
+
+    .bg-egg {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 18%;
+        cursor: pointer;
+    }
+}
+.popout-close{
     position: absolute;
     top: 0;
     left: 0;

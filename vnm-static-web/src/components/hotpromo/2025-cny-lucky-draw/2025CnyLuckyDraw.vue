@@ -7,6 +7,7 @@
       class="bg-egg"
       @click="handleClaimClick"
     />
+    <div class="egg-available-draw">Số lần còn lại: <span style="font-weight: 700;">{{ availableDraw }} </span> lần</div>
   </div>
   <div class="new-player-wrapper">
     <img class="title" src="@/assets/images/promotion/hotpromo/newPlayer/title.png" />
@@ -556,7 +557,13 @@ onMounted(() => {
   height: 550px;
   margin: 0 auto;
   position: relative;
-
+  .egg-available-draw{
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+  }
   .bg-image {
     width: 100%;
     position: absolute;
