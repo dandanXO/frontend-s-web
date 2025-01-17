@@ -851,7 +851,7 @@ const openVerificationCodeDialog = () => {
           $q.notify({
             color: "negative",
             position: "top",
-            message: "Email already used. Please try another email.",
+            message: t("notify.emailAlreadyUsed"),
             icon: "report_problem"
           });
         } else {
