@@ -390,17 +390,13 @@
       .post("/session/refer-wheel/spin?promoCode=bgd-refer-wheel")
       .then((res) => {
         if (res.code == 0) {
-          var bonusIndex = res.data.spinType === 'FIXEDBONUS' ? res.data.bonus : res.data.spinType;
-
-          if(bonusIndex === 'FIRSTBONUS') {
-            bonusIndex === 'RANDBONUS';
-          }
+          var bonusIndex = res.data.spinType === 'FIXEDBONUS' ? res.data.bonus : res.data.spinType === 'FIRSTBONUS' ? 'RANDBONUS' : res.data.spinType;
 
           const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
 
           spin(prizeIndex, () => {
             showPrizePopup.value = true;
-            prizePopupBonusAmt.value = ['RANDBONUS', 'FIXEDBONUS'].includes(res.data.spinType) ? res.data.bonus : res.data.spinType === 'FIRSTBONUS' ? 'RANDBONUS' : res.data.spinType;
+            prizePopupBonusAmt.value = ['RANDBONUS', 'FIRSTBONUS', 'FIXEDBONUS'].includes(res.data.spinType) ? res.data.bonus : res.data.spinType;
             remainingDraws.value = res.data.availableSpin;
             initSpinWheel();
           });
