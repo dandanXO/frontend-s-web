@@ -59,8 +59,8 @@
                   <div class="front-btn">查看详情</div>
                 </div>
                 <div class="promo-bg">
-                  <img class="promo-content isDesktop" :src="imgURL + promo.displayDesktopImgUrl" />
-                  <img class="promo-content isMobile" :src="imgURL + promo.displayMobileImgUrl" />
+                  <img class="promo-content isDesktop" :src="imgURL + promo.desktopImgUrlDark" />
+                  <img class="promo-content isMobile" :src="imgURL + promo.desktopImgUrlDark" />
                 </div>
               </div>
               <!-- <div class="promo-info">
