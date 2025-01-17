@@ -583,10 +583,6 @@ onMounted(() => {
     cursor: pointer;
   }
 }
-<<<<<<< HEAD
 
 
 </style>
-=======
-</style>
->>>>>>> d724f7c322260f1582defcb232952f12f3be89c0
