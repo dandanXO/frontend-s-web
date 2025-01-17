@@ -233,7 +233,11 @@ export default {
     failedToCopyLink: "লিঙ্ক কপি করতে ব্যর্থ",
     registeringInProgress: "রেজিস্ট্রেশন চলছে",
     loggingIn: "লগইন হচ্ছে",
-    loggingOut: "লগআউট হচ্ছে"
+    loggingOut: "লগআউট হচ্ছে",
+    emailBindedSuccessfully: "ইমেল সফলভাবে সংযুক্ত হয়েছে",
+    emailAlreadyUsed: "ইমেলটি ইতিমধ্যে ব্যবহৃত হয়েছে। দয়া করে অন্য ইমেল চেষ্টা করুন।",
+    phoneUpdatedSuccessfully: "ফোন নম্বর সফলভাবে আপডেট হয়েছে",
+    newPasswordUpdatedSuccessfully: "নতুন পাসওয়ার্ড সফলভাবে আপডেট হয়েছে"
   },
   sideNav: {
     inviteToEarn: "আয় করার জন্য আমন্ত্রণ জানান",
