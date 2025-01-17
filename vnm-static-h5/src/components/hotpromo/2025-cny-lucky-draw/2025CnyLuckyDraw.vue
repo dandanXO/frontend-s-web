@@ -278,12 +278,11 @@ const handleClaimClick = () => {
 onMounted(() => {
   drawEventInit(props.promoCode).then((res) => {
     if (res.code === 0) {
-      const { data } = res;
-      validBet.value = data.validBet;
-      minValidBet.value = data.minValidBet;
-      availableDraw.value = data.availableDraw;
-      usedDraw.value = data.usedDraw;
-      totalDraw.value = data.totalDraw;
+      validBet.value = res.data[0].validBet;
+      minValidBet.value = res.data[0].minValidBet;
+      availableDraw.value = res.data[0].availableDraw;
+      usedDraw.value = res.data[0].usedDraw;
+      totalDraw.value = res.data[0].totalDraw;
     } else {
       ElMessage.error(res.message);
     }
@@ -619,19 +618,18 @@ onMounted(() => {
   height: 355px;
   margin: 0 auto 20px;
   position: relative;
-
-  .bg-image {
-    width: 100%;
-    height: 355px;
-    margin: 0 auto 20px;
-    position: relative;
-    .egg-available-draw{
+  .egg-available-draw{
     position: absolute;
     bottom: 2%;
     left: 50%;
     transform: translateX(-50%);
     font-size: 18px;
   }
+  .bg-image {
+    width: 100%;
+    height: 355px;
+    margin: 0 auto 20px;
+    position: relative;
     .bg-image {
         width: 100%;
         position: absolute;
