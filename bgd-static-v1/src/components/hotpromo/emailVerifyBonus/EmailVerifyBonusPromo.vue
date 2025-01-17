@@ -378,6 +378,8 @@ const submitUpdateEmail = () => {
           formDetail.email = updateEmailInfo.email;
           formDetail.emailVerified = true;
 
+          store.getMemberInfo();
+
           getEmailVerifyBonus();
         } else {
           $q.notify({
