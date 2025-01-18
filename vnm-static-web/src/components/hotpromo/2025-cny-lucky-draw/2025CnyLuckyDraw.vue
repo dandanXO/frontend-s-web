@@ -85,7 +85,7 @@
       </p>
       <h3 class="mission-block-title">Giải thưởng bao gồm:</h3>
       <div class="mission-block-mission-wrapper promo-view-container">
-        <table>
+        <table class="smaller-table">
           <colgroup>
             <col />
             <col />
@@ -117,23 +117,23 @@
             </tr>
             <tr>
               <td>6</td>
-              <td>888 VNĐP</td>
+              <td>888 VNDP</td>
             </tr>
             <tr>
               <td>7</td>
-              <td>88 VNĐP</td>
+              <td>88 VNDP</td>
             </tr>
             <tr>
               <td>8</td>
-              <td>38 VNĐP</td>
+              <td>38 VNDP</td>
             </tr>
             <tr>
               <td>9</td>
-              <td>28 VNĐP</td>
+              <td>28 VNDP</td>
             </tr>
             <tr>
               <td>10</td>
-              <td>18 VNĐP</td>
+              <td>18 VNDP</td>
             </tr>
           </tbody>
         </table>
@@ -259,18 +259,20 @@ onMounted(() => {
   height: 500px;
   width: 560px;
   position: relative;
+  transform: scale(0.85);
+
   .bound-bg-top {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: -10%;
+    top: -14%;
   }
   .bound-bg-mid {
     background-image: url(../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound-bg-close-btn.png);
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 6%;
+    top: 7%;
     width: 392px;
     height: 62px;
     display: flex;
@@ -288,7 +290,7 @@ onMounted(() => {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 14%;
+    top: 17%;
     width: 266px;
     height: 266px;
   }
@@ -299,7 +301,7 @@ onMounted(() => {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 28%;
+    top: 31%;
     width: 271px;
     height: 229px;
     font-weight: bold;
@@ -309,7 +311,7 @@ onMounted(() => {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 64%;
+    top: 68%;
     width: 428px;
     height: 56px;
     display: flex;
@@ -324,7 +326,7 @@ onMounted(() => {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 78%;
+    top: 82%;
     width: 230px;
     height: 72px;
     display: flex;
@@ -433,6 +435,20 @@ onMounted(() => {
 
     .mission-block-mission-wrapper {
       position: relative;
+
+      .smaller-table {
+        width: min-content;
+        min-width: 40%;
+        margin: 10px 0px;
+
+        td {
+          padding: 4px;
+
+          &:first-child {
+            width: 80px;
+          }
+        }
+      }
 
       .mission-block-mission__bg {
         position: absolute;
