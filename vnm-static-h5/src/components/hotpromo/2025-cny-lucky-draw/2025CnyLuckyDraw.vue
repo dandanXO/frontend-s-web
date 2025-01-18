@@ -165,23 +165,23 @@ s
             </tr>
             <tr>
               <td>6</td>
-              <td>888 VNĐP</td>
+              <td>888 VNDP</td>
             </tr>
             <tr>
               <td>7</td>
-              <td>88 VNĐP</td>
+              <td>88 VNDP</td>
             </tr>
             <tr>
               <td>8</td>
-              <td>38 VNĐP</td>
+              <td>38 VNDP</td>
             </tr>
             <tr>
               <td>9</td>
-              <td>28 VNĐP</td>
+              <td>28 VNDP</td>
             </tr>
             <tr>
               <td>10</td>
-              <td>18 VNĐP</td>
+              <td>18 VNDP</td>
             </tr>
           </tbody>
         </table>
