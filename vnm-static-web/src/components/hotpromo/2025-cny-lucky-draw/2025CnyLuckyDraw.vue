@@ -20,7 +20,7 @@
     <div class="rule-block">
       <div class="rule-block-rule">
         <div class="rule-block-rule__title">Thời gian</div>
-        <span class="rule-block-rule__description">00:00:00 20/01/2025 – 23:59:59 02/02/2025</span>
+        <span class="rule-block-rule__description">00:00 20/01/2025-23:59 02/02/2025</span>
       </div>
       <div class="rule-block-rule">
         <div class="rule-block-rule__title">Áp dụng</div>
