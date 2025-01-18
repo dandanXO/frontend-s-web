@@ -400,10 +400,10 @@ onMounted(() => {
 .new-player-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 26px;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px 20px 40px;
+  padding: 18px 16px 30px;
   border-radius: 12px;
   border: 1px solid #acd4f6;
   box-shadow: 0px 0px 4px 0px #01497b0f;
@@ -445,7 +445,7 @@ onMounted(() => {
       gap: 12px;
 
       .rule-block-rule__title {
-        width: 120px;
+        width: 95px;
         background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
         padding: 3px 0;
         clip-path: polygon(0 50%, 12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%);
