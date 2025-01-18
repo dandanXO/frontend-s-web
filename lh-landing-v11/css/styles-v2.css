@@ -68,13 +68,28 @@ a {
   display: block;
   background: url(../imgs/logo-bg.png) no-repeat center center;
   background-size: 100% 100%;
-  padding: 10px 16%;
-  max-width: 300px;
+  padding: 4px 16% 5px;
+  margin: 0 auto;
+  max-width: 340px;
 }
+
+.title-text{
+  margin: 0px;
+  background: linear-gradient(180deg, #FF7D7F 21.28%, #E90E12 84.04%);
+  -webkit-background-clip: text; /* Clips the background to the text */
+  -webkit-text-fill-color: transparent; /* Makes the text itself transparent */
+  background-clip: text; /* For non-Webkit browsers that support it */
+  color: transparent;
+  -webkit-text-stroke: 0.5px white;
+  font-weight:bold;
+  font-size: 22px;
+  text-align: center;
+}
+
 
 .top-logo img {
   width: 100%;
-  max-width: 140px;
+  max-width: 120px;
 }
 
 .top-cs {
