@@ -609,6 +609,7 @@ onMounted(() => {
   .bg-egg {
     position: absolute;
     left: 50%;
+    width: 600px;
     transform: translateX(-50%);
     bottom: 0px;
     cursor: pointer;
