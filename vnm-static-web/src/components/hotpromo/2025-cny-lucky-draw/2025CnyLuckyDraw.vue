@@ -9,7 +9,7 @@
       </div>
     </div>
     <img
-      src="../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-egg.png"
+      src="../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-egg1.png"
       class="bg-egg"
       @click="handleClaimClick"
     />
