@@ -164,7 +164,7 @@
     <div class="egg-dialog-container">
       <img class="bound-bg-top" :src="boundBgTop" />
       <div class="bound-bg-mid">
-        <div>Bốc thăm xổ số</div>
+        <div>Chúc mừng bạn nhận được</div>
       </div>
       <!-- <img class="bound-image" :src="bonusImage[18]" /> -->
       <img class="bound-image" :src="bonusImage[bonus]" />
@@ -176,7 +176,7 @@
         </div>
       </div>
       <div class="bound-close" @click="bonusModalVisible = false">
-        <div>nhận được</div>
+        <div>Nhận Ngay</div>
       </div>
     </div>
   </el-dialog>
@@ -278,6 +278,10 @@ onMounted(() => {
     align-items: center;
     font-size: 26px;
     color: #fff;
+
+    div {
+      text-transform: capitalize;
+    }
   }
   .bound-image {
     z-index: 2;
@@ -298,6 +302,7 @@ onMounted(() => {
     top: 28%;
     width: 271px;
     height: 229px;
+    font-weight: bold;
   }
   .bound-text {
     background-image: url(../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound-money-bg.png);
@@ -311,6 +316,7 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     font-size: 24px;
+    font-weight: bold;
     color: rgba(248, 47, 6, 1);
   }
   .bound-close {
@@ -326,6 +332,10 @@ onMounted(() => {
     align-items: center;
     font-size: 24px;
     color: #fff;
+
+    div {
+      margin-bottom: 6px;
+    }
   }
 }
 .new-player-wrapper {

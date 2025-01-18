@@ -214,7 +214,7 @@ s
         <!-- <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup /> -->
         <img class="bound-bg-top" :src="boundBgTop" />
         <div class="bound-bg-mid">
-          <div>Bốc thăm xổ số</div>
+          <div>Chúc mừng bạn nhận được</div>
         </div>
         <img class="bound-image" :src="bonusImage[bonus]" />
         <!-- <img class="bound-image" :src="bonusImage[18]" /> -->
@@ -226,7 +226,7 @@ s
           </div>
         </div>
         <div class="bound-close" @click="bonusModalVisible = false">
-          <div>nhận được</div>
+          <div>Nhận Ngay</div>
         </div>
       </div>
     </div>
@@ -346,6 +346,10 @@ onMounted(() => {
     align-items: center;
     font-size: 1.5rem;
     color: #fff;
+
+    div {
+      text-transform: capitalize;
+    }
   }
   .bound-image {
     z-index: 2;
@@ -366,6 +370,7 @@ onMounted(() => {
     width: 80%;
     height: 34px;
     display: flex;
+    font-weight: bold;
     justify-content: center;
     align-items: center;
     font-size: 18px;
@@ -380,6 +385,7 @@ onMounted(() => {
     transform: translateX(-50%);
     top: 25%;
     width: 160px;
+    font-weight: bold;
     height: 160px;
   }
   .bound-close {
@@ -396,6 +402,10 @@ onMounted(() => {
     align-items: center;
     font-size: 18px;
     color: #fff;
+
+    div {
+      margin-bottom: 3px;
+    }
   }
 }
 .new-player-wrapper {
