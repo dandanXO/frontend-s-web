@@ -346,15 +346,16 @@ onMounted(() => {
     background-repeat: no-repeat;
     left: 50%;
     transform: translateX(-50%);
-    top: 5%;
+    top: 9%;
     aspect-ratio: 392/62;
-    width: 70%;
+    width: 75%;
     // height: 62px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1.5rem;
     color: #fff;
+    z-index: 10;
 
     div {
       white-space: nowrap;
@@ -366,7 +367,7 @@ onMounted(() => {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 15%;
+    top: 19%;
     width: 160px;
     height: 160px;
   }
@@ -376,9 +377,10 @@ onMounted(() => {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 60%;
+    top: 66%;
     width: 80%;
     height: 34px;
+    z-index: 20;
     display: flex;
     font-weight: bold;
     justify-content: center;
@@ -393,7 +395,7 @@ onMounted(() => {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 25%;
+    top: 30%;
     width: 160px;
     font-weight: bold;
     height: 160px;
@@ -404,13 +406,14 @@ onMounted(() => {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 76%;
-    width: 40%;
-    height: 43px;
+    top: 80%;
+    width: 50%;
+    min-height: 50px;
+    aspect-ratio: 230/72;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 18px;
+    font-size: 22px;
     color: #fff;
 
     div {
@@ -663,7 +666,7 @@ onMounted(() => {
   position: relative;
 
   .egg-available-draw {
-    font-size: 18px;
+    font-size: 17px;
     text-align: center;
     display: flex;
     align-items: center;
