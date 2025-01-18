@@ -23,9 +23,9 @@ s
     </div>
 
     <div class="rule-block">
-      <div class="rule-block-rule" style="flex-direction: column; align-items: flex-start">
+      <div class="rule-block-rule">
         <div class="rule-block-rule__title">Thời gian</div>
-        <span class="rule-block-rule__description">00:00:00 20/01/2025 – 23:59:59 02/02/2025</span>
+        <span class="rule-block-rule__description" style="line-height: 20px">00:00 20/01/2025-23:59 02/02/2025</span>
       </div>
       <div class="rule-block-rule">
         <div class="rule-block-rule__title">Áp dụng</div>
@@ -442,10 +442,10 @@ onMounted(() => {
     .rule-block-rule {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
 
       .rule-block-rule__title {
-        width: 95px;
+        width: 85px;
         background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
         padding: 3px 0;
         clip-path: polygon(0 50%, 12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%);
@@ -459,7 +459,7 @@ onMounted(() => {
       .rule-block-rule__description {
         font-size: 12px;
         font-weight: 400;
-        line-height: 28px;
+        line-height: 18px;
       }
     }
 
