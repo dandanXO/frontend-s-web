@@ -2,7 +2,7 @@
 import { FBQ_INITIALIZED, fbqLists, INSTALLATION_STATUS_KEY, PWA_DATA_KEY } from "./const.js";
 import { getRedirectInfo, redirectToGame } from "./redirect.js";
 
-const INSTALL_COUNTDOWN = 2;
+const INSTALL_COUNTDOWN = 4;
 let currentInstallCountdown = INSTALL_COUNTDOWN;
 let installationProgressNumber = 0;
 let deferredPrompt;
@@ -199,7 +199,7 @@ window.addEventListener("load", () => {
       container.setAttribute("data-type", "INSTALL");
     }
     loading.classList.remove("loading--show");
-  }, 1000);
+  }, 2000);
 
   detectDeviceAndBrowser();
   countdown.innerHTML = `${INSTALL_COUNTDOWN}`;
