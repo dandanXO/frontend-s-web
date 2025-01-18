@@ -10,16 +10,17 @@ s
       </div>
     </div>
     <img
-      src="@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bonus-egg1.png"
+      src="@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bonus-egg2.png"
       class="bg-egg"
       @click="handleClaimClick"
     />
+    <div @click="handleClaimClick" class="egg-button">Đập trứng vàng</div>
   </div>
   <div class="new-player-wrapper">
     <div style="display: flex; justify-content: center; align-items: center; gap: 12px">
-      <img class="title" src="@/assets/images/promo/hotpromo/2025-cny-lucky-draw/title-left.png" />
-      <img class="title" src="@/assets/images/promo/hotpromo/2025-cny-lucky-draw/title-content.png" />
-      <img class="title" src="@/assets/images/promo/hotpromo/2025-cny-lucky-draw/title-right.png" />
+      <img class="title" style="width: 17%" src="@/assets/images/promo/hotpromo/2025-cny-lucky-draw/title1.png" />
+      <img class="title" style="width: 66%" src="@/assets/images/promo/hotpromo/2025-cny-lucky-draw/title2.png" />
+      <img class="title" style="width: 17%" src="@/assets/images/promo/hotpromo/2025-cny-lucky-draw/title3.png" />
     </div>
 
     <div class="rule-block">
@@ -700,6 +701,24 @@ onMounted(() => {
       filter: brightness(0.8);
       top: 27%;
     }
+  }
+  .egg-button {
+    position: absolute;
+    background-image: url("../../../assets/images/promo/hotpromo/2025-cny-lucky-draw/btn-btn.png");
+    background-size: 100% auto;
+    width: 160px;
+    min-height: 50px;
+    bottom: 12px;
+    aspect-ratio: 360/117;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 21px;
+    left: 50%;
+    margin-left: -74px;
+    text-transform: capitalize;
   }
 }
 .popout-close {
