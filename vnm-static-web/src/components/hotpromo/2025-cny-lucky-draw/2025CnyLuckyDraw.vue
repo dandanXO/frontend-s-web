@@ -19,7 +19,7 @@
 
     <div class="rule-block">
       <div class="rule-block-rule">
-        <div class="rule-block-rule__title">Thời gian khuyến mãi</div>
+        <div class="rule-block-rule__title">Thời gian</div>
         <span class="rule-block-rule__description">00:00:00 20/01/2025 – 23:59:59 02/02/2025</span>
       </div>
       <div class="rule-block-rule">
@@ -31,7 +31,7 @@
         <span class="rule-block-rule__description">Tất cả sản phẩm tại TF88</span>
       </div>
       <div class="rule-block-rule" style="flex-direction: column; align-items: flex-start">
-        <div class="rule-block-rule__title">Chi tiết khuyến mãi</div>
+        <!--        <div class="rule-block-rule__title">Chi tiết khuyến mãi</div>-->
         <span class="rule-block-rule__description">
           Trong thời gian khuyến mãi, Thành viên đạt đủ doanh thu cược theo yêu cầu sẽ có cơ hội tham gia đập trứng vàng
           để nhận thưởng hấp dẫn, bao gồm tiền mặt ngẫu nhiên từ 18 VNDP đến 888 VNDP và giải thưởng cao nhất là 1 lượng

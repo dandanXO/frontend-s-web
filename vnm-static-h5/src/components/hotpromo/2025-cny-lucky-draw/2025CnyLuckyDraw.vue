@@ -24,7 +24,7 @@ s
 
     <div class="rule-block">
       <div class="rule-block-rule" style="flex-direction: column; align-items: flex-start">
-        <div class="rule-block-rule__title">Thời gian khuyến mãi</div>
+        <div class="rule-block-rule__title">Thời gian</div>
         <span class="rule-block-rule__description">00:00:00 20/01/2025 – 23:59:59 02/02/2025</span>
       </div>
       <div class="rule-block-rule">
@@ -36,7 +36,7 @@ s
         <span class="rule-block-rule__description">Tất cả sản phẩm tại TF88</span>
       </div>
       <div class="rule-block-rule" style="flex-direction: column; align-items: flex-start">
-        <div class="rule-block-rule__title">Sản phẩm</div>
+        <!--        <div class="rule-block-rule__title">Sản phẩm</div>-->
         <span class="rule-block-rule__description">
           Trong thời gian khuyến mãi, Thành viên đạt đủ doanh thu cược theo yêu cầu sẽ có cơ hội tham gia đập trứng vàng
           để nhận thưởng hấp dẫn, bao gồm tiền mặt ngẫu nhiên từ 18 VNDP đến 888 VNDP và giải thưởng cao nhất là 1 lượng
@@ -403,7 +403,7 @@ onMounted(() => {
   gap: 32px;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px 40px 40px;
+  padding: 20px 20px 40px;
   border-radius: 12px;
   border: 1px solid #acd4f6;
   box-shadow: 0px 0px 4px 0px #01497b0f;
@@ -636,9 +636,11 @@ onMounted(() => {
 
 .bonus-wrapper {
   width: 100%;
-  height: 355px;
+  min-height: 255px;
+  aspect-ratio: 702/550;
   margin: 0 auto 20px;
   position: relative;
+
   .egg-available-draw {
     font-size: 18px;
     text-align: center;
@@ -653,7 +655,7 @@ onMounted(() => {
   }
   .bg-image {
     width: 100%;
-    height: 355px;
+    height: 100%;
     margin: 0 auto 20px;
     position: relative;
     .bg-image {
@@ -691,12 +693,12 @@ onMounted(() => {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 23%;
+    top: 26%;
     cursor: pointer;
 
     &:active {
       filter: brightness(0.8);
-      top: 24%;
+      top: 27%;
     }
   }
 }
