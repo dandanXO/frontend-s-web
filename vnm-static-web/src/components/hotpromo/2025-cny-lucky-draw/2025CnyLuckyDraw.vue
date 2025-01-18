@@ -1,13 +1,18 @@
 <template>
   <div class="bonus-wrapper">
     <img src="../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-bg.png" class="bg-image" />
-    <img src="../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-title.png" class="bg-title" />
+    <div class="bg-title">
+      <div class="egg-available-draw">
+        Tổng số lần đập trứng vàng:
+        <span style="font-weight: 700">{{ availableDraw }}</span>
+        lần
+      </div>
+    </div>
     <img
       src="../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bonus-egg.png"
       class="bg-egg"
       @click="handleClaimClick"
     />
-    <div class="egg-available-draw">Số lần còn lại: <span style="font-weight: 700;">{{ availableDraw }} </span> lần</div>
   </div>
   <div class="new-player-wrapper">
     <img class="title" src="@/assets/images/promotion/hotpromo/newPlayer/title.png" />
@@ -181,6 +186,7 @@ import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { ElMessage } from "element-plus";
 import { drawEventInit, claimDrawEvent } from "@/api/promotion/drawEvent";
+import { userStore } from "@/store";
 
 const { t } = useI18n();
 const props = defineProps(["promoCode"]);
@@ -192,6 +198,7 @@ const availableDraw = ref(0);
 const usedDraw = ref(0);
 const totalDraw = ref(0);
 
+const store = userStore();
 const bonus = ref(0);
 const bonusName = ref("");
 const boundBgTop = require("../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bound-bg-top.png");
@@ -216,13 +223,16 @@ const handleClaimClick = () => {
       bonusModalVisible.value = true;
       bonus.value = res.data[0].bonus;
       bonusName.value = res.data[0].bonusName;
+
+      initGoldenEgg();
+      store.getBalance();
     } else {
       ElMessage.error(res.message);
     }
   });
 };
 
-onMounted(() => {
+const initGoldenEgg = () => {
   drawEventInit(props.promoCode).then((res) => {
     if (res.code === 0) {
       const { data } = res;
@@ -235,6 +245,10 @@ onMounted(() => {
       ElMessage.error(res.message);
     }
   });
+};
+
+onMounted(() => {
+  initGoldenEgg();
 });
 </script>
 <style lang="scss" scoped>
@@ -556,13 +570,7 @@ onMounted(() => {
   height: 550px;
   margin: 0 auto;
   position: relative;
-  .egg-available-draw{
-    position: absolute;
-    bottom: 10%;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 24px;
-  }
+
   .bg-image {
     width: 100%;
     position: absolute;
@@ -575,14 +583,42 @@ onMounted(() => {
     left: 50%;
     transform: translateX(-50%);
     top: 50px;
+
+    width: 438px;
+    min-height: 88px;
+    aspect-ratio: 876/160;
+    background-image: url("../../../assets/images/promotion/hotpromo/2025-cny-lucky-draw/bgtitle.png");
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    color: #fff;
+
+    .egg-available-draw {
+      font-size: 24px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      white-space: nowrap;
+      span {
+        padding: 0px 6px;
+      }
+    }
   }
 
   .bg-egg {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 20px;
+    bottom: 0px;
     cursor: pointer;
+
+    &:hover {
+      opacity: 0.9;
+    }
+    &:active {
+      filter: brightness(0.8);
+    }
   }
 }
 </style>
