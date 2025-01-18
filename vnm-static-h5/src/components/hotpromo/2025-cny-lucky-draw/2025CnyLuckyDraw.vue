@@ -313,23 +313,31 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 .dialog_continaer {
-  height: 450px;
+  height: 520px;
   width: 95%;
   position: relative;
+  transform: scale(0.85);
+
+  @media (max-width: 400px) {
+    height: 430px;
+  }
 }
 .dialog_inner {
   background-image: url(../../../assets/images/promo/hotpromo/2025-cny-lucky-draw/bound-bg.png);
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  height: 360px;
+  min-height: 260px;
   width: 100%;
   bottom: 0px;
   position: absolute;
+  aspect-ratio: 560/529;
+
   .bound-bg-top {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: -24%;
+    top: -19%;
+    width: 100%;
   }
   .bound-bg-mid {
     background-image: url(../../../assets/images/promo/hotpromo/2025-cny-lucky-draw/bound-bg-close-btn.png);
@@ -338,7 +346,8 @@ onMounted(() => {
     background-repeat: no-repeat;
     left: 50%;
     transform: translateX(-50%);
-    top: 2%;
+    top: 5%;
+    aspect-ratio: 392/62;
     width: 70%;
     // height: 62px;
     display: flex;
@@ -348,6 +357,7 @@ onMounted(() => {
     color: #fff;
 
     div {
+      white-space: nowrap;
       text-transform: capitalize;
     }
   }
@@ -404,7 +414,7 @@ onMounted(() => {
     color: #fff;
 
     div {
-      margin-bottom: 3px;
+      margin-bottom: 6px;
     }
   }
 }
