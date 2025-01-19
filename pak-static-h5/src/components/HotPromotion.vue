@@ -18,6 +18,7 @@
     <NewPlayersPromo v-if="list.redirectUrl === 'pak-new-players' && !isCommonPromo && store.token" :list="list" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'pak-aviator-golden-egg' && store.token" />
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'pak-slot-ftd' && store.token" :params="list.param" />
+    <VideoAmbassador v-if="list.redirectUrl === 'pak-video-ambassador' && store.token" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -54,6 +55,8 @@ import NewPlayersPromo from "../components/hotpromo/newPlayers/NewPlayersPromo.v
 import SlotFtdPromo from "../components/hotpromo/slotFtdPromo/SlotFtdPromo.vue";
 import GoldenEggPromo from "./hotpromo/goldenEgg/GoldenEggPromo.vue";
 
+import VideoAmbassador from "./hotpromo/video-ambassador/VideoAmbassador.vue"
+
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -68,6 +71,7 @@ export default defineComponent({
     InterestProfitPromo,
     NewPlayersPromo,
     SlotFtdPromo,
+    VideoAmbassador,
     GoldenEggPromo
   },
   props: {
@@ -128,6 +132,7 @@ export default defineComponent({
       this.list.redirectUrl === "pak-new-players" ||
       this.list.redirectUrl === "pak-slot-ftd" ||
       this.list.redirectUrl === "pak-aviator-golden-egg" ||
+      this.list.redirectUrl === "pak-video-ambassador" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;
