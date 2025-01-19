@@ -1,84 +1,131 @@
 <template>
   <div class="btn-container">
-    <img class="icon" src="./img/flower.png">
+    <img class="icon" src="./img/flower.png" />
     <div class="styled-box">
-        <div class="title">Show your creativity and become the face of B9.GAME!</div>
-        <ul class="content">
-            <li>Win <span class="sp1">PKR 3,000,000</span> and worldwide recognition with just one video!</li>
-            <li>Do you have creative ideas?</li>
-            <li>Do you want to be in the spotlight?</li>
-            <li><span class="sp2">B9.GAME</span> is searching for its next Brand Ambassador, and it could be YOU!</li>
-        </ul>
+      <div class="title">Show your creativity and become the face of B9.GAME!</div>
+      <ul class="content">
+        <li>
+          Win
+          <span class="sp1">PKR 3,000,000</span>
+          and worldwide recognition with just one video!
+        </li>
+        <li>Do you have creative ideas?</li>
+        <li>Do you want to be in the spotlight?</li>
+        <li>
+          <span class="sp2">B9.GAME</span>
+          is searching for its next Brand Ambassador, and it could be YOU!
+        </li>
+      </ul>
     </div>
     <div class="sec-title">
-      <img class="sec-icon" src="./img/sec-icon.png">
+      <img class="sec-icon" src="./img/sec-icon.png" />
       <di class="sec-content">Amazing Rewards Await You!</di>
     </div>
   </div>
   <div class="thrid-section">
-      <div>1st Prize - Annual Brand Ambassador</div>
-      <ul>
-        <li>Represent <sapn class="l1">B9.GAME</sapn> for 12 months</li>
-        <li>Prize Money:<span class="l2"> PKR 3,000,000 </span></li>
-      </ul>
+    <div>1st Prize - Annual Brand Ambassador</div>
+    <ul>
+      <li>
+        Represent
+        <sapn class="l1">B9.GAME</sapn>
+        for 12 months
+      </li>
+      <li>
+        Prize Money:
+        <span class="l2">PKR 3,000,000</span>
+      </li>
+    </ul>
 
-      <div>2nd Prize - Creative Star</div>
+    <div>2nd Prize - Creative Star</div>
+    <ul>
+      <li>
+        Represent
+        <span class="l1">B9.GAME</span>
+        for 6 months
+      </li>
+      <li>
+        Prize Money:
+        <span class="l2">PKR 300,000</span>
+      </li>
+    </ul>
+    <div>3rd Prize - Innovation Champ</div>
+    <ul>
+      <li>
+        Represent
+        <span class="l1">B9.GAME</span>
+        for 1 month
+      </li>
+      <li>
+        Prize Money:
+        <span class="l2">PKR 30,000</span>
+      </li>
+    </ul>
+    <div style="color: red">
+      Participation Bonus Get
+      <span style="color: rgba(255, 157, 0, 1)">PKR 3,000</span>
+      if your video gets over 1,000 views!
+    </div>
+    <div class="thrid-title">
+      <img class="thrid-icon" src="./img/sec-icon.png" />
+      <div class="thrid-content">Participation Bonus</div>
+    </div>
+    <div>
+      <span style="color: rgba(255, 255, 255, 0.8)">
+        if your video got 1000 views you will get 3000 pkr three simple steps to participate in game
+      </span>
       <ul>
-        <li>Represent <span class="l1">B9.GAME</span>  for 6 months</li>
-        <li>Prize Money: <span class="l2">PKR 300,000</span></li>
+        <li style="color: rgba(255, 255, 255, 0.8)">1- download b9 game</li>
+        <li style="color: rgba(255, 255, 255, 0.8)">2- sign up</li>
+        <li style="color: rgba(255, 255, 255, 0.8)">3- get the invitation link</li>
       </ul>
-      <div>3rd Prize - Innovation Champ</div>
-      <ul>
-        <li>Represent  <span class="l1">B9.GAME</span> for 1 month</li>
-        <li>Prize Money:<span  class="l2"> PKR 30,000</span></li>
-      </ul>
-      <div style="color: red;">
-        Participation Bonus
-        Get <span style="color:rgba(255, 157, 0, 1);">PKR 3,000 </span> if your video gets over 1,000 views!
-      </div>
-      <div class="thrid-title">
-        <img class="thrid-icon" src="./img/sec-icon.png">
-        <div class="thrid-content">Participation Bonus </div>
-      </div>
-      <div>
-        <span style="color: rgba(255, 255, 255, 0.8);">
-          if your video got 1000 views you will get 3000 pkr three simple steps to participate in game 
-        </span>
-        <ul>
-          <li style="color: rgba(255, 255, 255, 0.8);">1- download b9 game </li>
-          <li style="color: rgba(255, 255, 255, 0.8);">2- sign up </li>
-          <li style="color: rgba(255, 255, 255, 0.8);">3- get the invitation link </li>
-        </ul>
-      </div>
+    </div>
   </div>
   <div class="four-section">
     <div class="content">
       <div class="title">Create a Creative Video</div>
       <div class="text">
-        Show your talent with unique content! Whether it's gameplay, rewards, user stories, or fun ideas, don't forget to include your invitation link in the video.
+        Show your talent with unique content! Whether it's gameplay, rewards, user stories, or fun ideas, don't forget
+        to include your invitation link in the video.
       </div>
     </div>
-    <div class="content" style="margin-top: 12px;">
+    <div class="content">
       <div class="title">Upload Your Video</div>
-      <div class="text">
-        Share your video on TikTok, YouTube Shorts, or Instagram Reels and increase your views!
-      </div>
+      <div class="text">Share your video on TikTok, YouTube Shorts, or Instagram Reels and increase your views!</div>
     </div>
   </div>
   <div class="five-section">
-    <img src="./img/five-title.png" >
+    <img src="./img/five-title.png" />
     <div class="additional-info">
-    <ul>
+      <ul>
         <li>Your video must remain published and pinned for at least 1 month.</li>
-        <li>Rewards are based on the number of views for a single video (no combining views). Fake views will disqualify you.</li>
-        <li>Event duration: <span class="sp1">19th January 2025 - 19th February 2025</span>.</li>
+        <li>
+          Rewards are based on the number of views for a single video (no combining views). Fake views will disqualify
+          you.
+        </li>
+        <li>
+          Event duration:
+          <span class="sp1">19th January 2025 - 19th February 2025</span>
+          .
+        </li>
         <li>How to Claim Rewards?</li>
-        <li>Once your video reaches 1,000 views, contact <span class="sp2">B9.GAME</span> Customer Support to submit your video link and ID. Your reward will be processed within 7 working days!</li>
-        <li>Don't Miss Out! Download <span class="sp2">B9.GAME</span> now, use your creativity, and shine like a star!</li>
+        <li>
+          Once your video reaches 1,000 views, contact
+          <span class="sp2">B9.GAME</span>
+          Customer Support to submit your video link and ID. Your reward will be processed within 7 working days!
+        </li>
+        <li>
+          Don't Miss Out! Download
+          <span class="sp2">B9.GAME</span>
+          now, use your creativity, and shine like a star!
+        </li>
         <li>“This is your chance to make Pakistan proud!”</li>
-        <li>“The next <span class="sp2">B9.GAME</span> Brand Ambassador could be YOU!"</li>
-    </ul>
-</div>
+        <li>
+          “The next
+          <span class="sp2">B9.GAME</span>
+          Brand Ambassador could be YOU!"
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 <script setup>
@@ -130,7 +177,7 @@ onMounted(() => {
   margin: auto;
   padding: 14px;
   position: relative;
-  .icon{
+  .icon {
     z-index: 2;
     position: absolute;
     top: -10%;
@@ -139,9 +186,8 @@ onMounted(() => {
     height: 128px !important;
   }
 }
-.styled-box{
+.styled-box {
   z-index: 1;
-  font-family: Public Sans;
   font-size: 12px;
   font-weight: 700;
   line-height: 17px;
@@ -156,41 +202,38 @@ onMounted(() => {
   border-radius: 12px;
   padding: 8px;
   position: relative;
-  
-  .title{
+
+  .title {
     font-size: 16px;
-    color:#fff;
+    color: #fff;
     margin-top: 32px;
     margin-bottom: 12px;
-
   }
-  .content{
+  .content {
     font-size: 16px;
     color: rgba(214, 214, 214, 1);
-
   }
-  .sp1{
+  .sp1 {
     color: rgba(255, 204, 0, 1);
   }
-  .sp2{
+  .sp2 {
     color: rgba(0, 255, 178, 1);
   }
 }
-.sec-title{
+.sec-title {
   display: flex;
   justify-content: center;
   align-items: center;
   background-image: url(./img/sec-bg.png);
   height: 26px;
   width: 80%;
-  margin-top: 12px;
-  .sec-icon{
+  margin: 20px auto 16px;
+  .sec-icon {
     width: 17px !important;
     height: 17px !important;
     margin-right: 4px;
   }
-  .sec-content{
-    font-family: Orelega One;
+  .sec-content {
     font-size: 14px;
     font-weight: 400;
     line-height: 16px;
@@ -199,10 +242,9 @@ onMounted(() => {
     text-decoration-skip-ink: none;
   }
 }
-.thrid-section{
+.thrid-section {
   padding: 0 14px;
   font-size: 14px;
-  font-family: Public Sans;
   font-size: 14px;
   color: rgba(255, 255, 255, 1);
   font-weight: 700;
@@ -210,22 +252,22 @@ onMounted(() => {
   text-align: left;
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
-  .l1{
-    color:rgba(0, 255, 178, 1) ;
+  .l1 {
+    color: rgba(0, 255, 178, 1);
   }
-  .l2{
+  .l2 {
     color: rgba(255, 204, 0, 1);
   }
-  ul{
+  ul {
     color: rgba(203, 203, 203, 1);
     margin-top: 12px !important;
     margin-bottom: 8px !important;
   }
-  li{
+  li {
     margin-bottom: 4px !important;
   }
 }
-.thrid-title{
+.thrid-title {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -236,13 +278,12 @@ onMounted(() => {
   margin: auto;
   margin-top: 24px;
   margin-bottom: 24px;
-  .thrid-icon{
+  .thrid-icon {
     width: 17px !important;
     height: 17px !important;
     margin-right: 4px;
   }
-  .thrid-content{
-    font-family: Orelega One;
+  .thrid-content {
     font-size: 14px;
     font-weight: 400;
     line-height: 16px;
@@ -252,15 +293,15 @@ onMounted(() => {
   }
 }
 
-.four-section{
+.four-section {
   padding: 0 14px;
   font-size: 14px;
-  .content{
-
+  .content {
+    margin-top: 20px;
   }
-  .title{
+  .title {
     text-shadow: 2px 2px 2px rgba(255, 147, 64, 1);
-    font-style: italic; 
+    font-style: italic;
     color: rgba(255, 255, 255, 1);
     font-size: 14px;
     background-image: url(./img/four-bg.png);
@@ -273,40 +314,38 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
   }
-  .text{
-    font-family: Public Sans;
+  .text {
     font-size: 12px;
     font-weight: 700;
     line-height: 17px;
     text-align: left;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
-
   }
 }
-.five-section{
+.five-section {
   padding: 0 14px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  img{
+  img {
     margin: 24px 0 !important;
   }
   .additional-info {
-      // padding: 15px;
-      // border-radius: 10px;
-      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
-    }
-    .additional-info ul li {
-      margin-bottom: 0px !important;
-        color: #d1d1d1;
-    }
-    .sp1{
-      color: #ffd700;
-    }
-    .sp2{
-      font-weight: 700;
-      color: rgba(0, 255, 178, 1);
-    }
+    // padding: 15px;
+    // border-radius: 10px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+  }
+  .additional-info ul li {
+    margin-bottom: 0px !important;
+    color: #d1d1d1;
+  }
+  .sp1 {
+    color: #ffd700;
+  }
+  .sp2 {
+    font-weight: 700;
+    color: rgba(0, 255, 178, 1);
+  }
 }
 </style>
