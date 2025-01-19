@@ -1,6 +1,7 @@
 import { Platform } from "quasar";
 import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-vue-v3";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import { useNotify } from "src/hooks/notify";
 
 export const MAIN = "MAIN";
 
@@ -130,4 +131,37 @@ export const throttle = (fn, delay = 500) => {
       timer = null;
     }, delay);
   };
+};
+
+export const writeClipboard = async (content, useExecCommand = false) => {
+  const notify = useNotify();
+  try {
+    if (window.isSecureContext && navigator.clipboard && !useExecCommand) {
+      const permission = await requestClipboardPermission();
+      if (permission.state !== "granted") throw new Error();
+      await navigator.clipboard.writeText(content);
+    } else {
+      const textArea = document.createElement("textarea");
+      textArea.value = content;
+      textArea.style.position = "absolute";
+      textArea.style.opacity = "0";
+      document.body.prepend(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      textArea.remove();
+    }
+    notify({
+      type: "success",
+      message: "复制成功"
+    });
+  } catch (error) {
+    if (!useExecCommand) {
+      await writeClipboard(content, true);
+    } else {
+      notify({
+        type: "error",
+        message: "复制失败"
+      });
+    }
+  }
 };

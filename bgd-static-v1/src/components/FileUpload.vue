@@ -23,12 +23,14 @@ import { ref, defineComponent, watch, defineExpose } from "vue";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
 import { getRndInteger } from "boot/utils";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   emits: ["photoResponse"],
   name: "UploadExample",
   setup: (props, { emit }) => {
     const store = userStore();
+    const { t } = useI18n();
 
     var rstArray = Object.values(process.env.RST_API);
     var rstApi = rstArray[getRndInteger(0, rstArray.length)];
@@ -60,14 +62,14 @@ export default defineComponent({
             $q.notify({
               type: "positive",
               position: "top",
-              message: `${file.value.name} uploaded successfully`,
+              message: `${file.value.name} ` + t("form.uploadSuccess"),
               icon: "check_circle_outline"
             });
           } else {
             $q.notify({
               type: "negative",
               position: "top",
-              message: `${file.value.name} upload failed. Please try again`,
+              message: `${file.value.name} ` + t("form.uploadFailedTryAgain"),
               icon: "report_problem"
             });
             file.value = null;

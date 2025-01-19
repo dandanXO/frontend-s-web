@@ -5,6 +5,10 @@ export const getPrivilegeReport = (data) => {
   return https().request("/report/privilegeReportList", Method.GET, data, ContentType.form);
 };
 
+export const getPrivilegeReportAll = (data) => {
+  return https().request("/report/privilegeReportAll", Method.GET, data, ContentType.form);
+};
+
 export const getDailyReport = (data) => {
   return https().request("/report/dailyPrivilegeReport", Method.GET, data, ContentType.form);
 };

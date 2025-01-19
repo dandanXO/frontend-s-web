@@ -239,13 +239,17 @@
         {{ $t("btn.login") }}
       </q-btn>
 
-      <img src="../assets/images/index/login-directly.svg"/>
+      <img v-if="languageVal === 'en'" src="../assets/images/index/login-directly.svg" />
+      <img v-else src="../assets/images/account/logindirectly.png" />
 
+      <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onClickGoogleSignin">
+        <img
+          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABd1BMVEUAAADxRznpQzXpRDXqQzXqQzXqQzXqRDbrQzTfQEDpRDbqQzXrQzX/VSvoRjbqQzXqQzXpQzfnQDjqQzTbSSTqQzXqQzXqQjTqQzTqQjTqQzXqQzXpRDT/MzPqQzTrQzb/xgD0khbrSTLqQzXrQzb8vAbqRDT7uwTwbiTtSTf6vAX7vARDhvX7vAX7vAZDhvX7vQZChPT7vARChPTzuwiCsDY3pFtEg/RChPVBhfP8uwY1p1RChfNChfRAivS5tR80qFMyqFRChfVChfRChfQzp1Q0qFM0qFMzmWYAgIA6nYFBh/BChPNAn2A0qFMzqFM0qFQ0p1MzqFMzqVM0qFNChfMA//84p1A0qFNChfRGhPY0qFM0plw9j8Iktkk0p1Q0qFM0qFM0qFIzqlUtpVozqVM0qFM0qFM0qFM0qFMzqFM0qFMzqVI1p0/qQzX7vAX5qgztVy36twdChfTfuRBXq0U0qFM/qU43oXVAieE1pV8+jsj///9xjqGrAAAAbnRSTlMAEmqx4vb022cIgPB9BiHQxhcgtAfP5JJrbOP6dQV6sAns/vtMW4Sx7w7ir2f4hn6Hh7Bw/uQORGhWWoOE/Rju+0wy9cl9+nUFAmXuVQjO5JJraYvbxgEg4eUdz+YyB4Dz+ZgPEWiv4Pb137ZzHX5o7HUAAAABYktHRHzRtiBfAAAAB3RJTUUH6AYXEzsig/8aPAAAAQJJREFUKM9jYCAAGJmYWVjZ2Jk5GFGEObnY8qCAm4cXIc7Hn4cEBARh4kIsyOJ5wiIwc0TBfDFxCUlxKSRxBh6QsLSMLIjNKycPF1dQVMrLU1bBdKhqfkFhnhoWH6jn5xdpaGKR0MrPz9eGMIvhQAfI0wVK6KFL6EMlDNAlDKFGGaFLGAN5Rvn5JqZmYAlzELAASVgCeVb5JaVl1gjH2ADFbe1AHrQvLytzcISJOzkDJVzATNcyIHBz9wCxPb28QSb5gCV8/UAyZf4BgUHBIWUVlcXFoWEQ3eERZUigqjoyCmZueDSyTEwswiVx8Qkw4cSkZJQQS0lNS8/IzMrOySWUbAAwR2hJPoYcuAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNC0wNi0yM1QxOTo1OTozMyswMDowMBiqq7wAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjQtMDYtMjNUMTk6NTk6MzMrMDA6MDBp9xMAAAAAAElFTkSuQmCC"
+        />
 
-        <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onClickGoogleSignin">
-          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABd1BMVEUAAADxRznpQzXpRDXqQzXqQzXqQzXqRDbrQzTfQEDpRDbqQzXrQzX/VSvoRjbqQzXqQzXpQzfnQDjqQzTbSSTqQzXqQzXqQjTqQzTqQjTqQzXqQzXpRDT/MzPqQzTrQzb/xgD0khbrSTLqQzXrQzb8vAbqRDT7uwTwbiTtSTf6vAX7vARDhvX7vAX7vAZDhvX7vQZChPT7vARChPTzuwiCsDY3pFtEg/RChPVBhfP8uwY1p1RChfNChfRAivS5tR80qFMyqFRChfVChfRChfQzp1Q0qFM0qFMzmWYAgIA6nYFBh/BChPNAn2A0qFMzqFM0qFQ0p1MzqFMzqVM0qFNChfMA//84p1A0qFNChfRGhPY0qFM0plw9j8Iktkk0p1Q0qFM0qFM0qFIzqlUtpVozqVM0qFM0qFM0qFM0qFMzqFM0qFMzqVI1p0/qQzX7vAX5qgztVy36twdChfTfuRBXq0U0qFM/qU43oXVAieE1pV8+jsj///9xjqGrAAAAbnRSTlMAEmqx4vb022cIgPB9BiHQxhcgtAfP5JJrbOP6dQV6sAns/vtMW4Sx7w7ir2f4hn6Hh7Bw/uQORGhWWoOE/Rju+0wy9cl9+nUFAmXuVQjO5JJraYvbxgEg4eUdz+YyB4Dz+ZgPEWiv4Pb137ZzHX5o7HUAAAABYktHRHzRtiBfAAAAB3RJTUUH6AYXEzsig/8aPAAAAQJJREFUKM9jYCAAGJmYWVjZ2Jk5GFGEObnY8qCAm4cXIc7Hn4cEBARh4kIsyOJ5wiIwc0TBfDFxCUlxKSRxBh6QsLSMLIjNKycPF1dQVMrLU1bBdKhqfkFhnhoWH6jn5xdpaGKR0MrPz9eGMIvhQAfI0wVK6KFL6EMlDNAlDKFGGaFLGAN5Rvn5JqZmYAlzELAASVgCeVb5JaVl1gjH2ADFbe1AHrQvLytzcISJOzkDJVzATNcyIHBz9wCxPb28QSb5gCV8/UAyZf4BgUHBIWUVlcXFoWEQ3eERZUigqjoyCmZueDSyTEwswiVx8Qkw4cSkZJQQS0lNS8/IzMrOySWUbAAwR2hJPoYcuAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNC0wNi0yM1QxOTo1OTozMyswMDowMBiqq7wAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjQtMDYtMjNUMTk6NTk6MzMrMDA6MDBp9xMAAAAAAElFTkSuQmCC" />&nbsp;
-          {{ $t("btn.signinWithGoogle") }}
-        </q-btn>
+        &nbsp;
+        {{ $t("btn.signinWithGoogle") }}
+      </q-btn>
     </div>
 
     <div class="btn-lists">
@@ -278,11 +282,14 @@
 </template>
 
 <script>
+import { storeToRefs } from "pinia";
+import { i18nStore } from "src/router/language";
 import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
+import { t } from "src/boot/lang";
 import qs from "qs";
 // import PrimaryButton from "../components/auth/PrimaryButton.vue";
 import InputField from "../components/auth/InputField.vue";
@@ -306,6 +313,7 @@ export default defineComponent({
   },
   setup() {
     const { t } = useI18n();
+    const { languageVal } = storeToRefs(i18nStore());
     const ui = useUI();
     const store = userStore();
     const verificationImg = ref("");
@@ -438,7 +446,7 @@ export default defineComponent({
       sid: "",
       way: "ANDROID"
     });
-    
+
     onActivated(() => {
       getCode();
       getReferralCode();
@@ -447,68 +455,70 @@ export default defineComponent({
 
     const onClickGoogleSignin = async () => {
       const provider = await new GoogleAuthProvider();
-      return signInWithPopup(auth, provider).then((result) => {
-        // This gives you a Google Access Token. You can use it to access Google APIs.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
+      return signInWithPopup(auth, provider)
+        .then((result) => {
+          // This gives you a Google Access Token. You can use it to access Google APIs.
+          const credential = GoogleAuthProvider.credentialFromResult(result);
+          const token = credential.accessToken;
 
-        // The signed-in user info.
-        const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
+          // The signed-in user info.
+          const user = result.user;
+          // IdP data available using getAdditionalUserInfo(result)
+          // ...
 
-        (async () => {
-          thirdPartyLoginInfo.siteId = process.env.SITEID
-          thirdPartyLoginInfo.thirdParty = 'GOOGLE'
-          thirdPartyLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
-          thirdPartyLoginInfo.accessToken = credential.accessToken
-          thirdPartyLoginInfo.idToken = credential.idToken
+          (async () => {
+            thirdPartyLoginInfo.siteId = process.env.SITEID;
+            thirdPartyLoginInfo.thirdParty = "GOOGLE";
+            thirdPartyLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
+            thirdPartyLoginInfo.accessToken = credential.accessToken;
+            thirdPartyLoginInfo.idToken = credential.idToken;
 
-          api
-            .post("/member/thirdPartyLogin", qs.stringify(thirdPartyLoginInfo))
-            .then((ret) => {
-              const res = ret;
-              console.log("res:", res);
+            api
+              .post("/member/thirdPartyLogin", qs.stringify(thirdPartyLoginInfo))
+              .then((ret) => {
+                const res = ret;
+                console.log("res:", res);
 
-              if (res.code === 0) {
-                $q.notify({
-                  color: "positive",
-                  position: "top",
-                  message: "Google login successfully",
-                  icon: "check_circle_outline"
-                });
+                if (res.code === 0) {
+                  $q.notify({
+                    color: "positive",
+                    position: "top",
+                    message: "Google login successfully",
+                    icon: "check_circle_outline"
+                  });
 
-                store.autoLogin(res.data);
-                sessionStorage.removeItem("REFERRAL_CODE");
-                if (store.hasToken()) {
-                  router.push("/home");
+                  store.autoLogin(res.data);
+                  sessionStorage.removeItem("REFERRAL_CODE");
+                  if (store.hasToken()) {
+                    router.push("/home");
+                  }
+                } else {
+                  $q.notify({
+                    color: "negative",
+                    position: "top",
+                    message: res.message,
+                    icon: "report_problem"
+                  });
                 }
-              } else {
-                $q.notify({
-                  color: "negative",
-                  position: "top",
-                  message: res.message,
-                  icon: "report_problem"
-                });
-              }
-              $q.loading.hide();
-            })
-            .catch((error) => {
-              $q.loading.hide();
-            });
-          // getCode();
-        })();
-      }).catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-      });
-    }
+                $q.loading.hide();
+              })
+              .catch((error) => {
+                $q.loading.hide();
+              });
+            // getCode();
+          })();
+        })
+        .catch((error) => {
+          // Handle Errors here.
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // The email of the user's account used.
+          const email = error.customData.email;
+          // The AuthCredential type that was used.
+          const credential = GoogleAuthProvider.credentialFromError(error);
+          // ...
+        });
+    };
 
     const onSubmit = () => {
       loginNameRef.value.validate();
@@ -516,7 +526,7 @@ export default defineComponent({
       // nricRef.value.validate();
 
       $q.loading.show({
-        message: "Registering in progress"
+        message: t("notify.registeringInProgress")
       });
 
       isLoading.value = true;
@@ -552,7 +562,7 @@ export default defineComponent({
             regForm.regHost = "app://";
           }
 
-          regForm.registerType = loginNameType.value
+          regForm.registerType = loginNameType.value;
 
           api
             .post("/member/bgdRegister", qs.stringify(regForm))
@@ -562,7 +572,7 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: "Registered successfully",
+                  message: t("form.registerSuccess"),
                   icon: "check_circle_outline"
                 });
 
@@ -908,7 +918,8 @@ export default defineComponent({
       openCharity,
       downloadApp,
       onClickGoogleSignin,
-      loginNameType
+      loginNameType,
+      languageVal
     };
   }
 });
@@ -991,10 +1002,10 @@ function charType(num) {
   margin: 0 auto;
 
   :deep(.q-tab--active) {
-    color: #24EE89;
+    color: #24ee89;
 
     .q-tab__label {
-      color: #24EE89;
+      color: #24ee89;
     }
   }
 }

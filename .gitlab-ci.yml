@@ -290,6 +290,13 @@ deploy-id1-download-v2:
 
 #===============================================================================================
 
+deploy-minifun-site:
+  extends: .s3-deploy
+  variables:
+    PROJECT: minifun-site
+
+#===============================================================================================
+
 deploy-vnm-download:
   extends: .s3-deploy
   variables:
@@ -1101,20 +1108,6 @@ build-image-id1-static-v1:
     PROJECT: id1-static-v1
   needs:
     - build-id1-static-v1
-
-#===============================================================================================
-
-build-ind-download-pwa:
-  extends: .build-projects
-  variables:
-    PROJECT: ind-download-pwa
-    
-build-image-ind-download-pwa:
-  extends: .docker-build
-  variables:
-    PROJECT: ind-download-pwa
-  needs:
-    - build-ind-download-pwa
 
 #===============================================================================================
 

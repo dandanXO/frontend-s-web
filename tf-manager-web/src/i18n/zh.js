@@ -2227,7 +2227,11 @@ export default {
     priviRewardSetup: '奖金设置',
     priviVipSetup: 'vip设置',
     priviPaymentSetup: '支付',
-    priviOther: '其他'
+    priviOther: '其他',
+    privilegeAmountRatio: '领取金额比例',
+    privilegeCountRatio: '领取人数比例',
+    table: '数据',
+    chart: '图表',
   },
   message: {
     adsStatusOpen: '开',
@@ -3165,6 +3169,7 @@ export default {
     DOWNLOAD: '下载页',
     AFFILIATE: '代理',
     HOME: '首页',
+    MANAGER: '后台',
   },
   pmStatus: {
     UNSENT: '未发送',

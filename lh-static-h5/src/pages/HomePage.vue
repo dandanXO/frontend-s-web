@@ -2394,7 +2394,7 @@ export default defineComponent({
         overflow: hidden;
         display: grid;
         grid-template-columns: 50% 50%;
-        min-height: 106px;
+        max-height: 106px;
 
         .platform-content {
           width: 100%;

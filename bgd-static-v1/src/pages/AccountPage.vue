@@ -698,7 +698,7 @@ import moment from "moment";
 import { api } from "boot/axios";
 import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "src/stores";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { App } from "@capacitor/app";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
@@ -720,6 +720,8 @@ let slideListPath = ref([
 ]);
 let currentSlide = ref(slideList.value[0]);
 
+const route = useRoute();
+
 const isActiveSlide = (e) => {
   if (e === currentSlide.value) return true;
   return false;
@@ -729,7 +731,7 @@ const logout = () => {
   loadingLogout.value = true;
 
   $q.loading.show({
-    message: "Logging out..."
+    message: t("notify.loggingOut")
   });
 
   store.memberLogout().then(() => {
@@ -849,7 +851,7 @@ const openVerificationCodeDialog = () => {
           $q.notify({
             color: "negative",
             position: "top",
-            message: "Email already used. Please try another email.",
+            message: t("notify.emailAlreadyUsed"),
             icon: "report_problem"
           });
         } else {
@@ -953,6 +955,10 @@ const loadingLogout = ref(false);
 
 onActivated(() => {
   loadInfo();
+
+  if (route.query?.bindEmail === "true") {
+    bindEmailDialog.value = true;
+  }
 });
 
 onMounted(() => {
@@ -961,6 +967,10 @@ onMounted(() => {
   getVersionNo();
 
   window.location.search.includes("personal") && openPersonalCenterDialog();
+
+  if (route.query?.bindEmail === "true") {
+    bindEmailDialog.value = true;
+  }
 });
 
 const verificationImg = ref("");
@@ -1454,13 +1464,13 @@ const submitUpdateEmail = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "Email binded successfully",
+            message: t("notify.emailBindedSuccessfully"),
             icon: "check_circle_outline"
           });
           bindEmailDialog.value = false;
           formDetail.email = updateEmailInfo.email;
           formDetail.emailVerified = true;
-
+          store.getMemberInfo();
           // setTimeout(() => {
           //   startRefresh();
           // }, 2000);
@@ -1497,7 +1507,7 @@ const submitUpdateNewPwd = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "New password updated successfully",
+            message: t("notify.newPasswordUpdatedSuccessfully"),
             icon: "check_circle_outline"
           });
           // router.go("/account");

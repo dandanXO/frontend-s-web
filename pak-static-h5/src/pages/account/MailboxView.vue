@@ -166,7 +166,7 @@ export default defineComponent({
           message: "加载信箱..."
         });
         api
-          .get("/session/inbox", {
+          .get("/session/pm/inbox", {
             params: {
               type: mailboxData.value.type,
               current: mailboxData.value.current,

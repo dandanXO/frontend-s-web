@@ -10,7 +10,7 @@
           :class="{ active: todayCheckInDay === n }"
           :ref="setDayItemRef(n)"
         >
-          <span>{{ todayCheckInDay === n ? "TODAY" : n }}</span>
+          <span>{{ todayCheckInDay === n ? $t("hotPromo.signIn30Days.today") : n }}</span>
           <img
             class="day-card-img"
             :class="{ closed: !(n < todayCheckInDay || (todayCheckInDay === n && hasClaimedToday)) }"
@@ -24,7 +24,9 @@
       </div>
       <div class="check-in-btm">
         <div class="sign-in-btn" @click="claimReward" :class="{ 'is-disabled': hasClaimedToday || isLoadingClaim }">
-          <span>{{ hasClaimedToday ? "CLAIMED" : "SIGN IN NOW" }}</span>
+          <span>
+            {{ hasClaimedToday ? $t("hotPromo.signIn30Days.claimed") : $t("hotPromo.signIn30Days.signInNow") }}
+          </span>
         </div>
         <template v-if="minValidBet > 0">
           <div class="bonus-progress-bar">
@@ -38,38 +40,55 @@
     </div>
     <div class="reward-mech-container content-card">
       <div class="content-card-title">
-        <img src="../../../assets/images/promotion/hotpromo/signin-30days/reward-mech-title.png" />
+        <img
+          :src="
+            require(`../../../assets/images/promotion/hotpromo/signin-30days/reward-mech-title-${$t(
+              'lang.langVal'
+            )}.png`)
+          "
+        />
       </div>
-      <div class="q-mb-sm">PROGRESSIVE REWARD SYSTEM + DYNAMIC TREASURE CHEST INCENTIVES</div>
+      <div class="q-mb-sm">
+        {{ $t("hotPromo.signIn30Days.progressRewardSystem") }}
+      </div>
       <div class="reward-day-range" v-for="(item, index) in rewardProbability" :key="index">
         <img
           class="day-range-img"
           :src="require(`../../../assets/images/promotion/hotpromo/signin-30days/day-range-${index + 1}-icon.png`)"
         />
         <span>
-          Day
+          {{ $t("hotPromo.signIn30Days.day") }}
           <b>{{ item.dayRange }}</b>
-          {{ index === 3 ? "Super" : "" }} Rewards: Claim the {{ item.chestType }} Chest with a random maximum bonus of
+          {{ index === 3 ? "Super" : "" }}
+          {{ $t("hotPromo.signIn30Days.claim") }}: {{ $t("hotPromo.signIn30Days.claimThe") }} {{ item.chestType }}
+          {{ $t("hotPromo.signIn30Days.chestWithRandom") }}
           <span style="color: #eaff00cc; font-weight: 700">{{ item.maxReward }}BDT</span>
         </span>
       </div>
       <div class="missed-rules-txt">
-        *Rules for Missed Sign-ins: If a user misses a day, they must start again from Day 1.
+        {{ $t("hotPromo.signIn30Days.missedRules01") }}
       </div>
       <img
         class="subtitle-img"
-        src="../../../assets/images/promotion/hotpromo/signin-30days/reward-probability-dist-title.png"
+        :src="
+          require(`../../../assets/images/promotion/hotpromo/signin-30days/reward-probability-dist-title-${$t(
+            'lang.langVal'
+          )}.png`)
+        "
       />
       <table class="content-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
         <thead>
           <tr>
-            <th>Day Range</th>
-            <th>Max Reward</th>
+            <th>{{ $t("hotPromo.signIn30Days.dayRange") }}</th>
+            <th>{{ $t("hotPromo.signIn30Days.maxReward") }}</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(item, index) in rewardProbability" :key="index">
-            <td>Days {{ item.dayRange }}{{ index === 3 ? " Super Chest" : "" }}</td>
+            <td>
+              {{ $t("hotPromo.signIn30Days.days") }} {{ item.dayRange
+              }}{{ index === 3 ? $t("hotPromo.signIn30Days.superChest") : "" }}
+            </td>
             <td>
               <div class="reward-coin-container">
                 <img
@@ -85,107 +104,117 @@
 
       <img
         class="subtitle-img"
-        src="../../../assets/images/promotion/hotpromo/signin-30days/reward-claim-conditions-title.png"
+        :src="
+          require(`../../../assets/images/promotion/hotpromo/signin-30days/reward-claim-conditions-title-${$t(
+            'lang.langVal'
+          )}.png`)
+        "
       />
       <div class="q-mb-sm" style="text-transform: uppercase">
-        Users must meet the daily betting minimum to claim rewards:
+        {{ $t("hotPromo.signIn30Days.usersMustMeet") }}
       </div>
       <div class="reward-claim-condition">
         <div class="reward-claim-condition-item">
           <span>
-            <span style="font-size: 14px; color: #ffb700">Day 1</span>
-            : No betting required; reward can be claimed once.
+            <span style="font-size: 14px; color: #ffb700">{{ $t("hotPromo.signIn30Days.day") }} 1</span>
+            : {{ $t("hotPromo.signIn30Days.noBettingRequired") }}
             <br />
             <span style="margin-top: 8px; margin-bottom: 4px; display: inline-block">
-              &nbsp;&nbsp;&bull; If re-starting on Day 1: Minimum cumulative bet of
-              <span style="font-size: 14px; color: #11ff00">100 BDT</span>
-              required
+              &nbsp;&nbsp;&bull;
+              <span v-html="$t('hotPromo.signIn30Days.ifRestartingOnDay1')" />
             </span>
           </span>
         </div>
         <div class="reward-claim-condition-item">
           <span>
-            <span style="font-size: 14px; color: #ffb700">Day 2-3</span>
-            : No betting required; reward can be claimed once.
+            <span style="font-size: 14px; color: #ffb700">{{ $t("hotPromo.signIn30Days.day") }} 2-3</span>
+            : {{ $t("hotPromo.signIn30Days.noBettingRequired") }}
             <br />
             <span style="margin-top: 8px; margin-bottom: 4px; display: inline-block">
-              &nbsp;&nbsp;&bull; If re-starting on Days 2-3: Minimum cumulative bet of
-              <span style="font-size: 14px; color: #11ff00">100 BDT</span>
-              required
+              &nbsp;&nbsp;&bull;
+              <span v-html="$t('hotPromo.signIn30Days.ifRestartingOnDay2')" />
             </span>
           </span>
         </div>
         <div class="reward-claim-condition-item">
           <span>
-            <span style="font-size: 14px; color: #ffb700">Day 4</span>
+            <span style="font-size: 14px; color: #ffb700">{{ $t("hotPromo.signIn30Days.day") }} 4</span>
             :
             <span style="font-size: 14px; color: #11ff00">100 BDT</span>
           </span>
         </div>
         <div class="reward-claim-condition-item">
           <span>
-            <span style="font-size: 14px; color: #ffb700">Day 5</span>
+            <span style="font-size: 14px; color: #ffb700">{{ $t("hotPromo.signIn30Days.day") }} 5</span>
             :
             <span style="font-size: 14px; color: #11ff00">100 BDT</span>
           </span>
         </div>
         <div class="reward-claim-condition-item">
           <span>
-            <span style="font-size: 14px; color: #ffb700">Day 6</span>
+            <span style="font-size: 14px; color: #ffb700">{{ $t("hotPromo.signIn30Days.day") }} 6</span>
             :
             <span style="font-size: 14px; color: #11ff00">200 BDT</span>
           </span>
         </div>
         <div class="reward-claim-condition-item">
           <span>
-            <span style="font-size: 14px; color: #ffb700">Day 7</span>
+            <span style="font-size: 14px; color: #ffb700">{{ $t("hotPromo.signIn30Days.day") }} 7</span>
             :
             <span style="font-size: 14px; color: #11ff00">300 BDT</span>
           </span>
         </div>
         <div class="reward-claim-condition-item">
           <span>
-            <span style="font-size: 14px; color: #ffb700">Day 8-13</span>
-            : Minimum cumulative bets of
+            <span style="font-size: 14px; color: #ffb700">{{ $t("hotPromo.signIn30Days.day") }} 8-13</span>
+            : {{ $t("hotPromo.signIn30Days.minCumulativeBetsOf") }}
             <span style="font-size: 14px; color: #11ff00">500 BDT</span>
           </span>
         </div>
         <div class="reward-claim-condition-item">
           <span>
             <span style="font-size: 14px; color: #ffb700">
-              Day {{ rewardProbability[rewardProbability.length - 2].dayRange }}
+              {{ $t("hotPromo.signIn30Days.day") }} {{ rewardProbability[rewardProbability.length - 2].dayRange }}
             </span>
-            : Minimum cumulative bets of
+            : {{ $t("hotPromo.signIn30Days.minCumulativeBetsOf") }}
             <span style="font-size: 14px; color: #11ff00">600 BDT</span>
           </span>
         </div>
         <div class="reward-claim-condition-item">
           <span>
             <span style="font-size: 14px; color: #ffb700">
-              Day {{ rewardProbability[rewardProbability.length - 1].dayRange }}
+              {{ $t("hotPromo.signIn30Days.day") }} {{ rewardProbability[rewardProbability.length - 1].dayRange }}
             </span>
-            : Minimum cumulative bets of
+            : {{ $t("hotPromo.signIn30Days.minCumulativeBetsOf") }}
             <span style="font-size: 14px; color: #11ff00">1,000 BDT</span>
           </span>
         </div>
       </div>
-      <div class="misuse-warning-txt">Users must meet the betting requirements before claiming rewards.</div>
+      <div class="misuse-warning-txt">{{ $t("hotPromo.signIn30Days.usersMustMeetTheBettingReq") }}</div>
     </div>
     <div class="activity-rule-container">
       <img
         class="activity-rule-img"
-        src="../../../assets/images/promotion/hotpromo/signin-30days/activity-rule-title.png"
+        :src="
+          require(`../../../assets/images/promotion/hotpromo/signin-30days/activity-rule-title-${$t(
+            'lang.langVal'
+          )}.png`)
+        "
       />
       <ul class="activity-rule-list">
-        <li>Activity time: January 1 - January 31, 2025</li>
-        <li>Bonus rollover requirement: 1x rollover</li>
-        <li>Bonus distribution: Immediately distributed to your wallet after receiving it</li>
+        <li v-html="$t('hotPromo.signIn30Days.activityRules01')" />
+        <li v-html="$t('hotPromo.signIn30Days.activityRules02')" />
+        <li v-html="$t('hotPromo.signIn30Days.activityRules03')" />
       </ul>
     </div>
     <div class="ranking-list-container">
       <img
         class="ranking-list-title"
-        src="../../../assets/images/promotion/hotpromo/signin-30days/ranking-list-title.png"
+        :src="
+          require(`../../../assets/images/promotion/hotpromo/signin-30days/ranking-list-title-${$t(
+            'lang.langVal'
+          )}.png`)
+        "
       />
       <div class="podium-div">
         <img class="podium" src="../../../assets/images/promotion/hotpromo/signin-30days/podium.png" />
@@ -217,7 +246,9 @@
   <q-dialog v-model="isShowCongratsDialog" @hide="handleReceiveBonus" persistent>
     <div class="congrats-container">
       <!-- <q-btn icon="close" round dense v-close-popup class="congrats-close" /> -->
-      <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header-long.png" /></div>
+      <div class="congrats-header">
+        <img :src="require(`../../../assets/images/index/modal/congrats-header-long-${$t('lang.langVal')}.png`)" />
+      </div>
       <div class="congrats-chest"><img src="../../../assets/images/index/modal/congrats-chest-dark.png" /></div>
 
       <div class="congrats-highlight">{{ convertToCommaAmount(bonusAmount) }}BDT</div>
@@ -582,7 +613,7 @@ const submitUpdateEmail = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "Email binded successfully",
+            message: t("notify.emailBindedSuccessfully"),
             icon: "check_circle_outline"
           });
           bindEmailDialog.value = false;
@@ -613,7 +644,7 @@ const openVerificationCodeDialog = () => {
           $q.notify({
             color: "negative",
             position: "top",
-            message: "Email already used. Please try another email.",
+            message: t("notify.emailAlreadyUsed"),
             icon: "report_problem"
           });
         } else {
@@ -720,7 +751,7 @@ const submitUpdatePhone = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "Phone number updated successfully",
+            message: t("notify.phoneUpdatedSuccessfully"),
             icon: "check_circle_outline"
           });
 
@@ -746,24 +777,9 @@ const submitUpdatePhone = () => {
   }
 };
 
-const wishes = [
-  "May Allah bless you with endless Barakah.",
-  "May Allah open the doors of wealth and prosperity for you.",
-  "May Allah's blessings bring success and financial stability in your life.",
-  "Allah ka karam ho, aur har kaam mein barkat ho.",
-  "Tumhara har din taraqqi aur kamiyabi ka ho.",
-  "Khuda tumhein maal-o-doulat aur izzat se nawazay.",
-  "Best wishes for your success and financial growth.",
-  "May your business flourish and your earnings multiply.",
-  "Wishing you abundant wealth and endless happiness.",
-  "May this year bring you abundant wealth and prosperity.",
-  "May Allah bless you with immense wealth and endless prosperity.",
-  "Wishing you financial success and abundant blessings in all your endeavors.",
-  "May your earnings multiply and your wealth grow beyond measure.",
-  "May the doors of success and fortune always remain open for you.",
-  "May Allah’s blessings turn all your efforts into wealth and success.",
-  "On this special occasion, I pray for your financial growth and success."
-];
+const wishes = Array.from({ length: 16 }, (_, index) =>
+  t(`hotPromo.signIn30Days.wish${String(index + 1).padStart(2, "0")}`)
+);
 
 const randomWish = ref("");
 const generateRandomWish = () => {

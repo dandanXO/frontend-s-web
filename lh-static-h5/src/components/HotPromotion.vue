@@ -59,6 +59,10 @@
       v-else-if="list.redirectUrl === 'lh1-pgl-on-fire-buenos-aires-2025'"
       :promo-code="list.promoCode"
     />
+    <SkyesportsSouvenir2025
+      v-else-if="list.redirectUrl === 'lh1-skyesports-souvenir-2025'"
+      :promo-code="list.promoCode"
+    />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -90,6 +94,7 @@ import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
 import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue";
 import VctBangkok from "components/hotpromo/vct-bangkok/VctBangkok.vue";
 import PGLOnFireBuenosAires2025 from "./hotpromo/pgl-on-fire-buenos-aires-2025/PGLOnFireBuenosAires2025.vue";
+import SkyesportsSouvenir2025 from "./hotpromo/skyesports-souvenir-2025/SkyesportsSouvenir2025.vue";
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
 const DragonCardPromo = defineAsyncComponent(() => import("../components/hotpromo/dragoncard/dragonCardPromo.vue"));
 const FeedbackAwardPromo = defineAsyncComponent(() =>
@@ -193,7 +198,8 @@ export default defineComponent({
     DreamLeagueS25,
     Dota2BlastSlam2025,
     DarkModePromo,
-    PGLOnFireBuenosAires2025
+    PGLOnFireBuenosAires2025,
+    SkyesportsSouvenir2025
   },
   props: {
     list: {
@@ -594,7 +600,10 @@ export default defineComponent({
   padding: 30px;
   font-family: "PingFang";
 
-  .claim-title-icon, .claim-coin-icon, .claim-gift-icon {
+  .claim-title-icon,
+  .claim-coin-icon,
+  .claim-gift-icon,
+  .claim-stacked-coins-icon {
     width: 28px;
     height: 28px;
     display: flex;
@@ -613,7 +622,12 @@ export default defineComponent({
   }
 
   .claim-gift-icon {
-    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon2.png")  no-repeat center center;
+    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon2.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
+
+  .claim-stacked-coins-icon {
+    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon3.png") no-repeat center center;
     background-size: 100% 100%;
   }
 
@@ -713,7 +727,9 @@ export default defineComponent({
     border: 1px solid #be9457 !important;
     color: #fff;
 
-    .claim-title-icon, .claim-coin-icon, .claim-gift-icon {
+    .claim-title-icon,
+    .claim-coin-icon,
+    .claim-gift-icon {
       width: 32px;
       height: 32px;
       display: flex;

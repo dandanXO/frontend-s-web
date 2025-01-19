@@ -1,7 +1,7 @@
 <template>
   <div class="newplayers-collect">
     <q-btn rounded flat no-caps @click="collectclaim(list.promoCode)">
-      <img src="../../../assets/images/promotion/hotpromo/new-players/btn-collect.png" alt="" />
+      <img :src="require(`../../../assets/images/promotion/hotpromo/new-players/btn-collect-${$t('lang.langVal')}.png`)" style="width:200px" />
     </q-btn>
   </div>
 

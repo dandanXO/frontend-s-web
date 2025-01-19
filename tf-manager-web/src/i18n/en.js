@@ -2226,7 +2226,11 @@ export default {
     priviRewardSetup: 'Reward Setup',
     priviVipSetup: 'Vip Setup',
     priviPaymentSetup: 'Payment Setup',
-    priviOther: 'Other'
+    priviOther: 'Other',
+    privilegeAmountRatio: 'Privilege Amount Ratio',
+    privilegeCountRatio: 'Privilege Count Ratio',
+    table: 'Data Table',
+    chart: 'Chart',
   },
   message: {
     adsStatusOpen: 'Open',
@@ -3217,6 +3221,7 @@ export default {
     DOWNLOAD: 'Download',
     AFFILIATE: 'Affiliate',
     HOME: 'Home',
+    MANAGER: 'Manager',
   },
   pmStatus: {
     UNSENT: 'Unsent',
