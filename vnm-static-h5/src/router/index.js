@@ -160,9 +160,10 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("init", "1672168757009623");
       fbq("track", "PageView");
       user.isAffiliateA = true;
-    }else if (window.location.href.indexOf("f136f854.com") > -1){
+    } else if (window.location.href.indexOf("f136f854.com") > -1) {
       fbq("init", "1168864634732829");
       fbq("track", "PageView");
+      user.isAffiliateA = true;
     }
   });
 
