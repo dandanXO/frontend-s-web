@@ -7,7 +7,11 @@
         <img class="top" src="@/assets/images/promotion/hotpromo/blastpremier/section-1-spring.png" />
       </div>
       <div class="tips">
-        <div class="tips-inner">活动时间：2025年1月13日至2025年1月26日<br>参与BLAST Premier 赏金赛当日投注金额500元且注单结算后，次日可获得一个开箱钥匙，每投注500元即可获得一个钥匙。</div>
+        <div class="tips-inner">
+          活动时间：2025年1月14日至2025年1月26日
+          <br />
+          参与BLAST Premier 赏金赛当日投注金额500元且注单结算后，次日可获得一个开箱钥匙，每投注500元即可获得一个钥匙。
+        </div>
       </div>
       <div class="title">
         <img class="bottom" src="@/assets/images/promotion/hotpromo/blastpremier/section-bottom.png" />

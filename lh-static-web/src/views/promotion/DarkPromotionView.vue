@@ -28,7 +28,7 @@
                   class="active-arrow"
                   :src="require('../../assets/promo/promo-type-active-arrow.png')"
                 />
-                <span style="width: 100px" class="label">{{ p.label }}</span>
+                <span style="width: 100px" class="label">{{ p.label.zh }}</span>
               </div>
             </div>
           </div>
@@ -59,8 +59,8 @@
                   <div class="front-btn">查看详情</div>
                 </div>
                 <div class="promo-bg">
-                  <img class="promo-content isDesktop" :src="imgURL + promo.displayDesktopImgUrl" />
-                  <img class="promo-content isMobile" :src="imgURL + promo.displayMobileImgUrl" />
+                  <img class="promo-content isDesktop" :src="imgURL + promo.desktopImgUrlDark" />
+                  <img class="promo-content isMobile" :src="imgURL + promo.desktopImgUrlDark" />
                 </div>
               </div>
               <!-- <div class="promo-info">
@@ -207,7 +207,7 @@ import { userStore } from "@/store";
 import { ElMessageBox } from "element-plus";
 import moment from "moment";
 import { useDark } from "@vueuse/core";
-
+import { loadPromoTypes } from "@/api/index/promo.js";
 import HotPromotion from "@/components/HotPromotion";
 import { useLocalStorage } from "@vueuse/core";
 import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
@@ -327,43 +327,64 @@ export default defineComponent({
       }
     };
 
-    const loadAll = () => {
+    const loadAll = async () => {
+      await loadPromoTypes().then((res) => {
+        if (res.length > 0) {
+          promoTypes.value = [];
+          res.forEach(element => {
+            const obj = {
+              code: element.value,
+              img: 'all',
+              iconUrl: imgURL + element.iconUrl,
+              label: JSON.parse(element.name)
+            };
+            promoTypes.value.push(obj);
+          });
+          switchPromoType(promoTypes.value[0].code)
+        } else {
+          console.warn('No promo types loaded, using default promo types.');
+        }
+      });
       loadPromo()
         .then((res) => {
           if (res.code === 0) {
-            const processedData = res.data.filter(promo => !['lh1-dark-mode'].includes(promo.redirectUrl)).map(promo => ({
-              ...promo,
-              displayDesktopBannerUrl: promo.desktopBannerUrlDark ?? promo.desktopBannerUrl,
-              displayDesktopImgBackgroundUrl: promo.desktopImgBackgroundUrlDark ?? promo.desktopImgBackgroundUrl,
-              displayDesktopImgUrl: promo.desktopImgUrlDark ?? promo.desktopImgUrl,
-              displayMobileBannerUrl: promo.mobileBannerUrlDark ?? promo.mobileBannerUrl,
-              displayMobileImgBackgroundUrl: promo.mobileImgBackgroundUrlDark ?? promo.mobileImgBackgroundUrl,
-              displayMobileImgUrl: promo.mobileImgUrlDark ?? promo.mobileImgUrl,
-            }))
-
             if (promoState.promoList.length === 0) {
-              promoState.promoList.push(...processedData);
+              promoState.promoList.push(...res.data);
+              const processedData = res.data.filter(promo => !['lh1-dark-mode'].includes(promo.redirectUrl)).map(promo => ({
+                ...promo,
+                displayDesktopBannerUrl: promo.desktopBannerUrlDark ?? promo.desktopBannerUrl,
+                displayDesktopImgBackgroundUrl: promo.desktopImgBackgroundUrlDark ?? promo.desktopImgBackgroundUrl,
+                displayDesktopImgUrl: promo.desktopImgUrlDark ?? promo.desktopImgUrl,
+                displayMobileBannerUrl: promo.mobileBannerUrlDark ?? promo.mobileBannerUrl,
+                displayMobileImgBackgroundUrl: promo.mobileImgBackgroundUrlDark ?? promo.mobileImgBackgroundUrl,
+                displayMobileImgUrl: promo.mobileImgUrlDark ?? promo.mobileImgUrl,
+              }))
+              if (promoState.promoList.length === 0) {
+                promoState.promoList.push(...processedData);
+                promoState.promoList.push(...res.data);
+              }
+              promoState.promoList.forEach((element) => {
+                // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+                //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+                // } else {
+                if (route.query.name === "lh1-invite-2" || route.query.name === "lh1-invite-3") {
+                  if (element.redirectUrl === "lh1-invite") {
+                    showPromoDetails(element);
+                  }
+                }
+                if (route.query.name === "lh1-football-fight-2" || route.query.name === "lh1-football-fight-3") {
+                  if (element.redirectUrl === "lh1-football-fight") {
+                    showPromoDetails(element);
+                  }
+                }
+                if (element.redirectUrl === route.query.name) {
+                  showPromoDetails(element);
+                }
+                // }
+              });
             }
 
-            processedData.forEach((element) => {
-              // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-              //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-              // } else {
-              if (route.query.name === "lh1-invite-2" || route.query.name === "lh1-invite-3") {
-                if (element.redirectUrl === "lh1-invite") {
-                  showPromoDetails(element);
-                }
-              }
-              if (route.query.name === "lh1-football-fight-2" || route.query.name === "lh1-football-fight-3") {
-                if (element.redirectUrl === "lh1-football-fight") {
-                  showPromoDetails(element);
-                }
-              }
-              if (element.redirectUrl === route.query.name) {
-                showPromoDetails(element);
-              }
-              // }
-            });
+
           }
         })
         .catch((e) => {
@@ -705,7 +726,6 @@ export default defineComponent({
               height: 42px;
               gap: 60px;
               padding: 20px;
-              font-family: "PingFang SC";
 
               .label-type {
                 background: linear-gradient(89.92deg, #454bc2 0.06%, #b1a5f0 106.9%);
@@ -935,35 +955,14 @@ export default defineComponent({
           padding: 20px;
           color: #7a8eb9;
           font-size: 20px;
+          overflow: auto;
+
           ol {
             li {
               margin: 20px 0;
             }
           }
-          // background: #201f29;
-          // background-repeat: no-repeat;
-          // background-position: 95% 90%;
-          // padding: 20px;
-          // border-radius: 10px;
-          overflow: auto;
-          // &.welcome {
-          //   background-image: url("../../assets/images/promotion/hotpromo/common/welcome.png");
-          // }
-          // &.sport {
-          //   background-image: url("../../assets/images/promotion/hotpromo/common/sport.png");
-          // }
-          // &.esport {
-          //   background-image: url("../../assets/images/promotion/hotpromo/common/esport.png");
-          // }
-          // &.fish {
-          //   background-image: url("../../assets/images/promotion/hotpromo/common/fish.png");
-          // }
-          // &.livecasino {
-          //   background-image: url("../../assets/images/promotion/hotpromo/common/livecasino.png");
-          // }
-          // &.slot {
-          //   background-image: url("../../assets/images/promotion/hotpromo/common/slot.png");
-          // }
+
           &.olympicCheckin {
             border: 1px solid #acd4f6;
             border-radius: 10px;
@@ -1091,7 +1090,6 @@ export default defineComponent({
               background: linear-gradient(90deg, #2a3755 0%, #1a2338 100%);
               box-shadow: none;
               border-radius: 0px;
-              font-family: "PingFang SC";
 
               &.header {
                 background: linear-gradient(180deg, #18437c 0%, #182537 100%);
@@ -1134,7 +1132,7 @@ export default defineComponent({
                 }
 
                 .label-date {
-                  color: rgba($color-white, 20%);
+                  color: rgba($color-white, 90%);
                 }
               }
 

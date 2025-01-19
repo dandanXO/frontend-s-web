@@ -236,7 +236,9 @@
               </div>
               <div class="desc remain-wager-wrapper" @click="refreshRemainWager">
                 <q-spinner v-if="isRefreshRemainWager" />
-                <span v-else>{{ store.currency.label }}:{{ convertToCommaAmount(selectedWithdrawalMethod.remainWagers) }}</span>
+                <span v-else>
+                  {{ store.currency.label }}:{{ convertToCommaAmount(selectedWithdrawalMethod.remainWagers) }}
+                </span>
                 <img
                   class="refresh-btn-img"
                   :class="{ rotate: isRefreshRemainWager }"
@@ -354,17 +356,16 @@
       <div class="q-mt-sm step-desc-div q-mb-lg">
         <p>
           {{ $t("withdraw.withdrawTutorial") }}
-          <span class="tutorial-link" @click="openWithdrawTutorialPic">Picture</span>
+          <span class="tutorial-link" @click="openWithdrawTutorialPic">{{ $t("deposit.picture") }}</span>
           /
-          <span class="tutorial-link" @click="openWithdrawTutorialVideo">Video</span>
+          <span class="tutorial-link" @click="openWithdrawTutorialVideo">{{ $t("deposit.video") }}</span>
         </p>
-        <p>1.Bind your wallet/bank card using the correct format.</p>
-        <p>2.Daily wallet limit: BDT 50,000. Do not exceed this limit. You can add multiple wallets for withdrawals.</p>
+        <p>{{ $t("withdraw.withdrawTips1") }}</p>
+        <p>{{ $t("withdraw.withdrawTips2") }}</p>
         <p>
-          3.Daily bank card limit: BDT 500,000. Do not exceed this limit. You can add multiple bank cards for
-          withdrawals.
+          {{ $t("withdraw.withdrawTips3") }}
         </p>
-        <p>4.For blockchain wallet (USDT) withdrawals, there is no limit, and transfers are very fast.</p>
+        <p>{{ $t("withdraw.withdrawTips4") }}</p>
       </div>
     </template>
 
@@ -541,7 +542,6 @@ const refreshRemainWager = () => {
       isRefreshRemainWager.value = false;
     });
 };
-
 
 // const checkNewUser = () => {
 //   if (store.phone == "") {
@@ -791,7 +791,8 @@ const getWithdrawalMethods = () => {
     .get("/session/withdraw/entrance")
     .then((response) => {
       if (response.code === 0) {
-        withdrawalMethods.value = response.data;
+        // withdrawalMethods.value = response.data;
+        withdrawalMethods.value = response.data.filter((item) => item.status === true);
         //Remove this for real data
         // withdrawalMethods.value = [
         //   {"currencyId":6,"name":"withdraw_bank","code":"BANK","icon":"71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3},

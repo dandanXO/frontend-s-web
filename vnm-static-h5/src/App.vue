@@ -247,7 +247,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      console.log("22");
+      console.log("VNM0106");
       checkServerStatus();
       checkSID();
       getAppInfo();

@@ -2227,7 +2227,11 @@ export default {
     priviRewardSetup: '奖金设置',
     priviVipSetup: 'vip设置',
     priviPaymentSetup: '支付',
-    priviOther: '其他'
+    priviOther: '其他',
+    privilegeAmountRatio: '领取金额比例',
+    privilegeCountRatio: '领取人数比例',
+    table: '数据',
+    chart: '图表',
   },
   message: {
     adsStatusOpen: '开',
@@ -3165,6 +3169,7 @@ export default {
     DOWNLOAD: '下载页',
     AFFILIATE: '代理',
     HOME: '首页',
+    MANAGER: '后台',
   },
   pmStatus: {
     UNSENT: '未发送',
@@ -3256,6 +3261,8 @@ export default {
     1009: '谷歌验证码输入错误',
     1100: 'ADMIN 账号不能登录',
     1101: '账号不属于此站点',
+    1320: '提款渠道未设置',
+    1321: '提交重复订单，请在五分钟后再试',
     9000: '创建定时任务失败',
     9001: '更新定时任务失败',
     9002: '删除定时任务失败',

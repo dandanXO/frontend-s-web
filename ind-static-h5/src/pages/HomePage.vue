@@ -2771,8 +2771,8 @@ const loadAppTabs = () => {
     });
   } else {
     categoriesList.value = [
-      { title: "Lobby", icon: "lobby", active: true },
-      { title: "Hot", icon: "hot", active: false },
+      { title: "Hot", icon: "hot", active: true},
+      { title: "Lobby", icon: "lobby", active: false  },
       { title: "Casino", icon: "casino", active: false },
       { title: "Slot", icon: "slot", active: false },
       { title: "Fishing", icon: "fishing", active: false },

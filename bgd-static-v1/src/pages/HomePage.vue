@@ -99,10 +99,10 @@
           <a v-if="ui.youtubeUrl" class="cs-icon youtube" :href="ui.youtubeUrl" target="_blank">
             <img src="../assets/images/index/youtube-icon.png" />
           </a>
-          <a v-if="ui.instagramUrl"  class="cs-icon instagram" :href="ui.instagramUrl" target="_blank">
+          <a v-if="ui.instagramUrl" class="cs-icon instagram" :href="ui.instagramUrl" target="_blank">
             <img src="../assets/images/index/insta-icon.png" />
           </a>
-          <a v-if="ui.whatsappUrl"  class="cs-icon whatsapp" :href="ui.whatsappUrl" target="_blank">
+          <a v-if="ui.whatsappUrl" class="cs-icon whatsapp" :href="ui.whatsappUrl" target="_blank">
             <img src="../assets/images/index/cs-whatsapp.png" />
           </a>
           <a class="cs-icon cs" :href="ui.CSAUrl" target="_blank">
@@ -161,8 +161,13 @@
           <div class="volume">
             <img src="../assets/images/index/icon-volume.png" />
           </div>
-          <div class="marquee-container">
-            <marquee-text :repeat="5" :duration="announcementList.length * 500">
+          <div ref="marqueeWrapperRef" class="marquee-container">
+            <div ref="marqueePseudoRef" class="marquee-pseudo">
+              <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
+                {{ a.content }}
+              </span>
+            </div>
+            <marquee-text :repeat="marqueeRepeat" :duration="marqueeDuration">
               <div v-if="announcementList">
                 <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
                   {{ a.content }}
@@ -1430,7 +1435,9 @@
   <q-dialog v-model="isShowPrizeModal">
     <div class="congrats-container">
       <q-btn icon="close" round dense v-close-popup class="congrats-close" />
-      <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div>
+      <div class="congrats-header">
+        <img :src="require(`../assets/images/index/modal/congrats-header-${$t('lang.langVal')}.png`)" />
+      </div>
       <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-money.png" /></div>
       <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
       <div class="congrats-highlight">{{ store.currency.label }}28</div>
@@ -1641,6 +1648,10 @@ const hbDragPos = ref([10, 120]);
 const isDraggingHbIcon = ref(false);
 const isHbShow = ref(true);
 const hbSlide = ref(0);
+const marqueePseudoRef = ref();
+const marqueeWrapperRef = ref();
+const marqueeDuration = ref(0);
+const marqueeRepeat = ref(5);
 
 const slide = ref(0);
 
@@ -3828,6 +3839,10 @@ onMounted(() => {
   if (Platform.is.android && Platform.is.capacitor) {
     initOneSignal();
   }
+
+  if (marqueePseudoRef.value) {
+    new ResizeObserver(calculateMarqueeDuration).observe(marqueePseudoRef.value);
+  }
 });
 
 onUnmounted(() => {
@@ -3899,6 +3914,13 @@ const showCongratsModal = () => {
       }
     }
   });
+};
+
+const calculateMarqueeDuration = () => {
+  if (!marqueePseudoRef.value || !marqueeWrapperRef.value) return;
+  const marqueeWidth = marqueePseudoRef.value.scrollWidth;
+  const pixelPerSecond = 85;
+  marqueeDuration.value = (marqueeWidth * marqueeRepeat.value) / pixelPerSecond;
 };
 </script>
 
@@ -4133,7 +4155,18 @@ const showCongratsModal = () => {
 
     .marquee-container {
       width: calc(100% - 28px);
+
+      .marquee-pseudo {
+        display: flex;
+        position: absolute;
+        visibility: hidden;
+        z-index: -1;
+        width: max-content;
+        white-space: nowrap;
+      }
+
       :deep(.marquee-text-content) {
+        white-space: nowrap;
         width: max-content;
       }
     }

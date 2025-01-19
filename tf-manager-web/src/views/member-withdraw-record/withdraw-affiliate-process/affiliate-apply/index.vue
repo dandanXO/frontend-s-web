@@ -642,11 +642,13 @@ async function toCheck(memberWithdrawRecord) {
 }
 
 async function toPending(memberWithdrawRecord) {
+  page.loading = true
   if (memberWithdrawRecord) {
     await fromAffiliateApplyToPending([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate, siteId: memberWithdrawRecord.siteId }])
   } else {
     await fromAffiliateApplyToPending(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
   }
+  page.loading = false
   await loadRecord()
   ElMessage({ message: t('message.updateToSuspendSuccess'), type: 'success' })
 }

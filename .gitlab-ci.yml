@@ -157,6 +157,13 @@ deploy-xf-landing-v6:
 
 #===============================================================================================
 
+deploy-xf-landing-v11:
+  extends: .s3-deploy
+  variables:
+    PROJECT: xf-landing-v11
+
+#===============================================================================================
+
 deploy-tha-download:
   extends: .s3-deploy
   variables:
@@ -210,6 +217,13 @@ deploy-dy-landing-v8:
   extends: .s3-deploy
   variables:
     PROJECT: dy-landing-v8
+
+#===============================================================================================
+
+deploy-dy-landing-v11:
+  extends: .s3-deploy
+  variables:
+    PROJECT: dy-landing-v11
 
 #===============================================================================================
 
@@ -273,6 +287,13 @@ deploy-id1-download-v2:
   extends: .s3-deploy
   variables:
     PROJECT: id1-download-v2
+
+#===============================================================================================
+
+deploy-minifun-site:
+  extends: .s3-deploy
+  variables:
+    PROJECT: minifun-site
 
 #===============================================================================================
 
@@ -710,6 +731,13 @@ deploy-lh-landing-v10:
 
 #===============================================================================================
 
+deploy-lh-landing-v11:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-landing-v11
+
+#===============================================================================================
+
 deploy-lh-redirect:
   extends: .s3-deploy
   variables:
@@ -1080,6 +1108,7 @@ build-image-id1-static-v1:
     PROJECT: id1-static-v1
   needs:
     - build-id1-static-v1
+
 #===============================================================================================
 
 build-bgd-static-v1:
@@ -1179,5 +1208,12 @@ build-image-minigame-website:
     PROJECT: minigame-website
   needs:
     - build-minigame-website
+
+#===============================================================================================
+
+deploy-th2-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: th2-download
 
 #===============================================================================================

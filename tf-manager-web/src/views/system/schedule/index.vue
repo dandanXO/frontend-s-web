@@ -105,12 +105,28 @@
       prop="cronExpression"
       :label="t('fields.cronExpression')"
     />
-    <el-table-column prop="state" :label="t('fields.state')">
+    <!-- <el-table-column prop="state" :label="t('fields.state')">
       <template #default="scope">
         <el-tag v-if="scope.row.state === 1" type="success">RUN</el-tag>
         <el-tag v-if="scope.row.state === 0" type="danger">STOP</el-tag>
       </template>
+    </el-table-column> -->
+    <el-table-column
+      prop="state"
+      :label="t('fields.state')"
+    >
+      <template #default="scope">
+        <el-switch
+          v-model="scope.row.state"
+          :active-value="1"
+          :inactive-value="0"
+          active-color="#409EFF"
+          inactive-color="#F56C6C"
+          @change="changeJobStatus(scope.row.id, scope.row.state)"
+        />
+      </template>
     </el-table-column>
+
     <el-table-column prop="createBy" :label="t('fields.createBy')" />
     <el-table-column prop="createTime" :label="t('fields.createTime')" />
     <el-table-column :label="t('fields.operate')">
@@ -940,6 +956,14 @@ async function loadJobLogList() {
   const { data: ret } = await jobsLogList(query)
 
   list.jobLoglist = ret
+}
+
+async function changeJobStatus(id, state) {
+  if (state) {
+    runScheduleJob(id)
+  } else {
+    stopScheduleJob(id)
+  }
 }
 
 onMounted(() => {

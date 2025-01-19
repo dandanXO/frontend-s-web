@@ -66,7 +66,7 @@ const mailboxData = ref({
 });
 const loadInbox = () => {
   api
-    .get("/session/inbox", {
+    .get("/session/pm/inbox", {
       params: {
         type: mailboxData.value.type,
         orderBy: mailboxData.value.orderBy

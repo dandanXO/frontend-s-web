@@ -1,7 +1,7 @@
 import { route, store } from "quasar/wrappers";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
-import { isAndroid } from "boot/utils";
+import { isAndroid, isOperaPixelUrl } from "boot/utils";
 import { SessionStorage } from "quasar";
 
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from "vue-router";
@@ -142,12 +142,7 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("init", "3658633674357920");
       fbq("track", "PageView");
       user.isAffiliateA = true;
-    } else if (
-      window.location.href.indexOf("5svn88.com") > -1 ||
-      window.location.href.indexOf("tfpromo88.com") > -1 ||
-      window.location.href.indexOf("tf88bof.com") > -1 ||
-      window.location.href.indexOf("tslotf88.com") > -1
-    ) {
+    } else if (isOperaPixelUrl()) {
       otag("init", "adv10336256983680");
     } else if (window.location.href.indexOf("tf68688.com") > -1) {
       fbq("init", "1123673335564806");
@@ -159,6 +154,14 @@ export default route(function (/* { store, ssrContext } */) {
       user.isAffiliateA = true;
     } else if (window.location.href.indexOf("q7yxpdxwxk.com") > -1) {
       fbq("init", "1862869640792398");
+      fbq("track", "PageView");
+      user.isAffiliateA = true;
+    } else if (window.location.href.indexOf("t145f338.com") > -1) {
+      fbq("init", "1672168757009623");
+      fbq("track", "PageView");
+      user.isAffiliateA = true;
+    } else if (window.location.href.indexOf("f136f854.com") > -1) {
+      fbq("init", "1168864634732829");
       fbq("track", "PageView");
       user.isAffiliateA = true;
     }

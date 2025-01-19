@@ -1,4 +1,4 @@
-import { Notify, useQuasar } from "quasar";
+import { Notify } from "quasar";
 /**
  * @typedef {Object} NotifyObj
  * @property {(message: string) => void} NotifyObj.success - Adds a success notification to the queue.
@@ -12,8 +12,54 @@ import { Notify, useQuasar } from "quasar";
  * @returns {NotifyObj & Notify}
  */
 export const useNotify = () => {
-  const $q = useQuasar();
-  const notify = $q.notify;
+  const notify = (option) => {
+    const { type } = option;
+
+    switch (type) {
+      case "success":
+        Notify.create({
+          ...option,
+          type: "positive",
+          position: "top",
+          icon: "check_circle_outline"
+        });
+        break;
+      case "error":
+        Notify.create({
+          ...option,
+          type: "negative",
+          position: "top",
+          icon: "report_problem"
+        });
+        break;
+      case "warning":
+        Notify.create({
+          ...option,
+          type: "warning",
+          position: "top",
+          icon: "report_problem"
+        });
+        break;
+      case "info":
+        Notify.create({
+          ...option,
+          type: "info",
+          position: "top",
+          icon: "info"
+        });
+        break;
+      case "redPacket":
+        Notify.create({
+          ...option,
+          message: `领取彩金成功！彩金：${option.redPacket}元`,
+          type: "positive",
+          position: "top",
+          icon: "check_circle_outline"
+        });
+        break;
+      default:
+    }
+  };
 
   notify.success = (message) =>
     notify({

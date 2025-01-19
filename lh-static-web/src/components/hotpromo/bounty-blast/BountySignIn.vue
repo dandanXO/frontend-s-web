@@ -8,7 +8,7 @@
           <img class="top" src="@/assets/images/promotion/hotpromo/blastpremier/section-2-spring.png" />
         </div>
         <div class="tips">
-          <div class="tips-inner">活动时间：2025年1月13日至2025年1月26日<br>活动期间，当日存款≥200元且当天投注BLAST Premier 赏金赛≥1000元则视为签到成功，次日即可领取签到奖金</div>
+          <div class="tips-inner">活动时间：2025年1月14日至2025年1月26日<br>活动期间，当日存款≥200元且当天投注BLAST Premier 赏金赛≥1000元则视为签到成功，次日即可领取签到奖金</div>
         </div>
         <div class="title">
           <img class="bottom" src="@/assets/images/promotion/hotpromo/blastpremier/section-bottom.png" />
@@ -64,7 +64,7 @@
         <div class="title"><img src="@/assets/images/promotion/hotpromo/blastpremier/section-4-spring.png" /></div>
         <div class="little-title">
           <div class="left">活动时间</div>
-          <div class="right">2025年1月13日至2025年1月26日</div>
+          <div class="right">2025年1月14日至2025年1月26日</div>
         </div>
         <div class="little-title">
           <div class="left">活动内容</div>
