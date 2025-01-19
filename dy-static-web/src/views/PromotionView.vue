@@ -109,7 +109,11 @@
           ></div>
         </div>
 
-        <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'dy2-cs2-blast-2024'" />
+        <BlastPremierMarquee
+          v-if="
+            selectedPromo?.redirectUrl === 'dy2-cs2-blast-2024' || selectedPromo?.redirectUrl === 'bounty-blast-premier'
+          "
+        />
         <div
           class="inner"
           :class="{

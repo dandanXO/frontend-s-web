@@ -2,7 +2,7 @@
   <div class="btn-container">
     <div class="go-deposit-btn" :class="isFtdPromoEnded ? 'is-disabled' : ''" @click="gotoDepositPage(param)">
       <img src="./img/gift-icon.png" />
-      <span>JOIN NOW</span>
+      <span>{{ $t("btn.joinnow") }}</span>
     </div>
 
     <div class="text-warning" v-if="isFtdPromoEnded">

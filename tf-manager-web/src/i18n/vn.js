@@ -2767,6 +2767,7 @@ export default {
     DOWNLOAD: 'Trang tải xuống',
     AFFILIATE: 'Liên kết',
     HOME: 'Trang chủ',
+    MANAGER: 'giám đốc',
   },
   monitorTitle: {
     MEMBER_STATISTICS: 'Người dùng trực tuyến',

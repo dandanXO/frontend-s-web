@@ -6,10 +6,11 @@ import LocalStorage from "boot/local-storage";
 import axios from "axios";
 import { getRndInteger } from "boot/utils";
 
-const rstArray = process.env.RST_API;
-const crArray = process.env.CR_API;
-const evtArray = process.env.EVT_API;
+const rstArray = Object.values(process.env.RST_API);
+const evtArray = Object.values(process.env.EVT_API);
+const crtArray = Object.values(process.env.CR_API);
 const imgCDN = process.env.IMAGE_CDN;
+let apiReplacementRecords = [];
 
 console.log(window.location.hostname);
 const globalLinks = ["xf13140"];
@@ -20,49 +21,118 @@ const isGlobalAndCN = globalAndCNLinks.some((link) => window.location.hostname.i
 
 const REPLACEMENT_DOMAIN = "random";
 
-if (isGlobalLH) {
-  var rstApi = "https://apn0zz6gox.330z3w3.com";
-  var evtApi = "https://prx6g60gox.7tk6kax.com";
-  var crtApi = "https://cavqhi7gox.ax76c8n.com";
+const XF_H5_RST_URL = "XF_H5_RST_URL";
+const XF_H5_EVT_URL = "XF_H5_EVT_URL";
+const XF_H5_CRT_URL = "XF_H5_CRT_URL";
 
-  localStorage.setItem("XF_H5_RST_URL", rstApi);
-  localStorage.setItem("XF_H5_EVT_URL", evtApi);
-  localStorage.setItem("XF_H5_CRT_URL", crtApi);
+let rstApi;
+let evtApi;
+let crtApi;
+let api;
+let cashier;
+let eventapi;
 
-  var cdnApi = "https://urle7rqimtl.enkpdmqvhc.com";
-  localStorage.setItem("IMAGE_CDN", cdnApi);
-} else if (isGlobalAndCN) {
-  console.log("IS Global + CN");
-  var rstGlobalArray = Object.values(process.env.GLOBAL_RST_API);
-  var evtGlobalArray = Object.values(process.env.GLOBAL_EVT_API);
-  var crGlobalArray = Object.values(process.env.GLOBAL_CR_API);
+async function init() {
+  if (isGlobalLH) {
+    rstApi = "https://apn0zz6gox.330z3w3.com";
+    evtApi = "https://prx6g60gox.7tk6kax.com";
+    crtApi = "https://cavqhi7gox.ax76c8n.com";
 
-  var rstApi = getInitApi(rstGlobalArray, "XF_H5_RST_URL");
-  var evtApi = getInitApi(evtGlobalArray, "XF_H5_EVT_URL");
-  var crtApi = getInitApi(crGlobalArray, "XF_H5_CRT_URL");
-} else {
-  var rstApi = getInitApi(rstArray, "XF_H5_RST_URL");
-  var crtApi = getInitApi(crArray, "XF_H5_CRT_URL");
-  var evtApi = getInitApi(evtArray, "XF_H5_EVT_URL");
-}
+    localStorage.setItem("XF_H5_RST_URL", rstApi);
+    localStorage.setItem("XF_H5_EVT_URL", evtApi);
+    localStorage.setItem("XF_H5_CRT_URL", crtApi);
 
-const api = axios.create({ baseURL: rstApi });
-const cashier = axios.create({ baseURL: crtApi });
-const eventapi = axios.create({ baseURL: evtApi });
+    // var cdnApi = "https://urle7rqimtl.enkpdmqvhc.com";
+    // localStorage.setItem("IMAGE_CDN", cdnApi);
+  } else if (isGlobalAndCN) {
+    console.log("IS Global + CN");
+    const rstGlobalArray = Object.values(process.env.GLOBAL_RST_API);
+    const evtGlobalArray = Object.values(process.env.GLOBAL_EVT_API);
+    const crGlobalArray = Object.values(process.env.GLOBAL_CR_API);
 
-if (imgCDN.indexOf(REPLACEMENT_DOMAIN) > -1) {
-  const successImgCdn = localStorage.getItem("IMAGE_CDN");
-  if (!successImgCdn) {
-    const newDomain = replaceRndDomain("IMAGE_CDN");
-    const newImgCDN = imgCDN.replace(REPLACEMENT_DOMAIN, newDomain);
-    localStorage.setItem("IMAGE_CDN", newImgCDN);
+    rstApi = await getInitApi(rstGlobalArray, XF_H5_RST_URL, "1");
+    evtApi = await getInitApi(evtGlobalArray, XF_H5_EVT_URL, "2");
+    crtApi = await getInitApi(crGlobalArray, XF_H5_CRT_URL, "3");
+  } else {
+    rstApi = await getInitApi(rstArray, XF_H5_RST_URL, "1");
+    evtApi = await getInitApi(evtArray, XF_H5_EVT_URL, "2");
+    crtApi = await getInitApi(crtArray, XF_H5_CRT_URL, "3");
+  }
+
+  api = axios.create({ baseURL: rstApi });
+  cashier = axios.create({ baseURL: crtApi });
+  eventapi = axios.create({ baseURL: evtApi });
+
+  if (imgCDN.indexOf(REPLACEMENT_DOMAIN) > -1) {
+    const successImgCdn = localStorage.getItem("IMAGE_CDN");
+    if (!successImgCdn) {
+      const newDomain = replaceRndDomain("IMAGE_CDN");
+      const newImgCDN = imgCDN.replace(REPLACEMENT_DOMAIN, newDomain);
+      localStorage.setItem("IMAGE_CDN", newImgCDN);
+    }
   }
 }
 
-
-function getInitApi(apiLinks, urlLsName) {
+async function getInitApi(apiLinks, urlLsName, errorPrefix) {
   var successRstUrl = localStorage.getItem(urlLsName);
-  if (successRstUrl) {
+
+  if (isInApp()) {
+    return await new Promise((resolve) => {
+      let APP_INITIAL_TIME_OUT = 5000;
+      const checkAppInitialStatus = () => {
+        const isAppInitialized = !!sessionStorage.getItem("XF_APP_DOMAIN_INITIALIZED");
+        if (isAppInitialized) {
+          successRstUrl = localStorage.getItem(urlLsName);
+          if (successRstUrl) {
+            return "SUCCESS";
+          } else {
+            return "DOMAIN_NOT_FOUND";
+          }
+        } else {
+          return "FAIL";
+        }
+      };
+      const interval = setInterval(() => {
+        const appInitialStatus = checkAppInitialStatus();
+        switch (appInitialStatus) {
+          case "SUCCESS":
+            resolve(successRstUrl);
+            clearInterval(interval);
+            break;
+          case "DOMAIN_NOT_FOUND":
+            if (typeof apiLinks === "string" || apiLinks instanceof String) {
+              var initApi = apiLinks;
+            } else {
+              var apiLists = Object.values(apiLinks);
+              var initApi = apiLists[getRndInteger(0, apiLists.length)];
+              if (initApi.indexOf(REPLACEMENT_DOMAIN) > -1) {
+                const newDomain = replaceRndDomain(urlLsName);
+                initApi = initApi.replace(REPLACEMENT_DOMAIN, newDomain);
+                apiReplacementRecords.push({ errorPrefix, url: initApi });
+              }
+            }
+
+            axios.get(initApi + "/ping").then((res) => {
+              console.log(res);
+              if (res.status === 200) {
+                localStorage.setItem(urlLsName, initApi);
+              } else {
+                localStorage.removeItem(urlLsName);
+              }
+            });
+            resolve(initApi);
+            clearInterval(interval);
+            break;
+          case "FAIL":
+            APP_INITIAL_TIME_OUT -= 100;
+            if (APP_INITIAL_TIME_OUT <= 0) {
+              clearInterval(interval);
+              resolve(successRstUrl);
+            }
+        }
+      }, 100);
+    });
+  } else if (successRstUrl) {
     axios
       .get(successRstUrl + "/ping")
       .then((res) => {
@@ -131,15 +201,37 @@ function getApiDomainPrefix(urlLsName) {
   }
 }
 
+function isInApp() {
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  const isAndroidWebView = /wv/.test(userAgent);
+  const isiOSWebView = /WebView/.test(userAgent) && !/Safari/.test(userAgent);
+  const isWebView = isAndroidWebView || isiOSWebView;
+  if (
+    (window.location.pathname === "/vip" ||
+      window.location.pathname === "/viptest" ||
+      window.location.pathname === "/promotion" ||
+      window.location.pathname === "/promotiontest" ||
+      window.location.pathname === "/deposit" ||
+      window.location.pathname === "/deposittest" ||
+      window.location.pathname === "/invitefriend" ||
+      window.location.pathname === "/privilege/invite" ||
+      window.location.pathname === "/affiliatepage") &&
+    isWebView
+  ) {
+    return true;
+  }
+  return false;
+}
 
-export default boot(({ app, router }) => {
+export default boot(async ({ app, router }) => {
+  await init();
   const onRequest = (config) => {
     if (store.token) {
       api.defaults.headers["token"] = store.token;
       cashier.defaults.headers["TOKEN"] = store.token;
       eventapi.defaults.headers["token"] = store.token;
     }
-    // config.headers["Authorization"] = process.env.SITE;
+    config.headers["Authorization"] = process.env.SITE;
 
     if (config.data) {
       config.data = config.data;
@@ -179,7 +271,7 @@ export default boot(({ app, router }) => {
       if (res.code === ResponseCode.EMPTY_PROMO_POPOUT) {
         return res;
       }
-      if (res.code === ResponseCode.ERROR_BAD_REQUEST){
+      if (res.code === ResponseCode.ERROR_BAD_REQUEST) {
         Notify.create({
           type: "negative",
           timeout: 1000,

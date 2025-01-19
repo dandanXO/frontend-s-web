@@ -102,7 +102,7 @@
 
     <div class="earn-money-invitation-rewards earn-money-card">
       <div class="earn-money-card-title">
-        <img src="../../assets/images/earn-money/invitation-rewards-title.png" />
+        <img :src="require(`../../assets/images/earn-money/invitation-rewards-title-${$t('lang.langVal')}.png`)" />
       </div>
       <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
         <thead>
@@ -129,7 +129,7 @@
 
     <div class="earn-money-betting-commission earn-money-card">
       <div class="earn-money-card-title">
-        <img src="../../assets/images/earn-money/betting-commission-title.png" />
+        <img :src="require(`../../assets/images/earn-money/betting-commission-title-${$t('lang.langVal')}.png`)" />
       </div>
       <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
         <thead>
@@ -155,7 +155,7 @@
 
     <div class="earn-money-deposit-commission earn-money-card">
       <div class="earn-money-card-title">
-        <img src="../../assets/images/earn-money/deposit-commission-title.png" />
+        <img :src="require(`../../assets/images/earn-money/deposit-commission-title-${$t('lang.langVal')}.png`)" />
       </div>
       <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
         <thead>
@@ -294,7 +294,7 @@ const copyHrefLink = () => {
     .writeText(selfTgurl.value)
     .then(() => {
       $q.notify({
-        message: "Link copied to clipboard",
+        message: t("notify.linkCopiedToClipboard"),
         color: "positive",
         position: "top",
         timeout: 2000
@@ -302,7 +302,7 @@ const copyHrefLink = () => {
     })
     .catch(() => {
       $q.notify({
-        message: "Failed to copy link",
+        message: t("notify.failedToCopyLink"),
         color: "negative",
         position: "top",
         timeout: 2000

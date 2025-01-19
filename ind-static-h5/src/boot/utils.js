@@ -122,3 +122,12 @@ export const convertToCommaAmount = (amount, isForceDecimal) => {
 function isNonNumericString(value) {
   return typeof value === "string" && isNaN(value);
 }
+
+export const isInPwa = () => {
+  if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) {
+    return true;
+  } else {
+    return false;
+  }
+};
+

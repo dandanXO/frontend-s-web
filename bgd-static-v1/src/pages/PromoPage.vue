@@ -73,6 +73,7 @@
                 ></div> -->
                 <!-- <div class="promo-bg"> -->
                 <img
+                  v-if="selectedPromo.redirectUrl !== 'bgd-refer-wheel'"
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
                   style="display: block; width: 100%"
@@ -88,7 +89,7 @@
                   to="/earn-money"
                 >
                   <img src="../assets/images/bonus/share-icon.png" />
-                  <span>Earn Money</span>
+                  <span>{{ $t("header.earnMoney") }}</span>
                 </RouterLink>
                 <div class="content-title">{{ selectedPromo.title }}</div>
                 <div class="content-para" v-if="parsedParamSub">{{ parsedParamSub }}</div>
@@ -402,7 +403,7 @@ export default defineComponent({
               //For Testing.
               // const tgDomain = "https://win7.game";
 
-              var preUrl = tgDomain + `/promotion?name=${promo.redirectUrl}&token=${store.token}`;
+              var preUrl = tgDomain + `/promotion?name=${promo.redirectUrl}&token=${store.token}&lang=${langVal.value}`;
               // alert(preUrl);
               console.log(preUrl);
               // promoSrc.value= preUrl;

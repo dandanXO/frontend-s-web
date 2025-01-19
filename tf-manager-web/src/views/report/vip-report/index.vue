@@ -19,19 +19,19 @@
         />
 
         <!-- <el-select
-          v-model="request.siteId"
-          size="small"
-          :placeholder="t('fields.site')"
-          class="filter-item"
-          style="width: 120px; margin-left: 5px"
-        >
-          <el-option
-            v-for="item in siteList.list"
-            :key="item.id"
-            :label="item.siteName"
-            :value="item.id"
-          />
-        </el-select> -->
+            v-model="request.siteId"
+            size="small"
+            :placeholder="t('fields.site')"
+            class="filter-item"
+            style="width: 120px; margin-left: 5px"
+          >
+            <el-option
+              v-for="item in siteList.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select> -->
         <el-input
           v-model="request.gameName"
           style="width: 200px; margin-left: 10px"
@@ -40,22 +40,22 @@
           :placeholder="t('fields.gameName')"
         />
         <!-- <el-form-item :label="t('fields.vipLevel')" prop="vipId">
-          <el-select
-            v-model="request.vipId"
-            size="small"
-            :placeholder="t('message.selectSiteFirst')"
-            class="filter-item"
-            style="width: 300px;"
-            default-first-option
-          >
-            <el-option
-              v-for="item in vipList.list"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item> -->
+            <el-select
+              v-model="request.vipId"
+              size="small"
+              :placeholder="t('message.selectSiteFirst')"
+              class="filter-item"
+              style="width: 300px;"
+              default-first-option
+            >
+              <el-option
+                v-for="item in vipList.list"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item> -->
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -74,12 +74,12 @@
           {{ t('fields.reset') }}
         </el-button>
         <!-- <el-button
-          size="mini"
-          type="primary"
-          v-permission="['sys:report:vip:report:export']"
-          @click="requestExportExcel"
-        >{{ t('fields.requestExportToExcel') }}
-        </el-button> -->
+            size="mini"
+            type="primary"
+            v-permission="['sys:report:vip:report:export']"
+            @click="requestExportExcel"
+          >{{ t('fields.requestExportToExcel') }}
+          </el-button> -->
       </div>
     </div>
 
@@ -92,7 +92,7 @@
       v-loading="page.loading"
       :empty-text="t('fields.noData')"
       style="margin-top:20px;"
-      :row-style="{width: '100px'}"
+      :row-style="{ width: '100px' }"
       height="450"
       :summary-method="getSummaries"
       show-summary
@@ -107,14 +107,50 @@
         </template>
       </el-table-column>
       <el-table-column prop="platform" :label="t('fields.platform')" />
-      <el-table-column prop="bet" :label="t('fields.bet')" />
+
+      <el-table-column prop="bet" :label="t('fields.bet')">
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.bet,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+
       <el-table-column prop="betCount" :label="t('fields.summaryTotalBet')" />
-      <el-table-column prop="payout" :label="t('fields.payout')" />
-      <el-table-column prop="profit" :label="t('fields.profit')" />
+      <el-table-column prop="payout" :label="t('fields.payout')">
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.payout,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="profit" :label="t('fields.profit')">
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.profit,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+
       <el-table-column prop="ratio" :label="t('fields.return_ratio')">
         <template #default="scope">
           <span v-if="scope.row.ratio === null">0 %</span>
-          <span v-if="scope.row.ratio !== null">{{ scope.row.ratio.toFixed(2) }} %</span>
+          <span v-if="scope.row.ratio !== null">
+            {{ scope.row.ratio.toFixed(2) }} %
+          </span>
         </template>
       </el-table-column>
     </el-table>
@@ -126,25 +162,38 @@
       :page-count="page.pages"
       :current-page="request.current"
     />
+
     <div class="total-info-wrapper">
-      <div class="total-info">
-        {{ $t('fields.betTotal') }} : {{ page.records.length > 0 ? totalBet.toFixed(2) : '--' }}
-      </div>
-      <div class="total-info">
-        {{ $t('fields.totalBetMemberCount') }} : {{ page.records.length > 0 ? totalBetCount : '--' }}
-      </div>
-      <div class="total-info">
-        {{ $t('fields.payoutTotal') }} : {{ page.records.length > 0 ? totalPayout.toFixed(2) : '--' }}
-      </div>
-      <div class="total-info">
-        {{ $t('fields.profit') }} : {{ page.records.length > 0 ? totalProfit.toFixed(2) : '--' }}
-      </div>
-      <div class="total-info">
-        {{ $t('fields.return_ratio_total') }} : {{ page.records.length > 0 ? totalRatio.toFixed(2) + "%" : '--' }}
-      </div>
+      <span>{{ t('fields.totalDepositAmount') }} :</span>
+      <span style="margin-left: 10px">$</span>
+      <span v-formatter="{ data: totalBet, type: 'money' }" />
+
+      <span style="margin-left: 10px">
+        {{ t('fields.totalBetMemberCount') }} :
+      </span>
+      <span style="margin-left: 10px">{{ totalBetCount }}</span>
+
+      <span style="margin-left: 10px">{{ t('fields.payoutTotal') }} :</span>
+      <span style="margin-left: 10px">$</span>
+      <span v-formatter="{ data: totalPayout, type: 'money' }" />
+
+      <span style="margin-left: 10px">{{ t('fields.profit') }} :</span>
+      <span style="margin-left: 10px">$</span>
+      <span v-formatter="{ data: totalProfit, type: 'money' }" />
+
+      <span style="margin-left: 10px">
+        {{ t('fields.return_ratio_total') }} :
+      </span>
+      {{ page.records.length > 0 ? totalRatio.toFixed(2) + '%' : '--' }}
     </div>
-    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
-               :close-on-click-modal="false" :close-on-press-escape="false"
+
+    <el-dialog
+      :title="t('fields.exportToExcel')"
+      v-model="uiControl.messageVisible"
+      append-to-body
+      width="500px"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
     >
       <span>{{ t('message.requestExportToExcelDone1') }}</span>
       <router-link :to="`/site-management/download-manager`">
@@ -216,7 +265,7 @@ const request = reactive({
   siteId: null,
   recordTime: [defaultStartDate, defaultEndDate],
   vipId: null,
-  gameName: null
+  gameName: null,
 })
 
 const totalRatio = computed(() => {
@@ -230,8 +279,8 @@ const totalRatio = computed(() => {
 function resetQuery() {
   request.recordTime = [defaultStartDate, defaultEndDate]
   request.siteId = store.state.user.siteId
-  request.vipId = null;
-  request.gameName = null;
+  request.vipId = null
+  request.gameName = null
 }
 
 async function loadVipReport() {
@@ -255,7 +304,7 @@ async function loadVipReport() {
     query.random = Math.random()
   }
   const { data: ret } = await getVipReport(query)
-  page.records = ret.records;
+  page.records = ret.records
   // page.columns = ret.data
 
   page.records = page.records.map(record => {
@@ -266,9 +315,9 @@ async function loadVipReport() {
 
     return {
       ...record,
-      ratio: (record.payout / record.bet).toFixed(5) * 100
-    };
-  });
+      ratio: (record.payout / record.bet).toFixed(5) * 100,
+    }
+  })
 
   // const { data: ret1 } = await getTotalFinanceReport(query)
   // totalPage.records = ret1.financeReportItemVOS
@@ -347,13 +396,12 @@ function getSummaries(param) {
           var prop = column.property
           sums[index] =
             '$' +
-            parseFloat(totalPage.records[0].data[prop.replace('data.', '')]).toLocaleString(
-              'en-US',
-              {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }
-            )
+            parseFloat(
+              totalPage.records[0].data[prop.replace('data.', '')]
+            ).toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
         }
       })
     }

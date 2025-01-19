@@ -10,7 +10,7 @@
           :class="{ active: todayCheckInDay === n }"
           :ref="setDayItemRef(n)"
         >
-          <span>{{ todayCheckInDay === n ? "TODAY" : n }}</span>
+          <span>{{ todayCheckInDay === n ? $t("hotPromo.signIn30Days.today") : n }}</span>
           <img
             class="day-card-img"
             :class="{ closed: !(n < todayCheckInDay || (todayCheckInDay === n && hasClaimedToday)) }"
@@ -24,7 +24,9 @@
       </div>
       <div class="check-in-btm">
         <div class="sign-in-btn" @click="claimReward" :class="{ 'is-disabled': hasClaimedToday || isLoadingClaim }">
-          <span>{{ hasClaimedToday ? "CLAIMED" : "SIGN IN NOW" }}</span>
+          <span>
+            {{ hasClaimedToday ? $t("hotPromo.signIn30Days.claimed") : $t("hotPromo.signIn30Days.signInNow") }}
+          </span>
         </div>
         <template v-if="minValidBet > 0">
           <div class="bonus-progress-bar">
@@ -38,38 +40,55 @@
     </div>
     <div class="reward-mech-container content-card">
       <div class="content-card-title">
-        <img src="../../../assets/images/promotion/hotpromo/signin-30days/reward-mech-title.png" />
+        <img
+          :src="
+            require(`../../../assets/images/promotion/hotpromo/signin-30days/reward-mech-title-${$t(
+              'lang.langVal'
+            )}.png`)
+          "
+        />
       </div>
-      <div class="q-mb-sm">PROGRESSIVE REWARD SYSTEM + DYNAMIC TREASURE CHEST INCENTIVES</div>
+      <div class="q-mb-sm">
+        {{ $t("hotPromo.signIn30Days.progressRewardSystem") }}
+      </div>
       <div class="reward-day-range" v-for="(item, index) in rewardProbability" :key="index">
         <img
           class="day-range-img"
           :src="require(`../../../assets/images/promotion/hotpromo/signin-30days/day-range-${index + 1}-icon.png`)"
         />
         <span>
-          Day
+          {{ $t("hotPromo.signIn30Days.day") }}
           <b>{{ item.dayRange }}</b>
-          {{ index === 3 ? "Super" : "" }} Rewards: Claim the {{ item.chestType }} Chest with a random maximum bonus of
+          {{ index === 3 ? "Super" : "" }}
+          {{ $t("hotPromo.signIn30Days.claim") }}: {{ $t("hotPromo.signIn30Days.claimThe") }} {{ item.chestType }}
+          {{ $t("hotPromo.signIn30Days.chestWithRandom") }}
           <span style="color: #eaff00cc; font-weight: 700">{{ item.maxReward }}BDT</span>
         </span>
       </div>
       <div class="missed-rules-txt">
-        *Rules for Missed Sign-ins: If a user misses a day, they must start again from Day 1.
+        {{ $t("hotPromo.signIn30Days.missedRules01") }}
       </div>
       <img
         class="subtitle-img"
-        src="../../../assets/images/promotion/hotpromo/signin-30days/reward-probability-dist-title.png"
+        :src="
+          require(`../../../assets/images/promotion/hotpromo/signin-30days/reward-probability-dist-title-${$t(
+            'lang.langVal'
+          )}.png`)
+        "
       />
       <table class="content-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
         <thead>
           <tr>
-            <th>Day Range</th>
-            <th>Max Reward</th>
+            <th>{{ $t("hotPromo.signIn30Days.dayRange") }}</th>
+            <th>{{ $t("hotPromo.signIn30Days.maxReward") }}</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(item, index) in rewardProbability" :key="index">
-            <td>Days {{ item.dayRange }}{{ index === 3 ? " Super Chest" : "" }}</td>
+            <td>
+              {{ $t("hotPromo.signIn30Days.days") }} {{ item.dayRange
+              }}{{ index === 3 ? $t("hotPromo.signIn30Days.superChest") : "" }}
+            </td>
             <td>
               <div class="reward-coin-container">
                 <img
@@ -85,109 +104,117 @@
 
       <img
         class="subtitle-img"
-        src="../../../assets/images/promotion/hotpromo/signin-30days/reward-claim-conditions-title.png"
+        :src="
+          require(`../../../assets/images/promotion/hotpromo/signin-30days/reward-claim-conditions-title-${$t(
+            'lang.langVal'
+          )}.png`)
+        "
       />
       <div class="q-mb-sm" style="text-transform: uppercase">
-        Users must meet the daily betting minimum to claim rewards:
+        {{ $t("hotPromo.signIn30Days.usersMustMeet") }}
       </div>
       <div class="reward-claim-condition">
         <div class="reward-claim-condition-item">
           <span>
-            <span style="font-size: 14px; color: #ffb700">Day 1</span>
-            : No betting required; reward can be claimed once.
+            <span style="font-size: 14px; color: #ffb700">{{ $t("hotPromo.signIn30Days.day") }} 1</span>
+            : {{ $t("hotPromo.signIn30Days.noBettingRequired") }}
             <br />
             <span style="margin-top: 8px; margin-bottom: 4px; display: inline-block">
-              &nbsp;&nbsp;&bull; If re-starting on Day 1: Minimum cumulative bet of
-              <span style="font-size: 14px; color: #11ff00">100 BDT</span>
-              required
+              &nbsp;&nbsp;&bull;
+              <span v-html="$t('hotPromo.signIn30Days.ifRestartingOnDay1')" />
             </span>
           </span>
         </div>
         <div class="reward-claim-condition-item">
           <span>
-            <span style="font-size: 14px; color: #ffb700">Day 2-3</span>
-            : No betting required; reward can be claimed once.
+            <span style="font-size: 14px; color: #ffb700">{{ $t("hotPromo.signIn30Days.day") }} 2-3</span>
+            : {{ $t("hotPromo.signIn30Days.noBettingRequired") }}
             <br />
             <span style="margin-top: 8px; margin-bottom: 4px; display: inline-block">
-              &nbsp;&nbsp;&bull; If re-starting on Days 2-3: Minimum cumulative bet of
-              <span style="font-size: 14px; color: #11ff00">100 BDT</span>
-              required
+              &nbsp;&nbsp;&bull;
+              <span v-html="$t('hotPromo.signIn30Days.ifRestartingOnDay2')" />
             </span>
           </span>
         </div>
         <div class="reward-claim-condition-item">
           <span>
-            <span style="font-size: 14px; color: #ffb700">Day 4</span>
+            <span style="font-size: 14px; color: #ffb700">{{ $t("hotPromo.signIn30Days.day") }} 4</span>
             :
             <span style="font-size: 14px; color: #11ff00">100 BDT</span>
           </span>
         </div>
         <div class="reward-claim-condition-item">
           <span>
-            <span style="font-size: 14px; color: #ffb700">Day 5</span>
+            <span style="font-size: 14px; color: #ffb700">{{ $t("hotPromo.signIn30Days.day") }} 5</span>
             :
             <span style="font-size: 14px; color: #11ff00">100 BDT</span>
           </span>
         </div>
         <div class="reward-claim-condition-item">
           <span>
-            <span style="font-size: 14px; color: #ffb700">Day 6</span>
+            <span style="font-size: 14px; color: #ffb700">{{ $t("hotPromo.signIn30Days.day") }} 6</span>
             :
             <span style="font-size: 14px; color: #11ff00">200 BDT</span>
           </span>
         </div>
         <div class="reward-claim-condition-item">
           <span>
-            <span style="font-size: 14px; color: #ffb700">Day 7</span>
+            <span style="font-size: 14px; color: #ffb700">{{ $t("hotPromo.signIn30Days.day") }} 7</span>
             :
             <span style="font-size: 14px; color: #11ff00">300 BDT</span>
           </span>
         </div>
         <div class="reward-claim-condition-item">
           <span>
-            <span style="font-size: 14px; color: #ffb700">Day 8-13</span>
-            : Minimum cumulative bets of
+            <span style="font-size: 14px; color: #ffb700">{{ $t("hotPromo.signIn30Days.day") }} 8-13</span>
+            : {{ $t("hotPromo.signIn30Days.minCumulativeBetsOf") }}
             <span style="font-size: 14px; color: #11ff00">500 BDT</span>
           </span>
         </div>
         <div class="reward-claim-condition-item">
           <span>
             <span style="font-size: 14px; color: #ffb700">
-              Day {{ rewardProbability[rewardProbability.length - 2].dayRange }}
+              {{ $t("hotPromo.signIn30Days.day") }} {{ rewardProbability[rewardProbability.length - 2].dayRange }}
             </span>
-            : Minimum cumulative bets of
+            : {{ $t("hotPromo.signIn30Days.minCumulativeBetsOf") }}
             <span style="font-size: 14px; color: #11ff00">600 BDT</span>
           </span>
         </div>
         <div class="reward-claim-condition-item">
           <span>
             <span style="font-size: 14px; color: #ffb700">
-              Day {{ rewardProbability[rewardProbability.length - 1].dayRange }}
+              {{ $t("hotPromo.signIn30Days.day") }} {{ rewardProbability[rewardProbability.length - 1].dayRange }}
             </span>
-            : Minimum cumulative bets of
+            : {{ $t("hotPromo.signIn30Days.minCumulativeBetsOf") }}
             <span style="font-size: 14px; color: #11ff00">1,000 BDT</span>
           </span>
         </div>
       </div>
-      <div class="misuse-warning-txt">
-        Users must meet the betting requirements before claiming rewards.
-      </div>
+      <div class="misuse-warning-txt">{{ $t("hotPromo.signIn30Days.usersMustMeetTheBettingReq") }}</div>
     </div>
     <div class="activity-rule-container">
       <img
         class="activity-rule-img"
-        src="../../../assets/images/promotion/hotpromo/signin-30days/activity-rule-title.png"
+        :src="
+          require(`../../../assets/images/promotion/hotpromo/signin-30days/activity-rule-title-${$t(
+            'lang.langVal'
+          )}.png`)
+        "
       />
       <ul class="activity-rule-list">
-        <li>Activity time: January 1 - January 31, 2025</li>
-        <li>Bonus rollover requirement: 1x rollover</li>
-        <li>Bonus distribution: Immediately distributed to your wallet after receiving it</li>
+        <li v-html="$t('hotPromo.signIn30Days.activityRules01')" />
+        <li v-html="$t('hotPromo.signIn30Days.activityRules02')" />
+        <li v-html="$t('hotPromo.signIn30Days.activityRules03')" />
       </ul>
     </div>
     <div class="ranking-list-container">
       <img
         class="ranking-list-title"
-        src="../../../assets/images/promotion/hotpromo/signin-30days/ranking-list-title.png"
+        :src="
+          require(`../../../assets/images/promotion/hotpromo/signin-30days/ranking-list-title-${$t(
+            'lang.langVal'
+          )}.png`)
+        "
       />
       <div class="podium-div">
         <img class="podium" src="../../../assets/images/promotion/hotpromo/signin-30days/podium.png" />
@@ -215,14 +242,17 @@
       </div>
     </div>
   </div>
+
   <q-dialog v-model="isShowCongratsDialog" @hide="handleReceiveBonus" persistent>
     <div class="congrats-container">
       <!-- <q-btn icon="close" round dense v-close-popup class="congrats-close" /> -->
-      <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header.png" /></div>
-      <div class="congrats-chest"><img src="../../../assets/images/index/modal/congrats-chest.png" /></div>
-      <div class="congrats-title">Get sign-in bonus</div>
-      <div class="congrats-highlight">{{ convertToCommaAmount(bonusAmount) }}BDT</div>
+      <div class="congrats-header">
+        <img :src="require(`../../../assets/images/index/modal/congrats-header-long-${$t('lang.langVal')}.png`)" />
+      </div>
+      <div class="congrats-chest"><img src="../../../assets/images/index/modal/congrats-chest-dark.png" /></div>
 
+      <div class="congrats-highlight">{{ convertToCommaAmount(bonusAmount) }}BDT</div>
+      <div class="congrats-title">{{ randomWish }}</div>
       <div class="congrats-button">
         <q-btn no-caps unelevated class="receive-btn" @click="handleReceiveBonus">
           {{ $t("btn.receive") }}
@@ -230,14 +260,179 @@
       </div>
     </div>
   </q-dialog>
+
+  <q-dialog width="100%" v-model="bindEmailDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">{{ $t("form.bindEmail") }}</div>
+        <div class="pc-form">
+          <InputRowGrid>
+            <template #fields>
+              <InputField :label="$t('form.email')">
+                <template #input>
+                  <q-input
+                    outlined
+                    clearable
+                    :placeholder="$t('form.email_placeholder')"
+                    v-model="updateEmailInfo.email"
+                    ref="updateEmailRef"
+                    hide-bottom-space
+                    type="text"
+                    :rules="[(val) => /.+@.+\..+/.test(val) || $t('form.email_rules_02')]"
+                  >
+                    <template v-slot:append>
+                      <div class="pc-form-side-btn">
+                        <q-btn
+                          no-caps
+                          dense
+                          class="text-green"
+                          :label="!startCountdownResendOTP && $t('form.send')"
+                          :disable="startCountdownResendOTP"
+                          @click="openVerificationCodeDialog"
+                        />
+                      </div>
+                    </template>
+                  </q-input>
+                </template>
+              </InputField>
+
+              <InputField :label="$t('form.code')">
+                <template #input>
+                  <q-input
+                    outlined
+                    clearable
+                    :placeholder="$t('form.code_placeholder')"
+                    v-model="updateEmailInfo.code"
+                    ref="updateEmailCodeRef"
+                    hide-bottom-space
+                    type="text"
+                    :rules="[(val) => val.length !== 0 || $t('form.code_rules_01')]"
+                  >
+                    <template v-slot:append v-if="startCountdownResendOTP">{{ countdownOTP }}s</template>
+                  </q-input>
+                </template>
+              </InputField>
+            </template>
+          </InputRowGrid>
+        </div>
+
+        <div class="bottom-btn">
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="submitUpdateEmail">
+            {{ $t("btn.confirm") }}
+          </q-btn>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="verificationCodeDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">{{ $t("form.captchaCodeCheck") }}</div>
+
+        <div class="pc-form">
+          <div class="pc-form-item">
+            <div class="pc-form-label">{{ $t("form.captchaCode") }}</div>
+            <div class="pc-form-input">
+              <q-input
+                filled
+                hide-bottom-space
+                dense
+                clearable
+                :placeholder="$t('form.captchaCode_placeholder')"
+                v-model="captchaRef"
+                :rules="[
+                  (val) => (val && val.length > 0) || $t('form.captchaCode_rules_01'),
+                  (val) => (val && val.length > 3 && val.length < 5) || $t('form.captchaCode_rules_02')
+                ]"
+              >
+                <template v-slot:append>
+                  <img :src="verificationImg" @click="getCode" />
+                </template>
+              </q-input>
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-btn">
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onCaptchaSubmit">
+            {{ $t("btn.confirm") }}
+          </q-btn>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="changePhoneDialog">
+    <div class="popout-dialog">
+      <q-btn
+        dense
+        rounded
+        icon="close"
+        class="text-white popout-close"
+        @click="changePhoneDialog = false"
+        v-close-popup
+      />
+      <div class="popout-dialog-container">
+        <div class="txt-title">{{ $t("form.bindPhoneNumber") }}</div>
+        <div class="pc-form">
+          <InputRowGrid>
+            <template #fields>
+              <InputField :label="$t('form.phone')">
+                <template #input>
+                  <q-input
+                    type="tel"
+                    pattern="\d*"
+                    maxlength="11"
+                    hide-bottom-space
+                    ref="phoneRef"
+                    v-model="updatePhoneInfo.phone"
+                    :rules="[
+                      (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
+                      (val) => (val && val.length >= 10 && val.length <= 11) || $t('form.phone_rules_02'),
+                      (val) => val.startsWith('01') || $t('form.phone_rules_03')
+                    ]"
+                    label-color="brand"
+                    outlined
+                    color="green"
+                    :placeholder="$t('form.phone')"
+                  >
+                    <template v-slot:prepend>
+                      <FancyIcon name="smartphone" />
+                      <div class="prepend-number">+880</div>
+                    </template>
+                  </q-input>
+                </template>
+              </InputField>
+            </template>
+          </InputRowGrid>
+        </div>
+
+        <div class="bottom-btn">
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="submitUpdatePhone">
+            {{ $t("btn.confirm") }}
+          </q-btn>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
 </template>
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, reactive } from "vue";
 import { userStore } from "src/stores";
 import { eventapi } from "src/boot/axios";
 import { convertToCommaAmount } from "src/boot/utils";
+import { api } from "boot/axios";
+import { useQuasar } from "quasar";
+import { t } from "src/boot/lang";
+import InputRowGrid from "src/components/auth/InputRowGrid.vue";
+import InputField from "src/components/auth/InputField.vue";
 
 const store = userStore();
+const qs = require("qs");
+const $q = useQuasar();
 
 const rewardProbability = [
   {
@@ -338,6 +533,26 @@ const getRankingList = () => {
   });
 };
 
+const bindEmailDialog = ref(false);
+const formDetail = reactive([]);
+const phoneRef = ref();
+const updatePhoneRef = ref();
+const updateEmailRef = ref();
+const updateEmailCodeRef = ref();
+const captchaRef = ref();
+const showCaptchaDialog = ref(false);
+const changePhoneDialog = ref(false);
+const showVerificationTokenInput = ref(false);
+const updateSecurityVerified = reactive({
+  mobileNumber: "",
+  verificationCode: ""
+});
+const verificationModalVisible = ref(false);
+
+let verificationCodeID = "";
+const startCountdownResendOTP = ref(false);
+const countdownOTP = ref();
+
 const claimReward = () => {
   isLoadingClaim.value = true;
   eventapi
@@ -345,7 +560,25 @@ const claimReward = () => {
     .then((res) => {
       if (res.code === 0) {
         bonusAmount.value = res.data;
+
         isShowCongratsDialog.value = true;
+      }
+
+      if (res.code === 582301) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: res.message,
+          icon: "report_problem"
+        });
+
+        if (store.phone && !store.email) {
+          bindEmailDialog.value = true;
+        }
+
+        if (store.email && !store.phone) {
+          changePhoneDialog.value = true;
+        }
       }
     })
     .catch(() => {})
@@ -354,9 +587,211 @@ const claimReward = () => {
     });
 };
 
+const updateEmailInfo = reactive({
+  email: "",
+  code: "",
+  codeId: ""
+});
+
+const submitUpdateEmail = () => {
+  updateEmailRef.value.validate();
+  updateEmailCodeRef.value.validate();
+
+  if (updateEmailRef.value.hasError || updateEmailCodeRef.value.hasError) {
+  } else {
+    api
+      .post(
+        "/session/verifyAndUpdateEmail",
+        qs.stringify({
+          email: updateEmailInfo.email,
+          code: updateEmailInfo.code,
+          codeId: updateEmailInfo.codeId
+        })
+      )
+      .then((response) => {
+        if (response.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: t("notify.emailBindedSuccessfully"),
+            icon: "check_circle_outline"
+          });
+          bindEmailDialog.value = false;
+          formDetail.email = updateEmailInfo.email;
+          formDetail.emailVerified = true;
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: response.message,
+            icon: "report_problem"
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }
+};
+
+const verificationCodeDialog = ref(false);
+const openVerificationCodeDialog = () => {
+  api
+    .get(`/member/checkEmailRegisterStatus?email=${updateEmailInfo.email}`)
+    .then((response) => {
+      if (response.code === 0) {
+        if (response.data) {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: t("notify.emailAlreadyUsed"),
+            icon: "report_problem"
+          });
+        } else {
+          verificationCodeDialog.value = !verificationCodeDialog.value;
+        }
+      }
+    })
+    .catch((e) => {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: e.message,
+        icon: "report_problem"
+      });
+    });
+
+  captchaRef.value = "";
+  getCode();
+};
+
+const onCaptchaSubmit = () => {
+  api
+    .post(
+      `/otp/sendNewEmail`,
+      qs.stringify({
+        email: updateEmailInfo.email,
+        captchaCode: captchaRef.value,
+        codeId: updateSecurityVerified.codeId
+      })
+    )
+    .then((res) => {
+      let message = res.message,
+        color = "positive";
+
+      if (res.code === 0) {
+        verificationCodeDialog.value = false;
+
+        updateEmailInfo.codeId = res.data.codeId;
+
+        showVerificationTokenInput.value = true;
+        verificationCodeID = res.data.codeId;
+        startCountdownResendOTP.value = true;
+
+        countdownOTP.value = 59;
+        let timer = setInterval(() => {
+          countdownOTP.value -= 1;
+          if (countdownOTP.value === 0) {
+            clearInterval(timer);
+            startCountdownResendOTP.value = false;
+          }
+        }, 1000);
+
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: t("notify.emailVerificationSent"),
+          icon: "check_circle_outline"
+        });
+      } else color = "negative";
+
+      if (message) $q.notify({ message, color });
+
+      console.log("onCaptchaSubmit", res);
+    });
+};
+
+const verificationImg = ref("");
+const getCode = () => {
+  api
+    .get("/member/verificationCode")
+    .then((response) => {
+      if (response.code === 0) {
+        verificationImg.value = "data:image/png;base64," + response.data.img;
+        updateSecurityVerified.codeId = response.data.id;
+      }
+    })
+    .catch((e) => {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: e.message,
+        icon: "report_problem"
+      });
+    });
+};
+
+const updatePhoneInfo = reactive({
+  phone: ""
+});
+
+const submitUpdatePhone = () => {
+  phoneRef.value.validate();
+
+  if (!phoneRef.value.hasError) {
+    api
+      .post(
+        "/session/account",
+        qs.stringify({
+          phone: updatePhoneInfo.phone
+        })
+      )
+      .then((res) => {
+        if (res.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: t("notify.phoneUpdatedSuccessfully"),
+            icon: "check_circle_outline"
+          });
+
+          store
+            .getMemberInfo()
+            .then(() => {
+              loadInfo();
+            })
+            .finally(() => {
+              changePhoneDialog.value = false;
+              updatePhoneInfo.phone = "";
+            });
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: res.message,
+            icon: "report_problem"
+          });
+        }
+      })
+      .catch((error) => {});
+  }
+};
+
+const wishes = Array.from({ length: 16 }, (_, index) =>
+  t(`hotPromo.signIn30Days.wish${String(index + 1).padStart(2, "0")}`)
+);
+
+const randomWish = ref("");
+const generateRandomWish = () => {
+  const randomIndex = Math.floor(Math.random() * wishes.length);
+  randomWish.value = wishes[randomIndex];
+};
+
 onMounted(() => {
   getDailyCheckInData();
   getRankingList();
+  getCode();
+  generateRandomWish();
 });
 </script>
 
@@ -788,6 +1223,7 @@ onMounted(() => {
     justify-content: center;
     font-size: 1.5rem;
     font-weight: bold;
+    margin-top: 16px;
   }
 
   .congrats-highlight {
@@ -826,5 +1262,62 @@ onMounted(() => {
   font-size: 16px;
   line-height: 24px;
   color: #000a01;
+}
+
+.pc-form {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+
+  .pc-form-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+
+    &.item-click {
+      &:after {
+        content: "";
+        background: rgba(255, 255, 255, 0.05);
+        height: calc(100% - 36px);
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        border-radius: 8px;
+      }
+    }
+  }
+  .pc-form-label {
+    color: rgba(255, 255, 255, 1);
+  }
+  .pc-form-input {
+    border-radius: 5px;
+    position: relative;
+
+    :deep(.q-field__control) {
+      background: rgba(255, 255, 255, 0.15) !important;
+      border-radius: 4px;
+    }
+
+    :deep(.q-field__native) {
+      color: rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  .pc-form-side-btn {
+    position: relative;
+    right: -12px;
+
+    :deep(.q-btn-item) {
+      height: 38px;
+    }
+
+    &.copy-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
 }
 </style>

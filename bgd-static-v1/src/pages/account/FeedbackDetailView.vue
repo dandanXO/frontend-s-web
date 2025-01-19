@@ -35,7 +35,7 @@ const onCloseBtnClick = () => {
 const updateMailReadStatus = () => {
   api
     .post(
-      "/session/inbox/read",
+      "/session/pm/inbox/read",
       qs.stringify({
         id: mailDataRef.value.id
       })

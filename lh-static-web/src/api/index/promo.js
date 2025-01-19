@@ -22,8 +22,15 @@ export function loadHomePopup() {
   return server.REST.get("/member/ads-popout");
 }
 
-export function loadHomePopups() {
-  return server.REST.get("/member/site-popout-list");
+export function loadHomePopups(siteType) {
+  if (siteType) {
+    return server.REST.get('/member/site-popout-list', {
+      params: {
+        siteType: siteType
+      }
+    });
+  }
+  return server.REST.get('/member/site-popout-list')
 }
 
 export function claimBonusItem(item) {
@@ -733,7 +740,20 @@ export function claimVctBangkokBonus(promoCode) {
 export function getCompetitionLossWeeklyInit(promoCode) {
   return server.EVENT.get(`/session/competition-loss-weekly/init?promoCode=${promoCode}`);
 }
-
 export function claimCompetitionLossWeekly(promoCode) {
   return server.EVENT.post(`/session/competition-loss-weekly/claim?promoCode=${promoCode}`);
+}
+
+export function getPGLOnFireBuenosAires2025(promoCode) {
+  return server.EVENT.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimPGLOnFireBuenosAires2025(promoCode) {
+  return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+
+export function getSkyesportsSouvenir2025Bonus(promoCode) {
+  return server.EVENT.get(`/session/competition-payout-deposit/init?promoCode=${promoCode}`);
+}
+export function claimSkyesportsSouvenir2025Bonus(promoCode) {
+  return server.EVENT.post(`/session/competition-payout-deposit/claimBonus?promoCode=${promoCode}`);
 }
