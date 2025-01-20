@@ -49,7 +49,7 @@ let chart = null
 // 组件挂载后将echarts挂载在container上，并将给echarts设置传入的options
 onMounted(() => {
   chart = echarts.init(container.value, props.options.theme, {
-    height: 400
+    height: props.options.height || 400
   });
   chart.setOption(props.options);
   window.addEventListener('resize', function() {
