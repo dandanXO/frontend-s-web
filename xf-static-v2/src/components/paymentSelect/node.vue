@@ -20,7 +20,7 @@
       >
         <div class="node-text">
           <div class="node-txt-img">
-            <img :src="imgURL + item.nodeIcon" />
+            <div class="icon-wrapper"><img :src="imgURL + item.nodeIcon" /></div>
             <div class="overflow overflow-txt">{{ item.nodeName }}</div>
           </div>
 
@@ -168,6 +168,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
+
 $group-color: #76c034;
 // $node-color: #dd4645;
 $node-color: #00bfd7;
@@ -205,12 +206,12 @@ $node-color: #00bfd7;
   display: grid;
   margin-bottom: 0px;
   width: 100%;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   align-items: flex-start;
 
-  background: linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c 100%);
+  // background: linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c 100%);
   border-radius: 6px;
-  padding: 16px;
+  padding: 0px;
 
   .payment-method-item {
     text-align: center;
@@ -219,7 +220,7 @@ $node-color: #00bfd7;
     cursor: pointer;
     // margin-bottom: 10px;
     img {
-      max-width: 75px;
+      // max-width: 75px;
       margin-bottom: 10px;
       width: 100%;
       height: auto;
@@ -235,22 +236,30 @@ $node-color: #00bfd7;
         .node-txt-img {
           border-color: $node-color;
 
-          &:before {
-            display: block;
-            content: "";
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            height: 20px;
-            width: 20px;
-            z-index: 3;
-            background-image: url("../../assets/images/finance/node-tick.png");
-            background-size: 100%;
-            background-position: center center;
+          .icon-wrapper {
+            border-color: $node-color;
+
+            &:before {
+              display: block;
+              content: "";
+              position: absolute;
+              bottom: 0;
+              right: 0;
+              height: 20px;
+              width: 20px;
+              z-index: 3;
+              background-image: url("../../assets/images/finance/node-tick.svg");
+              background-size: 100%;
+              background-position: center center;
+            }
           }
 
           img {
             // border-color: $node-color;
+          }
+
+          .overflow-txt {
+            color: $node-color;
           }
         }
       }
@@ -282,7 +291,7 @@ $node-color: #00bfd7;
     .account-title-container {
       margin: 0 -30px;
       background: none;
-      grid-column: span 4;
+      grid-column: span 5;
       font-weight: 600;
       font-size: 16px;
     }
@@ -319,7 +328,7 @@ $node-color: #00bfd7;
         img {
           //width: 15px;
           border: 0;
-          background-color: #2a313e;
+          // background-color: #2a313e;
           // max-width: 1.5rem;
           padding: 0px;
           margin-bottom: 0;
@@ -329,7 +338,7 @@ $node-color: #00bfd7;
   }
 
   .node-content {
-    grid-gap: 16px;
+    grid-gap: 4px;
 
     .payment-method-item {
       text-align: center;
@@ -370,25 +379,35 @@ $node-color: #00bfd7;
         justify-content: center;
         // aspect-ratio: 1/1;
         width: 100%;
-        border-width: 2px;
+        border-width: 0px;
         border-style: solid;
         border-radius: 6px;
         border-color: #d9d9d94d;
-        background-color: #273354;
+        // background-color: #273354;
         // padding: 12px;
 
+        .icon-wrapper {
+          position: relative;
+          border: 2px solid transparent;
+          border-radius: 10px;
+          min-width: 45px;
+          min-height: 45px;
+        }
+
         .overflow-txt {
-          font-size: 10px;
+          font-size: 12px;
           padding-bottom: 6px;
+          font-family: 'PingFang';
+          color: #a9acb4;
         }
 
         img {
           background-color: transparent;
           margin-bottom: 0;
-          padding: 12px 12px 8px;
+          padding: 4px;
           display: block;
           width: 100%;
-          max-width: 60px;
+          // max-width: 60px;
           display: block;
           // height: auto;
         }
@@ -427,13 +446,13 @@ $node-color: #00bfd7;
       background-size: 100%;
       background-position: top center;
       width: 100%;
-      max-width: 40px;
+      max-width: 45px;
 
       img {
         padding: 0;
         border: 0;
         width: 100%;
-        max-width: 40px;
+        max-width: 45px;
         background-color: transparent;
       }
       ::after {
@@ -462,7 +481,7 @@ $node-color: #00bfd7;
 
 @media (max-width: 355px) {
   .payment-method-wrapper {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 </style>
