@@ -53,6 +53,7 @@ module.exports = configure(function (ctx) {
       vueRouterMode: "hash", // available values: 'hash', 'history'
 
       // transpile: false,
+      publicPath: '/5076209572/',
       publicPath: '/3539823646/',
 
       // Add dependencies for transpiling with Babel (Array of string/regex)
