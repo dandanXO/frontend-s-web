@@ -317,8 +317,15 @@
 
   <q-dialog width="100%" v-model="showBindEmailDialog" persistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" @click="() => showBindEmailDialog = false" v-close-popup />
-      <KYCBindEmail @closeBindEmailKYCDialog="() => showBindEmailDialog = false" />
+      <q-btn
+        dense
+        rounded
+        icon="close"
+        class="popout-close"
+        @click="() => (showBindEmailDialog = false)"
+        v-close-popup
+      />
+      <KYCBindEmail @closeBindEmailKYCDialog="() => (showBindEmailDialog = false)" />
     </div>
   </q-dialog>
 </template>
@@ -470,14 +477,14 @@ const calculatedMaxDeposit = ref("");
 const depositItems = ref([]);
 
 const onChangePrivilege = (privilege) => {
-  if(privilege?.code === 'bgd-email-verify-bonus' && isFtdPrivilegeEnable) {
+  if (privilege?.code === "bgd-email-verify-bonus" && isFtdPrivilegeEnable) {
     isFtdPrivilegeEnable.value = false;
   }
 
-  if(privilege?.code === 'bgd-email-verify-bonus' && (!store.email || store.emailVerified !== true)) {
+  if (privilege?.code === "bgd-email-verify-bonus" && (!store.email || store.emailVerified !== true)) {
     showBindEmailDialog.value = true;
   }
-}
+};
 
 const handleDepositItemClick = (index) => {
   depositItems.value.forEach((item, i) => {
@@ -665,7 +672,7 @@ function clearInfo() {
 
 const depositAmtRef = ref("");
 async function confirmDeposit() {
-  if(selectedPrivilege.value?.code === 'bgd-email-verify-bonus' && (!store.email || store.emailVerified !== true)) {
+  if (selectedPrivilege.value?.code === "bgd-email-verify-bonus" && (!store.email || store.emailVerified !== true)) {
     showBindEmailDialog.value = true;
     return;
   }
@@ -951,10 +958,10 @@ const openDepositVideo = () => {
     const code = selectedPayType.value;
     switch (code) {
       case "BKASH":
-        window.open("https://drive.google.com/file/d/1haAPLN5eEiHYJ8XtxsuNjF1vTkQOw_VJ/view?usp=sharing", "_blank");
+        window.open("https://drive.google.com/file/d/1xp-sKgJ634jLreKDeM5ZJ4fljeuYz75I/view?usp=sharing", "_blank");
         break;
       case "NAGAD":
-        window.open("https://drive.google.com/file/d/1vOP9wv26V1Lizy8YfHFGwJ4nDYSkBxsW/view?usp=sharing", "_blank");
+        window.open("https://drive.google.com/file/d/17o13PLoiSZxJZ_mc7m-BhyclkeOtez_6/view?usp=sharing", "_blank");
         break;
       case "ROCKET":
         window.open("https://drive.google.com/file/d/1fatbGp3rvXLPb69NwNzrt0pwEI3FhOn_/view?usp=sharing", "_blank");
@@ -1383,7 +1390,6 @@ onMounted(() => {
 :deep(.description-text p) {
   margin: 5px 0px !important;
 }
-
 
 @media (max-width: 400px) {
   .deposit-item-container {
