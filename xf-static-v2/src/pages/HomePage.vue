@@ -96,7 +96,7 @@
         <router-link v-if="store.token" to="/account" class="login">
           <div class="user-status">
             <q-avatar size="40px">
-              <img src="../assets/images/index/profile-img.png" />
+              <img src="../assets/images/account/profile-img.png" />
             </q-avatar>
             <div class="user-vip">{{ store.vip }}</div>
           </div>
