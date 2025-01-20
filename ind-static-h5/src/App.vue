@@ -131,6 +131,11 @@ export default defineComponent({
       const omitSites = ["bw3.genoortisy.com"];
 
       if (isInPwa()) {
+
+        api.get(`/app/pwa/log?step=OPEN&siteCode=${process.env.SITE}`).then((res2) => {
+          console.log("OPEN");
+        });
+
         const hostname = window.location.hostname.replace("www.", "");
         //Use thisApi to get AffiliateCode/FbPixelId/ WebPushId for PWA.
         api.get(`/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}`).then((res) => {
