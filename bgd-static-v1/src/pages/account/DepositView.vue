@@ -470,7 +470,7 @@ const calculatedMaxDeposit = ref("");
 const depositItems = ref([]);
 
 const onChangePrivilege = (privilege) => {
-  if(privilege?.code === 'BGD-SLOT-FTD' && isFtdPrivilegeEnable) {
+  if(privilege?.code === 'bgd-email-verify-bonus' && isFtdPrivilegeEnable) {
     isFtdPrivilegeEnable.value = false;
   }
 
@@ -665,7 +665,7 @@ function clearInfo() {
 
 const depositAmtRef = ref("");
 async function confirmDeposit() {
-  if(selectedPrivilege.value.code === 'bgd-email-verify-bonus' && (!store.email || store.emailVerified !== true)) {
+  if(selectedPrivilege.value?.code === 'bgd-email-verify-bonus' && (!store.email || store.emailVerified !== true)) {
     showBindEmailDialog.value = true;
     return;
   }
