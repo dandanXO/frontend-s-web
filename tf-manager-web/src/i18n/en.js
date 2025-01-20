@@ -2438,7 +2438,8 @@ export default {
     oddsType_3: 'Europe',
     oddsType_4: 'Indonesia',
     oddsType_6: 'US',
-    eventId: 'event ID'
+    eventId: 'event ID',
+    refresh: 'refresh'
   },
   message: {
     adsStatusOpen: 'Open',
