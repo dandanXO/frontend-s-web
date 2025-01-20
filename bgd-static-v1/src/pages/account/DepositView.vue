@@ -78,6 +78,7 @@
               v-model="isFtdPrivilegeEnable"
               v-if="store.ftd === 'OPEN' && paytypeWithPrivilege.indexOf(activeMethod.payType) > -1"
               style="white-space: pre-wrap"
+              @update:model-value="selectedPrivilege = undefined"
             >
               {{ $t("deposit.useFtdPrivilege") }}
             </q-checkbox>
@@ -469,7 +470,11 @@ const calculatedMaxDeposit = ref("");
 const depositItems = ref([]);
 
 const onChangePrivilege = (privilege) => {
-  if(privilege.code === 'bgd-email-verify-bonus' && (!store.email || store.emailVerified !== true)) {
+  if(privilege?.code === 'BGD-SLOT-FTD' && isFtdPrivilegeEnable) {
+    isFtdPrivilegeEnable.value = false;
+  }
+
+  if(privilege?.code === 'bgd-email-verify-bonus' && (!store.email || store.emailVerified !== true)) {
     showBindEmailDialog.value = true;
   }
 }
