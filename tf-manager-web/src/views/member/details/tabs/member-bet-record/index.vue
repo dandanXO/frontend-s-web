@@ -162,6 +162,7 @@
             />
           </template>
         </el-table-column>
+        <el-table-column v-if="site.id === 10" prop="remark" :label="t('fields.remark')" align="center" min-width="200" />
       </el-table>
       <div class="table-footer">
         <!-- <span>{{ t('fields.totalBetRecords') }}</span>
