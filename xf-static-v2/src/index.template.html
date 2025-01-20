@@ -72,7 +72,9 @@
           console.log("DOM fully loaded and parsed");
           if (window.flutter_inappwebview) {
             window.flutter_inappwebview.callHandler("FlutterChannel", "XF_FLUTTETR");
-            alert("xffluttetr1")
+
+            const flutterObj = JSON.stringify(window.flutter_inappwebview, null, 2);
+            alert(`flutter_inappwebview object:\n${flutterObj}`);
           } else {
             console.log("FlutterChannel not available yet, waiting...");
             const interval = setInterval(() => {
