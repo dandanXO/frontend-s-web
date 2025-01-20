@@ -44,7 +44,7 @@
           icon="el-icon-search"
           size="mini"
           type="success"
-          @click="loadCharts()"
+          @click="uiControl.display === 'DATA' ? loadDepositReport(false) : loadCharts() "
         >
           {{ t('fields.search') }}
         </el-button>
@@ -65,15 +65,25 @@
       </div>
     </div>
 
-    <div>
+    <div v-if="uiControl.display === 'CHART'">
       <el-card style="height: 1000px;">
+        <div class="chart-container" style="height: 100%; width: 100%;">
+          <Chart :options="amountOptions" />
+        </div>
+      </el-card>
+      <el-card style="height: 1000px; margin-top: 10px">
         <div class="chart-container" style="height: 100%; width: 100%;">
           <Chart :options="countOptions" />
         </div>
       </el-card>
+      <el-card style="height: 500px; margin-top: 10px">
+        <div class="chart-container" style="height: 100%; width: 100%;">
+          <Chart :options="barOption" />
+        </div>
+      </el-card>
     </div>
 
-    <div class="tables-container-wrap1">
+    <div class="tables-container-wrap1" v-if="uiControl.display === 'DATA'">
       <el-card class="info-card">
         <el-descriptions
           size="small"
@@ -471,6 +481,10 @@ async function loadCharts() {
   }
 
   const { data } = await getDepositReportAll(query)
+  getBarChart(
+    data,
+    barOption
+  )
   const paymentTypeData = data.reduce((acc, item) => {
     if (!acc[item.paymentType]) {
       acc[item.paymentType] = []
@@ -482,8 +496,29 @@ async function loadCharts() {
     paymentTypeData,
     countOptions
   )
+  getAmountChart(
+    paymentTypeData,
+    amountOptions
+  )
 
   uiControl.chartLoading = false
+}
+
+function getBarChart(data, options) {
+  const paymentData = []
+  data.sort((a, b) => {
+    return b.totalSuccessDeposit / b.totalDeposit - a.totalSuccessDeposit / a.totalDeposit
+  })
+  data.forEach((item) => {
+    const temp = []
+    temp.push(item.paymentType)
+    temp.push(item.name)
+    const rate = Number(item.totalSuccessDeposit / item.totalDeposit * 100)
+    temp.push(rate.toFixed(2))
+    paymentData.push(temp)
+  })
+  options.dataset.source = paymentData
+  console.log(options.dataset.source)
 }
 
 function getCountChart(data, options) {
@@ -500,7 +535,23 @@ function getCountChart(data, options) {
       children,
     })
   })
-  console.log("data", chartData)
+  options.series.data = chartData
+}
+
+function getAmountChart(data, options) {
+  const chartData = []
+  Object.keys(data).forEach((paymentType) => {
+    const children = data[paymentType].filter((item) => item.totalSuccessDeposit > 0).map((item) => {
+      return {
+        name: item.name,
+        value: Math.round(Number(item.totalSuccessDepositAmount))
+      }
+    })
+    chartData.push({
+      name: paymentType,
+      children,
+    })
+  })
   options.series.data = chartData
 }
 
@@ -526,7 +577,6 @@ const countOptions = reactive({
           borderWidth: 2
         },
         label: {
-          position: 'outside',
           silent: false,
           formatter: '{b}-{c}'
         },
@@ -543,6 +593,74 @@ const countOptions = reactive({
     ]
   },
 })
+
+const amountOptions = reactive({
+  title: {
+    text: t('fields.amountCountRatio'),
+  },
+  height: '1000px',
+  width: '1000px',
+  series: {
+    type: 'sunburst',
+    data: [],
+    radius: ['0%', '99%'],
+    emphasis: {
+      focus: 'self'
+    },
+    levels: [
+      {},
+      {
+        r0: '10%',
+        r: '30%',
+        itemStyle: {
+          borderWidth: 2
+        },
+        label: {
+          silent: false,
+          formatter: '{b}-' + '$' + '{c}'
+        },
+      },
+      {
+        r0: '30%',
+        r: '55%',
+        label: {
+          position: 'outside',
+          silent: false,
+          formatter: '{b}-' + '$' + '{c}'
+        },
+      }
+    ]
+  },
+})
+
+const barOption = {
+  title: {
+    text: t('fields.successRate'),
+  },
+  dataset: {
+    dimensions: ['PaymentType', 'Name', 'SuccessRate'],
+    source: []
+  },
+  xAxis: {
+    name: 'name',
+    type: 'category',
+    axisLabel: { interval: 0, rotate: 30 }
+  },
+  yAxis: {
+    type: 'value',
+    name: '%'
+  },
+  series: [
+    {
+      type: 'bar',
+      encode: { x: 'Name', y: 'SuccessRate' },
+    }
+  ],
+  tooltip: {
+    trigger: 'axis',
+    formatter: '{c}'
+  }
+};
 
 async function loadSites() {
   const { data: site } = await getSiteListSimple()

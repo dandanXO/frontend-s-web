@@ -2231,6 +2231,8 @@ export default {
     privilegeCountRatio: 'Privilege Count Ratio',
     table: 'Data Table',
     chart: 'Chart',
+    depositCountRatio: 'Deposit Count Ratio',
+    amountCountRatio: 'Amount Count Ratio',
   },
   message: {
     adsStatusOpen: 'Open',

@@ -2232,6 +2232,8 @@ export default {
     privilegeCountRatio: '领取人数比例',
     table: '数据',
     chart: '图表',
+    depositCountRatio: '存款笔数比例',
+    amountCountRatio: '存款金额比例',
   },
   message: {
     adsStatusOpen: '开',
