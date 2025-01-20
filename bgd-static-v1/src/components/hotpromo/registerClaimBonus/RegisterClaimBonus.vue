@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="bonus-wrapper">
-      <img src="./img/bonus-title.png" alt="" class="bonus-title" />
+      <img :src="require(`./img/bonus-title-${$t('lang.langVal')}.png`)" class="bonus-title" />
 
       <div class="bonus-container">
         <div class="bonus-main">
@@ -9,19 +9,19 @@
         </div>
         <div class="bonus-info">
           <div class="bonus-info-item">
-            <div class="label">Trial bonus balance:</div>
+            <div class="label">{{ $t("hotPromo.registerClaimBonus.trialBonusBalance") }}:</div>
             <div class="value">
               {{ promoData.trialBalance ? convertToCommaAmount(promoData.trialBalance) : "0.00" }}
             </div>
           </div>
           <div class="bonus-info-item">
-            <div class="label">Amount available:</div>
+            <div class="label">{{ $t("hotPromo.registerClaimBonus.amountAvailable") }}:</div>
             <div class="value">
               {{ promoData.claimableBonus ? convertToCommaAmount(promoData.claimableBonus) : "0.00" }}
             </div>
           </div>
           <div class="bonus-info-item">
-            <div class="label">Amount to be unlocked:</div>
+            <div class="label">{{ $t("hotPromo.registerClaimBonus.amountToBeUnlocked") }}:</div>
             <div class="value">
               {{ promoData.pendingBonus ? convertToCommaAmount(promoData.pendingBonus) : "0.00" }}
             </div>
@@ -31,21 +31,23 @@
         <div class="bonus-progress">
           <div class="bonus-progress-title">
             <div class="bonus-progress-title-left">
-              Complete
+              {{ $t("hotPromo.registerClaimBonus.complete") }}
               <span class="highlight">3</span>
-              tasks to receive it
+              {{ $t("hotPromo.registerClaimBonus.tasksToReceiveIt") }}
             </div>
             <div class="bonus-progress-title-right">
               <img src="./img/clock.png" alt="" />
-              {{ promoDaysLeft }} Days
+              {{ promoDaysLeft }} {{ $t("hotPromo.registerClaimBonus.days") }}
             </div>
           </div>
           <div class="bonus-progress-bar">
             <div class="bonus-progress-bar-fill" :style="{ width: totalProgressBarWidth + '%' }"></div>
           </div>
           <div class="bonus-progress-text">
-            <div class="bonus-progress-text-left">Completed： {{ noOfTasksCompleted }}</div>
-            <div class="bonus-progress-text-right">Target: 3</div>
+            <div class="bonus-progress-text-left">
+              {{ $t("hotPromo.registerClaimBonus.completed") }}: {{ noOfTasksCompleted }}
+            </div>
+            <div class="bonus-progress-text-right">{{ $t("hotPromo.registerClaimBonus.target") }}: 3</div>
           </div>
         </div>
 
@@ -54,15 +56,18 @@
           :class="{ disable: promoData.idVerificationStatus === true && promoData.claimableBonus <= 0 }"
           @click="claimBonus"
         >
-          Claim now
+          {{ $t("hotPromo.registerClaimBonus.claimNow") }}
         </div>
       </div>
     </div>
     <div class="task-container" v-for="(task, index) in promoData.tasks" :key="task.code">
       <div class="task-container-header">
-        Task {{ index + 1 }}: {{ task.name }}
-        <div class="status-button"
-          :class="(task.memberTaskStatus==='COMPLETED' || task.memberTaskStatus==='CLAIMED') ? 'completed' : 'progress'"
+        {{ $t("hotPromo.registerClaimBonus.task") }} {{ index + 1 }}: {{ task.name }}
+        <div
+          class="status-button"
+          :class="
+            task.memberTaskStatus === 'COMPLETED' || task.memberTaskStatus === 'CLAIMED' ? 'completed' : 'progress'
+          "
         >
           {{ task.memberTaskStatus.charAt(0) + task.memberTaskStatus.slice(1).toLowerCase() }}
         </div>
@@ -79,8 +84,10 @@
           ></div>
         </div>
         <div class="bonus-progress-text">
-          <div class="bonus-progress-text-left">Already recharged: {{ task.memberDepositStatus }}</div>
-          <div class="bonus-progress-text-right">Amount: {{ task.depositRequired }}</div>
+          <div class="bonus-progress-text-left">
+            {{ $t("hotPromo.registerClaimBonus.alreadyRecharged") }}: {{ task.memberDepositStatus }}
+          </div>
+          <div class="bonus-progress-text-right">{{ $t("hotPromo.registerClaimBonus.amount") }}: {{ task.depositRequired }}</div>
         </div>
       </div>
       <div class="task-container-footer">
@@ -128,19 +135,22 @@ const isCongratsModalV2 = ref(false);
 const bonusAmount = ref(0);
 const promoDaysLeft = ref(0);
 
-
 const noOfTasksCompleted = computed(() => {
-  return promoData.value?.tasks?.filter((item , index) => index <= 2 && (item.memberTaskStatus === "COMPLETED" || item.memberTaskStatus === "CLAIMED")).length || 0;
+  return (
+    promoData.value?.tasks?.filter(
+      (item, index) => index <= 2 && (item.memberTaskStatus === "COMPLETED" || item.memberTaskStatus === "CLAIMED")
+    ).length || 0
+  );
 });
 
 const totalProgressBarWidth = computed(() => {
   const tasksLength = promoData.value.tasks?.length || 0;
   var taskSize = 0;
-  if(noOfTasksCompleted.value === 1){
+  if (noOfTasksCompleted.value === 1) {
     taskSize = 0.3;
-  }else if(noOfTasksCompleted.value === 2){
+  } else if (noOfTasksCompleted.value === 2) {
     taskSize = 0.6;
-  }else  if(noOfTasksCompleted.value === 3){
+  } else if (noOfTasksCompleted.value === 3) {
     taskSize = 1;
   }
 
@@ -166,14 +176,13 @@ const handleReceiveBonus = async () => {
   isCongratsModalV2.value = false;
 };
 
-
 const getTasks = async () => {
   eventapi.get(`/session/register-trial-fund/init?promoCode=${props.promocode}`).then((res) => {
     promoData.value = res.data;
 
     const expiryDate = moment.utc(promoData.value.expiryDate, "YYYY-MM-DD HH:mm:ss");
     promoDaysLeft.value = expiryDate.diff(moment.utc(), "days");
-    if(promoDaysLeft.value < 0){
+    if (promoDaysLeft.value < 0) {
       promoDaysLeft.value = 0;
     }
   });

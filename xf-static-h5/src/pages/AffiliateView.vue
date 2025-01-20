@@ -240,7 +240,6 @@ const copyText = (text, msgTitle) => {
     text-align: center;
     text-shadow: 0px 7.804098606109619px 7.804098606109619px rgba(0, 0, 0, 0.47),
       3.9020493030548096px 3.9020493030548096px 0px #9da6d4;
-    // font-size: 3.46239rem;
     font-weight: 400;
     background: url("../assets/images/affiliate/title-bg.jpeg"), lightgray 50% / cover no-repeat;
     background-clip: text;
@@ -540,12 +539,14 @@ const copyText = (text, msgTitle) => {
   border-radius: 100px;
   padding: 5px 10px;
   cursor: pointer;
+  white-space: nowrap;
   transition: background-color 0.3s;
 }
 .download-button {
   background-color: #4ffbff;
   color: #000;
   border: none;
+  white-space: nowrap;
   border-radius: 100px;
   padding: 5px 10px;
   cursor: pointer;
@@ -589,20 +590,12 @@ a {
   color: #00bfd7;
 }
 
-.login-button:hover {
-}
-
 .join-us-button {
-  // background-color: #008cdd;
   color: #ffffff;
   background: linear-gradient(180deg, #00c7c0 0%, #0996c7 100%);
   box-shadow: 0px 0px 4px 0px #ffffff inset;
 }
 
-.join-us-button:hover {
-  // background-color: #007bbd;
-  // box-shadow: 0 6px 12px rgba(0, 123, 189, 0.7);
-}
 .affiliate-subgroup {
   margin: 24px 0px;
   display: flex;
@@ -654,6 +647,11 @@ a {
       justify-content: flex-start;
       align-items: center;
       margin-bottom: 15px;
+
+      color: #ffffff;
+      font-size: 20px;
+      font-weight: 700;
+
       &:before {
         background: linear-gradient(180deg, #8dbbec -42.2%, #3b4ba3 105.96%);
         content: "";
@@ -662,9 +660,6 @@ a {
         display: inline-block;
         margin-right: 10px;
       }
-      color: #ffffff;
-      font-size: 20px;
-      font-weight: 700;
     }
   }
 }
@@ -696,6 +691,10 @@ a {
   background: transparent;
   color: #fff;
   border: 0.76px solid #3578d01a;
+
+  &:first-child {
+    white-space: nowrap;
+  }
 }
 .agent-content-item table th {
   height: 56px;

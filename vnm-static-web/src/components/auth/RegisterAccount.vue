@@ -158,7 +158,7 @@
 import { ref, onMounted, reactive, defineEmits } from "vue";
 import { userStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
-import { isOperaPixelUrl, lsGet } from "@/utils/utils";
+import { lsGet } from "@/utils/utils";
 import { ElMessage } from "element-plus";
 import { getVerificationCode, register } from "@/api/index/login";
 import { useI18n } from "vue-i18n";
@@ -406,7 +406,7 @@ const submitRegisterForm = async (elForm) => {
                 if (store.isAffiliateA) {
                   fbq("track", "signup-success");
                 }
-                if (isOperaPixelUrl()) {
+                if (store.isOperaPixelB) {
                   otag("event", "registration");
                 }
 

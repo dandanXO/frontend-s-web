@@ -44,9 +44,11 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useQuasar, Platform } from "quasar";
+import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
 
+const { t } = useI18n();
 const router = useRouter();
 const $q = useQuasar();
 
@@ -73,7 +75,7 @@ const onSubmit = () => {
       $q.notify({
         color: "positive",
         position: "top",
-        message: "Registered successfully",
+        message: t("form.registerSuccess"),
         icon: "check_circle_outline"
       });
       window.location.reload();
@@ -84,7 +86,7 @@ const onSubmit = () => {
     $q.notify({
       color: "negative",
       position: "top",
-      message: "Please complete the verification code",
+      message: t("form.pleaseCompleteVerification"),
       icon: "report_problem"
     });
   }

@@ -125,6 +125,7 @@
     <DreamLeagueS25 v-if="list.redirectUrl === 'dy2-dream-league-s25'" :promo-code="list.promoCode" />
     <HongBaoYu2025 v-if="list.redirectUrl === 'dy2-cny2025-red-envelope'" :promo-code="list.promoCode" />
     <Monthly20HongBaoYu v-if="list.redirectUrl === 'dy2-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
+    <OfficialGiftPromo v-else-if="list.redirectUrl === 'dy-official-gift'" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -155,6 +156,9 @@ import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
 import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue";
 import VctBangkok from "components/hotpromo/vct-bangkok/VctBangkok.vue";
 
+const OfficialGiftPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/officialGift/OfficialGiftPromo.vue")
+);
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
 const TigerCardPromo = defineAsyncComponent(() => import("../components/hotpromo/tigercard/tigerCardPromo.vue"));
 const PrizePoolVotePromo = defineAsyncComponent(() =>
@@ -276,6 +280,7 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    OfficialGiftPromo,
     LivepokerRebate,
     SportZhongChao,
     BlastPremierPromo,

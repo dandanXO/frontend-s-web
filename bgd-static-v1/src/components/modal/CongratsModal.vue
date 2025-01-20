@@ -2,7 +2,9 @@
   <!-- <div class="congrats-wrapper"> -->
   <div class="congrats-container">
     <q-btn icon="close" round dense v-close-popup class="congrats-close" />
-    <div class="congrats-header"><img src="../../assets/images/index/modal/congrats-header.png" /></div>
+    <div class="congrats-header">
+      <img :src="require(`../../assets/images/index/modal/congrats-header-${$t('lang.langVal')}.png`)" />
+    </div>
     <div class="congrats-coupons"><img src="../../assets/images/index/modal/congrats-money.png" /></div>
     <div class="congrats-title">{{ $t("home.popup.getFreeCashLuckyDraw") }}</div>
     <div class="congrats-highlight">{{ $t("home.popup.downloadAppLoginAcc") }}</div>

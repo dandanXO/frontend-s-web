@@ -123,6 +123,7 @@ export default {
     currentPassword_rules_01: "Please insert current password",
     pleaseCompleteKYC: "Please Complete KYC",
     bindEmail: "Bind Email",
+    bindEmailDesc: "Please proceed to bind email",
     code: "Code",
     code_placeholder: "Enter verification code",
     code_rules_01: "Verification code is required",
@@ -167,7 +168,11 @@ export default {
     content: "Content",
     content_placeholder: "Please enter content",
     content_rules_01: "Please enter content",
-    content_rules_02: "Content length is 500 words or less"
+    content_rules_02: "Content length is 500 words or less",
+    registerSuccess: "Registered successfully",
+    pleaseCompleteVerification: "Please complete the verification code",
+    uploadSuccess: "uploaded successfully",
+    uploadFailedTryAgain: "upload failed. Please try again"
   },
   btn: {
     login: "Login",
@@ -207,7 +212,8 @@ export default {
     deposit: "Deposit",
     learnMore: "Learn More",
     replaceImage: "Replace Image",
-    details: "Details"
+    details: "Details",
+    proceed: "Proceed"
   },
   notify: {
     noRecord: "No Record",
@@ -222,7 +228,16 @@ export default {
     uploadImageLargerThan1MbError: "The uploaded image cannot be larger than 1MB",
     imageFormatError: "Image format error",
     uploadFailedPleaseTryAgain: "upload failed. Please try again",
-    copiedSuccessfully: "Copied Successfully"
+    copiedSuccessfully: "Copied Successfully",
+    linkCopiedToClipboard: "Link copied to clipboard",
+    failedToCopyLink: "Failed to copy link",
+    registeringInProgress: "Registering in progress",
+    loggingIn: "Logging in",
+    loggingOut: "Logging out",
+    emailBindedSuccessfully: "Email binded successfully",
+    emailAlreadyUsed: "Email already used. Please try another email.",
+    phoneUpdatedSuccessfully: "Phone number updated successfully",
+    newPasswordUpdatedSuccessfully: "New password updated successfully"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -303,7 +318,23 @@ export default {
     select_privilege: "Select Privilege",
     incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again.",
     useFtdPrivilege: "Use Slot First Deposit Privilege",
-    unlimited: "Unlimited"
+    unlimited: "Unlimited",
+    depositTips1: "1. Recharge tutorial:",
+    depositTips2: "2. Fill in the correct payment wallet account number.",
+    depositTips3:
+      "3. The submitted amount must match the payment amount; otherwise, it will not be automatically credited.",
+    depositTips33: "After completing the payment, please fill in the TrxID to avoid automatic credit failures.",
+    depositTips4:
+      "4. Only payments made using the wallet selected in the order are supported. Cross-wallet transfers are not\n" +
+      "          allowed.",
+    video: "Video",
+    picture: "Picture",
+    depositUsdtTip2: "২. ন্যূনতম জমা: ১০USDT, ১০USDT এর কম জমা ক্রেডিট করা হবে না।",
+    depositUsdtTip3: "৩. উপরের ঠিকানায় কোনো অ-মুদ্রা সম্পদ জমা করবেন না, অন্যথায় সম্পদ পুনরুদ্ধার করা যাবে না।",
+    depositUsdtTip4: "৪. তথ্য বিকৃত বা ফাঁস হওয়া এড়াতে অনুগ্রহ করে নিশ্চিত করুন যে অপারেটিং পরিবেশ নিরাপদ।",
+    depositUsdtTip5:
+      "৫. স্থানান্তর পরিমাণ অবশ্যই আপনার তৈরি করা অর্ডারের সাথে মিলতে হবে, অন্যথায় অর্থ সফলভাবে ক্রেডিট করা যাবে না।",
+    depositUsdtTip6: "৬. দ্রষ্টব্য: অর্থ স্থানান্তরের পরে জমা অর্ডার বাতিল করবেন না।"
   },
   withdraw: {
     cashBalance: "Cash Balance",
@@ -314,7 +345,14 @@ export default {
     remainWagers: "Remain Wagers",
     withdrawTutorial: "Withdraw Tutorial",
     withdrawalMethodInMaintenance:
-      "This channel is currently under maintenance from {startTime} to {endTime}. Please use other channels for withdrawal operations. Thank you!"
+      "This channel is currently under maintenance from {startTime} to {endTime}. Please use other channels for withdrawal operations. Thank you!",
+    withdrawTips1: "1.Bind your wallet/bank card using the correct format.",
+    withdrawTips2:
+      "2.Daily wallet limit: BDT 50,000. Do not exceed this limit. You can add multiple wallets for withdrawals.",
+    withdrawTips3:
+      "3.Daily bank card limit: BDT 500,000. Do not exceed this limit. You can add multiple bank cards for\n" +
+      "          withdrawals.",
+    withdrawTips4: "4.For blockchain wallet (USDT) withdrawals, there is no limit, and transfers are very fast."
   },
   bank: {
     virtualWallet: "eWallet",
@@ -363,7 +401,6 @@ export default {
     upgrade: "Upgrade",
     experience: "Experience",
     dailyWithdrawalTimes: "Daily Withdrawal Frequency",
-    rewards: "Rewards",
     vipTable_txt:
       "Once your deposits meet the upgrade requirements, your VIP level will be immediately upgraded, increasing your number of withdrawals.",
     accumulate: "Accumulate",
@@ -641,6 +678,43 @@ export default {
       remainingDrawTimes: "Remaining draw times",
       congratulations: "Congratulations"
     },
+    referWheel: {
+      remainingDrawTimes: "Remaining times",
+      congratulations: "Congratulations",
+      withdrawSuccessfully: "Withdraw successfully",
+      recharge: "Recharge",
+      shareSocialText: "Invite friends to help withdraw coins",
+      save: "Save",
+      currentAmount: "Current Amount",
+      withdrawalStillTakes: "Withdrawal still takes",
+      shareThisReferralLink: "Share this referral link with you friends",
+      getForFree: "Get For Free",
+      inviteFriendsHelp: "Invite friends to help",
+      withdraw: "Withdraw",
+      claim: "Claim",
+      days: "Days",
+      expiresLater: "Expires Later",
+      hours: "Hours",
+      minutes: "Minutes",
+      seconds: "Seconds",
+      scanQRCode: "Scan QR Code",
+      termsCondition1: "When the accumulated amount reaches 300BDT, you can apply for withdrawal.",
+      termsCondition2:
+        "Every time you invite a friend to register and the friend recharges once, you will get 1 free spin.",
+      termsCondition3:
+        "The event lasts for 3 days. After the activity period ends, the accumulated rewards will be reset and the activity will start again.",
+      termsCondition4:
+        "Each user can enjoy 1 free spin opportunity per day, and the number of spins will be reset at 24:00 every day.",
+      termsCondition5: "Once the application is approved, the bonus will be deposited directly into your wallet.",
+      termsCondition6: "The invitees must be qualified for the assistance to be successful.",
+      termsCondition7:
+        "The right to interpret this activity belongs to our company. If you have any questions, please contact customer service.",
+      paymentRequestSubmitted: "Payment request submitted",
+      withdrawalStillRequires: "Withdrawal is still required on",
+      willBeCreditedToAccount: "will be credited to your account",
+      thanks: "Thanks!",
+      noInvitesYet: "No invites yet!"
+    },
     signIn7Days: {
       continuousSignIn: "Continuous sign-in:",
       expired: "Expired",
@@ -648,6 +722,117 @@ export default {
       days: "days",
       signIn: "Sign in",
       signedIn: "Signed in"
+    },
+    emailVerifyBonus: {
+      linkWithEmail: "Link with Email",
+      link: "Link",
+      eventDetails01: `<span style="color: #fff96f">win7.game</span> Special Offer for New Members: First Deposit Bonus Up to <span style="color: #ff0000">119%</span>!`,
+      eventDetails02: `Simply create a new member account at <span style="color: #fff96f">win7.game</span>, complete your first deposit, and you can claim your bonus. In addition, with a minimum deposit of <span style="color: #ff0000">100TK</span>, you can enjoy the first deposit bonus and an additional bonus of up to <span style="color: #ff0000">119%</span>, providing more fun.`,
+      eventDetails03: `In addition, there are additional offers for users with higher top-ups. Top up more, enjoy more rewards, and participate in <span style="color: #fff96f">win7.game</span> activities with your friends to experience higher benefits and services.`,
+      depositAmount: "Deposit Amount",
+      giveawayBonus: "Giveaway Bonus",
+      turnoverRequirements: "Turnover requirements",
+      applicableGames: "Applicable games",
+      conditionsForReceiving: "Conditions for receiving",
+      slotMachines: "Slot Machines",
+      depositPayment: "Deposit payment",
+      selectADepositChannel: "Select a deposit channel",
+      checkOffer: "Check the first deposit offer",
+      examplesPara01: `For example, member A tops up <span style="color: #ff0000">100 TK</span> for the first time and gets <span style="color: #ff0000">119 TK</span> as a reward. Before withdrawing, he needs to complete at least 10 times the turnover requirement, that is:`,
+      examplesPara02: "100 principal x 10 + 119 reward x 10 = 2190 turnover",
+      examHowPara01:
+        "Before making your first deposit, members need to verify their email address and bind a valid withdrawal account (supports Nagad, Rocket, Bkash, Upay).",
+      examHowPara02:
+        "Go to the deposit page > Select a deposit channel > Select a promotion > Click to receive the 119% first deposit bonus",
+
+      tnc01: "This bonus is only available for new member accounts and only for their first deposit.</li>",
+      tnc02:
+        "Withdrawal requirements: You need to complete the wagering requirement of at least 10 times the turnover. The calculation formula is: (Deposit amount + Bonus amount) × 10 times the turnover requirement.</li>",
+      tnc03: "This bonus is only applicable to the slot game category.</li>",
+      tnc04:
+        "If a member mistakenly participates in a non-specified game category, the bonus will be deemed invalid and win7.gam reserves the right to deduct the relevant bonus and the profits generated.</li>",
+      tnc05:
+        "Each member is limited to one account (including deposit account, withdrawal account, IP address). Multiple account behavior will result in the bonus being invalid. If violations are found, win7.gam reserves the right to cancel the bonus and freeze the account.</li>",
+      tnc06:
+        "Before the first withdrawal application, the bound bank account information and phone number cannot be changed. If the information is changed, the bonus will be cancelled and the bonus and the resulting profits will be deducted.</li>",
+      tnc07:
+        "This bonus is only applicable to players in the specified game category. The bonus cannot be used to accumulate betting turnover, calculate arbitrage behavior or be used in combination with other technical means. If violations are found, the bonus will be deemed invalid, all bonuses and profits will be cancelled, and win7.gam reserves the right to close the account.</li>",
+      tnc08:
+        "win7.gam reserves the right to change, suspend or terminate this activity at any time without prior notice.</li>",
+      tnc09:
+        "The final right of interpretation of all terms belongs to win7.gam. win7.gam reserves the right to refuse to deal with any disputes involving terms.</li>        "
+    },
+    moneyRain: {
+      mainHeader: `<span class="orange">700,000BDT&nbsp;</span><span class="green">every time maximum surplus</span><span class="orange">&nbsp;70,000BDT</span>`,
+      events: "Events",
+      records: "Records",
+      rewindTime: "Rewind time",
+      startsNow: "starts now",
+      startsAt: "starts at",
+      everyFriSatSun: "Every Friday, Saturday, and Sunday",
+      onOtherDays: "On Other Days, Three Times Daily",
+      tnc: "Terms and Conditions",
+      tncContent: `Each round of cash rain freely distributes 700,000 BDT.<br />Maximum cashback amount per round: 70,000 BDT.<br />Each round freely distributes cashback.<br />Maintain a historical deposit of ≥200 BDT and complete daily bets of ≥100+ BDT to claim your reward forfree.<br />The received money can be directly used for playing games or withdrawing.<br />The higher the VIP membership level, the greater the amount received.`,
+      listOfWinners: "List of winners",
+      name: "Name",
+      date: "Date",
+      amount: "Amount"
+    },
+    registerClaimBonus: {
+      trialBonusBalance: "Trial bonus balance",
+      amountAvailable: "Amount available",
+      amountToBeUnlocked: "Amount to be unlocked",
+      complete: "Complete",
+      tasksToReceiveIt: "tasks to receive it",
+      days: "Days",
+      completed: "Completed",
+      target: "Target",
+      claimNow: "Claim now",
+      task: "Task",
+      alreadyRecharged: "Already recharged",
+      amount: "Amount"
+    },
+    signIn30Days: {
+      today: "TODAY",
+      claimed: "CLAIMED",
+      signInNow: "SIGN IN NOW",
+      progressRewardSystem: "PROGRESSIVE REWARD SYSTEM + DYNAMIC TREASURE CHEST INCENTIVES",
+      day: "Day",
+      rewards: "Rewards",
+      claim: "Claim",
+      claimThe: "Claim the",
+      chestWithRandom: "Chest with a random maximum bonus of",
+      missedRules01: "*Rules for Missed Sign-ins: If a user misses a day, they must start again from Day 1.",
+      dayRange: "Day Range",
+      maxReward: "Max Reward",
+      superChest: " Super Chest",
+      days: "Days",
+      usersMustMeet: "Users must meet the daily betting minimum to claim rewards:",
+      noBettingRequired: "No betting required; reward can be claimed once.",
+      ifRestartingOnDay1: `If re-starting on Day 1: Minimum cumulative bet of <span style="font-size: 14px; color: #11ff00">100 BDT</span> required`,
+      noBettingRequired: "No betting required; reward can be claimed once.",
+      ifRestartingOnDay2: `If re-starting on Days 2-3: Minimum cumulative bet of <span style="font-size: 14px; color: #11ff00">100 BDT</span> required`,
+      minCumulativeBetsOf: "Minimum cumulative bets of",
+      usersMustMeetTheBettingReq: "Users must meet the betting requirements before claiming rewards.",
+      activityRules01: "Activity time: January 1 - January 31, 2025",
+      activityRules02: "Bonus rollover requirement: 1x rollover",
+      activityRules03: "Bonus distribution: Immediately distributed to your wallet after receiving it",
+      wish01: "May Allah bless you with endless Barakah.",
+      wish02: "May Allah open the doors of wealth and prosperity for you.",
+      wish03: "May Allah's blessings bring success and financial stability in your life.",
+      wish04: "Allah ka karam ho, aur har kaam mein barkat ho.",
+      wish05: "Tumhara har din taraqqi aur kamiyabi ka ho.",
+      wish06: "Khuda tumhein maal-o-doulat aur izzat se nawazay.",
+      wish07: "Best wishes for your success and financial growth.",
+      wish08: "May your business flourish and your earnings multiply.",
+      wish09: "Wishing you abundant wealth and endless happiness.",
+      wish10: "May this year bring you abundant wealth and prosperity.",
+      wish11: "May Allah bless you with immense wealth and endless prosperity.",
+      wish12: "Wishing you financial success and abundant blessings in all your endeavors.",
+      wish13: "May your earnings multiply and your wealth grow beyond measure.",
+      wish14: "May the doors of success and fortune always remain open for you.",
+      wish15: "May Allah’s blessings turn all your efforts into wealth and success.",
+      wish16: "On this special occasion, I pray for your financial growth and success."
     }
   },
   maintenance: {
@@ -771,7 +956,7 @@ export default {
     33001: "Must be a 3-digit number",
     34000: "Member's birthday is not in this month",
     34001: "Member's birthday not found",
-    35000: "Member cannot receive this privilege",
+    35000: "Member does not meet the requirements to receive this offer",
     35001: "Member has already received this privilege",
     35002: "No eligible special privileges can be received",
     35003: "Special privileges and members do not match",

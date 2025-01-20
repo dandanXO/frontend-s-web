@@ -12,6 +12,7 @@
     <WelcomeTaskPromo v-if="list.redirectUrl === 'welcomenewuser'" />
     <PrivilegeInvite v-if="store.token && list.redirectUrl === 'invitefriend'" />
     <HongBaoYu2025 v-if="list.redirectUrl === 'xf1-cny2025-red-envelope'" :promo-code="list.promoCode" />
+    <OfficialGiftPromo v-if="list.redirectUrl === 'xf-official-gift'" :params="list.param" />
     <SlotLacky8 v-if="list.redirectUrl === 'xf-lucky-slot' && store.token" :promo-code="list.promoCode" />
     <BonusSpinWheelPromo v-if="list.redirectUrl === 'cny-spinwheel'" />
     <ReturnPromo v-if="list.redirectUrl === 'xf-return-promo'" />
@@ -218,6 +219,7 @@ import ReturnPromo from "../components/hotpromo/returnPromo/ReturnPromo.vue";
 import DepositAwardPromo from "../components/hotpromo/depositAward/DepositAwardPromo.vue";
 import SlotsRebatePromo from "../components/hotpromo/slotsrebate/SlotsRebatePromo.vue";
 import SlotsBonusPromo from "../components/hotpromo/slotsbonus/SlotsBonusPromo.vue";
+import OfficialGiftPromo from "./hotpromo/officialGift/OfficialGiftPromo.vue";
 
 const HongBaoYu2025 = defineAsyncComponent(() => import("../components/hotpromo/hongbaoyu2025/HongBaoYu2025.vue"));
 
@@ -239,6 +241,7 @@ export default defineComponent({
     ReturnPromo,
     SlotLacky8,
     HongBaoYu2025,
+    OfficialGiftPromo,
     DepositAwardPromo,
     SlotsRebatePromo,
     SlotsBonusPromo

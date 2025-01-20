@@ -134,16 +134,9 @@ export default route(function (/* { store, ssrContext } */) {
 
     // FB tracking
     console.log(window.location.href);
-    if (window.location.href.indexOf("tf88king.com") > -1) {
-      fbq("init", "888951505918547");
-      fbq("track", "PageView");
-      user.isAffiliateA = true;
-    } else if (window.location.href.indexOf("tfgame88.com") > -1) {
-      fbq("init", "3658633674357920");
-      fbq("track", "PageView");
-      user.isAffiliateA = true;
-    } else if (isOperaPixelUrl()) {
+    if (isOperaPixelUrl()) {
       otag("init", "adv10336256983680");
+      user.isOperaPixelB = true;
     } else if (window.location.href.indexOf("tf68688.com") > -1) {
       fbq("init", "1123673335564806");
       fbq("track", "PageView");
@@ -158,6 +151,10 @@ export default route(function (/* { store, ssrContext } */) {
       user.isAffiliateA = true;
     } else if (window.location.href.indexOf("t145f338.com") > -1) {
       fbq("init", "1672168757009623");
+      fbq("track", "PageView");
+      user.isAffiliateA = true;
+    } else if (window.location.href.indexOf("f136f854.com") > -1) {
+      fbq("init", "1168864634732829");
       fbq("track", "PageView");
       user.isAffiliateA = true;
     }

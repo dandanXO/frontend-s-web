@@ -199,7 +199,7 @@ window.addEventListener("load", () => {
       container.setAttribute("data-type", "INSTALL");
     }
     loading.classList.remove("loading--show");
-  }, 2500);
+  }, 1000);
 
   detectDeviceAndBrowser();
   countdown.innerHTML = `${INSTALL_COUNTDOWN}`;

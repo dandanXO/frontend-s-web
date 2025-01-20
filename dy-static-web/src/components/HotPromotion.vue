@@ -99,7 +99,7 @@
     <VctcnMatchPromo v-if="list.redirectUrl === 'dy2-vctcn'" :promo-code="list.promoCode" />
     <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
     <Dota2BlastSlam2025 v-if="list.redirectUrl === 'dy2-blast-slam-2025'" :promo-code="list.promoCode"/>
-
+    <OfficialGiftPromo v-if="list.redirectUrl === 'dy-official-gift'" :params="list.param" />
     <ChristmasGachapon
       v-if="list.redirectUrl === 'dy2-christmas-gashapon'"
       :promo-code="list.promoCode"
@@ -216,12 +216,14 @@ import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue"
 import BountyBlastPremier from "./hotpromo/bounty-blast/BountyBlastPremier.vue";
 import VctBangkok from "./hotpromo/vct-bangkok/VctBangkok.vue";
 import Dota2BlastSlam2025 from "./hotpromo/dota2-blast-slam-2025/Dota2BlastSlam2025.vue";
+import OfficialGiftPromo from "../components/hotpromo/officialGift/OfficialGiftPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    OfficialGiftPromo,
     Dota2BlastSlam2025,
     VctBangkok,
     LivepokerRebate,

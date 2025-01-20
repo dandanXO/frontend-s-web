@@ -22,8 +22,15 @@ export function loadHomePopup() {
   return server.REST.get("/member/ads-popout");
 }
 
-export function loadHomePopups() {
-  return server.REST.get("/member/site-popout-list");
+export function loadHomePopups(siteType) {
+  if (siteType) {
+    return server.REST.get('/member/site-popout-list', {
+      params: {
+        siteType: siteType
+      }
+    });
+  }
+  return server.REST.get('/member/site-popout-list')
 }
 
 export function claimBonusItem(item) {

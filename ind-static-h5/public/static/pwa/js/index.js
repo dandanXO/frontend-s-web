@@ -2,7 +2,7 @@
 import { FBQ_INITIALIZED, fbqLists, INSTALLATION_STATUS_KEY, PWA_DATA_KEY } from "./const.js";
 import { getRedirectInfo, redirectToGame } from "./redirect.js";
 
-const INSTALL_COUNTDOWN = 2;
+const INSTALL_COUNTDOWN = 5;
 let currentInstallCountdown = INSTALL_COUNTDOWN;
 let installationProgressNumber = 0;
 let deferredPrompt;
@@ -193,16 +193,34 @@ window.addEventListener("load", () => {
     container.setAttribute("data-type", installationStatus);
   }
 
+  const userAgent = navigator.userAgent.toLowerCase();
+  const isIos = /iphone|ipad|ipod/.test(userAgent);
+
   setTimeout(() => {
     if (deferredPrompt && installationStatus === "PLAY") {
       localStorage.removeItem(INSTALLATION_STATUS_KEY);
       container.setAttribute("data-type", "INSTALL");
     }
     loading.classList.remove("loading--show");
+
+    if (isIos) {
+      const currentDomain = window.location.origin;
+      window.location.href = `${currentDomain}/home`;
+      // window.location.href = `https://ind.55ace.com/home`;
+    }
   }, 2500);
 
   detectDeviceAndBrowser();
   countdown.innerHTML = `${INSTALL_COUNTDOWN}`;
+
+  // const userAgent = navigator.userAgent.toLowerCase();
+  // const isIos = /iphone|ipad|ipod/.test(userAgent);
+  // if (isIos) {
+  //   // document.querySelectorAll(".ios-modal").forEach((el) => (el.style.display = "flex"));
+  //   const currentDomain = window.location.origin;
+  //   // window.location.href = `${currentDomain}/home`;
+  //   window.location.href = `https://ind.55ace.com/home`
+  // }
 });
 
 /** browser detect **/

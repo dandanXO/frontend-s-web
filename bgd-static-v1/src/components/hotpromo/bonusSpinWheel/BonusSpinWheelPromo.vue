@@ -16,7 +16,7 @@
             <img
               id="spin-wheel-bg"
               class="wheel-bg"
-              src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-wheel-bg1.png"
+              src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-wheel-bg2.png"
             />
             <div id="spin-wheel-number" class="spin-wheel-number" style="display: none"></div>
           </div>
