@@ -34,21 +34,13 @@ let eventapi;
 
 async function init() {
   if (isGlobalLH) {
-    const rstGlobalArray = process.env.GLOBAL_RST_API.split(",");
-    const evtGlobalArray = process.env.GLOBAL_EVT_API.split(",");
-    const crGlobalArray = process.env.GLOBAL_CR_API.split(",");
+    rstApi = "https://apn0zz6gox.330z3w3.com";
+    evtApi = "https://prx6g60gox.7tk6kax.com";
+    crtApi = "https://cavqhi7gox.ax76c8n.com";
 
-    // rstApi = "https://apn0zz6gox.330z3w3.com";
-    // evtApi = "https://prx6g60gox.7tk6kax.com";
-    // crtApi = "https://cavqhi7gox.ax76c8n.com";
-
-    rstApi = rstGlobalArray[Math.floor(Math.random() * rstGlobalArray.length)];
-    evtApi = evtGlobalArray[Math.floor(Math.random() * evtGlobalArray.length)];
-    crtApi = crGlobalArray[Math.floor(Math.random() * crGlobalArray.length)];
-
-    localStorage.setItem(XF_H5_RST_URL, rstApi);
-    localStorage.setItem(XF_H5_EVT_URL, evtApi);
-    localStorage.setItem(XF_H5_CRT_URL, crtApi);
+    localStorage.setItem("XF_H5_RST_URL", rstApi);
+    localStorage.setItem("XF_H5_EVT_URL", evtApi);
+    localStorage.setItem("XF_H5_CRT_URL", crtApi);
 
     // var cdnApi = "https://urle7rqimtl.enkpdmqvhc.com";
     // localStorage.setItem("IMAGE_CDN", cdnApi);
@@ -141,10 +133,6 @@ async function getInitApi(apiLinks, urlLsName, errorPrefix) {
       }, 100);
     });
   } else if (successRstUrl) {
-    if (!Object.values(apiLinks).includes(successRstUrl)) {
-      apiReplacementRecords.push({ errorPrefix, url: successRstUrl });
-    }
-
     axios
       .get(successRstUrl + "/ping")
       .then((res) => {
@@ -168,7 +156,6 @@ async function getInitApi(apiLinks, urlLsName, errorPrefix) {
       if (initApi.indexOf(REPLACEMENT_DOMAIN) > -1) {
         const newDomain = replaceRndDomain(urlLsName);
         initApi = initApi.replace(REPLACEMENT_DOMAIN, newDomain);
-        apiReplacementRecords.push({ errorPrefix, url: initApi });
       }
     }
 
@@ -297,11 +284,7 @@ export default boot(async ({ app, router }) => {
         location.reload();
       } else {
         if (
-          (window.location.pathname === "/promotion" ||
-            window.location.pathname === "/deposit" ||
-            window.location.pathname === "/invitefriend" ||
-            window.location.pathname === "/vip" ||
-            window.location.pathname === "/privilege/invite") &&
+          window.location.pathname === "/promotion" &&
           (res.code === ResponseCode.ERROR_TOKEN_MISSED ||
             res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
             res.code === ResponseCode.ERROR_TOKEN_LOGGED ||

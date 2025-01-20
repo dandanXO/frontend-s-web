@@ -73,15 +73,15 @@
           if (window.flutter_inappwebview) {
             window.flutter_inappwebview.callHandler("FlutterChannel", "XF_FLUTTETR");
 
-            const flutterObj = JSON.stringify(window.flutter_inappwebview, null, 2);
-            alert(`flutter_inappwebview object:\n${flutterObj}`);
+            const flutterObj = JSON.stringify(window.flutter_inappwebview);
+            alert(`11flutter_inappwebview object:\n${flutterObj}`);
           } else {
             console.log("FlutterChannel not available yet, waiting...");
             const interval = setInterval(() => {
               if (window.flutter_inappwebview) {
                 window.flutter_inappwebview.callHandler("FlutterChannel", "XF_FLUTTETR");
                 console.log("Message sent to Flutter after DOMContentLoaded");
-                alert("Message sent to Flutter after DOMContentLoaded1")
+                alert("Message sent to Flutter after DOMContentLoaded1");
                 clearInterval(interval);
               }
             }, 100);
