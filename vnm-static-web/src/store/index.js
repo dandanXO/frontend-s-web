@@ -34,6 +34,7 @@ export const userStore = defineStore("userStore", {
       unreadTotal: 0,
       visitorId: "",
       isAffiliateA: false,
+      isOperaPixelB: false,
       withdrawType: ""
     };
   },
@@ -65,12 +66,13 @@ export const userStore = defineStore("userStore", {
       this.getMemberInfo();
     },
     getUnreadMail() {
-      getUnreadTotal().then((response) => {
-        if (response.code === 0) {
-          this.unreadTotal = response.data;
-        }
-      }).catch((error) => {
-      });
+      getUnreadTotal()
+        .then((response) => {
+          if (response.code === 0) {
+            this.unreadTotal = response.data;
+          }
+        })
+        .catch((error) => {});
     },
     getMemberInfo() {
       if (this.token) {
