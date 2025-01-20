@@ -93,7 +93,9 @@ installBtn.addEventListener("click", async () => {
         const userAgent = navigator.userAgent.toLowerCase();
         const isIos = /iphone|ipad|ipod/.test(userAgent);
         if (isIos) {
-          document.querySelectorAll(".ios-modal").forEach((el) => (el.style.display = "flex"));
+          // document.querySelectorAll(".ios-modal").forEach((el) => (el.style.display = "flex"));
+          const currentDomain = window.location.origin;
+          window.location.href = `${currentDomain}/home`;
         } else {
           window.open("https://ind.55ace.com/register", "_blank");
         }
