@@ -133,6 +133,10 @@ async function getInitApi(apiLinks, urlLsName, errorPrefix) {
       }, 100);
     });
   } else if (successRstUrl) {
+    if (!Object.values(apiLinks).includes(successRstUrl)) {
+      apiReplacementRecords.push({ errorPrefix, url: successRstUrl });
+    }
+
     axios
       .get(successRstUrl + "/ping")
       .then((res) => {
@@ -156,6 +160,7 @@ async function getInitApi(apiLinks, urlLsName, errorPrefix) {
       if (initApi.indexOf(REPLACEMENT_DOMAIN) > -1) {
         const newDomain = replaceRndDomain(urlLsName);
         initApi = initApi.replace(REPLACEMENT_DOMAIN, newDomain);
+        apiReplacementRecords.push({ errorPrefix, url: initApi });
       }
     }
 
