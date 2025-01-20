@@ -92,6 +92,10 @@
         window.notifyApp = function (message) {
           try {
             const returnJson = message.data;
+
+            const returnJsonStringify = JSON.stringify(returnJson);
+            alert(`returnJson:\n${returnJsonStringify}`);
+
             if (returnJson && returnJson.rstDomain) {
               window.localStorage.setItem("XF_H5_RST_URL", returnJson.rstDomain);
 
@@ -150,7 +154,8 @@
       } else if (
         window.location.pathname === "/viptest" ||
         window.location.pathname === "/deposittest" ||
-        window.location.pathname === "/promotiontest"
+        window.location.pathname === "/promotiontest" ||
+        window.location.pathname === "/promotion" ||
       ) {
         window.notifyApp = function (message) {
           try {
@@ -158,8 +163,8 @@
 
             // 打印数据到控制台，供调试用
             console.log("Received message from Flutter:", message);
-            // alert("Received message from Flutter:");
-            // alert(message);
+            alert("Received message from Flutter:");
+            alert(message);
             // alert("DATA   " + message.data);
 
             const returnJson = message.data;
