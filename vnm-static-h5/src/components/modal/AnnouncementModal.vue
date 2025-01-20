@@ -3,37 +3,9 @@
     <q-dialog v-model="visible">
       <div style="overflow: unset; width: 90%">
         <div class="dialog-wrapper">
-          <div class="dialog-header only-inbox">
-            <div
-              class="dialog-tab-item announcement"
-              :class="currentTab === 'announcement' ? 'active' : ''"
-              @click="changeTab('announcement')"
-              v-if="announceData.length > 0"
-            >
-              <div v-if="currentTab === 'announcement'">
-                <img class="bg-img" src="../../assets/images/home/announcement/tab-active-background-2.png" alt="" />
-                <p class="text">{{ $t('lang.inbox_imptAnnouncement') }}</p>
-              </div>
-              <p v-else>{{ $t('lang.inbox_imptAnnouncement') }}</p>
-            </div>
-            <div
-              class="dialog-tab-item inbox"
-              :class="currentTab === 'inbox' ? 'active' : ''"
-              @click="changeTab('inbox')"
-            >
-              <div v-if="currentTab === 'inbox'">
-                <img class="bg-img" src="../../assets/images/home/announcement/tab-active-background.png" alt="" />
-                <p class="text">
-                  <img
-                    src="../../assets/images/home/announcement/icon-mail.svg"
-                    alt=""
-                    style="width: 24px; height: 24px"
-                  />
-                  {{ $t('lang.inbox_mailBox') }}
-                </p>
-              </div>
-              <p v-else>{{ $t('lang.inbox_mailBox') }}</p>
-            </div>
+          <div class="dialog-header">
+            Tin Tức Trang Web
+            <q-btn icon="close" flat round dense v-close-popup size="12px" class="close-icon" @click="visible = false" />
           </div>
           <div class="dialog-content">
             <InboxComponent
@@ -43,13 +15,13 @@
               :slide="activeDot"
               :mailData="mailData"
             />
-            <AnnouncementComponent
+            <!-- <AnnouncementComponent
               @chageSlide="hChageSlide"
               v-if="currentTab === 'announcement'"
               ref="announcementComponentRef"
               :slide="activeDot"
               :announceData="announceData"
-            />
+            /> -->
           </div>
           <div class="dialog-footer">
             <div class="dot-wrapper">
@@ -61,18 +33,15 @@
                 @click="handleDotClick(index)"
               ></div>
             </div>
+            <div class="button-wrapper">
+              <q-btn text-color="white" :label="$t('lang.inbox_contactCS')" style="background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);" @click="handleService" />
+              <q-btn text-color="#7A80A1" :label="$t('lang.inbox_viewDetails')" style="background: linear-gradient(180deg, rgba(214, 233, 255, 0.83) 5.34%, rgba(255, 255, 255, 0) 102.78%);" @click="handleDetail(currentComponentData[activeDot])" />
+            </div>
             <q-checkbox v-model="checked" :label="$t('lang.inbox_noMoreToday')" />
           </div>
         </div>
         <div class="dialog-action">
           <div class="dialog-action-row">
-            <q-btn
-              rounded
-              class="dialog-action-item close-icon"
-              icon="close"
-              size="12px"
-              @click="visible = false"
-            ></q-btn>
           </div>
         </div>
       </div>
@@ -88,8 +57,10 @@ import { userStore } from "src/stores";
 import { api } from "boot/axios";
 import { useLocalStorage } from "@vueuse/core";
 import moment from "moment";
+import { useRouter } from "vue-router";
 
 const store = userStore();
+const router = useRouter();
 const lastAnnouncementDateStr = useLocalStorage("LH_LAST_ANNOUNCEMENT_DATE", null);
 
 const visible = ref(false);
@@ -115,6 +86,20 @@ const handleDotClick = (index) => {
 
 const hChageSlide = (val) => {
   activeDot.value = val;
+};
+
+const handleService = () => {
+  router.push("/liveChat");
+};
+
+const handleDetail = (mail) => {
+  router.push({
+    path: "/account/inbox",
+    query: {
+      id: mail.id,
+      type: mail.type
+    }
+  });
 };
 
 const getInbox = () => {
@@ -155,6 +140,14 @@ watch(
         if (res.code === 0) {
           mailData.value = res.data;
         }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        if (mailData.value.length > 0) {
+          visible.value = true;
+        }
       });
     }
   }
@@ -176,7 +169,10 @@ watch(checked, (val) => {
 }
 
 .dialog-header {
-  background: linear-gradient(0deg, #3480f9 0%, #6cadff 100%);
+  background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
   height: 42px;
   display: flex;
   align-items: center;
@@ -258,10 +254,10 @@ watch(checked, (val) => {
 }
 
 .dialog-footer {
-  background: #e8f0fd;
-  height: 48px;
+  background: white;
   border-radius: 0 0 12px 12px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   padding: 16px;
@@ -271,6 +267,7 @@ watch(checked, (val) => {
     justify-content: center;
     align-items: center;
     gap: 4px;
+    margin-bottom: 24px;
   }
 
   .dot {
@@ -284,6 +281,12 @@ watch(checked, (val) => {
       width: 20px;
       border-radius: 56px;
     }
+  }
+
+  .button-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
   }
 }
 
@@ -315,5 +318,10 @@ watch(checked, (val) => {
 
 ::v-deep(.q-dialog__inner > div) {
   overflow: unset;
+}
+
+.close-icon {
+  position: absolute;
+  right: 16px;
 }
 </style>

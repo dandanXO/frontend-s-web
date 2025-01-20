@@ -13,14 +13,6 @@
         <div class="announcement-title" v-html="item.title"></div>
         <div class="announcement-content" v-html="item.content"></div>
         <div class="announcement-footer">
-          <div class="footer-button" @click="handleService">
-            {{$t('lang.inbox_contactCS')}}
-            <img src="../../assets/images/home/announcement/arrow-right.svg" alt="" />
-          </div>
-          <div class="footer-button" @click="handleDetail(item)">
-            {{$t('lang.inbox_viewDetails')}}
-            <img src="../../assets/images/home/announcement/arrow-right.svg" alt="" />
-          </div>
         </div>
       </div>
     </q-carousel-slide>

@@ -3,8 +3,8 @@
     v-model="visible"
     destroyOnClose
     :append-to-body="true"
-    :show-close="false"
-    width="540px"
+    height="760px"
+    width="400px"
     class="announcement-modal"
   >
     <div>
@@ -24,8 +24,14 @@
             <p v-else>{{ $t('inbox.imptAnnouncement') }}</p>
           </div>
           <div class="dialog-tab-item" :class="currentTab === 'inbox' ? 'active' : ''" @click="currentTab = 'inbox'">
-            <img v-if="currentTab === 'inbox'" :src="require(`../../assets/home/announcement/tab-inbox-active-${languageVal}.png`)" alt="" />
-            <p v-else>{{ $t('inbox.mailBox') }}</p>
+            <!-- <img v-if="currentTab === 'inbox'" :src="require(`../../assets/home/announcement/tab-inbox-active-${languageVal}.png`)" alt="" /> -->
+            <div style="width: 33.3%; height: 1px;"></div>
+            <div>
+              <p >{{ $t('inbox.mailBox') }}</p>
+            </div>
+            <div style="width: 34%; text-align: right;" @click="visible=false">
+              <img style="height: 14px; width: 14px; margin-right: 12px;" :src="require(`../../assets/home/close.svg`)">
+            </div>
           </div>
         </div>
         <div class="dialog-content">
@@ -35,13 +41,13 @@
             :announceData="announceData"
           />
         </div>
-      </div>
-      <div class="dialog-action">
         <div class="dialog-action-row today-not-remind">
           <div class="dialog-action-item">
-            <el-checkbox v-model="checked" style="color: white" text-color="white">{{ $t('inbox.noMoreToday') }}</el-checkbox>
+            <el-checkbox v-model="checked" style="color: rgba(142, 142, 142, 1); font-size: 14px; font-weight: 400;" text-color="white">{{ $t('inbox.noMoreToday') }}</el-checkbox>
           </div>
         </div>
+      </div>
+      <!-- <div class="dialog-action">
 
         <div class="dialog-action-row">
           <div class="dialog-action-item close-icon" @click="visible = false">
@@ -50,7 +56,7 @@
             </el-icon>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </el-dialog>
 </template>
@@ -72,7 +78,7 @@ const { languageVal } = storeToRefs(i18nStoreLanguage);
 const store = userStore();
 const lastAnnouncementDateStr = useLocalStorage("LH_LAST_ANNOUNCEMENT_DATE", null);
 
-const visible = ref(false);
+const visible = ref(true);
 const currentTab = ref("inbox");
 const checked = ref(false);
 const mailData = ref([]);
@@ -152,7 +158,6 @@ watch(checked, (val) => {
   cursor: pointer;
 
   &.only-inbox {
-    background: #fff;
     height: 52px;
     border-bottom: 1px solid #999;
   }
@@ -202,7 +207,6 @@ watch(checked, (val) => {
     }
   }
 }
-
 .dialog-action {
   position: absolute;
   right: 0;
@@ -218,7 +222,14 @@ watch(checked, (val) => {
     }
   }
 
-  .dialog-action-item {
+  
+}
+
+.dialog-action-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
     &.close-icon {
       justify-content: center;
       cursor: pointer;
@@ -230,7 +241,6 @@ watch(checked, (val) => {
       fill: black;
     }
   }
-}
 
 ::v-deep(.el-checkbox__input.is-checked + .el-checkbox__label) {
   color: white !important;
