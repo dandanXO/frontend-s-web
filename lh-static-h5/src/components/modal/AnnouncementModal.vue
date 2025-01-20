@@ -134,7 +134,7 @@ onMounted(() => {
   getInbox()
     .then((res) => {
       if (res.code === 0) {
-        mailData.value = res.data.reverse();
+        mailData.value = res.data;
       }
     })
     .catch((err) => {
