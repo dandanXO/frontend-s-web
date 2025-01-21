@@ -936,6 +936,7 @@ export default {
     dailyTotalAmount: '每日总金额',
     dailyTotalRedeem: '每日总领取次数',
     dayWithdrawCount: '每日提款次数',
+    days: '当日签到天数',
     day1: '第一天解锁',
     day2: '第二天解锁',
     day3: '第三天解锁',

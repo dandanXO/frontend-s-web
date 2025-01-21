@@ -933,6 +933,7 @@ export default {
     dailyTotalAmount: 'Daily Total Amount',
     dailyTotalRedeem: 'Daily Total Redeem',
     dayWithdrawCount: 'Daily Withdraw Count',
+    days: 'Check In Day',
     day1: 'Day 1 Unlock',
     day2: 'Day 2 Unlock',
     day3: 'Day 3 Unlock',

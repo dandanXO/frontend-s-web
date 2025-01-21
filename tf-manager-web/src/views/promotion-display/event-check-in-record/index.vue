@@ -87,6 +87,17 @@
         min-width="150"
       />
       <el-table-column
+        prop="day"
+        :label="t('fields.days')"
+        min-width="100"
+      >
+        <template #default="scope">
+          <span v-if="scope.row.day === null">-</span>
+          <!-- eslint-disable -->
+          <span> {{ scope.row.day }} </span>
+        </template>
+      </el-table-column>
+      <el-table-column
         prop="createTime"
         :label="t('fields.createTime')"
         min-width="150"

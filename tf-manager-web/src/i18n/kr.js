@@ -820,6 +820,7 @@ export default {
     dailyTotalAmount: '일일 총액',
     dailyTotalRedeem: '일일 총 교환',
     dayWithdrawCount: '일일 인출 횟수',
+    days: '체크인 날짜',
     day1: '1 일 차 잠금 해제',
     day2: '2 일 차 잠금 해제',
     day3: '3 일 차 잠금 해제',

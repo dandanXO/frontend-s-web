@@ -800,6 +800,7 @@ export default {
     dailyTotalAmount: 'Tổng số tiền hàng ngày',
     dailyTotalRedeem: 'Tổng đổi thưởng hàng ngày',
     dayWithdrawCount: 'Số lần rút tiền hàng ngày',
+    days: 'Ngày nhận phòng',
     day1: 'Mở khóa ngày 1',
     day2: 'Mở khóa ngày 2',
     day3: 'Mở khóa ngày 3',
