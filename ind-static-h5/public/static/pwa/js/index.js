@@ -130,7 +130,7 @@ installBtn.addEventListener("click", async () => {
       }
       break;
     case "PLAY":
-      window.open(`/static/pwa/pwa-index.html?fbclid=${fbclid}`, "_blank");
+      window.open(`/static/pwa/pwa-index.html`, "_blank");
       break;
   }
 });
