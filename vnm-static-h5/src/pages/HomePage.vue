@@ -401,6 +401,13 @@
     </div>
   </div>
 
+  <q-page-sticky position="bottom-left" :offset="goldenEggPos" style="z-index: 999">
+    <div v-if="store && store.token && isGoldenEgg">
+      <q-btn class="close-btn" icon="close" flat round dense @click="hideGoldenEgg()"></q-btn>
+      <img src="../assets/images/home/golden-egg.gif" class="golden-egg" @click="goGoldenEgg" />
+    </div>
+  </q-page-sticky>
+
   <q-page-sticky position="bottom-right" :offset="packetPos" style="z-index: 999">
     <div v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
       <img src="../assets/images/home/redpacket.png" class="red-envelope" />
@@ -980,6 +987,14 @@ export default defineComponent({
     const isRedPacketShow = ref(false);
     const getRedEnvelope = () => {
       router.push("/promo?name=phongbao-lixi2/9");
+    };
+
+    const isGoldenEgg = ref(true);
+    const goGoldenEgg = () => {
+      router.push("/promo?name=vnm-2025-cny-lucky-draw");
+    };
+    const hideGoldenEgg = () => {
+      isGoldenEgg.value = false;
     };
 
     const getCheckRedPacket = () => {
@@ -1803,6 +1818,7 @@ export default defineComponent({
     const fabPos = ref([18, 0]);
     const promoPos = ref([18, 108]);
     const packetPos = ref([18, 18]);
+    const goldenEggPos = ref([18, 18]);
     const draggingRocketFab = ref(false);
     const draggingPromoFab = ref(false);
 
@@ -1947,6 +1963,9 @@ export default defineComponent({
       pushNotificationData,
       euroCupStartDate,
       getRedEnvelope,
+      goGoldenEgg,
+      isGoldenEgg,
+      hideGoldenEgg,
       isRedPacketShow,
       daysDiff,
       countDayString,
@@ -1961,6 +1980,7 @@ export default defineComponent({
       checkShowRocket,
       fabPos,
       packetPos,
+      goldenEggPos,
       draggingRocketFab,
       draggingPromoFab,
       moveRocketFab,
@@ -3011,6 +3031,12 @@ export default defineComponent({
   cursor: pointer;
   animation: shake 1s ease-in-out infinite;
   animation-delay: 2s;
+}
+
+.golden-egg {
+  width: 95px;
+  margin-left: 0px;
+  cursor: pointer;
 }
 
 @keyframes shake-with-pause {

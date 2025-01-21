@@ -38,10 +38,19 @@
       <img src="../../assets/home/redpacket.png" />
     </div>
 
+    <div class="golden-egg" v-if="store && store.token && isGoldenEgg">
+      <div class="close-btn" @click="hideGoldenEgg()">X</div>
+      <img src="../../assets/home/golden-egg.gif" @click="goGoldenEgg" />
+    </div>
+
     <GameModal ref="gameMenu" />
-    <div class="rocket-wrapper" v-if="showRocket" :class="'show-rocket'"
+    <div
+      class="rocket-wrapper"
+      v-if="showRocket"
+      :class="'show-rocket'"
       :style="{ top: rocketPosition.top + 'px', left: rocketPosition.left + 'px' }"
-      @mousedown="startDragging('rocket', $event)">
+      @mousedown="startDragging('rocket', $event)"
+    >
       <div>
         <div class="close-btn" @click="hideRocket()">X</div>
         <!-- <div class="rocket-container" @click="openGame('TFGaming', 'TFGaming', '20')">
@@ -49,8 +58,13 @@
           <img :src="`${imgURL}/game/${game.icon}`" />
         </div>
       </div> -->
-        <el-carousel height="100px" :indicator-position="gamePromo.length > 1 ? 'outside' : 'none'" arrow="never"
-          :autoplay="true" :interval="3000">
+        <el-carousel
+          height="100px"
+          :indicator-position="gamePromo.length > 1 ? 'outside' : 'none'"
+          arrow="never"
+          :autoplay="true"
+          :interval="3000"
+        >
           <el-carousel-item v-for="(game, i) in gamePromo" :key="i">
             <div @click="openGame(game.platform, game.platform, game.code)" class="rocket-container">
               <div class="rocket"><img :src="`${imgURL}/game/${game.icon}`" /></div>
@@ -60,13 +74,22 @@
       </div>
     </div>
 
-    <div class="rocket-wrapper" v-if="showFloatPromo" :class="'show-promo'"
+    <div
+      class="rocket-wrapper"
+      v-if="showFloatPromo"
+      :class="'show-promo'"
       :style="{ top: promoPosition.top + 'px', left: promoPosition.left + 'px' }"
-      @mousedown="startDragging('promo', $event)">
+      @mousedown="startDragging('promo', $event)"
+    >
       <div style="position: relative">
         <div class="close-btn" @click="hideFloatPromo()">X</div>
-        <el-carousel height="130px" :indicator-position="floatPromo.length > 1 ? 'outside' : 'none'" arrow="never"
-          :autoplay="true" :interval="3000">
+        <el-carousel
+          height="130px"
+          :indicator-position="floatPromo.length > 1 ? 'outside' : 'none'"
+          arrow="never"
+          :autoplay="true"
+          :interval="3000"
+        >
           <el-carousel-item v-for="(promo, i) in floatPromo" :key="i">
             <div @click="gotoPromo(promo.code)" class="rocket-container">
               <div class="rocket"><img :src="`${imgURL}/promo/${promo.icon}`" /></div>
@@ -84,7 +107,7 @@ import { getRedEnvelopeFromServer, getFloatingItems } from "@/api/index/site";
 import { useLocalStorage } from "@vueuse/core";
 import { useRouter } from "vue-router";
 
-const GameModal = defineAsyncComponent(() => import('@/components/modal/GameModal.vue'));
+const GameModal = defineAsyncComponent(() => import("@/components/modal/GameModal.vue"));
 
 export default defineComponent({
   components: {
@@ -99,6 +122,15 @@ export default defineComponent({
     const router = useRouter();
 
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value;
+
+    const isGoldenEgg = ref(true);
+    const goGoldenEgg = () => {
+      router.push("/promotion?name=vnm-2025-cny-lucky-draw");
+      hideGoldenEgg();
+    };
+    const hideGoldenEgg = () => {
+      isGoldenEgg.value = false;
+    };
 
     const getRedEnvelope = () => {
       router.push("/promotion?name=phongbao-lixi2/9");
@@ -225,6 +257,9 @@ export default defineComponent({
       store,
       customerHovered,
       scrollToTop,
+      isGoldenEgg,
+      goGoldenEgg,
+      hideGoldenEgg,
       getRedEnvelope,
       isRedPacketShow,
       gameMenu,
@@ -376,9 +411,7 @@ export default defineComponent({
   align-items: center;
   gap: 15px;
 
-
   @media (max-width: 768px) {
-
     .sticky-sidebar-items {
       gap: 5px;
       padding: 5px;
@@ -428,6 +461,22 @@ export default defineComponent({
   bottom: -185px;
   animation: shake 1s ease-in-out infinite;
   animation-delay: 2s;
+
+  img {
+    width: 100%;
+  }
+}
+
+.golden-egg {
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
+  margin-right: 94px;
+  position: absolute;
+  right: -70px;
+  bottom: -165px;
+  // animation: shake 1s ease-in-out infinite;
+  // animation-delay: 2s;
 
   img {
     width: 100%;

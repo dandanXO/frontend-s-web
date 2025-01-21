@@ -780,7 +780,7 @@
     "502": "Không tìm thấy máy chủ",
     "504": "Yêu cầu quá thường xuyên",
     "601": "Lỗi xác thực mã thông báo",
-    "603": "Không tìm thấy mã thông báo",
+    "603": "Vui lòng đăng nhập tài khoản để mở quà",
     "604": "Đăng nhập thành công",
     "608": "Hoạt động của người dùng hiện tại quá thường xuyên. Vui lòng thử lại sau.",
     "609": "Đang bảo trì",
@@ -880,7 +880,7 @@
     "37004": "Tất cả bao lì xì đã được phát hết! Vui lòng chờ đợi lần tiếp theo. Cảm ơn bạn đã tham gia.",
     "45000": "Chưa đạt đến số tiền tối thiểu để rút",
     "45001": "Hôm nay đã nhận được tiền thưởng ngẫu nhiên.",
-    "58100": "Số lần quay thưởng không đủ",
+    "58100": "Bạn chưa có hoặc đã sử dụng hết số lần đập trứng vàng",
     "58101": "Số lần quay thưởng hôm nay đã đạt giới hạn",
     "58102": "Tiền thưởng hàng ngày đã được đổi hết, vui lòng thử lại vào ngày mai.",
     "58103": "Bạn không đủ điều kiện để nhận thưởng"
