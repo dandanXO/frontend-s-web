@@ -3,14 +3,12 @@
     <div class="congrats-container">
       <q-btn icon="close" round dense v-close-popup class="congrats-close" />
       <div class="congrats-header">
-        <img
-          :src="headerImg ? require(headerImg) : require('../../assets/images/index/modal/congrats-header-v2.png')"
-        />
+        <img :src="computedHeaderImg" />
       </div>
       <div class="congrats-coupons">
-        <img :src="contentImg ? require(headerImg) : require('../../assets/images/index/modal/congrats-coupon.png')" />
+        <img :src="computedContentImg" />
       </div>
-      <div class="congrats-title">Congratulations! You have unlocked bonuses</div>
+      <div class="congrats-title">{{ $t("modal.congrats.congratsUnlockedBonus") }}</div>
       <div class="congrats-highlight">{{ !!bonusAmount ? convertToCommaAmount(bonusAmount) : 0 }}BDT</div>
 
       <div class="congrats-button-container">
@@ -22,13 +20,25 @@
   </q-dialog>
 </template>
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { convertToCommaAmount } from "src/boot/utils";
 
 const props = defineProps(["isShowDialog", "bonusAmount", "headerImg", "contentImg", "btnTxt"]);
 const emit = defineEmits(["handleBtnClick"]);
 
 const localIsShowDialog = ref(props.isShowDialog);
+
+const computedHeaderImg = computed(() => {
+  return props.headerImg
+    ? require(`${props.headerImg}`)
+    : require(`../../assets/images/index/modal/congrats-header-v2.png`);
+});
+
+const computedContentImg = computed(() => {
+  return props.contentImg
+    ? require(`${props.contentImg}`)
+    : require(`../../assets/images/index/modal/congrats-coupon.png`);
+});
 
 const handleBtnClick = () => {
   emit("handleBtnClick");

@@ -239,6 +239,11 @@ export default {
     phoneUpdatedSuccessfully: "ফোন নম্বর সফলভাবে আপডেট হয়েছে",
     newPasswordUpdatedSuccessfully: "নতুন পাসওয়ার্ড সফলভাবে আপডেট হয়েছে"
   },
+  modal: {
+    congrats: {
+      congratsUnlockedBonus: "অভিনন্দন! আপনি বোনাস আনলক করেছেন।"
+    }
+  },
   sideNav: {
     inviteToEarn: "আয় করার জন্য আমন্ত্রণ জানান",
     shareYourExclusiveQRCode: "আপনার এক্সক্লুসিব QR কোড শেয়ার করুন",
@@ -827,19 +832,39 @@ export default {
       wish16: "এই বিশেষ উপলক্ষে, আমি আপনার আর্থিক উন্নতি এবং সফলতার জন্য প্রার্থনা করছি।"
     },
     appLoginBonus: {
-      newlyRegistered: `নতুন নিবন্ধিত <span style="color: #faff00">WIN7</span> সদস্যরা, অ্যাপ্লিকেশন ডাউনলোড এবং ইনস্টল করুন, এবং র্যান্ডম ফ্রি বোনাস পাবেন, সর্বোচ্চ <span style="color: #00ffc3">888BDT</span> পর্যন্ত।`,
+      newlyRegistered1: "নতুন নিবন্ধিত",
+      win7: "WIN7",
+      newlyRegistered2: "সদস্যরা, অ্যাপ্লিকেশন ডাউনলোড এবং ইনস্টল করুন, এবং র্যান্ডম ফ্রি বোনাস পাবেন, সর্বোচ্চ",
+      bdt888: "888BDT",
+      newlyRegistered5: "পর্যন্ত।",
       claimNow: "এখনই দাবি করুন",
       downloadApp: "অ্যাপ ডাউনলোড করুন",
       claimed: "দাবি করা হয়েছে",
       beginnersGuide: "শুরু করার গাইড",
       rewardDetails: "পুরষ্কার বিস্তারিত",
-      beginnersGuideTxt1: `১. WhatsApp অনুসরণ করুন এবং <span style="color: #00ff80">win7.game</span> চ্যানেল সাবস্ক্রাইব করুন`,
+      beginnersGuideTxt1_1: "১. WhatsApp অনুসরণ করুন এবং",
+      win7game: "win7.game",
+      beginnersGuideTxt1_2: "চ্যানেল সাবস্ক্রাইব করুন",
       beginnersGuideTxt2: "২. ইমেইল ঠিকানা সংযুক্ত করুন এবং যাচাই করুন",
-      rewardDetailTxt: `সর্বোচ্চ বোনাস <span style="color: #ff9500">888BDT</span> পর্যন্ত পৌঁছাতে পারে<br /><span style="color: #ff0000; line-height: 30px">শুধুমাত্র নতুন ব্যবহারকারীদের জন্য</span>`,
-      thingsToNote: `<br />পুরষ্কার শুধুমাত্র অ্যাপের মাধ্যমে লগইন করার পর এবং যাচাই সম্পন্ন করার পর দাবি করা যাবে<br /><br />অ্যাপ্লিকেশন অবশ্যই <span style="color: #00ff80cc">ডাউনলোড</span> এবং <span style="color: #00ff80cc">ইনস্টল</span> করতে হবে`,
-      downloadAndInstall: `<br />ডাউনলোড এবং ইনস্টল করুন <span style="color: #00ff80cc">win7.game</span> অফিসিয়াল অ্যাপ্লিকেশন।<br /><br />সাবস্ক্রাইব করুন <span style="color: #00ff80cc">win7.game</span> অফিসিয়াল চ্যানেলে<br /><br />
-      WhatsApp চ্যানেল: <span style="color: #00ff80cc">win7.game</span> অফিসিয়াল চ্যানেল <br /><br />একটি সদস্য অ্যাকাউন্ট নিবন্ধন করুন এবং আপনার আসল নাম প্রবেশ করান (এটি অবশ্যই আপনার সংশ্লিষ্ট উত্তোলন অ্যাকাউন্টের নামের সাথে মেলাতে হবে)<br /><br />
-      লিঙ্ক করা উত্তোলন অ্যাকাউন্ট<br /><br />[ডিসকাউন্ট সেন্টারে] প্রবেশ করুন এবং যাচাই করুন, এবং আপনি সর্বোচ্চ <span style="color: #00ff80cc">888BDT</span> পর্যন্ত একটি র্যান্ডম পুরষ্কার পেতে পারেন।`,
+      rewardDetailTxt1: "সর্বোচ্চ বোনাস",
+      rewardDetailTxt2: "পর্যন্ত পৌঁছাতে পারে",
+      rewardDetailTxt3: "শুধুমাত্র নতুন ব্যবহারকারীদের জন্য",
+      thingsToNote1: "পুরষ্কার শুধুমাত্র অ্যাপের মাধ্যমে লগইন করার পর এবং যাচাই সম্পন্ন করার পর দাবি করা যাবে",
+      thingsToNote2: "অ্যাপ্লিকেশন অবশ্যই",
+      thingsToNote3: "ডাউনলোড",
+      thingsToNote4: "এবং",
+      thingsToNote5: "ইনস্টল",
+      thingsToNote6: "করতে হবে",
+      downloadAndInstall1: "ডাউনলোড এবং ইনস্টল করুন",
+      downloadAndInstall2: "অফিসিয়াল অ্যাপ্লিকেশন।",
+      downloadAndInstall3: "সাবস্ক্রাইব করুন",
+      downloadAndInstall4: " অফিসিয়াল চ্যানেলে",
+      downloadAndInstall5: "WhatsApp চ্যানেল:",
+      downloadAndInstall6:
+        "একটি সদস্য অ্যাকাউন্ট নিবন্ধন করুন এবং আপনার আসল নাম প্রবেশ করান (এটি অবশ্যই আপনার সংশ্লিষ্ট উত্তোলন অ্যাকাউন্টের নামের সাথে মেলাতে হবে)",
+      downloadAndInstall7: "লিঙ্ক করা উত্তোলন অ্যাকাউন্ট",
+      downloadAndInstall8: "[ডিসকাউন্ট সেন্টারে] প্রবেশ করুন এবং যাচাই করুন, এবং আপনি সর্বোচ্চ",
+      downloadAndInstall9: "পর্যন্ত একটি র্যান্ডম পুরষ্কার পেতে পারেন।",
       termsCondition1: "WIN7 সদস্য হিসেবে নিবন্ধন করার পর এবং কাজ সম্পন্ন করার পর, আপনি সম্পর্কিত পুরষ্কার পাবেন।",
       termsCondition2:
         "উত্তোলনের আগে, আপনাকে বোনাস X5 টার্নওভার শর্তগুলি পূর্ণ করতে হবে, তারপরই আপনি বোনাস উত্তোলন করতে পারবেন!",
