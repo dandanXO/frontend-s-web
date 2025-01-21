@@ -684,7 +684,7 @@
                   <q-icon size="24px" name="close"></q-icon>
               </div>
               <q-carousel animated v-model="popupSlide" navigation infinite swipeable height="100%" keep-alive
-                  style="background: transparent">
+                  style="background: transparent" autoplay>
                   <q-carousel-slide v-for="(item, index) in popupList" :key="index" :name="index"
                       class="carousel-slide" style="padding: 0">
                       <div class="promo-banner-container">
