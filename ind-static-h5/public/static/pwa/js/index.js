@@ -49,6 +49,8 @@ installBtn.addEventListener("click", async () => {
       const urlParams = new URLSearchParams(window.location.search);
       const fbclid = urlParams.get("fbclid");
       if (fbclid) {
+        localStorage.setItem("fbclid", fbclid);
+
         // Retrieve _fbp directly
         const getCookie = (name) => {
           const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
