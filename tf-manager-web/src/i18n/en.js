@@ -2232,7 +2232,9 @@ export default {
     table: 'Data Table',
     chart: 'Chart',
     depositCountRatio: 'Deposit Count Ratio',
-    amountCountRatio: 'Amount Count Ratio',
+    depositAmountRatio: 'Deposit Amount Ratio',
+    withdrawAmountRatio: 'Withdraw Amount Ratio',
+    withdrawCountRatio: 'Withdraw Count Ratio',
   },
   message: {
     adsStatusOpen: 'Open',
