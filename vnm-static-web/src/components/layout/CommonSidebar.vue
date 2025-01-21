@@ -38,7 +38,7 @@
       <img src="../../assets/home/redpacket.png" />
     </div>
 
-    <div class="golden-egg" v-if="store && store.token && isGoldenEgg">
+    <div class="golden-egg" v-if="isGoldenEgg">
       <div class="close-btn" @click="hideGoldenEgg()">X</div>
       <img src="../../assets/home/golden-egg.gif" @click="goGoldenEgg" />
     </div>
