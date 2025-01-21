@@ -132,7 +132,7 @@
     </div>
 
     <div class="list-section">
-      <marquee class="list-wrapper" direction="up" scrollamount="1">
+      <div class="list-wrapper">
         <div class="list">
           <div class="list-row" v-for="winner, index in winnersList" :key="index">
             <div class="list-item"><span class="cyan">{{ winner.loginName }}</span></div>
@@ -144,7 +144,7 @@
             </div>
           </div>
         </div>
-      </marquee>
+      </div>
       <div class="withdraw-order-btn btn-primary btn-primary__full center">Withdraw Orders</div>
     </div>
 
@@ -204,7 +204,7 @@
   import moment from 'moment';
   import { i18nStore } from "src/router/language";
   import { storeToRefs } from "pinia";
-
+  
   const { languageVal } = storeToRefs(i18nStore());
 
 
@@ -724,6 +724,15 @@
       }
     }
 
+    @keyframes marquee-content {
+			from {
+				transform: translateY( 0% );
+			}
+			to {
+				transform: translateY( -100% );
+			}
+		}
+
     .list-section {
       background: #70BC621A;
       border: 1px solid #575D53;
@@ -733,13 +742,17 @@
 
       .list-wrapper {
         max-height: 120px;
-        overflow-y: scroll;
+        overflow-y: hidden;
         padding-bottom: 20px;
 
         .list {
           display: table;
           width: 100%;
           padding: 10px 20px;
+          animation-duration: 100s ;
+          animation-iteration-count: infinite ;
+          animation-name: marquee-content ;
+          animation-timing-function: linear ;
 
           .list-row {
             display: table-row;
