@@ -146,7 +146,7 @@ const store = userStore();
 const ui = useUI();
 
 const bindEmailDialog = ref(false);
-const isShowReceiveDialog = ref(true);
+const isShowReceiveDialog = ref(false);
 const hasBindEmail = ref(false);
 const hadClaim = ref(false);
 const isAppLogin = ref(false);
