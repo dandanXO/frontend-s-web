@@ -675,7 +675,9 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isImportantAnnoucementModal" @update:model-value="offPopupModal()">
+  <PopupDialog></PopupDialog>
+
+  <!-- <q-dialog width="100%" v-model="isImportantAnnoucementModal" @update:model-value="offPopupModal()">
     <q-card flat style="width: 70%; max-width: 500px; background-color: transparent; margin: 0 auto" class="text-white">
       <q-card-section style="background-color: transparent">
         <div class="close-alert" @click="setExpiryBanner()">
@@ -707,7 +709,7 @@
         </q-carousel>
       </q-card-section>
     </q-card>
-  </q-dialog>
+  </q-dialog> -->
 </template>
 
 <script>
@@ -730,6 +732,7 @@ import moment from "moment";
 import "swiper/css";
 import "swiper/css/scrollbar";
 import { translateRecord } from "src/directives/translate";
+import PopupDialog from "src/components/PopupDialog.vue";
 import MaintenanceBox from "components/MaintenanceBox.vue";
 import UserProfile from "components/home/drawer/UserProfile.vue";
 import LinkGroup from "components/home/drawer/LinkGroup.vue";
@@ -751,7 +754,8 @@ export default defineComponent({
     LinkGroup,
     SystemConfig,
     // PlatformBlock
-    AnnouncementModal
+    AnnouncementModal,
+    PopupDialog
   },
   setup() {
     const isFirstView = ref(false);
