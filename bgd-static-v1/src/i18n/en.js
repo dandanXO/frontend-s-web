@@ -239,6 +239,11 @@ export default {
     phoneUpdatedSuccessfully: "Phone number updated successfully",
     newPasswordUpdatedSuccessfully: "New password updated successfully"
   },
+  modal: {
+    congrats: {
+      congratsUnlockedBonus: "Congratulations! You have unlocked bonuses"
+    }
+  },
   sideNav: {
     inviteToEarn: "Invite to Earn",
     shareYourExclusiveQRCode: "share your exclusive QR code",
@@ -835,19 +840,39 @@ export default {
       wish16: "On this special occasion, I pray for your financial growth and success."
     },
     appLoginBonus: {
-      newlyRegistered: `Newly registered <span style="color: #faff00">WIN7</span> members, download and install the application, and get random free bonuses, up to <span style="color: #00ffc3">888BDT</span>.`,
+      newlyRegistered1: "Newly registered",
+      win7: "WIN7",
+      newlyRegistered2: "members, download and install the application, and get random free bonuses, up to",
+      bdt888: "888BDT",
+      newlyRegistered5: ".",
       claimNow: "CLAIM NOW",
       downloadApp: "DOWNLOAD APP",
       claimed: "CLAIMED",
       beginnersGuide: "BEGINNER'S GUIDE",
       rewardDetails: "REWARD DETAILS",
-      beginnersGuideTxt1: `1. Follow whatsapp and subscribe to <span style="color: #00ff80">win7.game</span> channel`,
+      beginnersGuideTxt1_1: "1. Follow whatsapp and subscribe to",
+      win7game: "win7.game",
+      beginnersGuideTxt1_2: "channel",
       beginnersGuideTxt2: "2. Associate and verify email address",
-      rewardDetailTxt: `The maximum bonus can reach <span style="color: #ff9500">888BDT</span><br /><span style="color: #ff0000; line-height: 30px">New users only</span>`,
-      thingsToNote: `<br />Rewards can only be claimed after logging in through the APP and completing verification<br /><br />Application must be <span style="color: #00ff80cc">downloaded</span> and <span style="color: #00ff80cc">installed</span>`,
-      downloadAndInstall: `<br />Download and install <span style="color: #00ff80cc">win7.game</span> official application.<br /><br />Subscribe to <span style="color: #00ff80cc">win7.game</span> official channel<br /><br />
-        WhatsApp channel: <span style="color: #00ff80cc">win7.game</span> official channel <br /><br />Register a member account and enter your original name (must be consistent with the name of your associated withdrawal account)<br /><br />
-        Linked withdrawal account<br /><br />Enter the [Discount Center] to check and collect, and you can get a random reward of up to <span style="color: #00ff80cc">888BDT</span>.`,
+      rewardDetailTxt1: "The maximum bonus can reach",
+      rewardDetailTxt2: "",
+      rewardDetailTxt3: "New users only",
+      thingsToNote1: "Rewards can only be claimed after logging in through the APP and completing verification",
+      thingsToNote2: "Application must be",
+      thingsToNote3: "downloaded",
+      thingsToNote4: "and",
+      thingsToNote5: "installed",
+      thingsToNote6: "",
+      downloadAndInstall1: "Download and install",
+      downloadAndInstall2: "official application.",
+      downloadAndInstall3: "Subscribe to",
+      downloadAndInstall4: "official channel",
+      downloadAndInstall5: "WhatsApp channel:",
+      downloadAndInstall6:
+        "Register a member account and enter your original name (must be consistent with the name of your associated withdrawal account)",
+      downloadAndInstall7: "Linked withdrawal account",
+      downloadAndInstall8: "Enter the [Discount Center] to check and collect, and you can get a random reward of up to",
+      downloadAndInstall9: ".",
       termsCondition1:
         "After registering as a WIN7 member and completing tasks, you will receive corresponding rewards.",
       termsCondition2:

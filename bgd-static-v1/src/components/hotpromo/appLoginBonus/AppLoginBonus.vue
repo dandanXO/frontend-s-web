@@ -1,7 +1,13 @@
 <template>
   <div>
     <div class="download-container">
-      <span v-html="$t('hotPromo.appLoginBonus.newlyRegistered')" />
+      <span>
+        {{ $t("hotPromo.appLoginBonus.newlyRegistered1") }}
+        <span style="color: #faff00">{{ $t("hotPromo.appLoginBonus.win7") }}</span>
+        {{ $t("hotPromo.appLoginBonus.newlyRegistered2") }}
+        <span style="color: #00ffc3">{{ $t("hotPromo.appLoginBonus.bdt888") }}</span>
+        {{ $t("hotPromo.appLoginBonus.newlyRegistered5") }}
+      </span>
       <div v-if="!hadClaim && isAppLogin" class="claim-btn" @click="handleClaimBtnClick">
         <span>{{ $t("hotPromo.appLoginBonus.claimNow") }}</span>
       </div>
@@ -26,28 +32,76 @@
       <tbody>
         <tr>
           <td>
-            <span v-html="$t('hotPromo.appLoginBonus.beginnersGuideTxt1')" />
+            <span>
+              {{ $t("hotPromo.appLoginBonus.beginnersGuideTxt1_1") }}
+              <span style="color: #00ff80">{{ $t("hotPromo.appLoginBonus.win7game") }}</span>
+              {{ $t("hotPromo.appLoginBonus.beginnersGuideTxt1_2") }}
+            </span>
           </td>
           <td rowspan="2">
-            <span v-html="$t('hotPromo.appLoginBonus.rewardDetailTxt')" />
+            <span>
+              {{ $t("hotPromo.appLoginBonus.rewardDetailTxt1") }}
+              <span style="color: #ff9500">{{ $t("hotPromo.appLoginBonus.bdt888") }}</span>
+              {{ $t("hotPromo.appLoginBonus.rewardDetailTxt2") }}
+              <br />
+              <span style="color: #ff0000; display: block; margin-top: 10px">
+                {{ $t("hotPromo.appLoginBonus.rewardDetailTxt3") }}
+              </span>
+            </span>
           </td>
         </tr>
         <tr>
-          <td><span v-html="$t('hotPromo.appLoginBonus.beginnersGuideTxt2')" /></td>
+          <td>
+            <span>{{ $t("hotPromo.appLoginBonus.beginnersGuideTxt2") }}</span>
+          </td>
         </tr>
       </tbody>
     </table>
 
     <div class="things-to-note-container">
       <img src="../../../assets/images/promotion/hotpromo/app-login-bonus/things-to-note-title.png" />
-
-      <span v-html="$t('hotPromo.appLoginBonus.thingsToNote')" />
+      <span>
+        <br />
+        {{ $t("hotPromo.appLoginBonus.thingsToNote1") }}
+        <br />
+        <br />
+        {{ $t("hotPromo.appLoginBonus.thingsToNote2") }}
+        <span style="color: #00ff80cc">{{ $t("hotPromo.appLoginBonus.thingsToNote3") }}</span>
+        {{ $t("hotPromo.appLoginBonus.thingsToNote4") }}
+        <span style="color: #00ff80cc">{{ $t("hotPromo.appLoginBonus.thingsToNote5") }}</span>
+        {{ $t("hotPromo.appLoginBonus.thingsToNote6") }}
+      </span>
     </div>
 
     <div class="get-bonus-info-container">
       <img src="../../../assets/images/promotion/hotpromo/app-login-bonus/get-bonus-info-title.png" />
-
-      <span v-html="$t('hotPromo.appLoginBonus.downloadAndInstall')" />
+      <span>
+        <br />
+        {{ $t("hotPromo.appLoginBonus.downloadAndInstall1") }}
+        <span style="color: #00ff80cc">{{ $t("hotPromo.appLoginBonus.win7game") }}</span>
+        {{ $t("hotPromo.appLoginBonus.downloadAndInstall2") }}
+        <br />
+        <br />
+        {{ $t("hotPromo.appLoginBonus.downloadAndInstall3") }}
+        <span style="color: #00ff80cc">{{ $t("hotPromo.appLoginBonus.win7game") }}</span>
+        {{ $t("hotPromo.appLoginBonus.downloadAndInstall4") }}
+        <br />
+        <br />
+        {{ $t("hotPromo.appLoginBonus.downloadAndInstall5") }}
+        <span style="color: #00ff80cc">{{ $t("hotPromo.appLoginBonus.win7game") }}</span>
+        {{ $t("hotPromo.appLoginBonus.downloadAndInstall4") }}
+        <br />
+        <br />
+        {{ $t("hotPromo.appLoginBonus.downloadAndInstall6") }}
+        <br />
+        <br />
+        {{ $t("hotPromo.appLoginBonus.downloadAndInstall7") }}
+        <br />
+        <br />
+        {{ $t("hotPromo.appLoginBonus.downloadAndInstall8") }}
+        <span style="color: #00ff80cc">{{ $t("hotPromo.appLoginBonus.bdt888") }}</span>
+        {{ $t("hotPromo.appLoginBonus.downloadAndInstall9") }}
+      </span>
     </div>
     <div class="terms-and-conditions-container">
       <img src="../../../assets/images/promotion/hotpromo/app-login-bonus/terms-and-conditions-title.png" />
