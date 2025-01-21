@@ -5,7 +5,16 @@
 
   <div class="promo-container">
     <div class="promo">
-      <div class="tab-wrapper" v-if="!isPromoDetail">
+
+
+      <template v-if="allLoading">
+        <div class="q-pa-md q-gutter-y-md">
+          <template v-for="index in 9" :key="index"><q-skeleton height="100px" /></template>
+        </div>
+      </template>
+
+      <template v-else>
+        <div class="tab-wrapper" v-if="!isPromoDetail">
         <RoundTab
           v-if="!isPromoDetail"
           v-model:tab="tab"
@@ -15,13 +24,6 @@
         />
       </div>
 
-      <template v-if="allLoading">
-        <div class="q-pa-md q-gutter-y-md">
-          <template v-for="index in 9" :key="index"><q-skeleton height="100px" /></template>
-        </div>
-      </template>
-
-      <template v-else>
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel v-for="(tab, i) in tabItems" :key="i" :name="tab.name">
             <div class="all-promotions" v-if="!isPromoDetail">
