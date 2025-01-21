@@ -130,7 +130,7 @@ installBtn.addEventListener("click", async () => {
       }
       break;
     case "PLAY":
-      window.open("/static/pwa/pwa-index.html", "_blank");
+      window.open(`/static/pwa/pwa-index.html?fbclid=${fbclid}`, "_blank");
       break;
   }
 });
@@ -186,7 +186,7 @@ window.addEventListener("load", () => {
   }
 
   if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) {
-    redirectToGame();
+    redirectToGame(fbclid);
   }
 
   const installationStatus = localStorage.getItem(INSTALLATION_STATUS_KEY);
