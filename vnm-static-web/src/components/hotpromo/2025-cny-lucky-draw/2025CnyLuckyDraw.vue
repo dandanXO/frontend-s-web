@@ -139,7 +139,7 @@
         </table>
       </div>
 
-      <h3 class="mission-block-title">Giải thưởng bao gồm:</h3>
+      <h3 class="mission-block-title">Điều khoản và điều kiện:</h3>
       <p style="margin: 0">
         1. Lượt đập trứng vàng sẽ có hiệu lực 3 ngày kể từ khi cập nhật vào tài khoản. Lượt chưa sử dụng sẽ tự động hết
         hạn khi quá thời gian.
