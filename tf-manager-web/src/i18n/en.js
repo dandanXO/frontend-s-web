@@ -933,6 +933,7 @@ export default {
     dailyTotalAmount: 'Daily Total Amount',
     dailyTotalRedeem: 'Daily Total Redeem',
     dayWithdrawCount: 'Daily Withdraw Count',
+    days: 'Check In Day',
     day1: 'Day 1 Unlock',
     day2: 'Day 2 Unlock',
     day3: 'Day 3 Unlock',
@@ -2232,7 +2233,9 @@ export default {
     table: 'Data Table',
     chart: 'Chart',
     depositCountRatio: 'Deposit Count Ratio',
-    amountCountRatio: 'Amount Count Ratio',
+    depositAmountRatio: 'Deposit Amount Ratio',
+    withdrawAmountRatio: 'Withdraw Amount Ratio',
+    withdrawCountRatio: 'Withdraw Count Ratio',
   },
   message: {
     adsStatusOpen: 'Open',

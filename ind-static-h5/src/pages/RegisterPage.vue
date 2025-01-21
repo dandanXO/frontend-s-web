@@ -307,6 +307,13 @@ export default defineComponent({
       getCode();
       getReferralCode();
       getAffiliateCode();
+
+      if(isInPwa()){
+        api.get(`/app/pwa/log?step=OPENREGISTER&siteCode=${process.env.SITE}`).then((res2) => {
+          console.log("OPENREGISTER");
+        });
+      }
+
     });
 
     const trackRegisterSuccessEvent = () => {
@@ -386,6 +393,12 @@ export default defineComponent({
 
           if (regForm.regHost.indexOf("http://localhost") > -1) {
             regForm.regHost = "app://";
+          }
+
+          if(isInPwa()){
+            api.get(`/app/pwa/log?step=SUBMITREGISTER&siteCode=${process.env.SITE}`).then((res2) => {
+              console.log("SUBMITREGISTER");
+            });
           }
 
           api

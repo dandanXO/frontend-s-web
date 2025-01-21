@@ -57,9 +57,29 @@
           {{ t('fields.reset') }}
         </el-button>
       </div>
+      <div style="margin-top: 10px;">
+        <el-radio-group v-model="uiControl.display" size="small">
+          <el-radio-button label="DATA">{{ t('fields.table') }}</el-radio-button>
+          <el-radio-button label="CHART">{{ t('fields.chart') }}</el-radio-button>
+        </el-radio-group>
+      </div>
     </div>
 
-    <div class="tables-container-wrap1">
+    <div v-if="uiControl.display === 'CHART'">
+      <el-card class="chart-summary" v-if="uiControl.display === 'CHART'" v-loading="uiControl.chartLoading" style="gap: 10px; height: 500px;">
+        <Chart :options="amountOptions" />
+      </el-card>
+      <el-card class="chart-summary" v-if="uiControl.display === 'CHART'" v-loading="uiControl.chartLoading" style="gap: 10px; height: 500px; margin-top: 10px">
+        <Chart :options="countOptions" />
+      </el-card>
+      <el-card style="height: 500px; margin-top: 10px">
+        <div class="chart-container" style="height: 100%; width: 100%;">
+          <Chart :options="barOption" />
+        </div>
+      </el-card>
+    </div>
+
+    <div class="tables-container-wrap1" v-if="uiControl.display === 'DATA'">
       <el-card class="info-card">
         <el-descriptions
           size="small"
@@ -297,6 +317,7 @@ import {
   getWithdrawReport,
   getDailyReport,
   getTotalWithdrawReport,
+  getWithdrawReportList
 } from '../../../api/report-withdraw'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
@@ -305,6 +326,7 @@ import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
 import { hasPermission } from '../../../utils/util'
 import { isCnySite, isKorea, isVnmSite } from '../../../utils/site'
+import Chart from "@/components/charts/Charts.vue";
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -318,6 +340,10 @@ const site = ref(null)
 const siteList = reactive({
   list: [],
 })
+const uiControl = reactive({
+  display: "DATA",
+  chartLoading: false,
+});
 
 var expandrowkey = []
 
@@ -423,8 +449,8 @@ async function loadWithdrawReport(first) {
   page.pages = ret.pages
   ret.records.forEach((item, index) => {
     if (isCnySite(request.siteId) || isVnmSite(request.siteId) || isKorea(request.siteId)) {
-      item.totalTransaction = parseInt(item.totalWithdraw) + parseInt(item.totalSuccessWithdraw)
-      item.totalAmount = parseFloat(item.totalWithdrawAmount) + parseFloat(item.totalSuccessWithdrawAmount)
+      item.totalTransaction = parseInt(item.totalWithdraw)
+      item.totalAmount = parseFloat(item.totalWithdrawAmount)
     } else {
       item.totalTransaction = parseInt(item.totalWithdraw) >= parseInt(item.totalSuccessWithdraw) ? item.totalWithdraw : item.totalSuccessWithdraw
       item.totalAmount = parseFloat(item.totalWithdrawAmount) >= parseFloat(item.totalSuccessWithdrawAmount) ? item.totalWithdrawAmount : item.totalSuccessWithdrawAmount
@@ -433,6 +459,202 @@ async function loadWithdrawReport(first) {
   page.records = ret.records
   page.loading = false
 }
+
+async function loadCharts() {
+  uiControl.chartLoading = true
+  const requestCopy = { ...request }
+  const query = {}
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value
+    }
+  })
+  if (request.recordTime !== null) {
+    if (request.recordTime.length === 2) {
+      query.recordTime = request.recordTime.join(',')
+    }
+  }
+
+  const { data } = await getWithdrawReportList(query)
+  getBarChart(
+    data,
+    barOption
+  )
+  getCountChart(
+    data,
+    countOptions
+  )
+  getAmountChart(
+    data,
+    amountOptions
+  )
+
+  uiControl.chartLoading = false
+}
+
+function getBarChart(data, options) {
+  const paymentData = []
+  data.sort((a, b) => {
+    return b.totalSuccessWithdraw / b.totalWithdraw - a.totalSuccessWithdraw / a.totalWithdraw
+  })
+  data.forEach((item) => {
+    const temp = []
+    temp.push(item.name)
+    const rate = Number(item.totalSuccessWithdraw / item.totalWithdraw * 100)
+    temp.push(rate.toFixed(2))
+    paymentData.push(temp)
+  })
+  options.dataset.source = paymentData
+  console.log(options.dataset.source)
+}
+
+function getCountChart(data, options) {
+  const dataset = [['Name', 'Count']]
+  const legendData = []
+  data.sort((a, b) => {
+    return b.totalSuccessWithdraw - a.totalSuccessWithdraw
+  })
+  if (data.length > 0) {
+    data.forEach((item, index) => {
+      const data = []
+      data.push(item.name)
+      data.push(Math.round(item.totalSuccessWithdraw * 100) / 100)
+      dataset.push(data)
+      legendData.push({ name: item.name })
+    })
+    options.dataset.source = dataset
+    options.legend.data = legendData
+    console.log("legend", legendData)
+  }
+}
+
+function getAmountChart(data, options) {
+  const dataset = [['Name', 'Amount']]
+  const legendData = []
+  data.sort((a, b) => {
+    return b.totalSuccessWithdrawAmount - a.totalSuccessWithdrawAmount
+  })
+  if (data.length > 0) {
+    data.forEach((item, index) => {
+      const data = []
+      data.push(item.name)
+      data.push(Math.round(item.totalSuccessWithdrawAmount * 100) / 100)
+      dataset.push(data)
+      legendData.push({ name: item.name })
+    })
+    options.dataset.source = dataset
+    options.legend.data = legendData
+  }
+}
+
+const countOptions = reactive({
+  title: {
+    text: t('fields.withdrawCountRatio'),
+  },
+  legend: {
+    type: 'scroll',
+    orient: 'vertical',
+    data: [],
+    pageTextStyle: {
+      fontSize: 22,
+    },
+    right: 10,
+  },
+  height: '380px',
+  dataset: {
+    source: [['Name', 'Count']],
+  },
+  series: [
+    {
+      type: 'pie',
+      top: '20px',
+      emphasis: {
+        focus: 'self',
+        label: {
+          show: true,
+          formatter: '{b}: [' + t('fields.count') + ': {@Count}] ({d}%)',
+        }
+      },
+      label: {
+        show: false,
+      },
+      encode: {
+        itemName: 'Name',
+        value: 'Count',
+        tooltip: 'Count',
+      },
+    },
+  ],
+})
+
+const amountOptions = reactive({
+  title: {
+    text: t('fields.withdrawAmountRatio'),
+  },
+  legend: {
+    type: 'scroll',
+    orient: 'vertical',
+    data: [],
+    pageTextStyle: {
+      fontSize: 22,
+    },
+    right: 10,
+  },
+  height: '380px',
+  dataset: {
+    source: [['Name', 'Amount']],
+  },
+  series: [
+    {
+      type: 'pie',
+      top: '20px',
+      emphasis: {
+        focus: 'self',
+        label: {
+          show: true,
+          formatter: '{b}: [' + t('fields.amount') + ': ' + '$' + '{@Amount}] ({d}%)',
+        }
+      },
+      label: {
+        show: false,
+      },
+      encode: {
+        itemName: 'Name',
+        value: 'Amount',
+        tooltip: 'Amount',
+      },
+    },
+  ],
+})
+
+const barOption = {
+  title: {
+    text: t('fields.successRate'),
+  },
+  dataset: {
+    dimensions: ['Name', 'SuccessRate'],
+    source: []
+  },
+  xAxis: {
+    name: 'name',
+    type: 'category',
+    axisLabel: { interval: 0, rotate: 30 }
+  },
+  yAxis: {
+    type: 'value',
+    name: '%'
+  },
+  series: [
+    {
+      type: 'bar',
+      encode: { x: 'Name', y: 'SuccessRate' },
+    }
+  ],
+  tooltip: {
+    trigger: 'axis',
+    formatter: '{c}' + '%'
+  }
+};
 
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
@@ -525,6 +747,7 @@ onMounted(async () => {
     request.siteId = site.value.id
   }
   await loadWithdrawReport(true)
+  await loadCharts()
 })
 </script>
 
