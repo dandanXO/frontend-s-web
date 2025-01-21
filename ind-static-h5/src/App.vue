@@ -127,10 +127,56 @@ export default defineComponent({
       }
     };
 
+    const sendFacebookInfo = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const fbclid = urlParams.get("fbclid");
+      const fbc = fbclid;
+      const siteCode = "IND";
+
+      const getCookie = (name) => {
+        const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
+        return match ? decodeURIComponent(match[1]) : null;
+      };
+
+      // const fbp = getCookie("_fbp");
+      // Extract the last portion of _fbp
+      const fbp = (() => {
+        const rawFbp = getCookie("_fbp");
+        return rawFbp ? rawFbp.split(".").pop() : null;
+      })();
+
+      const payload = new URLSearchParams({
+        fbp: fbp || "",
+        fbc: fbc || "",
+        siteCode: siteCode
+      });
+
+      // Make the POST request
+      fetch("https://tljwn.plan2wtion.com/app/facebookInfo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: payload.toString()
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+
     const trackH5Affiliate = () => {
       const omitSites = ["bw3.genoortisy.com"];
 
       if (isInPwa()) {
+
+        api.get(`/app/pwa/log?step=OPEN&siteCode=${process.env.SITE}`).then((res2) => {
+          console.log("OPEN");
+        });
+
         const hostname = window.location.hostname.replace("www.", "");
         //Use thisApi to get AffiliateCode/FbPixelId/ WebPushId for PWA.
         api.get(`/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}`).then((res) => {
@@ -143,6 +189,7 @@ export default defineComponent({
           store.isFbPixel = true;
 
           initEngageLabPush(pushId);
+          sendFacebookInfo();
         });
       } else {
         var affiliateCode = "";

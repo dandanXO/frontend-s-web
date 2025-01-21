@@ -195,6 +195,7 @@
             <span v-else>{{ scope.row.affiliateName }}</span>
           </template>
         </el-table-column>
+        <el-table-column prop="remark" :label="t('fields.remark')" align="center" min-width="200" />
         <el-table-column prop="betTime" :label="t('fields.betTime')" align="center" min-width="180">
           <template #default="scope">
             <span v-if="scope.row.betTime === null">-</span>
