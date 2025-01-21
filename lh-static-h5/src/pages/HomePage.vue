@@ -675,7 +675,7 @@
     </q-card>
   </q-dialog>
 
-  <PopupDialog></PopupDialog>
+  <PopupDialog :clickHomePopupImg></PopupDialog>
 
   <!-- <q-dialog width="100%" v-model="isImportantAnnoucementModal" @update:model-value="offPopupModal()">
     <q-card flat style="width: 70%; max-width: 500px; background-color: transparent; margin: 0 auto" class="text-white">

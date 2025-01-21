@@ -12,7 +12,7 @@
                         class="carousel-slide" style="padding: 0">
                         <div class="promo-banner-container">
                             <div class="promo-banner-content" v-if="item.type === 'TEXT'" v-html="item.content"></div>
-                            <div class="promo-banner-img" @click="clickHomePopupImg(item.path)" v-else>
+                            <div class="promo-banner-img" @click="() => props.clickHomePopupImg(item.path)" v-else>
                                 <img :src="formatHomePopupImg(item.mobileImgUrl)" class="alert-img" draggable="false" />
                             </div>
                         </div>
@@ -28,10 +28,11 @@ import { ref, onMounted } from 'vue';
 import { api } from "boot/axios";
 import { useLocalStorage } from "@vueuse/core";
 
-const showPopupDialog = ref(true);
+const showPopupDialog = ref(false);
 const popupList = ref([]);
 const popupSlide = ref(0);
 const popupExpiryMap = ref({});
+const props = defineProps(['clickHomePopupImg']);
 
 const formatHomePopupImg = (path) => {
     return useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/" + path;
@@ -69,6 +70,10 @@ const getPopupList = () => {
                     return popup;
                 });
                 popupList.value = popupListData;
+
+                if(popupList.value) {
+                    showPopupDialog.value = true;
+                }
             }
         })
         .catch(() => { });
