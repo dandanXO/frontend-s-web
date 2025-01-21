@@ -28,6 +28,10 @@
       :promocode="list.promoCode"
       :params="list.param"
     />
+    <AppLoginBonus
+      v-if="list.redirectUrl === 'bgd-app-login-bonus' && !isCommonPromo && store.token"
+      :promocode="list.promoCode"
+    />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -66,6 +70,7 @@ import RegisterClaimBonus from "../components/hotpromo/registerClaimBonus/Regist
 import SignIn30DaysPromo from "./hotpromo/signIn30Days/SignIn30DaysPromo.vue";
 import EmailVerifyBonus from "./hotpromo/emailVerifyBonus/EmailVerifyBonusPromo.vue";
 import ReferSpinWheel from "./hotpromo/referSpinWheel/ReferSpinWheel.vue";
+import AppLoginBonus from "./hotpromo/appLoginBonus/AppLoginBonus.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -84,7 +89,8 @@ export default defineComponent({
     InterestProfitPromo,
     NewPlayersPromo,
     SlotFtdPromo,
-    RegisterClaimBonus
+    RegisterClaimBonus,
+    AppLoginBonus
   },
   props: {
     list: {
@@ -147,6 +153,7 @@ export default defineComponent({
       this.list.redirectUrl === "bgd-slot-ftd" ||
       this.list.redirectUrl === "bgd-register-claim-bonus" ||
       this.list.redirectUrl === "bgd-email-verify-bonus" ||
+      this.list.redirectUrl === "bgd-app-login-bonus" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

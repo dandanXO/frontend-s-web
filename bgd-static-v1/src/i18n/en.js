@@ -833,6 +833,34 @@ export default {
       wish14: "May the doors of success and fortune always remain open for you.",
       wish15: "May Allah’s blessings turn all your efforts into wealth and success.",
       wish16: "On this special occasion, I pray for your financial growth and success."
+    },
+    appLoginBonus: {
+      newlyRegistered: `Newly registered <span style="color: #faff00">WIN7</span> members, download and install the application, and get random free bonuses, up to <span style="color: #00ffc3">888BDT</span>.`,
+      claimNow: "CLAIM NOW",
+      downloadApp: "DOWNLOAD APP",
+      claimed: "CLAIMED",
+      beginnersGuide: "BEGINNER'S GUIDE",
+      rewardDetails: "REWARD DETAILS",
+      beginnersGuideTxt1: `1. Follow whatsapp and subscribe to <span style="color: #00ff80">win7.game</span> channel`,
+      beginnersGuideTxt2: "2. Associate and verify email address",
+      rewardDetailTxt: `The maximum bonus can reach <span style="color: #ff9500">888BDT</span><br /><span style="color: #ff0000; line-height: 30px">New users only</span>`,
+      thingsToNote: `<br />Rewards can only be claimed after logging in through the APP and completing verification<br /><br />Application must be <span style="color: #00ff80cc">downloaded</span> and <span style="color: #00ff80cc">installed</span>`,
+      downloadAndInstall: `<br />Download and install <span style="color: #00ff80cc">win7.game</span> official application.<br /><br />Subscribe to <span style="color: #00ff80cc">win7.game</span> official channel<br /><br />
+        WhatsApp channel: <span style="color: #00ff80cc">win7.game</span> official channel <br /><br />Register a member account and enter your original name (must be consistent with the name of your associated withdrawal account)<br /><br />
+        Linked withdrawal account<br /><br />Enter the [Discount Center] to check and collect, and you can get a random reward of up to <span style="color: #00ff80cc">888BDT</span>.`,
+      termsCondition1:
+        "After registering as a WIN7 member and completing tasks, you will receive corresponding rewards.",
+      termsCondition2:
+        "Before withdrawing, you must complete the bonus X5 turnover requirements before you can withdraw the bonus!",
+      termsCondition3:
+        "The bank account number and any information cannot be changed before the first withdrawal request. If correction is required, bonuses and profits will be deducted.",
+      termsCondition4:
+        "Each player can only receive one promotional bonus. If the system detects duplicates involving the same IP address, bank card or phone number, bonuses and profits will be forfeited.",
+      termsCondition5:
+        "This promotional bonus can only be used on slot games. Please note that small and large odd and even, two-way games are not applicable.",
+      termsCondition6:
+        "If a player chooses to bet on other games, such as poker, sports, electronic games, live or exclusive games, WIN7 reserves the right to forfeit winnings and any resulting profits.",
+      termsCondition7: "WIN7.GAME reserves the right to modify, suspend or cancel this event at any time."
     }
   },
   maintenance: {
