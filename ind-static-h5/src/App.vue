@@ -423,6 +423,15 @@ export default defineComponent({
             // Custom permission prompt logic
           }
         });
+
+        if (isInPwa()) {
+          const fbclid = window.localStorage.getItem("fbclid");
+          if (fbclid && !window.location.search.includes("fbclid")) {
+            const url = new URL(window.location.href);
+            url.searchParams.set("fbclid", fbclid);
+            window.history.replaceState({}, "", url.toString());
+          }
+        }
       };
 
       // Start the notification permission check
