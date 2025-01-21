@@ -132,7 +132,7 @@
     </div>
 
     <div class="list-section">
-      <div class="list-wrapper">
+      <marquee class="list-wrapper" direction="up" scrollamount="1">
         <div class="list">
           <div class="list-row" v-for="winner, index in winnersList" :key="index">
             <div class="list-item"><span class="cyan">{{ winner.loginName }}</span></div>
@@ -144,7 +144,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </marquee>
       <div class="withdraw-order-btn btn-primary btn-primary__full center">Withdraw Orders</div>
     </div>
 
