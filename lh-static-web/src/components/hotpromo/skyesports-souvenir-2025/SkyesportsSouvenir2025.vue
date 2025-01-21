@@ -25,7 +25,7 @@
             <div class="reward-info-icon claim-gift-icon"></div>
             <div class="reward-info-content">
               当日可领取彩金：
-              <span class="amount">{{ bonus }}次</span>
+              <span class="amount">{{ bonus }}元</span>
             </div>
           </div>
         </div>
