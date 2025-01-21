@@ -97,11 +97,13 @@ const EDITION = {
   SLOT: "SLOT"
 };
 
+const props = defineProps(['onShow']);
 // const router = useRouter();
 const ui = uiStore();
 
 const popoutList = ref([]);
 const selectedItemIndex = ref();
+const popupExpiryMap = ref({});
 
 const selectedItem = computed(() =>
   popoutList.value.length > 0 ? popoutList.value?.[selectedItemIndex.value] : undefined
@@ -113,6 +115,12 @@ const onSlideChange = (_swiper) => {
 };
 
 onMounted(() => {
+  try {
+      popupExpiryMap.value = JSON.parse(localStorage.getItem('POPUP'));
+  } catch {
+
+  }
+
   let siteType = "main";
   switch (ui.edition) {
     case EDITION.SLOT:
@@ -120,7 +128,41 @@ onMounted(() => {
   }
   loadHomePopups(siteType).then((res) => {
     if (res.code === 0) {
-      popoutList.value = res.data;
+
+      const popupListData = res.data.filter((popup) => {
+        if(popupExpiryMap.value && Object.keys(popupExpiryMap.value).includes(popup.path)) {
+
+            const now = Date.now();
+            const timestamp = now - popupExpiryMap.value[popup.path].lastSeen;
+            const minutes = Math.floor(timestamp / (1000 * 60));
+
+            if(popup.frequency === 'EVERYDAY' && minutes <= 1440) {
+                return false;
+            }
+
+            if(popup.frequency === 'SESSION' && minutes <= 131107.2) {
+                return false;
+            }
+        }
+
+        return true;
+    });
+
+    popoutList.value = sessionStorage.getItem('POPUP') === 'true' ? popupListData : [];
+
+    if(Object.keys(popoutList.value).length > 0) {
+        props.onShow();
+
+        popoutList.value.forEach((popup) => {
+            popupExpiryMap.value = {...popupExpiryMap.value, [popup.path]: {
+              lastSeen: Date.now(),
+              frequency: popup.frequency
+            } };
+        });
+
+        sessionStorage.removeItem('POPUP');
+        localStorage.setItem('POPUP', JSON.stringify(popupExpiryMap.value));
+    }
 
       if (res.data.length > 0) {
         selectedItemIndex.value = 0;

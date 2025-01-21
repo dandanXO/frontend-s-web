@@ -1101,12 +1101,6 @@ export default defineComponent({
     };
 
     const offPopupModal = () => {
-      popupList.value.filter(popup => popup.frequency !== 'EVERYTIME').forEach((popup) => {
-          popupExpiryMap.value = {...popupExpiryMap.value, [popup.path]: Date.now() };
-      });
-
-      localStorage.setItem('POPUP', JSON.stringify(popupExpiryMap.value));
-      
       setExpiryBanner();
     };
 
@@ -1176,14 +1170,14 @@ export default defineComponent({
             // if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {
             //   res = apiMockData
             // }
-            if (res.code === 0) {
+            if (res.code === 0 ) {
               const popupListData = res.data.filter((popup) => {
                   if(popupExpiryMap.value && Object.keys(popupExpiryMap.value).includes(popup.path)) {
 
                       const now = Date.now();
-                      const timestamp = now - popupExpiryMap.value[popup.path];
+                      const timestamp = now - popupExpiryMap.value[popup.path].lastSeen;
                       const minutes = Math.floor(timestamp / (1000 * 60));
-                      
+
                       if(popup.frequency === 'EVERYDAY' && minutes <= 1440) {
                           return false;
                       }
@@ -1193,13 +1187,23 @@ export default defineComponent({
                       }
                   }
 
-                  return popup;
+                  return true;
               });
-              popupList.value = popupListData;
 
-              console.log('here', popupList.value)
-              if(popupList.value) {
+              popupList.value = sessionStorage.getItem('POPUP') === 'true' ? popupListData : [];
+
+              if(Object.keys(popupList.value).length > 0) {
                   showPopupDialog.value = true;
+
+                  popupList.value.forEach((popup) => {
+                      popupExpiryMap.value = {...popupExpiryMap.value, [popup.path]: {
+                        lastSeen: Date.now(),
+                        frequency: popup.frequency
+                      } };
+                  });
+
+                  sessionStorage.removeItem('POPUP');
+                  localStorage.setItem('POPUP', JSON.stringify(popupExpiryMap.value));
               }
               
               // popupList.value = res.data;
