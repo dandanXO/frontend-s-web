@@ -1,55 +1,39 @@
 <template>
   <div>
     <div class="download-container">
-      <span>
-        Newly registered
-        <span style="color: #faff00">WIN7</span>
-        members, download and install the application, and get random free bonuses, up to
-        <span style="color: #00ffc3">888BDT</span>
-        .
-      </span>
+      <span v-html="$t('hotPromo.appLoginBonus.newlyRegistered')" />
       <div v-if="!hadClaim && isAppLogin" class="claim-btn" @click="handleClaimBtnClick">
-        <span>CLAIM NOW</span>
+        <span>{{ $t("hotPromo.appLoginBonus.claimNow") }}</span>
       </div>
       <a v-else-if="!hadClaim && !isAppLogin" :href="ui.downloadAppUrl" style="text-decoration: none">
         <div class="download-btn">
-          <span>DOWNLOAD APP</span>
+          <span>{{ $t("hotPromo.appLoginBonus.downloadApp") }}</span>
         </div>
       </a>
 
       <div v-else class="claim-btn disabled">
-        <span>CLAIMED</span>
+        <span>{{ $t("hotPromo.appLoginBonus.claimed") }}</span>
       </div>
     </div>
 
     <table class="content-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
       <thead>
         <tr>
-          <th>BEGINNER'S GUIDE</th>
-          <th>REWARD DETAILS</th>
+          <th>{{ $t("hotPromo.appLoginBonus.beginnersGuide") }}</th>
+          <th>R{{ $t("hotPromo.appLoginBonus.rewardDetails") }}</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>
-            <span>
-              1. Follow whatsapp and subscribe to
-              <span style="color: #00ff80">win7.game</span>
-              channel
-            </span>
+            <span v-html="$t('hotPromo.appLoginBonus.beginnersGuideTxt1')" />
           </td>
           <td rowspan="2">
-            <span>
-              The maximum bonus can reach
-              <span style="color: #ff9500">888BDT</span>
-            </span>
-
-            <br />
-            <span style="color: #ff0000; line-height: 30px">New users only</span>
+            <span v-html="$t('hotPromo.appLoginBonus.rewardDetailTxt')" />
           </td>
         </tr>
         <tr>
-          <td>2. Associate and verify email address</td>
+          <td><span v-html="$t('hotPromo.appLoginBonus.beginnersGuideTxt2')" /></td>
         </tr>
       </tbody>
     </table>
@@ -57,74 +41,34 @@
     <div class="things-to-note-container">
       <img src="../../../assets/images/promotion/hotpromo/app-login-bonus/things-to-note-title.png" />
 
-      <span>
-        <br />
-        Rewards can only be claimed after logging in through the APP and completing verification
-        <br />
-        <br />
-        Application must be
-        <span style="color: #00ff80cc">downloaded</span>
-        and
-        <span style="color: #00ff80cc">installed</span>
-      </span>
+      <span v-html="$t('hotPromo.appLoginBonus.thingsToNote')" />
     </div>
 
     <div class="get-bonus-info-container">
       <img src="../../../assets/images/promotion/hotpromo/app-login-bonus/get-bonus-info-title.png" />
 
-      <span>
-        <br />
-        Download and install
-        <span style="color: #00ff80cc">win7.game</span>
-        official application.
-        <br />
-        <br />
-        Subscribe to
-        <span style="color: #00ff80cc">win7.game</span>
-        official channel
-        <br />
-        <br />
-        WhatsApp channel:
-        <span style="color: #00ff80cc">win7.game</span>
-        official channel
-        <br />
-        <br />
-        Register a member account and enter your original name (must be consistent with the name of your associated
-        withdrawal account)
-        <br />
-        <br />
-        Linked withdrawal account
-        <br />
-        <br />
-        Enter the [Discount Center] to check and collect, and you can get a random reward of up to
-        <span style="color: #00ff80cc">888BDT</span>
-        .
-      </span>
+      <span v-html="$t('hotPromo.appLoginBonus.downloadAndInstall')" />
     </div>
     <div class="terms-and-conditions-container">
       <img src="../../../assets/images/promotion/hotpromo/app-login-bonus/terms-and-conditions-title.png" />
       <ul>
-        <li>After registering as a WIN7 member and completing tasks, you will receive corresponding rewards.</li>
+        <li>{{ $t("hotPromo.appLoginBonus.termsCondition1") }}</li>
         <li>
-          Before withdrawing, you must complete the bonus X5 turnover requirements before you can withdraw the bonus!
+          {{ $t("hotPromo.appLoginBonus.termsCondition2") }}
         </li>
         <li>
-          The bank account number and any information cannot be changed before the first withdrawal request. If
-          correction is required, bonuses and profits will be deducted.
+          {{ $t("hotPromo.appLoginBonus.termsCondition3") }}
         </li>
         <li>
-          Each player can only receive one promotional bonus. If the system detects duplicates involving the same IP
-          address, bank card or phone number, bonuses and profits will be forfeited.
+          {{ $t("hotPromo.appLoginBonus.termsCondition4") }}
         </li>
         <li>
-          This promotional bonus can only be used on slot games. Please note that small and large odd and even, two-way
-          games are not applicable.
+          {{ $t("hotPromo.appLoginBonus.termsCondition5") }}
         </li>
         <li>
-          If a player chooses to bet on other games, such as poker, sports, electronic games, live or exclusive games,
-          WIN7 reserves the right to forfeit winnings and any resulting profits.
+          {{ $t("hotPromo.appLoginBonus.termsCondition6") }}
         </li>
-        <li>WIN7.GAME reserves the right to modify, suspend or cancel this event at any time.</li>
+        <li>{{ $t("hotPromo.appLoginBonus.termsCondition7") }}</li>
       </ul>
     </div>
   </div>
@@ -179,8 +123,6 @@ const getAppLoginBonusData = () => {
       hasBindEmail.value = res.data.hasBindEmail;
       hadClaim.value = res.data.hadClaim;
       isAppLogin.value = res.data.isAppLogin;
-      // hasBindEmail.value = true;
-      // isAppLogin.value = true;
     }
   });
 };
