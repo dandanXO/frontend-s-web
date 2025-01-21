@@ -596,7 +596,7 @@ const countOptions = reactive({
 
 const amountOptions = reactive({
   title: {
-    text: t('fields.amountCountRatio'),
+    text: t('fields.depositAmountRatio'),
   },
   height: '1000px',
   width: '1000px',
@@ -658,7 +658,7 @@ const barOption = {
   ],
   tooltip: {
     trigger: 'axis',
-    formatter: '{c}'
+    formatter: '{c}' + '%'
   }
 };
 

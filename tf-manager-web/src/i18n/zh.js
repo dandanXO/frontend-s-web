@@ -2233,7 +2233,9 @@ export default {
     table: '数据',
     chart: '图表',
     depositCountRatio: '存款笔数比例',
-    amountCountRatio: '存款金额比例',
+    depositAmountRatio: '存款金额比例',
+    withdrawAmountRatio: '提款金额比例',
+    withdrawCountRatio: '提款笔数比例',
   },
   message: {
     adsStatusOpen: '开',
