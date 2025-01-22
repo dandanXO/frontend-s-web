@@ -80,6 +80,18 @@
   </div>
 
   <div>
+    <q-page-sticky
+      v-if="isReferSpinWheelShow"
+      position="bottom-right"
+      :offset="referSpinWheelDragPos"
+      class="floating-btn"
+    >
+      <div v-touch-pan.prevent.mouse="moveReferSpinWheelGif" @click="openReferSpinWheel">
+        <img class="charity-gif" src="../assets/images/index/refer-spin-wheel-float.gif" />
+      </div>
+    </q-page-sticky>
+  </div>
+  <div>
     <q-page-sticky v-if="isCharityShow" position="bottom-right" :offset="charityDragPos" class="floating-btn">
       <div v-touch-pan.prevent.mouse="moveCharityGif" @click="openCharityUrl">
         <!--        <div class="hb-close">-->
@@ -1627,6 +1639,10 @@ const checkHash = () => {
     handleActivateSlide("Lobby");
   }
 };
+
+const isReferSpinWheelShow = ref(true);
+const referSpinWheelDragPos = ref([10, 360]);
+const isDraggingReferSpinWheelGif = ref(false);
 
 const isCharityShow = computed(() => {
   if (ui.charityUrl) {
@@ -3567,31 +3583,39 @@ const detectAndroidVersion = () => {
   return "not-android";
 };
 
+const openReferSpinWheel = () => {
+  router.push({ path: "/promo", query: { name: "bgd-refer-wheel" } });
+};
+const moveReferSpinWheelGif = (ev) => {
+  isDraggingReferSpinWheelGif.value = ev.isFirst !== true && ev.isFinal !== true;
+
+  referSpinWheelDragPos.value = [
+    referSpinWheelDragPos.value[0] - ev.delta.x,
+    referSpinWheelDragPos.value[1] - ev.delta.y
+  ];
+};
+
 const openCharityUrl = () => {
   window.open(ui.charityUrl, "_blank");
 };
 
 const moveCharityGif = (ev) => {
   isDraggingCharityGif.value = ev.isFirst !== true && ev.isFinal !== true;
-
   charityDragPos.value = [charityDragPos.value[0] - ev.delta.x, charityDragPos.value[1] - ev.delta.y];
 };
 
 const moveCsIcon = (ev) => {
   isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
-
   csDragPos.value = [csDragPos.value[0] - ev.delta.x, csDragPos.value[1] - ev.delta.y];
 };
 
 const moveLiveIcon = (ev) => {
   isDraggingLiveIcon.value = ev.isFirst !== true && ev.isFinal !== true;
-
   liveDragPos.value = [liveDragPos.value[0] - ev.delta.x, liveDragPos.value[1] - ev.delta.y];
 };
 
 const moveHbIcon = (ev) => {
   isDraggingHbIcon.value = ev.isFirst !== true && ev.isFinal !== true;
-
   hbDragPos.value = [hbDragPos.value[0] - ev.delta.x, hbDragPos.value[1] - ev.delta.y];
 };
 
