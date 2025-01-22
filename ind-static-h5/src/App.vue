@@ -433,11 +433,12 @@ export default defineComponent({
 
           // request fullscreen for pwa
           nextTick(() => {
-            if (routerView.value) {
-              console.log("full ready");
-              requestFullscreen(routerView.value);
+            const fullscreenFunction = requestFullscreen();
+            if (fullscreenFunction) {
+              fullscreenFunction.call(document.documentElement);
+              console.log("Fullscreen request triggered");
             } else {
-              console.error("routerView is not ready.");
+              console.warn("Fullscreen API is not supported in this browser.");
             }
           });
         }
@@ -449,19 +450,12 @@ export default defineComponent({
 
     const routerView = ref(null);
 
-    const requestFullscreen = (element) => {
+    const requestFullscreen = () => {
       console.log("Fullscreen~");
-      if (element.requestFullscreen) {
-        element.requestFullscreen();
-      } else if (element.mozRequestFullScreen) {
-        element.mozRequestFullScreen();
-      } else if (element.webkitRequestFullscreen) {
-        element.webkitRequestFullscreen();
-      } else if (element.msRequestFullscreen) {
-        element.msRequestFullscreen();
-      } else {
-        console.log("Fullscreen API is not supported in this browser.");
-      }
+      var root = document.documentElement;
+      return (
+        root.requestFullscreen || root.webkitRequestFullscreen || root.mozRequestFullScreen || root.msRequestFullscreen
+      );
     };
 
     onMounted(async () => {
@@ -474,15 +468,6 @@ export default defineComponent({
       getAppInfo();
       initOrientation();
       AOS.init();
-
-      nextTick(() => {
-        if (routerView.value) {
-          console.log("routerView full ready");
-          requestFullscreen(routerView.value);
-        } else {
-          console.log("routerView is not ready.");
-        }
-      });
 
       if (isAndroid()) {
         document.addEventListener(
@@ -498,6 +483,15 @@ export default defineComponent({
       } else {
         trackH5Affiliate();
       }
+
+      // nextTick(() => {
+      //   const fullscreenFunction = requestFullscreen();
+      //   if (fullscreenFunction) {
+      //     fullscreenFunction.call(document.documentElement);
+      //   } else {
+      //     console.warn("Fullscreen API is not supported in this browser.");
+      //   }
+      // });
 
       // PWA
       // const hostname = window.location.hostname;
