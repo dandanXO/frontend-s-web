@@ -1,5 +1,5 @@
 <template>
-  <router-view />
+  <router-view ref="routerView" />
 </template>
 
 <script>
@@ -166,13 +166,12 @@ export default defineComponent({
         .catch((error) => {
           console.error("Error:", error);
         });
-    }
+    };
 
     const trackH5Affiliate = () => {
       const omitSites = ["bw3.genoortisy.com"];
 
       if (isInPwa()) {
-
         api.get(`/app/pwa/log?step=OPEN&siteCode=${process.env.SITE}`).then((res2) => {
           console.log("OPEN");
         });
@@ -431,11 +430,38 @@ export default defineComponent({
             url.searchParams.set("fbclid", fbclid);
             window.history.replaceState({}, "", url.toString());
           }
+
+          // request fullscreen for pwa
+          nextTick(() => {
+            if (routerView.value) {
+              console.log("full ready");
+              requestFullscreen(routerView.value);
+            } else {
+              console.error("routerView is not ready.");
+            }
+          });
         }
       };
 
       // Start the notification permission check
       requestNotificationPermission();
+    };
+
+    const routerView = ref(null);
+
+    const requestFullscreen = (element) => {
+      console.log("Fullscreen~");
+      if (element.requestFullscreen) {
+        element.requestFullscreen();
+      } else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+      } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+      } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+      } else {
+        console.log("Fullscreen API is not supported in this browser.");
+      }
     };
 
     onMounted(async () => {
@@ -448,6 +474,15 @@ export default defineComponent({
       getAppInfo();
       initOrientation();
       AOS.init();
+
+      nextTick(() => {
+        if (routerView.value) {
+          console.log("routerView full ready");
+          requestFullscreen(routerView.value);
+        } else {
+          console.log("routerView is not ready.");
+        }
+      });
 
       if (isAndroid()) {
         document.addEventListener(
@@ -480,6 +515,10 @@ export default defineComponent({
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);
     });
+
+    return {
+      routerView
+    };
   }
 });
 
