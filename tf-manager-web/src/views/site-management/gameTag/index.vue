@@ -110,6 +110,7 @@
           {{ t('fields.requestExportToExcel') }}
         </el-button>
         <el-button
+          v-if="hasPGF === true"
           icon="el-icon-refresh"
           size="mini"
           type="primary"
@@ -119,6 +120,7 @@
           PG -> PGF
         </el-button>
         <el-button
+          v-if="hasPGF === true"
           icon="el-icon-refresh"
           size="mini"
           type="primary"
