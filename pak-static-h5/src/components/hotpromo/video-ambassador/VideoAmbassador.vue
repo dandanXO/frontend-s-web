@@ -139,9 +139,7 @@
           <div
             class="rank-index"
             :style="`background: ${
-              n <= 3
-                ? 'url(' + require(`./img/medal-${n}.png`) + '); color: #9E6213; font-weight: 900; font-size: 16px;'
-                : 'none'
+              n <= 3 ? 'url(' + require(`./img/medal-${n}.png`) + '); color: #9E6213; font-weight: 900;' : 'none'
             }`"
           >
             {{ n }}
@@ -465,12 +463,11 @@ onMounted(() => {
       align-items: center;
       overflow-wrap: anywhere;
       .rank-index {
+        font-size: 1rem;
         text-align: center;
         background-repeat: no-repeat !important;
         background-size: contain !important;
         background-position: center !important;
-        align-items: center;
-        justify-content: center;
       }
       .rank-name {
         color: #ff4c00;
