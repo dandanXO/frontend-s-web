@@ -321,7 +321,7 @@ export const userStore = defineStore("userStore", {
         }
 
         // router.push("/home")
-        location.href = "/5076209572/";
+        location.href = "/8106212415/home";
       });
     },
     setMailData(mailData) {
