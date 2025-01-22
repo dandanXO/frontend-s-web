@@ -391,10 +391,15 @@ onMounted(() => {
 }
 .ranking-top-img {
   position: absolute;
-  top: calc(60% - 300px);
+  top: calc(60% - 310px);
   left: 50%;
   transform: translateX(-50%);
   width: 70% !important;
+}
+@media (min-width: 375px) {
+  .ranking-top-img {
+    top: calc(60% - 300px);
+  }
 }
 @media (min-width: 435px) {
   .ranking-top-img {
@@ -443,20 +448,22 @@ onMounted(() => {
       font-size: 10px;
     }
   }
-  // @media (max-width: 375px) {
-  //   .ranking-content,
-  //   .ranking-header {
-  //     font-size: 8px;
-  //   }
-  // }
+  @media (max-width: 375px) {
+    .ranking-content,
+    .ranking-header {
+      font-size: 9px;
+    }
+  }
   .ranking-content {
     margin-top: 16px;
 
     .ranking-item {
       display: grid;
       grid-template-columns: 100px 1fr 1fr;
-      padding: 20px 14px;
+      height: 65px;
+      padding: 0 14px;
       align-items: center;
+      overflow-wrap: anywhere;
       .rank-index {
         text-align: center;
         background-repeat: no-repeat !important;
