@@ -1640,7 +1640,7 @@ const checkHash = () => {
   }
 };
 
-const isReferSpinWheelShow = ref(true);
+const isReferSpinWheelShow = ref(false);
 const referSpinWheelDragPos = ref([10, 360]);
 const isDraggingReferSpinWheelGif = ref(false);
 
