@@ -19,7 +19,7 @@
     </div>
     <div class="sec-title">
       <img class="sec-icon" src="./img/sec-icon.png" />
-      <di class="sec-content">Amazing Rewards Await You!</di>
+      <div class="sec-content">Amazing Rewards Await You!</div>
     </div>
   </div>
   <div class="thrid-section">
@@ -27,7 +27,7 @@
     <ul>
       <li>
         Represent
-        <sapn class="l1">B9.GAME</sapn>
+        <span class="l1">B9.GAME</span>
         for 12 months
       </li>
       <li>
@@ -126,6 +126,37 @@
         </li>
       </ul>
     </div>
+  </div>
+  <div class="ranking-section">
+    <div class="ranking-container">
+      <div class="ranking-header">
+        <div class="rank-index">RANKING</div>
+        <div>NAME</div>
+        <div>AMOUNT</div>
+      </div>
+      <div class="ranking-content">
+        <div class="ranking-item" v-for="n in 5" :key="n">
+          <div
+            class="rank-index"
+            :style="`background: ${
+              n <= 3
+                ? 'url(' + require(`./img/medal-${n}.png`) + '); color: #9E6213; font-weight: 900; font-size: 16px;'
+                : 'none'
+            }`"
+          >
+            {{ n }}
+          </div>
+          <div class="rank-name">NAME</div>
+          <div class="rank-amt">
+            <img src="./img/coin.png" />
+            888
+          </div>
+        </div>
+      </div>
+    </div>
+    <img class="ranking-top-img" src="./img/ranking-top.png" />
+    <img class="ranking-left-img" src="./img/ranking-left.png" />
+    <img class="ranking-right-img" src="./img/ranking-right.png" />
   </div>
 </template>
 <script setup>
@@ -346,6 +377,110 @@ onMounted(() => {
   .sp2 {
     font-weight: 700;
     color: rgba(0, 255, 178, 1);
+  }
+}
+
+.ranking-section {
+  background-image: url(./img/ranking-bg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-width: 100% !important;
+  background-position: center;
+  aspect-ratio: 800 / 1750;
+  position: relative;
+}
+.ranking-top-img {
+  position: absolute;
+  top: calc(60% - 300px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70% !important;
+}
+@media (min-width: 435px) {
+  .ranking-top-img {
+    top: calc(60% - 265px);
+  }
+}
+.ranking-left-img {
+  position: absolute;
+  bottom: calc(100px);
+  transform: translateY(-50%);
+  left: 10px;
+  width: 50px !important;
+}
+.ranking-right-img {
+  position: absolute;
+  right: 10px;
+  bottom: calc(10% + 150px);
+  transform: translateY(-50%);
+  width: 20px !important;
+}
+.ranking-container {
+  background: #1e371f;
+  border: 2px solid #337e3a;
+  border-radius: 10px;
+  padding-top: 20px;
+  margin: 50px 30px;
+  font-weight: 700;
+  position: absolute;
+  bottom: 0;
+  width: calc(100% - 60px);
+  .ranking-header {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+    background: #0000001a;
+    border-radius: 24px;
+    padding: 16px 4px;
+    margin: 0 10px;
+    .rank-index {
+      text-align: center;
+      margin: 0 20px;
+    }
+  }
+  @media (max-width: 435px) {
+    .ranking-content,
+    .ranking-header {
+      font-size: 10px;
+    }
+  }
+  // @media (max-width: 375px) {
+  //   .ranking-content,
+  //   .ranking-header {
+  //     font-size: 8px;
+  //   }
+  // }
+  .ranking-content {
+    margin-top: 16px;
+
+    .ranking-item {
+      display: grid;
+      grid-template-columns: 100px 1fr 1fr;
+      padding: 20px 14px;
+      align-items: center;
+      .rank-index {
+        text-align: center;
+        background-repeat: no-repeat !important;
+        background-size: contain !important;
+        background-position: center !important;
+        align-items: center;
+        justify-content: center;
+      }
+      .rank-name {
+        color: #ff4c00;
+      }
+      .rank-amt {
+        display: flex;
+        color: #64ffce;
+        img {
+          height: 20px;
+          width: 20px !important;
+          margin-right: 10px;
+        }
+      }
+    }
+    .ranking-item:nth-child(odd) {
+      background-color: #0000001a;
+    }
   }
 }
 </style>
