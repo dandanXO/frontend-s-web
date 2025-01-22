@@ -177,8 +177,11 @@ export default defineComponent({
         });
 
         const hostname = window.location.hostname.replace("www.", "");
+        const urlParams = new URLSearchParams(window.location.search);
+        const affiliateCodeFromUrl = urlParams.get('affiliateCode');
+
         //Use thisApi to get AffiliateCode/FbPixelId/ WebPushId for PWA.
-        api.get(`/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}`).then((res) => {
+        api.get(`/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${affiliateCodeFromUrl}`).then((res) => {
           console.log(res);
           const { affiliateCode, facebookId, pushId } = res.data;
           sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
