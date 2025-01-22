@@ -475,6 +475,7 @@ onMounted(() => {
       .rank-amt {
         display: flex;
         color: #64ffce;
+        align-items: center;
         img {
           height: 20px;
           width: 20px !important;
