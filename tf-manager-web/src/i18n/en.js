@@ -1950,6 +1950,7 @@ export default {
     downloadManagerRecord: 'Download Manager Record',
     downloadExportedExcel: 'Download Exported Excel',
     redPacketAmountAfterReachingLimit: 'Red Packet Amount After Reaching Limit',
+    reOrderHotGame: 'Hot Game Seq Re-order',
     requestBy: 'Request By',
     requestTime: 'Request Time',
     progress: 'Progress',
@@ -2323,6 +2324,7 @@ export default {
     unfreezeMemberSuccess: 'Unfreeze Member Success',
     found: 'Found ',
     gameMatchEnded: 'Game Match Ended',
+    gameNotFound: 'Game Not Found',
     giftDelivered: 'Gift Delivered',
     giftNoCashRedeemAmount:
       'Gift does not have cash redeem amount, please set the cash redeem amount of the gift first',

@@ -109,6 +109,33 @@
         >
           {{ t('fields.requestExportToExcel') }}
         </el-button>
+        <el-button
+          icon="el-icon-refresh"
+          size="mini"
+          type="primary"
+          v-permission="['sys:site:game:update']"
+          @click="updateFakePGAll(21, 158)"
+        >
+          PG -> PGF
+        </el-button>
+        <el-button
+          icon="el-icon-refresh"
+          size="mini"
+          type="primary"
+          v-permission="['sys:site:game:update']"
+          @click="updateFakePGAll(158, 21)"
+        >
+          PGF -> PG
+        </el-button>
+        <el-button
+          icon="el-icon-sort"
+          size="mini"
+          type="primary"
+          v-permission="['sys:site:game:update']"
+          @click="reOrderSeq('HOT')"
+        >
+          {{ t('fields.reOrderHotGame') }}
+        </el-button>
       </div>
     </div>
 
@@ -253,11 +280,11 @@
         v-if="!hasRole(['SUB_TENANT'])"
       />
       <el-table-column prop="siteName" :label="t('fields.site')" width="150" />
-      <el-table-column prop="type" :label="t('fields.type')" width="120" />
-      <el-table-column prop="platformName" :label="t('fields.platform')" width="150" />
-      <el-table-column prop="gameName" :label="t('fields.gameName')" min-width="150" />
-      <el-table-column prop="gameLabel" :label="t('fields.label')" min-width="100" />
-      <el-table-column prop="sequence" :label="t('fields.sequence')" min-width="100" />
+      <el-table-column prop="type" :label="t('fields.type')" width="80" />
+      <el-table-column prop="platformName" :label="t('fields.platform')" width="80" />
+      <el-table-column prop="gameName" :label="t('fields.gameName')" min-width="100" />
+      <el-table-column prop="gameLabel" :label="t('fields.label')" min-width="80" />
+      <el-table-column prop="sequence" :label="t('fields.sequence')" min-width="20" />
       <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="150">
         <template #default="scope">
           <span v-if="scope.row.updateTime === null">-</span>
@@ -267,7 +294,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="150" />
+      <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="100" />
       <el-table-column
         :label="t('fields.operate')"
         align="right"
@@ -288,6 +315,20 @@
             v-permission="['sys:site:game:del']"
             @click="removeGame(scope.row)"
           />
+          <el-button
+            v-if="scope.row.platformName === 'PGF' && hasPGF === true"
+            size="mini"
+            type="primary"
+            v-permission="['sys:site:game:update']"
+            @click="updateFakePG(scope.row, 21)"
+          >PG</el-button>
+          <el-button
+            v-else-if="scope.row.platformName === 'PG' && hasPGF === true"
+            size="mini"
+            type="primary"
+            v-permission="['sys:site:game:update']"
+            @click="updateFakePG(scope.row, 158)"
+          >PGF</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -323,7 +364,7 @@ import {
   getTagGames,
   updateTagGame,
   getExportTagGame,
-  getGamesList,
+  getGamesList, updateTagGameFake, updateTagGameFakeAll, reOrderTagGameSeq,
 } from '../../../api/game'
 import {
   getPlatformsBySite,
@@ -340,6 +381,7 @@ const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
 const gameForm = ref(null)
+const hasPGF = ref(false)
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -388,6 +430,24 @@ const form = reactive({
   sequence: null,
   gameId: null,
   showLogo: null
+})
+
+const formFake = reactive({
+  id: null,
+  platformId: null,
+})
+
+const formFakeAll = reactive({
+  siteId: null,
+  oldPlatformId: null,
+  platformId: null,
+})
+
+const pgGameList = reactive({
+  list: [],
+})
+const pgfGameList = reactive({
+  list: [],
 })
 
 const formRules = reactive({
@@ -463,14 +523,13 @@ async function loadGame() {
     data.timeZone = store.state.user.sites.find(e => e.siteName === data.siteName) !== undefined
       ? store.state.user.sites.find(e => e.siteName === data.siteName).timeZone
       : null
-  });
-  ret.records.forEach(rec => {
-    const selectedPlatform = platforms.list.find(item => item.id === rec.platformId)
 
+    const selectedPlatform = platforms.list.find(item => item.id === data.platformId)
     if (selectedPlatform !== undefined) {
-      rec.platformName = selectedPlatform.code;
+      data.platformName = selectedPlatform.code;
     }
   });
+
   page.records = ret.records
   page.loading = false
 }
@@ -571,6 +630,40 @@ function edit() {
   })
 }
 
+async function updateFakePG(game, platformId) {
+  let targetGame = null;
+  if (game.platformName === 'PGF') {
+    targetGame = pgGameList.list.find(item => { return item.code === game.gameCode || item.name === game.gameName })
+  } else if (game.platformName === 'PG') {
+    targetGame = pgfGameList.list.find(item => { return item.code === game.gameCode || item.name === game.gameName })
+  }
+
+  if (targetGame !== undefined) {
+    formFake.id = game.id;
+    formFake.platformId = platformId;
+    await updateTagGameFake(formFake)
+    await loadGame()
+    ElMessage({ message: t('message.editSuccess'), type: 'success' })
+  } else {
+    ElMessage({ message: t('message.gameNotFound'), type: 'error' })
+  }
+}
+
+async function updateFakePGAll(oldPlatformId, platformId) {
+  formFakeAll.siteId = request.siteId;
+  formFakeAll.oldPlatformId = oldPlatformId;
+  formFakeAll.platformId = platformId;
+  await updateTagGameFakeAll(formFakeAll)
+  await loadGame()
+  ElMessage({ message: t('message.editSuccess'), type: 'success' })
+}
+
+async function reOrderSeq(label) {
+  await reOrderTagGameSeq(request.siteId, label)
+  await loadGame()
+  ElMessage({ message: t('message.editSuccess'), type: 'success' })
+}
+
 async function removeGame(game) {
   ElMessageBox.confirm(
     t('message.confirmDelete'),
@@ -659,6 +752,24 @@ onMounted(async () => {
   await loadSearchPlatforms()
   await loadGame();
   await loadPlatformNames()
+
+  hasPGF.value = platforms.list.find(platform => platform.code === "PGF") !== undefined
+
+  if (hasPGF.value) {
+    const reqPG = reactive({
+      siteId: request.siteId,
+      platform: 21,
+    });
+    const { data: ret1 } = await getGamesList(reqPG)
+    pgGameList.list = ret1;
+
+    const reqPGF = reactive({
+      siteId: request.siteId,
+      platform: 158,
+    });
+    const { data: ret2 } = await getGamesList(reqPGF)
+    pgfGameList.list = ret2;
+  }
 })
 </script>
 
