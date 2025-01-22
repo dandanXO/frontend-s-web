@@ -464,6 +464,7 @@ export default defineComponent({
     onMounted(async () => {
       // const info = await App.getInfo();
       console.log("APP Info");
+      alert("ws 11");
       // console.log(info);
       // checkSID();
       // getCSA();
