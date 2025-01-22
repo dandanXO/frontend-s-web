@@ -5,6 +5,10 @@ export const getPlatformGameReport = (data) => {
   return https().request("/report/platformGameReportList", Method.GET, data, ContentType.form);
 };
 
+export const getPlatformGameReportList = (data) => {
+  return https().request("/report/platformGameReportAll", Method.GET, data, ContentType.form);
+};
+
 export const getDailyReport = (data) => {
   return https().request("/report/dailyPlatformGameReport", Method.GET, data, ContentType.form);
 };

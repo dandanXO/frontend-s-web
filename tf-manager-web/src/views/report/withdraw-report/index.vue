@@ -44,7 +44,7 @@
           icon="el-icon-search"
           size="mini"
           type="success"
-          @click="loadWithdrawReport(false)"
+          @click="uiControl.display === 'DATA' ? loadWithdrawReport(false) : loadCharts()"
         >
           {{ t('fields.search') }}
         </el-button>

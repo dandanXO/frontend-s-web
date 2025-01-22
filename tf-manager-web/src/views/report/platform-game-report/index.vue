@@ -52,7 +52,7 @@
           icon="el-icon-search"
           size="mini"
           type="success"
-          @click="loadReport(false)"
+          @click="uiControl.display === 'DATA' ? loadReport(false) : loadCharts()"
         >
           {{ t('fields.search') }}
         </el-button>
@@ -72,9 +72,27 @@
         >{{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
+      <div style="margin-top: 10px;">
+        <el-radio-group v-model="uiControl.display" size="small">
+          <el-radio-button label="DATA">{{ t('fields.table') }}</el-radio-button>
+          <el-radio-button label="CHART">{{ t('fields.chart') }}</el-radio-button>
+        </el-radio-group>
+      </div>
+    </div>
+
+    <div v-if="uiControl.display === 'CHART'">
+      <el-card class="chart-summary" v-if="uiControl.display === 'CHART'" v-loading="uiControl.chartLoading" style="gap: 10px; height: 500px;">
+        <Chart :options="amountOptions" />
+      </el-card>
+      <el-card style="height: 500px; margin-top: 10px">
+        <div class="chart-container" style="height: 100%; width: 100%;">
+          <Chart :options="barOptions" />
+        </div>
+      </el-card>
     </div>
 
     <el-table
+      v-if="uiControl.display === 'DATA'"
       :data="page.records"
       ref="table"
       row-key="gamePlatform"
@@ -218,6 +236,7 @@
       </el-table-column>
     </el-table>
     <el-pagination
+      v-if="uiControl.display === 'DATA'"
       class="pagination"
       @current-change="changePage"
       layout="prev, pager, next"
@@ -251,8 +270,10 @@ import {
   getPlatformGameReport,
   getDailyReport,
   getExportReport,
+  getPlatformGameReportList
 } from '@/api/report-platform-game'
 import { hasPermission } from '../../../utils/util'
+import Chart from "@/components/charts/Charts.vue";
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -266,6 +287,8 @@ const site = ref(null)
 
 const uiControl = reactive({
   messageVisible: false,
+  display: "DATA",
+  chartLoading: false,
 })
 
 const siteList = reactive({
@@ -463,6 +486,157 @@ async function loadDaily(row, expandedRows) {
   }
 }
 
+async function loadCharts() {
+  uiControl.chartLoading = true
+  const requestCopy = { ...request }
+  const query = {}
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value
+    }
+  })
+  if (request.recordTime !== null) {
+    if (request.recordTime.length === 2) {
+      query.recordTime = request.recordTime.join(',')
+    }
+  }
+
+  const { data } = await getPlatformGameReportList(query)
+  getAmountChart(
+    data,
+    amountOptions
+  )
+  getBarChart(
+    data,
+    barOptions
+  )
+  uiControl.chartLoading = false
+}
+
+function getAmountChart(data, options) {
+  const dataset = [['Platform', 'Amount']]
+  const legendData = []
+  data.sort((a, b) => {
+    return b.totalBet - a.totalBet
+  })
+  if (data.length > 0) {
+    data.forEach((item, index) => {
+      const data = []
+      data.push(item.gamePlatform)
+      data.push(Math.round(item.totalBet * 100) / 100)
+      dataset.push(data)
+      legendData.push({ name: item.gamePlatform })
+    })
+    options.dataset.source = dataset
+    options.legend.data = legendData
+  }
+}
+
+function getBarChart(data, options) {
+  const xAxisData = []
+  const betData = []
+  const winData = []
+  data.sort((a, b) => {
+    return b.totalWin - a.totalWin
+  })
+  data.forEach(item => {
+    xAxisData.push(item.gamePlatform)
+    betData.push(item.totalBet)
+    winData.push(item.totalWin)
+  })
+  options.xAxis[0].data = xAxisData
+  options.series = [
+    {
+      name: 'Bet',
+      type: 'bar',
+      data: betData,
+    },
+    {
+      name: 'Win/Loss',
+      type: 'bar',
+      data: winData,
+    },
+  ]
+}
+
+const amountOptions = reactive({
+  title: {
+    text: t('fields.withdrawAmountRatio'),
+  },
+  legend: {
+    type: 'scroll',
+    orient: 'vertical',
+    data: [],
+    pageTextStyle: {
+      fontSize: 22,
+    },
+    right: 50,
+  },
+  height: '380px',
+  dataset: {
+    source: [['Platform', 'Amount']],
+  },
+  series: [
+    {
+      type: 'pie',
+      top: '20px',
+      emphasis: {
+        focus: 'self',
+        label: {
+          show: true,
+          formatter: '{b}: [' + t('fields.amount') + ': ' + '$' + '{@Amount}] ({d}%)',
+        }
+      },
+      label: {
+        show: false,
+      },
+      encode: {
+        itemName: 'Platform',
+        value: 'Amount',
+        tooltip: 'Amount',
+      },
+    },
+  ],
+})
+
+const barOptions = {
+  title: {
+    text: t('fields.totalBetAndWinLoss'),
+  },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'cross',
+      crossStyle: {
+        color: '#999'
+      }
+    }
+  },
+  legend: {
+    data: ['Bet', 'Win/Loss']
+  },
+  xAxis: [
+    {
+      type: 'category',
+      data: [],
+      axisPointer: {
+        type: 'shadow'
+      },
+      axisLabel: { interval: 0, rotate: 30 }
+    }
+  ],
+  yAxis: [
+    {
+      type: 'value',
+      name: 'Amount',
+      axisLabel: {
+        formatter: '$' + '{value}'
+      }
+    },
+  ],
+  series: []
+};
+
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD')
 }
@@ -539,6 +713,8 @@ onMounted(async () => {
   }
   await loadSearchPlatforms()
   await loadReport(true)
+  await loadCharts()
+  console.log(barOptions)
 })
 
 function getSummaries(param) {
