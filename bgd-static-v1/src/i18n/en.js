@@ -334,12 +334,15 @@ export default {
       "          allowed.",
     video: "Video",
     picture: "Picture",
-    depositUsdtTip2: "২. ন্যূনতম জমা: ১০USDT, ১০USDT এর কম জমা ক্রেডিট করা হবে না।",
-    depositUsdtTip3: "৩. উপরের ঠিকানায় কোনো অ-মুদ্রা সম্পদ জমা করবেন না, অন্যথায় সম্পদ পুনরুদ্ধার করা যাবে না।",
-    depositUsdtTip4: "৪. তথ্য বিকৃত বা ফাঁস হওয়া এড়াতে অনুগ্রহ করে নিশ্চিত করুন যে অপারেটিং পরিবেশ নিরাপদ।",
+    depositUsdtTip2: "2. Minimum deposit: 10 USDT. Deposits less than 10 USDT will not be credited.",
+    depositUsdtTip3:
+      "3. Do not deposit any non-currency assets to the above address; otherwise, the assets cannot be recovered.",
+    depositUsdtTip4: "4. Ensure the operating environment is secure to avoid data distortion or leakage.",
     depositUsdtTip5:
-      "৫. স্থানান্তর পরিমাণ অবশ্যই আপনার তৈরি করা অর্ডারের সাথে মিলতে হবে, অন্যথায় অর্থ সফলভাবে ক্রেডিট করা যাবে না।",
-    depositUsdtTip6: "৬. দ্রষ্টব্য: অর্থ স্থানান্তরের পরে জমা অর্ডার বাতিল করবেন না।"
+      "5. The transfer amount must match the order you created; otherwise, the funds cannot be successfully credited.",
+    depositUsdtTip6: "6. Note: Do not cancel the deposit order after transferring funds.",
+    wagerrequirement: "Wager requirement (to withdrawal): 10 times of your deposit amount",
+    example: "Eg. Deposit 100 { label }, require 1,000 { label } wager"
   },
   withdraw: {
     cashBalance: "Cash Balance",
@@ -813,7 +816,6 @@ export default {
       superChest: " Super Chest",
       days: "Days",
       usersMustMeet: "Users must meet the daily betting minimum to claim rewards:",
-      noBettingRequired: "No betting required; reward can be claimed once.",
       ifRestartingOnDay1: `If re-starting on Day 1: Minimum cumulative bet of <span style="font-size: 14px; color: #11ff00">100 BDT</span> required`,
       noBettingRequired: "No betting required; reward can be claimed once.",
       ifRestartingOnDay2: `If re-starting on Days 2-3: Minimum cumulative bet of <span style="font-size: 14px; color: #11ff00">100 BDT</span> required`,

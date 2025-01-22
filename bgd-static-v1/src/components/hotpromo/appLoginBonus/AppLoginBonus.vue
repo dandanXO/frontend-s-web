@@ -59,7 +59,12 @@
     </table>
 
     <div class="things-to-note-container">
-      <img src="../../../assets/images/promotion/hotpromo/app-login-bonus/things-to-note-title.png" />
+      <img
+        v-if="languageVal === 'en'"
+        src="../../../assets/images/promotion/hotpromo/app-login-bonus/things-to-note-title.png"
+      />
+      <img v-else src="../../../assets/images/promotion/hotpromo/app-login-bonus/thinktonote.png" />
+
       <span>
         <br />
         {{ $t("hotPromo.appLoginBonus.thingsToNote1") }}
@@ -74,7 +79,12 @@
     </div>
 
     <div class="get-bonus-info-container">
-      <img src="../../../assets/images/promotion/hotpromo/app-login-bonus/get-bonus-info-title.png" />
+      <img
+        v-if="languageVal === 'en'"
+        src="../../../assets/images/promotion/hotpromo/app-login-bonus/get-bonus-info-title.png"
+      />
+      <img v-else src="../../../assets/images/promotion/hotpromo/app-login-bonus/getapp.png" />
+
       <span>
         <br />
         {{ $t("hotPromo.appLoginBonus.downloadAndInstall1") }}
@@ -104,7 +114,11 @@
       </span>
     </div>
     <div class="terms-and-conditions-container">
-      <img src="../../../assets/images/promotion/hotpromo/app-login-bonus/terms-and-conditions-title.png" />
+      <img
+        v-if="languageVal === 'en'"
+        src="../../../assets/images/promotion/hotpromo/app-login-bonus/terms-and-conditions-title.png"
+      />
+      <img v-else src="../../../assets/images/promotion/hotpromo/app-login-bonus/termnc.png" />
       <ul>
         <li>{{ $t("hotPromo.appLoginBonus.termsCondition1") }}</li>
         <li>
@@ -134,6 +148,8 @@
   />
 </template>
 <script setup>
+import { storeToRefs } from "pinia";
+import { i18nStore } from "src/router/language";
 import { ref, onMounted } from "vue";
 import { userStore } from "src/stores";
 import { eventapi } from "src/boot/axios";
@@ -144,7 +160,7 @@ import CongratsReuseableModal from "src/components/modal/CongratsReuseableModal.
 const props = defineProps(["promocode"]);
 const store = userStore();
 const ui = useUI();
-
+const { languageVal } = storeToRefs(i18nStore());
 const bindEmailDialog = ref(false);
 const isShowReceiveDialog = ref(false);
 const hasBindEmail = ref(false);
