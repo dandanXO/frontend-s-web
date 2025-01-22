@@ -2237,6 +2237,7 @@ export default {
     depositAmountRatio: 'Deposit Amount Ratio',
     withdrawAmountRatio: 'Withdraw Amount Ratio',
     withdrawCountRatio: 'Withdraw Count Ratio',
+    totalBetAndWinLoss: 'Total Bet & Win/Loss',
   },
   message: {
     adsStatusOpen: 'Open',

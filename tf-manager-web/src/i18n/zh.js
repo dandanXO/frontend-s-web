@@ -2238,6 +2238,7 @@ export default {
     depositAmountRatio: '存款金额比例',
     withdrawAmountRatio: '提款金额比例',
     withdrawCountRatio: '提款笔数比例',
+    totalBetAndWinLoss: '总投注与输赢',
   },
   message: {
     adsStatusOpen: '开',
