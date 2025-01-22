@@ -236,7 +236,7 @@
           </div>
 
           <div class="platform-game-wrapper" v-else>
-            <div class="platform-game-container grid-view">
+            <div class="platform-game-container grid-view-col-4">
               <template v-for="(item, index) in hotGameList" :key="index">
                 <template v-if="item.type && item.type === 'game'">
                   <div
@@ -3873,6 +3873,13 @@ onBeforeUnmount(() => {
   &.grid-view {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    column-gap: 8px;
+    row-gap: 16px;
+  }
+
+  &.grid-view-col-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     column-gap: 8px;
     row-gap: 16px;
   }
