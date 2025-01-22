@@ -457,7 +457,7 @@
       >
         <q-carousel-slide v-for="(promo, i) in floatPromo" :key="i" :name="i" @click="gotoFloatPromo(promo.code)">
           <div class="rocket-wrapper">
-            <div class="rocket"><img style="width: 75px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" /></div>
+            <div class="rocket"><img style="width: 85px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" /></div>
           </div>
         </q-carousel-slide>
       </q-carousel>

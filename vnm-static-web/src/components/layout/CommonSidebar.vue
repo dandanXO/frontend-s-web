@@ -291,7 +291,7 @@ export default defineComponent({
   // right: 0px;
   transition: all 0.3s;
   display: none;
-  width: 100px;
+  width: 120px;
   height: 100px;
   user-select: none;
   /* Disable text selection */
@@ -332,7 +332,7 @@ export default defineComponent({
 
     img {
       display: block;
-      width: 100px;
+      width: 120px;
       cursor: pointer;
     }
   }
