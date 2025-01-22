@@ -187,7 +187,7 @@ s
         </table>
       </div>
 
-      <h3 class="mission-block-title">Giải thưởng bao gồm:</h3>
+      <h3 class="mission-block-title">Điều khoản và điều kiện:</h3>
       <p style="margin: 0">
         1. Lượt đập trứng vàng sẽ có hiệu lực 3 ngày kể từ khi cập nhật vào tài khoản. Lượt chưa sử dụng sẽ tự động hết
         hạn khi quá thời gian.
@@ -237,8 +237,10 @@ import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { drawEventInit, claimDrawEvent } from "@/api/promo/drawEvent";
 import { userStore } from "src/stores";
+import { useQuasar } from "quasar";
 
 const { t } = useI18n();
+const $q = useQuasar();
 const props = defineProps(["promoCode"]);
 
 const bonusModalVisible = ref(false);
@@ -282,7 +284,8 @@ const handleClaimClick = () => {
       $q.notify({
         color: "negative",
         position: "top",
-        message: res.message
+        // message: res.message
+        message: t("error." + res.code)
       });
     }
   });
@@ -301,7 +304,7 @@ const initGoldenEgg = () => {
       $q.notify({
         color: "negative",
         position: "top",
-        message: res.message
+        message: t("error." + res.code)
       });
     }
   });

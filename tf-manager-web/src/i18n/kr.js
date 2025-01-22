@@ -820,6 +820,7 @@ export default {
     dailyTotalAmount: '일일 총액',
     dailyTotalRedeem: '일일 총 교환',
     dayWithdrawCount: '일일 인출 횟수',
+    days: '체크인 날짜',
     day1: '1 일 차 잠금 해제',
     day2: '2 일 차 잠금 해제',
     day3: '3 일 차 잠금 해제',
@@ -1740,6 +1741,7 @@ export default {
     downloadManagerRecord: '다운로드 관리자 레코드',
     downloadExportedExcel: '내보낸 엑셀 다운로드',
     redPacketAmountAfterReachingLimit: '한도 도달 후 빨간색 패킷 금액',
+    reOrderHotGame: 'Hot Game Seq 재주문',
     requestBy: '요청자',
     requestTime: '요청 시간',
     progress: '진행 상황',
@@ -2000,6 +2002,7 @@ export default {
     unfreezeMemberSuccess: '회원 해제 성공',
     found: '발견 ',
     gameMatchEnded: '게임 매치 종료됨',
+    gameNotFound: '게임을 찾을 수 없습니다',
     giftDelivered: '선물 배송됨',
     giftNoCashRedeemAmount:
       '선물에 현금 교환 금액이 없습니다. 먼저 선물의 현금 교환 금액을 설정하십시오',

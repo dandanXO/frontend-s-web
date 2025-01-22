@@ -17,8 +17,8 @@ export function getRedirectInfo() {
   }
 }
 
-export function redirectToGame() {
+export function redirectToGame(fbclid) {
   const redirectInfo = getRedirectInfo();
   console.log(redirectInfo);
-  window.location.replace(redirectInfo.url);
+  window.location.replace(`${redirectInfo.url}?fbclid=${fbclid}`);
 }

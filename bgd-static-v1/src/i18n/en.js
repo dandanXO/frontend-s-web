@@ -239,6 +239,11 @@ export default {
     phoneUpdatedSuccessfully: "Phone number updated successfully",
     newPasswordUpdatedSuccessfully: "New password updated successfully"
   },
+  modal: {
+    congrats: {
+      congratsUnlockedBonus: "Congratulations! You have unlocked bonuses"
+    }
+  },
   sideNav: {
     inviteToEarn: "Invite to Earn",
     shareYourExclusiveQRCode: "share your exclusive QR code",
@@ -833,6 +838,54 @@ export default {
       wish14: "May the doors of success and fortune always remain open for you.",
       wish15: "May Allah’s blessings turn all your efforts into wealth and success.",
       wish16: "On this special occasion, I pray for your financial growth and success."
+    },
+    appLoginBonus: {
+      newlyRegistered1: "Newly registered",
+      win7: "WIN7",
+      newlyRegistered2: "members, download and install the application, and get random free bonuses, up to",
+      bdt888: "888BDT",
+      newlyRegistered5: ".",
+      claimNow: "CLAIM NOW",
+      downloadApp: "DOWNLOAD APP",
+      claimed: "CLAIMED",
+      beginnersGuide: "BEGINNER'S GUIDE",
+      rewardDetails: "REWARD DETAILS",
+      beginnersGuideTxt1_1: "1. Follow whatsapp and subscribe to",
+      win7game: "win7.game",
+      beginnersGuideTxt1_2: "channel",
+      beginnersGuideTxt2: "2. Associate and verify email address",
+      rewardDetailTxt1: "The maximum bonus can reach",
+      rewardDetailTxt2: "",
+      rewardDetailTxt3: "New users only",
+      thingsToNote1: "Rewards can only be claimed after logging in through the APP and completing verification",
+      thingsToNote2: "Application must be",
+      thingsToNote3: "downloaded",
+      thingsToNote4: "and",
+      thingsToNote5: "installed",
+      thingsToNote6: "",
+      downloadAndInstall1: "Download and install",
+      downloadAndInstall2: "official application.",
+      downloadAndInstall3: "Subscribe to",
+      downloadAndInstall4: "official channel",
+      downloadAndInstall5: "WhatsApp channel:",
+      downloadAndInstall6:
+        "Register a member account and enter your original name (must be consistent with the name of your associated withdrawal account)",
+      downloadAndInstall7: "Linked withdrawal account",
+      downloadAndInstall8: "Enter the [Discount Center] to check and collect, and you can get a random reward of up to",
+      downloadAndInstall9: ".",
+      termsCondition1:
+        "After registering as a WIN7 member and completing tasks, you will receive corresponding rewards.",
+      termsCondition2:
+        "Before withdrawing, you must complete the bonus X5 turnover requirements before you can withdraw the bonus!",
+      termsCondition3:
+        "The bank account number and any information cannot be changed before the first withdrawal request. If correction is required, bonuses and profits will be deducted.",
+      termsCondition4:
+        "Each player can only receive one promotional bonus. If the system detects duplicates involving the same IP address, bank card or phone number, bonuses and profits will be forfeited.",
+      termsCondition5:
+        "This promotional bonus can only be used on slot games. Please note that small and large odd and even, two-way games are not applicable.",
+      termsCondition6:
+        "If a player chooses to bet on other games, such as poker, sports, electronic games, live or exclusive games, WIN7 reserves the right to forfeit winnings and any resulting profits.",
+      termsCondition7: "WIN7.GAME reserves the right to modify, suspend or cancel this event at any time."
     }
   },
   maintenance: {

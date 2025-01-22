@@ -1,5 +1,5 @@
 <template>
-  <router-view />
+  <router-view ref="routerView" />
 </template>
 
 <script>
@@ -166,20 +166,22 @@ export default defineComponent({
         .catch((error) => {
           console.error("Error:", error);
         });
-    }
+    };
 
     const trackH5Affiliate = () => {
       const omitSites = ["bw3.genoortisy.com"];
 
       if (isInPwa()) {
-
         api.get(`/app/pwa/log?step=OPEN&siteCode=${process.env.SITE}`).then((res2) => {
           console.log("OPEN");
         });
 
         const hostname = window.location.hostname.replace("www.", "");
+        const urlParams = new URLSearchParams(window.location.search);
+        const affiliateCodeFromUrl = urlParams.get('affiliateCode');
+
         //Use thisApi to get AffiliateCode/FbPixelId/ WebPushId for PWA.
-        api.get(`/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}`).then((res) => {
+        api.get(`/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${affiliateCodeFromUrl}`).then((res) => {
           console.log(res);
           const { affiliateCode, facebookId, pushId } = res.data;
           sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
@@ -423,10 +425,40 @@ export default defineComponent({
             // Custom permission prompt logic
           }
         });
+
+        if (isInPwa()) {
+          const fbclid = window.localStorage.getItem("fbclid");
+          if (fbclid && !window.location.search.includes("fbclid")) {
+            const url = new URL(window.location.href);
+            url.searchParams.set("fbclid", fbclid);
+            window.history.replaceState({}, "", url.toString());
+          }
+
+          // request fullscreen for pwa
+          nextTick(() => {
+            const fullscreenFunction = requestFullscreen();
+            if (fullscreenFunction) {
+              fullscreenFunction.call(document.documentElement);
+              console.log("Fullscreen request triggered");
+            } else {
+              console.warn("Fullscreen API is not supported in this browser.");
+            }
+          });
+        }
       };
 
       // Start the notification permission check
       requestNotificationPermission();
+    };
+
+    const routerView = ref(null);
+
+    const requestFullscreen = () => {
+      console.log("Fullscreen~");
+      var root = document.documentElement;
+      return (
+        root.requestFullscreen || root.webkitRequestFullscreen || root.mozRequestFullScreen || root.msRequestFullscreen
+      );
     };
 
     onMounted(async () => {
@@ -455,6 +487,15 @@ export default defineComponent({
         trackH5Affiliate();
       }
 
+      // nextTick(() => {
+      //   const fullscreenFunction = requestFullscreen();
+      //   if (fullscreenFunction) {
+      //     fullscreenFunction.call(document.documentElement);
+      //   } else {
+      //     console.warn("Fullscreen API is not supported in this browser.");
+      //   }
+      // });
+
       // PWA
       // const hostname = window.location.hostname;
       // if (
@@ -471,6 +512,10 @@ export default defineComponent({
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);
     });
+
+    return {
+      routerView
+    };
   }
 });
 

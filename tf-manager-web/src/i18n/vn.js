@@ -800,6 +800,7 @@ export default {
     dailyTotalAmount: 'Tổng số tiền hàng ngày',
     dailyTotalRedeem: 'Tổng đổi thưởng hàng ngày',
     dayWithdrawCount: 'Số lần rút tiền hàng ngày',
+    days: 'Ngày nhận phòng',
     day1: 'Mở khóa ngày 1',
     day2: 'Mở khóa ngày 2',
     day3: 'Mở khóa ngày 3',
@@ -1717,6 +1718,7 @@ export default {
     downloadManagerRecord: 'Tải xuống bản ghi quản lý',
     downloadExportedExcel: 'Tải xuống Excel đã xuất',
     redPacketAmountAfterReachingLimit: 'Số tiền bao lì xì sau khi đạt giới hạn',
+    reOrderHotGame: 'Sắp xếp lại Hot Game Seq',
     requestBy: 'Yêu cầu bởi',
     requestTime: 'Thời gian yêu cầu',
     progress: 'Tiến trình',
@@ -1957,6 +1959,7 @@ export default {
     unfreezeMemberSuccess: 'Tháo băng thành viên thành công',
     found: 'tìm thấy',
     gameMatchEnded: 'trận đấu kết thúc',
+    gameNotFound: 'Trò chơi không tìm thấy',
     giftDelivered: 'quà tặng đã giao',
     giftNoCashRedeemAmount:
       'không có số tiền đổi quà thành tiền mặt. Vui lòng thiết lập số tiền đổi quà thành tiền mặt trước.',
