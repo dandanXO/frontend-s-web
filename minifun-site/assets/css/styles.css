@@ -92,8 +92,13 @@ body.bg-pigeon {
     padding-bottom: 0.3em !important;
     padding-top: 0.3em !important;
 }
+.minigame-nav {
+    background:#000;
+    color:#FFB909;
+}
 @media (max-width: 992px) {
     .minigame-nav {
+        background:#000;
         position: fixed;
         text-align: right;
         top: 0;
@@ -156,7 +161,7 @@ body.bg-pigeon {
         padding-right: 0;
     }
     .minigame-nav .nav-item .nav-link {
-        color: #000;
+        color: #FFB307;
         font-size: 20px;
         margin: 0;
     }
@@ -177,7 +182,8 @@ body.bg-pigeon {
 }
 .minigame-nav .nav-link {
     border-radius: 30px;
-    color: #3d3d3d;
+    color: #FFAF06;
+    font-weight: bold;
     font-size: 14px;
     margin: 0 8px;
     padding: 12px !important;
@@ -189,7 +195,7 @@ body.bg-pigeon {
     }
 }
 .minigame-nav .nav-link:hover {
-    background: rgba(120, 121, 241, 0.1);
+    background: rgba(120, 121, 241, 0.5);
 }
 .minigame-nav .dropdown-menu-lang.dropdown-toggle:after {
     display: none;
@@ -928,10 +934,22 @@ body.bg-pigeon {
     align-items: center;
     justify-content: flex-start;
     gap: 20px;
+    flex-wrap: wrap;
 }
 .game-item{
-
     width: 200px;
+}
+@media (max-width:450px){
+    .games-lists{
+        gap: 10px;
+    }
+    .game-item{
+        width: 48%;
+        aspect-ratio: 1/1;
+    }
+    .game-item img{
+        width: 100% !important;
+    }
 }
 .game-item img{
     width: 200px;
@@ -1307,7 +1325,7 @@ footer .newsletter-container .input-newsletter::placeholder {
     width: 100%;
 }
 .sec-texas-voice {
-    background: #32CD01;
+    background: #27273F;
     color: #fff;
     padding: 30px 0;
 }
@@ -1323,8 +1341,8 @@ footer .newsletter-container .input-newsletter::placeholder {
 }
 .sec-texas-voice .vv-txt {
     display: flex;
-    font-size: 45px;
-    justify-content: flex-end;
+    font-size: 34px;
+    /*justify-content: flex-end;*/
 }
 .sec-texas-device .vv-txt {
     display: flex;
@@ -1338,6 +1356,12 @@ footer .newsletter-container .input-newsletter::placeholder {
     .sec-texas-voice .vv-txt {
         font-size: 24px;
         justify-content: flex-start;
+        margin-top: 30px;
+    }
+}
+@media (max-width: 500px){
+    .sec-texas-device .vv-txt{
+        font-size: 18px;
     }
 }
 .sec-texas-voice .vv-img {
