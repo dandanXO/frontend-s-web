@@ -464,7 +464,7 @@ export default defineComponent({
     onMounted(async () => {
       // const info = await App.getInfo();
       console.log("APP Info");
-      alert("ws 13");
+      // alert("ws 13");
       // console.log(info);
       // checkSID();
       // getCSA();
