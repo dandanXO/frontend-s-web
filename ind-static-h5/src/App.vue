@@ -217,7 +217,10 @@ export default defineComponent({
         });
 
         const hostname = window.location.hostname.replace("www.", "");
-        const { adCode } = getRbParams() || {};
+        var { adCode } = getRbParams() || {};
+        if(!adCode){
+          adCode = "";
+        }
         //Use thisApi to get AffiliateCode/FbPixelId/ WebPushId for PWA.
         api
           .get(`/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${adCode}`)
