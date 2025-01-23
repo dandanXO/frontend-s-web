@@ -2439,7 +2439,25 @@ export default {
     oddsType_4: 'Indonesia',
     oddsType_6: 'US',
     eventId: 'event ID',
-    refresh: 'refresh'
+    refresh: 'refresh',
+    supplierName: 'supplier Name',
+    earlyMarketRefreshInterval: 'Early Market Refresh Interval',
+    outrightMarketRefreshInterval: 'Outright Market Refresh Interval',
+    inplayMarketRefreshInterval: 'Inplay Market Refresh Interval',
+    todayMarketRefreshInterval: 'Today Market Refresh Interval',
+    earlyMarketRefreshIntervalSeconds: 'Early Market Refresh Interval Seconds',
+    outrightMarketRefreshIntervalSeconds: 'Outright Market Refresh Interval Seconds',
+    inplayMarketRefreshIntervalSeconds: 'Inplay Market Refresh Interval Seconds',
+    todayMarketRefreshIntervalSeconds: 'Today Market Refresh Interval Seconds',
+    outrightMarketSyncIntervalSeconds: 'Outright Market Sync Interval Seconds',
+    earlyMarketSyncIntervalSeconds: 'Early Market Sync Interval Seconds',
+    todayMarketSyncIntervalSeconds: 'Today Market Sync Interval Seconds',
+    inplayMarketSyncIntervalSeconds: 'Inplay Market Sync Interval Seconds',
+    acceptRecommendedOdds: 'Accept Recommended Odds',
+    playerModeId: 'Player Mode ID',
+    singleBetSetting: 'Single Bet Setting',
+    parlayBetSetting: 'Parlay Bet Setting',
+    eventSortingId: 'Event Sorting ID'
   },
   message: {
     adsStatusOpen: 'Open',
@@ -3268,7 +3286,8 @@ export default {
     Competition: 'competition',
     Event: 'event',
     Team: 'team',
-    'Bet type setting': 'bet type setting'
+    'Bet type setting': 'bet type setting',
+    'Sport App Setting': 'Sport App Setting',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
