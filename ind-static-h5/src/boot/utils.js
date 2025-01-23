@@ -126,5 +126,6 @@ function isNonNumericString(value) {
 export const isInPwa = () => {
   const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
   const hasRbKey = Object.keys(localStorage).some((key) => key.startsWith("__rb_"));
-  return isStandalone || hasRbKey;
+  const hasPwa= process.env.ROUTER_BASE;
+  return isStandalone || hasRbKey || hasPwa;
 };
