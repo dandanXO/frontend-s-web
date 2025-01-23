@@ -237,7 +237,8 @@ export default {
     emailBindedSuccessfully: "ইমেল সফলভাবে সংযুক্ত হয়েছে",
     emailAlreadyUsed: "ইমেলটি ইতিমধ্যে ব্যবহৃত হয়েছে। দয়া করে অন্য ইমেল চেষ্টা করুন।",
     phoneUpdatedSuccessfully: "ফোন নম্বর সফলভাবে আপডেট হয়েছে",
-    newPasswordUpdatedSuccessfully: "নতুন পাসওয়ার্ড সফলভাবে আপডেট হয়েছে"
+    newPasswordUpdatedSuccessfully: "নতুন পাসওয়ার্ড সফলভাবে আপডেট হয়েছে",
+    virtualWalletAddedSuccessfully: 'ভার্চুয়াল ওয়ালেট সফলভাবে যোগ করা হয়েছে'
   },
   modal: {
     congrats: {

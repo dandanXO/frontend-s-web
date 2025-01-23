@@ -237,7 +237,8 @@ export default {
     emailBindedSuccessfully: "Email binded successfully",
     emailAlreadyUsed: "Email already used. Please try another email.",
     phoneUpdatedSuccessfully: "Phone number updated successfully",
-    newPasswordUpdatedSuccessfully: "New password updated successfully"
+    newPasswordUpdatedSuccessfully: "New password updated successfully",
+    virtualWalletAddedSuccessfully: 'Virtual wallet added successfully'
   },
   modal: {
     congrats: {
