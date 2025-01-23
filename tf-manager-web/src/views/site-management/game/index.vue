@@ -863,7 +863,7 @@ const formRules = reactive({
   status: [required(t('message.validateStatusRequired'))],
   gameType: [required(t('message.validateGameTypeRequired'))],
   icon: [required(t('message.validateIconRequired'))],
-  platformName: [required(t('message.validatePlatformRequired'))],
+  platformCode: [required(t('message.validatePlatformRequired'))],
   device: [required(t('message.validateDeviceRequired'))],
   sequence: [required(t('message.validateSequenceRequired'))],
 })
