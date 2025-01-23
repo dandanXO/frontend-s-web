@@ -690,6 +690,7 @@
 </template>
 
 <script setup>
+import { useI18n } from "vue-i18n";
 import SwiperNav from "../components/SwiperNav.vue";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import ProfileProgressBanner from "../components/ProfileProgressBanner.vue";
@@ -704,8 +705,6 @@ import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
-import PrimaryButton from "src/components/auth/PrimaryButton.vue";
-import { t } from "src/boot/lang";
 import FancyIcon from "src/components/auth/FancyIcon.vue";
 // import MediaSettingsComponent from "../components/MediaSettingsComponent.vue";
 
@@ -721,7 +720,7 @@ let slideListPath = ref([
 let currentSlide = ref(slideList.value[0]);
 
 const route = useRoute();
-
+const { t } = useI18n();
 const isActiveSlide = (e) => {
   if (e === currentSlide.value) return true;
   return false;
@@ -1026,7 +1025,7 @@ const verifyVerificationCode = () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "OTP验证码已发送至您的邮箱",
+          message: t("form.otphasbeenSent"),
           icon: "check_circle_outline"
         });
         verificationDetails.memberInfo.codeId = ret.data.codeId;
@@ -1063,7 +1062,7 @@ const submitUpdateSecurity = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "验证成功",
+            message: t("form.verifySuccess"),
             icon: "check_circle_outline"
           });
           updateSecurityModalVisible.value = false;

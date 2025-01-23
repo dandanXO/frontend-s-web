@@ -172,7 +172,9 @@ export default {
     registerSuccess: "Registered successfully",
     pleaseCompleteVerification: "Please complete the verification code",
     uploadSuccess: "uploaded successfully",
-    uploadFailedTryAgain: "upload failed. Please try again"
+    uploadFailedTryAgain: "upload failed. Please try again",
+    verifySuccess: "Verification successful",
+    otphasbeenSent: "OTP code has been sent to your email"
   },
   btn: {
     login: "Login",
@@ -238,7 +240,7 @@ export default {
     emailAlreadyUsed: "Email already used. Please try another email.",
     phoneUpdatedSuccessfully: "Phone number updated successfully",
     newPasswordUpdatedSuccessfully: "New password updated successfully",
-    virtualWalletAddedSuccessfully: 'Virtual wallet added successfully'
+    virtualWalletAddedSuccessfully: "Virtual wallet added successfully"
   },
   modal: {
     congrats: {
