@@ -455,7 +455,8 @@ export default defineComponent({
       requestNotificationPermission();
     };
 
-    onMounted(async () => {o();
+    onMounted(async () => {
+      console.log("APP Info");
       checkServerStatus();
       getAppInfo();
       initOrientation();
