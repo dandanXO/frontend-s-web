@@ -18,8 +18,8 @@ export const updateAdsPopout = (adsPopout) => {
   return https().request(`/site-ads-popout/update?_method=PUT`, Method.POST, adsPopout, ContentType.form);
 };
 
-export const updateAdsPopoupStatus = async (id, status) => {
-  await https().request(`/site-ads-popout/${id}/status?_method=PUT`, Method.POST, { status: status }, ContentType.form);
+export const updateAdsPopoupStatus = async (id, status, siteType) => {
+  await https().request(`/site-ads-popout/${id}/status?_method=PUT`, Method.POST, { status: status, siteType: siteType }, ContentType.form);
 };
 
 export const deleteAdsPopout = async (ids) => {
