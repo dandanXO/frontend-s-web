@@ -26,7 +26,7 @@
       <thead>
         <tr>
           <th>{{ $t("hotPromo.appLoginBonus.beginnersGuide") }}</th>
-          <th>R{{ $t("hotPromo.appLoginBonus.rewardDetails") }}</th>
+          <th>{{ $t("hotPromo.appLoginBonus.rewardDetails") }}</th>
         </tr>
       </thead>
       <tbody>
