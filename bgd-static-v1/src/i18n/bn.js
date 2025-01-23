@@ -172,7 +172,9 @@ export default {
     registerSuccess: "সফলভাবে নিবন্ধিত হয়েছে",
     pleaseCompleteVerification: "অনুগ্রহ করে যাচাইকরণ কোড সম্পূর্ণ করুন",
     uploadSuccess: "সফলভাবে আপলোড হয়েছে",
-    uploadFailedTryAgain: "আপলোড ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন"
+    uploadFailedTryAgain: "আপলোড ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন",
+    verifySuccess: "যাচাইকরণ সফল হয়েছে",
+    otphasbeenSent: "OTP কোড আপনার ইমেইলে পাঠানো হয়েছে"
   },
   btn: {
     login: "লগইন করুন",
@@ -238,7 +240,7 @@ export default {
     emailAlreadyUsed: "ইমেলটি ইতিমধ্যে ব্যবহৃত হয়েছে। দয়া করে অন্য ইমেল চেষ্টা করুন।",
     phoneUpdatedSuccessfully: "ফোন নম্বর সফলভাবে আপডেট হয়েছে",
     newPasswordUpdatedSuccessfully: "নতুন পাসওয়ার্ড সফলভাবে আপডেট হয়েছে",
-    virtualWalletAddedSuccessfully: 'ভার্চুয়াল ওয়ালেট সফলভাবে যোগ করা হয়েছে'
+    virtualWalletAddedSuccessfully: "ভার্চুয়াল ওয়ালেট সফলভাবে যোগ করা হয়েছে"
   },
   modal: {
     congrats: {

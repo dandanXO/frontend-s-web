@@ -357,10 +357,10 @@ const submitUpdateEmail = () => {
 
   if (updateEmailRef.value.hasError || updateEmailCodeRef.value.hasError) {
   } else {
+    const endpoint = store.email ? "/otp/verifyEmail" : "/session/verifyAndUpdateEmail"
+
     api
-      .post(
-        "/session/verifyAndUpdateEmail",
-        qs.stringify({
+      .post(endpoint, qs.stringify({
           email: updateEmailInfo.email,
           code: updateEmailInfo.code,
           codeId: updateEmailInfo.codeId
@@ -398,6 +398,11 @@ const submitUpdateEmail = () => {
 
 const verificationCodeDialog = ref(false);
 const openVerificationCodeDialog = () => {
+  if(store.email) {
+    verificationCodeDialog.value = !verificationCodeDialog.value;
+    return;
+  }
+
   api
     .get(`/member/checkEmailRegisterStatus?email=${updateEmailInfo.email}`)
     .then((response) => {
