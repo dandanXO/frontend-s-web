@@ -680,6 +680,7 @@ onMounted(async () => {
     imageRequest.siteId = sites.list[0].id;
   }
   request.siteId = site.value.id;
+  imageRequest.siteId = sites.list[0].id;
   await loadUefaTeam();
 });
 

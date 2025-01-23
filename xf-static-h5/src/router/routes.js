@@ -464,17 +464,6 @@ const routes = [
     meta: {requiresAuth: true}
   },
   {
-    path: "/account/message",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/mail/MessageView.vue")
-      }
-    ],
-    meta: {requiresAuth: true}
-  },
-  {
     path: "/account/mail/inbox",
     component: () => import("layouts/MainLayout.vue"),
     children: [
