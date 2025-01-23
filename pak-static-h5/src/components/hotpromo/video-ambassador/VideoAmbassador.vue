@@ -151,7 +151,11 @@
               {{ n }}
             </template>
           </div>
-          <div class="rank-name">NAME</div>
+          <div class="rank-name">
+            <a :href="params[`ambassador_${n}`]" target="_blank">
+              {{ params[`ambassador_${n}`] }}
+            </a>
+          </div>
           <div class="rank-amt">
             <img src="./img/coin.png" />
             888
@@ -410,11 +414,12 @@ onMounted(() => {
 
   .ranking-header {
     display: grid;
-    grid-template-columns: auto 1fr 1fr;
+    grid-template-columns: minmax(30px, 1fr) 2fr 1fr;
     background: #0000001a;
     border-radius: 24px;
     padding: 16px 4px;
     margin: 0 10px;
+    text-align: center;
     .rank-index {
       text-align: center;
       margin: 0 20px;
@@ -437,7 +442,7 @@ onMounted(() => {
 
     .ranking-item {
       display: grid;
-      grid-template-columns: 100px 1fr 1fr;
+      grid-template-columns: minmax(30px, 1fr) 2fr 1fr;
       height: 65px;
       padding: 0 14px;
       align-items: center;
@@ -451,6 +456,12 @@ onMounted(() => {
       }
       .rank-name {
         color: #ff4c00;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        a {
+          color: inherit;
+        }
       }
       .rank-amt {
         display: flex;
