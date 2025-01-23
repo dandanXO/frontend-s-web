@@ -80,18 +80,6 @@
   </div>
 
   <div>
-    <q-page-sticky
-      v-if="isReferSpinWheelShow"
-      position="bottom-right"
-      :offset="referSpinWheelDragPos"
-      class="floating-btn"
-    >
-      <div v-touch-pan.prevent.mouse="moveReferSpinWheelGif" @click="openReferSpinWheel">
-        <img class="charity-gif" src="../assets/images/index/refer-spin-wheel-float.gif" />
-      </div>
-    </q-page-sticky>
-  </div>
-  <div>
     <q-page-sticky v-if="isCharityShow" position="bottom-right" :offset="charityDragPos" class="floating-btn">
       <div v-touch-pan.prevent.mouse="moveCharityGif" @click="openCharityUrl">
         <!--        <div class="hb-close">-->
@@ -1640,9 +1628,8 @@ const checkHash = () => {
   }
 };
 
-const isReferSpinWheelShow = ref(false);
-const referSpinWheelDragPos = ref([10, 360]);
-const isDraggingReferSpinWheelGif = ref(false);
+// const referSpinWheelDragPos = ref([10, 300]);
+// const isDraggingReferSpinWheelGif = ref(false);
 
 const isCharityShow = computed(() => {
   if (ui.charityUrl) {
@@ -1660,7 +1647,7 @@ const liveDragPos = ref([16, 0]);
 const isDraggingLiveIcon = ref(false);
 const isLiveUrlShow = ref(false);
 
-const hbDragPos = ref([10, 120]);
+const hbDragPos = ref([10, 150]);
 const isDraggingHbIcon = ref(false);
 const isHbShow = ref(true);
 const hbSlide = ref(0);
@@ -3584,16 +3571,20 @@ const detectAndroidVersion = () => {
 };
 
 const openReferSpinWheel = () => {
-  router.push({ path: "/promo", query: { name: "bgd-refer-wheel" } });
+  if (!store.token) {
+    router.push("/login");
+  } else {
+    router.push({ path: "/promo", query: { name: "bgd-refer-wheel" } });
+  }
 };
-const moveReferSpinWheelGif = (ev) => {
-  isDraggingReferSpinWheelGif.value = ev.isFirst !== true && ev.isFinal !== true;
-
-  referSpinWheelDragPos.value = [
-    referSpinWheelDragPos.value[0] - ev.delta.x,
-    referSpinWheelDragPos.value[1] - ev.delta.y
-  ];
-};
+// const moveReferSpinWheelGif = (ev) => {
+//   isDraggingReferSpinWheelGif.value = ev.isFirst !== true && ev.isFinal !== true;
+//
+//   referSpinWheelDragPos.value = [
+//     referSpinWheelDragPos.value[0] - ev.delta.x,
+//     referSpinWheelDragPos.value[1] - ev.delta.y
+//   ];
+// };
 
 const openCharityUrl = () => {
   window.open(ui.charityUrl, "_blank");
@@ -3683,7 +3674,23 @@ const checkHbPromo = () => {
     })
     .then((data) => {
       // isHbShow.value = data.data.some((item) => item.code === "bgd-redpacketrain");
-      hbPromo.value = data.data;
+      hbPromo.value = [
+        {
+          id: 35,
+          siteId: 12,
+          type: "PROMO",
+          code: "bgd-refer-wheel",
+          platform: null,
+          icon: "12/ba4ecbbe-12d0-49c9-ae26-267ad7aaa244.gif",
+          status: true,
+          createTime: "2025-01-23 16:33:04",
+          createBy: "weiseng",
+          updateTime: "2025-01-23 16:34:00",
+          updateBy: "weiseng",
+          startTime: "2025-01-23 00:00:00",
+          endTime: "2026-02-28 00:00:00"
+        }
+      ];
     });
 };
 
@@ -3804,6 +3811,14 @@ const gotoFloatPromo = (val) => {
       router.push("/promo?name=interest-profit");
     } else {
       router.push("/promo");
+    }
+  }
+
+  if (val.type === "PROMO") {
+    if (store.hasToken()) {
+      router.push(`/promo?name=${val.code}`);
+    } else {
+      router.push("/login");
     }
   }
 
