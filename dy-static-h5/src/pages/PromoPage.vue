@@ -138,6 +138,7 @@
                 }"
               >
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
+                  
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
