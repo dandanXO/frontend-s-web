@@ -57,6 +57,11 @@ export default defineComponent({
       // console.log("Device ID");
       // console.log(info);
       // console.log(info.identifier);
+      const isPwa= process.env.IS_PWA;
+      // alert(isPwa);
+      if(isPwa){
+        sessionStorage.setItem("IS_PWA", "1");
+      }
     };
 
     const initOrientation = () => {
@@ -206,7 +211,6 @@ export default defineComponent({
 
     const trackH5Affiliate = () => {
       const omitSites = ["bw3.genoortisy.com"];
-      // alert(`/app/pwa/log?step=OPEN&siteCode=${process.env.SITE}`);
       if (isInPwa()) {
         api.get(`/app/pwa/log?step=OPEN&siteCode=${process.env.SITE}`).then((res2) => {
           console.log("OPEN");
@@ -457,6 +461,7 @@ export default defineComponent({
 
     onMounted(async () => {
       console.log("APP Info");
+      // alert("ws 4")
       checkServerStatus();
       getAppInfo();
       initOrientation();
