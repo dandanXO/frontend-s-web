@@ -16,8 +16,8 @@
         >
           <div class="title">{{ popoutListItem.title }}</div>
           <div class="period" v-if="popoutListItem.startTime && popoutListItem.endTime">
-            {{ moment(popoutListItem.startTime).format("DD/MM/YYYY") }} -
-            {{ moment(popoutListItem.endTime).format("DD/MM/YYYY") }}
+            {{ moment(popoutListItem.startTime).format("YYYY/MM/DD") }} -
+            {{ moment(popoutListItem.endTime).format("YYYY/MM/DD") }}
           </div>
         </div>
       </div>
