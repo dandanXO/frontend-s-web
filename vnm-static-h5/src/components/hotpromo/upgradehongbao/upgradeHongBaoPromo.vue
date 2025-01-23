@@ -13,6 +13,11 @@
           width="200"
           v-if="promoId === 567"
         />
+        <img
+          src="../../../assets/images/promo/hotpromo/upgradehongbao/claimhongbao.png"
+          width="200"
+          v-else-if="promoId === 669"
+        />
         <img v-else src="../../../assets/images/promo/hotpromo/upgradehongbao/red-packet.png" width="200" />
       </div>
 
@@ -63,18 +68,31 @@
     class="award-modal hongbaoyu-modal"
     width="100%"
     v-model="isClaimModal"
-    :no-backdrop-dismiss="promoId !== 567 ? true : false"
+    :no-backdrop-dismiss="promoId !== 567 && promoId !== 669 ? true : false"
     no-esc-dismiss
   >
     <div class="modal-div">
+      <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="red-packet-opened">
-        <img v-if="promoId === 567" :src="require(`../../../assets/images/promo/hotpromo/upgradehongbao/popup2.png`)" />
+        <img
+          v-if="promoId === 669"
+          :src="require(`../../../assets/images/promo/hotpromo/upgradehongbao/getrecord.png`)"
+        />
+        <img
+          v-else-if="promoId === 567"
+          :src="require(`../../../assets/images/promo/hotpromo/upgradehongbao/popup2.png`)"
+        />
         <img v-else :src="require(`../../../assets/images/promo/hotpromo/upgradehongbao/red-packet-opened.png`)" />
-        <div v-if="promoId !== 567" class="grats">{{ $t("lang.hong_congrats") }}</div>
-        <div v-if="promoId !== 567" class="amount">{{ winAmount }}</div>
+
+        <div v-if="promoId !== 567 && promoId !== 669" class="grats">{{ $t("lang.hong_congrats") }}</div>
+        <div v-if="promoId !== 567 && promoId !== 669" class="amount">{{ winAmount }}</div>
         <div v-else class="amount-halloween">{{ winAmount }}</div>
 
-        <div class="get-btn" :class="promoId === 567 ? 'get-btn-halloween' : ''" @click="getPromotionPrize">
+        <div
+          class="get-btn"
+          :class="promoId === 567 || promoId === 669 ? 'get-btn-halloween' : ''"
+          @click="getPromotionPrize"
+        >
           {{ $t("lang.claim") }}
         </div>
       </div>
@@ -332,6 +350,7 @@ onMounted(() => {
 
 .modal-div {
   width: 100%;
+  position: relative;
 }
 
 .red-packet-opened {
@@ -381,9 +400,9 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     top: 0;
-    margin-top: 28%;
-    color: #000;
-    font-size: 28px;
+    margin-top: 18%;
+    color: #fff;
+    font-size: 50px;
     font-weight: bold;
   }
 
@@ -406,5 +425,12 @@ onMounted(() => {
       filter: brightness(0.9);
     }
   }
+}
+
+.popout-close {
+  margin-left: auto;
+  margin-right: 20px;
+  display: flex;
+  color: #787878;
 }
 </style>

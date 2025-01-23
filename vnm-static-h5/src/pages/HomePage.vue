@@ -481,6 +481,7 @@
   </q-dialog>
 
   <GameModal ref="allGames"></GameModal>
+  <AnnouncementModal />
 
   <q-dialog
     width="100%"
@@ -665,6 +666,7 @@ import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import LangOptions from "components/LangOptions";
 import SitePopout from "components/modal/SitePopout.vue";
+import AnnouncementModal from "components/modal/AnnouncementModal";
 import MarqueeText from "vue-marquee-text-component";
 import { App } from "@capacitor/app";
 
@@ -718,7 +720,8 @@ export default defineComponent({
     GameList,
     SlotPromotion,
     SlotGameList,
-    SitePopout
+    SitePopout,
+    AnnouncementModal
   },
   setup() {
     const { t } = useI18n();
@@ -1393,7 +1396,7 @@ export default defineComponent({
     // const unreadInboxMail = ref(0);
     // const getUnreadTotal = () => {
     //   if (store.token) {
-    //     return api.get("/session/inbox/getUnreadTotal").then((res) => {
+    //     return api.get("/session/pm/inbox/getUnreadTotal").then((res) => {
     //       if (res.code === 0) {
     //         unreadInboxMail.value = res.data;
     //       }

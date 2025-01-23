@@ -2439,7 +2439,11 @@ export default {
     oddsType_3: '欧洲盘',
     oddsType_4: '印尼盘',
     oddsType_6: '美式盘',
-    eventId: '赛事ID'
+    eventId: '赛事ID',
+    privilegeAmountRatio: '领取金额比例',
+    privilegeCountRatio: '领取人数比例',
+    table: '数据',
+    chart: '图表',
   },
   message: {
     adsStatusOpen: '开',

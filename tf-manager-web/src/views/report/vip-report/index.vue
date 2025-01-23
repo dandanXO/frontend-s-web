@@ -19,19 +19,19 @@
         />
 
         <!-- <el-select
-          v-model="request.siteId"
-          size="small"
-          :placeholder="t('fields.site')"
-          class="filter-item"
-          style="width: 120px; margin-left: 5px"
-        >
-          <el-option
-            v-for="item in siteList.list"
-            :key="item.id"
-            :label="item.siteName"
-            :value="item.id"
-          />
-        </el-select> -->
+            v-model="request.siteId"
+            size="small"
+            :placeholder="t('fields.site')"
+            class="filter-item"
+            style="width: 120px; margin-left: 5px"
+          >
+            <el-option
+              v-for="item in siteList.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select> -->
         <el-input
           v-model="request.gameName"
           style="width: 200px; margin-left: 10px"
@@ -40,22 +40,22 @@
           :placeholder="t('fields.gameName')"
         />
         <!-- <el-form-item :label="t('fields.vipLevel')" prop="vipId">
-          <el-select
-            v-model="request.vipId"
-            size="small"
-            :placeholder="t('message.selectSiteFirst')"
-            class="filter-item"
-            style="width: 300px;"
-            default-first-option
-          >
-            <el-option
-              v-for="item in vipList.list"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item> -->
+            <el-select
+              v-model="request.vipId"
+              size="small"
+              :placeholder="t('message.selectSiteFirst')"
+              class="filter-item"
+              style="width: 300px;"
+              default-first-option
+            >
+              <el-option
+                v-for="item in vipList.list"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item> -->
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -74,12 +74,12 @@
           {{ t('fields.reset') }}
         </el-button>
         <!-- <el-button
-          size="mini"
-          type="primary"
-          v-permission="['sys:report:vip:report:export']"
-          @click="requestExportExcel"
-        >{{ t('fields.requestExportToExcel') }}
-        </el-button> -->
+            size="mini"
+            type="primary"
+            v-permission="['sys:report:vip:report:export']"
+            @click="requestExportExcel"
+          >{{ t('fields.requestExportToExcel') }}
+          </el-button> -->
       </div>
     </div>
 

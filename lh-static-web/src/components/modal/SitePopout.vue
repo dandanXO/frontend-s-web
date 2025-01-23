@@ -15,9 +15,9 @@
           :key="`left-item-${index}`"
         >
           <div class="title">{{ popoutListItem.title }}</div>
-          <div class="period" v-if="popoutListItem.displayStartTime && popoutListItem.displayEndTime">
-            {{ moment(popoutListItem.displayStartTime).format("DD/MM/YYYY") }} -
-            {{ moment(popoutListItem.displayEndTime).format("DD/MM/YYYY") }}
+          <div class="period" v-if="popoutListItem.startTime && popoutListItem.endTime">
+            {{ moment(popoutListItem.startTime).format("DD/MM/YYYY") }} -
+            {{ moment(popoutListItem.endTime).format("DD/MM/YYYY") }}
           </div>
         </div>
       </div>

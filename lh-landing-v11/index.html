@@ -16,7 +16,8 @@
       <div class="full-container">
         <div class="top-wrapper">
           <div class="top-logo">
-            <img src="imgs/lh-logo3.png" alt="雷火 TFGAMING" title="雷火 TFGAMING" />
+            <img src="imgs/lhlogo.png" alt="雷火 TFGAMING" title="雷火 TFGAMING" />
+            <h2 class="title-text">leihuo16.com</h2>
           </div>
           <div class="top-bg">
             <a id="click-to-claim-btn" href="#" target="_blank">
@@ -148,6 +149,17 @@
             claimUrl: "https://www.lh57018.com",
             agent1ID: "vip116",
             agent2ID: "vip120"
+          },
+          "fafac.gdn":{
+            group1Title: "富力：",
+            group1Number: "992359773",
+            group2Title: "满满福利： ",
+            group2Number: "983092106",
+            landingPageLink: "https://am787.cc", // You can set a default link or leave it empty
+            redirectUrl: "https://www.lh57018.com",
+            claimUrl: "https://www.lh57018.com",
+            agent1ID: "vip116",
+            agent2ID: "vip120"
           }
         };
 
@@ -199,6 +211,8 @@
       console.log(hostname);
       if (hostname.indexOf("21894.cc") > -1) {
         LA.init({ id: "KgmmdOQZU51lev3x", ck: "KgmmdOQZU51lev3x" });
+      }else if(hostname.indexOf("fafac.gdn") > -1){
+        LA.init({id:"KhMBsXgrCcxm1sDW",ck:"KhMBsXgrCcxm1sDW"})
       }
     </script>
   </body>

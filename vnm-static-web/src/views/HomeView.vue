@@ -2,10 +2,12 @@
   <div class="home">
     <HomeViewLayoutAdapter />
   </div>
+  <AnnouncementModal />
 </template>
 
 <script setup>
 import HomeViewLayoutAdapter from "@/components/home/HomeViewLayoutAdapter.vue";
+import AnnouncementModal from "@/components/modal/AnnouncementModal.vue";
 </script>
 
 <style scoped lang="scss">

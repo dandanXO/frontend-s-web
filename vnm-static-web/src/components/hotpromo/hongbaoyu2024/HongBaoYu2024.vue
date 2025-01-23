@@ -9,6 +9,11 @@
           width="350"
           v-if="promoId === 567"
         />
+        <img
+          src="../../../assets/images/promotion/hotpromo/hongbaoyu2024/claimhongbao.png"
+          width="350"
+          v-else-if="promoId === 669"
+        />
         <img v-else src="../../../assets/images/promotion/hotpromo/hongbaoyu2024/red-packet.png" width="350" />
       </div>
     </div>
@@ -16,25 +21,31 @@
 
   <el-dialog
     class="award-modal hongbaoyu-modal"
-    :close-on-click-modal="false"
+    :close-on-click-modal="true"
     :modal="false"
     v-model="privilegeClaimedModalVisible"
     align-center
   >
     <div class="modal-div">
+      <button class="text-white popout-close" @click="privilegeClaimedModalVisible = false">✕</button>
       <div class="red-packet-opened">
         <img
-          v-if="promoId === 567"
+          v-if="promoId === 669"
+          :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu2024/getrecord.png`)"
+        />
+        <img
+          v-else-if="promoId === 567"
           :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu2024/popup2.png`)"
         />
         <img v-else :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu2024/red-packet-opened.png`)" />
         <!-- <img src="../../../assets/images/promotion/hotpromo/red-packet-opened.png" /> -->
-        <div v-if="promoId !== 567" class="grats">{{ $t("promo.congrats") }}</div>
+        <div v-if="promoId !== 567 && promoId !== 669" class="grats">{{ $t("promo.congrats") }}</div>
 
-        <div v-if="promoId !== 567" class="amount">{{ winAmount }}</div>
+        <div v-if="promoId !== 567 && promoId !== 669" class="amount">{{ winAmount }}</div>
+        <div v-else-if="promoId === 669" class="amount-halloween">{{ winAmount }}</div>
         <div v-else class="amount-halloween">{{ winAmount }}</div>
 
-        <div class="get-btn" @click="getPromotionPrize">{{ $t("promo.claim") }}</div>
+        <!-- <div class="get-btn" @click="getPromotionPrize">{{ $t("promo.claim") }}</div> -->
       </div>
     </div>
   </el-dialog>
@@ -333,9 +344,9 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     top: 0;
-    margin-top: 142px;
-    color: #000;
-    font-size: 36px;
+    margin-top: 105px;
+    color: #fff;
+    font-size: 50px;
     font-weight: bold;
   }
 
@@ -363,6 +374,18 @@ onMounted(() => {
   color: #7a8eb9;
   font-size: 20px;
   min-width: 60%;
+}
+
+.popout-close {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  margin-left: auto;
+  margin-right: 20%;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 3px 3px 3px rgba(0,0,0,0.3);
 }
 </style>
 

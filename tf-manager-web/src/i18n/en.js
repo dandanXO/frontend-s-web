@@ -2438,7 +2438,11 @@ export default {
     oddsType_3: 'Europe',
     oddsType_4: 'Indonesia',
     oddsType_6: 'US',
-    eventId: 'event ID'
+    eventId: 'event ID',
+    privilegeAmountRatio: 'Privilege Amount Ratio',
+    privilegeCountRatio: 'Privilege Count Ratio',
+    table: 'Data Table',
+    chart: 'Chart',
   },
   message: {
     adsStatusOpen: 'Open',

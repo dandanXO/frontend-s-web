@@ -180,7 +180,7 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "stores/index";
 import qs from "qs";
 import { useUI } from "stores/ui";
-import { isAndroid } from "boot/utils";
+import { isAndroid, isInPwa } from "boot/utils";
 // import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 
 export default defineComponent({
@@ -401,6 +401,15 @@ export default defineComponent({
                   message: "Registered successfully",
                   icon: "check_circle_outline"
                 });
+
+                //FB Tracking.
+                if (isInPwa()) {
+                  if (store.isFbPixel) {
+                    fbq("track", "CompleteRegistration", {
+                      event_id: regForm.sid
+                    });
+                  }
+                }
 
                 //ADJUST TRACKEVENT.
                 trackRegisterSuccessEvent();

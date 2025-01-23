@@ -167,7 +167,7 @@ export default defineComponent({
         $q.loading.show({
           message: '加载信箱...'
         })
-        api.get("/session/inbox", {
+        api.get("/session/pm/inbox", {
           params: {
             type: mailboxData.value.type,
             current: mailboxData.value.current,

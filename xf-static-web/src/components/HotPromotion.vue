@@ -30,6 +30,7 @@
     <DepositAwardPromo v-if="list.redirectUrl === 'xf-deposit-award'" />
     <SlotsBonusPromo v-if="list.redirectUrl === 'xf1-slots-bet-bonus'" :promo-code="list.promoCode" />
     <HongBaoYu2025 v-if="list.redirectUrl === 'xf1-cny2025-red-envelope'" :promo-code="list.promoCode" />
+    <OfficialGiftPromo v-if="list.redirectUrl === 'xf-official-gift'" :params="list.param" />
     <SlotsRebatePromo v-if="list.redirectUrl === 'xf1-slots-rebate'" :promo-code="list.promoCode" />
     <div v-if="list.redirectUrl === 'fucaiiphone'" class="promo-4">
       <div class="tabs">
@@ -198,6 +199,7 @@ const HongBaoYu2025 = defineAsyncComponent(() => import("@/components/hotpromo/h
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
+import OfficialGiftPromo from "./hotpromo/officialGift/OfficialGiftPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -219,7 +221,8 @@ export default defineComponent({
     HongBaoPreEurocupPromo,
     SlotsRebatePromo,
     SlotsBonusPromo,
-    HongBaoYu2025
+    HongBaoYu2025,
+    OfficialGiftPromo
     // DailyBonus
   },
   props: {

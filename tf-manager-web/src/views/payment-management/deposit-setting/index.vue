@@ -307,7 +307,7 @@ async function loadPayTypes() {
 async function loadSetting(payType) {
   configForm.setting = null
   var code = "Deposit_amount_list_" + payType;
-  const { data: setting } = await getConfigList(code, request.siteId);
+  const { data: setting } = await getConfigList(code, form.siteId);
   configForm.setting = setting[0].value
 }
 
