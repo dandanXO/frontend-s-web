@@ -104,7 +104,7 @@
         </li>
         <li>
           Event duration:
-          <span class="sp1">19th January 2025 - 19th February 2025</span>
+          <span class="sp1">19th January 2025 - 19th March 2025</span>
           .
         </li>
         <li>How to Claim Rewards?</li>
