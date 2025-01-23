@@ -133,7 +133,7 @@
       <div class="ranking-header">
         <div class="rank-index">RANKING</div>
         <div>NAME</div>
-        <div>AMOUNT</div>
+        <!-- <div>AMOUNT</div> -->
       </div>
       <div class="ranking-content">
         <div class="ranking-item" v-for="n in 5" :key="n">
@@ -156,10 +156,10 @@
               {{ params[`ambassador_${n}`] }}
             </a>
           </div>
-          <div class="rank-amt">
+          <!-- <div class="rank-amt">
             <img src="./img/coin.png" />
             888
-          </div>
+          </div> -->
         </div>
       </div>
       <img class="ranking-container-decoration left" src="./img/ranking-left.png" />
@@ -414,7 +414,7 @@ onMounted(() => {
 
   .ranking-header {
     display: grid;
-    grid-template-columns: minmax(30px, 1fr) 2fr 1fr;
+    grid-template-columns: minmax(30px, 1fr) 3fr;
     background: #0000001a;
     border-radius: 24px;
     padding: 16px 4px;
@@ -442,7 +442,7 @@ onMounted(() => {
 
     .ranking-item {
       display: grid;
-      grid-template-columns: minmax(30px, 1fr) 2fr 1fr;
+      grid-template-columns: minmax(30px, 1fr) 3fr;
       height: 65px;
       padding: 0 14px;
       align-items: center;
