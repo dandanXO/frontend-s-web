@@ -1,5 +1,5 @@
 <template>
-  <router-view ref="routerView" />
+  <router-view />
 </template>
 
 <script>
@@ -214,25 +214,13 @@ export default defineComponent({
 
         const hostname = window.location.hostname.replace("www.", "");
         const { adCode } = getRbParams() || {};
-
-        // alert(`adCode: ${adCode}`);
-        // const urlParams = new URLSearchParams(window.location.search);
-        // const affiliateCodeFromUrl = urlParams.get("affiliateCode");
-        // const filteredAfCode = affiliateCodeFromUrl ? affiliateCodeFromUrl : "";
-
-        // alert(`/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${filteredAfCode}`);
         //Use thisApi to get AffiliateCode/FbPixelId/ WebPushId for PWA.
         api
           .get(`/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${adCode}`)
           .then((res) => {
             console.log(res);
             const { affiliateCode, facebookId, pushId } = res.data;
-
             sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
-            // alert(`affiliateCode: ${affiliateCode}`);
-            // alert(`facebookId: ${facebookId}`);
-            // alert(`pushId: ${pushId}`);
-
             console.log("Init FB");
             fbq("init", facebookId);
             fbq("track", "PageView");
@@ -318,32 +306,12 @@ export default defineComponent({
     const setStatusBarColor = async () => {
       AddressbarColor.set("#3E1474");
       if (Platform.is.capacitor && Platform.is.android) {
-        // console.log("STATUSBARR");
         await StatusBar.hide();
         await StatusBar.setOverlaysWebView({ overlay: true });
         await StatusBar.setBackgroundColor({ color: "#3E1474" });
         await StatusBar.setStyle({ style: Style.Dark });
-        // setTimeout(() => {
-        //   getInsetHeight();
-        // }, 250);
       }
     };
-
-    // const getInsetHeight = async () => {
-    //   const ua = navigator.userAgent.toLowerCase();
-    //   console.log(ua);
-    //   const isAndroidPixel = ua.indexOf("android") > -1;
-    //   // && (ua.indexOf("pixel") > -1 || ua.indexOf("samsung") > -1 || ua.indexOf("galaxy") > -1);
-    //   if (Platform.is.capacitor && Platform.is.android && isAndroidPixel) {
-    //     const insets = await SafeArea.getSafeAreaInsets();
-    //     console.log(insets);
-    //     // alert(insets); // Ex. { "bottom":34, "top":47, "right":0, "left":0 }
-    //     if (insets.bottom > 0) {
-    //       // console.log("HERe");
-    //       ui.bottomInsetHeight = insets.bottom;
-    //     }
-    //   }
-    // };
 
     const handleVisibilityChange = (status) => {
       if (Platform.is.capacitor && Platform.is.android) {
@@ -352,7 +320,6 @@ export default defineComponent({
     };
 
     const getOnlineStatApi = async () => {
-      // console.log("Ok Online.");
       const fpPromise = FingerprintJS.load();
 
       if (isAndroid()) {
@@ -488,16 +455,7 @@ export default defineComponent({
       requestNotificationPermission();
     };
 
-    const routerView = ref(null);
-
-    onMounted(async () => {
-      // const info = await App.getInfo();
-      console.log("VUE_APP_SITEID:", process.env.VUE_APP_SITEID);
-      console.log("APP Info");
-      // alert("ws 13");
-      // console.log(info);
-      // checkSID();
-      // getCSA();
+    onMounted(async () => {o();
       checkServerStatus();
       getAppInfo();
       initOrientation();
@@ -518,26 +476,10 @@ export default defineComponent({
         trackH5Affiliate();
       }
 
-      // PWA
-      // const hostname = window.location.hostname;
-      // if (
-      //   isInPwa()
-      //   // hostname.includes("7ffoz.cc") ||
-      //   // hostname.includes("0bmf0.cc")
-      // ) {
-      //   console.log("Engagel labe here");
-      //   initEngageLabPush();
-      // }
-
       document.addEventListener("visibilitychange", handleVisibilityChange);
-
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);
     });
-
-    return {
-      routerView
-    };
   }
 });
 
