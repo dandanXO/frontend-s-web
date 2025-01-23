@@ -6,7 +6,7 @@
           <div class="livepoker-rebate-section section-bg">
             <div class="livepoker-rebate-section-left">
               <div class="livepoker-rebate-section-title">
-                <div class="claim-title-icon"></div>
+                <div class="reward-info-icon claim-title-icon"></div>
                 投注嘉奖
               </div>
               <div class="reward-info">
@@ -38,7 +38,7 @@
             <div class="title-img">活动详情</div>
             <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
               <div class="ribbon">活动时间</div>
-              <div class="right">2025年1月29日至2025年2月09日</div>
+              <div class="right">2025 年 1 月 29 日至 2025 年 2 月 09 日</div>
             </div>
             <div
               class="little-title"
@@ -143,7 +143,7 @@
               </div>
               <div class="item">
                 <div class="item-num">6</div>
-                为避免文字理解差异，雷火电竞保留此活动最终解释权；
+                为避免文字理解差异，东赢电竞保留此活动最终解释权；
               </div>
             </div>
           </div>
@@ -550,4 +550,27 @@ onMounted(() => {
     }
   }
 }
+.claim-title-icon {
+    background: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/section-title-img.png") no-repeat
+      center center !important;
+    background-size: 100% 100% !important;
+  }
+
+  .claim-coin-icon {
+    background: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon1.png") no-repeat center
+      center !important;
+    background-size: 100% 100% !important;
+  }
+
+  .claim-gift-icon {
+    background: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon2.png") no-repeat center
+      center !important;
+    background-size: 100% 100% !important;
+  }
+
+  .claim-stacked-coins-icon {
+    background: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon3.png") no-repeat center
+      center !important;
+    background-size: 100% 100% !important;
+  }
 </style>
