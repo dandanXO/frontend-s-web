@@ -53,8 +53,7 @@ module.exports = configure(function (ctx) {
       vueRouterMode: "hash", // available values: 'hash', 'history'
 
       // transpile: false,
-      publicPath: '/5076209572/',
-      publicPath: '/3539823646/',
+      publicPath: `/${process.env.ROUTER_BASE}/`,
 
       // Add dependencies for transpiling with Babel (Array of string/regex)
       // (from node_modules, which are by default not transpiled).
@@ -70,8 +69,8 @@ module.exports = configure(function (ctx) {
       minify: true,
       uglifyOptions: {
         compress: {
-          drop_console: true, // Removes all console logs
-        },
+          drop_console: true // Removes all console logs
+        }
       },
 
       // Options below are automatically set depending on the env, set them if you want to override
