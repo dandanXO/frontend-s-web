@@ -542,7 +542,7 @@ const getDailyCheckInData = () => {
 };
 
 const getRankingList = () => {
-  eventapi.post(`/session/bgd-daily-check-in/top-ranking?${props.promocode}`).then((res) => {
+  eventapi.post(`/session/bgd-daily-check-in/top-ranking?promoCode=${props.promocode}`).then((res) => {
     rankingList.value = res.data;
   });
 };
