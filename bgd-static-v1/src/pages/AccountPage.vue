@@ -842,6 +842,11 @@ const copyLoginName = () => {
 
 const verificationCodeDialog = ref(false);
 const openVerificationCodeDialog = () => {
+  if(store.email) {
+    verificationCodeDialog.value = !verificationCodeDialog.value;
+    return;
+  }
+
   api
     .get(`/member/checkEmailRegisterStatus?email=${updateEmailInfo.email}`)
     .then((response) => {
@@ -1449,9 +1454,9 @@ const submitUpdateEmail = () => {
 
   if (updateEmailRef.value.hasError || updateEmailCodeRef.value.hasError) {
   } else {
+    const endpoint = store.email ? "/otp/verifyEmail" : "/session/verifyAndUpdateEmail"
     api
-      .post(
-        "/session/verifyAndUpdateEmail",
+      .post(endpoint,
         qs.stringify({
           email: updateEmailInfo.email,
           code: updateEmailInfo.code,
