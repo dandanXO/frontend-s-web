@@ -253,16 +253,26 @@
       <el-table-column prop="title" :label="t('fields.title')" />
       <el-table-column prop="frequency" :label="t('fields.frequency')" />
       <el-table-column prop="siteName" :label="t('fields.site')" />
-      <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:promo:ads-popout:update:state'])">
+      <el-table-column prop="status" :label="t('fields.status')" min-width="200">
         <template #default="scope">
-          <el-switch
+          <el-radio-group
             v-model="scope.row.status"
-            active-color="#409EFF"
-            inactive-color="#F56C6C"
+            size="mini"
+            v-if="hasPermission(['sys:promo:ads-popout:update:state'])"
             @change="changeAdsStatus(scope.row)"
-          />
+          >
+            <el-radio-button label="1">{{ t('common.status.OPEN') }}</el-radio-button>
+            <el-radio-button label="0">{{ t('common.status.CLOSE') }}</el-radio-button>
+            <el-radio-button label="2">{{ t('common.status.TEST') }}</el-radio-button>
+          </el-radio-group>
+          <div v-else>
+            <div v-if="scope.row.status === 0" style="color:red">{{ t('common.status.CLOSE') }}</div>
+            <div v-if="scope.row.status === 1" style="color: green;">{{ t('common.status.OPEN') }}</div>
+            <div v-if="scope.row.status === 2">{{ t('common.status.TEST') }}</div>
+          </div>
         </template>
       </el-table-column>
+
       <el-table-column prop="createTime" :label="t('fields.createTime')">
         <template #default="scope">
           <span v-if="scope.row.createTime === null">-</span>
@@ -339,8 +349,9 @@ const uiControl = reactive({
   editBtn: true,
   removeBtn: true,
   adsStatus: [
-    { key: 1, displayName: t('message.adsStatusOpen'), value: true },
-    { key: 2, displayName: t('message.adsStatusClose'), value: false },
+    { key: 1, displayName: t('common.status.OPEN'), value: 1 },
+    { key: 2, displayName: t('common.status.CLOSE'), value: 0 },
+    { key: 3, displayName: t('common.status.TEST'), value: 2 },
   ],
   // type: [
   //   { key: 1, displayName: '文字', value: 'TEXT' },
@@ -565,9 +576,10 @@ async function removeAdsPopout(adspopout) {
 }
 
 async function changeAdsStatus(row) {
-  await updateAdsPopoupStatus(row.id, row.status).catch(function() {
-    row.status = row.status === '0' ? '1' : '0'
+  await updateAdsPopoupStatus(row.id, row.status, row.siteType).catch(async function (){
+    await loadAdsPopoutList();
   })
+  await loadAdsPopoutList();
 }
 
 onMounted(async () => {

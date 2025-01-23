@@ -165,19 +165,18 @@ const submitLogin = () => {
                             genTime: loginForm.gen_time,
                         })
                         .then(() => {
-                            console.log('here');
                             const jumpUrl = route.query.redirect
                                 ? route.query.redirect.toString()
                                 : props.pageType === "view"
                                     ? "/"
                                     : route.path;
 
-                            console.log('here');
                             if (store.token) {
                                 router.push(jumpUrl);
                                 console.log('here');
                                 sessionStorage.removeItem("REFERRAL_CODE");
                                 sessionStorage.removeItem("SUMMON_CODE");
+                                sessionStorage.setItem("POPUP", "true");
                                 loginForm.loginName = null;
                                 loginForm.password = null;
                                 loginForm.captchaCode = null;

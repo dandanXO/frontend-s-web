@@ -18,6 +18,7 @@ const PK3_SITE_ID = 20;
 const MX1_SITE_ID = 21;
 const CO1_SITE_ID = 22;
 const TH2_SITE_ID = 23;
+const BPK_SITE_ID = 24;
 
 export const isIndiaSite = (siteId) => {
   return parseInt(siteId) === IND_SITE_ID || parseInt(siteId) === IND2_SITE_ID;
@@ -40,7 +41,7 @@ export const isInd2 = (siteId) => {
 }
 
 export const isPak = (siteId) => {
-  return parseInt(siteId) === PAK_SITE_ID || parseInt(siteId) === PAK2_SITE_ID || parseInt(siteId) === BGD_SITE_ID;
+  return parseInt(siteId) === PAK_SITE_ID || parseInt(siteId) === PAK2_SITE_ID || parseInt(siteId) === BGD_SITE_ID || parseInt(siteId) === BPK_SITE_ID;
 }
 
 export const isXF = (siteId) => {

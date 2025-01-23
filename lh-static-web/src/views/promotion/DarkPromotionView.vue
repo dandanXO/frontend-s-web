@@ -76,7 +76,7 @@
         <div
           class="banner-container"
           v-if="
-            (selectedPromo?.displayDesktopBannerUrl || selectedPromo?.displayMobileBannerUrl) &&
+            (selectedPromo?.desktopBannerUrlDark || selectedPromo?.desktopBannerUrl) &&
             selectedPromo.promoCode !== 'lh1-game-steps' &&
             selectedPromo.promoCode !== 'lh1-ftd-promo' &&
             selectedPromo.promoCode !== 'lh1-aijiasu' &&
@@ -88,28 +88,30 @@
             <img
               :src="
                 imgURL +
-                (selectedPromo.displayDesktopBannerUrl
-                  ? selectedPromo.displayDesktopBannerUrl
-                  : selectedPromo.displayDesktopImgUrl)
+                (selectedPromo.desktopBannerUrlDark
+                  ? selectedPromo.desktopBannerUrlDark
+                  : selectedPromo.desktopBannerUrl)
               "
             />
           </div>
-          <div
-            class="promo-bg isMobile"
-            :style="
-              'background-image: url(' +
-              imgURL +
-              (selectedPromo.displayMobileBannerUrl
-                ? selectedPromo.displayMobileBannerUrl
-                : selectedPromo.displayMobileImgUrl) +
-              ''
-            "
-          ></div>
+          <!--          <div-->
+          <!--            class="promo-bg isMobile"-->
+          <!--            :style="-->
+          <!--              'background-image: url(' +-->
+          <!--              imgURL +-->
+          <!--              (selectedPromo.displayMobileBannerUrl-->
+          <!--                ? selectedPromo.displayMobileBannerUrl-->
+          <!--                : selectedPromo.displayMobileImgUrl) +-->
+          <!--              ''-->
+          <!--            "-->
+          <!--          ></div>-->
         </div>
         <BlastPremierMarquee
+          :type="selectedPromo?.redirectUrl === 'bounty-blast-premier' ? 'bounty' : null"
           v-if="
             selectedPromo?.redirectUrl === 'lh-cs2-blast-2024' ||
-            selectedPromo?.redirectUrl === 'lh1-blast-premier-treasure'
+            selectedPromo?.redirectUrl === 'lh1-blast-premier-treasure' ||
+            selectedPromo?.redirectUrl === 'bounty-blast-premier'
           "
         />
         <div

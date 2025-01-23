@@ -29,7 +29,7 @@
           <el-option
             v-for="item in platforms.list"
             :key="item.id"
-            :label="item.name"
+            :label="item.code"
             :value="item.id"
           />
         </el-select>
@@ -277,7 +277,7 @@
         </el-form-item>
         <el-form-item :label="t('fields.platform')" prop="platformName">
           <el-select
-            v-model="form.platformName"
+            v-model="form.platformCode"
             :placeholder="t('fields.pleaseChoose')"
             style="width: 350px"
             filterable
@@ -286,7 +286,7 @@
             <el-option
               v-for="item in dialogPlats.list"
               :key="item.id"
-              :label="item.name"
+              :label="item.code"
               :value="item.id"
             />
           </el-select>
@@ -503,7 +503,7 @@
       />
       <el-table-column prop="name" :label="t('fields.gameName')" min-width="150"/>
       <el-table-column prop="code" :label="t('fields.gameCode')" min-width="180"/>
-      <el-table-column prop="platformName" :label="t('fields.platform')" width="150"/>
+      <el-table-column prop="platformCode" :label="t('fields.platformCode')" width="150"/>
       <el-table-column prop="gameType" :label="t('fields.gameType')" width="120"/>
       <el-table-column prop="siteName" :label="t('fields.site')" width="150"/>
       <!-- <el-table-column prop="status" :label="t('fields.status')" width="150"/> -->
@@ -863,7 +863,7 @@ const formRules = reactive({
   status: [required(t('message.validateStatusRequired'))],
   gameType: [required(t('message.validateGameTypeRequired'))],
   icon: [required(t('message.validateIconRequired'))],
-  platformName: [required(t('message.validatePlatformRequired'))],
+  platformCode: [required(t('message.validatePlatformRequired'))],
   device: [required(t('message.validateDeviceRequired'))],
   sequence: [required(t('message.validateSequenceRequired'))],
 })

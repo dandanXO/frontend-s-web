@@ -297,6 +297,13 @@ deploy-minifun-site:
 
 #===============================================================================================
 
+deploy-minifun-site-v2:
+  extends: .s3-deploy
+  variables:
+    PROJECT: minifun-site-v2
+
+#===============================================================================================
+
 deploy-vnm-download:
   extends: .s3-deploy
   variables:

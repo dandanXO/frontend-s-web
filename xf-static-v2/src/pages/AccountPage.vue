@@ -40,15 +40,15 @@
         <div class="card_btm">
           <div class="progress-container">
             <div class="progress-vip-stat">
-              <img :src="require(`../assets/images/account/vip-level-${vipLevel - 1}.png`)" />
-              VIP {{ vipLevel - 1 }}
+              <img :src="getVipImage(vipLevel - 1 >= 0 ? vipLevel - 1 : 0)" />
+              VIP {{ vipLevel }}
             </div>
             <div class="progress-bar-container">
               <div class="progress-bar" :style="{ width: progessPercentage(vipItems[vipLevel].upgrade) + '%' }"></div>
             </div>
             <div class="progress-vip-stat">
-              VIP {{ vipLevel }}
-              <img :src="require(`../assets/images/account/vip-level-${vipLevel}.png`)" />
+              VIP {{ vipLevel + 1 }}
+              <img :src="getVipImage(vipLevel + 1)" />
             </div>
           </div>
 
@@ -196,37 +196,16 @@ const logout = () => {
 const appVersionNo = ref(null);
 
 const vipLevel = computed(() => {
-  if (store.vip == "VIP0") {
-    return 1;
-  } else if (store.vip == "VIP1") {
-    return 1;
-  } else if (store.vip == "VIP2") {
-    return 2;
-  } else if (store.vip == "VIP3") {
-    return 3;
-  } else if (store.vip == "VIP4") {
-    return 4;
-  } else if (store.vip == "VIP5") {
-    return 5;
-  } else if (store.vip == "VIP6") {
-    return 6;
-  } else if (store.vip == "VIP7") {
-    return 7;
-  } else if (store.vip == "VIP8") {
-    return 8;
-  } else if (store.vip == "VIP9") {
-    return 9;
-  } else if (store.vip == "VIP10") {
-    return 10;
-  } else if (store.vip == "VIP11") {
-    return 11;
-  } else if (store.vip == "VIP12") {
-    return 12;
-  }
-  return store.vip;
+  const match = store.vip.match(/^VIP(\d+)$/);
+  const level = match ? parseInt(match[1], 10) : null;
+  return level !== null && level >= 0 ? level : 0;
 });
 
 const timerBalance = ref();
+
+const getVipImage = (level) => {
+  return require(`../assets/images/account/vip-level-${level}.png`);
+};
 
 const vip = computed(() => {
   return store.vip;

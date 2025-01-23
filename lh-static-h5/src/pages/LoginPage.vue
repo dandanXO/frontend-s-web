@@ -453,6 +453,7 @@ export default defineComponent({
                 $q.loading.hide();
                 sessionStorage.removeItem("REFERRAL_CODE");
                 sessionStorage.removeItem("SUMMON_CODE");
+                sessionStorage.setItem("POPUP", "true");
 
                 if (isCheckRmb.value) {
                   localStorage.setItem(

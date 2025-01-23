@@ -49,6 +49,8 @@ installBtn.addEventListener("click", async () => {
       const urlParams = new URLSearchParams(window.location.search);
       const fbclid = urlParams.get("fbclid");
       if (fbclid) {
+        localStorage.setItem("fbclid", fbclid);
+
         // Retrieve _fbp directly
         const getCookie = (name) => {
           const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
@@ -128,7 +130,7 @@ installBtn.addEventListener("click", async () => {
       }
       break;
     case "PLAY":
-      window.open("/static/pwa/pwa-index.html", "_blank");
+      window.open(`/static/pwa/pwa-index.html`, "_blank");
       break;
   }
 });
@@ -184,7 +186,8 @@ window.addEventListener("load", () => {
   }
 
   if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) {
-    redirectToGame();
+    const fbclid = localStorage.getItem("fbclid");
+    redirectToGame(fbclid);
   }
 
   const installationStatus = localStorage.getItem(INSTALLATION_STATUS_KEY);

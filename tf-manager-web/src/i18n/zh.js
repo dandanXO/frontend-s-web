@@ -1952,6 +1952,7 @@ export default {
     downloadManagerRecord: '下载中心记录',
     downloadExportedExcel: '下载已导出的 Excel',
     redPacketAmountAfterReachingLimit: '红包达到上限后金额',
+    reOrderHotGame: '热门游戏重新排序',
     requestBy: '请求者',
     requestTime: '请求时间',
     progress: '进度',
@@ -2237,6 +2238,7 @@ export default {
     depositAmountRatio: '存款金额比例',
     withdrawAmountRatio: '提款金额比例',
     withdrawCountRatio: '提款笔数比例',
+    totalBetAndWinLoss: '总投注与输赢',
   },
   message: {
     adsStatusOpen: '开',
@@ -2305,6 +2307,7 @@ export default {
     unfreezeMemberSuccess: '解冻用户成功',
     found: '已找到',
     gameMatchEnded: '赛事已结束',
+    gameNotFound: '找不到相关游戏',
     giftDelivered: '礼品已送达',
     giftNoCashRedeemAmount: '奖品没有折现金额，请先设置该奖品的折现金额',
     giftOutForDelivery: '礼品已在运送中',

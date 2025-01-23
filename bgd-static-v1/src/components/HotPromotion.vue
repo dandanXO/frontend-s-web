@@ -11,7 +11,10 @@
     <BonusSpinWheelPromo v-if="list.redirectUrl === 'bgd-spin-wheel' && !isCommonPromo && store.token" />
     <ReferSpinWheel v-if="list.redirectUrl === 'bgd-refer-wheel' && !isCommonPromo && store.token" />
     <SignIn7DaysPromo v-if="list.redirectUrl === 'bgd-signin-bonus' && !isCommonPromo && store.token" />
-    <SignIn30DaysPromo v-if="list.redirectUrl === 'bgd-daily-signin-bonus' && !isCommonPromo && store.token" />
+    <SignIn30DaysPromo
+      v-if="list.redirectUrl === 'bgd-daily-signin-bonus' && !isCommonPromo && store.token"
+      :promocode="list.promoCode"
+    />
     <EmailVerifyBonus
       v-if="list.redirectUrl === 'bgd-email-verify-bonus' && !isCommonPromo && store.token"
       :promocode="list.promoCode"
@@ -27,6 +30,10 @@
       v-if="!isCommonPromo && list.redirectUrl === 'bgd-register-claim-bonus' && store.token"
       :promocode="list.promoCode"
       :params="list.param"
+    />
+    <AppLoginBonus
+      v-if="list.redirectUrl === 'bgd-app-login-bonus' && !isCommonPromo && store.token"
+      :promocode="list.promoCode"
     />
   </div>
 
@@ -66,6 +73,7 @@ import RegisterClaimBonus from "../components/hotpromo/registerClaimBonus/Regist
 import SignIn30DaysPromo from "./hotpromo/signIn30Days/SignIn30DaysPromo.vue";
 import EmailVerifyBonus from "./hotpromo/emailVerifyBonus/EmailVerifyBonusPromo.vue";
 import ReferSpinWheel from "./hotpromo/referSpinWheel/ReferSpinWheel.vue";
+import AppLoginBonus from "./hotpromo/appLoginBonus/AppLoginBonus.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -84,7 +92,8 @@ export default defineComponent({
     InterestProfitPromo,
     NewPlayersPromo,
     SlotFtdPromo,
-    RegisterClaimBonus
+    RegisterClaimBonus,
+    AppLoginBonus
   },
   props: {
     list: {
@@ -147,6 +156,7 @@ export default defineComponent({
       this.list.redirectUrl === "bgd-slot-ftd" ||
       this.list.redirectUrl === "bgd-register-claim-bonus" ||
       this.list.redirectUrl === "bgd-email-verify-bonus" ||
+      this.list.redirectUrl === "bgd-app-login-bonus" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

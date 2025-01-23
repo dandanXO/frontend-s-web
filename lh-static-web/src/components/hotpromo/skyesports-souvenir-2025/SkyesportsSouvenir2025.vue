@@ -10,21 +10,21 @@
           <div class="reward-info">
             <div class="reward-info-icon claim-coin-icon"></div>
             <div class="reward-info-content">
-              当日累计存款金额：
+              昨日累计存款金额：
               <span class="amount">{{ totalDeposit }}元</span>
             </div>
           </div>
           <div class="reward-info">
             <div class="reward-info-icon claim-stacked-coins-icon"></div>
             <div class="reward-info-content">
-              当日单笔派彩金额：
+              昨日单笔派彩金额：
               <span class="amount">{{ totalPayout }}元</span>
             </div>
           </div>
           <div class="reward-info">
             <div class="reward-info-icon claim-gift-icon"></div>
             <div class="reward-info-content">
-              当日可领取彩金：
+              昨日可领取彩金：
               <span class="amount">{{ bonus }}元</span>
             </div>
           </div>
@@ -45,55 +45,55 @@
         <div class="title-img">活动详情</div>
         <div class="little-title">
           <div class="ribbon">活动时间</div>
-          <div class="right">2025年2月17日至2025年2月23日</div>
+          <div class="right">2025 年 2 月 17 日至 2025 年 2 月 23 日</div>
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
-          <div class="right">在活动期间投注Skyesports纪念杯2025赛事，满足活动要求后即可获得奖金，最高可获1,088元~</div>
+          <div class="right">在活动期间当日投注 Skyesports 纪念杯 2025 赛事，满足活动要求后次日即可获得奖金，最高可获 1,088 元~</div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
           <thead>
             <tr>
-              <th>当日累计存款</th>
-              <th>当日单笔派彩金额</th>
+              <th>昨日累计存款</th>
+              <th>昨日单笔派彩金额</th>
               <th>奖金</th>
               <th>流水倍数</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td rowspan="8">≥300元</td>
+              <td rowspan="8">≥300 元</td>
               <td>500</td>
-              <td>8元</td>
-              <td rowspan="8">6倍流水</td>
+              <td>8 元</td>
+              <td rowspan="8">6 倍流水</td>
             </tr>
             <tr>
               <td>1,000</td>
-              <td>28元</td>
+              <td>28 元</td>
             </tr>
             <tr>
               <td>3,000</td>
-              <td>58元</td>
+              <td>58 元</td>
             </tr>
             <tr>
               <td>5,000</td>
-              <td>88元</td>
+              <td>88 元</td>
             </tr>
             <tr>
               <td>10,000</td>
-              <td>108元</td>
+              <td>108 元</td>
             </tr>
             <tr>
               <td>30,000</td>
-              <td>388元</td>
+              <td>388 元</td>
             </tr>
             <tr>
               <td>50,000</td>
-              <td>588元</td>
+              <td>588 元</td>
             </tr>
             <tr>
               <td>100,000</td>
-              <td>1,088元</td>
+              <td>1,088 元</td>
             </tr>
           </tbody>
         </table>
@@ -103,8 +103,7 @@
               <img src="@/assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
               <span>示例</span>
             </div>
-            会员在2月19日在Skyesports 纪念杯
-            2025赛事中累计存款500元，其中有一笔注单派彩金额为1,800元，根据规则会员可获得28元奖金，奖金仅需6倍水即可出款。
+              会员在 2 月 19 日当日累计存款 500 元，在 Skyesports 纪念杯 2025 赛事投注中，其中一笔最高有效注单派彩金额为 1,800 元，根据规则会员次日可获得 28 元奖金，奖金仅需 6 倍水即可出款。
           </div>
         </div>
       </div>
@@ -116,26 +115,24 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              当前活动仅计算电竞场馆，在Skyesports 纪念杯
-              2025赛事期间内当日累计存款≥300元且单笔派彩金额≥500元即可获得对应彩金，彩金只需6倍流水即可出款；
+              活动仅计算电竞场馆，在 Skyesports 纪念杯 2025 赛事期间内当日累计存款≥300 元且单笔派彩最高金额≥500 元次日即可获得对应彩金，彩金只需 6 倍流水即可出款；
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            单笔派彩金额按当天最高一次的派彩金额进行计算，符合活动条件的会员可在优惠界面【点击领取】按钮获得彩金，彩金保留24小时；
+            单笔派彩金额按当天最高一次的派彩金额进行计算，符合活动条件的会员可在次日优惠界面【点击领取】按钮获得彩金，彩金保留 24 小时；
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            流水仅计算当天下注Skyesports 纪念杯
-            2025赛事且结算的注单，若提前兑现、注单未结算、取消或走盘皆不及不计算为有效投注；
+            有效流水仅计算当日下注 Skyesports 纪念杯 2025 赛事且结算的注单，若提前兑现、注单未结算、取消或走盘皆不及不计算为有效投注；
           </div>
           <div class="item">
             <div class="item-num">4</div>
-            任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+            任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
           </div>
           <div class="item">
             <div class="item-num">5</div>
-            每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消全部优惠的权利；
+            每位有效玩家、手机号码、电子邮箱、银行卡、IP 地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消全部优惠的权利；
           </div>
           <div class="item">
             <div class="item-num">6</div>

@@ -7,7 +7,7 @@
     align-center
   >
     <div style="position: relative;">
-      <SitePopout @popup-click="clickHomePopupImg"/>
+      <SitePopout @popup-click="clickHomePopupImg" :onShow="() => setWithExpiry('isImpt', true, 43200000)"/>
       <img class="close-btn" src="../../assets/images/home/site-popout/close-btn.png" alt="" @click="handleClose">
     </div>
   </el-dialog>
