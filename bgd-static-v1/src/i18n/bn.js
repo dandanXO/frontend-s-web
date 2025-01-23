@@ -63,7 +63,7 @@ export default {
     phone: "ফোন",
     phone_placeholder: "অনুগ্রহ করে আপনার মোবাইল নম্বর লিখুন",
     phone_rules_01: "অনুগ্রহ করে ফোন নম্বর লিখুন",
-    phone_rules_02: "ফোন নম্বরটি অবশ্যই 10 - 11 সংখ্যার হতে হবে",
+    phone_rules_02: "ফোন নম্বরটি অবশ্যই 11 সংখ্যার হতে হবে",
     phone_rules_03: "ফোন নম্বর অবশ্যই '01' দিয়ে শুরু করতে হবে",
     bindPhoneNumber: "ফোন নম্বর যুক্ত করুন",
     password: "পাসওয়ার্ড",
@@ -172,7 +172,9 @@ export default {
     registerSuccess: "সফলভাবে নিবন্ধিত হয়েছে",
     pleaseCompleteVerification: "অনুগ্রহ করে যাচাইকরণ কোড সম্পূর্ণ করুন",
     uploadSuccess: "সফলভাবে আপলোড হয়েছে",
-    uploadFailedTryAgain: "আপলোড ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন"
+    uploadFailedTryAgain: "আপলোড ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন",
+    verifySuccess: "যাচাইকরণ সফল হয়েছে",
+    otphasbeenSent: "OTP কোড আপনার ইমেইলে পাঠানো হয়েছে"
   },
   btn: {
     login: "লগইন করুন",
@@ -237,7 +239,8 @@ export default {
     emailBindedSuccessfully: "ইমেল সফলভাবে সংযুক্ত হয়েছে",
     emailAlreadyUsed: "ইমেলটি ইতিমধ্যে ব্যবহৃত হয়েছে। দয়া করে অন্য ইমেল চেষ্টা করুন।",
     phoneUpdatedSuccessfully: "ফোন নম্বর সফলভাবে আপডেট হয়েছে",
-    newPasswordUpdatedSuccessfully: "নতুন পাসওয়ার্ড সফলভাবে আপডেট হয়েছে"
+    newPasswordUpdatedSuccessfully: "নতুন পাসওয়ার্ড সফলভাবে আপডেট হয়েছে",
+    virtualWalletAddedSuccessfully: "ভার্চুয়াল ওয়ালেট সফলভাবে যোগ করা হয়েছে"
   },
   modal: {
     congrats: {
@@ -332,7 +335,15 @@ export default {
     depositTips4:
       "৪. শুধুমাত্র অর্ডারে নির্বাচিত ওয়ালেট ব্যবহার করে করা পেমেন্ট গ্রহণযোগ্য। ক্রস-ওয়ালেট ট্রান্সফার অনুমোদিত নয়।",
     video: "ভিডিও",
-    picture: "ছবি"
+    picture: "ছবি",
+    depositUsdtTip2: "২. ন্যূনতম জমা: ১০USDT, ১০USDT এর কম জমা ক্রেডিট করা হবে না।",
+    depositUsdtTip3: "৩. উপরের ঠিকানায় কোনো অ-মুদ্রা সম্পদ জমা করবেন না, অন্যথায় সম্পদ পুনরুদ্ধার করা যাবে না।",
+    depositUsdtTip4: "৪. তথ্য বিকৃত বা ফাঁস হওয়া এড়াতে অনুগ্রহ করে নিশ্চিত করুন যে অপারেটিং পরিবেশ নিরাপদ।",
+    depositUsdtTip5:
+      "৫. স্থানান্তর পরিমাণ অবশ্যই আপনার তৈরি করা অর্ডারের সাথে মিলতে হবে, অন্যথায় অর্থ সফলভাবে ক্রেডিট করা যাবে না।",
+    depositUsdtTip6: "৬. দ্রষ্টব্য: অর্থ স্থানান্তরের পরে জমা অর্ডার বাতিল করবেন না।",
+    wagerrequirement: "প্রত্যাহারের জন্য বাজি ধরার শর্ত: আপনার জমার পরিমাণের ১০ গুণ।",
+    example: "উদাহরণস্বরূপ: ১০০ { label } জমা দিন, ১,০০০ { label } বাজি প্রয়োজন।"
   },
   withdraw: {
     cashBalance: "ক্যাশ ব্যালেন্স",
@@ -684,7 +695,6 @@ export default {
       save: "সংরক্ষণ",
       currentAmount: "বর্তমান পরিমাণ",
       withdrawalStillTakes: "তুলে নেওয়া এখনও লাগে",
-      inviteFriendsHelp: "মুদ্রা তুলে নিতে বন্ধুদের আমন্ত্রণ জানান",
       shareThisReferralLink: "এই রেফারেল লিঙ্কটি আপনার বন্ধুদের সাথে শেয়ার করুন",
       getForFree: "বিনামূল্যে পান",
       inviteFriendsHelp: "সহায়তা করতে বন্ধুদের আমন্ত্রণ জানান",
@@ -805,7 +815,6 @@ export default {
       superChest: " সুপার chest",
       days: "দিন",
       usersMustMeet: "পুরস্কার দাবির জন্য ব্যবহারকারীদের দৈনিক বাজি ন্যূনতম পূরণ করতে হবে:",
-      noBettingRequired: "বাজি লাগবে না; পুরস্কার একবার দাবি করা যাবে।",
       ifRestartingOnDay1: `যদি দিন 1-এ আবার শুরু করা হয়: সর্বনিম্ন সঞ্চিত বাজি <span style="font-size: 14px; color: #11ff00">100 BDT</span> প্রয়োজন`,
       noBettingRequired: "বাজি লাগবে না; পুরস্কার একবার দাবি করা যাবে।",
       ifRestartingOnDay2: `যদি দিন 2-3-এ আবার শুরু করা হয়: সর্বনিম্ন সঞ্চিত বাজি <span style="font-size: 14px; color: #11ff00">100 BDT</span> প্রয়োজন`,

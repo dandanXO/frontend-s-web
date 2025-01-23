@@ -104,7 +104,7 @@
         </li>
         <li>
           Event duration:
-          <span class="sp1">19th January 2025 - 19th February 2025</span>
+          <span class="sp1">19th January 2025 - 19th March 2025</span>
           .
         </li>
         <li>How to Claim Rewards?</li>
@@ -128,33 +128,44 @@
     </div>
   </div>
   <div class="ranking-section">
+    <img class="ranking-top-img" src="./img/ranking-top.png" />
     <div class="ranking-container">
       <div class="ranking-header">
         <div class="rank-index">RANKING</div>
         <div>NAME</div>
-        <div>AMOUNT</div>
+        <!-- <div>AMOUNT</div> -->
       </div>
       <div class="ranking-content">
         <div class="ranking-item" v-for="n in 5" :key="n">
           <div
             class="rank-index"
             :style="`background: ${
-              n <= 3 ? 'url(' + require(`./img/medal-${n}.png`) + '); color: #9E6213; font-weight: 900;' : 'none'
+              n <= 3
+                ? 'url(' +
+                  require(`./img/rank-${n}.png`) +
+                  ') no-repeat center center; color: #9E6213; font-weight: 900; min-height: 24px'
+                : 'none'
             }`"
           >
-            {{ n }}
+            <template v-if="n > 3">
+              {{ n }}
+            </template>
           </div>
-          <div class="rank-name">NAME</div>
-          <div class="rank-amt">
+          <div class="rank-name">
+            <a :href="params[`ambassador_${n}`]" target="_blank">
+              {{ params[`ambassador_${n}`] }}
+            </a>
+          </div>
+          <!-- <div class="rank-amt">
             <img src="./img/coin.png" />
             888
-          </div>
+          </div> -->
         </div>
       </div>
+      <img class="ranking-container-decoration left" src="./img/ranking-left.png" />
+      <img class="ranking-container-decoration right" src="./img/ranking-right.png" />
+      <img class="ranking-container-decoration bottom" src="./img/ranking-bottom.png" />
     </div>
-    <img class="ranking-top-img" src="./img/ranking-top.png" />
-    <img class="ranking-left-img" src="./img/ranking-left.png" />
-    <img class="ranking-right-img" src="./img/ranking-right.png" />
   </div>
 </template>
 <script setup>
@@ -382,59 +393,33 @@ onMounted(() => {
   background-image: url(./img/ranking-bg.png);
   background-repeat: no-repeat;
   background-size: cover;
-  min-width: 100% !important;
-  background-position: center;
-  aspect-ratio: 800 / 1750;
-  position: relative;
+  background-position: top center;
+  padding-top: 15%;
 }
 .ranking-top-img {
-  position: absolute;
-  top: calc(60% - 310px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: 70% !important;
+  top: 10%;
+  margin: auto;
+  max-width: 70%;
 }
-@media (min-width: 375px) {
-  .ranking-top-img {
-    top: calc(60% - 300px);
-  }
-}
-@media (min-width: 435px) {
-  .ranking-top-img {
-    top: calc(60% - 265px);
-  }
-}
-.ranking-left-img {
-  position: absolute;
-  bottom: calc(100px);
-  transform: translateY(-50%);
-  left: 10px;
-  width: 50px !important;
-}
-.ranking-right-img {
-  position: absolute;
-  right: 10px;
-  bottom: calc(10% + 150px);
-  transform: translateY(-50%);
-  width: 20px !important;
-}
+
 .ranking-container {
+  position: relative;
   background: #1e371f;
   border: 2px solid #337e3a;
   border-radius: 10px;
   padding-top: 20px;
-  margin: 50px 30px;
+  margin: -6% 30px 88px;
   font-weight: 700;
-  position: absolute;
-  bottom: 0;
   width: calc(100% - 60px);
+
   .ranking-header {
     display: grid;
-    grid-template-columns: auto 1fr 1fr;
+    grid-template-columns: minmax(30px, 1fr) 3fr;
     background: #0000001a;
     border-radius: 24px;
     padding: 16px 4px;
     margin: 0 10px;
+    text-align: center;
     .rank-index {
       text-align: center;
       margin: 0 20px;
@@ -457,7 +442,7 @@ onMounted(() => {
 
     .ranking-item {
       display: grid;
-      grid-template-columns: 100px 1fr 1fr;
+      grid-template-columns: minmax(30px, 1fr) 3fr;
       height: 65px;
       padding: 0 14px;
       align-items: center;
@@ -471,6 +456,12 @@ onMounted(() => {
       }
       .rank-name {
         color: #ff4c00;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        a {
+          color: inherit;
+        }
       }
       .rank-amt {
         display: flex;
@@ -485,6 +476,27 @@ onMounted(() => {
     }
     .ranking-item:nth-child(odd) {
       background-color: #0000001a;
+    }
+  }
+  .ranking-container-decoration {
+    position: absolute;
+    margin-bottom: unset !important;
+    &.left {
+      max-width: 50px;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+    &.right {
+      max-width: 20px;
+      top: 30%;
+      right: 0;
+      transform: translate(100%, -50%);
+    }
+    &.bottom {
+      max-width: 88px;
+      bottom: 0;
+      right: 0;
+      transform: translate(0, 100%);
     }
   }
 }

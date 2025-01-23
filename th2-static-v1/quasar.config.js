@@ -69,8 +69,8 @@ module.exports = configure(function (ctx) {
       minify: true,
       uglifyOptions: {
         compress: {
-          drop_console: true, // Removes all console logs
-        },
+          drop_console: true // Removes all console logs
+        }
       },
 
       // Options below are automatically set depending on the env, set them if you want to override
@@ -249,7 +249,7 @@ module.exports = configure(function (ctx) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: "id1-project"
+        appId: "th2-project"
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain

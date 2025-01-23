@@ -106,9 +106,15 @@
       :promo-rules="list.pageContent"
       :promo-date="listParam.date"
     />
+    <IemKatowice2025 v-if="list.redirectUrl === 'dy2-iem-katowice-2025'" :promo-code="list.promoCode" />
     <DreamLeagueS25 v-if="list.redirectUrl === 'dy2-dream-league-s25'" :promo-code="list.promoCode" />
     <HongBaoYu2025 v-if="list.redirectUrl === 'dy2-cny2025-red-envelope'" :promo-code="list.promoCode" />
     <Monthly20HongBaoYu v-if="list.redirectUrl === 'dy2-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
+    <SkyesportsSouvenir2025 v-if="list.redirectUrl === 'dy2-skyesports-souvenir-2025'" :promo-code="list.promoCode" />
+    <PGLOnFireBuenosAires2025
+      v-if="list.redirectUrl === 'dy2-pgl-on-fire-buenos-aires-2025'"
+      :promo-code="list.promoCode"
+    />
 
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
@@ -217,12 +223,18 @@ import BountyBlastPremier from "./hotpromo/bounty-blast/BountyBlastPremier.vue";
 import VctBangkok from "./hotpromo/vct-bangkok/VctBangkok.vue";
 import Dota2BlastSlam2025 from "./hotpromo/dota2-blast-slam-2025/Dota2BlastSlam2025.vue";
 import OfficialGiftPromo from "../components/hotpromo/officialGift/OfficialGiftPromo.vue";
+import IemKatowice2025 from "./hotpromo/lh1-iem-katowice-2025/Iem-katowice-2025.vue";
+import SkyesportsSouvenir2025 from "./hotpromo/skyesports-souvenir-2025/SkyesportsSouvenir2025.vue";
+import PGLOnFireBuenosAires2025 from "./hotpromo/pgl-on-fire-buenos-aires-2025/PGLOnFireBuenosAires2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    PGLOnFireBuenosAires2025,
+    SkyesportsSouvenir2025,
+    IemKatowice2025,
     OfficialGiftPromo,
     Dota2BlastSlam2025,
     VctBangkok,
