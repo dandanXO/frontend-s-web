@@ -220,23 +220,35 @@
         <img class="podium" src="../../../assets/images/promotion/hotpromo/signin-30days/podium.png" />
         <div v-for="n in 3" :key="n" class="medal" :class="'medal-' + n">
           <img :src="require(`../../../assets/images/promotion/hotpromo/signin-30days/medal-${n}.png`)" />
-          <div class="medal-txt">{{ rankingList[n - 1]?.loginName }}</div>
-          <div class="ranking-win-coin">
+          <div class="medal-txt">{{ rankingList?.length > 0 ? rankingList[n - 1]?.loginName : "" }}</div>
+          <div v-if="rankingList?.length > 0" class="ranking-win-coin">
             <img src="../../../assets/images/promotion/hotpromo/signin-30days/ranking-coin.png" />
-            <div>{{ rankingList[n - 1]?.amount ? convertToCommaAmount(rankingList[n - 1].amount, false) : "" }}</div>
+            <div>
+              {{
+                rankingList?.length > 0 && rankingList[n - 1]?.amount
+                  ? convertToCommaAmount(rankingList[n - 1].amount, false)
+                  : ""
+              }}
+            </div>
           </div>
         </div>
       </div>
-      <div class="ranking-list">
+      <div v-if="rankingList?.length > 0" class="ranking-list">
         <div class="ranking-list-item" v-for="n in 7" :key="n">
           <div class="ranking-index">{{ n + 3 }}</div>
           <div class="icon-txt">
             <img src="../../../assets/images/promotion/hotpromo/signin-30days/ranking-badge.png" />
-            <span>{{ rankingList[n + 2]?.loginName }}</span>
+            <span>{{ rankingList?.length > 0 ? rankingList[n + 2]?.loginName : "" }}</span>
           </div>
           <div class="icon-txt">
             <img src="../../../assets/images/promotion/hotpromo/signin-30days/ranking-coin.png" />
-            <span>{{ rankingList[n + 2]?.amount ? convertToCommaAmount(rankingList[n + 2].amount, false) : "" }}</span>
+            <span>
+              {{
+                rankingList?.length > 0 && rankingList[n + 2]?.amount
+                  ? convertToCommaAmount(rankingList[n + 2].amount, false)
+                  : ""
+              }}
+            </span>
           </div>
         </div>
       </div>
@@ -430,6 +442,8 @@ import { t } from "src/boot/lang";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
 
+const props = defineProps(["promocode"]);
+
 const store = userStore();
 const qs = require("qs");
 const $q = useQuasar();
@@ -528,7 +542,7 @@ const getDailyCheckInData = () => {
 };
 
 const getRankingList = () => {
-  eventapi.post("/session/bgd-daily-check-in/top-ranking?promoCode=bgd-daily-check-in-bonus").then((res) => {
+  eventapi.post(`/session/bgd-daily-check-in/top-ranking?${props.promocode}`).then((res) => {
     rankingList.value = res.data;
   });
 };

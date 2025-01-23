@@ -11,7 +11,10 @@
     <BonusSpinWheelPromo v-if="list.redirectUrl === 'bgd-spin-wheel' && !isCommonPromo && store.token" />
     <ReferSpinWheel v-if="list.redirectUrl === 'bgd-refer-wheel' && !isCommonPromo && store.token" />
     <SignIn7DaysPromo v-if="list.redirectUrl === 'bgd-signin-bonus' && !isCommonPromo && store.token" />
-    <SignIn30DaysPromo v-if="list.redirectUrl === 'bgd-daily-signin-bonus' && !isCommonPromo && store.token" />
+    <SignIn30DaysPromo
+      v-if="list.redirectUrl === 'bgd-daily-signin-bonus' && !isCommonPromo && store.token"
+      :promocode="list.promoCode"
+    />
     <EmailVerifyBonus
       v-if="list.redirectUrl === 'bgd-email-verify-bonus' && !isCommonPromo && store.token"
       :promocode="list.promoCode"
