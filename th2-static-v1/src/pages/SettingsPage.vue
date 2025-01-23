@@ -155,7 +155,7 @@ const imgURL = process.env.IMAGE_CDN + "/promo/";
 
 const btm_banners = ref([
   {
-    mobileImageUrl: require("../assets/images/account/account-banner-2.png")
+    mobileImageUrl: require("../assets/images/account/account-banner-2.jpg")
   }
 ]);
 
