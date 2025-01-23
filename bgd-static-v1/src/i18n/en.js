@@ -63,7 +63,7 @@ export default {
     phone: "Phone",
     phone_placeholder: "Please enter your mobile number",
     phone_rules_01: "Please insert Phone number",
-    phone_rules_02: "The phone number must be 10 - 11 digits",
+    phone_rules_02: "The phone number must be 11 digits",
     phone_rules_03: "The phone number must start with '01'",
     bindPhoneNumber: "Bind Phone Number",
     password: "Password",
@@ -238,7 +238,7 @@ export default {
     emailAlreadyUsed: "Email already used. Please try another email.",
     phoneUpdatedSuccessfully: "Phone number updated successfully",
     newPasswordUpdatedSuccessfully: "New password updated successfully",
-    virtualWalletAddedSuccessfully: 'Virtual wallet added successfully'
+    virtualWalletAddedSuccessfully: "Virtual wallet added successfully"
   },
   modal: {
     congrats: {

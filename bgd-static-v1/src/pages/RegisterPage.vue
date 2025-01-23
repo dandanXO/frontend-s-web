@@ -49,7 +49,7 @@
                   v-model="regForm.loginName"
                   :rules="[
                     (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-                    (val) => (val && val.length >= 10 && val.length <= 11) || $t('form.phone_rules_01'),
+                    (val) => (val && val.length === 11) || $t('form.phone_rules_01'),
                     (val) => val.startsWith('01') || $t('form.phone_rules_03')
                   ]"
                   color="green"
