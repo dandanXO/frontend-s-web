@@ -3512,6 +3512,7 @@ export default {
     Team: 'team',
     'Bet type setting': 'bet type setting',
     'Sport App Setting': 'Sport App Setting',
+    Sport: '体育'
   },
   google: {
     google_auth_menu: 'Google Authenticator',
