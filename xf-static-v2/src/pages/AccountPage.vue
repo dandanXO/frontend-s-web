@@ -16,6 +16,12 @@
 
         <div class="details-span" v-if="appVersionNo">版本：{{ appVersionNo }}</div>
       </div>
+
+      <router-link to="/account/personal" class="q-ml-auto q-mt-auto">
+        <div class="acct-top-menu">
+          <img src="../assets/images/account/icon-top-personal.png" />
+        </div>
+      </router-link>
     </div>
 
     <div class="q-px-md">
@@ -96,12 +102,12 @@
               <div class="acct-nav-label">优惠领取</div>
             </div>
           </router-link>
-          <router-link to="/account/personal">
+          <!-- <router-link to="/account/personal">
             <div class="acct-nav-item">
               <img src="../assets/images/account/menu_personal.png" />
               <div class="acct-nav-label">个人信息</div>
             </div>
-          </router-link>
+          </router-link> -->
           <router-link to="/account/changePwd">
             <div class="acct-nav-item">
               <img src="../assets/images/account/menu_changePwd.png" />
@@ -478,6 +484,13 @@ onBeforeUnmount(() => {
         color: #7a80a1;
       }
     }
+  }
+}
+
+.acct-top-menu {
+  img {
+    dispaly: block;
+    width: 32px;
   }
 }
 
