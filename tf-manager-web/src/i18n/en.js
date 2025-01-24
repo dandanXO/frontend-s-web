@@ -3295,12 +3295,11 @@ export default {
     'Privi Spin Event Record': 'Privi Spin Event Record',
     'Top Ranking': 'Top Ranking',
     'Top Bonus Ranking': 'Top Bonus Ranking',
-    'Bet type setting': 'bet type setting',
-    'Sport App Setting': 'Sport App Setting',
     Competition: 'competition',
     Event: 'event',
     Team: 'team',
-    'Bet type setting': 'bet type setting'
+    'Bet type setting': 'bet type setting',
+    'Sport App Setting': 'Sport App Setting',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

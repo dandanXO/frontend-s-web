@@ -870,11 +870,10 @@ async function loadForm(id, siteId) {
       selectedVIPs.vipChecked.push(parseInt(element))
     })
 
-    if (vipArr.length === 0) {
-      form.vips = 'test'
+    if(vipArr.length === vipList.list.length) {
       checkboxes.vip.checkAll = true
-    } else if(vipArr.length === vipList.list.length) {
-      checkboxes.vip.checkAll = true
+    } else {
+      checkboxes.vip.checkAll = false
     }
 
     siteList.list.forEach(element => {

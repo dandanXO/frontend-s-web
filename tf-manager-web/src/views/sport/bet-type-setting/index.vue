@@ -129,7 +129,7 @@ async function handleStatusChange(row) {
   };
 
   await updateBetTypeStatus(query);
-  ElMessage.success(t('fields.updateSuccess'));
+  ElMessage.success(t('message.updateSuccess'));
 }
 
 onMounted(() => {
