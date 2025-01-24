@@ -29,10 +29,6 @@
       {{ $t("hotPromo.newPlayerFreeTrial.remainingTime") }}: {{ remainingDraws }}
     </div>
     <div class="spin-wheel-board">
-      <img
-        class="spin-wheel-outer"
-        src="./../../../assets/images/promotion/hotpromo/new-user-roulette/spin-wheel-outer.png"
-      />
       <div id="spin-wheel-id" class="spin-wheel">
         <img
           v-if="languageVal === 'en'"
@@ -47,6 +43,10 @@
           src="./../../../assets/images/promotion/hotpromo/new-user-roulette/spin-wheel-bg-bn.png"
         />
         <div id="spin-wheel-number" class="spin-wheel-number" style="display: none"></div>
+        <img
+          class="spin-wheel-outer"
+          src="./../../../assets/images/promotion/hotpromo/new-user-roulette/spin-wheel-outer.png"
+        />
       </div>
     </div>
   </div>
@@ -279,13 +279,13 @@ const spinWheel = () => {
   //     privilegeId: null
   //   }
   // };
-  // var bonusIndex = 500;
+  // var bonusIndex = "bgd-roulette-deposit-get-18";
   // prizeIndex.value = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
   // showRoulette.value = res.data.showRoulette === "YES";
   // spin(prizeIndex.value, () => {
   //   showPrizePopup.value = true;
   //   prizePopupBonus.value = bonusIndex;
-  //   remainingDraws.value = res.data.availableSpin;
+  //   remainingDraws.value = res.data.spinChance;
   // });
   // return;
   //FOr TesTING END
@@ -346,7 +346,8 @@ onMounted(() => {
   text-align: center;
 
   .draw-btn {
-    width: 92px;
+    width: 16vw;
+    max-width: 92px;
     height: auto;
     aspect-ratio: 95 / 117;
     z-index: 25;
@@ -364,7 +365,8 @@ onMounted(() => {
       width: 100%;
     }
     img.hand {
-      width: 50px !important;
+      width: 11vw !important;
+      max-width: 60px;
       position: absolute;
       top: 60%;
       left: 66%;
@@ -419,15 +421,22 @@ onMounted(() => {
     position: relative;
     z-index: 20;
     background-size: contain;
+    .wheel-bg {
+      z-index: 20 !important;
+      position: relative;
+    }
+    .spin-wheel-outer {
+      z-index: 19;
+      position: absolute;
+      width: 91% !important;
+      top: 50%;
+      left: calc(50% - 1px);
+      transform: translate(-50%, -50%);
+    }
   }
 
-  .spin-wheel-outer {
-    z-index: 21;
-    position: absolute;
-    width: 91% !important;
-    top: 50%;
-    left: calc(50% - 1px);
-    transform: translate(-50%, -50%);
+  .spin-wheel {
+    z-index: 20;
   }
 }
 
