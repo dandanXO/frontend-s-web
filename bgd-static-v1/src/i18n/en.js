@@ -888,6 +888,11 @@ export default {
       termsCondition7: "WIN7.GAME reserves the right to modify, suspend or cancel this event at any time."
     },
     newPlayerFreeTrial: {
+      congratsOnSignUpBonus: "Congratulations on your sign up bonus",
+      recharge100get18: "Recharge 100 and get 18 free",
+      recharge200get28: "Recharge 200 and get 28 free",
+      remainingDrawTimes: "Remaining draw times",
+      remainingTime: "Remaining time",
       timePeriod: "Time Period",
       numberOfPlaces: "Number of Places",
       signUpBonus1:

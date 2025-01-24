@@ -879,6 +879,11 @@ export default {
       termsCondition7: "WIN7.GAME যেকোনো সময় এই ইভেন্টটি সংশোধন, স্থগিত বা বাতিল করার অধিকার রাখে।"
     },
     newPlayerFreeTrial: {
+      congratsOnSignUpBonus: "নিবন্ধনের বোনাসে অভিনন্দন",
+      recharge100get18: "১০০ টাকা রিচার্জ করুন এবং ১৮ টাকা ফ্রি পান",
+      recharge200get28: "২০০ টাকা রিচার্জ করুন এবং ২৮ টাকা ফ্রি পান",
+      remainingDrawTimes: "বাকি ড্র-এর সংখ্যা",
+      remainingTime: "বাকি সময়",
       timePeriod: "সময়কাল",
       numberOfPlaces: "স্থান সংখ্যা",
       signUpBonus1:

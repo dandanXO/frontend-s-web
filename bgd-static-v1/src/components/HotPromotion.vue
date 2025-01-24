@@ -32,7 +32,10 @@
       v-if="list.redirectUrl === 'bgd-app-login-bonus' && !isCommonPromo && store.token"
       :promocode="list.promoCode"
     />
-    <NewUserRoulette v-if="list.redirectUrl === 'bgd-new-user-roulette' && !isCommonPromo && store.token" />
+    <NewUserRoulette
+      v-if="list.redirectUrl === 'bgd-new-user-roulette' && !isCommonPromo && store.token"
+      :promocode="list.promoCode"
+    />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>

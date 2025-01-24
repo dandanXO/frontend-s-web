@@ -1,5 +1,5 @@
 <template>
-  <div class="spin-wheel-container">
+  <div v-if="showRoulette" class="spin-wheel-container">
     <div :class="`draw-btn click-pointer ${spinButtonDisable ? 'disabled' : ''}`" @click="spinWheel">
       <img
         v-if="languageVal === 'en'"
@@ -25,7 +25,14 @@
       class="wheel-stage-effects-img"
       src="./../../../assets/images/promotion/hotpromo/new-user-roulette/spin-wheel-stg-effects.png"
     />
+    <div class="wheel-remaining-time-txt">
+      {{ $t("hotPromo.newPlayerFreeTrial.remainingTime") }}: {{ remainingDraws }}
+    </div>
     <div class="spin-wheel-board">
+      <img
+        class="spin-wheel-outer"
+        src="./../../../assets/images/promotion/hotpromo/new-user-roulette/spin-wheel-outer.png"
+      />
       <div id="spin-wheel-id" class="spin-wheel">
         <img
           v-if="languageVal === 'en'"
@@ -110,6 +117,31 @@
       </li>
     </ul>
   </div>
+  <q-dialog v-model="showPrizePopup" @hide="handleBtnClick" persistent>
+    <div class="congrats-container">
+      <q-btn icon="close" round dense v-close-popup class="congrats-close" />
+      <div class="congrats-header">
+        <img src="../../../assets/images/index/modal/congrats-header.png" />
+      </div>
+      <div class="congrats-content">
+        <img src="../../../assets/images/index/modal/congrats-shine-bg.png" />
+        <div class="congrats-highlight" :style="isNaN(prizePopupBonus) ? 'font-size: 20px;' : ''">
+          <img :src="require(`../../../assets/images/promotion/hotpromo/new-user-roulette/bonus-${prizeIndex}.png`)" />
+          {{
+            !!prizePopupBonus ? (isNaN(prizePopupBonus) ? getPrizeTxt(prizePopupBonus) : `${prizePopupBonus} BDT`) : 0
+          }}
+        </div>
+      </div>
+
+      <div class="congrats-title">{{ $t("hotPromo.newPlayerFreeTrial.congratsOnSignUpBonus") }}</div>
+
+      <div class="congrats-button-container">
+        <q-btn no-caps unelevated class="congrats-btn" @click="handleBtnClick">
+          {{ $t("btn.receive") }}
+        </q-btn>
+      </div>
+    </div>
+  </q-dialog>
 </template>
 <script setup>
 import { ref, onMounted, computed, onUnmounted } from "vue";
@@ -120,6 +152,8 @@ import { userStore } from "src/stores";
 import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
 
+const props = defineProps(["promocode"]);
+
 const { t } = useI18n();
 const $q = useQuasar();
 const store = userStore();
@@ -128,20 +162,17 @@ const { languageVal } = storeToRefs(i18nStore());
 const spinButtonDisable = ref(false);
 const remainingDraws = ref(0);
 const showPrizePopup = ref(false);
-const prizePopupBonusAmt = ref();
-const endDate = ref();
-const accumulatedBonus = ref();
-const invitedList = ref([]);
+const prizePopupBonus = ref();
+const prizeIndex = ref(0);
 const degreesToStopAt = ref([]);
-const remainingTimeTimer = ref();
-const winnersList = ref([]);
+const showRoulette = ref(false);
 
 // spin wheel constants
 const TOTAL_ITEMS = 8;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
-const SPIN_WHEEL_PRIZES = [18, 58, 88, 200, 300, 500, "RECHARGE100GET18", "RECHARGE200GET28"];
+const SPIN_WHEEL_PRIZES = [18, 58, 88, 200, 300, 500, "bgd-roulette-deposit-get-18", "bgd-roulette-deposit-get-28"];
 
 // spin wheel element refs
 const spinBoardRef = ref();
@@ -154,9 +185,11 @@ var spinSchedule;
 var degree;
 
 const spin = (prizeIndex, stopCallback) => {
-  spinButtonDisable.value = true;
-  // drawBtnRef.value.style.filter = "brightness(0.85)";
+  spinBoardRef.value = document.getElementById("spin-wheel-bg");
+  spinNumRef.value = document.getElementById("spin-wheel-number");
+  drawBtnRef.value = document.querySelector(".draw-btn");
 
+  spinButtonDisable.value = true;
   reset();
 
   spinSchedule = setInterval(() => {
@@ -182,110 +215,7 @@ const reset = () => {
   spinNumRef.value.style.transition = "";
 };
 
-const spinWheel = () => {
-  //FOr TesTING START
-  const res = {
-    data: {
-      bonus: 8,
-      availableSpin: 1,
-      spinType: "THANKS"
-    }
-  };
-  // var bonusIndex = res.data.spinType === "FIXEDBONUS" ? res.data.bonus : res.data.spinType;
-  var bonusIndex = "RECHARGE200GET28";
-
-  const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
-
-  console.log("here", bonusIndex, prizeIndex);
-  spin(prizeIndex, () => {
-    showPrizePopup.value = true;
-    prizePopupBonusAmt.value = ["RANDBONUS", "FIXEDBONUS"].includes(res.data.spinType)
-      ? res.data.bonus
-      : res.data.spinType;
-    remainingDraws.value = res.data.availableSpin;
-  });
-  return;
-  //FOr TesTING END
-
-  // if (spinButtonDisable.value === true) {
-  //   return;
-  // }
-
-  // if (remainingDraws.value <= 0) {
-  //   $q.notify({
-  //     color: "negative",
-  //     position: "top",
-  //     message: t("hotPromo.referWheel.remainingDrawTimes") + `: 0`,
-  //     icon: "report_problem"
-  //   });
-  //   return;
-  // }
-
-  // eventapi
-  //   .post("/session/refer-wheel/spin?promoCode=bgd-refer-wheel")
-  //   .then((res) => {
-  //     if (res.code == 0) {
-  //       var bonusIndex =
-  //         res.data.spinType === "FIXEDBONUS"
-  //           ? res.data.bonus
-  //           : res.data.spinType === "FIRSTBONUS"
-  //           ? "RANDBONUS"
-  //           : res.data.spinType;
-
-  //       const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
-
-  //       spin(prizeIndex, () => {
-  //         showPrizePopup.value = true;
-  //         prizePopupBonusAmt.value = ["RANDBONUS", "FIRSTBONUS", "FIXEDBONUS"].includes(res.data.spinType)
-  //           ? res.data.bonus
-  //           : res.data.spinType;
-  //         remainingDraws.value = res.data.availableSpin;
-  //         initSpinWheel();
-  //       });
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
-};
-
-const initSpinWheel = () => {
-  eventapi.get("/session/refer-wheel/init?promoCode=bgd-refer-wheel").then((res) => {
-    if (res.code == 0) {
-      remainingDraws.value = res.data.availableSpin;
-      endDate.value = res.data.endDate;
-      accumulatedBonus.value = res.data.accumulatedBonus;
-      invitedList.value = res.data.invitedList;
-
-      if (!remainingTimeTimer.value) {
-        setInterval(() => {
-          if (endDate.value) {
-            endDate.value = endDate.value - 1;
-          }
-        }, 1000);
-      }
-    }
-  });
-
-  getRecords();
-};
-
-const getRecords = () => {
-  eventapi
-    .get("/session/refer-wheel/getRecords?promoCode=bgd-refer-wheel")
-    .then((res) => {
-      if (res.code == 0) {
-        winnersList.value = res.data;
-      }
-    })
-    .catch((err) => {
-      console.log("here", err);
-    });
-};
-
 const stopSpin = (prizeIndex, stopCallback) => {
-  // call api
-
   let spinTimeEnd = false;
   let isApiReturned = true;
   setTimeout(() => {
@@ -320,12 +250,79 @@ const stopSpin = (prizeIndex, stopCallback) => {
         spinButtonDisable.value = false;
 
         setTimeout(() => {
-          // drawBtnRef.value.style.filter = "none";
           stopCallback?.();
         }, 750);
       }, stopTime * 1000);
     }
   };
+};
+
+const getPrizeTxt = (prize) => {
+  if (prize === "bgd-roulette-deposit-get-18") {
+    return t("hotPromo.newPlayerFreeTrial.recharge100get18");
+  } else if (prize === "bgd-roulette-deposit-get-28") {
+    return t("hotPromo.newPlayerFreeTrial.recharge200get28");
+  }
+};
+const handleBtnClick = () => {
+  showPrizePopup.value = false;
+  if (store.token) store.getBalance();
+};
+
+const spinWheel = () => {
+  //FOr TesTING START
+  // const res = {
+  //   data: {
+  //     showRoulette: "YES",
+  //     spinChance: 1,
+  //     hasUnusedCoupon: "NO",
+  //     privilegeId: null
+  //   }
+  // };
+  // var bonusIndex = 500;
+  // prizeIndex.value = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
+  // showRoulette.value = res.data.showRoulette === "YES";
+  // spin(prizeIndex.value, () => {
+  //   showPrizePopup.value = true;
+  //   prizePopupBonus.value = bonusIndex;
+  //   remainingDraws.value = res.data.availableSpin;
+  // });
+  // return;
+  //FOr TesTING END
+  if (spinButtonDisable.value === true) {
+    return;
+  }
+  if (remainingDraws.value <= 0) {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: t("hotPromo.newPlayerFreeTrial.remainingDrawTimes") + `: 0`,
+      icon: "report_problem"
+    });
+    return;
+  }
+  eventapi
+    .post(`/session/${props.promocode}/spin`)
+    .then((res) => {
+      if (res.code == 0) {
+        prizePopupBonus.value = res.data.bonusName ? res.data.bonusName : res.data.bonusAmount;
+        prizeIndex.value = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === prizePopupBonus.value);
+        spin(prizeIndex.value, () => {
+          showPrizePopup.value = true;
+          initSpinWheel();
+        });
+      }
+    })
+    .catch(() => {});
+};
+
+const initSpinWheel = () => {
+  eventapi.get(`/session/${props.promocode}/init`).then((res) => {
+    if (res.code == 0) {
+      remainingDraws.value = res.data.spinChance;
+      showRoulette.value = res.data.showRoulette === "YES";
+    }
+  });
 };
 
 onMounted(() => {
@@ -340,10 +337,6 @@ onMounted(() => {
   drawBtnRef.value = document.querySelector(".draw-btn");
 
   initSpinWheel();
-});
-
-onUnmounted(() => {
-  clearInterval(remainingTimeTimer.value);
 });
 </script>
 <style scoped lang="scss">
@@ -396,7 +389,7 @@ onUnmounted(() => {
   }
 
   .wheel-stage-img {
-    width: 290px !important;
+    width: 85% !important;
     z-index: 20;
     position: absolute;
     bottom: 8%;
@@ -411,11 +404,30 @@ onUnmounted(() => {
     left: 50%;
     transform: translateX(-50%);
   }
+  .wheel-remaining-time-txt {
+    color: #000;
+    font-size: 1rem;
+    font-weight: 600;
+    position: absolute;
+    bottom: -4%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+  }
 
   .spin-wheel-board {
     position: relative;
     z-index: 20;
     background-size: contain;
+  }
+
+  .spin-wheel-outer {
+    z-index: 21;
+    position: absolute;
+    width: 91% !important;
+    top: 50%;
+    left: calc(50% - 1px);
+    transform: translate(-50%, -50%);
   }
 }
 
@@ -488,6 +500,120 @@ onUnmounted(() => {
   }
   li {
     margin-bottom: 6px !important;
+  }
+}
+
+.congrats-container {
+  background-color: #1e371f;
+  border: 1px solid #337e3a;
+  border-radius: 10px !important;
+  max-width: 350px;
+  width: 100%;
+  padding: 16px;
+  position: relative;
+  overflow: visible;
+  border-radius: 12px;
+
+  &:before {
+    content: "";
+    background-image: url(../../../assets/images/index/modal/congrats-container-light.png);
+    background-size: 100% 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 150px;
+    position: absolute;
+    left: 0;
+    top: -150px;
+  }
+
+  .congrats-header {
+    display: flex;
+    justify-content: center;
+    margin-top: -18px;
+    z-index: 2;
+
+    img {
+      display: block;
+      width: 100%;
+      max-width: 320px;
+    }
+  }
+
+  .congrats-coupons {
+    img {
+      display: block;
+      width: 100%;
+      margin: auto;
+      max-width: 240px;
+    }
+  }
+
+  .congrats-title {
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .congrats-content {
+    position: relative;
+    img {
+      display: block;
+      width: 100%;
+      max-width: 320px;
+    }
+  }
+
+  .congrats-highlight {
+    color: #fff96f;
+    font-size: 48px;
+    text-align: center;
+    background-image: url(../../../assets/images/index/modal/congrats-highlight-bg.png);
+    padding: 0 12px;
+    background-repeat: no-repeat;
+    background-size: 70% 100%;
+    background-position: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    text-shadow: 0px 3.5px 0px #a00022;
+    font-family: Poppins;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      display: block;
+      width: 100%;
+      max-width: 80px;
+    }
+  }
+}
+
+.congrats-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.congrats-button-container {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  .congrats-btn {
+    background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: #000a01;
   }
 }
 </style>
