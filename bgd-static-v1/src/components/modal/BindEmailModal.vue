@@ -125,6 +125,7 @@ const verificationCodeDialog = ref(false);
 const verificationImg = ref("");
 const updateEmailRef = ref();
 const updateEmailCodeRef = ref();
+const countdownOTP = ref();
 
 const updateEmailInfo = reactive({
   email: "",
@@ -204,8 +205,6 @@ const onCaptchaSubmit = () => {
         verificationCodeDialog.value = false;
 
         updateEmailInfo.codeId = res.data.codeId;
-
-        showVerificationTokenInput.value = true;
         verificationCodeID = res.data.codeId;
         startCountdownResendOTP.value = true;
 
@@ -263,6 +262,8 @@ const submitUpdateEmail = () => {
           store.getMemberInfo();
 
           getEmailVerifyBonus();
+
+          closeDialog();
         } else {
           $q.notify({
             color: "negative",
