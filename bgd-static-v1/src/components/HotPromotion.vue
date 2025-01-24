@@ -32,7 +32,7 @@
       v-if="list.redirectUrl === 'bgd-app-login-bonus' && !isCommonPromo && store.token"
       :promocode="list.promoCode"
     />
-    <NewPlayerFreeTrialPromo v-if="list.redirectUrl === 'bgd-new-player-free-trial' && !isCommonPromo && store.token" />
+    <NewUserRoulette v-if="list.redirectUrl === 'bgd-new-user-roulette' && !isCommonPromo && store.token" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -72,7 +72,7 @@ import SignIn30DaysPromo from "./hotpromo/signIn30Days/SignIn30DaysPromo.vue";
 import EmailVerifyBonus from "./hotpromo/emailVerifyBonus/EmailVerifyBonusPromo.vue";
 import ReferSpinWheel from "./hotpromo/referSpinWheel/ReferSpinWheel.vue";
 import AppLoginBonus from "./hotpromo/appLoginBonus/AppLoginBonus.vue";
-import NewPlayerFreeTrialPromo from "./hotpromo/newPlayerFreeTrial/NewPlayerFreeTrialPromo.vue";
+import NewUserRoulette from "./hotpromo/newUserRoulette/NewUserRoulette.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -93,7 +93,7 @@ export default defineComponent({
     SlotFtdPromo,
     RegisterClaimBonus,
     AppLoginBonus,
-    NewPlayerFreeTrialPromo
+    NewUserRoulette
   },
   props: {
     list: {
@@ -157,7 +157,7 @@ export default defineComponent({
       this.list.redirectUrl === "bgd-register-claim-bonus" ||
       this.list.redirectUrl === "bgd-email-verify-bonus" ||
       this.list.redirectUrl === "bgd-app-login-bonus" ||
-      this.list.redirectUrl === "bgd-new-player-free-trial" ||
+      this.list.redirectUrl === "bgd-new-user-roulette" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

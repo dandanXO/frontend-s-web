@@ -4,26 +4,26 @@
       <img
         v-if="languageVal === 'en'"
         class="spin-btn"
-        src="./../../../assets/images/promotion/hotpromo/new-player-free-trial/click-spin-btn-en.png"
+        src="./../../../assets/images/promotion/hotpromo/new-user-roulette/click-spin-btn-en.png"
       />
       <img
         v-else
         class="spin-btn"
-        src="./../../../assets/images/promotion/hotpromo/new-player-free-trial/click-spin-btn-bn.png"
+        src="./../../../assets/images/promotion/hotpromo/new-user-roulette/click-spin-btn-bn.png"
       />
       <img
         class="hand"
         v-if="!spinButtonDisable"
-        src="./../../../assets/images/promotion/hotpromo/new-player-free-trial/hand.png"
+        src="./../../../assets/images/promotion/hotpromo/new-user-roulette/hand.png"
       />
     </div>
     <img
       class="wheel-stage-img"
-      src="./../../../assets/images/promotion/hotpromo/new-player-free-trial/spin-wheel-stg.png"
+      src="./../../../assets/images/promotion/hotpromo/new-user-roulette/spin-wheel-stg.png"
     />
     <img
       class="wheel-stage-effects-img"
-      src="./../../../assets/images/promotion/hotpromo/new-player-free-trial/spin-wheel-stg-effects.png"
+      src="./../../../assets/images/promotion/hotpromo/new-user-roulette/spin-wheel-stg-effects.png"
     />
     <div class="spin-wheel-board">
       <div id="spin-wheel-id" class="spin-wheel">
@@ -31,13 +31,13 @@
           v-if="languageVal === 'en'"
           id="spin-wheel-bg"
           class="wheel-bg"
-          src="./../../../assets/images/promotion/hotpromo/new-player-free-trial/spin-wheel-bg-en.png"
+          src="./../../../assets/images/promotion/hotpromo/new-user-roulette/spin-wheel-bg-en.png"
         />
         <img
           v-else
           id="spin-wheel-bg"
           class="wheel-bg"
-          src="./../../../assets/images/promotion/hotpromo/new-player-free-trial/spin-wheel-bg-bn.png"
+          src="./../../../assets/images/promotion/hotpromo/new-user-roulette/spin-wheel-bg-bn.png"
         />
         <div id="spin-wheel-number" class="spin-wheel-number" style="display: none"></div>
       </div>
@@ -72,9 +72,9 @@
   <div class="sign-up-bonus-section">
     <img
       v-if="languageVal === 'en'"
-      src="../../../assets/images/promotion/hotpromo/new-player-free-trial/sign-up-bonus-title-en.png"
+      src="../../../assets/images/promotion/hotpromo/new-user-roulette/sign-up-bonus-title-en.png"
     />
-    <img v-else src="../../../assets/images/promotion/hotpromo/new-player-free-trial/sign-up-bonus-title-bn.png" />
+    <img v-else src="../../../assets/images/promotion/hotpromo/new-user-roulette/sign-up-bonus-title-bn.png" />
     <p>
       {{ $t("hotPromo.newPlayerFreeTrial.signUpBonus1") }}
     </p>
@@ -92,9 +92,9 @@
   <div class="activity-rule-section">
     <img
       v-if="languageVal === 'en'"
-      src="../../../assets/images/promotion/hotpromo/new-player-free-trial/activity-rule-en.png"
+      src="../../../assets/images/promotion/hotpromo/new-user-roulette/activity-rule-en.png"
     />
-    <img v-else src="../../../assets/images/promotion/hotpromo/new-player-free-trial/activity-rule-bn.png" />
+    <img v-else src="../../../assets/images/promotion/hotpromo/new-user-roulette/activity-rule-bn.png" />
     <ul>
       <li>
         {{ $t("hotPromo.newPlayerFreeTrial.activityRule1") }}
