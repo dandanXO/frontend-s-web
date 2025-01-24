@@ -2,7 +2,7 @@
   <div class="bet-type-switch">
     <div class="filter-section">
       <el-select
-        v-model="filters.supplierId"
+        v-model="filters.platformId"
         size="small"
         :placeholder="t('fields.platform')"
         class="filter-item"
@@ -81,7 +81,7 @@ const betTypes = ref([]);
 const loading = ref(false);
 
 const filters = reactive({
-  supplierId: null,
+  platformId: null,
   sportType: null,
 });
 
@@ -106,7 +106,7 @@ async function loadSportTypes() {
 async function loadBetTypes() {
   loading.value = true;
   const { data } = await getBetTypeSettings({
-    supplierId: filters.supplierId,
+    platformId: filters.platformId,
     tfSportType: filters.sportType,
   });
   betTypes.value = data;
@@ -114,7 +114,7 @@ async function loadBetTypes() {
 }
 
 function resetFilters() {
-  filters.supplierId = null;
+  filters.platformId = null;
   filters.sportType = null;
   betTypes.value = [];
 }
@@ -122,7 +122,7 @@ function resetFilters() {
 async function handleStatusChange(row) {
   console.log(row)
   const query = {
-    supplierId: row.supplierId,
+    platformId: row.platformId,
     tfSportId: row.tfSportId,
     tfBetTypeId: row.tfBetTypeId,
     status: row.status
