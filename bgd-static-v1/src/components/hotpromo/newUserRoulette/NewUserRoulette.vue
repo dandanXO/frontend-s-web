@@ -140,30 +140,95 @@
       </div>
     </div>
   </q-dialog>
+
+  <BindEmailModal :bindEmailDialog="bindEmailDialog" @update:bindEmailDialog="bindEmailDialog = $event" />
+
+  <q-dialog width="100%" v-model="changePhoneDialog">
+    <div class="popout-dialog">
+      <q-btn
+        dense
+        rounded
+        icon="close"
+        class="text-white popout-close"
+        @click="changePhoneDialog = false"
+        v-close-popup
+      />
+      <div class="popout-dialog-container">
+        <div class="txt-title">{{ $t("form.bindPhoneNumber") }}</div>
+        <div class="pc-form">
+          <InputRowGrid>
+            <template #fields>
+              <InputField :label="$t('form.phone')">
+                <template #input>
+                  <q-input
+                    type="tel"
+                    pattern="\d*"
+                    maxlength="11"
+                    hide-bottom-space
+                    ref="phoneRef"
+                    v-model="updatePhoneInfo.phone"
+                    :rules="[
+                      (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
+                      (val) => (val && val.length >= 10 && val.length <= 11) || $t('form.phone_rules_02'),
+                      (val) => val.startsWith('01') || $t('form.phone_rules_03')
+                    ]"
+                    label-color="brand"
+                    outlined
+                    color="green"
+                    :placeholder="$t('form.phone')"
+                  >
+                    <template v-slot:prepend>
+                      <FancyIcon name="smartphone" />
+                      <div class="prepend-number">+880</div>
+                    </template>
+                  </q-input>
+                </template>
+              </InputField>
+            </template>
+          </InputRowGrid>
+        </div>
+
+        <div class="bottom-btn">
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="submitUpdatePhone">
+            {{ $t("btn.confirm") }}
+          </q-btn>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
 </template>
 <script setup>
-import { ref, onMounted, computed, onUnmounted } from "vue";
+import { ref, onMounted, reactive } from "vue";
 import { api, eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
 import { userStore } from "src/stores";
+import { useRouter } from "vue-router";
 import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
+import BindEmailModal from "src/components/modal/BindEmailModal.vue";
+import InputRowGrid from "src/components/auth/InputRowGrid.vue";
+import InputField from "src/components/auth/InputField.vue";
+import FancyIcon from "src/components/auth/FancyIcon.vue";
 
 const props = defineProps(["promocode"]);
 
 const { t } = useI18n();
 const $q = useQuasar();
 const store = userStore();
+const router = useRouter();
 const { languageVal } = storeToRefs(i18nStore());
 
 const spinButtonDisable = ref(false);
 const remainingDraws = ref(0);
-const showPrizePopup = ref(false);
 const prizePopupBonus = ref();
 const prizeIndex = ref(0);
 const degreesToStopAt = ref([]);
 const showRoulette = ref(false);
+
+const showPrizePopup = ref(false);
+const bindEmailDialog = ref(false);
+const changePhoneDialog = ref(false);
 
 // spin wheel constants
 const TOTAL_ITEMS = 8;
@@ -255,6 +320,52 @@ const stopSpin = (prizeIndex, stopCallback) => {
   };
 };
 
+const updatePhoneInfo = reactive({
+  phone: ""
+});
+
+const submitUpdatePhone = () => {
+  phoneRef.value.validate();
+
+  if (!phoneRef.value.hasError) {
+    api
+      .post(
+        "/session/account",
+        qs.stringify({
+          phone: updatePhoneInfo.phone
+        })
+      )
+      .then((res) => {
+        if (res.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: t("notify.phoneUpdatedSuccessfully"),
+            icon: "check_circle_outline"
+          });
+
+          store
+            .getMemberInfo()
+            .then(() => {
+              loadInfo();
+            })
+            .finally(() => {
+              changePhoneDialog.value = false;
+              updatePhoneInfo.phone = "";
+            });
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: res.message,
+            icon: "report_problem"
+          });
+        }
+      })
+      .catch((error) => {});
+  }
+};
+
 const getPrizeTxt = (prize) => {
   if (prize === "bgd-roulette-deposit-get-18") {
     return t("hotPromo.newUserRoulette.recharge100get18");
@@ -309,6 +420,30 @@ const spinWheel = () => {
           showPrizePopup.value = true;
           initSpinWheel();
         });
+      } else if (res.code == 582301) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: res.message,
+          icon: "report_problem"
+        });
+
+        if (store.phone && !store.email) {
+          bindEmailDialog.value = true;
+        }
+
+        if (store.email && !store.phone) {
+          changePhoneDialog.value = true;
+        }
+      } else if (res.code == 54001) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: res.message,
+          icon: "report_problem"
+        });
+
+        router.push("/account/bank");
       }
     })
     .catch(() => {});
@@ -622,5 +757,9 @@ onMounted(() => {
     line-height: 24px;
     color: #000a01;
   }
+}
+
+.bottom-btn {
+  margin-top: 20px;
 }
 </style>
