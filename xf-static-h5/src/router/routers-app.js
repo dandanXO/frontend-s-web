@@ -28,6 +28,17 @@ const routes = [
     meta: { requiresAuth: true, isApp: true }
   },
   {
+    path: "/deposit",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/finance/DepositView.vue")
+      }
+    ],
+    meta: { requiresAuth: true, isApp: true }
+  },
+  {
     path: "/invitefriend",
     component: () => import("layouts/MainLayout.vue"),
     children: [
