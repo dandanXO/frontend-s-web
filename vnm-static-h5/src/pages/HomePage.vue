@@ -457,7 +457,12 @@
       >
         <q-carousel-slide v-for="(promo, i) in floatPromo" :key="i" :name="i" @click="gotoFloatPromo(promo.code)">
           <div class="rocket-wrapper">
-            <div class="rocket"><img style="width: 85px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" /></div>
+            <div class="rocket">
+              <img style="width: 85px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" />
+              <span v-if="promo.showTime" class="promo-remaining-time">
+                {{ floatPromoRemainingTime[i] }}
+              </span>
+            </div>
           </div>
         </q-carousel-slide>
       </q-carousel>
@@ -1739,12 +1744,14 @@ export default defineComponent({
       router.push(`/promo?name=${code}`);
     };
     const floatPromo = [];
+    const floatPromoRemainingTime = ref([]);
     const gamePromo = [];
     const initFloating = () => {
       floatPromo.value = [];
       gamePromo.value = [];
+      const apiUrl = store.hasToken() ? "/session/loggedInRedirect" : "/redirect";
       api
-        .get("/redirect")
+        .get(apiUrl)
         .then((res) => {
           if (res.code === 0) {
             res.data.forEach((element) => {
@@ -1760,6 +1767,8 @@ export default defineComponent({
             checkShowRocket();
             checkFloatPromo();
             updatePromo(); // Initially update the displayed promo
+            updatePromoRemainingTime();
+            setInterval(updatePromoRemainingTime, 1000);
             // Update the displayed promo every 5 seconds
             setInterval(updatePromo, 3000);
             updateRocket(); // Initially update the displayed promo
@@ -1772,6 +1781,24 @@ export default defineComponent({
         .catch((err) => {
           console.log(err);
         });
+    };
+
+    const updatePromoRemainingTime = () => {
+      floatPromoRemainingTime.value = floatPromo.map((promo) => {
+        let result = "00:00:00";
+        if (promo?.endTime) {
+          const now = moment(Date.now());
+          const endTime = moment(currentPromo.value.endTime);
+          const totalSeconds = endTime.diff(now, "seconds");
+          if (totalSeconds > 0) {
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            result = `${`${hours}`.padStart(2, 0)}:${`${minutes}`.padStart(2, 0)}:${`${seconds}`.padStart(2, 0)}`;
+          }
+        }
+        return result;
+      });
     };
 
     const currentPromo = ref(null);
@@ -2006,7 +2033,8 @@ export default defineComponent({
       EDITION,
       marqueeDuration,
       marqueePseudoRef,
-      marqueeWrapperRef
+      marqueeWrapperRef,
+      floatPromoRemainingTime
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -2149,6 +2177,7 @@ export default defineComponent({
 .rocket-wrapper {
   transition: all 0.3s;
   // cursor: pointer;
+  position: relative;
 
   img {
     width: 105px;
@@ -2157,6 +2186,16 @@ export default defineComponent({
 
   &:hover {
     filter: brightness(0.9);
+  }
+
+  .promo-remaining-time {
+    position: absolute;
+    color: #eaff00;
+    text-shadow: 2px 2px 0px #00000040;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
   }
 }
 
