@@ -226,7 +226,7 @@ export default {
     feedbackSentSuccess: "আপনার প্রতিক্রিয়া সফলভাবে পাঠানো হয়েছে!",
     quitGameMessage: "আপনি কি নিশ্চিতভাবে প্রস্থান করতে চান? গেমটি ছেড়ে দিতে নিশ্চিত করুন-এ ক্লিক করুন।",
     signOutMessage: "আপনি কি নিশ্চিত আপনি সাইন আউট করতে চান?",
-    cardBindSuccessBackPromo: "Your card has been added successfully, do you want to back to promo page?",
+    cardBindSuccessBackPromo: "আপনার কার্ড সফলভাবে যোগ করা হয়েছে, আপনি কি প্রোমো পৃষ্ঠায় ফিরে যেতে চান?",
     plsLoginToContinue: "চালিয়ে যেতে অনুগ্রহ করে লগইন করুন",
     uploadImageLargerThan1MbError: "আপলোড করা ছবি 1MB এর বেশি হতে পারে না",
     imageFormatError: "ছবি ফরম্যাট ত্রুটি",
