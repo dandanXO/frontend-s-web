@@ -344,7 +344,7 @@ function translateBetType(betTypeId, wagerSelections = []) {
 }
 
 function formatHandicap(translatedName, handicap) {
-  if (!handicap || (translatedName !== 'Home' && translatedName !== 'Away')) {
+  if (!handicap || (translatedName !== 'Home' && translatedName !== 'Away' && translatedName !== 'Over' && translatedName !== 'Under')) {
     return translatedName;
   }
 
@@ -359,6 +359,8 @@ function formatHandicap(translatedName, handicap) {
     return `${translatedName} +${handicapValue}`;
   } else if (translatedName === 'Away' && handicapValue < 0) {
     return `${translatedName} -${Math.abs(handicapValue)}`;
+  } else if (translatedName === 'Over' || translatedName === 'Under') {
+    return `${translatedName} ${Math.abs(handicapValue)}`;
   }
 
   return translatedName;
