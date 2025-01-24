@@ -445,6 +445,8 @@ const spinWheel = () => {
           icon: "report_problem"
         });
 
+        sessionStorage.setItem("FROM_PROMO", props.promocode);
+
         router.push("/account/bank");
       }
     })
