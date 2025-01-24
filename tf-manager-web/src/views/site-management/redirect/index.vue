@@ -3,11 +3,27 @@
     <div class="header-container">
       <div class="search">
         <el-select
+          v-if="uiControl.showSiteType === true"
+          v-model="request.siteType"
+          size="small"
+          class="filter-item"
+          :placeholder="t('fields.siteType')"
+          style="width: 120px;margin-left:5px"
+        >
+          <el-option
+            v-for="item in siteType.list"
+            :key="item.value"
+            :label="item.displayName"
+            :value="item.value"
+          />
+        </el-select>
+
+        <el-select
           v-model="request.siteId"
-          size="mini"
+          size="small"
           :placeholder="t('fields.site')"
           class="filter-item"
-          style="width: 200px;"
+          style="width: 200px;margin-left:10px"
           @focus="loadSites"
         >
           <el-option
@@ -17,15 +33,24 @@
             :value="item.id"
           />
         </el-select>
-        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadRedirect"
-                   :disabled="!uiControl.isLoaded"
+        <el-button
+          style="margin-left: 10px"
+          icon="el-icon-search"
+          size="mini"
+          type="success"
+          @click="loadRedirect"
+          :disabled="!uiControl.isLoaded"
         >
           {{ t('fields.search') }}
         </el-button>
       </div>
       <div class="btn-group">
-        <el-button icon="el-icon-plus" size="mini" type="primary" @click="showDialog('CREATE')"
-                   v-permission="['sys:site:redirect:create']"
+        <el-button
+          icon="el-icon-plus"
+          size="mini"
+          type="primary"
+          @click="showDialog('CREATE')"
+          v-permission="['sys:site:redirect:create']"
         >
           {{ t('fields.add') }}
         </el-button>
@@ -40,17 +65,36 @@
       highlight-current-row
       :empty-text="t('fields.noData')"
     >
+      <el-table-column
+        prop="title"
+        :label="t('fields.title')"
+        min-width="250"
+      />
       <el-table-column prop="type" :label="t('fields.type')" min-width="250">
         <template #default="scope">
-          <span v-if="scope.row.type === 'GAME'">{{ t('fields.gameCode') }}</span>
-          <span v-else-if="scope.row.type === 'PROMO'">{{ t('fields.promo') }}</span>
-          <span v-else-if="scope.row.type === 'DOMAIN'">{{ t('fields.domainEasy') }}</span>
-          <span v-else-if="scope.row.type === 'VIDEO'">{{ t('fields.videoShiPin') }}</span>
-          <span v-else-if="scope.row.type === 'CHARITY'">{{ t('fields.CHARITY') }}</span>
+          <span v-if="scope.row.type === 'GAME'">
+            {{ t('fields.gameCode') }}
+          </span>
+          <span v-else-if="scope.row.type === 'PROMO'">
+            {{ t('fields.promo') }}
+          </span>
+          <span v-else-if="scope.row.type === 'DOMAIN'">
+            {{ t('fields.domainEasy') }}
+          </span>
+          <span v-else-if="scope.row.type === 'VIDEO'">
+            {{ t('fields.videoShiPin') }}
+          </span>
+          <span v-else-if="scope.row.type === 'CHARITY'">
+            {{ t('fields.CHARITY') }}
+          </span>
         </template>
       </el-table-column>
       <el-table-column prop="code" :label="t('fields.code')" min-width="250" />
-      <el-table-column prop="platform" :label="t('fields.platform')" min-width="180">
+      <el-table-column
+        prop="platform"
+        :label="t('fields.platform')"
+        min-width="180"
+      >
         <template #default="scope">
           <span v-if="scope.row.platform">{{ scope.row.platform }}</span>
           <span v-else>-</span>
@@ -59,19 +103,43 @@
       <el-table-column
         prop="status"
         :label="t('fields.status')"
-        width="150"
-        v-if="hasPermission(['sys:site:redirect:update'])"
+        min-width="200"
       >
         <template #default="scope">
-          <el-switch
+          <el-radio-group
             v-model="scope.row.status"
-            active-color="#409EFF"
-            inactive-color="#F56C6C"
-            @change="changeRedirectStatus(scope.row.id, scope.row.status)"
-          />
+            size="mini"
+            v-if="hasPermission(['sys:site:redirect:update'])"
+            @change="changeRedirectStatus(scope.row)"
+          >
+            <el-radio-button label="1">
+              {{ t('common.status.OPEN') }}
+            </el-radio-button>
+            <el-radio-button label="0">
+              {{ t('common.status.CLOSE') }}
+            </el-radio-button>
+            <el-radio-button label="2">
+              {{ t('common.status.TEST') }}
+            </el-radio-button>
+          </el-radio-group>
+          <div v-else>
+            <div v-if="scope.row.status === 0" style="color:red">
+              {{ t('common.status.CLOSE') }}
+            </div>
+            <div v-if="scope.row.status === 1" style="color: green;">
+              {{ t('common.status.OPEN') }}
+            </div>
+            <div v-if="scope.row.status === 2">
+              {{ t('common.status.TEST') }}
+            </div>
+          </div>
         </template>
       </el-table-column>
-      <el-table-column prop="startTime" :label="t('fields.startTime')" width="180">
+      <el-table-column
+        prop="startTime"
+        :label="t('fields.startTime')"
+        width="180"
+      >
         <template #default="scope">
           <span v-if="scope.row.startTime === null">-</span>
           <!-- eslint-disable -->
@@ -106,8 +174,20 @@
         width="200"
       >
         <template #default="scope">
-          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:site:redirect:update']" @click="showEdit(scope.row)" />
-          <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:site:redirect:del']" @click="removeRedirect(scope.row.id)" />
+          <el-button
+            icon="el-icon-edit"
+            size="mini"
+            type="success"
+            v-permission="['sys:site:redirect:update']"
+            @click="showEdit(scope.row)"
+          />
+          <el-button
+            icon="el-icon-remove"
+            size="mini"
+            type="danger"
+            v-permission="['sys:site:redirect:del']"
+            @click="removeRedirect(scope.row.id)"
+          />
         </template>
       </el-table-column>
     </el-table>
@@ -130,7 +210,9 @@
     width="700px"
   >
     <el-form
-      v-if="uiControl.dialogType === 'CREATE' || uiControl.dialogType === 'EDIT'"
+      v-if="
+        uiControl.dialogType === 'CREATE' || uiControl.dialogType === 'EDIT'
+      "
       ref="formRef"
       :model="form"
       :rules="formRules"
@@ -138,7 +220,14 @@
       size="small"
       label-width="200px"
     >
-      <el-form-item :label="t('fields.site')" prop="siteId" v-if="!hasRole(['TENANT'])">
+      <el-form-item :label="t('fields.title')" prop="title">
+        <el-input v-model="form.title" style="width: 350px;" maxlength="100" />
+      </el-form-item>
+      <el-form-item
+        :label="t('fields.site')"
+        prop="siteId"
+        v-if="!hasRole(['TENANT'])"
+      >
         <el-select
           v-model="form.siteId"
           size="small"
@@ -154,6 +243,26 @@
             :key="item.id"
             :label="item.siteName"
             :value="item.id"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item
+        :label="t('fields.siteType')"
+        prop="siteType"
+        v-if="uiControl.showDialogSiteType === true"
+      >
+        <el-select
+          v-model="form.siteType"
+          size="small"
+          class="filter-item"
+          :placeholder="t('fields.siteType')"
+          style="width: 350px;"
+        >
+          <el-option
+            v-for="item in siteType.list"
+            :key="item.value"
+            :label="item.displayName"
+            :value="item.value"
           />
         </el-select>
       </el-form-item>
@@ -192,9 +301,18 @@
             :value="item.redirectUrl"
           />
         </el-select>
-        <el-input v-else v-model="form.code" style="width: 350px;" maxlength="100" />
+        <el-input
+          v-else
+          v-model="form.code"
+          style="width: 350px;"
+          maxlength="100"
+        />
       </el-form-item>
-      <el-form-item v-if="form.type === 'GAME'" :label="t('fields.platform')" prop="platform">
+      <el-form-item
+        v-if="form.type === 'GAME'"
+        :label="t('fields.platform')"
+        prop="platform"
+      >
         <el-select
           v-model="form.platform"
           size="small"
@@ -242,6 +360,24 @@
           </el-col>
         </el-row>
       </el-form-item>
+      <el-form-item label="VIP" prop="vips">
+        <el-checkbox
+          v-model="checkboxes.vip.checkAll"
+          :indeterminate="checkboxes.vip.isIndeterminate"
+          @change="handleVIPCheckAllChange"
+        >
+          {{ t('fields.checkall') }}
+        </el-checkbox>
+        <el-checkbox-group
+          v-model="selectedVIPs.vipChecked"
+          @change="handleCheckedChange"
+          style="width: 300px"
+        >
+          <el-checkbox v-for="v in vipList.list" :label="v.id" :key="v.id">
+            {{ v.name }}
+          </el-checkbox>
+        </el-checkbox-group>
+      </el-form-item>
       <el-form-item :label="t('fields.startTime')" prop="startTime">
         <el-date-picker
           type="datetime"
@@ -261,8 +397,12 @@
         />
       </el-form-item>
       <div class="dialog-footer">
-        <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-        <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
+        <el-button @click="uiControl.dialogVisible = false">
+          {{ t('fields.cancel') }}
+        </el-button>
+        <el-button type="primary" @click="submit">
+          {{ t('fields.confirm') }}
+        </el-button>
       </div>
     </el-form>
   </el-dialog>
@@ -392,39 +532,51 @@
 </template>
 
 <script setup>
+import { computed, reactive, ref } from 'vue'
+import { hasRole, hasPermission } from '@/utils/util'
+import { getSiteListSimple } from '@/api/site'
+import { nextTick, onMounted } from '@vue/runtime-core'
+import { useStore } from '@/store'
+import { TENANT } from '@/store/modules/user/action-types'
+import { useI18n } from 'vue-i18n'
+import {
+  getRedirect,
+  createRedirect,
+  updateRedirect,
+  updateRedirectStatus,
+  deleteRedirect,
+} from '@/api/redirect'
+import { getPlatformsBySite } from '@/api/platform'
+import { getActivePromoPageList } from '@/api/promoPages'
+import { required } from '@/utils/validate'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { getSiteImage } from '@/api/site-image'
+import { useSessionStorage } from '@vueuse/core'
+import { getVipList } from '../../../api/vip'
+import { isVnm } from '@/utils/site'
 
-import { computed, reactive, ref } from "vue";
-import { hasRole, hasPermission } from "@/utils/util";
-import { getSiteListSimple } from "@/api/site";
-import { nextTick, onMounted } from "@vue/runtime-core";
-import { useStore } from '@/store';
-import { TENANT } from "@/store/modules/user/action-types";
-import { useI18n } from "vue-i18n";
-import { getRedirect, createRedirect, updateRedirect, updateRedirectStatus, deleteRedirect } from "@/api/redirect";
-import { getPlatformsBySite } from "@/api/platform";
-import { getActivePromoPageList } from "@/api/promoPages"
-import { required } from "@/utils/validate";
-import { ElMessage, ElMessageBox } from "element-plus";
-import { getSiteImage } from "@/api/site-image";
-import { useSessionStorage } from "@vueuse/core";
-
-const { t } = useI18n();
-const store = useStore();
-const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
-const site = ref(null);
-const formRef = ref(null);
-const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
-const gameDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/game/'
-const selectedId = ref(null);
+const { t } = useI18n()
+const store = useStore()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
+const site = ref(null)
+const formRef = ref(null)
+const promoDir =
+  useSessionStorage('IMAGE_CDN', process.env.VUE_APP_IMAGE).value + '/promo/'
+const gameDir =
+  useSessionStorage('IMAGE_CDN', process.env.VUE_APP_IMAGE).value + '/game/'
+const selectedId = ref(null)
 const platforms = reactive({
-  list: []
+  list: [],
 })
 const privileges = reactive({
-  list: []
+  list: [],
 })
 const imageList = reactive({
   dataList: [],
   pages: 0,
+})
+const vipList = reactive({
+  list: [],
 })
 
 const selectedImage = reactive({
@@ -438,43 +590,53 @@ const selectedImage = reactive({
 const uiControl = reactive({
   isLoaded: false,
   dialogVisible: false,
-  dialogTitle: "",
-  dialogType: "CREATE",
+  dialogTitle: '',
+  dialogType: 'CREATE',
   type: [
     { key: 0, displayName: 'gameCode', value: 'GAME' },
     { key: 1, displayName: 'promo', value: 'PROMO' },
     { key: 2, displayName: 'domainEasy', value: 'DOMAIN' },
     { key: 3, displayName: 'videoShiPin', value: 'VIDEO' },
-    { key: 4, displayName: 'CHARITY', value: 'CHARITY' }
+    { key: 4, displayName: 'CHARITY', value: 'CHARITY' },
   ],
   imageSelectionTitle: '',
   imageSelectionType: '',
-  imageSelectionVisible: false
-});
+  showSiteType: false,
+  showDialogSiteType: false,
+  imageSelectionVisible: false,
+})
+
+const siteType = reactive({
+  list: [
+    { displayName: t('siteType.main'), value: 'main' },
+    { displayName: t('siteType.slot'), value: 'slot' },
+  ],
+})
 
 const imageRequest = reactive({
   size: 10,
   current: 1,
   name: null,
   siteId: null,
-  category: 'PROMO'
+  category: 'PROMO',
 })
 
 const request = reactive({
   size: 20,
   current: 1,
-  siteId: null
-});
+  siteType: null,
+  siteId: null,
+})
 
 const sites = reactive({
-  list: []
-});
+  list: [],
+})
 
 const page = reactive({
   pages: 0,
   records: [],
-  loading: false
-});
+  loading: false,
+})
 
 const form = reactive({
   siteId: null,
@@ -483,93 +645,162 @@ const form = reactive({
   platform: null,
   icon: null,
   startTime: null,
-  endTime: null
-});
+  endTime: null,
+  title: null,
+  vips: null,
+  siteType: null,
+})
+
+const checkboxes = reactive({
+  vip: {
+    checkAll: ref(false),
+    isIndeterminate: ref(false),
+  },
+})
+
+const selectedVIPs = reactive({ vipChecked: [] })
 
 const validateStartTime = (rule, value, callback) => {
   if (form.endTime && form.endTime < form.startTime) {
-    callback(new Error(t('message.startMustBeforeEnd')));
+    callback(new Error(t('message.startMustBeforeEnd')))
   } else {
-    callback();
+    callback()
   }
-};
+}
 
 const validateEndTime = (rule, value, callback) => {
   if (form.startTime && form.startTime > form.endTime) {
-    callback(new Error(t('message.endMustAfterStart')));
+    callback(new Error(t('message.endMustAfterStart')))
   } else {
-    callback();
+    callback()
   }
-};
+}
 
 const formRules = reactive({
+  title: [required(t('message.validateTitleRequired'))],
   siteId: [required(t('message.validateSiteRequired'))],
   type: [required(t('message.validateTypeRequired'))],
   code: [required(t('message.validateCodeRequired'))],
   platform: [required(t('message.validatePlatformRequired'))],
   icon: [required(t('message.validateIconRequired'))],
-  startTime: [{ validator: validateStartTime, trigger: "blur" }],
-  endTime: [{ validator: validateEndTime, trigger: "blur" }]
-});
+  siteType: [required(t('message.validateSiteTypeRequired'))],
+  startTime: [{ validator: validateStartTime, trigger: 'blur' }],
+  endTime: [{ validator: validateEndTime, trigger: 'blur' }],
+})
 
 async function loadRedirect() {
-  page.loading = true;
-  const requestCopy = { ...request };
-  const query = {};
+  page.loading = true
+  const requestCopy = { ...request }
+  const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
     if (value) {
-      query[key] = value;
+      query[key] = value
     }
-  });
-  const { data: ret } = await getRedirect(query);
-  page.pages = ret.pages;
-  page.records = ret.records;
-  page.loading = false;
+  })
+  const { data: ret } = await getRedirect(query)
+  page.pages = ret.pages
+  page.records = ret.records
+  page.loading = false
 }
 
 async function loadSites() {
-  const { data: site } = await getSiteListSimple();
-  sites.list = site;
+  const { data: site } = await getSiteListSimple()
+  sites.list = site
 }
 
 async function loadPlatform() {
-  const { data: platform } = await getPlatformsBySite(form.siteId);
-  platforms.list = platform;
+  const { data: platform } = await getPlatformsBySite(form.siteId)
+  platforms.list = platform
 }
 
 async function loadPrivileges() {
-  const { data: privilege } = await getActivePromoPageList(form.siteId);
-  privileges.list = privilege;
+  const { data: privilege } = await getActivePromoPageList(form.siteId)
+  privileges.list = privilege
 }
 
-function showDialog(type) {
+async function showDialog(type) {
+  selectedVIPs.vipChecked = [];
+
+  if(type != 'EDIT'){
+    checkboxes.vip.checkAll = false
+  }
+
   if (formRef.value) {
-    formRef.value.resetFields();
-    form.platform = null;
-    form.icon = null;
-    form.startTime = null;
-    form.endTime = null;
+    formRef.value.resetFields()
+    form.platform = null
+    form.icon = null
+    form.startTime = null
+    form.endTime = null
   }
-  if (type === "CREATE") {
-    form.siteId = request.siteId;
-    uiControl.dialogTitle = t('fields.addRedirect');
-  } else if (type === "EDIT") {
-    uiControl.dialogTitle = t('fields.editRedirect');
+  if (type === 'CREATE') {
+    uiControl.dialogTitle = t('fields.addRedirect')
+  } else if (type === 'EDIT') {
+    uiControl.dialogTitle = t('fields.editRedirect')
   }
-  uiControl.dialogType = type;
-  uiControl.dialogVisible = true;
+  uiControl.dialogType = type
+  uiControl.dialogVisible = true
+
+  if (isVnm(form.siteId)) {
+    uiControl.showDialogSiteType = true
+  } else {
+    uiControl.showDialogSiteType = false
+  }
 }
 
 function showEdit(redirect) {
-  showDialog('EDIT');
+  showDialog('EDIT')
   nextTick(() => {
     for (const key in redirect) {
       if (Object.keys(form).find(k => k === key)) {
-        form[key] = redirect[key];
+        form[key] = redirect[key]
       }
     }
-    selectedId.value = redirect.id;
-  });
+    selectedId.value = redirect.id
+
+    const vipArr = form.vips ? form.vips.split(',') : []
+    vipArr.forEach(element => {
+      selectedVIPs.vipChecked.push(parseInt(element))
+    })
+
+    if (vipArr.length === vipList.list.length) {
+      checkboxes.vip.checkAll = true
+      checkboxes.vip.isIndeterminate = false
+    } else if(vipArr.length == 0){
+      checkboxes.vip.checkAll = false
+      checkboxes.vip.isIndeterminate = false
+    } else {
+      checkboxes.vip.checkAll = false
+      checkboxes.vip.isIndeterminate = true
+    }
+  })
+}
+
+async function loadVips() {
+  const { data: vip } = await getVipList()
+  vipList.list = vip.filter(vip => vip.siteId === form.siteId)
+}
+
+const handleVIPCheckAllChange = val => {
+  selectedVIPs.vipChecked = []
+  if (val) {
+    vipList.list.forEach(vip => {
+      selectedVIPs.vipChecked.push(vip.id)
+    })
+  }
+  handleCheckedChange()
+}
+
+function handleCheckedChange() {
+  form.vips = selectedVIPs.vipChecked.join(',')
+  const vipIds = [...new Set(vipList.list.map(el => el.id))]
+  handleCategoryChange(selectedVIPs.vipChecked, checkboxes.vip, vipIds)
+}
+
+function handleCategoryChange(selectedList, checkboxData, dataList) {
+  const selectedCount = selectedList.filter(el => dataList.includes(el)).length
+  const listCount = dataList.length
+  checkboxData.checkAll = selectedCount === listCount
+  checkboxData.isIndeterminate = selectedCount > 0 && selectedCount < listCount
 }
 
 function submit() {
@@ -581,14 +812,14 @@ function submit() {
 }
 
 function create() {
-  formRef.value.validate(async (valid) => {
+  formRef.value.validate(async valid => {
     if (valid) {
-      await createRedirect(form);
-      uiControl.dialogVisible = false;
-      await loadRedirect();
-      ElMessage({ message: t('message.addSuccess'), type: "success" });
+      await createRedirect(form)
+      uiControl.dialogVisible = false
+      await loadRedirect()
+      ElMessage({ message: t('message.addSuccess'), type: 'success' })
     }
-  });
+  })
 }
 
 function edit() {
@@ -625,11 +856,11 @@ function selectImage(item) {
 async function browseImage() {
   switch (form.type) {
     case 'PROMO':
-      imageRequest.category = 'PROMO';
-      break;
+      imageRequest.category = 'PROMO'
+      break
     case 'GAME':
-      imageRequest.category = 'GAME';
-      break;
+      imageRequest.category = 'GAME'
+      break
   }
   imageRequest.current = 1
   await loadSiteImage()
@@ -662,21 +893,34 @@ async function removeRedirect(id) {
   })
 }
 
-async function changeRedirectStatus(id, status) {
-  await updateRedirectStatus(id, status)
+async function changeRedirectStatus(row) {
+  await updateRedirectStatus(row.id, row.status)
 }
 
 onMounted(async () => {
-  await loadSites();
-  uiControl.isLoaded = true;
+  await loadSites()
+  uiControl.isLoaded = true
   if (LOGIN_USER_TYPE.value === TENANT.value) {
-    site.value = sites.list.find(s => s.siteName === store.state.user.siteName);
+    site.value = sites.list.find(s => s.siteName === store.state.user.siteName)
   } else {
-    site.value = sites.list[0];
+    site.value = sites.list[0]
   }
-  request.siteId = site.value.id;
-});
+  request.siteId = site.value.id
+  form.siteId = request.siteId
 
+  console.log(request.siteId)
+  console.log(isVnm(request.siteId))
+
+  if (isVnm(request.siteId)) {
+    uiControl.showSiteType = true
+  } else {
+    uiControl.showSiteType = false
+  }
+
+  request.siteType = 'main'
+  form.siteType = 'main'
+  await loadVips()
+})
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
