@@ -458,7 +458,7 @@
         <q-carousel-slide v-for="(promo, i) in floatPromo" :key="i" :name="i" @click="gotoFloatPromo(promo.code)">
           <div class="rocket-wrapper">
             <div class="rocket">
-              <img style="width: 85px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" />
+              <img style="width: 110px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" />
               <span v-if="promo.showTime" class="promo-remaining-time">
                 {{ floatPromoRemainingTime[i] }}
               </span>
@@ -2190,11 +2190,12 @@ export default defineComponent({
 
   .promo-remaining-time {
     position: absolute;
-    color: #eaff00;
-    text-shadow: 2px 2px 0px #00000040;
-    bottom: 16px;
+    bottom: 21px;
     left: 50%;
     transform: translateX(-50%);
+    font-weight: bold;
+    // color: #eaff00;
+    // text-shadow: 2px 2px 0px #00000040;
     font-size: 10px;
   }
 }

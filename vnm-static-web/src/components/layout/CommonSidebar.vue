@@ -84,7 +84,7 @@
       <div style="position: relative">
         <div class="close-btn" @click="hideFloatPromo()">X</div>
         <el-carousel
-          height="330px"
+          height="297px"
           :indicator-position="floatPromo.length > 1 ? 'outside' : 'none'"
           arrow="never"
           :autoplay="true"
@@ -169,7 +169,7 @@ export default defineComponent({
     const showRocket = ref(false);
     const hideRocket = () => {
       showRocket.value = false;
-      promoPosition.value = { top: window.innerHeight - 330, left: 0 };
+      promoPosition.value = { top: window.innerHeight - 297, left: 0 };
     };
     const showFloatPromo = ref(false);
     const hideFloatPromo = () => {
@@ -207,12 +207,12 @@ export default defineComponent({
     };
     const checkFloatPromo = () => {
       if (gamePromo.length === 0) {
-        promoPosition.value = { top: window.innerHeight - 330, left: 0 };
+        promoPosition.value = { top: window.innerHeight - 297, left: 0 };
       }
     };
 
     const rocketPosition = ref({ top: window.innerHeight - 200, left: window.innerWidth - 220 });
-    const promoPosition = ref({ top: window.innerHeight - 330, left: 0 });
+    const promoPosition = ref({ top: window.innerHeight - 297, left: 0 });
     const isDragging = ref(false);
     const shiftX = ref(0);
     const shiftY = ref(0);
@@ -326,8 +326,8 @@ export default defineComponent({
 
   &.show-promo {
     display: block;
-    width: 440px;
-    height: 330px;
+    width: 396px;
+    height: 297px;
   }
 
   &.show-rocket {
@@ -368,12 +368,13 @@ export default defineComponent({
     }
     .promo-remaining-time {
       position: absolute;
-      bottom: 18%;
+      bottom: 16%;
       left: 50%;
       transform: translateX(-50%);
       font-size: 44px;
-      color: #eaff00;
-      text-shadow: 2px 2px 0px #00000040;
+      font-weight: bold;
+      // color: #eaff00;
+      // text-shadow: 2px 2px 0px #00000040;
     }
   }
 }
