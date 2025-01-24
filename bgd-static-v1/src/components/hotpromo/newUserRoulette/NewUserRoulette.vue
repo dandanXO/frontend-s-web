@@ -218,6 +218,7 @@ const $q = useQuasar();
 const store = userStore();
 const router = useRouter();
 const { languageVal } = storeToRefs(i18nStore());
+const qs = require("qs");
 
 const spinButtonDisable = ref(false);
 const remainingDraws = ref(0);
@@ -320,6 +321,7 @@ const stopSpin = (prizeIndex, stopCallback) => {
   };
 };
 
+const phoneRef = ref();
 const updatePhoneInfo = reactive({
   phone: ""
 });

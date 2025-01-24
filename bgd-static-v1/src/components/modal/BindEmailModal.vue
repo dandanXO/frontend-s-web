@@ -255,15 +255,10 @@ const submitUpdateEmail = () => {
             message: t("notify.emailBindedSuccessfully"),
             icon: "check_circle_outline"
           });
-          bindEmailDialog.value = false;
-          formDetail.email = updateEmailInfo.email;
-          formDetail.emailVerified = true;
-
-          store.getMemberInfo();
-
-          getEmailVerifyBonus();
 
           closeDialog();
+          store.getMemberInfo();
+          getEmailVerifyBonus();
         } else {
           $q.notify({
             color: "negative",
