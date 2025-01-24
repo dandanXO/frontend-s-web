@@ -13,7 +13,7 @@ export const updateSportAppSetting = (data) => {
   console.log('data', data);
   const formData = {
     id: data.id,
-    supplierId: data.supplierId,
+    platformId: data.platformId,
     setting: data.setting,
   }
   return https().request(

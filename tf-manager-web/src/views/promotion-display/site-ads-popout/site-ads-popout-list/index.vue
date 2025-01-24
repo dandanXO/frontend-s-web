@@ -576,7 +576,7 @@ async function removeAdsPopout(adspopout) {
 }
 
 async function changeAdsStatus(row) {
-  await updateAdsPopoupStatus(row.id, row.status, row.siteType).catch(async function (){
+  await updateAdsPopoupStatus(row.id, row.status, row.siteType).catch(async function () {
     await loadAdsPopoutList();
   })
   await loadAdsPopoutList();

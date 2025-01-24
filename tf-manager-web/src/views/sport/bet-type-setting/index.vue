@@ -2,17 +2,17 @@
   <div class="bet-type-switch">
     <div class="filter-section">
       <el-select
-        v-model="filters.supplierId"
+        v-model="filters.platformId"
         size="small"
         :placeholder="t('fields.platform')"
         class="filter-item"
         clearable
       >
         <el-option
-          v-for="supplier in uiControl.supplier"
-          :key="supplier.id"
-          :label="supplier.name"
-          :value="supplier.id"
+          v-for="platform in uiControl.platform"
+          :key="platform.id"
+          :label="platform.name"
+          :value="platform.id"
         />
       </el-select>
 
@@ -81,21 +81,21 @@ const betTypes = ref([]);
 const loading = ref(false);
 
 const filters = reactive({
-  supplierId: null,
+  platformId: null,
   sportType: null,
 });
 
-// const suppliers = reactive({ list: [] });
+// const platforms = reactive({ list: [] });
 const sports = reactive({ list: [] });
 const uiControl = reactive({
-  supplier: [
+  platform: [
     { name: 'IM', display: 'IM', id: 1 }
   ]
 });
 
-// async function loadSuppliers() {
+// async function loadPlatforms() {
 //   const { data } = await getSiteListSimple();
-//   suppliers.list = data;
+//   platforms.list = data;
 // }
 
 async function loadSportTypes() {
@@ -106,7 +106,7 @@ async function loadSportTypes() {
 async function loadBetTypes() {
   loading.value = true;
   const { data } = await getBetTypeSettings({
-    supplierId: filters.supplierId,
+    platformId: filters.platformId,
     tfSportType: filters.sportType,
   });
   betTypes.value = data;
@@ -114,7 +114,7 @@ async function loadBetTypes() {
 }
 
 function resetFilters() {
-  filters.supplierId = null;
+  filters.platformId = null;
   filters.sportType = null;
   betTypes.value = [];
 }
@@ -122,7 +122,7 @@ function resetFilters() {
 async function handleStatusChange(row) {
   console.log(row)
   const query = {
-    supplierId: row.supplierId,
+    platformId: row.platformId,
     tfSportId: row.tfSportId,
     tfBetTypeId: row.tfBetTypeId,
     status: row.status
@@ -133,7 +133,7 @@ async function handleStatusChange(row) {
 }
 
 onMounted(() => {
-  // loadSuppliers();
+  // loadPlatforms();
   loadSportTypes();
 });
 </script>
