@@ -2,7 +2,7 @@
   <div class="bet-type-switch">
     <div class="filter-section">
       <el-select
-        v-model="filters.platformId"
+        v-model="filters.supplierId"
         size="small"
         :placeholder="t('fields.platform')"
         class="filter-item"
@@ -81,16 +81,22 @@ const betTypes = ref([]);
 const loading = ref(false);
 
 const filters = reactive({
-  platformId: null,
+  supplierId: null,
   sportType: null,
 });
 
+// const suppliers = reactive({ list: [] });
 const sports = reactive({ list: [] });
 const uiControl = reactive({
   supplier: [
     { name: 'IM', display: 'IM', id: 1 }
   ]
 });
+
+// async function loadSuppliers() {
+//   const { data } = await getSiteListSimple();
+//   suppliers.list = data;
+// }
 
 async function loadSportTypes() {
   const { data } = await getSportTypes();
@@ -100,7 +106,7 @@ async function loadSportTypes() {
 async function loadBetTypes() {
   loading.value = true;
   const { data } = await getBetTypeSettings({
-    platformId: filters.platformId,
+    supplierId: filters.supplierId,
     tfSportType: filters.sportType,
   });
   betTypes.value = data;
@@ -108,7 +114,7 @@ async function loadBetTypes() {
 }
 
 function resetFilters() {
-  filters.platformId = null;
+  filters.supplierId = null;
   filters.sportType = null;
   betTypes.value = [];
 }
@@ -116,7 +122,7 @@ function resetFilters() {
 async function handleStatusChange(row) {
   console.log(row)
   const query = {
-    platformId: row.platformId,
+    supplierId: row.supplierId,
     tfSportId: row.tfSportId,
     tfBetTypeId: row.tfBetTypeId,
     status: row.status
@@ -127,6 +133,7 @@ async function handleStatusChange(row) {
 }
 
 onMounted(() => {
+  // loadSuppliers();
   loadSportTypes();
 });
 </script>

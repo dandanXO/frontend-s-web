@@ -3,14 +3,14 @@
     <div class="header-container">
       <div class="search">
         <el-select
-          v-model="request.platformName"
+          v-model="request.supplierName"
           size="small"
           :placeholder="t('fields.platform')"
           class="filter-item"
           default-first-option
         >
           <el-option
-            v-for="item in uiControl.platform"
+            v-for="item in uiControl.supplier"
             :key="item.name"
             :label="item.name"
             :value="item.name"
@@ -213,7 +213,7 @@ const uiControl = reactive({
   editBtn: true,
   removeBtn: true,
   dialogLoading: false,
-  platform: [
+  supplier: [
     { name: 'IM', display: 'IM' },
     { name: 'FB', display: 'FB' },
   ],
@@ -231,7 +231,7 @@ const request = reactive({
   size: 30,
   current: 1,
   orderBy: "_id",
-  platformName: null,
+  supplierName: null,
   sportType: null,
   eventId: null,
   siteId: null,
@@ -254,7 +254,7 @@ const tfAwayTeamName = ref('');
 
 function resetQuery() {
   request.sportType = null;
-  request.platformName = null;
+  request.supplierName = null;
   request.sportType = null;
   request.siteId = null;
   request.eventStatus = null;
