@@ -2211,6 +2211,7 @@ export default {
     endHour: 'End Hour',
     oldBetAmount: 'Old Site Bet Amount',
     showLogo: 'Show Logo',
+    showTime: 'Show Time',
     adjustTarget: 'Adjust Target',
     ignoreSettlement: 'Ignore Settlement',
     sendType: 'Send Type',

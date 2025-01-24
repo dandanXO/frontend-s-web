@@ -1867,6 +1867,7 @@ export default {
     displayEndTime: 'Hiển thị thời gian kết thúc',
     batchFrozenMember: 'Đóng băng thành viên hàng loạt',
     showLogo: 'hiển thị biểu tượng',
+    showTime: 'Show Time',
     isSeamlessTransfer: 'Không cần chuyển nhượng',
     fromPlatform: 'Từ Nền tảng',
     fromGameCode: 'Từ Game Code',
