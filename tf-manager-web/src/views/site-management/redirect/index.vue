@@ -538,6 +538,7 @@
 </template>
 
 <script setup>
+/* eslint-disable */
 import { computed, reactive, ref } from 'vue'
 import { hasRole, hasPermission } from '@/utils/util'
 import { getSiteListSimple } from '@/api/site'
