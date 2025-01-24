@@ -553,13 +553,13 @@
 </template>
 <script setup>
 import { computed, nextTick, reactive, ref, onMounted, watch } from 'vue'
-import { required } from '../../../../utils/validate'
+import { required } from '@/utils/validate'
 import Editor from '../../../../components/editor/index.vue'
 import {
   createAdsPopout,
   updateAdsPopout,
   getAdsPopOutById,
-} from '../../../../api/site-ads-popout'
+} from '@/api/site-ads-popout'
 import { ElMessage } from 'element-plus'
 import { uploadImage } from '../../../../api/image'
 import { useRoute, useRouter } from 'vue-router'
@@ -663,11 +663,7 @@ const filterTypes = computed(() => {
 })
 
 function changeSite() {
-  if (isVnm(form.siteId)) {
-    uiControl.showSiteType = true
-  } else {
-    uiControl.showSiteType = false
-  }
+  uiControl.showSiteType = isVnm(form.siteId);
   if (form.siteId !== 8) {
     form.type = 'IMG'
   }
@@ -873,7 +869,7 @@ async function loadForm(id, siteId) {
     if (vipArr.length === 0) {
       form.vips = 'test'
       checkboxes.vip.checkAll = true
-    } else if(vipArr.length === vipList.list.length) {
+    } else if (vipArr.length === vipList.list.length) {
       checkboxes.vip.checkAll = true
     }
 
@@ -883,11 +879,7 @@ async function loadForm(id, siteId) {
       }
     })
 
-    if (isVnm(form.siteId)) {
-      uiControl.showSiteType = true
-    } else {
-      uiControl.showSiteType = false
-    }
+    uiControl.showSiteType = isVnm(form.siteId);
   })
 }
 
@@ -1042,7 +1034,7 @@ watch(
 )
 onMounted(async () => {
   await loadSites()
-  
+
   imageRequest.siteId = store.state.user.siteId
   form.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
