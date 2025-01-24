@@ -9,10 +9,10 @@
         clearable
       >
         <el-option
-          v-for="supplier in uiControl.supplier"
-          :key="supplier.id"
-          :label="supplier.name"
-          :value="supplier.id"
+          v-for="platform in uiControl.platform"
+          :key="platform.id"
+          :label="platform.name"
+          :value="platform.id"
         />
       </el-select>
 
@@ -85,17 +85,17 @@ const filters = reactive({
   sportType: null,
 });
 
-// const suppliers = reactive({ list: [] });
+// const platforms = reactive({ list: [] });
 const sports = reactive({ list: [] });
 const uiControl = reactive({
-  supplier: [
+  platform: [
     { name: 'IM', display: 'IM', id: 1 }
   ]
 });
 
-// async function loadSuppliers() {
+// async function loadPlatforms() {
 //   const { data } = await getSiteListSimple();
-//   suppliers.list = data;
+//   platforms.list = data;
 // }
 
 async function loadSportTypes() {
@@ -133,7 +133,7 @@ async function handleStatusChange(row) {
 }
 
 onMounted(() => {
-  // loadSuppliers();
+  // loadPlatforms();
   loadSportTypes();
 });
 </script>

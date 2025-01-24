@@ -17,12 +17,12 @@
     <el-collapse v-model="uiControl.activeGroups">
       <el-collapse-item
         v-for="(config, index) in configs"
-        :title="config.supplierName"
-        :name="config.supplierName"
+        :title="config.platformName"
+        :name="config.platformName"
         :key="index"
       >
         <template #title>
-          <span>{{ config.supplierName }}</span>
+          <span>{{ config.platformName }}</span>
           <span
             style="margin-left: 10px"
           >
@@ -139,7 +139,7 @@ const configForm = ref(null)
 
 const form = reactive({
   id: null,
-  supplierId: null,
+  platformId: null,
   setting: null,
 })
 
@@ -149,11 +149,11 @@ const formRules = reactive({
   configGroup: [required(t('message.validateConfigGroupRequired'))],
 })
 
-const supplierEnum = (supplierId) => {
-  const suppliers = {
+const platformEnum = (platformId) => {
+  const platforms = {
     1: 'IM',
   };
-  return suppliers[supplierId] || 'Unknown';
+  return platforms[platformId] || 'Unknown';
 };
 
 async function loadDefaultConfigs() {
@@ -161,10 +161,10 @@ async function loadDefaultConfigs() {
   originalConfigs.value = ret;
   configs.value = ret.map(item => ({
     id: item.id,
-    supplierId: item.supplierId,
-    supplierName: supplierEnum(item.supplierId),
+    platformId: item.platformId,
+    platformName: platformEnum(item.platformId),
     setting: item.setting
-  })).sort((a, b) => a.supplierId - b.supplierId).map(item => {
+  })).sort((a, b) => a.platformId - b.platformId).map(item => {
     return {
       ...item,
       setting: Object.entries(item.setting).map(([key, value]) => ({
@@ -183,8 +183,8 @@ function showEdit(item, config) {
 
   // 將 item.data 轉換成陣列物件
   const transformedData = item.data.map(dataItem => ({
-    platform: config.supplierName,
-    platformId: config.supplierId,
+    platform: config.platformName,
+    platformId: config.platformId,
     settingKey: item.key,
     key: dataItem.key,
     value: dataItem.value
@@ -225,7 +225,7 @@ async function fetchAndFilterSettings(platformId) {
 
     // 過濾並提取 setting
     const uniqueSettings = allSettings
-      .filter(setting => setting.supplierId === platformId)
+      .filter(setting => setting.platformId === platformId)
       .map(item => item.setting);
 
     return uniqueSettings[0];
@@ -263,7 +263,7 @@ async function submit() {
     if (valid) {
       const formData = {
         id: platformId,
-        supplierId: platformId,
+        platformId: platformId,
         setting: settingJson,
       }
       await updateSportAppSetting(formData)
