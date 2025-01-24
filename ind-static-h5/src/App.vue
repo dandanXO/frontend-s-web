@@ -155,6 +155,7 @@ export default defineComponent({
 
       const parsedParams = extractParams(params);
       return {
+        linkId: parsedParams["link_id"] ?? "",
         fbclid: parsedParams["fbclid"] ?? "",
         adCode: parsedParams["adCode"] ?? ""
       };
@@ -164,7 +165,7 @@ export default defineComponent({
       // const urlParams = new URLSearchParams(window.location.search);
       // const fbclid = urlParams.get("fbclid");
 
-      const { fbclid } = getRbParams() || {};
+      const { fbclid, linkId } = getRbParams() || {};
 
       const fbc = fbclid;
       const siteCode = "IND";
@@ -186,7 +187,8 @@ export default defineComponent({
       const payload = new URLSearchParams({
         fbp: fbp || "",
         fbc: fbc || "",
-        siteCode: siteCode
+        siteCode: siteCode,
+        linkId : linkId || ""
       });
 
       // alert(`payload: ${payload}`);
