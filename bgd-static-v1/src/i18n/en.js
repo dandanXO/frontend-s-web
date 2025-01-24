@@ -887,7 +887,7 @@ export default {
         "If a player chooses to bet on other games, such as poker, sports, electronic games, live or exclusive games, WIN7 reserves the right to forfeit winnings and any resulting profits.",
       termsCondition7: "WIN7.GAME reserves the right to modify, suspend or cancel this event at any time."
     },
-    newPlayerFreeTrial: {
+    newUserRoulette: {
       congratsOnSignUpBonus: "Congratulations on your sign up bonus",
       recharge100get18: "Recharge 100 and get 18 free",
       recharge200get28: "Recharge 200 and get 28 free",

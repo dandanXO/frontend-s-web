@@ -25,9 +25,7 @@
       class="wheel-stage-effects-img"
       src="./../../../assets/images/promotion/hotpromo/new-user-roulette/spin-wheel-stg-effects.png"
     />
-    <div class="wheel-remaining-time-txt">
-      {{ $t("hotPromo.newPlayerFreeTrial.remainingTime") }}: {{ remainingDraws }}
-    </div>
+    <div class="wheel-remaining-time-txt">{{ $t("hotPromo.newUserRoulette.remainingTime") }}: {{ remainingDraws }}</div>
     <div class="spin-wheel-board">
       <div id="spin-wheel-id" class="spin-wheel">
         <img
@@ -53,8 +51,8 @@
   <table class="content-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
     <thead>
       <tr>
-        <th>{{ $t("hotPromo.newPlayerFreeTrial.timePeriod") }}</th>
-        <th>{{ $t("hotPromo.newPlayerFreeTrial.numberOfPlaces") }}</th>
+        <th>{{ $t("hotPromo.newUserRoulette.timePeriod") }}</th>
+        <th>{{ $t("hotPromo.newUserRoulette.numberOfPlaces") }}</th>
       </tr>
     </thead>
     <tbody>
@@ -83,17 +81,17 @@
     />
     <img v-else src="../../../assets/images/promotion/hotpromo/new-user-roulette/sign-up-bonus-title-bn.png" />
     <p>
-      {{ $t("hotPromo.newPlayerFreeTrial.signUpBonus1") }}
+      {{ $t("hotPromo.newUserRoulette.signUpBonus1") }}
     </p>
     <p>
-      {{ $t("hotPromo.newPlayerFreeTrial.signUpBonus2") }}
+      {{ $t("hotPromo.newUserRoulette.signUpBonus2") }}
       <span style="color: #ff0000cc">18, 58, 88, 200, 300, 500 BDT</span>
       <span>{{ `. ` }}</span>
-      {{ $t("hotPromo.newPlayerFreeTrial.signUpBonus3") }}
+      {{ $t("hotPromo.newUserRoulette.signUpBonus3") }}
     </p>
-    <p>{{ $t("hotPromo.newPlayerFreeTrial.signUpBonus4") }}</p>
+    <p>{{ $t("hotPromo.newUserRoulette.signUpBonus4") }}</p>
     <p style="color: #ff9d00">
-      {{ $t("hotPromo.newPlayerFreeTrial.signUpBonus5") }}
+      {{ $t("hotPromo.newUserRoulette.signUpBonus5") }}
     </p>
   </div>
   <div class="activity-rule-section">
@@ -104,16 +102,16 @@
     <img v-else src="../../../assets/images/promotion/hotpromo/new-user-roulette/activity-rule-bn.png" />
     <ul>
       <li>
-        {{ $t("hotPromo.newPlayerFreeTrial.activityRule1") }}
+        {{ $t("hotPromo.newUserRoulette.activityRule1") }}
       </li>
       <li>
-        {{ $t("hotPromo.newPlayerFreeTrial.activityRule2") }}
+        {{ $t("hotPromo.newUserRoulette.activityRule2") }}
       </li>
       <li>
-        {{ $t("hotPromo.newPlayerFreeTrial.activityRule3") }}
+        {{ $t("hotPromo.newUserRoulette.activityRule3") }}
       </li>
       <li>
-        {{ $t("hotPromo.newPlayerFreeTrial.activityRule4") }}
+        {{ $t("hotPromo.newUserRoulette.activityRule4") }}
       </li>
     </ul>
   </div>
@@ -133,7 +131,7 @@
         </div>
       </div>
 
-      <div class="congrats-title">{{ $t("hotPromo.newPlayerFreeTrial.congratsOnSignUpBonus") }}</div>
+      <div class="congrats-title">{{ $t("hotPromo.newUserRoulette.congratsOnSignUpBonus") }}</div>
 
       <div class="congrats-button-container">
         <q-btn no-caps unelevated class="congrats-btn" @click="handleBtnClick">
@@ -259,9 +257,9 @@ const stopSpin = (prizeIndex, stopCallback) => {
 
 const getPrizeTxt = (prize) => {
   if (prize === "bgd-roulette-deposit-get-18") {
-    return t("hotPromo.newPlayerFreeTrial.recharge100get18");
+    return t("hotPromo.newUserRoulette.recharge100get18");
   } else if (prize === "bgd-roulette-deposit-get-28") {
-    return t("hotPromo.newPlayerFreeTrial.recharge200get28");
+    return t("hotPromo.newUserRoulette.recharge200get28");
   }
 };
 const handleBtnClick = () => {
@@ -296,7 +294,7 @@ const spinWheel = () => {
     $q.notify({
       color: "negative",
       position: "top",
-      message: t("hotPromo.newPlayerFreeTrial.remainingDrawTimes") + `: 0`,
+      message: t("hotPromo.newUserRoulette.remainingDrawTimes") + `: 0`,
       icon: "report_problem"
     });
     return;
