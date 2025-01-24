@@ -261,14 +261,18 @@ const bonusImage = {
   28: require("@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bound28.png"),
   38: require("@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bound38.png"),
   88: require("@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bound88.png"),
-  888: require("@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bound888.png")
+  888: require("@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bound888.png"),
+  999: require("@/assets/images/promo/hotpromo/2025-cny-lucky-draw/bound999.png"),
+  1000: require("@/assets/images/promo/hotpromo/2025-cny-lucky-draw/boundiphone.png")
 };
 const bonusText = {
   18: "18 VNDP",
   28: "28 VNDP",
   38: "38 VNDP",
   88: "88 VNDP",
-  888: "888 VNDP"
+  888: "888 VNDP",
+  999: "1 Lượng Vàng SJC 999.9",
+  1000: "iPhone 16 Pro Max 256 GB"
 };
 
 const handleClaimClick = () => {
