@@ -325,7 +325,7 @@ export default {
     depositTutorial: "Deposit Tutorial",
     select_privilege: "Select Privilege",
     incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again.",
-    useFtdPrivilege: "Use Slot First Deposit Privilege",
+    useFtdPrivilege: "New players' first deposit 119% bonus",
     unlimited: "Unlimited",
     depositTips1: "1. Recharge tutorial:",
     depositTips2: "2. Fill in the correct payment wallet account number.",
