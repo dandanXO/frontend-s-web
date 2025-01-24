@@ -43,8 +43,7 @@
           icon="el-icon-search"
           size="mini"
           type="success"
-          :disabled="uiControl.isButtonDisabled"
-          @click="search()"
+          @click="throttleSearch"
         >
           {{ t('fields.search') }}
         </el-button>
@@ -184,6 +183,7 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from "vue-router";
 import { getShortcuts } from '@/utils/datetime'
 import moment from "moment/moment";
+import { useThrottleFn } from '@vueuse/core'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -279,13 +279,17 @@ function joinRecordTime(recordTime) {
   return string.join(',')
 }
 
-const disableBtnEvent = () => {
-  uiControl.isButtonDisabled = true;
+// const disableBtnEvent = () => {
+//   uiControl.isButtonDisabled = true;
+//
+//   setTimeout(() => {
+//     uiControl.isButtonDisabled = false;
+//   }, 3000)
+// }
 
-  setTimeout(() => {
-    uiControl.isButtonDisabled = false;
-  }, 3000)
-}
+const throttleSearch = useThrottleFn(() => {
+  search()
+}, 3000)
 
 function search() {
   uiControl.referrer = null
@@ -304,7 +308,7 @@ async function reloadMembers(loginName, uplineId) {
 
 async function loadMembers() {
   page.loading = true
-  disableBtnEvent();
+  // disableBtnEvent();
   uiControl.searchDialogVisible = false
   const query = checkQuery()
   const result = await getPakMemberReferSummary(query)
@@ -362,7 +366,7 @@ onMounted(async () => {
       request.siteId = site.value.id
     }
   }
-  await loadMembers();
+  throttleSearch();
 })
 </script>
 
