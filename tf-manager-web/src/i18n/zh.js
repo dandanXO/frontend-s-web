@@ -3248,6 +3248,7 @@ export default {
     Team: '队伍',
     'Bet type setting': '投注项设定',
     'Sport App Setting': '体育 App 设置',
+    Sport: 'Sport'
   },
   google: {
     google_auth_menu: '谷歌验证',
