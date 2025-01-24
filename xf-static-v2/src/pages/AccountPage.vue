@@ -40,7 +40,7 @@
         <div class="card_btm">
           <div class="progress-container">
             <div class="progress-vip-stat">
-              <img :src="getVipImage(vipLevel - 1 >= 0 ? vipLevel - 1 : 0)" />
+              <img :src="getVipImage(vipLevel)" />
               VIP {{ vipLevel }}
             </div>
             <div class="progress-bar-container">
