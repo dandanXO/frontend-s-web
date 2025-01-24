@@ -43,6 +43,7 @@
           icon="el-icon-search"
           size="mini"
           type="success"
+          :disabled="uiControl.isButtonDisabled"
           @click="search()"
         >
           {{ t('fields.search') }}
@@ -170,6 +171,7 @@
 </template>
 
 <script setup>
+/* eslint-disabled */
 import { computed, reactive, ref, onMounted } from 'vue'
 import {
   getPakMemberReferSummary
@@ -209,6 +211,7 @@ const uiControl = reactive({
   referrer: null,
   referrerPath: [],
   referrerIdPath: [],
+  isButtonDisabled: false
 })
 
 const page = reactive({
@@ -276,6 +279,14 @@ function joinRecordTime(recordTime) {
   return string.join(',')
 }
 
+const disableBtnEvent = () => {
+  uiControl.isButtonDisabled = true;
+
+  setTimeout(() => {
+    uiControl.isButtonDisabled = false;
+  }, 3000)
+}
+
 function search() {
   uiControl.referrer = null
   request.referrerId = null
@@ -293,6 +304,7 @@ async function reloadMembers(loginName, uplineId) {
 
 async function loadMembers() {
   page.loading = true
+  disableBtnEvent();
   uiControl.searchDialogVisible = false
   const query = checkQuery()
   const result = await getPakMemberReferSummary(query)

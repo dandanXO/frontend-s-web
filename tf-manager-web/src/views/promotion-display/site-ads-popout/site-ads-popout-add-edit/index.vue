@@ -870,7 +870,7 @@ async function loadForm(id, siteId) {
       selectedVIPs.vipChecked.push(parseInt(element))
     })
 
-    if(vipArr.length === vipList.list.length) {
+    if (vipArr.length === vipList.list.length) {
       checkboxes.vip.checkAll = true
     } else {
       checkboxes.vip.checkAll = false
@@ -1041,7 +1041,7 @@ watch(
 )
 onMounted(async () => {
   await loadSites()
-  
+
   imageRequest.siteId = store.state.user.siteId
   form.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
