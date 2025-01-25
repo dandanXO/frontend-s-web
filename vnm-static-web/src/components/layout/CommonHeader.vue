@@ -1880,7 +1880,7 @@ body {
       right: -10px;
       width: 46px;
       height: 36px;
-      background-image: url("@/assets/images/home/cny/gold-cloud-btn-decor.png");
+      background-image: url("@/assets/images/home/cny/cny-gold-cloud-btn-decor.png");
       background-repeat: no-repeat;
     }
   }
