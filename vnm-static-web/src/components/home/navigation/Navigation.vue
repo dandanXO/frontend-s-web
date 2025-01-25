@@ -2,7 +2,7 @@
   <div class="navigations">
     <template v-for="nav in navigations" :key="nav.name">
       <template v-if="!nav.hasicon">
-        <div class="header-menu-item">
+        <div class="header-menu-item" :class="{active: route.name === nav.code || route.name === nav.enName.toLowerCase()}">
           <a @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
             <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase()">
               <img class="menu-icon" :src="nav.iconActive" :alt="nav.code" />
@@ -114,7 +114,7 @@ const navigations = computed(() => {
       path: "/home",
       role: "NORMAL",
       order: "home",
-      iconActive: require("../../../assets/images/home/menu/home-icon-active.png"),
+      iconActive: store?.theme === 'CNY' ? require("../../../assets/images/home/cny/cny-home-icon-active.png") : require("../../../assets/images/home/menu/home-icon-active.png"),
       icon: require("../../../assets/images/home/menu/home-icon.png")
     }
   ];
@@ -127,7 +127,7 @@ const navigations = computed(() => {
       submenu: true,
       role: "NORMAL",
       order: 1,
-      iconActive: require("../../../assets/images/home/menu/sports-icon-active.png"),
+      iconActive: store?.theme === 'CNY' ? require("../../../assets/images/home/cny/cny-sports-icon-active.png") : require("../../../assets/images/home/menu/sports-icon-active.png"),
       icon: require("../../../assets/images/home/menu/sports-icon.png")
     },
     {
@@ -138,7 +138,7 @@ const navigations = computed(() => {
       submenu: true,
       role: "NORMAL",
       order: 2,
-      iconActive: require("../../../assets/images/home/menu/live-icon-active.png"),
+      iconActive: store?.theme === 'CNY' ? require("../../../assets/images/home/cny/cny-live-icon-active.png") : require("../../../assets/images/home/menu/live-icon-active.png"),
       icon: require("../../../assets/images/home/menu/live-icon.png")
     },
     {
@@ -149,7 +149,7 @@ const navigations = computed(() => {
       submenu: true,
       role: "NORMAL",
       order: 3,
-      iconActive: require("../../../assets/images/home/menu/slot-icon-active.png"),
+      iconActive: store?.theme === 'CNY' ? require("../../../assets/images/home/cny/cny-slot-icon-active.png") : require("../../../assets/images/home/menu/slot-icon-active.png"),
       icon: require("../../../assets/images/home/menu/slot-icon.png")
     },
     {
@@ -160,7 +160,7 @@ const navigations = computed(() => {
       submenu: true,
       role: "NORMAL",
       order: 4,
-      iconActive: require("../../../assets/images/home/menu/poker-icon-active.png"),
+      iconActive: store?.theme === 'CNY' ? require("../../../assets/images/home/cny/cny-poker-icon-active.png") : require("../../../assets/images/home/menu/poker-icon-active.png"),
       icon: require("../../../assets/images/home/menu/poker-icon.png")
     },
     {
@@ -171,7 +171,7 @@ const navigations = computed(() => {
       submenu: true,
       role: "NORMAL",
       order: 5,
-      iconActive: require("../../../assets/images/home/menu/esports-icon-active.png"),
+      iconActive: store?.theme === 'CNY' ? require("../../../assets/images/home/cny/cny-esports-icon-active.png") : require("../../../assets/images/home/menu/esports-icon-active.png"),
       icon: require("../../../assets/images/home/menu/esports-icon.png")
     },
     {
@@ -182,7 +182,7 @@ const navigations = computed(() => {
       submenu: true,
       role: "NORMAL",
       order: 6,
-      iconActive: require("../../../assets/images/home/menu/lottery-icon-active.png"),
+      iconActive: store?.theme === 'CNY' ? require("../../../assets/images/home/cny/cny-lottery-icon-active.png") : require("../../../assets/images/home/menu/lottery-icon-active.png"),
       icon: require("../../../assets/images/home/menu/lottery-icon.png")
     },
     // { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true , role: 'NORMAL',order: 7},
@@ -194,7 +194,7 @@ const navigations = computed(() => {
       submenu: true,
       role: "NORMAL",
       order: 8,
-      iconActive: require("../../../assets/images/home/menu/minigame-icon-active.png"),
+      iconActive: store?.theme === 'CNY' ? require("../../../assets/images/home/cny/cny-minigame-icon-active.png") : require("../../../assets/images/home/menu/minigame-icon-active.png"),
       icon: require("../../../assets/images/home/menu/minigame-icon.png")
     },
     {
@@ -205,7 +205,7 @@ const navigations = computed(() => {
       submenu: true,
       role: "NORMAL",
       order: 9,
-      iconActive: require("../../../assets/images/home/menu/others-icon-active.png"),
+      iconActive: store?.theme === 'CNY' ? require("../../../assets/images/home/cny/cny-others-icon-active.png") : require("../../../assets/images/home/menu/others-icon-active.png"),
       icon: require("../../../assets/images/home/menu/others-icon.png")
     },
     {
@@ -390,6 +390,20 @@ const openGame = (gameName, code, gameCode) => {
 .header-menu-item {
   position: relative;
   cursor: pointer;
+  &.active {
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: -12px;
+      right: -10px;
+      width: 92px;
+      height: 60px;
+      background-image: url("@/assets/images/home/cny/cny-home-icon-decor.png");
+      background-repeat: no-repeat;
+    }
+  }
 
   // display: flex;
   a {
