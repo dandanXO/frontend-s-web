@@ -219,7 +219,7 @@ const TOTAL_ITEMS = 8;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
-const SPIN_WHEEL_PRIZES = [18, 58, 88, 200, 300, 500, "bgd-roulette-deposit-get-18", "bgd-roulette-deposit-get-28"];
+const SPIN_WHEEL_PRIZES = [18, 500, "bgd-roulette-deposit-get-28", 200, 300, 58, "bgd-roulette-deposit-get-18"];
 
 // spin wheel element refs
 const spinBoardRef = ref();
