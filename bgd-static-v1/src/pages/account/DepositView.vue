@@ -24,7 +24,7 @@
           <q-badge v-if="isFtdPrivilegePayType" color="green" floating rounded>
             +{{ getFtdCommaAmount(item.amount) }}
           </q-badge>
-          <div :class="['deposit-amt', item.isActive && 'active']">{{ item.amount }}</div>
+          <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
           <div :class="['deposit-svg', item.isActive && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path
@@ -339,7 +339,6 @@ import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
-import { convertToCommaAmount } from "src/boot/utils";
 // import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
 // import PrimaryButton from "src/components/auth/PrimaryButton.vue";
@@ -401,6 +400,20 @@ const copybtntxt3 = ref("复制");
 const extraPrivilegeId = ref();
 const paytypeWithPrivilege = ref("");
 const isFtdPrivilegeEnable = ref(false);
+
+function isNonNumericString(value) {
+  return typeof value === "string" && isNaN(value);
+}
+
+const convertToCommaAmount = (amount) => {
+  if (amount === null) {
+    return 0;
+  }
+  if (isNonNumericString(amount)) {
+    return amount;
+  }
+  return parseFloat(amount).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+};
 
 const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
 const isFtdPrivilege = computed(
