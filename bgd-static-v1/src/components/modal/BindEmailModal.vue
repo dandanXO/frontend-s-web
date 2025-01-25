@@ -110,11 +110,13 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
+import { userStore } from "src/stores";
 
 const $q = useQuasar();
 const qs = require("qs");
 const props = defineProps(["bindEmailDialog"]);
 const emit = defineEmits(["update:bindEmailDialog"]);
+const store = userStore();
 
 let verificationCodeID = "";
 
@@ -158,6 +160,11 @@ const getCode = () => {
 };
 
 const openVerificationCodeDialog = () => {
+  if(store.email) {
+    verificationCodeDialog.value = !verificationCodeDialog.value;
+    return;
+  }
+
   api
     .get(`/member/checkEmailRegisterStatus?email=${updateEmailInfo.email}`)
     .then((response) => {
@@ -238,9 +245,10 @@ const submitUpdateEmail = () => {
 
   if (updateEmailRef.value.hasError || updateEmailCodeRef.value.hasError) {
   } else {
+    const endpoint = store.email ? "/otp/verifyEmail" : "/session/verifyAndUpdateEmail"
+
     api
-      .post(
-        "/session/verifyAndUpdateEmail",
+      .post(endpoint,
         qs.stringify({
           email: updateEmailInfo.email,
           code: updateEmailInfo.code,
