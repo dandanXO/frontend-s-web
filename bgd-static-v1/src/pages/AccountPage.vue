@@ -317,7 +317,7 @@
                           dense
                           class="text-green"
                           :label="!startCountdownResendOTP && $t('form.send')"
-                          :disable="!formDetail.phone || startCountdownResendOTP"
+                          :disable="!formDetail.email || startCountdownResendOTP"
                           @click="openVerificationCodeDialog"
                         />
                       </div>
