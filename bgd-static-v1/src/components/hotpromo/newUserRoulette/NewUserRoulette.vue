@@ -22,7 +22,7 @@
     </div>
   </div>
 
-  <div class="remaining-draw-wrapper">
+  <div v-if="showRoulette" class="remaining-draw-wrapper">
     <div class="remaining-draw-text">
       {{ $t("hotPromo.referWheel.remainingDrawTimes") }}
       <span id="remaning-draw-amt">: {{ remainingDraws }}</span>
@@ -71,10 +71,10 @@
       <span>{{ `. ` }}</span>
       {{ $t("hotPromo.newUserRoulette.signUpBonus3") }}
     </p>
-    <p>{{ $t("hotPromo.newUserRoulette.signUpBonus4") }}</p>
+    <!-- <p>{{ $t("hotPromo.newUserRoulette.signUpBonus4") }}</p>
     <p style="color: #ff9d00">
       {{ $t("hotPromo.newUserRoulette.signUpBonus5") }}
-    </p>
+    </p> -->
   </div>
   <div class="activity-rule-section" v-if="!hideRulesAndDesc">
     <img
@@ -613,6 +613,7 @@ onMounted(() => {
   }
 
 .content-table {
+  display: none;
   text-align: center;
   font-family: "Manrope", sans-serif;
   font-size: 10px;
