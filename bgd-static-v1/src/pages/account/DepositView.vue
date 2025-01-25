@@ -339,7 +339,6 @@ import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
-import { convertToCommaAmount } from "src/boot/utils";
 // import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
 // import PrimaryButton from "src/components/auth/PrimaryButton.vue";
@@ -401,6 +400,20 @@ const copybtntxt3 = ref("复制");
 const extraPrivilegeId = ref();
 const paytypeWithPrivilege = ref("");
 const isFtdPrivilegeEnable = ref(false);
+
+function isNonNumericString(value) {
+  return typeof value === "string" && isNaN(value);
+}
+
+const convertToCommaAmount = (amount) => {
+  if (amount === null) {
+    return 0;
+  }
+  if (isNonNumericString(amount)) {
+    return amount;
+  }
+  return parseFloat(amount).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+};
 
 const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
 const isFtdPrivilege = computed(
@@ -1393,15 +1406,22 @@ onMounted(() => {
 
 @media (max-width: 400px) {
   .deposit-item-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    .deposit-item {
+      .deposit-amt {
+        padding: 2px 8px;
+      }
+    }
   }
 }
 
-@media (max-width: 280px) {
+@media (max-width: 330px) {
   .deposit-item-container {
-    display: grid;
-    grid-template-columns: 1fr;
+    .deposit-item {
+      .deposit-amt {
+        padding: 2px 4px;
+        letter-spacing: -1px;
+      }
+    }
   }
 }
 </style>

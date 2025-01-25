@@ -1,54 +1,35 @@
 <template>
   <div v-if="showRoulette" class="spin-wheel-container">
     <div :class="`draw-btn click-pointer ${spinButtonDisable ? 'disabled' : ''}`" @click="spinWheel">
-      <img
-        v-if="languageVal === 'en'"
-        class="spin-btn"
-        src="./../../../assets/images/promotion/hotpromo/new-user-roulette/click-spin-btn-en.png"
-      />
-      <img
-        v-else
-        class="spin-btn"
-        src="./../../../assets/images/promotion/hotpromo/new-user-roulette/click-spin-btn-bn.png"
-      />
-      <img
-        class="hand"
-        v-if="!spinButtonDisable"
-        src="./../../../assets/images/promotion/hotpromo/new-user-roulette/hand.png"
-      />
+      <img v-if="languageVal === 'en'" class="spin-btn" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/click-spin-btn-en.png" />
+      <img v-else class="spin-btn" src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/click-spin-btn-bn.png" />
+      <img class="hand" v-if="!spinButtonDisable"
+        src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/hand.png" />
     </div>
-    <img
-      class="wheel-stage-img"
-      src="./../../../assets/images/promotion/hotpromo/new-user-roulette/spin-wheel-stg.png"
-    />
-    <img
-      class="wheel-stage-effects-img"
-      src="./../../../assets/images/promotion/hotpromo/new-user-roulette/spin-wheel-stg-effects.png"
-    />
-    <div class="wheel-remaining-time-txt">{{ $t("hotPromo.newUserRoulette.remainingTime") }}: {{ remainingDraws }}</div>
+    <div class="wheel-stage">
+      <img src="./../../../assets/images/promotion/hotpromo/refer-spinwheel/spin-wheel-stg.png" />
+    </div>
     <div class="spin-wheel-board">
-      <div id="spin-wheel-id" class="spin-wheel">
-        <img
-          v-if="languageVal === 'en'"
-          id="spin-wheel-bg"
-          class="wheel-bg"
-          src="./../../../assets/images/promotion/hotpromo/new-user-roulette/spin-wheel-bg-en.png"
-        />
-        <img
-          v-else
-          id="spin-wheel-bg"
-          class="wheel-bg"
-          src="./../../../assets/images/promotion/hotpromo/new-user-roulette/spin-wheel-bg-bn.png"
-        />
-        <div id="spin-wheel-number" class="spin-wheel-number" style="display: none"></div>
-        <img
-          class="spin-wheel-outer"
-          src="./../../../assets/images/promotion/hotpromo/new-user-roulette/spin-wheel-outer.png"
-        />
+      <div class="spin-wheel-frame">
+        <div id="spin-wheel-id" class="spin-wheel">
+          <img v-if="languageVal === 'en'" id="spin-wheel-bg" class="wheel-bg"
+            src="./../../../assets/images/promotion/hotpromo/new-user-roulette/spin-wheel-bg-en.png" />
+          <img v-else id="spin-wheel-bg" class="wheel-bg"
+            src="./../../../assets/images/promotion/hotpromo/new-user-roulette/spin-wheel-bg-bn.png" />
+          <div id="spin-wheel-number" class="spin-wheel-number" style="display: none"></div>
+        </div>
       </div>
     </div>
   </div>
-  <table class="content-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+
+  <div v-if="showRoulette" class="remaining-draw-wrapper">
+    <div class="remaining-draw-text">
+      {{ $t("hotPromo.referWheel.remainingDrawTimes") }}
+      <span id="remaning-draw-amt">: {{ remainingDraws }}</span>
+    </div>
+  </div>
+
+  <table class="content-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center" v-if="!hideRulesAndDesc">
     <thead>
       <tr>
         <th>{{ $t("hotPromo.newUserRoulette.timePeriod") }}</th>
@@ -74,7 +55,8 @@
       </tr>
     </tbody>
   </table>
-  <div class="sign-up-bonus-section">
+
+  <div class="sign-up-bonus-section" v-if="!hideRulesAndDesc">
     <img
       v-if="languageVal === 'en'"
       src="../../../assets/images/promotion/hotpromo/new-user-roulette/sign-up-bonus-title-en.png"
@@ -89,12 +71,12 @@
       <span>{{ `. ` }}</span>
       {{ $t("hotPromo.newUserRoulette.signUpBonus3") }}
     </p>
-    <p>{{ $t("hotPromo.newUserRoulette.signUpBonus4") }}</p>
+    <!-- <p>{{ $t("hotPromo.newUserRoulette.signUpBonus4") }}</p>
     <p style="color: #ff9d00">
       {{ $t("hotPromo.newUserRoulette.signUpBonus5") }}
-    </p>
+    </p> -->
   </div>
-  <div class="activity-rule-section">
+  <div class="activity-rule-section" v-if="!hideRulesAndDesc">
     <img
       v-if="languageVal === 'en'"
       src="../../../assets/images/promotion/hotpromo/new-user-roulette/activity-rule-en.png"
@@ -211,7 +193,7 @@ import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
 import FancyIcon from "src/components/auth/FancyIcon.vue";
 
-const props = defineProps(["promocode"]);
+const props = defineProps(["promocode", "hideRulesAndDesc"]);
 
 const { t } = useI18n();
 const $q = useQuasar();
@@ -230,6 +212,7 @@ const showRoulette = ref(false);
 const showPrizePopup = ref(false);
 const bindEmailDialog = ref(false);
 const changePhoneDialog = ref(false);
+const hideRulesAndDesc = ref(props?.hideRulesAndDesc || false);
 
 // spin wheel constants
 const TOTAL_ITEMS = 8;
@@ -390,7 +373,7 @@ const spinWheel = () => {
   //     privilegeId: null
   //   }
   // };
-  // var bonusIndex = "bgd-roulette-deposit-get-18";
+  // var bonusIndex = 500;
   // prizeIndex.value = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
   // showRoulette.value = res.data.showRoulette === "YES";
   // spin(prizeIndex.value, () => {
@@ -465,7 +448,7 @@ const initSpinWheel = () => {
 onMounted(() => {
   // calc no of spin wheel items and potential stops
   for (var i = 0; i < TOTAL_ITEMS; i++) {
-    var the_degree = (FULL_DEGREE / TOTAL_ITEMS) * i * -1;
+    var the_degree = ((FULL_DEGREE / TOTAL_ITEMS) * i * -1) + 20;
     degreesToStopAt.value.push({ degree: the_degree, prize: SPIN_WHEEL_PRIZES[i] });
   }
 
@@ -478,13 +461,80 @@ onMounted(() => {
 </script>
 <style scoped lang="scss">
 .spin-wheel-container {
-  position: relative;
-  margin: 20px 0px 60px;
-  text-align: center;
+    position: relative;
+    margin: 25px 0px 25px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .spin-wheel-frame {
+    position: relative;
+    width: 330px;
+    height: 330px;
+    margin: 0 auto;
+    background: url(../../../assets/images/promotion/hotpromo/refer-spinwheel/spin-wheel-frame.gif) no-repeat center center;
+    background-size: 100%;
+  }
+
+  .wheel-frame {
+    position: relative;
+    z-index: 3;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 100%;
+  }
+
+  .chosen-color-bg {
+    position: absolute;
+    z-index: 3;
+    top: -0px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 230px;
+  }
+
+  .spin-wheel {
+    position: absolute;
+    z-index: 2;
+    top: 35px;
+    left: 35px;
+    width: 260px;
+    height: 260px;
+  }
+
+  .wheel-bg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .spin-wheel-cny-hat {
+    width: 100%;
+    height: 100%;
+  }
+
+  .spin-wheel-number {
+    position: absolute;
+    z-index: 5;
+    top: 0px;
+    left: 0px;
+    width: 550px;
+    height: 550px;
+  }
+
+  .spin-wheel-number img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .spin-btn {
+    width: 90px;
+  }
 
   .draw-btn {
-    width: 16vw;
-    max-width: 92px;
+    width: 92px;
     height: auto;
     aspect-ratio: 95 / 117;
     z-index: 25;
@@ -498,86 +548,72 @@ onMounted(() => {
       opacity: 1 !important;
       pointer-events: none;
     }
-    img {
-      width: 100%;
-    }
+
     img.hand {
-      width: 11vw !important;
-      max-width: 60px;
+      width: 50px !important;
       position: absolute;
       top: 60%;
       left: 66%;
       animation: swipe-hand 3s infinite;
       animation-delay: 1s;
     }
-
-    .click-pointer,
-    .history-btn {
-      cursor: pointer;
-    }
-
-    .click-pointer:hover,
-    .history-btn {
-      filter: brightness(1);
-    }
-
-    .click-pointer:active {
-      transform: translate(-50%, calc(-50% + 1px));
-      filter: brightness(0.9);
-    }
   }
 
-  .wheel-stage-img {
-    width: 85% !important;
-    z-index: 20;
+  @keyframes swipe-hand {
+    25% { transform: translate(20px) rotate(30deg);}
+    50% { transform: translate(-20px) rotate(-15deg); }
+    100% { transform: translate(0px) rotate(0); }
+  }
+
+  .click-pointer,
+  .history-btn {
+    cursor: pointer;
+  }
+
+  .click-pointer:hover,
+  .history-btn {
+    filter: brightness(1);
+  }
+
+  .history-btn:active {
+    transform: translate(0px, 1px);
+    filter: brightness(0.9);
+  }
+
+  .click-pointer:active {
+    transform: translate(-50%, calc(-50% + 1px));
+    filter: brightness(0.9);
+  }
+
+  .wheel-stage {
+    width: 370px;
+    height: 500px;
+    z-index: 0;
     position: absolute;
-    bottom: 8%;
+    bottom: 24%;
     left: 50%;
     transform: translate(-50%, 50%);
+
+    img {
+      width: 100%;
+    }
   }
 
-  .wheel-stage-effects-img {
-    z-index: 20;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .wheel-remaining-time-txt {
-    color: #000;
-    font-size: 1rem;
-    font-weight: 600;
-    position: absolute;
-    bottom: -4%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 20;
-  }
-
-  .spin-wheel-board {
-    position: relative;
-    z-index: 20;
-    background-size: contain;
-    .wheel-bg {
-      z-index: 20 !important;
+  .remaining-draw-wrapper {
+    .remaining-draw-text {
+      color: #FFFFFF;
+      font-size: 12px;
+      margin: 10px auto 30px;
+      padding-top: 8px;
+      text-align: center;
+      width: 300px;
       position: relative;
-    }
-    .spin-wheel-outer {
-      z-index: 19;
-      position: absolute;
-      width: 91% !important;
-      top: 50%;
-      left: calc(50% - 1px);
-      transform: translate(-50%, -50%);
+      z-index: 23;
     }
   }
-
-  .spin-wheel {
-    z-index: 20;
-  }
-}
 
 .content-table {
+  display: none;
   text-align: center;
   font-family: "Manrope", sans-serif;
   font-size: 10px;

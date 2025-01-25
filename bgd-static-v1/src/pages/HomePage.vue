@@ -1425,7 +1425,10 @@
   </q-dialog>
 
   <q-dialog v-model="isCongratsModal">
-    <CongratsModal />
+    <!-- <CongratsModal /> -->
+    <div style="width:100%;">
+      <NewUserRoulette :promocode="'bgd-new-user-roulette'" :hideRulesAndDesc="true"/>
+    </div>
   </q-dialog>
 
   <q-dialog v-model="isCongratsModalV2">
@@ -1510,6 +1513,7 @@ import { onClickOutside, useEventListener } from "@vueuse/core";
 import { useCustomerTrigger } from "src/hooks/trigger";
 import chroma from "chroma-js";
 import SetFirstPasswordModal from "src/components/modal/SetFirstPasswordModal.vue";
+import NewUserRoulette from "src/components/hotpromo/newUserRoulette/NewUserRoulette.vue";
 
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
@@ -3945,7 +3949,7 @@ const showSpinWheel = () => {
 };
 
 const showCongratsModal = () => {
-  eventapi.get("/new-user-roulette/init").then((res) => {
+  eventapi.get("/session/bgd-new-user-roulette/init").then((res) => {
     if (res.code == 0) {
       if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
         isCongratsModal.value = true;
