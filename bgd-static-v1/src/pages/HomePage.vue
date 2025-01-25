@@ -3955,10 +3955,6 @@ const showCongratsModal = () => {
         isCongratsModal.value = true;
         // isCongratsModalV2.value = true;
       }
-
-      if(window.location.hostname === 'localhost') {
-        isCongratsModal.value = true;
-      }
     }
   });
 };

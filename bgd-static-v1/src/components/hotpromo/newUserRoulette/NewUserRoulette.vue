@@ -442,11 +442,6 @@ const initSpinWheel = () => {
       remainingDraws.value = res.data.spinChance;
       showRoulette.value = res.data.showRoulette === "YES";
     }
-
-    if(window.location.hostname === 'localhost') {
-      remainingDraws.value = 100;
-      showRoulette.value = true;
-    }
   });
 };
 
