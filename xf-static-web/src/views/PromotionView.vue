@@ -87,14 +87,19 @@
         </div>
         <div
           class="inner"
-          :class="
-            selectedPromo.promoCode === 'cny-hongbaoyu' ||
-            selectedPromo.redirectUrl === 'cny-hongbaoyu' ||
-            selectedPromo.promoCode === 'xf-eurocup-hongbao' ||
-            selectedPromo.redirectUrl === 'xf-eurocup-hongbao'
-              ? 'hongbao'
-              : ''
+          :class="{
+            hongbao: selectedPromo.promoCode === 'cny-hongbaoyu' ||
+              selectedPromo.redirectUrl === 'cny-hongbaoyu' ||
+              selectedPromo.promoCode === 'xf-eurocup-hongbao' ||
+              selectedPromo.redirectUrl === 'xf-eurocup-hongbao',
+            fullwidth: selectedPromo.redirectUrl === 'xf1-cny2025-red-envelope'
+          }
           "
+          :style="{
+            backgroundImage: selectedPromo?.desktopImgBackgroundUrl
+              ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
+              : 'none'
+          }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
             <HotPromotion :list="selectedPromo" />
@@ -599,6 +604,26 @@ export default defineComponent({
     width: 100%;
 
     .selected-promo-wrapper {
+      &.bg__xf1-cny2025-red-envelope {
+        .inner {
+          width: 100%;
+          max-width: 100%;
+          margin: 0;
+        }
+
+        .banner-container {
+
+          .promo-bg {
+            background-size: 100% 100%;
+
+            &.isDesktop {
+              min-height: 569px;
+              aspect-ratio: unset;
+            }
+          }
+        }
+      }
+
       &.bg__xf-eurocup-hongbao {
         padding-bottom: 0px;
         background-color: #090b18;

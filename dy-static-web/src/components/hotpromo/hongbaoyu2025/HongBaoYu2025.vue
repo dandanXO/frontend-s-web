@@ -149,6 +149,7 @@ const getPromotionPrize = () => {
 .livepoker-rebate-wrapper {
   display: flex;
   justify-content: center;
+  padding-bottom: 100px;
 }
 .livepoker-rebate-container {
   width: 1200px;
@@ -159,11 +160,11 @@ const getPromotionPrize = () => {
   box-shadow: 0px 0px 4px 0px #01497b0f;
   padding: 30px 40px;
   border-radius: 12px;
-  border: 1px solid #acd4f6;
+  // border: 1px solid #acd4f6;
   margin-top: 40px;
   display: flex;
   justify-content: center;
-  background: url("@/assets/promo/lh-livepoker-rebate/section-bg.png");
+  background: url("@/assets/images/promotion/hotpromo/hongbaoyu2025/section-bg-w-decor.png");
   background-size: 100% 100%;
 
   .bonus-image {
@@ -230,12 +231,14 @@ const getPromotionPrize = () => {
   background: #f2f8fe;
   border-radius: 12px;
   padding: 40px;
-  border: 1px solid #acd4f6;
+  // border: 1px solid #acd4f6;
   box-shadow: 0px 0px 4px 0px #01497b0f;
   display: flex;
   flex-direction: column;
   // align-items: center;
   gap: 20px;
+  background: url("@/assets/images/promotion/hotpromo/hongbaoyu2025/section-bg.png");
+  background-size: 100% 100%;
 
   .title {
     background-image: url("@/assets/promo/lh-livepoker-rebate/info-title.png");
@@ -252,7 +255,7 @@ const getPromotionPrize = () => {
     align-items: flex-start;
     gap: 10px;
     .left {
-      background-image: url("@/assets/promo/lh-livepoker-rebate/info-little-title-bg.png");
+      background-image: url("@/assets/images/promotion/hotpromo/hongbaoyu2025/ribbon.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       width: 120px;
@@ -263,7 +266,7 @@ const getPromotionPrize = () => {
       font-size: 16px;
       font-weight: 600;
       line-height: 23.33px;
-      color: #ffffff;
+      color: #894800;
       margin-right: 16px;
     }
     .right {
@@ -288,8 +291,8 @@ const getPromotionPrize = () => {
     font-size: 20px;
     font-weight: 400;
     line-height: 28px;
-    color: #fff;
-    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    color: #894800;
+    background: linear-gradient(180deg, #FFE190 0%, #FF9F40 100%);
     &:first-child {
       border-top-left-radius: 12px;
     }
@@ -330,11 +333,14 @@ const getPromotionPrize = () => {
   background: #f2f8fe;
   border-radius: 12px;
   padding: 40px;
-  border: 1px solid #acd4f6;
+  // border: 1px solid #acd4f6;
   box-shadow: 0px 0px 4px 0px #01497b0f;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: url("@/assets/images/promotion/hotpromo/hongbaoyu2025/section-bg.png");
+  background-size: 100% 100%;
+
   .title {
     background-image: url("@/assets/promo/lh-livepoker-rebate/rule-title.png");
     background-repeat: no-repeat;
