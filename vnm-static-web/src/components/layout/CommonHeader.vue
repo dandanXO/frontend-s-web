@@ -1872,7 +1872,6 @@ body {
   }
 
   &.cny-login-btn, &.cny-register-btn {
-    &::before,
     &::after {
       content: "";
       position: absolute;

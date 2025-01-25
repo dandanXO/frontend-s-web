@@ -393,7 +393,6 @@ const openGame = (gameName, code, gameCode) => {
   &.active {
     position: relative;
 
-    &::before,
     &::after {
       content: "";
       position: absolute;
