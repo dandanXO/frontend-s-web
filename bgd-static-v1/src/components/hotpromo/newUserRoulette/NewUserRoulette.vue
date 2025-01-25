@@ -365,23 +365,23 @@ const handleBtnClick = () => {
 
 const spinWheel = () => {
   //FOr TesTING START
-  const res = {
-    data: {
-      showRoulette: "YES",
-      spinChance: 1,
-      hasUnusedCoupon: "NO",
-      privilegeId: null
-    }
-  };
-  var bonusIndex = "bgd-roulette-deposit-get-18";
-  prizeIndex.value = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
-  showRoulette.value = res.data.showRoulette === "YES";
-  spin(prizeIndex.value, () => {
-    showPrizePopup.value = true;
-    prizePopupBonus.value = bonusIndex;
-    remainingDraws.value = res.data.spinChance;
-  });
-  return;
+  // const res = {
+  //   data: {
+  //     showRoulette: "YES",
+  //     spinChance: 1,
+  //     hasUnusedCoupon: "NO",
+  //     privilegeId: null
+  //   }
+  // };
+  // var bonusIndex = 500;
+  // prizeIndex.value = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
+  // showRoulette.value = res.data.showRoulette === "YES";
+  // spin(prizeIndex.value, () => {
+  //   showPrizePopup.value = true;
+  //   prizePopupBonus.value = bonusIndex;
+  //   remainingDraws.value = res.data.spinChance;
+  // });
+  // return;
   //FOr TesTING END
   if (spinButtonDisable.value === true) {
     return;
@@ -442,13 +442,18 @@ const initSpinWheel = () => {
       remainingDraws.value = res.data.spinChance;
       showRoulette.value = res.data.showRoulette === "YES";
     }
+
+    // if(window.location.hostname === 'localhost') {
+    //   remainingDraws.value = 100;
+    //   showRoulette.value = true;
+    // }
   });
 };
 
 onMounted(() => {
   // calc no of spin wheel items and potential stops
   for (var i = 0; i < TOTAL_ITEMS; i++) {
-    var the_degree = (FULL_DEGREE / TOTAL_ITEMS) * i * -1;
+    var the_degree = ((FULL_DEGREE / TOTAL_ITEMS) * i * -1) + 20;
     degreesToStopAt.value.push({ degree: the_degree, prize: SPIN_WHEEL_PRIZES[i] });
   }
 

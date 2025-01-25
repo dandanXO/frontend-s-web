@@ -1393,15 +1393,22 @@ onMounted(() => {
 
 @media (max-width: 400px) {
   .deposit-item-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    .deposit-item {
+      .deposit-amt {
+        padding: 2px 8px;
+      }
+    }
   }
 }
 
-@media (max-width: 280px) {
+@media (max-width: 330px) {
   .deposit-item-container {
-    display: grid;
-    grid-template-columns: 1fr;
+    .deposit-item {
+      .deposit-amt {
+        padding: 2px 4px;
+        letter-spacing: -1px;
+      }
+    }
   }
 }
 </style>
