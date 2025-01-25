@@ -197,7 +197,7 @@ export default {
     cancel: "বাতিল করুন",
     signOut: "সাইন আউট করুন",
     back: "পিছনে",
-    joinnow: "ابھی شامل ہوں",
+    joinnow: "এখনই যোগ দিন",
     moreGames: "আরো গেম",
     addCash: "ক্যাশ যোগ করুন",
     search: "অনুসন্ধান করুন",
