@@ -535,7 +535,7 @@ onMounted(() => {
   }
 
   .spin-btn {
-    width: 100px;
+    width: 90px;
   }
 
   .draw-btn {
