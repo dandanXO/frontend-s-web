@@ -12,6 +12,18 @@
         alt="TF88 slot right ribbon"
       />
     </template>
+    <template v-else-if="store?.theme === 'CNY'">
+      <img
+        class="header-decoration left"
+        src="@/assets/images/home/cny/cny-header-decoration-left.png"
+        alt="TF88 slot left ribbon"
+      />
+      <img
+        class="header-decoration right"
+        src="@/assets/images/home/cny/cny-header-decoration-right.png"
+        alt="TF88 slot right ribbon"
+      />
+    </template>
     <div class="top-nav-wrapper">
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
@@ -22,8 +34,8 @@
         <LocaleChanger />
 
         <div v-if="!store.token" class="right-contents">
-          <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">{{ $t("common.login") }}</a>
-          <a class="header-btn btn-color-white" :class="ui.edition" @click="registerDialogVisible = true">
+          <a class="header-btn btn-color-blue" @click="loginDialogVisible = true" :class="`${store?.theme === 'CNY' ? 'cny-login-btn' : ''}`">{{ $t("common.login") }}</a>
+          <a class="header-btn btn-color-white" :class="`${ui.edition} ${store?.theme === 'CNY' ? 'cny-register-btn' : ''}`" @click="registerDialogVisible = true">
             {{ $t("common.register") }}
             <img v-if="ui.edition === EDITION.NORMAL" src="../../assets/home/regbtn_side.png" alt="football" />
             <img v-if="ui.edition === EDITION.SLOT" src="@/assets/home/regbtn-side-slot-edition.png" alt="slot" />
@@ -1840,7 +1852,36 @@ body {
     img {
       position: absolute;
       right: -10px;
-      top: -20px;
+      top: -30px;
+    }
+  }
+
+  &.cny-login-btn {
+    background: url("@/assets/images/home/cny/cny-primary-btn.png") no-repeat center center;
+    background-size: 100% 100%;
+    box-shadow: none;
+    color: $color-white;
+    position: relative;
+  }
+
+  &.cny-register-btn {
+    background: url("@/assets/images/home/cny/cny-secondary-btn.png") no-repeat center center;
+    background-size: 100% 100%;
+    box-shadow: none;
+    position: relative;
+  }
+
+  &.cny-login-btn, &.cny-register-btn {
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      right: -10px;
+      width: 46px;
+      height: 36px;
+      background-image: url("@/assets/images/home/cny/gold-cloud-btn-decor.png");
+      background-repeat: no-repeat;
     }
   }
 
