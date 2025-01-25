@@ -3949,7 +3949,7 @@ const showSpinWheel = () => {
 };
 
 const showCongratsModal = () => {
-  eventapi.get("/new-user-roulette/init").then((res) => {
+  eventapi.get("/session/bgd-new-user-roulette/init").then((res) => {
     if (res.code == 0) {
       if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
         isCongratsModal.value = true;
