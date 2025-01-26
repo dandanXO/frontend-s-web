@@ -317,7 +317,7 @@
                           dense
                           class="text-green"
                           :label="!startCountdownResendOTP && $t('form.send')"
-                          :disable="!formDetail.email || startCountdownResendOTP"
+                          :disable="!updateEmailInfo.email || startCountdownResendOTP"
                           @click="openVerificationCodeDialog"
                         />
                       </div>
@@ -842,7 +842,7 @@ const copyLoginName = () => {
 
 const verificationCodeDialog = ref(false);
 const openVerificationCodeDialog = () => {
-  if(store.email) {
+  if (store.email) {
     verificationCodeDialog.value = !verificationCodeDialog.value;
     return;
   }
@@ -1454,9 +1454,10 @@ const submitUpdateEmail = () => {
 
   if (updateEmailRef.value.hasError || updateEmailCodeRef.value.hasError) {
   } else {
-    const endpoint = store.email ? "/otp/verifyEmail" : "/session/verifyAndUpdateEmail"
+    const endpoint = store.email ? "/otp/verifyEmail" : "/session/verifyAndUpdateEmail";
     api
-      .post(endpoint,
+      .post(
+        endpoint,
         qs.stringify({
           email: updateEmailInfo.email,
           code: updateEmailInfo.code,
