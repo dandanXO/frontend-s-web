@@ -465,14 +465,12 @@ export default defineComponent({
         console.log("User info:", user);
         alert(user);
 
-        const credential = GoogleAuthProvider.credentialFromResult(user);
-
         (() => {
           thirdPartyLoginInfo.siteId = process.env.SITEID;
           thirdPartyLoginInfo.thirdParty = "GOOGLE";
           thirdPartyLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
-          thirdPartyLoginInfo.accessToken = credential.accessToken;
-          thirdPartyLoginInfo.idToken = credential.idToken;
+          thirdPartyLoginInfo.accessToken = user.authentication.accessToken;
+          thirdPartyLoginInfo.idToken = user.authentication.idToken;
 
           api
             .post("/member/thirdPartyLogin", qs.stringify(thirdPartyLoginInfo))
