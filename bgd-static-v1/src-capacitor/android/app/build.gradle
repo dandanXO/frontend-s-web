@@ -3,6 +3,7 @@ apply plugin: 'cloudwise'
 
 cloudwise { injectDebug = true }
 
+
 android {
     namespace "com.ind.appb9bgd"
     compileSdkVersion rootProject.ext.compileSdkVersion

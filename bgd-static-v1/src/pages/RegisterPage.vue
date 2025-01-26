@@ -250,6 +250,10 @@
         &nbsp;
         {{ $t("btn.signinWithGoogle") }}
       </q-btn>
+
+      <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onCapacitorGoogleSignin">
+        Android APP GOOGLE
+      </q-btn>
     </div>
 
     <div class="btn-lists">
@@ -291,16 +295,16 @@ import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { t } from "src/boot/lang";
 import qs from "qs";
-// import PrimaryButton from "../components/auth/PrimaryButton.vue";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { isAndroid, isInPwa, trackNewUserFtd } from "boot/utils";
 import FancyIcon from "src/components/auth/FancyIcon.vue";
-import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
 import { useI18n } from "vue-i18n";
+import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -451,7 +455,64 @@ export default defineComponent({
       getCode();
       getReferralCode();
       getAffiliateCode();
+
+      GoogleAuth.initialize();
     });
+
+    const onCapacitorGoogleSignin = async () => {
+      try {
+        const user = await GoogleAuth.signIn();
+        console.log("User info:", user);
+        alert(user);
+
+        const credential = GoogleAuthProvider.credentialFromResult(user);
+
+        (() => {
+          thirdPartyLoginInfo.siteId = process.env.SITEID;
+          thirdPartyLoginInfo.thirdParty = "GOOGLE";
+          thirdPartyLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
+          thirdPartyLoginInfo.accessToken = credential.accessToken;
+          thirdPartyLoginInfo.idToken = credential.idToken;
+
+          api
+            .post("/member/thirdPartyLogin", qs.stringify(thirdPartyLoginInfo))
+            .then((ret) => {
+              const res = ret;
+              console.log("res:", res);
+
+              if (res.code === 0) {
+                $q.notify({
+                  color: "positive",
+                  position: "top",
+                  message: "Google login successfully",
+                  icon: "check_circle_outline"
+                });
+
+                store.autoLogin(res.data);
+                sessionStorage.removeItem("REFERRAL_CODE");
+                if (store.hasToken()) {
+                  router.push("/home");
+                }
+              } else {
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message: res.message,
+                  icon: "report_problem"
+                });
+              }
+              $q.loading.hide();
+            })
+            .catch((error) => {
+              $q.loading.hide();
+            });
+          // getCode();
+        })();
+      } catch (error) {
+        console.error("Google Sign-In error:", error);
+        alert(error);
+      }
+    };
 
     const onClickGoogleSignin = async () => {
       const provider = await new GoogleAuthProvider();
@@ -918,6 +979,7 @@ export default defineComponent({
       openCharity,
       downloadApp,
       onClickGoogleSignin,
+      onCapacitorGoogleSignin,
       loginNameType,
       languageVal
     };
