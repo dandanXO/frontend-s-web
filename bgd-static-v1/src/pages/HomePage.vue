@@ -1427,7 +1427,7 @@
   <q-dialog v-model="isCongratsModal">
     <!-- <CongratsModal /> -->
     <div style="width:100%;">
-      <NewUserRoulette :promocode="'bgd-new-user-roulette'" :hideRulesAndDesc="true"/>
+      <NewUserRoulette :promocode="'bgd-new-user-roulette'" :hideRulesAndDesc="true" :closePopup="() => isCongratsModal = false"/>
     </div>
   </q-dialog>
 
@@ -3922,11 +3922,7 @@ const checkGoogleLoginSetPwd = () => {
 };
 
 const checkSpinWheel = () => {
-  if (store.hasToken() && isAndroid()) {
-    setTimeout(() => {
-      showSpinWheel();
-    }, 750);
-  } else if (store.hasToken() && !isAndroid()) {
+  if (store.hasToken()) {
     showCongratsModal();
   }
 };

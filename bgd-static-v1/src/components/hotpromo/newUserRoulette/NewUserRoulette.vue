@@ -193,7 +193,7 @@ import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
 import FancyIcon from "src/components/auth/FancyIcon.vue";
 
-const props = defineProps(["promocode", "hideRulesAndDesc"]);
+const props = defineProps(["promocode", "hideRulesAndDesc", "closePopup"]);
 
 const { t } = useI18n();
 const $q = useQuasar();
@@ -361,6 +361,10 @@ const getPrizeTxt = (prize) => {
 const handleBtnClick = () => {
   showPrizePopup.value = false;
   if (store.token) store.getBalance();
+
+  if(props?.closePopup) {
+    props?.closePopup();
+  }
 };
 
 const spinWheel = () => {
