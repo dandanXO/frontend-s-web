@@ -185,7 +185,6 @@
           v-if="hasPrivilege && unselectedPrivileges.length > 0"
           :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
           clearable
-          @update:model-value="onChangePrivilege"
         >
           <template v-slot:option="scope">
             <q-item v-bind="scope.itemProps">
@@ -428,10 +427,12 @@ const isFtdPrivilegePayType = computed(
 
 const onCheckFtdCheckbox = (status) => {
   if(status === true) {
-    const ftdPrivilege = privilegeList.value.find((privilege) => privilege.code === 'bgd-email-verify-bonus');;
-    if(ftdPrivilege) {
-      selectedPrivilege.value = ftdPrivilege;
-      onChangePrivilege(ftdPrivilege);
+    if(extraPrivilegeId.value) {
+      selectedPrivilege.value = { id: extraPrivilegeId.value, payTypes: paytypeWithPrivilege.value };
+      
+      if (!store.email || store.emailVerified !== true) {
+        showBindEmailDialog.value = true;
+      }
     }
   } else {
     selectedPrivilege.value = undefined;
@@ -502,12 +503,6 @@ const calculatedMaxDeposit = ref("");
 // ]);
 
 const depositItems = ref([]);
-
-const onChangePrivilege = (privilege) => {
-  if (privilege?.code === "bgd-email-verify-bonus" && (!store.email || store.emailVerified !== true)) {
-    showBindEmailDialog.value = true;
-  }
-};
 
 const handleDepositItemClick = (index) => {
   depositItems.value.forEach((item, i) => {
@@ -703,7 +698,7 @@ function clearInfo() {
 
 const depositAmtRef = ref("");
 async function confirmDeposit() {
-  if (selectedPrivilege.value?.code === "bgd-email-verify-bonus" && (!store.email || store.emailVerified !== true)) {
+  if (extraPrivilegeId.value && (!store.email || store.emailVerified !== true)) {
     showBindEmailDialog.value = true;
     return;
   }
