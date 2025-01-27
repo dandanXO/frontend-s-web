@@ -542,7 +542,7 @@ const getDailyCheckInData = () => {
 };
 
 const getRankingList = () => {
-  eventapi.post(`/session/bgd-daily-check-in/top-ranking?${props.promocode}`).then((res) => {
+  eventapi.post(`/session/bgd-daily-check-in/top-ranking?promoCode=${props.promocode}`).then((res) => {
     rankingList.value = res.data;
   });
 };
@@ -586,13 +586,15 @@ const claimReward = () => {
           icon: "report_problem"
         });
 
-        if (store.phone && !store.email) {
-          bindEmailDialog.value = true;
-        }
-
         if (store.email && !store.phone) {
           changePhoneDialog.value = true;
         }
+
+        if (store.phone && (!store.email || !store.emailVerified)) {
+          bindEmailDialog.value = true;
+        }
+
+
       }
     })
     .catch(() => {})
@@ -613,9 +615,11 @@ const submitUpdateEmail = () => {
 
   if (updateEmailRef.value.hasError || updateEmailCodeRef.value.hasError) {
   } else {
+    const endpoint = store.email ? "/otp/verifyEmail" : "/session/verifyAndUpdateEmail"
+
     api
       .post(
-        "/session/verifyAndUpdateEmail",
+        endpoint,
         qs.stringify({
           email: updateEmailInfo.email,
           code: updateEmailInfo.code,
@@ -650,30 +654,34 @@ const submitUpdateEmail = () => {
 
 const verificationCodeDialog = ref(false);
 const openVerificationCodeDialog = () => {
-  api
-    .get(`/member/checkEmailRegisterStatus?email=${updateEmailInfo.email}`)
-    .then((response) => {
-      if (response.code === 0) {
-        if (response.data) {
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: t("notify.emailAlreadyUsed"),
-            icon: "report_problem"
-          });
-        } else {
-          verificationCodeDialog.value = !verificationCodeDialog.value;
+  if(!store.email) {
+    api
+      .get(`/member/checkEmailRegisterStatus?email=${updateEmailInfo.email}`)
+      .then((response) => {
+        if (response.code === 0) {
+          if (response.data) {
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: t("notify.emailAlreadyUsed"),
+              icon: "report_problem"
+            });
+          } else {
+            verificationCodeDialog.value = !verificationCodeDialog.value;
+          }
         }
-      }
-    })
-    .catch((e) => {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: e.message,
-        icon: "report_problem"
+      })
+      .catch((e) => {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: e.message,
+          icon: "report_problem"
+        });
       });
-    });
+  }else{
+    verificationCodeDialog.value = !verificationCodeDialog.value;
+  }
 
   captchaRef.value = "";
   getCode();

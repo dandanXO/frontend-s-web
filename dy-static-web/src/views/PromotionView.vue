@@ -138,7 +138,8 @@
               selectedPromo.promoCode === 'dy2-s14-vote' ||
               selectedPromo.promoCode === 'dy2-elisa-gift' ||
               selectedPromo.promoCode === 'dy2-blast-premier-treasure' ||
-              selectedPromo.redirectUrl === 'dy2-christmas-gashapon',
+              selectedPromo.redirectUrl === 'dy2-christmas-gashapon' ||
+              selectedPromo.redirectUrl === 'dy2-cny2025-red-envelope',
             duanwujie:
               selectedPromo.promoCode === 'dy-duanwujie24' || selectedPromo.redirectUrl === 'lh-blackmyth-wukong',
             dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2',

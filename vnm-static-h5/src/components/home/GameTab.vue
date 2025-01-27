@@ -1,6 +1,6 @@
 <template>
   <div class="game-platform btn-pointer" @click="$emit('click')">
-    <div class="game-tab-bg" :class="selected === code && 'active'">
+    <div class="game-tab-bg" :class="`${selected === code && 'active'} ${store?.theme === 'CNY' ? 'cny-bg' : ''}`">
       <div class="game-tab-content">
         <div :class="`${imgMapping}-icon`" />
         <div class="label">{{ text }}</div>
@@ -16,6 +16,7 @@
 </template>
 <script setup>
 import { computed } from "vue";
+import { userStore } from "stores/index";
 
 const props = defineProps({
   code: String,
@@ -25,6 +26,8 @@ const props = defineProps({
 defineEmits(["click"]);
 
 const selected = defineModel();
+
+const store = userStore();
 
 const imgMapping = computed(() => {
   switch (props.code) {

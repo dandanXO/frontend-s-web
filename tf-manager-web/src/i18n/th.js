@@ -1285,6 +1285,7 @@ export default {
     configDescribes: 'Config Describes',
     batchFrozenMember: 'แช่แข็งสมาชิกแบบกลุ่ม',
     showLogo: 'แสดงไอคอน',
+    showTime: 'Show Time',
     isSeamlessTransfer: 'ไม่มีการโอน',
     fromPlatform: 'จากแพลตฟอร์ม',
     fromGameCode: 'จากโค้ดเกม',

@@ -2212,6 +2212,7 @@ export default {
     endHour: '结束小时',
     oldBetAmount: '老站流水金额',
     showLogo: '显示图标',
+    showTime: '显示时间',
     adjustTarget: '平账目标',
     ignoreSettlement: '忽略结算',
     sendType: '发送方法',

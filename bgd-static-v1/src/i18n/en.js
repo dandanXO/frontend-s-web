@@ -226,6 +226,7 @@ export default {
     feedbackSentSuccess: "Your feedback has been sent successfully!",
     quitGameMessage: "Are you sure want to quit? Click Confirm to quit the game.",
     signOutMessage: "Are you sure you want to sign out?",
+    cardBindSuccessBackPromo: "Your card has been added successfully, do you want to back to promo page?",
     plsLoginToContinue: "Please login to continue",
     uploadImageLargerThan1MbError: "The uploaded image cannot be larger than 1MB",
     imageFormatError: "Image format error",
@@ -325,7 +326,7 @@ export default {
     depositTutorial: "Deposit Tutorial",
     select_privilege: "Select Privilege",
     incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again.",
-    useFtdPrivilege: "Use Slot First Deposit Privilege",
+    useFtdPrivilege: "New players' first deposit 119% bonus",
     unlimited: "Unlimited",
     depositTips1: "1. Recharge tutorial:",
     depositTips2: "2. Fill in the correct payment wallet account number.",
@@ -891,6 +892,30 @@ export default {
       termsCondition6:
         "If a player chooses to bet on other games, such as poker, sports, electronic games, live or exclusive games, WIN7 reserves the right to forfeit winnings and any resulting profits.",
       termsCondition7: "WIN7.GAME reserves the right to modify, suspend or cancel this event at any time."
+    },
+    newUserRoulette: {
+      congratsOnSignUpBonus: "Congratulations on your sign up bonus",
+      recharge100get18: "Recharge 100 and get 18 free",
+      recharge200get28: "Recharge 200 and get 28 free",
+      remainingDrawTimes: "Remaining draw times",
+      remainingTime: "Remaining time",
+      timePeriod: "Time Period",
+      numberOfPlaces: "Number of Places",
+      signUpBonus1:
+        "After registering, users can get a chance to win a carousel lottery, and no deposit is required to participate.",
+      signUpBonus2: "Lottery bonus amounts include:",
+      signUpBonus3: "And bonuses for deposits.",
+      signUpBonus4: "The quota has been used up during the current period:",
+      signUpBonus5:
+        "(For example, during the period, a member participated in the carousel and won 18, 58, 88, etc. but the quota has been used up. It will prompt that the quota has been claimed. A deposit coupon will be randomly given. For example, if you deposit 100, you will get 18, or if you deposit 200, you will get 28)",
+      activityRule1:
+        "The bonus earned can be transferred directly to the account, and users only need to meet the 1x turnover requirement to apply for withdrawal.",
+      activityRule2:
+        "Before participating in the spin, you must enter your original name in the associated withdrawal account (must be consistent with the name of your associated withdrawal account). and verify the email.",
+      activityRule3:
+        "The bank account number and any information cannot be changed before the first withdrawal request. If correction is required, bonuses and profits will be deducted.",
+      activityRule4:
+        "Each player can only receive one promotional bonus. If the system detects duplicates involving the same IP address, bank card or phone number, bonuses and profits will be forfeited."
     }
   },
   maintenance: {

@@ -179,7 +179,8 @@ export default boot(({ app, router }) => {
         res.code === ResponseCode.ERROR_WITHDRAW_LIMIT_MEMBER ||
         res.code === ResponseCode.ERROR_NO_ELIGIBLE_PLAN_FOUND ||
         res.code === ResponseCode.ERROR_NO_CASH_FLOW ||
-        res.code === ResponseCode.ERROR_EMAIL_PHONE_NOT_VERIFIED
+        res.code === ResponseCode.ERROR_EMAIL_PHONE_NOT_VERIFIED ||
+        res.code === ResponseCode.ERROR_NO_BIND_WITHDRAWAL_ACC
       ) {
         res.message =
           i18n.global.t("error." + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error";

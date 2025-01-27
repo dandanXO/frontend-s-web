@@ -1909,6 +1909,7 @@ export default {
     self: '(본인)',
     batchFrozenMember: '회원 일괄 동결',
     showLogo: '아이콘 표시',
+    showTime: 'Show Time',
     adjustTarget: '목표 조정',
     ignoreSettlement: '결제를 무시하다',
     sendType: '전송 방법',

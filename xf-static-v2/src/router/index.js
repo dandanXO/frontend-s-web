@@ -22,6 +22,7 @@ function isInApp() {
     (window.location.pathname === "/vip" && hasToken) ||
     (window.location.pathname === "/promotion" && hasToken) ||
     window.location.pathname === "/invitefriend" ||
+    window.location.pathname === "/deposit" ||
     window.location.pathname === "/affiliatepage"
   ) {
     return true;
@@ -62,6 +63,7 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/login" ||
       to.path === "/register" ||
       to.path === "/promotion" ||
+      to.path === "/deposit" ||
       to.path === "/invitefriend" ||
       to.path === "/vip" ||
       to.path === "/affiliatepage"
@@ -71,7 +73,7 @@ export default route(function (/* { store, ssrContext } */) {
       ui.showFooter();
     }
 
-    if (to.path === "/promotion" || to.path === "/invitefriend" || to.path === "/vip" || to.path === "/affiliatepage") {
+    if (to.path === "/promotion" || to.path === "/invitefriend" || to.path === "/vip" || to.path === "/affiliatepage" || to.path === "/deposit") {
       if (isAndroid()) {
         localStorage.setItem("TOKEN", to.query.token);
       } else {
