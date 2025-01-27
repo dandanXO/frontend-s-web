@@ -600,6 +600,12 @@ export default defineComponent({
   padding: 30px;
   font-family: "PingFang";
 
+  &.cny {
+    background: url("../assets/images/promotion/hotpromo/hongbaoyu2025/section-bg.png");
+    background-size: 100% 100%;
+    border: none;
+  }
+
   .claim-title-icon,
   .claim-coin-icon,
   .claim-gift-icon,
@@ -659,6 +665,13 @@ export default defineComponent({
       color: #333;
       background: transparent !important;
     }
+
+    &.cny {
+      th {
+        background: linear-gradient(180deg, #FFE190 0%, #FF9F40 100%) !important;
+        color: #894800 !important;
+      }
+    }
   }
 
   .element-bg {
@@ -680,6 +693,11 @@ export default defineComponent({
     font-size: 16px;
     width: fit-content;
     padding: 0px 20px 0px 10px;
+
+    &.cny {
+      background: linear-gradient(180deg, #FFE190 0%, #FF9F40 100%);
+      color: #894800;
+    }
   }
 
   .title-img {

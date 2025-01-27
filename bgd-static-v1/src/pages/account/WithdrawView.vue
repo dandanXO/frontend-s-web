@@ -559,7 +559,7 @@ onMounted(() => {
 });
 
 onActivated(() => {
-  checkNewUser();
+  // checkNewUser();
   store.getBalance();
   // loadPlatform()
 });
