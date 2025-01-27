@@ -182,6 +182,7 @@ const claimAppLoginBonus = () => {
     .post(`/session/app-login-bonus/claimBonus?promoCode=${props.promocode}`)
     .then((res) => {
       if (res.code === 0) {
+        isShowReceiveDialog.value= true;
         bonusAmount.value = res.data;
       }
     })
