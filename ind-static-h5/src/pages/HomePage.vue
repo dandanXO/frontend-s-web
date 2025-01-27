@@ -214,7 +214,7 @@
                         <img src="../assets/images/index/hot.png" />
                       </div>
 
-                      <div class="platform-game-title">{{ truncateText(item.platform, 22) }}</div>
+                      <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
                     </div>
                   </swiper-slide>
                 </template>
@@ -2127,8 +2127,8 @@ const loadHotGameList = () => {
             return { ...item5, ...matchingItem };
           });
 
-          // console.log("End");
-          // console.log(JSON.stringify(hotGameList.value));
+          console.log("End");
+          console.log(hotGameList.value);
           // console.log(livecasino.value);
           isHotGameLoading.value = false;
         });
