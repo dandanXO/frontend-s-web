@@ -1,5 +1,5 @@
 <template>
-  <router-view />
+  <router-view ref="routerView" />
 </template>
 
 <script>
@@ -127,13 +127,61 @@ export default defineComponent({
       }
     };
 
+    const sendFacebookInfo = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const fbclid = urlParams.get("fbclid");
+      const fbc = fbclid;
+      const siteCode = "IND";
+
+      const getCookie = (name) => {
+        const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
+        return match ? decodeURIComponent(match[1]) : null;
+      };
+
+      // const fbp = getCookie("_fbp");
+      // Extract the last portion of _fbp
+      const fbp = (() => {
+        const rawFbp = getCookie("_fbp");
+        return rawFbp ? rawFbp.split(".").pop() : null;
+      })();
+
+      const payload = new URLSearchParams({
+        fbp: fbp || "",
+        fbc: fbc || "",
+        siteCode: siteCode
+      });
+
+      // Make the POST request
+      fetch("https://tljwn.plan2wtion.com/app/facebookInfo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: payload.toString()
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    };
+
     const trackH5Affiliate = () => {
       const omitSites = ["bw3.genoortisy.com"];
 
       if (isInPwa()) {
+        api.get(`/app/pwa/log?step=OPEN&siteCode=${process.env.SITE}`).then((res2) => {
+          console.log("OPEN");
+        });
+
         const hostname = window.location.hostname.replace("www.", "");
+        const urlParams = new URLSearchParams(window.location.search);
+        const affiliateCodeFromUrl = urlParams.get('affiliateCode');
+
         //Use thisApi to get AffiliateCode/FbPixelId/ WebPushId for PWA.
-        api.get(`/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}`).then((res) => {
+        api.get(`/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${affiliateCodeFromUrl}`).then((res) => {
           console.log(res);
           const { affiliateCode, facebookId, pushId } = res.data;
           sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
@@ -143,6 +191,7 @@ export default defineComponent({
           store.isFbPixel = true;
 
           initEngageLabPush(pushId);
+          sendFacebookInfo();
         });
       } else {
         var affiliateCode = "";
@@ -376,10 +425,40 @@ export default defineComponent({
             // Custom permission prompt logic
           }
         });
+
+        if (isInPwa()) {
+          const fbclid = window.localStorage.getItem("fbclid");
+          if (fbclid && !window.location.search.includes("fbclid")) {
+            const url = new URL(window.location.href);
+            url.searchParams.set("fbclid", fbclid);
+            window.history.replaceState({}, "", url.toString());
+          }
+
+          // request fullscreen for pwa
+          nextTick(() => {
+            const fullscreenFunction = requestFullscreen();
+            if (fullscreenFunction) {
+              fullscreenFunction.call(document.documentElement);
+              console.log("Fullscreen request triggered");
+            } else {
+              console.warn("Fullscreen API is not supported in this browser.");
+            }
+          });
+        }
       };
 
       // Start the notification permission check
       requestNotificationPermission();
+    };
+
+    const routerView = ref(null);
+
+    const requestFullscreen = () => {
+      console.log("Fullscreen~");
+      var root = document.documentElement;
+      return (
+        root.requestFullscreen || root.webkitRequestFullscreen || root.mozRequestFullScreen || root.msRequestFullscreen
+      );
     };
 
     onMounted(async () => {
@@ -408,6 +487,15 @@ export default defineComponent({
         trackH5Affiliate();
       }
 
+      // nextTick(() => {
+      //   const fullscreenFunction = requestFullscreen();
+      //   if (fullscreenFunction) {
+      //     fullscreenFunction.call(document.documentElement);
+      //   } else {
+      //     console.warn("Fullscreen API is not supported in this browser.");
+      //   }
+      // });
+
       // PWA
       // const hostname = window.location.hostname;
       // if (
@@ -424,6 +512,10 @@ export default defineComponent({
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);
     });
+
+    return {
+      routerView
+    };
   }
 });
 

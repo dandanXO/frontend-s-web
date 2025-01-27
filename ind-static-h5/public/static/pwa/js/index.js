@@ -49,6 +49,8 @@ installBtn.addEventListener("click", async () => {
       const urlParams = new URLSearchParams(window.location.search);
       const fbclid = urlParams.get("fbclid");
       if (fbclid) {
+        localStorage.setItem("fbclid", fbclid);
+
         // Retrieve _fbp directly
         const getCookie = (name) => {
           const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
@@ -128,7 +130,7 @@ installBtn.addEventListener("click", async () => {
       }
       break;
     case "PLAY":
-      window.open("/static/pwa/pwa-index.html", "_blank");
+      window.open(`/static/pwa/pwa-index.html`, "_blank");
       break;
   }
 });
@@ -184,7 +186,8 @@ window.addEventListener("load", () => {
   }
 
   if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) {
-    redirectToGame();
+    const fbclid = localStorage.getItem("fbclid");
+    redirectToGame(fbclid);
   }
 
   const installationStatus = localStorage.getItem(INSTALLATION_STATUS_KEY);
@@ -193,16 +196,34 @@ window.addEventListener("load", () => {
     container.setAttribute("data-type", installationStatus);
   }
 
+  const userAgent = navigator.userAgent.toLowerCase();
+  const isIos = /iphone|ipad|ipod/.test(userAgent);
+
   setTimeout(() => {
     if (deferredPrompt && installationStatus === "PLAY") {
       localStorage.removeItem(INSTALLATION_STATUS_KEY);
       container.setAttribute("data-type", "INSTALL");
     }
     loading.classList.remove("loading--show");
+
+    if (isIos) {
+      const currentDomain = window.location.origin;
+      window.location.href = `${currentDomain}/home`;
+      // window.location.href = `https://ind.55ace.com/home`;
+    }
   }, 2500);
 
   detectDeviceAndBrowser();
   countdown.innerHTML = `${INSTALL_COUNTDOWN}`;
+
+  // const userAgent = navigator.userAgent.toLowerCase();
+  // const isIos = /iphone|ipad|ipod/.test(userAgent);
+  // if (isIos) {
+  //   // document.querySelectorAll(".ios-modal").forEach((el) => (el.style.display = "flex"));
+  //   const currentDomain = window.location.origin;
+  //   // window.location.href = `${currentDomain}/home`;
+  //   window.location.href = `https://ind.55ace.com/home`
+  // }
 });
 
 /** browser detect **/

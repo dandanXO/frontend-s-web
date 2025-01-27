@@ -60,3 +60,15 @@ export const updateTagGame = async (game) => {
 export const getExportTagGame = (data) => {
   return https().request("/game/tagGameExport", Method.GET, data, ContentType.form);
 };
+
+export const updateTagGameFake = async (game) => {
+  await https().request(`/game/updateTagGameFake?_method=PUT`, Method.POST, game, ContentType.form);
+};
+
+export const updateTagGameFakeAll = async (game) => {
+  await https().request(`/game/updateTagGameFakeAll?_method=PUT`, Method.POST, game, ContentType.form);
+};
+
+export const reOrderTagGameSeq = async (siteId, label) => {
+  await https().request(`/game/reorderTagGameSequence?_method=PUT`, Method.POST, { siteId: siteId, label: label }, ContentType.form);
+};

@@ -381,7 +381,7 @@ export default defineComponent({
     };
 
     onMounted(async () => {
-      console.log("pak-static-h5");
+      console.log("pak-static-h5 0120");
 
       handleRedirect();
       // const info = await App.getInfo();

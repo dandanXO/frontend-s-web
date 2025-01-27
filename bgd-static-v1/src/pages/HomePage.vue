@@ -1425,7 +1425,10 @@
   </q-dialog>
 
   <q-dialog v-model="isCongratsModal">
-    <CongratsModal />
+    <!-- <CongratsModal /> -->
+    <div style="width:100%;">
+      <NewUserRoulette :promocode="'bgd-new-user-roulette'" :hideRulesAndDesc="true" :closePopup="() => isCongratsModal = false"/>
+    </div>
   </q-dialog>
 
   <q-dialog v-model="isCongratsModalV2">
@@ -1510,6 +1513,7 @@ import { onClickOutside, useEventListener } from "@vueuse/core";
 import { useCustomerTrigger } from "src/hooks/trigger";
 import chroma from "chroma-js";
 import SetFirstPasswordModal from "src/components/modal/SetFirstPasswordModal.vue";
+import NewUserRoulette from "src/components/hotpromo/newUserRoulette/NewUserRoulette.vue";
 
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
@@ -1628,6 +1632,9 @@ const checkHash = () => {
   }
 };
 
+// const referSpinWheelDragPos = ref([10, 300]);
+// const isDraggingReferSpinWheelGif = ref(false);
+
 const isCharityShow = computed(() => {
   if (ui.charityUrl) {
     return true;
@@ -1644,7 +1651,7 @@ const liveDragPos = ref([16, 0]);
 const isDraggingLiveIcon = ref(false);
 const isLiveUrlShow = ref(false);
 
-const hbDragPos = ref([10, 120]);
+const hbDragPos = ref([10, 150]);
 const isDraggingHbIcon = ref(false);
 const isHbShow = ref(true);
 const hbSlide = ref(0);
@@ -3567,31 +3574,43 @@ const detectAndroidVersion = () => {
   return "not-android";
 };
 
+const openReferSpinWheel = () => {
+  if (!store.token) {
+    router.push("/login");
+  } else {
+    router.push({ path: "/promo", query: { name: "bgd-refer-wheel" } });
+  }
+};
+// const moveReferSpinWheelGif = (ev) => {
+//   isDraggingReferSpinWheelGif.value = ev.isFirst !== true && ev.isFinal !== true;
+//
+//   referSpinWheelDragPos.value = [
+//     referSpinWheelDragPos.value[0] - ev.delta.x,
+//     referSpinWheelDragPos.value[1] - ev.delta.y
+//   ];
+// };
+
 const openCharityUrl = () => {
   window.open(ui.charityUrl, "_blank");
 };
 
 const moveCharityGif = (ev) => {
   isDraggingCharityGif.value = ev.isFirst !== true && ev.isFinal !== true;
-
   charityDragPos.value = [charityDragPos.value[0] - ev.delta.x, charityDragPos.value[1] - ev.delta.y];
 };
 
 const moveCsIcon = (ev) => {
   isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
-
   csDragPos.value = [csDragPos.value[0] - ev.delta.x, csDragPos.value[1] - ev.delta.y];
 };
 
 const moveLiveIcon = (ev) => {
   isDraggingLiveIcon.value = ev.isFirst !== true && ev.isFinal !== true;
-
   liveDragPos.value = [liveDragPos.value[0] - ev.delta.x, liveDragPos.value[1] - ev.delta.y];
 };
 
 const moveHbIcon = (ev) => {
   isDraggingHbIcon.value = ev.isFirst !== true && ev.isFinal !== true;
-
   hbDragPos.value = [hbDragPos.value[0] - ev.delta.x, hbDragPos.value[1] - ev.delta.y];
 };
 
@@ -3659,7 +3678,23 @@ const checkHbPromo = () => {
     })
     .then((data) => {
       // isHbShow.value = data.data.some((item) => item.code === "bgd-redpacketrain");
-      hbPromo.value = data.data;
+      hbPromo.value = [
+        {
+          id: 35,
+          siteId: 12,
+          type: "PROMO",
+          code: "bgd-refer-wheel",
+          platform: null,
+          icon: "12/ba4ecbbe-12d0-49c9-ae26-267ad7aaa244.gif",
+          status: true,
+          createTime: "2025-01-23 16:33:04",
+          createBy: "weiseng",
+          updateTime: "2025-01-23 16:34:00",
+          updateBy: "weiseng",
+          startTime: "2025-01-23 00:00:00",
+          endTime: "2026-02-28 00:00:00"
+        }
+      ];
     });
 };
 
@@ -3783,6 +3818,14 @@ const gotoFloatPromo = (val) => {
     }
   }
 
+  if (val.type === "PROMO") {
+    if (store.hasToken()) {
+      router.push(`/promo?name=${val.code}`);
+    } else {
+      router.push("/login");
+    }
+  }
+
   if (val.type === "DOMAIN") {
     window.open(val.code, "_blank");
   }
@@ -3879,11 +3922,7 @@ const checkGoogleLoginSetPwd = () => {
 };
 
 const checkSpinWheel = () => {
-  if (store.hasToken() && isAndroid()) {
-    setTimeout(() => {
-      showSpinWheel();
-    }, 750);
-  } else if (store.hasToken() && !isAndroid()) {
+  if (store.hasToken()) {
     showCongratsModal();
   }
 };
@@ -3906,7 +3945,7 @@ const showSpinWheel = () => {
 };
 
 const showCongratsModal = () => {
-  eventapi.get("/new-user-roulette/init").then((res) => {
+  eventapi.get("/session/bgd-new-user-roulette/init").then((res) => {
     if (res.code == 0) {
       if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
         isCongratsModal.value = true;

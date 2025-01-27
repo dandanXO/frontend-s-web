@@ -2,42 +2,68 @@
   <div class="login-container">
     <q-form class="rounded-borders" @submit="onSubmit">
       <div class="login-form-container">
-        <q-input ref="loginNameRef" rounded standout clearable dense v-model="regForm.loginName"
-          :placeholder="$t('lang.username')" :rules="[
+        <q-input
+          ref="loginNameRef"
+          rounded
+          standout
+          clearable
+          dense
+          v-model="regForm.loginName"
+          :placeholder="$t('lang.username')"
+          :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_enter_username'),
             (val) => (val && val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11'),
             (val) => /^[a-zA-Z0-9]*$/.test(val) || $t('lang.no_special_characters')
-          ]" color="white">
+          ]"
+          color="white"
+        >
           <template v-slot:prepend>
             <div class="user-icon" />
           </template>
         </q-input>
 
-        <q-input ref="pwdRef" rounded standout dense v-model="regForm.password" :placeholder="$t('lang.password')"
-          :type="isPwd ? 'password' : 'text'" :rules="[
+        <q-input
+          ref="pwdRef"
+          rounded
+          standout
+          dense
+          v-model="regForm.password"
+          :placeholder="$t('lang.password')"
+          :type="isPwd ? 'password' : 'text'"
+          :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_type_the_password'),
             (val) => (val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11')
-          ]" color="white">
+          ]"
+          color="white"
+        >
           <template v-slot:prepend>
             <div class="password-icon" />
           </template>
           <template v-slot:append>
-            <q-icon color="dark" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
-              @click="isPwd = !isPwd" />
+            <q-icon
+              color="dark"
+              :name="isPwd ? 'visibility_off' : 'visibility'"
+              class="cursor-pointer"
+              @click="isPwd = !isPwd"
+            />
           </template>
         </q-input>
         <div v-if="regForm.password" class="password-str-div">
-          <span :class="{
-            'weak-pwd': pwdStrength == 'weak',
-            'normal-pwd': pwdStrength == 'normal',
-            'strong-pwd': pwdStrength == 'strong'
-          }">
+          <span
+            :class="{
+              'weak-pwd': pwdStrength == 'weak',
+              'normal-pwd': pwdStrength == 'normal',
+              'strong-pwd': pwdStrength == 'strong'
+            }"
+          >
             {{ $t("lang.password_weak") }}
           </span>
-          <span :class="{
-            'normal-pwd': pwdStrength == 'normal',
-            'strong-pwd': pwdStrength == 'strong'
-          }">
+          <span
+            :class="{
+              'normal-pwd': pwdStrength == 'normal',
+              'strong-pwd': pwdStrength == 'strong'
+            }"
+          >
             {{ $t("lang.password_good") }}
           </span>
           <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">
@@ -45,18 +71,26 @@
           </span>
         </div>
 
-
-        <q-input ref="realNameRef" rounded standout dense clearable v-model="regForm.realName"
-          :placeholder="$t('lang.real_name')" :rules="[
+        <q-input
+          ref="realNameRef"
+          rounded
+          standout
+          dense
+          clearable
+          v-model="regForm.realName"
+          :placeholder="$t('lang.real_name')"
+          :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_enter_your_real_name'),
             (val) => (val && val.length >= 2) || $t('lang.real_name_validation'),
             (val) => isValidRealName(val)
-          ]" color="white">
+          ]"
+          color="white"
+        >
           <template v-slot:prepend>
             <div class="user-icon" />
           </template>
           <template v-slot:hint>
-            <div class="q-mb-xs" style="font-size: 11px; color: #cccccc; ">{{ $t("lang.real_name_hints") }}</div>
+            <div class="q-mb-xs" style="font-size: 11px; color: #cccccc">{{ $t("lang.real_name_hints") }}</div>
           </template>
         </q-input>
 
@@ -65,13 +99,24 @@
           {{ $t("lang.mobile_number") }}
           <em>*</em>
         </q-label> -->
-        <q-input ref="telRef" standout dense rounded v-model="regForm.telephone" :placeholder="$t('lang.mobile_number')"
-          maxlength="11" clearable type="number" :rules="[
-            val => !!val || $t('lang.mobile_number_required'),
-            val => val.length === 10 || $t('lang.mobile_number_length'),
-            val => /^0\d{9}$/.test(val) || $t('lang.mobile_number_starts_with_0'),
-            val => (val && val.length > 7) || $t('lang.mobile_number_valid')
-          ]" color="white">
+        <q-input
+          ref="telRef"
+          standout
+          dense
+          rounded
+          v-model="regForm.telephone"
+          :placeholder="$t('lang.mobile_number')"
+          maxlength="11"
+          clearable
+          type="number"
+          :rules="[
+            (val) => !!val || $t('lang.mobile_number_required'),
+            (val) => val.length === 10 || $t('lang.mobile_number_length'),
+            (val) => /^0\d{9}$/.test(val) || $t('lang.mobile_number_starts_with_0'),
+            (val) => (val && val.length > 7) || $t('lang.mobile_number_valid')
+          ]"
+          color="white"
+        >
           <template v-slot:prepend>
             <div style="width: 26px; display: flex; align-items: center">
               <div class="phone-icon" />
@@ -79,11 +124,21 @@
           </template>
         </q-input>
 
-        <q-input ref="verificationRef" rounded standout dense clearable type="text" v-model="regForm.captchaCode"
-          :placeholder="$t('lang.verification_code')" color="white" :rules="[
+        <q-input
+          ref="verificationRef"
+          rounded
+          standout
+          dense
+          clearable
+          type="text"
+          v-model="regForm.captchaCode"
+          :placeholder="$t('lang.verification_code')"
+          color="white"
+          :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_enter_verification_code'),
             (val) => (val && val.length > 3 && val.length < 5) || $t('lang.length_is_4')
-          ]">
+          ]"
+        >
           <template v-slot:append>
             <img class="veri-img" :src="verificationImg" @click="getCode()" />
           </template>
@@ -92,24 +147,41 @@
           </template>
         </q-input>
 
-        <q-input v-if="!hasAffiliate" ref="affiliateCodeRef" rounded standout dense clearable v-model="regForm.referrer"
-          :hint="$t('lang.referral_hints')" :placeholder="$t('lang.referral_code')">
+        <q-input
+          v-if="!hasAffiliate"
+          ref="affiliateCodeRef"
+          rounded
+          standout
+          dense
+          clearable
+          v-model="regForm.referrer"
+          :hint="$t('lang.referral_hints')"
+          :placeholder="$t('lang.referral_code')"
+        >
           <template v-slot:prepend>
             <div class="veri-icon" />
           </template>
         </q-input>
 
         <div class="row justify-between items-center">
-          <q-btn @click.prevent="onSubmit" type="submit" class="q-mt-lg common-large-btn"
-            :label="$t('lang.register_btn')" no-caps width="100%" color="brightbtn" style="width: 100%" rounded />
+          <q-btn
+            @click.prevent="onSubmit"
+            type="submit"
+            class="q-mt-lg common-large-btn"
+            :label="$t('lang.register_btn')"
+            no-caps
+            width="100%"
+            color="brightbtn"
+            style="width: 100%"
+            rounded
+          />
         </div>
 
         <div class="text-center q-mt-md q-pb-xs">
           {{ $t("lang.registration_hints") }}
-          <span @click="openDialog('betrules')" style="white-space: nowrap; color: #0071ed;">
+          <span @click="openDialog('betrules')" style="white-space: nowrap; color: #0071ed">
             {{ $t("lang.user_registration_protocol") }}
           </span>
-
         </div>
         <div class="text-center q-mt-md q-pb-sm">
           {{ $t("lang.already_have_acc") }}
@@ -120,68 +192,68 @@
       </div>
     </q-form>
 
-
     <div class="login-bottom-div" @click="openDialog('hundred')">
       <img src="../assets/images/login/register-banner.jpg" />
     </div>
   </div>
   <q-dialog v-model="showHundredDialog" width="100%" show-close>
-
     <q-card width="100%" class="q-pa-md">
       <q-card-section class="row items-end justify-end q-pb-none">
         <div class="text-h6"></div>
         <q-btn icon="close" flat round dense v-close-popup />
       </q-card-section>
       <div>
-        <p style="
-    width: 85%;
-    margin-top: -25px;"><b style="font-size: 14px; color: #0071ed;">THƯỞNG CHÀO MỪNG 100% LÊN ĐẾN 2,000 VNDP</b>
-
+        <p style="width: 85%; margin-top: -25px">
+          <b style="font-size: 14px; color: #0071ed">THƯỞNG CHÀO MỪNG 100% LÊN ĐẾN 2,000 VNDP</b>
         </p>
-        Thành Viên có thể tham gia khuyến mãi này tại trang nạp tiền, sau khi nhập <strong>"Số tiền nạp"</strong> ấn
-        chọn
-        khuyến mãi <strong>100% Chào Mừng</strong>, sau đó nhấn <strong>"Xác nhận"</strong>.
-
+        Thành Viên có thể tham gia khuyến mãi này tại trang nạp tiền, sau khi nhập
+        <strong>"Số tiền nạp"</strong>
+        ấn chọn khuyến mãi
+        <strong>100% Chào Mừng</strong>
+        , sau đó nhấn
+        <strong>"Xác nhận"</strong>
+        .
 
         <table
-          style="font-size: 13px; margin: 10px auto; min-width: 80%; text-align: center; border-collapse: collapse;">
+          style="font-size: 13px; margin: 10px auto; min-width: 80%; text-align: center; border-collapse: collapse"
+        >
           <colgroup>
-            <col>
-            <col>
-            <col>
-            <col>
-            <col>
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
           </colgroup>
           <thead>
             <tr>
-              <th style="background: #e7f3ff; padding: 10px; border-top-left-radius: 20px;">Sản Phẩm</th>
-              <th style="background: #e7f3ff; padding: 10px;">Nạp tối thiểu</th>
-              <th style="background: #e7f3ff; padding: 10px;">Thưởng</th>
-              <th style="background: #e7f3ff; padding: 10px;">Thưởng tối đa</th>
-              <th style="background: #e7f3ff; padding: 10px; border-top-right-radius: 20px;">Vòng cược</th>
+              <th style="background: #e7f3ff; padding: 10px; border-top-left-radius: 20px">Sản Phẩm</th>
+              <th style="background: #e7f3ff; padding: 10px">Nạp tối thiểu</th>
+              <th style="background: #e7f3ff; padding: 10px">Thưởng</th>
+              <th style="background: #e7f3ff; padding: 10px">Thưởng tối đa</th>
+              <th style="background: #e7f3ff; padding: 10px; border-top-right-radius: 20px">Vòng cược</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">Thể thao</td>
-              <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">200 VNDP</td>
-              <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">100%</td>
-              <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">2,000 VNDP</td>
-              <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">15</td>
+              <td style="border: 1px solid #dcdce8; padding: 10px; color: #444">Thể thao</td>
+              <td style="border: 1px solid #dcdce8; padding: 10px; color: #444">200 VNDP</td>
+              <td style="border: 1px solid #dcdce8; padding: 10px; color: #444">100%</td>
+              <td style="border: 1px solid #dcdce8; padding: 10px; color: #444">2,000 VNDP</td>
+              <td style="border: 1px solid #dcdce8; padding: 10px; color: #444">15</td>
             </tr>
             <tr>
-              <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">E-sports, Live Casino, Nổ hũ, Poker,
-                Hashgame</td>
-              <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">200 VNDP</td>
-              <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">100%</td>
-              <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">2,000 VNDP</td>
-              <td style="border: 1px solid #dcdce8; padding: 10px; color: #444;">25</td>
+              <td style="border: 1px solid #dcdce8; padding: 10px; color: #444">
+                E-sports, Live Casino, Nổ hũ, Poker, Hashgame
+              </td>
+              <td style="border: 1px solid #dcdce8; padding: 10px; color: #444">200 VNDP</td>
+              <td style="border: 1px solid #dcdce8; padding: 10px; color: #444">100%</td>
+              <td style="border: 1px solid #dcdce8; padding: 10px; color: #444">2,000 VNDP</td>
+              <td style="border: 1px solid #dcdce8; padding: 10px; color: #444">25</td>
             </tr>
           </tbody>
         </table>
 
-        <p>Để biết thêm chi tiết về khuyến mãi vui lòng liên hệ Chăm Sóc Khách Hàng trực tuyến 24/7 để được hỗ trợ
-        </p>
+        <p>Để biết thêm chi tiết về khuyến mãi vui lòng liên hệ Chăm Sóc Khách Hàng trực tuyến 24/7 để được hỗ trợ</p>
       </div>
     </q-card>
   </q-dialog>
@@ -193,8 +265,9 @@
         <q-btn icon="close" flat round dense v-close-popup />
       </q-card-section>
 
-      <p style="width: 85%; margin-top: -25px;"><b style="font-size: 16px; color: #0071ed;">{{
-        $t("lang.about.bettingRules") }}</b></p>
+      <p style="width: 85%; margin-top: -25px">
+        <b style="font-size: 16px; color: #0071ed">{{ $t("lang.about.bettingRules") }}</b>
+      </p>
       <ul>
         <li>{{ $t("lang.about.familyRestriction") }}</li>
         <li>{{ $t("lang.about.entertainmentPurpose2") }}</li>
@@ -245,8 +318,12 @@
         <q-card-section class="q-mb-md q-pa-md">
           <q-input v-model="innerCaptchaRef" placeholder="验证码">
             <template v-slot:append>
-              <img :src="phoneVerificationImg" title="点击刷新验证码" style="margin-top: 6px; cursor: pointer"
-                @click="getInnerCode" />
+              <img
+                :src="phoneVerificationImg"
+                title="点击刷新验证码"
+                style="margin-top: 6px; cursor: pointer"
+                @click="getInnerCode"
+              />
             </template>
           </q-input>
         </q-card-section>
@@ -265,7 +342,7 @@ import { userStore } from "stores/index";
 import qs from "qs";
 import { useI18n } from "vue-i18n";
 import { useUI } from "stores/ui";
-import { isAndroid, isOperaPixelUrl } from "boot/utils";
+import { isAndroid } from "boot/utils";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -280,12 +357,12 @@ export default defineComponent({
     const showHundredDialog = ref(false);
     const showBetRulesDialog = ref(false);
     const openDialog = (currentDialog) => {
-      if (currentDialog === 'hundred') {
-        showHundredDialog.value = true
+      if (currentDialog === "hundred") {
+        showHundredDialog.value = true;
       } else {
-        showBetRulesDialog.value = true
+        showBetRulesDialog.value = true;
       }
-    }
+    };
     const { t } = useI18n();
     const store = userStore();
     const verificationImg = ref("");
@@ -383,7 +460,7 @@ export default defineComponent({
     const pwdStrength = ref("");
     const isValidEmail = () => {
       if (!regForm.email) {
-        return
+        return;
       }
       const emailPattern =
         /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
@@ -408,14 +485,14 @@ export default defineComponent({
         var adjustEvent = new AdjustEvent(ui.adjust_register_event);
         Adjust.trackEvent(adjustEvent);
       }
-    }
+    };
 
     const trackRegisterFailedEvent = () => {
       if (ui.adjust_register_fail_event && isAndroid()) {
         var adjustEvent = new AdjustEvent(ui.adjust_register_fail_event);
         Adjust.trackEvent(adjustEvent);
       }
-    }
+    };
 
     const onSubmit = () => {
       loginNameRef.value.validate();
@@ -476,7 +553,6 @@ export default defineComponent({
               // console.log("RET");
               // console.log(ret);
               if (res.code === 0) {
-
                 // $q.notify({
                 //   color: "positive",
                 //   position: "top",
@@ -491,7 +567,7 @@ export default defineComponent({
                 if (store.isAffiliateA) {
                   fbq("track", "signup-success");
                 }
-                if (isOperaPixelUrl()) {
+                if (store.isOperaPixelB) {
                   otag("event", "registration");
                 }
 
@@ -714,7 +790,8 @@ function charType(num) {
 
 .login-container {
   position: relative;
-  background: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwkHBgoJCAkLCwoMDxkQDw4ODx4WFxIZJCAmJSMgIyIoLTkwKCo2KyIjMkQyNjs9QEBAJjBGS0U+Sjk/QD3/2wBDAQsLCw8NDx0QEB09KSMpPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT3/wgARCAHxAOUDAREAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAECAwf/xAAYAQEBAQEBAAAAAAAAAAAAAAAAAQIDBP/aAAwDAQACEAMQAAAA9e3kAUKEklkqJKAAAAAAAAL25gBFWkhLM2QUAAAAAAAATvyARSqhKzUslAAAAAAAAAz34woBVRc1nSVBQAAAAAAABj0cAALKGdXNualKAAAAAAAAMejgAAEqVm3F1NAoAAAAAAAGPRwAACEszq5upbKCgAAAAAADHo4AAAM2ZtlstzapQAAAAAABj0cAAAGbM0tzdS2UoAAAAAAAx6OAAACWZqLLZdZ0CgAAAAAAY9HAAABDOpFlsus0pQAAAAAAMejgAAAGbM1LqXUqUoAAAAAAGPRwAAACWZqXWbqVKUAAAAAADHo4AAABCWZus6stlKAAAAAABj0cAAAAErNudXNspQAAAAAAMejgAAAAlstzq4qUoAAAAAAJj0cQAAALLZbnVzUokoAAAABLQ59+IAAAstLLZq5qIqBIKAACWgqpy7cgAAC2NS1bKgqECSgAAC2BSuXTkAALKLLpbLVASRUBAAAUFVFvHfIAWUUstWy0KAAkgCgAgotA5a5gCqilWy0KAAAAAAAABi4hQFpYLVAAAAAAAAAAyyAKooUAAAAAAAAAAEABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/8QAGxAAAwADAQEAAAAAAAAAAAAAARFAABBQMKD/2gAIAQEAAT8Ax2PHY9Pb07H3HeO2LR2haMFgwWC0dcaFQ9ViiHRW1aqV8RH/xAAZEQADAAMAAAAAAAAAAAAAAAABEWBQgKD/2gAIAQIBAT8AvDpKb1YFccn/xAAWEQADAAAAAAAAAAAAAAAAAAABgKD/2gAIAQMBAT8AWgTd/wD/2Q==') no-repeat center center;
+  background: url("data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwkHBgoJCAkLCwoMDxkQDw4ODx4WFxIZJCAmJSMgIyIoLTkwKCo2KyIjMkQyNjs9QEBAJjBGS0U+Sjk/QD3/2wBDAQsLCw8NDx0QEB09KSMpPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT3/wgARCAHxAOUDAREAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAECAwf/xAAYAQEBAQEBAAAAAAAAAAAAAAAAAQIDBP/aAAwDAQACEAMQAAAA9e3kAUKEklkqJKAAAAAAAAL25gBFWkhLM2QUAAAAAAAATvyARSqhKzUslAAAAAAAAAz34woBVRc1nSVBQAAAAAAABj0cAALKGdXNualKAAAAAAAAMejgAAEqVm3F1NAoAAAAAAAGPRwAACEszq5upbKCgAAAAAADHo4AAAM2ZtlstzapQAAAAAABj0cAAAGbM0tzdS2UoAAAAAAAx6OAAACWZqLLZdZ0CgAAAAAAY9HAAABDOpFlsus0pQAAAAAAMejgAAAGbM1LqXUqUoAAAAAAGPRwAAACWZqXWbqVKUAAAAAADHo4AAABCWZus6stlKAAAAAABj0cAAAAErNudXNspQAAAAAAMejgAAAAlstzq4qUoAAAAAAJj0cQAAALLZbnVzUokoAAAABLQ59+IAAAstLLZq5qIqBIKAACWgqpy7cgAAC2NS1bKgqECSgAAC2BSuXTkAALKLLpbLVASRUBAAAUFVFvHfIAWUUstWy0KAAkgCgAgotA5a5gCqilWy0KAAAAAAAABi4hQFpYLVAAAAAAAAAAyyAKooUAAAAAAAAAAEABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/8QAGxAAAwADAQEAAAAAAAAAAAAAARFAABBQMKD/2gAIAQEAAT8Ax2PHY9Pb07H3HeO2LR2haMFgwWC0dcaFQ9ViiHRW1aqV8RH/xAAZEQADAAMAAAAAAAAAAAAAAAABEWBQgKD/2gAIAQIBAT8AvDpKb1YFccn/xAAWEQADAAAAAAAAAAAAAAAAAAABgKD/2gAIAQMBAT8AWgTd/wD/2Q==")
+    no-repeat center center;
   background-size: cover;
   height: 100%;
   padding: 12px 0px;

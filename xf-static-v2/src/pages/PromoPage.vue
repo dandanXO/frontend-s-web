@@ -1,20 +1,6 @@
 <template>
-  <q-header v-if="!isPromoDetail">
-    <q-card-section class="page-title">优惠活动</q-card-section>
-  </q-header>
-
   <div class="promo-container">
     <div class="promo">
-      <div class="tab-wrapper" v-if="!isPromoDetail">
-        <RoundTab
-          v-if="!isPromoDetail"
-          v-model:tab="tab"
-          :items="tabItems"
-          :border-radius="50"
-          background-color="#183249;"
-        />
-      </div>
-
       <template v-if="allLoading">
         <div class="q-pa-md q-gutter-y-md">
           <template v-for="index in 9" :key="index"><q-skeleton height="100px" /></template>
@@ -22,6 +8,20 @@
       </template>
 
       <template v-else>
+        <q-header v-if="!isPromoDetail">
+          <q-card-section class="page-title">优惠活动</q-card-section>
+        </q-header>
+
+        <div class="tab-wrapper" v-if="!isPromoDetail">
+          <RoundTab
+            v-if="!isPromoDetail"
+            v-model:tab="tab"
+            :items="tabItems"
+            :border-radius="50"
+            background-color="#183249;"
+          />
+        </div>
+
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel v-for="(tab, i) in tabItems" :key="i" :name="tab.name">
             <div class="all-promotions" v-if="!isPromoDetail">
@@ -32,7 +32,10 @@
                     data-aos-easing="ease-out"
                     data-aos-duration="1000" -->
                   <div v-for="(promo, i) in filteredArray" :key="i">
-                    <div class="promo-item" v-if="tab.name === 'all' || promo.promoType.toLowerCase().split(',').includes(tab.name)">
+                    <div
+                      class="promo-item"
+                      v-if="tab.name === 'all' || promo.promoType.toLowerCase().split(',').includes(tab.name)"
+                    >
                       <a @click="showPromoDetails(promo)">
                         <div class="promo-img-wrapper">
                           <div class="promo-bg">

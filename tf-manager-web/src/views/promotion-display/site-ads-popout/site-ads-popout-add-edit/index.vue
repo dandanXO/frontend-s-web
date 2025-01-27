@@ -39,18 +39,18 @@
     <el-row v-if="uiControl.showSiteType === true">
       <el-form-item :label="t('fields.siteType')" prop="siteType">
         <el-select
-            v-model="form.siteType"
-            size="small"
-            class="filter-item"
-            :placeholder="t('fields.siteType')"
-            style="width: 240px;margin-bottom:10px"
+          v-model="form.siteType"
+          size="small"
+          class="filter-item"
+          :placeholder="t('fields.siteType')"
+          style="width: 240px;margin-bottom:10px"
         >
-            <el-option
+          <el-option
             v-for="item in siteType.list"
             :key="item.value"
             :label="item.displayName"
             :value="item.value"
-            />
+          />
         </el-select>
       </el-form-item>
     </el-row>
@@ -97,37 +97,40 @@
     </el-row>
     <el-row>
       <el-col>
-        <el-form-item :label="t('fields.displayStartTime')" prop="displayStartTime">
-            <el-date-picker
+        <el-form-item
+          :label="t('fields.displayStartTime')"
+          prop="displayStartTime"
+        >
+          <el-date-picker
             type="datetime"
             value-format="YYYY-MM-DD HH:mm:ss"
             v-model="form.displayStartTime"
-            />
+          />
         </el-form-item>
         <el-form-item :label="t('fields.displayEndTime')" prop="displayEndTime">
-            <el-date-picker
+          <el-date-picker
             type="datetime"
             value-format="YYYY-MM-DD HH:mm:ss"
             v-model="form.displayEndTime"
-            />
+          />
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
       <el-col>
         <el-form-item :label="t('fields.startTime')" prop="startTime">
-            <el-date-picker
+          <el-date-picker
             type="datetime"
             value-format="YYYY-MM-DD HH:mm:ss"
             v-model="form.startTime"
-            />
+          />
         </el-form-item>
         <el-form-item :label="t('fields.endTime')" prop="endTime">
-            <el-date-picker
+          <el-date-picker
             type="datetime"
             value-format="YYYY-MM-DD HH:mm:ss"
             v-model="form.endTime"
-            />
+          />
         </el-form-item>
       </el-col>
     </el-row>
@@ -142,6 +145,49 @@
             @keypress="restrictInput($event)"
             controls-position="right"
           />
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col>
+        <el-form-item label="VIP" prop="vips">
+          <el-checkbox
+            v-model="checkboxes.vip.checkAll"
+            :indeterminate="checkboxes.vip.isIndeterminate"
+            @change="handleVIPCheckAllChange"
+          >
+            {{ t('fields.checkall') }}
+          </el-checkbox>
+          <el-checkbox-group
+            v-model="selectedVIPs.vipChecked"
+            @change="handleCheckedChange"
+            style="width: 300px"
+          >
+            <el-checkbox v-for="v in vipList.list" :label="v.id" :key="v.id">
+              {{ v.name }}
+            </el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col>
+        <el-form-item :label="t('fields.status')" prop="status">
+          <el-radio-group
+            v-model="form.status"
+            size="mini"
+            style="width: 300px"
+          >
+            <el-radio-button label="1">
+              {{ t('common.status.OPEN') }}
+            </el-radio-button>
+            <el-radio-button label="0">
+              {{ t('common.status.CLOSE') }}
+            </el-radio-button>
+            <el-radio-button label="2">
+              {{ t('common.status.TEST') }}
+            </el-radio-button>
+          </el-radio-group>
         </el-form-item>
       </el-col>
     </el-row>
@@ -161,7 +207,10 @@
               :preview-src-list="[promoDir + form.desktopImgUrl]"
             />
           </el-col>
-          <el-col :span="form.desktopImgUrl ? 12 : 24" style="display: flex;justify-content: center;align-items: center;">
+          <el-col
+            :span="form.desktopImgUrl ? 12 : 24"
+            style="display: flex;justify-content: center;align-items: center;"
+          >
             <el-button
               icon="el-icon-plus"
               size="mini"
@@ -198,7 +247,10 @@
               :preview-src-list="[promoDir + form.mobileImgUrl]"
             />
           </el-col>
-          <el-col :span="form.desktopImgUrl ? 12 : 24" style="display: flex;justify-content: center;align-items: center;">
+          <el-col
+            :span="form.desktopImgUrl ? 12 : 24"
+            style="display: flex;justify-content: center;align-items: center;"
+          >
             <el-button
               icon="el-icon-plus"
               size="mini"
@@ -470,11 +522,14 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item
-        :label="t('fields.promoType')"
-        prop="promoType"
-      >
-        <span style="width: 350px">{{ imageForm.promoType === 'DESKTOP_IMAGE' ? t('fields.desktopImage') : t('fields.mobileImage') }}</span>
+      <el-form-item :label="t('fields.promoType')" prop="promoType">
+        <span style="width: 350px">
+          {{
+            imageForm.promoType === 'DESKTOP_IMAGE'
+              ? t('fields.desktopImage')
+              : t('fields.mobileImage')
+          }}
+        </span>
       </el-form-item>
       <el-form-item :label="t('fields.remark')" prop="remark">
         <el-input
@@ -510,22 +565,26 @@ import { uploadImage } from '../../../../api/image'
 import { useRoute, useRouter } from 'vue-router'
 import { createSiteImage, getSiteImage } from '../../../../api/site-image'
 import { getSiteListSimple } from '../../../../api/site'
+import { getVipList } from '../../../../api/vip'
 import { useI18n } from 'vue-i18n'
 import { useStore } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
 import draggable from 'vuedraggable'
 import { isVnm } from '@/utils/site'
-import { useSessionStorage } from "@vueuse/core";
+import { useSessionStorage } from '@vueuse/core'
 
 const { t } = useI18n()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const route = useRoute()
 const store = useStore()
 const site = ref(null)
-const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
+const promoDir =
+  useSessionStorage('IMAGE_CDN', process.env.VUE_APP_IMAGE).value + '/promo/'
 const inputImage = ref(null)
 const imageFormRef = ref(null)
-
+const vipList = reactive({
+  list: [],
+})
 const adsPopoutForm = ref(null)
 
 const siteType = reactive({
@@ -548,28 +607,38 @@ const form = reactive({
   type: null,
   content: null,
   contentList: null,
-  status: false,
+  status: '0',
   siteType: null,
   displayStartTime: null,
   displayEndTime: null,
   startTime: null,
   endTime: null,
+  vips: null,
 })
+
+const checkboxes = reactive({
+  vip: {
+    checkAll: ref(false),
+    isIndeterminate: ref(false),
+  },
+})
+
+const selectedVIPs = reactive({ vipChecked: [] })
 
 const uiControl = reactive({
   titleDisable: false,
-  adsStatus: [
-    { key: 1, displayName: t('message.adsStatusOpen'), value: true },
-    { key: 2, displayName: t('message.adsStatusClose'), value: false },
-  ],
-  // type: [
-  //   { key: 1, displayName: '文字', value: 'TEXT' },
-  //   { key: 2, displayName: '图片', value: 'IMG' },
-  // ],
   frequency: [
-    { key: 1, displayName: t('message.frequencyEveryTime'), value: 'EVERYTIME' },
+    {
+      key: 1,
+      displayName: t('message.frequencyEveryTime'),
+      value: 'EVERYTIME',
+    },
     { key: 2, displayName: t('message.frequencyEveryDay'), value: 'EVERYDAY' },
-    { key: 3, displayName: t('message.frequencyEverySession'), value: 'SESSION' },
+    {
+      key: 3,
+      displayName: t('message.frequencyEverySession'),
+      value: 'SESSION',
+    },
   ],
   imageSelectionTitle: '',
   imageSelectionType: '',
@@ -595,9 +664,9 @@ const filterTypes = computed(() => {
 
 function changeSite() {
   if (isVnm(form.siteId)) {
-    uiControl.showSiteType = true;
+    uiControl.showSiteType = true
   } else {
-    uiControl.showSiteType = false;
+    uiControl.showSiteType = false
   }
   if (form.siteId !== 8) {
     form.type = 'IMG'
@@ -786,7 +855,6 @@ function back() {
 
 async function loadForm(id, siteId) {
   const { data: adspopout } = await getAdsPopOutById(id, siteId)
-
   nextTick(() => {
     for (const key in adspopout) {
       if (adspopout.contentList !== null && adspopout.contentList !== '') {
@@ -796,6 +864,18 @@ async function loadForm(id, siteId) {
         form[key] = adspopout[key]
       }
     }
+
+    const vipArr = form.vips ? form.vips.split(',') : []
+    vipArr.forEach(element => {
+      selectedVIPs.vipChecked.push(parseInt(element))
+    })
+
+    if (vipArr.length === vipList.list.length) {
+      checkboxes.vip.checkAll = true
+    } else {
+      checkboxes.vip.checkAll = false
+    }
+
     siteList.list.forEach(element => {
       if (element.siteName === adspopout.siteName) {
         form.siteId = element.id
@@ -803,9 +883,9 @@ async function loadForm(id, siteId) {
     })
 
     if (isVnm(form.siteId)) {
-      uiControl.showSiteType = true;
+      uiControl.showSiteType = true
     } else {
-      uiControl.showSiteType = false;
+      uiControl.showSiteType = false
     }
   })
 }
@@ -896,7 +976,7 @@ function submitImageUpload() {
         name: imageForm.name,
         path: `${imageForm.siteId}/${imageForm.path}`,
         remark: imageForm.remark,
-        siteName: ''
+        siteName: '',
       })
       submitImage()
     }
@@ -919,6 +999,34 @@ function restrictInput(event) {
   }
 }
 
+async function loadVips() {
+  const { data: vip } = await getVipList()
+  vipList.list = vip.filter(vip => vip.siteId === form.siteId)
+}
+
+const handleVIPCheckAllChange = val => {
+  selectedVIPs.vipChecked = []
+  if (val) {
+    vipList.list.forEach(vip => {
+      selectedVIPs.vipChecked.push(vip.id)
+    })
+  }
+  handleCheckedChange()
+}
+
+function handleCheckedChange() {
+  form.vips = selectedVIPs.vipChecked.join(',')
+  const vipIds = [...new Set(vipList.list.map(el => el.id))]
+  handleCategoryChange(selectedVIPs.vipChecked, checkboxes.vip, vipIds)
+}
+
+function handleCategoryChange(selectedList, checkboxData, dataList) {
+  const selectedCount = selectedList.filter(el => dataList.includes(el)).length
+  const listCount = dataList.length
+  checkboxData.checkAll = selectedCount === listCount
+  checkboxData.isIndeterminate = selectedCount > 0 && selectedCount < listCount
+}
+
 watch(
   () => route.name,
   () => {
@@ -933,17 +1041,24 @@ watch(
 )
 onMounted(async () => {
   await loadSites()
+
   imageRequest.siteId = store.state.user.siteId
   form.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     imageRequest.siteId = store.state.user.siteId
   }
-  form.siteType = "main";
+  await loadVips()
+  form.siteType = 'main'
   if (route.name.includes('Edit')) {
     uiControl.titleDisable = true
     loadForm(route.params.id, route.params.siteId)
   } else {
     form.type = filterTypes.value[0].value
+    if (isVnm(form.siteId)) {
+      uiControl.showSiteType = true
+    } else {
+      uiControl.showSiteType = false
+    }
   }
 })
 </script>

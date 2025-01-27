@@ -132,6 +132,17 @@
         </el-row>
         <el-row>
           <el-col :span="12">
+            {{ t('fields.withdrawAmount') }}
+          </el-col>
+          <el-col :span="12">
+            $
+            <span
+              v-formatter="{data: data.withdrawAmount, type: 'money'}"
+            />
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
             {{ t('fields.transferAmount') }}
           </el-col>
           <el-col :span="12">

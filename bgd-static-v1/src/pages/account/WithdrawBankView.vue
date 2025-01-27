@@ -204,6 +204,22 @@
       </template>
     </div>
   </q-page>
+
+  <q-dialog width="100%" v-model="modalBackToPromo" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">{{ $t("notify.updatedSuccessfully") }}</div>
+
+        <div class="txt-content q-mt-md text-center">{{ $t("notify.cardBindSuccessBackPromo") }}</div>
+
+        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+          <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
+          <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="backtoPromo" />
+        </div>
+      </div>
+    </div>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -229,6 +245,12 @@ const imgURL = process.env.IMAGE_CDN + "/payment/";
 
 const onBindCardClick = (path) => {
   router.push(path);
+};
+
+const modalBackToPromo = ref(false);
+const fromPromoCode = ref("");
+const backtoPromo = () => {
+  router.push(`/promo?name=${fromPromoCode.value}`);
 };
 
 const isCardVisible = reactive({ BANK: true, CRYPTO: true, EWALLET: true, ALIPAY: true });
@@ -329,6 +351,12 @@ const loadCards = () => {
           } else {
             bankCardList[bankType].push(data);
           }
+        }
+
+        fromPromoCode.value = sessionStorage.getItem("FROM_PROMO");
+        if (fromPromoCode.value && res.data.length > 0) {
+          sessionStorage.removeItem("FROM_PROMO");
+          modalBackToPromo.value = true;
         }
       }
     })
@@ -542,5 +570,30 @@ onActivated(() => {
   display: flex;
   width: 100%;
   margin-top: 20px;
+}
+
+.btn-cancel {
+  background: url(../../assets/images/index/btn-bg-grey-small.png) no-repeat center center;
+  background-size: contain;
+  font-weight: 700;
+  color: #fff;
+  width: 140px;
+  height: 42px;
+  border: none;
+  &::before {
+    display: none;
+  }
+}
+.btn-confirm {
+  background: url(../../assets/images/index/btn-bg-green-small.png) no-repeat center center;
+  background-size: contain;
+  font-weight: 700;
+  width: 140px;
+  height: 42px;
+  color: #000a01;
+  border: none;
+  &::before {
+    display: none;
+  }
 }
 </style>

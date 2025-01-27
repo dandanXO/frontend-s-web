@@ -132,13 +132,13 @@
     <div class="deposit-container q-mt-md" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs">
         <div v-if="amountList.length === 0">
-          <div class="column q-gutter-y-sm">
-            <div class="">存款金额</div>
+          <div class="input-submit-wrapper">
+            <!-- <div class="">存款金额</div> -->
             <q-input
               hide-bottom-space
               ref="depositAmtRef"
               v-model="form.localAmount"
-              placeholder="请输入存款金额"
+              :placeholder="isUSDT ? '请输入USDT金额' : '请输入存款金额'"
               :rules="verifyDepositAmount"
               label-color="brand"
               clearable
@@ -147,13 +147,18 @@
               color="white"
               bg-color="recinputstyle"
             >
-              <template v-slot:prepend>
-                <span style="font-size: 26px" class="text-bright">
-                  <template v-if="isUSDT">USDT</template>
-                  <template v-else>{{ store.currency.value }}</template>
-                </span>
-              </template>
             </q-input>
+
+            <div class="">
+              <q-btn
+                :loading="btnLoading"
+                class="deposit-btn"
+                color="brightbtn"
+                @click="confirmDeposit"
+                label="确认"
+                rounded
+              />
+            </div>
           </div>
         </div>
         <div class="flex-c-center" v-else>
@@ -183,7 +188,7 @@
           <!-- <q-btn color="brightbtn" :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" label="确认" /> -->
         </div>
 
-        <div class="q-mt-sm text-grey">
+        <div class="q-mt-sm text-gray">
           单笔存款：{{
             calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0
           }}
@@ -196,14 +201,14 @@
         </div>
 
         <div v-if="isUSDT && activeMethod.currencyRate">
-          <div class="q-mt-md text-grey">
+          <div class="q-mt-md text-gray">
             实时汇率:
             <span class="text-neontb">
               1.00 USDT ≈ {{ activeMethod.currencyRate }}
               {{ store.currency.value }}
             </span>
           </div>
-          <div class="q-my-xs text-grey">
+          <div class="q-my-xs text-gray">
             预计到帐:
             <span class="text-neontb">
               {{
@@ -271,7 +276,7 @@
           <span v-else>流水倍数要求（本金 + 彩金）：{{ selectedPrivilege.rollover }}倍</span>
         </div>
 
-        <div class="q-mt-md text-grey" v-html="activeMethod.msg"></div>
+        <div class="q-mt-md text-gray" v-html="activeMethod.msg"></div>
         <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
         <!-- <div class="q-mt-md">
           <q-btn
@@ -281,18 +286,6 @@
               label="确定存款"
           />
         </div> -->
-        <div class="q-mt-md">
-          <q-btn
-            :loading="btnLoading"
-            class="deposit-btn"
-            color="brightbtn"
-            @click="confirmDeposit"
-            label="确认"
-            size="md"
-            rounded
-            style="width: 100%"
-          />
-        </div>
       </q-form>
     </div>
   </div>
@@ -862,6 +855,10 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+.deposit-container {
+  font-family: 'PingFang';
+}
+
 .submit-message {
   // width: calc(100% - 40px);
   border-radius: 10px;
@@ -899,6 +896,19 @@ onMounted(() => {
     }
   }
 }
+
+.input-submit-wrapper {
+  display:grid;
+  grid-template-columns:0.7fr 0.3fr;
+  gap: 15px;
+}
+
+.deposit-btn {
+  width: 100%;
+  height: 100%;
+  font-size: 18px;
+}
+
 .flex-c-center {
   display: flex;
   align-items: flex-start;
@@ -936,5 +946,14 @@ onMounted(() => {
   background: linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c 100%);
   border-radius: 6px;
   padding: 24px 16px;
+}
+
+.q-field--outlined .q-field__control:before {
+  box-shadow: 0px 0px 2.78px 0px rgba(169, 201, 234, 1) inset;
+  border: none;
+}
+
+.text-gray {
+  color: #7A80A1;
 }
 </style>

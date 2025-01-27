@@ -46,7 +46,9 @@ export const userStore = defineStore("userStore", {
       aaid: "",
       hasUpdatedOneSignal: false,
       isAffiliateA: false,
-      withdrawType: ""
+      isOperaPixelB: false,
+      withdrawType: "",
+      theme: 'CNY'
     };
   },
   actions: {
