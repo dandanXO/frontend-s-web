@@ -267,7 +267,7 @@ const submitUpdateEmail = () => {
 
           closeDialog();
           store.getMemberInfo();
-          getEmailVerifyBonus();
+
         } else {
           $q.notify({
             color: "negative",
