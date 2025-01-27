@@ -191,8 +191,6 @@
             {{ $t("btn.signinWithGoogle") }}
           </q-btn>
         </template>
-
-
       </div>
     </div>
 
@@ -468,8 +466,7 @@ export default defineComponent({
     onActivated(() => {
       getReferralCode();
 
-
-      if(isAndroid()){
+      if (isAndroid()) {
         GoogleAuth.initialize();
       }
     });
@@ -477,8 +474,6 @@ export default defineComponent({
     const onCapacitorGoogleSignin = async () => {
       try {
         const user = await GoogleAuth.signIn();
-        console.log("User info:", user);
-        alert(user);
 
         (() => {
           thirdPartyLoginInfo.siteId = process.env.SITEID;
@@ -526,7 +521,6 @@ export default defineComponent({
         alert(error);
       }
     };
-
 
     const onClickGoogleSignin = async () => {
       const provider = await new GoogleAuthProvider();

@@ -262,8 +262,6 @@
           {{ $t("btn.signinWithGoogle") }}
         </q-btn>
       </template>
-
-
     </div>
 
     <div class="btn-lists">
@@ -465,17 +463,14 @@ export default defineComponent({
       getReferralCode();
       getAffiliateCode();
 
-      if(isAndroid()){
+      if (isAndroid()) {
         GoogleAuth.initialize();
       }
-
     });
 
     const onCapacitorGoogleSignin = async () => {
       try {
         const user = await GoogleAuth.signIn();
-        console.log("User info:", user);
-        alert(user);
 
         (() => {
           thirdPartyLoginInfo.siteId = process.env.SITEID;
