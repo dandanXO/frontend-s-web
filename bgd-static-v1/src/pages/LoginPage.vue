@@ -255,7 +255,7 @@
 <script>
 import { storeToRefs } from "pinia";
 import { i18nStore } from "src/router/language";
-import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "vue";
+import { defineComponent, ref, reactive, onMounted, watch } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
@@ -462,14 +462,6 @@ export default defineComponent({
         thirdPartyLoginInfo.referrer = refCode;
       }
     };
-
-    onActivated(() => {
-      getReferralCode();
-
-      if (isAndroid()) {
-        GoogleAuth.initialize();
-      }
-    });
 
     const onCapacitorGoogleSignin = async () => {
       try {
@@ -850,6 +842,11 @@ export default defineComponent({
       }
       checkRememberPwd();
       loadCustomerAddress();
+
+      getReferralCode();
+      if (isAndroid()) {
+        GoogleAuth.initialize();
+      }
     });
     return {
       header: "Login",
