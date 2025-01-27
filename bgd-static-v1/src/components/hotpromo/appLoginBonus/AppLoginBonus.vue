@@ -140,7 +140,7 @@
       </ul>
     </div>
   </div>
-  <BindEmailModal :bindEmailDialog="bindEmailDialog" @update:bindEmailDialog="bindEmailDialog = $event" />
+  <BindEmailModal :bindEmailDialog="bindEmailDialog" @update:bindEmailDialog="updateBindEvent($event)" />
   <CongratsReuseableModal
     :isShowDialog="isShowReceiveDialog"
     :bonusAmount="bonusAmount"
@@ -168,14 +168,12 @@ const hadClaim = ref(false);
 const isAppLogin = ref(false);
 const bonusAmount = ref(0);
 
-const handleClaimBtnClick = () => {
-  if (hasBindEmail.value) {
-    claimAppLoginBonus();
-  } else {
-    // bind email
-    bindEmailDialog.value = true;
-  }
-};
+
+
+const updateBindEvent = async (event) => {
+  bindEmailDialog.value= event;
+  getAppLoginBonusData();
+}
 
 const claimAppLoginBonus = () => {
   eventapi
@@ -191,11 +189,21 @@ const claimAppLoginBonus = () => {
 const getAppLoginBonusData = () => {
   eventapi.get(`/session/app-login-bonus/init?promoCode=${props.promocode}`).then((res) => {
     if (res.code === 0) {
-      hasBindEmail.value = res.data.hasBindEmail;
+      hasBindEmail.value = res.data.hadBindEmail;
       hadClaim.value = res.data.hadClaim;
       isAppLogin.value = res.data.isAppLogin;
+
     }
   });
+};
+
+const handleClaimBtnClick = () => {
+  if (hasBindEmail.value === true) {
+    claimAppLoginBonus();
+  } else {
+    // bind email
+    bindEmailDialog.value = true;
+  }
 };
 
 const handleReceiveBonus = () => {
