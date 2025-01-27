@@ -429,6 +429,61 @@
         <div class="loading__text">Loading</div>
       </div>
     </div>
+
+    <div class="modal-open" style="display: none">
+      <div class="modal-div">
+        <div class="modal-inner">
+          <div class="modal-header">Attention!</div>
+
+          <div class="modal-content">
+            <div class="content-text"><p>Please copy the following URL and paste it into Chrome/Firefox</p></div>
+            <div class="content-logo">
+              <img src="images/browser-chrome.png" alt="" class="logo-android" />
+              <img src="images/browser-firefox.png" alt="" class="logo-android" />
+              <img src="images/browser-safari.png" alt="" class="logo-ios" />
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="modal-input">
+              <div id="id-url-input" class="url-input"></div>
+              <div class="copy-btn-input" id="id-copy-btn">Copy</div>
+            </div>
+            <div class="open-btn" id="id-open-btn">Open in a compatible browser</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ios-modal" style="display: none">
+      <div class="ios-modal-content">
+        <button class="ios-close-btn" id="id-ios-close">✕</button>
+        <div class="ios-modal-title">Install the app</div>
+        <div class="app-info">
+          <!-- <img src="https://via.placeholder.com/50" alt="App Logo" class="app-logo" /> -->
+          <img alt="55ACE" loading="lazy" src="./images/logo.png" class="app-logo" />
+          <div>
+            <p class="app-title">55ACE</p>
+            <p class="app-url" id="id-url-install">55ACE.com</p>
+          </div>
+        </div>
+        <ol class="instruction-list">
+          <li>
+            Tap
+            <span class="ios-share-icon"><img alt="share" src="./images/ios-share.svg" /></span>
+            in the browser menu
+          </li>
+          <li>
+            Scroll down and select
+            <b>Add to Home Screen</b>
+          </li>
+          <li>
+            Scroll down and select
+            <span class="ios-share-icon"><img alt="icon" src="./images/logo.png" /></span>
+            the icon on your home screen
+          </li>
+        </ol>
+      </div>
+    </div>
   </body>
   <script src="js/qrcode.min.js" type="text/javascript" defer></script>
   <script src="js/index.js" type="module" defer></script>

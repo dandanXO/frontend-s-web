@@ -5,6 +5,10 @@ export const getDepositReport = (data) => {
   return https().request("/report/depositReportList", Method.GET, data, ContentType.form);
 };
 
+export const getDepositReportAll = (data) => {
+  return https().request("/report/depositReportAll", Method.GET, data, ContentType.form);
+};
+
 export const getDailyReport = (data) => {
   return https().request("/report/dailyDepositReport", Method.GET, data, ContentType.form);
 };

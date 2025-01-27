@@ -675,7 +675,32 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isImportantAnnoucementModal" @update:model-value="offPopupModal()">
+  <!-- <PopupDialog :clickHomePopupImg></PopupDialog> -->
+  <q-dialog width="100%" v-model="showPopupDialog" @update:model-value="offPopupModal">
+      <q-card flat style="width: 70%; max-width: 500px; background-color: transparent; margin: 0 auto"
+          class="text-white">
+          <q-card-section style="background-color: transparent">
+              <div class="close-alert" v-close-popup>
+                  <q-icon size="24px" name="close"></q-icon>
+              </div>
+              <q-carousel animated v-model="popupSlide" navigation infinite swipeable height="100%" keep-alive
+                  style="background: transparent" autoplay transition-next="slide-left"
+                  transition-prev="slide-right">
+                  <q-carousel-slide v-for="(item, index) in popupList" :key="index" :name="index"
+                      class="carousel-slide" style="padding: 0">
+                      <div class="promo-banner-container">
+                          <div class="promo-banner-content" v-if="item.type === 'TEXT'" v-html="item.content"></div>
+                          <div class="promo-banner-img" @click="clickHomePopupImg(item.path)" v-else>
+                              <img :src="formatHomePopupImg(item.mobileImgUrl)" class="alert-img" draggable="false" />
+                          </div>
+                      </div>
+                  </q-carousel-slide>
+              </q-carousel>
+          </q-card-section>
+      </q-card>
+  </q-dialog>
+
+  <!-- <q-dialog width="100%" v-model="isImportantAnnoucementModal" @update:model-value="offPopupModal()">
     <q-card flat style="width: 70%; max-width: 500px; background-color: transparent; margin: 0 auto" class="text-white">
       <q-card-section style="background-color: transparent">
         <div class="close-alert" @click="setExpiryBanner()">
@@ -707,7 +732,7 @@
         </q-carousel>
       </q-card-section>
     </q-card>
-  </q-dialog>
+  </q-dialog> -->
 </template>
 
 <script>
@@ -758,6 +783,9 @@ export default defineComponent({
     const thumbsSwiper = ref(null);
     const firstSwiper = ref(null);
     const secondSwiper = ref(null);
+
+    const showPopupDialog = ref(false);
+    const popupExpiryMap = ref({});
 
     const hasDrawer = ref(false);
 
@@ -1143,28 +1171,63 @@ export default defineComponent({
             // if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {
             //   res = apiMockData
             // }
-            if (res.code === 0) {
-              popupList.value = res.data;
-              // if (res.data[id] !== null) {
-              if (isImpt === null) {
-                switch (res.data[0]["frequency"]) {
-                  case "EVERYTIME":
-                    homePopupFrequencyNum.value = 0;
-                    break;
-                  case "EVERYDAY":
-                    homePopupFrequencyNum.value = 86400000; // 24hrs
-                    break;
-                  case "SESSION":
-                    homePopupFrequencyNum.value = 7866432000; // 3months
-                    break;
-                  default:
-                    homePopupFrequencyNum.value = 10000;
-                    break;
-                }
-                isImportantAnnoucementModal.value = true;
-                isFirstView.value = true;
-                // }
+            if (res.code === 0 ) {
+              const popupListData = res.data.filter((popup) => {
+                  if(popupExpiryMap.value && Object.keys(popupExpiryMap.value).includes(popup.path)) {
+
+                      const now = Date.now();
+                      const timestamp = now - popupExpiryMap.value[popup.path].lastSeen;
+                      const minutes = Math.floor(timestamp / (1000 * 60));
+
+                      if(popup.frequency === 'EVERYDAY' && minutes <= 1440) {
+                          return false;
+                      }
+
+                      if(popup.frequency === 'SESSION' && minutes <= 131107.2) {
+                          return false;
+                      }
+                  }
+
+                  return true;
+              });
+
+              popupList.value = sessionStorage.getItem('POPUP') === 'true' ? popupListData : [];
+
+              if(Object.keys(popupList.value).length > 0) {
+                  showPopupDialog.value = true;
+
+                  popupList.value.forEach((popup) => {
+                      popupExpiryMap.value = {...popupExpiryMap.value, [popup.path]: {
+                        lastSeen: Date.now(),
+                        frequency: popup.frequency
+                      } };
+                  });
+
+                  sessionStorage.removeItem('POPUP');
+                  localStorage.setItem('POPUP', JSON.stringify(popupExpiryMap.value));
               }
+              
+              // popupList.value = res.data;
+              // // if (res.data[id] !== null) {
+              // if (isImpt === null) {
+              //   switch (res.data[0]["frequency"]) {
+              //     case "EVERYTIME":
+              //       homePopupFrequencyNum.value = 0;
+              //       break;
+              //     case "EVERYDAY":
+              //       homePopupFrequencyNum.value = 86400000; // 24hrs
+              //       break;
+              //     case "SESSION":
+              //       homePopupFrequencyNum.value = 7866432000; // 3months
+              //       break;
+              //     default:
+              //       homePopupFrequencyNum.value = 10000;
+              //       break;
+              //   }
+              //   isImportantAnnoucementModal.value = true;
+              //   isFirstView.value = true;
+              //   // }
+              // }
               // } else {
               // isImportantAnnoucementModal.value = false;
               // }
@@ -1734,6 +1797,12 @@ export default defineComponent({
     });
 
     onMounted(() => {
+      try {
+          popupExpiryMap.value = JSON.parse(localStorage.getItem('POPUP'));
+      } catch {
+
+      }
+      
       if (sessionStorage.getItem("regSuccessGuideVisible")) {
         store.regSuccessGuideVisible = true;
         sessionStorage.removeItem("regSuccessGuideVisible");
@@ -1862,7 +1931,8 @@ export default defineComponent({
       promoSlide: ref(0),
       convertToCommaAmount,
       formatHomePopupImg,
-      bannersWithImage
+      bannersWithImage,
+      showPopupDialog
     };
   }
 });

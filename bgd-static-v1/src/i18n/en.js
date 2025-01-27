@@ -63,7 +63,7 @@ export default {
     phone: "Phone",
     phone_placeholder: "Please enter your mobile number",
     phone_rules_01: "Please insert Phone number",
-    phone_rules_02: "The phone number must be 10 - 11 digits",
+    phone_rules_02: "The phone number must be 11 digits",
     phone_rules_03: "The phone number must start with '01'",
     bindPhoneNumber: "Bind Phone Number",
     password: "Password",
@@ -172,7 +172,9 @@ export default {
     registerSuccess: "Registered successfully",
     pleaseCompleteVerification: "Please complete the verification code",
     uploadSuccess: "uploaded successfully",
-    uploadFailedTryAgain: "upload failed. Please try again"
+    uploadFailedTryAgain: "upload failed. Please try again",
+    verifySuccess: "Verification successful",
+    otphasbeenSent: "OTP code has been sent to your email"
   },
   btn: {
     login: "Login",
@@ -224,6 +226,7 @@ export default {
     feedbackSentSuccess: "Your feedback has been sent successfully!",
     quitGameMessage: "Are you sure want to quit? Click Confirm to quit the game.",
     signOutMessage: "Are you sure you want to sign out?",
+    cardBindSuccessBackPromo: "Your card has been added successfully, do you want to back to promo page?",
     plsLoginToContinue: "Please login to continue",
     uploadImageLargerThan1MbError: "The uploaded image cannot be larger than 1MB",
     imageFormatError: "Image format error",
@@ -237,7 +240,13 @@ export default {
     emailBindedSuccessfully: "Email binded successfully",
     emailAlreadyUsed: "Email already used. Please try another email.",
     phoneUpdatedSuccessfully: "Phone number updated successfully",
-    newPasswordUpdatedSuccessfully: "New password updated successfully"
+    newPasswordUpdatedSuccessfully: "New password updated successfully",
+    virtualWalletAddedSuccessfully: "Virtual wallet added successfully"
+  },
+  modal: {
+    congrats: {
+      congratsUnlockedBonus: "Congratulations! You have unlocked bonuses"
+    }
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -317,7 +326,7 @@ export default {
     depositTutorial: "Deposit Tutorial",
     select_privilege: "Select Privilege",
     incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again.",
-    useFtdPrivilege: "Use Slot First Deposit Privilege",
+    useFtdPrivilege: "New players' first deposit 119% bonus",
     unlimited: "Unlimited",
     depositTips1: "1. Recharge tutorial:",
     depositTips2: "2. Fill in the correct payment wallet account number.",
@@ -329,12 +338,15 @@ export default {
       "          allowed.",
     video: "Video",
     picture: "Picture",
-    depositUsdtTip2: "২. ন্যূনতম জমা: ১০USDT, ১০USDT এর কম জমা ক্রেডিট করা হবে না।",
-    depositUsdtTip3: "৩. উপরের ঠিকানায় কোনো অ-মুদ্রা সম্পদ জমা করবেন না, অন্যথায় সম্পদ পুনরুদ্ধার করা যাবে না।",
-    depositUsdtTip4: "৪. তথ্য বিকৃত বা ফাঁস হওয়া এড়াতে অনুগ্রহ করে নিশ্চিত করুন যে অপারেটিং পরিবেশ নিরাপদ।",
+    depositUsdtTip2: "2. Minimum deposit: 10 USDT. Deposits less than 10 USDT will not be credited.",
+    depositUsdtTip3:
+      "3. Do not deposit any non-currency assets to the above address; otherwise, the assets cannot be recovered.",
+    depositUsdtTip4: "4. Ensure the operating environment is secure to avoid data distortion or leakage.",
     depositUsdtTip5:
-      "৫. স্থানান্তর পরিমাণ অবশ্যই আপনার তৈরি করা অর্ডারের সাথে মিলতে হবে, অন্যথায় অর্থ সফলভাবে ক্রেডিট করা যাবে না।",
-    depositUsdtTip6: "৬. দ্রষ্টব্য: অর্থ স্থানান্তরের পরে জমা অর্ডার বাতিল করবেন না।"
+      "5. The transfer amount must match the order you created; otherwise, the funds cannot be successfully credited.",
+    depositUsdtTip6: "6. Note: Do not cancel the deposit order after transferring funds.",
+    wagerrequirement: "Wager requirement (to withdrawal): 10 times of your deposit amount",
+    example: "Eg. Deposit 100 { label }, require 1,000 { label } wager"
   },
   withdraw: {
     cashBalance: "Cash Balance",
@@ -808,7 +820,6 @@ export default {
       superChest: " Super Chest",
       days: "Days",
       usersMustMeet: "Users must meet the daily betting minimum to claim rewards:",
-      noBettingRequired: "No betting required; reward can be claimed once.",
       ifRestartingOnDay1: `If re-starting on Day 1: Minimum cumulative bet of <span style="font-size: 14px; color: #11ff00">100 BDT</span> required`,
       noBettingRequired: "No betting required; reward can be claimed once.",
       ifRestartingOnDay2: `If re-starting on Days 2-3: Minimum cumulative bet of <span style="font-size: 14px; color: #11ff00">100 BDT</span> required`,
@@ -833,6 +844,78 @@ export default {
       wish14: "May the doors of success and fortune always remain open for you.",
       wish15: "May Allah’s blessings turn all your efforts into wealth and success.",
       wish16: "On this special occasion, I pray for your financial growth and success."
+    },
+    appLoginBonus: {
+      newlyRegistered1: "Newly registered",
+      win7: "WIN7",
+      newlyRegistered2: "members, download and install the application, and get random free bonuses, up to",
+      bdt888: "888BDT",
+      newlyRegistered5: ".",
+      claimNow: "CLAIM NOW",
+      downloadApp: "DOWNLOAD APP",
+      claimed: "CLAIMED",
+      beginnersGuide: "BEGINNER'S GUIDE",
+      rewardDetails: "REWARD DETAILS",
+      beginnersGuideTxt1_1: "1. Follow whatsapp and subscribe to",
+      win7game: "win7.game",
+      beginnersGuideTxt1_2: "channel",
+      beginnersGuideTxt2: "2. Associate and verify email address",
+      rewardDetailTxt1: "The maximum bonus can reach",
+      rewardDetailTxt2: "",
+      rewardDetailTxt3: "New users only",
+      thingsToNote1: "Rewards can only be claimed after logging in through the APP and completing verification",
+      thingsToNote2: "Application must be",
+      thingsToNote3: "downloaded",
+      thingsToNote4: "and",
+      thingsToNote5: "installed",
+      thingsToNote6: "",
+      downloadAndInstall1: "Download and install",
+      downloadAndInstall2: "official application.",
+      downloadAndInstall3: "Subscribe to",
+      downloadAndInstall4: "official channel",
+      downloadAndInstall5: "WhatsApp channel:",
+      downloadAndInstall6:
+        "Register a member account and enter your original name (must be consistent with the name of your associated withdrawal account)",
+      downloadAndInstall7: "Linked withdrawal account",
+      downloadAndInstall8: "Enter the [Discount Center] to check and collect, and you can get a random reward of up to",
+      downloadAndInstall9: ".",
+      termsCondition1:
+        "After registering as a WIN7 member and completing tasks, you will receive corresponding rewards.",
+      termsCondition2:
+        "Before withdrawing, you must complete the bonus X5 turnover requirements before you can withdraw the bonus!",
+      termsCondition3:
+        "The bank account number and any information cannot be changed before the first withdrawal request. If correction is required, bonuses and profits will be deducted.",
+      termsCondition4:
+        "Each player can only receive one promotional bonus. If the system detects duplicates involving the same IP address, bank card or phone number, bonuses and profits will be forfeited.",
+      termsCondition5:
+        "This promotional bonus can only be used on slot games. Please note that small and large odd and even, two-way games are not applicable.",
+      termsCondition6:
+        "If a player chooses to bet on other games, such as poker, sports, electronic games, live or exclusive games, WIN7 reserves the right to forfeit winnings and any resulting profits.",
+      termsCondition7: "WIN7.GAME reserves the right to modify, suspend or cancel this event at any time."
+    },
+    newUserRoulette: {
+      congratsOnSignUpBonus: "Congratulations on your sign up bonus",
+      recharge100get18: "Recharge 100 and get 18 free",
+      recharge200get28: "Recharge 200 and get 28 free",
+      remainingDrawTimes: "Remaining draw times",
+      remainingTime: "Remaining time",
+      timePeriod: "Time Period",
+      numberOfPlaces: "Number of Places",
+      signUpBonus1:
+        "After registering, users can get a chance to win a carousel lottery, and no deposit is required to participate.",
+      signUpBonus2: "Lottery bonus amounts include:",
+      signUpBonus3: "And bonuses for deposits.",
+      signUpBonus4: "The quota has been used up during the current period:",
+      signUpBonus5:
+        "(For example, during the period, a member participated in the carousel and won 18, 58, 88, etc. but the quota has been used up. It will prompt that the quota has been claimed. A deposit coupon will be randomly given. For example, if you deposit 100, you will get 18, or if you deposit 200, you will get 28)",
+      activityRule1:
+        "The bonus earned can be transferred directly to the account, and users only need to meet the 1x turnover requirement to apply for withdrawal.",
+      activityRule2:
+        "Before participating in the spin, you must enter your original name in the associated withdrawal account (must be consistent with the name of your associated withdrawal account). and verify the email.",
+      activityRule3:
+        "The bank account number and any information cannot be changed before the first withdrawal request. If correction is required, bonuses and profits will be deducted.",
+      activityRule4:
+        "Each player can only receive one promotional bonus. If the system detects duplicates involving the same IP address, bank card or phone number, bonuses and profits will be forfeited."
     }
   },
   maintenance: {

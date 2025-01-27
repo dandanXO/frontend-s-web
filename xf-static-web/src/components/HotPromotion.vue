@@ -815,6 +815,13 @@ export default defineComponent({
     padding: 30px;
     font-family: "PingFang";
 
+    &.cny {
+      background: url("../assets/images/promotion/hotpromo/hongbaoyu2025/section-bg.png") !important;
+      background-size: 100% 100% !important;
+      border: none !important;
+      color: #4C4C6C;
+    }
+
     .section-table {
       th {
         color: #fff !important;
@@ -829,6 +836,17 @@ export default defineComponent({
       td {
         border: 1px solid #484c5770 !important;
         color: #fff;
+      }
+
+      &.cny {
+        th {
+          background: linear-gradient(180deg, #FFE190 0%, #FF9F40 100%) !important;
+          color: #894800 !important;
+        }
+
+        td {
+          color: #4C4C6C;
+        }
       }
     }
 
@@ -853,6 +871,11 @@ export default defineComponent({
       aspect-ratio: 94/30;
       white-space: nowrap;
       background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%);
+
+      &.cny {
+        background: linear-gradient(180deg, #FFE190 0%, #FF9F40 100%);
+        color: #894800;
+      }
     }
 
     .title-img {
@@ -892,6 +915,12 @@ export default defineComponent({
         box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
           0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
         background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) !important;
+      }
+    }
+
+    &.cny {
+      .item {
+        color: #4C4C6C;
       }
     }
   }

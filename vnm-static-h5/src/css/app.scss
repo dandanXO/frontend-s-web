@@ -38,6 +38,15 @@ body {
   }
 }
 
+.q-layout {
+  &.cny-bg {
+    background-image: url("../assets/images/home/cny/cny-home-bg.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: top center;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 2px;
   height: 2px;
@@ -730,6 +739,14 @@ svg {
   width: 58px;
   position: relative;
 
+  &.cny-bg {
+    background: url('../assets/images/home/cny/cny-game-tab-bg.png');
+    background-position: 7% 0%;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    position: relative;
+  }
+
   .game-tab-content {
     display: flex;
     flex-direction: column;
@@ -823,6 +840,17 @@ svg {
 
   &.active {
     background-position: 100% 0%;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: -12px;
+      right: -5px;
+      width: 75px;
+      height: 60px;
+      background-image: url("../assets/images/home/cny/cny-home-icon-decor.png");
+      background-repeat: no-repeat;
+    }
 
     .sport-icon {
       background: url('../assets/images/home/games/game-tab-icons.png');

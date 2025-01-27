@@ -25,6 +25,10 @@ export function initDepositRedPacket(item) {
   return server.EVENT.get(`/session/redPacketVip/initDepositRedPacket?promoCode=${item}`);
 }
 
+export function initNextRainTime(item) {
+  return server.EVENT.get(`/session/redPacketVip/nextRainTime?promoCode=${item}`);
+}
+
 export function claimDailyRainItem(item) {
   return server.EVENT.get(`/redPacketVip/claim?promoCode=${item}`);
 }
@@ -562,4 +566,17 @@ export function getCompetitionLossWeeklyInit(promoCode) {
 
 export function claimCompetitionLossWeekly(promoCode) {
   return server.EVENT.post(`/session/competition-loss-weekly/claim?promoCode=${promoCode}`);
+}
+export function getPGLOnFireBuenosAires2025(promoCode) {
+  return server.EVENT.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimPGLOnFireBuenosAires2025(promoCode) {
+  return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+
+export function getSkyesportsSouvenir2025Bonus(promoCode) {
+  return server.EVENT.get(`/session/competition-payout-deposit/init?promoCode=${promoCode}`);
+}
+export function claimSkyesportsSouvenir2025Bonus(promoCode) {
+  return server.EVENT.post(`/session/competition-payout-deposit/claimBonus?promoCode=${promoCode}`);
 }

@@ -44,7 +44,7 @@
           icon="el-icon-search"
           size="mini"
           type="success"
-          @click="loadDepositReport(false)"
+          @click="uiControl.display === 'DATA' ? loadDepositReport(false) : loadCharts() "
         >
           {{ t('fields.search') }}
         </el-button>
@@ -57,9 +57,33 @@
           {{ t('fields.reset') }}
         </el-button>
       </div>
+      <div style="margin-top: 10px;">
+        <el-radio-group v-model="uiControl.display" size="small">
+          <el-radio-button label="DATA">{{ t('fields.table') }}</el-radio-button>
+          <el-radio-button label="CHART">{{ t('fields.chart') }}</el-radio-button>
+        </el-radio-group>
+      </div>
     </div>
 
-    <div class="tables-container-wrap1">
+    <div v-if="uiControl.display === 'CHART'">
+      <el-card style="height: 1000px;">
+        <div class="chart-container" style="height: 100%; width: 100%;">
+          <Chart :options="amountOptions" />
+        </div>
+      </el-card>
+      <el-card style="height: 1000px; margin-top: 10px">
+        <div class="chart-container" style="height: 100%; width: 100%;">
+          <Chart :options="countOptions" />
+        </div>
+      </el-card>
+      <el-card style="height: 500px; margin-top: 10px">
+        <div class="chart-container" style="height: 100%; width: 100%;">
+          <Chart :options="barOption" />
+        </div>
+      </el-card>
+    </div>
+
+    <div class="tables-container-wrap1" v-if="uiControl.display === 'DATA'">
       <el-card class="info-card">
         <el-descriptions
           size="small"
@@ -301,7 +325,7 @@ import moment from 'moment'
 import {
   getDepositReport,
   getDailyReport,
-  getTotalDeposit,
+  getTotalDeposit, getDepositReportAll,
 } from '../../../api/report-deposit'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
@@ -309,6 +333,7 @@ import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
 import { hasPermission } from '../../../utils/util'
+import Chart from "@/components/charts/Charts.vue";
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -322,6 +347,10 @@ const site = ref(null)
 const siteList = reactive({
   list: [],
 })
+const uiControl = reactive({
+  display: "DATA",
+  chartLoading: false,
+});
 
 var expandrowkey = []
 
@@ -436,6 +465,203 @@ async function loadDepositReport(first) {
   page.loading = false
 }
 
+async function loadCharts() {
+  uiControl.chartLoading = true
+  const requestCopy = { ...request }
+  const query = {}
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value
+    }
+  })
+  if (request.recordTime !== null) {
+    if (request.recordTime.length === 2) {
+      query.recordTime = request.recordTime.join(',')
+    }
+  }
+
+  const { data } = await getDepositReportAll(query)
+  getBarChart(
+    data,
+    barOption
+  )
+  const paymentTypeData = data.reduce((acc, item) => {
+    if (!acc[item.paymentType]) {
+      acc[item.paymentType] = []
+    }
+    acc[item.paymentType].push(item)
+    return acc
+  }, {})
+  getCountChart(
+    paymentTypeData,
+    countOptions
+  )
+  getAmountChart(
+    paymentTypeData,
+    amountOptions
+  )
+
+  uiControl.chartLoading = false
+}
+
+function getBarChart(data, options) {
+  const paymentData = []
+  data.sort((a, b) => {
+    return b.totalSuccessDeposit / b.totalDeposit - a.totalSuccessDeposit / a.totalDeposit
+  })
+  data.forEach((item) => {
+    const temp = []
+    temp.push(item.paymentType)
+    temp.push(item.name)
+    const rate = Number(item.totalSuccessDeposit / item.totalDeposit * 100)
+    temp.push(rate.toFixed(2))
+    paymentData.push(temp)
+  })
+  options.dataset.source = paymentData
+  console.log(options.dataset.source)
+}
+
+function getCountChart(data, options) {
+  const chartData = []
+  Object.keys(data).forEach((paymentType) => {
+    const children = data[paymentType].filter((item) => item.totalSuccessDeposit > 0).map((item) => {
+      return {
+        name: item.name,
+        value: Number(item.totalSuccessDeposit),
+      }
+    })
+    chartData.push({
+      name: paymentType,
+      children,
+    })
+  })
+  options.series.data = chartData
+}
+
+function getAmountChart(data, options) {
+  const chartData = []
+  Object.keys(data).forEach((paymentType) => {
+    const children = data[paymentType].filter((item) => item.totalSuccessDeposit > 0).map((item) => {
+      return {
+        name: item.name,
+        value: Math.round(Number(item.totalSuccessDepositAmount))
+      }
+    })
+    chartData.push({
+      name: paymentType,
+      children,
+    })
+  })
+  options.series.data = chartData
+}
+
+const countOptions = reactive({
+  title: {
+    text: t('fields.depositCountRatio'),
+  },
+  height: '1000px',
+  width: '1000px',
+  series: {
+    type: 'sunburst',
+    data: [],
+    radius: ['0%', '99%'],
+    emphasis: {
+      focus: 'self'
+    },
+    levels: [
+      {},
+      {
+        r0: '10%',
+        r: '30%',
+        itemStyle: {
+          borderWidth: 2
+        },
+        label: {
+          silent: false,
+          formatter: '{b}-{c}'
+        },
+      },
+      {
+        r0: '30%',
+        r: '55%',
+        label: {
+          position: 'outside',
+          silent: false,
+          formatter: '{b}-{c}'
+        },
+      }
+    ]
+  },
+})
+
+const amountOptions = reactive({
+  title: {
+    text: t('fields.depositAmountRatio'),
+  },
+  height: '1000px',
+  width: '1000px',
+  series: {
+    type: 'sunburst',
+    data: [],
+    radius: ['0%', '99%'],
+    emphasis: {
+      focus: 'self'
+    },
+    levels: [
+      {},
+      {
+        r0: '10%',
+        r: '30%',
+        itemStyle: {
+          borderWidth: 2
+        },
+        label: {
+          silent: false,
+          formatter: '{b}-' + '$' + '{c}'
+        },
+      },
+      {
+        r0: '30%',
+        r: '55%',
+        label: {
+          position: 'outside',
+          silent: false,
+          formatter: '{b}-' + '$' + '{c}'
+        },
+      }
+    ]
+  },
+})
+
+const barOption = {
+  title: {
+    text: t('fields.successRate'),
+  },
+  dataset: {
+    dimensions: ['PaymentType', 'Name', 'SuccessRate'],
+    source: []
+  },
+  xAxis: {
+    name: 'name',
+    type: 'category',
+    axisLabel: { interval: 0, rotate: 30 }
+  },
+  yAxis: {
+    type: 'value',
+    name: '%'
+  },
+  series: [
+    {
+      type: 'bar',
+      encode: { x: 'Name', y: 'SuccessRate' },
+    }
+  ],
+  tooltip: {
+    trigger: 'axis',
+    formatter: '{c}' + '%'
+  }
+};
+
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
@@ -528,6 +754,7 @@ onMounted(async () => {
     request.siteId = site.value.id
   }
   await loadDepositReport(true)
+  await loadCharts()
 })
 </script>
 
@@ -677,6 +904,12 @@ onMounted(async () => {
 .refresh-platform-btn {
   margin-left: 5px;
   display: inline-block;
+}
+
+.chart-container {
+  position: relative;
+  height: 1000px; /* Force desired height */
+  width: 100%; /* Make it responsive */
 }
 </style>
 

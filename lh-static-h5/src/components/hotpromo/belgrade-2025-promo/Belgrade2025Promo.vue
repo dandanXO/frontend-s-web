@@ -12,7 +12,7 @@
             <div class="reward-info-icon claim-coin-icon">
             </div>
             <div class="reward-info-content">
-              昨日单笔最高有效投注:
+              昨日单笔最高有效投注：
               <span class="amount">{{ highestSingleValidBet }}元</span>
             </div>
           </div>
@@ -35,11 +35,11 @@
         <div class="title-img">活动详情</div>
         <div class="little-title">
           <div class="ribbon">活动时间</div>
-          <div class="right">2025年1月24日至2月2日</div>
+          <div class="right">2025 年 1 月 24 日至 2 月 2 日</div>
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
-          <div class="right">活动期间，当日贝尔格莱德 2025赛事中单笔最高有效投注≥500 元即可获得最高1588元的奖金。</div>
+          <div class="right">活动期间，当日在 FISSURE PLAYGROUND 贝尔格莱德赛事中单笔最高有效投注≥500 元即可获得最高 1588 元的奖金。</div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
           <thead>
@@ -52,40 +52,40 @@
           <tbody>
             <tr>
               <td>≥500</td>
-              <td>8元</td>
-              <td rowspan="9">6倍流水</td>
+              <td>8 元</td>
+              <td rowspan="9">6 倍流水</td>
             </tr>
             <tr>
               <td>≥1,000</td>
-              <td>28元</td>
+              <td>28 元</td>
             </tr>
             <tr>
               <td>≥3,000</td>
-              <td>58元</td>
+              <td>58 元</td>
             </tr>
             <tr>
               <td>≥5,000</td>
-              <td>108元</td>
+              <td>108 元</td>
             </tr>
             <tr>
               <td>≥10,000</td>
-              <td>288元</td>
+              <td>288 元</td>
             </tr>
             <tr>
               <td>≥50,000</td>
-              <td>388元</td>
+              <td>388 元</td>
             </tr>
             <tr>
               <td>≥100,000</td>
-              <td>588元</td>
+              <td>588 元</td>
             </tr>
             <tr>
               <td>≥300,000</td>
-              <td>888元</td>
+              <td>888 元</td>
             </tr>
             <tr>
               <td>≥500,000</td>
-              <td>1,588元</td>
+              <td>1,588 元</td>
             </tr>
           </tbody>
         </table>
@@ -100,7 +100,7 @@
               />
               <span>示例</span>
             </div>
-            用户 在1月25日的贝尔格莱德 2025赛事中下注3次，有效投注分别为500元、5000元和100元，单笔最高有效投注金额为5000元，则次日会员可登录优惠页面点击领取108元投注金。
+            用户 在 1 月 25 日的 FISSURE PLAYGROUND 贝尔格莱德 赛事中下注 3 次，有效投注分别为 500 元、5000 元和 100 元，单笔最高有效投注金额为 5000 元，则次日会员可登录优惠页面点击领取 108 元投注金。
           </div>
         </div>
       </div>
@@ -112,13 +112,15 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              活动期间，活动仅计算电竞场馆中贝尔格莱德 2025赛事，会员在当日贝尔格莱德 2025赛事中单笔最高有效投注≥500 元即可获得对应彩金，单笔最高有效投注次日清零；
+              活动期间，活动仅计算电竞场馆中 FISSURE PLAYGROUND 贝尔格莱德 赛事，会员在当日 FISSURE PLAYGROUND 贝尔格莱德赛事中单笔最高有效投注≥500 元即可获得对应彩金，单笔最高有效投注次日清零；
+注：奖金不叠加派发，奖金按最高档位每日派发一次。
             <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
           </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，活动仅计算当日 贝尔格莱德 2025赛事已结算的赛事的单笔最高有效投注，次日 24 小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 6倍流水即可出款；
+            活动期间，活动仅计算电竞场馆中 FISSURE PLAYGROUND 贝尔格莱德 赛事，会员在当日 FISSURE PLAYGROUND 贝尔格莱德赛事中单笔最高有效投注≥500 元即可获得对应彩金，单笔最高有效投注次日清零；
+注：奖金不叠加派发，奖金按最高档位每日派发一次。
           </div>
           <div class="item">
             <div class="item-num">3</div>

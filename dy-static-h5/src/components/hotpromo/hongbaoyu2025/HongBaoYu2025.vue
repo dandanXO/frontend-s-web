@@ -189,6 +189,9 @@ const getPromotionPrize = () => {
   background-size: 100% 100%;
   align-items: center;
   width: 100%;
+  background: url("../../../assets/images/promotion/hotpromo/hongbaoyu2025/section-bg-w-decor.png");
+  background-size: 100% 100%;
+  border: none;
 
   img {
     width: 200px !important;
@@ -245,6 +248,9 @@ const getPromotionPrize = () => {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  background: url("../../../assets/images/promotion/hotpromo/hongbaoyu2025/section-bg.png");
+  background-size: 100% 100%;
+  border: none;
 
   .title {
     background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/info-title.png");
@@ -260,7 +266,7 @@ const getPromotionPrize = () => {
     align-items: center;
     gap: 10px;
     .left {
-      background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/info-little-title-bg.png");
+      background-image: url("../../../assets/images/promotion/hotpromo/hongbaoyu2025/ribbon.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       width: 64px;
@@ -271,7 +277,7 @@ const getPromotionPrize = () => {
       font-size: 12px;
       font-weight: 600;
       line-height: 23.33px;
-      color: #ffffff;
+      color: #894800;
       margin-right: 16px;
     }
     .right {
@@ -295,8 +301,8 @@ const getPromotionPrize = () => {
     font-size: 12px;
     font-weight: 400;
     line-height: 28px;
-    color: #fff;
-    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    color: #894800;
+    background: linear-gradient(180deg,#ffe190,#ff9f40) !important;
     &:first-child {
       border-top-left-radius: 12px;
     }
@@ -343,6 +349,10 @@ const getPromotionPrize = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: url("../../../assets/images/promotion/hotpromo/hongbaoyu2025/section-bg.png");
+  background-size: 100% 100%;
+  border: none;
+
   .title {
     background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/rule-title.png");
     background-repeat: no-repeat;

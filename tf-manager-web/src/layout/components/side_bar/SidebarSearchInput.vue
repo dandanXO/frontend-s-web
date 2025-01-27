@@ -20,11 +20,18 @@ const filterHiddenAndGetMostBottomLevelMenuItems = (dynamicRoutes) => {
   const filterRoutes = (routeList) => {
     routeList.forEach(route => {
       if (route.meta && !route.meta.hidden) {
-        if (route.children) {
-          filterRoutes(route.children);
-        } else {
+        const slashCount = route.path.split('/').filter(Boolean).length
+        if (route.name !== null && slashCount > 1) {
           result.push(route);
         }
+        if (route.children) {
+          filterRoutes(route.children);
+        }
+        // if (route.children) {
+        //   filterRoutes(route.children);
+        // } else {
+        //   result.push(route);
+        // }
       }
     });
   };

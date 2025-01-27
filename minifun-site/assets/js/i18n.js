@@ -12,7 +12,7 @@ const resources = {
       "carousel.main.title": "Empowering Your Digital Future",
       "carousel.texas.title":
         '"Stay Connected, Anytime, Anywhere with our Chat App."',
-      "carousel.pigeon.title": "Power up your customer support with FunExpo",
+      "carousel.pigeon.title": "Power up your customer support with TopFun",
       "carousel.moreAbout": "More About",
       "carousel.download": "Download",
       "carousel.joinus.main.title": "Join us",

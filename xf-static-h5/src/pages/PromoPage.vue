@@ -54,7 +54,14 @@
                   style="display: block; width: 100%"
                 />
               </div>
-              <div class="inner" :class="isSpecialPromo ? 'special-promo' : ''">
+              <div class="inner" :class="{
+                ['special-promo']: isSpecialPromo, 
+                hongbaoyu2025: selectedPromo?.promoCode === 'xf1-cny2025-red-envelope'
+              }" :style="{
+                  backgroundImage: selectedPromo?.mobileImgBackgroundUrl
+                    ? `url(${imgURL + selectedPromo.mobileImgBackgroundUrl})`
+                    : 'none'
+                }">
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
                 </div>
@@ -718,6 +725,16 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
+        &.hongbaoyu2025 {
+          gap: 0;
+          margin: 0;
+          width: 100%;
+          background-repeat: no-repeat;
+          background-size: 100% auto;
+          background-color: #e7f1fd;
+          padding: 20px;
+        }
 
         &.special-promo {
           width: 100%;

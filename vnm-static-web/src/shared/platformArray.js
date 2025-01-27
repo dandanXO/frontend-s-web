@@ -378,7 +378,6 @@ export const cockfightPlatforms = [
     vimessage:
       "Sảnh Đá Gà sở hữu hơn 10 năm bề dày kinh nghiệm hoạt động trên thị trường với nhiều lựa chọn như: đá gà cựa, đá gà đòn, đá gà tre và đá gà Mỹ v.v….",
     caption: "",
-    gameCode: 7202
   }
 ];
 

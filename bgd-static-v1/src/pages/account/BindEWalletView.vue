@@ -251,6 +251,7 @@ import { userStore } from "stores/index";
 import { useLocalStorage } from "@vueuse/core";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
+import { t } from "src/boot/lang";
 
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);
@@ -450,7 +451,7 @@ const submitBankCard = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "Virtual wallet added successfully",
+            message: t("notify.virtualWalletAddedSuccessfully"),
             icon: "check_circle_outline"
           });
           router.push("/account/bank");

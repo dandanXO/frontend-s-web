@@ -72,12 +72,16 @@
           console.log("DOM fully loaded and parsed");
           if (window.flutter_inappwebview) {
             window.flutter_inappwebview.callHandler("FlutterChannel", "XF_FLUTTER");
+
+            const flutterObj = JSON.stringify(window.flutter_inappwebview);
+            // alert(`22flutter_inappwebview object:\n${flutterObj}`);
           } else {
             console.log("FlutterChannel not available yet, waiting...");
             const interval = setInterval(() => {
               if (window.flutter_inappwebview) {
                 window.flutter_inappwebview.callHandler("FlutterChannel", "XF_FLUTTER");
                 console.log("Message sent to Flutter after DOMContentLoaded");
+                // alert("Message sent to Flutter after DOMContentLoaded1");
                 clearInterval(interval);
               }
             }, 100);
@@ -88,6 +92,10 @@
         window.notifyApp = function (message) {
           try {
             const returnJson = message.data;
+
+            // const returnJsonStringify = JSON.stringify(returnJson);
+            // alert(`returnJson:\n${returnJsonStringify}`);
+
             if (returnJson && returnJson.rstDomain) {
               window.localStorage.setItem("XF_H5_RST_URL", returnJson.rstDomain);
 
@@ -154,8 +162,8 @@
 
             // 打印数据到控制台，供调试用
             console.log("Received message from Flutter:", message);
-            // alert("Received message from Flutter:");
-            // alert(message);
+            alert("Received message from Flutter:");
+            alert(message);
             // alert("DATA   " + message.data);
 
             const returnJson = message.data;

@@ -19,7 +19,7 @@
     </div>
     <div class="sec-title">
       <img class="sec-icon" src="./img/sec-icon.png" />
-      <di class="sec-content">Amazing Rewards Await You!</di>
+      <div class="sec-content">Amazing Rewards Await You!</div>
     </div>
   </div>
   <div class="thrid-section">
@@ -27,7 +27,7 @@
     <ul>
       <li>
         Represent
-        <sapn class="l1">B9.GAME</sapn>
+        <span class="l1">B9.GAME</span>
         for 12 months
       </li>
       <li>
@@ -104,7 +104,7 @@
         </li>
         <li>
           Event duration:
-          <span class="sp1">19th January 2025 - 19th February 2025</span>
+          <span class="sp1">19th January 2025 - 19th March 2025</span>
           .
         </li>
         <li>How to Claim Rewards?</li>
@@ -125,6 +125,46 @@
           Brand Ambassador could be YOU!"
         </li>
       </ul>
+    </div>
+  </div>
+  <div class="ranking-section">
+    <img class="ranking-top-img" src="./img/ranking-top.png" />
+    <div class="ranking-container">
+      <div class="ranking-header">
+        <div class="rank-index">RANKING</div>
+        <div>NAME</div>
+        <!-- <div>AMOUNT</div> -->
+      </div>
+      <div class="ranking-content">
+        <div class="ranking-item" v-for="n in 5" :key="n">
+          <div
+            class="rank-index"
+            :style="`background: ${
+              n <= 3
+                ? 'url(' +
+                  require(`./img/rank-${n}.png`) +
+                  ') no-repeat center center; color: #9E6213; font-weight: 900; min-height: 24px'
+                : 'none'
+            }`"
+          >
+            <template v-if="n > 3">
+              {{ n }}
+            </template>
+          </div>
+          <div class="rank-name">
+            <a :href="params[`ambassador_${n}`]" target="_blank">
+              {{ params[`ambassador_${n}`] }}
+            </a>
+          </div>
+          <!-- <div class="rank-amt">
+            <img src="./img/coin.png" />
+            888
+          </div> -->
+        </div>
+      </div>
+      <img class="ranking-container-decoration left" src="./img/ranking-left.png" />
+      <img class="ranking-container-decoration right" src="./img/ranking-right.png" />
+      <img class="ranking-container-decoration bottom" src="./img/ranking-bottom.png" />
     </div>
   </div>
 </template>
@@ -346,6 +386,118 @@ onMounted(() => {
   .sp2 {
     font-weight: 700;
     color: rgba(0, 255, 178, 1);
+  }
+}
+
+.ranking-section {
+  background-image: url(./img/ranking-bg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top center;
+  padding-top: 15%;
+}
+.ranking-top-img {
+  top: 10%;
+  margin: auto;
+  max-width: 70%;
+}
+
+.ranking-container {
+  position: relative;
+  background: #1e371f;
+  border: 2px solid #337e3a;
+  border-radius: 10px;
+  padding-top: 20px;
+  margin: -6% 30px 88px;
+  font-weight: 700;
+  width: calc(100% - 60px);
+
+  .ranking-header {
+    display: grid;
+    grid-template-columns: minmax(30px, 1fr) 3fr;
+    background: #0000001a;
+    border-radius: 24px;
+    padding: 16px 4px;
+    margin: 0 10px;
+    text-align: center;
+    .rank-index {
+      text-align: center;
+      margin: 0 20px;
+    }
+  }
+  @media (max-width: 435px) {
+    .ranking-content,
+    .ranking-header {
+      font-size: 10px;
+    }
+  }
+  @media (max-width: 375px) {
+    .ranking-content,
+    .ranking-header {
+      font-size: 9px;
+    }
+  }
+  .ranking-content {
+    margin-top: 16px;
+
+    .ranking-item {
+      display: grid;
+      grid-template-columns: minmax(30px, 1fr) 3fr;
+      height: 65px;
+      padding: 0 14px;
+      align-items: center;
+      overflow-wrap: anywhere;
+      .rank-index {
+        font-size: 1rem;
+        text-align: center;
+        background-repeat: no-repeat !important;
+        background-size: contain !important;
+        background-position: center !important;
+      }
+      .rank-name {
+        color: #ff4c00;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        a {
+          color: inherit;
+        }
+      }
+      .rank-amt {
+        display: flex;
+        color: #64ffce;
+        align-items: center;
+        img {
+          height: 20px;
+          width: 20px !important;
+          margin-right: 10px;
+        }
+      }
+    }
+    .ranking-item:nth-child(odd) {
+      background-color: #0000001a;
+    }
+  }
+  .ranking-container-decoration {
+    position: absolute;
+    margin-bottom: unset !important;
+    &.left {
+      max-width: 50px;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+    &.right {
+      max-width: 20px;
+      top: 30%;
+      right: 0;
+      transform: translate(100%, -50%);
+    }
+    &.bottom {
+      max-width: 88px;
+      bottom: 0;
+      right: 0;
+      transform: translate(0, 100%);
+    }
   }
 }
 </style>

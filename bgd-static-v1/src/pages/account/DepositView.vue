@@ -78,6 +78,7 @@
               v-model="isFtdPrivilegeEnable"
               v-if="store.ftd === 'OPEN' && paytypeWithPrivilege.indexOf(activeMethod.payType) > -1"
               style="white-space: pre-wrap"
+              @update:model-value="onCheckFtdCheckbox"
             >
               {{ $t("deposit.useFtdPrivilege") }}
             </q-checkbox>
@@ -172,6 +173,7 @@
         ></BankComponent>
 
         <q-select
+          :disable="isFtdPrivilegeEnable"
           style="width: 100%"
           ref="offerRef"
           class="deposit-selection q-mt-xs"
@@ -183,7 +185,6 @@
           v-if="hasPrivilege && unselectedPrivileges.length > 0"
           :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
           clearable
-          @update:model-value="onChangePrivilege"
         >
           <template v-slot:option="scope">
             <q-item v-bind="scope.itemProps">
@@ -213,9 +214,9 @@
     </div>
 
     <div class="q-mt-lg" style="color: #576373" v-if="activeMethod.privilegeId || isFtdPrivilegePayType">
-      <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
+      <div class="q-mt-sm">{{ $t("deposit.wagerrequirement") }}</div>
       <div class="q-mt-sm">
-        Eg. Deposit 100 {{ store.currency.label }}, require 1,000 {{ store.currency.label }} wager
+        {{ $t("deposit.example", { label: store.currency.label }) }}
       </div>
     </div>
 
@@ -316,8 +317,15 @@
 
   <q-dialog width="100%" v-model="showBindEmailDialog" persistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" @click="() => showBindEmailDialog = false" v-close-popup />
-      <KYCBindEmail @closeBindEmailKYCDialog="() => showBindEmailDialog = false" />
+      <q-btn
+        dense
+        rounded
+        icon="close"
+        class="popout-close"
+        @click="() => (showBindEmailDialog = false)"
+        v-close-popup
+      />
+      <KYCBindEmail @closeBindEmailKYCDialog="() => (showBindEmailDialog = false)" />
     </div>
   </q-dialog>
 </template>
@@ -331,7 +339,6 @@ import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
-import { convertToCommaAmount } from "src/boot/utils";
 // import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
 // import PrimaryButton from "src/components/auth/PrimaryButton.vue";
@@ -393,6 +400,21 @@ const copybtntxt3 = ref("复制");
 const extraPrivilegeId = ref();
 const paytypeWithPrivilege = ref("");
 const isFtdPrivilegeEnable = ref(false);
+const ftdBonuses = ref([]);
+
+function isNonNumericString(value) {
+  return typeof value === "string" && isNaN(value);
+}
+
+const convertToCommaAmount = (amount) => {
+  if (amount === null) {
+    return 0;
+  }
+  if (isNonNumericString(amount)) {
+    return amount;
+  }
+  return parseFloat(amount).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+};
 
 const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
 const isFtdPrivilege = computed(
@@ -402,6 +424,20 @@ const isFtdPrivilege = computed(
 const isFtdPrivilegePayType = computed(
   () => isFtdPrivilege.value && paytypeWithPrivilege.value.indexOf(activeMethod.value.payType) > -1
 );
+
+const onCheckFtdCheckbox = (status) => {
+  if(status === true) {
+    if(extraPrivilegeId.value) {
+      selectedPrivilege.value = { id: extraPrivilegeId.value, payTypes: paytypeWithPrivilege.value };
+      
+      if (!store.email || store.emailVerified !== true) {
+        showBindEmailDialog.value = true;
+      }
+    }
+  } else {
+    selectedPrivilege.value = undefined;
+  }
+}
 
 const copyMessage = (position) => {
   let copyText = null;
@@ -468,12 +504,6 @@ const calculatedMaxDeposit = ref("");
 
 const depositItems = ref([]);
 
-const onChangePrivilege = (privilege) => {
-  if(privilege.code === 'bgd-email-verify-bonus' && (!store.email || store.emailVerified !== true)) {
-    showBindEmailDialog.value = true;
-  }
-}
-
 const handleDepositItemClick = (index) => {
   depositItems.value.forEach((item, i) => {
     item.isActive = i === index;
@@ -484,12 +514,20 @@ const handleDepositItemClick = (index) => {
 };
 
 const getFtdCommaAmount = (amount) => {
-  const currencyRate = isUSDT.value ? activeMethod.value : 1;
-  const bonusAmount = amount * 0.5 * currencyRate;
-  if (bonusAmount < 999) {
-    return bonusAmount.toFixed(0) + "Bdt";
-  } else {
-    return "999Bdt";
+  const bonuses = ftdBonuses.value;
+
+  let bonusAmt = undefined;
+
+  if(bonuses) {
+    bonuses.sort((a,b) => b.min - a.min);
+    bonuses.forEach(({min, bonus}) => {
+      if(amount >= min && bonusAmt === undefined) {
+        bonusAmt = bonus;
+        return;
+      }
+    });
+
+    return bonusAmt;
   }
 };
 
@@ -660,7 +698,7 @@ function clearInfo() {
 
 const depositAmtRef = ref("");
 async function confirmDeposit() {
-  if(selectedPrivilege.value.code === 'bgd-email-verify-bonus' && (!store.email || store.emailVerified !== true)) {
+  if (extraPrivilegeId.value && (!store.email || store.emailVerified !== true)) {
     showBindEmailDialog.value = true;
     return;
   }
@@ -946,10 +984,10 @@ const openDepositVideo = () => {
     const code = selectedPayType.value;
     switch (code) {
       case "BKASH":
-        window.open("https://drive.google.com/file/d/1haAPLN5eEiHYJ8XtxsuNjF1vTkQOw_VJ/view?usp=sharing", "_blank");
+        window.open("https://drive.google.com/file/d/1xp-sKgJ634jLreKDeM5ZJ4fljeuYz75I/view?usp=sharing", "_blank");
         break;
       case "NAGAD":
-        window.open("https://drive.google.com/file/d/1vOP9wv26V1Lizy8YfHFGwJ4nDYSkBxsW/view?usp=sharing", "_blank");
+        window.open("https://drive.google.com/file/d/17o13PLoiSZxJZ_mc7m-BhyclkeOtez_6/view?usp=sharing", "_blank");
         break;
       case "ROCKET":
         window.open("https://drive.google.com/file/d/1fatbGp3rvXLPb69NwNzrt0pwEI3FhOn_/view?usp=sharing", "_blank");
@@ -962,7 +1000,7 @@ const openDepositVideo = () => {
 };
 
 const loadAppTabs = () => {
-  api.get("/opt-session/getPakAppTabs").then((res) => {
+  api.get("/opt-session/getPromoAppTabs").then((res) => {
     if (res.code === 0) {
       const { data } = res;
 
@@ -981,6 +1019,10 @@ const loadAppTabs = () => {
         if (store.ftd) {
           // isFtdPrivilegeEnable.value = true;
         }
+      }
+
+      if (data?.param?.bonuses) {
+        ftdBonuses.value = data.param.bonuses;
       }
     }
   });
@@ -1379,18 +1421,24 @@ onMounted(() => {
   margin: 5px 0px !important;
 }
 
-
 @media (max-width: 400px) {
   .deposit-item-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    .deposit-item {
+      .deposit-amt {
+        padding: 2px 8px;
+      }
+    }
   }
 }
 
-@media (max-width: 280px) {
+@media (max-width: 330px) {
   .deposit-item-container {
-    display: grid;
-    grid-template-columns: 1fr;
+    .deposit-item {
+      .deposit-amt {
+        padding: 2px 4px;
+        letter-spacing: -1px;
+      }
+    }
   }
 }
 </style>
