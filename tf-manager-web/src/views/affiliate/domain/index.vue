@@ -500,6 +500,7 @@ function showDialog(type) {
     form.domain = null
     inputValue.value = ''
     uiControl.dialogTitle = t('fields.addAffiliateDomain')
+    filteredAffiliateList.value = []
     loadAllAffiliateList()
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editAffiliateDomain')
