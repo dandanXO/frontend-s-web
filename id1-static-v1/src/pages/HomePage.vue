@@ -194,7 +194,7 @@
                         <img src="../assets/images/index/hot.png" />
                       </div>
 
-                      <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
+                      <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                     </div>
                   </swiper-slide>
                 </template>
