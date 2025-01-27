@@ -162,6 +162,7 @@ const getCode = () => {
 const openVerificationCodeDialog = () => {
   if(store.email) {
     verificationCodeDialog.value = !verificationCodeDialog.value;
+    getCode();
     return;
   }
 
