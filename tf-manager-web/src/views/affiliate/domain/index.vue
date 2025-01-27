@@ -113,9 +113,10 @@
               style="width: 350px;"
               :placeholder="t('fields.affiliateName')"
               filterable
+              :filter-method="customFilterMethod"
             >
               <el-option
-                v-for="item in affiliateList.list"
+                v-for="item in filteredAffiliateList"
                 :key="item.value"
                 :label="item.value"
                 :value="item.value"
@@ -555,6 +556,19 @@ async function loadAllAffiliateList() {
   } else {
     affiliateList.list = []
   }
+}
+
+const filteredAffiliateList = ref([]);
+
+function customFilterMethod(query) {
+  if (!query) {
+    filteredAffiliateList.value = affiliateList.list.slice(0, 100); // Limit default results
+    return;
+  }
+
+  filteredAffiliateList.value = affiliateList.list.filter(item =>
+    item.value.toLowerCase().includes(query.toLowerCase())
+  ).slice(0, 100); // Limit filtered results
 }
 
 onMounted(async () => {
