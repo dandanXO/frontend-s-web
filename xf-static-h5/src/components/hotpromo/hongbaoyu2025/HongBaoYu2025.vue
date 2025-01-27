@@ -1,7 +1,7 @@
 <template>
   <div class="livepoker-rebate-wrapper">
     <div class="livepoker-rebate-container">
-      <div class="livepoker-rebate-section section-bg">
+      <div class="livepoker-rebate-section section-bg cny">
         <img
           src="../../../assets/images/promotion/hotpromo/hongbaoyu/red-packet-2025.png"
           alt=""
@@ -106,6 +106,9 @@ const getPromotionPrize = () => {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  background: url("../../../assets/images/promotion/hotpromo/hongbaoyu2025/section-bg-w-decor.png") !important;
+  background-size: 100% 100% !important;
+  border: none !important;
 
   img {
     width: 200px !important;

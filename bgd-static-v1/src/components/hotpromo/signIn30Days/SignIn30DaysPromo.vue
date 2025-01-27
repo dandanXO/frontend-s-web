@@ -220,23 +220,35 @@
         <img class="podium" src="../../../assets/images/promotion/hotpromo/signin-30days/podium.png" />
         <div v-for="n in 3" :key="n" class="medal" :class="'medal-' + n">
           <img :src="require(`../../../assets/images/promotion/hotpromo/signin-30days/medal-${n}.png`)" />
-          <div class="medal-txt">{{ rankingList[n - 1]?.loginName }}</div>
-          <div class="ranking-win-coin">
+          <div class="medal-txt">{{ rankingList?.length > 0 ? rankingList[n - 1]?.loginName : "" }}</div>
+          <div v-if="rankingList?.length > 0" class="ranking-win-coin">
             <img src="../../../assets/images/promotion/hotpromo/signin-30days/ranking-coin.png" />
-            <div>{{ rankingList[n - 1]?.amount ? convertToCommaAmount(rankingList[n - 1].amount, false) : "" }}</div>
+            <div>
+              {{
+                rankingList?.length > 0 && rankingList[n - 1]?.amount
+                  ? convertToCommaAmount(rankingList[n - 1].amount, false)
+                  : ""
+              }}
+            </div>
           </div>
         </div>
       </div>
-      <div class="ranking-list">
+      <div v-if="rankingList?.length > 0" class="ranking-list">
         <div class="ranking-list-item" v-for="n in 7" :key="n">
           <div class="ranking-index">{{ n + 3 }}</div>
           <div class="icon-txt">
             <img src="../../../assets/images/promotion/hotpromo/signin-30days/ranking-badge.png" />
-            <span>{{ rankingList[n + 2]?.loginName }}</span>
+            <span>{{ rankingList?.length > 0 ? rankingList[n + 2]?.loginName : "" }}</span>
           </div>
           <div class="icon-txt">
             <img src="../../../assets/images/promotion/hotpromo/signin-30days/ranking-coin.png" />
-            <span>{{ rankingList[n + 2]?.amount ? convertToCommaAmount(rankingList[n + 2].amount, false) : "" }}</span>
+            <span>
+              {{
+                rankingList?.length > 0 && rankingList[n + 2]?.amount
+                  ? convertToCommaAmount(rankingList[n + 2].amount, false)
+                  : ""
+              }}
+            </span>
           </div>
         </div>
       </div>
@@ -391,7 +403,7 @@
                     v-model="updatePhoneInfo.phone"
                     :rules="[
                       (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-                      (val) => (val && val.length >= 10 && val.length <= 11) || $t('form.phone_rules_02'),
+                      (val) => (val && val.length === 11) || $t('form.phone_rules_02'),
                       (val) => val.startsWith('01') || $t('form.phone_rules_03')
                     ]"
                     label-color="brand"
@@ -429,6 +441,8 @@ import { useQuasar } from "quasar";
 import { t } from "src/boot/lang";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
+
+const props = defineProps(["promocode"]);
 
 const store = userStore();
 const qs = require("qs");
@@ -528,7 +542,7 @@ const getDailyCheckInData = () => {
 };
 
 const getRankingList = () => {
-  eventapi.post("/session/bgd-daily-check-in/top-ranking?promoCode=bgd-daily-check-in-bonus").then((res) => {
+  eventapi.post(`/session/bgd-daily-check-in/top-ranking?promoCode=${props.promocode}`).then((res) => {
     rankingList.value = res.data;
   });
 };
@@ -572,13 +586,15 @@ const claimReward = () => {
           icon: "report_problem"
         });
 
-        if (store.phone && !store.email) {
-          bindEmailDialog.value = true;
-        }
-
         if (store.email && !store.phone) {
           changePhoneDialog.value = true;
         }
+
+        if (store.phone && (!store.email || !store.emailVerified)) {
+          bindEmailDialog.value = true;
+        }
+
+
       }
     })
     .catch(() => {})
@@ -599,9 +615,11 @@ const submitUpdateEmail = () => {
 
   if (updateEmailRef.value.hasError || updateEmailCodeRef.value.hasError) {
   } else {
+    const endpoint = store.email ? "/otp/verifyEmail" : "/session/verifyAndUpdateEmail"
+
     api
       .post(
-        "/session/verifyAndUpdateEmail",
+        endpoint,
         qs.stringify({
           email: updateEmailInfo.email,
           code: updateEmailInfo.code,
@@ -636,30 +654,34 @@ const submitUpdateEmail = () => {
 
 const verificationCodeDialog = ref(false);
 const openVerificationCodeDialog = () => {
-  api
-    .get(`/member/checkEmailRegisterStatus?email=${updateEmailInfo.email}`)
-    .then((response) => {
-      if (response.code === 0) {
-        if (response.data) {
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: t("notify.emailAlreadyUsed"),
-            icon: "report_problem"
-          });
-        } else {
-          verificationCodeDialog.value = !verificationCodeDialog.value;
+  if(!store.email) {
+    api
+      .get(`/member/checkEmailRegisterStatus?email=${updateEmailInfo.email}`)
+      .then((response) => {
+        if (response.code === 0) {
+          if (response.data) {
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: t("notify.emailAlreadyUsed"),
+              icon: "report_problem"
+            });
+          } else {
+            verificationCodeDialog.value = !verificationCodeDialog.value;
+          }
         }
-      }
-    })
-    .catch((e) => {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: e.message,
-        icon: "report_problem"
+      })
+      .catch((e) => {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: e.message,
+          icon: "report_problem"
+        });
       });
-    });
+  }else{
+    verificationCodeDialog.value = !verificationCodeDialog.value;
+  }
 
   captchaRef.value = "";
   getCode();

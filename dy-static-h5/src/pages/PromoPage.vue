@@ -129,7 +129,8 @@
                   midAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
                   isYallaCompass: selectedPromo?.promoCode === 'dy2-yalla-compass',
                   isBbdachaBelgrade: selectedPromo?.promoCode === 'dy2-bbdacha-belgrade',
-                  isValorantChampionTour2024: selectedPromo?.promoCode === 'dy2-valorant-champion-tour-2024'
+                  isValorantChampionTour2024: selectedPromo?.promoCode === 'dy2-valorant-champion-tour-2024',
+                  hongbaoyu2025: selectedPromo?.promoCode === 'dy2-cny2025-red-envelope'
                 }"
                 :style="{
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
@@ -138,6 +139,7 @@
                 }"
               >
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
+                  
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
@@ -962,7 +964,8 @@ export default defineComponent({
 
         &.isYallaCompass,
         &.isBbdachaBelgrade,
-        &.isValorantChampionTour2024 {
+        &.isValorantChampionTour2024,
+        &.hongbaoyu2025 {
           gap: 0;
           margin: 0;
           width: 100%;

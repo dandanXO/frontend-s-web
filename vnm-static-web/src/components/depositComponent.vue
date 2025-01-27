@@ -200,7 +200,6 @@ import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 import { doIt } from "@/utils/action";
 import { useI18n } from "vue-i18n";
-import { isOperaPixelUrl } from "@/utils/utils";
 
 const { t } = useI18n();
 const router = useRouter();
@@ -536,7 +535,7 @@ function doDeposit(data) {
   postDeposit(data)
     .then((d) => {
       if (d.code === 0) {
-        if (isOperaPixelUrl()) {
+        if (store.isOperaPixelB) {
           otag("event", "deposit");
         }
 

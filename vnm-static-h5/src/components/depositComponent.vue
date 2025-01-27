@@ -122,14 +122,18 @@
         </div>
 
         <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-xs" label="兑换率">
-          <label class="label" style="width: 130px; display: inline-block;">{{ $t('lang.deposit_realtimeexchangerates') }}</label>
+          <label class="label" style="width: 130px; display: inline-block">
+            {{ $t("lang.deposit_realtimeexchangerates") }}
+          </label>
           <span class="text-positive">
             1.00 USDT ≈ {{ activeMethod.currencyRate }}
             {{ store.currency.value }}
           </span>
         </div>
         <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-xs" label="预计到账">
-          <label class="label" style="width: 130px; display: inline-block;">{{ $t('lang.deposit_estimatedarrival') }}</label>
+          <label class="label" style="width: 130px; display: inline-block">
+            {{ $t("lang.deposit_estimatedarrival") }}
+          </label>
           <span class="text-positive">
             {{
               calculatedMinDeposit && form.localAmount < calculatedMinDeposit
@@ -251,15 +255,12 @@ var qs = require("qs");
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { isOperaPixelUrl } from "boot/utils";
 
 const store = userStore();
 const route = useRoute();
 const { t } = useI18n();
 const router = useRouter();
-const formRef = ref();
 const isNewUser = ref(false);
-const isNoBankCard = ref(false);
 const isNoRealName = ref(false);
 const isDeposited = ref(false);
 const checkNewUser = () => {
@@ -632,9 +633,7 @@ async function pDepo(deposit) {
       // const res = ret.data
       // console.log(res)
       if (res.code === 0) {
-        if (
-          isOperaPixelUrl()
-        ) {
+        if (store.isOperaPixelB) {
           otag("event", "deposit");
         }
 

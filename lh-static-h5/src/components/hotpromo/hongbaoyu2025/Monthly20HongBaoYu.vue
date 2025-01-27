@@ -4,21 +4,18 @@
       <div class="livepoker-rebate-section section-bg">
         <div class="livepoker-rebate-section-left">
           <div class="livepoker-rebate-section-title">
-            <div class="claim-title-icon">
-            </div>
+            <div class="claim-title-icon"></div>
             投注礼金
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon claim-coin-icon">
-            </div>
+            <div class="reward-info-icon claim-coin-icon"></div>
             <div class="reward-info-content">
               上月累计存款：
               <span class="amount">{{ depositAmount }}元</span>
             </div>
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon claim-gift-icon">
-            </div>
+            <div class="reward-info-icon claim-gift-icon"></div>
             <div class="reward-info-content">
               可领取红包次数：
               <span class="amount">{{ draw }}次</span>
@@ -26,7 +23,14 @@
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: draw <= 0, loading: loadingClaim }">
+          <div
+            class="bonus-image"
+            @click="handleClaimBonus"
+            :class="{
+              disabled: draw === 0 || !nowIsRain || gotAlready,
+              loading: loadingClaim
+            }"
+          >
             <img src="../../../assets/images/promotion/hotpromo/hongbaoyu/claim-btn-1.png" alt="" width="100%" />
           </div>
         </div>
@@ -97,7 +101,7 @@
 
       <div class="livepoker-rebate-game-bottom-rule section-bg">
         <div class="title-img">活动规则</div>
-        <br/>
+        <br />
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
@@ -171,6 +175,8 @@ const depositAmount = ref(0);
 const isClaimModal = ref(false);
 const loadingClaim = ref(false);
 const winAmount = ref(0);
+const nowIsRain = ref(false);
+const gotAlready = ref(false);
 
 const fetchData = async () => {
   loadingClaim.value = true;
@@ -183,6 +189,19 @@ const fetchData = async () => {
         draw.value = res.data.draw;
 
         store.getBalance();
+      }
+    })
+    .catch(() => {})
+    .finally(() => {
+      loadingClaim.value = false;
+    });
+
+  eventapi
+    .get(`/session/redPacketVip/nextRainTime?promoCode=${props.promoCode}&v=${randNum}`)
+    .then((res) => {
+      if (res.code === 0) {
+        nowIsRain.value = res.data.nowIsRain;
+        gotAlready.value = res.data.gotAlready;
       }
     })
     .catch(() => {})
@@ -458,7 +477,7 @@ onMounted(() => {
         font-size: 12px;
         font-weight: 400;
         line-height: 22.4px;
-        color: #ff5f5f!important;
+        color: #ff5f5f !important;
         display: flex;
         justify-content: flex-start;
         align-items: center;

@@ -10,7 +10,7 @@
           <div class="reward-info">
             <div class="reward-info-icon claim-coin-icon"></div>
             <div class="reward-info-content">
-              活动期间总有效投注:
+              活动期间总有效投注：
               <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
@@ -18,7 +18,7 @@
             <div class="reward-info-icon claim-gift-icon"></div>
             <div class="reward-info-content">
               可领取彩金：
-              <span class="amount">{{ bonus }}次</span>
+              <span class="amount">{{ bonus }} 元</span>
             </div>
           </div>
         </div>
@@ -38,12 +38,12 @@
         <div class="title-img">活动详情</div>
         <div class="little-title">
           <div class="ribbon">活动时间</div>
-          <div class="right">2025年2月13日至2025年2月23日</div>
+          <div class="right">2025 年 2 月 13 日至 2025 年 2 月 23 日</div>
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
           <div class="right">
-            活动期间在PGL on FiRe布宜诺斯艾利斯2025总有效投注≥5,000元即可获得最高1,888元的投注金。
+            活动期间在 PGL on FiRe 布宜诺斯艾利斯 2025 总有效投注≥5,000 元即可获得最高 1,888 元的投注金。
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
@@ -57,40 +57,40 @@
           <tbody>
             <tr>
               <td>≥5,000</td>
-              <td>28元</td>
-              <td rowspan="9">8倍流水</td>
+              <td>28 元</td>
+              <td rowspan="9">8 倍流水</td>
             </tr>
             <tr>
               <td>≥10,000</td>
-              <td>58元</td>
+              <td>58 元</td>
             </tr>
             <tr>
               <td>≥30,000</td>
-              <td>88元</td>
+              <td>88 元</td>
             </tr>
             <tr>
               <td>≥50,000</td>
-              <td>188元</td>
+              <td>188 元</td>
             </tr>
             <tr>
               <td>≥100,000</td>
-              <td>358元</td>
+              <td>358 元</td>
             </tr>
             <tr>
               <td>≥300,000</td>
-              <td>588元</td>
+              <td>588 元</td>
             </tr>
             <tr>
               <td>≥500,000</td>
-              <td>888元</td>
+              <td>888 元</td>
             </tr>
             <tr>
               <td>≥1,000,000</td>
-              <td>1,088元</td>
+              <td>1,088 元</td>
             </tr>
             <tr>
               <td>≥5,000,000</td>
-              <td>1,888元</td>
+              <td>1,888 元</td>
             </tr>
           </tbody>
         </table>
@@ -100,7 +100,7 @@
               <img src="@/assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
               <span>示例</span>
             </div>
-            会员在PGL on FiRe 布宜诺斯艾利斯2025赛事期间总有效投注 50,000元，在2月24日24小时内可获得彩金：188元
+            会员在 PGL on FiRe 布宜诺斯艾利斯 2025 赛事期间总有效投注 50,000 元，在 2 月 24 日 24 小时内可获得彩金：188 元
           </div>
         </div>
       </div>
@@ -112,15 +112,15 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              活动期间，活动仅计算电竞场馆中PGL on FiRe 布宜诺斯艾利斯 2025赛事，会员在PGL on FiRe 布宜诺斯艾利斯
-              2025赛事期间内累计有效投注≥5,000元即可获得对应彩金，有效投注过期清零；
+              活动期间，活动仅计算电竞场馆中 PGL on FiRe 布宜诺斯艾利斯 2025 赛事，会员在 PGL on FiRe 布宜诺斯艾利斯
+              2025 赛事期间内累计有效投注≥5,000 元即可获得对应彩金，有效投注过期清零；
               <div class="hint">注：奖金不叠加派发，奖金按最高档位派发一次。</div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，活动仅计算PGL on FiRe 布宜诺斯艾利斯 2025已结算的赛事总有效投注，2月24日
-            24小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 8倍流水即可出款；
+            活动期间，活动仅计算 PGL on FiRe 布宜诺斯艾利斯 2025 已结算的赛事总有效投注，2 月 24 日
+            24 小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 8 倍流水即可出款；
           </div>
           <div class="item">
             <div class="item-num">3</div>

@@ -132,7 +132,7 @@
     </div>
 
     <div class="list-section">
-      <div class="list-wrapper">
+      <marquee direction="up" scrollamount="1" class="list-wrapper">
         <div class="list">
           <div class="list-row" v-for="winner, index in winnersList" :key="index">
             <div class="list-item"><span class="cyan">{{ winner.loginName }}</span></div>
@@ -144,7 +144,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </marquee>
       <div class="withdraw-order-btn btn-primary btn-primary__full center">Withdraw Orders</div>
     </div>
 
@@ -204,7 +204,7 @@
   import moment from 'moment';
   import { i18nStore } from "src/router/language";
   import { storeToRefs } from "pinia";
-
+  
   const { languageVal } = storeToRefs(i18nStore());
 
 
@@ -219,7 +219,7 @@
       return { days,hours,minutes,seconds };
     }
     
-    return {};
+    return { days: 0,hours: 0,minutes: 0,seconds: 0 };
   });
 
   const achievementProgress = computed(() => {
@@ -417,7 +417,9 @@
         
         if(!remainingTimeTimer.value) {
           setInterval(() => {
-            endDate.value = endDate.value - 1;
+            if(endDate.value) {
+              endDate.value = endDate.value - 1;
+            }
           }, 1000);
         }
       }
@@ -733,19 +735,21 @@
 
       .list-wrapper {
         max-height: 120px;
-        overflow-y: scroll;
+        overflow-y: hidden;
         padding-bottom: 20px;
 
         .list {
-          display: table;
           width: 100%;
-          padding: 10px 20px;
+          padding: 10px;
 
           .list-row {
-            display: table-row;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
 
             .list-item {
-              display: table-cell;
+              display: flex;
+              align-items: center;
+              justify-content: center;
 
               .cyan {
                 color: #00FFC3;

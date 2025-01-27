@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>JoyFun</title>
+    <meta name="title" content="JoyFun Technologies"/>
+    <meta
+            name="description"
+            content="JoyFun Technologies is a small company dedicated to crafting innovative mobile mini-games, transforming creative concepts into exciting and enjoyable mobile experiences."
+    />
+    <meta name="author" content="minigame"/>
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon2.ico"/>
+
+    <meta
+            name="twitter:description"
+            content="JoyFun Technologies is a small company dedicated to crafting innovative mobile mini-games, transforming creative concepts into exciting and enjoyable mobile experiences."
+    />
+    <meta name="twitter:image" content=""/>
+    <meta
+            name="keywords"
+            content="JoyFun Technologies is a small company dedicated to crafting innovative mobile mini-games, transforming creative concepts into exciting and enjoyable mobile experiences."
+    />
+
+    <!-- CSS -->
+    <link
+            href="assets/css/vendors/modern-normalize.min.css"
+            rel="stylesheet"
+    />
+    <link
+            href="assets/css/vendors/bootstrap.min.css"
+            rel="stylesheet"
+            crossorigin="anonymous"
+    />
+    <link href="assets/css/vendors/aos.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/css/styles.css"/>
+
+</head>
+
+<body>
+<!-- loading content / before page done loading -->
+<div id="fadeinContent"></div>
+<div id="loader-wrapper">
+    <div class="spinner-border mt-5" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<!-- navigation -->
+<nav
+        class="navbar navbar-expand-lg bg-body-tertiary minigame-nav nav-white-bg"
+>
+    <div class="container">
+        <a class="navbar-brand" href="/"
+        ><img
+                src="assets/images/joyfunlogo.png"
+                alt="logo"
+                title="minigame"
+                width="150"
+        /></a>
+
+    </div>
+</nav>
+
+<main>
+    <section class="sec-privacy">
+        <div class="container">
+            <h1>About Us</h1>
+
+            <p>Welcome to JoyFun!</p>
+
+            <p>At JoyFun, we are passionate about creating fun and engaging mini-games that bring joy to players of all ages. Our team is dedicated to crafting unique gaming experiences, combining creativity, innovation, and a touch of whimsy. So far, we’ve developed several popular mini-games, including Wordle, 2048, Ball Bumping, and Bottle Jump. Each game is designed to challenge your skills, spark your imagination, and provide endless entertainment.</p>
+
+
+            <p>We believe in the power of games to connect people, spark imagination, and create unforgettable memories. With a focus on quality and player satisfaction, JoyFun is constantly exploring new ideas and technologies to push the boundaries of what mini-games can offer.</p>
+
+
+            <p>Thank you for being a part of our journey. Let's make every moment a JoyFun moment!</p>
+
+            <p>Email: <span style="color: #0a58ca;">support@ijoyfun.com</span></p>
+
+            <p>Thank you for choosing JoyFun. We hope you enjoy our games!</p>
+
+        </div>
+    </section>
+</main>
+
+<script
+        src="assets/js/vendors/jquery-3.6.4.min.js"
+        crossorigin="anonymous"
+></script>
+<script
+        src="assets/js/vendors/bootstrap.bundle.min.js"
+        crossorigin="anonymous"
+></script>
+<script src="assets/js/vendors/aos.js"></script>
+<script defer src="assets/js/scripts.js"></script>
+
+<script type="text/javascript">
+    setTimeout(() => {
+        document.getElementById("loader-wrapper").style.display = "none";
+    }, 1000);
+</script>
+</body>
+</html>

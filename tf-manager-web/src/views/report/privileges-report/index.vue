@@ -73,10 +73,10 @@
       </div>
     </div>
 
-    <el-card class="chart-summary" v-if="uiControl.display === 'CHART'" v-loading="uiControl.chartLoading" style="gap: 10px;">
+    <el-card class="chart-summary" v-if="uiControl.display === 'CHART'" v-loading="uiControl.chartLoading" style="gap: 10px; height: 500px;">
       <Chart :options="amountPiechatOptions" />
     </el-card>
-    <el-card class="chart-summary" v-if="uiControl.display === 'CHART'" v-loading="uiControl.chartLoading" style="margin-top: 10px;">
+    <el-card class="chart-summary" v-if="uiControl.display === 'CHART'" v-loading="uiControl.chartLoading" style="margin-top: 10px; height: 500px;">
       <Chart :options="countPiechatOptions" />
     </el-card>
 
@@ -253,6 +253,7 @@ function getAmountChart(summaryList, chartOptions) {
     })
     chartOptions.dataset.source = dataset
     chartOptions.legend.data = legendData
+    console.log("legend", legendData)
   }
 }
 
@@ -280,10 +281,11 @@ const amountPiechatOptions = reactive({
   legend: {
     type: 'scroll',
     orient: 'vertical',
+    data: [],
+    pageTextStyle: {
+      fontSize: 22,
+    },
     right: 10,
-    top: 10,
-    bottom: 10,
-    data: []
   },
   height: '380px',
   dataset: {
@@ -323,10 +325,11 @@ const countPiechatOptions = reactive({
   legend: {
     type: 'scroll',
     orient: 'vertical',
+    data: [],
+    pageTextStyle: {
+      fontSize: 22,
+    },
     right: 10,
-    top: 10,
-    bottom: 10,
-    data: []
   },
   series: [
     {

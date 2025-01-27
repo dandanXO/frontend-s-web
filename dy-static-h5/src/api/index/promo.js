@@ -472,3 +472,18 @@ export function claimVctBangkokBonus(promoCode) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}&v=${randNum}`);
 }
+
+export function getPGLOnFireBuenosAires2025(promoCode) {
+  return eventapi.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimPGLOnFireBuenosAires2025(promoCode) {
+  return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+
+
+export function getSkyesportsSouvenir2025Bonus(promoCode) {
+  return eventapi.get(`/session/competition-payout-deposit/init?promoCode=${promoCode}`);
+}
+export function claimSkyesportsSouvenir2025Bonus(promoCode) {
+  return eventapi.post(`/session/competition-payout-deposit/claimBonus?promoCode=${promoCode}`);
+}
