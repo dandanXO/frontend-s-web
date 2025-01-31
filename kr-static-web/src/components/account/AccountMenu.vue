@@ -140,7 +140,8 @@ watch(languageVal, (newValue, oldValue) => {
   menuItems.value = [
     // { route: "/center/share", label: t("menu.referFriend"), icon: "share" },
     { route: "/center/transit-record", label: t("menu.transactionRecord"), icon: "transitrecord" },
-    { route: "/center/personal", label: t("menu.personalInfo"), icon: "personal" }
+    { route: "/center/personal", label: t("menu.personalInfo"), icon: "personal" },
+    { route: "/center/changePwd", label: t("menu.changePwd"), icon: "password" }
     // { route: "/center/mailbox", label: t("menu.mailbox"), icon: "inbox" },
     // { route: "/center/message", label: t("menu_item.menu_message"), icon: "inbox" },
     // { route: "/center/inquiry", label: t("menu_item.menu_inquiry"), icon: "inbox" }
@@ -154,7 +155,8 @@ const menuItems = ref([
   // { route: "/center/transfer", label: "快速转账", icon: "transitrecord" },
   { route: "/center/transit-record", label: t("menu.transactionRecord"), icon: "transitrecord" },
   // { route: "/center/transit-record?type=6", label: "投注记录", icon: "betrecord" },
-  { route: "/center/personal", label: t("menu.personalInfo"), icon: "personal" }
+  { route: "/center/personal", label: t("menu.personalInfo"), icon: "personal" },
+  { route: "/center/changePwd", label: t("menu.changePwd"), icon: "password" }
   // { route: "/center/withdrawbank", label: "银行卡管理", icon: "transitrecord" },
   // { route: "/center/mailbox", label: t("menu.mailbox"), icon: "inbox" },
   // { route: "/center/message", label: t("menu_item.menu_message"), icon: "inbox" },
