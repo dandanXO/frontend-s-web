@@ -16,7 +16,7 @@ body {
   background: #0E1116;
   position: relative;
 }
-.top-wrapper { width: 90%; margin: 10px auto; max-width: 1050px; display: flex; gap: 50px; justify-content: center; align-items: center;}
+.top-wrapper { width: 90%; margin: 0px auto; max-width: 1050px; display: flex; gap: 50px; justify-content: center; align-items: center;}
 .top-wrapper .top-logo { width: 404px; margin: -50px -50px -50px -100px; }
 .top-wrapper .top-logo img { width: 100%; }
 .top-wrapper .top-slogan { max-width: 367px; display: flex; justify-content: center; align-items: center; flex-direction: column;}
@@ -24,21 +24,21 @@ body {
 .top-wrapper .top-slogan .title-text { background-image: linear-gradient(259.14deg, #D47C33 27.82%, #FAFE8A 52.4%, #D47C33 99.13%); background-clip: text; -webkit-background-clip: text; /* Required for Safari */ color: transparent; font-family: "PingFang"; font-size: 29.69px; font-weight: 600; margin-top: -5px; }
 .top-wrapper .top-cs { width: 356px; }
 .top-wrapper .top-cs img { width: 100%;}
-.main-container { min-height: 723px; display: flex; justify-content: center; align-items: center; background: url(../imgs/bg.png)no-repeat center center; background-size: cover;}
+.main-container { min-height: 723px; display: flex; justify-content: center; align-items: flex-start; background: url(../imgs/bg.png)no-repeat center center; background-size: cover;}
 .main-container .bgrgt { width: 25%;}
 .main-container .bglft { width: 25%;}
-.main-container .inner-contents { display: flex; width: 50%; border: 2px solid #8E7878; height: 589px;background: #060B1D; border-radius: 16px;}
+.main-container .inner-contents { display: flex; width: 50%; margin-top: 30px; border: 2px solid #8E7878; height: 589px;background: #060B1D; border-radius: 16px;}
 .main-container .inner-contents .inner__left {flex: 5; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; width: 100%; }
-.main-container .inner-contents .inner__left .carousel-container { 
+.main-container .inner-contents .inner__left .carousel-container {
   width: 95%;
   border-bottom: 1px solid #FFFFFF66;
 }
 .main-container .inner-contents .inner__left .carousel-container .slide-content { min-height: 430px;
   display: flex;
   flex-direction: column;
-    justify-content: space-between;
- gap: 30px; height: 80%;align-items: flex-start;
-padding-bottom: 80px;}
+  justify-content: space-between;
+  gap: 30px; height: 80%;align-items: flex-start;
+  padding-bottom: 80px;}
 
 .main-container .inner-contents .inner__left .carousel-container .slide-content .slide-box { display: flex; justify-content: space-evenly; align-items: center; gap: 10px; font-size: 16px;}
 
@@ -100,7 +100,7 @@ padding-bottom: 80px;}
   .main-container { background: unset;}
   .main-container .bgrgt { display: none;}
   .main-container .bglft { display: none;}
-  .main-container .inner-contents { flex-direction: column; width: 90%; 
+  .main-container .inner-contents { flex-direction: column; width: 90%;
     border: unset;
     height: unset;
     background: unset; gap: 20px;}
@@ -108,21 +108,21 @@ padding-bottom: 80px;}
   .main-container .inner__rgt{ border: 2px solid #8E7878;
     padding: 0 20px;
     background: #060B1D; border-radius: 10px; }
-    .main-container .inner-contents .inner__left .carousel-container .slide-content .slide-box { width: 95%; flex-direction: column; align-items: flex-start;}
-    .main-container .inner-contents .inner__left .carousel-container .slide-content .slide-box .arrow {  display: none; }
-  
-    .main-container .inner-contents .inner__left .carousel-container .slide-content .slide-box h4 {
-      border: 0;
-      background: unset;
-      padding: 0;
-      text-align: left;}
+  .main-container .inner-contents .inner__left .carousel-container .slide-content .slide-box { width: 95%; flex-direction: column; align-items: flex-start;}
+  .main-container .inner-contents .inner__left .carousel-container .slide-content .slide-box .arrow {  display: none; }
+
+  .main-container .inner-contents .inner__left .carousel-container .slide-content .slide-box h4 {
+    border: 0;
+    background: unset;
+    padding: 0;
+    text-align: left;}
   .footer-logos {flex-wrap: wrap; gap: 10px;
     max-width: 350px;
     margin: 0px auto;
     padding: 30px 20px;
     gap: 30px;
     width: 90%;
-}
+  }
   /* .footer-logos img {height: 20px;} */
-  
+
 }
