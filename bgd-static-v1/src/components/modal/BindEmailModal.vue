@@ -162,6 +162,7 @@ const getCode = () => {
 const openVerificationCodeDialog = () => {
   if(store.email) {
     verificationCodeDialog.value = !verificationCodeDialog.value;
+    getCode();
     return;
   }
 
@@ -266,7 +267,7 @@ const submitUpdateEmail = () => {
 
           closeDialog();
           store.getMemberInfo();
-          getEmailVerifyBonus();
+
         } else {
           $q.notify({
             color: "negative",

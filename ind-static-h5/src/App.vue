@@ -178,7 +178,7 @@ export default defineComponent({
 
         const hostname = window.location.hostname.replace("www.", "");
         const urlParams = new URLSearchParams(window.location.search);
-        const affiliateCodeFromUrl = urlParams.get('affiliateCode');
+        const affiliateCodeFromUrl = urlParams.get('affiliateCode') || "";
 
         //Use thisApi to get AffiliateCode/FbPixelId/ WebPushId for PWA.
         api.get(`/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${affiliateCodeFromUrl}`).then((res) => {
@@ -272,7 +272,9 @@ export default defineComponent({
       if (Platform.is.capacitor && Platform.is.android) {
         // console.log("STATUSBARR");
         await StatusBar.hide();
-        await StatusBar.setOverlaysWebView({ overlay: true });
+        setTimeout(async () => {
+          await StatusBar.setOverlaysWebView({ overlay: true });
+        }, 500);
         await StatusBar.setBackgroundColor({ color: "#3E1474" });
         await StatusBar.setStyle({ style: Style.Dark });
         // setTimeout(() => {

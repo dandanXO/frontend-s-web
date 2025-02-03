@@ -763,6 +763,7 @@ export default {
     bankName: 'Bank Name',
     bankNumber: 'Bank Number',
     bankType: 'Bank Type',
+    BankAliasName: 'Bank Alias Name',
     batchCancel: 'Batch Cancel',
     bbDachaDetails: 'BB Dacha Details',
     bbdachaAnswers: 'BB Dacha Answers',

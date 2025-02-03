@@ -766,6 +766,7 @@ export default {
     bankName: '银行名',
     bankNumber: '银行号码',
     bankType: '银行类型',
+    BankAliasName: '银行别名',
     batchCancel: '批量取消',
     bbDachaDetails: 'BB 别墅杯详情',
     bbdachaAnswers: 'BB 别墅杯投票记录',
