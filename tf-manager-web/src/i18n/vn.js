@@ -1468,6 +1468,7 @@ export default {
     superiorAffiliatePaymentChannel:
       'Kênh Thanh Toán Của Đối Tác Liên Kết Cấp Cao',
     supplement: 'Bổ Sung',
+    supplementAmount: 'Bổ Sung Số lượng',
     supplementDeposit: 'Bổ Sung Tiền Gửi',
     supportType: 'Loại Hỗ Trợ',
     sureWin: 'Chắc Chắn Chiến Thắng',

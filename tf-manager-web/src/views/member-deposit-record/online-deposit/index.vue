@@ -216,6 +216,9 @@
         <el-form-item :label="t('fields.thirdSerialNo')" prop="thirdSerialNumber">
           <el-input v-model="suppForm.thirdSerialNumber" style="width: 250px" maxlength="50" />
         </el-form-item>
+        <el-form-item :label="t('fields.supplementAmount')" prop="supplementAmount" v-if="(store.state.user.siteName === 'PAKWIN' || store.state.user.siteName === 'PAKWIN2')">
+          <el-input v-model="suppForm.supplementAmount" style="width: 250px" maxlength="50" />
+        </el-form-item>
         <el-form-item :label="t('fields.remark')" prop="remark">
           <el-input type="textarea" :rows="6" v-model="suppForm.remark" style="width: 250px" maxlength="100" show-word-limit />
         </el-form-item>
@@ -318,6 +321,7 @@ const suppForm = reactive({
   depositDate: null,
   serialNumber: null,
   thirdSerialNumber: null,
+  supplementAmount: null,
   remark: null,
   siteId: null,
 });
@@ -413,6 +417,7 @@ async function showDialog(type, row) {
     suppForm.id = row.id;
     suppForm.depositDate = row.depositDate;
     suppForm.serialNumber = row.serialNumber;
+    suppForm.supplementAmount = Number(row.depositAmount).toFixed(2);
     uiControl.dialogTitle = t('fields.supplementDeposit');
   } else if (type === "CANCEL") {
     if (cancelDepositForm.value) {

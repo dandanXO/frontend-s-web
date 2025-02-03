@@ -1057,6 +1057,7 @@ export default {
     superiorAffiliateLevel: 'ระดับพันธมิตรที่เหนือกว่า',
     superiorCategory: 'หมวดที่เหนือกว่า',
     supplement: 'เพิ่มเติม',
+    supplementAmount: 'จำนวนเพิ่มเติม',
     supplementDeposit: 'การฝากเพิ่มเติม',
     supportType: 'ประเภทการสนับสนุน',
     suspend: 'ระงับ',

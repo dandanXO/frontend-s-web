@@ -1688,6 +1688,7 @@ export default {
     superiorCategory: '上级组件',
     superiorAffiliatePaymentChannel: '上级代理支付渠道',
     supplement: '补单',
+    supplementAmount: '补单金额',
     supplementDeposit: '存款补单',
     supportType: '支持类型',
     sureWin: '必中奖',
