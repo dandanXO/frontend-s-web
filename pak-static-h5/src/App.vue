@@ -82,6 +82,11 @@ export default defineComponent({
       // console.log("Device ID");
       // console.log(info);
       // console.log(info.identifier);
+      const isPwa = process.env.IS_PWA;
+      // alert(isPwa);
+      if (isPwa) {
+        sessionStorage.setItem("IS_PWA", "1");
+      }
     };
 
     const initOrientation = () => {
@@ -157,28 +162,60 @@ export default defineComponent({
     //   }
     // };
 
+    const getRbParams = () => {
+      const params = JSON.parse(localStorage.getItem(`__rb_${process.env.ROUTER_BASE}_params`));
+      // alert(params);
+
+      if (!params) {
+        console.warn("No params found in localStorage");
+        return null;
+      }
+
+      const extractParams = (paramsString) => {
+        const result = {};
+        const pairs = paramsString.split("&");
+        pairs.forEach((pair) => {
+          const [key, value] = pair.split("=");
+          if (key && value) {
+            result[key] = decodeURIComponent(value);
+          }
+        });
+        return result;
+      };
+
+      const parsedParams = extractParams(params);
+      return {
+        linkId: parsedParams["link_id"] ?? "",
+        fbclid: parsedParams["fbclid"] ?? "",
+        adCode: parsedParams["adCode"] ?? ""
+      };
+    };
+
     const trackH5Affiliate = () => {
       const omitSites = ["bw3.genoortisy.com"];
 
-      var affiliateCode = "";
-      if (omitSites.includes(window.location.host)) {
-        affiliateCode = "4F09FA";
+      if (isInPwa()) {
       } else {
-        // affiliateCode = "3B1BFB";
-        affiliateCode = "";
-      }
+        var affiliateCode = "";
+        if (omitSites.includes(window.location.host)) {
+          affiliateCode = "4F09FA";
+        } else {
+          // affiliateCode = "3B1BFB";
+          affiliateCode = "";
+        }
 
-      sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
-      // api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
-      //   if (res.code === 0) {
-      //     sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-      //     sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
-      //     sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
-      //     affAppToken.value = res.data.adjust_app_token;
-      //     // initAdjustEventTrack();
-      //     // alert(affAppToken.value);
-      //   }
-      // });
+        sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+        // api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
+        //   if (res.code === 0) {
+        //     sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+        //     sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
+        //     sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+        //     affAppToken.value = res.data.adjust_app_token;
+        //     // initAdjustEventTrack();
+        //     // alert(affAppToken.value);
+        //   }
+        // });
+      }
     };
 
     const onDeviceReady = () => {
@@ -390,7 +427,7 @@ export default defineComponent({
       checkServerStatus();
       checkSID();
       // getCSA();
-      // getAppInfo();
+      getAppInfo();
       initOrientation();
       loadSocialMediaLinks();
 
