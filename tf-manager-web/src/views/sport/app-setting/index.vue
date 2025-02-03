@@ -53,17 +53,26 @@
               {{ t('fields.edit') }}
             </el-button>
           </div>
-          <div class="setting-content">
-            <div v-for="(dataItem, dataIndex) in item.data" :key="dataIndex" class="setting-data-item">
-              <span class="data-key">{{ t(`fields.${dataItem.key}`) }}：</span>
-              <el-input
-                class="data-value"
-                type="text"
-                v-model="dataItem.value"
-                :disabled="true"
-              />
-            </div>
-          </div>
+          <el-table
+            :data="item.data"
+            style="width: 100%;"
+          >
+            <el-table-column prop="key" label="">
+              <template #default="scope">
+                <span>{{ t(`fields.${scope.row.key}`) }}</span>
+              </template>
+            </el-table-column>
+
+            <el-table-column prop="value" label="Value">
+              <template #default="scope">
+                <el-input
+                  v-model="scope.row.value"
+                  :placeholder="scope.row.value"
+                  :disabled="true"
+                />
+              </template>
+            </el-table-column>
+          </el-table>
         </div>
       </el-collapse-item>
     </el-collapse>
