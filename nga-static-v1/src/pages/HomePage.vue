@@ -3756,14 +3756,14 @@ onMounted(() => {
 
   &.grid-view {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 32%);
     column-gap: 8px;
     row-gap: 16px;
   }
 
   &.grid-view-col-4 {
     display: grid;
-    grid-template-columns: repeat(4, minmax(75px, 1fr));
+    grid-template-columns: repeat(4, minmax(75px, 32%));
     column-gap: 8px;
     row-gap: 16px;
   }
