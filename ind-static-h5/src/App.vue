@@ -58,8 +58,7 @@ export default defineComponent({
       // console.log(info);
       // console.log(info.identifier);
       const isPwa= process.env.IS_PWA;
-      // alert(isPwa);
-      if(isPwa){
+      if(isPwa === "1"){
         sessionStorage.setItem("IS_PWA", "1");
       }
     };
