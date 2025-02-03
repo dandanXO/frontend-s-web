@@ -191,10 +191,84 @@ export default defineComponent({
       };
     };
 
+    const sendFacebookInfo = () => {
+      // const urlParams = new URLSearchParams(window.location.search);
+      // const fbclid = urlParams.get("fbclid");
+
+      const { fbclid, linkId } = getRbParams() || {};
+
+      const fbc = fbclid;
+      const siteCode = "IND";
+
+      const getCookie = (name) => {
+        const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
+        return match ? decodeURIComponent(match[1]) : null;
+      };
+
+      // const fbp = getCookie("_fbp");
+      // Extract the last portion of _fbp
+      const fbp = (() => {
+        const rawFbp = getCookie("_fbp");
+        return rawFbp ? rawFbp.split(".").pop() : null;
+      })();
+
+      // alert(`fbc: ${fbc}`);
+
+      const payload = new URLSearchParams({
+        fbp: fbp || "",
+        fbc: fbc || "",
+        siteCode: siteCode,
+        linkId: linkId || ""
+      });
+
+      // alert(`payload: ${payload}`);
+
+      // Make the POST request
+      fetch("https://tljwn.plan2wtion.com/app/facebookInfo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: payload.toString()
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          // alert(JSON.stringify(data));
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    };
+
     const trackH5Affiliate = () => {
       const omitSites = ["bw3.genoortisy.com"];
 
       if (isInPwa()) {
+        api.get(`/app/pwa/log?step=OPEN&siteCode=${process.env.SITE}`).then((res2) => {
+          console.log("OPEN");
+        });
+
+        const hostname = window.location.hostname.replace("www.", "");
+        var { adCode } = getRbParams() || {};
+        if (!adCode) {
+          adCode = "";
+        }
+        //Use thisApi to get AffiliateCode/FbPixelId/ WebPushId for PWA.
+        api
+          .get(`/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${adCode}`)
+          .then((res) => {
+            console.log(res);
+            const { affiliateCode, facebookId, pushId } = res.data;
+            sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+            console.log("Init FB");
+            fbq("init", facebookId);
+            fbq("track", "PageView");
+            store.isFbPixel = true;
+
+            initEngageLabPush();
+            sendFacebookInfo();
+          });
       } else {
         var affiliateCode = "";
         if (omitSites.includes(window.location.host)) {
@@ -271,7 +345,9 @@ export default defineComponent({
       if (Platform.is.capacitor && Platform.is.android) {
         // console.log("STATUSBARR");
         await StatusBar.hide();
-        await StatusBar.setOverlaysWebView({ overlay: true });
+        setTimeout(async () => {
+          await StatusBar.setOverlaysWebView({ overlay: true });
+        }, 500);
         await StatusBar.setBackgroundColor({ color: "#3E1474" });
         await StatusBar.setStyle({ style: Style.Dark });
 
@@ -356,117 +432,159 @@ export default defineComponent({
       });
     };
 
-    const checkIfVirtualMachine = async () => {
-      const info = await Device.getInfo();
+    const initEngageLabPush = (appKeyId) => {
+      // Supported versions: 2.1.9+
+      console.log("initEngageLabPush");
 
-      const isEmulator = info.isVirtual;
-      const model = info.model;
-      const manufacturer = info.manufacturer;
-
-      if (isEmulator || model.includes("sdk") || manufacturer.includes("Genymotion")) {
-        console.log("This is a virtual machine or emulator.");
-        App.exitApp();
-      } else {
-        console.log("This is a physical device.");
-      }
-    };
-
-    const checkFBPixelInit = () => {
-      const windowLocation = window.location.hostname;
-      const pixelDataStr = sessionStorage.getItem("FB_PIXEL_CODE");
-      const isNoPixel = sessionStorage.getItem("NO_FB_PIXEL_CODE");
-      if (isNoPixel) {
-        return;
-      } else if (pixelDataStr) {
-        registerFbPixel(JSON.parse(pixelDataStr));
-      } else {
-        api.get(`/member/fb-request?url=${windowLocation}`).then((res) => {
-          if (res.code === 0) {
-            registerFbPixel(res.data);
-            sessionStorage.setItem("FB_PIXEL_CODE", JSON.stringify(res.data));
-          } else {
-            sessionStorage.setItem("NO_FB_PIXEL_CODE", "1");
+      const requestNotificationPermission = async () => {
+        if (Notification.permission === "default") {
+          // Prompt user to allow notifications
+          try {
+            const permission = await Notification.requestPermission();
+            if (permission === "granted") {
+              console.log("Notification permission granted.");
+              initializePush(appKeyId);
+            } else {
+              console.log("Notification permission denied.");
+              // alert("Please enable notifications to receive updates.");
+            }
+          } catch (error) {
+            console.error("Failed to request notification permission:", error);
           }
-        });
-      }
-    };
-
-    const registerFbPixel = (res) => {
-      const { fbId, token } = res;
-      if (fbId !== "1") {
-        const fbIdList = fbId.split("|");
-        fbIdList.forEach((_fbId) => fbq("init", _fbId));
-      } else {
-        const tokenObj = JSON.parse(token);
-        const referralCode =
-          route.name === "referCode" && route.params.referralCode
-            ? route.params.referralCode
-            : sessionStorage.getItem("REFERRAL_CODE")
-            ? sessionStorage.getItem("REFERRAL_CODE")
-            : localStorage.getItem("REG_REFERRAL_CODE");
-        const _fbId = tokenObj[referralCode] || tokenObj.DEFAULT;
-        if (!_fbId) return;
-        fbq("init", _fbId);
-      }
-      fbq("track", "PageView");
-      store.isFbPixel = true;
-
-      const isNewUser = isInPwa() ? localStorage.getItem("newUserFtd") : sessionStorage.getItem("newUserFtd");
-      if (isNewUser) {
-        document.addEventListener("ftdSuccess", trackNewUserFtd);
-      }
-    };
-
-    onMounted(async () => {
-      console.log("pak-static-h5 0120");
-
-      handleRedirect();
-      // const info = await App.getInfo();
-      // console.log(info);
-      checkIfVirtualMachine();
-      checkServerStatus();
-      checkSID();
-      // getCSA();
-      getAppInfo();
-      initOrientation();
-      loadSocialMediaLinks();
-
-      if (isAndroid()) {
-        document.addEventListener(
-          "deviceready",
-          () => {
-            onDeviceReady();
-            setStatusBarColor();
-          },
-          false
-        );
-      } else {
-        trackH5Affiliate();
-      }
-
-      document.addEventListener("visibilitychange", handleVisibilityChange);
-
-      setTimeout(getOnlineStatApi, 2000);
-      setInterval(getOnlineStatApi, 60000);
-      checkFBPixelInit();
-    });
-
-    watch(
-      () => ui.shouldFetchDownloadAppUrl,
-      (value) => value && ui.getTopDownloadUrl()
-    );
-    watch(
-      () => window.location.hostname,
-      () => {
-        const currentDomain = window.location.hostname;
-        const redirectKey = `redirected-${currentDomain}`;
-        if (!sessionStorage.getItem(redirectKey)) {
-          handleRedirect();
+        } else if (Notification.permission === "granted") {
+          console.log("Notification permission already granted.");
+          initializePush(appKeyId);
+        } else {
+          console.log("Notification permission denied.");
+          // alert("Please enable notifications in your browser settings.");
         }
-      }
-    );
-  }
-});
+      };
+
+      // Push initialization logic
+      const initializePush = (appKeyId) => {
+
+        if (isInPwa()) {
+          const fbclid = window.localStorage.getItem("fbclid");
+          if (fbclid && !window.location.search.includes("fbclid")) {
+            const url = new URL(window.location.href);
+            url.searchParams.set("fbclid", fbclid);
+            window.history.replaceState({}, "", url.toString());
+          }
+        }
+      };
+
+
+      const checkIfVirtualMachine = async () => {
+        const info = await Device.getInfo();
+
+        const isEmulator = info.isVirtual;
+        const model = info.model;
+        const manufacturer = info.manufacturer;
+
+        if (isEmulator || model.includes("sdk") || manufacturer.includes("Genymotion")) {
+          console.log("This is a virtual machine or emulator.");
+          App.exitApp();
+        } else {
+          console.log("This is a physical device.");
+        }
+      };
+
+      const checkFBPixelInit = () => {
+        const windowLocation = window.location.hostname;
+        const pixelDataStr = sessionStorage.getItem("FB_PIXEL_CODE");
+        const isNoPixel = sessionStorage.getItem("NO_FB_PIXEL_CODE");
+        if (isNoPixel) {
+          return;
+        } else if (pixelDataStr) {
+          registerFbPixel(JSON.parse(pixelDataStr));
+        } else {
+          api.get(`/member/fb-request?url=${windowLocation}`).then((res) => {
+            if (res.code === 0) {
+              registerFbPixel(res.data);
+              sessionStorage.setItem("FB_PIXEL_CODE", JSON.stringify(res.data));
+            } else {
+              sessionStorage.setItem("NO_FB_PIXEL_CODE", "1");
+            }
+          });
+        }
+      };
+
+      const registerFbPixel = (res) => {
+        const { fbId, token } = res;
+        if (fbId !== "1") {
+          const fbIdList = fbId.split("|");
+          fbIdList.forEach((_fbId) => fbq("init", _fbId));
+        } else {
+          const tokenObj = JSON.parse(token);
+          const referralCode =
+            route.name === "referCode" && route.params.referralCode
+              ? route.params.referralCode
+              : sessionStorage.getItem("REFERRAL_CODE")
+                ? sessionStorage.getItem("REFERRAL_CODE")
+                : localStorage.getItem("REG_REFERRAL_CODE");
+          const _fbId = tokenObj[referralCode] || tokenObj.DEFAULT;
+          if (!_fbId) return;
+          fbq("init", _fbId);
+        }
+        fbq("track", "PageView");
+        store.isFbPixel = true;
+
+        const isNewUser = isInPwa() ? localStorage.getItem("newUserFtd") : sessionStorage.getItem("newUserFtd");
+        if (isNewUser) {
+          document.addEventListener("ftdSuccess", trackNewUserFtd);
+        }
+      };
+
+      onMounted(async () => {
+        console.log("pak-static-h5 0120");
+
+        handleRedirect();
+        // const info = await App.getInfo();
+        // console.log(info);
+        checkIfVirtualMachine();
+        checkServerStatus();
+        checkSID();
+        // getCSA();
+        getAppInfo();
+        initOrientation();
+        loadSocialMediaLinks();
+
+        if (isAndroid() && !isInPwa()) {
+          document.addEventListener(
+            "deviceready",
+            () => {
+              onDeviceReady();
+              setStatusBarColor();
+            },
+            false
+          );
+        } else {
+          trackH5Affiliate();
+        }
+
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+
+        setTimeout(getOnlineStatApi, 2000);
+        setInterval(getOnlineStatApi, 60000);
+        checkFBPixelInit();
+      });
+
+      watch(
+        () => ui.shouldFetchDownloadAppUrl,
+        (value) => value && ui.getTopDownloadUrl()
+      );
+      watch(
+        () => window.location.hostname,
+        () => {
+          const currentDomain = window.location.hostname;
+          const redirectKey = `redirected-${currentDomain}`;
+          if (!sessionStorage.getItem(redirectKey)) {
+            handleRedirect();
+          }
+        }
+      );
+    }
+  });
 
 // document.addEventListener("deviceready", onDeviceReady, false);
 </script>
