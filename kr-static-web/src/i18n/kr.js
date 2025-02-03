@@ -22,6 +22,7 @@ export default {
     referFriend: "친구 추천",
     transactionRecord: "거래 내역",
     personalInfo: "개인 정보",
+    changePwd: "비밀번호 변경",
     mailbox: "메일함",
     logout: "로그아웃",
     rebate: "환불"
@@ -181,6 +182,7 @@ export default {
   personal: {
     url: "접속",
     personalInfo: "개인 정보",
+    changePwd: "비밀번호 변경",
     bank: "은행",
     chgPwd: "비밀번호 변경",
     chgWithdrawPwd: "출금 비밀번호 변경",
@@ -212,6 +214,18 @@ export default {
       "은행 계좌 연결은 계좌 이름과 등록된 이름이 일치해야 합니다. 잘못된 정보 입력으로 출금 실패 또는 지연이 발생할 경우, 고객 서비스에 문의해 주세요. 감사합니다!",
     bankCardReminder2:
       "카드의 이름과 계좌 번호를 정확하게 입력해 주세요. 잘못된 정보로 인해 출금 시 손실이 발생할 수 있습니다! DIAMOND 이 감사드립니다!"
+  },
+  password: {
+    initialPwd: "초기 비밀번호",
+    plcInitialPwd: "초기 비밀번호를 입력해주세요",
+    newPwd: "새 비밀번호",
+    plcNewPwd: "새로운 비밀번호를 입력해주세요",
+    cfmNewPwd: "새 비밀번호 확인",
+    plcCfmNewPwd: "새 비밀번호를 확인해 주세요",
+    verificationCode: "인증코드",
+    plcVerificationCode: "인증번호를 입력해주세요",
+    cancel: "취소",
+    confirmChg: "변경사항 확인"
   },
   placeholder: {
     realName: "실명 입력해 주세요",

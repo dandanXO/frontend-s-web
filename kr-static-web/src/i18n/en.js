@@ -23,6 +23,7 @@ export default {
     referFriend: "Refer a friend",
     transactionRecord: "Transaction record",
     personalInfo: "Personal information",
+    changePwd: "Change Password",
     mailbox: "Mailbox",
     logout: "Logout"
   },
@@ -212,6 +213,18 @@ export default {
       "Linking NH account needs to be identical in account name and NH registered name. Any incorrect information entered will lead to the failure of the withdrawal of the delay in processing the bank. Please contact our customer service to promptly handle it. Sincerely thanks!",
     bankCardReminder2:
       "Please enter correct information with your name and account number on your NH card, to avoid mistakes when withdrawing! Thank you very much from DIAMOND!"
+  },
+  password: {
+    initialPwd: "Initial Password",
+    plcInitialPwd: "Please enter initial password",
+    newPwd: "New password",
+    plcNewPwd: "Please enter new password",
+    cfmNewPwd: "Confirm New Password",
+    plcCfmNewPwd: "Please confirm new password",
+    verificationCode: "Verification Code",
+    plcVerificationCode: "Please enter verification code",
+    cancel: "Cancel",
+    confirmChg: "Confirm Changes"
   },
   placeholder: {
     realName: "Please enter Real Name",

@@ -94,7 +94,7 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item :label="t('fields.affiliateName')" prop="affiliateName">
+          <!-- <el-form-item :label="t('fields.affiliateName')" prop="affiliateName">
             <el-autocomplete
               v-model="inputValue"
               style="width: 350px;"
@@ -104,6 +104,24 @@
               @select="handleSelect"
               @blur="handleBlur"
             />
+          </el-form-item> -->
+          <el-form-item :label="t('fields.affiliateName')" prop="affiliateName">
+            <el-select
+              v-model="form.affiliateName"
+              size="small"
+              class="filter-item"
+              style="width: 350px;"
+              :placeholder="t('fields.affiliateName')"
+              filterable
+              :filter-method="customFilterMethod"
+            >
+              <el-option
+                v-for="item in filteredAffiliateList"
+                :key="item.value"
+                :label="item.value"
+                :value="item.value"
+              />
+            </el-select>
           </el-form-item>
           <el-form-item :label="t('fields.way')" prop="way">
             <el-select
@@ -318,7 +336,7 @@ import { useStore } from '../../../store';
 import { getSiteListSimple } from '../../../api/site'
 import { hasPermission, hasRole } from '../../../utils/util'
 import { useI18n } from 'vue-i18n'
-import { debounce } from 'lodash';
+// import { debounce } from 'lodash';
 import { getAffiliateLoginNameList } from '../../../api/affiliate';
 
 const { t } = useI18n()
@@ -330,7 +348,7 @@ const siteList = reactive({
 })
 let timeZone = null
 const inputValue = ref('')
-const suggestions = ref([]); // Store suggestions
+// const suggestions = ref([]); // Store suggestions
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -362,6 +380,10 @@ const form = reactive({
   affiliateName: null,
   domain: null,
   way: null,
+})
+
+const affiliateList = reactive({
+  list: []
 })
 
 const formRules = reactive({
@@ -400,56 +422,56 @@ async function loadAffiliateDomains() {
   page.loading = false
 }
 
-const querySearch = async (queryString, callback) => {
-  if (!queryString) {
-    callback();
-    return;
-  } else if (queryString.length < 3) {
-    callback();
-    return;
-  }
+// const querySearch = async (queryString, callback) => {
+//   if (!queryString) {
+//     callback();
+//     return;
+//   } else if (queryString.length < 3) {
+//     callback();
+//     return;
+//   }
 
-  try {
-    const { data: ret } = await getAffiliateLoginNameList(form.siteId, queryString);
+//   try {
+//     const { data: ret } = await getAffiliateLoginNameList(form.siteId, queryString);
 
-    const results = ret.map(item => ({
-      value: item.value,
-      id: item.id
-    }));
-    suggestions.value = results; // Update suggestions list
-    callback(results);
-  } catch (error) {
-    suggestions.value = []; // Clear suggestions on error
-    callback();
-  }
-};
+//     const results = ret.map(item => ({
+//       value: item.value,
+//       id: item.id
+//     }));
+//     suggestions.value = results; // Update suggestions list
+//     callback(results);
+//   } catch (error) {
+//     suggestions.value = []; // Clear suggestions on error
+//     callback();
+//   }
+// };
 
-const debouncedFetchSuggestions = debounce((queryString, callback) => {
-  if (!form.siteId) {
-    ElMessage({ message: t('message.validateSiteRequired'), type: 'error' })
-    return;
-  }
-  querySearch(queryString, callback);
-}, 1500);
+// const debouncedFetchSuggestions = debounce((queryString, callback) => {
+//   if (!form.siteId) {
+//     ElMessage({ message: t('message.validateSiteRequired'), type: 'error' })
+//     return;
+//   }
+//   querySearch(queryString, callback);
+// }, 1500);
 
-const handleSelect = item => {
-  if (item) {
-    inputValue.value = item.value
-    form.affiliateName = item.value
-    memberForm.value.validateField('affiliateName')
-  }
-}
+// const handleSelect = item => {
+//   if (item) {
+//     inputValue.value = item.value
+//     form.affiliateName = item.value
+//     memberForm.value.validateField('affiliateName')
+//   }
+// }
 
-const handleBlur = () => {
-  const exists = suggestions.value.some(
-    (suggestion) => suggestion.value === inputValue.value
-  );
-  if (!exists) {
-    inputValue.value = ''
-    form.affiliateName = null
-  }
-  memberForm.value.validateField('affiliateName')
-};
+// const handleBlur = () => {
+//   const exists = suggestions.value.some(
+//     (suggestion) => suggestion.value === inputValue.value
+//   );
+//   if (!exists) {
+//     inputValue.value = ''
+//     form.affiliateName = null
+//   }
+//   memberForm.value.validateField('affiliateName')
+// };
 
 function changePage(page) {
   if (request.current >= 1) {
@@ -478,6 +500,8 @@ function showDialog(type) {
     form.domain = null
     inputValue.value = ''
     uiControl.dialogTitle = t('fields.addAffiliateDomain')
+    filteredAffiliateList.value = []
+    loadAllAffiliateList()
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editAffiliateDomain')
   }
@@ -524,6 +548,28 @@ async function removeAffiliateDomain(id) {
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
+}
+
+async function loadAllAffiliateList() {
+  if (request.siteId !== null) {
+    const { data: ret } = await getAffiliateLoginNameList(form.siteId);
+    affiliateList.list = ret
+  } else {
+    affiliateList.list = []
+  }
+}
+
+const filteredAffiliateList = ref([]);
+
+function customFilterMethod(query) {
+  if (!query) {
+    filteredAffiliateList.value = affiliateList.list.slice(0, 100); // Limit default results
+    return;
+  }
+
+  filteredAffiliateList.value = affiliateList.list.filter(item =>
+    item.value.toLowerCase().includes(query.toLowerCase())
+  ).slice(0, 100); // Limit filtered results
 }
 
 onMounted(async () => {
