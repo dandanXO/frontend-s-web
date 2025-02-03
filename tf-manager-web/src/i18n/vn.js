@@ -2663,6 +2663,7 @@ export default {
     Team: 'Đội',
     'Bet type setting': 'Cài đặt loại cược',
     'Sport App Setting': 'Cài đặt ứng dụng thể thao',
+    Sport: 'Thể thao'
   },
   google: {
     google_auth_menu: 'Google Xác thực',

@@ -2695,6 +2695,7 @@ export default {
     Team: '팀',
     'Bet type setting': '베팅 항목 설정',
     'Sport App Setting': '스포츠 앱 설정',
+    Sport: '스포츠'
   },
   google: {
     google_auth_menu: 'Google 인증자',
