@@ -97,7 +97,7 @@ installBtn.addEventListener("click", async () => {
         if (isIos) {
           document.querySelectorAll(".ios-modal").forEach((el) => (el.style.display = "flex"));
         } else {
-          window.open("https://b9game0.com/register", "_blank");
+          window.open(`${window.location.origin}/register`, "_blank");
         }
       } else {
         const { outcome } = await deferredPrompt.prompt();
@@ -352,10 +352,8 @@ function openLinkInPreferredBrowser(url) {
     const fallbackTimer = setTimeout(() => {
       // alert("Nenhum navegador suportado encontrado. O aplicativo será baixado em formato apk");
       // window.open(newLink, "_self");
-      window.open(
-        `https://cab50.cc/?p0=${affiliateCodePwa}&p1={{campaign.name}}&p2={{campaign.id}}&p3={{adset.name}}&p4={{adset.id}}&p5={{ad.name}}&p6={{ad.id}}`,
-        "_self"
-      );
+      const currentDomain = window.location.origin;
+      window.location.href = `${currentDomain}/home`;
     }, 1500);
 
     window.location.href = chromeIntentUrl;
@@ -367,10 +365,8 @@ function openLinkInPreferredBrowser(url) {
   } else if (isHuawei) {
     // alert("Nenhum navegador suportado encontrado. O aplicativo será baixado em formato apk");
     // window.open(newLink, "_self");
-    window.open(
-      `https://cab50.cc/?p0=${affiliateCodePwa}&p1={{campaign.name}}&p2={{campaign.id}}&p3={{adset.name}}&p4={{adset.id}}&p5={{ad.name}}&p6={{ad.id}}`,
-      "_self"
-    );
+    const currentDomain = window.location.origin;
+    window.location.href = `${currentDomain}/home`;
   } else {
     window.open(url, "_blank");
   }
