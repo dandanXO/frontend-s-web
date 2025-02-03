@@ -21,3 +21,7 @@ export const getNewMemberFeedback = siteId => {
     ContentType.form
   )
 }
+
+export const getExportMemberFeedback = (query) => {
+  return https().request("/memberFeedback/export", Method.GET, query, ContentType.form);
+};
