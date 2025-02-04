@@ -1687,6 +1687,7 @@ export default {
     superiorCategory: 'Superior Category',
     superiorAffiliatePaymentChannel: 'Superior Affiliate Deposit Channel',
     supplement: 'Supplement',
+    supplementAmount: 'Supplement Amount',
     supplementDeposit: 'Supplement Deposit',
     supportType: 'Support Type',
     sureWin: 'Sure Win',
