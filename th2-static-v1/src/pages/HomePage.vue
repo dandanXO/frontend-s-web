@@ -2581,8 +2581,6 @@ const gotoPromo = (banner) => {
     } else if (extractedUrl === "JILI") {
       // gameName: JiliGames platformCode: JILI gameCode:  gameStatus: OPEN gameType: SLOT gameId: 8
       openGame(extractedUrl, extractedUrl, "", "OPEN", "SLOT", "8");
-    } else if (extractedUrl === "PG") {
-      openGame(extractedUrl, extractedUrl, "", "OPEN", "SLOT", "21");
     }
   } else if (banner.redirectUrl.match(gamePattern)) {
     const extractedUrl = banner.redirectUrl.match(gamePattern)[1];
