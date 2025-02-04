@@ -17,8 +17,13 @@ export const getTeams = (query) => {
   return https().request("/sport/team", Method.GET, query, ContentType.form);
 };
 
-export const updateTeamLanguageName = (teamId, language, name) => {
-  return https().request(`/sport/team/${teamId}/language-name`, Method.PUT, { language: language, name: name }, ContentType.form);
+export const updateTeamLanguageName = (teamId, request) => {
+  console.log(request);
+  return https().request(
+    `/sport/team/${teamId}/language-name`,
+    Method.PUT, request,
+    ContentType.json
+  );
 }
 
 export const updateCompetitionPendingDuration = (competitionId) => {

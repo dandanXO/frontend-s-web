@@ -32,31 +32,27 @@
     </div>
     <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="580px">
       <el-form ref="platformForm" v-loading="uiControl.dialogLoading" :model="form" :rules="formRules" :inline="true" size="small" label-width="150px">
-        <el-form-item :label="t('fields.platformName')" prop="name">
-          <el-input v-model="form.name" style="width: 350px;" />
+        <el-form-item :label="t('fields.id')" prop="_id">
+          <el-input v-model="form._id" style="width: 350px;" />
         </el-form-item>
-        <el-form-item :label="t('fields.platformCode')" prop="code">
-          <el-input v-model="form.code" style="width: 350px;" />
+        <el-form-item :label="t('fields.sportType')" prop="tfSportName">
+          <el-input v-model="form.tfSportName" style="width: 350px;" />
         </el-form-item>
-        <el-form-item :label="t('fields.gameType')" prop="gameType">
-          <el-select
-            v-model="form.gameType"
-            value-key="id"
-            :placeholder="t('fields.pleaseChoose')"
-            style="width: 350px"
-            filterable
-            multiple
-            @focus="loadGameTypes"
-          >
-            <el-option
-              v-for="item in gameTypes.list"
-              :key="item"
-              :label="item"
-              :value="item"
-            />
-          </el-select>
+        <el-form-item :label="t('fields.teamNameEn')" prop="teamNameEn">
+          <el-input v-model="form.teamNameEn" style="width: 350px;" />
         </el-form-item>
-
+        <el-form-item :label="t('fields.teamNameZh')" prop="teamNameZh">
+          <el-input v-model="form.teamNameZh" style="width: 350px;" />
+        </el-form-item>
+        <el-form-item :label="t('fields.teamNameVn')" prop="teamNameVn">
+          <el-input v-model="form.teamNameVn" style="width: 350px;" />
+        </el-form-item>
+        <el-form-item :label="t('fields.teamNameKr')" prop="teamNameKr">
+          <el-input v-model="form.teamNameKr" style="width: 350px;" />
+        </el-form-item>
+        <el-form-item :label="t('fields.teamNameTh')" prop="teamNameTh">
+          <el-input v-model="form.teamNameTh" style="width: 350px;" />
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -90,7 +86,7 @@
 
 import { nextTick, onMounted, reactive, ref } from "vue";
 import { required } from "../../../utils/validate";
-import { getTeams, getSportTypes } from "../../../api/sport";
+import { getTeams, getSportTypes, updateTeamLanguageName } from "../../../api/sport";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -121,16 +117,22 @@ const gameTypes = reactive({
 })
 
 const form = reactive({
-  id: null,
-  name: null,
-  code: null,
-  gameType: []
+  _id: null,
+  tfSportName: null,
+  tfTeamName: null,
+  teamNameEn: null,
+  teamNameZh: null,
+  teamNameVn: null,
+  teamNameKr: null,
+  teamNameTh: null,
 });
 
 const formRules = reactive({
-  name: [required(t('message.validatePlatformNameRequired'))],
-  code: [required(t('message.validatePlatformCodeRequired'))],
-  gameType: [required(t('message.validateGameTypeRequired'))]
+  teamNameEn: [required(t('message.validateTeamNameEnRequired'))],
+  teamNameZh: [required(t('message.validateTeamNameZhRequired'))],
+  teamNameVn: [required(t('message.validateTeamNameVnRequired'))],
+  teamNameKr: [required(t('message.validateTeamNameKrRequired'))],
+  teamNameTh: [required(t('message.validateTeamNameThRequired'))]
 });
 
 function resetQuery() {
@@ -156,10 +158,10 @@ function showDialog(type) {
     if (platformForm.value) {
       platformForm.value.resetFields();
     }
-    uiControl.dialogTitle = t('fields.addPlatform');
+    uiControl.dialogTitle = t('fields.teamName');
     form.id = null;
   } else if (type === "EDIT") {
-    uiControl.dialogTitle = t('fields.editPlatform');
+    uiControl.dialogTitle = t('fields.teamName');
   }
   uiControl.dialogType = type;
   uiControl.dialogVisible = true;
@@ -169,12 +171,8 @@ function showEdit(platform) {
   showDialog("EDIT");
   nextTick(() => {
     for (const key in platform) {
-      if (Object.keys(form).find(k => k === key)) {
-        if (key === 'gameType') { // game type 需要进行转换
-          form[key] = platform[key].split(","); // string 转 array
-        } else {
-          form[key] = platform[key];
-        }
+      if (Object.prototype.hasOwnProperty.call(form, key)) {
+        form[key] = platform[key];
       }
     }
   });
@@ -183,6 +181,18 @@ function showEdit(platform) {
 async function loadGameTypes() {
   const { data: ret } = await getSportTypes()
   gameTypes.list = ret
+}
+
+async function submit() {
+  console.log(form);
+  const request = {
+    tfTeamNameEn: form.teamNameEn,
+    tfTeamNameZh: form.teamNameZh,
+    tfTeamNameVn: form.teamNameVn,
+    tfTeamNameKr: form.teamNameKr,
+    tfTeamNameTh: form.teamNameTh,
+  }
+  await updateTeamLanguageName(form._id, request);
 }
 
 onMounted(() => {
