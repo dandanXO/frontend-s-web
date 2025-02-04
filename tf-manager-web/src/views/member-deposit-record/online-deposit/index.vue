@@ -417,7 +417,7 @@ async function showDialog(type, row) {
     suppForm.id = row.id;
     suppForm.depositDate = row.depositDate;
     suppForm.serialNumber = row.serialNumber;
-    suppForm.supplementAmount = Number(row.depositAmount).toFixed(2);
+    suppForm.supplementAmount = Number(row.localCurrencyAmount).toFixed(2);
     uiControl.dialogTitle = t('fields.supplementDeposit');
   } else if (type === "CANCEL") {
     if (cancelDepositForm.value) {
