@@ -201,7 +201,9 @@ export default defineComponent({
       await StatusBar.hide();
       await StatusBar.setBackgroundColor({ color: "#3E1474" });
       await StatusBar.setStyle({ style: Style.Dark });
-      await StatusBar.setOverlaysWebView({ overlay: true });
+      setTimeout(async () => {
+        await StatusBar.setOverlaysWebView({ overlay: true });
+      }, 500);
       // setTimeout(() => {
       //   getInsetHeight();
       // }, 250);

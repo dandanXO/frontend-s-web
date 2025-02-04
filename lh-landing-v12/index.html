@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>雷火电竞体育官网</title>
+
+  <link rel="stylesheet" type="text/css" href="css/styles-v2.css" />
+  <link rel="icon" href="imgs/favicon.ico" type="image/x-icon" />
+
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <script type="text/javascript" src="js/jquery-3.7.1.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+</head>
+
+<body id="lh-landing-v12">
+<div class="main-wrapper">
+  <div class="full-container">
+    <div class="top-wrapper">
+      <div class="top-logo">
+        <img src="imgs/lh-logo.png" alt="雷火 TFGAMING" title="雷火 TFGAMING" />
+
+      </div>
+      <div class="top-slogan">
+        <img src="imgs/slogan.png" alt="雷火 TFGAMING" title="雷火 TFGAMING" />
+        <h2 class="title-text">https://www.lh888.com</h2>
+      </div>
+      <div class="top-cs">
+        <a href="https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN" target="_blank">
+          <img src="imgs/cs.png" alt="雷火 TFGAMING" title="雷火 TFGAMING" />
+        </a>
+      </div>
+    </div>
+    <div class="main-container">
+      <img class="bglft" src="imgs/lftwoman.png">
+      <div class="inner-contents">
+        <div class="inner__left">
+          <div class="cmn-title">雷火最新官方网址</div>
+          <div class="carousel-container">
+            <div id="myCarousel" class="carousel slide">
+              <!-- Indicators -->
+              <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+              </ol>
+
+              <!-- Wrapper for slides -->
+
+              <div class="carousel-inner" role="listbox">
+              </div>
+
+
+              <!-- Left and right controls -->
+              <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+          </div>
+          <a href="https://lh952.cc/affiliate" class="bottom-btn" target="_blank">
+            <img src="imgs/computer.png">
+            <span>代理加盟--躺着赚钱</span>
+          </a>
+        </div>
+        <div class="inner__rgt">
+          <div class="cmn-title">手机APP下载</div>
+          <div class="top-box">
+            <div class="lft"><img src="imgs/app.jpg"></div>
+            <div class="rgt">
+              <div class="qr-container">
+                <div class="qr-box">
+                  <div id="qr-container" style="text-align: center; "></div>
+                </div>
+                <div class="qr-txt">扫码立即下载</div>
+              </div>
+              <div class="buttons">
+                <a href="https://lhd328.app/?agentCode=0A7E4D" class="btn apple"><img src="imgs/ios.png">苹果下载</a>
+                <a href="https://lhd328.app/?agentCode=0A7E4D" class="btn apple"><img src="imgs/android.png">安卓手机</a>
+              </div>
+            </div>
+          </div>
+          <div class="bot-box">
+            <img src="imgs/badge.png">
+          </div>
+        </div>
+      </div>
+      <img class="bgrgt" src="imgs/rgtwoman.png">
+    </div>
+    <div class="footer-logos">
+      <img src="imgs/bbin.png">
+      <img src="imgs/ag.png">
+      <img src="imgs/pt.png">
+      <img src="imgs/mg.png">
+      <img src="imgs/cht.png">
+      <img src="imgs/zfb.png">
+      <img src="imgs/visa.png">
+    </div>
+
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    const webLinks = [
+      "lh952.cc",
+      "lh722.cc",
+      "lh180.cc",
+      "lh672.cc",
+      "lh332.cc",
+      "lh919.cc"
+    ];
+
+    const mobileLinks = [
+      "m.lh952.cc",
+      "m.lh722.cc",
+      "m.lh180.cc",
+      "m.lh672.cc",
+      "m.lh332.cc",
+      "m.lh919.cc"
+    ];
+
+    const createSlides = (links) => {
+      const slidesContainer = document.querySelector(".carousel-inner");
+      let slideGroup = [];
+
+      links.forEach((link, index) => {
+        const div = document.createElement("div");
+        div.className = "slide-box";
+        div.innerHTML = `
+            <h4>雷火${index + 1}站</h4>
+            <div class="arrow"><img src="imgs/rgtarrow.png"></div>
+            <div class="boxlink">
+            <div class="box">https://${link}</div>
+            <a href="https://${link}" target="_blank">进入雷火</a>
+            </div>
+          `;
+        slideGroup.push(div.outerHTML);
+
+        if ((index + 1) % 5 === 0 || index === links.length - 1) {
+          const slideDiv = document.createElement("div");
+          slideDiv.className = `item ${slidesContainer.children.length === 0 ? "active" : ""}`;
+          slideDiv.innerHTML = `<div class="slide-content">${slideGroup.join("")}</div>`;
+          slidesContainer.appendChild(slideDiv);
+          slideGroup = [];
+        }
+      });
+    };
+
+    const isMobile = window.innerWidth < 768;
+    createSlides(isMobile ? mobileLinks : webLinks);
+
+    $("#myCarousel").carousel();
+  });
+  // Function to generate a QR code
+  function generateQRCode(link) {
+    const container = document.getElementById("qr-container");
+    container.innerHTML = ""; // Clear the container
+    QRCode.toDataURL(link, { width: '100%', margin: 2 }, (err, url) => {
+      if (err) {
+        console.error("Error generating QR code:", err);
+        return;
+      }
+      const img = document.createElement("img");
+      img.src = url;
+      container.appendChild(img);
+    });
+  }
+
+  // Example usage
+  const link = "https://lhd328.app/?agentCode=0A7E4D"; // Replace with your desired link
+  generateQRCode(link);
+</script>
+</body>
+</html>

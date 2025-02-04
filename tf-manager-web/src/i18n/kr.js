@@ -1491,6 +1491,7 @@ export default {
     superiorCategory: '상위 카테고리',
     superiorAffiliatePaymentChannel: '상위 제휴사 입금 채널',
     supplement: '보충',
+    supplementAmount: '보충 양',
     supplementDeposit: '보충 입금',
     supportType: '지원 유형',
     sureWin: '확실한 승리',

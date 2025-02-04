@@ -109,6 +109,13 @@
             @input="handleChange()"
           />
         </el-form-item>
+        <el-form-item :label="t('fields.BankAliasName')" prop="aliasName">
+          <el-input
+            v-model="form.aliasName"
+            style="width: 350px"
+            @input="handleChange()"
+          />
+        </el-form-item>
         <el-form-item v-if="form.bankType === 'BANK'" :label="t('fields.bankCode')" prop="code">
           <el-input
             v-model="form.code"
@@ -497,6 +504,7 @@ const form = reactive({
   currencyIds: null,
   bankType: null,
   bankIcon: null,
+  aliasName: null,
 })
 
 const imageList = reactive({
