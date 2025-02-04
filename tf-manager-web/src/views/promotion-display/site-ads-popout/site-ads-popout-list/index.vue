@@ -314,6 +314,7 @@
 </template>
 
 <script setup>
+/* eslint-disable */
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
 import { computed, onMounted, reactive, ref } from 'vue'
@@ -474,6 +475,7 @@ function handleSelectionChange(val) {
     uiControl.removeBtn = false
   }
 }
+
 const router = useRouter()
 
 const route = useRoute()
@@ -576,7 +578,7 @@ async function removeAdsPopout(adspopout) {
 }
 
 async function changeAdsStatus(row) {
-  await updateAdsPopoupStatus(row.id, row.status, row.siteType).catch(async function (){
+  await updateAdsPopoupStatus(row.id, row.status, row.siteType).catch(async function() {
     await loadAdsPopoutList();
   })
   await loadAdsPopoutList();

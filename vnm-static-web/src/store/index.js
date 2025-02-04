@@ -35,7 +35,8 @@ export const userStore = defineStore("userStore", {
       visitorId: "",
       isAffiliateA: false,
       isOperaPixelB: false,
-      withdrawType: ""
+      withdrawType: "",
+      theme: 'CNY' // remove this disables cny decor
     };
   },
   actions: {

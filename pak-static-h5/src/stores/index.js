@@ -320,7 +320,8 @@ export const userStore = defineStore("userStore", {
           OneSignal.logout();
         }
 
-        location.href = "/";
+        // location.href = "/";
+        window.location.reload();
       });
     },
     setMailData(mailData) {

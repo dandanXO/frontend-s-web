@@ -1468,6 +1468,7 @@ export default {
     superiorAffiliatePaymentChannel:
       'Kênh Thanh Toán Của Đối Tác Liên Kết Cấp Cao',
     supplement: 'Bổ Sung',
+    supplementAmount: 'Bổ Sung Số lượng',
     supplementDeposit: 'Bổ Sung Tiền Gửi',
     supportType: 'Loại Hỗ Trợ',
     sureWin: 'Chắc Chắn Chiến Thắng',
@@ -1867,6 +1868,7 @@ export default {
     displayEndTime: 'Hiển thị thời gian kết thúc',
     batchFrozenMember: 'Đóng băng thành viên hàng loạt',
     showLogo: 'hiển thị biểu tượng',
+    showTime: 'Show Time',
     isSeamlessTransfer: 'Không cần chuyển nhượng',
     fromPlatform: 'Từ Nền tảng',
     fromGameCode: 'Từ Game Code',

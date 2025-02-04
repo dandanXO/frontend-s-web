@@ -215,7 +215,7 @@
                         <img src="../assets/images/index/hot.png" />
                       </div>
 
-                      <div class="platform-game-title">{{ truncateText(item.platform, 22) }}</div>
+                      <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
                     </div>
                   </swiper-slide>
                 </template>
@@ -744,60 +744,66 @@
           </div> -->
         </div>
 
-        <div class="platform-game-container grid-view" v-else>
-          <template v-for="(item, index) in fishGameJILIList" :key="index">
-            <div
-              class="platform-game-item btn-effect"
-              @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
-            >
-              <div class="platform-game-img">
-                <div
-                  class="game--bg"
-                  :style="{
-                    backgroundImage: (() => {
-                      try {
-                        return `url(${require(`../assets/images/games/fish/jili-${item.code.toLowerCase()}.png`)})`;
-                      } catch (e) {
+        <div class="games-selection-wrapper" id="fishing" v-else>
+          <div class="title-game">
+            <img src="../assets/images/index/fishing-icon-label.png" />
+            <!-- <span class="txt-style">Fishing</span> -->
+          </div>
+          <div class="platform-game-container grid-view">
+            <template v-for="(item, index) in fishGameJILIList" :key="index">
+              <div
+                class="platform-game-item btn-effect"
+                @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
+              >
+                <div class="platform-game-img">
+                  <div
+                    class="game--bg"
+                    :style="{
+                      backgroundImage: (() => {
                         try {
-                          return `url(${imgURLGame}${item.icon})`;
+                          return `url(${require(`../assets/images/games/fish/jili-${item.code.toLowerCase()}.png`)})`;
                         } catch (e) {
-                          return `url(https://m.indwin7.com/static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                          try {
+                            return `url(${imgURLGame}${item.icon})`;
+                          } catch (e) {
+                            return `url(https://m.indwin7.com/static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                          }
                         }
-                      }
-                    })()
-                  }"
-                ></div>
+                      })()
+                    }"
+                  ></div>
+                </div>
+                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
               </div>
-              <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-            </div>
-          </template>
+            </template>
 
-          <template v-for="(item, index) in fishGameJDBList" :key="index">
-            <div
-              class="platform-game-item btn-effect"
-              @click="playGame(item.name, 'JDB', item.code, item.status, item.gameType, item.id)"
-            >
-              <div class="platform-game-img">
-                <div
-                  class="game--bg"
-                  :style="{
-                    backgroundImage: (() => {
-                      try {
-                        return `url(${require(`../assets/images/games/fish/jdb-${item.code.toLowerCase()}.png`)})`;
-                      } catch (e) {
+            <template v-for="(item, index) in fishGameJDBList" :key="index">
+              <div
+                class="platform-game-item btn-effect"
+                @click="playGame(item.name, 'JDB', item.code, item.status, item.gameType, item.id)"
+              >
+                <div class="platform-game-img">
+                  <div
+                    class="game--bg"
+                    :style="{
+                      backgroundImage: (() => {
                         try {
-                          return `url(${imgURLGame}${item.icon})`;
+                          return `url(${require(`../assets/images/games/fish/jdb-${item.code.toLowerCase()}.png`)})`;
                         } catch (e) {
-                          return `url(https://m.indwin7.com/static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                          try {
+                            return `url(${imgURLGame}${item.icon})`;
+                          } catch (e) {
+                            return `url(https://m.indwin7.com/static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                          }
                         }
-                      }
-                    })()
-                  }"
-                ></div>
+                      })()
+                    }"
+                  ></div>
+                </div>
+                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
               </div>
-              <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-            </div>
-          </template>
+            </template>
+          </div>
         </div>
       </template>
 
@@ -3956,14 +3962,14 @@ onBeforeUnmount(() => {
 
   &.grid-view {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 32%);
     column-gap: 8px;
     row-gap: 16px;
   }
 
   &.grid-view-col-4 {
     display: grid;
-    grid-template-columns: repeat(4, minmax(75px, 1fr));
+    grid-template-columns: repeat(4, minmax(75px, 32%));
     column-gap: 8px;
     row-gap: 16px;
   }

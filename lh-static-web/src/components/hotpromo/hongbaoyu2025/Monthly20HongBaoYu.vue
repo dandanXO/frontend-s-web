@@ -8,16 +8,14 @@
             投注礼金
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon claim-coin-icon">
-            </div>
+            <div class="reward-info-icon claim-coin-icon"></div>
             <div class="reward-info-content">
               上月累计存款:
               <span class="amount">{{ depositAmount }}元</span>
             </div>
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon claim-gift-icon">
-            </div>
+            <div class="reward-info-icon claim-gift-icon"></div>
             <div class="reward-info-content">
               可领取红包次数：
               <span class="amount">{{ draw }}次</span>
@@ -25,8 +23,15 @@
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: draw <= 0, loading: loadingClaim }">
-            <img v-if="draw <= 0" src="@/assets/promo/hongbaoyu/reward-btn-disabled.png" alt="" width="100%" />
+          <div
+            class="bonus-image"
+            @click="handleClaimBonus"
+            :class="{
+              disabled: draw === 0 || !nowIsRain || gotAlready,
+              loading: loadingClaim
+            }"
+          >
+            <img v-if="draw === 0 || !nowIsRain || gotAlready" src="@/assets/promo/hongbaoyu/reward-btn-disabled.png" alt="" width="100%" />
             <img v-else src="@/assets/promo/hongbaoyu/reward-btn.png" alt="" width="100%" />
           </div>
         </div>
@@ -92,7 +97,7 @@
 
       <div class="livepoker-rebate-game-bottom-rule section-bg">
         <div class="title-img">活动规则</div>
-        <br/>
+        <br />
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
@@ -151,7 +156,7 @@ import { ResponseCode } from "@/api/response";
 import { useNotify } from "@/hooks/notify";
 import { onMounted, ref, defineProps } from "vue";
 import { userStore } from "@/store";
-import { initDepositRedPacket, claimDailyRainItem } from "@/api/index/promo";
+import { initDepositRedPacket, claimDailyRainItem, initNextRainTime } from "@/api/index/promo";
 
 const props = defineProps(["promoCode", "params"]);
 const promoCode = ref(props.promoCode);
@@ -162,6 +167,8 @@ const draw = ref(0);
 const winAmount = ref(0);
 const loadingClaim = ref(false);
 const privilegeClaimedModalVisible = ref(false);
+const nowIsRain = ref(false);
+const gotAlready = ref(false);
 
 const fetchData = async () => {
   loadingClaim.value = true;
@@ -172,6 +179,18 @@ const fetchData = async () => {
         draw.value = res.data.draw;
 
         store.getBalance();
+      }
+    })
+    .catch(() => {})
+    .finally(() => {
+      loadingClaim.value = false;
+    });
+
+  initNextRainTime(promoCode.value)
+    .then((res) => {
+      if (res.code === 0) {
+        nowIsRain.value = res.data.nowIsRain;
+        gotAlready.value = res.data.gotAlready;
       }
     })
     .catch(() => {})

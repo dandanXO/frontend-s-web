@@ -42,6 +42,23 @@
         </el-select>
         <el-checkbox v-model="request.isNotRead" :true-label="true" :false-label="false" style="margin-left:10px;">{{ t('fields.notRead') }}</el-checkbox>
         <el-checkbox v-model="request.isNotReplied" :true-label="true" :false-label="false">{{ t('fields.notReplied') }}</el-checkbox>
+        <el-date-picker
+          v-model="request.sendTime"
+          format="DD/MM/YYYY HH:mm:ss"
+          value-format="YYYY-MM-DD HH:mm:ss"
+          size="small"
+          type="datetimerange"
+          range-separator=":"
+          :start-placeholder="t('fields.startDate')"
+          :end-placeholder="t('fields.endDate')"
+          style="margin-left: 5px; width: 380px"
+          :disabled-date="disabledDate"
+          :editable="false"
+          :clearable="false"
+          :default-time="defaultTime"
+          @blur="calendarBlur"
+          @calendar-change="calendarChange"
+        />
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -58,6 +75,13 @@
           @click="resetQuery()"
         >
           {{ t('fields.reset') }}
+        </el-button>
+        <el-button
+          size="mini"
+          type="primary"
+          @click="requestExportExcel"
+        >
+          {{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
     </div>
@@ -182,12 +206,24 @@
     :page-count="page.pages"
     :current-page="request.current"
   />
+  <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
+               :close-on-click-modal="false" :close-on-press-escape="false"
+    >
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.DownloadManager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
+    </el-dialog>
 </template>
 
 <script setup>
 import { ElMessage } from 'element-plus'
 import { computed, nextTick, onMounted, reactive, ref } from 'vue'
 import {
+  getExportMemberFeedback,
   getFeedbacks,
   readFeedback,
   replyFeedback
@@ -200,6 +236,8 @@ import { TENANT } from '../../../store/modules/user/action-types'
 import { hasPermission } from '../../../utils/util'
 import { getConfigList } from "@/api/config";
 import { isCnySite } from '@/utils/site'
+import { formatInputTimeZone } from "@/utils/format-timeZone"
+import moment from 'moment'
 
 const { t } = useI18n()
 const feedbackForm = ref(null)
@@ -210,13 +248,29 @@ const siteList = reactive({
   list: [],
 })
 
+let timeZone = null;
+const defaultTime = [
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 1, 1, 23, 59, 59),
+];
+const date = new Date();
+const startDate = new Date()
+startDate.setTime(
+  moment(startDate)
+    .startOf('month')
+    .format('x')
+)
+const defaultStartDate = convertStartDate(startDate);
+const defaultEndDate = convertDate(date);
+
 const uiControl = reactive({
   formVisible: false,
   formDisabled: false,
   dialogTitle: '',
   dialogType: 'EDIT',
   editBtn: true,
-  feedbackTypes: []
+  feedbackTypes: [],
+  messageVisible: false,
 })
 const request = reactive({
   size: 30,
@@ -226,9 +280,8 @@ const request = reactive({
   feedbackType: null,
   isNotRead: false,
   isNotReplied: false,
+  sendTime: [defaultStartDate, defaultEndDate],
 })
-
-let timeZone = null;
 
 function resetQuery() {
   request.loginName = null
@@ -236,6 +289,7 @@ function resetQuery() {
   request.siteId = store.state.user.siteId
   request.isNotRead = false
   request.isNotReplied = false
+  request.requestTime = [defaultStartDate, defaultEndDate]
 }
 
 const form = reactive({
@@ -268,6 +322,15 @@ async function loadFeedback() {
       query[key] = value
     }
   })
+  if (request.sendTime !== null) {
+    if (request.sendTime.length === 2) {
+      query.sendTime = JSON.parse(JSON.stringify(request.sendTime));
+      query.sendTime[0] = formatInputTimeZone(query.sendTime[0], timeZone);
+      query.sendTime[1] = formatInputTimeZone(query.sendTime[1], timeZone);
+      query.sendTime = query.sendTime.join(',')
+    }
+  }
+  console.log("sendTime: ", query.sendTime);
   const { data: ret } = await getFeedbacks(query)
   page.pages = ret.pages
   timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
@@ -318,6 +381,38 @@ async function loadFeedbackTypesBySiteId() {
     const { data: adjustType } = await getConfigList("feedback_type", request.siteId);
     uiControl.feedbackTypes = adjustType;
   }
+}
+
+async function requestExportExcel() {
+  const query = {};
+  query.requestBy = store.state.user.name;
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+  query.siteId = request.siteId
+  query.feedbackType = request.feedbackType
+  query.isNotRead = request.isNotRead
+  query.isNotReplied = request.isNotReplied
+  query.loginName = request.loginName
+
+  if (request.sendTime !== null) {
+    if (request.sendTime.length === 2) {
+      query.sendTime = JSON.parse(JSON.stringify(request.sendTime));
+      query.sendTime[0] = formatInputTimeZone(query.sendTime[0], timeZone);
+      query.sendTime[1] = formatInputTimeZone(query.sendTime[1], timeZone);
+      query.sendTime = query.sendTime.join(',')
+    }
+  }
+  const { data: ret } = await getExportMemberFeedback(query);
+  if (ret) {
+    uiControl.messageVisible = true;
+  }
+}
+
+function convertDate(date) {
+  return moment(date).format('YYYY-MM-DD') + ' 23:59:59';
+}
+
+function convertStartDate(date) {
+  return moment(date).startOf('day').format('YYYY-MM-DD HH:mm:ss');
 }
 
 onMounted(async () => {

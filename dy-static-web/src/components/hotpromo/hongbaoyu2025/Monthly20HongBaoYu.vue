@@ -27,8 +27,15 @@
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: draw <= 0, loading: loadingClaim }">
-            <img v-if="draw <= 0" src="@/assets/promo/hongbaoyu/reward-btn-disabled.png" alt="" width="100%" />
+          <div
+            class="bonus-image"
+            @click="handleClaimBonus"
+            :class="{
+              disabled: draw === 0 || !nowIsRain || gotAlready,
+              loading: loadingClaim
+            }"
+          >
+            <img v-if="draw === 0 || !nowIsRain || gotAlready" src="@/assets/promo/hongbaoyu/reward-btn-disabled.png" alt="" width="100%" />
             <img v-else src="@/assets/promo/hongbaoyu/reward-btn.png" alt="" width="100%" />
           </div>
         </div>
@@ -142,15 +149,15 @@
         <div class="amount">{{ winAmount }}元</div>
 
         <div class="get-btn" @click="getPromotionPrize">点击领取</div>
-      </div> 
-    </div> 
+      </div>
+    </div>
   </el-dialog>
 </template>
 
 <script setup>
 import { onMounted, ref, defineProps } from "vue";
 import { userStore } from "@/store";
-import { initDepositRedPacket, claimDailyRainItem } from "@/api/index/promo";
+import { initDepositRedPacket, claimDailyRainItem, initNextRainTime } from "@/api/index/promo";
 
 const props = defineProps(["promoCode", "params"]);
 const promoCode = ref(props.promoCode);
@@ -161,6 +168,8 @@ const draw = ref(0);
 const winAmount = ref(0);
 const loadingClaim = ref(false);
 const privilegeClaimedModalVisible = ref(false);
+const nowIsRain = ref(false);
+const gotAlready = ref(false);
 
 const fetchData = async () => {
   loadingClaim.value = true;
@@ -171,6 +180,18 @@ const fetchData = async () => {
         draw.value = res.data.draw;
 
         store.getBalance();
+      }
+    })
+    .catch(() => {})
+    .finally(() => {
+      loadingClaim.value = false;
+    });
+
+  initNextRainTime(promoCode.value)
+    .then((res) => {
+      if (res.code === 0) {
+        nowIsRain.value = res.data.nowIsRain;
+        gotAlready.value = res.data.gotAlready;
       }
     })
     .catch(() => {})

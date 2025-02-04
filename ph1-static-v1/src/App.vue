@@ -15,7 +15,7 @@ import { StatusBar, Style } from "@capacitor/status-bar";
 import { useUI } from "src/stores/ui";
 import axios from "axios";
 import AOS from "aos";
-import {useRouter} from "vue-router"
+import { useRouter } from "vue-router";
 import "aos/dist/aos.css";
 
 export default defineComponent({
@@ -126,7 +126,6 @@ export default defineComponent({
     };
 
     const trackH5Affiliate = () => {
-
       var affiliateCode = "1DF0CB";
 
       sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
@@ -199,7 +198,9 @@ export default defineComponent({
       if (Platform.is.capacitor && Platform.is.android) {
         // console.log("STATUSBARR");
         await StatusBar.hide();
-        await StatusBar.setOverlaysWebView({ overlay: true });
+        setTimeout(async () => {
+          await StatusBar.setOverlaysWebView({ overlay: true });
+        }, 500);
         await StatusBar.setBackgroundColor({ color: "#3E1474" });
         await StatusBar.setStyle({ style: Style.Dark });
         // setTimeout(() => {
@@ -208,7 +209,7 @@ export default defineComponent({
       }
     };
 
-    const router= useRouter();
+    const router = useRouter();
     const checkServerStatus = () => {
       axios.get(`https://sumbtf.tebarncale.com/server/status/${process.env.SITE}`).then((response) => {
         if (response.data.code === 0) {
