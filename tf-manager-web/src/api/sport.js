@@ -9,6 +9,10 @@ export const getCompetitions = (query) => {
   return https().request("/sport/competition", Method.GET, query, ContentType.form);
 };
 
+export const updateCompetitionStatus = (data) => {
+  return https().request(`/sport/competition/update-status`, Method.PUT, data, ContentType.json);
+}
+
 export const updateCompetitionLanguageName = (competitionId, language, name) => {
   return https().request(`/sport/competition/${competitionId}/language-name`, Method.PUT, { language: language, name: name }, ContentType.form);
 }

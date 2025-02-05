@@ -69,6 +69,16 @@
       <el-table-column prop="tfCompetitionName" :label="t('fields.tfCompetitionName')" width="200" />
       <el-table-column prop="startTime" :label="t('fields.startTime')" width="200" />
       <el-table-column prop="endTime" :label="t('fields.endTime')" width="200" />
+      <el-table-column :label="t('fields.status')" align="center" width="150">
+        <template #default="scope">
+          <el-switch
+            v-model="scope.row.status"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            @change="updateStatus(scope.row)"
+          />
+        </template>
+      </el-table-column>
       <el-table-column :label="t('fields.operate')" align="right" fixed="right">
         <template #default="scope" :hidden="true">
           <el-button icon="el-icon-refresh" size="mini" @click="updateDurationPending(scope.row._id)" />
@@ -89,7 +99,7 @@
 
 import { onMounted, reactive, ref } from "vue";
 import { required } from "../../../utils/validate";
-import { getCompetitions, getSportTypes, updateCompetitionPendingDuration } from "../../../api/sport";
+import { getCompetitions, getSportTypes, updateCompetitionPendingDuration, updateCompetitionStatus } from "../../../api/sport";
 import { useI18n } from "vue-i18n";
 import { useStore } from "@/store";
 import { getSiteTimeZoneById } from "@/api/site";
@@ -154,6 +164,20 @@ async function loadPlatform() {
   page.pages = ret.pages;
   page.records = ret.records;
   page.loading = false;
+}
+
+async function updateStatus(row) {
+  try {
+    const dto = {
+      id: row._id,
+      status: row.status,
+      platformId: row.sourceInfo?.[0]?.sportPlatformId || null,
+    };
+
+    await updateCompetitionStatus(dto);
+  } catch (error) {
+    console.error("Update status failed:", error);
+  }
 }
 
 function changePage(page) {
