@@ -23,6 +23,7 @@
     <LPLSummer v-if="list.redirectUrl === 'lh1-lpl-game'" />
     <LPLLCK v-if="list.redirectUrl === 'lh1-lpl-lck'" />
     <Cny2024Promo v-if="list.redirectUrl === 'lh1-cny2024-promo'" />
+    <AgYuanxiaohongbao v-if="list.redirectUrl === 'lh1-ag-yuanxiaohongbao'" :promo-code="list.promoCode" />
     <div style="text-align: center" v-if="list.redirectUrl === 'lh1-feedback-award'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -174,6 +175,7 @@ import Dota2Ti13 from "../components/hotpromo/dota2-ti13/Dota2Ti13.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 import LPLSummer from "../components/hotpromo/lpl-summer/LPLSummer.vue";
 import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
+import AgYuanxiaohongbao from "../components/hotpromo/agyuanxiaohongbao/AgYuanxiaohongbao.vue";
 import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
 import CnyStepGame2024Promo from "../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue";
 import LhStepGamePromo from "../components/hotpromo/lhstepgame/LhStepGamePromo.vue";
@@ -259,6 +261,7 @@ export default defineComponent({
     GiftPromo,
     LPLSummer,
     Cny2024Promo,
+    AgYuanxiaohongbao,
     BbDacha2024Promo,
     CnyStepGame2024Promo,
     DragonCardPromo,
@@ -1067,6 +1070,23 @@ export default defineComponent({
     font-weight: bold;
     letter-spacing: 3px;
     margin: 0 auto;
+  }
+
+  .title-img2 {
+    aspect-ratio: 2952 / 176;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 905px 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin: 0 auto;
+    color: transparent;
+    background: linear-gradient(270.62deg, #E6CC93 -6.62%, #FFF1E1 101.55%);
+    -webkit-background-clip: text;
   }
 
   .item {
