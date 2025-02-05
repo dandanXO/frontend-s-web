@@ -75,16 +75,20 @@
     </div>
 
     <div
-      class="rocket-wrapper"
+      class="rocket-wrapper show-promo"
       v-if="showFloatPromo"
-      :class="'show-promo'"
+      :class="{ minimum: !isFloatPromoExpanded }"
       :style="{ top: promoPosition.top + 'px', left: promoPosition.left + 'px' }"
       @mousedown="startDragging('promo', $event)"
     >
       <div style="position: relative">
-        <div class="close-btn" @click="hideFloatPromo()">X</div>
+        <!-- <div class="close-btn" @click="hideFloatPromo()">X</div> -->
+        <div class="close-btn scale" @click.prevent="scaleFloatPromo">
+          <img v-if="isFloatPromoExpanded" src="../../assets/home/icon-close-fullscreen.png" />
+          <img v-else src="../../assets/home/icon-fullscreen.png" />
+        </div>
         <el-carousel
-          height="297px"
+          height="207px"
           :indicator-position="floatPromo.length > 1 ? 'outside' : 'none'"
           arrow="never"
           :autoplay="true"
@@ -169,11 +173,15 @@ export default defineComponent({
     const showRocket = ref(false);
     const hideRocket = () => {
       showRocket.value = false;
-      promoPosition.value = { top: window.innerHeight - 297, left: 0 };
+      promoPosition.value = { top: window.innerHeight - 207, left: 0 };
     };
     const showFloatPromo = ref(false);
+    const isFloatPromoExpanded = ref(true);
     const hideFloatPromo = () => {
       showFloatPromo.value = false;
+    };
+    const scaleFloatPromo = () => {
+      isFloatPromoExpanded.value = !isFloatPromoExpanded.value;
     };
     const floatPromo = [];
     const floatPromoRemainingTime = ref([]);
@@ -207,12 +215,12 @@ export default defineComponent({
     };
     const checkFloatPromo = () => {
       if (gamePromo.length === 0) {
-        promoPosition.value = { top: window.innerHeight - 297, left: 0 };
+        promoPosition.value = { top: window.innerHeight - 207, left: 0 };
       }
     };
 
     const rocketPosition = ref({ top: window.innerHeight - 200, left: window.innerWidth - 220 });
-    const promoPosition = ref({ top: window.innerHeight - 297, left: 0 });
+    const promoPosition = ref({ top: window.innerHeight - 207, left: 0 });
     const isDragging = ref(false);
     const shiftX = ref(0);
     const shiftY = ref(0);
@@ -304,7 +312,9 @@ export default defineComponent({
       currentPromo,
       currentPromoIndex,
       gotoPromo,
-      floatPromoRemainingTime
+      floatPromoRemainingTime,
+      isFloatPromoExpanded,
+      scaleFloatPromo
     };
   }
 });
@@ -326,8 +336,13 @@ export default defineComponent({
 
   &.show-promo {
     display: block;
-    width: 396px;
-    height: 297px;
+    width: 277px;
+    height: 207px;
+  }
+
+  &.minimum {
+    transform: scale(0.5);
+    transform-origin: bottom left;
   }
 
   &.show-rocket {
@@ -354,6 +369,14 @@ export default defineComponent({
     right: 0;
     z-index: 99;
     cursor: pointer;
+
+    &.scale {
+      top: -10px;
+      right: -10px;
+      img {
+        max-width: 100%;
+      }
+    }
   }
 
   .rocket {
@@ -371,7 +394,7 @@ export default defineComponent({
       bottom: 16%;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 44px;
+      font-size: 32px;
       font-weight: bold;
       // color: #eaff00;
       // text-shadow: 2px 2px 0px #00000040;
