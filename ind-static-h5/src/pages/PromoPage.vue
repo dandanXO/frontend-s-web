@@ -86,8 +86,8 @@
                   style="display: block; width: 100%"
                 />
               </div>
-              <div class="inner">
-                <div class="promo-content-inner">
+              <div class="inner" :class="ui.promoBg">
+                <div v-if="!selectedParam.hidetitle" class="promo-content-inner">
                   <div class="content-title">{{ selectedPromo.title }}</div>
                 </div>
 
@@ -96,7 +96,7 @@
                 </div>
 
                 <div
-                  v-if="selectedPromo.promoType"
+                  v-if="selectedPromo.promoType && selectedPromo.redirectUrl !== 'spin-lucky-wheel'"
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
@@ -1049,6 +1049,14 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
         padding-bottom: 40px;
+
+        &.spin-lucky-wheel-envelope {
+          background: url("../assets/images/promotion/spin-lucky-wheel/envelope-stage/bg.png") no-repeat top center;
+          background-size: cover;
+          width: 100%;
+          margin-top: 0;
+          padding-bottom: 0;
+        }
 
         p {
           font-size: 14px;
