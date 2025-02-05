@@ -11,7 +11,7 @@
               text-align: center;
               color: transparent !important;
               font-weight: 600;
-              font-size: 16px;
+              font-size: 20px;
             "
           >
             活动详情
@@ -29,7 +29,7 @@
               活动时间
             </div>
             <div class="right">
-              2025 年 2 月 18 日 至 2 月 20 日，每日两场活动时间 下午场 15:00 至 15:20(北京时间) 晚间场 22:00 至 22:20(北京时间
+              2025年2月18日至2月20日，每日两场活动时间 下午场 15:00 至 15:20(北京时间) 晚间场 22:00 至 22:20(北京时间
             </div>
           </div>
           <div class="little-title" style="display: flex; flex-direction: column; align-items: start">
@@ -45,7 +45,8 @@
               活动内容
             </div>
             <div class="right">
-              欢庆元宵佳节，AG 为全体玩家奉上年度盛典【元宵红包雨】！参与百家乐游戏，赢取金、银、红三大等级红包！最后一场更送出本次活动最顶级红包——高达
+              欢庆元宵佳节，AG
+              为全体玩家奉上年度盛典【元宵红包雨】！参与百家乐游戏，赢取金、银、红三大等级红包！最后一场更送出本次活动最顶级红包——高达
               208,888 元人民币 的现金奖励！
               只要您在游戏中不断累计有效投注金额，即可自动提升红包等级，助您抢占更高额奖励！总计超过 568 万人民币
               奖金大放送，快来参加，感受最热血的红包狂欢吧
@@ -84,8 +85,8 @@
             text-align: center;
             color: transparent !important;
             font-weight: 700;
-            margin-top: 40px;
-            font-size: 16px;
+            margin-top: 20px;
+            font-size: 20px;
           "
         >
           活动亮点
@@ -93,7 +94,7 @@
         <div class="highlight-wrapper">
           <div class="section-bg">
             <div class="highlight-content">
-              <img src="./images/highlight1.png" alt="" />
+              <img class="istopitem" src="./images/highlight1.png" alt="" />
               <div style="display: flex; flex-direction: column; align-items: center">
                 <h3 class="title">多重红包等级</h3>
                 <p style="text-align: center">金、银、红三种红包等级，人人都有机会赢取大奖。</p>
@@ -102,7 +103,7 @@
           </div>
           <div class="section-bg">
             <div class="highlight-content">
-              <img src="./images/highlight2.png" alt="" />
+              <img class="istopitem" src="./images/highlight2.png" alt="" />
               <div style="display: flex; flex-direction: column; align-items: center">
                 <h3 class="title">动态升级机制</h3>
                 <p style="text-align: center">随着投注金额的提升，红包等级自动升级，挑战更高奖金！</p>
@@ -120,7 +121,7 @@
           </div>
           <div class="section-bg">
             <div class="highlight-content">
-              <img src="./images/highlight4.png" alt="" />
+              <img class="istopitem" src="./images/highlight4.png" alt="" />
               <div style="display: flex; flex-direction: column; align-items: center">
                 <h3 class="title">终极加码</h3>
                 <p style="text-align: center">最后一场活动加码大奖，赢得年度顶级奖金！</p>
@@ -131,10 +132,10 @@
 
         <div class="section-bg" style="margin-top: 20px">
           <div>
-            <div style="display: flex; align-items: center; justify-content: space-around;">
-              <img src="./images/c001.png" alt="" style="height: 64px; width: 53px;"/>
-              <img src="./images/c002.png" alt="" style="height: 70px; width: 53px;"/>
-              <img src="./images/c003.png" alt="" style="height: 70px; width: 53px;"/>
+            <div style="display: flex; align-items: end; justify-content: space-around">
+              <img src="./images/c001.png" alt="" style="width: 53px" />
+              <img src="./images/c002.png" alt="" style="width: 53px" />
+              <img src="./images/c003.png" alt="" style="width: 53px" />
             </div>
             <div style="display: flex; flex-direction: column; align-items: center">
               <h3
@@ -164,7 +165,7 @@
               text-align: center;
               color: transparent !important;
               font-weight: 700;
-              font-size: 16px;
+              font-size: 20px;
             "
           >
             活动详情
@@ -219,7 +220,7 @@
               text-align: center;
               color: transparent !important;
               font-weight: 700;
-              font-size: 16px;
+              font-size: 20px;
             "
           >
             活动条款
@@ -267,7 +268,7 @@
               text-align: center;
               color: transparent !important;
               font-weight: 700;
-              font-size: 16px;
+              font-size: 20px;
             "
           >
             常见问题
@@ -337,10 +338,19 @@
 
   .section-bg {
     border: 4px solid #be9457 !important;
-    color:#fff;
+    color: #fff;
     background-image: url("./images/section-bgN.png") !important;
     background-repeat: no-repeat;
     background-color: #7a0707e4;
+    background-size: 100% auto;
+
+    .item {
+      padding-left: 10px;
+    }
+
+    p {
+      font-size: 15px;
+    }
   }
 }
 
@@ -465,7 +475,7 @@
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
-    color:#fff;
+    color: #fff;
     .left {
       background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-little-title-bg.png");
       background-repeat: no-repeat;
@@ -563,12 +573,12 @@
     font-weight: 400;
     line-height: 20px;
     color: #fff;
-    padding: 8px;
+    padding: 0px;
     .item {
       display: flex;
       gap: 10px;
       align-items: baseline;
-      color:#fff;
+      color: #fff;
       .item-num {
         color: #583600 !important;
         font-size: 12px;
@@ -581,7 +591,7 @@
         justify-content: center;
         align-items: center;
         margin-top: 2px;
-        background: linear-gradient(259.14deg, #D47C33 27.82%, #FAFE8A 52.4%, #D47C33 99.13%);
+        background: linear-gradient(259.14deg, #d47c33 27.82%, #fafe8a 52.4%, #d47c33 99.13%);
       }
 
       .hint {
@@ -676,7 +686,7 @@
     align-items: center;
     padding: 20px;
     border: 1px solid #acd4f6;
-    color:#fff;
+    color: #fff;
     .step-item {
       display: flex;
       flex-direction: column;
@@ -692,6 +702,14 @@
   flex-direction: column;
   gap: 12px;
 
+  .highlight-content {
+    img.istopitem {
+      aspect-ratio: 140 / 80;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
   .title {
     background: linear-gradient(
       259.14deg,
@@ -701,7 +719,7 @@
       #efd190 72.12%,
       #e4bd80 99.13%
     );
-    font-size: 14px !important;
+    font-size: 16px !important;
     font-weight: 600;
     background-clip: text;
     -webkit-background-clip: text;
@@ -709,3 +727,4 @@
   }
 }
 </style>
+<script setup lang="ts"></script>
