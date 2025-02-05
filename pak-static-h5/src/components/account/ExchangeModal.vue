@@ -23,6 +23,7 @@
                     :placeholder="$t('form.redemptionCode_placeholder')"
                     :rules="[(val) => (val && val.length > 0) || $t('form.redemptionCode_rule_01')]"
                     v-model="formDetail.redemptionCode"
+                    @update:model-value="isInvalidCode = false"
                   />
                 </div>
 
@@ -50,6 +51,7 @@
             </InputField>
           </div>
         </div>
+        <div class="error-text bonus-amt-txt">Bonus amount: 9-9999</div>
 
         <q-btn
           :loading="btnLoading"
@@ -72,6 +74,14 @@
             id="whatapp-icon"
             src="../../assets/images/auth/whatsapp-icon.png"
           />
+        </div>
+        <div class="error-text" :style="isInvalidCode ? 'margin-top: 20px;' : 'margin-top: 0;'">
+          Please follow the steps below: Subscribe to the official WhatsApp channel to receive your reward
+          code.（Limited quantity, first come first served!） Enter the bonus code on this page. Once redeemed, the
+          bonus will be credited directly to your account and can be used immediately. Redeem the code within the
+          validity period. Wager 1x the bonus amount before withdrawing your winnings. Redemption may fail if
+          eligibility conditions are not met. System verification is final. Only the account owner can redeem the code.
+          Using bots, cheating, or any unauthorized methods will result in a ban and forfeiture of the bonus.
         </div>
       </div>
     </div>
@@ -159,6 +169,10 @@ const closeRedeemSuccessDialog = () => {
 <style lang="scss" scoped>
 .error-text {
   font-size: 13px;
+}
+.bonus-amt-txt {
+  width: 100%;
+  margin-bottom: 20px;
 }
 .pc-form {
   margin-top: 20px;
