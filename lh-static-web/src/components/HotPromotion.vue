@@ -47,6 +47,11 @@
       :promo-param="listParam"
       :promo-code="list.promoCode"
     />
+    <LanternFestival2025
+      v-if="list.redirectUrl === 'lh1-lantern-festival-bonus'"
+      :promo-param="listParam"
+      :promo-code="list.promoCode"
+    />
     <LiveDailyRebates v-if="list.redirectUrl === 'lh1-live-daily-rebates'" :promo-code="list.promoCode" />
     <Dota2Pgl v-if="list.redirectUrl === 'lh1-dota2-pgl'" :promo-code="list.promoCode" />
     <NewVipRebate v-if="list.redirectUrl === 'lh1-newvip-rebate'" :promo-code="list.promoCode" />
@@ -163,6 +168,7 @@ import Cba30Dream from "../components/hotpromo/cba30-dream/Cba30Dream.vue";
 import PerfectWorldMajor2024 from "../components/hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue";
 import DemaciaCup1 from "../components/hotpromo/demacia-cup-1/DemaciaCup1.vue";
 import LplPKlck2025loss from "../components/hotpromo/lpl-lck-2025-loss/lpl-lck-2025-loss.vue";
+import LanternFestival2025 from "../components/hotpromo/lantern-festival-2025/LanternFestival2025.vue";
 import LiveDailyRebates from "../components/hotpromo/live-daily-rebates/LiveDailyRebates.vue";
 import Dota2Pgl from "../components/hotpromo/dota2-pgl/Dota2Pgl.vue";
 import NewVipRebate from "../components/hotpromo/newVipRebate/NewVipRebate.vue";
@@ -330,7 +336,8 @@ export default defineComponent({
     Dota2BlastSlam2025,
     DarkModePromo,
     PGLOnFireBuenosAires2025,
-    SkyesportsSouvenir2025
+    SkyesportsSouvenir2025,
+    LanternFestival2025
   },
   props: {
     list: {
@@ -1019,7 +1026,7 @@ export default defineComponent({
 
     &.cny {
       th {
-        background: linear-gradient(180deg, #FFE190 0%, #FF9F40 100%) !important;
+        background: linear-gradient(180deg, #ffe190 0%, #ff9f40 100%) !important;
         color: #894800 !important;
       }
     }
@@ -1048,7 +1055,7 @@ export default defineComponent({
     white-space: nowrap;
 
     &.cny {
-      background: linear-gradient(180deg, #FFE190 0%, #FF9F40 100%);
+      background: linear-gradient(180deg, #ffe190 0%, #ff9f40 100%);
       color: #894800;
     }
   }
