@@ -1908,7 +1908,12 @@ export default {
     playerModeId: 'ID chế độ người chơi',
     singleBetSetting: 'Cài đặt cược đơn',
     parlayBetSetting: 'Cài đặt cược gộp',
-    eventSortingId: 'ID sắp xếp sự kiện',
+    tfCompetitionName: 'Tên giải đấu',
+    tfCompetitionNameEn: 'Tên giải đấu (Tiếng Anh)',
+    tfCompetitionNameZh: 'Tên giải đấu (Tiếng Trung)',
+    tfCompetitionNameVn: 'Tên giải đấu (Tiếng Việt)',
+    tfCompetitionNameKr: 'Tên giải đấu (Tiếng Hàn)',
+    tfCompetitionNameTh: 'Tên giải đấu (Tiếng Thái)',
   },
   message: {
     startenddatemore3months:

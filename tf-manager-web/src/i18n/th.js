@@ -1327,6 +1327,12 @@ export default {
     singleBetSetting: 'การตั้งค่าเดิมพันเดี่ยว',
     parlayBetSetting: 'การตั้งค่าเดิมพันแบบพาร์เลย์',
     eventSortingId: 'รหัสการจัดเรียงเหตุการณ์',
+    tfCompetitionName: 'ชื่อการแข่งขัน',
+    tfCompetitionNameEn: 'ชื่อการแข่งขัน (อังกฤษ)',
+    tfCompetitionNameZh: 'ชื่อการแข่งขัน (จีน)',
+    tfCompetitionNameVn: 'ชื่อการแข่งขัน (วิทนาม)',
+    tfCompetitionNameKr: 'ชื่อการแข่งขัน (คอร์ยา)',
+    tfCompetitionNameTh: 'ชื่อการแข่งขัน (ไทย)',
   },
   message: {
     startenddatemore3months: 'เวลาเริ่มและเสร็จสิ้นต้องไม่เกิน 3 เดือน',

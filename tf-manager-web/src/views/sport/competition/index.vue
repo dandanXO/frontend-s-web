@@ -30,33 +30,41 @@
         </el-button>
       </div>
     </div>
-    <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="580px">
-      <el-form ref="platformForm" v-loading="uiControl.dialogLoading" :model="form" :rules="formRules" :inline="true" size="small" label-width="150px">
-        <el-form-item :label="t('fields.platformName')" prop="name">
-          <el-input v-model="form.name" style="width: 350px;" />
+    <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body>
+      <el-form ref="platformForm" v-loading="uiControl.dialogLoading" :model="form" :rules="formRules" :inline="true" size="small" label-width="230px">
+        <el-form-item :label="t('fields.id')" prop="_id">
+          <el-input v-model="form._id" style="width: 350px;" :disabled="true" />
         </el-form-item>
-        <el-form-item :label="t('fields.platformCode')" prop="code">
-          <el-input v-model="form.code" style="width: 350px;" />
+        <el-form-item :label="t('fields.sportType')" prop="tfSportName">
+          <el-input v-model="form.tfSportName" style="width: 350px;" :disabled="true" />
         </el-form-item>
-        <el-form-item :label="t('fields.gameType')" prop="gameType">
-          <el-select
-            v-model="form.gameType"
-            value-key="id"
-            :placeholder="t('fields.pleaseChoose')"
-            style="width: 350px"
-            filterable
-            multiple
-            @focus="loadGameTypes"
-          >
-            <el-option
-              v-for="item in gameTypes.list"
-              :key="item"
-              :label="item"
-              :value="item"
-            />
-          </el-select>
+        <el-form-item :label="t('fields.tfCompetitionName')" prop="tfCompetitionName">
+          <el-input v-model="form.tfCompetitionName" style="width: 350px;" :disabled="true" />
         </el-form-item>
-
+        <el-form-item :label="t('fields.tfCompetitionNameEn')" prop="tfCompetitionNameEn">
+          <el-input v-model="form.tfCompetitionNameEn" style="width: 350px;" />
+        </el-form-item>
+        <el-form-item :label="t('fields.tfCompetitionNameZh')" prop="tfCompetitionNameZh">
+          <el-input v-model="form.tfCompetitionNameZh" style="width: 350px;" />
+        </el-form-item>
+        <el-form-item :label="t('fields.tfCompetitionNameVn')" prop="tfCompetitionNameVn">
+          <el-input v-model="form.tfCompetitionNameVn" style="width: 350px;" />
+        </el-form-item>
+        <el-form-item :label="t('fields.tfCompetitionNameKr')" prop="tfCompetitionNameKr">
+          <el-input v-model="form.tfCompetitionNameKr" style="width: 350px;" />
+        </el-form-item>
+        <el-form-item :label="t('fields.tfCompetitionNameTh')" prop="tfCompetitionNameTh">
+          <el-input v-model="form.tfCompetitionNameTh" style="width: 350px;" />
+        </el-form-item>
+        <el-form-item :label="t('fields.startTime')" prop="startTime">
+          <el-input v-model="form.startTime" style="width: 350px;" />
+        </el-form-item>
+        <el-form-item :label="t('fields.endTime')" prop="endTime">
+          <el-input v-model="form.endTime" style="width: 350px;" />
+        </el-form-item>
+        <el-form-item :label="t('fields.updateTime')" prop="updateTime">
+          <el-input v-model="form.updateTime" style="width: 350px;" :disabled="true" />
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -64,23 +72,15 @@
       </el-form>
     </el-dialog>
     <el-table :data="page.records" v-loading="page.loading" ref="table" row-key="id" size="small" highlight-current-row>
-      <el-table-column prop="_id" :label="t('fields.id')" width="200" />
+      <el-table-column prop="_id" :label="t('fields.id')" width="100" />
       <el-table-column prop="tfSportName" :label="t('fields.sportType')" width="200" />
       <el-table-column prop="tfCompetitionName" :label="t('fields.tfCompetitionName')" width="200" />
       <el-table-column prop="startTime" :label="t('fields.startTime')" width="200" />
       <el-table-column prop="endTime" :label="t('fields.endTime')" width="200" />
-      <el-table-column :label="t('fields.status')" align="center" width="150">
-        <template #default="scope">
-          <el-switch
-            v-model="scope.row.status"
-            active-color="#13ce66"
-            inactive-color="#ff4949"
-            @change="updateStatus(scope.row)"
-          />
-        </template>
-      </el-table-column>
+      <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="200" />
       <el-table-column :label="t('fields.operate')" align="right" fixed="right">
         <template #default="scope" :hidden="true">
+          <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit(scope.row)" />
           <el-button icon="el-icon-refresh" size="mini" @click="updateDurationPending(scope.row._id)" />
         </template>
       </el-table-column>
@@ -97,9 +97,9 @@
 
 <script setup>
 
-import { onMounted, reactive, ref } from "vue";
+import { nextTick, onMounted, reactive, ref } from "vue";
 import { required } from "../../../utils/validate";
-import { getCompetitions, getSportTypes, updateCompetitionPendingDuration, updateCompetitionStatus } from "../../../api/sport";
+import { getCompetitions, getSportTypes, updateCompetitionPendingDuration, updateCompetitionLanguageName } from "../../../api/sport";
 import { useI18n } from "vue-i18n";
 import { useStore } from "@/store";
 import { getSiteTimeZoneById } from "@/api/site";
@@ -134,16 +134,21 @@ const gameTypes = reactive({
 const timezone = ref(null);
 
 const form = reactive({
-  id: null,
-  name: null,
-  code: null,
-  gameType: []
+  _id: null,
+  tfSportName: null,
+  tfCompetitionName: null,
+  tfCompetitionNameZh: null,
+  tfCompetitionNameEn: null,
+  tfCompetitionNameVn: null,
+  tfCompetitionNameKr: null,
+  tfCompetitionNameTh: null,
+  startTime: null,
+  endTime: null,
+  updateTime: null,
 });
 
 const formRules = reactive({
   name: [required(t('message.validatePlatformNameRequired'))],
-  code: [required(t('message.validatePlatformCodeRequired'))],
-  gameType: [required(t('message.validateGameTypeRequired'))]
 });
 
 function resetQuery() {
@@ -155,29 +160,13 @@ async function loadPlatform() {
   page.loading = true;
   const { data: ret } = await getCompetitions(request);
   ret.records.forEach(record => {
-    if (!record.tfCompetitionStartDateTimestamp || !record.tfCompetitionEndDateTimestamp) {
-      return;
-    }
     record.startTime = formatTimestamp(record.tfCompetitionStartDateTimestamp);
     record.endTime = formatTimestamp(record.tfCompetitionEndDateTimestamp);
+    record.updateTime = formatTimestamp(record.updateTime);
   });
   page.pages = ret.pages;
   page.records = ret.records;
   page.loading = false;
-}
-
-async function updateStatus(row) {
-  try {
-    const dto = {
-      id: row._id,
-      status: row.status,
-      platformId: row.sourceInfo?.[0]?.sportPlatformId || null,
-    };
-
-    await updateCompetitionStatus(dto);
-  } catch (error) {
-    console.error("Update status failed:", error);
-  }
 }
 
 function changePage(page) {
@@ -185,15 +174,27 @@ function changePage(page) {
   loadPlatform();
 }
 
+function showEdit(item) {
+  showDialog("EDIT");
+  console.log(item);
+  nextTick(() => {
+    for (const key in item) {
+      if (Object.prototype.hasOwnProperty.call(form, key)) {
+        form[key] = item[key];
+      }
+    }
+  });
+}
+
 function showDialog(type) {
   if (type === "CREATE") {
     if (platformForm.value) {
       platformForm.value.resetFields();
     }
-    uiControl.dialogTitle = t('fields.addPlatform');
+    uiControl.dialogTitle = t('fields.addCompetition');
     form.id = null;
   } else if (type === "EDIT") {
-    uiControl.dialogTitle = t('fields.editPlatform');
+    uiControl.dialogTitle = t('fields.editCompetition');
   }
   uiControl.dialogType = type;
   uiControl.dialogVisible = true;
@@ -214,9 +215,25 @@ async function updateDurationPending(id) {
 }
 
 function formatTimestamp(timestamp) {
+  if (!timestamp) {
+    return null;
+  }
   const date = new Date(timestamp);
   const full = date.toLocaleString('en-US', { timeZone: timezone.value });
-  return full.split(',')[0];
+  return full;
+}
+
+async function submit() {
+  const request = {
+    tfCompetitionNameEn: form.tfCompetitionNameEn,
+    tfCompetitionNameZh: form.tfCompetitionNameZh,
+    tfCompetitionNameVn: form.tfCompetitionNameVn,
+    tfCompetitionNameKr: form.tfCompetitionNameKr,
+    tfCompetitionNameTh: form.tfCompetitionNameTh,
+  }
+  await updateCompetitionLanguageName(form._id, request);
+  uiControl.dialogVisible = false
+  loadPlatform()
 }
 
 onMounted(() => {

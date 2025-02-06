@@ -33,25 +33,28 @@
     <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="580px">
       <el-form ref="platformForm" v-loading="uiControl.dialogLoading" :model="form" :rules="formRules" :inline="true" size="small" label-width="150px">
         <el-form-item :label="t('fields.id')" prop="_id">
-          <el-input v-model="form._id" style="width: 350px;" />
+          <el-input v-model="form._id" style="width: 350px;" :disabled="true" />
         </el-form-item>
         <el-form-item :label="t('fields.sportType')" prop="tfSportName">
-          <el-input v-model="form.tfSportName" style="width: 350px;" />
+          <el-input v-model="form.tfSportName" style="width: 350px;" :disabled="true" />
         </el-form-item>
-        <el-form-item :label="t('fields.teamNameEn')" prop="teamNameEn">
-          <el-input v-model="form.teamNameEn" style="width: 350px;" />
+        <el-form-item :label="t('fields.teamName')" prop="tfTeamName">
+          <el-input v-model="form.tfTeamName" style="width: 350px;" :disabled="true" />
         </el-form-item>
-        <el-form-item :label="t('fields.teamNameZh')" prop="teamNameZh">
-          <el-input v-model="form.teamNameZh" style="width: 350px;" />
+        <el-form-item :label="t('fields.teamNameEn')" prop="tfTeamNameEn">
+          <el-input v-model="form.tfTeamNameEn" style="width: 350px;" />
         </el-form-item>
-        <el-form-item :label="t('fields.teamNameVn')" prop="teamNameVn">
-          <el-input v-model="form.teamNameVn" style="width: 350px;" />
+        <el-form-item :label="t('fields.teamNameZh')" prop="tfTeamNameZh">
+          <el-input v-model="form.tfTeamNameZh" style="width: 350px;" />
         </el-form-item>
-        <el-form-item :label="t('fields.teamNameKr')" prop="teamNameKr">
-          <el-input v-model="form.teamNameKr" style="width: 350px;" />
+        <el-form-item :label="t('fields.teamNameVn')" prop="tfTeamNameVn">
+          <el-input v-model="form.tfTeamNameVn" style="width: 350px;" />
         </el-form-item>
-        <el-form-item :label="t('fields.teamNameTh')" prop="teamNameTh">
-          <el-input v-model="form.teamNameTh" style="width: 350px;" />
+        <el-form-item :label="t('fields.teamNameKr')" prop="tfTeamNameKr">
+          <el-input v-model="form.tfTeamNameKr" style="width: 350px;" />
+        </el-form-item>
+        <el-form-item :label="t('fields.teamNameTh')" prop="tfTeamNameTh">
+          <el-input v-model="form.tfTeamNameTh" style="width: 350px;" />
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
@@ -63,8 +66,8 @@
       <el-table-column prop="_id" :label="t('fields.id')" width="200" />
       <el-table-column prop="tfSportName" :label="t('fields.sportType')" width="200" />
       <el-table-column prop="tfTeamName" :label="t('fields.teamName')" width="200" />
-      <el-table-column prop="startTime" :label="t('fields.startTime')" width="200" />
-      <el-table-column prop="endTime" :label="t('fields.endTime')" width="200" />
+      <!-- <el-table-column prop="startTime" :label="t('fields.startTime')" width="200" /> -->
+      <!-- <el-table-column prop="endTime" :label="t('fields.endTime')" width="200" /> -->
       <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="200" />
       <el-table-column :label="t('fields.operate')" align="right" fixed="right">
         <template #default="scope" :hidden="true">
@@ -88,9 +91,13 @@ import { nextTick, onMounted, reactive, ref } from "vue";
 import { required } from "../../../utils/validate";
 import { getTeams, getSportTypes, updateTeamLanguageName } from "../../../api/sport";
 import { useI18n } from "vue-i18n";
+import { useStore } from "@/store";
+import { getSiteTimeZoneById } from "@/api/site";
 
 const { t } = useI18n();
 const platformForm = ref(null);
+const timezone = ref(null);
+
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: "",
@@ -120,19 +127,15 @@ const form = reactive({
   _id: null,
   tfSportName: null,
   tfTeamName: null,
-  teamNameEn: null,
-  teamNameZh: null,
-  teamNameVn: null,
-  teamNameKr: null,
-  teamNameTh: null,
+  tfTeamNameEn: null,
+  tfTeamNameZh: null,
+  tfTeamNameVn: null,
+  tfTeamNameKr: null,
+  tfTeamNameTh: null,
 });
 
 const formRules = reactive({
-  teamNameEn: [required(t('message.validateTeamNameEnRequired'))],
-  teamNameZh: [required(t('message.validateTeamNameZhRequired'))],
-  teamNameVn: [required(t('message.validateTeamNameVnRequired'))],
-  teamNameKr: [required(t('message.validateTeamNameKrRequired'))],
-  teamNameTh: [required(t('message.validateTeamNameThRequired'))]
+  name: [required(t('message.validatePlatformNameRequired'))],
 });
 
 function resetQuery() {
@@ -140,9 +143,21 @@ function resetQuery() {
   request.name = null;
 }
 
+function formatTimestamp(timestamp) {
+  if (!timestamp) {
+    return null;
+  }
+  const date = new Date(timestamp);
+  const full = date.toLocaleString('en-US', { timeZone: timezone.value });
+  return full;
+}
+
 async function loadPlatform() {
   page.loading = true;
   const { data: ret } = await getTeams(request);
+  ret.records.forEach(record => {
+    record.updateTime = formatTimestamp(record.updateTime);
+  });
   page.pages = ret.pages;
   page.records = ret.records;
   page.loading = false;
@@ -167,12 +182,13 @@ function showDialog(type) {
   uiControl.dialogVisible = true;
 }
 
-function showEdit(platform) {
+function showEdit(item) {
   showDialog("EDIT");
+  console.log(item);
   nextTick(() => {
-    for (const key in platform) {
+    for (const key in item) {
       if (Object.prototype.hasOwnProperty.call(form, key)) {
-        form[key] = platform[key];
+        form[key] = item[key];
       }
     }
   });
@@ -184,18 +200,25 @@ async function loadGameTypes() {
 }
 
 async function submit() {
-  console.log(form);
   const request = {
-    tfTeamNameEn: form.teamNameEn,
-    tfTeamNameZh: form.teamNameZh,
-    tfTeamNameVn: form.teamNameVn,
-    tfTeamNameKr: form.teamNameKr,
-    tfTeamNameTh: form.teamNameTh,
+    tfSportName: form.tfSportName,
+    tfTeamNameEn: form.tfTeamNameEn,
+    tfTeamNameZh: form.tfTeamNameZh,
+    tfTeamNameVn: form.tfTeamNameVn,
+    tfTeamNameKr: form.tfTeamNameKr,
+    tfTeamNameTh: form.tfTeamNameTh,
   }
   await updateTeamLanguageName(form._id, request);
+  uiControl.dialogVisible = false
+  loadPlatform()
 }
 
 onMounted(() => {
+  const store = useStore()
+  const { data: timeZone } = getSiteTimeZoneById(
+    store.state.user.siteId
+  )
+  timezone.value = timeZone
   loadGameTypes();
   loadPlatform();
 });

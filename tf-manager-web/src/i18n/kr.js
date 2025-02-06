@@ -1956,6 +1956,12 @@ export default {
     singleBetSetting: '단일 베팅 설정',
     parlayBetSetting: '복합 베팅 설정',
     eventSortingId: '이벤트 정렬 ID',
+    tfCompetitionName: '리그 이름',
+    tfCompetitionNameEn: '리그 이름 (영어)',
+    tfCompetitionNameZh: '리그 이름 (중국어)',
+    tfCompetitionNameVn: '리그 이름 (베트남어)',
+    tfCompetitionNameKr: '리그 이름 (한국어)',
+    tfCompetitionNameTh: '리그 이름 (태국어)',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3 개월 이상일 수 없습니다',

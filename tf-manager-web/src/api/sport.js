@@ -9,12 +9,13 @@ export const getCompetitions = (query) => {
   return https().request("/sport/competition", Method.GET, query, ContentType.form);
 };
 
-export const updateCompetitionStatus = (data) => {
-  return https().request(`/sport/competition/update-status`, Method.PUT, data, ContentType.json);
-}
-
-export const updateCompetitionLanguageName = (competitionId, language, name) => {
-  return https().request(`/sport/competition/${competitionId}/language-name`, Method.PUT, { language: language, name: name }, ContentType.form);
+export const updateCompetitionLanguageName = (competitionId, request) => {
+  return https().request(
+    `/sport/competition/${competitionId}/language-name`,
+    Method.PUT,
+    request,
+    ContentType.json
+  );
 }
 
 export const getTeams = (query) => {
@@ -22,10 +23,10 @@ export const getTeams = (query) => {
 };
 
 export const updateTeamLanguageName = (teamId, request) => {
-  console.log(request);
   return https().request(
     `/sport/team/${teamId}/language-name`,
-    Method.PUT, request,
+    Method.PUT,
+    request,
     ContentType.json
   );
 }
