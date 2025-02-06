@@ -62,7 +62,9 @@
             </div>
         </div>
 
-        <div class="bottom">
+        <div class="bottom" :class="{
+            isApp: store.isApp()
+        }">
             <div>-No rank</div>
             <div class="column">
                 <div class="label">My Bets <span class="value">0</span></div>
@@ -108,7 +110,9 @@
 <script setup>
 import { ref } from 'vue';
 import JackpotAviatorRules from './JackpotAviatorRules.vue';
+import { userStore } from "stores/index";
 
+const store = userStore();
 const confettiCount = 20;
 const mode = ref('MAIN');
 const isShowHistoryPopup = ref(false);
@@ -459,9 +463,13 @@ const ranksAndPercentages = ref([
     align-items: center;
     padding: 20px;
     position: fixed;
-    bottom: 90px;
+    bottom: 95px;
     width: 100%;
     font-family: 'Poppins';
+
+    &.isApp {
+        bottom: 0px;
+    }
 
     .column {
         display: flex;
