@@ -156,8 +156,8 @@
           <el-col>
             <el-form-item :label="t('fields.startTime')" prop="startTime">
               <el-date-picker
-                type="date"
-                value-format="YYYY-MM-DD"
+                type="datetime"
+                value-format="YYYY-MM-DD HH:mm:ss"
                 v-model="form.startTime"
                 style="width: 355px"
                 :disabled-date="disabledStartDate"
@@ -165,8 +165,8 @@
             </el-form-item>
             <el-form-item :label="t('fields.endTime')" prop="endTime">
               <el-date-picker
-                type="date"
-                value-format="YYYY-MM-DD"
+                type="datetime"
+                value-format="YYYY-MM-DD HH:mm:ss"
                 v-model="form.endTime"
                 style="width: 355px"
                 :disabled-date="disabledEndDate"
@@ -534,27 +534,13 @@
       <el-table-column prop="startTime" :label="t('fields.startTime')">
         <template #default="scope">
           <span v-if="scope.row.startTime === null">-</span>
-          <span
-            v-if="scope.row.startTime !== null"
-            v-formatter="{
-              data: scope.row.startTime,
-              timeZone: scope.row.timeZone,
-              type: 'date',
-            }"
-          />
+          <span v-if="scope.row.startTime !== null">{{ scope.row.startTime }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="endTime" :label="t('fields.endTime')">
         <template #default="scope">
           <span v-if="scope.row.endTime === null">-</span>
-          <span
-            v-if="scope.row.endTime !== null"
-            v-formatter="{
-              data: scope.row.endTime,
-              timeZone: scope.row.timeZone,
-              type: 'date',
-            }"
-          />
+          <span v-if="scope.row.endTime !== null">{{ scope.row.endTime }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="updateBy" :label="t('fields.updateBy')" />
@@ -607,7 +593,6 @@ import {getVipList} from "@/api/vip";
 import moment from "moment/moment";
 import { useRouter } from 'vue-router'
 import { isXF, isThai } from '@/utils/site'
-import { formatTimeZone } from "@/utils/format-timeZone";
 import { createPromoCodeConfig, getPromoCodeConfigList, updatePromoCodeConfig, updatePromoCodeConfigStatus } from '../../../api/privilege-promo-code-config'
 import { getGameTypes } from '../../../api/game'
 
@@ -893,7 +878,6 @@ async function getAvailableVip() {
     levels = form.rangeVipRules.map(vip => vip.vipLevel)
   }
   
-  console.log(levels)
   currVipList.list = siteVipList.list.filter(vip => {
     return !levels.includes(vip.level)
   });
@@ -1006,8 +990,9 @@ function disabledEndDate(time) {
 function edit() {
   bannerForm.value.validate(async valid => {
     if (valid) {
-      console.log(form)
-      form.gameTypes = form.gameTypes.join(",")
+      if(form.gameTypes){
+        form.gameTypes = form.gameTypes.join(",")
+      }
       await updatePromoCodeConfig(form)
       uiControl.dialogVisible = false
       await loadPromoConfig()
@@ -1039,7 +1024,6 @@ onMounted(async () => {
   await loadSites();
   await loadVips();
   await loadWays();
-  console.log(ways.list)
   request.siteId = siteList.list[0].id
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
