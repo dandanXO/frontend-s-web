@@ -97,7 +97,11 @@ installBtn.addEventListener("click", async () => {
         if (isIos) {
           document.querySelectorAll(".ios-modal").forEach((el) => (el.style.display = "flex"));
         } else {
-          window.open(`${window.location.origin}/register`, "_blank");
+          // alert(isQRCodeScannerWebView());
+          const newTab = window.open(`${window.location.origin}/register`, "_blank", "noopener");
+          if (!newTab) {
+            window.location.href = `https://b9.game/register`;
+          }
         }
       } else {
         const { outcome } = await deferredPrompt.prompt();
@@ -134,6 +138,32 @@ installBtn.addEventListener("click", async () => {
       break;
   }
 });
+
+function isQRCodeScannerWebView() {
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+
+  // Detect known QR Scanner App patterns
+  if (/QRScanner|QRCode|FreeScanner/i.test(ua)) {
+    return true;
+  }
+
+  // Detect Generic WebView (iOS & Android)
+  const isIOSWebView = /iPhone|iPod|iPad/i.test(ua) && !/Safari/i.test(ua);
+  const isAndroidWebView = /Android/i.test(ua) && /Version\/\d+\.\d+/i.test(ua) && !/Chrome/i.test(ua);
+
+  if (isIOSWebView || isAndroidWebView) {
+    return true;
+  }
+
+  // Feature detection for blocked popups
+  const testWindow = window.open("about:blank");
+  if (!testWindow || testWindow.closed) {
+    return true;
+  }
+  testWindow.close();
+
+  return false;
+}
 
 function handleInstallationProgress() {
   if (installationProgressNumber < 100) {
