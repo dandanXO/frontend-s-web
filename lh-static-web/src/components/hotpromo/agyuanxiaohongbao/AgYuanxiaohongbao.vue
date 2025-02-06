@@ -150,17 +150,17 @@
         </div>
       </div>
 
-      <div class="section-bg" style="margin-top: 40px">
+      <div class="section-bg" style="width: 600px; margin: 40px auto 0px">
         <div class="progress">
           <div>
-            <img src="./images/c001.png" alt="" width="100%" style="height: 180px; width: 150px" />
+            <img src="./images/c001.png" alt="" width="100%" style="width: 120px" />
           </div>
 
           <div>
-            <img src="./images/c002.png" alt="" width="100%" style="height: 203px; width: 150px" />
+            <img src="./images/c002.png" alt="" width="100%" style="width: 120px" />
           </div>
           <div>
-            <img src="./images/c003.png" alt="" width="100%" style="height: 203px; width: 150px" />
+            <img src="./images/c003.png" alt="" width="100%" style="width: 120px" />
           </div>
         </div>
         <div style="display: flex; flex-direction: column; align-items: center">
@@ -173,11 +173,12 @@
               color: transparent !important;
               font-weight: 600;
               font-size: 28px;
+              margin: 10px auto;
             "
           >
             累计越多奖金越丰厚
           </h3>
-          <p style="font-size: 20px">赢得对应等级红包最高奖金机会提高！</p>
+          <p style="font-size: 20px; margin: 3px auto">赢得对应等级红包最高奖金机会提高！</p>
         </div>
       </div>
 
@@ -442,7 +443,7 @@
   margin-top: 40px;
   background: #f2f8fe;
   border-radius: 12px;
-  padding: 40px;
+  padding: 30px 35px;
   border: 1px solid #acd4f6;
   box-shadow: 0px 0px 4px 0px #01497b0f;
   display: flex;
@@ -601,6 +602,7 @@
       display: flex;
       align-items: end;
       justify-content: space-around;
+      padding: 16px 0px;
     }
   }
   // .section-bg:before {
