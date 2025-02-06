@@ -241,15 +241,15 @@ window.addEventListener("load", () => {
       window.location.href = `${currentDomain}/home`;
       // window.location.href = `https://ind.55ace.com/home`;
     } else {
-      const isTest = window.location.hostname.includes("localhost") || window.location.hostname.includes("di1yf4");
-      if (isTest) {
-        alert("IN WebView:" + isInWebView());
-        alert("Is Support Pwa:" + supportsPWA());
-        alert("Defer: " + deferredPrompt);
-      }
-      if (isInWebView() || !supportsPWA() || !deferredPrompt) {
-        redirectToChromeIfUnsupported();
-      }
+      // const isTest = window.location.hostname.includes("localhost") || window.location.hostname.includes("di1yf4");
+      // if (isTest) {
+      //   alert("IN WebView:" + isInWebView());
+      //   alert("Is Support Pwa:" + supportsPWA());
+      //   alert("Defer: " + deferredPrompt);
+      // }
+      // if (isInWebView() || !supportsPWA() || !deferredPrompt) {
+      //   redirectToChromeIfUnsupported();
+      // }
     }
   }, 2500);
 
