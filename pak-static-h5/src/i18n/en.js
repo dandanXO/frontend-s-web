@@ -580,6 +580,26 @@ export default {
       minute: "Min",
       second: "Sec",
       rewardClaimed: "Reward has already been claimed"
+    },
+    jackpotAviator: {
+      rules: "Rules",
+      history: "History",
+      receive: "Receive",
+      ranking: "Ranking",
+      username: "Username",
+      betVolume: "Bet Volume",
+      rank: "Rank",
+      dailyOrWeekly: "Daily/Weekly",
+      rankingBonusRatio: "Ranking Bonus Ratio",
+      rules1: "Daily Ranking Rewards: 1.5% of the platform's total daily pilot revenue will be included in the daily prize pool. This pool will be automatically distributed to players daily based on their positions in the daily rankings.",
+      rules2: "Weekly Ranking Rewards: 0.6% of the platform's total weekly revenue will contribute to the weekly prize pool. This pool will be automatically distributed to players weekly based on their positions in the weekly rankings.",
+      activityRules1: "Players' rankings on the daily leaderboard, weekly leaderboard, and overall ranking are based on their corresponding total bet amount.",
+      activityRules2: "Rewards will be displayed on the leaderboard event page.",
+      activityRules3: "The daily leaderboard is calculated from 00:00 to 24:00 local time. Daily rewards will be issued within half an hour after the end of the daily leaderboard and can be claimed manually on the promotions page.",
+      activityRules4: "The weekly ranking is calculated from 00:00 local time on Monday to 24:00 local time on Sunday. Weekly rewards will be issued within half an hour after the end of the weekly cycle and can be claimed manually on the promotions page.",
+      termsCondition1: "Before applying for rewards, players must provide their phone number and bank account information. The phone number, IP address, and bank account information must match the region and personal data. Any abnormal behavior by the player will result in the cancellation of their bonuses or earnings.",
+      termsCondition2: "Players who open multiple accounts or fraudulent accounts will lose their eligibility to participate in events due to improper behavior on the platform, and the related accounts will be frozen.",
+      termsCondition3: "Please be sure to read these terms and conditions carefully before participating in this event.",
     }
   },
   maintenance: {
