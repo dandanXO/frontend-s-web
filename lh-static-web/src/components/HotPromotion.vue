@@ -1010,8 +1010,8 @@ export default defineComponent({
       font-size: 1rem;
       font-weight: 400;
       line-height: 28px;
-      color: #fff !important;
-      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%) !important;
+      color: #fff ;
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%) ;
       white-space: pre-wrap;
 
       &:not(:last-child) {

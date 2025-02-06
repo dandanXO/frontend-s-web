@@ -30,9 +30,9 @@
               </div>
             </div>
             <div class="livepoker-rebate-section-right">
-              <div class="bonus-image" @click="handleClaimBonus1" :class="{ disabled: bonus1 <= 0 }">
+              <div class="bonus-image" @click="handleClaimBonus1" :class="{ disabledd: bonus1 <= 0 }">
                 <img
-                  src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/new-claim-btn2.png"
+                  src="./images/reward.png"
                   alt=""
                   width="100%"
                 />
@@ -40,112 +40,118 @@
             </div>
           </div>
           <div class="livepoker-rebate-game-info section-bg">
-            <div class="title-img">活动详情</div>
-            <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
+            <div
+            style="
+              background: linear-gradient(270.62deg, #e6cc93 -6.62%, #fff1e1 101.55%);
+              background-clip: text;
+              --webkit-background-clip: text;
+              text-align: center;
+              color: transparent !important;
+              font-weight: 600;
+              font-size: 22px;
+            "
+          >
+            活动详情
+          </div>
+            
+            <div class="little-title" style="flex-direction: column;justify-content: flex-start; align-items: flex-start">
               <div class="ribbon">活动时间</div>
-              <div class="right">2025 年 1 月 12 日起</div>
+              <div class="right">2025 年 2 月 10 日 00:00 至 2 月 12 日 23:59(共 3 天!）</div>
             </div>
             <div
               class="little-title"
               style="flex-direction: column; justify-content: flex-start; align-items: flex-start"
             >
               <div class="ribbon">活动内容</div>
-              <div class="right">活动期间，当日LPL&LCK2025第一赛段有效投注≥3,000 元即可获得 最高 1288 元的奖励金</div>
+              <div class="right">在元宵节期间（3 天内），会员累计达到一定的有效投注金额，即可获得元宵特别奖金，投注越高，奖励越丰厚！</div>
             </div>
             <table class="livepoker-rebate-game-info-table section-table">
               <tbody>
                 <tr>
-                  <th>有效投注</th>
-                  <th>投注金</th>
-                  <th>流水倍数</th>
+                  <th>有效投注金额 (元)</th>
+                  <th>奖励金额 (元)</th>
+                  <th>流水要求</th>
                 </tr>
                 <tr>
-                  <td>≥3,000</td>
-                  <td>8 元</td>
-                  <td :rowspan="9">8 倍流水</td>
+                  <td>3,888 - 9,999</td>
+                  <td>58</td>
+                  <td :rowspan="5">6 倍流水</td>
                 </tr>
                 <tr>
-                  <td>≥5,000</td>
-                  <td>28 元</td>
+                  <td>10,000 - 29,999</td>
+                  <td>88</td>
                 </tr>
                 <tr>
-                  <td>≥10,000</td>
-                  <td>58 元</td>
+                  <td>30,000 - 59,999</td>
+                  <td>188</td>
                 </tr>
                 <tr>
-                  <td>≥15,000</td>
-                  <td>88 元</td>
+                  <td>60,000 - 99,999</td>
+                  <td>588</td>
                 </tr>
                 <tr>
-                  <td>≥30,000</td>
-                  <td>168 元</td>
+                  <td>100,000 及以上</td>
+                  <td>888</td>
                 </tr>
-                <tr>
-                  <td>≥50,000</td>
-                  <td>288 元</td>
-                </tr>
-                <tr>
-                  <td>≥100,000</td>
-                  <td>558 元</td>
-                </tr>
-                <tr>
-                  <td>≥300,000</td>
-                  <td>888 元</td>
-                </tr>
-                <tr>
-                  <td>≥500,000</td>
-                  <td>1,288 元</td>
-                </tr>
+               
               </tbody>
             </table>
             <div class="livepoker-rebate-game-bottom">
               <div class="livepoker-rebate-game-bottom-left-title">
                 <div class="livepoker-rebate-game-bottom-left-btn">
                   <img
-                    src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/game-bottom-left-btn.png"
+                    src="./images/triangle.png"
                     alt=""
                     style="width: 10px"
                   />
                   <span>示例</span>
                 </div>
-                用户 A 在 1 月 17 日投注LPL&LCK2025第一赛段累计有效投注 50,000 元，用户 A 在次日 24
-                小时内可获得彩金：288 元
+                会员在 2 月 10 日至 2 月 12 日三天活动时间内累计有效投注 58,888 元，在 2 月 13 日可获得 188 元的元宵特别奖金，仅需 6 倍流水即可提款。
               </div>
             </div>
           </div>
 
           <div class="livepoker-rebate-game-bottom-rule section-bg">
-            <div class="title-img">活动规则</div>
+            
+            <div
+              style="
+                background: linear-gradient(270.62deg, #e6cc93 -6.62%, #fff1e1 101.55%);
+                background-clip: text;
+                --webkit-background-clip: text;
+                text-align: center;
+                color: transparent !important;
+                font-weight: 600;
+                font-size: 28px;
+              "
+            >
+            活动规则
+            </div>
             <br />
             <div class="content">
               <div class="item">
                 <div class="item-num">1</div>
                 <div style="display: flex; flex-direction: column">
                   <div>
-                    活动期间，活动仅计算电竞场馆中LPL&LCK2025第一赛段，会员在当日LPL&LCK2025第一赛段中累计有效投注≥3,000
-                    元即可获得对应彩金，有效投注次日清零；
+                    活动期间会员在 2 月 10 日至 2 月 12 日活动期间内累计有效投注≥3888 元即可获得元宵特别奖金；
                   </div>
-                  <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
+                  <div class="hint">注：奖金不叠加派发，奖金按最高档位派发一次。</div>
                 </div>
               </div>
               <div class="item">
                 <div class="item-num">2</div>
-                活动期间，活动仅计算当日LPL&LCK2025第一赛段已结算的赛事总有效投注，次日 24
-                小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 8 倍流水即可出款；
+                活动领取时间为 2 月 13 日全天（00:00-23:59）,满足活动要求的会员在活动页面点击【元宵奖金】按钮领取。逾期未领取则视为放弃，彩金 6 倍流水即可出款；
               </div>
               <div class="item">
                 <div class="item-num">3</div>
-                任何低于欧洲盘 1.7 或亚洲盘 0.7
-                水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+                彩金不可用于以下游戏或投注：购买免费旋转、桌面游戏、街机游戏、能量累积类游戏和部分多旋转类游戏；
               </div>
               <div class="item">
                 <div class="item-num">4</div>
-                根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
+                此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
               </div>
               <div class="item">
                 <div class="item-num">5</div>
-                此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
-                地址视为同一账户，若有违规者，将不享受此红利；
+                根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
               </div>
               <div class="item">
                 <div class="item-num">6</div>
@@ -180,9 +186,9 @@
               </div>
             </div>
             <div class="livepoker-rebate-section-right">
-              <div class="bonus-image" @click="handleClaimBonus2" :class="{ disabled: lantern <= 0 }">
+              <div class="bonus-image" @click="handleClaimBonus2" :class="{ disabledd: lantern <= 0 }">
                 <img
-                  src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/new-claim-btn2.png"
+                  src="./images/reward.png"
                   alt=""
                   width="100%"
                 />
@@ -190,10 +196,23 @@
             </div>
           </div>
           <div class="livepoker-rebate-game-info section-bg">
-            <div class="title-img">活动详情</div>
+            
+            <div
+              style="
+                background: linear-gradient(270.62deg, #e6cc93 -6.62%, #fff1e1 101.55%);
+                background-clip: text;
+                --webkit-background-clip: text;
+                text-align: center;
+                color: transparent !important;
+                font-weight: 600;
+                font-size: 28px;
+              "
+            >
+              活动详情
+            </div>
             <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
               <div class="ribbon">活动时间</div>
-              <div class="right">2025 年 1 月 12 日起</div>
+              <div class="right">2 月 12 日</div>
             </div>
             <div
               class="little-title"
@@ -201,53 +220,52 @@
             >
               <div class="ribbon">活动内容</div>
               <div class="right">
-                会员在电竞场馆中投注LPL&LCK2025第一赛段，北京时间当日负盈利达到 1500
-                元及以上，次日即可领取救援金，最高可达 1,188 元！
+                在 2 月 12 日当天累计总存款≥1000 元以上即可获得灯笼抽奖机会，点亮灯笼数量高达 60 盏！
               </div>
             </div>
             <table class="livepoker-rebate-game-info-table section-table">
               <tbody>
                 <tr>
-                  <th>LPL&LCK 2025 第一赛段 负盈利</th>
-                  <th>救援金</th>
+                  <th>当日总存款</th>
+                  <th>点亮灯笼</th>
                   <th>流水倍数</th>
                 </tr>
                 <tr>
-                  <td>≥1,500</td>
-                  <td>8 元</td>
-                  <td :rowspan="9">6 倍流水</td>
+                  <td>≥1,000 元</td>
+                  <td>1 盏</td>
+                  <td :rowspan="9">8 倍流水</td>
                 </tr>
                 <tr>
-                  <td>≥3,000</td>
-                  <td>18 元</td>
+                  <td>≥5,000 元</td>
+                  <td>3 盏</td>
                 </tr>
                 <tr>
-                  <td>≥5,000</td>
-                  <td>38 元</td>
+                  <td>≥10,000 元</td>
+                  <td>5 盏</td>
                 </tr>
                 <tr>
-                  <td>≥10,000</td>
-                  <td>88 元</td>
+                  <td>≥30,000 元</td>
+                  <td>10 盏</td>
                 </tr>
                 <tr>
-                  <td>≥30,000</td>
-                  <td>188 元</td>
+                  <td>≥80,000 元</td>
+                  <td>15 盏</td>
                 </tr>
                 <tr>
-                  <td>≥50,000</td>
-                  <td>388 元</td>
+                  <td>≥100,000 元</td>
+                  <td>20 盏</td>
                 </tr>
                 <tr>
-                  <td>≥100,000</td>
-                  <td>558 元</td>
+                  <td>≥500,000 元</td>
+                  <td>30 盏</td>
                 </tr>
                 <tr>
-                  <td>≥300,000</td>
-                  <td>888 元</td>
+                  <td>1,000,000 元</td>
+                  <td>50 盏</td>
                 </tr>
                 <tr>
-                  <td>≥500,000</td>
-                  <td>1,188 元</td>
+                  <td>≥5,000,000 元</td>
+                  <td> 60 盏</td>
                 </tr>
               </tbody>
             </table>
@@ -255,49 +273,57 @@
               <div class="livepoker-rebate-game-bottom-left-title">
                 <div class="livepoker-rebate-game-bottom-left-btn">
                   <img
-                    src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/game-bottom-left-btn.png"
+                    src="./images/triangle.png"
                     alt=""
                     style="width: 10px"
                   />
                   <span>示例</span>
                 </div>
-                会员 A 在电竞场馆投注LPL&LCK2025第一赛段，当日产生负盈利为 60000 元，次日即可获得救援金 388 元。
+                会员在 2 月 12 日当天存款 50000 元，2 月 13 日全天即可进入优惠页面点亮灯笼 10 盏，获得对应的点亮礼金，礼金仅需 8 倍流水即可出款。
               </div>
             </div>
           </div>
 
           <div class="livepoker-rebate-game-bottom-rule section-bg">
-            <div class="title-img">活动规则</div>
+            <div
+              style="
+                background: linear-gradient(270.62deg, #e6cc93 -6.62%, #fff1e1 101.55%);
+                background-clip: text;
+                --webkit-background-clip: text;
+                text-align: center;
+                color: transparent !important;
+                font-weight: 600;
+                font-size: 28px;
+              "
+            >
+              活动规则
+            </div>
             <br />
             <div class="content">
               <div class="item">
                 <div class="item-num">1</div>
                 <div style="display: flex; flex-direction: column">
                   <div>
-                    活动期间，活动仅计算电竞场馆中LPL&LCK2025第一赛段，会员在当日LPL&LCK2025第一赛段中累计负盈利≥1,500
-                    元即可获得对应彩金，负盈利次日清零； 
+                    活动期间会员在 2 月 12 日当天累计总存款≥1000 元即可点亮灯笼。
                   </div>
-                  <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
+                  <div class="hint">注：奖金不叠加派发，点亮灯笼数量高达 60 盏！</div>
                 </div>
               </div>
               <div class="item">
                 <div class="item-num">2</div>
-                活动期间，活动仅计算LPL&LCK2025第一赛段已结算的赛事总负盈利，次日 24
-                小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 6 倍流水即可出款；
+                点亮灯笼时间为 2 月 13 日全天（00:00-23:59），符合要求的会员可登入优惠界面点击【点亮灯笼】按钮获得，彩金实时到账，仅需 8 倍流水即可提款；
               </div>
               <div class="item">
                 <div class="item-num">3</div>
-                任何低于欧洲盘 1.7 或亚洲盘 0.7
-                水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+                彩金不可用于以下游戏或投注：购买免费旋转、桌面游戏、街机游戏、能量累积类游戏和部分多旋转类游戏；
               </div>
               <div class="item">
                 <div class="item-num">4</div>
-                根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
+                此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
               </div>
               <div class="item">
                 <div class="item-num">5</div>
-                此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
-                地址视为同一账户，若有违规者，将不享受此红利；
+                根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
               </div>
               <div class="item">
                 <div class="item-num">6</div>
@@ -471,11 +497,11 @@ onMounted(() => {
   box-shadow: 0px 0px 4px 0px #01497b0f;
   padding: 20px 12px 40px;
   border-radius: 12px;
-  border: 1px solid #acd4f6;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-bg.png");
+  border: unset !important;
+  background: url("./images/bg1.png");
   background-size: 100% 100%;
   align-items: center;
   width: 100%;
@@ -485,6 +511,7 @@ onMounted(() => {
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
+    color: #fff;
   }
 
   .livepoker-rebate-section-right {
@@ -500,7 +527,7 @@ onMounted(() => {
         transform: translate(0px, 1px);
       }
 
-      &.disabled {
+      &.disabledd {
         filter: grayscale(100%);
         cursor: not-allowed;
         pointer-events: none;
@@ -509,7 +536,7 @@ onMounted(() => {
   }
 
   .livepoker-rebate-section-title {
-    color: #000000;
+    color: #fff;
     font-size: 16px;
     line-height: 1;
     font-weight: 600;
@@ -517,6 +544,18 @@ onMounted(() => {
     gap: 8px;
     align-items: center;
     margin-bottom: 20px;
+    .claim-title-icon{
+      background: url("./images/icon.png") no-repeat center center;
+      background-size: 100% 100%;
+    }
+  }
+  .claim-coin-icon {
+    background: url("./images/icon3.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
+  .claim-gift-icon{
+    background: url("./images/icon2.png") no-repeat center center;
+    background-size: 100% 100%;
   }
 }
 
@@ -538,13 +577,13 @@ onMounted(() => {
     font-size: 12px;
     font-weight: 600;
     line-height: 22.4px;
-    color: #ff5757 !important;
+    color: #fff !important;
   }
   .livepoker-rebate-game-bottom-left-btn {
     font-size: 12px;
     font-weight: 600;
     line-height: 22.4px;
-    color: #ff5757 !important;
+    color: #fff !important;
     cursor: pointer;
     display: flex;
     justify-content: flex-start;
@@ -560,7 +599,12 @@ onMounted(() => {
   background: #f2f8fe;
   border-radius: 12px;
   padding: 20px 12px 12px;
-  border: 1px solid #acd4f6;
+  
+  border: 0px !important;
+  background-image: url("./images/bg2.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  
   box-shadow: 0px 0px 4px 0px #01497b0f;
   display: flex;
   flex-direction: column;
@@ -579,6 +623,11 @@ onMounted(() => {
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
+    
+    .ribbon{
+      background: linear-gradient(259.14deg, #D47C33 27.82%, #FAFE8A 52.4%, #D47C33 99.13%);
+      color:  #000;
+    }
     .left {
       background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-little-title-bg.png");
       background-repeat: no-repeat;
@@ -598,7 +647,7 @@ onMounted(() => {
       font-size: 12px;
       font-weight: 400;
       line-height: 28px;
-      color: #000000;
+      color: #fff;
     }
   }
 }
@@ -615,8 +664,8 @@ onMounted(() => {
     font-size: 12px;
     font-weight: 400;
     line-height: 28px;
-    color: #fff;
-    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    color: #000 !important; 
+    background: linear-gradient(259.14deg, #D47C33 27.82%, #FAFE8A 52.4%, #D47C33 99.13%) !important;
     &:first-child {
       border-top-left-radius: 12px;
     }
@@ -642,12 +691,12 @@ onMounted(() => {
   }
   td {
     background: transparent !important;
-    border: 1px solid #acd4f6;
+    border: 1px solid rgba(244, 210, 76, 1) !important;
     height: 36px;
     font-size: 12px;
     font-weight: 400;
     line-height: 28px;
-    color: #000000;
+    color: #fff;
   }
 }
 
@@ -658,7 +707,10 @@ onMounted(() => {
   background: #f2f8fe;
   border-radius: 12px;
   padding: 20px 12px 12px;
-  border: 1px solid #acd4f6;
+  border: 0px !important;
+  background-image: url("./images/bg3.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   box-shadow: 0px 0px 4px 0px #01497b0f;
   display: flex;
   flex-direction: column;
@@ -681,9 +733,9 @@ onMounted(() => {
       display: flex;
       gap: 10px;
       align-items: baseline;
-
+      color: #fff;
       .item-num {
-        color: #ffffff;
+        color: #000;
         font-size: 12px;
         line-height: 1;
         border-radius: 50%;
@@ -694,14 +746,14 @@ onMounted(() => {
         justify-content: center;
         align-items: center;
         margin-top: 2px;
-        background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+        background: linear-gradient(259.14deg, #D47C33 27.82%, #FAFE8A 52.4%, #D47C33 99.13%);
       }
 
       .hint {
         font-size: 12px;
         font-weight: 400;
         line-height: 22.4px;
-        color: #ff0000;
+        color: rgba(225, 255, 0, 1);
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -732,10 +784,20 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   font-size: 12px;
-  color: black;
+  color: #fff;
 
   .amount {
-    color: #00a1ff;
+    background: linear-gradient(
+          259.14deg,
+          #ffecce 11.64%,
+          #f3cd92 27.82%,
+          #fff2ca 52.4%,
+          #efd190 72.12%,
+          #e4bd80 99.13%
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
     font-weight: 600;
   }
 }
@@ -761,8 +823,8 @@ onMounted(() => {
     cursor: pointer;
 
     &.active {
-      background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-      color: white;
+      background:linear-gradient(90deg, #FFFD66 0%, #FF9400 100%);
+      color: #000;
     }
   }
 }
