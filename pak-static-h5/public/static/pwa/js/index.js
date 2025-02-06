@@ -97,7 +97,11 @@ installBtn.addEventListener("click", async () => {
         if (isIos) {
           document.querySelectorAll(".ios-modal").forEach((el) => (el.style.display = "flex"));
         } else {
-          window.open(`${window.location.origin}/register`, "_blank");
+          // alert(isQRCodeScannerWebView());
+          const newTab = window.open(`${window.location.origin}/register`, "_blank", "noopener");
+          if (!newTab) {
+            window.location.href = `https://b9.game/register`;
+          }
         }
       } else {
         const { outcome } = await deferredPrompt.prompt();
@@ -134,6 +138,32 @@ installBtn.addEventListener("click", async () => {
       break;
   }
 });
+
+function isQRCodeScannerWebView() {
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+
+  // Detect known QR Scanner App patterns
+  if (/QRScanner|QRCode|FreeScanner/i.test(ua)) {
+    return true;
+  }
+
+  // Detect Generic WebView (iOS & Android)
+  const isIOSWebView = /iPhone|iPod|iPad/i.test(ua) && !/Safari/i.test(ua);
+  const isAndroidWebView = /Android/i.test(ua) && /Version\/\d+\.\d+/i.test(ua) && !/Chrome/i.test(ua);
+
+  if (isIOSWebView || isAndroidWebView) {
+    return true;
+  }
+
+  // Feature detection for blocked popups
+  const testWindow = window.open("about:blank");
+  if (!testWindow || testWindow.closed) {
+    return true;
+  }
+  testWindow.close();
+
+  return false;
+}
 
 function handleInstallationProgress() {
   if (installationProgressNumber < 100) {
@@ -210,6 +240,8 @@ window.addEventListener("load", () => {
       const currentDomain = window.location.origin;
       window.location.href = `${currentDomain}/home`;
       // window.location.href = `https://ind.55ace.com/home`;
+    } else if (isInWebView() || !supportsPWA()) {
+      redirectToChromeIfUnsupported();
     }
   }, 2500);
 
@@ -229,6 +261,47 @@ window.addEventListener("load", () => {
 /** browser detect **/
 document.getElementById("id-url-input").textContent = window.location.href;
 document.getElementById("id-url-install").textContent = window.location.origin;
+
+function supportsPWA() {
+  return (
+    "serviceWorker" in navigator || window.matchMedia("(display-mode: standalone)").matches || "standalone" in navigator
+  );
+}
+
+function isInWebView() {
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+
+  // 常见 App 内 WebView
+  const webViewPatterns = [
+    /FBAN|FBAV|Instagram/i, // Facebook, Instagram
+    /MicroMessenger/i, // WeChat
+    /QQ\//i, // QQ
+    /Line/i, // LINE
+    /Weibo/i, // Weibo
+    /AlipayClient/i, // Alipay
+    /UBrowser|Quark|2345Explorer|baidubrowser/i, // 常见国产浏览器
+    /QRScanner|QRCode|FreeScanner/i // 可能的二维码扫描器
+  ];
+
+  return webViewPatterns.some((pattern) => pattern.test(ua));
+}
+
+function redirectToChromeIfUnsupported() {
+  const url = window.location.href;
+
+  // Android 使用 `intent://` 跳转到 Chrome
+  if (/Android/i.test(navigator.userAgent)) {
+    window.location.href = `intent://${url.replace(
+      /^https?:\/\//,
+      ""
+    )}#Intent;scheme=https;package=com.android.chrome;end;`;
+  }
+  // iOS 提示用户手动打开
+  else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    // alert("请使用 Safari 浏览器打开，以获得更好的体验。");
+    window.location.href = url; // 仍然跳转
+  }
+}
 
 function isChromeInstalled() {
   const userAgent = navigator.userAgent.toLowerCase();
@@ -397,17 +470,20 @@ function insertRandomImages() {
 
   var fileLists = [];
   const numbers = new Set();
+  var order = 1;
   while (fileLists.length < 5) {
-    const random = Math.floor(Math.random() * fileLength) + 1;
-    if (!numbers.has(random)) {
-      numbers.add(random);
-      fileLists.push(random);
+    // const random = Math.floor(Math.random() * fileLength) + 1;
+    if (!numbers.has(order)) {
+      numbers.add(order);
+      fileLists.push(order);
     }
+    order++;
   }
   console.log(fileLists);
 
   fileLists.forEach((file) => {
-    var fileName = `images/${fileDirec}/${file}.jpg`;
+    // var fileName = `images/${fileDirec}/${file}.jpg`;
+    var fileName = `images/${fileDirec}/img${file}.jpg`;
     imageUrls.push(fileName);
   });
 
@@ -415,8 +491,9 @@ function insertRandomImages() {
     extraStyle = `style="height:300px;"`;
     defaultScrollList.style.height = "300px";
   } else {
-    extraStyle = `style="width:65vw;max-width: 180px;"`;
-    defaultScrollList.style.height = "auto";
+    extraStyle = `style="width:auto;max-width: 180px;height:280px;"`;
+    // defaultScrollList.style.height = "auto";
+    defaultScrollList.style.height = "280px";
   }
 
   imageUrls.forEach((imageUrl) => {
