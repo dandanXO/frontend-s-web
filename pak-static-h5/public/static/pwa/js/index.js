@@ -397,17 +397,20 @@ function insertRandomImages() {
 
   var fileLists = [];
   const numbers = new Set();
+  var order = 1;
   while (fileLists.length < 5) {
-    const random = Math.floor(Math.random() * fileLength) + 1;
-    if (!numbers.has(random)) {
-      numbers.add(random);
-      fileLists.push(random);
+    // const random = Math.floor(Math.random() * fileLength) + 1;
+    if (!numbers.has(order)) {
+      numbers.add(order);
+      fileLists.push(order);
     }
+    order++;
   }
   console.log(fileLists);
 
   fileLists.forEach((file) => {
-    var fileName = `images/${fileDirec}/${file}.jpg`;
+    // var fileName = `images/${fileDirec}/${file}.jpg`;
+    var fileName = `images/${fileDirec}/img${file}.jpg`;
     imageUrls.push(fileName);
   });
 
@@ -415,8 +418,9 @@ function insertRandomImages() {
     extraStyle = `style="height:300px;"`;
     defaultScrollList.style.height = "300px";
   } else {
-    extraStyle = `style="width:65vw;max-width: 180px;"`;
-    defaultScrollList.style.height = "auto";
+    extraStyle = `style="width:auto;max-width: 180px;height:280px;"`;
+    // defaultScrollList.style.height = "auto";
+    defaultScrollList.style.height = "280px";
   }
 
   imageUrls.forEach((imageUrl) => {
