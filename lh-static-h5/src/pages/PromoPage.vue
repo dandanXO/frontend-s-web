@@ -5,7 +5,8 @@
       :class="{
         unfixed: selectedPromo.redirectUrl === 'lh1-app-hongbao',
         midAutumnWukong: selectedPromo.redirectUrl === 'lh1-midautumn-spinwheel',
-        lh1Vip: selectedPromo.redirectUrl === 'lh1-vip'
+        lh1Vip: selectedPromo.redirectUrl === 'lh1-vip',
+        hongbaoyu2025: selectedPromo.redirectUrl === 'hongbaoyu-2025'
       }"
       :style="
         isPromoDetail
@@ -146,7 +147,8 @@
                   lhworldcup:
                     selectedPromo.promoCode === 'lh1worldcup' ||
                     selectedPromo.promoCode === 'lh1worldcupdota2' ||
-                    selectedPromo.promoCode === 'lh1-football-fight',
+                    selectedPromo.promoCode === 'lh1-football-fight' ||
+                    selectedPromo.redirectUrl === 'lh1-ag-yuanxiaohongbao',
                   lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl',
                   lhinvite: selectedPromo.promoCode === 'lh1-invite',
                   lheuromanual:
@@ -160,6 +162,7 @@
                   selectedPromo.promoCode === 'lh-eurocup-manual' ||
                   selectedPromo.promoCode === 'lh1-deposit-rebates' ||
                   selectedPromo.redirectUrl === 'lh-blackmyth-wukong' ||
+                  selectedPromo.redirectUrl === 'lh1-ag-yuanxiaohongbao' ||
                   selectedPromo.promoCode === 'lh1-daily-checkin'
                     ? 'background-image: url(' +
                       imgURL +
@@ -614,6 +617,12 @@ export default defineComponent({
     background-position: bottom center;
     background-size: cover;
     background-attachment: fixed;
+
+    &.hongbaoyu2025 {
+      background-position: top;
+      background-size: 100% auto;
+      background-attachment: unset;
+    }
 
     &.midAutumnWukong {
       background-position: top;

@@ -89,7 +89,6 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="code" :label="t('fields.code')" min-width="250" />
       <el-table-column
         prop="platform"
         :label="t('fields.platform')"
@@ -378,6 +377,13 @@
           </el-checkbox>
         </el-checkbox-group>
       </el-form-item>
+      <el-form-item :label="t('fields.showTime')" prop="showTime">
+        <el-switch
+          v-model="form.showTime"
+          active-color="#409EFF"
+          inactive-color="#F56C6C"
+        />
+      </el-form-item>
       <el-form-item :label="t('fields.startTime')" prop="startTime">
         <el-date-picker
           type="datetime"
@@ -532,6 +538,7 @@
 </template>
 
 <script setup>
+/* eslint-disable */
 import { computed, reactive, ref } from 'vue'
 import { hasRole, hasPermission } from '@/utils/util'
 import { getSiteListSimple } from '@/api/site'
@@ -649,6 +656,7 @@ const form = reactive({
   title: null,
   vips: null,
   siteType: null,
+  showTime: null,
 })
 
 const checkboxes = reactive({
@@ -719,9 +727,9 @@ async function loadPrivileges() {
 }
 
 async function showDialog(type) {
-  selectedVIPs.vipChecked = [];
+  selectedVIPs.vipChecked = []
 
-  if(type != 'EDIT'){
+  if (type != 'EDIT') {
     checkboxes.vip.checkAll = false
   }
 
@@ -765,7 +773,7 @@ function showEdit(redirect) {
     if (vipArr.length === vipList.list.length) {
       checkboxes.vip.checkAll = true
       checkboxes.vip.isIndeterminate = false
-    } else if(vipArr.length == 0){
+    } else if (vipArr.length == 0) {
       checkboxes.vip.checkAll = false
       checkboxes.vip.isIndeterminate = false
     } else {

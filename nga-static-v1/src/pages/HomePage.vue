@@ -2469,6 +2469,7 @@ const gotoPromo = (banner) => {
   const platformPattern = /^\/platform\/(.*)/;
   const gamePattern = /^\/game\/(.*)/;
   const openPattern = /^\/open\/(.*)/;
+  const openGamePattern = /^\/openGame\/(.*)/;
 
   if (banner.redirectUrl.match(urlPattern)) {
     const extractedUrl = banner.redirectUrl.match(urlPattern)[1];
@@ -2499,6 +2500,16 @@ const gotoPromo = (banner) => {
     const extractedUrl = banner.redirectUrl.match(openPattern)[1];
     const [gameName, platformCode, gameCode, gameStatus, gameType, gameId] = extractedUrl.split("/");
     playGame(gameName, platformCode, gameCode, gameStatus, gameType, gameId);
+  } else if (banner.redirectUrl.match(openGamePattern)) {
+    const extractedUrl = banner.redirectUrl.match(openGamePattern)[1];
+    const queryString = extractedUrl.replace("/openGame/", "");
+    const params = new URLSearchParams(queryString);
+    const gameName = params.get("gameName");
+    const platformCode = params.get("platformCode");
+    const gameStatus = params.get("gameStatus");
+    const gameType = params.get("gameType");
+    const gameId = params.get("gameId");
+    openGame(gameName, platformCode, "", gameStatus, gameType, gameId);
   } else if (banner.redirectUrl.slice(0, 4) === "http") {
     window.open(banner.redirectUrl, "_blank");
   }
@@ -3756,14 +3767,14 @@ onMounted(() => {
 
   &.grid-view {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 32%);
     column-gap: 8px;
     row-gap: 16px;
   }
 
   &.grid-view-col-4 {
     display: grid;
-    grid-template-columns: repeat(4, minmax(75px, 1fr));
+    grid-template-columns: repeat(4, minmax(75px, 32%));
     column-gap: 8px;
     row-gap: 16px;
   }

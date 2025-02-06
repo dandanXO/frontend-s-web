@@ -317,7 +317,8 @@ export const userStore = defineStore("userStore", {
 
         logoutOneSignal();
 
-        location.href = "/";
+        // location.href = "/";
+        window.location.reload();
       });
     },
     setMailData(mailData) {

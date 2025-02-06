@@ -110,11 +110,13 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
+import { userStore } from "src/stores";
 
 const $q = useQuasar();
 const qs = require("qs");
 const props = defineProps(["bindEmailDialog"]);
 const emit = defineEmits(["update:bindEmailDialog"]);
+const store = userStore();
 
 let verificationCodeID = "";
 
@@ -125,6 +127,7 @@ const verificationCodeDialog = ref(false);
 const verificationImg = ref("");
 const updateEmailRef = ref();
 const updateEmailCodeRef = ref();
+const countdownOTP = ref();
 
 const updateEmailInfo = reactive({
   email: "",
@@ -157,6 +160,12 @@ const getCode = () => {
 };
 
 const openVerificationCodeDialog = () => {
+  if(store.email) {
+    verificationCodeDialog.value = !verificationCodeDialog.value;
+    getCode();
+    return;
+  }
+
   api
     .get(`/member/checkEmailRegisterStatus?email=${updateEmailInfo.email}`)
     .then((response) => {
@@ -204,8 +213,6 @@ const onCaptchaSubmit = () => {
         verificationCodeDialog.value = false;
 
         updateEmailInfo.codeId = res.data.codeId;
-
-        showVerificationTokenInput.value = true;
         verificationCodeID = res.data.codeId;
         startCountdownResendOTP.value = true;
 
@@ -239,9 +246,10 @@ const submitUpdateEmail = () => {
 
   if (updateEmailRef.value.hasError || updateEmailCodeRef.value.hasError) {
   } else {
+    const endpoint = store.email ? "/otp/verifyEmail" : "/session/verifyAndUpdateEmail"
+
     api
-      .post(
-        "/session/verifyAndUpdateEmail",
+      .post(endpoint,
         qs.stringify({
           email: updateEmailInfo.email,
           code: updateEmailInfo.code,
@@ -256,13 +264,10 @@ const submitUpdateEmail = () => {
             message: t("notify.emailBindedSuccessfully"),
             icon: "check_circle_outline"
           });
-          bindEmailDialog.value = false;
-          formDetail.email = updateEmailInfo.email;
-          formDetail.emailVerified = true;
 
+          closeDialog();
           store.getMemberInfo();
 
-          getEmailVerifyBonus();
         } else {
           $q.notify({
             color: "negative",

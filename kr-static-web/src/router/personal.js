@@ -8,6 +8,15 @@ export default [
         /* webpackChunkName: "personal" */ "../views/account/PersonalView.vue"
       ),
   },
+  {
+    path: "changePwd",
+    name: "changePwd",
+    meta: { requiresAuth: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "changePwd" */ "../views/account/ChangePwdView.vue"
+      ),
+  },
   // {
   //   path: "withdrawbank",
   //   name: "withdrawbank",

@@ -214,6 +214,8 @@ const getPromotionPrize = () => {
     position: relative;
     background: linear-gradient(180deg, #2d3f64 0%, #232a36 100%);
     border: none;
+    background: url("@/assets/images/promotion/hotpromo/hongbaoyu2025/section-bg-w-decor.png");
+    background-size: 100% 100%;
   }
 
   .livepoker-rebate-section::before,

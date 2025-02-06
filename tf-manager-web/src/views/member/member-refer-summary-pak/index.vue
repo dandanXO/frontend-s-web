@@ -43,7 +43,7 @@
           icon="el-icon-search"
           size="mini"
           type="success"
-          @click="search()"
+          @click="throttleSearch"
         >
           {{ t('fields.search') }}
         </el-button>
@@ -170,6 +170,7 @@
 </template>
 
 <script setup>
+/* eslint-disabled */
 import { computed, reactive, ref, onMounted } from 'vue'
 import {
   getPakMemberReferSummary
@@ -182,6 +183,7 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from "vue-router";
 import { getShortcuts } from '@/utils/datetime'
 import moment from "moment/moment";
+import { useThrottleFn } from '@vueuse/core'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -209,6 +211,7 @@ const uiControl = reactive({
   referrer: null,
   referrerPath: [],
   referrerIdPath: [],
+  isButtonDisabled: false
 })
 
 const page = reactive({
@@ -276,6 +279,18 @@ function joinRecordTime(recordTime) {
   return string.join(',')
 }
 
+// const disableBtnEvent = () => {
+//   uiControl.isButtonDisabled = true;
+//
+//   setTimeout(() => {
+//     uiControl.isButtonDisabled = false;
+//   }, 3000)
+// }
+
+const throttleSearch = useThrottleFn(() => {
+  search()
+}, 3000)
+
 function search() {
   uiControl.referrer = null
   request.referrerId = null
@@ -293,6 +308,7 @@ async function reloadMembers(loginName, uplineId) {
 
 async function loadMembers() {
   page.loading = true
+  // disableBtnEvent();
   uiControl.searchDialogVisible = false
   const query = checkQuery()
   const result = await getPakMemberReferSummary(query)
@@ -350,7 +366,7 @@ onMounted(async () => {
       request.siteId = site.value.id
     }
   }
-  await loadMembers();
+  throttleSearch();
 })
 </script>
 

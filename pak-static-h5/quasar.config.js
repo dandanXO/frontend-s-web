@@ -50,11 +50,18 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-build
     build: {
-      vueRouterMode: "history", // available values: 'hash', 'history'
+      env: {
+        IS_PWA: process.env.ROUTER_BASE ? "1" : "0",
+        ROUTER_BASE: process.env.ROUTER_BASE
+      },
+      vueRouterMode: process.env.VUE_ROUTER_MODE === "hash" || "history", // available values: 'hash', 'history'
+
       nativeMobile: false, // or any other value you want
       nativeMobileWrapper: "", // or any other value you want
       // transpile: false,
       // publicPath: '/',
+      // transpile: false,
+      publicPath: process.env.ROUTER_BASE ? `/${process.env.ROUTER_BASE}/` : "",
 
       // Add dependencies for transpiling with Babel (Array of string/regex)
       // (from node_modules, which are by default not transpiled).
@@ -76,6 +83,16 @@ module.exports = configure(function (ctx) {
       // chainWebpack(chain) {
       //   chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
       // }
+      minify: true,
+      uglifyOptions: {
+        compress: {
+          drop_console: true // Removes all console logs
+        }
+      },
+      // Options below are automatically set depending on the env, set them if you want to override
+      extractCSS: true,
+      sourceMap: false,
+
       chainWebpack(chain) {
         chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
 

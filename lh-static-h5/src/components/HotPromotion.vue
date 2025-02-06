@@ -29,6 +29,7 @@
     <DailyCheckin v-else-if="list.redirectUrl === 'lh1-daily-checkin'" :promo-info="list" />
     <NewFootball v-else-if="list.redirectUrl === 'lh1-football'" :promo-code="list.promoCode" />
     <EslOneBkk2024 v-else-if="list.redirectUrl === 'lh1-esl-one-bangkok-2024'" :promo-code="list.promoCode" />
+    <AgYuanxiaohongbao v-else-if="list.redirectUrl === 'lh1-ag-yuanxiaohongbao'" :promo-code="list.promoCode" />
 
     <Cba30Dream v-else-if="list.redirectUrl === 'lh1-cba30-dream'" :promo-code="list.promoCode" />
     <PerfectWorldMajor2024 v-else-if="list.redirectUrl === 'lh1-perfect-world-major-2024'" :promo-param="listParam" />
@@ -90,6 +91,7 @@ import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import moment from "moment";
 import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
+import AgYuanxiaohongbao from "./hotpromo/ag-yuanxiaohongbao/AgYuanxiaohongbao.vue";
 import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
 import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue";
 import VctBangkok from "components/hotpromo/vct-bangkok/VctBangkok.vue";
@@ -177,6 +179,7 @@ export default defineComponent({
     ChallengeComebackPromo,
     OfficialGiftPromo,
     EslOneBkk2024,
+    AgYuanxiaohongbao,
     Cba30Dream,
     PerfectWorldMajor2024,
     DemaciaCup1,
@@ -600,6 +603,12 @@ export default defineComponent({
   padding: 30px;
   font-family: "PingFang";
 
+  &.cny {
+    background: url("../assets/images/promotion/hotpromo/hongbaoyu2025/section-bg.png");
+    background-size: 100% 100%;
+    border: none;
+  }
+
   .claim-title-icon,
   .claim-coin-icon,
   .claim-gift-icon,
@@ -659,6 +668,13 @@ export default defineComponent({
       color: #333;
       background: transparent !important;
     }
+
+    &.cny {
+      th {
+        background: linear-gradient(180deg, #FFE190 0%, #FF9F40 100%) !important;
+        color: #894800 !important;
+      }
+    }
   }
 
   .element-bg {
@@ -680,6 +696,11 @@ export default defineComponent({
     font-size: 16px;
     width: fit-content;
     padding: 0px 20px 0px 10px;
+
+    &.cny {
+      background: linear-gradient(180deg, #FFE190 0%, #FF9F40 100%);
+      color: #894800;
+    }
   }
 
   .title-img {

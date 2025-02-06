@@ -1,7 +1,7 @@
 <template>
   <div class="livepoker-rebate-wrapper">
     <div class="livepoker-rebate-container">
-      <div class="livepoker-rebate-section">
+      <div class="livepoker-rebate-section section-bg cny-decor">
         <img
           class="bonus-image"
           src="../../../assets/images/promotion/hotpromo/hongbaoyu2025/red-packet.png"
@@ -10,19 +10,19 @@
           :class="{ loading: loadingClaim }"
         />
       </div>
-      <div class="livepoker-rebate-game-info section-bg">
+      <div class="livepoker-rebate-game-info section-bg cny">
         <div class="title-img">活动详情</div>
         <div class="little-title">
-          <div class="ribbon">活动时间</div>
+          <div class="ribbon cny">活动时间</div>
           <div class="right">2025年1月29日至2025年2月4日</div>
         </div>
         <div class="little-title">
-          <div class="ribbon">活动内容</div>
+          <div class="ribbon cny">活动内容</div>
           <div class="right">
             VIP1及以上会员当天累计存款达到200元，即可在当天活动时间内领新年红包，单个红包最高888元。
           </div>
         </div>
-        <table class="livepoker-rebate-game-info-table section-table">
+        <table class="livepoker-rebate-game-info-table section-table cny">
           <tbody>
             <tr>
               <th>当天累计存款</th>
@@ -52,7 +52,7 @@
         </div>
       </div>
 
-      <div class="livepoker-rebate-game-bottom-rule section-bg">
+      <div class="livepoker-rebate-game-bottom-rule section-bg cny">
         <div class="title-img">活动规则</div>
         <br/>
         <div class="content">
@@ -180,6 +180,12 @@ const getPromotionPrize = () => {
   justify-content: center;
   background: url("../../../assets/promo/lh-livepoker-rebate/section-bg.png");
   background-size: 100% 100%;
+
+  &.cny-decor {
+    background: url("../../../assets/images/promotion/hotpromo/hongbaoyu2025/section-bg-w-decor.png");
+    background-size: 100% 100%;
+    border: none;
+  }
 
   .bonus-image {
     cursor: pointer;

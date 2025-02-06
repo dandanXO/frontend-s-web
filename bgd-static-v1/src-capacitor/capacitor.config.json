@@ -2,8 +2,14 @@
   "appId": "com.ind.appb9bgd",
   "appName": "WIN7.GAME",
   "webDir": "www",
-  "server": {
-    "androidScheme": "https",
-    "hostname": "win7.game"
+  "plugins": {
+    "GoogleAuth": {
+      "scopes": [
+        "profile",
+        "email"
+      ],
+      "serverClientId": "744708244334-p9m6a7aphelep9i5ulafb16chtfdjuq3.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
+    }
   }
 }

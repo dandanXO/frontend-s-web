@@ -23,6 +23,7 @@ export default {
     referFriend: "Giới thiệu bạn bè",
     transactionRecord: "Lịch sử giao dịch",
     personalInfo: "Thông tin cá nhân",
+    changePwd: "Đổi mật khẩu",
     mailbox: "Hộp thư",
     logout: "Đăng xuất"
   },
@@ -179,6 +180,7 @@ export default {
   personal: {
     url: "URL",
     personalInfo: "Thông tin cá nhân",
+    changePwd: "Đổi mật khẩu",
     bank: "Ngân hàng",
     chgPwd: "Đổi mật khẩu",
     chgWithdrawPwd: "Đổi mật khẩu rút tiền",
@@ -211,6 +213,18 @@ export default {
       "Liên kết tài khoản NH cần giống tên tài khoản và tên đăng ký NH. Bất kỳ thông tin không chính xác nào được nhập sẽ dẫn đến việc rút tiền không thành công hoặc chậm xử lý. Vui lòng liên hệ dịch vụ khách hàng của chúng tôi để xử lý kịp thời. Trân trọng cảm ơn!",
     bankCardReminder2:
       "Vui lòng nhập thông tin chính xác với tên và số tài khoản trên thẻ NH của bạn, để tránh sai sót khi rút tiền! Cảm ơn bạn rất nhiều từ DIAMOND!"
+  },
+  password: {
+    initialPwd: "Mật khẩu ban đầu",
+    plcInitialPwd: "Vui lòng nhập mật khẩu ban đầu",
+    newPwd: "Mật khẩu mới",
+    plcNewPwd: "Vui lòng nhập mật khẩu mới",
+    cfmNewPwd: "Xác nhận mật khẩu mới",
+    plcCfmNewPwd: "Vui lòng xác nhận mật khẩu mới",
+    verificationCode: "Mã xác nhận",
+    plcVerificationCode: "Vui lòng nhập mã xác nhận",
+    cancel: "Hủy",
+    confirmChg: "Xác nhận thay đổi"
   },
   placeholder: {
     realName: "Vui lòng nhập tên thật",

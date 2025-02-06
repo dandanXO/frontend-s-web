@@ -493,9 +493,10 @@ async function loadCharts() {
 }
 
 function patchRecord(records) {
+  const couponStr = "Coupon";
   if (records.length > 0) {
     records.forEach((item, index) => {
-      if (item.alias !== null && (item.privilegeId !== "866")) {
+      if (item.alias !== null && !item.name.includes(couponStr)) {
         item.name = item.alias
       }
     })

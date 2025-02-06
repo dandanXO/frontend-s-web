@@ -303,7 +303,6 @@ export default defineComponent({
           () => {
             onDeviceReady();
             setTimeout(() => {
-              console.log("ABABAAA1");
               setStatusBarColor();
             }, 1000);
           },

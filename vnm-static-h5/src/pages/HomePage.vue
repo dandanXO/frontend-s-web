@@ -34,10 +34,10 @@
       <img alt="TF88 logo" src="../assets/logo-xmas.png" />
     </div>
     <div class="header-middle" v-if="!isLogined">
-      <q-btn rounded no-caps color="brightbtn" class="sm-screen-txt" @click="router.push('/login')">
+      <q-btn rounded no-caps color="brightbtn" :class="`sm-screen-txt ${store?.theme === 'CNY' ? 'cny-login-btn' : ''}`" @click="router.push('/login')">
         {{ $t("lang.login") }}
       </q-btn>
-      <q-btn rounded no-caps color="lightbluebtn" class="sm-screen-txt" @click="goToRegister">
+      <q-btn rounded no-caps color="lightbluebtn" :class="`sm-screen-txt ${store?.theme === 'CNY' ? 'cny-register-btn' : ''}`" @click="goToRegister">
         {{ $t("lang.register") }}
       </q-btn>
     </div>
@@ -2289,6 +2289,34 @@ export default defineComponent({
       font-weight: bold;
       @media (max-width: 400px) {
         font-size: 80%;
+      }
+    }
+
+    .cny-login-btn {
+      background: url("../assets/images/home/cny/cny-primary-btn.png") no-repeat center center;
+      background-size: 100% 100%;
+      box-shadow: none;
+      color: #fff;
+      position: relative;
+    }
+
+    .cny-register-btn {
+      background: url("../assets/images/home/cny/cny-secondary-btn.png") no-repeat center center;
+      background-size: 100% 100%;
+      box-shadow: none;
+      position: relative;
+    }
+
+    .cny-login-btn, .cny-register-btn {
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        right: -10px;
+        width: 46px;
+        height: 36px;
+        background-image: url("../assets/images/home/cny/cny-gold-cloud-btn-decor.png");
+        background-repeat: no-repeat;
       }
     }
   }

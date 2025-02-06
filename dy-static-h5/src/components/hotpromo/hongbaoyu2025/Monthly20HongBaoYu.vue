@@ -40,7 +40,14 @@
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: draw <= 0, loading: loadingClaim }">
+          <div
+            class="bonus-image"
+            @click="handleClaimBonus"
+            :class="{
+              disabled: draw === 0 || !nowIsRain || gotAlready,
+              loading: loadingClaim
+            }"
+          >
             <img src="../../../assets/images/promotion/hotpromo/hongbaoyu/claim-btn-1.png" alt="" width="100%" />
           </div>
         </div>
@@ -184,6 +191,8 @@ const depositAmount = ref(0);
 const isClaimModal = ref(false);
 const loadingClaim = ref(false);
 const winAmount = ref(0);
+const nowIsRain = ref(false);
+const gotAlready = ref(false);
 
 const fetchData = async () => {
   loadingClaim.value = true;
@@ -196,6 +205,19 @@ const fetchData = async () => {
         draw.value = res.data.draw;
 
         store.getBalance();
+      }
+    })
+    .catch(() => {})
+    .finally(() => {
+      loadingClaim.value = false;
+    });
+
+  eventapi
+    .get(`/session/redPacketVip/nextRainTime?promoCode=${props.promoCode}&v=${randNum}`)
+    .then((res) => {
+      if (res.code === 0) {
+        nowIsRain.value = res.data.nowIsRain;
+        gotAlready.value = res.data.gotAlready;
       }
     })
     .catch(() => {})
