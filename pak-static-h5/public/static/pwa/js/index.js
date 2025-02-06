@@ -240,6 +240,8 @@ window.addEventListener("load", () => {
       const currentDomain = window.location.origin;
       window.location.href = `${currentDomain}/home`;
       // window.location.href = `https://ind.55ace.com/home`;
+    } else if (isInWebView() || !supportsPWA()) {
+      redirectToChromeIfUnsupported();
     }
   }, 2500);
 
@@ -259,6 +261,47 @@ window.addEventListener("load", () => {
 /** browser detect **/
 document.getElementById("id-url-input").textContent = window.location.href;
 document.getElementById("id-url-install").textContent = window.location.origin;
+
+function supportsPWA() {
+  return (
+    "serviceWorker" in navigator || window.matchMedia("(display-mode: standalone)").matches || "standalone" in navigator
+  );
+}
+
+function isInWebView() {
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+
+  // 常见 App 内 WebView
+  const webViewPatterns = [
+    /FBAN|FBAV|Instagram/i, // Facebook, Instagram
+    /MicroMessenger/i, // WeChat
+    /QQ\//i, // QQ
+    /Line/i, // LINE
+    /Weibo/i, // Weibo
+    /AlipayClient/i, // Alipay
+    /UBrowser|Quark|2345Explorer|baidubrowser/i, // 常见国产浏览器
+    /QRScanner|QRCode|FreeScanner/i // 可能的二维码扫描器
+  ];
+
+  return webViewPatterns.some((pattern) => pattern.test(ua));
+}
+
+function redirectToChromeIfUnsupported() {
+  const url = window.location.href;
+
+  // Android 使用 `intent://` 跳转到 Chrome
+  if (/Android/i.test(navigator.userAgent)) {
+    window.location.href = `intent://${url.replace(
+      /^https?:\/\//,
+      ""
+    )}#Intent;scheme=https;package=com.android.chrome;end;`;
+  }
+  // iOS 提示用户手动打开
+  else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    // alert("请使用 Safari 浏览器打开，以获得更好的体验。");
+    window.location.href = url; // 仍然跳转
+  }
+}
 
 function isChromeInstalled() {
   const userAgent = navigator.userAgent.toLowerCase();
