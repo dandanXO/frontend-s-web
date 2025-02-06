@@ -1,6 +1,6 @@
-image: docker:20.10.24
+image: docker:20.10.16
 services:
-  - name: docker:20.10.24-dind
+  - name: docker:20.10.16-dind
     alias: docker
     command: [ "--tls=false" ]
 variables:
