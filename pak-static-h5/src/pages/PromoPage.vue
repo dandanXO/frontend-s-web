@@ -98,7 +98,9 @@
                 </div>
               </div>
 
-              <div class="inner">
+              <div class="inner" :class="{
+                isJackpotAviator: selectedPromo.redirectUrl === 'pak-jackpot-aviator'
+              }">
                 <div v-if="selectedPromo.hasPromo">
                   <!-- <pre>selectedPromo{{ selectedPromo }}</pre>
                   <template v-if="selectedPromo.promoCode === 'pak-red-packet-rain'">
@@ -1087,6 +1089,10 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
         padding-bottom: 40px;
+
+        &.isJackpotAviator {
+          width: 100%;
+        }
 
         p {
           font-size: 14px;
