@@ -1,6 +1,6 @@
 <template>
     <div class="rules-container">
-        <img class="back-btn" @click="props.onClickBackBtn" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/back-btn.svg" />
+        <img class="back-btn" @click="props.onClickBackBtn" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/back-btn.png" />
 
         <img v-if="langVal === 'ur'" class="title-img" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/rules-title-ur.png" />
         <img v-else class="title-img" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/rules-title.png" />
