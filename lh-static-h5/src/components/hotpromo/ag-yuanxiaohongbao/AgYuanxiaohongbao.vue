@@ -146,7 +146,8 @@
                   text-align: center;
                   color: transparent !important;
                   font-weight: 700;
-                  font-size: 14px;
+                  font-size: 18px;
+                  margin: 6px auto;
                 "
               >
                 累计越多奖金越丰厚
@@ -343,6 +344,7 @@
     background-repeat: no-repeat;
     background-color: #7a0707e4;
     background-size: 100% auto;
+    padding: 10px 16px;
 
     .item {
       padding-left: 10px;
@@ -492,9 +494,9 @@
       margin-right: 16px;
     }
     .right {
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 400;
-      line-height: 28px;
+      line-height: 20px;
       color: #fff;
     }
   }
@@ -579,6 +581,7 @@
       gap: 10px;
       align-items: baseline;
       color: #fff;
+      font-size: 16px;
       .item-num {
         color: #583600 !important;
         font-size: 12px;
@@ -595,7 +598,7 @@
       }
 
       .hint {
-        font-size: 12px;
+        font-size: 14px;
         font-weight: 400;
         line-height: 22.4px;
         color: #fff;
@@ -704,9 +707,15 @@
 
   .highlight-content {
     img.istopitem {
-      aspect-ratio: 140 / 80;
+      aspect-ratio: 140 / 70;
       object-fit: cover;
       object-position: center;
+      padding-top: 0px !important;
+      padding-bottom: 0px !important;
+    }
+    img {
+      padding-top: 0px !important;
+      padding-bottom: 0px !important;
     }
   }
 
@@ -719,8 +728,10 @@
       #efd190 72.12%,
       #e4bd80 99.13%
     );
-    font-size: 16px !important;
+    font-size: 18px !important;
     font-weight: 600;
+    margin-bottom: 6px !important;
+    margin-top: 6px !important;
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
