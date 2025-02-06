@@ -386,7 +386,7 @@ const handleClaimBonus2 = () => {
       if (res.code === 0) {
         notify({
           type: "success",
-          message: `成功领取${res.data}元`
+          message: `成功点亮灯笼！成功领取${res.data}元！`
         });
         fetchData();
       } else {
