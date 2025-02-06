@@ -242,7 +242,7 @@ export default defineComponent({
       // { code: "POKER", img: "poker", label: "棋牌优惠" },
       // { code: "FISH", img: 'fish', label: '捕鱼'},
       { code: "FTD", img: "deposit", label: "存款优惠" },
-      { code: "VIP", img: "vip", label: "VIP特权" }
+      { code: "VIP", img: "vip", label: "VIP 特权" }
     ]);
     const promoTabActive = ref(promoTypes.value[0].code);
     const filteredArray = ref([]);
