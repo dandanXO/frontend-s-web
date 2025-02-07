@@ -754,12 +754,12 @@ async function pDepo(deposit) {
       if (res.code === 0) {
         const response = res.data.result;
 
-        //FB Tracking. 不发了~~
-        if (store.isFbPixel) {
-          // fbq("track", "Purchase", {
-          //   currency: "PKR",
-          //   value: obj.localAmount
-          // });
+        //FB Tracking.
+        if (store.isOldFBPixel) {
+          fbq("track", "Purchase", {
+            currency: "PKR",
+            value: obj.localAmount
+          });
         }
 
         if (store.isTkPixel) {

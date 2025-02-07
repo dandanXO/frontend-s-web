@@ -503,6 +503,7 @@ export default defineComponent({
       }
       fbq("track", "PageView");
       store.isFbPixel = true;
+      store.isOldFBPixel = true;
 
       const isNewUser = isInPwa() ? localStorage.getItem("newUserFtd") : sessionStorage.getItem("newUserFtd");
       if (isNewUser) {
