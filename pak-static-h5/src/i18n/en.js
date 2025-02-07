@@ -50,7 +50,9 @@ export default {
     promotionRecord: "Promotion Record",
     betRecord: "Bet Record",
     referralRecord: "Referral Record",
-    interestProfit: "Interest Profit"
+    interestProfit: "Interest Profit",
+    spinnerRules: "Rules",
+    spinnerHistory: "History"
   },
   bottomNav: {
     home: "Home",
