@@ -135,7 +135,10 @@
                 :style="{
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
                     ? `url(${imgURL + selectedPromo.mobileImgBackgroundUrl})`
-                    : 'none'
+                    : 'none',
+                    margin: selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ? '0px auto' : '20px auto',
+                    'max-width': selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ? 'unset' : '1400px',
+                    'width': selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ? '100%' : '95%',
                 }"
               >
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
@@ -293,7 +296,7 @@
   </div>
 
   <q-dialog width="100%" v-model="isDisplayLogin">
-    <q-card style="width: 100%; padding: 20px" class="bg-white text-black text-right">
+    <q-card style="width: 100%; padding: 20px" class="text-right text-black bg-white">
       <q-card-section class="q-mb-md gologin-popup">
         <strong>
           <img class="svg" src="~assets/promo/error-warning-line.svg" />

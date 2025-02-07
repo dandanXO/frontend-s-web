@@ -84,7 +84,7 @@
     <BlastPremierGlobalPromo v-if="list.redirectUrl === 'dy2-blast-premier-treasure'" :promo-code="list.promoCode" />
     <BountyBlastPremier v-if="list.redirectUrl === 'bounty-blast-premier'" :promo-code="list.promoCode" />
     <DreamLeagueS24 v-if="list.redirectUrl === 'dy2-dreamleague-s24'" :promo-code="list.promoCode" />
-
+    <AgYuanxiaohongbao v-if="list.redirectUrl === 'dy1-ag-yuanxiaohongbao'" :promo-code="list.promoCode" />
     <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao'" />
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao'" />
     <OlympicFund v-if="list.redirectUrl === 'dy2-olympic-fund'" />
@@ -164,6 +164,8 @@ import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
 import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
 import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue";
 import VctBangkok from "components/hotpromo/vct-bangkok/VctBangkok.vue";
+
+import AgYuanxiaohongbao from "./hotpromo/ag-yuanxiaohongbao/AgYuanxiaohongbao.vue";
 
 const OfficialGiftPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/officialGift/OfficialGiftPromo.vue")
@@ -292,6 +294,7 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    AgYuanxiaohongbao,
     PGLOnFireBuenosAires2025,
     SkyesportsSouvenir2025,
     KatowiceS25,
