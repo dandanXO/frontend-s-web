@@ -242,9 +242,9 @@ const getImgPlatformBg = (platform, game) => {
 const handlePlayGame = (platform, game) => {
   if (platform === "hot") {
     if (game.type === "game") {
-      emit("playGame", game.name, game.platformCode, game.code, game.status, game.gameType, game.id);
+      emit("playGame", game.name, game.platformCode, game.code, game.status, game.gameType, game.id, game.demo);
     } else {
-      emit("playGame", game.name, game.code, "", game.status, game.gameType, game.id);
+      emit("playGame", game.name, game.code, "", game.status, game.gameType, game.id, game.demo);
     }
   } else if (["slot", "fish", "poker"].includes(platform)) {
     let gameType = "";
@@ -260,7 +260,7 @@ const handlePlayGame = (platform, game) => {
     }
     emit("openGame", game.name, game.code, "", game.status, gameType, game.id);
   } else {
-    emit("playGame", game.name, game.code, "", game.status, game.gameType, game.id);
+    emit("playGame", game.name, game.code, "", game.status, game.gameType, game.id, game.demo);
   }
 };
 
