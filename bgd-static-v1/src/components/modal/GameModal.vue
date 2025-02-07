@@ -274,7 +274,9 @@ const goToDeposit = () => {
 };
 
 const platformCodeImg = ref();
-const open = (gameName, platformCode, gameCode, gameType) => {
+const isPlatformAllowNonLogin = (demo) => !store.hasToken() && demo;
+
+const open = (gameName, platformCode, gameCode, gameType, demo) => {
   // debugger;
   // AppFullscreen.request()
   isInnerHtmlSrc.value = false;
@@ -331,7 +333,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   if (store.memberType !== "TEST" && gameType === "TEST") {
     visibleComingSoon.value = true;
   } else {
-    if (store.hasToken()) {
+    const _isPlatformAllowNonLogin = isPlatformAllowNonLogin(demo);
+    if (store.hasToken() || _isPlatformAllowNonLogin) {
       if (platformCode !== "LuckySport") {
         visible.value = true;
       }
@@ -348,14 +351,33 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         }
       }
 
+      const apiUrl = _isPlatformAllowNonLogin
+        ? `/game/launch?_time=${new Date().getTime()}`
+        : `/session/launch?_time=${new Date().getTime()}`;
+      let apiParam = {
+        platform: platformCode,
+        gameCode: gameCode,
+        isMobile: Platform.is.mobile ? true : false,
+        way: way
+      };
+      if (_isPlatformAllowNonLogin) {
+        try {
+          const demoInfo = JSON.parse(demo);
+          apiParam = {
+            ...apiParam,
+            platform: demoInfo.platformCode,
+            gameCode: demoInfo.code,
+            siteId: process.env.SITEID,
+            siteCode: process.env.SITE
+          };
+        } catch (_) {
+          denyGameLaunch();
+        }
+      }
+
       api
-        .get(`/session/launch?_time=${new Date().getTime()}`, {
-          params: {
-            platform: platformCode,
-            gameCode: gameCode,
-            isMobile: Platform.is.mobile ? true : false,
-            way: way
-          }
+        .get(apiUrl, {
+          params: apiParam
         })
         .then((res) => {
           let srcDoc = res.data;
@@ -394,17 +416,21 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           // }
         });
     } else {
-      props.closeFullGameDialog();
-      $q.notify({
-        message: t("notify.plsLoginToContinue"),
-        color: "negative",
-        position: "top",
-        icon: "report_problem",
-        timeout: 2000
-      });
-      router.push({ path: "/login", query: { redirect: route.path } });
+      denyGameLaunch();
     }
   }
+};
+
+const denyGameLaunch = () => {
+  props.closeFullGameDialog();
+  $q.notify({
+    message: t("notify.plsLoginToContinue"),
+    color: "negative",
+    position: "top",
+    icon: "report_problem",
+    timeout: 2000
+  });
+  router.push({ path: "/login", query: { redirect: route.path } });
 };
 
 const loadGame = () => {
