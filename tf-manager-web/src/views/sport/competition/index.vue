@@ -81,7 +81,6 @@
       <el-table-column :label="t('fields.operate')" align="right" fixed="right">
         <template #default="scope" :hidden="true">
           <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit(scope.row)" />
-          <el-button icon="el-icon-refresh" size="mini" @click="updateDurationPending(scope.row._id)" />
         </template>
       </el-table-column>
     </el-table>
@@ -99,7 +98,7 @@
 
 import { nextTick, onMounted, reactive, ref } from "vue";
 import { required } from "../../../utils/validate";
-import { getCompetitions, getSportTypes, updateCompetitionPendingDuration, updateCompetitionLanguageName } from "../../../api/sport";
+import { getCompetitions, getSportTypes, updateCompetitionLanguageName } from "../../../api/sport";
 import { useI18n } from "vue-i18n";
 import { useStore } from "@/store";
 import { getSiteTimeZoneById } from "@/api/site";
@@ -203,15 +202,6 @@ function showDialog(type) {
 async function loadGameTypes() {
   const { data: ret } = await getSportTypes()
   gameTypes.list = ret
-}
-
-async function updateDurationPending(id) {
-  uiControl.dialogLoading = true;
-  const { code: c } = await updateCompetitionPendingDuration(id);
-  uiControl.dialogLoading = false;
-  if (c === 0) {
-    loadPlatform();
-  }
 }
 
 function formatTimestamp(timestamp) {
