@@ -580,3 +580,19 @@ export function getSkyesportsSouvenir2025Bonus(promoCode) {
 export function claimSkyesportsSouvenir2025Bonus(promoCode) {
   return server.EVENT.post(`/session/competition-payout-deposit/claimBonus?promoCode=${promoCode}`);
 }
+
+export function initLanternFestivalBonus(promoCode) {
+  return server.EVENT.get(`/session/valid-bet-bonus/init?promoCode=${promoCode}`);
+}
+
+export function claimLanternFestivalBonus(promoCode) {
+  return server.EVENT.post("/session/valid-bet-bonus/claimBonus", { promoCode });
+}
+
+export function initLanternFestivalDeposit(promoCode) {
+  return server.EVENT.get(`/session/lantern-festival/init?promoCode=${promoCode}`);
+}
+
+export function claimLanternFestivalDeposit(promoCode) {
+  return server.EVENT.post("/session/lantern-festival/claimBonus", { promoCode });
+}

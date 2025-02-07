@@ -30,8 +30,9 @@
               </div>
             </div>
             <div class="livepoker-rebate-section-right">
-              <div class="bonus-image" @click="handleClaimBonus1" :class="{ disabledd: bonus1 <= 0 }">
-                <img src="./images/reward.png" alt="" width="100%" />
+              <div class="bonus-image" @click="handleClaimBonus1" :class="{ disabled: bonus1 <= 0 }">
+                <img src="./images/reward-1.png" alt="" width="100%" />
+                <img src="./images/reward-2.png" alt="" width="100%" />
               </div>
             </div>
           </div>
@@ -44,23 +45,16 @@
                 text-align: center;
                 color: transparent !important;
                 font-weight: 600;
-                font-size: 22px;
+                font-size: 32px;
               "
             >
               活动详情
             </div>
-
-            <div
-              class="little-title"
-              style="flex-direction: column; justify-content: flex-start; align-items: flex-start"
-            >
+            <div class="little-title">
               <div class="ribbon">活动时间</div>
               <div class="right">2025 年 2 月 10 日 00:00 至 2 月 12 日 23:59(共 3 天!）</div>
             </div>
-            <div
-              class="little-title"
-              style="flex-direction: column; justify-content: flex-start; align-items: flex-start"
-            >
+            <div class="little-title">
               <div class="ribbon">活动内容</div>
               <div class="right">
                 在元宵节期间（3 天内），会员累计达到一定的有效投注金额，即可获得元宵特别奖金，投注越高，奖励越丰厚！
@@ -109,6 +103,7 @@
           </div>
 
           <div class="livepoker-rebate-game-bottom-rule section-bg">
+            <!-- <div class="title-img"></div> -->
             <div
               style="
                 background: linear-gradient(270.62deg, #e6cc93 -6.62%, #fff1e1 101.55%);
@@ -117,7 +112,7 @@
                 text-align: center;
                 color: transparent !important;
                 font-weight: 600;
-                font-size: 28px;
+                font-size: 32px;
               "
             >
               活动规则
@@ -127,7 +122,7 @@
               <div class="item">
                 <div class="item-num">1</div>
                 <div style="display: flex; flex-direction: column">
-                  <div>活动期间会员在 2 月 10 日至 2 月 12 日活动期间内累计有效投注≥3,888元即可获得元宵特别奖金；</div>
+                  <div>活动期间会员在 2 月 10 日至 2 月 12 日活动期间内累计有效投注≥3,888 元即可获得元宵特别奖金；</div>
                   <div class="hint">注：奖金不叠加派发，奖金按最高档位派发一次。</div>
                 </div>
               </div>
@@ -135,7 +130,7 @@
                 <div class="item-num">2</div>
                 活动领取时间为 2 月 13
                 日全天（00:00-23:59）,满足活动要求的会员在活动页面点击【元宵奖金】按钮领取。逾期未领取则视为放弃，彩金
-                6倍流水即可出款；
+                6 倍流水即可出款；
               </div>
               <div class="item">
                 <div class="item-num">3</div>
@@ -152,7 +147,7 @@
               </div>
               <div class="item">
                 <div class="item-num">6</div>
-                为避免文字理解差异，雷火电竞保留此活动最终解释权；
+                为避免文字理解差异，东赢电竞保留此活动最终解释权；
               </div>
             </div>
           </div>
@@ -178,13 +173,13 @@
                 <div class="reward-info-icon claim-gift-icon"></div>
                 <div class="reward-info-content">
                   可点亮灯笼数量：
-                  <span class="amount">{{ lanternAvailable }}盏</span>
+                  <span class="amount">{{ lantern }}元</span>
                 </div>
               </div>
             </div>
             <div class="livepoker-rebate-section-right">
-              <div class="bonus-image" @click="handleClaimBonus2" :class="{ disabledd: lanternAvailable <= 0 }">
-                <img src="./images/reward.png" alt="" width="100%" />
+              <div class="bonus-image" @click="handleClaimBonus2" :class="{ disabled: lantern <= 0 }">
+                <img src="../../../assets/promo/lh-livepoker-rebate/new-reward-btn.png" alt="" width="100%" />
               </div>
             </div>
           </div>
@@ -197,19 +192,16 @@
                 text-align: center;
                 color: transparent !important;
                 font-weight: 600;
-                font-size: 28px;
+                font-size: 32px;
               "
             >
               活动详情
             </div>
-            <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
+            <div class="little-title">
               <div class="ribbon">活动时间</div>
-              <div class="right">2 月 12 日</div>
+              <div class="right">2025 年 2 月 12 日</div>
             </div>
-            <div
-              class="little-title"
-              style="flex-direction: column; justify-content: flex-start; align-items: flex-start"
-            >
+            <div class="little-title">
               <div class="ribbon">活动内容</div>
               <div class="right">
                 在 2 月 12 日当天累计总存款≥1,000 元以上即可获得灯笼抽奖机会，点亮灯笼数量高达 60 盏！
@@ -264,7 +256,11 @@
             <div class="livepoker-rebate-game-bottom">
               <div class="livepoker-rebate-game-bottom-left-title">
                 <div class="livepoker-rebate-game-bottom-left-btn">
-                  <img src="./images/triangle.png" alt="" style="width: 10px" />
+                  <img
+                    src="../../../assets/promo/lh1-blast-premier/game-bottom-left-btn.png"
+                    alt=""
+                    style="width: 10px"
+                  />
                   <span>示例</span>
                 </div>
                 会员在 2 月 12 日当天存款 50,000 元，2 月 13 日全天即可进入优惠页面点亮灯笼 10
@@ -282,7 +278,7 @@
                 text-align: center;
                 color: transparent !important;
                 font-weight: 600;
-                font-size: 28px;
+                font-size: 32px;
               "
             >
               活动规则
@@ -317,7 +313,7 @@
               </div>
               <div class="item">
                 <div class="item-num">6</div>
-                为避免文字理解差异，雷火电竞保留此活动最终解释权；
+                为避免文字理解差异，东赢电竞保留此活动最终解释权；
               </div>
             </div>
           </div>
@@ -328,60 +324,47 @@
 </template>
 
 <script setup>
-import { onMounted, ref, toRefs } from "vue";
 import {
   initLanternFestivalBonus,
   claimLanternFestivalBonus,
   initLanternFestivalDeposit,
-  claimLanternFestivalDeposit,
-  claimCompetitionBonus
-} from "../../../api/index/promo";
-import { useNotify } from "src/hooks/notify";
-import { userStore } from "src/stores";
-import { useQuasar } from "quasar";
-import { useRouter } from "vue-router";
+  claimLanternFestivalDeposit
+} from "@/api/index/promo";
+import { ResponseCode } from "@/api/response";
+import { onMounted, ref, defineProps, toRefs } from "vue";
+import { useNotify } from "@/hooks/notify";
+import { userStore } from "@/store";
+import { ElMessageBox } from "element-plus";
 
-const props = defineProps(["promoParam"]);
-const { promoParam } = toRefs(props);
+const props = defineProps(["promoParam", "promoCode"]);
+const { promoParam, promoCode } = toRefs(props);
 
 const notify = useNotify();
-const store = userStore();
-const $q = useQuasar();
-const router = useRouter();
 
+const store = userStore();
 const totalValidBet = ref(0);
 const bonus1 = ref(0);
 
-const lanternLighted = ref(0);
-const lanternAvailable = ref(0);
+const lantern = ref(0);
 const totalDeposit = ref(0);
 
 const tabValue = ref(1);
 
 const handleClaimBonus2 = () => {
-  if (!store.token) {
-    $q.dialog({
-      class: "q-px-md q-pt-md",
-      title: "系统提示",
-      message: "请登录后再操作",
-      ok: {
-        push: true,
-        color: "primary",
-        label: "去登录",
-        tabindex: 1
-      },
-      cancel: {
-        push: true,
-        color: "warning",
-        label: "取消",
-        tabindex: 0
-      },
-      persistent: true
-    }).onOk(() => {
-      router.push("/login");
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
     });
     return;
   }
+
   claimLanternFestivalDeposit(promoParam.value.promoCode2)
     .then((res) => {
       if (res.code === 0) {
@@ -390,7 +373,15 @@ const handleClaimBonus2 = () => {
           message: `成功点亮灯笼！成功领取${res.data}元！`
         });
         fetchData();
-      } else {
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
         notify({
           type: "error",
           message: res.message
@@ -399,34 +390,29 @@ const handleClaimBonus2 = () => {
     })
     .catch((err) => {
       console.log(err);
+      notify({
+        type: "error",
+        message: err.message
+      });
     });
 };
 
 const handleClaimBonus1 = () => {
-  if (!store.token) {
-    $q.dialog({
-      class: "q-px-md q-pt-md",
-      title: "系统提示",
-      message: "请登录后再操作",
-      ok: {
-        push: true,
-        color: "primary",
-        label: "去登录",
-        tabindex: 1
-      },
-      cancel: {
-        push: true,
-        color: "warning",
-        label: "取消",
-        tabindex: 0
-      },
-      persistent: true
-    }).onOk(() => {
-      router.push("/login");
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
     });
     return;
   }
-  claimCompetitionBonus(promoParam.value.promoCode1)
+
+  claimLanternFestivalBonus(promoParam.value.promoCode1)
     .then((res) => {
       if (res.code === 0) {
         notify({
@@ -434,7 +420,15 @@ const handleClaimBonus1 = () => {
           message: `成功领取${res.data}元`
         });
         fetchData();
-      } else {
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
         notify({
           type: "error",
           message: res.message
@@ -443,6 +437,10 @@ const handleClaimBonus1 = () => {
     })
     .catch((err) => {
       console.log(err);
+      notify({
+        type: "error",
+        message: err.message
+      });
     });
 };
 
@@ -455,8 +453,7 @@ const fetchData = async () => {
     bonus1.value = res1.data?.bonus || 0;
 
     totalDeposit.value = res2.data?.totalDeposit || 0;
-    lanternLighted.value = res2.data?.lanternLighted || 0;
-    lanternAvailable.value = res2.data?.lanternAvailable || 0;
+    lantern.value = res2.data?.lantern || 0;
   } catch (error) {
     console.log(error);
   }
@@ -464,6 +461,10 @@ const fetchData = async () => {
 
 onMounted(() => {
   if (!store.token) {
+    // notify({
+    //   message: "请登录后操作",
+    //   type: "error"
+    // });
     return;
   }
   fetchData();
@@ -475,61 +476,68 @@ onMounted(() => {
   display: flex;
   justify-content: center;
 }
-
 .livepoker-rebate-container {
-  width: 100%;
+  margin-top: 20px;
+  width: 1200px;
   height: 100%;
-  max-width: 1200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .livepoker-rebate-section {
   box-shadow: 0px 0px 4px 0px #01497b0f;
-  padding: 20px 12px 40px;
   border-radius: 12px;
+  border: 1px solid #acd4f6;
+  margin-top: 40px;
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   border: unset !important;
   background: url("./images/bg1.png");
   background-size: 100% 100%;
-  align-items: center;
-  width: 100%;
 
   .livepoker-rebate-section-left {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 100%;
-    color: #fff;
+    padding: 30px 40px;
+    .livepoker-rebate-section-title {
+      color: #fff;
+    }
   }
 
   .livepoker-rebate-section-right {
-    width: 180px;
-    margin-top: 20px;
+    margin-top: auto;
+    margin-bottom: 30px;
+    margin-right: 100px;
+    width: 200px;
 
     .bonus-image {
-      width: 100%;
       cursor: pointer;
+      width: 100%;
 
+      &:hover {
+        filter: brightness(0.9);
+      }
       &:active {
-        filter: brightness(0.85);
         transform: translate(0px, 1px);
+        opacity: 0.9;
       }
 
-      &.disabledd {
+      &.disabled {
         filter: grayscale(100%);
         cursor: not-allowed;
         pointer-events: none;
       }
     }
   }
-
+  .claim-coin-icon {
+    background: url("./images/icon3.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
+  .claim-gift-icon {
+    background: url("./images/icon2.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
   .livepoker-rebate-section-title {
-    color: #fff;
-    font-size: 16px;
+    font-size: 24px;
     line-height: 1;
     font-weight: 600;
     display: flex;
@@ -540,14 +548,6 @@ onMounted(() => {
       background: url("./images/icon.png") no-repeat center center;
       background-size: 100% 100%;
     }
-  }
-  .claim-coin-icon {
-    background: url("./images/icon3.png") no-repeat center center;
-    background-size: 100% 100%;
-  }
-  .claim-gift-icon {
-    background: url("./images/icon2.png") no-repeat center center;
-    background-size: 100% 100%;
   }
 }
 
@@ -566,16 +566,16 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   .livepoker-rebate-game-bottom-left-title {
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 500;
     line-height: 22.4px;
-    color: #fff !important;
+    color: #fff;
   }
   .livepoker-rebate-game-bottom-left-btn {
-    font-size: 12px;
+    font-size: 16px;
     font-weight: 600;
     line-height: 22.4px;
-    color: #fff !important;
+    color: #fff;
     cursor: pointer;
     display: flex;
     justify-content: flex-start;
@@ -590,56 +590,55 @@ onMounted(() => {
   margin-top: 40px;
   background: #f2f8fe;
   border-radius: 12px;
-  padding: 20px 12px 12px;
-
+  padding: 40px;
   border: 0px !important;
-  background-image: url("./images/bg2.png");
-  background-repeat: no-repeat;
+  background: url("./images/bg2.png");
   background-size: 100% 100%;
-
   box-shadow: 0px 0px 4px 0px #01497b0f;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  // align-items: center;
+  gap: 20px;
 
   .title {
-    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-title.png");
+    background-image: url("../../../assets/promo/lh1-blast-premier/info-title.png");
     background-repeat: no-repeat;
-    background-size: 100%;
-    width: 240px;
-    height: 26px;
-    margin: 0 auto;
+    background-size: 100% 100%;
+    width: 738px;
+    height: 44px;
+    margin: 0 auto 40px;
   }
   .little-title {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
-
     .ribbon {
       background: linear-gradient(259.14deg, #d47c33 27.82%, #fafe8a 52.4%, #d47c33 99.13%);
       color: #000;
+      font-weight: bold;
     }
     .left {
-      background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-little-title-bg.png");
+      background-image: url("../../../assets/promo/lh1-blast-premier/info-little-title-bg.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
-      width: 64px;
-      height: 20px;
+      width: 120px;
+      height: 36px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 12px;
+      font-size: 16px;
       font-weight: 600;
+      min-width: 120px;
       line-height: 23.33px;
       color: #ffffff;
       margin-right: 16px;
     }
     .right {
-      font-size: 12px;
+      color: #ffffff;
+      font-size: 20px;
       font-weight: 400;
       line-height: 28px;
-      color: #fff;
     }
   }
 }
@@ -649,14 +648,16 @@ onMounted(() => {
   height: 100%;
   border-collapse: separate;
   border-spacing: 0;
+  table-layout: fixed;
   text-align: center;
   vertical-align: middle;
   th {
-    height: 36px;
-    font-size: 12px;
+    height: 56px;
+    font-size: 20px;
     font-weight: 400;
     line-height: 28px;
     color: #000 !important;
+
     background: linear-gradient(259.14deg, #d47c33 27.82%, #fafe8a 52.4%, #d47c33 99.13%) !important;
     &:first-child {
       border-top-left-radius: 12px;
@@ -682,13 +683,12 @@ onMounted(() => {
     }
   }
   td {
-    background: transparent !important;
     border: 1px solid rgba(244, 210, 76, 1) !important;
-    height: 36px;
-    font-size: 12px;
+    height: 56px;
+    font-size: 20px;
     font-weight: 400;
     line-height: 28px;
-    color: #fff;
+    color: #fff !important;
   }
 }
 
@@ -698,42 +698,41 @@ onMounted(() => {
   margin-top: 40px;
   background: #f2f8fe;
   border-radius: 12px;
-  padding: 20px 12px 12px;
+  padding: 40px;
   border: 0px !important;
-  background-image: url("./images/bg3.png");
-  background-repeat: no-repeat;
+  background: url("./images/bg2.png");
   background-size: 100% 100%;
   box-shadow: 0px 0px 4px 0px #01497b0f;
   display: flex;
   flex-direction: column;
   align-items: center;
   .title {
-    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/rule-title.png");
+    background-image: url("../../../assets/promo/lh1-blast-premier/rule-title.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    width: 240px;
-    height: 20px;
+    width: 738px;
+    height: 44px;
     margin-bottom: 20px;
   }
   .content {
-    font-size: 12px;
+    font-size: 20px;
     font-weight: 400;
-    line-height: 20px;
+    line-height: 36px;
     color: #000000;
-    padding: 8px;
     .item {
+      padding-left: 24px;
       display: flex;
       gap: 10px;
-      align-items: baseline;
       color: #fff;
+
       .item-num {
-        color: #000;
-        font-size: 12px;
+        color: rgba(88, 54, 0, 1);
+        font-size: 20px;
         line-height: 1;
         border-radius: 50%;
-        height: 16px !important;
-        width: 16px !important;
-        min-width: 16px;
+        height: 28px !important;
+        width: 28px !important;
+        min-width: 28px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -742,7 +741,7 @@ onMounted(() => {
       }
 
       .hint {
-        font-size: 12px;
+        font-size: 18px;
         font-weight: 400;
         line-height: 22.4px;
         color: rgba(225, 255, 0, 1);
@@ -765,8 +764,8 @@ onMounted(() => {
 }
 
 .reward-info-icon {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   margin-right: 10px;
 }
 
@@ -775,9 +774,9 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 12px;
+  font-size: 20px;
+  gap: 24px;
   color: #fff;
-
   .amount {
     background: linear-gradient(
       259.14deg,
@@ -799,18 +798,17 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   gap: 20px;
-  margin-bottom: 20px;
 
   .tab {
-    width: 160px;
-    height: 32px;
+    width: 300px;
+    height: 64px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 60px;
     background: linear-gradient(180deg, #e7e7e7 0%, #c9c9c9 100%);
-    color: #818181;
-    font-size: 18px;
+    color: #fff;
+    font-size: 36px;
     font-weight: bold;
     cursor: pointer;
 

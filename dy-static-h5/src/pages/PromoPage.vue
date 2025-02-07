@@ -135,7 +135,10 @@
                 :style="{
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
                     ? `url(${imgURL + selectedPromo.mobileImgBackgroundUrl})`
-                    : 'none'
+                    : 'none',
+                    margin: selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ? '0px auto' : '20px auto',
+                    'max-width': selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ? 'unset' : '1400px',
+                    'width': selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ? '100%' : '95%',
                 }"
               >
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">

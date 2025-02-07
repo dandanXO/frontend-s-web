@@ -66,6 +66,9 @@
       <div class="selected-promo-wrapper" :class="`bg__${selectedPromo.promoCode}`">
         <div
           class="banner-container"
+          :style="{
+            'min-height': selectedPromo.redirectUrl === 'xf1-ag-yuanxiaohongbao' ? 'unset' : '500px'
+          }"
           v-if="selectedPromo.redirectUrl !== 'cny-hongbaoyu' || selectedPromo.redirectUrl !== 'xf-eurocup-hongbao'"
         >
           <template v-if="selectedPromo.promoCode === 'cny-spinwheel'">
@@ -98,7 +101,11 @@
           :style="{
             backgroundImage: selectedPromo?.desktopImgBackgroundUrl
               ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
-              : 'none'
+              : 'none',
+              margin: selectedPromo.redirectUrl === 'xf1-ag-yuanxiaohongbao' ? '0px auto' : '20px auto',
+              'max-width': selectedPromo.redirectUrl === 'xf1-ag-yuanxiaohongbao' ? 'unset' : '1400px',
+              'width': selectedPromo.redirectUrl === 'xf1-ag-yuanxiaohongbao' ? '100%' : '95%',
+            
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
