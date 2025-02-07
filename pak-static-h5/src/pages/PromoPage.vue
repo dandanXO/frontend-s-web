@@ -61,7 +61,7 @@
 
             <div class="selected-promo-wrapper">
               <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
-              <div class="banner-container">
+              <div class="banner-container" v-if="selectedPromo.redirectUrl !== 'pak-jackpot-aviator'">
                 <!-- <div
                     class="promo-bg"
                     :style="
@@ -80,7 +80,7 @@
                 <!-- </div> -->
               </div>
 
-              <div class="promo-content-inner">
+              <div class="promo-content-inner" v-if="selectedPromo.redirectUrl !== 'pak-jackpot-aviator'">
                 <RouterLink
                   v-if="parsedParam.showEarnMoney"
                   class="content-go-earn-money-btn"
@@ -98,7 +98,9 @@
                 </div>
               </div>
 
-              <div class="inner">
+              <div class="inner" :class="{
+                isJackpotAviator: selectedPromo.redirectUrl === 'pak-jackpot-aviator'
+              }">
                 <div v-if="selectedPromo.hasPromo">
                   <!-- <pre>selectedPromo{{ selectedPromo }}</pre>
                   <template v-if="selectedPromo.promoCode === 'pak-red-packet-rain'">
@@ -1087,6 +1089,10 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
         padding-bottom: 40px;
+
+        &.isJackpotAviator {
+          width: 100%;
+        }
 
         p {
           font-size: 14px;

@@ -960,6 +960,7 @@ export default {
     defaultVip: '默认 VIP',
     defaultAgentVip: '默认代理 VIP',
     delete: '删除',
+    demo: '试玩',
     runAtOnce: '立即执行',
     deleteRole: '删除角色',
     deleteRanking: '刪除排行记录',

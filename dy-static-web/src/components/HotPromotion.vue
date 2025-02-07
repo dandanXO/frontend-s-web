@@ -107,6 +107,11 @@
       :promo-rules="list.pageContent"
       :promo-date="listParam.date"
     />
+    <LanternFestival2025
+      v-if="list.redirectUrl === 'dy1-lantern-festival-bonus'"
+      :promo-param="listParam"
+      :promo-code="list.promoCode"
+    />
     <IemKatowice2025 v-if="list.redirectUrl === 'dy2-iem-katowice-2025'" :promo-code="list.promoCode" />
     <DreamLeagueS25 v-if="list.redirectUrl === 'dy2-dream-league-s25'" :promo-code="list.promoCode" />
     <HongBaoYu2025 v-if="list.redirectUrl === 'dy2-cny2025-red-envelope'" :promo-code="list.promoCode" />
@@ -228,12 +233,14 @@ import IemKatowice2025 from "./hotpromo/lh1-iem-katowice-2025/Iem-katowice-2025.
 import SkyesportsSouvenir2025 from "./hotpromo/skyesports-souvenir-2025/SkyesportsSouvenir2025.vue";
 import PGLOnFireBuenosAires2025 from "./hotpromo/pgl-on-fire-buenos-aires-2025/PGLOnFireBuenosAires2025.vue";
 import AgYuanxiaohongbao from "../components/hotpromo/agyuanxiaohongbao/AgYuanxiaohongbao.vue";
+import LanternFestival2025 from "../components/hotpromo/lantern-festival-2025/LanternFestival2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    LanternFestival2025,
     AgYuanxiaohongbao,
     PGLOnFireBuenosAires2025,
     SkyesportsSouvenir2025,

@@ -147,7 +147,8 @@ export const getVisitorId = async () => {
 export const trackNewUserFtd = (e) => {
   const { detail: triggeredPixels } = e;
   if (triggeredPixels.includes("fb")) {
-    fbq("trackCustom", "PurchaseComplete");
+    //不发了~
+    // fbq("trackCustom", "PurchaseComplete");
   }
   if (triggeredPixels.includes("tk")) {
     ttq.track("PurchaseComplete", { content_type: "product" }, { event_id: Date.now() });
