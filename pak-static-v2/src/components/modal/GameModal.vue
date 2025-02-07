@@ -363,6 +363,7 @@ const open = (gameName, platformCode, gameCode, gameType, demo) => {
       if (_isPlatformAllowNonLogin) {
         try {
           const demoInfo = JSON.parse(demo);
+          if (!demoInfo.platformCode || !demoInfo.code) throw new Error();
           apiParam = {
             ...apiParam,
             platform: demoInfo.platformCode,
