@@ -26,7 +26,7 @@
     />
 
     <LanternFestival2025
-      v-if="list.redirectUrl === 'xf1-ag-yuanxiaohongbao'"
+      v-if="list.redirectUrl === 'xf1-lantern-festival-bonus'"
       :promo-param="listParam"
       :promo-code="list.promoCode"
     />
