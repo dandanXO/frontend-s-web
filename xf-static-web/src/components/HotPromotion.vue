@@ -37,6 +37,7 @@
       :promo-param="listParam"
       :promo-code="list.promoCode"
     />
+    <AgYuanxiaohongbao v-if="list.redirectUrl === 'xf1-ag-yuanxiaohongbao'" :promo-code="list.promoCode" />
     <div v-if="list.redirectUrl === 'fucaiiphone'" class="promo-4">
       <div class="tabs">
         <el-tabs v-model="activeKey" type="card">
@@ -200,6 +201,7 @@ import DepositAwardPromo from "../components/hotpromo/depositAward/DepositAwardP
 import SlotsBonusPromo from "../components/hotpromo/slotsbonus/SlotsBonusPromo.vue";
 import SlotsRebatePromo from "../components/hotpromo/slotsrebate/SlotsRebatePromo.vue";
 import LanternFestival2025 from "../components/hotpromo/lantern-festival-2025/LanternFestival2025.vue";
+import AgYuanxiaohongbao from "../components/hotpromo/agyuanxiaohongbao/AgYuanxiaohongbao.vue";
 const HongBaoYu2025 = defineAsyncComponent(() => import("@/components/hotpromo/hongbaoyu2025/HongBaoYu2025.vue"));
 
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -213,6 +215,7 @@ export default defineComponent({
   // setup: (props, { emit }) => {},
   components: {
     LanternFestival2025,
+    AgYuanxiaohongbao,
     ClaimPromo,
     TigerCardPromo,
     GoldenEggPromo,

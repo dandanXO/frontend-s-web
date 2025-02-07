@@ -87,7 +87,7 @@
                   !isSpecialPromo &&
                   selectedPromo.promoCode !== 'lh1-ftd-promo' &&
                   selectedPromo.promoCode !== 'lh1-aijiasu' &&
-                  selectedPromo.promoCode !== 'lh1-eurocup-regen' && 
+                  selectedPromo.promoCode !== 'lh1-eurocup-regen' &&
                   selectedPromo.redirectUrl !== 'dy2-christmas-gashapon'
                 "
               >
@@ -117,7 +117,10 @@
                     selectedPromo.promoCode === 'dy2-cs2-blast-2024' ||
                     selectedPromo.promoCode === 'dy2-blast-premier-treasure',
                   msi: selectedPromo.promoCode === 'dy2-msi-promo',
-                  dyftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'dy2-intel-esl' || selectedPromo.redirectUrl === 'dy2-christmas-gashapon',
+                  dyftd:
+                    selectedPromo.promoCode === 'lh1-ftd-promo' ||
+                    selectedPromo.promoCode === 'dy2-intel-esl' ||
+                    selectedPromo.redirectUrl === 'dy2-christmas-gashapon',
                   dyEurocupHongbao: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
                   lplSummer2024: selectedPromo.promoCode === 'dy2-lpl-summer24',
                   eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
@@ -136,13 +139,12 @@
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
                     ? `url(${imgURL + selectedPromo.mobileImgBackgroundUrl})`
                     : 'none',
-                    margin: selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ? '0px auto' : '20px auto',
-                    'max-width': selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ? 'unset' : '1400px',
-                    'width': selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ? '100%' : '95%',
+                  margin: selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ? '0px auto' : '20px auto',
+                  'max-width': selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ? 'unset' : '1400px',
+                  width: selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ? '100%' : '95%'
                 }"
               >
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
-                  
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
@@ -173,7 +175,11 @@
                     <ValorantChampionTour2024 :promo-code="selectedPromo.promoCode" />
                   </div>
                   <div
-                    v-if="selectedPromo.id !== 259 && selectedPromo.id !== 241 && selectedPromo.redirectUrl !== 'dy2-christmas-gashapon'"
+                    v-if="
+                      selectedPromo.id !== 259 &&
+                      selectedPromo.id !== 241 &&
+                      selectedPromo.redirectUrl !== 'dy2-christmas-gashapon'
+                    "
                     v-html="selectedPromo.pageContent"
                   ></div>
                 </div>
@@ -296,7 +302,7 @@
   </div>
 
   <q-dialog width="100%" v-model="isDisplayLogin">
-    <q-card style="width: 100%; padding: 20px" class="bg-white text-black text-right">
+    <q-card style="width: 100%; padding: 20px" class="text-right text-black bg-white">
       <q-card-section class="q-mb-md gologin-popup">
         <strong>
           <img class="svg" src="~assets/promo/error-warning-line.svg" />

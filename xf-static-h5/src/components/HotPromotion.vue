@@ -1,5 +1,5 @@
 <template>
-  <div :class="list.redirectUrl === 'cny-spinwheel'  ||list.redirectUrl==='xf1-ag-yuanxiaohongbao' ? '' : 'hot-promo'">
+  <div :class="list.redirectUrl === 'cny-spinwheel' ||  list.redirectUrl === 'xf1-ag-yuanxiaohongbao' ? '' : 'hot-promo'">
     <ClaimPromo
       v-if="listParam.type === 'claimpromo' && store.hasToken()"
       :promo-id="list.id"
@@ -17,6 +17,7 @@
     <BonusSpinWheelPromo v-if="list.redirectUrl === 'cny-spinwheel'" />
     <ReturnPromo v-if="list.redirectUrl === 'xf-return-promo'" />
     <DepositAwardPromo v-if="list.redirectUrl === 'xf-deposit-award'" />
+    <AgYuanxiaohongbao v-if="list.redirectUrl === 'xf1-ag-yuanxiaohongbao'" :promo-code="list.promoCode" />
     <HongBaoYu2024Promo :promo-code="list.promoCode" v-if="list.redirectUrl === 'cny-hongbaoyu'" />
     <HongBaoYuEurocupPromo
       :promo-code="list.promoCode"
@@ -225,6 +226,7 @@ import DepositAwardPromo from "../components/hotpromo/depositAward/DepositAwardP
 import SlotsRebatePromo from "../components/hotpromo/slotsrebate/SlotsRebatePromo.vue";
 import SlotsBonusPromo from "../components/hotpromo/slotsbonus/SlotsBonusPromo.vue";
 import OfficialGiftPromo from "./hotpromo/officialGift/OfficialGiftPromo.vue";
+import AgYuanxiaohongbao from "./hotpromo/ag-yuanxiaohongbao/AgYuanxiaohongbao.vue";
 import LanternFestival2025 from "../components/hotpromo/lantern-festival-2025/LanternFestival2025.vue";
 
 const HongBaoYu2025 = defineAsyncComponent(() => import("../components/hotpromo/hongbaoyu2025/HongBaoYu2025.vue"));
@@ -234,6 +236,7 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    AgYuanxiaohongbao,
     LanternFestival2025,
     ClaimPromo,
     TigerCardPromo,
@@ -989,10 +992,10 @@ export default defineComponent({
       justify-content: center;
       align-items: center;
       margin-top: 2px;
-      color: #fff;
+      color: #fff ;
       box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
-        0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
-      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%);
+        0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset ;
+      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) ;
     }
   }
 

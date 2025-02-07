@@ -87,6 +87,7 @@
       :promo-param="listParam"
       :promo-code="list.promoCode"
     />
+    <AgYuanxiaohongbao v-if="list.redirectUrl === 'dy1-ag-yuanxiaohongbao'" :promo-code="list.promoCode" />
     <VctBangkok v-if="list.redirectUrl === 'dy2-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
     <S14VotePromo v-if="list.redirectUrl === 'dy2-s14-vote'" :promo-code="list.promoCode" />
     <Dota2Pgl v-if="list.redirectUrl === 'dy2-dota2-pgl'" :promo-code="list.promoCode" />
@@ -231,6 +232,7 @@ import OfficialGiftPromo from "../components/hotpromo/officialGift/OfficialGiftP
 import IemKatowice2025 from "./hotpromo/lh1-iem-katowice-2025/Iem-katowice-2025.vue";
 import SkyesportsSouvenir2025 from "./hotpromo/skyesports-souvenir-2025/SkyesportsSouvenir2025.vue";
 import PGLOnFireBuenosAires2025 from "./hotpromo/pgl-on-fire-buenos-aires-2025/PGLOnFireBuenosAires2025.vue";
+import AgYuanxiaohongbao from "../components/hotpromo/agyuanxiaohongbao/AgYuanxiaohongbao.vue";
 import LanternFestival2025 from "../components/hotpromo/lantern-festival-2025/LanternFestival2025.vue";
 
 export default defineComponent({
@@ -239,6 +241,7 @@ export default defineComponent({
   // setup: (props, { emit }) => {},
   components: {
     LanternFestival2025,
+    AgYuanxiaohongbao,
     PGLOnFireBuenosAires2025,
     SkyesportsSouvenir2025,
     IemKatowice2025,

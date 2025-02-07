@@ -54,17 +54,22 @@
                   style="display: block; width: 100%"
                 />
               </div>
-              <div class="inner" :class="{
-                ['special-promo']: isSpecialPromo, 
-                hongbaoyu2025: selectedPromo?.promoCode === 'xf1-cny2025-red-envelope'
-              }" :style="{
+              <div
+                class="inner"
+                :class="{
+                  ['special-promo']: isSpecialPromo,
+                  hongbaoyu2025: selectedPromo?.promoCode === 'xf1-cny2025-red-envelope'
+                }"
+                :style="{
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
                     ? `url(${imgURL + selectedPromo.mobileImgBackgroundUrl})`
                     : 'none',
                   margin: selectedPromo.redirectUrl === 'xf1-ag-yuanxiaohongbao' ? '0px auto' : '20px auto',
                   'max-width': selectedPromo.redirectUrl === 'xf1-ag-yuanxiaohongbao' ? 'unset' : '1400px',
-                  'width': selectedPromo.redirectUrl === 'xf1-ag-yuanxiaohongbao' ? '100%' : '95%',
-                }">
+                  width: selectedPromo.redirectUrl === 'xf1-ag-yuanxiaohongbao' ? '100%' : '95%',
+                  padding: selectedPromo.redirectUrl === 'xf1-ag-yuanxiaohongbao' ? '10px' : 'initial'
+                }"
+              >
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
                 </div>
