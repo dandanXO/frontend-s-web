@@ -2,7 +2,18 @@
   <div class="livepoker-rebate-wrapper">
     <div class="livepoker-rebate-container">
       <div class="livepoker-rebate-game-info section-bg">
-        <div class="title-img2">活动详情</div>
+        <div
+          style="
+            color: transparent;
+            background: linear-gradient(270.62deg, #e6cc93 -6.62%, #fff1e1 101.55%);
+            -webkit-background-clip: text;
+            font-size: 32px;
+            text-align: center;
+            margin-top: 20px;
+          "
+        >
+          活动详情
+        </div>
         <div class="little-title" style="flex-wrap: nowrap; flex-direction: unset">
           <div
             class="ribbon"
@@ -183,7 +194,18 @@
       </div>
 
       <div class="livepoker-rebate-game-bottom-rule section-bg">
-        <div class="title-img2">活动详情</div>
+        <div
+          style="
+            color: transparent;
+            background: linear-gradient(270.62deg, #e6cc93 -6.62%, #fff1e1 101.55%);
+            -webkit-background-clip: text;
+            font-size: 32px;
+            text-align: center;
+            margin-top: 20px;
+          "
+        >
+          活动详情
+        </div>
         <br />
         <div class="content">
           <div class="item">
@@ -227,7 +249,14 @@
       </div>
 
       <div class="livepoker-rebate-game-bottom-rule section-bg">
-        <div class="title-img2">活动条款</div>
+        <div style="
+            color: transparent;
+            background: linear-gradient(270.62deg, #e6cc93 -6.62%, #fff1e1 101.55%);
+            -webkit-background-clip: text;
+            font-size: 32px;
+            text-align: center;
+            margin-top: 20px;
+          ">活动条款</div>
         <br />
         <div class="content">
           <div class="item">
@@ -264,7 +293,14 @@
       </div>
 
       <div class="livepoker-rebate-game-bottom-rule section-bg">
-        <div class="title-img2">常见问题</div>
+        <div style="
+            color: transparent;
+            background: linear-gradient(270.62deg, #e6cc93 -6.62%, #fff1e1 101.55%);
+            -webkit-background-clip: text;
+            font-size: 32px;
+            text-align: center;
+            margin-top: 20px;
+          ">常见问题</div>
         <br />
         <div class="content">
           <div class="item">
@@ -547,7 +583,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
-
+    min-width: 1280px;
     .highlight-content {
       display: flex;
       flex-direction: column;
