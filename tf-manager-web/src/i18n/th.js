@@ -1324,6 +1324,8 @@ export default {
     inplayMarketSyncIntervalSeconds: 'ช่วงเวลาการซิงค์ตลาดสด',
     acceptRecommendedOdds: 'ยอมรับอัตราต่อรองที่แนะนำ',
     playerModeId: 'รหัสโหมดผู้เล่น',
+    oddsTypeId: 'รหัสอัตราต่อรอง',
+    displayModeId: 'รหัสการแสดง',
     singleBetSetting: 'การตั้งค่าเดิมพันเดี่ยว',
     parlayBetSetting: 'การตั้งค่าเดิมพันแบบพาร์เลย์',
     eventSortingId: 'รหัสการจัดเรียงเหตุการณ์',

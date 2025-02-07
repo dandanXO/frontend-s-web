@@ -2478,9 +2478,11 @@ export default {
     inplayMarketSyncIntervalSeconds: 'Inplay Market Sync Interval Seconds',
     acceptRecommendedOdds: 'Accept Recommended Odds',
     playerModeId: 'Player Mode ID',
+    oddsTypeId: 'Odds Type ID',
     singleBetSetting: 'Single Bet Setting',
     parlayBetSetting: 'Parlay Bet Setting',
     eventSortingId: 'Event Sorting ID',
+    displayModeId: 'Display Mode ID',
   },
   message: {
     adsStatusOpen: 'Open',
@@ -3311,7 +3313,7 @@ export default {
     Event: 'event',
     Team: 'team',
     'Bet type setting': 'bet type setting',
-    '`Sport App Setting`': 'Sport App Setting',
+    'Sport App Setting': 'Sport App Setting',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
