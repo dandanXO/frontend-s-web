@@ -393,16 +393,16 @@ const openGame = (gameName, code, gameCode) => {
   &.active {
     position: relative;
 
-    &::after {
-      content: "";
-      position: absolute;
-      top: -12px;
-      right: -10px;
-      width: 92px;
-      height: 60px;
-      background-image: url("@/assets/images/home/cny/cny-home-icon-decor.png");
-      background-repeat: no-repeat;
-    }
+    // &::after {
+    //   content: "";
+    //   position: absolute;
+    //   top: -12px;
+    //   right: -10px;
+    //   width: 92px;
+    //   height: 60px;
+    //   background-image: url("@/assets/images/home/cny/cny-home-icon-decor.png");
+    //   background-repeat: no-repeat;
+    // }
   }
 
   // display: flex;
