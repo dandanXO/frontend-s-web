@@ -240,8 +240,16 @@ window.addEventListener("load", () => {
       const currentDomain = window.location.origin;
       window.location.href = `${currentDomain}/home`;
       // window.location.href = `https://ind.55ace.com/home`;
-    } else if (isInWebView() || !supportsPWA()) {
-      redirectToChromeIfUnsupported();
+    } else {
+      // const isTest = window.location.hostname.includes("localhost") || window.location.hostname.includes("di1yf4");
+      // if (isTest) {
+      //   alert("IN WebView:" + isInWebView());
+      //   alert("Is Support Pwa:" + supportsPWA());
+      //   alert("Defer: " + deferredPrompt);
+      // }
+      // if (isInWebView() || !supportsPWA() || !deferredPrompt) {
+      //   redirectToChromeIfUnsupported();
+      // }
     }
   }, 2500);
 
@@ -271,7 +279,10 @@ function supportsPWA() {
 function isInWebView() {
   const ua = navigator.userAgent || navigator.vendor || window.opera;
 
-  // 常见 App 内 WebView
+  // Log User-Agent for debugging
+  console.log("User-Agent:", ua);
+
+  // Common WebView indicators
   const webViewPatterns = [
     /FBAN|FBAV|Instagram/i, // Facebook, Instagram
     /MicroMessenger/i, // WeChat
@@ -279,11 +290,33 @@ function isInWebView() {
     /Line/i, // LINE
     /Weibo/i, // Weibo
     /AlipayClient/i, // Alipay
-    /UBrowser|Quark|2345Explorer|baidubrowser/i, // 常见国产浏览器
-    /QRScanner|QRCode|FreeScanner/i // 可能的二维码扫描器
+    /UBrowser|Quark|2345Explorer|baidubrowser/i, // Other Chinese browsers
+    /QRScanner|QRCode|FreeScanner/i // Possible QR Code scanners
   ];
 
-  return webViewPatterns.some((pattern) => pattern.test(ua));
+  // User-Agent matching
+  if (webViewPatterns.some((pattern) => pattern.test(ua))) {
+    return true;
+  }
+
+  // WebView environments often do not match "display-mode: browser"
+  if (!window.matchMedia("(display-mode: browser)").matches) {
+    return true;
+  }
+
+  // WebView may lack full navigator properties
+  if (typeof navigator.standalone !== "undefined" && navigator.standalone === false) {
+    return true;
+  }
+
+  // Try opening a new window (many WebViews block this)
+  const testWindow = window.open("about:blank");
+  if (!testWindow || testWindow.closed) {
+    return true;
+  }
+  testWindow.close();
+
+  return false;
 }
 
 function redirectToChromeIfUnsupported() {

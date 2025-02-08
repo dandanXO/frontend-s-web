@@ -823,6 +823,7 @@ export default {
     defaultVip: 'VIP mặc định',
     defaultAgentVip: 'VIP đại lý mặc định',
     delete: 'Xóa',
+    demo: 'Hãy thử nó',
     runAtOnce: 'Chạy ngay lập tức',
     deleteRole: 'Xóa vai trò',
     deleteRanking: 'Xóa xếp hạng',

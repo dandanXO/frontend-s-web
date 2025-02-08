@@ -32,6 +32,12 @@
     <HongBaoYu2025 v-if="list.redirectUrl === 'xf1-cny2025-red-envelope'" :promo-code="list.promoCode" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'xf-official-gift'" :params="list.param" />
     <SlotsRebatePromo v-if="list.redirectUrl === 'xf1-slots-rebate'" :promo-code="list.promoCode" />
+    <LanternFestival2025
+      v-if="list.redirectUrl === 'xf1-lantern-festival-bonus'"
+      :promo-param="listParam"
+      :promo-code="list.promoCode"
+    />
+    <AgYuanxiaohongbao v-if="list.redirectUrl === 'xf1-ag-yuanxiaohongbao'" :promo-code="list.promoCode" />
     <div v-if="list.redirectUrl === 'fucaiiphone'" class="promo-4">
       <div class="tabs">
         <el-tabs v-model="activeKey" type="card">
@@ -194,6 +200,8 @@ import slotLucky8 from "../components/hotpromo/slot-lucky8-2024/slot-lucky8-2024
 import DepositAwardPromo from "../components/hotpromo/depositAward/DepositAwardPromo.vue";
 import SlotsBonusPromo from "../components/hotpromo/slotsbonus/SlotsBonusPromo.vue";
 import SlotsRebatePromo from "../components/hotpromo/slotsrebate/SlotsRebatePromo.vue";
+import LanternFestival2025 from "../components/hotpromo/lantern-festival-2025/LanternFestival2025.vue";
+import AgYuanxiaohongbao from "../components/hotpromo/agyuanxiaohongbao/AgYuanxiaohongbao.vue";
 const HongBaoYu2025 = defineAsyncComponent(() => import("@/components/hotpromo/hongbaoyu2025/HongBaoYu2025.vue"));
 
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -206,6 +214,8 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    LanternFestival2025,
+    AgYuanxiaohongbao,
     ClaimPromo,
     TigerCardPromo,
     GoldenEggPromo,
@@ -808,7 +818,7 @@ export default defineComponent({
 }
 
 .section-bg {
-    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%) !important;
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%) ;
     border: 1px solid #be9457 !important;
     color: #fff;
     border-radius: 12px;
@@ -825,8 +835,8 @@ export default defineComponent({
     .section-table {
       th {
         color: #fff !important;
-        background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) !important;
-        border-radius: 0px !important;
+        background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) ;
+        border-radius: 0px ;
 
         &:not(:last-child) {
           border-right: 1px solid #484c5770;
@@ -911,10 +921,10 @@ export default defineComponent({
         justify-content: center;
         align-items: center;
         margin-top: 2px;
-        color: #fff !important;
+        color: #fff ;
         box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
-          0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
-        background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) !important;
+          0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset ;
+        background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) ;
       }
     }
 

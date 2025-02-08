@@ -118,29 +118,32 @@
               <img src="@/assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
               <span>示例</span>
             </div>
-            会员A：在小艾电竞场馆投注VCTCN联赛5,000元后又在雷火电竞投注VCTCN联赛投注5,000元，会员A在次日可获投注奖励38元和雷火助力金38元，共76元彩金。
+            会员A：在小艾电竞场馆投注无畏契约冠军巡回赛5,000元后又在雷火电竞投注无畏契约冠军巡回赛投注5,000元，会员A在次日可获投注奖励38元和雷火助力金38元，共76元彩金。
           </div>
         </div>
       </div>
 
       <div class="livepoker-rebate-game-bottom-rule section-bg">
         <div class="title-img">活动规则</div>
-        <br/>
+        <br />
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-            活动期间，在电竞场馆投注 VCTCN 联赛累计有效投注≥3,000 元或以上可获的对应投注嘉奖，若在雷火电竞场馆进行投注 VCTCN 联赛可获更高奖励金额。
-            <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
-          </div>
+              活动期间，在电竞场馆投注无畏契约冠军巡回赛累计有效投注≥3,000
+              元或以上可获的对应投注嘉奖，若在雷火电竞场馆进行投注无畏契约冠军巡回赛可获更高奖励金额。
+              <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
+            </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            VCTCN 联赛投注嘉奖在结算后 24 小时内有效，可登入优惠界面点击【领取】按钮获得，彩金 6 倍流水即可提款；
+            无畏契约冠军巡回赛投注嘉奖在结算后 24 小时内有效，可登入优惠界面点击【领取】按钮获得，彩金 6
+            倍流水即可提款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+            任何低于欧洲盘 1.7 或亚洲盘 0.7
+            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
           </div>
           <div class="item">
             <div class="item-num">4</div>
@@ -148,7 +151,8 @@
           </div>
           <div class="item">
             <div class="item-num">5</div>
-            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
+            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+            地址视为同一账户，若有违规者，将不享受此红利；
           </div>
           <div class="item">
             <div class="item-num">6</div>

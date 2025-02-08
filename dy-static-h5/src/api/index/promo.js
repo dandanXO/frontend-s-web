@@ -487,3 +487,21 @@ export function getSkyesportsSouvenir2025Bonus(promoCode) {
 export function claimSkyesportsSouvenir2025Bonus(promoCode) {
   return eventapi.post(`/session/competition-payout-deposit/claimBonus?promoCode=${promoCode}`);
 }
+
+export function initLanternFestivalBonus(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/valid-bet-bonus/init?promoCode=${promoCode}&v=${randNum}`);
+}
+export function claimLanternFestivalBonus(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/valid-bet-bonus/claimBonus?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function initLanternFestivalDeposit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/lantern-festival/init?promoCode=${promoCode}&v=${randNum}`);
+}
+export function claimLanternFestivalDeposit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/lantern-festival/claimBonus?promoCode=${promoCode}&v=${randNum}`);
+}

@@ -53,6 +53,7 @@ export const userStore = defineStore("userStore", {
       visitorId: "",
       h5Url: "https://m.b9mega1.com/",
       isFbPixel: false,
+      isOldFBPixel: false,
       hasUpdatedOneSignal: false,
       paytypeWithPrivilege: "",
       extraPrivilegeId: "",
@@ -276,7 +277,7 @@ export const userStore = defineStore("userStore", {
                 if (this.isFbPixel) triggeredPixels.push("fb");
                 if (this.isTkPixel) triggeredPixels.push("tk");
                 const isNewUser = sessionStorage.getItem("newUserFtd");
-                if (isNewUser && isNewUser === this.nickName) {
+                if (isNewUser && isNewUser === this.nickName && this.isOldFBPixel === true) {
                   document.dispatchEvent(createFtdEvent(triggeredPixels));
                 }
               }

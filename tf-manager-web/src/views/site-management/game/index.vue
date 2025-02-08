@@ -343,7 +343,7 @@
             :placeholder="t('fields.pleaseChoose')"
             style="width: 350px"
           >
-          <el-option
+            <el-option
               v-for="item in uiControl.showLogo"
               :key="item.key"
               :label="item.displayName"
@@ -371,6 +371,23 @@
             style="width: 350px"
             @keypress="restrictInput($event)"
             controls-position="right"
+          />
+        </el-form-item>
+        <el-form-item :label="t('fields.demo')" prop="param">
+          <JsonEditor
+            class="editor"
+            v-model="editorValue"
+            currentMode="code"
+            :modeList="[]"
+            @update:modelValue="updataModel"
+          />
+          <el-input
+            type="hidden"
+            v-model="form.demo"
+            :rows="20"
+            style="width: 350px; white-space: pre-line"
+            placeholder="{'abc':'xyz'}"
+            @change="json"
           />
         </el-form-item>
         <div class="dialog-footer">
@@ -714,6 +731,7 @@ import { useI18n } from "vue-i18n";
 import moment from 'moment'
 import { uploadImage } from '../../../api/image'
 import { useSessionStorage } from "@vueuse/core";
+import JsonEditor from 'json-editor-vue3'
 
 const { t } = useI18n();
 const store = useStore();
@@ -827,7 +845,8 @@ const form = reactive({
   gameLabel: null,
   device: 'WEB',
   sequence: null,
-  showLogo: null
+  showLogo: null,
+  demo: null
 })
 
 const imageForm = reactive({
@@ -900,6 +919,21 @@ const devices = reactive({
     { key: 4, displayName: 'ANDROID', value: 'ANDROID' },
   ],
 })
+
+let editorValue = ref({})
+
+const updataModel = val => {
+  form.demo = JSON.stringify(val, null, 2)
+  editorValue = val
+}
+
+function json() {
+  if (form.demo) {
+    nextTick(() => {
+      form.demo = JSON.stringify(JSON.parse(form.demo), null, 2)
+    })
+  }
+}
 
 const gameLabel = reactive({
   list: [
@@ -1003,6 +1037,8 @@ function showDialog(type) {
     form.status = 'OPEN'
     form.platformName = null
     form.siteName = null
+    form.demo = null
+    editorValue = ref({})
     selected.gameLabels = []
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editGame')
@@ -1010,6 +1046,29 @@ function showDialog(type) {
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
+
+  nextTick(() => {
+    removeJsonEditorElement()
+  })
+}
+
+function removeJsonEditorElement() {
+  const classesToRemove = [
+    'jsoneditor-poweredBy',
+    'jsoneditor-sort',
+    'jsoneditor-transform',
+    'jsoneditor-undo',
+    'jsoneditor-redo',
+    'jsoneditor-repair',
+  ]
+  classesToRemove.forEach(className => {
+    const elements = document.getElementsByClassName(className)
+    Array.from(elements).forEach(element => {
+      if (element.parentNode) {
+        element.parentNode.removeChild(element)
+      }
+    })
+  })
 }
 
 function showEdit(game) {
@@ -1027,6 +1086,13 @@ function showEdit(game) {
       }
       form[key] = game[key]
       form.siteId = selectedPlatform.siteId
+      if (key === 'demo') {
+        if (form[key] !== null) {
+          editorValue = JSON.parse(form[key])
+        } else {
+          editorValue = JSON.parse("{}")
+        }
+      }
     }
     if (form.gameLabel !== null) {
       const arr = form.gameLabel.split(",")
@@ -1035,6 +1101,7 @@ function showEdit(game) {
       })
     }
     loadPlatformNames()
+    form.demo = JSON.stringify(JSON.parse(form.demo), null, 2)
   })
 }
 

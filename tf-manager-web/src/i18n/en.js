@@ -957,6 +957,7 @@ export default {
     defaultVip: 'Default VIP',
     defaultAgentVip: 'Default Affiliate VIP',
     delete: 'Delete',
+    demo: 'Demo',
     runAtOnce: 'runAtOnce',
     deleteRole: 'Delete Role',
     deleteRanking: 'Delete Ranking',

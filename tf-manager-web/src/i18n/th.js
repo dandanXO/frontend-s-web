@@ -546,6 +546,7 @@ export default {
     defaultVip: 'วีไอพีเริ่มต้น',
     defaultAgentVip: 'VIP พันธมิตรเริ่มต้น',
     delete: 'ลบ',
+    demo: 'ลองดูสิ',
     deleteRole: 'ลบกฎ',
     deleteRanking: 'ลบการจัดอันดับ',
     deposit: 'เงินฝาก',

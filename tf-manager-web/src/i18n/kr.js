@@ -843,6 +843,7 @@ export default {
     defaultVip: '기본 VIP',
     defaultAgentVip: '기본 제휴사 VIP',
     delete: '삭제',
+    demo: '시도해보세요',
     runAtOnce: '즉시 실행',
     deleteRole: '역할 삭제',
     deleteRanking: '순위 삭제',
