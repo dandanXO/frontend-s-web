@@ -198,7 +198,7 @@ export default defineComponent({
       const { fbclid, linkId } = getRbParams() || {};
 
       const fbc = fbclid;
-      const siteCode = "IND";
+      const siteCode = "PAK";
 
       const getCookie = (name) => {
         const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
