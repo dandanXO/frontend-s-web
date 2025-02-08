@@ -62,9 +62,6 @@
         <el-form-item :label="t('fields.endTime')" prop="endTime">
           <el-input v-model="form.endTime" style="width: 350px;" />
         </el-form-item>
-        <el-form-item :label="t('fields.updateTime')" prop="updateTime">
-          <el-input v-model="form.updateTime" style="width: 350px;" :disabled="true" />
-        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>

@@ -2031,7 +2031,7 @@ export default {
     competitionName: '赛事名称',
     competitionTime: '赛事时间',
     addCompetition: '新增赛事',
-    editCompetition: '编辑赛事',
+    editCompetition: '编辑联赛',
     addCompetitionCode: '新增赛事代码',
     editCompetitionCode: '编辑赛事代码',
     addMemberTreasureKey: '添加会员宝箱钥匙',
