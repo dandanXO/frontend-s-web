@@ -1,5 +1,5 @@
 <template>
-  <div :class="list.redirectUrl === 'cny-spinwheel' ||  list.redirectUrl === 'xf1-ag-yuanxiaohongbao' ? '' : 'hot-promo'">
+  <div :class="list.redirectUrl === 'cny-spinwheel' ||  list.redirectUrl === 'xf1-ag-yuanxiaohongbao' || list.redirectUrl === 'xf1-lantern-festival-bonus' ? '' : 'hot-promo'">
     <ClaimPromo
       v-if="listParam.type === 'claimpromo' && store.hasToken()"
       :promo-id="list.id"

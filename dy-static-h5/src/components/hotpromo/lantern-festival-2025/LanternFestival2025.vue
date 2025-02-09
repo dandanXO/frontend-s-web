@@ -127,7 +127,7 @@
               <div class="item">
                 <div class="item-num">1</div>
                 <div style="display: flex; flex-direction: column">
-                  <div>活动期间会员在 2 月 10 日至 2 月 12 日活动期间内累计有效投注≥3,888 元即可获得元宵特别奖金；</div>
+                  <div>活动期间会员在 2 月 10 日至 2 月 12 日活动期间内累计有效投注≥3,888元即可获得元宵特别奖金；</div>
                   <div class="hint">注：奖金不叠加派发，奖金按最高档位派发一次。</div>
                 </div>
               </div>
@@ -135,7 +135,7 @@
                 <div class="item-num">2</div>
                 活动领取时间为 2 月 13
                 日全天（00:00-23:59）,满足活动要求的会员在活动页面点击【元宵奖金】按钮领取。逾期未领取则视为放弃，彩金
-                6 倍流水即可出款；
+                6倍流水即可出款；
               </div>
               <div class="item">
                 <div class="item-num">3</div>
@@ -152,7 +152,7 @@
               </div>
               <div class="item">
                 <div class="item-num">6</div>
-                为避免文字理解差异，东赢电竞保留此活动最终解释权；
+                为避免文字理解差异，雷火电竞保留此活动最终解释权；
               </div>
             </div>
           </div>
@@ -178,12 +178,12 @@
                 <div class="reward-info-icon claim-gift-icon"></div>
                 <div class="reward-info-content">
                   可点亮灯笼数量：
-                  <span class="amount">{{ lantern }}元</span>
+                  <span class="amount">{{ lanternAvailable }}盏</span>
                 </div>
               </div>
             </div>
             <div class="livepoker-rebate-section-right">
-              <div class="bonus-image" @click="handleClaimBonus2" :class="{ disabledd: lantern <= 0 }">
+              <div class="bonus-image" @click="handleClaimBonus2" :class="{ disabledd: lanternAvailable <= 0 }">
                 <img src="./images/reward.png" alt="" width="100%" />
               </div>
             </div>
@@ -317,7 +317,7 @@
               </div>
               <div class="item">
                 <div class="item-num">6</div>
-                为避免文字理解差异，东赢电竞保留此活动最终解释权；
+                为避免文字理解差异，雷火电竞保留此活动最终解释权；
               </div>
             </div>
           </div>
