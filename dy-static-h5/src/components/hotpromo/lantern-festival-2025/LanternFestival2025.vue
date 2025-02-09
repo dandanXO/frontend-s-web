@@ -352,7 +352,8 @@ const router = useRouter();
 const totalValidBet = ref(0);
 const bonus1 = ref(0);
 
-const lantern = ref(0);
+const lanternLighted = ref(0);
+const lanternAvailable = ref(0);
 const totalDeposit = ref(0);
 
 const tabValue = ref(1);
@@ -454,7 +455,8 @@ const fetchData = async () => {
     bonus1.value = res1.data?.bonus || 0;
 
     totalDeposit.value = res2.data?.totalDeposit || 0;
-    lantern.value = res2.data?.lantern || 0;
+    lanternLighted.value = res2.data?.lanternLighted || 0;
+    lanternAvailable.value = res2.data?.lanternAvailable || 0;
   } catch (error) {
     console.log(error);
   }
@@ -475,7 +477,6 @@ onMounted(() => {
 }
 
 .livepoker-rebate-container {
-  padding: 5px 20px;
   width: 100%;
   height: 100%;
   max-width: 1200px;
