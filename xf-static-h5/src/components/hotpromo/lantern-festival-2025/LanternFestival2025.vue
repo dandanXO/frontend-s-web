@@ -152,7 +152,7 @@
               </div>
               <div class="item">
                 <div class="item-num">6</div>
-                为避免文字理解差异，雷火电竞保留此活动最终解释权；
+                为避免文字理解差异，兴发电竞保留此活动最终解释权；
               </div>
             </div>
           </div>
@@ -317,7 +317,7 @@
               </div>
               <div class="item">
                 <div class="item-num">6</div>
-                为避免文字理解差异，雷火电竞保留此活动最终解释权；
+                为避免文字理解差异，兴发电竞保留此活动最终解释权；
               </div>
             </div>
           </div>
