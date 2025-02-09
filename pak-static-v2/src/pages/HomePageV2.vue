@@ -297,7 +297,17 @@
                     <template v-if="index < showValue">
                       <div
                         class="game-platform-item"
-                        @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                        @click="
+                          playGame(
+                            item.name,
+                            item.platformCode,
+                            item.code,
+                            item.status,
+                            item.gameType,
+                            item.id,
+                            item.demo
+                          )
+                        "
                         data-aos="zoom-in"
                         data-aos-duration="1200"
                         data-aos-once="true"
@@ -335,7 +345,9 @@
                     <template v-if="index < showValue">
                       <div
                         class="game-platform-item"
-                        @click="playGame(item.name, subGameCode, item.code, item.status, item.gameType, item.id)"
+                        @click="
+                          playGame(item.name, subGameCode, item.code, item.status, item.gameType, item.id, item.demo)
+                        "
                         data-aos="zoom-in"
                         data-aos-duration="1200"
                         data-aos-once="true"
@@ -1112,8 +1124,8 @@ const router = useRouter();
 const store = userStore();
 
 const allGames = ref(null);
-const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
-  allGames.value.open(gameName, platformCode, gameCode, gameType);
+const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId, demo) => {
+  allGames.value.open(gameName, platformCode, gameCode, gameType, demo);
 };
 
 const isGameLoading = ref(true);

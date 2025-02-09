@@ -34,7 +34,7 @@
               />
               <template v-else>{{ p.label }}</template> -->
               <img :src="require('../assets/promo/menu-' + p.img + '.png')" />
-              {{ p.label.zh||p.label }}
+              {{ p.label.zh || p.label }}
             </div>
           </div>
         </div>
@@ -66,6 +66,9 @@
       <div class="selected-promo-wrapper" :class="`bg__${selectedPromo.promoCode}`">
         <div
           class="banner-container"
+          :style="{
+            'min-height': selectedPromo.redirectUrl === 'xf1-ag-yuanxiaohongbao' ? 'unset' : '500px'
+          }"
           v-if="selectedPromo.redirectUrl !== 'cny-hongbaoyu' || selectedPromo.redirectUrl !== 'xf-eurocup-hongbao'"
         >
           <template v-if="selectedPromo.promoCode === 'cny-spinwheel'">
@@ -88,17 +91,26 @@
         <div
           class="inner"
           :class="{
-            hongbao: selectedPromo.promoCode === 'cny-hongbaoyu' ||
+            hongbao:
+              selectedPromo.promoCode === 'cny-hongbaoyu' ||
               selectedPromo.redirectUrl === 'cny-hongbaoyu' ||
               selectedPromo.promoCode === 'xf-eurocup-hongbao' ||
               selectedPromo.redirectUrl === 'xf-eurocup-hongbao',
             fullwidth: selectedPromo.redirectUrl === 'xf1-cny2025-red-envelope'
-          }
-          "
+          }"
           :style="{
             backgroundImage: selectedPromo?.desktopImgBackgroundUrl
               ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
-              : 'none'
+              : 'none',
+            margin: ['xf1-ag-yuanxiaohongbao', 'xf1-lantern-festival-bonus'].includes(selectedPromo.redirectUrl)
+              ? '0px auto'
+              : '20px auto',
+            'max-width': ['xf1-ag-yuanxiaohongbao', 'xf1-lantern-festival-bonus'].includes(selectedPromo.redirectUrl)
+              ? 'unset'
+              : '1400px',
+            width: ['xf1-ag-yuanxiaohongbao', 'xf1-lantern-festival-bonus'].includes(selectedPromo.redirectUrl)
+              ? '100%'
+              : '95%'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
@@ -612,7 +624,6 @@ export default defineComponent({
         }
 
         .banner-container {
-
           .promo-bg {
             background-size: 100% 100%;
 
