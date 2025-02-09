@@ -11,6 +11,8 @@
     <HongBaoYuPromo v-if="list.redirectUrl === 'hongbaoyu'" />
     <WelcomeTaskPromo v-if="list.redirectUrl === 'welcomenewuser'" />
     <PrivilegeInvite v-if="store.token && list.redirectUrl === 'invitefriend'" />
+    <HongBaoYu2025 v-if="list.redirectUrl === 'xf1-cny2025-red-envelope'" :promo-code="list.promoCode" />
+    <OfficialGiftPromo v-if="list.redirectUrl === 'xf-official-gift'" :params="list.param" />
     <SlotLacky8 v-if="list.redirectUrl === 'xf-lucky-slot' && store.token" :promo-code="list.promoCode" />
     <BonusSpinWheelPromo v-if="list.redirectUrl === 'cny-spinwheel'" />
     <ReturnPromo v-if="list.redirectUrl === 'xf-return-promo'" />
@@ -195,7 +197,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, defineAsyncComponent } from "vue";
 import { userStore } from "stores/index";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -217,6 +219,9 @@ import ReturnPromo from "../components/hotpromo/returnPromo/ReturnPromo.vue";
 import DepositAwardPromo from "../components/hotpromo/depositAward/DepositAwardPromo.vue";
 import SlotsRebatePromo from "../components/hotpromo/slotsrebate/SlotsRebatePromo.vue";
 import SlotsBonusPromo from "../components/hotpromo/slotsbonus/SlotsBonusPromo.vue";
+import OfficialGiftPromo from "./hotpromo/officialGift/OfficialGiftPromo.vue";
+
+const HongBaoYu2025 = defineAsyncComponent(() => import("../components/hotpromo/hongbaoyu2025/HongBaoYu2025.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -235,6 +240,8 @@ export default defineComponent({
     BonusSpinWheelPromo,
     ReturnPromo,
     SlotLacky8,
+    HongBaoYu2025,
+    OfficialGiftPromo,
     DepositAwardPromo,
     SlotsRebatePromo,
     SlotsBonusPromo
@@ -859,6 +866,130 @@ export default defineComponent({
           }
         }
       }
+    }
+  }
+}
+
+.section-bg {
+  border: 1px solid rgba(172, 212, 246, 1);
+  border-radius: 12px;
+  padding: 30px;
+  font-family: "PingFang";
+  background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%) !important;
+  border: 1px solid #be9457 !important;
+  color: #fff;
+
+  &.cny {
+    background: url("../assets/images/promotion/hotpromo/hongbaoyu2025/section-bg.png") !important;
+    background-size: 100% 100% !important;
+    border: none !important;
+    color: #4C4C6C !important;
+  }
+
+  .section-table {
+    th {
+      height: 56px;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 28px;
+      color: #fff !important;
+      box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
+      0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) !important;
+      white-space: pre-wrap;
+
+      &:not(:last-child) {
+        border-right: 1px solid #dcdce8;
+      }
+    }
+
+    td {
+      border: 1px solid #484c5770;
+      color: #fff;
+      background-color: transparent !important;
+    }
+
+    &.cny {
+      th {
+        background: linear-gradient(180deg, #FFE190 0%, #FF9F40 100%) !important;
+        color: #894800 !important;
+      }
+
+      td {
+        color: #4C4C6C !important;
+      }
+    }
+  }
+
+  .element-bg {
+    color: #fff !important;
+    box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
+    0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+    background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) !important;
+  }
+
+  .ribbon {
+    clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
+    background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    width: fit-content;
+    padding: 0px 20px 0px 10px;
+    white-space: nowrap;
+    height: fit-content;
+
+    &.cny {
+      background: linear-gradient(180deg, #FFE190 0%, #FF9F40 100%);
+      color: #894800;
+    }
+  }
+
+  .title-img {
+    aspect-ratio: 960 / 80;
+    background: url("../assets/images/promotion/hotpromo/common/promo-details-title-bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 290px 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  .item {
+    color: #fff;
+    padding-left: 24px;
+    display: flex;
+    gap: 10px;
+    font-size: 1rem;
+
+    .item-num {
+      font-size: 1rem;
+      line-height: 1;
+      border-radius: 50%;
+      height: 28px !important;
+      width: 28px !important;
+      min-width: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2px;
+      color: #fff !important;
+      box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
+      0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) !important;
+    }
+  }
+
+  &.cny {
+    .item, .title-img {
+      color: #4C4C6C;
     }
   }
 }

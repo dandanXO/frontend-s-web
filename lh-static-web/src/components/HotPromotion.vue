@@ -23,6 +23,7 @@
     <LPLSummer v-if="list.redirectUrl === 'lh1-lpl-game'" />
     <LPLLCK v-if="list.redirectUrl === 'lh1-lpl-lck'" />
     <Cny2024Promo v-if="list.redirectUrl === 'lh1-cny2024-promo'" />
+    <AgYuanxiaohongbao v-if="list.redirectUrl === 'lh1-ag-yuanxiaohongbao'" :promo-code="list.promoCode" />
     <div style="text-align: center" v-if="list.redirectUrl === 'lh1-feedback-award'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -44,6 +45,11 @@
     <DemaciaCup1 v-if="list.redirectUrl === 'lh-demacia-cup-1'" :promo-param="listParam" />
     <LplPKlck2025loss
       v-if="list.redirectUrl === 'lh1-lpl-lck-2025-loss'"
+      :promo-param="listParam"
+      :promo-code="list.promoCode"
+    />
+    <LanternFestival2025
+      v-if="list.redirectUrl === 'lh1-lantern-festival-bonus'"
       :promo-param="listParam"
       :promo-code="list.promoCode"
     />
@@ -163,6 +169,7 @@ import Cba30Dream from "../components/hotpromo/cba30-dream/Cba30Dream.vue";
 import PerfectWorldMajor2024 from "../components/hotpromo/perfect-world-major-2024/PerfectWorldMajor2024.vue";
 import DemaciaCup1 from "../components/hotpromo/demacia-cup-1/DemaciaCup1.vue";
 import LplPKlck2025loss from "../components/hotpromo/lpl-lck-2025-loss/lpl-lck-2025-loss.vue";
+import LanternFestival2025 from "../components/hotpromo/lantern-festival-2025/LanternFestival2025.vue";
 import LiveDailyRebates from "../components/hotpromo/live-daily-rebates/LiveDailyRebates.vue";
 import Dota2Pgl from "../components/hotpromo/dota2-pgl/Dota2Pgl.vue";
 import NewVipRebate from "../components/hotpromo/newVipRebate/NewVipRebate.vue";
@@ -174,6 +181,7 @@ import Dota2Ti13 from "../components/hotpromo/dota2-ti13/Dota2Ti13.vue";
 import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
 import LPLSummer from "../components/hotpromo/lpl-summer/LPLSummer.vue";
 import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
+import AgYuanxiaohongbao from "../components/hotpromo/agyuanxiaohongbao/AgYuanxiaohongbao.vue";
 import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
 import CnyStepGame2024Promo from "../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue";
 import LhStepGamePromo from "../components/hotpromo/lhstepgame/LhStepGamePromo.vue";
@@ -259,6 +267,7 @@ export default defineComponent({
     GiftPromo,
     LPLSummer,
     Cny2024Promo,
+    AgYuanxiaohongbao,
     BbDacha2024Promo,
     CnyStepGame2024Promo,
     DragonCardPromo,
@@ -330,7 +339,8 @@ export default defineComponent({
     Dota2BlastSlam2025,
     DarkModePromo,
     PGLOnFireBuenosAires2025,
-    SkyesportsSouvenir2025
+    SkyesportsSouvenir2025,
+    LanternFestival2025
   },
   props: {
     list: {
@@ -1003,8 +1013,8 @@ export default defineComponent({
       font-size: 1rem;
       font-weight: 400;
       line-height: 28px;
-      color: #fff !important;
-      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%) !important;
+      color: #fff ;
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%) ;
       white-space: pre-wrap;
 
       &:not(:last-child) {
@@ -1019,7 +1029,7 @@ export default defineComponent({
 
     &.cny {
       th {
-        background: linear-gradient(180deg, #FFE190 0%, #FF9F40 100%) !important;
+        background: linear-gradient(180deg, #ffe190 0%, #ff9f40 100%) !important;
         color: #894800 !important;
       }
     }
@@ -1048,7 +1058,7 @@ export default defineComponent({
     white-space: nowrap;
 
     &.cny {
-      background: linear-gradient(180deg, #FFE190 0%, #FF9F40 100%);
+      background: linear-gradient(180deg, #ffe190 0%, #ff9f40 100%);
       color: #894800;
     }
   }
@@ -1067,6 +1077,23 @@ export default defineComponent({
     font-weight: bold;
     letter-spacing: 3px;
     margin: 0 auto;
+  }
+
+  .title-img2 {
+    aspect-ratio: 2952 / 176;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 905px 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin: 0 auto;
+    color: transparent;
+    background: linear-gradient(270.62deg, #E6CC93 -6.62%, #FFF1E1 101.55%);
+    -webkit-background-clip: text;
   }
 
   .item {

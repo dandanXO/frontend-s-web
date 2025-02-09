@@ -15,7 +15,11 @@ console.log(window.location.hostname);
 const globalLinks = ["xf13140"];
 const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
 
-const globalAndCNLinks = ["xingfabet6", "xingfabet8"];
+const globalAndCNLinks = [
+  "xf99161.com",
+  "xingfabet6",
+  "xingfabet8"
+];
 const isGlobalAndCN = globalAndCNLinks.some((link) => window.location.hostname.includes(link));
 
 const REPLACEMENT_DOMAIN = "random";
