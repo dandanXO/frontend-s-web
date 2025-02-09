@@ -29,11 +29,14 @@
     <DailyCheckin v-else-if="list.redirectUrl === 'lh1-daily-checkin'" :promo-info="list" />
     <NewFootball v-else-if="list.redirectUrl === 'lh1-football'" :promo-code="list.promoCode" />
     <EslOneBkk2024 v-else-if="list.redirectUrl === 'lh1-esl-one-bangkok-2024'" :promo-code="list.promoCode" />
+    <AgYuanxiaohongbao v-else-if="list.redirectUrl === 'lh1-ag-yuanxiaohongbao'" :promo-code="list.promoCode" />
 
     <Cba30Dream v-else-if="list.redirectUrl === 'lh1-cba30-dream'" :promo-code="list.promoCode" />
     <PerfectWorldMajor2024 v-else-if="list.redirectUrl === 'lh1-perfect-world-major-2024'" :promo-param="listParam" />
     <DemaciaCup1 v-else-if="list.redirectUrl === 'lh-demacia-cup-1'" :promo-param="listParam" />
     <Lh1LplLck2025loss v-else-if="list.redirectUrl === 'lh1-lpl-lck-2025-loss'" :promo-param="listParam" />
+    <LanternFestival2025 v-else-if="list.redirectUrl === 'lh1-lantern-festival-bonus'" :promo-param="listParam" />
+
     <LiveDailyRebates v-else-if="list.redirectUrl === 'lh1-live-daily-rebates'" :promo-code="list.promoCode" />
     <NewVipRebate v-else-if="list.redirectUrl === 'lh1-newvip-rebate'" :promo-code="list.promoCode" />
     <LoLS14 v-else-if="list.redirectUrl === 'lh1-lol-s14'" :promo-code="list.promoCode" />
@@ -90,6 +93,7 @@ import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import moment from "moment";
 import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
+import AgYuanxiaohongbao from "./hotpromo/ag-yuanxiaohongbao/AgYuanxiaohongbao.vue";
 import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
 import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue";
 import VctBangkok from "components/hotpromo/vct-bangkok/VctBangkok.vue";
@@ -128,6 +132,9 @@ const DemaciaCup1 = defineAsyncComponent(() => import("./hotpromo/demacia-cup-1/
 const Lh1LplLck2025loss = defineAsyncComponent(() =>
   import("./hotpromo/lh1-lpl-lck-2025-loss/lh1-lpl-lck-2025-loss.vue")
 );
+const LanternFestival2025 = defineAsyncComponent(() =>
+  import("./hotpromo/lantern-festival-2025/LanternFestival2025.vue")
+);
 const LiveDailyRebates = defineAsyncComponent(() => import("./hotpromo/live-daily-rebates/LiveDailyRebates.vue"));
 const NewVipRebate = defineAsyncComponent(() => import("../components/hotpromo/newVipRebate/newVipRebate.vue"));
 const LoLS14 = defineAsyncComponent(() => import("../components/hotpromo/lol-s14/LoLS14.vue"));
@@ -146,10 +153,12 @@ const Belgrade2025Promo = defineAsyncComponent(() =>
   import("../components/hotpromo/belgrade-2025-promo/Belgrade2025Promo.vue")
 );
 
-const KatowiceS25 = defineAsyncComponent(()=>import("./hotpromo/katowice-s-25/KatowiceS25.vue"))
+const KatowiceS25 = defineAsyncComponent(() => import("./hotpromo/katowice-s-25/KatowiceS25.vue"));
 const lh1Vctcn = defineAsyncComponent(() => import("./hotpromo/lh1-vctcn/lh1Vctcn.vue"));
 const DreamLeagueS25 = defineAsyncComponent(() => import("../components/hotpromo/dream-league-s25/DreamLeagueS25.vue"));
-const Dota2BlastSlam2025 = defineAsyncComponent(() => import("../components/hotpromo/dota2-blast-slam-2025/Dota2BlastSlam2025.vue"));
+const Dota2BlastSlam2025 = defineAsyncComponent(() =>
+  import("../components/hotpromo/dota2-blast-slam-2025/Dota2BlastSlam2025.vue")
+);
 const DarkModePromo = defineAsyncComponent(() => import("../components/hotpromo/dark-mode/DarkModePromo.vue"));
 
 export default defineComponent({
@@ -177,10 +186,12 @@ export default defineComponent({
     ChallengeComebackPromo,
     OfficialGiftPromo,
     EslOneBkk2024,
+    AgYuanxiaohongbao,
     Cba30Dream,
     PerfectWorldMajor2024,
     DemaciaCup1,
     Lh1LplLck2025loss,
+    LanternFestival2025,
     LiveDailyRebates,
     NewVipRebate,
     LoLS14,
@@ -618,12 +629,13 @@ export default defineComponent({
   }
 
   .claim-title-icon {
-    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/section-title-img.png") no-repeat center center;
+    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/section-title-img.png") no-repeat center
+      center;
     background-size: 100% 100%;
   }
 
   .claim-coin-icon {
-    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon1.png")  no-repeat center center;
+    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon1.png") no-repeat center center;
     background-size: 100% 100%;
   }
 
@@ -641,7 +653,7 @@ export default defineComponent({
     aspect-ratio: 762/630;
     width: auto;
     height: 100%;
-    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-btn.png")  no-repeat center center;
+    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-btn.png") no-repeat center center;
     background-size: 100% 100%;
   }
 
@@ -668,7 +680,7 @@ export default defineComponent({
 
     &.cny {
       th {
-        background: linear-gradient(180deg, #FFE190 0%, #FF9F40 100%) !important;
+        background: linear-gradient(180deg, #ffe190 0%, #ff9f40 100%) !important;
         color: #894800 !important;
       }
     }
@@ -695,7 +707,7 @@ export default defineComponent({
     padding: 0px 20px 0px 10px;
 
     &.cny {
-      background: linear-gradient(180deg, #FFE190 0%, #FF9F40 100%);
+      background: linear-gradient(180deg, #ffe190 0%, #ff9f40 100%);
       color: #894800;
     }
   }
@@ -761,12 +773,12 @@ export default defineComponent({
     }
 
     .claim-coin-icon {
-      background: url("../assets/images/promotion/hotpromo/common/claim-coin-icon.svg")  no-repeat center center;
+      background: url("../assets/images/promotion/hotpromo/common/claim-coin-icon.svg") no-repeat center center;
       background-size: 100% 100%;
     }
 
     .claim-gift-icon {
-      background: url("../assets/images/promotion/hotpromo/common/claim-gift-icon.svg")  no-repeat center center;
+      background: url("../assets/images/promotion/hotpromo/common/claim-gift-icon.svg") no-repeat center center;
       background-size: 100% 100%;
     }
 

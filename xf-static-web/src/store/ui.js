@@ -8,7 +8,10 @@ export const uiStore = defineStore("ui-store", {
       orientation: "landscape",
       downloadUrl: "",
       maintenanceStartTime: "",
-      maintenanceEndTime: ""
+      maintenanceEndTime: "",
+      notificationQueue: [],
+      notificationZIndex: 2000,
+
     };
   },
   actions: {
@@ -24,6 +27,15 @@ export const uiStore = defineStore("ui-store", {
     },
     orientationLandscape() {
       this.orientation = "landscape";
+    },
+    notify(options) {
+      const id = `${Date.now()}-${Math.floor(Math.random() * 100)}`;
+      this.notificationQueue.push({
+        ...options,
+        id,
+        zIndex: this.notificationZIndex++,
+        duration: options.duration ?? 3000
+      });
     },
     setTitle(title) {
       this.title = title;

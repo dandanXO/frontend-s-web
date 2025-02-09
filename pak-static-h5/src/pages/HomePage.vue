@@ -219,7 +219,9 @@
                 <template v-if="item.type && item.type === 'game'">
                   <swiper-slide
                     class="platform-game-item btn-effect"
-                    @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                    @click="
+                      playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id, item.demo)
+                    "
                   >
                     <div>
                       <div class="platform-game-img">
@@ -262,7 +264,7 @@
                 <template v-else>
                   <swiper-slide
                     class="platform-game-item btn-effect"
-                    @click="playGame(item.name, item.code, '', 'OPEN', 'LIVE')"
+                    @click="playGame(item.name, item.code, '', 'OPEN', 'LIVE', item.demo)"
                   >
                     <div>
                       <div class="platform-game-img">
@@ -304,7 +306,9 @@
                 <template v-if="item.type && item.type === 'game'">
                   <div
                     class="platform-game-item btn-effect"
-                    @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                    @click="
+                      playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id, item.demo)
+                    "
                   >
                     <div class="platform-game-img">
                       <div
@@ -346,7 +350,7 @@
                 <template v-else>
                   <div
                     class="platform-game-item btn-effect"
-                    @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+                    @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id, item.demo)"
                   >
                     <div class="platform-game-img">
                       <div
@@ -404,7 +408,7 @@
               <template v-for="(item, index) in livecasino" :key="index">
                 <swiper-slide
                   class="platform-game-item btn-effect"
-                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id, item.demo)"
                 >
                   <div
                     data-aos="zoom-in"
@@ -446,7 +450,7 @@
               <template v-for="(item, index) in livecasino" :key="index">
                 <div
                   class="platform-game-item btn-effect"
-                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id, item.demo)"
                 >
                   <div>
                     <img src="../assets/images/index/live/item-game-maintenance.png" />
@@ -623,7 +627,7 @@
                 <!-- <template v-if="item.code === 'JILI'"> -->
                 <swiper-slide
                   class="platform-game-item btn-effect"
-                  @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
+                  @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id, item.demo)"
                 >
                   <div
                     data-aos="zoom-in"
@@ -677,7 +681,7 @@
                 <!-- <template v-if="item.code === 'JILI'"> -->
                 <div
                   class="platform-game-item btn-effect"
-                  @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
+                  @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id, item.demo)"
                 >
                   <div class="platform-game-img">
                     <div
@@ -736,7 +740,7 @@
               <template v-for="(item, index) in fishGameJILIList" :key="index">
                 <swiper-slide
                   class="platform-game-item btn-effect"
-                  @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
+                  @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id, item.demo)"
                 >
                   <div
                     data-aos="zoom-in"
@@ -775,7 +779,7 @@
               <template v-for="(item, index) in fishGameJDBList" :key="index">
                 <swiper-slide
                   class="platform-game-item btn-effect"
-                  @click="playGame(item.name, 'JDB', item.code, item.status, item.gameType, item.id)"
+                  @click="playGame(item.name, 'JDB', item.code, item.status, item.gameType, item.id, item.demo)"
                 >
                   <div
                     data-aos="zoom-in"
@@ -892,7 +896,7 @@
               <template v-for="(item, index) in fishing" :key="index">
                 <div
                   class="platform-game-item btn-effect"
-                  @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                  @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id, item.demo)"
                   data-aos="zoom-in"
                   data-aos-delay="100"
                   data-aos-duration="1200"
@@ -929,7 +933,7 @@
             <template v-for="(item, index) in fishGameJILIList" :key="index">
               <div
                 class="platform-game-item btn-effect"
-                @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
+                @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id, item.demo)"
               >
                 <div class="platform-game-img">
                   <div
@@ -960,7 +964,7 @@
             <template v-for="(item, index) in fishGameJDBList" :key="index">
               <div
                 class="platform-game-item btn-effect"
-                @click="playGame(item.name, 'JDB', item.code, item.status, item.gameType, item.id)"
+                @click="playGame(item.name, 'JDB', item.code, item.status, item.gameType, item.id, item.demo)"
               >
                 <div class="platform-game-img">
                   <div
@@ -1002,7 +1006,7 @@
             <template v-for="(item, index) in sport" :key="index">
               <div
                 class="platform-game-item btn-effect"
-                @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+                @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id, item.demo)"
               >
                 <img src="../assets/images/index/sport/item-game-maintenance.png" />
                 <div
@@ -1184,7 +1188,17 @@
                     <template v-if="index < showValue">
                       <div
                         class="game-platform-item"
-                        @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                        @click="
+                          playGame(
+                            item.name,
+                            item.platformCode,
+                            item.code,
+                            item.status,
+                            item.gameType,
+                            item.id,
+                            item.demo
+                          )
+                        "
                         data-aos="zoom-in"
                         data-aos-duration="1200"
                         data-aos-once="true"
@@ -1222,7 +1236,9 @@
                     <template v-if="index < showValue">
                       <div
                         class="game-platform-item"
-                        @click="playGame(item.name, subGameCode, item.code, item.status, item.gameType, item.id)"
+                        @click="
+                          playGame(item.name, subGameCode, item.code, item.status, item.gameType, item.id, item.demo)
+                        "
                         data-aos="zoom-in"
                         data-aos-duration="1200"
                         data-aos-once="true"
@@ -2042,8 +2058,8 @@ const router = useRouter();
 const store = userStore();
 
 const allGames = ref(null);
-const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
-  allGames.value.open(gameName, platformCode, gameCode, gameType);
+const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId, demo) => {
+  allGames.value.open(gameName, platformCode, gameCode, gameType, demo);
 };
 
 const isGameLoading = ref(true);
