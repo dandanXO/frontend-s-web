@@ -179,10 +179,18 @@
             </div>
             <div class="livepoker-rebate-section-right">
               <div class="bonus-image" :class="{ disabled: lanternLighted <= 0 }">
-                <img src="../../../assets/images/promotion/hotpromo/lantern-festival-2025/lantern-festival-lanterns.png" alt="" width="100%" />
+                <img
+                  src="../../../assets/images/promotion/hotpromo/lantern-festival-2025/lantern-festival-lanterns.png"
+                  alt=""
+                  width="100%"
+                />
               </div>
               <div class="bonus-image" @click="handleClaimBonus2" :class="{ disabled: lanternAvailable <= 0 }">
-                <img src="../../../assets/images/promotion/hotpromo/lantern-festival-2025/lantern-festival-lit-btn.png" alt="" width="100%" />
+                <img
+                  src="../../../assets/images/promotion/hotpromo/lantern-festival-2025/lantern-festival-lit-btn.png"
+                  alt=""
+                  width="100%"
+                />
               </div>
             </div>
           </div>
@@ -348,7 +356,8 @@ const store = userStore();
 const totalValidBet = ref(0);
 const bonus1 = ref(0);
 
-const lantern = ref(0);
+const lanternLighted = ref(0);
+const lanternAvailable = ref(0);
 const totalDeposit = ref(0);
 
 const tabValue = ref(1);
@@ -456,7 +465,8 @@ const fetchData = async () => {
     bonus1.value = res1.data?.bonus || 0;
 
     totalDeposit.value = res2.data?.totalDeposit || 0;
-    lantern.value = res2.data?.lantern || 0;
+    lanternLighted.value = res2.data?.lanternLighted || 0;
+    lanternAvailable.value = res2.data?.lanternAvailable || 0;
   } catch (error) {
     console.log(error);
   }
@@ -480,7 +490,6 @@ onMounted(() => {
   justify-content: center;
 }
 .livepoker-rebate-container {
-  margin-top: 20px;
   width: 1200px;
   height: 100%;
 }
