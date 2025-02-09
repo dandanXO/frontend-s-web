@@ -823,6 +823,7 @@ export default {
     defaultVip: 'VIP mặc định',
     defaultAgentVip: 'VIP đại lý mặc định',
     delete: 'Xóa',
+    demo: 'Hãy thử nó',
     runAtOnce: 'Chạy ngay lập tức',
     deleteRole: 'Xóa vai trò',
     deleteRanking: 'Xóa xếp hạng',
@@ -1468,6 +1469,7 @@ export default {
     superiorAffiliatePaymentChannel:
       'Kênh Thanh Toán Của Đối Tác Liên Kết Cấp Cao',
     supplement: 'Bổ Sung',
+    supplementAmount: 'Bổ Sung Số lượng',
     supplementDeposit: 'Bổ Sung Tiền Gửi',
     supportType: 'Loại Hỗ Trợ',
     sureWin: 'Chắc Chắn Chiến Thắng',
