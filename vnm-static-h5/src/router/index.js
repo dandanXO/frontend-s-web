@@ -157,6 +157,10 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("init", "1168864634732829");
       fbq("track", "PageView");
       user.isAffiliateA = true;
+    } else if (window.location.href.indexOf("t128f467.com") > -1) {
+      fbq("init", "1681908645691049");
+      fbq("track", "PageView");
+      user.isAffiliateA = true;
     }
   });
 

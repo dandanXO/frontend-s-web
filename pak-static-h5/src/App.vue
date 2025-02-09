@@ -82,6 +82,11 @@ export default defineComponent({
       // console.log("Device ID");
       // console.log(info);
       // console.log(info.identifier);
+      const isPwa = process.env.IS_PWA;
+      // alert(isPwa);
+      if (isPwa === "1") {
+        sessionStorage.setItem("IS_PWA", "1");
+      }
     };
 
     const initOrientation = () => {
@@ -157,28 +162,134 @@ export default defineComponent({
     //   }
     // };
 
+    const getRbParams = () => {
+      const params = JSON.parse(localStorage.getItem(`__rb_${process.env.ROUTER_BASE}_params`));
+      // alert(params);
+
+      if (!params) {
+        console.warn("No params found in localStorage");
+        return null;
+      }
+
+      const extractParams = (paramsString) => {
+        const result = {};
+        const pairs = paramsString.split("&");
+        pairs.forEach((pair) => {
+          const [key, value] = pair.split("=");
+          if (key && value) {
+            result[key] = decodeURIComponent(value);
+          }
+        });
+        return result;
+      };
+
+      const parsedParams = extractParams(params);
+      return {
+        linkId: parsedParams["link_id"] ?? "",
+        fbclid: parsedParams["fbclid"] ?? "",
+        adCode: parsedParams["adCode"] ?? ""
+      };
+    };
+
+    const sendFacebookInfo = () => {
+      // const urlParams = new URLSearchParams(window.location.search);
+      // const fbclid = urlParams.get("fbclid");
+
+      const { fbclid, linkId } = getRbParams() || {};
+
+      const fbc = fbclid;
+      const siteCode = "PAK";
+
+      const getCookie = (name) => {
+        const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
+        return match ? decodeURIComponent(match[1]) : null;
+      };
+
+      // const fbp = getCookie("_fbp");
+      // Extract the last portion of _fbp
+      const fbp = (() => {
+        const rawFbp = getCookie("_fbp");
+        return rawFbp ? rawFbp.split(".").pop() : null;
+      })();
+
+      // alert(`fbc: ${fbc}`);
+
+      const payload = new URLSearchParams({
+        fbp: fbp || "",
+        fbc: fbc || "",
+        siteCode: siteCode,
+        linkId: linkId || ""
+      });
+
+      // alert(`payload: ${payload}`);
+
+      // Make the POST request
+      fetch("https://tljwn.plan2wtion.com/app/facebookInfo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: payload.toString()
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          // alert(JSON.stringify(data));
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    };
+
     const trackH5Affiliate = () => {
       const omitSites = ["bw3.genoortisy.com"];
 
-      var affiliateCode = "";
-      if (omitSites.includes(window.location.host)) {
-        affiliateCode = "4F09FA";
-      } else {
-        // affiliateCode = "3B1BFB";
-        affiliateCode = "";
-      }
+      if (isInPwa()) {
+        api.get(`/app/pwa/log?step=OPEN&siteCode=${process.env.SITE}`).then((res2) => {
+          console.log("OPEN");
+        });
 
-      sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
-      // api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
-      //   if (res.code === 0) {
-      //     sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-      //     sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
-      //     sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
-      //     affAppToken.value = res.data.adjust_app_token;
-      //     // initAdjustEventTrack();
-      //     // alert(affAppToken.value);
-      //   }
-      // });
+        const hostname = window.location.hostname.replace("www.", "");
+        var { adCode } = getRbParams() || {};
+        if (!adCode) {
+          adCode = "";
+        }
+        //Use thisApi to get AffiliateCode/FbPixelId/ WebPushId for PWA.
+        api
+          .get(`/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${adCode}`)
+          .then((res) => {
+            console.log(res);
+            const { affiliateCode, facebookId, pushId } = res.data;
+            sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+            console.log("Init FB");
+            fbq("init", facebookId);
+            fbq("track", "PageView");
+            store.isFbPixel = true;
+
+            initEngageLabPush();
+            sendFacebookInfo();
+          });
+      } else {
+        var affiliateCode = "";
+        if (omitSites.includes(window.location.host)) {
+          affiliateCode = "4F09FA";
+        } else {
+          // affiliateCode = "3B1BFB";
+          affiliateCode = "";
+        }
+
+        sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+        // api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
+        //   if (res.code === 0) {
+        //     sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+        //     sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
+        //     sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+        //     affAppToken.value = res.data.adjust_app_token;
+        //     // initAdjustEventTrack();
+        //     // alert(affAppToken.value);
+        //   }
+        // });
+      }
     };
 
     const onDeviceReady = () => {
@@ -234,7 +345,9 @@ export default defineComponent({
       if (Platform.is.capacitor && Platform.is.android) {
         // console.log("STATUSBARR");
         await StatusBar.hide();
-        await StatusBar.setOverlaysWebView({ overlay: true });
+        setTimeout(async () => {
+          await StatusBar.setOverlaysWebView({ overlay: true });
+        }, 500);
         await StatusBar.setBackgroundColor({ color: "#3E1474" });
         await StatusBar.setStyle({ style: Style.Dark });
 
@@ -319,6 +432,23 @@ export default defineComponent({
       });
     };
 
+    const initEngageLabPush = (appKeyId) => {
+      // Supported versions: 2.1.9+
+      console.log("initEngageLabPush");
+    };
+
+    // Push initialization logic
+    const initializePush = (appKeyId) => {
+      if (isInPwa()) {
+        const fbclid = window.localStorage.getItem("fbclid");
+        if (fbclid && !window.location.search.includes("fbclid")) {
+          const url = new URL(window.location.href);
+          url.searchParams.set("fbclid", fbclid);
+          window.history.replaceState({}, "", url.toString());
+        }
+      }
+    };
+
     const checkIfVirtualMachine = async () => {
       const info = await Device.getInfo();
 
@@ -373,6 +503,7 @@ export default defineComponent({
       }
       fbq("track", "PageView");
       store.isFbPixel = true;
+      store.isOldFBPixel = true;
 
       const isNewUser = isInPwa() ? localStorage.getItem("newUserFtd") : sessionStorage.getItem("newUserFtd");
       if (isNewUser) {
@@ -390,11 +521,11 @@ export default defineComponent({
       checkServerStatus();
       checkSID();
       // getCSA();
-      // getAppInfo();
+      getAppInfo();
       initOrientation();
       loadSocialMediaLinks();
 
-      if (isAndroid()) {
+      if (isAndroid() && !isInPwa()) {
         document.addEventListener(
           "deviceready",
           () => {

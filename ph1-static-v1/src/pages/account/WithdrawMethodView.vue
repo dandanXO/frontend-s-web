@@ -550,6 +550,7 @@ const isNoBankCard = ref(false);
 const filterCards = (type) => {
   isLoadingBankCard.value = true;
 
+  bankCardList.value = [];
   api
     .get("/session/bankCard")
     .then((res) => {
@@ -852,7 +853,7 @@ const isValidCardNumber = () => {
     ? "Please Enter Card Number"
     : !cardNumber.includes(".")
     ? true
-    : "Account number must not contain a decimal point"
+    : "Account number must not contain a decimal point";
 
   if (
     cardNumber &&

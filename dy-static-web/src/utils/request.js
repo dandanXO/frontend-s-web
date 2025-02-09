@@ -15,6 +15,8 @@ console.log(window.location.hostname);
 const isGlobalDY = window.location.hostname.indexOf("dy988.") > -1 || window.location.hostname.indexOf("dy723.") > -1 || window.location.hostname.indexOf("dy639.") > -1;
 
 const globalAndCNLinks = [
+  "dy61190.com",
+  "dy01065.com",
   "dy044.cc",
   "dy465.cc",
   "dy080.cc",

@@ -78,6 +78,7 @@
               selectedPromo.redirectUrl === 'dy2-livepoker-rebate' ||
               selectedPromo.redirectUrl === 'dy2-football' ||
               selectedPromo.redirectUrl === 'dy2-blackmyth-wukong' ||
+              selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ||
               selectedPromo.promoCode === 'dy2-intel-esl',
             isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual',
             isDuanwuBanner: selectedPromo.promoCode === 'dy-duanwujie24',
@@ -153,7 +154,16 @@
           :style="{
             backgroundImage: selectedPromo?.desktopImgBackgroundUrl
               ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
-              : 'none'
+              : 'none',
+            margin: ['dy1-ag-yuanxiaohongbao', 'dy1-lantern-festival-bonus'].includes(selectedPromo.redirectUrl)
+              ? '0px auto'
+              : '20px auto',
+            'max-width': ['dy1-ag-yuanxiaohongbao', 'dy1-lantern-festival-bonus'].includes(selectedPromo.redirectUrl)
+              ? 'unset'
+              : '1400px',
+            width: ['dy1-ag-yuanxiaohongbao', 'dy1-lantern-festival-bonus'].includes(selectedPromo.redirectUrl)
+              ? '100%'
+              : '95%'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
