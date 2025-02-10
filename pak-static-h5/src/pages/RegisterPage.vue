@@ -445,6 +445,7 @@ export default defineComponent({
       if (refCode) {
         // hasAffiliate.value = true;
         regForm.referrer = refCode;
+        thirdPartyLoginInfo.referrer = refCode;
       }
     };
 
