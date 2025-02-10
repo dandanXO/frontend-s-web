@@ -17,7 +17,7 @@
         <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
         <div class="popout-dialog-container">
           <q-card style="background:transparent;width:100%;padding:0;">
-            <div class="txt-title">{{ $t('bank.areYouSureUnbind') }}</div>
+            <div class="text-h5 dialog-title" style="width:100%;text-align:center;margin:0 0 1rem 0;">{{ $t('bank.areYouSureUnbind') }}</div>
             <q-card-section>
               <q-form>
                 <div class="input-title">{{ $t("form.accountNumber") }}</div>
