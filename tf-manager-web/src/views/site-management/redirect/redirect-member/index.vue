@@ -105,7 +105,7 @@
             icon="el-icon-remove"
             size="mini"
             type="danger"
-            v-permission="['sys:site:redirect:del']"
+            v-permission="['sys:site:redirect:member:del']"
             @click="removeRedirectMember(scope.row.id)"
           />
         </template>
