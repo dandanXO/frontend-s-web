@@ -211,7 +211,8 @@ export default {
     completed: "Completed",
     deposit: "Deposit",
     betting: "Betting",
-    share: "Share"
+    share: "Share",
+    signinWithGoogle: "Google",
   },
   notify: {
     noRecord: "No Record",

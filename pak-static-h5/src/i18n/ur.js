@@ -208,7 +208,8 @@ export default {
     completed: "مکمل",
     deposit: "جمع",
     betting: "جوا",
-    share: "شیئر"
+    share: "شیئر",
+    signinWithGoogle: "Google",
   },
   notify: {
     noRecord: "کوئی ریکارڈ نہیں",
