@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="./css//font.css"
+      rel="stylesheet"
+    />
+    <script src="./js/tailwind.js"></script>
+  </head>
+  <script></script>
+  <body class="scrollbar-hidden">
+    <div class="max-w-[1200px] flex flex-col mx-auto">
+      <header
+        class="h-[122px] px-5 flex items-center justify-between bg-[#27273F] md:bg-transparent"
+      >
+        <img src="./images/logo.png" alt="" />
+      </header>
+      <main class="flex flex-col py-6 gap-10 mb-[200px] px-6 xl:px-0">
+        <section>
+          <div class="flex gap-4 items-center mb-6">
+            <img src="./images/header-icon1.png" alt="" />
+            <h2
+              class="text-[24px] text-white"
+              style="font-family: FZZhengHeiS-DB-GB"
+            >
+              热门游戏
+            </h2>
+          </div>
+          <div class="flex flex-col md:flex-row justify-between gap-6 xl:gap-0">
+            <div class="flex justify-center">
+              <img src="./images/hot-game-item1.png" alt="" />
+            </div>
+            <div class="flex justify-center">
+              <img src="./images/hot-game-item2.png" alt="" />
+            </div>
+            <div class="flex justify-center">
+              <img src="./images/hot-game-item3.png" alt="" />
+            </div>
+          </div>
+        </section>
+        <section>
+          <div
+            class="flex flex-col md:flex-row gap-6 md:gap-0 justify-between mb-6"
+          >
+            <div class="flex gap-4 items-center">
+              <img src="./images/header-icon2.png" alt="" />
+              <h2
+                class="text-[24px] text-white"
+                style="font-family: FZZhengHeiS-DB-GB"
+              >
+                最新好玩的游戏列表
+              </h2>
+            </div>
+            <div class="flex gap-4 items-center">
+              <div
+                class="card-tab text-white/80 font-bold cursor-pointer card-active"
+              >
+                全部游戏
+              </div>
+              <div class="card-tab text-white/80 font-bold cursor-pointer">
+                类型一
+              </div>
+              <div class="card-tab text-white/80 font-bold cursor-pointer">
+                类型二
+              </div>
+              <div class="card-tab text-white/80 font-bold cursor-pointer">
+                类型三
+              </div>
+            </div>
+          </div>
+          <div
+            id="card-wrapper"
+            class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4"
+          ></div>
+        </section>
+      </main>
+    </div>
+    <img class="absolute left-0 top-0" src="./images/bg-planet-2.png" alt="" />
+  </body>
+  <script>
+    // 生成卡片列表
+    const cardWrapper = document.querySelector("#card-wrapper");
+    const card_list = [
+    { img: "./images/cards/card-item1.png", name: "" },
+    { img: "./images/cards/card-item2.png", name: "" },
+    { img: "./images/cards/card-item3.png", name: "" },
+    { img: "./images/cards/card-item4.png", name: "" },
+    { img: "./images/cards/card-item5.png", name: "" },
+    { img: "./images/cards/card-item6.png", name: "" },
+    { img: "./images/cards/card-item7.png", name: "" },
+    { img: "./images/cards/card-item8.png", name: "" },
+    { img: "./images/cards/card-item9.png", name: "" },
+    { img: "./images/cards/card-item10.png", name: "平板横杆挑战赛", gamePath:"horizontal-bar-challenge-race" },
+    { img: "./images/cards/card-item11.png", name: "" },
+    { img: "./images/cards/card-item12.png", name: "跳箱英雄", gamePath:"jumping-ninja-hero"},
+    { img: "./images/cards/card-item13.png", name: "道岔短跑", gamePath:"switch-short-sprint" },
+    { img: "./images/cards/card-item14.png", name: "" },
+    { img: "./images/cards/card-item15.png", name: "" },
+    { img: "./images/cards/card-item16.png", name: "" },
+    { img: "./images/cards/card-item17.png", name: "" },
+    { img: "./images/cards/card-item18.png", name: "" },
+    { img: "./images/cards/card-item19.png", name: "" },
+    { img: "./images/cards/card-item20.png", name: "" },
+    { img: "./images/cards/card-item21.png", name: "" },
+    { img: "./images/cards/card-item22.png", name: "" },
+    { img: "./images/cards/card-item23.png", name: "" },
+    { img: "./images/cards/card-item24.png", name: "" },
+    { img: "./images/cards/card-item25.png", name: "敏捷吃金币", gamePath:"agile-coin-eating" },
+    { img: "./images/cards/card-item26.png", name: "" },
+    { img: "./images/cards/card-item27.png", name: "" },
+    { img: "./images/cards/card-item28.png", name: "神奇立方冒险", gamePath:"magical-cube-adventure" },
+    { img: "./images/cards/card-item29.png", name: "" },
+    { img: "./images/cards/card-item30.png", name: "" },
+    { img: "./images/cards/card-item31.png", name: "超级跳箱游戏", gamePath: "super-jump-box-game"},
+    { img: "./images/cards/card-item32.png", name: "" },
+    { img: "./images/cards/card-item33.png", name: "" },
+    { img: "./images/cards/card-item34.png", name: "" },
+    { img: "./images/cards/card-item35.png", name: "" },
+    { img: "./images/cards/card-item36.png", name: "图形射手", gamePath: "circular-shooter" },
+    { img: "./images/cards/card-item37.png", name: "" },
+    { img: "./images/cards/card-item38.png", name: "" }
+  ];
+
+    for (let i = 0; i < 38; i++) {
+      const card = document.createElement("div");
+      card.setAttribute("id", `game-name-${i}`);
+      card.classList.add(
+        "rounded-lg",
+        "overflow-hidden",
+        "cursor-pointer",
+        "group"
+      );
+      card.innerHTML = `
+        <div class="relative flex flex-col">
+          <img src="${card_list[i].img}" alt="" class="w-full" />
+          <div class="absolute top-0 left-0 w-full h-full bg-black/70 bg-opacity-50 hidden group-hover:flex justify-center items-center">
+            <img src="./images/play-button.png" alt="" />
+          </div>
+        </div>
+        <div class="flex items-center justify-between bg-[#23262F] px-6 py-4 w-full" style="box-shadow: 2.97px 3.96px 10.9px 0px #00000040;">
+          <span class="text-white">${card_list[i].name||'NAME'}</span>
+          <img src="./images/card-icon.png" alt="">
+        </div>
+      `;
+       // 添加点击事件监听器
+      card.addEventListener("click", () => {
+        const targetUrl = `../${card_list[i].gamePath}/index.html`;
+        window.location.href = targetUrl;
+      });
+      cardWrapper.appendChild(card);
+    }
+
+    // 卡片列表筛选按钮
+    const card_active_class = "card-active";
+    const card_tab = document.querySelectorAll(".card-tab");
+    card_tab.forEach((item) => {
+      item.addEventListener("click", () => {
+        card_tab.forEach((item) => {
+          item.classList.remove(card_active_class);
+        });
+        item.classList.add(card_active_class);
+      });
+    });
+  </script>
+  <style>
+    body {
+      background: url(./images/bg.png) no-repeat bottom;
+      background-size: 100%;
+      overflow-y: auto;
+      background-color: #202136;
+    }
+
+    .card-active {
+      background-color: #5ec821;
+      padding: 4px 16px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 100px;
+    }
+  </style>
+</html>
