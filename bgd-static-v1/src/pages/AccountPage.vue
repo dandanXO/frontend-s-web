@@ -1471,7 +1471,7 @@ const submitUpdateEmail = () => {
   updateEmailCodeRef.value.validate();
 
   if (!updateEmailCodeRef.value.hasError) {
-    const emailDetails = {
+    let emailDetails = {
       email: updateEmailInfo.email,
       code: updateEmailInfo.code,
       codeId: updateEmailInfo.codeId
