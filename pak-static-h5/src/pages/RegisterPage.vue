@@ -360,6 +360,7 @@ import { isAndroid, isInPwa, trackNewUserFtd } from "boot/utils";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
 import { useI18n } from "vue-i18n";
+import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 export default defineComponent({
   name: "RegisterPage",
