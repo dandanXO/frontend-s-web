@@ -121,7 +121,7 @@ export default route(function (/* { store, ssrContext } */) {
         }
       }
     } else {
-      if (to.meta.requiresAuth) {
+      if (to.meta.requiresAuth || (isAndroid() && ["/promotion", "/promo"].includes(to.path))) {
         next(`/login?redirect=${to.path}`);
       } else {
         next();
