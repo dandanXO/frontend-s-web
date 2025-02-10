@@ -75,7 +75,7 @@
                 </div>
             </div>
         </div>
-        <q-dialog v-model="showDialog">
+        <q-dialog v-model="showDialog" persistent>
             <div class="prize-popup">
             <!-- <q-btn icon="close" flat round dense v-close-popup class="q-ml-auto" /> -->
             <div class="prize-gold">
@@ -85,7 +85,7 @@
 
             </div>
 
-            <q-btn no-caps unelevated class="btn-primary" @click="closeDialog">{{ $t("btn.recharge") }}</q-btn>
+            <q-btn no-caps unelevated class="btn-primary" @click="closeDialog">{{ $t("btn.claim") }}</q-btn>
             </div>
         </q-dialog>
     </div>
@@ -339,7 +339,7 @@ const roll = (result) => {
       rolling.value = false;
       prizeResult.value = prizeListValue[result].name;
       if (prizeResult.value === 'X1' || prizeResult.value === 'X2') {
-        resetWheel();
+        resetWheel();   
       } else {
         showDialog.value = true;
         prizePopupBonusAmt.value = prizeResult.value
@@ -354,8 +354,8 @@ const init = () => {
     return eventapi.get("/session/deposit-wheel/init?promoCode=pak-deposit-wheel")
       .then((res) => {
         if (res.code === 0) {
-          spinWheelDetails.value = res.data;
-          depositAmount.value = res.data.depositAmount;
+            spinWheelDetails.value = res.data;
+            depositAmount.value = res.data.totalDepositAmount;
             res.data.wheels.forEach((wheel) => {
             const wheelType = wheel.wheelType; // e.g., "SILVER-1"
             const availableSpin = wheel.availableSpin;
