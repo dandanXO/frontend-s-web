@@ -342,7 +342,7 @@
                     
                     <template v-slot:append>
                       <span v-if="startCountdownResendOTP">{{ countdownOTP }}s</span>
-                      <div v-if="!startCountdownResendOTP && !store.email" class="pc-form-side-btn">
+                      <div v-if="!startCountdownResendOTP && store.email" class="pc-form-side-btn">
                         <q-btn
                           no-caps
                           dense
@@ -1500,6 +1500,7 @@ const submitUpdateEmail = () => {
           formDetail.email = updateEmailInfo.email;
           formDetail.emailVerified = true;
           store.getMemberInfo();
+          getCode();
         } else {
           $q.notify({
             color: "negative",

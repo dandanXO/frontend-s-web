@@ -288,6 +288,7 @@ const submitUpdateEmail = () => {
           });
 
           closeDialog();
+          getCode();
           store.getMemberInfo();
         } else {
           $q.notify({

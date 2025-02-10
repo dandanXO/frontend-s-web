@@ -400,7 +400,7 @@ const submitUpdateEmail = () => {
           formDetail.email = updateEmailInfo.email;
           formDetail.emailVerified = true;
           store.getMemberInfo();
-
+          getCode();
           getEmailVerifyBonus();
         } else {
           $q.notify({
