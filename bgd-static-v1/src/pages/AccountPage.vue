@@ -298,7 +298,7 @@
         <div class="pc-form">
           <InputRowGrid>
             <template #fields>
-              <InputField :label="$t('form.email')">
+              <InputField v-if="!store.email" :label="$t('form.email')">
                 <template #input>
                   <q-input
                     outlined
@@ -338,7 +338,21 @@
                     type="text"
                     :rules="[(val) => val.length !== 0 || $t('form.code_rules_01')]"
                   >
-                    <template v-slot:append v-if="startCountdownResendOTP">{{ countdownOTP }}s</template>
+                    <!-- <template v-slot:append>{{ countdownOTP }}s</template> -->
+                    
+                    <template v-slot:append>
+                      <span v-if="startCountdownResendOTP">{{ countdownOTP }}s</span>
+                      <div v-if="!startCountdownResendOTP && !store.email" class="pc-form-side-btn">
+                        <q-btn
+                          no-caps
+                          dense
+                          class="text-green"
+                          :label="!startCountdownResendOTP && $t('form.send')"
+                          :disable="startCountdownResendOTP"
+                          @click="openVerificationCodeDialog"
+                        />
+                      </div>
+                    </template>
                   </q-input>
                 </template>
               </InputField>
@@ -788,6 +802,7 @@ const bindEmailDialog = ref(false);
 const openBindEmailDialog = () => {
   if (!formDetail.emailVerified) {
     bindEmailDialog.value = !bindEmailDialog.value;
+    updateEmailInfo.code = ''
   }
 };
 
@@ -962,6 +977,7 @@ onActivated(() => {
 
   if (route.query?.bindEmail === "true") {
     bindEmailDialog.value = true;
+    updateEmailInfo.code = ''
   }
 });
 
@@ -974,6 +990,7 @@ onMounted(() => {
 
   if (route.query?.bindEmail === "true") {
     bindEmailDialog.value = true;
+          updateEmailInfo.code = ''
   }
 });
 
@@ -1288,6 +1305,9 @@ const startCountdownResendOTP = ref(false);
 const countdownOTP = ref();
 
 const onCaptchaSubmit = () => {
+  if (store.email) {
+    updateEmailInfo.email = store.email
+  }
   api
     .post(
       `/otp/sendNewEmail`,
@@ -1447,23 +1467,27 @@ const submitUpdatePwd = () => {
       });
   }
 };
-
 const submitUpdateEmail = () => {
-  updateEmailRef.value.validate();
   updateEmailCodeRef.value.validate();
 
-  if (updateEmailRef.value.hasError || updateEmailCodeRef.value.hasError) {
-  } else {
-    const endpoint = store.email ? "/otp/verifyEmail" : "/session/verifyAndUpdateEmail";
+  if (!updateEmailCodeRef.value.hasError) {
+    const emailDetails = {
+      email: updateEmailInfo.email,
+      code: updateEmailInfo.code,
+      codeId: updateEmailInfo.codeId
+    };
+
+    if (!store.email) {
+      updateEmailRef.value.validate();
+      if (updateEmailRef.value.hasError) return;
+      emailDetails = {
+        code: updateEmailInfo.code,
+        codeId: updateEmailInfo.codeId
+      };
+    }
+
     api
-      .post(
-        endpoint,
-        qs.stringify({
-          email: updateEmailInfo.email,
-          code: updateEmailInfo.code,
-          codeId: updateEmailInfo.codeId
-        })
-      )
+      .post("/session/verifyRegisteredEmail", qs.stringify(emailDetails))
       .then((response) => {
         if (response.code === 0) {
           $q.notify({
@@ -1476,9 +1500,6 @@ const submitUpdateEmail = () => {
           formDetail.email = updateEmailInfo.email;
           formDetail.emailVerified = true;
           store.getMemberInfo();
-          // setTimeout(() => {
-          //   startRefresh();
-          // }, 2000);
         } else {
           $q.notify({
             color: "negative",
