@@ -31,7 +31,7 @@ export const userStore = defineStore("userStore", {
       token: getStoreToken(),
       vip: "",
       evip: "",
-      h5Url: "",
+      h5Url: "xf19918.com",
       currency: { value: "￥", label: "RMB" },
       personalAddress: "",
       unreadInboxMail: 0,
