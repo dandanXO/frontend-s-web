@@ -154,6 +154,7 @@ import { getSiteIdByName, getSiteListSimple } from "../../../../api/site";
 import { replyMember } from "../../../../api/system-message-template";
 import { useStore } from '../../../../store';
 import { TENANT } from "../../../../store/modules/user/action-types";
+import moment from "moment";
 
 const { t } = useI18n();
 const store = useStore();
@@ -172,16 +173,25 @@ const uiControl = reactive({
   size: null
 });
 
+const startDate = new Date()
+startDate.setDate(startDate.getDate() - 3)
+const defaultStartDate = convertDate(startDate)
+const defaultEndDate = convertDate(new Date())
+
+function convertDate(date) {
+  return moment(date).format('YYYY-MM-DD')
+}
+
 const request = reactive({
   size: 30,
   current: 1,
-  createTime: [],
+  createTime: [defaultStartDate, defaultEndDate],
   memberName: null,
   siteId: null
 });
 
 function resetQuery() {
-  request.createTime = [];
+  request.createTime = [defaultStartDate, defaultEndDate];
   request.memberName = null;
   request.siteId = site.value ? site.value.id : siteList.list[0].id
 }
