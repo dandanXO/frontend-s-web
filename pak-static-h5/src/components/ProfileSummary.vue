@@ -7,12 +7,14 @@
       <div class="download-close" :style="!topDownloadcloseBtn && 'opacity:0'">
         <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
       </div>
-      <div class="download-logo"><img src="../assets/images/index/download/download-logo.png" /></div>
+      <div class="download-logo"><img src="../assets/images/index/download/download-app-logo.png" /></div>
       <!-- <div class="download-btn">
         <a :href="topDownloadUrl">
           <img src="../assets/images/index/download/top-download-btn.png" />
         </a>
       </div> -->
+
+      <div class="download-text">Get Free Spins on the APP</div>
       <div class="download-btn-yel">
         <a :href="ui.downloadAppUrl">{{ $t("header.download") }}</a>
       </div>
@@ -549,6 +551,11 @@ onMounted(() => {
         width: 100%;
         display: block;
       }
+    }
+
+    .download-text {
+      font-size: 12px;
+      margin-right: auto;
     }
 
     .download-btn-yel {
