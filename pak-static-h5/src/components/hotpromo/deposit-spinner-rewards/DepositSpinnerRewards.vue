@@ -312,8 +312,17 @@ const onClickRotate = () => {
     }
   eventapi.post(`/session/deposit-wheel/spin?promoCode=pak-deposit-wheel&wheelType=${wheelType}`).then((res) => {
     if (res.code === 0) {
-      // Usage example
-      const result = getIndexByName(res.data.bonus.toString());
+      
+      var result = getIndexByName(res.data.bonus.toString());
+
+      if (res.data.spinType === 'FREESPIN') {
+        if (res.data.freeSpinWheelType === wheelType) {
+            result = 'X2'
+        } else {
+            result = 'X1'
+        }
+      }
+      
       roll(result);
     }
   });
