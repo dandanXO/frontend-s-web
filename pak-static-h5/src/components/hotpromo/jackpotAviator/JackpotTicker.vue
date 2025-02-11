@@ -44,6 +44,8 @@ onUnmounted(() => {
 watch(() => props?.timeframe, () => {
     clearInterval(jackpotFetchInterval.value);
     
+    updateJackpot();
+    
     jackpotFetchInterval.value = setInterval(() => {
         updateJackpot();
     }, 5000);
