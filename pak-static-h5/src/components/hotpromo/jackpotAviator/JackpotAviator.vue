@@ -13,11 +13,7 @@
         </q-tabs>
             
         <div class="jackpot">
-            <div class="jackpot-plate">
-                <svg class="jackpot-number" data-v-40789f9c="" xmlns="http://www.w3.org/2000/svg" width="150" height="35" viewBox="0 0 150 35">
-                <text data-v-40789f9c="" x="7.5" y="20">{{ convertToCommaAmount(jackpotAmt) }}</text>
-            </svg>
-            </div>
+            <JackpotTicker :timeframe="timeframe"/>
                 
             <div class="rules-ribbon" @click="mode = 'RULES'">{{ $t('hotPromo.jackpotAviator.rules') }}</div>
             <div class="history-ribbon" @click="isShowHistoryPopup = true">{{ $t('hotPromo.jackpotAviator.history') }}</div>
@@ -67,6 +63,7 @@ import RankPodium from './RankPodium.vue';
 import HistoryTable from './HistoryTable.vue';
 import ClaimPrizePopup from './ClaimPrizePopup.vue';
 import { convertToCommaAmount } from "src/boot/utils";
+import JackpotTicker from './JackpotTicker.vue';
 
 const mode = ref('MAIN');
 const timeframe = ref('DAILY');
@@ -151,36 +148,6 @@ onMounted(() => {
     aspect-ratio: 1125/500;
     background-size: 100% 100%;
     position: relative;
-
-    .jackpot-plate {
-        background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/jackpot-plate.png') no-repeat center center;
-        aspect-ratio: 381/66;
-        background-size: 100% 100%;
-        width: 38%;
-        position: absolute;
-        top: 70%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: 'Poppins';
-
-        .jackpot-number {
-            transform: rotateX(45deg);
-
-            text {
-                fill: #FFF9FF;
-                stroke: #1E826A;
-                stroke-width: 1;
-                margin: 0;
-                font-family: 'Poppins';
-                font-size: 22px;
-                font-weight: bold;
-                letter-spacing: -3px;
-            }
-        }
-    }
 
     .rules-ribbon {
         background-color: #30AF88;
