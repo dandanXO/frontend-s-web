@@ -80,9 +80,6 @@ const isLoadingRanking = ref(false);
 const onClickReceive = () => {
     const endpoint = timeframe.value === 'DAILY' ? '/session/game-jackpot-bonus/claim??promoCode=pak-aviator-jackpot-daily-challenge' : '/session/game-jackpot-bonus/claim??promoCode=pak-aviator-jackpot-weekly-challenge';
 
-    claimPrizeAmt.value = 1000;
-    isShowClaimPrizePopup.value = true;
-
     eventapi.post(endpoint).then((res) => {
         if (res.code == 0) {
             claimPrizeAmt.value = res?.data;
