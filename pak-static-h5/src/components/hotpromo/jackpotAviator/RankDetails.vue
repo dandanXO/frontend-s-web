@@ -37,6 +37,8 @@ const props = defineProps(['rankDetails', 'isLoadingRanking']);
     width: 100%;
     font-family: 'Poppins';
     min-height: 70px;
+    font-size: 14px;
+    letter-spacing: -1px;
 
     &.isLoading {
         grid-template-columns: 1fr;
@@ -59,5 +61,23 @@ const props = defineProps(['rankDetails', 'isLoadingRanking']);
     .value {
         color: #F1FF55;
     }
+}
+
+@media (max-width: 400px) {
+  .bottom {
+    padding: 5px;
+    min-height: 50px;
+    font-size: 14px;
+    letter-spacing: -1px;
+  }
+}
+
+@media (max-width: 350px) {
+  .bottom {
+    padding: 5px;
+    min-height: 50px;
+    font-size: 12px;
+    letter-spacing: -1px;
+  }
 }
 </style>

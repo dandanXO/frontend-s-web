@@ -231,4 +231,28 @@ $duration: 3000;
   75% {transform: rotate(-5deg);}
   100% {transform: rotate(0deg);}
 }
+
+@media (max-width: 400px) {
+  .podium {
+    .podium-silver, .podium-bronze, .podium-gold {
+      font-size: 12px;
+      letter-spacing: -1px;
+      .left-wing, .right-wing {
+        min-height: 30px;
+      }
+    }
+  }
+}
+
+@media (max-width: 350px) {
+  .podium {
+    .podium-silver, .podium-bronze, .podium-gold {
+      font-size: 10px;
+      letter-spacing: -1px;
+      .left-wing, .right-wing {
+        min-height: 20px;
+      }
+    }
+  }
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class="jackpot-plate">
         <svg v-if="jackpotAmt > 0" class="jackpot-number" data-v-40789f9c="" xmlns="http://www.w3.org/2000/svg" width="150" height="35" viewBox="0 0 150 35">
-            <text data-v-40789f9c="" x="7.5" y="20">{{ convertToCommaAmount(jackpotAmt) }}</text>
+            <text data-v-40789f9c="" x="20" y="20">{{ convertToCommaAmount(jackpotAmt) }}</text>
         </svg>
         <span v-else>-</span>
     </div>
@@ -25,6 +25,7 @@ const updateJackpot = () => {
     eventapi.get(endpoint).then((res) => {
         if (res.code == 0) {
             jackpotAmt.value = res?.data?.min;
+            jackpotAmtCap.value = res?.data?.max;
 
             jackpotAmtInterval.value = setInterval(() => {
                 if(jackpotAmtCap.value > 0 && jackpotAmt.value <= jackpotAmtCap.value) {
@@ -82,7 +83,7 @@ onMounted(() => {
             font-family: 'Poppins';
             font-size: 22px;
             font-weight: bold;
-            letter-spacing: -3px;
+            letter-spacing: -1px;
         }
     }
 }
