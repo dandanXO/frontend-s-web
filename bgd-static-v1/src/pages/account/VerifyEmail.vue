@@ -296,45 +296,39 @@ export default defineComponent({
     }
 
     const onCaptchaSubmit = () => {
-      if (!formDetail.email) {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: "邮箱不能为空",
-          icon: "report_problem"
-        });
-        getCode();
-        return;
+
+  const payload = {
+    captchaCode: innerCaptchaRef.value,
+    codeId: updateSecurityVerified.codeId
+  };
+
+  if (formDetail.email) {
+    payload.email = formDetail.email;
+  }
+
+  api
+    .post(`/session/verifyRegisteredEmail`, qs.stringify(payload))
+    .then(res => {
+      getCode();
+      let message = res.message || "发送邮箱验证码成功",
+        color = res.code === 0 ? "positive" : "negative";
+
+      if (res.code === 0) {
+        canEdit.value = true;
+        showCaptchaDialog.value = false;
+        showVerifyBtn.value = false;
+        showVerificationTokenInput.value = true;
+
+        emailCodeId.value = res.data.codeId;
       }
 
-      api.post(`/otp/sendNewEmail`, qs.stringify({
-        email: formDetail.email,
-        captchaCode: innerCaptchaRef.value,
-        codeId: updateSecurityVerified.codeId
-      }))
-          .then(res => {
-            getCode();
-            let message = res.message || '发送邮箱验证码成功',
-                color = 'positive'
+      if (message) {
+        $q.notify({ message, color });
+      }
 
-            if (res.code === 0) {
-              canEdit.value = true;
-              showCaptchaDialog.value = false
-              showVerifyBtn.value = false;
-              showVerificationTokenInput.value = true
-
-              emailCodeId.value = res.data.codeId;
-            } else
-              color = 'negative';
-            getCode();
-
-            if (message)
-              $q.notify({message, color});
-            getCode();
-
-            console.log('onCaptchaSubmit', res)
-          })
-    }
+      console.log("onCaptchaSubmit", res);
+    });
+};
 
     return {
       router,

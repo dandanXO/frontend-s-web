@@ -358,7 +358,7 @@ const countdownOTP = ref();
 const openBindEmailDialog = () => {
   bindEmailDialog.value = true;
   
-  updateEmailInfo.code = false;
+  updateEmailInfo.code = '';
 };
 
 const updateEmailInfo = reactive({
@@ -371,23 +371,22 @@ const submitUpdateEmail = () => {
   updateEmailCodeRef.value.validate();
 
   if (!updateEmailCodeRef.value.hasError) {
-    let emailDetails = {
-      email: updateEmailInfo.email,
+    if (!store.email) {
+      updateEmailRef.value.validate();
+      if (updateEmailRef.value.hasError) return;
+    }
+
+    const emailDetails = {
       code: updateEmailInfo.code,
       codeId: updateEmailInfo.codeId
     };
 
     if (!store.email) {
-      updateEmailRef.value.validate();
-      if (updateEmailRef.value.hasError) return;
-      emailDetails = {
-        code: updateEmailInfo.code,
-        codeId: updateEmailInfo.codeId
-      };
+      emailDetails.email = updateEmailInfo.email;
     }
 
     api
-      .post("/session/verifyRegisteredEmail", qs.stringify(emailDetails))
+      .post("/session/verifyRegisteredEmailOtp", qs.stringify(emailDetails))
       .then((response) => {
         if (response.code === 0) {
           $q.notify({
@@ -454,25 +453,23 @@ const openVerificationCodeDialog = () => {
 };
 
 const onCaptchaSubmit = () => {
-  if (store.email) {
-    updateEmailInfo.email = store.email
+  const payload = {
+    captchaCode: captchaRef.value,
+    codeId: updateSecurityVerified.codeId
+  };
+
+  if (updateEmailInfo.email) {
+    payload.email = updateEmailInfo.email;
   }
+
   api
-    .post(
-      `/otp/sendNewEmail`,
-      qs.stringify({
-        email: updateEmailInfo.email,
-        captchaCode: captchaRef.value,
-        codeId: updateSecurityVerified.codeId
-      })
-    )
+    .post(`/session/verifyRegisteredEmail`, qs.stringify(payload))
     .then((res) => {
       let message = res.message,
         color = "positive";
 
       if (res.code === 0) {
         verificationCodeDialog.value = false;
-
         updateEmailInfo.codeId = res.data.codeId;
 
         showVerificationTokenInput.value = true;
@@ -496,10 +493,11 @@ const onCaptchaSubmit = () => {
         });
       } else {
         color = "negative";
-        getCode();
       }
 
-      if (message) $q.notify({ message, color });
+      if (message) {
+        $q.notify({ message, color });
+      }
 
       console.log("onCaptchaSubmit", res);
     });
