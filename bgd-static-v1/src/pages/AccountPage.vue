@@ -1497,7 +1497,7 @@ const submitUpdateEmail = () => {
             icon: "check_circle_outline"
           });
           bindEmailDialog.value = false;
-          formDetail.email = updateEmailInfo.email;
+          // formDetail.email = updateEmailInfo.email;
           formDetail.emailVerified = true;
           store.getMemberInfo();
           getCode();
