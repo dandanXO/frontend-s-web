@@ -82,7 +82,7 @@ export default {
     password_rules_02: "Password must be more than 6 characters",
     strongerPasswordRecommended: "Stronger Password Recommended",
     forgotPassword: "Forgot Password",
-    forgotPassword_desc: "Enter your Username and Phone Number, we will send OTP to your registered phone number.",
+    forgotPassword_desc: "Enter your Phone Number, we will send OTP to your registered phone number.",
     register_agree_01: "I have agreed to the ",
     register_agree_02: "Privacy Usage Agreement",
     email: "Email",
