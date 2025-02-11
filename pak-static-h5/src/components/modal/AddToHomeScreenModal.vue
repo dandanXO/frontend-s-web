@@ -10,8 +10,12 @@
       </div>
       <div class="continue-to-h5" @click="closeDialog">Continue to use H5</div>
       <div class="add-to-homescreen-btn">
+        <q-btn v-if="Platform.is.ios" no-caps unelevated class="btn-secondary" @click="handleIosBtnClick">
+          <img class="os-logo" src="../../assets/images/index/download/ios-logo.png" />
+          App + Web
+        </q-btn>
         <q-btn
-          v-if="isAndroid"
+          v-else
           no-caps
           unelevated
           class="btn-primary btn-primary__full"
@@ -20,11 +24,6 @@
         >
           <img class="os-logo" src="../../assets/images/index/download/android-logo.png" />
           App
-        </q-btn>
-
-        <q-btn v-else no-caps unelevated class="btn-secondary" @click="handleIosBtnClick">
-          <img class="os-logo" src="../../assets/images/index/download/ios-logo.png" />
-          App + Web
         </q-btn>
       </div>
     </div>
@@ -40,7 +39,7 @@
 
 <script setup>
 import { ref, watch } from "vue";
-import { isAndroid } from "boot/utils";
+import { Platform } from "quasar";
 import { useUI } from "stores/ui";
 
 const props = defineProps(["isAddToHomeScreen"]);

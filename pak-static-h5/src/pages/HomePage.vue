@@ -3667,10 +3667,10 @@ onMounted(() => {
 
   if (Platform.is.android && Platform.is.capacitor) {
     initOneSignal();
-  }
-
-  if (!sessionStorage.getItem("add_to_homescreen") && isH5.value) {
-    isAddToHomeScreen.value = true;
+  } else {
+    if (!sessionStorage.getItem("add_to_homescreen")) {
+      isAddToHomeScreen.value = true;
+    }
   }
 });
 
