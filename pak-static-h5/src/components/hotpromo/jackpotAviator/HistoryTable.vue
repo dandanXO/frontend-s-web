@@ -9,9 +9,9 @@
         <div class="scrollable">
             <div class="item" v-for="historyListItem, historyListItemIndex in props?.historyList" :key="historyListItemIndex">
                 <div class="rank">
-                    <img v-if="historyListItemIndex + 1 === 1" style="width:40px;margin:0;" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/1st-place-crown.png" />
-                    <img v-else-if="historyListItemIndex + 1 === 2" style="width:40px;margin:0;" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/2nd-place-crown.png" />
-                    <img v-else-if="historyListItemIndex + 1 === 3" style="width:40px;margin:0;" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/3rd-place-crown.png" />
+                    <img class="crown-icon" v-if="historyListItemIndex + 1 === 1" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/1st-place-crown.png" />
+                    <img class="crown-icon" v-else-if="historyListItemIndex + 1 === 2"  src="../../../assets/images/promotion/hotpromo/jackpot-aviator/2nd-place-crown.png" />
+                    <img class="crown-icon" v-else-if="historyListItemIndex + 1 === 3" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/3rd-place-crown.png" />
                     <span v-else>{{ historyListItemIndex + 1 }}</span>
                 </div>
                 <div>{{ historyListItem.loginName }}</div>
@@ -45,6 +45,11 @@ const props = defineProps(['historyList'])
             display: flex;
             justify-content: center;
             align-items: center;
+
+            .crown-icon {
+                width:40px;
+                margin:0;
+            }
         }
 
         &:first-child {
@@ -78,5 +83,34 @@ const props = defineProps(['historyList'])
 .scrollable {
     max-height: 500px;
     overflow: auto;
+}
+
+@media (max-width: 400px) {
+    .history-list {
+        margin: 0 5px;
+
+        .item {
+            height: 30px;
+
+            .rank {
+                .crown-icon {
+                    width:30px;
+                }
+            }
+
+            &:first-child {
+                font-size: 12px;
+                line-height: 30px;
+                letter-spacing: -1px;
+
+            }
+
+            &:not(:first-child) {
+                font-size: 12px;
+                line-height: 30px;
+                letter-spacing: -1px;
+            }
+        }
+    }
 }
 </style>

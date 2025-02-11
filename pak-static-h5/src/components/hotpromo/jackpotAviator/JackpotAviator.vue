@@ -177,6 +177,7 @@ onMounted(() => {
     }
 
     .rules-ribbon, .history-ribbon {
+        z-index: 1;
         cursor: pointer;
         font-family: 'Poppins';
         transition: width .2s ease;
@@ -261,5 +262,13 @@ onMounted(() => {
     :deep(.q-tab--active .q-tab__indicator) {
         background:#FFF900;
     }
+}
+
+@media (max-width: 350px) {
+  .receive-btn {
+    padding: 10px;
+    width: 150px;
+    height: 30px;
+  }
 }
 </style>
