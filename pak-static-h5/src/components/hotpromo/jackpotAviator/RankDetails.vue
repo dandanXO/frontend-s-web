@@ -2,11 +2,11 @@
     <div class="bottom" :class="{ isNotInApp: isNotInApp }">
         <div>{{ props?.rankDetails?.rank > -1 ? props?.rankDetails?.rank : 'No Rank' }}</div>
         <div class="column">
-            <div class="label">My Bets <span class="value">{{ props?.rankDetails?.currentBet }}</span></div>
-            <div class="label">{{ `My Reward ${props?.rankDetails?.rewardPerc}%` }}</div>
+            <div class="label">{{ $t('hotPromo.jackpotAviator.myBets') }} <span class="value">{{ props?.rankDetails?.currentBet }}</span></div>
+            <div class="label">{{ `${$t('hotPromo.jackpotAviator.myReward')} ${props?.rankDetails?.rewardPerc}%` }}</div>
         </div>
         <div class="column">
-            <div class="label">Ranks Left</div>
+            <div class="label">{{ $t('hotPromo.jackpotAviator.ranksLeft') }}</div>
             <div>{{ store.currency.value }} {{ props?.rankDetails?.betAmtNeeded }}</div>
         </div>
     </div>
@@ -27,13 +27,13 @@ const props = defineProps(['rankDetails']);
     color: #FFFFFF;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    height: 77px;
     align-items: center;
-    padding: 20px;
+    padding: 10px;
     position: fixed;
     bottom: 0px;
     width: 100%;
     font-family: 'Poppins';
+    min-height: 70px;
 
     &.isNotInApp {
         bottom: 95px;
