@@ -1,14 +1,17 @@
 <template>
-    <div class="bottom" :class="{ isNotInApp: isNotInApp }">
-        <div>{{ props?.rankDetails?.rank > -1 ? props?.rankDetails?.rank : 'No Rank' }}</div>
-        <div class="column">
-            <div class="label">{{ $t('hotPromo.jackpotAviator.myBets') }} <span class="value">{{ props?.rankDetails?.currentBet }}</span></div>
-            <div class="label">{{ `${$t('hotPromo.jackpotAviator.myReward')} ${props?.rankDetails?.rewardPerc}%` }}</div>
-        </div>
-        <div class="column">
-            <div class="label">{{ $t('hotPromo.jackpotAviator.ranksLeft') }}</div>
-            <div>{{ store.currency.value }} {{ props?.rankDetails?.betAmtNeeded }}</div>
-        </div>
+    <div class="bottom" :class="{ isNotInApp: isNotInApp, isLoading: isLoadingRanking }">
+        <q-spinner style="margin:auto;" color="yellow" size="3em" :thickness="5" v-if="isLoadingRanking"/>
+        <template v-else>
+            <div>{{ props?.rankDetails?.rank > -1 ? props?.rankDetails?.rank : 'No Rank' }}</div>
+            <div class="column">
+                <div class="label">{{ $t('hotPromo.jackpotAviator.myBets') }} <span class="value">{{ props?.rankDetails?.currentBet }}</span></div>
+                <div class="label">{{ `${$t('hotPromo.jackpotAviator.myReward')} ${props?.rankDetails?.rewardPerc}%` }}</div>
+            </div>
+            <div class="column">
+                <div class="label">{{ $t('hotPromo.jackpotAviator.ranksLeft') }}</div>
+                <div>{{ store.currency.value }} {{ props?.rankDetails?.betAmtNeeded }}</div>
+            </div>
+        </template>
     </div>
 </template>
 <script setup>
@@ -17,7 +20,7 @@ import { userStore } from "stores/index";
 const store = userStore();
 
 const isNotInApp = window.location.pathname === '/promo';
-const props = defineProps(['rankDetails']);
+const props = defineProps(['rankDetails', 'isLoadingRanking']);
 
 </script>
 <style lang="scss" scoped>
@@ -34,6 +37,10 @@ const props = defineProps(['rankDetails']);
     width: 100%;
     font-family: 'Poppins';
     min-height: 70px;
+
+    &.isLoading {
+        grid-template-columns: 1fr;
+    }
 
     &.isNotInApp {
         bottom: 95px;

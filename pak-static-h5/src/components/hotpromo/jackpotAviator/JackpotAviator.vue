@@ -27,11 +27,16 @@
             {{ $t('hotPromo.jackpotAviator.receive') }}
         </div>
 
-        <RankPodium :rankingList="rankingList" :isLoadingRanking="isLoadingRanking" />
+        <template v-if="isLoadingRanking">
+            <img style="width: 100px;margin: 100px auto;" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/podium-loader.gif" />
+        </template>
+        <template v-else>
+            <RankPodium :rankingList="rankingList" />
+            <HistoryTable :historyList="rankingList" />
+        </template>
+        
 
-        <HistoryTable :historyList="rankingList"/>
-
-        <RankDetails :rankDetails="rankDetails" />
+        <RankDetails :rankDetails="rankDetails" :isLoadingRanking="isLoadingRanking" />
     </template>
     <template v-else-if="mode === 'RULES'">
         <JackpotAviatorRules :onClickBackBtn="() => mode = 'MAIN'" :rankingBonusRatioList="rankingBonusRatioList"/>
@@ -64,16 +69,16 @@ import ClaimPrizePopup from './ClaimPrizePopup.vue';
 import { convertToCommaAmount } from "src/boot/utils";
 
 const mode = ref('MAIN');
+const timeframe = ref('DAILY');
 const isShowHistoryPopup = ref(false);
 const isShowClaimPrizePopup = ref(false);
-const timeframe = ref('DAILY');
+const claimPrizeAmt = ref(0);
+const jackpotAmt = ref(298360000);
 const rankingList = ref([]);
 const history = ref([]);
-const jackpotAmt = ref(298360000);
 const rankingBonusRatioList = ref([]);
 const rankDetails = ref({});
 const isLoadingRanking = ref(false);
-const claimPrizeAmt = ref(0);
 
 const onClickReceive = () => {
     const endpoint = timeframe.value === 'DAILY' ? '/session/game-jackpot-bonus/claim??promoCode=pak-aviator-jackpot-daily-challenge' : '/session/game-jackpot-bonus/claim??promoCode=pak-aviator-jackpot-weekly-challenge';
