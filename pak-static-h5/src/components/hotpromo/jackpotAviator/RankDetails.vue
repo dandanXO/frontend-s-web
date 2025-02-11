@@ -2,7 +2,7 @@
     <div class="bottom" :class="{ isNotInApp: isNotInApp, isLoading: isLoadingRanking }">
         <q-spinner style="margin:auto;" color="yellow" size="3em" :thickness="5" v-if="isLoadingRanking"/>
         <template v-else>
-            <div>{{ props?.rankDetails?.rank > -1 ? props?.rankDetails?.rank : 'No Rank' }}</div>
+            <div>{{ props?.rankDetails?.rank > -1 ? props?.rankDetails?.rank : $t('hotPromo.jackpotAviator.noRank') }}</div>
             <div class="column">
                 <div class="label">{{ $t('hotPromo.jackpotAviator.myBets') }} <span class="value">{{ props?.rankDetails?.currentBet }}</span></div>
                 <div class="label">{{ `${$t('hotPromo.jackpotAviator.myReward')} ${props?.rankDetails?.rewardPerc}%` }}</div>

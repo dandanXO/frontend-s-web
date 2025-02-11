@@ -41,11 +41,11 @@
     <q-dialog width="100%" v-model="isShowHistoryPopup">
         <div class="history-container">
             <div class="congrats-highlight">
-                <div class="congrats-title">History</div>
-                <div class="congrats-prize">{{ timeframe }}</div>
+                <div class="congrats-title">{{ $t('hotPromo.jackpotAviator.jackpot') }}</div>
+                <div class="congrats-prize">{{ store.currency.value }} {{ historyData.jackpotAmount }}</div>
             </div>
 
-            <HistoryTable :historyList="history" />
+            <HistoryTable :historyList="historyData.rankingList" />
         </div>
     </q-dialog>
 
@@ -62,17 +62,17 @@ import RankDetails from './RankDetails.vue';
 import RankPodium from './RankPodium.vue';
 import HistoryTable from './HistoryTable.vue';
 import ClaimPrizePopup from './ClaimPrizePopup.vue';
-import { convertToCommaAmount } from "src/boot/utils";
 import JackpotTicker from './JackpotTicker.vue';
+import { userStore } from "stores/index";
 
+const store = userStore();
 const mode = ref('MAIN');
 const timeframe = ref('DAILY');
 const isShowHistoryPopup = ref(false);
 const isShowClaimPrizePopup = ref(false);
 const claimPrizeAmt = ref(0);
-const jackpotAmt = ref(298360000);
 const rankingList = ref([]);
-const history = ref([]);
+const historyData = ref({});
 const rankingBonusRatioList = ref([]);
 const rankDetails = ref({});
 const isLoadingRanking = ref(false);
@@ -93,7 +93,7 @@ const getHistory = () => {
 
     eventapi.post(endpoint).then((res) => {
         if (res.code == 0) {
-            history.value = res?.data;
+            historyData.value = res?.data;
         }
     });
 };

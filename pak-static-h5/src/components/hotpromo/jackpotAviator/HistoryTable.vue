@@ -21,7 +21,8 @@
     </div>
 </template>
 <script setup>
-const props = defineProps(['historyList'])
+const props = defineProps(['historyList']);
+
 </script>
 <style lang="scss" scoped>
 
