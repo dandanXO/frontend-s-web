@@ -15,7 +15,7 @@
         <div class="jackpot">
             <div class="jackpot-plate">
                 <svg class="jackpot-number" data-v-40789f9c="" xmlns="http://www.w3.org/2000/svg" width="150" height="35" viewBox="0 0 150 35">
-                <text data-v-40789f9c="" x="10" y="20">{{ jackpotAmt }}</text>
+                <text data-v-40789f9c="" x="7.5" y="20">{{ convertToCommaAmount(jackpotAmt) }}</text>
             </svg>
             </div>
                 
@@ -61,6 +61,7 @@ import RankDetails from './RankDetails.vue';
 import RankPodium from './RankPodium.vue';
 import HistoryTable from './HistoryTable.vue';
 import ClaimPrizePopup from './ClaimPrizePopup.vue';
+import { convertToCommaAmount } from "src/boot/utils";
 
 const mode = ref('MAIN');
 const isShowHistoryPopup = ref(false);
@@ -171,7 +172,7 @@ onMounted(() => {
                 font-family: 'Poppins';
                 font-size: 22px;
                 font-weight: bold;
-                letter-spacing: -1px;
+                letter-spacing: -3px;
             }
         }
     }
