@@ -3669,7 +3669,7 @@ onMounted(() => {
     initOneSignal();
   }
 
-  if (!localStorage.getItem("add_to_homescreen") && isH5.value) {
+  if (!sessionStorage.getItem("add_to_homescreen") && isH5.value) {
     isAddToHomeScreen.value = true;
   }
 });

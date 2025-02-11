@@ -61,7 +61,7 @@ const closeInstructionsDialog = () => {
 };
 
 const flagLocalStorage = () => {
-  localStorage.setItem("add_to_homescreen", true);
+  sessionStorage.setItem("add_to_homescreen", true);
 };
 
 const closeDialog = () => {
@@ -105,6 +105,7 @@ watch(
     text-align: center;
     margin: 18px 0 14px;
     font-size: 13px;
+    cursor: pointer;
   }
 
   .btn-primary {
