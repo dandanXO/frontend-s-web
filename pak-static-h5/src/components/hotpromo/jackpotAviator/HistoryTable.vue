@@ -1,13 +1,13 @@
 <template>
     <div class="history-list" v-if="props?.historyList">
         <div class="item">
-            <div>{{ $t('hotPromo.jackpotAviator.ranking') }}</div>
-            <div>{{ $t('hotPromo.jackpotAviator.username') }}</div>
-            <div>{{ $t('hotPromo.jackpotAviator.betVolume') }}</div>
+            <div class="header">{{ $t('hotPromo.jackpotAviator.ranking') }}</div>
+            <div class="header">{{ $t('hotPromo.jackpotAviator.username') }}</div>
+            <div class="header">{{ $t('hotPromo.jackpotAviator.betVolume') }}</div>
         </div>
 
         <div class="scrollable">
-            <div class="item" v-for="historyListItem, historyListItemIndex in props?.historyList" :key="historyListItemIndex">
+            <div class="item" v-for="historyListItem, historyListItemIndex in props?.historyList" :key="historyListItemIndex" :class="{ isOwn: historyListItem?.currentMember }">
                 <div class="rank">
                     <img class="crown-icon" v-if="historyListItemIndex + 1 === 1" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/1st-place-crown.png" />
                     <img class="crown-icon" v-else-if="historyListItemIndex + 1 === 2"  src="../../../assets/images/promotion/hotpromo/jackpot-aviator/2nd-place-crown.png" />
@@ -41,6 +41,26 @@ const props = defineProps(['historyList']);
         align-items: center;
         text-align: center;
         height: 40px;
+        font-family: Poppins;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 40px;
+        text-align: center;
+        color: #FFFFFF80;
+
+        .header {
+            font-family: Poppins;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 40px;
+            text-align: center;
+            color: #FFFFFF;
+        }
+
+        &.isOwn {
+            background: linear-gradient(180deg, #1BAA99 0%, #8AC542 100%);
+            color: #fff;
+        }
 
         .rank {
             display: flex;
@@ -51,24 +71,6 @@ const props = defineProps(['historyList']);
                 width:40px;
                 margin:0;
             }
-        }
-
-        &:first-child {
-            font-family: Poppins;
-            font-size: 14px;
-            font-weight: 600;
-            line-height: 40px;
-            text-align: center;
-
-        }
-
-        &:not(:first-child) {
-            font-family: Poppins;
-            font-size: 14px;
-            font-weight: 600;
-            line-height: 40px;
-            text-align: center;
-            color: #FFFFFF80;
         }
 
         &:nth-child(odd) {
