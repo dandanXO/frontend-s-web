@@ -307,7 +307,7 @@ export default defineComponent({
   }
 
   api
-    .post(`/session/verifyRegisteredEmail`, qs.stringify(payload))
+    .post(`/session/sendRegisteredEmailOtp`, qs.stringify(payload))
     .then(res => {
       getCode();
       let message = res.message || "发送邮箱验证码成功",

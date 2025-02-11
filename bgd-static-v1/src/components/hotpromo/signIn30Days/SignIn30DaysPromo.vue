@@ -322,7 +322,7 @@
                     :rules="[(val) => val.length !== 0 || $t('form.code_rules_01')]"
                   >
                     <!-- <template v-slot:append v-if="startCountdownResendOTP">{{ countdownOTP }}s</template> -->
-                     
+
                     <template v-slot:append>
                       <span v-if="startCountdownResendOTP">{{ countdownOTP }}s</span>
                       <div v-if="!startCountdownResendOTP && !store.email" class="pc-form-side-btn">
@@ -719,7 +719,7 @@ const onCaptchaSubmit = () => {
   }
 
   api
-    .post(`/session/verifyRegisteredEmail`, qs.stringify(payload))
+    .post(`/session/sendRegisteredEmailOtp`, qs.stringify(payload))
     .then((res) => {
       let message = res.message,
         color = "positive";
