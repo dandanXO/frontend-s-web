@@ -12,36 +12,48 @@ import { eventapi } from "boot/axios";
 import { convertToCommaAmount } from "src/boot/utils";
 
 const jackpotAmt = ref(0);
+const jackpotAmtCap = ref();
 const jackpotAmtInterval = ref();
-const props = defineProps(['timeframe'])
+const jackpotFetchInterval = ref();
+const props = defineProps(['timeframe']);
 
-
-const initData = () => {
+const updateJackpot = () => {
     const endpoint = props?.timeframe === 'DAILY' ? '/session/game-jackpot-bonus/jackpot?promoCode=pak-aviator-jackpot-daily-challenge' : '/session/game-jackpot-bonus/jackpot?promoCode=pak-aviator-jackpot-weekly-challenge';
+
+    clearInterval(jackpotAmtInterval.value);
 
     eventapi.get(endpoint).then((res) => {
         if (res.code == 0) {
             jackpotAmt.value = res?.data?.min;
 
-            if(!jackpotAmtInterval.value) {
-                jackpotAmtInterval.value = setInterval(() => {
+            jackpotAmtInterval.value = setInterval(() => {
+                if(jackpotAmtCap.value > 0 && jackpotAmt.value <= jackpotAmtCap.value) {
                     jackpotAmt.value += 1;
-                },500);
-            }
+                }
+            },500);
         }
     });
-};
+}
 
 onUnmounted(() => {
     clearInterval(jackpotAmtInterval.value);
+    clearInterval(jackpotFetchInterval.value);
 })
 
 watch(() => props?.timeframe, () => {
-    initData();
+    clearInterval(jackpotFetchInterval.value);
+    
+    jackpotFetchInterval.value = setInterval(() => {
+        updateJackpot();
+    }, 5000);
 })
 
 onMounted(() => {
-    initData();
+    updateJackpot();
+
+    jackpotFetchInterval.value = setInterval(() => {
+        updateJackpot();
+    }, 5000);
 })
 </script>
 <style lang="scss" scoped>
