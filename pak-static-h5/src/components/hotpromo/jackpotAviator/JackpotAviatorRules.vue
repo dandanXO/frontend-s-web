@@ -65,6 +65,7 @@ const langVal = computed(() => i18nStoreLanguage.languageVal);
         width: 33px !important;
         height: 33px !important;
         cursor: pointer;
+        background: transparent;
 
         &:hover {
             filter: brightness(1.1);
