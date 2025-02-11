@@ -582,6 +582,8 @@ export default {
       rewardClaimed: "Reward has already been claimed"
     },
     jackpotAviator: {
+      daily: "Daily",
+      weekly: "Weekly",
       rules: "Rules",
       history: "History",
       receive: "Receive",

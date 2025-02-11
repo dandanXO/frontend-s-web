@@ -578,6 +578,8 @@ export default {
       rewardClaimed: "انعام پہلے ہی حاصل کیا جا چکا ہے"
     },
     jackpotAviator: {
+      daily: "روزانہ",
+      weekly: "ہفتہ وار",
       rules: "قواعد",
       history: "تاریخ",
       receive: "وصول کریں",
