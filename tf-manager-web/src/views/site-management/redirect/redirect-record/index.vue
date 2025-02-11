@@ -42,8 +42,6 @@
           >
             {{ t('fields.search') }}
           </el-button>
-        </div>
-        <div class="btn-group">
           <el-button
             icon="el-icon-plus"
             size="mini"
