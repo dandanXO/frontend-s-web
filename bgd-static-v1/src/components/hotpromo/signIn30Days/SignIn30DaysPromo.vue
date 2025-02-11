@@ -281,7 +281,7 @@
         <div class="pc-form">
           <InputRowGrid>
             <template #fields>
-              <InputField :label="$t('form.email')">
+              <InputField v-if="!store.email" :label="$t('form.email')">
                 <template #input>
                   <q-input
                     outlined
@@ -321,7 +321,21 @@
                     type="text"
                     :rules="[(val) => val.length !== 0 || $t('form.code_rules_01')]"
                   >
-                    <template v-slot:append v-if="startCountdownResendOTP">{{ countdownOTP }}s</template>
+                    <!-- <template v-slot:append v-if="startCountdownResendOTP">{{ countdownOTP }}s</template> -->
+                     
+                    <template v-slot:append>
+                      <span v-if="startCountdownResendOTP">{{ countdownOTP }}s</span>
+                      <div v-if="!startCountdownResendOTP && store.email" class="pc-form-side-btn">
+                        <q-btn
+                          no-caps
+                          dense
+                          class="text-green"
+                          :label="!startCountdownResendOTP && $t('form.send')"
+                          :disable="startCountdownResendOTP"
+                          @click="openVerificationCodeDialog"
+                        />
+                      </div>
+                    </template>
                   </q-input>
                 </template>
               </InputField>
@@ -592,6 +606,7 @@ const claimReward = () => {
 
         if (store.phone && (!store.email || !store.emailVerified)) {
           bindEmailDialog.value = true;
+          updateEmailInfo.code = ''
         }
 
 
@@ -610,22 +625,25 @@ const updateEmailInfo = reactive({
 });
 
 const submitUpdateEmail = () => {
-  updateEmailRef.value.validate();
   updateEmailCodeRef.value.validate();
 
-  if (updateEmailRef.value.hasError || updateEmailCodeRef.value.hasError) {
-  } else {
-    const endpoint = store.email ? "/otp/verifyEmail" : "/session/verifyAndUpdateEmail"
+  if (!updateEmailCodeRef.value.hasError) {
+    if (!store.email) {
+      updateEmailRef.value.validate();
+      if (updateEmailRef.value.hasError) return;
+    }
+
+    const emailDetails = {
+      code: updateEmailInfo.code,
+      codeId: updateEmailInfo.codeId
+    };
+
+    if (!store.email) {
+      emailDetails.email = updateEmailInfo.email;
+    }
 
     api
-      .post(
-        endpoint,
-        qs.stringify({
-          email: updateEmailInfo.email,
-          code: updateEmailInfo.code,
-          codeId: updateEmailInfo.codeId
-        })
-      )
+      .post("/session/verifyRegisteredEmailOtp", qs.stringify(emailDetails))
       .then((response) => {
         if (response.code === 0) {
           $q.notify({
@@ -637,6 +655,9 @@ const submitUpdateEmail = () => {
           bindEmailDialog.value = false;
           formDetail.email = updateEmailInfo.email;
           formDetail.emailVerified = true;
+          store.getMemberInfo();
+          getCode();
+          getEmailVerifyBonus();
         } else {
           $q.notify({
             color: "negative",
@@ -688,22 +709,23 @@ const openVerificationCodeDialog = () => {
 };
 
 const onCaptchaSubmit = () => {
+  const payload = {
+    captchaCode: captchaRef.value,
+    codeId: updateSecurityVerified.codeId
+  };
+
+  if (updateEmailInfo.email) {
+    payload.email = updateEmailInfo.email;
+  }
+
   api
-    .post(
-      `/otp/sendNewEmail`,
-      qs.stringify({
-        email: updateEmailInfo.email,
-        captchaCode: captchaRef.value,
-        codeId: updateSecurityVerified.codeId
-      })
-    )
+    .post(`/session/sendRegisteredEmailOtp`, qs.stringify(payload))
     .then((res) => {
       let message = res.message,
         color = "positive";
 
       if (res.code === 0) {
         verificationCodeDialog.value = false;
-
         updateEmailInfo.codeId = res.data.codeId;
 
         showVerificationTokenInput.value = true;
@@ -725,14 +747,17 @@ const onCaptchaSubmit = () => {
           message: t("notify.emailVerificationSent"),
           icon: "check_circle_outline"
         });
-      } else color = "negative";
+      } else {
+        color = "negative";
+      }
 
-      if (message) $q.notify({ message, color });
+      if (message) {
+        $q.notify({ message, color });
+      }
 
       console.log("onCaptchaSubmit", res);
     });
 };
-
 const verificationImg = ref("");
 const getCode = () => {
   api
