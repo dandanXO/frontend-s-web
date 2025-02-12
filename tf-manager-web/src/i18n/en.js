@@ -2248,6 +2248,7 @@ export default {
     downlineTransfer: 'Downline Transfer',
     sender: 'Sender',
     receiver: 'Receiver',
+    allPrivilege: 'All Privilege',
   },
   message: {
     adsStatusOpen: 'Open',

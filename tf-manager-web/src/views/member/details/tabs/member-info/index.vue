@@ -550,6 +550,7 @@
             </div>
           </template>
           <el-switch
+            :disabled="!hasPermission(['sys:member:open-transfer:update:state'])"
             v-model="memberDetail.isOpenTransfer"
             @change="changeOpenTransferState(memberDetail.isOpenTransfer)"
           />

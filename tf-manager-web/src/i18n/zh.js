@@ -2249,6 +2249,7 @@ export default {
     transfer: '下线转账',
     sender: '发送人',
     receiver: '接收人',
+    allPrivilege: '全部优惠',
   },
   message: {
     adsStatusOpen: '开',
