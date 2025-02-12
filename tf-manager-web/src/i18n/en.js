@@ -2245,6 +2245,9 @@ export default {
     withdrawAmountRatio: 'Withdraw Amount Ratio',
     withdrawCountRatio: 'Withdraw Count Ratio',
     totalBetAndWinLoss: 'Total Bet & Win/Loss',
+    downlineTransfer: 'Downline Transfer',
+    sender: 'Sender',
+    receiver: 'Receiver',
   },
   message: {
     adsStatusOpen: 'Open',
@@ -3070,6 +3073,7 @@ export default {
     'Privi Spin Event Record': 'Privi Spin Event Record',
     'Top Ranking': 'Top Ranking',
     'Top Bonus Ranking': 'Top Bonus Ranking',
+    'Member Refer Transfer Record': 'Member Refer Transfer Record',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

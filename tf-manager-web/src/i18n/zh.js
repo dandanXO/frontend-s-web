@@ -1524,8 +1524,8 @@ export default {
     redeemCode: '兑换码',
     redeemPoints: '兑换分数',
     redirect: '域名转址',
-    'redirectRecord': '浮窗记录',
-    'redirectMember': '指定玩家显示',
+    redirectRecord: '浮窗记录',
+    redirectMember: '指定玩家显示',
     reenterPassword: '重新输入密码',
     referredName: '被推荐人',
     referrer: '推荐人',
@@ -2246,6 +2246,9 @@ export default {
     withdrawAmountRatio: '提款金额比例',
     withdrawCountRatio: '提款笔数比例',
     totalBetAndWinLoss: '总投注与输赢',
+    transfer: '下线转账',
+    sender: '发送人',
+    receiver: '接收人',
   },
   message: {
     adsStatusOpen: '开',
@@ -3019,6 +3022,7 @@ export default {
     'ID Verification': '身份认证',
     'Top Ranking': '优惠游戏排行榜记录',
     'Top Bonus Ranking': '优惠奖金排行榜记录',
+    'Member Refer Transfer Record': '会员上下级转账记录',
   },
   google: {
     google_auth_menu: '谷歌验证',
