@@ -59,6 +59,16 @@ export default {
     wallet: "پرس",
     me: "میں"
   },
+  modal: {
+    addToHomeScreen: {
+      addToHomeScreenBonus: "ہم آپ کی ہوم اسکرین پر تازہ ترین مفت بیٹس اور بونس اپ ڈیٹس شامل کرنا چاہتے ہیں",
+      continueToUseH5: "H5 استعمال کرتے رہیں",
+      appAndWeb: "ایپ + ویب",
+      app: "ایپ",
+      addToHomeScreen: "ہوم اسکرین پر شامل کریں",
+      enjoyMoreBenefits: "زیادہ فوائد سے لطف اندوز ہوں!"
+    }
+  },
   form: {
     phone: "فون نمبر",
     phone_placeholder: "براہ کرم اپنا موبائل نمبر درج کریں",

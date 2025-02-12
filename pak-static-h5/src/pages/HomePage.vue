@@ -1428,6 +1428,8 @@
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
   </q-dialog>
   <a ref="downloadAppRef" :href="ui.downloadAppUrl" download style="display: none" />
+
+  <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
 </template>
 
 <script setup>
@@ -1469,6 +1471,7 @@ import { useCustomerTrigger } from "src/hooks/trigger";
 import chroma from "chroma-js";
 import PopupController from "src/components/PopupController.vue";
 import MegaSharingWheelModal from "src/components/hotpromo/megaSharingWheel/MegaSharingWheelModal.vue";
+import AddToHomeScreenModal from "src/components/modal/AddToHomeScreenModal.vue";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
@@ -1483,6 +1486,7 @@ const isShowPrizeModal = ref(false);
 const isMediaSettingsModal = ref(false);
 const popupPromo = ref("");
 const megaSharingWheelDialogModel = ref(true);
+const isAddToHomeScreen = ref(false);
 
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
@@ -3735,6 +3739,10 @@ onMounted(() => {
 
   if (Platform.is.android && Platform.is.capacitor) {
     initOneSignal();
+  } else {
+    if (!sessionStorage.getItem("add_to_homescreen")) {
+      isAddToHomeScreen.value = true;
+    }
   }
 });
 
