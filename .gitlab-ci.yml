@@ -304,6 +304,13 @@ deploy-minifun-site-v2:
 
 #===============================================================================================
 
+deploy-mini-game:
+  extends: .s3-deploy
+  variables:
+    PROJECT: mini-game
+
+#===============================================================================================
+
 deploy-vnm-download:
   extends: .s3-deploy
   variables:
@@ -1215,20 +1222,6 @@ deploy-br1-download-pwa:
     SITE_CODE: P8S1-BR1
   tags:
     - p8s1-br1-runners
-
-#===============================================================================================
-
-build-mini-game:
-  extends: .build-projects
-  variables:
-    PROJECT: mini-game
-
-build-image-mini-game:
-  extends: .docker-build
-  variables:
-    PROJECT: mini-game
-  needs:
-    - build-mini-game
 
 #===============================================================================================
 
