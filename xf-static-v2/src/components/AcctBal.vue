@@ -54,7 +54,7 @@
                   <span class="text-bold" v-if="p.isLoading">加载中...</span>
                   <span class="text-bold" v-else-if="p.isTransferring">转出中...</span>
                   <span v-else>
-                    {{ store.currency.value }}
+                    <!-- {{ store.currency.value }} -->
                     {{ p.amount ? Number(p.amount).toFixed(2) : (0.0).toFixed(2) }}
                   </span>
                 </div>

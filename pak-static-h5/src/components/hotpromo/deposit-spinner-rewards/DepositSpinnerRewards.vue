@@ -312,9 +312,13 @@ const onClickRotate = () => {
     }
   eventapi.post(`/session/deposit-wheel/spin?promoCode=pak-deposit-wheel&wheelType=${wheelType}`).then((res) => {
     if (res.code === 0) {
-      // Usage example
-      const result = getIndexByName(res.data.bonus.toString());
-      roll(result);
+        let result = getIndexByName(res.data.bonus.toString());
+
+        if (res.data.spinType === 'FREESPIN') {
+        result = res.data.freeSpinWheelType === wheelType ? 'X2' : 'X1';
+        }
+
+        roll(result);
     }
   });
     // const result = getIndexByName('17');
@@ -491,6 +495,8 @@ linear-gradient(180deg, #FF7527 0%, #FFA011 100%);
             }
             .bg {
                 margin-top: -85px;
+                
+    margin-top: -22.5vw;
                 height: 100%;
     position: absolute;
     z-index: 0;
@@ -664,6 +670,7 @@ linear-gradient(180deg, #FF7527 0%, #FFA011 100%);
             border-radius: 10px 10px 0 0;
             background: radial-gradient(50% 40.87% at 50% 59.13%, #001501 0%, #002417 100%);
             border: 1.5px solid #8C7B32;
+             min-height: 22.5vw;
             img.spinwheel {
                 width: 30px;
                 margin: 0 auto;

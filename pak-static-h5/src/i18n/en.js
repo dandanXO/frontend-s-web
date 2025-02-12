@@ -212,6 +212,7 @@ export default {
     deposit: "Deposit",
     betting: "Betting",
     share: "Share",
+    close: "Close",
     signinWithGoogle: "Google",
   },
   notify: {
@@ -585,6 +586,8 @@ export default {
       rewardClaimed: "Reward has already been claimed"
     },
     jackpotAviator: {
+      daily: "Daily",
+      weekly: "Weekly",
       rules: "Rules",
       history: "History",
       receive: "Receive",
@@ -594,6 +597,11 @@ export default {
       rank: "Rank",
       dailyOrWeekly: "Daily/Weekly",
       rankingBonusRatio: "Ranking Bonus Ratio",
+      myBets: "My Bets",
+      myReward: "My Rewards",
+      ranksLeft: "Ranks Left",
+      jackpot: "Jackpot",
+      noRank: "No Rank",
       rules1: "Daily Ranking Rewards: 1.5% of the platform's total daily pilot revenue will be included in the daily prize pool. This pool will be automatically distributed to players daily based on their positions in the daily rankings.",
       rules2: "Weekly Ranking Rewards: 0.6% of the platform's total weekly revenue will contribute to the weekly prize pool. This pool will be automatically distributed to players weekly based on their positions in the weekly rankings.",
       activityRules1: "Players' rankings on the daily leaderboard, weekly leaderboard, and overall ranking are based on their corresponding total bet amount.",
