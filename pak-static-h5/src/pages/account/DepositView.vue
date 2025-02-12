@@ -755,7 +755,7 @@ async function pDepo(deposit) {
         const response = res.data.result;
 
         //FB Tracking.
-        if (store.isFbPixel) {
+        if (store.isOldFBPixel) {
           fbq("track", "Purchase", {
             currency: "PKR",
             value: obj.localAmount

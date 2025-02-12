@@ -136,24 +136,46 @@
 
       function updateContactInfoByHostname() {
         const hostname = window.location.host.replace("www.", "");
-        console.log(hostname, "dan");
+        // console.log(hostname, "dan");
 
         const contactInfo = {
           "41109.cc": {
-            group1Title: "福满多",
-            group1Number: "558193077",
-            group2Title: "大发特发",
-            group2Number: "1002516732",
-            landingPageLink: "https://am787.cc",
+            group1Title: "富力",
+            group1Number: "992359773",
+            group2Title: "满满福利",
+            group2Number: "983092106",
+            landingPageLink: "https://am787.cc", // You can set a default link or leave it empty
             redirectUrl: "https://www.dy38376.com",
             claimUrl: "https://www.dy38376.com",
-            agent1ID: "vip121",
-            agent2ID: "vip521"
+            agent1ID: "vip116",
+            agent2ID: "vip120"
           },
-          "facfa.gdn":{
+          "facfa.gdn": {
             group1Title: "富力：",
             group1Number: "992359773",
             group2Title: "满满福利： ",
+            group2Number: "983092106",
+            landingPageLink: "https://am787.cc", // You can set a default link or leave it empty
+            redirectUrl: "https://www.dy38376.com",
+            claimUrl: "https://www.dy38376.com",
+            agent1ID: "vip116",
+            agent2ID: "vip120"
+          },
+          "djsnz.bid": {
+            group1Title: "红丽群：",
+            group1Number: "992359773",
+            group2Title: "恭喜发财： ",
+            group2Number: "777463204",
+            landingPageLink: "https://am787.cc", // You can set a default link or leave it empty
+            redirectUrl: "https://www.dy38376.com",
+            claimUrl: "https://www.dy38376.com",
+            agent1ID: "vip116",
+            agent2ID: "vip120"
+          },
+          "80195.co": {
+            group1Title: "富力",
+            group1Number: "992359773",
+            group2Title: "满满福利",
             group2Number: "983092106",
             landingPageLink: "https://am787.cc", // You can set a default link or leave it empty
             redirectUrl: "https://www.dy38376.com",
@@ -211,10 +233,11 @@
       console.log(hostname);
       if (hostname.indexOf("41109.cc") > -1) {
         LA.init({ id: "KgmmimSiDYduYTQq", ck: "KgmmimSiDYduYTQq" });
-      }else if(hostname.indexOf("facfa.gdn") > -1){
-        LA.init({id:"KhMBfrDmfahJW5Mm",ck:"KhMBfrDmfahJW5Mm"})
+      } else if (hostname.indexOf("facfa.gdn") > -1) {
+        LA.init({ id: "KhMBfrDmfahJW5Mm", ck: "KhMBfrDmfahJW5Mm" });
+      } else if (hostname.indexOf("djsnz.bid") > -1) {
+        LA.init({ id: "KiYJ6SmOb0Zi7hZa", ck: "KiYJ6SmOb0Zi7hZa" });
       }
     </script>
   </body>
 </html>
-

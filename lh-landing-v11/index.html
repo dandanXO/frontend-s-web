@@ -83,6 +83,16 @@
                   <span id="group2-number">941446940</span>
                 </div>
               </div>
+
+              <div class="contact-item contact-item3 w-50" style="height: 100%; justify-content: flex-start">
+                <div class="icon">
+                  <img src="./imgs/qq-icon.png" alt="" />
+                </div>
+                <div style="display: flex; flex-direction: column">
+                  <span class="title" id="group3-title">活动群：</span>
+                  <span id="group3-number">941446940</span>
+                </div>
+              </div>
             </div>
 
             <div class="contact-item w-100">
@@ -113,6 +123,20 @@
                 <img src="./imgs/contact-btn.png" alt="" />
               </a>
             </div>
+            <div class="contact-item contact-item3agent w-100">
+              <div class="contact-group">
+                <div class="icon">
+                  <img src="./imgs/service-icon.png" alt="" />
+                </div>
+                <div style="display: flex; flex-direction: column">
+                  <span class="title">Amico 专员 ID</span>
+                  <span id="agent3-id">VIP521</span>
+                </div>
+              </div>
+              <a href="https://www.am787.cc" id="landing-page-link1" target="_blank" class="service-icon">
+                <img src="./imgs/contact-btn.png" alt="" />
+              </a>
+            </div>
             <a href="https://www.am787.cc" id="landing-page-link2" target="_blank" style="width: 100%">
               <img src="./imgs/contact-download.png" width="100%" />
             </a>
@@ -136,32 +160,43 @@
 
       function updateContactInfoByHostname() {
         const hostname = window.location.host.replace("www.", "");
-        console.log(hostname, "dan");
+        // console.log(hostname, "dan");
 
         const contactInfo = {
-          "21894.cc": {
-            group1Title: "富力",
-            group1Number: "992359773",
-            group2Title: "满满福利",
-            group2Number: "983092106",
+          "73290.co": {
+            group1Title: "超级活动群",
+            group1Number: "178572309",
+            group2Title: "才云群",
+            group2Number: "699878262",
             landingPageLink: "https://www.am787.cc",
             redirectUrl: "https://www.lh57018.com",
             claimUrl: "https://www.lh57018.com",
-            agent1ID: "vip116",
-            agent2ID: "vip120"
+            agent1ID: "baozi8795",
+            agent2ID: "vip119"
           },
-          "fafac.gdn":{
-            group1Title: "富力：",
-            group1Number: "992359773",
-            group2Title: "满满福利： ",
-            group2Number: "983092106",
-            landingPageLink: "https://am787.cc", // You can set a default link or leave it empty
+          "67401.co": {
+            group1Title: "超级活动群",
+            group1Number: "178572309",
+            group2Title: "才云群",
+            group2Number: "699878262",
+            landingPageLink: "https://www.am787.cc",
             redirectUrl: "https://www.lh57018.com",
             claimUrl: "https://www.lh57018.com",
-            agent1ID: "vip116",
-            agent2ID: "vip120"
+            agent1ID: "baozi8795",
+            agent2ID: "vip119"
           },
-          "75109.cc": {
+          "21894.cc": {
+            group1Title: "超级活动群",
+            group1Number: "178572309",
+            group2Title: "才云群",
+            group2Number: "699878262",
+            landingPageLink: "https://www.am787.cc",
+            redirectUrl: "https://www.lh57018.com",
+            claimUrl: "https://www.lh57018.com",
+            agent1ID: "baozi8795",
+            agent2ID: "vip119"
+          },
+          "78658.cc": {
             group1Title: "富力",
             group1Number: "992359773",
             group2Title: "满满福利",
@@ -172,6 +207,29 @@
             agent1ID: "vip116",
             agent2ID: "vip120"
           },
+          "cxayz.bid": {
+            group1Title: "红丽群",
+            group1Number: "992359773",
+            group2Title: "满满福利",
+            group2Number: "983092106",
+            landingPageLink: "https://am787.cc",
+            redirectUrl: "https://www.lh57018.com",
+            claimUrl: "https://www.lh57018.com",
+            agent1ID: "vip116",
+            agent2ID: "vip120"
+          },
+          "fafac.gdn": {
+            group1Title: "富力：",
+            group1Number: "992359773",
+            group2Title: "满满福利： ",
+            group2Number: "983092106",
+            landingPageLink: "https://am787.cc", // You can set a default link or leave it empty
+            redirectUrl: "https://www.lh57018.com",
+            claimUrl: "https://www.lh57018.com",
+            agent1ID: "vip116",
+            agent2ID: "vip120",
+            agent3ID: "vip512"
+          }
         };
 
         // Default content if no hostname matches
@@ -195,12 +253,21 @@
         document.getElementById("group1-number").textContent = selectedInfo.group1Number;
         document.getElementById("group2-title").textContent = selectedInfo.group2Title;
         document.getElementById("group2-number").textContent = selectedInfo.group2Number;
+        document.getElementById("group3-title").textContent = selectedInfo.group3Title;
+        document.getElementById("group3-number").textContent = selectedInfo.group3Number;
         document.getElementById("landing-page-link1").href = selectedInfo.landingPageLink;
         document.getElementById("landing-page-link2").href = selectedInfo.landingPageLink;
         document.getElementById("landing-page-link3").href = selectedInfo.landingPageLink;
         document.getElementById("agent1-id").textContent = selectedInfo.agent1ID;
         document.getElementById("agent2-id").textContent = selectedInfo.agent2ID;
+        document.getElementById("agent3-id").textContent = selectedInfo.agent3ID;
+        const contactItem = document.querySelector(".contact-item3");
+        const contactItemAgent = document.querySelector(".contact-item3agent");
 
+        if (!selectedInfo.group3Title || !selectedInfo.agent3ID) {
+          contactItem.style.display = "none";
+          contactItemAgent.style.display = "none";
+        }
         var element = document.getElementById("tf88Url-btn");
         var claimBtnElement = document.getElementById("click-to-claim-btn");
 
@@ -220,16 +287,18 @@
     <script>
       var hostname = window.location.hostname;
       console.log(hostname);
-      if (hostname.indexOf("21894.cc") > -1) {
+      if (hostname.indexOf("78658.cc") > -1) {
+        LA.init({ id: "Kc3jtkvnthfuobWe", ck: "Kc3jtkvnthfuobWe" });
+      } else if (hostname.indexOf("21894.cc") > -1) {
         LA.init({ id: "KgmmdOQZU51lev3x", ck: "KgmmdOQZU51lev3x" });
-      } else if(hostname.indexOf("fafac.gdn") > -1){
-        LA.init({id:"KhMBsXgrCcxm1sDW",ck:"KhMBsXgrCcxm1sDW"})
+      } else if (hostname.indexOf("fafac.gdn") > -1) {
+        LA.init({ id: "KhMBsXgrCcxm1sDW", ck: "KhMBsXgrCcxm1sDW" });
       } else if (hostname.indexOf("75109.cc") > -1) {
         LA.init({ id: "KXx0yq8vuBr5ecCe", ck: "KXx0yq8vuBr5ecCe" });
+      } else if (hostname.indexOf("cxayz.bid") > -1) {
+        LA.init({ id: "KiYIzEe6dR1wLg7l", ck: "KiYIzEe6dR1wLg7l" });
       } else {
-        
       }
     </script>
   </body>
 </html>
-

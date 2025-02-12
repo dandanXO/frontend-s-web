@@ -1,5 +1,5 @@
 <template>
-  <div class="hot-promo">
+  <div class="hot-promo" :style="list.redirectUrl === 'pak-deposit-spinner-rewards' ? 'border-radius: 0;' : ''">
     <ClaimPromo
       v-if="isCommonPromo && store.hasToken()"
       :promo-id="list.id"
@@ -19,6 +19,11 @@
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'pak-aviator-golden-egg' && store.token" />
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'pak-slot-ftd' && store.token" :params="list.param" />
     <VideoAmbassador v-if="list.redirectUrl === 'pak-video-ambassador' && store.token" :params="list.param" />
+    <JackpotAviator
+      v-if="list.redirectUrl === 'pak-jackpot-aviator' && !isCommonPromo && store.token"
+      :promocode="list.promoCode"
+    />
+    <DepositSpinnerRewards v-if="list.redirectUrl === 'pak-deposit-spinner-rewards' && store.token" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -55,7 +60,9 @@ import NewPlayersPromo from "../components/hotpromo/newPlayers/NewPlayersPromo.v
 import SlotFtdPromo from "../components/hotpromo/slotFtdPromo/SlotFtdPromo.vue";
 import GoldenEggPromo from "./hotpromo/goldenEgg/GoldenEggPromo.vue";
 
-import VideoAmbassador from "./hotpromo/video-ambassador/VideoAmbassador.vue"
+import VideoAmbassador from "./hotpromo/video-ambassador/VideoAmbassador.vue";
+import DepositSpinnerRewards from "./hotpromo/deposit-spinner-rewards/DepositSpinnerRewards.vue";
+import JackpotAviator from "./hotpromo/jackpotAviator/JackpotAviator.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -72,7 +79,9 @@ export default defineComponent({
     NewPlayersPromo,
     SlotFtdPromo,
     VideoAmbassador,
-    GoldenEggPromo
+    GoldenEggPromo,
+    JackpotAviator,
+    DepositSpinnerRewards
   },
   props: {
     list: {
@@ -133,6 +142,8 @@ export default defineComponent({
       this.list.redirectUrl === "pak-slot-ftd" ||
       this.list.redirectUrl === "pak-aviator-golden-egg" ||
       this.list.redirectUrl === "pak-video-ambassador" ||
+      this.list.redirectUrl === "pak-jackpot-aviator" ||
+      this.list.redirectUrl === "pak-deposit-spinner-rewards" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;
