@@ -1191,6 +1191,7 @@ export default {
     isDeposit: '显示存款会员',
     isMultiple: '支持多选项',
     itsYou: '是你',
+    jackpotAmount: '奖金池',
     job: '任務',
     jobLog: '日志列表',
     jobName: '任务名称',
@@ -1511,6 +1512,7 @@ export default {
     maxBalance: '最高余额',
     nickName: '昵称',
     rangeVipRules: 'VIP 奖金范围',
+    rankingTime: '排行榜日期',
     rebateAmount: '返水金额',
     receiveTime: '领取时间',
     receiveType: '领取模式',
@@ -3019,6 +3021,7 @@ export default {
     'ID Verification': '身份认证',
     'Top Ranking': '优惠游戏排行榜记录',
     'Top Bonus Ranking': '优惠奖金排行榜记录',
+    'Game Jackpot Bonus Record': '奖金池奖励记录',
   },
   google: {
     google_auth_menu: '谷歌验证',

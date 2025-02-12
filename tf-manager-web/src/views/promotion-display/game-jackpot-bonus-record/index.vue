@@ -19,7 +19,7 @@
           />
         </el-select>
         <el-date-picker
-          v-model="request.recordTime"
+          v-model="request.recordDate"
           format="DD/MM/YYYY"
           value-format="YYYY-MM-DD"
           type="daterange"
@@ -39,21 +39,7 @@
         />
         <el-select
           clearable
-          v-model="request.type"
-          size="small"
-          :placeholder="t('fields.type')"
-          style="width: 120px; margin-left: 5px"
-        >
-          <el-option
-            v-for="item in topRankingTypes.list"
-            :key="item"
-            :label="item"
-            :value="item"
-          />
-        </el-select>
-        <el-select
-          clearable
-          v-model="request.timeType"
+          v-model="request.poolType"
           size="small"
           :placeholder="t('fields.type')"
           style="width: 120px; margin-left: 5px"
@@ -65,13 +51,27 @@
             :value="item"
           />
         </el-select>
-        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadTopRanking">
+        <el-select
+          clearable
+          v-model="request.status"
+          size="small"
+          :placeholder="t('fields.type')"
+          style="width: 120px; margin-left: 5px"
+        >
+          <el-option
+            v-for="item in statusTypes.list"
+            :key="item"
+            :label="item"
+            :value="item"
+          />
+        </el-select>
+        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadGameJackpotBonus">
           {{ t('fields.search') }}
         </el-button>
       </div>
-      <div class="btn-group">
+      <!-- <div class="btn-group">
         <el-button icon="el-icon-plus" size="mini" type="primary" v-permission="['sys:privi:top-ranking:add']" @click="showDialog('CREATE')">{{ t('fields.add') }}</el-button>
-      </div>
+      </div> -->
     </div>
     <el-dialog
       :title="uiControl.dialogTitle"
@@ -174,68 +174,75 @@
     <el-table :data="page.records" v-loading="page.loading" ref="table" row-key="id" size="small" highlight-current-row>
       <!-- <el-table-column prop="siteId" :label="t('fields.site')" width="50" /> -->
       <el-table-column type="index" width="50" />
-      <el-table-column prop="type" :label="t('fields.type')" width="50" />
-      <el-table-column prop="platform" :label="t('fields.platform')" width="100" />
-      <el-table-column prop="gameType" :label="t('fields.gameType')" width="100" />
-      <el-table-column prop="gameName" :label="t('fields.gameName')" width="100" />
       <el-table-column prop="loginName" :label="t('fields.memberName')" width="120" />
-      <el-table-column prop="amount" :label="t('fields.amount')" align="center" min-width="180" sortable>
+      <el-table-column prop="bonus" :label="t('fields.bonus')" align="center" width="100">
         <template #default="scope">
-          $ <span v-formatter="{data: scope.row.amount, type: 'money'}" />
+          $ <span v-formatter="{data: scope.row.bonus, type: 'money'}" />
         </template>
       </el-table-column>
-      <el-table-column prop="recordTime" :label="t('fields.rankingTime')" width="100">
+      <el-table-column prop="recordDate" :label="t('fields.rankingTime')" width="100">
         <template #default="scope">
-          <span v-if="scope.row.recordTime === null">-</span>
+          <span v-if="scope.row.recordDate === null">-</span>
           <span
-            v-if="scope.row.recordTime !== null"
+            v-if="scope.row.recordDate !== null"
             v-formatter="{
-              data: scope.row.recordTime,
+              data: scope.row.recordDate,
               formatter: 'YYYY-MM-DD',
               type: 'date',
             }"
           />
         </template>
       </el-table-column>
-      <el-table-column prop="timeType" :label="t('fields.timeType')" width="100" />
+      <el-table-column prop="rankHistory" :label="t('fields.rank')" width="50" />
+      <el-table-column prop="poolType" :label="t('fields.timeType')" width="100" />
+      <el-table-column prop="bonusRatio" :label="t('fields.rate')" width="100">
+        <template #default="scope">
+          <span>{{ scope.row.bonusRatio }}</span> %
+        </template>
+      </el-table-column>
+      <el-table-column prop="jackpotAmount" :label="t('fields.totalBonus')" width="100">
+        <template #default="scope">
+          $ <span v-formatter="{data: scope.row.jackpotAmount, type: 'money'}" />
+        </template>
+      </el-table-column>
+      <el-table-column prop="status" :label="t('fields.status')" />
       <el-table-column prop="createTime" :label="t('fields.createTime')" />
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
-      <el-table-column :label="t('fields.action')" align="right" v-if="hasPermission(['sys:privi:top-ranking:update']) || hasPermission(['sys:privi:top-ranking:delete'])">
+      <!-- <el-table-column :label="t('fields.action')" align="right" v-if="hasPermission(['sys:privi:top-ranking:update']) || hasPermission(['sys:privi:top-ranking:delete'])">
         <template #default="scope">
           <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:privi:top-ranking:update']" @click="showEdit(scope.row)" />
           <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:privi:top-ranking:delete']" @click="remove(scope.row)" />
         </template>
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
     <el-pagination
       class="pagination"
       :total="page.total"
-      :page-sizes="[20, 50, 100, 150, 200, 500]"
+      :page-sizes="[20, 50, 100, 150, 200, 500, 1000]"
       @current-change="changepage"
       layout="total,sizes,prev, pager, next"
       v-model:page-size="request.size"
       v-model:page-count="page.pages"
       v-model:current-page="request.current"
-      @size-change="loadTopRanking()"
+      @size-change="loadGameJackpotBonus()"
     />
   </div>
 </template>
 
 <script setup>
 
-import { nextTick, reactive, ref, watch } from "vue";
+import { reactive, ref, watch } from "vue";
 import { required } from "../../../utils/validate";
 import { getSiteListSimple } from "@/api/site";
 import { getPlatformsBySite } from "../../../api/platform";
-import { createTopRanking, updateTopRanking, getTopRankingList, delTopRanking } from "@/api/top-ranking";
-import { hasRole, hasPermission } from "@/utils/util";
+import { hasRole } from "@/utils/util";
 import { onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
 import { useI18n } from "vue-i18n";
 import { getGameTypes } from '../../../api/game'
-import { ElMessage, ElMessageBox } from "element-plus";
 import moment from 'moment'
 import { getShortcuts } from '@/utils/datetime'
+import { getGameJackpotRecordList } from "../../../api/game-jackpot-bonus-record";
 
 const { t } = useI18n();
 const store = useStore();
@@ -258,18 +265,19 @@ const request = reactive({
   size: 20,
   current: 1,
   siteId: null,
-  recordTime: [defaultStartDate, defaultEndDate],
-  type: 'BET',
-  timeType: 'DAILY',
-  orderBy: "record_time, time_type, amount"
+  recordDate: [defaultStartDate, defaultEndDate],
+  poolType: 'DAILY',
+  status: null,
+  orderBy: "record_date, pool_type, bonus"
 });
 
 const topRankingForm = ref(null);
-const topRankingTypes = reactive({
-  list: ["BET", "WIN", "LOSS"],
-});
+
 const rankingTimeTypes = reactive({
   list: ["DAILY", "WEEKLY", "MONTHLY"],
+});
+const statusTypes = reactive({
+  list: ["PENDING", "CLAIMED", "EXPIRED"],
 });
 const gameTypes = reactive({
   list: [],
@@ -313,10 +321,10 @@ function convertDate(date) {
   return moment(date).format('YYYY-MM-DD')
 }
 
-async function loadTopRanking() {
+async function loadGameJackpotBonus() {
   page.loading = true;
   const query = checkQuery()
-  const { data: ret } = await getTopRankingList(query);
+  const { data: ret } = await getGameJackpotRecordList(query);
   page.pages = ret.pages;
   page.records = ret.records;
   page.total = ret.total;
@@ -331,18 +339,18 @@ function checkQuery() {
       query[key] = value
     }
   })
-  if (request.recordTime !== null) {
-    if (request.recordTime.length === 2) {
-      query.recordTime = JSON.parse(JSON.stringify(request.recordTime))
-      query.recordTime[0] = moment(query.recordTime[0]).format(
+  if (request.recordDate !== null) {
+    if (request.recordDate.length === 2) {
+      query.recordDate = JSON.parse(JSON.stringify(request.recordDate))
+      query.recordDate[0] = moment(query.recordDate[0]).format(
         'YYYY-MM-DD'
       )
-      query.recordTime[1] = moment(query.recordTime[1]).format(
+      query.recordDate[1] = moment(query.recordDate[1]).format(
         'YYYY-MM-DD'
       )
-      query.recordTime = query.recordTime.join(',')
+      query.recordDate = query.recordDate.join(',')
     } else {
-      query.recordTime[0] = moment(query.recordTime[0]).format(
+      query.recordDate[0] = moment(query.recordDate[0]).format(
         'YYYY-MM-DD'
       )
     }
@@ -355,78 +363,78 @@ async function loadGameTypes() {
   gameTypes.list = ret
 }
 
-function showDialog(type) {
-  if (topRankingForm.value) {
-    topRankingForm.value.resetFields();
-  }
-  if (type === "CREATE") {
-    form.id = null;
-    form.status = "true";
-    form.orderSequence = page.records.length + 1;
-    uiControl.dialogTitle = t('fields.add');
-  } else if (type === "EDIT") {
-    uiControl.dialogTitle = t('fields.edit');
-  }
-  uiControl.dialogType = type;
-  uiControl.dialogVisible = true;
-}
+// function showDialog(type) {
+//   if (topRankingForm.value) {
+//     topRankingForm.value.resetFields();
+//   }
+//   if (type === "CREATE") {
+//     form.id = null;
+//     form.status = "true";
+//     form.orderSequence = page.records.length + 1;
+//     uiControl.dialogTitle = t('fields.add');
+//   } else if (type === "EDIT") {
+//     uiControl.dialogTitle = t('fields.edit');
+//   }
+//   uiControl.dialogType = type;
+//   uiControl.dialogVisible = true;
+// }
 
-function showEdit(topRanking) {
-  showDialog("EDIT");
-  nextTick(() => {
-    for (const key in topRanking) {
-      if (Object.keys(form).find(k => k === key)) {
-        form[key] = topRanking[key];
-      }
-    }
-  });
-}
+// function showEdit(topRanking) {
+//   showDialog("EDIT");
+//   nextTick(() => {
+//     for (const key in topRanking) {
+//       if (Object.keys(form).find(k => k === key)) {
+//         form[key] = topRanking[key];
+//       }
+//     }
+//   });
+// }
 
-function remove(ranking) {
-  ElMessageBox.confirm(t('fields.deleteRanking'), {
-    confirmButtonText: t('fields.confirm'),
-    cancelButtonText: t('fields.cancel'),
-    type: 'warning',
-  }).then(async () => {
-    await delTopRanking(ranking.id)
-    await loadTopRanking()
-    ElMessage({ message: t('message.deleteSuccess'), type: 'success' })
-  })
-}
+// function remove(ranking) {
+//   ElMessageBox.confirm(t('fields.deleteRanking'), {
+//     confirmButtonText: t('fields.confirm'),
+//     cancelButtonText: t('fields.cancel'),
+//     type: 'warning',
+//   }).then(async () => {
+//     await delTopRanking(ranking.id)
+//     await loadGameJackpotBonus()
+//     ElMessage({ message: t('message.deleteSuccess'), type: 'success' })
+//   })
+// }
 
-function handleChangeSite(value) {
-  request.siteId = value
-  loadSearchPlatforms()
-}
+// function handleChangeSite(value) {
+//   request.siteId = value
+//   loadSearchPlatforms()
+// }
 
-function save() {
-  topRankingForm.value.validate(async (valid) => {
-    if (valid) {
-      await createTopRanking(form);
-      uiControl.dialogVisible = false;
-      await loadTopRanking();
-    }
-  });
-}
+// function save() {
+//   topRankingForm.value.validate(async (valid) => {
+//     if (valid) {
+//       await createTopRanking(form);
+//       uiControl.dialogVisible = false;
+//       await loadGameJackpotBonus();
+//     }
+//   });
+// }
 
-function update() {
-  topRankingForm.value.validate(async (valid) => {
-    if (valid) {
-      await updateTopRanking(form);
-      uiControl.dialogVisible = false;
-      await loadTopRanking();
-    }
-  });
-}
+// function update() {
+//   topRankingForm.value.validate(async (valid) => {
+//     if (valid) {
+//       await updateTopRanking(form);
+//       uiControl.dialogVisible = false;
+//       await loadGameJackpotBonus();
+//     }
+//   });
+// }
 
-function submit() {
-  uiControl.dialogLoading = true;
-  if (uiControl.dialogType === "CREATE") {
-    save();
-  } else if (uiControl.dialogType === "EDIT") {
-    update();
-  }
-}
+// function submit() {
+//   uiControl.dialogLoading = true;
+//   if (uiControl.dialogType === "CREATE") {
+//     save();
+//   } else if (uiControl.dialogType === "EDIT") {
+//     update();
+//   }
+// }
 
 async function loadSearchPlatforms() {
   if (request.siteId !== null) {
@@ -445,7 +453,7 @@ async function loadSites() {
 
 function changepage(page) {
   request.current = page;
-  loadTopRanking();
+  loadGameJackpotBonus();
 }
 
 watch(() => request.siteId, () => {
@@ -457,7 +465,7 @@ onMounted(async () => {
   site.value = list.site.find(s => s.siteName === store.state.user.siteName);
   request.siteId = site.value.id;
   loadSearchPlatforms();
-  await loadTopRanking();
+  await loadGameJackpotBonus();
 });
 
 </script>

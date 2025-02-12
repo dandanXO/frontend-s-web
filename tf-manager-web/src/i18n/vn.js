@@ -1029,6 +1029,7 @@ export default {
     isDeposit: 'Hiển thị nạp tiền',
     isMultiple: 'Có phải lựa chọn nhiều không',
     itsYou: 'Là bạn',
+    jackpotAmount: 'Tiền thưởng',
     job: 'Công việc',
     jobLog: 'Nhật ký công việc',
     jobName: 'Tên công việc',
@@ -1311,6 +1312,7 @@ export default {
     maxRebate: 'Hoàn tiền tối đa',
     maxBalance: 'Số dư tối đa',
     nickName: 'Biệt danh',
+    rankingTime: 'ngày xếp hạng',
     rebateAmount: 'Số tiền hoàn tiền',
     receiveTime: 'Thời gian nhận',
     receiveType: 'Loại nhận',
@@ -2639,6 +2641,7 @@ export default {
     'Privi Spin Event Record': 'Ghi chép sự kiện quay thưởng Privi',
     'Top Ranking': 'Ghi chép xếp hạng cao nhất',
     'Top Bonus Ranking': 'Xếp Hạng Thưởng Hàng Đầu',
+    'Game Jackpot Bonus Record': 'Hồ sơ thưởng Jackpot',
   },
   google: {
     google_auth_menu: 'Google Xác thực',
