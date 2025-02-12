@@ -61,6 +61,16 @@ export default {
     wallet: "Wallet",
     me: "Me"
   },
+  modal: {
+    addToHomeScreen: {
+      addToHomeScreenBonus: "We would like to add it to your home screen for the latest free bets and bonus updates",
+      continueToUseH5: "Continue to use H5",
+      appAndWeb: "App + Web",
+      app: "App",
+      addToHomeScreen: "Add to Home Screen",
+      enjoyMoreBenefits: "Enjoy more benefits!"
+    }
+  },
   form: {
     phone: "Phone",
     phone_placeholder: "Please enter your mobile number",

@@ -1,18 +1,20 @@
 <template>
-  <q-dialog v-model="isAddToHomeScreenModal" persistent @hide="closeDialog" position="bottom">
+  <q-dialog v-model="isAddToHomeScreenModal" @hide="closeDialog" position="bottom">
     <div class="add-to-homescreen-container">
       <q-btn class="close-btn" flat round dense icon="close" @click="closeDialog" />
       <div class="add-to-homescreen-top">
         <img class="app-logo" src="../../assets/images/index/download/download-app-logo_2.png" />
         <div class="add-to-homescreen-content">
-          We would like to add it to your home screen for the latest free bets and bonus updates
+          {{ $t("modal.addToHomeScreen.addToHomeScreenBonus") }}
         </div>
       </div>
-      <div class="continue-to-h5" @click="closeDialog">Continue to use H5</div>
+      <div class="continue-to-h5" @click="closeDialog">{{ $t("modal.addToHomeScreen.continueToUseH5") }}</div>
+
       <div class="add-to-homescreen-btn">
+        <div class="more-benefits-txt">{{ $t("modal.addToHomeScreen.enjoyMoreBenefits") }}</div>
         <q-btn v-if="Platform.is.ios" no-caps unelevated class="btn-secondary" @click="handleIosBtnClick">
           <img class="os-logo" src="../../assets/images/index/download/ios-logo.png" />
-          App + Web
+          {{ $t("modal.addToHomeScreen.appAndWeb") }}
         </q-btn>
         <q-btn
           v-else
@@ -23,15 +25,15 @@
           @click="closeDialog"
         >
           <img class="os-logo" src="../../assets/images/index/download/android-logo.png" />
-          App
+          {{ $t("modal.addToHomeScreen.app") }}
         </q-btn>
       </div>
     </div>
   </q-dialog>
-  <q-dialog v-model="isDisplayInstructions" persistent @hide="closeInstructionsDialog" position="bottom">
+  <q-dialog v-model="isDisplayInstructions" @hide="closeInstructionsDialog" position="bottom">
     <div class="instructions-container">
       <q-btn class="close-btn" flat round dense icon="close" @click="closeInstructionsDialog" />
-      <div>Add to Home Screen</div>
+      <div>{{ $t("modal.addToHomeScreen.addToHomeScreen") }}</div>
       <img src="../../assets/images/index/download/add-homescreen-instructions.png" />
     </div>
   </q-dialog>
@@ -41,6 +43,7 @@
 import { ref, watch } from "vue";
 import { Platform } from "quasar";
 import { useUI } from "stores/ui";
+import { useI18n } from "vue-i18n";
 
 const props = defineProps(["isAddToHomeScreen"]);
 const emit = defineEmits(["update:isAddToHomeScreen"]);
@@ -77,7 +80,7 @@ watch(
 
 <style scoped lang="scss">
 .add-to-homescreen-container {
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.75);
   color: #000;
   padding: 16px;
   .add-to-homescreen-top {
@@ -102,9 +105,23 @@ watch(
     font-weight: 600;
     width: 100%;
     text-align: center;
-    margin: 18px 0 14px;
+    margin: 18px 0;
     font-size: 13px;
     cursor: pointer;
+  }
+
+  .add-to-homescreen-btn {
+    position: relative;
+    .more-benefits-txt {
+      background-color: #e84d44;
+      color: #fff;
+      padding: 2px 10px;
+      border-radius: 20px;
+      position: absolute;
+      top: -14px;
+      right: 0;
+      z-index: 2;
+    }
   }
 
   .btn-primary {
@@ -115,13 +132,16 @@ watch(
     height: 46px;
   }
   .btn-secondary {
-    background-color: #fff;
+    background-color: transparent;
     color: #4488ff;
     font-size: 16px;
     height: 46px;
     border: 1px solid #4488ff;
     border-radius: 10px;
     width: 100%;
+  }
+  .btn-secondary::before {
+    background: none;
   }
 
   .os-logo {
@@ -132,7 +152,7 @@ watch(
 }
 
 .instructions-container {
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.75);
   color: #000;
   padding: 16px;
   display: flex;
@@ -151,7 +171,7 @@ watch(
 }
 
 .close-btn {
-  background-color: #d4d4d4;
+  background-color: #9e9e9e;
   color: #fff;
   position: absolute;
   right: 10px;
