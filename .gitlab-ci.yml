@@ -1218,17 +1218,17 @@ deploy-br1-download-pwa:
 
 #===============================================================================================
 
-build-minigame-website:
+build-mini-game:
   extends: .build-projects
   variables:
-    PROJECT: minigame-website
+    PROJECT: mini-game
 
-build-image-minigame-website:
+build-image-mini-game:
   extends: .docker-build
   variables:
-    PROJECT: minigame-website
+    PROJECT: mini-game
   needs:
-    - build-minigame-website
+    - build-mini-game
 
 #===============================================================================================
 
