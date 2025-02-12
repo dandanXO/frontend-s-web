@@ -150,7 +150,11 @@
 
   <div
     class="infoboard-container"
-    :class="{ 'q-pa-md': !homeProfile, 'with-top-download': topDownload && !ui.hideDownload }"
+    :class="{
+      'q-pa-md': !homeProfile,
+      'with-top-download': topDownload && !ui.hideDownload,
+      'with-background': isScrolled
+    }"
   >
     <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
@@ -285,7 +289,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, onUnmounted } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
@@ -305,6 +309,12 @@ const route = useRoute();
 const router = useRouter();
 const store = userStore();
 const ui = useUI();
+
+const isScrolled = ref(false);
+
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 0;
+};
 
 const loadCustomerAddress = () => {
   cached
@@ -486,6 +496,11 @@ onMounted(() => {
     isSideDownload.value = true;
   }
   afterMounted();
+  window.addEventListener("scroll", handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
 });
 </script>
 
@@ -733,7 +748,7 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   position: relative;
-  background-image: url("../assets/images/auth/auth-bg.png");
+  // background-image: url("../assets/images/auth/auth-bg.png");
   background-size: 100% 100%;
   box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -744,6 +759,10 @@ onMounted(() => {
   z-index: 2003;
   transition: 0.3s all;
   height: 60px;
+
+  &.with-background {
+    background: #150a08;
+  }
 
   &.with-top-download {
     // border-top-right-radius: 25px;
