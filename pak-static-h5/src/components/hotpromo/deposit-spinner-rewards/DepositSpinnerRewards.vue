@@ -598,7 +598,10 @@ linear-gradient(180deg, #FF7527 0%, #FFA011 100%);
                         }
                         &.mid {
                             position: absolute;
-                            left: 26%;
+                            left: 28.5%;
+                            @media screen and (min-width: 500px) {
+                                left: 29.5%;
+                            }
                             display: flex;
                             flex-direction: column;
                             justify-content: center;
