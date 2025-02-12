@@ -43,7 +43,6 @@
 import { ref, watch } from "vue";
 import { Platform } from "quasar";
 import { useUI } from "stores/ui";
-import { useI18n } from "vue-i18n";
 
 const props = defineProps(["isAddToHomeScreen"]);
 const emit = defineEmits(["update:isAddToHomeScreen"]);
