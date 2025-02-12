@@ -1050,6 +1050,7 @@ export default {
     isDeposit: '입금 표시',
     isMultiple: '다중 선택 여부',
     itsYou: '당신입니다',
+    jackpotAmount: '잭팟금액',
     job: '작업',
     jobLog: '작업 로그',
     jobName: '작업 이름',
@@ -1331,6 +1332,7 @@ export default {
     maxRebate: '최대 리베이트',
     maxBalance: '최대 잔액',
     nickName: '별명',
+    rankingTime: '랭킹 날짜',
     rebateAmount: '리베이트 금액',
     receiveTime: '수신 시간',
     receiveType: '수신 유형',
@@ -2667,6 +2669,7 @@ export default {
     'Privi Spin Event Record': '프리비 스핀 이벤트 기록',
     'Top Ranking': '최고 순위 기록',
     'Top Bonus Ranking': '최고 보너스 순위',
+    'Game Jackpot Bonus Record': '게임 잭팟 보너스 기록',
   },
   google: {
     google_auth_menu: 'Google 인증자',

@@ -1187,6 +1187,7 @@ export default {
     isDeposit: 'Show Deposit',
     isMultiple: 'Is Multiple Choice',
     itsYou: "it's you",
+    jackpotAmount: 'Jackpot Amount',
     job: 'Job',
     jobLog: 'Job Log',
     jobName: 'Job Name',
@@ -1509,6 +1510,7 @@ export default {
     maxBalance: 'Maximun Balance',
     nickName: 'Nickname',
     rangeVipRules: 'VIP Range Bonus',
+    rankingTime: 'Ranking Time',
     rebateAmount: 'Rebate Amount',
     receiveTime: 'Receive Time',
     receiveType: 'Receive Type',
@@ -3066,6 +3068,7 @@ export default {
     'Privi Spin Event Record': 'Privi Spin Event Record',
     'Top Ranking': 'Top Ranking',
     'Top Bonus Ranking': 'Top Bonus Ranking',
+    'Game Jackpot Bonus Record': 'Game Jackpot Bonus Record',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
