@@ -163,7 +163,7 @@
       </div>
       <div class="profile-wrapper-extra">
         <div class="logo-img">
-          <img src="../assets/images/auth/auth-logo-text-only.png" @click="onClickLogo" />
+          <img src="../assets/images/auth/bg-logo-only.png" @click="onClickLogo" />
         </div>
       </div>
       <div class="profile-wrapper" v-if="ui.loggedIn || store.hasToken()">
@@ -198,6 +198,13 @@
             </div>
           </template>
         </div>
+
+        <q-btn class="gift-wrapper" flat @click="showBonusModal">
+          <img src="../assets/images/auth/gift.png" />
+          <q-badge v-if="!!fastAccessPromoLength" class="gift-badge" floating rounded>
+            {{ fastAccessPromoLength }}
+          </q-badge>
+        </q-btn>
 
         <!-- <div>
           <q-btn square class="style-blue-btn" icon="add" dense @click="router.push('/deposit?from=' + route.path)" />
@@ -285,6 +292,10 @@
         <div class="btn-lang" @click="router.push('/language')"><img src="../assets/images/auth/icon-globe.png" /></div>
       </div>
     </div>
+
+    <q-dialog v-model="isBonusModal" position="top" style="z-index: 2002">
+      <BonusModal :has-top-download="topDownload && !ui.hideDownload" :promo-list="fastAccessPromo" />
+    </q-dialog>
   </div>
 </template>
 
@@ -299,6 +310,7 @@ import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { useI18n } from "vue-i18n";
 import LangOptions from "components/LangOptions";
+import BonusModal from "./modal/BonusModal.vue";
 
 import { defineEmits } from "vue";
 import { useCustomerTrigger } from "src/hooks/trigger";
@@ -314,6 +326,25 @@ const isScrolled = ref(false);
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 0;
+};
+
+const isBonusModal = ref(false);
+const fastAccessPromo = ref([]);
+
+const getFastAccessPromo = () => {
+  api.get("/opt-session/promo/page?showFastAccess=1").then((res) => {
+    if (res.code === 0) {
+      if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+        fastAccessPromo.value = res.data;
+      } else {
+        fastAccessPromo.value = res.data.filter((item) => item.privilegeStatus !== "TEST");
+      }
+    }
+  });
+};
+
+const showBonusModal = () => {
+  isBonusModal.value = true;
 };
 
 const loadCustomerAddress = () => {
@@ -497,6 +528,7 @@ onMounted(() => {
   }
   afterMounted();
   window.addEventListener("scroll", handleScroll);
+  getFastAccessPromo();
 });
 
 onUnmounted(() => {
@@ -857,6 +889,30 @@ onUnmounted(() => {
       font-size: 16px;
     }
 
+    .gift-wrapper {
+      background: rgba(0, 10, 1, 0.6);
+      // box-shadow: 0px 0px 5px 0px #ffffff4a inset;
+      border-radius: 8px;
+      position: relative;
+      border: none;
+      padding: 10px;
+      height: 40px;
+      width: 40px;
+
+      &:hover {
+        filter: brightness(1.2);
+      }
+
+      img {
+        max-width: 100%;
+      }
+
+      .gift-badge {
+        background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+        color: #fff;
+      }
+    }
+
     .profile-name {
       display: flex;
       align-items: center;
@@ -953,8 +1009,7 @@ onUnmounted(() => {
     display: flex;
 
     img {
-      max-width: 115px;
-      width: 100%;
+      width: 32px;
       text-align: center;
     }
   }
