@@ -129,7 +129,7 @@ const initContactList = () => {
     {
       icon: 'cskype',
       type: t('common.skype'),
-      link: 'live:.cid.1b8d9a018a52a8f5',
+      link: 'live:.cid.1a1ab9b6b5b0721f',
       btns: [{
         text: t('common.copy'),
         action: ''
@@ -155,7 +155,7 @@ const initContactList = () => {
     {
       icon: 'bubble-logo',
       type: t('common.paopao'),
-      link: 'LH100866',
+      link: 'LH1008666',
       btns: [{
         text: t('common.copy'),
         action: ''

@@ -96,7 +96,7 @@ const openUrl = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 40px 14px 0px 14px;
+  padding: 20px 14px 0px 14px;
 }
 .q-layout__section--marginal {
   background: linear-gradient(90deg, #17221c 0.11%, #171719 39.57%);
@@ -105,7 +105,7 @@ const openUrl = () => {
 .q-tabs {
   background-color: #131313;
   position: sticky;
-  top: 101px;
+  top: 81px;
   padding-top: 8px;
   padding-bottom: 8px;
   z-index: 1990;
