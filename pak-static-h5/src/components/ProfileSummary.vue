@@ -892,7 +892,7 @@ onUnmounted(() => {
     .gift-wrapper {
       background: rgba(0, 10, 1, 0.6);
       // box-shadow: 0px 0px 5px 0px #ffffff4a inset;
-      border-radius: 50%;
+      border-radius: 8px;
       position: relative;
       border: none;
       padding: 10px;

@@ -16,7 +16,7 @@
           </q-icon> -->
         </div>
         <RouterLink :to="{ path: '/promo', query: { name: mission.redirectUrl } }">
-          <q-btn flat class="details">Details</q-btn>
+          <q-btn flat class="details">{{ $t("btn.details") }}</q-btn>
         </RouterLink>
       </div>
     </div>
@@ -51,16 +51,15 @@ const imgURL = process.env.IMAGE_CDN + "/promo/";
 
   &:before {
     content: "";
-    background-image: url(../../assets/images/index/modal/congrats-container-light.png);
+    background-image: url(../../assets/images/index/modal/bonus-container-light.png);
     background-size: 100% 100%;
     background-position: center center;
     background-repeat: no-repeat;
     width: 100%;
-    height: 150px;
+    height: 370px;
     position: absolute;
     left: 0;
-    bottom: 0;
-    transform: rotate(180deg) translateY(-100%) scaleX(-1);
+    top: 0;
     z-index: -1;
   }
 
@@ -71,14 +70,18 @@ const imgURL = process.env.IMAGE_CDN + "/promo/";
   .bonus-header {
     display: flex;
     justify-content: center;
-    margin-top: -18px;
-    z-index: 2;
+    // margin-top: -18px;
+    // z-index: 2;
+    position: absolute;
+    bottom: 4px;
+    width: 100%;
 
     img {
       display: block;
       width: 100%;
       max-width: 248px;
       margin-bottom: -24px;
+      margin-right: 24px;
     }
   }
 
