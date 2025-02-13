@@ -18,6 +18,25 @@
             :value="item.id"
           />
         </el-select>
+        <el-date-picker
+          v-model="request.recordTime"
+          format="DD/MM/YYYY"
+          value-format="YYYY-MM-DD"
+          type="daterange"
+          range-separator=":"
+          :start-placeholder="t('fields.startDate')"
+          :end-placeholder="t('fields.endDate')"
+          style="width: 300px; margin-left: 10px"
+          :shortcuts="shortcuts"
+          :editable="false"
+          :clearable="false"
+        />
+        <el-input
+          v-model="request.loginName"
+          size="small"
+          style="width: 200px; margin-left: 10px;"
+          :placeholder="t('fields.loginName')"
+        />
         <el-select
           clearable
           v-model="request.type"
@@ -27,6 +46,20 @@
         >
           <el-option
             v-for="item in topRankingTypes.list"
+            :key="item"
+            :label="item"
+            :value="item"
+          />
+        </el-select>
+        <el-select
+          clearable
+          v-model="request.timeType"
+          size="small"
+          :placeholder="t('fields.type')"
+          style="width: 120px; margin-left: 5px"
+        >
+          <el-option
+            v-for="item in rankingTimeTypes.list"
             :key="item"
             :label="item"
             :value="item"
@@ -140,12 +173,31 @@
     </el-dialog>
     <el-table :data="page.records" v-loading="page.loading" ref="table" row-key="id" size="small" highlight-current-row>
       <!-- <el-table-column prop="siteId" :label="t('fields.site')" width="50" /> -->
+      <el-table-column type="index" width="50" />
       <el-table-column prop="type" :label="t('fields.type')" width="50" />
       <el-table-column prop="platform" :label="t('fields.platform')" width="100" />
       <el-table-column prop="gameType" :label="t('fields.gameType')" width="100" />
       <el-table-column prop="gameName" :label="t('fields.gameName')" width="100" />
       <el-table-column prop="loginName" :label="t('fields.memberName')" width="120" />
-      <el-table-column prop="amount" :label="t('fields.amount')" width="100" />
+      <el-table-column prop="amount" :label="t('fields.amount')" align="center" min-width="180" sortable>
+        <template #default="scope">
+          $ <span v-formatter="{data: scope.row.amount, type: 'money'}" />
+        </template>
+      </el-table-column>
+      <el-table-column prop="recordTime" :label="t('fields.rankingTime')" width="100">
+        <template #default="scope">
+          <span v-if="scope.row.recordTime === null">-</span>
+          <span
+            v-if="scope.row.recordTime !== null"
+            v-formatter="{
+              data: scope.row.recordTime,
+              formatter: 'YYYY-MM-DD',
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="timeType" :label="t('fields.timeType')" width="100" />
       <el-table-column prop="createTime" :label="t('fields.createTime')" />
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
       <el-table-column :label="t('fields.action')" align="right" v-if="hasPermission(['sys:privi:top-ranking:update']) || hasPermission(['sys:privi:top-ranking:delete'])">
@@ -158,7 +210,7 @@
     <el-pagination
       class="pagination"
       :total="page.total"
-      :page-sizes="[20, 50, 100, 150, 200]"
+      :page-sizes="[20, 50, 100, 150, 200, 500]"
       @current-change="changepage"
       layout="total,sizes,prev, pager, next"
       v-model:page-size="request.size"
@@ -182,6 +234,8 @@ import { useStore } from '@/store';
 import { useI18n } from "vue-i18n";
 import { getGameTypes } from '../../../api/game'
 import { ElMessage, ElMessageBox } from "element-plus";
+import moment from 'moment'
+import { getShortcuts } from '@/utils/datetime'
 
 const { t } = useI18n();
 const store = useStore();
@@ -190,18 +244,32 @@ const list = reactive({
   platform: [],
   site: []
 });
+// const startDate = new Date()
+// startDate.setTime(
+//   moment(startDate)
+//     .startOf('month')
+//     .format('x')
+// )
 
+const defaultStartDate = convertDate(new Date())
+const defaultEndDate = convertDate(new Date())
+const shortcuts = getShortcuts(t)
 const request = reactive({
   size: 20,
   current: 1,
   siteId: null,
-  type: null,
-  orderBy: "amount"
+  recordTime: [defaultStartDate, defaultEndDate],
+  type: 'BET',
+  timeType: 'DAILY',
+  orderBy: "record_time, time_type, amount"
 });
 
 const topRankingForm = ref(null);
 const topRankingTypes = reactive({
   list: ["BET", "WIN", "LOSS"],
+});
+const rankingTimeTypes = reactive({
+  list: ["DAILY", "WEEKLY", "MONTHLY"],
 });
 const gameTypes = reactive({
   list: [],
@@ -241,14 +309,47 @@ const formRules = reactive({
   type: [required(t('message.validateTypeRequired'))],
 });
 
+function convertDate(date) {
+  return moment(date).format('YYYY-MM-DD')
+}
+
 async function loadTopRanking() {
   page.loading = true;
-  const { data: ret } = await getTopRankingList(request);
+  const query = checkQuery()
+  const { data: ret } = await getTopRankingList(query);
   page.pages = ret.pages;
   page.records = ret.records;
   page.total = ret.total;
   page.loading = false;
 }
+
+function checkQuery() {
+  const requestCopy = { ...request }
+  const query = {}
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value
+    }
+  })
+  if (request.recordTime !== null) {
+    if (request.recordTime.length === 2) {
+      query.recordTime = JSON.parse(JSON.stringify(request.recordTime))
+      query.recordTime[0] = moment(query.recordTime[0]).format(
+        'YYYY-MM-DD'
+      )
+      query.recordTime[1] = moment(query.recordTime[1]).format(
+        'YYYY-MM-DD'
+      )
+      query.recordTime = query.recordTime.join(',')
+    } else {
+      query.recordTime[0] = moment(query.recordTime[0]).format(
+        'YYYY-MM-DD'
+      )
+    }
+  }
+  return query
+}
+
 async function loadGameTypes() {
   const { data: ret } = await getGameTypes()
   gameTypes.list = ret

@@ -333,8 +333,7 @@ import {
   initLanternFestivalBonus,
   claimLanternFestivalBonus,
   initLanternFestivalDeposit,
-  claimLanternFestivalDeposit,
-  claimCompetitionBonus
+  claimLanternFestivalDeposit
 } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
@@ -426,7 +425,7 @@ const handleClaimBonus1 = () => {
     });
     return;
   }
-  claimCompetitionBonus(promoParam.value.promoCode1)
+  claimLanternFestivalBonus(promoParam.value.promoCode1)
     .then((res) => {
       if (res.code === 0) {
         notify({

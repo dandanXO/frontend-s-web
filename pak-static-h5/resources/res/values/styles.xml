@@ -23,7 +23,7 @@
     <!-- 设置启动图标 -->
     <item name="windowSplashScreenAnimatedIcon">@drawable/background_centered</item>
     <!-- 设置启动背景色 -->
-    <item name="windowSplashScreenBackground">@color/colorPrimary</item>
+    <item name="windowSplashScreenBackground">@color/my_splash_background</item>
     <!-- 设置图标背景色 -->
     <item name="windowSplashScreenIconBackgroundColor">@color/colorPrimary</item>
     <!-- 设置启动后使用的主题 -->
