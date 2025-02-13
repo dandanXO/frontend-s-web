@@ -1,4 +1,4 @@
-# Quasar App (fishing-img)
+# Quasar App (minesweeper)
 
 A Quasar Project
 
