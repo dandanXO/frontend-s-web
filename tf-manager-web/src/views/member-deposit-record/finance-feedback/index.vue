@@ -141,18 +141,17 @@
         align="center"
         min-width="100"
       >
-        <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
+        <template
+          #default="scope"
+          v-if="hasPermission(['sys:member:detail'])"
+        >
           <router-link
             v-if="scope.row.memberType === 'AFFILIATE'"
-            :to="
-              `/affiliate/details/${scope.row.memberId}?site=${request.siteId}`
-            "
+            :to="`/affiliate/details/${scope.row.memberId}?site=${request.siteId}`"
           >
             <el-link type="primary">{{ scope.row.name }}</el-link>
           </router-link>
-          <router-link
-            :to="`/member/details/${scope.row.memberId}?site=${request.siteId}`"
-          >
+          <router-link :to="`/member/details/${scope.row.memberId}?site=${request.siteId}`">
             <el-link type="primary">{{ scope.row.name }}</el-link>
           </router-link>
         </template>
@@ -232,11 +231,7 @@
       >
         <template #default="scope">
           <el-image
-            v-if="
-              scope.row.photos.endsWith('.png') ||
-                scope.row.photos.endsWith('.jpeg') ||
-                scope.row.photos.endsWith('.jpg')
-            "
+            v-if="scope.row.photos.endsWith('.png') || scope.row.photos.endsWith('.jpeg') || scope.row.photos.endsWith('.jpg')"
             hide-on-click-modal
             style="width: 30px; height: 30px; border: 1px solid grey"
             :src="fixOldImgUrl(scope.row.photos)"
@@ -255,11 +250,7 @@
           <span v-if="scope.row.commitTime === null">-</span>
           <span
             v-if="scope.row.commitTime !== null"
-            v-formatter="{
-              data: scope.row.commitTime,
-              timeZone: timeZone,
-              type: 'date',
-            }"
+            v-formatter="{data: scope.row.commitTime, timeZone: timeZone, type: 'date'}"
           />
         </template>
       </el-table-column>
@@ -273,11 +264,7 @@
           <span v-if="scope.row.feedbackTime === null">-</span>
           <span
             v-if="scope.row.feedbackTime !== null"
-            v-formatter="{
-              data: scope.row.feedbackTime,
-              timeZone: timeZone,
-              type: 'date',
-            }"
+            v-formatter="{data: scope.row.feedbackTime, timeZone: timeZone, type: 'date'}"
           />
         </template>
       </el-table-column>
@@ -291,11 +278,7 @@
           <span v-if="scope.row.updateTime === null">-</span>
           <span
             v-if="scope.row.updateTime !== null"
-            v-formatter="{
-              data: scope.row.updateTime,
-              timeZone: timeZone,
-              type: 'date',
-            }"
+            v-formatter="{data: scope.row.updateTime, timeZone: timeZone, type: 'date'}"
           />
         </template>
       </el-table-column>
@@ -385,8 +368,8 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
-import { getShortcuts } from '@/utils/datetime'
-import { formatInputTimeZone } from '@/utils/format-timeZone'
+import { getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -401,7 +384,7 @@ const site = ref(null)
 const siteList = reactive({
   list: [],
 })
-let timeZone = null
+let timeZone = null;
 const typeList = reactive({
   list: [
     { label: t('fields.feedbackTypeAll'), value: '0' },
@@ -446,7 +429,7 @@ const uiControl = reactive({
   dialogTitle: '',
 })
 
-const shortcuts = getShortcuts(t)
+const shortcuts = getShortcuts(t);
 
 // function disabledDate(time) {
 //   return (
@@ -494,22 +477,14 @@ async function loadFinanceFeedback() {
       query[key] = value
     }
   })
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
 
   if (request.feedbackTime !== null) {
     if (request.feedbackTime.length === 2) {
-      query.feedbackTime = JSON.parse(JSON.stringify(request.feedbackTime))
+      query.feedbackTime = JSON.parse(JSON.stringify(request.feedbackTime));
       if (query.feedbackTime[0] !== null && query.feedbackTime[1] !== null) {
-        query.feedbackTime[0] = formatInputTimeZone(
-          query.feedbackTime[0],
-          timeZone,
-          'start'
-        )
-        query.feedbackTime[1] = formatInputTimeZone(
-          query.feedbackTime[1],
-          timeZone,
-          'end'
-        )
+        query.feedbackTime[0] = formatInputTimeZone(query.feedbackTime[0], timeZone, 'start');
+        query.feedbackTime[1] = formatInputTimeZone(query.feedbackTime[1], timeZone, 'end');
       }
       query.feedbackTime = query.feedbackTime.join(',')
     }
@@ -517,18 +492,10 @@ async function loadFinanceFeedback() {
 
   if (request.commitTime !== null) {
     if (request.commitTime.length === 2) {
-      query.commitTime = JSON.parse(JSON.stringify(request.commitTime))
+      query.commitTime = JSON.parse(JSON.stringify(request.commitTime));
       if (query.commitTime[0] !== null && query.commitTime[1] !== null) {
-        query.commitTime[0] = formatInputTimeZone(
-          query.commitTime[0],
-          timeZone,
-          'start'
-        )
-        query.commitTime[1] = formatInputTimeZone(
-          query.commitTime[1],
-          timeZone,
-          'end'
-        )
+        query.commitTime[0] = formatInputTimeZone(query.commitTime[0], timeZone, 'start');
+        query.commitTime[1] = formatInputTimeZone(query.commitTime[1], timeZone, 'end');
       }
       query.commitTime = query.commitTime.join(',')
     }
