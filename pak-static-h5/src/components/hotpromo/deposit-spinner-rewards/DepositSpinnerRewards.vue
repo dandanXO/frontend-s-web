@@ -2,15 +2,15 @@
     <div class="deposit-spinner-rewards">
         <div class="top">
             <div class="side-buttons">
-                <RouterLink to="/spinnerRules" class="individual-btn">Rules</RouterLink>
+                <RouterLink to="/spinnerRules" class="individual-btn">{{ $t('hotPromo.depositSpinWheel.rules') }}</RouterLink>
                 <!-- <RouterLink to="/spinnerHistory" class="individual-btn">History</RouterLink> -->
             </div>
             <div class="instructions">
-                Complete the deposit task to participate in the wheel activity and get a bonus of up to <span class="orange">7777PKR</span>
+                {{ $t('hotPromo.depositSpinWheel.instruction') }} <span class="orange">7777PKR</span>
             </div>
         </div>
         <RouterLink to="/deposit" class="deposit-now">
-            Deposit Now
+            {{ $t('hotPromo.depositSpinWheel.depositNow') }}
         </RouterLink>
 
         <div class="tab-buttons">
@@ -21,7 +21,7 @@
             :class="{ active: activeTab === index, lock: index === 3 }"
             >
             <img class="spinwheel" :src="require(`./img/spin-${index+1}.png`)">
-            <span class="upto">UP to </span> <span class="uptonum">{{ tab.upto }}</span>
+            <span class="upto">{{ $t('hotPromo.depositSpinWheel.upto') }}</span> <span class="uptonum">{{ tab.upto }}</span>
             </button>
         </div>
         <div class="slider-container" ref="sliderRef" v-touch="onSwipe">
@@ -38,7 +38,7 @@
                     >
                     <div class="onlyactiveshow">
 
-                        <div class="ins">Deposit Rs {{ tab.min }} to get 1 spin.</div>
+                        <div class="ins">{{ $t('hotPromo.depositSpinWheel.depositSpin', { min: tab.min }) }}</div>
                         <div class="bar">
                             <div class="outerbar">
                                 <div class="innerbar" :style="{ width: progressBarWidth }"></div>
@@ -67,10 +67,10 @@
                         <img :class="{wheel: rolling}" :style="`transform: rotate(${tab.wheelDeg}deg)`" :src="require(`./img/bigspin-${index+1}.png`)">
                         <img class="spintop" :src="require(`./img/spin-top-${index+1}.png`)">
                         <img class="spingo" @click="onClickRotate" @touchstart="onClickRotate" :src="require(`./img/spingo-${index+1}.png`)">
-                        <span class="spinnum" @click="onClickRotate" @touchstart="onClickRotate">{{ 'Spin *' + (tab.times1 + tab.times2 ) }}</span>
+                        <span class="spinnum" @click="onClickRotate" @touchstart="onClickRotate">{{ $t('hotPromo.depositSpinWheel.spin') }} {{ '* ' + (tab.times1 + tab.times2 ) }}</span>
                     </div>
                     <div class="onlyactiveshow">
-                        <span class="remaining">Remaining times:</span> 
+                        <span class="remaining">{{ $t('hotPromo.depositSpinWheel.remainingTimes') }} :</span> 
                         <span class="remainingamt">{{ tab.times1 + tab.times2 }}</span></div>
                 </div>
             </div>

@@ -224,20 +224,281 @@ onMounted(() => {
 }
 
 .receive-btn {
-  background: linear-gradient(180deg, #61ff00 0%, #006ded 100%);
-  padding: 20px;
-  border-radius: 17px;
-  width: 236px;
-  height: 34px;
+    background: linear-gradient(180deg, #61FF00 0%, #006DED 100%);
+    padding: 20px;
+    border-radius: 17px;
+    width: 236px;
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    font-family: Poppins;
+    font-size: 16.9px;
+    font-weight: 900;
+    line-height: 19.16px;
+    text-align: center;
+
+}
+
+.podium {
+    background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/podium.png') no-repeat center center;
+    aspect-ratio: 1020/416;
+    background-size: 100% 100%;
+    position: relative;
+    font-family: 'Poppins';
+
+    .podium-silver {
+        background-size: 100% 100%;
+        position: absolute;
+        top: 80%;
+        left: 19.5%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 5px;
+
+        .left-wing {
+            background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/silver-left-wing.png') no-repeat center center;
+            aspect-ratio: 66/93;
+            background-size: 100% 100%;
+            min-height: 35px;
+        }
+
+        .right-wing {
+            background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/silver-right-wing.png') no-repeat center center;
+            aspect-ratio: 66/93;
+            background-size: 100% 100%;
+            min-height: 35px;
+        }
+    }
+
+    .podium-gold {
+        background-size: 100% 100%;
+        position: absolute;
+        top: 72%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 5px;
+        font-size: 15px;
+
+        .left-wing {
+            background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/gold-left-wing.png') no-repeat center center;
+            aspect-ratio: 90/141;
+            background-size: 100% 100%;
+            min-height: 45px;
+        }
+
+        .right-wing {
+            background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/gold-right-wing.png') no-repeat center center;
+            aspect-ratio: 90/141;
+            background-size: 100% 100%;
+            min-height: 45px;
+        }
+    }
+
+    .podium-bronze {
+        background-size: 100% 100%;
+        position: absolute;
+        top: 80%;
+        left: 80%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 5px;
+
+        .left-wing {
+            background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/bronze-left-wing.png') no-repeat center center;
+            aspect-ratio: 63/90;
+            background-size: 100% 100%;
+            min-height: 35px;
+        }
+
+        .right-wing {
+            background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/bronze-right-wing.png') no-repeat center center;
+            aspect-ratio: 63/90;
+            background-size: 100% 100%;
+            min-height: 35px;
+        }
+    }
+}
+
+.ranking {
+    display: flex;
+    flex-direction: column;
+    margin: 0 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    padding-bottom: 0px;
+
+    .item {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height: 40px;
+
+        &:first-child {
+            font-family: Poppins;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 21px;
+            text-align: center;
+
+        }
+
+        &:not(:first-child) {
+            font-family: Poppins;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 21px;
+            text-align: center;
+            color: #FFFFFF80;
+        }
+
+        &:nth-child(odd) {
+            background-color: #032503;
+        }
+
+        &:nth-child(even) {
+            background-color: #113810;
+        }
+    }
+}
+
+.bottom {
+    background: linear-gradient(180deg, #0D5819 0%, #082A23 100%);
+    border: 1px solid #258838;
+    color: #FFFFFF;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: 77px;
+    align-items: center;
+    padding: 20px;
+    position: fixed;
+    bottom: 95px;
+    width: 100%;
+    max-width: 500px;
+    font-family: 'Poppins';
+
+    &.isApp {
+        bottom: 0px;
+    }
+
+    .column {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .label {
+        color: #7EC24A;
+    }
+
+    .value {
+        color: #F1FF55;
+    }
+}
+
+
+$yellow: #ffd300;
+$blue: #17d3ff;
+$pink: #ff4e91;
+
+$duration: 3000;
+
+@function randomNum($min, $max) {
+  $rand: random();
+  $randomNum: $min + floor($rand * (($max - $min) + 1));
+
+  @return $randomNum;
+}
+
+
+.confetti {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto;
-  font-family: Poppins;
-  font-size: 16.9px;
-  font-weight: 900;
-  line-height: 19.16px;
-  text-align: center;
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 6px;
+  height: 12px;
+  background: $yellow;
+  top: 0;
+  opacity: 0;
+  
+  @for $i from 1 through 13 {
+    &:nth-child(#{$i}) {
+      left: $i * 7%;
+      transform: rotate(#{randomNum(-80, 80)}deg);
+      animation: makeItRain $duration * 1ms infinite ease-out;
+      animation-delay: #{randomNum(0, $duration * .5)}ms;
+      animation-duration: #{randomNum($duration * .7, $duration * 1.2)}ms
+    }
+  }
+  
+  &:nth-child(odd) {
+    background: $blue;
+  }
+  
+  &:nth-child(even) {
+    z-index: 1;
+  }
+  
+  &:nth-child(4n) {
+    width: 5px;
+    height: 12px;
+    animation-duration: $duration * 2ms;
+  }
+  
+  &:nth-child(3n) {
+    width: 3px;
+    height: 10px;
+    animation-duration: $duration * 2.5ms;
+    animation-delay: $duration * 1ms;
+  }
+  
+  &:nth-child(4n-7) {
+    background: $pink;
+  }
+}
+
+@keyframes makeItRain {
+  from {
+    opacity: 0;
+  }
+  
+  50% {
+    opacity: 1;
+  }
+  
+  to {
+    transform: translateY(200px);
+  }
 }
 
 .history-container {
