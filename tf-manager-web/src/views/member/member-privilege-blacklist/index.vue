@@ -96,7 +96,8 @@
         </el-table-column>
         <el-table-column prop="privilegeName" :label="t('fields.privilegeName')" min-width="150">
           <template #default="scope">
-            <span v-if="scope.row.privilegeName === null">-</span>
+            <span v-if="scope.row.privilegeName === null && scope.row.privilegeId !== -1">-</span>
+            <span v-if="scope.row.privilegeName === null && scope.row.privilegeId === -1">{{ t('fields.allPrivilege') }}</span>
             <span v-if="scope.row.privilegeName !== null">{{ scope.row.privilegeName }}</span>
           </template>
         </el-table-column>
@@ -177,6 +178,11 @@
             @focus="loadPrivilegeNamesBySiteId"
             :disabled="!form.siteId"
           >
+            <el-option
+              key="-1"
+              :label="t('fields.allPrivilege')"
+              value="-1"
+            />
             <el-option
               v-for="item in privilegeInfoList.list"
               :key="item.id"

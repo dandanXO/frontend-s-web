@@ -539,8 +539,39 @@
             {{ t('fields.update') }}
           </el-button>
         </el-descriptions-item>
-        <el-descriptions-item />
-        <el-descriptions-item />
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              <svg-icon icon-class="user" style="height: 16px;width: 16px;" />
+              {{ t('fields.gender') }}
+            </div>
+          </template>
+          <span v-if="memberDetail.gender !== null && memberDetail.gender !== ''">{{ t(`fields.${memberDetail.gender}`) }}</span>
+          <span v-else>-</span>
+        </el-descriptions-item>
+        <el-descriptions-item
+          v-if="isPak(memberDetail.siteId)"
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              <svg-icon icon-class="user" style="height: 16px; width: 16px;" />
+              {{ t('fields.transfer') }}
+            </div>
+          </template>
+          <el-switch
+            :disabled="!hasPermission(['sys:member:open-transfer:update:state'])"
+            v-model="memberDetail.isOpenTransfer"
+            @change="changeOpenTransferState(memberDetail.isOpenTransfer)"
+          />
+        </el-descriptions-item>
+        <el-descriptions-item v-else />
       </el-descriptions>
     </el-card>
 
@@ -1675,6 +1706,7 @@ import {
   updateWithdrawType,
   toggleMemberWallet,
   walletBalance,
+  updateOpenTransfer
 } from '../../../../../api/member'
 import { getPlatformsBySite } from '../../../../../api/platform'
 import { selectIpLabelAll } from '../../../../../api/ip-label'
@@ -1688,7 +1720,7 @@ import { changeNewAffilaite } from '../../../../../api/member-affiliate'
 import { callTelephone, stopTelephone } from '../../../../../api/vcall'
 import { getConfigListByGroup } from '../../../../../api/config'
 import { sendOneSms } from '../../../../../api/send-sms'
-import { isInd, isKorea } from '@/utils/site'
+import { isInd, isKorea, isPak } from '@/utils/site'
 import { hasPermission } from '@/utils/util'
 
 const store = useStore()
@@ -1840,6 +1872,8 @@ export default defineComponent({
       fiatBalance: null,
       usdtBalance: null,
       walletType: null,
+      gender: null,
+      isOpenTransfer: null,
     })
 
     const affiliateDetail = reactive({
@@ -2627,6 +2661,10 @@ export default defineComponent({
       ElMessage({ message: t('message.success'), type: 'success' })
     }
 
+    async function changeOpenTransferState(state) {
+      await updateOpenTransfer(memberDetail.id, memberDetail.siteId, state);
+    }
+
     onMounted(async () => {
       loading.accountInfo = true
       loading.affiliateInfo = true
@@ -2638,7 +2676,11 @@ export default defineComponent({
       Object.keys({ ...data.data }).forEach(detailField => {
         memberDetail[detailField] = data.data[detailField]
           ? data.data[detailField]
-          : ''
+          : '';
+
+        if (detailField === 'isOpenTransfer') {
+          memberDetail[detailField] = data.data[detailField]
+        }
       })
 
       const { data: aff } = await getAffiliateInfo(props.mbrId, site.id)
@@ -2768,7 +2810,9 @@ export default defineComponent({
       withdrawTypeForm,
       withdrawType,
       updateWithdrawTypeForm,
-      hasPermission
+      hasPermission,
+      changeOpenTransferState,
+      isPak
     }
   },
 })
