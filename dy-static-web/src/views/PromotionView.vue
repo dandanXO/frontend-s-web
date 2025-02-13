@@ -155,9 +155,15 @@
             backgroundImage: selectedPromo?.desktopImgBackgroundUrl
               ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
               : 'none',
-            margin: selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ? '0px auto' : '20px auto',
-            'max-width': selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ? 'unset' : '1400px',
-            width: selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ? '100%' : '95%'
+            margin: ['dy1-ag-yuanxiaohongbao', 'dy1-lantern-festival-bonus'].includes(selectedPromo.redirectUrl)
+              ? '0px auto'
+              : '20px auto',
+            'max-width': ['dy1-ag-yuanxiaohongbao', 'dy1-lantern-festival-bonus'].includes(selectedPromo.redirectUrl)
+              ? 'unset'
+              : '1400px',
+            width: ['dy1-ag-yuanxiaohongbao', 'dy1-lantern-festival-bonus'].includes(selectedPromo.redirectUrl)
+              ? '100%'
+              : '95%'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">

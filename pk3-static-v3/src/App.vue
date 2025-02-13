@@ -213,8 +213,8 @@ export default defineComponent({
     const checkServerStatus = () => {
       axios.get(`https://sumbtf.tebarncale.com/server/status/${process.env.SITE}`).then((response) => {
         if (response.data.code === 0) {
-          console.log("responseStatus:", response.data.data.status);
-          if (response.data.data.status === "CLOSED") {
+          // console.log("responseStatus:", response.data.data.status);
+          if (response.data.data && response.data.data.status === "CLOSED") {
             router.replace(`/maintenance`);
             ui.maintenanceStartTime = response.data.data.maintenanceStartTime;
             ui.maintenanceEndTime = response.data.data.maintenanceEndTime;

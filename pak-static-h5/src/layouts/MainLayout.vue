@@ -480,6 +480,14 @@ export default defineComponent({
           prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = t("header.interestProfit");
+        } else if (route.path === "/spinnerRules") {
+          prevPage.value = "/promo?name=pak-deposit-spinner-rewards";
+          hasPage.value = true;
+          pageName.value = t("header.spinnerRules");
+        } else if (route.path === "/spinnerHistory") {
+          prevPage.value = "/promo?name=pak-deposit-spinner-rewards";
+          hasPage.value = true;
+          pageName.value = t("header.spinnerHistory");
         }
       }
     };

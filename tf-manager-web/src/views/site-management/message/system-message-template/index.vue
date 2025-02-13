@@ -402,6 +402,7 @@ import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 import { TENANT } from '../../../../store/modules/user/action-types';
 import { debounce } from 'lodash';
+import moment from 'moment';
 
 const store = useStore();
 const { t } = useI18n();
@@ -474,16 +475,25 @@ const importRules = reactive({
   type: [required(t('message.validateTypeRequired'))]
 });
 
+const startDate = new Date()
+startDate.setDate(startDate.getDate() - 3)
+const defaultStartDate = convertDate(startDate)
+const defaultEndDate = convertDate(new Date())
+
+function convertDate(date) {
+  return moment(date).format('YYYY-MM-DD')
+}
+
 const request = reactive({
   size: 30,
   current: 1,
   siteId: null,
-  sendTime: [],
+  sendTime: [defaultStartDate, defaultEndDate],
   type: null,
 })
 
 function resetQuery() {
-  request.sendTime = [];
+  request.sendTime = [defaultStartDate, defaultEndDate];
   request.type = null;
   request.siteId = siteList.list[0].id;
 }
