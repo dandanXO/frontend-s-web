@@ -450,7 +450,7 @@ $duration: 3000;
   background: $yellow;
   top: 0;
   opacity: 0;
-  
+
   @for $i from 1 through 13 {
     &:nth-child(#{$i}) {
       left: $i * 7%;
@@ -460,28 +460,28 @@ $duration: 3000;
       animation-duration: #{randomNum($duration * .7, $duration * 1.2)}ms
     }
   }
-  
+
   &:nth-child(odd) {
     background: $blue;
   }
-  
+
   &:nth-child(even) {
     z-index: 1;
   }
-  
+
   &:nth-child(4n) {
     width: 5px;
     height: 12px;
     animation-duration: $duration * 2ms;
   }
-  
+
   &:nth-child(3n) {
     width: 3px;
     height: 10px;
     animation-duration: $duration * 2.5ms;
     animation-delay: $duration * 1ms;
   }
-  
+
   &:nth-child(4n-7) {
     background: $pink;
   }
@@ -491,11 +491,11 @@ $duration: 3000;
   from {
     opacity: 0;
   }
-  
+
   50% {
     opacity: 1;
   }
-  
+
   to {
     transform: translateY(200px);
   }

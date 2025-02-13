@@ -140,7 +140,88 @@
       </div>
     </div>
 
-    <div class="earn-money-friendcount">
+    <div class="earn-money-invitation-rewards earn-money-card">
+      <div class="earn-money-card-title">
+        <img :src="require(`../../assets/images/earn-money/invitation-rewards-title-${$t('lang.langVal')}.png`)" />
+      </div>
+      <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+        <thead>
+          <tr>
+            <th>{{ $t("earnMoney.reward.level") }}</th>
+            <th>{{ $t("earnMoney.reward.totalNoOfValidPlayersInvited") }}</th>
+            <th>{{ $t("earnMoney.reward.invitationRewards") }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in oneTimeBonusSetting.settingList" :key="index">
+            <td>
+              <template v-if="index < 3">
+                <img :src="require(`../../assets/images/earn-money/no${index + 1}.png`)" alt="Level Image" />
+              </template>
+              LEVEL {{ index + 1 }}
+            </td>
+            <td>{{ item.minReferCount }} ~ {{ item.maxReferCount }}</td>
+            <td>
+              <div class="reward-coin-container">
+                <img class="reward-coin" src="../../assets/images/earn-money/invite-reward-coin.png" />
+                {{ item.bonusAmount }}
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="earn-money-betting-commission earn-money-card">
+      <div class="earn-money-card-title">
+        <img :src="require(`../../assets/images/earn-money/betting-commission-title-${$t('lang.langVal')}.png`)" />
+      </div>
+      <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+        <thead>
+          <tr>
+            <th>{{ $t("earnMoney.reward.betting_table.header.description") }}</th>
+            <th>{{ $t("earnMoney.reward.betting_table.header.commission") }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ $t(`earnMoney.reward.betting_table.row1.description`) }}</td>
+            <td>{{ $t(`earnMoney.reward.betting_table.row1.commission`) }}</td>
+          </tr>
+           <tr v-for="index in 3" :key="index">
+            <td colspan="2">
+              {{ $t(`earnMoney.reward.betting_table.row${index + 1}.description`) }}
+              {{ $t(`earnMoney.reward.betting_table.row${index + 1}.commission`) }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="earn-money-deposit-commission earn-money-card">
+      <div class="earn-money-card-title">
+        <img :src="require(`../../assets/images/earn-money/deposit-commission-title-${$t('lang.langVal')}.png`)" />
+      </div>
+      <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+        <thead>
+          <tr>
+            <th>{{ $t("earnMoney.reward.deposit_table.header.description") }}</th>
+            <th>{{ $t("earnMoney.reward.deposit_table.header.commission") }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="index in 1" :key="index">
+            <td>{{ $t(`earnMoney.reward.deposit_table.row${index}.description`) }}</td>
+            <td>{{ $t(`earnMoney.reward.deposit_table.row${index}.commission`) }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="q-mt-md" v-html="$t('earnMoney.reward.note')"></div>
+      <div class="q-mt-sm grey-txt" v-html="$t('earnMoney.reward.eligibility_tips')"></div>
+      <div class="q-mt-sm red-txt" v-html="$t('earnMoney.reward.multiple_acc_hint')"></div>
+    </div>
+
+    <!-- <div class="earn-money-friendcount">
       <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
         <tr>
           <td style="color: #8c968f; font-size: 120%">{{ $t("earnMoney.reward.friendCount") }}</td>
@@ -164,7 +245,7 @@
 
         <div class="q-mt-sm high-light" v-html="$t('earnMoney.reward.multiple_acc_hint')"></div>
       </div>
-    </div>
+    </div> -->
 
     <div class="earn-money-sent-ytd">
       <div class="sent-ytd-icon">
@@ -968,5 +1049,97 @@ watch(activeSetting, checkIsShowDetail);
   height: 100vh;
   position: fixed;
   z-index: 9999;
+}
+
+.earn-money-card {
+  background-color: #1e371f;
+  border: 1px solid #337e3a;
+  border-radius: 10px;
+  padding: 0 16px 16px;
+  margin-top: calc(4% + 16px);
+  width: 100%;
+
+  .earn-money-card-title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+
+    img {
+      width: 80%;
+      // margin-top: -2%;
+      margin-top: -6%;
+    }
+  }
+
+  .card-table {
+    text-align: center;
+    font-family: "Manrope", sans-serif;
+    font-size: 10px;
+    color: #000;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    thead {
+      // background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+      background: linear-gradient(180deg, #21b29c 0%, #87c646 100%);
+
+      th {
+        color: #076b2c;
+        font-weight: 700;
+        font-size: 12px;
+        min-width: 100px;
+      }
+    }
+
+    tbody {
+      td {
+        color: #fff;
+        padding: 10px 4px;
+        font-size: 12px;
+        // border: 1px solid #ffffff1a;
+      }
+
+      tr {
+        &:nth-child(odd) {
+          background: #ffffff0d;
+        }
+
+        .player-details {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+        }
+      }
+    }
+  }
+}
+
+.earn-money-invitation-rewards {
+  .reward-coin-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .reward-coin {
+      // height: 16px;
+      width: 24px;
+      // margin-right: 4px;
+      display: block;
+    }
+  }
+}
+
+.earn-money-deposit-commission {
+  .grey-txt {
+    color: #9f9f9f;
+  }
+  .red-txt {
+    color: red;
+  }
 }
 </style>
