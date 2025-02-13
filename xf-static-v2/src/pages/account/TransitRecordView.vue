@@ -688,7 +688,7 @@ export default defineComponent({
       turnover: "/session/member/moneyChange",
       withdraw: "/session/member/withdraw",
       rebates: "/session/member/privilege",
-      gameBetRecord: "/session/member/gameBetRecord",
+      gameBetRecord: "/session/member/gameBetRecordWithType",
     };
 
     const searchRecord = () => {
