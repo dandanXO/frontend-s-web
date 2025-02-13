@@ -187,7 +187,15 @@ export default {
     redemptionFullyRedeemed:
       "The code has been fully redeemed. Please follow our official WhatsApp channel to claim the next free code in time.",
     redemptionBtmText:
-      "Redemption Process: If you don't have a redemption code, check the official channel below for the latest promotions. Once you have a code, enter it above to redeem! "
+      "Redemption Process: If you don't have a redemption code, check the official channel below for the latest promotions. Once you have a code, enter it above to redeem! ",
+    transferTitle: "Transfer",
+    uplineId: "Upline",
+    uplineId_placeholder: "Please Enter The Upline ID",
+    uplineId_rule_01: "Please Enter The Upline ID",
+    amount: "Amount",
+    amount_placeholder: "Please Enter Amount",
+    amount_rule_01: "Please Enter Amount",
+    all: "All"
   },
   btn: {
     login: "Login",
@@ -222,7 +230,8 @@ export default {
     deposit: "Deposit",
     betting: "Betting",
     share: "Share",
-    close: "Close"
+    close: "Close",
+    transfer: "Transfer",
   },
   notify: {
     noRecord: "No Record",
@@ -286,7 +295,8 @@ export default {
     logout: "LOG OUT",
     depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
     interestProfit: "Interest Profit",
-    exchange: "Exchange"
+    exchange: "Exchange",
+    transfer: "Transfer"
   },
   deposit: {
     selectAmount: "Select Amount",
