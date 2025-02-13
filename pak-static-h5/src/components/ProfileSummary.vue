@@ -7,12 +7,14 @@
       <div class="download-close" :style="!topDownloadcloseBtn && 'opacity:0'">
         <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
       </div>
-      <div class="download-logo"><img src="../assets/images/index/download/download-logo.png" /></div>
+      <div class="download-logo"><img src="../assets/images/index/download/download-app-logo.png" /></div>
       <!-- <div class="download-btn">
         <a :href="topDownloadUrl">
           <img src="../assets/images/index/download/top-download-btn.png" />
         </a>
       </div> -->
+
+      <div class="download-text">Get Free Spins on the APP</div>
       <div class="download-btn-yel">
         <a :href="ui.downloadAppUrl">{{ $t("header.download") }}</a>
       </div>
@@ -148,7 +150,11 @@
 
   <div
     class="infoboard-container"
-    :class="{ 'q-pa-md': !homeProfile, 'with-top-download': topDownload && !ui.hideDownload }"
+    :class="{
+      'q-pa-md': !homeProfile,
+      'with-top-download': topDownload && !ui.hideDownload,
+      'with-background': isScrolled
+    }"
   >
     <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
@@ -283,7 +289,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, onUnmounted } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
@@ -303,6 +309,12 @@ const route = useRoute();
 const router = useRouter();
 const store = userStore();
 const ui = useUI();
+
+const isScrolled = ref(false);
+
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 0;
+};
 
 const loadCustomerAddress = () => {
   cached
@@ -484,6 +496,11 @@ onMounted(() => {
     isSideDownload.value = true;
   }
   afterMounted();
+  window.addEventListener("scroll", handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
 });
 </script>
 
@@ -549,6 +566,11 @@ onMounted(() => {
         width: 100%;
         display: block;
       }
+    }
+
+    .download-text {
+      font-size: 12px;
+      margin-right: auto;
     }
 
     .download-btn-yel {
@@ -726,7 +748,7 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   position: relative;
-  background-image: url("../assets/images/auth/auth-bg.png");
+  // background-image: url("../assets/images/auth/auth-bg.png");
   background-size: 100% 100%;
   box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -737,6 +759,10 @@ onMounted(() => {
   z-index: 2003;
   transition: 0.3s all;
   height: 60px;
+
+  &.with-background {
+    background: #150a08;
+  }
 
   &.with-top-download {
     // border-top-right-radius: 25px;

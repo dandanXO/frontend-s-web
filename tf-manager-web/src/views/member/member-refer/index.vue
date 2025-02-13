@@ -193,13 +193,26 @@ const page = reactive({
   loading: false,
 })
 
+const startDate = new Date()
+startDate.setDate(startDate.getDate() - 7)
+const defaultStartDate = convertStartDate(startDate)
+const defaultEndDate = convertEndDate(new Date())
+
+function convertStartDate(date) {
+  return moment(date).startOf('day').format('YYYY-MM-DD HH:mm:ss')
+}
+
+function convertEndDate(date) {
+  return moment(date).endOf('day').format('YYYY-MM-DD HH:mm:ss')
+}
+
 const request = reactive({
   size: 30,
   current: 1,
   loginName: null,
   siteId: null,
   memberRemark: null,
-  regTime: null,
+  regTime: [defaultStartDate, defaultEndDate],
   referrerId: null,
 })
 
@@ -207,7 +220,7 @@ function resetQuery() {
   request.loginName = null
   request.memberRemark = null
   request.siteId = store.state.user.siteId
-  request.regTime = null
+  request.regTime = [defaultStartDate, defaultEndDate]
   request.referrerId = null
   uiControl.referrer = null
 }
