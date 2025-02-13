@@ -44,6 +44,17 @@
           <RiMailLine />
           反馈奖励
         </router-link>
+        <router-link to="/center/message" class="account-menu-item">
+          <RiMessageLine />
+          <div class="account-menu-item-message">
+            <div>
+              消息中心
+            </div>
+            <div v-if="store.unreadTotal > 0" class="unread-total">
+              <span>{{ store.unreadTotal }}</span>
+            </div>
+          </div>
+        </router-link>
         <router-link to="/center/share" class="account-menu-item">
           <RiShareBoxLine />
           推广赚钱
@@ -74,7 +85,8 @@ import {
   RiShareBoxLine,
   RiFileShieldLine,
   RiMenuLine,
-  RiBankLine
+  RiBankLine,
+  RiMessageLine
 } from "vue-remix-icons";
 
 {
@@ -114,6 +126,26 @@ const vip = computed(() => {
     .account-vip {
       color: #436aa0;
     }
+  }
+}
+</style>
+
+<style lang="scss" scoped>
+.account-menu-item-message {
+  position: relative;
+
+  .unread-total {
+    position: absolute;
+    top: -10px;
+    right: -25px;
+    line-height: normal !important;
+    line-height: unset;
+    padding: 1px 6px;
+    background: #db0011;
+    border-radius: 25px;
+    margin-right: 5px;
+    font-size: 10px;
+    color: #fff;
   }
 }
 </style>

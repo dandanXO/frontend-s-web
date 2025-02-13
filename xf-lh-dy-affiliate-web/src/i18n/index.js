@@ -4,6 +4,7 @@ import zh from "./zh";
 import th from "./th";
 import vi from "./vi";
 import kr from "./kr";
+import pt from "./pt";
 
 const i18n = createI18n({
   legacy: false,
@@ -14,7 +15,8 @@ const i18n = createI18n({
     zh,
     th,
     vi,
-    kr
+    kr,
+    pt
   },
   globalInjection: true,
 });
