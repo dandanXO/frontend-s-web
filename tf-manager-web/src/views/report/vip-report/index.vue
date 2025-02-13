@@ -163,25 +163,17 @@
       :current-page="request.current"
     />
 
-    <div class= "total-info-wrapper">
-      <span>
-        {{ t('fields.totalDepositAmount') }} :
-      </span>
-      <span style="margin-left: 10px">$</span>
-      <span v-formatter="{ data: totalBet, type: 'money' }" />
-
-      <span style="margin-left: 10px">{{ t('fields.totalBetMemberCount') }} :</span>
-      <span style="margin-left: 10px">{{ totalBetCount }}</span>
-
-      <span style="margin-left: 10px">
-        {{ t('fields.payoutTotal') }} :
-      </span>
+    <div class="total-info-wrapper">
+      <span>{{ t('fields.totalDepositAmount') }} :</span>
       <span style="margin-left: 10px">$</span>
       <span v-formatter="{data: totalBet, type: 'money'}" />
 
       <span style="margin-left: 10px">
-        {{ t('fields.profit') }} :
+        {{ t('fields.totalBetMemberCount') }} :
       </span>
+      <span style="margin-left: 10px">{{ totalBetCount }}</span>
+
+      <span style="margin-left: 10px">{{ t('fields.payoutTotal') }} :</span>
       <span style="margin-left: 10px">$</span>
       <span v-formatter="{data: totalPayout, type: 'money'}" />
 

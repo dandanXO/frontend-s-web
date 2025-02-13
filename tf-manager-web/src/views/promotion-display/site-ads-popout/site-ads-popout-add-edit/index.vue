@@ -553,13 +553,13 @@
 </template>
 <script setup>
 import { computed, nextTick, reactive, ref, onMounted, watch } from 'vue'
-import { required } from '@/utils/validate'
+import { required } from '../../../../utils/validate'
 import Editor from '../../../../components/editor/index.vue'
 import {
   createAdsPopout,
   updateAdsPopout,
   getAdsPopOutById,
-} from '@/api/site-ads-popout'
+} from '../../../../api/site-ads-popout'
 import { ElMessage } from 'element-plus'
 import { uploadImage } from '../../../../api/image'
 import { useRoute, useRouter } from 'vue-router'
@@ -663,7 +663,11 @@ const filterTypes = computed(() => {
 })
 
 function changeSite() {
-  uiControl.showSiteType = isVnm(form.siteId);
+  if (isVnm(form.siteId)) {
+    uiControl.showSiteType = true
+  } else {
+    uiControl.showSiteType = false
+  }
   if (form.siteId !== 8) {
     form.type = 'IMG'
   }
@@ -878,7 +882,11 @@ async function loadForm(id, siteId) {
       }
     })
 
-    uiControl.showSiteType = isVnm(form.siteId);
+    if (isVnm(form.siteId)) {
+      uiControl.showSiteType = true
+    } else {
+      uiControl.showSiteType = false
+    }
   })
 }
 

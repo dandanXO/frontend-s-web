@@ -578,7 +578,7 @@ onMounted(async () => {
 .config_form {
   padding: 10px;
 
-  :deep(.withdrawal_failure_type) {
+  :deep( .withdrawal_failure_type) {
     display: grid;
     grid-template-columns: repeat(2, 500px);
     grid-row-gap: 5px;
@@ -600,7 +600,7 @@ onMounted(async () => {
     }
   }
 
-  :deep(label) {
+  :deep(label){
     font-weight: 900;
   }
 
