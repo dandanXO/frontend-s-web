@@ -57,7 +57,7 @@
             <td rowspan="8">8倍</td>
           </tr>
           <tr>
-            <td>≥8,000</td>
+            <td>≥10,000</td>
             <td>88元</td>
           </tr>
           <tr>

@@ -61,6 +61,16 @@ export default {
     wallet: "Wallet",
     me: "Me"
   },
+  modal: {
+    addToHomeScreen: {
+      addToHomeScreenBonus: "We would like to add it to your home screen for the latest free bets and bonus updates",
+      continueToUseH5: "Continue to use H5",
+      appAndWeb: "App + Web",
+      app: "App",
+      addToHomeScreen: "Add to Home Screen",
+      enjoyMoreBenefits: "Enjoy more benefits!"
+    }
+  },
   form: {
     phone: "Phone",
     phone_placeholder: "Please enter your mobile number",
@@ -220,6 +230,8 @@ export default {
     deposit: "Deposit",
     betting: "Betting",
     share: "Share",
+    close: "Close",
+    details: "Details",
     transfer: "Transfer",
   },
   notify: {
@@ -384,22 +396,45 @@ export default {
       inviteList_02: "Register via link",
       inviteList_03: "Complete deposit after registration",
       copyLink: "Copy Link",
+      level: "Level",
+      totalNoOfValidPlayersInvited: "Total number of valid invited players",
+      invitationRewards: "Invitation rewards",
+      note: "Note:",
       friendCount: "Friend Count",
       inviteBonus: "Invite Bonus",
       totalAmountSentAsOfYesterday: "Total amount sent as of yesterday",
       player: "Player",
       money: "Money",
-      eligibility_tips: "Eligibility: <br />Invitee's deposit must be ≥ 300.",
+      eligibility_tips: "1. Invitee's deposit must be ≥ 300.",
       betting_tips:
         "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
       deposit_tips: "Deposit Commission: <br />Earn a 5% rebate on the first deposit of each new member you refer.",
-      multiple_acc_hint: `Notice:
-    It is prohibited for the same individual to use multiple accounts to maliciously exploit commissions. Violators will have their accounts frozen.
+      multiple_acc_hint: `2. It is prohibited for the same individual to use multiple accounts to maliciously exploit commissions. Violators will have their accounts frozen.
     Reward distribution time: Between 3:00 PM and 6:00 PM Pakistan time on the next day. The rewards will be credited to the account during this time frame.
     `,
       shareTitle: "B9GAME Share and Earn",
       shareText:
-        "B9GAME Share and Earn:\n\tEarn up to 500 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
+        "B9GAME Share and Earn:\n\tEarn up to 500 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}",
+      betting_table: {
+        header: {
+          description: "Description",
+          commission: "Three-Level Commision"
+        },
+        row1: {
+          description: "Invite players to place bets (win or lose) to earn rewards",
+          commission: "0.6%"
+        }
+      },
+      deposit_table: {
+        header: {
+          description: "Description",
+          commission: "Deposit Commission"
+        },
+        row1: {
+          description: "Invite players to make their first deposit and receive a reward.",
+          commission: "5%"
+        }
+      }
     },
     teamManagement: {
       searchField: {
@@ -613,6 +648,8 @@ export default {
       rewardClaimed: "Reward has already been claimed"
     },
     jackpotAviator: {
+      daily: "Daily",
+      weekly: "Weekly",
       rules: "Rules",
       history: "History",
       receive: "Receive",
@@ -622,15 +659,27 @@ export default {
       rank: "Rank",
       dailyOrWeekly: "Daily/Weekly",
       rankingBonusRatio: "Ranking Bonus Ratio",
-      rules1: "Daily Ranking Rewards: 1.5% of the platform's total daily pilot revenue will be included in the daily prize pool. This pool will be automatically distributed to players daily based on their positions in the daily rankings.",
-      rules2: "Weekly Ranking Rewards: 0.6% of the platform's total weekly revenue will contribute to the weekly prize pool. This pool will be automatically distributed to players weekly based on their positions in the weekly rankings.",
-      activityRules1: "Players' rankings on the daily leaderboard, weekly leaderboard, and overall ranking are based on their corresponding total bet amount.",
+      myBets: "My Bets",
+      myReward: "My Rewards",
+      ranksLeft: "Ranks Left",
+      jackpot: "Jackpot",
+      noRank: "No Rank",
+      rules1:
+        "Daily Ranking Rewards: 1.5% of the platform's total daily pilot revenue will be included in the daily prize pool. This pool will be automatically distributed to players daily based on their positions in the daily rankings.",
+      rules2:
+        "Weekly Ranking Rewards: 0.6% of the platform's total weekly revenue will contribute to the weekly prize pool. This pool will be automatically distributed to players weekly based on their positions in the weekly rankings.",
+      activityRules1:
+        "Players' rankings on the daily leaderboard, weekly leaderboard, and overall ranking are based on their corresponding total bet amount.",
       activityRules2: "Rewards will be displayed on the leaderboard event page.",
-      activityRules3: "The daily leaderboard is calculated from 00:00 to 24:00 local time. Daily rewards will be issued within half an hour after the end of the daily leaderboard and can be claimed manually on the promotions page.",
-      activityRules4: "The weekly ranking is calculated from 00:00 local time on Monday to 24:00 local time on Sunday. Weekly rewards will be issued within half an hour after the end of the weekly cycle and can be claimed manually on the promotions page.",
-      termsCondition1: "Before applying for rewards, players must provide their phone number and bank account information. The phone number, IP address, and bank account information must match the region and personal data. Any abnormal behavior by the player will result in the cancellation of their bonuses or earnings.",
-      termsCondition2: "Players who open multiple accounts or fraudulent accounts will lose their eligibility to participate in events due to improper behavior on the platform, and the related accounts will be frozen.",
-      termsCondition3: "Please be sure to read these terms and conditions carefully before participating in this event.",
+      activityRules3:
+        "The daily leaderboard is calculated from 00:00 to 24:00 local time. Daily rewards will be issued within half an hour after the end of the daily leaderboard and can be claimed manually on the promotions page.",
+      activityRules4:
+        "The weekly ranking is calculated from 00:00 local time on Monday to 24:00 local time on Sunday. Weekly rewards will be issued within half an hour after the end of the weekly cycle and can be claimed manually on the promotions page.",
+      termsCondition1:
+        "Before applying for rewards, players must provide their phone number and bank account information. The phone number, IP address, and bank account information must match the region and personal data. Any abnormal behavior by the player will result in the cancellation of their bonuses or earnings.",
+      termsCondition2:
+        "Players who open multiple accounts or fraudulent accounts will lose their eligibility to participate in events due to improper behavior on the platform, and the related accounts will be frozen.",
+      termsCondition3: "Please be sure to read these terms and conditions carefully before participating in this event."
     }
   },
   maintenance: {
