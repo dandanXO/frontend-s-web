@@ -148,9 +148,10 @@ const submitTransfer = async () => {
         icon: "check_circle_outline",
       });
 
-      formDetail.value.uplineId = undefined;
-      formDetail.value.downlineId = undefined;
+      // formDetail.value.uplineId = undefined;
+      // formDetail.value.downlineId = undefined;
       formDetail.value.transferAmount = 0;
+      store.getBalance();
       emit("update:modelValue", false);
     }
   } catch (error) {
@@ -161,8 +162,8 @@ const submitTransfer = async () => {
 };
 onMounted(() => {
   console.log(props)
-  formDetail.value.downlineId = downlineId.value
-  formDetail.value.uplineId = uplineId.value
+  formDetail.value.downlineId = props.downlineId
+  formDetail.value.uplineId = props.uplineId
 });
 // Watch for changes in props and update formDetail
 watch([downlineId, uplineId], ([newDownlineId, newUplineId]) => {
