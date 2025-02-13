@@ -8,7 +8,7 @@ import { Platform, SessionStorage, useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
-import { isAndroid, isInPwa, trackNewUserFtd } from "boot/utils";
+import { isAndroid, isInPwa, trackNewUserFtd, getRndInteger } from "boot/utils";
 import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
@@ -223,8 +223,11 @@ export default defineComponent({
 
       // alert(`payload: ${payload}`);
 
+      var rstArray = Object.values(process.env.RST_API);
+      var rstApi = rstArray[getRndInteger(0, rstArray.length)];
+
       // Make the POST request
-      fetch("https://tljwn.plan2wtion.com/app/facebookInfo", {
+      fetch(`${rstApi}/app/facebookInfo`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
@@ -249,6 +252,8 @@ export default defineComponent({
 
     const trackH5Affiliate = () => {
       const omitSites = ["bw3.genoortisy.com"];
+
+      sendFacebookInfo();
 
       if (isInPwa()) {
         api.get(`/app/pwa/log?step=OPEN&siteCode=${process.env.SITE}`).then((res2) => {
