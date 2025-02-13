@@ -187,7 +187,15 @@ export default {
     redemptionFullyRedeemed:
       "The code has been fully redeemed. Please follow our official WhatsApp channel to claim the next free code in time.",
     redemptionBtmText:
-      "Redemption Process: If you don't have a redemption code, check the official channel below for the latest promotions. Once you have a code, enter it above to redeem! "
+      "Redemption Process: If you don't have a redemption code, check the official channel below for the latest promotions. Once you have a code, enter it above to redeem! ",
+    transferTitle: "Transfer",
+    uplineId: "Upline",
+    uplineId_placeholder: "Please Enter The Upline ID",
+    uplineId_rule_01: "Please Enter The Upline ID",
+    amount: "Amount",
+    amount_placeholder: "Please Enter Amount",
+    amount_rule_01: "Please Enter Amount",
+    all: "All"
   },
   btn: {
     login: "Login",
@@ -223,7 +231,8 @@ export default {
     betting: "Betting",
     share: "Share",
     close: "Close",
-    details: "Details"
+    details: "Details",
+    transfer: "Transfer",
   },
   notify: {
     noRecord: "No Record",
@@ -287,7 +296,8 @@ export default {
     logout: "LOG OUT",
     depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
     interestProfit: "Interest Profit",
-    exchange: "Exchange"
+    exchange: "Exchange",
+    transfer: "Transfer"
   },
   deposit: {
     selectAmount: "Select Amount",
@@ -595,6 +605,25 @@ export default {
     aviatorWheel: {
       remainingDrawTimes: "Remaining draw times",
       congratulations: "Congratulations"
+    },
+    depositSpinWheel: {
+      instruction: "Complete the deposit task to participate in the wheel activity and get a bonus of up to ",
+      depositNow: "Deposit Now",
+      upto: "UP to",
+      remainingTimes: "Remaining times",
+      depositSpin: "Deposit Rs {min} to get 1 spin.",
+      spin: "Spin",
+      rules: "Rules",
+      activityRules: "Activity rules",
+      rule_01: "The activity includes four types of carousels: Silver, Gold, Diamond, and Special. You can unlock different levels of carousels by recharging. The higher the level, the more generous the rewards will be.",
+      rule_02: "Every draw has a 100% chance of winning a prize.",
+      rule_03: "All rewards will be deposited directly into your wallet.",
+      rule_04: "The bonus requires one turnover to withdraw.",
+      rule_05: "The right to interpret this event belongs to B9.game. If you have any questions, please contact customer service.",
+      silver: "Silver",
+      gold: "Gold",
+      diamond: "Diamond",
+      supreme: "Supreme"
     },
     signIn7Days: {
       continuousSignIn: "Continuous sign-in:",
