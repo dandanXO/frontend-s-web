@@ -381,16 +381,16 @@ export default {
       inviteList_02: "لنک کے ذریعے رجسٹر کریں",
       inviteList_03: "رجسٹریشن کے بعد جمع کرائیں مکمل کریں",
       copyLink: "لنک کاپی کریں",
-      level: "Level",
-      totalNoOfValidPlayersInvited: "Total number of valid invited players",
-      invitationRewards: "Invitation rewards",
-      note: "Note:",
+      level: "سطح",
+      totalNoOfValidPlayersInvited: "درست مدعو کیے گئے کھلاڑیوں کی کل تعداد",
+      invitationRewards: "دعوتی انعامات",
+      note: "نوٹ:",
       friendCount: "دوست کی تعداد",
       inviteBonus: "دعوت کی مکافات",
       totalAmountSentAsOfYesterday: "کل رقم جو کل تک بھیجی گئی ہے",
       player: "پلیئر",
       money: "پیسہ",
-      eligibility_tips: "اہلیت: <br /> مدعو کا جمع کردہ رقم ≥ 300 ہونا چاہیے۔",
+      eligibility_tips: "مدعو کا جمع کردہ رقم ≥ 300 ہونا چاہیے۔",
       betting_tips:
         "بیٹنگ کمیشن: <br /> نئے صارفین کو بیٹنگ کے لیے مدعو کریں اور طویل مدتی 0.6% بیٹنگ ریبیٹ کمیشن کمائیں۔",
       deposit_tips: "ڈپازٹ کمیشن: <br /> ہر نئے ممبر کی پہلی جمع کردہ رقم پر 5% ریبیٹ حاصل کریں جو آپ مدعو کریں۔",
@@ -402,21 +402,21 @@ export default {
         "B9GAME شیئر کریں اور کمائیں:\nہر دوست کے لئے 500 روپے تک کمائیں۔\nاپنے پہلے ڈپازٹ پر 5% کی رعایت حاصل کریں۔\nتمام بیٹس پر طویل مدتی 0.6% کی رعایت کا لطف اٹھائیں۔\nابھی ایپ ڈاؤن لوڈ کریں اور ایک خفیہ نقد انعام حاصل کریں!\n{url}",
       betting_table: {
         header: {
-          description: "Description",
-          commission: "Three-Level Commision"
+          description: "تفصیل",
+          commission: "تین سطحی کمیشن"
         },
         row1: {
-          description: "Invite players to place bets (win or lose) to earn rewards",
+          description: "کھلاڑیوں کو شرط لگانے (جیت یا ہار) کی دعوت دیں اور انعامات حاصل کریں",
           commission: "0.6%"
         }
       },
       deposit_table: {
         header: {
-          description: "Description",
-          commission: "Deposit Commission"
+          description: "تفصیل",
+          commission: "ڈپازٹ کمیشن"
         },
         row1: {
-          description: "Invite players to make their first deposit and receive a reward.",
+          description: "کھلاڑیوں کو اپنی پہلی رقم جمع کروانے کی دعوت دیں اور انعام حاصل کریں۔",
           commission: "5%"
         }
       }
