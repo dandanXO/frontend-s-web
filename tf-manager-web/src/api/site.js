@@ -51,6 +51,7 @@ export const getSiteListSimple = () => {
   return https()
     .request('/site/systemSiteList', Method.GET)
     .then(response => {
+      // if (store.state.user.userType === 'MANAGER') {
       const site = response.data
 
       const updateWithUserStoreSiteId = site.filter(
@@ -62,6 +63,9 @@ export const getSiteListSimple = () => {
       }
 
       return mockResponse
+      // } else {
+      //   return response
+      // }
     })
     .catch(error => {
       console.error('Error fetching site list:', error)

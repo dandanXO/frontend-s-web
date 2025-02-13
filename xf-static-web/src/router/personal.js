@@ -27,15 +27,6 @@ export default [
       ),
   },
   {
-    path: "message",
-    name: "message",
-    meta: { requiresAuth: true },
-    component: () =>
-      import(
-        /* webpackChunkName: "message" */ "../views/account/MessageView.vue"
-      ),
-  },
-  {
     path: "share",
     name: "share",
     meta: { requiresAuth: true },
