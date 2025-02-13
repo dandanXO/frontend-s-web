@@ -222,7 +222,8 @@ export default {
     deposit: "Deposit",
     betting: "Betting",
     share: "Share",
-    close: "Close"
+    close: "Close",
+    details: "Details"
   },
   notify: {
     noRecord: "No Record",

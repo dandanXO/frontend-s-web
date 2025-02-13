@@ -219,7 +219,8 @@ export default {
     deposit: "جمع",
     betting: "جوا",
     share: "شیئر",
-    close: "بند کریں"
+    close: "بند کریں",
+    details: "تفصیلات"
   },
   notify: {
     noRecord: "کوئی ریکارڈ نہیں",
