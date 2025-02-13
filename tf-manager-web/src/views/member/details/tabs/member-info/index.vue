@@ -6,22 +6,22 @@
           <span class="role-span">{{ t('fields.accountInfo') }}</span>
         </div>
       </template>
-      <el-button
-        type="info"
-        size="mini"
-        style="float: right;"
-        @click="toggleWallet"
-      >Toggle Wallet</el-button>
-      <el-row>
-        <span>
-          Wallet Type : {{ memberDetail.walletType }}
-        </span>
-      </el-row>
-      <el-row>
-        <span>
-          Fiat Balance : {{ memberDetail.fiatBalance }}, USDT Balance : {{ memberDetail.usdtBalance }}
-        </span>
-      </el-row>
+      <!--      <el-button-->
+      <!--        type="info"-->
+      <!--        size="mini"-->
+      <!--        style="float: right;"-->
+      <!--        @click="toggleWallet"-->
+      <!--      >Toggle Wallet</el-button>-->
+      <!--      <el-row>-->
+      <!--        <span>-->
+      <!--          Wallet Type : {{ memberDetail.walletType }}-->
+      <!--        </span>-->
+      <!--      </el-row>-->
+      <!--      <el-row>-->
+      <!--        <span>-->
+      <!--          Fiat Balance : {{ memberDetail.fiatBalance }}, USDT Balance : {{ memberDetail.usdtBalance }}-->
+      <!--        </span>-->
+      <!--      </el-row>-->
       <el-descriptions
         size="small"
         class="margin-top"
