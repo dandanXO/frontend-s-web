@@ -1906,6 +1906,7 @@ export default {
     outrightMarketRefreshIntervalSeconds: 'Thời gian làm mới thị trường độc thắng',
     inplayMarketRefreshIntervalSeconds: 'Thời gian làm mới thị trường đang chơi',
     todayMarketRefreshIntervalSeconds: 'Thời gian làm mới thị trường hôm nay',
+    closedSportTypeId: 'ID loại thể thao đã đóng',
     outrightMarketSyncIntervalSeconds: 'Thời gian đồng bộ thị trường độc thắng',
     earlyMarketSyncIntervalSeconds: 'Thời gian đồng bộ thị trường sớm',
     todayMarketSyncIntervalSeconds: 'Thời gian đồng bộ thị trường hôm nay',

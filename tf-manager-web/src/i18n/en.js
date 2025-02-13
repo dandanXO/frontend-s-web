@@ -2478,6 +2478,7 @@ export default {
     outrightMarketRefreshIntervalSeconds: 'Outright Market Refresh Interval Seconds',
     inplayMarketRefreshIntervalSeconds: 'Inplay Market Refresh Interval Seconds',
     todayMarketRefreshIntervalSeconds: 'Today Market Refresh Interval Seconds',
+    closedSportTypeId: 'Closed Sport Type Id',
     outrightMarketSyncIntervalSeconds: 'Outright Market Sync Interval Seconds',
     earlyMarketSyncIntervalSeconds: 'Early Market Sync Interval Seconds',
     todayMarketSyncIntervalSeconds: 'Today Market Sync Interval Seconds',

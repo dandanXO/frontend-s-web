@@ -2262,6 +2262,7 @@ export default {
     outrightMarketRefreshIntervalSeconds: '独赢刷新间隔秒数',
     inplayMarketRefreshIntervalSeconds: '滚球刷新间隔秒数',
     todayMarketRefreshIntervalSeconds: '今日刷新间隔秒数',
+    closedSportTypeId: '关闭体育类型ID',
     outrightMarketSyncIntervalSeconds: '独赢同步间隔秒数',
     earlyMarketSyncIntervalSeconds: '早盘同步间隔秒数',
     todayMarketSyncIntervalSeconds: '今日同步间隔秒数',

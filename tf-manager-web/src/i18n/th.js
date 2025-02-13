@@ -1324,6 +1324,7 @@ export default {
     outrightMarketRefreshIntervalSeconds: 'ช่วงเวลาการรีเฟรชตลาดเดี่ยว',
     inplayMarketRefreshIntervalSeconds: 'ช่วงเวลาการรีเฟรชตลาดสด',
     todayMarketRefreshIntervalSeconds: 'ช่วงเวลาการรีเฟรชตลาดวันนี้',
+    closedSportTypeId: 'ประเภทกีฬาที่ปิดรหัส',
     outrightMarketSyncIntervalSeconds: 'ช่วงเวลาการซิงค์ตลาดเดี่ยว',
     earlyMarketSyncIntervalSeconds: 'ช่วงเวลาการซิงค์ตลาดเช้า',
     todayMarketSyncIntervalSeconds: 'ช่วงเวลาการซิงค์ตลาดวันนี้',

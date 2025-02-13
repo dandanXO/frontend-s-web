@@ -1953,6 +1953,7 @@ export default {
     outrightMarketRefreshIntervalSeconds: '단식 시장 새로고침 간격',
     inplayMarketRefreshIntervalSeconds: '실시간 시장 새로고침 간격',
     todayMarketRefreshIntervalSeconds: '오늘 시장 새로고침 간격',
+    closedSportTypeId: '닫힌 스포츠 유형 ID',
     outrightMarketSyncIntervalSeconds: '단식 동기화 간격',
     earlyMarketSyncIntervalSeconds: '초기 시장 동기화 간격',
     todayMarketSyncIntervalSeconds: '오늘 동기화 간격',
