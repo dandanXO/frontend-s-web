@@ -910,6 +910,8 @@ export default {
     promo: 'โปรโมชั่น',
     promoApplication: 'แอปพลิเคชันโปรโม',
     promoCode: 'รหัสโปรโมชั่น',
+    promoCodeRedeemConfig: 'กำหนดค่าโค้ดโปรโมชั่น',
+    promoCodeRedeemBnWList: 'โค้ดโปรโมชันรายการขาวดำ',
     promoPages: 'หน้าโปรโมชั่น',
     promoStyle: 'สไตล์การโปรโมต',
     promoType: 'ประเภทโปรโมชั่น',

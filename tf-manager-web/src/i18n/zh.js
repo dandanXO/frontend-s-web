@@ -590,6 +590,10 @@ export default {
     VIP: 'VIP',
     DEPOSIT: '存款'
   },
+  priviCodeRedeemBnWStatus: {
+    blacklist: '黑名单',
+    whitelist: '白名单'
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -1474,6 +1478,8 @@ export default {
     promo: '优惠',
     promoApplication: '优惠申请',
     promoCode: '优惠代码',
+    promoCodeRedeemConfig: '配置',
+    promoCodeRedeemBnWList: '黑白名单',
     promoPages: '优惠页面',
     promoStyle: '优惠方式',
     promoType: '优惠类型',
@@ -1526,8 +1532,8 @@ export default {
     redeemCode: '兑换码',
     redeemPoints: '兑换分数',
     redirect: '域名转址',
-    'redirectRecord': '浮窗记录',
-    'redirectMember': '指定玩家显示',
+    redirectRecor: '浮窗记录',
+    redirectMember: '指定玩家显示',
     reenterPassword: '重新输入密码',
     referredName: '被推荐人',
     referrer: '推荐人',

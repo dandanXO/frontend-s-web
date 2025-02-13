@@ -67,7 +67,7 @@
           size="mini"
           type="warning"
           @click="resetQuery()"
-        >  
+        >
           {{ t('fields.reset') }}
         </el-button>
         <el-button
