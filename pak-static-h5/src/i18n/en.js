@@ -232,7 +232,7 @@ export default {
     share: "Share",
     close: "Close",
     details: "Details",
-    transfer: "Transfer",
+    transfer: "Transfer"
   },
   notify: {
     noRecord: "No Record",
@@ -423,6 +423,18 @@ export default {
         row1: {
           description: "Invite players to place bets (win or lose) to earn rewards",
           commission: "0.6%"
+        },
+        row2: {
+          description: "First-Level Commission",
+          commission: "0.3%"
+        },
+        row3: {
+          description: "Second-Level Commission",
+          commission: "0.2%"
+        },
+        row4: {
+          description: "Third-Level Commission",
+          commission: "0.1%"
         }
       },
       deposit_table: {
@@ -615,11 +627,13 @@ export default {
       spin: "Spin",
       rules: "Rules",
       activityRules: "Activity rules",
-      rule_01: "The activity includes four types of carousels: Silver, Gold, Diamond, and Special. You can unlock different levels of carousels by recharging. The higher the level, the more generous the rewards will be.",
+      rule_01:
+        "The activity includes four types of carousels: Silver, Gold, Diamond, and Special. You can unlock different levels of carousels by recharging. The higher the level, the more generous the rewards will be.",
       rule_02: "Every draw has a 100% chance of winning a prize.",
       rule_03: "All rewards will be deposited directly into your wallet.",
       rule_04: "The bonus requires one turnover to withdraw.",
-      rule_05: "The right to interpret this event belongs to B9.game. If you have any questions, please contact customer service.",
+      rule_05:
+        "The right to interpret this event belongs to B9.game. If you have any questions, please contact customer service.",
       silver: "Silver",
       gold: "Gold",
       diamond: "Diamond",

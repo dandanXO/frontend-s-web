@@ -188,12 +188,12 @@
             <td>{{ $t(`earnMoney.reward.betting_table.row1.description`) }}</td>
             <td>{{ $t(`earnMoney.reward.betting_table.row1.commission`) }}</td>
           </tr>
-          <!-- <tr v-for="index in 3" :key="index">
+           <tr v-for="index in 3" :key="index">
             <td colspan="2">
               {{ $t(`earnMoney.reward.betting_table.row${index + 1}.description`) }}
               {{ $t(`earnMoney.reward.betting_table.row${index + 1}.commission`) }}
             </td>
-          </tr> -->
+          </tr>
         </tbody>
       </table>
     </div>
