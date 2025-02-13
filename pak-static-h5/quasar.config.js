@@ -29,7 +29,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-webpack/boot-files
-    boot: ["axios", "cache", "lang", "fingerprint","google-analytics", "one-signal"],
+    boot: ["axios", "cache", "lang", "fingerprint", "google-analytics"],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
     css: ["app.scss"],
@@ -190,16 +190,13 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        $schema: "https://json.schemastore.org/web-manifest-combined.json",
         name: `B9.GAME`,
         short_name: `B9.GAME`,
-        description: `Pakistan real money games`,
+        description: `APP`,
         display: "standalone",
         orientation: "portrait",
-        background_color: "#131313",
-        theme_color: "#131313",
-        start_url: "/download",
-        scope: "./",
+        background_color: "#ffffff",
+        theme_color: "#027be3",
         icons: [
           {
             src: "icons/icon-128x128.png",
@@ -225,23 +222,6 @@ module.exports = configure(function (ctx) {
             src: "icons/icon-512x512.png",
             sizes: "512x512",
             type: "image/png"
-          }
-        ],
-        screenshots: [
-          {
-            src: "screenshot/screenshot1.jpg",
-            type: "image/jpg",
-            sizes: "499x1024"
-          },
-          {
-            src: "screenshot/screenshot2.jpg",
-            type: "image/jpg",
-            sizes: "499x1024"
-          },
-          {
-            src: "screenshot/screenshot3.jpg",
-            type: "image/jpg",
-            sizes: "499x1024"
           }
         ]
       }
