@@ -100,7 +100,7 @@
             <div class="acct-nav-label">{{ $t("settings.exchange") }}</div>
           </a>
           
-          <a target="_blank" @click="handleTransferClick">
+          <a v-if="canTransfer" target="_blank" @click="handleTransferClick">
             <div class="acct-nav-item">
               <img src="../assets/images/account/transfer-svg.svg" />
             </div>
@@ -177,7 +177,7 @@
     </div>
   </q-dialog>
   <ExchangeModal v-model="showExchangeModal" />
-  <TransferModal v-model="showTransferModal" />
+  <TransferModal v-model="showTransferModal" :uplineId="uplineId" :upline="true" />
 </template>
 
 <script setup>
@@ -225,11 +225,30 @@ const openConfirmSignOutDialog = () => {
 
 const handleExchangeClick = () => (showExchangeModal.value = true);
 
-const handleTransferClick = () => (showTransferModal.value = true);
+const handleTransferClick = () => {
+  getUplineDetails();
+  showTransferModal.value = true;
+};
 onActivated(() => {
   store.getUnreadTotal();
   getPromoImage();
+  getUplineDetails();
 });
+
+const canTransfer = ref(false);
+const uplineId = ref();
+const getUplineDetails = () => {
+  
+  api
+    .get(`/session/upline/checkTransfer`)
+    .then((res) => {
+      if (res.code === 0) {
+        canTransfer.value = res.data.canTransfer
+        uplineId.value = res.data.referrerId
+      } else {
+      }
+    });
+}
 
 const logout = () => {
   loadingLogout.value = true;

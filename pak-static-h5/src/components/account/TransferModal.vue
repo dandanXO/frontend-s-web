@@ -11,7 +11,22 @@
         <div class="txt-title">{{ $t("form.transferTitle") }}</div>
         <div class="pc-form">
           <div class="pc-form-item">
-            <InputField :label="$t('form.uplineId')">
+            <InputField v-if="!upline" :label="$t('form.downlineId')">
+              <template #input>
+                <div class="pc-form-input">
+                  <q-input
+                    outlined
+                    clearable
+                    color="green"
+                    ref="downlineRef"
+                    :placeholder="$t('form.downlineId_placeholder')"
+                    :rules="[(val) => (val && val.length > 0) || $t('form.downlineId_rule_01')]"
+                    v-model="formDetail.downlineId"
+                  />
+                </div>
+              </template>
+            </InputField>
+            <InputField v-else :label="$t('form.uplineId')">
               <template #input>
                 <div class="pc-form-input">
                   <q-input
@@ -21,7 +36,7 @@
                     ref="uplineRef"
                     :placeholder="$t('form.uplineId_placeholder')"
                     :rules="[(val) => (val && val.length > 0) || $t('form.uplineId_rule_01')]"
-                    v-model="formDetail.memberId"
+                    v-model="formDetail.uplineId"
                   />
                 </div>
               </template>
@@ -65,15 +80,15 @@
 </template>
 <script setup>
 import { useUI } from "stores/ui";
-import { ref, toRefs } from "vue";
+import { ref, onMounted, watch, toRefs } from "vue";
 import InputField from "../../components/auth/InputField.vue";
 import { api } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import {userStore} from "stores/index";
 import { convertToCommaAmount } from "src/boot/utils";
 
-const props = defineProps(["modelValue"]);
-const { modelValue } = toRefs(props);
+const props = defineProps(["modelValue", "upline", "downlineId", "uplineId"]);
+const { modelValue, upline, downlineId, uplineId } = toRefs(props);
 
 const emit = defineEmits(["update:modelValue"]);
 
@@ -83,8 +98,10 @@ const qs = require("qs");
 const ui = useUI();
 const btnLoading = ref(false);
 const uplineRef = ref();
+const downlineRef = ref();
 const amountRef = ref();
 const formDetail = ref({
+  downlineId: undefined,
   uplineId: undefined,
   transferAmount: 0
 });
@@ -94,37 +111,64 @@ const updateTransferAmount = () => {
   formDetail.value.transferAmount = store.balance.toFixed(2)
 }
 const submitTransfer = async () => {
-  const isUplineValid = await uplineRef.value.validate();
-  const isAmountValid = await amountRef.value.validate();
-  
-  if (!isUplineValid || !isAmountValid) return;
-  btnLoading.value = true;
-  
-  const obj = {
-    memberId: formDetail.value.memberId,
-    transferAmount: formDetail.value.transferAmount,
-    siteId: process.env.SITEID,
-    rollover: 1
-  }
-  api
-    .post(`/session/upline/transfer`, qs.stringify(obj))
-    .then((res) => {
-      if (res.code === 0) {
-        $q.notify({
-          type: "positive",
-          position: "top",
-          message: `Successfully transferred`,
-          icon: "check_circle_outline"
-        });
-        formDetail.value.memberId = undefined;
-        formDetail.value.transferAmount = 0;
-        emit("update:modelValue", false);
-      } else {
-      }
-    })
-    .finally(() => (btnLoading.value = false));
-};
+  const isUplineValid = uplineRef.value ? await uplineRef.value.validate() : true;
+  const isDownlineValid = downlineRef.value ? await downlineRef.value.validate() : true;
+  const isAmountValid = amountRef.value ? await amountRef.value.validate() : false; // Amount validation must always pass
 
+  if (!isAmountValid) return;
+
+  btnLoading.value = true;
+
+  try {
+    let apiUrl = "";
+    let obj = {
+      transferAmount: formDetail.value.transferAmount,
+      siteId: process.env.SITEID,
+      rollover: 1,
+    };
+
+    if (!upline.value) {
+      apiUrl = `/session/downlines/transfer`;
+      obj.memberId = formDetail.value.downlineId;
+    } else if (!isDownlineValid) {
+      apiUrl = `/session/upline/transfer`;
+      obj.memberId = formDetail.value.uplineId;
+    } else {
+      apiUrl = `/session/upline/transfer`;
+      obj.memberId = formDetail.value.uplineId;
+    }
+
+    const res = await api.post(apiUrl, qs.stringify(obj));
+
+    if (res.code === 0) {
+      $q.notify({
+        type: "positive",
+        position: "top",
+        message: `Successfully transferred`,
+        icon: "check_circle_outline",
+      });
+
+      formDetail.value.uplineId = undefined;
+      formDetail.value.downlineId = undefined;
+      formDetail.value.transferAmount = 0;
+      emit("update:modelValue", false);
+    }
+  } catch (error) {
+    console.error("Transfer failed:", error);
+  } finally {
+    btnLoading.value = false;
+  }
+};
+onMounted(() => {
+  console.log(props)
+  formDetail.value.downlineId = downlineId.value
+  formDetail.value.uplineId = uplineId.value
+});
+// Watch for changes in props and update formDetail
+watch([downlineId, uplineId], ([newDownlineId, newUplineId]) => {
+  formDetail.value.downlineId = newDownlineId;
+  formDetail.value.uplineId = newUplineId;
+});
 </script>
 <style lang="scss" scoped>
 .error-text {

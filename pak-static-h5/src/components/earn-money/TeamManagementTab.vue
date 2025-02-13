@@ -73,6 +73,9 @@
               <span v-if="col.field === 'loginName'">
                 <span class="span-username" @click="searchByReferral(props)">{{ col.value }}</span>
               </span>
+              <span v-else-if="col.field === 'isOpenTransfer'">
+                <span v-if="col.value === true"><img @click="handleTransferClick(props)" style="width:25px; display: block;" src="../../assets/images/account/transfer-svg.svg"></span>
+              </span>
               <span v-else-if="col.field === 'balance'">
                 {{ convertToCommaAmount(col.value, true) }}
               </span>
@@ -104,17 +107,68 @@
           color="green"
         ></q-btn>
       </div>
+      
+      <TransferModal v-model="showTransferModal" :downlineId="downlineId" :upline="false" />
+      <!-- <q-dialog
+        width="100%"
+        :modelValue="transferDialog"
+        presistent
+      >
+        <div class="popout-dialog">
+          <q-btn dense rounded icon="close" class="popout-close" @click="transferDialog = false" />
+          <div class="popout-dialog-container">
+            <div class="txt-title">{{ $t("form.transferTitle") }}</div>
+            <div class="pc-form">
+              <div class="pc-form-item">
+                <InputField :label="$t('form.amount')">
+                  <template #input>
+                    <div class="pc-form-input">
+                      <q-input
+                        outlined
+                        clearable
+                        color="green"
+                        ref="amountRef"
+                        :placeholder="$t('form.amount_placeholder')"
+                        :rules="[(val) => (val && val.length > 0) || $t('form.amount_rule_01')]"
+                        v-model="selectedRow.transferAmount"
+                      >
+                        <template v-slot:append>
+                          <a style="color: #00B900;" @click="updateTransferAmount">{{ $t('form.all') }}</a>
+                        </template>
+                      </q-input>
+                    </div>
+                  </template>
+                </InputField>
+              <span class="full-balance">{{ store.balance.toFixed(2) }}</span>
+              </div>
+            </div>
+            
+            <q-btn
+              :loading="btnLoading"
+              rounded
+              flat
+              no-caps
+              class="btn-primary btn-primary__full"
+              @click="submitTransfer"
+            >
+              {{ $t("btn.transfer") }}
+            </q-btn>
+          </div>
+        </div>
+      </q-dialog> -->
     </div>
   </div>
 </template>
 <script setup>
 import { computed, onMounted, ref } from "vue";
 import moment from "moment";
+import InputField from "../../components/auth/InputField.vue";
 import { DATE_FORMAT } from "../../constant/format";
 import { useI18n } from "vue-i18n";
 import { convertToCommaAmount } from "src/boot/utils";
 import { api } from "boot/axios";
 import { userStore } from "src/stores";
+import TransferModal from "../../components/account/TransferModal.vue";
 
 const { t } = useI18n();
 const store = userStore();
@@ -140,6 +194,7 @@ const downLineOptions = computed(() => [
 const tableHeaders = computed(() => [
   // { label: t("earnMoney.teamManagement.table.id"), name: "id", field: "id", align: "center" },
   { label: t("earnMoney.teamManagement.table.username"), name: "loginName", field: "loginName", align: "center" },
+  { label: "", name: "isOpenTransfer", field: "isOpenTransfer", align: "center"},
   { label: t("earnMoney.teamManagement.table.registrationDate"), name: "regTime", field: "regTime", align: "center" },
   {
     label: t("earnMoney.teamManagement.table.downlineMember"),
@@ -174,6 +229,26 @@ const searchByReferral = (props) => {
   referralName.value = props.row.loginName;
   getDownlines();
 };
+const showTransferModal = ref(false);
+const amountRef = ref();
+const downlineId = ref();
+const handleTransferClick = (props) => {
+  downlineId.value = props.row.id
+  showTransferModal.value = true
+}
+// const openTransferDialog = (props) => {
+//   selectedRow.value.memberId = props.row.id
+//   transferDialog.value = true
+// }
+// const confirmTransfer = async () => {
+//   const isAmountValid = await amountRef.value.validate();
+//   if (!isAmountValid) return;
+//   transferDialog.value = false;
+//   console.log(selectedRow)
+// }
+// const updateTransferAmount = () => {
+//   selectedRow.value.transferAmount = store.balance.toFixed(2)
+// }
 
 const currentPage = ref(1);
 const totalPages = ref(1);
@@ -249,3 +324,16 @@ onMounted(() => {
 });
 </script>
 <style scoped lang="scss" src="../../css/page/earnMoney.scss"></style>
+<style lang="scss" scoped>
+.pc-form {
+  width: 100%;
+}
+.full-balance {
+  text-align: right;
+  margin-top: -20px;
+  margin-bottom: 30px;
+  color: #5F6061;
+  width: 100%;
+  display: block;
+}
+</style>
