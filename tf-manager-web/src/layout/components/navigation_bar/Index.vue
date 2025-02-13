@@ -373,20 +373,20 @@ export default {
       updateData();
     });
 
-    watch(() => store.state.socket.event, () => {
-      const memberAlertEventArr = store.state.socket.event.filter(e => e.event === 'MEMBER_ALERT');
-      if (memberAlertEventArr.length > 0) {
-        const alert = memberAlertEventArr[0].memberAlertMsg
-
-        if (alert) {
-          message.value = t('fields.' + alert)
-        } else {
-          message.value = null
-        }
-      } else {
-        message.value = null
-      }
-    }, { deep: true });
+    // watch(() => store.state.socket.event, () => {
+    //   const memberAlertEventArr = store.state.socket.event.filter(e => e.event === 'MEMBER_ALERT');
+    //   if (memberAlertEventArr.length > 0) {
+    //     const alert = memberAlertEventArr[0].memberAlertMsg
+    //
+    //     if (alert) {
+    //       message.value = t('fields.' + alert)
+    //     } else {
+    //       message.value = null
+    //     }
+    //   } else {
+    //     message.value = null
+    //   }
+    // }, { deep: true });
 
     // watch(() => useStore().state.socket.event, () => {
     //   const memberStatistics = useStore().state.socket.event.filter(e => e.event === 'MEMBER_STATISTICS');
