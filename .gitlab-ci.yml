@@ -37,7 +37,7 @@ default:
   image:
     name: sonarsource/sonar-scanner-cli:latest
     entrypoint: [""]
-  script: 
+  script:
     - sonar-scanner
   allow_failure: true
   only:
@@ -59,7 +59,7 @@ default:
     - cd $PROJECT
     - npm install
     - npm install -g @quasar/cli
-    - export NODE_OPTIONS="$NODE_OPTIONS" 
+    - export NODE_OPTIONS="$NODE_OPTIONS"
     - if [ "$CI_COMMIT_BRANCH" == "staging" ]; then npm run build:staging; elif [ "$CI_COMMIT_BRANCH" == "test" ]; then npm run build:test; else npm run build:prod; fi
   artifacts:
    untracked: true
@@ -301,6 +301,13 @@ deploy-minifun-site-v2:
   extends: .s3-deploy
   variables:
     PROJECT: minifun-site-v2
+
+#===============================================================================================
+
+deploy-mini-game:
+  extends: .s3-deploy
+  variables:
+    PROJECT: mini-game
 
 #===============================================================================================
 
@@ -911,6 +918,13 @@ deploy-pak-landing-v2:
 
 #===============================================================================================
 
+deploy-pk3-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: pk3-download
+
+#===============================================================================================
+
 deploy-pak-bga-b9-landing:
   extends: .s3-deploy
   variables:
@@ -1125,6 +1139,20 @@ build-image-id1-static-v1:
 
 #===============================================================================================
 
+build-ind-download-pwa:
+  extends: .build-projects
+  variables:
+    PROJECT: ind-download-pwa
+
+build-image-ind-download-pwa:
+  extends: .docker-build
+  variables:
+    PROJECT: ind-download-pwa
+  needs:
+    - build-ind-download-pwa
+
+#===============================================================================================
+
 build-bgd-static-v1:
   extends: .build-projects
   variables:
@@ -1208,20 +1236,6 @@ deploy-br1-download-pwa:
     SITE_CODE: P8S1-BR1
   tags:
     - p8s1-br1-runners
-
-#===============================================================================================
-
-build-minigame-website:
-  extends: .build-projects
-  variables:
-    PROJECT: minigame-website
-
-build-image-minigame-website:
-  extends: .docker-build
-  variables:
-    PROJECT: minigame-website
-  needs:
-    - build-minigame-website
 
 #===============================================================================================
 

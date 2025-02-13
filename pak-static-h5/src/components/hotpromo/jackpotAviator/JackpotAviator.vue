@@ -465,6 +465,7 @@ const ranksAndPercentages = ref([
     position: fixed;
     bottom: 95px;
     width: 100%;
+    max-width: 500px;
     font-family: 'Poppins';
 
     &.isApp {

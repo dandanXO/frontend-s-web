@@ -75,16 +75,20 @@
     </div>
 
     <div
-      class="rocket-wrapper"
+      class="rocket-wrapper show-promo"
       v-if="showFloatPromo"
-      :class="'show-promo'"
+      :class="{ minimum: !isFloatPromoExpanded }"
       :style="{ top: promoPosition.top + 'px', left: promoPosition.left + 'px' }"
       @mousedown="startDragging('promo', $event)"
     >
       <div style="position: relative">
-        <div class="close-btn" @click="hideFloatPromo()">X</div>
+        <!-- <div class="close-btn" @click="hideFloatPromo()">X</div> -->
+        <div class="close-btn scale" @click.prevent="scaleFloatPromo">
+          <img v-if="isFloatPromoExpanded" src="../../assets/home/icon-close-fullscreen.png" />
+          <img v-else src="../../assets/home/icon-fullscreen.png" />
+        </div>
         <el-carousel
-          height="130px"
+          height="207px"
           :indicator-position="floatPromo.length > 1 ? 'outside' : 'none'"
           arrow="never"
           :autoplay="true"
@@ -92,7 +96,12 @@
         >
           <el-carousel-item v-for="(promo, i) in floatPromo" :key="i">
             <div @click="gotoPromo(promo.code)" class="rocket-container">
-              <div class="rocket"><img :src="`${imgURL}/promo/${promo.icon}`" /></div>
+              <div class="rocket">
+                <img :src="`${imgURL}/promo/${promo.icon}`" />
+                <span v-if="promo.showTime" class="promo-remaining-time">
+                  {{ floatPromoRemainingTime[i] }}
+                </span>
+              </div>
             </div>
           </el-carousel-item>
         </el-carousel>
@@ -103,9 +112,10 @@
 <script>
 import { defineAsyncComponent, defineComponent, onMounted, ref } from "vue";
 import { userStore } from "@/store";
-import { getRedEnvelopeFromServer, getFloatingItems } from "@/api/index/site";
+import { getRedEnvelopeFromServer, getFloatingItems, getLoggedInFloatingItems } from "@/api/index/site";
 import { useLocalStorage } from "@vueuse/core";
 import { useRouter } from "vue-router";
+import moment from "moment";
 
 const GameModal = defineAsyncComponent(() => import("@/components/modal/GameModal.vue"));
 
@@ -163,18 +173,24 @@ export default defineComponent({
     const showRocket = ref(false);
     const hideRocket = () => {
       showRocket.value = false;
-      promoPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 220 };
+      promoPosition.value = { top: window.innerHeight - 207, left: 0 };
     };
     const showFloatPromo = ref(false);
+    const isFloatPromoExpanded = ref(true);
     const hideFloatPromo = () => {
       showFloatPromo.value = false;
     };
+    const scaleFloatPromo = () => {
+      isFloatPromoExpanded.value = !isFloatPromoExpanded.value;
+    };
     const floatPromo = [];
+    const floatPromoRemainingTime = ref([]);
     const gamePromo = [];
     const initFloating = () => {
       floatPromo.value = [];
       gamePromo.value = [];
-      getFloatingItems().then((res) => {
+      const api = store.token ? getLoggedInFloatingItems : getFloatingItems;
+      api().then((res) => {
         if (res.code === 0) {
           res.data.forEach((element) => {
             if (element.type === "PROMO") {
@@ -189,7 +205,9 @@ export default defineComponent({
           checkFloatPromo();
           updatePromo(); // Initially update the displayed promo
           // Update the displayed promo every 5 seconds
+          updatePromoRemainingTime();
           setInterval(updatePromo, 3000);
+          setInterval(updatePromoRemainingTime, 1000);
         } else {
           ElMessage.error(res.message);
         }
@@ -197,12 +215,12 @@ export default defineComponent({
     };
     const checkFloatPromo = () => {
       if (gamePromo.length === 0) {
-        promoPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 220 };
+        promoPosition.value = { top: window.innerHeight - 207, left: 0 };
       }
     };
 
     const rocketPosition = ref({ top: window.innerHeight - 200, left: window.innerWidth - 220 });
-    const promoPosition = ref({ top: window.innerHeight - 320, left: window.innerWidth - 220 });
+    const promoPosition = ref({ top: window.innerHeight - 207, left: 0 });
     const isDragging = ref(false);
     const shiftX = ref(0);
     const shiftY = ref(0);
@@ -248,6 +266,23 @@ export default defineComponent({
       currentPromo.value = floatPromo[currentPromoIndex.value];
       currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.length;
     };
+    const updatePromoRemainingTime = () => {
+      floatPromoRemainingTime.value = floatPromo.map((promo) => {
+        let result = "00:00:00";
+        if (promo?.endTime) {
+          const now = moment(Date.now());
+          const endTime = moment(currentPromo.value.endTime);
+          const totalSeconds = endTime.diff(now, "seconds");
+          if (totalSeconds > 0) {
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            result = `${`${hours}`.padStart(2, 0)}:${`${minutes}`.padStart(2, 0)}:${`${seconds}`.padStart(2, 0)}`;
+          }
+        }
+        return result;
+      });
+    };
 
     onMounted(() => {
       getCheckRedPacket();
@@ -276,7 +311,10 @@ export default defineComponent({
       gamePromo,
       currentPromo,
       currentPromoIndex,
-      gotoPromo
+      gotoPromo,
+      floatPromoRemainingTime,
+      isFloatPromoExpanded,
+      scaleFloatPromo
     };
   }
 });
@@ -298,6 +336,13 @@ export default defineComponent({
 
   &.show-promo {
     display: block;
+    width: 277px;
+    height: 207px;
+  }
+
+  &.minimum {
+    transform: scale(0.5);
+    transform-origin: bottom left;
   }
 
   &.show-rocket {
@@ -324,16 +369,35 @@ export default defineComponent({
     right: 0;
     z-index: 99;
     cursor: pointer;
+
+    &.scale {
+      top: -10px;
+      right: -10px;
+      img {
+        max-width: 100%;
+      }
+    }
   }
 
   .rocket {
     pointer-events: none;
     user-select: none;
+    position: relative;
 
     img {
       display: block;
-      width: 120px;
+      width: 100%;
       cursor: pointer;
+    }
+    .promo-remaining-time {
+      position: absolute;
+      bottom: 16%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 32px;
+      font-weight: bold;
+      // color: #eaff00;
+      // text-shadow: 2px 2px 0px #00000040;
     }
   }
 }

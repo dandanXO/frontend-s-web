@@ -554,3 +554,16 @@ export const refreshWithdrawableBalance = (id, siteId) => {
     ContentType.form
   )
 }
+
+export const updateOpenTransfer = (memberId, siteId, state) => {
+  return https().request(
+    `/member/update-open-transfer?_method=PUT`,
+    Method.POST,
+    {
+      memberId: memberId,
+      siteId: siteId,
+      state: state,
+    },
+    ContentType.form
+  )
+}

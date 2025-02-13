@@ -1,4 +1,3 @@
-
 export const UserMutationTypes = {
   SET_TOKEN: 'SET_TOKEN',
   SET_LOGIN_USER: 'SET_LOGIN_USER',
