@@ -9,6 +9,7 @@
           :placeholder="t('fields.redirectType')"
           style="width: 170px;margin-right:10px;"
         >
+
           <el-option
             v-for="item in redirectType.list"
             :key="item.value"

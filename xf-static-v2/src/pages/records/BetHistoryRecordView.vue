@@ -51,7 +51,7 @@ const totalBetRecord = reactive({
   totalPayout: 0
 });
 
-var apiUrl = "/session/member/gameBetRecord";
+var apiUrl = "/session/member/gameBetRecordWithType";
 
 var endDate = reactive(moment().format("YYYY-MM-DD"));
 var startDate = reactive(moment().add(-7, "days").format("YYYY-MM-DD"));

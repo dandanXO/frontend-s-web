@@ -3719,6 +3719,15 @@ onActivated(() => {
     }
   }
   afterActivated();
+
+  if (!(Platform.is.android && Platform.is.capacitor)) {
+    if (!sessionStorage.getItem("add_to_homescreen")) {
+      setTimeout(() => {
+        isAddToHomeScreen.value = true;
+    }, 2000);
+
+    }
+  }
 });
 
 const afterMounted = useCustomerTrigger(loadCustomerAddress);
@@ -3739,10 +3748,6 @@ onMounted(() => {
 
   if (Platform.is.android && Platform.is.capacitor) {
     initOneSignal();
-  } else {
-    if (!sessionStorage.getItem("add_to_homescreen")) {
-      isAddToHomeScreen.value = true;
-    }
   }
 });
 
