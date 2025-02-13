@@ -73,7 +73,7 @@ const imgURL = process.env.IMAGE_CDN + "/promo/";
     // margin-top: -18px;
     // z-index: 2;
     position: absolute;
-    bottom: 4px;
+    bottom: 5px;
     width: 100%;
 
     img {
