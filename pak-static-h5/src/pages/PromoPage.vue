@@ -74,13 +74,20 @@
                 <!-- <div class="promo-bg"> -->
                 <img
                   class="promo-content"
-                  :class="selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards' ? 'dpsr' : 'usual'" 
+                  :class="selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards' ? 'dpsr' : 'usual'"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
                 />
                 <!-- </div> -->
               </div>
 
-              <div class="promo-content-inner" v-if="selectedPromo.redirectUrl !== 'pak-jackpot-aviator'" :style="selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards' ? 'border:0; padding: 0;':''">
+              <div
+                class="promo-content-inner"
+                v-if="
+                  selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
+                  selectedPromo.redirectUrl !== 'spin-lucky-wheel'
+                "
+                :style="selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards' ? 'border:0; padding: 0;' : ''"
+              >
                 <RouterLink
                   v-if="parsedParam.showEarnMoney"
                   class="content-go-earn-money-btn"
@@ -90,7 +97,9 @@
                   <img src="../assets/images/bonus/share-icon.png" />
                   <span>Earn Money</span>
                 </RouterLink>
-                <div class="content-title" v-if="selectedPromo.redirectUrl !== 'pak-deposit-spinner-rewards'">{{ selectedPromo.title }}</div>
+                <div class="content-title" v-if="selectedPromo.redirectUrl !== 'pak-deposit-spinner-rewards'">
+                  {{ selectedPromo.title }}
+                </div>
                 <div class="content-para" v-if="parsedParamSub">{{ parsedParamSub }}</div>
                 <div class="content-date" v-if="parsedParamDate">
                   <div><img src="../assets/images/promotion/calendar-icon.png" /></div>
@@ -98,11 +107,15 @@
                 </div>
               </div>
 
-              <div class="inner" 
-                :class="{ isJackpotAviator: selectedPromo.redirectUrl === 'pak-jackpot-aviator',
-                  isDepositSpinnerRewards: selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards'
-                 }"
-                >
+              <div
+                class="inner"
+                :class="{
+                  isJackpotAviator: selectedPromo.redirectUrl === 'pak-jackpot-aviator',
+                  isDepositSpinnerRewards: selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards',
+                  isSpinLuckyWheel:
+                    selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel-envelope'
+                }"
+              >
                 <div v-if="selectedPromo.hasPromo">
                   <!-- <pre>selectedPromo{{ selectedPromo }}</pre>
                   <template v-if="selectedPromo.promoCode === 'pak-red-packet-rain'">
@@ -114,13 +127,15 @@
                 </div>
                 <div
                   v-if="selectedPromo.promoType"
+                  class="select-promo-html"
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
                     eSport: selectedPromo.promoType.toLowerCase() === 'esport',
                     fish: selectedPromo.promoType.toLowerCase() === 'fish',
                     liveCasino: selectedPromo.promoType.toLowerCase() === 'live casino',
-                    slot: selectedPromo.promoType.toLowerCase() === 'slot game'
+                    slot: selectedPromo.promoType.toLowerCase() === 'slot game',
+                    isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel'
                   }"
                 >
                   <!-- <div class="top-float">
@@ -1051,7 +1066,6 @@ export default defineComponent({
       .banner-container {
         width: 100%;
         .promo-content {
-          
           &.usual {
             display: block;
             width: 100%;
@@ -1105,16 +1119,31 @@ export default defineComponent({
         font-size: 12px;
         padding-bottom: 40px;
 
+        &.isSpinLuckyWheel {
+          background: url("../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/bg.png") no-repeat top
+            center;
+          background-size: cover;
+          width: 100%;
+          margin-top: 0;
+          padding-bottom: 0;
+        }
         &.isJackpotAviator {
           width: 100%;
         }
         &.isDepositSpinnerRewards {
-          border-radius:0; width: 100%;
+          border-radius: 0;
+          width: 100%;
           padding: 0;
           margin: 0;
           > div:nth-child(2) {
             display: none;
-          } 
+          }
+        }
+
+        .select-promo-html {
+          &.isSpinLuckyWheel {
+            display: none;
+          }
         }
 
         p {
