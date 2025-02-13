@@ -234,6 +234,12 @@ export default defineComponent({
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
+          if (data.data.sendEvent === "ftd") {
+            fbq("track", "Purchase", {
+              currency: "PKR",
+              value: 300
+            });
+          }
           // alert(JSON.stringify(data));
         })
         .catch((error) => {
