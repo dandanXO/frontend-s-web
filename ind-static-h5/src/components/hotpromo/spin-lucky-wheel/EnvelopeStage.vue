@@ -27,7 +27,7 @@
       </div>
       <div v-else class="selected-envelope">
         <span class="prize">{{ prizeList[selectedIndex]?.prize }}$</span>
-        <CommonButton class="withdraw-btn">Go withdraw now!</CommonButton>
+        <CommonButton class="withdraw-btn" @click="$emit('envelopeClick')">Go withdraw now!</CommonButton>
         <span class="remaining-time">time left: {{ remainingTime }}</span>
       </div>
       <img class="footer tiger" src="../../../assets/images/promotion/spin-lucky-wheel/decoration-tiger.png" />
@@ -38,15 +38,19 @@
 </template>
 <script setup>
 import moment from "moment";
-import { onMounted, ref } from "vue";
+import { onUnmounted, ref } from "vue";
 import CommonButton from "./CommonButton.vue";
+import { eventapi } from "src/boot/axios";
+
+defineEmits(["envelopeClick"]);
 
 const envelopeStatus = ref("idle");
-const prizeList = ref(new Array(6).fill().map(() => ({ status: "idle", prize: 498.11 })));
+const prizeList = ref(new Array(6).fill().map(() => ({ status: "idle", prize: 0 })));
 const selectedIndex = ref(0);
 const remainingTime = ref("00:00:00");
-const endTime = ref("2025-02-07 00:00:00");
+const endTime = ref("");
 const isClaiming = ref(false);
+const timer = ref();
 
 const delay = async (ms) => {
   return new Promise((resolve) => {
@@ -54,25 +58,34 @@ const delay = async (ms) => {
   });
 };
 
-const handleEnvelopeClick = async (index) => {
+const handleEnvelopeClick = (index) => {
   if (prizeList.value[index].status !== "idle" || isClaiming.value) return;
 
-  prizeList.value[index].status = "selected";
-  selectedIndex.value = index;
   isClaiming.value = true;
+  selectedIndex.value = index;
+  eventapi.post("/refer-spin/start", { box: index }).then(async (res) => {
+    let otherPrizeCounter = 0;
 
-  await delay(1000);
+    prizeList.value[index].status = "selected";
+    prizeList.value[index].prize = res.data.bonus;
 
-  prizeList.value.forEach((prize, _index) => {
-    if (_index === index) return;
-    prize.status = "unselected";
+    await delay(1000);
+
+    prizeList.value.forEach((prize, _index) => {
+      if (_index === index) return;
+
+      prize.status = "unselected";
+      prize.prize = res.data.otherBonus[otherPrizeCounter++];
+    });
+
+    await delay(1000);
+
+    envelopeStatus.value = "selected";
+    endTime.value = moment(Date.now()).add(3, "days");
+    updateRemainingTime();
+    timer.value = setInterval(updateRemainingTime, 1000);
+    isClaiming.value = false;
   });
-
-  await delay(1000);
-
-  envelopeStatus.value = "selected";
-  updateRemainingTime();
-  setInterval(updateRemainingTime, 1000);
 };
 
 const updateRemainingTime = () => {
@@ -93,7 +106,9 @@ const updateRemainingTime = () => {
   remainingTime.value = result;
 };
 
-onMounted(() => {});
+onUnmounted(() => {
+  clearInterval(timer.value);
+});
 </script>
 <style lang="scss">
 .envelope-stage-wrapper {

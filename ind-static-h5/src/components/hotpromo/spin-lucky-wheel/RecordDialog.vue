@@ -24,8 +24,8 @@
           <div class="record-wrapper lottery">
             <div v-for="(record, index) in lotteryRecords" :key="index" class="record">
               <span>{{ moment(record.date).format("MM-DD hh:mm:ss") }}</span>
-              <span class="name">{{ record.name }}</span>
-              <span>500</span>
+              <!-- <span class="name">{{ record.name }}</span> -->
+              <span class="amount">500$</span>
             </div>
           </div>
         </q-tab-panel>
@@ -103,16 +103,22 @@ const handleTabClick = (tab) => {
     padding: 12px;
     height: 30vh;
     overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     &.invitation {
       .record {
-        grid-template-columns: 2fr minmax(70px, 1fr) 3fr;
+        grid-template-columns: minmax(100px, 1fr) 1fr minmax(50px, 1fr);
       }
     }
 
     &.lottery {
       .record {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
@@ -123,12 +129,23 @@ const handleTabClick = (tab) => {
       > span {
         font-size: 12px;
         color: #fff;
+        &:last-child {
+          text-align: right;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
       }
 
       .name {
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
+      }
+
+      .amount {
+        font-weight: 900;
+        color: #cd91ff;
       }
     }
   }

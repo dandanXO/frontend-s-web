@@ -1,42 +1,49 @@
 <template>
   <div class="wheel-stage-wrapper">
     <div class="wheel-outer-wrapper">
-      <span class="title">Countdown: {{ remainingTime }}</span>
+      <!-- <span class="title">Countdown: {{ remainingTime }}</span> -->
       <div class="summary-wrapper">
         <span class="prize">
           $
-          <span class="amount">{{ currentAmount }}</span>
+          <span class="amount">{{ info.currAmount }}</span>
         </span>
 
-        <template v-if="extractionDifference > 0">
+        <template v-if="extractionDifference > 0 && info.status === 'IN_PROGRESS'">
           <span class="extraction-require-amount">
             Extraction requires only
             <span class="amount">{{ extractionDifference }}$</span>
           </span>
 
           <div class="extraction-progress-bar">
-            <div class="progress" :style="{ width: `calc(100% - ${extractionDifference}%)` }"></div>
+            <div class="progress" :style="{ width: progressBarIndicatePosition }"></div>
             <img
-              class="pointer"
-              :style="{ left: `calc(100% - ${extractionDifference}%)` }"
+              class="indicate"
+              :style="{ left: progressBarIndicatePosition }"
               src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/coin.png"
             />
           </div>
         </template>
 
-        <button v-else class="receive-btn">
+        <button v-else-if="info.status === 'IN_PROGRESS'" class="receive-btn" @click="handleReceiveClick">
           <img src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/coin-2.png" />
           <span>RECEIVE</span>
         </button>
 
-        <div class="winning-record-wrapper">
-          <div v-for="(record, index) in winningRecord" :key="index" class="winning-record-item">
-            <span>{{ moment(record.date).format("MM-DD hh:mm:ss") }}</span>
-            <span>{{ record.name }}</span>
-            <span>
-              RECEIVE
-              <span class="amount">{{ record.amount }}$</span>
-            </span>
+        <button v-else-if="info.status === 'CLAIMED'" class="receive-btn disabled">
+          <img src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/coin-2.png" />
+          <span>RECEIVED</span>
+        </button>
+
+        <div class="winning-record-outer-wrapper">
+          <div ref="winningRecordRef" class="winning-record-wrapper">
+            <div v-for="(record, index) in winningRecord" :key="index" class="winning-record-item">
+              <span>{{ moment(record.date).format("MM-DD hh:mm:ss") }}</span>
+              <span class="name">{{ record.name }}</span>
+              <span>
+                RECEIVE
+                <span class="amount">500$</span>
+              </span>
+            </div>
           </div>
         </div>
         <div class="foreground-wrapper">
@@ -47,6 +54,7 @@
             />
             <img class="decoration ox" src="../../../assets/images/promotion/spin-lucky-wheel/decoration-ox.png" />
 
+            <div class="countdown">Countdown: {{ remainingTime }}</div>
             <div class="wheel-inner-wrapper">
               <img
                 ref="spinWheelRef"
@@ -57,10 +65,10 @@
                 class="indicate"
                 src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/wheel-indicate.png"
               />
-              <button class="btn" @click="handleWheelClick">
+              <button class="btn" :class="{ disabled: !info.spinChance }" @click="handleWheelClick">
                 rotate
                 <br />
-                {{ remainingSpinTimes }} time
+                {{ info.spinChance }} time
               </button>
             </div>
 
@@ -72,11 +80,13 @@
               class="decoration rabbit"
               src="../../../assets/images/promotion/spin-lucky-wheel/decoration-rabbit.png"
             />
-            <CommonButton class="draw-btn">Invitation wins</CommonButton>
-            <span class="next-spin-remaining-time">Countdown to next free spins: 21:21:21</span>
+            <CommonButton class="draw-btn" @click="handleInviteClick">Invitation wins</CommonButton>
+            <span class="next-spin-remaining-time">Countdown to next free spins: {{ nextFreeSpinRemainingTime }}</span>
           </div>
         </div>
       </div>
+
+      <button class="record-btn" @click="handleRecordClick">Record</button>
     </div>
     <div class="block-wrapper">
       <div class="title-wrapper">
@@ -111,16 +121,23 @@
         </li>
       </ol>
     </div>
-    <WheelResultDialog v-model="showResultDialog" :prize="0.02" />
+    <WheelResultDialog v-model="showResultDialog" :prize="prize" @hide="$emit('reload')" />
     <RecordDialog v-model="showRecordDialog" />
   </div>
 </template>
 <script setup>
 import moment from "moment";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref, toRefs } from "vue";
 import CommonButton from "./CommonButton.vue";
 import WheelResultDialog from "./WheelResultDialog.vue";
 import RecordDialog from "./RecordDialog.vue";
+import { useRouter } from "vue-router";
+import { eventapi } from "src/boot/axios";
+import { useQuasar } from "quasar";
+
+const emit = defineEmits(["reload"]);
+const props = defineProps(["info"]);
+const { info } = toRefs(props);
 
 const TOTAL_ITEMS = 6;
 const DEFAULT_SPEED = 1;
@@ -131,11 +148,11 @@ const SPIN_DURATION = 5000;
 const SPIN_DECELERATION_TIME = 3;
 const RESULT_DIALOG_OPEN_DELAY = 1000;
 
-const remainingTime = ref("71:59:59");
-const extractionRequireAmount = ref(500);
-const currentAmount = ref(498.11);
-const winningRecord = ref(new Array(10).fill({ date: "2025-02-03 15:34:32", amount: 500, name: "John Doe" }));
-const remainingSpinTimes = ref(2);
+const router = useRouter();
+const $q = useQuasar();
+
+const remainingTime = ref("");
+const nextFreeSpinRemainingTime = ref("");
 const showRecordDialog = ref(false);
 const showResultDialog = ref(false);
 const spinWheelRef = ref();
@@ -146,10 +163,36 @@ const speed = ref(1);
 const spinStartTime = ref();
 const degreeToStopAt = ref([]);
 const prizeIndex = ref(0);
+const timer = ref();
+const prize = ref(0);
+const winningRecordRef = ref();
 
 const extractionDifference = computed(() =>
-  Math.min(Math.round((extractionRequireAmount.value - currentAmount.value) * 100) / 100, 100)
+  Math.min(Math.round((info.value.targetWithdrawAmount - info.value.currAmount) * 100) / 100, 100)
 );
+
+const winningRecord = computed(() => {
+  const result = [];
+  for (let i = 0; i < 20; i++) {
+    const date = moment()
+      .subtract(Math.random() * 24 * 60 * 60 * 1000, "milliseconds")
+      .format("YYYY-MM-DD HH:mm:ss");
+    const name = `User${Math.floor(Math.random() * 900) + 100}`;
+    result.push({
+      date,
+      name
+    });
+  }
+  return result;
+});
+
+const progressBarIndicatePosition = computed(() => {
+  if (extractionDifference.value < 5) {
+    return `96%`;
+  } else {
+    return `calc(100% - ${extractionDifference.value}%)`;
+  }
+});
 
 const rotate = (timestamp, stopCallback) => {
   if (!spinStartTime.value) {
@@ -200,12 +243,58 @@ const reset = () => {
 };
 
 const handleWheelClick = () => {
-  if (spinButtonDisable.value) return;
-  spin(0, () => {
-    setTimeout(() => {
-      showResultDialog.value = true;
-    }, RESULT_DIALOG_OPEN_DELAY);
+  if (spinButtonDisable.value || !info.value.spinChance) return;
+  eventapi.post("/refer-spin/spin").then((res) => {
+    if (res.code === 0) {
+      prize.value = res.data;
+      const prizeIndex = Math.floor(Math.random() * TOTAL_ITEMS);
+
+      spin(prizeIndex, () => {
+        setTimeout(() => {
+          showResultDialog.value = true;
+        }, RESULT_DIALOG_OPEN_DELAY);
+      });
+    }
   });
+};
+
+const handleInviteClick = () => {
+  router.push("/earn-money");
+};
+
+const getRemainingTime = (endTime) => {
+  let result = "00:00:00";
+  if (endTime) {
+    const now = moment(Date.now());
+    const _endTime = moment(endTime);
+    const totalSeconds = _endTime.diff(now, "seconds");
+    if (totalSeconds > 0) {
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      result = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds
+        .toString()
+        .padStart(2, "0")}`;
+    }
+  }
+  return result;
+};
+
+const handleReceiveClick = () => {
+  eventapi.post("/refer-spin/withdraw").then((res) => {
+    if (res.code === 0) {
+      $q.notify({
+        message: "Receive successfully",
+        color: "positive",
+        position: "top"
+      });
+      emit("reload");
+    }
+  });
+};
+
+const handleRecordClick = () => {
+  showRecordDialog.value = true;
 };
 
 onMounted(() => {
@@ -213,6 +302,24 @@ onMounted(() => {
     const _degree = (FULL_DEGREE / TOTAL_ITEMS) * i * -1;
     degreeToStopAt.value.push({ degree: _degree, prize: SPIN_WHEEL_PRIZES[i] });
   }
+
+  const endTime = moment(info.value.startTime).add(3, "days");
+  const nextFreeSpinEndTime = moment().add(1, "days").startOf("day");
+  timer.value = setInterval(() => {
+    remainingTime.value = getRemainingTime(endTime);
+    nextFreeSpinRemainingTime.value = getRemainingTime(nextFreeSpinEndTime);
+    if (winningRecordRef.value) {
+      const isScrollToEnd = winningRecordRef.value.scrollTop >= winningRecordRef.value.offsetHeight;
+      winningRecordRef.value.scrollTo({
+        top: isScrollToEnd ? 0 : winningRecordRef.value.scrollTop + 20,
+        behavior: isScrollToEnd ? "instant" : "smooth"
+      });
+    }
+  }, 1000);
+});
+
+onUnmounted(() => {
+  clearInterval(timer.value);
 });
 </script>
 <style lang="scss" scoped>
@@ -227,25 +334,16 @@ onMounted(() => {
     aspect-ratio: 343 / 656;
     position: relative;
 
-    .title {
-      position: absolute;
-      top: 4%;
-      transform: translateY(-50%);
-      width: 100%;
-      text-align: center;
-      font-size: 16px;
-      font-weight: 700;
-      color: #fff;
-    }
-
     .summary-wrapper {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
       padding: 58px 34px 0;
 
       .prize {
+        margin-top: 4px;
+        margin-bottom: -12px;
         font-size: 32px;
         font-weight: 900;
         color: #cd91ff;
@@ -281,7 +379,7 @@ onMounted(() => {
           border-radius: 4px;
         }
 
-        .pointer {
+        .indicate {
           position: absolute;
           top: 50%;
           transform: translate(-50%, -50%);
@@ -304,31 +402,49 @@ onMounted(() => {
         line-height: 28px;
         color: #fff;
 
+        &.disabled {
+          filter: grayscale(0.7);
+        }
+
         img {
           max-width: 28px;
         }
       }
 
-      .winning-record-wrapper {
-        display: flex;
-        flex-direction: column;
+      .winning-record-outer-wrapper {
+        padding: 12px 14px;
+        width: 100%;
         background-color: #5817aa99;
         border: 1px solid #e8c4ff99;
         border-radius: 8px;
-        padding: 12px 14px;
-        width: 100%;
 
-        .winning-record-item {
+        .winning-record-wrapper {
           display: flex;
-          align-items: center;
-          justify-content: space-between;
-          > span {
-            line-height: 20px;
-            flex: 1;
-          }
-          .amount {
-            font-weight: 600;
-            color: #cd91ff;
+          flex-direction: column;
+          height: 200px;
+          overflow: hidden;
+
+          .winning-record-item {
+            display: grid;
+            gap: 8px;
+            grid-template-columns: 2fr minmax(40px, 1fr) 2fr;
+            > span {
+              line-height: 20px;
+              flex: 1;
+              &:last-child {
+                text-align: right;
+              }
+            }
+            .amount {
+              font-weight: 600;
+              color: #cd91ff;
+            }
+            .name {
+              text-align: center;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+            }
           }
         }
       }
@@ -340,7 +456,7 @@ onMounted(() => {
         right: -1px;
         background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/fg.png) no-repeat;
         background-size: 100% 100%;
-        aspect-ratio: 343 / 437;
+        aspect-ratio: 343 / 480;
         padding-top: 36px;
         text-align: center;
 
@@ -349,12 +465,26 @@ onMounted(() => {
           width: 100%;
           height: 100%;
 
+          .countdown {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/countdown-bg.png) no-repeat;
+            background-size: 100% 100%;
+            aspect-ratio: 295 / 24;
+            margin: 4px 24px 16px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+          }
+
           .wheel-inner-wrapper {
             position: relative;
             top: 0;
             padding: 0 20px;
 
             .indicate {
+              -webkit-user-drag: none;
               position: absolute;
               top: 3px;
               left: 50%;
@@ -364,6 +494,7 @@ onMounted(() => {
             }
 
             .btn {
+              -webkit-user-drag: none;
               position: absolute;
               top: 50%;
               left: 50%;
@@ -378,6 +509,10 @@ onMounted(() => {
               font-weight: 700;
               line-height: 24px;
               color: #f33d31;
+              &.disabled {
+                filter: grayscale(0.7);
+                opacity: 1 !important;
+              }
             }
           }
 
@@ -386,7 +521,7 @@ onMounted(() => {
             -webkit-user-drag: none;
 
             &.penguin {
-              top: 0;
+              top: 9%;
               left: 0;
               width: 105px;
               max-width: 21%;
@@ -394,7 +529,7 @@ onMounted(() => {
             }
 
             &.ox {
-              top: 0;
+              top: 9%;
               right: 0;
               width: 150px;
               max-width: 30%;
@@ -428,6 +563,17 @@ onMounted(() => {
           }
         }
       }
+    }
+
+    .record-btn {
+      position: absolute;
+      top: 2%;
+      right: 7%;
+      border: none;
+      background-color: #e8c4ff33;
+      border-radius: 87px;
+      padding: 3px 6px;
+      color: #cd91ff;
     }
   }
 
@@ -483,9 +629,11 @@ onMounted(() => {
       .summary-wrapper {
         padding: 11vw 7vw 0;
 
-        .winning-record-wrapper {
-          .winning-record-item > span {
-            font-size: 10px;
+        .winning-record-outer-wrapper {
+          .winning-record-wrapper {
+            .winning-record-item > span {
+              font-size: 10px;
+            }
           }
         }
 
@@ -510,6 +658,16 @@ onMounted(() => {
   .wheel-stage-wrapper {
     .wheel-outer-wrapper {
       .summary-wrapper {
+        .foreground-wrapper {
+          padding-top: 7vw;
+
+          .wheel-wrapper {
+            .countdown {
+              font-size: 14px;
+            }
+          }
+        }
+
         .prize {
           font-size: 24px;
           .amount {
