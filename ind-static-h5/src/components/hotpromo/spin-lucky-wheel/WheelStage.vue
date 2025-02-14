@@ -11,7 +11,7 @@
         <template v-if="extractionDifference > 0 && info.status === 'IN_PROGRESS'">
           <span class="extraction-require-amount">
             Extraction requires only
-            <span class="amount">{{ extractionDifference }}$</span>
+            <span class="amount">${{ extractionDifference }}</span>
           </span>
 
           <div class="extraction-progress-bar">
@@ -41,7 +41,7 @@
               <span class="name">{{ record.name }}</span>
               <span>
                 RECEIVE
-                <span class="amount">500$</span>
+                <span class="amount">$500</span>
               </span>
             </div>
           </div>
@@ -80,7 +80,7 @@
               class="decoration rabbit"
               src="../../../assets/images/promotion/spin-lucky-wheel/decoration-rabbit.png"
             />
-            <CommonButton class="draw-btn" @click="handleInviteClick">Invitation wins</CommonButton>
+            <CommonButton class="draw-btn" @click="handleInviteClick">Invite To Earn Spin</CommonButton>
             <span class="next-spin-remaining-time">Countdown to next free spins: {{ nextFreeSpinRemainingTime }}</span>
           </div>
         </div>
@@ -100,24 +100,26 @@
       </div>
       <ol>
         <li>
-          When the accumulated amount reaches 500 yuan, you can apply for withdrawal (withdrawal is to the game wallet)
+          When the accumulated amount reaches $500, you can apply for withdrawal (Rewards will add to your wallet
+          directly).
         </li>
-        <li>When there are no spins available, re-refer a new player to get a free spin.</li>
+        <li>When there are no spin available, refer a new player to get a free spin.</li>
         <li>
-          The event lasts for 3 days. After the event, the accumulated bonus will be reset and the event will start
+          The event lasts for 3 days. After the event, the accumulated bonus will be reset, and the event will start
           again.
         </li>
         <li>
-          Each user can enjoy one free spin opportunity per day, and the number of spins is reset at 24:00 every day.
+          Each user can enjoy one free spin opportunity per day, the free spins will be added at 12:00 a.m. every day.
         </li>
         <li>After the application is approved, the bonus is deposited directly into your wallet.</li>
         <li>The bonus needs to be rolled over twice before it can be withdrawn.</li>
         <li>
-          The invitee needs to bind his or her phone number and link it with the inviter's invitation code in order to
-          be considered for recommendation
+          The invitee must bind their phone number and register via inviter's invitation link to be considered for the
+          recommendation.
         </li>
         <li>
-          The right to interpret the event belongs to xxxx. If you have any questions, please contact customer service
+          The right to interpret the event belongs to 55Ace. If you have any questions, please contact to customer
+          service.
         </li>
       </ol>
     </div>
