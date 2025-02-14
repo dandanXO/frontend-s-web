@@ -95,6 +95,12 @@ export const updateDate = (val) => {
   return newDate.Y + newDate.M + newDate.D;
 };
 
+export const convertToGMT5 = (dateTime) => {
+  return moment(dateTime).utcOffset("+05:00").format("YYYY-MM-DD HH:mm:ss");
+};
+export const convertToGMT5Date = (dateTime) => {
+  return moment(dateTime).utcOffset("+05:00").format("YYYY-MM-DD");
+};
 export const convertToGMT55 = (dateTime) => {
   return moment(dateTime).utcOffset("+05:30").format("YYYY-MM-DD HH:mm:ss");
 };
