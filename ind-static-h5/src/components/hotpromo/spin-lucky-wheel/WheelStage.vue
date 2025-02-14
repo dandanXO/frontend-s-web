@@ -456,7 +456,7 @@ onUnmounted(() => {
         right: -1px;
         background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/fg.png) no-repeat;
         background-size: 100% 100%;
-        aspect-ratio: 343 / 480;
+        aspect-ratio: 343 / 470;
         padding-top: 36px;
         text-align: center;
 
