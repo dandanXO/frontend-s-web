@@ -20,14 +20,14 @@ interface GameConfig {
 const $q = useQuasar()
 console.log($q)
 
-// 遊戲配置
+// 游戏配置
 const config = ref<GameConfig>({
   rows: 10,
   cols: 10,
   mines: 10,
 })
 
-// 遊戲狀態
+// 游戏状态
 const board = ref<Cell[][]>([])
 const gameOver = ref<boolean>(false)
 const gameWon = ref<boolean>(false)
@@ -35,7 +35,7 @@ const flagCount = ref<number>(0)
 const timer = ref<number>(0)
 const timerInterval = ref<number | null>(null)
 
-// 計算屬性
+// 计算属性
 const minesLeft = computed(() => config.value.mines - flagCount.value)
 const formattedTime = computed(() => {
   const minutes = Math.floor(timer.value / 60)
@@ -43,7 +43,7 @@ const formattedTime = computed(() => {
   return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
 })
 
-// 檢查座標是否在邊界內
+// 检查座标是否在边界内
 function isInBounds(row: number, col: number): boolean {
   return row >= 0 && row < config.value.rows && col >= 0 && col < config.value.cols
 }
@@ -54,13 +54,13 @@ function getCell(board: Cell[][], row: number, col: number): Cell | null {
   return board[row]?.[col] ?? null
 }
 
-// 初始化遊戲板
+// 初始化游戏板
 function initBoard(): Cell[][] {
   const rows = config.value.rows
   const cols = config.value.cols
   const mines = config.value.mines
 
-  // 創建空白遊戲板
+  // 创建空白游戏板
   const newBoard: Cell[][] = Array.from({ length: rows }, (_, row) =>
     Array.from({ length: cols }, (_, col) => ({
       isMine: false,
@@ -72,7 +72,7 @@ function initBoard(): Cell[][] {
     })),
   )
 
-  // 隨機放置地雷
+  // 随机放置地雷
   let minesPlaced = 0
   while (minesPlaced < mines) {
     const row = Math.floor(Math.random() * rows)
@@ -85,7 +85,7 @@ function initBoard(): Cell[][] {
     }
   }
 
-  // 計算鄰近地雷數
+  // 计算邻近地雷数
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       const cell = getCell(newBoard, row, col)
@@ -98,7 +98,7 @@ function initBoard(): Cell[][] {
   return newBoard
 }
 
-// 計算鄰近地雷數
+// 计算邻近地雷数
 function countNeighborMines(board: Cell[][], row: number, col: number): number {
   let count = 0
 
@@ -119,7 +119,7 @@ function countNeighborMines(board: Cell[][], row: number, col: number): number {
   return count
 }
 
-// 開啟格子
+// 开启格子
 function revealCell(row: number, col: number): void {
   const cell = getCell(board.value, row, col)
 
@@ -129,7 +129,7 @@ function revealCell(row: number, col: number): void {
 
   cell.isRevealed = true
 
-  // 如果是空格子，遞迴開啟周圍格子
+  // 如果是空格子，递回开启周围格子
   if (cell.neighborMines === 0) {
     for (let i = -1; i <= 1; i++) {
       for (let j = -1; j <= 1; j++) {
@@ -140,18 +140,18 @@ function revealCell(row: number, col: number): void {
   }
 }
 
-// 處理點擊事件
+// 处理点击事件
 function handleClick(cell: Cell): void {
   if (gameOver.value) return
 
   startTimer()
 
-  // 如果該格已翻開且有數字（不為 0），執行自動打開周邊格子的功能
+  // 如果该格已翻开且有数字（不为 0），执行自动打开周边格子的功能
   if (cell.isRevealed && cell.neighborMines > 0) {
     let flagCount = 0
     const unopenedNeighbors: Cell[] = []
 
-    // 遍歷八個方向
+    // 遍历八个方向
     for (let i = -1; i <= 1; i++) {
       for (let j = -1; j <= 1; j++) {
         if (i === 0 && j === 0) continue
@@ -161,18 +161,18 @@ function handleClick(cell: Cell): void {
         if (neighbor.isFlagged) {
           flagCount++
         }
-        // 收集尚未翻開且未標記的鄰近格子
+        // 收集尚未翻开且未标记的邻近格子
         if (!neighbor.isRevealed && !neighbor.isFlagged) {
           unopenedNeighbors.push(neighbor)
         }
       }
     }
 
-    // 如果已標記的數量正好等於該格顯示的數字，
-    // 就自動打開所有尚未翻開且未標記的鄰近格子
+    // 如果已标记的数量正好等于该格显示的数字，
+    // 就自动打开所有尚未翻开且未标记的邻近格子
     if (flagCount === cell.neighborMines) {
       for (const neighbor of unopenedNeighbors) {
-        // 如果打開的其中一個鄰近格子是炸彈，直接結束遊戲
+        // 如果打开的其中一个邻近格子是炸弹，直接结束游戏
         if (neighbor.isMine) {
           neighbor.isRevealed = true
           gameOver.value = true
@@ -190,11 +190,11 @@ function handleClick(cell: Cell): void {
     return
   }
 
-  // 如果該格尚未翻開
+  // 如果该格尚未翻开
   if (!cell.isRevealed) {
     if (cell.isFlagged) return
 
-    // 一般情況：點擊未翻開的格子
+    // 一般情况：点击未翻开的格子
     if (cell.isMine) {
       cell.isRevealed = true
       gameOver.value = true
@@ -210,7 +210,7 @@ function handleClick(cell: Cell): void {
 }
 
 
-// 切換旗幟
+// 切换旗帜
 function toggleFlag(cell: Cell): void {
   if (gameOver.value || cell.isRevealed) return
 
@@ -220,7 +220,7 @@ function toggleFlag(cell: Cell): void {
   flagCount.value += cell.isFlagged ? 1 : -1
 }
 
-// 顯示所有地雷
+// 显示所有地雷
 function revealAllMines(): void {
   board.value.forEach((row) => {
     row.forEach((cell) => {
@@ -231,7 +231,7 @@ function revealAllMines(): void {
   })
 }
 
-// 檢查是否獲勝
+// 检查是否获胜
 function checkWin(): void {
   const allNonMinesRevealed = board.value.every((row) =>
     row.every((cell) => cell.isMine || cell.isRevealed),
@@ -245,7 +245,7 @@ function checkWin(): void {
   }
 }
 
-// 計時器功能
+// 计时器功能
 function startTimer(): void {
   if (timerInterval.value === null) {
     timerInterval.value = window.setInterval(() => {
@@ -261,13 +261,13 @@ function stopTimer(): void {
   }
 }
 
-// 對話框
+// 对话框
 function showGameOverDialog(): void {
   $q.dialog({
-    title: '遊戲結束',
-    message: '很遺憾，你踩到地雷了！',
+    title: '游戏结束',
+    message: '很遗憾，你踩到地雷了！',
     ok: {
-      label: '重新開始',
+      label: '重新开始',
       flat: true,
       color: 'primary',
     },
@@ -278,10 +278,10 @@ function showGameOverDialog(): void {
 
 function showWinDialog(): void {
   $q.dialog({
-    title: '恭喜獲勝',
-    message: `你用了 ${formattedTime.value} 完成遊戲！`,
+    title: '恭喜获胜',
+    message: `你用了 ${formattedTime.value} 完成游戏！`,
     ok: {
-      label: '重新開始',
+      label: '重新开始',
       flat: true,
       color: 'primary',
     },
@@ -290,7 +290,7 @@ function showWinDialog(): void {
   })
 }
 
-// 開始新遊戲
+// 开始新游戏
 function newGame(): void {
   board.value = initBoard()
   gameOver.value = false
@@ -300,36 +300,36 @@ function newGame(): void {
   stopTimer()
 }
 
-// 取得格子顏色
+// 取得格子颜色
 function getCellColor(cell: Cell): string {
   if (cell.isFlagged) return 'warning'
   if (!cell.isRevealed) return 'grey-3'
   if (cell.isMine) return 'negative'
-  // 已揭露的格子不再使用 positive 顏色
+  // 已揭露的格子不再使用 positive 颜色
   return 'revealed'
 }
 
-// 取得數字顏色
+// 取得数字颜色
 function getNumberColor(num: number): string {
   const colors = ['blue', 'green', 'red', 'purple', 'maroon', 'turquoise', 'black', 'grey']
   return colors[num - 1] || 'black'
 }
 
-// 初始化遊戲
+// 初始化游戏
 newGame()
 </script>
 
 <template>
   <q-page class="flex flex-center q-pa-md">
     <div class="column items-center q-gutter-y-md">
-      <!-- 遊戲資訊 -->
+      <!-- 游戏资讯 -->
       <div class="game-controls">
-        <q-btn color="primary" label="新遊戲" @click="newGame" />
-        <q-chip icon="flag" color="warning" text-color="white"> 剩餘地雷：{{ minesLeft }} </q-chip>
-        <q-chip icon="timer" color="primary" text-color="white"> 時間：{{ formattedTime }} </q-chip>
+        <q-btn color="primary" label="新游戏" @click="newGame" />
+        <q-chip icon="flag" color="warning" text-color="white"> 剩余地雷：{{ minesLeft }} </q-chip>
+        <q-chip icon="timer" color="primary" text-color="white"> 时间：{{ formattedTime }} </q-chip>
       </div>
 
-      <!-- 遊戲版面 -->
+      <!-- 游戏版面 -->
       <q-card flat bordered class="minesweeper-board">
         <q-card-section class="q-pa-none">
           <div class="board-container">
@@ -368,7 +368,7 @@ newGame()
   background: #666;
 }
 
-/* 遊戲控制區域樣式 */
+/* 游戏控制区域样式 */
 .game-controls {
   display: flex;
   flex-direction: row;
@@ -397,40 +397,40 @@ newGame()
   border: 1px solid #999 !important;
 }
 
-/* 覆蓋 Quasar 的預設按鈕樣式 */
+/* 覆盖 Quasar 的预设按钮样式 */
 .mine-cell.q-btn {
   border-radius: 0 !important;
 }
 
-/* 已揭露格子的樣式 */
+/* 已揭露格子的样式 */
 .mine-cell.revealed {
   background: #e8e8e8 !important;
   color: #000 !important;
 }
 
-/* 未揭露格子的懸停效果 */
+/* 未揭露格子的悬停效果 */
 .mine-cell.q-btn--grey-3:hover {
   background: #dcdcdc !important;
 }
 
-/* 已揭露格子的懸停效果 */
+/* 已揭露格子的悬停效果 */
 .mine-cell.revealed:hover {
   background: #e0e0e0 !important;
 }
 
-/* 旗幟格子樣式 */
+/* 旗帜格子样式 */
 .mine-cell.q-btn--warning {
   background: #ffd700 !important;
   color: #000 !important;
 }
 
-/* 地雷格子樣式 */
+/* 地雷格子样式 */
 .mine-cell.q-btn--negative {
   background: #ff4444 !important;
   color: #fff !important;
 }
 
-/* 確保內容垂直置中 */
+/* 确保内容垂直置中 */
 .mine-cell .q-btn__content {
   display: flex;
   align-items: center;
@@ -438,28 +438,28 @@ newGame()
   height: 100%;
 }
 
-/* 數字顏色 */
+/* 数字颜色 */
 .mine-cell.revealed span {
   font-weight: bold;
 }
 
-/* RWD 設定 */
+/* RWD 设定 */
 @media screen and (max-width: 450px) {
-  /* 控制按鈕改為垂直排列 */
+  /* 控制按钮改为垂直排列 */
   .game-controls {
     flex-direction: column;
     width: 100%;
     gap: 0.5rem;
   }
 
-  /* 讓按鈕和計數器占滿寬度 */
+  /* 让按钮和计数器占满宽度 */
   .game-controls .q-btn,
   .game-controls .q-chip {
     width: 100%;
     justify-content: center;
   }
 
-  /* 縮小格子尺寸 */
+  /* 缩小格子尺寸 */
   .board-row {
     height: 30px;
   }
@@ -471,12 +471,12 @@ newGame()
     font-size: 0.8em !important;
   }
 
-  /* 調整內容大小 */
+  /* 调整内容大小 */
   .mine-cell .q-btn__content {
     font-size: 0.8em;
   }
 
-  /* 縮小表情符號大小 */
+  /* 缩小表情符号大小 */
   .mine-cell .q-btn__content span {
     font-size: 0.8em;
   }
