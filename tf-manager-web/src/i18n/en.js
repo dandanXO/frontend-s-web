@@ -587,6 +587,10 @@ export default {
     VIP: 'VIP',
     DEPOSIT: 'Deposit'
   },
+  priviCodeRedeemBnWStatus: {
+    blacklist: 'Blacklist',
+    whitelist: 'Whitelist'
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -1473,6 +1477,8 @@ export default {
     promo: 'Promo',
     promoApplication: 'Promo Application',
     promoCode: 'Promo Code',
+    promoCodeRedeemConfig: 'Promo Code Config',
+    promoCodeRedeemBnWList: 'Promo Code blanklist&whitelist',
     promoPages: 'Promotion Pages',
     promoStyle: 'Promo Style',
     promoType: 'Promo Type',
