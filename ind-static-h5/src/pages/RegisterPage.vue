@@ -204,7 +204,7 @@
         </q-card-section>
         <div class="q-px-lg q-pt-sm q-pb-lg">
           <q-card-section class="q-mb-md q-pa-md">
-            <q-input v-model="innerCaptchaRef" placeholder="验证码">
+            <q-input v-model="innerCaptchaRef" placeholder="Captcha Code">
               <template v-slot:append>
                 <img
                   v-show="showImageCode"
