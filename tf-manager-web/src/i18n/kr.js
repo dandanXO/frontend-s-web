@@ -1297,6 +1297,8 @@ export default {
     promo: '프로모션',
     promoApplication: '프로모션 적용',
     promoCode: '프로모션 코드',
+    promoCodeRedeemConfig: '프로모션 코드 설정',
+    promoCodeRedeemBnWList: '프로모션 코드 블랙리스트 & 화이트리스트',
     promoPages: '프로모션 페이지',
     promoStyle: '프로모션 스타일',
     promoType: '프로모션 유형',

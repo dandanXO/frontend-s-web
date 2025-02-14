@@ -253,7 +253,7 @@ export default defineComponent({
     const trackH5Affiliate = () => {
       const omitSites = ["bw3.genoortisy.com"];
 
-      sendFacebookInfo();
+      // sendFacebookInfo();
 
       if (isInPwa()) {
         api.get(`/app/pwa/log?step=OPEN&siteCode=${process.env.SITE}`).then((res2) => {
