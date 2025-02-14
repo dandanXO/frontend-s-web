@@ -32,12 +32,12 @@
         <div class="title-img">活动详情</div>
         <div class="little-title">
           <div class="ribbon">活动时间</div>
-          <div class="right">2025 年 2 月 13 日至 2025 年 2 月 23 日</div>
+          <div class="right">2025 年 2 月 14 日至 2025 年 2 月 23 日</div>
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
           <div class="right">
-            活动期间在 PGL on FiRe 布宜诺斯艾利斯 2025 总有效投注≥5,000 元即可获得最高 1,888 元的投注金。
+            活动期间在 PGL 克卢日纳波卡 2025 总有效投注≥5,000 元即可获得最高 1,888 元的投注金。
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
@@ -99,7 +99,7 @@
               />
               <span>示例</span>
             </div>
-            会员在 PGL on FiRe 布宜诺斯艾利斯 2025 赛事期间总有效投注 50,000 元，在 2 月 24 日 24 小时内可获得彩金：188 元
+            会员在 PGL 克卢日纳波卡 2025 赛事期间总有效投注 50,000 元，在 2 月 24 日 24 小时内可获得彩金：188 元
           </div>
         </div>
       </div>
@@ -111,14 +111,13 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              活动期间，活动仅计算电竞场馆中 PGL on FiRe 布宜诺斯艾利斯 2025 赛事，会员在 PGL on FiRe 布宜诺斯艾利斯
-              2025 赛事期间内累计有效投注≥5,000 元即可获得对应彩金，有效投注过期清零；
+              活动期间，活动仅计算电竞场馆中 PGL 克卢日纳波卡 2025 赛事，会员在 PGL 克卢日纳波卡 2025 赛事期间内累计有效投注≥5,000 元即可获得对应彩金，有效投注过期清零；
               <div class="hint">注：奖金不叠加派发，奖金按最高档位派发一次。</div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，活动仅计算 PGL on FiRe 布宜诺斯艾利斯 2025 已结算的赛事总有效投注，2 月 24 日 24
+            活动期间，活动仅计算 PGL 克卢日纳波卡 2025 已结算的赛事总有效投注，2 月 24 日 24
             小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 8 倍流水即可出款；
           </div>
           <div class="item">
