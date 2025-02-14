@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="_modelValue">
+  <q-dialog v-model="_modelValue" @show="getRecords">
     <div class="record-dialog-inner-wrapper">
       <div class="tab-wrapper">
         <div class="tab" :class="{ selected: currentTab === 'invitation' }" @click="handleTabClick('invitation')">
@@ -10,39 +10,49 @@
         </div>
       </div>
 
-      <q-tab-panels v-model="currentTab" animated>
-        <q-tab-panel name="invitation">
-          <div class="record-wrapper invitation">
-            <div v-for="(record, index) in invitationRecords" :key="index" class="record">
-              <span>{{ moment(record.date).format("MM-DD hh:mm:ss") }}</span>
-              <span class="name">{{ record.name }}</span>
-              <span>Invitation successful</span>
+      <div>
+        <q-tab-panels v-model="currentTab" animated>
+          <q-tab-panel name="invitation">
+            <div class="record-wrapper invitation">
+              <template v-if="invitationRecords.length">
+                <div v-for="(record, index) in invitationRecords" :key="index" class="record">
+                  <span>{{ moment(record.referTime).format("MM-DD hh:mm:ss") }}</span>
+                  <span class="name">{{ record.loginName }}</span>
+                  <span>Invitation successful</span>
+                </div>
+              </template>
+              <span v-else class="no-record-text">No Records</span>
             </div>
-          </div>
-        </q-tab-panel>
-        <q-tab-panel name="lottery">
-          <div class="record-wrapper lottery">
-            <div v-for="(record, index) in lotteryRecords" :key="index" class="record">
-              <span>{{ moment(record.date).format("MM-DD hh:mm:ss") }}</span>
-              <!-- <span class="name">{{ record.name }}</span> -->
-              <span class="amount">500$</span>
+          </q-tab-panel>
+          <q-tab-panel name="lottery">
+            <div class="record-wrapper lottery">
+              <template v-if="lotteryRecords.length">
+                <div v-for="(record, index) in lotteryRecords" :key="index" class="record">
+                  <span>{{ moment(record.time).format("MM-DD hh:mm:ss") }}</span>
+                  <span class="amount">{{ record.amount }}$</span>
+                </div>
+              </template>
+              <span v-else class="no-record-text">No Records</span>
             </div>
-          </div>
-        </q-tab-panel>
-      </q-tab-panels>
+          </q-tab-panel>
+        </q-tab-panels>
+        <q-inner-loading :showing="isLoading" />
+      </div>
     </div>
   </q-dialog>
 </template>
 <script setup>
 import moment from "moment";
+import { eventapi } from "src/boot/axios";
 import { computed, ref } from "vue";
 
 const props = defineProps(["modelValue", "prize"]);
 const emit = defineEmits(["update:modelValue"]);
 
 const currentTab = ref("invitation");
-const invitationRecords = ref(new Array(10).fill({ date: "2025-02-03 15:34:32", name: "John Doe1111" }));
-const lotteryRecords = ref(new Array(10).fill({ date: "2025-02-03 15:34:32", name: "John Doe1111" }));
+const invitationRecords = ref([]);
+const lotteryRecords = ref([]);
+const isLoading = ref(false);
 
 const _modelValue = computed({
   get: () => props.modelValue,
@@ -51,6 +61,26 @@ const _modelValue = computed({
 
 const handleTabClick = (tab) => {
   currentTab.value = tab;
+};
+
+const getRecords = () => {
+  const invitationRecordApi = eventapi.get("/refer-spin/invitation-record");
+  const lotteryRecordApi = eventapi.get("/refer-spin/amount-record");
+  isLoading.value = true;
+
+  Promise.allSettled([invitationRecordApi, lotteryRecordApi])
+    .then(([invitationRes, lotteryRes]) => {
+      console.log(invitationRes, lotteryRes);
+      if (invitationRes?.value.code === 0) {
+        invitationRecords.value = invitationRes?.value.data;
+      }
+      if (lotteryRes?.value.code === 0) {
+        lotteryRecords.value = lotteryRes?.value.data;
+      }
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
 };
 </script>
 <style lang="scss" scoped>
@@ -147,6 +177,11 @@ const handleTabClick = (tab) => {
         font-weight: 900;
         color: #cd91ff;
       }
+    }
+
+    .no-record-text {
+      text-align: center;
+      font-weight: 700;
     }
   }
 }
