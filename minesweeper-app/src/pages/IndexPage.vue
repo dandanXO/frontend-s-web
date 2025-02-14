@@ -142,21 +142,73 @@ function revealCell(row: number, col: number): void {
 
 // 處理點擊事件
 function handleClick(cell: Cell): void {
-  if (gameOver.value || cell.isFlagged) return
+  if (gameOver.value) return
 
   startTimer()
 
-  if (cell.isMine) {
-    gameOver.value = true
-    gameWon.value = false
-    stopTimer()
-    revealAllMines()
-    showGameOverDialog()
-  } else {
-    revealCell(cell.row, cell.col)
-    checkWin()
+  // 如果該格已翻開且有數字（不為 0），執行自動打開周邊格子的功能
+  if (cell.isRevealed && cell.neighborMines > 0) {
+    let flagCount = 0
+    const unopenedNeighbors: Cell[] = []
+
+    // 遍歷八個方向
+    for (let i = -1; i <= 1; i++) {
+      for (let j = -1; j <= 1; j++) {
+        if (i === 0 && j === 0) continue
+        const neighbor = getCell(board.value, cell.row + i, cell.col + j)
+        if (!neighbor) continue
+
+        if (neighbor.isFlagged) {
+          flagCount++
+        }
+        // 收集尚未翻開且未標記的鄰近格子
+        if (!neighbor.isRevealed && !neighbor.isFlagged) {
+          unopenedNeighbors.push(neighbor)
+        }
+      }
+    }
+
+    // 如果已標記的數量正好等於該格顯示的數字，
+    // 就自動打開所有尚未翻開且未標記的鄰近格子
+    if (flagCount === cell.neighborMines) {
+      for (const neighbor of unopenedNeighbors) {
+        // 如果打開的其中一個鄰近格子是炸彈，直接結束遊戲
+        if (neighbor.isMine) {
+          neighbor.isRevealed = true
+          gameOver.value = true
+          gameWon.value = false
+          stopTimer()
+          revealAllMines()
+          showGameOverDialog()
+          return
+        } else {
+          revealCell(neighbor.row, neighbor.col)
+        }
+      }
+      checkWin()
+    }
+    return
+  }
+
+  // 如果該格尚未翻開
+  if (!cell.isRevealed) {
+    if (cell.isFlagged) return
+
+    // 一般情況：點擊未翻開的格子
+    if (cell.isMine) {
+      cell.isRevealed = true
+      gameOver.value = true
+      gameWon.value = false
+      stopTimer()
+      revealAllMines()
+      showGameOverDialog()
+    } else {
+      revealCell(cell.row, cell.col)
+      checkWin()
+    }
   }
 }
+
 
 // 切換旗幟
 function toggleFlag(cell: Cell): void {
@@ -273,8 +325,8 @@ newGame()
       <!-- 遊戲資訊 -->
       <div class="game-controls">
         <q-btn color="primary" label="新遊戲" @click="newGame" />
-        <q-chip icon="flag" color="warning" text-color="white"> 剩餘地雷: {{ minesLeft }} </q-chip>
-        <q-chip icon="timer" color="primary" text-color="white"> 時間: {{ formattedTime }} </q-chip>
+        <q-chip icon="flag" color="warning" text-color="white"> 剩餘地雷：{{ minesLeft }} </q-chip>
+        <q-chip icon="timer" color="primary" text-color="white"> 時間：{{ formattedTime }} </q-chip>
       </div>
 
       <!-- 遊戲版面 -->
