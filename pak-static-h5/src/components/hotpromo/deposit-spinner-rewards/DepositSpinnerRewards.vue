@@ -2,15 +2,15 @@
     <div class="deposit-spinner-rewards">
         <div class="top">
             <div class="side-buttons">
-                <RouterLink to="/spinnerRules" class="individual-btn">Rules</RouterLink>
+                <RouterLink to="/spinnerRules" class="individual-btn">{{ $t('hotPromo.depositSpinWheel.rules') }}</RouterLink>
                 <!-- <RouterLink to="/spinnerHistory" class="individual-btn">History</RouterLink> -->
             </div>
             <div class="instructions">
-                Complete the deposit task to participate in the wheel activity and get a bonus of up to <span class="orange">7777PKR</span>
+                {{ $t('hotPromo.depositSpinWheel.instruction') }} <span class="orange">7777PKR</span>
             </div>
         </div>
         <RouterLink to="/deposit" class="deposit-now">
-            Deposit Now
+            {{ $t('hotPromo.depositSpinWheel.depositNow') }}
         </RouterLink>
 
         <div class="tab-buttons">
@@ -21,14 +21,14 @@
             :class="{ active: activeTab === index, lock: index === 3 }"
             >
             <img class="spinwheel" :src="require(`./img/spin-${index+1}.png`)">
-            <span class="upto">UP to </span> <span class="uptonum">{{ tab.upto }}</span>
+            <span class="upto">{{ $t('hotPromo.depositSpinWheel.upto') }}</span> <span class="uptonum">{{ tab.upto }}</span>
             </button>
         </div>
         <div class="slider-container" ref="sliderRef" v-touch="onSwipe">
             <div class="bg"><img :src="require(`./img/tab${activeTab+1}.png`)"></div> 
             <div class="slider" 
             :style="{
-            transform: `translateX(calc(-${activeTab * 80}vw + 10vw))`
+            transform: transformStyle
             }">
             
             <div v-for="(tab, index) in tabs" :key="index" 
@@ -38,7 +38,7 @@
                     >
                     <div class="onlyactiveshow">
 
-                        <div class="ins">Deposit Rs {{ tab.min }} to get 1 spin.</div>
+                        <div class="ins">{{ $t('hotPromo.depositSpinWheel.depositSpin', { min: tab.min }) }}</div>
                         <div class="bar">
                             <div class="outerbar">
                                 <div class="innerbar" :style="{ width: progressBarWidth }"></div>
@@ -67,10 +67,10 @@
                         <img :class="{wheel: rolling}" :style="`transform: rotate(${tab.wheelDeg}deg)`" :src="require(`./img/bigspin-${index+1}.png`)">
                         <img class="spintop" :src="require(`./img/spin-top-${index+1}.png`)">
                         <img class="spingo" @click="onClickRotate" @touchstart="onClickRotate" :src="require(`./img/spingo-${index+1}.png`)">
-                        <span class="spinnum" @click="onClickRotate" @touchstart="onClickRotate">{{ 'Spin *' + (tab.times1 + tab.times2 ) }}</span>
+                        <span class="spinnum" @click="onClickRotate" @touchstart="onClickRotate">{{ $t('hotPromo.depositSpinWheel.spin') }} {{ '* ' + (tab.times1 + tab.times2 ) }}</span>
                     </div>
                     <div class="onlyactiveshow">
-                        <span class="remaining">Remaining times:</span> 
+                        <span class="remaining">{{ $t('hotPromo.depositSpinWheel.remainingTimes') }} :</span> 
                         <span class="remainingamt">{{ tab.times1 + tab.times2 }}</span></div>
                 </div>
             </div>
@@ -91,7 +91,7 @@
     </div>
 </template>
 <script setup>
-import { onMounted, ref, reactive, nextTick, computed } from "vue";
+import { onMounted, onUnmounted, ref, reactive, nextTick, computed } from "vue";
 import { useSwipe } from "@vueuse/core";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -237,16 +237,19 @@ const prizeResult = ref("");
 const { lengthX } = useSwipe(sliderRef, {
   passive: false,
   onSwipeEnd() {
-    if (lengthX.value > 50) {
-      // Swipe right → Move to previous tab
-      if (activeTab.value + 1 === 3) {
-        return
+    const screenWidth = window.innerWidth;
+    const tabWidth = screenWidth > 500 ? 80 : screenWidth * 0.8; // Ensure proper calculation
+
+    if (lengthX.value > tabWidth * 0.2) { // 20% of tab width
+      // Swipe right → Move to next tab
+      if (activeTab.value < tabs.length - 1) {
+        setTab(activeTab.value + 1);
       }
-      setTab(Math.min(tabs.length - 1, activeTab.value + 1)); 
-    } else if (lengthX.value < -50) {
-        if (activeTab.value )
-      // Swipe left → Move to next tab
-      setTab(Math.max(0, activeTab.value - 1));
+    } else if (lengthX.value < -tabWidth * 0.2) {
+      // Swipe left → Move to previous tab
+      if (activeTab.value > 0) {
+        setTab(activeTab.value - 1);
+      }
     }
   },
 });
@@ -413,9 +416,28 @@ const resetWheel = () => {
   });
   init();
 };
+const screenWidth = ref(window.innerWidth)
+
+const updateScreenWidth = () => {
+  screenWidth.value = window.innerWidth
+}
+
 onMounted(() => {
     init();
+  window.addEventListener('resize', updateScreenWidth)
 })
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateScreenWidth)
+})
+const transformStyle = computed(() => {
+  if (screenWidth.value > 500) {
+    const tabWidth = 500 * 0.8; // 80% of screen width in pixels
+    return `translateX(calc(-${activeTab.value * tabWidth}px + 50px))`;
+  } else {
+    return `translateX(calc(-${activeTab.value * 80}vw + 10vw))`;
+  }
+});
 </script>
 <style lang="scss" scoped>
     .deposit-spinner-rewards {
@@ -489,26 +511,33 @@ linear-gradient(180deg, #FF7527 0%, #FFA011 100%);
             
             border-top: 1px solid #FFE667;
             background:#032519;
-            background-image: url(img/spinner-bg.png);
+            // background-image: url(img/spinner-bg.png);
             background-position: center center;
             background-size: cover;
+            @media screen and (min-width: 500px) {
+                height: 80vh;
+            }
             }
             .bg {
                 margin-top: -85px;
-                
-    margin-top: -22.5vw;
+                margin-top: -22.5vw;
                 height: 100%;
-    position: absolute;
-    z-index: 0;
+                position: absolute;
+                z-index: 0;
+                @media screen and (min-width: 500px) {
+                   margin-top: -117px; 
+                }
             }
             .slider {
                 display: flex;
                 transition: transform 0.5s ease-in-out;
                 margin: 10px auto;
                 width: calc(100vw * 4); 
+                max-width: 500px;
             }
             .tab-content {
                 width: calc(100vw - 20vw); /* Each tab width minus the amount to peek out */
+                max-width: calc(500px - 100px);
                 // height: 300px;
                 display: flex;
                 align-items: center;
@@ -522,7 +551,7 @@ linear-gradient(180deg, #FF7527 0%, #FFA011 100%);
                 transition: transform 0.3s ease-in-out;
                 &.active {
                 transform: scale(1); /* Active tab stays full size */
-                .onlyactiveshow {opacity: 1;}
+                .onlyactiveshow {opacity: 1; max-width: 100%;}
                 }
                 &.inactive {
                 transform: scale(0.7); /* Non-active tabs shrink to 80% */
@@ -541,6 +570,7 @@ linear-gradient(180deg, #FF7527 0%, #FFA011 100%);
                     width: 100%;
                     .outerbar {
                         width: 85vw;
+                        max-width: 100%;
                         height: 17px;
                         background: linear-gradient(180deg, #0B4400 0%, #1C751C 100%);
                         border: 1px solid #5EA361;
@@ -568,7 +598,10 @@ linear-gradient(180deg, #FF7527 0%, #FFA011 100%);
                         }
                         &.mid {
                             position: absolute;
-                            left: 26%;
+                            left: 28.5%;
+                            @media screen and (min-width: 500px) {
+                                left: 29.5%;
+                            }
                             display: flex;
                             flex-direction: column;
                             justify-content: center;
@@ -579,7 +612,7 @@ linear-gradient(180deg, #FF7527 0%, #FFA011 100%);
                         }
                         &.last {
                             position: absolute;
-                            right: -5%;
+                            right: 1%;
                             display: flex;
                             flex-direction: column;
                             align-items: flex-end;
@@ -671,6 +704,11 @@ linear-gradient(180deg, #FF7527 0%, #FFA011 100%);
             background: radial-gradient(50% 40.87% at 50% 59.13%, #001501 0%, #002417 100%);
             border: 1.5px solid #8C7B32;
              min-height: 22.5vw;
+             
+             @media screen and (min-width: 500px) {
+                   min-height: 110px; 
+                   margin-bottom: 4px;
+                }
             img.spinwheel {
                 width: 30px;
                 margin: 0 auto;

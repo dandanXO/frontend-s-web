@@ -1,14 +1,14 @@
 <template>
     <div class="rules-container">
         <div class="rule-title">
-            Activity rules
+            {{ $t('hotPromo.depositSpinWheel.activityRules')}}
         </div>
         <ul>
-            <li>The activity includes four types of carousels: Silver, Gold, Diamond, and Special. You can unlock different levels of carousels by recharging. The higher the level, the more generous the rewards will be.</li>
-            <li>Every draw has a 100% chance of winning a prize.</li>
-            <li>All rewards will be deposited directly into your wallet.</li>
-            <li>The bonus requires one turnover to withdraw.</li>
-            <li>The right to interpret this event belongs to B9.game. If you have any questions, please contact customer service.</li>
+            <li>{{ $t('hotPromo.depositSpinWheel.rule_01')}}</li>
+            <li>{{ $t('hotPromo.depositSpinWheel.rule_02')}}</li>
+            <li>{{ $t('hotPromo.depositSpinWheel.rule_03')}}</li>
+            <li>{{ $t('hotPromo.depositSpinWheel.rule_04')}}</li>
+            <li>{{ $t('hotPromo.depositSpinWheel.rule_05')}}</li>
         </ul>
         <div class="badges">
             <div class="badge" :key="index" v-for="(badge,index) in badgesList">
@@ -20,18 +20,21 @@
 </template>
 <script setup>
     import { ref } from "vue";
+    import { useI18n } from "vue-i18n";
+
+    const { t } = useI18n();
     const badgesList = ref([
         {
-            title: "Silver"
+            title: t('hotPromo.depositSpinWheel.silver')
         },
         {
-            title: "Gold"
+            title: t('hotPromo.depositSpinWheel.gold')
         },
         {
-            title: "Diamond"
+            title: t('hotPromo.depositSpinWheel.diamond')
         },
         {
-            title: "Supreme"
+            title: t('hotPromo.depositSpinWheel.supreme')
         }
     ])
 </script>

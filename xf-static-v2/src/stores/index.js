@@ -85,6 +85,16 @@ export const userStore = defineStore("userStore", {
     setPhone(tel) {
       this.phone = tel;
     },
+    isNotAppPromo() {
+      if (
+        window.location.pathname === "/deposit" ||
+        window.location.pathname === "/vip" ||
+        window.location.pathname === "/promotion"
+      ) {
+        return false;
+      }
+      return true;
+    },
     memberLogin(loginInfo) {
       var regDevice = Platform.is.mobile ? "H5" : "WEB";
       if ("standalone" in window.navigator && window.navigator.standalone) {
