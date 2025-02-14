@@ -26,21 +26,34 @@
                 </div>
               </template>
             </InputField>
-            <InputField v-else :label="$t('form.uplineId')">
-              <template #input>
-                <div class="pc-form-input">
-                  <q-input
-                    outlined
-                    clearable
-                    color="green"
-                    ref="uplineRef"
-                    :placeholder="$t('form.uplineId_placeholder')"
-                    :rules="[(val) => (val && val.length > 0) || $t('form.uplineId_rule_01')]"
-                    v-model="formDetail.uplineId"
-                  />
-                </div>
-              </template>
-            </InputField>
+            <template v-else>
+              <div class="hidden">
+                <InputField :label="$t('form.uplineId')">
+                  <template #input>
+                    <div class="pc-form-input">
+                      <q-input
+                        outlined
+                        clearable
+                        color="green"
+                        ref="uplineRef"
+                        :placeholder="$t('form.uplineId_placeholder')"
+                        :rules="[(val) => (val && val.length > 0) || $t('form.uplineId_rule_01')]"
+                        v-model="formDetail.uplineId"
+                        readonly
+                      />
+                    </div>
+                  </template>
+                </InputField>
+              </div>
+              <InputField :label="$t('form.uplineId')">
+                <template #input>
+                  <div class="pc-form-input">
+                    <q-input outlined clearable color="green" v-model="uplineNameRef" readonly />
+                  </div>
+                </template>
+              </InputField>
+            </template>
+
             <InputField :label="$t('form.amount')">
               <template #input>
                 <div class="pc-form-input">
@@ -54,24 +67,17 @@
                     v-model="formDetail.transferAmount"
                   >
                     <template v-slot:append>
-                      <a style="color: #00B900;" @click="updateTransferAmount">{{ $t('form.all') }}</a>
+                      <a style="color: #00b900" @click="updateTransferAmount">{{ $t("form.all") }}</a>
                     </template>
                   </q-input>
                 </div>
               </template>
             </InputField>
-           <span class="full-balance">{{ store.balance.toFixed(2) }}</span>
+            <span class="full-balance">{{ store.balance.toFixed(2) }}</span>
           </div>
         </div>
-        
-        <q-btn
-          :loading="btnLoading"
-          rounded
-          flat
-          no-caps
-          class="btn-primary btn-primary__full"
-          @click="submitTransfer"
-        >
+
+        <q-btn :loading="btnLoading" rounded flat no-caps class="btn-primary btn-primary__full" @click="submitTransfer">
           {{ $t("btn.transfer") }}
         </q-btn>
       </div>
@@ -84,10 +90,10 @@ import { ref, onMounted, watch, toRefs } from "vue";
 import InputField from "../../components/auth/InputField.vue";
 import { api } from "src/boot/axios";
 import { useQuasar } from "quasar";
-import {userStore} from "stores/index";
+import { userStore } from "stores/index";
 import { convertToCommaAmount } from "src/boot/utils";
 
-const props = defineProps(["modelValue", "upline", "downlineId", "uplineId"]);
+const props = defineProps(["modelValue", "upline", "downlineId", "uplineId", "uplineName"]);
 const { modelValue, upline, downlineId, uplineId } = toRefs(props);
 
 const emit = defineEmits(["update:modelValue"]);
@@ -98,6 +104,7 @@ const qs = require("qs");
 const ui = useUI();
 const btnLoading = ref(false);
 const uplineRef = ref();
+const uplineNameRef = ref();
 const downlineRef = ref();
 const amountRef = ref();
 const formDetail = ref({
@@ -108,8 +115,8 @@ const formDetail = ref({
 
 const errorCode = ref(0);
 const updateTransferAmount = () => {
-  formDetail.value.transferAmount = store.balance.toFixed(2)
-}
+  formDetail.value.transferAmount = store.balance.toFixed(2);
+};
 const submitTransfer = async () => {
   const isUplineValid = uplineRef.value ? await uplineRef.value.validate() : true;
   const isDownlineValid = downlineRef.value ? await downlineRef.value.validate() : true;
@@ -124,7 +131,7 @@ const submitTransfer = async () => {
     let obj = {
       transferAmount: formDetail.value.transferAmount,
       siteId: process.env.SITEID,
-      rollover: 1,
+      rollover: 1
     };
 
     if (!upline.value) {
@@ -145,7 +152,7 @@ const submitTransfer = async () => {
         type: "positive",
         position: "top",
         message: `Successfully transferred`,
-        icon: "check_circle_outline",
+        icon: "check_circle_outline"
       });
 
       // formDetail.value.uplineId = undefined;
@@ -161,14 +168,16 @@ const submitTransfer = async () => {
   }
 };
 onMounted(() => {
-  console.log(props)
-  formDetail.value.downlineId = props.downlineId
-  formDetail.value.uplineId = props.uplineId
+  console.log(props);
+  formDetail.value.downlineId = props.downlineId;
+  formDetail.value.uplineId = props.uplineId;
+  uplineNameRef.value = props.uplineName;
 });
 // Watch for changes in props and update formDetail
 watch([downlineId, uplineId], ([newDownlineId, newUplineId]) => {
   formDetail.value.downlineId = newDownlineId;
   formDetail.value.uplineId = newUplineId;
+  uplineNameRef.value = props.uplineName;
 });
 </script>
 <style lang="scss" scoped>
@@ -219,7 +228,6 @@ watch([downlineId, uplineId], ([newDownlineId, newUplineId]) => {
   text-align: right;
   margin-top: -20px;
   margin-bottom: 10px;
-  color: #5F6061;
+  color: #5f6061;
 }
-
 </style>
