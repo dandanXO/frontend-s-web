@@ -18,8 +18,8 @@ export const updateHomeBanner = (homeBanner) => {
   return https().request(`/home-banner/update?_method=PUT`, Method.POST, homeBanner, ContentType.form);
 };
 
-export const updateBannerState = async (id, state) => {
-  await https().request(`/home-banner/${id}/state?_method=PUT`, Method.POST, { state: state }, ContentType.form);
+export const updateBannerState = (id, state) => {
+  return https().request(`/home-banner/${id}/state?_method=PUT`, Method.POST, { state: state }, ContentType.form);
 };
 
 export const deleteHomeBanner = async (ids) => {
