@@ -83,7 +83,8 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
 import AgencyPolicy from "../components/earn-money/AgencyPolicy.vue";
 import MyMember from "../components/earn-money/MyMember.vue";
 import DailyComponent from "../components/earn-money/DailyComponent.vue";
@@ -113,6 +114,15 @@ const swipeRight = () => {
   const previousIndex = findPreviousIndex(currentIndex, tabsOrder.length);
   activeKey.value = tabsOrder[previousIndex];
 };
+
+onMounted(() => {
+  const route = useRoute();
+  const key = route.query.key;  // Get the key from the query parameter
+
+  if (key) {  // Check if key exists and equals '4'
+    activeKey.value = key;
+  }
+});
 </script>
 
 <style scoped lang="scss">

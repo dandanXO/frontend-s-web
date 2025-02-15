@@ -261,7 +261,7 @@ const handleWheelClick = () => {
 };
 
 const handleInviteClick = () => {
-  router.push("/earn-money");
+  router.push("/earn-money?key=earn");
 };
 
 const getRemainingTime = (endTime) => {
@@ -299,14 +299,13 @@ const handleRecordClick = () => {
   showRecordDialog.value = true;
 };
 
-onMounted(() => {
-  for (let i = 0; i < TOTAL_ITEMS; i++) {
-    const _degree = (FULL_DEGREE / TOTAL_ITEMS) * i * -1;
-    degreeToStopAt.value.push({ degree: _degree, prize: SPIN_WHEEL_PRIZES[i] });
-  }
-
+const updateCountdownTime = () => {
+  // console.log("updateCountdownTime")
   const endTime = moment(info.value.startTime).add(3, "days");
   const nextFreeSpinEndTime = moment().add(1, "days").startOf("day");
+  if(timer.value){
+    clearTimeout(timer.value);
+  }
   timer.value = setInterval(() => {
     remainingTime.value = getRemainingTime(endTime);
     nextFreeSpinRemainingTime.value = getRemainingTime(nextFreeSpinEndTime);
@@ -318,6 +317,20 @@ onMounted(() => {
       });
     }
   }, 1000);
+}
+
+onMounted(() => {
+  for (let i = 0; i < TOTAL_ITEMS; i++) {
+    const _degree = (FULL_DEGREE / TOTAL_ITEMS) * i * -1;
+    degreeToStopAt.value.push({ degree: _degree, prize: SPIN_WHEEL_PRIZES[i] });
+  }
+
+  updateCountdownTime();
+});
+
+
+defineExpose({
+  updateCountdownTime
 });
 
 onUnmounted(() => {
