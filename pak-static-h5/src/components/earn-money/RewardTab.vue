@@ -188,7 +188,7 @@
             <td>{{ $t(`earnMoney.reward.betting_table.row1.description`) }}</td>
             <td>{{ $t(`earnMoney.reward.betting_table.row1.commission`) }}</td>
           </tr>
-           <tr v-for="index in 3" :key="index">
+          <tr v-for="index in 3" :key="index">
             <td colspan="2">
               {{ $t(`earnMoney.reward.betting_table.row${index + 1}.description`) }}
               {{ $t(`earnMoney.reward.betting_table.row${index + 1}.commission`) }}
@@ -288,10 +288,12 @@
 
     <div class="earn-money-friendcount">
       <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
-        <tr>
-          <td style="color: #8c968f; font-size: 120%; width: 60%">{{ $t("earnMoney.reward.player") }}</td>
-          <td style="color: #8c968f; font-size: 120%; width: 40%">{{ $t("earnMoney.reward.money") }}</td>
-        </tr>
+        <tbody>
+          <tr>
+            <td style="color: #8c968f; font-size: 120%; width: 60%">{{ $t("earnMoney.reward.player") }}</td>
+            <td style="color: #8c968f; font-size: 120%; width: 40%">{{ $t("earnMoney.reward.money") }}</td>
+          </tr>
+        </tbody>
       </table>
       <div class="table-container" ref="tableContainer">
         <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
