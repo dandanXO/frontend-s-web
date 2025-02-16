@@ -304,6 +304,13 @@ deploy-minifun-site-v2:
 
 #===============================================================================================
 
+deploy-mini-game:
+  extends: .s3-deploy
+  variables:
+    PROJECT: mini-game
+
+#===============================================================================================
+
 deploy-vnm-download:
   extends: .s3-deploy
   variables:
@@ -911,6 +918,13 @@ deploy-pak-landing-v2:
 
 #===============================================================================================
 
+deploy-pk3-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: pk3-download
+
+#===============================================================================================
+
 deploy-pak-bga-b9-landing:
   extends: .s3-deploy
   variables:
@@ -1208,20 +1222,6 @@ deploy-br1-download-pwa:
     SITE_CODE: P8S1-BR1
   tags:
     - p8s1-br1-runners
-
-#===============================================================================================
-
-build-minigame-website:
-  extends: .build-projects
-  variables:
-    PROJECT: minigame-website
-
-build-image-minigame-website:
-  extends: .docker-build
-  variables:
-    PROJECT: minigame-website
-  needs:
-    - build-minigame-website
 
 #===============================================================================================
 

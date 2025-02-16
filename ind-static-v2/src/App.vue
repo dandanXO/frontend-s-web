@@ -344,11 +344,8 @@ export default defineComponent({
     };
 
     onMounted(async () => {
-      // const info = await App.getInfo();
-      // console.log("APP Info");
-      // console.log(info);
-      // checkSID();
-      // getCSA();
+      console.log("START");
+
       checkServerStatus();
       getAppInfo();
       initOrientation();

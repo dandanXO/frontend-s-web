@@ -7,12 +7,14 @@
       <div class="download-close" :style="!topDownloadcloseBtn && 'opacity:0'">
         <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
       </div>
-      <div class="download-logo"><img src="../assets/images/index/download/download-logo.png" /></div>
+      <div class="download-logo"><img src="../assets/images/index/download/download-app-logo.png" /></div>
       <!-- <div class="download-btn">
         <a :href="topDownloadUrl">
           <img src="../assets/images/index/download/top-download-btn.png" />
         </a>
       </div> -->
+
+      <div class="download-text">Get Free Spins on the APP</div>
       <div class="download-btn-yel">
         <a :href="ui.downloadAppUrl">{{ $t("header.download") }}</a>
       </div>
@@ -148,7 +150,11 @@
 
   <div
     class="infoboard-container"
-    :class="{ 'q-pa-md': !homeProfile, 'with-top-download': topDownload && !ui.hideDownload }"
+    :class="{
+      'q-pa-md': !homeProfile,
+      'with-top-download': topDownload && !ui.hideDownload,
+      'with-background': isScrolled
+    }"
   >
     <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
@@ -157,7 +163,7 @@
       </div>
       <div class="profile-wrapper-extra">
         <div class="logo-img">
-          <img src="../assets/images/auth/auth-logo-text-only.png" @click="onClickLogo" />
+          <img src="../assets/images/auth/bg-logo-only.png" @click="onClickLogo" />
         </div>
       </div>
       <div class="profile-wrapper" v-if="ui.loggedIn || store.hasToken()">
@@ -192,6 +198,13 @@
             </div>
           </template>
         </div>
+
+        <q-btn class="gift-wrapper" flat @click="showBonusModal">
+          <img src="../assets/images/auth/gift.png" />
+          <q-badge v-if="!!fastAccessPromoLength" class="gift-badge" floating rounded>
+            {{ fastAccessPromoLength }}
+          </q-badge>
+        </q-btn>
 
         <!-- <div>
           <q-btn square class="style-blue-btn" icon="add" dense @click="router.push('/deposit?from=' + route.path)" />
@@ -279,11 +292,15 @@
         <div class="btn-lang" @click="router.push('/language')"><img src="../assets/images/auth/icon-globe.png" /></div>
       </div>
     </div>
+
+    <q-dialog v-model="isBonusModal" position="top" style="z-index: 2002">
+      <BonusModal :has-top-download="topDownload && !ui.hideDownload" :promo-list="fastAccessPromo" />
+    </q-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, onUnmounted } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
@@ -293,6 +310,7 @@ import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { useI18n } from "vue-i18n";
 import LangOptions from "components/LangOptions";
+import BonusModal from "./modal/BonusModal.vue";
 
 import { defineEmits } from "vue";
 import { useCustomerTrigger } from "src/hooks/trigger";
@@ -303,6 +321,31 @@ const route = useRoute();
 const router = useRouter();
 const store = userStore();
 const ui = useUI();
+
+const isScrolled = ref(false);
+
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 0;
+};
+
+const isBonusModal = ref(false);
+const fastAccessPromo = ref([]);
+
+const getFastAccessPromo = () => {
+  api.get("/opt-session/promo/page?showFastAccess=1").then((res) => {
+    if (res.code === 0) {
+      if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+        fastAccessPromo.value = res.data;
+      } else {
+        fastAccessPromo.value = res.data.filter((item) => item.privilegeStatus !== "TEST");
+      }
+    }
+  });
+};
+
+const showBonusModal = () => {
+  isBonusModal.value = true;
+};
 
 const loadCustomerAddress = () => {
   cached
@@ -484,6 +527,12 @@ onMounted(() => {
     isSideDownload.value = true;
   }
   afterMounted();
+  window.addEventListener("scroll", handleScroll);
+  getFastAccessPromo();
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
 });
 </script>
 
@@ -549,6 +598,11 @@ onMounted(() => {
         width: 100%;
         display: block;
       }
+    }
+
+    .download-text {
+      font-size: 12px;
+      margin-right: auto;
     }
 
     .download-btn-yel {
@@ -726,7 +780,7 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   position: relative;
-  background-image: url("../assets/images/auth/auth-bg.png");
+  // background-image: url("../assets/images/auth/auth-bg.png");
   background-size: 100% 100%;
   box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -737,6 +791,10 @@ onMounted(() => {
   z-index: 2003;
   transition: 0.3s all;
   height: 60px;
+
+  &.with-background {
+    background: #150a08;
+  }
 
   &.with-top-download {
     // border-top-right-radius: 25px;
@@ -829,6 +887,30 @@ onMounted(() => {
       display: flex;
       flex-direction: column;
       font-size: 16px;
+    }
+
+    .gift-wrapper {
+      background: rgba(0, 10, 1, 0.6);
+      // box-shadow: 0px 0px 5px 0px #ffffff4a inset;
+      border-radius: 8px;
+      position: relative;
+      border: none;
+      padding: 10px;
+      height: 40px;
+      width: 40px;
+
+      &:hover {
+        filter: brightness(1.2);
+      }
+
+      img {
+        max-width: 100%;
+      }
+
+      .gift-badge {
+        background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+        color: #fff;
+      }
     }
 
     .profile-name {
@@ -927,8 +1009,7 @@ onMounted(() => {
     display: flex;
 
     img {
-      max-width: 115px;
-      width: 100%;
+      width: 32px;
       text-align: center;
     }
   }

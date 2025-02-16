@@ -80,7 +80,7 @@ const handleDetail = (mail) => {
 
 <style lang="scss" scoped>
 .announcement-component {
-  padding: 10px 12px 66px;
+  padding: 10px 12px 16px;
   background: white;
   height: 100%;
   position: relative;
@@ -109,9 +109,6 @@ const handleDetail = (mail) => {
   justify-content: flex-end;
   gap: 12px;
   align-items: center;
-  position: absolute;
-  right: 20px;
-  bottom: 2px;
 
   .footer-button {
     cursor: pointer;

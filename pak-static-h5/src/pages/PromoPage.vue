@@ -74,13 +74,13 @@
                 <!-- <div class="promo-bg"> -->
                 <img
                   class="promo-content"
+                  :class="selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards' ? 'dpsr' : 'usual'" 
                   :src="imgURL + selectedPromo.mobileBannerUrl"
-                  style="display: block; width: 100%"
                 />
                 <!-- </div> -->
               </div>
 
-              <div class="promo-content-inner" v-if="selectedPromo.redirectUrl !== 'pak-jackpot-aviator'">
+              <div class="promo-content-inner" v-if="selectedPromo.redirectUrl !== 'pak-jackpot-aviator'" :style="selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards' ? 'border:0; padding: 0;':''">
                 <RouterLink
                   v-if="parsedParam.showEarnMoney"
                   class="content-go-earn-money-btn"
@@ -90,7 +90,7 @@
                   <img src="../assets/images/bonus/share-icon.png" />
                   <span>Earn Money</span>
                 </RouterLink>
-                <div class="content-title">{{ selectedPromo.title }}</div>
+                <div class="content-title" v-if="selectedPromo.redirectUrl !== 'pak-deposit-spinner-rewards'">{{ selectedPromo.title }}</div>
                 <div class="content-para" v-if="parsedParamSub">{{ parsedParamSub }}</div>
                 <div class="content-date" v-if="parsedParamDate">
                   <div><img src="../assets/images/promotion/calendar-icon.png" /></div>
@@ -98,9 +98,11 @@
                 </div>
               </div>
 
-              <div class="inner" :class="{
-                isJackpotAviator: selectedPromo.redirectUrl === 'pak-jackpot-aviator'
-              }">
+              <div class="inner" 
+                :class="{ isJackpotAviator: selectedPromo.redirectUrl === 'pak-jackpot-aviator',
+                  isDepositSpinnerRewards: selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards'
+                 }"
+                >
                 <div v-if="selectedPromo.hasPromo">
                   <!-- <pre>selectedPromo{{ selectedPromo }}</pre>
                   <template v-if="selectedPromo.promoCode === 'pak-red-packet-rain'">
@@ -1048,6 +1050,19 @@ export default defineComponent({
     .selected-promo-wrapper {
       .banner-container {
         width: 100%;
+        .promo-content {
+          
+          &.usual {
+            display: block;
+            width: 100%;
+          }
+          &.dpsr {
+            display: block;
+            width: 90%;
+            border-radius: 15px;
+            margin: 20px auto;
+          }
+        }
 
         .promo-bg {
           background-size: cover;
@@ -1092,6 +1107,14 @@ export default defineComponent({
 
         &.isJackpotAviator {
           width: 100%;
+        }
+        &.isDepositSpinnerRewards {
+          border-radius:0; width: 100%;
+          padding: 0;
+          margin: 0;
+          > div:nth-child(2) {
+            display: none;
+          } 
         }
 
         p {

@@ -1,64 +1,76 @@
 <template>
-  <ProfileSummary :homeProfile="true" @activateSlide="handleActivateSlide" />
-
-  <q-carousel
-    v-model="slide"
-    id="home"
-    class="home"
-    data-aos-duration="1200"
-    data-aos-once="true"
-    data-aos="fade-in"
-    transition-next="slide-left"
-    transition-prev="slide-right"
-    animated
-    autoplay
-    infinite
-    navigation
-    swipeable
+  <div
+    :style="`background:linear-gradient(to bottom, ${bannerColors[slide]}, rgba(35,39,38,1)`"
+    style="transition: background 0.5s ease-in-out"
+    class="dynamic-bg"
   >
-    <q-carousel-slide
-      v-for="(banner, i) in banners"
-      :key="i"
-      :name="i"
-      class="column no-wrap flex-center"
-      :img-src="returnBannerUrl(banner)"
-      @click="gotoPromo(banner)"
-    ></q-carousel-slide>
+    <ProfileSummary :homeProfile="true" @activateSlide="handleActivateSlide" />
 
-    <!-- :img-src="require(`../assets/images/index/${banner.mobileImageUrl}`)" -->
+    <q-carousel
+      v-model="slide"
+      id="home"
+      class="home"
+      data-aos-duration="1200"
+      data-aos-once="true"
+      data-aos="fade-in"
+      transition-next="slide-left"
+      transition-prev="slide-right"
+      animated
+      autoplay
+      infinite
+      navigation
+      swipeable
+    >
+      <q-carousel-slide
+        v-for="(banner, i) in banners"
+        :key="i"
+        :name="i"
+        class="column no-wrap flex-center"
+        :img-src="returnBannerUrl(banner)"
+        @click="gotoPromo(banner)"
+      ></q-carousel-slide>
 
-    <template v-slot:navigation-icon="{ active, onClick }">
-      <q-btn
-        v-if="active"
-        size="xs"
-        @click="onClick"
-        style="
-          border-radius: 8px;
-          margin: 6px 3px;
-          height: 3px;
-          min-height: 3px;
-          width: 33px;
-          padding: 0;
-          background-color: #7edb5c;
-        "
-      />
-      <q-btn
-        v-else
-        size="xs"
-        @click="onClick"
-        style="
-          border-radius: 8px;
-          margin: 6px 3px;
-          height: 3px;
-          min-height: 3px;
-          width: 33px;
-          padding: 0;
-          background-color: rgba(255, 255, 255, 0.2);
-        "
-      />
-    </template>
-  </q-carousel>
+      <!-- :img-src="require(`../assets/images/index/${banner.mobileImageUrl}`)" -->
 
+      <template v-slot:navigation-icon="{ active, onClick }">
+        <q-btn
+          v-if="active"
+          size="xs"
+          @click="onClick"
+          style="
+            border-radius: 8px;
+            margin: 6px 3px;
+            height: 3px;
+            min-height: 3px;
+            width: 33px;
+            padding: 0;
+            background-color: #7edb5c;
+          "
+        />
+        <q-btn
+          v-else
+          size="xs"
+          @click="onClick"
+          style="
+            border-radius: 8px;
+            margin: 6px 3px;
+            height: 3px;
+            min-height: 3px;
+            width: 33px;
+            padding: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+          "
+        />
+      </template>
+    </q-carousel>
+
+    <!-- <pre>
+    banners--{{ banners }}
+    banners--{{ bannerColors }}
+    gradientStyle--{{ gradientStyle }}
+    slide--{{ bannerColors[slide] }}
+    </pre> -->
+  </div>
   <div>
     <q-page-sticky v-if="isCharityShow" position="bottom-right" :offset="charityDragPos" class="floating-btn">
       <div v-touch-pan.prevent.mouse="moveCharityGif" @click="openCharityUrl">
@@ -1395,7 +1407,6 @@
     <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
   </q-dialog>
 
-  -
   <q-dialog
     v-if="popupPromo === 'mega-sharing-wheel'"
     :model-value="megaSharingWheelDialogModel"
@@ -1416,6 +1427,8 @@
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
   </q-dialog>
   <a ref="downloadAppRef" :href="ui.downloadAppUrl" download style="display: none" />
+
+  <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
 </template>
 
 <script setup>
@@ -1454,8 +1467,10 @@ import "swiper/css/effect-coverflow";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core";
 import { onClickOutside, useEventListener } from "@vueuse/core";
 import { useCustomerTrigger } from "src/hooks/trigger";
+import chroma from "chroma-js";
 import PopupController from "src/components/PopupController.vue";
 import MegaSharingWheelModal from "src/components/hotpromo/megaSharingWheel/MegaSharingWheelModal.vue";
+import AddToHomeScreenModal from "src/components/modal/AddToHomeScreenModal.vue";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
@@ -1470,6 +1485,7 @@ const isShowPrizeModal = ref(false);
 const isMediaSettingsModal = ref(false);
 const popupPromo = ref("");
 const megaSharingWheelDialogModel = ref(true);
+const isAddToHomeScreen = ref(false);
 
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
@@ -2056,6 +2072,63 @@ const returnBannerUrl = (banner) => {
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
+
+const bannerColors = ref([]);
+
+// Extract dominant color from an image
+const getImageDominantColor = (imgUrl) => {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.src = imgUrl;
+
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0);
+
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+
+      // Calculate average color
+      const rgba = [0, 0, 0];
+      for (let i = 0; i < data.length; i += 4) {
+        rgba[0] += data[i]; // Red
+        rgba[1] += data[i + 1]; // Green
+        rgba[2] += data[i + 2]; // Blue
+      }
+
+      const pixelCount = data.length / 4;
+      rgba[0] = Math.floor(rgba[0] / pixelCount);
+      rgba[1] = Math.floor(rgba[1] / pixelCount);
+      rgba[2] = Math.floor(rgba[2] / pixelCount);
+
+      const dominantColor = chroma(rgba).hex(); // Convert to HEX
+      resolve(dominantColor);
+    };
+  });
+};
+
+const extractColors = async () => {
+  bannerColors.value = [];
+  for (const banner of banners.value) {
+    const imgUrl = returnBannerUrl(banner);
+    const color = await getImageDominantColor(imgUrl);
+    bannerColors.value.push(color);
+  }
+};
+
+const gradientStyle = ref("");
+
+const updateGradient = () => {
+  const colors = bannerColors.value.join(", ");
+  gradientStyle.value = `linear-gradient(to bottom, ${colors}, black)`;
+};
+
+// Watch for changes in bannerColors and update gradient
+watch(bannerColors, updateGradient);
 
 const allGames = ref(null);
 const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId, demo) => {
@@ -3104,6 +3177,8 @@ function loadData() {
       if (res.code === 0) {
         banners.value = [];
         banners.value = res.data;
+
+        extractColors();
         // banners.value = [
         //   {
         //     promoPageId: null,
@@ -3643,6 +3718,15 @@ onActivated(() => {
     }
   }
   afterActivated();
+
+  if (!(Platform.is.android && Platform.is.capacitor)) {
+    if (!sessionStorage.getItem("add_to_homescreen")) {
+      setTimeout(() => {
+        isAddToHomeScreen.value = true;
+    }, 2000);
+
+    }
+  }
 });
 
 const afterMounted = useCustomerTrigger(loadCustomerAddress);
