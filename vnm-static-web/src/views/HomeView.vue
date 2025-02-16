@@ -2,7 +2,6 @@
   <div class="home" :class="store?.theme === 'CNY' ? 'cny-bg' : ''">
     <HomeViewLayoutAdapter />
   </div>
-  <AnnouncementModal />
 </template>
 
 <script setup>

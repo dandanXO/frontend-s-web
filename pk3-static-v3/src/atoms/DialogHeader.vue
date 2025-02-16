@@ -23,8 +23,8 @@ const props = defineProps(["title"]);
 
   .close-btn {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: -10px;
+    top: -15px;
     width: 2rem;
     height: 2rem;
   }

@@ -13,35 +13,24 @@
 
     <!-- unbind dialog -->
     <q-dialog align-center v-model="isUnbindDialogOpen" width="500" class="modal-container">
-      <q-card>
-        <DialogHeader :title="$t('bank.areYouSureUnbind')"></DialogHeader>
-
-        <q-card-section>
-          <q-form>
-            <div class="input-title">{{ $t("form.accountNumber") }}</div>
-            <q-input
-              standout
-              class="q-pb-xs dialog-input"
-              hide-bottom-space
-              filled
-              v-model="unbindField.bankCardNumber"
-              :label="$t('form.accountNumber_placeholder')"
-              lazy-rules
-              :rules="[
-                (val) => (val && val.length > 0) || $t('form.accountNumber_rules_01'),
-                (val) => (val && val === selectedUnbindCardNum) || $t('form.accountNumber_rules_02')
-              ]"
-              label-color="secondary"
-            />
-          </q-form>
-        </q-card-section>
-
-        <ConfirmButton
-          :label="$t('btn.confirm')"
-          :confirmFunc="unbind"
-          :isDisabled="unbindField.bankCardNumber !== selectedUnbindCardNum"
-        ></ConfirmButton>
-      </q-card>
+      <div class="popout-dialog">
+        <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+        <div class="popout-dialog-container">
+          <q-card style="background:transparent;width:100%;padding:0;">
+            <div class="text-h5 dialog-title" style="width:100%;text-align:center;margin:0 0 1rem 0;">{{ $t('bank.areYouSureUnbind') }}</div>
+            <q-card-section>
+              <q-form>
+                <div class="input-title">{{ $t("form.accountNumber") }}</div>
+                <q-input standout class="q-pb-xs dialog-input" hide-bottom-space filled v-model="unbindField.bankCardNumber" :label="$t('form.accountNumber_placeholder')" lazy-rules :rules="[
+                    (val) => (val && val.length > 0) || $t('form.accountNumber_rules_01'),
+                    (val) => (val && val === selectedUnbindCardNum) || $t('form.accountNumber_rules_02')
+                  ]" label-color="secondary" />
+              </q-form>
+            </q-card-section>
+            <ConfirmButton :label="$t('btn.confirm')" :confirmFunc="unbind" :isDisabled="unbindField.bankCardNumber !== selectedUnbindCardNum"></ConfirmButton>
+          </q-card>
+        </div>
+      </div>
     </q-dialog>
 
     <!-- add card dialog -->

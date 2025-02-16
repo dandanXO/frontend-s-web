@@ -346,6 +346,28 @@ const routes = [
     ],
     meta: { requiresAuth: true }
   },
+  {
+    path: "/spinnerRules",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("components/hotpromo/deposit-spinner-rewards/DepositSpinnerRules.vue")
+      }
+    ],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/spinnerHistory",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("components/hotpromo/deposit-spinner-rewards/DepositSpinnerHistory.vue")
+      }
+    ],
+    meta: { requiresAuth: true }
+  },
   // {
   //   path: "/account/changePwd",
   //   component: () => import("layouts/MainLayout.vue"),

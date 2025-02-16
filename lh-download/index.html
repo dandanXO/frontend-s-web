@@ -50,6 +50,9 @@
 
 
             <div class="download_des">下载安装过程中请勿切换网络，推荐使用手机自带浏览器打开本页面下滑查看安装教程。</div>
+            <div class="download_btn">
+                <a id="switch-btn"></a>
+            </div>
             <div class="download_install_des">下滑查看安装教程</div>
         </div>
 
@@ -138,6 +141,8 @@
         var liveUrl1 = "";
         var liveUrl2 = "";
 
+        let currentPlatform = "";
+
         getApiUrl();
         getCustomerUrl();
 
@@ -145,6 +150,22 @@
         $('#dy_customer').click(() => {
             window.open(liveUrl1)
         })
+
+        $("#switch-btn").click(function () {
+            if(currentPlatform === "ios") {
+                showAndroid();
+            } else {
+                showIOS();
+            }
+        });
+
+        $(".modal-div").click(function (e) {
+            $(".modal-open").hide();
+        });
+
+        $(".modal-inner").click(function (e) {
+            e.stopPropagation();
+        });
 
         async function getCustomerUrl() {
             try {
@@ -219,6 +240,11 @@
         }
 
         function showAndroid() {
+            currentPlatform = "android";
+            $("#switch-btn").html("切换 IOS");
+            $("#android-lists").show();
+            $("#ios-lists").hide();
+
             for (var i = 0; i < andList.length; i++) {
                 $(".swiper-wrapper").append(
                     '<div class="swiper-slide"><img src="' +
@@ -314,6 +340,11 @@
 
 
         function showIOS() {
+            currentPlatform = "ios";
+            $("#switch-btn").html("切换安卓");
+            $("#android-lists").hide();
+            $("#ios-lists").show();
+
             detectIfSafari();
 
             $('#desc').show();

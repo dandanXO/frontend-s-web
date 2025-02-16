@@ -355,6 +355,15 @@ svg {
   background: #273354;
   border-radius: 32px !important;
 }
+
+.q-field--readonly{
+  .bg-roundedinputstyle{
+    &.q-field__control:before {
+      border-style: solid;
+    }
+  }
+}
+
 .menu-title {
   color: #db7e42;
   background-image: linear-gradient(to right, #de4545, #db7e42);
