@@ -222,6 +222,7 @@
     })
 
     async function getApiUrl() {
+        const sortKey = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
         try {
             const response = await fetch(`${dataUrl}/app/getDownloadPage?siteCode=dy2`);
             const data = await response.json();
@@ -229,7 +230,11 @@
             $("#before-load").hide();
             if (data) {
                 // console.log("data", data);
-                iosDownload = data.data.ios;
+                iosDownload = data.data.ios.sort((a, b) => {
+                    const keyIndexA =  sortKey.findIndex(key => Object.keys(a)[0].includes(key));
+                    const keyIndexB =  sortKey.findIndex(key => Object.keys(b)[0].includes(key));
+                    return keyIndexA - keyIndexB;
+                });
                 androidDownload = data.data.android;
                 console.log(iosDownload);
                 console.log(androidDownload);
