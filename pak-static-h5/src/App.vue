@@ -237,10 +237,11 @@ export default defineComponent({
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
+          const randomValue = Math.floor(Math.random() * (999 - 300 + 1)) + 300;
           if (data.data.sendEvent === "ftd") {
             fbq("track", "Purchase", {
               currency: "PKR",
-              value: 300
+              value: randomValue
             });
           }
           // alert(JSON.stringify(data));
@@ -253,7 +254,7 @@ export default defineComponent({
     const trackH5Affiliate = () => {
       const omitSites = ["bw3.genoortisy.com"];
 
-      sendFacebookInfo();
+      // sendFacebookInfo();
 
       if (isInPwa()) {
         api.get(`/app/pwa/log?step=OPEN&siteCode=${process.env.SITE}`).then((res2) => {

@@ -590,6 +590,10 @@ export default {
     VIP: 'VIP',
     DEPOSIT: '存款'
   },
+  priviCodeRedeemBnWStatus: {
+    blacklist: '黑名单',
+    whitelist: '白名单'
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -1474,6 +1478,8 @@ export default {
     promo: '优惠',
     promoApplication: '优惠申请',
     promoCode: '优惠代码',
+    promoCodeRedeemConfig: '配置',
+    promoCodeRedeemBnWList: '黑白名单',
     promoPages: '优惠页面',
     promoStyle: '优惠方式',
     promoType: '优惠类型',
