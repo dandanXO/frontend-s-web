@@ -12,6 +12,11 @@ const ESLintPlugin = require("eslint-webpack-plugin");
 
 const { configure } = require("quasar/wrappers");
 
+const fs = require('fs');
+const path = require('path');
+const fse = require('fs-extra');  // 推荐使用 fs-extra，更方便复制整个文件夹
+
+
 /**
  * NOTE:
  * 1. default no set path = .env file
@@ -57,7 +62,23 @@ module.exports = configure(function (ctx) {
       env: {
         ...buildEnv
       },
+      beforeBuild() {
+        const srcDir = path.resolve(__dirname, 'src/assets/images');
+        const destDir = path.resolve(__dirname, 'public/static/images');
 
+        console.log('开始复制文件...');
+
+        try {
+          if (fs.existsSync(srcDir)) {
+            fse.copySync(srcDir, destDir);
+            console.log('文件复制成功！');
+          } else {
+            console.log('源目录不存在，跳过复制');
+          }
+        } catch (error) {
+          console.error('复制文件失败：', error);
+        }
+      },
       // transpile: false,
       // publicPath: '/',
 
