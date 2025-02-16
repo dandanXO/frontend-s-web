@@ -2,15 +2,17 @@
   <div class="deposit-spinner-rewards">
     <div class="top">
       <div class="side-buttons">
-        <RouterLink to="/spinnerRules" class="individual-btn">Rules</RouterLink>
+        <RouterLink to="/spinnerRules" class="individual-btn">{{ $t("hotPromo.depositSpinWheel.rules") }}</RouterLink>
         <!-- <RouterLink to="/spinnerHistory" class="individual-btn">History</RouterLink> -->
       </div>
       <div class="instructions">
-        Complete the deposit task to participate in the wheel activity and get a bonus of up to
+        {{ $t("hotPromo.depositSpinWheel.instruction") }}
         <span class="orange">7777PKR</span>
       </div>
     </div>
-    <RouterLink to="/deposit" class="deposit-now">Deposit Now</RouterLink>
+    <RouterLink to="/deposit" class="deposit-now">
+      {{ $t("hotPromo.depositSpinWheel.depositNow") }}
+    </RouterLink>
 
     <div class="tab-buttons">
       <button
@@ -20,7 +22,7 @@
         :class="{ active: activeTab === index, lock: index === 3 }"
       >
         <img class="spinwheel" :src="require(`./img/spin-${index + 1}.png`)" />
-        <span class="upto">UP to</span>
+        <span class="upto">{{ $t("hotPromo.depositSpinWheel.upto") }}</span>
         <span class="uptonum">{{ tab.upto }}</span>
       </button>
     </div>
@@ -40,7 +42,7 @@
           :style="{ transformOrigin: index === activeTab - 1 ? 'right' : 'left' }"
         >
           <div class="onlyactiveshow">
-            <div class="ins">Deposit Rs {{ tab.min }} to get 1 spin.</div>
+            <div class="ins">{{ $t("hotPromo.depositSpinWheel.depositSpin", { min: tab.min }) }}</div>
             <div class="bar">
               <div class="outerbar">
                 <div class="innerbar" :style="{ width: progressBarWidth }"></div>
@@ -79,11 +81,11 @@
               :src="require(`./img/spingo-${index + 1}.png`)"
             />
             <span class="spinnum" @click="onClickRotate" @touchstart="onClickRotate">
-              {{ "Spin *" + (tab.times1 + tab.times2) }}
+              {{ $t("hotPromo.depositSpinWheel.spin") }} {{ "* " + (tab.times1 + tab.times2) }}
             </span>
           </div>
           <div class="onlyactiveshow">
-            <span class="remaining">Remaining times:</span>
+            <span class="remaining">{{ $t("hotPromo.depositSpinWheel.remainingTimes") }} :</span>
             <span class="remainingamt">{{ tab.times1 + tab.times2 }}</span>
           </div>
         </div>
@@ -93,7 +95,7 @@
       <div class="prize-popup">
         <!-- <q-btn icon="close" flat round dense v-close-popup class="q-ml-auto" /> -->
         <div class="prize-gold">
-          <div class="prize-get">{{ prizePopupBonusAmt }} PRK</div>
+          <!--          <div class="prize-get">You get the reward</div>-->
 
           <div class="prize-amount">{{ prizePopupBonusAmt }} PRK</div>
         </div>
@@ -485,6 +487,7 @@ const transformStyle = computed(() => {
       }
     }
     .instructions {
+      font-family: Poppins;
       font-size: 16px;
       font-weight: 700;
       line-height: 24px;
@@ -504,6 +507,7 @@ const transformStyle = computed(() => {
     width: 148px;
     height: 40px;
     color: #000a01;
+    font-family: Poppins;
     font-size: 16px;
     font-weight: 700;
     line-height: 24px;
@@ -531,6 +535,7 @@ const transformStyle = computed(() => {
     }
   }
   .bg {
+    margin-top: -85px;
     margin-top: -22.5vw;
     height: 100%;
     position: absolute;
@@ -549,6 +554,7 @@ const transformStyle = computed(() => {
   .tab-content {
     width: calc(100vw - 20vw); /* Each tab width minus the amount to peek out */
     max-width: calc(500px - 100px);
+    // height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -574,6 +580,7 @@ const transformStyle = computed(() => {
       }
     }
     .ins {
+      font-family: Poppins;
       font-size: 12px;
       font-weight: 500;
       line-height: 18px;
@@ -613,17 +620,16 @@ const transformStyle = computed(() => {
         &.mid {
           position: absolute;
           left: 28.5%;
-
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          &.center {
-            left: 43%;
-          }
 
           @media screen and (min-width: 500px) {
             left: 29.5%;
+          }
+          &.center {
+            left: 43%;
           }
         }
         &.last {
@@ -680,6 +686,7 @@ const transformStyle = computed(() => {
     }
     .remaining,
     .remainingamt {
+      font-family: Poppins;
       font-size: 12px;
       font-weight: 700;
       line-height: 18px;
@@ -694,6 +701,11 @@ const transformStyle = computed(() => {
     }
   }
 
+  // .tab0 { background-color: #9a9a9a; }
+  // .tab1 { background-color: #ff5733; }
+  // .tab2 { background-color: #33c3ff; }
+  // .tab3 { background-color: #33ff77; }
+
   .tab-buttons {
     display: flex;
     justify-content: space-between;
@@ -706,7 +718,7 @@ const transformStyle = computed(() => {
     position: relative;
     padding: 10px 0px;
     margin-bottom: -1.5px;
-    //border: none;
+    border: none;
     cursor: pointer;
     width: 100%;
     height: 84px;
@@ -725,11 +737,13 @@ const transformStyle = computed(() => {
       margin: 0 auto;
     }
     .upto {
+      font-family: Poppins;
       font-size: 12px;
       font-weight: 500;
       line-height: 18px;
     }
     .uptonum {
+      font-family: Poppins;
       font-size: 16px;
       font-weight: 700;
       line-height: 24px;
@@ -795,16 +809,19 @@ const transformStyle = computed(() => {
 }
 .prize-popup {
   width: 100%;
+  margin-bottom: 120px;
 }
 .prize-gold {
   width: 95%;
   height: 400px;
-  background: url(./img/congrats.png) no-repeat center center;
+  background: url(./img/congrats.png) no-repeat bottom center;
   background-size: contain;
   position: relative;
+  margin-bottom: 16px;
+
   .prize-get {
     position: absolute;
-    bottom: 90px;
+    bottom: 20%;
     font-family: Manrope;
     font-size: 13px;
     font-weight: 700;
@@ -814,14 +831,19 @@ const transformStyle = computed(() => {
   }
   .prize-amount {
     position: absolute;
-    bottom: 15px;
+    bottom: 5%;
     font-family: Poppins;
     font-size: 30px;
     font-weight: 900;
     line-height: 45px;
+    margin-bottom: 0px;
     text-align: center;
     color: #fff96f;
     text-shadow: 1px 1px #0000008a;
+
+    @media (max-width: 380px) {
+      bottom: 3.5%;
+    }
   }
 }
 </style>

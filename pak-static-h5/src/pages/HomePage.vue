@@ -1407,7 +1407,6 @@
     <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
   </q-dialog>
 
-  -
   <q-dialog
     v-if="popupPromo === 'mega-sharing-wheel'"
     :model-value="megaSharingWheelDialogModel"

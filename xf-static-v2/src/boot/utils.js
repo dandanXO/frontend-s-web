@@ -1,4 +1,4 @@
-import { Platform } from "quasar";
+import { Platform, Notify } from "quasar";
 import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-vue-v3";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
@@ -113,15 +113,54 @@ export const convertToCommaAmount = (amount, isForceDecimal) => {
   if (isNonNumericString(amount)) {
     return amount;
   }
+  const formattedAmount = isForceDecimal ? parseFloat(amount).toFixed(2) : parseInt(amount).toLocaleString("en-US");
 
-  const digits = isForceDecimal ? 2 : 0;
-
-  if(typeof amount === 'number') {
-    return amount.toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits });
-  } else {
-    return parseInt(amount).toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits });
-  }
+  return isForceDecimal
+    ? parseFloat(formattedAmount).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : formattedAmount;
 };
 function isNonNumericString(value) {
   return typeof value === "string" && isNaN(value);
 }
+
+const requestClipboardPermission = () => {
+  return navigator.permissions.query({
+    name: "clipboard-write"
+  });
+};
+
+export const writeClipboard = async (content, useExecCommand = false) => {
+  try {
+    if (window.isSecureContext && navigator.clipboard && !useExecCommand) {
+      const permission = await requestClipboardPermission();
+      if (permission.state !== "granted") throw new Error();
+      await navigator.clipboard.writeText(content);
+    } else {
+      const textArea = document.createElement("textarea");
+      textArea.value = content;
+      textArea.style.position = "absolute";
+      textArea.style.opacity = "0";
+      document.body.prepend(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      textArea.remove();
+    }
+    Notify.create({
+      color: "positive",
+      position: "top",
+      message: "复制成功",
+      icon: "check_circle"
+    });
+  } catch (error) {
+    if (!useExecCommand) {
+      await writeClipboard(content, true);
+    } else {
+      Notify.create({
+        color: "negative",
+        position: "top",
+        message: "复制失败",
+        icon: "report_problem"
+      });
+    }
+  }
+};

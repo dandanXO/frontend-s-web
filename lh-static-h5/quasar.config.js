@@ -1,7 +1,8 @@
 /* eslint-env node */
-const TerserPlugin = require('terser-webpack-plugin');
-const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
+const CompressionWebpackPlugin = require("compression-webpack-plugin");
 
+const fs = require("fs");
 /*
  * This file runs in a Node context (it's NOT transpiled by Babel), so use only
  * the ES6 features that are supported by your Node version. https://node.green/
@@ -13,15 +14,14 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const ESLintPlugin = require("eslint-webpack-plugin");
 const path = require("path");
 
-const {configure} = require("quasar/wrappers");
+const { configure } = require("quasar/wrappers");
 
-const fs = require("fs-extra");
+const fse = require("fs-extra");
 const isImageCompress = true;
 
 const ImageminPlugin = require("imagemin-webpack-plugin").default;
 
-const ContextReplacementPlugin = require('webpack').ContextReplacementPlugin
-
+const ContextReplacementPlugin = require("webpack").ContextReplacementPlugin;
 
 module.exports = configure(function (ctx) {
   return {
@@ -37,7 +37,7 @@ module.exports = configure(function (ctx) {
     boot: ["axios", "cache", "fingerprint"],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
-    css: ["app.scss", 'responsive.scss'],
+    css: ["app.scss", "responsive.scss"],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
@@ -59,7 +59,7 @@ module.exports = configure(function (ctx) {
 
       postcss: {
         // tell Quasar to use the PostCSS config from the external file
-        configFile: true,
+        configFile: true
       },
       // transpile: false,
       // publicPath: '/',
@@ -74,7 +74,24 @@ module.exports = configure(function (ctx) {
       // showProgress: false,
       // gzip: true,
       analyze: {
-        analyzerMode: 'static'
+        analyzerMode: "static"
+      },
+      beforeBuild() {
+        const srcDir = path.resolve(__dirname, "src/assets/images");
+        const destDir = path.resolve(__dirname, "public/static/images");
+
+        console.log("开始复制文件...");
+
+        try {
+          if (fs.existsSync(srcDir)) {
+            fse.copySync(srcDir, destDir);
+            console.log("文件复制成功！");
+          } else {
+            console.log("源目录不存在，跳过复制");
+          }
+        } catch (error) {
+          console.error("复制文件失败：", error);
+        }
       },
 
       // Options below are automatically set depending on the env, set them if you want to override
@@ -87,19 +104,22 @@ module.exports = configure(function (ctx) {
         chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
 
         // remove moment locale file
-        chain.plugin('context-replacement-plugin').use(ContextReplacementPlugin, [/moment[\/\\]locale$/, /zh-cn/])
+        chain.plugin("context-replacement-plugin").use(ContextReplacementPlugin, [/moment[\/\\]locale$/, /zh-cn/]);
 
         // override image bundle rule
-        chain.module.rules.delete('images')
-        chain.module.rule('asset-module').test(/\.(jpe?g|png|gif|svg)$/i).set('type', 'asset/resource')
-        .set('generator', {
-          filename: 'img/[name].[hash:8][ext]'
-        })
-        .set('parser', {
-          dataUrlCondition: {
-            maxSize: 10 * 1024
-          }
-        })
+        chain.module.rules.delete("images");
+        chain.module
+          .rule("asset-module")
+          .test(/\.(jpe?g|png|gif|svg)$/i)
+          .set("type", "asset/resource")
+          .set("generator", {
+            filename: "img/[name].[hash:8][ext]"
+          })
+          .set("parser", {
+            dataUrlCondition: {
+              maxSize: 10 * 1024
+            }
+          });
 
         // Add Image Compression
         if (process.env.NODE_ENV === "production" && isImageCompress) {
@@ -126,15 +146,15 @@ module.exports = configure(function (ctx) {
           new TerserPlugin({
             terserOptions: {
               compress: {
-                drop_console: true, // 移除 console.log
-              },
-            },
-          }),
+                drop_console: true // 移除 console.log
+              }
+            }
+          })
         ];
 
         cfg.optimization = {
           splitChunks: {
-            chunks: 'all',
+            chunks: "all",
             maxInitialRequests: Infinity,
             minSize: 3000,
             cacheGroups: {
@@ -144,7 +164,7 @@ module.exports = configure(function (ctx) {
                   if (module.context) {
                     const match = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/);
                     const packageName = match ? match[1] : null;
-                    return packageName ? `npm.${packageName.replace('@', '')}` : null;
+                    return packageName ? `npm.${packageName.replace("@", "")}` : null;
                   }
                   return null;
                 }
@@ -153,12 +173,12 @@ module.exports = configure(function (ctx) {
                 test: /\.(jpe?g|png|gif|svg)$/i,
                 name(module) {
                   const relativePath = module.context.match(/[\\/]src[\\/](.+)[\\/]/);
-                  if(relativePath) {
-                    const nestedPath = relativePath[1].replace(/[\\/]/g, '-');
+                  if (relativePath) {
+                    const nestedPath = relativePath[1].replace(/[\\/]/g, "-");
                     return `img-${nestedPath}`;
                   }
-                  return 'img-ungrouped'
-                },
+                  return "img-ungrouped";
+                }
               }
             }
           }
@@ -166,10 +186,10 @@ module.exports = configure(function (ctx) {
 
         cfg.plugins.push(
           new CompressionWebpackPlugin({
-            algorithm: 'gzip',
+            algorithm: "gzip",
             test: /\.(js|css|html|svg)$/,
             threshold: 10240,
-            minRatio: 0.8,
+            minRatio: 0.8
           })
         );
       }
@@ -186,7 +206,7 @@ module.exports = configure(function (ctx) {
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-framework
     framework: {
-      lang: 'zh-CN',
+      lang: "zh-CN",
       config: {},
 
       // iconSet: 'material-icons', // Quasar icon set
@@ -233,9 +253,7 @@ module.exports = configure(function (ctx) {
       // Tell browser when a file from the server should expire from cache (in ms)
 
       chainWebpackWebserver(chain) {
-        chain
-          .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{extensions: ["js"]}]);
+        chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js"] }]);
       },
 
       middlewares: [
@@ -253,9 +271,7 @@ module.exports = configure(function (ctx) {
       // if using workbox in InjectManifest mode
 
       chainWebpackCustomSW(chain) {
-        chain
-          .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{extensions: ["js"]}]);
+        chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js"] }]);
       },
 
       manifest: {
@@ -305,8 +321,8 @@ module.exports = configure(function (ctx) {
     capacitor: {
       hideSplashscreen: true,
       // (Optional) If not present, will look for package.json > name
-      appName: '雷火', // string
-      backButtonExit: '*',
+      appName: "雷火", // string
+      backButtonExit: "*"
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/developing-electron-apps/configuring-electron
@@ -333,15 +349,11 @@ module.exports = configure(function (ctx) {
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
 
       chainWebpackMain(chain) {
-        chain
-          .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{extensions: ["js"]}]);
+        chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js"] }]);
       },
 
       chainWebpackPreload(chain) {
-        chain
-          .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{extensions: ["js"]}]);
+        chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js"] }]);
       }
     }
   };
