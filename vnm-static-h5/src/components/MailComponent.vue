@@ -216,7 +216,7 @@ export default defineComponent({
         const formattedIds = messagesIdArr.join(",");
         api
           .post(
-            "/session/pm/inbox/readMultiple",
+            "/session/inbox/readMultiple",
             qs.stringify({
               ids: formattedIds
             })
@@ -247,7 +247,7 @@ export default defineComponent({
       } else if (type !== "ALL") {
         api
           .post(
-            "/session/pm/inbox/readAll",
+            "/session/inbox/readAll",
             qs.stringify({
               type: type
             })
@@ -280,7 +280,7 @@ export default defineComponent({
           });
       } else {
         api
-          .post("/session/pm/inbox/readAll")
+          .post("/session/inbox/readAll")
           .then((res) => {
             if (res.code === 0) {
               $q.notify({
@@ -327,7 +327,7 @@ export default defineComponent({
       if (!readTime) {
         api
           .post(
-            "/session/pm/inbox/read",
+            "/session/inbox/read",
             qs.stringify({
               id: id
             })
@@ -365,7 +365,7 @@ export default defineComponent({
         const formattedIds = mailIdArr.join(",");
         api
           .post(
-            "/session/pm/inbox/deleteMultiple",
+            "/session/inbox/deleteMultiple",
             qs.stringify({
               ids: formattedIds
             })
@@ -394,7 +394,7 @@ export default defineComponent({
       } else if (msgType.value !== null) {
         api
           .post(
-            "/session/pm/inbox/deleteAll",
+            "/session/inbox/deleteAll",
             qs.stringify({
               type: msgType.value
             })
@@ -421,7 +421,7 @@ export default defineComponent({
           });
       } else {
         api
-          .post("/session/pm/inbox/deleteAll")
+          .post("/session/inbox/deleteAll")
           .then((res) => {
             isDeleteMailModal.value = false;
 

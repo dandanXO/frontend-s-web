@@ -65,7 +65,7 @@ installBtn.addEventListener("click", async () => {
         })();
 
         const fbc = fbclid;
-        const siteCode = "IND";
+        const siteCode = "PAK";
 
         // Create payload in form format
         const payload = new URLSearchParams({
@@ -75,7 +75,7 @@ installBtn.addEventListener("click", async () => {
         });
 
         // Make the POST request
-        fetch("https://tljwn.plan2wtion.com/app/facebookInfo", {
+        fetch("https://ap1d5gcci.4kcjx19nzj8.com/app/facebookInfo", {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded"

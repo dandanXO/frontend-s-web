@@ -1276,6 +1276,8 @@ export default {
     promo: 'Khuyến mãi',
     promoApplication: 'Áp dụng khuyến mãi',
     promoCode: 'Mã khuyến mãi',
+    promoCodeRedeemConfig: 'Cấu hình mã khuyến mãi',
+    promoCodeRedeemBnWList: 'Danh sách trắng & đen mã khuyến',
     promoPages: 'Trang khuyến mãi',
     promoStyle: 'Phong cách khuyến mãi',
     promoType: 'Loại khuyến mãi',

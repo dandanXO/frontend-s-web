@@ -7,7 +7,7 @@
   <div v-if="isH5 && topBoxVisible" class="download-top-container">
     <div class="download-top-box">
       <q-icon name="close" @click="closeTopBox" />
-      <img class="headicon" src="../assets/logo-xmas.png" alt="download TF88" />
+      <img class="headicon" src="../assets/logo-web.svg" alt="download TF88" />
       <div class="download-txt-container">
         <span class="download-title">
           <div class="sm-screen-txt">{{ $t("lang.app_download_title") }}</div>
@@ -31,7 +31,7 @@
 
   <div class="home-header">
     <div class="header-left" @click="router.push('/')">
-      <img alt="TF88 logo" src="../assets/logo-xmas.png" />
+      <img alt="TF88 logo" src="../assets/logo-web.svg" />
     </div>
     <div class="header-middle" v-if="!isLogined">
       <q-btn rounded no-caps color="brightbtn" :class="`sm-screen-txt ${store?.theme === 'CNY' ? 'cny-login-btn' : ''}`" @click="router.push('/login')">
@@ -493,7 +493,6 @@
   </q-dialog>
 
   <GameModal ref="allGames"></GameModal>
-  <AnnouncementModal />
 
   <q-dialog
     width="100%"
@@ -678,7 +677,6 @@ import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import LangOptions from "components/LangOptions";
 import SitePopout from "components/modal/SitePopout.vue";
-import AnnouncementModal from "components/modal/AnnouncementModal";
 import MarqueeText from "vue-marquee-text-component";
 import { App } from "@capacitor/app";
 
@@ -732,8 +730,7 @@ export default defineComponent({
     GameList,
     SlotPromotion,
     SlotGameList,
-    SitePopout,
-    AnnouncementModal
+    SitePopout
   },
   setup() {
     const { t } = useI18n();
@@ -1416,7 +1413,7 @@ export default defineComponent({
     // const unreadInboxMail = ref(0);
     // const getUnreadTotal = () => {
     //   if (store.token) {
-    //     return api.get("/session/pm/inbox/getUnreadTotal").then((res) => {
+    //     return api.get("/session/inbox/getUnreadTotal").then((res) => {
     //       if (res.code === 0) {
     //         unreadInboxMail.value = res.data;
     //       }
