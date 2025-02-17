@@ -1,6 +1,27 @@
 <template>
   <q-form class="q-gutter-y-md rounded-borders" @submit="onSubmit">
     <q-input
+      ref="realNameRef"
+      hide-bottom-space
+      v-model="regForm.realName"
+      label="姓名"
+      :rules="[
+        (val) => (val && val.length > 0) || '请输入姓名',
+        (val) => (val && val.length >= 2 && val.length <= 12) || '用户名个数必须在2和12之间',
+        validRealName
+      ]"
+      clearable
+      rounded
+      outlined
+      color="white"
+      bg-color="inputstyle"
+    >
+      <template v-slot:prepend>
+        <q-icon color="bright" name="person_outline" size="24px" />
+      </template>
+    </q-input>
+
+    <q-input
       ref="loginNameRef"
       hide-bottom-space
       v-model="regForm.loginName"
@@ -253,11 +274,11 @@ export default defineComponent({
     });
     const store = userStore();
     const verificationImg = ref("");
-    // const isValidName = () => {
-    //   const namePattern = /^([\u4e00-\u9fa5\.\。]*)$/;
-    //   // const namePattern = /^[\u4e00-\u9fa5]{2,4}$/;
-    //   return namePattern.test(regForm.realName) || "请输入中文字符";
-    // };
+    const validRealName = () => {
+      const namePattern = /^([\u4e00-\u9fa5\.\。]*)$/;
+      // const namePattern = /^[\u4e00-\u9fa5]{2,4}$/;
+      return namePattern.test(regForm.realName) || "请输入中文字符";
+    };
 
     const captchaRef = ref();
     const innerCodeId = ref("");
@@ -271,6 +292,7 @@ export default defineComponent({
     };
 
     const regForm = reactive({
+      realName: "",
       loginName: "",
       password: "",
       confirmPwd: "",
@@ -338,6 +360,7 @@ export default defineComponent({
     //     regForm.referrer = refCode;
     //   }
     // }
+    const realNameRef = ref();
     const loginNameRef = ref();
     const pwdRef = ref();
     const confirmPwdRef = ref();
@@ -362,6 +385,7 @@ export default defineComponent({
 
     const router = useRouter();
     const onSubmit = () => {
+      realNameRef.value.validate();
       loginNameRef.value.validate();
       pwdRef.value.validate();
       confirmPwdRef.value.validate();
@@ -373,6 +397,7 @@ export default defineComponent({
         message: "注册中"
       });
       if (
+        realNameRef.value.hasError ||
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
         confirmPwdRef.value.hasError ||
@@ -541,6 +566,7 @@ export default defineComponent({
       header: "注册账号",
       regForm,
       verificationImg,
+      realNameRef,
       loginNameRef,
       pwdRef,
       confirmPwdRef,
@@ -563,7 +589,8 @@ export default defineComponent({
       phoneVerificationRef,
       isValidCnPhone,
       hasAffiliate,
-      validLoginName
+      validLoginName,
+      validRealName
     };
   }
 });
