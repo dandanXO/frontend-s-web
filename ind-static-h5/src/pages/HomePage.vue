@@ -2638,14 +2638,17 @@ const onCloseSpinLuckyWheelPromoPopup = () => {
     localStorage.setItem("SPIN_LUCKY_WHEEL_POPUP", Date.now());
     isShowSpinLuckyWheelPromoPopup.value = false;
   } else {
+    sessionStorage.setItem("SPIN_LUCKY_WHEEL_TEMP_POPUP" , "1");
     localStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
   }
 }
 const checkSpinLuckyWheelPromo = () => {
+  // debugger
   // or if got timestamp
-  const hasPromo = localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP") === 'true';
+  const hasPromo = localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP");
+  const hasTempPromo =  sessionStorage.getItem("SPIN_LUCKY_WHEEL_TEMP_POPUP");
 
-  if(hasPromo) {
+  if((!hasTempPromo && !hasPromo) || hasPromo==='true') {
     isShowSpinLuckyWheelPromoPopup.value = true;
   }
 }
@@ -2861,7 +2864,10 @@ onMounted(() => {
   loadJDBFishGameList();
   loadCustomerAddress();
   checkHbPromo();
-  checkSpinLuckyWheelPromo();
+
+  if(store.hasToken()){
+    checkSpinLuckyWheelPromo();
+  }
 
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 

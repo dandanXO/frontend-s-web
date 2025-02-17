@@ -2,11 +2,12 @@
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn" v-if="nextFreeSpinRemainingTime && isShowSticky">
         <div v-touch-pan.prevent.mouse="moveCsIcon" @click="router.push('promo?name=spin-lucky-wheel')" class="countdown-sticky">
             <span class="remaining-time"> {{ nextFreeSpinRemainingTime }}</span>
-            <img @click.stop="isShowSticky = false" class="close-btn" src="../../../assets/images/index/close-btn.png" />
+            <img @click.stop="closeSticky()" class="close-btn" src="../../../assets/images/index/close-btn.png" />
         </div>
     </q-page-sticky>
 </template>
 <script setup>
+import { userStore } from "src/stores";
 import { onMounted, ref } from "vue";
 import { eventapi } from "src/boot/axios";
 import moment from 'moment-timezone';
@@ -21,6 +22,13 @@ const moveCsIcon = (ev) => {
     isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
     csDragPos.value = [csDragPos.value[0] - ev.delta.x, csDragPos.value[1] - ev.delta.y];
 };
+
+const store= userStore()
+
+const closeSticky = () => {
+  isShowSticky.value = false;
+  sessionStorage.setItem("SPIN_LUCKY_WHEEL_STICKY", "1");
+}
 
 const csDragPos = ref([10, 0]);
 const isDraggingCsIcon = ref(false);
@@ -77,7 +85,10 @@ const loadData = async () => {
 };
 
 onMounted(() => {
+  const getShow = sessionStorage.getItem("SPIN_LUCKY_WHEEL_STICKY");
+  if(!getShow && store.token){
     loadData();
+  }
 })
 </script>
 <style lang="scss">

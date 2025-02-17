@@ -37,7 +37,7 @@ const _modelValue = computed({
 
 const hideCashOutPopup = () => {
     isShowInviteWins.value = false;
-    $emit('hide');
+    emit('hide');
 }
 
 const extractionDifference = inject('extractionDifference');

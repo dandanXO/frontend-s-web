@@ -1,6 +1,6 @@
 <template>
     <div class="spin-lucky-wheel-promo-popup-wrapper">
-        <img class="banner" src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/home-popup.png" />
+        <img @click="goToPromo" class="banner" src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/home-popup.png" />
         <div class="do-not-show-again-wrapper">
             <q-checkbox v-model="isDoNotShowAgain">
                 Do not show again
@@ -10,7 +10,14 @@
 </template>
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from "vue-router";
 const isDoNotShowAgain = ref(false);
+
+const router= useRouter()
+
+const goToPromo= () => {
+  router.push("/promo?name=spin-lucky-wheel")
+}
 
 defineExpose({
     isDoNotShowAgain
@@ -24,7 +31,7 @@ defineExpose({
     align-items: center;
     gap: 10px;
     width: 100%;
-    
+
     .banner {
         max-width: 90%;
         width: 100%;
