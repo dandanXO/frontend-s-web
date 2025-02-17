@@ -105,7 +105,7 @@ import { useQuasar } from "quasar";
 
 import { api } from "@/boot/axios";
 import { t } from "@/boot/lang";
-import { convertToCommaAmount, convertToGMT5Date, updateDate } from "@/boot/utils";
+import { convertToCommaAmount, convertToGMT8, updateDate } from "@/boot/utils";
 import LoadingComponent from "@/components/LoadingComponent.vue";
 import NoInfoComponent from "@/components/NoInfoComponent.vue";
 
@@ -125,8 +125,8 @@ const searchWithdrawalRecord = () => {
   withdrawalData.value = [];
 
   const { startDate, endDate } = searchForm;
-  const gmtStartDate = convertToGMT5Date(startDate);
-  const gmtEndDate = convertToGMT5Date(endDate);
+  const gmtStartDate = convertToGMT8(startDate);
+  const gmtEndDate = convertToGMT8(endDate);
   api
     .get("/session/member/withdraw", {
       params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: 10 }
@@ -175,8 +175,8 @@ const searchDepositRecord = () => {
   depositData.value = [];
 
   const { startDate, endDate } = searchForm;
-  const gmtStartDate = convertToGMT5Date(startDate);
-  const gmtEndDate = convertToGMT5Date(endDate);
+  const gmtStartDate = convertToGMT8(startDate);
+  const gmtEndDate = convertToGMT8(endDate);
   api
     .get("/session/member/deposit", {
       params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: 10 }
