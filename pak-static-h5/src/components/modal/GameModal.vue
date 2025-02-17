@@ -360,7 +360,8 @@ const open = (gameName, platformCode, gameCode, gameType, demo) => {
         isMobile: Platform.is.mobile ? true : false,
         way: way
       };
-      if (_isPlatformAllowNonLogin) {
+      const _isFromNewPlayerGuide = sessionStorage.getItem("isFromNewPlayerGuide")
+      if (_isPlatformAllowNonLogin || _isFromNewPlayerGuide) {
         try {
           const demoInfo = JSON.parse(demo);
           if (!demoInfo.platformCode || !demoInfo.code) throw new Error();
@@ -374,6 +375,7 @@ const open = (gameName, platformCode, gameCode, gameType, demo) => {
         } catch (_) {
           denyGameLaunch();
         }
+        sessionStorage.removeItem("isFromNewPlayerGuide")
       }
 
       api

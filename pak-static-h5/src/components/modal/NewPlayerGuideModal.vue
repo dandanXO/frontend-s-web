@@ -131,7 +131,11 @@
                   
                   <div v-if="isVideo" class="video-portion">
                     <video width="100%" height="100%" controls>
-                      <source v-if="index+1 === 2" src="../../assets/images/newplayerguide/video-1.mp4" type="video/mp4">
+                      
+                      <source v-if="index+1 === 2" src="http://npr101.com/video/video-1.mp4" type="video/mp4">
+                      <source v-if="index+1 === 3" src="http://npr101.com/video/video-2.mp4" type="video/mp4">
+                      <source v-if="index+1 === 4" src="http://npr101.com/video/video-1.mp4" type="video/mp4">
+                      <source v-if="index+1 === 5" src="http://npr101.com/video/video-2.mp4" type="video/mp4">
                       Your browser does not support the video tag.
                     </video>
                     <!-- <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dRPcJyisLUI?si=ok64lVuE9jWtcnGr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
@@ -221,6 +225,7 @@
   import { useCustomerTrigger } from "src/hooks/trigger";
   
   const store = userStore();
+  const $q = useQuasar();
   const ui = useUI();
   const { t } = useI18n();
   const router = useRouter();
@@ -242,9 +247,9 @@
     { title: t('playerGuide.welcome'), instruction: t('playerGuide.completeRegistration'), earnableAmt: "10", buttonTxt: t('playerGuide.startNow'), video: "" },
     { title: t('playerGuide.hotGames'), instruction: t('playerGuide.experienceGame'), earnableAmt: "10", buttonTxt: t('playerGuide.tryItOut'), video: t('playerGuide.watchGameTutorial') },
     { title: t('playerGuide.recharging'), instruction: t('playerGuide.rechargeDownloadApp'), earnableAmt: "28", buttonTxt: t('playerGuide.depositNow'), video: t('playerGuide.depositTutorial') },
-    { title: t('playerGuide.inviteFriends'), instruction: t('playerGuide.playerGuide'), earnableAmt: "250", buttonTxt: t('playerGuide.shareNow') },
+    { title: t('playerGuide.inviteFriends'), instruction: t('playerGuide.inviteReward'), earnableAmt: "250", buttonTxt: t('playerGuide.shareNow') },
     { title: t('playerGuide.withdrawal'), instruction: t('playerGuide.unlockTasks'), earnableAmt: "250", buttonTxt: t('playerGuide.withdrawNow'), video: t('playerGuide.withdrawTutorial') },
-    { title: t('playerGuide.congratulations'), instruction: t('playerGuide.completeNoviceMission'), earnableAmt: "1000", buttonTxt: t('playerGuide.startGame'), video: t('playerGuide.expertGameplayGuide') },
+    // { title: t('playerGuide.congratulations'), instruction: t('playerGuide.completeNoviceMission'), earnableAmt: "1000", buttonTxt: t('playerGuide.startGame'), video: t('playerGuide.expertGameplayGuide') },
   ]);
   const isVideo = ref(false);
 
@@ -289,7 +294,7 @@
       }, 100); // You can adjust this timeout if needed
     }
     let nextStep = (Number(currentStep.value) + 1).toString();
-    if (Number(currentStep.value) === 6) {
+    if (Number(currentStep.value) === 5) {
       nextStep = "END";
     }
 

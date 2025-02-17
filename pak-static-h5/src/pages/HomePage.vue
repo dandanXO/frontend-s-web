@@ -1510,15 +1510,22 @@ const updateCurrentStep = (newStep) => {
   localStorage.setItem("newPlayerGuide", newStep);
 };
 const handleGamePlay = () => {
-  playGame(
-    hotGameList.value[0].name, 
-    hotGameList.value[0].platformCode, 
-    hotGameList.value[0].code, 
-    hotGameList.value[0].status, 
-    hotGameList.value[0].gameType, 
-    hotGameList.value[0].id, 
-    hotGameList.value[0].demo
-  );
+  sessionStorage.setItem("isFromNewPlayerGuide", JSON.stringify(true));
+  hotGameList.value.forEach(element => {
+    console.log(element);
+    if (element.code === 'aviator') {
+      playGame(
+        element.name, 
+        element.platformCode, 
+        element.code, 
+        element.status, 
+        element.gameType, 
+        element.id, 
+        element.demo
+      );
+    }
+  });
+  
 };
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
