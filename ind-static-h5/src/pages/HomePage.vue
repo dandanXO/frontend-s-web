@@ -1145,7 +1145,7 @@
     <HomePopup ref="spinLuckyWheelPromoPopupRef" />
   </q-dialog>
 
-  <PromoSticky />
+  <SpinLuckyWheelPromoSticky />
 </template>
 
 <script setup>
@@ -1177,7 +1177,7 @@ import "swiper/css/effect-coverflow";
 // Import Swiper modules
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core";
 import HomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
-import PromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
+import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);

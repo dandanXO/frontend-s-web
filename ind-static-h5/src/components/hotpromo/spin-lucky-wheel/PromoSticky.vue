@@ -2,7 +2,7 @@
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn" v-if="nextFreeSpinRemainingTime && isShowSticky">
         <div v-touch-pan.prevent.mouse="moveCsIcon" @click="router.push('promo?name=spin-lucky-wheel')" class="countdown-sticky">
             <span class="remaining-time"> {{ nextFreeSpinRemainingTime }}</span>
-            <img @click="isShowSticky = false" class="close-btn" src="../../../assets/images/index/close-btn.png" />
+            <img @click.stop="isShowSticky = false" class="close-btn" src="../../../assets/images/index/close-btn.png" />
         </div>
     </q-page-sticky>
 </template>
