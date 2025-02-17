@@ -117,7 +117,6 @@ const loadDepositTable = (isNew) => {
   console.log(startDate);
   console.log(endDate);
 
-
   let paramData = {
     startDate: startDate,
     endDate: endDate,
@@ -130,7 +129,7 @@ const loadDepositTable = (isNew) => {
   };
 
   let selectedPlatform = platform.value ? (platform.value.value === "BBINDY" ? "BBIN" : platform.value.value) : "";
-  if (selectedPlatform.includes("@")) {
+  if (selectedPlatform && selectedPlatform.includes("@")) {
     const platformArr = selectedPlatform.split("@");
     paramData.platform = platformArr[0];
     paramData.gameType = platformArr[1];
@@ -159,7 +158,7 @@ const loadDepositTable = (isNew) => {
 };
 
 const loadPlatformLists = () => {
-  var platformApiUrl =  "/platformWithType";
+  var platformApiUrl = "/platformWithType";
   var platformApiKey = "PLATFORMSTYPES";
 
   cached
