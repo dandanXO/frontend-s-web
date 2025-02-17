@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useQuasar } from 'quasar'
 
 interface Cell {
@@ -17,14 +17,44 @@ interface GameConfig {
   mines: number
 }
 
-const $q = useQuasar()
-console.log($q)
+interface DifficultyOption {
+  label: string
+  value: string
+  rows: number
+  cols: number
+  mines: number
+}
 
-// 游戏配置
+const $q = useQuasar()
+
+// 定义难度选项
+const difficulties: DifficultyOption[] = [
+  { label: '低', value: 'low', rows: 9, cols: 9, mines: 10 },
+  { label: '中', value: 'medium', rows: 14, cols: 12, mines: 20 },
+  { label: '高', value: 'high', rows: 16, cols: 12, mines: 40 },
+]
+
+// 难度选单 v-model
+const selectedDifficulty = ref({ label: '低', value: 'low', rows: 9, cols: 9, mines: 10 })
+const difficultyOptions = computed(() =>
+  difficulties.map((d) => ({ label: d.label, value: d.value })),
+)
+
+// 游戏配置（预设采用低难度）
 const config = ref<GameConfig>({
-  rows: 10,
-  cols: 10,
+  rows: 9,
+  cols: 9,
   mines: 10,
+})
+
+// 当难度选择改变时，更新游戏配置并重新开始新游戏
+watch(selectedDifficulty, (newValue) => {
+  const diff = difficulties.find((d) => d.value === newValue.value)
+  
+  if (diff) {
+    config.value = { rows: diff.rows, cols: diff.cols, mines: diff.mines }
+    newGame()
+  }
 })
 
 // 游戏状态
@@ -40,12 +70,14 @@ const minesLeft = computed(() => config.value.mines - flagCount.value)
 const formattedTime = computed(() => {
   const minutes = Math.floor(timer.value / 60)
   const seconds = timer.value % 60
-  return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+  return `${minutes.toString().padStart(2, '0')}:${seconds
+    .toString()
+    .padStart(2, '0')}`
 })
 
 // 检查座标是否在边界内
 function isInBounds(row: number, col: number): boolean {
-  return row >= 0 && row < config.value.rows && col >= 0 && col < config.value.cols
+  return row >= 0 && row < config.value.rows && col < config.value.cols && col >= 0
 }
 
 // 安全地取得格子
@@ -140,75 +172,72 @@ function revealCell(row: number, col: number): void {
   }
 }
 
-// 处理点击事件
-function handleClick(cell: Cell): void {
-  if (gameOver.value) return
+// 新增：打开已揭露数字周围未揭露的格子功能
+function revealAdjacentCells(cell: Cell): void {
+  let flaggedCount = 0
 
-  startTimer()
+  // 计算周围插旗数量
+  for (let i = -1; i <= 1; i++) {
+    for (let j = -1; j <= 1; j++) {
+      if (i === 0 && j === 0) continue
+      const neighbor = getCell(board.value, cell.row + i, cell.col + j)
+      if (neighbor && neighbor.isFlagged) {
+        flaggedCount++
+      }
+    }
+  }
 
-  // 如果该格已翻开且有数字（不为 0），执行自动打开周边格子的功能
-  if (cell.isRevealed && cell.neighborMines > 0) {
-    let flagCount = 0
-    const unopenedNeighbors: Cell[] = []
-
-    // 遍历八个方向
+  // 如果旗帜数等于该数字，则打开所有相邻未翻开且未插旗的格子
+  if (flaggedCount === cell.neighborMines) {
     for (let i = -1; i <= 1; i++) {
       for (let j = -1; j <= 1; j++) {
         if (i === 0 && j === 0) continue
         const neighbor = getCell(board.value, cell.row + i, cell.col + j)
-        if (!neighbor) continue
-
-        if (neighbor.isFlagged) {
-          flagCount++
-        }
-        // 收集尚未翻开且未标记的邻近格子
-        if (!neighbor.isRevealed && !neighbor.isFlagged) {
-          unopenedNeighbors.push(neighbor)
+        if (neighbor && !neighbor.isRevealed && !neighbor.isFlagged) {
+          if (neighbor.isMine) {
+            // 如果有未插旗的地雷则触发游戏结束
+            neighbor.isRevealed = true
+            gameOver.value = true
+            gameWon.value = false
+            stopTimer()
+            revealAllMines()
+            showGameOverDialog()
+            return
+          } else {
+            revealCell(neighbor.row, neighbor.col)
+          }
         }
       }
     }
+    checkWin()
+  }
+}
 
-    // 如果已标记的数量正好等于该格显示的数字，
-    // 就自动打开所有尚未翻开且未标记的邻近格子
-    if (flagCount === cell.neighborMines) {
-      for (const neighbor of unopenedNeighbors) {
-        // 如果打开的其中一个邻近格子是炸弹，直接结束游戏
-        if (neighbor.isMine) {
-          neighbor.isRevealed = true
-          gameOver.value = true
-          gameWon.value = false
-          stopTimer()
-          revealAllMines()
-          showGameOverDialog()
-          return
-        } else {
-          revealCell(neighbor.row, neighbor.col)
-        }
-      }
-      checkWin()
+// 处理点击事件
+function handleClick(cell: Cell): void {
+  if (gameOver.value || cell.isFlagged) return
+
+  // 如果格子已揭露，且有数字，则尝试打开周围格子
+  if (cell.isRevealed) {
+    if (cell.neighborMines > 0) {
+      revealAdjacentCells(cell)
     }
     return
   }
 
-  // 如果该格尚未翻开
-  if (!cell.isRevealed) {
-    if (cell.isFlagged) return
+  startTimer()
 
-    // 一般情况：点击未翻开的格子
-    if (cell.isMine) {
-      cell.isRevealed = true
-      gameOver.value = true
-      gameWon.value = false
-      stopTimer()
-      revealAllMines()
-      showGameOverDialog()
-    } else {
-      revealCell(cell.row, cell.col)
-      checkWin()
-    }
+  if (cell.isMine) {
+    gameOver.value = true
+    gameWon.value = false
+    stopTimer()
+    revealAllMines()
+    showGameOverDialog()
+  } else {
+    revealCell(cell.row, cell.col)
+    checkWin()
   }
 }
-
 
 // 切换旗帜
 function toggleFlag(cell: Cell): void {
@@ -305,7 +334,6 @@ function getCellColor(cell: Cell): string {
   if (cell.isFlagged) return 'warning'
   if (!cell.isRevealed) return 'grey-3'
   if (cell.isMine) return 'negative'
-  // 已揭露的格子不再使用 positive 颜色
   return 'revealed'
 }
 
@@ -325,7 +353,18 @@ newGame()
       <!-- 游戏资讯 -->
       <div class="game-controls">
         <q-btn color="primary" label="新游戏" @click="newGame" />
-        <q-chip icon="flag" color="warning" text-color="white"> 剩余地雷：{{ minesLeft }} </q-chip>
+        <!-- 难度下拉选单 -->
+        <q-select
+          :color="selectedDifficulty.value === 'low' ? 'green' : selectedDifficulty.value === 'medium' ? 'orange' : 'red'"
+          
+          v-model="selectedDifficulty"
+          :options="difficultyOptions"
+          label="难度"
+          dense
+          outlined
+          style="min-width: 120px;"
+        />
+        <q-chip icon="flag" color="red" text-color="white"> 剩余地雷：{{ minesLeft }} </q-chip>
         <q-chip icon="timer" color="primary" text-color="white"> 时间：{{ formattedTime }} </q-chip>
       </div>
 
@@ -362,13 +401,29 @@ newGame()
 </template>
 
 <style scoped>
-.minesweeper-board {
-  border: 3px solid #666;
-  padding: 0;
-  background: #666;
+/* 定义全局变数方便调整配色 */
+:root {
+  --border-color: #666;
+  --background-color: #757575;
+  --cell-bg: #fafafa;
+  --cell-border: #bbb;
+  --cell-shadow: rgba(0, 0, 0, 0.15);
+  --flag-bg: #ffd700;
+  --mine-bg: #ff4444;
+  --hover-bg: #e0e0e0;
+  --revealed-hover-bg: #dcdcdc;
 }
 
-/* 游戏控制区域样式 */
+/* 地雷扫描器棋盘容器 */
+.minesweeper-board {
+  border: 3px solid var(--border-color);
+  padding: 4px;
+  background: var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px var(--cell-shadow);
+}
+
+/* 游戏控制区域 */
 .game-controls {
   display: flex;
   flex-direction: row;
@@ -376,16 +431,20 @@ newGame()
   align-items: center;
 }
 
+/* 棋盘容器 */
 .board-container {
   display: flex;
   flex-direction: column;
+  margin-top: 1rem;
 }
 
+/* 棋盘每一行 */
 .board-row {
   display: flex;
   height: 40px;
 }
 
+/* 格子样式 */
 .mine-cell {
   width: 40px !important;
   height: 40px !important;
@@ -394,43 +453,19 @@ newGame()
   margin: 1px !important;
   font-weight: bold;
   font-size: 1.2em;
-  border: 1px solid #999 !important;
+  border: 1px solid var(--cell-border) !important;
+  background: var(--background-color);
+  color: #333;
+  border-radius: 4px;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
 }
 
-/* 覆盖 Quasar 的预设按钮样式 */
+/* 按钮额外调整：移除圆角 */
 .mine-cell.q-btn {
-  border-radius: 0 !important;
+  border-radius: 4px !important;
 }
 
-/* 已揭露格子的样式 */
-.mine-cell.revealed {
-  background: #e8e8e8 !important;
-  color: #000 !important;
-}
-
-/* 未揭露格子的悬停效果 */
-.mine-cell.q-btn--grey-3:hover {
-  background: #dcdcdc !important;
-}
-
-/* 已揭露格子的悬停效果 */
-.mine-cell.revealed:hover {
-  background: #e0e0e0 !important;
-}
-
-/* 旗帜格子样式 */
-.mine-cell.q-btn--warning {
-  background: #ffd700 !important;
-  color: #000 !important;
-}
-
-/* 地雷格子样式 */
-.mine-cell.q-btn--negative {
-  background: #ff4444 !important;
-  color: #fff !important;
-}
-
-/* 确保内容垂直置中 */
+/* 格子内文字垂直与水平置中 */
 .mine-cell .q-btn__content {
   display: flex;
   align-items: center;
@@ -438,47 +473,82 @@ newGame()
   height: 100%;
 }
 
-/* 数字颜色 */
+/* 已揭露格子样式 */
+.mine-cell.revealed {
+  background: var(--cell-bg) !important;
+  color: #000 !important;
+  box-shadow: inset 0 0 5px var(--cell-shadow);
+}
+
+/* 未揭露格子的悬停效果 */
+.mine-cell:not(.revealed):hover {
+  background: var(--hover-bg) !important;
+  transform: translateY(-1px);
+}
+
+/* 已揭露格子的悬停效果 */
+.mine-cell.revealed:hover {
+  background: var(--revealed-hover-bg) !important;
+}
+
+/* 旗帜格子样式 */
+.mine-cell.q-btn--warning {
+  background: var(--flag-bg) !important;
+  color: #333 !important;
+  box-shadow: 0 2px 4px var(--cell-shadow);
+}
+
+/* 地雷格子样式 */
+.mine-cell.q-btn--negative {
+  background: var(--mine-bg) !important;
+  color: #fff !important;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+/* 数字样式：保持文字粗体 */
 .mine-cell.revealed span {
   font-weight: bold;
 }
 
-/* RWD 设定 */
+/* RWD 调整：小萤幕版 */
 @media screen and (max-width: 450px) {
-  /* 控制按钮改为垂直排列 */
+  /* 控制区域垂直排列 */
   .game-controls {
     flex-direction: column;
     width: 100%;
     gap: 0.5rem;
   }
 
-  /* 让按钮和计数器占满宽度 */
+  /* 控制按钮、计数器与选单占满宽度 */
   .game-controls .q-btn,
-  .game-controls .q-chip {
+  .game-controls .q-chip,
+  .game-controls .q-select {
     width: 100%;
     justify-content: center;
   }
 
-  /* 缩小格子尺寸 */
+  /* 调整棋盘行高 */
   .board-row {
     height: 30px;
   }
 
+  /* 调整格子尺寸与字体大小 */
   .mine-cell {
     width: 30px !important;
     height: 30px !important;
     min-height: 30px !important;
-    font-size: 0.8em !important;
+    font-size: 1.2em !important;
   }
 
-  /* 调整内容大小 */
+  /* 格子内内容字体大小 */
   .mine-cell .q-btn__content {
     font-size: 0.8em;
   }
 
-  /* 缩小表情符号大小 */
+  /* 调整表情符号字体大小 */
   .mine-cell .q-btn__content span {
     font-size: 0.8em;
   }
 }
+
 </style>
