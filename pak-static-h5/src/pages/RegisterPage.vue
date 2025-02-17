@@ -527,7 +527,7 @@ export default defineComponent({
                   message: "Registered successfully",
                   icon: "check_circle_outline"
                 });
-
+                localStorage.setItem("newPlayerGuide", 1)
                 //FB Tracking.
                 if (store.isFbPixel || store.isTkPixel) {
                   if (store.isFbPixel) {

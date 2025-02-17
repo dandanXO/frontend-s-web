@@ -1429,10 +1429,17 @@
   <a ref="downloadAppRef" :href="ui.downloadAppUrl" download style="display: none" />
 
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
+  <NewPlayerGuideModal v-if="store.token"
+    :modelValue="isNewPlayerModal"
+    :currentStep="currentStep"
+    @update:runAviator="handleGamePlay"
+    @update:modelValue="handleModalUpdate"
+    @update:currentStep="updateCurrentStep" 
+  />
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch, onActivated, provide } from "vue";
+import { onMounted, ref, reactive, computed, watch, watchEffect, onActivated, provide } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -1450,6 +1457,7 @@ import CongratsModal from "../components/modal/CongratsModal.vue";
 import LuckySpinWheel from "../components/hotpromo/newPlayerWheel/LuckySpinWheel.vue";
 import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
 import MediaSettingsComponent from "../components/MediaSettingsComponent.vue";
+import NewPlayerGuideModal from "../components/modal/NewPlayerGuideModal.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { isAndroid } from "boot/utils";
@@ -1487,6 +1495,31 @@ const popupPromo = ref("");
 const megaSharingWheelDialogModel = ref(true);
 const isAddToHomeScreen = ref(false);
 
+const currentStep = ref(localStorage.getItem("newPlayerGuide") || "1");
+// Only show the guide if on `/home` or `/`
+const isNewPlayerModal = computed(() => {
+  return (route.path === "/" || route.path === "/home") && currentStep.value !== "END";
+});
+const handleModalUpdate = (value) => {
+  isNewPlayerModal.value = value;
+};
+
+const updateCurrentStep = (newStep) => {
+  currentStep.value = newStep;
+  // Optionally, update localStorage again in the parent component
+  localStorage.setItem("newPlayerGuide", newStep);
+};
+const handleGamePlay = () => {
+  playGame(
+    hotGameList.value[0].name, 
+    hotGameList.value[0].platformCode, 
+    hotGameList.value[0].code, 
+    hotGameList.value[0].status, 
+    hotGameList.value[0].gameType, 
+    hotGameList.value[0].id, 
+    hotGameList.value[0].demo
+  );
+};
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
   { title: "Hot", label: t("home.menu_hot"), icon: "hot", active: false },

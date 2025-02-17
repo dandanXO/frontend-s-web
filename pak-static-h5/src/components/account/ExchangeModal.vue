@@ -2,7 +2,7 @@
   <q-dialog
     width="100%"
     :modelValue="modelValue"
-    presistent
+    persistent
     @update:modelValue="(value) => emit('update:modelValue', value)"
   >
     <div class="popout-dialog">
