@@ -1,53 +1,28 @@
 <template>
-  <div class="table-record">
+  <div class="table-record q-pa-md">
     <div class="flex-div">
-      <span class="select-stage">选择平台：</span>
+      <!-- <span class="select-stage">选择平台：</span> -->
       <q-select
         allowClear
-        rounded
-        outlined
         dense
-        color="white"
-        style="width: 200px; margin: 10px auto 8px 8px"
+        style="width: 100%"
         v-model="platform"
         :options="platformsList"
         placeholder="选择平台"
         @update:model-value="searchRecord"
-      ></q-select>
-      <div class="payout-total">
-        <div>总投注: {{ totalBetRecord.totalBet }}</div>
-        <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
-      </div>
+        outlined
+        color="white"
+        bg-color="roundedinputstyle"
+      >
+        <template v-slot:prepend><span>选择平台:</span></template>
+      </q-select>
     </div>
-    <div class="flex-div">
-      <span>开始：</span>
-      <q-input rounded outlined dense v-model="startDate">
-        <template v-slot:append>
-          <q-icon name="event" class="cursor-pointer">
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="startDate" mask="YYYY-MM-DD" @update:model-value="searchRecord">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="关闭" color="primary" flat />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-      </q-input>
-      <span>结束：</span>
-      <q-input rounded outlined dense v-model="endDate">
-        <template v-slot:append>
-          <q-icon name="event" class="cursor-pointer">
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="endDate" mask="YYYY-MM-DD" @update:model-value="searchRecord">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="关闭" color="primary" flat />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-      </q-input>
+
+    <RecordDateFilter class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="searchRecord" />
+
+    <div class="payout-total flex-div">
+      <div>总投注: {{ totalBetRecord.totalBet }}</div>
+      <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
     </div>
 
     <RecordComponent
@@ -69,6 +44,7 @@ import moment from "moment/moment";
 import { userStore } from "src/stores";
 import { cached } from "boot/cache";
 import * as _ from "lodash";
+import RecordDateFilter from "src/components/RecordDateFilter.vue";
 
 const totalBetRecord = reactive({
   totalBet: 0,
@@ -91,8 +67,14 @@ const platform = ref("");
 const platformsList = ref([]);
 const isEnded = ref(false);
 
-const searchRecord = () => {
+const searchRecord = (data) => {
+  const { val, isStartDate } = data;
+  if (isStartDate !== undefined && val !== undefined) {
+    isStartDate ? (startDate = val) : (endDate = val);
+  }
+
   tableData.value = [];
+  current.value = 1;
   isEnded.value = false;
   recordRef.value.clearTable();
   loadDepositTable(true);
@@ -117,7 +99,7 @@ const loadDepositTable = (isNew) => {
   console.log(startDate);
   console.log(endDate);
 
-
+  var platformName = platform.value ? platform.value.value : "";
   let paramData = {
     startDate: startDate,
     endDate: endDate,
@@ -159,7 +141,7 @@ const loadDepositTable = (isNew) => {
 };
 
 const loadPlatformLists = () => {
-  var platformApiUrl =  "/platformWithType";
+  var platformApiUrl = "/platformWithType";
   var platformApiKey = "PLATFORMSTYPES";
 
   cached
@@ -246,15 +228,11 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 16px;
 
   span {
     font-size: 14px;
-    padding-left: 5px;
     min-width: 50px;
-
-    &:nth-child(3) {
-      margin-left: 10px;
-    }
 
     &.select-stage {
       min-width: 80px;

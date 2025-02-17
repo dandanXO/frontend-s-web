@@ -9,9 +9,6 @@
           <q-btn glossy color="brand" to="/login">登录</q-btn>
           <q-btn outline color="brand" to="/register">注册</q-btn>
         </q-card-actions>
-        <!-- <q-card-actions v-if="store.hasToken()">
-          <q-btn glossy color="brand" @click="logout">Logout</q-btn>
-        </q-card-actions> -->
         <q-btn v-if="store.hasToken()" class="flex" to="/finance/deposit" no-caps flat>
           <span style="font-size: 10px; margin-left: 5px; display: block">充值</span>
         </q-btn>
@@ -31,81 +28,56 @@
           icon="menu"
         />
       </q-card-section>
-      <!-- <q-card-actions v-if="store.hasToken()" class="bot-section" horizontal>
-        <q-card-section class="acct-section">
-          <div class="label">Main account:</div>
-          <div class="amt">{{ mainWallet }}</div>
-        </q-card-section>
-        <q-separator vertical />
-        <q-btn class="flex" to="/finance/deposit" no-caps flat
-          ><RiWalletLine />Top-up center</q-btn
-        >
-        <q-btn to="/finance/withdraw" no-caps flat
-          ><RiBankCardLine />Quick Withdraw</q-btn
-        >
-      </q-card-actions> -->
     </q-header>
 
     <q-drawer side="right" elevated v-model="ui.drawerRight" :width="250" :breakpoint="500" v-if="hasDrawer">
-      <div class="q-pa-md bg-brightbtn">游戏平台</div>
-      <div class="platforms q-pt-md">
-        <!--        <div class="text-bright q-px-sm q-pt-md">-->
-        <!--          -->
-        <!--        </div>-->
-      </div>
+      <div class="text-center q-pa-md">游戏平台</div>
       <q-scroll-area class="fit">
-        <div class="q-pa-sm platform-list">
+        <div class="q-pa-md platform-list">
           <q-btn
             @click="changePlatform(plat)"
             size="md"
-            color="brightbtn"
+            :color="isPlatformActive(plat.code) ? 'brightbtn' : ''"
             v-for="(plat, n) in platformsList"
             :key="n"
             :label="plat.icon"
+            rounded
           />
         </div>
       </q-scroll-area>
     </q-drawer>
-    <!-- <q-scroll-area
-      ref="scrollPageRef"
-      class="scrollArea"
-    >
-      <q-page-container>
-        <router-view />
-      </q-page-container>
-    </q-scroll-area> -->
 
     <q-page-container>
       <router-view />
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
-      <q-tabs v-model="tab" no-caps class="bg-primary text-white shadow-2" :breakpoint="0" align="justify">
-        <q-route-tab to="/" name="home" exact>
-          <img class="inactive" src="../assets/images/index/menu/home-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/home-icon-hover.png" />
-          首页
-        </q-route-tab>
-        <q-route-tab to="/promo" name="promo">
-          <img class="inactive" src="../assets/images/index/menu/promo-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/promo-icon-hover.png" />
-          优惠
-        </q-route-tab>
-        <q-route-tab class="cs-web-id" to="/liveChat" id="cs-web-id" name="live">
-          <img class="inactive" src="../assets/images/index/menu/livechat-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/livechat-icon-hover.png" />
-          客服
-        </q-route-tab>
-        <q-route-tab to="/affiliate" name="affiliate">
-          <img class="inactive" src="../assets/images/index/menu/affiliate-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/affiliate-icon-hover.png" />
-          加盟
-        </q-route-tab>
-        <q-route-tab to="/account" name="account">
-          <img class="inactive" src="../assets/images/index/menu/account-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/account-icon-hover.png" />
-          我的
-        </q-route-tab>
-      </q-tabs>
+      <div class="bottom-nav">
+        <q-tabs v-model="tab" no-caps :breakpoint="0" align="justify">
+          <q-route-tab to="/" name="home" exact :ripple="false">
+            <div class="menu-icon inactive"><img src="../assets/images/index/menu/menu-home.png" /></div>
+            <div class="menu-icon hover"><img src="../assets/images/index/menu/menu-home-hover.png" /></div>
+            首页
+          </q-route-tab>
+          <q-route-tab to="/promo" name="promo" :ripple="false">
+            <div class="menu-icon inactive"><img src="../assets/images/index/menu/menu-promo.png" /></div>
+            <div class="menu-icon hover"><img src="../assets/images/index/menu/menu-promo-hover.png" /></div>
+            优惠
+          </q-route-tab>
+          <q-route-tab to="/account" name="account" :ripple="false">
+            <div class="menu-icon account"><img src="../assets/images/index/menu/menu-account-hover.png" /></div>
+          </q-route-tab>
+          <q-route-tab to="/affiliate" name="affiliate" :ripple="false">
+            <div class="menu-icon inactive"><img src="../assets/images/index/menu/menu-affiliate.png" /></div>
+            <div class="menu-icon hover"><img src="../assets/images/index/menu/menu-affiliate-hover.png" /></div>
+            加盟
+          </q-route-tab>
+          <q-route-tab class="cs-web-id" to="/liveChat" id="cs-web-id" name="live" :ripple="false">
+            <div class="menu-icon inactive"><img src="../assets/images/index/menu/menu-livechat.png" /></div>
+            <div class="menu-icon hover"><img src="../assets/images/index/menu/menu-livechat-hover.png" /></div>
+            客服
+          </q-route-tab>
+        </q-tabs>
+      </div>
     </q-footer>
   </q-layout>
 </template>
@@ -134,12 +106,7 @@ export default defineComponent({
     const prevPage = ref(null);
     const ui = useUI();
     const scrollPageRef = ref(null);
-    // ui.$onAction(({ name, args }) => {
-    //   switch (name) {
-    //     case "setScrollPosition":
-    //       scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
-    //   }
-    // });
+
     const goToPrevPage = (prePage) => {
       if (prePage === "/") {
         router.push("/");
@@ -319,8 +286,8 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = "优惠领取区";
         } else if (route.path === "/affiliate") {
-          prevPage.value = "account";
-          hasPage.value = true;
+          prevPage.value = "";
+          hasPage.value = false;
           pageName.value = "加盟";
         } else if (route.path === "/insert-bankinfo") {
           hasPage.value = true;
@@ -379,7 +346,7 @@ export default defineComponent({
     const pageName = ref("");
     const hasPage = ref(false);
     const hasDrawer = ref(false);
-    const leftDrawerOpen = ref(false);
+
     const platformsFixed = ref([
       {
         id: "81",
@@ -449,17 +416,16 @@ export default defineComponent({
       }
       return ui.slotLists;
     });
-    console.log(platformsList.value);
+
+    const isPlatformActive = (platformCode) => {
+      return route.query.platform === platformCode;
+    };
 
     onMounted(() => {
       checkRoute();
     });
     return {
       tab: ref("home"),
-      leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
-      },
       logout,
       store,
       scrollPageRef,
@@ -470,7 +436,8 @@ export default defineComponent({
       goToPrevPage,
       hasDrawer,
       platformsList,
-      changePlatform
+      changePlatform,
+      isPlatformActive
     };
   }
 });
@@ -478,17 +445,17 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .q-drawer .platform-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 16px;
 
   .q-btn {
-    width: 40%;
+    width: 100%;
+    box-shadow: 0px 0px 2.78px 0px #a9c9ea inset;
   }
 }
 
 .scrollArea {
-  // height: calc(100vh - 70px);
   height: 100%;
   max-width: 500px;
   margin: 0 auto;
@@ -516,6 +483,22 @@ svg path {
 
   img {
     width: 100%;
+  }
+}
+
+.bottom-nav {
+  font-size: 10px;
+  position: relative;
+  background-image: url("../assets/images/index/menu/menu-bg.png");
+  background-size: auto 100%;
+  background-position: center center;
+  background-repeat: repeat-x;
+  margin: 0 -6px;
+  background-color: transparent;
+  padding-top: 4px;
+
+  :deep(.q-tabs__content) {
+    padding-bottom: 4px;
   }
 }
 </style>

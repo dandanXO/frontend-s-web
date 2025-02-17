@@ -1,6 +1,6 @@
 <template>
-  <div class="download">
-    <q-tabs
+  <div class="download q-pa-md">
+    <!-- <q-tabs
       v-model="tab"
       active-color="white"
       indicator-color="bright"
@@ -8,16 +8,14 @@
     >
       <q-tab name="android" label="安卓系统" />
       <q-tab name="apple" label="苹果系统" />
-    </q-tabs>
+    </q-tabs> -->
+
+    <RoundTab v-model:tab="tab" :items="tabItems" @change="goToTab"></RoundTab>
 
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="android">
         <div class="downloads">
-          <div
-            class="download-item q-my-sm"
-            v-for="(dn, i) in androidItems"
-            :key="i"
-          >
+          <div class="download-item q-my-sm" v-for="(dn, i) in androidItems" :key="i">
             <div class="imgtext">
               <img :src="require(`../../assets/download/${dn.icon}.png`)" />
               <div>
@@ -27,10 +25,7 @@
               </div>
             </div>
             <a :href="dn.downloadLink" target="_blank">
-              <img
-                class="download"
-                src="../../assets/download/btn_download.png"
-              />
+              <img class="download" src="../../assets/download/btn_download.png" />
             </a>
           </div>
         </div>
@@ -38,11 +33,7 @@
 
       <q-tab-panel name="apple">
         <div class="downloads">
-          <div
-            class="download-item q-my-sm"
-            v-for="(dn, i) in appleItems"
-            :key="i"
-          >
+          <div class="download-item q-my-sm" v-for="(dn, i) in appleItems" :key="i">
             <div class="imgtext">
               <img :src="require(`../../assets/download/${dn.icon}.png`)" />
               <div>
@@ -52,10 +43,7 @@
               </div>
             </div>
             <a :href="dn.downloadLink" target="_blank">
-              <img
-                class="download"
-                src="../../assets/download/btn_download.png"
-              />
+              <img class="download" src="../../assets/download/btn_download.png" />
             </a>
           </div>
         </div>
@@ -66,8 +54,19 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { api } from "boot/axios";
+import RoundTab from "src/components/RoundTab.vue";
 
 const tab = ref("android");
+const tabItems = [
+  {
+    name: "android",
+    label: "安卓系统"
+  },
+  {
+    name: "apple",
+    label: "苹果系统"
+  }
+];
 
 const downloadUrl = ref("");
 
@@ -95,8 +94,7 @@ const androidItems = computed(() => {
       downloadLink: downloadUrl.value
     }
   ];
-})
-
+});
 
 const appleItems = computed(() => {
   return [
@@ -107,7 +105,7 @@ const appleItems = computed(() => {
       downloadLink: downloadUrl.value
     }
   ];
-})
+});
 
 const getAppDownloadUrl = () => {
   api
