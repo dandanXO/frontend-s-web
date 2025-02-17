@@ -6,12 +6,13 @@
   </div>
 </template>
 <script setup>
-import { onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref, provide, computed } from "vue";
 import EnvelopeStage from "./EnvelopeStage.vue";
 import { useUI } from "src/stores/ui";
 import WheelStage from "./WheelStage.vue";
 import { eventapi } from "src/boot/axios";
 const ui = useUI();
+
 
 const props = defineProps(["params"]);
 const params = JSON.parse(props.params || "{}");
@@ -28,6 +29,13 @@ const info = ref({
   spinChance: 0,
   status: ""
 });
+
+const extractionDifference = computed(() =>
+    Math.min(Math.round((info.value.targetWithdrawAmount - info.value.currAmount) * 100) / 100, 100)
+);
+
+provide('info', info);
+provide('extractionDifference', extractionDifference);
 
 const loadData = async () => {
   isDuringInit.value = true;
@@ -48,6 +56,7 @@ const loadData = async () => {
       ...info.value,
       ...res.data
     };
+    
     isDuringInit.value = false;
   }
 };

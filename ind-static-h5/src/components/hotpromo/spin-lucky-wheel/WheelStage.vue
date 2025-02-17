@@ -3,25 +3,16 @@
     <div class="wheel-outer-wrapper">
       <!-- <span class="title">Countdown: {{ remainingTime }}</span> -->
       <div class="summary-wrapper">
-        <span class="prize">
+        <!-- <span class="prize">
           $
           <span class="amount">{{ info.currAmount }}</span>
-        </span>
+        </span> -->
+
+        <GradientTextAmount :amountText="`$ ${info.currAmount}`" />
 
         <template v-if="extractionDifference > 0 && info.status === 'IN_PROGRESS'">
-          <span class="extraction-require-amount">
-            Extraction requires only
-            <span class="amount">${{ extractionDifference }}</span>
-          </span>
-
-          <div class="extraction-progress-bar">
-            <div class="progress" :style="{ width: progressBarIndicatePosition }"></div>
-            <img
-              class="indicate"
-              :style="{ left: progressBarIndicatePosition }"
-              src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/coin.png"
-            />
-          </div>
+          <ProgressBar />
+          <div class="cash-out-btn" @click="isCashOutPopupVisible = true" />
         </template>
 
         <button v-else-if="info.status === 'IN_PROGRESS'" class="receive-btn" @click="handleReceiveClick">
@@ -125,21 +116,26 @@
     </div>
     <WheelResultDialog v-model="showResultDialog" :prize="prize" @hide="$emit('reload')" />
     <RecordDialog v-model="showRecordDialog" />
+    <CashOutPopup ref="cashOutPopupRef" v-model="isCashOutPopupVisible" />
   </div>
 </template>
 <script setup>
 import moment from "moment-timezone";
-import { computed, onMounted, onUnmounted, ref, toRefs } from "vue";
+import { computed, onMounted, onUnmounted, ref, toRefs, provide } from "vue";
 import CommonButton from "./CommonButton.vue";
 import WheelResultDialog from "./WheelResultDialog.vue";
 import RecordDialog from "./RecordDialog.vue";
 import { useRouter } from "vue-router";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
+import ProgressBar from './ProgressBar.vue';
+import CashOutPopup from "./CashOutPopup.vue";
+import GradientTextAmount from "./GradientTextAmount.vue";
 
 const emit = defineEmits(["reload"]);
 const props = defineProps(["info"]);
 const { info } = toRefs(props);
+
 
 const TOTAL_ITEMS = 6;
 const DEFAULT_SPEED = 1;
@@ -168,9 +164,13 @@ const prizeIndex = ref(0);
 const timer = ref();
 const prize = ref(0);
 const winningRecordRef = ref();
+const isCashOutPopupVisible = ref(false);
+const cashOutPopupRef = ref();
+
+provide('nextFreeSpinRemainingTime', nextFreeSpinRemainingTime);
 
 const extractionDifference = computed(() =>
-  Math.min(Math.round((info.value.targetWithdrawAmount - info.value.currAmount) * 100) / 100, 100)
+  Math.min(((info.value.targetWithdrawAmount - info.value.currAmount) * 10000 / 10000).toFixed(4), 100)
 );
 
 const winningRecord = computed(() => {
@@ -186,14 +186,6 @@ const winningRecord = computed(() => {
     });
   }
   return result;
-});
-
-const progressBarIndicatePosition = computed(() => {
-  if (extractionDifference.value < 5) {
-    return `96%`;
-  } else {
-    return `calc(100% - ${extractionDifference.value}%)`;
-  }
 });
 
 const rotate = (timestamp, stopCallback) => {
@@ -261,7 +253,8 @@ const handleWheelClick = () => {
 };
 
 const handleInviteClick = () => {
-  router.push("/earn-money?key=earn");
+  isCashOutPopupVisible.value = true;
+  cashOutPopupRef.value?.showInviteWins();
 };
 
 const getRemainingTime = (endTime) => {
@@ -366,15 +359,19 @@ onUnmounted(() => {
           font-size: 40px;
         }
       }
-
-      .extraction-require-amount {
-        font-size: 16px;
-        font-weight: 700;
+      
+      .extraction-require-amount, .extraction-require-percentage {
         color: #fff;
+        font-family: 'Poppins';
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 0px;
+        text-align: left;
+
         .amount {
-          font-size: 20px;
-          font-weight: 900;
-          color: #cd91ff;
+          font-weight: 500;
+          color: #FEBA02;
         }
       }
 
@@ -391,6 +388,8 @@ onUnmounted(() => {
           left: 0;
           height: 100%;
           background: linear-gradient(356.25deg, #3b156e -0.21%, #8100ae 93.65%);
+          background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/progress-bar-bg.png) no-repeat;
+          background-size: 100% 100%;
           border-radius: 4px;
         }
 
@@ -429,8 +428,7 @@ onUnmounted(() => {
       .winning-record-outer-wrapper {
         padding: 12px 14px;
         width: 100%;
-        background-color: #5817aa99;
-        border: 1px solid #e8c4ff99;
+        background-color: #1E1F24;
         border-radius: 8px;
 
         .winning-record-wrapper {
@@ -466,7 +464,7 @@ onUnmounted(() => {
 
       .foreground-wrapper {
         position: absolute;
-        bottom: 0;
+        bottom: -50px;
         left: -1px;
         right: -1px;
         background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/fg.png) no-repeat;
@@ -596,6 +594,7 @@ onUnmounted(() => {
     background-color: #1e1f24;
     border-radius: 12px;
     padding: 16px 10px;
+    margin-top: 70px;
 
     .title-wrapper {
       display: flex;
@@ -692,5 +691,13 @@ onUnmounted(() => {
       }
     }
   }
+}
+
+.cash-out-btn {
+  background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/cash-out-btn.svg) no-repeat;
+  background-size: 100% 100%;
+  aspect-ratio: 287 / 36;
+  min-height: 36px;
+  width: 100%;
 }
 </style>

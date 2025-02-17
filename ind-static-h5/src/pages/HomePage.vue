@@ -1140,6 +1140,10 @@
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
+
+  <q-dialog width="100%" v-model="isShowSpinLuckyWheelPromoPopup" class="spin-lucky-wheel-promo-popup" @update:model-value="onCloseSpinLuckyWheelPromoPopup" >
+    <HomePopup ref="spinLuckyWheelPromoPopupRef" />
+  </q-dialog>
 </template>
 
 <script setup>
@@ -1160,7 +1164,7 @@ import WithdrawalModal from "../components/modal/WithdrawalModal.vue";
 import DepositComponent from "../components/depositComponent.vue";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
-
+import moment from 'moment';
 import { Swiper, SwiperSlide } from "swiper/vue";
 // import { ref, onMounted, onUnmounted } from 'vue';
 import "swiper/css";
@@ -1170,6 +1174,7 @@ import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 // Import Swiper modules
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core";
+import HomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
@@ -2623,6 +2628,25 @@ const checkHbPromo = () => {
     });
 };
 
+const spinLuckyWheelPromoPopupRef = ref();
+const isShowSpinLuckyWheelPromoPopup = ref(false);
+const onCloseSpinLuckyWheelPromoPopup = () => {
+  if(spinLuckyWheelPromoPopupRef.value?.isDoNotShowAgain) {
+    localStorage.setItem("SPIN_LUCKY_WHEEL_POPUP", Date.now());
+    isShowSpinLuckyWheelPromoPopup.value = false;
+  } else {
+    localStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
+  }
+}
+const checkSpinLuckyWheelPromo = () => {
+  // or if got timestamp
+  const hasPromo = localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP") === 'true';
+
+  if(hasPromo) {
+    isShowSpinLuckyWheelPromoPopup.value = true;
+  }
+}
+
 const download_url = ref("");
 const isAppUpdateModal = ref(false);
 const isOutdatedApp = ref(false);
@@ -2834,6 +2858,7 @@ onMounted(() => {
   loadJDBFishGameList();
   loadCustomerAddress();
   checkHbPromo();
+  checkSpinLuckyWheelPromo();
 
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
