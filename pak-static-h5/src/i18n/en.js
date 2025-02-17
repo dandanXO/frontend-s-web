@@ -650,7 +650,9 @@ export default {
     "minutes": "minutes)",
     "successfulWithdrawal": "Reminder of successful withdrawal (a prompt pops up after the funds arrive)",
     "shareandearn": "Share and Earn",
-    "noSupport": "Your browser does not support the video tag."
+    "noSupport": "Your browser does not support the video tag.",
+    "linkCopied": "Link copied to clipboard",
+    "copyFailed": "Failed to copy link"
   },
   hotPromo: {
     aviatorWheel: {

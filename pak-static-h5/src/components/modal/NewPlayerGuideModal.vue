@@ -316,7 +316,7 @@ const copyHrefLink = () => {
     .writeText(selfTgurl.value)
     .then(() => {
       $q.notify({
-        message: "Link copied to clipboard",
+        message: t('playerGuide.linkCopied'),
         color: "positive",
         position: "top",
         timeout: 2000
@@ -324,7 +324,7 @@ const copyHrefLink = () => {
     })
     .catch(() => {
       $q.notify({
-        message: "Failed to copy link",
+        message: t('playerGuide.copyFailed'),
         color: "negative",
         position: "top",
         timeout: 2000

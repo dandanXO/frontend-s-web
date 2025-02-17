@@ -647,6 +647,8 @@ export default {
     "successfulWithdrawal": "کامیاب واپسی کی یاد دہانی (فنڈز کے پہنچنے کے بعد ایک پیغام ظاہر ہوتا ہے)",
     "shareandearn": "شیئر کریں اور کمائیں",
     "noSupport": "آپ کا براؤزر ویڈیو ٹیگ کو سپورٹ نہیں کرتا ہے۔",
+    "linkCopied": "لنک کلپ بورڈ پر کاپی ہو گیا",
+    "copyFailed": "لنک کاپی کرنے میں ناکامی"
   },
   hotPromo: {
     aviatorWheel: {
