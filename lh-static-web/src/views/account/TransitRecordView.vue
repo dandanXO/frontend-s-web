@@ -1070,7 +1070,7 @@ export default defineComponent({
         }
         if (recordActive.value === 'gameBetRecord') {
           let selectedPlatform = searchForm.gameBetRecord.platformName;
-          if (selectedPlatform.includes("@")){
+          if (selectedPlatform && selectedPlatform.includes("@")){
             const platformArr = selectedPlatform.split('@');
             searchForm.gameBetRecord.platform = platformArr[0];
             searchForm.gameBetRecord.gameType = platformArr[1];
