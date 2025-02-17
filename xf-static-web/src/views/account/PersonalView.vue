@@ -50,6 +50,15 @@
               </div>
               <div class="tbl-row">
                 <div class="basic-info-cell title">生日</div>
+
+                <el-button
+                  class="common-btn"
+                  v-if="!isEdit && (!personalState.memberInfo.realName || !personalState.memberInfo.birthday)"
+                  @click="isEdit = !isEdit"
+                >
+                  编辑
+                </el-button>
+
                 <div v-if="personalState.memberInfo.birthday" class="basic-info-cell content">
                   {{ personalState.memberInfo.birthday }}
                 </div>

@@ -103,7 +103,7 @@
             <router-link :class="nav.icon" @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
               <span v-if="nav.icon"><img :src="require(`@/assets/images/index/menu/menuicon_${nav.icon}.png`)"></span>
               <span>{{ nav.name }}</span>
-              <!-- <span>{{ nav.enName }}</span> -->
+              <span v-if="!nav.icon" class="nav-enName">{{ nav.enName }}</span>
             </router-link>
           </div>
           <div @mouseleave="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">
@@ -321,7 +321,7 @@
               </el-space>
             </el-form-item> -->
 
-            <!-- <el-form-item label="姓名" prop="realName">
+            <el-form-item label="姓名" prop="realName">
               <el-space>
                 <el-input v-model="regForm.realName" placeholder="输入姓名" />
                 <el-tooltip content="范围在 2-12 位之间，由中文字符组成" placement="right">
@@ -330,7 +330,7 @@
                   </el-icon>
                 </el-tooltip>
               </el-space>
-            </el-form-item> -->
+            </el-form-item>
 
             <el-form-item label="用户名" prop="loginName">
               <el-space>
@@ -1084,25 +1084,25 @@ export default defineComponent({
       }
     };
 
-    // let validateRealName = async (r, v) => {
-    //   if (v === "") {
-    //     return Promise.reject("请输入登姓名");
-    //   } else if (!checkRealName(v)) {
-    //     return Promise.reject("请输入中文字符");
-    //   } else {
-    //     return Promise.resolve();
-    //   }
-    // };
+    let validateRealName = async (r, v) => {
+      if (v === "") {
+        return Promise.reject("请输入登姓名");
+      } else if (!checkRealName(v)) {
+        return Promise.reject("请输入中文字符");
+      } else {
+        return Promise.resolve();
+      }
+    }; 
 
     const checkName = (v) => {
       const alphanumeric = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$/;
       return v.match(alphanumeric);
     };
-    // const checkRealName = (v) => {
-    //   // const alphanumeric = /^[\p{L}\p{N}]*$/u;
-    //   const chineseCharOnly = /^([\u4e00-\u9fa5]*)$/u;
-    //   return v.match(chineseCharOnly);
-    // };
+    const checkRealName = (v) => {
+      // const alphanumeric = /^[\p{L}\p{N}]*$/u;
+      const chineseCharOnly = /^([\u4e00-\u9fa5]*)$/u;
+      return v.match(chineseCharOnly);
+    };
     let validatePass2 = async (r, v) => {
       if (v === "") {
         return Promise.reject("请重新输入密码");
@@ -1230,7 +1230,7 @@ export default defineComponent({
     };
 
     const regForm = reactive({
-      // realName: "",
+      realName: "",
       loginName: "",
       password: "",
       confirmPwd: "",
@@ -1255,19 +1255,19 @@ export default defineComponent({
     });
 
     const regRules = {
-      // realName: [
-      //   {
-      //     required: true,
-      //     min: 2,
-      //     max: 12,
-      //     message: "长度应为 2 至 12",
-      //     trigger: "blur",
-      //   },
-      //   {
-      //     validator: validateRealName,
-      //     trigger: "change",
-      //   },
-      // ],
+      realName: [
+        {
+          required: true,
+          min: 2,
+          max: 12,
+          message: "长度应为 2 至 12",
+          trigger: "blur",
+        },
+        {
+          validator: validateRealName,
+          trigger: "change",
+        },
+      ],
       loginName: [
         {
           required: true,
@@ -2708,6 +2708,8 @@ body {
             font-size: 18px;
             font-weight: 400;
             line-height: 24px;
+            white-space: nowrap;
+
             span:first-child {
               color: #B8B8B8;
               // font-size: 1rem;
@@ -2759,6 +2761,10 @@ body {
               &:after {
                 background: $link-active;
               }
+            }
+
+            .nav-enName{
+              font-size:70%;
             }
           }
 
