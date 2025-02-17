@@ -136,12 +136,13 @@
                       <source v-if="index+1 === 3" src="http://npr101.com/video/video-2.mp4" type="video/mp4">
                       <source v-if="index+1 === 4" src="http://npr101.com/video/video-1.mp4" type="video/mp4">
                       <source v-if="index+1 === 5" src="http://npr101.com/video/video-2.mp4" type="video/mp4">
-                      Your browser does not support the video tag.
+                      
+                      {{ $t('playerGuide.noSupport') }}
                     </video>
                     <!-- <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dRPcJyisLUI?si=ok64lVuE9jWtcnGr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
                   </div>
-                  <div class="bottom-button" @click="closeDialog(step)">
-                    <span v-if="step.buttonTxt === 'SHARE NOW'">
+                  <div class="bottom-button" @click="closeDialog(index+1)">
+                    <span v-if="index+1 === 4">
                       <img src="../../assets/images/newplayerguide/share-icon.png">
                     </span>
                     {{ step.buttonTxt }}
@@ -193,7 +194,7 @@
         <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
 
         <div class="popout-dialog-container">
-          <div class="txt-title">Share and Earn</div>
+          <div class="txt-title">{{ $t('playerGuide.shareandearn') }}</div>
           <!-- <div class="txt-content q-mt-md text-center">Share and Earn</div> -->
           <div class="modal-invite-share-social">
             <a class="social-item" @click="handleShareToYoutube(selfTgurl)">
@@ -277,15 +278,15 @@
     });
 };
   // Close the dialog and move to the next step
-  const closeDialog = (step) => {
+  const closeDialog = (index) => {
     isVideo.value = false;
-    if (step.buttonTxt === "TRY IT OUT") {
+    if (index === 2) {
       emit("update:runAviator");
-    } else if (step.buttonTxt === "DEPOSIT NOW") {
+    } else if (index === 3) {
       router.push("/deposit");
-    } else if (step.buttonTxt === "WITHDRAW NOW") {
+    } else if (index === 5) {
       router.push("/withdraw");
-    } else if (step.buttonTxt === "SHARE NOW") {
+    } else if (index === 4) {
       isBottomShareDialog.value = true;
       return
     } else {

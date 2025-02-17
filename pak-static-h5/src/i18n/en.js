@@ -648,7 +648,9 @@ export default {
     "commissionDetails": "(regardless of winning or losing)",
     "arrivalTime": "Reminder of arrival time (usually",
     "minutes": "minutes)",
-    "successfulWithdrawal": "Reminder of successful withdrawal (a prompt pops up after the funds arrive)"
+    "successfulWithdrawal": "Reminder of successful withdrawal (a prompt pops up after the funds arrive)",
+    "shareandearn": "Share and Earn",
+    "noSupport": "Your browser does not support the video tag."
   },
   hotPromo: {
     aviatorWheel: {

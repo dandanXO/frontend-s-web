@@ -644,7 +644,9 @@ export default {
     "commissionDetails": "(چاہے جیتیں یا ہاریں)",
     "arrivalTime": "پہنچنے کے وقت کی یاد دہانی (عام طور پر",
     "minutes": "منٹ)",
-    "successfulWithdrawal": "کامیاب واپسی کی یاد دہانی (فنڈز کے پہنچنے کے بعد ایک پیغام ظاہر ہوتا ہے)"
+    "successfulWithdrawal": "کامیاب واپسی کی یاد دہانی (فنڈز کے پہنچنے کے بعد ایک پیغام ظاہر ہوتا ہے)",
+    "shareandearn": "شیئر کریں اور کمائیں",
+    "noSupport": "آپ کا براؤزر ویڈیو ٹیگ کو سپورٹ نہیں کرتا ہے۔",
   },
   hotPromo: {
     aviatorWheel: {
