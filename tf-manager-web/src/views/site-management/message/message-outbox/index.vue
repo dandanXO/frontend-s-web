@@ -287,7 +287,9 @@ async function loadMessageOutbox() {
     }
   });
   if (request.createTime.length === 2) {
-    query.createTime = request.createTime.join(",");
+    const newDate = [request.createTime[0], request.createTime[1]]
+    newDate[1] = convertDate(moment(newDate[1]).add(1, 'days'))
+    query.createTime = newDate.join(',')
   }
   if (request.siteId === null) {
     const siteIdList = siteList.list.map(s => s.id);
