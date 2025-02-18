@@ -370,7 +370,7 @@ export default defineComponent({
       referrer: "",
       smsCodeId: "",
       smsCode: "",
-      traceid: ""
+      traceId: ""
     });
     const getCode = () => {
       // api
@@ -510,7 +510,7 @@ export default defineComponent({
 
         (async () => {
           if (store.aaid) {
-            regForm.traceid = store.aaid;
+            regForm.traceId = store.aaid;
           }
           regForm.sid = sidParam;
 
