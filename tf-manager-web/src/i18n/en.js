@@ -3333,6 +3333,7 @@ export default {
     'Bet type setting': 'bet type setting',
     'Sport App Setting': 'Sport App Setting',
     'Game Jackpot Bonus Record': 'Game Jackpot Bonus Record',
+    'Member Privilege Record Pak Export': 'Member Privilege Record Pak Export'
   },
   google: {
     google_auth_menu: 'Google Authenticator',

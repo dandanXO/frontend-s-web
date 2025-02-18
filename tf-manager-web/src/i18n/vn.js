@@ -2688,6 +2688,7 @@ export default {
     'Sport App Setting': 'Cài đặt ứng dụng thể thao',
     Sport: 'Thể thao',
     'Game Jackpot Bonus Record': 'Hồ sơ thưởng Jackpot',
+    'Member Privilege Record Pak Export': 'Xuất khẩu kỷ lục giảm giá thành viên - Pakistan'
   },
   google: {
     google_auth_menu: 'Google Xác thực',
