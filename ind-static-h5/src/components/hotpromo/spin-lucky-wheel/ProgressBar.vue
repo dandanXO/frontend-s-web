@@ -7,7 +7,7 @@
 
     <div class="extraction-remaining-progress">
         <span class="extraction-require-amount">Only <span class="amount">${{ extractionDifference }}</span> to go</span>
-        <span class="extraction-require-percentage">{{ `${info.currAmount / info.targetWithdrawAmount * 100}%` }}</span>
+        <span class="extraction-require-percentage">{{ `${remainingRequired}%` }}</span>
     </div>
 </template>
 <script setup>
@@ -15,13 +15,10 @@ import { computed, inject } from "vue";
 
 const info = inject('info');
 const extractionDifference = inject('extractionDifference');
+const remainingRequired = computed(() => info.value.currAmount / info.value.targetWithdrawAmount * 100);
 
 const progressBarIndicatePosition = computed(() => {
-    if (extractionDifference.value < 5) {
-        return `96%`;
-    } else {
-        return `calc(100% - ${extractionDifference.value}%)`;
-    }
+    return `calc(${remainingRequired.value}%)`;
 });
 </script>
 <style lang="scss" scoped>
