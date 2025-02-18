@@ -79,8 +79,7 @@
       v-if="showFloatPromo"
       :class="{ minimum: !isFloatPromoExpanded }"
       :style="{ top: promoPosition.top + 'px', left: promoPosition.left + 'px' }"
-      @mousedown="startDragging('promo', $event)"
-    >
+      >
       <div style="position: relative">
         <!-- <div class="close-btn" @click="hideFloatPromo()">X</div> -->
         <div class="close-btn scale" @click.prevent="scaleFloatPromo">
