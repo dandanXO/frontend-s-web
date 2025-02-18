@@ -464,7 +464,7 @@ onUnmounted(() => {
 
       .foreground-wrapper {
         position: absolute;
-        bottom: -50px;
+        bottom: -60px;
         left: -1px;
         right: -1px;
         background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/fg.png) no-repeat;
@@ -699,5 +699,9 @@ onUnmounted(() => {
   aspect-ratio: 287 / 36;
   min-height: 36px;
   width: 100%;
+
+  &:active {
+      transform: translateY(2px);
+  }
 }
 </style>
