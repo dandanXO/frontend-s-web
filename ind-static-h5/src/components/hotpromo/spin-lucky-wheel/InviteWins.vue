@@ -10,7 +10,8 @@
 
         <div class="qr-wrapper invite-win-section">
             <q-spinner v-if="isLoading" :size="30" />
-            <VueQRCodeComponent v-else id="the-qrcode" :size="150" :text="selfTgurl" class="qr-code" />
+            <VueQRCodeComponent v-else id="the-qrcode" :size="120" :text="selfTgurl" class="qr-code" />
+            <span class="desc">Do you want to unlock your reward right away? Invite you friends for a free spin!</span>
             <q-btn label="Save" :size="'150'" class="save-btn" @click="downloadQRImg()" />
         </div>
     </div>
@@ -212,5 +213,12 @@ onMounted(() => {
             padding: 10px;
         }
     }
+}
+
+.desc {
+    line-height: 15px;
+    font-size: 13px;
+    letter-spacing: 0px;
+    text-align: center;
 }
 </style>
