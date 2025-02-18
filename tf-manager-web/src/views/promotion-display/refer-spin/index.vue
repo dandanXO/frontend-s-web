@@ -83,8 +83,8 @@
               <span v-if="item.type === 'FIRST_FREE_SPIN'">First Free Spin({{ item.pt }}pt) <br></span>
               <span v-if="item.type === 'NEW_INVITE'">New Invite({{ item.pt }}pt): {{ item.count }} invites <br></span>
               <span v-if="item.type === 'TEAM_VALID_BET'">Team Valid Bet({{ item.pt }}pt): Amount ${{ item.amount }} Team Size: {{ item.teamCount }} <br></span>
-              <span v-if="item.type === 'TEAM_DEPOSIT'">Team Valid Bet({{ item.pt }}pt): Amount ${{ item.amount }} Team Size: {{ item.teamCount }} <br></span>
-              <span v-if="item.type === 'TEAM_PROFIT'">Team Valid Bet({{ item.pt }}pt): Amount ${{ item.amount }} <br></span>
+              <span v-if="item.type === 'TEAM_DEPOSIT'">Team Deposit({{ item.pt }}pt): Amount ${{ item.amount }} Team Size: {{ item.teamCount }} <br></span>
+              <span v-if="item.type === 'TEAM_PROFIT'">Team Profit({{ item.pt }}pt): Amount ${{ item.amount }} <br></span>
             </span>
           </template>
         </el-table-column>
