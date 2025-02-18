@@ -96,4 +96,16 @@ const nextFreeSpinRemainingTime = inject('nextFreeSpinRemainingTime');
     line-height: 24.2px;
     letter-spacing: 0px;
 }
+
+@media screen and (max-width: 400px) {
+    .next-spin-remaining-time {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .next-spin-remaining-time {
+        font-size: 14px;
+    }
+}
 </style>

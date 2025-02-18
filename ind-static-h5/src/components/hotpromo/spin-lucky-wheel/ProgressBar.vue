@@ -43,7 +43,8 @@ const progressBarIndicatePosition = computed(() => {
 
 .extraction-progress-bar {
     position: relative;
-    width: 100%;
+    width: 95%;
+    margin: 0 auto;
     height: 12px;
     background-color: #cc9f8c;
     border-radius: 100px;
@@ -72,6 +73,15 @@ const progressBarIndicatePosition = computed(() => {
   justify-content: space-between;
   font-family: 'Poppins';
   width: 100%;
-  margin: 5px 0;
+  margin: 5px auto;
+}
+
+@media screen and (max-width: 400px) {
+    .extraction-progress-bar {
+        width: 90%;
+    }
+    .extraction-remaining-progress {
+        width: 95%;
+    }
 }
 </style>

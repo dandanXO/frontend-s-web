@@ -44,4 +44,31 @@ const isLongText = computed(() => props?.amountText?.length > 10);
         }
     }
 }
+
+@media screen and (max-width: 400px) {
+    .gradient-amount-wrapper {
+        .amount {
+            font-size: 40px;
+
+            &.longText {
+                font-size: 22px;
+                letter-spacing: -1px;
+            }
+        }
+    }
+}
+
+
+@media screen and (max-width: 350px) {
+    .gradient-amount-wrapper {
+        .amount {
+            font-size: 30px;
+
+            &.longText {
+                font-size: 18px;
+                letter-spacing: -1px;
+            }
+        }
+    }
+}
 </style>

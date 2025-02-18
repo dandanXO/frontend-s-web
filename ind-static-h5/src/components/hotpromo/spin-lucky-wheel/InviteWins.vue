@@ -1,12 +1,16 @@
 <template>
     <div class="invite-win-container">
         <div class="referral-link-wrapper invite-win-section">
-            <div class="link">{{ selfTgurl }}</div>
+            <div class="link">
+                <q-spinner style="width: 100%;margin:0 auto;" v-if="isLoading" :size="30" />
+                <span v-else>{{ selfTgurl }}</span>
+            </div>
             <q-icon class="copy-btn" name="content_copy" @click="copyShareLink(selfTgurl)" />
         </div>
 
         <div class="qr-wrapper invite-win-section">
-            <VueQRCodeComponent id="the-qrcode" :size="150" :text="selfTgurl" class="qr-code" />
+            <q-spinner v-if="isLoading" :size="30" />
+            <VueQRCodeComponent v-else id="the-qrcode" :size="150" :text="selfTgurl" class="qr-code" />
             <q-btn label="Save" :size="'150'" class="save-btn" @click="downloadQRImg()" />
         </div>
     </div>
@@ -23,6 +27,7 @@ import { Filesystem, Directory } from "@capacitor/filesystem";
 
 const $q = useQuasar();
 const store = userStore();
+const isLoading = ref(false);
 
 const selfTgurl = ref("");
 const copyShareLink = (selfTgurl) => {
@@ -89,13 +94,22 @@ const downloadQRImg = async () => {
 };
 
 onMounted(() => {
+    isLoading.value = true;
+
     let tgDomain = window.location.origin + "/";
     if (store.isApp()) {
         tgDomain = store.h5Url;
     }
 
     api.get("/session/member/referralCode").then((res) => {
-        if (res.code === 0) selfTgurl.value = tgDomain + "refer/" + res.data;
+        if (res.code === 0) {
+            selfTgurl.value = tgDomain + "refer/" + res.data;
+            isLoading.value = false;
+        }
+    }).catch(() => {
+        isLoading.value = false;
+    }).finally(() => {
+        isLoading.value = false;
     });
 });
 </script>
@@ -119,6 +133,8 @@ onMounted(() => {
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+            width: 100%;
+            margin: 0 auto;
         }
 
         .copy-btn {
@@ -159,5 +175,42 @@ onMounted(() => {
     background: #1E1F24;
     border: 1px solid #CD91FF;
     border-radius: 4px;
+}
+
+@media screen and (max-width: 400px) {
+    .invite-win-container {
+        gap: 10px;
+
+        .referral-link-wrapper {
+            gap: 5px;
+            margin: 5px 0 0 0;
+            height: 40px;
+            padding: 5px;
+        }
+
+        .qr-wrapper {
+            padding: 10px;
+        }
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .invite-wins {
+        padding: 35px 15px 0;
+    }
+    .invite-win-container {
+        gap: 10px;
+
+        .referral-link-wrapper {
+            gap: 5px;
+            margin: 5px 0 0 0;
+            height: 40px;
+            padding: 5px;
+        }
+
+        .qr-wrapper {
+            padding: 10px;
+        }
+    }
 }
 </style>
