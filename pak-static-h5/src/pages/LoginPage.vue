@@ -471,7 +471,8 @@ export default defineComponent({
               .memberLogin({
                 loginName: loginForm.loginName,
                 password: loginForm.password,
-                sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
+                // sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
+                sid: sidParam,
                 captchaCode: loginForm.captchaCode,
                 codeId: loginForm.codeId,
                 ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVersionNo.value } : {})

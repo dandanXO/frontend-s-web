@@ -172,7 +172,6 @@
             v-if="scope.row.startTime !== null"
             v-formatter="{
               data: scope.row.startTime,
-              timeZone: timeZone,
               type: 'date',
             }"
           />
@@ -186,7 +185,6 @@
             v-if="scope.row.endTime !== null"
             v-formatter="{
               data: scope.row.endTime,
-              timeZone: timeZone,
               type: 'date',
             }"
           />
@@ -355,7 +353,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item v-if="form.type" :label="t('fields.icon')" prop="icon">
+      <el-form-item v-if="form.type" :label="t('fields.desktopImage')" prop="icon" style="width: 550px">
         <el-row :gutter="5">
           <el-col v-if="form.icon" :span="18" style="width: 350px">
             <el-image
@@ -363,6 +361,7 @@
               :src="promoDir + form.icon"
               fit="contain"
               class="preview"
+              style="max-width: 230px;"
               :preview-src-list="[promoDir + form.icon]"
             />
             <el-image
@@ -370,6 +369,7 @@
               :src="gameDir + form.icon"
               fit="contain"
               class="preview"
+              style="max-width: 230px;"
               :preview-src-list="[gameDir + form.icon]"
             />
           </el-col>
@@ -378,7 +378,39 @@
               icon="el-icon-search"
               size="mini"
               type="success"
-              @click="browseImage()"
+              @click="browseImage('DESKTOP_IMAGE')"
+            >
+              {{ t('fields.browse') }}
+            </el-button>
+          </el-col>
+        </el-row>
+      </el-form-item>
+      <el-form-item v-if="form.type" :label="t('fields.mobileImage')" prop="icon" style="width: 550px">
+        <el-row :gutter="5">
+          <el-col v-if="form.iconMobile" :span="18" style="width: 350px">
+            <el-image
+              v-if="form.iconMobile && form.type === 'PROMO'"
+              :src="promoDir + form.iconMobile"
+              fit="contain"
+              class="preview"
+              style="max-width: 230px;"
+              :preview-src-list="[promoDir + form.iconMobile]"
+            />
+            <el-image
+              v-if="form.iconMobile && form.type === 'GAME'"
+              :src="gameDir + form.iconMobile"
+              fit="contain"
+              class="preview"
+              style="max-width: 230px;"
+              :preview-src-list="[gameDir + form.iconMobile]"
+            />
+          </el-col>
+          <el-col :span="6">
+            <el-button
+              icon="el-icon-search"
+              size="mini"
+              type="success"
+              @click="browseImage('MOBILE_IMAGE')"
             >
               {{ t('fields.browse') }}
             </el-button>
@@ -697,6 +729,7 @@ const form = reactive({
   code: null,
   platform: null,
   icon: null,
+  iconMobile: null,
   startTime: null,
   endTime: null,
   title: null,
@@ -908,7 +941,7 @@ function selectImage(item) {
   selectedImage.remark = item.remark
 }
 
-async function browseImage() {
+async function browseImage(type) {
   switch (form.type) {
     case 'PROMO':
       imageRequest.category = 'PROMO'
@@ -918,21 +951,27 @@ async function browseImage() {
       break
   }
   imageRequest.current = 1
-  await loadSiteImage()
-  uiControl.imageSelectionTitle = t('fields.icon')
-  uiControl.imageSelectionType = form.type
+  await loadSiteImage(type)
+
+  uiControl.imageSelectionTitle = type == "DESKTOP_IMAGE"?t('fields.desktopImage'):t('fields.mobileImage')
+  uiControl.imageSelectionType = type
   uiControl.imageSelectionVisible = true
 }
 
-async function loadSiteImage() {
+async function loadSiteImage(type) {
   selectedImage.id = 0
+  imageRequest.promoType = type
   const { data: ret } = await getSiteImage(imageRequest)
   imageList.list = ret.records
   imageList.pages = ret.pages
 }
 
 function submitImage() {
-  form.icon = selectedImage.path
+  if(uiControl.imageSelectionType == "DESKTOP_IMAGE"){
+    form.icon = selectedImage.path
+  } else {
+    form.iconMobile = selectedImage.path
+  }
   uiControl.imageSelectionVisible = false
 }
 

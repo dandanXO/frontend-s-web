@@ -984,7 +984,11 @@ async function removeBanner(banner) {
 }
 
 async function changeBannerState(id, state) {
-  await updateBannerState(id, state)
+  const res = await updateBannerState(id, state)
+  // console.log(res);
+  if (res.code === 0) {
+    ElMessage({ message: t('message.changeSuccess'), type: 'success' })
+  }
 }
 
 function create() {

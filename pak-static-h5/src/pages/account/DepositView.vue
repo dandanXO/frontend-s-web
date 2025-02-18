@@ -911,12 +911,12 @@ const langSelect = localStorage.getItem("languageLocale") ?? "";
 const openDepositPage = () => {
   // alert(selectedPayType.value);
   if (selectedPayType.value === "EASYPAISA") {
-    window.open("https://drive.google.com/file/d/1RoNBxSPtiT-JL94Q2koI5J3HV69Nl7j0/view", "_blank");
+    window.open("https://drive.google.com/file/d/13QWAalASV5S5KvF77XErugrnfiw_-Ca1/view?usp=drive_link", "_blank");
   } else if (selectedPayType.value === "JAZZCASH") {
     // isDepositTutorial.value= true;
-    window.open("https://drive.google.com/file/d/1uVpFov1xcBs4GU1MwzbzeqbHtBzkHAct/view?usp=sharing", "_blank");
+    window.open("https://drive.google.com/file/d/13QWAalASV5S5KvF77XErugrnfiw_-Ca1/view?usp=drive_link", "_blank");
   } else {
-    window.open("https://drive.google.com/file/d/1UCBOIAxRfBZoq56zv5Md-XO-6eAzunWJ/view?usp=drivesdk", "_blank");
+    window.open("https://drive.google.com/file/d/13QWAalASV5S5KvF77XErugrnfiw_-Ca1/view?usp=drive_link", "_blank");
   }
 };
 

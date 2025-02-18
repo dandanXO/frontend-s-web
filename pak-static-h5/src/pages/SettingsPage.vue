@@ -99,6 +99,13 @@
             </div>
             <div class="acct-nav-label">{{ $t("settings.exchange") }}</div>
           </a>
+
+          <a v-if="canTransfer" target="_blank" @click="handleTransferClick">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/transfer-svg.svg" />
+            </div>
+            <div class="acct-nav-label">{{ $t("settings.transfer") }}</div>
+          </a>
         </div>
       </div>
 
@@ -170,6 +177,7 @@
     </div>
   </q-dialog>
   <ExchangeModal v-model="showExchangeModal" />
+  <TransferModal v-model="showTransferModal" :uplineId="uplineId" :uplineName="uplineName" :upline="true" />
 </template>
 
 <script setup>
@@ -179,6 +187,7 @@ import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import ExchangeModal from "../components/account/ExchangeModal.vue";
+import TransferModal from "../components/account/TransferModal.vue";
 import { api } from "boot/axios";
 import { useUI } from "stores/ui";
 
@@ -207,6 +216,7 @@ const getPromoImage = () => {
 
 const loadingLogout = ref(false);
 const showExchangeModal = ref(false);
+const showTransferModal = ref(false);
 
 const confirmSignOutDialog = ref(false);
 const openConfirmSignOutDialog = () => {
@@ -215,10 +225,32 @@ const openConfirmSignOutDialog = () => {
 
 const handleExchangeClick = () => (showExchangeModal.value = true);
 
+const handleTransferClick = () => {
+  getUplineDetails();
+  showTransferModal.value = true;
+};
 onActivated(() => {
   store.getUnreadTotal();
   getPromoImage();
+  getUplineDetails();
 });
+
+const canTransfer = ref(false);
+const uplineId = ref();
+const uplineName = ref();
+const getUplineDetails = () => {
+
+  api
+    .get(`/session/upline/checkTransfer`)
+    .then((res) => {
+      if (res.code === 0) {
+        canTransfer.value = res.data.canTransfer
+        uplineId.value = res.data.referrerId
+        uplineName.value = res.data.referrerName
+      } else {
+      }
+    });
+}
 
 const logout = () => {
   loadingLogout.value = true;

@@ -374,7 +374,7 @@
         width="120"
       />
 
-      <el-table-column prop="remark" :label="t('fields.remark')" width="120" />
+      <el-table-column prop="remark" :label="t('fields.remark')" width="120" fixed="right" />
 
       <el-table-column
         prop="review"
