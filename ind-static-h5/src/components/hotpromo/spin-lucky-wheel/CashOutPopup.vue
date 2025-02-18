@@ -15,7 +15,7 @@
                 <img class="cash-out-backdrop"
                     src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/cash-out-backdrop.png" />
             </div>
-            <ProgressBar isShowDetails />
+            <ProgressBar :isShowDetails="true" />
             <CommonButton class="invite-wins-btn" @click="showInviteWins">Invitation wins</CommonButton>
         </div>
     </q-dialog>
