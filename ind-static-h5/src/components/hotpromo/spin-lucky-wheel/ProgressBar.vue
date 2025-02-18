@@ -5,7 +5,7 @@
             src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/coin.png" />
     </div>
 
-    <div class="extraction-remaining-progress">
+    <div class="extraction-remaining-progress" v-if="props?.isShowDetails">
         <span class="extraction-require-amount">Only <span class="amount">${{ extractionDifference }}</span> to go</span>
         <span class="extraction-require-percentage">{{ `${remainingRequired}%` }}</span>
     </div>
@@ -13,6 +13,7 @@
 <script setup>
 import { computed, inject } from "vue";
 
+const props = defineProps(['isShowDetails']);
 const info = inject('info');
 const extractionDifference = inject('extractionDifference');
 const remainingRequired = computed(() => info.value.currAmount / info.value.targetWithdrawAmount * 100);
