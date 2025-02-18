@@ -1429,6 +1429,8 @@
   <a ref="downloadAppRef" :href="ui.downloadAppUrl" download style="display: none" />
 
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
+
+  <SpinLuckyWheelPromoSticky />
 </template>
 
 <script setup>
@@ -1471,6 +1473,8 @@ import chroma from "chroma-js";
 import PopupController from "src/components/PopupController.vue";
 import MegaSharingWheelModal from "src/components/hotpromo/megaSharingWheel/MegaSharingWheelModal.vue";
 import AddToHomeScreenModal from "src/components/modal/AddToHomeScreenModal.vue";
+import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
+
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
