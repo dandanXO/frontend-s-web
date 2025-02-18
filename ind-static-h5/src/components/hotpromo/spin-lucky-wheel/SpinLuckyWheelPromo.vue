@@ -31,7 +31,7 @@ const info = ref({
 });
 
 const extractionDifference = computed(() =>
-    Math.min(Math.round((info.value.targetWithdrawAmount - info.value.currAmount) * 100) / 100, 100)
+  ((info.value.targetWithdrawAmount - info.value.currAmount) * 10000 / 10000).toFixed(4)
 );
 
 provide('info', info);

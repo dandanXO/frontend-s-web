@@ -121,7 +121,7 @@
 </template>
 <script setup>
 import moment from "moment-timezone";
-import { computed, onMounted, onUnmounted, ref, toRefs, provide } from "vue";
+import { computed, onMounted, onUnmounted, ref, toRefs, provide, inject } from "vue";
 import CommonButton from "./CommonButton.vue";
 import WheelResultDialog from "./WheelResultDialog.vue";
 import RecordDialog from "./RecordDialog.vue";
@@ -168,10 +168,7 @@ const isCashOutPopupVisible = ref(false);
 const cashOutPopupRef = ref();
 
 provide('nextFreeSpinRemainingTime', nextFreeSpinRemainingTime);
-
-const extractionDifference = computed(() =>
-  Math.min(((info.value.targetWithdrawAmount - info.value.currAmount) * 10000 / 10000).toFixed(4), 100)
-);
+const extractionDifference = inject('extractionDifference');
 
 const winningRecord = computed(() => {
   const result = [];

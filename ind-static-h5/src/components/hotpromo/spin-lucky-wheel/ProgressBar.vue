@@ -7,7 +7,7 @@
 
     <div class="extraction-remaining-progress">
         <span class="extraction-require-amount">Only <span class="amount">${{ extractionDifference }}</span> to go</span>
-        <span class="extraction-require-percentage">{{ `${100 - extractionDifference}%` }}</span>
+        <span class="extraction-require-percentage">{{ `${info.currAmount / info.targetWithdrawAmount * 100}%` }}</span>
     </div>
 </template>
 <script setup>
