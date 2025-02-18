@@ -127,7 +127,7 @@ export default defineComponent({
             // attribution: details about the changed attribution
             console.log("CALLBACK");
             console.log(attribution);
-            store.aaid = attribution && attribution.adid ? attribution.adid : "";
+            // store.aaid = attribution && attribution.adid ? attribution.adid : "";
           }
         });
         setTimeout(() => {
