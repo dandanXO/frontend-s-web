@@ -369,7 +369,8 @@ export default defineComponent({
       codeAffiliate: "",
       referrer: "",
       smsCodeId: "",
-      smsCode: ""
+      smsCode: "",
+      traceid: ""
     });
     const getCode = () => {
       // api
@@ -509,10 +510,9 @@ export default defineComponent({
 
         (async () => {
           if (store.aaid) {
-            regForm.sid = store.aaid;
-          } else {
-            regForm.sid = sidParam;
+            regForm.traceid = store.aaid;
           }
+          regForm.sid = sidParam;
 
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
           if ("standalone" in window.navigator && window.navigator.standalone) {
