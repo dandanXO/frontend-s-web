@@ -2720,6 +2720,7 @@ export default {
     'Sport App Setting': '스포츠 앱 설정',
     Sport: '스포츠',
     'Game Jackpot Bonus Record': '게임 잭팟 보너스 기록',
+    'Member Privilege Record Pak Export': '회원 할인 기록 수출 - 파키스탄'
   },
   google: {
     google_auth_menu: 'Google 인증자',

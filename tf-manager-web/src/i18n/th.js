@@ -1879,7 +1879,8 @@ export default {
     Team: 'ทีม',
     'Bet type setting': 'การตั้งค่าสำหรับการเดิมพัน',
     'Sport App Setting': 'การตั้งค่าสำหรับแอปพลิเคชันกีฬา',
-    Sport: 'กีฬา'
+    Sport: 'กีฬา',
+    'Member Privilege Record Pak Export': 'บันทึกส่วนลดสมาชิกส่งออก - ปากีสถาน'
   },
   google: {
     google_auth_menu: 'ตัวรับรองความถูกต้องของกูเกิ้ล',
