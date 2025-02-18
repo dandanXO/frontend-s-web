@@ -353,7 +353,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item v-if="form.type" :label="t('fields.desktopImage')" prop="icon" style="width: 350px">
+      <el-form-item v-if="form.type" :label="t('fields.desktopImage')" prop="icon" style="width: 550px">
         <el-row :gutter="5">
           <el-col v-if="form.icon" :span="18" style="width: 350px">
             <el-image
@@ -361,6 +361,7 @@
               :src="promoDir + form.icon"
               fit="contain"
               class="preview"
+              style="max-width: 230px;"
               :preview-src-list="[promoDir + form.icon]"
             />
             <el-image
@@ -368,6 +369,7 @@
               :src="gameDir + form.icon"
               fit="contain"
               class="preview"
+              style="max-width: 230px;"
               :preview-src-list="[gameDir + form.icon]"
             />
           </el-col>
@@ -383,7 +385,7 @@
           </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item v-if="form.type" :label="t('fields.mobileImage')" prop="icon" style="width: 350px">
+      <el-form-item v-if="form.type" :label="t('fields.mobileImage')" prop="icon" style="width: 550px">
         <el-row :gutter="5">
           <el-col v-if="form.iconMobile" :span="18" style="width: 350px">
             <el-image
@@ -391,6 +393,7 @@
               :src="promoDir + form.iconMobile"
               fit="contain"
               class="preview"
+              style="max-width: 230px;"
               :preview-src-list="[promoDir + form.iconMobile]"
             />
             <el-image
@@ -398,6 +401,7 @@
               :src="gameDir + form.iconMobile"
               fit="contain"
               class="preview"
+              style="max-width: 230px;"
               :preview-src-list="[gameDir + form.iconMobile]"
             />
           </el-col>
