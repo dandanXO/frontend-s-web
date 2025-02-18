@@ -369,7 +369,8 @@ export default defineComponent({
       codeAffiliate: "",
       referrer: "",
       smsCodeId: "",
-      smsCode: ""
+      smsCode: "",
+      traceId: ""
     });
     const getCode = () => {
       // api
@@ -474,6 +475,16 @@ export default defineComponent({
       getAffiliateCode();
     });
 
+    const trackRegisterSuccessEvent = () => {
+      if (ui.adjust_register_event && isInPwa()) {
+        console.log(ui.adjust_register_event);
+        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        AdjustWeb.trackEvent({
+          eventToken: ui.adjust_register_event
+        });
+      }
+    };
+
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
@@ -498,6 +509,9 @@ export default defineComponent({
         const sidParam = store.visitorId;
 
         (async () => {
+          if (store.aaid) {
+            regForm.traceId = store.aaid;
+          }
           regForm.sid = sidParam;
 
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
@@ -545,6 +559,8 @@ export default defineComponent({
                   }
                   localStorage.setItem("REG_REFERRAL_CODE", regForm.referrer);
                 }
+
+                trackRegisterSuccessEvent();
 
                 //ADJUST TRACKEVENT.
                 // debugger;
