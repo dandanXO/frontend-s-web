@@ -217,7 +217,7 @@ onMounted(() => {
 
 .desc {
     line-height: 15px;
-    font-size: 13px;
+    font-size: 12px;
     letter-spacing: 0px;
     text-align: center;
 }

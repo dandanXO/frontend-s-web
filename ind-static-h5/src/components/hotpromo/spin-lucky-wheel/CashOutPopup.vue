@@ -56,10 +56,9 @@ const nextFreeSpinRemainingTime = inject('nextFreeSpinRemainingTime');
 .invite-wins {
     width: 90%;
     background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/invite-win-popup-bg.png) no-repeat;
-    aspect-ratio: 957 / 1152;
-    background-size: cover;
+    background-size: 100% 100%;
     position: relative;
-    padding: 40px 20px;
+    padding: 40px 20px 20px;
 }
 
 .cash-out-backdrop-wrapper {
