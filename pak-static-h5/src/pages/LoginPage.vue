@@ -481,6 +481,17 @@ export default defineComponent({
                 getCode();
                 sessionStorage.removeItem("REFERRAL_CODE");
 
+                if(!localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
+                  localStorage.setItem("SPIN_LUCKY_WHEEL_POPUP", true);
+                } else if(localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
+                  const currTime = Date.now();
+                  const prevTime = Number(localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP"));
+                  
+                  if (currTime - prevTime > 60 * 1000 * 60 * 24 * 30) {
+                    localStorage.setItem("SPIN_LUCKY_WHEEL_POPUP", true);
+                  }
+                }
+                
                 if (isCheckRmb.value) {
                   localStorage.setItem(
                     "userpass",

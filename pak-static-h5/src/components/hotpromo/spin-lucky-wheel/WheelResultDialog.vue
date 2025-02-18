@@ -1,8 +1,8 @@
 <template>
-  <q-dialog v-model="_modelValue">
+  <q-dialog v-model="_modelValue" @hide="$emit('hide')">
     <div class="wheel-result-wrapper">
-      <span class="prize">+{{ props.prize }}$</span>
-      <CommonButton class="close-btn" v-close-popup>Knew</CommonButton>
+      <span class="prize">+${{ props.prize }}</span>
+      <CommonButton class="close-btn" v-close-popup>Okay</CommonButton>
     </div>
   </q-dialog>
 </template>
@@ -11,7 +11,7 @@ import { computed } from "vue";
 import CommonButton from "./CommonButton.vue";
 
 const props = defineProps(["modelValue", "prize"]);
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "hide"]);
 
 const _modelValue = computed({
   get: () => props.modelValue,
@@ -33,7 +33,7 @@ const _modelValue = computed({
     width: 100%;
     font-size: 56px;
     font-weight: 900;
-    color: #f33d31;
+    color: #8100ae;
     text-align: center;
   }
 

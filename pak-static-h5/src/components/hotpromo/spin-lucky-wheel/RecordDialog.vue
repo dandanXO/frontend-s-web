@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="_modelValue">
+  <q-dialog v-model="_modelValue" @show="getRecords">
     <div class="record-dialog-inner-wrapper">
       <div class="tab-wrapper">
         <div class="tab" :class="{ selected: currentTab === 'invitation' }" @click="handleTabClick('invitation')">
@@ -10,39 +10,49 @@
         </div>
       </div>
 
-      <q-tab-panels v-model="currentTab" animated>
-        <q-tab-panel name="invitation">
-          <div class="record-wrapper invitation">
-            <div v-for="(record, index) in invitationRecords" :key="index" class="record">
-              <span>{{ moment(record.date).format("MM-DD hh:mm:ss") }}</span>
-              <span class="name">{{ record.name }}</span>
-              <span>Invitation successful</span>
+      <div>
+        <q-tab-panels v-model="currentTab" animated>
+          <q-tab-panel name="invitation">
+            <div class="record-wrapper invitation">
+              <template v-if="invitationRecords.length">
+                <div v-for="(record, index) in invitationRecords" :key="index" class="record">
+                  <span>{{ moment(record.referTime).format("MM-DD hh:mm:ssA") }}</span>
+                  <span class="name">{{ record.loginName }}</span>
+                  <span>Invitation successful</span>
+                </div>
+              </template>
+              <span v-else class="no-record-text">No Records</span>
             </div>
-          </div>
-        </q-tab-panel>
-        <q-tab-panel name="lottery">
-          <div class="record-wrapper lottery">
-            <div v-for="(record, index) in lotteryRecords" :key="index" class="record">
-              <span>{{ moment(record.date).format("MM-DD hh:mm:ss") }}</span>
-              <span class="name">{{ record.name }}</span>
-              <span>500</span>
+          </q-tab-panel>
+          <q-tab-panel name="lottery">
+            <div class="record-wrapper lottery">
+              <template v-if="lotteryRecords.length">
+                <div v-for="(record, index) in lotteryRecords" :key="index" class="record">
+                  <span>{{ moment(record.time).format("MM-DD hh:mm:ssA") }}</span>
+                  <span class="amount">${{ record.amount }}</span>
+                </div>
+              </template>
+              <span v-else class="no-record-text">No Records</span>
             </div>
-          </div>
-        </q-tab-panel>
-      </q-tab-panels>
+          </q-tab-panel>
+        </q-tab-panels>
+        <q-inner-loading :showing="isLoading" />
+      </div>
     </div>
   </q-dialog>
 </template>
 <script setup>
 import moment from "moment";
+import { eventapi } from "src/boot/axios";
 import { computed, ref } from "vue";
 
 const props = defineProps(["modelValue", "prize"]);
 const emit = defineEmits(["update:modelValue"]);
 
 const currentTab = ref("invitation");
-const invitationRecords = ref(new Array(10).fill({ date: "2025-02-03 15:34:32", name: "John Doe1111" }));
-const lotteryRecords = ref(new Array(10).fill({ date: "2025-02-03 15:34:32", name: "John Doe1111" }));
+const invitationRecords = ref([]);
+const lotteryRecords = ref([]);
+const isLoading = ref(false);
 
 const _modelValue = computed({
   get: () => props.modelValue,
@@ -52,14 +62,33 @@ const _modelValue = computed({
 const handleTabClick = (tab) => {
   currentTab.value = tab;
 };
+
+const getRecords = () => {
+  const invitationRecordApi = eventapi.get("/refer-spin/invitation-record");
+  const lotteryRecordApi = eventapi.get("/refer-spin/amount-record");
+  isLoading.value = true;
+
+  Promise.allSettled([invitationRecordApi, lotteryRecordApi])
+    .then(([invitationRes, lotteryRes]) => {
+      console.log(invitationRes, lotteryRes);
+      if (invitationRes?.value.code === 0) {
+        invitationRecords.value = invitationRes?.value.data;
+      }
+      if (lotteryRes?.value.code === 0) {
+        lotteryRecords.value = lotteryRes?.value.data;
+      }
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
+};
 </script>
 <style lang="scss" scoped>
 .record-dialog-inner-wrapper {
   width: 90%;
   max-width: 450px;
-  background-color: #917ca1;
+  background-color: #82A17C;
   border-radius: 14px;
-  border: 1px solid #e8c4ff99;
   padding: 12px;
 
   .tab-wrapper {
@@ -80,7 +109,7 @@ const handleTabClick = (tab) => {
       text-align: center;
 
       &.selected {
-        background: linear-gradient(356.25deg, #3b156e -0.21%, #f33d31 93.65%);
+        background: linear-gradient(180deg, #1BAA99 0%, #8AC542 100%);
         color: #fff;
       }
     }
@@ -97,22 +126,28 @@ const handleTabClick = (tab) => {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    background-color: #17aa2699;
-    border: 1px solid #e8c4ff99;
+    background: #119B8B99;
+    border: 1px solid #C4FFF799;
     border-radius: 8px;
     padding: 12px;
     height: 30vh;
     overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     &.invitation {
       .record {
-        grid-template-columns: 2fr minmax(70px, 1fr) 3fr;
+        grid-template-columns: minmax(100px, 1fr) 1fr minmax(50px, 1fr);
       }
     }
 
     &.lottery {
       .record {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
@@ -123,6 +158,12 @@ const handleTabClick = (tab) => {
       > span {
         font-size: 12px;
         color: #fff;
+        &:last-child {
+          text-align: right;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
       }
 
       .name {
@@ -130,6 +171,16 @@ const handleTabClick = (tab) => {
         white-space: nowrap;
         overflow: hidden;
       }
+
+      .amount {
+        font-weight: 900;
+        color: #91FFAB;
+      }
+    }
+
+    .no-record-text {
+      text-align: center;
+      font-weight: 700;
     }
   }
 }
