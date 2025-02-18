@@ -350,17 +350,18 @@ const open = (gameName, platformCode, gameCode, gameType, demo) => {
           }
         }
       }
-
-      const apiUrl = _isPlatformAllowNonLogin
-        ? `/game/launch?_time=${new Date().getTime()}`
-        : `/session/launch?_time=${new Date().getTime()}`;
+      const _isFromNewPlayerGuide = sessionStorage.getItem("isFromNewPlayerGuide");
+      const apiUrl =
+        _isPlatformAllowNonLogin || _isFromNewPlayerGuide
+          ? `/game/launch?_time=${new Date().getTime()}`
+          : `/session/launch?_time=${new Date().getTime()}`;
       let apiParam = {
         platform: platformCode,
         gameCode: gameCode,
         isMobile: Platform.is.mobile ? true : false,
         way: way
       };
-      const _isFromNewPlayerGuide = sessionStorage.getItem("isFromNewPlayerGuide")
+
       if (_isPlatformAllowNonLogin || _isFromNewPlayerGuide) {
         try {
           const demoInfo = JSON.parse(demo);
@@ -375,7 +376,7 @@ const open = (gameName, platformCode, gameCode, gameType, demo) => {
         } catch (_) {
           denyGameLaunch();
         }
-        sessionStorage.removeItem("isFromNewPlayerGuide")
+        sessionStorage.removeItem("isFromNewPlayerGuide");
       }
 
       api
