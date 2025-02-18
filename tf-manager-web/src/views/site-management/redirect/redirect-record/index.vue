@@ -813,6 +813,7 @@ async function showDialog(type) {
     formRef.value.resetFields()
     form.platform = null
     form.icon = null
+    form.iconMobile = null
     form.startTime = null
     form.endTime = null
   }
@@ -956,7 +957,9 @@ async function browseImage(type) {
 
 async function loadSiteImage(type) {
   selectedImage.id = 0
-  imageRequest.promoType = type
+  if(form.type != 'GAME'){
+    imageRequest.promoType = type
+  }
   const { data: ret } = await getSiteImage(imageRequest)
   imageList.list = ret.records
   imageList.pages = ret.pages
