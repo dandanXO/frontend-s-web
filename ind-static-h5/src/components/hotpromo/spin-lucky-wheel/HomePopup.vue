@@ -70,7 +70,7 @@ onActivated(() => {
         const currTime = Date.now();
         const prevTime = Number(localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP"));
         
-        if (currTime - prevTime > 60 * 1000 * 60 * 24 * 30) {
+        if (currTime - prevTime > 60 * 1000 * 60 * 24 * 7) {
             localStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
             isDoNotShowAgain.value = false;
         }
