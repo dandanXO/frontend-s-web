@@ -3188,6 +3188,8 @@ export default {
     'Payment Display List': '支付平台显示',
     'Platform Game Report': '场馆游戏报表',
     Payment: '支付',
+    Deposit: '存款',
+    Withdraw: '提款',
     'Add Payment': '新增支付',
     'Edit Payment': '编辑支付',
     CurrencyRate: '汇率',

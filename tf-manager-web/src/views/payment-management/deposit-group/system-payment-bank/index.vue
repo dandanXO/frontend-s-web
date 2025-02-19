@@ -136,10 +136,10 @@ import {
   getPaymentBankList,
   createPaymentBank,
   deletePaymentBank,
-} from '../../../api/system-payment-bank'
-import { getBankInfoListSimple } from '../../../api/bank-info'
-import { getAllPayments } from "../../../api/payment-display";
-import { required } from '../../../utils/validate'
+} from '../../../../api/system-payment-bank'
+import { getBankInfoListSimple } from '../../../../api/bank-info'
+import { getAllPayments } from "../../../../api/payment-display";
+import { required } from '../../../../utils/validate'
 // import { hasRole, hasPermission } from '../../../utils/util'
 import { useI18n } from "vue-i18n";
 

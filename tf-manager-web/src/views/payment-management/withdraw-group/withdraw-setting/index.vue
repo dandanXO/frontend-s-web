@@ -145,16 +145,16 @@
 
 <script setup>
 import { onMounted, reactive, ref, computed } from 'vue'
-import { isNumeric, numericOnlyNonRequired } from '../../../utils/validate'
+import { isNumeric, numericOnlyNonRequired } from '../../../../utils/validate'
 import { ElMessage } from 'element-plus'
-import { getWithdrawSettingList, insertOrUpdate } from '../../../api/withdraw-setting'
-import { getSiteListSimple } from '../../../api/site'
-import { getFinancialLevels } from '../../../api/financial-level'
-import { getCurrencyNames } from '../../../api/currency'
-import { hasRole, hasPermission } from "../../../utils/util";
-import { useStore } from '../../../store'
+import { getWithdrawSettingList, insertOrUpdate } from '../../../../api/withdraw-setting'
+import { getSiteListSimple } from '../../../../api/site'
+import { getFinancialLevels } from '../../../../api/financial-level'
+import { getCurrencyNames } from '../../../../api/currency'
+import { hasRole, hasPermission } from "../../../../utils/util";
+import { useStore } from '../../../../store'
 import { useI18n } from "vue-i18n";
-import { TENANT } from '../../../store/modules/user/action-types'
+import { TENANT } from '../../../../store/modules/user/action-types'
 
 const { t } = useI18n();
 const store = useStore()

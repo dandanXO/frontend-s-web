@@ -7,7 +7,7 @@
 import { computed, defineComponent } from '@vue/runtime-core'
 import { useRouter } from 'vue-router'
 // import PaymentAdd from './system-payment-action'
-import PaymentList from './system-payment-list'
+import PaymentList from './system-payment-list/index.vue'
 
 export default defineComponent({
   components: {

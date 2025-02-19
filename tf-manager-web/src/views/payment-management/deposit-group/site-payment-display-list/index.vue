@@ -47,11 +47,11 @@ import {
   getAllPayments,
   getPaymentShow,
   getPaymentShowDetails,
-} from '../../../api/payment-display'
-import { getSiteListSimple } from '../../../api/site'
-import { getFinancialLevels } from '../../../api/financial-level'
-import { useStore } from '../../../store'
-import { TENANT } from '../../../store/modules/user/action-types'
+} from '../../../../api/payment-display'
+import { getSiteListSimple } from '../../../../api/site'
+import { getFinancialLevels } from '../../../../api/financial-level'
+import { useStore } from '../../../../store'
+import { TENANT } from '../../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
