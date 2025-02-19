@@ -3239,6 +3239,8 @@ export default {
     'Bank Card': 'Bank Card',
     'Payment Type': 'Payment Type',
     Payment: 'Payment',
+    Deposit: 'Deposit',
+    Withdraw: 'Withdraw',
     'Add Payment': 'Add Payment',
     'Edit Payment': 'Edit Payment',
     CurrencyRate: 'Currency Rate',
