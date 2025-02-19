@@ -1431,7 +1431,7 @@
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
 
   <SpinLuckyWheelPromoSticky />
-  <SpinLuckyWheelPromoHomePopup ref="spinLuckyWheelPromoHomePopupRef" />
+  <!-- <SpinLuckyWheelPromoHomePopup ref="spinLuckyWheelPromoHomePopupRef" /> -->
 </template>
 
 <script setup>
@@ -3703,7 +3703,7 @@ const afterActivated = useCustomerTrigger(() => {
 const downloadAppRef = ref();
 
 const checkSpinLuckyWheelPromoHomePopupCanShow = () => {
-  if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
+  if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP") && spinLuckyWheelPromoHomePopupRef.value) {
     spinLuckyWheelPromoHomePopupRef.value.checkIsCanShowPopup();
   }
 };
