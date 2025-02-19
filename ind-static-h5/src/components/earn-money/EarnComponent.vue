@@ -122,6 +122,9 @@ const downloadQRImg = async () => {
 
         link.click();
         document.body.removeChild(link);
+
+        canvas.style.display = "none";
+        document.body.removeChild(canvas);
       });
     } catch (error) {
       console.error("Error saving QR Code image:", error);
