@@ -106,15 +106,26 @@ const downloadQRImg = async () => {
       console.error("Error saving QR Code image:", error);
     }
   } else {
-    const link = window.document.createElement("a");
-    const imgElement = document.querySelector('img[alt="Scan me!"]');
-    link.href = imgElement.src;
-    link.download = "myreferral";
+    try {
+      html2canvas(document.querySelector("#the-qrcode")).then(async function (canvas) {
+        document.body.appendChild(canvas);
+        const dataUrl = canvas.toDataURL("image/jpeg");
+        // console.log(dataUrl);
+        
+        
+        const link = window.document.createElement("a");
+        const imgElement = document.querySelector('img[alt="Scan me!"]');
+        link.href = dataUrl;
+        link.download = "myreferral";
 
-    document.body.appendChild(link);
+        document.body.appendChild(link);
 
-    link.click();
-    document.body.removeChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+    } catch (error) {
+      console.error("Error saving QR Code image:", error);
+    }
   }
 };
 
