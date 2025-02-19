@@ -281,7 +281,7 @@
           <ul class="tips">
             <li>标记有 * 者为必填项目。</li>
             <li>手机号码为找回密码的重要凭证，请务必填写真实信息。</li>
-            <li>若公司有其他活动会邮件通知您，请您务必填写真实有效的邮箱。"</li>
+            <li>若公司有其他活动会邮件通知您，请您务必在个人中心完善信息，填写真实有效的邮箱。</li>
           </ul>
         </div>
         <div class="registered-right">
@@ -534,7 +534,7 @@
       </el-form>
     </el-dialog>
 
-    <el-dialog v-model="forgetPassDialogVisible" title="忘记账号" width="50%" align-center style="max-width: 800px">
+    <el-dialog v-model="forgetPassDialogVisible" title="忘记账号/密码" width="50%" align-center style="max-width: 800px">
       <span>
         <el-tabs type="card" v-model="activeTab" @tabChange="changeTab">
           <el-tab-pane label="手机找回密码" name="phone">
@@ -913,10 +913,10 @@ export default defineComponent({
 					this.navigations.push({code: "Poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true});
 				}
 			}
-			this.navigations.push({code: "Agent", name: "代理", enName: "Agent", path: "/agent", icon: "agent"});
-			this.navigations.push({code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", icon: "promo", submenu: true});
-			this.navigations.push({code: "VIP", name: "VIP", enName: "VIP", path: "/vip", icon: "vip"});
-			this.navigations.push({code: "App", name: "APP", enName: "App", path: "/app", icon: "app", submenu: true});
+			this.navigations.push({code: "Agent", name: "代理加盟", enName: "Agent", path: "/agent", icon: "agent"});
+			this.navigations.push({code: "Promotion", name: "优惠活动", enName: "Promotion", path: "/promotion", icon: "promo", submenu: true});
+			this.navigations.push({code: "VIP", name: "VIP中心", enName: "VIP", path: "/vip", icon: "vip"});
+			this.navigations.push({code: "App", name: "手机APP", enName: "App", path: "/app", icon: "app", submenu: true});
 	  }).catch((err) => {
 		console.log(err)
 		this.navigations.splice(0);
@@ -2715,7 +2715,9 @@ body {
               // font-size: 1rem;
             }
             &.agent, &.promo, &.app, &.vip {
+              margin-top: -5px;
               align-items: center;
+              font-size: 12.6px;
               &:after {
                 content: unset;
               }
@@ -2725,7 +2727,7 @@ body {
             }
 
             img { 
-              height: 30px;
+              height: 25px;
               filter: grayscale(1);
               display: block;
             }
