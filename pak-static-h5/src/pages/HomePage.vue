@@ -1431,6 +1431,7 @@
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
 
   <SpinLuckyWheelPromoSticky />
+  <SpinLuckyWheelPromoHomePopup ref="spinLuckyWheelPromoHomePopupRef" />
 </template>
 
 <script setup>
@@ -1474,6 +1475,7 @@ import PopupController from "src/components/PopupController.vue";
 import MegaSharingWheelModal from "src/components/hotpromo/megaSharingWheel/MegaSharingWheelModal.vue";
 import AddToHomeScreenModal from "src/components/modal/AddToHomeScreenModal.vue";
 import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
+import SpinLuckyWheelPromoHomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
 
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
@@ -1506,6 +1508,8 @@ const csTabRef = ref();
 
 const isLiveTabVisible = ref(false);
 const liveTabRef = ref();
+
+const spinLuckyWheelPromoHomePopupRef = ref();
 
 const translatedCategoriesList = computed(() => {
   return categoriesList.value.map((category) => ({
@@ -1587,7 +1591,7 @@ const slide = ref(0);
 const isFirstView = ref(false);
 const closeAlert = () => {
   // Create a new date object in GMT+5.5
-  const currentTimeInGMT55 = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+  const currentTimeInGMT55 = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Karachi" }));
 
   localStorage.setItem("indexImgTop", currentTimeInGMT55.getTime());
   isFirstView.value = false;
@@ -3163,7 +3167,7 @@ const imgURLPromo = imgURL + "/promo/";
 
 // const setWithExpiry = (key, value, interval) => {
 //   // Create a new date object in GMT+5.5
-//   const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+//   const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Karachi" }));
 
 //   const item = {
 //     value: value,
@@ -3698,11 +3702,18 @@ const afterActivated = useCustomerTrigger(() => {
 
 const downloadAppRef = ref();
 
+const checkSpinLuckyWheelPromoHomePopupCanShow = () => {
+  if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
+    spinLuckyWheelPromoHomePopupRef.value.checkIsCanShowPopup();
+  }
+};
+
 onActivated(() => {
   store.getUnreadTotal();
   checkHash();
 
   checkSpinWheel();
+  checkSpinLuckyWheelPromoHomePopupCanShow();
 
   if (route.query.login === "true") {
     // isMoneyRainModal.value = true;
@@ -3727,8 +3738,7 @@ onActivated(() => {
     if (!sessionStorage.getItem("add_to_homescreen")) {
       setTimeout(() => {
         isAddToHomeScreen.value = true;
-    }, 2000);
-
+      }, 2000);
     }
   }
 });
@@ -3743,6 +3753,7 @@ onMounted(() => {
   loadJILIFishGameList();
   loadJDBFishGameList();
   loadJILIPokerhGameList();
+  checkSpinLuckyWheelPromoHomePopupCanShow();
   ui.shouldFetchDownloadAppUrl = true;
 
   AOS.init();

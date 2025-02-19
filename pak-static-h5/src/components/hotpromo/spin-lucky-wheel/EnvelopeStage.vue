@@ -31,8 +31,14 @@
         <span class="remaining-time">time left: {{ remainingTime }}</span>
       </div>
       <img class="footer tiger" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-tiger.png" />
-      <img class="footer rabbit" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-rabbit.png" />
-      <img class="footer coin" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/footer-coin.png" />
+      <img
+        class="footer rabbit"
+        src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-rabbit.png"
+      />
+      <img
+        class="footer coin"
+        src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/footer-coin.png"
+      />
     </div>
   </div>
 </template>
@@ -63,25 +69,31 @@ const handleEnvelopeClick = (index) => {
 
   isClaiming.value = true;
   selectedIndex.value = index;
-  eventapi.post("/refer-spin/start", { box: index }).then(async (res) => {
+  eventapi.post("/session/refer-wheel-spin/red-packet?promoCode=pak-refer-wheel-spin").then(async (res) => {
     let otherPrizeCounter = 0;
 
     prizeList.value[index].status = "selected";
     prizeList.value[index].prize = res.data.bonus;
 
+    const targetIndex = res.data.redPackets.findIndex((prize) => prize === res.data.bonus);
+    const temp = res.data.redPackets[index];
+    res.data.redPackets[index] = res.data.redPackets[targetIndex];
+    res.data.redPackets[targetIndex] = temp;
+
     await delay(1000);
 
     prizeList.value.forEach((prize, _index) => {
-      if (_index === index) return;
-
-      prize.status = "unselected";
-      prize.prize = res.data.otherBonus[otherPrizeCounter++];
+      if (_index !== index) {
+        prize.status = "unselected";
+        prize.prize = res.data.redPackets[otherPrizeCounter];
+      }
+      otherPrizeCounter++;
     });
 
     await delay(1000);
 
     envelopeStatus.value = "selected";
-    endTime.value = moment(Date.now()).add(3, "days");
+    endTime.value = moment(Date.now()).tz("Asia/Karachi").add(3, "days");
     updateRemainingTime();
     timer.value = setInterval(updateRemainingTime, 1000);
     isClaiming.value = false;
@@ -132,7 +144,8 @@ onUnmounted(() => {
         display: flex;
         align-items: flex-start;
         justify-content: center;
-        background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/envelope-close.png) no-repeat;
+        background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/envelope-close.png)
+          no-repeat;
         background-size: cover;
         aspect-ratio: 109 / 133;
         border: none;
@@ -166,7 +179,8 @@ onUnmounted(() => {
     .selected-envelope {
       width: 65vw;
       max-width: 325px;
-      background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/envelope-detail.png) no-repeat;
+      background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/envelope-detail.png)
+        no-repeat;
       background-size: cover;
       aspect-ratio: 485 / 574;
       margin: 0 auto;

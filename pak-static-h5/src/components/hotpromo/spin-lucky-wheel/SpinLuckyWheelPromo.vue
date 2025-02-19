@@ -13,42 +13,53 @@ import WheelStage from "./WheelStage.vue";
 import { eventapi } from "src/boot/axios";
 const ui = useUI();
 
-
 const props = defineProps(["params"]);
 const params = JSON.parse(props.params || "{}");
 
-
 const stage = ref("");
-const wheelstage= ref();
+const wheelstage = ref();
 const isDuringInit = ref(false);
 const info = ref({
-  startTime: "",
+  wheelStartTime: "",
+  wheelEndTime: "",
+  hasWithdrawn: false,
+  wheelNo: 1,
   // nextFreeSpinTime: "2025-02-14 00:00:00",
-  currAmount: 0,
-  targetWithdrawAmount: 0,
-  spinChance: 0,
-  status: ""
+  accumulatedBonus: 0,
+  availableSpin: 0,
+  currentBonusType: ""
+});
+
+const targetWithdrawAmount = computed(() => {
+  switch (info.value.wheelNo) {
+    case 3:
+      return 1000;
+    case 2:
+      return 600;
+    case 1:
+    default:
+      return 300;
+  }
 });
 
 const extractionDifference = computed(() =>
-  ((info.value.targetWithdrawAmount - info.value.currAmount) * 10000 / 10000).toFixed(4)
+  (((targetWithdrawAmount.value - info.value.accumulatedBonus) * 10000) / 10000).toFixed(4)
 );
 
-provide('info', info);
-provide('extractionDifference', extractionDifference);
+provide("info", info);
+provide("extractionDifference", extractionDifference);
+provide("targetWithdrawAmount", targetWithdrawAmount);
 
 const loadData = async () => {
   isDuringInit.value = true;
-  const res= await eventapi.post("/refer-spin/check");
+  const res = await eventapi.get("/session/refer-wheel-spin/init?promoCode=pak-refer-wheel-spin");
   if (res.code === 0) {
-    switch (res.data.status) {
-      case "NOT_STARTED":
-      case "EXPIRED":
+    switch (res.data.currentBonusType) {
+      case "REDPACKET":
         stage.value = "envelope";
         ui.promoBg = "spin-lucky-wheel-envelope";
         break;
-      case "CLAIMED":
-      case "IN_PROGRESS":
+      case "SPIN":
         stage.value = "wheel";
         break;
     }
@@ -56,14 +67,14 @@ const loadData = async () => {
       ...info.value,
       ...res.data
     };
-    
+
     isDuringInit.value = false;
   }
 };
 
 const handleEnvelopClick = async () => {
   resetPromoBg();
-  await loadData()
+  await loadData();
   stage.value = "wheel";
   wheelstage.value.updateCountdownTime();
 };

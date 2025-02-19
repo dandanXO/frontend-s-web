@@ -324,10 +324,18 @@ export default defineComponent({
       loadAll();
       updateCountdown();
       store.getUnreadTotal();
+
+      if(sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+        sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
+      }
     });
 
     onMounted(() => {
       checkExtension();
+
+      if(sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+        sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
+      }
     });
 
     watch(

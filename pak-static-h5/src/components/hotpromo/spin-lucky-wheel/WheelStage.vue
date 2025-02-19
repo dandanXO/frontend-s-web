@@ -5,22 +5,22 @@
       <div class="summary-wrapper">
         <span class="prize">
           $
-          <span class="amount">{{ info.currAmount }}</span>
+          <span class="amount">{{ info.accumulatedBonus }}</span>
         </span>
 
-        <!-- <GradientTextAmount :amountText="`$ ${info.currAmount}`" /> -->
+        <!-- <GradientTextAmount :amountText="`$ ${info.accumulatedBonus}`" /> -->
 
-        <template v-if="extractionDifference > 0 && info.status === 'IN_PROGRESS'">
+        <template v-if="extractionDifference > 0 && !info.hasWithdrawn">
           <ProgressBar />
           <div class="cash-out-btn" @click="isCashOutPopupVisible = true" />
         </template>
 
-        <button v-else-if="info.status === 'IN_PROGRESS'" class="receive-btn" @click="handleReceiveClick">
+        <button v-else-if="!info.hasWithdrawn" class="receive-btn" @click="handleReceiveClick">
           <img src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/coin-2.png" />
           <span>RECEIVE</span>
         </button>
 
-        <button v-else-if="info.status === 'CLAIMED'" class="receive-btn disabled">
+        <button v-else-if="info.hasWithdrawn" class="receive-btn disabled">
           <img src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/coin-2.png" />
           <span>RECEIVED</span>
         </button>
@@ -43,7 +43,10 @@
               class="decoration penguin"
               src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-penguin.png"
             />
-            <img class="decoration ox" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-ox.png" />
+            <img
+              class="decoration ox"
+              src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-ox.png"
+            />
 
             <div class="countdown">Countdown: {{ remainingTime }}</div>
             <div class="wheel-inner-wrapper">
@@ -56,10 +59,10 @@
                 class="indicate"
                 src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/wheel-indicate.png"
               />
-              <button class="btn" :class="{ disabled: !info.spinChance }" @click="handleWheelClick">
+              <button class="btn" :class="{ disabled: !info.availableSpin }" @click="handleWheelClick">
                 rotate
                 <br />
-                {{ info.spinChance }} time
+                {{ info.availableSpin }} time
               </button>
             </div>
 
@@ -72,7 +75,7 @@
               src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-rabbit.png"
             />
             <CommonButton class="draw-btn" @click="handleInviteClick">Invite To Earn Spin</CommonButton>
-            <span class="next-spin-remaining-time">Countdown to next free spins: {{ nextFreeSpinRemainingTime }}</span>
+            <!-- <span class="next-spin-remaining-time">Countdown to next free spins: {{ nextFreeSpinRemainingTime }}</span> -->
           </div>
         </div>
       </div>
@@ -81,7 +84,10 @@
     </div>
     <div class="block-wrapper">
       <div class="title-wrapper">
-        <img style="width:100%;max-width:250px;padding:0 0 5px 0;" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/activity-rules-title.png" />
+        <img
+          style="width: 100%; max-width: 250px; padding: 0 0 5px 0"
+          src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/activity-rules-title.png"
+        />
       </div>
       <ol>
         <li>
@@ -122,14 +128,13 @@ import RecordDialog from "./RecordDialog.vue";
 import { useRouter } from "vue-router";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
-import ProgressBar from './ProgressBar.vue';
+import ProgressBar from "./ProgressBar.vue";
 import CashOutPopup from "./CashOutPopup.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
 
 const emit = defineEmits(["reload"]);
 const props = defineProps(["info"]);
 const { info } = toRefs(props);
-
 
 const TOTAL_ITEMS = 6;
 const DEFAULT_SPEED = 1;
@@ -161,8 +166,8 @@ const winningRecordRef = ref();
 const isCashOutPopupVisible = ref(false);
 const cashOutPopupRef = ref();
 
-provide('nextFreeSpinRemainingTime', nextFreeSpinRemainingTime);
-const extractionDifference = inject('extractionDifference');
+provide("nextFreeSpinRemainingTime", nextFreeSpinRemainingTime);
+const extractionDifference = inject("extractionDifference");
 
 const winningRecord = computed(() => {
   const result = [];
@@ -228,8 +233,8 @@ const reset = () => {
 };
 
 const handleWheelClick = () => {
-  if (spinButtonDisable.value || !info.value.spinChance) return;
-  eventapi.post("/refer-spin/spin").then((res) => {
+  if (spinButtonDisable.value || !info.value.availableSpin) return;
+  eventapi.post("/session/refer-wheel-spin/spin?promoCode=pak-refer-wheel-spin").then((res) => {
     if (res.code === 0) {
       prize.value = res.data;
       const prizeIndex = Math.floor(Math.random() * TOTAL_ITEMS);
@@ -251,8 +256,8 @@ const handleInviteClick = () => {
 const getRemainingTime = (endTime) => {
   let result = "00:00:00";
   if (endTime) {
-    const now = moment(Date.now()).tz("Asia/Kolkata");
-    const _endTime = moment(endTime).tz("Asia/Kolkata");
+    const now = moment(Date.now()).tz("Asia/Karachi");
+    const _endTime = moment(endTime).tz("Asia/Karachi");
     const totalSeconds = _endTime.diff(now, "seconds");
     if (totalSeconds > 0) {
       const hours = Math.floor(totalSeconds / 3600);
@@ -267,7 +272,7 @@ const getRemainingTime = (endTime) => {
 };
 
 const handleReceiveClick = () => {
-  eventapi.post("/refer-spin/withdraw").then((res) => {
+  eventapi.post("/session/refer-wheel-spin/claimBonus?promoCode=pak-refer-wheel-spin").then((res) => {
     if (res.code === 0) {
       $q.notify({
         message: "Receive successfully",
@@ -285,14 +290,14 @@ const handleRecordClick = () => {
 
 const updateCountdownTime = () => {
   // console.log("updateCountdownTime")
-  const endTime = moment(info.value.startTime).tz("Asia/Kolkata").add(3, "days");
-  const nextFreeSpinEndTime = moment().tz("Asia/Kolkata").add(1, "days").startOf("day");
-  if(timer.value){
+  const endTime = moment(info.value.wheelEndTime);
+  const nextFreeSpinEndTime = moment().tz("Asia/Karachi").add(1, "days").startOf("day");
+  if (timer.value) {
     clearTimeout(timer.value);
   }
   timer.value = setInterval(() => {
     remainingTime.value = getRemainingTime(endTime);
-    nextFreeSpinRemainingTime.value = getRemainingTime(nextFreeSpinEndTime);
+    // nextFreeSpinRemainingTime.value = getRemainingTime(nextFreeSpinEndTime);
     if (winningRecordRef.value) {
       const isScrollToEnd = winningRecordRef.value.scrollTop >= winningRecordRef.value.offsetHeight;
       winningRecordRef.value.scrollTo({
@@ -301,7 +306,7 @@ const updateCountdownTime = () => {
       });
     }
   }, 1000);
-}
+};
 
 onMounted(() => {
   for (let i = 0; i < TOTAL_ITEMS; i++) {
@@ -311,7 +316,6 @@ onMounted(() => {
 
   updateCountdownTime();
 });
-
 
 defineExpose({
   updateCountdownTime
@@ -345,15 +349,16 @@ onUnmounted(() => {
         margin-bottom: -12px;
         font-size: 32px;
         font-weight: 900;
-        color: #91FFAB;
+        color: #91ffab;
         .amount {
           font-size: 40px;
         }
       }
-      
-      .extraction-require-amount, .extraction-require-percentage {
+
+      .extraction-require-amount,
+      .extraction-require-percentage {
         color: #fff;
-        font-family: 'Poppins';
+        font-family: "Poppins";
         font-weight: 400;
         font-size: 12px;
         line-height: 16px;
@@ -362,7 +367,7 @@ onUnmounted(() => {
 
         .amount {
           font-weight: 500;
-          color: #FEBA02;
+          color: #feba02;
         }
       }
 
@@ -379,7 +384,8 @@ onUnmounted(() => {
           left: 0;
           height: 100%;
           background: linear-gradient(356.25deg, #3b156e -0.21%, #8100ae 93.65%);
-          background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/progress-bar-bg.png) no-repeat;
+          background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/progress-bar-bg.png)
+            no-repeat;
           background-size: 100% 100%;
           border-radius: 4px;
         }
@@ -419,8 +425,8 @@ onUnmounted(() => {
       .winning-record-outer-wrapper {
         padding: 12px 14px;
         width: 100%;
-        background: #17AA2699;
-        border: 1px solid #C4FFD599;
+        background: #17aa2699;
+        border: 1px solid #c4ffd599;
         border-radius: 8px;
 
         .winning-record-wrapper {
@@ -442,7 +448,7 @@ onUnmounted(() => {
             }
             .amount {
               font-weight: 600;
-              color: #91FFAB;
+              color: #91ffab;
             }
             .name {
               text-align: center;
@@ -474,7 +480,8 @@ onUnmounted(() => {
             display: flex;
             align-items: center;
             justify-content: center;
-            background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/countdown-bg.png) no-repeat;
+            background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/countdown-bg.png)
+              no-repeat;
             background-size: 100% 100%;
             aspect-ratio: 295 / 24;
             margin: 4px 24px 16px;
@@ -575,10 +582,10 @@ onUnmounted(() => {
       top: 2%;
       right: 7%;
       border: none;
-      background-color: #354C3F;
+      background-color: #354c3f;
       border-radius: 87px;
       padding: 3px 6px;
-      color: #91FFAB;
+      color: #91ffab;
     }
   }
 
@@ -693,7 +700,7 @@ onUnmounted(() => {
   width: 100%;
 
   &:active {
-      transform: translateY(2px);
+    transform: translateY(2px);
   }
 }
 </style>

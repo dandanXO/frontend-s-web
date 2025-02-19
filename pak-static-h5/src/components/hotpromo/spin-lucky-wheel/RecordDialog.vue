@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="_modelValue" @show="getRecords">
+  <q-dialog v-model="_modelValue">
     <div class="record-dialog-inner-wrapper">
       <div class="tab-wrapper">
         <div class="tab" :class="{ selected: currentTab === 'invitation' }" @click="handleTabClick('invitation')">
@@ -14,9 +14,9 @@
         <q-tab-panels v-model="currentTab" animated>
           <q-tab-panel name="invitation">
             <div class="record-wrapper invitation">
-              <template v-if="invitationRecords.length">
-                <div v-for="(record, index) in invitationRecords" :key="index" class="record">
-                  <span>{{ moment(record.referTime).format("MM-DD hh:mm:ssA") }}</span>
+              <template v-if="info.invitedList.length">
+                <div v-for="(record, index) in info.invitedList" :key="index" class="record">
+                  <span>{{ moment(record.depositDate).format("MM-DD hh:mm:ssA") }}</span>
                   <span class="name">{{ record.loginName }}</span>
                   <span>Invitation successful</span>
                 </div>
@@ -26,10 +26,10 @@
           </q-tab-panel>
           <q-tab-panel name="lottery">
             <div class="record-wrapper lottery">
-              <template v-if="lotteryRecords.length">
-                <div v-for="(record, index) in lotteryRecords" :key="index" class="record">
-                  <span>{{ moment(record.time).format("MM-DD hh:mm:ssA") }}</span>
-                  <span class="amount">${{ record.amount }}</span>
+              <template v-if="info.records.length">
+                <div v-for="(record, index) in info.records" :key="index" class="record">
+                  <span>{{ moment(record.recordTime).format("MM-DD hh:mm:ssA") }}</span>
+                  <span class="amount">${{ record.bonus }}</span>
                 </div>
               </template>
               <span v-else class="no-record-text">No Records</span>
@@ -43,16 +43,17 @@
 </template>
 <script setup>
 import moment from "moment";
-import { eventapi } from "src/boot/axios";
-import { computed, ref } from "vue";
+import { computed, inject, ref } from "vue";
 
-const props = defineProps(["modelValue", "prize"]);
+const props = defineProps(["modelValue"]);
 const emit = defineEmits(["update:modelValue"]);
 
 const currentTab = ref("invitation");
 const invitationRecords = ref([]);
 const lotteryRecords = ref([]);
 const isLoading = ref(false);
+
+const info = inject("info");
 
 const _modelValue = computed({
   get: () => props.modelValue,
@@ -62,32 +63,12 @@ const _modelValue = computed({
 const handleTabClick = (tab) => {
   currentTab.value = tab;
 };
-
-const getRecords = () => {
-  const invitationRecordApi = eventapi.get("/refer-spin/invitation-record");
-  const lotteryRecordApi = eventapi.get("/refer-spin/amount-record");
-  isLoading.value = true;
-
-  Promise.allSettled([invitationRecordApi, lotteryRecordApi])
-    .then(([invitationRes, lotteryRes]) => {
-      console.log(invitationRes, lotteryRes);
-      if (invitationRes?.value.code === 0) {
-        invitationRecords.value = invitationRes?.value.data;
-      }
-      if (lotteryRes?.value.code === 0) {
-        lotteryRecords.value = lotteryRes?.value.data;
-      }
-    })
-    .finally(() => {
-      isLoading.value = false;
-    });
-};
 </script>
 <style lang="scss" scoped>
 .record-dialog-inner-wrapper {
   width: 90%;
   max-width: 450px;
-  background-color: #82A17C;
+  background-color: #82a17c;
   border-radius: 14px;
   padding: 12px;
 
@@ -109,7 +90,7 @@ const getRecords = () => {
       text-align: center;
 
       &.selected {
-        background: linear-gradient(180deg, #1BAA99 0%, #8AC542 100%);
+        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
         color: #fff;
       }
     }
@@ -126,8 +107,8 @@ const getRecords = () => {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    background: #119B8B99;
-    border: 1px solid #C4FFF799;
+    background: #119b8b99;
+    border: 1px solid #c4fff799;
     border-radius: 8px;
     padding: 12px;
     height: 30vh;
@@ -174,7 +155,7 @@ const getRecords = () => {
 
       .amount {
         font-weight: 900;
-        color: #91FFAB;
+        color: #91ffab;
       }
     }
 
