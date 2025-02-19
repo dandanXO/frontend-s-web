@@ -1,7 +1,11 @@
 <template>
     <q-dialog width="100%" v-model="isShowSpinLuckyWheelPromoPopup" class="spin-lucky-wheel-promo-popup"
         @update:model-value="onCloseSpinLuckyWheelPromoPopup">
+
+
+      <div class="">
         <div class="spin-lucky-wheel-promo-popup-wrapper">
+          <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
             <div class="banner-wrapper">
                 <div class="pulse1"></div>
                 <div class="pulse2"></div>
@@ -17,6 +21,7 @@
                 </q-checkbox>
             </div>
         </div>
+      </div>
     </q-dialog>
 </template>
 <script setup>
@@ -69,7 +74,7 @@ onActivated(() => {
     if(localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
         const currTime = Date.now();
         const prevTime = Number(localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP"));
-        
+
         if (currTime - prevTime > 60 * 1000 * 60 * 24 * 7) {
             localStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
             isDoNotShowAgain.value = false;
@@ -81,7 +86,7 @@ onMounted(() => {
     if(localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
         const currTime = Date.now();
         const prevTime = Number(localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP"));
-        
+
         if (currTime - prevTime > 60 * 1000 * 60 * 24 * 7) {
             localStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
             isDoNotShowAgain.value = false;
@@ -93,7 +98,12 @@ onMounted(() => {
 const router = useRouter()
 
 const goToPromo = () => {
+  if(!store.hasToken()){
+    router.push("/login")
+  }else{
     router.push("/promo?name=spin-lucky-wheel")
+  }
+
 }
 
 defineExpose({
@@ -109,6 +119,11 @@ defineExpose({
     align-items: center;
     gap: 10px;
     width: 100%;
+
+  .bg-yellow{
+    margin-left: auto;
+    margin-right: 12px;
+  }
 
     .banner {
         max-width: 90%;

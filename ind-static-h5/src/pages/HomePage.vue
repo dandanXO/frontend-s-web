@@ -2835,6 +2835,8 @@ onActivated(() => {
   }
 });
 
+
+
 onMounted(() => {
   isPlatLoading.value = true;
   loadAppTabs();
@@ -2846,6 +2848,12 @@ onMounted(() => {
   loadJDBFishGameList();
   loadCustomerAddress();
   checkHbPromo();
+
+  if (sessionStorage.getItem("isReload")) {
+    sessionStorage.removeItem("isReload");
+    sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
+  }
+
   if(!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
     spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
   }
@@ -2857,6 +2865,16 @@ onMounted(() => {
   }
 
   intervalId = setInterval(checkPlatform, 300000);
+
+  window.addEventListener("beforeunload", function () {
+    sessionStorage.setItem("isReload", "true");
+  });
+
+
+});
+
+window.addEventListener("beforeunload", () => {
+  sessionStorage.setItem("isReload", "true");
 });
 
 onBeforeUnmount(() => {
