@@ -32,7 +32,9 @@ const isLoading = ref(false);
 
 const selfTgurl = ref("");
 const copyShareLink = (selfTgurl) => {
-    copyToClipboard(selfTgurl)
+    const copiedText = `Do you want to unlock your $500 reward right away? Click the link: ${selfTgurl}`;
+
+    copyToClipboard(copiedText)
         .then(() => {
             $q.notify({
                 color: "position",
