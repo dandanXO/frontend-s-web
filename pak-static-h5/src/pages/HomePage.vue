@@ -1431,7 +1431,7 @@
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
 
   <SpinLuckyWheelPromoSticky />
-  <!-- <SpinLuckyWheelPromoHomePopup ref="spinLuckyWheelPromoHomePopupRef" /> -->
+  <SpinLuckyWheelPromoHomePopup ref="spinLuckyWheelPromoHomePopupRef" />
 </template>
 
 <script setup>

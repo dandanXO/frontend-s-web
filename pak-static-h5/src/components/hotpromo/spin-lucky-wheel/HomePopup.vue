@@ -28,7 +28,8 @@
 import { ref, onMounted, onActivated } from "vue";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
-import { eventapi } from "boot/axios";
+
+const EXPIRATION_TIME = 60 * 1000 * 60 * 24 * 30;
 
 const store = userStore();
 const isDoNotShowAgain = ref(false);
@@ -57,42 +58,28 @@ const checkIsCanShowPopup = () => {
   }
 
   if (store.hasToken()) {
-    eventapi.get("/session/refer-wheel-spin/init?promoCode=pak-refer-wheel-spin").then((res) => {
-      if (res.code === 0) {
-        isShowSpinLuckyWheelPromoPopup.value = true;
-      }
-    });
-  } else if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
-    api.get("/config/uiconfigs").then((res) => {
-      if (res.code === 0 && res.data?.spinwheel_promo === "1") {
-        isShowSpinLuckyWheelPromoPopup.value = true;
-      }
-    });
+    isShowSpinLuckyWheelPromoPopup.value = true;
+  }
+};
+
+const checkExpirationTime = () => {
+  if (localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
+    const currTime = Date.now();
+    const prevTime = Number(localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP"));
+
+    if (currTime - prevTime > EXPIRATION_TIME) {
+      localStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
+      isDoNotShowAgain.value = false;
+    }
   }
 };
 
 onActivated(() => {
-  if (localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
-    const currTime = Date.now();
-    const prevTime = Number(localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP"));
-
-    if (currTime - prevTime > 60 * 1000 * 60 * 24 * 7) {
-      localStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
-      isDoNotShowAgain.value = false;
-    }
-  }
+  checkExpirationTime();
 });
 
 onMounted(() => {
-  if (localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
-    const currTime = Date.now();
-    const prevTime = Number(localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP"));
-
-    if (currTime - prevTime > 60 * 1000 * 60 * 24 * 7) {
-      localStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
-      isDoNotShowAgain.value = false;
-    }
-  }
+  checkExpirationTime();
 });
 
 const router = useRouter();
