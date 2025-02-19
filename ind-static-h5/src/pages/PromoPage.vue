@@ -417,7 +417,7 @@ export default defineComponent({
                   // Save the image to the photo gallery
                   await Filesystem.writeFile({
                     path: `Pictures/myreferral.jpg`,
-                    data: dataUrl,s
+                    data: dataUrl,
                     directory: Directory.Documents,
                     recursive: true
                   });
