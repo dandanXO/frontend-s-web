@@ -2617,6 +2617,8 @@ export default {
     'Bank Card': 'Thẻ Ngân hàng',
     'Payment Type': 'Loại Thanh toán',
     Payment: 'Thanh toán',
+    Deposit: 'tiền gửi',
+    Withdraw: 'Rút tiền',
     'Add Payment': 'Thêm Thanh toán',
     'Edit Payment': 'Chỉnh sửa Thanh toán',
     CurrencyRate: 'Tỷ giá Tiền tệ',

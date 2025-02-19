@@ -1840,6 +1840,8 @@ export default {
     'Bank Card': 'บัตรธนาคาร',
     'Payment Type': 'ประเภทการชำระเงิน',
     Payment: 'การชำระเงิน',
+    Deposit: 'เงินฝาก',
+    Withdraw: 'ถอนเงิน',
     'Add Payment': 'เพิ่มการชำระเงิน',
     'Edit Payment': 'แก้ไขการชำระเงิน',
     CurrencyRate: 'อัตราสกุลเงิน',

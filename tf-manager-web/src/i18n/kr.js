@@ -2646,6 +2646,8 @@ export default {
     'Bank Card': '은행 카드',
     'Payment Type': '지불 유형',
     Payment: '지불',
+    Deposit: '보증금',
+    Withdraw: '돈을 인출하다',
     'Add Payment': '지불 추가',
     'Edit Payment': '지불 수정',
     CurrencyRate: '통화 환율',
