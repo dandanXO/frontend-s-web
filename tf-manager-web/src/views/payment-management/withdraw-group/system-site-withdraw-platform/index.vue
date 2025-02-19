@@ -48,11 +48,11 @@
 import { computed, reactive, ref } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
 import { ElMessage } from "element-plus";
-import { getSiteListSimple } from "../../../api/site";
-import { getSiteWithdrawPlatform, insertSiteWithdrawPlatform } from "../../../api/site-withdraw-platform";
-import { getWithdrawPlatforms } from "../../../api/withdraw-platform";
-import { useStore } from '../../../store';
-import { TENANT } from "../../../store/modules/user/action-types";
+import { getSiteListSimple } from "../../../../api/site";
+import { getSiteWithdrawPlatform, insertSiteWithdrawPlatform } from "../../../../api/site-withdraw-platform";
+import { getWithdrawPlatforms } from "../../../../api/withdraw-platform";
+import { useStore } from '../../../../store';
+import { TENANT } from "../../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();

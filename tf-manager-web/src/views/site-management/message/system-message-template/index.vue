@@ -701,7 +701,9 @@ async function loadSystemMessageTemplate() {
     }
   })
   if (request.sendTime.length === 2) {
-    query.sendTime = request.sendTime.join(',')
+    const newDate = [request.sendTime[0], request.sendTime[1]]
+    newDate[1] = convertDate(moment(newDate[1]).add(1, 'days'))
+    query.sendTime = newDate.join(',')
   }
   const { data: ret } = await getSystemMessageTemplate(query)
   page.pages = ret.pages

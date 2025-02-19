@@ -583,7 +583,7 @@
             type="info"
             size="mini"
             style="float: right;"
-            v-permission="['sys:affiliate:change-affiliate']"
+            v-permission="['sys:member:change-affiliate']"
             @click="showDialog('CHANGE_AFF')"
           >
             {{ t('fields.changeAffiliate') }}

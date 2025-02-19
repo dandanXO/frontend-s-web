@@ -42,8 +42,18 @@
       ></q-select>
 
       <div class="payout-total">
-        <div>总投注: {{ totalBetRecord.totalBet }}</div>
-        <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
+        <div>
+          <span style="width: 80px; display: inline-block">总投注:</span>
+          {{ totalBetRecord.totalBet }}
+        </div>
+        <div>
+          <span style="width: 80px; display: inline-block">总派彩:</span>
+          {{ totalBetRecord.totalPayout }}
+        </div>
+        <div>
+          <span style="width: 80px; display: inline-block">总有效投注:</span>
+          {{ totalBetRecord.totalValidBet }}
+        </div>
       </div>
     </div>
 
@@ -137,7 +147,8 @@ const platform = ref("");
 const recordRef = ref();
 const totalBetRecord = reactive({
   totalBet: 0,
-  totalPayout: 0
+  totalPayout: 0,
+  totalValidBet: 0
 });
 const loadNewData = () => {
   if (maxPage.value > current.value) {
@@ -186,7 +197,7 @@ const loadDepositTable = (isNew) => {
   };
 
   let selectedPlatform = platform.value ? (platform.value.value === "BBINDY" ? "BBIN" : platform.value.value) : "";
-  if (selectedPlatform.includes("@")) {
+  if (selectedPlatform && selectedPlatform.includes("@")) {
     const platformArr = selectedPlatform.split("@");
     paramData.platform = platformArr[0];
     paramData.gameType = platformArr[1];
@@ -205,6 +216,7 @@ const loadDepositTable = (isNew) => {
       maxPage.value = res.data.pages;
       totalBetRecord.totalBet = res.data.sums.totalBet;
       totalBetRecord.totalPayout = res.data.sums.totalPayout;
+      totalBetRecord.totalValidBet = res.data.sums.totalValidBet;
       tableData.value.push(...res.data.records);
     })
     .catch(() => {

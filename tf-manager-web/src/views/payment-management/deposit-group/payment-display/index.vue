@@ -253,7 +253,7 @@
 <script setup>
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
 import { toRaw } from '@vue/reactivity'
-import Node from '@/components/paymentSelect/node'
+import Node from '@/components/paymentSelect/node.vue'
 import {
   getAllPayments,
   getPaymentShow,
@@ -261,12 +261,12 @@ import {
   updatePaymentShow,
   updatePaymentShowDetails,
   deletePaymentShowDetails,
-} from '../../../api/payment-display'
+} from '../../../../api/payment-display'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { getSiteListSimple } from '../../../api/site'
-import { getFinancialLevels } from '../../../api/financial-level'
-import bus from '../../../utils/bus'
-import { useStore } from '../../../store'
+import { getSiteListSimple } from '../../../../api/site'
+import { getFinancialLevels } from '../../../../api/financial-level'
+import bus from '../../../../utils/bus'
+import { useStore } from '../../../../store'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()

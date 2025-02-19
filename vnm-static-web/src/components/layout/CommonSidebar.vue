@@ -79,8 +79,7 @@
       v-if="showFloatPromo"
       :class="{ minimum: !isFloatPromoExpanded }"
       :style="{ top: promoPosition.top + 'px', left: promoPosition.left + 'px' }"
-      @mousedown="startDragging('promo', $event)"
-    >
+      >
       <div style="position: relative">
         <!-- <div class="close-btn" @click="hideFloatPromo()">X</div> -->
         <div class="close-btn scale" @click.prevent="scaleFloatPromo">
@@ -94,7 +93,7 @@
           :autoplay="true"
           :interval="3000"
         >
-          <el-carousel-item v-for="(promo, i) in floatPromo" :key="i">
+          <el-carousel-item v-for="(promo, i) in floatPromo" :key="promo.id">
             <div @click="gotoPromo(promo.code)" class="rocket-container">
               <div class="rocket">
                 <img :src="`${imgURL}/promo/${promo.icon}`" />
@@ -206,7 +205,7 @@ export default defineComponent({
           updatePromo(); // Initially update the displayed promo
           // Update the displayed promo every 5 seconds
           updatePromoRemainingTime();
-          setInterval(updatePromo, 3000);
+          // setInterval(updatePromo, 3000);
           setInterval(updatePromoRemainingTime, 1000);
         } else {
           ElMessage.error(res.message);
@@ -396,6 +395,7 @@ export default defineComponent({
       transform: translateX(-50%);
       font-size: 32px;
       font-weight: bold;
+      color: #444;
       // color: #eaff00;
       // text-shadow: 2px 2px 0px #00000040;
     }

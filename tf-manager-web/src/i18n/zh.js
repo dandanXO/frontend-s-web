@@ -3188,6 +3188,8 @@ export default {
     'Payment Display List': '支付平台显示',
     'Platform Game Report': '场馆游戏报表',
     Payment: '支付',
+    Deposit: '存款',
+    Withdraw: '提款',
     'Add Payment': '新增支付',
     'Edit Payment': '编辑支付',
     CurrencyRate: '汇率',
@@ -3282,6 +3284,7 @@ export default {
     'Bet type setting': '投注项设定',
     'Sport App Setting': '体育 App 设置',
     'Game Jackpot Bonus Record': '奖金池奖励记录',
+    'Member Privilege Record Pak Export': '会员优惠记录导出 - 巴基斯坦'
   },
   google: {
     google_auth_menu: '谷歌验证',

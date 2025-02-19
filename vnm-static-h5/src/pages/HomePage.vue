@@ -416,7 +416,7 @@
 
   <q-page-sticky v-if="showRocket" position="bottom-right" :offset="fabPos" style="z-index: 999">
     <div class="rebates-absolute" :disable="draggingRocketFab" v-touch-pan.prevent.mouse="moveRocketFab">
-      <q-btn class="close-btn" icon="close" flat round dense @click="hideRocket()"></q-btn>
+      <!-- <q-btn class="close-btn" icon="close" flat round dense @click="hideRocket()"></q-btn> -->
       <q-carousel
         class="float"
         :navigation="gamePromo.length > 1 ? true : false"
@@ -443,7 +443,7 @@
   </q-page-sticky>
   <q-page-sticky v-if="showFloatPromo" position="bottom-right" :offset="promoPos" style="z-index: 999">
     <div class="rebates-absolute" :disable="draggingPromoFab" v-touch-pan.prevent.mouse="movePromoFab">
-      <q-btn class="close-btn" icon="close" flat round dense @click="hideFloatPromo()"></q-btn>
+      <!-- <q-btn class="close-btn" icon="close" flat round dense @click="hideFloatPromo()"></q-btn> -->
       <q-carousel
         class="float"
         :navigation="floatPromo.length > 1 ? true : false"
@@ -453,12 +453,13 @@
         transition-prev="slide-right"
         animated
         infinite
+        :autoplay="3000"
         size="xs"
       >
-        <q-carousel-slide v-for="(promo, i) in floatPromo" :key="i" :name="i" @click="gotoFloatPromo(promo.code)">
+        <q-carousel-slide v-for="(promo, i) in floatPromo" :key="promo.id" :name="i" @click="gotoFloatPromo(promo.code)">
           <div class="rocket-wrapper">
             <div class="rocket">
-              <img style="width: 110px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" />
+              <img style="width: 110px;" :src="`${imgURL}${promo.iconMobile}`" />
               <span v-if="promo.showTime" class="promo-remaining-time">
                 {{ floatPromoRemainingTime[i] }}
               </span>
@@ -1770,7 +1771,7 @@ export default defineComponent({
             updatePromoRemainingTime();
             setInterval(updatePromoRemainingTime, 1000);
             // Update the displayed promo every 5 seconds
-            setInterval(updatePromo, 3000);
+            // setInterval(updatePromo, 3000);
             updateRocket(); // Initially update the displayed promo
             // Update the displayed promo every 5 seconds
             setInterval(updateRocket, 3000);
@@ -2190,13 +2191,14 @@ export default defineComponent({
 
   .promo-remaining-time {
     position: absolute;
-    bottom: 21px;
+    bottom: 1rem;
     left: 50%;
     transform: translateX(-50%);
     font-weight: bold;
-    // color: #eaff00;
+    font-family: Arial;
+    color: #444;
     // text-shadow: 2px 2px 0px #00000040;
-    font-size: 10px;
+    font-size: 1.03rem;
   }
 }
 
@@ -2962,6 +2964,9 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
+  :deep(.q-carousel__slide){
+    padding: 0px;
+  }
 }
 
 .close-btn {

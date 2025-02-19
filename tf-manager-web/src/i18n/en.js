@@ -3239,6 +3239,8 @@ export default {
     'Bank Card': 'Bank Card',
     'Payment Type': 'Payment Type',
     Payment: 'Payment',
+    Deposit: 'Deposit',
+    Withdraw: 'Withdraw',
     'Add Payment': 'Add Payment',
     'Edit Payment': 'Edit Payment',
     CurrencyRate: 'Currency Rate',
@@ -3333,6 +3335,7 @@ export default {
     'Bet type setting': 'bet type setting',
     'Sport App Setting': 'Sport App Setting',
     'Game Jackpot Bonus Record': 'Game Jackpot Bonus Record',
+    'Member Privilege Record Pak Export': 'Member Privilege Record Pak Export'
   },
   google: {
     google_auth_menu: 'Google Authenticator',
