@@ -94,25 +94,27 @@
       </div>
       <ol>
         <li>
-          When the accumulated amount reaches $500, you can apply for withdrawal (Rewards will add to your wallet
-          directly).
+          When the accumulated amount reaches, you can apply for withdrawal (Rewards will add to your wallet directly).
         </li>
-        <li>When there are no spin available, refer a new player to get a free spin.</li>
+        <li>When there are no spins available, refer a new player to get a free spin.</li>
         <li>
-          The event lasts for 3 days. After the event, the accumulated bonus will be reset, and the event will start
-          again.
+          Each round of the event lasts for 24, 48, or 72 hours. After 24, 48, or 72 hours, the accumulated bonus and
+          invitation records will be reset, and a new round will start.
         </li>
+        <li>Each user can enjoy one free spin upon their first participation in the lucky spin.</li>
         <li>
-          Each user can enjoy one free spin opportunity per day, the free spins will be added at 12:00 a.m. every day.
-        </li>
-        <li>After the application is approved, the bonus is deposited directly into your wallet.</li>
-        <li>The bonus needs to be rolled over twice before it can be withdrawn.</li>
-        <li>
-          The invitee must bind their phone number and register via inviter's invitation link to be considered for the
-          recommendation.
+          Users can randomly receive bonus rewards through the lucky spin. The reset time is 24 hours for the first
+          stage, 48 hours for the second stage, and 72 hours for the third stage.
         </li>
         <li>
-          The right to interpret the event belongs to 55Ace. If you have any questions, please contact to customer
+          After completing a stage, the user will automatically enter the next stage. If the stage is not completed, it
+          will be reset and restarted.
+        </li>
+        <li>
+          Upon reaching the third stage, the event will continuously reset the third stage based on the cycle time.
+        </li>
+        <li>
+          The right to interpret the event belongs to B9GAME. If you have any questions, please contact customer
           service.
         </li>
       </ol>
