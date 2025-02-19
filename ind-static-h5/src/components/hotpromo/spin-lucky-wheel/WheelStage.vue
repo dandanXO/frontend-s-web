@@ -45,7 +45,7 @@
             />
             <img class="decoration ox" src="../../../assets/images/promotion/spin-lucky-wheel/decoration-ox.png" />
 
-            <div class="countdown">Countdown: {{ remainingTime }}</div>
+            <div class="countdown">Next Round: {{ remainingTime }}</div>
             <div class="wheel-inner-wrapper">
               <img
                 ref="spinWheelRef"
