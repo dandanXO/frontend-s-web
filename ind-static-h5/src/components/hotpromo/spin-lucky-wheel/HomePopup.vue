@@ -13,7 +13,7 @@
     </q-dialog>
 </template>
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onActivated } from 'vue';
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { api, eventapi } from "boot/axios";
@@ -58,6 +58,18 @@ const checkIsCanShowPopup = () => {
     }
 }
 
+onActivated(() => {
+    if(localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
+        const currTime = Date.now();
+        const prevTime = Number(localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP"));
+        
+        if (currTime - prevTime > 60 * 1000 * 60 * 24 * 30) {
+            localStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
+            isDoNotShowAgain.value = false;
+        }
+    }
+})
+
 onMounted(() => {
     if(localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
         const currTime = Date.now();
@@ -65,6 +77,7 @@ onMounted(() => {
         
         if (currTime - prevTime > 60 * 1000 * 60 * 24 * 30) {
             localStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
+            isDoNotShowAgain.value = false;
         }
     }
 })
