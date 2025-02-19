@@ -1180,6 +1180,7 @@ import HomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
 import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
+import { eventapi } from "src/boot/axios";
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
@@ -2648,9 +2649,13 @@ const checkSpinLuckyWheelPromo = () => {
   const hasPromo = localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP");
   const hasTempPromo =  sessionStorage.getItem("SPIN_LUCKY_WHEEL_TEMP_POPUP");
 
-  if((!hasTempPromo && !hasPromo) || hasPromo==='true') {
-    isShowSpinLuckyWheelPromoPopup.value = true;
-  }
+  eventapi.post("/refer-spin/check").then((res) => {
+    if (res.code === 0) {
+      if((!hasTempPromo && !hasPromo) || hasPromo === 'true') {
+        isShowSpinLuckyWheelPromoPopup.value = true;
+      }
+    }
+  });
 }
 
 const download_url = ref("");
