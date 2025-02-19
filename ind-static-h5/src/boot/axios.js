@@ -164,6 +164,9 @@ export default boot(({ app, router }) => {
       if (res.code === ResponseCode.EMPTY_PROMO_POPOUT || res.code === ResponseCode.EMPTY_PROMO_ID_NOTFOUND) {
         return res;
       }
+      if(res.code === ResponseCode.OTP_COOLDOWN_ERROR) {
+        return res;
+      }
       if (res.code === ResponseCode.ERROR_GUEST_LOGGED) {
         return res;
       }
