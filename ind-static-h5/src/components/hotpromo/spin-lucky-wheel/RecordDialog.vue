@@ -16,7 +16,7 @@
             <div class="record-wrapper invitation">
               <template v-if="invitationRecords.length">
                 <div v-for="(record, index) in invitationRecords" :key="index" class="record">
-                  <span>{{ moment(record.referTime).format("MM-DD hh:mm:ss") }}</span>
+                  <span>{{ moment(record.referTime).format("MM-DD hh:mm:ssA") }}</span>
                   <span class="name">{{ record.loginName }}</span>
                   <span>Invitation successful</span>
                 </div>
@@ -28,7 +28,7 @@
             <div class="record-wrapper lottery">
               <template v-if="lotteryRecords.length">
                 <div v-for="(record, index) in lotteryRecords" :key="index" class="record">
-                  <span>{{ moment(record.time).format("MM-DD hh:mm:ss") }}</span>
+                  <span>{{ moment(record.time).format("MM-DD hh:mm:ssA") }}</span>
                   <span class="amount">${{ record.amount }}</span>
                 </div>
               </template>
