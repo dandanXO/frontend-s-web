@@ -262,7 +262,8 @@ export default defineComponent({
       loginName: "",
       password: "",
       captchaCode: "",
-      codeId: ""
+      codeId: "",
+      way: "H5"
       // ...(Platform.is.android && Platform.is.capacitor ? {} : { appVersion: "" })
     });
     const phoneLoginForm = reactive({

@@ -304,7 +304,8 @@ export default defineComponent({
       codeAffiliate: "",
       referrer: "",
       smsCodeId: "",
-      smsCode: ""
+      smsCode: "",
+      way: "H5"
     });
     const getCode = () => {
       api
