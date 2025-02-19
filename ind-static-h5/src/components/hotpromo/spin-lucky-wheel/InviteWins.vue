@@ -79,7 +79,6 @@ const downloadQRImg = async () => {
                 });
 
                 canvas.style.display = "none";
-                document.body.removeChild(canvas);
             });
         } catch (error) {
             console.error("Error saving QR Code image:", error);
