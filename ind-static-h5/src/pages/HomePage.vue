@@ -1141,9 +1141,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isShowSpinLuckyWheelPromoPopup" class="spin-lucky-wheel-promo-popup" @update:model-value="onCloseSpinLuckyWheelPromoPopup" >
-    <HomePopup ref="spinLuckyWheelPromoPopupRef" />
-  </q-dialog>
+  <HomePopup ref="spinLuckyWheelPromoPopupRef" />
 
   <SpinLuckyWheelPromoSticky />
 </template>
@@ -2633,30 +2631,6 @@ const checkHbPromo = () => {
 };
 
 const spinLuckyWheelPromoPopupRef = ref();
-const isShowSpinLuckyWheelPromoPopup = ref(false);
-const onCloseSpinLuckyWheelPromoPopup = () => {
-  if(spinLuckyWheelPromoPopupRef.value?.isDoNotShowAgain) {
-    localStorage.setItem("SPIN_LUCKY_WHEEL_POPUP", Date.now());
-    isShowSpinLuckyWheelPromoPopup.value = false;
-  } else {
-    sessionStorage.setItem("SPIN_LUCKY_WHEEL_TEMP_POPUP" , "1");
-    localStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
-  }
-}
-const checkSpinLuckyWheelPromo = () => {
-  // debugger
-  // or if got timestamp
-  const hasPromo = localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP");
-  const hasTempPromo =  sessionStorage.getItem("SPIN_LUCKY_WHEEL_TEMP_POPUP");
-
-  eventapi.post("/refer-spin/check").then((res) => {
-    if (res.code === 0) {
-      if((!hasTempPromo && !hasPromo) || hasPromo === 'true') {
-        isShowSpinLuckyWheelPromoPopup.value = true;
-      }
-    }
-  });
-}
 
 const download_url = ref("");
 const isAppUpdateModal = ref(false);
@@ -2856,6 +2830,9 @@ const loadAppTabs = () => {
 
 onActivated(() => {
   store.getUnreadTotal();
+  if(!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+    spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
+  }
 });
 
 onMounted(() => {
@@ -2869,9 +2846,8 @@ onMounted(() => {
   loadJDBFishGameList();
   loadCustomerAddress();
   checkHbPromo();
-
-  if(store.hasToken()){
-    checkSpinLuckyWheelPromo();
+  if(!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+    spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
   }
 
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);

@@ -103,7 +103,7 @@
           Each user can enjoy one free spin opportunity per day, the free spins will be added at 12:00 a.m. every day.
         </li>
         <li>After the application is approved, the bonus is deposited directly into your wallet.</li>
-        <li>The bonus needs to be rolled over twice before it can be withdrawn.</li>
+        <li>The bonus needs to be rolled over once before it can be withdrawn.</li>
         <li>
           The invitee must bind their phone number and register via inviter's invitation link to be considered for the
           recommendation.
