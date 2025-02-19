@@ -1840,6 +1840,8 @@ export default {
     'Bank Card': 'บัตรธนาคาร',
     'Payment Type': 'ประเภทการชำระเงิน',
     Payment: 'การชำระเงิน',
+    Deposit: 'เงินฝาก',
+    Withdraw: 'ถอนเงิน',
     'Add Payment': 'เพิ่มการชำระเงิน',
     'Edit Payment': 'แก้ไขการชำระเงิน',
     CurrencyRate: 'อัตราสกุลเงิน',
@@ -1879,7 +1881,8 @@ export default {
     Team: 'ทีม',
     'Bet type setting': 'การตั้งค่าสำหรับการเดิมพัน',
     'Sport App Setting': 'การตั้งค่าสำหรับแอปพลิเคชันกีฬา',
-    Sport: 'กีฬา'
+    Sport: 'กีฬา',
+    'Member Privilege Record Pak Export': 'บันทึกส่วนลดสมาชิกส่งออก - ปากีสถาน'
   },
   google: {
     google_auth_menu: 'ตัวรับรองความถูกต้องของกูเกิ้ล',

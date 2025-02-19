@@ -355,6 +355,7 @@ export default defineComponent({
                 $q.loading.hide();
                 getCode();
                 sessionStorage.removeItem("REFERRAL_CODE");
+                sessionStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
 
                 if (isCheckRmb.value) {
                   localStorage.setItem(

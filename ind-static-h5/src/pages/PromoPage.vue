@@ -278,6 +278,10 @@ export default defineComponent({
       loadAll();
       updateCountdown();
       store.getUnreadTotal();
+
+      if(sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+        sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
+      }
     });
 
     watch(() => route.query, () => {
@@ -607,6 +611,10 @@ export default defineComponent({
 
     onMounted(() => {
       checkExtension();
+      
+      if(sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+        sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
+      }
     });
 
     const swipeLeft = () => {

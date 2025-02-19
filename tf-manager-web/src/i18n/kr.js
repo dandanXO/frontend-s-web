@@ -2646,6 +2646,8 @@ export default {
     'Bank Card': '은행 카드',
     'Payment Type': '지불 유형',
     Payment: '지불',
+    Deposit: '보증금',
+    Withdraw: '돈을 인출하다',
     'Add Payment': '지불 추가',
     'Edit Payment': '지불 수정',
     CurrencyRate: '통화 환율',
@@ -2720,6 +2722,7 @@ export default {
     'Sport App Setting': '스포츠 앱 설정',
     Sport: '스포츠',
     'Game Jackpot Bonus Record': '게임 잭팟 보너스 기록',
+    'Member Privilege Record Pak Export': '회원 할인 기록 수출 - 파키스탄'
   },
   google: {
     google_auth_menu: 'Google 인증자',
