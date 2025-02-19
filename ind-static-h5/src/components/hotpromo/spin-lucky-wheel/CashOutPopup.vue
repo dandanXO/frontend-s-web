@@ -5,7 +5,7 @@
         </div>
         <div class="cash-out" v-else>
             <GradientTextAmount :amountText="`CASH OUT COSTS  ${extractionDifference}$`" :width="300" />
-            <span class="next-spin-remaining-time">COUNTDOWN: {{ nextFreeSpinRemainingTime }}</span>
+            <span class="next-spin-remaining-time">COUNTDOWN: {{ remainingTime }}</span>
             <div class="cash-out-backdrop-wrapper">
                 <div class="pulse1"></div>
                 <div class="pulse2"></div>
@@ -49,6 +49,7 @@ const hideCashOutPopup = () => {
 
 const extractionDifference = inject('extractionDifference');
 const nextFreeSpinRemainingTime = inject('nextFreeSpinRemainingTime');
+const remainingTime = inject('remainingTime');
 
 </script>
 <style lang="scss" scoped>

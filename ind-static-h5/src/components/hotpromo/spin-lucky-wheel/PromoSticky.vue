@@ -8,7 +8,7 @@
 </template>
 <script setup>
 import { userStore } from "src/stores";
-import { onMounted, ref } from "vue";
+import { onActivated, onMounted, onUnmounted, ref } from "vue";
 import { eventapi } from "src/boot/axios";
 import moment from 'moment-timezone';
 import { useRouter } from "vue-router";
@@ -16,7 +16,7 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const timer = ref();
 const remainingTime = ref("");
-const isShowSticky = ref(true);
+const isShowSticky = ref(false);
 const nextFreeSpinRemainingTime = ref("");
 const moveCsIcon = (ev) => {
     isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -80,6 +80,10 @@ const loadData = async () => {
             ...res.data
         };
 
+        if(info.value.status === 'IN_PROGRESS') {
+            isShowSticky.value = true;
+        }
+
         updateCountdownTime();
     }
 };
@@ -89,6 +93,19 @@ onMounted(() => {
   if(!getShow && store.token){
     loadData();
   }
+});
+
+onActivated(() => {
+    clearInterval(timer.value);
+
+    const getShow = sessionStorage.getItem("SPIN_LUCKY_WHEEL_STICKY");
+    if(!getShow && store.token){
+        loadData();
+    }
+})
+
+onUnmounted(() => {
+    clearInterval(timer.value);
 })
 </script>
 <style lang="scss">

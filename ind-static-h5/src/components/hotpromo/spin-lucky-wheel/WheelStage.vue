@@ -168,6 +168,7 @@ const isCashOutPopupVisible = ref(false);
 const cashOutPopupRef = ref();
 
 provide('nextFreeSpinRemainingTime', nextFreeSpinRemainingTime);
+provide('remainingTime', remainingTime);
 const extractionDifference = inject('extractionDifference');
 
 const winningRecord = computed(() => {
