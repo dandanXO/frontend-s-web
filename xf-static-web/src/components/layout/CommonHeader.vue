@@ -122,7 +122,7 @@
         <div v-if="!store.token" class="right-contents">
           <a class="common-btn" @click="openUsernameLogin()">登录</a>
           <a class="common-btn grey" @click="registerDialogVisible = true">开设账户</a>
-          <a class="common-link" @click="openForgotDialog">忘记账号？</a>
+          <a class="common-link" @click="openForgotDialog">忘记账号/密码？</a>
         </div>
         <div class="details" v-if="store.token">
           <el-dropdown @command="handleCommand" trigger="click">
