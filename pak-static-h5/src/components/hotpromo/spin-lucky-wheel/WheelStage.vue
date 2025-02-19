@@ -27,14 +27,17 @@
 
         <div class="winning-record-outer-wrapper">
           <div ref="winningRecordRef" class="winning-record-wrapper">
-            <div v-for="(record, index) in winningRecord" :key="index" class="winning-record-item">
-              <span>{{ moment(record.date).format("MM-DD hh:mm:ss") }}</span>
-              <span class="name">{{ record.name }}</span>
-              <span>
-                RECEIVE
-                <span class="amount">$500</span>
-              </span>
-            </div>
+            <template v-if="!winningRecord.length">
+              <div v-for="(record, index) in winningRecord" :key="index" class="winning-record-item">
+                <span>{{ moment(record.date).format("MM-DD hh:mm:ss") }}</span>
+                <span class="name">{{ record.loginName }}</span>
+                <span>
+                  RECEIVE
+                  <span class="amount">${{ record.bonus }}</span>
+                </span>
+              </div>
+            </template>
+            <div v-else class="no-record-text">No Records</div>
           </div>
         </div>
         <div class="foreground-wrapper">
@@ -165,24 +168,25 @@ const prize = ref(0);
 const winningRecordRef = ref();
 const isCashOutPopupVisible = ref(false);
 const cashOutPopupRef = ref();
+const winningRecord = ref([]);
 
 provide("nextFreeSpinRemainingTime", nextFreeSpinRemainingTime);
 const extractionDifference = inject("extractionDifference");
 
-const winningRecord = computed(() => {
-  const result = [];
-  for (let i = 0; i < 20; i++) {
-    const date = moment()
-      .subtract(Math.random() * 24 * 60 * 60 * 1000, "milliseconds")
-      .format("YYYY-MM-DD HH:mm:ss");
-    const name = `User${Math.floor(Math.random() * 900) + 100}`;
-    result.push({
-      date,
-      name
-    });
-  }
-  return result;
-});
+// const winningRecord = computed(() => {
+//   const result = [];
+//   for (let i = 0; i < 20; i++) {
+//     const date = moment()
+//       .subtract(Math.random() * 24 * 60 * 60 * 1000, "milliseconds")
+//       .format("YYYY-MM-DD HH:mm:ss");
+//     const name = `User${Math.floor(Math.random() * 900) + 100}`;
+//     result.push({
+//       date,
+//       name
+//     });
+//   }
+//   return result;
+// });
 
 const rotate = (timestamp, stopCallback) => {
   if (!spinStartTime.value) {
@@ -308,6 +312,23 @@ const updateCountdownTime = () => {
   }, 1000);
 };
 
+const getRecords = () => {
+  eventapi.get("/session/refer-wheel-spin/getRecords?promoCode=pak-refer-wheel-spin").then((res) => {
+    if (res.code === 0) {
+      winningRecord.value = res.data.map((record) => {
+        const date = moment()
+          .subtract(Math.random() * 24 * 60 * 60 * 1000, "milliseconds")
+          .format("YYYY-MM-DD HH:mm:ss");
+
+        return {
+          date,
+          ...record
+        };
+      });
+    }
+  });
+};
+
 onMounted(() => {
   for (let i = 0; i < TOTAL_ITEMS; i++) {
     const _degree = (FULL_DEGREE / TOTAL_ITEMS) * i * -1;
@@ -315,6 +336,7 @@ onMounted(() => {
   }
 
   updateCountdownTime();
+  getRecords();
 });
 
 defineExpose({
@@ -456,6 +478,11 @@ onUnmounted(() => {
               white-space: nowrap;
               overflow: hidden;
             }
+          }
+
+          .no-record-text {
+            text-align: center;
+            font-weight: 700;
           }
         }
       }

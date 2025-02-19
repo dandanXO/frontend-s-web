@@ -165,7 +165,7 @@ onUnmounted(() => {
           font-size: 20px;
           font-weight: 700;
           line-height: 24px;
-          color: #8100ae;
+          color: #f33d31;
 
           .prize {
             font-size: 24px;
@@ -193,7 +193,7 @@ onUnmounted(() => {
         transform: translateY(-50%);
         font-size: 50px;
         font-weight: 900;
-        color: #8100ae;
+        color: #f33d31;
         text-align: center;
       }
 

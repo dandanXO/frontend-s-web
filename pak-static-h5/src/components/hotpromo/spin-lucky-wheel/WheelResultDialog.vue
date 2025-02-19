@@ -2,6 +2,7 @@
   <q-dialog v-model="_modelValue" @hide="$emit('hide')">
     <div class="wheel-result-wrapper">
       <span class="prize">+${{ props.prize }}</span>
+      <span class="desc">Withdraw money over $500</span>
       <CommonButton class="close-btn" v-close-popup>Okay</CommonButton>
     </div>
   </q-dialog>
@@ -33,7 +34,19 @@ const _modelValue = computed({
     width: 100%;
     font-size: 56px;
     font-weight: 900;
-    color: #8100ae;
+    color: #f33d31;
+    text-align: center;
+  }
+
+  .desc {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    font-size: 20px;
+    font-weight: 900;
+    color: #f33d31;
     text-align: center;
   }
 
