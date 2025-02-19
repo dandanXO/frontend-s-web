@@ -201,21 +201,21 @@
 <script setup>
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { onMounted, reactive, ref, computed } from 'vue'
-import { getSiteListSimple } from '../../../api/site'
+import { getSiteListSimple } from '../../../../api/site'
 import {
   copyWithdrawBank,
   getWithdrawBankList,
   getWithdrawPlatform,
   createWithdrawBank,
   deleteWithdrawBank,
-} from '../../../api/system-withdraw-bank'
-import { getWithdrawBanks } from '../../../api/bank-info'
-import { getWithdrawPlatforms } from "../../../api/withdraw-platform";
-import { required } from '../../../utils/validate'
+} from '../../../../api/system-withdraw-bank'
+import { getWithdrawBanks } from '../../../../api/bank-info'
+import { getWithdrawPlatforms } from "../../../../api/withdraw-platform";
+import { required } from '../../../../utils/validate'
 // import { hasRole, hasPermission } from '../../../utils/util'
 import { useI18n } from "vue-i18n";
-import { useStore } from '../../../store'
-import { TENANT } from '../../../store/modules/user/action-types'
+import { useStore } from '../../../../store'
+import { TENANT } from '../../../../store/modules/user/action-types'
 
 const { t } = useI18n()
 const store = useStore()

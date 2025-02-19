@@ -278,15 +278,15 @@
 <script setup>
 
 import { computed, nextTick, onMounted, reactive, ref } from "vue";
-import { required } from "../../../utils/validate";
+import { required } from "../../../../utils/validate";
 import { ElMessage } from "element-plus";
-import { createWithdrawPlatform, getWithdrawPlatforms, updateWithdrawPlatform, updateWithdrawPlatformStatus, copyWithdrawPlatform } from "../../../api/withdraw-platform";
-import { getCurrencyNames } from "../../../api/currency";
-import { hasPermission } from '../../../utils/util'
+import { createWithdrawPlatform, getWithdrawPlatforms, updateWithdrawPlatform, updateWithdrawPlatformStatus, copyWithdrawPlatform } from "../../../../api/withdraw-platform";
+import { getCurrencyNames } from "../../../../api/currency";
+import { hasPermission } from '../../../../utils/util'
 import { useStore } from '@/store';
 import { TENANT, ADMIN } from "@/store/modules/user/action-types";
-import { getSiteListSimple } from "../../../api/site";
-import { getActivePaymentTypes } from '../../../api/payment-type'
+import { getSiteListSimple } from "../../../../api/site";
+import { getActivePaymentTypes } from '../../../../api/payment-type'
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();

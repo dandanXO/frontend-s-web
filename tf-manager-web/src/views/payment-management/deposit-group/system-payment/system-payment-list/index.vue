@@ -210,14 +210,14 @@ import {
   updateSystemPaymentStatus,
   copyPayment,
   updatePaymentPlatform,
-} from '../../../../api/system-payment'
-import { hasPermission } from '../../../../utils/util'
-import { useStore } from '../../../../store'
-import { TENANT, ADMIN } from '../../../../store/modules/user/action-types'
-import { getSiteListSimple } from '../../../../api/site'
+} from '../../../../../api/system-payment'
+import { hasPermission } from '../../../../../utils/util'
+import { useStore } from '../../../../../store'
+import { TENANT, ADMIN } from '../../../../../store/modules/user/action-types'
+import { getSiteListSimple } from '../../../../../api/site'
 import { useI18n } from "vue-i18n";
 import { ElMessage } from 'element-plus'
-import { getActivePaymentTypes } from "../../../../api/payment-type";
+import { getActivePaymentTypes } from "../../../../../api/payment-type";
 
 // eslint-disable-next-line
 const { t } = useI18n();

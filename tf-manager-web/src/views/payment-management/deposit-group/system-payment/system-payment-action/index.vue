@@ -255,13 +255,13 @@
 </template>
 <script setup>
 import { computed, nextTick, onMounted, reactive, ref } from 'vue';
-import { numericOnly, required } from '../../../../utils/validate';
+import { numericOnly, required } from '../../../../../utils/validate';
 import { ElMessage } from 'element-plus';
 import { useRoute, useRouter } from 'vue-router';
-import { getCurrencyNames } from '../../../../api/currency';
-import { getActivePaymentTypes } from '../../../../api/payment-type';
-import { createSystemPayment, getSystemPaymentById, updateSystemPayment } from '../../../../api/system-payment';
-import { getSiteListSimple } from '../../../../api/site';
+import { getCurrencyNames } from '../../../../../api/currency';
+import { getActivePaymentTypes } from '../../../../../api/payment-type';
+import { createSystemPayment, getSystemPaymentById, updateSystemPayment } from '../../../../../api/system-payment';
+import { getSiteListSimple } from '../../../../../api/site';
 import { useStore } from '@/store';
 import { TENANT, ADMIN } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";

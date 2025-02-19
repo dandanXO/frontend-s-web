@@ -144,18 +144,18 @@
 <script setup>
 
 import { computed, onMounted, reactive, ref } from "vue";
-import { hasRole, hasPermission } from "../../../utils/util";
-import { getDepositSetting, insertOrUpdate, updateAmountSetting } from "../../../api/deposit-setting";
-import { getFinancialLevels } from "../../../api/financial-level";
-import { getSiteListSimple } from "../../../api/site";
-import { getActivePaymentTypes } from "../../../api/payment-type";
-import { getCurrencyCodes } from '../../../api/currency'
-import { useStore } from '../../../store';
-import { TENANT } from "../../../store/modules/user/action-types";
+import { hasRole, hasPermission } from "../../../../utils/util";
+import { getDepositSetting, insertOrUpdate, updateAmountSetting } from "../../../../api/deposit-setting";
+import { getFinancialLevels } from "../../../../api/financial-level";
+import { getSiteListSimple } from "../../../../api/site";
+import { getActivePaymentTypes } from "../../../../api/payment-type";
+import { getCurrencyCodes } from '../../../../api/currency'
+import { useStore } from '../../../../store';
+import { TENANT } from "../../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 import { ElMessage } from "element-plus";
-import { isNumeric } from "../../../utils/validate";
-import { getConfigList } from '../../../api/config'
+import { isNumeric } from "../../../../utils/validate";
+import { getConfigList } from '../../../../api/config'
 
 const { t } = useI18n();
 const store = useStore();
