@@ -161,7 +161,7 @@ export default boot(({ app, router }) => {
       if (res.code === ResponseCode.TOO_OFTEN_REQUEST || res.code === ResponseCode.ERROR_AMOUNT_DEPOSIT) {
         return res;
       }
-      if (res.code === ResponseCode.EMPTY_PROMO_POPOUT) {
+      if (res.code === ResponseCode.EMPTY_PROMO_POPOUT || res.code === ResponseCode.EMPTY_PROMO_ID_NOTFOUND) {
         return res;
       }
       if (res.code === ResponseCode.ERROR_GUEST_LOGGED) {
