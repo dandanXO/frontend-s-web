@@ -44,9 +44,10 @@
                         <div class="hotitems">
                           <div class="hotitem" v-for="i in 3" :key="i">
                             <span class="hot"><img src="../../assets/images/newplayerguide/tophot.png"></span>
-                            <img :src="require(`../../assets/images/newplayerguide/hot-0${i}.png`)">
+                            <img @click="showVideo(i)" :src="require(`../../assets/images/newplayerguide/hot-0${i}.png`)">
                           </div>
                         </div>
+                        <div class="watchTutorial">{{ $t('playerGuide.watchGameTutorial') }}</div>
                       </div>
                     </div>
                     
@@ -130,13 +131,15 @@
                     <div v-if="!isVideo && step.video" @click="isVideo = !isVideo" class="videolink"><img src="../../assets/images/newplayerguide/video.png">{{ step.video }}</div>
                   
                   <div v-if="isVideo" class="video-portion">
+                    
+                    <span style="width: 100%; display: flex; justify-content: flex-end; align-items: flex-end; margin: 5px auto; cursor:pointer;" @click="isVideo = !isVideo">{{ $t('btn.close') }}</span>
                     <video width="100%" height="100%" controls>
-                      
-                      <source v-if="index+1 === 2" src="http://npr101.com/video/video-1.mp4" type="video/mp4">
-                      <source v-if="index+1 === 3" src="http://npr101.com/video/video-2.mp4" type="video/mp4">
-                      <source v-if="index+1 === 4" src="http://npr101.com/video/video-1.mp4" type="video/mp4">
-                      <source v-if="index+1 === 5" src="http://npr101.com/video/video-2.mp4" type="video/mp4">
-                      
+                      <source v-if="index+1 === 3" :src="`${videoUrl}how_to_deposit_668mnf.mp4`" type="video/mp4">
+                      <source v-if="index+1 === 2 && selectedGame === '7up7'" :src="`${videoUrl}how_to_play_7up7down_668mnf.mp4`" type="video/mp4">
+                      <source v-if="index+1 === 2 && selectedGame === 'aviator'" :src="`${videoUrl}how_to_play_aviator_668mnf.mp4`" type="video/mp4">
+                      <source v-if="index+1 === 2 && selectedGame === 'mines'" :src="`${videoUrl}how_to_play_mines_668mnf.mp4`" type="video/mp4">
+                      <source v-if="index+1 === 4" :src="`${videoUrl}how_to_refer_668mnf.mp4`" type="video/mp4">
+                      <source v-if="index+1 === 5" :src="`${videoUrl}how_to_withdraw_668mnf.mp4`" type="video/mp4">
                       {{ $t('playerGuide.noSupport') }}
                     </video>
                     <!-- <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dRPcJyisLUI?si=ok64lVuE9jWtcnGr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
@@ -232,6 +235,18 @@
   const router = useRouter();
   const emit = defineEmits(["update:modelValue","update:currentStep", "update:runAviator"]);
 
+  const videoUrl = process.env.IMAGE_CDN + "/media/pak/";
+  const selectedGame = ref()
+  const showVideo = (i) => {
+    isVideo.value = !isVideo.value
+    if (i === 1) {
+      selectedGame.value = 'aviator'
+    } else if (i === 2) {
+      selectedGame.value = 'mines'
+    } else if (i === 3) {
+      selectedGame.value = '7up7'
+    }
+  }
   const props = defineProps(["modelValue", "currentStep"]);
   const { modelValue, currentStep } = toRefs(props);
   const isBottomShareDialog = ref(false)
@@ -246,9 +261,9 @@
   // ];
   const steps = computed(() => [
     { title: t('playerGuide.welcome'), instruction: t('playerGuide.completeRegistration'), earnableAmt: "10", buttonTxt: t('playerGuide.startNow'), video: "" },
-    { title: t('playerGuide.hotGames'), instruction: t('playerGuide.experienceGame'), earnableAmt: "10", buttonTxt: t('playerGuide.tryItOut'), video: t('playerGuide.watchGameTutorial') },
+    { title: t('playerGuide.hotGames'), instruction: t('playerGuide.experienceGame'), earnableAmt: "10", buttonTxt: t('playerGuide.tryItOut'), video: "" },
     { title: t('playerGuide.recharging'), instruction: t('playerGuide.rechargeDownloadApp'), earnableAmt: "28", buttonTxt: t('playerGuide.depositNow'), video: t('playerGuide.depositTutorial') },
-    { title: t('playerGuide.inviteFriends'), instruction: t('playerGuide.inviteReward'), earnableAmt: "250", buttonTxt: t('playerGuide.shareNow') },
+    { title: t('playerGuide.inviteFriends'), instruction: t('playerGuide.inviteReward'), earnableAmt: "250", buttonTxt: t('playerGuide.shareNow'), video: t('playerGuide.referTutorial') },
     { title: t('playerGuide.withdrawal'), instruction: t('playerGuide.unlockTasks'), earnableAmt: "250", buttonTxt: t('playerGuide.withdrawNow'), video: t('playerGuide.withdrawTutorial') },
     // { title: t('playerGuide.congratulations'), instruction: t('playerGuide.completeNoviceMission'), earnableAmt: "1000", buttonTxt: t('playerGuide.startGame'), video: t('playerGuide.expertGameplayGuide') },
   ]);
@@ -666,6 +681,15 @@ onMounted(() => {
             gap: 10px;
             .hotitem {
               position: relative;
+              .watchTutorial {
+                // position: absolute;
+                // transform: translate(50%, 50%);
+                // width: 100%;
+                // top: 0;
+                // bottom: 0;
+                // margin: auto;
+                
+              }
               .hot {
                 position: absolute;
                 top: -5px;
