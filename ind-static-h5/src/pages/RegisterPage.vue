@@ -582,7 +582,7 @@ export default defineComponent({
             console.log(res.data.codeId);
 
             // start otp countdown
-            otpCountdown.value = 60;
+            otpCountdown.value = res.data.second || 60;
             otpCountdownInterval.value = setInterval(() => {
               if(otpCountdown.value > 0) {
                 otpCountdown.value = otpCountdown.value - 1;
@@ -590,16 +590,27 @@ export default defineComponent({
             },1000);
           } else {
             color = "negative";
+            if(res.code === 1402) {
+              message = `Please try again after ${res.data.second} seconds`;
+
+               // start otp countdown
+              otpCountdown.value = res.data.second || 60;
+              otpCountdownInterval.value = setInterval(() => {
+                if(otpCountdown.value > 0) {
+                  otpCountdown.value = otpCountdown.value - 1;
+                }
+              },1000);
+            }
             getInnerCode();
           }
 
           if (message) {
-            $q.notify({ message, color });
+            $q.notify({ message, color, position: 'top' });
           }
 
           console.log("onCaptchaSubmit", res);
         })
-        .catch(() => {
+        .catch((a) => {
           getInnerCode();
         });
     };
