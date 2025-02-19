@@ -85,18 +85,36 @@ const downloadQRImg = async () => {
     }
   }else if(window.location.pathname === "/promotion") {
 
-    const target = window['cordova_iab'] ?? window['webkit'].messageHandlers['cordova_iab'];
-    target.postMessage(JSON.stringify({
-      'action': "qrcode",
-      "item" : selfTgurl.value
-    }));
+    try {
+      html2canvas(document.querySelector("#the-qrcode")).then(async function (canvas) {
+        document.body.appendChild(canvas);
+        const dataUrl = canvas.toDataURL("image/jpeg");
+        // console.log(dataUrl);
 
-    $q.notify({
-      color: "positive",
-      position: "top",
-      message: "QR Code image saved to photo gallery.",
-      icon: "check_circle_outline"
-    });
+        const target = window['cordova_iab'] ?? window['webkit'].messageHandlers['cordova_iab'];
+        target.postMessage(JSON.stringify({
+          'action': "qrcode",
+          "item" : dataUrl
+        }));
+
+        console.log("QR Code image saved to gallery.");
+
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "QR Code image saved to photo gallery.",
+          icon: "check_circle_outline"
+        });
+
+        canvas.style.display = "none";
+      });
+    } catch (error) {
+      console.error("Error saving QR Code image:", error);
+    }
+
+
+
+
   } else  {
     try {
       html2canvas(document.querySelector("#the-qrcode")).then(async function (canvas) {

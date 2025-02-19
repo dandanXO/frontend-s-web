@@ -401,32 +401,19 @@ export default defineComponent({
               },500)
             });
 
-            ref.addEventListener("message", function (event) {
+            ref.addEventListener("message", async function(event) {
               if (event.data.action === "qrcode") {
                 // alert(event.data.item);
-                selfUrl.value= event.data.item;
-                // alert(selfUrl.value)
-
-                html2canvas(document.querySelector("#thepp-qrcode")).then(async function (canvas) {
-                  // debugger;
-                  document.body.appendChild(canvas);
-                  const dataUrl = canvas.toDataURL("image/jpeg");
-                  // console.log(dataUrl);
-                  alert(dataUrl)
-
-                  // Save the image to the photo gallery
-                  await Filesystem.writeFile({
-                    path: `Pictures/myreferral.jpg`,
-                    data: dataUrl,
-                    directory: Directory.Documents,
-                    recursive: true
-                  });
-
-                  console.log("QR Code image saved to gallery.");
-                  canvas.style.display = "none";
-
-                  selfUrl.value= "";
+                const dataUrl = event.data.item;
+                // alert(dataUrl)
+                // Save the image to the photo gallery
+                await Filesystem.writeFile({
+                  path: `Pictures/myreferral.jpg`,
+                  data: dataUrl,
+                  directory: Directory.Documents,
+                  recursive: true
                 });
+
               }
             });
 
