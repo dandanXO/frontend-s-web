@@ -34,10 +34,22 @@
       <img alt="TF88 logo" src="../assets/logo-web.svg" />
     </div>
     <div class="header-middle" v-if="!isLogined">
-      <q-btn rounded no-caps color="brightbtn" :class="`sm-screen-txt ${store?.theme === 'CNY' ? 'cny-login-btn' : ''}`" @click="router.push('/login')">
+      <q-btn
+        rounded
+        no-caps
+        color="brightbtn"
+        :class="`sm-screen-txt ${store?.theme === 'CNY' ? 'cny-login-btn' : ''}`"
+        @click="router.push('/login')"
+      >
         {{ $t("lang.login") }}
       </q-btn>
-      <q-btn rounded no-caps color="lightbluebtn" :class="`sm-screen-txt ${store?.theme === 'CNY' ? 'cny-register-btn' : ''}`" @click="goToRegister">
+      <q-btn
+        rounded
+        no-caps
+        color="lightbluebtn"
+        :class="`sm-screen-txt ${store?.theme === 'CNY' ? 'cny-register-btn' : ''}`"
+        @click="goToRegister"
+      >
         {{ $t("lang.register") }}
       </q-btn>
     </div>
@@ -456,10 +468,15 @@
         :autoplay="3000"
         size="xs"
       >
-        <q-carousel-slide v-for="(promo, i) in floatPromo" :key="promo.id" :name="i" @click="gotoFloatPromo(promo.code)">
+        <q-carousel-slide
+          v-for="(promo, i) in floatPromo"
+          :key="promo.id"
+          :name="i"
+          @click="gotoFloatPromo(promo.code)"
+        >
           <div class="rocket-wrapper">
             <div class="rocket">
-              <img style="width: 110px;" :src="`${imgURL}${promo.iconMobile}`" />
+              <img style="width: 110px" :src="`${imgURL}${promo.iconMobile}`" />
               <span v-if="promo.showTime" class="promo-remaining-time">
                 {{ floatPromoRemainingTime[i] }}
               </span>
@@ -1789,7 +1806,7 @@ export default defineComponent({
         let result = "00:00:00";
         if (promo?.endTime) {
           const now = moment(Date.now());
-          const endTime = moment(currentPromo.value.endTime);
+          const endTime = moment(promo?.endTime);
           const totalSeconds = endTime.diff(now, "seconds");
           if (totalSeconds > 0) {
             const hours = Math.floor(totalSeconds / 3600);
@@ -2346,7 +2363,8 @@ export default defineComponent({
       position: relative;
     }
 
-    .cny-login-btn, .cny-register-btn {
+    .cny-login-btn,
+    .cny-register-btn {
       &::after {
         content: "";
         position: absolute;
@@ -2964,7 +2982,15 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
-  :deep(.q-carousel__slide){
+  position: relative;
+
+  :deep(.q-carousel) {
+    padding-bottom: 3px;
+  }
+  :deep(.q-carousel__control) {
+    bottom: 0px;
+  }
+  :deep(.q-carousel__slide) {
     padding: 0px;
   }
 }
