@@ -2500,7 +2500,11 @@ export default {
     betType_199: "时段 {x} - 让球",
     betType_200: "时段 {x} - 大/小",
     betType_201: "时段 {x} - 单/双",
-    selection: "投注项"
+    selection: "投注项",
+    currAmount: '当前金额',
+    calculatedAmount: '计算金额',
+    calculatedPts: '计算积分',
+    spinRecord: '转盘记录',
   },
   message: {
     adsStatusOpen: '开',
@@ -3282,6 +3286,7 @@ export default {
     'Bet type setting': '投注项设定',
     'Sport App Setting': '体育 App 设置',
     'Game Jackpot Bonus Record': '奖金池奖励记录',
+    'Refer Spin': '邀请转盘',
   },
   google: {
     google_auth_menu: '谷歌验证',

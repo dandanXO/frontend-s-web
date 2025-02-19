@@ -2500,6 +2500,10 @@ export default {
     parlayBetSetting: 'Parlay Bet Setting',
     eventSortingId: 'Event Sorting ID',
     displayModeId: 'Display Mode ID',
+    currAmount: 'Current Amount',
+    calculatedAmount: 'Calculated Amount',
+    calculatedPts: 'Calculated Points',
+    spinRecord: 'Spin Record',
   },
   message: {
     adsStatusOpen: 'Open',
@@ -3333,6 +3337,7 @@ export default {
     'Bet type setting': 'bet type setting',
     'Sport App Setting': 'Sport App Setting',
     'Game Jackpot Bonus Record': 'Game Jackpot Bonus Record',
+    'Refer Spin': 'Refer Spin',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
