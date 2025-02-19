@@ -17,9 +17,9 @@
         <div class="details-span" v-if="appVersionNo">版本：{{ appVersionNo }}</div>
       </div>
 
-      <router-link to="/account/personal" class="q-ml-auto q-mt-auto">
+      <router-link v-if="!store.isApp() && isH5" to="/account/download" class="q-ml-auto q-mt-auto">
         <div class="acct-top-menu">
-          <img src="../assets/images/account/icon-top-personal.png" />
+          <img src="../assets/images/account/menu_download.png" />
         </div>
       </router-link>
     </div>
@@ -96,18 +96,24 @@
               <div class="acct-nav-label">推广赚钱</div>
             </div>
           </router-link>
+          <!-- <router-link v-if="!store.isApp() && isH5" to="/account/download">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/menu_download.png" />
+              <div class="acct-nav-label">下载中心</div>
+            </div>
+          </router-link> -->
           <router-link to="/promo">
             <div class="acct-nav-item">
               <img src="../assets/images/account/menu_promo.png" />
               <div class="acct-nav-label">优惠领取</div>
             </div>
           </router-link>
-          <!-- <router-link to="/account/personal">
+          <router-link to="/account/personal">
             <div class="acct-nav-item">
               <img src="../assets/images/account/menu_personal.png" />
               <div class="acct-nav-label">个人信息</div>
             </div>
-          </router-link> -->
+          </router-link>
           <router-link to="/account/changePwd">
             <div class="acct-nav-item">
               <img src="../assets/images/account/menu_changePwd.png" />
@@ -118,12 +124,6 @@
             <div class="acct-nav-item">
               <img src="../assets/images/account/menu_bank.png" />
               <div class="acct-nav-label">银行信息</div>
-            </div>
-          </router-link>
-          <router-link v-if="!store.isApp() && isH5" to="/account/download">
-            <div class="acct-nav-item">
-              <img src="../assets/images/account/menu_download.png" />
-              <div class="acct-nav-label">下载中心</div>
             </div>
           </router-link>
           <router-link to="/account/announcement">
