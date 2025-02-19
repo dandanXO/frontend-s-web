@@ -101,6 +101,8 @@ export default {
     newPassword_placeholder: "Please enter new password",
     newPassword_rules_01: "Please insert new password",
     newPassword_rules_02: "The characters of new password must be above 6",
+    confirmPassword: "Confirm Password",
+    confirmPassword_placeholder: "Please enter confirm password",
     confirmNewPassword: "Confirm New Password",
     confirmNewPassword_placeholder: "Please enter new confirm password",
     confirmNewPassword_rules_01: "Please insert new confirm password",
@@ -125,6 +127,7 @@ export default {
     fullName_placeholder: "Enter your full name",
     fullName_rules_01: "Please insert your full name",
     fullName_rules_02: "Please enter a Valid full name",
+    setPassword: "Set Password",
     changePassword: "Change Password",
     currentPassword: "Current Password",
     currentPassword_placeholder: "Enter Current Password",
@@ -236,7 +239,7 @@ export default {
     close: "Close",
     details: "Details",
     transfer: "Transfer",
-    signinWithGoogle: "Google",
+    signinWithGoogle: "Google"
   },
   notify: {
     noRecord: "No Record",
@@ -247,7 +250,8 @@ export default {
     feedbackSentSuccess: "Your feedback has been sent successfully!",
     quitGameMessage: "Are you sure want to quit? Click Confirm to quit the game.",
     signOutMessage: "Are you sure you want to sign out?",
-    plsLoginToContinue: "Please login to continue"
+    plsLoginToContinue: "Please login to continue",
+    copiedSuccessfully: "Copied Successfully"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",

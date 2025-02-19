@@ -3,6 +3,11 @@
 
   <q-page>
     <div class="top-setting-section">
+      <div class="top-login-name">
+        <img src="../assets/images/account/login-name-icon.png" />
+        <div>ID: {{ store.nickName }}</div>
+        <img class="copy-icon" src="../assets/images/account/copy-icon.png" @click="handleCopyClick" />
+      </div>
       <div class="top-total-score">
         <div class="score-txt">{{ $t("settings.totalScore") }}</div>
         <div class="score-amount">{{ store.balance.toFixed(2) }}</div>
@@ -190,6 +195,8 @@ import ExchangeModal from "../components/account/ExchangeModal.vue";
 import TransferModal from "../components/account/TransferModal.vue";
 import { api } from "boot/axios";
 import { useUI } from "stores/ui";
+import { Platform } from "quasar";
+import { t } from "src/boot/lang";
 
 const store = userStore();
 const router = useRouter();
@@ -239,18 +246,15 @@ const canTransfer = ref(false);
 const uplineId = ref();
 const uplineName = ref();
 const getUplineDetails = () => {
-
-  api
-    .get(`/session/upline/checkTransfer`)
-    .then((res) => {
-      if (res.code === 0) {
-        canTransfer.value = res.data.canTransfer
-        uplineId.value = res.data.referrerId
-        uplineName.value = res.data.referrerName
-      } else {
-      }
-    });
-}
+  api.get(`/session/upline/checkTransfer`).then((res) => {
+    if (res.code === 0) {
+      canTransfer.value = res.data.canTransfer;
+      uplineId.value = res.data.referrerId;
+      uplineName.value = res.data.referrerName;
+    } else {
+    }
+  });
+};
 
 const logout = () => {
   loadingLogout.value = true;
@@ -264,13 +268,87 @@ const logout = () => {
     router.push("/home");
   });
 };
+
+function isHuaweiBrowser() {
+  const userAgent = navigator.userAgent.toLowerCase();
+  return userAgent.includes("huawei") || userAgent.includes("honor");
+}
+
+const handleCopyClick = async () => {
+  if (window.location.pathname === "/account") {
+    const textToCopy = store.nickName;
+    // alert(textToCopy);
+
+    if (isHuaweiBrowser()) {
+      writeClipboard(store.nickName);
+    } else if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
+      await navigator.clipboard.writeText(textToCopy);
+
+      setTimeout(() => {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: t("notify.copiedSuccessfully"),
+          icon: "check_circle_outline"
+        });
+      }, 100);
+    } else {
+      // Use the 'out of viewport hidden text area' trick
+      const textArea = document.createElement("textarea");
+      textArea.value = textToCopy;
+
+      // Move textarea out of the viewport so it's not visible
+      textArea.style.position = "absolute";
+      textArea.style.left = "-999999px";
+
+      document.body.prepend(textArea);
+      textArea.focus();
+      textArea.select();
+
+      try {
+        document.execCommand("copy");
+      } catch (error) {
+        console.error(error);
+      } finally {
+        document.body.removeChild(textArea);
+      }
+
+      setTimeout(() => {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: t("notify.copiedSuccessfully"),
+          icon: "check_circle_outline"
+        });
+      }, 100);
+    }
+  } else {
+    writeClipboard(currentVoxisId.value);
+  }
+};
 </script>
 
 <style scoped lang="scss">
 .top-setting-section {
   position: relative;
-
   margin: 20px;
+
+  .top-login-name {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    margin: 0 20px 10px;
+    img {
+      width: 30px;
+      height: 30px;
+      margin-right: 8px;
+    }
+    .copy-icon {
+      width: 16px;
+      height: 16px;
+      margin-left: 8px;
+    }
+  }
 
   .top-total-score {
     background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
