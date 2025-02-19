@@ -27,7 +27,7 @@
 
         <div class="winning-record-outer-wrapper">
           <div ref="winningRecordRef" class="winning-record-wrapper">
-            <template v-if="!winningRecord.length">
+            <template v-if="winningRecord.length">
               <div v-for="(record, index) in winningRecord" :key="index" class="winning-record-item">
                 <span>{{ moment(record.date).format("MM-DD hh:mm:ss") }}</span>
                 <span class="name">{{ record.loginName }}</span>
