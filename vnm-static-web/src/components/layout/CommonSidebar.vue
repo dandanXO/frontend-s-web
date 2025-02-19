@@ -79,7 +79,7 @@
       v-if="showFloatPromo"
       :class="{ minimum: !isFloatPromoExpanded }"
       :style="{ top: promoPosition.top + 'px', left: promoPosition.left + 'px' }"
-      >
+    >
       <div style="position: relative">
         <!-- <div class="close-btn" @click="hideFloatPromo()">X</div> -->
         <div class="close-btn scale" @click.prevent="scaleFloatPromo">
@@ -269,8 +269,9 @@ export default defineComponent({
       floatPromoRemainingTime.value = floatPromo.map((promo) => {
         let result = "00:00:00";
         if (promo?.endTime) {
+          // console.log(promo.endTime);
           const now = moment(Date.now());
-          const endTime = moment(currentPromo.value.endTime);
+          const endTime = moment(promo?.endTime);
           const totalSeconds = endTime.diff(now, "seconds");
           if (totalSeconds > 0) {
             const hours = Math.floor(totalSeconds / 3600);
@@ -281,6 +282,8 @@ export default defineComponent({
         }
         return result;
       });
+
+      // console.log(floatPromoRemainingTime.value);
     };
 
     onMounted(() => {
