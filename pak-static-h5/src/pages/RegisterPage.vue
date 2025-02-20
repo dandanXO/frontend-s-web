@@ -405,17 +405,23 @@ export default defineComponent({
 
     const hasAffiliate = ref(false);
 
-    const getReferralCode = () => {
-      const refCode = sessionStorage.getItem("REFERRAL_CODE") ?? "";
-      const pwaRefCode = localStorage.getItem("PWA_REFERRAL_CODE") ?? "";
-      affCode.value = sessionStorage.getItem("AFFILIATE_CODE") ?? "";
-
-      if (refCode || pwaRefCode) {
-        // hasAffiliate.value = true;
-        regForm.referrer = refCode ? refCode : pwaRefCode;
-      } else if (affCode.value) {
+    const getAffiliateCode = () => {
+      affCode.value = sessionStorage.getItem("AFFILIATE_CODE");
+      if (affCode.value) {
         // hasAffiliate.value = true;
         regForm.codeAffiliate = affCode.value;
+      }
+    };
+    const getReferralCode = () => {
+      const refCode = sessionStorage.getItem("REFERRAL_CODE");
+      if (refCode) {
+        // hasAffiliate.value = true;
+        regForm.referrer = refCode;
+      }
+      const pwaRefCode = localStorage.getItem("PWA_REFERRAL_CODE");
+      if (pwaRefCode) {
+        // hasAffiliate.value = true;
+        regForm.referrer = pwaRefCode;
       }
     };
 
@@ -465,6 +471,7 @@ export default defineComponent({
     onActivated(() => {
       getCode();
       getReferralCode();
+      getAffiliateCode();
     });
 
     const trackRegisterSuccessEvent = () => {
