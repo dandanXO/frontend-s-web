@@ -1308,6 +1308,7 @@ export default {
     message: '信息',
     min: '最低盈亏金额',
     minAmount: '最低金额',
+    minPoints: '最低分数',
     max: '最高盈亏金额',
     maxAmount: '最高金额',
     maxTicket: '最高可获得票',
