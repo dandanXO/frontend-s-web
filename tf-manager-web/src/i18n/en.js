@@ -1307,6 +1307,7 @@ export default {
     message: 'Message',
     min: 'Min Profit',
     minAmount: 'Min Amount',
+    minPoints: 'Min Points',
     max: 'Max Profit',
     maxAmount: 'Max Amount',
     minno: 'Please insert min',

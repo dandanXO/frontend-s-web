@@ -2,20 +2,42 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
-          v-model="request.siteId"
+        <el-input
+          type="text"
+          v-model="request.loginName"
           size="small"
-          :placeholder="t('fields.site')"
-          class="filter-item"
-          style="width: 120px; margin-left: 5px"
-        >
-          <el-option
-            v-for="item in siteList.list"
-            :key="item.id"
-            :label="item.siteName"
-            :value="item.id"
-          />
-        </el-select>
+          style="width: 180px; margin-left: 5px;"
+          :placeholder="t('fields.loginName')"
+        />
+        <el-date-picker
+          v-model="request.startTime"
+          format="DD/MM/YYYY HH:mm:ss"
+          value-format="YYYY-MM-DD HH:mm:ss"
+          size="small"
+          type="datetimerange"
+          range-separator=":"
+          :start-placeholder="t('fields.startDate')"
+          :end-placeholder="t('fields.endDate')"
+          style="width: 380px; margin-left: 10px;"
+          :shortcuts="shortcuts"
+          :default-time="defaultTime"
+          :editable="false"
+          :clearable="true"
+        />
+        <el-input
+          type="number"
+          v-model="request.minPts"
+          size="small"
+          style="width: 180px; margin-left: 5px;"
+          :placeholder="t('fields.minPoints')"
+        />
+        <el-input
+          type="number"
+          v-model="request.minAmount"
+          size="small"
+          style="width: 180px; margin-left: 5px;"
+          :placeholder="t('fields.minAmount')"
+        />
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -356,9 +378,12 @@ import { useRoute } from 'vue-router';
 import { getSiteListSimple } from "@/api/site";
 import { TENANT } from "@/store/modules/user/action-types";
 import { useStore } from "@/store";
+import { getShortcuts } from "@/utils/datetime";
 
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const { t } = useI18n()
+const shortcuts = getShortcuts(t);
+
 const store = useStore()
 const route = useRoute()
 const site = reactive({
@@ -372,6 +397,7 @@ const addAmountAdjustmentType = ref('NORMAL');
 const siteList = reactive({
   list: []
 });
+let timeZone = null;
 
 const uiControl = reactive({
   dialogTitle: t('fields.cancelRolloverRecord'),
@@ -403,7 +429,10 @@ const request = reactive({
   id: null,
   current: 1,
   siteId: null,
-  memberId: null,
+  loginName: null,
+  startTime: [],
+  minPts: null,
+  minAmount: null,
 })
 
 const form = reactive({
@@ -479,9 +508,18 @@ const changeBetsPage = (page) => {
   }
 };
 
+const defaultTime = [
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 1, 1, 23, 59, 59),
+];
+
 function resetQuery() {
   request.id = null;
   request.siteId = siteList.list[0].id;
+  request.loginName = null;
+  request.startTime = [];
+  request.minPts = null;
+  request.minAmount = null;
 }
 
 function checkQuery() {
@@ -492,6 +530,11 @@ function checkQuery() {
       query[key] = value
     }
   })
+  if (request.startTime !== null) {
+    if (request.startTime.length === 2) {
+      query.startTime = request.startTime.join(",");
+    }
+  }
   return query
 }
 
@@ -511,6 +554,7 @@ async function loadRolloverRecords() {
       item.content = JSON.parse(item.content)
     }
   )
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   page.pages = ret.pages
   page.records = ret.records
   page.loading = false
