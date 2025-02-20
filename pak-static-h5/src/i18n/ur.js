@@ -621,7 +621,7 @@ export default {
     "hotGames": "مشہور گیمز",
     "experienceGame": "گیم کا تجربہ کریں اور بغیر ریچارج کیے آزمائیں",
     "tryItOut": "آزمائیں",
-    "watchGameTutorial": "گیم پر کلک کریں تاکہ اس کا ٹیوٹوریل ویڈیو دیکھ سکیں",
+    "watchGameTutorial": "گیم ٹیوٹوریل ویڈیو دیکھیں",
     "recharging": "ریچارجنگ",
     "rechargeDownloadApp": "ریچارج کے بعد، ایپ ڈاؤن لوڈ کریں اور لاگ ان کریں تاکہ 28 اضافی بونس حاصل کریں",
     "depositNow": "ابھی جمع کریں",
@@ -649,7 +649,8 @@ export default {
     "shareandearn": "شیئر کریں اور کمائیں",
     "noSupport": "آپ کا براؤزر ویڈیو ٹیگ کو سپورٹ نہیں کرتا ہے۔",
     "linkCopied": "لنک کلپ بورڈ پر کاپی ہو گیا",
-    "copyFailed": "لنک کاپی کرنے میں ناکامی"
+    "copyFailed": "لنک کاپی کرنے میں ناکامی",
+    next: "اگلا"
   },
   hotPromo: {
     aviatorWheel: {

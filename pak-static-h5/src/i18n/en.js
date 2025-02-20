@@ -625,7 +625,7 @@ export default {
     "hotGames": "Hot Games",
     "experienceGame": "Experience the game and try it out without recharging",
     "tryItOut": "TRY IT OUT",
-    "watchGameTutorial": "Click on the game to watch it's tutorial video",
+    "watchGameTutorial": "Watch the game tutorial video",
     "recharging": "Recharging",
     "rechargeDownloadApp": "After recharging, download the app and log in to get 28 extra bonuses",
     "depositNow": "DEPOSIT NOW",
@@ -653,7 +653,8 @@ export default {
     "shareandearn": "Share and Earn",
     "noSupport": "Your browser does not support the video tag.",
     "linkCopied": "Link copied to clipboard",
-    "copyFailed": "Failed to copy link"
+    "copyFailed": "Failed to copy link",
+    next: "Next"
   },
   hotPromo: {
     aviatorWheel: {

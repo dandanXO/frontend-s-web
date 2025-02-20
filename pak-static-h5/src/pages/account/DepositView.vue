@@ -329,6 +329,8 @@
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
+  
+  <AdditionalSteps v-if="isAdditionalDepositSteps" :currentAdditionalStep="currentDepStep" :currentType="'deposit'" @updateStep="handleStepUpdate" @closeGuide="closePlayerGuide" />
 </template>
 
 <script setup>
@@ -348,6 +350,22 @@ import { t } from "src/boot/lang";
 import { useCheckKYC } from "src/hooks/checkKYC";
 import { storeToRefs } from "pinia";
 // import MediaSettingsComponent from "../../components/MediaSettingsComponent.vue";
+
+import AdditionalSteps from "../../components/modal/AdditionalSteps.vue";
+const closePlayerGuide = () => {
+  isAdditionalDepositSteps.value = false;
+  if (currentDepStep.value === 4) {
+    localStorage.setItem("newPlayerGuide", "4");
+  }
+  enableScroll();
+};
+const enableScroll = () => {
+  document.body.style.overflow = ""; // Restore scrolling
+};
+const currentDepStep = ref(2);
+const handleStepUpdate = (newStep) => {
+  currentDepStep.value = newStep;
+};
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -974,11 +992,13 @@ watch(
   },
   { immediate: true }
 );
+const isAdditionalDepositSteps = ref(false);
 
 onActivated(() => {
   // checkNewUser();
   // refreshNode();
   // console.log("onActivated deposit");
+  
 });
 
 onMounted(() => {
@@ -987,6 +1007,10 @@ onMounted(() => {
   refreshNode();
   loadAppTabs();
   // console.log("onMounted deposit");
+  if (route.query.isNewPlayer && userKYCDialog.value === false) {
+    isAdditionalDepositSteps.value = true;
+  }
+  
 });
 </script>
 

@@ -469,6 +469,7 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
+  <AdditionalSteps v-if="isAdditionalWithdrawSteps" :currentAdditionalStep="currentDepStep" :currentType="'withdraw'" @updateStep="handleStepUpdate" @closeGuide="closePlayerGuide" />
 </template>
 
 <script setup>
@@ -487,6 +488,7 @@ import { useRoute, useRouter } from "vue-router";
 import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
 import { useCheckKYC } from "src/hooks/checkKYC";
+import AdditionalSteps from "../../components/modal/AdditionalSteps.vue";
 // import MediaSettingsComponent from "../../components/MediaSettingsComponent.vue";
 
 const router = useRouter();
@@ -547,11 +549,16 @@ const checkNewUser = () => {
     getWithdrawalMethods();
   }
 };
+const isAdditionalWithdrawSteps = ref(false);
 
 onMounted(() => {
   checkNewUser();
   store.getBalance();
   // loadPlatform()
+  
+  if (route.query.isNewPlayer && userKYCDialog.value === false) {
+    isAdditionalWithdrawSteps.value = true;
+  }
 });
 
 onActivated(() => {
@@ -878,6 +885,20 @@ const openWithdrawTutorialVideo = () => {
   // } else {
   //   window.open("https://drive.google.com/file/d/1u796pIy2tqdLtRIqfGRDAQgKWa1guIG2/view?usp=sharing", "_blank");
   // }
+};
+const closePlayerGuide = () => {
+  isAdditionalWithdrawSteps.value = false;
+  if (currentDepStep.value === 4) {
+    localStorage.setItem("newPlayerGuide", "4");
+  }
+  enableScroll();
+};
+const enableScroll = () => {
+  document.body.style.overflow = ""; // Restore scrolling
+};
+const currentDepStep = ref(2);
+const handleStepUpdate = (newStep) => {
+  currentDepStep.value = newStep;
 };
 </script>
 

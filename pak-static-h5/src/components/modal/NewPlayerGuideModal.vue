@@ -47,31 +47,32 @@
                             <img @click="showVideo(i)" :src="require(`../../assets/images/newplayerguide/hot-0${i}.png`)">
                           </div>
                         </div>
-                        <div class="watchTutorial">{{ $t('playerGuide.watchGameTutorial') }}</div>
                       </div>
                     </div>
                     
                     <div v-if="index+1 === 3">
-                      <div class="deposit-section">
-                        <div class="deposititems">
-                          <div class="deposititem" v-for="i in 3" :key="i">
-                            <img :src="require(`../../assets/images/newplayerguide/deposit-0${i}.png`)">
+                      <div>
+                        <div class="deposit-section">
+                          <div class="deposititems">
+                            <div class="deposititem" v-for="i in 3" :key="i">
+                              <img :src="require(`../../assets/images/newplayerguide/deposit-0${i}.png`)">
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div class="deposit-steps">
-                       <div class="dep-step">
-                        <img src="../../assets/images/newplayerguide/step-01.png">
-                        Bank Transfer
-                      </div>
-                       <div class="dep-step">
-                        <img src="../../assets/images/newplayerguide/step-02.png">
-                        Easypaisa/JazzCash
-                      </div>
-                       <div class="dep-step">
-                        <img src="../../assets/images/newplayerguide/step-03.png">
-                        USDT digital currency
-                      </div>
+                        <div class="deposit-steps">
+                        <div class="dep-step">
+                          <img src="../../assets/images/newplayerguide/step-01.png">
+                          Bank Transfer
+                        </div>
+                        <div class="dep-step">
+                          <img src="../../assets/images/newplayerguide/step-02.png">
+                          Easypaisa/JazzCash
+                        </div>
+                        <div class="dep-step">
+                          <img src="../../assets/images/newplayerguide/step-03.png">
+                          USDT digital currency
+                        </div>
+                        </div>
                       </div>
                     </div>
                     
@@ -144,7 +145,7 @@
                     </video>
                     <!-- <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dRPcJyisLUI?si=ok64lVuE9jWtcnGr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
                   </div>
-                  <div class="bottom-button" @click="closeDialog(index+1)">
+                  <div class="bottom-button" @click="runInnerSteps(index+1)">
                     <span v-if="index+1 === 4">
                       <img src="../../assets/images/newplayerguide/share-icon.png">
                     </span>
@@ -219,7 +220,7 @@
   </template>
   <script setup>
   import { useUI } from "stores/ui";
-  import { ref, toRefs, onMounted, computed } from "vue";
+  import { ref, defineExpose, toRefs, onMounted, computed } from "vue";
   import { api, eventapi } from "src/boot/axios";
   import { userStore } from "stores/index";
   import { copyToClipboard, useQuasar } from "quasar";
@@ -233,7 +234,7 @@
   const ui = useUI();
   const { t } = useI18n();
   const router = useRouter();
-  const emit = defineEmits(["update:modelValue","update:currentStep", "update:runAviator"]);
+  const emit = defineEmits(["update:modelValue","update:currentStep", "update:showSteps", "update:runAviator"]);
 
   const videoUrl = process.env.IMAGE_CDN + "/media/pak/";
   const selectedGame = ref()
@@ -245,6 +246,8 @@
       selectedGame.value = 'mines'
     } else if (i === 3) {
       selectedGame.value = '7up7'
+    } else {
+      selectedGame.value = null
     }
   }
   const props = defineProps(["modelValue", "currentStep"]);
@@ -261,7 +264,7 @@
   // ];
   const steps = computed(() => [
     { title: t('playerGuide.welcome'), instruction: t('playerGuide.completeRegistration'), earnableAmt: "10", buttonTxt: t('playerGuide.startNow'), video: "" },
-    { title: t('playerGuide.hotGames'), instruction: t('playerGuide.experienceGame'), earnableAmt: "10", buttonTxt: t('playerGuide.tryItOut'), video: "" },
+    { title: t('playerGuide.hotGames'), instruction: t('playerGuide.experienceGame'), earnableAmt: "10", buttonTxt: t('playerGuide.tryItOut'), video: t('playerGuide.watchGameTutorial') },
     { title: t('playerGuide.recharging'), instruction: t('playerGuide.rechargeDownloadApp'), earnableAmt: "28", buttonTxt: t('playerGuide.depositNow'), video: t('playerGuide.depositTutorial') },
     { title: t('playerGuide.inviteFriends'), instruction: t('playerGuide.inviteReward'), earnableAmt: "250", buttonTxt: t('playerGuide.shareNow'), video: t('playerGuide.referTutorial') },
     { title: t('playerGuide.withdrawal'), instruction: t('playerGuide.unlockTasks'), earnableAmt: "250", buttonTxt: t('playerGuide.withdrawNow'), video: t('playerGuide.withdrawTutorial') },
@@ -292,6 +295,20 @@
       }
     });
 };
+  const runInnerSteps = (index) => {
+    if (index === 1) {
+      closeDialog(index)
+    } else if (index === 2) {
+      // emit("update:modelValue", false);
+      emit("update:showSteps", index);
+    } else if (index === 3) {
+      emit("update:showSteps", index);
+    } else if (index === 4) {
+      isBottomShareDialog.value = true;
+    } else if (index === 5) {
+      emit("update:showSteps", index);
+    }
+  }
   // Close the dialog and move to the next step
   const closeDialog = (index) => {
     isVideo.value = false;
@@ -406,9 +423,9 @@ onMounted(() => {
     }
   });
 });
+defineExpose({ showVideo });
   </script>
   <style lang="scss" scoped>
-
 .bottom-panel {
   position: fixed;
   bottom: 0;
@@ -528,13 +545,14 @@ onMounted(() => {
         backdrop-filter: blur(10px);
         border: 1px solid #24EE89;
         padding: 25px 10px 15px;
-        margin-top: -45px;
+        margin: -45px auto 0;
         border-radius: 16px;
         display: flex;
         gap: 25px;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        width: 85%;
         .congrats-step {
           display: flex;
           flex-direction: column;
@@ -589,6 +607,7 @@ onMounted(() => {
             }
           }
           .mid-content {
+            min-height: 45px;
             background: linear-gradient(270deg, rgba(69, 181, 121, 0) 0%, rgba(69, 181, 121, 0.5) 46.5%, rgba(69, 181, 121, 0) 100%);
             display: flex;
             justify-content: center;
@@ -852,6 +871,11 @@ onMounted(() => {
         }
         .video-portion {
           margin: 45px auto 0;
+        }
+        .step-no {
+          color: #90E974;
+          margin: 0px auto 15px;
+          text-align: center;
         }
         .bottom-button {
           cursor: pointer;
