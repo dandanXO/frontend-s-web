@@ -90,10 +90,13 @@ const handleEnvelopeClick = (index) => {
       otherPrizeCounter++;
     });
 
-    await delay(1000);
+    const [initRes] = await Promise.all([
+      eventapi.get("/session/refer-wheel-spin/init?promoCode=pak-refer-wheel-spin"),
+      delay(1000)
+    ]);
 
     envelopeStatus.value = "selected";
-    endTime.value = moment(Date.now()).tz("Asia/Karachi").add(3, "days");
+    endTime.value = moment.min(moment(initRes.data.wheelEndTime), moment(initRes.data.wheelResetTime));
     updateRemainingTime();
     timer.value = setInterval(updateRemainingTime, 1000);
     isClaiming.value = false;
@@ -103,8 +106,8 @@ const handleEnvelopeClick = (index) => {
 const updateRemainingTime = () => {
   let result = "00:00:00";
   if (endTime.value) {
-    const now = moment(Date.now());
-    const _endTime = moment(endTime.value);
+    const now = moment(Date.now()).tz("Asia/Karachi");
+    const _endTime = moment(endTime.value).tz("Asia/Karachi");
     const totalSeconds = _endTime.diff(now, "seconds");
     if (totalSeconds > 0) {
       const hours = Math.floor(totalSeconds / 3600);
