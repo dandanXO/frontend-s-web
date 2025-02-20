@@ -451,6 +451,7 @@ export default defineComponent({
                 }
 
                 sessionStorage.removeItem("REFERRAL_CODE");
+                sessionStorage.setItem("regSuccessGuideVisible", true);
               } else {
                 $q.notify({
                   color: "negative",

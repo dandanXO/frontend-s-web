@@ -1,5 +1,6 @@
 <template>
   <q-layout view="hHh Lpr fFf">
+    <NewMemberGuide v-if="store.regSuccessGuideVisible" />
     <q-header v-if="hasPage">
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
@@ -83,7 +84,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, onMounted, ref, watch } from "vue";
+import { computed, defineComponent, onMounted, ref, watch, defineAsyncComponent, watchEffect } from "vue";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
@@ -92,11 +93,14 @@ import { useRoute, useRouter } from "vue-router";
 import { RiArrowDropLeftLine } from "vue-remix-icons";
 import { translateRecord } from "src/directives/translate";
 
+const NewMemberGuide = defineAsyncComponent(() => import("components/home/NewMemberGuide.vue"));
+
 export default defineComponent({
   name: "MainLayout",
 
   components: {
-    RiArrowDropLeftLine
+    RiArrowDropLeftLine,
+    NewMemberGuide
   },
 
   setup() {
@@ -135,6 +139,11 @@ export default defineComponent({
         checkRoute();
       }
     );
+
+    watchEffect(() => {
+      document.body.style.overflow = store.regSuccessGuideVisible ? "hidden" : "auto";
+    });
+
     const changePlatform = (plat) => {
       router.replace(`slot?platform=${plat.code}`);
       ui.drawerRight = false;

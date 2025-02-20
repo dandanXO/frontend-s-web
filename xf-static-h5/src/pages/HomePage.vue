@@ -1128,6 +1128,11 @@ export default defineComponent({
         checkShowImgTop();
       }
 
+      if (sessionStorage.getItem("regSuccessGuideVisible")) {
+        store.regSuccessGuideVisible = true;
+        sessionStorage.removeItem("regSuccessGuideVisible");
+      }
+
       getAppDownloadUrl();
     });
     const imageLoading = ref(false);

@@ -38,7 +38,8 @@ export const userStore = defineStore("userStore", {
       phoneVerified: false,
       emailVerified: false,
       visitorId: "",
-      withdrawType: ""
+      withdrawType: "",
+      regSuccessGuideVisible: false
     };
   },
   actions: {
