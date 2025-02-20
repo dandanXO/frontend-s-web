@@ -1,22 +1,25 @@
 <template>
   <div class="spin-lucky-wheel-promo-wrapper">
     <EnvelopeStage v-if="stage === 'envelope'" @envelope-click="handleEnvelopClick" />
-    <WheelStage v-else-if="stage === 'wheel'" :info="info" @reload="loadData" />
+    <WheelStage v-else-if="stage === 'wheel'" :info="info" @reload="loadData" ref="wheelstage" />
     <q-inner-loading :showing="isDuringInit" />
   </div>
 </template>
 <script setup>
-import { onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref, provide, computed } from "vue";
 import EnvelopeStage from "./EnvelopeStage.vue";
 import { useUI } from "src/stores/ui";
 import WheelStage from "./WheelStage.vue";
 import { eventapi } from "src/boot/axios";
 const ui = useUI();
 
+
 const props = defineProps(["params"]);
 const params = JSON.parse(props.params || "{}");
 
+
 const stage = ref("");
+const wheelstage= ref();
 const isDuringInit = ref(false);
 const info = ref({
   startTime: "",
@@ -27,33 +30,42 @@ const info = ref({
   status: ""
 });
 
-const loadData = () => {
+const extractionDifference = computed(() =>
+  ((info.value.targetWithdrawAmount - info.value.currAmount) * 10000 / 10000).toFixed(4)
+);
+
+provide('info', info);
+provide('extractionDifference', extractionDifference);
+
+const loadData = async () => {
   isDuringInit.value = true;
-  eventapi.post("/refer-spin/check").then((res) => {
-    if (res.code === 0) {
-      switch (res.data.status) {
-        case "NOT_STARTED":
-        case "EXPIRED":
-          stage.value = "envelope";
-          ui.promoBg = "spin-lucky-wheel-envelope";
-          break;
-        case "CLAIMED":
-        case "IN_PROGRESS":
-          stage.value = "wheel";
-          break;
-      }
-      info.value = {
-        ...info.value,
-        ...res.data
-      };
-      isDuringInit.value = false;
+  const res= await eventapi.post("/refer-spin/check");
+  if (res.code === 0) {
+    switch (res.data.status) {
+      case "NOT_STARTED":
+      case "EXPIRED":
+        stage.value = "envelope";
+        ui.promoBg = "spin-lucky-wheel-envelope";
+        break;
+      case "CLAIMED":
+      case "IN_PROGRESS":
+        stage.value = "wheel";
+        break;
     }
-  });
+    info.value = {
+      ...info.value,
+      ...res.data
+    };
+    
+    isDuringInit.value = false;
+  }
 };
 
-const handleEnvelopClick = () => {
-  stage.value = "wheel";
+const handleEnvelopClick = async () => {
   resetPromoBg();
+  await loadData()
+  stage.value = "wheel";
+  wheelstage.value.updateCountdownTime();
 };
 
 const resetPromoBg = () => {

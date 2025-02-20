@@ -32,7 +32,7 @@
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <template #header>
         <div class="clearfix">
-          <span class="role-span">{{ t('fields.rolloverRecord') }}</span>
+          <span class="role-span">{{ t('fields.spinRecord') }}</span>
         </div>
       </template>
       <el-table
@@ -55,7 +55,7 @@
           prop="currAmount"
           :label="t('fields.currAmount')"
           align="center"
-          min-width="150"
+          min-width="100"
         >
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.currAmount, type: 'money'}" />
@@ -65,7 +65,7 @@
           prop="currAmount"
           :label="t('fields.calculatedAmount')"
           align="center"
-          min-width="150"
+          min-width="100"
         >
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.calculatedAmount, type: 'money'}" />
@@ -75,9 +75,9 @@
           prop="calculatedPts"
           :label="t('fields.calculatedPts')"
           align="center"
-          min-width="180"
+          min-width="100"
         />
-        <el-table-column :label="t('fields.description')" align="center" min-width="280">
+        <el-table-column :label="t('fields.description')" align="center" min-width="350">
           <template #default="scope">
             <span v-for="(item, index) in scope.row.content" :key="index">
               <span v-if="item.type === 'FIRST_FREE_SPIN'">First Free Spin({{ item.pt }}pt) <br></span>
