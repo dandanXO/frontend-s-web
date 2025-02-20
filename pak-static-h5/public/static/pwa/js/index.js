@@ -50,7 +50,7 @@ installBtn.addEventListener("click", async () => {
       const fbclid = urlParams.get("fbclid");
       const referral = urlParams.get("refer");
       if (referral) {
-        localStorage.setItem("REFERRAL_CODE", fbclid);
+        localStorage.setItem("REFERRAL_CODE", referral);
       }
       if (fbclid) {
         localStorage.setItem("fbclid", fbclid);
