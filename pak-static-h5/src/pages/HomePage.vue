@@ -6,6 +6,15 @@
   >
     <ProfileSummary :homeProfile="true" @activateSlide="handleActivateSlide" />
 
+    <!--    <pre>-->
+    <!--      {{isNewPlayerModal}} <br/>-->
+    <!--      {{currentStep !== "END"}}<br/>-->
+    <!--      {{!isHotGameAdditionalSteps}}<br/>-->
+    <!--      {{!isAdditionalDepositSteps}}<br/>-->
+    <!--      {{!isAdditionalReferSteps}}<br/>-->
+    <!--     {{!isAdditionalWithdrawSteps}} <br/>-->
+    <!--    </pre>-->
+
     <q-carousel
       v-model="slide"
       id="home"
@@ -208,13 +217,13 @@
     <!-- <pre>hotGameList{{ hotGameList }}</pre> -->
     <!-- <pre>pokerGameJILIList--{{ pokerGameJILIList }}</pre> -->
 
-
     <div v-if="showOverlay" class="highlight-overlay">
       <div class="highlight-box" @click="handleGamePlay"></div>
-      <div class="next-btm-btn" @click="updateCurrentStep('3')">{{ $t('playerGuide.next') }}</div>
+      <div class="next-btm-btn" @click="updateCurrentStep('3')">{{ $t("playerGuide.next") }}</div>
       <div class="videolink" @click="playVideo()">
-        <img src="../assets/images/newplayerguide/video.png">
-        {{ $t('playerGuide.watchGameTutorial') }}</div>
+        <img src="../assets/images/newplayerguide/video.png" />
+        {{ $t("playerGuide.watchGameTutorial") }}
+      </div>
     </div>
     <div ref="targetSection" class="target-section">
       <!-- The section to scroll to -->
@@ -1363,6 +1372,24 @@
     </q-card>
   </q-dialog>
 
+  <NewPlayerGuideModal
+    ref="modalGuide"
+    v-if="store.token"
+    :modelValue="isNewPlayerModal"
+    :currentStep="currentStep"
+    @update:runAviator="handleGamePlay"
+    @update:modelValue="handleModalUpdate"
+    @update:showSteps="handleAdditionalSteps"
+    @update:currentStep="updateCurrentStep"
+  />
+  <AdditionalSteps
+    v-if="isAdditionalDepositSteps || isAdditionalReferSteps || isAdditionalWithdrawSteps"
+    :currentAdditionalStep="currentAdditionalStep"
+    :currentType="currentType"
+    @updateStep="handleStepUpdate"
+    @closeGuide="closePlayerGuide"
+  />
+
   <template v-if="isAndroid()">
     <q-dialog v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
       <div class="luckyspin-wrapper">
@@ -1440,19 +1467,21 @@
   <a ref="downloadAppRef" :href="ui.downloadAppUrl" download style="display: none" />
 
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
-  <NewPlayerGuideModal ref="modalGuide" v-if="store.token"
-    :modelValue="isNewPlayerModal"
-    :currentStep="currentStep"
-    @update:runAviator="handleGamePlay"
-    @update:modelValue="handleModalUpdate"
-    @update:showSteps="handleAdditionalSteps"
-    @update:currentStep="updateCurrentStep" 
-  />
-  <AdditionalSteps v-if="isAdditionalDepositSteps || isAdditionalReferSteps || isAdditionalWithdrawSteps" :currentAdditionalStep="currentAdditionalStep" :currentType="currentType" @updateStep="handleStepUpdate"  @closeGuide="closePlayerGuide" />
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref, reactive, computed, watch, watchEffect, onActivated, provide, nextTick } from "vue";
+import {
+  onMounted,
+  onUnmounted,
+  ref,
+  reactive,
+  computed,
+  watch,
+  watchEffect,
+  onActivated,
+  provide,
+  nextTick
+} from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -1479,7 +1508,6 @@ import { useI18n } from "vue-i18n";
 import { eventapi } from "src/boot/axios";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
-// import { ref, onMounted, onUnmounted } from 'vue';
 import "swiper/css";
 import "swiper/css/scrollbar";
 import "swiper/css/navigation";
@@ -1493,8 +1521,7 @@ import chroma from "chroma-js";
 import PopupController from "src/components/PopupController.vue";
 import MegaSharingWheelModal from "src/components/hotpromo/megaSharingWheel/MegaSharingWheelModal.vue";
 import AddToHomeScreenModal from "src/components/modal/AddToHomeScreenModal.vue";
-import { reset } from "app/src-capacitor/android/app/src/main/assets/public/cordova";
-// import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
+
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
@@ -1509,11 +1536,17 @@ const isMediaSettingsModal = ref(false);
 const popupPromo = ref("");
 const megaSharingWheelDialogModel = ref(true);
 const isAddToHomeScreen = ref(false);
-
 const currentStep = ref(localStorage.getItem("newPlayerGuide") || "1");
 // Only show the guide if on `/home` or `/`
 const isNewPlayerModal = computed(() => {
-  return currentStep.value !== "END" && (!isHotGameAdditionalSteps.value && !isAdditionalDepositSteps.value && !isAdditionalReferSteps.value && !isAdditionalWithdrawSteps.value);
+  return (
+    currentStep.value !== "END" &&
+    route.path !== "/language" &&
+    !isHotGameAdditionalSteps.value &&
+    !isAdditionalDepositSteps.value &&
+    !isAdditionalReferSteps.value &&
+    !isAdditionalWithdrawSteps.value
+  );
 });
 const handleModalUpdate = (value) => {
   isNewPlayerModal.value = value;
@@ -1531,57 +1564,58 @@ const isHotGameAdditionalSteps = ref(false);
 const isAdditionalDepositSteps = ref(false);
 const isAdditionalReferSteps = ref(false);
 const isAdditionalWithdrawSteps = ref(false);
-const currentType = ref('deposit');
+const currentType = ref("deposit");
 const currentAdditionalStep = ref(1);
 
 const handleStepUpdate = (newStep) => {
   currentAdditionalStep.value = newStep;
 };
 const handleAdditionalSteps = (index) => {
-    if (index === 2) {
-      isHotGameAdditionalSteps.value = true;
-      handleActivateSlide("Hot");
-      // Scroll to the target element
-       // Scroll to the target element
-        nextTick(() => {
-          if (targetSection.value) {
-            const offset = 100; // Adjust this offset as needed
-            const rect = targetSection.value.getBoundingClientRect();
-            const scrollTop = window.scrollY || document.documentElement.scrollTop; // Get current scroll position
-            const finalPosition = rect.top + scrollTop - offset;
+  if (index === 2) {
+    isHotGameAdditionalSteps.value = true;
+    handleActivateSlide("Hot");
+    // Scroll to the target element
+    // Scroll to the target element
+    nextTick(() => {
+      if (targetSection.value) {
+        const offset = 100; // Adjust this offset as needed
+        const rect = targetSection.value.getBoundingClientRect();
+        const scrollTop = window.scrollY || document.documentElement.scrollTop; // Get current scroll position
+        const finalPosition = rect.top + scrollTop - offset;
 
-            // Smooth scroll to the calculated position
-            window.scrollTo({
-              top: finalPosition,
-              behavior: "smooth"
-            });
-          }
+        // Smooth scroll to the calculated position
+        window.scrollTo({
+          top: finalPosition,
+          behavior: "smooth"
         });
-        // Show overlay after scrolling
-        setTimeout(() => {
-          showOverlay.value = true;
-          disableScroll();
-        }, 500);
-
-    } else if (index === 3) {
-      currentType.value = 'deposit'
-      isAdditionalDepositSteps.value = true
+      }
+    });
+    // Show overlay after scrolling
+    setTimeout(() => {
+      showOverlay.value = true;
       disableScroll();
-    } else if (index === 4) {
-      currentType.value = 'refer'
-      isAdditionalReferSteps.value = true
-      disableScroll();
-    } else if (index === 5) {
-      currentType.value = 'withdraw'
-      isAdditionalWithdrawSteps.value = true
-      disableScroll();
-    }
-}
+    }, 500);
+  } else if (index === 3) {
+    currentAdditionalStep.value = 1;
+    currentType.value = "deposit";
+    isAdditionalDepositSteps.value = true;
+    disableScroll();
+  } else if (index === 4) {
+    currentAdditionalStep.value = 1;
+    currentType.value = "refer";
+    isAdditionalReferSteps.value = true;
+    disableScroll();
+  } else if (index === 5) {
+    currentAdditionalStep.value = 1;
+    currentType.value = "withdraw";
+    isAdditionalWithdrawSteps.value = true;
+    disableScroll();
+  }
+};
 onUnmounted(() => {
   enableScroll();
 });
 const resetSteps = () => {
-  
   isHotGameAdditionalSteps.value = false;
   handleActivateSlide("Lobby");
   showOverlay.value = false;
@@ -1590,30 +1624,33 @@ const resetSteps = () => {
     behavior: "smooth"
   });
   enableScroll();
-}
+};
 const updateCurrentStep = (newStep) => {
-  resetSteps()
+  resetSteps();
   currentStep.value = newStep;
   // Optionally, update localStorage again in the parent component
   localStorage.setItem("newPlayerGuide", newStep);
 };
 const closePlayerGuide = () => {
-  // isAdditionalReferSteps.value = false;
-  // enableScroll();
+  // debugger;
+  isAdditionalReferSteps.value = false;
+  isAdditionalDepositSteps.value = false;
+  isAdditionalWithdrawSteps.value = false;
+  enableScroll();
 };
 const handleGamePlay = () => {
   resetSteps();
   sessionStorage.setItem("isFromNewPlayerGuide", JSON.stringify(true));
-  hotGameList.value.forEach(element => {
+  hotGameList.value.forEach((element) => {
     console.log(element);
-    if (element.code === 'aviator') {
+    if (element.code === "aviator") {
       playGame(
-        element.name, 
-        element.platformCode, 
-        element.code, 
-        element.status, 
-        element.gameType, 
-        element.id, 
+        element.name,
+        element.platformCode,
+        element.code,
+        element.status,
+        element.gameType,
+        element.id,
         element.demo
       );
     }
@@ -3827,61 +3864,6 @@ const gotoFloatPromo = (val) => {
     mediaCode.value = val.code;
   }
 };
-// watch(
-//   () => isAdditionalDepositSteps.value,
-//   (newVal) => {
-//     if (newVal === true) {
-//       const completedGuide = localStorage.getItem("completeddepositguide");
-//       if (completedGuide === true) {
-//         alert('i complete this deposit')
-//         isAdditionalDepositSteps.value = false;
-//         updateCurrentStep("4");
-//       }
-//     }
-//   },
-//   { immediate: true }
-// );
-// watch(
-//   () => isAdditionalReferSteps.value,
-//   (newVal) => {
-//     if (newVal === true) {
-//       const completedGuide = localStorage.getItem("completedreferguide");
-//       if (completedGuide === "true") {
-//         isAdditionalReferSteps.value = false;
-//         updateCurrentStep("5");
-//       }
-//     }
-//   },
-//   { immediate: true }
-// );
-
-// // watch(
-// //   () => currentStep.value,
-// //   (newVal) => {
-// //     console.log(newVal === "4");
-// //     if (newVal === "4") {
-// //       isAdditionalReferSteps.value = true;
-// //       currentType.value = "refer";
-// //       currentAdditionalStep.value = 1;
-// //     }
-// //   },
-// //   { immediate: true }
-// // );
-
-// watch(
-//   () => isAdditionalWithdrawSteps.value,
-//   (newVal) => {
-//     if (newVal === true) {
-//       const completedGuide = localStorage.getItem("completedwithdrawguide");
-//       if (completedGuide === "true") {
-//       isAdditionalWithdrawSteps.value = false;
-//       updateCurrentStep("END");
-//       currentAdditionalStep.value = 1;
-//       }
-//     }
-//   },
-//   { immediate: true }
-// );
 
 function checkDepositStep() {
   if (isAdditionalDepositSteps.value) {
@@ -3897,7 +3879,7 @@ function checkDepositStep() {
 function checkReferStep() {
   if (isAdditionalReferSteps.value) {
     const completedGuide = localStorage.getItem("completedreferguide");
-    alert('refer,' + completedGuide)
+    // alert("refer," + completedGuide);
     if (completedGuide === "true") {
       isAdditionalReferSteps.value = true;
       updateCurrentStep("5");
@@ -3906,6 +3888,13 @@ function checkReferStep() {
     }
   }
 }
+
+const checkGameTipStep = () => {
+  const completedGuide = localStorage.getItem("completedlangguide");
+  if (completedGuide === "true" && currentStep.value === "2") {
+    updateCurrentStep("2");
+  }
+};
 
 function checkWithdrawStep() {
   if (isAdditionalWithdrawSteps.value) {
@@ -3918,6 +3907,13 @@ function checkWithdrawStep() {
   }
 }
 
+const checkNewGuideSteps = () => {
+  checkGameTipStep();
+  checkDepositStep();
+  checkReferStep();
+  checkWithdrawStep();
+};
+
 // Keep watchers for real-time changes if necessary
 watch(() => isAdditionalDepositSteps.value, checkDepositStep, { immediate: false });
 watch(() => isAdditionalReferSteps.value, checkReferStep, { immediate: false });
@@ -3925,30 +3921,12 @@ watch(() => isAdditionalWithdrawSteps.value, checkWithdrawStep, { immediate: fal
 const afterActivated = useCustomerTrigger(() => {
   checkShowImgTop();
   checkHbPromo();
-  // if (LocalStorage.getItem('completeddepositguide') === 'true') {
-
-  // }
-  
-  // if (isAdditionalDepositSteps.value === true) {
-  //   isAdditionalDepositSteps.value = false
-  //   updateCurrentStep("4")
-  //   isAdditionalReferSteps.value = true
-  //   currentType.value = 'refer'
-  //   currentAdditionalStep.value = 1
-  // }
-  // if (currentStep.value === "4") {
-  //   handleAdditionalSteps(4);
-  // }
-  // if (isAdditionalWithdrawSteps.value === true) {
-  //   isAdditionalWithdrawSteps.value = false
-  //   updateCurrentStep("END");
-  //   currentAdditionalStep.value = 1
-  // }
 });
 
 const downloadAppRef = ref();
 
 onActivated(() => {
+  // alert(currentStep.value);
   // alert(LocalStorage.getItem('completeddepositguide') === 'true')
   // alert(LocalStorage.getItem('completeddepositguide') === true)
   // if(LocalStorage.getItem('completeddepositguide') === 'true') {
@@ -3970,10 +3948,8 @@ onActivated(() => {
   //   updateCurrentStep("END");
   //   currentAdditionalStep.value = 1
   // }
-  
-  checkDepositStep();
-  checkReferStep();
-  checkWithdrawStep();
+
+  checkNewGuideSteps();
   store.getUnreadTotal();
   checkHash();
 
@@ -3982,6 +3958,11 @@ onActivated(() => {
   if (route.query.login === "true") {
     // isMoneyRainModal.value = true;
     popupPromo.value = "money-rain";
+  }
+
+  if (route.query.newPlayerGuide === "earn-money") {
+    // debugger;
+    closePlayerGuide();
   }
 
   if (store.hasToken() && ui.promo_megaspin === "1") {
@@ -4002,8 +3983,7 @@ onActivated(() => {
     if (!sessionStorage.getItem("add_to_homescreen")) {
       setTimeout(() => {
         isAddToHomeScreen.value = true;
-    }, 2000);
-
+      }, 2000);
     }
   }
 });
@@ -4066,6 +4046,7 @@ const showSpinWheel = () => {
     .get("/new-user-roulette/init")
     .then((res) => {
       if (res.code == 0) {
+        debugger;
         if (res.data.hasUnusedCoupon === "YES") {
           isShowPrizeModal.value = true;
         } else if (res.data.showRoulette === "YES") {
@@ -4092,16 +4073,14 @@ const showCongratsModal = () => {
 </script>
 
 <style scoped lang="scss">
-
-
 .highlight-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-    z-index: 9999;
-    flex-direction: column;
+  z-index: 9999;
+  flex-direction: column;
 
   display: flex;
   justify-content: center;
@@ -4109,7 +4088,7 @@ const showCongratsModal = () => {
   gap: 10px;
   .next-btm-btn {
     cursor: pointer;
-    background: linear-gradient(180deg, #1BAA99 0%, #8AC542 100%);
+    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
     padding: 10px;
     font-family: Poppins;
     font-weight: 700;
@@ -4127,25 +4106,25 @@ const showCongratsModal = () => {
     align-items: center;
     gap: 10px;
   }
-  
-  .videolink {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          gap: 5px;
-          color: #F3D235CC;
-          border-bottom: 1px solid #F3D235CC;
-          font-family: Poppins;
-          font-weight: 700;
-          font-size: 1.5vh;
-          line-height: 2vh;
-          padding-bottom: 5px;
-          cursor: pointer;
 
-          img{ 
-            width: 15px;
-          }
-        }
+  .videolink {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    color: #f3d235cc;
+    border-bottom: 1px solid #f3d235cc;
+    font-family: Poppins;
+    font-weight: 700;
+    font-size: 1.5vh;
+    line-height: 2vh;
+    padding-bottom: 5px;
+    cursor: pointer;
+
+    img {
+      width: 15px;
+    }
+  }
 }
 
 .highlight-box {
@@ -4153,8 +4132,8 @@ const showCongratsModal = () => {
   margin: 0 auto;
   height: 340px;
   background: transparent;
-  border: 2px dashed #5DCD77;
-  box-shadow: 0px 0px 30px 0px #00E60091;
+  border: 2px dashed #5dcd77;
+  box-shadow: 0px 0px 30px 0px #00e60091;
   border-radius: 10px;
   box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.8); /* Creates the cutout effect */
 }
@@ -4884,7 +4863,6 @@ const showCongratsModal = () => {
 </style>
 
 <style lang="scss">
-
 .q-dialog__inner--maximized > div {
   overflow-x: hidden;
 }

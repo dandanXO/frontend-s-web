@@ -325,12 +325,18 @@
 
   <q-dialog width="100%" v-model="userKYCDialog" persistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
-      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
+      <q-btn dense rounded icon="close" class="popout-close" @click="goBackPage" v-close-popup />
+      <KYCUserForm @closeUserKYCDialog="checkCloseUserKYCDialog" />
     </div>
   </q-dialog>
-  
-  <AdditionalSteps v-if="isAdditionalDepositSteps" :currentAdditionalStep="currentDepStep" :currentType="'deposit'" @updateStep="handleStepUpdate" @closeGuide="closePlayerGuide" />
+
+  <AdditionalSteps
+    v-if="isAdditionalDepositSteps"
+    :currentAdditionalStep="currentDepStep"
+    :currentType="'deposit'"
+    @updateStep="handleStepUpdate"
+    @closeGuide="closePlayerGuide"
+  />
 </template>
 
 <script setup>
@@ -377,6 +383,15 @@ const route = useRoute();
 const emits = defineEmits(["closeModal"]);
 
 const { userKYCDialog, closeUserKYCDialog } = useCheckKYC(["mounted", "activated"]);
+
+const checkCloseUserKYCDialog = () => {
+  closeUserKYCDialog();
+
+  const completedGuide = localStorage.getItem("completeddepositguide");
+  if (route.query.isNewPlayer && completedGuide !== "true") {
+    isAdditionalDepositSteps.value = true;
+  }
+};
 
 const isBank2 = computed(() => {
   return activeMethod.value.code === "BANK-2";
@@ -994,23 +1009,26 @@ watch(
 );
 const isAdditionalDepositSteps = ref(false);
 
-onActivated(() => {
-  // checkNewUser();
-  // refreshNode();
-  // console.log("onActivated deposit");
-  
-});
+const goBackPage = () => {
+  // debugger;
+  if (route.query.isNewPlayer) {
+    setTimeout(() => {
+      userKYCDialog.value = true;
+    }, 250);
+  } else {
+    router.go(-1);
+  }
+};
 
 onMounted(() => {
   initPay();
-  // checkNewUser();
   refreshNode();
   loadAppTabs();
   // console.log("onMounted deposit");
-  if (route.query.isNewPlayer && userKYCDialog.value === false) {
+  const completedGuide = localStorage.getItem("completeddepositguide");
+  if (route.query.isNewPlayer && completedGuide !== "true" && userKYCDialog.value === false) {
     isAdditionalDepositSteps.value = true;
   }
-  
 });
 </script>
 

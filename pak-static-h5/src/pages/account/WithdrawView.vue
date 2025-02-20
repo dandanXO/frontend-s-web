@@ -415,15 +415,15 @@
 
   <q-dialog width="100%" v-model="guestKYCDialog" persistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
+      <q-btn dense rounded icon="close" class="popout-close" @click="goBackPage" v-close-popup />
       <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
     </div>
   </q-dialog>
 
   <q-dialog width="100%" v-model="userKYCDialog" persistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" @click="router.push('')" v-close-popup />
-      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
+      <q-btn dense rounded icon="close" class="popout-close" @click="goBackPage" v-close-popup />
+      <KYCUserForm @closeUserKYCDialog="checkCloseUserKYCDialog" />
     </div>
   </q-dialog>
 
@@ -469,7 +469,13 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
-  <AdditionalSteps v-if="isAdditionalWithdrawSteps" :currentAdditionalStep="currentDepStep" :currentType="'withdraw'" @updateStep="handleStepUpdate" @closeGuide="closePlayerGuide" />
+  <AdditionalSteps
+    v-if="isAdditionalWithdrawSteps"
+    :currentAdditionalStep="currentDepStep"
+    :currentType="'withdraw'"
+    @updateStep="handleStepUpdate"
+    @closeGuide="closePlayerGuide"
+  />
 </template>
 
 <script setup>
@@ -524,6 +530,15 @@ const withdrawalMethods = ref([]);
 const selectedWithdrawalMethod = ref([]);
 const isRefreshRemainWager = ref(false);
 
+const checkCloseUserKYCDialog = () => {
+  closeUserKYCDialog();
+
+  const completedGuide = localStorage.getItem("completedwithdrawguide");
+  if (route.query.isNewPlayer && completedGuide !== "true") {
+    isAdditionalWithdrawSteps.value = true;
+  }
+};
+
 const refreshRemainWager = () => {
   isRefreshRemainWager.value = true;
 
@@ -551,12 +566,23 @@ const checkNewUser = () => {
 };
 const isAdditionalWithdrawSteps = ref(false);
 
+const goBackPage = () => {
+  if (route.query.isNewPlayer) {
+    setTimeout(() => {
+      userKYCDialog.value = true;
+    }, 250);
+  } else {
+    router.go(-1);
+  }
+};
+
 onMounted(() => {
   checkNewUser();
   store.getBalance();
   // loadPlatform()
-  
-  if (route.query.isNewPlayer && userKYCDialog.value === false) {
+
+  const completedGuide = localStorage.getItem("completedwithdrawguide");
+  if (route.query.isNewPlayer && completedGuide !== "true" && userKYCDialog.value === false) {
     isAdditionalWithdrawSteps.value = true;
   }
 });

@@ -8,12 +8,7 @@
       <!-- The section to scroll to -->
     </div>
     <q-tabs v-model="currentTab" no-caps class="children-tab" indicator-color="transparent" align="justify">
-      <q-tab
-        v-for="(tab, index) in childrenTabs"
-        :key="index"
-        :label="tab.label"
-        :name="tab.name"
-      />
+      <q-tab v-for="(tab, index) in childrenTabs" :key="index" :label="tab.label" :name="tab.name" />
     </q-tabs>
     <q-tab-panels
       v-model="currentTab"
@@ -26,8 +21,14 @@
         <component :is="tab.component" />
       </q-tab-panel>
     </q-tab-panels>
-    
-    <AdditionalSteps v-if="isAdditionalReferSteps" :currentAdditionalStep="currentReferStep" :currentType="'refer'" @updateStep="handleStepUpdate" @closeGuide="closePlayerGuide" />
+
+    <AdditionalSteps
+      v-if="isAdditionalReferSteps"
+      :currentAdditionalStep="currentReferStep"
+      :currentType="'refer'"
+      @updateStep="handleStepUpdate"
+      @closeGuide="closePlayerGuide"
+    />
   </div>
 </template>
 
@@ -57,7 +58,7 @@ const childrenTabs = computed(() => [
 const isAdditionalReferSteps = ref(false);
 const closePlayerGuide = () => {
   isAdditionalReferSteps.value = false;
-  if (currentReferStep.value === 3) {
+  if (currentReferStep.value === 4) {
     router.push("/?newPlayerGuide=earn-money");
   }
   enableScroll();
@@ -85,7 +86,7 @@ watch(
 
             window.scrollTo({
               top: finalPosition,
-              behavior: "smooth",
+              behavior: "smooth"
             });
           }
         }, 100);
