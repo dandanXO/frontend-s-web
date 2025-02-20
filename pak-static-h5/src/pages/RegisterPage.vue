@@ -577,6 +577,7 @@ export default defineComponent({
                 // }
 
                 sessionStorage.removeItem("REFERRAL_CODE");
+                localStorage.removeItem("PWA_REFERRAL_CODE");
 
                 store.autoLogin(res.data);
                 if (store.hasToken()) {
