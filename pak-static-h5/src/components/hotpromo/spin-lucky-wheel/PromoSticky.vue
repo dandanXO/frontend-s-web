@@ -16,8 +16,11 @@ import { onMounted, onUnmounted, ref, onActivated } from "vue";
 import { eventapi } from "src/boot/axios";
 import moment from "moment-timezone";
 import { useRouter } from "vue-router";
+import { usePromoStore } from "src/stores/promo";
 
 const router = useRouter();
+const promoStore = usePromoStore();
+
 const timer = ref();
 const remainingTime = ref("");
 const isShowSticky = ref(true);
@@ -34,8 +37,9 @@ const closeSticky = () => {
   sessionStorage.setItem("SPIN_LUCKY_WHEEL_STICKY", "1");
 };
 
-const csDragPos = ref([10, 0]);
+const csDragPos = ref([10, 240]);
 const isDraggingCsIcon = ref(false);
+const isInitialized = ref(false);
 
 const info = ref({
   wheelStartTime: "",
@@ -79,31 +83,32 @@ const updateCountdownTime = () => {
 };
 
 const loadData = async () => {
-  const res = await eventapi.get("/session/refer-wheel-spin/init?promoCode=pak-refer-wheel-spin");
-  if (res.code === 0) {
-    info.value = {
-      ...info.value,
-      ...res.data
-    };
+  const getShow = sessionStorage.getItem("SPIN_LUCKY_WHEEL_STICKY");
 
-    updateCountdownTime();
+  if (!getShow && store.token) {
+    const res = await eventapi.get("/session/refer-wheel-spin/init?promoCode=pak-refer-wheel-spin");
+    if (res.code === 0) {
+      info.value = {
+        ...info.value,
+        ...res.data
+      };
+
+      updateCountdownTime();
+      promoStore.addShownFloatingOrDialogList("spin-lucky-wheel");
+    }
   }
 };
 
-onMounted(() => {
-  const getShow = sessionStorage.getItem("SPIN_LUCKY_WHEEL_STICKY");
-  if (!getShow && store.token) {
-    loadData();
-  }
+onMounted(async () => {
+  await loadData();
+  isInitialized.value = true;
 });
 
 onActivated(() => {
-  clearInterval(timer.value);
+  if (!isInitialized.value) return;
 
-  const getShow = sessionStorage.getItem("SPIN_LUCKY_WHEEL_STICKY");
-  if (!getShow && store.token) {
-    loadData();
-  }
+  clearInterval(timer.value);
+  loadData();
 });
 
 onUnmounted(() => {

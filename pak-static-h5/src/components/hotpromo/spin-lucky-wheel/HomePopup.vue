@@ -21,6 +21,7 @@
       <div class="do-not-show-again-wrapper">
         <q-checkbox v-model="isDoNotShowAgain">Do not show again</q-checkbox>
       </div>
+      <q-btn icon="close" round dense v-close-popup class="popup-close" />
     </div>
   </q-dialog>
 </template>
@@ -28,8 +29,7 @@
 import { ref, onMounted, onActivated } from "vue";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
-
-const EXPIRATION_TIME = 60 * 1000 * 60 * 24 * 30;
+import moment from "moment";
 
 const store = userStore();
 const isDoNotShowAgain = ref(false);
@@ -63,11 +63,13 @@ const checkIsCanShowPopup = () => {
 };
 
 const checkExpirationTime = () => {
-  if (localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
-    const currTime = Date.now();
-    const prevTime = Number(localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP"));
+  const preTimeStr = localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP");
+  if (preTimeStr) {
+    const currTime = moment().tz("Asia/Karachi").startOf("day");
+    const prevTime = moment(Number(preTimeStr)).tz("Asia/Karachi");
+    const diff = currTime.diff(prevTime, "milliseconds");
 
-    if (currTime - prevTime > EXPIRATION_TIME) {
+    if (diff > 0) {
       localStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
       isDoNotShowAgain.value = false;
     }
@@ -95,6 +97,7 @@ defineExpose({
 </script>
 <style lang="scss" scoped>
 .spin-lucky-wheel-promo-popup-wrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -158,5 +161,11 @@ defineExpose({
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.popup-close {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 </style>

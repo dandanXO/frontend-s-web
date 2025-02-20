@@ -72,14 +72,14 @@
     </pre> -->
   </div>
   <div>
-    <q-page-sticky v-if="isCharityShow" position="bottom-right" :offset="charityDragPos" class="floating-btn">
-      <div v-touch-pan.prevent.mouse="moveCharityGif" @click="openCharityUrl">
-        <!--        <div class="hb-close">-->
-        <!--          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click.stop="isCharityShow = false" />-->
-        <!--        </div>-->
-        <img class="charity-gif" src="../assets/images/index/charity-float.gif" />
-      </div>
-    </q-page-sticky>
+    <!-- <q-page-sticky v-if="isCharityShow" position="bottom-right" :offset="charityDragPos" class="floating-btn"> -->
+    <!-- <div v-touch-pan.prevent.mouse="moveCharityGif" @click="openCharityUrl"> -->
+    <!--        <div class="hb-close">-->
+    <!--          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click.stop="isCharityShow = false" />-->
+    <!--        </div>-->
+    <!-- <img class="charity-gif" src="../assets/images/index/charity-float.gif" /> -->
+    <!-- </div> -->
+    <!-- </q-page-sticky> -->
   </div>
   <div class="home-wrapper" :class="detectAndroidVersion()">
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
@@ -132,7 +132,7 @@
               :key="i"
               :name="i"
               @click="gotoFloatPromo(promo)"
-              :img-src="`${imgURL}/promo/${promo.icon}`"
+              :img-src="promo.icon"
             >
               <!-- <img style="width: 100px" :src="`${imgURL}/promo/${promo.icon}`" /> -->
             </q-carousel-slide>
@@ -1430,12 +1430,12 @@
 
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
 
-  <SpinLuckyWheelPromoSticky />
-  <SpinLuckyWheelPromoHomePopup ref="spinLuckyWheelPromoHomePopupRef" />
+  <SpinLuckyWheelPromoSticky v-show="isShownSpinLuckyWheel" />
+  <SpinLuckyWheelPromoHomePopup v-if="isShownSpinLuckyWheel" ref="spinLuckyWheelPromoHomePopupRef" />
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch, onActivated, provide } from "vue";
+import { onMounted, ref, reactive, computed, watch, onActivated, provide, nextTick } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -1476,6 +1476,8 @@ import MegaSharingWheelModal from "src/components/hotpromo/megaSharingWheel/Mega
 import AddToHomeScreenModal from "src/components/modal/AddToHomeScreenModal.vue";
 import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
 import SpinLuckyWheelPromoHomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
+import { usePromoStore } from "src/stores/promo";
+import { storeToRefs } from "pinia";
 
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
@@ -1483,6 +1485,8 @@ const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const { t } = useI18n();
+const promoStore = usePromoStore();
+const { isShownSpinLuckyWheel } = storeToRefs(promoStore);
 
 // const isLuckyDrawModal = ref(false);
 // const isCongratsModal = ref(true);
@@ -3544,7 +3548,18 @@ const loadCustomerAddress = () => {
     });
 };
 
-const hbPromo = ref([]);
+const floatPromo = ref([]);
+const hbPromo = computed(() => {
+  const result = [...floatPromo.value];
+  if (isCharityShow.value) {
+    result.push({
+      type: "DOMAIN",
+      code: ui.charityUrl,
+      icon: require("../assets/images/index/charity-float.gif")
+    });
+  }
+  return result;
+});
 
 const checkHbPromo = () => {
   api
@@ -3554,11 +3569,18 @@ const checkHbPromo = () => {
     })
     .then((data) => {
       // isHbShow.value = data.data.some((item) => item.code === "pak-redpacketrain");
-      hbPromo.value = data.data.filter(
-        (redirectList) =>
-          redirectList.code !== "pak-mega-sharing-wheel" ||
-          (redirectList.code === "pak-mega-sharing-wheel" && store.token && ui.promo_megaspin === "1")
-      );
+      floatPromo.value = data.data.reduce((result, promo) => {
+        if (
+          promo.code !== "pak-mega-sharing-wheel" ||
+          (promo.code === "pak-mega-sharing-wheel" && store.token && ui.promo_megaspin === "1")
+        ) {
+          result.push({
+            ...promo,
+            icon: `${imgURL}/promo/${promo.icon}`
+          });
+        }
+        return result;
+      }, []);
     });
 };
 
@@ -3713,7 +3735,6 @@ onActivated(() => {
   checkHash();
 
   checkSpinWheel();
-  checkSpinLuckyWheelPromoHomePopupCanShow();
 
   if (route.query.login === "true") {
     // isMoneyRainModal.value = true;
@@ -3753,7 +3774,6 @@ onMounted(() => {
   loadJILIFishGameList();
   loadJDBFishGameList();
   loadJILIPokerhGameList();
-  checkSpinLuckyWheelPromoHomePopupCanShow();
   ui.shouldFetchDownloadAppUrl = true;
 
   AOS.init();
@@ -3771,6 +3791,14 @@ watch(
     if (newHash) {
       checkHash();
     }
+  }
+);
+
+watch(
+  () => promoStore.isShownSpinLuckyWheel,
+  async (val) => {
+    await nextTick();
+    val && checkSpinLuckyWheelPromoHomePopupCanShow();
   }
 );
 

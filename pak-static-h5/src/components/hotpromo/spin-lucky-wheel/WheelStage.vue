@@ -29,7 +29,7 @@
           <div ref="winningRecordRef" class="winning-record-wrapper">
             <template v-if="winningRecord.length">
               <div v-for="(record, index) in winningRecord" :key="index" class="winning-record-item">
-                <span>{{ moment(record.date).format("MM-DD hh:mm:ss") }}</span>
+                <span>{{ moment(record.recordTime).format("MM-DD hh:mm:ss") }}</span>
                 <span class="name">{{ record.loginName }}</span>
                 <span>
                   RECEIVE
@@ -317,16 +317,7 @@ const updateCountdownTime = () => {
 const getRecords = () => {
   eventapi.get("/session/refer-wheel-spin/getRecords?promoCode=pak-refer-wheel-spin").then((res) => {
     if (res.code === 0) {
-      winningRecord.value = res.data.map((record) => {
-        const date = moment()
-          .subtract(Math.random() * 24 * 60 * 60 * 1000, "milliseconds")
-          .format("YYYY-MM-DD HH:mm:ss");
-
-        return {
-          date,
-          ...record
-        };
-      });
+      winningRecord.value = res.data;
     }
   });
 };
@@ -461,11 +452,14 @@ onUnmounted(() => {
 
           .winning-record-item {
             display: grid;
-            gap: 8px;
-            grid-template-columns: 2fr minmax(40px, 1fr) 2fr;
+            gap: 4px;
+            grid-template-columns: 3fr minmax(40px, 2fr) 3fr;
             > span {
               line-height: 20px;
               flex: 1;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
               &:last-child {
                 text-align: right;
               }
@@ -476,9 +470,6 @@ onUnmounted(() => {
             }
             .name {
               text-align: center;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              overflow: hidden;
             }
           }
 
