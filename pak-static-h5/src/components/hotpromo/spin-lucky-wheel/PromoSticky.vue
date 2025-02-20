@@ -23,7 +23,7 @@ const promoStore = usePromoStore();
 
 const timer = ref();
 const remainingTime = ref("");
-const isShowSticky = ref(true);
+const isShowSticky = ref(false);
 const nextFreeSpinRemainingTime = ref("");
 const moveCsIcon = (ev) => {
   isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -48,7 +48,7 @@ const info = ref({
   accumulatedBonus: 0,
   targetWithdrawAmount: 0,
   availableSpin: 0,
-  status: ""
+  currentBonusType: ""
 });
 
 const getRemainingTime = (endTime) => {
@@ -95,6 +95,9 @@ const loadData = async () => {
 
       updateCountdownTime();
       promoStore.addShownFloatingOrDialogList("spin-lucky-wheel");
+      if (info.value.wheelStartTime) {
+        isShowSticky.value = true;
+      }
     }
   }
 };
