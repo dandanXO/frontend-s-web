@@ -1,4 +1,5 @@
 <template>
+
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
@@ -1438,7 +1439,7 @@ function submitImageUpload() {
       await createSiteImage(imageForm)
       uiControl.imageDialogVisible = false
       ElMessage({ message: t('message.addSuccess'), type: 'success' })
-      if(imageForm.siteId && imageForm.platform && imageForm.path) {
+      if (imageForm.siteId && imageForm.platform && imageForm.path) {
         form.icon = `${imageForm.siteId}/${imageForm.platform}/${imageForm.path}`
       }
     }
