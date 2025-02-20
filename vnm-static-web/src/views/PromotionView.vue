@@ -209,7 +209,7 @@ export default defineComponent({
 
 
 
-
+      promoState.promoList = []
       loadPromo(siteType).then((res) => {
         if (res.code === 0) {
           promoState.promoList.push(...res.data);
