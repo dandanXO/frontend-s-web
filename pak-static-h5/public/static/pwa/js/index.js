@@ -48,8 +48,12 @@ installBtn.addEventListener("click", async () => {
       // Get the current URL
       const urlParams = new URLSearchParams(window.location.search);
       const fbclid = urlParams.get("fbclid");
+      const referral = urlParams.get("refer");
       if (fbclid) {
         localStorage.setItem("fbclid", fbclid);
+        if (referral) {
+          localStorage.setItem("REFERRAL_CODE", fbclid);
+        }
 
         // Retrieve _fbp directly
         const getCookie = (name) => {
