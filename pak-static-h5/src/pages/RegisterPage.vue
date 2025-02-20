@@ -405,27 +405,20 @@ export default defineComponent({
 
     const hasAffiliate = ref(false);
 
-    const getAffiliateCode = () => {
-      affCode.value = sessionStorage.getItem("AFFILIATE_CODE");
-      if (affCode.value) {
+    const getReferralCode = () => {
+      const refCode = sessionStorage.getItem("REFERRAL_CODE") ?? "";
+      const pwaRefCode = localStorage.getItem("PWA_REFERRAL_CODE") ?? "";
+      affCode.value = sessionStorage.getItem("AFFILIATE_CODE") ?? "";
+
+      if (refCode || pwaRefCode) {
+        // hasAffiliate.value = true;
+        regForm.referrer = refCode ? refCode : pwaRefCode;
+      } else if (affCode.value) {
         // hasAffiliate.value = true;
         regForm.codeAffiliate = affCode.value;
       }
     };
-    const getReferralCode = () => {
-      const refCode = sessionStorage.getItem("REFERRAL_CODE");
-      if (refCode) {
-        // hasAffiliate.value = true;
-        regForm.referrer = refCode;
-      }
-    };
 
-    // const getReferralCode = () => {
-    //   const refCode = sessionStorage.getItem("REFERRAL_CODE");
-    //   if (refCode) {
-    //     regForm.referrer = refCode;
-    //   }
-    // }
     const loginNameRef = ref();
     const pwdRef = ref();
     const confirmPwdRef = ref();
@@ -472,7 +465,6 @@ export default defineComponent({
     onActivated(() => {
       getCode();
       getReferralCode();
-      getAffiliateCode();
     });
 
     const trackRegisterSuccessEvent = () => {
@@ -578,6 +570,7 @@ export default defineComponent({
                 // }
 
                 sessionStorage.removeItem("REFERRAL_CODE");
+                localStorage.removeItem("PWA_REFERRAL_CODE");
 
                 store.autoLogin(res.data);
                 if (store.hasToken()) {

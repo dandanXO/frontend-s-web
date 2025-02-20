@@ -30,7 +30,7 @@
             <img class="white-svg" src="../assets/images/auth/phone.svg" />
           </template>
           <template v-if="regForm.referrer" v-slot:append>
-            <q-btn class="get-code-btn" @click="openPhoneVeriDialog">Get Code</q-btn>
+            <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">{{ otpCountdown > 0 ? `Get Code (${otpCountdown})` : 'Get Code' }}</q-btn>
           </template>
         </q-input>
 
@@ -226,7 +226,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "vue";
+import { defineComponent, ref, reactive, onUnmounted, watch, onActivated } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
@@ -250,6 +250,8 @@ export default defineComponent({
     const phoneVerificationImg = ref("");
     const isAgreeReg = ref(true);
     const showImageCode = ref(false);
+    const otpCountdown = ref();
+    const otpCountdownInterval = ref();
 
     const affCode = ref("");
 
@@ -578,18 +580,37 @@ export default defineComponent({
             regForm.smsCode = "";
             regForm.smsCodeId = res.data.codeId;
             console.log(res.data.codeId);
+
+            // start otp countdown
+            otpCountdown.value = res.data.second || 60;
+            otpCountdownInterval.value = setInterval(() => {
+              if(otpCountdown.value > 0) {
+                otpCountdown.value = otpCountdown.value - 1;
+              }
+            },1000);
           } else {
             color = "negative";
+            if(res.code === 1402) {
+              message = `Please try again after ${res.data.second} seconds`;
+
+               // start otp countdown
+              otpCountdown.value = res.data.second || 60;
+              otpCountdownInterval.value = setInterval(() => {
+                if(otpCountdown.value > 0) {
+                  otpCountdown.value = otpCountdown.value - 1;
+                }
+              },1000);
+            }
             getInnerCode();
           }
 
           if (message) {
-            $q.notify({ message, color });
+            $q.notify({ message, color, position: 'top' });
           }
 
           console.log("onCaptchaSubmit", res);
         })
-        .catch(() => {
+        .catch((a) => {
           getInnerCode();
         });
     };
@@ -609,6 +630,16 @@ export default defineComponent({
 
     const imgOnLoad = () => (showImageCode.value = true);
     const imgOnError = () => (showImageCode.value = false);
+
+    watch(() => otpCountdown.value, () => {
+      if(otpCountdown.value === 0) {
+        clearInterval(otpCountdownInterval.value);
+      }
+    })
+
+    onUnmounted(() => {
+      clearInterval(otpCountdownInterval.value);
+    })
 
     return {
       header: "Register Account",
@@ -642,7 +673,9 @@ export default defineComponent({
       affRegEvent,
       showImageCode,
       imgOnLoad,
-      imgOnError
+      imgOnError,
+      otpCountdown,
+      otpCountdownInterval
     };
   }
 });

@@ -94,7 +94,7 @@ const getRecords = () => {
 
   .tab-wrapper {
     display: flex;
-    align-items: center;
+    align-items:stretch;
     justify-content: space-between;
     gap: 12px;
     margin-bottom: 12px;
@@ -103,8 +103,12 @@ const getRecords = () => {
       flex: 1;
       background-color: #d9d9d9;
       border-radius: 12px;
-      padding: 10px 12px;
+      padding: 10px 8px;
       font-size: 16px;
+      display:flex;
+      line-height: 16px;
+      align-items: center;
+      justify-content: center;
       font-weight: 700;
       color: #666666;
       text-align: center;
@@ -130,7 +134,7 @@ const getRecords = () => {
     background-color: #5817aa99;
     border: 1px solid #e8c4ff99;
     border-radius: 8px;
-    padding: 12px;
+    padding: 12px 8px;
     height: 30vh;
     overflow: auto;
     scrollbar-width: none;
@@ -157,20 +161,22 @@ const getRecords = () => {
       gap: 8px;
 
       > span {
+        white-space: wrap;
         font-size: 12px;
         color: #fff;
         &:last-child {
           text-align: right;
           text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
+          white-space: wrap;
+          //overflow: hidden;
         }
       }
 
       .name {
         text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
+        white-space: wrap;
+        //white-space: nowrap;
+        //overflow: hidden;
       }
 
       .amount {

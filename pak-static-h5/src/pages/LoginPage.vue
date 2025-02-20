@@ -481,6 +481,7 @@ export default defineComponent({
                 $q.loading.hide();
                 getCode();
                 sessionStorage.removeItem("REFERRAL_CODE");
+                localStorage.removeItem("PWA_REFERRAL_CODE");
 
                 if (isCheckRmb.value) {
                   localStorage.setItem(
@@ -528,6 +529,8 @@ export default defineComponent({
               .then(() => {
                 $q.loading.hide();
                 sessionStorage.removeItem("REFERRAL_CODE");
+                localStorage.removeItem("PWA_REFERRAL_CODE");
+
                 loginFormRef.value.reset();
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/";

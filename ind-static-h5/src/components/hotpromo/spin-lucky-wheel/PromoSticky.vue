@@ -30,7 +30,7 @@ const closeSticky = () => {
   sessionStorage.setItem("SPIN_LUCKY_WHEEL_STICKY", "1");
 }
 
-const csDragPos = ref([10, 0]);
+const csDragPos = ref([10, 90]);
 const isDraggingCsIcon = ref(false);
 
 const info = ref({
