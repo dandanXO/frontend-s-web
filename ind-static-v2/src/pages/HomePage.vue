@@ -1126,6 +1126,10 @@
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
+
+  <HomePopup ref="spinLuckyWheelPromoPopupRef" />
+
+  <SpinLuckyWheelPromoSticky />
 </template>
 
 <script setup>
@@ -1157,6 +1161,10 @@ import "swiper/css/effect-coverflow";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
+
+import HomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
+import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
+
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
@@ -2763,6 +2771,7 @@ const gotoSignUp = () => {
   router.push("/register");
 };
 
+const spinLuckyWheelPromoPopupRef = ref();
 const download_url = ref("");
 const isAppUpdateModal = ref(false);
 const isOutdatedApp = ref(false);
@@ -2983,6 +2992,9 @@ const loadAppTabs = () => {
 
 onActivated(() => {
   store.getUnreadTotal();
+  if(!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+    spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
+  }
 });
 
 onMounted(() => {
@@ -2998,6 +3010,15 @@ onMounted(() => {
   loadJDBFishGameList();
   checkHbPromo();
 
+  if (sessionStorage.getItem("isReload")) {
+    sessionStorage.removeItem("isReload");
+    sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
+  }
+
+  if(!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+    spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
+  }
+
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
   if (Platform.is.android && Platform.is.capacitor) {
@@ -3005,6 +3026,14 @@ onMounted(() => {
   }
 
   intervalId = setInterval(checkPlatform, 300000);
+
+  window.addEventListener("beforeunload", function () {
+    sessionStorage.setItem("isReload", "true");
+  });
+});
+
+window.addEventListener("beforeunload", () => {
+  sessionStorage.setItem("isReload", "true");
 });
 
 onBeforeUnmount(() => {
