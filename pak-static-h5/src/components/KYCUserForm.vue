@@ -24,7 +24,7 @@
             clearable
             :placeholder="$t('form.phone_placeholder')"
             v-model="formDetail.phone"
-            :rules="[(_) => isValidPhone()]"
+            :rules="[(val) => val.startsWith('03') || $t('form.phone_rules_03'), (_) => isValidPhone()]"
           >
             <template v-slot:prepend>
               <q-icon name="smartphone" />
