@@ -1844,6 +1844,7 @@ export default {
     Withdraw: 'ถอนเงิน',
     'Add Payment': 'เพิ่มการชำระเงิน',
     'Edit Payment': 'แก้ไขการชำระเงิน',
+    'Copy Payment': 'สำเนาำระเงิน',
     CurrencyRate: 'อัตราสกุลเงิน',
     'Payment Display': 'การแสดงการชำระเงิน',
     'Withdraw Platform': 'แพลตฟอร์มการถอน',

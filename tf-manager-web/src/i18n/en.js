@@ -3248,6 +3248,7 @@ export default {
     Withdraw: 'Withdraw',
     'Add Payment': 'Add Payment',
     'Edit Payment': 'Edit Payment',
+    'Copy Payment': 'Copy Payment',
     CurrencyRate: 'Currency Rate',
     'Payment Display': 'Payment Display',
     'Withdraw Platform': 'Withdraw Platform',

@@ -2650,6 +2650,7 @@ export default {
     Withdraw: '돈을 인출하다',
     'Add Payment': '지불 추가',
     'Edit Payment': '지불 수정',
+    'Copy Payment': '지불 복사',
     CurrencyRate: '통화 환율',
     'Payment Display': '지불 디스플레이',
     'Withdraw Platform': '출금 플랫폼',
