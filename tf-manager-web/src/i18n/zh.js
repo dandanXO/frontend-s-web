@@ -3296,7 +3296,9 @@ export default {
     'Sport App Setting': '体育 App 设置',
     'Game Jackpot Bonus Record': '奖金池奖励记录',
     'Refer Spin': '邀请转盘',
-    'Member Privilege Record Pak Export': '会员优惠记录导出 - 巴基斯坦'
+    'Member Privilege Record Pak Export': '会员优惠记录导出 - 巴基斯坦',
+    'Refer Spin Claim Record': '邀请转盘领取记录',
+    'Refer Spin Record': '邀请转盘记录',
   },
   google: {
     google_auth_menu: '谷歌验证',
