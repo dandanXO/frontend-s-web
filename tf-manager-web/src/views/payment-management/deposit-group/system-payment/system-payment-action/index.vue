@@ -2,7 +2,7 @@
   <el-card class="box-card" shadow="never">
     <template #header>
       <div class="card-header">
-        <span>{{ t('fields.systemPayment') }}</span>
+        <span>{{ route.name==="Add Payment" ? $t('menu.Add Payment') : route.name==="Edit Payment" ? $t('menu.Edit Payment') : $t('menu.Copy Payment') }}</span>
       </div>
     </template>
     <el-form
