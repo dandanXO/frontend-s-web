@@ -461,8 +461,8 @@ function getSummaries(param) {
           index === 12 ||
           index === 13 ||
           index === 14 ||
-          index === 24 ||
-          index === 25
+          index === 23 ||
+          index === 24
         ) {
           sums[index] = total.data[prop]
         } else if (index === 5) {
