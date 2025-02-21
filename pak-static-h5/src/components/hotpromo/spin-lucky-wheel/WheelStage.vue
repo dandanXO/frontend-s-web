@@ -296,7 +296,11 @@ const handleRecordClick = () => {
 
 const updateCountdownTime = () => {
   // console.log("updateCountdownTime")
-  const endTime = moment(info.value.wheelEndTime);
+  const endTime = moment.min(
+    moment.tz(info.value.wheelEndTime, "Asia/Karachi"),
+    moment.tz(info.value.wheelResetTime, "Asia/Karachi")
+  );
+
   const nextFreeSpinEndTime = moment().add(1, "days").startOf("day");
   if (timer.value) {
     clearTimeout(timer.value);
