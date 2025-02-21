@@ -127,29 +127,36 @@ const adjustGuide = () => {
 
   if (value === 2) {
     setTimeout(() => {
-      const { x, y } = document.querySelector(".navigations").getBoundingClientRect();
+      const { x, y } = document.querySelector(".header-menu-acc-dropdown>span")?.getBoundingClientRect() || {};
+
       const step2img = document.querySelector(".step2-img");
-      step2img.style.top = `calc(${y}px - 8px)`;
-      step2img.style.left = `calc(${x}px - 15px)`;
-      step2img.style.visibility = "visible";
+      if (step2img && x !== undefined && y !== undefined) {
+        step2img.style.top = `calc(${y}px - 8px)`;
+        step2img.style.left = `calc(${x}px - 15px)`;
+        step2img.style.visibility = "visible";
+      }
     }, 500);
   } else if (value === 3) {
     setTimeout(() => {
-      const { x, y } = document.querySelector(".header-menu-item>a.promo").getBoundingClientRect();
+      const { x, y } = document.querySelector(".header-menu-item>a.promo")?.getBoundingClientRect() || {};
       const step3img = document.querySelector(".step3-img");
-      step3img.style.top = `calc(${y}px - 10px)`;
-      step3img.style.left = `calc(${x}px - 265px)`;
-      step3img.style.visibility = "visible";
+      if (step3img && x !== undefined && y !== undefined) {
+        step3img.style.top = `calc(${y}px - 10px)`;
+        step3img.style.left = `calc(${x}px - 265px)`;
+        step3img.style.visibility = "visible";
+      }
     }, 500);
   } else if (value === 4) {
     props?.openAppMenu();
 
     setTimeout(() => {
-      const { x, y } = document.querySelector(".app-download-menu-qr").getBoundingClientRect();
+      const { x, y } = document.querySelector(".app-download-menu-qr")?.getBoundingClientRect() || {};
       const step4img = document.querySelector(".step4-img");
-      step4img.style.top = `calc(${y}px - 139px)`;
-      step4img.style.left = `calc(${x}px - 242px)`;
-      step4img.style.visibility = "visible";
+      if (step4img && x !== undefined && y !== undefined) {
+        step4img.style.top = `calc(${y}px - 139px)`;
+        step4img.style.left = `calc(${x}px - 242px)`;
+        step4img.style.visibility = "visible";
+      }
     }, 500);
   } else if (value === 5) {
     props?.closeAppMenu();
@@ -158,29 +165,35 @@ const adjustGuide = () => {
     personalCenter.click();
 
     setTimeout(() => {
-      const { x, y } = document.querySelector(".header-menu-acc-dropdown>span").getBoundingClientRect();
+      const { x, y } = document.querySelector(".header-menu-acc-dropdown>span")?.getBoundingClientRect() || {};
       const step5img = document.querySelector(".step5-img");
-      step5img.style.top = `calc(${y}px - 8px)`;
-      step5img.style.left = `calc(${x}px - 220px)`;
-      step5img.style.visibility = "visible";
+      if (step5img && x !== undefined && y !== undefined) {
+        step5img.style.top = `calc(${y}px - 8px)`;
+        step5img.style.left = `calc(${x}px - 220px)`;
+        step5img.style.visibility = "visible";
+      }
     }, 500);
   } else if (value === 6) {
     router.push("/center/deposit");
 
     setTimeout(() => {
-      const { x, y } = document.querySelector(".account-menu-item").getBoundingClientRect();
+      const { x, y } = document.querySelector(".account-menu-item")?.getBoundingClientRect() || {};
       const step6img1 = document.querySelector(".step6-img1");
-      step6img1.style.top = `calc(${y}px - 2px)`;
-      step6img1.style.left = `calc(${x}px - 15px)`;
-      step6img1.style.visibility = "visible";
+      if (step6img1 && x !== undefined && y !== undefined) {
+        step6img1.style.top = `calc(${y}px - 2px)`;
+        step6img1.style.left = `calc(${x}px - 15px)`;
+        step6img1.style.visibility = "visible";
+      }
     }, 1000);
 
     setTimeout(() => {
-      const { x: x2, y: y2 } = document.querySelector(".btn-confirm").getBoundingClientRect();
+      const { x: x2, y: y2 } = document.querySelector(".btn-confirm")?.getBoundingClientRect() || {};
       const step6img2 = document.querySelector(".step6-img2");
-      step6img2.style.top = `calc(${y2}px - 80px - 220px)`;
-      step6img2.style.left = `calc(${x2}px - 25px)`;
-      step6img2.style.visibility = "visible";
+      if (step6img2 && x2 !== undefined && y2 !== undefined) {
+        step6img2.style.top = `calc(${y2}px - 80px - 220px)`;
+        step6img2.style.left = `calc(${x2}px - 25px)`;
+        step6img2.style.visibility = "visible";
+      }
     }, 2500);
   }
 };
