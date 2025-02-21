@@ -448,7 +448,7 @@ onUnmounted(() => {
             }
             .amount {
               font-weight: 600;
-              color: #cd91ff;
+              color: #9AFF91;
             }
             .name {
               text-align: center;
@@ -581,10 +581,10 @@ onUnmounted(() => {
       top: 2%;
       right: 7%;
       border: none;
-      background-color: #e8c4ff33;
+      background-color: #388D40;
       border-radius: 87px;
       padding: 3px 6px;
-      color: #cd91ff;
+      color: #9AFF91;
     }
   }
 
@@ -601,7 +601,7 @@ onUnmounted(() => {
       gap: 8px;
       font-size: 16px;
       font-weight: 700;
-      color: #cd91ff;
+      color: #9AFF91;
 
       .title-decoration {
         display: flex;
@@ -610,7 +610,7 @@ onUnmounted(() => {
           width: 8px;
           height: 8px;
           transform: rotate(45deg);
-          background-color: #cd91ff;
+          background-color: #9AFF91;
         }
       }
     }

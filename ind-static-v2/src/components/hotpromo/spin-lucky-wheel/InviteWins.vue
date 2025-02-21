@@ -220,7 +220,7 @@ onMounted(() => {
 
 .invite-win-section {
   background: #1E1F24;
-  border: 1px solid #CD91FF;
+  border: 1px solid #9AFF91;
   border-radius: 4px;
 }
 

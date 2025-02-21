@@ -87,9 +87,8 @@ const getRecords = () => {
 .record-dialog-inner-wrapper {
   width: 90%;
   max-width: 450px;
-  background-color: #917ca1;
+  background-color: #8BA17C;
   border-radius: 14px;
-  border: 1px solid #e8c4ff99;
   padding: 12px;
 
   .tab-wrapper {
@@ -114,7 +113,7 @@ const getRecords = () => {
       text-align: center;
 
       &.selected {
-        background: linear-gradient(356.25deg, #3b156e -0.21%, #8100ae 93.65%);
+        background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
         color: #fff;
       }
     }
@@ -131,8 +130,8 @@ const getRecords = () => {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    background-color: #5817aa99;
-    border: 1px solid #e8c4ff99;
+    background-color: #157F42;
+    border: 1px solid #D1FFC499;
     border-radius: 8px;
     padding: 12px 8px;
     height: 30vh;
@@ -181,7 +180,7 @@ const getRecords = () => {
 
       .amount {
         font-weight: 900;
-        color: #cd91ff;
+        color: #9AFF91;
       }
     }
 
