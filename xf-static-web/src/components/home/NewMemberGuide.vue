@@ -127,7 +127,7 @@ const adjustGuide = () => {
 
   if (value === 2) {
     setTimeout(() => {
-      const { x, y } = document.querySelector(".header-menu-acc-dropdown>span")?.getBoundingClientRect() || {};
+      const { x, y } = document.querySelector(".navigations")?.getBoundingClientRect() || {};
 
       const step2img = document.querySelector(".step2-img");
       if (step2img && x !== undefined && y !== undefined) {
