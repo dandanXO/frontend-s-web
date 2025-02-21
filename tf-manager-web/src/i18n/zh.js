@@ -2218,6 +2218,7 @@ export default {
     referRelationQuery: '邀请关系查询',
     referCount: '邀请人数',
     referBonus: '邀请奖金',
+    referFtdCount: '邀请首存人数',
     successCount: '合格人数',
     betBonus: '投注返佣',
     batchFrozenMember: '批量冻结会员',
@@ -2508,6 +2509,7 @@ export default {
     calculatedAmount: '计算金额',
     calculatedPts: '计算积分',
     spinRecord: '转盘记录',
+    traceID: 'Trace ID'
   },
   message: {
     adsStatusOpen: '开',

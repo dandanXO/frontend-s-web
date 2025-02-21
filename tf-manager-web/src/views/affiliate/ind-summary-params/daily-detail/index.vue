@@ -295,6 +295,18 @@
             <span v-formatter="{data: scope.row.netProfit, type: 'money'}" />
           </template>
         </el-table-column>
+        <el-table-column
+          prop="referCount"
+          :label="t('fields.referCount')"
+          align="center"
+          width="120"
+        />
+        <el-table-column
+          prop="referFtdCount"
+          :label="t('fields.referFtdCount')"
+          align="center"
+          width="120"
+        />
       </el-table>
       <el-pagination
         class="pagination"
@@ -548,7 +560,9 @@ function getSummaries(param) {
         var prop = column.property
         if (
           index === 4 ||
-          index === 6
+          index === 6 ||
+          index === 18 ||
+          index === 19
         ) {
           sums[index] = total.data[prop]
         } else if (index === 7 || index === 12 || index === 13) {

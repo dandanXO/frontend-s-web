@@ -2215,6 +2215,7 @@ export default {
     referRelationQuery: 'Refer Relation Query',
     referCount: 'Refer Count',
     referBonus: 'Refer Bonus',
+    referFtdCount: 'Refer First Deposit Count',
     successCount: 'Success Count',
     betBonus: 'Bet Bonus',
     batchFrozenMember: 'Batch Frozen Member',
@@ -2505,6 +2506,7 @@ export default {
     calculatedAmount: 'Calculated Amount',
     calculatedPts: 'Calculated Points',
     spinRecord: 'Spin Record',
+    traceId: 'Trace ID'
   },
   message: {
     adsStatusOpen: 'Open',

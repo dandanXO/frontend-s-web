@@ -290,6 +290,18 @@
           :label="t('fields.oldMemberWithdrawMemberCount')"
           width="120"
         />
+        <el-table-column
+          prop="referCount"
+          :label="t('fields.referCount')"
+          align="center"
+          width="120"
+        />
+        <el-table-column
+          prop="referFtdCount"
+          :label="t('fields.referFtdCount')"
+          align="center"
+          width="120"
+        />
       </el-table>
       <el-pagination
         class="pagination"
@@ -448,7 +460,9 @@ function getSummaries(param) {
           index === 7 ||
           index === 12 ||
           index === 13 ||
-          index === 14
+          index === 14 ||
+          index === 24 ||
+          index === 25
         ) {
           sums[index] = total.data[prop]
         } else if (index === 5) {
