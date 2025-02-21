@@ -1578,7 +1578,7 @@ const handleAdditionalSteps = (index) => {
     // Scroll to the target element
     nextTick(() => {
       if (targetSection.value) {
-        const offset = 100; // Adjust this offset as needed
+        const offset = 130; // Adjust this offset as needed
         const rect = targetSection.value.getBoundingClientRect();
         const scrollTop = window.scrollY || document.documentElement.scrollTop; // Get current scroll position
         const finalPosition = rect.top + scrollTop - offset;
@@ -3881,20 +3881,18 @@ function checkReferStep() {
     const completedGuide = localStorage.getItem("completedreferguide");
     // alert("refer," + completedGuide);
     if (completedGuide === "true") {
-      isAdditionalReferSteps.value = true;
-      updateCurrentStep("5");
-    } else {
-      handleAdditionalSteps(4);
+      isAdditionalReferSteps.value = false;
+      // updateCurrentStep("5");
     }
   }
 }
 
-const checkGameTipStep = () => {
-  const completedGuide = localStorage.getItem("completedlangguide");
-  if (completedGuide === "true" && currentStep.value === "2") {
-    updateCurrentStep("2");
-  }
-};
+// const checkGameTipStep = () => {
+//   const completedGuide = localStorage.getItem("completedlangguide");
+//   if (completedGuide === "true" && currentStep.value === "2") {
+//     updateCurrentStep("2");
+//   }
+// };
 
 function checkWithdrawStep() {
   if (isAdditionalWithdrawSteps.value) {
@@ -3908,7 +3906,6 @@ function checkWithdrawStep() {
 }
 
 const checkNewGuideSteps = () => {
-  checkGameTipStep();
   checkDepositStep();
   checkReferStep();
   checkWithdrawStep();
@@ -3926,6 +3923,14 @@ const afterActivated = useCustomerTrigger(() => {
 const downloadAppRef = ref();
 
 onActivated(() => {
+  nextTick(() => {
+    if(LocalStorage.getItem('completedreferguide') !== 'true' && LocalStorage.getItem('newPlayerGuide') === '4') {
+      currentType.value = 'refer';
+      isAdditionalReferSteps.value = true;
+      disableScroll();
+      currentAdditionalStep.value = 1;
+    }
+  });
   // alert(currentStep.value);
   // alert(LocalStorage.getItem('completeddepositguide') === 'true')
   // alert(LocalStorage.getItem('completeddepositguide') === true)
@@ -4136,6 +4141,18 @@ const showCongratsModal = () => {
   box-shadow: 0px 0px 30px 0px #00e60091;
   border-radius: 10px;
   box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.8); /* Creates the cutout effect */
+  position: relative;
+  &:after {
+    position: absolute;
+    content: "";
+    background: url(../assets/images/newplayerguide/finger.png) no-repeat center center;
+    width: 10vh;
+    background-size: contain;
+    height: 10vh;
+    bottom: 20vh;
+    left: 10vh;
+    animation: moveFinger 1.5s ease-in-out infinite;
+  }
 }
 .q-page-container {
   min-height: 100vh;
@@ -5777,5 +5794,28 @@ const showCongratsModal = () => {
   transform: translateX(-50%);
   z-index: 1;
   pointer-events: all;
+}
+/* Keyframe animation to simulate finger moving towards the button */
+@keyframes moveFinger {
+  0% {
+    bottom: 30vh; /* Start position */
+    right: -7vh; /* Start on the right */
+  }
+  25% {
+    bottom: 30.5vh; /* Move up slightly */
+    right: -6vh; /* Move left slightly (towards the center) */
+  }
+  50% {
+    bottom: 29vh; /* Move up further */
+    right: -5vh; /* Move further left */
+  }
+  75% {
+    bottom: 30.5vh; /* Move back down slightly */
+    right: -6vh; /* Move back to the center */
+  }
+  100% {
+    bottom: 30vh; /* End position */
+    right: -7vh; /* Back to the original position on the right */
+  }
 }
 </style>

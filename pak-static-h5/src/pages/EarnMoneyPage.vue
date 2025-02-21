@@ -25,7 +25,7 @@
     <AdditionalSteps
       v-if="isAdditionalReferSteps"
       :currentAdditionalStep="currentReferStep"
-      :currentType="'refer'"
+      :currentType="currentType"
       @updateStep="handleStepUpdate"
       @closeGuide="closePlayerGuide"
     />
@@ -58,7 +58,7 @@ const childrenTabs = computed(() => [
 const isAdditionalReferSteps = ref(false);
 const closePlayerGuide = () => {
   isAdditionalReferSteps.value = false;
-  if (currentReferStep.value === 4) {
+  if (currentReferStep.value === 3) {
     router.push("/?newPlayerGuide=earn-money");
   }
   enableScroll();
@@ -71,14 +71,15 @@ const handleStepUpdate = (newStep) => {
   currentReferStep.value = newStep;
 };
 const targetSection = ref();
+const currentType = ref('refer');
 watch(
   () => route.query.isNewPlayer,
   (newVal) => {
-    if (newVal === "1") {
+    if (newVal === "2" && currentType.value === 'refer') {
       isAdditionalReferSteps.value = true;
       nextTick(() => {
         setTimeout(() => {
-          if (targetSection.value) {
+          if (targetSection.value && isAdditionalReferSteps.value) {
             const offset = -760;
             const rect = targetSection.value.getBoundingClientRect();
             const scrollTop = window.scrollY || document.documentElement.scrollTop;

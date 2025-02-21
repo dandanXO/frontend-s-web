@@ -21,6 +21,9 @@
         <div class="title">{{ $t("withdraw.withdrawable") }}</div>
       </div>
     </div>
+      <div ref="targetSection" class="target-section">
+        <!-- The section to scroll to -->
+      </div>
     <div class="withdraw-section">
       <div class="account-content last">
         <div class="withdrawalmethod">
@@ -471,7 +474,7 @@
   </q-dialog>
   <AdditionalSteps
     v-if="isAdditionalWithdrawSteps"
-    :currentAdditionalStep="currentDepStep"
+    :currentAdditionalStep="currentWithdrawStep"
     :currentType="'withdraw'"
     @updateStep="handleStepUpdate"
     @closeGuide="closePlayerGuide"
@@ -480,7 +483,7 @@
 
 <script setup>
 /* eslint-disable */
-import { defineComponent, reactive, ref, onActivated, computed, onMounted } from "vue";
+import { defineComponent, watch, nextTick, reactive, ref, onActivated, computed, onMounted } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -914,7 +917,7 @@ const openWithdrawTutorialVideo = () => {
 };
 const closePlayerGuide = () => {
   isAdditionalWithdrawSteps.value = false;
-  if (currentDepStep.value === 4) {
+  if (currentWithdrawStep.value === 4) {
     localStorage.setItem("newPlayerGuide", "4");
   }
   enableScroll();
@@ -922,10 +925,34 @@ const closePlayerGuide = () => {
 const enableScroll = () => {
   document.body.style.overflow = ""; // Restore scrolling
 };
-const currentDepStep = ref(2);
+const currentWithdrawStep = ref(2);
 const handleStepUpdate = (newStep) => {
-  currentDepStep.value = newStep;
+  currentWithdrawStep.value = newStep;
 };
+const targetSection = ref();
+watch(
+  () => currentWithdrawStep.value,
+  (newVal) => {
+    if (newVal === 3) {
+      nextTick(() => {
+        setTimeout(() => {
+          if (targetSection.value && currentWithdrawStep.value === 3) {
+            const offset = 80;
+            const rect = targetSection.value.getBoundingClientRect();
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const finalPosition = rect.top + scrollTop - offset;
+
+            window.scrollTo({
+              top: finalPosition,
+              behavior: "smooth"
+            });
+          }
+        }, 100);
+      });
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped lang="scss">

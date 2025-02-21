@@ -27,21 +27,19 @@
                 <span class="pen"><img src="../../assets/images/newplayerguide/edit.png" /></span>
               </div>
 
-              <!--              index + 1 === 6 ||-->
-              <div v-if="index + 1 === 4" class="congrats-step">
-                <div class="txt">{{ step.instruction }}</div>
-                <!--                <div class="amt">RS {{ step.earnableAmt }}</div>-->
-              </div>
-              <div v-else class="other-steps">
-                <div class="midimg">
-                  <img :src="require(`../../assets/images/newplayerguide/step-mid-${index + 1}.png`)" />
+                <div v-if="index + 1 === 6" class="congrats-step">
+                  <div class="txt">{{ step.instruction }}</div>
+                  <div class="amt">RS {{ step.earnableAmt }}</div>
                 </div>
-                <div class="mid-content">
-                  <div class="ins">{{ step.instruction }}</div>
-                  <div class="amt">{{ step.earnableAmt }}RS</div>
+                <div v-else class="other-steps">
+                  <div class="midimg">
+                    <img :src="require(`../../assets/images/newplayerguide/step-mid-${index + 1}.png`)">
+                  </div>
+                  <div class="mid-content">
+                    <div class="ins">{{ step.instruction }}</div>
+                    <div class="amt">{{ step.earnableAmt }}RS</div>
+                  </div>
                 </div>
-              </div>
-
               <div v-if="index + 1 === 1">
                 <div class="welcome">
                   {{ t("playerGuide.welcomeMessage") }}
@@ -53,6 +51,8 @@
 
               <div v-if="index + 1 === 2">
                 <div class="hotgames">
+                  <img class="abs-line" src="../../assets/images/newplayerguide/line-hot-1.png" />
+                  <div class="abs-box"></div>
                   <div class="hottitle">
                     <img src="../../assets/images/newplayerguide/hotgameicon.png" />
                     <span>{{ t("playerGuide.hotGames") }}</span>
@@ -93,38 +93,39 @@
               </div>
 
               <div v-if="index + 1 === 4">
-                <!--                <div class="share-steps">-->
-                <!--                  <div class="share-step">-->
-                <!--                    <img src="../../assets/images/newplayerguide/step-01.png" />-->
-                <!--                    <div>-->
-                <!--                      {{ t("playerGuide.maxReward") }}-->
-                <!--                      <span class="yellow">1000</span>-->
-                <!--                      {{ t("playerGuide.rs") }}-->
-                <!--                    </div>-->
-                <!--                  </div>-->
+                <div class="share-steps">
+                    <div class="share-step">
+                      <img src="../../assets/images/newplayerguide/step-01.png" />
+                      <div>
+                        {{ t("playerGuide.maxReward") }}
+                        <span class="yellow">1000</span>
+                        {{ t("playerGuide.rs") }}
+                      </div>
+                    </div>
 
-                <!--                  <div class="share-step">-->
-                <!--                    <img src="../../assets/images/newplayerguide/step-02.png" />-->
-                <!--                    <div>-->
-                <!--                      <span class="yellow">5%</span>-->
-                <!--                      {{ t("playerGuide.extraBonus") }}-->
-                <!--                    </div>-->
-                <!--                  </div>-->
+                    <div class="share-step">
+                      <img src="../../assets/images/newplayerguide/step-02.png" />
+                      <div>
+                        <span class="yellow">5%</span>
+                        {{ t("playerGuide.extraBonus") }}
+                      </div>
+                    </div>
 
-                <!--                  <div class="share-step">-->
-                <!--                    <img src="../../assets/images/newplayerguide/step-03.png" />-->
-                <!--                    <div>-->
-                <!--                      {{ t("playerGuide.lifetimeCommission") }}-->
-                <!--                      <span class="yellow">0.6%</span>-->
-                <!--                      {{ t("playerGuide.commissionDetails") }}-->
-                <!--                    </div>-->
-                <!--                  </div>-->
-                <!--                </div>-->
+                    <div class="share-step">
+                      <img src="../../assets/images/newplayerguide/step-03.png" />
+                      <div>
+                        {{ t("playerGuide.lifetimeCommission") }}
+                        <span class="yellow">0.6%</span>
+                        {{ t("playerGuide.commissionDetails") }}
+                      </div>
+                    </div>
+                  </div>
 
-                <!--                <div class="invite-share-link">-->
-                <!--                  <div class="link-href">{{ selfTgurl }}</div>-->
-                <!--                  <div class="link-copy" @click="copyHrefLink">{{ $t("earnMoney.reward.copyLink") }}</div>-->
-                <!--                </div>-->
+                  <div class="invite-share-link">
+                    <div class="link-href">{{ selfTgurl }}</div>
+                    <div class="link-copy" @click="copyHrefLink">{{ $t("earnMoney.reward.copyLink") }}</div>
+                  </div>
+
               </div>
 
               <div v-if="index + 1 === 5">
@@ -275,7 +276,7 @@
 </template>
 <script setup>
 import { useUI } from "stores/ui";
-import { ref, defineExpose, toRefs, onMounted, computed } from "vue";
+import { ref, defineExpose, watch, toRefs, onMounted, computed } from "vue";
 import { api, eventapi } from "src/boot/axios";
 import { userStore } from "stores/index";
 import { copyToClipboard, useQuasar } from "quasar";
@@ -343,9 +344,9 @@ const steps = computed(() => [
     title: t("playerGuide.inviteFriends"),
     instruction: t("playerGuide.inviteReward"),
     earnableAmt: "250",
-    buttonTxt: t("playerGuide.tryItOut"),
-    // buttonTxt: t("playerGuide.shareNow"),
-    video: ""
+    // buttonTxt: t("playerGuide.tryItOut"),
+    buttonTxt: t("playerGuide.shareNow"),
+    video: t("playerGuide.referTutorial")
   },
   {
     title: t("playerGuide.withdrawal"),
@@ -398,8 +399,8 @@ const runInnerSteps = (index) => {
   } else if (index === 3) {
     emit("update:showSteps", index);
   } else if (index === 4) {
-    emit("update:showSteps", index);
-    // isBottomShareDialog.value = true;
+    // emit("update:showSteps", index);
+    isBottomShareDialog.value = true;
   } else if (index === 5) {
     emit("update:showSteps", index);
   }
@@ -502,10 +503,23 @@ const handleShareToEmail = (url) => {
 };
 
 const modalSocialShare = ref(false);
+  
+const completedDepoGuide = localStorage.getItem("completeddepositguide");
+  const completedReferGuide = localStorage.getItem("completeddreferguide");
 
+  watch(
+    () => modelValue.value,
+    (newValue) => {
+      
+      if (completedDepoGuide === "true") {
+          if (completedReferGuide !== "true") {
+            emit("update:showSteps", 4);
+          }
+        }
+    },
+    { immediate: true } 
+  );
 onMounted(() => {
-  // afterMounted();
-
   let tgDomain = window.location.origin + "/";
   if (store.isApp()) {
     tgDomain = store.evip ? "https://" + store.evip + "/" : store.h5Url;
@@ -771,6 +785,27 @@ defineExpose({ showVideo });
         justify-content: center;
         align-items: center;
         gap: 10px;
+        position: relative;
+        .abs-line {
+          position: absolute;
+          width: 33vh;
+          z-index: 9999;
+          top: 0px;
+          left: -10vh;
+          pointer-events: none;
+        }
+        .abs-box {
+          position: absolute;
+          width: 21vh;
+          height: 7.5vh;
+          z-index: 9999;
+          border-radius: 10px;
+          top: 30vh;
+          left: 8vh;
+          border: 2px dotted #08F437;
+          box-shadow: 0px 0px 20px 0px #00E60091;
+          pointer-events: none;
+        }
         .hottitle {
           // margin: 10px 0 0;
           // gap: 10px;
