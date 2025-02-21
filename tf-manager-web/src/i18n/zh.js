@@ -2218,6 +2218,7 @@ export default {
     referRelationQuery: '邀请关系查询',
     referCount: '邀请人数',
     referBonus: '邀请奖金',
+    referFtdCount: '邀请首存人数',
     successCount: '合格人数',
     betBonus: '投注返佣',
     batchFrozenMember: '批量冻结会员',

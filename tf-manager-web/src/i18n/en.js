@@ -2215,6 +2215,7 @@ export default {
     referRelationQuery: 'Refer Relation Query',
     referCount: 'Refer Count',
     referBonus: 'Refer Bonus',
+    referFtdCount: 'Refer First Deposit Count',
     successCount: 'Success Count',
     betBonus: 'Bet Bonus',
     batchFrozenMember: 'Batch Frozen Member',

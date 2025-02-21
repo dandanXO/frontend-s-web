@@ -285,6 +285,18 @@
             <span v-formatter="{ data: scope.row.netProfit, type: 'money' }" />
           </template>
         </el-table-column>
+        <el-table-column
+          prop="referCount"
+          :label="t('fields.referCount')"
+          align="center"
+          width="120"
+        />
+        <el-table-column
+          prop="referFtdCount"
+          :label="t('fields.referFtdCount')"
+          align="center"
+          width="120"
+        />
       </el-table>
       <el-pagination
         class="pagination"
@@ -511,7 +523,9 @@ function getSummaries(param) {
         if (
           index === 4 ||
           index === 6 ||
-          index === 13
+          index === 13 ||
+          index === 19 ||
+          index === 20
         ) {
           // withdrawCount, registerCount, ftdCount, totalDepositCount, totalBetCount
           sums[index] = total.data[prop]
