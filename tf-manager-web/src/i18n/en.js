@@ -2506,6 +2506,7 @@ export default {
     calculatedAmount: 'Calculated Amount',
     calculatedPts: 'Calculated Points',
     spinRecord: 'Spin Record',
+    traceId: 'Trace ID'
   },
   message: {
     adsStatusOpen: 'Open',
