@@ -2506,6 +2506,7 @@ export default {
     calculatedAmount: 'Calculated Amount',
     calculatedPts: 'Calculated Points',
     spinRecord: 'Spin Record',
+    pointsDistribution: 'Points Distribution',
     traceId: 'Trace ID'
   },
   message: {

@@ -2509,6 +2509,7 @@ export default {
     calculatedAmount: '计算金额',
     calculatedPts: '计算积分',
     spinRecord: '转盘记录',
+    pointsDistribution: '积分分布',
     traceId: 'Trace ID'
   },
   message: {
