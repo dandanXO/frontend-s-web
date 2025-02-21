@@ -67,22 +67,34 @@
           </div>
 
           <!-- <img :src="`img/spin-${index+1}`"> -->
-          <div class="spinwheel">
+          <div class="spinwheel" :class="{ disabledItem: index === 3 }">
             <img
               :class="{ wheel: rolling }"
               :style="`transform: rotate(${tab.wheelDeg}deg)`"
               :src="require(`./img/bigspin-${index + 1}.png`)"
             />
             <img class="spintop" :src="require(`./img/spin-top-${index + 1}.png`)" />
-            <img
-              class="spingo"
-              @click="onClickRotate"
-              @touchstart="onClickRotate"
-              :src="require(`./img/spingo-${index + 1}.png`)"
-            />
-            <span class="spinnum" @click="onClickRotate" @touchstart="onClickRotate">
-              {{ $t("hotPromo.depositSpinWheel.spin") }} {{ "* " + (tab.times1 + tab.times2) }}
-            </span>
+            <template v-if="index === 3">
+              <img
+                class="spingo"
+                :class="{ disabledItem: index === 3 }"
+                :src="require(`./img/spingo-${index + 1}.png`)"
+              />
+              <span class="spinnum" :class="{ disabledItem: index === 3 }">
+                {{ $t("hotPromo.depositSpinWheel.spin") }} {{ "* " + (tab.times1 + tab.times2) }}
+              </span>
+            </template>
+            <template v-else>
+              <img
+                class="spingo"
+                @click="onClickRotate"
+                @touchstart="onClickRotate"
+                :src="require(`./img/spingo-${index + 1}.png`)"
+              />
+              <span class="spinnum" @click="onClickRotate" @touchstart="onClickRotate">
+                {{ $t("hotPromo.depositSpinWheel.spin") }} {{ "* " + (tab.times1 + tab.times2) }}
+              </span>
+            </template>
           </div>
           <div class="onlyactiveshow">
             <span class="remaining">{{ $t("hotPromo.depositSpinWheel.remainingTimes") }} :</span>
@@ -845,5 +857,10 @@ const transformStyle = computed(() => {
       bottom: 3.5%;
     }
   }
+}
+
+.disabledItem {
+  filter:grayscale(1);
+  cursor:not-allowed;
 }
 </style>
