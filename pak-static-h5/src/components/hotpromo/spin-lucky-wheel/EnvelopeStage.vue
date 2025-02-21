@@ -27,6 +27,7 @@
       </div>
       <div v-else class="selected-envelope">
         <span class="prize">${{ prizeList[selectedIndex]?.prize }}</span>
+        <span class="desc">Withdraw money over ${{ targetWithdrawAmount }}</span>
         <CommonButton class="withdraw-btn" @click="$emit('envelopeClick')">Go withdraw now!</CommonButton>
         <span class="remaining-time">time left: {{ remainingTime }}</span>
       </div>
@@ -44,7 +45,7 @@
 </template>
 <script setup>
 import moment from "moment";
-import { onUnmounted, ref } from "vue";
+import { computed, onUnmounted, ref } from "vue";
 import CommonButton from "./CommonButton.vue";
 import { eventapi } from "src/boot/axios";
 
@@ -57,6 +58,20 @@ const remainingTime = ref("00:00:00");
 const endTime = ref("");
 const isClaiming = ref(false);
 const timer = ref();
+const wheelNo = ref(0);
+
+const targetWithdrawAmount = computed(() => {
+  switch (wheelNo.value) {
+    case 3:
+      return 1000;
+    case 2:
+      return 600;
+    case 1:
+      return 300;
+    default:
+      return 0;
+  }
+});
 
 const delay = async (ms) => {
   return new Promise((resolve) => {
@@ -95,8 +110,9 @@ const handleEnvelopeClick = (index) => {
       delay(1000)
     ]);
 
-    envelopeStatus.value = "selected";
     endTime.value = moment.min(moment(initRes.data.wheelEndTime), moment(initRes.data.wheelResetTime));
+    wheelNo.value = initRes.data.wheelNo;
+    envelopeStatus.value = "selected";
     updateRemainingTime();
     timer.value = setInterval(updateRemainingTime, 1000);
     isClaiming.value = false;
@@ -106,8 +122,8 @@ const handleEnvelopeClick = (index) => {
 const updateRemainingTime = () => {
   let result = "00:00:00";
   if (endTime.value) {
-    const now = moment(Date.now()).tz("Asia/Karachi");
-    const _endTime = moment(endTime.value).tz("Asia/Karachi");
+    const now = moment(Date.now());
+    const _endTime = moment(endTime.value);
     const totalSeconds = _endTime.diff(now, "seconds");
     if (totalSeconds > 0) {
       const hours = Math.floor(totalSeconds / 3600);
@@ -195,6 +211,18 @@ onUnmounted(() => {
         width: 100%;
         transform: translateY(-50%);
         font-size: 50px;
+        font-weight: 900;
+        color: #f33d31;
+        text-align: center;
+      }
+
+      .desc {
+        position: absolute;
+        top: 36%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 70%;
+        font-size: 20px;
         font-weight: 900;
         color: #f33d31;
         text-align: center;

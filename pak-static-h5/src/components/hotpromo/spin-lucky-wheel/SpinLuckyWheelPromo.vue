@@ -23,7 +23,7 @@ const info = ref({
   wheelStartTime: "",
   wheelEndTime: "",
   hasWithdrawn: false,
-  wheelNo: 1,
+  wheelNo: 0,
   // nextFreeSpinTime: "2025-02-14 00:00:00",
   accumulatedBonus: 0,
   availableSpin: 0,
@@ -37,8 +37,9 @@ const targetWithdrawAmount = computed(() => {
     case 2:
       return 600;
     case 1:
-    default:
       return 300;
+    default:
+      return 0;
   }
 });
 

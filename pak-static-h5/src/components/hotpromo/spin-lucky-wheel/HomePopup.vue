@@ -65,8 +65,8 @@ const checkIsCanShowPopup = () => {
 const checkExpirationTime = () => {
   const preTimeStr = localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP");
   if (preTimeStr) {
-    const currTime = moment().tz("Asia/Karachi").startOf("day");
-    const prevTime = moment(Number(preTimeStr)).tz("Asia/Karachi");
+    const currTime = moment().startOf("day");
+    const prevTime = moment(Number(preTimeStr));
     const diff = currTime.diff(prevTime, "milliseconds");
 
     if (diff > 0) {

@@ -2,17 +2,19 @@
   <q-dialog v-model="_modelValue" @hide="$emit('hide')">
     <div class="wheel-result-wrapper">
       <span class="prize">+${{ props.prize }}</span>
-      <span class="desc">Withdraw money over $500</span>
+      <span class="desc">Withdraw money over ${{ targetWithdrawAmount }}</span>
       <CommonButton class="close-btn" v-close-popup>Okay</CommonButton>
     </div>
   </q-dialog>
 </template>
 <script setup>
-import { computed } from "vue";
+import { computed, inject } from "vue";
 import CommonButton from "./CommonButton.vue";
 
 const props = defineProps(["modelValue", "prize"]);
 const emit = defineEmits(["update:modelValue", "hide"]);
+
+const targetWithdrawAmount = inject("targetWithdrawAmount");
 
 const _modelValue = computed({
   get: () => props.modelValue,
