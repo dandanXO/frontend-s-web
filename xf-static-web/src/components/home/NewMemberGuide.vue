@@ -132,7 +132,7 @@ const adjustGuide = () => {
       const step2img = document.querySelector(".step2-img");
       if (step2img && x !== undefined && y !== undefined) {
         step2img.style.top = `calc(${y}px - 8px)`;
-        step2img.style.left = `calc(${x}px - 15px)`;
+        step2img.style.left = `calc(${x}px - 50px)`;
         step2img.style.visibility = "visible";
       }
     }, 500);
@@ -141,8 +141,8 @@ const adjustGuide = () => {
       const { x, y } = document.querySelector(".header-menu-item>a.promo")?.getBoundingClientRect() || {};
       const step3img = document.querySelector(".step3-img");
       if (step3img && x !== undefined && y !== undefined) {
-        step3img.style.top = `calc(${y}px - 10px)`;
-        step3img.style.left = `calc(${x}px - 265px)`;
+        step3img.style.top = `calc(${y}px - 8px)`;
+        step3img.style.left = `calc(${x}px - 240px)`;
         step3img.style.visibility = "visible";
       }
     }, 500);
@@ -168,8 +168,8 @@ const adjustGuide = () => {
       const { x, y } = document.querySelector(".header-menu-acc-dropdown>span")?.getBoundingClientRect() || {};
       const step5img = document.querySelector(".step5-img");
       if (step5img && x !== undefined && y !== undefined) {
-        step5img.style.top = `calc(${y}px - 8px)`;
-        step5img.style.left = `calc(${x}px - 220px)`;
+        step5img.style.top = `calc(${y}px + 32px)`;
+        step5img.style.left = `calc(${x}px - 270px)`;
         step5img.style.visibility = "visible";
       }
     }, 500);
@@ -365,7 +365,7 @@ onMounted(() => {
 }
 
 .step5-container {
-  left: 10%;
+  left: 5%;
   top: -5%;
 
   .content {
