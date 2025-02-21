@@ -126,7 +126,7 @@
 </template>
 <script setup>
 import moment from "moment-timezone";
-import { computed, onMounted, onUnmounted, ref, toRefs, provide, inject } from "vue";
+import { computed, onMounted, onUnmounted, ref, toRefs, provide, inject, watch } from "vue";
 import CommonButton from "./CommonButton.vue";
 import WheelResultDialog from "./WheelResultDialog.vue";
 import RecordDialog from "./RecordDialog.vue";
@@ -303,7 +303,7 @@ const updateCountdownTime = () => {
 
   const nextFreeSpinEndTime = moment().add(1, "days").startOf("day");
   if (timer.value) {
-    clearTimeout(timer.value);
+    clearInterval(timer.value);
   }
   timer.value = setInterval(() => {
     remainingTime.value = getRemainingTime(endTime);
@@ -325,6 +325,10 @@ const getRecords = () => {
     }
   });
 };
+
+watch(info, () => {
+  updateCountdownTime();
+});
 
 onMounted(() => {
   for (let i = 0; i < TOTAL_ITEMS; i++) {

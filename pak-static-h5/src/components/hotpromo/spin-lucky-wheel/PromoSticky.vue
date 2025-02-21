@@ -78,7 +78,7 @@ const updateCountdownTime = () => {
 
   const nextFreeSpinEndTime = moment().add(1, "days").startOf("day");
   if (timer.value) {
-    clearTimeout(timer.value);
+    clearInterval(timer.value);
   }
   timer.value = setInterval(() => {
     remainingTime.value = getRemainingTime(endTime);
