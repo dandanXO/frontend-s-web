@@ -926,9 +926,20 @@ function showImageDialog(type) {
   uiControl.imageDialogVisible = true
 }
 
+function generateRandomString(charSize) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < charSize; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters[randomIndex];
+  }
+  return result;
+}
+
 async function attachImage(event) {
   const data = await attachPhoto(event)
   if (data.code === 0) {
+    imageForm.name = generateRandomString(10)
     imageForm.path = data.data
     inputImage.value.value = ''
   } else {

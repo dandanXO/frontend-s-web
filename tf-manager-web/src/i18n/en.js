@@ -2215,6 +2215,7 @@ export default {
     referRelationQuery: 'Refer Relation Query',
     referCount: 'Refer Count',
     referBonus: 'Refer Bonus',
+    referFtdCount: 'Refer First Deposit Count',
     successCount: 'Success Count',
     betBonus: 'Bet Bonus',
     batchFrozenMember: 'Batch Frozen Member',
@@ -2506,6 +2507,7 @@ export default {
     calculatedPts: 'Calculated Points',
     spinRecord: 'Spin Record',
     pointsDistribution: 'Points Distribution',
+    traceId: 'Trace ID'
   },
   message: {
     adsStatusOpen: 'Open',
@@ -3249,6 +3251,7 @@ export default {
     Withdraw: 'Withdraw',
     'Add Payment': 'Add Payment',
     'Edit Payment': 'Edit Payment',
+    'Copy Payment': 'Copy Payment',
     CurrencyRate: 'Currency Rate',
     'Payment Display': 'Payment Display',
     'Withdraw Platform': 'Withdraw Platform',
