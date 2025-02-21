@@ -1,4 +1,5 @@
 <template>
+  <NewMemberGuide :openAppMenu="() => (selectedMenu = 'App')" :closeAppMenu="() => (selectedMenu = '')" />
   <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
     <!-- <div class="top-bar-wrapper">
       <div class="top-bar-inner">
@@ -101,7 +102,7 @@
             </a> -->
 
             <router-link :class="nav.icon" @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
-              <span v-if="nav.icon"><img :src="require(`@/assets/images/index/menu/menuicon_${nav.icon}.png`)"></span>
+              <span v-if="nav.icon"><img :src="require(`@/assets/images/index/menu/menuicon_${nav.icon}.png`)" /></span>
               <span>{{ nav.name }}</span>
               <span v-if="!nav.icon" class="nav-enName">{{ nav.enName }}</span>
             </router-link>
@@ -125,7 +126,7 @@
           <a class="common-link" @click="openForgotDialog">忘记账号/密码？</a>
         </div>
         <div class="details" v-if="store.token">
-          <el-dropdown @command="handleCommand" trigger="click">
+          <el-dropdown class="header-menu-acc-dropdown" @command="handleCommand" trigger="click">
             <span class="el-dropdown-link">
               <el-tag size="medium" type="warning" effect="dark" style="margin-right: 10px; font-weight: bold">
                 {{ store.vip }}
@@ -534,7 +535,13 @@
       </el-form>
     </el-dialog>
 
-    <el-dialog v-model="forgetPassDialogVisible" title="忘记账号/密码" width="50%" align-center style="max-width: 800px">
+    <el-dialog
+      v-model="forgetPassDialogVisible"
+      title="忘记账号/密码"
+      width="50%"
+      align-center
+      style="max-width: 800px"
+    >
       <span>
         <el-tabs type="card" v-model="activeTab" @tabChange="changeTab">
           <el-tab-pane label="手机找回密码" name="phone">
@@ -850,6 +857,7 @@ import { getPlatformList } from "@/api/platform/platform";
 import GameModal from "@/components/modal/GameModal";
 import {getSiteParamFromServer} from "@/api/index/site";
 import { ElMessageBox } from "element-plus";
+import NewMemberGuide from "../home/NewMemberGuide.vue";
 
 import {
   sendForgetPasswordPhone,
@@ -879,7 +887,8 @@ export default defineComponent({
     Refresh,
     RiAccountCircleLine,
     RiMoneyCnyCircleLine, RiBankCardLine, RiCouponLine, RiLogoutBoxLine,
-    GameModal
+    GameModal,
+    NewMemberGuide
   },
   data: () => ({
     // carousel settings
@@ -1092,7 +1101,7 @@ export default defineComponent({
       } else {
         return Promise.resolve();
       }
-    }; 
+    };
 
     const checkName = (v) => {
       const alphanumeric = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$/;
@@ -1616,6 +1625,7 @@ export default defineComponent({
 
                     sessionStorage.removeItem("REFERRAL_CODE");
                     getCode();
+                    store.regSuccessGuideVisible = true;
                   } else {
                     getCode();
                     // message.error(response.message);
@@ -2514,20 +2524,18 @@ body {
     background: #3a4550;
     color: #e1e9ee;
   }
-  
-  header {
 
+  header {
     .top-nav-wrapper {
-     .el-input__wrapper {
-      
-      width: 100px;
-      height: 28px;
-      gap: 0px;
-      border-radius: 93px 0px 0px 0px;
-      background: #FFFFFF33;
-      border: 0;
+      .el-input__wrapper {
+        width: 100px;
+        height: 28px;
+        gap: 0px;
+        border-radius: 93px 0px 0px 0px;
+        background: #ffffff33;
+        border: 0;
+      }
     }
-  }
   }
 }
 </style>
@@ -2575,7 +2583,7 @@ body {
       svg {
         width: 1.3em;
         height: 1.3em;
-        color: #32CEED;
+        color: #32ceed;
       }
     }
   }
@@ -2583,7 +2591,7 @@ body {
   .top-deposit {
     a {
       text-decoration: none;
-      background: linear-gradient(180deg, #32CEED 0%, #1C7587 100%);
+      background: linear-gradient(180deg, #32ceed 0%, #1c7587 100%);
       border-radius: 100px;
     }
   }
@@ -2652,7 +2660,6 @@ body {
           display: flex;
           justify-content: flex-end;
           align-items: center;
-
         }
       }
     }
@@ -2711,10 +2718,13 @@ body {
             white-space: nowrap;
 
             span:first-child {
-              color: #B8B8B8;
+              color: #b8b8b8;
               // font-size: 1rem;
             }
-            &.agent, &.promo, &.app, &.vip {
+            &.agent,
+            &.promo,
+            &.app,
+            &.vip {
               margin-top: -5px;
               align-items: center;
               font-size: 12.6px;
@@ -2726,14 +2736,14 @@ body {
               margin-left: 50px;
             }
 
-            img { 
+            img {
               height: 25px;
               filter: grayscale(1);
               display: block;
             }
 
             span:last-child {
-              color: #B8B8B8;
+              color: #b8b8b8;
               text-transform: uppercase;
               // font-size: 0.75rem;
             }
@@ -2747,10 +2757,9 @@ body {
 
             &:hover,
             &.router-link-active {
-
-              img { 
-              filter: unset;
-            }
+              img {
+                filter: unset;
+              }
               font-weight: 600;
               span:first-child {
                 color: $link-active;
@@ -2765,8 +2774,8 @@ body {
               }
             }
 
-            .nav-enName{
-              font-size:70%;
+            .nav-enName {
+              font-size: 70%;
             }
           }
 
