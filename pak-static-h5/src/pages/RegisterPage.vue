@@ -550,12 +550,7 @@ export default defineComponent({
                     ttq.track("CompleteRegistration", { content_type: "product" }, { event_id: Date.now() });
                   }
 
-                  document.addEventListener("ftdSuccess", trackNewUserFtd);
-                  if (isInPwa()) {
-                    localStorage.setItem("newUserFtd", regForm.loginName);
-                  } else {
-                    sessionStorage.setItem("newUserFtd", regForm.loginName);
-                  }
+                  localStorage.setItem("newUserFtd", regForm.loginName);
                   localStorage.setItem("REG_REFERRAL_CODE", regForm.referrer);
                 }
 
