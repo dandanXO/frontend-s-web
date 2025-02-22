@@ -110,10 +110,13 @@ const handleEnvelopeClick = (index) => {
       delay(1000)
     ]);
 
-    endTime.value = moment.min(
-      moment.tz(initRes.data.wheelEndTime, "Asia/Karachi"),
-      moment.tz(initRes.data.wheelResetTime, "Asia/Karachi")
-    );
+    const wheelEndTime = moment.tz(initRes.data.wheelEndTime, "Asia/Karachi");
+    const wheelResetTime = moment.tz(initRes.data.wheelResetTime, "Asia/Karachi");
+    const now = moment();
+
+    endTime.value = now.isAfter(moment.min(wheelEndTime, wheelResetTime))
+      ? moment.max(wheelEndTime, wheelResetTime)
+      : moment.min(wheelEndTime, wheelResetTime);
 
     wheelNo.value = initRes.data.wheelNo;
     envelopeStatus.value = "selected";
