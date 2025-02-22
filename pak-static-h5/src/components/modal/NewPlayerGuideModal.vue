@@ -27,19 +27,19 @@
                 <span class="pen"><img src="../../assets/images/newplayerguide/edit.png" /></span>
               </div>
 
-                <div v-if="index + 1 === 6" class="congrats-step">
-                  <div class="txt">{{ step.instruction }}</div>
-                  <div class="amt">RS {{ step.earnableAmt }}</div>
+              <div v-if="index + 1 === 6" class="congrats-step">
+                <div class="txt">{{ step.instruction }}</div>
+                <div class="amt">RS {{ step.earnableAmt }}</div>
+              </div>
+              <div v-else class="other-steps">
+                <div class="midimg">
+                  <img :src="require(`../../assets/images/newplayerguide/step-mid-${index + 1}.png`)" />
                 </div>
-                <div v-else class="other-steps">
-                  <div class="midimg">
-                    <img :src="require(`../../assets/images/newplayerguide/step-mid-${index + 1}.png`)">
-                  </div>
-                  <div class="mid-content">
-                    <div class="ins">{{ step.instruction }}</div>
-                    <div class="amt">{{ step.earnableAmt }}RS</div>
-                  </div>
+                <div class="mid-content">
+                  <div class="ins">{{ step.instruction }}</div>
+                  <div class="amt">{{ step.earnableAmt }}RS</div>
                 </div>
+              </div>
               <div v-if="index + 1 === 1">
                 <div class="welcome">
                   {{ t("playerGuide.welcomeMessage") }}
@@ -94,38 +94,37 @@
 
               <div v-if="index + 1 === 4">
                 <div class="share-steps">
-                    <div class="share-step">
-                      <img src="../../assets/images/newplayerguide/step-01.png" />
-                      <div>
-                        {{ t("playerGuide.maxReward") }}
-                        <span class="yellow">1000</span>
-                        {{ t("playerGuide.rs") }}
-                      </div>
-                    </div>
-
-                    <div class="share-step">
-                      <img src="../../assets/images/newplayerguide/step-02.png" />
-                      <div>
-                        <span class="yellow">5%</span>
-                        {{ t("playerGuide.extraBonus") }}
-                      </div>
-                    </div>
-
-                    <div class="share-step">
-                      <img src="../../assets/images/newplayerguide/step-03.png" />
-                      <div>
-                        {{ t("playerGuide.lifetimeCommission") }}
-                        <span class="yellow">0.6%</span>
-                        {{ t("playerGuide.commissionDetails") }}
-                      </div>
+                  <div class="share-step">
+                    <img src="../../assets/images/newplayerguide/step-01.png" />
+                    <div>
+                      {{ t("playerGuide.maxReward") }}
+                      <span class="yellow">1000</span>
+                      {{ t("playerGuide.rs") }}
                     </div>
                   </div>
 
-                  <div class="invite-share-link">
-                    <div class="link-href">{{ selfTgurl }}</div>
-                    <div class="link-copy" @click="copyHrefLink">{{ $t("earnMoney.reward.copyLink") }}</div>
+                  <div class="share-step">
+                    <img src="../../assets/images/newplayerguide/step-02.png" />
+                    <div>
+                      <span class="yellow">5%</span>
+                      {{ t("playerGuide.extraBonus") }}
+                    </div>
                   </div>
 
+                  <div class="share-step">
+                    <img src="../../assets/images/newplayerguide/step-03.png" />
+                    <div>
+                      {{ t("playerGuide.lifetimeCommission") }}
+                      <span class="yellow">0.6%</span>
+                      {{ t("playerGuide.commissionDetails") }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="invite-share-link">
+                  <div class="link-href">{{ selfTgurl }}</div>
+                  <div class="link-copy" @click="copyHrefLink">{{ $t("earnMoney.reward.copyLink") }}</div>
+                </div>
               </div>
 
               <div v-if="index + 1 === 5">
@@ -503,22 +502,21 @@ const handleShareToEmail = (url) => {
 };
 
 const modalSocialShare = ref(false);
-  
-const completedDepoGuide = localStorage.getItem("completeddepositguide");
-  const completedReferGuide = localStorage.getItem("completeddreferguide");
 
-  watch(
-    () => modelValue.value,
-    (newValue) => {
-      
-      if (completedDepoGuide === "true") {
-          if (completedReferGuide !== "true") {
-            emit("update:showSteps", 4);
-          }
-        }
-    },
-    { immediate: true } 
-  );
+const completedDepoGuide = localStorage.getItem("completeddepositguide");
+const completedReferGuide = localStorage.getItem("completeddreferguide");
+
+watch(
+  () => modelValue.value,
+  (newValue) => {
+    if (completedDepoGuide === "true") {
+      if (completedReferGuide !== "true") {
+        emit("update:showSteps", 4);
+      }
+    }
+  },
+  { immediate: true }
+);
 onMounted(() => {
   let tgDomain = window.location.origin + "/";
   if (store.isApp()) {
@@ -802,8 +800,8 @@ defineExpose({ showVideo });
           border-radius: 10px;
           top: 30vh;
           left: 8vh;
-          border: 2px dotted #08F437;
-          box-shadow: 0px 0px 20px 0px #00E60091;
+          border: 2px dotted #08f437;
+          box-shadow: 0px 0px 20px 0px #00e60091;
           pointer-events: none;
         }
         .hottitle {
