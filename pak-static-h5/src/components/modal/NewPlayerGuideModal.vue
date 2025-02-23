@@ -21,7 +21,7 @@
             <div class="title">{{ step.title }}</div>
           </div>
           <div class="main-box">
-            <div v-if="!isVideo">
+            <div class="inner" v-if="!isVideo">
               <div v-if="index + 1 === 1" class="language" @click="gotoLang()">
                 {{ $t("sideNav.language") }}
                 <span class="pen"><img src="../../assets/images/newplayerguide/edit.png" /></span>
@@ -610,7 +610,7 @@ defineExpose({ showVideo });
       margin-top: -30px;
     }
     &.step-1 .other-steps {
-      margin-top: -30px;
+      margin-top: -15px;
     }
     .top {
       width: 100%;
@@ -642,6 +642,9 @@ defineExpose({ showVideo });
       }
     }
     .main-box {
+      .inner {
+        width: 100%;
+      }
       background: linear-gradient(325.86deg, rgba(14, 30, 8, 0.85) 5.38%, rgba(27, 96, 38, 0.85) 98.11%);
       box-shadow: 0px 0px 37.43px 0px #b479ff40 inset;
       backdrop-filter: blur(10px);
@@ -701,6 +704,7 @@ defineExpose({ showVideo });
           width: 35vh;
           margin: 0 auto;
           max-width: 100%;
+          margin-bottom: -20px;
           img {
             width: 90%;
             margin: 0 auto;
@@ -714,7 +718,7 @@ defineExpose({ showVideo });
             rgba(69, 181, 121, 0.5) 46.5%,
             rgba(69, 181, 121, 0) 100%
           );
-          display: flex;
+          display: none;
           justify-content: center;
           align-items: center;
           padding: 5px;
@@ -786,20 +790,24 @@ defineExpose({ showVideo });
         position: relative;
         .abs-line {
           position: absolute;
-          width: 33vh;
+          // width: 33vh;
+          // z-index: 9999;
+          // top: 0px;
+          // left: -10vh;
+          width: 74%;
           z-index: 9999;
           top: 0px;
-          left: -10vh;
+          left: -20%;
           pointer-events: none;
         }
         .abs-box {
           position: absolute;
-          width: 21vh;
           height: 7.5vh;
           z-index: 9999;
           border-radius: 10px;
-          top: 30vh;
-          left: 8vh;
+          width: 100%;
+          left: 0;
+          top: 145%;
           border: 2px dotted #08f437;
           box-shadow: 0px 0px 20px 0px #00e60091;
           pointer-events: none;

@@ -215,7 +215,8 @@ const updateCurrentAdditionalStep = () => {
     &.step-1 {
       width: 80px;
       height: 80px;
-      right: 11vh;
+      // right: 11vh;
+      right: 20%;
       bottom: 0;
     }
     &.step-2 {
@@ -349,7 +350,8 @@ const updateCurrentAdditionalStep = () => {
     &.step-1 {
       width: 80px;
       height: 80px;
-      right: 11vh;
+      // right: 11vh;
+      right: 20%;
       bottom: 0;
     }
     &.step-2 {
@@ -418,57 +420,113 @@ const updateCurrentAdditionalStep = () => {
       z-index: 9999;
       &.deposit {
         &.step-1 {
+          @media screen  and (min-width: 360px) and (max-width: 375px) {
           width: 20vh;
           top: 56vh;
           left: 18vh;
+          }
+          width: 49%;
+          top: 95%;
+          left: 30%;
         }
         &.step-2 {
-          width: 44vh;
-          left: -5vh;
-          top: 0vh;
+          @media screen  and (min-width: 360px) and (max-width: 375px) {
+            width: 44vh;
+            left: -5vh;
+            top: 0vh;
+          }
+          width: 93%;
+          left: -18%;
+          top: -25%;
         }
         &.step-3 {
-          width: 14vh;
-          left: 6vh;
-          top: 2vh;
+          @media screen  and (min-width: 360px) and (max-width: 375px) {
+            // width: 14vh;
+            // left: 6vh;
+            // top: 2vh;
+            width: 24vw;
+            left: 10vw;
+            top: 2vw;
+          }
+          width: 30%;
+          left: 5%;
+          top: -20%;
         }
         &.step-4 {
-          width: 20vh;
-          left: 20vh;
-          top: 50vh;
+          @media screen  and (min-width: 360px) and (max-width: 375px) {
+            width: 20vh;
+            left: 20vh;
+            top: 50vh;
+          }
+          width: 55%;
+          left: 25%;
+          top: 85%;
         }
       }
       &.refer {
         &.step-2 {
-          width: 10vh;
-          left: 20vh;
-          top: 58vh;
+          @media screen  and (min-width: 360px) and (max-width: 375px) {
+            width: 10vh;
+            left: 20vh;
+            top: 58vh;
+            transform: unset;
+          }
+          width: 28%;
+          left: 35%;
+          // top: 95%;
+    top: 99%;
+    transform: rotate(25deg);
         }
         &.step-3 {
+          
+          @media screen  and (min-width: 360px) and (max-width: 375px) {
           width: 43vh;
           top: -8vh;
+          }
+          width: 100%;
+          top:-50%;
         }
       }
       &.withdraw {
         &.step-1 {
-          width: 20vh;
-          top: 56vh;
-          left: 18vh;
-        }
+          @media screen  and (min-width: 360px) and (max-width: 375px) {
+            width: 20vh;
+            top: 56vh;
+            left: 18vh;
+            }
+            width: 49%;
+            top: 95%;
+            left: 30%;
+          }
         &.step-2 {
+          @media screen  and (min-width: 360px) and (max-width: 375px) {
           width: 50vh;
           left: 5vh;
           top: -16vh;
+          }
+          width: 100%;
+          left: 0%;
+          top: -50%;
         }
         &.step-3 {
+          @media screen  and (min-width: 360px) and (max-width: 375px) {
           width: 18vh;
           left: 3vh;
           top: -13vh;
+          }
+          width: 35%;
+          left: 0%;
+          top: -40%;
         }
         &.step-4 {
-          width: 20vh;
-          left: 20vh;
-          top: 50vh;
+          @media screen  and (min-width: 360px) and (max-width: 375px) {
+            width: 20vh;
+            left: 20vh;
+            top: 50vh;
+          }
+          width: 55%;
+          left: 25%;
+          top: 85%;
         }
       }
     }

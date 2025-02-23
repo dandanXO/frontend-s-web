@@ -1632,7 +1632,6 @@ const updateCurrentStep = (newStep) => {
   localStorage.setItem("newPlayerGuide", newStep);
 };
 const closePlayerGuide = () => {
-  // debugger;
   isAdditionalReferSteps.value = false;
   isAdditionalDepositSteps.value = false;
   isAdditionalWithdrawSteps.value = false;
@@ -4051,7 +4050,6 @@ const showSpinWheel = () => {
     .get("/new-user-roulette/init")
     .then((res) => {
       if (res.code == 0) {
-        debugger;
         if (res.data.hasUnusedCoupon === "YES") {
           isShowPrizeModal.value = true;
         } else if (res.data.showRoulette === "YES") {
@@ -4080,17 +4078,18 @@ const showCongratsModal = () => {
 <style scoped lang="scss">
 .highlight-overlay {
   position: fixed;
-  top: 0;
+  // top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   z-index: 9999;
   flex-direction: column;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // gap: 10px;
+  top: 13%;
   .next-btm-btn {
     cursor: pointer;
     background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
@@ -4142,6 +4141,7 @@ const showCongratsModal = () => {
   border-radius: 10px;
   box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.8); /* Creates the cutout effect */
   position: relative;
+  margin-bottom: 10px;
   &:after {
     position: absolute;
     content: "";
@@ -5798,23 +5798,23 @@ const showCongratsModal = () => {
 /* Keyframe animation to simulate finger moving towards the button */
 @keyframes moveFinger {
   0% {
-    bottom: 30vh; /* Start position */
+    bottom: 60%; /* Start position */
     right: -7vh; /* Start on the right */
   }
   25% {
-    bottom: 30.5vh; /* Move up slightly */
+    bottom: 55%; /* Move up slightly */
     right: -6vh; /* Move left slightly (towards the center) */
   }
   50% {
-    bottom: 29vh; /* Move up further */
+    bottom: 50%; /* Move up further */
     right: -5vh; /* Move further left */
   }
   75% {
-    bottom: 30.5vh; /* Move back down slightly */
+    bottom: 55%; /* Move back down slightly */
     right: -6vh; /* Move back to the center */
   }
   100% {
-    bottom: 30vh; /* End position */
+    bottom: 60%; /* End position */
     right: -7vh; /* Back to the original position on the right */
   }
 }
