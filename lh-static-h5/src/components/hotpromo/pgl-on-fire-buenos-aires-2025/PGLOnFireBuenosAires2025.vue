@@ -36,9 +36,7 @@
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
-          <div class="right">
-            活动期间在PGL 克卢日纳波卡 2025总有效投注≥5,000元即可获得最高1,888元的投注金。
-          </div>
+          <div class="right">活动期间在PGL 克卢日纳波卡 2025总有效投注≥5,000元即可获得最高1,888元的投注金。</div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
           <thead>
@@ -99,7 +97,7 @@
               />
               <span>示例</span>
             </div>
-            会员在PGL 克卢日纳波卡 2025赛事期间总有效投注 50,000 元，在2月24日24小时内可获得彩金：188元
+            会员在PGL 克卢日纳波卡 2025赛事期间总有效投注 50,000元，在2月24日24小时内可获得彩金：188元
           </div>
         </div>
       </div>
@@ -111,14 +109,15 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              活动期间，活动仅计算电竞场馆中PGL 克卢日纳波卡 2025赛事，会员在PGL 克卢日纳波卡 2025赛事期间内累计有效投注≥5,000 元即可获得对应彩金，有效投注过期清零；
+              活动期间，活动仅计算电竞场馆中PGL 克卢日纳波卡 2025赛事，会员在PGL 克卢日纳波卡
+              2025赛事期间内累计有效投注≥5,000元即可获得对应彩金，有效投注过期清零；
               <div class="hint">注：奖金不叠加派发，奖金按最高档位派发一次。</div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，活动仅计算PGL 克卢日纳波卡 2025已结算的赛事总有效投注，2月24日 24
-            小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 8 倍流水即可出款；
+            活动期间，活动仅计算PGL 克卢日纳波卡 2025已结算的赛事总有效投注，2月24日24
+            小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 8倍流水即可出款；
           </div>
           <div class="item">
             <div class="item-num">3</div>

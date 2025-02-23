@@ -2,7 +2,7 @@
   <el-card class="box-card" shadow="never">
     <template #header>
       <div class="card-header">
-        <span>{{ t('fields.systemPayment') }}</span>
+        <span>{{ route.name==="Add Payment" ? $t('menu.Add Payment') : route.name==="Edit Payment" ? $t('menu.Edit Payment') : $t('menu.Copy Payment') }}</span>
       </div>
     </template>
     <el-form
@@ -247,7 +247,8 @@
         </el-form-item>
       </el-row>
       <div class="form-footer">
-        <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
+        <span v-if="route.name.includes('Copy')"><el-button type="primary" @click="create()">{{ t('fields.saveAsNewPayment') }}</el-button></span>
+        <span v-if="!route.name.includes('Copy')"><el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button></span>
         <el-button style="margin-left: 8em" @click="back">{{ t('fields.cancel') }}</el-button>
       </div>
     </el-form>
@@ -475,6 +476,9 @@ onMounted(async() => {
   if (route.name.includes("Edit")) {
     uiControl.titleDisable = true;
     await loadSystemPaymentById(route.params.id);
+  } else if(route.name.includes("Copy")){
+    await loadSystemPaymentById(route.params.id);
+    form.paymentName = form.paymentName + "-1";
   }
 });
 </script>

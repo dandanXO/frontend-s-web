@@ -895,6 +895,7 @@ export default {
     copyPayment: '正在复制',
     copyTo: '复制到',
     copyToOtherLevel: '复制到其他会员组别',
+    copyWithdrawPlatform: '复制提款平台',
     country: '国家',
     countryImage: '国家图像',
     createBy: '创建人',
@@ -1081,6 +1082,7 @@ export default {
     editVip: '编辑 VIP',
     editVipRebateRule: '编辑 VIP 返水条例',
     editWithdrawPlatform: '编辑提款平台',
+
     editWithdrawSetting: '编辑提款设置',
     email: '邮箱',
     endBbDacha: '结束 BB 别墅杯赛事',
@@ -1308,6 +1310,7 @@ export default {
     message: '信息',
     min: '最低盈亏金额',
     minAmount: '最低金额',
+    minPoints: '最低分数',
     max: '最高盈亏金额',
     maxAmount: '最高金额',
     maxTicket: '最高可获得票',
@@ -2215,6 +2218,7 @@ export default {
     referRelationQuery: '邀请关系查询',
     referCount: '邀请人数',
     referBonus: '邀请奖金',
+    referFtdCount: '邀请首存人数',
     successCount: '合格人数',
     betBonus: '投注返佣',
     batchFrozenMember: '批量冻结会员',
@@ -2505,6 +2509,8 @@ export default {
     calculatedAmount: '计算金额',
     calculatedPts: '计算积分',
     spinRecord: '转盘记录',
+    pointsDistribution: '积分分布',
+    traceId: 'Trace ID'
   },
   message: {
     adsStatusOpen: '开',
@@ -3196,6 +3202,7 @@ export default {
     Withdraw: '提款',
     'Add Payment': '新增支付',
     'Edit Payment': '编辑支付',
+    'Copy Payment': '复制系统支付',
     CurrencyRate: '汇率',
     'Payment Display': '支付显示',
     'Withdraw Platform': '提款平台',
@@ -3289,7 +3296,9 @@ export default {
     'Sport App Setting': '体育 App 设置',
     'Game Jackpot Bonus Record': '奖金池奖励记录',
     'Refer Spin': '邀请转盘',
-    'Member Privilege Record Pak Export': '会员优惠记录导出 - 巴基斯坦'
+    'Member Privilege Record Pak Export': '会员优惠记录导出 - 巴基斯坦',
+    'Refer Spin Claim Record': '邀请转盘领取记录',
+    'Refer Spin Record': '邀请转盘记录',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -3661,6 +3670,7 @@ export default {
     15063: '提款记录不存在',
     15064: '提款平台不存在',
     15065: '提款卡不存在',
+    15066: '提款平台名称已存在',
     16000: '优惠不存在',
     16001: '开彩号码必须为三位数',
     16002: '该日期已有开彩结果',

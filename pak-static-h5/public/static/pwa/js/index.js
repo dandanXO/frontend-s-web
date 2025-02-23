@@ -49,11 +49,11 @@ installBtn.addEventListener("click", async () => {
       const urlParams = new URLSearchParams(window.location.search);
       const fbclid = urlParams.get("fbclid");
       const referral = urlParams.get("refer");
+      if (referral) {
+        localStorage.setItem("PWA_REFERRAL_CODE", referral);
+      }
       if (fbclid) {
         localStorage.setItem("fbclid", fbclid);
-        if (referral) {
-          localStorage.setItem("REFERRAL_CODE", fbclid);
-        }
 
         // Retrieve _fbp directly
         const getCookie = (name) => {

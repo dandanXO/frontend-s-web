@@ -1,4 +1,5 @@
 <template>
+
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
@@ -855,7 +856,7 @@ const imageForm = reactive({
   path: null,
   displayPath: null,
   category: null,
-  siteId: null,
+  siteId: store.state.user.siteId,
   remark: null,
   platform: null
 })
@@ -1383,10 +1384,21 @@ function showImageDialog() {
   uiControl.imageDialogVisible = true
 }
 
+function generateRandomString(charSize) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < charSize; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters[randomIndex];
+  }
+  return result;
+}
 async function attachImage(event) {
   const data = await attachPhoto(event)
   if (data.code === 0) {
     imageForm.path = data.data
+    form.icon = data.data
+    imageForm.name = generateRandomString(10)
     inputImage.value.value = ''
   } else {
     ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
@@ -1427,6 +1439,9 @@ function submitImageUpload() {
       await createSiteImage(imageForm)
       uiControl.imageDialogVisible = false
       ElMessage({ message: t('message.addSuccess'), type: 'success' })
+      if (imageForm.siteId && imageForm.platform && imageForm.path) {
+        form.icon = `${imageForm.siteId}/${imageForm.platform}/${imageForm.path}`
+      }
     }
   })
 }
@@ -1450,8 +1465,8 @@ onMounted(async () => {
     site.value = sites.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
   } else {
-    request.siteId = sites.list[0].id;
-    imageRequest.siteId = sites.list[0].id;
+    request.siteId = store.state.user.siteId
+    imageRequest.siteId = store.state.user.siteId
   }
   form.siteId = request.siteId
   await loadSearchPlatforms()

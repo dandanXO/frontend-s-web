@@ -2,20 +2,28 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-select
-          v-model="request.siteId"
+        <el-input
+          type="text"
+          v-model="request.loginName"
           size="small"
-          :placeholder="t('fields.site')"
-          class="filter-item"
-          style="width: 120px; margin-left: 5px"
-        >
-          <el-option
-            v-for="item in siteList.list"
-            :key="item.id"
-            :label="item.siteName"
-            :value="item.id"
-          />
-        </el-select>
+          style="width: 180px; margin-left: 5px;"
+          :placeholder="t('fields.loginName')"
+        />
+        <el-date-picker
+          v-model="request.startTime"
+          format="DD/MM/YYYY HH:mm:ss"
+          value-format="YYYY-MM-DD HH:mm:ss"
+          size="small"
+          type="datetimerange"
+          range-separator=":"
+          :start-placeholder="t('fields.startDate')"
+          :end-placeholder="t('fields.endDate')"
+          style="width: 380px; margin-left: 10px;"
+          :shortcuts="shortcuts"
+          :default-time="defaultTime"
+          :editable="false"
+          :clearable="true"
+        />
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -28,6 +36,12 @@
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
       </div>
     </div>
+
+    <el-card style="height: 500px; margin-top: 10px" v-loading="uiControl.chartLoading">
+      <div class="chart-container" style="height: 100%; width: 100%;">
+        <Chart :options="countPiechatOptions" />
+      </div>
+    </el-card>
 
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <template #header>
@@ -50,25 +64,11 @@
           :label="t('fields.loginName')"
           align="center"
           min-width="180"
-        />
-        <el-table-column
-          prop="currAmount"
-          :label="t('fields.currAmount')"
-          align="center"
-          min-width="100"
         >
-          <template #default="scope">
-            $ <span v-formatter="{data: scope.row.currAmount, type: 'money'}" />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="currAmount"
-          :label="t('fields.calculatedAmount')"
-          align="center"
-          min-width="100"
-        >
-          <template #default="scope">
-            $ <span v-formatter="{data: scope.row.calculatedAmount, type: 'money'}" />
+          <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
+            <router-link :to="`/member/details/${scope.row.memberId}?site=${request.siteId}`">
+              <el-link type="primary">{{ scope.row.loginName }}</el-link>
+            </router-link>
           </template>
         </el-table-column>
         <el-table-column
@@ -89,7 +89,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="updateTime"
+          prop="startTime"
           :label="t('fields.startTime')"
           align="center"
           min-width="180"
@@ -100,14 +100,14 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="updateTime"
-          :label="t('fields.updateTime')"
+          prop="claimTime"
+          :label="t('fields.claimTime')"
           align="center"
           min-width="180"
         >
           <template #default="scope">
-            <span v-if="scope.row.updateTime === null">-</span>
-            <span v-else v-formatter="{data: scope.row.updateTime, timeZone: timeZone, type: 'date'}">{{ scope.row.updateTime }}</span>
+            <span v-if="scope.row.claimTime === null">-</span>
+            <span v-else v-formatter="{data: scope.row.claimTime, timeZone: timeZone, type: 'date'}">{{ scope.row.claimTime }}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -342,23 +342,28 @@
 
 <script setup>
 import { computed, nextTick, onMounted, reactive, ref } from 'vue'
-import { hasPermission, hasRole } from '../../../utils/util'
+import { hasPermission, hasRole } from '@/utils/util'
 import { useI18n } from 'vue-i18n'
 import {
   cancelRollover,
-} from '../../../api/member-rollover-records'
+} from '@/api/member-rollover-records'
 import {
-  getCalculated
-} from '../../../api/refer-spin'
-import { required } from '../../../utils/validate';
+  getClaimRecords,
+  getClaimDistributionStats
+} from '@/api/refer-spin'
+import { required } from '@/utils/validate';
 import { ElMessage } from 'element-plus';
 import { useRoute } from 'vue-router';
 import { getSiteListSimple } from "@/api/site";
 import { TENANT } from "@/store/modules/user/action-types";
 import { useStore } from "@/store";
+import { getShortcuts } from "@/utils/datetime";
+import Chart from "@/components/charts/Charts.vue";
 
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const { t } = useI18n()
+const shortcuts = getShortcuts(t);
+
 const store = useStore()
 const route = useRoute()
 const site = reactive({
@@ -372,12 +377,55 @@ const addAmountAdjustmentType = ref('NORMAL');
 const siteList = reactive({
   list: []
 });
+let timeZone = null;
+
+const countPiechatOptions = reactive({
+  title: {
+    text: t('fields.pointsDistribution'),
+  },
+  height: '380px',
+  dataset: {
+    source: [['Category', 'Count']],
+  },
+  legend: {
+    type: 'scroll',
+    orient: 'vertical',
+    data: [],
+    pageTextStyle: {
+      fontSize: 22,
+    },
+    right: 10,
+  },
+  series: [
+    {
+      type: 'pie',
+      top: '20px',
+      emphasis: {
+        focus: 'self',
+        label: {
+          show: true,
+          formatter: '{b}: [' + t('fields.points') + ': {@Count}] ({d}%)',
+        }
+      },
+      label: {
+        show: false,
+        formatter: '{b}: [' + t('fields.points') + ': {@Count}] ({d}%)',
+      },
+      encode: {
+        itemName: 'Category',
+        value: 'Count',
+        tooltip: 'Count',
+      },
+    },
+  ],
+})
 
 const uiControl = reactive({
   dialogTitle: t('fields.cancelRolloverRecord'),
   dialogType: 'CANCEL',
   dialogVisible: false,
   addDialogVisible: false,
+  chartLoading: false
 })
 
 const page = reactive({
@@ -403,7 +451,8 @@ const request = reactive({
   id: null,
   current: 1,
   siteId: null,
-  memberId: null,
+  loginName: null,
+  startTime: [],
 })
 
 const form = reactive({
@@ -472,6 +521,23 @@ function getShowRecords() {
   }
 }
 
+function getCountChart(summaryList, chartOptions) {
+  const dataset = [['Category', 'Count']]
+  const legendData = []
+  if (summaryList.length > 0) {
+    summaryList.forEach((item, index) => {
+      const data = []
+      data.push(item.type)
+      data.push(item.value)
+
+      dataset.push(data)
+      legendData.push({ name: item.type })
+    })
+  }
+  chartOptions.dataset.source = dataset
+  chartOptions.legend.data = legendData
+}
+
 const changeBetsPage = (page) => {
   if (betsPage.current >= 1) {
     betsPage.current = page;
@@ -479,9 +545,16 @@ const changeBetsPage = (page) => {
   }
 };
 
+const defaultTime = [
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 1, 1, 23, 59, 59),
+];
+
 function resetQuery() {
   request.id = null;
   request.siteId = siteList.list[0].id;
+  request.loginName = null;
+  request.startTime = [];
 }
 
 function checkQuery() {
@@ -492,6 +565,11 @@ function checkQuery() {
       query[key] = value
     }
   })
+  if (request.startTime !== null) {
+    if (request.startTime.length === 2) {
+      query.startTime = request.startTime.join(",");
+    }
+  }
   return query
 }
 
@@ -505,12 +583,22 @@ function restrictInput(event) {
 async function loadRolloverRecords() {
   page.loading = true
   const query = checkQuery()
-  const { data: ret } = await getCalculated(query)
+  const { data: ret } = await getClaimRecords(query)
   ret.records.forEach(
     (item) => {
       item.content = JSON.parse(item.content)
     }
   )
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
+
+  uiControl.chartLoading = true
+  const { data } = await getClaimDistributionStats(query)
+  getCountChart(
+    data,
+    countPiechatOptions
+  )
+  uiControl.chartLoading = false
+
   page.pages = ret.pages
   page.records = ret.records
   page.loading = false
