@@ -494,6 +494,20 @@
           label-align="left"
           label-class-name="member-label"
           class-name="member-context"
+        >
+          <template #label>
+            <div>
+              <svg-icon icon-class="user" style="height: 16px;width: 16px;" />
+              {{ t('fields.traceId') }}
+            </div>
+          </template>
+          <span v-if="memberDetail.traceId !== null">{{ memberDetail.traceId }}</span>
+          <span v-if="memberDetail.traceId === null">-</span>
+        </el-descriptions-item>
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
           v-if="affiliateDetail.loginName !== null && parseInt(memberDetail.siteId) === 10"
         >
           <template #label>
@@ -583,7 +597,7 @@
             type="info"
             size="mini"
             style="float: right;"
-            v-permission="['sys:affiliate:change-affiliate']"
+            v-permission="['sys:member:change-affiliate']"
             @click="showDialog('CHANGE_AFF')"
           >
             {{ t('fields.changeAffiliate') }}

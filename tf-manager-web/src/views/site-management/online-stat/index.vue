@@ -166,7 +166,7 @@ const onlineStatOptions = reactive({
     display: true,
     text: t('dashboard.onlineStatsChartName'),
   },
-  height: '160px',
+  // height: '160px',
   tooltip: {
     trigger: 'axis',
   },
@@ -197,7 +197,7 @@ const compareOptions = reactive({
     display: true,
     text: t('dashboard.onlineStatsCompareChartName'),
   },
-  height: '160px',
+  // height: '160px',
   tooltip: {
     trigger: 'axis',
   },
@@ -343,6 +343,7 @@ onMounted(async () => {
   request.siteId = siteList.list[0].id
   compareRequest.siteId = siteList.list[0].id
   await loadStats()
+  await loadCompare()
 })
 </script>
 

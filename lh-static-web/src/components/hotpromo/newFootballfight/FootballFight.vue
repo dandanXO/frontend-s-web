@@ -12,7 +12,7 @@
               <div class="claim-coin-icon"></div>
             </div>
             <div class="reward-info-content">
-              今日体育场馆投注：
+              昨日体育场馆投注：
               <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
@@ -109,7 +109,7 @@
 
       <div class="livepoker-rebate-game-bottom-rule section-bg">
         <div class="title-img">活动规则</div>
-        <br/>
+        <br />
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
@@ -187,10 +187,10 @@ const fetchData = async () => {
     return;
   }
   try {
-    const res = await footballHistroy();
+    // const res = await footballHistroy();
     const res2 = await footballEligibility();
-    totalValidBet.value = res.data.lastDayBet;
-    bonus.value = res.data.bonus;
+    totalValidBet.value = res2.data.lastDayBet;
+    bonus.value = res2.data.bonus;
     isGrey.value = res2.data.bonus === 0;
   } catch (error) {
     console.log(error);

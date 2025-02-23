@@ -83,7 +83,7 @@
 </template>
 
 <script lang="js">
-import { ref, defineComponent, onMounted, reactive, provide, computed, defineAsyncComponent } from "vue";
+import { ref, defineComponent, onMounted, reactive, provide, computed, defineAsyncComponent, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { loadPromo } from "@/api/index/promo.js";
 import { useI18n } from "vue-i18n";
@@ -209,7 +209,7 @@ export default defineComponent({
 
 
 
-
+      promoState.promoList = []
       loadPromo(siteType).then((res) => {
         if (res.code === 0) {
           promoState.promoList.push(...res.data);
@@ -255,6 +255,12 @@ export default defineComponent({
     onMounted(() => {
       loadAll();
     });
+
+    watch(() => route.query.name, () => {
+      if(route.query.name) {
+        loadAll();
+      }
+    })
 
     return {
       promoState,

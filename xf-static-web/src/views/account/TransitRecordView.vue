@@ -1032,10 +1032,10 @@ export default defineComponent({
           searchForm[recordActive.value].pagingState = null;
         } else {
           searchForm[recordActive.value].pagingState = pagination.pagingState;
-        } 
+        }
         if (recordActive.value === 'gameBetRecord') {
           let selectedPlatform = searchForm.gameBetRecord.platformName;
-          if (selectedPlatform.includes("@")){
+          if (selectedPlatform && selectedPlatform.includes("@")){
             const platformArr = selectedPlatform.split('@');
             searchForm.gameBetRecord.platform = platformArr[0];
             searchForm.gameBetRecord.gameType = platformArr[1];
