@@ -395,7 +395,7 @@ function resetQuery() {
   request.os = null
   request.appType = null
   request.apkType = null
-  request.siteId = site.value ? site.value.id : siteList.list[0].id
+  request.siteId = store.state.user.siteId
   loadAppVersion()
 }
 
@@ -591,7 +591,11 @@ async function loadAppVersion() {
 
 onMounted(async () => {
   await loadSites()
-  request.siteId = siteList.list[0].id
+  request.siteId = store.state.user.siteId
+  form.siteId = store.state.user.siteId
+  form.os = 'ANDROID'
+  form.appType = 'ALL_SITE'
+  form.apkType = 'NORMAL'
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
       s => s.siteName === store.state.user.siteName

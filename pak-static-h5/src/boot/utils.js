@@ -153,12 +153,10 @@ export const trackNewUserFtd = (e) => {
     ttq.track("PurchaseComplete", { content_type: "product" }, { event_id: Date.now() });
   }
   console.log("PurchaseComplete");
-  if (isInPwa()) {
-    localStorage.removeItem("newUserFtd");
-  } else {
-    sessionStorage.removeItem("newUserFtd");
-  }
-  document.removeEventListener("ftdSuccess", trackNewUserFtd);
+
+  localStorage.removeItem("newUserFtd");
+
+  document.removeEventListener("ftdPurchaseSuccess", trackNewUserFtd);
   localStorage.removeItem("REG_REFERRAL_CODE");
 };
 

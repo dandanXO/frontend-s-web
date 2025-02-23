@@ -1973,6 +1973,7 @@ export default {
     tfCompetitionNameVn: '리그 이름 (베트남어)',
     tfCompetitionNameKr: '리그 이름 (한국어)',
     tfCompetitionNameTh: '리그 이름 (태국어)',
+    traceId: 'Trace ID'
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3 개월 이상일 수 없습니다',
@@ -2646,8 +2647,11 @@ export default {
     'Bank Card': '은행 카드',
     'Payment Type': '지불 유형',
     Payment: '지불',
+    Deposit: '보증금',
+    Withdraw: '돈을 인출하다',
     'Add Payment': '지불 추가',
     'Edit Payment': '지불 수정',
+    'Copy Payment': '지불 복사',
     CurrencyRate: '통화 환율',
     'Payment Display': '지불 디스플레이',
     'Withdraw Platform': '출금 플랫폼',
@@ -2720,6 +2724,7 @@ export default {
     'Sport App Setting': '스포츠 앱 설정',
     Sport: '스포츠',
     'Game Jackpot Bonus Record': '게임 잭팟 보너스 기록',
+    'Member Privilege Record Pak Export': '회원 할인 기록 수출 - 파키스탄'
   },
   google: {
     google_auth_menu: 'Google 인증자',
