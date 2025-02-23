@@ -401,6 +401,7 @@
           <div class="payout-total">
             <div>总投注: {{ totalBetRecord.totalBet }}</div>
             <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
+            <div>总有效投注: {{ totalBetRecord.totalValidBet }}</div>
           </div>
           <div>
             <el-form layout="inline" :model="searchForm.gameBetRecord">
@@ -712,7 +713,8 @@ const recordActive = ref("deposit");
 const reminderForm = reactive({});
 const totalBetRecord = reactive({
   totalBet: 0,
-  totalPayout: 0
+  totalPayout: 0,
+  totalValidBet:0
 });
 const searchForm = reactive({
   turnover: {
@@ -1070,7 +1072,7 @@ export default defineComponent({
         }
         if (recordActive.value === 'gameBetRecord') {
           let selectedPlatform = searchForm.gameBetRecord.platformName;
-          if (selectedPlatform.includes("@")){
+          if (selectedPlatform && selectedPlatform.includes("@")){
             const platformArr = selectedPlatform.split('@');
             searchForm.gameBetRecord.platform = platformArr[0];
             searchForm.gameBetRecord.gameType = platformArr[1];
@@ -1096,6 +1098,7 @@ export default defineComponent({
             if (recordActive.value === "gameBetRecord") {
               totalBetRecord.totalBet = response.data.sums.totalBet;
               totalBetRecord.totalPayout = response.data.sums.totalPayout;
+              totalBetRecord.totalValidBet= response.data.sums.totalValidBet;
             }
 
             const dataSource = dataState[recordActive.value];

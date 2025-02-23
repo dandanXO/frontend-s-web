@@ -34,10 +34,22 @@
       <img alt="TF88 logo" src="../assets/logo-web.svg" />
     </div>
     <div class="header-middle" v-if="!isLogined">
-      <q-btn rounded no-caps color="brightbtn" :class="`sm-screen-txt ${store?.theme === 'CNY' ? 'cny-login-btn' : ''}`" @click="router.push('/login')">
+      <q-btn
+        rounded
+        no-caps
+        color="brightbtn"
+        :class="`sm-screen-txt ${store?.theme === 'CNY' ? 'cny-login-btn' : ''}`"
+        @click="router.push('/login')"
+      >
         {{ $t("lang.login") }}
       </q-btn>
-      <q-btn rounded no-caps color="lightbluebtn" :class="`sm-screen-txt ${store?.theme === 'CNY' ? 'cny-register-btn' : ''}`" @click="goToRegister">
+      <q-btn
+        rounded
+        no-caps
+        color="lightbluebtn"
+        :class="`sm-screen-txt ${store?.theme === 'CNY' ? 'cny-register-btn' : ''}`"
+        @click="goToRegister"
+      >
         {{ $t("lang.register") }}
       </q-btn>
     </div>
@@ -416,7 +428,7 @@
 
   <q-page-sticky v-if="showRocket" position="bottom-right" :offset="fabPos" style="z-index: 999">
     <div class="rebates-absolute" :disable="draggingRocketFab" v-touch-pan.prevent.mouse="moveRocketFab">
-      <q-btn class="close-btn" icon="close" flat round dense @click="hideRocket()"></q-btn>
+      <!-- <q-btn class="close-btn" icon="close" flat round dense @click="hideRocket()"></q-btn> -->
       <q-carousel
         class="float"
         :navigation="gamePromo.length > 1 ? true : false"
@@ -443,7 +455,7 @@
   </q-page-sticky>
   <q-page-sticky v-if="showFloatPromo" position="bottom-right" :offset="promoPos" style="z-index: 999">
     <div class="rebates-absolute" :disable="draggingPromoFab" v-touch-pan.prevent.mouse="movePromoFab">
-      <q-btn class="close-btn" icon="close" flat round dense @click="hideFloatPromo()"></q-btn>
+      <!-- <q-btn class="close-btn" icon="close" flat round dense @click="hideFloatPromo()"></q-btn> -->
       <q-carousel
         class="float"
         :navigation="floatPromo.length > 1 ? true : false"
@@ -453,12 +465,18 @@
         transition-prev="slide-right"
         animated
         infinite
+        :autoplay="3000"
         size="xs"
       >
-        <q-carousel-slide v-for="(promo, i) in floatPromo" :key="i" :name="i" @click="gotoFloatPromo(promo.code)">
+        <q-carousel-slide
+          v-for="(promo, i) in floatPromo"
+          :key="promo.id"
+          :name="i"
+          @click="gotoFloatPromo(promo.code)"
+        >
           <div class="rocket-wrapper">
             <div class="rocket">
-              <img style="width: 110px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" />
+              <img style="width: 110px" :src="`${imgURL}${promo.iconMobile}`" />
               <span v-if="promo.showTime" class="promo-remaining-time">
                 {{ floatPromoRemainingTime[i] }}
               </span>
@@ -1770,7 +1788,7 @@ export default defineComponent({
             updatePromoRemainingTime();
             setInterval(updatePromoRemainingTime, 1000);
             // Update the displayed promo every 5 seconds
-            setInterval(updatePromo, 3000);
+            // setInterval(updatePromo, 3000);
             updateRocket(); // Initially update the displayed promo
             // Update the displayed promo every 5 seconds
             setInterval(updateRocket, 3000);
@@ -1788,7 +1806,7 @@ export default defineComponent({
         let result = "00:00:00";
         if (promo?.endTime) {
           const now = moment(Date.now());
-          const endTime = moment(currentPromo.value.endTime);
+          const endTime = moment(promo?.endTime);
           const totalSeconds = endTime.diff(now, "seconds");
           if (totalSeconds > 0) {
             const hours = Math.floor(totalSeconds / 3600);
@@ -2190,13 +2208,14 @@ export default defineComponent({
 
   .promo-remaining-time {
     position: absolute;
-    bottom: 21px;
+    bottom: 1rem;
     left: 50%;
     transform: translateX(-50%);
     font-weight: bold;
-    // color: #eaff00;
+    font-family: Arial;
+    color: #444;
     // text-shadow: 2px 2px 0px #00000040;
-    font-size: 10px;
+    font-size: 1.03rem;
   }
 }
 
@@ -2344,7 +2363,8 @@ export default defineComponent({
       position: relative;
     }
 
-    .cny-login-btn, .cny-register-btn {
+    .cny-login-btn,
+    .cny-register-btn {
       &::after {
         content: "";
         position: absolute;
@@ -2962,6 +2982,17 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+
+  :deep(.q-carousel) {
+    padding-bottom: 3px;
+  }
+  :deep(.q-carousel__control) {
+    bottom: 0px;
+  }
+  :deep(.q-carousel__slide) {
+    padding: 0px;
+  }
 }
 
 .close-btn {

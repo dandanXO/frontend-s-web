@@ -471,7 +471,8 @@ export default defineComponent({
               .memberLogin({
                 loginName: loginForm.loginName,
                 password: loginForm.password,
-                sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
+                // sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
+                sid: sidParam,
                 captchaCode: loginForm.captchaCode,
                 codeId: loginForm.codeId,
                 ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVersionNo.value } : {})
@@ -480,6 +481,7 @@ export default defineComponent({
                 $q.loading.hide();
                 getCode();
                 sessionStorage.removeItem("REFERRAL_CODE");
+                localStorage.removeItem("PWA_REFERRAL_CODE");
                 sessionStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
 
                 if (!localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
@@ -539,6 +541,8 @@ export default defineComponent({
               .then(() => {
                 $q.loading.hide();
                 sessionStorage.removeItem("REFERRAL_CODE");
+                localStorage.removeItem("PWA_REFERRAL_CODE");
+
                 loginFormRef.value.reset();
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/";

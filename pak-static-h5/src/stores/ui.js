@@ -30,7 +30,8 @@ export const useUI = defineStore("ui-store", {
       maintenanceEndTime: "",
       isPageInitialized: false,
       firstScreenLoading: !!sessionStorage.getItem("FIRST_SCREEN_CACHE") || true,
-      promoBg: ""
+      promoBg: "",
+      adjust_register_event: ""
     };
   },
   actions: {

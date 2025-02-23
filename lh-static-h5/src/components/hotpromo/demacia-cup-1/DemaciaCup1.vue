@@ -125,7 +125,7 @@
                   />
                   <span>示例</span>
                 </div>
-                用户 A 在12月17日投注德玛西亚杯有效投注 50,000 元，用户 A 在次日 24 小时内可获得彩金：288元
+                用户 A 在12月17日投注德玛西亚杯有效投注 50,000元，用户 A 在次日 24 小时内可获得彩金：288元
               </div>
             </div>
           </div>
@@ -136,17 +136,22 @@
               <div class="item">
                 <div class="item-num">1</div>
                 <div style="display: flex; flex-direction: column">
-                  <div>活动期间，活动仅计算电竞场馆中德玛西亚杯赛事，会员在当日德玛西亚杯中累计有效投注≥1,500 元即可获得对应彩金，有效投注次日清零；</div>
-                  <div class="hint"> 注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
+                  <div>
+                    活动期间，活动仅计算电竞场馆中德玛西亚杯赛事，会员在当日德玛西亚杯中累计有效投注≥1,500
+                    元即可获得对应彩金，有效投注次日清零；
+                  </div>
+                  <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
                 </div>
               </div>
               <div class="item">
                 <div class="item-num">2</div>
-                活动期间，活动仅计算当日 德玛西亚杯已结算的赛事总有效投注，次日 24 小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 8 倍流水即可出款；
+                活动期间，活动仅计算当日 德玛西亚杯已结算的赛事总有效投注，次日 24
+                小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 8倍流水即可出款；
               </div>
               <div class="item">
                 <div class="item-num">3</div>
-                任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+                任何低于欧洲盘 1.7 或亚洲盘 0.7
+                水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
               </div>
               <div class="item">
                 <div class="item-num">4</div>
@@ -154,7 +159,8 @@
               </div>
               <div class="item">
                 <div class="item-num">5</div>
-                此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
+                此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+                地址视为同一账户，若有违规者，将不享受此红利；
               </div>
               <div class="item">
                 <div class="item-num">6</div>
@@ -217,21 +223,13 @@
           </div>
           <div class="livepoker-rebate-game-info">
             <div class="title"></div>
-            <div
-              class="little-title"
-              style="justify-content: flex-start; align-items: flex-start"
-            >
+            <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
               <div class="left">活动时间</div>
               <div class="right">2024年12月16日至2024年12月29日</div>
             </div>
-            <div
-              class="little-title"
-              style="justify-content: flex-start; align-items: flex-start"
-            >
+            <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
               <div class="left">活动内容</div>
-              <div class="right">
-                投注德玛西亚杯的会员（电竞）
-              </div>
+              <div class="right">投注德玛西亚杯的会员（电竞）</div>
             </div>
             <div
               class="little-title"
@@ -291,7 +289,11 @@
             <div class="livepoker-rebate-game-bottom">
               <div class="livepoker-rebate-game-bottom-left-title">
                 <div class="livepoker-rebate-game-bottom-left-btn">
-                  <img src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
+                  <img
+                    src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/game-bottom-left-btn.png"
+                    alt=""
+                    style="width: 10px"
+                  />
                   <span>示例</span>
                 </div>
                 会员A在电竞场馆投注德玛西亚杯,当日产生负盈利为6000元,次日即可获得救援金38元。
@@ -305,17 +307,22 @@
               <div class="item">
                 <div class="item-num">1</div>
                 <div style="display: flex; flex-direction: column">
-                  <div>活动期间，活动仅计算电竞场馆中德玛西亚杯赛事，会员在当日德玛西亚杯中累计负盈利≥1,000 元即可获得对应彩金，负盈利次日清零； </div>
+                  <div>
+                    活动期间，活动仅计算电竞场馆中德玛西亚杯赛事，会员在当日德玛西亚杯中累计负盈利≥1,000
+                    元即可获得对应彩金，负盈利次日清零；
+                  </div>
                   <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
                 </div>
               </div>
               <div class="item">
                 <div class="item-num">2</div>
-                活动期间，活动仅计算德玛西亚杯已结算的赛事总负盈利，次日 24 小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金5 倍流水即可出款；
+                活动期间，活动仅计算德玛西亚杯已结算的赛事总负盈利，次日 24
+                小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金5倍流水即可出款；
               </div>
               <div class="item">
                 <div class="item-num">3</div>
-                任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+                任何低于欧洲盘 1.7 或亚洲盘 0.7
+                水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
               </div>
               <div class="item">
                 <div class="item-num">4</div>
@@ -323,7 +330,8 @@
               </div>
               <div class="item">
                 <div class="item-num">5</div>
-                此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
+                此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+                地址视为同一账户，若有违规者，将不享受此红利；
               </div>
               <div class="item">
                 <div class="item-num">6</div>
@@ -339,7 +347,12 @@
 
 <script setup>
 import { onMounted, ref, toRefs } from "vue";
-import { getCompetitionLossInit, claimCompetitionLoss, getCompetitionYesterday, claimCompetitionBonus } from "../../../api/index/promo";
+import {
+  getCompetitionLossInit,
+  claimCompetitionLoss,
+  getCompetitionYesterday,
+  claimCompetitionBonus
+} from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";

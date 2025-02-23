@@ -1140,6 +1140,10 @@
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
+
+  <HomePopup ref="spinLuckyWheelPromoPopupRef" />
+
+  <SpinLuckyWheelPromoSticky />
 </template>
 
 <script setup>
@@ -1160,7 +1164,7 @@ import WithdrawalModal from "../components/modal/WithdrawalModal.vue";
 import DepositComponent from "../components/depositComponent.vue";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
-
+import moment from 'moment';
 import { Swiper, SwiperSlide } from "swiper/vue";
 // import { ref, onMounted, onUnmounted } from 'vue';
 import "swiper/css";
@@ -1170,8 +1174,11 @@ import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 // Import Swiper modules
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core";
+import HomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
+import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
+import { eventapi } from "src/boot/axios";
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
@@ -2623,6 +2630,8 @@ const checkHbPromo = () => {
     });
 };
 
+const spinLuckyWheelPromoPopupRef = ref();
+
 const download_url = ref("");
 const isAppUpdateModal = ref(false);
 const isOutdatedApp = ref(false);
@@ -2821,7 +2830,12 @@ const loadAppTabs = () => {
 
 onActivated(() => {
   store.getUnreadTotal();
+  if(!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+    spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
+  }
 });
+
+
 
 onMounted(() => {
   isPlatLoading.value = true;
@@ -2835,6 +2849,15 @@ onMounted(() => {
   loadCustomerAddress();
   checkHbPromo();
 
+  if (sessionStorage.getItem("isReload")) {
+    sessionStorage.removeItem("isReload");
+    sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
+  }
+
+  if(!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+    spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
+  }
+
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
   if (Platform.is.android && Platform.is.capacitor) {
@@ -2842,6 +2865,16 @@ onMounted(() => {
   }
 
   intervalId = setInterval(checkPlatform, 300000);
+
+  window.addEventListener("beforeunload", function () {
+    sessionStorage.setItem("isReload", "true");
+  });
+
+
+});
+
+window.addEventListener("beforeunload", () => {
+  sessionStorage.setItem("isReload", "true");
 });
 
 onBeforeUnmount(() => {

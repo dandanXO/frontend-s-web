@@ -299,7 +299,7 @@
         </el-row>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-          <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
+          <el-button type="primary" @click="submit" :loading="btnLoading" :disabled="btnLoading">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
     </el-dialog>
@@ -486,6 +486,7 @@ import { getMemberLoginNameList } from "../../../../api/system-message-template"
 import { getActivePrivilegeInfoBySiteId } from "@/api/privilege-info";
 import moment from 'moment';
 
+const btnLoading = ref(false);
 const store = useStore();
 const { t } = useI18n();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
@@ -1036,7 +1037,12 @@ function handleVipFilter() {
 }
 
 function submit() {
+  btnLoading.value = true;
   dialogForm.value.validate(async valid => {
+    if (!valid) {
+      btnLoading.value = false;
+      return;
+    }
     if (valid) {
       if (uiControl.dialogType === 'CREATE') {
         if (form.receiveType === 'MULTIPLE') {
@@ -1054,12 +1060,15 @@ function submit() {
             form.recipient.push(inputValue.value);
           } else {
             ElMessage({ message: t('message.validateRecipientRequired'), type: 'error' })
+            btnLoading.value = false;
             return
           }
         }
         form.siteId = selected.site
         form.gameTypeRollover = constructRollover()
-        await createDistributePrivilege(form)
+        await createDistributePrivilege(form).finally(() => {
+          btnLoading.value = false;
+        });
       }
       uiControl.dialogVisible = false
       await loadSystemMessageTemplate()
@@ -1105,7 +1114,9 @@ async function loadSystemMessageTemplate() {
     }
   })
   if (request.sendTime.length === 2) {
-    query.sendTime = request.sendTime.join(',')
+    const newDate = [request.sendTime[0], request.sendTime[1]]
+    newDate[1] = convertDate(moment(newDate[1]).add(1, 'days'))
+    query.sendTime = newDate.join(',')
   }
   const { data: ret } = await getDistributeRecord(query)
   page.pages = ret.pages

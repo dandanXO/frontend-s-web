@@ -48,6 +48,10 @@ installBtn.addEventListener("click", async () => {
       // Get the current URL
       const urlParams = new URLSearchParams(window.location.search);
       const fbclid = urlParams.get("fbclid");
+      const referral = urlParams.get("refer");
+      if (referral) {
+        localStorage.setItem("PWA_REFERRAL_CODE", referral);
+      }
       if (fbclid) {
         localStorage.setItem("fbclid", fbclid);
 
