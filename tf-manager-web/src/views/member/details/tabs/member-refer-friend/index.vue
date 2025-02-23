@@ -1,7 +1,7 @@
 <template>
   <div class="inputs-wrap">
     <el-date-picker
-      v-model="regTime"
+      v-model="depositTime"
       format="DD/MM/YYYY"
       value-format="YYYY-MM-DD"
       size="small"
@@ -56,6 +56,13 @@
       >
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.depositAmount,type: 'money'}" />
+        </template>
+      </el-table-column>
+      <el-table-column :label="t('dateType.depositDate')"
+                       align="center" min-width="180"
+      >
+        <template #default="scope">
+          <span v-formatter="{data: scope.row.depositTime,timeZone: timeZone,type: 'date'}" />
         </template>
       </el-table-column>
       <!-- <el-table-column :label="t('fields.bonusReceived')" prop="bonusReceived"
@@ -132,9 +139,10 @@ export default defineComponent({
       loading: false
     });
     const formData = reactive({
-      regTime: [defaultStartDate, defaultEndDate],
+      depositTime: [defaultStartDate, defaultEndDate],
       size: 20,
-      current: 1
+      current: 1,
+      orderBy: "deposit_time"
     });
     const loadData = async () => {
       memberData.loading = true;
@@ -145,11 +153,11 @@ export default defineComponent({
           query[key] = value;
         }
       });
-      if (formData.regTime && formData.regTime.length === 2) {
-        query.regTime = JSON.parse(JSON.stringify(formData.regTime));
-        query.regTime[0] = formatInputTimeZone(query.regTime[0], props.timeZone, 'start');
-        query.regTime[1] = formatInputTimeZone(query.regTime[1], props.timeZone, 'end');
-        query.regTime = query.regTime.join(',')
+      if (formData.depositTime && formData.depositTime.length === 2) {
+        query.depositTime = JSON.parse(JSON.stringify(formData.depositTime));
+        query.depositTime[0] = formatInputTimeZone(query.depositTime[0], props.timeZone, 'start');
+        query.depositTime[1] = formatInputTimeZone(query.depositTime[1], props.timeZone, 'end');
+        query.depositTime = query.depositTime.join(',')
       }
       query.referrerId = props.mbrId;
       query.siteId = props.siteId;

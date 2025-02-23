@@ -16,3 +16,7 @@ export const getDistributeRecord = (query) => {
 export const createDistributePrivilege = (query) => {
   return https().request("/distribute-privilege", Method.POST, query, ContentType.json);
 }
+
+export const getMemberPrivilegeExport = (query) => {
+  return https().request('/member-privilege/export', Method.GET, query, ContentType.form)
+}

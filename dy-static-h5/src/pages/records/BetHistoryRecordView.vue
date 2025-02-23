@@ -20,6 +20,7 @@
       <div class="payout-total">
         <div>总投注: {{ totalBetRecord.totalBet }}</div>
         <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
+        <div>总有效投注: {{ totalBetRecord.totalValidBet }}</div>
       </div>
     </div>
     <div class="flex-div">
@@ -101,7 +102,8 @@ const platform = ref("");
 const recordRef = ref();
 const totalBetRecord = reactive({
   totalBet: 0,
-  totalPayout: 0
+  totalPayout: 0,
+  totalValidBet: 0
 });
 const loadNewData = () => {
   if (maxPage.value > current.value) {
@@ -151,6 +153,7 @@ const loadDepositTable = (isNew) => {
       maxPage.value = res.data.pages;
       totalBetRecord.totalBet = res.data.sums.totalBet;
       totalBetRecord.totalPayout = res.data.sums.totalPayout;
+      totalBetRecord.totalValidBet = res.data.sums.totalValidBet;
       tableData.value.push(...res.data.records);
     })
     .finally(() => {

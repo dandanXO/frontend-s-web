@@ -369,7 +369,8 @@ export default defineComponent({
       codeAffiliate: "",
       referrer: "",
       smsCodeId: "",
-      smsCode: ""
+      smsCode: "",
+      traceId: ""
     });
     const getCode = () => {
       // api
@@ -417,14 +418,13 @@ export default defineComponent({
         // hasAffiliate.value = true;
         regForm.referrer = refCode;
       }
+      const pwaRefCode = localStorage.getItem("PWA_REFERRAL_CODE");
+      if (pwaRefCode) {
+        // hasAffiliate.value = true;
+        regForm.referrer = pwaRefCode;
+      }
     };
 
-    // const getReferralCode = () => {
-    //   const refCode = sessionStorage.getItem("REFERRAL_CODE");
-    //   if (refCode) {
-    //     regForm.referrer = refCode;
-    //   }
-    // }
     const loginNameRef = ref();
     const pwdRef = ref();
     const confirmPwdRef = ref();
@@ -474,6 +474,16 @@ export default defineComponent({
       getAffiliateCode();
     });
 
+    const trackRegisterSuccessEvent = () => {
+      if (ui.adjust_register_event && isInPwa()) {
+        console.log(ui.adjust_register_event);
+        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        AdjustWeb.trackEvent({
+          eventToken: ui.adjust_register_event
+        });
+      }
+    };
+
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
@@ -498,6 +508,9 @@ export default defineComponent({
         const sidParam = store.visitorId;
 
         (async () => {
+          if (store.aaid) {
+            regForm.traceId = store.aaid;
+          }
           regForm.sid = sidParam;
 
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
@@ -537,14 +550,11 @@ export default defineComponent({
                     ttq.track("CompleteRegistration", { content_type: "product" }, { event_id: Date.now() });
                   }
 
-                  document.addEventListener("ftdSuccess", trackNewUserFtd);
-                  if (isInPwa()) {
-                    localStorage.setItem("newUserFtd", regForm.loginName);
-                  } else {
-                    sessionStorage.setItem("newUserFtd", regForm.loginName);
-                  }
+                  localStorage.setItem("newUserFtd", regForm.loginName);
                   localStorage.setItem("REG_REFERRAL_CODE", regForm.referrer);
                 }
+
+                trackRegisterSuccessEvent();
 
                 //ADJUST TRACKEVENT.
                 // debugger;
@@ -562,6 +572,7 @@ export default defineComponent({
                 // }
 
                 sessionStorage.removeItem("REFERRAL_CODE");
+                localStorage.removeItem("PWA_REFERRAL_CODE");
 
                 store.autoLogin(res.data);
                 if (store.hasToken()) {
