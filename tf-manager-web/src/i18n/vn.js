@@ -1926,6 +1926,7 @@ export default {
     tfCompetitionNameVn: 'Tên giải đấu (Tiếng Việt)',
     tfCompetitionNameKr: 'Tên giải đấu (Tiếng Hàn)',
     tfCompetitionNameTh: 'Tên giải đấu (Tiếng Thái)',
+    traceId: 'Trace ID'
   },
   message: {
     startenddatemore3months:
@@ -2621,6 +2622,7 @@ export default {
     Withdraw: 'Rút tiền',
     'Add Payment': 'Thêm Thanh toán',
     'Edit Payment': 'Chỉnh sửa Thanh toán',
+    'Copy Payment': 'sao chép Thanh toán',
     CurrencyRate: 'Tỷ giá Tiền tệ',
     'Payment Display': 'Hiển thị Thanh toán',
     'Withdraw Platform': 'Nền tảng Rút tiền',

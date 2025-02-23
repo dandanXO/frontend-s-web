@@ -10,7 +10,7 @@ var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
 
 const createFtdEvent = (triggeredPixels) => {
-  return new CustomEvent("ftdSuccess", { detail: triggeredPixels });
+  return new CustomEvent("ftdPurchaseSuccess", { detail: triggeredPixels });
 };
 
 export const userStore = defineStore("userStore", {
@@ -277,13 +277,17 @@ export const userStore = defineStore("userStore", {
           .then((res) => {
             console.log(res);
             if (res.code === 0) {
-              if ((this.isFbPixel || this.isTkPixel) && this.balance === 0 && res.data !== 0) {
+              if ((this.isOldFBPixel || this.isTkPixel) && res.data !== 0) {
+                // debugger;
                 const triggeredPixels = [];
-                if (this.isFbPixel) triggeredPixels.push("fb");
+                if (this.isOldFBPixel) triggeredPixels.push("fb");
                 if (this.isTkPixel) triggeredPixels.push("tk");
-                const isNewUser = sessionStorage.getItem("newUserFtd");
-                if (isNewUser && isNewUser === this.nickName && this.isOldFBPixel === true) {
-                  document.dispatchEvent(createFtdEvent(triggeredPixels));
+                const isNewFtd = localStorage.getItem("newUserFtd");
+                // const UserPurchaseComplete = localStorage.getItem("UserPurchaseComplete") || "";
+                if (isNewFtd) {
+                  if (isNewFtd && isNewFtd === this.nickName && this.isOldFBPixel === true) {
+                    document.dispatchEvent(createFtdEvent(triggeredPixels));
+                  }
                 }
               }
               this.balance = res.data;

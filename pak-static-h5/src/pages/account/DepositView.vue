@@ -339,7 +339,7 @@ import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
-import { convertToCommaAmount } from "src/boot/utils";
+import { convertToCommaAmount, trackNewUserFtd } from "src/boot/utils";
 // import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
 // import PrimaryButton from "src/components/auth/PrimaryButton.vue";
@@ -774,16 +774,13 @@ async function pDepo(deposit) {
           );
         }
 
-        // let isFirstDepo = localStorage.getItem("IS_FIRST_DEPOSIT");
-        // if (!isFirstDepo) {
-        //   console.log("First Depo");
-        //   //ADJUST TRACKEVENT.
-        //   var adjustEvent = new AdjustEvent("medfxb");
-        //   adjustEvent.setRevenue(deposit.localAmount, "INR");
-        //   Adjust.trackEvent(adjustEvent);
-        //
-        //   localStorage.setItem("IS_FIRST_DEPOSIT", "1");
-        // }
+        if (store.isOldFBPixel || store.isTkPixel) {
+          // localStorage.setItem(
+          //   "UserPurchaseComplete",
+          //   JSON.stringify({ loginName: store.nickName, currentBalance: store.balance })
+          // );
+          document.addEventListener("ftdPurchaseSuccess", trackNewUserFtd, { once: true });
+        }
 
         if (res.data.result.payResultType === "OFFLINE") {
         }

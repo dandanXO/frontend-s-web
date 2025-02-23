@@ -143,7 +143,6 @@
       <el-table-column
         type="title"
         :label="t('fields.action')"
-        v-if="hasPermission(['sys:payment:update'])"
       >
         <template #default="scope">
           <el-button
@@ -151,13 +150,15 @@
             size="mini"
             type="success"
             @click="editPayment(scope.row)"
+            v-if="hasPermission(['sys:payment:update'])"
           />
 
           <el-button
             icon="el-icon-copy-document"
             size="mini"
             type="warning"
-            @click="showDialog(scope.row)"
+            @click="copyPayment(scope.row)"
+            v-if="hasPermission(['sys:payment:add'])"
           />
         </template>
       </el-table-column>
@@ -208,7 +209,6 @@ import { useRoute, useRouter } from 'vue-router'
 import {
   getSystemPaymentList,
   updateSystemPaymentStatus,
-  copyPayment,
   updatePaymentPlatform,
 } from '../../../../../api/system-payment'
 import { hasPermission } from '../../../../../utils/util'
@@ -216,7 +216,7 @@ import { useStore } from '../../../../../store'
 import { TENANT, ADMIN } from '../../../../../store/modules/user/action-types'
 import { getSiteListSimple } from '../../../../../api/site'
 import { useI18n } from "vue-i18n";
-import { ElMessage } from 'element-plus'
+// import { ElMessage } from 'element-plus'
 import { getActivePaymentTypes } from "../../../../../api/payment-type";
 
 // eslint-disable-next-line
@@ -305,13 +305,13 @@ function addPayment() {
   })
 }
 
-function showDialog(systemPayment) {
-  copyForm.id = systemPayment.id;
-  copyForm.mall = "";
-  copyForm.name = "";
-  uiControl.dialogTitle = t('fields.copyPayment') + " -  " + systemPayment.paymentName;
-  uiControl.dialogVisible = true
-}
+// function showDialog(systemPayment) {
+//   copyForm.id = systemPayment.id;
+//   copyForm.mall = "";
+//   copyForm.name = "";
+//   uiControl.dialogTitle = t('fields.copyPayment') + " -  " + systemPayment.paymentName;
+//   uiControl.dialogVisible = true
+// }
 
 function editPayment(systemPayment) {
   nextTick(() => {
@@ -327,18 +327,32 @@ function editPayment(systemPayment) {
   })
 }
 
-async function copySubmit() {
-  if (copyForm.name === null || copyForm.name === "") {
-    ElMessage({ message: t('message.validatePaymentNameRequired'), type: 'error' });
-  } else if (copyForm.mall === null || copyForm.mall === "") {
-    ElMessage({ message: t('message.validateMallNameRequired'), type: 'error' });
-  } else {
-    uiControl.dialogVisible = false;
-    await copyPayment(copyForm);
-    loadSystemPayment();
-    ElMessage({ message: t('message.copySuccess'), type: 'success' });
-  }
+function copyPayment(systemPayment) {
+  nextTick(() => {
+    for (const key in systemPayment) {
+      if (Object.keys(form).find(k => k === key)) {
+        form[key] = systemPayment[key]
+      }
+    }
+    router.push({
+      name: 'Copy Payment',
+      params: { id: systemPayment.id, current: request.current },
+    })
+  })
 }
+
+// async function copySubmit() {
+//   if (copyForm.name === null || copyForm.name === "") {
+//     ElMessage({ message: t('message.validatePaymentNameRequired'), type: 'error' });
+//   } else if (copyForm.mall === null || copyForm.mall === "") {
+//     ElMessage({ message: t('message.validateMallNameRequired'), type: 'error' });
+//   } else {
+//     uiControl.dialogVisible = false;
+//     await copyPayment(copyForm);
+//     loadSystemPayment();
+//     ElMessage({ message: t('message.copySuccess'), type: 'success' });
+//   }
+// }
 
 const page = reactive({
   pages: 0,

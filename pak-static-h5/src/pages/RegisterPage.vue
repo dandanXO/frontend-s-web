@@ -449,14 +449,13 @@ export default defineComponent({
         regForm.referrer = refCode;
         thirdPartyLoginInfo.referrer = refCode;
       }
+      const pwaRefCode = localStorage.getItem("PWA_REFERRAL_CODE");
+      if (pwaRefCode) {
+        // hasAffiliate.value = true;
+        regForm.referrer = pwaRefCode;
+      }
     };
 
-    // const getReferralCode = () => {
-    //   const refCode = sessionStorage.getItem("REFERRAL_CODE");
-    //   if (refCode) {
-    //     regForm.referrer = refCode;
-    //   }
-    // }
     const loginNameRef = ref();
     const pwdRef = ref();
     const confirmPwdRef = ref();
@@ -710,12 +709,7 @@ export default defineComponent({
                     ttq.track("CompleteRegistration", { content_type: "product" }, { event_id: Date.now() });
                   }
 
-                  document.addEventListener("ftdSuccess", trackNewUserFtd);
-                  if (isInPwa()) {
-                    localStorage.setItem("newUserFtd", regForm.loginName);
-                  } else {
-                    sessionStorage.setItem("newUserFtd", regForm.loginName);
-                  }
+                  localStorage.setItem("newUserFtd", regForm.loginName);
                   localStorage.setItem("REG_REFERRAL_CODE", regForm.referrer);
                 }
 
@@ -737,6 +731,7 @@ export default defineComponent({
                 // }
 
                 sessionStorage.removeItem("REFERRAL_CODE");
+                localStorage.removeItem("PWA_REFERRAL_CODE");
 
                 store.autoLogin(res.data);
                 if (store.hasToken()) {

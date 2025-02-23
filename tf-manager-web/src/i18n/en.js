@@ -1307,6 +1307,7 @@ export default {
     message: 'Message',
     min: 'Min Profit',
     minAmount: 'Min Amount',
+    minPoints: 'Min Points',
     max: 'Max Profit',
     maxAmount: 'Max Amount',
     minno: 'Please insert min',
@@ -2214,6 +2215,7 @@ export default {
     referRelationQuery: 'Refer Relation Query',
     referCount: 'Refer Count',
     referBonus: 'Refer Bonus',
+    referFtdCount: 'Refer First Deposit Count',
     successCount: 'Success Count',
     betBonus: 'Bet Bonus',
     batchFrozenMember: 'Batch Frozen Member',
@@ -2504,6 +2506,8 @@ export default {
     calculatedAmount: 'Calculated Amount',
     calculatedPts: 'Calculated Points',
     spinRecord: 'Spin Record',
+    pointsDistribution: 'Points Distribution',
+    traceId: 'Trace ID'
   },
   message: {
     adsStatusOpen: 'Open',
@@ -3247,6 +3251,7 @@ export default {
     Withdraw: 'Withdraw',
     'Add Payment': 'Add Payment',
     'Edit Payment': 'Edit Payment',
+    'Copy Payment': 'Copy Payment',
     CurrencyRate: 'Currency Rate',
     'Payment Display': 'Payment Display',
     'Withdraw Platform': 'Withdraw Platform',
@@ -3340,7 +3345,9 @@ export default {
     'Sport App Setting': 'Sport App Setting',
     'Game Jackpot Bonus Record': 'Game Jackpot Bonus Record',
     'Refer Spin': 'Refer Spin',
-    'Member Privilege Record Pak Export': 'Member Privilege Record Pak Export'
+    'Member Privilege Record Pak Export': 'Member Privilege Record Pak Export',
+    'Refer Spin Claim Record': 'Refer Spin Claim Record',
+    'Refer Spin Record': 'Refer Spin Record',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

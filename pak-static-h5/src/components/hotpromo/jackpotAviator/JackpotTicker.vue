@@ -48,7 +48,7 @@ watch(() => props?.timeframe, () => {
     
     jackpotFetchInterval.value = setInterval(() => {
         updateJackpot();
-    }, 5000);
+    }, 30000);
 })
 
 onMounted(() => {
@@ -56,7 +56,7 @@ onMounted(() => {
 
     jackpotFetchInterval.value = setInterval(() => {
         updateJackpot();
-    }, 5000);
+    }, 30000);
 })
 </script>
 <style lang="scss" scoped>

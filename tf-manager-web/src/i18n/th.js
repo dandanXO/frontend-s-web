@@ -1344,6 +1344,7 @@ export default {
     tfCompetitionNameVn: 'ชื่อการแข่งขัน (วิทนาม)',
     tfCompetitionNameKr: 'ชื่อการแข่งขัน (คอร์ยา)',
     tfCompetitionNameTh: 'ชื่อการแข่งขัน (ไทย)',
+    traceId: 'Trace ID'
   },
   message: {
     startenddatemore3months: 'เวลาเริ่มและเสร็จสิ้นต้องไม่เกิน 3 เดือน',
@@ -1844,6 +1845,7 @@ export default {
     Withdraw: 'ถอนเงิน',
     'Add Payment': 'เพิ่มการชำระเงิน',
     'Edit Payment': 'แก้ไขการชำระเงิน',
+    'Copy Payment': 'สำเนาำระเงิน',
     CurrencyRate: 'อัตราสกุลเงิน',
     'Payment Display': 'การแสดงการชำระเงิน',
     'Withdraw Platform': 'แพลตฟอร์มการถอน',

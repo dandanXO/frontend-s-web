@@ -195,7 +195,8 @@
         </el-row>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false" class="footer_btn">{{ t('fields.cancel') }}</el-button>
-          <el-button type="primary" @click="submit" class="footer_btn">{{ t('fields.confirm') }}</el-button>
+          <span v-if="uiControl.dialogType !== 'COPY'"><el-button type="primary" @click="submit" class="footer_btn">{{ t('fields.confirm') }}</el-button></span>
+          <span v-if="uiControl.dialogType === 'COPY'"><el-button type="primary" @click="create()" class="footer_btn">{{ t('fields.copyWithdrawPlatform') }}</el-button></span>
         </div>
       </el-form>
     </el-dialog>
@@ -224,14 +225,15 @@
           />
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')" align="right" v-if="hasPermission(['sys:payment:withdraw:update'])">
+      <el-table-column :label="t('fields.operate')" align="right">
         <template #default="scope">
-          <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit(scope.row)" />
+          <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit(scope.row)" v-if="hasPermission(['sys:payment:withdraw:update'])" />
           <el-button
             icon="el-icon-copy-document"
             size="mini"
             type="warning"
-            @click="showDialogCopy(scope.row)"
+            @click="showCopyWithdraw(scope.row)"
+            v-if="hasPermission(['sys:payment:withdraw:add'])"
           />
         </template>
       </el-table-column>
@@ -431,6 +433,8 @@ function showDialog(type) {
     }
   } else if (type === "EDIT") {
     uiControl.dialogTitle = t('fields.editWithdrawPlatform');
+  } else if (type === "COPY") {
+    uiControl.dialogTitle = t('fields.copyWithdrawPlatform');
   }
   uiControl.dialogType = type;
   uiControl.dialogVisible = true;
@@ -506,13 +510,26 @@ onMounted(async() => {
   await loadPayTypes();
 });
 
-function showDialogCopy(withdrawPlatform) {
-  console.log(withdrawPlatform);
-  copyForm.id = withdrawPlatform.id;
-  copyForm.mallName = "";
-  copyForm.name = "";
-  uiControl.dialogTitle = t('fields.copyPayment') + " -  " + withdrawPlatform.name;
-  uiControl.dialogCopyVisible = true
+// function showDialogCopy(withdrawPlatform) {
+//   console.log(withdrawPlatform);
+//   copyForm.id = withdrawPlatform.id;
+//   copyForm.mallName = "";
+//   copyForm.name = "";
+//   uiControl.dialogTitle = t('fields.copyPayment') + " -  " + withdrawPlatform.name;
+//   uiControl.dialogCopyVisible = true
+// }
+
+function showCopyWithdraw(withdrawPlatform) {
+  showDialog("COPY");
+  nextTick(() => {
+    for (const key in withdrawPlatform) {
+      if (Object.keys(form).find(k => k === key)) {
+        form[key] = withdrawPlatform[key];
+      }
+    }
+    form.name = form.name + "-1";
+  });
+  filterPayTypeByCurrency(parseInt(withdrawPlatform.siteId))
 }
 
 async function copySubmit() {

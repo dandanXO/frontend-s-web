@@ -1973,6 +1973,7 @@ export default {
     tfCompetitionNameVn: '리그 이름 (베트남어)',
     tfCompetitionNameKr: '리그 이름 (한국어)',
     tfCompetitionNameTh: '리그 이름 (태국어)',
+    traceId: 'Trace ID'
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3 개월 이상일 수 없습니다',
@@ -2650,6 +2651,7 @@ export default {
     Withdraw: '돈을 인출하다',
     'Add Payment': '지불 추가',
     'Edit Payment': '지불 수정',
+    'Copy Payment': '지불 복사',
     CurrencyRate: '통화 환율',
     'Payment Display': '지불 디스플레이',
     'Withdraw Platform': '출금 플랫폼',
