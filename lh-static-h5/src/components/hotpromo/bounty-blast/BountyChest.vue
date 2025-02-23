@@ -63,7 +63,8 @@
       <div class="title"><img src="../../../assets/images/promo/hotpromo/blastbounty/section-3-spring.png" /></div>
       <div class="content">
         <p>
-          1. 活动期间,每日投注BLAST Premier 赏金赛达到500元有效投注即可在次日12：00点左右自动获得1个开箱钥匙,开箱钥匙与开箱次数每日不设上限；
+          1. 活动期间,每日投注BLAST Premier
+          赏金赛达到500元有效投注即可在次日12：00点左右自动获得1个开箱钥匙,开箱钥匙与开箱次数每日不设上限；
         </p>
         <p>
           2.
@@ -71,17 +72,15 @@
         </p>
         <p>3. 开启宝箱后获得彩金由系统自动实时派发至会员主钱包内.彩金5倍流水即可出款；</p>
         <p>
-          4. 活动期间,当日存款≥200元且 BLAST Premier 赏金赛有效投注≥1,000元在次日24 小时内在活动页面点击【点击领取】按钮领取签到奖金。逾期未领取则视为放弃，彩金8 倍流水即可出款；
+          4. 活动期间,当日存款≥200元且 BLAST Premier 赏金赛有效投注≥1,000元在次日24
+          小时内在活动页面点击【点击领取】按钮领取签到奖金。逾期未领取则视为放弃，彩金8 倍流水即可出款；
         </p>
+        <p>5. 同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号,仅可参与一次,若有违规者,将不享受此红利；</p>
         <p>
-          5.
-          同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号,仅可参与一次,若有违规者,将不享受此红利；
+          6.
+          任何会员或团体以不正常的方式进行套取活动优惠,平台方保在不通知的情况下冻结或关闭相关账户的权利,并不退还款项,且会员会被列入黑名单；
         </p>
-        <p>6. 任何会员或团体以不正常的方式进行套取活动优惠,平台方保在不通知的情况下冻结或关闭相关账户的权利,并不退还款项,且会员会被列入黑名单；</p>
-        <p>
-          7.
-          为避免文字理解差异,本站保留本活动最终解释权；
-        </p>
+        <p>7. 为避免文字理解差异,本站保留本活动最终解释权；</p>
       </div>
     </div>
 
@@ -603,7 +602,7 @@ onMounted(() => {
         color: $white;
         width: 50px;
         gap: 10px;
-        img{
+        img {
           margin: 0 !important;
         }
       }
@@ -753,15 +752,9 @@ onMounted(() => {
   font-size: 16px;
   padding-top: 30px;
   &.keyRec {
+    color: #7f4c00;
+
     .rec {
-      &::-webkit-scrollbar {
-        width: 5px;
-        height: 8px;
-        background-color: #ffffff;
-      }
-      &::-webkit-scrollbar-thumb {
-        background: #ffd4b3;
-      }
       width: 98%;
       margin: 0 auto;
       height: 140px;
@@ -771,8 +764,17 @@ onMounted(() => {
       overflow: auto;
       justify-content: flex-start;
       align-items: center;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+        height: 8px;
+        background-color: #ffffff;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #ffd4b3;
+      }
     }
-    color: #7f4c00;
+
     table {
       width: 100%;
       .keysAmt {
@@ -796,18 +798,13 @@ onMounted(() => {
   &.openRec {
     justify-content: flex-start;
     padding: 25px 0;
+    color: #7f4c00;
+    gap: 5px;
+
     .table-title {
       font-weight: 700;
     }
     .rec {
-      &::-webkit-scrollbar {
-        width: 5px;
-        height: 8px;
-        background-color: #ffffff;
-      }
-      &::-webkit-scrollbar-thumb {
-        background: #ffd4b3;
-      }
       width: 90%;
       margin: 0 auto;
       height: 140px;
@@ -817,9 +814,17 @@ onMounted(() => {
       overflow: auto;
       justify-content: flex-start;
       align-items: center;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+        height: 8px;
+        background-color: #ffffff;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #ffd4b3;
+      }
     }
-    color: #7f4c00;
-    gap: 5px;
+
     .flex {
       display: flex;
       justify-content: space-between;
