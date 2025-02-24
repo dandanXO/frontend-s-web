@@ -72,7 +72,7 @@
               src="../../../assets/images/promotion/spin-lucky-wheel/decoration-rabbit.png"
             />
             <CommonButton class="draw-btn" @click="handleInviteClick">Invite To Earn Spin</CommonButton>
-            <span class="next-spin-remaining-time">Countdown to next free spins: {{ nextFreeSpinRemainingTime }}</span>
+            <span class="next-spin-remaining-time" v-if="info.startTime !== '' || info.status !== 'CLAIMED'">Countdown to next free spins: {{ nextFreeSpinRemainingTime }}</span>
           </div>
         </div>
       </div>
@@ -295,7 +295,7 @@ const handleRecordClick = () => {
 
 const updateCountdownTime = () => {
   // console.log("updateCountdownTime")
-  const endTime = moment(info.value.startTime).tz("Asia/Kolkata").add(3, "days");
+  const endTime = info.value.startTime === '' && info.value.status === 'CLAIMED' ? moment().tz("Asia/Kolkata").add(1, "days").startOf("day") : moment(info.value.startTime).tz("Asia/Kolkata").add(3, "days");
   const nextFreeSpinEndTime = moment().tz("Asia/Kolkata").add(1, "days").startOf("day");
   if(timer.value){
     clearTimeout(timer.value);
