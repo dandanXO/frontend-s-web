@@ -68,7 +68,7 @@
           </div>
         </div>
         <div class="dialog-footer">
-          <q-btn color="brightbtn" type="primary" @click="onChoiceSubmit('third')" style="width: 120px;">提交</q-btn>
+          <q-btn color="brightbtn" type="primary" @click="onChoiceSubmit('third')" style="width: 120px">提交</q-btn>
         </div>
       </q-card-section>
     </q-card>
@@ -127,7 +127,7 @@
                     <span>{{ firstChoiceRef ? firstChoiceRef : "" }}</span>
                   </div>
                   <div class="question-btn-box" @click="onFirstQuestionClick(true)">
-                    <img :src="firstChoiceRef ? reSelectBtn : selectBtn" alt="">
+                    <img :src="firstChoiceRef ? reSelectBtn : selectBtn" alt="" />
                   </div>
                 </div>
               </div>
@@ -142,7 +142,7 @@
                     <span>{{ secondChoiceRef ? secondChoiceRef : "" }}</span>
                   </div>
                   <div class="question-btn-box" @click="onSecondQuestionClick(true)">
-                    <img :src="secondChoiceRef ? reSelectBtn : selectBtn" alt="">
+                    <img :src="secondChoiceRef ? reSelectBtn : selectBtn" alt="" />
                   </div>
                 </div>
               </div>
@@ -157,7 +157,7 @@
                     <span>{{ thirdChoiceRef ? thirdChoiceRef : "" }}</span>
                   </div>
                   <div class="question-btn-box" @click="onThirdQuestionClick(true)">
-                    <img :src="thirdChoiceRef ? reSelectBtn : selectBtn" alt="">
+                    <img :src="thirdChoiceRef ? reSelectBtn : selectBtn" alt="" />
                   </div>
                 </div>
               </div>
@@ -373,10 +373,11 @@ function getRecords() {
       const dataLength = data.total;
       if (dataLength > 0) {
         paginationInfo.pageNumber = data.current;
-        if(data.pages === 0){
-          recordsPagination.pages = data.pages + 1;
-        }else{
-          recordsPagination.pages = data.pages;
+        // paginationInfo.pageTotal = data.pages;
+        if (data.pages === 0) {
+          paginationInfo.pageTotal = data.pages + 1;
+        } else {
+          paginationInfo.pageTotal = data.pages;
         }
         getRecordList();
 
@@ -622,7 +623,7 @@ const getMatchTimeOnly = (matchTime) => {
       }
 
       .prize-quiz-main {
-        background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+        background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
         box-shadow: 0px 5px 10px 0px rgba(12, 3, 7, 0.2);
         border-radius: 20px;
         overflow: hidden;
@@ -709,7 +710,7 @@ const getMatchTimeOnly = (matchTime) => {
           line-height: 1;
 
           height: 40px;
-          background: linear-gradient(180deg, #597ADF 0%, #3C5EC3 100%);
+          background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%);
 
           color: #ffffff;
           border-bottom: 2px solid #fff;
@@ -849,11 +850,11 @@ const getMatchTimeOnly = (matchTime) => {
             width: 100%;
             padding: 10px;
             flex: 1;
-            color: #7A8EB9;
+            color: #7a8eb9;
 
             span {
               font-weight: 700;
-              color: #3981FF;
+              color: #3981ff;
             }
           }
 
@@ -1279,11 +1280,11 @@ const getMatchTimeOnly = (matchTime) => {
           width: 100%;
           padding: 10px;
           flex: 1;
-          color: #7A8EB9;
+          color: #7a8eb9;
 
           span {
             font-weight: 700;
-            color: #3981FF;
+            color: #3981ff;
           }
         }
 
