@@ -91,6 +91,32 @@
               </template>
             </InputField>
 
+            <InputField :label="'OTP'">
+              <template #input>
+                <q-input
+                  v-if="regForm.referrer"
+                  pattern="\d*"
+                  maxlength="6"
+                  ref="verificationRef"
+                  hide-bottom-space
+                  v-model="regForm.smsCode"
+                  :rules="[
+                    (val) => (val && val.length > 0) || 'Please insert OTP number',
+                    (val) => (val && val.length === 6) || 'The OTP number must have 6 digits'
+                  ]"
+                  color="white"
+                  class="landing-input"
+                  outlined
+                  placeholder="Enter your OTP number"
+                  label-color="brand"
+                >
+                  <template v-slot:prepend>
+                    <img class="white-svg" src="../assets/images/auth/otp.svg" />
+                  </template>
+                </q-input>
+              </template>
+            </InputField>
+
             <!--            <InputField :label="'Confirm Password'">-->
             <!--              <template #input>-->
             <!--                <q-input-->
@@ -392,7 +418,7 @@ export default defineComponent({
       // telRef.value.validate();
       // phoneVerificationRef.value.validate();
       // emailRef.value.validate();
-      // verificationRef.value.validate();
+      verificationRef.value?.validate();
 
       $q.loading.show({
         message: "Registering in progress"
@@ -407,7 +433,7 @@ export default defineComponent({
         // telRef.value.hasError ||
         // phoneVerificationRef.value.hasError ||
         // emailRef.value.hasError ||
-        // verificationRef.value.hasError ||
+        verificationRef.value?.hasError ||
         isAgreeReg.value === false
       ) {
         isLoading.value = false;
