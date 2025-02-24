@@ -373,10 +373,11 @@ function getRecords() {
       const dataLength = data.total;
       if (dataLength > 0) {
         paginationInfo.pageNumber = data.current;
+        // paginationInfo.pageTotal = data.pages;
         if (data.pages === 0) {
-          paginationInfo.pages = data.pages + 1;
+          paginationInfo.pageTotal = data.pages + 1;
         } else {
-          paginationInfo.pages = data.pages;
+          paginationInfo.pageTotal = data.pages;
         }
         getRecordList();
 
