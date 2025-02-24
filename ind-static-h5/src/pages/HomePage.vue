@@ -2631,16 +2631,18 @@ const gotoSignUp = () => {
 const hbPromo = ref([]);
 
 const checkSpinLuckyWheelPromo = async () => {
-  const res = await eventapi.post("/refer-spin/check");
-  info.value = res.data;
+  if(store.token) {
+    const res = await eventapi.post("/refer-spin/check");
+    info.value = res.data;
 
-  if (sessionStorage.getItem("isReload")) {
-    sessionStorage.removeItem("isReload");
-    sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
-  }
+    if (sessionStorage.getItem("isReload")) {
+      sessionStorage.removeItem("isReload");
+      sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
+    }
 
-  if(!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
-    spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
+    if (!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+      spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
+    }
   }
 }
 
