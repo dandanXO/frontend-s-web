@@ -1128,8 +1128,8 @@
   </q-dialog>
 
   <!-- Spin Lucky Wheel promo start -->
-  <HomePopup ref="spinLuckyWheelPromoPopupRef" v-if="info" />
-  <SpinLuckyWheelPromoSticky v-if="info.status === 'IN_PROGRESS'" />
+  <HomePopup ref="spinLuckyWheelPromoPopupRef" />
+  <SpinLuckyWheelPromoSticky v-if="info?.status === 'IN_PROGRESS'" />
   <!-- Spin Lucky Wheel promo end -->
 </template>
 
