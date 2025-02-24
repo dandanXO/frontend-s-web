@@ -81,7 +81,7 @@ const handleEnvelopeClick = (index) => {
     await delay(1000);
 
     envelopeStatus.value = "selected";
-    endTime.value = moment(Date.now()).add(3, "days");
+    endTime.value = moment(res.data.startTime).add(3, "days");
     updateRemainingTime();
     timer.value = setInterval(updateRemainingTime, 1000);
     isClaiming.value = false;
