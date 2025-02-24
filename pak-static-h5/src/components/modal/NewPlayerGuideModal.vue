@@ -35,7 +35,7 @@
                 <div class="midimg">
                   <img :src="require(`../../assets/images/newplayerguide/step-mid-${index + 1}.png`)" />
                 </div>
-                <div class="mid-content">
+                <div class="mid-content" :class="{show: index + 1 === 4}">
                   <div class="ins">{{ step.instruction }}</div>
                   <div class="amt">{{ step.earnableAmt }}RS</div>
                 </div>
@@ -719,6 +719,10 @@ defineExpose({ showVideo });
             rgba(69, 181, 121, 0) 100%
           );
           display: none;
+          &.show {
+            display: flex;
+            margin-top: 15px;
+          }
           justify-content: center;
           align-items: center;
           padding: 5px;
