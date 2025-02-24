@@ -16,7 +16,7 @@
             <div class="record-wrapper invitation">
               <template v-if="info.invitedList.length">
                 <div v-for="(record, index) in info.invitedList" :key="index" class="record">
-                  <span>{{ moment(record.depositDate).format("MM-DD hh:mm:ssA") }}</span>
+                  <span>{{ moment(record.depositDate).format("MM-DD HH:mm:ss") }}</span>
                   <span class="name">{{ record.loginName }}</span>
                   <span>Invitation successful</span>
                 </div>
@@ -28,7 +28,7 @@
             <div class="record-wrapper lottery">
               <template v-if="info.records.length">
                 <div v-for="(record, index) in info.records" :key="index" class="record">
-                  <span>{{ moment(record.recordTime).format("MM-DD hh:mm:ssA") }}</span>
+                  <span>{{ moment(record.recordTime).format("MM-DD HH:mm:ss") }}</span>
                   <span class="amount">${{ record.bonus }}</span>
                 </div>
               </template>
