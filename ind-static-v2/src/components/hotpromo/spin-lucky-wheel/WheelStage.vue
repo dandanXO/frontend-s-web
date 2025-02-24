@@ -240,7 +240,7 @@ const reset = () => {
 };
 
 const handleWheelClick = () => {
-  if (spinButtonDisable.value || !info.value.spinChance) return;
+  if (spinButtonDisable.value || !info.value.spinChance || isClaimedStatus.value) return;
   eventapi.post("/refer-spin/spin").then((res) => {
     if (res.code === 0) {
       prize.value = res.data;
