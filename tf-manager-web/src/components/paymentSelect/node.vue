@@ -33,23 +33,27 @@
           :key="i"
           v-for="(item, i) in list"
         >
-          <el-row :gutter="10" justify="space-between" align="middle" class="node-elrow">
-            <el-col :span="6" style="position: relative;">
+          <el-row :gutter="20" justify="space-between" align="middle" class="node-elrow">
+            <el-col :span="5" style="position: relative;">
               <!-- eslint-disable -->
               <img
                 v-if="item.icon === 'OFFLINE' || item.icon === 'test'"
                 :src="paymethodicon + '/000/fff.png&text=payment'"
+                style="width:60px;height: auto"
               />
-              <img v-else :src="paymentDir + item.icon" />
+              <img v-else :src="paymentDir + item.icon" style="width:60px;height: auto" />
             </el-col>
             <el-col :span="12">
               <div class="node-text">
                 <div class="group-node">
-                  <div>{{ item.name }}</div>
+                  <div>
+                    {{ item.name }}
+                    <img :src="paymentDir + item.promoIcon" style="width:40px;height: auto" />
+                  </div>
                 </div>
               </div>
             </el-col>
-            <el-col :span="6" class="icons">
+            <el-col :span="7" class="icons">
               <el-switch
                 v-model="item.status"
                 size="mini"
@@ -853,7 +857,7 @@ $node-color: #309799;
     color: $node-color;
 
     .node-elrow{
-      width: 320px;
+      width: 300px;
     }
 
     img {
@@ -863,8 +867,9 @@ $node-color: #309799;
 
     .node-text {
       font-size: 12px;
-      padding: 10px 5px;
+      padding: 5px 5px;
       max-width: 200px;
+      word-wrap: break-word;
 
       .payment-node > div:first-child,
       .group-node {
