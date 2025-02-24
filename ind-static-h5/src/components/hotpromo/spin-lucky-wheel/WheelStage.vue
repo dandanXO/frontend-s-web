@@ -109,6 +109,9 @@
           recommendation.
         </li>
         <li>
+          The more your invitees play on the website, the higher your next spin reward will be. Invite friends and win more rewards together!
+        </li>
+        <li>
           The right to interpret the event belongs to 55Ace. If you have any questions, please contact to customer
           service.
         </li>
