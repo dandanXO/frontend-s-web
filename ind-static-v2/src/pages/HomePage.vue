@@ -1127,15 +1127,16 @@
     </div>
   </q-dialog>
 
-  <HomePopup ref="spinLuckyWheelPromoPopupRef" />
-
-  <SpinLuckyWheelPromoSticky />
+  <!-- Spin Lucky Wheel promo start -->
+  <HomePopup ref="spinLuckyWheelPromoPopupRef" v-if="info" />
+  <SpinLuckyWheelPromoSticky v-if="info.status === 'IN_PROGRESS'" />
+  <!-- Spin Lucky Wheel promo end -->
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch, onActivated, onBeforeUnmount } from "vue";
+import { onMounted, ref, reactive, computed, watch, onActivated, onBeforeUnmount, provide } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { api } from "boot/axios";
+import { api, eventapi } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
@@ -1183,6 +1184,16 @@ const activateSlide = (clickedItem) => {
   });
 };
 
+const info = ref({
+    startTime: "",
+    currAmount: 0,
+    targetWithdrawAmount: 0,
+    spinChance: 0,
+    status: ""
+});
+
+provide('info', info);
+
 const csDragPos = ref([10, 0]);
 const isDraggingCsIcon = ref(false);
 
@@ -1225,6 +1236,20 @@ const checkHbPromo = () => {
       hbPromo.value = data.data;
     });
 };
+
+const checkSpinLuckyWheelPromo = async () => {
+  const res = await eventapi.post("/refer-spin/check");
+  info.value = res.data;
+
+  if (sessionStorage.getItem("isReload")) {
+    sessionStorage.removeItem("isReload");
+    sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
+  }
+
+  if(!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+    spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
+  }
+}
 
 const slide = ref(0);
 
@@ -3009,15 +3034,7 @@ onMounted(() => {
   loadJILIFishGameList();
   loadJDBFishGameList();
   checkHbPromo();
-
-  if (sessionStorage.getItem("isReload")) {
-    sessionStorage.removeItem("isReload");
-    sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
-  }
-
-  if(!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
-    spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
-  }
+  checkSpinLuckyWheelPromo();
 
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 

@@ -25,13 +25,14 @@
     </q-dialog>
 </template>
 <script setup>
-import { ref, onMounted, onActivated } from 'vue';
+import { ref, onMounted, onActivated, inject } from 'vue';
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { api, eventapi } from "boot/axios";
 
 const store = userStore();
 const isDoNotShowAgain = ref(false);
+const info = inject('info');
 
 const isShowSpinLuckyWheelPromoPopup = ref(false);
 
@@ -56,11 +57,9 @@ const checkIsCanShowPopup = () => {
     }
 
     if(store.hasToken()) {
-        eventapi.post("/refer-spin/check").then((res) => {
-            if (res.code === 0) {
-                isShowSpinLuckyWheelPromoPopup.value = true;
-            }
-        });
+        if (info.value) {
+            isShowSpinLuckyWheelPromoPopup.value = true;
+        }
     } else if(!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
         api.get("/config/uiconfigs").then((res) => {
             if(res.code === 0 && res.data?.spinwheel_promo === '1') {
