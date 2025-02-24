@@ -6,7 +6,7 @@
       <div class="content">
         <div class="title">
           <div style="font-size: 38px">恭喜您</div>
-          <div>雷火账号创建成功~</div>
+          <div>兴發账号创建成功~</div>
         </div>
         <div>
           <img src="../../assets/home/guide/step1-arrow.png" alt="" />
@@ -57,7 +57,7 @@
         <div class="content">
           <div class="title">
             <div style="font-size: 34px">
-              扫码下载雷火 APP
+              扫码下载兴發 APP
               <br />
               APP 嗨翻周末夜
             </div>
@@ -97,7 +97,7 @@
       <div class="content">
         <div class="title">
           <div style="font-size: 38px">点击这里充值</div>
-          <div>开启您的雷火游戏之旅</div>
+          <div>开启您的兴發游戏之旅</div>
         </div>
         <div class="page-count">5/5</div>
         <div class="next-button" @click="closeNewMemerGuide">知道了</div>
