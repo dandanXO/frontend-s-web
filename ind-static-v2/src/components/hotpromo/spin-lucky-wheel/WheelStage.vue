@@ -56,7 +56,7 @@
                 class="indicate"
                 src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/wheel-indicate.png"
               />
-              <button class="btn" :class="{ disabled: !info.spinChance }" @click="handleWheelClick">
+              <button class="btn" :class="{ disabled: !info.spinChance || isClaimedStatus }" @click="handleWheelClick">
                 rotate
                 <br />
                 {{ info.spinChance }} time
@@ -71,8 +71,9 @@
               class="decoration rabbit"
               src="../../../assets/images/promotion/spin-lucky-wheel/decoration-rabbit.png"
             />
-            <CommonButton class="draw-btn" @click="handleInviteClick">Invite To Earn Spin</CommonButton>
-            <span class="next-spin-remaining-time" v-if="info.startTime !== '' || info.status !== 'CLAIMED'">Countdown to next free spins: {{ nextFreeSpinRemainingTime }}</span>
+            <CommonButton v-if="isClaimedStatus" class="draw-btn disabled">Invite To Earn Spin</CommonButton>
+            <CommonButton v-else class="draw-btn" @click="handleInviteClick">Invite To Earn Spin</CommonButton>
+            <span class="next-spin-remaining-time" v-if="!isClaimedStatus">Countdown to next free spins: {{ nextFreeSpinRemainingTime }}</span>
           </div>
         </div>
       </div>
@@ -169,6 +170,7 @@ const prize = ref(0);
 const winningRecordRef = ref();
 const isCashOutPopupVisible = ref(false);
 const cashOutPopupRef = ref();
+const isClaimedStatus = computed(() => info.value.startTime === '' && info.value.status === 'CLAIMED');
 
 provide('nextFreeSpinRemainingTime', nextFreeSpinRemainingTime);
 provide('remainingTime', remainingTime);
@@ -295,7 +297,7 @@ const handleRecordClick = () => {
 
 const updateCountdownTime = () => {
   // console.log("updateCountdownTime")
-  const endTime = info.value.startTime === '' && info.value.status === 'CLAIMED' ? moment().tz("Asia/Kolkata").add(1, "days").startOf("day") : moment(info.value.startTime).tz("Asia/Kolkata").add(3, "days");
+  const endTime = isClaimedStatus.value ? moment().tz("Asia/Kolkata").add(1, "days").startOf("day") : moment(info.value.startTime).tz("Asia/Kolkata").add(3, "days");
   const nextFreeSpinEndTime = moment().tz("Asia/Kolkata").add(1, "days").startOf("day");
   if(timer.value){
     clearTimeout(timer.value);
