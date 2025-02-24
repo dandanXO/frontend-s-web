@@ -292,6 +292,9 @@ onUnmounted(() => {
         .prize {
           font-size: 10vw;
         }
+        .desc {
+          font-size: 4vw;
+        }
         .remaining-time {
           font-size: 4vw;
         }
