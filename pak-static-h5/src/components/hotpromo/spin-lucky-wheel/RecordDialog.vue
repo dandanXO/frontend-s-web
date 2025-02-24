@@ -18,7 +18,7 @@
                 <div v-for="(record, index) in info.invitedList" :key="index" class="record">
                   <span>{{ moment(record.depositDate).format("MM-DD HH:mm:ss") }}</span>
                   <span class="name">{{ record.loginName }}</span>
-                  <span>Invitation successful</span>
+                  <!-- <span>Invitation successful</span> -->
                 </div>
               </template>
               <span v-else class="no-record-text">No Records</span>
@@ -122,7 +122,7 @@ const handleTabClick = (tab) => {
 
     &.invitation {
       .record {
-        grid-template-columns: minmax(100px, 1fr) 1fr minmax(50px, 1fr);
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
