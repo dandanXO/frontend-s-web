@@ -42,7 +42,7 @@ const _modelValue = computed({
 
   .desc {
     position: absolute;
-    top: 45%;
+    top: 40%;
     left: 50%;
     transform: translateX(-50%);
     width: 70%;

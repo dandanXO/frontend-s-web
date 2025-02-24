@@ -49,7 +49,7 @@ const progressBarIndicatePosition = computed(() => {
 
 .extraction-progress-bar {
   position: relative;
-  width: 95%;
+  width: 90%;
   margin: 0 auto;
   height: 12px;
   background-color: #cc9f8c;

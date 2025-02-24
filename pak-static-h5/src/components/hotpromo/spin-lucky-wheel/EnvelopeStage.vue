@@ -225,7 +225,7 @@ onUnmounted(() => {
 
       .desc {
         position: absolute;
-        top: 36%;
+        top: 34%;
         left: 50%;
         transform: translateX(-50%);
         width: 70%;
