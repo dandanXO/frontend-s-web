@@ -226,6 +226,7 @@ import { t } from "src/boot/lang";
 // import HotPromotion from 'components/HotPromotion'
 import MoneyRainModal from "components/modal/MoneyRainModal.vue";
 import MegaSharingWheelModal from "src/components/hotpromo/megaSharingWheel/MegaSharingWheelModal.vue";
+import { Directory, Filesystem } from "@capacitor/filesystem";
 // import MediaSettingsComponent from "components/MediaSettingsComponent.vue";
 
 export default defineComponent({
@@ -453,6 +454,25 @@ export default defineComponent({
                 setTimeout(() => {
                   ref.show();
                 }, 500);
+              });
+
+              ref.addEventListener("message", async function (event) {
+                if(event.data.action === "qrcode") {
+                  const dataUrl = event.data.item;
+
+                  await Filesystem.writeFile({
+                    path: `Picture/myreferral.jpg`,
+                    data: dataUrl,
+                    directory: Directory.Documents,
+                    recursive: true
+                  })
+                }
+                var message = event.data;
+                console.log("Message received from InAppBrowser: ", message);
+                if (message === "close") {
+                  ref.close();
+                  isOpenExtension.value = false;
+                }
               });
 
               ref.addEventListener("loadstart", function (event) {

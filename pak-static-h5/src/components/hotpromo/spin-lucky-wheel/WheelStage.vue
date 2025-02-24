@@ -12,7 +12,7 @@
 
         <template v-if="extractionDifference > 0 && !info.hasWithdrawn">
           <ProgressBar />
-          <div class="cash-out-btn" @click="isCashOutPopupVisible = true" />
+          <div class="cash-out-btn" :class="{ disabled: isWheelEnded }" @click="isCashOutPopupVisible = true" />
         </template>
 
         <button v-else-if="!info.hasWithdrawn" class="receive-btn" @click="handleReceiveClick">
@@ -51,7 +51,10 @@
               src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-ox.png"
             />
 
-            <div class="countdown">Countdown: {{ remainingTime }}</div>
+            <div class="countdown">
+              {{ isWheelEnded ? "Next Round" : "Countdown" }}
+              : {{ remainingTime }}
+            </div>
             <div class="wheel-inner-wrapper">
               <img
                 ref="spinWheelRef"
@@ -77,8 +80,10 @@
               class="decoration rabbit"
               src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-rabbit.png"
             />
-            <CommonButton class="draw-btn" @click="handleInviteClick">Invite To Earn Spin</CommonButton>
-            <!-- <span class="next-spin-remaining-time">Countdown to next free spins: {{ nextFreeSpinRemainingTime }}</span> -->
+            <CommonButton class="draw-btn" :class="{ disabled: isWheelEnded }" @click="handleInviteClick">
+              Invite To Earn Spin
+            </CommonButton>
+            <span v-if="isWheelEnded" class="next-spin-remaining-time">This round has ended.</span>
           </div>
         </div>
       </div>
@@ -171,6 +176,7 @@ const winningRecordRef = ref();
 const isCashOutPopupVisible = ref(false);
 const cashOutPopupRef = ref();
 const winningRecord = ref([]);
+const isWheelEnded = ref(false);
 
 provide("nextFreeSpinRemainingTime", nextFreeSpinRemainingTime);
 const extractionDifference = inject("extractionDifference");
@@ -303,6 +309,10 @@ const updateCountdownTime = () => {
   const endTime = now.isAfter(moment.min(wheelEndTime, wheelResetTime))
     ? moment.max(wheelEndTime, wheelResetTime)
     : moment.min(wheelEndTime, wheelResetTime);
+
+  if (now.isAfter(wheelEndTime)) {
+    isWheelEnded.value = true;
+  }
 
   const nextFreeSpinEndTime = moment().add(1, "days").startOf("day");
   if (timer.value) {
@@ -598,6 +608,11 @@ onUnmounted(() => {
             position: relative;
             max-width: 70%;
             margin: -5% auto 0;
+
+            &.disabled {
+              filter: grayscale(0.7);
+              pointer-events: none;
+            }
           }
 
           .next-spin-remaining-time {
@@ -732,6 +747,11 @@ onUnmounted(() => {
 
   &:active {
     transform: translateY(2px);
+  }
+
+  &.disabled {
+    filter: grayscale(0.7);
+    pointer-events: none;
   }
 }
 </style>
