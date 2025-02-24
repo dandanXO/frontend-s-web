@@ -373,7 +373,11 @@ function getRecords() {
       const dataLength = data.total;
       if (dataLength > 0) {
         paginationInfo.pageNumber = data.current;
-        paginationInfo.pageTotal = data.pages;
+        if(data.pages === 0){
+          recordsPagination.pages = data.pages + 1;
+        }else{
+          recordsPagination.pages = data.pages;
+        }
         getRecordList();
 
         isHasRecord.value = true;
