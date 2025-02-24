@@ -16,9 +16,9 @@
             <div class="record-wrapper invitation">
               <template v-if="invitationRecords.length">
                 <div v-for="(record, index) in invitationRecords" :key="index" class="record">
-                  <span>{{ moment(record.referTime).format("MM-DD hh:mm:ssA") }}</span>
+                  <span>{{ moment(record.referTime).format("MM-DD HH:mm:ss") }}</span>
                   <span class="name">{{ record.loginName }}</span>
-                  <span>Invitation successful</span>
+                  <!--                  <span>Invitation successful</span>-->
                 </div>
               </template>
               <span v-else class="no-record-text">No Records</span>
@@ -28,7 +28,7 @@
             <div class="record-wrapper lottery">
               <template v-if="lotteryRecords.length">
                 <div v-for="(record, index) in lotteryRecords" :key="index" class="record">
-                  <span>{{ moment(record.time).format("MM-DD hh:mm:ssA") }}</span>
+                  <span>{{ moment(record.time).format("MM-DD HH:mm:ss") }}</span>
                   <span class="amount">${{ record.amount }}</span>
                 </div>
               </template>
@@ -87,13 +87,13 @@ const getRecords = () => {
 .record-dialog-inner-wrapper {
   width: 90%;
   max-width: 450px;
-  background-color: #8BA17C;
+  background-color: #8ba17c;
   border-radius: 14px;
   padding: 12px;
 
   .tab-wrapper {
     display: flex;
-    align-items:stretch;
+    align-items: stretch;
     justify-content: space-between;
     gap: 12px;
     margin-bottom: 12px;
@@ -104,7 +104,7 @@ const getRecords = () => {
       border-radius: 12px;
       padding: 10px 8px;
       font-size: 16px;
-      display:flex;
+      display: flex;
       line-height: 16px;
       align-items: center;
       justify-content: center;
@@ -113,7 +113,7 @@ const getRecords = () => {
       text-align: center;
 
       &.selected {
-        background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
+        background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
         color: #fff;
       }
     }
@@ -130,8 +130,8 @@ const getRecords = () => {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    background-color: #157F42;
-    border: 1px solid #D1FFC499;
+    background-color: #157f42;
+    border: 1px solid #d1ffc499;
     border-radius: 8px;
     padding: 12px 8px;
     height: 30vh;
@@ -145,7 +145,7 @@ const getRecords = () => {
 
     &.invitation {
       .record {
-        grid-template-columns: minmax(100px, 1fr) 1fr minmax(50px, 1fr);
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
@@ -180,7 +180,7 @@ const getRecords = () => {
 
       .amount {
         font-weight: 900;
-        color: #9AFF91;
+        color: #9aff91;
       }
     }
 

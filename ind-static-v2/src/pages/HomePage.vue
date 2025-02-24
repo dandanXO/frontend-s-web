@@ -1185,14 +1185,14 @@ const activateSlide = (clickedItem) => {
 };
 
 const info = ref({
-    startTime: "",
-    currAmount: 0,
-    targetWithdrawAmount: 0,
-    spinChance: 0,
-    status: ""
+  startTime: "",
+  currAmount: 0,
+  targetWithdrawAmount: 0,
+  spinChance: 0,
+  status: ""
 });
 
-provide('info', info);
+provide("info", info);
 
 const csDragPos = ref([10, 0]);
 const isDraggingCsIcon = ref(false);
@@ -1238,18 +1238,20 @@ const checkHbPromo = () => {
 };
 
 const checkSpinLuckyWheelPromo = async () => {
-  const res = await eventapi.post("/refer-spin/check");
-  info.value = res.data;
+  if (store.token) {
+    const res = await eventapi.post("/refer-spin/check");
+    info.value = res.data;
 
-  if (sessionStorage.getItem("isReload")) {
-    sessionStorage.removeItem("isReload");
-    sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
-  }
+    if (sessionStorage.getItem("isReload")) {
+      sessionStorage.removeItem("isReload");
+      sessionStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
+    }
 
-  if(!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
-    spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
+    if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
+      spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
+    }
   }
-}
+};
 
 const slide = ref(0);
 
@@ -3017,7 +3019,7 @@ const loadAppTabs = () => {
 
 onActivated(() => {
   store.getUnreadTotal();
-  if(!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+  if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
     spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
   }
 });
