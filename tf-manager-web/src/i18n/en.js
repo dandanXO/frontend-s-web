@@ -2649,6 +2649,7 @@ export default {
     selectPaymentType: 'Please input payment type',
     selectMobilePayment: 'Please select mobile payment',
     selectWebPayment: 'Please select web payment',
+    sequenceEmpty: 'sequence can not be empty',
     settlementToChecking: 'Updated to checking',
     settlementToPay: 'Updated to payment',
     settled: 'Successfully settled',

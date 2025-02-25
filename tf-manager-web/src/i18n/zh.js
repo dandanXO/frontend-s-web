@@ -2625,6 +2625,7 @@ export default {
     selectPaymentType: '请输入支付类型',
     selectMobilePayment: '请先选择手机支付类型',
     selectWebPayment: '请先选择网页支付类型',
+    sequenceEmpty: '排序不可為空',
     settlementToChecking: '成功更新至待审核',
     settlementToPay: '成功更新至待结算',
     settled: '成功结算',

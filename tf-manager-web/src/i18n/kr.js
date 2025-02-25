@@ -2104,6 +2104,7 @@ export default {
     selectPaymentType: '결제 유형을 선택하십시오',
     selectMobilePayment: '모바일 결제를 선택하십시오',
     selectWebPayment: '웹 결제를 선택하십시오',
+    sequenceEmpty: '시퀀스는 비워둘 수 없습니다.',
     settlementToChecking: '검토 중으로 업데이트됨',
     settlementToPay: '결제로 업데이트됨',
     settled: '성공적으로 처리됨',
