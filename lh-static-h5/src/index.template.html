@@ -23,7 +23,6 @@
     <script type="text/javascript">
       function initCloudWise(appId) {
         CWRUMLICENCE = appId;
-        console.log(CWRUMLICENCE)
         const cloudWiseScript = document.createElement("script");
         cloudWiseScript.src = `https://apm-int.cloudwise.com/api/browser/settings/v70/js?app_key=${appId}`;
         cloudWiseScript.async = true;
@@ -42,7 +41,8 @@
               })
               .join("")
           );
-          return JSON.parse(jsonPayload);
+          const tokenObj = JSON.parse(jsonPayload)
+          return JSON.parse(tokenObj.data);
         } catch(e) {
           return null
         }
