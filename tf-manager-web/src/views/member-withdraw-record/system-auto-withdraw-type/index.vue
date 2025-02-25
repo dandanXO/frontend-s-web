@@ -977,7 +977,6 @@ async function changeWithdrawReviewStatus(data, status) {
 }
 
 async function saveOrder(data) {
-  data.siteId = request.siteId
   await createWithdrawalChannelOrder(data)
   await loadAutoPaymentType()
   ElMessage({ message: t('message.addSuccess'), type: 'success' })
@@ -986,7 +985,11 @@ async function saveOrder(data) {
 async function batchSave(data) {
   var sequenceList = []
   var isDuplicate = false
+  var isSequenceEmpty = false
   data.forEach(setting => {
+    if (setting.sequence === undefined) {
+      isSequenceEmpty = true
+    }
     if (!isDuplicate && setting.status) {
       if (sequenceList.includes(setting.sequence)) {
         isDuplicate = true
@@ -995,6 +998,10 @@ async function batchSave(data) {
       }
     }
   })
+  if (isSequenceEmpty) {
+    ElMessage({ message: t("message.sequenceEmpty"), type: 'error' })
+    return
+  }
   if (isDuplicate) {
     ElMessage({ message: t('message.validateWithdrawChannel'), type: 'error' })
     return
