@@ -764,7 +764,11 @@ export default defineComponent({
               // if (platTypes.indexOf("CASUAL") > -1) {
               var casualObj = Object.assign({}, element);
               casualObj.gameCode = "casual";
-              casualObj.title = casualObj.name + " 小游戏";
+              if (casualObj.code === "TFGaming") {
+                casualObj.title = casualObj.alias.split('、')[1];
+              } else {
+                casualObj.title = casualObj.name + " 小游戏";
+              }
               casualObj.icon = "casual";
               casualObj.subtitle = "小游戏";
               casuals.value.push(casualObj);
