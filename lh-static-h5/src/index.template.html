@@ -22,10 +22,15 @@
     </script>
     <script type="text/javascript">
       function initCloudWise(appId) {
+        window.cloudWiseQueue = []
         CWRUMLICENCE = appId;
         const cloudWiseScript = document.createElement("script");
         cloudWiseScript.src = `https://apm-int.cloudwise.com/api/browser/settings/v70/js?app_key=${appId}`;
         cloudWiseScript.async = true;
+        cloudWiseScript.onload = () => {
+          window.cloudWiseQueue.forEach(request => request())
+          window.cloudWiseQueue = []
+        }
         document.head.appendChild(cloudWiseScript);
       }
 
@@ -125,25 +130,37 @@
         timestamp: Date.now()
       })
 
+      const sendCloudWiseTrack = (request) => {
+        if(window.CloudWiseUtil) {
+          request()
+        } else {
+          window.cloudWiseQueue.push(() => {
+            request()
+          })
+        }
+      }
+
       const callFlutterHandler = (tokenObj) => {
-        if(tokenObj && tokenObj.s3 && window.CloudWiseUtil && window.WEBVIEW_CLOUD_WISE) {
-          CloudWiseUtil.setUserInfoWithUserId(tokenObj.s3)
-          CloudWiseUtil.setCustomEventInfo({
-            "user_id": tokenObj.s3,
-            "type": "SENDING_MESSAGE_TO_FLUTTER",
-            "data": addTimestamp({})
-          }, "CUSTOM")
+        if(tokenObj && tokenObj.s3 && window.WEBVIEW_CLOUD_WISE) {
+          sendCloudWiseTrack(() => {
+            CloudWiseUtil.setUserInfoWithUserId(tokenObj.s3)
+            CloudWiseUtil.setCustomEventInfo({
+              // "user_id": tokenObj.s3,
+              "type": "SENDING_MESSAGE_TO_FLUTTER",
+              "data": addTimestamp({})
+            }, "CUSTOM")
+          })
         }
         window.flutter_inappwebview.callHandler('FlutterChannel','LH_FLUTTER')
       }
 
       const receiveMessageFromFlutter = (tokenObj, data) => {
-        if( window.CloudWiseUtil && window.WEBVIEW_CLOUD_WISE) {
-          CloudWiseUtil.setCustomEventInfo({
+        if(window.WEBVIEW_CLOUD_WISE) {
+          sendCloudWiseTrack(() => CloudWiseUtil.setCustomEventInfo({
             // "user_id": tokenObj.s3,
             "type": "RECEIVING_MESSAGE_FROM_FLUTTER",
             "data": addTimestamp(data)
-          }, "CUSTOM")
+          }, "CUSTOM"))
         }
       }
 
