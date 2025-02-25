@@ -1,6 +1,6 @@
 <template>
     <div class="gradient-amount-wrapper">
-        <svg class="prize" width="300" :height="props?.height || 60" style="" xmlns="http://www.w3.org/2000/svg">
+        <svg class="prize" width="300px" :height="`${props?.height || 60}px`" style="" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <linearGradient id="gradientAmount" gradientTransform="rotate(90)">
                     <stop offset="0%" stop-color="#FDFD7A" />
