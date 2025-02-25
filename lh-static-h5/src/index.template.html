@@ -59,7 +59,6 @@
         if(appPaths.includes(pathname)) {
           initCloudWise("wS0n2SF8WRCb0fAkjFLvksRizrsrej3YfZosUhCbiG7b2z**czacDVZXpilaow2ti")
           window.parseJwt = parseJwt;
-          window.WEBVIEW_CLOUD_WISE = true;
         } else {
           initCloudWise("wS0n2SF8WRCb0fAkjFLvksRizrsrej3Y0t429/b5onII**yr8w22d3AkwtO5qHCg9")
         }
@@ -131,7 +130,7 @@
       })
 
       const sendCloudWiseTrack = (request) => {
-        if(window.CloudWiseUtil) {
+        if(window.CloudWiseUtil && window.WEBVIEW_CLOUD_WISE) {
           request()
         } else {
           window.cloudWiseQueue.push(() => {
@@ -140,28 +139,22 @@
         }
       }
 
-      const callFlutterHandler = (tokenObj) => {
-        if(tokenObj && tokenObj.s3 && window.WEBVIEW_CLOUD_WISE) {
-          sendCloudWiseTrack(() => {
-            CloudWiseUtil.setUserInfoWithUserId(tokenObj.s3)
-            CloudWiseUtil.setCustomEventInfo({
-              // "user_id": tokenObj.s3,
-              "type": "SENDING_MESSAGE_TO_FLUTTER",
-              "data": addTimestamp({})
-            }, "CUSTOM")
-          })
-        }
-        window.flutter_inappwebview.callHandler('FlutterChannel','LH_FLUTTER')
+      const callFlutterHandler = () => {
+        window.WEBVIEW_CLOUD_WISE = true;
+        sendCloudWiseTrack(() => {
+          CloudWiseUtil.setCustomEventInfo({
+            "type": "SENDING_MESSAGE_TO_FLUTTER",
+            "data": addTimestamp({})
+          }, "CUSTOM")
+        });
+        window.flutter_inappwebview.callHandler('FlutterChannel','LH_FLUTTER');
       }
 
-      const receiveMessageFromFlutter = (tokenObj, data) => {
-        if(window.WEBVIEW_CLOUD_WISE) {
-          sendCloudWiseTrack(() => CloudWiseUtil.setCustomEventInfo({
-            // "user_id": tokenObj.s3,
-            "type": "RECEIVING_MESSAGE_FROM_FLUTTER",
-            "data": addTimestamp(data)
-          }, "CUSTOM"))
-        }
+      const receiveMessageFromFlutter = (data) => {
+        sendCloudWiseTrack(() => CloudWiseUtil.setCustomEventInfo({
+          "type": "RECEIVING_MESSAGE_FROM_FLUTTER",
+          "data": addTimestamp(data)
+        }, "CUSTOM"))
       }
 
       if (
@@ -177,6 +170,13 @@
         const params = new URLSearchParams(url.search);
         const tokenStr = params.get('token');
         const tokenObj = window.parseJwt ? window.parseJwt(tokenStr) : null;
+        sendCloudWiseTrack(() => {
+          CloudWiseUtil.setUserInfoWithUserId(tokenObj.s3)
+          CloudWiseUtil.setCustomEventInfo({
+            "type": "INITIALIZE_APP",
+            "data": addTimestamp({})
+          }, "CUSTOM")
+        })
 
         //IOS
         if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.notifyApp) {
@@ -191,12 +191,12 @@
         document.addEventListener("DOMContentLoaded", function () {
           console.log('DOM fully loaded and parsed');
           if (window.flutter_inappwebview) {
-            callFlutterHandler(tokenObj);
+            callFlutterHandler();
           } else {
             console.log('FlutterChannel not available yet, waiting...');
             const interval = setInterval(() => {
               if (window.flutter_inappwebview) {
-                callFlutterHandler(tokenObj);
+                callFlutterHandler();
                 console.log('Message sent to Flutter after DOMContentLoaded');
                 clearInterval(interval);
               }
@@ -208,7 +208,7 @@
         window.notifyApp = function (message) {
           try {
             const returnJson = message.data;
-            receiveMessageFromFlutter(tokenObj, returnJson);
+            receiveMessageFromFlutter(returnJson);
             if (returnJson && returnJson.rstDomain) {
               window.localStorage.setItem("LH_H5_RST_URL", returnJson.rstDomain);
 
