@@ -1,11 +1,11 @@
 <template>
-    <q-dialog v-model="_modelValue" @hide="hideCashOutPopup">
+    <q-dialog v-model="_modelValue" @hide="hideCashOutPopup" @show="handleDialogShow">
         <div v-if="isShowInviteWins" class="invite-wins">
             <InviteWins />
         </div>
         <div class="cash-out" v-else>
-            <GradientTextAmount :amountText="`CASH OUT COSTS`" :width="300" :height="35" />
-            <GradientTextAmount :amountText="`${extractionDifference}$`" :width="300" :height="35" />
+            <GradientTextAmount v-if="isShowTextAmount" :amountText="`CASH OUT COSTS  ${extractionDifference}$`" />
+            <div v-else class="text-amount-placeholder"></div>
             <span class="next-spin-remaining-time">Next Round: {{ remainingTime }}</span>
             <div class="cash-out-backdrop-wrapper">
                 <div class="pulse1"></div>
@@ -31,6 +31,7 @@ import InviteWins from "./InviteWins.vue";
 const props = defineProps(["modelValue"]);
 const emit = defineEmits(["update:modelValue", "hide"]);
 const showInviteWins = () => isShowInviteWins.value = true;
+const isShowTextAmount = ref(false);
 
 defineExpose({
     showInviteWins
@@ -45,12 +46,16 @@ const _modelValue = computed({
 
 const hideCashOutPopup = () => {
     isShowInviteWins.value = false;
+    isShowTextAmount.value = false;
     emit('hide');
-}
+};
 
 const extractionDifference = inject('extractionDifference');
 const remainingTime = inject('remainingTime');
 
+const handleDialogShow = () => {
+    isShowTextAmount.value = true;
+};
 </script>
 <style lang="scss" scoped>
 
@@ -72,7 +77,21 @@ const remainingTime = inject('remainingTime');
 }
 
 .cash-out {
-    width: 300px;
+    width: 85%;
+
+    .text-amount-placeholder {
+        width: 100%;
+        height: 50px;
+    }
+
+    .prize {
+        position: absolute;
+        top: 20%;
+        width: 100%;
+        font-size: 56px;
+        font-weight: 900;
+        text-align: center;
+    }
 
     .invite-wins-btn {
         width: 65%;
@@ -85,25 +104,33 @@ const remainingTime = inject('remainingTime');
     }
 }
 
+@media screen and (max-width: 500px) {
+    .cash-out {
+        .prize {
+            font-size: 11vw;
+        }
+    }
+}
+
 .next-spin-remaining-time {
     display: flex;
     justify-content: center;
     font-family: Inter;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 20px;
     line-height: 24.2px;
     letter-spacing: 0px;
 }
 
 @media screen and (max-width: 400px) {
     .next-spin-remaining-time {
-        font-size: 16px;
+        font-size: 18px;
     }
 }
 
 @media screen and (max-width: 350px) {
     .next-spin-remaining-time {
-        font-size: 12px;
+        font-size: 14px;
     }
 }
 
@@ -121,7 +148,11 @@ const remainingTime = inject('remainingTime');
     }
 }
 
-.pulse1, .pulse2, .pulse3, .pulse4, .pulse5 {
+.pulse1,
+.pulse2,
+.pulse3,
+.pulse4,
+.pulse5 {
     width: 30px;
     background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/sparkle.gif) no-repeat;
     aspect-ratio: 480 / 467;
