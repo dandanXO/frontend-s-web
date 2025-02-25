@@ -397,6 +397,22 @@ export default defineComponent({
               },500)
             });
 
+            ref.addEventListener("message", async function(event) {
+              if (event.data.action === "qrcode") {
+                // alert(event.data.item);
+                const dataUrl = event.data.item;
+                // alert(dataUrl)
+                // Save the image to the photo gallery
+                await Filesystem.writeFile({
+                  path: `Pictures/myreferral-${Date.now()}.jpg`,
+                  data: dataUrl,
+                  directory: Directory.Documents,
+                  recursive: true
+                });
+
+              }
+            });
+
             ref.addEventListener("loadstart", function (event) {
               var url = event.url;
               // alert("This" + url);
