@@ -905,6 +905,11 @@ import { useNotify } from "src/hooks/notify";
 import { Carousel, Slide, Navigation, Pagination } from "vue3-carousel";
 import { useLocalStorage } from "@vueuse/core";
 import GameModal from "src/components/modal/GameModal.vue";
+import { useCloudWiseHelper } from "src/hooks/cloudWiseHelper";
+
+useCloudWiseHelper({
+  pageName: "vip"
+})
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 const isShowTable = ref(false);
