@@ -194,6 +194,7 @@ import { SessionStorage } from "quasar";
 import ProfileSummary from "components/ProfileSummary.vue";
 import HotPromotion from 'components/HotPromotion'
 import GameModal from "components/modal/GameModal.vue";
+import { Filesystem, Directory } from "@capacitor/filesystem";
 // import HotPromotion from 'components/HotPromotion'
 export default defineComponent({
   name: "PromoView",
