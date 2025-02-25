@@ -48,7 +48,7 @@
                 <div class="group-node">
                   <div>
                     {{ item.name }}
-                    <img :src="paymentDir + item.promoIcon" style="width:40px;height: auto" />
+                    <img v-if="item.promoIcon !== null" :src="paymentDir + item.promoIcon" style="width:40px;height: auto" />
                   </div>
                 </div>
               </div>
