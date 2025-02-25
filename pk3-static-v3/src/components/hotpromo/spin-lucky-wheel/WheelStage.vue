@@ -8,7 +8,7 @@
           <span class="amount">{{ info.currAmount }}</span>
         </span> -->
 
-        <GradientTextAmount :amountText="`$ ${info.currAmount}`" />
+        <GradientTextAmount :amountText="`${store.currency.label} ${info.currAmount}`" />
 
         <template v-if="extractionDifference > 0 && info.status === 'IN_PROGRESS'">
           <ProgressBar />
@@ -135,10 +135,12 @@ import { useQuasar } from "quasar";
 import ProgressBar from './ProgressBar.vue';
 import CashOutPopup from "./CashOutPopup.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
+import { userStore } from "@/stores/index";
 
 const emit = defineEmits(["reload"]);
 const props = defineProps(["info"]);
 const { info } = toRefs(props);
+const store = userStore();
 
 
 const TOTAL_ITEMS = 6;
@@ -480,6 +482,10 @@ onUnmounted(() => {
           position: relative;
           width: 100%;
           height: 100%;
+          
+          .wheel {
+            width: 100% !important;
+          }
 
           .countdown {
             display: flex;

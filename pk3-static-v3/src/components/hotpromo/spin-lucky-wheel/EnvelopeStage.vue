@@ -121,6 +121,7 @@ onUnmounted(() => {
 
     .title {
       margin-bottom: 20px !important;
+      width: 100% !important;
     }
 
     .envelope-wrapper {
@@ -226,6 +227,7 @@ onUnmounted(() => {
         left: 50%;
         bottom: -8%;
         transform: translateX(-50%);
+        width: 100% !important;
       }
     }
   }

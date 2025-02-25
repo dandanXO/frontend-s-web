@@ -39,7 +39,7 @@ import * as _ from "lodash";
 import moment from "moment";
 
 import SlotFtdPromo from "@/components/hotpromo/slotftdpromo/SlotFtdPromo.vue";
-const SpinLuckyWheelPromo = defineAsyncComponent(() => "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue");
+import SpinLuckyWheelPromo from "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
