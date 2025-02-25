@@ -1,10 +1,11 @@
 <template>
-    <q-dialog v-model="_modelValue" @hide="hideCashOutPopup">
+    <q-dialog v-model="_modelValue" @hide="hideCashOutPopup" @show="handleDialogShow">
         <div v-if="isShowInviteWins" class="invite-wins">
             <InviteWins />
         </div>
         <div class="cash-out" v-else>
-            <GradientTextAmount :amountText="`CASH OUT COSTS  ${extractionDifference}$`" :width="300" />
+            <GradientTextAmount v-if="isShowTextAmount" :amountText="`CASH OUT COSTS  ${extractionDifference}$`" />
+            <div v-else class="text-amount-placeholder"></div>
             <span class="next-spin-remaining-time">Next Round: {{ remainingTime }}</span>
             <div class="cash-out-backdrop-wrapper">
                 <div class="pulse1"></div>
@@ -27,9 +28,10 @@ import GradientTextAmount from "./GradientTextAmount.vue";
 import ProgressBar from "./ProgressBar.vue";
 import InviteWins from "./InviteWins.vue";
 
-const props = defineProps(["modelValue", "prize"]);
+const props = defineProps(["modelValue"]);
 const emit = defineEmits(["update:modelValue", "hide"]);
 const showInviteWins = () => isShowInviteWins.value = true;
+const isShowTextAmount = ref(false);
 
 defineExpose({
     showInviteWins
@@ -44,13 +46,16 @@ const _modelValue = computed({
 
 const hideCashOutPopup = () => {
     isShowInviteWins.value = false;
+    isShowTextAmount.value = false;
     emit('hide');
-}
+};
 
 const extractionDifference = inject('extractionDifference');
-const nextFreeSpinRemainingTime = inject('nextFreeSpinRemainingTime');
 const remainingTime = inject('remainingTime');
 
+const handleDialogShow = () => {
+    isShowTextAmount.value = true;
+};
 </script>
 <style lang="scss" scoped>
 
@@ -73,6 +78,11 @@ const remainingTime = inject('remainingTime');
 
 .cash-out {
     width: 85%;
+
+    .text-amount-placeholder {
+        width: 100%;
+        height: 50px;
+    }
 
     .prize {
         position: absolute;
