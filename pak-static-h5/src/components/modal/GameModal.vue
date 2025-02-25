@@ -1022,6 +1022,9 @@ defineExpose({
       width: 100%;
     padding: 15px;
     text-align: center;
+     &:last-child {
+      border-top: 1px solid #ffffff;
+     }
      }
   }
 }
