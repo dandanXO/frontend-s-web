@@ -32,7 +32,7 @@ const isLongText = computed(() => props?.amountText?.length > 10);
     }
 
     .amount {
-        font-size: 22px;
+        font-size: 35px;
         font-weight: 900;
         font-style: italic;
         fill: url(#gradientAmount);
