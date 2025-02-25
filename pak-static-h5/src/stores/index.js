@@ -44,7 +44,7 @@ export const userStore = defineStore("userStore", {
       emailVerified: false,
       currentDeposit: "",
       levelUpDeposit: "",
-      hasFtd: "",
+      hasDeposit: "",
       currentMailData: {},
       guest: false,
       readMsgLists: [],
@@ -224,7 +224,7 @@ export const userStore = defineStore("userStore", {
             phoneVerified,
             emailVerified,
             evip,
-            hasFtd,
+            hasDeposit,
             currentDeposit,
             levelUpDeposit,
             guest
@@ -244,7 +244,7 @@ export const userStore = defineStore("userStore", {
           this.emailVerified = emailVerified;
           this.currentDeposit = parseFloat(currentDeposit);
           this.levelUpDeposit = parseFloat(levelUpDeposit);
-          this.hasFtd = hasFtd;
+          this.hasDeposit = hasDeposit;
           this.guest = guest;
 
           if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
