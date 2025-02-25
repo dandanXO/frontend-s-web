@@ -21,9 +21,9 @@
     <RecordDateFilter class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="searchRecord" />
 
     <div class="payout-total flex-div">
-      <div>总投注: {{ totalBetRecord.totalBet }}</div>
-      <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
-      <div>总有效投注: {{ totalBetRecord.totalValidBet }}</div>
+      <div class="rounded-payout">总投注: {{ totalBetRecord.totalBet }}</div>
+      <div class="rounded-payout">总有效投注: {{ totalBetRecord.totalValidBet }}</div>
+      <div class="rounded-payout">总派彩: {{ totalBetRecord.totalPayout }}</div>
     </div>
 
     <RecordComponent
@@ -245,5 +245,16 @@ onMounted(async () => {
 
 .payout-total {
   margin-right: 5px;
+  gap:12px;
+
+  .rounded-payout {
+    border-radius: 24px;
+    padding: 8px 16px;
+    width:100%;
+    background-color: #222D49;
+    color:#A3A7AF;
+    text-align:center;
+    white-space: nowrap;
+  }
 }
 </style>
