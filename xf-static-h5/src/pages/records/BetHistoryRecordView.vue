@@ -160,8 +160,14 @@ const loadPlatformLists = () => {
           label: item.alias,
           value: item.code + "@" + item.gameType + "@" + item.alias
         };
+
         platformsList.value.push(option);
       });
+      platformsList.value.push({
+        label: "全部平台",
+        value: ""
+      });
+      platform.value = { label: "全部平台", value: "" };
     });
 };
 
@@ -245,15 +251,15 @@ onMounted(async () => {
 
 .payout-total {
   margin-right: 5px;
-  gap:12px;
+  gap: 12px;
 
   .rounded-payout {
     border-radius: 24px;
     padding: 8px 16px;
-    width:100%;
-    background-color: #222D49;
-    color:#A3A7AF;
-    text-align:center;
+    width: 100%;
+    background-color: #222d49;
+    color: #a3a7af;
+    text-align: center;
     white-space: nowrap;
   }
 }
