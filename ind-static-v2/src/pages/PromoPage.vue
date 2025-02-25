@@ -1061,6 +1061,14 @@ export default defineComponent({
         font-size: 12px;
         padding-bottom: 40px;
 
+        &.spin-lucky-wheel-envelope {
+          background: url("../assets/images/promotion/spin-lucky-wheel/envelope-stage/bg.png") no-repeat top center;
+          background-size: cover;
+          width: 100%;
+          margin-top: 0;
+          padding-bottom: 0;
+        }
+
         p {
           font-size: 14px;
         }
