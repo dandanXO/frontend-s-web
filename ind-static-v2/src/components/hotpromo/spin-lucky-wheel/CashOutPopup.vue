@@ -4,7 +4,8 @@
             <InviteWins />
         </div>
         <div class="cash-out" v-else>
-            <GradientTextAmount :amountText="`CASH OUT COSTS  ${extractionDifference}$`" :width="300" />
+            <GradientTextAmount :amountText="`CASH OUT COSTS`" :width="300" :height="35" />
+            <GradientTextAmount :amountText="`${extractionDifference}$`" :width="300" :height="35" />
             <span class="next-spin-remaining-time">Next Round: {{ remainingTime }}</span>
             <div class="cash-out-backdrop-wrapper">
                 <div class="pulse1"></div>
@@ -71,7 +72,7 @@ const remainingTime = inject('remainingTime');
 }
 
 .cash-out {
-    width: 85%;
+    width: 300px;
 
     .invite-wins-btn {
         width: 65%;
