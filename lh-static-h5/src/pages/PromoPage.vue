@@ -308,6 +308,7 @@ import AijiasuPromo from "src/components/hotpromo/aijiasu/AijiasuPromo.vue";
 import { useNotify } from "src/hooks/notify";
 import { cached } from "src/boot/cache";
 import NBAWaterBattle from "src/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
+import { useCloudWiseHelper } from "src/hooks/cloudWiseHelper";
 
 
 export default defineComponent({
@@ -321,6 +322,10 @@ export default defineComponent({
     const notify = useNotify();
     const store = userStore();
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
+    useCloudWiseHelper({
+      pageName: "promo"
+    })
+
     const banner = ref([]);
     const promoState = reactive({
       active: { value: "ALL", label: "ALL" },

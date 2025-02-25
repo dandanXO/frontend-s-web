@@ -170,3 +170,18 @@ export const writeClipboard = async (content, useExecCommand = false) => {
     }
   }
 };
+
+export const customCloudWiseRecord = (type, data = {}) => {
+  if (!window.WEBVIEW_CLOUD_WISE || !window.CloudWiseUtil) return;
+  CloudWiseUtil.setCustomEventInfo(
+    {
+      // user_id: tokenObj.s3,
+      type: "SENDING_MESSAGE_TO_FLUTTER",
+      data: {
+        ...data,
+        timestamp: Date.now()
+      }
+    },
+    "CUSTOM"
+  );
+};
