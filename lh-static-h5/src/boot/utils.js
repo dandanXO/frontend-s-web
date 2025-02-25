@@ -172,16 +172,32 @@ export const writeClipboard = async (content, useExecCommand = false) => {
 };
 
 export const customCloudWiseRecord = (type, data = {}) => {
-  if (!window.WEBVIEW_CLOUD_WISE || !window.CloudWiseUtil) return;
-  CloudWiseUtil.setCustomEventInfo(
-    {
-      // user_id: tokenObj.s3,
-      type: "SENDING_MESSAGE_TO_FLUTTER",
-      data: {
-        ...data,
-        timestamp: Date.now()
-      }
-    },
-    "CUSTOM"
-  );
+  if (!window.WEBVIEW_CLOUD_WISE) return;
+  if (window.CloudWiseUtil) {
+    window.CloudWiseUtil.setCustomEventInfo(
+      {
+        // user_id: tokenObj.s3,
+        type: "SENDING_MESSAGE_TO_FLUTTER",
+        data: {
+          ...data,
+          timestamp: Date.now()
+        }
+      },
+      "CUSTOM"
+    );
+  } else {
+    window.cloudWiseQueue.push(() =>
+      window.CloudWiseUtil.setCustomEventInfo(
+        {
+          // user_id: tokenObj.s3,
+          type: "SENDING_MESSAGE_TO_FLUTTER",
+          data: {
+            ...data,
+            timestamp: Date.now()
+          }
+        },
+        "CUSTOM"
+      )
+    );
+  }
 };
