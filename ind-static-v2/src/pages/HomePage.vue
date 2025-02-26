@@ -1129,7 +1129,7 @@
 
   <!-- Spin Lucky Wheel promo start -->
   <HomePopup ref="spinLuckyWheelPromoPopupRef" />
-  <SpinLuckyWheelPromoSticky v-if="info?.status === 'IN_PROGRESS'" />
+  <SpinLuckyWheelPromoSticky v-if="store.spinWheelLuckyPromoInfo?.status === 'IN_PROGRESS'" />
   <!-- Spin Lucky Wheel promo end -->
 </template>
 
@@ -1184,16 +1184,6 @@ const activateSlide = (clickedItem) => {
   });
 };
 
-const info = ref({
-  startTime: "",
-  currAmount: 0,
-  targetWithdrawAmount: 0,
-  spinChance: 0,
-  status: ""
-});
-
-provide("info", info);
-
 const csDragPos = ref([10, 0]);
 const isDraggingCsIcon = ref(false);
 
@@ -1240,7 +1230,7 @@ const checkHbPromo = () => {
 const checkSpinLuckyWheelPromo = async () => {
   if (store.token) {
     const res = await eventapi.post("/refer-spin/check");
-    info.value = res.data;
+    store.spinWheelLuckyPromoInfo = res.data;
 
     if (sessionStorage.getItem("isReload")) {
       sessionStorage.removeItem("isReload");
