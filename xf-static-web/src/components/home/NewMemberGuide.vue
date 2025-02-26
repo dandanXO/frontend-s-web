@@ -1,5 +1,5 @@
 <template>
-  <div class="new-member-guide-dialog" :show-close="false" v-if="store.regSuccessGuideVisible">
+  <div class="new-member-guide-dialog" :show-close="false" v-if="!store.regSuccessGuideVisible">
     <div class="step1-container" v-if="step === 1">
       <img class="step-bg" src="../../assets/home/guide/step-bg.png" alt="" />
       <img src="../../assets/home/guide/step1-flag.png" alt="" class="flag" />
@@ -153,8 +153,8 @@ const adjustGuide = () => {
       const { x, y } = document.querySelector(".app_address")?.getBoundingClientRect() || {};
       const step4img = document.querySelector(".step4-img");
       if (step4img && x !== undefined && y !== undefined) {
-        step4img.style.top = `calc(${y}px - 139px)`;
-        step4img.style.left = `calc(${x}px - 192px)`;
+        step4img.style.top = `calc(${y}px - 269px)`;
+        step4img.style.left = `calc(${x}px - 380px)`;
         step4img.style.visibility = "visible";
       }
     }, 500);
@@ -346,7 +346,7 @@ onMounted(() => {
 }
 
 .step4-container {
-  margin-left: -30%;
+  margin-left: -50%;
 
   .arrow {
     right: -50%;
