@@ -172,6 +172,7 @@ export const writeClipboard = async (content, useExecCommand = false) => {
 };
 
 export const customCloudWiseRecord = (userId, data = {}) => {
+  if (!window.WEBVIEW_CLOUD_WISE) return;
   LA.track('PAGE_VIEW', {
     type: "PAGE_VIEW",
     data: {
@@ -180,7 +181,6 @@ export const customCloudWiseRecord = (userId, data = {}) => {
       timestamp: Date.now()
     }
   });
-  if (!window.WEBVIEW_CLOUD_WISE) return;
   if (window.CloudWiseUtil) {
     CloudWiseUtil.setCustomEventInfo(
       {
