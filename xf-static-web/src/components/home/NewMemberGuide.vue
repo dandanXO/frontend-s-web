@@ -58,11 +58,10 @@
           <div class="title">
             <div style="font-size: 34px">
               扫码下载兴發 APP
-              <br />
-              APP 嗨翻周末夜
             </div>
           </div>
-          <div class="subtitle">周六周日准时开启红包雨</div>
+          <div class="subtitle">让您畅享海量策略 <br />
+            赛事玩法</div>
           <div class="page-count">3/5</div>
           <div class="next-button" @click="handleNext(5)">下一个</div>
         </div>
@@ -147,19 +146,20 @@ const adjustGuide = () => {
       }
     }, 500);
   } else if (value === 4) {
-    props?.openAppMenu();
+    // props?.openAppMenu(); 
+    router.push("/app");
 
     setTimeout(() => {
-      const { x, y } = document.querySelector(".app-download-menu-qr")?.getBoundingClientRect() || {};
+      const { x, y } = document.querySelector(".app_address")?.getBoundingClientRect() || {};
       const step4img = document.querySelector(".step4-img");
       if (step4img && x !== undefined && y !== undefined) {
         step4img.style.top = `calc(${y}px - 139px)`;
-        step4img.style.left = `calc(${x}px - 242px)`;
+        step4img.style.left = `calc(${x}px - 192px)`;
         step4img.style.visibility = "visible";
       }
     }, 500);
   } else if (value === 5) {
-    props?.closeAppMenu();
+    // props?.closeAppMenu();
 
     const personalCenter = document.querySelector(".header-menu-acc-dropdown>span");
     personalCenter.click();
@@ -346,10 +346,7 @@ onMounted(() => {
 }
 
 .step4-container {
-  display: flex;
-  align-items: center;
-  position: absolute;
-  left: 7%;
+  margin-left: -30%;
 
   .arrow {
     right: -50%;
