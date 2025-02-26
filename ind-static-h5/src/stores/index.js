@@ -51,7 +51,14 @@ export const userStore = defineStore("userStore", {
       paytypeWithPrivilege: "",
       extraPrivilegeId: "",
       ftd: true,
-      isFbPixel: false
+      isFbPixel: false,
+      spinWheelLuckyPromoInfo: {
+        startTime: "",
+        currAmount: 0,
+        targetWithdrawAmount: 0,
+        spinChance: 0,
+        status: ""
+      }
     };
   },
   actions: {

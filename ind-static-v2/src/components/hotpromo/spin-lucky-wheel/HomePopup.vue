@@ -29,10 +29,11 @@ import { ref, onMounted, onActivated, inject } from 'vue';
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { api, eventapi } from "boot/axios";
+import { storeToRefs } from 'pinia';
 
 const store = userStore();
 const isDoNotShowAgain = ref(false);
-const info = inject('info');
+const { spinWheelLuckyPromoInfo: info } = storeToRefs(store);
 
 const isShowSpinLuckyWheelPromoPopup = ref(false);
 

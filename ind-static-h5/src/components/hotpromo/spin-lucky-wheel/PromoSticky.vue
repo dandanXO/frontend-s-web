@@ -12,6 +12,7 @@ import { onActivated, onMounted, onUnmounted, ref, inject } from "vue";
 import { eventapi } from "src/boot/axios";
 import moment from 'moment-timezone';
 import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
 
 const router = useRouter();
 const timer = ref();
@@ -33,7 +34,7 @@ const closeSticky = () => {
 const csDragPos = ref([10, 90]);
 const isDraggingCsIcon = ref(false);
 
-const info = inject('info');
+const { spinWheelLuckyPromoInfo: info } = storeToRefs(store);
 
 const getRemainingTime = (endTime) => {
     let result = "00:00:00";

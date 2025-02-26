@@ -50,7 +50,14 @@ export const userStore = defineStore("userStore", {
       multipleBalance: [],
       paytypeWithPrivilege: "",
       extraPrivilegeId: "",
-      ftd: true
+      ftd: true,
+      spinWheelLuckyPromoInfo: {
+        startTime: "",
+        currAmount: 0,
+        targetWithdrawAmount: 0,
+        spinChance: 0,
+        status: ""
+      }
     };
   },
   actions: {
