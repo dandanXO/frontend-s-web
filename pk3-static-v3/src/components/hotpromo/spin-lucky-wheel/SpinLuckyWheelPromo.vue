@@ -11,7 +11,11 @@ import EnvelopeStage from "./EnvelopeStage.vue";
 import { useUI } from "src/stores/ui";
 import WheelStage from "./WheelStage.vue";
 import { eventapi } from "src/boot/axios";
+import { userStore } from "stores/index";
+import { storeToRefs } from "pinia";
+
 const ui = useUI();
+const store = userStore();
 
 
 const props = defineProps(["params"]);
@@ -21,14 +25,8 @@ const params = JSON.parse(props.params || "{}");
 const stage = ref("");
 const wheelstage= ref();
 const isDuringInit = ref(false);
-const info = ref({
-  startTime: "",
-  // nextFreeSpinTime: "2025-02-14 00:00:00",
-  currAmount: 0,
-  targetWithdrawAmount: 0,
-  spinChance: 0,
-  status: ""
-});
+
+const { spinWheelLuckyPromoInfo: info } = storeToRefs(store);
 
 const extractionDifference = computed(() =>
   ((info.value.targetWithdrawAmount - info.value.currAmount) * 10000 / 10000).toFixed(4)
@@ -40,25 +38,22 @@ provide('extractionDifference', extractionDifference);
 const loadData = async () => {
   isDuringInit.value = true;
   const res= await eventapi.post("/refer-spin/check");
-  if (res.code === 0) {
-    switch (res.data.status) {
-      case "NOT_STARTED":
-      case "EXPIRED":
-        stage.value = "envelope";
-        ui.promoBg = "spin-lucky-wheel-envelope";
-        break;
-      case "CLAIMED":
-      case "IN_PROGRESS":
-        stage.value = "wheel";
-        break;
-    }
-    info.value = {
-      ...info.value,
-      ...res.data
-    };
-    
-    isDuringInit.value = false;
+  const newInfo = res.code === 0 ? res.data : info.value;
+
+  switch (newInfo.status) {
+    case "NOT_STARTED":
+    case "EXPIRED":
+      stage.value = "envelope";
+      ui.promoBg = "spin-lucky-wheel-envelope";
+      break;
+    case "CLAIMED":
+    case "IN_PROGRESS":
+      stage.value = "wheel";
+      break;
   }
+  store.spinWheelLuckyPromoInfo = newInfo;
+  
+  isDuringInit.value = false;
 };
 
 const handleEnvelopClick = async () => {

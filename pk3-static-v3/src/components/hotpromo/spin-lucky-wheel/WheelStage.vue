@@ -265,8 +265,8 @@ const handleInviteClick = () => {
 const getRemainingTime = (endTime) => {
   let result = "00:00:00";
   if (endTime) {
-    const now = moment(Date.now()).tz("Asia/Kolkata");
-    const _endTime = moment(endTime).tz("Asia/Kolkata");
+    const now = moment(Date.now()).tz("Asia/Karachi");
+    const _endTime = moment(endTime).tz("Asia/Karachi");
     const totalSeconds = _endTime.diff(now, "seconds");
     if (totalSeconds > 0) {
       const hours = Math.floor(totalSeconds / 3600);
@@ -299,8 +299,8 @@ const handleRecordClick = () => {
 
 const updateCountdownTime = () => {
   // console.log("updateCountdownTime")
-  const endTime = isClaimedStatus.value ? moment().tz("Asia/Kolkata").add(1, "days").startOf("day") : moment(info.value.startTime).tz("Asia/Kolkata").add(3, "days");
-  const nextFreeSpinEndTime = moment().tz("Asia/Kolkata").add(1, "days").startOf("day");
+  const endTime = isClaimedStatus.value ? moment().tz("Asia/Karachi").add(1, "days").startOf("day") : moment(info.value.startTime).tz("Asia/Karachi").add(3, "days");
+  const nextFreeSpinEndTime = moment().tz("Asia/Karachi").add(1, "days").startOf("day");
   if(timer.value){
     clearTimeout(timer.value);
   }
