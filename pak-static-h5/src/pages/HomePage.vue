@@ -1637,21 +1637,23 @@ const closePlayerGuide = () => {
   isAdditionalWithdrawSteps.value = false;
   enableScroll();
 };
-const handleGamePlay = () => {
+const handleGamePlay = (elementName) => {
   resetSteps();
   sessionStorage.setItem("isFromNewPlayerGuide", JSON.stringify(true));
   hotGameList.value.forEach((element) => {
-    console.log(element);
-    if (element.code === "aviator") {
-      playGame(
-        element.name,
-        element.platformCode,
-        element.code,
-        element.status,
-        element.gameType,
-        element.id,
-        element.demo
-      );
+    console.log(elementName)
+    if (elementName === element.name.toLowerCase()) {
+      if (element.code === "aviator" || element.code === "229" || element.code === "124") {
+        playGame(
+          element.name,
+          element.platformCode,
+          element.code,
+          element.status,
+          element.gameType,
+          element.id,
+          element.demo
+        );
+      }
     }
   });
 };

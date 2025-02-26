@@ -60,7 +60,7 @@
                   <div class="hotitems">
                     <div class="hotitem" v-for="i in 3" :key="i">
                       <span class="hot"><img src="../../assets/images/newplayerguide/tophot.png" /></span>
-                      <img @click="showVideo(i)" :src="require(`../../assets/images/newplayerguide/hot-0${i}.png`)" />
+                      <img :src="require(`../../assets/images/newplayerguide/hot-0${i}.png`)" />
                     </div>
                   </div>
                 </div>
@@ -159,7 +159,7 @@
                 </ul>
               </div>
             </div>
-            <div v-if="!isVideo && step.video" @click="isVideo = !isVideo" class="videolink">
+            <div v-if="!isVideo && step.video" @click="showVideo(index)" class="videolink">
               <img src="../../assets/images/newplayerguide/video.png" />
               {{ step.video }}
             </div>
@@ -181,7 +181,7 @@
               <video width="100%" height="100%" controls>
                 <source v-if="index + 1 === 3" :src="`${videoUrl}how_to_deposit_668mnf.mp4`" type="video/mp4" />
                 <source
-                  v-if="index + 1 === 2 && selectedGame === '7up7'"
+                  v-if="index + 1 === 2 && selectedGame === '7up7down'"
                   :src="`${videoUrl}how_to_play_7up7down_668mnf.mp4`"
                   type="video/mp4"
                 />
@@ -295,14 +295,10 @@ const videoUrl = process.env.IMAGE_CDN + "/media/pak/";
 const selectedGame = ref();
 const showVideo = (i) => {
   isVideo.value = !isVideo.value;
-  if (i === 1) {
-    selectedGame.value = "aviator";
-  } else if (i === 2) {
-    selectedGame.value = "mines";
-  } else if (i === 3) {
-    selectedGame.value = "7up7";
-  } else {
-    selectedGame.value = null;
+  if (i + 1 === 2) {
+    const gameOptions = ["aviator", "mines", "7up7down"];
+    const randomIndex = Math.floor(Math.random() * gameOptions.length);
+    selectedGame.value = gameOptions[randomIndex];
   }
 };
 const props = defineProps(["modelValue", "currentStep"]);
@@ -393,8 +389,9 @@ const runInnerSteps = (index) => {
   if (index === 1) {
     closeDialog(index);
   } else if (index === 2) {
+    closeDialog(index);
     // emit("update:modelValue", false);
-    emit("update:showSteps", index);
+    // emit("update:showSteps", index);
   } else if (index === 3) {
     emit("update:showSteps", index);
   } else if (index === 4) {
@@ -406,9 +403,14 @@ const runInnerSteps = (index) => {
 };
 // Close the dialog and move to the next step
 const closeDialog = (index) => {
+  if (isVideo.value === false) {
+    const gameOptions = ["aviator", "mines", "7up7down"];
+    const randomIndex = Math.floor(Math.random() * gameOptions.length);
+    selectedGame.value = gameOptions[randomIndex];
+  }
   isVideo.value = false;
   if (index === 2) {
-    emit("update:runAviator");
+    emit("update:runAviator", selectedGame.value);
   } else if (index === 3) {
     router.push("/deposit");
   } else if (index === 5) {
@@ -806,15 +808,23 @@ defineExpose({ showVideo });
         }
         .abs-box {
           position: absolute;
-          height: 7.5vh;
+          height: 65px;
           z-index: 9999;
           border-radius: 10px;
-          width: 100%;
+          width: 60%;
+          margin: 0 auto;
           left: 0;
+          right: 0;
           top: 145%;
           border: 2px dotted #08f437;
           box-shadow: 0px 0px 20px 0px #00e60091;
           pointer-events: none;
+          @media screen and (min-width: 500px) {
+            
+          top: 138%;
+          width: 50%;
+          height: 60px;
+          }
         }
         .hottitle {
           // margin: 10px 0 0;
@@ -1042,6 +1052,7 @@ defineExpose({ showVideo });
           height: 10vh;
           bottom: 0;
           right: 0;
+          z-index: 9999;
           animation: moveFinger 1.5s ease-in-out infinite;
         }
       }
