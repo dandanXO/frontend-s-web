@@ -1,5 +1,5 @@
 <template>
-  <div class="new-member-guide-dialog" :show-close="false" v-if="!store.regSuccessGuideVisible">
+  <div class="new-member-guide-dialog" :show-close="false" v-if="store.regSuccessGuideVisible">
     <div class="step1-container" v-if="step === 1">
       <img class="step-bg" src="../../assets/home/guide/step-bg.png" alt="" />
       <img src="../../assets/home/guide/step1-flag.png" alt="" class="flag" />
