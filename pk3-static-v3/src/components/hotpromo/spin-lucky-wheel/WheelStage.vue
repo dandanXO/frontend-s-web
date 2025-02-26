@@ -8,7 +8,7 @@
           <span class="amount">{{ info.currAmount }}</span>
         </span> -->
 
-        <GradientTextAmount :amountText="`${store.currency.label} ${info.currAmount}`" />
+        <GradientTextAmount :amountText="`${info.currAmount} ${store.currency.label}`" />
 
         <template v-if="extractionDifference > 0 && info.status === 'IN_PROGRESS'">
           <ProgressBar />

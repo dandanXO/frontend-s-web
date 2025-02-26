@@ -4,7 +4,7 @@
             <InviteWins />
         </div>
         <div class="cash-out" v-else>
-            <GradientTextAmount v-if="isShowTextAmount" :amountText="`CASH OUT COSTS  ${store.currency.label}${extractionDifference}`" />
+            <GradientTextAmount v-if="isShowTextAmount" :amountText="`CASH OUT COSTS  ${extractionDifference} ${store.currency.label}`" />
             <div v-else class="text-amount-placeholder"></div>
             <span class="next-spin-remaining-time">Next Round: {{ remainingTime }}</span>
             <div class="cash-out-backdrop-wrapper">
