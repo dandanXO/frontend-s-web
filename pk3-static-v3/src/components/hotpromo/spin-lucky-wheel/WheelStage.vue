@@ -172,7 +172,7 @@ const prize = ref(0);
 const winningRecordRef = ref();
 const isCashOutPopupVisible = ref(false);
 const cashOutPopupRef = ref();
-const isClaimedStatus = computed(() => info.value.startTime === '' && info.value.status === 'CLAIMED');
+const isClaimedStatus = computed(() => info.value.status === 'CLAIMED');
 
 provide('nextFreeSpinRemainingTime', nextFreeSpinRemainingTime);
 provide('remainingTime', remainingTime);
