@@ -172,12 +172,19 @@ export const writeClipboard = async (content, useExecCommand = false) => {
 };
 
 export const customCloudWiseRecord = (type, data = {}) => {
+  LA.track('PAGE_VIEW', {
+    type: "PAGE_VIEW",
+    data: {
+      ...data,
+      timestamp: Date.now()
+    }
+  });
   if (!window.WEBVIEW_CLOUD_WISE) return;
   if (window.CloudWiseUtil) {
     CloudWiseUtil.setCustomEventInfo(
       {
         // user_id: tokenObj.s3,
-        type: "SENDING_MESSAGE_TO_FLUTTER",
+        type: "PAGE_VIEW",
         data: {
           ...data,
           timestamp: Date.now()
@@ -190,7 +197,7 @@ export const customCloudWiseRecord = (type, data = {}) => {
       CloudWiseUtil.setCustomEventInfo(
         {
           // user_id: tokenObj.s3,
-          type: "SENDING_MESSAGE_TO_FLUTTER",
+          type: "PAGE_VIEW",
           data: {
             ...data,
             timestamp: Date.now()
