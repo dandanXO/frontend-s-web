@@ -8,7 +8,7 @@
           <span class="amount">{{ info.currAmount }}</span>
         </span> -->
 
-        <GradientTextAmount :amountText="`$ ${info.currAmount}`" />
+        <GradientTextAmount :amountText="`${store.currency.value} ${info.currAmount}`" />
 
         <template v-if="extractionDifference > 0 && info.status === 'IN_PROGRESS'">
           <ProgressBar />
@@ -32,7 +32,7 @@
               <span class="name">{{ record.name }}</span>
               <span>
                 RECEIVE
-                <span class="amount">$500</span>
+                <span class="amount">{{ `${store.currency.value} 5000` }}</span>
               </span>
             </div>
           </div>
@@ -92,7 +92,7 @@
       </div>
       <ol>
         <li>
-          When the accumulated amount reaches $500, you can apply for withdrawal (Rewards will add to your wallet
+          When the accumulated amount reaches {{ `${store.currency.value} 5000` }}, you can apply for withdrawal (Rewards will add to your wallet
           directly).
         </li>
         <li>When there are no spin available, refer a new player to get a free spin.</li>
@@ -135,10 +135,12 @@ import { useQuasar } from "quasar";
 import ProgressBar from './ProgressBar.vue';
 import CashOutPopup from "./CashOutPopup.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
+import { userStore } from "src/stores";
 
 const emit = defineEmits(["reload"]);
 const props = defineProps(["info"]);
 const { info } = toRefs(props);
+const store = userStore();
 
 
 const TOTAL_ITEMS = 6;
@@ -263,8 +265,8 @@ const handleInviteClick = () => {
 const getRemainingTime = (endTime) => {
   let result = "00:00:00";
   if (endTime) {
-    const now = moment(Date.now()).tz("Africa/Lagos");
-    const _endTime = moment(endTime).tz("Africa/Lagos");
+    const now = moment(Date.now()).tz("Asia/Karachi");
+    const _endTime = moment(endTime).tz("Asia/Karachi");
     const totalSeconds = _endTime.diff(now, "seconds");
     if (totalSeconds > 0) {
       const hours = Math.floor(totalSeconds / 3600);
@@ -297,8 +299,8 @@ const handleRecordClick = () => {
 
 const updateCountdownTime = () => {
   // console.log("updateCountdownTime")
-  const endTime = isClaimedStatus.value ? moment().tz("Africa/Lagos").add(1, "days").startOf("day") : moment(info.value.startTime).tz("Africa/Lagos").add(3, "days");
-  const nextFreeSpinEndTime = moment().tz("Africa/Lagos").add(1, "days").startOf("day");
+  const endTime = isClaimedStatus.value ? moment().tz("Asia/Karachi").add(1, "days").startOf("day") : moment(info.value.startTime).tz("Asia/Karachi").add(3, "days");
+  const nextFreeSpinEndTime = moment().tz("Asia/Karachi").add(1, "days").startOf("day");
   if(timer.value){
     clearTimeout(timer.value);
   }
@@ -480,6 +482,10 @@ onUnmounted(() => {
           position: relative;
           width: 100%;
           height: 100%;
+          
+          .wheel {
+            width: 100% !important;
+          }
 
           .countdown {
             display: flex;
