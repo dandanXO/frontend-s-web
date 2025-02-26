@@ -1230,7 +1230,7 @@ const checkHbPromo = () => {
 const checkSpinLuckyWheelPromo = async () => {
   if (store.token) {
     const res = await eventapi.post("/refer-spin/check");
-    store.spinWheelLuckyPromoInfo = res.data;
+    store.spinWheelLuckyPromoInfo = { ...store.spinWheelLuckyPromoInfo, ...res.data };
 
     if (sessionStorage.getItem("isReload")) {
       sessionStorage.removeItem("isReload");
