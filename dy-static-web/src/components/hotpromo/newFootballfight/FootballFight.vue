@@ -12,7 +12,7 @@
               <img src="../../../assets/promo/lh-livepoker-rebate/reward-icon1.png" alt="" width="100%" />
             </div>
             <div class="reward-info-content">
-              今日体育场馆投注：
+              昨日体育场馆投注：
               <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
@@ -184,10 +184,10 @@ const fetchData = async () => {
     return;
   }
   try {
-    const res = await footballHistroy();
+    // const res = await footballHistroy();
     const res2 = await footballEligibility();
-    totalValidBet.value = res.data.lastDayBet;
-    bonus.value = res.data.bonus;
+    totalValidBet.value = res2.data.lastDayBet;
+    bonus.value = res2.data.bonus;
     isGrey.value = res2.data.bonus === 0;
   } catch (error) {
     console.log(error);

@@ -16,9 +16,9 @@
             <div class="record-wrapper invitation">
               <template v-if="invitationRecords.length">
                 <div v-for="(record, index) in invitationRecords" :key="index" class="record">
-                  <span>{{ moment(record.referTime).format("MM-DD hh:mm:ssA") }}</span>
+                  <span>{{ moment(record.referTime).format("MM-DD HH:mm:ss") }}</span>
                   <span class="name">{{ record.loginName }}</span>
-                  <span>Invitation successful</span>
+<!--                  <span>Invitation successful</span>-->
                 </div>
               </template>
               <span v-else class="no-record-text">No Records</span>
@@ -28,7 +28,7 @@
             <div class="record-wrapper lottery">
               <template v-if="lotteryRecords.length">
                 <div v-for="(record, index) in lotteryRecords" :key="index" class="record">
-                  <span>{{ moment(record.time).format("MM-DD hh:mm:ssA") }}</span>
+                  <span>{{ moment(record.time).format("MM-DD HH:mm:ss") }}</span>
                   <span class="amount">${{ record.amount }}</span>
                 </div>
               </template>
@@ -146,7 +146,7 @@ const getRecords = () => {
 
     &.invitation {
       .record {
-        grid-template-columns: minmax(100px, 1fr) 1fr minmax(50px, 1fr);
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 

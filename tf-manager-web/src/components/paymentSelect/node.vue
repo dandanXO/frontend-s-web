@@ -3,16 +3,17 @@
     <div class="node" v-if="list && list.length !== 0">
       <div class="title root" v-if="level === 1" />
       <div class="title" v-else>{{ name }}</div>
-      <el-button
-        v-if="level === 1"
-        :key="level"
-        class="add"
-        icon="el-icon-plus"
-        size="mini"
-        type="primary"
-        @click="addHandle()"
-      />
+
       <div class="node-content">
+        <el-button
+          v-if="level === 1"
+          :key="level"
+          class="add-button"
+          icon="el-icon-plus"
+          size="mini"
+          type="primary"
+          @click="addHandle()"
+        />
         <div
           class="node-item"
           :id="level + '_' + i"
@@ -33,23 +34,21 @@
           :key="i"
           v-for="(item, i) in list"
         >
-          <el-row :gutter="10" justify="space-between" align="middle" class="node-elrow">
-            <el-col :span="6" style="position: relative;">
-              <!-- eslint-disable -->
-              <img
-                v-if="item.icon === 'OFFLINE' || item.icon === 'test'"
-                :src="paymethodicon + '/000/fff.png&text=payment'"
-              />
-              <img v-else :src="paymentDir + item.icon" />
-            </el-col>
-            <el-col :span="12">
-              <div class="node-text">
-                <div class="group-node">
-                  <div>{{ item.name }}</div>
-                </div>
+          <el-row :gutter="20" justify="space-between" align="middle" class="node-elrow">
+            <!-- eslint-disable -->
+            <el-col :span="10" style="position: relative;">
+              <div style="position: relative; display: inline-block;">
+                <img
+                  v-if="item.icon === 'OFFLINE' || item.icon === 'test'"
+                  :src="paymethodicon + '/000/fff.png&text=payment'"
+                  style="width:40px; height:auto;"
+                />
+                <img v-else :src="paymentDir + item.icon" style="width:40px; height:auto;" />
+                <img v-if="item.promoIcon !== null && item.promoIcon !== ''" :src="paymentDir + item.promoIcon" style="width: 40px; height: auto; position: absolute; top: 0; right: 0; transform: translate(50%, -50%);" />
               </div>
             </el-col>
-            <el-col :span="6" class="icons">
+            <el-col :span="10" class="icons" style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+              <!-- el-switch on top -->
               <el-switch
                 v-model="item.status"
                 size="mini"
@@ -59,18 +58,27 @@
                 inactive-color="#F56C6C"
                 @change="changePaymentStatus()"
               />
-              <i
-                class="el-icon-edit"
-                size="mini"
-                type="success"
-                @click.stop="editHandle(item, i, idx)"
-              />
-              <i
-                class="el-icon-remove"
-                size="mini"
-                type="danger"
-                @click.stop="deleteItem(item, i, idx)"
-              />
+
+              <!-- Icons below -->
+              <div style="display: flex; gap: 1px;">
+                <i
+                  class="el-icon-edit"
+                  size="mini"
+                  type="success"
+                  @click.stop="editHandle(item, i, idx)"
+                />
+                <i
+                  class="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  @click.stop="deleteItem(item, i, idx)"
+                />
+              </div>
+            </el-col>
+            <el-col :span="24" style="display: flex; align-items: center; margin-top: 10px;">
+              <div style="font-size: 14px; font-weight: bold; text-align: left;">
+                {{ item.name }}
+              </div>
             </el-col>
           </el-row>
           <!-- <div
@@ -805,13 +813,20 @@ $node-color: #309799;
     box-shadow: 1px 10px 13px -14px rgba(0, 0, 0, 0.24);
     position: relative;
     width: 100%;
+
+    .add-button {
+      position: absolute;
+      top: 10px; /* Adjust distance from top */
+      right: 10px; /* Adjust distance from right */
+      z-index: 10; /* Ensure it stays above other content */
+    }
   }
 
   .title {
     min-width: 200px;
     margin: 20px 20px 0;
     float: left;
-    font-size: 25px;
+    font-size: 15px;
     font-weight: bold;
 
     &.root {
@@ -853,7 +868,7 @@ $node-color: #309799;
     color: $node-color;
 
     .node-elrow{
-      width: 320px;
+      width: 120px;
     }
 
     img {
@@ -863,8 +878,9 @@ $node-color: #309799;
 
     .node-text {
       font-size: 12px;
-      padding: 10px 5px;
+      padding: 5px 5px;
       max-width: 200px;
+      word-wrap: break-word;
 
       .payment-node > div:first-child,
       .group-node {

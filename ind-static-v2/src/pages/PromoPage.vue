@@ -194,6 +194,7 @@ import { SessionStorage } from "quasar";
 import ProfileSummary from "components/ProfileSummary.vue";
 import HotPromotion from 'components/HotPromotion'
 import GameModal from "components/modal/GameModal.vue";
+import { Filesystem, Directory } from "@capacitor/filesystem";
 // import HotPromotion from 'components/HotPromotion'
 export default defineComponent({
   name: "PromoView",
@@ -395,6 +396,22 @@ export default defineComponent({
               setTimeout(()=>{
                 ref.show();
               },500)
+            });
+
+            ref.addEventListener("message", async function(event) {
+              if (event.data.action === "qrcode") {
+                // alert(event.data.item);
+                const dataUrl = event.data.item;
+                // alert(dataUrl)
+                // Save the image to the photo gallery
+                await Filesystem.writeFile({
+                  path: `Pictures/myreferral-${Date.now()}.jpg`,
+                  data: dataUrl,
+                  directory: Directory.Documents,
+                  recursive: true
+                });
+
+              }
             });
 
             ref.addEventListener("loadstart", function (event) {
@@ -1060,6 +1077,14 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
         padding-bottom: 40px;
+
+        &.spin-lucky-wheel-envelope {
+          background: url("../assets/images/promotion/spin-lucky-wheel/envelope-stage/bg.png") no-repeat top center;
+          background-size: cover;
+          width: 100%;
+          margin-top: 0;
+          padding-bottom: 0;
+        }
 
         p {
           font-size: 14px;

@@ -170,3 +170,42 @@ export const writeClipboard = async (content, useExecCommand = false) => {
     }
   }
 };
+
+export const customCloudWiseRecord = (userId, data = {}) => {
+  if (!window.WEBVIEW_CLOUD_WISE) return;
+  LA.track('PAGE_VIEW', {
+    type: "PAGE_VIEW",
+    data: {
+      ...data,
+      user_id: userId,
+      timestamp: Date.now()
+    }
+  });
+  if (window.CloudWiseUtil) {
+    CloudWiseUtil.setCustomEventInfo(
+      {
+        // user_id: tokenObj.s3,
+        type: "PAGE_VIEW",
+        data: {
+          ...data,
+          timestamp: Date.now()
+        }
+      },
+      "CUSTOM"
+    );
+  } else {
+    window.cloudWiseQueue.push(() =>
+      CloudWiseUtil.setCustomEventInfo(
+        {
+          // user_id: tokenObj.s3,
+          type: "PAGE_VIEW",
+          data: {
+            ...data,
+            timestamp: Date.now()
+          }
+        },
+        "CUSTOM"
+      )
+    );
+  }
+};

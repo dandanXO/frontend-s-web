@@ -559,6 +559,8 @@ export default defineComponent({
     };
 
     const checkFBPixelInit = () => {
+      //FOr Testing.
+      // const windowLocation = "b9game0.com";
       const windowLocation = window.location.hostname;
       const pixelDataStr = sessionStorage.getItem("FB_PIXEL_CODE");
       const isNoPixel = sessionStorage.getItem("NO_FB_PIXEL_CODE");
@@ -599,9 +601,9 @@ export default defineComponent({
       store.isFbPixel = true;
       store.isOldFBPixel = true;
 
-      const isNewUser = isInPwa() ? localStorage.getItem("newUserFtd") : sessionStorage.getItem("newUserFtd");
+      const isNewUser = localStorage.getItem("newUserFtd");
       if (isNewUser) {
-        document.addEventListener("ftdSuccess", trackNewUserFtd);
+        document.addEventListener("ftdPurchaseSuccess", trackNewUserFtd, { once: true });
       }
     };
 

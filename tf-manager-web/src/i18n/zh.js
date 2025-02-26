@@ -2625,6 +2625,7 @@ export default {
     selectPaymentType: '请输入支付类型',
     selectMobilePayment: '请先选择手机支付类型',
     selectWebPayment: '请先选择网页支付类型',
+    sequenceEmpty: '排序不可為空',
     settlementToChecking: '成功更新至待审核',
     settlementToPay: '成功更新至待结算',
     settled: '成功结算',
@@ -3296,7 +3297,9 @@ export default {
     'Sport App Setting': '体育 App 设置',
     'Game Jackpot Bonus Record': '奖金池奖励记录',
     'Refer Spin': '邀请转盘',
-    'Member Privilege Record Pak Export': '会员优惠记录导出 - 巴基斯坦'
+    'Member Privilege Record Pak Export': '会员优惠记录导出 - 巴基斯坦',
+    'Refer Spin Claim Record': '邀请转盘领取记录',
+    'Refer Spin Record': '邀请转盘记录',
   },
   google: {
     google_auth_menu: '谷歌验证',

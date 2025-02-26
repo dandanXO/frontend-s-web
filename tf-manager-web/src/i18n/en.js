@@ -2649,6 +2649,7 @@ export default {
     selectPaymentType: 'Please input payment type',
     selectMobilePayment: 'Please select mobile payment',
     selectWebPayment: 'Please select web payment',
+    sequenceEmpty: 'sequence can not be empty',
     settlementToChecking: 'Updated to checking',
     settlementToPay: 'Updated to payment',
     settled: 'Successfully settled',
@@ -3345,7 +3346,9 @@ export default {
     'Sport App Setting': 'Sport App Setting',
     'Game Jackpot Bonus Record': 'Game Jackpot Bonus Record',
     'Refer Spin': 'Refer Spin',
-    'Member Privilege Record Pak Export': 'Member Privilege Record Pak Export'
+    'Member Privilege Record Pak Export': 'Member Privilege Record Pak Export',
+    'Refer Spin Claim Record': 'Refer Spin Claim Record',
+    'Refer Spin Record': 'Refer Spin Record',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

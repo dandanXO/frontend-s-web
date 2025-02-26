@@ -56,7 +56,7 @@
                 class="indicate"
                 src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/wheel-indicate.png"
               />
-              <button class="btn" :class="{ disabled: !info.spinChance }" @click="handleWheelClick">
+              <button class="btn" :class="{ disabled: !info.spinChance || isClaimedStatus }" @click="handleWheelClick">
                 rotate
                 <br />
                 {{ info.spinChance }} time
@@ -71,8 +71,9 @@
               class="decoration rabbit"
               src="../../../assets/images/promotion/spin-lucky-wheel/decoration-rabbit.png"
             />
-            <CommonButton class="draw-btn" @click="handleInviteClick">Invite To Earn Spin</CommonButton>
-            <span class="next-spin-remaining-time">Countdown to next free spins: {{ nextFreeSpinRemainingTime }}</span>
+            <CommonButton v-if="isClaimedStatus" class="draw-btn disabled">Invite To Earn Spin</CommonButton>
+            <CommonButton v-else class="draw-btn" @click="handleInviteClick">Invite To Earn Spin</CommonButton>
+            <span class="next-spin-remaining-time" v-if="!isClaimedStatus">Countdown to next free spins: {{ nextFreeSpinRemainingTime }}</span>
           </div>
         </div>
       </div>
@@ -107,6 +108,9 @@
         <li>
           The invitee must bind their phone number and register via inviter's invitation link to be considered for the
           recommendation.
+        </li>
+        <li>
+          The more your invitees play on the website, the higher your next spin reward will be. Invite friends and win more rewards together!
         </li>
         <li>
           The right to interpret the event belongs to 55Ace. If you have any questions, please contact to customer
@@ -166,6 +170,7 @@ const prize = ref(0);
 const winningRecordRef = ref();
 const isCashOutPopupVisible = ref(false);
 const cashOutPopupRef = ref();
+const isClaimedStatus = computed(() => info.value.startTime === '' && info.value.status === 'CLAIMED');
 
 provide('nextFreeSpinRemainingTime', nextFreeSpinRemainingTime);
 provide('remainingTime', remainingTime);
@@ -235,7 +240,7 @@ const reset = () => {
 };
 
 const handleWheelClick = () => {
-  if (spinButtonDisable.value || !info.value.spinChance) return;
+  if (spinButtonDisable.value || !info.value.spinChance || isClaimedStatus.value) return;
   eventapi.post("/refer-spin/spin").then((res) => {
     if (res.code === 0) {
       prize.value = res.data;
@@ -292,7 +297,7 @@ const handleRecordClick = () => {
 
 const updateCountdownTime = () => {
   // console.log("updateCountdownTime")
-  const endTime = moment(info.value.startTime).tz("Asia/Kolkata").add(3, "days");
+  const endTime = isClaimedStatus.value ? moment().tz("Asia/Kolkata").add(1, "days").startOf("day") : moment(info.value.startTime).tz("Asia/Kolkata").add(3, "days");
   const nextFreeSpinEndTime = moment().tz("Asia/Kolkata").add(1, "days").startOf("day");
   if(timer.value){
     clearTimeout(timer.value);

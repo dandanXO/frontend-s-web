@@ -33,6 +33,9 @@
                   <template v-slot:prepend>
                     <img src="../assets/images/auth/phone.svg">
                   </template>
+                  <template v-if="regForm.referrer" v-slot:append>
+                    <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">{{ otpCountdown > 0 ? `Get Code (${otpCountdown})` : 'Get Code' }}</q-btn>
+                  </template>
                 </q-input>
               </template>
             </InputField>
@@ -85,6 +88,32 @@
                   </span>
                   <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
                 </div> -->
+              </template>
+            </InputField>
+
+            <InputField :label="'OTP'">
+              <template #input>
+                <q-input
+                  v-if="regForm.referrer"
+                  pattern="\d*"
+                  maxlength="6"
+                  ref="verificationRef"
+                  hide-bottom-space
+                  v-model="regForm.smsCode"
+                  :rules="[
+                    (val) => (val && val.length > 0) || 'Please insert OTP number',
+                    (val) => (val && val.length === 6) || 'The OTP number must have 6 digits'
+                  ]"
+                  color="white"
+                  class="landing-input"
+                  outlined
+                  placeholder="Enter your OTP number"
+                  label-color="brand"
+                >
+                  <template v-slot:prepend>
+                    <img class="white-svg" src="../assets/images/auth/otp.svg" />
+                  </template>
+                </q-input>
               </template>
             </InputField>
 
@@ -180,11 +209,39 @@
 <!--    <div class="register-form-logo-img">-->
 <!--      <img src="../assets/images/auth/auth-logo.png" />-->
 <!--    </div>-->
+    <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
+      <q-card class="captcha-form-wrapper" width="100%">
+        <q-card-section class="q-pa-md bg-brightbtn text-white">
+          <q-toolbar>
+            <q-toolbar-title>Verification Code</q-toolbar-title>
+            <q-btn flat v-close-popup round dense icon="close" />
+          </q-toolbar>
+        </q-card-section>
+        <div class="q-px-lg q-pt-sm q-pb-lg">
+          <q-card-section class="q-mb-md q-pa-md">
+            <q-input v-model="innerCaptchaRef" placeholder="Captcha Code">
+              <template v-slot:append>
+                <img
+                  v-show="showImageCode"
+                  :src="phoneVerificationImg"
+                  @load="imgOnLoad"
+                  @error="imgOnError"
+                  title="Refresh Verification Code"
+                  style="margin-top: 6px; cursor: pointer"
+                  @click="getInnerCode"
+                />
+              </template>
+            </q-input>
+          </q-card-section>
+          <q-btn class="get-code-btn" @click="onCaptchaSubmit" label="Send OTP" />
+          </div>
+        </q-card>
+      </q-dialog>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, watch, onActivated, nextTick } from "vue";
+import { defineComponent, ref, reactive, onMounted, watch, onActivated, nextTick, onUnmounted } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
@@ -218,6 +275,9 @@ export default defineComponent({
 
     const affCode = ref("");
     const isLoading = ref(false);
+    const showImageCode = ref(false);
+    const otpCountdown = ref();
+    const otpCountdownInterval = ref();
 
     const regForm = reactive({
       loginName: "",
@@ -358,7 +418,7 @@ export default defineComponent({
       // telRef.value.validate();
       // phoneVerificationRef.value.validate();
       // emailRef.value.validate();
-      // verificationRef.value.validate();
+      verificationRef.value?.validate();
 
       $q.loading.show({
         message: "Registering in progress"
@@ -373,7 +433,7 @@ export default defineComponent({
         // telRef.value.hasError ||
         // phoneVerificationRef.value.hasError ||
         // emailRef.value.hasError ||
-        // verificationRef.value.hasError ||
+        verificationRef.value?.hasError ||
         isAgreeReg.value === false
       ) {
         isLoading.value = false;
@@ -503,15 +563,15 @@ export default defineComponent({
     );
 
     const openPhoneVeriDialog = () => {
-      telRef.value.validate();
-      if (!telRef.value.hasError) {
+      loginNameRef.value.validate();
+      if (!loginNameRef.value.hasError) {
         showCaptchaDialog.value = true;
         getInnerCode();
       }
     };
 
     const onCaptchaSubmit = () => {
-      if (!regForm.telephone) {
+      if (!regForm.loginName) {
         $q.notify({
           color: "negative",
           position: "top",
@@ -525,7 +585,7 @@ export default defineComponent({
         .post(
           `/otp/sendSms`,
           qs.stringify({
-            telephone: regForm.telephone,
+            telephone: regForm.loginName,
             captchaCode: innerCaptchaRef.value,
             codeId: innerCodeId.value
           })
@@ -539,8 +599,29 @@ export default defineComponent({
             regForm.smsCode = "";
             regForm.smsCodeId = res.data.codeId;
             console.log(res.data.codeId);
+
+            // start otp countdown
+            otpCountdown.value = res.data.second || 60;
+            otpCountdownInterval.value = setInterval(() => {
+              if(otpCountdown.value > 0) {
+                otpCountdown.value = otpCountdown.value - 1;
+              }
+            },1000);
           } else {
             color = "negative";
+
+            if(res.code === 1402) {
+              message = `Please try again after ${res.data.second} seconds`;
+
+               // start otp countdown
+              otpCountdown.value = res.data.second || 60;
+              otpCountdownInterval.value = setInterval(() => {
+                if(otpCountdown.value > 0) {
+                  otpCountdown.value = otpCountdown.value - 1;
+                }
+              },1000);
+            }
+            
             getInnerCode();
           }
 
@@ -567,6 +648,19 @@ export default defineComponent({
 
       return isValid ? true : "Phone Number must be 10 digits or more";
     };
+
+    const imgOnLoad = () => (showImageCode.value = true);
+    const imgOnError = () => (showImageCode.value = false);
+
+    watch(() => otpCountdown.value, () => {
+      if(otpCountdown.value === 0) {
+        clearInterval(otpCountdownInterval.value);
+      }
+    })
+
+    onUnmounted(() => {
+      clearInterval(otpCountdownInterval.value);
+    })
 
     return {
       header: "Register Account",
@@ -598,7 +692,12 @@ export default defineComponent({
       isValidName,
       isValidPhone,
       affRegEvent,
-      isLoading
+      isLoading,
+      showImageCode,
+      imgOnLoad,
+      imgOnError,
+      otpCountdown,
+      otpCountdownInterval
     };
   }
 });
