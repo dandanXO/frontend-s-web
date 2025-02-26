@@ -66,6 +66,7 @@
       v-else-if="list.redirectUrl === 'lh1-skyesports-souvenir-2025'"
       :promo-code="list.promoCode"
     />
+    <EslProLeagueS21 v-else-if="list.redirectUrl === 'lh1-esl-pro-league-s21'" :promo-param="listParam" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -160,6 +161,9 @@ const Dota2BlastSlam2025 = defineAsyncComponent(() =>
   import("../components/hotpromo/dota2-blast-slam-2025/Dota2BlastSlam2025.vue")
 );
 const DarkModePromo = defineAsyncComponent(() => import("../components/hotpromo/dark-mode/DarkModePromo.vue"));
+const EslProLeagueS21 = defineAsyncComponent(() =>
+  import("./hotpromo/esl-pro-league-s21/EslProLeagueS21.vue")
+);
 
 export default defineComponent({
   name: "HotPromo",
@@ -210,7 +214,8 @@ export default defineComponent({
     Dota2BlastSlam2025,
     DarkModePromo,
     PGLOnFireBuenosAires2025,
-    SkyesportsSouvenir2025
+    SkyesportsSouvenir2025,
+    EslProLeagueS21
   },
   props: {
     list: {
