@@ -171,11 +171,12 @@ export const writeClipboard = async (content, useExecCommand = false) => {
   }
 };
 
-export const customCloudWiseRecord = (type, data = {}) => {
+export const customCloudWiseRecord = (userId, data = {}) => {
   LA.track('PAGE_VIEW', {
     type: "PAGE_VIEW",
     data: {
       ...data,
+      user_id: userId,
       timestamp: Date.now()
     }
   });
