@@ -1432,6 +1432,7 @@ export default {
     selectPaymentType: 'กรุณากรอกประเภทการชำระเงิน',
     selectMobilePayment: 'กรุณาเลือกชำระเงินผ่านมือถือ',
     selectWebPayment: 'กรุณาเลือกชำระเงินทางเว็บ',
+    sequenceEmpty: 'ลำดับต้องไม่ว่างเปล่า',
     settlementToChecking: 'อัปเดตเป็นการตรวจสอบแล้ว',
     settlementToPay: 'อัปเดตเป็นการชำระเงินแล้ว',
     settled: 'ตัดสินได้สำเร็จ',
