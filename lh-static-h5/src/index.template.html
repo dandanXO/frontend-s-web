@@ -17,7 +17,6 @@
     <link rel="shortcut icon" type="image/png" href="icons/favicon.ico" />
 
     <link rel="icon" type="image/ico" href="icons/favicon.ico" />
-    <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
     <script>
       var CWRUMLICENCE;
     </script>
@@ -60,7 +59,6 @@
         if(appPaths.includes(pathname)) {
           initCloudWise("wS0n2SF8WRCb0fAkjFLvksRizrsrej3YfZosUhCbiG7b2z**czacDVZXpilaow2ti")
           window.parseJwt = parseJwt;
-          LA.init({ id: "Kji45HtToMp7Ffur", ck: "Kji45HtToMp7Ffur", autoTrack: true, hashMode: true });
         } else {
           initCloudWise("wS0n2SF8WRCb0fAkjFLvksRizrsrej3Y0t429/b5onII**yr8w22d3AkwtO5qHCg9")
         }
@@ -149,11 +147,6 @@
             "data": addTimestamp({})
           }, "CUSTOM")
         });
-        LA.track('SENDING_MESSAGE_TO_FLUTTER', {
-          "user_id": tokenObj.s3,
-          "type": "SENDING_MESSAGE_TO_FLUTTER",
-          "data": addTimestamp({})
-        });
         window.flutter_inappwebview.callHandler('FlutterChannel','LH_FLUTTER');
       }
 
@@ -162,11 +155,6 @@
           "type": "RECEIVING_MESSAGE_FROM_FLUTTER",
           "data": addTimestamp(data)
         }, "CUSTOM"))
-        LA.track('RECEIVING_MESSAGE_FROM_FLUTTER', {
-          "user_id": tokenObj.s3,
-          "type": "RECEIVING_MESSAGE_FROM_FLUTTER",
-          "data": addTimestamp(data)
-        });
       }
 
       if (
@@ -189,11 +177,6 @@
             "data": addTimestamp({})
           }, "CUSTOM")
         })
-        LA.track('INITIALIZE', {
-          "user_id": tokenObj.s3,
-          "type": "INITIALIZE_APP",
-          "data": addTimestamp({})
-        });
 
         //IOS
         if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.notifyApp) {
@@ -208,12 +191,12 @@
         document.addEventListener("DOMContentLoaded", function () {
           console.log('DOM fully loaded and parsed');
           if (window.flutter_inappwebview) {
-            callFlutterHandler(tokenObj);
+            callFlutterHandler();
           } else {
             console.log('FlutterChannel not available yet, waiting...');
             const interval = setInterval(() => {
               if (window.flutter_inappwebview) {
-                callFlutterHandler(tokenObj);
+                callFlutterHandler();
                 console.log('Message sent to Flutter after DOMContentLoaded');
                 clearInterval(interval);
               }
@@ -225,7 +208,7 @@
         window.notifyApp = function (message) {
           try {
             const returnJson = message.data;
-            receiveMessageFromFlutter(tokenObj, returnJson);
+            receiveMessageFromFlutter(returnJson);
             if (returnJson && returnJson.rstDomain) {
               window.localStorage.setItem("LH_H5_RST_URL", returnJson.rstDomain);
 
@@ -337,6 +320,8 @@
         };
       }
     </script>
+
+    <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
   </head>
   <body id="lh-static-h5" style="margin:0;">
     <!-- DO NOT touch the following DIV -->
