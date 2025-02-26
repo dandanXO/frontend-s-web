@@ -137,6 +137,9 @@
         <div class="download_des">
             下载安装过程中请勿切换网络，推荐使用手机自带浏览器打开本页面下滑查看安装教程。
         </div>
+        <div class="download_btn">
+            <a id="switch-btn"></a>
+        </div>
         <div class="download_install_des">下滑查看安装教程</div>
     </div>
 
@@ -193,6 +196,8 @@
     var iosDownload = [];
     var androidDownload = [];
 
+    let currentPlatform = "";
+
     var realUrl = getQueryString("url");
     var agentCode = getQueryString("agentCode");
     var from = getQueryString("from");
@@ -221,8 +226,23 @@
         window.open("https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=H5&lang=zh-CN")
     })
 
+    $("#switch-btn").click(function () {
+        if(currentPlatform === "ios") {
+            showAndroid();
+        } else {
+            showIOS();
+        }
+    });
+
+    $(".modal-div").click(function (e) {
+        $(".modal-open").hide();
+    });
+
+    $(".modal-inner").click(function (e) {
+        e.stopPropagation();
+    });
+
     async function getApiUrl() {
-        const sortKey = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
         try {
             const response = await fetch(`${dataUrl}/app/getDownloadPage?siteCode=dy2`);
             const data = await response.json();
@@ -230,11 +250,7 @@
             $("#before-load").hide();
             if (data) {
                 // console.log("data", data);
-                iosDownload = data.data.ios.sort((a, b) => {
-                    const keyIndexA =  sortKey.findIndex(key => Object.keys(a)[0].includes(key));
-                    const keyIndexB =  sortKey.findIndex(key => Object.keys(b)[0].includes(key));
-                    return keyIndexA - keyIndexB;
-                });
+                iosDownload = data.data.ios;
                 androidDownload = data.data.android;
                 console.log(iosDownload);
                 console.log(androidDownload);
@@ -280,6 +296,10 @@
     }
 
     function showAndroid() {
+        currentPlatform = "android";
+        $("#switch-btn").html("切换 IOS");
+        $("#android-lists").show();
+        $("#ios-lists").hide();
         for (var i = 0; i < andList.length; i++) {
             $(".swiper-wrapper").append(
                 '<div class="swiper-slide"><img src="' +
@@ -328,6 +348,11 @@
     }
 
     function showIOS() {
+        currentPlatform = "ios";
+        $("#switch-btn").html("切换安卓");
+        $("#android-lists").hide();
+        $("#ios-lists").show();
+
         for (var i = 0; i < iosList.length; i++) {
             $(".swiper-wrapper").append(
                 '<div class="swiper-slide"><img src="' +
