@@ -434,7 +434,7 @@
         <el-table-column
           prop="loginName"
           :label="t('fields.loginName')"
-          width="150"
+          width="200"
         >
           <template
             #default="scope"
@@ -443,7 +443,8 @@
             <router-link
               :to="`details/${scope.row.id}?site=${scope.row.siteId}`"
             >
-              <el-link type="primary">{{ scope.row.loginName }}</el-link>
+              <el-link type="primary" v-if="scope.row.maskedLoginName !== null">{{ scope.row.loginName + " [" + scope.row.maskedLoginName + "]" }}</el-link>
+              <el-link type="primary" v-else>{{ scope.row.loginName }}</el-link>
             </router-link>
           </template>
         </el-table-column>

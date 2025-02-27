@@ -126,6 +126,12 @@
       :promo-code="list.promoCode"
     />
     <SkyesportsSouvenir2025 v-if="list.redirectUrl === 'lh1-skyesports-souvenir-2025'" :promo-code="list.promoCode" />
+    <EslProLeagueS21
+      v-if="list.redirectUrl === 'lh1-esl-pro-league-s21'"
+      :promo-param="listParam"
+      :promo-code="list.promoCode"
+    />
+    
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -242,6 +248,7 @@ import Dota2BlastSlam2025 from "../components/hotpromo/dota2-blast-slam-2025/Dot
 import DarkModePromo from "../components/hotpromo/dark-mode/DarkModePromo.vue";
 import PGLOnFireBuenosAires2025 from "./hotpromo/pgl-on-fire-buenos-aires-2025/PGLOnFireBuenosAires2025.vue";
 import SkyesportsSouvenir2025 from "./hotpromo/skyesports-souvenir-2025/SkyesportsSouvenir2025.vue";
+import EslProLeagueS21 from "./hotpromo/esl-pro-league-s21/EslProLeagueS21.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -340,7 +347,8 @@ export default defineComponent({
     DarkModePromo,
     PGLOnFireBuenosAires2025,
     SkyesportsSouvenir2025,
-    LanternFestival2025
+    LanternFestival2025,
+    EslProLeagueS21
   },
   props: {
     list: {

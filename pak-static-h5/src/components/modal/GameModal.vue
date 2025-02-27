@@ -110,6 +110,18 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+    <q-dialog v-model="isChooseGameDialog" transition-show="fade" transition-hide="fade">
+    <div class="dialog-wrapper">
+      <q-card class="bottom-panel">
+        <q-card-section class="row justify-center">
+          <div class="choices">
+            <div @click="handleChooseGame(false)">Play Real</div>
+            <div @click="handleChooseGame(true)">Free Trial</div>
+          </div>
+        </q-card-section>
+      </q-card>
+    </div>
+  </q-dialog>
   </q-scroll-area>
 </template>
 <script setup id="GameModal">
@@ -274,9 +286,28 @@ const goToDeposit = () => {
 };
 
 const platformCodeImg = ref();
-const isPlatformAllowNonLogin = (demo) => !store.hasToken() && demo;
+const isPlatformAllowNonLogin = (demo) => !store.hasToken() || (demo && isDepositZero.value);
+const isChooseGameDialog = ref(false);
+const pendingGameParams = ref(null);
 
-const open = (gameName, platformCode, gameCode, gameType, demo) => {
+const isDepositZero = ref(false);
+const open = (gameName, platformCode, gameCode, gameType, demo, isChoice = false) => {
+  const store = userStore();
+  isDepositZero.value = (store.hasDeposit === false);
+
+  if (!isChoice && isDepositZero.value && demo) {
+    // Store the parameters and show the dialog
+    pendingGameParams.value = { gameName, platformCode, gameCode, gameType, demo };
+    isChooseGameDialog.value = true;
+    return;
+  }
+  console.log(demo)
+  // Proceed with the game launch
+  startGame(gameName, platformCode, gameCode, gameType, demo);
+};
+const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
+  const store = userStore();
+  console.log(store.getCurrentDeposit())
   // debugger;
   // AppFullscreen.request()
   isInnerHtmlSrc.value = false;
@@ -328,7 +359,6 @@ const open = (gameName, platformCode, gameCode, gameType, demo) => {
   // buttonInIFrame.style.visible = visible;
   //   console.log(iframe)
   title.value = gameName;
-  const store = userStore();
 
   if (store.memberType !== "TEST" && gameType === "TEST") {
     visibleComingSoon.value = true;
@@ -424,7 +454,17 @@ const open = (gameName, platformCode, gameCode, gameType, demo) => {
     }
   }
 };
+const handleChooseGame = (runDemo) => {
+  if (!pendingGameParams.value) return;
 
+  const { gameName, platformCode, gameCode, gameType, demo } = pendingGameParams.value;
+  const demoMode = runDemo ? demo : null; // Use demo object or empty object
+
+  // Call open() with retry = true to avoid reopening the dialog
+  open(gameName, platformCode, gameCode, gameType, demoMode, true);
+  pendingGameParams.value = null; // Clear the pending parameters after use
+  isChooseGameDialog.value = false;
+};
 const denyGameLaunch = () => {
   props.closeFullGameDialog();
   $q.notify({
@@ -960,6 +1000,35 @@ defineExpose({
 
   100% {
     filter: brightness(0.8) saturate(0.8) contrast(0.8);
+  }
+}
+
+.bottom-panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99999;
+  // height: 120px; 
+  background: #131313;
+  // box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  border-radius: 12px 12px 0 0;
+  margin: 0;
+  .choices {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+     div {
+      width: 100%;
+    padding: 15px;
+    text-align: center;
+     &:last-child {
+      border-top: 1px solid #ffffff;
+     }
+     }
   }
 }
 </style>

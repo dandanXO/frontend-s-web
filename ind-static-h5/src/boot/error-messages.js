@@ -93,6 +93,7 @@ export const errorMessages = {
   24002: "Detected same IP",
   24005: "Does not meet the minimum deposit amount",
   25002: "You have already claimed the reward.",
+  25005: "The wheel activity has reached the withdrawal amount.",
   30000: "Member data not found",
   30001: "Member has already received the promotion",
   30002: "Member has sent the number today",

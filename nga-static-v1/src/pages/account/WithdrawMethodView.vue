@@ -295,6 +295,7 @@
         Note: 2% + 50NGN of the withdrawal amount will be deducted as bank commission Please double check the withdrawal
         information, if withdrawal failed or you have any other questions, please contact CS 24/7
       </div> -->
+      <div v-if="selectedMethodItem.tips" class="withdraw-tip-wrapper" v-html="selectedMethodItem.tips" />
     </template>
 
     <template v-else>
@@ -1195,5 +1196,31 @@ const refreshRemainWager = () => {
 .dialog-input {
   background-color: #263349;
   border-radius: 6px;
+}
+
+.withdraw-tip-wrapper {
+  background-color: rgba(21, 127, 66, 0.2);
+  margin-top: 20px;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16.2px;
+  letter-spacing: 0.045em;
+  text-align: left;
+  color: #cdcbd5;
+
+  :deep(b) {
+    font-weight: bold;
+    color: #fff;
+  }
+
+  :deep(em) {
+    color: #ffae00;
+  }
+
+  :deep(p) {
+    margin-bottom: 4px;
+  }
 }
 </style>

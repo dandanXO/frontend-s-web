@@ -2,16 +2,17 @@
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn" v-if="remainingTime && isShowSticky">
         <div v-touch-pan.prevent.mouse="moveCsIcon" @click="router.push('promo?name=spin-lucky-wheel')" class="countdown-sticky">
             <span class="remaining-time"> {{ remainingTime }}</span>
-            <img @click.stop="closeSticky()" class="close-btn" src="../../../assets/images/index/close-btn.png" />
+            <img @click.stop="closeSticky" class="close-btn" src="../../../assets/images/index/close-btn.png" />
         </div>
     </q-page-sticky>
 </template>
 <script setup>
 import { userStore } from "src/stores";
-import { onActivated, onMounted, onUnmounted, ref } from "vue";
+import { onActivated, onMounted, onUnmounted, ref, inject } from "vue";
 import { eventapi } from "src/boot/axios";
 import moment from 'moment-timezone';
 import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
 
 const router = useRouter();
 const timer = ref();
@@ -33,13 +34,7 @@ const closeSticky = () => {
 const csDragPos = ref([10, 90]);
 const isDraggingCsIcon = ref(false);
 
-const info = ref({
-    startTime: "",
-    currAmount: 0,
-    targetWithdrawAmount: 0,
-    spinChance: 0,
-    status: ""
-});
+const { spinWheelLuckyPromoInfo: info } = storeToRefs(store);
 
 const getRemainingTime = (endTime) => {
     let result = "00:00:00";
@@ -72,26 +67,14 @@ const updateCountdownTime = () => {
     }, 1000);
 }
 
-const loadData = async () => {
-    const res = await eventapi.post("/refer-spin/check");
-    if (res.code === 0) {
-        info.value = {
-            ...info.value,
-            ...res.data
-        };
-
-        if(info.value.status === 'IN_PROGRESS') {
-            isShowSticky.value = true;
-        }
-
-        updateCountdownTime();
-    }
-};
-
 onMounted(() => {
   const getShow = sessionStorage.getItem("SPIN_LUCKY_WHEEL_STICKY");
   if(!getShow && store.token){
-    loadData();
+    if(info.value.status === 'IN_PROGRESS') {
+        isShowSticky.value = true;
+    }
+
+    updateCountdownTime();
   }
 });
 
@@ -100,7 +83,12 @@ onActivated(() => {
 
     const getShow = sessionStorage.getItem("SPIN_LUCKY_WHEEL_STICKY");
     if(!getShow && store.token){
-        loadData();
+        if(info.value.status === 'IN_PROGRESS') {
+            isShowSticky.value = true;
+        }
+
+        updateCountdownTime();
+
     }
 })
 
