@@ -151,7 +151,7 @@
 <script lang="js">
 import { computed, defineComponent, onActivated, onBeforeUnmount, onMounted, reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-
+import { Filesystem, Directory } from "@capacitor/filesystem";
 import { api } from "@/boot/axios";
 import HotPromotion from "@/components/HotPromotion";
 import GameModal from "@/components/modal/GameModal.vue";
@@ -360,6 +360,22 @@ export default defineComponent({
             // promoSrc.value= preUrl;
             var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no,toolbar=no,fullscreen=yes,hidden=yes");
             isOpenExtension.value = true;
+
+            ref.addEventListener("message", async function(event) {
+              if (event.data.action === "qrcode") {
+                // alert(event.data.item);
+                const dataUrl = event.data.item;
+                // alert(dataUrl)
+                // Save the image to the photo gallery
+                await Filesystem.writeFile({
+                  path: `Pictures/myreferral-${Date.now()}.jpg`,
+                  data: dataUrl,
+                  directory: Directory.Documents,
+                  recursive: true
+                });
+
+              }
+            });
 
             ref.addEventListener("loadstart", function (event) {
               var url = event.url;
