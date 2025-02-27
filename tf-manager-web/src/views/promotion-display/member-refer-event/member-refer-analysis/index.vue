@@ -12,7 +12,7 @@
       name="refer-relation"
       v-if="hasPermission(['sys:privi:member-refer-friend-stats:list'])"
     >
-      <ReferRelationTab :referrer-name="referName" />
+      <ReferRelationTab :referrer-query="referQuery" />
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -32,10 +32,10 @@ export default defineComponent({
   setup() {
     const { t } = useI18n()
     const activeName = ref('stats-analysis')
-    const referName = ref(null)
-    const switchPane = (name) => {
+    const referQuery = ref(null)
+    const switchPane = (query) => {
       activeName.value = 'refer-relation'
-      referName.value = name
+      referQuery.value = query
     }
 
     return {
@@ -43,7 +43,7 @@ export default defineComponent({
       t,
       hasPermission,
       switchPane,
-      referName
+      referQuery
     }
   },
 })

@@ -199,8 +199,12 @@ function getSummaries(param) {
   return sums
 }
 
-function redirectToReferPane(name) {
-  emits('switch-to-relation-tab', name)
+function redirectToReferPane(referrerName) {
+  const query = {
+    referrerName,
+    recordTime: request.recordTime
+  }
+  emits('switch-to-relation-tab', query)
 }
 
 const sort = (column) => {
