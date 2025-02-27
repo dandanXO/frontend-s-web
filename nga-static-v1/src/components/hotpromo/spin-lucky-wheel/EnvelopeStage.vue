@@ -242,7 +242,7 @@ onUnmounted(() => {
 
       .selected-envelope {
         .prize {
-          font-size: 10vw;
+          font-size: 22px;
         }
         .remaining-time {
           font-size: 4vw;
