@@ -181,7 +181,7 @@ const extractionDifference = inject('extractionDifference');
 const winningRecord = computed(() => {
   const result = [];
   for (let i = 0; i < 20; i++) {
-    const date = moment()
+    const date = moment().tz("Africa/Lagos")
       .subtract(Math.random() * 24 * 60 * 60 * 1000, "milliseconds")
       .format("YYYY-MM-DD HH:mm:ss");
     const name = `User${Math.floor(Math.random() * 900) + 100}`;
