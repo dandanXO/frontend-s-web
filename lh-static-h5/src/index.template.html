@@ -167,9 +167,8 @@
           }, "CUSTOM")
         });
         gtag("event", "SENDING_MESSAGE_TO_FLUTTER", {
-          "user_id": tokenObj.s3,
           "type": "SENDING_MESSAGE_TO_FLUTTER",
-          "data": addTimestamp({})
+          "data": JSON.stringify(addTimestamp({}))
         })
         window.flutter_inappwebview.callHandler('FlutterChannel','LH_FLUTTER');
       }
@@ -180,9 +179,8 @@
           "data": addTimestamp(data)
         }, "CUSTOM"))
         gtag("event", "RECEIVING_MESSAGE_FROM_FLUTTER", {
-          "user_id": tokenObj.s3,
           "type": "RECEIVING_MESSAGE_FROM_FLUTTER",
-          "data": addTimestamp(data)
+          "data": JSON.stringify(addTimestamp(data))
         })
       }
 
@@ -205,11 +203,13 @@
             "type": "INITIALIZE_APP",
             "data": addTimestamp({})
           }, "CUSTOM")
-          gtag("event", "INITIALIZE_APP", {
-          "user_id": tokenObj.s3,
-          "type": "INITIALIZE_APP",
-          "data": addTimestamp({})
         })
+        gtag('config', 'TAG_ID', {
+          'user_id': tokenObj.s3
+        });
+        gtag("event", "INITIALIZE_APP", {
+          "type": "INITIALIZE_APP",
+          "data": JSON.stringify(addTimestamp({}))
         })
 
         //IOS
