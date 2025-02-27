@@ -782,6 +782,7 @@ export default {
     betId: 'Bet ID',
     belongType: 'Belong Type',
     betMoneyChange: 'Member Bet Money Change',
+    betMoneyChangeTidb: 'Member Bet Money Change TiDB',
     betMoreThan: 'Bet More Than',
     betRebateDetails: 'Bet Rebate Record Details',
     betRebateRecord: 'Bet Rebate Record',
