@@ -938,6 +938,10 @@ onMounted(() => {
     }
   }
 }
+
+.helptxt .el-select__wrapper {
+  min-width: 200px;
+}
 </style>
 <style scoped lang="scss">
 .txt-center {

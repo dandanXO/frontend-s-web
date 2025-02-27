@@ -9,6 +9,7 @@
 
     <!-- external promos -->
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'pk3-slot-ftd' && store.token" :params="list.param" />
+    <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -29,7 +30,7 @@
 
 <script>
 import { useQuasar } from "quasar";
-import { defineComponent, ref } from "vue";
+import { defineAsyncComponent, defineComponent, ref } from "vue";
 
 import { eventapi } from "@/boot/axios";
 import ClaimPromo from "@/components/hotpromo/claimPromo.vue";
@@ -38,6 +39,7 @@ import * as _ from "lodash";
 import moment from "moment";
 
 import SlotFtdPromo from "@/components/hotpromo/slotftdpromo/SlotFtdPromo.vue";
+import SpinLuckyWheelPromo from "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -45,7 +47,8 @@ export default defineComponent({
   // setup: (props, { emit }) => {},
   components: {
     ClaimPromo,
-    SlotFtdPromo
+    SlotFtdPromo,
+    SpinLuckyWheelPromo
   },
   props: {
     list: {

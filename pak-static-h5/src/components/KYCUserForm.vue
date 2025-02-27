@@ -15,6 +15,24 @@
           />
         </div>
       </div>
+      <div v-if="!store.phone" class="pc-form-item">
+        <div class="pc-form-label">{{ $t("form.phone") }}</div>
+        <div class="pc-form-input">
+          <q-input
+            filled
+            dense
+            clearable
+            :placeholder="$t('form.phone_placeholder')"
+            v-model="formDetail.phone"
+            :rules="[(val) => val.startsWith('03') || $t('form.phone_rules_03'), (_) => isValidPhone()]"
+          >
+            <template v-slot:prepend>
+              <q-icon name="smartphone" />
+              <div class="prepend-number">+92</div>
+            </template>
+          </q-input>
+        </div>
+      </div>
     </div>
 
     <q-btn
@@ -23,7 +41,7 @@
       flat
       no-caps
       class="btn-primary btn-primary__full"
-      :disable="!(isValidName() === true)"
+      :disabled="isValidName() !== true || (!store.phone && isValidPhone() !== true)"
       @click="submitKYCNewUser"
     >
       {{ $t("btn.submit") }}
@@ -67,10 +85,10 @@ const isValidPhone = () => {
     return "Please Enter Phone Number";
   }
 
-  const phoneRegex = /^\d{10}$/;
+  const phoneRegex = /^\d{11,20}$/;
   const isValid = phoneRegex.test(phone);
 
-  return isValid ? true : "Phone Number must be 10 digits";
+  return isValid ? true : "Phone Number must be 11 digits or more";
 };
 
 const isAlphanumeric = (value, translation) => {
@@ -88,6 +106,7 @@ const submitKYCNewUser = () => {
 const updateNewUserState = () => {
   const updateInfo = {};
   updateInfo.realName = formDetail.realName;
+  updateInfo.phone = formDetail.phone;
 
   api
     .post("/session/account", qs.stringify(updateInfo))

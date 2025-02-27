@@ -68,6 +68,7 @@ export default {
     15202: "New password must not match with old password",
     21000: "This game is already in your favorite games list.",
     25002: "You have already claimed the reward.",
+    25005: "The wheel activity has reached the withdrawal amount.",
     30000: "Member data not found",
     30001: "Member has already received the promotion",
     30002: "Member has sent the number today",

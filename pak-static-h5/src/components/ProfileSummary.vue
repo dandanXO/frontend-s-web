@@ -842,6 +842,10 @@ onUnmounted(() => {
     width: 100%;
     position: relative;
 
+    .q-btn {
+      white-space: nowrap;
+    }
+
     .btn-lang {
       img {
         display: block;

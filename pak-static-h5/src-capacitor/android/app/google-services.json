@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "649216089271",
+    "project_id": "b9game",
+    "storage_bucket": "b9game.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:649216089271:android:95cb67baa64eff52d58132",
+        "android_client_info": {
+          "package_name": "com.ind.appb9mega1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "649216089271-fc6gmv5e24qo0t1hhdguolafcstvsfpi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ind.appb9mega1",
+            "certificate_hash": "72d0d4c84c7e12495bc2155dbe94528b16ccd491"
+          }
+        },
+        {
+          "client_id": "649216089271-76sl4oo78mp03o2klvnentncg7j3iaai.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEbVUqow1I4qIUtSrWzP-9aDFIkF3ySYc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "649216089271-76sl4oo78mp03o2klvnentncg7j3iaai.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
