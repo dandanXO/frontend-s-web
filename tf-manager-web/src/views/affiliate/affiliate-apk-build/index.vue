@@ -165,7 +165,7 @@
               type="danger"
               v-if="
                 hasPermission(['sys:affiliate:affapk:build']) &&
-                  scope.row.buildStatus === 'IN_QUEUE'
+                  (scope.row.buildStatus === 'IN_QUEUE' || scope.row.buildStatus === 'IN_PROGRESS')
               "
               v-permission="['sys:affiliate:affapk:build']"
               @click="cancel(scope.row.id)"
@@ -180,6 +180,14 @@
               @click="showDialog(scope.row)"
             >
               {{ t('fields.edit') }}
+            </el-button>
+            <el-button
+              size="mini"
+              type="success"
+              v-if="scope.row.fileUrl !== null && scope.row.buildStatus === 'SUCCESS'"
+              @click="downloadFile(scope.row.fileUrl)"
+            >
+              {{ t('fields.download') }}
             </el-button>
           </template>
         </el-table-column>
@@ -466,6 +474,14 @@ async function loadSites() {
   // const { data: ret } = await getSiteListSimple()
   list.sites = store.state.user.sites
 }
+
+const downloadFile = (url) => {
+  if (url) {
+    window.open(url, '_blank');
+  } else {
+    console.error('Download URL is empty');
+  }
+};
 
 onMounted(async () => {
   await loadSites()
