@@ -1,7 +1,7 @@
 <template>
   <template v-if="!$q.dark.isActive ">
     <div class="white">
-      <div v-if="hotMatchesByType.length > 0" class="hot-match-container">
+      <div class="hot-match-container">
         <div class="competition-items">
           <div
             class="competition-item"
@@ -54,7 +54,7 @@
   </div>
   </template>
   <template v-else>
-    <div v-if="hotMatchesByType.length > 0" class="hot-match-container">
+    <div class="hot-match-container">
       <div class="competition-items">
         <div
           class="competition-item"
