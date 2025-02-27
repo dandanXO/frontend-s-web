@@ -2720,16 +2720,16 @@ const hbPromo = ref([]);
 const checkSpinLuckyWheelPromo = async () => {
   if(store.token) {
     const res = await eventapi.post("/refer-spin/check");
-    store.spinWheelLuckyPromoInfo = { ...store.spinWheelLuckyPromoInfo, ...res.data };
+    store.spinWheelLuckyPromoInfo = res.data;
+  }
 
-    if (sessionStorage.getItem("isReload")) {
-      sessionStorage.removeItem("isReload");
-      sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
-    }
+  if (sessionStorage.getItem("isReload")) {
+    sessionStorage.removeItem("isReload");
+    sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
+  }
 
-    if (!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
-      spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
-    }
+  if (!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+    spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
   }
 }
 
