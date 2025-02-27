@@ -214,8 +214,8 @@
       </q-btn>
 
       <div class="google-login-wrapper">
-        <img v-if="languageVal === 'en'" style="width:100%;" src="../assets/images/index/logindirectly-en.png" />
-        <img v-else style="width:100%;" src="../assets/images/index/logindirectly-ur.png" />
+        <img v-if="languageVal === 'en'" style="width: 100%" src="../assets/images/index/logindirectly-en.png" />
+        <img v-else style="width: 100%" src="../assets/images/index/logindirectly-ur.png" />
         <template v-if="isAndroid()">
           <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onCapacitorGoogleSignin">
             <img
@@ -437,10 +437,10 @@ export default defineComponent({
 
     const getAffiliateCode = () => {
       affCode.value = sessionStorage.getItem("AFFILIATE_CODE");
-      if (affCode.value) {
-        // hasAffiliate.value = true;
-        regForm.codeAffiliate = affCode.value;
-      }
+      // if (affCode.value) {
+      // hasAffiliate.value = true;
+      // }
+      regForm.codeAffiliate = affCode.value;
     };
     const getReferralCode = () => {
       const refCode = sessionStorage.getItem("REFERRAL_CODE");
