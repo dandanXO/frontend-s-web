@@ -3503,6 +3503,7 @@ export default {
     WITHDRAW_ERROR: '提款请求报错',
     DEPOSIT_ERROR: '存款请求报错',
     JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: '任务闲置 (注单捞取)',
+    OTP_FAIL: 'OTP发送失败'
   },
   domain: {
     domainMainType: {
