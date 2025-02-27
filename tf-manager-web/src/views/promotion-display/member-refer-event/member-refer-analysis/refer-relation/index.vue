@@ -37,6 +37,7 @@
           :placeholder="t('fields.status')"
           class="filter-item"
           style="width: 120px; margin-left: 5px"
+          clearable
         >
           <el-option :label="t('memberReferStatus.FAILED')" value="FAILED" />
           <el-option :label="t('memberReferStatus.SUCCESS')" value="SUCCESS" />
@@ -253,16 +254,18 @@ const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 let timeZone = null
 const props = defineProps({
-  referrerName: {
-    type: String,
+  referrerQuery: {
+    type: Object,
     required: false,
-    default: "",
+    default: () => {},
   },
 })
 watch(
-  () => props.referrerName,
-  (newVal, oldVal) => {
-    request.referrerName = newVal
+  () => props.referrerQuery,
+  ({ referrerName, recordTime }, oldVal) => {
+    request.referrerName = referrerName
+    request.recordTime[0] = convertDateToStart(recordTime[0])
+    request.recordTime[1] = convertDateToEnd(recordTime[1])
     loadRecord()
   }
 )
