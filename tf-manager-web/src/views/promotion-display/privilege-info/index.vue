@@ -516,6 +516,7 @@
             {{ t('fields.priviClickNextStep') }}
           </el-button>
           <el-button v-if="active === 4" type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
+          <el-button v-if="uiControl.dialogType === 'EDIT'" type="primary" @click="savePage">{{ t('fields.save') }}</el-button>
         </div>
       </el-form>
     </el-dialog>
@@ -1349,6 +1350,16 @@ function edit() {
       ElMessage({ message: t('message.editSuccess'), type: 'success' })
     }
   })
+}
+
+function savePage() {
+  if (active.value === 2) {
+    form.vips = form.vips.replace(/['"]+/g, '')
+  }
+  if (active.value === 3) {
+    form.payTypes = form.payTypes.replace(/['"]+/g, '')
+  }
+  edit()
 }
 
 function submit() {
