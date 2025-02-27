@@ -51,7 +51,7 @@ const loadData = async () => {
       stage.value = "wheel";
       break;
   }
-  store.spinWheelLuckyPromoInfo = newInfo;
+  store.spinWheelLuckyPromoInfo = { ...store.spinWheelLuckyPromoInfo, ...newInfo };
   
   isDuringInit.value = false;
 };
