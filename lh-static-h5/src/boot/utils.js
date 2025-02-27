@@ -176,7 +176,11 @@ export const customCloudWiseRecord = (userId, data = {}) => {
 
   gtag("event", "PAGE_VIEW", {
     "type": "PAGE_VIEW",
-    "data": JSON.stringify(addTimestamp({}))
+    "data": JSON.stringify(addTimestamp({
+      ...data,
+      timestamp: Date.now(),
+      user_id: userId,
+    }))
   })
   if (window.CloudWiseUtil) {
     CloudWiseUtil.setCustomEventInfo(

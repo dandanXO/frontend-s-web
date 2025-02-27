@@ -168,7 +168,9 @@
         });
         gtag("event", "SENDING_MESSAGE_TO_FLUTTER", {
           "type": "SENDING_MESSAGE_TO_FLUTTER",
-          "data": JSON.stringify(addTimestamp({}))
+          "data": JSON.stringify(addTimestamp({
+            "user_id": tokenObj.s3,
+          }))
         })
         window.flutter_inappwebview.callHandler('FlutterChannel','LH_FLUTTER');
       }
@@ -180,7 +182,10 @@
         }, "CUSTOM"))
         gtag("event", "RECEIVING_MESSAGE_FROM_FLUTTER", {
           "type": "RECEIVING_MESSAGE_FROM_FLUTTER",
-          "data": JSON.stringify(addTimestamp(data))
+          "data": JSON.stringify(addTimestamp({
+            ...data,
+            "user_id": tokenObj.s3,
+          }))
         })
       }
 
@@ -209,8 +214,17 @@
         });
         gtag("event", "INITIALIZE_APP", {
           "type": "INITIALIZE_APP",
-          "data": JSON.stringify(addTimestamp({}))
+          "data": JSON.stringify(addTimestamp({
+            "user_id": tokenObj.s3,
+          }))
         })
+
+        window.addEventListener("error", (event) => {
+          gtag('event', 'exception', {
+            description: `${event.message} at ${event.source}:${event.lineno}:${event.colno}`,
+            fatal: false // 設為 true 表示致命錯誤
+          });
+        });
 
         //IOS
         if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.notifyApp) {
