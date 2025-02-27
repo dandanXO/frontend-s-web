@@ -812,7 +812,7 @@
         <tr>
           <th style="background: #f1dda0; color: #766442">VIP等级</th>
           <th style="background: #f1dda0; color: #766442">升级条件（流水）</th>
-          <th style="background: #f1dda0; color: #766442">保级条件（90天）</th>
+          <th style="background: #f1dda0; color: #766442">保级条件流水（90天）</th>
           <th style="background: #f1dda0; color: #766442">晋级彩金</th>
         </tr>
       </thead>

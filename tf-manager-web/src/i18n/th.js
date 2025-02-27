@@ -416,6 +416,7 @@ export default {
     betId: 'รหัสเดิมพัน',
     belongType: 'ประเภทหน้าเว็บ',
     betMoneyChange: 'สมาชิกเดิมพันแลกเปลี่ยนเงิน',
+    betMoneyChangeTidb: 'สมาชิกเดิมพันแลกเปลี่ยนเงิน',
     betMoreThan: 'เดิมพันมากกว่า',
     betRecords: 'บันทึกการเดิมพัน',
     betStatus: 'สถานะการเดิมพัน',

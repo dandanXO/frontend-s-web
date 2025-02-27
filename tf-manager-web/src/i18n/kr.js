@@ -670,6 +670,7 @@ export default {
     betId: '베팅 ID',
     belongType: '소속 유형',
     betMoneyChange: '회원 베팅 금액 변경',
+    betMoneyChangeTidb: '회원 베팅 금액 변경',
     betMoreThan: '이상 베팅',
     betRebateDetails: '베팅 리베이트 기록 세부 정보',
     betRebateRecord: '베팅 리베이트 기록',

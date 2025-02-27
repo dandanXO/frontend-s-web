@@ -650,6 +650,7 @@ export default {
     betId: 'ID cược',
     belongType: 'Loại thuộc về',
     betMoneyChange: 'Thay đổi số tiền cược thành viên',
+    betMoneyChangeTidb: 'Thay đổi số tiền cược thành viên',
     betMoreThan: 'Cược nhiều hơn',
     betRebateDetails: 'Chi tiết hoàn tiền cược',
     betRebateRecord: 'Hồ sơ hoàn tiền cược',

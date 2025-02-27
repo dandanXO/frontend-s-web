@@ -140,6 +140,7 @@
       v-if="list.redirectUrl === 'dy2-pgl-on-fire-buenos-aires-2025'"
       :promo-code="list.promoCode"
     />
+    <EslProLeagueS21 v-else-if="list.redirectUrl === 'dy2-esl-pro-league-s21'" :promo-param="listParam" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -289,6 +290,9 @@ const VctcnMatchPromo = defineAsyncComponent(() =>
 const Belgrade2025Promo = defineAsyncComponent(() =>
   import("../components/hotpromo/belgrade-2025-promo/Belgrade2025Promo.vue")
 );
+const EslProLeagueS21 = defineAsyncComponent(() =>
+  import("./hotpromo/esl-pro-league-s21/EslProLeagueS21.vue")
+);
 const DreamLeagueS25 = defineAsyncComponent(() => import("./hotpromo/dream-league-s25/DreamLeagueS25.vue"));
 const Dota2BlastSlam2025 = defineAsyncComponent(() => import("../components/hotpromo/dota2-blast-slam-2025/Dota2BlastSlam2025.vue"));
 const KatowiceS25 = defineAsyncComponent(()=>import("./hotpromo/katowice-s-25/KatowiceS25.vue"))
@@ -300,6 +304,7 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    EslProLeagueS21,
     LanternFestival2025,
     AgYuanxiaohongbao,
     PGLOnFireBuenosAires2025,
