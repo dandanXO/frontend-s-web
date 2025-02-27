@@ -18,6 +18,17 @@
 
     <link rel="icon" type="image/ico" href="icons/favicon.ico" />
     <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-ZMQ37SM5Q3', {
+        linker: {
+          domains: ["90099888.com", "26651924.com", "54495187.com", "07518351.com", "36864956.com", "78978090.com", "lh318.com"]
+        }
+      });
+    </script>
+    <script>
       var CWRUMLICENCE;
     </script>
     <script type="text/javascript">
@@ -32,6 +43,13 @@
           window.cloudWiseQueue = []
         }
         document.head.appendChild(cloudWiseScript);
+      }
+
+      function initGA() {
+        const gaScript = document.createElement("script");
+        gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-ZMQ37SM5Q3";
+        gaScript.async = true;
+        document.head.appendChild(gaScript);
       }
 
       function parseJwt(token) {
@@ -58,6 +76,7 @@
         const appPaths = ["/promotion", "/promotiontest", "/deposit", "/deposittest", "/invitefriend", "/vip", "/viptest", "/privilege/invite"]
         if(appPaths.includes(pathname)) {
           initCloudWise("wS0n2SF8WRCb0fAkjFLvksRizrsrej3YfZosUhCbiG7b2z**czacDVZXpilaow2ti")
+          initGA();
           window.parseJwt = parseJwt;
         } else {
           initCloudWise("wS0n2SF8WRCb0fAkjFLvksRizrsrej3Y0t429/b5onII**yr8w22d3AkwtO5qHCg9")
@@ -139,7 +158,7 @@
         }
       }
 
-      const callFlutterHandler = () => {
+      const callFlutterHandler = (tokenObj) => {
         window.WEBVIEW_CLOUD_WISE = true;
         sendCloudWiseTrack(() => {
           CloudWiseUtil.setCustomEventInfo({
@@ -147,14 +166,24 @@
             "data": addTimestamp({})
           }, "CUSTOM")
         });
+        gtag("event", "SENDING_MESSAGE_TO_FLUTTER", {
+          "user_id": tokenObj.s3,
+          "type": "SENDING_MESSAGE_TO_FLUTTER",
+          "data": addTimestamp({})
+        })
         window.flutter_inappwebview.callHandler('FlutterChannel','LH_FLUTTER');
       }
 
-      const receiveMessageFromFlutter = (data) => {
+      const receiveMessageFromFlutter = (tokenObj, data) => {
         sendCloudWiseTrack(() => CloudWiseUtil.setCustomEventInfo({
           "type": "RECEIVING_MESSAGE_FROM_FLUTTER",
           "data": addTimestamp(data)
         }, "CUSTOM"))
+        gtag("event", "RECEIVING_MESSAGE_FROM_FLUTTER", {
+          "user_id": tokenObj.s3,
+          "type": "RECEIVING_MESSAGE_FROM_FLUTTER",
+          "data": addTimestamp(data)
+        })
       }
 
       if (
@@ -176,6 +205,11 @@
             "type": "INITIALIZE_APP",
             "data": addTimestamp({})
           }, "CUSTOM")
+          gtag("event", "INITIALIZE_APP", {
+          "user_id": tokenObj.s3,
+          "type": "INITIALIZE_APP",
+          "data": addTimestamp({})
+        })
         })
 
         //IOS
@@ -191,12 +225,12 @@
         document.addEventListener("DOMContentLoaded", function () {
           console.log('DOM fully loaded and parsed');
           if (window.flutter_inappwebview) {
-            callFlutterHandler();
+            callFlutterHandler(tokenObj);
           } else {
             console.log('FlutterChannel not available yet, waiting...');
             const interval = setInterval(() => {
               if (window.flutter_inappwebview) {
-                callFlutterHandler();
+                callFlutterHandler(tokenObj);
                 console.log('Message sent to Flutter after DOMContentLoaded');
                 clearInterval(interval);
               }
@@ -208,7 +242,7 @@
         window.notifyApp = function (message) {
           try {
             const returnJson = message.data;
-            receiveMessageFromFlutter(returnJson);
+            receiveMessageFromFlutter(tokenObj, returnJson);
             if (returnJson && returnJson.rstDomain) {
               window.localStorage.setItem("LH_H5_RST_URL", returnJson.rstDomain);
 
