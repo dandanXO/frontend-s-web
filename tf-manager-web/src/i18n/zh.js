@@ -785,6 +785,7 @@ export default {
     betId: '投注单号',
     belongType: '代理归属',
     betMoneyChange: '投注账变',
+    betMoneyChangeTidb: '投注账变TiDB',
     betMoreThan: '投注金额大于',
     betRebateDetails: '投注返水记录明细',
     betRebateRecord: '投注返水记录',
