@@ -1428,6 +1428,10 @@
   </q-dialog>
   <a ref="downloadAppRef" :href="ui.downloadAppUrl" download style="display: none" />
 
+  <q-dialog v-model="isShowSetFirstPw">
+    <SetFirstPasswordModal @closeDialog="isShowSetFirstPw = false" />
+  </q-dialog>
+
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
 
   <SpinLuckyWheelPromoSticky v-show="isShownSpinLuckyWheel" />
@@ -1473,6 +1477,7 @@ import { useCustomerTrigger } from "src/hooks/trigger";
 import chroma from "chroma-js";
 import PopupController from "src/components/PopupController.vue";
 import MegaSharingWheelModal from "src/components/hotpromo/megaSharingWheel/MegaSharingWheelModal.vue";
+import SetFirstPasswordModal from "src/components/modal/SetFirstPasswordModal.vue";
 import AddToHomeScreenModal from "src/components/modal/AddToHomeScreenModal.vue";
 import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
 import SpinLuckyWheelPromoHomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
@@ -1496,6 +1501,7 @@ const isMediaSettingsModal = ref(false);
 const popupPromo = ref("");
 const megaSharingWheelDialogModel = ref(true);
 const isAddToHomeScreen = ref(false);
+const isShowSetFirstPw = ref(false);
 
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
@@ -3735,6 +3741,7 @@ onActivated(() => {
   checkHash();
 
   checkSpinWheel();
+  checkGoogleLoginSetPwd();
 
   if (route.query.login === "true") {
     // isMoneyRainModal.value = true;
@@ -3852,6 +3859,16 @@ const showCongratsModal = () => {
       }
     }
   });
+};
+
+const checkGoogleLoginSetPwd = () => {
+  if (store.isGoogleLogin && store.isFirstLandOnHomePage) {
+    api.get("/session/first-password").then((res) => {
+      if (res.code === 0 && !res.data) {
+        isShowSetFirstPw.value = true;
+      }
+    });
+  }
 };
 </script>
 

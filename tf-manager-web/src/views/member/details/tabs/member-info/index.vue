@@ -40,10 +40,13 @@
               {{ t('fields.loginName') }}
             </div>
           </template>
-          <span v-if="memberDetail.loginName !== null">
+          <span v-if="memberDetail.loginName !== null && memberDetail.maskedLoginName !== null">
+            {{ memberDetail.loginName + " [" + memberDetail.maskedLoginName + "]" }}
+          </span>
+          <span v-else-if="memberDetail.loginName !== null">
             {{ memberDetail.loginName }}
           </span>
-          <span v-if="memberDetail.loginName === null">-</span>
+          <span v-else>-</span>
           <el-button
             type="info"
             size="mini"
@@ -1898,6 +1901,7 @@ export default defineComponent({
       walletType: null,
       gender: null,
       isOpenTransfer: null,
+      maskedLoginName: null,
     })
 
     const affiliateDetail = reactive({
@@ -2709,6 +2713,10 @@ export default defineComponent({
         memberDetail[detailField] = data.data[detailField]
           ? data.data[detailField]
           : '';
+
+        if (detailField === 'maskedLoginName') {
+          memberDetail[detailField] = data.data[detailField]
+        }
 
         if (detailField === 'isOpenTransfer') {
           memberDetail[detailField] = data.data[detailField]
