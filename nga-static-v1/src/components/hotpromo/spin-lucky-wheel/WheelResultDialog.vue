@@ -32,9 +32,9 @@ const _modelValue = computed({
 
   .prize {
     position: absolute;
-    top: 20%;
+    top: 22%;
     width: 100%;
-    font-size: 56px;
+    font-size: 30px;
     font-weight: 900;
     color: #8100ae;
     text-align: center;
