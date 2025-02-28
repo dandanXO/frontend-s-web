@@ -785,6 +785,7 @@ export default {
     betId: '投注单号',
     belongType: '代理归属',
     betMoneyChange: '投注账变',
+    betMoneyChangeTidb: '投注账变TiDB',
     betMoreThan: '投注金额大于',
     betRebateDetails: '投注返水记录明细',
     betRebateRecord: '投注返水记录',
@@ -3503,6 +3504,7 @@ export default {
     WITHDRAW_ERROR: '提款请求报错',
     DEPOSIT_ERROR: '存款请求报错',
     JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: '任务闲置 (注单捞取)',
+    OTP_FAIL: 'OTP发送失败'
   },
   domain: {
     domainMainType: {

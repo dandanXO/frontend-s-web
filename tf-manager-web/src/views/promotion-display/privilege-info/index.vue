@@ -516,6 +516,7 @@
             {{ t('fields.priviClickNextStep') }}
           </el-button>
           <el-button v-if="active === 4" type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
+          <el-button v-if="uiControl.dialogType === 'EDIT'" type="primary" @click="savePage">{{ t('fields.save') }}</el-button>
         </div>
       </el-form>
     </el-dialog>
@@ -1326,6 +1327,51 @@ function edit() {
     return;
   }
 
+  privilegeInfoForm.value.validate(async valid => {
+    if (valid) {
+      if (form.bonusType === 'RATIO') {
+        form.bonusAmount = form.bonusAmountRatio / 100
+      }
+      form.vips = form.vips.replace(/['"]+/g, '')
+      form.payTypes = form.payTypes.replace(/['"]+/g, '')
+      if (
+        form.bonusDays &&
+        form.frequency === 'DAILY' &&
+        form.triggerType === 'DEPOSITBONUSES'
+      ) {
+        form.bonusDays = form.bonusDays.replace(/['"]+/g, '')
+      } else {
+        form.bonusDays = ''
+      }
+      form.gameTypeRollover = constructRollover()
+      await updatePrivilegeInfo(form)
+      uiControl.dialogVisible = false
+      await loadPrivilegeInfo()
+      ElMessage({ message: t('message.editSuccess'), type: 'success' })
+    }
+  })
+}
+
+function savePage() {
+  if (active.value === 1) {
+    // Reward Setup Page
+    if (!uiControl.selectedGameTypeRolloverType) {
+      ElMessage({ message: t('message.validateGameRolloverRequired'), type: 'error' })
+      return;
+    }
+    if (validateGameRollOverType()) {
+      ElMessage({ message: t('message.validateGameRolloverSelectRequired'), type: 'error' })
+      return;
+    }
+  }
+  if (active.value === 2) {
+    // VIP Page
+    form.vips = form.vips.replace(/['"]+/g, '')
+  }
+  if (active.value === 3) {
+    // Payment Page
+    form.payTypes = form.payTypes.replace(/['"]+/g, '')
+  }
   privilegeInfoForm.value.validate(async valid => {
     if (valid) {
       if (form.bonusType === 'RATIO') {
