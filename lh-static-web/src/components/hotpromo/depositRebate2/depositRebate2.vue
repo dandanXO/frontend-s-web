@@ -82,8 +82,8 @@
         <tr>
           <td>支付宝</td>
           <td>0.5%</td>
-          <td>≥500</td>
-          <td>88</td>
+          <td>≥1000</td>
+          <td>38</td>
         </tr>
       </tbody>
     </table>
@@ -155,7 +155,7 @@ const depositCards = ref([
   {
     code: "zfb",
     title: "支付宝转卡",
-    content: `充值即送<em class="light-bg">0.5%</em>彩金 支付宝可以满足您不同需求和使用场景，速度快，够安全。用户每日任何时间在雷火使用“支付宝”方式成功存款≥500元，即可享受存款金额的<em class="light-bg">0.5%</em>加码彩金，单日优惠最高上限88元。`
+    content: `充值即送<em class="light-bg">0.5%</em>彩金 支付宝可以满足您不同需求和使用场景，速度快，够安全。用户每日任何时间在雷火使用“支付宝”方式成功存款≥1000元，即可享受存款金额的<em class="light-bg">0.5%</em>加码彩金，单日优惠最高上限38元。`
   },
 ]);
 </script>
