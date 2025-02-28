@@ -153,6 +153,7 @@
 </template>
 
 <script lang="js">
+import { Filesystem, Directory } from "@capacitor/filesystem";
 import { computed, defineComponent, onActivated, onBeforeUnmount, reactive, ref, watch, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
@@ -363,6 +364,22 @@ export default defineComponent({
             // promoSrc.value= preUrl;
             var ref = cordova.InAppBrowser.open(preUrl, "_blank", "location=no,zoom=no,footer=no,toolbar=no,fullscreen=yes,hidden=yes");
             isOpenExtension.value = true;
+
+            ref.addEventListener("message", async function(event) {
+              if (event.data.action === "qrcode") {
+                // alert(event.data.item);
+                const dataUrl = event.data.item;
+                // alert(dataUrl)
+                // Save the image to the photo gallery
+                await Filesystem.writeFile({
+                  path: `Pictures/myreferral-${Date.now()}.jpg`,
+                  data: dataUrl,
+                  directory: Directory.Documents,
+                  recursive: true
+                });
+
+              }
+            });
 
             ref.addEventListener("loadstart", function (event) {
               var url = event.url;
