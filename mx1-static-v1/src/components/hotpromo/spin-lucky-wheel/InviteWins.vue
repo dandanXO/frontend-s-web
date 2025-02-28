@@ -11,7 +11,7 @@
     <div class="qr-wrapper invite-win-section">
       <q-spinner v-if="isLoading" :size="30" />
       <VueQRCodeComponent v-else id="the-qrcode" :size="120" :text="selfTgurl" class="qr-code" />
-      <span class="desc">Do you want to unlock your {{`${store.currency.value} 500`}} reward right away? Invite your friends for a free spin!</span>
+      <span class="desc">¿Quieres desbloquear tu recompensa de {{`${store.currency.value} 100`}} de inmediato? ¡Invita a tus amigos para obtener un giro gratis!</span>
       <q-btn label="Save" :size="'150'" class="save-btn" @click="downloadQRImg()" />
     </div>
   </div>
@@ -32,14 +32,14 @@ const isLoading = ref(false);
 
 const selfTgurl = ref("");
 const copyShareLink = (selfTgurl) => {
-  const copiedText = `Do you want to unlock your ${store.currency.value} 500 reward right away? Click the link: ${selfTgurl}`;
+  const copiedText = `¿Quieres desbloquear tu recompensa de ${store.currency.value} 100 de inmediato? Haz clic en el enlace: ${selfTgurl}`;
 
   copyToClipboard(copiedText)
     .then(() => {
       $q.notify({
         color: "position",
         position: "top",
-        message: `${selfTgurl} copied to clipboard`,
+        message: `${selfTgurl} copiado al portapapeles`,
         icon: "check_circle_outline"
       });
     })
@@ -47,7 +47,7 @@ const copyShareLink = (selfTgurl) => {
       $q.notify({
         color: "negative",
         position: "top",
-        message: "Failed",
+        message: "Fallido",
         icon: "report_problem"
       });
     });
@@ -69,19 +69,19 @@ const downloadQRImg = async () => {
           recursive: true
         });
 
-        console.log("QR Code image saved to gallery.");
+        console.log("Imagen del código QR guardada en la galería.");
 
         $q.notify({
           color: "positive",
           position: "top",
-          message: "QR Code image saved to photo gallery.",
+          message: "Imagen del código QR guardada en la galería.",
           icon: "check_circle_outline"
         });
 
         canvas.style.display = "none";
       });
     } catch (error) {
-      console.error("Error saving QR Code image:", error);
+      console.error("Error al guardar la imagen del código QR:", error);
     }
   }else if(window.location.pathname === "/promotion") {
 
@@ -97,19 +97,19 @@ const downloadQRImg = async () => {
           "item" : dataUrl
         }));
 
-        console.log("QR Code image saved to gallery.");
+        console.log("Imagen del código QR guardada en la galería.");
 
         $q.notify({
           color: "positive",
           position: "top",
-          message: "QR Code image saved to photo gallery.",
+          message: "Imagen del código QR guardada en la galería.",
           icon: "check_circle_outline"
         });
 
         canvas.style.display = "none";
       });
     } catch (error) {
-      console.error("Error saving QR Code image:", error);
+      console.error("Error al guardar la imagen del código QR:", error);
     }
 
 

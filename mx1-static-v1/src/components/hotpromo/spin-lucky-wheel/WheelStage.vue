@@ -17,12 +17,12 @@
 
         <button v-else-if="info.status === 'IN_PROGRESS'" class="receive-btn" @click="handleReceiveClick">
           <img src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/coin-2.png" />
-          <span>RECEIVE</span>
+          <span>RECIBE</span>
         </button>
 
         <button v-else-if="info.status === 'CLAIMED'" class="receive-btn disabled">
           <img src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/coin-2.png" />
-          <span>RECEIVED</span>
+          <span>RECIBIDO</span>
         </button>
 
         <div class="winning-record-outer-wrapper">
@@ -31,8 +31,8 @@
               <span>{{ moment(record.date).format("MM-DD hh:mm:ss") }}</span>
               <span class="name">{{ record.name }}</span>
               <span>
-                RECEIVE
-                <span class="amount">{{ `${store.currency.value} 500` }}</span>
+                RECIBE
+                <span class="amount">{{ `${store.currency.value} 100` }}</span>
               </span>
             </div>
           </div>
@@ -45,7 +45,7 @@
             />
             <img class="decoration ox" src="../../../assets/images/promotion/spin-lucky-wheel/decoration-ox.png" />
 
-            <div class="countdown">Next Round: {{ remainingTime }}</div>
+            <div class="countdown">Siguiente Ronda: {{ remainingTime }}</div>
             <div class="wheel-inner-wrapper">
               <img
                 ref="spinWheelRef"
@@ -57,9 +57,9 @@
                 src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/wheel-indicate.png"
               />
               <button class="btn" :class="{ disabled: !info.spinChance || isClaimedStatus }" @click="handleWheelClick">
-                rotate
+                gira
                 <br />
-                {{ info.spinChance }} time
+                {{ info.spinChance }} vez
               </button>
             </div>
 
@@ -71,50 +71,46 @@
               class="decoration rabbit"
               src="../../../assets/images/promotion/spin-lucky-wheel/decoration-rabbit.png"
             />
-            <CommonButton v-if="isClaimedStatus" class="draw-btn disabled">Invite To Earn Spin</CommonButton>
-            <CommonButton v-else class="draw-btn" @click="handleInviteClick">Invite To Earn Spin</CommonButton>
-            <span class="next-spin-remaining-time" v-if="!isClaimedStatus">Countdown to next free spins: {{ nextFreeSpinRemainingTime }}</span>
+            <CommonButton v-if="isClaimedStatus" class="draw-btn disabled">Invita para Ganar un Giro</CommonButton>
+            <CommonButton v-else class="draw-btn" @click="handleInviteClick">Invita para Ganar un Giro</CommonButton>
+            <span class="next-spin-remaining-time" v-if="!isClaimedStatus">Cuenta Regresiva para los Próximos Giros Gratis: {{ nextFreeSpinRemainingTime }}</span>
           </div>
         </div>
       </div>
 
-      <button class="record-btn" @click="handleRecordClick">Record</button>
+      <button class="record-btn" @click="handleRecordClick">Registro</button>
     </div>
     <div class="block-wrapper">
       <div class="title-wrapper">
         <div class="title-decoration">
           <div v-for="index in 3" :key="index"></div>
         </div>
-        <span>Activity rules</span>
+        <span>Reglas de la Actividad</span>
         <div class="title-decoration">
           <div v-for="index in 3" :key="index"></div>
         </div>
       </div>
       <ol>
         <li>
-          When the accumulated amount reaches {{ `${store.currency.value} 500` }}, you can apply for withdrawal (Rewards will add to your wallet
-          directly).
+          Cuando el monto acumulado alcance {{ `${store.currency.value} 100` }}, puedes solicitar el retiro (Las recompensas se agregarán directamente a tu billetera).
         </li>
-        <li>When there are no spin available, refer a new player to get a free spin.</li>
+        <li>Cuando no haya giros disponibles, invita a un nuevo jugador para obtener un giro gratis.</li>
         <li>
-          The event lasts for 3 days. After the event, the accumulated bonus will be reset, and the event will start
-          again.
+          El evento dura 3 días. Después del evento, el bono acumulado se reiniciará y el evento comenzará de nuevo.
         </li>
         <li>
-          Each user can enjoy one free spin opportunity per day, the free spins will be added at 12:00 a.m. every day.
+          Cada usuario puede disfrutar de una oportunidad de giro gratis por día; los giros gratis se agregarán a las 12:00 a.m. todos los días.
         </li>
-        <li>After the application is approved, the bonus is deposited directly into your wallet.</li>
-        <li>The bonus needs to be rolled over once before it can be withdrawn.</li>
+        <li>Después de que se apruebe la solicitud, el bono se depositará directamente en tu billetera.</li>
+        <li>El bono debe ser usado una vez antes de poder retirarse.</li>
         <li>
-          The invitee must bind their phone number and register via inviter's invitation link to be considered for the
-          recommendation.
-        </li>
-        <li>
-          The more your invitees play on the website, the higher your next spin reward will be. Invite friends and win more rewards together!
+          El invitado debe vincular su número de teléfono y registrarse a través del enlace de invitación del invitador para ser considerado para la recomendación.
         </li>
         <li>
-          The right to interpret the event belongs to 55Ace. If you have any questions, please contact to customer
-          service.
+          Cuanto más jueguen tus invitados en el sitio web, mayor será tu próxima recompensa de giro. ¡Invita a tus amigos y gana más recompensas juntos!
+        </li>
+        <li>
+          El derecho de interpretar el evento pertenece a 55Ace. Si tienes alguna pregunta, por favor contacta al servicio al cliente.
         </li>
       </ol>
     </div>
@@ -265,8 +261,8 @@ const handleInviteClick = () => {
 const getRemainingTime = (endTime) => {
   let result = "00:00:00";
   if (endTime) {
-    const now = moment(Date.now()).tz("Asia/Karachi");
-    const _endTime = moment(endTime).tz("Asia/Karachi");
+    const now = moment(Date.now()).tz("America/Mexico_City");
+    const _endTime = moment(endTime).tz("America/Mexico_City");
     const totalSeconds = _endTime.diff(now, "seconds");
     if (totalSeconds > 0) {
       const hours = Math.floor(totalSeconds / 3600);
@@ -299,8 +295,8 @@ const handleRecordClick = () => {
 
 const updateCountdownTime = () => {
   // console.log("updateCountdownTime")
-  const endTime = isClaimedStatus.value ? moment().tz("Asia/Karachi").add(1, "days").startOf("day") : moment(info.value.startTime).tz("Asia/Karachi").add(3, "days");
-  const nextFreeSpinEndTime = moment().tz("Asia/Karachi").add(1, "days").startOf("day");
+  const endTime = isClaimedStatus.value ? moment().tz("America/Mexico_City").add(1, "days").startOf("day") : moment(info.value.startTime).tz("America/Mexico_City").add(3, "days");
+  const nextFreeSpinEndTime = moment().tz("America/Mexico_City").add(1, "days").startOf("day");
   if(timer.value){
     clearTimeout(timer.value);
   }

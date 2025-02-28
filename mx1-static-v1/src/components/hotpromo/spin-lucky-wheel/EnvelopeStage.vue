@@ -16,7 +16,7 @@
         >
           <div v-if="prize.status !== 'idle'" class="prize-wrapper">
             <span>
-              {{ prize.status === "selected" ? "Winning" : `BONUS ${index + 1}` }}
+              {{ prize.status === "selected" ? "Ganando" : `BONO ${index + 1}` }}
             </span>
             <br />
             <span class="prize">
@@ -27,8 +27,8 @@
       </div>
       <div v-else class="selected-envelope">
         <span class="prize">{{ store.currency.value }} {{ prizeList[selectedIndex]?.prize }}</span>
-        <CommonButton class="withdraw-btn" @click="$emit('envelopeClick')">Go withdraw now!</CommonButton>
-        <span class="remaining-time">time left: {{ remainingTime }}</span>
+        <CommonButton class="withdraw-btn" @click="$emit('envelopeClick')">Retira ahora!</CommonButton>
+        <span class="remaining-time">tiempo restante: {{ remainingTime }}</span>
       </div>
       <img class="footer tiger" src="../../../assets/images/promotion/spin-lucky-wheel/decoration-tiger.png" />
       <img class="footer rabbit" src="../../../assets/images/promotion/spin-lucky-wheel/decoration-rabbit.png" />

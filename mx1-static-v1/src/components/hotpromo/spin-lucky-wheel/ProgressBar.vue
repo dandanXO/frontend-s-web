@@ -6,7 +6,7 @@
     </div>
 
     <div class="extraction-remaining-progress" v-if="props?.isShowDetails">
-        <span class="extraction-require-amount">Only <span class="amount">{{ `${store.currency.value} ${extractionDifference}` }}</span> to go</span>
+        <span class="extraction-require-amount">Solo <span class="amount">{{ `${store.currency.value} ${extractionDifference}` }}</span> para llegar</span>
         <span class="extraction-require-percentage">{{ `${remainingRequired.toFixed(2)}%` }}</span>
     </div>
 </template>
