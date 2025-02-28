@@ -578,6 +578,8 @@ onUnmounted(() => {
           .next-spin-remaining-time {
             font-weight: 700;
             color: #fff;
+            font-size: 13px;
+            letter-spacing: -1px;
           }
         }
       }
