@@ -294,7 +294,11 @@ const isDepositZero = ref(false);
 const open = (gameName, platformCode, gameCode, gameType, demo, isChoice = false) => {
   const store = userStore();
   isDepositZero.value = (store.hasDeposit === false);
-
+  const _isFromNewPlayerGuide = sessionStorage.getItem("isFromNewPlayerGuide");
+  if (_isFromNewPlayerGuide) {
+    startGame(gameName, platformCode, gameCode, gameType, demo);
+    return;
+  }
   if (!isChoice && isDepositZero.value && demo) {
     // Store the parameters and show the dialog
     pendingGameParams.value = { gameName, platformCode, gameCode, gameType, demo };
