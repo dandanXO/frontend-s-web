@@ -45,7 +45,14 @@ export const userStore = defineStore("userStore", {
       aaid: "",
       googleadid: "",
       h5Url: "https://n9yvj69mw.com/",
-      hasUpdatedOneSignal: false
+      hasUpdatedOneSignal: false,
+      spinWheelLuckyPromoInfo: {
+        startTime: "",
+        currAmount: 0,
+        targetWithdrawAmount: 0,
+        spinChance: 0,
+        status: ""
+      }
     };
   },
   actions: {
