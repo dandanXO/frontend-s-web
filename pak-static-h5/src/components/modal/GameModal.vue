@@ -1018,7 +1018,8 @@ defineExpose({
   // box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
   border-radius: 12px 12px 0 0;
-  margin: 0;
+    max-width: 500px;
+    margin: auto;
   .choices {
     display: flex;
     width: 100%;
