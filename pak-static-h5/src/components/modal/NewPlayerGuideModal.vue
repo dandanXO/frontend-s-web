@@ -60,7 +60,7 @@
                   <div class="hotitems">
                     <div class="hotitem" v-for="i in 3" :key="i">
                       <span class="hot"><img src="../../assets/images/newplayerguide/tophot.png" /></span>
-                      <img :src="require(`../../assets/images/newplayerguide/hot-0${i}.png`)" />
+                      <img @click="showVideo(index, i)" :src="require(`../../assets/images/newplayerguide/hot-0${i}.png`)" />
                     </div>
                   </div>
                 </div>
@@ -293,11 +293,15 @@ const emit = defineEmits(["update:modelValue", "update:currentStep", "update:sho
 
 const videoUrl = process.env.IMAGE_CDN + "/media/pak/";
 const selectedGame = ref();
-const showVideo = (i) => {
+const showVideo = (i, vidIndex) => {
   isVideo.value = !isVideo.value;
   if (i + 1 === 2) {
     const gameOptions = ["aviator", "mines", "7up7down"];
-    const randomIndex = Math.floor(Math.random() * gameOptions.length);
+    let randomIndex = Math.floor(Math.random() * gameOptions.length);
+    
+    if (vidIndex) {
+      randomIndex = vidIndex - 1
+    }
     selectedGame.value = gameOptions[randomIndex];
   }
 };
