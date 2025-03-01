@@ -1043,14 +1043,14 @@ const activateSlide = (clickedItem) => {
 };
 
 const info = ref({
-    startTime: "",
-    currAmount: 0,
-    targetWithdrawAmount: 0,
-    spinChance: 0,
-    status: ""
+  startTime: "",
+  currAmount: 0,
+  targetWithdrawAmount: 0,
+  spinChance: 0,
+  status: ""
 });
 
-provide('info', info);
+provide("info", info);
 
 const csDragPos = ref([10, 0]);
 const isDraggingCsIcon = ref(false);
@@ -2098,7 +2098,9 @@ const loadHotGameList = () => {
           gameLists = res;
 
           hotlists = hotlists.map((item1) => {
-            const matchingItem = gameLists.find((item2) => item1.type === "game" && item1.code === item2.code);
+            const matchingItem = gameLists.find(
+              (item2) => item1.type === "game" && item1.code === item2.code && item1.platform === item2.platformCode
+            );
             return { ...matchingItem, ...item1 };
           });
 
@@ -2843,17 +2845,17 @@ const hbSlide = ref(0);
 const hbPromo = ref([]);
 
 const checkSpinLuckyWheelPromo = async () => {
-  if(store.token) {
+  if (store.token) {
     const res = await eventapi.post("/refer-spin/check");
     store.spinWheelLuckyPromoInfo = { ...store.spinWheelLuckyPromoInfo, ...res.data };
   }
 
   if (sessionStorage.getItem("isReload")) {
     sessionStorage.removeItem("isReload");
-    sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
+    sessionStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
   }
 
-  if (!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+  if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
     spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
   }
 };
@@ -2894,7 +2896,7 @@ let intervalId;
 
 onActivated(() => {
   store.getUnreadTotal();
-  if(!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+  if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
     spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
   }
 });
