@@ -12,6 +12,9 @@
     <el-tab-pane :label="t('fields.betMoneyChange')" name="bet-money-change" lazy>
       <BetMoneyChange :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
+    <el-tab-pane v-if="hasRole(['ADMIN']) && useStore().state.user.name === 'xf-martin'" :label="t('fields.betMoneyChangeTidb')" name="member-money-change-tidb" lazy>
+      <MemberMoneyChangeTidb :mbr-id="id" :time-zone="timeZone" />
+    </el-tab-pane>
     <el-tab-pane :label="t('fields.moneyChange')" name="member-money-change" lazy>
       <MemberMoneyChange :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
@@ -80,6 +83,7 @@
 
 <script>
 import { defineComponent, computed } from 'vue'
+import { hasRole } from "../../../utils/util";
 import LoginInfoTab from './tabs/login-info/index.vue'
 import MemberInfoTab from './tabs/member-info/index.vue'
 import TransactionInfoTab from './tabs/transaction-info/index.vue'
@@ -89,6 +93,7 @@ import { useRouter } from 'vue-router'
 import MemberPrivilegeRecord from './tabs/member-privilege-record/index.vue'
 import BetMoneyChange from './tabs/bet-money-change/index.vue'
 import MemberMoneyChange from './tabs/member-money-change/index.vue'
+import MemberMoneyChangeTidb from './tabs/bet-money-change-tidb/index.vue'
 import MemberBankTab from './tabs/member-bank/index.vue'
 import RiskInfoTab from './tabs/risk-info/index.vue'
 import MemberBetRecordTab from './tabs/member-bet-record/index.vue'
@@ -100,6 +105,7 @@ import MemberPlatformTab from './tabs/member-platform/index.vue'
 import MemberRolloverEventTab from './tabs/rollover-event/index.vue'
 import { useI18n } from 'vue-i18n'
 import { getSiteTimeZoneById } from '@/api/site'
+import { useStore } from '../../../store'
 
 export default defineComponent({
   components: {
@@ -109,6 +115,7 @@ export default defineComponent({
     MemberPrivilegeRecord,
     BetMoneyChange,
     MemberMoneyChange,
+    MemberMoneyChangeTidb,
     DepositInfoTab,
     WithdrawInfoTab,
     MemberBankTab,
@@ -139,6 +146,8 @@ export default defineComponent({
       siteId,
       t,
       timeZone,
+      hasRole,
+      useStore
     }
   },
 })

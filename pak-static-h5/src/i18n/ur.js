@@ -100,6 +100,8 @@ export default {
     newPassword_placeholder: "براہ کرم نیا پاس ورڈ درج کریں",
     newPassword_rules_01: "براہ کرم نیا پاس ورڈ درج کریں",
     newPassword_rules_02: "نئے پاس ورڈ کے حروف 6 سے زیادہ ہونے چاہئیں",
+    confirmPassword: "پاس ورڈ کی تصدیق کریں",
+    confirmPassword_placeholder: "براہ کرم پاس ورڈ کی تصدیق درج کریں",
     confirmNewPassword: "نیا پاس ورڈ کی تصدیق کریں",
     confirmNewPassword_placeholder: "براہ کرم نیا تصدیق شدہ پاس ورڈ درج کریں",
     confirmNewPassword_rules_01: "براہ کرم نیا تصدیق شدہ پاس ورڈ درج کریں",
@@ -123,6 +125,7 @@ export default {
     fullName_placeholder: "اپنا پورا نام درج کریں",
     fullName_rules_01: "براہ کرم اپنا پورا نام درج کریں",
     fullName_rules_02: "براہ کرم ایک درست پورا نام درج کریں",
+    setPassword: "پاس ورڈ سیٹ کریں",
     changePassword: "پاس ورڈ تبدیل کریں",
     currentPassword: "موجودہ پاس ورڈ",
     currentPassword_placeholder: "موجودہ پاس ورڈ درج کریں",
@@ -233,7 +236,8 @@ export default {
     share: "شیئر",
     close: "بند کریں",
     details: "تفصیلات",
-    transfer: "تبادلہ کرنا"
+    transfer: "تبادلہ کرنا",
+    signinWithGoogle: "Google"
   },
   notify: {
     noRecord: "کوئی ریکارڈ نہیں",
@@ -244,7 +248,8 @@ export default {
     feedbackSentSuccess: "آپ کا تبادلہ خیال کامیابی سے بھیجا گیا ہے!",
     quitGameMessage: "کیا آپ واقعی خارج ہونا چاہتے ہیں؟ خود کو خارج کرنے کے لئے تصدیق کرنے کے لئے کلک کریں۔",
     signOutMessage: "کیا آپ واقعی لاگ آوٹ ہونا چاہتے ہیں؟",
-    plsLoginToContinue: "براہ کرم جاری رکھنے کے لئے لاگ ان کریں"
+    plsLoginToContinue: "براہ کرم جاری رکھنے کے لئے لاگ ان کریں",
+    copiedSuccessfully: "کامیابی سے کاپی کیا گیا"
   },
   sideNav: {
     inviteToEarn: "دعوت دیں اور کمائیں",

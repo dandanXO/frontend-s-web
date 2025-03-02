@@ -5,5 +5,15 @@
   "server": {
     "androidScheme": "https",
     "hostname": "7rzyd3kui.b9mega1.com"
+  },
+  "plugins": {
+    "GoogleAuth": {
+      "scopes": [
+        "profile",
+        "email"
+      ],
+      "serverClientId": "649216089271-76sl4oo78mp03o2klvnentncg7j3iaai.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
+    }
   }
 }

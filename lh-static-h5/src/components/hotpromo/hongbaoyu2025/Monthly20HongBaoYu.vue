@@ -39,12 +39,12 @@
         <div class="title-img">活动详情</div>
         <div class="little-title">
           <div class="ribbon">活动时间</div>
-          <div class="right">自2025年1月1日起</div>
+          <div class="right">自2025年3月1日起</div>
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
           <div class="right">
-            会员在每月最后一天前累计存款达到5000元，即可在次月20日晚6点-晚10点拆红包，单个红包最高888元。
+            会员在每月最后一天前累计存款≥15,000元，即可在次月13日晚6点-晚10点拆红包，单个红包最高888元！
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
@@ -57,28 +57,28 @@
           </thead>
           <tbody>
             <tr>
-              <td>15000</td>
+              <td>15,000</td>
               <td>1</td>
               <td rowspan="6">8倍流水</td>
             </tr>
             <tr>
-              <td>50000</td>
+              <td>50,000</td>
               <td>3</td>
             </tr>
             <tr>
-              <td>100000</td>
+              <td>100,000</td>
               <td>5</td>
             </tr>
             <tr>
-              <td>300000</td>
+              <td>300,000</td>
               <td>10</td>
             </tr>
             <tr>
-              <td>500000</td>
+              <td>500,000</td>
               <td>15</td>
             </tr>
             <tr>
-              <td>1000000</td>
+              <td>1,000,000</td>
               <td>20</td>
             </tr>
           </tbody>
@@ -94,7 +94,7 @@
               />
               <span>示例</span>
             </div>
-            会员A在1月累计存款60000元，在2月20日晚上6点-10点即可登录账号进入活动页面拆红包，共计红包数量为5个。
+            会员A在2月累计存款60,000元，在3月13日晚上6点-10点即可登录账号进入活动页面拆红包，共计红包数量为3个。
           </div>
         </div>
       </div>
@@ -106,13 +106,13 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              活动期间内累计存款达到指定金额（月累计存款≥5000元）即可参与红包雨。存款金额越高，获得的红包奖励越丰厚。
+              活动期间内累计存款达到指定金额（月累计存款≥15000元）即可参与红包雨。存款金额越高，获得的红包奖励越丰厚。
               <div class="hint">注：红包数量不叠加，红包按最高档位每月派发</div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            红包发放时间为每月20日晚上6点至晚上10点之间，符合要求的会员可登入优惠界面点击【拆红包】按钮获得，红包实时到账，红包彩金8倍流水即可提款；
+            红包发放时间为每月13日晚上6点至晚上10点之间，符合要求的会员可登入优惠界面点击【拆红包】即可参与，红包实时到账，红包彩金8倍流水即可提款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
