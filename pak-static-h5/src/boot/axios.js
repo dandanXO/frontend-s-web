@@ -182,7 +182,8 @@ export default boot(({ app, router }) => {
         res.code === ResponseCode.ERROR_INVALID_REDEEM_CODE ||
         res.code === ResponseCode.ERROR_MAX_NUMBER_OF_REDEEM ||
         res.code === ResponseCode.ERROR_CODE_FULLY_REDEEM ||
-        res.code === ResponseCode.ERROR_ALREADY_CLAIMED_PROMO
+        res.code === ResponseCode.ERROR_ALREADY_CLAIMED_PROMO ||
+        res.code === ResponseCode.ERROR_BAD_REQUEST
       ) {
         res.message =
           i18n.global.t("error." + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error";
