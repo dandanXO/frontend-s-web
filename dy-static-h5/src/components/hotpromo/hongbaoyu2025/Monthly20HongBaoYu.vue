@@ -122,7 +122,7 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              活动期间内累计存款达到指定金额（月累计存款≥5000元）即可参与红包雨。存款金额越高，获得的红包奖励越丰厚。
+              活动期间内累计存款达到指定金额（月累计存款≥15000元）即可参与红包雨。存款金额越高，获得的红包奖励越丰厚。
               <div class="hint">注：红包数量不叠加，红包按最高档位每月派发</div>
             </div>
           </div>
