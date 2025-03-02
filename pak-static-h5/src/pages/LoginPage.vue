@@ -146,6 +146,31 @@
       <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">
         {{ $t("btn.confirm") }}
       </q-btn>
+
+      <div class="google-login-wrapper">
+        <img v-if="languageVal === 'en'" style="width:100%;" src="../assets/images/index/logindirectly-en.png" />
+        <img v-else style="width:100%;" src="../assets/images/index/logindirectly-ur.png" />
+        <template v-if="isAndroid()">
+          <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onCapacitorGoogleSignin">
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABd1BMVEUAAADxRznpQzXpRDXqQzXqQzXqQzXqRDbrQzTfQEDpRDbqQzXrQzX/VSvoRjbqQzXqQzXpQzfnQDjqQzTbSSTqQzXqQzXqQjTqQzTqQjTqQzXqQzXpRDT/MzPqQzTrQzb/xgD0khbrSTLqQzXrQzb8vAbqRDT7uwTwbiTtSTf6vAX7vARDhvX7vAX7vAZDhvX7vQZChPT7vARChPTzuwiCsDY3pFtEg/RChPVBhfP8uwY1p1RChfNChfRAivS5tR80qFMyqFRChfVChfRChfQzp1Q0qFM0qFMzmWYAgIA6nYFBh/BChPNAn2A0qFMzqFM0qFQ0p1MzqFMzqVM0qFNChfMA//84p1A0qFNChfRGhPY0qFM0plw9j8Iktkk0p1Q0qFM0qFM0qFIzqlUtpVozqVM0qFM0qFM0qFM0qFMzqFM0qFMzqVI1p0/qQzX7vAX5qgztVy36twdChfTfuRBXq0U0qFM/qU43oXVAieE1pV8+jsj///9xjqGrAAAAbnRSTlMAEmqx4vb022cIgPB9BiHQxhcgtAfP5JJrbOP6dQV6sAns/vtMW4Sx7w7ir2f4hn6Hh7Bw/uQORGhWWoOE/Rju+0wy9cl9+nUFAmXuVQjO5JJraYvbxgEg4eUdz+YyB4Dz+ZgPEWiv4Pb137ZzHX5o7HUAAAABYktHRHzRtiBfAAAAB3RJTUUH6AYXEzsig/8aPAAAAQJJREFUKM9jYCAAGJmYWVjZ2Jk5GFGEObnY8qCAm4cXIc7Hn4cEBARh4kIsyOJ5wiIwc0TBfDFxCUlxKSRxBh6QsLSMLIjNKycPF1dQVMrLU1bBdKhqfkFhnhoWH6jn5xdpaGKR0MrPz9eGMIvhQAfI0wVK6KFL6EMlDNAlDKFGGaFLGAN5Rvn5JqZmYAlzELAASVgCeVb5JaVl1gjH2ADFbe1AHrQvLytzcISJOzkDJVzATNcyIHBz9wCxPb28QSb5gCV8/UAyZf4BgUHBIWUVlcXFoWEQ3eERZUigqjoyCmZueDSyTEwswiVx8Qkw4cSkZJQQS0lNS8/IzMrOySWUbAAwR2hJPoYcuAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNC0wNi0yM1QxOTo1OTozMyswMDowMBiqq7wAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjQtMDYtMjNUMTk6NTk6MzMrMDA6MDBp9xMAAAAAAElFTkSuQmCC"
+            />
+
+            &nbsp;
+            {{ $t("btn.signinWithGoogle") }}
+          </q-btn>
+        </template>
+        <template v-else>
+          <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onClickGoogleSignin">
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABd1BMVEUAAADxRznpQzXpRDXqQzXqQzXqQzXqRDbrQzTfQEDpRDbqQzXrQzX/VSvoRjbqQzXqQzXpQzfnQDjqQzTbSSTqQzXqQzXqQjTqQzTqQjTqQzXqQzXpRDT/MzPqQzTrQzb/xgD0khbrSTLqQzXrQzb8vAbqRDT7uwTwbiTtSTf6vAX7vARDhvX7vAX7vAZDhvX7vQZChPT7vARChPTzuwiCsDY3pFtEg/RChPVBhfP8uwY1p1RChfNChfRAivS5tR80qFMyqFRChfVChfRChfQzp1Q0qFM0qFMzmWYAgIA6nYFBh/BChPNAn2A0qFMzqFM0qFQ0p1MzqFMzqVM0qFNChfMA//84p1A0qFNChfRGhPY0qFM0plw9j8Iktkk0p1Q0qFM0qFM0qFIzqlUtpVozqVM0qFM0qFM0qFM0qFMzqFM0qFMzqVI1p0/qQzX7vAX5qgztVy36twdChfTfuRBXq0U0qFM/qU43oXVAieE1pV8+jsj///9xjqGrAAAAbnRSTlMAEmqx4vb022cIgPB9BiHQxhcgtAfP5JJrbOP6dQV6sAns/vtMW4Sx7w7ir2f4hn6Hh7Bw/uQORGhWWoOE/Rju+0wy9cl9+nUFAmXuVQjO5JJraYvbxgEg4eUdz+YyB4Dz+ZgPEWiv4Pb137ZzHX5o7HUAAAABYktHRHzRtiBfAAAAB3RJTUUH6AYXEzsig/8aPAAAAQJJREFUKM9jYCAAGJmYWVjZ2Jk5GFGEObnY8qCAm4cXIc7Hn4cEBARh4kIsyOJ5wiIwc0TBfDFxCUlxKSRxBh6QsLSMLIjNKycPF1dQVMrLU1bBdKhqfkFhnhoWH6jn5xdpaGKR0MrPz9eGMIvhQAfI0wVK6KFL6EMlDNAlDKFGGaFLGAN5Rvn5JqZmYAlzELAASVgCeVb5JaVl1gjH2ADFbe1AHrQvLytzcISJOzkDJVzATNcyIHBz9wCxPb28QSb5gCV8/UAyZf4BgUHBIWUVlcXFoWEQ3eERZUigqjoyCmZueDSyTEwswiVx8Qkw4cSkZJQQS0lNS8/IzMrOySWUbAAwR2hJPoYcuAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNC0wNi0yM1QxOTo1OTozMyswMDowMBiqq7wAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjQtMDYtMjNUMTk6NTk6MzMrMDA6MDBp9xMAAAAAAElFTkSuQmCC"
+            />
+
+            &nbsp;
+            {{ $t("btn.signinWithGoogle") }}
+          </q-btn>
+        </template>
+      </div>
     </div>
 
     <div class="is-domain bottom-btn-primary">
@@ -281,6 +306,10 @@ import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { isAndroid, trackNewUserFtd } from "boot/utils";
 import { App } from "@capacitor/app";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../../firebase/firebaseConfig";
+import { useI18n } from "vue-i18n";
+import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 export default defineComponent({
   name: "LoginPage",
@@ -292,6 +321,7 @@ export default defineComponent({
     // RiArrowDropLeftLine
   },
   setup() {
+    const { t } = useI18n();
     const ui = useUI();
     const tab = ref("login");
     const loginType = ref(false);
@@ -449,6 +479,138 @@ export default defineComponent({
       window.open(ui.charityUrl, "_blank");
     };
 
+    const thirdPartyLoginInfo = reactive({
+      sid: "",
+      way: "ANDROID"
+    });
+
+    const getReferralCode = () => {
+      const refCode = sessionStorage.getItem("REFERRAL_CODE");
+      if (refCode) {
+        thirdPartyLoginInfo.referrer = refCode;
+      }
+    };
+
+    const onCapacitorGoogleSignin = async () => {
+      try {
+        const user = await GoogleAuth.signIn();
+
+        (() => {
+          thirdPartyLoginInfo.siteId = process.env.SITEID;
+          thirdPartyLoginInfo.thirdParty = "GOOGLE";
+          thirdPartyLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
+          thirdPartyLoginInfo.accessToken = user.authentication.accessToken;
+          thirdPartyLoginInfo.idToken = user.authentication.idToken;
+
+          api
+            .post("/member/thirdPartyLogin", qs.stringify(thirdPartyLoginInfo))
+            .then((ret) => {
+              const res = ret;
+              console.log("res:", res);
+
+              if (res.code === 0) {
+                $q.notify({
+                  color: "positive",
+                  position: "top",
+                  message: "Google login successfully",
+                  icon: "check_circle_outline"
+                });
+
+                store.autoLogin(res.data);
+                sessionStorage.removeItem("REFERRAL_CODE");
+                if (store.hasToken()) {
+                  router.push("/home");
+                }
+              } else {
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message: res.message,
+                  icon: "report_problem"
+                });
+              }
+              $q.loading.hide();
+            })
+            .catch((error) => {
+              $q.loading.hide();
+            });
+          // getCode();
+        })();
+      } catch (error) {
+        console.error("Google Sign-In error:", error);
+        alert(error);
+      }
+    };
+
+    const onClickGoogleSignin = async () => {
+      const provider = await new GoogleAuthProvider();
+      return signInWithPopup(auth, provider)
+        .then((result) => {
+          // This gives you a Google Access Token. You can use it to access Google APIs.
+          const credential = GoogleAuthProvider.credentialFromResult(result);
+          const token = credential.accessToken;
+
+          // The signed-in user info.
+          const user = result.user;
+          // IdP data available using getAdditionalUserInfo(result)
+          // ...
+
+          (async () => {
+            thirdPartyLoginInfo.siteId = process.env.SITEID;
+            thirdPartyLoginInfo.thirdParty = "GOOGLE";
+            thirdPartyLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
+            thirdPartyLoginInfo.accessToken = credential.accessToken;
+            thirdPartyLoginInfo.idToken = credential.idToken;
+
+            api
+              .post("/member/thirdPartyLogin", qs.stringify(thirdPartyLoginInfo))
+              .then((ret) => {
+                const res = ret;
+
+                if (res.code === 0) {
+                  store.isGoogleLogin = true;
+                  store.isFirstLandOnHomePage = true;
+
+                  $q.notify({
+                    color: "positive",
+                    position: "top",
+                    message: "Google login successfully",
+                    icon: "check_circle_outline"
+                  });
+
+                  store.autoLogin(res.data);
+                  sessionStorage.removeItem("REFERRAL_CODE");
+                  if (store.hasToken()) {
+                    router.push("/home");
+                  }
+                } else {
+                  $q.notify({
+                    color: "negative",
+                    position: "top",
+                    message: res.message,
+                    icon: "report_problem"
+                  });
+                }
+                $q.loading.hide();
+              })
+              .catch((error) => {
+                $q.loading.hide();
+              });
+            // getCode();
+          })();
+        })
+        .catch((error) => {
+          // Handle Errors here.
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // The email of the user's account used.
+          const email = error.customData.email;
+          // The AuthCredential type that was used.
+          const credential = GoogleAuthProvider.credentialFromError(error);
+          // ...
+        });
+    };
+
     const onSubmit = () => {
       $q.loading.show({
         message: "Logging in"
@@ -471,7 +633,8 @@ export default defineComponent({
               .memberLogin({
                 loginName: loginForm.loginName,
                 password: loginForm.password,
-                sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
+                // sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
+                sid: sidParam,
                 captchaCode: loginForm.captchaCode,
                 codeId: loginForm.codeId,
                 ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVersionNo.value } : {})
@@ -480,6 +643,7 @@ export default defineComponent({
                 $q.loading.hide();
                 getCode();
                 sessionStorage.removeItem("REFERRAL_CODE");
+                localStorage.removeItem("PWA_REFERRAL_CODE");
 
                 if (isCheckRmb.value) {
                   localStorage.setItem(
@@ -527,6 +691,8 @@ export default defineComponent({
               .then(() => {
                 $q.loading.hide();
                 sessionStorage.removeItem("REFERRAL_CODE");
+                localStorage.removeItem("PWA_REFERRAL_CODE");
+
                 loginFormRef.value.reset();
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/";
@@ -714,6 +880,11 @@ export default defineComponent({
       }
       checkRememberPwd();
       loadCustomerAddress();
+
+      getReferralCode();
+      if (isAndroid()) {
+        GoogleAuth.initialize();
+      }
     });
     return {
       header: "Login",
@@ -766,7 +937,9 @@ export default defineComponent({
       openYoutube,
       openCharity,
       isRestrictedDomain,
-      router
+      router,
+      onCapacitorGoogleSignin,
+      onClickGoogleSignin
     };
   }
 });
@@ -1136,5 +1309,12 @@ export default defineComponent({
     -webkit-transform: scale(1);
     transform: scale(1);
   }
+}
+
+.google-login-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 25px;
 }
 </style>

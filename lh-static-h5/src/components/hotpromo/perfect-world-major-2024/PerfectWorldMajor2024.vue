@@ -11,21 +11,18 @@
           <div class="livepoker-rebate-section section-bg">
             <div class="livepoker-rebate-section-left">
               <div class="livepoker-rebate-section-title">
-                <div class="claim-title-icon">
-                </div>
+                <div class="claim-title-icon"></div>
                 投注嘉奖
               </div>
               <div class="reward-info">
-                <div class="reward-info-icon claim-coin-icon">
-                </div>
+                <div class="reward-info-icon claim-coin-icon"></div>
                 <div class="reward-info-content">
                   昨日累计有效投注：
                   <span class="amount">{{ totalValidBet }}元</span>
                 </div>
               </div>
               <div class="reward-info">
-                <div class="reward-info-icon claim-gift-icon">
-                </div>
+                <div class="reward-info-icon claim-gift-icon"></div>
                 <div class="reward-info-content">
                   可领取彩金：
                   <span class="amount">{{ bonus1 }}元</span>
@@ -111,24 +108,29 @@
                   />
                   <span>示例</span>
                 </div>
-                用户 A 在09月25日投注完美世界Major 2024有效投注 50,000 元，用户 A 在次日 24 小时内可获得彩金：288元
+                用户 A 在09月25日投注完美世界Major 2024有效投注 50,000元，用户 A 在次日 24 小时内可获得彩金：288元
               </div>
             </div>
           </div>
 
           <div class="livepoker-rebate-game-bottom-rule section-bg">
-            <div class="title-img">活动规则</div><br/>
+            <div class="title-img">活动规则</div>
+            <br />
             <div class="content">
               <div class="item">
                 <div class="item-num">1</div>
                 <div style="display: flex; flex-direction: column">
-                  <div>活动期间，活动仅计算电竞场馆中完美世界Major 2024赛事，会员在当日完美世界Major 2024中累计有效投注≥1,500元即可获得对应彩金，有效投注次日清零；</div>
+                  <div>
+                    活动期间，活动仅计算电竞场馆中完美世界Major 2024赛事，会员在当日完美世界Major
+                    2024中累计有效投注≥1,500元即可获得对应彩金，有效投注次日清零；
+                  </div>
                   <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
                 </div>
               </div>
               <div class="item">
                 <div class="item-num">2</div>
-                活动期间，活动仅计算当日 完美世界Major 2024已结算的赛事总有效投注，次日24小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金8倍流水即可出款；
+                活动期间，活动仅计算当日 完美世界Major
+                2024已结算的赛事总有效投注，次日24小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金8倍流水即可出款；
               </div>
               <div class="item">
                 <div class="item-num">3</div>
@@ -140,7 +142,8 @@
               </div>
               <div class="item">
                 <div class="item-num">5</div>
-                此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
+                此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+                地址视为同一账户，若有违规者，将不享受此红利；
               </div>
               <div class="item">
                 <div class="item-num">6</div>
@@ -156,21 +159,18 @@
           <div class="livepoker-rebate-section section-bg">
             <div class="livepoker-rebate-section-left">
               <div class="livepoker-rebate-section-title">
-                <div class="claim-title-icon">
-                </div>
+                <div class="claim-title-icon"></div>
                 救援礼金
               </div>
               <div class="reward-info">
-                <div class="reward-info-icon claim-coin-icon">
-                </div>
+                <div class="reward-info-icon claim-coin-icon"></div>
                 <div class="reward-info-content">
                   昨日累计负盈利：
                   <span class="amount">{{ totalLoss }}元</span>
                 </div>
               </div>
               <div class="reward-info">
-                <div class="reward-info-icon claim-gift-icon">
-                </div>
+                <div class="reward-info-icon claim-gift-icon"></div>
                 <div class="reward-info-content">
                   可领取彩金：
                   <span class="amount">{{ bonus2 }}元</span>
@@ -189,21 +189,13 @@
           </div>
           <div class="livepoker-rebate-game-info section-bg">
             <div class="title-img">活动详情</div>
-            <div
-              class="little-title"
-              style="justify-content: flex-start; align-items: flex-start"
-            >
+            <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
               <div class="ribbon">活动时间</div>
               <div class="right">2024年11月11日至2024年12月15日</div>
             </div>
-            <div
-              class="little-title"
-              style="justify-content: flex-start; align-items: flex-start"
-            >
+            <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
               <div class="ribbon">活动内容</div>
-              <div class="right">
-                投注完美世界 Major 2024的会员(电竞)
-              </div>
+              <div class="right">投注完美世界 Major 2024的会员(电竞)</div>
             </div>
             <div
               class="little-title"
@@ -263,7 +255,11 @@
             <div class="livepoker-rebate-game-bottom">
               <div class="livepoker-rebate-game-bottom-left-title">
                 <div class="livepoker-rebate-game-bottom-left-btn">
-                  <img src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
+                  <img
+                    src="../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/game-bottom-left-btn.png"
+                    alt=""
+                    style="width: 10px"
+                  />
                   <span>示例</span>
                 </div>
                 会员A在电竞场馆投注完美世界Major 2024,当日产生负盈利为6,000元,次日即可获得救援金38元。
@@ -277,13 +273,17 @@
               <div class="item">
                 <div class="item-num">1</div>
                 <div style="display: flex; flex-direction: column">
-                  <div>活动期间，活动仅计算电竞场馆中完美世界Major 2024赛事，会员在当日完美世界Major 2024中累计负盈利≥1,000元即可获得对应彩金，负盈利次日清零； </div>
+                  <div>
+                    活动期间，活动仅计算电竞场馆中完美世界Major 2024赛事，会员在当日完美世界Major
+                    2024中累计负盈利≥1,000元即可获得对应彩金，负盈利次日清零；
+                  </div>
                   <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
                 </div>
               </div>
               <div class="item">
                 <div class="item-num">2</div>
-                活动期间，活动仅计算完美世界Major 2024已结算的赛事总负盈利，次日24小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金5倍流水即可出款；
+                活动期间，活动仅计算完美世界Major
+                2024已结算的赛事总负盈利，次日24小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金5倍流水即可出款；
               </div>
               <div class="item">
                 <div class="item-num">3</div>
@@ -295,7 +295,8 @@
               </div>
               <div class="item">
                 <div class="item-num">5</div>
-                此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
+                此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+                地址视为同一账户，若有违规者，将不享受此红利；
               </div>
               <div class="item">
                 <div class="item-num">6</div>
@@ -311,7 +312,12 @@
 
 <script setup>
 import { onMounted, ref, toRefs } from "vue";
-import { getCompetitionLossInit, claimCompetitionLoss, getCompetitionYesterday, claimCompetitionBonus } from "../../../api/index/promo";
+import {
+  getCompetitionLossInit,
+  claimCompetitionLoss,
+  getCompetitionYesterday,
+  claimCompetitionBonus
+} from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";

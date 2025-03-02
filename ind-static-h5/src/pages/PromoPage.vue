@@ -174,10 +174,17 @@
   <q-dialog width="100%" v-if="isOpenExtension" v-model="isOpenExtension" class="dark-grey-dialog">
     <div class="dialog-mid-text">Loading...</div>
   </q-dialog>
+
+  <VueQRCodeComponent v-show="selfUrl" id="thepp-qrcode" :size="120" :text="selfUrl" class="qr-code" />
+
+
 </template>
 
 <script lang="js">
+import { Filesystem, Directory } from "@capacitor/filesystem";
+import html2canvas from "html2canvas";
 import {ref, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated, computed} from "vue";
+import VueQRCodeComponent from "vue-qrcode-component";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
@@ -185,14 +192,14 @@ import {useUI} from "stores/ui";
 import {userStore} from "stores/index";
 import {isAndroid} from "boot/utils";
 import { SessionStorage } from "quasar";
-// import { loadPromo } from "src/api/index/promo.js";
-// import { loadPromoBanner } from "src/api/index/promo";
+
 import ProfileSummary from "components/ProfileSummary.vue";
 import HotPromotion from 'components/HotPromotion.vue'
 import GameModal from "components/modal/GameModal.vue";
 export default defineComponent({
   name: "PromoView",
   components: {
+    VueQRCodeComponent,
     GameModal,
     HotPromotion,
     ProfileSummary
@@ -213,7 +220,8 @@ export default defineComponent({
       {code: "POKER", img: 'poker', label: '棋牌'},
       {code: "LIVE CASINO", img: 'live', label: '真人娱乐'},
       {code: "FISH", img: 'game', label: '老虎机/捕鱼'},
-    ]);
+    ])
+    const selfUrl= ref("");
     const promoTabActive = ref(promoTypes.value[0].value);
     const filteredArray = ref([]);
     const isPromoDetail = ref(false);
@@ -278,6 +286,10 @@ export default defineComponent({
       loadAll();
       updateCountdown();
       store.getUnreadTotal();
+
+      // if(sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+      //   sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
+      // }
     });
 
     watch(() => route.query, () => {
@@ -389,6 +401,22 @@ export default defineComponent({
               },500)
             });
 
+            ref.addEventListener("message", async function(event) {
+              if (event.data.action === "qrcode") {
+                // alert(event.data.item);
+                const dataUrl = event.data.item;
+                // alert(dataUrl)
+                // Save the image to the photo gallery
+                await Filesystem.writeFile({
+                  path: `Pictures/myreferral-${Date.now()}.jpg`,
+                  data: dataUrl,
+                  directory: Directory.Documents,
+                  recursive: true
+                });
+
+              }
+            });
+
             ref.addEventListener("loadstart", function (event) {
               var url = event.url;
               // alert("This" + url);
@@ -407,6 +435,9 @@ export default defineComponent({
                   document.head.appendChild(style);
                 `
               });
+
+
+
             });
 
             ref.addEventListener("exit", function () {
@@ -607,6 +638,10 @@ export default defineComponent({
 
     onMounted(() => {
       checkExtension();
+
+      // if(sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+      //   sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
+      // }
     });
 
     const swipeLeft = () => {
@@ -659,7 +694,8 @@ export default defineComponent({
       selectedParam,
       isFetchingPromo,
       extensionState,
-      isOpenExtension
+      isOpenExtension,
+      selfUrl
     }
   },
 });

@@ -3,25 +3,16 @@
     <div class="wheel-outer-wrapper">
       <!-- <span class="title">Countdown: {{ remainingTime }}</span> -->
       <div class="summary-wrapper">
-        <span class="prize">
+        <!-- <span class="prize">
           $
           <span class="amount">{{ info.currAmount }}</span>
-        </span>
+        </span> -->
+
+        <GradientTextAmount :amountText="`$ ${info.currAmount}`" />
 
         <template v-if="extractionDifference > 0 && info.status === 'IN_PROGRESS'">
-          <span class="extraction-require-amount">
-            Extraction requires only
-            <span class="amount">${{ extractionDifference }}</span>
-          </span>
-
-          <div class="extraction-progress-bar">
-            <div class="progress" :style="{ width: progressBarIndicatePosition }"></div>
-            <img
-              class="indicate"
-              :style="{ left: progressBarIndicatePosition }"
-              src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/coin.png"
-            />
-          </div>
+          <ProgressBar />
+          <div class="cash-out-btn" @click="isCashOutPopupVisible = true" />
         </template>
 
         <button v-else-if="info.status === 'IN_PROGRESS'" class="receive-btn" @click="handleReceiveClick">
@@ -54,7 +45,7 @@
             />
             <img class="decoration ox" src="../../../assets/images/promotion/spin-lucky-wheel/decoration-ox.png" />
 
-            <div class="countdown">Countdown: {{ remainingTime }}</div>
+            <div class="countdown">Next Round: {{ remainingTime }}</div>
             <div class="wheel-inner-wrapper">
               <img
                 ref="spinWheelRef"
@@ -65,7 +56,7 @@
                 class="indicate"
                 src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/wheel-indicate.png"
               />
-              <button class="btn" :class="{ disabled: !info.spinChance }" @click="handleWheelClick">
+              <button class="btn" :class="{ disabled: !info.spinChance || isClaimedStatus }" @click="handleWheelClick">
                 rotate
                 <br />
                 {{ info.spinChance }} time
@@ -80,8 +71,9 @@
               class="decoration rabbit"
               src="../../../assets/images/promotion/spin-lucky-wheel/decoration-rabbit.png"
             />
-            <CommonButton class="draw-btn" @click="handleInviteClick">Invite To Earn Spin</CommonButton>
-            <span class="next-spin-remaining-time">Countdown to next free spins: {{ nextFreeSpinRemainingTime }}</span>
+            <CommonButton v-if="isClaimedStatus" class="draw-btn disabled">Invite To Earn Spin</CommonButton>
+            <CommonButton v-else class="draw-btn" @click="handleInviteClick">Invite To Earn Spin</CommonButton>
+            <span class="next-spin-remaining-time" v-if="!isClaimedStatus">Countdown to next free spins: {{ nextFreeSpinRemainingTime }}</span>
           </div>
         </div>
       </div>
@@ -112,10 +104,13 @@
           Each user can enjoy one free spin opportunity per day, the free spins will be added at 12:00 a.m. every day.
         </li>
         <li>After the application is approved, the bonus is deposited directly into your wallet.</li>
-        <li>The bonus needs to be rolled over twice before it can be withdrawn.</li>
+        <li>The bonus needs to be rolled over once before it can be withdrawn.</li>
         <li>
           The invitee must bind their phone number and register via inviter's invitation link to be considered for the
           recommendation.
+        </li>
+        <li>
+          The more your invitees play on the website, the higher your next spin reward will be. Invite friends and win more rewards together!
         </li>
         <li>
           The right to interpret the event belongs to 55Ace. If you have any questions, please contact to customer
@@ -125,21 +120,26 @@
     </div>
     <WheelResultDialog v-model="showResultDialog" :prize="prize" @hide="$emit('reload')" />
     <RecordDialog v-model="showRecordDialog" />
+    <CashOutPopup ref="cashOutPopupRef" v-model="isCashOutPopupVisible" />
   </div>
 </template>
 <script setup>
-import moment from "moment";
-import { computed, onMounted, onUnmounted, ref, toRefs } from "vue";
+import moment from "moment-timezone";
+import { computed, onMounted, onUnmounted, ref, toRefs, provide, inject } from "vue";
 import CommonButton from "./CommonButton.vue";
 import WheelResultDialog from "./WheelResultDialog.vue";
 import RecordDialog from "./RecordDialog.vue";
 import { useRouter } from "vue-router";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
+import ProgressBar from './ProgressBar.vue';
+import CashOutPopup from "./CashOutPopup.vue";
+import GradientTextAmount from "./GradientTextAmount.vue";
 
 const emit = defineEmits(["reload"]);
 const props = defineProps(["info"]);
 const { info } = toRefs(props);
+
 
 const TOTAL_ITEMS = 6;
 const DEFAULT_SPEED = 1;
@@ -168,10 +168,13 @@ const prizeIndex = ref(0);
 const timer = ref();
 const prize = ref(0);
 const winningRecordRef = ref();
+const isCashOutPopupVisible = ref(false);
+const cashOutPopupRef = ref();
+const isClaimedStatus = computed(() => info.value.status === 'CLAIMED');
 
-const extractionDifference = computed(() =>
-  Math.min(Math.round((info.value.targetWithdrawAmount - info.value.currAmount) * 100) / 100, 100)
-);
+provide('nextFreeSpinRemainingTime', nextFreeSpinRemainingTime);
+provide('remainingTime', remainingTime);
+const extractionDifference = inject('extractionDifference');
 
 const winningRecord = computed(() => {
   const result = [];
@@ -186,14 +189,6 @@ const winningRecord = computed(() => {
     });
   }
   return result;
-});
-
-const progressBarIndicatePosition = computed(() => {
-  if (extractionDifference.value < 5) {
-    return `96%`;
-  } else {
-    return `calc(100% - ${extractionDifference.value}%)`;
-  }
 });
 
 const rotate = (timestamp, stopCallback) => {
@@ -245,7 +240,7 @@ const reset = () => {
 };
 
 const handleWheelClick = () => {
-  if (spinButtonDisable.value || !info.value.spinChance) return;
+  if (spinButtonDisable.value || !info.value.spinChance || isClaimedStatus.value) return;
   eventapi.post("/refer-spin/spin").then((res) => {
     if (res.code === 0) {
       prize.value = res.data;
@@ -261,14 +256,15 @@ const handleWheelClick = () => {
 };
 
 const handleInviteClick = () => {
-  router.push("/earn-money");
+  isCashOutPopupVisible.value = true;
+  cashOutPopupRef.value?.showInviteWins();
 };
 
 const getRemainingTime = (endTime) => {
   let result = "00:00:00";
   if (endTime) {
-    const now = moment(Date.now());
-    const _endTime = moment(endTime);
+    const now = moment(Date.now()).tz("Asia/Kolkata");
+    const _endTime = moment(endTime).tz("Asia/Kolkata");
     const totalSeconds = _endTime.diff(now, "seconds");
     if (totalSeconds > 0) {
       const hours = Math.floor(totalSeconds / 3600);
@@ -299,14 +295,13 @@ const handleRecordClick = () => {
   showRecordDialog.value = true;
 };
 
-onMounted(() => {
-  for (let i = 0; i < TOTAL_ITEMS; i++) {
-    const _degree = (FULL_DEGREE / TOTAL_ITEMS) * i * -1;
-    degreeToStopAt.value.push({ degree: _degree, prize: SPIN_WHEEL_PRIZES[i] });
+const updateCountdownTime = () => {
+  // console.log("updateCountdownTime")
+  const endTime = isClaimedStatus.value ? moment().tz("Asia/Kolkata").add(1, "days").startOf("day") : moment(info.value.startTime).tz("Asia/Kolkata").add(3, "days");
+  const nextFreeSpinEndTime = moment().tz("Asia/Kolkata").add(1, "days").startOf("day");
+  if(timer.value){
+    clearTimeout(timer.value);
   }
-
-  const endTime = moment(info.value.startTime).add(3, "days");
-  const nextFreeSpinEndTime = moment().add(1, "days").startOf("day");
   timer.value = setInterval(() => {
     remainingTime.value = getRemainingTime(endTime);
     nextFreeSpinRemainingTime.value = getRemainingTime(nextFreeSpinEndTime);
@@ -318,6 +313,20 @@ onMounted(() => {
       });
     }
   }, 1000);
+}
+
+onMounted(() => {
+  for (let i = 0; i < TOTAL_ITEMS; i++) {
+    const _degree = (FULL_DEGREE / TOTAL_ITEMS) * i * -1;
+    degreeToStopAt.value.push({ degree: _degree, prize: SPIN_WHEEL_PRIZES[i] });
+  }
+
+  updateCountdownTime();
+});
+
+
+defineExpose({
+  updateCountdownTime
 });
 
 onUnmounted(() => {
@@ -353,15 +362,19 @@ onUnmounted(() => {
           font-size: 40px;
         }
       }
-
-      .extraction-require-amount {
-        font-size: 16px;
-        font-weight: 700;
+      
+      .extraction-require-amount, .extraction-require-percentage {
         color: #fff;
+        font-family: 'Poppins';
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 0px;
+        text-align: left;
+
         .amount {
-          font-size: 20px;
-          font-weight: 900;
-          color: #cd91ff;
+          font-weight: 500;
+          color: #FEBA02;
         }
       }
 
@@ -378,6 +391,8 @@ onUnmounted(() => {
           left: 0;
           height: 100%;
           background: linear-gradient(356.25deg, #3b156e -0.21%, #8100ae 93.65%);
+          background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/progress-bar-bg.png) no-repeat;
+          background-size: 100% 100%;
           border-radius: 4px;
         }
 
@@ -416,8 +431,7 @@ onUnmounted(() => {
       .winning-record-outer-wrapper {
         padding: 12px 14px;
         width: 100%;
-        background-color: #5817aa99;
-        border: 1px solid #e8c4ff99;
+        background-color: #1E1F24;
         border-radius: 8px;
 
         .winning-record-wrapper {
@@ -453,7 +467,7 @@ onUnmounted(() => {
 
       .foreground-wrapper {
         position: absolute;
-        bottom: 0;
+        bottom: -60px;
         left: -1px;
         right: -1px;
         background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/fg.png) no-repeat;
@@ -583,6 +597,7 @@ onUnmounted(() => {
     background-color: #1e1f24;
     border-radius: 12px;
     padding: 16px 10px;
+    margin-top: 70px;
 
     .title-wrapper {
       display: flex;
@@ -678,6 +693,18 @@ onUnmounted(() => {
         }
       }
     }
+  }
+}
+
+.cash-out-btn {
+  background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/cash-out-btn.svg) no-repeat;
+  background-size: 100% 100%;
+  aspect-ratio: 287 / 36;
+  min-height: 36px;
+  width: 100%;
+
+  &:active {
+      transform: translateY(2px);
   }
 }
 </style>

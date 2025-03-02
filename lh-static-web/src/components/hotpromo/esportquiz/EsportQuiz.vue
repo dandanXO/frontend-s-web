@@ -408,7 +408,12 @@ function getRecords() {
     if (code == 0) {
       records.value = data.records;
       recordsPagination.total = data.total;
-      recordsPagination.pages = data.pages + 1;
+      if(data.pages === 0){
+        recordsPagination.pages = data.pages + 1;
+      }else{
+        recordsPagination.pages = data.pages;
+      }
+      
       // quizAttendTimesRecord.value = data.quizAttendTimes;
       // quizWonTimesRecord.value = data.quizWonTimes;
 

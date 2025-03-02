@@ -416,6 +416,7 @@ export default {
     betId: 'รหัสเดิมพัน',
     belongType: 'ประเภทหน้าเว็บ',
     betMoneyChange: 'สมาชิกเดิมพันแลกเปลี่ยนเงิน',
+    betMoneyChangeTidb: 'สมาชิกเดิมพันแลกเปลี่ยนเงิน',
     betMoreThan: 'เดิมพันมากกว่า',
     betRecords: 'บันทึกการเดิมพัน',
     betStatus: 'สถานะการเดิมพัน',
@@ -1344,6 +1345,7 @@ export default {
     tfCompetitionNameVn: 'ชื่อการแข่งขัน (วิทนาม)',
     tfCompetitionNameKr: 'ชื่อการแข่งขัน (คอร์ยา)',
     tfCompetitionNameTh: 'ชื่อการแข่งขัน (ไทย)',
+    traceId: 'Trace ID'
   },
   message: {
     startenddatemore3months: 'เวลาเริ่มและเสร็จสิ้นต้องไม่เกิน 3 เดือน',
@@ -1431,6 +1433,7 @@ export default {
     selectPaymentType: 'กรุณากรอกประเภทการชำระเงิน',
     selectMobilePayment: 'กรุณาเลือกชำระเงินผ่านมือถือ',
     selectWebPayment: 'กรุณาเลือกชำระเงินทางเว็บ',
+    sequenceEmpty: 'ลำดับต้องไม่ว่างเปล่า',
     settlementToChecking: 'อัปเดตเป็นการตรวจสอบแล้ว',
     settlementToPay: 'อัปเดตเป็นการชำระเงินแล้ว',
     settled: 'ตัดสินได้สำเร็จ',
@@ -1840,8 +1843,11 @@ export default {
     'Bank Card': 'บัตรธนาคาร',
     'Payment Type': 'ประเภทการชำระเงิน',
     Payment: 'การชำระเงิน',
+    Deposit: 'เงินฝาก',
+    Withdraw: 'ถอนเงิน',
     'Add Payment': 'เพิ่มการชำระเงิน',
     'Edit Payment': 'แก้ไขการชำระเงิน',
+    'Copy Payment': 'สำเนาำระเงิน',
     CurrencyRate: 'อัตราสกุลเงิน',
     'Payment Display': 'การแสดงการชำระเงิน',
     'Withdraw Platform': 'แพลตฟอร์มการถอน',
@@ -1879,7 +1885,8 @@ export default {
     Team: 'ทีม',
     'Bet type setting': 'การตั้งค่าสำหรับการเดิมพัน',
     'Sport App Setting': 'การตั้งค่าสำหรับแอปพลิเคชันกีฬา',
-    Sport: 'กีฬา'
+    Sport: 'กีฬา',
+    'Member Privilege Record Pak Export': 'บันทึกส่วนลดสมาชิกส่งออก - ปากีสถาน'
   },
   google: {
     google_auth_menu: 'ตัวรับรองความถูกต้องของกูเกิ้ล',

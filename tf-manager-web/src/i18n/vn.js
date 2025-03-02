@@ -650,6 +650,7 @@ export default {
     betId: 'ID cược',
     belongType: 'Loại thuộc về',
     betMoneyChange: 'Thay đổi số tiền cược thành viên',
+    betMoneyChangeTidb: 'Thay đổi số tiền cược thành viên',
     betMoreThan: 'Cược nhiều hơn',
     betRebateDetails: 'Chi tiết hoàn tiền cược',
     betRebateRecord: 'Hồ sơ hoàn tiền cược',
@@ -1926,6 +1927,7 @@ export default {
     tfCompetitionNameVn: 'Tên giải đấu (Tiếng Việt)',
     tfCompetitionNameKr: 'Tên giải đấu (Tiếng Hàn)',
     tfCompetitionNameTh: 'Tên giải đấu (Tiếng Thái)',
+    traceId: 'Trace ID'
   },
   message: {
     startenddatemore3months:
@@ -2062,6 +2064,7 @@ export default {
     selectPaymentType: 'Chọn loại thanh toán',
     selectMobilePayment: 'Chọn thanh toán di động',
     selectWebPayment: 'Chọn thanh toán trên web',
+    sequenceEmpty: 'trình tự không được để trống',
     settlementToChecking: 'Đang chờ kiểm tra',
     settlementToPay: 'Đã thanh toán',
     settled: 'Đã xử lý thành công',
@@ -2617,8 +2620,11 @@ export default {
     'Bank Card': 'Thẻ Ngân hàng',
     'Payment Type': 'Loại Thanh toán',
     Payment: 'Thanh toán',
+    Deposit: 'tiền gửi',
+    Withdraw: 'Rút tiền',
     'Add Payment': 'Thêm Thanh toán',
     'Edit Payment': 'Chỉnh sửa Thanh toán',
+    'Copy Payment': 'sao chép Thanh toán',
     CurrencyRate: 'Tỷ giá Tiền tệ',
     'Payment Display': 'Hiển thị Thanh toán',
     'Withdraw Platform': 'Nền tảng Rút tiền',
@@ -2688,6 +2694,7 @@ export default {
     'Sport App Setting': 'Cài đặt ứng dụng thể thao',
     Sport: 'Thể thao',
     'Game Jackpot Bonus Record': 'Hồ sơ thưởng Jackpot',
+    'Member Privilege Record Pak Export': 'Xuất khẩu kỷ lục giảm giá thành viên - Pakistan'
   },
   google: {
     google_auth_menu: 'Google Xác thực',

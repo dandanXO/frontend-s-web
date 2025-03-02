@@ -16,9 +16,9 @@
             <div class="record-wrapper invitation">
               <template v-if="invitationRecords.length">
                 <div v-for="(record, index) in invitationRecords" :key="index" class="record">
-                  <span>{{ moment(record.referTime).format("MM-DD hh:mm:ss") }}</span>
+                  <span>{{ moment(record.referTime).format("MM-DD HH:mm:ss") }}</span>
                   <span class="name">{{ record.loginName }}</span>
-                  <span>Invitation successful</span>
+<!--                  <span>Invitation successful</span>-->
                 </div>
               </template>
               <span v-else class="no-record-text">No Records</span>
@@ -28,7 +28,7 @@
             <div class="record-wrapper lottery">
               <template v-if="lotteryRecords.length">
                 <div v-for="(record, index) in lotteryRecords" :key="index" class="record">
-                  <span>{{ moment(record.time).format("MM-DD hh:mm:ss") }}</span>
+                  <span>{{ moment(record.time).format("MM-DD HH:mm:ss") }}</span>
                   <span class="amount">${{ record.amount }}</span>
                 </div>
               </template>
@@ -94,7 +94,7 @@ const getRecords = () => {
 
   .tab-wrapper {
     display: flex;
-    align-items: center;
+    align-items:stretch;
     justify-content: space-between;
     gap: 12px;
     margin-bottom: 12px;
@@ -103,8 +103,12 @@ const getRecords = () => {
       flex: 1;
       background-color: #d9d9d9;
       border-radius: 12px;
-      padding: 10px 12px;
+      padding: 10px 8px;
       font-size: 16px;
+      display:flex;
+      line-height: 16px;
+      align-items: center;
+      justify-content: center;
       font-weight: 700;
       color: #666666;
       text-align: center;
@@ -130,7 +134,7 @@ const getRecords = () => {
     background-color: #5817aa99;
     border: 1px solid #e8c4ff99;
     border-radius: 8px;
-    padding: 12px;
+    padding: 12px 8px;
     height: 30vh;
     overflow: auto;
     scrollbar-width: none;
@@ -142,7 +146,7 @@ const getRecords = () => {
 
     &.invitation {
       .record {
-        grid-template-columns: minmax(100px, 1fr) 1fr minmax(50px, 1fr);
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
@@ -157,20 +161,22 @@ const getRecords = () => {
       gap: 8px;
 
       > span {
+        white-space: wrap;
         font-size: 12px;
         color: #fff;
         &:last-child {
           text-align: right;
           text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
+          white-space: wrap;
+          //overflow: hidden;
         }
       }
 
       .name {
         text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
+        white-space: wrap;
+        //white-space: nowrap;
+        //overflow: hidden;
       }
 
       .amount {

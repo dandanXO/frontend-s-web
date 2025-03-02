@@ -3,7 +3,7 @@
     <q-header elevated>
       <q-toolbar>
         <q-toolbar-title>
-          Mine Game
+          Minesweeper
         </q-toolbar-title>
       </q-toolbar>
     </q-header>

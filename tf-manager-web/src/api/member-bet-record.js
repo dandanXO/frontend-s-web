@@ -19,6 +19,15 @@ export const getBetMoneyChange = query => {
   )
 }
 
+export const getBetMoneyChangeTidb = query => {
+  return https().request(
+    '/memberBetRecord/money-change-tidb',
+    Method.GET,
+    query,
+    ContentType.form
+  )
+}
+
 export const getBetMoneyChangeTotal = query => {
   return https().request(
     '/memberBetRecord/money-change-total',
@@ -28,9 +37,27 @@ export const getBetMoneyChangeTotal = query => {
   )
 }
 
+export const getBetMoneyChangeTotalTidb = query => {
+  return https().request(
+    '/memberBetRecord/money-change-total-tidb',
+    Method.GET,
+    query,
+    ContentType.form
+  )
+}
+
 export const requestBetMoneyChangeExport = query => {
   return https().request(
     '/memberBetRecord/money-change-export',
+    Method.GET,
+    query,
+    ContentType.form
+  )
+}
+
+export const requestBetMoneyChangeExportTidb = query => {
+  return https().request(
+    '/memberBetRecord/money-change-export-tidb',
     Method.GET,
     query,
     ContentType.form
@@ -104,6 +131,15 @@ export const updateBetStatusType = async (transactionId, betStatus) => {
     `/memberBetRecord/money-change/update?_method=PUT`,
     Method.POST,
     { transactionId: transactionId, betStatus: betStatus },
+    ContentType.form
+  )
+}
+
+export const updateBetStatusTypeTidb = async (query) => {
+  await https().request(
+    `/memberBetRecord/money-change-tidb/update?_method=PUT`,
+    Method.POST,
+    query,
     ContentType.form
   )
 }

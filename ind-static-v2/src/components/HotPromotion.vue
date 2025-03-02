@@ -27,7 +27,7 @@
       v-if="!isCommonPromo && list.redirectUrl === 'indwin2-slot-ftd' && store.token"
       :params="list.param"
     />
-
+    <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
     <div v-if="list.redirectUrl === 'fucaiiphone' && store.hasToken()" class="promo-4">
       <div class="tabs">
         <q-card-section>
@@ -204,7 +204,7 @@ import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskProm
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import AnniversaryCelebrationPromo from "../components/hotpromo/anniversarycelebration/AnniversaryCelebrationPromo.vue";
 import SlotFtdPromo from "../components/hotpromo/slotftdpromo/SlotFtdPromo.vue";
-
+import SpinLuckyWheelPromo from "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue";
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -217,7 +217,8 @@ export default defineComponent({
     WelcomeTaskPromo,
     InviteFriendPromo,
     AnniversaryCelebrationPromo,
-    SlotFtdPromo
+    SlotFtdPromo,
+    SpinLuckyWheelPromo
   },
   props: {
     list: {

@@ -16,6 +16,7 @@ dependencies {
     implementation project(':capacitor-preferences')
     implementation project(':capacitor-splash-screen')
     implementation project(':capacitor-status-bar')
+    implementation project(':codetrix-studio-capacitor-google-auth')
     implementation "androidx.webkit:webkit:1.4.0"
     implementation "com.onesignal:OneSignal:5.1.23"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.10"

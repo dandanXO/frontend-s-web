@@ -139,23 +139,44 @@
           </el-row>
         </div>
         <div class="inputs-wrap">
-          <el-row :gutter="20" style="gap: 10px;">
-            <el-form-item :label="t('fields.downlineAffiliate') + ' :'">
-              <el-select
-                style="width: 100%;"
-                size="normal"
-                v-model="request.downlineAffiliate"
-                @focus="getAllAffiliateDownlines"
-                :clearable="true"
-              >
-                <el-option
-                  v-for="item in affiliate.list"
-                  :key="item.affiliateId"
-                  :label="item.loginName"
-                  :value="item.affiliateId"
+          <el-row :gutter="20">
+            <el-col :xl="8" :lg="8" :md="6" :sm="6">
+              <el-form-item :label="t('fields.downlineAffiliate') + ' :'">
+                <el-select
+                  style="width: 100%;"
+                  size="normal"
+                  v-model="request.downlineAffiliate"
+                  @focus="getAllAffiliateDownlines"
+                  :clearable="true"
+                >
+                  <el-option
+                    v-for="item in affiliate.list"
+                    :key="item.affiliateId"
+                    :label="item.loginName"
+                    :value="item.affiliateId"
+                  />
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :xl="10" :lg="10" :md="12" :sm="12">
+              <el-form-item :label="t('fields.validBet') + ' :'">
+                <el-input
+                  size="normal"
+                  v-model="request.validBetMinAmount"
+                  class="input-min"
+                >
+                  <template #append>
+                    -
+                  </template>
+                </el-input>
+                <el-input
+                  v-model="request.validBetMaxAmount"
+                  class="input-max"
+                  size="normal"
                 />
-              </el-select>
-            </el-form-item>
+              </el-form-item>
+            </el-col>
+            <el-col :xl="6" :lg="6" :md="4" :sm="4" />
           </el-row>
         </div>
         <div class="inputs-wrap">
@@ -1193,6 +1214,8 @@ function resetQuery() {
   request.downlineAffiliate = null
   selected.tags = []
   checkAll.value = false
+  request.validBetMaxAmount = null
+  request.validBetMinAmount = null
 }
 
 async function loadAffiliateMembers() {

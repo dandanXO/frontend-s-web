@@ -1126,12 +1126,17 @@
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
+
+  <!-- Spin Lucky Wheel promo start -->
+  <HomePopup ref="spinLuckyWheelPromoPopupRef" />
+  <SpinLuckyWheelPromoSticky v-if="store.spinWheelLuckyPromoInfo?.status === 'IN_PROGRESS'" />
+  <!-- Spin Lucky Wheel promo end -->
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch, onActivated, onBeforeUnmount } from "vue";
+import { onMounted, ref, reactive, computed, watch, onActivated, onBeforeUnmount, provide } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { api } from "boot/axios";
+import { api, eventapi } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
@@ -1157,6 +1162,10 @@ import "swiper/css/effect-coverflow";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
+
+import HomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
+import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
+
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
@@ -1216,6 +1225,22 @@ const checkHbPromo = () => {
       // isHbShow.value = data.data.some((item) => item.code === "pak-redpacketrain");
       hbPromo.value = data.data;
     });
+};
+
+const checkSpinLuckyWheelPromo = async () => {
+  if (store.token) {
+    const res = await eventapi.post("/refer-spin/check");
+    store.spinWheelLuckyPromoInfo = { ...store.spinWheelLuckyPromoInfo, ...res.data };
+  }
+
+  if (sessionStorage.getItem("isReload")) {
+    sessionStorage.removeItem("isReload");
+    sessionStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
+  }
+
+  if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
+    spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
+  }
 };
 
 const slide = ref(0);
@@ -2763,6 +2788,7 @@ const gotoSignUp = () => {
   router.push("/register");
 };
 
+const spinLuckyWheelPromoPopupRef = ref();
 const download_url = ref("");
 const isAppUpdateModal = ref(false);
 const isOutdatedApp = ref(false);
@@ -2983,6 +3009,9 @@ const loadAppTabs = () => {
 
 onActivated(() => {
   store.getUnreadTotal();
+  if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
+    spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
+  }
 });
 
 onMounted(() => {
@@ -2997,6 +3026,7 @@ onMounted(() => {
   loadJILIFishGameList();
   loadJDBFishGameList();
   checkHbPromo();
+  checkSpinLuckyWheelPromo();
 
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
@@ -3005,6 +3035,14 @@ onMounted(() => {
   }
 
   intervalId = setInterval(checkPlatform, 300000);
+
+  window.addEventListener("beforeunload", function () {
+    sessionStorage.setItem("isReload", "true");
+  });
+});
+
+window.addEventListener("beforeunload", () => {
+  sessionStorage.setItem("isReload", "true");
 });
 
 onBeforeUnmount(() => {

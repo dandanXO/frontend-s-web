@@ -78,18 +78,23 @@
           <span>首页</span>
         </q-route-tab>
 
-        <q-route-tab v-if="$q.dark.isActive" to="/hotmatch" name="hotmatch">
+        <q-route-tab v-if="$q.dark.isActive"  to="/hotmatch" name="hotmatch">
           <div class="inactive footer-icon flag" />
           <div class="hover footer-icon flag" />
           <span>赛程</span>
         </q-route-tab>
-        <q-route-tab v-else to="/account/transfer" name="transfer">
+        <q-route-tab v-else  to="/hotmatch" name="hotmatch">
+          <div class="inactive footer-icon flag-w" />
+          <div class="hover footer-icon flag-w" />
+          <span>赛程</span>
+        </q-route-tab>
+        <!-- <q-route-tab v-else to="/account/transfer" name="transfer">
           <img class="inactive" v-if="$q.dark.isActive" src="../assets/images/footer/withdraw-icon-dark.png" />
           <div class="inactive footer-icon wallet" v-else />
           <img class="hover" v-if="$q.dark.isActive" src="../assets/images/footer/withdraw-icon-active-dark.png" />
           <div class="hover footer-icon wallet" v-else />
           <span>账户</span>
-        </q-route-tab>
+        </q-route-tab> -->
 
         <q-route-tab to="/promo" name="promo">
           <template v-if="!$q.dark.isActive">
@@ -442,7 +447,7 @@ export default defineComponent({
         } else if (route.path === "/app-tutorial") {
           prevPage.value = "account/invite";
           hasPage.value = true;
-          pageName.value = "APP安装教程";
+          pageName.value = "APP 安装教程";
         }
 
         if (route.query.redirect) {
@@ -610,6 +615,16 @@ svg path {
       background-position: 0.5% 100%;
     }
   }
+  &.flag-w {
+      width: 20px;
+      background: url("../assets/images/footer/flag-white-active.svg") no-repeat center center;
+      background-size: 100% 100%;
+
+      &.inactive {
+        background: url("../assets/images/footer/flag-white.svg") no-repeat center center;
+        background-size: 100% 100%;
+      }
+    }
 
   &.wallet {
     background: url("../assets/images/footer/footer-icons.svg") no-repeat center center;

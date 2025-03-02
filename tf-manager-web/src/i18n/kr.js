@@ -670,6 +670,7 @@ export default {
     betId: '베팅 ID',
     belongType: '소속 유형',
     betMoneyChange: '회원 베팅 금액 변경',
+    betMoneyChangeTidb: '회원 베팅 금액 변경',
     betMoreThan: '이상 베팅',
     betRebateDetails: '베팅 리베이트 기록 세부 정보',
     betRebateRecord: '베팅 리베이트 기록',
@@ -1973,6 +1974,7 @@ export default {
     tfCompetitionNameVn: '리그 이름 (베트남어)',
     tfCompetitionNameKr: '리그 이름 (한국어)',
     tfCompetitionNameTh: '리그 이름 (태국어)',
+    traceId: 'Trace ID'
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3 개월 이상일 수 없습니다',
@@ -2103,6 +2105,7 @@ export default {
     selectPaymentType: '결제 유형을 선택하십시오',
     selectMobilePayment: '모바일 결제를 선택하십시오',
     selectWebPayment: '웹 결제를 선택하십시오',
+    sequenceEmpty: '시퀀스는 비워둘 수 없습니다.',
     settlementToChecking: '검토 중으로 업데이트됨',
     settlementToPay: '결제로 업데이트됨',
     settled: '성공적으로 처리됨',
@@ -2646,8 +2649,11 @@ export default {
     'Bank Card': '은행 카드',
     'Payment Type': '지불 유형',
     Payment: '지불',
+    Deposit: '보증금',
+    Withdraw: '돈을 인출하다',
     'Add Payment': '지불 추가',
     'Edit Payment': '지불 수정',
+    'Copy Payment': '지불 복사',
     CurrencyRate: '통화 환율',
     'Payment Display': '지불 디스플레이',
     'Withdraw Platform': '출금 플랫폼',
@@ -2720,6 +2726,7 @@ export default {
     'Sport App Setting': '스포츠 앱 설정',
     Sport: '스포츠',
     'Game Jackpot Bonus Record': '게임 잭팟 보너스 기록',
+    'Member Privilege Record Pak Export': '회원 할인 기록 수출 - 파키스탄'
   },
   google: {
     google_auth_menu: 'Google 인증자',

@@ -331,7 +331,6 @@ import { createBatchBlacknWhitelist, createBlacknWhitelist, deleteBlacknWhitelis
 // import { getActivePrivilegeInfo, getActivePrivilegeInfoBySiteId } from "../../../../api/privilege-info";
 import { useStore } from "../../../../store";
 import { getSiteListSimple } from "../../../../api/site";
-import { findIdByLoginName } from "../../../../api/member";
 import { TENANT } from "../../../../store/modules/user/action-types";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { useI18n } from "vue-i18n";
@@ -621,9 +620,9 @@ function importToTable(file) {
           })
         );
         for (const d of data) {
-          const { data: id } = await findIdByLoginName(d.loginName, request.siteId);
-          d.memberId = id;
+          d.memberId = "0";
         }
+
         break;
       }
       importedPage.records = data;

@@ -17,6 +17,104 @@
     <link rel="shortcut icon" type="image/png" href="icons/favicon.ico" />
 
     <link rel="icon" type="image/ico" href="icons/favicon.ico" />
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-ZMQ37SM5Q3', {
+        linker: {
+          domains: ["90099888.com", "26651924.com", "54495187.com", "07518351.com", "36864956.com", "78978090.com", "lh318.com"]
+        }
+      });
+    </script>
+    <script>
+      var CWRUMLICENCE;
+    </script>
+    <script type="text/javascript">
+      function initCloudWise(appId) {
+        window.cloudWiseQueue = []
+        CWRUMLICENCE = appId;
+        const cloudWiseScript = document.createElement("script");
+        cloudWiseScript.src = `https://apm-int.cloudwise.com/api/browser/settings/v70/js?app_key=${appId}`;
+        cloudWiseScript.async = true;
+        cloudWiseScript.onload = () => {
+          window.cloudWiseQueue.forEach(request => request())
+          window.cloudWiseQueue = []
+        }
+        document.head.appendChild(cloudWiseScript);
+      }
+
+      function initGA() {
+        const gaScript = document.createElement("script");
+        gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-ZMQ37SM5Q3";
+        gaScript.async = true;
+        document.head.appendChild(gaScript);
+      }
+
+      function parseJwt(token) {
+        try {
+          const base64Url = token.split(".")[1];
+          const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+          const jsonPayload = decodeURIComponent(
+            atob(base64)
+              .split("")
+              .map(function (c) {
+                return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+              })
+              .join("")
+          );
+          const tokenObj = JSON.parse(jsonPayload)
+          return JSON.parse(tokenObj.data);
+        } catch(e) {
+          return null
+        }
+      }
+
+      (function initTracking() {
+        const pathname = window.location.pathname;
+        const appPaths = ["/promotion", "/promotiontest", "/deposit", "/deposittest", "/invitefriend", "/vip", "/viptest", "/privilege/invite"]
+        if(appPaths.includes(pathname)) {
+          initCloudWise("wS0n2SF8WRCb0fAkjFLvksRizrsrej3YfZosUhCbiG7b2z**czacDVZXpilaow2ti")
+          initGA();
+          window.parseJwt = parseJwt;
+        } else {
+          initCloudWise("wS0n2SF8WRCb0fAkjFLvksRizrsrej3Y0t429/b5onII**yr8w22d3AkwtO5qHCg9")
+        }
+
+        var hostname = window.location.hostname;
+        // console.log(hostname);
+        if (hostname.indexOf("lh99966.com") > -1) {
+          console.log("Track");
+          LA.init({ id: "KTtv5inKGfP1Jw2q", ck: "KTtv5inKGfP1Jw2q" });
+        } else if (hostname.indexOf("lh59799.com") > -1) {
+          console.log("Track");
+          LA.init({ id: "KUuG5CF21aRbjlTk", ck: "KUuG5CF21aRbjlTk" });
+        } else if (hostname.indexOf("lh81097.com") > -1) {
+          console.log("Track");
+          LA.init({ id: "KUuGmPWdYgRIM8ud", ck: "KUuGmPWdYgRIM8ud" });
+        } else if (hostname.indexOf("lh50891.com") > -1) {
+          console.log("Track");
+          LA.init({ id: "KUuGqH3PR39zTbTM", ck: "KUuGqH3PR39zTbTM" });
+        } else if (hostname.indexOf("lh89186.com") > -1) {
+          console.log("Track");
+          LA.init({ id: "KUuGtTl6ivPktez9", ck: "KUuGtTl6ivPktez9" });
+        } else if (hostname.indexOf("823223.com") > -1) {
+          console.log("Track");
+          LA.init({ id: "Kf2YMsi0fHrzuuir", ck: "Kf2YMsi0fHrzuuir" });
+        } else if (hostname.indexOf("968276.com") > -1) {
+          console.log("Track");
+          LA.init({ id: "Kf2Yj0h2tNfS2CCs", ck: "Kf2Yj0h2tNfS2CCs" });
+        } else if (hostname.indexOf("385683.com") > -1) {
+          console.log("Track");
+          LA.init({ id: "Kf2YqZP1X3HpsAZo", ck: "Kf2YqZP1X3HpsAZo" });
+        } else if (hostname.indexOf("531950.com") > -1) {
+          console.log("Track");
+          LA.init({ id: "Kf2YxQaliOlT8Cem", ck: "Kf2YxQaliOlT8Cem" });
+        }
+
+      })();
+    </script>
 
     <!-- PolyFill Script To Support Lower Version of Browser/Device -->
     <script type="text/javascript">
@@ -45,6 +143,52 @@
         bodyElement.classList.add("body-applinks");
       }
 
+      const addTimestamp = (data) => ({
+        ...data,
+        timestamp: Date.now()
+      })
+
+      const sendCloudWiseTrack = (request) => {
+        if(window.CloudWiseUtil && window.WEBVIEW_CLOUD_WISE) {
+          request()
+        } else {
+          window.cloudWiseQueue.push(() => {
+            request()
+          })
+        }
+      }
+
+      const callFlutterHandler = (tokenObj) => {
+        window.WEBVIEW_CLOUD_WISE = true;
+        sendCloudWiseTrack(() => {
+          CloudWiseUtil.setCustomEventInfo({
+            "type": "SENDING_MESSAGE_TO_FLUTTER",
+            "data": addTimestamp({})
+          }, "CUSTOM")
+        });
+        gtag("event", "SENDING_MESSAGE_TO_FLUTTER", {
+          "type": "SENDING_MESSAGE_TO_FLUTTER",
+          "data": JSON.stringify(addTimestamp({
+            "user_id": tokenObj.s3,
+          }))
+        })
+        window.flutter_inappwebview.callHandler('FlutterChannel','LH_FLUTTER');
+      }
+
+      const receiveMessageFromFlutter = (tokenObj, data) => {
+        sendCloudWiseTrack(() => CloudWiseUtil.setCustomEventInfo({
+          "type": "RECEIVING_MESSAGE_FROM_FLUTTER",
+          "data": addTimestamp(data)
+        }, "CUSTOM"))
+        gtag("event", "RECEIVING_MESSAGE_FROM_FLUTTER", {
+          "type": "RECEIVING_MESSAGE_FROM_FLUTTER",
+          "data": JSON.stringify(addTimestamp({
+            ...data,
+            "user_id": tokenObj.s3,
+          }))
+        })
+      }
+
       if (
         window.location.pathname === "/vip" ||
         window.location.pathname === "/promotion" ||
@@ -53,6 +197,34 @@
         window.location.pathname === "/privilege/invite" ||
         window.location.pathname === "/affiliatepage"
       ) {
+
+        const url = new URL(window.location.href);
+        const params = new URLSearchParams(url.search);
+        const tokenStr = params.get('token');
+        const tokenObj = window.parseJwt ? window.parseJwt(tokenStr) : null;
+        sendCloudWiseTrack(() => {
+          CloudWiseUtil.setUserInfoWithUserId(tokenObj.s3)
+          CloudWiseUtil.setCustomEventInfo({
+            "type": "INITIALIZE_APP",
+            "data": addTimestamp({})
+          }, "CUSTOM")
+        })
+        gtag('config', 'G-ZMQ37SM5Q3', {
+          'user_id': tokenObj.s3
+        });
+        gtag("event", "INITIALIZE_APP", {
+          "type": "INITIALIZE_APP",
+          "data": JSON.stringify(addTimestamp({
+            "user_id": tokenObj.s3,
+          }))
+        })
+
+        window.addEventListener("error", (event) => {
+          gtag('event', 'exception', {
+            description: `${event.message} at ${event.source}:${event.lineno}:${event.colno}`,
+            fatal: false // 設為 true 表示致命錯誤
+          });
+        });
 
         //IOS
         if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.notifyApp) {
@@ -67,12 +239,12 @@
         document.addEventListener("DOMContentLoaded", function () {
           console.log('DOM fully loaded and parsed');
           if (window.flutter_inappwebview) {
-            window.flutter_inappwebview.callHandler('FlutterChannel','LH_FLUTTER')
+            callFlutterHandler(tokenObj);
           } else {
             console.log('FlutterChannel not available yet, waiting...');
             const interval = setInterval(() => {
               if (window.flutter_inappwebview) {
-                window.flutter_inappwebview.callHandler('FlutterChannel','LH_FLUTTER')
+                callFlutterHandler(tokenObj);
                 console.log('Message sent to Flutter after DOMContentLoaded');
                 clearInterval(interval);
               }
@@ -84,6 +256,7 @@
         window.notifyApp = function (message) {
           try {
             const returnJson = message.data;
+            receiveMessageFromFlutter(tokenObj, returnJson);
             if (returnJson && returnJson.rstDomain) {
               window.localStorage.setItem("LH_H5_RST_URL", returnJson.rstDomain);
 
@@ -118,6 +291,7 @@
           if (event.data.data !== undefined) {
             // {"actDomain":"https://przvnboftl.anpoxuaq9ae.com:9972","crDomain":"https://m.lh330696.com:9971","rstDomain":"https://apodnbo0tl.anipoius54d.com:9972"}
             const returnJson = event.data.data;
+            receiveMessageFromFlutter(tokenObj, returnJson);
             if (returnJson && returnJson.rstDomain) {
               window.localStorage.setItem("LH_H5_RST_URL", returnJson.rstDomain);
 
@@ -196,52 +370,6 @@
     </script>
 
     <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
-    <script>
-      var CWRUMLICENCE = "wS0n2SF8WRCb0fAkjFLvksRizrsrej3Y0t429/b5onII**yr8w22d3AkwtO5qHCg9";
-    </script>
-    <script type="text/javascript">
-      (function initTracking() {
-        const pathname = window.location.pathname;
-        const appPaths = ["/promotion", "/promotiontest", "/deposit", "/deposittest", "/invitefriend", "/vip", "/viptest", "/privilege/invite"]
-        if(appPaths.includes(pathname)) return
-
-        var hostname = window.location.hostname;
-        // console.log(hostname);
-        if (hostname.indexOf("lh99966.com") > -1) {
-          console.log("Track");
-          LA.init({ id: "KTtv5inKGfP1Jw2q", ck: "KTtv5inKGfP1Jw2q" });
-        } else if (hostname.indexOf("lh59799.com") > -1) {
-          console.log("Track");
-          LA.init({ id: "KUuG5CF21aRbjlTk", ck: "KUuG5CF21aRbjlTk" });
-        } else if (hostname.indexOf("lh81097.com") > -1) {
-          console.log("Track");
-          LA.init({ id: "KUuGmPWdYgRIM8ud", ck: "KUuGmPWdYgRIM8ud" });
-        } else if (hostname.indexOf("lh50891.com") > -1) {
-          console.log("Track");
-          LA.init({ id: "KUuGqH3PR39zTbTM", ck: "KUuGqH3PR39zTbTM" });
-        } else if (hostname.indexOf("lh89186.com") > -1) {
-          console.log("Track");
-          LA.init({ id: "KUuGtTl6ivPktez9", ck: "KUuGtTl6ivPktez9" });
-        } else if (hostname.indexOf("823223.com") > -1) {
-          console.log("Track");
-          LA.init({ id: "Kf2YMsi0fHrzuuir", ck: "Kf2YMsi0fHrzuuir" });
-        } else if (hostname.indexOf("968276.com") > -1) {
-          console.log("Track");
-          LA.init({ id: "Kf2Yj0h2tNfS2CCs", ck: "Kf2Yj0h2tNfS2CCs" });
-        } else if (hostname.indexOf("385683.com") > -1) {
-          console.log("Track");
-          LA.init({ id: "Kf2YqZP1X3HpsAZo", ck: "Kf2YqZP1X3HpsAZo" });
-        } else if (hostname.indexOf("531950.com") > -1) {
-          console.log("Track");
-          LA.init({ id: "Kf2YxQaliOlT8Cem", ck: "Kf2YxQaliOlT8Cem" });
-        }
-
-        const cloudWiseScript = document.createElement("script");
-        cloudWiseScript.src = 'https://apm-int.cloudwise.com/api/browser/settings/v70/js?app_key=wS0n2SF8WRCb0fAkjFLvksRizrsrej3Y0t429/b5onII**yr8w22d3AkwtO5qHCg9';
-        cloudWiseScript.async = true;
-        document.head.appendChild(cloudWiseScript);
-      })();
-    </script>
   </head>
   <body id="lh-static-h5" style="margin:0;">
     <!-- DO NOT touch the following DIV -->

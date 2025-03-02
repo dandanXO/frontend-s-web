@@ -1112,12 +1112,17 @@
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
+
+  <!-- Spin Lucky Wheel promo start -->
+  <HomePopup ref="spinLuckyWheelPromoPopupRef" />
+  <SpinLuckyWheelPromoSticky v-if="store.spinWheelLuckyPromoInfo?.status === 'IN_PROGRESS'" />
+  <!-- Spin Lucky Wheel promo end -->
 </template>
 
 <script setup>
 import { onMounted, ref, reactive, computed, watch, onActivated } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { api } from "boot/axios";
+import { api, eventapi } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
@@ -1132,7 +1137,8 @@ import WithdrawalModal from "../components/modal/WithdrawalModal.vue";
 import DepositComponent from "../components/depositComponent.vue";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
-
+import HomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
+import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 // import { ref, onMounted, onUnmounted } from 'vue';
 import "swiper/css";
@@ -2539,6 +2545,7 @@ const gotoSignUp = () => {
   router.push("/register");
 };
 
+const spinLuckyWheelPromoPopupRef = ref();
 const download_url = ref("");
 const isAppUpdateModal = ref(false);
 const isOutdatedApp = ref(false);
@@ -2671,7 +2678,7 @@ const populatePushNotificationData = (data) => {
 };
 
 const initOneSignal = () => {
-  OneSignal.initialize("5fd20672-11f1-4c8a-8e24-23c7eed428fb");
+  OneSignal.initialize("d7b777f4-c697-4958-b623-ef4b7a3788d0");
 
   let myClickListener = async function (event) {
     console.log("CLICK PUSH");
@@ -2709,6 +2716,22 @@ const hbDragPos = ref([10, 120]);
 const isHbShow = ref(true);
 const hbSlide = ref(0);
 const hbPromo = ref([]);
+
+const checkSpinLuckyWheelPromo = async () => {
+  if(store.token) {
+    const res = await eventapi.post("/refer-spin/check");
+    store.spinWheelLuckyPromoInfo = res.data;
+  }
+
+  if (sessionStorage.getItem("isReload")) {
+    sessionStorage.removeItem("isReload");
+    sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
+  }
+
+  if (!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+    spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
+  }
+}
 
 const checkHbPromo = () => {
   api
@@ -2789,6 +2812,9 @@ const loadAppTabs = () => {
 
 onActivated(() => {
   store.getUnreadTotal();
+  if(!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+    spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
+  }
 });
 
 onMounted(() => {
@@ -2802,11 +2828,21 @@ onMounted(() => {
   loadJDBFishGameList();
   loadCustomerAddress();
   checkHbPromo();
+  checkSpinLuckyWheelPromo();
+
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
   if (Platform.is.android && Platform.is.capacitor) {
     initOneSignal();
   }
+
+  window.addEventListener("beforeunload", function () {
+    sessionStorage.setItem("isReload", "true");
+  });
+});
+
+window.addEventListener("beforeunload", () => {
+  sessionStorage.setItem("isReload", "true");
 });
 </script>
 

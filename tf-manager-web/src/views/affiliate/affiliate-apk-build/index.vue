@@ -66,7 +66,7 @@
         highlight-current-row
         :empty-text="t('fields.noData')"
       >
-        <el-table-column prop="loginName" :label="t('fields.loginName')">
+        <el-table-column prop="loginName" :label="t('fields.loginName')" width="250">
           <template
             #default="scope"
             v-if="hasPermission(['sys:affiliate:detail'])"
@@ -79,6 +79,7 @@
         <el-table-column
           prop="affiliateCode"
           :label="t('fields.affiliateCode')"
+          width="150"
         >
           <template #default="scope">
             <span v-if="scope.row.affiliateCode === null">-</span>
@@ -87,10 +88,11 @@
             </span>
           </template>
         </el-table-column>
-        <el-table-column :label="t('fields.site')" prop="site" />
+        <el-table-column :label="t('fields.site')" prop="site" width="150" />
         <el-table-column
           prop="affiliateStatus"
           :label="t('fields.affiliateStatus')"
+          width="120"
         >
           <template #default="scope">
             <el-tag v-if="scope.row.affiliateStatus === 'APPLY'" size="mini">
@@ -122,6 +124,7 @@
         <el-table-column
           prop="currentVersion"
           :label="t('affiliateApk.currentVersion')"
+          width="120"
         >
           <template #default="scope">
             <span v-if="scope.row.currentVersion === null">-</span>
@@ -133,6 +136,7 @@
         <el-table-column
           prop="buildStatus"
           :label="t('affiliateApk.buildStatus')"
+          width="120"
         >
           <template #default="scope">
             <span v-if="scope.row.buildStatus === null">-</span>
@@ -141,7 +145,7 @@
             </span>
           </template>
         </el-table-column>
-        <el-table-column :label="t('affiliateApk.latestVersion')">
+        <el-table-column :label="t('affiliateApk.latestVersion')" width="120">
           {{ latestVersion !== undefined ? latestVersion : '-' }}
         </el-table-column>
         <el-table-column :label="t('fields.operate')">
@@ -165,7 +169,7 @@
               type="danger"
               v-if="
                 hasPermission(['sys:affiliate:affapk:build']) &&
-                  scope.row.buildStatus === 'IN_QUEUE'
+                  (scope.row.buildStatus === 'IN_QUEUE' || scope.row.buildStatus === 'IN_PROGRESS')
               "
               v-permission="['sys:affiliate:affapk:build']"
               @click="cancel(scope.row.id)"
@@ -180,6 +184,14 @@
               @click="showDialog(scope.row)"
             >
               {{ t('fields.edit') }}
+            </el-button>
+            <el-button
+              size="mini"
+              type="success"
+              v-if="scope.row.fileUrl !== null && scope.row.buildStatus === 'SUCCESS'"
+              @click="downloadFile(scope.row.fileUrl)"
+            >
+              {{ t('fields.download') }}
             </el-button>
           </template>
         </el-table-column>
@@ -466,6 +478,14 @@ async function loadSites() {
   // const { data: ret } = await getSiteListSimple()
   list.sites = store.state.user.sites
 }
+
+const downloadFile = (url) => {
+  if (url) {
+    window.open(url, '_blank');
+  } else {
+    console.error('Download URL is empty');
+  }
+};
 
 onMounted(async () => {
   await loadSites()

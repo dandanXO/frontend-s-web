@@ -146,19 +146,19 @@ const tableHeaders = computed(() => [
     name: "totalDownlineCount",
     field: "totalDownlineCount",
     align: "center"
-  },
-  {
-    label: t("earnMoney.teamManagement.table.todayRegCount"),
-    name: "todayRegCount",
-    field: "todayRegCount",
-    align: "center"
-  },
-  {
-    label: t("earnMoney.teamManagement.table.ytdRegCount"),
-    name: "yesterdayRegCount",
-    field: "yesterdayRegCount",
-    align: "center"
   }
+  // {
+  //   label: t("earnMoney.teamManagement.table.todayRegCount"),
+  //   name: "todayRegCount",
+  //   field: "todayRegCount",
+  //   align: "center"
+  // },
+  // {
+  //   label: t("earnMoney.teamManagement.table.ytdRegCount"),
+  //   name: "yesterdayRegCount",
+  //   field: "yesterdayRegCount",
+  //   align: "center"
+  // }
 
   // { label: t("earnMoney.teamManagement.table.downlineDepositMember"), name: "downlineDepositMember", field: "downlineDepositMember", align: "center" },
   // { label: t("earnMoney.teamManagement.table.vip"), name: "vip", field: "vip", align: "center" },
