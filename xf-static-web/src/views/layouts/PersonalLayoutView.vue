@@ -8,15 +8,16 @@
         <div class="account-box account-balance">
           <a @click="refreshBalance" class="balance-container">
             <div>
-            <span>账户余额：</span><span class="trans-tip">（游戏前，请将余额转到相应场馆）</span>
-          </div>
-          <div class="bal">
-            <div class="balance-txt">
-              <span v-if="isLoadingBalance">Loading...</span>
-              <span v-if="!isLoadingBalance">￥{{ store.balance }}</span>
+              <span>账户余额：</span>
+              <span class="trans-tip">（游戏前，请将余额转到相应场馆）</span>
             </div>
-            <el-icon><Refresh /></el-icon>
-          </div>
+            <div class="bal">
+              <div class="balance-txt">
+                <span v-if="isLoadingBalance">Loading...</span>
+                <span v-if="!isLoadingBalance">￥{{ store.balance }}</span>
+              </div>
+              <el-icon><Refresh /></el-icon>
+            </div>
           </a>
           <div class="forever-web">
             <span>专属网址：</span>
@@ -78,9 +79,10 @@ export default defineComponent({
     align-items: stretch;
     gap: 20px;
     color: #b8b8b8;
+
     .account-box {
       // background-color: #1d212e;
-      background: #1B1B1C;
+      background: #1b1b1c;
       box-shadow: 0 5px 8px 0 rgb(0 0 0 / 25%);
       border-radius: 12px;
     }
@@ -109,7 +111,7 @@ export default defineComponent({
           align-items: flex-start;
           flex-direction: column;
           margin-right: 10px;
-          color:#B8B8B8;
+          color: #b8b8b8;
           font-family: PingFang SC;
           font-size: 16px;
           font-weight: 600;
@@ -124,10 +126,10 @@ export default defineComponent({
             font-size: 20px;
           }
           .trans-tip {
-            color:#B8B8B8;
+            color: #b8b8b8;
           }
           svg {
-            color:#32CEED;
+            color: #32ceed;
           }
         }
       }
@@ -137,7 +139,7 @@ export default defineComponent({
         gap: 10px;
         justify-content: center;
         align-items: center;
-        background: url(../../assets/images/account/foreverwebbg.png)no-repeat center center;
+        background: url(../../assets/images/account/foreverwebbg.png) no-repeat center center;
         background-size: contain;
         padding: 15px 60px 15px 15px;
       }
@@ -152,7 +154,7 @@ export default defineComponent({
         width: 100%;
         .account-avatar {
           border-radius: 50%;
-          width:63px;
+          width: 63px;
           height: 63px;
           overflow: hidden;
           display: flex;
@@ -160,11 +162,11 @@ export default defineComponent({
           margin: 10px auto;
           align-items: center;
           img {
-             width: 100%;
+            width: 100%;
           }
         }
         .account-name {
-          color:#B8B8B8;
+          color: #b8b8b8;
           font-family: PingFang SC;
           font-size: 16px;
           font-weight: 600;
@@ -175,7 +177,7 @@ export default defineComponent({
             font-style: italic;
             font-weight: 700;
             line-height: 10px;
-            background: url(../../assets/images/account/viplinebg.png)no-repeat center center;
+            background: url(../../assets/images/account/viplinebg.png) no-repeat center center;
             background-size: contain;
             padding: 0px 10px 0px 24px;
           }
@@ -189,14 +191,13 @@ export default defineComponent({
           color: #b8b8b8;
         }
         .account-menu-list {
-          margin: 0;
           display: flex;
           gap: 10px;
           justify-content: space-between;
           align-items: center;
           width: 90%;
           margin: 20px auto;
-          border-bottom: 1px solid #FFFFFF1A;
+          border-bottom: 1px solid #ffffff1a;
           padding: 10px 0 30px 0;
           .account-menu-item {
             display: flex;
@@ -204,17 +205,18 @@ export default defineComponent({
             justify-content: space-evenly;
             align-items: center;
             text-decoration: none;
-            color: #B8B8B8;
+            color: #b8b8b8;
             gap: 10px;
             font-size: 12px;
 
-            svg, .sideicon {
-                fill: #32CEED;
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                padding: 10px;
-                background: #141414;
+            svg,
+            .sideicon {
+              fill: #32ceed;
+              width: 20px;
+              height: 20px;
+              border-radius: 50%;
+              padding: 10px;
+              background: #141414;
             }
             .sideicon {
               display: flex;
@@ -226,13 +228,14 @@ export default defineComponent({
             &.router-link-exact-active {
               color: #ffffff;
               font-weight: 600;
-              svg, .sideicon {
+              svg,
+              .sideicon {
                 fill: #ffffff;
                 width: 20px;
                 height: 20px;
                 border-radius: 50%;
                 padding: 10px;
-                background: linear-gradient(180deg, #32CEED 0%, #1C7587 100%);
+                background: linear-gradient(180deg, #32ceed 0%, #1c7587 100%);
               }
               .sideicon {
                 display: none;
@@ -258,10 +261,9 @@ export default defineComponent({
             gap: 20px;
             align-items: center;
             text-decoration: none;
-            color: #B8B8B8;
+            color: #b8b8b8;
             border-radius: 8px;
             padding: 10px 60px;
-
 
             svg {
               height: 20px;
@@ -276,7 +278,7 @@ export default defineComponent({
             &:hover,
             &.router-link-exact-active {
               font-weight: 600;
-              color: #32CEED;
+              color: #32ceed;
               background: #242425;
               svg {
                 fill: #45fdfb;
@@ -289,7 +291,7 @@ export default defineComponent({
               }
             }
           }
-          }
+        }
       }
     }
   }
