@@ -841,7 +841,7 @@ onMounted(() => {
   }
   :deep(.el-form-item) {
     display: flex;
-    // flex-direction: column;
+    flex-direction: row;
     align-items: center;
   }
   :deep(.el-form-item__label) {

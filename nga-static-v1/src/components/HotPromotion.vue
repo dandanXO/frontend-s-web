@@ -7,9 +7,8 @@
       @daily-slot="handleSlot()"
     />
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
-
-
   </div>
+  <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
 
   <q-dialog v-model="isClaimModal" persistent>
     <q-card class="win-rebate-model">
@@ -36,6 +35,7 @@ import * as _ from "lodash";
 import moment from "moment";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
+import SpinLuckyWheelPromo from "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -44,6 +44,7 @@ export default defineComponent({
   components: {
     ClaimPromo,
     HongBaoYuPromo,
+    SpinLuckyWheelPromo
   },
   props: {
     list: {

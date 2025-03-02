@@ -251,16 +251,21 @@ export default defineComponent({
     };
 
     const trackH5Affiliate = async () => {
-      const omitSites = ["bw3.genoortisy.com"];
+      const referral = route.params.referralCode
+        ? route.params.referralCode
+        : sessionStorage.getItem("REFERRAL_CODE")
+        ? sessionStorage.getItem("REFERRAL_CODE")
+        : localStorage.getItem("REG_REFERRAL_CODE") || "";
 
-      // sendFacebookInfo();
+      const hostname = window.location.hostname.replace("www.", "");
+      //FOR TESTING.
+      // const hostname = "igooaa.com";
 
       if (isInPwa()) {
         api.get(`/app/pwa/log?step=OPEN&siteCode=${process.env.SITE}`).then((res2) => {
           console.log("OPEN");
         });
 
-        const hostname = window.location.hostname.replace("www.", "");
         var { adCode } = getRbParams() || {};
         if (!adCode) {
           adCode = "";
@@ -294,25 +299,17 @@ export default defineComponent({
           }
         });
       } else {
-        var affiliateCode = "";
-        if (omitSites.includes(window.location.host)) {
-          affiliateCode = "4F09FA";
-        } else {
-          // affiliateCode = "3B1BFB";
-          affiliateCode = "";
-        }
+        var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || "";
 
-        sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
-        // api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
-        //   if (res.code === 0) {
-        //     sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-        //     sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
-        //     sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
-        //     affAppToken.value = res.data.adjust_app_token;
-        //     // initAdjustEventTrack();
-        //     // alert(affAppToken.value);
-        //   }
-        // });
+        await api
+          .get(
+            `/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${affiliateCode}&refer=${referral}`
+          )
+          .then((res) => {
+            console.log("THIS");
+            console.log(res);
+            // const { affiliateCode, facebookId, pushId } = res.data;
+          });
       }
     };
 
