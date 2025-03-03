@@ -3045,9 +3045,13 @@ export default {
     validateAdjustColumnRequired: 'Adjust Column is required',
     validateIsSeamlessTransferRequired: 'Is Seamless Transfer is required',
     validateVipSettingRequired: 'VIP Setting is required',
-    validatePayementTypesSettingRequired: 'Payment Setting is required'
+    validatePayementTypesSettingRequired: 'Payment Setting is required',
+    validateFbIdRequired: 'Facebook ID is required',
+    validateFbUrlRequired: 'Facebook URL is required',
+    validateFbTokenRequired: 'Facebook Token is required',
   },
   menu: {
+    'Add Promo': 'Add Promo',
     undefined: '',
     Dashboard: 'Dashboard',
     Member: 'Member',

@@ -2433,9 +2433,13 @@ export default {
     validatePlanLimitMaxRequired: 'Yêu cầu giới hạn đầu tư tối đa',
     validateIsSeamlessTransferRequired: 'Nó là cần thiết để không chuyển nhượng',
     validateVipSettingRequired: 'Yêu cầu cài đặt VIP',
-    validatePayementTypesSettingRequired: 'Yêu cầu cài đặt thanh toán'
+    validatePayementTypesSettingRequired: 'Yêu cầu cài đặt thanh toán',
+    validateFbIdRequired: 'Facebook ID là bắt buộc',
+    validateFbUrlRequired: 'URL Facebook là bắt buộc',
+    validateFbTokenRequired: 'Token Facebook là bắt buộc',
   },
   menu: {
+    'Add Promo': 'Thêm khuyến mãi',
     undefined: '',
     Dashboard: 'Bảng điều khiển',
     Member: 'Thành viên',
