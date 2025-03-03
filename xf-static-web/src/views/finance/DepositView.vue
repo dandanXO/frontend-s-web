@@ -3,7 +3,12 @@
     <div class="menu-title-container">
       <span class="menu-title">充值中心</span>
       <span class="additional-title"
-        >支持虚拟币 USDT 小额存提，24 小时安全、便捷、秒存秒提！</span
+        >支持虚拟币 USDT 小额存提，24 小时安全、便捷、秒存秒提！
+        
+      <span class="account-tick">
+        <img src="@/assets/images/account/icon-tick.png">
+      </span>
+      </span
       >
     </div>
     <div class="account-content deposit">

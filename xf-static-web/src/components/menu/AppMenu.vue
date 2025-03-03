@@ -2,22 +2,15 @@
   <div>
     <div class="platform-menu app">
       <div class="platform-box">
-        <img
-          :src="require('../../assets/app/header_nav_app.png')"
-          style="width: 205px"
-        />
+        <img :src="require('../../assets/app/header_nav_app.png')" style="width: 205px" />
       </div>
       <div>
         <h3 class="header-menu-title">全站APP</h3>
         <!-- <div id="headerAllQrcode" class="download-img-container"><img src="../../assets/app/download.png" /></div> -->
-        <vue-qrious :value="`${downloadUrl}`" />
+        <vue-qrious class="app-download-menu-qr" :value="`${downloadUrl}`" />
         <p class="qrcode-scan-txt">扫一扫下载全站APP</p>
         <p class="qrcode-scan-support">支持IOS &amp; Android等全部移动设备</p>
-        <a
-          id="headerAllHref"
-          :href="`${downloadUrl}?url=${downloadUrl}&amp;agentCode=`"
-          class="download-url"
-        >
+        <a id="headerAllHref" :href="`${downloadUrl}?url=${downloadUrl}&amp;agentCode=`" class="download-url">
           <!-- xf9866.app -->
           {{ downloadUrl }}
         </a>

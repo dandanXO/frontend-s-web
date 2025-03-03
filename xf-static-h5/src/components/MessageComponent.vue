@@ -3,7 +3,7 @@
     <MailDetail v-if="route.query.id && selectedMail" :mail="selectedMail" />
 
     <template v-else>
-      <q-tabs indicator-color="bright" align="justify" v-model="mailboxMessageTab">
+      <q-tabs align="justify" indicator-color="transparent" v-model="mailboxMessageTab">
         <q-tab :key="index" :name="item.type" v-for="(item, index) in MAILBOX_TYPES">
           <div class="tab-flex">
             <!-- <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" /> -->
@@ -20,10 +20,22 @@
               class="action-buttons"
               v-if="props.type !== 'outbox' && truncatedListByType && truncatedListByType.length"
             >
-              <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md" @click="readMails(item.type)">
+              <q-btn
+                v-if="truncatedListByType.length"
+                color="brightbtn"
+                size="md"
+                @click="readMails(item.type)"
+                rounded
+              >
                 全部已读
               </q-btn>
-              <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md" @click="deleteMails(item.type)">
+              <q-btn
+                v-if="truncatedListByType.length"
+                color="darkbtn"
+                size="md"
+                @click="deleteMails(item.type)"
+                rounded
+              >
                 全部删除
               </q-btn>
               <q-toggle
@@ -31,11 +43,11 @@
                 v-model="allowSelectMultiple"
                 :label="'选择多个'"
                 left-label
+                color="blue"
+                class="q-ml-auto"
               />
-              <q-btn v-if="hasMailSelected" class="common-md-white-btn" size="md" @click="readMails(item.type)">
-                已读
-              </q-btn>
-              <q-btn v-if="hasMailSelected" class="common-md-white-btn" size="md" @click="deleteMails(item.type)">
+              <q-btn v-if="hasMailSelected" color="darkbtn" size="md" @click="readMails(item.type)" rounded>已读</q-btn>
+              <q-btn v-if="hasMailSelected" color="darkbtn" size="md" @click="deleteMails(item.type)" rounded>
                 删除
               </q-btn>
             </div>
@@ -105,7 +117,7 @@
 
           <div class="loading-container" v-else>
             <q-inner-loading :showing="loading">
-              <q-spinner-gears size="50px" color="brand" />
+              <q-spinner-ios color="white" size="8em" />
               <div class="label">加载中</div>
             </q-inner-loading>
           </div>
@@ -176,11 +188,11 @@ export default defineComponent({
 
     const MAILBOX_TYPES = [
       { num: 1, type: "NOTIFICATION", name: "通知" },
-      { num: 5, type: "MATCH", name: "赛事" },
+      // { num: 5, type: "MATCH", name: "赛事" },
       { num: 2, type: "ACTIVITY", name: "活动" },
       { num: 3, type: "ANNOUNCEMENT", name: "公告" },
-      { num: 4, type: "PAYMENT", name: "充提" }
-      // { num: 5, type: "ALL", name: "全部" }
+      { num: 4, type: "PAYMENT", name: "充提" },
+      { num: 5, type: "ALL", name: "全部" }
     ];
 
     const mailboxMessageTab = ref(MAILBOX_TYPES[0].type);
@@ -702,5 +714,25 @@ export default defineComponent({
 
 p {
   margin: 0px;
+}
+
+.q-tabs {
+  background-color: #213057;
+  background-attachment: fixed;
+  border-radius: 50px;
+  border: 1px solid #ffffff33;
+  min-height: 36px;
+  margin: 16px;
+  padding: 6px;
+}
+
+.q-tab {
+  min-height: 36px;
+  &.q-tab--active {
+    background: linear-gradient(180deg, #00c7c0 0%, #0996c7 100%);
+    border-radius: 50px;
+    color: #fff;
+    box-shadow: 0px 0px 4px 0px #ffffff inset;
+  }
 }
 </style>

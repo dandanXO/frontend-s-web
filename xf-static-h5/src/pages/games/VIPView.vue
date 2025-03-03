@@ -1,74 +1,52 @@
 <template>
   <div class="vip-container">
-    <q-tabs v-model="tab" active-color="white" indicator-color="transparent">
-      <q-tab name="special" label="VIP特权" />
-      <q-tab name="details" label="VIP详情" />
-    </q-tabs>
+    <RoundTab v-model:tab="tab" :items="tabItems"></RoundTab>
 
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="special" style="padding: 0">
-        <q-carousel
-          class="vip bg-transparent"
-          animated
-          v-model="slide"
-          arrows
-          swipeable
-          transition-prev="slide-right"
-          transition-next="slide-left"
-        >
-          <q-carousel-slide
+        <div ref="scrollContainer" class="scroll-container">
+          <div
             v-for="(vip, vipIndex) in vipItems"
             :key="vipIndex"
-            :name="vipIndex"
+            :data-index="vipIndex"
+            class="card"
+            :style="{ backgroundImage: `url(${require(`../../assets/vip/v${vip.vipLevel - 1}_card_bg.png`)})` }"
           >
-            <div class="carousel__item">
-              <div class="vipitem">
-                <div class="viplevelcard">
-                  <div class="vip-badgelevel">
-                    <div class="vip-badge">
-                      <img
-                        :src="
-                          require(`../../assets/vip/vip_img_${vip.vipLevel}.png`)
-                        "
-                      />
-                    </div>
-                    <div class="vip-text">
-                      <img
-                        :src="
-                          require(`../../assets/vip/vip_text_${vip.vipLevel}.png`)
-                        "
-                      />
-                    </div>
-                  </div>
-                  <div class="vip-badgecontent">
-                    <span>
-                      {{ `>${vip.saving}` }}
-                    </span>
-                    <span>
-                      {{ `>${vip.monthlySaving}${vip.oneMonthSaving}` }}
-                    </span>
-                  </div>
-                </div>
+            <div class="card_top">
+              <div class="info-container">
+                <img :src="require(`../../assets/vip/vip_text_${vip.vipLevel - 1}.png`)" />
+                <span>{{ `${vip.monthlySaving}${vip.oneMonthSaving}` }}</span>
+              </div>
+              <img :src="require(`../../assets/vip/vip_badge_${vip.vipLevel - 1}.png`)" />
+            </div>
+            <div class="card_btm">
+              <div class="progress-bar-container">
+                <div class="progress-bar" :style="{ width: progessPercentage(vip.upgrade) + '%' }"></div>
+              </div>
+              <div class="amt-info">
+                <span>累计存款大于{{ convertToCommaAmount(vip.upgrade) }}</span>
+                <span>当前流水(元)：{{ convertToCommaAmount(currentBetAmount) }}</span>
               </div>
             </div>
-          </q-carousel-slide>
-        </q-carousel>
+          </div>
+        </div>
 
         <div class="vip-benefits">
-          <div class="bft-title">VIP特权</div>
-          <template v-for="(vip, vipIndex) in vipList" :key="vipIndex">
-            <template v-if="vipIndex === slide">
-              <div class="bft-row">
-                <div class="bft-row-cnt">
-                  <div class="left">
-                    <div class="icon">
-                      <img src="../../assets/vip/deposit.png" />
-                    </div>
-                    <div class="txt" style="margin-right: 20px">
-                      晋升奖励：{{ vip.cunsong }}
-                    </div>
-                  </div>
-                  <!-- <template v-if="vip.cunsong !== '无'">
+          <div class="bft-title">
+            <img src="~/assets/vip/vip_priv_title.png" />
+          </div>
+          <div class="bft-row">
+            <div class="bft-row-cnt">
+              <div class="left">
+                <div class="icon-description">
+                  <img class="" src="../../assets/vip/promo_rewards_icon.png" />
+                  <span>晋级奖励</span>
+                </div>
+                <div class="txt">
+                  {{ vipCardData.cunsong }}
+                </div>
+              </div>
+              <!-- <template v-if="vip.cunsong !== '无'">
                     <q-btn
                       class="btn"
                       color="dyblue"
@@ -76,349 +54,133 @@
                       label="领取"
                     />
                   </template> -->
+            </div>
+            <!--                <div class="bft-row-cnt">-->
+            <!--                  <div class="left">-->
+            <!--                    <div class="icon">-->
+            <!--                      <img src="../../assets/vip/red_box.png"/>-->
+            <!--                    </div>-->
+            <!--                    <div class="txt">每月红包: {{ vip.monthlyBonus }}</div>-->
+            <!--                  </div>-->
+            <!--                  <template v-if="vip.monthlyBonus !== '无'">-->
+            <!--                    <q-btn-->
+            <!--                        class="btn"-->
+            <!--                        color="brightbtn"-->
+            <!--                        label="领取"-->
+            <!--                        :disable="btnIsDisabled"-->
+            <!--                        @click="onVIPButtonClick('monthly')"-->
+            <!--                        :loading="false"-->
+            <!--                    />-->
+            <!--                  </template>-->
+            <!--                </div>-->
+            <div class="bft-row-cnt">
+              <div class="left">
+                <div class="icon-description">
+                  <img src="../../assets/vip/birthday_icon.png" />
+                  <span>生日礼金</span>
                 </div>
-                <!--                <div class="bft-row-cnt">-->
-                <!--                  <div class="left">-->
-                <!--                    <div class="icon">-->
-                <!--                      <img src="../../assets/vip/red_box.png"/>-->
-                <!--                    </div>-->
-                <!--                    <div class="txt">每月红包: {{ vip.monthlyBonus }}</div>-->
-                <!--                  </div>-->
-                <!--                  <template v-if="vip.monthlyBonus !== '无'">-->
-                <!--                    <q-btn-->
-                <!--                        class="btn"-->
-                <!--                        color="brightbtn"-->
-                <!--                        label="领取"-->
-                <!--                        :disable="btnIsDisabled"-->
-                <!--                        @click="onVIPButtonClick('monthly')"-->
-                <!--                        :loading="false"-->
-                <!--                    />-->
-                <!--                  </template>-->
-                <!--                </div>-->
-                <div class="bft-row-cnt">
-                  <div class="left">
-                    <div class="icon">
-                      <img src="../../assets/vip/money.png" />
-                    </div>
-                    <div class="txt">生日礼金: {{ vip.birthdayBonus }}</div>
-                  </div>
-                  <template v-if="vip.birthdayBonus !== '无'">
-                    <q-btn
-                      class="btn"
-                      color="brightbtn"
-                      label="领取"
-                      :disable="btnIsDisabled"
-                      @click="onVIPButtonClick('birthday')"
-                    />
-                  </template>
-                </div>
-                <div class="bft-row-cnt">
-                  <div class="left">
-                    <div class="txt">流水要求: {{ vip.drawTimes }}倍</div>
-                  </div>
-                </div>
-              </div>
-            </template>
-          </template>
-        </div>
-
-        <template v-for="(vip, vipIndex) in vipList" :key="vipIndex">
-          <template v-if="vipIndex === slide">
-            <div class="vip-benefits">
-              <div class="bft-title">VIP优惠</div>
-              <div class="bft-promo-row">
-                <div class="bft-promo">
-                  <div class="promo-percent">{{ vip.perEsport }}</div>
-                  <div class="promo-title">电竞返水</div>
-                </div>
-                <div class="bft-promo">
-                  <div class="promo-percent">{{ vip.perSport }}</div>
-                  <div class="promo-title">体育返水</div>
-                </div>
-                <div class="bft-promo">
-                  <div class="promo-percent">{{ vip.perLive }}</div>
-                  <div class="promo-title">真人返水</div>
-                </div>
-                <div class="bft-promo">
-                  <div class="promo-percent">{{ vip.perSlot }}</div>
-                  <div class="promo-title">电子返水</div>
-                </div>
-                <div class="bft-promo">
-                  <div class="promo-percent">{{ vip.perPoker }}</div>
-                  <div class="promo-title">棋牌返水</div>
+                <div v-if="vipCardData.birthdayBonus === '无'" class="txt">{{ vipCardData.birthdayBonus }}</div>
+                <div v-else class="btn-container">
+                  <q-btn
+                    color="orangebtn"
+                    label="领取"
+                    :disable="btnIsDisabled"
+                    @click="onVIPButtonClick('birthday')"
+                  />
                 </div>
               </div>
             </div>
-          </template>
-        </template>
+            <div class="bft-row-cnt">
+              <div class="left">
+                <div class="icon-description">
+                  <img src="../../assets/vip/turnover_multiplier_icon.png" />
+                  <span>流水要求</span>
+                </div>
+                <div class="txt">{{ vipCardData.drawTimes }}倍</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="vip-benefits">
+          <div class="bft-title">
+            <img src="~/assets/vip/vip_disc_title.png" />
+          </div>
+          <div class="bft-promo-row">
+            <div class="bft-promo">
+              <div class="promo-percent">{{ vipCardData.perEsport }}</div>
+              <div class="promo-title">电竞返水</div>
+            </div>
+            <div class="bft-promo">
+              <div class="promo-percent">{{ vipCardData.perSport }}</div>
+              <div class="promo-title">体育返水</div>
+            </div>
+            <div class="bft-promo">
+              <div class="promo-percent">{{ vipCardData.perLive }}</div>
+              <div class="promo-title">真人返水</div>
+            </div>
+            <div class="bft-promo">
+              <div class="promo-percent">{{ vipCardData.perSlot }}</div>
+              <div class="promo-title">电子返水</div>
+            </div>
+            <div class="bft-promo">
+              <div class="promo-percent">{{ vipCardData.perPoker }}</div>
+              <div class="promo-title">棋牌返水</div>
+            </div>
+          </div>
+        </div>
       </q-tab-panel>
 
       <q-tab-panel name="details">
-        <table class="bouns_table">
-          <thead>
-            <tr>
-              <th class="dy-vip-th">等级</th>
-              <th class="dy-vip-th">升级要求</th>
-              <th class="dy-vip-th">晋升奖金(1倍)</th>
-              <th class="dy-vip-th">生日奖金(1倍)</th>
-              <!--            <th class="dy-vip-th">每月红包</th>-->
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>VIP1</td>
-              <td>5000</td>
-              <td>8元</td>
-              <td>0元</td>
-              <!--            <td>无</td>-->
-            </tr>
-            <tr>
-              <td>VIP2</td>
-              <td>20000</td>
-              <td>8元</td>
-              <td>0元</td>
-              <!--            <td>28元</td>-->
-            </tr>
-            <tr>
-              <td>VIP3</td>
-              <td>200000</td>
-              <td>38元</td>
-              <td>0元</td>
-              <!--            <td>88元</td>-->
-            </tr>
-            <tr>
-              <td>VIP4</td>
-              <td>500000</td>
-              <td>88元</td>
-              <td>0元</td>
-              <!--            <td>188元</td>-->
-            </tr>
-            <tr>
-              <td>VIP5</td>
-              <td>2000000</td>
-              <!--            <td>288≤一个月内累积存款</td>-->
-              <td>288元</td>
-              <td>188元</td>
-            </tr>
-            <tr>
-              <td>VIP6</td>
-              <td>5000000</td>
-              <td>588元</td>
-              <td>388元</td>
-              <!--            <td>888元</td>-->
-            </tr>
-            <tr>
-              <td>VIP7</td>
-              <td>8000000</td>
-              <!--            <td>188888≤一个月内累积存款</td>-->
-              <td>1888元</td>
-              <td>588元</td>
-            </tr>
-            <tr>
-              <td>VIP8</td>
-              <td>10000000</td>
-              <!--            <td>288888≤一个月内累积存款</td>-->
-              <td>2888元</td>
-              <td>888元</td>
-            </tr>
-            <tr>
-              <td>VIP9</td>
-              <td>20000000</td>
-              <!--            <td>588888≤一个月内累积存款</td>-->
-              <td>5888元</td>
-              <td>1288元</td>
-            </tr>
-            <tr>
-              <td>VIP10</td>
-              <td>30000000</td>
-              <!--            <td>888888≤一个月内累积存款</td>-->
-              <td>18888元</td>
-              <td>1588元</td>
-            </tr>
-          </tbody>
-        </table>
+        <RowHeaderTable
+          :header-data="['等级', '升级要求', '晋升奖金(1倍)', '生日奖金(1倍)']"
+          :row-data="[
+            ['VIP1', '5000', '8元', '0元'],
+            ['VIP2', '20000', '8元', '0元'],
+            ['VIP3', '200000', '38元', '0元'],
+            ['VIP4', '500000', '88元', '0元'],
+            ['VIP5', '2000000', '288元', '188元'],
+            ['VIP6', '5000000', '588元', '388元'],
+            ['VIP7', '8000000', '1888元', '588元'],
+            ['VIP8', '10000000', '2888元', '888元'],
+            ['VIP9', '20000000', '5888元', '1288元'],
+            ['VIP10', '30000000', '18888元', '1588元']
+          ]"
+        />
 
-        <table class="privilege_table">
-          <thead>
-            <tr>
-              <th class="dy-vip-th">等级</th>
-              <th class="dy-vip-th">每月优惠</th>
-              <th class="dy-vip-th">优惠流水要求</th>
-              <!--            <th class="dy-vip-th">平台限制</th>-->
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>VIP1</td>
-              <td>每月单笔≥500元,返现15%, 最高188元</td>
-              <td>无</td>
-              <!--            <td>无</td>-->
-            </tr>
-            <tr>
-              <td>VIP2</td>
-              <td>每月单笔≥500元,返现15%, 最高258元</td>
-              <td>15倍</td>
-              <!--            <td>电竞/体育</td>-->
-            </tr>
-            <tr>
-              <td>VIP3</td>
-              <td>每月单笔≥500元,返现15%, 最高288元</td>
-              <td>15倍</td>
-              <!--            <td>所有（彩票除外）</td>-->
-            </tr>
-            <tr>
-              <td>VIP4</td>
-              <td>每月单笔≥1000元,返现25%, 最高388元</td>
-              <td>15倍</td>
-              <!--            <td>电竞/体育</td>-->
-            </tr>
-            <tr>
-              <td>VIP5</td>
-              <td>每月单笔≥1000元,返现25%, 最高588元</td>
-              <td>15倍</td>
-              <!--            <td>所有（彩票除外）</td>-->
-            </tr>
-            <tr>
-              <td>VIP6</td>
-              <td>每月单笔≥1000元,返现25%, 最高688元</td>
-              <td>15倍</td>
-              <!--            <td>所有（彩票除外）</td>-->
-            </tr>
-            <tr>
-              <td>VIP7</td>
-              <td>每月单笔≥2000元,返现35%, 最高888元</td>
-              <td>15倍</td>
-              <!--            <td>所有（彩票除外）</td>-->
-            </tr>
-            <tr>
-              <td>VIP8</td>
-              <td>每月单笔≥2000元,返现35%, 最高1288元</td>
-              <td>15倍</td>
-              <!--            <td>所有（彩票除外）</td>-->
-            </tr>
-            <tr>
-              <td>VIP9</td>
-              <td>每月单笔≥2000元,返现35%, 最高1888元</td>
-              <td>15倍</td>
-              <!--            <td>所有（彩票除外）</td>-->
-            </tr>
-            <tr>
-              <td>VIP10</td>
-              <td>每月单笔≥2000元,返现40%, 最高2888元</td>
-              <td>15倍</td>
-              <!--            <td>所有（彩票除外）</td>-->
-            </tr>
-          </tbody>
-        </table>
+        <RowHeaderTable
+          :header-data="['等级', '每月优惠', '优惠流水要求']"
+          :row-data="[
+            ['VIP1', '每月单笔≥500元,返现15%, 最高188元', '无'],
+            ['VIP2', '每月单笔≥500元,返现15%, 最高258元', '15倍'],
+            ['VIP3', '每月单笔≥500元,返现15%, 最高288元', '15倍'],
+            ['VIP4', '每月单笔≥1000元,返现25%, 最高388元', '15倍'],
+            ['VIP5', '每月单笔≥1000元,返现25%, 最高588元', '15倍'],
+            ['VIP6', '每月单笔≥1000元,返现25%, 最高688元', '15倍'],
+            ['VIP7', '每月单笔≥2000元,返现35%, 最高888元', '15倍'],
+            ['VIP8', '每月单笔≥2000元,返现35%, 最高1288元', '15倍'],
+            ['VIP9', '每月单笔≥2000元,返现35%, 最高1888元', '15倍'],
+            ['VIP10', '每月单笔≥2000元,返现40%, 最高2888元', '15倍']
+          ]"
+        />
 
-        <table class="percent_table">
-          <thead>
-            <tr>
-              <th class="dy-vip-th">等级</th>
-              <th class="dy-vip-th">VIP0</th>
-              <th class="dy-vip-th">VIP1</th>
-              <th class="dy-vip-th">VIP2</th>
-              <th class="dy-vip-th">VIP3</th>
-              <th class="dy-vip-th">VIP4</th>
-              <th class="dy-vip-th">VIP5</th>
-              <th class="dy-vip-th">VIP6</th>
-              <th class="dy-vip-th">VIP7</th>
-              <th class="dy-vip-th">VIP8</th>
-              <th class="dy-vip-th">VIP9</th>
-              <th class="dy-vip-th">VIP10</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>体育返水</td>
-              <td>0.40%</td>
-              <td>0.40%</td>
-              <td>0.40%</td>
-              <td>0.45%</td>
-              <td>0.50%</td>
-              <td>0.55%</td>
-              <td>0.60%</td>
-              <td>0.65%</td>
-              <td>0.70%</td>
-              <td>0.8%</td>
-              <td>1%</td>
-            </tr>
-            <tr>
-              <td>电竞返水</td>
-              <td>0.45%</td>
-              <td>0.45%</td>
-              <td>0.50%</td>
-              <td>0.50%</td>
-              <td>0.55%</td>
-              <td>0.60%</td>
-              <td>0.65%</td>
-              <td>0.70%</td>
-              <td>0.75%</td>
-              <td>0.80%</td>
-              <td>1%</td>
-            </tr>
-
-            <tr>
-              <td>真人返水</td>
-              <td>0.50%</td>
-              <td>0.50%</td>
-              <td>0.50%</td>
-              <td>0.50%</td>
-              <td>0.55%</td>
-              <td>0.60%</td>
-              <td>0.65%</td>
-              <td>0.70%</td>
-              <td>0.80%</td>
-              <td>0.90%</td>
-              <td>1%</td>
-            </tr>
-
-            <tr>
-              <td>棋牌返水</td>
-              <td>0.40%</td>
-              <td>0.45%</td>
-              <td>0.50%</td>
-              <td>0.55%</td>
-              <td>0.60%</td>
-              <td>0.65%</td>
-              <td>0.70%</td>
-              <td>0.75%</td>
-              <td>0.80%</td>
-              <td>0.90%</td>
-              <td>1%</td>
-            </tr>
-
-            <tr>
-              <td>电子返水</td>
-              <td>0.45%</td>
-              <td>0.45%</td>
-              <td>0.50%</td>
-              <td>0.55%</td>
-              <td>0.60%</td>
-              <td>0.65%</td>
-              <td>0.70%</td>
-              <td>0.80%</td>
-              <td>0.90%</td>
-              <td>1%</td>
-              <td>1.2%</td>
-            </tr>
-
-            <tr>
-              <td>返水上限</td>
-              <td>8888元</td>
-              <td>12888元</td>
-              <td>15888元</td>
-              <td>16888元</td>
-              <td>18888元</td>
-              <td>28888元</td>
-              <td>38888元</td>
-              <td>58888元</td>
-              <td>88888元</td>
-              <td>128888元</td>
-              <td>188888元</td>
-            </tr>
-          </tbody>
-        </table>
+        <RowHeaderTable
+          isHighlightFirstCol
+          :header-data="['等级', '体育返水', '电竞返水', '真人返水', '棋牌返水', '电子返水', '返水上限']"
+          :row-data="[
+            ['VIP0', '0.40%', '0.45%', '0.50%', '0.40%', '0.45%', '8888元'],
+            ['VIP1', '0.40%', '0.45%', '0.50%', '0.45%', '0.45%', '12888元'],
+            ['VIP2', '0.40%', '0.50%', '0.50%', '0.50%', '0.50%', '15888元'],
+            ['VIP3', '0.45%', '0.50%', '0.50%', '0.50%', '0.55%', '16888元'],
+            ['VIP4', '0.50%', '0.55%', '0.55%', '0.60%', '0.60%', '18888元'],
+            ['VIP5', '0.55%', '0.60%', '0.60%', '0.65%', '0.65%', '28888元'],
+            ['VIP6', '0.60%', '0.65%', '0.65%', '0.70%', '0.70%', '38888元'],
+            ['VIP7', '0.65%', '0.70%', '0.70%', '0.75%', '0.80%', '58888元'],
+            ['VIP8', '0.70%', '0.75%', '0.80%', '0.80%', '0.90%', '88888元'],
+            ['VIP9', '0.80%', '0.80%', '0.90%', '0.90%', '1%', '128888元'],
+            ['VIP10', '1%', '1%', '1%', '1%', '1.2%', '188888元']
+          ]"
+        />
 
         <!-- <div class="terms-conditions">
        <div class="terms">
@@ -430,29 +192,27 @@
          </div>
        </div>
      </div> -->
+        <div class="terms-conditions-title">
+          <img src="~/assets/vip/vip_rules_title.png" />
+        </div>
         <div class="terms-conditions">
-          <div class="title">规则与条款</div>
-          <ol style="padding-inline-start: 15px">
-            <li>晋升标准：用户充值达到相应级别即可晋升相应VIP等级。</li>
-            <li>晋升顺序：VIP等级可以越级晋升，每天仅限晋升一级。</li>
-            <li>
-              晋级奖金：用户晋级后晋级奖金将自动派发到主账户中，每个级别的晋级奖金每位用户仅能获得一次。
-            </li>
-            <li>
-              生日奖金：用户在注册90天内过生日，今年将不能领取生日礼金，另注册时间大于90天的会员需在生日当天的VIP页面进行自助领取，每年可领取一次。
-            </li>
-            <li>
-              奖金流水：晋级奖金、生日奖金领取后需要完成一倍流水后可提款，此活动不可以与其他活动共享。
-            </li>
-            <li>
-              每月首充：领取彩金需完成相应流水后可提款，有效投注额仅对已结算并产生输赢结果的投注额进行计算，
-              电竞盘：香港盘0.75以下，欧洲盘1.75以下；
-              香港盘＜0.75以下、欧洲盘＜1.75以下、马来盘＜0.75以下、印尼盘＜-1.3以下、美国盘＜-133以下，串关、走盘，注单取消，对冲等情况都不算有效流水。
-            </li>
-            <li>
-              凡参加活动用户，即表示接受且自愿遵守平台规定，平台保留最终解释权。
-            </li>
-          </ol>
+          <div class="content">
+            <ol style="padding-inline-start: 15px">
+              <li>晋升标准：用户充值达到相应级别即可晋升相应VIP等级。</li>
+              <li>晋升顺序：VIP等级可以越级晋升，每天仅限晋升一级。</li>
+              <li>晋级奖金：用户晋级后晋级奖金将自动派发到主账户中，每个级别的晋级奖金每位用户仅能获得一次。</li>
+              <li>
+                生日奖金：用户在注册90天内过生日，今年将不能领取生日礼金，另注册时间大于90天的会员需在生日当天的VIP页面进行自助领取，每年可领取一次。
+              </li>
+              <li>奖金流水：晋级奖金、生日奖金领取后需要完成一倍流水后可提款，此活动不可以与其他活动共享。</li>
+              <li>
+                每月首充：领取彩金需完成相应流水后可提款，有效投注额仅对已结算并产生输赢结果的投注额进行计算，
+                电竞盘：香港盘0.75以下，欧洲盘1.75以下；
+                香港盘＜0.75以下、欧洲盘＜1.75以下、马来盘＜0.75以下、印尼盘＜-1.3以下、美国盘＜-133以下，串关、走盘，注单取消，对冲等情况都不算有效流水。
+              </li>
+              <li>凡参加活动用户，即表示接受且自愿遵守平台规定，平台保留最终解释权。</li>
+            </ol>
+          </div>
         </div>
       </q-tab-panel>
     </q-tab-panels>
@@ -475,20 +235,26 @@
 </template>
 
 <script>
-import { ref, defineComponent, onMounted } from "vue";
+import { ref, defineComponent, onMounted, computed, watch, nextTick } from "vue";
 import { userStore } from "stores/index";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import Swal from "sweetalert2";
+import RoundTab from "src/components/RoundTab.vue";
+import { convertToCommaAmount } from "src/boot/utils.js";
+import RowHeaderTable from "src/components/RowHeaderTable.vue";
 
 export default defineComponent({
   name: "TransitRecordView",
+  components: {
+    RoundTab,
+    RowHeaderTable
+  },
   setup() {
     const $q = useQuasar();
     const tab = ref("special");
 
-    const slide = ref(0);
     const showRebate = ref(false);
 
     const router = useRouter();
@@ -503,14 +269,39 @@ export default defineComponent({
     const errorCount = ref(0);
     let countdownInterval;
 
+    const scrollContainer = ref(null);
+    const scrollVipCardIndex = ref(0);
+
+    const options = {
+      root: null,
+      threshold: 0.7
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          scrollVipCardIndex.value = entry.target.dataset.index;
+        }
+      });
+    }, options);
+
+    const vipCardData = computed(() => {
+      return vipList.value[scrollVipCardIndex.value];
+    });
+
+    watch(tab, () => {
+      nextTick(() => {
+        if (tab.value === "special") {
+          initVipCardScroll();
+        }
+      });
+    });
+
     const onVIPButtonClick = (type) => {
       // Check if the button is already disabled
       if (localStorage.getItem("vipButtonDisabled") === "true") {
         const currentTime = new Date().getTime();
-        const expirationTime = parseInt(
-          localStorage.getItem("vipButtonExpirationTime"),
-          10
-        );
+        const expirationTime = parseInt(localStorage.getItem("vipButtonExpirationTime"), 10);
 
         // Check if the expiration time has passed
         if (currentTime < expirationTime) {
@@ -560,10 +351,7 @@ export default defineComponent({
               const expirationTime = currentTime + 10000; // 10 secs in milliseconds
 
               localStorage.setItem("vipButtonDisabled", "true");
-              localStorage.setItem(
-                "vipButtonExpirationTime",
-                expirationTime.toString()
-              );
+              localStorage.setItem("vipButtonExpirationTime", expirationTime.toString());
               // Start the countdown
               startCountdown(expirationTime);
               Swal.fire({
@@ -600,10 +388,7 @@ export default defineComponent({
     // Check if the button should be initially disabled after a page refresh
     if (localStorage.getItem("vipButtonDisabled") === "true") {
       const currentTime = new Date().getTime();
-      const expirationTime = parseInt(
-        localStorage.getItem("vipButtonExpirationTime"),
-        10
-      );
+      const expirationTime = parseInt(localStorage.getItem("vipButtonExpirationTime"), 10);
 
       // Check if the expiration time has passed
       if (currentTime < expirationTime) {
@@ -891,8 +676,7 @@ program at any time without prior notice.`
     const vipList = ref([
       {
         level: 1,
-        description:
-          "升级要求 &gt; 5000≤累积存款<br> 保级要求 &gt; 1888≤一个月内累积存款",
+        description: "升级要求 &gt; 5000≤累积存款<br> 保级要求 &gt; 1888≤一个月内累积存款",
         monthlyBonus: `无`,
         birthdayBonus: `无`,
         cunsong: `8元`,
@@ -1033,90 +817,81 @@ program at any time without prior notice.`
     const vipItems = [
       {
         vipLevel: "1",
+        upgrade: 5000,
         monthly: "",
         birthday: "",
-        saving: "累计存款大于5000元",
         monthlySaving: "",
         oneMonthSaving: "每月单笔≥500元, 返现15%, 最高188元"
       },
       {
         vipLevel: "2",
-        upgrade: "70,000",
+        upgrade: 20000,
         monthly: "188",
         birthday: "",
-        saving: "累计存款大于20000元",
         monthlySaving: "",
         oneMonthSaving: "每月单笔≥500元, 返现15%, 最高258元"
       },
       {
         vipLevel: "3",
-        upgrade: "500,000",
+        upgrade: 200000,
         monthly: "688",
         birthday: "888",
-        saving: "累计存款大于200000元",
         monthlySaving: "",
         oneMonthSaving: "每月单笔≥500元,返现15%, 最高288元"
       },
       {
         vipLevel: "4",
-        upgrade: "2,000,000",
+        upgrade: 500000,
         monthly: "1,588",
         birthday: "2,888",
-        saving: "累计存款大于500000元",
         monthlySaving: "",
         oneMonthSaving: "每月单笔≥1000元,返现25%, 最高388元"
       },
       {
         vipLevel: "5",
-        upgrade: "7,000,000",
+        upgrade: 2000000,
         monthly: "2,888",
         birthday: "5,888",
-        saving: "累计存款大于2000000元",
         monthlySaving: "",
         oneMonthSaving: "每月单笔≥1000元,返现25%, 最高588元"
       },
       {
         vipLevel: "6",
-        upgrade: "20,000,000",
+        upgrade: 5000000,
         monthly: "6,888",
         birthday: "8,888",
-        saving: "累计存款大于5000000元",
         monthlySaving: "",
         oneMonthSaving: "每月单笔≥1000元,返现25%, 最高688元"
       },
       {
         vipLevel: "7",
-        upgrade: "60,000,000",
+        upgrade: 8000000,
         monthly: "18,888",
         birthday: "48,888",
-        saving: "5累计存款大于8000000元",
         monthlySaving: "",
         oneMonthSaving: "每月单笔≥2000元,返现35%, 最高888元"
       },
       {
         vipLevel: "8",
-        upgrade: "60,000,000",
+        upgrade: 10000000,
         monthly: "18,888",
         birthday: "48,888",
-        saving: "累计存款大于10000000元",
         monthlySaving: "",
         oneMonthSaving: "每月单笔≥2000元,返现35%, 最高1288元"
       },
       {
         vipLevel: "9",
-        upgrade: "60,000,000",
+        upgrade: 20000000,
         monthly: "18,888",
         birthday: "48,888",
-        saving: "累计存款大于20000000元",
         monthlySaving: "",
         oneMonthSaving: "每月单笔≥2000元,返现35%, 最高1888元"
       },
       {
         vipLevel: "10",
-        upgrade: "60,000,000",
+        upgrade: 30000000,
         monthly: "18,888",
         birthday: "48,888",
-        saving: "累计存款大于30000000元",
         monthlySaving: "",
         oneMonthSaving: "每月单笔≥2000元,返现40%, 最高2888元"
       }
@@ -1125,12 +900,57 @@ program at any time without prior notice.`
     const isClaimModal = ref(false);
     const claimMsg = ref("");
 
-    onMounted(() => {
-      vipLevel.value = store.vip.replace("VIP", "");
-      if (vipLevel.value >= 1) {
-        slide.value = vipLevel.value ? parseInt(vipLevel.value) - 1 : 0;
+    const tabItems = [
+      {
+        name: "special",
+        label: "VIP特权"
+      },
+      {
+        name: "details",
+        label: "VIP详情"
       }
+    ];
+
+    const progessPercentage = (upgradeAmt) => {
+      return (currentDepositAmount.value / upgradeAmt) * 100;
+    };
+
+    const currentBetAmount = ref(0);
+    const currentDepositAmount = ref(0);
+
+    const getVipDetails = () => {
+      const randNum = Math.floor(Math.random() * 1000) + 1;
+      eventapi.get(`/vip-bonus/get-detail?v=${randNum}`).then((res) => {
+        currentBetAmount.value = res.data.currentBetAmount;
+        currentDepositAmount.value = res.data.currentDepositAmount;
+      });
+    };
+    onMounted(() => {
+      getVipDetails();
+      initVipCardScroll();
     });
+
+    const initVipCardScroll = () => {
+      vipLevel.value = store.vip.replace("VIP", "");
+      scrollVipCardIndex.value = vipLevel.value >= 1 && vipLevel.value ? parseInt(vipLevel.value) - 1 : 0;
+
+      setTimeout(() => {
+        const itemElements = scrollContainer.value.querySelectorAll(".card");
+        if (itemElements[scrollVipCardIndex.value]) {
+          itemElements[scrollVipCardIndex.value].scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "start"
+          });
+        }
+
+        // reset observe
+        observer.disconnect();
+        itemElements.forEach((item) => {
+          observer.observe(item);
+        });
+      }, 100);
+    };
 
     const claimRebate = (type, vipType) => {
       loading.value = true;
@@ -1187,7 +1007,6 @@ program at any time without prior notice.`
       vipList,
       loading,
       vipLevel,
-      slide,
       claimRebate,
       store,
       isClaimModal,
@@ -1195,9 +1014,15 @@ program at any time without prior notice.`
       loadingMClaim,
       loadingBClaim,
       tab,
+      tabItems,
       onVIPButtonClick,
       btnIsDisabled,
-      startCountdown
+      startCountdown,
+      convertToCommaAmount,
+      progessPercentage,
+      currentBetAmount,
+      scrollContainer,
+      vipCardData
     };
   }
 });
@@ -1205,6 +1030,7 @@ program at any time without prior notice.`
 <style scoped lang="scss">
 .vip-container {
   min-height: 100%;
+  font-family: PingFang SC;
 
   .banner-container {
     background-size: cover;
@@ -1307,212 +1133,117 @@ program at any time without prior notice.`
     // }
   }
 
-  .inner-vip-mobile {
-    display: none;
-  }
-
-  .vipitem {
-    position: relative;
-    display: flex;
-    // background: url("../../assets/vip/vip_04.png") no-repeat top center;
-    background-size: contain;
-    width: 320px;
-    padding: 40px 0;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-
-    .viplevelcard {
-      // padding: 10px;
-      width: 70%;
-      height: 150px;
-      background: url("../../assets/vip/vip_logo_bg.png") no-repeat center
-        center;
-      background-size: contain;
-      position: relative;
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      padding: 35px 10px 10px 35px;
-
-      .vip-badgelevel {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        .vip-badge {
-          flex: 1;
-          position: absolute;
-          // width: 2.66rem;
-          top: -10px;
-          left: -50px;
-
-          img {
-            width: 100%;
-          }
-        }
-
-        .vip-text {
-          flex: 2;
-
-          img {
-            width: 100%;
-            max-width: 73px;
-          }
-        }
-      }
-
-      .vip-badgecontent {
-        margin-top: 1px;
-        font-size: 11px;
-        color: #33bcd4;
-
-        span {
-          display: block;
-          line-height: 200%;
-        }
-
-        // position: absolute;
-        // right: 20px;
-        // bottom: 20px;
-      }
-    }
-
-    .vipcontents {
-      padding-top: 60px;
-      // background: #2b2b4b;
-      color: #ffffff;
-      border-radius: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      // border-top: 2px solid #db7e42;
-      // border-bottom: 2px solid #db7e42;
-      .title {
-        font-size: 21px;
-        line-height: 36px;
-      }
-
-      .inner-vip {
-        background-color: #303450;
-        width: 100%;
-        margin-bottom: 10px;
-        display: flex;
-        justify-content: space-evenly;
-        font-size: 45px;
-        line-height: 53px;
-        font-family: "Arial";
-      }
-
-      .second-vip {
-        // background: #2b2b4b;
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-        font-size: 45px;
-        line-height: 53px;
-
-        div {
-          flex: 1;
-        }
-
-        .common-btn {
-          padding: 5px 10px;
-          font-size: 12px;
-          line-height: 20px;
-          margin: 0 30px 30px;
-        }
-      }
-    }
-  }
-
   .vip-benefits {
     padding: 10px;
     font-size: 0.75rem;
-    background: #eaeef2;
+    background: #1a2338;
 
     .bft-title {
       display: flex;
-      justify-content: flex-start;
+      justify-content: center;
       align-items: center;
       color: #3a3a3a;
       font-weight: bold;
       gap: 10px;
+      margin-bottom: 12px;
 
-      &:before {
-        content: "";
-        width: 10px;
-        height: 19px;
-        display: inline-block;
-        background-image: url(../../assets/vip/privilege.png);
-        background-position: center center;
-        background-size: 100%;
+      > img {
+        width: 180px;
       }
     }
 
     .bft-row {
-      padding: 10px;
+      // padding: 10px;
       display: flex;
-      flex-direction: column;
-      gap: 10px;
+      flex-direction: row;
+      // gap: 10px;
 
       .bft-row-cnt {
         background: #fff;
-        padding: 10px;
+        // padding: 10px;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         color: #3a3a3a;
+        flex: 1;
+        background: url(../../assets/vip/vip_priv_item_bg.png) center center no-repeat;
+        background-size: contain;
+        width: 100%;
+        aspect-ratio: 9 / 10;
 
         .left {
           display: flex;
-          justify-content: flex-start;
+          // justify-content: space-between;
           align-items: center;
-          gap: 40px;
+          // gap: 40px;
+          flex-direction: column;
+          height: 100%;
+          // padding-bottom: 10px;
+          width: 100%;
+          color: #fff;
 
-          .icon {
-            width: 40px;
-            min-width: 40px;
+          .icon-description {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            flex: 5;
+            justify-content: center;
 
             img {
-              flex: 1;
-              width: 100%;
+              width: 40px;
               display: block;
+              margin-bottom: 6px;
             }
           }
-
-          .text {
+          .txt {
+            flex: 3;
+            display: flex;
+            align-items: center;
           }
-        }
+          .btn-container {
+            flex: 3;
+            padding: 0;
+            width: calc(100% - 40px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-        .btn {
+            button {
+              width: 100%;
+            }
+          }
         }
       }
     }
 
     .bft-promo-row {
-      display: flex;
+      display: grid;
       gap: 15px;
-      flex-wrap: wrap;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 10px;
 
       .bft-promo {
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        width: calc(33.33% - 10px);
+        background: url(../../assets/vip/vip_disc_item_bg.png) center center no-repeat;
+        background-size: contain;
+        padding: 4px;
+        aspect-ratio: 10 / 8;
 
         .promo-percent {
-          color: #ccb455;
+          color: #01bfd8;
           text-align: center;
-          font-weight: 700;
-          font-size: 25px;
+          font-weight: 600;
+          font-size: 24px;
         }
 
         .promo-title {
-          color: #3a3a3a;
-          font-size: 13px;
+          color: #ffffff99;
+          font-weight: 600;
+          font-size: 12px;
         }
       }
     }
@@ -1569,158 +1300,220 @@ program at any time without prior notice.`
   }
 
   .q-tab-panel {
-    padding: 8px;
+    padding: 16px;
   }
 
-  table {
-    text-align: center;
-    font-size: 10px;
-    color: #000;
-    border-collapse: collapse;
-    width: 100%;
-    margin-bottom: 10px;
+  // .table-wrapper {
+  //   border-radius: 10px;
+  //   background: linear-gradient(180deg, rgba(0, 191, 215, 0) 0%, #00bfd7 75.68%);
+  //   padding: 1px;
+  //   margin-bottom: 14px;
 
-    thead {
-      background-color: #7197ff;
+  //   table {
+  //     text-align: center;
+  //     font-size: 10px;
+  //     color: #000;
+  //     width: 100%;
 
-      th {
-        color: #ffffff;
-      }
-    }
+  //     border-collapse: separate;
+  //     border-spacing: 0;
+  //     overflow: hidden;
+  //     border-radius: 10px;
 
-    tbody {
-      td {
-        border: 1px solid #bac8dc;
-        background: #fff;
-      }
+  //     thead {
+  //       background-color: #445f95;
+
+  //       th {
+  //         color: #ffffff;
+  //         padding: 12px 4px;
+  //         font-size: 12px;
+  //         max-width: 10px;
+  //         overflow-wrap: anywhere;
+  //         font-weight: 400;
+  //       }
+  //     }
+
+  //     tbody {
+  //       background: linear-gradient(180deg, #384e79 0%, #212e4b 100%);
+  //       td {
+  //         // border: 0.35px solid #3B5385;
+  //         // border-radius: 10px;
+  //         color: #ffffff99;
+  //         padding: 10px 4px;
+  //         font-size: 12px;
+  //         // background: #fff;
+  //       }
+  //     }
+  //   }
+
+  //   .percentage_table {
+  //     tbody tr td:first-child {
+  //       background-color: #445f95;
+  //     }
+  //   }
+
+  //   th,
+  //   td {
+  //     padding: 12px;
+  //   }
+
+  //   th:first-of-type {
+  //     border-top-left-radius: 10px;
+  //   }
+  //   th:last-of-type {
+  //     border-top-right-radius: 10px;
+  //   }
+  //   tr:last-of-type td:first-of-type {
+  //     border-bottom-left-radius: 10px;
+  //   }
+  //   tr:last-of-type td:last-of-type {
+  //     border-bottom-right-radius: 10px;
+  //   }
+  // }
+
+  .terms-conditions-title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 14px;
+    margin-top: 20px;
+    > img {
+      width: 180px;
     }
   }
 
   .terms-conditions {
     color: #fff;
     font-size: 0.8rem;
+    color: #ffffff99;
 
-    .title {
-      color: #3865e8;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background-image: linear-gradient(180deg, #384e79 0%, #212e4b 100%),
+      linear-gradient(180deg, rgba(0, 191, 215, 0) 0%, #00bfd7 75.68%);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+
+    .content {
+      padding: 16px;
+    }
+
+    li {
+      line-height: 24px;
+    }
+
+    li:after {
+      content: "";
+      display: block;
+      margin: 16px 0;
     }
   }
 }
-</style>
-<!-- Carousel CSS only -->
-<style lang="scss">
-.vip-container {
-  .q-tabs {
-    background: url(../../assets/vip/vipbg.png) no-repeat top right;
-    background-attachment: fixed;
-  }
 
-  .q-tabs--not-scrollable .q-tabs__content {
-    gap: 45px;
+.scroll-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 20px;
+  background-color: #1a2338;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.card {
+  flex: 0 0 80%;
+  margin-right: 20px;
+  height: 120px;
+  border-radius: 10px;
+  scroll-snap-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  flex-direction: column;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 10px;
+  .card_top {
+    flex: 1;
     display: flex;
-    justify-content: center;
-  }
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 300px;
+    padding: 0 10px;
+    > img {
+      width: 75px;
+      height: 60px;
+    }
+    @media (max-width: 400px) {
+      > img {
+        width: 50px;
+        height: 40px;
+      }
+    }
+    @media (max-width: 370px) {
+      > img {
+        width: 40px;
+        height: 32px;
+      }
+    }
 
-  .q-tabs__content--align-justify .q-tab {
-    flex: unset;
-  }
-
-  .q-tab {
-    min-height: 35px;
-
-    &__label {
-      font-size: 12px;
-      color: #ffffff;
+    .info-container {
+      display: flex;
+      flex-direction: column;
+      padding-right: 10px;
+      align-self: flex-end;
+      > img {
+        width: 50px;
+        margin-bottom: 6px;
+      }
+      @media (max-width: 400px) {
+        > img {
+          width: 32px;
+          margin-bottom: 4px;
+        }
+      }
+      @media (max-width: 370px) {
+        > img {
+          width: 24px;
+          margin-bottom: 3px;
+        }
+      }
     }
   }
-
-  .q-tab--active .q-tab__indicator {
+  .card_btm {
+    flex: 1;
     width: 100%;
-    margin: 0 auto;
-    height: 10px;
-  }
-}
+    max-width: 300px;
+    padding: 0 10px;
+    .amt-info {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+    }
+    .progress-bar-container {
+      width: 100%;
+      height: 6px;
+      border-radius: 15px;
+      overflow: hidden;
+      background: #ffffff4d;
+      margin-top: 6px;
+      margin-bottom: 6px;
+    }
 
-.q-carousel {
-  overflow: hidden;
-  margin: 0 auto;
-  text-align: center;
-
-  ol {
-    padding: 0;
-    margin: 0 auto;
-    width: 100%;
-    list-style-type: none;
-    display: flex;
-  }
-}
-
-.carousel__item {
-  background: url(../../assets/vip/vipbg.png) no-repeat top center;
-  background-size: cover;
-  font-size: 20px;
-}
-
-.q-carousel__slide {
-  padding: 0;
-  width: 100%;
-}
-
-button {
-  border: 0;
-}
-
-.q-carousel__arrow {
-  background: url(../../assets/vip/nextprev.png) no-repeat center center;
-  background-size: contain;
-  width: 30px;
-
-  .q-icon {
-    display: none;
-  }
-}
-
-.q-carousel__prev,
-.q-carousel__next {
-  position: absolute;
-  padding: 10px;
-
-  box-sizing: content-box;
-  background: url(../../assets/vip/nextprev.png) no-repeat center center;
-  background-size: contain;
-  top: 20%;
-
-  .carousel__icon {
-    display: none;
-  }
-}
-
-.carousel__prev {
-  top: 20%;
-  left: 0%;
-}
-
-.q-carousel__next-arrow--horizontal {
-  transform: rotate(180deg);
-  right: 10px;
-}
-
-h2#swal2-title.swal2-title {
-  font-size: 14px;
-}
-
-#swal2-html-container.swal2-html-container {
-  font-size: 14px;
-}
-
-.swal2-confirm.swal2-styled {
-  font-size: 14px;
-  background-color: #5b80e8;
-}
-
-@media (max-width: 450px) {
-  .percent_table {
-    width: 600px;
-    overflow-x: scroll;
+    .progress-bar {
+      height: 100%;
+      width: 75%;
+      background: #fff;
+      transition: width 0.5s;
+    }
   }
 }
 </style>

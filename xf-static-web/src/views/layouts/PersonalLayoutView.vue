@@ -7,16 +7,22 @@
       <div class="account-content-wrapper">
         <div class="account-box account-balance">
           <a @click="refreshBalance" class="balance-container">
-            <span>账户余额：</span>
-            <div class="balance-txt">
-              <span v-if="isLoadingBalance">Loading...</span>
-              <span v-if="!isLoadingBalance">￥{{ store.balance }}</span>
+            <div>
+              <span>账户余额：</span>
+              <span class="trans-tip">（游戏前，请将余额转到相应场馆）</span>
             </div>
-            <el-icon><Refresh /></el-icon>
-            <div class="trans-tip">（游戏前，请将余额转到相应场馆）</div>
+            <div class="bal">
+              <div class="balance-txt">
+                <span v-if="isLoadingBalance">Loading...</span>
+                <span v-if="!isLoadingBalance">￥{{ store.balance }}</span>
+              </div>
+              <el-icon><Refresh /></el-icon>
+            </div>
           </a>
-          <span style="width: 100px; margin-left: 10px; text-align: center">专属网址：</span>
-          <span id="vipUrl" class="badge badge-info">{{ store.evip.web }}</span>
+          <div class="forever-web">
+            <span>专属网址：</span>
+            <span id="vipUrl" class="badge badge-info">{{ store.evip.web }}</span>
+          </div>
         </div>
         <div class="account-box account-contents">
           <router-view />
@@ -62,6 +68,8 @@ export default defineComponent({
 .account-container {
   font-size: 14px;
   padding: 20px;
+  background: #141414;
+
   .account-container-wrap {
     width: 100%;
     max-width: $maxwidth;
@@ -70,20 +78,22 @@ export default defineComponent({
     justify-content: space-between;
     align-items: stretch;
     gap: 20px;
-    color: #a0bcd6;
+    color: #b8b8b8;
+
     .account-box {
-      background-color: #1d212e;
+      // background-color: #1d212e;
+      background: #1b1b1c;
       box-shadow: 0 5px 8px 0 rgb(0 0 0 / 25%);
-      border-radius: 3px;
+      border-radius: 12px;
     }
     .account-menu-wrapper {
-      width: 225px;
+      width: 260px;
       padding-top: 20px;
       padding-bottom: 30px;
     }
     .account-content-wrapper {
       text-align: left;
-      width: calc(100% - 225px);
+      width: calc(100% - 260px);
       display: flex;
       flex-direction: column;
       gap: 20px;
@@ -91,63 +101,193 @@ export default defineComponent({
         font-size: 14px;
         height: 100px;
         display: flex;
-        justify-content: flex-start;
+        justify-content: space-between;
         align-items: center;
-        padding: 0 40px;
+        padding: 0 20px;
         .balance-container {
           gap: 10px;
           display: flex;
           justify-content: center;
-          align-items: center;
-          border-right: 1px solid #2a313e;
+          align-items: flex-start;
+          flex-direction: column;
           margin-right: 10px;
-          padding: 5px 0px;
+          color: #b8b8b8;
+          font-family: PingFang SC;
+          font-size: 16px;
+          font-weight: 600;
+          padding: 20px 0px;
+          .bal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
           .balance-txt {
-            color: #30a73b;
+            color: #ffffff;
+            font-size: 20px;
           }
           .trans-tip {
-            color: #436aa0;
+            color: #b8b8b8;
+          }
+          svg {
+            color: #32ceed;
           }
         }
       }
+      .forever-web {
+        color: #ffffff;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+        background: url(../../assets/images/account/foreverwebbg.png) no-repeat center center;
+        background-size: contain;
+        padding: 15px 60px 15px 15px;
+      }
       .account-contents {
         height: calc(100% - 50px);
-        padding: 20px 40px;
+        padding: 20px;
+        position: relative;
       }
     }
     .account-menu-container {
       .account-info-wrapper {
         width: 100%;
+        .account-avatar {
+          border-radius: 50%;
+          width: 63px;
+          height: 63px;
+          overflow: hidden;
+          display: flex;
+          justify-content: center;
+          margin: 10px auto;
+          align-items: center;
+          img {
+            width: 100%;
+          }
+        }
+        .account-name {
+          color: #b8b8b8;
+          font-family: PingFang SC;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 22.4px;
+          .vipbg {
+            font-family: Arial Narrow;
+            font-size: 10px;
+            font-style: italic;
+            font-weight: 700;
+            line-height: 10px;
+            background: url(../../assets/images/account/viplinebg.png) no-repeat center center;
+            background-size: contain;
+            padding: 0px 10px 0px 24px;
+          }
+        }
       }
       .web-menu {
         .account-menu-title {
           text-align: left;
           padding: 20px 30px;
           margin-top: 50px;
-          color: #a0bcd6;
+          color: #b8b8b8;
         }
         .account-menu-list {
-          margin: 0;
+          display: flex;
+          gap: 10px;
+          justify-content: space-between;
+          align-items: center;
+          width: 90%;
+          margin: 20px auto;
+          border-bottom: 1px solid #ffffff1a;
+          padding: 10px 0 30px 0;
           .account-menu-item {
             display: flex;
+            flex-direction: column;
             justify-content: space-evenly;
             align-items: center;
             text-decoration: none;
-            color: #a0bcd6;
-            padding: 15px 40px 15px 10px;
-            border-left: 4px solid transparent;
+            color: #b8b8b8;
+            gap: 10px;
+            font-size: 12px;
 
-            svg {
+            svg,
+            .sideicon {
+              fill: #32ceed;
+              width: 20px;
               height: 20px;
-              fill: #3d4b66;
+              border-radius: 50%;
+              padding: 10px;
+              background: #141414;
+            }
+            .sideicon {
+              display: flex;
+              &.hover {
+                display: none;
+              }
             }
             &:hover,
             &.router-link-exact-active {
-              border-left: 4px solid #45fdfb;
-              background-image: linear-gradient(90deg, #2d4551 0, #2a313e 100%);
               color: #ffffff;
+              font-weight: 600;
+              svg,
+              .sideicon {
+                fill: #ffffff;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                padding: 10px;
+                background: linear-gradient(180deg, #32ceed 0%, #1c7587 100%);
+              }
+              .sideicon {
+                display: none;
+                &.hover {
+                  display: flex;
+                }
+              }
+            }
+          }
+        }
+        .account-menu-last {
+          display: flex;
+          width: 90%;
+          margin: 20px auto;
+          flex-direction: column;
+          font-family: PingFang SC;
+          font-size: 14px;
+          gap: 5px;
+          .account-menu-item {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            gap: 20px;
+            align-items: center;
+            text-decoration: none;
+            color: #b8b8b8;
+            border-radius: 8px;
+            padding: 10px 60px;
+
+            svg {
+              height: 20px;
+              fill: #b8b8b8;
+            }
+            .sideicon {
+              display: flex;
+              &.hover {
+                display: none;
+              }
+            }
+            &:hover,
+            &.router-link-exact-active {
+              font-weight: 600;
+              color: #32ceed;
+              background: #242425;
               svg {
                 fill: #45fdfb;
+              }
+              .sideicon {
+                display: none;
+                &.hover {
+                  display: flex;
+                }
               }
             }
           }

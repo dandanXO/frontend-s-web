@@ -1,247 +1,343 @@
 <template>
-  <div v-if="isH5" class="download-top-container">
-    <div class="download-top-box">
-      <q-icon name="close" @click="closeTopBox" />
-      <img class="headicon" src="../assets/images/index/head_logo.png" />
-      <div class="download-txt-container">
-        <span class="download-title text-bold">兴發 APP</span>
-        <span>覆盖全部游戏,体验更流畅,更安全,更快捷</span>
-      </div>
-      <div class="buttons">
+  <div class="q-pa-md">
+    <div v-if="isH5" class="download-top-container">
+      <div class="download-top-box">
+        <q-icon name="close" @click="closeTopBox" />
+        <img class="headicon" src="../assets/images/index/head_logo.png" />
+        <div class="download-txt-container">
+          <span class="download-title text-bold">兴發 APP</span>
+          <span>覆盖全部游戏,体验更流畅,更安全,更快捷</span>
+        </div>
         <div class="buttons">
-          <!-- <q-btn
-            size="sm"
-            href="/wap/login.html?way=reg"
-            label="注册"
-            color="dyblue"
-          />
-            href="https://xfapp1.com?url=m.xf882.com&amp;agentCode="-->
-          <q-btn
-            size="md"
-            :href="`${downloadUrl}`"
-            target="_blank"
-            label="立即下载"
-            color="brightbtn"
-            class="top-btn"
-          />
+          <div class="buttons">
+            <q-btn
+              size="md"
+              :href="`${downloadUrl}`"
+              target="_blank"
+              label="立即下载"
+              color="brightbtn"
+              class="top-btn"
+              rounded
+            />
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <q-carousel
-    class="home"
-    autoplay
-    navigation
-    v-model="slide"
-    swipeable
-    transition-next="slide-left"
-    transition-prev="slide-right"
-    animated
-    infinite
-  >
-    <template v-slot:navigation-icon="{ active, onClick }">
-      <q-btn
-        padding="3px"
-        v-if="active"
-        size="xs"
-        color="white"
-        @click="onClick"
-        style="border: 1px solid #ffffff; border-radius: 50%; margin: 6px 8px"
-      />
-      <q-btn
-        padding="3px"
-        v-else
-        size="xs"
-        color="transparent"
-        @click="onClick"
-        style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px"
-      />
-    </template>
 
-    <q-carousel-slide
-      v-for="(banner, i) in banners"
-      :key="i"
-      :name="i"
-      class="column no-wrap flex-center"
-      :img-src="imgURL + banner.mobileImageUrl"
-      @click="gotoPromo(banner)"
-    ></q-carousel-slide>
-  </q-carousel>
-  <div class="midd">
-    <div class="station-notice-wrapper">
-      <div class="volume">
-        <RiVolumeUpLine style="fill: #2fbdd5" />
-      </div>
-      <marquee-text :repeat="5" :duration="announcementList.length * 120">
-        <div v-if="announcementList">
-          <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
-            {{ a.content }}
-          </span>
+  <div class="home-all-slider" v-scroll="onHomeScroll">
+    <div class="q-px-md">
+      <template v-if="bannerLoading">
+        <q-skeleton style="height: 200px" />
+      </template>
+      <template v-else>
+        <q-carousel
+          class="home"
+          autoplay
+          navigation
+          v-model="slide"
+          swipeable
+          transition-next="slide-left"
+          transition-prev="slide-right"
+          animated
+          infinite
+        >
+          <template v-slot:navigation-icon="{ active, onClick }">
+            <q-btn
+              padding="3px"
+              v-if="active"
+              size="xs"
+              color="white"
+              @click="onClick"
+              style="border: 1px solid #ffffff; border-radius: 50%; margin: 6px 8px"
+            />
+            <q-btn
+              padding="3px"
+              v-else
+              size="xs"
+              color="transparent"
+              @click="onClick"
+              style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px"
+            />
+          </template>
+
+          <q-carousel-slide
+            v-for="(banner, i) in banners"
+            :key="i"
+            :name="i"
+            class="column no-wrap flex-center"
+            :img-src="imgURL + banner.mobileImageUrl"
+            @click="gotoPromo(banner)"
+          ></q-carousel-slide>
+        </q-carousel>
+      </template>
+
+      <div class="midd">
+        <div class="station-notice-wrapper">
+          <div class="volume">
+            <img src="../assets/images/index/icon-sound-fill.svg" />
+          </div>
+          <marquee-text :repeat="5" :duration="announcementList.length * 120">
+            <div v-if="announcementList">
+              <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
+                {{ a.content }}
+              </span>
+            </div>
+          </marquee-text>
         </div>
-      </marquee-text>
-    </div>
-    <!-- <div class="share" @click="router.push('/promo?id=35')">
-      <RiUserShared2Line />
-    </div> -->
-  </div>
-  <div class="welcome-bar">
-    <div class="logo"><img src="../assets/logo.png" /></div>
-    <div class="welcome-liner">欢迎您， {{ store.token ? store.nickName : "亲爱的用户" }}</div>
-    <div v-if="store.token">
-      <q-badge color="orange" text-color="black" :label="store.vip" />
-      <!--      <span class="q-ml-sm">￥{{ store.balance }}</span>-->
-    </div>
-    <router-link v-if="!store.token" to="/login?register" class="login with-register">
-      <span class="log">注册</span>
-    </router-link>
-    <router-link v-if="!store.token" to="/login" class="login with-register">
-      <span class="log" style="white-space: nowrap">请登录</span>
-      <span class="user">
-        <q-icon name="person" style="color: #2dbfd4; font-size: 14px" />
-      </span>
-    </router-link>
-    <router-link v-else to="/account" class="login">
-      <!--      <span class="log" style="white-space: nowrap">已登录</span>-->
-      <span class="user">
-        <q-icon name="person" style="color: #2dbfd4; font-size: 14px" />
-      </span>
-    </router-link>
-  </div>
-  <div class="details-bar">
-    <div class="message" @click="refreshBalance">
-      {{ store.token ? (!isLoadingBalance ? "¥" + mainWallet.toFixed(2) : "加载中...") : "早上好~" }}
-    </div>
-    <div class="menulist">
-      <router-link to="/finance/deposit?redirect=/" class="men deposit-menu">
-        <img src="../assets/images/index/deposit_icon.png" />
-        <div class="">存款</div>
-      </router-link>
-      <router-link to="/finance/withdraw?redirect=/" class="men withdraw-menu">
-        <img src="../assets/images/index/withdrawal_icon.png" />
-        <div class="">取款</div>
-      </router-link>
-      <router-link to="/account/transfer?redirect=/" class="men transfer-menu">
-        <img src="../assets/images/index/transfer_icon.png" />
-        <div class="">转账</div>
-      </router-link>
-    </div>
-  </div>
+      </div>
 
-  <div class="swiper-container">
-    <!-- Thumbs Swiper -> store swiper instance -->
-    <!-- It is also required to set watchSlidesProgress prop -->
-    <swiper
-      :modules="[Thumbs, Controller]"
-      slides-per-view="auto"
-      :freeMode="true"
-      :set-wrapper-size="true"
-      :scrollbar="{ draggable: true }"
-      :mousewheel="true"
-      watch-slides-progress
-      @swiper="setSecondSwiper"
-      :controller="{ control: firstSwiper }"
-      class="firstSwiper"
-    >
-      <swiper-slide
-        :class="tab.name && { tbact: selectedTab === tab.name }"
-        @click="setSelectedSwiper(tab)"
-        v-for="(tab, i) in tabs"
-        :key="i"
-        style="width: calc(100vw / 6)"
-      >
-        {{ selectedTab !== tab.name ? tab.label : tab.labelact }}
-      </swiper-slide>
-    </swiper>
-    <div class="index-platform-container" style="overflow: hidden">
-      <!-- Main Swiper -> pass thumbs swiper instance -->
-      <swiper
-        :modules="[Thumbs, Controller]"
-        :thumbs="{ swiper: thumbsSwiper }"
-        :direction="'vertical'"
-        slides-per-view="auto"
-        :rewind="true"
-        :scrollbar="{ draggable: true }"
-        @slide-change-transition-end="onSlideChange"
-        @swiper="setFirstSwiper"
-        :controller="{ control: secondSwiper }"
-        class="secondSwiper"
-        id="btm-second-swiper"
-      >
-        <swiper-slide v-for="(slt, i) in slot" :key="i" :class="'slot-' + i">
-          <PlatformBlock dataType="slot" :data="slt" />
-        </swiper-slide>
+      <div class="welcome-bar">
+        <div class="logo"><img src="../assets/logo.png" /></div>
+        <div class="welcome-liner">欢迎您， {{ store.token ? store.nickName : "亲爱的用户" }}</div>
+        <q-btn v-if="!store.token" to="/login" dense class="auth-btn btn-blue" rounded>登录</q-btn>
+        <q-btn v-if="!store.token" to="/login?register" dense class="auth-btn btn-orange" rounded>注册</q-btn>
 
-        <swiper-slide v-for="(live, i) in livecasino" :key="i" :class="'live-' + i">
-          <template v-if="live.code === 'BBINDY' && live.name === 'BBIN'">
-            <PlatformBlock @click="playGame(live.name, live.code, 'bblive_lobby_app')" dataType="live" :data="live" />
+        <router-link v-if="store.token" to="/account" class="login">
+          <div class="user-status">
+            <q-avatar size="40px">
+              <img src="../assets/images/account/profile-img.png" />
+            </q-avatar>
+            <div class="user-vip">{{ store.vip }}</div>
+          </div>
+        </router-link>
+      </div>
+
+      <div class="details-bar">
+        <div class="message" @click="refreshBalance">
+          <template v-if="store.token">
+            <span>主钱包：</span>
+            <div class="money-font">{{ !isLoadingBalance ? "¥" + mainWallet.toFixed(2) : "加载中..." }}</div>
           </template>
           <template v-else>
-            <PlatformBlock @click="playGame(live.name, live.code, live.gameCode)" dataType="live" :data="live" />
+            <span>登录/注册后查看</span>
+            早上好，您还未登录
           </template>
-        </swiper-slide>
-        <swiper-slide v-for="(sp, i) in sport" :key="i" :class="'sport-' + i">
-          <PlatformBlock @click="playGame(sp.name, sp.code, sp.gameCode)" dataType="sport" :data="sp" />
-        </swiper-slide>
-        <swiper-slide v-for="(es, i) in esport" :key="i" :class="'esport-' + i">
-          <PlatformBlock @click="playGame(es.name, 'platformType', es.code)" dataType="esport" :data="es" />
-        </swiper-slide>
+        </div>
 
-        <swiper-slide v-for="(fish, i) in fishing" :key="i" :class="'fishing-' + i">
-          <template v-if="fish.code === 'GPS' && fish.name === 'GPS'">
-            <PlatformBlock @click="playGame(fish.name, fish.code, '7202')" dataType="fish" :data="fish" />
-          </template>
+        <div class="menulist">
+          <router-link to="/finance/deposit?redirect=/" class="men">
+            <img src="../assets/images/index/icon-deposit.png" />
+            <div class="">存款</div>
+          </router-link>
+          <router-link to="/finance/withdraw?redirect=/" class="men">
+            <img src="../assets/images/index/icon-withdraw.png" />
+            <div class="">取款</div>
+          </router-link>
+          <router-link to="/account/transfer?redirect=/" class="men">
+            <img src="../assets/images/index/icon-transfer.png" />
+            <div class="">转账</div>
+          </router-link>
+        </div>
+      </div>
+    </div>
 
-          <template v-if="fish.code === 'AGF' && fish.name === 'AGF'">
-            <PlatformBlock @click="playGame(fish.name, fish.code, '6')" dataType="fish" :data="fish" />
-          </template>
-          <template v-if="fish.code === 'SG' && fish.name === 'SG'">
-            <PlatformBlock @click="playGame(fish.name, fish.code, 'F-SF01')" dataType="fish" :data="fish" />
-          </template>
-          <PlatformBlock @click="playGame(fish.name, fish.code, fish.code)" dataType="fish" :data="fish" />
-        </swiper-slide>
+    <!-- home header -->
+    <div class="home-header-section" id="id-sticky-header">
+      <GameTypeSwiper
+        scroll-to-center
+        :list="tabs"
+        v-model="selectedTab"
+        @swiper="setSecondSwiper"
+        @select-swiper="setSelectedSwiper"
+      />
+    </div>
 
-        <swiper-slide v-for="(poke, i) in poker" :key="i" :class="'poker-' + i">
-          <template v-if="poke.code === 'KYDY' && poke.name === 'KY'">
-            <PlatformBlock @click="playGame(poke.name, poke.code, 'ky_lobby')" dataType="poker" :data="poke" />
-          </template>
-          <PlatformBlock @click="playGame(poke.name, poke.code, poke.gameCode)" dataType="poker" :data="poke" />
-        </swiper-slide>
-        <swiper-slide v-for="(lotter, i) in lottery" :key="i" :class="'lottery-' + i">
-          <template v-if="lotter.code === 'SGWin' && lotter.name === 'SGWin'">
-            <PlatformBlock
-              @click="playGame(lotter.name, lotter.code, 'imlotto30000')"
-              dataType="lottery"
-              :data="lotter"
-            />
-          </template>
-          <template v-else-if="lotter.code === 'BBINDY' && lotter.name === 'BBIN'">
-            <!--            <PlatformBlock-->
-            <!--                @click="playGame(lotter.name, lotter.code, 'bbkeno_lobby_app')"-->
-            <!--                dataType="lottery"-->
-            <!--                :data="lotter"-->
-            <!--            />-->
+    <div class="q-px-md">
+      <div ref="swiperContainerRef" class="swiper-container">
+        <div class="index-platform-container">
+          <!-- Main Swiper -> pass thumbs swiper instance -->
+          <template v-if="platListLoading">
+            <div class="home-game-boards">
+              <div class="game-list-div">
+                <div v-for="index in 9" :key="index">
+                  <q-skeleton style="height: 170px" />
+                </div>
+              </div>
+            </div>
           </template>
           <template v-else>
-            <PlatformBlock
-              @click="playGame(lotter.name, lotter.code, lotter.gameCode)"
-              dataType="lottery"
-              :data="lotter"
-            />
+            <div class="secondSwiper" id="btm-second-swiper">
+              <div id="id-slot-slide" class="slot-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>电子游戏</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in slot"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="`slot?platform=${item.code}`"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div id="id-live-slide" class="live-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>真人娱乐</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in livecasino"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="''"
+                      :onClick="
+                        item.code === 'BBINDY' && item.name === 'BBIN'
+                          ? () => playGame(item.name, item.code, 'bblive_lobby_app')
+                          : () => playGame(item.name, item.code, item.gameCode)
+                      "
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div id="id-sport-slide" class="sport-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>体育赛事</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in sport"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="''"
+                      :onClick="() => playGame(item.name, item.code, item.gameCode)"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div id="id-poker-slide" class="poker-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>棋牌游戏</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in poker"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="''"
+                      :onclick="() => playGame(item.name, item.code, item.gameCode)"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div id="id-esport-slide" class="esport-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>电竞赛事</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in esport"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="''"
+                      :onClick="() => playGame(item.name, 'platformType', item.code)"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div id="id-casual-slide" class="casual-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>小游戏</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in casuals"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="''"
+                      :onClick="() => playGame(item.name, item.code, item.gameCode)"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div id="id-fish-slide" class="fish-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>捕鱼游戏</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in fishing"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="''"
+                      :onclick="
+                        item.code === 'GPS' && item.name === 'GPS'
+                          ? () => playGame(item.name, item.code, '7202')
+                          : item.code === 'GAGFPS' && item.name === 'AGF'
+                          ? () => playGame(item.name, item.code, '6')
+                          : item.code === 'SG' && item.name === 'SG'
+                          ? () => playGame(item.name, item.code, 'F-SF01')
+                          : () => playGame(item.name, item.code, item.code)
+                      "
+                    />
+                  </div>
+                </div>
+              </div>
+              <div id="id-lottery-slide" class="lottery-slides home-swiper-slide">
+                <div class="home-game-boards">
+                  <h2>彩票游戏</h2>
+                  <div class="game-list-div">
+                    <GameBoard
+                      v-for="(item, i) in lottery"
+                      :key="i"
+                      :title="item.title"
+                      :name="item.name"
+                      :code="item.code"
+                      :icon="item.icon"
+                      :underMaintenance="item.underMaintenance"
+                      :maintenanceStartTime="item.maintenanceStartTime"
+                      :maintenanceEndTime="item.maintenanceEndTime"
+                      :link="''"
+                      :onClick="() => playGame(item.name, item.code, item.gameCode)"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </template>
-        </swiper-slide>
-
-        <swiper-slide v-for="(casual, i) in casuals" :key="i" :class="'casual-' + i">
-          <PlatformBlock
-            @click="playGame(casual.name, casual.code, casual.gameCode)"
-            dataType="casual"
-            :data="casual"
-          />
-        </swiper-slide>
-
-        <swiper-slide style="opacity: 0"></swiper-slide>
-      </swiper>
+        </div>
+      </div>
     </div>
   </div>
+
   <GameModal ref="allGames"></GameModal>
 
   <q-dialog
@@ -251,63 +347,28 @@
     show-cancel-button
     :showCancelButton="false"
     :showConfirmButton="false"
+    :persistent="isOutdatedApp"
   >
-    <q-card style="width: 100%" class="bg-bright text-black">
-      <div class="modalcontent">
-        <div class="headers">
-          <div class="titles backgroundColor">更新公告</div>
-        </div>
-        <div class="contents">检测到新版本，你是否要更新？</div>
-        <div class="btnsreas">
-          <div class="cacnels borderColor fontColor" @click="cancelUpdate">取消</div>
-          <div class="confirmsbtns btncolor" @click="openDownloadPage">立即更新</div>
+    <div class="update-container">
+      <div class="update-content">
+        <span>发现新版本，请立即更新。</span>
+        <span>若更新出现异常，请卸载后从下载 地址重新安装。</span>
+        <div class="q-mt-lg">
+          <span class="download-txt">下载地址:http://lh8888.app</span>
+          <span class="download-txt q-ml-sm">点击下载</span>
         </div>
       </div>
-    </q-card>
+      <div class="btn-group" :class="{ half: isOutdatedApp }">
+        <q-btn v-if="!isOutdatedApp" size="md" label="取消" color="blueborderbtn" @click="cancelUpdate" />
+        <q-btn size="md" label="立即下载" color="brightbtn" @click="openDownloadPage" />
+      </div>
+    </div>
   </q-dialog>
 
   <q-dialog width="100%" v-model="isStationNotice">
-    <q-card style="width: 100%" class="bg-primary text-white">
-      <q-card-section class="q-mb-md">
-        <q-tabs
-          v-model="activeKey"
-          dense
-          class="text-grey"
-          active-color="bright"
-          indicator-color="bright"
-          align="justify"
-        >
-          <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
-        </q-tabs>
-
-        <q-separator />
-
-        <q-tab-panels v-model="activeKey" animated>
-          <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
-            <q-list style="min-height: 65vh">
-              <div v-for="(ann, idx) in announcementList" :key="idx">
-                <span v-if="ann.typeId === tab.id">
-                  <q-expansion-item
-                    style="max-height: 65vh; overflow: auto"
-                    group="somegroup"
-                    icon="volume_up"
-                    :label="ann.title"
-                  >
-                    <q-card>
-                      <q-card-section>
-                        {{ ann.content }}
-                      </q-card-section>
-                    </q-card>
-                  </q-expansion-item>
-
-                  <q-separator></q-separator>
-                </span>
-              </div>
-            </q-list>
-          </q-tab-panel>
-        </q-tab-panels>
-      </q-card-section>
-    </q-card>
+    <div style="width: 90%; min-height: 400px" class="bg-darkbox">
+      <AnnouncementView />
+    </div>
   </q-dialog>
 
   <q-dialog width="100%" v-model="isImportantAnnouncementModal" @update:model-value="setExpiryBanner()">
@@ -328,49 +389,146 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, reactive, computed } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { api } from "boot/axios";
-import { cached, TIME_EXPIRED } from "boot/cache";
-import { useQuasar, Platform } from "quasar";
-import { userStore } from "stores/index";
-import GameModal from "components/modal/GameModal";
-import MarqueeText from "vue-marquee-text-component";
-import { RiVolumeUpLine } from "vue-remix-icons";
 import { App } from "@capacitor/app";
-
+import { useLocalStorage } from "@vueuse/core";
+import { api } from "boot/axios";
+import { cached } from "boot/cache";
+import GameBoard from "components/home/GameBoard.vue";
+import GameTypeSwiper from "components/home/GameTypeSwiper.vue";
+import GameModal from "components/modal/GameModal";
+import moment from "moment";
+import AnnouncementView from "pages/account/AnnouncementView.vue";
+import { Platform, useQuasar } from "quasar";
+import { translateRecord } from "src/directives/translate";
+import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
-import { Scrollbar } from "swiper";
-// Import Swiper Vue.js components
-import SwiperCore, { Keyboard, Mousewheel, HashNavigation, A11y } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Thumbs, Controller } from "swiper";
-// Import Swiper styles
+import SwiperCore, { A11y, Controller, HashNavigation, Keyboard, Mousewheel, Scrollbar, Thumbs } from "swiper";
 import "swiper/css";
 import "swiper/css/scrollbar";
-import { useLocalStorage } from "@vueuse/core";
+import { computed, defineComponent, onMounted, reactive, ref } from "vue";
+import MarqueeText from "vue-marquee-text-component";
+import { useRoute, useRouter } from "vue-router";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
-
-import PlatformBlock from "components/platform/PlatformBlock.vue";
-import { translateRecord } from "src/directives/translate";
 
 export default defineComponent({
   name: "IndexPage",
   components: {
-    Swiper,
-    SwiperSlide,
+    GameBoard,
     GameModal,
     MarqueeText,
-    RiVolumeUpLine,
-    PlatformBlock
+    GameTypeSwiper,
+    AnnouncementView
   },
   setup() {
     const isFirstView = ref(false);
-
     const thumbsSwiper = ref(null);
     const firstSwiper = ref(null);
     const secondSwiper = ref(null);
+    const slotSwiper = ref(null);
+    const slotSwiper2 = ref(null);
+
+    const isShowBackTop = ref(false);
+    const isShowDownload = ref(false);
+    const isStickyGameType = ref(false);
+    const scrollPosition = ref(0);
+    const isZeroScrollPos = ref(true);
+    const scrollSlotRef = ref();
+    const scrollToTop = (el) => {
+      window.scrollTo(0, 0, "smooth");
+    };
+
+    const isScrolling = ref(false);
+    const swiperContainerRef = ref(null);
+    const scrollToSlide = (slide_id) => {
+      isScrolling.value = true;
+      var slideItem = document.getElementById(slide_id);
+      if (slideItem) {
+        const positionY = slideItem.offsetTop;
+        const topHeight = document.getElementById("id-sticky-header").offsetHeight;
+        const parentOffset = swiperContainerRef.value.offsetTop ?? 0;
+        let offset = isStickyGameType.value ? 0 : 60;
+        const y_axis = positionY + parentOffset - topHeight - offset;
+
+        window.scroll({
+          top: y_axis,
+          left: 0,
+          behavior: "smooth"
+        });
+        setTimeout(() => {
+          isScrolling.value = false;
+        }, 1500);
+      }
+    };
+    const onHomeScroll = (position) => {
+      if (route.path === "/") {
+        scrollPosition.value = position;
+        if (position === 0) {
+          isZeroScrollPos.value = true;
+        } else {
+          isZeroScrollPos.value = false;
+        }
+
+        if (position > 55) {
+          isShowDownload.value = false;
+        } else {
+          isShowDownload.value = true;
+        }
+
+        if (position > 430) {
+          isStickyGameType.value = true;
+        } else {
+          isStickyGameType.value = false;
+        }
+
+        if (position > 450) {
+          isShowBackTop.value = true;
+        } else {
+          isShowBackTop.value = false;
+        }
+
+        const minScrollTop = swiperContainerRef.value.offsetTop;
+        if (!isScrolling.value && position > minScrollTop) {
+          const stickyHeight = document.getElementById("id-sticky-header").offsetHeight;
+
+          const slotSlide = document.getElementById("id-slot-slide");
+          const liveSlide = document.getElementById("id-live-slide");
+          const sportSlide = document.getElementById("id-sport-slide");
+          const esportSlide = document.getElementById("id-esport-slide");
+          const fishSlide = document.getElementById("id-fish-slide");
+          const pokerSlide = document.getElementById("id-poker-slide");
+          const lotterySlide = document.getElementById("id-lottery-slide");
+          const casualSlide = document.getElementById("id-casual-slide");
+
+          const slotTop = slotSlide.getBoundingClientRect().top;
+          const liveTop = liveSlide.getBoundingClientRect().top;
+          const sportTop = sportSlide.getBoundingClientRect().top;
+          const esportTop = esportSlide.getBoundingClientRect().top;
+          const fishTop = fishSlide.getBoundingClientRect().top;
+          const pokerTop = pokerSlide.getBoundingClientRect().top;
+          const lotteryTop = lotterySlide.getBoundingClientRect().top;
+          const casualTop = casualSlide.getBoundingClientRect().top;
+
+          if (casualTop - 630 <= stickyHeight) {
+            selectedTab.value = "casual";
+          } else if (lotteryTop <= stickyHeight) {
+            selectedTab.value = "lottery";
+          } else if (pokerTop <= stickyHeight) {
+            selectedTab.value = "poker";
+          } else if (fishTop <= stickyHeight) {
+            selectedTab.value = "fishing";
+          } else if (esportTop <= stickyHeight) {
+            selectedTab.value = "esport";
+          } else if (sportTop <= stickyHeight) {
+            selectedTab.value = "sport";
+          } else if (liveTop <= stickyHeight) {
+            selectedTab.value = "live";
+          } else if (slotTop <= stickyHeight) {
+            selectedTab.value = "slot";
+          }
+        }
+      }
+    };
 
     const setFirstSwiper = (swiper) => {
       firstSwiper.value = swiper;
@@ -378,84 +536,50 @@ export default defineComponent({
     const setSecondSwiper = (swiper) => {
       secondSwiper.value = swiper;
     };
+    const setSlotSwiper = (swiper) => {
+      slotSwiper.value = swiper;
+    };
+    const setSlotSwiper2 = (swiper) => {
+      slotSwiper2.value = swiper;
+    };
     const setSelectedSwiper = (tab) => {
-      selectedTab.value = tab.name;
-      // console.log(tab.name);
       var slideIndex = 0;
       if (tab.name === "slot") {
-        slideIndex = 0;
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide("id-slot-slide");
       }
 
       if (tab.name === "live") {
-        slideIndex = slot.value.length;
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide("id-live-slide");
       }
       if (tab.name === "sport") {
-        slideIndex = livecasino.value.length + slot.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide("id-sport-slide");
       }
       if (tab.name === "esport") {
-        slideIndex = livecasino.value.length + sport.value.length + slot.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide("id-esport-slide");
       }
 
       if (tab.name === "fishing") {
-        slideIndex = livecasino.value.length + sport.value.length + esport.value.length + slot.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide("id-fish-slide");
       }
       if (tab.name === "poker") {
-        slideIndex =
-          livecasino.value.length + sport.value.length + esport.value.length + slot.value.length + fishing.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
-      }
-      if (tab.name === "lottery") {
-        slideIndex =
-          livecasino.value.length +
-          sport.value.length +
-          esport.value.length +
-          slot.value.length +
-          fishing.value.length +
-          poker.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide("id-poker-slide");
       }
       if (tab.name === "casual") {
-        slideIndex =
-          livecasino.value.length +
-          sport.value.length +
-          esport.value.length +
-          slot.value.length +
-          fishing.value.length +
-          poker.value.length +
-          lottery.value.length;
-
-        firstSwiper.value?.slideTo(slideIndex, 500);
+        scrollToSlide("id-casual-slide");
+      }
+      if (tab.name === "lottery") {
+        scrollToSlide("id-lottery-slide");
+        // window.scrollTo(0, 0);
       }
     };
+
     const onSlideChange = (swiper) => {
-      // console.log("Swiping hEre")
-      // Get the active slide index
       const activeIndex = swiper.activeIndex;
-
-      // Get the active slide element
       const activeSlide = swiper.slides[activeIndex];
-
-      // Get the class name of the active slide
       const activeSlideClassName = activeSlide.className;
-      // Check if the class name contains "sport," "slot," or "esport"
-      // Array of keywords to check
       const keywords = ["slot", "live", "sport", "esport", "fishing", "poker", "lottery", "casual"];
-
-      // Iterate over each keyword
       for (const keyword of keywords) {
-        // Check if the class name contains the current keyword
         if (activeSlideClassName.includes(keyword)) {
-          // console.log("select: "+ keyword);
           selectedTab.value = keyword;
         }
       }
@@ -472,19 +596,31 @@ export default defineComponent({
         name: "live",
         icon: "live",
         label: "真人",
-        labelact: "真人娱乐"
+        labelact: "真人"
       },
       {
         name: "sport",
         icon: "sport",
         label: "体育",
-        labelact: "体育赛事"
+        labelact: "体育"
+      },
+      {
+        name: "poker",
+        icon: "poker",
+        label: "棋牌",
+        labelact: "棋牌"
       },
       {
         name: "esport",
         icon: "esport",
         label: "电竞",
-        labelact: "电竞赛事"
+        labelact: "电竞"
+      },
+      {
+        name: "casual",
+        icon: "casual",
+        label: "小游戏",
+        labelact: "小游戏"
       },
       {
         name: "fishing",
@@ -493,22 +629,10 @@ export default defineComponent({
         labelact: "捕鱼"
       },
       {
-        name: "poker",
-        icon: "poker",
-        label: "棋牌",
-        labelact: "棋牌游戏"
-      },
-      {
         name: "lottery",
         icon: "lottery",
         label: "彩票",
-        labelact: "彩票游戏"
-      },
-      {
-        name: "casual",
-        icon: "casual",
-        label: "小游戏",
-        labelact: "小游戏"
+        labelact: "彩票"
       }
     ]);
 
@@ -520,6 +644,19 @@ export default defineComponent({
     const slot = ref([]);
     const fishing = ref([]);
     const casuals = ref([]);
+
+    const slot_odds = computed(() => {
+      var filtered = slot.value.filter(function (element, index, array) {
+        return index % 2 === 0;
+      });
+      return filtered;
+    });
+    const slot_evens = computed(() => {
+      var filtered = slot.value.filter(function (element, index, array) {
+        return index % 2 === 1;
+      });
+      return filtered;
+    });
 
     const ui = useUI();
     const scrollPageRef = ref(null);
@@ -552,9 +689,9 @@ export default defineComponent({
     });
     const allGames = ref(null);
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
-      // console.log(gameName)
-      // console.log(platformCode)
-      // console.log(gameCode)
+      // console.log(gameName);
+      // console.log(platformCode);
+      // console.log(gameCode);
       // console.log(gameStatus);
 
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
@@ -685,29 +822,24 @@ export default defineComponent({
       router.push(`/promo?name=${urlString}`);
     };
 
+    const bannerLoading = ref(false);
+
     function loadData() {
+      bannerLoading.value = true;
       api
         .get("/opt-session/promo/banner?category=HOME")
         .then((res) => {
           if (res.code === 0) {
             banners.value = res.data;
-          } else {
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: res.data.message,
-            //   icon: "report_problem"
-            // });
+            setTimeout(() => {
+              bannerLoading.value = false;
+            }, 500);
           }
-          // banners.value = response.data;
         })
-        .catch(() => {
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: "Loading failed",
-          //   icon: "report_problem"
-          // });
+        .finally(() => {
+          setTimeout(() => {
+            bannerLoading.value = false;
+          }, 500);
         });
     }
 
@@ -727,7 +859,12 @@ export default defineComponent({
 
     var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
     var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
+
+    const platListLoading = ref(false);
+
     const getPlatList = () => {
+      platListLoading.value = true;
+
       cached
         .get(platformApiKey, () =>
           api.get(platformApiUrl).then((res) => {
@@ -739,11 +876,8 @@ export default defineComponent({
           ui.slotLists = [];
           pf.forEach((element) => {
             const platTypes = element.gameType.split(",");
-            // console.log(platTypes);
             if (platTypes.indexOf("ESPORT") > -1) {
               var espObj = Object.assign({}, element);
-              // console.log(espObj);
-
               if (espObj.code === "TFGaming") {
                 espObj.title = "兴發电竞";
               }
@@ -761,7 +895,6 @@ export default defineComponent({
               esport.value.push(espObj);
 
               //Add 1 More Casual minigame.
-              // if (platTypes.indexOf("CASUAL") > -1) {
               var casualObj = Object.assign({}, element);
               casualObj.gameCode = "casual";
               if (casualObj.code === "TFGaming") {
@@ -772,7 +905,6 @@ export default defineComponent({
               casualObj.icon = "casual";
               casualObj.subtitle = "小游戏";
               casuals.value.push(casualObj);
-              // }
             }
             if (platTypes.indexOf("SPORT") > -1) {
               var spObj = Object.assign({}, element);
@@ -817,6 +949,7 @@ export default defineComponent({
               // console.log(slotObj);
               if (slotObj.code === "AG") {
                 slotObj.title = "XIN 电子";
+                slotObj.name = "xin";
                 let slotItem = {
                   id: slotObj.id,
                   code: slotObj.code,
@@ -842,7 +975,7 @@ export default defineComponent({
               fishObj.icon = "fish";
               fishObj.subtitle = "捕鱼游戏";
               fishing.value.push(fishObj);
-              console.log(fishObj);
+              // console.log(fishObj);
             }
             if (platTypes.indexOf("POKER") > -1) {
               var pokerObj = Object.assign({}, element);
@@ -863,7 +996,12 @@ export default defineComponent({
             }
           });
         })
-        .catch((err) => {});
+        .catch((err) => {})
+        .finally(() => {
+          setTimeout(() => {
+            platListLoading.value = false;
+          }, 500);
+        });
     };
 
     const liveTabs = ref("");
@@ -930,30 +1068,28 @@ export default defineComponent({
 
     const download_url = ref("");
     const isAppUpdateModal = ref(false);
+    const isOutdatedApp = ref(false);
     const getVersionNo = async () => {
-      // console.log(Platform);
-      // alert("Capacitor" + Platform.is.capacitor);
       if (Platform.is.android && Platform.is.capacitor) {
         const info = await App.getInfo();
-        // const info = {
-        //   version: "1.0.1"
-        // };
-        // alert(info.version);
         var current_version = parseInt(info.version.replaceAll(".", ""));
-        // info.version && info.build
         const appType = "ALL";
         const device = Platform.is.android ? "ANDROID" : "IOS";
         const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
+        var min_version = res.data.minVersion;
         // console.log(res);
         if (res.code === 0) {
           var version_info = res.data.version;
           var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
           download_url.value = res.data.url;
-
-          // alert(latest_ver_no);
-          // console.log(download_url.value);
           if (latest_ver_no > current_version) {
             isAppUpdateModal.value = true;
+          }
+          if (min_version) {
+            var min_ver_no = parseInt(min_version.replaceAll(".", ""));
+            if (min_ver_no > current_version) {
+              isOutdatedApp.value = true;
+            }
           }
         }
       }
@@ -979,7 +1115,6 @@ export default defineComponent({
       api
         .get("/config/appDownloadUrl")
         .then((res) => {
-          // console.log(res);
           downloadUrl.value = res.data;
         })
         .catch((err) => {
@@ -995,6 +1130,11 @@ export default defineComponent({
       getVersionNo();
       if (store.token && store.memberType === "TEST") {
         checkShowImgTop();
+      }
+
+      if (sessionStorage.getItem("regSuccessGuideVisible")) {
+        store.regSuccessGuideVisible = true;
+        sessionStorage.removeItem("regSuccessGuideVisible");
       }
 
       getAppDownloadUrl();
@@ -1049,6 +1189,8 @@ export default defineComponent({
       secondSwiper,
       setFirstSwiper,
       setSecondSwiper,
+      setSlotSwiper,
+      setSlotSwiper2,
       setSelectedSwiper,
       isFirstView,
       isAppUpdateModal,
@@ -1071,20 +1213,38 @@ export default defineComponent({
       homePopupPath,
       isImpt,
       isImportantAnnouncementModal,
-      clickHomePopupImg
+      clickHomePopupImg,
+      slot_odds,
+      slot_evens,
+      isStickyGameType,
+      isShowBackTop,
+      isShowDownload,
+      slotSwiper,
+      slotSwiper2,
+      moment,
+      onHomeScroll,
+      scrollPosition,
+      isZeroScrollPos,
+      scrollSlotRef,
+      scrollToTop,
+      isScrolling,
+      swiperContainerRef,
+      scrollToSlide,
+      isOutdatedApp,
+      platListLoading,
+      bannerLoading
     };
   }
 });
 </script>
+
 <style scoped lang="scss">
 .q-page-container {
   min-height: 100vh;
 }
 
 .secondSwiper {
-  height: calc(100vh - 380px);
-  padding-bottom: 0px;
-  padding-top: 25px;
+  padding-bottom: 50px;
 }
 
 .longer-swiper {
@@ -1112,21 +1272,7 @@ export default defineComponent({
     img {
       width: 100%;
     }
-
-    &:first-child {
-      // padding-top: 65px;
-      // margin-top: -40px;
-      // padding-top: 30px;
-    }
-
-    &-active {
-      // padding-top: 30px;
-    }
   }
-}
-
-:deep(.firstSwiper .swiper-wrapper) {
-  background: #23263c;
 }
 
 .swiper-container {
@@ -1155,101 +1301,53 @@ export default defineComponent({
 }
 
 .modal-update-div {
-  .modalcontent {
-    background: #fff;
-    height: 232px;
-    box-sizing: border-box;
-
+  .update-container {
+    position: relative;
+    background: url("../assets/images/index/update-bg.png") no-repeat center center;
+    overflow: hidden;
+    width: 80%;
+    max-width: 360px;
+    min-width: 290px;
+    background-size: 100% 100%;
+    aspect-ratio: 4/5;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 0px 0px 16px;
-
-    .headers {
-      width: 100%;
-      box-sizing: border-box;
-      height: 37px;
-      line-height: 37px;
-      background: #1976d2;
-      color: #fff;
-      text-align: center;
-      font-size: 15px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
-    .contents {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 10px 12px;
-      text-align: center;
-
-      .contentfonts {
-        text-align: center;
-        color: #333;
+    padding: 0 24px 24px 24px;
+    align-items: center;
+    .update-content {
+      font-family: PingFang SC;
+      font-weight: 600;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: calc(50% + 24px);
+      > span {
         font-size: 16px;
-        margin: 37px 0 20.5px 0;
       }
-
-      .inputs {
-        width: 292px;
-        height: 36px;
-        border-radius: 4px 4px;
-        border: 1px solid #666;
-        box-sizing: border-box;
-        margin: 0 auto;
-        padding-left: 20px;
-
-        .van-field__control {
-          height: 100%;
-          width: 100%;
-        }
+      .download-txt {
+        color: #01bfd8;
+        font-size: 12px;
       }
     }
-
-    .btnsreas {
-      width: 100%;
-      box-sizing: border-box;
+    .btn-group {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      margin-top: 23.5px;
-
-      .cacnels {
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      > button {
         flex: 1;
-        background: #f7fcfd;
-        box-sizing: border-box;
-        color: #1976d2;
-        border: 1px solid #1976d2;
-        border-radius: 6px;
-        line-height: 40px;
-        height: 40px;
-        text-align: center;
-        letter-spacing: 1px;
-        font-size: 14px;
-        margin-right: 8px;
       }
-
-      .confirmsbtns {
-        flex: 1;
-        box-sizing: border-box;
-        border-radius: 6px;
-        line-height: 40px;
-        height: 40px;
-        text-align: center;
-        color: #fff;
-        background: #1976d2;
-        letter-spacing: 1px;
-        font-size: 14px;
+      &.half {
+        width: 50%;
       }
     }
   }
 }
 
 .download-top-container {
-  padding: 4px 10px;
+  padding: 4px 0px;
 
   .download-top-box {
     display: flex;
@@ -1284,32 +1382,18 @@ export default defineComponent({
       display: flex;
       gap: 5px;
     }
-
-    .q-btn {
-    }
   }
 }
 
 .midd {
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
-  // gap: 10px;
-  // margin: 10px;
-  margin-top: -29px;
-  height: 30px;
   position: relative;
   border-radius: 15px 15px 0 0;
   overflow: hidden;
 
   .station-notice-wrapper {
     display: flex;
-    background: rgba(44, 44, 44, 0.7);
-    // background: #2b2b4b;
-    // border-radius: 10px;
-    // margin: 10px;
     gap: 10px;
-    padding: 5px 10px;
+    padding: 8px 0px;
     justify-content: center;
     align-items: center;
 
@@ -1322,7 +1406,7 @@ export default defineComponent({
     span {
       margin-right: 10px;
       cursor: pointer;
-      color: #bacef1;
+      color: #a1a8cb;
     }
   }
 
@@ -1339,10 +1423,11 @@ export default defineComponent({
 
 .welcome-bar {
   display: flex;
-  padding: 10px;
-  gap: 20px;
-  background-color: #212534;
-  height: 35px;
+  padding: 10px 12px;
+  gap: 12px;
+  background-color: #2a395a;
+  // height: 35px;
+  border-radius: 8px;
   justify-content: space-evenly;
   align-items: center;
   color: #bacef1;
@@ -1360,6 +1445,7 @@ export default defineComponent({
   .welcome-liner {
     flex: 3;
     white-space: nowrap;
+    font-size: 14px;
   }
 
   .login {
@@ -1385,34 +1471,48 @@ export default defineComponent({
 }
 
 .details-bar {
-  gap: 10px;
-  background-color: #1a1c28;
-  padding: 10px;
+  gap: 16px;
+  // background-color: #1a1c28;
+  // padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 16px 0 0;
+  // height: 75px;
 
   .message {
     flex: 1;
-    padding: 10px;
-    border-right: 1px solid #45475f;
-    color: #bacef1;
-    font-size: 16px;
+    color: #ffffff;
+    font-size: 14px;
+    white-space: nowrap;
+
+    span {
+      display: block;
+      color: #a1a8cb;
+    }
+
+    .money-font {
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 600;
+      margin-top: 4px;
+    }
   }
 
   .menulist {
     flex: 4;
     display: flex;
-    justify-content: space-between;
-    gap: 10px;
+    justify-content: flex-end;
+    gap: 12px;
 
     .men {
       text-decoration: none;
-      color: #ffffff;
-      gap: 10px;
+      color: #00bfd7;
+      gap: 6px;
       display: flex;
       justify-content: center;
       align-items: center;
+      white-space: nowrap;
 
       img {
         width: 30px;
@@ -1438,6 +1538,7 @@ export default defineComponent({
 
   .q-tab-panel {
     padding: 0px;
+    background: transparent;
   }
 
   .q-tabs--vertical {
@@ -1598,6 +1699,236 @@ export default defineComponent({
       width: 100%;
       display: block;
     }
+  }
+}
+
+.auth-btn {
+  padding-left: 12px;
+  padding-right: 12px;
+  // border-radius: 6px;
+  box-shadow: 0px 2px 4px 0px #ffffff inset;
+  color: #ffffff;
+  white-space: nowrap;
+
+  &:after {
+    content: "";
+    background: radial-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2), transparent);
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 3px;
+    position: absolute;
+  }
+
+  &.btn-blue {
+    background: linear-gradient(180deg, #00c7c0 0%, #0996c7 100%);
+  }
+
+  &.btn-orange {
+    background: linear-gradient(180deg, #ff9d34 0%, #c76700 100%);
+  }
+}
+
+.home-game-boards {
+  // padding-top: 16px;
+  h2 {
+    //margin-top: 15px;
+    //margin-bottom: 15px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 1px;
+    font-size: 14px;
+  }
+
+  .game-list-div {
+    display: grid;
+    column-gap: 16px;
+    row-gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+
+    .game-item-div {
+      &.maintenance-on {
+        pointer-events: none;
+
+        .game-platform-img img,
+        .game-btn {
+          filter: grayscale(100%);
+        }
+      }
+
+      &.slot-item {
+        width: 100%;
+      }
+
+      .game-board {
+        position: relative;
+        width: 100%;
+        display: flex;
+
+        .game-img {
+          img {
+            width: 100%;
+            display: block;
+          }
+        }
+
+        .game-platform-img {
+          img {
+            width: 120%;
+            display: block;
+            position: absolute;
+            top: -10%;
+            left: -10%;
+          }
+        }
+
+        .game-title {
+          position: absolute;
+          bottom: 8px;
+          backdrop-filter: blur(20px);
+          background: rgba(0, 0, 0, 0.2);
+          width: calc(100% - 16px);
+          border-radius: 8px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          padding: 8px 4px;
+
+          h3 {
+            font-size: 14px;
+            color: #fff;
+            text-align: center;
+            font-weight: 500;
+            letter-spacing: 1px;
+            line-height: 1;
+            margin: 0;
+            padding: 0;
+            white-space: nowrap;
+
+            &.small-size {
+              font-size: 70%;
+            }
+          }
+
+          .game-title-logo {
+            padding-top: 6px;
+            margin: 4px 0;
+            img {
+              display: block;
+              width: auto;
+              height: 100%;
+              max-height: 16px;
+            }
+          }
+
+          .game-btn {
+            background: linear-gradient(180deg, #00bfd7 0%, #0184ba 100%);
+            // border-radius: 6px;
+            color: #ffffff;
+            padding: 2px 4px;
+            line-height: 1;
+            width: calc(100% - 12px);
+            // max-width: 86px;
+            margin: 2px 6px 0px;
+            font-size: 12px;
+          }
+        }
+
+        .maintenance-box {
+          position: absolute;
+          top: 0;
+          padding-top: 15px;
+          padding-bottom: 15px;
+          color: #ffffff;
+          font-size: 22px;
+          font-weight: bold;
+          z-index: 33;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          margin: 0 auto;
+          width: 100%;
+          height: 100%;
+          border-radius: 3vw;
+          background: rgba(2, 9, 73, 0.4);
+          text-align: center;
+
+          p {
+            margin-top: 0px;
+            margin-bottom: 0px;
+          }
+
+          .small-size {
+            font-size: 12px;
+          }
+        }
+
+        // .game-bg {
+        //   background-size: contain;
+        //   aspect-ratio: 573/709;
+        //   background-repeat: no-repeat;
+        // }
+
+        span {
+          font-size: 12px;
+          font-weight: 300;
+          color: #fff;
+          text-align: center;
+          // margin-bottom: 5px;
+          width: 100%;
+          letter-spacing: 1px;
+        }
+
+        &:hover {
+          filter: brightness(1.05);
+        }
+
+        &:active {
+          filter: brightness(1.15);
+          transform: translate(1px, 1px);
+        }
+      }
+    }
+  }
+}
+
+.home-header-section {
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  padding: 16px;
+  background: #1a2338;
+
+  &.fixed-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    margin: 0 auto;
+    left: 0;
+    z-index: 99;
+  }
+}
+
+.user-status {
+  display: flex;
+  align-items: center;
+
+  .user-vip {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 12px 4px 20px;
+    background: linear-gradient(180deg, #00c7c0 0%, #0996c7 100%);
+    box-shadow: 0px 0px 4px 0px #ffffff inset;
+    color: #ffffff;
+    border-radius: 16px;
+    font-size: 12px;
+    margin-left: -16px;
   }
 }
 </style>

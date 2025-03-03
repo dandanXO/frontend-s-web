@@ -2,7 +2,7 @@
   <div>
     <div class="menu-title-container">
       <span class="menu-title">
-        {{ isAutoWithdrawal ? "快速提款" : "提款" }}
+        {{ isAutoWithdrawal ? "快速提款" : "取款中心" }}
       </span>
       <el-button
         v-if="!isAutoWithdrawal"
@@ -17,8 +17,8 @@
       </el-button>
     </div>
 
-    <div class="menu-title-container">
-      <span class="menu-title">提款流程：</span>
+    <div class="steps-title-container">
+      <span class="menu-title">提款流程</span>
       <div class="account-content withdrawal">
         <div class="flex-box">
           <div class="step-item active">申请中</div>
@@ -32,13 +32,13 @@
     <div class="withdraw-form">
       <el-form
         ref="formRef"
-        label-width="150px"
         label-position="left"
         label-suffix=":"
         :model="withdrawInfo"
         :rules="withdrawRules"
       >
-        <el-form-item label="提款方式">
+        <span class="menu-title">提款方式</span>
+        <el-form-item class="withdraw-types">
           <div
             v-for="(method, i) in withdrawalMethods"
             :key="i"
@@ -57,43 +57,35 @@
             </div>
           </div>
         </el-form-item>
-
+        <div style="width: 343px;">
+        <div class="common-title">提款金额</div>
         <el-form-item
           class="helptxt"
           :class="{ 'has-helper-text': isAutoWithdrawal }"
           prop="amount"
-          label="提款金额"
           name="amount"
         >
-          <el-space>
-            <el-row :gutter="10">
-              <el-col :span="12">
+        <div style="width: 100%;">
                 <el-input class="form-input" v-model="withdrawInfo.amount" placeholder="提款金额">
                   <template #append>{{ store.currency.label }}</template>
                 </el-input>
-              </el-col>
-              <el-col :span="12">
-                <span v-if="selectedWithdrawalMethod">
-                  {{
-                    `单笔限额：${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax} ${store.currency.label}`
-                  }}
-                  <br />
-                  {{
-                    `今日提款：${selectedWithdrawalMethod.withdrawMaxAmount} ${store.currency.label}, 剩余：${selectedWithdrawalMethod.withdrawMaxTimes} 次`
-                  }}
+                
+                <span style="margin-top: 10px; display: flex; flex-direction: column; gap: 10px;" v-if="selectedWithdrawalMethod">
+                  <div class="spaced">
+                    <span>单笔限额：</span>
+                    <span>{{
+                    `${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax} ${store.currency.label}`
+                    }}</span>
+                  </div>
+                  <div class="spaced">
+                    <span>今日提款：</span>
+                    <span>{{
+                    `${selectedWithdrawalMethod.withdrawMaxAmount} ${store.currency.label}, 剩余：${selectedWithdrawalMethod.withdrawMaxTimes} 次`
+                    }}
+                    </span>
+                  </div>
                 </span>
-              </el-col>
-            </el-row>
-            <el-button
-              :loading="loadingBtn"
-              :disable="loadingBtn"
-              size="large"
-              class="common-btn withdraw-btn"
-              @click="submitWithraw"
-            >
-              确定
-            </el-button>
-          </el-space>
+              </div>
           <!-- <div
             v-if="selectedWithdrawalMethod"
             class="account-tip remain-box"
@@ -131,11 +123,12 @@
             {{ store.currency.label }}
           </span>
         </el-form-item>
+        
+        <div class="common-title">{{ `选择${cardLabel()}` }}</div>
         <el-form-item
           class="select"
           style="margin-top: 10px"
           prop="cardId"
-          :label="`选择${cardLabel()}`"
           :rules="[
             {
               required: true,
@@ -148,7 +141,7 @@
             @click="withdrawState.bankCardList.length === 0 ? checkBankCards() : ''"
             v-model="withdrawInfo.cardId"
             :placeholder="`请选择${cardLabel()}`"
-            style="width: 300px"
+            style="width: 100%"
           >
             <el-option
               v-for="b in withdrawState.bankCardList"
@@ -173,16 +166,15 @@
             USDT
           </div>
         </el-form-item>
-
         <!-- K 豆教程视频 -->
-        <div style="margin-left: 150px" v-else-if="isEWALLET && selectedWithdrawalMethod.url">
+        <div v-else-if="isEWALLET && selectedWithdrawalMethod.url">
           <div
-            style="margin: 15px 0px; color: #ff7f10"
+            style="margin: 15px 0px; color: #FD574C;"
             v-if="['KDPAY', 'OKPAY', 'EBPAY', 'BLBPAY', 'JDPAY', 'SZPAY'].includes(selectedWithdrawalMethod.code)"
           >
             *特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！
           </div>
-          <el-button class="common-btn" v-if="selectedWithdrawalMethod.code !== 'SZPAY'" @click="openEWalletTutorial">
+          <el-button class="common-btn grey" v-if="selectedWithdrawalMethod.code !== 'SZPAY'" @click="openEWalletTutorial">
             <span>{{ tutorialLabel }}</span>
           </el-button>
         </div>
@@ -191,6 +183,16 @@
           *提币手续费：{{ selectedWithdrawalMethod.withdrawFee }} USDT
         </div>
 
+
+        <el-button
+              :loading="loadingBtn"
+              :disable="loadingBtn"
+              size="large"
+              class="common-btn withdraw-btn"
+              @click="submitWithraw"
+            >
+              确定
+            </el-button>
         <!-- <div
           v-if="isUSDT && selectedWithdrawalMethod.tips"
           class="selected-tip"
@@ -198,6 +200,7 @@
         ></div> -->
 
         <div class="flex-box flex-justify-center"></div>
+        </div>
       </el-form>
     </div>
 
@@ -620,7 +623,8 @@ export default defineComponent({
         justify-content: center;
       }
       .withdraw-tip {
-        color: #ff7f10;
+        color: #FD574C;
+        margin-top: 10px;
       }
       ul {
         margin: 20px auto;
@@ -680,17 +684,28 @@ export default defineComponent({
           border-bottom: 25px solid transparent;
         }
       }
-      &:first-child::before,
-      &:last-child::after {
+      &:first-child::before
+      {
         display: none;
       }
     }
+    .withdraw-types {
+      gap: 10px;
+      display: flex;
+      border-bottom: 1px solid #FFFFFF1A;
+      padding: 20px 0;
+    }
     .withdraw-type-item {
       // width: 120px;
+      width: 120px;
+      gap: 10px;
+      padding: 20px 0;
       // padding: 20px 30px;
       // margin-right: 10px;
       // border-radius: 6px;
       // border: solid 1px #484460;
+      border-radius: 15px;
+        border: 1px solid #323233;
       position: relative;
       display: flex;
       justify-content: center;
@@ -701,9 +716,8 @@ export default defineComponent({
 
       .promo-label {
         position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translate(-50%);
+        left: 0;
+        top: 0;
         width: 40px;
 
         img {
@@ -713,29 +727,48 @@ export default defineComponent({
       }
 
       .promo-img {
-        width: 40px;
-        // padding: 6px 20px;
-        padding: 15px 10px;
-        background: #2a313e;
-        border: 1px solid transparent;
-        margin-bottom: 5px;
+        // width: 40px;
+        // // padding: 6px 20px;
+        // padding: 15px 10px;
+        // margin-bottom: 5px;
+        width: 28px;
       }
       &.active {
+        &:after {
+          content:"";
+          background: url(@/assets/images/account/depotick.png)no-repeat bottom right;
+          position: absolute;
+          background-size: contain;
+          right: 0px;
+          bottom: 0px;
+          width: 30px;
+          height: 30px;
+        }
         // border-bottom: 4px solid #1bcef1;
         // border: 1px solid #ffd800;
         // color: #ffd800;
+        border-color: #32CEED;
         pointer-events: none;
-        .promo-img {
-          border: 1px solid #45fdfb;
+        .type-name {
+          
+        font-weight: bold;
+        color:#32CEED;
         }
+        // .promo-img {
+        //   border: 1px solid #45fdfb;
+        // }
         .promo-label {
           border: none;
         }
       }
       .type-name {
         line-height: 15px;
-        margin: 10px 0 0;
         overflow-wrap: break-word;
+        font-family: PingFang SC;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 19.6px;
+        color: #ffffff;
       }
       .promo {
         position: absolute;
@@ -762,6 +795,10 @@ export default defineComponent({
   .withdraw-btn {
     // min-width: 300px;
     // margin: 30px auto;
+    width: 100%;
+    background: linear-gradient(180deg, #32CEED 0%, #1C7587 100%);
+    border-radius: 8px;
+    margin-top: 30px;
     &.cancel {
       margin-right: 60px;
     }
@@ -953,4 +990,26 @@ export default defineComponent({
   gap: 10px;
   margin-top: 10px;
 }
+.spaced {
+      display: flex;
+      justify-content: space-between;
+      color: #B8B8B8;
+      margin: 0;
+
+      .el-form-item__label {
+        font-family: PingFang SC;
+        font-size: 12px;
+        font-weight: 400;
+        color:#B8B8B8;
+      }
+      .el-form-item__content {
+        font-family: PingFang SC;
+        font-size: 12px;
+        font-weight: 400;
+        color:#B8B8B8;
+        display: flex;
+        justify-content: flex-end;
+
+      }
+      }
 </style>
