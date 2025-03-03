@@ -1008,7 +1008,7 @@ import { Platform, useQuasar } from "quasar";
 import { computed, onActivated, onBeforeUnmount, onMounted, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
-import { api } from "@/boot/axios";
+import { api, eventapi } from "@/boot/axios";
 import { cached } from "@/boot/cache";
 import { t } from "@/boot/lang";
 import KYCUserForm from "@/components/KYCUserForm.vue";
