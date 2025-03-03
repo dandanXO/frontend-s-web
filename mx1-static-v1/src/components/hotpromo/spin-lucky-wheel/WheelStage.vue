@@ -491,7 +491,7 @@ onUnmounted(() => {
             background-size: 100% 100%;
             aspect-ratio: 295 / 24;
             margin: 4px 24px 16px;
-            font-size: 16px;
+            font-size: 13px;
             font-weight: 700;
             color: #fff;
           }
@@ -685,7 +685,7 @@ onUnmounted(() => {
 
           .wheel-wrapper {
             .countdown {
-              font-size: 14px;
+              font-size: 12px;
             }
           }
         }
