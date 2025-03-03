@@ -2534,6 +2534,7 @@ export default {
     changeAffiliateSuccess: '更换代理成功',
     confirmUnbindAffiliateAccesss: '确认解绑上级代理',
     changeSuccess: '更改成功',
+    codeTooLong: 'code過長',
     commissionPaySuccess: '佣金发放成功',
     confirmCancel: '请确认是否要取消此记录，此操作不可撤销',
     confirmCancelBbDacha: '请确认是否要取消此 BB 别墅杯赛事，此操作不可撤销',

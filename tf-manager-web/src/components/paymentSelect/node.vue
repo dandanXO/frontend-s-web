@@ -474,6 +474,13 @@ export default defineComponent({
     confirmAddNode() {
       this.$refs.addFormRef.validate(valid => {
         if (valid) {
+          if (this.ruleForm.code.length > 11) {
+            ElMessage({
+              message: i18n.global.t('message.codeTooLong'),
+              type: 'error',
+            })
+            return
+          }
           this.ruleForm.siteId = this.pageList.siteId
           this.ruleForm.children = []
           // eslint-disable-next-line vue/no-mutating-props
@@ -514,6 +521,13 @@ export default defineComponent({
     confirmEdit() {
       this.$refs.addFormRef.validate(valid => {
         if (valid) {
+          if (this.ruleForm.code.length > 11) {
+            ElMessage({
+              message: i18n.global.t('message.codeTooLong'),
+              type: 'error',
+            })
+            return
+          }
           Object.assign(this.item, this.ruleForm)
           console.log(this.list)
 

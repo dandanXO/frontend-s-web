@@ -2529,6 +2529,7 @@ export default {
     cancelQuizSuccess: 'Cancel Quiz Success',
     cancelRolloverRecordSuccess: 'Cancel Rollover Record Success',
     changeAffiliateSuccess: 'Change Affiliate Success',
+    codeTooLong: 'code is too long',
     confirmUnbindAffiliateAccesss: 'Confirm Unbind Superior Agent',
     changeSuccess: 'Change Success',
     commissionPaySuccess: 'Commission Pay Success',

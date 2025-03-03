@@ -1946,6 +1946,7 @@ export default {
     changeAffiliateSuccess: 'Thay đổi đối tác liên kết thành công',
     confirmUnbindAffiliateAccesss: 'Xác nhận gỡ ràng buộc đại lý cấp trên',
     changeSuccess: 'Thay đổi thành công',
+    codeTooLong: 'mã quá dài',
     commissionPaySuccess: 'Thanh toán hoa hồng thành công',
     confirmToAdjust:
       'Bạn có chắc chắn muốn điều chỉnh không? Sau khi xác nhận, điều chỉnh không thể hoàn tác.',

@@ -1360,6 +1360,7 @@ export default {
     changeAffiliateSuccess: 'เปลี่ยนความสำเร็จของพันธมิตร',
     confirmUnbindAffiliateAccesss: 'ยืนยันการยกเลิกตัวแทนระดับสูง',
     changeSuccess: 'เปลี่ยนความสำเร็จ',
+    codeTooLong: 'รหัสยาวเกินไป',
     commissionPaySuccess: 'ความสำเร็จในการจ่ายค่าคอมมิชชั่น',
     confirmToAdjust:
       'คุณแน่ใจหรือว่าจะทำการปรับเปลี่ยน? ไม่สามารถทำการปรับเปลี่ยนอื่น ๆ ได้หลังจากการยืนยัน',
