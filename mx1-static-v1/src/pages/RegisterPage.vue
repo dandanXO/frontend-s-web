@@ -745,6 +745,7 @@ function charType(num) {
   font-size: 14px;
   color: #ffffff;
   margin-left: 8px;
+  z-index: 2;
 }
 
 .get-code-btn {
