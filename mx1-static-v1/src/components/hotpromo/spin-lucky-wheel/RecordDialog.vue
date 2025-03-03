@@ -3,10 +3,10 @@
     <div class="record-dialog-inner-wrapper">
       <div class="tab-wrapper">
         <div class="tab" :class="{ selected: currentTab === 'invitation' }" @click="handleTabClick('invitation')">
-          Registros de Invitación
+          Registros de <br/>Invitación
         </div>
         <div class="tab" :class="{ selected: currentTab === 'lottery' }" @click="handleTabClick('lottery')">
-          Registros de Lotería
+          Registros de <br/>Lotería
         </div>
       </div>
 
