@@ -509,16 +509,16 @@ export default defineComponent({
           const lotteryTop = lotterySlide.getBoundingClientRect().top;
           const casualTop = casualSlide.getBoundingClientRect().top;
 
-          if (casualTop - 630 <= stickyHeight) {
-            selectedTab.value = "casual";
-          } else if (lotteryTop <= stickyHeight) {
+          if (lotteryTop <= stickyHeight) {
             selectedTab.value = "lottery";
-          } else if (pokerTop <= stickyHeight) {
-            selectedTab.value = "poker";
           } else if (fishTop <= stickyHeight) {
             selectedTab.value = "fishing";
+          }  else if (casualTop <= stickyHeight) {
+            selectedTab.value = "casual";
           } else if (esportTop <= stickyHeight) {
             selectedTab.value = "esport";
+          } else if (pokerTop <= stickyHeight) {
+            selectedTab.value = "poker";
           } else if (sportTop <= stickyHeight) {
             selectedTab.value = "sport";
           } else if (liveTop <= stickyHeight) {
