@@ -32,7 +32,7 @@
                 <div class="amt">RS {{ step.earnableAmt }}</div>
               </div>
               <div v-else class="other-steps">
-                <div class="midimg">
+                <div class="midimg" v-if="index + 1 === 1 || index + 1 === 2">
                   <img :src="require(`../../assets/images/newplayerguide/step-mid-${index + 1}.png`)" />
                 </div>
                 <div class="mid-content" :class="{show: index + 1 === 4}">
@@ -611,7 +611,21 @@ defineExpose({ showVideo });
   .step {
     padding-bottom: 40px;
     width: 100%;
+    &.step-5 .top {
+      width: 80%;
+      margin: 0 auto;
+      .title {
+        bottom: 0;
+      }
+    }
+    
+    &.step-5 .main-box .withdraw-section .withdrawitems {
+      width: 80%;
+    }
 
+    &.step-2 .main-box .other-steps .midimg {
+      margin: -10px auto -35px;
+    }
     &.step-2 .mid-content {
       margin-top: -30px;
     }
@@ -656,10 +670,11 @@ defineExpose({ showVideo });
       backdrop-filter: blur(10px);
       border: 1px solid #24ee89;
       padding: 25px 10px 15px;
-      margin: -45px auto 0;
+      // margin: -45px auto 0;
+      margin: -30px auto 0;
       border-radius: 16px;
       display: flex;
-      gap: 25px;
+      gap: 15px;
       flex-direction: column;
       justify-content: center;
       align-items: center;
@@ -754,12 +769,13 @@ defineExpose({ showVideo });
         position: relative;
         box-shadow: 0px 4px 4px 0px #00000040;
         background: #ffffff4d;
-        padding: 10px 15px;
+        padding: 5px 10px 5px 15px;
         border-radius: 15px;
         display: flex;
-        gap: 10px;
+        gap: 5px;
         margin-left: auto;
-        margin-top: 30px;
+        // margin-top: 30px;
+        
         justify-content: space-between;
         align-items: center;
         font-weight: bold;
@@ -812,14 +828,14 @@ defineExpose({ showVideo });
         }
         .abs-box {
           position: absolute;
-          height: 65px;
+          height: 55px;
           z-index: 9999;
           border-radius: 10px;
           width: 60%;
           margin: 0 auto;
           left: 0;
           right: 0;
-          top: 145%;
+          top: 132%;
           border: 2px dotted #08f437;
           box-shadow: 0px 0px 20px 0px #00e60091;
           pointer-events: none;
@@ -878,7 +894,7 @@ defineExpose({ showVideo });
           justify-content: center;
           align-items: center;
           width: 90%;
-          margin: 20px auto;
+          margin: 5px auto;
           gap: 10px;
           .deposititem {
             img {
@@ -909,6 +925,7 @@ defineExpose({ showVideo });
         flex-direction: column;
         gap: 5px;
         margin: 10px auto;
+        font-size: 12px;
         .share-step {
           display: flex;
           gap: 10px;
@@ -931,15 +948,18 @@ defineExpose({ showVideo });
         justify-content: space-between;
         width: 100%;
         margin: 0 auto;
+        font-size: 12px;
 
         .link-href {
           padding: 5px 12px;
           overflow: hidden;
           text-overflow: ellipsis;
           font-size: 11px;
-          line-height: 40px;
+          // line-height: 40px;
           word-break: break-all;
-          height: 50px;
+          // height: 50px;
+          height: 35px;
+          line-height: 25px;
         }
         .link-copy {
           cursor: pointer;
@@ -962,7 +982,8 @@ defineExpose({ showVideo });
           justify-content: center;
           align-items: center;
           width: 90%;
-          margin: 20px auto;
+          // margin: 20px auto;
+          margin: 5px auto;
           gap: 10px;
           .withdrawitem {
             img {
@@ -976,7 +997,7 @@ defineExpose({ showVideo });
         margin: 0;
         padding: 0 0 0 25px;
         color: #ff0000;
-        font-size: 1.7vh;
+        font-size: 1.5vh;
         line-height: 2vh;
         .yellow {
           color: #ffe500;
@@ -985,11 +1006,12 @@ defineExpose({ showVideo });
       .withdraw-steps {
         display: flex;
         flex-direction: column;
-        gap: 5px;
-        margin: 10px auto;
+        gap: 0px;
+        margin: 5px auto;
         .withdraw-step {
           font-weight: bold;
           display: flex;
+          font-size: 10px;
           gap: 10px;
           justify-content: flex-start;
           align-items: center;
