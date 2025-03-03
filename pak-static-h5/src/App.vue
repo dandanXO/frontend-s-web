@@ -191,10 +191,9 @@ export default defineComponent({
     };
 
     const sendFacebookInfo = () => {
-      // const urlParams = new URLSearchParams(window.location.search);
-      // const fbclid = urlParams.get("fbclid");
-
       const { fbclid, linkId } = getRbParams() || {};
+
+      const fbclid2 = window.localStorage.getItem("fbclid");
 
       const fbc = fbclid;
       const siteCode = "PAK";
@@ -204,6 +203,14 @@ export default defineComponent({
         return match ? decodeURIComponent(match[1]) : null;
       };
 
+      const getFbClientId = () => {
+        let result = /_fbp=(fb\.1\.\d+\.\d+)/.exec(window.document.cookie);
+        if (!(result && result[1])) {
+          return null;
+        }
+        return result[1];
+      };
+
       // const fbp = getCookie("_fbp");
       // Extract the last portion of _fbp
       const fbp = (() => {
@@ -211,11 +218,14 @@ export default defineComponent({
         return rawFbp ? rawFbp.split(".").pop() : null;
       })();
 
-      // alert(`fbc: ${fbc}`);
+      const fbp2 = (() => {
+        const rawFbp = getFbClientId();
+        return rawFbp ? rawFbp : null;
+      })();
 
       const payload = new URLSearchParams({
-        fbp: fbp || "",
-        fbc: fbc || "",
+        fbp: fbp || fbp2 || "",
+        fbc: fbc || fbclid2 || "",
         siteCode: siteCode,
         linkId: linkId || ""
       });
