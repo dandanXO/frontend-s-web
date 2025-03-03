@@ -72,7 +72,7 @@ const progressBarIndicatePosition = computed(() => {
   display: flex;
   justify-content: space-between;
   font-family: 'Poppins';
-  width: 100%;
+  width: 95%;
   margin: 5px auto;
 }
 
@@ -81,7 +81,7 @@ const progressBarIndicatePosition = computed(() => {
         width: 90%;
     }
     .extraction-remaining-progress {
-        width: 95%;
+        width: 90%;
     }
 }
 </style>
