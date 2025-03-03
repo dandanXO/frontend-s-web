@@ -73,7 +73,7 @@
             />
             <CommonButton v-if="isClaimedStatus" class="draw-btn disabled">Invita para Ganar un Giro</CommonButton>
             <CommonButton v-else class="draw-btn" @click="handleInviteClick">Invita para Ganar un Giro</CommonButton>
-            <span class="next-spin-remaining-time" v-if="!isClaimedStatus">Cuenta Regresiva para los Próximos Giros Gratis: {{ nextFreeSpinRemainingTime }}</span>
+            <span class="next-spin-remaining-time" v-if="!isClaimedStatus">Próximo giro gratis: {{ nextFreeSpinRemainingTime }}</span>
           </div>
         </div>
       </div>
@@ -580,7 +580,7 @@ onUnmounted(() => {
             font-weight: 700;
             color: #fff;
             font-size: 13px;
-            letter-spacing: -1px;
+            letter-spacing: 0px;
           }
         }
       }
