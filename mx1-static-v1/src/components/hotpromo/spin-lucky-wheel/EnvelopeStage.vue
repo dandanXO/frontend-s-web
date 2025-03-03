@@ -180,7 +180,8 @@ onUnmounted(() => {
         top: 26%;
         width: 100%;
         transform: translateY(-50%);
-        font-size: 50px;
+        font-size: 26px;
+        letter-spacing: -1px;
         font-weight: 900;
         color: #8100ae;
         text-align: center;
@@ -242,7 +243,7 @@ onUnmounted(() => {
 
       .selected-envelope {
         .prize {
-          font-size: 30px;
+          font-size: 26px;
         }
         .remaining-time {
           font-size: 4vw;

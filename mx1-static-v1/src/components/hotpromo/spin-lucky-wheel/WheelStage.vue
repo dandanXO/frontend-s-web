@@ -573,6 +573,7 @@ onUnmounted(() => {
             position: relative;
             max-width: 70%;
             margin: -5% auto 0;
+            font-size: 16px;
           }
 
           .next-spin-remaining-time {

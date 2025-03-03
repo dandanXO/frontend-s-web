@@ -34,7 +34,8 @@ const _modelValue = computed({
     position: absolute;
     top: 22%;
     width: 100%;
-    font-size: 30px;
+    font-size: 26px;
+    letter-spacing: -1px;
     font-weight: 900;
     color: #8100ae;
     text-align: center;
