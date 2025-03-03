@@ -3065,6 +3065,8 @@ onMounted(() => {
   loadTADAFishGameList();
   loadCustomerAddress();
   checkHbPromo();
+  checkSpinLuckyWheelPromo();
+  
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
   if (Platform.is.android && Platform.is.capacitor) {
