@@ -88,9 +88,12 @@
         </div>
       </div>
 
+      <button class="rules-btn" @click="handleRulesClick">Rukes</button>
       <button class="record-btn" @click="handleRecordClick">Record</button>
     </div>
-    <div class="block-wrapper">
+    
+    <q-dialog v-model="showRulesDialog">
+      <div class="block-wrapper">
       <div class="title-wrapper">
         <img
           style="width: 100%; max-width: 250px; padding: 0 0 5px 0"
@@ -124,6 +127,7 @@
         </li>
       </ol>
     </div>
+    </q-dialog>
     <WheelResultDialog v-model="showResultDialog" :prize="prize" @hide="$emit('reload')" />
     <RecordDialog v-model="showRecordDialog" />
     <CashOutPopup ref="cashOutPopupRef" v-model="isCashOutPopupVisible" />
@@ -161,6 +165,7 @@ const $q = useQuasar();
 const remainingTime = ref("");
 const nextFreeSpinRemainingTime = ref("");
 const showRecordDialog = ref(false);
+const showRulesDialog = ref(false);
 const showResultDialog = ref(false);
 const spinWheelRef = ref();
 const spinButtonDisable = ref(false);
@@ -298,6 +303,9 @@ const handleReceiveClick = () => {
 
 const handleRecordClick = () => {
   showRecordDialog.value = true;
+};
+const handleRulesClick = () => {
+  showRulesDialog.value = true;
 };
 
 const updateCountdownTime = () => {
@@ -633,13 +641,29 @@ onUnmounted(() => {
       padding: 3px 6px;
       color: #91ffab;
     }
+    .rules-btn {
+      position: absolute;
+      top: 2%;
+      left: 9%;
+      border: none;
+      background-color: #354c3f;
+      border-radius: 87px;
+      padding: 3px 6px;
+      color: #91ffab;
+    }
   }
 
-  .block-wrapper {
+  
+
+  > div:not(:last-child) {
+    margin-bottom: 12px;
+  }
+}
+.block-wrapper {
     background-color: #1e1f24;
     border-radius: 12px;
     padding: 16px 10px;
-    margin-top: 70px;
+    width: 90%;
 
     .title-wrapper {
       display: flex;
@@ -667,12 +691,6 @@ onUnmounted(() => {
       }
     }
   }
-
-  > div:not(:last-child) {
-    margin-bottom: 12px;
-  }
-}
-
 @media screen and (max-width: 500px) {
   .wheel-stage-wrapper {
     .wheel-outer-wrapper {
