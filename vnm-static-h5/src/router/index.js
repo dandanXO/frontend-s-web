@@ -161,6 +161,10 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("init", "1681908645691049");
       fbq("track", "PageView");
       user.isAffiliateA = true;
+    } else if (window.location.href.indexOf("t128f312.com") > -1) {
+      fbq("init", "1329778304894127");
+      fbq("track", "PageView");
+      user.isAffiliateA = true;
     }
   });
 
