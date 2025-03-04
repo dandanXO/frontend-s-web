@@ -113,7 +113,7 @@ const IMPORT_LIST = ["loginName"]
 
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
-  siteList.list = site.filter(e => e.id === 11 || e.id === 12 || e.id === 19)
+  siteList.list = site
 }
 
 async function downloadTemplate() {
