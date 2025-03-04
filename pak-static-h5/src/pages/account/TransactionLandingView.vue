@@ -103,6 +103,7 @@ watch(
 
   .deposit-panels {
     background: transparent;
+    position: unset;
   }
 }
 </style>

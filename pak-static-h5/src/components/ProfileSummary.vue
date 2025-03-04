@@ -294,7 +294,7 @@
     </div>
 
     <q-dialog v-model="isBonusModal" position="top" style="z-index: 2002">
-      <BonusModal :has-top-download="topDownload && !ui.hideDownload" :promo-list="fastAccessPromo" />
+      <BonusModal :has-top-download="topDownload && !ui.hideDownload" :promo-list="fastAccessPromo" @openNewPlayer="showNewPlayer" />
     </q-dialog>
   </div>
 </template>
@@ -316,7 +316,7 @@ import { defineEmits } from "vue";
 import { useCustomerTrigger } from "src/hooks/trigger";
 
 const props = defineProps(["homeProfile"]);
-const emits = defineEmits(["closeslot", "activateSlide"]);
+const emits = defineEmits(["closeslot", "activateSlide", "showNewPlayer"]);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
@@ -346,6 +346,10 @@ const getFastAccessPromo = () => {
 const showBonusModal = () => {
   isBonusModal.value = true;
 };
+const showNewPlayer = () => {
+  isBonusModal.value = false;
+  emits('showNewPlayer');
+}
 
 const loadCustomerAddress = () => {
   cached

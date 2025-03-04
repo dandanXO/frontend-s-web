@@ -4,7 +4,7 @@
     style="transition: background 0.5s ease-in-out"
     class="dynamic-bg"
   >
-    <ProfileSummary :homeProfile="true" @activateSlide="handleActivateSlide" />
+    <ProfileSummary :homeProfile="true" @activateSlide="handleActivateSlide" @showNewPlayer="showNewPlayer" />
 
     <!--    <pre>-->
     <!--      {{isNewPlayerModal}} <br/>-->
@@ -1560,7 +1560,7 @@ const handleModalUpdate = (value) => {
 const targetSection = ref();
 const showOverlay = ref();
 const disableScroll = () => {
-  document.body.style.overflow = "hidden"; // Disable scrolling
+  // document.body.style.overflow = "hidden"; // Disable scrolling
 };
 
 const enableScroll = () => {
@@ -1615,6 +1615,9 @@ const handleAdditionalSteps = (index) => {
     currentAdditionalStep.value = 1;
     currentType.value = "withdraw";
     isAdditionalWithdrawSteps.value = true;
+    nextTick(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    })
     disableScroll();
   }
 };
@@ -2333,6 +2336,10 @@ const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId
 const closeSlotModal = () => {
   fullGameDialog.value = false;
 };
+
+const showNewPlayer = () => {
+  currentStep.value = localStorage.getItem("newPlayerGuide");
+}
 
 const closeFullGameDialog = () => {
   fullGameDialog.value = false;
@@ -3884,12 +3891,12 @@ function checkDepositStep() {
 }
 
 function checkReferStep() {
-  if (isAdditionalReferSteps.value) {
+  if (isAdditionalReferSteps.value && currentStep.value === "3") {
     const completedGuide = localStorage.getItem("completedreferguide");
     // alert("refer," + completedGuide);
     if (completedGuide === "true") {
       isAdditionalReferSteps.value = false;
-      // updateCurrentStep("5");
+      updateCurrentStep("5");
     }
   }
 }
@@ -3931,7 +3938,7 @@ const downloadAppRef = ref();
 
 onActivated(() => {
   nextTick(() => {
-    if(LocalStorage.getItem('completedreferguide') !== 'true' && LocalStorage.getItem('newPlayerGuide') === '4') {
+    if(LocalStorage.getItem('completeddepositguide') === 'true' && LocalStorage.getItem('completedreferguide') !== 'true' && LocalStorage.getItem('newPlayerGuide') === '4') {
       currentType.value = 'refer';
       isAdditionalReferSteps.value = true;
       disableScroll();

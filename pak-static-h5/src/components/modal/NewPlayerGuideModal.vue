@@ -509,8 +509,8 @@ const handleShareToEmail = (url) => {
 
 const modalSocialShare = ref(false);
 
-const completedDepoGuide = localStorage.getItem("completeddepositguide");
-const completedReferGuide = localStorage.getItem("completeddreferguide");
+const completedDepoGuide = JSON.stringify(localStorage.getItem("completeddepositguide"));
+const completedReferGuide = JSON.stringify(localStorage.getItem("completeddreferguide"));
 
 watch(
   () => modelValue.value,

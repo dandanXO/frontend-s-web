@@ -1,5 +1,5 @@
 <template>
-  <div class="abs-container">
+  <div class="abs-container" :class="`abs-${localType}-${localStep}`">
     <div class="player-guide" :class="`${localType}-mode`">
       <div class="steps-portion" :class="`steptopmain-${currentAdditionalStep} ${localType}-mode`">
         <!-- <img class="abs-line" :class="`${localType} step-${localStep}`" v-if="localType === 'deposit'" :src="require(`../../assets/images/newplayerguide/line-${localType}-${localStep}.png`)"> -->
@@ -156,20 +156,32 @@ const updateCurrentAdditionalStep = () => {
 <style lang="scss" scoped>
 .abs-container {
   background: transparent;
-  position: fixed;
+  // position: fixed;
+  // pointer-events: none;
+    position: absolute; /* Change from fixed to absolute */
+
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  max-width: 500px;
+  min-height: 100%; /* Allow content to expand */
   z-index: 9999;
-  overflow: hidden;
   flex-direction: column;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 10px;
   background: rgba(0, 0, 0, 0.2); /* Adjust the alpha value to change transparency */
 
+  overflow: auto; /* Ensure content inside is scrollable */
+    &.abs-refer-3 {
+      top: 860px;
+    }
+    &.abs-withdraw-3 {
+      
+      top: 175px;
+
+    }
   .main-highlight-box {
     width: 100%;
     position: absolute;
@@ -218,6 +230,10 @@ const updateCurrentAdditionalStep = () => {
       // right: 11vh;
       right: 20%;
       bottom: 0;
+      .inner-line {
+        background: url(../../assets/images/newplayerguide/dep-point-1.png) no-repeat center center;
+        background-size: 60%;
+      }
     }
     &.step-2 {
       width: 50%;
@@ -248,6 +264,10 @@ const updateCurrentAdditionalStep = () => {
       bottom: 30px;
       left: 0;
       right: 0;
+      .inner-line {
+        background: url(../../assets/images/newplayerguide/dep-point-4.png) no-repeat center center;
+        background-size: 95%;
+      }
     }
   }
   .green-highlight-box.refer-mode {
@@ -292,6 +312,10 @@ const updateCurrentAdditionalStep = () => {
       right: unset;
       bottom: 0;
       right: 0;
+      .inner-line {
+        background: url(../../assets/images/newplayerguide/refer-point-2.png) no-repeat center center;
+        background-size: 150%;
+      }
     }
     &.step-3 {
       width: 95%;
@@ -353,6 +377,10 @@ const updateCurrentAdditionalStep = () => {
       // right: 11vh;
       right: 20%;
       bottom: 0;
+      .inner-line {
+        background: url(../../assets/images/newplayerguide/dep-point-1.png) no-repeat center center;
+        background-size: 60%;
+      }
     }
     &.step-2 {
       width: 50%;
@@ -383,6 +411,10 @@ const updateCurrentAdditionalStep = () => {
       bottom: 30px;
       left: 0;
       right: 0;
+      .inner-line {
+        background: url(../../assets/images/newplayerguide/dep-point-4.png) no-repeat center center;
+        background-size: 95%;
+      }
     }
   }
   .player-guide {
@@ -483,8 +515,10 @@ const updateCurrentAdditionalStep = () => {
           width: 43vh;
           top: -8vh;
           }
-          width: 100%;
-          top:-50%;
+          // width: 100%;
+          // top:-50%;
+    width: 85%;
+    top: -33%;
         }
       }
       &.withdraw {
