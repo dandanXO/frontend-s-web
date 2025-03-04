@@ -1387,6 +1387,7 @@
     :bonusTitle="$t('modal.homeCodeBonus.congratsWonFreeCash')"
     :bonusTxt="$t('modal.homeCodeBonus.enterCodeToClaim')"
     :btnTxt="$t('btn.goNow')"
+    :contentImg="require('../assets/images/index/modal/congrats-coupons-2.png')"
     @handleBtnClick="handleReceiveCodeBonus"
     @handleBtnClose="isShowCodeBonusModal = false"
   />

@@ -44,9 +44,7 @@ const computedHeaderImg = computed(() => {
 });
 
 const computedContentImg = computed(() => {
-  return props.contentImg
-    ? require(`${props.contentImg}`)
-    : require(`../../assets/images/index/modal/congrats-coupons.png`);
+  return props.contentImg ? props.contentImg : require(`../../assets/images/index/modal/congrats-coupons.png`);
 });
 
 const handleBtnClick = () => {
