@@ -85,7 +85,7 @@ const i18nStoreLanguage = i18nStore();
 const { languageVal } = storeToRefs(i18nStoreLanguage);
 
 const store = userStore();
-const lastAnnouncementDateStr = useLocalStorage("LH_LAST_ANNOUNCEMENT_DATE", null);
+const lastAnnouncementDateStr = useLocalStorage("LH_LAST_ANNOUNCEMENT_DATE", moment("1990-12-25"));
 
 const visible = ref(false);
 const currentTab = ref("inbox");
@@ -100,7 +100,9 @@ onMounted(() => {
     const today = moment();
     const lastAnnouncementDate = moment(lastAnnouncementDateStr.value);
     const diff = today.diff(lastAnnouncementDate, "days");
-    if (!diff) return;
+    if (!diff) return
+
+    lastAnnouncementDateStr.value = moment()
   }
   popupMailBox()
     .then((res) => {
