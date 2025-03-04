@@ -57,8 +57,10 @@
                     style="font-size: 14px"
                     color="#0089ED"
                   />
-                  <q-chip size="sm" :label="$t('lang.mail_read')" v-if="det.readTime && det.sendTime" />
-                  {{ det.title }}
+                  <div style="display: flex; gap: 16px">
+                    <q-chip size="sm" :label="$t('lang.mail_read')" v-if="det.readTime && det.sendTime" />
+                    <div v-html="det.title"></div>
+                  </div>
                 </div>
 
                 <div class="right-title">
@@ -67,7 +69,7 @@
                 </div>
               </div>
               <div class="mailcontents" v-if="isSelectedMail === det.id">
-                {{ det.content }}
+                <div v-html="det.content"></div>
               </div>
               <div v-if="mailType === 'outbox'" class="buttons">
                 <q-btn outline label="催单" size="sm" color="bright" class="q-mr-sm" />
@@ -77,7 +79,7 @@
 
             <template v-slot:loading>
               <div v-if="comList.length > 0">
-                <div class="row justify-center q-my-md">
+                <div class="justify-center row q-my-md">
                   <q-spinner-dots color="primary" size="40px" />
                 </div>
               </div>
@@ -99,7 +101,7 @@
 
     <q-dialog width="100%" v-model="isDeleteMailModal">
       <q-card style="width: 100%; padding: 20px" class="text-black">
-        <q-card-section class="q-mb-md text-center" style="flex-direction: column">
+        <q-card-section class="text-center q-mb-md" style="flex-direction: column">
           <strong>{{ $t("lang.system_hint") }}</strong>
           <br />
           <br />

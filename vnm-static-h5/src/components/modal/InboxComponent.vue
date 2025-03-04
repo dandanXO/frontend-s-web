@@ -8,7 +8,7 @@
     :arrows="false"
     @update:model-value="emits('chageSlide', $event)"
   >
-    <q-carousel-slide v-for="(item, index) in mailData" :key="item.id" :name="index" class="column no-wrap flex-center">
+    <q-carousel-slide v-for="(item, index) in mailData" :key="item.id" :name="index" class="column no-wrap flex-center" style="padding-bottom: 0">
       <div class="announcement-component">
         <div class="announcement-title" v-html="item.title"></div>
         <div class="announcement-content" v-html="item.content"></div>
@@ -71,7 +71,7 @@ const handleDetail = (mail) => {
 
 <style lang="scss" scoped>
 .announcement-component {
-  padding: 10px 12px 66px;
+  padding: 10px 12px 0px;
   background: white;
   height: 100%;
   position: relative;

@@ -4,7 +4,7 @@
       <div style="overflow: unset; width: 90%">
         <div class="dialog-wrapper">
           <div class="dialog-header">
-            Tin Tức Trang Web
+            Tin Nhắn
             <q-btn
               icon="close"
               flat
@@ -19,7 +19,7 @@
           <div class="dialog-content">
             <InboxComponent
               @chageSlide="hChageSlide"
-              v-if="currentTab === 'inbox'"
+              v-if="currentTab === 'inbox' && mailData.length > 0"
               ref="inboxComponentRef"
               :slide="activeDot"
               :mailData="mailData"
@@ -81,7 +81,7 @@ import { useRouter } from "vue-router";
 
 const store = userStore();
 const router = useRouter();
-const lastAnnouncementDateStr = useLocalStorage("LH_LAST_ANNOUNCEMENT_DATE", null);
+const lastAnnouncementDateStr = useLocalStorage("LH_LAST_ANNOUNCEMENT_DATE", moment("1990-12-25"));
 
 const visible = ref(false);
 const currentTab = ref("inbox");
@@ -133,7 +133,9 @@ onMounted(() => {
     const today = moment();
     const lastAnnouncementDate = moment(lastAnnouncementDateStr.value);
     const diff = today.diff(lastAnnouncementDate, "days");
-    if (!diff) return;
+    if (!diff) return
+
+    lastAnnouncementDateStr.value = moment()
   }
 
   getInbox()
