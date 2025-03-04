@@ -121,6 +121,7 @@
       v-if="list.redirectUrl === 'dy2-pgl-on-fire-buenos-aires-2025'"
       :promo-code="list.promoCode"
     />
+    <PGLBucharest2025 v-if="list.redirectUrl === 'dy2-pgl-bucharest-2025'" :promo-code="list.promoCode" />
     <EslProLeagueS21
       v-if="list.redirectUrl === 'dy2-esl-pro-league-s21'"
       :promo-param="listParam"
@@ -240,6 +241,7 @@ import PGLOnFireBuenosAires2025 from "./hotpromo/pgl-on-fire-buenos-aires-2025/P
 import AgYuanxiaohongbao from "../components/hotpromo/agyuanxiaohongbao/AgYuanxiaohongbao.vue";
 import LanternFestival2025 from "../components/hotpromo/lantern-festival-2025/LanternFestival2025.vue";
 import EslProLeagueS21 from "./hotpromo/esl-pro-league-s21/EslProLeagueS21.vue";
+import PGLBucharest2025 from "./hotpromo/pgl-bucharest-2025/PGLBucharest2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -250,6 +252,7 @@ export default defineComponent({
     LanternFestival2025,
     AgYuanxiaohongbao,
     PGLOnFireBuenosAires2025,
+    PGLBucharest2025,
     SkyesportsSouvenir2025,
     IemKatowice2025,
     OfficialGiftPromo,
