@@ -281,7 +281,7 @@ const handleReceiveClick = () => {
   eventapi.post("/refer-spin/withdraw").then((res) => {
     if (res.code === 0) {
       $q.notify({
-        message: "Receive successfully",
+        message: "ได้รับสำเร็จ",
         color: "positive",
         position: "top"
       });
