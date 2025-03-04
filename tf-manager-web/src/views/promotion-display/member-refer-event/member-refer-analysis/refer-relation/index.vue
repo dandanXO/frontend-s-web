@@ -23,6 +23,7 @@
           size="small"
           maxlength="50"
           :placeholder="t('fields.referrer')"
+          v-if="!hasPermission(['sys:privi:member-refer-friend-stats:search'])"
         />
         <el-input
           v-model="request.loginName"
