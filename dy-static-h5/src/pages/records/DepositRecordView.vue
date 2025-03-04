@@ -1,6 +1,8 @@
 <template>
+  <RecordDateFilter class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="handleDateChange" />
   <div class="table-record">
     <RecordComponent
+      ref="recordRef"
       recordType="deposit"
       :loading="visible"
       :list="tableData"
@@ -16,22 +18,24 @@ import RecordComponent from "../../components/RecordComponent.vue";
 import { api } from "boot/axios";
 import moment from "moment/moment";
 import { cached, TIME_EXPIRED } from "boot/cache";
+import RecordDateFilter from "src/components/RecordDateFilter.vue";
 
 export default defineComponent({
   name: "DepositRecordView",
   components: {
-    RecordComponent
+    RecordComponent,
+    RecordDateFilter
   },
   setup() {
-
+    const recordRef = ref();
     const visible = ref(true);
     const tableData = ref([]);
     const isEnded = ref(false);
 
     var apiUrl = "/session/member/deposit";
+    const endDate = ref(moment().format("YYYY-MM-DD"));
+    const startDate = ref(moment().add(-7, "days").format("YYYY-MM-DD"));
 
-    var endDate = moment().format("YYYY-MM-DD");
-    var startDate = moment().add(-7, "days").format("YYYY-MM-DD");
     var current = ref(1);
     var maxPage = ref(0);
 
@@ -40,13 +44,13 @@ export default defineComponent({
         current.value++;
       }else {
         current.value = 1;
-        endDate = moment(startDate).add(-1, "days").format("YYYY-MM-DD");
-        console.log(endDate);
+        endDate.value = moment(startDate.value).add(-1, "days").format("YYYY-MM-DD");
+        console.log(endDate.value);
 
-        startDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
-        console.log(startDate);
+        startDate.value = moment(endDate.value).add(-7, "days").format("YYYY-MM-DD");
+        console.log(startDate.value);
 
-        if (endDate <= moment().add(-29, "days").format("YYYY-MM-DD")) {
+        if (endDate.value <= moment().add(-29, "days").format("YYYY-MM-DD")) {
           console.log("mor than 3 months");
           isEnded.value = true;
           return;
@@ -63,12 +67,12 @@ export default defineComponent({
       // console.log(endDate);
 
       let paramData = {
-        "startDate": startDate,
-        "endDate": endDate,
+        "startDate": startDate.value,
+        "endDate": endDate.value,
         "size": 10,
         "current": current.value
       };
-      var apiKey = apiUrl + "_" + startDate + "_" + endDate + "_" + current.value;
+      var apiKey = apiUrl + "_" + startDate.value + "_" + endDate.value + "_" + current.value;
       console.log(apiKey);
 
       cached.get(apiKey, () => api.get(apiUrl, {
@@ -83,6 +87,11 @@ export default defineComponent({
         }
 
         tableData.value.push(...res.records);
+        if(!tableData.value.length){
+          isEnded.value = true;
+        }else{
+          isEnded.value = false;
+        }
         // console.log("TableData");
         // console.log(tableData.value);
       }).catch((err) => {
@@ -114,6 +123,15 @@ export default defineComponent({
         label: "存款编码"
       }
     ];
+    const handleDateChange = (data) => {
+      const {val, isStartDate} = data
+      isStartDate ? startDate.value = val : endDate.value = val
+      tableData.value = [];
+      current.value = 1;
+      isEnded.value = false;
+      recordRef.value.clearTable();
+      loadDepositTable(true);
+    };
     onMounted(() => {
       current.value = 1;
       tableData.value = [];
@@ -125,7 +143,11 @@ export default defineComponent({
       isEnded,
       tableHeaders,
       loadNewData,
-      tableData
+      tableData,
+      handleDateChange,
+      endDate,
+      startDate,
+      recordRef
     };
   }
 });
