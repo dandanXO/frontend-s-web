@@ -190,6 +190,7 @@ onMounted(() => {
       width: 25px;
       height: 25px;
       font-size: 12px;
+      display: flex;
     }
   }
 
