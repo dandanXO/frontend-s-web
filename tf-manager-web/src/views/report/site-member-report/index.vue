@@ -421,7 +421,7 @@ async function loadSiteMemberReport() {
   const query = checkQuery()
   const { data: ret } = await getSiteMemberReport(query)
   const { data: ret1 } = await getTotalSiteMemberReport(query)
-  totalPage.records = ret1.records
+  totalPage.records = ret1
   page.records = ret.records
   page.pages = ret.pages
   page.loading = false
@@ -624,7 +624,7 @@ function getSummaries(param) {
       }
     }
 
-    if (totalPage.records.length > 0) {
+    if (totalPage.records) {
       columns.forEach((column, index) => {
         if (index === 0) {
           sums[index] = t('fields.total')
@@ -644,11 +644,11 @@ function getSummaries(param) {
           ) {
             var prop = column.property
             if (index === 3 || index === 5) {
-              sums[index] = totalPage.records[0][prop]
+              sums[index] = totalPage.records[prop]
             } else {
               sums[index] =
                 '$' +
-                parseFloat(totalPage.records[0][prop]).toLocaleString('en-US', {
+                parseFloat(totalPage.records[prop]).toLocaleString('en-US', {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
                 })
@@ -657,7 +657,6 @@ function getSummaries(param) {
         }
       })
     }
-    console.log(sums)
     return sums
   } else {
     return '-'
