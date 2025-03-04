@@ -11,8 +11,8 @@
     <div class="qr-wrapper invite-win-section">
       <q-spinner v-if="isLoading" :size="30" />
       <VueQRCodeComponent v-else id="the-qrcode" :size="120" :text="selfTgurl" class="qr-code" />
-      <span class="desc">Do you want to unlock your {{`${store.currency.value}`}} 500 reward right away? Invite your friends for a free spin!</span>
-      <q-btn label="Save" :size="'150'" class="save-btn" @click="downloadQRImg()" />
+      <span class="desc">คุณต้องการปลดล็อกเงินรางวัล {{`${store.currency.value}`}}500 ของคุณทันทีหรือไม่? เชิญเพื่อนของคุณเพื่อหมุนฟรี!</span>
+      <q-btn label="บันทึก" :size="'150'" class="save-btn" @click="downloadQRImg()" />
     </div>
   </div>
 </template>

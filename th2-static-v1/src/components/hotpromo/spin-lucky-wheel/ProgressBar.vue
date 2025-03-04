@@ -6,7 +6,7 @@
     </div>
 
     <div class="extraction-remaining-progress" v-if="props?.isShowDetails">
-        <span class="extraction-require-amount">Only <span class="amount">{{ `${store.currency.value} ${extractionDifference}` }}</span> to go</span>
+        <span class="extraction-require-amount">เหลือเพียง <span class="amount">{{ `${store.currency.value} ${extractionDifference}` }}</span> เท่านั้น</span>
         <span class="extraction-require-percentage">{{ `${remainingRequired.toFixed(2)}%` }}</span>
     </div>
 </template>
@@ -43,7 +43,7 @@ const progressBarIndicatePosition = computed(() => {
 
 .extraction-progress-bar {
     position: relative;
-    width: 95%;
+    width: 90%;
     margin: 0 auto;
     height: 12px;
     background-color: #cc9f8c;
@@ -72,16 +72,16 @@ const progressBarIndicatePosition = computed(() => {
   display: flex;
   justify-content: space-between;
   font-family: 'Poppins';
-  width: 100%;
+  width: 90%;
   margin: 5px auto;
 }
 
 @media screen and (max-width: 400px) {
     .extraction-progress-bar {
-        width: 90%;
+        width: 85%;
     }
     .extraction-remaining-progress {
-        width: 95%;
+        width: 85%;
     }
 }
 </style>

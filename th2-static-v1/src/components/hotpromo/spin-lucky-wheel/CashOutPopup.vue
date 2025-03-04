@@ -6,7 +6,7 @@
         <div class="cash-out" v-else>
             <GradientTextAmount v-if="isShowTextAmount" :amountText="`การถอนเงินมีค่าใช้จ่าย ${store.currency.value} ${extractionDifference}`" />
             <div v-else class="text-amount-placeholder"></div>
-            <span class="next-spin-remaining-time">Next Round: {{ remainingTime }}</span>
+            <span class="next-spin-remaining-time">รอบถัดไป: {{ remainingTime }}</span>
             <div class="cash-out-backdrop-wrapper">
                 <div class="pulse1"></div>
                 <div class="pulse2"></div>
@@ -17,7 +17,7 @@
                     src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/cash-out-backdrop.png" />
             </div>
             <ProgressBar :isShowDetails="true" />
-            <CommonButton class="invite-wins-btn" @click="showInviteWins">Invitation wins</CommonButton>
+            <CommonButton class="invite-wins-btn" @click="showInviteWins">ชนะการเชิญ</CommonButton>
         </div>
     </q-dialog>
 </template>
@@ -110,7 +110,7 @@ const handleDialogShow = () => {
 @media screen and (max-width: 500px) {
     .cash-out {
         .prize {
-            font-size: 11vw;
+            font-size: 30px;
         }
     }
 }
@@ -120,14 +120,14 @@ const handleDialogShow = () => {
     justify-content: center;
     font-family: Inter;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 16px;
     line-height: 24.2px;
     letter-spacing: 0px;
 }
 
 @media screen and (max-width: 400px) {
     .next-spin-remaining-time {
-        font-size: 18px;
+        font-size: 15px;
     }
 }
 

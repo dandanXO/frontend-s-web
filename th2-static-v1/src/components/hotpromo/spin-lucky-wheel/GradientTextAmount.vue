@@ -39,7 +39,7 @@ const isLongText = computed(() => props?.amountText?.length > 10);
         text-shadow: 1px 3px #791802;
 
         &.longText {
-            font-size: 26px;
+            font-size: 20px;
             letter-spacing: -1px;
         }
     }

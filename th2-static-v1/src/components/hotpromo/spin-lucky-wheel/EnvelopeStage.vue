@@ -2,6 +2,7 @@
   <div class="envelope-stage-wrapper">
     <div class="envelope-stage-inner-wrapper">
       <img
+        style="width:100%;"
         class="title"
         src="../../../assets/images/promotion/spin-lucky-wheel/envelope-stage/title.png"
         alt="get cash every day"
@@ -16,7 +17,7 @@
         >
           <div v-if="prize.status !== 'idle'" class="prize-wrapper">
             <span>
-              {{ prize.status === "selected" ? "Winning" : `BONUS ${index + 1}` }}
+              {{ prize.status === "selected" ? "ชนะ" : `โบนัส ${index + 1}` }}
             </span>
             <br />
             <span class="prize">
@@ -27,8 +28,8 @@
       </div>
       <div v-else class="selected-envelope">
         <span class="prize">{{ store.currency.value }} {{ prizeList[selectedIndex]?.prize }}</span>
-        <CommonButton class="withdraw-btn" @click="$emit('envelopeClick')">Go withdraw now!</CommonButton>
-        <span class="remaining-time">time left: {{ remainingTime }}</span>
+        <CommonButton class="withdraw-btn" @click="$emit('envelopeClick')">ไปถอนเงินเดี๋ยวนี้!</CommonButton>
+        <span class="remaining-time">เวลาที่เหลือ: {{ remainingTime }}</span>
       </div>
       <img class="footer tiger" src="../../../assets/images/promotion/spin-lucky-wheel/decoration-tiger.png" />
       <img class="footer rabbit" src="../../../assets/images/promotion/spin-lucky-wheel/decoration-rabbit.png" />
@@ -183,6 +184,7 @@ onUnmounted(() => {
         font-weight: 900;
         color: #8100ae;
         text-align: center;
+        letter-spacing: -1px;
       }
 
       .withdraw-btn {
@@ -228,6 +230,7 @@ onUnmounted(() => {
         left: 50%;
         bottom: -8%;
         transform: translateX(-50%);
+        width: 100%;
       }
     }
   }
@@ -243,7 +246,7 @@ onUnmounted(() => {
           font-size: 30px;
         }
         .remaining-time {
-          font-size: 4vw;
+          font-size: 15px;
         }
       }
     }
