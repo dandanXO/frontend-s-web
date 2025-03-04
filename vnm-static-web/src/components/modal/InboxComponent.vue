@@ -1,6 +1,6 @@
 <template>
   <div class="announcement-component">
-    <el-carousel class="banner-slider" :autoplay="false" :interval="5000">
+    <el-carousel class="banner-slider" :autoplay="false" :interval="5000" @change="handleChange">
       <el-carousel-item class="banner-container" v-for="item in mailData" :key="item.id">
         <div class="announcement-title" v-html="item.title"></div>
         <template v-if="item.content">
@@ -28,9 +28,10 @@
 <script setup>
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
+import { ref, defineProps } from "vue";
 
 const router = useRouter();
-
+const carouselIndex = ref(0)
 const props = defineProps({
   mailData: {
     type: Array,
@@ -38,10 +39,11 @@ const props = defineProps({
   }
 });
 const store = userStore();
-
+const handleChange = (index) => {
+  carouselIndex.value = index;
+};
 const goToMailDetail = (mail) => {
-  console.log(mail);
-  router.push(`/center/mailbox?mailid=${mail.id}&type=${mail.type}`);
+  router.push(`/center/mailbox?mailid=${props.mailData[carouselIndex.value].id}&type=${props.mailData[carouselIndex.value].type}`);
 };
 </script>
 

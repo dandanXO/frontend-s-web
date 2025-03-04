@@ -287,10 +287,10 @@
     "unread": "Chưa đọc"
   },
   "inbox": {
-    "contactCS": "Liên hệ bộ phận hỗ trợ khách hàng",
-    "viewDetails": "Xem chi tiết",
+    "contactCS": "Liên Hệ CSKH",
+    "viewDetails": "Đọc thêm",
     "imptAnnouncement": "Thông báo quan trọng",
-    "mailBox": "Tin nhắn nội bộ",
+    "mailBox": "Tin Nhắn",
     "noMoreToday": "Không nhắc lại hôm nay"
   },
   "withdraw": {
