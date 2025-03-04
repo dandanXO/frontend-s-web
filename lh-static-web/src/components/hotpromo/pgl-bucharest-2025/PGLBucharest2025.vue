@@ -23,7 +23,7 @@
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus">
+          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 || loadingClaim }">
             <img
               v-if="bonus <= 0 || loadingClaim"
               src="@/assets/promo/lh-livepoker-rebate/reward-btn-3-disabled.png"
@@ -251,10 +251,10 @@ onMounted(() => {
         opacity: 0.9;
       }
 
-      // &.disabled {
-      //   cursor: not-allowed;
-      //   pointer-events: none;
-      // }
+      &.disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+      }
     }
   }
 
