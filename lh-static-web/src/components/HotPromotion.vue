@@ -116,6 +116,7 @@
     <IemKatowice2025 v-if="list.redirectUrl === 'lh1-iem-katowice-2025'" :promo-code="list.promoCode" />
     <HongBaoYu2025 v-if="list.redirectUrl === 'hongbaoyu-2025'" :promo-code="list.promoCode" />
     <Monthly20HongBaoYu v-if="list.redirectUrl === 'lh1-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
+    <PGLBucharest2025 v-if="list.redirectUrl === 'lh1-pgl-bucharest-2025'" :promo-code="list.promoCode" />
     <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
     <VctBangkok v-if="list.redirectUrl === 'lh1-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
     <Dota2BlastSlamS25 v-if="list.redirectUrl === 'lh1-dream-league-s25'" :promo-code="list.promoCode" />
@@ -249,6 +250,7 @@ import DarkModePromo from "../components/hotpromo/dark-mode/DarkModePromo.vue";
 import PGLOnFireBuenosAires2025 from "./hotpromo/pgl-on-fire-buenos-aires-2025/PGLOnFireBuenosAires2025.vue";
 import SkyesportsSouvenir2025 from "./hotpromo/skyesports-souvenir-2025/SkyesportsSouvenir2025.vue";
 import EslProLeagueS21 from "./hotpromo/esl-pro-league-s21/EslProLeagueS21.vue";
+import PGLBucharest2025 from "./hotpromo/pgl-bucharest-2025/PGLBucharest2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -339,6 +341,7 @@ export default defineComponent({
     VctcnMatchPromo,
     HongBaoYu2025,
     Monthly20HongBaoYu,
+    PGLBucharest2025,
     Belgrade2025Promo,
     Lh1Vctcn,
     Dota2BlastSlamS25,
