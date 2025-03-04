@@ -88,7 +88,7 @@
         </div>
       </div>
 
-      <button class="rules-btn" @click="handleRulesClick">Rukes</button>
+      <button class="rules-btn" @click="handleRulesClick">Rules</button>
       <button class="record-btn" @click="handleRecordClick">Record</button>
     </div>
     
@@ -130,7 +130,8 @@
     </q-dialog>
     <WheelResultDialog v-model="showResultDialog" :prize="prize" @hide="$emit('reload')" />
     <RecordDialog v-model="showRecordDialog" />
-    <CashOutPopup ref="cashOutPopupRef" v-model="isCashOutPopupVisible" />
+    <!-- <CashOutPopup ref="cashOutPopupRef" v-model="isCashOutPopupVisible" /> -->
+    <SharePopup ref="sharePopupRef" v-model="isSharePopupVisible" />
   </div>
 </template>
 <script setup>
@@ -143,7 +144,8 @@ import { useRouter } from "vue-router";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import ProgressBar from "./ProgressBar.vue";
-import CashOutPopup from "./CashOutPopup.vue";
+// import CashOutPopup from "./CashOutPopup.vue";
+import SharePopup from "./SharePopup.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
 
 const emit = defineEmits(["reload"]);
@@ -178,8 +180,10 @@ const prizeIndex = ref(0);
 const timer = ref();
 const prize = ref(0);
 const winningRecordRef = ref();
-const isCashOutPopupVisible = ref(false);
-const cashOutPopupRef = ref();
+// const isCashOutPopupVisible = ref(false);
+// const cashOutPopupRef = ref();
+const isSharePopupVisible = ref(false);
+const sharePopupRef = ref();
 const winningRecord = ref([]);
 const isWheelEnded = ref(false);
 
@@ -266,8 +270,10 @@ const handleWheelClick = () => {
 };
 
 const handleInviteClick = () => {
-  isCashOutPopupVisible.value = true;
-  cashOutPopupRef.value?.showInviteWins();
+  // isCashOutPopupVisible.value = true;
+  // cashOutPopupRef.value?.showInviteWins();
+  isSharePopupVisible.value = true
+  // sharePopupRef.value?.showInviteWins();
 };
 
 const getRemainingTime = (endTime) => {
@@ -371,6 +377,7 @@ onUnmounted(() => {
 </script>
 <style lang="scss" scoped>
 .wheel-stage-wrapper {
+  height: 710px;
   img {
     margin-bottom: 0 !important;
   }
