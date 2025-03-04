@@ -136,6 +136,7 @@
     <HongBaoYu2025 v-if="list.redirectUrl === 'dy2-cny2025-red-envelope'" :promo-code="list.promoCode" />
     <Monthly20HongBaoYu v-if="list.redirectUrl === 'dy2-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'dy-official-gift'" :params="list.param" />
+    <PGLBucharest2025 v-if="list.redirectUrl === 'dy2-pgl-bucharest-2025'" :promo-code="list.promoCode" />
     <PGLOnFireBuenosAires2025
       v-if="list.redirectUrl === 'dy2-pgl-on-fire-buenos-aires-2025'"
       :promo-code="list.promoCode"
@@ -298,6 +299,7 @@ const Dota2BlastSlam2025 = defineAsyncComponent(() => import("../components/hotp
 const KatowiceS25 = defineAsyncComponent(()=>import("./hotpromo/katowice-s-25/KatowiceS25.vue"))
 import SkyesportsSouvenir2025 from "./hotpromo/skyesports-souvenir-2025/SkyesportsSouvenir2025.vue";
 import PGLOnFireBuenosAires2025 from "./hotpromo/pgl-on-fire-buenos-aires-2025/PGLOnFireBuenosAires2025.vue";
+import PGLBucharest2025 from "./hotpromo/pgl-bucharest-2025/PGLBucharest2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -308,6 +310,7 @@ export default defineComponent({
     LanternFestival2025,
     AgYuanxiaohongbao,
     PGLOnFireBuenosAires2025,
+    PGLBucharest2025,
     SkyesportsSouvenir2025,
     KatowiceS25,
     OfficialGiftPromo,
