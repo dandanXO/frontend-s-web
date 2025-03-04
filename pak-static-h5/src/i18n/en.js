@@ -69,6 +69,10 @@ export default {
       app: "App",
       addToHomeScreen: "Add to Home Screen",
       enjoyMoreBenefits: "Enjoy more benefits!"
+    },
+    homeCodeBonus: {
+      congratsWonFreeCash: "Congratulations, you've won free cash!",
+      enterCodeToClaim: "Please enter the cash redemption code to claim it."
     }
   },
   form: {
@@ -239,7 +243,8 @@ export default {
     close: "Close",
     details: "Details",
     transfer: "Transfer",
-    signinWithGoogle: "Google"
+    signinWithGoogle: "Google",
+    goNow: "Go Now"
   },
   notify: {
     noRecord: "No Record",

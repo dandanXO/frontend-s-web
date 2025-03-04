@@ -68,6 +68,10 @@ export default {
       app: "ایپ",
       addToHomeScreen: "ہوم اسکرین پر شامل کریں",
       enjoyMoreBenefits: "زیادہ فوائد سے لطف اندوز ہوں!"
+    },
+    homeCodeBonus: {
+      congratsWonFreeCash: "مبارک ہو، آپ نے مفت نقدی جیت لی ہے!",
+      enterCodeToClaim: "اسے دعوی کرنے کے لیے نقدی کا کوڈ درج کریں۔"
     }
   },
   form: {
@@ -237,7 +241,8 @@ export default {
     close: "بند کریں",
     details: "تفصیلات",
     transfer: "تبادلہ کرنا",
-    signinWithGoogle: "Google"
+    signinWithGoogle: "Google",
+    goNow: "اب جائیں"
   },
   notify: {
     noRecord: "کوئی ریکارڈ نہیں",
