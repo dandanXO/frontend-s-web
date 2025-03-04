@@ -3,10 +3,10 @@
     <div class="record-dialog-inner-wrapper">
       <div class="tab-wrapper">
         <div class="tab" :class="{ selected: currentTab === 'invitation' }" @click="handleTabClick('invitation')">
-          Invitation records
+          Catatan Undangan
         </div>
         <div class="tab" :class="{ selected: currentTab === 'lottery' }" @click="handleTabClick('lottery')">
-          Lottery records
+          Catatan Lotere
         </div>
       </div>
 
@@ -21,7 +21,7 @@
 <!--                  <span>Invitation successful</span>-->
                 </div>
               </template>
-              <span v-else class="no-record-text">No Records</span>
+              <span v-else class="no-record-text">Tidak Ada Catatan</span>
             </div>
           </q-tab-panel>
           <q-tab-panel name="lottery">
@@ -29,10 +29,10 @@
               <template v-if="lotteryRecords.length">
                 <div v-for="(record, index) in lotteryRecords" :key="index" class="record">
                   <span>{{ moment(record.time).format("MM-DD HH:mm:ss") }}</span>
-                  <span class="amount">${{ record.amount }}</span>
+                  <span class="amount">{{ `${store.currency.value} ${record.amount}` }}</span>
                 </div>
               </template>
-              <span v-else class="no-record-text">No Records</span>
+              <span v-else class="no-record-text">Tidak Ada Catatan</span>
             </div>
           </q-tab-panel>
         </q-tab-panels>
@@ -45,10 +45,11 @@
 import moment from "moment";
 import { eventapi } from "src/boot/axios";
 import { computed, ref } from "vue";
+import { userStore } from "stores/index";
 
 const props = defineProps(["modelValue", "prize"]);
 const emit = defineEmits(["update:modelValue"]);
-
+const store = userStore();
 const currentTab = ref("invitation");
 const invitationRecords = ref([]);
 const lotteryRecords = ref([]);

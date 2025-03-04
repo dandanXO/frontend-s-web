@@ -8,7 +8,7 @@
           <span class="amount">{{ info.currAmount }}</span>
         </span> -->
 
-        <GradientTextAmount :amountText="`$ ${info.currAmount}`" />
+        <GradientTextAmount :amountText="`${store.currency.value} ${info.currAmount}`" />
 
         <template v-if="extractionDifference > 0 && info.status === 'IN_PROGRESS'">
           <ProgressBar />
@@ -17,12 +17,12 @@
 
         <button v-else-if="info.status === 'IN_PROGRESS'" class="receive-btn" @click="handleReceiveClick">
           <img src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/coin-2.png" />
-          <span>RECEIVE</span>
+          <span>TERIMA</span>
         </button>
 
         <button v-else-if="info.status === 'CLAIMED'" class="receive-btn disabled">
           <img src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/coin-2.png" />
-          <span>RECEIVED</span>
+          <span>DITERIMA</span>
         </button>
 
         <div class="winning-record-outer-wrapper">
@@ -31,8 +31,8 @@
               <span>{{ moment(record.date).format("MM-DD hh:mm:ss") }}</span>
               <span class="name">{{ record.name }}</span>
               <span>
-                RECEIVE
-                <span class="amount">$500</span>
+                TERIMA
+                <span class="amount">{{ `${store.currency.value} 500K` }}</span>
               </span>
             </div>
           </div>
@@ -45,7 +45,7 @@
             />
             <img class="decoration ox" src="../../../assets/images/promotion/spin-lucky-wheel/decoration-ox.png" />
 
-            <div class="countdown">Next Round: {{ remainingTime }}</div>
+            <div class="countdown">Putaran Berikutnya: {{ remainingTime }}</div>
             <div class="wheel-inner-wrapper">
               <img
                 ref="spinWheelRef"
@@ -57,9 +57,9 @@
                 src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/wheel-indicate.png"
               />
               <button class="btn" :class="{ disabled: !info.spinChance || isClaimedStatus }" @click="handleWheelClick">
-                rotate
+                putar
                 <br />
-                {{ info.spinChance }} time
+                {{ info.spinChance }} kali
               </button>
             </div>
 
@@ -71,9 +71,9 @@
               class="decoration rabbit"
               src="../../../assets/images/promotion/spin-lucky-wheel/decoration-rabbit.png"
             />
-            <CommonButton v-if="isClaimedStatus" class="draw-btn disabled">Invite To Earn Spin</CommonButton>
-            <CommonButton v-else class="draw-btn" @click="handleInviteClick">Invite To Earn Spin</CommonButton>
-            <span class="next-spin-remaining-time" v-if="!isClaimedStatus">Countdown to next free spins: {{ nextFreeSpinRemainingTime }}</span>
+            <CommonButton v-if="isClaimedStatus" class="draw-btn disabled">Undang Untuk Mendapatkan Putaran</CommonButton>
+            <CommonButton v-else class="draw-btn" @click="handleInviteClick">Undang Untuk Mendapatkan Putaran</CommonButton>
+            <span class="next-spin-remaining-time" v-if="!isClaimedStatus">Hitung Mundur ke Putaran Gratis Berikutnya: {{ nextFreeSpinRemainingTime }}</span>
           </div>
         </div>
       </div>
@@ -85,36 +85,32 @@
         <div class="title-decoration">
           <div v-for="index in 3" :key="index"></div>
         </div>
-        <span>Activity rules</span>
+        <span>Aturan Kegiatan</span>
         <div class="title-decoration">
           <div v-for="index in 3" :key="index"></div>
         </div>
       </div>
       <ol>
         <li>
-          When the accumulated amount reaches $500, you can apply for withdrawal (Rewards will add to your wallet
-          directly).
+          Ketika jumlah yang terakumulasi mencapai {{ `${store.currency.value} 500K` }}, Anda dapat mengajukan penarikan (Hadiah akan langsung ditambahkan ke dompet Anda).
         </li>
-        <li>When there are no spin available, refer a new player to get a free spin.</li>
+        <li>Ketika tidak ada putaran yang tersedia, referensikan pemain baru untuk mendapatkan putaran gratis.</li>
         <li>
-          The event lasts for 3 days. After the event, the accumulated bonus will be reset, and the event will start
-          again.
+          Acara berlangsung selama 3 hari. Setelah acara, bonus yang terakumulasi akan direset, dan acara akan dimulai lagi.
         </li>
         <li>
-          Each user can enjoy one free spin opportunity per day, the free spins will be added at 12:00 a.m. every day.
+          Setiap pengguna dapat menikmati satu kesempatan putaran gratis per hari, putaran gratis akan ditambahkan pada pukul 12:00 pagi setiap hari.
         </li>
-        <li>After the application is approved, the bonus is deposited directly into your wallet.</li>
-        <li>The bonus needs to be rolled over once before it can be withdrawn.</li>
+        <li>Setelah aplikasi disetujui, bonus akan langsung dimasukkan ke dompet Anda.</li>
+        <li>Bonus perlu diputar sekali sebelum dapat ditarik.</li>
         <li>
-          The invitee must bind their phone number and register via inviter's invitation link to be considered for the
-          recommendation.
-        </li>
-        <li>
-          The more your invitees play on the website, the higher your next spin reward will be. Invite friends and win more rewards together!
+          Invitee harus mengikat nomor telepon mereka dan mendaftar melalui tautan undangan pengundang untuk dipertimbangkan dalam rekomendasi.
         </li>
         <li>
-          The right to interpret the event belongs to 55Ace. If you have any questions, please contact to customer
-          service.
+          Semakin banyak invitee yang bermain di situs web, semakin tinggi hadiah putaran berikutnya. Undang teman-teman dan menangkan lebih banyak hadiah bersama!
+        </li>
+        <li>
+          Hak untuk menafsirkan acara ada pada 55Ace. Jika Anda memiliki pertanyaan, silakan hubungi layanan pelanggan.
         </li>
       </ol>
     </div>
@@ -135,11 +131,12 @@ import { useQuasar } from "quasar";
 import ProgressBar from './ProgressBar.vue';
 import CashOutPopup from "./CashOutPopup.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
+import { userStore } from "@/stores/index";
 
 const emit = defineEmits(["reload"]);
 const props = defineProps(["info"]);
 const { info } = toRefs(props);
-
+const store = userStore();
 
 const TOTAL_ITEMS = 6;
 const DEFAULT_SPEED = 1;
@@ -263,8 +260,8 @@ const handleInviteClick = () => {
 const getRemainingTime = (endTime) => {
   let result = "00:00:00";
   if (endTime) {
-    const now = moment(Date.now()).tz("Asia/Kolkata");
-    const _endTime = moment(endTime).tz("Asia/Kolkata");
+    const now = moment(Date.now()).tz("Asia/Jakarta");
+    const _endTime = moment(endTime).tz("Asia/Jakarta");
     const totalSeconds = _endTime.diff(now, "seconds");
     if (totalSeconds > 0) {
       const hours = Math.floor(totalSeconds / 3600);
@@ -297,8 +294,8 @@ const handleRecordClick = () => {
 
 const updateCountdownTime = () => {
   // console.log("updateCountdownTime")
-  const endTime = isClaimedStatus.value ? moment().tz("Asia/Kolkata").add(1, "days").startOf("day") : moment(info.value.startTime).tz("Asia/Kolkata").add(3, "days");
-  const nextFreeSpinEndTime = moment().tz("Asia/Kolkata").add(1, "days").startOf("day");
+  const endTime = isClaimedStatus.value ? moment().tz("Asia/Jakarta").add(1, "days").startOf("day") : moment(info.value.startTime).tz("Asia/Jakarta").add(3, "days");
+  const nextFreeSpinEndTime = moment().tz("Asia/Jakarta").add(1, "days").startOf("day");
   if(timer.value){
     clearTimeout(timer.value);
   }

@@ -4,9 +4,9 @@
             <InviteWins />
         </div>
         <div class="cash-out" v-else>
-            <GradientTextAmount v-if="isShowTextAmount" :amountText="`CASH OUT COSTS  ${extractionDifference}$`" />
+            <GradientTextAmount v-if="isShowTextAmount" :amountText="`CASH OUT COSTS  ${store.currency.value} ${extractionDifference}$`" />
             <div v-else class="text-amount-placeholder"></div>
-            <span class="next-spin-remaining-time">Next Round: {{ remainingTime }}</span>
+            <span class="next-spin-remaining-time">Putaran Berikutnya: {{ remainingTime }}</span>
             <div class="cash-out-backdrop-wrapper">
                 <div class="pulse1"></div>
                 <div class="pulse2"></div>
@@ -17,7 +17,7 @@
                     src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/cash-out-backdrop.png" />
             </div>
             <ProgressBar :isShowDetails="true" />
-            <CommonButton class="invite-wins-btn" @click="showInviteWins">Invitation wins</CommonButton>
+            <CommonButton class="invite-wins-btn" @click="showInviteWins">Undangan menang</CommonButton>
         </div>
     </q-dialog>
 </template>
@@ -27,7 +27,9 @@ import CommonButton from "./CommonButton.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
 import ProgressBar from "./ProgressBar.vue";
 import InviteWins from "./InviteWins.vue";
+import { userStore } from "@/stores/index";
 
+const store = userStore();
 const props = defineProps(["modelValue"]);
 const emit = defineEmits(["update:modelValue", "hide"]);
 const showInviteWins = () => isShowInviteWins.value = true;
