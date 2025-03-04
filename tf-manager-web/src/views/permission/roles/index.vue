@@ -73,6 +73,25 @@
         >
           {{ t('fields.delete') }}
         </el-button>
+        <!-- 添加导出按钮 -->
+        <el-button
+          icon="el-icon-download"
+          size="mini"
+          type="success"
+          @click="exportRoleButton"
+          :disabled="rolesID.length !== 1"
+        >
+          {{ t('fields.exportToExcel') }}
+        </el-button>
+        <!-- 添加导入按钮 -->
+        <el-button
+          icon="el-icon-upload"
+          size="mini"
+          type="primary"
+          @click="showImportDialog"
+        >
+          {{ t('fields.import') }}
+        </el-button>
       </div>
     </div>
     <el-dialog
@@ -328,6 +347,126 @@
         </div>
       </div>
     </el-dialog>
+
+
+    <el-dialog
+      :title="t('fields.importRole')"
+      v-model="importControl.dialogVisible"
+      width="60%"
+      :close-on-click-modal="false"
+      >
+      <el-steps
+        class="steps"
+        :space="200"
+        :active="importControl.activeStep"
+        finish-status="success"
+        align-center
+      >
+        <el-step :title="t('fields.import')" />
+        <el-step :title="t('fields.roleDetails')" />
+        <el-step :title="t('fields.permissionAssignment')" />
+      </el-steps>
+
+      <!-- Step 1: Upload File -->
+      <div v-if="importControl.activeStep === 0">
+        <el-upload
+          ref="uploadRef"
+          class="upload-demo"
+          :limit="1"
+          :on-change="handleFileUpload"
+          :auto-upload="false"
+          accept=".xlsx"
+          style="text-align: center;"
+        >
+          <el-button type="primary">{{ t('fields.import') }}</el-button>
+        </el-upload>
+      </div>
+
+      <!-- Step 2: Role Details -->
+      <div v-if="importControl.activeStep === 1">
+        <el-form
+          ref="importForm"
+          :model="form"
+          label-width="120px"
+          size="small"
+        >
+          <el-form-item :label="t('fields.roleName')" prop="name">
+            <el-input v-model="form.name" />
+          </el-form-item>
+          <el-form-item :label="t('fields.site')" prop="siteId">
+            <el-select
+              v-model="form.siteId"
+              :placeholder="t('fields.site')"
+              filterable
+              default-first-option
+            >
+              <el-option
+                v-for="item in siteList.list"
+                :key="item.id"
+                :label="item.siteName"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item :label="t('fields.remark')" prop="remark">
+            <el-input
+              type="textarea"
+              :rows="6"
+              v-model="form.remark"
+              maxlength="500"
+              show-word-limit
+            />
+          </el-form-item>
+        </el-form>
+      </div>
+
+      <!-- Step 3: Permission Assignment -->
+      <div v-if="importControl.activeStep === 2">
+        <el-card style="margin-top: 20px;">
+          <el-tree
+            ref="importTree"
+            show-checkbox
+            accordion
+            node-key="id"
+            :data="menus.list"
+            highlight-current
+            :default-checked-keys="importControl.selectedMenuIds"
+          >
+            <template #default="{node, data}">
+              <div>
+                <span>{{ data.name }}</span>
+                <span v-if="data.remark" class="tree-node">{{ data.remark }}</span>
+              </div>
+            </template>
+          </el-tree>
+        </el-card>
+      </div>
+
+      <template #footer>
+        <el-button
+          v-if="importControl.activeStep > 0"
+          @click="importControl.activeStep--"
+        >
+          {{ t('fields.back') }}
+        </el-button>
+        <el-button
+          v-if="importControl.activeStep < 2"
+          type="primary"
+          @click="nextStep"
+          :disabled="!canProceed"
+        >
+          {{ t('fields.nextStep') }}
+        </el-button>
+        <el-button
+          v-if="importControl.activeStep === 2"
+          type="primary"
+          @click="submitImport"
+        >
+          {{ t('fields.confirm') }}
+        </el-button>
+      </template>
+    </el-dialog>
+
     <div class="body-container">
       <el-card class="roles" shadow="never">
         <template #header>
@@ -497,6 +636,17 @@
       </el-card> -->
     </div>
   </div>
+  <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
+             :close-on-click-modal="false" :close-on-press-escape="false"
+  >
+    <span>{{ t('message.requestExportToExcelDone1') }}</span>
+    <router-link :to="`/site-management/download-manager`">
+      <el-link type="primary">
+        {{ t('menu.DownloadManager') }}
+      </el-link>
+    </router-link>
+    <span>{{ t('message.requestExportToExcelDone2') }}</span>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -512,6 +662,7 @@ import {
   getRoles,
   updateRole,
   updateRolePermission,
+  exportRole,
 } from '../../../api/roles'
 import { fetchSimpleMenu } from '../../../api/menus'
 import { getSiteListSimple } from '../../../api/site'
@@ -519,6 +670,7 @@ import { hasPermission } from '../../../utils/util'
 import { useStore } from '../../../store'
 import { ADMIN, TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
+import * as XLSX from 'xlsx'
 
 const { t } = useI18n()
 const store = useStore()
@@ -536,7 +688,8 @@ const uiControl = reactive({
   createLoading: false,
   copyLoading: false,
   permissionLoading: false,
-  treeLoading: false
+  treeLoading: false,
+  messageVisible: false
 })
 const roleToCopy = reactive({
   id: null,
@@ -852,6 +1005,128 @@ function next() {
       active.value = 1;
     }
   })
+}
+
+// 导出角色
+async function exportRoleButton() {
+  if (rolesID.length !== 1) {
+    ElMessage({ message: t('message.roleMustOnlyOne'), type: 'error' })
+  }
+
+  const { data: ret } = await exportRole(request.siteId, rolesID[0].id)
+  if (ret) {
+    uiControl.messageVisible = true;
+  }
+}
+
+// 导入角色
+const importControl = reactive({
+  dialogVisible: false,
+  activeStep: 0,
+  fileLoaded: false,
+  selectedMenuIds: [],
+  loading: false
+})
+
+const canProceed = computed(() => {
+  switch (importControl.activeStep) {
+    case 0:
+      return importControl.fileLoaded
+    case 1:
+      return form.name && form.siteId
+    case 2:
+      return true
+    default:
+      return false
+  }
+})
+
+const uploadRef = ref(null)
+
+function showImportDialog() {
+  importControl.dialogVisible = true
+  importControl.activeStep = 0
+  importControl.fileLoaded = false
+  importControl.selectedMenuIds = []
+
+  // 重置表单数据
+  form.name = ''
+  form.siteId = null
+  form.remark = ''
+
+  // 清空文件上传组件
+  if (uploadRef.value) {
+    uploadRef.value.clearFiles()
+  }
+}
+
+function handleFileUpload(file) {
+  const allowFileType = [
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/vnd.ms-excel',
+  ]
+
+  if (allowFileType.find(ftype => ftype.includes(file.raw.type))) {
+    const fileReader = new FileReader()
+
+    fileReader.onload = event => {
+      const { result } = event.target
+      const workbook = XLSX.read(result, { type: 'binary' })
+      const sheet = workbook.Sheets[workbook.SheetNames[0]]
+      const data = XLSX.utils.sheet_to_json(sheet)
+
+      if (data.length > 0) {
+        const firstRow = data[0]
+
+        // 检查必要字段是否存在
+        const requiredFields = ['name', 'siteId', 'menuIds', 'remark']
+        const missingFields = requiredFields.filter(field => !(field in firstRow))
+        if (missingFields.length > 0) {
+          console.log(missingFields)
+          ElMessage({ message: t('message.invalidFile'), type: 'error' })
+          return false
+          // throw new Error(t('message.missingColumns', { columns: missingFields.join(', ') }))
+        }
+
+        form.name = firstRow.name || ''
+        form.siteId = request.siteId || null
+        form.remark = firstRow.remark || ''
+        importControl.selectedMenuIds = firstRow.menuIds
+          ? firstRow.menuIds.split(',').map(Number)
+          : []
+        importControl.fileLoaded = true
+      }
+    }
+    fileReader.readAsBinaryString(file.raw)
+  }
+}
+
+function nextStep() {
+  if (importControl.activeStep < 2) {
+    importControl.activeStep++
+  }
+}
+
+const importTree = ref(null)
+
+async function submitImport() {
+  try {
+    importControl.loading = true
+
+    const checkedKeys = importTree.value.getCheckedNodes(false, true).map(c => c.id)
+    const roleData = {
+      ...form,
+      menuIds: checkedKeys.join(',')
+    }
+    await createRoleWithPermission(roleData)
+    ElMessage.success(t('message.importSuccess'))
+    importControl.dialogVisible = false
+    loadData()
+  } catch (error) {
+    ElMessage.error(t('message.importFailed'))
+  } finally {
+    importControl.loading = false
+  }
 }
 
 onMounted(async () => {
