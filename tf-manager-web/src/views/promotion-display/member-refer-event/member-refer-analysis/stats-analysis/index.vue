@@ -20,7 +20,6 @@
           size="small"
           style="width: 200px; margin-left: 10px;"
           :placeholder="t('fields.referrer')"
-          v-if="!hasPermission(['sys:privi:member-refer-friend-stats:search'])"
         />
         <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadStatsAnalysis()">
           {{ t('fields.search') }}
@@ -101,7 +100,6 @@ import moment from "moment";
 import { getShortcuts } from "@/utils/datetime";
 import { getAnalysisRecord } from "@/api/member-refer-friend-analysis";
 import { getSiteListSimple } from "@/api/site";
-import { hasPermission } from "@/utils/util";
 
 const { t } = useI18n();
 const store = useStore();
