@@ -351,12 +351,11 @@ import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import qs from "qs";
-// import PrimaryButton from "../components/auth/PrimaryButton.vue";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
-import { isAndroid, isInPwa, trackNewUserFtd } from "boot/utils";
+import { isAndroid, isInPwa, generateEventID } from "boot/utils";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
 import { useI18n } from "vue-i18n";
@@ -703,7 +702,8 @@ export default defineComponent({
                 //FB Tracking.
                 if (store.isFbPixel || store.isTkPixel) {
                   if (store.isFbPixel) {
-                    fbq("track", "CompleteRegistration");
+                    const eventID = generateEventID();
+                    fbq("track", "CompleteRegistration", {}, { eventID: eventID });
                   }
                   if (store.isTkPixel) {
                     ttq.track("CompleteRegistration", { content_type: "product" }, { event_id: Date.now() });
