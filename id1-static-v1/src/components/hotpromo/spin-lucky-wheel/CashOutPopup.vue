@@ -111,7 +111,7 @@ const handleDialogShow = () => {
 @media screen and (max-width: 500px) {
     .cash-out {
         .prize {
-            font-size: 11vw;
+            font-size: 26px;
         }
     }
 }

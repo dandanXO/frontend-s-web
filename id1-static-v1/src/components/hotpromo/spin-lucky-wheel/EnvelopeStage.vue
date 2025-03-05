@@ -21,13 +21,13 @@
             </span>
             <br />
             <span class="prize">
-              {{ prize.prize }}
+              {{ `${convertToCommaAmount(Number(prize.prize) / 1000)}K` }}
             </span>
           </div>
         </button>
       </div>
       <div v-else class="selected-envelope">
-        <span class="prize">{{ store.currency.value }} {{ prizeList[selectedIndex]?.prize }}</span>
+        <span class="prize">{{ store.currency.value }} {{ `${convertToCommaAmount(Number(prizeList[selectedIndex]?.prize) / 1000)}K` }}</span>
         <CommonButton class="withdraw-btn" @click="$emit('envelopeClick')">"Tarik sekarang!</CommonButton>
         <span class="remaining-time">waktu tersisa: {{ remainingTime }}</span>
       </div>
@@ -43,6 +43,7 @@ import { onUnmounted, ref } from "vue";
 import CommonButton from "./CommonButton.vue";
 import { eventapi } from "src/boot/axios";
 import { userStore } from "stores/index";
+import { convertToCommaAmount } from "@/boot/utils";
 
 defineEmits(["envelopeClick"]);
 const store = userStore();
@@ -179,10 +180,11 @@ onUnmounted(() => {
         top: 26%;
         width: 100%;
         transform: translateY(-50%);
-        font-size: 50px;
+        font-size: 30px;
         font-weight: 900;
         color: #8100ae;
         text-align: center;
+        letter-spacing: -1px;
       }
 
       .withdraw-btn {
@@ -240,7 +242,7 @@ onUnmounted(() => {
 
       .selected-envelope {
         .prize {
-          font-size: 30px;
+          font-size: 26px;
         }
         .remaining-time {
           font-size: 4vw;
