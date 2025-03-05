@@ -3775,5 +3775,6 @@ export default {
     45302: 'Member does not belong to any affiliate',
     50002: 'The maximum amount for adjustment has been exceeded',
     53000: 'Login name cannot be empty',
+    53001: 'Referrer cannot be empty',
   },
 }

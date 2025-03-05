@@ -8,7 +8,7 @@ import { Platform, SessionStorage, useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
-import { isAndroid, isInPwa, trackNewUserFtd, getRndInteger } from "boot/utils";
+import { isAndroid, isInPwa, trackNewUserFtd, getRndInteger, generateEventID } from "boot/utils";
 import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
@@ -247,11 +247,17 @@ export default defineComponent({
         .then((data) => {
           console.log("Success:", data);
           const randomValue = Math.floor(Math.random() * (999 - 300 + 1)) + 300;
+          const randUuid = generateEventID();
           if (data.data.sendEvent === "ftd") {
-            fbq("track", "Purchase", {
-              currency: "PKR",
-              value: randomValue
-            });
+            fbq(
+              "track",
+              "Purchase",
+              {
+                currency: "PKR",
+                value: randomValue
+              },
+              { eventID: randUuid }
+            );
           }
           // alert(JSON.stringify(data));
         })

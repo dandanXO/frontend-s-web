@@ -52,6 +52,7 @@
     <VctcnMatchPromo v-if="list.redirectUrl === 'lh1-vctcn'" :promo-code="list.promoCode" />
     <HongBaoYu2025 v-if="list.redirectUrl === 'hongbaoyu-2025'" :promo-code="list.promoCode" />
     <Monthly20HongBaoYu v-if="list.redirectUrl === 'lh1-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
+    <PGLBucharest2025 v-if="list.redirectUrl === 'lh1-pgl-bucharest-2025'" :promo-code="list.promoCode" />
     <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
     <VctBangkok v-if="list.redirectUrl === 'lh1-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
     <DreamLeagueS25 v-else-if="list.redirectUrl === 'lh1-dream-league-s25'" :promo-code="list.promoCode" />
@@ -161,9 +162,9 @@ const Dota2BlastSlam2025 = defineAsyncComponent(() =>
   import("../components/hotpromo/dota2-blast-slam-2025/Dota2BlastSlam2025.vue")
 );
 const DarkModePromo = defineAsyncComponent(() => import("../components/hotpromo/dark-mode/DarkModePromo.vue"));
-const EslProLeagueS21 = defineAsyncComponent(() =>
-  import("./hotpromo/esl-pro-league-s21/EslProLeagueS21.vue")
-);
+const EslProLeagueS21 = defineAsyncComponent(() => import("./hotpromo/esl-pro-league-s21/EslProLeagueS21.vue"));
+
+const PGLBucharest2025 = defineAsyncComponent(() => import("./hotpromo/pgl-bucharest-2025/PGLBucharest2025.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -208,6 +209,7 @@ export default defineComponent({
     VctcnMatchPromo,
     HongBaoYu2025,
     Monthly20HongBaoYu,
+    PGLBucharest2025,
     Belgrade2025Promo,
     lh1Vctcn,
     DreamLeagueS25,
