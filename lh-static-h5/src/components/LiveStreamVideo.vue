@@ -156,7 +156,7 @@ const handleWrapperMouseEnter = () => {
 };
 
 const handleWrapperMouseLeave = () => {
-  setTimeout(() => (showPlayerController.value = false), 8500);
+  setTimeout(() => (showPlayerController.value = false), 2500);
 };
 
 onMounted(async () => {
