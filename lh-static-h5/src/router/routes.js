@@ -30,6 +30,16 @@ const routes = [
     children: [{ path: "", component: () => import("pages/HotMatchPage.vue") }]
   },
   {
+    path: "/livestream",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/livestream/LiveStreamPage.vue") }]
+  },
+  {
+    path: "/livestream/streamplayer",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/livestream/StreamPlayerPage.vue") }]
+  },
+  {
     path: "/liveChat",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/LiveChatPage.vue") }]
