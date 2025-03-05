@@ -2,6 +2,7 @@
   <div class="envelope-stage-wrapper">
     <div class="envelope-stage-inner-wrapper">
       <img
+        style="width:100%;"
         class="title"
         src="../../../assets/images/promotion/spin-lucky-wheel/envelope-stage/title.png"
         alt="get cash every day"
@@ -32,7 +33,7 @@
       </div>
       <img class="footer tiger" src="../../../assets/images/promotion/spin-lucky-wheel/decoration-tiger.png" />
       <img class="footer rabbit" src="../../../assets/images/promotion/spin-lucky-wheel/decoration-rabbit.png" />
-      <img class="footer coin" src="../../../assets/images/promotion/spin-lucky-wheel/envelope-stage/footer-coin.png" />
+      <img class="footer coin" style="width:100%;" src="../../../assets/images/promotion/spin-lucky-wheel/envelope-stage/footer-coin.png" />
     </div>
   </div>
 </template>

@@ -48,6 +48,7 @@
             <div class="countdown">Putaran Berikutnya: {{ remainingTime }}</div>
             <div class="wheel-inner-wrapper">
               <img
+                style="width:100%;"
                 ref="spinWheelRef"
                 class="wheel"
                 src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/wheel-bg.png"
@@ -73,7 +74,7 @@
             />
             <CommonButton v-if="isClaimedStatus" class="draw-btn disabled">Undang Untuk Mendapatkan Putaran</CommonButton>
             <CommonButton v-else class="draw-btn" @click="handleInviteClick">Undang Untuk Mendapatkan Putaran</CommonButton>
-            <span class="next-spin-remaining-time" v-if="!isClaimedStatus">Hitung Mundur ke Putaran Gratis Berikutnya: {{ nextFreeSpinRemainingTime }}</span>
+            <span class="next-spin-remaining-time" v-if="!isClaimedStatus">Putaran Gratis yang Akan Datang: {{ nextFreeSpinRemainingTime }}</span>
           </div>
         </div>
       </div>

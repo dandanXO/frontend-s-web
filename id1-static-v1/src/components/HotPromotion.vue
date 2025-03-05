@@ -98,7 +98,7 @@ export default defineComponent({
         this.selectedHotPromo = element;
       }
     });
-    if (this.list.redirectUrl === "id1-slot-ftd" || this.list.id === 40) {
+    if (this.list.redirectUrl === "id1-slot-ftd" || this.list.id === 40 || this.list.redirectUrl === 'spin-lucky-wheel') {
       this.isCommonPromo = false;
     } else {
       this.isCommonPromo = true;

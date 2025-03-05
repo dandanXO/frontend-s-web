@@ -120,14 +120,14 @@ const handleDialogShow = () => {
     justify-content: center;
     font-family: Inter;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 17px;
     line-height: 24.2px;
     letter-spacing: 0px;
 }
 
 @media screen and (max-width: 400px) {
     .next-spin-remaining-time {
-        font-size: 18px;
+        font-size: 16px;
     }
 }
 
