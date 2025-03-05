@@ -24,7 +24,7 @@
           <img
             @click="claimHongBao"
             class="hongbao-1"
-            style="width: 215px; margin: auto"
+            style="width: 215px; height: 178px; margin: auto"
             :src="require(`../../../assets/promo/slots-bonus/hongbao.png`)"
           />
         </div>
