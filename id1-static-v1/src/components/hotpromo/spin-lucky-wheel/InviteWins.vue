@@ -32,14 +32,14 @@ const isLoading = ref(false);
 
 const selfTgurl = ref("");
 const copyShareLink = (selfTgurl) => {
-  const copiedText = `Do you want to unlock your ${store.currency.value}500K reward right away? Click the link: ${selfTgurl}`;
+  const copiedText = `"Apakah Anda ingin membuka ${store.currency.value}500K hadiah anda segera? Klik tautan ini: ${selfTgurl}`;
 
   copyToClipboard(copiedText)
     .then(() => {
       $q.notify({
         color: "position",
         position: "top",
-        message: `${selfTgurl} copied to clipboard`,
+        message: `${selfTgurl} disalin ke papan klip`,
         icon: "check_circle_outline"
       });
     })
@@ -47,7 +47,7 @@ const copyShareLink = (selfTgurl) => {
       $q.notify({
         color: "negative",
         position: "top",
-        message: "Failed",
+        message: "Gagal",
         icon: "report_problem"
       });
     });
@@ -74,7 +74,7 @@ const downloadQRImg = async () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "QR Code image saved to photo gallery.",
+          message: "Gambar QR Code disimpan ke galeri foto.",
           icon: "check_circle_outline"
         });
 
@@ -102,7 +102,7 @@ const downloadQRImg = async () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "QR Code image saved to photo gallery.",
+          message: "Gambar QR Code disimpan ke galeri foto.",
           icon: "check_circle_outline"
         });
 
