@@ -67,7 +67,6 @@ body {
 .download-content {
   width: 70%;
   padding-right: 20px;
-  position: relative;
   padding-bottom: 36px;
 }
 
@@ -89,14 +88,20 @@ body {
   text-align: center;
 }
 
+.download-btn-container {
+  position: sticky;
+  bottom: 0;
+}
+
 .download-btn-info {
   width: 128px;
   position: absolute;
-  bottom: 0;
+  bottom: 54px;
   right: 50px;
 }
 
 .download-btn {
+  height: 48px;
   width: calc(100% - 40px);
   background: linear-gradient(180deg, #ffa600 0%, #ff3b00 100%);
   border: none;
