@@ -378,6 +378,8 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .wheel-stage-wrapper {
   height: 710px;
+  max-width: 320px;
+  margin: 0 auto;
   img {
     margin-bottom: 0 !important;
   }

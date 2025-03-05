@@ -1,35 +1,39 @@
 <template>
-  <q-dialog v-model="_modelValue" @hide="hideSharePopup" @show="handleDialogShow">
-  
-    <a @click="hideSharePopup" class="q-mt-sm">
-          <img src="../../../assets/images/index/btn-back.png" width="30" />
-      </a>
-      <div class="page-title-wrapper">
-        <div class="title-container">
-          <span class="title">Share</span>
+  <q-dialog position="top" class="share-popup" v-model="_modelValue" @hide="hideSharePopup" @show="handleDialogShow">
+      <div class="top">
+        <a @click="hideSharePopup">
+            <img src="../../../assets/images/index/btn-back.png" width="30" />
+        </a>
+        <div class="page-title-wrapper">
+          <div class="title-container">
+            <span class="title">Share</span>
+          </div>
         </div>
       </div>
-    <q-carousel
-      v-model="slide"
-      transition-prev="fade-right"
-      transition-next="fade-left"
-      swipeable
-      animated
-      navigation
-      nopadding
-      height="70vh"
-      class="sharepopupslider q-pa-md q-mb-xl"
-    >
-      <q-carousel-slide 
-        v-for="i in 6" 
-        :key="i" 
-        :name="i" 
-        class="rounded-borders"
-        style="width: 80%; margin: 0 auto; border-radius: 20px;"
-      >
-        <q-img class="rounded-borders col-6 full-height" :src="require(`../spin-lucky-wheel/img/share-${i}.png`)" />
-      </q-carousel-slide>
-    </q-carousel>
+      <div class="carousel-container" ref="captureRef">
+        <q-carousel
+          v-model="slide"
+          transition-prev="fade-right"
+          transition-next="fade-left"
+          swipeable
+          navigation
+          nopadding
+          class="sharepopupslider q-pa-md q-mb-xl"
+        >
+          <q-carousel-slide
+            v-for="i in 6" 
+            :key="i" 
+            :name="i" 
+            class="rounded-borders"
+            style="width: 100%; margin: 0 auto; border-radius: 20px;"
+          >
+            <q-img class="rounded-borders col-6 full-height" :src="require(`../spin-lucky-wheel/img/share-${i}.png`)" />
+            
+            <VueQRCodeComponent class="qr-code" size="100" :text="qrCode" />
+          </q-carousel-slide>
+        </q-carousel>
+        
+      </div>
     <div class="bottom-panel">
       <div class="share-icons">
         <div class="invite-share-social">
@@ -51,9 +55,9 @@
           <img src="../../../assets/images/earn-money/social-green-instagram.png" />
           <span class="grey">Instagram</span>
         </a>
-        <a class="social-item" @click="handleShareToTikTok(selfTgurl)">
-          <img src="../../../assets/images/earn-money/social-green-tiktok.png" />
-          <span class="grey">Tik Tok</span>
+        <a class="social-item" @click="takeScreenshot">
+          <img src="../../../assets/images/earn-money/social-green-download.png" />
+          <span class="grey">Save Image</span>
         </a>
         <a ref="tiktokRef" href="tiktok://" target="_blank" :style="{ display: 'none' }" />
         <a class="social-item" @click="modalSocialShare = true">
@@ -92,21 +96,75 @@
             <a class="social-item" @click="handleShareToEmail(selfTgurl)">
               <img src="../../../assets/images/earn-money/social-email.png" />
             </a>
+            <a class="social-item" @click="handleShareToTikTok(selfTgurl)">
+              <img src="../../../assets/images/earn-money/social-green-tiktok.png" />
+            </a>
           </div>
         </div>
       </div>
     </q-dialog>
 </template>
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, nextTick } from "vue";
 import { copyToClipboard, useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
 import { api } from "boot/axios";
 import { userStore } from "stores/index";
+import VueQRCodeComponent from "vue-qrcode-component";
+import html2canvas from "html2canvas";
 const { t } = useI18n();
 const slide = ref(1);
 const props = defineProps(["modelValue", "prize"]);
 const emit = defineEmits(["update:modelValue", "hide"]);
+
+const captureRef = ref(null);
+
+
+const takeScreenshot = async () => {
+  await nextTick(); // Ensure the DOM is fully updated
+
+  if (captureRef.value) {
+    html2canvas(captureRef.value, {
+      backgroundColor: null, // Ensures transparency
+    }).then((canvas) => {
+      const ctx = canvas.getContext("2d");
+
+      // Original image dimensions
+      const originalWidth = canvas.width;
+      const originalHeight = canvas.height;
+
+      // Crop dimensions (80% height)
+      const cropWidth = originalWidth * 0.75;
+      const cropHeight = originalHeight * 0.88;
+
+      // Calculate the starting Y position (centered crop)
+      const startX = (originalWidth - cropWidth) / 2; // Keep full width
+      const startY = (originalHeight - cropHeight) / 2 - 18; // Center vertically
+
+      // Create a new canvas for cropped image
+      const croppedCanvas = document.createElement("canvas");
+      croppedCanvas.width = cropWidth;
+      croppedCanvas.height = cropHeight;
+      const croppedCtx = croppedCanvas.getContext("2d");
+      
+      // Enable transparency
+      croppedCtx.clearRect(0, 0, cropWidth, cropHeight);
+      croppedCtx.drawImage(
+        canvas,
+        startX, startY, cropWidth, cropHeight, // Source (original)
+        0, 0, cropWidth, cropHeight // Destination (cropped canvas)
+      );
+
+      // Convert to image and download
+      const timeStamp = Date.now();
+      const image = croppedCanvas.toDataURL("image/png");
+      const link = document.createElement("a");
+      link.href = image;
+      link.download = `b9share-1-${timeStamp}.png`;
+      link.click();
+    }).catch((err) => console.error("Screenshot error:", err));
+  }
+};
 // const showInviteWins = () => (isShowInviteWins.value = true);
 // const isShowTextAmount = ref(false);
 
@@ -205,11 +263,16 @@ const copyHrefLink = () => {
     });
 };
 
+
+const qrCode = computed(() => {
+  return selfTgurl.value;
+});
 onMounted(() => {
   
-  let tgDomain = window.location.origin + "/";
+
+  let tgDomain = location.origin;
   if (store.isApp()) {
-    tgDomain = store.evip ? "https://" + store.evip + "/" : store.h5Url;
+    tgDomain = 'https://' + store.evip;
   }
 
   api.get("/session/member/referralCode").then((res) => {
@@ -219,11 +282,59 @@ onMounted(() => {
   });
 })
 </script>
+<style>
+.share-popup {
+  .q-dialog__inner {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    max-width: 500px;
+}
+}
+
+</style>
 <style lang="scss" scoped>
+.share-popup {
+  display: flex;
+  max-width: 500px;
+  flex-direction: column;
+  margin: 0 auto;
+  .top {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+  }
+}
+.carousel-container {
+  width: 100%;
+  // height: 900px;
+  // margin-bottom: 15vh;
+    // width: 320px;
+    // height: 470px;
+    
+    // margin-top: -30vh;
+  position: relative;
+}
 .sharepopupslider {
+  .qr-code {
+    position: absolute;  
+    // right: 50px;
+    // bottom: 68px;
+    
+    right: 14%;
+    bottom: 12%;
+  }
   background: transparent;
   &.q-carousel {
     width: 90%;
+    max-width: 400px;
+    margin: 0 auto;
+    height: unset;
+
+    // max-width: 280px;
+    position: relative;
     // :deep(.q-carousel__navigation) {
     //   bottom: -15px;
     // }
@@ -304,7 +415,7 @@ onMounted(() => {
   // box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
   border-radius: 12px 12px 0 0;
-  margin: 0;
+  margin: auto;
   .choices {
     display: flex;
     width: 100%;
@@ -381,7 +492,7 @@ onMounted(() => {
 
 .modal-invite-share-social {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-gap: 12px;
   margin-top: 16px;
   // display: none !important;
