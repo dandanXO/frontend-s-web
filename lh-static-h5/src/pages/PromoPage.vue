@@ -156,14 +156,16 @@
                   meizhoubei:
                     selectedPromo.promoCode === 'lh1meizhoubei' || selectedPromo.promoCode === 'lh1-olympic-fund',
                   aijiasu: selectedPromo.promoCode === 'lh1-aijiasu',
-                  euroRegen: selectedPromo.promoCode === 'lh1-eurocup-regen'
+                  euroRegen: selectedPromo.promoCode === 'lh1-eurocup-regen',
+                  'lh1-2025-pgl-s3': selectedPromo.promoCode === 'lh1-2025-pgl-s3'
                 }"
                 :style="[
                   selectedPromo.promoCode === 'lh-eurocup-manual' ||
                   selectedPromo.promoCode === 'lh1-deposit-rebates' ||
                   selectedPromo.redirectUrl === 'lh-blackmyth-wukong' ||
                   selectedPromo.redirectUrl === 'lh1-ag-yuanxiaohongbao' ||
-                  selectedPromo.promoCode === 'lh1-daily-checkin'
+                  selectedPromo.promoCode === 'lh1-daily-checkin'||
+                  selectedPromo.promoCode === 'lh1-2025-pgl-s3'
                     ? 'background-image: url(' +
                       imgURL +
                       (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
@@ -1040,7 +1042,12 @@ export default defineComponent({
         &.lhinvite {
           width: 100%;
         }
-
+        &.lh1-2025-pgl-s3 {
+          margin: 0px;
+          width: 100%;
+          gap: 0px;
+          padding: 0px 16px 20px;
+        } 
         &.lheuromanual {
           margin: 0px;
           width: 100%;
