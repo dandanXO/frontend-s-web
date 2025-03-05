@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>55Ace</title>
+
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  </head>
+  <body id="pak-landing-v2">
+    <div class="main-container">
+      <div class="header">
+        <img class="header-logo" src="imgs/header-logo.png" />
+      </div>
+      <div class="banner-container">
+        <img class="banner" src="imgs/aviator-banner.png" />
+        <img class="banner" src="imgs/jili-banner.png" />
+        <img class="banner" src="imgs/100-plus-games-banner.png" />
+        <img class="banner" src="imgs/table-games-banner.png" />
+      </div>
+      <div class="download-info-container">
+        <img class="download-promotional-img" src="imgs/download-promotional-img.png" />
+        <div class="download-content">
+          <div class="download-content-item">
+            <div class="download-txt-bg">DOWNLOAD THE APP AND GET Rs500 Invitation Bonus</div>
+            <div class="download-txt">Secure Encryption To Protect Your Privacy</div>
+          </div>
+          <div class="download-content-item">
+            <div class="download-txt-bg">Small size, Fast Installation</div>
+            <div class="download-txt">High-quality Mobile Application Experience</div>
+          </div>
+          <div class="download-content-item">
+            <div class="download-txt-bg">24/7 Online Customer Support</div>
+            <div class="download-txt">Completely Free And Available On All Devices</div>
+          </div>
+          <img class="download-btn-info" src="imgs/download-btn-info.png" />
+        </div>
+      </div>
+      <button class="download-btn" id="downloadBtn">Download App</button>
+    </div>
+    <script type="text/javascript">
+      const searchParams = new URLSearchParams(window.location.search);
+      let affidValue = searchParams.get("p0") || searchParams.get("id");
+      const campaignname = searchParams.get("p1") || searchParams.get("campaignname");
+      const campaignid = searchParams.get("p2") || searchParams.get("campaignid");
+      const adsetid = searchParams.get("p3") || searchParams.get("adsetid");
+      const adsetname = searchParams.get("p4") || searchParams.get("adsetname");
+      const adname = searchParams.get("p5") || searchParams.get("adname");
+      const adid = searchParams.get("p6") || searchParams.get("adid");
+      const fbclid = searchParams.get("fbclid");
+      const fbpid = searchParams.get("fbpid");
+      const autoDownload = searchParams.get("autoDownload");
+
+      affidValue = affidValue ?? "A3048D";
+
+      var apiUrl = "";
+      var adjustUrlCode = "";
+      getApiUrl();
+
+      async function getApiUrl() {
+        var button;
+
+        let affiliateLists = {
+          A3048D: {
+            adCode: "1cjl84xe",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/5/affiliate/1796386315862343681/android/apk/1.0.21_20240814145813.apk"
+          }
+        };
+
+        adjustUrlCode = affiliateLists[affidValue]["adCode"];
+        apiUrl = affiliateLists[affidValue]["url"];
+
+        button = document.getElementById("downloadBtn");
+        button.onclick = function () {
+          downloadApk(code, pp, fbclid, fbpid);
+          return false;
+        };
+
+        if (autoDownload == "1") {
+          downloadApk(code, pp, fbclid, fbpid);
+        }
+      }
+
+      function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+          var pair = vars[i].split("=");
+          if (pair[0] == variable) {
+            return pair[1];
+          }
+        }
+        return "";
+      }
+
+      var code = getQueryVariable("code");
+      var pp = new Array(7);
+      for (let i = 0; i < pp.length; i++) {
+        pp[i] = getQueryVariable("p" + i);
+        pp[i] = pp[i].replace(/{|}/g, "");
+      }
+
+      button = document.getElementById("downloadBtn");
+      button.onclick = function () {
+        downloadApk(code, pp, fbclid, fbpid);
+        return false;
+      };
+
+      function downloadApk(code, pp, fbvar, fbpid) {
+        console.log(apiUrl);
+        var date = Date.now();
+        var url =
+          `https://app.adjust.com/${adjustUrlCode}?campaign=${campaignname}%20%28${campaignid}%29&adgroup=${adsetname}%20%28${adsetid}%29&creative=${adname}%20%28${adid}%29&fbclid=${fbclid}&redirect=${apiUrl}?v=` +
+          date;
+        // alert(url)
+        const link = document.createElement("a");
+        link.style.display = "none";
+        link.href = url;
+        link.download = "ph1-app-1.0.1.apk";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    </script>
+  </body>
+</html>
