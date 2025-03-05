@@ -48,6 +48,8 @@
       <button class="download-btn" id="downloadBtn">Download App</button>
     </div>
     <script type="text/javascript">
+      console.log("PK3 Download");
+      
       const searchParams = new URLSearchParams(window.location.search);
       let affidValue = searchParams.get("p0") || searchParams.get("id");
       const campaignname = searchParams.get("p1") || searchParams.get("campaignname");
