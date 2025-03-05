@@ -17,12 +17,12 @@
                   {{ translateRecord(det[obj], recordType) }}
                 </div>
                 <div v-else-if="obj === 'depositAmount'">
-                  <div class="row items-center justify-between">
+                  <div class="items-center justify-between row">
                     <div>{{ det[obj] }}</div>
                   </div>
                 </div>
                 <div v-else-if="obj === 'withdrawAmount'">
-                  <div class="row items-center justify-between">
+                  <div class="items-center justify-between row">
                     <div>{{ det[obj] }}</div>
 
                     <div v-if="recordType === 'withdraw' && det.status === 'STEP_1'" class="buttons">
@@ -42,10 +42,10 @@
                   </q-link>
                 </div>
                 <div v-else-if="obj === 'status'">
-                  <div class="row items-center justify-between">
+                  <div class="items-center justify-between row">
                     <div
                       v-if="det[obj] == 'PENDING' || det[obj] == 'STEP_1'"
-                      class="row items-center justify-start gap-3"
+                      class="items-center justify-start gap-3 row"
                     >
                       <!--                    <img src="../assets/records/info-icon.png"/>-->
                       <span class="text-black text-bold">
@@ -54,26 +54,26 @@
                     </div>
                     <div
                       v-else-if="det[obj] == 'SUCCESS' || det[obj] === 2 || det[obj] == 'SUPPLEMENT_SUCCESS'"
-                      class="row items-center justify-start gap-3"
+                      class="items-center justify-start gap-3 row"
                     >
                       <img src="../assets/records/success-icon.png" />
                       <span class="text-positive">
                         {{ checkRecord(det[obj], recordType) }}
                       </span>
                     </div>
-                    <div v-else-if="det[obj] == 'FAIL'" class="row items-center justify-start gap-3">
+                    <div v-else-if="det[obj] == 'FAIL'" class="items-center justify-start gap-3 row">
                       <img src="../assets/records/error-icon.png" />
                       <span class="text-negative">
                         {{ checkRecord(det[obj], recordType) }}
                       </span>
                     </div>
-                    <div v-else-if="det[obj] == 'CANCEL'" class="row items-center justify-start gap-3">
+                    <div v-else-if="det[obj] == 'CANCEL'" class="items-center justify-start gap-3 row">
                       <img src="../assets/records/warning-icon.png" />
                       <span class="text-warning">
                         {{ checkRecord(det[obj], recordType) }}
                       </span>
                     </div>
-                    <div v-else class="row items-center justify-start gap-3">
+                    <div v-else class="items-center justify-start gap-3 row">
                       <!--                    <img src="../assets/records/info-icon.png"/>-->
                       <span class="text-black text-bold">
                         {{ checkRecord(det[obj], recordType) }}
@@ -85,7 +85,7 @@
                   {{ checkRecord(det[obj]) }}
                 </div>
                 <div v-else-if="obj === 'paymentType'">
-                  <div class="row items-center justify-between">
+                  <div class="items-center justify-between row">
                     <div>{{ checkRecord(det[obj]) }}</div>
                     <div v-if="recordType === 'deposit' && det.status === 'PENDING'" class="buttons">
                       <q-btn round size="xs" color="bright" class="btn-deposit" @click="feedbackTrans(det)">
@@ -125,7 +125,7 @@
                           @click="copyText(det.serialNumber, '存款编码')"
                            outline
                            size="md"
-                           class="btn-cfm-deposit bg-greyblue row justify-between items-center"
+                           class="items-center justify-between btn-cfm-deposit bg-greyblue row"
                            icon="content_copy"
                            label="复制"
                          />
@@ -140,7 +140,7 @@
                            @click="openWithdrawConfirmDialog(det)"
                            outline
                            size="md"
-                           class="btn-cfm-deposit bg-greyblue row justify-between items-center"
+                           class="items-center justify-between btn-cfm-deposit bg-greyblue row"
                            icon="check_circle"
                            label="确认到账"
                          />
@@ -175,15 +175,15 @@
 
         <template v-slot:loading>
           <div v-if="comList.length > 0">
-            <div class="row justify-center q-my-md">
+            <div class="justify-center row q-my-md">
               <q-spinner-dots color="primary" size="40px" />
             </div>
           </div>
           <div v-else class="q-pa-md" style="text-align: center">
-            <div class="row justify-center q-my-md" v-if="!isEnded">
+            <div class="justify-center row q-my-md" v-if="!isEnded">
               <q-spinner-dots color="primary" size="40px" />
             </div>
-            <span style="padding: 4px 0px; line-height: 36px" v-if="isEnded">没有更多数据了</span>
+            <span style="padding: 4px 0px; line-height: 36px" >没有更多数据了</span>
           </div>
         </template>
       </q-infinite-scroll>
@@ -193,7 +193,7 @@
   <q-input style="width: 100%; opacity: 0" filled color="white" ref="copyinput" v-model="text_copied" />
 
   <q-dialog v-model="reminderDialog" width="100%" no-backdrop-dismiss no-esc-dismis>
-    <q-card class="reminder-dialog-card bg-white text-black" style="width: 100%; padding: 0px 0px 20px">
+    <q-card class="text-black bg-white reminder-dialog-card" style="width: 100%; padding: 0px 0px 20px">
       <q-card-section>
         <q-toolbar>
           <q-toolbar-title>催单</q-toolbar-title>
@@ -240,7 +240,7 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isConfirmWithdraw">
-    <q-card style="width: 100%; padding: 20px; text-align: center" class="bg-white text-black">
+    <q-card style="width: 100%; padding: 20px; text-align: center" class="text-black bg-white">
       <q-card-section class="q-mb-md">
         系统提示
         <br />
@@ -253,7 +253,7 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isCancelWithdraw">
-    <q-card style="width: 100%; padding: 20px" class="bg-white text-black">
+    <q-card style="width: 100%; padding: 20px" class="text-black bg-white">
       <q-card-section class="q-mb-md">
         系统提示
         <br />
@@ -322,23 +322,26 @@ export default defineComponent({
     const passDet = ref(null);
 
     const onLoad = (index, done) => {
+      
       comList.value = props.list;
       // console.log("onLoad");
       // console.log(comList.value);
       setTimeout(() => {
+        console.log('inin',comList.value.length,props.isEnded)
+        truncatedList.value = []
         if (!props.isEnded) {
           if (comList.value.length) {
-            var slicedArray = comList.value.splice(0, 3);
+            var slicedArray = comList.value
             slicedArray.forEach((element) => {
               truncatedList.value.push(element);
             });
             done();
-          } else if (comList.value.length === 0) {
-            context.emit("loadnewdata");
-            done();
+          } else if (comList.value.length === 0 ) {
+            // context.emit("loadnewdata");
+            // done();
           }
         }
-      }, 100);
+      }, 30);
     };
 
     const openWithdrawConfirmDialog = (det) => {

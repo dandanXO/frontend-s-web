@@ -1,6 +1,8 @@
 <template>
+  <RecordDateFilter class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="handleDateChange" />
   <div class="table-record">
     <RecordComponent
+      ref="recordRef"
       recordType="moneyChange"
       :loading="visible"
       :list="tableData"
@@ -17,42 +19,34 @@ import moment from "moment";
 import {api} from "boot/axios";
 import {userStore} from "src/stores";
 import {cached, TIME_EXPIRED} from "boot/cache";
+import RecordDateFilter from "../../components/RecordDateFilter.vue";
 
 export default defineComponent({
   name: "MoneyChangeRecordView",
   components: {
-    RecordComponent
+    RecordComponent,
+    RecordDateFilter
   },
   setup() {
     const visible = ref(true);
     const tableData = ref([]);
     const isEnded = ref(false);
-
+    const recordRef = ref();
     var apiUrl = "/session/member/moneyChange";
 
 
-    var endDate = moment().format("YYYY-MM-DD");
-    var startDate = moment().add(-7, "days").format("YYYY-MM-DD");
+  const endDate = ref(moment().format("YYYY-MM-DD"));
+  const startDate = ref(moment().add(-7, "days").format("YYYY-MM-DD"));
     var current = ref(1);
     var maxPage = ref(0);
     var pagingState = ref("")
 
     const loadNewData = () => {
-      if(maxPage.value > current.value){
+      if (maxPage.value > current.value) {
         current.value++;
-      }else {
-        current.value = 1;
-        endDate = moment(startDate).add(-1, "days").format("YYYY-MM-DD");
-        console.log(endDate);
-
-        startDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
-        console.log(startDate);
-
-        if (endDate <= moment().add(-29, "days").format("YYYY-MM-DD")) {
-          console.log("mor than 3 months");
-          isEnded.value = true;
-          return;
-        }
+      } else {
+        isEnded.value = true;
+        return;
       }
       loadDepositTable(false);
     };
@@ -61,19 +55,19 @@ export default defineComponent({
       if (isNew) {
         visible.value = true;
       }
-      console.log(startDate);
+      console.log(startDate.value);
       console.log(endDate);
 
       let paramData = {
-        "startDate": startDate,
-        "endDate": endDate,
+        "startDate": startDate.value,
+        "endDate": endDate.value,
         "size": 10,
         "current": current.value
       };
       if(pagingState.value && current.value !== 1){
         paramData["pagingState"]= pagingState.value;
       }
-      var apiKey = apiUrl + "_" + startDate + "_" + endDate + "_" + current.value;
+      var apiKey = apiUrl + "_" + startDate.value + "_" + endDate.value + "_" + current.value;
       console.log(apiKey);
 
       cached.get(apiKey, () => api.get(apiUrl, {
@@ -101,6 +95,11 @@ export default defineComponent({
         }
 
         tableData.value.push(...res.records);
+        if(!tableData.value.length){
+          isEnded.value = true;
+        }else{
+          isEnded.value = false;
+        }
       }).catch((err) => {
         if (isNew) {
           visible.value = false;
@@ -179,7 +178,14 @@ export default defineComponent({
         label: "时间"
       }
     ]);
-
+    const handleDateChange = (data) => {
+      const {val, isStartDate} = data;
+      isStartDate ? startDate.value = val : endDate.value = val;
+      tableData.value = [];
+      current.value = 1;
+      recordRef.value.clearTable();
+      loadDepositTable();
+    };
     onMounted(() => {
       current.value = 1;
       loadDepositTable();
@@ -190,7 +196,11 @@ export default defineComponent({
       tableHeaders,
       visible,
       loadNewData,
-      isEnded
+      isEnded,
+      startDate,
+      endDate,
+      handleDateChange,
+      recordRef
     };
   }
 });
