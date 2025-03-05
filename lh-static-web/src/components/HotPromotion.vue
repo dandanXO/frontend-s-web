@@ -127,7 +127,7 @@
       :promo-code="list.promoCode"
     />
     <SkyesportsSouvenir2025 v-if="list.redirectUrl === 'lh1-skyesports-souvenir-2025'" :promo-code="list.promoCode" />
-    <Dota2Pgl
+    <EslProLeagueS21
       v-if="list.redirectUrl === 'lh1-esl-pro-league-s21'"
       :promo-param="listParam"
       :promo-code="list.promoCode"
