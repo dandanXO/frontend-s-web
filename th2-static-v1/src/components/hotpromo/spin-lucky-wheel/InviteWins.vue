@@ -32,7 +32,7 @@ const isLoading = ref(false);
 
 const selfTgurl = ref("");
 const copyShareLink = (selfTgurl) => {
-  const copiedText = `Do you want to unlock your ${store.currency.value}500 reward right away? Click the link: ${selfTgurl}`;
+  const copiedText = `คุณต้องการปลดล็อกรางวัลของคุณ ${store.currency.value}500 ทันทีหรือไม่? คลิกที่ลิงก์: ${selfTgurl}`;
 
   copyToClipboard(copiedText)
     .then(() => {
@@ -74,14 +74,14 @@ const downloadQRImg = async () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "QR Code image saved to photo gallery.",
+          message: "รูปภาพ QR Code ถูกบันทึกลงในแกลเลอรีรูปภาพ.",
           icon: "check_circle_outline"
         });
 
         canvas.style.display = "none";
       });
     } catch (error) {
-      console.error("Error saving QR Code image:", error);
+      console.error("เกิดข้อผิดพลาดในการบันทึกรูปภาพ QR Code:", error);
     }
   }else if(window.location.pathname === "/promotion") {
 
@@ -102,14 +102,14 @@ const downloadQRImg = async () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "QR Code image saved to photo gallery.",
+          message: "รูปภาพ QR Code ถูกบันทึกลงในแกลเลอรีรูปภาพ.",
           icon: "check_circle_outline"
         });
 
         canvas.style.display = "none";
       });
     } catch (error) {
-      console.error("Error saving QR Code image:", error);
+      console.error("เกิดข้อผิดพลาดในการบันทึกรูปภาพ QR Code:", error);
     }
 
 
