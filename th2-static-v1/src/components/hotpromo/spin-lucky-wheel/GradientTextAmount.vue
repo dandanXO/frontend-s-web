@@ -48,7 +48,7 @@ const isLongText = computed(() => props?.amountText?.length > 10);
 @media screen and (max-width: 400px) {
     .gradient-amount-wrapper {
         .amount {
-            font-size: 40px;
+            font-size: 30px;
 
             &.longText {
                 font-size: 22px;

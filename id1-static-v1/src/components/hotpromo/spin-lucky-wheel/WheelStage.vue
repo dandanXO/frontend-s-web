@@ -8,7 +8,7 @@
           <span class="amount">{{ info.currAmount }}</span>
         </span> -->
 
-        <GradientTextAmount :amountText="`${store.currency.value} ${convertToCommaAmount(Number(info.currAmount) / 1000)}K`" />
+        <GradientTextAmount :amountText="`${store.currency.value} ${info.currAmount}`" />
 
         <template v-if="extractionDifference > 0 && info.status === 'IN_PROGRESS'">
           <ProgressBar />
@@ -366,7 +366,7 @@ onUnmounted(() => {
         color: #fff;
         font-family: 'Poppins';
         font-weight: 400;
-        font-size: 12px;
+        font-size: 11px;
         line-height: 16px;
         letter-spacing: 0px;
         text-align: left;

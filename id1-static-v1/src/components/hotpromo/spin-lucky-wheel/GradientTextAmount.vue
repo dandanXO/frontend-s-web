@@ -1,6 +1,6 @@
 <template>
     <div class="gradient-amount-wrapper" :class="{ longText: isLongText }">
-        <svg class="prize" width="100%" :height="isLongText ? 50 : 60" style="" xmlns="http://www.w3.org/2000/svg">
+        <svg class="prize" width="100%" :height="isLongText ? 30 : 60" style="" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <linearGradient id="gradientAmount" gradientTransform="rotate(90)">
                     <stop offset="0%" stop-color="#FDFD7A" />
@@ -28,7 +28,7 @@ const isLongText = computed(() => props?.amountText?.length > 10);
     align-items: center;
 
     &.longText {
-        height: 50px;
+        height: 30px;
     }
 
     .amount {
@@ -39,7 +39,7 @@ const isLongText = computed(() => props?.amountText?.length > 10);
         text-shadow: 1px 3px #791802;
 
         &.longText {
-            font-size: 20px;
+            font-size: 24px;
             letter-spacing: -1px;
         }
     }
@@ -48,10 +48,10 @@ const isLongText = computed(() => props?.amountText?.length > 10);
 @media screen and (max-width: 400px) {
     .gradient-amount-wrapper {
         .amount {
-            font-size: 40px;
+            font-size: 30px;
 
             &.longText {
-                font-size: 18px;
+                font-size: 20px;
                 letter-spacing: -1px;
             }
         }

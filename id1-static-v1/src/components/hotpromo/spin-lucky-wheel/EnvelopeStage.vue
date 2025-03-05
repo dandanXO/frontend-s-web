@@ -21,13 +21,13 @@
             </span>
             <br />
             <span class="prize">
-              {{ `${convertToCommaAmount(Number(prize.prize) / 1000)}K` }}
+              {{ prize.prize }}
             </span>
           </div>
         </button>
       </div>
       <div v-else class="selected-envelope">
-        <span class="prize">{{ store.currency.value }} {{ `${convertToCommaAmount(Number(prizeList[selectedIndex]?.prize) / 1000)}K` }}</span>
+        <span class="prize">{{ store.currency.value }} {{ prizeList[selectedIndex]?.prize }}</span>
         <CommonButton class="withdraw-btn" @click="$emit('envelopeClick')">"Tarik sekarang!</CommonButton>
         <span class="remaining-time">waktu tersisa: {{ remainingTime }}</span>
       </div>
@@ -158,7 +158,7 @@ onUnmounted(() => {
           color: #8100ae;
 
           .prize {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 900;
             line-height: 28px;
           }
@@ -180,7 +180,7 @@ onUnmounted(() => {
         top: 26%;
         width: 100%;
         transform: translateY(-50%);
-        font-size: 30px;
+        font-size: 26px;
         font-weight: 900;
         color: #8100ae;
         text-align: center;

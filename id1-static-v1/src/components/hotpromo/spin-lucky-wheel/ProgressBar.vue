@@ -6,7 +6,7 @@
     </div>
 
     <div class="extraction-remaining-progress" v-if="props?.isShowDetails">
-        <span class="extraction-require-amount">Hanya tersisa <span class="amount">{{ `${store.currency.value} ${convertToCommaAmount(Number(extractionDifference) / 1000)}K` }}</span> lagi</span>
+        <span class="extraction-require-amount">Hanya tersisa <span class="amount">{{ `${store.currency.value} ${extractionDifference}` }}</span> lagi</span>
         <span class="extraction-require-percentage">{{ `${remainingRequired.toFixed(2)}%` }}</span>
     </div>
 </template>
@@ -31,7 +31,7 @@ const progressBarIndicatePosition = computed(() => {
     color: #fff;
     font-family: 'Poppins';
     font-weight: 400;
-    font-size: 12px;
+    font-size: 11px;
     line-height: 16px;
     letter-spacing: 0px;
     text-align: left;
