@@ -1,0 +1,25 @@
+@mixin livestream-content-block {
+  background-color: #fff;
+  border-radius: 18px;
+  box-shadow: 0px 3.77px 20.76px 0px #00000026;
+}
+
+@mixin livestream-team-emblem {
+  @include livestream-content-block;
+  padding: 7px;
+  border-radius: 50%;
+  img {
+    display: block;
+    max-width: 30px;
+  }
+}
+
+@mixin livestream-on-air {
+  background-color: #1ac1a2;
+  padding: 0 5px;
+  border-radius: 4px;
+  font-size: 10px;
+  line-height: 13px;
+  font-weight: 500;
+  color: #fff;
+}
