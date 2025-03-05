@@ -127,12 +127,12 @@
       :promo-code="list.promoCode"
     />
     <SkyesportsSouvenir2025 v-if="list.redirectUrl === 'lh1-skyesports-souvenir-2025'" :promo-code="list.promoCode" />
-    <EslProLeagueS21
+    <Dota2Pgl
       v-if="list.redirectUrl === 'lh1-esl-pro-league-s21'"
       :promo-param="listParam"
       :promo-code="list.promoCode"
     />
-    
+
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -1024,8 +1024,8 @@ export default defineComponent({
       font-size: 1rem;
       font-weight: 400;
       line-height: 28px;
-      color: #fff ;
-      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%) ;
+      color: #fff;
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
       white-space: pre-wrap;
 
       &:not(:last-child) {
@@ -1103,7 +1103,7 @@ export default defineComponent({
     letter-spacing: 3px;
     margin: 0 auto;
     color: transparent;
-    background: linear-gradient(270.62deg, #E6CC93 -6.62%, #FFF1E1 101.55%);
+    background: linear-gradient(270.62deg, #e6cc93 -6.62%, #fff1e1 101.55%);
     -webkit-background-clip: text;
   }
 
