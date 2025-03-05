@@ -25,7 +25,7 @@
             <span class="prepend-number">{{ $t("form.prependNumber") }}</span>
           </template>
           <template v-if="regForm.referrer" v-slot:append>
-            <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">{{ otpCountdown > 0 ? `Get Code (${otpCountdown})` : 'Get Code' }}</q-btn>
+            <q-btn style="font-size:10px;" :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">{{ otpCountdown > 0 ? `Dapatkan Kode (${otpCountdown})` : 'Dapatkan Kode' }}</q-btn>
           </template>
         </q-input>
         <q-input
@@ -65,13 +65,13 @@
           hide-bottom-space
           v-model="regForm.smsCode"
           :rules="[
-            (val) => (val && val.length > 0) || 'Please insert OTP number',
-            (val) => (val && val.length === 6) || 'The OTP number must have 6 digits'
+            (val) => (val && val.length > 0) || 'Silakan masukkan nomor OTP',
+            (val) => (val && val.length === 6) || 'Nomor OTP harus terdiri dari 6 digit'
           ]"
           color="white"
           class="landing-input"
           outlined
-          placeholder="Enter your OTP number"
+          placeholder="Masukkan nomor OTP Anda"
           label-color="brand"
         >
           <template v-slot:prepend>
@@ -111,13 +111,13 @@
       <q-card class="captcha-form-wrapper" width="100%">
         <q-card-section class="q-pa-md bg-brightbtn text-white">
           <q-toolbar>
-            <q-toolbar-title>Verification Code</q-toolbar-title>
+            <q-toolbar-title>Kode Verifikasi</q-toolbar-title>
             <q-btn flat v-close-popup round dense icon="close" />
           </q-toolbar>
         </q-card-section>
         <div class="q-px-lg q-pt-sm q-pb-lg">
           <q-card-section class="q-mb-md q-pa-md">
-            <q-input v-model="innerCaptchaRef" placeholder="Captcha Code">
+            <q-input v-model="innerCaptchaRef" placeholder="Kode Captcha">
               <template v-slot:append>
                 <img
                   v-show="showImageCode"
@@ -131,7 +131,7 @@
               </template>
             </q-input>
           </q-card-section>
-          <q-btn class="get-code-btn" @click="onCaptchaSubmit" label="Send OTP" />
+          <q-btn class="get-code-btn" @click="onCaptchaSubmit" label="Kirim OTP" />
         </div>
       </q-card>
     </q-dialog>
@@ -461,7 +461,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: "Phone number cannot be empty",
+          message: "Nomor telepon tidak boleh kosong",
           icon: "report_problem"
         });
         getInnerCode();
@@ -477,7 +477,7 @@ export default defineComponent({
           })
         )
         .then((res) => {
-          let message = res.message || "OTP sent to phone successfully",
+          let message = res.message || "OTP berhasil dikirim ke ponsel",
             color = "positive";
 
           if (res.code === 0) {
@@ -496,7 +496,7 @@ export default defineComponent({
           } else {
             color = "negative";
             if(res.code === 1402) {
-              message = `Please try again after ${res.data.second} seconds`;
+              message = `Silakan coba lagi setelah ${res.data.second} detik`;
 
                // start otp countdown
               otpCountdown.value = res.data.second || 60;

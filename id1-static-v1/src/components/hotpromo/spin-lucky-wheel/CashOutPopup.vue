@@ -4,7 +4,7 @@
             <InviteWins />
         </div>
         <div class="cash-out" v-else>
-            <GradientTextAmount v-if="isShowTextAmount" :amountText="`CASH OUT COSTS  ${store.currency.value} ${extractionDifference}$`" />
+            <GradientTextAmount v-if="isShowTextAmount" :amountText="`BIAYA PENARIKAN TUNAI  ${store.currency.value} ${convertToCommaAmount(Number(extractionDifference) / 1000)}K`" />
             <div v-else class="text-amount-placeholder"></div>
             <span class="next-spin-remaining-time">Putaran Berikutnya: {{ remainingTime }}</span>
             <div class="cash-out-backdrop-wrapper">
@@ -28,6 +28,7 @@ import GradientTextAmount from "./GradientTextAmount.vue";
 import ProgressBar from "./ProgressBar.vue";
 import InviteWins from "./InviteWins.vue";
 import { userStore } from "@/stores/index";
+import { convertToCommaAmount } from "@/boot/utils";
 
 const store = userStore();
 const props = defineProps(["modelValue"]);

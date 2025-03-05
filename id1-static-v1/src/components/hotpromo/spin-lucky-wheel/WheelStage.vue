@@ -8,7 +8,7 @@
           <span class="amount">{{ info.currAmount }}</span>
         </span> -->
 
-        <GradientTextAmount :amountText="`${store.currency.value} ${info.currAmount}`" />
+        <GradientTextAmount :amountText="`${store.currency.value} ${convertToCommaAmount(Number(info.currAmount) / 1000)}K`" />
 
         <template v-if="extractionDifference > 0 && info.status === 'IN_PROGRESS'">
           <ProgressBar />
@@ -72,14 +72,14 @@
               class="decoration rabbit"
               src="../../../assets/images/promotion/spin-lucky-wheel/decoration-rabbit.png"
             />
-            <CommonButton v-if="isClaimedStatus" class="draw-btn disabled">Undang Untuk Mendapatkan Putaran</CommonButton>
-            <CommonButton v-else class="draw-btn" @click="handleInviteClick">Undang Untuk Mendapatkan Putaran</CommonButton>
+            <CommonButton v-if="isClaimedStatus" class="draw-btn disabled">Undang Untuk<br/>Mendapatkan Putaran</CommonButton>
+            <CommonButton v-else class="draw-btn" @click="handleInviteClick">Undang Untuk<br/>Mendapatkan Putaran</CommonButton>
             <span class="next-spin-remaining-time" v-if="!isClaimedStatus">Putaran Gratis yang Akan Datang: {{ nextFreeSpinRemainingTime }}</span>
           </div>
         </div>
       </div>
 
-      <button class="record-btn" @click="handleRecordClick">Record</button>
+      <button class="record-btn" @click="handleRecordClick">Catatan</button>
     </div>
     <div class="block-wrapper">
       <div class="title-wrapper">
@@ -133,6 +133,7 @@ import ProgressBar from './ProgressBar.vue';
 import CashOutPopup from "./CashOutPopup.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
 import { userStore } from "@/stores/index";
+import { convertToCommaAmount } from "@/boot/utils";
 
 const emit = defineEmits(["reload"]);
 const props = defineProps(["info"]);
@@ -569,6 +570,8 @@ onUnmounted(() => {
             position: relative;
             max-width: 70%;
             margin: -5% auto 0;
+            font-size: 14px;
+            line-height: 18px;
           }
 
           .next-spin-remaining-time {

@@ -1,7 +1,7 @@
 <template>
   <q-dialog v-model="_modelValue" @hide="$emit('hide')">
     <div class="wheel-result-wrapper">
-      <span class="prize">+{{store.currency.value}} {{ props.prize?.toFixed(4) }}</span>
+      <span class="prize">+{{store.currency.value}} {{ `${convertToCommaAmount(Number(props.prize) / 1000)?.toFixed(4)}K` }}</span>
       <CommonButton class="close-btn" v-close-popup>Oke</CommonButton>
     </div>
   </q-dialog>
