@@ -6,7 +6,7 @@
     </div>
 
     <div class="extraction-remaining-progress" v-if="props?.isShowDetails">
-        <span class="extraction-require-amount">Only <span class="amount">{{ `${store.currency.value} ${convertToCommaAmount(Number(extractionDifference) / 1000)}K` }}</span> to go</span>
+        <span class="extraction-require-amount">Hanya tersisa <span class="amount">{{ `${store.currency.value} ${convertToCommaAmount(Number(extractionDifference) / 1000)}K` }}</span> lagi</span>
         <span class="extraction-require-percentage">{{ `${remainingRequired.toFixed(2)}%` }}</span>
     </div>
 </template>
