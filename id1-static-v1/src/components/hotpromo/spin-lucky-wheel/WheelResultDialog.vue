@@ -1,7 +1,7 @@
 <template>
   <q-dialog v-model="_modelValue" @hide="$emit('hide')">
     <div class="wheel-result-wrapper">
-      <span class="prize">+{{store.currency.value}} {{ `${convertToCommaAmount(Number(props.prize) / 1000)?.toFixed(4)}K` }}</span>
+      <span class="prize">+{{store.currency.value}} {{ `${convertToCommaAmount(Number(props.prize?.toFixed(4)) / 1000)}K` }}</span>
       <CommonButton class="close-btn" v-close-popup>Oke</CommonButton>
     </div>
   </q-dialog>
@@ -10,6 +10,7 @@
 import { computed } from "vue";
 import CommonButton from "./CommonButton.vue";
 import { userStore } from "stores/index";
+import { convertToCommaAmount } from "@/boot/utils";
 
 const props = defineProps(["modelValue", "prize"]);
 const emit = defineEmits(["update:modelValue", "hide"]);
