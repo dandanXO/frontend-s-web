@@ -1,5 +1,5 @@
 <template>
-  <div class="abs-container" :class="`abs-${localType}-${localStep}`">
+  <div style="padding-bottom: env(safe-area-inset-bottom);" class="abs-container" :class="`abs-${localType}-${localStep}`">
     <div class="player-guide" :class="`${localType}-mode`">
       <div class="steps-portion" :class="`steptopmain-${currentAdditionalStep} ${localType}-mode`">
         <!-- <img class="abs-line" :class="`${localType} step-${localStep}`" v-if="localType === 'deposit'" :src="require(`../../assets/images/newplayerguide/line-${localType}-${localStep}.png`)"> -->
@@ -265,8 +265,8 @@ const updateCurrentAdditionalStep = () => {
       left: 0;
       right: 0;
       .inner-line {
-        background: url(../../assets/images/newplayerguide/dep-point-4.png) no-repeat center center;
-        background-size: 95%;
+        // background: url(../../assets/images/newplayerguide/dep-point-4.png) no-repeat center center;
+        // background-size: 95%;
       }
     }
   }
@@ -412,14 +412,15 @@ const updateCurrentAdditionalStep = () => {
       left: 0;
       right: 0;
       .inner-line {
-        background: url(../../assets/images/newplayerguide/dep-point-4.png) no-repeat center center;
-        background-size: 95%;
+        // background: url(../../assets/images/newplayerguide/dep-point-4.png) no-repeat center center;
+        // background-size: 95%;
       }
     }
   }
   .player-guide {
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - env(safe-area-inset-bottom));
+    padding-bottom: env(safe-area-inset-bottom);
     display: flex;
     flex-direction: column;
     justify-content: center;

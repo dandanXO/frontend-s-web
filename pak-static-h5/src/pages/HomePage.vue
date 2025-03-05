@@ -1560,7 +1560,7 @@ const handleModalUpdate = (value) => {
 const targetSection = ref();
 const showOverlay = ref();
 const disableScroll = () => {
-  // document.body.style.overflow = "hidden"; // Disable scrolling
+  document.body.style.overflow = "hidden"; // Disable scrolling
 };
 
 const enableScroll = () => {

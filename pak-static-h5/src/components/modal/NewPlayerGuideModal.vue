@@ -1,6 +1,7 @@
 <template>
   <q-dialog
     width="100%"
+    style="padding-bottom: env(safe-area-inset-bottom);"
     :modelValue="modelValue"
     presistent
     @update:modelValue="(value) => emit('update:modelValue', value)"
