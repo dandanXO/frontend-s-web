@@ -146,8 +146,7 @@
               outlined
               color="white"
               bg-color="recinputstyle"
-            >
-            </q-input>
+            ></q-input>
 
             <div class="">
               <q-btn
@@ -161,31 +160,43 @@
             </div>
           </div>
         </div>
-        <div class="flex-c-center" v-else>
-          <q-select
-            class="deposit-input"
-            ref="depositAmtRef"
-            label="选择金额"
-            name="localAmount"
-            :options="amountList"
-            v-model="form.localAmount"
-            :rules="verifyDepositAmount"
-            padding="none"
-            emit-value
-            map-options
-            style="width: 100%"
-            rounded
-            outlined
-            color="white"
-            bg-color="recinputstyle"
-          >
-            <template v-slot:prepend>
-              <span style="font-size: 26px" class="text-white">
-                {{ store.currency.value }}
-              </span>
-            </template>
-          </q-select>
-          <!-- <q-btn color="brightbtn" :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" label="确认" /> -->
+        <div class="" v-else>
+          <div class="input-submit-wrapper">
+            <q-select
+              class="deposit-input"
+              ref="depositAmtRef"
+              label="选择金额"
+              name="localAmount"
+              :options="amountList"
+              v-model="form.localAmount"
+              :rules="verifyDepositAmount"
+              padding="none"
+              emit-value
+              map-options
+              style="width: 100%"
+              rounded
+              outlined
+              color="white"
+              bg-color="recinputstyle"
+            >
+              <template v-slot:prepend>
+                <span style="font-size: 26px" class="text-white">
+                  {{ store.currency.value }}
+                </span>
+              </template>
+            </q-select>
+            <div>
+              <q-btn
+                color="brightbtn"
+                rounded
+                :loading="btnLoading"
+                class="deposit-btn"
+                @click="confirmDeposit"
+                label="确认"
+                style="height: 56px"
+              />
+            </div>
+          </div>
         </div>
 
         <div class="q-mt-sm text-gray">
@@ -856,7 +867,7 @@ onMounted(() => {
 
 <style lang="scss">
 .deposit-container {
-  font-family: 'PingFang';
+  font-family: "PingFang";
 }
 
 .submit-message {
@@ -898,8 +909,8 @@ onMounted(() => {
 }
 
 .input-submit-wrapper {
-  display:grid;
-  grid-template-columns:0.7fr 0.3fr;
+  display: grid;
+  grid-template-columns: 0.7fr 0.3fr;
   gap: 15px;
 }
 
@@ -954,6 +965,6 @@ onMounted(() => {
 }
 
 .text-gray {
-  color: #7A80A1;
+  color: #7a80a1;
 }
 </style>
