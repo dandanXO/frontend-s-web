@@ -39,7 +39,7 @@ const selectedBankId = ref();
 
 function selectBank() {
   // console.log(selectedBankId)
-  emits("selected", selectedBankId);
+  emits("selected", selectedBankId.value);
 }
 
 async function validateBank(value) {
