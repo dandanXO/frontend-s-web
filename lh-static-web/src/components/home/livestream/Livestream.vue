@@ -7,8 +7,8 @@
     <div class="livestream-inner-wrapper">
       <LivestreamList class="livestream-list" />
       <CurrentLivestream />
-      <LivestreamChat class="livestream-chat" />
-      <LivestreamVideo />
+      <LivestreamChat class="livestream-chat" :messages @send-chat-message="handleSendChatMessage" />
+      <LivestreamVideo :danmuList />
     </div>
   </div>
 </template>
@@ -17,6 +17,41 @@ import LivestreamList from "@/components/home/livestream/LivestreamList.vue";
 import CurrentLivestream from "@/components/home/livestream/CurrentLivestream.vue";
 import LivestreamChat from "@/components/home/livestream/LivestreamChat.vue";
 import LivestreamVideo from "@/components/home/livestream/LivestreamVideo.vue";
+import { onMounted, ref } from "vue";
+import { userStore } from "@/store";
+
+const store = userStore();
+
+const messages = ref([]);
+const danmuList = ref([]);
+
+const handleSendChatMessage = (message) => {
+  if (!store.hasToken()) {
+    store.loginPageVisible = true;
+    return;
+  }
+  messages.value.push({
+    content: message,
+    name: store.nickName
+  });
+  danmuList.value = [message];
+};
+
+onMounted(() => {
+  // setInterval(() => {
+  //   const _messages = [];
+  //   for (let i = 0; i < 1000; i++) {
+  //     const randomIndex = Math.floor(Math.random() * mockMessagePool.length);
+  //     const randomUserNameIndex = Math.floor(Math.random() * mockUserNamePool.length);
+  //     _messages.push({
+  //       name: mockUserNamePool[randomUserNameIndex],
+  //       content: mockMessagePool[randomIndex]
+  //     });
+  //   }
+  //   messages.value.push(..._messages);
+  //   danmuList.value = _messages.map((item) => item.content);
+  // }, 2000);
+});
 </script>
 <style lang="scss" scoped>
 .livestream-container {

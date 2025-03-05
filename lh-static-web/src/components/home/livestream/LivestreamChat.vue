@@ -1,35 +1,58 @@
 <template>
   <div class="livestream-chat-wrapper">
     <div ref="chatListRef" class="livestream-chat-list">
-      <div v-for="i in 100" :key="i" class="livestream-chat-item">
-        <div class="livestream-chat-item__name">用户名</div>
-        <div class="livestream-chat-item__message">你好</div>
+      <div v-for="(message, index) in messages" :key="index" class="livestream-chat-item">
+        <div class="livestream-chat-item__name">{{ message.name }}</div>
+        <div class="livestream-chat-item__message">{{ message.content }}</div>
       </div>
     </div>
     <div class="livestream-chat-input-wrapper">
-      <div class="livestream-chat-input-inner-wrapper">
-        <el-input v-model="message" class="livestream-chat-input" placeholder="请输入聊天内容" autocomplete="off" />
-        <button class="livestream-chat-input-btn" :disabled="!isMessageSendable" @click="handleSendChatMessage">
+      <el-form class="livestream-chat-input-inner-wrapper" @submit.enter.prevent>
+        <el-input
+          v-model="messageToSend"
+          class="livestream-chat-input"
+          placeholder="请输入聊天内容"
+          autocomplete="off"
+        />
+        <button
+          class="livestream-chat-input-btn"
+          type="submit"
+          :disabled="!isMessageSendable"
+          @click="handleSendChatMessage"
+        >
           发弹幕
         </button>
-      </div>
+      </el-form>
     </div>
   </div>
 </template>
 <script setup>
-import { computed, ref } from "vue";
+import { computed, nextTick, ref, toRefs, watch } from "vue";
 
+const props = defineProps(["messages"]);
+const { messages } = toRefs(props);
 const emit = defineEmits(["sendChatMessage"]);
 
-const message = ref("");
+const messageToSend = ref("");
 const chatListRef = ref(null);
 
-const isMessageSendable = computed(() => message.value.trim().length > 0);
+const isMessageSendable = computed(() => messageToSend.value.trim().length > 0);
 
 const handleSendChatMessage = () => {
-  emit("sendChatMessage", message);
-  message.value = "";
+  emit("sendChatMessage", messageToSend.value);
+  messageToSend.value = "";
 };
+
+watch(
+  messages,
+  async () => {
+    if (chatListRef.value) {
+      await nextTick();
+      chatListRef.value.scrollTop = chatListRef.value.scrollHeight;
+    }
+  },
+  { deep: true }
+);
 </script>
 <style lang="scss" scoped>
 @import "@/scss/pages/livestream.scss";
@@ -45,8 +68,7 @@ const handleSendChatMessage = () => {
 
   .livestream-chat-list {
     flex: 1;
-    margin: 17px 11px 0;
-    // height: 100%;
+    padding: 17px 11px 0;
     overflow: auto;
 
     .livestream-chat-item {

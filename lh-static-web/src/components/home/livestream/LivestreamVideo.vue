@@ -2,12 +2,13 @@
   <div
     ref="videoWrapperRef"
     class="livestream-video-wrapper"
-    @click="handlePauseClick"
+    @click="handlePauseChange(!playerConfig.isPause)"
     @mouseenter="handleWrapperMouseEnter"
     @mouseleave="handleWrapperMouseLeave"
   >
     <template v-if="isFlvSupported">
       <video ref="videoRef" class="livestream-video" @progress="handlePlayerProgress" />
+      <div ref="danmuRef" class="livestream-video-danmu" />
       <div
         class="livestream-video-controller"
         :class="{
@@ -19,7 +20,7 @@
           <button
             class="livestream-video-controller-pause-btn btn"
             :title="playerConfig.isPause ? '播放' : '暂停'"
-            @click="handlePauseClick"
+            @click="handlePauseChange(!playerConfig.isPause)"
           >
             <img v-if="playerConfig.isPause" src="@/assets/home/livestream/icon-play.png" />
             <img v-else src="@/assets/home/livestream/icon-pause.png" />
@@ -44,7 +45,7 @@
           <button
             class="livestream-video-controller-danmu-btn btn"
             :title="playerConfig.isDanmuClose ? '开启' : '关闭' + '弹幕'"
-            @click="handleDanmuClick"
+            @click="handleDanmuChange(!playerConfig.isDanmuClose)"
           >
             <img v-if="playerConfig.isDanmuClose" src="@/assets/home/livestream/icon-danmu-close.png" />
             <img v-else src="@/assets/home/livestream/icon-danmu-open.png" />
@@ -52,20 +53,19 @@
           <button
             class="livestream-video-controller-fullscreen-btn btn"
             :title="playerConfig.isFullScreen ? '开启' : '退出' + '全屏'"
-            @click="handleFullScreenClick"
+            @click="handleFullScreenChange(!playerConfig.isFullScreen)"
           >
             <img v-if="playerConfig.isFullScreen" src="@/assets/home/livestream/icon-fullscreen-exit.png" />
             <img v-else src="@/assets/home/livestream/icon-fullscreen.png" />
           </button>
         </div>
       </div>
-      <div ref="danmuRef" class="livestream-video-danmu" />
     </template>
     <div v-else>不支援的浏览器</div>
   </div>
 </template>
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, toRefs, watch } from "vue";
 
 /** @type {import("flv.js").default.Config} */
 const DEFAULT_FLV_CONFIG = {
@@ -76,7 +76,7 @@ const PLAYER_CONFIG_KEY = "lh-livestream-player-config";
 
 const DEFAULT_DANMU_CONFIG = {
   area: {
-    start: 0,
+    start: 0.05,
     end: 1
   },
   channelSize: 30
@@ -85,10 +85,20 @@ const DEFAULT_DANMU_CONFIG = {
 const DANMU_STYLE = {
   color: "#fff",
   fontSize: "11.32px",
+  lineHeight: "15.85px",
   borderRadius: "37.74px",
   padding: "6px 10px",
   backgroundColor: "#00000033"
 };
+
+const DANMU_CONFIG = {
+  duration: 5000,
+  start: 0,
+  style: DANMU_STYLE
+};
+
+const props = defineProps(["danmuList"]);
+const { danmuList } = toRefs(props);
 
 /**  @type {import("vue").Ref<typeof import("flv.js").default | null>} */
 const flv = ref(null);
@@ -124,6 +134,7 @@ const loadFlv = async () => {
     player.value.attachMediaElement(videoRef.value);
     player.value.load();
     player.value.play();
+    player.value.on(flv.value.Events.ERROR, handlePlayerError);
   }
 };
 
@@ -154,29 +165,12 @@ const loadPlayerConfig = () => {
         case "volume":
           videoRef.value.volume = value / 100;
           playerConfig.value[key] = value;
+          break;
         case "isDanmuClose":
-          playerConfig.value[key] = value;
-          if (value) {
-            danmu.value.stop();
-          } else {
-            danmu.value.start();
-          }
+          handleDanmuChange(value);
       }
     });
   }
-};
-
-const test = () => {
-  danmu.value.updateComments(
-    Array.from(new Array(30)).map((_, i) => ({
-      //发送弹幕
-      duration: 5000,
-      start: 0,
-      id: i,
-      txt: "长弹幕长弹幕长弹幕长弹幕长弹幕",
-      style: DANMU_STYLE
-    }))
-  );
 };
 
 const changePlayerConfig = (key, value) => {
@@ -185,8 +179,8 @@ const changePlayerConfig = (key, value) => {
   localStorage.setItem(PLAYER_CONFIG_KEY, playConfigStr);
 };
 
-const handlePauseClick = () => {
-  changePlayerConfig("isPause", !playerConfig.value.isPause);
+const handlePauseChange = (value) => {
+  changePlayerConfig("isPause", value);
   if (playerConfig.value.isPause) {
     player.value.pause();
   } else {
@@ -194,8 +188,8 @@ const handlePauseClick = () => {
   }
 };
 
-const handleDanmuClick = () => {
-  changePlayerConfig("isDanmuClose", !playerConfig.value.isDanmuClose);
+const handleDanmuChange = (value) => {
+  changePlayerConfig("isDanmuClose", value);
   if (playerConfig.value.isDanmuClose) {
     danmu.value.stop();
   } else {
@@ -203,8 +197,8 @@ const handleDanmuClick = () => {
   }
 };
 
-const handleFullScreenClick = () => {
-  changePlayerConfig("isFullScreen", !playerConfig.value.isFullScreen);
+const handleFullScreenChange = (value) => {
+  changePlayerConfig("isFullScreen", value);
   if (playerConfig.value.isFullScreen) {
     videoWrapperRef.value.requestFullscreen();
   } else {
@@ -224,7 +218,6 @@ const handleWrapperMouseEnter = () => {
 };
 
 const handleWrapperMouseLeave = () => {
-  console.log("leave");
   videoWrapperMouseLeaveTimer.value = setTimeout(() => {
     showPlayerController.value = false;
   }, 1500);
@@ -235,9 +228,27 @@ const handlePlayerProgress = () => {
   const bufferedEnd = videoRef.value.buffered.end(0);
   const delta = bufferedEnd - videoRef.value.currentTime;
   if (delta > 10 || delta < 0) {
-    videoRef.value.currentTime = bufferedEnd - 1;
+    videoRef.value.currentTime = bufferedEnd - 0.5;
   }
 };
+
+const handlePlayerError = (e) => {
+  console.log(e);
+  if (!playerConfig.value.isPause) {
+    changePlayerConfig("isPause", true);
+  }
+};
+
+watch(danmuList, () => {
+  if (danmuList.value.length && danmu.value) {
+    const _danmuList = danmuList.value.map((content, index) => ({
+      ...DANMU_CONFIG,
+      txt: content,
+      id: Date.now() + index
+    }));
+    danmu.value.updateComments(_danmuList);
+  }
+});
 
 onMounted(() => {
   Promise.all([loadFlv(), loadDanmu()]).then(loadPlayerConfig);
@@ -251,7 +262,6 @@ onMounted(() => {
 
   .livestream-video-danmu {
     position: absolute;
-    z-index: 1000;
     inset: 0;
     width: 100%;
     height: 100%;
@@ -262,7 +272,6 @@ onMounted(() => {
     align-items: center;
     justify-content: space-between;
     position: absolute;
-    z-index: 1001;
     bottom: 0;
     width: 100%;
     padding: 0 16px 14px;
@@ -312,7 +321,7 @@ onMounted(() => {
   }
 
   .livestream-video {
-    object-fit: fill;
+    object-fit: contain;
     width: 100%;
     height: 100%;
   }
