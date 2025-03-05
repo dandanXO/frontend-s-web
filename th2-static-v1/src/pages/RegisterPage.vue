@@ -66,7 +66,7 @@
           v-model="regForm.smsCode"
           :rules="[
             (val) => (val && val.length > 0) || 'กรุณาใส่หมายเลข OTP',
-            (val) => (val && val.length === 6) || '"หมายเลข OTP ต้องมี 6 หลัก'
+            (val) => (val && val.length === 6) || 'หมายเลข OTP ต้องมี 6 หลัก'
           ]"
           color="white"
           class="landing-input"
