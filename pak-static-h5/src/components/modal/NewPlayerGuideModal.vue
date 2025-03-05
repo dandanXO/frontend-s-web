@@ -641,20 +641,22 @@ defineExpose({ showVideo });
         position: absolute;
         font-family: Inter;
         font-weight: 700;
-        font-size: 5.6vw;
-        line-height: 71.12px;
+        // font-size: 5.6vw;
+        font-size: 25px;
+        line-height: 30px;
+        // line-height: 71.12px;
         text-align: center;
         color: #ffffff;
         text-shadow: -1px -1px 0 #215f25, 1px -1px 0 #215f25, -1px 1px 0 #215f25, 1px 1px 0 #215f25;
         text-transform: uppercase;
-        bottom: 1vh;
+        bottom: 15%;
         width: 80%;
         margin: 0 auto;
         left: 0;
         right: 0;
 
         @media screen and (min-width: 500px) {
-          bottom: 2.4vh;
+          bottom: 17%;
           font-size: 30px;
         }
       }
@@ -841,10 +843,13 @@ defineExpose({ showVideo });
           box-shadow: 0px 0px 20px 0px #00e60091;
           pointer-events: none;
           @media screen and (min-width: 500px) {
-            
-          top: 138%;
-          width: 50%;
-          height: 60px;
+            top: 123%;
+            width: 50%;
+            height: 60px;
+          }
+          
+          @supports (-webkit-touch-callout: none) {
+            top: 30svh;
           }
         }
         .hottitle {
@@ -1031,8 +1036,10 @@ defineExpose({ showVideo });
         border-bottom: 1px solid #f3d235cc;
         font-family: Poppins;
         font-weight: 700;
-        font-size: 1.5vh;
-        line-height: 2vh;
+        // font-size: 1.5vh;
+        // line-height: 2vh;
+        font-size: 8px;
+        line-height: 18px;
         padding-bottom: 5px;
         cursor: pointer;
 
@@ -1054,9 +1061,12 @@ defineExpose({ showVideo });
         padding: 10px;
         font-family: Poppins;
         font-weight: 700;
-        font-size: 2vh;
-        line-height: 2vh;
+        // font-size: 2vh;
+        // line-height: 2vh;
         padding: 15px 30px;
+        font-size: 15px;
+        line-height: 18px;
+        // padding: 8px 30px;
         letter-spacing: 0px;
         text-align: center;
         color: #000000;
@@ -1081,6 +1091,14 @@ defineExpose({ showVideo });
           right: 0;
           z-index: 9999;
           animation: moveFinger 1.5s ease-in-out infinite;
+        @media screen and (min-width: 400px) {
+          width: 70px;
+          height: 70px;
+        }
+        }
+        
+        @media screen and (min-width: 400px) {
+          font-size: 16px;
         }
       }
     }

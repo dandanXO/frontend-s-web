@@ -56,7 +56,7 @@
 </template>
 
 <script setup>
-import { ref, watch, computed } from "vue";
+import { ref, watch, computed, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
 const props = defineProps({ currentAdditionalStep: Number, currentType: String });
@@ -155,44 +155,45 @@ const updateCurrentAdditionalStep = () => {
 </script>
 <style lang="scss" scoped>
 .abs-container {
-  background: transparent;
-  // position: fixed;
-  // pointer-events: none;
-    position: absolute; /* Change from fixed to absolute */
-
+  background: rgba(0, 0, 0, 0.2);
+  position: fixed; /* Change to absolute if needed */
   top: 0;
   left: 0;
   width: 100vw;
   max-width: 500px;
-  min-height: 100%; /* Allow content to expand */
   z-index: 9999;
   flex-direction: column;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
-  background: rgba(0, 0, 0, 0.2); /* Adjust the alpha value to change transparency */
-
-  overflow: auto; /* Ensure content inside is scrollable */
-    &.abs-refer-3 {
-      top: 860px;
-    }
-    &.abs-withdraw-3 {
+  height: calc(var(--vh) * 100 - env(safe-area-inset-bottom));
+  height: calc(100dvh - env(safe-area-inset-bottom));
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  margin: auto;
+  max-height: 100dvh; /* Ensure content does not get cut off */
+  // overscroll-behavior: contain;
+    // &.abs-refer-3 {
+    //   top: 860px;
+    // }
+    // &.abs-withdraw-3 {
       
-      top: 175px;
+    //   top: 175px;
 
-    }
+    // }
   .main-highlight-box {
     width: 100%;
     position: absolute;
     top: 0;
-    bottom: 0;
+    bottom: 20px;
     left: 0;
     right: 0;
     background: transparent;
     border-radius: 10px;
     box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.8);
-    height: 100vh;
+    height: 90vh;
     margin: auto;
   }
   .green-highlight-box.deposit-mode {
@@ -246,7 +247,7 @@ const updateCurrentAdditionalStep = () => {
       width: 95%;
       max-width: 500px;
       height: 100px;
-      top: 140px;
+      top: 10px;
       bottom: unset;
       left: 0;
       right: 0;
@@ -312,10 +313,10 @@ const updateCurrentAdditionalStep = () => {
       right: unset;
       bottom: 0;
       right: 0;
-      .inner-line {
-        background: url(../../assets/images/newplayerguide/refer-point-2.png) no-repeat center center;
-        background-size: 150%;
-      }
+      // .inner-line {
+      //   background: url(../../assets/images/newplayerguide/refer-point-2.png) no-repeat center center;
+      //   background-size: 150%;
+      // }
     }
     &.step-3 {
       width: 95%;
@@ -375,7 +376,7 @@ const updateCurrentAdditionalStep = () => {
       width: 80px;
       height: 80px;
       // right: 11vh;
-      right: 20%;
+      right: 22%;
       bottom: 0;
       .inner-line {
         background: url(../../assets/images/newplayerguide/dep-point-1.png) no-repeat center center;
@@ -435,16 +436,22 @@ const updateCurrentAdditionalStep = () => {
       justify-content: center;
       align-items: center;
       &.steptopmain-3.deposit-mode {
-        top: 35vh;
+        // top: 35vh;
+        top: 25dvh;
       }
-      &.steptopmain-3.refer-mode {
-        top: 35vh;
-      }
+      // &.steptopmain-3.refer-mode {
+      //   top: 35vh;
+      // }
       &.steptopmain-3.withdraw-mode {
-        top: 35vh;
+        // top: 35vh;
+        top: 25dvh;
       }
       &.steptopmain-2.withdraw-mode {
-        top: 35vh;
+        // top: 35vh;
+        top: 25dvh;
+      }
+      &.steptopmain-2 .top {
+        width: 75% !important;
       }
     }
     .abs-line {
@@ -454,9 +461,14 @@ const updateCurrentAdditionalStep = () => {
       &.deposit {
         &.step-1 {
           @media screen  and (min-width: 360px) and (max-width: 375px) {
-          width: 20vh;
-          top: 56vh;
-          left: 18vh;
+            width: 18vh;
+            top: 54vh;
+            left: 18vh;
+          }
+          @supports (-webkit-touch-callout: none) {
+            width: 16svh;
+            top: 60svh;
+            left: 30svh;
           }
           width: 49%;
           top: 95%;
@@ -464,109 +476,150 @@ const updateCurrentAdditionalStep = () => {
         }
         &.step-2 {
           @media screen  and (min-width: 360px) and (max-width: 375px) {
-            width: 44vh;
-            left: -5vh;
-            top: 0vh;
+            width: 36svh;
+            top: -3svh;
+            left: 2svh;
           }
-          width: 93%;
-          left: -18%;
-          top: -25%;
+          @supports (-webkit-touch-callout: none) {
+            width: 44svh;
+            top: -3svh;
+            left: 2svh;
+          }
+          width: 40dvh;
+          top: -14dvh;
+          left: -6dvh;
         }
         &.step-3 {
           @media screen  and (min-width: 360px) and (max-width: 375px) {
-            // width: 14vh;
-            // left: 6vh;
-            // top: 2vh;
-            width: 24vw;
-            left: 10vw;
-            top: 2vw;
+            width: 16svh;
+            left: 5svh;
+            top: -9svh;
           }
-          width: 30%;
-          left: 5%;
-          top: -20%;
+          @supports (-webkit-touch-callout: none) {
+            width: 18svh;
+            top: -11svh;
+            left: 8svh;
+          }
+          width: 14svh;
+          left: 3svh;
+          top: -12svh;
         }
         &.step-4 {
           @media screen  and (min-width: 360px) and (max-width: 375px) {
-            width: 20vh;
-            left: 20vh;
-            top: 50vh;
+            width: 16svh;
+            left: 20svh;
+            top: 51svh;
           }
-          width: 55%;
-          left: 25%;
-          top: 85%;
+          @supports (-webkit-touch-callout: none) {
+            width: 12svh;
+            top: 57svh;
+            left: 29svh;
+          }
+          width: 27dvh;
+          top: 38dvh;
+          left: 11dvh;
         }
       }
       &.refer {
         &.step-2 {
           @media screen  and (min-width: 360px) and (max-width: 375px) {
-            width: 10vh;
-            left: 20vh;
-            top: 58vh;
-            transform: unset;
+            width: 10svh;
+            left: 23svh;
+            top: 53svh;
           }
-          width: 28%;
-          left: 35%;
-          // top: 95%;
-    top: 99%;
-    transform: rotate(25deg);
+          @supports (-webkit-touch-callout: none) {
+            width: 9svh;
+            top: 59svh;
+            left: 29svh;
+          }
+          width: 15dvh;
+          top: 45dvh;
+          left: 15dvh;
+          transform: rotate(25deg);
         }
         &.step-3 {
           
           @media screen  and (min-width: 360px) and (max-width: 375px) {
-          width: 43vh;
-          top: -8vh;
+            width: 38svh;
+            left: 5svh;
+            top: -4svh;
           }
-          // width: 100%;
-          // top:-50%;
-    width: 85%;
-    top: -33%;
+          @supports (-webkit-touch-callout: none) {
+            width: 43svh;
+            left: 8svh;
+            top: -3svh;
+          }
+          width: 43dvh;
+          top: -15dvh;
+          left: 0dvh;
         }
       }
       &.withdraw {
         &.step-1 {
           @media screen  and (min-width: 360px) and (max-width: 375px) {
-            width: 20vh;
-            top: 56vh;
+            width: 18vh;
+            top: 54vh;
             left: 18vh;
-            }
-            width: 49%;
-            top: 95%;
-            left: 30%;
           }
+          @supports (-webkit-touch-callout: none) {
+            width: 16svh;
+            top: 60svh;
+            left: 30svh;
+          }
+          width: 49%;
+          top: 95%;
+          left: 30%;
+        }
+        
         &.step-2 {
           @media screen  and (min-width: 360px) and (max-width: 375px) {
-          width: 50vh;
-          left: 5vh;
-          top: -16vh;
+            width: 40svh;
+            top: -10svh;
+            left: 8svh;
           }
-          width: 100%;
-          left: 0%;
-          top: -50%;
+          @supports (-webkit-touch-callout: none) {
+            width: 45svh;
+            top: -12svh;
+            left: 10svh;
+          }
+          width: 37dvh;
+          top: -14dvh;
+          left: 4dvh;
         }
         &.step-3 {
           @media screen  and (min-width: 360px) and (max-width: 375px) {
-          width: 18vh;
-          left: 3vh;
-          top: -13vh;
+            width: 14svh;
+            left: 5svh;
+            top: -2svh;
           }
-          width: 35%;
-          left: 0%;
-          top: -40%;
+          @supports (-webkit-touch-callout: none) {
+            width: 16svh;
+            top: -3svh;
+            left: 10svh;
+          }
+          width: 13dvh;
+          left: 7dvh;
+          top: -7dvh;
         }
         &.step-4 {
           @media screen  and (min-width: 360px) and (max-width: 375px) {
-            width: 20vh;
-            left: 20vh;
-            top: 50vh;
+            width: 16svh;
+            left: 20svh;
+            top: 52svh;
           }
-          width: 55%;
-          left: 25%;
-          top: 85%;
+          @supports (-webkit-touch-callout: none) {
+            width: 12svh;
+            top: 58svh;
+            left: 28svh;
+          }
+          width: 25dvh;
+          left: 14dvh;
+          top: 39dvh;
         }
       }
     }
     .top {
-      width: 100%;
+      width: 90%;
       position: relative;
       z-index: 999;
       max-width: 500px;

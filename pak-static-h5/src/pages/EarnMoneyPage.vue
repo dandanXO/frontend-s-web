@@ -63,8 +63,24 @@ const closePlayerGuide = () => {
   }
   enableScroll();
 };
+
+const preventBodyScroll = (e) => {
+  const container = document.querySelector(".abs-container");
+  if (!container.contains(e.target)) {
+    e.preventDefault(); // Stop background scrolling
+  }
+};
+
+const disableScroll = () => {
+  document.body.style.overscrollBehavior = 'contain';
+  document.body.style.overflow = "hidden"; // Prevent body scrolling
+  document.addEventListener("touchmove", preventBodyScroll, { passive: false });
+};
+
 const enableScroll = () => {
-  document.body.style.overflow = ""; // Restore scrolling
+  document.body.style.overscrollBehavior = "";
+  document.body.style.overflow = ""; // Restore body scroll
+  document.removeEventListener("touchmove", preventBodyScroll);
 };
 const currentReferStep = ref(3);
 const handleStepUpdate = (newStep) => {
