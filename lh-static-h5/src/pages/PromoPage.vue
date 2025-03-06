@@ -164,7 +164,7 @@
                   selectedPromo.promoCode === 'lh1-deposit-rebates' ||
                   selectedPromo.redirectUrl === 'lh-blackmyth-wukong' ||
                   selectedPromo.redirectUrl === 'lh1-ag-yuanxiaohongbao' ||
-                  selectedPromo.promoCode === 'lh1-daily-checkin'||
+                  selectedPromo.promoCode === 'lh1-daily-checkin' ||
                   selectedPromo.promoCode === 'lh1-2025-pgl-s3'
                     ? 'background-image: url(' +
                       imgURL +
@@ -1047,7 +1047,8 @@ export default defineComponent({
           width: 100%;
           gap: 0px;
           padding: 0px 16px 20px;
-        } 
+          background-color: #1c0d18;
+        }
         &.lheuromanual {
           margin: 0px;
           width: 100%;
