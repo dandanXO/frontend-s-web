@@ -2,6 +2,7 @@
   <div class="envelope-stage-wrapper">
     <div class="envelope-stage-inner-wrapper">
       <img
+        style="width:100%;"
         class="title"
         src="../../../assets/images/promotion/spin-lucky-wheel/envelope-stage/title.png"
         alt="get cash every day"
@@ -16,7 +17,7 @@
         >
           <div v-if="prize.status !== 'idle'" class="prize-wrapper">
             <span>
-              {{ prize.status === "selected" ? "Winning" : `BONUS ${index + 1}` }}
+              {{ prize.status === "selected" ? "Ganhando" : `Bônus ${index + 1}` }}
             </span>
             <br />
             <span class="prize">
@@ -27,12 +28,12 @@
       </div>
       <div v-else class="selected-envelope">
         <span class="prize">{{ store.currency.value }} {{ prizeList[selectedIndex]?.prize }}</span>
-        <CommonButton class="withdraw-btn" @click="$emit('envelopeClick')">Go withdraw now!</CommonButton>
-        <span class="remaining-time">time left: {{ remainingTime }}</span>
+        <CommonButton class="withdraw-btn" @click="$emit('envelopeClick')">Vá sacar agora!</CommonButton>
+        <span class="remaining-time">Tempo Restante: {{ remainingTime }}</span>
       </div>
       <img class="footer tiger" src="../../../assets/images/promotion/spin-lucky-wheel/decoration-tiger.png" />
       <img class="footer rabbit" src="../../../assets/images/promotion/spin-lucky-wheel/decoration-rabbit.png" />
-      <img class="footer coin" src="../../../assets/images/promotion/spin-lucky-wheel/envelope-stage/footer-coin.png" />
+      <img style="width:100%;" class="footer coin" src="../../../assets/images/promotion/spin-lucky-wheel/envelope-stage/footer-coin.png" />
     </div>
   </div>
 </template>
@@ -178,10 +179,11 @@ onUnmounted(() => {
         top: 26%;
         width: 100%;
         transform: translateY(-50%);
-        font-size: 50px;
+        font-size: 30px;
         font-weight: 900;
         color: #8100ae;
         text-align: center;
+        letter-spacing: -1px;
       }
 
       .withdraw-btn {

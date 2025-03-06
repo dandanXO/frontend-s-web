@@ -17,7 +17,7 @@
             </div>
             <div class="do-not-show-again-wrapper">
                 <q-checkbox v-model="isDoNotShowAgain">
-                    Do not show again
+                    Não mostrar novamente
                 </q-checkbox>
             </div>
         </div>

@@ -11,8 +11,8 @@
     <div class="qr-wrapper invite-win-section">
       <q-spinner v-if="isLoading" :size="30" />
       <VueQRCodeComponent v-else id="the-qrcode" :size="120" :text="selfTgurl" class="qr-code" />
-      <span class="desc">Do you want to unlock your {{`${store.currency.value} 50`}} reward right away? Invite your friends for a free spin!</span>
-      <q-btn label="Save" :size="'150'" class="save-btn" @click="downloadQRImg()" />
+      <span class="desc">"Você quer desbloquear sua recompensa de {{`${store.currency.value} 50`}} imediatamente? Convide seus amigos para um giro grátis!</span>
+      <q-btn label="Salvar" :size="'150'" class="save-btn" @click="downloadQRImg()" />
     </div>
   </div>
 </template>
@@ -32,14 +32,14 @@ const isLoading = ref(false);
 
 const selfTgurl = ref("");
 const copyShareLink = (selfTgurl) => {
-  const copiedText = `Do you want to unlock your ${store.currency.value} 50 reward right away? Click the link: ${selfTgurl}`;
+  const copiedText = `Você quer desbloquear sua recompensa de ${store.currency.value} 50 imediatamente? Clique no link: ${selfTgurl}`;
 
   copyToClipboard(copiedText)
     .then(() => {
       $q.notify({
         color: "position",
         position: "top",
-        message: `${selfTgurl} copied to clipboard`,
+        message: `${selfTgurl} Copiado para a área de transferência`,
         icon: "check_circle_outline"
       });
     })
@@ -47,7 +47,7 @@ const copyShareLink = (selfTgurl) => {
       $q.notify({
         color: "negative",
         position: "top",
-        message: "Failed",
+        message: "Falhou",
         icon: "report_problem"
       });
     });
@@ -74,7 +74,7 @@ const downloadQRImg = async () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "QR Code image saved to photo gallery.",
+          message: "Imagem do QR Code salva na galeria de fotos.",
           icon: "check_circle_outline"
         });
 
@@ -102,7 +102,7 @@ const downloadQRImg = async () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "QR Code image saved to photo gallery.",
+          message: "Imagem do QR Code salva na galeria de fotos.",
           icon: "check_circle_outline"
         });
 
