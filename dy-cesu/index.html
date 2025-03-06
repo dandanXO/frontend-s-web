@@ -79,8 +79,22 @@
             <div class="browser"><img src="images/browser-chrome.png " alt=""></div>
             <div class="browser"><img src="images/browser-universe.png" alt=""></div>
         </div> -->
-        <img class="qrcode" src="./images/qrcode.png" />
-        <div class="qrcode-txt">下载手机App 速度提升10倍</div>
+        <div id="largeScreenDiv" class="download-container">
+          <img class="qrcode" src="./images/qrcode.png" />
+          <div class="qrcode-txt">下载手机App 速度提升10倍</div>
+        </div>
+        <a
+          id="mobileScreenDiv"
+          class="line-btn download-mobile-btn"
+          href="https://www.df140.app/"
+          target="_blank"
+          title="下载手机App 速度提升10倍"
+          ><img
+            class="phone-icon"
+            src="images/phone-icon.svg"
+            alt=""
+          />下载手机App<br />速度提升10倍</a
+        >
       </div>
     </div>
   </body>
@@ -94,5 +108,22 @@
     if (hostname.indexOf("dydy18.com") > -1) {
       LA.init({ id: "Kc6fZaSY3MdBOkcH", ck: "Kc6fZaSY3MdBOkcH" });
     }
+
+    function renderBasedOnScreenSize() {
+      const mobileScreenDiv = document.getElementById("mobileScreenDiv");
+      const largeScreenDiv = document.getElementById("largeScreenDiv");
+
+      if (window.innerWidth >= 768) {
+        mobileScreenDiv.style.display = "none";
+        largeScreenDiv.style.display = "grid";
+      } else {
+        mobileScreenDiv.style.display = "flex";
+        largeScreenDiv.style.display = "none";
+      }
+    }
+
+    renderBasedOnScreenSize();
+
+    window.addEventListener("resize", renderBasedOnScreenSize);
   </script>
 </html>

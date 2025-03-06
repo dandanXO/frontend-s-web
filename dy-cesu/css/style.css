@@ -163,6 +163,11 @@ span.color-red {
   justify-content: center;
 }
 
+.download-container {
+  display: grid;
+  justify-items: center;
+}
+
 .qrcode {
   width: 160px;
 }
@@ -171,6 +176,19 @@ span.color-red {
   color: #000;
   margin-top: 6px;
   font-weight: 600;
+}
+
+.download-mobile-btn {
+  padding: 32px 64px !important;
+  font-size: 14px !important;
+  border-radius: 100px !important;
+  font-weight: bold !important;
+}
+
+.phone-icon {
+  width: 28px;
+  height: 28px;
+  margin-right: 4px;
 }
 
 .footer-title {
