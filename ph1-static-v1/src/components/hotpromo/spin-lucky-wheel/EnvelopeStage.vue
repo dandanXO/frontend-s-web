@@ -184,6 +184,7 @@ onUnmounted(() => {
         font-weight: 900;
         color: #8100ae;
         text-align: center;
+        letter-spacing: -1px;
       }
 
       .withdraw-btn {
@@ -193,6 +194,7 @@ onUnmounted(() => {
         width: 80%;
         transform: translate(-50%, -50%);
         margin: 0 auto;
+        font-size: 12px;
       }
 
       .remaining-time {

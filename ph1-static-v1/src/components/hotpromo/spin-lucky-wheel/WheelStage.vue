@@ -143,7 +143,7 @@ import { useQuasar } from "quasar";
 import ProgressBar from './ProgressBar.vue';
 import CashOutPopup from "./CashOutPopup.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
-import { userStore } from "@/stores/index";
+import { userStore } from "stores/index";
 
 const emit = defineEmits(["reload"]);
 const props = defineProps(["info"]);

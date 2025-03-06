@@ -27,7 +27,7 @@ import CommonButton from "./CommonButton.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
 import ProgressBar from "./ProgressBar.vue";
 import InviteWins from "./InviteWins.vue";
-import { userStore } from "@/stores/index";
+import { userStore } from "stores/index";
 
 const store = userStore();
 const props = defineProps(["modelValue"]);

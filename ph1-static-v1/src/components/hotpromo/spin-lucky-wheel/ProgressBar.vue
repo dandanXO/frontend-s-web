@@ -12,7 +12,7 @@
 </template>
 <script setup>
 import { computed, inject } from "vue";
-import { userStore } from "@/stores/index";
+import { userStore } from "stores/index";
 
 const store = userStore();
 const props = defineProps(['isShowDetails']);
