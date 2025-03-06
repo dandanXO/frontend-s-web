@@ -87,7 +87,8 @@
             isNationalDay24: selectedPromo.promoCode === 'dy2-national-day-2024',
             isYallaCompass: selectedPromo.promoCode === 'dy2-yalla-compass',
             isBbdachaBelgrade: selectedPromo.promoCode === 'dy2-bbdacha-belgrade',
-            isValorantChampionTour2024: selectedPromo.promoCode === 'dy2-valorant-champion-tour-2024'
+            isValorantChampionTour2024: selectedPromo.promoCode === 'dy2-valorant-champion-tour-2024',
+            'dy1-2025-pgl-s3': selectedPromo.promoCode === 'dy1-2025-pgl-s3'
           }"
         >
           <div
@@ -805,6 +806,9 @@ export default defineComponent({
           .promo-bg.isDesktop {
             height: 568px !important;
           }
+        }
+        &.dy1-2025-pgl-s3 {
+          background: #1C0D18;
         }
 
         &.isNationalDay24 {
