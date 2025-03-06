@@ -331,6 +331,9 @@ onMounted(() => {
     :deep(img) {
       max-width: 100%;
     }
+    :deep(canvas) {
+      max-width: 100%;
+    }
   }
   background: transparent;
   &.q-carousel {
