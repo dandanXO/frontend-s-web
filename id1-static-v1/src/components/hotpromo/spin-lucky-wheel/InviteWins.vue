@@ -11,8 +11,8 @@
     <div class="qr-wrapper invite-win-section">
       <q-spinner v-if="isLoading" :size="30" />
       <VueQRCodeComponent v-else id="the-qrcode" :size="120" :text="selfTgurl" class="qr-code" />
-      <span class="desc">คุณต้องการปลดล็อกเงินรางวัล {{`${store.currency.value}`}}500 ของคุณทันทีหรือไม่? เชิญเพื่อนของคุณเพื่อหมุนฟรี!</span>
-      <q-btn label="บันทึก" :size="'150'" class="save-btn" @click="downloadQRImg()" />
+      <span class="desc">Apakah Anda ingin membuka hadiah {{`${store.currency.value} 500K`}} Anda sekarang? Undang teman-teman Anda untuk putaran gratis!</span>
+      <q-btn label="Simpan" :size="'150'" class="save-btn" @click="downloadQRImg()" />
     </div>
   </div>
 </template>
@@ -32,14 +32,14 @@ const isLoading = ref(false);
 
 const selfTgurl = ref("");
 const copyShareLink = (selfTgurl) => {
-  const copiedText = `คุณต้องการปลดล็อกรางวัลของคุณ ${store.currency.value}500 ทันทีหรือไม่? คลิกที่ลิงก์: ${selfTgurl}`;
+  const copiedText = `Apakah Anda ingin membuka ${store.currency.value}500K hadiah anda segera? Klik tautan ini: ${selfTgurl}`;
 
   copyToClipboard(copiedText)
     .then(() => {
       $q.notify({
         color: "position",
         position: "top",
-        message: `${selfTgurl} คัดลอกไปยังคลิปบอร์ด`,
+        message: `${selfTgurl} disalin ke papan klip`,
         icon: "check_circle_outline"
       });
     })
@@ -47,7 +47,7 @@ const copyShareLink = (selfTgurl) => {
       $q.notify({
         color: "negative",
         position: "top",
-        message: "Failed",
+        message: "Gagal",
         icon: "report_problem"
       });
     });
@@ -74,14 +74,14 @@ const downloadQRImg = async () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "รูปภาพ QR Code ถูกบันทึกลงในแกลเลอรีรูปภาพ.",
+          message: "Gambar QR Code disimpan ke galeri foto.",
           icon: "check_circle_outline"
         });
 
         canvas.style.display = "none";
       });
     } catch (error) {
-      console.error("เกิดข้อผิดพลาดในการบันทึกรูปภาพ QR Code:", error);
+      console.error("Error saving QR Code image:", error);
     }
   }else if(window.location.pathname === "/promotion") {
 
@@ -102,14 +102,14 @@ const downloadQRImg = async () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "รูปภาพ QR Code ถูกบันทึกลงในแกลเลอรีรูปภาพ.",
+          message: "Gambar QR Code disimpan ke galeri foto.",
           icon: "check_circle_outline"
         });
 
         canvas.style.display = "none";
       });
     } catch (error) {
-      console.error("เกิดข้อผิดพลาดในการบันทึกรูปภาพ QR Code:", error);
+      console.error("Error saving QR Code image:", error);
     }
 
 
