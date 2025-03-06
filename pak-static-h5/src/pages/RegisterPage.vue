@@ -702,8 +702,7 @@ export default defineComponent({
                 //FB Tracking.
                 if (store.isFbPixel || store.isTkPixel) {
                   if (store.isFbPixel) {
-                    const eventID = generateEventID();
-                    fbq("track", "CompleteRegistration", {}, { eventID: eventID });
+                    fbq("track", "CompleteRegistration");
                   }
                   if (store.isTkPixel) {
                     ttq.track("CompleteRegistration", { content_type: "product" }, { event_id: Date.now() });
