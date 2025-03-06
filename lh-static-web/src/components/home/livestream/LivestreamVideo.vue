@@ -131,10 +131,10 @@ const loadFlv = async () => {
       },
       DEFAULT_FLV_CONFIG
     );
+    player.value.on(flv.value.Events.ERROR, handlePlayerError);
     player.value.attachMediaElement(videoRef.value);
     player.value.load();
     player.value.play();
-    player.value.on(flv.value.Events.ERROR, handlePlayerError);
   }
 };
 

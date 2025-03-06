@@ -2,7 +2,7 @@
   <div class="livestream-container">
     <img
       src="@/assets/home/livestream/livestream-title-light.png"
-      style="display: flex; margin: 20px auto 10px; width: 1300px"
+      style="display: flex; margin: 38px auto 50px; width: 100%"
     />
     <div class="livestream-inner-wrapper">
       <LivestreamList class="livestream-list" />
@@ -60,7 +60,7 @@ onMounted(() => {
 
   .livestream-inner-wrapper {
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 957.72px 306.66px;
     grid-template-rows: auto auto 1fr;
     gap: 18.87px;
     padding: 18px;
