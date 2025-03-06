@@ -54,9 +54,9 @@
 
               <div class="reward-title-wrapper">
                 <div class="reward-title" style="color: #8c5b00 !important">
-                  累计完成场次:
+                  累计完成场次：
                   <span style="font-weight: bold">{{ accumulatedClaimed }}</span>
-                  次 剩余开启次数:
+                  次 剩余开启次数：
                   <span style="font-weight: bold">{{ todayLeftClaimCount }}</span>
                   次
                 </div>
@@ -81,8 +81,8 @@
             </div>
             <div class="content">
               <div class="item" style="color: #ffd164 !important">
-                1. 活动期间，活动仅计算电竞场馆中 PGL 瓦拉几亚 第2季赛事，会员在当日 PGL 瓦拉几亚 第2季中累计有效投注 ≥
-                1,500 元即可获得1次开箱次数，每日最高上限获得10次开箱次数，每日最高可开启 10 次宝箱；
+                1. 活动期间，活动仅计算电竞场馆中 PGL 瓦拉几亚 第 3 季赛事，会员在当日 PGL 瓦拉几亚 第 3 季中累计有效投注 ≥
+                1,500 元即可获得 1 次开箱次数，每日最高上限获得 10 次开箱次数，每日最高可开启 10 次宝箱；
               </div>
               <div class="item" style="color: #ffd164 !important">
                 2. 开启宝箱每第 10 次开启即可触发最高奖励，开启获得的宝箱彩金实时派发，彩金 5 倍流水即可提款；
@@ -211,16 +211,16 @@ const bonuses = [1, 8, 18, 58, 88];
 
 const boxes = ref([
   {
-    title: "宝箱x1",
-    text: "连续存款≥3天"
+    title: "宝箱 x1",
+    text: "连续存款≥3 天"
   },
   {
-    title: "宝箱x3",
-    text: "连续存款≥5天"
+    title: "宝箱 x3",
+    text: "连续存款≥5 天"
   },
   {
-    title: "宝箱x5",
-    text: "连续存款≥10天"
+    title: "宝箱 x5",
+    text: "连续存款≥10 天"
   }
 ]);
 
