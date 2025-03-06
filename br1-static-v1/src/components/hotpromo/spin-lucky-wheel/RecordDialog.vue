@@ -29,7 +29,7 @@
               <template v-if="lotteryRecords.length">
                 <div v-for="(record, index) in lotteryRecords" :key="index" class="record">
                   <span>{{ moment(record.time).format("MM-DD HH:mm:ss") }}</span>
-                  <span class="amount">${{ record.amount }}</span>
+                  <span class="amount">{{ `${store.currency.value} ${record.amount}` }}</span>
                 </div>
               </template>
               <span v-else class="no-record-text">No Records</span>
@@ -45,7 +45,9 @@
 import moment from "moment";
 import { eventapi } from "src/boot/axios";
 import { computed, ref } from "vue";
+import { userStore } from "stores/index";
 
+const store = userStore();
 const props = defineProps(["modelValue", "prize"]);
 const emit = defineEmits(["update:modelValue"]);
 

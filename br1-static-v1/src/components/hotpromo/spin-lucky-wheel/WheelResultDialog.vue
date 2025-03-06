@@ -1,7 +1,7 @@
 <template>
   <q-dialog v-model="_modelValue" @hide="$emit('hide')">
     <div class="wheel-result-wrapper">
-      <span class="prize">+${{ props.prize }}</span>
+      <span class="prize">+{{store.currency.value}} {{ props.prize?.toFixed(4) }}</span>
       <CommonButton class="close-btn" v-close-popup>Okay</CommonButton>
     </div>
   </q-dialog>
@@ -9,7 +9,9 @@
 <script setup>
 import { computed } from "vue";
 import CommonButton from "./CommonButton.vue";
+import { userStore } from "stores/index";
 
+const store = userStore();
 const props = defineProps(["modelValue", "prize"]);
 const emit = defineEmits(["update:modelValue", "hide"]);
 
