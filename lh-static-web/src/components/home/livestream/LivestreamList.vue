@@ -50,10 +50,10 @@ defineProps({
 .livestream-list-wrapper {
   display: flex;
   gap: 18.87px;
-  padding: 18px;
+  padding: 0 18px 26px;
   align-items: center;
   overflow: auto;
-  margin: 0 -14px -8px -18px;
+  margin: 0 -14px -28px -18px;
 
   .livestream-list-item {
     @include livestream-content-block;

@@ -42,6 +42,29 @@
         </div>
 
         <div class="livestream-video-controller-group">
+          <el-popover
+            ref="urlPopperRef"
+            popper-class="livestream-video-controller-url-popover"
+            placement="top"
+            trigger="click"
+            offset="12"
+            width="max-content"
+            :show-arrow="false"
+            :teleported="false"
+          >
+            <template #reference>
+              <button class="livestream-video-controller-url-btn btn" @click="handleUrlSelectionClick">
+                {{ currentUrl.name }}
+              </button>
+            </template>
+            <div class="livestream-video-controller-url-list">
+              <div v-for="(url, index) in urls" :key="index" class="livestream-video-controller-url-item">
+                <button class="livestream-video-controller-url-item-btn btn" @click="handleUrlChange(index)">
+                  {{ url.name }}
+                </button>
+              </div>
+            </div>
+          </el-popover>
           <button
             class="livestream-video-controller-danmu-btn btn"
             :title="playerConfig.isDanmuClose ? '开启' : '关闭' + '弹幕'"
@@ -65,7 +88,7 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref, toRefs, watch } from "vue";
+import { computed, onMounted, ref, toRefs, watch } from "vue";
 
 /** @type {import("flv.js").default.Config} */
 const DEFAULT_FLV_CONFIG = {
@@ -97,8 +120,8 @@ const DANMU_CONFIG = {
   style: DANMU_STYLE
 };
 
-const props = defineProps(["danmuList"]);
-const { danmuList } = toRefs(props);
+const props = defineProps(["danmuList", "urls"]);
+const { danmuList, urls } = toRefs(props);
 
 /**  @type {import("vue").Ref<typeof import("flv.js").default | null>} */
 const flv = ref(null);
@@ -107,16 +130,22 @@ const danmuJs = ref(null);
 const videoRef = ref(null);
 const danmuRef = ref(null);
 const videoWrapperRef = ref(null);
+const urlPopperRef = ref(null);
 const videoWrapperMouseLeaveTimer = ref(null);
 const showPlayerController = ref(false);
 const isFlvSupported = ref(true);
 const player = ref(null);
 const danmu = ref(null);
+const currentUrlIndex = ref(0);
 const playerConfig = ref({
   isPause: false,
   volume: 50,
   isFullScreen: false,
   isDanmuClose: false
+});
+
+const currentUrl = computed(() => {
+  return urls.value[currentUrlIndex.value];
 });
 
 const loadFlv = async () => {
@@ -220,6 +249,7 @@ const handleWrapperMouseEnter = () => {
 const handleWrapperMouseLeave = () => {
   videoWrapperMouseLeaveTimer.value = setTimeout(() => {
     showPlayerController.value = false;
+    urlPopperRef.value.hide();
   }, 1500);
 };
 
@@ -238,6 +268,8 @@ const handlePlayerError = (e) => {
     changePlayerConfig("isPause", true);
   }
 };
+
+const handleUrlChange = (index) => (currentUrlIndex.value = index);
 
 watch(danmuList, () => {
   if (danmuList.value.length && danmu.value) {
@@ -259,6 +291,7 @@ onMounted(() => {
   position: relative;
   border-radius: 15.1px;
   overflow: hidden;
+  aspect-ratio: 16 / 9;
 
   .livestream-video-danmu {
     position: absolute;
@@ -318,12 +351,39 @@ onMounted(() => {
         }
       }
     }
+
+    .livestream-video-controller-url-btn {
+      border-radius: 15px;
+      border: 1px solid #fff;
+      font-size: 12px;
+      color: #fff;
+    }
   }
 
   .livestream-video {
     object-fit: contain;
     width: 100%;
     height: 100%;
+  }
+}
+</style>
+<style lang="scss">
+.el-popover.el-popper.livestream-video-controller-url-popover {
+  background-color: #0000004d !important;
+  border: none !important;
+  min-width: unset;
+  padding: 8px;
+
+  .livestream-video-controller-url-list {
+    .livestream-video-controller-url-item-btn {
+      background-color: transparent;
+      font-size: 12px;
+      color: #fff;
+
+      &:hover {
+        color: #12a3ff;
+      }
+    }
   }
 }
 </style>

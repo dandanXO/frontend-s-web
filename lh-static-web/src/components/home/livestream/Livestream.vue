@@ -8,7 +8,7 @@
       <LivestreamList class="livestream-list" />
       <CurrentLivestream />
       <LivestreamChat class="livestream-chat" :messages @send-chat-message="handleSendChatMessage" />
-      <LivestreamVideo :danmuList />
+      <LivestreamVideo :danmuList :urls />
     </div>
   </div>
 </template>
@@ -24,6 +24,11 @@ const store = userStore();
 
 const messages = ref([]);
 const danmuList = ref([]);
+const urls = ref([
+  { name: "线路1", url: "" },
+  { name: "线路2", url: "" },
+  { name: "线路3", url: "" }
+]);
 
 const handleSendChatMessage = (message) => {
   if (!store.hasToken()) {
@@ -55,6 +60,7 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 .livestream-container {
+  --grid-gap: 18.87px;
   max-width: 1320px;
   margin: 0 auto;
 
@@ -62,7 +68,7 @@ onMounted(() => {
     display: grid;
     grid-template-columns: 957.72px 306.66px;
     grid-template-rows: auto auto 1fr;
-    gap: 18.87px;
+    gap: var(--grid-gap);
     padding: 18px;
     border: 2px solid #fff;
     border-radius: 15px;
@@ -74,7 +80,7 @@ onMounted(() => {
     .livestream-chat {
       grid-row: 2 / span 2;
       grid-column: 2;
-      height: 632px;
+      height: 633px;
     }
   }
 }
