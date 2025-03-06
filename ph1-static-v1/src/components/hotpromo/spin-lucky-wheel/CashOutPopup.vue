@@ -4,7 +4,8 @@
             <InviteWins />
         </div>
         <div class="cash-out" v-else>
-            <GradientTextAmount v-if="isShowTextAmount" :amountText="`Mga Gastos sa Pag-cash Out ${store.currency.value} ${extractionDifference}`" />
+            <GradientTextAmount v-if="isShowTextAmount" :amountText="`Mga Gastos sa Pag-cash Out`" />
+            <GradientTextAmount v-if="isShowTextAmount" :amountText="`${store.currency.value} ${extractionDifference}   `" />
             <div v-else class="text-amount-placeholder"></div>
             <span class="next-spin-remaining-time">Susunod na Round: {{ remainingTime }}</span>
             <div class="cash-out-backdrop-wrapper">
@@ -127,7 +128,7 @@ const handleDialogShow = () => {
 
 @media screen and (max-width: 400px) {
     .next-spin-remaining-time {
-        font-size: 18px;
+        font-size: 16px;
     }
 }
 

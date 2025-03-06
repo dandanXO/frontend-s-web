@@ -12,7 +12,7 @@
       <q-spinner v-if="isLoading" :size="30" />
       <VueQRCodeComponent v-else id="the-qrcode" :size="120" :text="selfTgurl" class="qr-code" />
       <span class="desc">Gusto mo bang i-unlock kaagad ang iyong {{`${store.currency.value} 500`}} na reward? Imbitahin ang iyong mga kaibigan para sa isang libreng spin!</span>
-      <q-btn label="Save" :size="'150'" class="save-btn" @click="downloadQRImg()" />
+      <q-btn label="I-save" :size="'150'" class="save-btn" @click="downloadQRImg()" />
     </div>
   </div>
 </template>

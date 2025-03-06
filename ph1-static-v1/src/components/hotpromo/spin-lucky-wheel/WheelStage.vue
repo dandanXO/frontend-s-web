@@ -45,7 +45,7 @@
             />
             <img class="decoration ox" src="../../../assets/images/promotion/spin-lucky-wheel/decoration-ox.png" />
 
-            <div class="countdown">"Susunod na Round: {{ remainingTime }}</div>
+            <div class="countdown">Susunod na Round: {{ remainingTime }}</div>
             <div class="wheel-inner-wrapper">
               <img
                 style="width:100%;"
@@ -86,7 +86,7 @@
         <div class="title-decoration">
           <div v-for="index in 3" :key="index"></div>
         </div>
-        <span>Mga Panuntunan sa Aktibidad</span>
+        <span style="font-size: 12px;">Mga Panuntunan sa Aktibidad</span>
         <div class="title-decoration">
           <div v-for="index in 3" :key="index"></div>
         </div>
@@ -498,7 +498,7 @@ onUnmounted(() => {
             background-size: 100% 100%;
             aspect-ratio: 295 / 24;
             margin: 4px 24px 16px;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
             color: #fff;
           }
@@ -580,6 +580,8 @@ onUnmounted(() => {
             position: relative;
             max-width: 70%;
             margin: -5% auto 0;
+            letter-spacing: -1px;
+            font-size: 15px;
           }
 
           .next-spin-remaining-time {
@@ -658,7 +660,7 @@ onUnmounted(() => {
         .winning-record-outer-wrapper {
           .winning-record-wrapper {
             .winning-record-item > span {
-              font-size: 10px;
+              font-size: 9px;
             }
           }
         }
@@ -669,8 +671,9 @@ onUnmounted(() => {
           .wheel-wrapper {
             .wheel-inner-wrapper {
               .btn {
-                font-size: 16px;
-                line-height: 20px;
+                letter-spacing: -1px;
+                font-size: 14px;
+                line-height: 15px;
               }
             }
           }
