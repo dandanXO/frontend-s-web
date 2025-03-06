@@ -1,13 +1,8 @@
 <template>
-  <q-page ref="pageContainer">
-    <!-- Video Player (Fixed Full Width) -->
-    <div class="video-wrapper" :style="videoStyle">
-      <!-- <video ref="videoElement" class="video-player" controls muted autoplay>
-        Your browser doesn't support HTML5 video.
-      </video> -->
-      <LiveStreamvideo />
-      <div ref="danmuContainer" class="danmu-overlay"></div>
-    </div>
+  <q-page ref="pageContainer" class="page-style">
+    <!-- <div class="video-wrapper" :style="videoStyle"> -->
+    <LiveStreamVideo :danmuList />
+    <!-- </div> -->
 
     <div class="transfer-mid-div">
       <div class="station-notice-wrapper" @click="showAnnouncementDialog">
@@ -25,46 +20,17 @@
       </div>
     </div>
 
-    <!-- Chat Messages (Scrollable) -->
-    <div class="chat-container" ref="chatContainer">
-      <div class="chat-messages">
-        <div v-for="(msg, index) in chatMessages" :key="index" class="chat-message">
-          <div class="chat-user-name">{{ msg.user }}</div>
-          <div class="chat-message-text">{{ msg.message }}</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Chat Input (Stays at Bottom) -->
-    <div class="chat-input-container">
-      <q-btn class="bet-btn" rounded>投一注</q-btn>
-
-      <q-input
-        v-model="chatMessage"
-        class="chat-input"
-        placeholder="输入您的消息..."
-        @keyup.enter="sendDanmu"
-        outlined
-        rounded
-        dense
-      >
-        <template v-slot:append>
-          <div>
-            <q-btn @click="sendDanmu" rounded outline color="primary" label="发弹幕" />
-          </div>
-        </template>
-      </q-input>
-    </div>
+    <LiveStreamChatMessages class="livestream-chat" :messages @send-chat-message="handleSendChatMessage" />
   </q-page>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted, nextTick } from "vue";
-// import flvjs from "flv.js";
 import Danmu from "danmu.js";
 import MarqueeText from "vue-marquee-text-component";
 import { userStore } from "stores/index";
-import LiveStreamvideo from "../../components/LiveStreamVideo.vue";
+import LiveStreamVideo from "../../components/livestream/LiveStreamVideo.vue";
+import LiveStreamChatMessages from "../../components/livestream/LiveStreamChatMessages.vue";
 
 const videoElement = ref(null);
 const danmuContainer = ref(null);
@@ -74,43 +40,30 @@ const announcementList = ref(["禁止发表任何广告、低俗色情、辱骂�
 const chatContainer = ref(null);
 const pageContainer = ref(null);
 const store = userStore();
+const isDanmuShow = ref(true);
 
-// const streamUrl = ref("http://207.148.73.114:8080/live/livestream.flv");
-const streamUrl = ref("http://www.html5videoplayer.net/videos/toystory.mp4");
-let player = null;
 let danmu = null;
-
-// Load FLV Player
-const flvLoad = () => {
-  if (flvjs.isSupported()) {
-    if (player) {
-      player.unload();
-      player.detachMediaElement();
-      player.destroy();
-      player = null;
-    }
-
-    player = flvjs.createPlayer({ type: "flv", url: streamUrl.value, isLive: true });
-    player.attachMediaElement(videoElement.value);
-    player.load();
-  } else {
-    console.log("FLV.js is not supported on this browser.");
-  }
-};
+let chatInterval = null;
+let randomChatInterval = null;
 
 // Initialize Danmu.js for chat overlay
 const initDanmu = () => {
   danmu = new Danmu({
     container: danmuContainer.value,
     media: videoElement.value,
-    engine: "canvas"
+    engine: "canvas",
+    speed: 100, // Adjust speed for smoother flow
+    area: {
+      start: 0, // Start at top
+      end: 1 // Cover full height
+    }
   });
 };
 
-// Send Chat Message as Danmu (弹幕)
 const sendDanmu = () => {
   if (chatMessage.value.trim()) {
     // Add to chat messages
+    const uniqueId = `danmu-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     const message = chatMessage.value;
     const userName = store.realName ? store.realName : "User";
 
@@ -128,8 +81,8 @@ const sendDanmu = () => {
 
     // Send with custom style via danmu.sendComment
     danmu.sendComment({
-      duration: 15000,
-      id: "id", // Unique identifier for the comment
+      duration: 10000,
+      id: uniqueId, // Unique identifier for the comment
       start: 3000, // Delay before the Danmu is shown
       txt: message,
       style: {
@@ -162,44 +115,26 @@ const scrollToTop = () => {
   checkValue.value = container.scrollTop;
 };
 
-// adjust mobile keyboard
-const isKeyboardOpen = ref(false);
-const videoStyle = ref({});
+const messages = ref([]);
+const danmuList = ref([]);
 
-const adjustLayout = () => {
-  if (window.visualViewport.height < window.innerHeight) {
-    isKeyboardOpen.value = true;
-    videoStyle.value = { position: "fixed", bottom: "0px" }; // Adjust video position
-  } else {
-    isKeyboardOpen.value = false;
-    videoStyle.value = { position: "fixed", top: "0px" };
+const handleSendChatMessage = (message) => {
+  if (!store.hasToken()) {
+    store.loginPageVisible = true;
+    return;
   }
-  console.log("resize~");
+  messages.value.push({
+    content: message,
+    name: store.nickName
+  });
+  danmuList.value = [message];
 };
-
-onMounted(() => {
-  // flvLoad();
-  initDanmu();
-
-  window.visualViewport.addEventListener("resize", adjustLayout);
-});
-
-onUnmounted(() => {
-  if (player) {
-    player.pause();
-    player.unload();
-    player.detachMediaElement();
-    player.destroy();
-  }
-
-  window.visualViewport.removeEventListener("resize", adjustLayout);
-});
 </script>
 
 <style scoped lang="scss">
 /* Video Section */
 .video-wrapper {
-  position: fixed;
+  // position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -214,12 +149,17 @@ onUnmounted(() => {
 }
 
 .danmu-overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
+  opacity: 0;
+
+  &.show {
+    opacity: 1;
+  }
 }
 
 .transfer-mid-div {
@@ -273,7 +213,7 @@ onUnmounted(() => {
   border-radius: 50px;
 
   :deep(.q-field__control) {
-    padding-right: 4px;
+    padding-right: 0px;
   }
 }
 
@@ -297,5 +237,9 @@ onUnmounted(() => {
   background: #ffffff;
   width: auto;
   display: inline-flex;
+}
+
+.page-style {
+  color: #e8f2fe;
 }
 </style>
