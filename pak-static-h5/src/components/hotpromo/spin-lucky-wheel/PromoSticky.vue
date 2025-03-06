@@ -5,7 +5,30 @@
       @click="router.push('promo?name=spin-lucky-wheel')"
       class="countdown-sticky"
     >
-      <span class="remaining-time">{{ remainingTime }}</span>
+      <picture>
+        <template v-if="info.wheelNo === 1">
+          <source
+            srcset="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/sticky/gift-300.png"
+            type="image/apng"
+          />
+          <img src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/sticky/gift-300.gif" />
+        </template>
+        <template v-if="info.wheelNo === 2">
+          <source
+            srcset="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/sticky/gift-600.png"
+            type="image/apng"
+          />
+          <img src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/sticky/gift-600.gif" />
+        </template>
+        <template v-if="info.wheelNo === 3">
+          <source
+            srcset="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/sticky/gift-1000.png"
+            type="image/apng"
+          />
+          <img src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/sticky/gift-1000.gif" />
+        </template>
+      </picture>
+      <!-- <span class="remaining-time">{{ remainingTime }}</span> -->
       <img @click.stop="closeSticky()" class="close-btn" src="../../../assets/images/index/close-btn.png" />
     </div>
   </q-page-sticky>
@@ -48,7 +71,8 @@ const info = ref({
   accumulatedBonus: 0,
   targetWithdrawAmount: 0,
   availableSpin: 0,
-  currentBonusType: ""
+  currentBonusType: "",
+  wheelNo: 1
 });
 
 const getRemainingTime = (endTime) => {
@@ -132,9 +156,9 @@ onUnmounted(() => {
   justify-content: center;
   width: 100px;
   aspect-ratio: 192/172;
-  background: url("../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/sticky.png") no-repeat center
-    center;
-  background-size: contain;
+  // background: url("../../../assets/images/promotion/hotpromo/spin-lucky-wheel/sticky/bg.png") no-repeat center
+  //   center;
+  // background-size: contain;
   position: relative;
 
   .close-btn {
