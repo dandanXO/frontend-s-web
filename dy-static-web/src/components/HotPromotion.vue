@@ -91,6 +91,7 @@
     <VctBangkok v-if="list.redirectUrl === 'dy2-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
     <S14VotePromo v-if="list.redirectUrl === 'dy2-s14-vote'" :promo-code="list.promoCode" />
     <Dota2Pgl v-if="list.redirectUrl === 'dy2-dota2-pgl'" :promo-code="list.promoCode" />
+    <PglS32025 v-if="list.redirectUrl === 'dy1-2025-pgl-s3'" :promo-code="list.promoCode" />
     <IemMasterPromo v-if="list.redirectUrl === 'dy2-iem-master'" :promo-code="list.promoCode" />
     <PullbackTide v-if="list.redirectUrl === 'dy2-pullback-tide'" :promo-code="list.promoCode" />
     <Cba30Dream v-if="list.redirectUrl === 'dy2-cba30-dream'" :promo-code="list.promoCode" />
@@ -227,6 +228,7 @@ import NationalDay2024 from "../components/hotpromo/national-day-2024/NationalDa
 import LoLS14 from "../components/hotpromo/lol-s14/LoLS14.vue";
 import Dota2BlastSlam2024 from "../components/hotpromo/dota2-blast-slam-2024/Dota2BlastSlam2024.vue";
 import Dota2Pgl from "./hotpromo/dota2-pgl/Dota2Pgl.vue";
+import PglS32025 from "./hotpromo/pgl-s3-2025/PglS32025.vue"
 import PullbackTide from "./hotpromo/pullback-tide/PullbackTide.vue";
 import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
 import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
@@ -318,6 +320,7 @@ export default defineComponent({
     SubmitClaimPromo,
     S14VotePromo,
     Dota2Pgl,
+    PglS32025,
     IemMasterPromo,
     PullbackTide,
     Cba30Dream,
