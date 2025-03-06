@@ -147,7 +147,7 @@
             dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2',
             'livepoker-rebate-bg': selectedPromo?.promoCode === 'dy2-livepoker-rebate',
             dyfootball: selectedPromo?.promoCode === 'dy2-football',
-            dota2Pgql: selectedPromo?.promoCode === 'dy2-dota2-pgl',
+            dota2Pgql: selectedPromo?.promoCode === 'dy2-dota2-pgl' || selectedPromo.redirectUrl === 'dy1-2025-pgl-s3',
             isYallaCompass: selectedPromo?.promoCode === 'dy2-yalla-compass',
             isBbdachaBelgrade: selectedPromo?.promoCode === 'dy2-bbdacha-belgrade',
             isValorantChampionTour2024: selectedPromo.promoCode === 'dy2-valorant-champion-tour-2024'
@@ -808,7 +808,7 @@ export default defineComponent({
           }
         }
         &.dy1-2025-pgl-s3 {
-          background: #1C0D18;
+          background: #1c0d18;
         }
 
         &.isNationalDay24 {
@@ -958,9 +958,9 @@ export default defineComponent({
 
         &.dota2Pgql {
           background-color: #e7f1fd;
-          width: 100%;
-          max-width: 1920px;
-          margin: 0 auto;
+          width: 100% !important;
+          max-width: 1920px !important;
+          margin: 0 auto !important;
         }
 
         &.duanwujie {
