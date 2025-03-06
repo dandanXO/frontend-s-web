@@ -5,7 +5,7 @@
       @click="router.push('promo?name=spin-lucky-wheel')"
       class="countdown-sticky"
     >
-      <picture>
+      <picture class="gift-img">
         <template v-if="info.wheelNo === 1">
           <source
             srcset="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/sticky/gift-300.png"
@@ -28,7 +28,7 @@
           <img src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/sticky/gift-1000.gif" />
         </template>
       </picture>
-      <!-- <span class="remaining-time">{{ remainingTime }}</span> -->
+      <span class="remaining-time">{{ remainingTime }}</span>
       <img @click.stop="closeSticky()" class="close-btn" src="../../../assets/images/index/close-btn.png" />
     </div>
   </q-page-sticky>
@@ -149,7 +149,7 @@ onUnmounted(() => {
   clearInterval(timer.value);
 });
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .countdown-sticky {
   display: flex;
   align-items: center;
@@ -171,11 +171,21 @@ onUnmounted(() => {
 }
 
 .remaining-time {
-  font-size: 18px;
+  position: absolute;
+  bottom: 10px;
+  font-size: 12px;
+  font-weight: 900;
   line-height: 24px;
   letter-spacing: -1px;
-  color: #fdfd7a;
-  text-shadow: 1px 2px #b72c00;
-  margin-top: -20px;
+  color: #0f992f;
+  // text-shadow: 1px 2px #b72c00;
+  -webkit-text-stroke: 0.3px #fff;
+  // margin-top: -20px;
+}
+
+.gift-img {
+  img {
+    pointer-events: none;
+  }
 }
 </style>
