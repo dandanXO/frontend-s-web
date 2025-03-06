@@ -575,10 +575,10 @@ export default {
     jackpot: "جیک پاٹ",
     bonus: "بونس",
     amount: "رقم",
-    applying: "پروسیسنگ",
+    applying: "درخواست جاری ہے",
     failed: "ناکام",
     Success: "کامیابی",
-    underReview: "پروسیسنگ",
+    underReview: "جائزہ جاری ہے",
     toBePaid: "ادائیگی ہونی ہے",
     paymentOnGoing: "ادائیگی جاری ہے",
     automaticPayment: "خودکار ادائیگی",
@@ -594,7 +594,13 @@ export default {
     bytoday: " آج تک",
     byyesterday: "کل تک",
     all: "سب",
-    turnover_requi: "ٹرن اوور کی شرط"
+    turnover_requi: "ٹرن اوور کی شرط",
+    sending: "بھیجا جا رہا ہے",
+    waitCallback: "کال بیک کا انتظار",
+    paying: "ادائیگی ہو رہی ہے",
+    waitingAutoPay: "خودکار ادائیگی کا انتظار",
+    failReview: "ناکام جائزہ",
+    waitingRetry: "دوبارہ کوشش کا انتظار"
   },
   appUpdate: {
     updateHeader: "اعلانِ اپ ڈیٹ",
