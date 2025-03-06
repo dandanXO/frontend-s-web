@@ -80,7 +80,7 @@
             <div class="browser"><img src="images/browser-universe.png" alt=""></div>
         </div> -->
         <div id="largeScreenDiv" class="download-container">
-          <img class="qrcode" src="./images/qrcode.png" />
+          <div class="qrcode" id="dl-qr"></div>
           <div class="qrcode-txt">下载手机App 速度提升10倍</div>
         </div>
         <a
@@ -103,11 +103,18 @@
     id="LA_COLLECT"
     src="//sdk.51.la/js-sdk-pro.min.js"
   ></script>
+  <script type="text/javascript" src="./js/qrcode.js"></script>
   <script type="text/javascript">
     var hostname = window.location.hostname;
     if (hostname.indexOf("dydy18.com") > -1) {
       LA.init({ id: "Kc6fZaSY3MdBOkcH", ck: "Kc6fZaSY3MdBOkcH" });
     }
+
+    (function () {
+      var appDlQR = new QRCode("dl-qr");
+
+      appDlQR.makeCode("https://www.df140.app/");
+    })();
 
     function renderBasedOnScreenSize() {
       const mobileScreenDiv = document.getElementById("mobileScreenDiv");

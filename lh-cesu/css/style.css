@@ -162,12 +162,19 @@ span.color-red {
 }
 
 .qrcode {
+  width: 180px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.qrcode img {
   width: 160px;
 }
 
 .qrcode-txt {
   color: #000;
-  margin-top: 6px;
+  margin-top: 8px;
   font-weight: 600;
 }
 
