@@ -8,7 +8,7 @@
           <span class="amount">{{ info.currAmount }}</span>
         </span> -->
 
-        <GradientTextAmount :amountText="`$ ${info.currAmount}`" />
+        <GradientTextAmount :amountText="`${store.currency.value} ${info.currAmount}`" />
 
         <template v-if="extractionDifference > 0 && info.status === 'IN_PROGRESS'">
           <ProgressBar />
@@ -32,7 +32,7 @@
               <span class="name">{{ record.name }}</span>
               <span>
                 Tumanggap
-                <span class="amount">$500</span>
+                <span class="amount">{{ `${store.currency.value} 500` }}</span>
               </span>
             </div>
           </div>
@@ -93,7 +93,7 @@
       </div>
       <ol>
         <li>
-          Kapag umabot na sa $500 ang naipong halaga, maaari kang mag-apply para sa withdrawal 
+          Kapag umabot na sa {{ `${store.currency.value} 500` }} ang naipong halaga, maaari kang mag-apply para sa withdrawal 
           (Ang mga reward ay direktang maidaragdag sa iyong wallet).
         </li>
         <li>
@@ -143,11 +143,12 @@ import { useQuasar } from "quasar";
 import ProgressBar from './ProgressBar.vue';
 import CashOutPopup from "./CashOutPopup.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
+import { userStore } from "@/stores/index";
 
 const emit = defineEmits(["reload"]);
 const props = defineProps(["info"]);
 const { info } = toRefs(props);
-
+const store = userStore();
 
 const TOTAL_ITEMS = 6;
 const DEFAULT_SPEED = 1;

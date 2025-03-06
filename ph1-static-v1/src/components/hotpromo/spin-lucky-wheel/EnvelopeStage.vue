@@ -27,7 +27,7 @@
         </button>
       </div>
       <div v-else class="selected-envelope">
-        <span class="prize">${{ prizeList[selectedIndex]?.prize }}</span>
+        <span class="prize">{{ store.currency.value }} {{ prizeList[selectedIndex]?.prize }}</span>
         <CommonButton class="withdraw-btn" @click="$emit('envelopeClick')">Mag-withdraw ka na ngayon!</CommonButton>
         <span class="remaining-time">Natitirang Oras: {{ remainingTime }}</span>
       </div>
@@ -42,9 +42,11 @@ import moment from "moment";
 import { onUnmounted, ref } from "vue";
 import CommonButton from "./CommonButton.vue";
 import { eventapi } from "src/boot/axios";
+import { userStore } from "stores/index";
 
 defineEmits(["envelopeClick"]);
 
+const store = userStore();
 const envelopeStatus = ref("idle");
 const prizeList = ref(new Array(6).fill().map(() => ({ status: "idle", prize: 0 })));
 const selectedIndex = ref(0);
