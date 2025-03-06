@@ -67,7 +67,8 @@
       v-else-if="list.redirectUrl === 'lh1-skyesports-souvenir-2025'"
       :promo-code="list.promoCode"
     />
-    <EslProLeagueS21 v-else-if="list.redirectUrl === 'lh1-esl-pro-league-s21'" :promo-param="listParam" />
+    <Dota2Pgl v-else-if="list.redirectUrl === 'lh1-esl-pro-league-s21'" :promo-param="listParam" />
+    <PglS32025 v-else-if="list.redirectUrl === 'lh1-2025-pgl-s3'" :promo-param="listParam" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -101,6 +102,8 @@ import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue"
 import VctBangkok from "components/hotpromo/vct-bangkok/VctBangkok.vue";
 import PGLOnFireBuenosAires2025 from "./hotpromo/pgl-on-fire-buenos-aires-2025/PGLOnFireBuenosAires2025.vue";
 import SkyesportsSouvenir2025 from "./hotpromo/skyesports-souvenir-2025/SkyesportsSouvenir2025.vue";
+import Dota2Pgl from "components/hotpromo/dota2-pgl/Dota2Pgl.vue";
+import PglS32025 from "components/hotpromo/pgl-s3-2025/PglS32025.vue"
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
 const DragonCardPromo = defineAsyncComponent(() => import("../components/hotpromo/dragoncard/dragonCardPromo.vue"));
 const FeedbackAwardPromo = defineAsyncComponent(() =>
@@ -171,6 +174,8 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    Dota2Pgl,
+    PglS32025,
     KatowiceS25,
     VctBangkok,
     NewFootball,
