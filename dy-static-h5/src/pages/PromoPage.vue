@@ -133,7 +133,7 @@
                   isYallaCompass: selectedPromo?.promoCode === 'dy2-yalla-compass',
                   isBbdachaBelgrade: selectedPromo?.promoCode === 'dy2-bbdacha-belgrade',
                   isValorantChampionTour2024: selectedPromo?.promoCode === 'dy2-valorant-champion-tour-2024',
-                  hongbaoyu2025: selectedPromo?.promoCode === 'dy2-cny2025-red-envelope'
+                  hongbaoyu2025: selectedPromo?.promoCode === 'dy2-cny2025-red-envelope',
                 }"
                 :style="{
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
@@ -1153,6 +1153,14 @@ export default defineComponent({
           gap: 0px;
           padding: 10px;
           background: url(../assets/images/promotion/hotpromo/LOL-msi/h6bgbg.jpg) no-repeat center center;
+        }
+
+        &.dy1-2025-pgl-s3 {
+          margin: 0px;
+          width: 100%;
+          gap: 0px;
+          padding: 0px 16px 20px;
+          background-color: #1c0d18;
         }
 
         img {
