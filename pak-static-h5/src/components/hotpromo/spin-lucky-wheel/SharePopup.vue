@@ -319,6 +319,9 @@ onMounted(() => {
 }
 .sharepopupslider {
   .qr-code {
+  background: #ffffff;
+  border-radius: 5px;
+  padding: 10px;
     position: absolute;
     // right: 50px;
     // bottom: 68px;
