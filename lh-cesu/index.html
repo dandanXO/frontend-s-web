@@ -72,17 +72,39 @@
       </div>
       <div class="footer-content">
         <!-- <div class="footer-title">推荐使用以下浏览器</div>
-                <div class="browsers-list">
-                    <div class="browser"><img src="images/browser-firefox.png" alt=""></div>
-                    <div class="browser"><img src="images/browser-chrome.png " alt=""></div>
-                    <div class="browser"><img src="images/browser-universe.png" alt=""></div>
-                </div> -->
-        <img class="qrcode" src="./images/qrcode.png" />
-        <div class="qrcode-txt">下载手机App 速度提升10倍</div>
+        <div class="browsers-list">
+          <div class="browser">
+            <img src="images/browser-firefox.png" alt="" />
+          </div>
+          <div class="browser">
+            <img src="images/browser-chrome.png " alt="" />
+          </div>
+          <div class="browser">
+            <img src="images/browser-universe.png" alt="" />
+          </div>
+        </div> -->
+
+        <div id="largeScreenDiv" class="download-container">
+          <div class="qrcode" id="dl-qr"></div>
+          <div class="qrcode-txt">下载手机App 速度提升10倍</div>
+        </div>
+        <a
+          id="mobileScreenDiv"
+          class="line-btn download-mobile-btn"
+          href="https://lhd328.app/"
+          target="_blank"
+          title="下载手机App 速度提升10倍"
+          ><img
+            class="phone-icon"
+            src="images/phone-icon.svg"
+            alt=""
+          />下载手机App<br />速度提升10倍</a
+        >
       </div>
     </div>
   </body>
   <script src="js/jquery-3.6.1.min.js" type="text/javascript"></script>
+  <script type="text/javascript" src="./js/qrcode.js"></script>
   <script
     charset="UTF-8"
     id="LA_COLLECT"
@@ -95,5 +117,28 @@
     } else if (hostname.indexOf("leihuo16.com") > -1) {
       LA.init({ id: "KdJtlxGYO7LA0zwt", ck: "KdJtlxGYO7LA0zwt" });
     }
+
+    (function () {
+      var appDlQR = new QRCode("dl-qr");
+
+      appDlQR.makeCode("https://lhd328.app/");
+    })();
+
+    function renderBasedOnScreenSize() {
+      const mobileScreenDiv = document.getElementById("mobileScreenDiv");
+      const largeScreenDiv = document.getElementById("largeScreenDiv");
+
+      if (window.innerWidth >= 768) {
+        mobileScreenDiv.style.display = "none";
+        largeScreenDiv.style.display = "grid";
+      } else {
+        mobileScreenDiv.style.display = "flex";
+        largeScreenDiv.style.display = "none";
+      }
+    }
+
+    renderBasedOnScreenSize();
+
+    window.addEventListener("resize", renderBasedOnScreenSize);
   </script>
 </html>

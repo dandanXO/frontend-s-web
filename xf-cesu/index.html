@@ -79,8 +79,22 @@
             <div class="browser"><img src="images/browser-chrome.png " alt=""></div>
             <div class="browser"><img src="images/browser-universe.png" alt=""></div>
         </div> -->
-        <img class="qrcode" src="./images/qrcode.png" />
-        <div class="qrcode-txt">下载手机App 速度提升10倍</div>
+        <div id="largeScreenDiv" class="download-container">
+          <div class="qrcode" id="dl-qr"></div>
+          <div class="qrcode-txt">下载手机App 速度提升10倍</div>
+        </div>
+        <a
+          id="mobileScreenDiv"
+          class="line-btn download-mobile-btn"
+          href="https://www.xf0003.app/"
+          target="_blank"
+          title="下载手机App 速度提升10倍"
+          ><img
+            class="phone-icon"
+            src="images/phone-icon.svg"
+            alt=""
+          />下载手机App<br />速度提升10倍</a
+        >
       </div>
     </div>
   </body>
@@ -89,10 +103,34 @@
     id="LA_COLLECT"
     src="//sdk.51.la/js-sdk-pro.min.js"
   ></script>
+  <script type="text/javascript" src="./js/qrcode.js"></script>
   <script type="text/javascript">
     var hostname = window.location.hostname;
     if (hostname.indexOf("xfxf98.com") > -1) {
       LA.init({ id: "Kc6fej4QkMRpm4I0", ck: "Kc6fej4QkMRpm4I0" });
     }
+
+    (function () {
+      var appDlQR = new QRCode("dl-qr");
+
+      appDlQR.makeCode("https://www.xf0003.app/");
+    })();
+
+    function renderBasedOnScreenSize() {
+      const mobileScreenDiv = document.getElementById("mobileScreenDiv");
+      const largeScreenDiv = document.getElementById("largeScreenDiv");
+
+      if (window.innerWidth >= 768) {
+        mobileScreenDiv.style.display = "none";
+        largeScreenDiv.style.display = "grid";
+      } else {
+        mobileScreenDiv.style.display = "flex";
+        largeScreenDiv.style.display = "none";
+      }
+    }
+
+    renderBasedOnScreenSize();
+
+    window.addEventListener("resize", renderBasedOnScreenSize);
   </script>
 </html>
