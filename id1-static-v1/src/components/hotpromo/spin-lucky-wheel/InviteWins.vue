@@ -32,7 +32,7 @@ const isLoading = ref(false);
 
 const selfTgurl = ref("");
 const copyShareLink = (selfTgurl) => {
-  const copiedText = `"Apakah Anda ingin membuka ${store.currency.value}500K hadiah anda segera? Klik tautan ini: ${selfTgurl}`;
+  const copiedText = `Apakah Anda ingin membuka ${store.currency.value}500K hadiah anda segera? Klik tautan ini: ${selfTgurl}`;
 
   copyToClipboard(copiedText)
     .then(() => {
