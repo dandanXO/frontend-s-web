@@ -633,12 +633,22 @@ export default defineComponent({
     };
 
     const trackRegisterSuccessEvent = () => {
-      if (ui.adjust_register_event && isInPwa()) {
+      if (!ui.adjust_register_event) return;
+      if (isInPwa()) {
         console.log(ui.adjust_register_event);
         const AdjustWeb = require("@adjustcom/adjust-web-sdk");
         AdjustWeb.trackEvent({
           eventToken: ui.adjust_register_event
         });
+      } else if (Platform.is.android && Platform.is.capacitor) {
+        var adjustEvent = new AdjustEvent(ui.adjust_register_event);
+        // alert(affRegEvent.value);
+        Adjust.trackEvent(adjustEvent);
+        // } else {
+        //   const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        //   AdjustWeb.trackEvent({
+        //     eventToken: ui.adjust_register_event
+        //   });
       }
     };
 
@@ -713,21 +723,6 @@ export default defineComponent({
                 }
 
                 trackRegisterSuccessEvent();
-
-                //ADJUST TRACKEVENT.
-                // debugger;
-                // if (Platform.is.android && Platform.is.capacitor) {
-                //   affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
-                //   var adjustEvent = new AdjustEvent(affRegEvent.value);
-                //   // alert(affRegEvent.value);
-                //   Adjust.trackEvent(adjustEvent);
-                // } else {
-                //   affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
-                //   const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-                //   AdjustWeb.trackEvent({
-                //     eventToken: affRegEvent.value
-                //   });
-                // }
 
                 sessionStorage.removeItem("REFERRAL_CODE");
                 localStorage.removeItem("PWA_REFERRAL_CODE");

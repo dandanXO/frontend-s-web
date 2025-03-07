@@ -626,7 +626,7 @@ export default defineComponent({
       handleRedirect();
       // const info = await App.getInfo();
       // console.log(info);
-      // checkIfVirtualMachine();
+      checkIfVirtualMachine();
       checkServerStatus();
       checkSID();
       // getCSA();
