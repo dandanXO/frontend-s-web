@@ -58,6 +58,7 @@
     <DreamLeagueS25 v-else-if="list.redirectUrl === 'lh1-dream-league-s25'" :promo-code="list.promoCode" />
     <KatowiceS25 v-else-if="list.redirectUrl === 'lh1-iem-katowice-2025'" :promo-code="list.promoCode" />
     <Dota2BlastSlam2025 v-else-if="list.redirectUrl === 'lh1-blast-slam-2025'" :promo-code="list.promoCode" />
+    <Blast2025S3 v-else-if="list.redirectUrl === 'lh1-blast-open-lisbon-2025'" :promo-code="list.promoCode" />
     <DarkModePromo v-else-if="list.redirectUrl === 'lh1-dark-mode'" />
     <PGLOnFireBuenosAires2025
       v-else-if="list.redirectUrl === 'lh1-pgl-on-fire-buenos-aires-2025'"
@@ -169,11 +170,15 @@ const EslProLeagueS21 = defineAsyncComponent(() => import("./hotpromo/esl-pro-le
 
 const PGLBucharest2025 = defineAsyncComponent(() => import("./hotpromo/pgl-bucharest-2025/PGLBucharest2025.vue"));
 
+const Blast2025S3 = defineAsyncComponent(() =>
+  import("./hotpromo/Blast2025-s3/Blast2025S3.vue"))
+
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    Blast2025S3,
     Dota2Pgl,
     PglS32025,
     KatowiceS25,
