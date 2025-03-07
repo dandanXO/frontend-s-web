@@ -12,7 +12,7 @@
       <div />
     </div>
     <div class="carousel-container" ref="captureRef">
-      <q-carousel
+      <!-- <q-carousel
         v-model="slide"
         transition-prev="fade-right"
         transition-next="fade-left"
@@ -32,42 +32,38 @@
 
           <VueQRCodeComponent class="qr-code" size="200" :text="qrCode" />
         </q-carousel-slide>
-      </q-carousel>
+      </q-carousel> -->
+      <Carousel
+        v-bind="carouselSettings"
+        class="custom-carousel sharepopupslider"
+      >
+        <Slide v-for="i in 6" :key="i">
+          <div class="slide-content">
+            <img class="slide-img" :src="require(`../spin-lucky-wheel/img/share-${i}.png`)" alt="Slide Image" />
+            <VueQRCodeComponent class="qr-code" size="200" :text="qrCode" />
+          </div>
+        </Slide>
+
+        <!-- <template #addons>
+          <Navigation />
+        </template> -->
+      </Carousel>
     </div>
     <div class="bottom-panel">
       <div class="share-icons">
         <div class="invite-share-social">
-          <a
-            class="social-item"
-            :href="`https://wa.me/?text=${encodeURIComponent($t('earnMoney.reward.shareText', { url: selfTgurl }))}`"
-            target="_blank"
-          >
-            <img src="../../../assets/images/earn-money/social-green-whatsapp.png" />
-            <span class="grey">Whatsapp</span>
-          </a>
-          <a
-            class="social-item"
-            :href="`instagram://sharesheet?text=${encodeURIComponent(
-              $t('earnMoney.reward.shareText', { url: selfTgurl })
-            )}`"
-            target="_blank"
-          >
-            <img src="../../../assets/images/earn-money/social-green-instagram.png" />
-            <span class="grey">Instagram</span>
+          <a class="social-item" @click="modalSocialShare = true">
+            <img src="../spin-lucky-wheel/img/share-icon.png" />
+            <span class="grey">Share</span>
           </a>
           <a class="social-item" @click="takeScreenshot">
-            <img src="../../../assets/images/earn-money/social-green-download.png" />
+            <img src="../spin-lucky-wheel/img/download-icon.png" />
             <span class="grey">Save Image</span>
-          </a>
-          <a ref="tiktokRef" href="tiktok://" target="_blank" :style="{ display: 'none' }" />
-          <a class="social-item" @click="modalSocialShare = true">
-            <img src="../../../assets/images/earn-money/social-green-more.png" />
-            <span class="grey">Other Share</span>
           </a>
           <a class="social-item" @click="copyHrefLink">
             <!-- <div class="link-href">{{ selfTgurl }}</div> -->
 
-            <img src="../../../assets/images/earn-money/social-green-copy.png" />
+            <img src="../spin-lucky-wheel/img/copy-icon.png" />
             <span class="grey">{{ $t("earnMoney.reward.copyLink") }}</span>
           </a>
         </div>
@@ -98,6 +94,24 @@
           <a class="social-item" @click="handleShareToTikTok(selfTgurl)">
             <img src="../../../assets/images/earn-money/social-green-tiktok.png" />
           </a>
+          
+          <a ref="tiktokRef" href="tiktok://" target="_blank" :style="{ display: 'none' }" />
+          <a
+            class="social-item"
+            :href="`https://wa.me/?text=${encodeURIComponent($t('earnMoney.reward.shareText', { url: selfTgurl }))}`"
+            target="_blank"
+          >
+            <img src="../../../assets/images/earn-money/social-green-whatsapp.png" />
+          </a>
+          <a
+            class="social-item"
+            :href="`instagram://sharesheet?text=${encodeURIComponent(
+              $t('earnMoney.reward.shareText', { url: selfTgurl })
+            )}`"
+            target="_blank"
+          >
+            <img src="../../../assets/images/earn-money/social-green-instagram.png" />
+          </a>
         </div>
       </div>
     </div>
@@ -111,11 +125,24 @@ import { api } from "boot/axios";
 import { userStore } from "stores/index";
 import VueQRCodeComponent from "vue-qrcode-component";
 import html2canvas from "html2canvas";
+
+import 'vue3-carousel/dist/carousel.css';
+// import { Carousel, Slide, Navigation } from 'vue3-carousel';
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 const { t } = useI18n();
 const slide = ref(1);
 const props = defineProps(["modelValue", "prize"]);
 const emit = defineEmits(["update:modelValue", "hide"]);
 
+
+const carouselSettings = ref({
+  itemsToShow: 1.2, // Ensures peeking effect
+  snapAlign: 'center',
+  wrapAround: true,
+  transition: 500,
+  height: 200,
+  gap: 30
+});
 const captureRef = ref(null);
 
 const takeScreenshot = async () => {
@@ -133,12 +160,12 @@ const takeScreenshot = async () => {
         const originalHeight = canvas.height;
 
         // Crop dimensions (80% height)
-        const cropWidth = originalWidth * 0.75;
-        const cropHeight = originalHeight * 0.88;
+        const cropWidth = originalWidth * 0.78;
+        const cropHeight = originalHeight * 0.98;
 
         // Calculate the starting Y position (centered crop)
         const startX = (originalWidth - cropWidth) / 2; // Keep full width
-        const startY = (originalHeight - cropHeight) / 2 - 18; // Center vertically
+        const startY = (originalHeight - cropHeight) / 2; // Center vertically
 
         // Create a new canvas for cropped image
         const croppedCanvas = document.createElement("canvas");
@@ -316,20 +343,47 @@ onMounted(() => {
 
   // margin-top: -30vh;
   position: relative;
+  max-width: 500px; /* Make it as small as you need */
+  margin: 0 auto;
+  overflow: hidden; /* Ensures no vertical scrolling */
+  /* Small Parent Container */
+/* Carousel Styling */
+.custom-carousel {
+  width: 100%;
+}
+
+// /* Slide Content */
+// .slide-content {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   padding: 0 5px
+// }
+.slide-content {
+  padding: 0 10px;
+}
+/* Slide Image */
+.slide-img {
+  width: 100%;
+  border-radius: 20px;
+}
 }
 .sharepopupslider {
   .qr-code {
-  background: #ffffff;
-  border-radius: 5px;
-  padding: 10px;
+    background: #ffffff;
+    border-radius: 5px;
+    padding: 10px;
     position: absolute;
     // right: 50px;
     // bottom: 68px;
     width: 28vw;
     max-width: 123px;
 
-    right: 13%;
-    bottom: 12%;
+    // right: 13%;
+    // bottom: 12%;
+    right: 10%;
+    bottom: 4%;
 
     :deep(img) {
       max-width: 100%;
@@ -339,56 +393,58 @@ onMounted(() => {
     }
   }
   background: transparent;
-  &.q-carousel {
-    width: 90%;
-    max-width: 400px;
-    margin: 0 auto;
-    height: unset;
+  // &.q-carousel {
+  //   width: 90%;
+  //   max-width: 400px;
+  //   margin: 0 auto;
+  //   height: unset;
 
-    // max-width: 280px;
-    position: relative;
-    // :deep(.q-carousel__navigation) {
-    //   bottom: -15px;
-    // }
-    :deep(.q-carousel__navigation .q-btn) {
-      margin: 0px;
-      padding: 0;
-    }
-    :deep(.q-carousel__navigation-icon--active) {
-      width: 40px;
-      width: 40px;
-      height: 6px;
-      background: #21ef89;
-      min-height: 1.6em;
-      min-width: 15%;
-      border-radius: 10px;
-      font-size: 0px !important;
-    }
-    :deep(.q-img__container) {
-      background: #434343;
-      padding: 2px;
-      border-radius: 20px;
-      background: linear-gradient(
-        154.65deg,
-        rgba(5, 160, 0, 0.45) 6.41%,
-        rgba(11, 92, 8, 0.45) 22.98%,
-        rgba(62, 234, 56, 0.45) 43.48%,
-        rgba(6, 63, 4, 0.45) 72.71%,
-        rgba(5, 160, 0, 0.45) 93.64%
-      );
-      height: 96%;
-    }
-    :deep(.q-btn .q-icon, .q-btn .q-spinner) {
-      font-size: 0.715em;
-    }
-    // .q-img__image--loaded {
+  //   // max-width: 280px;
+  //   position: relative;
+  //   // :deep(.q-carousel__navigation) {
+  //   //   bottom: -15px;
+  //   // }
+  //   :deep(.q-carousel__navigation .q-btn) {
+  //     margin: 0px;
+  //     padding: 0;
+  //   }
+  //   :deep(.q-carousel__navigation-icon--active) {
+  //     width: 40px;
+  //     width: 40px;
+  //     height: 6px;
+  //     background: #21ef89;
+  //     min-height: 1.6em;
+  //     min-width: 15%;
+  //     border-radius: 10px;
+  //     font-size: 0px !important;
+  //   }
+  //   :deep(.q-img__container) {
+  //     background: #434343;
+  //     padding: 2px;
+  //     border-radius: 20px;
+  //     background: linear-gradient(
+  //       154.65deg,
+  //       rgba(5, 160, 0, 0.45) 6.41%,
+  //       rgba(11, 92, 8, 0.45) 22.98%,
+  //       rgba(62, 234, 56, 0.45) 43.48%,
+  //       rgba(6, 63, 4, 0.45) 72.71%,
+  //       rgba(5, 160, 0, 0.45) 93.64%
+  //     );
+  //     height: 96%;
+  //   }
+  //   :deep(.q-btn .q-icon, .q-btn .q-spinner) {
+  //     font-size: 0.715em;
+  //   }
+  //   // .q-img__image--loaded {
 
-    //   height: 85%;
-    //   border-radius: 20px;
-    //   padding: 2px;
+  //   //   height: 85%;
+  //   //   border-radius: 20px;
+  //   //   padding: 2px;
 
-    // }
-  }
+  //   // }
+  // }
+  
+  
 }
 
 .back-btn {
@@ -481,27 +537,40 @@ onMounted(() => {
 
   .invite-share-social {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-gap: 12px;
-    margin-top: 16px;
-    margin-bottom: 10px;
+    width: 95%;
+    margin: 10px auto 16px;
     // display: none !important;
     .social-item {
+      position: relative;
+      background: #ffffff;
+      border-radius: 30px;
+      padding: 10px 5px 10px 40px;
       img {
         display: block;
         width: 100%;
-        max-width: 40px;
+        max-width: 50px;
         margin: 0 auto 5px;
+        position: absolute;
+        left: -5px;
+        top: -10px;
       }
       text-decoration: none;
       .grey {
-        color: #9f9f9f;
+        color: #000000;
         font-size: 9px;
         text-decoration: none;
         display: flex;
         width: 100%;
         justify-content: center;
         align-items: center;
+        font-family: Poppins;
+        font-weight: 700;
+        font-size: 10px;
+        line-height: 16.47px;
+        letter-spacing: 0px;
+
       }
     }
   }
@@ -509,7 +578,7 @@ onMounted(() => {
 
 .modal-invite-share-social {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-gap: 12px;
   margin-top: 16px;
   // display: none !important;
