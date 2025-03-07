@@ -354,6 +354,9 @@ export default defineComponent({
                         sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
                         sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
                         sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+                        if (res.data.adjust_register_event) {
+                          ui.adjust_register_event = res.data.adjust_register_event;
+                        }
                         affAppToken.value = res.data.adjust_app_token;
                         initAdjustEventTrack();
                         // alert(affAppToken.value);
