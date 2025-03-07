@@ -850,4 +850,8 @@ function charType(num) {
     background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
   }
 }
+
+.prepend-number {
+  z-index: 2;
+}
 </style>
