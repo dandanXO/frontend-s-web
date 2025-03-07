@@ -117,6 +117,7 @@
     <DreamLeagueS25 v-if="list.redirectUrl === 'dy2-dream-league-s25'" :promo-code="list.promoCode" />
     <HongBaoYu2025 v-if="list.redirectUrl === 'dy2-cny2025-red-envelope'" :promo-code="list.promoCode" />
     <Monthly20HongBaoYu v-if="list.redirectUrl === 'dy2-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
+    <Blast2025 v-if="list.redirectUrl === 'dy2-blast-open-lisbon-2025'" :promo-code="list.promoCode" />
     <SkyesportsSouvenir2025 v-if="list.redirectUrl === 'dy2-skyesports-souvenir-2025'" :promo-code="list.promoCode" />
     <PGLOnFireBuenosAires2025
       v-if="list.redirectUrl === 'dy2-pgl-on-fire-buenos-aires-2025'"
@@ -244,12 +245,14 @@ import AgYuanxiaohongbao from "../components/hotpromo/agyuanxiaohongbao/AgYuanxi
 import LanternFestival2025 from "../components/hotpromo/lantern-festival-2025/LanternFestival2025.vue";
 import EslProLeagueS21 from "./hotpromo/esl-pro-league-s21/EslProLeagueS21.vue";
 import PGLBucharest2025 from "./hotpromo/pgl-bucharest-2025/PGLBucharest2025.vue";
+import Blast2025 from "../components/hotpromo/Blast2025/Blast2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    Blast2025,
     EslProLeagueS21,
     LanternFestival2025,
     AgYuanxiaohongbao,

@@ -115,6 +115,7 @@
     <Dota2BlastSlam2024 v-if="list.redirectUrl === 'dy2-dota2-blast-slam-2024'" :promo-code="list.promoCode" />
     <KatowiceS25 v-if="list.redirectUrl === 'dy2-iem-katowice-2025'" :promo-code="list.promoCode" />
     <Lh1LplLck2025loss v-else-if="list.redirectUrl === 'dy2-lpl-lck-2025'" :promo-param="listParam" />
+    <Blast2025S3 v-else-if="list.redirectUrl === 'dy2-blast-open-lisbon-2025'" :promo-code="list.promoCode" />
     <ChristmasGachapon
       v-if="list.redirectUrl === 'dy2-christmas-gashapon'"
       :promo-code="list.promoCode"
@@ -302,12 +303,15 @@ const KatowiceS25 = defineAsyncComponent(()=>import("./hotpromo/katowice-s-25/Ka
 import SkyesportsSouvenir2025 from "./hotpromo/skyesports-souvenir-2025/SkyesportsSouvenir2025.vue";
 import PGLOnFireBuenosAires2025 from "./hotpromo/pgl-on-fire-buenos-aires-2025/PGLOnFireBuenosAires2025.vue";
 import PGLBucharest2025 from "./hotpromo/pgl-bucharest-2025/PGLBucharest2025.vue";
+const Blast2025S3 = defineAsyncComponent(() =>
+  import("./hotpromo/Blast2025-s3/Blast2025S3.vue"))
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    Blast2025S3,
     EslProLeagueS21,
     LanternFestival2025,
     AgYuanxiaohongbao,
