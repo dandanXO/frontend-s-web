@@ -11,8 +11,8 @@
     <div class="qr-wrapper invite-win-section">
       <q-spinner v-if="isLoading" :size="30" />
       <VueQRCodeComponent v-else id="the-qrcode" :size="120" :text="selfTgurl" class="qr-code" />
-      <span class="desc">Gusto mo bang i-unlock kaagad ang iyong {{`${store.currency.value} 500`}} na reward? Imbitahin ang iyong mga kaibigan para sa isang libreng spin!</span>
-      <q-btn label="I-save" :size="'150'" class="save-btn" @click="downloadQRImg()" />
+      <span class="desc">Do you want to unlock your {{`${store.currency.value} 500`}} reward right away? Invite your friends for a free spin!</span>
+      <q-btn label="Save" :size="'150'" class="save-btn" @click="downloadQRImg()" />
     </div>
   </div>
 </template>
@@ -39,7 +39,7 @@ const copyShareLink = (selfTgurl) => {
       $q.notify({
         color: "position",
         position: "top",
-        message: `${selfTgurl} Nakopya sa clipboard`,
+        message: `${selfTgurl} copied to clipboard`,
         icon: "check_circle_outline"
       });
     })
@@ -47,7 +47,7 @@ const copyShareLink = (selfTgurl) => {
       $q.notify({
         color: "negative",
         position: "top",
-        message: "Nabigo",
+        message: "Failed",
         icon: "report_problem"
       });
     });
@@ -74,7 +74,7 @@ const downloadQRImg = async () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "QR Code na imahe ay na-save sa photo gallery.",
+          message: "QR Code image saved to photo gallery.",
           icon: "check_circle_outline"
         });
 
@@ -102,7 +102,7 @@ const downloadQRImg = async () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "QR Code na imahe ay na-save sa photo gallery.",
+          message: "QR Code image saved to photo gallery.",
           icon: "check_circle_outline"
         });
 

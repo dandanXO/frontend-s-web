@@ -17,12 +17,12 @@
 
         <button v-else-if="info.status === 'IN_PROGRESS'" class="receive-btn" @click="handleReceiveClick">
           <img src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/coin-2.png" />
-          <span>Tumanggap</span>
+          <span>RECEIVE</span>
         </button>
 
         <button v-else-if="info.status === 'CLAIMED'" class="receive-btn disabled">
           <img src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/coin-2.png" />
-          <span>Natanggap</span>
+          <span>RECEIVED</span>
         </button>
 
         <div class="winning-record-outer-wrapper">
@@ -31,7 +31,7 @@
               <span>{{ moment(record.date).format("MM-DD hh:mm:ss") }}</span>
               <span class="name">{{ record.name }}</span>
               <span>
-                Tumanggap
+                RECEIVE
                 <span class="amount">{{ `${store.currency.value} 500` }}</span>
               </span>
             </div>
@@ -45,7 +45,7 @@
             />
             <img class="decoration ox" src="../../../assets/images/promotion/spin-lucky-wheel/decoration-ox.png" />
 
-            <div class="countdown">Susunod na Round: {{ remainingTime }}</div>
+            <div class="countdown">Next Round: {{ remainingTime }}</div>
             <div class="wheel-inner-wrapper">
               <img
                 style="width:100%;"
@@ -58,9 +58,9 @@
                 src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/wheel-indicate.png"
               />
               <button class="btn" :class="{ disabled: !info.spinChance || isClaimedStatus }" @click="handleWheelClick">
-                Paikutin ng
+                rotate
                 <br />
-                {{ info.spinChance }} beses
+                {{ info.spinChance }} time
               </button>
             </div>
 
@@ -72,9 +72,9 @@
               class="decoration rabbit"
               src="../../../assets/images/promotion/spin-lucky-wheel/decoration-rabbit.png"
             />
-            <CommonButton v-if="isClaimedStatus" class="draw-btn disabled">Mag-imbita para Kumita ng Spin</CommonButton>
-            <CommonButton v-else class="draw-btn" @click="handleInviteClick">Mag-imbita para Kumita ng Spin</CommonButton>
-            <span class="next-spin-remaining-time" v-if="!isClaimedStatus">Paparating na Libreng Spin: {{ nextFreeSpinRemainingTime }}</span>
+            <CommonButton v-if="isClaimedStatus" class="draw-btn disabled">Invite To Earn Spin</CommonButton>
+            <CommonButton v-else class="draw-btn" @click="handleInviteClick">Invite To Earn Spin</CommonButton>
+            <span class="next-spin-remaining-time" v-if="!isClaimedStatus">Countdown to next free spins: {{ nextFreeSpinRemainingTime }}</span>
           </div>
         </div>
       </div>
@@ -86,43 +86,36 @@
         <div class="title-decoration">
           <div v-for="index in 3" :key="index"></div>
         </div>
-        <span style="font-size: 12px;">Mga Panuntunan sa Aktibidad</span>
+        <span style="font-size: 12px;">Activity rules</span>
         <div class="title-decoration">
           <div v-for="index in 3" :key="index"></div>
         </div>
       </div>
       <ol>
         <li>
-          Kapag umabot na sa {{ `${store.currency.value} 500` }} ang naipong halaga, maaari kang mag-apply para sa withdrawal 
-          (Ang mga reward ay direktang maidaragdag sa iyong wallet).
+          When the accumulated amount reaches {{ `${store.currency.value} 500` }}, you can apply for withdrawal (Rewards will add to your wallet
+          directly).
+        </li>
+        <li>When there are no spin available, refer a new player to get a free spin.</li>
+        <li>
+          The event lasts for 3 days. After the event, the accumulated bonus will be reset, and the event will start
+          again.
         </li>
         <li>
-          Kapag wala nang magagamit na spin, mag-refer ng bagong manlalaro para makakuha ng libreng spin.
+          Each user can enjoy one free spin opportunity per day, the free spins will be added at 12:00 a.m. every day.
+        </li>
+        <li>After the application is approved, the bonus is deposited directly into your wallet.</li>
+        <li>The bonus needs to be rolled over once before it can be withdrawn.</li>
+        <li>
+          The invitee must bind their phone number and register via inviter's invitation link to be considered for the
+          recommendation.
         </li>
         <li>
-          Ang event ay tumatagal ng 3 araw. Pagkatapos ng event, ire-reset ang naipong bonus at magsisimula muli ang event.
+          The more your invitees play on the website, the higher your next spin reward will be. Invite friends and win more rewards together!
         </li>
         <li>
-          Ang bawat user ay maaaring mag-enjoy ng isang libreng spin bawat araw. 
-          Ang mga libreng spin ay idinaragdag tuwing 12:00 a.m. araw-araw.
-        </li>
-        <li>
-          Kapag naaprubahan ang aplikasyon, ang bonus ay direktang idinedeposito sa iyong wallet.
-        </li>
-        <li>
-          Ang bonus ay kailangang i-rollover nang isang beses bago ito ma-withdraw.
-        </li>
-        <li>
-          Ang inimbitahan ay kailangang i-bind ang kanilang numero ng telepono at magparehistro 
-          sa pamamagitan ng link ng imbitasyon ng nag-imbita upang maisaalang-alang sa rekomendasyon.
-        </li>
-        <li>
-          Mas maraming maglaro ang iyong mga inimbitahan sa website, mas mataas ang iyong susunod na spin reward. 
-          Mag-imbita ng mga kaibigan at magkasamang manalo ng mas maraming reward!
-        </li>
-        <li>
-          Ang karapatan sa interpretasyon ng event ay nasa 55Ace. 
-          Kung mayroon kang anumang katanungan, mangyaring makipag-ugnayan sa customer service.
+          The right to interpret the event belongs to 55Ace. If you have any questions, please contact to customer
+          service.
         </li>
       </ol>
     </div>

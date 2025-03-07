@@ -3,10 +3,10 @@
     <div class="record-dialog-inner-wrapper">
       <div class="tab-wrapper">
         <div class="tab" :class="{ selected: currentTab === 'invitation' }" @click="handleTabClick('invitation')">
-          Mga Talaan<br/>ng Imbitasyon
+          Invitation records
         </div>
         <div class="tab" :class="{ selected: currentTab === 'lottery' }" @click="handleTabClick('lottery')">
-          Mga Talaan<br/>ng Lottery
+          Lottery records
         </div>
       </div>
 
@@ -21,7 +21,7 @@
 <!--                  <span>Invitation successful</span>-->
                 </div>
               </template>
-              <span v-else class="no-record-text">Walang Talaan</span>
+              <span v-else class="no-record-text">No Records</span>
             </div>
           </q-tab-panel>
           <q-tab-panel name="lottery">
@@ -32,7 +32,7 @@
                   <span class="amount">{{ `${store.currency.value} ${record.amount}` }}</span>
                 </div>
               </template>
-              <span v-else class="no-record-text">Walang Talaan</span>
+              <span v-else class="no-record-text">No Records</span>
             </div>
           </q-tab-panel>
         </q-tab-panels>

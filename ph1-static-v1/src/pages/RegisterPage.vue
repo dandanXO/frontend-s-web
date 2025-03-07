@@ -79,13 +79,13 @@
           hide-bottom-space
           v-model="regForm.smsCode"
           :rules="[
-            (val) => (val && val.length > 0) || 'Mangyaring ipasok ang OTP number',
-            (val) => (val && val.length === 6) || 'Ang OTP number ay dapat may 6 na digits'
+            (val) => (val && val.length > 0) || 'Please insert OTP number',
+            (val) => (val && val.length === 6) || 'The OTP number must have 6 digits'
           ]"
           color="white"
           class="landing-input"
           outlined
-          placeholder="Ilagay ang iyong OTP number"
+          placeholder="Enter your OTP number"
           label-color="brand"
         >
           <template v-slot:prepend>
@@ -205,7 +205,7 @@
       <q-card class="captcha-form-wrapper" width="100%">
         <q-card-section class="q-pa-md bg-brightbtn text-white">
           <q-toolbar>
-            <q-toolbar-title>Kode ng Pagpapatunay</q-toolbar-title>
+            <q-toolbar-title>Verification Code</q-toolbar-title>
             <q-btn flat v-close-popup round dense icon="close" />
           </q-toolbar>
         </q-card-section>
@@ -225,7 +225,7 @@
               </template>
             </q-input>
           </q-card-section>
-          <q-btn class="get-code-btn" @click="onCaptchaSubmit" label="Ipadala ang OTP" />
+          <q-btn class="get-code-btn" @click="onCaptchaSubmit" label="Send OTP" />
         </div>
       </q-card>
     </q-dialog>
@@ -565,7 +565,7 @@ export default defineComponent({
           })
         )
         .then((res) => {
-          let message = res.message || "Matagumpay na naipadala ang OTP sa telepono",
+          let message = res.message || "OTP sent to phone successfully",
             color = "positive";
 
           if (res.code === 0) {
@@ -584,7 +584,7 @@ export default defineComponent({
           } else {
             color = "negative";
             if(res.code === 1402) {
-              message = `Pakitangkang muli pagkatapos ng ${res.data.second} segundo`;
+              message = `Please try again after ${res.data.second} seconds`;
 
                // start otp countdown
               otpCountdown.value = res.data.second || 60;

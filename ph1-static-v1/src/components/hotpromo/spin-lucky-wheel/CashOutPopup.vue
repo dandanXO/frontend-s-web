@@ -7,7 +7,7 @@
             <GradientTextAmount v-if="isShowTextAmount" :amountText="`Mga Gastos sa Pag-cash Out`" />
             <GradientTextAmount v-if="isShowTextAmount" :amountText="`${store.currency.value} ${extractionDifference}   `" />
             <div v-else class="text-amount-placeholder"></div>
-            <span class="next-spin-remaining-time">Susunod na Round: {{ remainingTime }}</span>
+            <span class="next-spin-remaining-time">Next Round: {{ remainingTime }}</span>
             <div class="cash-out-backdrop-wrapper">
                 <div class="pulse1"></div>
                 <div class="pulse2"></div>
@@ -18,7 +18,7 @@
                     src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/cash-out-backdrop.png" />
             </div>
             <ProgressBar :isShowDetails="true" />
-            <CommonButton class="invite-wins-btn" @click="showInviteWins">Panalo sa Imbitasyon</CommonButton>
+            <CommonButton class="invite-wins-btn" @click="showInviteWins">Invitation wins</CommonButton>
         </div>
     </q-dialog>
 </template>

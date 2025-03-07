@@ -2,7 +2,7 @@
   <q-dialog v-model="_modelValue" @hide="$emit('hide')">
     <div class="wheel-result-wrapper">
       <span class="prize">+{{store.currency.value}} {{ props.prize?.toFixed(4) }}</span>
-      <CommonButton class="close-btn" v-close-popup>Sige</CommonButton>
+      <CommonButton class="close-btn" v-close-popup>Okay</CommonButton>
     </div>
   </q-dialog>
 </template>
