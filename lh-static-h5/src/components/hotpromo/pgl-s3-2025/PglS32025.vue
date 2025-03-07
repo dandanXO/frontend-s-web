@@ -1,7 +1,7 @@
 <template>
   <div class="livepoker-rebate-wrapper">
     <div class="livepoker-rebate-container">
-      <div class="livepoker-rebate-section" style="background: transparent !important;">
+      <div class="livepoker-rebate-section" style="background: transparent !important">
         <div class="welcomne" v-if="!store.token">
           你好，请
           <span style="color: #2483ff; cursor: pointer" @click="handleClickLogin">【登录】</span>
@@ -11,8 +11,22 @@
         <!--          <span style="color: #2483ff; cursor: pointer" @click="handleClickLogout">退出</span>-->
         <!--        </div>-->
         <div class="tab-wrapper">
-          <div class="tab" :style="{ color: tabValue === 1 ? '#000000 !important' : '#818181 !important' }" :class="{ active: tabValue === 1 }" @click="handleClickTab(1)">投注宝箱</div>
-          <div class="tab" :style="{ color: tabValue === 2 ? '#000000 !important' : '#818181 !important' }" :class="{ active: tabValue === 2 }" @click="handleClickTab(2)">充值宝箱</div>
+          <div
+            class="tab"
+            :style="{ color: tabValue === 1 ? '#000000 !important' : '#818181 !important' }"
+            :class="{ active: tabValue === 1 }"
+            @click="handleClickTab(1)"
+          >
+            投注宝箱
+          </div>
+          <div
+            class="tab"
+            :style="{ color: tabValue === 2 ? '#000000 !important' : '#818181 !important' }"
+            :class="{ active: tabValue === 2 }"
+            @click="handleClickTab(2)"
+          >
+            充值宝箱
+          </div>
         </div>
       </div>
 
@@ -81,8 +95,9 @@
             </div>
             <div class="content">
               <div class="item" style="color: #ffd164 !important">
-                1. 活动期间，活动仅计算电竞场馆中 PGL 瓦拉几亚 第 3 季赛事，会员在当日 PGL 瓦拉几亚 第 3 季中累计有效投注 ≥
-                1,500 元即可获得 1 次开箱次数，每日最高上限获得 10 次开箱次数，每日最高可开启 10 次宝箱；
+                1. 活动期间，活动仅计算电竞场馆中 PGL 瓦拉几亚 第 3 季赛事，会员在当日 PGL 瓦拉几亚 第 3
+                季中累计有效投注 ≥ 1,500 元即可获得 1 次开箱次数，每日最高上限获得 10 次开箱次数，每日最高可开启 10
+                次宝箱；
               </div>
               <div class="item" style="color: #ffd164 !important">
                 2. 开启宝箱每第 10 次开启即可触发最高奖励，开启获得的宝箱彩金实时派发，彩金 5 倍流水即可提款；
@@ -207,7 +222,7 @@ const todayClaimed = ref(0);
 const tabValue = ref(1);
 const slide = ref(1);
 
-const bonuses = [1, 8, 18, 58, 88];
+const bonuses = ref([8, 18, 38, 58, 88]);
 
 const boxes = ref([
   {

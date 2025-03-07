@@ -4,7 +4,7 @@
       <div class="livepoker-rebate-section">
         <div class="welcomne" v-if="!store.token">
           你好，请
-          <span style="color: #FFFD66; cursor: pointer" @click="handleClickLogin">【登录】</span>
+          <span style="color: #fffd66; cursor: pointer" @click="handleClickLogin">【登录】</span>
         </div>
         <!--        <div class="welcomne" v-else>-->
         <!--          欢迎您，{{ store.realName }}-->
@@ -71,8 +71,9 @@
             </div>
             <div class="content">
               <div class="item">
-                1. 活动期间，活动仅计算电竞场馆中 PGL 瓦拉几亚 第 3 季赛事，会员在当日 PGL 瓦拉几亚 第 2 季中累计有效投注 ≥
-                1,500 元即可获得 1 次开箱次数，每日最高上限获得 10 次开箱次数，每日最高可开启 10 次宝箱；
+                1. 活动期间，活动仅计算电竞场馆中 PGL 瓦拉几亚 第 3 季赛事，会员在当日 PGL 瓦拉几亚 第 2
+                季中累计有效投注 ≥ 1,500 元即可获得 1 次开箱次数，每日最高上限获得 10 次开箱次数，每日最高可开启 10
+                次宝箱；
               </div>
               <div class="item">
                 2. 开启宝箱每第 10 次开启即可触发最高奖励，开启获得的宝箱彩金实时派发，彩金 5 倍流水即可提款；
@@ -97,7 +98,7 @@
       </template>
 
       <template v-if="tabValue === 2">
-        <div style="width: 100%;">
+        <div style="width: 100%">
           <div class="livepoker-rebate-game-info">
             <div class="title-wrapper">
               <img src="../../../assets/promo/lh-dota2-pgl/rule-title-left2.png" alt="" />
@@ -128,7 +129,8 @@
             </div>
             <div class="content">
               <div class="item">
-                1.活动期间，当日累计存款≥100 即可计算连续天数，连续存款达档位标准即可获得开启宝箱次数，充值宝箱次数将自动派发至投注宝箱页，点击开启即可参与抽奖；
+                1.活动期间，当日累计存款≥100
+                即可计算连续天数，连续存款达档位标准即可获得开启宝箱次数，充值宝箱次数将自动派发至投注宝箱页，点击开启即可参与抽奖；
               </div>
               <div class="item">
                 2.活动期间，每个档位的奖励仅可领取一次，若出现中断连续天数，重新打卡至对应连续天数奖励则不重复派发；
@@ -172,7 +174,7 @@ const todayClaimed = ref(0);
 const tabValue = ref(1);
 const slide = ref(1);
 
-const bonuses = [1, 8, 18, 58, 88];
+const bonuses = ref([8, 18, 38, 58, 88]);
 
 const boxes = ref([
   {
@@ -366,7 +368,10 @@ onMounted(() => {
   border-radius: 12px;
   padding: 20px 12px 12px;
   width: 100%;
-  background: url('../../../assets/promo/lh-dota2-pgl/reward-section-bg-t.png') no-repeat top / 100%, url('../../../assets/promo/lh-dota2-pgl/reward-section-bg-b.png') no-repeat bottom / 100%, url('../../../assets/promo/lh-dota2-pgl/reward-section-bg-l.png') no-repeat left center, url('../../../assets/promo/lh-dota2-pgl/reward-section-bg-r.png') no-repeat right center, #1C0D18;
+  background: url("../../../assets/promo/lh-dota2-pgl/reward-section-bg-t.png") no-repeat top / 100%,
+    url("../../../assets/promo/lh-dota2-pgl/reward-section-bg-b.png") no-repeat bottom / 100%,
+    url("../../../assets/promo/lh-dota2-pgl/reward-section-bg-l.png") no-repeat left center,
+    url("../../../assets/promo/lh-dota2-pgl/reward-section-bg-r.png") no-repeat right center, #1c0d18;
 
   .reward-item {
     background: url("../../../assets/promo/lh-dota2-pgl/reward-item-bg.png") no-repeat;
@@ -550,7 +555,10 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   margin-top: 25px;
-  background: url('../../../assets/promo/lh-dota2-pgl/reward-section-bg-t.png') no-repeat top / 100%, url('../../../assets/promo/lh-dota2-pgl/reward-section-bg-b.png') no-repeat bottom / 100%, url('../../../assets/promo/lh-dota2-pgl/reward-section-bg-l.png') no-repeat left center, url('../../../assets/promo/lh-dota2-pgl/reward-section-bg-r.png') no-repeat right center, #1C0D18;
+  background: url("../../../assets/promo/lh-dota2-pgl/reward-section-bg-t.png") no-repeat top / 100%,
+    url("../../../assets/promo/lh-dota2-pgl/reward-section-bg-b.png") no-repeat bottom / 100%,
+    url("../../../assets/promo/lh-dota2-pgl/reward-section-bg-l.png") no-repeat left center,
+    url("../../../assets/promo/lh-dota2-pgl/reward-section-bg-r.png") no-repeat right center, #1c0d18;
   border-radius: 12px;
   padding: 20px 12px 12px;
   box-shadow: 0px 0px 4px 0px #01497b0f;

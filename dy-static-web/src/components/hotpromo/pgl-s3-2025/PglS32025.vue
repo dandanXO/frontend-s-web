@@ -190,7 +190,7 @@ const todayLeftClaimCount = ref(0);
 const todayClaimed = ref(0);
 const tabValue = ref(1);
 
-const bonuses = [1, 8, 18, 58, 88];
+const bonuses = ref([8, 18, 38, 58, 88]);
 
 const handleClickTab = (value) => {
   tabValue.value = value;
