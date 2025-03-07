@@ -569,7 +569,7 @@
   <q-dialog width="100%" v-model="userKYCDialog" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="closeUserKYCDialog" />
-      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
+      <KYCUserForm ref="kycUserFormRef" @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
 
@@ -647,6 +647,7 @@ import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
 import PrimaryButton from "src/components/auth/PrimaryButton.vue";
 import { t } from "src/boot/lang";
+import { useCheckKYC } from "src/hooks/checkKYC";
 // import MediaSettingsComponent from "../components/MediaSettingsComponent.vue";
 
 let slideList = ref(["Personal Center", "Discount", "Record", "Order", "Bank", "Message"]);
@@ -659,6 +660,9 @@ let slideListPath = ref([
   "/account/message"
 ]);
 let currentSlide = ref(slideList.value[0]);
+const kycUserFormRef = ref(null);
+
+const { userKYCDialog, guestKYCDialog, loadInfo: loadKYCInfo } = useCheckKYC([], kycUserFormRef);
 
 const isActiveSlide = (e) => {
   if (e === currentSlide.value) return true;
@@ -697,14 +701,15 @@ const startRefresh = async () => {
 
 const personalCenterDialog = ref(false);
 const openPersonalCenterDialog = () => {
-  if (store.guest && !personalState.memberInfo.realName) {
-    // openNewChangePasswordDialog();
-    openGuestKYCDialog();
-  } else if (!store.guest && !personalState.memberInfo.realName) {
-    openUserKYCDialog();
-  } else {
-    return false;
-  }
+  loadKYCInfo();
+  // if (store.guest && !personalState.memberInfo.realName) {
+  //   // openNewChangePasswordDialog();
+  //   openGuestKYCDialog();
+  // } else if (!store.guest && !personalState.memberInfo.realName) {
+  //   openUserKYCDialog();
+  // } else {
+  //   return false;
+  // }
   // } else if (!personalState.memberInfo.realName || !personalState.memberInfo.phone || !personalState.memberInfo.email) {
   //   personalCenterDialog.value = true;
   // }
@@ -728,10 +733,6 @@ const openBindEmailDialog = () => {
   }
 };
 
-const userKYCDialog = ref(false);
-const openUserKYCDialog = () => {
-  userKYCDialog.value = true;
-};
 const closeUserKYCDialog = (updateInfo) => {
   store.getMemberInfo().then(() => {
     loadInfo();
@@ -742,10 +743,6 @@ const closeUserKYCDialog = (updateInfo) => {
   });
 };
 
-const guestKYCDialog = ref(false);
-const openGuestKYCDialog = () => {
-  guestKYCDialog.value = true;
-};
 const closeGuestKYCDialog = () => {
   store.getMemberInfo().then(() => {
     loadInfo();
@@ -834,15 +831,16 @@ const isEditBirthday = ref(false);
 const loadInfo = () => {
   personalState.memberInfo = userStore();
 
-  if (store.guest && personalState.memberInfo.realName === null) {
-    // openNewChangePasswordDialog();
-    openGuestKYCDialog();
-  }
+  loadKYCInfo();
+  // if (store.guest && personalState.memberInfo.realName === null) {
+  //   // openNewChangePasswordDialog();
+  //   openGuestKYCDialog();
+  // }
 
-  if (!store.guest && personalState.memberInfo.realName === null) {
-    // openPersonalCenterDialog();
-    openUserKYCDialog();
-  }
+  // if (!store.guest && personalState.memberInfo.realName === null) {
+  //   // openPersonalCenterDialog();
+  //   openUserKYCDialog();
+  // }
 
   // console.log(personalState.memberInfo);
   if (personalState.memberInfo.birthday > 0) {

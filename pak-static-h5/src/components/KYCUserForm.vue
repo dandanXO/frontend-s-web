@@ -133,6 +133,20 @@ const updateNewUserState = () => {
       btnLoading.value = false;
     });
 };
+
+const loadCurrentInfo = () => {
+  if (store.realName) {
+    formDetail.realName = store.realName;
+  }
+
+  if (store.phone) {
+    formDetail.phone = store.phone;
+  }
+};
+
+defineExpose({
+  loadCurrentInfo
+});
 </script>
 
 <style lang="scss" scoped>
