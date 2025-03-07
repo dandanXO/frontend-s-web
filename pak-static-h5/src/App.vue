@@ -100,40 +100,40 @@ export default defineComponent({
 
     const initAdjustEventTrack = () => {
       if (isAndroid()) {
-        // //Android App.
-        // console.log("Init Adjust Sdk");
-        // console.log(affAppToken.value);
-        // var adjustConfig = new AdjustConfig(affAppToken.value, AdjustEnvironment.Production);
-        // adjustConfig.setLogLevel(AdjustLogLevel.Verbose);
-        // adjustConfig.setAttributionCallbackListener(function (e) {
-        //   console.log("setAttributionCallbackListener");
-        //   console.log(e);
-        // });
-        // Adjust.create(adjustConfig);
-        // setTimeout(() => {
-        //   // Adjust.getAdid().then((aaid) => {
-        //   //   console.log("aaid");
-        //   //   console.log(aaid);
-        //   //   if(store.aaid===""){
-        //   //     store.aaid = aaid;
-        //   //   }
-        //   // });
-        //   Adjust.getGoogleAdId().then((googleid) => {
-        //     console.log("Google AdID");
-        //     console.log(googleid);
-        //     if(!googleid || googleid==='00000000-0000-0000-0000-000000000000'){
-        //       (async () => {
-        //         Adjust.getAttribution().then((attribution) => {
-        //           console.log("Attribution 2");
-        //           console.log(attribution);
-        //           store.aaid = attribution.adid;
-        //         });
-        //       })();
-        //     }else{
-        //       store.googleadid = googleid;
-        //     }
-        //   });
-        // }, 0);
+        //Android App.
+        console.log("Init Adjust Sdk");
+        console.log(affAppToken.value);
+        var adjustConfig = new AdjustConfig(affAppToken.value, AdjustConfig.EnvironmentProduction);
+        adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
+        adjustConfig.setAttributionCallbackListener(function (e) {
+          console.log("setAttributionCallbackListener");
+          console.log(e);
+        });
+        Adjust.create(adjustConfig);
+        setTimeout(() => {
+          // Adjust.getAdid().then((aaid) => {
+          //   console.log("aaid");
+          //   console.log(aaid);
+          //   if (store.aaid === "") {
+          //     store.aaid = aaid;
+          //   }
+          // });
+          Adjust.getGoogleAdId((googleid) => {
+            console.log("Google AdID");
+            console.log(googleid);
+            if (!googleid || googleid === "00000000-0000-0000-0000-000000000000") {
+              (async () => {
+                Adjust.getAdid(function (adid) {
+                  console.log("Attribution 2");
+                  console.log(adid);
+                  store.aaid = adid;
+                });
+              })();
+            } else {
+              store.googleadid = googleid;
+            }
+          });
+        }, 0);
       } else {
         //Normal WEb / H5 / iOS WEbclip.
         console.log("Init Web Adjust");
@@ -349,16 +349,19 @@ export default defineComponent({
                   if (json && json.channel) {
                     sessionStorage.setItem("AFFILIATE_CODE", json.channel);
                     channelValue.value = sessionStorage.getItem("AFFILIATE_CODE");
-                    // api.get(`/app/adjust/params?affiliateCode=${channelValue.value}`).then((res) => {
-                    //   if (res.code === 0) {
-                    //     sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-                    //     sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
-                    //     sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
-                    //     affAppToken.value = res.data.adjust_app_token;
-                    //     // initAdjustEventTrack();
-                    //     // alert(affAppToken.value);
-                    //   }
-                    // });
+                    api.get(`/app/adjust/params?affiliateCode=${channelValue.value}`).then((res) => {
+                      if (res.code === 0) {
+                        sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+                        sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
+                        sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+                        if (res.data.adjust_register_event) {
+                          ui.adjust_register_event = res.data.adjust_register_event;
+                        }
+                        affAppToken.value = res.data.adjust_app_token;
+                        initAdjustEventTrack();
+                        // alert(affAppToken.value);
+                      }
+                    });
                   }
                 };
 
