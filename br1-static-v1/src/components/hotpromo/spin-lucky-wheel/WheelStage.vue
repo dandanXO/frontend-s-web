@@ -79,7 +79,7 @@
         </div>
       </div>
 
-      <button class="record-btn" @click="handleRecordClick">Record</button>
+      <button class="record-btn" @click="handleRecordClick">Registro</button>
     </div>
     <div class="block-wrapper">
       <div class="title-wrapper">
