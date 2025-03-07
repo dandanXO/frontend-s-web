@@ -37,7 +37,7 @@
             <span class="prepend-number">+63</span>
           </template>
           <template v-if="regForm.referrer" v-slot:append>
-            <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">{{ otpCountdown > 0 ? `Kunin ang Code (${otpCountdown})` : 'Kunin ang Code' }}</q-btn>
+            <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">{{ otpCountdown > 0 ? `Get Code (${otpCountdown})` : 'Get Code' }}</q-btn>
           </template>
         </q-input>
 
