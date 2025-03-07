@@ -385,7 +385,7 @@ export const fishingPlatforms = [
     cnname: "AG捕鱼王",
     image: "ag",
     message:
-      "最受欢迎的AG捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
+      "火爆AG捕鱼，畅享极致射击快感！高清画质打造沉浸式海底世界，丰富鱼种千变万化，超高爆率畅快收金，多人竞技欢乐无穷，尽享捕鱼巅峰体验！",
     caption: "",
     gameCode: "HMPL"
   },
