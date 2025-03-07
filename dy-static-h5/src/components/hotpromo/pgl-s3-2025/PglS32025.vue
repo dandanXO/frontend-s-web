@@ -49,7 +49,7 @@
 
               <div class="reward-title-wrapper">
                 <div class="reward-title">
-                  累计完成场次：
+                  累计开启次数：
                   <span style="font-weight: bold">{{ accumulatedClaimed }}</span>
                   次 剩余开启次数：
                   <span style="font-weight: bold">{{ todayLeftClaimCount }}</span>
@@ -129,7 +129,7 @@
             </div>
             <div class="content">
               <div class="item">
-                1.活动期间，当日累计存款≥100
+                1.活动期间，当日累计存款≥1000
                 即可计算连续天数，连续存款达档位标准即可获得开启宝箱次数，充值宝箱次数将自动派发至投注宝箱页，点击开启即可参与抽奖；
               </div>
               <div class="item">
