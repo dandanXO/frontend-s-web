@@ -83,8 +83,9 @@
             </div>
             <div class="content">
               <div class="item">
-                1. 活动期间，活动仅计算电竞场馆中 PGL 瓦拉几亚 第 3 季赛事，会员在当日 PGL 瓦拉几亚 第 3 季中累计有效投注 ≥
-                1,500 元即可获得 1 次开箱次数，每日最高上限获得 10 次开箱次数，每日最高可开启 10 次宝箱；
+                1. 活动期间，活动仅计算电竞场馆中 PGL 瓦拉几亚 第 3 季赛事，会员在当日 PGL 瓦拉几亚 第 3
+                季中累计有效投注 ≥ 1,500 元即可获得 1 次开箱次数，每日最高上限获得 10 次开箱次数，每日最高可开启 10
+                次宝箱；
               </div>
               <div class="item">
                 2. 开启宝箱每第 10 次开启即可触发最高奖励，开启获得的宝箱彩金实时派发，彩金 5 倍流水即可提款；
@@ -193,7 +194,7 @@ const todayLeftClaimCount = ref(0);
 const todayClaimed = ref(0);
 const tabValue = ref(1);
 
-const bonuses = [1, 8, 18, 58, 88];
+const bonuses = ref([8, 18, 38, 58, 88]);
 
 const handleClickTab = (value) => {
   tabValue.value = value;
