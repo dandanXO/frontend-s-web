@@ -65,7 +65,7 @@
           </thead>
           <tbody>
             <tr>
-              <td>VIP1–VIP3</td>
+              <td>VIP1–VIP2</td>
               <td>18</td>
               <td>38</td>
               <td>68</td>
@@ -74,7 +74,7 @@
               <td rowspan="4">5 倍流水</td>
             </tr>
             <tr>
-              <td>VIP4–VIP6</td>
+              <td>VIP3–VIP5</td>
               <td>28</td>
               <td>58</td>
               <td>88</td>
@@ -82,7 +82,7 @@
               <td>288</td>
             </tr>
             <tr>
-              <td>VIP7–VIP9</td>
+              <td>VIP6–VIP8</td>
               <td>38</td>
               <td>68</td>
               <td>128</td>
@@ -90,7 +90,7 @@
               <td>588</td>
             </tr>
             <tr>
-              <td>VIP10–VIP12</td>
+              <td>VIP9–VIP10</td>
               <td>58</td>
               <td>88</td>
               <td>168</td>
