@@ -291,17 +291,19 @@ export default defineComponent({
         await api
           .get(`/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${adCode}`)
           .then((res) => {
-            console.log(res);
-            const { affiliateCode, facebookId, pushId } = res.data;
+            const { affiliateCode = "", facebookId = "", pushId = "" } = res.data;
             sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
             _affiliateCode = affiliateCode;
             console.log("Init FB");
-            fbq("init", facebookId);
-            fbq("track", "PageView");
-            store.isFbPixel = true;
-
-            initEngageLabPush(pushId);
-            sendFacebookInfo();
+            if (facebookId) {
+              fbq("init", facebookId);
+              fbq("track", "PageView");
+              store.isFbPixel = true;
+              sendFacebookInfo();
+            }
+            if (pushId) {
+              initEngageLabPush(pushId);
+            }
           });
 
         api.get(`/app/adjust/params?affiliateCode=${_affiliateCode}`).then((res) => {
