@@ -72,7 +72,7 @@
     </pre> -->
   </div>
   <div>
-    <q-page-sticky v-if="isCharityShow" position="bottom-right" :offset="charityDragPos" class="floating-btn">
+    <q-page-sticky v-if="isCharityShow" position="bottom-right" :offset="charityDragPos" class="floating-btn scalable" :style="{ transform: `scale(${scaleValue})` }">
       <div v-touch-pan.prevent.mouse="moveCharityGif" @click="openCharityUrl">
         <!--        <div class="hb-close">-->
         <!--          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click.stop="isCharityShow = false" />-->
@@ -82,7 +82,7 @@
     </q-page-sticky>
   </div>
   <div class="home-wrapper" :class="detectAndroidVersion()">
-    <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
+    <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn scalable" :style="{ transform: `scale(${scaleValue})` }">
       <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef" @click="toggleCSTab">
         <div class="cs-icon-wrapper" :class="{ active: isCsTabVisible }">
           <a class="cs-icon youtube" :href="ui.youtubeUrl" target="_blank">
@@ -104,13 +104,13 @@
       </div>
     </q-page-sticky>
 
-    <q-page-sticky position="bottom-right" :offset="liveDragPos" class="floating-btn" v-if="isLiveUrlShow">
+    <q-page-sticky position="bottom-right" :offset="liveDragPos" class="floating-btn scalable" :style="{ transform: `scale(${scaleValue})` }" v-if="isLiveUrlShow">
       <div v-touch-pan.prevent.mouse="moveLiveIcon" @click="openLiveInNewTab(ui.LiveUrl)">
         <div class="live-icon-wrapper"></div>
       </div>
     </q-page-sticky>
 
-    <q-page-sticky position="bottom-right" :offset="hbDragPos" class="floating-btn" v-if="isHbShow">
+    <q-page-sticky position="bottom-right" :offset="hbDragPos" class="floating-btn scalable" :style="{ transform: `scale(${scaleValue})` }" v-if="isHbShow">
       <div>
         <!--        <div class="hb-close">-->
         <!--          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click="isHbShow = false" />-->
@@ -1446,7 +1446,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch, onActivated, provide } from "vue";
+import { onMounted, onUnmounted, ref, reactive, computed, watch, onActivated, provide } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -1488,6 +1488,30 @@ import SetFirstPasswordModal from "src/components/modal/SetFirstPasswordModal.vu
 import AddToHomeScreenModal from "src/components/modal/AddToHomeScreenModal.vue";
 import CongratsReuseableModal from "src/components/modal/CongratsReuseableModal.vue";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
+const scaleValue = ref(1);
+let lastScrollTop = 0;
+
+const handleScroll = () => {
+  const currentScroll = window.scrollY;
+
+  if (currentScroll > lastScrollTop) {
+    // Scrolling down
+    scaleValue.value = 0;
+  } else {
+    // Scrolling up
+    scaleValue.value = 1;
+  }
+
+  lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
@@ -4964,6 +4988,10 @@ const checkGoogleLoginSetPwd = () => {
 }
 
 .floating-btn {
+  &.scalable {
+    transform-origin: center;
+    transition: transform 0.5s ease-in-out;
+  }
   z-index: 2001;
 
   img {
