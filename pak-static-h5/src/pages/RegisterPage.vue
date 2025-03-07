@@ -663,7 +663,7 @@ export default defineComponent({
         isLoading.value = false;
       } else {
         var qs = require("qs");
-        const sidParam = store.visitorId;
+        const sidParam = store.googleadid || store.visitorId;
 
         (async () => {
           if (store.aaid) {
