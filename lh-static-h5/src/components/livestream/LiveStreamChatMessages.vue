@@ -133,48 +133,13 @@ const generateRandomMessages = () => {
 
 // Start generating random messages every 2-5 seconds
 onMounted(() => {
-  messageInterval = setInterval(generateRandomMessages, Math.random() * 3000 + 2000);
+  messageInterval = setInterval(generateRandomMessages, Math.random() * 10000 + 2000);
 });
 
 // Stop generating messages when component is destroyed
 onBeforeUnmount(() => {
   clearInterval(messageInterval);
 });
-
-// keyboard appear
-// onMounted(() => {
-//   window.visualViewport.addEventListener("resize", adjustLayout);
-// });
-
-// onUnmounted(() => {
-//   window.visualViewport.removeEventListener("resize", adjustLayout);
-// });
-
-// // adjust mobile keyboard
-// const isKeyboardOpen = ref(false);
-// const videoStyle = ref({});
-// const chatBoxStyle = ref({});
-
-// const adjustLayout = () => {
-//   if (window.visualViewport.height < window.innerHeight) {
-//     isKeyboardOpen.value = true;
-//   } else {
-//     isKeyboardOpen.value = false;
-//   }
-// };
-
-// watch(isKeyboardOpen, (newValue) => {
-//   if (newValue) {
-//     chatBoxStyle.value = {
-//       position: "fixed",
-//       top: "0px",
-//       // top: "60px",
-//       bottom: "auto"
-//     };
-//   } else {
-//     chatBoxStyle.value = { position: "fixed", top: "auto", bottom: 0 };
-//   }
-// });
 </script>
 
 <style lang="scss" scoped>

@@ -1,7 +1,7 @@
 <template>
   <q-page ref="pageContainer" class="page-style">
     <!-- <div class="video-wrapper" :style="videoStyle"> -->
-    <LiveStreamVideo :danmuList />
+    <LiveStreamVideo :danmuList :urls />
     <!-- </div> -->
 
     <div class="transfer-mid-div">
@@ -31,7 +31,9 @@ import MarqueeText from "vue-marquee-text-component";
 import { userStore } from "stores/index";
 import LiveStreamVideo from "../../components/livestream/LiveStreamVideo.vue";
 import LiveStreamChatMessages from "../../components/livestream/LiveStreamChatMessages.vue";
+import { useQuasar } from "quasar";
 
+const $q = useQuasar();
 const videoElement = ref(null);
 const danmuContainer = ref(null);
 const chatMessage = ref("");
@@ -45,6 +47,12 @@ const isDanmuShow = ref(true);
 let danmu = null;
 let chatInterval = null;
 let randomChatInterval = null;
+
+const urls = ref([
+  { name: "线路1", url: "" },
+  { name: "线路2", url: "" },
+  { name: "线路3", url: "" }
+]);
 
 // Initialize Danmu.js for chat overlay
 const initDanmu = () => {
@@ -120,7 +128,27 @@ const danmuList = ref([]);
 
 const handleSendChatMessage = (message) => {
   if (!store.hasToken()) {
-    store.loginPageVisible = true;
+    // store.loginPageVisible = true;
+    $q.dialog({
+      class: "q-px-md q-pt-md",
+      title: "系统提示",
+      message: "请登录后再操作",
+      ok: {
+        push: true,
+        color: "primary",
+        label: "去登录",
+        tabindex: 1
+      },
+      cancel: {
+        push: true,
+        color: "warning",
+        label: "取消",
+        tabindex: 0
+      },
+      persistent: true
+    }).onOk(() => {
+      router.push("/login");
+    });
     return;
   }
   messages.value.push({

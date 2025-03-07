@@ -52,6 +52,29 @@
           </div>
         </div>
 
+        <q-btn
+          class="livestream-video-controller-url-btn"
+          unelevated
+          color="white"
+          outline
+          dense
+          size="sm"
+          @click="handleUrlSelectionClick"
+        >
+          {{ currentUrl.name }}
+          <q-popup-proxy ref="urlPopperRef" transition-show="scale" transition-hide="scale">
+            <q-card class="livestream-video-controller-url-popover">
+              <q-list separator>
+                <q-item v-for="(url, index) in urls" :key="index" clickable @click="handleUrlChange(index)">
+                  <q-item-section>
+                    {{ url.name }}
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-card>
+          </q-popup-proxy>
+        </q-btn>
+
         <div class="livestream-video-controller-group">
           <q-btn
             class="livestream-video-controller-danmu-btn btn"
@@ -78,7 +101,7 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref, toRefs, watch, onUnmounted } from "vue";
+import { onMounted, ref, toRefs, watch, onUnmounted, computed } from "vue";
 
 /** @type {import("flv.js").default.Config} */
 const DEFAULT_FLV_CONFIG = {
@@ -110,8 +133,8 @@ const DANMU_CONFIG = {
   style: DANMU_STYLE
 };
 
-const props = defineProps(["danmuList"]);
-const { danmuList } = toRefs(props);
+const props = defineProps(["danmuList", "urls"]);
+const { danmuList, urls } = toRefs(props);
 
 /**  @type {import("vue").Ref<typeof import("flv.js").default | null>} */
 const flv = ref(null);
@@ -335,59 +358,22 @@ watch(danmuList, () => {
   }
 });
 
+const urlPopperRef = ref();
+const currentUrlIndex = ref(0);
+const currentUrl = computed(() => {
+  return urls.value[currentUrlIndex.value];
+});
+const handleUrlChange = (index) => {
+  currentUrlIndex.value = index;
+  urlPopperRef.value?.hide();
+};
+
 onMounted(() => {
   Promise.all([loadFlv(), loadDanmu()]).then(() => {
     loadPlayerConfig();
-    setInterval(generateRandomDanmu, Math.random() * (5000 - 3000) + 3000);
+    setInterval(generateRandomDanmu, Math.random() * 10000 + 6000);
   });
 });
-
-// // keyboard appear
-// onMounted(() => {
-//   window.visualViewport.addEventListener("resize", adjustLayout);
-// });
-
-// onUnmounted(() => {
-//   window.visualViewport.removeEventListener("resize", adjustLayout);
-// });
-
-// // adjust mobile keyboard
-// const isKeyboardOpen = ref(false);
-// const videoStyle = ref({});
-
-// const adjustLayout = () => {
-//   if (window.visualViewport.height < window.innerHeight) {
-//     isKeyboardOpen.value = true;
-//     // videoStyle.value = { position: "fixed", bottom: window.visualViewport.height - window.innerHeight + 60 };
-//     // document.documentElement.style.overflow = "hidden";
-//     // document.body.style.overflow = "hidden";
-//   } else {
-//     isKeyboardOpen.value = false;
-//     // videoStyle.value = { position: "fixed", bottom: "0px" };
-//     // document.documentElement.style.overflow = "auto";
-//     // document.body.style.overflow = "auto";
-//   }
-
-//   console.log("window.visualViewport.height:", window.visualViewport.height);
-//   console.log("window.innerHeight:", window.innerHeight);
-// };
-
-// watch(isKeyboardOpen, (newValue) => {
-//   if (newValue) {
-//     // Disable scrolling when the keyboard is open
-//     // document.documentElement.style.overflow = "hidden";
-//     // document.body.style.overflow = "hidden";
-//     // videoStyle.value = { marginTop: window.innerHeight - window.visualViewport.height };
-//     // window.scrollTo({ top: 0, behavior: "smooth" });
-//     // videoWrapperRef.value.requestHalfscreen();
-//   } else {
-//     // Re-enable scrolling when the keyboard is closed
-//     // document.documentElement.style.overflow = "auto";
-//     // document.body.style.overflow = "auto";
-//     // videoStyle.value = { marginTop: "0px" };
-//     // window.scrollTo({ top: 800, behavior: "smooth" });
-//   }
-// });
 </script>
 
 <style lang="scss" scoped>
@@ -510,11 +496,4 @@ onMounted(() => {
     }
   }
 }
-</style>
-
-<style>
-/* html,
-body {
-  overflow: hidden;
-} */
 </style>
