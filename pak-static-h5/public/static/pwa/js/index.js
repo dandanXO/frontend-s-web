@@ -49,7 +49,6 @@ installBtn.addEventListener("click", async () => {
       const urlParams = new URLSearchParams(window.location.search);
       const fbclid = urlParams.get("fbclid");
       const referral = urlParams.get("refer");
-      sessionStorage.setItem("IS_PWA", "1");
       if (referral) {
         localStorage.setItem("PWA_REFERRAL_CODE", referral);
       }
@@ -211,6 +210,7 @@ window.addEventListener("beforeinstallprompt", (e) => {
 });
 
 window.addEventListener("load", () => {
+  sessionStorage.setItem("IS_PWA", "1");
   const hostname = window.location.hostname.replace("www.", "");
 
   const fbqId = fbqLists[hostname]?.id;
