@@ -324,9 +324,13 @@ export default defineComponent({
             `/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${affiliateCode}&refer=${referral}`
           )
           .then((res) => {
-            console.log("THIS");
             console.log(res);
-            // const { affiliateCode, facebookId, pushId } = res.data;
+            const { facebookId = "" } = res.data;
+            if (facebookId) {
+              fbq("init", facebookId);
+              fbq("track", "PageView");
+              store.isFbPixel = true;
+            }
           });
       }
     };
