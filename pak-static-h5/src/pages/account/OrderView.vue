@@ -56,8 +56,21 @@
                 <q-btn
                   :class="{
                     'btn--green': ['SUCCESS'].includes(e.status),
-                    'btn--red': ['FAIL', 'STEP_5'].includes(e.status),
-                    'btn--orange': ['APPLY', 'STEP_1', 'STEP_2', 'STEP_3', 'STEP_4'].includes(e.status)
+                    'btn--red': ['FAIL', 'STEP_5', 'FAIL_REVIEW'].includes(e.status),
+                    'btn--orange': [
+                      'APPLY',
+                      'STEP_1',
+                      'STEP_2',
+                      'STEP_3',
+                      'STEP_4',
+                      'AUTOPAY',
+                      'PENDING',
+                      'SENDING',
+                      'WAITING_CALLBACK',
+                      'PAYING',
+                      'WAITING_AUTO_PAY',
+                      'WAITING_RETRY'
+                    ].includes(e.status)
                   }"
                   :label="`${getWithdrawStatus(e.status)}`"
                 ></q-btn>
@@ -240,17 +253,38 @@ const searchDepositRecord = () => {
 
 const getWithdrawStatus = (withdrawStatus) => {
   switch (withdrawStatus) {
-    case "APPLY":
-    case "STEP_1":
-    case "STEP_2":
-    case "STEP_3":
-    case "STEP_4":
-      return t("records.pending");
-    case "FAIL":
-    case "STEP_5":
-      return t("records.failed");
     case "SUCCESS":
       return t("records.success");
+    case "FAIL":
+      return t("records.failed");
+    case "APPLY":
+      return t("records.applying");
+    case "STEP_1":
+      return t("records.underReview");
+    case "STEP_2":
+      return t("records.toBePaid");
+    case "STEP_3":
+      return t("records.paymentOnGoing");
+    case "AUTOPAY":
+      return t("records.automaticPayment");
+    case "PENDING":
+      return t("records.pending");
+    case "SENDING":
+      return t("records.sending");
+    case "WAITING_CALLBACK":
+      return t("records.waitCallback");
+    case "PAYING":
+      return t("records.paying");
+    case "WAITING_AUTO_PAY":
+      return t("records.waitingAutoPay");
+    case "FAIL_REVIEW":
+      return t("records.failReview");
+    case "WAITING_RETRY":
+      return t("records.waitingRetry");
+    case "STEP_5":
+      return t("records.failed");
+    case "CLOSED":
+      return t("records.closed");
     default:
       return withdrawStatus;
   }
@@ -264,8 +298,7 @@ const getDepositStatus = (depositStatus) => {
       return t("records.success");
     case "SUPPLEMENT_SUCCESS":
       return t("records.success");
-    case "CLOSED":
-      return t("records.closed");
+
     default:
       return depositStatus;
   }

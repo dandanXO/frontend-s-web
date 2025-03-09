@@ -925,6 +925,13 @@ deploy-pk3-download:
 
 #===============================================================================================
 
+deploy-pk3-download-v2:
+  extends: .s3-deploy
+  variables:
+    PROJECT: pk3-download-v2
+
+#===============================================================================================
+
 deploy-pak-bga-b9-landing:
   extends: .s3-deploy
   variables:

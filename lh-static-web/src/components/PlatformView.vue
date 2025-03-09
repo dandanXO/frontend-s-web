@@ -53,6 +53,20 @@
                   <div class="list-item-btn" :id="`id-list-item-${plat.code}`">
                     <span>
                       <img
+                        v-if="plat.code === 'PMLOTTERY'"
+                        :src="
+                          require('../assets/' +
+                            platformType +
+                            '/' +
+                            platformType +
+                            '-logo-' +
+                            plat.code.toLowerCase() +
+                            (selectedPlat === plat.code ? '-active' : '') +
+                            '.png')
+                        "
+                      />
+                      <img
+                        v-else
                         :src="
                           require('../assets/' +
                             platformType +

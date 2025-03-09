@@ -160,6 +160,7 @@
 </template>
 
 <script lang="js">
+import { Filesystem, Directory } from "@capacitor/filesystem";
 import { computed, defineComponent, onActivated, onBeforeUnmount, reactive, ref, watch, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
@@ -375,6 +376,22 @@ export default defineComponent({
               "location=no,zoom=no,footer=no,toolbar=no,fullscreen=yes,hidden=yes"
             );
             isOpenExtension.value = true;
+
+            ref.addEventListener("message", async function(event) {
+              if (event.data.action === "qrcode") {
+                // alert(event.data.item);
+                const dataUrl = event.data.item;
+                // alert(dataUrl)
+                // Save the image to the photo gallery
+                await Filesystem.writeFile({
+                  path: `Pictures/myreferral-${Date.now()}.jpg`,
+                  data: dataUrl,
+                  directory: Directory.Documents,
+                  recursive: true
+                });
+
+              }
+            });
 
             ref.addEventListener("loadstart", function (event) {
               var url = event.url;
@@ -987,6 +1004,14 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
         padding-bottom: 40px;
+
+        &.spin-lucky-wheel-envelope {
+          background: url("../assets/images/promotion/spin-lucky-wheel/envelope-stage/bg.png") no-repeat top center;
+          background-size: cover;
+          width: 100%;
+          margin-top: 0;
+          padding-bottom: 0;
+        }
 
         p {
           font-size: 14px;

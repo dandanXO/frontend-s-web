@@ -20,6 +20,22 @@
   </el-card>
   <el-row>
     <el-form ref="formRef" :model="form" label-position="right" :rules="formRules" label-width="200px" label-suffix=":">
+      <el-form-item :label="t('fields.memberType')" prop="memberType">
+        <el-select
+          size="normal"
+          v-model="form.memberType"
+          :placeholder="t('fields.memberType')"
+        >
+          <el-option
+            v-for="item in uiControl.memberType"
+            :key="item.key"
+            :value="item.value"
+            :label="t(`fields.${item.displayName}`)"
+          >
+            {{ $t(`fields.${item.displayName}`) }}
+          </el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item :label="t('fields.downlineMember')" prop="loginName">
         <el-input
           v-model="form.loginName"
@@ -73,6 +89,7 @@ const showBalance = ref(false);
 const formRef = ref();
 const isLoading = ref(false);
 const form = reactive({
+  memberType: null,
   loginName: null,
   transferAmount: null,
   rollover: null,
@@ -80,7 +97,15 @@ const form = reactive({
   withdrawPassword: null
 });
 
+const uiControl = reactive({
+  memberType: [
+    { key: 1, displayName: 'member', value: 'MEMBER' },
+    { key: 2, displayName: 'affiliate', value: 'AFFILIATE' },
+  ]
+})
+
 const formRules = reactive({
+  memberType: [required(t('message.requiredMemberType'))],
   loginName: [required(t('message.requiredLoginName'))],
   transferAmount: [required(t('message.requiredTransferAmount')), isNumeric(t('message.validateNumberOnly'))],
   rollover: [required(t('message.requiredRollover')), {

@@ -2,16 +2,15 @@
   <div>
     <div class="transit-buttons">
       <router-link class="btn" v-for="(trans, i) in transitList" :key="i" :to="`mail/${trans.code}`">
-        <img :src="require(`../../assets/images/account/${trans.icon}_letters.png`)">
+        <img :src="require(`../../assets/images/account/${trans.icon}_letters.png`)" />
         {{ trans.name }}
         <div class="right">
-<!--          <q-chip v-if="trans.icon === 'inbox' && store.unreadInboxMail!= 0" color="brand" size="sm">-->
-<!--            {{ store.unreadInboxMail }}-->
-<!--          </q-chip>-->
-          <RiArrowRightSLine/>
+          <!--          <q-chip v-if="trans.icon === 'inbox' && store.unreadInboxMail!= 0" color="brand" size="sm">-->
+          <!--            {{ store.unreadInboxMail }}-->
+          <!--          </q-chip>-->
+          <RiArrowRightSLine />
         </div>
       </router-link>
-
     </div>
   </div>
 </template>
@@ -63,19 +62,20 @@ export default defineComponent({
   padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
   color: #bacef1;
 
   .btn {
     color: #bacef1;
     text-decoration: none;
     position: relative;
-    background: #212534;
+    background: linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c 100%);
     padding: 15px 20px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     gap: 30px;
+    border-radius: 8px;
 
     img {
       width: 25px;
@@ -95,4 +95,3 @@ export default defineComponent({
   }
 }
 </style>
-

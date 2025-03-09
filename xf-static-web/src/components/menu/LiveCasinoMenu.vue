@@ -1,110 +1,20 @@
 <template>
-  <div>
-    <div class="platform-menu live">
-      <div
-        class="platform-box"
-        v-for="nav in filteredNavigations"
-        :key="nav.code"
-        @click="$emit('loadModal', nav.label, nav.code, nav.gameCode)"
-      >
-        <img :src="require('../../assets/live/live_logo_' + nav.icon + '.png')" style="width: 150px" />
-        <p class="platform-title">{{ nav.label }} 真人</p>
-        <p class="platform-slogan">{{ nav.slogan }}</p>
-      </div>
-      <div class="header-fs-box">
-        <p class="fs-title">真人娱乐</p>
-        <p class="fs-name">
-          LIVE
-          <br />
-          EVENTS
-        </p>
-        <p class="fs-desc">返水最高可达</p>
-        <div class="fs-percentage"></div>
-      </div>
-    </div>
-  </div>
+  <PlatformMenu
+    :platformGameType="platformGameType"
+    :platformType="platformType"
+    platformName="live-casino"
+    @load-game="openGame"
+  />
 </template>
 
-<script>
-import { defineComponent, ref, onMounted, computed } from "vue";
-import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
-import { userStore } from "@/store";
+<script setup>
+import { ref, defineEmits } from "vue";
+import PlatformMenu from "@/components/menu/PlatformMenu.vue";
 
-export default defineComponent({
-  setup() {
-    const navigations = [
-      {
-        code: "PMLIVE",
-        icon: "pm",
-        label: "DB",
-        gameCode: "",
-        slogan: "独创首秀，现场体验"
-      },
-      {
-        code: "AG",
-        icon: "ag",
-        label: "AG",
-        gameCode: "",
-        slogan: "全球顶尖, 尊享娱乐"
-      },
-      {
-        code: "BBINDY",
-        icon: "bbin",
-        label: "BBIN",
-        gameCode: "bblive_lobby_pc",
-        slogan: "资深品牌，多元娱乐"
-      },
-      {
-        code: "ALLBET",
-        icon: "allbet",
-        label: "ALLBET",
-        gameCode: "",
-        slogan: "多端娱乐，畅享体验"
-      },
-      {
-        code: "EBET",
-        icon: "we",
-        label: "WE",
-        gameCode: "",
-        slogan: "玩法丰富，惊喜不断"
-      },
-      {
-        code: "WE",
-        icon: "we",
-        label: "WE",
-        gameCode: "",
-        slogan: "玩法丰富，惊喜不断"
-      }
-    ];
-
-    const store = userStore();
-    const platformsList = ref([]);
-    const platformsListDisplay = ref([]);
-    const getPlatList = () => {
-      if (store.token) {
-        getLoggedInPlatformList().then((res) => {
-          platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("LIVE"));
-        });
-      } else {
-        getPlatformListDisplay().then((res) => {
-          platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("LIVE"));
-        });
-      }
-    };
-    const filteredNavigations = computed(() => {
-      return navigations.filter((nav) => platformsListDisplay.value.some((platform) => platform.code === nav.code));
-    });
-
-    onMounted(() => {
-      getPlatList();
-    });
-
-    return {
-      filteredNavigations,
-      getPlatList
-    };
-  }
-});
+const emits = defineEmits(["load-modal"]);
+const platformType = ref("live");
+const platformGameType = ref("LIVE");
+const openGame = (gameName, code, gameCode) => {
+  emits("load-modal", gameName, code, gameCode);
+};
 </script>

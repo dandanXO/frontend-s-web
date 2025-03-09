@@ -32,7 +32,7 @@
         <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
-      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次体育首存优惠</p>
+      <p style="font-size: 16px">活动期间新会员存款时可申请一次体育首存优惠</p>
       <table>
         <thead>
           <tr>
@@ -88,7 +88,7 @@
         <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
-      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次电竞首存优惠</p>
+      <p style="font-size: 16px">活动期间新会员存款时可申请一次电竞首存优惠</p>
       <table>
         <thead>
           <tr>
@@ -144,7 +144,7 @@
         <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
-      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次真人首存优惠</p>
+      <p style="font-size: 16px">活动期间新会员存款时可申请一次真人首存优惠</p>
       <table>
         <thead>
           <tr>
@@ -192,7 +192,7 @@
         <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
-      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次棋牌首存优惠</p>
+      <p style="font-size: 16px">活动期间新会员存款时可申请一次棋牌首存优惠</p>
       <table>
         <thead>
           <tr>
@@ -239,7 +239,7 @@
         <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
-      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次电子首存优惠</p>
+      <p style="font-size: 16px">活动期间新会员存款时可申请一次电子首存优惠</p>
       <table>
         <thead>
           <tr>
@@ -287,7 +287,7 @@
         <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
         <div class="title">新人首存</div>
       </div>
-      <p style="font-size: 16px">活动期间新会员首次存款时可申请一次捕鱼首存优惠</p>
+      <p style="font-size: 16px">活动期间新会员存款时可申请一次捕鱼首存优惠</p>
       <table>
         <thead>
           <tr>

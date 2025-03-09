@@ -996,6 +996,11 @@
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
+
+  <!-- Spin Lucky Wheel promo start -->
+  <HomePopup ref="spinLuckyWheelPromoPopupRef" />
+  <SpinLuckyWheelPromoSticky v-if="store.spinWheelLuckyPromoInfo?.status === 'IN_PROGRESS'" />
+  <!-- Spin Lucky Wheel promo end -->
 </template>
 
 <script setup>
@@ -1003,7 +1008,7 @@ import { Platform, useQuasar } from "quasar";
 import { computed, onActivated, onBeforeUnmount, onMounted, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
-import { api } from "@/boot/axios";
+import { api, eventapi } from "@/boot/axios";
 import { cached } from "@/boot/cache";
 import { t } from "@/boot/lang";
 import KYCUserForm from "@/components/KYCUserForm.vue";
@@ -1023,6 +1028,9 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import MarqueeText from "vue-marquee-text-component";
+import HomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
+import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
+
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
@@ -2288,7 +2296,7 @@ const loadHotGameList = () => {
           gameLists = res;
 
           hotlists = hotlists.map((item1) => {
-            const matchingItem = gameLists.find((item2) => item1.type === "game" && item1.code === item2.code);
+            const matchingItem = gameLists.find((item2) => item1.type === "game" && item1.code === item2.code && item1.platform === item2.platformCode);
             return { ...matchingItem, ...item1 };
           });
 
@@ -2760,6 +2768,7 @@ const gotoSignUp = () => {
   router.push("/register");
 };
 
+const spinLuckyWheelPromoPopupRef = ref();
 const download_url = ref("");
 const isAppUpdateModal = ref(false);
 const isOutdatedApp = ref(false);
@@ -2987,6 +2996,22 @@ const isHbShow = ref(true);
 const hbSlide = ref(0);
 const hbPromo = ref([]);
 
+const checkSpinLuckyWheelPromo = async () => {
+  if(store.token) {
+    const res = await eventapi.post("/refer-spin/check");
+    store.spinWheelLuckyPromoInfo = { ...store.spinWheelLuckyPromoInfo, ...res.data };
+  }
+
+  if (sessionStorage.getItem("isReload")) {
+    sessionStorage.removeItem("isReload");
+    sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
+  }
+
+  if (!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+    spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
+  }
+};
+
 const checkHbPromo = () => {
   api
     .get("/redirect")
@@ -3023,6 +3048,9 @@ let intervalId;
 
 onActivated(() => {
   store.getUnreadTotal();
+  if(!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+    spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
+  }
 });
 
 onMounted(() => {
@@ -3037,6 +3065,8 @@ onMounted(() => {
   loadTADAFishGameList();
   loadCustomerAddress();
   checkHbPromo();
+  checkSpinLuckyWheelPromo();
+  
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
   if (Platform.is.android && Platform.is.capacitor) {
@@ -3044,6 +3074,14 @@ onMounted(() => {
   }
 
   intervalId = setInterval(checkPlatform, 300000);
+
+  window.addEventListener("beforeunload", function () {
+    sessionStorage.setItem("isReload", "true");
+  });
+});
+
+window.addEventListener("beforeunload", () => {
+  sessionStorage.setItem("isReload", "true");
 });
 
 onBeforeUnmount(() => {

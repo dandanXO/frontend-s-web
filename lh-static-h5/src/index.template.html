@@ -71,7 +71,21 @@
         }
       }
 
-      (function initTracking() {
+      function getAndroidVersion() {
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        // Check if the user agent indicates an Android device
+        const match = userAgent.match(/Android\s([0-9.]*)/);
+        if (match) {
+          return match[1]; // This returns the Android version as a string
+        } else {
+          return "Not an Android device";
+        }
+      }
+
+      const androidVersion = getAndroidVersion();
+
+      function initTracking() {
         const pathname = window.location.pathname;
         const appPaths = ["/promotion", "/promotiontest", "/deposit", "/deposittest", "/invitefriend", "/vip", "/viptest", "/privilege/invite"]
         if(appPaths.includes(pathname)) {
@@ -113,7 +127,11 @@
           LA.init({ id: "Kf2YxQaliOlT8Cem", ck: "Kf2YxQaliOlT8Cem" });
         }
 
-      })();
+      }
+
+      if(androidVersion > 9) {
+        initTracking();
+      }
     </script>
 
     <!-- PolyFill Script To Support Lower Version of Browser/Device -->
@@ -183,7 +201,7 @@
         gtag("event", "RECEIVING_MESSAGE_FROM_FLUTTER", {
           "type": "RECEIVING_MESSAGE_FROM_FLUTTER",
           "data": JSON.stringify(addTimestamp({
-            ...data,
+            // ...data,
             "user_id": tokenObj.s3,
           }))
         })
@@ -210,6 +228,9 @@
           }, "CUSTOM")
         })
         gtag('config', 'G-ZMQ37SM5Q3', {
+          'user_id': tokenObj.s3
+        });
+        gtag('set', 'G-ZMQ37SM5Q3', {
           'user_id': tokenObj.s3
         });
         gtag("event", "INITIALIZE_APP", {

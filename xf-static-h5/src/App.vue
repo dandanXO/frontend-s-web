@@ -8,7 +8,6 @@ import { useQuasar } from "quasar";
 import { api } from "boot/axios";
 import axios from "axios";
 import CsClient from "csweb-client";
-// import CsClient from "boot/client";
 import { userStore } from "src/stores";
 import { getVisitorId } from "boot/utils";
 import { useRouter } from "vue-router";
@@ -70,6 +69,7 @@ export default defineComponent({
 
       csclient.set("pageurl", "/liveChat");
       csclient.set("btnid", "cs-web-id");
+      csclient.set("bottom", "81px");
       csclient.set("openanimation", false);
 
       csclient.set("notification-type", {
@@ -162,9 +162,8 @@ export default defineComponent({
       checkSID();
       // initCsWeb();
       getCSA();
-
-      getAffiliateByDomain();
       checkSessStorageItem();
+      getAffiliateByDomain()
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);
