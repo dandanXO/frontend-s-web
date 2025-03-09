@@ -3719,8 +3719,10 @@ onActivated(() => {
   checkHash();
 
   checkSpinWheel();
-  checkCodeBonusModal();
   checkGoogleLoginSetPwd();
+  if (store.hasToken()) {
+    checkCodeBonusModal();
+  }
 
   if (route.query.login === "true") {
     // isMoneyRainModal.value = true;

@@ -352,11 +352,13 @@ export function claimNBABonus(matchId) {
 }
 
 export function getPGLTreasureInit() {
-  return eventapi.get("/session/pglTreasure/init");
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/pglTreasure/init?v=${randNum}`);
 }
 
 export function putPGLTreasureInit() {
-  return eventapi.put("/session/pglTreasure/claim");
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.put(`/session/pglTreasure/claim?v=${randNum}`);
 }
 
 export function getIEMRioInit() {

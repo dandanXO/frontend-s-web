@@ -422,8 +422,8 @@
 
   <q-dialog width="100%" v-model="userKYCDialog" persistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" @click="router.push('')" v-close-popup />
-      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
+      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
+      <KYCUserForm ref="kycUserFormRef" @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
 
@@ -495,10 +495,13 @@ const isNewUser = ref(false);
 const { t } = useI18n();
 const $q = useQuasar();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
-const { userKYCDialog, guestKYCDialog, closeGuestKYCDialog, closeUserKYCDialog } = useCheckKYC([
-  "mounted",
-  "activated"
-]);
+
+const kycUserFormRef = ref(null);
+
+const { userKYCDialog, guestKYCDialog, closeGuestKYCDialog, closeUserKYCDialog } = useCheckKYC(
+  ["mounted", "activated"],
+  kycUserFormRef
+);
 
 const amountRef = ref();
 const withdrawPwdRef = ref();

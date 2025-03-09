@@ -25,7 +25,7 @@
             <span class="prepend-number">{{ $t("form.prependNumber") }}</span>
           </template>
           <template v-if="regForm.referrer" v-slot:append>
-            <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">{{ otpCountdown > 0 ? `Get Code (${otpCountdown})` : 'Get Code' }}</q-btn>
+            <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">{{ otpCountdown > 0 ? `รับรหัส (${otpCountdown})` : 'รับรหัส' }}</q-btn>
           </template>
         </q-input>
         <q-input
@@ -65,8 +65,8 @@
           hide-bottom-space
           v-model="regForm.smsCode"
           :rules="[
-            (val) => (val && val.length > 0) || 'Please insert OTP number',
-            (val) => (val && val.length === 6) || 'The OTP number must have 6 digits'
+            (val) => (val && val.length > 0) || 'กรุณาใส่หมายเลข OTP',
+            (val) => (val && val.length === 6) || 'หมายเลข OTP ต้องมี 6 หลัก'
           ]"
           color="white"
           class="landing-input"
@@ -111,13 +111,13 @@
       <q-card class="captcha-form-wrapper" width="100%">
         <q-card-section class="q-pa-md bg-brightbtn text-white">
           <q-toolbar>
-            <q-toolbar-title>Verification Code</q-toolbar-title>
+            <q-toolbar-title>รหัสยืนยัน</q-toolbar-title>
             <q-btn flat v-close-popup round dense icon="close" />
           </q-toolbar>
         </q-card-section>
         <div class="q-px-lg q-pt-sm q-pb-lg">
           <q-card-section class="q-mb-md q-pa-md">
-            <q-input v-model="innerCaptchaRef" placeholder="Captcha Code">
+            <q-input v-model="innerCaptchaRef" placeholder="รหัส Captcha">
               <template v-slot:append>
                 <img
                   v-show="showImageCode"
@@ -131,7 +131,7 @@
               </template>
             </q-input>
           </q-card-section>
-          <q-btn class="get-code-btn" @click="onCaptchaSubmit" label="Send OTP" />
+          <q-btn class="get-code-btn" @click="onCaptchaSubmit" label="ส่ง OTP" />
         </div>
       </q-card>
     </q-dialog>
@@ -452,7 +452,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: "Phone number cannot be empty",
+          message: "หมายเลขโทรศัพท์ต้องไม่เว้นว่าง",
           icon: "report_problem"
         });
         getInnerCode();
@@ -468,7 +468,7 @@ export default defineComponent({
           })
         )
         .then((res) => {
-          let message = res.message || "OTP sent to phone successfully",
+          let message = res.message || "ส่ง OTP ไปยังโทรศัพท์เรียบร้อยแล้ว",
             color = "positive";
 
           if (res.code === 0) {

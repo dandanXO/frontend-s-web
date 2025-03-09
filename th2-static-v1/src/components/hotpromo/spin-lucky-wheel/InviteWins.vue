@@ -39,7 +39,7 @@ const copyShareLink = (selfTgurl) => {
       $q.notify({
         color: "position",
         position: "top",
-        message: `${selfTgurl} copied to clipboard`,
+        message: `${selfTgurl} คัดลอกไปยังคลิปบอร์ด`,
         icon: "check_circle_outline"
       });
     })

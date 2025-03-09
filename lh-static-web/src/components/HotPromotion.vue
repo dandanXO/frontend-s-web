@@ -55,6 +55,7 @@
     />
     <LiveDailyRebates v-if="list.redirectUrl === 'lh1-live-daily-rebates'" :promo-code="list.promoCode" />
     <Dota2Pgl v-if="list.redirectUrl === 'lh1-dota2-pgl'" :promo-code="list.promoCode" />
+    <PglS32025 v-if="list.redirectUrl === 'lh1-2025-pgl-s3'" :promo-code="list.promoCode" />
     <NewVipRebate v-if="list.redirectUrl === 'lh1-newvip-rebate'" :promo-code="list.promoCode" />
     <LongNewVip v-if="list.redirectUrl === 'lh1-vip'" :promo-code="list.promoCode" />
     <NationalDay2024 v-if="list.redirectUrl === 'lh1-national-day-2024'" :promo-code="list.promoCode" />
@@ -120,6 +121,7 @@
     <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
     <VctBangkok v-if="list.redirectUrl === 'lh1-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
     <Dota2BlastSlamS25 v-if="list.redirectUrl === 'lh1-dream-league-s25'" :promo-code="list.promoCode" />
+    <Blast2025 v-if="list.redirectUrl === 'lh1-blast-open-lisbon-2025'" :promo-code="list.promoCode" />
     <Dota2BlastSlam2025 v-if="list.redirectUrl === 'lh1-blast-slam-2025'" :promo-code="list.promoCode" />
     <DarkModePromo v-if="list.redirectUrl === 'lh1-dark-mode'" />
     <PGLOnFireBuenosAires2025
@@ -132,7 +134,7 @@
       :promo-param="listParam"
       :promo-code="list.promoCode"
     />
-    
+
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -179,6 +181,7 @@ import LplPKlck2025loss from "../components/hotpromo/lpl-lck-2025-loss/lpl-lck-2
 import LanternFestival2025 from "../components/hotpromo/lantern-festival-2025/LanternFestival2025.vue";
 import LiveDailyRebates from "../components/hotpromo/live-daily-rebates/LiveDailyRebates.vue";
 import Dota2Pgl from "../components/hotpromo/dota2-pgl/Dota2Pgl.vue";
+import PglS32025 from "../components/hotpromo/pgl-s3-2025/PglS32025.vue"
 import NewVipRebate from "../components/hotpromo/newVipRebate/NewVipRebate.vue";
 import LongNewVip from "../components/hotpromo/longNewVip/LongNewVip.vue";
 import NationalDay2024 from "../components/hotpromo/national-day-2024/NationalDay2024.vue";
@@ -243,6 +246,7 @@ import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
 import Belgrade2025Promo from "./hotpromo/belgrade-2025-promo/Belgrade2025Promo.vue";
 import VctBangkok from "./hotpromo/vct-bangkok/VctBangkok.vue";
 import Dota2BlastSlamS25 from "../components/hotpromo/dream-league-s25/DreamLeagueS25.vue";
+import Blast2025 from "../components/hotpromo/Blast2025/Blast2025.vue";
 import Lh1Vctcn from "./hotpromo/lh1-vctcn/lh1Vctcn.vue";
 import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue";
 import Dota2BlastSlam2025 from "../components/hotpromo/dota2-blast-slam-2025/Dota2BlastSlam2025.vue";
@@ -323,6 +327,7 @@ export default defineComponent({
     LplPKlck2025loss,
     LiveDailyRebates,
     Dota2Pgl,
+    PglS32025,
     NewVipRebate,
     LongNewVip,
     NationalDay2024,
@@ -351,7 +356,8 @@ export default defineComponent({
     PGLOnFireBuenosAires2025,
     SkyesportsSouvenir2025,
     LanternFestival2025,
-    EslProLeagueS21
+    EslProLeagueS21,
+    Blast2025
   },
   props: {
     list: {
@@ -1024,8 +1030,8 @@ export default defineComponent({
       font-size: 1rem;
       font-weight: 400;
       line-height: 28px;
-      color: #fff ;
-      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%) ;
+      color: #fff;
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
       white-space: pre-wrap;
 
       &:not(:last-child) {
@@ -1103,7 +1109,7 @@ export default defineComponent({
     letter-spacing: 3px;
     margin: 0 auto;
     color: transparent;
-    background: linear-gradient(270.62deg, #E6CC93 -6.62%, #FFF1E1 101.55%);
+    background: linear-gradient(270.62deg, #e6cc93 -6.62%, #fff1e1 101.55%);
     -webkit-background-clip: text;
   }
 

@@ -198,6 +198,13 @@
           <el-input v-model="form.version" style="width: 350px" />
         </el-form-item>
 
+        <el-form-item :label="t('siteAppVersion.publishStatus')" prop="status">
+          <el-radio-group v-model="form.publishStatus">
+            <el-radio label="PENDING">{{ t('siteAppVersion.PENDING') }}</el-radio>
+            <el-radio label="PUBLISHED">{{ t('siteAppVersion.PUBLISHED') }}</el-radio>
+          </el-radio-group>
+        </el-form-item>
+
         <el-form-item :label="t('siteAppVersion.appUpload')" prop="filePath">
           <el-row :gutter="10">
             <el-col :span="9">
@@ -223,6 +230,35 @@
             <el-col :span="1">
               <el-button icon="el-icon-files" v-if="uploadedApp.filePath">
                 {{ t('siteAppVersion.fileUploadedSuccessfully') }}
+              </el-button>
+            </el-col>
+          </el-row>
+        </el-form-item>
+        <el-form-item :label="t('siteAppVersion.logoUpload')" prop="logoFilePath">
+          <el-row :gutter="10">
+            <el-col :span="9">
+              <!-- eslint-disable -->
+              <input
+                id="uploadLogo"
+                type="file"
+                ref="inputLogo"
+                style="display: none"
+                accept="image/*"
+                @change="attachLogo"
+              />
+              <el-button
+                icon="el-icon-upload"
+                size="mini"
+                type="success"
+                :disabled="isFormDataFilled()"
+                @click="$refs.inputLogo.click()"
+              >
+                {{ t('fields.upload') }}
+              </el-button>
+            </el-col>
+            <el-col :span="1">
+              <el-button icon="el-icon-files" v-if="uploadedApp.logoFilePath">
+                {{ t('siteAppVersion.logoUploadedSuccessfully') }}
               </el-button>
             </el-col>
           </el-row>
@@ -264,6 +300,11 @@
         </template>
       </el-table-column>
       <el-table-column prop="version" :label="t('siteAppVersion.version')" />
+      <el-table-column prop="publishStatus" :label="t('siteAppVersion.publishStatus')">
+        <template #default="scope">
+          <span>{{ t(`siteAppVersion.${scope.row.publishStatus}`) }}</span>
+        </template>
+      </el-table-column>
       <el-table-column type="title" :label="t('fields.action')">
         <template #default="scope">
           <el-button
@@ -303,6 +344,7 @@ import {
   updateSiteAppVersion,
   deleteSiteAppVersion,
   uploadApp,
+  uploadLogo
 } from '../../../api/site-app-version'
 import { nextTick } from 'process'
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -327,6 +369,7 @@ const request = reactive({
   size: 30,
   current: 1,
   version: null,
+  status: false,
   siteId: null,
   os: null,
   appType: null,
@@ -362,9 +405,16 @@ const form = reactive({
   apkType: null,
   version: null,
   filePath: null,
+  logoFilePath: null,
+  publishStatus: 'PENDING',
 })
 
 const appUpload = reactive({
+  formData: null,
+  extension: null,
+})
+
+const logoUpload = reactive({
   formData: null,
   extension: null,
 })
@@ -377,6 +427,7 @@ const formRules = reactive({
 })
 
 const inputApp = ref(null)
+const inputLogo = ref(null)
 
 const appForm = ref(null)
 
@@ -386,6 +437,7 @@ const siteList = reactive({
 
 const uploadedApp = reactive({
   filePath: null,
+  logoFilePath: null,
   isAndroid: null,
   isIOS: null,
 })
@@ -446,6 +498,7 @@ function handleSelectionChange(val) {
 function showEdit(app) {
   showDialog('EDIT')
   uploadedApp.filePath = app.filePath
+  uploadedApp.logoFilePath = app.logoFilePath
   nextTick(() => {
     for (const key in app) {
       if (Object.keys(form).find(k => k === key)) {
@@ -476,6 +529,18 @@ function create() {
           form.filePath = getUploadApp.data
           create = true
         }
+      }
+      if (logoUpload.formData != null) {
+        const getUploadLogo = await uploadLogo(
+          logoUpload.formData,
+          logoUpload.extension
+        )
+        console.log('getUploadLogo', getUploadLogo)
+        if (getUploadLogo.code === 0) {
+          form.logoFilePath = getUploadLogo.data
+          create = true
+        }
+        console.log('form.logoFilePath', form.logoFilePath)
       }
 
       if (create) {
@@ -574,6 +639,33 @@ async function attachApp(event) {
     form.filePath = URL.createObjectURL(files)
     appUpload.formData = formData
     appUpload.extension = fileExtension
+  }
+}
+
+async function attachLogo(event) {
+  const files = event.target.files[0]
+
+  // Extract file extension
+  const fileNameParts = files.name.split('.')
+  const fileExtension = fileNameParts[fileNameParts.length - 1].toLowerCase()
+
+  const allowFileType = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
+  const dir = 'temp'
+  if (!allowFileType.find(ftype => ftype.includes(files.type))) {
+    ElMessage({ message: t('message.invalidFileType'), type: 'error' })
+  } else {
+    var formData = new FormData()
+    formData.append('files', files)
+    formData.append('dir', dir)
+    formData.append('overwrite', false)
+    formData.append('siteId', form.siteId)
+    formData.append('os', form.os)
+    formData.append('appType', form.appType)
+    formData.append('extension', fileExtension)
+    uploadedApp.logoFilePath = URL.createObjectURL(files)
+    form.logoFilePath = URL.createObjectURL(files)
+    logoUpload.formData = formData
+    logoUpload.extension = fileExtension
   }
 }
 

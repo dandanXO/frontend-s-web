@@ -26,6 +26,28 @@ body {
   aspect-ratio: 104/19;
 }
 
+.top-info-container {
+  background: linear-gradient(180deg, #334ad6 0%, #8b36f8 100%);
+  border-radius: 4px;
+  margin: 0 20px;
+  padding: 8px 12px;
+}
+
+.top-info-container p {
+  font-family: Inter;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.info-highlight-txt {
+  font-family: Inter;
+  color: #fff848;
+  font-size: 16px;
+  font-weight: 700;
+}
+
 .banner-container {
   padding: 20px;
 }
@@ -45,7 +67,6 @@ body {
 .download-content {
   width: 70%;
   padding-right: 20px;
-  position: relative;
   padding-bottom: 36px;
 }
 
@@ -53,8 +74,8 @@ body {
   background: linear-gradient(270deg, #334ad6 0%, #8b36f8 100%);
   border-radius: 4px;
   padding: 6px;
-  font-size: 8px;
-  font-weight: 600;
+  font-size: 9px;
+  font-weight: 500;
   color: #fff;
   text-align: center;
 }
@@ -67,14 +88,20 @@ body {
   text-align: center;
 }
 
+.download-btn-container {
+  position: sticky;
+  bottom: 0;
+}
+
 .download-btn-info {
   width: 128px;
   position: absolute;
-  bottom: 0;
+  bottom: 54px;
   right: 50px;
 }
 
 .download-btn {
+  height: 48px;
   width: calc(100% - 40px);
   background: linear-gradient(180deg, #ffa600 0%, #ff3b00 100%);
   border: none;

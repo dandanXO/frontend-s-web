@@ -326,7 +326,7 @@
   <q-dialog width="100%" v-model="userKYCDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
-      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
+      <KYCUserForm ref="kycUserFormRef" @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
 </template>
@@ -358,7 +358,9 @@ const router = useRouter();
 const route = useRoute();
 const emits = defineEmits(["closeModal"]);
 
-const { userKYCDialog, closeUserKYCDialog } = useCheckKYC(["mounted", "activated"]);
+const kycUserFormRef = ref(null);
+
+const { userKYCDialog, closeUserKYCDialog } = useCheckKYC(["mounted", "activated"], kycUserFormRef);
 
 const isBank2 = computed(() => {
   return activeMethod.value.code === "BANK-2";
