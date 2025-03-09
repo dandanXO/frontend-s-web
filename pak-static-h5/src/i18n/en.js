@@ -579,10 +579,10 @@ export default {
     jackpot: "Jackpot",
     bonus: "Bonus",
     amount: "Amount",
-    applying: "Processing",
+    applying: "Applying",
     failed: "Failed",
     Success: "Success",
-    underReview: "Processing",
+    underReview: "Under Review",
     toBePaid: "To be paid",
     paymentOnGoing: "Payment on going",
     automaticPayment: "Automatic Payment",
@@ -598,7 +598,13 @@ export default {
     bytoday: "Today",
     byyesterday: "Yesterday",
     all: "All",
-    turnover_requi: "TurnOver Requirement"
+    turnover_requi: "TurnOver Requirement",
+    sending: "Sending",
+    waitCallback: "Waiting for callback",
+    paying: "Paying",
+    waitingAutoPay: "Awaiting Auto Payment",
+    failReview: "Failed Review",
+    waitingRetry: "Waiting for retry"
   },
   appUpdate: {
     updateHeader: "Update Announcement",
