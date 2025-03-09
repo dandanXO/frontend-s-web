@@ -7,7 +7,7 @@
     @mouseleave="handleWrapperMouseLeave"
   >
     <template v-if="isFlvSupported">
-      <video ref="videoRef" class="livestream-video" @progress="handlePlayerProgress" />
+      <video ref="videoRef" class="livestream-video" crossorigin="anonymous" @progress="handlePlayerProgress" />
       <div ref="danmuRef" class="livestream-video-danmu" />
       <div
         class="livestream-video-controller"
@@ -44,23 +44,56 @@
         <div class="livestream-video-controller-group">
           <el-popover
             ref="urlPopperRef"
-            popper-class="livestream-video-controller-url-popover"
+            popper-class="livestream-video-controller-popover url"
             placement="top"
             trigger="click"
-            offset="12"
+            :offset="12"
             width="max-content"
             :show-arrow="false"
             :teleported="false"
           >
             <template #reference>
-              <button class="livestream-video-controller-url-btn btn" @click="handleUrlSelectionClick">
+              <button class="livestream-video-controller-url-btn btn" title="线路选择">
                 {{ currentUrl.name }}
               </button>
             </template>
-            <div class="livestream-video-controller-url-list">
-              <div v-for="(url, index) in urls" :key="index" class="livestream-video-controller-url-item">
-                <button class="livestream-video-controller-url-item-btn btn" @click="handleUrlChange(index)">
+            <div class="livestream-video-controller-list">
+              <div
+                v-for="(url, index) in urls"
+                :key="index"
+                class="livestream-video-controller-item"
+                :class="{ selected: playerConfig.channel === index }"
+              >
+                <button class="livestream-video-controller-item-btn btn" @click="handleUrlChange(index)">
                   {{ url.name }}
+                </button>
+              </div>
+            </div>
+          </el-popover>
+          <el-popover
+            ref="urlPopperRef"
+            popper-class="livestream-video-controller-popover quality"
+            placement="top"
+            trigger="click"
+            :offset="12"
+            width="max-content"
+            :show-arrow="false"
+            :teleported="false"
+          >
+            <template #reference>
+              <button class="livestream-video-controller-quality-btn btn" title="画质选择">
+                <img src="@/assets/home/livestream/icon-setting.png" />
+              </button>
+            </template>
+            <div class="livestream-video-controller-list">
+              <div
+                v-for="(quality, index) in qualities"
+                :key="index"
+                class="livestream-video-controller-item"
+                :class="{ selected: playerConfig.quality === quality.value }"
+              >
+                <button class="livestream-video-controller-item-btn btn" @click="handleQualityChange(quality.value)">
+                  {{ quality.name }}
                 </button>
               </div>
             </div>
@@ -89,10 +122,18 @@
 </template>
 <script setup>
 import { computed, onMounted, ref, toRefs, watch } from "vue";
+import { VideoPlayer } from "../../../utils/videoPlayer";
 
 /** @type {import("flv.js").default.Config} */
 const DEFAULT_FLV_CONFIG = {
   enableWorker: true
+};
+
+/** @type {import("hls.js").HlsConfig} */
+const DEFAULT_HLS_CONFIG = {
+  enableWorker: true,
+  debug: false,
+  maxBufferLength: 10
 };
 
 const PLAYER_CONFIG_KEY = "lh-livestream-player-config";
@@ -120,13 +161,18 @@ const DANMU_CONFIG = {
   style: DANMU_STYLE
 };
 
+const DEFAULT_QUALITY = { value: -1, name: "自动" };
+
 const props = defineProps(["danmuList", "urls"]);
 const { danmuList, urls } = toRefs(props);
 
 /**  @type {import("vue").Ref<typeof import("flv.js").default | null>} */
 const flv = ref(null);
+/**  @type {import("vue").Ref<typeof import("hls.js").default | null>} */
+const hls = ref(null);
 const danmuJs = ref(null);
 
+/**  @type {import("vue").Ref<HTMLVideoElement | null>} */
 const videoRef = ref(null);
 const danmuRef = ref(null);
 const videoWrapperRef = ref(null);
@@ -134,18 +180,21 @@ const urlPopperRef = ref(null);
 const videoWrapperMouseLeaveTimer = ref(null);
 const showPlayerController = ref(false);
 const isFlvSupported = ref(true);
+/** @type {import("vue").Ref< VideoPlayer | null>}*/
 const player = ref(null);
 const danmu = ref(null);
-const currentUrlIndex = ref(0);
+const qualities = ref([DEFAULT_QUALITY]);
 const playerConfig = ref({
   isPause: false,
   volume: 50,
   isFullScreen: false,
-  isDanmuClose: false
+  isDanmuClose: false,
+  quality: -1,
+  channel: 0
 });
 
 const currentUrl = computed(() => {
-  return urls.value[currentUrlIndex.value];
+  return urls.value[playerConfig.value.channel];
 });
 
 const loadFlv = async () => {
@@ -155,7 +204,8 @@ const loadFlv = async () => {
     player.value = flv.value.createPlayer(
       {
         type: "flv",
-        url: "http://207.148.73.114:8080/live/livestream.flv",
+        // url: "http://207.148.73.114:8080/live/livestream.flv",
+        url: "http://192.168.31.145:8000/live/stream.flv",
         isLive: true
       },
       DEFAULT_FLV_CONFIG
@@ -166,6 +216,37 @@ const loadFlv = async () => {
     player.value.play();
   }
 };
+
+const loadPlayer = async () => {
+  player.value = new VideoPlayer(
+    {
+      mediaType: "hls",
+      // url: "http://192.168.31.145:8000/live/stream.flv",
+      url: "http://192.168.31.145:8000/hls/index.m3u8",
+      // url: "https://cdn.jwplayer.com/manifests/pZxWPRg4.m3u8",
+      // ...DEFAULT_FLV_CONFIG,
+      ...DEFAULT_HLS_CONFIG
+    },
+    videoRef.value
+  );
+  await player.value.init();
+  player.value.on(player.value.Events.ERROR, handlePlayerError);
+  await player.value.load();
+  if (player.value.qualitySupported) getQualities();
+  // player.value.onManifestParsed(handleManifestParsed);
+  player.value.play();
+};
+
+// const loadHls = async () => {
+//   const _hls = (await import("hls.js")).default;
+//   hls.value = _hls;
+//   const videoSrc = "http://192.168.31.145:8000/live/stream.m3u8";
+//   if(hls.value.isSupported()) {
+
+//   }else if(videoRef.value.canPlayType('application/vnd.apple.mpegurl')) {
+//     videoRef.value.src = videoSrc
+//   }
+// }
 
 const loadDanmu = async () => {
   const _danmu = (await import("danmu.js")).default;
@@ -197,6 +278,10 @@ const loadPlayerConfig = () => {
           break;
         case "isDanmuClose":
           handleDanmuChange(value);
+          break;
+        case "quality":
+          handleQualityChange(value);
+          break;
       }
     });
   }
@@ -254,22 +339,39 @@ const handleWrapperMouseLeave = () => {
 };
 
 const handlePlayerProgress = () => {
-  if (!videoRef.value || videoRef.value.paused) return;
-  const bufferedEnd = videoRef.value.buffered.end(0);
-  const delta = bufferedEnd - videoRef.value.currentTime;
-  if (delta > 10 || delta < 0) {
-    videoRef.value.currentTime = bufferedEnd - 0.5;
-  }
+  // if (!videoRef.value || videoRef.value.paused) return;
+  // const bufferedEnd = videoRef.value.buffered.end(0);
+  // const delta = bufferedEnd - videoRef.value.currentTime;
+  // if (delta > 10 || delta < 0) {
+  //   videoRef.value.currentTime = bufferedEnd - 0.5;
+  // }
 };
 
-const handlePlayerError = (e) => {
+const handlePlayerError = (event, data) => {
   console.log(e);
   if (!playerConfig.value.isPause) {
     changePlayerConfig("isPause", true);
   }
 };
 
-const handleUrlChange = (index) => (currentUrlIndex.value = index);
+const handleUrlChange = (index) => {
+  changePlayerConfig("channel", index);
+  // player.value.changeUrl(urls.value[index].url);
+};
+
+const handleQualityChange = (index) => {
+  changePlayerConfig("quality", index);
+  player.value.setQualityLevel(index);
+};
+
+const getQualities = () => {
+  console.log(player.value.levels);
+  const result = player.value.levels.map((level, index) => ({
+    value: index,
+    name: `${level.height}p`
+  }));
+  qualities.value.push(...result);
+};
 
 watch(danmuList, () => {
   if (danmuList.value.length && danmu.value) {
@@ -283,7 +385,7 @@ watch(danmuList, () => {
 });
 
 onMounted(() => {
-  Promise.all([loadFlv(), loadDanmu()]).then(loadPlayerConfig);
+  Promise.all([loadPlayer(), loadDanmu()]).then(loadPlayerConfig);
 });
 </script>
 <style lang="scss" scoped>
@@ -368,20 +470,31 @@ onMounted(() => {
 }
 </style>
 <style lang="scss">
-.el-popover.el-popper.livestream-video-controller-url-popover {
+.el-popover.el-popper.livestream-video-controller-popover {
   background-color: #0000004d !important;
   border: none !important;
   min-width: unset;
-  padding: 8px;
+  padding: 8px 0;
 
-  .livestream-video-controller-url-list {
-    .livestream-video-controller-url-item-btn {
-      background-color: transparent;
-      font-size: 12px;
-      color: #fff;
+  .livestream-video-controller-list {
+    .livestream-video-controller-item {
+      padding: 0 8px;
+      &.selected {
+        background-color: #12a3ff;
 
-      &:hover {
-        color: #12a3ff;
+        .livestream-video-controller-item-btn:hover {
+          color: #fff;
+        }
+      }
+
+      .livestream-video-controller-item-btn {
+        background-color: transparent;
+        font-size: 12px;
+        color: #fff;
+
+        &:hover {
+          color: #12a3ff;
+        }
       }
     }
   }

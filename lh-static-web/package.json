@@ -29,6 +29,7 @@
     "fingerprintjs": "^0.5.3",
     "flv.js": "^1.6.2",
     "gsap": "^3.12.1",
+    "hls.js": "^1.5.20",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "moment-locales-webpack-plugin": "^1.2.0",
