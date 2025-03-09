@@ -188,7 +188,7 @@
 <script setup>
 import { onActivated, ref } from "vue";
 import { userStore } from "src/stores";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useQuasar } from "quasar";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import ExchangeModal from "../components/account/ExchangeModal.vue";
@@ -200,6 +200,7 @@ import { t } from "src/boot/lang";
 
 const store = userStore();
 const router = useRouter();
+const route = useRoute();
 const qs = require("qs");
 const $q = useQuasar();
 const ui = useUI();
@@ -240,6 +241,10 @@ onActivated(() => {
   store.getUnreadTotal();
   getPromoImage();
   getUplineDetails();
+
+  if (route.query.openCodeModal) {
+    showExchangeModal.value = true;
+  }
 });
 
 const canTransfer = ref(false);

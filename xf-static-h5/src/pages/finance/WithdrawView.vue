@@ -1,16 +1,17 @@
 <template>
-  <div>
-    <div class="title-wrapper q-pa-md" style="padding-bottom: 0px">
-      <span>{{ isAutoWithdrawal ? "快速提款" : "提款" }}</span>
-      <q-btn v-if="!isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick">
-        <img src="../../assets/images/finance/withdraw/rocket-icon.png" />
-        <span>升级快速提款</span>
-      </q-btn>
-    </div>
+  <div class="q-pa-md">
     <!--    <AcctBal :platforms="platforms" />-->
-    <div class="q-pa-md bg-dark q-mx-sm q-my-md">
+    <div class="">
       <div class="account-content last">
         <div class="withdrawalmethod">
+          <div class="title-wrapper" style="padding-bottom: 0px">
+            <span>{{ isAutoWithdrawal ? "快速提款" : "提款" }}</span>
+            <q-btn v-if="!isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick" rounded>
+              <img src="../../assets/images/finance/withdraw/rocket-icon.png" />
+              <span>升级快速提款</span>
+            </q-btn>
+          </div>
+
           <div
             v-for="(method, i) in withdrawalMethods"
             :key="i"
@@ -29,20 +30,24 @@
             </div>
           </div>
         </div>
-        <q-form ref="withdrawFormRef">
+        <q-form ref="withdrawFormRef" class="q-gutter-y-md q-mt-md">
           <q-select
             v-show="isLoaded"
             hide-bottom-space
-            filled
             ref="cardRef"
             v-model="withdrawInfo.cardId"
             option-value="id"
             emit-value
             :label="'选择' + chooseLabel()"
-            color="white"
             :options="withdrawState.bankCardList"
             map-options
             :rules="[(val) => !!val || '请选择' + chooseLabel()]"
+            padding="none"
+            style="width: 100%"
+            rounded
+            outlined
+            color="white"
+            bg-color="recinputstyle"
           >
             <template v-slot:no-option>
               <q-item>
@@ -94,7 +99,6 @@
             ref="amountRef"
             v-model="withdrawInfo.amount"
             label="金额"
-            color="white"
             :rules="[
               (val) => (val && val.length > 0) || '请输入提款金额',
               (val) => val >= selectedWithdrawalMethod.withdrawMin || '请输入正确的提款金额',
@@ -103,6 +107,11 @@
               !isUSDT ? (val) => (!isUSDT && /^([1-9][0-9]*)$/.test(val)) || '金额应为正数' : true
             ]"
             clearable
+            label-color="brand"
+            rounded
+            outlined
+            color="white"
+            bg-color="recinputstyle"
           >
             <template v-slot:prepend>
               <span style="font-size: 26px" class="text-bright">
@@ -111,12 +120,12 @@
             </template>
             <template v-slot:append>
               <span style="font-size: 26px" class="text-bright">
-                <q-btn @click="updateWithdrawAmt" label="全额提款" color="brightbtn" />
+                <q-btn @click="updateWithdrawAmt" label="全额提款" color="brightbtn" rounded />
               </span>
             </template>
           </q-input>
           <div
-            class="q-mt-md q-mb-md text-grey text-bold q-pb-md"
+            class="q-mt-md q-mb-md text-grey q-pb-md"
             style="border-bottom: 1px solid #434343"
             v-show="selectedWithdrawalMethod"
           >
@@ -142,7 +151,7 @@
             </template>
           </div>
           <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
-            <div class="q-my-md" style="display: flex; justify-content: center; align-items: center">
+            <div class="" style="display: flex; justify-content: center; align-items: center">
               <span style="flex: 1">实施汇率：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
@@ -168,6 +177,7 @@
             <div class="q-mt-md q-mb-md text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
               <q-btn
                 style="border: 1px solid #33bcd4; color: #33bcd4"
+                rounded
                 @click="openEWalletTutorial"
                 :label="tutorialLabel()"
               />
@@ -211,6 +221,8 @@
               :loading="withdrawLoading"
               :disable="withdrawLoading"
               label="立即提款"
+              size="md"
+              rounded
             />
           </div>
           <div class="q-py-md text-orange">
@@ -219,9 +231,9 @@
               class="selected-tip"
               v-html="selectedWithdrawalMethod.tips"
             ></div>
-            <!--            <div v-if="isALIPAY" class="selected-tip">-->
-            <!--              “支付宝提款”可用时间：早 10 点 - 晚 12 点，其他时间提交系统会自动取消！-->
-            <!--            </div>-->
+            <div v-if="isALIPAY" class="selected-tip">
+              “支付宝提款”可用时间：早 10 点 - 晚 12 点，其他时间提交系统会自动取消！
+            </div>
           </div>
         </q-form>
       </div>
@@ -243,6 +255,7 @@
         </div>
       </q-card>
     </q-dialog>
+
     <q-dialog v-model="isShowWithdrawErrorBlock" persistent no-backdrop-dismiss no-esc-dismiss>
       <q-card style="width: 100%; max-width: 290px; padding: 15px; flex-direction: column">
         <q-card-section class="q-mb-md">
@@ -646,41 +659,53 @@ export default defineComponent({
   grid-template-columns: repeat(4, 1fr);
   text-align: center;
   overflow-x: auto;
-  padding: 15px 5px;
-  grid-gap: 10px;
+  padding: 16px;
+  grid-gap: 16px;
+  background: linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c 100%);
+  border-radius: 6px;
 
   .withdraw-type-item {
-    // display: flex;
-    // justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    max-width: 4.5rem;
-
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 6px;
+    border-color: rgba(217, 217, 217, 0.3019607843);
+    background-color: #273354;
     position: relative;
     cursor: pointer;
 
+    img {
+      display: block;
+      width: 100%;
+      background-color: transparent;
+      margin-bottom: 0;
+      padding: 12px 12px 8px;
+      max-width: 60px;
+    }
+
     .promo-label {
       position: absolute;
-      bottom: 8px;
+      top: -10px;
       left: 50%;
       transform: translate(-50%);
-      width: 50px;
+      width: 40px;
 
       img {
         width: 100%;
-        height: auto;
-        padding: 4px 6px;
+        display: block;
+        padding: 0;
+        max-width: 40px;
       }
     }
 
     .withdraw-img {
-      border: 2px solid transparent;
-      border-radius: 6px;
-      margin-bottom: 5px;
-    }
-
-    img {
-      width: 100%;
-      padding: 5px 10px;
+      // border: 2px solid transparent;
+      // border-radius: 6px;
+      // margin-bottom: 5px;
     }
 
     &.active {
@@ -688,22 +713,28 @@ export default defineComponent({
       // color: #db7e42;
       // box-shadow: none;
       // filter: drop-shadow(0px 0px 3px #ffffff);
-      img {
-        border: 1px solid #33bcd4;
-      }
+      border-color: #00bfd7;
+      position: relative;
 
-      .promo-img {
-        border: none;
-        border-radius: 0px;
+      &:before {
+        display: block;
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        right: -2px;
+        height: 20px;
+        width: 20px;
+        z-index: 3;
+        background-image: url("../../assets/images/finance/node-tick.png");
+        background-size: 100%;
+        background-position: center center;
       }
-
-      // img {
-      //   border: 2px solid #33bcd4;
-      // }
     }
 
     .type-name {
-      line-height: 15px;
+      // line-height: 15px;
+      font-size: 10px;
+      margin-bottom: 6px;
       overflow-wrap: break-word;
     }
 
@@ -741,8 +772,11 @@ export default defineComponent({
   display: flex;
   align-items: center;
   gap: 1rem;
+  grid-column: span 4;
+
   .upgrade-btn {
     padding: 1px 12px;
+    margin-left: auto;
     img {
       height: 30px;
     }

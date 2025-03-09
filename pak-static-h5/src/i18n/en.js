@@ -69,6 +69,10 @@ export default {
       app: "App",
       addToHomeScreen: "Add to Home Screen",
       enjoyMoreBenefits: "Enjoy more benefits!"
+    },
+    homeCodeBonus: {
+      congratsWonFreeCash: "Congratulations, you've won free cash!",
+      enterCodeToClaim: "Please enter the cash redemption code to claim it."
     }
   },
   form: {
@@ -239,7 +243,8 @@ export default {
     close: "Close",
     details: "Details",
     transfer: "Transfer",
-    signinWithGoogle: "Google"
+    signinWithGoogle: "Google",
+    goNow: "Go Now"
   },
   notify: {
     noRecord: "No Record",
@@ -574,10 +579,10 @@ export default {
     jackpot: "Jackpot",
     bonus: "Bonus",
     amount: "Amount",
-    applying: "Processing",
+    applying: "Applying",
     failed: "Failed",
     Success: "Success",
-    underReview: "Processing",
+    underReview: "Under Review",
     toBePaid: "To be paid",
     paymentOnGoing: "Payment on going",
     automaticPayment: "Automatic Payment",
@@ -593,7 +598,13 @@ export default {
     bytoday: "Today",
     byyesterday: "Yesterday",
     all: "All",
-    turnover_requi: "TurnOver Requirement"
+    turnover_requi: "TurnOver Requirement",
+    sending: "Sending",
+    waitCallback: "Waiting for callback",
+    paying: "Paying",
+    waitingAutoPay: "Awaiting Auto Payment",
+    failReview: "Failed Review",
+    waitingRetry: "Waiting for retry"
   },
   appUpdate: {
     updateHeader: "Update Announcement",

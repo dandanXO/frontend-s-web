@@ -351,12 +351,11 @@ import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import qs from "qs";
-// import PrimaryButton from "../components/auth/PrimaryButton.vue";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
-import { isAndroid, isInPwa, trackNewUserFtd } from "boot/utils";
+import { isAndroid, isInPwa, generateEventID } from "boot/utils";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
 import { useI18n } from "vue-i18n";
@@ -634,12 +633,22 @@ export default defineComponent({
     };
 
     const trackRegisterSuccessEvent = () => {
-      if (ui.adjust_register_event && isInPwa()) {
+      if (!ui.adjust_register_event) return;
+      if (isInPwa()) {
         console.log(ui.adjust_register_event);
         const AdjustWeb = require("@adjustcom/adjust-web-sdk");
         AdjustWeb.trackEvent({
           eventToken: ui.adjust_register_event
         });
+      } else if (Platform.is.android && Platform.is.capacitor) {
+        var adjustEvent = new AdjustEvent(ui.adjust_register_event);
+        // alert(affRegEvent.value);
+        Adjust.trackEvent(adjustEvent);
+        // } else {
+        //   const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        //   AdjustWeb.trackEvent({
+        //     eventToken: ui.adjust_register_event
+        //   });
       }
     };
 
@@ -664,7 +673,7 @@ export default defineComponent({
         isLoading.value = false;
       } else {
         var qs = require("qs");
-        const sidParam = store.visitorId;
+        const sidParam = store.googleadid || store.visitorId;
 
         (async () => {
           if (store.aaid) {
@@ -714,21 +723,6 @@ export default defineComponent({
                 }
 
                 trackRegisterSuccessEvent();
-
-                //ADJUST TRACKEVENT.
-                // debugger;
-                // if (Platform.is.android && Platform.is.capacitor) {
-                //   affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
-                //   var adjustEvent = new AdjustEvent(affRegEvent.value);
-                //   // alert(affRegEvent.value);
-                //   Adjust.trackEvent(adjustEvent);
-                // } else {
-                //   affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
-                //   const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-                //   AdjustWeb.trackEvent({
-                //     eventToken: affRegEvent.value
-                //   });
-                // }
 
                 sessionStorage.removeItem("REFERRAL_CODE");
                 localStorage.removeItem("PWA_REFERRAL_CODE");

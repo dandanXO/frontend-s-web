@@ -1946,6 +1946,7 @@ export default {
     changeAffiliateSuccess: 'Thay đổi đối tác liên kết thành công',
     confirmUnbindAffiliateAccesss: 'Xác nhận gỡ ràng buộc đại lý cấp trên',
     changeSuccess: 'Thay đổi thành công',
+    codeTooLong: 'mã quá dài',
     commissionPaySuccess: 'Thanh toán hoa hồng thành công',
     confirmToAdjust:
       'Bạn có chắc chắn muốn điều chỉnh không? Sau khi xác nhận, điều chỉnh không thể hoàn tác.',
@@ -2433,9 +2434,13 @@ export default {
     validatePlanLimitMaxRequired: 'Yêu cầu giới hạn đầu tư tối đa',
     validateIsSeamlessTransferRequired: 'Nó là cần thiết để không chuyển nhượng',
     validateVipSettingRequired: 'Yêu cầu cài đặt VIP',
-    validatePayementTypesSettingRequired: 'Yêu cầu cài đặt thanh toán'
+    validatePayementTypesSettingRequired: 'Yêu cầu cài đặt thanh toán',
+    validateFbIdRequired: 'Facebook ID là bắt buộc',
+    validateFbUrlRequired: 'URL Facebook là bắt buộc',
+    validateFbTokenRequired: 'Token Facebook là bắt buộc',
   },
   menu: {
+    'Add Promo': 'Thêm khuyến mãi',
     undefined: '',
     Dashboard: 'Bảng điều khiển',
     Member: 'Thành viên',
@@ -3026,6 +3031,8 @@ export default {
     30000: 'Cập nhật trạng thái giao dịch PG không thành công',
     24003: 'Kết quả đã được xử lý trước đó',
     27000: 'Không đủ lượng chìa khóa',
-    50002: 'Số tiền điều chỉnh tối đa đã vượt quá'
+    50002: 'Số tiền điều chỉnh tối đa đã vượt quá',
+    53000: 'Vui lòng nhập tên thành viên',
+    53001: 'Vui lòng nhập tên người giới thiệu hoặc tên thành viên'
   },
 }

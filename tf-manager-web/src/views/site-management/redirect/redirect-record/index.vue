@@ -354,7 +354,7 @@
         </el-select>
       </el-form-item>
       <el-form-item v-if="form.type" :label="t('fields.desktopImage')" prop="icon" style="width: 550px">
-        <el-row :gutter="5">
+        <el-row >
           <el-col v-if="form.icon" :span="18" style="width: 350px">
             <el-image
               v-if="form.icon && form.type === 'PROMO'"
@@ -373,7 +373,16 @@
               :preview-src-list="[gameDir + form.icon]"
             />
           </el-col>
-          <el-col :span="6">
+          <el-col>
+            <el-button
+              v-if="form.type !== 'GAME' || form.platform !== null"
+              icon="el-icon-plus"
+              size="mini"
+              type="primary"
+              @click="showImageDialog('DESKTOP_IMAGE')"
+            >
+              {{ t('fields.upload') }}
+            </el-button>
             <el-button
               icon="el-icon-search"
               size="mini"
@@ -386,7 +395,7 @@
         </el-row>
       </el-form-item>
       <el-form-item v-if="form.type" :label="t('fields.mobileImage')" prop="icon" style="width: 550px">
-        <el-row :gutter="5">
+        <el-row>
           <el-col v-if="form.iconMobile" :span="18" style="width: 350px">
             <el-image
               v-if="form.iconMobile && form.type === 'PROMO'"
@@ -405,7 +414,16 @@
               :preview-src-list="[gameDir + form.iconMobile]"
             />
           </el-col>
-          <el-col :span="6">
+          <el-col>
+            <el-button
+              v-if="form.type !== 'GAME' || form.platform !== null"
+              icon="el-icon-plus"
+              size="mini"
+              type="primary"
+              @click="showImageDialog('MOBILE_IMAGE')"
+            >
+              {{ t('fields.upload') }}
+            </el-button>
             <el-button
               icon="el-icon-search"
               size="mini"
@@ -600,6 +618,94 @@
       </div>
     </div>
   </el-dialog>
+
+  <el-dialog
+    :title="uiControl.imageDialogTitle"
+    v-model="uiControl.imageDialogVisible"
+    append-to-body
+    width="600px"
+    :close-on-press-escape="false"
+  >
+    <el-form
+      ref="imageFormRef"
+      :model="imageForm"
+      :rules="imageFormRules"
+      :inline="true"
+      size="small"
+      label-width="180px"
+    >
+      <div id="preview">
+        <el-image
+          v-if="uploadedImage.url"
+          :src="uploadedImage.url"
+          :fit="contain"
+          :preview-src-list="[uploadedImage.url]"
+        />
+      </div>
+      <el-form-item :label="t('fields.image')" prop="path">
+        <el-row :gutter="10">
+          <el-col :span="2">
+            <!-- eslint-disable -->
+            <input
+              id="uploadFile"
+              type="file"
+              ref="inputImage"
+              style="display: none"
+              accept="image/*"
+              @change="attachImage"
+            />
+            <el-button
+              icon="el-icon-upload"
+              size="mini"
+              type="success"
+              @click="$refs.inputImage.click()"
+            >
+              {{ t('fields.upload') }}
+            </el-button>
+          </el-col>
+          <el-col :span="1" />
+        </el-row>
+      </el-form-item>
+      <el-form-item :label="t('fields.imageName')" prop="name">
+        <el-input v-model="imageForm.name" style="width: 350px" />
+      </el-form-item>
+      <el-form-item :label="t('fields.category')" prop="category">
+        <span style="width: 350px">
+          {{
+            imageForm.category === 'GAME'
+              ? t('fields.game')
+              : t('fields.promo')
+          }}
+        </span>
+      </el-form-item>
+      <el-form-item :label="t('fields.promoType')" prop="promoType">
+        <span style="width: 350px">
+          {{
+            imageForm.promoType === 'DESKTOP_IMAGE'
+              ? t('fields.desktopImage')
+              : t('fields.mobileImage')
+          }}
+        </span>
+      </el-form-item>
+      <el-form-item :label="t('fields.remark')" prop="remark">
+        <el-input
+          v-model="imageForm.remark"
+          :rows="2"
+          type="textarea"
+          :placeholder="t('fields.pleaseInput')"
+          style="width: 350px"
+        />
+      </el-form-item>
+      <div class="dialog-footer">
+        <el-button @click="uiControl.imageDialogVisible = false">
+          {{ t('fields.cancel') }}
+        </el-button>
+        <el-button type="primary" @click="submitImageUpload">
+          {{ t('fields.confirm') }}
+        </el-button>
+      </div>
+    </el-form>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -622,11 +728,12 @@ import { getPlatformsBySite } from '@/api/platform'
 import { getActivePromoPageList } from '@/api/promoPages'
 import { required } from '@/utils/validate'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { getSiteImage } from '@/api/site-image'
+import { createSiteImage, getSiteImage } from '@/api/site-image'
 import { useSessionStorage } from '@vueuse/core'
 import { getVipList } from '../../../../api/vip'
 import { isVnm } from '@/utils/site'
 import { formatInputTimeZone } from '@/utils/format-timeZone'
+import { uploadImage } from '../../../../api/image'
 
 let timeZone = null
 
@@ -635,6 +742,8 @@ const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const formRef = ref(null)
+const imageFormRef = ref(null)
+const inputImage = ref(null)
 const promoDir =
   useSessionStorage('IMAGE_CDN', process.env.VUE_APP_IMAGE).value + '/promo/'
 const gameDir =
@@ -679,6 +788,8 @@ const uiControl = reactive({
   showSiteType: false,
   showDialogSiteType: false,
   imageSelectionVisible: false,
+  imageDialogVisible: false,
+  imageDialogTitle: '',
 })
 
 const siteType = reactive({
@@ -737,6 +848,31 @@ const form = reactive({
   siteType: null,
   showTime: null,
   specificMember: null,
+})
+
+const imageForm = reactive({
+  id: null,
+  name: null,
+  path: null,
+  displayPath: null,
+  category: null,
+  siteId: null,
+  remark: null,
+  imageDimension: null,
+  promoType: null,
+  platform: null,
+})
+
+const uploadedImage = reactive({
+  url: null,
+})
+
+const imageFormRules = reactive({
+  path: [required(t('message.validateImageRequired'))],
+  name: [required(t('message.validateImageNameRequired'))],
+  category: [required(t('message.validateCategoryRequired'))],
+  siteId: [required(t('message.validateSiteRequired'))],
+  promoType: [required(t('messsage.validatePromoTypeRequired'))],
 })
 
 const checkboxes = reactive({
@@ -970,6 +1106,7 @@ async function loadSiteImage(type) {
 }
 
 function submitImage() {
+    console.log(form.type)
   if(uiControl.imageSelectionType == "DESKTOP_IMAGE"){
     form.icon = selectedImage.path
   } else {
@@ -999,6 +1136,99 @@ function resetQuery() {
   request.title = null
 }
 
+function showImageDialog(type) {
+  if (imageFormRef.value) {
+    imageFormRef.value.resetFields()
+    uploadedImage.url = null
+    imageForm.id = null
+  }
+  imageForm.category = form.type
+  console.log(form.type)
+
+  uiControl.imageSelectionType = type
+
+  imageForm.platform = form.platform
+  imageForm.promoType = type
+  imageForm.siteId = imageRequest.siteId
+  uiControl.imageDialogTitle = t('fields.addImage')
+  uiControl.imageDialogVisible = true
+}
+
+function submitImageUpload() {
+  imageFormRef.value.validate(async valid => {
+    if (valid) {
+      await createSiteImage(imageForm)
+      uiControl.imageDialogVisible = false
+      ElMessage({ message: t('message.addSuccess'), type: 'success' })
+      var pathurl = ""
+
+      if(form.type == 'PROMO'){
+        pathurl = `${imageForm.siteId}/${imageForm.path}`
+      } else {
+        pathurl = `${imageForm.siteId}/${form.platform}/${imageForm.path}`
+      }
+
+      selectImage({
+        id: imageForm.id,
+        name: imageForm.name,
+        path: pathurl,
+        remark: imageForm.remark,
+        siteName: '',
+      })
+      submitImage()
+    }
+  })
+}
+
+async function attachImage(event) {
+  const data = await attachPhoto(event)
+  if (data.code === 0) {
+    imageForm.name = generateRandomString(10)
+    imageForm.path = data.data
+    inputImage.value.value = ''
+  } else {
+    ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
+  }
+}
+
+async function attachPhoto(event) {
+  const files = event.target.files[0]
+
+  // record file dimension
+  var fr = new FileReader()
+  fr.onload = function() {
+    var img = new Image()
+    img.onload = function() {
+      imageForm.imageDimension = img.width + ' * ' + img.height
+    }
+    img.src = fr.result
+  }
+  fr.readAsDataURL(files)
+
+  const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
+  const dir = 'temp'
+  if (!allowFileType.find(ftype => ftype.includes(files.type))) {
+    ElMessage({ message: t('message.invalidFileType'), type: 'error' })
+  } else {
+    var formData = new FormData()
+    formData.append('files', files)
+    formData.append('dir', dir)
+    formData.append('overwrite', false)
+    uploadedImage.url = URL.createObjectURL(files)
+    return await uploadImage(formData)
+  }
+}
+
+function generateRandomString(charSize) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < charSize; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters[randomIndex];
+  }
+  return result;
+}
+
 onMounted(async () => {
   await loadSites()
   uiControl.isLoaded = true
@@ -1007,6 +1237,7 @@ onMounted(async () => {
   } else {
     site.value = sites.list[0]
   }
+  imageRequest.siteId = store.state.user.siteId
   request.siteId = site.value.id
   timeZone = sites.list.find(e => e.id === request.siteId).timeZone
   form.siteId = request.siteId

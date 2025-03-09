@@ -506,10 +506,13 @@ const isNewUser = ref(false);
 const { t } = useI18n();
 const $q = useQuasar();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
-const { userKYCDialog, guestKYCDialog, closeGuestKYCDialog, closeUserKYCDialog } = useCheckKYC([
-  "mounted",
-  "activated"
-]);
+
+const kycUserFormRef = ref(null);
+
+const { userKYCDialog, guestKYCDialog, closeGuestKYCDialog, closeUserKYCDialog } = useCheckKYC(
+  ["mounted", "activated"],
+  kycUserFormRef
+);
 
 const amountRef = ref();
 const withdrawPwdRef = ref();

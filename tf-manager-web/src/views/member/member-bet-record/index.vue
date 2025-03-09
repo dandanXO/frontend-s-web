@@ -368,9 +368,11 @@ function convertStartDate(date) {
 
 function disabledDate(time) {
   if (selectedDate) {
-    return time.getTime() < moment(selectedDate).startOf('month').format('x') || (time.getTime() > new Date().getTime() || time.getTime() > moment(selectedDate).endOf('month').format('x'));
+    return time.getTime() < moment(selectedDate).startOf('month').format('x') ||
+      (time.getTime() > new Date().getTime() || time.getTime() > moment(selectedDate).add(2, 'months').endOf('month').format('x'));
   }
-  return time.getTime() < moment(new Date()).subtract(2, 'months').startOf('month').format('x') || time.getTime() > new Date().getTime();
+  return time.getTime() < moment(new Date()).subtract(2, 'months').startOf('month').format('x') ||
+    time.getTime() > new Date().getTime();
 }
 
 function calendarBlur() {

@@ -1,6 +1,6 @@
 import { storeToRefs } from "pinia";
 import { userStore } from "src/stores";
-import { onActivated, onMounted, ref } from "vue";
+import { nextTick, onActivated, onMounted, ref } from "vue";
 
 /**
  * Use the `useCheckKYC` function to check KYC (Know Your Customer) status
@@ -17,9 +17,9 @@ import { onActivated, onMounted, ref } from "vue";
  * // Call the function with only "mounted" timing
  * useCheckKYC(["mounted"]);
  */
-export const useCheckKYC = (checkTiming) => {
+export const useCheckKYC = (checkTiming = [], kycUserFormRef) => {
   const store = userStore();
-  const { realName, guest } = storeToRefs(store);
+  const { realName, guest, phone } = storeToRefs(store);
   const { getMemberInfo } = store;
 
   const userKYCDialog = ref(false);
@@ -45,13 +45,17 @@ export const useCheckKYC = (checkTiming) => {
     });
   };
 
-  const loadInfo = () => {
-    if (guest.value && realName.value === null) {
-      openGuestKYCDialog();
-    }
-
-    if (!guest.value && realName.value === null) {
-      openUserKYCDialog();
+  const loadInfo = async () => {
+    if (realName.value === null || phone.value === null) {
+      if (guest.value) {
+        openGuestKYCDialog();
+      } else {
+        openUserKYCDialog();
+        await nextTick();
+        if (kycUserFormRef.value) {
+          kycUserFormRef.value.loadCurrentInfo();
+        }
+      }
     }
   };
 
@@ -61,6 +65,9 @@ export const useCheckKYC = (checkTiming) => {
   return {
     userKYCDialog,
     guestKYCDialog,
+    loadInfo,
+    openUserKYCDialog,
+    openGuestKYCDialog,
     closeGuestKYCDialog,
     closeUserKYCDialog
   };

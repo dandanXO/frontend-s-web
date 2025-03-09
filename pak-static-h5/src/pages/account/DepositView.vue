@@ -350,7 +350,7 @@ import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
-import { convertToCommaAmount, trackNewUserFtd } from "src/boot/utils";
+import { convertToCommaAmount, generateEventID, trackNewUserFtd } from "src/boot/utils";
 // import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
 // import PrimaryButton from "src/components/auth/PrimaryButton.vue";
@@ -390,8 +390,8 @@ const currentType = ref('deposit');
 const currentDepStep = ref(2);
 const handleStepUpdate = (newStep) => {
   currentDepStep.value = newStep;
-  
-    
+
+
   nextTick(() => {
     setTimeout(() => {
       console.log(currentDepStep.value);
@@ -419,7 +419,9 @@ const router = useRouter();
 const route = useRoute();
 const emits = defineEmits(["closeModal"]);
 
-const { userKYCDialog, closeUserKYCDialog } = useCheckKYC(["mounted", "activated"]);
+const kycUserFormRef = ref(null);
+
+const { userKYCDialog, closeUserKYCDialog } = useCheckKYC(["mounted", "activated"], kycUserFormRef);
 
 const checkCloseUserKYCDialog = () => {
   closeUserKYCDialog();
@@ -427,7 +429,7 @@ const checkCloseUserKYCDialog = () => {
   const completedGuide = localStorage.getItem("completeddepositguide");
   if (route.query.isNewPlayer && completedGuide !== "true") {
     isAdditionalDepositSteps.value = true;
-    
+
   }
 };
 const isBank2 = computed(() => {
@@ -826,10 +828,16 @@ async function pDepo(deposit) {
 
         //FB Tracking.
         if (store.isOldFBPixel || (store.isFbPixel && store.memberType === "TEST")) {
-          fbq("track", "Purchase", {
-            currency: "PKR",
-            value: obj.localAmount
-          });
+          const randUuid = generateEventID();
+          fbq(
+            "track",
+            "Purchase",
+            {
+              currency: "PKR",
+              value: obj.localAmount
+            },
+            { eventID: randUuid }
+          );
         }
 
         if (store.isTkPixel) {
@@ -1063,7 +1071,7 @@ onMounted(() => {
   if (route.query.isNewPlayer && completedGuide !== "true" && userKYCDialog.value === false) {
     isAdditionalDepositSteps.value = true;
   }
-  
+
 });
 </script>
 

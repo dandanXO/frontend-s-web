@@ -24,6 +24,9 @@
             <img class="white-svg" src="@/assets/images/auth/phone.svg" />
             <span class="prepend-number">{{ $t("form.prependNumber") }}</span>
           </template>
+          <template v-if="regForm.referrer" v-slot:append>
+            <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">{{ otpCountdown > 0 ? `รับรหัส (${otpCountdown})` : 'รับรหัส' }}</q-btn>
+          </template>
         </q-input>
         <q-input
           ref="pwdRef"
@@ -51,6 +54,28 @@
 
           <template v-slot:prepend>
             <img class="white-svg" src="@/assets/images/auth/pass.svg" />
+          </template>
+        </q-input>
+
+        <q-input
+          v-if="regForm.referrer"
+          pattern="\d*"
+          maxlength="6"
+          ref="verificationRef"
+          hide-bottom-space
+          v-model="regForm.smsCode"
+          :rules="[
+            (val) => (val && val.length > 0) || 'กรุณาใส่หมายเลข OTP',
+            (val) => (val && val.length === 6) || 'หมายเลข OTP ต้องมี 6 หลัก'
+          ]"
+          color="white"
+          class="landing-input"
+          outlined
+          placeholder="Enter your OTP number"
+          label-color="brand"
+        >
+          <template v-slot:prepend>
+            <img class="white-svg" src="../assets/images/auth/otp.svg" />
           </template>
         </q-input>
       </div>
@@ -81,12 +106,41 @@
     <div class="register-form-logo-img">
       <img src="@/assets/55-ace-logo.png" />
     </div>
+
+    <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
+      <q-card class="captcha-form-wrapper" width="100%">
+        <q-card-section class="q-pa-md bg-brightbtn text-white">
+          <q-toolbar>
+            <q-toolbar-title>รหัสยืนยัน</q-toolbar-title>
+            <q-btn flat v-close-popup round dense icon="close" />
+          </q-toolbar>
+        </q-card-section>
+        <div class="q-px-lg q-pt-sm q-pb-lg">
+          <q-card-section class="q-mb-md q-pa-md">
+            <q-input v-model="innerCaptchaRef" placeholder="รหัส Captcha">
+              <template v-slot:append>
+                <img
+                  v-show="showImageCode"
+                  :src="phoneVerificationImg"
+                  @load="imgOnLoad"
+                  @error="imgOnError"
+                  title="Refresh Verification Code"
+                  style="margin-top: 6px; cursor: pointer"
+                  @click="getInnerCode"
+                />
+              </template>
+            </q-input>
+          </q-card-section>
+          <q-btn class="get-code-btn" @click="onCaptchaSubmit" label="ส่ง OTP" />
+        </div>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script>
 import { Platform, useQuasar } from "quasar";
-import { defineComponent, onActivated, reactive, ref, watch } from "vue";
+import { defineComponent, onActivated, reactive, ref, watch, onUnmounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import { api } from "@/boot/axios";
@@ -111,6 +165,9 @@ export default defineComponent({
     const showCaptchaDialog = ref(false);
     const phoneVerificationImg = ref("");
     const isAgreeReg = ref(true);
+    const showImageCode = ref(false);
+    const otpCountdown = ref();
+    const otpCountdownInterval = ref();
 
     const affCode = ref("");
 
@@ -246,7 +303,7 @@ export default defineComponent({
       // telRef.value.validate();
       // phoneVerificationRef.value.validate();
       // emailRef.value.validate();
-      // verificationRef.value.validate();
+      verificationRef.value?.validate();
 
       $q.loading.show({
         message: t("notify.registeringInProgress")
@@ -259,7 +316,7 @@ export default defineComponent({
         // telRef.value.hasError ||
         // phoneVerificationRef.value.hasError ||
         // emailRef.value.hasError ||
-        // verificationRef.value.hasError ||
+        verificationRef.value?.hasError ||
         isAgreeReg.value === false
       ) {
         $q.loading.hide();
@@ -383,19 +440,19 @@ export default defineComponent({
     );
 
     const openPhoneVeriDialog = () => {
-      telRef.value.validate();
-      if (!telRef.value.hasError) {
+      loginNameRef.value.validate();
+      if (!loginNameRef.value.hasError) {
         showCaptchaDialog.value = true;
         getInnerCode();
       }
     };
 
     const onCaptchaSubmit = () => {
-      if (!regForm.telephone) {
+      if (!regForm.loginName) {
         $q.notify({
           color: "negative",
           position: "top",
-          message: "Phone number cannot be empty",
+          message: "หมายเลขโทรศัพท์ต้องไม่เว้นว่าง",
           icon: "report_problem"
         });
         getInnerCode();
@@ -405,13 +462,13 @@ export default defineComponent({
         .post(
           `/otp/sendSms`,
           qs.stringify({
-            telephone: regForm.telephone,
+            telephone: regForm.loginName,
             captchaCode: innerCaptchaRef.value,
             codeId: innerCodeId.value
           })
         )
         .then((res) => {
-          let message = res.message || "OTP sent to phone successfully",
+          let message = res.message || "ส่ง OTP ไปยังโทรศัพท์เรียบร้อยแล้ว",
             color = "positive";
 
           if (res.code === 0) {
@@ -419,18 +476,37 @@ export default defineComponent({
             regForm.smsCode = "";
             regForm.smsCodeId = res.data.codeId;
             console.log(res.data.codeId);
+
+            // start otp countdown
+            otpCountdown.value = res.data.second || 60;
+            otpCountdownInterval.value = setInterval(() => {
+              if(otpCountdown.value > 0) {
+                otpCountdown.value = otpCountdown.value - 1;
+              }
+            },1000);
           } else {
             color = "negative";
+            if(res.code === 1402) {
+              message = `Please try again after ${res.data.second} seconds`;
+
+               // start otp countdown
+              otpCountdown.value = res.data.second || 60;
+              otpCountdownInterval.value = setInterval(() => {
+                if(otpCountdown.value > 0) {
+                  otpCountdown.value = otpCountdown.value - 1;
+                }
+              },1000);
+            }
             getInnerCode();
           }
 
           if (message) {
-            $q.notify({ message, color });
+            $q.notify({ message, color, position: 'top' });
           }
 
           console.log("onCaptchaSubmit", res);
         })
-        .catch(() => {
+        .catch((a) => {
           getInnerCode();
         });
     };
@@ -447,6 +523,19 @@ export default defineComponent({
 
       return isValid ? true : "Phone Number must be 10 digits or more";
     };
+
+    const imgOnLoad = () => (showImageCode.value = true);
+    const imgOnError = () => (showImageCode.value = false);
+
+    watch(() => otpCountdown.value, () => {
+      if(otpCountdown.value === 0) {
+        clearInterval(otpCountdownInterval.value);
+      }
+    })
+
+    onUnmounted(() => {
+      clearInterval(otpCountdownInterval.value);
+    })
 
     return {
       header: "Register Account",
@@ -477,7 +566,12 @@ export default defineComponent({
       isAlphanumeric,
       isValidName,
       isValidPhone,
-      affRegEvent
+      affRegEvent,
+      showImageCode,
+      imgOnLoad,
+      imgOnError,
+      otpCountdown,
+      otpCountdownInterval
     };
   }
 });
@@ -605,9 +699,10 @@ function charType(num) {
   :deep(.q-field__control) {
     padding-left: 20px;
     padding-right: 20px;
-    background-color: #1e1f24;
+  }
+  :deep(.q-field__control):before {
     border-color: #1e1f24;
-
+    background-color: #1e1f24;
     border-width: 2px;
   }
 
@@ -650,5 +745,19 @@ function charType(num) {
   font-size: 14px;
   color: #ffffff;
   margin-left: 8px;
+  z-index: 2;
+}
+
+.get-code-btn {
+  background-color: #3b156e;
+  color: #fff;
+}
+
+.captcha-form-wrapper {
+  background: #000;
+
+  .q-toolbar {
+    background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
+  }
 }
 </style>

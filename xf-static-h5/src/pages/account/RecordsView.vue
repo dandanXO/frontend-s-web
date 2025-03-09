@@ -1,59 +1,58 @@
 <template>
   <div>
     <div class="transit-buttons">
-      <router-link class="btn" v-for="(trans, i) in transitList" :key="i" :to="`records/${trans.code}`">
-        <img :src="require(`../../assets/images/account/${trans.icon}_record.png`)">
+      <router-link class="btn bg-darkbox" v-for="(trans, i) in transitList" :key="i" :to="`records/${trans.code}`">
+        <!-- <img :src="require(`../../assets/images/account/${trans.icon}_record.png`)"> -->
         {{ trans.name }}
         <div class="right">
-          <RiArrowRightSLine/>
+          <RiArrowRightSLine />
         </div>
       </router-link>
-
     </div>
   </div>
 </template>
 <script setup>
-import {ref} from "vue"
-import {RiArrowRightSLine} from "vue-remix-icons"
+import { ref } from "vue";
+import { RiArrowRightSLine } from "vue-remix-icons";
 
 components: {
-  RiArrowRightSLine
+  RiArrowRightSLine;
 }
 const transitList = ref([
   {
-    code: 'deposit',
-    icon: 'deposit',
-    name: '存款记录'
+    code: "deposit",
+    icon: "deposit",
+    name: "存款记录"
   },
   {
-    code: 'withdraw',
-    icon: 'withdraw',
-    name: '提款记录'
+    code: "withdraw",
+    icon: "withdraw",
+    name: "提款记录"
   },
   {
-    code: 'transfer',
-    icon: 'transfer',
-    name: '转账记录'
+    code: "transfer",
+    icon: "transfer",
+    name: "转账记录"
   },
   {
-    code: 'moneyChange',
-    icon: 'transfer',
-    name: '账变记录'
+    code: "moneyChange",
+    icon: "transfer",
+    name: "账变记录"
   },
   {
-    code: 'promo',
-    icon: 'deposit',
-    name: '优惠记录'
+    code: "promo",
+    icon: "deposit",
+    name: "优惠记录"
   },
   {
-    code: 'bet',
-    icon: 'change',
-    name: '投注记录'
+    code: "bet",
+    icon: "change",
+    name: "投注记录"
   },
   {
-    code: 'financeFeedback',
-    icon: 'help',
-    name: '催单记录'
+    code: "financeFeedback",
+    icon: "help",
+    name: "催单记录"
   }
   // {
   //   code: 'recommend',
@@ -65,7 +64,6 @@ const transitList = ref([
   //   icon: 'help',
   //   name: '投注记录'
   // },
-
 ]);
 </script>
 <style scoped lang="scss">
@@ -74,13 +72,11 @@ const transitList = ref([
   display: flex;
   flex-direction: column;
   gap: 10px;
-  color: #bacef1;
 
   .btn {
-    color: #bacef1;
+    color: #ffffff;
     text-decoration: none;
     position: relative;
-    background: #212534;
     padding: 15px 20px;
     display: flex;
     justify-content: flex-start;
@@ -102,4 +98,3 @@ const transitList = ref([
   }
 }
 </style>
-

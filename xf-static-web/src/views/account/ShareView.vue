@@ -212,7 +212,7 @@ export default defineComponent({
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       color: #000000;
       // padding: 10px;
       // background: #ebebeb;
@@ -228,12 +228,26 @@ export default defineComponent({
         width: 100%;
         // width: calc(100% - 30px);
         gap: 20px;
+        max-width: 500px;
+        position: relative;
         input {
-          // width: 100%;
-          width: 400px;
+          width: 100%;
+          // width: 400px;
           border: none;
           border: 1px solid #c7c7c7;
           padding: 10px;
+          font-family: PingFang SC;
+          font-size: 16px;
+          font-weight: 400;
+          color: #b8b8b8;
+          background: #262627;
+          border: 1px solid #3c3c3d;
+          border-radius: 8px;
+          padding: 10px 15px;
+        }
+        .common-btn {
+          position: absolute;
+          right: 10px;
         }
       }
     }
@@ -289,11 +303,17 @@ export default defineComponent({
 .share-title-container {
   display: flex;
   gap: 20px;
+  flex-direction: column;
   // align-items: center;
 
   .share-title {
     font-size: 18px;
     min-width: 110px;
+    font-family: PingFang SC;
+    font-weight: 600;
+    line-height: 24px;
+    color: #ffffff;
+
   }
 }
 
@@ -314,6 +334,7 @@ export default defineComponent({
 .divider-style {
   margin-top: 30px;
   margin-bottom: 30px;
+  border: 1px solid #ffffff1a;
 }
 
 .share-info-div {
@@ -322,13 +343,14 @@ export default defineComponent({
   justify-content: flex-start;
   margin-top: 22px;
   gap: 15px;
-
+  
   .el-icon {
     border-radius: 50%;
     width: 70px;
     min-height: 70px;
-    background: #466aeb;
-    color: #638bf0;
+    // background: #466aeb;
+    // color: #638bf0;
+    background: #0a5f89;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -337,7 +359,8 @@ export default defineComponent({
 
     svg {
       font-size: 40px;
-      color: #638bf0;
+      // color: #638bf0;
+      color: #b8b8b8;
     }
   }
 }
@@ -345,8 +368,9 @@ export default defineComponent({
 .share-info-box {
   width: 140px;
   height: 80px;
-  background-image: linear-gradient(-37deg, #597ceb 0, #83bcfe 100%), linear-gradient(#fff, #fff);
-  background-blend-mode: normal, normal;
+  // background-image: linear-gradient(-37deg, #597ceb 0, #83bcfe 100%), linear-gradient(#fff, #fff);
+  // background-blend-mode: normal, normal;
+  background: linear-gradient(180deg, #32CEED 0%, #1C7587 100%);
   border-radius: 10px;
   position: relative;
   display: flex;

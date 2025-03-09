@@ -209,8 +209,21 @@ window.addEventListener("beforeinstallprompt", (e) => {
   deferredPrompt = e;
 });
 
+function getDomainWithoutSubdomain() {
+  let hostname = window.location.hostname;
+  let parts = hostname.split(".");
+
+  // 处理 localhost 和 IP
+  if (parts.length <= 2 || /^\d+\.\d+\.\d+\.\d+$/.test(hostname) || hostname === "localhost") {
+    return hostname; // 直接返回 IP 或 localhost
+  }
+
+  return parts.slice(1).join("."); // 去掉第一个 subdomain
+}
+
 window.addEventListener("load", () => {
-  const hostname = window.location.hostname.replace("www.", "");
+  sessionStorage.setItem("IS_PWA", "1");
+  const hostname = getDomainWithoutSubdomain();
 
   const fbqId = fbqLists[hostname]?.id;
   if (fbqId) {

@@ -569,7 +569,8 @@ const copyText = (text, msgTitle) => {
   display: flex;
   flex-direction: row;
 }
-a {
+.contact-actions a,
+.button-group a {
   flex: 1;
 }
 .login-button,

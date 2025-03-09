@@ -13,26 +13,10 @@
             icon="close"
             style="width: 24px; height: 24px; min-height: 24px; min-width: 24px"
           />
-          <!--                  <q-btn-->
-          <!--                      v-if="!drawerVisible"-->
-          <!--                      flat-->
-          <!--                      @click="drawerVisible = !drawerVisible"-->
-          <!--                      round-->
-          <!--                      dense-->
-          <!--                      icon="menu_open"-->
-          <!--                  />-->
-          <!--                  <q-btn-->
-          <!--                      v-if="drawerVisible"-->
-          <!--                      flat-->
-          <!--                      @click="drawerVisible = !drawerVisible"-->
-          <!--                      round-->
-          <!--                      dense-->
-          <!--                      icon="read_more"-->
-          <!--                  />-->
         </div>
 
         <div v-if="!src" class="loading-div">
-          <q-spinner-hourglass color="blue-6" size="8em" />
+          <q-spinner-ios color="white" size="8em" />
         </div>
 
         <template v-if="transferInfo.platform === 'PG'">
@@ -61,31 +45,20 @@
         </template>
       </q-toolbar>
     </q-dialog>
-    <q-dialog
-      v-model="visibleComingSoon"
-      class="gameDialog"
-      style="width: 100%; margin: 0 auto"
-    >
+    <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">
       <!--      <img src="../../assets/logo-coming.png" style="width: 80%;"/>-->
     </q-dialog>
   </q-scroll-area>
 </template>
 <script setup id="GameModal">
-import { userStore } from "stores/index";
-// import { launchSessionGame } from "api/platform/platform";
-// import { isMobile } from "utils/utils";
-import { useRoute, useRouter } from "vue-router";
-import { ref, defineExpose, reactive, shallowRef } from "vue";
-import DepositComponent from "components/depositComponent.vue";
-
-import { Browser } from "@capacitor/browser";
-
-import { storeToRefs } from "pinia";
 import { api } from "boot/axios";
-import { useQuasar, Platform, AppFullscreen, openURL } from "quasar";
-import liff from "@line/liff";
 import { isAndroid, isHuaweiPhone } from "boot/utils";
-// import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { storeToRefs } from "pinia";
+import { AppFullscreen, Platform, useQuasar } from "quasar";
+import { userStore } from "stores/index";
+import { defineExpose, reactive, ref, shallowRef } from "vue";
+import { useRoute, useRouter } from "vue-router";
+
 const $q = useQuasar();
 
 const store = userStore();
@@ -254,11 +227,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               $q.loading.hide();
 
               if (way == "ANDROID") {
-                var ref = cordova.InAppBrowser.open(
-                  response.data,
-                  "_blank",
-                  "location=no,zoom=no"
-                );
+                var ref = cordova.InAppBrowser.open(response.data, "_blank", "location=no,zoom=no");
               } else {
                 window.location.href = response.data;
               }
@@ -293,11 +262,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               src.value = srcData;
               visible.value = true;
             } else if (way == "ANDROID") {
-              var ref = cordova.InAppBrowser.open(
-                srcData,
-                "_blank",
-                "location=no,zoom=no"
-              );
+              var ref = cordova.InAppBrowser.open(srcData, "_blank", "location=no,zoom=no");
             } else {
               window.location.href = srcData;
             }
@@ -454,15 +419,11 @@ defineExpose({
       top: -95%;
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
         radial-gradient(circle, transparent 20%, #db7e42 20%, transparent 30%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
         radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%);
-      background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%,
-        15% 15%, 10% 10%, 18% 18%;
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
+      background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%;
     }
 
     &:after {
@@ -470,12 +431,9 @@ defineExpose({
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
         radial-gradient(circle, #db7e42 20%, transparent 20%),
         radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%);
-      background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%,
-        20% 20%;
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
+      background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
     }
 
     &.animate {
@@ -498,31 +456,25 @@ defineExpose({
 
     @keyframes topBubbles {
       0% {
-        background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%,
-          40% 90%, 55% 90%, 70% 90%;
+        background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%, 40% 90%, 55% 90%, 70% 90%;
       }
       50% {
-        background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%,
-          50% 50%, 65% 20%, 90% 30%;
+        background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%, 50% 50%, 65% 20%, 90% 30%;
       }
       100% {
-        background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%,
-          50% 40%, 65% 10%, 90% 20%;
+        background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%, 50% 40%, 65% 10%, 90% 20%;
         background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
       }
     }
     @keyframes bottomBubbles {
       0% {
-        background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%,
-          70% -10%, 70% 0%;
+        background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%, 70% -10%, 70% 0%;
       }
       50% {
-        background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%,
-          95% 60%, 105% 0%;
+        background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%, 105% 0%;
       }
       100% {
-        background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%,
-          95% 70%, 110% 10%;
+        background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%, 110% 10%;
         background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
       }
     }
