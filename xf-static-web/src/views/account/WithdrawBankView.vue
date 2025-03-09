@@ -1043,6 +1043,12 @@ body {
 }
 </style>
 <style scoped lang="scss">
+.account-title {
+  font-family: PingFang SC;
+font-size: 18px;
+font-weight: 600;
+color: #ffffff;
+}
 :deep(.ant-form-item.half .ant-form-item-control-input-content) {
   display: flex;
   align-items: center;

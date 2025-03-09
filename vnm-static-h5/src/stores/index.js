@@ -48,7 +48,7 @@ export const userStore = defineStore("userStore", {
       isAffiliateA: false,
       isOperaPixelB: false,
       withdrawType: "",
-      theme: ''
+      theme: ""
     };
   },
   actions: {
@@ -195,7 +195,7 @@ export const userStore = defineStore("userStore", {
           this.id = response.data.id;
           this.nickName = response.data.loginName;
           this.realName = response.data.realName;
-          this.birthday = response.data.birthday;
+          this.birthday = response.data.dob;
           this.email = response.data.email;
           this.phone = response.data.telephone;
           this.memberType = response.data.memberType;

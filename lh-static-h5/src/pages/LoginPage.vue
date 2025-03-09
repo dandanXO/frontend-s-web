@@ -546,7 +546,7 @@ export default defineComponent({
     };
 
     const bannerImage = ref("");
-    const bannerImageDark = ref("")
+    const bannerImageDark = ref("");
 
     const getBannerImage = () => {
       api
@@ -763,6 +763,8 @@ export default defineComponent({
 
       .logo-img {
         width: 100%;
+        height: auto;
+        max-height: 60px;
       }
     }
 

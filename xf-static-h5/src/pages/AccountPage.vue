@@ -1,357 +1,462 @@
 <template>
   <q-page>
-    <div class="profile">
+    <div class="profile q-pa-md">
       <div class="avatar">
         <img src="../assets/images/account/profile-img.png" />
       </div>
       <div class="pro-details">
-        <span class="nickname-span">{{ store.nickName }}</span>
-        <q-badge
-          class="vip-badge-item"
-          color="orange"
-          text-color="black"
-          :label="store.vip"
-        />
+        <div class="nickname-span">{{ store.nickName }}</div>
 
-        <!--        <span v-if="vipLevel === 1"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_1.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 2"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_2.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 3"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_3.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 4"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_4.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 5"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_5.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 6"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_6.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 7"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_7.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 8"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_8.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 9"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_9.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 10"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_10.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 11"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_11.png"-->
-        <!--        /></span>-->
-        <!--        <span v-else-if="vipLevel === 12"-->
-        <!--        ><img id="personal_vip_img" src="../assets/vip/vip_text_12.png"-->
-        <!--        /></span>-->
-        <br />
-        专属网址: <a style="text-decoration: none; color: #fff; font-size: 15px;"
-                     :href="selfTgurl" target="_blank">{{ store.evip }}</a>
-        <br />
-        <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
+        <div class="details-span">
+          专属网址:
+          <a style="text-decoration: none" :href="selfTgurl" target="_blank">
+            {{ store.evip }}
+          </a>
+        </div>
+
+        <div class="details-span" v-if="appVersionNo">版本：{{ appVersionNo }}</div>
       </div>
+
+      <router-link v-if="!store.isApp() && isH5" to="/account/download" class="q-ml-auto q-mt-auto">
+        <div class="acct-top-menu">
+          <img src="../assets/images/account/menu_download.png" />
+        </div>
+      </router-link>
     </div>
-    <div class="vipcard">
-      <q-card-section class="top-section">
-        <!-- <div class="vip-badge">
-          <img
-            v-if="vip === 'VIP0'"
-            src="../assets/vip/badge/badge-0.png"
-          />
-          <img
-            v-if="vip === 'VIP1'"
-            src="../assets/vip/badge/badge-1.png"
-          />
-          <img
-            v-if="vip === 'VIP2'"
-            src="../assets/vip/badge/badge-2.png"
-          />
-          <img
-            v-if="vip === 'VIP3'"
-            src="../assets/vip/badge/badge-3.png"
-          />
-          <img
-            v-if="vip === 'VIP4'"
-            src="../assets/vip/badge/badge-4.png"
-          />
-          <img
-            v-if="vip === 'VIP5'"
-            src="../assets/vip/badge/badge-5.png"
-          />
-          <img
-            v-if="vip === 'VIP6'"
-            src="../assets/vip/badge/badge-6.png"
-          />
-          <img
-            v-if="vip === 'VIP7'"
-            src="../assets/vip/badge/badge-7.png"
-          />
-        </div> -->
-        <!-- <div class="name">{{ header }}</div> -->
-        <q-card-section class="acct-section">
+
+    <div class="q-px-md">
+      <div class="vipcard">
+        <div class="row items-center">
           <div class="label">中心钱包:</div>
-          <div class="amt">{{ mainWallet }}</div>
-        </q-card-section>
+          <q-btn unelevated :disable="isRefreshingMainWallet" @click="refreshMainWallet()" dense rounded>
+            <q-icon name="autorenew" size="24px" :class="{ rotating: isRefreshingMainWallet }" />
+          </q-btn>
+
+          <div class="acc-btns-container row q-gutter-x-sm q-ml-auto">
+            <q-btn color="brightbtn" @click="openDeposit" rounded>存款</q-btn>
+            <q-btn color="brightbtn" to="finance/withdraw" rounded>提款</q-btn>
+            <q-btn color="brightbtn" to="account/transfer" rounded>转账</q-btn>
+          </div>
+        </div>
+
+        <div class="amt q-mb-sm">{{ isRefreshingMainWallet ? "刷新中..." : store.currency.value + mainWallet }}</div>
+
         <q-separator />
-        <q-card-section class="bot-section">
-          <router-link to="/" @click="openDeposit" class="button">
-            <img src="../assets/images/index/deposit_icon.png" />
-            存款
-          </router-link>
-          <router-link to="finance/withdraw" class="button">
-            <img src="../assets/images/index/withdrawal_icon.png" />
-            提款
-          </router-link>
-          <router-link to="account/transfer" class="button">
-            <img src="../assets/images/index/transfer_icon.png" />
-            转账
-          </router-link>
-          <router-link to="account/vip" class="button">
-            <img src="../assets/images/account/vip_icon.png" />
-            VIP
-          </router-link>
-        </q-card-section>
-      </q-card-section>
-    </div>
-    <q-item-section class="acct-nav">
-      <div class="acct-title">
-        <div class="acct-title-1">我的功能</div>
-        <div id="vipDomain" class="vipurl">专属网址：<a style="text-decoration: none; color: #fff; font-size: 16px;"
-                                                       :href="selfTgurl" target="_blank">{{ store.evip }}</a></div>
-      </div>
-      <div class="acct-menu">
-        <router-link to="/account/records">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_record.png" />
-            <div class="acct-nav-label">交易记录</div>
-          </div>
-        </router-link>
-        <router-link to="/account/invite">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_share.png" />
-            <div class="acct-nav-label">推广赚钱</div>
-          </div>
-        </router-link>
-        <router-link to="/promo">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_promo.png" />
-            <div class="acct-nav-label">优惠领取</div>
-          </div>
-        </router-link>
-        <router-link to="/account/personal">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_personal.png" />
-            <div class="acct-nav-label">个人信息</div>
-          </div>
-        </router-link>
-        <router-link to="/account/changePwd">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_changePwd.png" />
-            <div class="acct-nav-label">密码</div>
-          </div>
-        </router-link>
-        <router-link to="/account/withdraw">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_bank.png" />
-            <div class="acct-nav-label">银行信息</div>
-          </div>
-        </router-link>
-        <router-link v-if="!store.isApp() && isH5" to="/account/download">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_download.png" />
-            <div class="acct-nav-label">下载中心</div>
-          </div>
-        </router-link>
-        <router-link to="/account/announcement">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_announcement.png" />
-            <div class="acct-nav-label">系统公告</div>
-          </div>
-        </router-link>
-        <router-link to="/account/mail">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_mailbox.png" />
-            <div class="acct-nav-label">反馈奖励</div>
-            <!--          ({{ store.unreadInboxMail }})-->
-          </div>
-        </router-link>
-        <router-link to="/account/message">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_message.png" />
-            <div class="acct-nav-label">消息中心</div>
-            <div class="unread" v-if="store.unreadInboxMail > 0">
-              {{ store.unreadInboxMail > 99 ? "99+" : store.unreadInboxMail.toString() }}
+
+        <div class="card_btm">
+          <div class="progress-container">
+            <div class="progress-vip-stat">
+              <img :src="getVipImage(vipLevel)" />
+              VIP {{ vipLevel }}
             </div>
-            <!--          ({{ store.unreadInboxMail }})-->
+            <div class="progress-bar-container">
+              <div class="progress-bar" :style="{ width: progessPercentage(vipItems[vipLevel].upgrade) + '%' }"></div>
+            </div>
+            <div class="progress-vip-stat">
+              VIP {{ vipLevel + 1 }}
+              <img :src="getVipImage(vipLevel + 1)" />
+            </div>
           </div>
+
+          <div class="amt-info">
+            <span>
+              晋级存款（元）{{ convertToCommaAmount(currentDepositAmount) }} /
+              {{ convertToCommaAmount(vipItems[vipLevel].upgrade) }}
+            </span>
+          </div>
+        </div>
+
+        <router-link to="account/vip" class="vip-ribbon-btn">
+          <img src="../assets/images/account/vip-ribbon.png" />
         </router-link>
       </div>
-    </q-item-section>
-    <a @click="logout">
-      <div class="acct-logout">
+    </div>
+
+    <div class="q-pa-md">
+      <q-item-section class="acct-nav">
+        <div class="acct-title">
+          <div class="acct-title-1">我的功能</div>
+          <div id="vipDomain" class="vipurl">
+            专属网址：
+            <a :href="selfTgurl" target="_blank">
+              {{ store.evip }}
+            </a>
+          </div>
+        </div>
+        <div class="acct-menu">
+          <router-link to="/account/records">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/menu_record.png" />
+              <div class="acct-nav-label">交易记录</div>
+            </div>
+          </router-link>
+          <router-link to="/account/invite">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/menu_share.png" />
+              <div class="acct-nav-label">推广赚钱</div>
+            </div>
+          </router-link>
+          <!-- <router-link v-if="!store.isApp() && isH5" to="/account/download">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/menu_download.png" />
+              <div class="acct-nav-label">下载中心</div>
+            </div>
+          </router-link> -->
+          <router-link to="/promo">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/menu_promo.png" />
+              <div class="acct-nav-label">优惠领取</div>
+            </div>
+          </router-link>
+          <router-link to="/account/personal">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/menu_personal.png" />
+              <div class="acct-nav-label">个人信息</div>
+            </div>
+          </router-link>
+          <router-link to="/account/changePwd">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/menu_changePwd.png" />
+              <div class="acct-nav-label">密码</div>
+            </div>
+          </router-link>
+          <router-link to="/account/withdraw">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/menu_bank.png" />
+              <div class="acct-nav-label">银行信息</div>
+            </div>
+          </router-link>
+          <router-link to="/account/announcement">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/menu_announcement.png" />
+              <div class="acct-nav-label">系统公告</div>
+            </div>
+          </router-link>
+          <router-link to="/account/mail">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/menu_mailbox.png" />
+              <div class="acct-nav-label">反馈奖励</div>
+              <!--          ({{ store.unreadInboxMail }})-->
+            </div>
+          </router-link>
+          <router-link to="/account/message">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/menu_message.png" />
+              <div class="acct-nav-label">消息中心</div>
+              <div class="unread" v-if="store.unreadInboxMail > 0">
+                {{ store.unreadInboxMail > 99 ? "99+" : store.unreadInboxMail.toString() }}
+              </div>
+              <!--          ({{ store.unreadInboxMail }})-->
+            </div>
+          </router-link>
+        </div>
+      </q-item-section>
+    </div>
+
+    <div>
+      <div class="acct-logout q-mx-md" @click="isLogout = true">
         <div class="acct-nav-label">退出登录</div>
+        <div class="acct-logout-img">
+          <img src="../assets/images/account/menu_logout.png" />
+        </div>
       </div>
-    </a>
+    </div>
   </q-page>
+
+  <q-dialog width="100%" v-model="isLogout" no-backdrop-dismiss no-esc-dismiss>
+    <div class="dialog-card q-ma-md q-pa-md">
+      <div class="dialog-title">温馨提示</div>
+      <div class="dialog-desc">确认退出登录吗？</div>
+
+      <div class="dialog-actions">
+        <div class="action-btn">
+          <q-btn @click="isLogout = false" color="blueborderbtn" label="取消" rounded size="md" style="width: 100%" />
+        </div>
+        <div class="action-btn">
+          <q-btn @click="logout()" color="brightbtn" label="确定" rounded size="md" style="width: 100%" />
+        </div>
+      </div>
+    </div>
+  </q-dialog>
 </template>
 
-<script>
-import {
-  defineComponent,
-  ref,
-  computed,
-  onMounted,
-  onActivated,
-  onBeforeUnmount
-} from "vue";
-import { userStore } from "stores/index";
-import { useRouter } from "vue-router";
+<script setup>
 import { App } from "@capacitor/app";
+import { eventapi } from "boot/axios";
 import { Platform } from "quasar";
+import { convertToCommaAmount } from "src/boot/utils.js";
+import { userStore } from "stores/index";
+import { computed, onActivated, onBeforeUnmount, onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 
-export default defineComponent({
-  name: "AccountPage",
-  setup() {
-    const router = useRouter();
-    const store = userStore();
-    const logout = () => {
-      store.memberLogout().then(() => {
-        router.push("/");
-      });
-    };
+const router = useRouter();
+const store = userStore();
 
-    const appVersionNo = ref(null);
+const isLogout = ref(false);
+const logout = () => {
+  store.memberLogout().then(() => {
+    router.push("/");
+  });
+};
 
-    const vipLevel = computed(() => {
-      if (store.vip == "VIP1") {
-        return 1;
-      } else if (store.vip == "VIP2") {
-        return 2;
-      } else if (store.vip == "VIP3") {
-        return 3;
-      } else if (store.vip == "VIP4") {
-        return 4;
-      } else if (store.vip == "VIP5") {
-        return 5;
-      } else if (store.vip == "VIP6") {
-        return 6;
-      } else if (store.vip == "VIP7") {
-        return 7;
-      } else if (store.vip == "VIP8") {
-        return 8;
-      } else if (store.vip == "VIP9") {
-        return 9;
-      } else if (store.vip == "VIP10") {
-        return 10;
-      } else if (store.vip == "VIP11") {
-        return 11;
-      } else if (store.vip == "VIP12") {
-        return 12;
-      }
-      return store.vip;
-    });
+const appVersionNo = ref(null);
 
-    const timerBalance = ref();
-
-    const vip = computed(() => {
-      return store.vip;
-    });
-    const selfTgurl = ref('https://' + store.evip);
-
-    const getVersionNo = async () => {
-      if (store.getDeviceType() == "ANDROID") {
-        const info = await App.getInfo();
-        var current_version = info.version ;
-        appVersionNo.value = current_version;
-      } else if (store.getDeviceType() == "IOS") {
-        appVersionNo.value = "1.0.0`";
-      } else {
-
-      }
-    };
-
-    const mainWallet = computed(() => {
-      return store.balance.toFixed(2);
-    });
-    onActivated(() => {
-      store.getUnreadTotal();
-    });
-    onMounted(() => {
-      getBalance();
-      // store.getUnreadTotal();
-      store.getBalance();
-      getVersionNo();
-      checkPlatform();
-      store.getUnreadTotal();
-    });
-
-    onBeforeUnmount(() => {
-      clearInterval(timerBalance.value);
-
-    });
-
-    const openDeposit = () => {
-      // to="finance/deposit"
-      localStorage.setItem("isOpenFromAccount", JSON.stringify(true));
-      router.push("finance/deposit");
-    };
-
-    const getBalance = () => {
-      timerBalance.value = setInterval(function () {
-        if (store.hasToken()) {
-          store.getBalance();
-        }
-      }, 20000);
-    };
-
-    const isH5 = ref(false);
-    const checkPlatform = () => {
-      //Is iOS Webclip App || Is Android Apk
-      if (
-        (Platform.is.ios &&
-          "standalone" in window.navigator &&
-          window.navigator.standalone) ||
-        (Platform.is.android && Platform.is.capacitor)
-      ) {
-        isH5.value = false;
-      } else {
-        isH5.value = true;
-      }
-    };
-
-    return {
-      header: "Account",
-      logout,
-      mainWallet,
-      getBalance,
-      store,
-      openDeposit,
-      vipLevel,
-      appVersionNo,
-      isH5,
-      checkPlatform,
-      selfTgurl
-    };
-  }
+const vipLevel = computed(() => {
+  const match = store.vip.match(/^VIP(\d+)$/);
+  const level = match ? parseInt(match[1], 10) : null;
+  return level !== null && level >= 0 ? level : 0;
 });
+
+const timerBalance = ref();
+
+const getVipImage = (level) => {
+  return require(`../assets/images/account/vip-level-${level}.png`);
+};
+
+const vip = computed(() => {
+  return store.vip;
+});
+const selfTgurl = ref("https://" + store.evip);
+
+const getVersionNo = async () => {
+  if (store.getDeviceType() == "ANDROID") {
+    const info = await App.getInfo();
+    var current_version = info.version;
+    appVersionNo.value = current_version;
+  } else if (store.getDeviceType() == "IOS") {
+    appVersionNo.value = "1.0.0`";
+  } else {
+  }
+};
+
+const mainWallet = computed(() => {
+  return store.balance.toFixed(2);
+});
+
+const isRefreshingMainWallet = ref(false);
+
+const refreshMainWallet = () => {
+  store.getBalance();
+
+  isRefreshingMainWallet.value = true;
+
+  setTimeout(() => {
+    isRefreshingMainWallet.value = false;
+  }, 3000);
+};
+
+const openDeposit = () => {
+  // to="finance/deposit"
+  localStorage.setItem("isOpenFromAccount", JSON.stringify(true));
+  router.push("finance/deposit");
+};
+
+const getBalance = () => {
+  timerBalance.value = setInterval(function () {
+    if (store.hasToken()) {
+      store.getBalance();
+    }
+  }, 20000);
+};
+
+const isH5 = ref(false);
+const checkPlatform = () => {
+  //Is iOS Webclip App || Is Android Apk
+  if (
+    (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) ||
+    (Platform.is.android && Platform.is.capacitor)
+  ) {
+    isH5.value = false;
+  } else {
+    isH5.value = true;
+  }
+};
+
+const currentBetAmount = ref(0);
+const currentDepositAmount = ref(0);
+
+const getVipDetails = () => {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  eventapi.get(`/vip-bonus/get-detail?v=${randNum}`).then((res) => {
+    currentBetAmount.value = res.data.currentBetAmount;
+    currentDepositAmount.value = res.data.currentDepositAmount;
+  });
+};
+
+// const vipLevel = ref('');
+
+const vipItems = [
+  {
+    vipLevel: "1",
+    upgrade: 5000,
+    monthly: "",
+    birthday: "",
+    monthlySaving: "",
+    oneMonthSaving: "每月单笔≥500元, 返现15%, 最高188元"
+  },
+  {
+    vipLevel: "2",
+    upgrade: 20000,
+    monthly: "188",
+    birthday: "",
+    monthlySaving: "",
+    oneMonthSaving: "每月单笔≥500元, 返现15%, 最高258元"
+  },
+  {
+    vipLevel: "3",
+    upgrade: 200000,
+    monthly: "688",
+    birthday: "888",
+    monthlySaving: "",
+    oneMonthSaving: "每月单笔≥500元,返现15%, 最高288元"
+  },
+  {
+    vipLevel: "4",
+    upgrade: 500000,
+    monthly: "1,588",
+    birthday: "2,888",
+    monthlySaving: "",
+    oneMonthSaving: "每月单笔≥1000元,返现25%, 最高388元"
+  },
+  {
+    vipLevel: "5",
+    upgrade: 2000000,
+    monthly: "2,888",
+    birthday: "5,888",
+    monthlySaving: "",
+    oneMonthSaving: "每月单笔≥1000元,返现25%, 最高588元"
+  },
+  {
+    vipLevel: "6",
+    upgrade: 5000000,
+    monthly: "6,888",
+    birthday: "8,888",
+    monthlySaving: "",
+    oneMonthSaving: "每月单笔≥1000元,返现25%, 最高688元"
+  },
+  {
+    vipLevel: "7",
+    upgrade: 8000000,
+    monthly: "18,888",
+    birthday: "48,888",
+    monthlySaving: "",
+    oneMonthSaving: "每月单笔≥2000元,返现35%, 最高888元"
+  },
+  {
+    vipLevel: "8",
+    upgrade: 10000000,
+    monthly: "18,888",
+    birthday: "48,888",
+    monthlySaving: "",
+    oneMonthSaving: "每月单笔≥2000元,返现35%, 最高1288元"
+  },
+  {
+    vipLevel: "9",
+    upgrade: 20000000,
+    monthly: "18,888",
+    birthday: "48,888",
+    monthlySaving: "",
+    oneMonthSaving: "每月单笔≥2000元,返现35%, 最高1888元"
+  },
+  {
+    vipLevel: "10",
+    upgrade: 30000000,
+    monthly: "18,888",
+    birthday: "48,888",
+    monthlySaving: "",
+    oneMonthSaving: "每月单笔≥2000元,返现40%, 最高2888元"
+  }
+];
+
+const progessPercentage = (upgradeAmt) => {
+  return (currentDepositAmount.value / upgradeAmt) * 100;
+};
+
+onActivated(() => {
+  store.getUnreadTotal();
+});
+
+onMounted(() => {
+  getBalance();
+  // store.getUnreadTotal();
+  store.getBalance();
+  getVersionNo();
+  checkPlatform();
+  store.getUnreadTotal();
+  getVipDetails();
+});
+
+onBeforeUnmount(() => {
+  clearInterval(timerBalance.value);
+});
+
+// return {
+//   logout,
+//   mainWallet,
+//   getBalance,
+//   store,
+//   openDeposit,
+//   vipLevel,
+//   appVersionNo,
+//   isH5,
+//   checkPlatform,
+//   selfTgurl,
+//   refreshMainWallet,
+//   isRefreshingMainWallet,
+//   convertToCommaAmount,
+//   currentBetAmount,
+//   currentDepositAmount,
+//   vipItems,
+//   progessPercentage,
+//   isLogout
+// };
 </script>
+
+<style lang="scss">
+.dialog-card {
+  background: linear-gradient(0deg, #213057, #213057),
+    linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c 100%);
+  width: 100%;
+
+  .dialog-title {
+    font-size: 20px;
+  }
+
+  .dialog-desc {
+    padding-top: 16px;
+  }
+
+  .dialog-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding-top: 24px;
+
+    .action-btn {
+      display: flex;
+      width: 100%;
+    }
+  }
+}
+</style>
+
 <style scoped lang="scss">
 .profile {
-  background: url(../assets/images/account/account-bg.png) no-repeat center
-    center;
+  // background: url(../assets/images/account/account-bg.png) no-repeat center
+  //   center;
+  // display: flex;
+  // justify-content: flex-start;
+  // align-items: flex-start;
+  // padding: 30px 10px;
+  // gap: 10px;
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 30px 10px;
-  gap: 10px;
+  gap: 8px;
+  align-items: center;
 
   .avatar {
-    width: 60px;
+    width: 50px;
 
     img {
       width: 100%;
@@ -361,62 +466,43 @@ export default defineComponent({
   .pro-details {
     font-size: 12px;
     line-height: 15px;
-    margin-top: 5px;
-    margin-bottom: 3px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 
-    .vip-badge-item {
-      margin-left: 12px;
+    .nickname-span {
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .details-span {
+      font-size: 10px;
+      color: #7a80a1;
+
+      a {
+        text-decoration: none;
+        color: #7a80a1;
+      }
     }
   }
 }
 
+.acct-top-menu {
+  img {
+    dispaly: block;
+    width: 32px;
+  }
+}
+
 .vipcard {
-  margin: -20px auto 0;
-  border-radius: 15px;
-  width: 95%;
-  background: url(../assets/images/account/personal_details_bg.png) no-repeat
-    center center;
-  background-size: cover;
+  background: linear-gradient(180deg, #384e79 0%, #212e4b 100%);
+  border-radius: 6px;
+  padding: 16px;
+  position: relative;
 
-  .q-card__section--vert {
-    padding: 0;
-
-    > div {
-      flex: 1;
-    }
-  }
-
-  .q-card__actions .q-btn {
-    min-width: 60px;
-  }
-
-  .top-section {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-  }
-
-  .acct-section {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    justify-content: space-evenly;
-    padding: 10px 20px;
-    border-bottom: 1px solid #2e3445;
-    width: 100%;
-    color: #bacef1;
-
-    .label {
-      font-size: 11px;
-      line-height: 12px;
-    }
-
-    .amt {
-      font-size: 18px;
-    }
+  .amt {
+    font-size: 20px;
+    font-weight: 600;
   }
 
   .bot-section {
@@ -457,35 +543,54 @@ export default defineComponent({
   }
 }
 
+.acc-btns-container {
+  .q-btn {
+    font-size: 12px;
+    min-width: 60px;
+  }
+}
+
 .acct-nav {
-  background: #212534;
-  width: 95%;
-  margin: 10px auto;
-  padding: 5px;
-  gap: 10px;
+  background: linear-gradient(180deg, #384e79 0%, #212e4b 100%);
+  border-radius: 8px;
+  overflow: hidden;
 
   .acct-title {
     display: flex;
-    margin-top: 4px;
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
-    color: #bacef1;
-    // .acct-header-icon
+    color: #ffffff;
+    background: #445f95;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
 
     .acct-title-1 {
       display: flex;
       align-items: center;
-      gap: 6px;
+      position: relative;
 
       &:before {
         content: "";
-        // background: #33bcd4;
-        height: 19px;
-        width: 10px;
-        background-size: 100%;
-        display: inline-block;
-        margin-left: -5px;
+        background: linear-gradient(180deg, #00c7c0 0%, #0996c7 100%);
+        box-shadow: 0px 1px 2px 0px #ffffff inset;
+
+        height: 24px;
+        width: 5px;
+        display: block;
+        position: absolute;
+        left: -12px;
+        top: 0;
+      }
+    }
+
+    .vipurl {
+      font-size: 12px;
+      color: #00c7c0;
+
+      a {
+        text-decoration: none;
+        color: #00c7c0;
       }
     }
   }
@@ -494,6 +599,7 @@ export default defineComponent({
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
+    padding: 12px 0;
 
     a {
       width: 33.33%;
@@ -515,6 +621,10 @@ export default defineComponent({
         text-decoration: none;
         padding: 10px;
         position: relative;
+
+        .acct-nav-label {
+          font-size: 14px;
+        }
 
         .unread {
           position: absolute;
@@ -539,14 +649,99 @@ export default defineComponent({
 
 .acct-logout {
   padding: 10px;
-  margin: 5px 10px;
-  background-color: #33bcd4;
+  background: linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c 100%);
   text-align: center;
+  border-radius: 8px;
+  color: #7a80a1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  img {
+    display: block;
+    width: 100%;
+    max-width: 18px;
+  }
 }
 
 .vip-badge {
   position: absolute;
   left: 10px;
   top: -40px;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotating {
+  animation: rotate 1s linear infinite;
+}
+
+.card_btm {
+  flex: 1;
+  width: 100%;
+  position: relative;
+  // max-width: 300px;
+  margin-top: 16px;
+  .amt-info {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    color: #98a7b5;
+  }
+
+  .progress-container {
+    display: flex;
+    gap: 12px;
+    padding: 6px 0 12px;
+
+    .progress-bar-container {
+      width: 100%;
+      height: 6px;
+      border-radius: 15px;
+      overflow: hidden;
+      background: #0996c733;
+      margin-top: 6px;
+      margin-bottom: 6px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 75%;
+      background: linear-gradient(180deg, #00c7c0 0%, #0996c7 100%);
+
+      transition: width 0.5s;
+    }
+
+    .progress-vip-stat {
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      img {
+        display: block;
+        width: 36px;
+      }
+    }
+  }
+}
+
+.vip-ribbon-btn {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  img {
+    width: 100%;
+    max-width: 120px;
+  }
 }
 </style>

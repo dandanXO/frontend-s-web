@@ -117,6 +117,7 @@
                     selectedPromo.promoCode === 'dy2-cs2-blast-2024' ||
                     selectedPromo.promoCode === 'dy2-blast-premier-treasure',
                   msi: selectedPromo.promoCode === 'dy2-msi-promo',
+                  dy12025pgls3: selectedPromo.promoCode === 'dy1-2025-pgl-s3',
                   dyftd:
                     selectedPromo.promoCode === 'lh1-ftd-promo' ||
                     selectedPromo.promoCode === 'dy2-intel-esl' ||
@@ -139,9 +140,21 @@
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
                     ? `url(${imgURL + selectedPromo.mobileImgBackgroundUrl})`
                     : 'none',
-                  margin: selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' || selectedPromo.redirectUrl === 'dy1-lantern-festival-bonus' ? '0px auto' : '20px auto',
-                  'max-width': selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' || selectedPromo.redirectUrl === 'dy1-lantern-festival-bonus' ? 'unset' : '1400px',
-                  width: selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' || selectedPromo.redirectUrl === 'dy1-lantern-festival-bonus' ? '100%' : '95%'
+                  margin:
+                    selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ||
+                    selectedPromo.redirectUrl === 'dy1-lantern-festival-bonus'
+                      ? '0px auto'
+                      : '20px auto',
+                  'max-width':
+                    selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ||
+                    selectedPromo.redirectUrl === 'dy1-lantern-festival-bonus'
+                      ? 'unset'
+                      : '1400px',
+                  width:
+                    selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ||
+                    selectedPromo.redirectUrl === 'dy1-lantern-festival-bonus'
+                      ? '100%'
+                      : '95%'
                 }"
               >
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
@@ -1153,6 +1166,14 @@ export default defineComponent({
           gap: 0px;
           padding: 10px;
           background: url(../assets/images/promotion/hotpromo/LOL-msi/h6bgbg.jpg) no-repeat center center;
+        }
+
+        &.dy12025pgls3 {
+          margin: 0px !important;
+          width: 100% !important;
+          gap: 0px;
+          padding: 0px 16px 20px;
+          background-color: #1c0d18;
         }
 
         img {

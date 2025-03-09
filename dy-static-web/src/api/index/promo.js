@@ -596,3 +596,10 @@ export function initLanternFestivalDeposit(promoCode) {
 export function claimLanternFestivalDeposit(promoCode) {
   return server.EVENT.post("/session/lantern-festival/claimBonus", { promoCode });
 }
+
+export function getPGLBucharest2025Bonus(promoCode) {
+  return server.EVENT.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimPGLBucharest2025Bonus(promoCode) {
+  return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}

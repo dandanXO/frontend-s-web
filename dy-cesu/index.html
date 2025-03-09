@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,62 +8,129 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
 
-
     <script src="js/jquery-3.6.1.min.js" type="text/javascript"></script>
-</head>
+  </head>
 
-<body id="dy-cesu">
-<div class="wrapper">
-    <div class="header-container">
+  <body id="dy-cesu">
+    <div class="wrapper">
+      <div class="header-container">
         <img src="images/dlogo.png" alt="" title="" class="logo-img" />
-    </div>
-    <div class="main-title">
+      </div>
+      <div class="main-title">
         <p>东赢团队，线路检测中心</p>
-    </div>
+      </div>
 
-    <div class="main-cs">
-        <a class="line-btn" href="https://csweb.mh98q4u1yq.com/?partnerCode=DYCS&way=WEB&lang=zh-CN" target="_blank">在线客服</a>
-    </div>
+      <div class="main-cs">
+        <a
+          class="line-btn"
+          href="https://csweb.mh98q4u1yq.com/?partnerCode=DYCS&way=WEB&lang=zh-CN"
+          target="_blank"
+          >在线客服</a
+        >
+      </div>
 
-    <div class="main-content">
+      <div class="main-content">
         <div class="liner-set">
-            <div class="line-direction line-bg"><strong>线路一</strong></div>
-            <div class="line-speed line-bg">顺畅线路 <span>Extreme speed line</span></div>
-            <a class="line-btn" href="https://www.dy55580.com" target="_blank" title="立即访问">立即访问</a>
+          <div class="line-direction line-bg"><strong>线路一</strong></div>
+          <div class="line-speed line-bg">
+            顺畅线路 <span>Extreme speed line</span>
+          </div>
+          <a
+            class="line-btn"
+            href="https://www.dy55580.com"
+            target="_blank"
+            title="立即访问"
+            >立即访问</a
+          >
         </div>
 
         <div class="liner-set">
-            <div class="line-direction line-bg"><strong>线路二</strong></div>
-            <div class="line-speed line-bg">顺畅线路 <span>Extreme speed line</span></div>
-            <a class="line-btn" href="https://www.dy57330.com" target="_blank" title="立即访问">立即访问</a>
+          <div class="line-direction line-bg"><strong>线路二</strong></div>
+          <div class="line-speed line-bg">
+            顺畅线路 <span>Extreme speed line</span>
+          </div>
+          <a
+            class="line-btn"
+            href="https://www.dy57330.com"
+            target="_blank"
+            title="立即访问"
+            >立即访问</a
+          >
         </div>
 
         <div class="liner-set">
-            <div class="line-direction line-bg"><strong>线路三</strong></div>
-            <div class="line-speed line-bg">顺畅线路 <span>Extreme speed line</span></div>
-            <a class="line-btn" href="https://www.dy60833.com" target="_blank" title="立即访问">立即访问</a>
+          <div class="line-direction line-bg"><strong>线路三</strong></div>
+          <div class="line-speed line-bg">
+            顺畅线路 <span>Extreme speed line</span>
+          </div>
+          <a
+            class="line-btn"
+            href="https://www.dy60833.com"
+            target="_blank"
+            title="立即访问"
+            >立即访问</a
+          >
         </div>
-    </div>
-    <div class="footer-content">
-        <div class="footer-title">推荐使用以下浏览器</div>
+      </div>
+      <div class="footer-content">
+        <!-- <div class="footer-title">推荐使用以下浏览器</div>
         <div class="browsers-list">
             <div class="browser"><img src="images/browser-firefox.png" alt=""></div>
             <div class="browser"><img src="images/browser-chrome.png " alt=""></div>
             <div class="browser"><img src="images/browser-universe.png" alt=""></div>
+        </div> -->
+        <div id="largeScreenDiv" class="download-container">
+          <div class="qrcode" id="dl-qr"></div>
+          <div class="qrcode-txt">下载手机App 速度提升10倍</div>
         </div>
+        <a
+          id="mobileScreenDiv"
+          class="line-btn download-mobile-btn"
+          href="https://www.df140.app/"
+          target="_blank"
+          title="下载手机App 速度提升10倍"
+          ><img
+            class="phone-icon"
+            src="images/phone-icon.svg"
+            alt=""
+          />下载手机App<br />速度提升10倍</a
+        >
+      </div>
     </div>
-</div>
-
-</body>
+  </body>
   <script
     charset="UTF-8"
     id="LA_COLLECT"
     src="//sdk.51.la/js-sdk-pro.min.js"
   ></script>
+  <script type="text/javascript" src="./js/qrcode.js"></script>
   <script type="text/javascript">
     var hostname = window.location.hostname;
     if (hostname.indexOf("dydy18.com") > -1) {
       LA.init({ id: "Kc6fZaSY3MdBOkcH", ck: "Kc6fZaSY3MdBOkcH" });
     }
+
+    (function () {
+      var appDlQR = new QRCode("dl-qr");
+
+      appDlQR.makeCode("https://www.df140.app/");
+    })();
+
+    function renderBasedOnScreenSize() {
+      const mobileScreenDiv = document.getElementById("mobileScreenDiv");
+      const largeScreenDiv = document.getElementById("largeScreenDiv");
+
+      if (window.innerWidth >= 768) {
+        mobileScreenDiv.style.display = "none";
+        largeScreenDiv.style.display = "grid";
+      } else {
+        mobileScreenDiv.style.display = "flex";
+        largeScreenDiv.style.display = "none";
+      }
+    }
+
+    renderBasedOnScreenSize();
+
+    window.addEventListener("resize", renderBasedOnScreenSize);
   </script>
 </html>

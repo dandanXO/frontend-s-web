@@ -152,7 +152,7 @@ export const trackNewUserFtd = (e) => {
   if (triggeredPixels.includes("tk")) {
     ttq.track("PurchaseComplete", { content_type: "product" }, { event_id: Date.now() });
   }
-  console.log("PurchaseComplete");
+  // console.log("PurchaseComplete");
 
   localStorage.removeItem("newUserFtd");
 
@@ -165,4 +165,8 @@ export const isInPwa = () => {
   const hasRbKey = Object.keys(localStorage).some((key) => key.startsWith("__rb_"));
   const hasPwa = sessionStorage.getItem("IS_PWA");
   return isStandalone || hasRbKey || hasPwa;
+};
+
+export const generateEventID = () => {
+  return `evt_${Date.now()}_${Math.random().toString(36).substring(2, 10)}`;
 };

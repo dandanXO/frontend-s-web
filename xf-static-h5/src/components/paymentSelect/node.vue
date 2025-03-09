@@ -2,10 +2,13 @@
   <div class="node" v-if="list && list.length !== 0">
     <div v-if="level === 1" />
     <!-- <div class="title" v-else>{{ name }}</div> -->
-    <div class="account-title-container" v-else>
+    <!-- <div class="account-title-container" v-else>
       <span class="account-title">{{ name }}</span>
-    </div>
+    </div> -->
     <div class="node-content payment-method-wrapper">
+      <div class="account-title-container" v-if="level !== 1">
+        <span class="account-title">{{ name }}</span>
+      </div>
       <div
         class="node-item payment-method-item"
         :id="level + '_' + i"
@@ -16,8 +19,11 @@
         v-for="(item, i) in list"
       >
         <div class="node-text">
-          <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
-          <div class="overflow">{{ item.nodeName }}</div>
+          <div class="node-txt-img">
+            <div class="icon-wrapper"><img :src="imgURL + item.nodeIcon" /></div>
+            <div class="overflow overflow-txt">{{ item.nodeName }}</div>
+          </div>
+
           <div class="promo">
             <img v-if="item.promotionIcon" :src="`${imgURL}${item.promotionIcon}`" />
           </div>
@@ -162,9 +168,10 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
+
 $group-color: #76c034;
 // $node-color: #dd4645;
-$node-color: #33bcd4;
+$node-color: #00bfd7;
 .title {
   color: $group-color;
   margin: 10px auto;
@@ -195,20 +202,25 @@ $node-color: #33bcd4;
 
 .payment-method-wrapper {
   // display: flex;
-  grid-gap: 15px;
+  // grid-gap: 16px;
   display: grid;
   margin-bottom: 0px;
   width: 100%;
   grid-template-columns: repeat(5, 1fr);
   align-items: flex-start;
 
+  // background: linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c 100%);
+  border-radius: 6px;
+  padding: 0px;
+
   .payment-method-item {
     text-align: center;
     border-radius: 6px;
     color: #ffffff;
     cursor: pointer;
+    // margin-bottom: 10px;
     img {
-      max-width: 75px;
+      // max-width: 75px;
       margin-bottom: 10px;
       width: 100%;
       height: auto;
@@ -222,28 +234,32 @@ $node-color: #33bcd4;
       // background: rgba(255,255,255, .2);
       .node-text {
         .node-txt-img {
-          border-width: 2px;
-          border-style: solid;
           border-color: $node-color;
 
-          // &:before {
-          //   display: block;
-          //   content: "";
-          //   position: absolute;
-          //   bottom: 23px;
-          //   right: 3px;
-          //   background-color: #4873f1;
-          //   height: 15px;
-          //   width: 15px;
-          //   z-index: 3;
-          //   border-radius: 3px;
-          //   background-image: url("../../assets/images/account/CheckBox.svg");
-          //   background-size: 100%;
-          //   background-position: center center;
-          // }
+          .icon-wrapper {
+            border-color: $node-color;
+
+            &:before {
+              display: block;
+              content: "";
+              position: absolute;
+              bottom: 0;
+              right: 0;
+              height: 20px;
+              width: 20px;
+              z-index: 3;
+              background-image: url("../../assets/images/finance/node-tick.svg");
+              background-size: 100%;
+              background-position: center center;
+            }
+          }
 
           img {
             // border-color: $node-color;
+          }
+
+          .overflow-txt {
+            color: $node-color;
           }
         }
       }
@@ -275,6 +291,9 @@ $node-color: #33bcd4;
     .account-title-container {
       margin: 0 -30px;
       background: none;
+      grid-column: span 5;
+      font-weight: 600;
+      font-size: 16px;
     }
 
     &.node-group {
@@ -282,23 +301,25 @@ $node-color: #33bcd4;
       justify-content: flex-start;
       align-items: flex-start;
       // gap: 10px;
-      margin: 10px 0px;
+      margin: 16px 0px;
       padding: 0 0px;
       flex-direction: column;
       .account-title-container {
         margin: 0 0px 8px;
       }
-      .payment-method-wrapper {
-        gap: 5px;
-      }
+      // .payment-method-wrapper {
+      //   gap: 5px;
+      // }
       .payment-method-item {
         border: 1px solid transparent;
       }
       .node-text {
-        display: flex;
-        gap: 5px;
-        justify-content: center;
-        align-items: center;
+        // display: flex;
+        // gap: 5px;
+        // justify-content: center;
+        // align-items: center;
+        // width: 100%;
+        // aspect-ratio: 1/1;
         & > div {
           font-size: 12px;
           color: #ffffff;
@@ -307,7 +328,7 @@ $node-color: #33bcd4;
         img {
           //width: 15px;
           border: 0;
-          background-color: #2a313e;
+          // background-color: #2a313e;
           // max-width: 1.5rem;
           padding: 0px;
           margin-bottom: 0;
@@ -317,7 +338,7 @@ $node-color: #33bcd4;
   }
 
   .node-content {
-    gap: 10px;
+    grid-gap: 4px;
 
     .payment-method-item {
       text-align: center;
@@ -328,7 +349,7 @@ $node-color: #33bcd4;
       display: flex;
       justify-content: center;
       width: 100%;
-      max-width: 4.5rem;
+      // max-width: 4.5rem;
 
       .payment-method-wrapper {
         display: none;
@@ -341,6 +362,7 @@ $node-color: #33bcd4;
       align-items: center;
       // gap: 5px;
       flex-direction: column;
+      width: 100%;
 
       & > div {
         font-size: 12px;
@@ -348,24 +370,46 @@ $node-color: #33bcd4;
       }
 
       .node-txt-img {
-        background-color: transparent;
+        // background-color: transparent;
+        // margin-bottom: 5px;
+        // border-radius: 3px;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
-        //box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
-        width: 60px;
-        height: 60px;
-        margin-bottom: 5px;
-        //border: 1px solid #ddd;
-        border-radius: 3px;
+        // aspect-ratio: 1/1;
+        width: 100%;
+        border-width: 0px;
+        border-style: solid;
+        border-radius: 6px;
+        border-color: #d9d9d94d;
+        // background-color: #273354;
+        // padding: 12px;
+
+        .icon-wrapper {
+          position: relative;
+          border: 2px solid transparent;
+          border-radius: 10px;
+          min-width: 45px;
+          min-height: 45px;
+        }
+
+        .overflow-txt {
+          font-size: 12px;
+          padding-bottom: 6px;
+          font-family: 'PingFang';
+          color: #a9acb4;
+        }
 
         img {
           background-color: transparent;
           margin-bottom: 0;
-          padding: 5px;
+          padding: 4px;
           display: block;
           width: 100%;
-          height: auto;
+          // max-width: 60px;
+          display: block;
+          // height: auto;
         }
       }
     }
@@ -402,13 +446,13 @@ $node-color: #33bcd4;
       background-size: 100%;
       background-position: top center;
       width: 100%;
-      max-width: 40px;
+      max-width: 45px;
 
       img {
         padding: 0;
         border: 0;
         width: 100%;
-        max-width: 40px;
+        max-width: 45px;
         background-color: transparent;
       }
       ::after {
@@ -430,14 +474,14 @@ $node-color: #33bcd4;
 
 @media (max-width: 420px) {
   .node-txt-img {
-    width: 54px !important;
-    height: 54px !important;
+    // width: 54px !important;
+    // height: 54px !important;
   }
 }
 
 @media (max-width: 355px) {
   .payment-method-wrapper {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 </style>
