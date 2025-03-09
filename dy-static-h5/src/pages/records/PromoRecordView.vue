@@ -1,7 +1,9 @@
 <!-- NOT USING -->
 <template>
+  <RecordDateFilter class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="handleDateChange" />
   <div class="table-record">
     <RecordComponent
+      ref="recordRef"
       recordType="promo"
       :loading="visible"
       :list="tableData"
@@ -17,11 +19,13 @@ import RecordComponent from "../../components/RecordComponent.vue";
 import { api } from "boot/axios";
 import moment from "moment/moment";
 import { cached, TIME_EXPIRED } from "boot/cache";
+import RecordDateFilter from "../../components/RecordDateFilter.vue";
 
 export default defineComponent({
   name: "PromoRecordView",
   components: {
-    RecordComponent
+    RecordComponent,
+    RecordDateFilter
   },
   setup() {
 
@@ -31,27 +35,18 @@ export default defineComponent({
     var apiUrl = "/session/member/privilege";
 
     const isEnded = ref(false);
-    var endDate = moment().format("YYYY-MM-DD");
-    var startDate = moment().add(-7, "days").format("YYYY-MM-DD");
+    const recordRef = ref();
+    const endDate = ref(moment().format("YYYY-MM-DD"));
+    const startDate = ref(moment().add(-7, "days").format("YYYY-MM-DD"));
     var current = ref(1);
     var maxPage = ref(0);
 
     const loadNewData = () => {
-      if(maxPage.value > current.value){
+      if (maxPage.value > current.value) {
         current.value++;
-      }else {
-        current.value = 1;
-        endDate = moment(startDate).add(-1, "days").format("YYYY-MM-DD");
-        console.log(endDate);
-
-        startDate = moment(endDate).add(-7, "days").format("YYYY-MM-DD");
-        console.log(startDate);
-
-        if (endDate <= moment().add(-29, "days").format("YYYY-MM-DD")) {
-          console.log("mor than 3 months");
-          isEnded.value = true;
-          return;
-        }
+      } else {
+        isEnded.value = true;
+        return;
       }
       loadDepositTable(false);
     };
@@ -64,12 +59,12 @@ export default defineComponent({
       console.log(endDate);
 
       let paramData = {
-        "startDate": startDate,
-        "endDate": endDate,
+        "startDate": startDate.value,
+        "endDate": endDate.value,
         "size": 10,
         "current": current.value
       };
-      var apiKey = apiUrl + "_" + startDate + "_" + endDate + "_" + current.value;
+      var apiKey = apiUrl + "_" + startDate.value + "_" + endDate.value + "_" + current.value;
       console.log(apiKey);
 
       cached.get(apiKey, () => api.get(apiUrl, {
@@ -88,6 +83,11 @@ export default defineComponent({
         tableData.value.push(...res.records);
         // console.log("TableData");
         // console.log(tableData.value);
+        if(!tableData.value.length){
+          isEnded.value = true;
+        }else{
+          isEnded.value = false;
+        }
       }).catch((err) => {
         if (isNew) {
           visible.value = false;
@@ -113,6 +113,14 @@ export default defineComponent({
         label: "记录时间"
       }
     ];
+    const handleDateChange = (data) => {
+      const {val, isStartDate} = data;
+      isStartDate ? startDate.value = val : endDate.value = val;
+      tableData.value = [];
+      current.value = 1;
+      recordRef.value.clearTable();
+      loadDepositTable();
+    };
     onMounted(() => {
       current.value = 1;
       loadDepositTable();
@@ -123,7 +131,11 @@ export default defineComponent({
       visible,
       tableHeaders,
       loadNewData,
-      isEnded
+      isEnded,
+      startDate,
+      endDate,
+      handleDateChange,
+      recordRef
     };
   }
 });

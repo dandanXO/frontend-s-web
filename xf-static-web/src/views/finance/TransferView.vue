@@ -8,34 +8,37 @@
         <div class="balance">
           <div class="balance-wrapper">
             <span class="currency">主账户:</span>
+            <span>
             ￥{{ mainWallet }}
+              <el-icon @click="refreshAllModal"><Refresh style="color: #32CEED" /></el-icon>
+            </span>
           </div>
+          
           <!-- <div class="balance-refresh" @click="refreshBalance(MAIN)">
             <el-icon><Refresh style="color: #ffffff" /></el-icon>
           </div> -->
 
-          <el-button type="success" class="common-btn" @click="transferOutAllModal">一键转出</el-button>
-          <el-button type="success" class="common-btn" @click="refreshAllModal">一键刷新</el-button>
-
+          <el-button type="success" class="common-btn" @click="transferOutAllModal"><img src="@/assets/images/account/transfer.png">一键转出</el-button>
+          
+          </div>
+        </div>
+        <div class="account-content">
+          <div class="common-title menulike">场馆明细</div>
+          <div class="account-tip-text" style="color: #FD574C; padding-bottom: 20px;">
+            除了以下平台需要转账，其它游戏平台都无需转账即可游戏
+          </div>
+        </div>
           <div class="balance-transfer-button">
             <span>自动平台转账:</span>
             <el-switch
               v-model="autoTransfer"
               class="ml-2"
               inline-prompt
-              style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+              style="--el-switch-on-color: #32CEED; --el-switch-off-color: #ff4949"
               active-text="已开启"
               inactive-text="已关闭"
               @change="updateAutoTransfer($event)"
             />
-          </div>
-        </div>
-        <div class="account-content">
-          <div class="account-tip-text">
-            <el-icon><InfoFilled style="color: #45fdfb" /></el-icon>
-            除了以下平台需要转账，其它游戏平台都无需转账即可游戏
-          </div>
-        </div>
         <!--<div class="account-tip">
         E-Sports do not need to transfer, recharge and play
         </div>-->
@@ -46,12 +49,11 @@
             <div class="platform-details">
               <div class="plat-name">{{ platNames[p.code] || p.name }}</div>
               <div class="balance-wrapper">
-                <span class="currency">余额:</span>
                 {{ p.amount }}
+                <div class="balance-refresh" @click="refreshBalance(p.code)">
+                  <el-icon><Refresh /></el-icon>
+                </div>
               </div>
-            </div>
-            <div class="balance-refresh" @click="refreshBalance(p.code)">
-              <el-icon><Refresh /></el-icon>
             </div>
           </div>
           <div class="flex-box flex-justify-space flex-wrap transfer-action-box">
@@ -434,35 +436,52 @@ body .transferinout .el-dialog__header .el-dialog__title {
     .transfer-top-container {
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 20px;
+      padding: 10px 0;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #FFFFFF1A;
+
       .balance {
         display: flex;
         align-items: center;
         margin: 10px 0;
+        background:#242425;
+        padding: 10px;
+        border-radius: 8px;
+        width: 280px;
+        position: relative;
+        .el-button {
+          position: absolute;
+          right: 10px;
+           top: 10px;
+          background: linear-gradient(180deg, #32CEED 0%, #1C7587 100%);
+          border-radius: 50px;
+          padding: 5px;
+          
+          img { width: 16px; margin-right: 10px;}
+        }
         .transfer-btn {
           padding: 5px;
         }
         .balance-wrapper {
           display: flex;
           width: 18%;
+          flex-direction: column;
           justify-content: flex-start;
-          gap: 10px;
-          align-items: center;
-          font-size: 14px;
-          margin-right: 50px;
-          color: #30a73b;
+          gap: 20px;
+          align-items: flex-start;
+          font-size: 24px;
+          color: #ffffff;
+          span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+          }
           .currency {
-            color: #a0bcd6;
+            color: #b8b8b8;
+            font-size: 14px;
             white-space: normal;
           }
-        }
-        .balance-transfer-button {
-          display: flex;
-          width: 80%;
-          justify-content: flex-end;
-          gap: 10px;
-          align-items: center;
-          font-size: 14px;
         }
         .balance-refresh {
           cursor: pointer;
@@ -481,6 +500,17 @@ body .transferinout .el-dialog__header .el-dialog__title {
       }
     }
 
+    .balance-transfer-button {
+      display: flex;
+      width: 80%;
+      justify-content: flex-end;
+      gap: 10px;
+      align-items: center;
+      font-size: 14px;
+      position: absolute;
+      top: 15px;
+      right: 20px;
+    }
     .transfer-plat-wrapper {
       // display: grid;
       // padding-top: 30px;
@@ -496,14 +526,14 @@ body .transferinout .el-dialog__header .el-dialog__title {
       gap: 10px;
       .transfer-plat-item {
         display: flex;
-        background-color: #232833;
-        box-shadow: 0 2px 2px 0 rgb(0 0 0 / 20%);
-        border-radius: 2px;
-        margin: 0 0 23px 14px;
+        background: #242425;
+        // box-shadow: 0 2px 2px 0 rgb(0 0 0 / 20%);
+        border-radius: 8px;
+        // margin: 0 0 23px 14px;
         padding: 10px 20px;
         flex-direction: column;
         position: relative;
-        width: 170px;
+        width: 250px;
         .transfer-balance-box {
           align-items: center;
         }
@@ -518,7 +548,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
             box-shadow: 0 2px 2px 0 rgb(0 0 0 / 20%);
             border-radius: 2px;
             border: 1px solid #22737f;
-            color: #a0bcd6;
+            color: #b8b8b8;
             padding: 2px 20px;
             font-size: 12px;
             line-height: 14px;
@@ -542,50 +572,54 @@ body .transferinout .el-dialog__header .el-dialog__title {
             // min-width: 60px;
             position: relative;
             clear: both;
-            padding: 5px 12px;
-            margin-bottom: 15px;
-            -webkit-box-shadow: 2px 5px 10px rgb(138 146 154 / 15%);
-            box-shadow: 2px 5px 10px rgb(138 146 154 / 15%);
-            color: #fff;
-            margin-left: -27px;
-            margin-top: -3px;
-            border-radius: 0 3px 3px 0;
-            background: #323d50;
-            &::before {
-              content: " ";
-              border-style: solid;
-              border-width: 10px;
-              display: block;
-              position: absolute;
-              bottom: -10px;
-              left: 0;
-              margin-bottom: -10px;
-              z-index: 0;
-              border-color: #2494be transparent transparent;
-            }
-            &::after {
-              content: " ";
-              background: #232833;
-              display: block;
-              position: absolute;
-              width: 100%;
-              height: 20px;
-              bottom: -20px;
-              left: 7px;
-              margin-bottom: 0px;
-              z-index: 0;
-              border-color: #2494be transparent transparent;
-            }
+            font-size: 14px;
+            color:#B8B8B8;
+            // -webkit-box-shadow: 2px 5px 10px rgb(138 146 154 / 15%);
+            // box-shadow: 2px 5px 10px rgb(138 146 154 / 15%);
+            // color: #fff;
+            // margin-left: -27px;
+            // margin-top: -3px;
+            // border-radius: 0 3px 3px 0;
+            // background: #323d50;
+            // &::before {
+            //   content: " ";
+            //   border-style: solid;
+            //   border-width: 10px;
+            //   display: block;
+            //   position: absolute;
+            //   bottom: -10px;
+            //   left: 0;
+            //   margin-bottom: -10px;
+            //   z-index: 0;
+            //   border-color: #2494be transparent transparent;
+            // }
+            // &::after {
+            //   content: " ";
+            //   background: #232833;
+            //   display: block;
+            //   position: absolute;
+            //   width: 100%;
+            //   height: 20px;
+            //   bottom: -20px;
+            //   left: 7px;
+            //   margin-bottom: 0px;
+            //   z-index: 0;
+            //   border-color: #2494be transparent transparent;
+            // }
           }
           .balance-wrapper {
             display: flex;
-            justify-content: flex-end;
+            // justify-content: flex-end;
             width: 100%;
             align-items: center;
-            color: #30a73b;
+            color: #b8b8b8;
+            font-family: PingFang SC;
+            font-size: 24px;
+            font-weight: 600;
             margin: 10px 0;
+            gap: 10px;
             .currency {
-              color: #a0bcd6;
+              color: #b8b8b8;
               font-size: 14px;
               line-height: 16px;
               margin-right: 10px;
@@ -593,11 +627,11 @@ body .transferinout .el-dialog__header .el-dialog__title {
           }
         }
         .balance-refresh {
-          position: absolute;
-          right: 10px;
-          top: 10px;
-          cursor: pointer;
-          margin-left: 10px;
+          // position: absolute;
+          // right: 10px;
+          // top: 10px;
+          // cursor: pointer;
+          // margin-left: 10px;
           .el-icon {
             display: block;
             width: 16px;

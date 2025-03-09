@@ -326,11 +326,13 @@ export function claimNBABonus(matchId) {
 }
 
 export function getPGLTreasureInit() {
-  return eventapi.get("/session/pglTreasure/init");
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/pglTreasure/init?v=${randNum}`);
 }
 
 export function putPGLTreasureInit() {
-  return eventapi.put("/session/pglTreasure/claim");
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.put(`/session/pglTreasure/claim?v=${randNum}`);
 }
 
 export function getIEMRioInit() {
@@ -504,4 +506,11 @@ export function initLanternFestivalDeposit(promoCode) {
 export function claimLanternFestivalDeposit(promoCode) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.post(`/session/lantern-festival/claimBonus?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function getPGLBucharest2025Bonus(promoCode) {
+  return eventapi.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimPGLBucharest2025Bonus(promoCode) {
+  return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
 }

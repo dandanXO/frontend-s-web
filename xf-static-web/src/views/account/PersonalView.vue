@@ -3,7 +3,7 @@
     <div class="menu-title-container">
       <span class="menu-title">推荐链接</span>
     </div>
-    <div class="personal-container">
+    <div class="personal-container top">
       <input class="referral-link" @blur="blurCode" ref="copyinput" v-model="referralLink" readonly />
       <button class="common-btn copy-btn" @blur="blurCode" @click="copyCode">
         {{ copybtntxt }}
@@ -50,6 +50,15 @@
               </div>
               <div class="tbl-row">
                 <div class="basic-info-cell title">生日</div>
+
+                <el-button
+                  class="common-btn"
+                  v-if="!isEdit && (!personalState.memberInfo.realName || !personalState.memberInfo.birthday)"
+                  @click="isEdit = !isEdit"
+                >
+                  编辑
+                </el-button>
+
                 <div v-if="personalState.memberInfo.birthday" class="basic-info-cell content">
                   {{ personalState.memberInfo.birthday }}
                 </div>
@@ -875,13 +884,18 @@ const verificationPhoneModalVisible = ref(false)
 
 <style scoped lang="scss">
 .personal-container {
-  background-color: #232833;
+  // background-color: #232833;
   box-shadow: 0 2px 2px 0 rgb(0 0 0 / 20%);
   border-radius: 2px;
   display: flex;
   padding: 20px;
   justify-content: space-between;
-  margin: 0 auto;
+  margin: 0 auto 50px;
+  &.top {
+    padding: 0; overflow: hidden; box-shadow: none; border-radius: 8px;
+    border-top: 0;
+    margin-top: 35px;
+  }
   .el-form {
     width: 100%;
   }
@@ -931,8 +945,15 @@ const verificationPhoneModalVisible = ref(false)
 .referral-link {
   width: 100%;
   border: none;
-  background-color: #2c444f;
-  padding: 10px;
+  color: #b8b8b8;
+  background: #262627;
+  border: 1px solid #3c3c3d;
+  padding: 10px 15px;
+  color: #B8B8B8;
+  font-family: PingFang SC;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22.4px;
 }
 
 .verification {

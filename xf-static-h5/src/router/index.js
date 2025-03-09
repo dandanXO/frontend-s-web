@@ -63,8 +63,8 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/login" ||
       to.path === "/register" ||
       to.path === "/promotion" ||
-      to.path === "/invitefriend" ||
       to.path === "/deposit" ||
+      to.path === "/invitefriend" ||
       to.path === "/vip" ||
       to.path === "/affiliatepage"
     ) {
@@ -73,13 +73,7 @@ export default route(function (/* { store, ssrContext } */) {
       ui.showFooter();
     }
 
-    if (
-      to.path === "/promotion" ||
-      to.path === "/invitefriend" ||
-      to.path === "/vip" ||
-      to.path === "/affiliatepage" ||
-      to.path === "/deposit"
-    ) {
+    if (to.path === "/promotion" || to.path === "/invitefriend" || to.path === "/vip" || to.path === "/affiliatepage" || to.path === "/deposit") {
       if (isAndroid()) {
         localStorage.setItem("TOKEN", to.query.token);
       } else {
@@ -121,7 +115,7 @@ export default route(function (/* { store, ssrContext } */) {
         }
       }
     } else {
-      if (to.meta.requiresAuth || (isAndroid() && ["/promotion", "/promo"].includes(to.path))) {
+      if (to.meta.requiresAuth) {
         next(`/login?redirect=${to.path}`);
       } else {
         next();

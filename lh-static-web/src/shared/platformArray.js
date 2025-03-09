@@ -357,6 +357,15 @@ export const lotteryPlatforms = [
       "忠于匠心精神打造40多款彩票，支持覆盖各种传统盘/双面盘等多种投注玩法，秉持行业最高赔率，全天24小时开奖不间断。任君挑选。",
     caption: "",
     gameCode: ""
+  },
+  {
+    code: "PMLOTTERY",
+    cnname: "多宝彩票",
+    image: "pml",
+    message:
+      "多宝彩票深耕彩票行业多年，提供丰富多样的彩种选择，涵盖经典玩法与独家创新模式。凭借强大的技术支持和稳定的开奖系统，秒开秒结，让您尽享极致购彩体验。",
+    caption: "",
+    gameCode: ""
   }
 ];
 
@@ -376,7 +385,7 @@ export const fishingPlatforms = [
     cnname: "AG捕鱼王",
     image: "ag",
     message:
-      "最受欢迎的AG捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
+      "火爆AG捕鱼，畅享极致射击快感！高清画质打造沉浸式海底世界，丰富鱼种千变万化，超高爆率畅快收金，多人竞技欢乐无穷，尽享捕鱼巅峰体验！",
     caption: "",
     gameCode: "HMPL"
   },

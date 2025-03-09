@@ -31,12 +31,14 @@ const routes = [
       {
         path: "/esports",
         name: "esports",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/eSportsView.vue")
+        component: () => import(/* webpackChunkName: "Game" */ "../views/eSportsView.vue"),
+        meta: { requiresAuth: true }
       },
       {
         path: "/esportsCasual",
         name: "esportsCasual",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/eSportsCasualView.vue")
+        component: () => import(/* webpackChunkName: "Game" */ "../views/eSportsCasualView.vue"),
+        meta: { requiresAuth: true }
       },
       {
         path: "/sports",

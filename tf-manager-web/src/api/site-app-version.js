@@ -69,3 +69,35 @@ export const uploadApp = async (formData, fileType) => {
       return Promise.reject(error)
     })
 }
+
+export const uploadLogo = async (formData, fileType) => {
+  const allowedFileTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
+
+  const baseApi = globals.$baseApi
+
+  if (!allowedFileTypes.includes(fileType)) {
+    ElMessage({
+      message: 'Invalid file type. Supported types are [\'image/jpeg\', \'image/jpg\', \'image/png\', \'image/gif\'].',
+      type: 'error',
+    })
+  }
+
+  const requestOptions = {
+    method: 'POST',
+    body: formData,
+    ContentType: 'multipart/form-data',
+    boundary: '—-WebKitFormBoundaryfgtsKTYLsT7PNUVD',
+  }
+
+  return fetch(baseApi + '/siteAppVersion/uploadLogo', requestOptions)
+    .then(response => {
+      return response.json() // Corrected: Call response.json() as a function
+    })
+    .catch(error => {
+      ElMessage({
+        message: error.message,
+        type: 'error',
+      })
+      return Promise.reject(error)
+    })
+}

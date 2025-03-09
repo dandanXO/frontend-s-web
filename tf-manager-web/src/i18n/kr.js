@@ -1992,6 +1992,7 @@ export default {
     changeAffiliateSuccess: '제휴 변경 성공',
     confirmUnbindAffiliateAccesss: '상위 대리인 연결 해제 확인',
     changeSuccess: '변경 성공',
+    codeTooLong: '코드가 너무 깁니다',
     commissionPaySuccess: '커미션 지급 성공',
     confirmToAdjust: '조정하시겠습니까? 확인 후 조정이 불가능합니다.',
     confirmCancelBbDacha:
@@ -3083,6 +3084,8 @@ export default {
     30000: 'PG 업데이트 트랜잭션 상태 업데이트 실패',
     24003: '결과가 이미 처리되었습니다',
     27000: '키 수량이 충분하지 않습니다',
-    50002: '조정 가능 최대 금액을 초과했습니다'
+    50002: '조정 가능 최대 금액을 초과했습니다',
+    53000: '회원 이름을 입력해주세요.',
+    53001: '추천인 또는 회원명을 입력해주세요.'
   },
 }

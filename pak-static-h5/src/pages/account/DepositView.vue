@@ -326,7 +326,7 @@
   <q-dialog width="100%" v-model="userKYCDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
-      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
+      <KYCUserForm ref="kycUserFormRef" @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
 </template>
@@ -339,7 +339,7 @@ import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
-import { convertToCommaAmount, trackNewUserFtd } from "src/boot/utils";
+import { convertToCommaAmount, generateEventID, trackNewUserFtd } from "src/boot/utils";
 // import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
 // import PrimaryButton from "src/components/auth/PrimaryButton.vue";
@@ -358,7 +358,9 @@ const router = useRouter();
 const route = useRoute();
 const emits = defineEmits(["closeModal"]);
 
-const { userKYCDialog, closeUserKYCDialog } = useCheckKYC(["mounted", "activated"]);
+const kycUserFormRef = ref(null);
+
+const { userKYCDialog, closeUserKYCDialog } = useCheckKYC(["mounted", "activated"], kycUserFormRef);
 
 const isBank2 = computed(() => {
   return activeMethod.value.code === "BANK-2";
@@ -756,10 +758,16 @@ async function pDepo(deposit) {
 
         //FB Tracking.
         if (store.isOldFBPixel || (store.isFbPixel && store.memberType === "TEST")) {
-          fbq("track", "Purchase", {
-            currency: "PKR",
-            value: obj.localAmount
-          });
+          const randUuid = generateEventID();
+          fbq(
+            "track",
+            "Purchase",
+            {
+              currency: "PKR",
+              value: obj.localAmount
+            },
+            { eventID: randUuid }
+          );
         }
 
         if (store.isTkPixel) {

@@ -9,6 +9,7 @@
 
     <!-- external promos -->
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'id1-slot-ftd' && store.token" :params="list.param" />
+    <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -38,6 +39,7 @@ import * as _ from "lodash";
 import moment from "moment";
 
 import SlotFtdPromo from "@/components/hotpromo/slotftdpromo/SlotFtdPromo.vue";
+import SpinLuckyWheelPromo from "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -45,7 +47,8 @@ export default defineComponent({
   // setup: (props, { emit }) => {},
   components: {
     ClaimPromo,
-    SlotFtdPromo
+    SlotFtdPromo,
+    SpinLuckyWheelPromo
   },
   props: {
     list: {
@@ -95,7 +98,7 @@ export default defineComponent({
         this.selectedHotPromo = element;
       }
     });
-    if (this.list.redirectUrl === "id1-slot-ftd" || this.list.id === 40) {
+    if (this.list.redirectUrl === "id1-slot-ftd" || this.list.id === 40 || this.list.redirectUrl === 'spin-lucky-wheel') {
       this.isCommonPromo = false;
     } else {
       this.isCommonPromo = true;

@@ -8,7 +8,7 @@ import { Platform, SessionStorage, useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
-import { isAndroid, isInPwa, trackNewUserFtd, getRndInteger } from "boot/utils";
+import { isAndroid, isInPwa, trackNewUserFtd, getRndInteger, generateEventID } from "boot/utils";
 import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
@@ -100,40 +100,40 @@ export default defineComponent({
 
     const initAdjustEventTrack = () => {
       if (isAndroid()) {
-        // //Android App.
-        // console.log("Init Adjust Sdk");
-        // console.log(affAppToken.value);
-        // var adjustConfig = new AdjustConfig(affAppToken.value, AdjustEnvironment.Production);
-        // adjustConfig.setLogLevel(AdjustLogLevel.Verbose);
-        // adjustConfig.setAttributionCallbackListener(function (e) {
-        //   console.log("setAttributionCallbackListener");
-        //   console.log(e);
-        // });
-        // Adjust.create(adjustConfig);
-        // setTimeout(() => {
-        //   // Adjust.getAdid().then((aaid) => {
-        //   //   console.log("aaid");
-        //   //   console.log(aaid);
-        //   //   if(store.aaid===""){
-        //   //     store.aaid = aaid;
-        //   //   }
-        //   // });
-        //   Adjust.getGoogleAdId().then((googleid) => {
-        //     console.log("Google AdID");
-        //     console.log(googleid);
-        //     if(!googleid || googleid==='00000000-0000-0000-0000-000000000000'){
-        //       (async () => {
-        //         Adjust.getAttribution().then((attribution) => {
-        //           console.log("Attribution 2");
-        //           console.log(attribution);
-        //           store.aaid = attribution.adid;
-        //         });
-        //       })();
-        //     }else{
-        //       store.googleadid = googleid;
-        //     }
-        //   });
-        // }, 0);
+        //Android App.
+        console.log("Init Adjust Sdk");
+        console.log(affAppToken.value);
+        var adjustConfig = new AdjustConfig(affAppToken.value, AdjustConfig.EnvironmentProduction);
+        adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
+        adjustConfig.setAttributionCallbackListener(function (e) {
+          console.log("setAttributionCallbackListener");
+          console.log(e);
+        });
+        Adjust.create(adjustConfig);
+        setTimeout(() => {
+          // Adjust.getAdid().then((aaid) => {
+          //   console.log("aaid");
+          //   console.log(aaid);
+          //   if (store.aaid === "") {
+          //     store.aaid = aaid;
+          //   }
+          // });
+          Adjust.getGoogleAdId((googleid) => {
+            console.log("Google AdID");
+            console.log(googleid);
+            if (!googleid || googleid === "00000000-0000-0000-0000-000000000000") {
+              (async () => {
+                Adjust.getAdid(function (adid) {
+                  console.log("Attribution 2");
+                  console.log(adid);
+                  store.aaid = adid;
+                });
+              })();
+            } else {
+              store.googleadid = googleid;
+            }
+          });
+        }, 0);
       } else {
         //Normal WEb / H5 / iOS WEbclip.
         console.log("Init Web Adjust");
@@ -191,10 +191,9 @@ export default defineComponent({
     };
 
     const sendFacebookInfo = () => {
-      // const urlParams = new URLSearchParams(window.location.search);
-      // const fbclid = urlParams.get("fbclid");
-
       const { fbclid, linkId } = getRbParams() || {};
+
+      const fbclid2 = window.localStorage.getItem("fbclid");
 
       const fbc = fbclid;
       const siteCode = "PAK";
@@ -204,6 +203,14 @@ export default defineComponent({
         return match ? decodeURIComponent(match[1]) : null;
       };
 
+      const getFbClientId = () => {
+        let result = /_fbp=(fb\.1\.\d+\.\d+)/.exec(window.document.cookie);
+        if (!(result && result[1])) {
+          return null;
+        }
+        return result[1];
+      };
+
       // const fbp = getCookie("_fbp");
       // Extract the last portion of _fbp
       const fbp = (() => {
@@ -211,11 +218,14 @@ export default defineComponent({
         return rawFbp ? rawFbp.split(".").pop() : null;
       })();
 
-      // alert(`fbc: ${fbc}`);
+      const fbp2 = (() => {
+        const rawFbp = getFbClientId();
+        return rawFbp ? rawFbp : null;
+      })();
 
       const payload = new URLSearchParams({
-        fbp: fbp || "",
-        fbc: fbc || "",
+        fbp: fbp || fbp2 || "",
+        fbc: fbc || fbclid2 || "",
         siteCode: siteCode,
         linkId: linkId || ""
       });
@@ -237,17 +247,35 @@ export default defineComponent({
         .then((data) => {
           console.log("Success:", data);
           const randomValue = Math.floor(Math.random() * (999 - 300 + 1)) + 300;
+          const randUuid = generateEventID();
           if (data.data.sendEvent === "ftd") {
-            fbq("track", "Purchase", {
-              currency: "PKR",
-              value: randomValue
-            });
+            fbq(
+              "track",
+              "Purchase",
+              {
+                currency: "PKR",
+                value: randomValue
+              },
+              { eventID: randUuid }
+            );
           }
           // alert(JSON.stringify(data));
         })
         .catch((error) => {
           console.error("Error:", error);
         });
+    };
+
+    const getDomainWithoutSubdomain = () => {
+      let hostname = window.location.hostname;
+      let parts = hostname.split(".");
+
+      // 处理 localhost 和 IP
+      if (parts.length <= 2 || /^\d+\.\d+\.\d+\.\d+$/.test(hostname) || hostname === "localhost") {
+        return hostname; // 直接返回 IP 或 localhost
+      }
+
+      return parts.slice(1).join("."); // 去掉第一个 subdomain
     };
 
     const trackH5Affiliate = async () => {
@@ -257,7 +285,7 @@ export default defineComponent({
         ? sessionStorage.getItem("REFERRAL_CODE")
         : localStorage.getItem("REG_REFERRAL_CODE") || "";
 
-      const hostname = window.location.hostname.replace("www.", "");
+      const hostname = getDomainWithoutSubdomain();
       //FOR TESTING.
       // const hostname = "igooaa.com";
 
@@ -275,17 +303,19 @@ export default defineComponent({
         await api
           .get(`/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${adCode}`)
           .then((res) => {
-            console.log(res);
-            const { affiliateCode, facebookId, pushId } = res.data;
+            const { affiliateCode = "", facebookId = "", pushId = "" } = res.data;
             sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
             _affiliateCode = affiliateCode;
             console.log("Init FB");
-            fbq("init", facebookId);
-            fbq("track", "PageView");
-            store.isFbPixel = true;
-
-            initEngageLabPush(pushId);
-            sendFacebookInfo();
+            if (facebookId) {
+              fbq("init", facebookId);
+              fbq("track", "PageView");
+              store.isFbPixel = true;
+              sendFacebookInfo();
+            }
+            if (pushId) {
+              initEngageLabPush(pushId);
+            }
           });
 
         api.get(`/app/adjust/params?affiliateCode=${_affiliateCode}`).then((res) => {
@@ -306,9 +336,13 @@ export default defineComponent({
             `/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${affiliateCode}&refer=${referral}`
           )
           .then((res) => {
-            console.log("THIS");
             console.log(res);
-            // const { affiliateCode, facebookId, pushId } = res.data;
+            const { facebookId = "" } = res.data;
+            if (facebookId) {
+              fbq("init", facebookId);
+              fbq("track", "PageView");
+              store.isFbPixel = true;
+            }
           });
       }
     };
@@ -333,16 +367,19 @@ export default defineComponent({
                   if (json && json.channel) {
                     sessionStorage.setItem("AFFILIATE_CODE", json.channel);
                     channelValue.value = sessionStorage.getItem("AFFILIATE_CODE");
-                    // api.get(`/app/adjust/params?affiliateCode=${channelValue.value}`).then((res) => {
-                    //   if (res.code === 0) {
-                    //     sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-                    //     sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
-                    //     sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
-                    //     affAppToken.value = res.data.adjust_app_token;
-                    //     // initAdjustEventTrack();
-                    //     // alert(affAppToken.value);
-                    //   }
-                    // });
+                    api.get(`/app/adjust/params?affiliateCode=${channelValue.value}`).then((res) => {
+                      if (res.code === 0) {
+                        sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+                        sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
+                        sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+                        if (res.data.adjust_register_event) {
+                          ui.adjust_register_event = res.data.adjust_register_event;
+                        }
+                        affAppToken.value = res.data.adjust_app_token;
+                        initAdjustEventTrack();
+                        // alert(affAppToken.value);
+                      }
+                    });
                   }
                 };
 
