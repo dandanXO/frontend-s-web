@@ -61,12 +61,12 @@
           <td>任意金额</td>
           <td>188</td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td>OKPAY</td>
           <td>1.0%</td>
           <td>任意金额</td>
           <td>188</td>
-        </tr>
+        </tr> -->
         <tr>
           <td>数字人民币</td>
           <td>1.0%</td>
@@ -134,12 +134,12 @@ const depositCards = ref([
       "充值即送<em>1.0%</em>彩金K豆完全可以满足您不同需求和使用场景。活动期间，每位玩家每笔使用K豆单笔充值成功享受存款金额的1.0%加码彩金，单日优惠最高上限188元！",
     lesson: "https://kdxz1848.com/"
   },
-  {
-    code: "okpay",
-    title: "OKpay",
-    content: `充值即送<em class="light-bg">1.0%</em>彩金 OKpay充值火热上线，速度快，够安全。活动期间，每日用户任何时间在雷火使用“OKpay充值"方式成功存款，即可获得OKpay存款金额的1.0%的彩金返还，单日优惠最高上限188元。`,
-    lesson: "https://me-qr.com/l/okpayjiaocheng"
-  },
+  // {
+  //   code: "okpay",
+  //   title: "OKpay",
+  //   content: `充值即送<em class="light-bg">1.0%</em>彩金 OKpay充值火热上线，速度快，够安全。活动期间，每日用户任何时间在雷火使用“OKpay充值"方式成功存款，即可获得OKpay存款金额的1.0%的彩金返还，单日优惠最高上限188元。`,
+  //   lesson: "https://me-qr.com/l/okpayjiaocheng"
+  // },
 
   // {
   //   "code": "jdpay",
@@ -156,7 +156,7 @@ const depositCards = ref([
     code: "zfb",
     title: "支付宝转卡",
     content: `充值即送<em class="light-bg">0.5%</em>彩金 支付宝可以满足您不同需求和使用场景，速度快，够安全。用户每日任何时间在雷火使用“支付宝”方式成功存款≥1000元，即可享受存款金额的<em class="light-bg">0.5%</em>加码彩金，单日优惠最高上限38元。`
-  },
+  }
 ]);
 </script>
 <style lang="scss">
