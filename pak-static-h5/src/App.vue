@@ -266,6 +266,18 @@ export default defineComponent({
         });
     };
 
+    const getDomainWithoutSubdomain = () => {
+      let hostname = window.location.hostname;
+      let parts = hostname.split(".");
+
+      // 处理 localhost 和 IP
+      if (parts.length <= 2 || /^\d+\.\d+\.\d+\.\d+$/.test(hostname) || hostname === "localhost") {
+        return hostname; // 直接返回 IP 或 localhost
+      }
+
+      return parts.slice(1).join("."); // 去掉第一个 subdomain
+    };
+
     const trackH5Affiliate = async () => {
       const referral = route.params.referralCode
         ? route.params.referralCode
@@ -273,7 +285,7 @@ export default defineComponent({
         ? sessionStorage.getItem("REFERRAL_CODE")
         : localStorage.getItem("REG_REFERRAL_CODE") || "";
 
-      const hostname = window.location.hostname.replace("www.", "");
+      const hostname = getDomainWithoutSubdomain();
       //FOR TESTING.
       // const hostname = "igooaa.com";
 
@@ -324,9 +336,13 @@ export default defineComponent({
             `/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${affiliateCode}&refer=${referral}`
           )
           .then((res) => {
-            console.log("THIS");
             console.log(res);
-            // const { affiliateCode, facebookId, pushId } = res.data;
+            const { facebookId = "" } = res.data;
+            if (facebookId) {
+              fbq("init", facebookId);
+              fbq("track", "PageView");
+              store.isFbPixel = true;
+            }
           });
       }
     };
