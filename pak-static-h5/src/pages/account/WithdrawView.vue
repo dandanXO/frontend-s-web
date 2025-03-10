@@ -21,9 +21,9 @@
         <div class="title">{{ $t("withdraw.withdrawable") }}</div>
       </div>
     </div>
-      <div ref="targetSection" class="target-section">
-        <!-- The section to scroll to -->
-      </div>
+    <div ref="targetSection" class="target-section">
+      <!-- The section to scroll to -->
+    </div>
     <div class="withdraw-section">
       <div class="account-content last">
         <div class="withdrawalmethod">
@@ -573,13 +573,15 @@ const checkNewUser = () => {
 const isAdditionalWithdrawSteps = ref(false);
 
 const goBackPage = () => {
-  if (route.query.isNewPlayer) {
-    setTimeout(() => {
-      userKYCDialog.value = true;
-    }, 250);
-  } else {
-    router.go(-1);
-  }
+  // if (route.query.isNewPlayer) {
+  //   setTimeout(() => {
+  //     userKYCDialog.value = true;
+  //   }, 250);
+  // } else {
+  //
+  // }
+  localStorage.setItem(`completedwithdrawguide`, JSON.stringify(true));
+  router.go(-1);
 };
 
 onMounted(() => {

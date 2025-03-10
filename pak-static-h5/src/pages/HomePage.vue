@@ -4031,10 +4031,6 @@ onActivated(() => {
   store.getUnreadTotal();
   checkHash();
 
-  if (store.hasToken()) {
-    checkCodeBonusModal();
-  }
-
   checkSpinWheel();
   checkGoogleLoginSetPwd();
 
@@ -4082,6 +4078,10 @@ onMounted(() => {
   loadJDBFishGameList();
   loadJILIPokerhGameList();
   ui.shouldFetchDownloadAppUrl = true;
+
+  if (store.hasToken()) {
+    checkCodeBonusModal();
+  }
 
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);

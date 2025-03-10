@@ -386,11 +386,10 @@ const enableScroll = () => {
 };
 
 const targetSection = ref();
-const currentType = ref('deposit');
+const currentType = ref("deposit");
 const currentDepStep = ref(2);
 const handleStepUpdate = (newStep) => {
   currentDepStep.value = newStep;
-
 
   nextTick(() => {
     setTimeout(() => {
@@ -429,7 +428,6 @@ const checkCloseUserKYCDialog = () => {
   const completedGuide = localStorage.getItem("completeddepositguide");
   if (route.query.isNewPlayer && completedGuide !== "true") {
     isAdditionalDepositSteps.value = true;
-
   }
 };
 const isBank2 = computed(() => {
@@ -1053,13 +1051,14 @@ const isAdditionalDepositSteps = ref(false);
 
 const goBackPage = () => {
   // debugger;
-  if (route.query.isNewPlayer) {
-    setTimeout(() => {
-      userKYCDialog.value = true;
-    }, 250);
-  } else {
-    router.go(-1);
-  }
+  // if (route.query.isNewPlayer) {
+  //   setTimeout(() => {
+  //     userKYCDialog.value = true;
+  //   }, 250);
+  // } else {
+  localStorage.setItem(`completeddepositguide`, JSON.stringify(true));
+  router.go(-1);
+  // }
 };
 
 onMounted(() => {
@@ -1071,7 +1070,6 @@ onMounted(() => {
   if (route.query.isNewPlayer && completedGuide !== "true" && userKYCDialog.value === false) {
     isAdditionalDepositSteps.value = true;
   }
-
 });
 </script>
 
