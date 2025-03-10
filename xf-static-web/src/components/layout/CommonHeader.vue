@@ -2677,7 +2677,7 @@ body {
         font-size: 12px;
       }
       .common-btn {
-        border-radius: 100px;
+        border-radius: 100px; 
       }
       .top-nav-inner {
         max-width: $maxwidth;
