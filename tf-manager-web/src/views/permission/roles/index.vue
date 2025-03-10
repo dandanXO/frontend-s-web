@@ -239,7 +239,7 @@
                 show-checkbox
                 accordion
                 node-key="id"
-                :data="menus.list"
+                :data="menus.alllist"
                 highlight-current
                 :default-checked-keys="jsonImportControl.selectedMenuIds"
               >
@@ -708,6 +708,7 @@ const request = reactive({
 const menus = reactive({
   list: [],
   cloneList: [],
+  alllist: []
 })
 
 function showDialog(type) {
@@ -1312,7 +1313,7 @@ const loadMenuDataForImport = async () => {
 
     // 获取所有菜单
     const { data: allMenuData } = await fetchSimpleMenu()
-    // allMenus.value = allMenuData
+    menus.alllist = allMenuData
 
     // 递归收集所有菜单的 ID
     const collectMenuIds = (menus) => {
