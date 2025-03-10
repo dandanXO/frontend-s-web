@@ -1420,6 +1420,16 @@
     </q-dialog>
   </template>
 
+  <CongratsReuseableModal
+    :isShowDialog="isShowCodeBonusModal"
+    :bonusTitle="$t('modal.homeCodeBonus.congratsWonFreeCash')"
+    :bonusTxt="$t('modal.homeCodeBonus.enterCodeToClaim')"
+    :btnTxt="$t('btn.goNow')"
+    :contentImg="require('../assets/images/index/modal/congrats-coupons-2.png')"
+    @handleBtnClick="handleReceiveCodeBonus"
+    @handleBtnClose="isShowCodeBonusModal = false"
+  />
+
   <q-dialog v-model="isShowPrizeModal">
     <div class="congrats-container">
       <q-btn icon="close" round dense v-close-popup class="congrats-close" />
@@ -1553,6 +1563,7 @@ const popupPromo = ref("");
 const megaSharingWheelDialogModel = ref(true);
 const isAddToHomeScreen = ref(false);
 const isShowSetFirstPw = ref(false);
+const isShowCodeBonusModal = ref(false);
 const currentStep = ref(localStorage.getItem("newPlayerGuide") || "1");
 // Only show the guide if on `/home` or `/`
 const isNewPlayerModal = computed(() => {
@@ -1627,8 +1638,8 @@ const handleAdditionalSteps = (index) => {
     currentType.value = "withdraw";
     isAdditionalWithdrawSteps.value = true;
     nextTick(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    })
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
     disableScroll();
   }
 };
@@ -1653,8 +1664,8 @@ const updateCurrentStep = (newStep) => {
 };
 const closePlayerGuide = (skipStep) => {
   if (skipStep === true) {
-      updateCurrentStep("5");
-      currentType.value = 'withdraw'
+    updateCurrentStep("5");
+    currentType.value = "withdraw";
   }
   isAdditionalReferSteps.value = false;
   isAdditionalDepositSteps.value = false;
@@ -1665,7 +1676,7 @@ const handleGamePlay = (elementName) => {
   resetSteps();
   sessionStorage.setItem("isFromNewPlayerGuide", JSON.stringify(true));
   hotGameList.value.forEach((element) => {
-    console.log(elementName)
+    console.log(elementName);
     if (elementName === element.name.toLowerCase()) {
       if (element.code === "aviator" || element.code === "229" || element.code === "124") {
         playGame(
@@ -1734,6 +1745,8 @@ const activeCategoryLabel = computed(() => {
 provide("closeMegaSharingWheelDialog", () => {
   megaSharingWheelDialogModel.value = false;
 });
+
+const handleReceiveBonus = () => {};
 
 const closeDialog = () => {
   popupPromo.value = "";
@@ -2356,7 +2369,7 @@ const closeSlotModal = () => {
 
 const showNewPlayer = () => {
   currentStep.value = localStorage.getItem("newPlayerGuide");
-}
+};
 
 const closeFullGameDialog = () => {
   fullGameDialog.value = false;
@@ -3980,8 +3993,12 @@ const checkSpinLuckyWheelPromoHomePopupCanShow = () => {
 
 onActivated(() => {
   nextTick(() => {
-    if(LocalStorage.getItem('completeddepositguide') === 'true' && LocalStorage.getItem('completedreferguide') !== 'true' && LocalStorage.getItem('newPlayerGuide') === '4') {
-      currentType.value = 'refer';
+    if (
+      LocalStorage.getItem("completeddepositguide") === "true" &&
+      LocalStorage.getItem("completedreferguide") !== "true" &&
+      LocalStorage.getItem("newPlayerGuide") === "4"
+    ) {
+      currentType.value = "refer";
       isAdditionalReferSteps.value = true;
       disableScroll();
       currentAdditionalStep.value = 1;
@@ -4013,6 +4030,10 @@ onActivated(() => {
   checkNewGuideSteps();
   store.getUnreadTotal();
   checkHash();
+
+  if (store.hasToken()) {
+    checkCodeBonusModal();
+  }
 
   checkSpinWheel();
   checkGoogleLoginSetPwd();
@@ -4100,6 +4121,18 @@ watch(
 // );
 
 const hasInviteWheelPromo = ref(false);
+
+const handleReceiveCodeBonus = () => {
+  router.push({ path: "/account", query: { openCodeModal: "true" } });
+};
+
+const checkCodeBonusModal = () => {
+  eventapi.get("/session/promo-code-bonus/checkBonus").then((res) => {
+    if (res.data.hasUnclaimed) {
+      isShowCodeBonusModal.value = true;
+    }
+  });
+};
 
 const checkSpinWheel = () => {
   if (store.hasToken() && isAndroid()) {
