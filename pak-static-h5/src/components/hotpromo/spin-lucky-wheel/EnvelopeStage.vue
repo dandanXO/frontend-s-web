@@ -84,17 +84,18 @@ const handleEnvelopeClick = (index) => {
     res.data.redPackets[index] = res.data.redPackets[targetIndex];
     res.data.redPackets[targetIndex] = temp;
 
-    let constantIndex = Math.floor(Math.random() * 6);
-    while (constantIndex === index) {
-      constantIndex = Math.floor(Math.random() * 6);
-    }
+    // let constantIndex = Math.floor(Math.random() * 6);
+    // while (constantIndex === index) {
+    //   constantIndex = Math.floor(Math.random() * 6);
+    // }
 
     await delay(1000);
     prizeList.value.forEach((prize, _index) => {
-      if (_index === constantIndex) {
-        prize.status = "unselected";
-        prize.prize = targetWithdrawAmount.value;
-      } else if (_index !== index) {
+      // if (_index === constantIndex) {
+      //   prize.status = "unselected";
+      //   prize.prize = targetWithdrawAmount.value;
+      // } else
+      if (_index !== index) {
         prize.status = "unselected";
         prize.prize = res.data.redPackets[otherPrizeCounter];
       }
