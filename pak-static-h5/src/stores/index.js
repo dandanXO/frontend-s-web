@@ -332,6 +332,7 @@ export const userStore = defineStore("userStore", {
       return api.post("/session/logout").then(() => {
         LocalStorage.remove("TOKEN");
         SessionStorage.remove("TOKEN");
+        LocalStorage.remove("newPlayerGuide");
 
         this.hasUpdatedOneSignal = false;
 

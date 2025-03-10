@@ -774,8 +774,10 @@ const updateCurrentAdditionalStep = () => {
         padding: 10px;
         font-family: Poppins;
         font-weight: 700;
-        font-size: 2vh;
-        line-height: 2vh;
+        // font-size: 2vh;
+        line-height: 18px;
+        font-size: 15px;
+        // line-height: 2vh;
         padding: 15px 10px;
         letter-spacing: 0px;
         text-align: center;
