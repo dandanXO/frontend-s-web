@@ -73,25 +73,6 @@
         >
           {{ t('fields.delete') }}
         </el-button>
-        <!-- 添加导出按钮 -->
-        <el-button
-          icon="el-icon-download"
-          size="mini"
-          type="success"
-          @click="exportRoleButton"
-          :disabled="rolesID.length !== 1"
-        >
-          {{ t('fields.exportToExcel') }}
-        </el-button>
-        <!-- 添加导入按钮 -->
-        <el-button
-          icon="el-icon-upload"
-          size="mini"
-          type="primary"
-          @click="showImportDialog"
-        >
-          {{ t('fields.import') }}
-        </el-button>
       </div>
     </div>
     <el-dialog
@@ -99,21 +80,210 @@
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
-      width="600px"
+      width="800px"
     >
-      <div v-if="uiControl.dialogType === 'CREATE'">
-        <el-steps
-          class="steps"
-          :space="200"
-          :active="active"
-          finish-status="success"
-          align-center
-        >
-          <el-step :title="t('fields.roleDetails')" />
-          <el-step v-if="hasPermission(['sys:roles:update:permission'])" :title="t('fields.permissionAssignment')" />
-        </el-steps>
+      <el-tabs
+        v-model="createType"
+        type="card"
+        @tab-change="handleTabChange"
+        v-if="uiControl.dialogType === 'CREATE'"
+      >
+        <!-- Normal Create Tab -->
+        <el-tab-pane :label="t('fields.normalCreate')" name="normal">
+          <div v-if="uiControl.dialogType === 'CREATE'">
+            <el-steps
+              class="steps"
+              :space="200"
+              :active="active"
+              finish-status="success"
+              align-center
+            >
+              <el-step :title="t('fields.roleDetails')" />
+              <el-step
+                v-if="hasPermission(['sys:roles:update:permission'])"
+                :title="t('fields.permissionAssignment')"
+              />
+            </el-steps>
+            <el-form
+              v-if="active === 0"
+              ref="rolesForm"
+              :model="form"
+              :rules="formRules"
+              :inline="true"
+              size="small"
+              label-width="100px"
+            >
+              <el-form-item :label="t('fields.roleName')" prop="name">
+                <el-input v-model="form.name" style="width: 450px" />
+              </el-form-item>
+              <el-form-item
+                v-if="uiControl.siteVisible"
+                :label="t('fields.site')"
+                prop="siteId"
+              >
+                <el-select
+                  v-model="form.siteId"
+                  size="small"
+                  :placeholder="t('fields.site')"
+                  class="filter-item"
+                  style="width: 450px"
+                  default-first-option
+                  @focus="loadSites"
+                >
+                  <el-option
+                    v-for="item in siteList.list"
+                    :key="item.id"
+                    :label="item.siteName"
+                    :value="item.id"
+                  />
+                </el-select>
+              </el-form-item>
+              <el-form-item :label="t('fields.describe')" prop="remark">
+                <el-input
+                  type="textarea"
+                  :rows="5"
+                  v-model="form.remark"
+                  style="width: 450px"
+                  :placeholder="t('fields.describe')"
+                />
+              </el-form-item>
+              <div class="dialog-footer">
+                <el-button @click="uiControl.dialogVisible = false">
+                  {{ t('fields.cancel') }}
+                </el-button>
+                <el-button
+                  v-if="hasPermission(['sys:roles:update:permission'])"
+                  type="primary"
+                  @click="next"
+                >
+                  {{ t('fields.nextStep') }}
+                </el-button>
+                <el-button v-else type="primary" @click="submit">
+                  {{ t('fields.confirm') }}
+                </el-button>
+              </div>
+            </el-form>
+            <div v-else-if="active === 1">
+              <el-card style="margin-top: 20px; margin-bottom: 20px">
+                <el-tree
+                  ref="tree"
+                  show-checkbox
+                  accordion
+                  node-key="id"
+                  :data="menus.list"
+                  highlight-current
+                  :filter-node-method="filterNode"
+                >
+                  <!-- eslint-disable -->
+                  <template #default="{node, data}">
+                    <div>
+                      <span>{{ data.name }}</span>
+                      <span
+                        v-if="data.remark"
+                        class="tree-node"
+                        >{{ data.remark }}</span
+                      >
+                    </div>
+                  </template>
+                </el-tree>
+              </el-card>
+              <div class="dialog-footer">
+                <el-button @click="active = 0">
+                  {{ t('fields.back') }}
+                </el-button>
+                <el-button
+                  type="primary"
+                  @click="submit"
+                  :loading="uiControl.createLoading"
+                >
+                  {{ t('fields.confirm') }}
+                </el-button>
+              </div>
+            </div>
+          </div>
+        </el-tab-pane>
+
+        <el-tab-pane :label="t('fields.import')" name="import-json">
+          <el-steps
+            class="steps"
+            :space="200"
+            :active="jsonImportControl.activeStep"
+            finish-status="success"
+            align-center
+          >
+            <el-step :title="t('fields.import')" />
+            <el-step :title="t('fields.permissionAssignment')" />
+          </el-steps>
+
+          <!-- Step 1: Upload File -->
+          <div v-if="jsonImportControl.activeStep === 0">
+            <el-upload
+              ref="jsonUpload"
+              :auto-upload="false"
+              :show-file-list="false"
+              :on-change="handleJSONUpload"
+              accept=".json"
+              style="text-align: center; margin-top: 20px"
+            >
+              <el-button type="primary">
+                {{ t('fields.upload') }}
+              </el-button>
+            </el-upload>
+          </div>
+
+          <!-- Step 2: Permission Assignment -->
+          <div v-if="jsonImportControl.activeStep === 1">
+            <el-card style="margin-top: 20px">
+              <el-tree
+                ref="jsonImportTree"
+                show-checkbox
+                accordion
+                node-key="id"
+                :data="menus.list"
+                highlight-current
+                :default-checked-keys="jsonImportControl.selectedMenuIds"
+              >
+                <template #default="{node, data}">
+                  <div>
+                    <span 
+                      class="json-menu" 
+                      :data-menu-id="data.id" 
+                      :data-parent-id="data.parentId"
+                      :class="getNodeClass(data)"
+                    >
+                      {{ data.name }}
+                    </span>
+                    <span
+                      v-if="data.remark"
+                      class="tree-node"
+                    >{{ data.remark }}</span>
+                  </div>
+                </template>
+              </el-tree>
+            </el-card>
+          </div>
+
+          <div class="dialog-footer" style="margin-top: 20px">
+            <el-button
+              v-if="jsonImportControl.activeStep > 0"
+              @click="jsonImportControl.activeStep--"
+            >
+              {{ t('fields.back') }}
+            </el-button>
+            <el-button
+              v-if="jsonImportControl.activeStep === 1"
+              type="primary"
+              :disabled="!canJsonImportProceed"
+              @click="submitJsonImport"
+            >
+              {{ t('fields.confirm') }}
+            </el-button>
+          </div>
+        </el-tab-pane>
+      </el-tabs>
+
+      <div v-else-if="uiControl.dialogType === 'EDIT'">
         <el-form
-          v-if="active === 0"
           ref="rolesForm"
           :model="form"
           :rules="formRules"
@@ -159,96 +329,12 @@
             <el-button @click="uiControl.dialogVisible = false">
               {{ t('fields.cancel') }}
             </el-button>
-            <el-button v-if="hasPermission(['sys:roles:update:permission'])" type="primary" @click="next">
-              {{ t('fields.nextStep') }}
-            </el-button>
-            <el-button v-else type="primary" @click="submit">
+            <el-button type="primary" @click="submit">
               {{ t('fields.confirm') }}
             </el-button>
           </div>
         </el-form>
-        <div v-else-if="active === 1">
-          <el-card style="margin-top: 20px; margin-bottom: 20px">
-            <el-tree
-              ref="tree"
-              show-checkbox
-              accordion
-              node-key="id"
-              :data="menus.list"
-              highlight-current
-              :filter-node-method="filterNode"
-            >
-              <!-- eslint-disable -->
-              <template #default="{node, data}">
-                <div>
-                  <span>{{ data.name }}</span>
-                  <span v-if="data.remark" class="tree-node">{{ data.remark }}</span>
-                </div>
-              </template>
-            </el-tree>
-          </el-card>
-          <div class="dialog-footer">
-            <el-button @click="active = 0">
-              {{ t('fields.back') }}
-            </el-button>
-            <el-button type="primary" @click="submit" :loading="uiControl.createLoading">
-              {{ t('fields.confirm') }}
-            </el-button>
-          </div>
-        </div>
       </div>
-      <el-form
-        v-else-if="uiControl.dialogType === 'EDIT'"
-        ref="rolesForm"
-        :model="form"
-        :rules="formRules"
-        :inline="true"
-        size="small"
-        label-width="100px"
-      >
-        <el-form-item :label="t('fields.roleName')" prop="name">
-          <el-input v-model="form.name" style="width: 450px" />
-        </el-form-item>
-        <el-form-item
-          v-if="uiControl.siteVisible"
-          :label="t('fields.site')"
-          prop="siteId"
-        >
-          <el-select
-            v-model="form.siteId"
-            size="small"
-            :placeholder="t('fields.site')"
-            class="filter-item"
-            style="width: 450px"
-            default-first-option
-            @focus="loadSites"
-          >
-            <el-option
-              v-for="item in siteList.list"
-              :key="item.id"
-              :label="item.siteName"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="t('fields.describe')" prop="remark">
-          <el-input
-            type="textarea"
-            :rows="5"
-            v-model="form.remark"
-            style="width: 450px"
-            :placeholder="t('fields.describe')"
-          />
-        </el-form-item>
-        <div class="dialog-footer">
-          <el-button @click="uiControl.dialogVisible = false">
-            {{ t('fields.cancel') }}
-          </el-button>
-          <el-button type="primary" @click="submit">
-            {{ t('fields.confirm') }}
-          </el-button>
-        </div>
-      </el-form>
     </el-dialog>
     <el-dialog
       v-else-if="uiControl.dialogType === 'PERMISSION' || uiControl.dialogType === 'COPY'"
@@ -306,15 +392,25 @@
           />
         </el-form-item>
         <div class="dialog-footer">
-          <el-button @click="uiControl.dialogVisible = false" :disabled=uiControl.copyLoading>
+          <el-button
+            @click="uiControl.dialogVisible = false"
+            :disabled="uiControl.copyLoading"
+          >
             {{ t('fields.cancel') }}
           </el-button>
-          <el-button type="primary" @click="submit" :loading="uiControl.copyLoading">
+          <el-button
+            type="primary"
+            @click="submit"
+            :loading="uiControl.copyLoading"
+          >
             {{ t('fields.confirm') }}
           </el-button>
         </div>
       </el-form>
-      <div v-else-if="uiControl.dialogType === 'PERMISSION'" v-loading="uiControl.treeLoading">
+      <div
+        v-else-if="uiControl.dialogType === 'PERMISSION'"
+        v-loading="uiControl.treeLoading"
+      >
         <el-tree
           ref="tree"
           show-checkbox
@@ -328,12 +424,19 @@
           <template #default="{node, data}">
             <div>
               <span>{{ data.name }}</span>
-              <span v-if="data.remark" class="tree-node">{{ data.remark }}</span>
+              <span
+                v-if="data.remark"
+                class="tree-node"
+                >{{ data.remark }}</span
+              >
             </div>
           </template>
         </el-tree>
         <div class="dialog-footer">
-          <el-button @click="uiControl.dialogVisible = false" :disabled=uiControl.permissionLoading>
+          <el-button
+            @click="uiControl.dialogVisible = false"
+            :disabled="uiControl.permissionLoading"
+          >
             {{ t('fields.cancel') }}
           </el-button>
           <el-button
@@ -346,125 +449,6 @@
           </el-button>
         </div>
       </div>
-    </el-dialog>
-
-
-    <el-dialog
-      :title="t('fields.importRole')"
-      v-model="importControl.dialogVisible"
-      width="60%"
-      :close-on-click-modal="false"
-      >
-      <el-steps
-        class="steps"
-        :space="200"
-        :active="importControl.activeStep"
-        finish-status="success"
-        align-center
-      >
-        <el-step :title="t('fields.import')" />
-        <el-step :title="t('fields.roleDetails')" />
-        <el-step :title="t('fields.permissionAssignment')" />
-      </el-steps>
-
-      <!-- Step 1: Upload File -->
-      <div v-if="importControl.activeStep === 0">
-        <el-upload
-          ref="uploadRef"
-          class="upload-demo"
-          :limit="1"
-          :on-change="handleFileUpload"
-          :auto-upload="false"
-          accept=".xlsx"
-          style="text-align: center;"
-        >
-          <el-button type="primary">{{ t('fields.import') }}</el-button>
-        </el-upload>
-      </div>
-
-      <!-- Step 2: Role Details -->
-      <div v-if="importControl.activeStep === 1">
-        <el-form
-          ref="importForm"
-          :model="form"
-          label-width="120px"
-          size="small"
-        >
-          <el-form-item :label="t('fields.roleName')" prop="name">
-            <el-input v-model="form.name" />
-          </el-form-item>
-          <el-form-item :label="t('fields.site')" prop="siteId">
-            <el-select
-              v-model="form.siteId"
-              :placeholder="t('fields.site')"
-              filterable
-              default-first-option
-            >
-              <el-option
-                v-for="item in siteList.list"
-                :key="item.id"
-                :label="item.siteName"
-                :value="item.id"
-              />
-            </el-select>
-          </el-form-item>
-          <el-form-item :label="t('fields.remark')" prop="remark">
-            <el-input
-              type="textarea"
-              :rows="6"
-              v-model="form.remark"
-              maxlength="500"
-              show-word-limit
-            />
-          </el-form-item>
-        </el-form>
-      </div>
-
-      <!-- Step 3: Permission Assignment -->
-      <div v-if="importControl.activeStep === 2">
-        <el-card style="margin-top: 20px;">
-          <el-tree
-            ref="importTree"
-            show-checkbox
-            accordion
-            node-key="id"
-            :data="menus.list"
-            highlight-current
-            :default-checked-keys="importControl.selectedMenuIds"
-          >
-            <template #default="{node, data}">
-              <div>
-                <span>{{ data.name }}</span>
-                <span v-if="data.remark" class="tree-node">{{ data.remark }}</span>
-              </div>
-            </template>
-          </el-tree>
-        </el-card>
-      </div>
-
-      <template #footer>
-        <el-button
-          v-if="importControl.activeStep > 0"
-          @click="importControl.activeStep--"
-        >
-          {{ t('fields.back') }}
-        </el-button>
-        <el-button
-          v-if="importControl.activeStep < 2"
-          type="primary"
-          @click="nextStep"
-          :disabled="!canProceed"
-        >
-          {{ t('fields.nextStep') }}
-        </el-button>
-        <el-button
-          v-if="importControl.activeStep === 2"
-          type="primary"
-          @click="submitImport"
-        >
-          {{ t('fields.confirm') }}
-        </el-button>
-      </template>
     </el-dialog>
 
     <div class="body-container">
@@ -492,7 +476,7 @@
           <el-table-column
             prop="siteName"
             :label="t('fields.siteName')"
-            width="120"
+            width="200"
           />
           <el-table-column
             prop="remark"
@@ -519,7 +503,7 @@
           <el-table-column
             prop="createBy"
             :label="t('fields.createBy')"
-            width="120"
+            width="180"
           />
           <el-table-column
             prop="updateTime"
@@ -541,7 +525,7 @@
           <el-table-column
             prop="updateBy"
             :label="t('fields.updateBy')"
-            width="120"
+            width="180"
           />
           <el-table-column
             :label="t('fields.operate')"
@@ -553,9 +537,16 @@
                 hasPermission(['sys:roles:update:permission']) ||
                 hasPermission(['sys:roles:delete'])
             "
-            width="350"
+            width="550"
           >
             <template #default="scope">
+              <el-button
+                icon="el-icon-download"
+                size="mini"
+                type="info"
+                @click="exportToJSON(scope.row)"
+              >
+              </el-button>
               <el-button
                 icon="el-icon-copy-document"
                 size="mini"
@@ -576,14 +567,14 @@
                 type="warning"
                 v-permission="['sys:roles:update:permission']"
                 @click="showPermission(scope.row)"
-              >{{ t('fields.permissionAssignment') }}
+                >{{ t('fields.permissionAssignment') }}
               </el-button>
               <el-button
                 v-else
                 size="mini"
                 type="warning"
                 @click="showPermission(scope.row)"
-              >{{ t('fields.viewPermission') }}
+                >{{ t('fields.viewPermission') }}
               </el-button>
               <el-button
                 icon="el-icon-remove"
@@ -636,21 +627,11 @@
       </el-card> -->
     </div>
   </div>
-  <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
-             :close-on-click-modal="false" :close-on-press-escape="false"
-  >
-    <span>{{ t('message.requestExportToExcelDone1') }}</span>
-    <router-link :to="`/site-management/download-manager`">
-      <el-link type="primary">
-        {{ t('menu.DownloadManager') }}
-      </el-link>
-    </router-link>
-    <span>{{ t('message.requestExportToExcelDone2') }}</span>
-  </el-dialog>
+
 </template>
 
 <script setup>
-import { nextTick, onMounted, reactive, ref, computed } from 'vue'
+import { nextTick, onMounted, reactive, ref, computed, watch } from 'vue'
 import { required } from '../../../utils/validate'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
@@ -662,7 +643,6 @@ import {
   getRoles,
   updateRole,
   updateRolePermission,
-  exportRole,
 } from '../../../api/roles'
 import { fetchSimpleMenu } from '../../../api/menus'
 import { getSiteListSimple } from '../../../api/site'
@@ -670,7 +650,6 @@ import { hasPermission } from '../../../utils/util'
 import { useStore } from '../../../store'
 import { ADMIN, TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
-import * as XLSX from 'xlsx'
 
 const { t } = useI18n()
 const store = useStore()
@@ -745,6 +724,26 @@ function showDialog(type) {
     form.remark = null
     form.idToCopy = null
     uiControl.dialogTitle = t('fields.addRole')
+
+    // 重置 createType 为 normal
+    createType.value = 'normal'
+
+    // 重置导入json菜单数据
+    allMenus.value = []
+    allMenusData.value = []
+    userAccessibleMenus.value = []
+    inaccessibleMenuIds.value = []
+    jsonImportControl.dialogVisible = false
+    jsonImportControl.activeStep = 0
+    jsonImportControl.selectedMenuIds = []
+    jsonImportControl.fileLoaded = false
+    jsonImportControl.isImportMode = false
+
+    // 2. 重置树型组件状态
+    if (jsonImportTree.value) {
+      jsonImportTree.value.setCheckedKeys([]) // 清空所有勾选
+      jsonImportTree.value.store.nodesMap = {} // 清空节点数据
+    }
   } else if (type === 'PERMISSION') {
     if (hasPermission(['sys:roles:update:permission'])) {
       uiControl.dialogTitle = t('fields.permissionAssignment')
@@ -1007,125 +1006,356 @@ function next() {
   })
 }
 
-// 导出角色
-async function exportRoleButton() {
-  if (rolesID.length !== 1) {
-    ElMessage({ message: t('message.roleMustOnlyOne'), type: 'error' })
-  }
+// 添加 tab 切换
+const createType = ref('normal')
 
-  const { data: ret } = await exportRole(request.siteId, rolesID[0].id)
-  if (ret) {
-    uiControl.messageVisible = true;
+// 导出角色权限 - json 格式
+const exportToJSON = (row) => {
+  // 1. 获取需要导出的数据
+  const dataToExport = {
+    name: row.name,
+    remark: row.remark,
+    menuIds: row.menus,
+  }
+  // 2. 调用下载方法
+  downloadJSON(dataToExport, `role-${row.name}-permissions.json`)
+}
+
+const downloadJSON = (data, filename = 'data.json') => {
+  // 1. 将数据转换为 JSON 字符串
+  const jsonString = JSON.stringify(data, null, 2) // 第二个参数为 null，第三个参数为缩进空格数
+
+  // 2. 创建 Blob 对象
+  const blob = new Blob([jsonString], { type: 'application/json' })
+
+  // 3. 创建下载链接
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = filename
+
+  // 4. 触发下载
+  document.body.appendChild(a) // 将链接添加到 DOM 中
+  a.click() // 模拟点击下载
+  document.body.removeChild(a) // 下载完成后移除链接
+
+  // 5. 释放 Blob URL
+  URL.revokeObjectURL(url)
+}
+
+// 1. 定义状态存储菜单数据
+const allMenus = ref([]) // 所有菜单
+const allMenusData = ref([])
+const userAccessibleMenus = ref([]) // 用户可访问的菜单
+const inaccessibleMenuIds = ref([]) // 没有权限的菜单 ID 列表
+const isMenuDataLoaded = ref(false) // 菜单数据是否已加载
+const jsonImportControl = reactive({
+  dialogVisible: false,
+  activeStep: 0,
+  selectedMenuIds: [],
+  fileLoaded: false,
+  isImportMode: false
+})
+
+// 在进入权限导入页面时调用
+const handleTabChange = (tabName) => {
+  if (tabName === 'import-json') {
+    jsonImportControl.loadMenuData()
   }
 }
 
-// 导入角色
-const importControl = reactive({
-  dialogVisible: false,
-  activeStep: 0,
-  fileLoaded: false,
-  selectedMenuIds: [],
-  loading: false
-})
+const jsonImportTree = ref(null)
 
-const canProceed = computed(() => {
-  switch (importControl.activeStep) {
-    case 0:
-      return importControl.fileLoaded
-    case 1:
-      return form.name && form.siteId
-    case 2:
+const canJsonImportProceed = computed(() => {
+  switch (jsonImportControl.activeStep) {
+    case 0: // 第一步：文件加载
+      return jsonImportControl.fileLoaded
+    case 1: // 第二步：Permission Assignment
+      return (
+        form.name &&
+        form.siteId &&
+        inaccessibleMenuIds.value.length === 0 // 确保没有权限错误
+      )
+    case 2: // 第三步：提交
       return true
     default:
       return false
   }
 })
 
-const uploadRef = ref(null)
+const handleJSONUpload = (file) => {
+  const reader = new FileReader()
+  reader.onload = (event) => {
+    try {
+      const jsonData = JSON.parse(event.target.result) // 解析 JSON 文件
 
-function showImportDialog() {
-  importControl.dialogVisible = true
-  importControl.activeStep = 0
-  importControl.fileLoaded = false
-  importControl.selectedMenuIds = []
+      // 1. 验证 JSON 数据结构
+      if (!jsonData.name || !jsonData.menuIds || !jsonData.remark) {
+        ElMessage.error(t('message.invalidJSONStructure'))
+        return
+      }
 
-  // 重置表单数据
-  form.name = ''
-  form.siteId = null
-  form.remark = ''
+      // 2. 直接跳转到 Permission Assignment 步骤
+      jsonImportControl.activeStep = 1 // Permission Assignment
 
-  // 清空文件上传组件
-  if (uploadRef.value) {
-    uploadRef.value.clearFiles()
+      // 3. 调用 processJSONData 进行权限检查
+      processJSONData(jsonData)
+    } catch (error) {
+      ElMessage.error(t('message.invalidJSONFile'))
+    }
   }
+  reader.readAsText(file.raw) // 读取文件内容
 }
 
-function handleFileUpload(file) {
-  const allowFileType = [
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    'application/vnd.ms-excel',
-  ]
+const processJSONData = (jsonData) => {
+  // 1. 验证 JSON 数据结构
+  if (!jsonData.name || !jsonData.menuIds || !jsonData.remark) {
+    ElMessage.error(t('message.invalidJSONStructure'))
+    return
+  }
+  // 2. 更新表单数据
+  form.name = jsonData.name
+  form.remark = jsonData.remark
 
-  if (allowFileType.find(ftype => ftype.includes(file.raw.type))) {
-    const fileReader = new FileReader()
+  // 3. 比较菜单权限
+  inaccessibleMenuIds.value = jsonData.menuIds.filter(menuId => {
+    // 如果菜单不在用户可访问的菜单列表中，但存在于所有菜单列表中
+    return (
+      !userAccessibleMenus.value.some(menu => menu === menuId) &&
+      allMenus.value.some(menu => menu === menuId)
+    )
+  })
+  // 4. 如果有没权限的菜单，显示错误信息
+  if (inaccessibleMenuIds.value.length > 0) {
+    const inaccessibleMenuNames = mapMenuIdsToNames(inaccessibleMenuIds.value)
+    ElMessage.error(`No Permission To Menu - ${inaccessibleMenuNames}`)
+    // ElMessage.error(t('message.inaccessibleMenus', { menuIds: inaccessibleMenuIds.value.join(', ') }))
+  }
 
-    fileReader.onload = event => {
-      const { result } = event.target
-      const workbook = XLSX.read(result, { type: 'binary' })
-      const sheet = workbook.Sheets[workbook.SheetNames[0]]
-      const data = XLSX.utils.sheet_to_json(sheet)
+  // 5. 手动处理 jsonImportTree.value 的数据
+  nextTick(() => {
+    if (jsonImportTree.value) {
+      // // 清空所有已勾选的节点
+      jsonImportTree.value.setCheckedKeys([])
 
-      if (data.length > 0) {
-        const firstRow = data[0]
+      // 只勾选用户有权限的菜单
+      const accessibleMenuIds = jsonData.menuIds.filter(menuId =>
+        userAccessibleMenus.value.includes(menuId)
+      )
 
-        // 检查必要字段是否存在
-        const requiredFields = ['name', 'siteId', 'menuIds', 'remark']
-        const missingFields = requiredFields.filter(field => !(field in firstRow))
-        if (missingFields.length > 0) {
-          console.log(missingFields)
-          ElMessage({ message: t('message.invalidFile'), type: 'error' })
-          return false
-          // throw new Error(t('message.missingColumns', { columns: missingFields.join(', ') }))
+      // 遍历所有节点，处理父节点和子节点的勾选逻辑
+      const nodes = jsonImportTree.value.store.nodesMap
+      for (const node of Object.values(nodes)) {
+        if (node.children && node.children.length > 0) {
+          // 父节点：检查子节点的勾选情况
+          const checkedChildren = node.children.filter(child =>
+            accessibleMenuIds.includes(child.data.id))
+          if (checkedChildren.length === 1) {
+            // 如果只有一个子节点被勾选，则只勾选该子节点
+            jsonImportTree.value.setChecked(checkedChildren[0].data.id, true)
+          } else if (checkedChildren.length > 1) {
+            // 如果有多个子节点被勾选，则勾选父节点
+            jsonImportTree.value.setChecked(node.data.id, true)
+          }
+        } else {
+          // 叶子节点：直接勾选
+          if (accessibleMenuIds.includes(node.data.id)) {
+            jsonImportTree.value.setChecked(node.data.id, true)
+          }
+        }
+      }
+
+      // 将选中的菜单 ID 存储到 form.menuIds
+      const checkedKeys = jsonImportTree.value.getCheckedKeys()
+      form.menuIds = checkedKeys.join(',')
+    }
+  })
+
+  // 6. 直接跳转到 Permission Assignment 步骤
+  jsonImportControl.activeStep = 1
+}
+
+// 动态设置节点样式
+const getNodeClass = (node) => {
+  // 检查当前节点是否无权限
+  if (inaccessibleMenuIds.value.includes(node.id)) {
+    return 'inaccessible-node'
+  }
+  // 递归检查子节点
+  if (node.children && node.children.length > 0) {
+    const hasInaccessibleChild = node.children.some(child =>
+      inaccessibleMenuIds.value.includes(child.id))
+    if (hasInaccessibleChild) {
+      console.log("hasInaccessibleChild : ", hasInaccessibleChild)
+      return 'has-inaccessible-child'
+    }
+  }
+
+  return ''
+}
+
+async function submitJsonImport() {
+  try {
+    jsonImportControl.loading = true
+
+    // 1. 获取选中的节点（包括半选中的父节点）
+    const checkedNodes = jsonImportTree.value.getCheckedNodes(false, true)
+    const checkedKeys = checkedNodes.map(node => node.id)
+
+    // 2. 检查是否有无权限的菜单
+    const inaccessibleMenuIds = checkedKeys.filter(menuId => {
+      return (
+        !userAccessibleMenus.value.includes(menuId) &&
+        allMenus.value.includes(menuId))
+    })
+
+    // 3. 如果有无权限的菜单，显示错误信息并阻止提交
+    if (inaccessibleMenuIds.length > 0) {
+      // 更新 inaccessibleMenuIds，以便 getNodeClass 能够正确应用样式
+      inaccessibleMenuIds.value = inaccessibleMenuIds
+
+      // 显示错误信息
+      const inaccessibleMenuNames = mapMenuIdsToNames(inaccessibleMenuIds)
+      ElMessage.error(`No Permission To Menu - ${inaccessibleMenuNames}`)
+
+      const inaccessibleMenuIdsSet = new Set(inaccessibleMenuIds)
+
+      // 找到所有带有 json-menu 类的元素
+      const jsonMenuElements = document.querySelectorAll('.json-menu')
+      jsonMenuElements.forEach(element => {
+        const menuId = parseInt(element.dataset.menuId) // 获取当前元素的菜单 ID
+
+        // 检查当前菜单是否无权限
+        if (inaccessibleMenuIdsSet.has(menuId)) {
+          element.classList.add('inaccessible-node') // 添加 inaccessible-node 类
         }
 
-        form.name = firstRow.name || ''
-        form.siteId = request.siteId || null
-        form.remark = firstRow.remark || ''
-        importControl.selectedMenuIds = firstRow.menuIds
-          ? firstRow.menuIds.split(',').map(Number)
-          : []
-        importControl.fileLoaded = true
-      }
+        // 检查子树型数据是否有无权限的菜单
+        const hasInaccessibleChild = Array.from(jsonMenuElements).some(childElement => {
+          return (
+            childElement.dataset.parentId === menuId.toString() && // 是当前母树型数据的子树
+      inaccessibleMenuIdsSet.has(parseInt(childElement.dataset.menuId)) // 子树无权限
+          )
+        })
+
+        // 如果子树型数据有无权限的菜单，为母树型数据添加 has-inaccessible-node 类
+        if (hasInaccessibleChild) {
+          element.classList.add('has-inaccessible-child')
+        }
+      })
+
+      return
     }
-    fileReader.readAsBinaryString(file.raw)
-  }
-}
-
-function nextStep() {
-  if (importControl.activeStep < 2) {
-    importControl.activeStep++
-  }
-}
-
-const importTree = ref(null)
-
-async function submitImport() {
-  try {
-    importControl.loading = true
-
-    const checkedKeys = importTree.value.getCheckedNodes(false, true).map(c => c.id)
+    // 4. 构建提交数据
     const roleData = {
       ...form,
       menuIds: checkedKeys.join(',')
     }
+
+    // 5. 调用 API 提交数据
     await createRoleWithPermission(roleData)
+
+    // 5. 处理成功响应
     ElMessage.success(t('message.importSuccess'))
-    importControl.dialogVisible = false
-    loadData()
+    uiControl.dialogVisible = false
+    jsonImportControl.dialogVisible = false
+    await loadData() // 重新加载数据
   } catch (error) {
+    console.error('提交数据失败:', error)
     ElMessage.error(t('message.importFailed'))
   } finally {
-    importControl.loading = false
+    uiControl.loading = false
+    jsonImportControl.loading = false
+  }
+}
+
+// 监听 createType 的变化
+watch(createType, (newTabName) => {
+  if (newTabName === 'import-json') {
+    // 切换到 import-json 标签页时，加载菜单数据
+    loadMenuDataForImport()
+  }
+})
+
+// 假设 allMenuData 是一个包含所有菜单数据的数组，结构为 [{ id: 1, name: '菜单1' }, ...]
+const mapMenuIdsToNames = (menuIds) => {
+  return menuIds
+    .map(menuId => {
+      // 递归查找菜单名称
+      const findMenuName = (menus, targetId) => {
+        for (const menu of menus) {
+          if (menu.id === targetId) {
+            return menu.name
+          }
+          if (menu.children && menu.children.length > 0) {
+            const found = findMenuName(menu.children, targetId)
+            if (found) {
+              return found
+            }
+          }
+        }
+        return null
+      }
+
+      // 查找菜单名称
+      const menuName = findMenuName(allMenusData.value, menuId)
+      return menuName || `未知菜单 (ID: ${menuId})`
+    })
+    .join(', ')
+}
+
+// 加载菜单数据的方法
+const loadMenuDataForImport = async () => {
+  try {
+    const getAllMenuIds = []
+    const getUserMenuIds = []
+
+    // 获取所有菜单
+    const { data: allMenuData } = await fetchSimpleMenu()
+    // allMenus.value = allMenuData
+
+    // 递归收集所有菜单的 ID
+    const collectMenuIds = (menus) => {
+      menus.forEach(menu => {
+        getAllMenuIds.push(menu.id) // 收集当前菜单的 ID
+        if (menu.children && menu.children.length > 0) {
+          collectMenuIds(menu.children) // 递归收集子菜单的 ID
+        }
+      })
+    }
+
+    // 调用递归函数，收集所有菜单的 ID
+    if (allMenuData && allMenuData.length > 0) {
+      collectMenuIds(allMenuData)
+    }
+    allMenus.value = getAllMenuIds
+    allMenusData.value = allMenuData
+
+    // 获取用户可访问的菜单
+    const siteId = store.state.user.siteId // 当前用户的 siteId
+    const { data: userMenuData } = await fetchSimpleMenu(siteId)
+    // userAccessibleMenus.value = userMenuData
+
+    // 递归收集所有菜单的 ID
+    const collectUserMenuIds = (menus) => {
+      menus.forEach(menu => {
+        getUserMenuIds.push(menu.id) // 收集当前菜单的 ID
+        if (menu.children && menu.children.length > 0) {
+          collectUserMenuIds(menu.children) // 递归收集子菜单的 ID
+        }
+      })
+    }
+
+    // 调用递归函数，收集所有菜单的 ID
+    if (userMenuData && userMenuData.length > 0) {
+      collectUserMenuIds(userMenuData)
+    }
+    userAccessibleMenus.value = getUserMenuIds
+
+    // 标记菜单数据已加载
+    isMenuDataLoaded.value = true
+  } catch (error) {
+    ElMessage.error(t('message.fetchMenuDataError'))
   }
 }
 
@@ -1155,7 +1385,7 @@ onMounted(async () => {
   justify-content: space-between;
 
   .roles {
-    // width: 75%;
+    width: 100%;
 
     .pagination {
       margin-top: 10px;
@@ -1181,7 +1411,7 @@ onMounted(async () => {
 
 .tree-node {
   position: absolute;
-  right: 50px
+  right: 50px;
 }
 
 .dialog-footer {
@@ -1195,5 +1425,21 @@ onMounted(async () => {
 
 .el-table--enable-row-transition .el-table__body td.el-table__cell {
   padding: 4px 0;
+}
+
+:deep(.inaccessible-node) {
+  border: 1px solid red !important;
+  padding: 2px !important;
+  border-radius: 4px !important;
+  background-color: #ffebee !important; // 浅红色背景
+  color: #d32f2f !important; // 红色文字
+}
+
+:deep(.has-inaccessible-child) {
+  border: 1px solid red !important;
+  padding: 2px !important;
+  border-radius: 4px !important;
+  background-color: #ffebee !important; // 浅红色背景
+  color: #d32f2f !important; // 红色文字
 }
 </style>
