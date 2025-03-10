@@ -26,6 +26,12 @@
       "
     />
 
+    <HongBaoPreEurocupPromo
+      :promo-code="list.promoCode"
+      :pageContent="list.pageContent"
+      :promoParam="list.param"
+      v-if="listParam.type === 'hongbaoyu'"
+    />
     <BountyBlastPremier v-if="list.redirectUrl === 'bounty-blast-premier'" :promo-code="list.promoCode" />
 
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao'" />
@@ -109,6 +115,7 @@ import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskProm
 import EsportQuiz2 from "../components/hotpromo/esportquiz2/EsportQuiz.vue";
 import PrivilegeInvite from "../components/hotpromo/privilegeInvite/PrivilegeInvite.vue";
 
+import HongBaoPreEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue";
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 
 import LivepokerRebate from "@/components/hotpromo/livepoker-rebate/LivepokerRebate.vue";
@@ -164,7 +171,7 @@ export default defineComponent({
     BountyBlastPremier,
     fishHongbao,
     ClaimPromo,
-
+    HongBaoPreEurocupPromo,
     PrizePoolVotePromo,
     GoldenEggPromo,
     InviteFriendPromo,
