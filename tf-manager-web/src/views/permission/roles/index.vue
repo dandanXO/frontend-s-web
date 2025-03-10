@@ -879,7 +879,7 @@ function submit() {
 }
 
 async function loadTreeMenu() {
-  let requestSiteId = 0
+  let requestSiteId = request.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     requestSiteId = store.state.user.siteId
   }
