@@ -34,6 +34,7 @@
             outlined
             color="white"
             bg-color="recinputstyle"
+            rounded
           >
             <template v-slot:append v-if="showVerifyBtn">
               <q-btn
@@ -65,6 +66,7 @@
             outlined
             color="white"
             bg-color="recinputstyle"
+            rounded
           ></q-input>
         </div>
       </div>
