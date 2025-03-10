@@ -1190,23 +1190,23 @@ defineExpose({ showVideo });
 @keyframes moveFinger {
   0% {
     bottom: -4vh; /* Start position */
-    right: -4vh; /* Start on the right */
+    right: -2vh; /* Start on the right */
   }
   25% {
     bottom: -4.5vh; /* Move up slightly */
-    right: -3vh; /* Move left slightly (towards the center) */
+    right: -1vh; /* Move left slightly (towards the center) */
   }
   50% {
     bottom: -5vh; /* Move up further */
-    right: -2vh; /* Move further left */
+    right: 0vh; /* Move further left */
   }
   75% {
     bottom: -4.5vh; /* Move back down slightly */
-    right: -3vh; /* Move back to the center */
+    right: -1vh; /* Move back to the center */
   }
   100% {
     bottom: -4vh; /* End position */
-    right: -4vh; /* Back to the original position on the right */
+    right: -2vh; /* Back to the original position on the right */
   }
 }
 

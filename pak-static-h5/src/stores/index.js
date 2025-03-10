@@ -127,6 +127,7 @@ export const userStore = defineStore("userStore", {
             SessionStorage.set("TOKEN", ret.data);
           }
           this.token = ret.data;
+          this.getMemberInfo('fromlogin')
         } else {
           Notify.create({
             color: "negative",
@@ -156,6 +157,7 @@ export const userStore = defineStore("userStore", {
           } else {
             SessionStorage.set("TOKEN", ret.data);
           }
+          this.getMemberInfo('fromlogin')
         } else {
           Notify.create({
             color: "negative",
@@ -178,7 +180,7 @@ export const userStore = defineStore("userStore", {
     setReadMsg() {
       this.readMsgLists = SessionStorage.getItem("READ_MAIL_IDS") || [];
     },
-    getMemberInfo() {
+    getMemberInfo(from) {
       // api.interceptors.request.use(async (req) => {
       //   var token;
       //   if (isAndroid()) {
@@ -260,8 +262,15 @@ export const userStore = defineStore("userStore", {
             var exclusive = JSON.parse(evip);
             this.evip = exclusive.wap;
           }
-
           this.unreadInboxMail = 0;
+          if (from === 'fromlogin') {
+            if (!this.hasDeposit && this.token) {
+              localStorage.setItem("newPlayerGuide", '1');
+              localStorage.removeItem("completeddepositguide");
+              localStorage.removeItem("completedreferguide");
+              localStorage.removeItem("completedwithdrawguide");
+            }
+          }
           // this.unreadInboxMail = 16;
           this.getBalance();
         } else {

@@ -34,6 +34,7 @@
             <div class="step-no" :class="`step-${currentAdditionalStep} ${localType}-mode`">
               {{ currentAdditionalStep }} / {{ currentSteps.length }}
             </div>
+            <div class="buttons">
             <div
               @click="updateCurrentAdditionalStep"
               :class="{ whand: localType === 'refer' && localStep === 1 }"
@@ -41,6 +42,8 @@
             >
               {{ localType === "refer" && localStep === 1 ? $t("playerGuide.tryItOut") : $t("playerGuide.next") }}
             </div>
+            <div @click="updateToWithdrawStep" class="next-button" v-if="localType === 'refer' && localStep === 1">{{ $t("playerGuide.next") }}</div>
+          </div>
           </div>
         </div>
       </div>
@@ -117,6 +120,12 @@ const currentSteps = computed(() => {
   if (localType.value === "withdraw") return additionalWithdrawSteps.value;
   return additionalDepSteps.value;
 });
+const updateToWithdrawStep = () => {
+  router.push("/");
+  emit("closeGuide", true);
+  localStorage.setItem(`completedreferguide`, JSON.stringify(true));
+  localStorage.setItem(`newPlayerGuide`, 5);
+}
 const updateCurrentAdditionalStep = () => {
   // debugger;
   if (localType.value === "deposit") {
@@ -729,6 +738,36 @@ const updateCurrentAdditionalStep = () => {
           display: none;
         }
       }
+      .buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+      }
+      .next-button {
+        text-transform: uppercase;
+        cursor: pointer;
+        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        padding: 10px;
+        font-family: Poppins;
+        font-weight: 700;
+        // font-size: 2vh;
+        // line-height: 2vh;
+        padding: 15px 10px;
+        font-size: 15px;
+        line-height: 18px;
+        // padding: 8px 30px;
+        letter-spacing: 0px;
+        text-align: center;
+        color: #000000;
+        border-radius: 8px;
+        margin: 0 auto;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
       .bottom-button {
         cursor: pointer;
         background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
@@ -737,7 +776,7 @@ const updateCurrentAdditionalStep = () => {
         font-weight: 700;
         font-size: 2vh;
         line-height: 2vh;
-        padding: 15px 30px;
+        padding: 15px 10px;
         letter-spacing: 0px;
         text-align: center;
         color: #000000;
@@ -762,6 +801,11 @@ const updateCurrentAdditionalStep = () => {
             bottom: 0;
             right: 0;
             animation: moveFinger 1.5s ease-in-out infinite;
+            @media screen and (min-width: 400px) {
+              width: 70px;
+              height: 70px;
+            }
+            z-index: 99;
           }
         }
       }
@@ -773,23 +817,23 @@ const updateCurrentAdditionalStep = () => {
 @keyframes moveFinger {
   0% {
     bottom: -4vh; /* Start position */
-    right: -7vh; /* Start on the right */
+    right: -2vh; /* Start on the right */
   }
   25% {
     bottom: -4.5vh; /* Move up slightly */
-    right: -6vh; /* Move left slightly (towards the center) */
+    right: -1vh; /* Move left slightly (towards the center) */
   }
   50% {
     bottom: -5vh; /* Move up further */
-    right: -5vh; /* Move further left */
+    right: 0vh; /* Move further left */
   }
   75% {
     bottom: -4.5vh; /* Move back down slightly */
-    right: -6vh; /* Move back to the center */
+    right: -1vh; /* Move back to the center */
   }
   100% {
     bottom: -4vh; /* End position */
-    right: -7vh; /* Back to the original position on the right */
+    right: -2vh; /* Back to the original position on the right */
   }
 }
 </style>

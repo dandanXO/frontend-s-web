@@ -1420,16 +1420,6 @@
     </q-dialog>
   </template>
 
-  <CongratsReuseableModal
-    :isShowDialog="isShowCodeBonusModal"
-    :bonusTitle="$t('modal.homeCodeBonus.congratsWonFreeCash')"
-    :bonusTxt="$t('modal.homeCodeBonus.enterCodeToClaim')"
-    :btnTxt="$t('btn.goNow')"
-    :contentImg="require('../assets/images/index/modal/congrats-coupons-2.png')"
-    @handleBtnClick="handleReceiveCodeBonus"
-    @handleBtnClose="isShowCodeBonusModal = false"
-  />
-
   <q-dialog v-model="isShowPrizeModal">
     <div class="congrats-container">
       <q-btn icon="close" round dense v-close-popup class="congrats-close" />
@@ -1536,8 +1526,7 @@ import PopupController from "src/components/PopupController.vue";
 import MegaSharingWheelModal from "src/components/hotpromo/megaSharingWheel/MegaSharingWheelModal.vue";
 import SetFirstPasswordModal from "src/components/modal/SetFirstPasswordModal.vue";
 import AddToHomeScreenModal from "src/components/modal/AddToHomeScreenModal.vue";
-import CongratsReuseableModal from "src/components/modal/CongratsReuseableModal.vue";
-// import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
+
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
@@ -1553,7 +1542,6 @@ const popupPromo = ref("");
 const megaSharingWheelDialogModel = ref(true);
 const isAddToHomeScreen = ref(false);
 const isShowSetFirstPw = ref(false);
-const isShowCodeBonusModal = ref(false);
 const currentStep = ref(localStorage.getItem("newPlayerGuide") || "1");
 // Only show the guide if on `/home` or `/`
 const isNewPlayerModal = computed(() => {
@@ -1652,7 +1640,11 @@ const updateCurrentStep = (newStep) => {
   // Optionally, update localStorage again in the parent component
   localStorage.setItem("newPlayerGuide", newStep);
 };
-const closePlayerGuide = () => {
+const closePlayerGuide = (skipStep) => {
+  if (skipStep === true) {
+      updateCurrentStep("5");
+      currentType.value = 'withdraw'
+  }
   isAdditionalReferSteps.value = false;
   isAdditionalDepositSteps.value = false;
   isAdditionalWithdrawSteps.value = false;
@@ -1729,8 +1721,6 @@ const activeCategoryLabel = computed(() => {
 provide("closeMegaSharingWheelDialog", () => {
   megaSharingWheelDialogModel.value = false;
 });
-
-const handleReceiveBonus = () => {};
 
 const closeDialog = () => {
   popupPromo.value = "";
@@ -3943,15 +3933,7 @@ const checkNewGuideSteps = () => {
 watch(() => isAdditionalDepositSteps.value, checkDepositStep, { immediate: false });
 watch(() => isAdditionalReferSteps.value, checkReferStep, { immediate: false });
 watch(() => isAdditionalWithdrawSteps.value, checkWithdrawStep, { immediate: false });
-watch(() => store.token, (newValue) => {
-  if (newValue && !store.hasDeposit) {
-    localStorage.setItem("newPlayerGuide", '1');
-    localStorage.removeItem("completeddepositguide");
-    localStorage.removeItem("completedreferguide");
-    localStorage.removeItem("completedwithdrawguide");
-    currentStep.value = localStorage.getItem("newPlayerGuide");
-  }
-}, { immediate: true });
+
 const afterActivated = useCustomerTrigger(() => {
   checkShowImgTop();
   checkHbPromo();
@@ -3997,9 +3979,6 @@ onActivated(() => {
 
   checkSpinWheel();
   checkGoogleLoginSetPwd();
-  if (store.hasToken()) {
-    checkCodeBonusModal();
-  }
 
   if (route.query.login === "true") {
     // isMoneyRainModal.value = true;
@@ -4077,17 +4056,6 @@ watch(
 
 const hasInviteWheelPromo = ref(false);
 
-const handleReceiveCodeBonus = () => {
-  router.push({ path: "/account", query: { openCodeModal: "true" } });
-};
-
-const checkCodeBonusModal = () => {
-  eventapi.get("/session/promo-code-bonus/checkBonus").then((res) => {
-    if (res.data.hasUnclaimed) {
-      isShowCodeBonusModal.value = true;
-    }
-  });
-};
 const checkSpinWheel = () => {
   if (store.hasToken() && isAndroid()) {
     setTimeout(() => {
