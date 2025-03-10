@@ -148,6 +148,7 @@ const updateCurrentAdditionalStep = () => {
     localStep.value += 1;
     emit("updateStep", localStep.value);
   } else {
+    router.push("/");
     emit("closeGuide");
     localStorage.setItem(`completed${localType.value}guide`, JSON.stringify(true));
   }

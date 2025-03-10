@@ -202,12 +202,17 @@
               </video>
               <!-- <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dRPcJyisLUI?si=ok64lVuE9jWtcnGr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
             </div>
+            <div class="buttons">
             <div class="bottom-button" @click="runInnerSteps(index + 1)">
               <!--              <span v-if="index + 1 === 4">-->
               <!--                <img src="../../assets/images/newplayerguide/share-icon.png" />-->
               <!--              </span>-->
               {{ step.buttonTxt }}
             </div>
+            <div class="next-button" @click="nextDialog(index + 1, true)">
+              {{ $t("playerGuide.next") }}
+            </div>
+          </div>
           </div>
         </div>
       </template>
@@ -284,6 +289,7 @@ import { useI18n } from "vue-i18n";
 import { convertToCommaAmount } from "src/boot/utils";
 import { useRouter } from "vue-router";
 import { useCustomerTrigger } from "src/hooks/trigger";
+import lang from "src/boot/lang";
 
 const store = userStore();
 const $q = useQuasar();
@@ -363,7 +369,7 @@ const gotoLang = () => {
   router.push("/language");
   localStorage.setItem(`completedlangguide`, JSON.stringify(true));
   setTimeout(() => {
-    closeDialog(1);
+    nextDialog(1);
   }, 100); // You can adjust this timeout if needed
 };
 
@@ -392,9 +398,9 @@ const gotoLang = () => {
 // };
 const runInnerSteps = (index) => {
   if (index === 1) {
-    closeDialog(index);
+    nextDialog(index);
   } else if (index === 2) {
-    closeDialog(index);
+    nextDialog(index);
     // emit("update:modelValue", false);
     // emit("update:showSteps", index);
   } else if (index === 3) {
@@ -406,28 +412,49 @@ const runInnerSteps = (index) => {
     emit("update:showSteps", index);
   }
 };
+const closeDialog = () => {
+  let nextStep = 'END'
+  // Update localStorage
+  localStorage.setItem("newPlayerGuide", nextStep);
+
+  // Emit the updated step to the parent component
+  emit("update:modelValue", false); // Close the dialog
+  emit("update:currentStep", nextStep); // Pass the next step to the parent component
+}
 // Close the dialog and move to the next step
-const closeDialog = (index) => {
+const nextDialog = (index, goNext) => {
   if (isVideo.value === false) {
     const gameOptions = ["aviator", "mines", "7up7down"];
     const randomIndex = Math.floor(Math.random() * gameOptions.length);
     selectedGame.value = gameOptions[randomIndex];
   }
   isVideo.value = false;
-  if (index === 2) {
-    emit("update:runAviator", selectedGame.value);
-  } else if (index === 3) {
-    router.push("/deposit");
-  } else if (index === 5) {
-    router.push("/withdraw");
-  } else if (index === 4) {
-    isBottomShareDialog.value = true;
-    return;
-  } else {
+  if (goNext === true) {
+    if (index === 3) {
+      localStorage.setItem(`completeddepositguide`, JSON.stringify(true));
+      emit("update:showSteps", 4);
+    }
     setTimeout(() => {
       emit("update:modelValue", true); // Open the dialog again
-    }, 100); // You can adjust this timeout if needed
+    }, 100);
+  } else {
+    if (index === 2) {
+      emit("update:runAviator", selectedGame.value);
+    } else if (index === 3) {
+      router.push("/deposit");
+    } else if (index === 5) {
+      router.push("/withdraw");
+    } else if (index === 4) {
+      isBottomShareDialog.value = true;
+      return;
+    } else {
+      setTimeout(() => {
+        emit("update:modelValue", true); // Open the dialog again
+      }, 100); // You can adjust this timeout if needed
+    }
+
   }
+  
   let nextStep = (Number(currentStep.value) + 1).toString();
   if (Number(currentStep.value) === 5) {
     nextStep = "END";
@@ -831,14 +858,14 @@ defineExpose({ showVideo });
         }
         .abs-box {
           position: absolute;
-          height: 55px;
+          height: 66px;
           z-index: 9999;
           border-radius: 10px;
-          width: 60%;
+          width: 47%;
           margin: 0 auto;
-          left: 0;
+          left: -29%;
           right: 0;
-          top: 132%;
+          top: 134%;
           border: 2px dotted #08f437;
           box-shadow: 0px 0px 20px 0px #00e60091;
           pointer-events: none;
@@ -1055,6 +1082,36 @@ defineExpose({ showVideo });
         margin: 0px auto 15px;
         text-align: center;
       }
+      .buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+      }
+      .next-button {
+        text-transform: uppercase;
+        cursor: pointer;
+        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        padding: 10px;
+        font-family: Poppins;
+        font-weight: 700;
+        // font-size: 2vh;
+        // line-height: 2vh;
+        padding: 15px 10px;
+        font-size: 15px;
+        line-height: 18px;
+        // padding: 8px 30px;
+        letter-spacing: 0px;
+        text-align: center;
+        color: #000000;
+        border-radius: 8px;
+        margin: 0 auto;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
       .bottom-button {
         cursor: pointer;
         background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
@@ -1063,7 +1120,7 @@ defineExpose({ showVideo });
         font-weight: 700;
         // font-size: 2vh;
         // line-height: 2vh;
-        padding: 15px 30px;
+        padding: 15px 10px;
         font-size: 15px;
         line-height: 18px;
         // padding: 8px 30px;
@@ -1133,23 +1190,23 @@ defineExpose({ showVideo });
 @keyframes moveFinger {
   0% {
     bottom: -4vh; /* Start position */
-    right: -7vh; /* Start on the right */
+    right: -4vh; /* Start on the right */
   }
   25% {
     bottom: -4.5vh; /* Move up slightly */
-    right: -6vh; /* Move left slightly (towards the center) */
+    right: -3vh; /* Move left slightly (towards the center) */
   }
   50% {
     bottom: -5vh; /* Move up further */
-    right: -5vh; /* Move further left */
+    right: -2vh; /* Move further left */
   }
   75% {
     bottom: -4.5vh; /* Move back down slightly */
-    right: -6vh; /* Move back to the center */
+    right: -3vh; /* Move back to the center */
   }
   100% {
     bottom: -4vh; /* End position */
-    right: -7vh; /* Back to the original position on the right */
+    right: -4vh; /* Back to the original position on the right */
   }
 }
 

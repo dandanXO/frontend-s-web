@@ -3943,6 +3943,15 @@ const checkNewGuideSteps = () => {
 watch(() => isAdditionalDepositSteps.value, checkDepositStep, { immediate: false });
 watch(() => isAdditionalReferSteps.value, checkReferStep, { immediate: false });
 watch(() => isAdditionalWithdrawSteps.value, checkWithdrawStep, { immediate: false });
+watch(() => store.token, (newValue) => {
+  if (newValue && !store.hasDeposit) {
+    localStorage.setItem("newPlayerGuide", '1');
+    localStorage.removeItem("completeddepositguide");
+    localStorage.removeItem("completedreferguide");
+    localStorage.removeItem("completedwithdrawguide");
+    currentStep.value = localStorage.getItem("newPlayerGuide");
+  }
+}, { immediate: true });
 const afterActivated = useCustomerTrigger(() => {
   checkShowImgTop();
   checkHbPromo();
