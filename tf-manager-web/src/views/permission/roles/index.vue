@@ -1091,7 +1091,7 @@ const handleJSONUpload = (file) => {
       const jsonData = JSON.parse(event.target.result) // 解析 JSON 文件
 
       // 1. 验证 JSON 数据结构
-      if (!jsonData.name || !jsonData.menuIds || !jsonData.remark) {
+      if (!jsonData.name || !jsonData.menuIds) {
         ElMessage.error(t('message.invalidJSONStructure'))
         return
       }
@@ -1110,13 +1110,13 @@ const handleJSONUpload = (file) => {
 
 const processJSONData = (jsonData) => {
   // 1. 验证 JSON 数据结构
-  if (!jsonData.name || !jsonData.menuIds || !jsonData.remark) {
+  if (!jsonData.name || !jsonData.menuIds) {
     ElMessage.error(t('message.invalidJSONStructure'))
     return
   }
   // 2. 更新表单数据
   form.name = jsonData.name
-  form.remark = jsonData.remark
+  form.remark = jsonData.remark !== null ? jsonData.remark : ""
 
   // 3. 比较菜单权限
   inaccessibleMenuIds.value = jsonData.menuIds.filter(menuId => {
