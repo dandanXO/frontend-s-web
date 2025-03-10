@@ -5004,8 +5004,8 @@ const checkGoogleLoginSetPwd = () => {
     transition: transform 0.5s ease-in-out;
     &.whitee {
       border-radius: 10px 0 0 10px;
-  background: rgb(255 255 255 / 40%);
-  padding: 10px;
+      background: rgb(255 255 255 / 40%);
+      padding: 5px 10px 3px;
     }
   }
   z-index: 2001;
@@ -5014,6 +5014,7 @@ const checkGoogleLoginSetPwd = () => {
     width: 100%;
     max-width: 100px;
     &.stickyopenclose {
+      width: 15px;
     //  padding: 0px 40px;
     }
     &.open {
