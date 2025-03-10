@@ -2675,6 +2675,7 @@ body {
       .common-link {
         cursor: pointer;
         font-size: 12px;
+        color: #ffffff;
       }
       .common-btn {
         border-radius: 100px; 
