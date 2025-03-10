@@ -129,7 +129,7 @@
 
       }
 
-      if(androidVersion > 9) {
+      if(typeof androidVersion !== 'string' || androidVersion > 9) {
         initTracking();
       }
     </script>
@@ -167,6 +167,7 @@
       })
 
       const sendCloudWiseTrack = (request) => {
+        if(!window.cloudWiseQueue) return
         if(window.CloudWiseUtil && window.WEBVIEW_CLOUD_WISE) {
           request()
         } else {
