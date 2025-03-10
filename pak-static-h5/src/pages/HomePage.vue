@@ -82,7 +82,7 @@
     </q-page-sticky>
   </div>
   <div class="home-wrapper" :class="detectAndroidVersion()">
-    <q-page-sticky v-if="isShowStickyIcons" style="min-width: 120px; z-index: 3000;" position="bottom-right" :offset="csDragPos" class="floating-btn scalable" :style="{ transform: `scale(${scaleValue})` }">
+    <q-page-sticky v-if="isShowStickyIcons" style="z-index: 3000;" position="bottom-right" :offset="csDragPos" class="floating-btn scalable" :style="{ transform: `scale(${scaleValue})` }">
       <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef" @click="toggleCSTab">
         <div class="cs-icon-wrapper" :class="{ active: isCsTabVisible }">
           <a class="cs-icon youtube" :href="ui.youtubeUrl" target="_blank">
@@ -140,7 +140,7 @@
         </div>
       </div>
     </q-page-sticky>
-    <q-page-sticky @click="isShowStickyIcons = !isShowStickyIcons" position="bottom-right" :offset="[0, 300]" class="floating-btn scalable whitee" :style="{ transform: `scale(${scaleValue})` }">
+    <q-page-sticky @click="isShowStickyIcons = !isShowStickyIcons" position="bottom-right" :offset="[0, 400]" class="floating-btn scalable whitee" :style="{ transform: `scale(${scaleValue})` }">
 
       <img class="stickyopenclose" :class="{open: !isShowStickyIcons}" src="../assets/images/index/open.png">
 
@@ -1612,17 +1612,17 @@ const isCharityShow = computed(() => {
   }
   return false;
 });
-const charityDragPos = ref([10, 200]);
+const charityDragPos = ref([10, 300]);
 const isDraggingCharityGif = ref(false);
 
-const csDragPos = ref([10, 0]);
+const csDragPos = ref([10, 80]);
 const isDraggingCsIcon = ref(false);
 
-const liveDragPos = ref([0, 0]);
+const liveDragPos = ref([16, 0]);
 const isDraggingLiveIcon = ref(false);
 const isLiveUrlShow = ref(false);
 
-const hbDragPos = ref([10, 80]);
+const hbDragPos = ref([10, 180]);
 const isDraggingHbIcon = ref(false);
 const isHbShow = ref(true);
 const hbSlide = ref(0);
