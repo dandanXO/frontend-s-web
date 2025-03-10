@@ -1,6 +1,6 @@
 {
   "name": "br1-project",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "BR1 App",
   "productName": "55Ace",
   "author": "KengHong <kenghongho@eagrp.net>",
@@ -47,6 +47,7 @@
     "imagemin-pngquant": "^9.0.2",
     "imagemin-webpack-plugin": "^2.4.2",
     "moment": "^2.29.4",
+    "moment-timezone": "^0.5.47",
     "onesignal-cordova-plugin": "^5.2.3",
     "pinia": "^2.0.17",
     "qs": "^6.11.0",
