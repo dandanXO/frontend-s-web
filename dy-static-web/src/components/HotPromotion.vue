@@ -8,19 +8,15 @@
       @daily-slot="handleSlot()"
     />
     <PrizePoolVotePromo v-if="list.redirectUrl === 'Dongying-team-vote'" />
-    
+
     <OuZuLianPromo v-if="list.redirectUrl === 'ouzulian'" />
     <GoldenEggPromo v-if="list.redirectUrl === 'goldenegg'" />
 
     <WelcomeTaskPromo v-if="list.redirectUrl === 'welcomenewuser'" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend'" />
-    
+
     <EsportQuiz2 v-if="list.redirectUrl === 'dy2-quiz'"></EsportQuiz2>
-    
-    
-    
-    
-    
+
     <LivepokerRebate v-if="list.redirectUrl === 'dy2-livepoker-rebate'" :promo-code="list.promoCode" />
     <PrivilegeInvite
       v-if="
@@ -29,24 +25,15 @@
         list.redirectUrl === 'dy2-refer-bonus'
       "
     />
-    
-    
-    
 
-    
-    
-    
-    
-  
     <BountyBlastPremier v-if="list.redirectUrl === 'bounty-blast-premier'" :promo-code="list.promoCode" />
-    
-    
+
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao'" />
-    
+
     <slotLucky8 v-if="list.redirectUrl === 'dy-lucky-slot'" :promo-code="list.promoCode" />
-    
-    
-    
+
+    <FootballFight v-if="list.redirectUrl === 'dy2-football'" :promo-code="list.promoCode" />
+
     <SubmitClaimPromo v-if="list.redirectUrl === 'dy2-UCL'" :promo-code="list.promoCode" />
     <ChallengeComebackPromo v-if="list.redirectUrl === 'dy2-cycle-loss-refund'" :promo-code="list.promoCode" />
     <LplPKlck2025loss
@@ -56,17 +43,16 @@
     />
     <AgYuanxiaohongbao v-if="list.redirectUrl === 'dy1-ag-yuanxiaohongbao'" :promo-code="list.promoCode" />
     <VctBangkok v-if="list.redirectUrl === 'dy2-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
-    
-    
+
     <PglS32025 v-if="list.redirectUrl === 'dy1-2025-pgl-s3'" :promo-code="list.promoCode" />
-    
+
     <PullbackTide v-if="list.redirectUrl === 'dy2-pullback-tide'" :promo-code="list.promoCode" />
     <Cba30Dream v-if="list.redirectUrl === 'dy2-cba30-dream'" :promo-code="list.promoCode" />
-    
+
     <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
-    <Dota2BlastSlam2025 v-if="list.redirectUrl === 'dy2-blast-slam-2025'" :promo-code="list.promoCode"/>
+    <Dota2BlastSlam2025 v-if="list.redirectUrl === 'dy2-blast-slam-2025'" :promo-code="list.promoCode" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'dy-official-gift'" :params="list.param" />
-    
+
     <LanternFestival2025
       v-if="list.redirectUrl === 'dy1-lantern-festival-bonus'"
       :promo-param="listParam"
@@ -94,8 +80,6 @@
         src="../assets/images/promotion/webfeedback.png"
       />
     </div>
-
-    
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -125,7 +109,6 @@ import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskProm
 import EsportQuiz2 from "../components/hotpromo/esportquiz2/EsportQuiz.vue";
 import PrivilegeInvite from "../components/hotpromo/privilegeInvite/PrivilegeInvite.vue";
 
-
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 
 import LivepokerRebate from "@/components/hotpromo/livepoker-rebate/LivepokerRebate.vue";
@@ -136,13 +119,12 @@ import SubmitClaimPromo from "@/components/hotpromo/submitclaim/SubmitClaimPromo
 import Cba30Dream from "@/components/hotpromo/cba30-dream/Cba30Dream.vue";
 import ChallengeComebackPromo from "@/components/hotpromo/challenge-comeback/ChallengeComeback.vue";
 
-
 import Belgrade2025Promo from "./hotpromo/belgrade-2025-promo/Belgrade2025Promo.vue";
 import LplPKlck2025loss from "../components/hotpromo/lpl-lck-2025-loss/lpl-lck-2025-loss.vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 
-import PglS32025 from "./hotpromo/pgl-s3-2025/PglS32025.vue"
+import PglS32025 from "./hotpromo/pgl-s3-2025/PglS32025.vue";
 import PullbackTide from "./hotpromo/pullback-tide/PullbackTide.vue";
 
 import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
@@ -159,12 +141,14 @@ import LanternFestival2025 from "../components/hotpromo/lantern-festival-2025/La
 import EslProLeagueS21 from "./hotpromo/esl-pro-league-s21/EslProLeagueS21.vue";
 import PGLBucharest2025 from "./hotpromo/pgl-bucharest-2025/PGLBucharest2025.vue";
 import Blast2025 from "../components/hotpromo/Blast2025/Blast2025.vue";
+import FootballFight from "@/components/hotpromo/newFootballfight/FootballFight.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    FootballFight,
     Blast2025,
     EslProLeagueS21,
     LanternFestival2025,
@@ -180,7 +164,7 @@ export default defineComponent({
     BountyBlastPremier,
     fishHongbao,
     ClaimPromo,
-    
+
     PrizePoolVotePromo,
     GoldenEggPromo,
     InviteFriendPromo,
@@ -189,9 +173,9 @@ export default defineComponent({
     PrivilegeInvite,
     slotLucky8,
     OuZuLianPromo,
-    
+
     SubmitClaimPromo,
-    
+
     PglS32025,
     PullbackTide,
     Cba30Dream,
