@@ -58,6 +58,7 @@
     "imagemin-pngquant": "^9.0.2",
     "imagemin-webpack-plugin": "^2.4.2",
     "moment": "^2.29.4",
+    "moment-timezone": "^0.5.47",
     "onesignal-cordova-plugin": "^5.2.6",
     "pinia": "^2.0.17",
     "qs": "^6.11.0",

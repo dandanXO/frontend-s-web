@@ -81,14 +81,14 @@
     </pre> -->
   </div>
   <div>
-    <q-page-sticky v-if="isCharityShow" position="bottom-right" :offset="charityDragPos" class="floating-btn">
-      <div v-touch-pan.prevent.mouse="moveCharityGif" @click="openCharityUrl">
-        <!--        <div class="hb-close">-->
-        <!--          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click.stop="isCharityShow = false" />-->
-        <!--        </div>-->
-        <img class="charity-gif" src="../assets/images/index/charity-float.gif" />
-      </div>
-    </q-page-sticky>
+    <!-- <q-page-sticky v-if="isCharityShow" position="bottom-right" :offset="charityDragPos" class="floating-btn"> -->
+    <!-- <div v-touch-pan.prevent.mouse="moveCharityGif" @click="openCharityUrl"> -->
+    <!--        <div class="hb-close">-->
+    <!--          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click.stop="isCharityShow = false" />-->
+    <!--        </div>-->
+    <!-- <img class="charity-gif" src="../assets/images/index/charity-float.gif" /> -->
+    <!-- </div> -->
+    <!-- </q-page-sticky> -->
   </div>
   <div class="home-wrapper" :class="detectAndroidVersion()">
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
@@ -141,7 +141,7 @@
               :key="i"
               :name="i"
               @click="gotoFloatPromo(promo)"
-              :img-src="`${imgURL}/promo/${promo.icon}`"
+              :img-src="promo.icon"
             >
               <!-- <img style="width: 100px" :src="`${imgURL}/promo/${promo.icon}`" /> -->
             </q-carousel-slide>
@@ -1471,6 +1471,9 @@
   </q-dialog>
 
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
+
+  <SpinLuckyWheelPromoSticky v-show="isShownSpinLuckyWheel" />
+  <SpinLuckyWheelPromoHomePopup v-if="isShownSpinLuckyWheel" ref="spinLuckyWheelPromoHomePopupRef" />
 </template>
 
 <script setup>
@@ -1526,12 +1529,20 @@ import PopupController from "src/components/PopupController.vue";
 import MegaSharingWheelModal from "src/components/hotpromo/megaSharingWheel/MegaSharingWheelModal.vue";
 import SetFirstPasswordModal from "src/components/modal/SetFirstPasswordModal.vue";
 import AddToHomeScreenModal from "src/components/modal/AddToHomeScreenModal.vue";
+import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
+import SpinLuckyWheelPromoHomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
+import { usePromoStore } from "src/stores/promo";
+import { storeToRefs } from "pinia";
 
+import CongratsReuseableModal from "src/components/modal/CongratsReuseableModal.vue";
+// import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const { t } = useI18n();
+const promoStore = usePromoStore();
+const { isShownSpinLuckyWheel } = storeToRefs(promoStore);
 
 // const isLuckyDrawModal = ref(false);
 // const isCongratsModal = ref(true);
@@ -1695,6 +1706,8 @@ const csTabRef = ref();
 const isLiveTabVisible = ref(false);
 const liveTabRef = ref();
 
+const spinLuckyWheelPromoHomePopupRef = ref();
+
 const translatedCategoriesList = computed(() => {
   return categoriesList.value.map((category) => ({
     ...category,
@@ -1775,7 +1788,7 @@ const slide = ref(0);
 const isFirstView = ref(false);
 const closeAlert = () => {
   // Create a new date object in GMT+5.5
-  const currentTimeInGMT55 = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+  const currentTimeInGMT55 = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Karachi" }));
 
   localStorage.setItem("indexImgTop", currentTimeInGMT55.getTime());
   isFirstView.value = false;
@@ -3355,7 +3368,7 @@ const imgURLPromo = imgURL + "/promo/";
 
 // const setWithExpiry = (key, value, interval) => {
 //   // Create a new date object in GMT+5.5
-//   const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+//   const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Karachi" }));
 
 //   const item = {
 //     value: value,
@@ -3732,7 +3745,18 @@ const loadCustomerAddress = () => {
     });
 };
 
-const hbPromo = ref([]);
+const floatPromo = ref([]);
+const hbPromo = computed(() => {
+  const result = [...floatPromo.value];
+  if (isCharityShow.value) {
+    result.push({
+      type: "DOMAIN",
+      code: ui.charityUrl,
+      icon: require("../assets/images/index/charity-float.gif")
+    });
+  }
+  return result;
+});
 
 const checkHbPromo = () => {
   api
@@ -3742,11 +3766,18 @@ const checkHbPromo = () => {
     })
     .then((data) => {
       // isHbShow.value = data.data.some((item) => item.code === "pak-redpacketrain");
-      hbPromo.value = data.data.filter(
-        (redirectList) =>
-          redirectList.code !== "pak-mega-sharing-wheel" ||
-          (redirectList.code === "pak-mega-sharing-wheel" && store.token && ui.promo_megaspin === "1")
-      );
+      floatPromo.value = data.data.reduce((result, promo) => {
+        if (
+          promo.code !== "pak-mega-sharing-wheel" ||
+          (promo.code === "pak-mega-sharing-wheel" && store.token && ui.promo_megaspin === "1")
+        ) {
+          result.push({
+            ...promo,
+            icon: `${imgURL}/promo/${promo.icon}`
+          });
+        }
+        return result;
+      }, []);
     });
 };
 
@@ -3941,6 +3972,12 @@ const afterActivated = useCustomerTrigger(() => {
 
 const downloadAppRef = ref();
 
+const checkSpinLuckyWheelPromoHomePopupCanShow = () => {
+  if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP") && spinLuckyWheelPromoHomePopupRef.value) {
+    spinLuckyWheelPromoHomePopupRef.value.checkIsCanShowPopup();
+  }
+};
+
 onActivated(() => {
   nextTick(() => {
     if(LocalStorage.getItem('completeddepositguide') === 'true' && LocalStorage.getItem('completedreferguide') !== 'true' && LocalStorage.getItem('newPlayerGuide') === '4') {
@@ -4040,6 +4077,14 @@ watch(
     if (newHash) {
       checkHash();
     }
+  }
+);
+
+watch(
+  () => promoStore.isShownSpinLuckyWheel,
+  async (val) => {
+    await nextTick();
+    val && checkSpinLuckyWheelPromoHomePopupCanShow();
   }
 );
 
