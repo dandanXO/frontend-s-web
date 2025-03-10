@@ -58,7 +58,9 @@ const checkIsCanShowPopup = () => {
   }
 
   if (store.hasToken()) {
-    isShowSpinLuckyWheelPromoPopup.value = true;
+    setTimeout(() => {
+      isShowSpinLuckyWheelPromoPopup.value = true;
+    }, 1000);
   }
 };
 
