@@ -223,9 +223,10 @@
               <div class="profile-pic-frame" v-if="!homeProfile"></div>
 
               <div class="vip-details">
-                <img src="../assets/images/index/vip-row.png" alt="" />
+                <img class="bg" src="../assets/images/index/vip-row1.png" alt="" />
                 <div class="vip-level">
-                  {{ store.vip }}
+                  <img src="../assets/images/index/viptext.png" alt="" />
+                  {{ store.vip.replace('VIP', '') }}
                 </div>
               </div>
             </div>
@@ -823,7 +824,7 @@ onUnmounted(() => {
 
       .profile-pic {
         margin-top: -20px;
-        margin-right: 20px;
+        // margin-right: 20px;
       }
     }
   }
@@ -1029,9 +1030,9 @@ onUnmounted(() => {
   margin-bottom: 5px;
   margin-top: -15px;
 
-  img {
+  img.bg {
     display: block;
-    width: 60px;
+    width: 55px;
     position: absolute;
     top: -2px;
     left: -25px;
@@ -1047,9 +1048,13 @@ onUnmounted(() => {
     padding-top: 3px;
     padding-bottom: 4px;
     z-index: 3;
-    color: #00ae00;
+    color: #ffffff;
     font-weight: 700;
     font-style: italic;
+    img {
+      width: 68%;
+      margin-left: -7px;
+    }
   }
 }
 
@@ -1112,6 +1117,7 @@ onUnmounted(() => {
 <style lang="scss">
 .q-btn-dropdown--simple * + .q-btn-dropdown__arrow {
   margin-left: -12px !important;
+  display: none;
 }
 
 .q-btn-dropdown--simple {
