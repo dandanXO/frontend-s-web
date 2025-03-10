@@ -6,7 +6,7 @@
     @mouseenter="handleWrapperMouseEnter"
     @mouseleave="handleWrapperMouseLeave"
   >
-    <template v-if="isFlvSupported">
+    <template v-if="isPlayerSupported">
       <video ref="videoRef" class="livestream-video" crossorigin="anonymous" @progress="handlePlayerProgress" />
       <div ref="danmuRef" class="livestream-video-danmu" />
       <div
@@ -43,8 +43,8 @@
 
         <div class="livestream-video-controller-group">
           <el-popover
-            ref="urlPopperRef"
-            popper-class="livestream-video-controller-popover url"
+            ref="channelPopperRef"
+            popper-class="livestream-video-controller-popover channel"
             placement="top"
             trigger="click"
             :offset="12"
@@ -53,25 +53,25 @@
             :teleported="false"
           >
             <template #reference>
-              <button class="livestream-video-controller-url-btn btn" title="线路选择">
-                {{ currentUrl.name }}
+              <button class="livestream-video-controller-channel-btn btn" title="线路选择">
+                {{ currentChannel.name }}
               </button>
             </template>
             <div class="livestream-video-controller-list">
               <div
-                v-for="(url, index) in urls"
+                v-for="(channel, index) in channels"
                 :key="index"
                 class="livestream-video-controller-item"
                 :class="{ selected: playerConfig.channel === index }"
               >
-                <button class="livestream-video-controller-item-btn btn" @click="handleUrlChange(index)">
-                  {{ url.name }}
+                <button class="livestream-video-controller-item-btn btn" @click="handleChannelChange(index)">
+                  {{ channel.name }}
                 </button>
               </div>
             </div>
           </el-popover>
           <el-popover
-            ref="urlPopperRef"
+            ref="qualityPopperRef"
             popper-class="livestream-video-controller-popover quality"
             placement="top"
             trigger="click"
@@ -117,12 +117,12 @@
         </div>
       </div>
     </template>
-    <div v-else>不支援的浏览器</div>
+    <div v-else class="livestream-unsupported">不支援的浏览器</div>
   </div>
 </template>
 <script setup>
-import { computed, onMounted, ref, toRefs, watch } from "vue";
-import { VideoPlayer } from "../../../utils/videoPlayer";
+import { computed, onMounted, onUnmounted, ref, toRefs, watch } from "vue";
+import { VideoPlayer } from "@/utils/videoPlayer";
 
 /** @type {import("flv.js").default.Config} */
 const DEFAULT_FLV_CONFIG = {
@@ -163,23 +163,20 @@ const DANMU_CONFIG = {
 
 const DEFAULT_QUALITY = { value: -1, name: "自动" };
 
-const props = defineProps(["danmuList", "urls"]);
-const { danmuList, urls } = toRefs(props);
+const props = defineProps(["danmuList", "channels"]);
+const { danmuList, channels } = toRefs(props);
 
-/**  @type {import("vue").Ref<typeof import("flv.js").default | null>} */
-const flv = ref(null);
-/**  @type {import("vue").Ref<typeof import("hls.js").default | null>} */
-const hls = ref(null);
 const danmuJs = ref(null);
 
 /**  @type {import("vue").Ref<HTMLVideoElement | null>} */
 const videoRef = ref(null);
 const danmuRef = ref(null);
 const videoWrapperRef = ref(null);
-const urlPopperRef = ref(null);
+const channelPopperRef = ref(null);
+const qualityPopperRef = ref(null);
 const videoWrapperMouseLeaveTimer = ref(null);
 const showPlayerController = ref(false);
-const isFlvSupported = ref(true);
+const isPlayerSupported = ref(true);
 /** @type {import("vue").Ref< VideoPlayer | null>}*/
 const player = ref(null);
 const danmu = ref(null);
@@ -193,60 +190,34 @@ const playerConfig = ref({
   channel: 0
 });
 
-const currentUrl = computed(() => {
-  return urls.value[playerConfig.value.channel];
+const currentChannel = computed(() => {
+  return channels.value[playerConfig.value.channel];
 });
-
-const loadFlv = async () => {
-  const _flv = (await import("flv.js")).default;
-  flv.value = _flv;
-  if (flv.value.isSupported() && videoRef.value) {
-    player.value = flv.value.createPlayer(
-      {
-        type: "flv",
-        // url: "http://207.148.73.114:8080/live/livestream.flv",
-        url: "http://192.168.31.145:8000/live/stream.flv",
-        isLive: true
-      },
-      DEFAULT_FLV_CONFIG
-    );
-    player.value.on(flv.value.Events.ERROR, handlePlayerError);
-    player.value.attachMediaElement(videoRef.value);
-    player.value.load();
-    player.value.play();
-  }
-};
 
 const loadPlayer = async () => {
   player.value = new VideoPlayer(
     {
       mediaType: "hls",
-      // url: "http://192.168.31.145:8000/live/stream.flv",
-      url: "http://192.168.31.145:8000/hls/index.m3u8",
-      // url: "https://cdn.jwplayer.com/manifests/pZxWPRg4.m3u8",
+      url: currentChannel.value.url,
+      maxLatency: 10,
       // ...DEFAULT_FLV_CONFIG,
       ...DEFAULT_HLS_CONFIG
     },
     videoRef.value
   );
+  await initPlayer();
+};
+
+const initPlayer = async () => {
+  if (!player.value) return;
+
   await player.value.init();
+  isPlayerSupported.value = player.value.SupportPlayer !== "NONE";
   player.value.on(player.value.Events.ERROR, handlePlayerError);
   await player.value.load();
   if (player.value.qualitySupported) getQualities();
-  // player.value.onManifestParsed(handleManifestParsed);
   player.value.play();
 };
-
-// const loadHls = async () => {
-//   const _hls = (await import("hls.js")).default;
-//   hls.value = _hls;
-//   const videoSrc = "http://192.168.31.145:8000/live/stream.m3u8";
-//   if(hls.value.isSupported()) {
-
-//   }else if(videoRef.value.canPlayType('application/vnd.apple.mpegurl')) {
-//     videoRef.value.src = videoSrc
-//   }
-// }
 
 const loadDanmu = async () => {
   const _danmu = (await import("danmu.js")).default;
@@ -280,6 +251,9 @@ const loadPlayerConfig = () => {
           handleDanmuChange(value);
           break;
         case "quality":
+          if (value < player.value.levels.length) {
+            handleQualityChange(value);
+          }
           handleQualityChange(value);
           break;
       }
@@ -334,17 +308,14 @@ const handleWrapperMouseEnter = () => {
 const handleWrapperMouseLeave = () => {
   videoWrapperMouseLeaveTimer.value = setTimeout(() => {
     showPlayerController.value = false;
-    urlPopperRef.value.hide();
+    channelPopperRef.value.hide();
+    qualityPopperRef.value.hide();
   }, 1500);
 };
 
 const handlePlayerProgress = () => {
-  // if (!videoRef.value || videoRef.value.paused) return;
-  // const bufferedEnd = videoRef.value.buffered.end(0);
-  // const delta = bufferedEnd - videoRef.value.currentTime;
-  // if (delta > 10 || delta < 0) {
-  //   videoRef.value.currentTime = bufferedEnd - 0.5;
-  // }
+  if (!videoRef.value || videoRef.value.paused) return;
+  player.value.syncLive();
 };
 
 const handlePlayerError = (event, data) => {
@@ -354,9 +325,12 @@ const handlePlayerError = (event, data) => {
   }
 };
 
-const handleUrlChange = (index) => {
+const handleChannelChange = async (index) => {
+  qualities.value = [DEFAULT_QUALITY];
+  changePlayerConfig("quality", -1);
   changePlayerConfig("channel", index);
-  // player.value.changeUrl(urls.value[index].url);
+  player.value.changeSource(currentChannel.value.url);
+  await initPlayer();
 };
 
 const handleQualityChange = (index) => {
@@ -365,7 +339,6 @@ const handleQualityChange = (index) => {
 };
 
 const getQualities = () => {
-  console.log(player.value.levels);
   const result = player.value.levels.map((level, index) => ({
     value: index,
     name: `${level.height}p`
@@ -387,6 +360,11 @@ watch(danmuList, () => {
 onMounted(() => {
   Promise.all([loadPlayer(), loadDanmu()]).then(loadPlayerConfig);
 });
+
+onUnmounted(() => {
+  player.value.destroy();
+  danmu.value.stop();
+});
 </script>
 <style lang="scss" scoped>
 .livestream-video-wrapper {
@@ -400,6 +378,17 @@ onMounted(() => {
     inset: 0;
     width: 100%;
     height: 100%;
+  }
+
+  .livestream-unsupported {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    color: #fff;
+    font-size: 24px;
   }
 
   .livestream-video-controller {
@@ -428,6 +417,7 @@ onMounted(() => {
 
     .btn {
       background-color: transparent;
+      -webkit-user-drag: none;
     }
 
     img {
@@ -454,7 +444,7 @@ onMounted(() => {
       }
     }
 
-    .livestream-video-controller-url-btn {
+    .livestream-video-controller-channel-btn {
       border-radius: 15px;
       border: 1px solid #fff;
       font-size: 12px;

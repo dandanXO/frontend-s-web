@@ -2,6 +2,10 @@
  * @typedef {'flv'|'hls'} MediaType
  */
 
+/**
+ * @typedef {'FULL'|'ORIGIN'|'NONE'} SupportPlayer
+ */
+
 import { initFlv } from "./flv";
 import { _hls, initHls } from "./hls";
 
@@ -16,15 +20,18 @@ export class VideoPlayer {
    * @param {HTMLVideoElement} video - video element
    */
   constructor(config, video) {
-    const { mediaType, url, ...otherConfig } = config;
+    const { mediaType, url, maxLiveLatency, ...otherConfig } = config;
     this.videoEl = video;
     this._mediaType = mediaType;
     this._config = otherConfig;
     this._player = null;
     this._url = url;
     this.qualitySupported = false;
+    this._maxLatency = maxLiveLatency || 10;
     /** @type { typeof import('hls.js').Events | import('flv.js').default.Events} */
     this.Events = {};
+    /** @type {SupportPlayer} */
+    this.SupportPlayer = "NONE";
 
     return new Proxy(this, {
       get(target, prop, receiver) {
@@ -46,12 +53,24 @@ export class VideoPlayer {
   async init() {
     if (this._mediaType === "hls") {
       this._player = await initHls(this._url, this._config, this.videoEl);
-      this.qualitySupported = true;
-      this.Events = _hls.Events;
+      if (!this._player) {
+        this.SupportPlayer = "NONE";
+        return;
+      } else if (_hls.isSupported()) {
+        this.qualitySupported = true;
+        this.Events = _hls.Events;
+        this.SupportPlayer = "FULL";
+      } else {
+        this.SupportPlayer = "ORIGIN";
+      }
     } else {
       this._player = await initFlv(this._url, this._config);
-      this.qualitySupported = false;
-      this.Events = this._player.Events;
+      if (!this._player) {
+        this.SupportPlayer = "NONE";
+      } else {
+        this.qualitySupported = false;
+        this.Events = this._player.Events;
+      }
     }
   }
 
@@ -95,8 +114,6 @@ export class VideoPlayer {
     }
   }
 
-  setConfig(config) {}
-
   checkInitialization() {
     if (!this._player) {
       throw new Error("Player not initialized");
@@ -107,10 +124,41 @@ export class VideoPlayer {
     if (!this.qualitySupported) return;
     if (this._mediaType === "hls") {
       this._player.currentLevel = level;
-      this._player.stopLoad();
-      this._player.startLoad(this.videoEl.currentTime);
     }
   }
 
-  destroy() {}
+  changeSource(url) {
+    if (this._player) {
+      this.destroy();
+    }
+    this._url = url;
+  }
+
+  syncLive() {
+    let latestPosition;
+    if (this._mediaType === "hls") {
+      latestPosition = this._player.liveSyncPosition;
+    } else {
+      latestPosition = this.videoEl.buffered.end(0);
+    }
+
+    const currentTime = this.videoEl.currentTime;
+
+    if (latestPosition - currentTime > this._maxLatency) {
+      this.videoEl.currentTime = latestPosition;
+    }
+  }
+
+  destroy() {
+    if (this._mediaType === "hls") {
+      this._player.detachMedia();
+      this._player.stopLoad();
+      this._player.destroy();
+    } else {
+      this._player.unload();
+      this._player.detachMediaElement();
+      this._player.destroy();
+    }
+    this._player = null;
+  }
 }

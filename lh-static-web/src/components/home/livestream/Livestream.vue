@@ -8,7 +8,7 @@
       <LivestreamList class="livestream-list" />
       <CurrentLivestream />
       <LivestreamChat class="livestream-chat" :messages @send-chat-message="handleSendChatMessage" />
-      <LivestreamVideo :danmuList :urls />
+      <LivestreamVideo :danmuList :channels />
     </div>
   </div>
 </template>
@@ -24,10 +24,10 @@ const store = userStore();
 
 const messages = ref([]);
 const danmuList = ref([]);
-const urls = ref([
-  { name: "线路1", url: "" },
-  { name: "线路2", url: "" },
-  { name: "线路3", url: "" }
+const channels = ref([
+  { name: "线路1", url: "http://localhost:8080/hls/test.m3u8" },
+  { name: "线路2", url: "https://cdn.jwplayer.com/manifests/pZxWPRg4.m3u8" }
+  // { name: "线路3", url: "" }
 ]);
 
 const handleSendChatMessage = (message) => {
