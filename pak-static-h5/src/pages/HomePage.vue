@@ -1374,7 +1374,7 @@
 
   <NewPlayerGuideModal
     ref="modalGuide"
-    v-if="store.token"
+    v-if="store.token && !store.hasDeposit"
     :modelValue="isNewPlayerModal"
     :currentStep="currentStep"
     @update:runAviator="handleGamePlay"

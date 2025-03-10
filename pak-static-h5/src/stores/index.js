@@ -264,11 +264,13 @@ export const userStore = defineStore("userStore", {
           }
           this.unreadInboxMail = 0;
           if (from === 'fromlogin') {
-            if (!this.hasDeposit && this.token) {
+            if (!this.hasDeposit) {
               localStorage.setItem("newPlayerGuide", '1');
               localStorage.removeItem("completeddepositguide");
               localStorage.removeItem("completedreferguide");
               localStorage.removeItem("completedwithdrawguide");
+            } else {
+              localStorage.setItem("newPlayerGuide", 'END');
             }
           }
           // this.unreadInboxMail = 16;
