@@ -45,7 +45,7 @@
 </template>
 <script setup>
 import moment from "moment";
-import { computed, onUnmounted, ref } from "vue";
+import { inject, onUnmounted, ref } from "vue";
 import CommonButton from "./CommonButton.vue";
 import { eventapi } from "src/boot/axios";
 
@@ -60,18 +60,7 @@ const isClaiming = ref(false);
 const timer = ref();
 const wheelNo = ref(0);
 
-const targetWithdrawAmount = computed(() => {
-  switch (wheelNo.value) {
-    case 3:
-      return 1000;
-    case 2:
-      return 600;
-    case 1:
-      return 300;
-    default:
-      return 0;
-  }
-});
+const targetWithdrawAmount = inject("targetWithdrawAmount");
 
 const delay = async (ms) => {
   return new Promise((resolve) => {
@@ -95,10 +84,17 @@ const handleEnvelopeClick = (index) => {
     res.data.redPackets[index] = res.data.redPackets[targetIndex];
     res.data.redPackets[targetIndex] = temp;
 
-    await delay(1000);
+    let constantIndex = Math.floor(Math.random() * 6);
+    while (constantIndex === index) {
+      constantIndex = Math.floor(Math.random() * 6);
+    }
 
+    await delay(1000);
     prizeList.value.forEach((prize, _index) => {
-      if (_index !== index) {
+      if (_index === constantIndex) {
+        prize.status = "unselected";
+        prize.prize = targetWithdrawAmount.value;
+      } else if (_index !== index) {
         prize.status = "unselected";
         prize.prize = res.data.redPackets[otherPrizeCounter];
       }
