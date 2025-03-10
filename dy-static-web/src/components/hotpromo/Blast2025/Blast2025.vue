@@ -19,7 +19,7 @@
             <div class="reward-info-icon claim-gift-icon">
             </div>
             <div class="reward-info-content">
-              可领取彩金：
+              可领取救援金：
               <span class="amount">{{ bonus }}元</span>
             </div>
           </div>
