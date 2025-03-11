@@ -329,7 +329,7 @@ export default defineComponent({
           }
         });
       } else {
-        const savedAffiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || "A21AE9";
+        const savedAffiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || "";
         let _affiliateCode = "";
 
         await api
