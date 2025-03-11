@@ -156,7 +156,7 @@
 <script setup>
 import { onMounted, ref, defineProps } from "vue";
 import { ElMessageBox } from "element-plus";
-
+import { ResponseCode } from "@/api/response";
 import { claimCompetitionLoss, getCompetitionLossInit } from "@/api/index/promo";
 import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
@@ -192,6 +192,19 @@ const handleClaimBonus = () => {
           message: `成功领取`
         });
         fetchData();
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
+        notify({
+          type: "error",
+          message: res.message
+        });
       }
     })
     .catch((err) => {
