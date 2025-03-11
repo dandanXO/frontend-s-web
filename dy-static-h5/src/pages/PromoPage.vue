@@ -108,10 +108,7 @@
                 class="inner"
                 :class="{
                   lhworldcup: selectedPromo.promoCode === 'dy2worldcup',
-                  cny2024: selectedPromo.promoCode === 'dy2-cny2024-promo',
                   hongbaoyu: selectedPromo.promoCode === 'hongbaoyu',
-                  cnystepgame: selectedPromo.promoCode === 'dy2-cny-step-game',
-                  dy2gamesteps: selectedPromo.promoCode === 'dy2-game-steps',
                   cs2:
                     selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
                     selectedPromo.promoCode === 'dy2-cs2-blast-2024' ||
@@ -131,8 +128,6 @@
                   lpllck: selectedPromo.promoCode === 'dy2-lpl-lck-bonus',
                   'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus',
                   midAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
-                  isYallaCompass: selectedPromo?.promoCode === 'dy2-yalla-compass',
-                  isBbdachaBelgrade: selectedPromo?.promoCode === 'dy2-bbdacha-belgrade',
                   isValorantChampionTour2024: selectedPromo?.promoCode === 'dy2-valorant-champion-tour-2024',
                   hongbaoyu2025: selectedPromo?.promoCode === 'dy2-cny2025-red-envelope'
                 }"
@@ -161,11 +156,7 @@
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
-                  v-if="
-                    selectedPromo.promoType &&
-                    selectedPromo.promoCode !== 'dy2-cny-step-game' &&
-                    selectedPromo.promoCode !== 'dy2-game-steps'
-                  "
+                  v-if="selectedPromo.promoType"
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
@@ -177,12 +168,6 @@
                 >
                   <div v-if="selectedPromo.redirectUrl === 'dy2-nba-water-battle'">
                     <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
-                  </div>
-                  <div v-if="selectedPromo.redirectUrl === 'dy2-yalla-compass'">
-                    <YallaCompass :promoCode="selectedPromo.promoCode" />
-                  </div>
-                  <div v-if="selectedPromo.redirectUrl === 'dy2-bbdacha-belgrade'">
-                    <BbdachaBelgrade :promoCode="selectedPromo.promoCode" />
                   </div>
                   <div v-if="selectedPromo.redirectUrl === 'dy2-valorant-champion-tour-2024'">
                     <ValorantChampionTour2024 :promo-code="selectedPromo.promoCode" />
@@ -264,10 +249,7 @@
                 class="inner"
                 :class="{
                   lhworldcup: selectedPromo.promoCode === 'dy2worldcup',
-                  cny2024: selectedPromo.promoCode === 'dy2-cny2024-promo',
                   hongbaoyu: selectedPromo.promoCode === 'hongbaoyu',
-                  cnystepgame: selectedPromo.promoCode === 'dy2-cny-step-game',
-                  dy2gamesteps: selectedPromo.promoCode === 'dy2-game-steps',
                   cs2:
                     selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
                     selectedPromo.promoCode === 'dy2-cs2-blast-2024',
@@ -288,9 +270,7 @@
                 </div>
                 <div
                   v-if="
-                    selectedPromo.promoType &&
-                    selectedPromo.promoCode !== 'dy2-cny-step-game' &&
-                    selectedPromo.promoCode !== 'dy2-game-steps'
+                    selectedPromo.promoType
                   "
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
@@ -347,8 +327,6 @@ import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/Blast
 import { useLocalStorage } from "@vueuse/core";
 import NBAWaterBattle from "src/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
-const YallaCompass = defineAsyncComponent(() => import("src/components/hotpromo/yalla-compass/YallaCompass.vue"));
-const BbdachaBelgrade = defineAsyncComponent(() => import("src/components/hotpromo/bbdacha-belgrade/BbdachaBelgrade.vue"));
 const ValorantChampionTour2024 = defineAsyncComponent(() => import("src/components/hotpromo/valorant-champion-tour-2024/ValorantChampionTour2024.vue"));
 
 export default defineComponent({
@@ -357,8 +335,6 @@ export default defineComponent({
     HotPromotion,
     BlastPremierMarquee,
     NBAWaterBattle,
-    YallaCompass,
-    BbdachaBelgrade,
     ValorantChampionTour2024
   },
   setup() {
@@ -454,7 +430,7 @@ export default defineComponent({
     };
     const isSpecialPromo = ref(false);
     const showPromoDetails = (promo) => {
-      if (promo.promoCode === "dy2-cny-step-game" || promo.promoCode === "dy2-game-steps" || promo.redirectUrl === 'dy2-christmas-gachapon') {
+      if (promo.redirectUrl === 'dy2-christmas-gachapon') {
         isSpecialPromo.value = true;
       } else {
         isSpecialPromo.value = false;
@@ -984,8 +960,6 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
 
-        &.isYallaCompass,
-        &.isBbdachaBelgrade,
         &.isValorantChampionTour2024,
         &.hongbaoyu2025 {
           gap: 0;
