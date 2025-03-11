@@ -33,7 +33,8 @@
                 src="../assets/images/index/game_icon_all.png"
               />
               <template v-else>{{ p.label }}</template> -->
-              <img :src="require('../assets/promo/menu-' + p.img + '.png')" />
+              <!-- <img :src="require('../assets/promo/menu-' + p.img + '.png')" /> -->
+              <img :src="p.iconUrl" />
               {{ p.label.zh || p.label }}
             </div>
           </div>
