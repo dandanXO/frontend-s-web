@@ -1,10 +1,12 @@
 <template>
   <Card>
-    <template #title>Member List</template>
+    <template #title>会员列表</template>
     <template #content>
-      <p class="m-0">Member List</p>
+      <MemberList />
     </template>
   </Card>
 </template>
 
-<script setup></script>
+<script setup>
+import MemberList from '@/components/Member/MemberList.vue'
+</script>

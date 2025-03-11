@@ -4,7 +4,7 @@
       type="pie"
       :data="chartData"
       :options="chartOptions"
-      style="width: 100%; height: 100%; max-height: 400px; display: flex; justify-content: center"
+      style="height: 250px; display: flex; justify-content: center"
     />
   </div>
 </template>
