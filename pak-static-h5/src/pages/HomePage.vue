@@ -4206,7 +4206,9 @@ const checkSpinWheel = () => {
       showSpinWheel();
     }, 750);
   } else if (store.hasToken() && !isAndroid()) {
-    showCongratsModal();
+    setTimeout(() => {
+      showCongratsModal();
+    }, 500);
   }
 };
 
@@ -4232,7 +4234,7 @@ const showSpinWheel = () => {
 
 const showCongratsModal = () => {
   eventapi.get("/new-user-roulette/init").then((res) => {
-    if (res.code == 0) {
+    if (res.code === 0) {
       if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
         // isCongratsModal.value = true;
         if (!promoStore.isShownSpinLuckyWheel) {
