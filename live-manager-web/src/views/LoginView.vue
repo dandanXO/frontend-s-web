@@ -1,99 +1,114 @@
 <template>
   <canvas class="background"></canvas>
-  <div class="login-form">
-    <img src="../assets/gif.gif" height="80px;" />
-    <Form
-      class="flex flex-col gap-4 w-full sm:w-56"
-      style="display: flex; flex-direction: column; gap: 15px"
-    >
-      <FormField
-        v-slot="$field"
-        as="section"
-        name="username"
-        initialValue=""
-        class="flex flex-col gap-2"
+  <Card class="login-form" v-if="isLoading">
+    <template #content>
+      <LoadingSpinner />
+    </template>
+  </Card>
+  <Card class="login-form" v-else>
+    <template #content>
+      <img src="../assets/logo.png" height="80px;" style="display: flex; margin: 0 auto 20px" />
+      <Form
+        class="flex flex-col gap-4 w-full sm:w-56"
+        style="display: flex; flex-direction: column; gap: 15px"
       >
-        <InputText
-          type="text"
-          placeholder="Username"
-          style="width: 100%"
-          v-model="loginForm.loginName"
-        />
-        <Message v-if="$field?.invalid" severity="error" size="small" variant="simple">{{
-          $field.error?.message
-        }}</Message>
-      </FormField>
-      <FormField v-slot="$field" asChild name="password" initialValue="">
-        <section class="flex flex-col gap-2">
-          <Password
+        <FormField
+          v-slot="$field"
+          as="section"
+          name="username"
+          initialValue=""
+          class="flex flex-col gap-2"
+        >
+          <InputText
             type="text"
-            placeholder="Password"
-            :feedback="false"
-            toggleMask
-            fluid
-            v-model="loginForm.password"
+            placeholder="Username"
+            style="width: 100%"
+            v-model="loginForm.loginName"
+            :disabled="isLoading"
           />
           <Message v-if="$field?.invalid" severity="error" size="small" variant="simple">{{
             $field.error?.message
           }}</Message>
-        </section>
-      </FormField>
-      <Button
-        type="submit"
-        severity="info"
-        label="Submit"
-        style="width: 100%"
-        @click="onFormSubmit"
-      />
-    </Form>
-  </div>
+        </FormField>
+        <FormField v-slot="$field" asChild name="password" initialValue="">
+          <section class="flex flex-col gap-2">
+            <Password
+              type="text"
+              placeholder="Password"
+              :feedback="false"
+              toggleMask
+              fluid
+              v-model="loginForm.password"
+              :disabled="isLoading"
+            />
+            <Message v-if="$field?.invalid" severity="error" size="small" variant="simple">{{
+              $field.error?.message
+            }}</Message>
+          </section>
+        </FormField>
+        <Button
+          type="submit"
+          severity="info"
+          label="Submit"
+          style="width: 100%"
+          @click="onFormSubmit"
+          :disabled="isLoading"
+        />
+      </Form>
+    </template>
+  </Card>
 </template>
 
 <script setup>
 import Particles from 'particlesjs'
-import { onMounted, reactive, inject } from 'vue'
+import { onMounted, reactive, inject, ref } from 'vue'
 import { Form } from '@primevue/forms'
 import { useToast } from 'primevue/usetoast'
 import { DashboardService } from '@/service/DashboardService'
+import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 const loginForm = reactive({
   loginName: 'testloginname',
   password: 'testpassword',
 })
 
+const isLoading = ref(false)
+
 const toast = useToast()
 
 const isLoggedIn = inject('isLoggedIn')
 
-const onFormSubmit = ({ valid }) => {
+const onFormSubmit = () => {
+  isLoading.value = true
   console.log('here', loginForm)
-  DashboardService.logIn(loginForm.loginName, loginForm.password).then((result) => {
-    console.log('here', result)
+  DashboardService.logIn(loginForm.loginName, loginForm.password)
+    .then((result) => {
+      console.log('here', result)
 
-    if (result) {
-      toast.add({ severity: 'success', summary: '已登入，页面即将转变...', life: 3000 })
-
-      setTimeout(() => {
-        isLoggedIn.value = true
-      }, 2000)
-    }
-  })
-  //   if (valid) {
-  //     toast.add({ severity: 'success', summary: 'Form is submitted.', life: 3000 })
-  //   }
+      if (result) {
+        setTimeout(() => {
+          isLoggedIn.value = true
+          isLoading.value = false
+          toast.add({ severity: 'success', summary: '成功登录', life: 3000 })
+        }, 2000)
+      }
+    })
+    .catch(() => {
+      isLoading.value = false
+    })
 }
 
 const initParticles = () => {
   Particles.init({
     selector: '.background',
-    color: ['#bdbdbd', '#636363'],
+    color: ['#9ddafa', '#418cc5', '#dddff1', '#708ac6'],
     connectParticles: true,
     responsive: [
       {
-        breakpoint: 100,
+        breakpoint: 10,
         options: {
           color: '#00C9B1',
-          maxParticles: 5,
+          maxParticles: 1,
           connectParticles: false,
           speed: 0.2,
         },
@@ -114,8 +129,6 @@ onMounted(() => {
   top: 0;
   left: 0;
   z-index: 0;
-  background: url('../assets/bg1.jpg') center center no-repeat;
-  background-size: 100% 100%;
 }
 
 .login-form {
@@ -123,7 +136,6 @@ onMounted(() => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #00000040;
   padding: 30px;
   border-radius: 6px;
   display: flex;

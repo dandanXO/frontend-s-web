@@ -2,7 +2,7 @@
   <div class="card">
     <Menubar :model="items">
       <template #start>
-        <img width="50px" src="../../assets/gif.gif" />
+        <img width="50px" src="../../assets/logo.png" />
       </template>
       <template #item="{ item, props, hasSubmenu, root }">
         <BreacrumbComponent />
