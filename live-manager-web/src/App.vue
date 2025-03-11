@@ -102,7 +102,7 @@ const items = ref([
   .content {
     width: 100%;
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 1fr 85%;
     gap: 10px;
   }
 }
