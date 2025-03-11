@@ -1,5 +1,11 @@
 <template>
-  <div class="card">
+  <div class="card" style="position: relative">
+    <ProgressBar
+      v-if="isLoading"
+      mode="indeterminate"
+      style="height: 6px; position: absolute; top: 0px; width: 100%"
+    ></ProgressBar>
+
     <Menubar :model="items">
       <template #start>
         <img width="50px" src="../../assets/logo.png" />
@@ -35,7 +41,7 @@
             image="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80"
             shape="circle"
           />
-          <Button label="退出" severity="contrast" @click="isLoggedIn = false" />
+          <Button label="退出" severity="contrast" @click="onLogout" />
         </div>
       </template>
     </Menubar>
@@ -47,8 +53,25 @@ import { ref, inject } from 'vue'
 import LangToggle from './LangToggle.vue'
 import SiteToggle from './SiteToggle.vue'
 import BreacrumbComponent from './BreacrumbComponent.vue'
+import { useToast } from 'primevue/usetoast'
+
+const isLoading = ref(false)
 
 const items = ref([{}])
 
 const isLoggedIn = inject('isLoggedIn')
+
+const toast = useToast()
+
+const onLogout = () => {
+  isLoading.value = true
+
+  setTimeout(() => {
+    isLoggedIn.value = false
+    isLoading.value = false
+    toast.add({ severity: 'success', summary: '成功退出', life: 3000 })
+  }, 2000)
+}
 </script>
+
+<style lang="scss"></style>

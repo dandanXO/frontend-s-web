@@ -12,3 +12,8 @@ body {
   background-attachment: fixed;
   // background-color: #1a1a1a;
 }
+
+.p-progressbar-value {
+  margin: 0;
+  background: linear-gradient(45deg, #84c3fe, #dddefd) !important;
+}
