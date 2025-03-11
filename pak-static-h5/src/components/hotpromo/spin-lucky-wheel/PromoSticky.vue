@@ -117,7 +117,8 @@ const loadData = async () => {
   const getShow = sessionStorage.getItem("SPIN_LUCKY_WHEEL_STICKY");
 
   if (!getShow && store.token) {
-    const res = await eventapi.get("/session/refer-wheel-spin/init?promoCode=pak-refer-wheel-spin");
+    var res = await eventapi.get("/session/refer-wheel-spin/init?promoCode=pak-refer-wheel-spin");
+    // res.code = 199;
     if (res.code === 0) {
       info.value = {
         ...info.value,

@@ -1425,7 +1425,7 @@
           <img src="../assets/images/index/modal/luckyspin-title.png" />
         </div>
         <div class="luckyspin-container">
-          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="true" />
+          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="isShownSpinLuckyWheel" />
           <div class="luckyspin-title">
             <img src="../assets/images/index/modal/luckyspin-welcome.png" />
           </div>
@@ -1442,7 +1442,7 @@
     <q-dialog v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
       <CongratsModal>
         <template #controller>
-          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="true" />
+          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="isShownSpinLuckyWheel" />
         </template>
       </CongratsModal>
     </q-dialog>
@@ -4219,7 +4219,9 @@ const showSpinWheel = () => {
           isShowPrizeModal.value = true;
         } else if (res.data.showRoulette === "YES") {
           // isLuckyDrawModal.value = true;
-          popupPromo.value = "lucky-spin-wheel";
+          if (!promoStore.isShownSpinLuckyWheel) {
+            popupPromo.value = "lucky-spin-wheel";
+          }
         }
       }
     })
@@ -4233,7 +4235,9 @@ const showCongratsModal = () => {
     if (res.code == 0) {
       if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
         // isCongratsModal.value = true;
-        popupPromo.value = "lucky-spin-wheel";
+        if (!promoStore.isShownSpinLuckyWheel) {
+          popupPromo.value = "lucky-spin-wheel";
+        }
       }
     }
   });
