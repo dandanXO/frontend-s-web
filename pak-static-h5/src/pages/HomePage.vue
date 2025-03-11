@@ -81,17 +81,24 @@
     </pre> -->
   </div>
   <div>
-<!--    <q-page-sticky v-if="isCharityShow && isShowStickyIcons" position="bottom-right" :offset="charityDragPos" class="floating-btn scalable" :style="{ transform: `scale(${scaleValue})` }">-->
-<!--      <div v-touch-pan.prevent.mouse="moveCharityGif" @click="openCharityUrl">-->
-<!--        &lt;!&ndash;        <div class="hb-close">&ndash;&gt;-->
-<!--        &lt;!&ndash;          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click.stop="isCharityShow = false" />&ndash;&gt;-->
-<!--        &lt;!&ndash;        </div>&ndash;&gt;-->
-<!--        <img class="charity-gif" src="../assets/images/index/charity-float.gif" />-->
-<!--      </div>-->
-<!--    </q-page-sticky>-->
+    <!--    <q-page-sticky v-if="isCharityShow && isShowStickyIcons" position="bottom-right" :offset="charityDragPos" class="floating-btn scalable" :style="{ transform: `scale(${scaleValue})` }">-->
+    <!--      <div v-touch-pan.prevent.mouse="moveCharityGif" @click="openCharityUrl">-->
+    <!--        &lt;!&ndash;        <div class="hb-close">&ndash;&gt;-->
+    <!--        &lt;!&ndash;          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click.stop="isCharityShow = false" />&ndash;&gt;-->
+    <!--        &lt;!&ndash;        </div>&ndash;&gt;-->
+    <!--        <img class="charity-gif" src="../assets/images/index/charity-float.gif" />-->
+    <!--      </div>-->
+    <!--    </q-page-sticky>-->
   </div>
   <div class="home-wrapper" :class="detectAndroidVersion()">
-    <q-page-sticky v-if="isShowStickyIcons" style="z-index: 3000;" position="bottom-right" :offset="csDragPos" class="floating-btn scalable" :style="{ transform: `scale(${scaleValue})` }">
+    <q-page-sticky
+      v-if="isShowStickyIcons"
+      style="z-index: 3000"
+      position="bottom-right"
+      :offset="csDragPos"
+      class="floating-btn scalable"
+      :style="{ transform: `scale(${scaleValue})` }"
+    >
       <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef" @click="toggleCSTab">
         <div class="cs-icon-wrapper" :class="{ active: isCsTabVisible }">
           <a class="cs-icon youtube" :href="ui.youtubeUrl" target="_blank">
@@ -113,13 +120,25 @@
       </div>
     </q-page-sticky>
 
-    <q-page-sticky position="bottom-right" :offset="liveDragPos" class="floating-btn scalable" :style="{ transform: `scale(${scaleValue})` }" v-if="isLiveUrlShow && isShowStickyIcons">
+    <q-page-sticky
+      position="bottom-right"
+      :offset="liveDragPos"
+      class="floating-btn scalable"
+      :style="{ transform: `scale(${scaleValue})` }"
+      v-if="isLiveUrlShow && isShowStickyIcons"
+    >
       <div v-touch-pan.prevent.mouse="moveLiveIcon" @click="openLiveInNewTab(ui.LiveUrl)">
         <div class="live-icon-wrapper"></div>
       </div>
     </q-page-sticky>
 
-    <q-page-sticky position="bottom-right" :offset="hbDragPos" class="floating-btn scalable" :style="{ transform: `scale(${scaleValue})` }" v-if="isHbShow && isShowStickyIcons">
+    <q-page-sticky
+      position="bottom-right"
+      :offset="hbDragPos"
+      class="floating-btn scalable"
+      :style="{ transform: `scale(${scaleValue})` }"
+      v-if="isHbShow && isShowStickyIcons"
+    >
       <div>
         <!--        <div class="hb-close">-->
         <!--          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click="isHbShow = false" />-->
@@ -149,10 +168,14 @@
         </div>
       </div>
     </q-page-sticky>
-    <q-page-sticky @click="isShowStickyIcons = !isShowStickyIcons" position="bottom-right" :offset="[0, 400]" class="floating-btn scalable whitee" :style="{ transform: `scale(${scaleValue})` }">
-
-      <img class="stickyopenclose" :class="{open: !isShowStickyIcons}" src="../assets/images/index/open.png">
-
+    <q-page-sticky
+      @click="isShowStickyIcons = !isShowStickyIcons"
+      position="bottom-right"
+      :offset="[0, 400]"
+      class="floating-btn scalable whitee"
+      :style="{ transform: `scale(${scaleValue})` }"
+    >
+      <img class="stickyopenclose" :class="{ open: !isShowStickyIcons }" src="../assets/images/index/open.png" />
     </q-page-sticky>
 
     <PushNotification
@@ -1583,11 +1606,11 @@ const handleScroll = () => {
 };
 
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
+  window.addEventListener("scroll", handleScroll);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener("scroll", handleScroll);
 });
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
@@ -4080,8 +4103,7 @@ onActivated(() => {
   checkGoogleLoginSetPwd();
 
   if (route.query.login === "true") {
-    // isMoneyRainModal.value = true;
-    popupPromo.value = "money-rain";
+    popupPromo.value = "spin-lucky-wheel";
   }
 
   if (route.query.newPlayerGuide === "earn-money") {
@@ -5436,7 +5458,7 @@ const checkGoogleLoginSetPwd = () => {
     max-width: 100px;
     &.stickyopenclose {
       width: 15px;
-    //  padding: 0px 40px;
+      //  padding: 0px 40px;
     }
     &.open {
       transform: rotateZ(180deg);
