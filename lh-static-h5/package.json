@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@fingerprintjs/fingerprintjs": "^3.4.0",
-    "@fingerprintjs/fingerprintjs-pro-vue-v3": "^1.5.0",
+    "@fingerprintjs/fingerprintjs-pro-vue-v3": "1.4.0",
     "@quasar/cli": "^2.4.1",
     "@quasar/extras": "^1.16.11",
     "@vueuse/core": "^9.13.0",
