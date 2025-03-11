@@ -4,7 +4,7 @@
       <!-- <span class="title">Countdown: {{ remainingTime }}</span> -->
       <div class="summary-wrapper">
         <span class="prize">
-          $
+         Rs
           <span class="amount">{{ info.accumulatedBonus }}</span>
         </span>
 
@@ -33,7 +33,7 @@
                 <span class="name">{{ record.loginName }}</span>
                 <span>
                   RECEIVE
-                  <span class="amount">${{ record.bonus }}</span>
+                  <span class="amount">Rs{{ record.bonus }}</span>
                 </span>
               </div>
             </template>

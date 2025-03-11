@@ -24,8 +24,9 @@
 import { ref, onMounted, onActivated } from "vue";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
+import { defineEmits } from "vue";
 import moment from "moment";
-
+const emits = defineEmits(["closeDialog"]);
 const store = userStore();
 const isDoNotShowAgain = ref(false);
 
@@ -84,6 +85,7 @@ const router = useRouter();
 
 const goToPromo = () => {
   router.push("/promo?name=spin-lucky-wheel");
+  emits('closeDialog');
 };
 
 defineExpose({

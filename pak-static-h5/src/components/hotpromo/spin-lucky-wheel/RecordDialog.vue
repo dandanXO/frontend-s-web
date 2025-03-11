@@ -29,7 +29,7 @@
               <template v-if="info.records.length">
                 <div v-for="(record, index) in info.records" :key="index" class="record">
                   <span>{{ moment(record.recordTime).format("MM-DD HH:mm:ss") }}</span>
-                  <span class="amount">${{ record.bonus }}</span>
+                  <span class="amount">Rs{{ record.bonus }}</span>
                 </div>
               </template>
               <span v-else class="no-record-text">No Records</span>

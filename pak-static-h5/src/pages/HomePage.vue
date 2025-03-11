@@ -1506,7 +1506,7 @@
     persistent
   >
     <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
-    <SpinLuckyWheelPromoHomePopup ref="spinLuckyWheelPromoHomePopupRef">
+    <SpinLuckyWheelPromoHomePopup @close-dialog="closeDialog" ref="spinLuckyWheelPromoHomePopupRef">
       <template #controller>
         <PopupController v-model="popupPromo" :hasSpin="true" />
       </template>
