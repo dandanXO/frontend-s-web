@@ -2509,7 +2509,8 @@ export default {
     calculatedPts: 'Calculated Points',
     spinRecord: 'Spin Record',
     pointsDistribution: 'Points Distribution',
-    traceId: 'Trace ID'
+    traceId: 'Trace ID',
+    normalCreate: 'Normal'
   },
   message: {
     adsStatusOpen: 'Open',

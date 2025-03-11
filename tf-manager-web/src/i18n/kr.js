@@ -1974,7 +1974,8 @@ export default {
     tfCompetitionNameVn: '리그 이름 (베트남어)',
     tfCompetitionNameKr: '리그 이름 (한국어)',
     tfCompetitionNameTh: '리그 이름 (태국어)',
-    traceId: 'Trace ID'
+    traceId: 'Trace ID',
+    normalCreate: '정상'
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3 개월 이상일 수 없습니다',
