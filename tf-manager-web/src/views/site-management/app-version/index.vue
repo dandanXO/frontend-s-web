@@ -469,7 +469,9 @@ function showDialog(type) {
     if (appForm.value) {
       appForm.value.resetFields()
       uploadedApp.filePath = null
+      uploadedApp.logoFilePath = null
       form.filePath = null
+      form.logoFilePath = null
       form.id = null
     }
     // Clear the input file value when opening the dialog
