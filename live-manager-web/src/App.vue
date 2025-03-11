@@ -3,14 +3,24 @@
 
   <LoginView v-if="!isLoggedIn" />
   <div class="layout" v-else>
-    <HeaderComponent />
+    <HeaderComponent style="margin: 10px 10px 0" />
 
     <div class="content">
-      <MegaMenu :model="items" orientation="vertical" style="height: fit-content">
-        <template #start> </template>
-      </MegaMenu>
+      <div>
+        <!-- <MegaMenu
+          :model="items"
+          orientation="vertical"
+          style="height: fit-content; margin-left: 10px"
+        >
+          <template #start> </template>
+        </MegaMenu> -->
 
-      <RouterView />
+        <PanelMenuComponent style="height: fit-content; margin-left: 10px" />
+      </div>
+
+      <div style="margin-right: 10px">
+        <RouterView />
+      </div>
     </div>
   </div>
 </template>
@@ -20,6 +30,7 @@ import { useRouter } from 'vue-router'
 import { ref, provide } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import HeaderComponent from './components/Header/HeaderComponent.vue'
+import PanelMenuComponent from './components/PanelMenuComponent.vue'
 import LoginView from './views/LoginView.vue'
 import Toast from 'primevue/toast'
 const router = useRouter()
@@ -102,7 +113,7 @@ const items = ref([
   .content {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 85%;
+    grid-template-columns: 13% 87%;
     gap: 10px;
   }
 }

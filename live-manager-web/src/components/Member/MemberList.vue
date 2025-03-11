@@ -14,7 +14,7 @@
       :globalFilterFields="['name', 'country.name', 'representative.name', 'balance', 'status']"
     >
       <template #header>
-        <div class="flex justify-between">
+        <div class="flex justify-between" style="display: flex; gap: 8px">
           <Button
             type="button"
             icon="pi pi-filter-slash"
