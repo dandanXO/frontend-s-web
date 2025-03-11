@@ -81,17 +81,17 @@
     </pre> -->
   </div>
   <div>
-    <!-- <q-page-sticky v-if="isCharityShow" position="bottom-right" :offset="charityDragPos" class="floating-btn"> -->
-    <!-- <div v-touch-pan.prevent.mouse="moveCharityGif" @click="openCharityUrl"> -->
-    <!--        <div class="hb-close">-->
-    <!--          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click.stop="isCharityShow = false" />-->
-    <!--        </div>-->
-    <!-- <img class="charity-gif" src="../assets/images/index/charity-float.gif" /> -->
-    <!-- </div> -->
-    <!-- </q-page-sticky> -->
+<!--    <q-page-sticky v-if="isCharityShow && isShowStickyIcons" position="bottom-right" :offset="charityDragPos" class="floating-btn scalable" :style="{ transform: `scale(${scaleValue})` }">-->
+<!--      <div v-touch-pan.prevent.mouse="moveCharityGif" @click="openCharityUrl">-->
+<!--        &lt;!&ndash;        <div class="hb-close">&ndash;&gt;-->
+<!--        &lt;!&ndash;          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click.stop="isCharityShow = false" />&ndash;&gt;-->
+<!--        &lt;!&ndash;        </div>&ndash;&gt;-->
+<!--        <img class="charity-gif" src="../assets/images/index/charity-float.gif" />-->
+<!--      </div>-->
+<!--    </q-page-sticky>-->
   </div>
   <div class="home-wrapper" :class="detectAndroidVersion()">
-    <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
+    <q-page-sticky v-if="isShowStickyIcons" style="z-index: 3000;" position="bottom-right" :offset="csDragPos" class="floating-btn scalable" :style="{ transform: `scale(${scaleValue})` }">
       <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef" @click="toggleCSTab">
         <div class="cs-icon-wrapper" :class="{ active: isCsTabVisible }">
           <a class="cs-icon youtube" :href="ui.youtubeUrl" target="_blank">
@@ -113,13 +113,13 @@
       </div>
     </q-page-sticky>
 
-    <q-page-sticky position="bottom-right" :offset="liveDragPos" class="floating-btn" v-if="isLiveUrlShow">
+    <q-page-sticky position="bottom-right" :offset="liveDragPos" class="floating-btn scalable" :style="{ transform: `scale(${scaleValue})` }" v-if="isLiveUrlShow && isShowStickyIcons">
       <div v-touch-pan.prevent.mouse="moveLiveIcon" @click="openLiveInNewTab(ui.LiveUrl)">
         <div class="live-icon-wrapper"></div>
       </div>
     </q-page-sticky>
 
-    <q-page-sticky position="bottom-right" :offset="hbDragPos" class="floating-btn" v-if="isHbShow">
+    <q-page-sticky position="bottom-right" :offset="hbDragPos" class="floating-btn scalable" :style="{ transform: `scale(${scaleValue})` }" v-if="isHbShow && isShowStickyIcons">
       <div>
         <!--        <div class="hb-close">-->
         <!--          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click="isHbShow = false" />-->
@@ -148,6 +148,11 @@
           </q-carousel>
         </div>
       </div>
+    </q-page-sticky>
+    <q-page-sticky @click="isShowStickyIcons = !isShowStickyIcons" position="bottom-right" :offset="[0, 400]" class="floating-btn scalable whitee" :style="{ transform: `scale(${scaleValue})` }">
+
+      <img class="stickyopenclose" :class="{open: !isShowStickyIcons}" src="../assets/images/index/open.png">
+
     </q-page-sticky>
 
     <PushNotification
@@ -1546,6 +1551,30 @@ import { storeToRefs } from "pinia";
 
 import CongratsReuseableModal from "src/components/modal/CongratsReuseableModal.vue";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
+const scaleValue = ref(1);
+let lastScrollTop = 0;
+const isShowStickyIcons = ref(true);
+const handleScroll = () => {
+  const currentScroll = window.scrollY;
+
+  if (currentScroll > lastScrollTop) {
+    // Scrolling down
+    scaleValue.value = 0;
+  } else {
+    // Scrolling up
+    scaleValue.value = 1;
+  }
+
+  lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
@@ -1781,17 +1810,17 @@ const isCharityShow = computed(() => {
   }
   return false;
 });
-const charityDragPos = ref([10, 240]);
+const charityDragPos = ref([10, 300]);
 const isDraggingCharityGif = ref(false);
 
-const csDragPos = ref([10, 0]);
+const csDragPos = ref([10, 80]);
 const isDraggingCsIcon = ref(false);
 
 const liveDragPos = ref([16, 0]);
 const isDraggingLiveIcon = ref(false);
 const isLiveUrlShow = ref(false);
 
-const hbDragPos = ref([10, 120]);
+const hbDragPos = ref([10, 180]);
 const isDraggingHbIcon = ref(false);
 const isHbShow = ref(true);
 const hbSlide = ref(0);
@@ -5057,6 +5086,7 @@ const checkGoogleLoginSetPwd = () => {
     transform: translateY(-50%);
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
+    pointer-events: none;
 
     &.youtube {
       left: -60px;
@@ -5085,6 +5115,7 @@ const checkGoogleLoginSetPwd = () => {
 
   &.active {
     .cs-icon {
+      pointer-events: unset;
       opacity: 1;
     }
   }
@@ -5368,13 +5399,34 @@ const checkGoogleLoginSetPwd = () => {
     }
   }
 }
-
+.q-page-container {
+  :not(.home-wrapper) > .floating-btn.scalable:first-child {
+    border-radius: 10px 0 0 0;
+  }
+}
 .floating-btn {
+  &.scalable {
+    transform-origin: center;
+    transition: transform 0.5s ease-in-out;
+    &.whitee {
+      border-radius: 10px 0 0 10px;
+      background: rgb(255 255 255 / 40%);
+      padding: 5px 10px 3px;
+    }
+  }
   z-index: 2001;
 
   img {
     width: 100%;
     max-width: 100px;
+    &.stickyopenclose {
+      width: 15px;
+    //  padding: 0px 40px;
+    }
+    &.open {
+      transform: rotateZ(180deg);
+      padding: 0px;
+    }
   }
 }
 
