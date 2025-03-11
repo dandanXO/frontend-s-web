@@ -1,5 +1,5 @@
 <template>
-  <DataView :value="products" :layout="layout">
+  <DataView :value="[...Array(10).keys()]" :layout="layout">
     <template #grid="slotProps">
       <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px">
         <div class="p-2">
@@ -131,13 +131,9 @@
 import { ref, onMounted } from 'vue'
 import { DashboardService } from '@/service/DashboardService'
 
-onMounted(() => {
-  DashboardService.getProducts().then((data) => (products.value = data.slice(0, 12)))
-})
+onMounted(() => {})
 
-const products = ref()
 const layout = ref('grid')
-const options = ref(['list', 'grid'])
 </script>
 
 <style lang="scss" scoped>
