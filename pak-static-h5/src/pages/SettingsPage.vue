@@ -166,7 +166,7 @@
     </div>
   </q-page>
 
-  <q-dialog width="100%" v-model="confirmSignOutDialog" presistent>
+  <q-dialog width="100%" v-model="confirmSignOutDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">

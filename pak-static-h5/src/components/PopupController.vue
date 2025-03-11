@@ -22,13 +22,14 @@
 import { computed, ref, toRefs, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
-const props = defineProps(["modelValue", "hasWheel"]);
+const props = defineProps(["modelValue", "hasWheel", "hasSpin"]);
 const { modelValue } = toRefs(props);
 
 const emit = defineEmits("update:modelValue");
 
 const { t } = useI18n();
 const isAdded = ref(false);
+const isAddedSpin = ref(false);
 
 const promoList = ref([
   { code: "money-rain", name: t("home.cashGift") },
@@ -37,11 +38,18 @@ const promoList = ref([
 if (props.hasWheel && !isAdded.value) {
   promoList.value.push({ code: "mega-sharing-wheel", name: t("home.MegaSharingRoulette") });
 }
+if (props.hasSpin && !isAdded.value) {
+  promoList.value.push({ code: "spin-lucky-wheel", name: t("home.spinLuckyWheel") });
+}
 
 watch(props, (newVal, oldVal) => {
   if (newVal.hasWheel === true && isAdded.value === false) {
     isAdded.value = true;
     promoList.value.push({ code: "mega-sharing-wheel", name: t("home.MegaSharingRoulette") });
+  }
+  if (newVal.hasSpin === true && isAddedSpin.value === false) {
+    isAddedSpin.value = true;
+    promoList.value.push({ code: "spin-lucky-wheel", name: t("home.spinLuckyWheel") });
   }
 });
 
@@ -56,6 +64,7 @@ const controllerStyle = computed(() => {
       return "style-2";
     case "money-rain":
     case "lucky-spin-wheel":
+    case "spin-lucky-wheel":
     default:
       return "style-1";
   }

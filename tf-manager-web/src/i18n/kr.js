@@ -1976,6 +1976,7 @@ export default {
     tfCompetitionNameTh: '리그 이름 (태국어)',
     traceId: 'Trace ID',
     downloadQRCode: 'QR 코드 다운로드',
+    normalCreate: '정상'
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3 개월 이상일 수 없습니다',

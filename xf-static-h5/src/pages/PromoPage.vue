@@ -748,7 +748,7 @@ onMounted(() => {
             padding: 5px;
             text-align: center;
             background-color: #202228;
-            border: 1px solid #2e3039;
+            border: 1px solid #d3d3d3;
           }
         }
 

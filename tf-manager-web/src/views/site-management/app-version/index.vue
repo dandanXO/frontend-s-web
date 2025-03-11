@@ -243,7 +243,7 @@
                 type="file"
                 ref="inputLogo"
                 style="display: none"
-                accept="image/*"
+                accept=".png"
                 @change="attachLogo"
               />
               <el-button
@@ -469,7 +469,9 @@ function showDialog(type) {
     if (appForm.value) {
       appForm.value.resetFields()
       uploadedApp.filePath = null
+      uploadedApp.logoFilePath = null
       form.filePath = null
+      form.logoFilePath = null
       form.id = null
     }
     // Clear the input file value when opening the dialog
@@ -649,7 +651,7 @@ async function attachLogo(event) {
   const fileNameParts = files.name.split('.')
   const fileExtension = fileNameParts[fileNameParts.length - 1].toLowerCase()
 
-  const allowFileType = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
+  const allowFileType = ['image/png']
   const dir = 'temp'
   if (!allowFileType.find(ftype => ftype.includes(files.type))) {
     ElMessage({ message: t('message.invalidFileType'), type: 'error' })

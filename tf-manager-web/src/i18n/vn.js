@@ -1929,6 +1929,7 @@ export default {
     tfCompetitionNameTh: 'Tên giải đấu (Tiếng Thái)',
     traceId: 'Trace ID',
     downloadQRCode: 'Tải xuống mã QR',
+    normalCreate: 'Bình thường'
   },
   message: {
     startenddatemore3months:

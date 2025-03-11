@@ -71,13 +71,15 @@ export const uploadApp = async (formData, fileType) => {
 }
 
 export const uploadLogo = async (formData, fileType) => {
-  const allowedFileTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
+  const allowedFileTypes = ['image/png', 'png']
 
   const baseApi = globals.$baseApi
 
+  console.log("filetype", fileType)
+
   if (!allowedFileTypes.includes(fileType)) {
     ElMessage({
-      message: 'Invalid file type. Supported types are [\'image/jpeg\', \'image/jpg\', \'image/png\', \'image/gif\'].',
+      message: 'Invalid file type. Supported types is .png.',
       type: 'error',
     })
   }

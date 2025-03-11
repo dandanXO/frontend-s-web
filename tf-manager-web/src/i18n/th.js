@@ -1347,6 +1347,7 @@ export default {
     tfCompetitionNameTh: 'ชื่อการแข่งขัน (ไทย)',
     traceId: 'Trace ID',
     downloadQRCode: 'ดาวน์โหลดรหัส QR',
+    normalCreate: 'ปกติ'
   },
   message: {
     startenddatemore3months: 'เวลาเริ่มและเสร็จสิ้นต้องไม่เกิน 3 เดือน',

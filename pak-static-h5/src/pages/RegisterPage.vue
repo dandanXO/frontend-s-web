@@ -644,11 +644,11 @@ export default defineComponent({
         var adjustEvent = new AdjustEvent(ui.adjust_register_event);
         // alert(affRegEvent.value);
         Adjust.trackEvent(adjustEvent);
-        // } else {
-        //   const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-        //   AdjustWeb.trackEvent({
-        //     eventToken: ui.adjust_register_event
-        //   });
+      } else {
+        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        AdjustWeb.trackEvent({
+          eventToken: ui.adjust_register_event
+        });
       }
     };
 
@@ -673,12 +673,12 @@ export default defineComponent({
         isLoading.value = false;
       } else {
         var qs = require("qs");
-        const sidParam = store.googleadid || store.visitorId;
+        const sidParam = store.aaid || store.googleadid || store.visitorId;
 
         (async () => {
-          if (store.aaid) {
-            regForm.traceId = store.aaid;
-          }
+          // if (store.aaid) {
+          //   regForm.traceId = store.aaid;
+          // }
           regForm.sid = sidParam;
 
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
@@ -708,7 +708,7 @@ export default defineComponent({
                   message: "Registered successfully",
                   icon: "check_circle_outline"
                 });
-
+                localStorage.setItem("newPlayerGuide", 1)
                 //FB Tracking.
                 if (store.isFbPixel || store.isTkPixel) {
                   if (store.isFbPixel) {
