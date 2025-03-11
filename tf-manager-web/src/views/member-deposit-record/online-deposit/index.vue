@@ -421,6 +421,7 @@ async function loadRecord() {
   page.loading = false;
 };
 
+
 async function showDialog(type, row) {
   if (type === "SUPPLEMENT") {
     if (supplementForm.value) {
@@ -432,8 +433,8 @@ async function showDialog(type, row) {
     suppForm.serialNumber = row.serialNumber;
     suppForm.supplementAmount = Number(row.localCurrencyAmount).toFixed(2);
     suppForm.currencyRate = row.currencyRate;
-    suppForm.depositAmount = Intl.NumberFormat().format(Number(row.depositAmount).toFixed(2));
-    suppForm.localCurrencyAmount = Intl.NumberFormat().format(Number(row.localCurrencyAmount).toFixed(2));
+    suppForm.depositAmount = Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }).format(Number(row.depositAmount));
+    suppForm.localCurrencyAmount = Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }).format(Number(row.localCurrencyAmount));
     uiControl.dialogTitle = t('fields.supplementDeposit');
   } else if (type === "CANCEL") {
     if (cancelDepositForm.value) {
