@@ -17,6 +17,7 @@ import axios from "axios";
 import { getVisitorId } from "boot/utils";
 import { cached } from "boot/cache";
 import { useRoute, useRouter } from "vue-router";
+import { App } from "@capacitor/app";
 
 export default defineComponent({
   name: "App",
