@@ -11,7 +11,7 @@
   <div class="extraction-remaining-progress" v-if="props?.isShowDetails">
     <span class="extraction-require-amount">
       Only
-      <span class="amount">${{ extractionDifference }}</span>
+      <span class="amount">Rs{{ extractionDifference }}</span>
       to go
     </span>
     <span class="extraction-require-percentage">{{ `${remainingRequired}%` }}</span>

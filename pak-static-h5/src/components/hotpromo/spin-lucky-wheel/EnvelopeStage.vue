@@ -26,8 +26,8 @@
         </button>
       </div>
       <div v-else class="selected-envelope">
-        <span class="prize">${{ prizeList[selectedIndex]?.prize }}</span>
-        <span class="desc">Withdraw money over ${{ targetWithdrawAmount }}</span>
+        <span class="prize">Rs{{ prizeList[selectedIndex]?.prize }}</span>
+        <span class="desc">Withdraw money over Rs{{ targetWithdrawAmount }}</span>
         <CommonButton class="withdraw-btn" @click="$emit('envelopeClick')">Go withdraw now!</CommonButton>
         <span class="remaining-time">time left: {{ remainingTime }}</span>
       </div>
