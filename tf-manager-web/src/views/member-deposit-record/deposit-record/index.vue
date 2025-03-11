@@ -372,6 +372,30 @@
         </el-table-column>
         <el-table-column
           v-if="request.siteId !== 5"
+          prop="localCurrencyAmount"
+          :label="t('fields.localCurrencyAmount')"
+          align="center"
+          min-width="180"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{
+                data: scope.row.localCurrencyAmount,
+                type: 'money',
+              }"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          v-if="request.siteId !== 5 && !hasPermission(['sys:ind:role:cs'])"
+          prop="currencyRate"
+          :label="t('fields.currencyRate')"
+          align="center"
+          min-width="100"
+        />
+        <el-table-column
+          v-if="request.siteId !== 5"
           prop="paymentType"
           :label="t('fields.paymentType')"
           align="center"
@@ -407,30 +431,6 @@
           :label="t('fields.currency')"
           align="center"
           min-width="80"
-        />
-        <el-table-column
-          v-if="request.siteId !== 5"
-          prop="localCurrencyAmount"
-          :label="t('fields.localCurrencyAmount')"
-          align="center"
-          min-width="180"
-        >
-          <template #default="scope">
-            $
-            <span
-              v-formatter="{
-                data: scope.row.localCurrencyAmount,
-                type: 'money',
-              }"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          v-if="request.siteId !== 5 && !hasPermission(['sys:ind:role:cs'])"
-          prop="currencyRate"
-          :label="t('fields.currencyRate')"
-          align="center"
-          min-width="100"
         />
         <el-table-column
           v-if="!hasPermission(['sys:ind:role:cs'])"
