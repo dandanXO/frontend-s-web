@@ -2513,6 +2513,7 @@ export default {
     spinRecord: '转盘记录',
     pointsDistribution: '积分分布',
     traceId: 'Trace ID',
+    downloadQRCode: '二维码下载',
     normalCreate: '普通'
   },
   message: {

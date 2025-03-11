@@ -1928,6 +1928,7 @@ export default {
     tfCompetitionNameKr: 'Tên giải đấu (Tiếng Hàn)',
     tfCompetitionNameTh: 'Tên giải đấu (Tiếng Thái)',
     traceId: 'Trace ID',
+    downloadQRCode: 'Tải xuống mã QR',
     normalCreate: 'Bình thường'
   },
   message: {

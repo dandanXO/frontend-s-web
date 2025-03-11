@@ -2510,6 +2510,7 @@ export default {
     spinRecord: 'Spin Record',
     pointsDistribution: 'Points Distribution',
     traceId: 'Trace ID',
+    downloadQRCode: 'Download QRCode',
     normalCreate: 'Normal'
   },
   message: {
