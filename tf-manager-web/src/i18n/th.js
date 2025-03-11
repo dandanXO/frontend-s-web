@@ -1345,7 +1345,8 @@ export default {
     tfCompetitionNameVn: 'ชื่อการแข่งขัน (วิทนาม)',
     tfCompetitionNameKr: 'ชื่อการแข่งขัน (คอร์ยา)',
     tfCompetitionNameTh: 'ชื่อการแข่งขัน (ไทย)',
-    traceId: 'Trace ID'
+    traceId: 'Trace ID',
+    downloadQRCode: 'ดาวน์โหลดรหัส QR',
   },
   message: {
     startenddatemore3months: 'เวลาเริ่มและเสร็จสิ้นต้องไม่เกิน 3 เดือน',

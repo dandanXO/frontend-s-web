@@ -387,9 +387,9 @@
           size="mini"
           :key="item.orderIndex"
         >
-          <el-input data-highlight-target class="disable-input" v-model="item.code" />
+          <el-input data-highlight-target class="disable-input" v-model="item.code" style="width: 200px;" />
           -
-          <el-input data-highlight-target class="disable-input" v-model="item.value" />
+          <el-input data-highlight-target class="disable-input" v-model="item.value" style="width: 700px;" />
           <el-button
             icon="el-icon-edit"
             size="mini"

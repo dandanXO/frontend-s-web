@@ -2512,7 +2512,8 @@ export default {
     calculatedPts: '计算积分',
     spinRecord: '转盘记录',
     pointsDistribution: '积分分布',
-    traceId: 'Trace ID'
+    traceId: 'Trace ID',
+    downloadQRCode: '二维码下载',
   },
   message: {
     adsStatusOpen: '开',

@@ -193,6 +193,14 @@
             >
               {{ t('fields.download') }}
             </el-button>
+            <el-button
+              size="mini"
+              type="primary"
+              v-if="scope.row.fileUrl !== null && scope.row.buildStatus === 'SUCCESS'"
+              @click="downloadQRCode(scope.row.fileUrl)"
+            >
+              {{ t('fields.downloadQRCode') }}
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -292,6 +300,8 @@ import {
 // import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
+import { saveAs } from 'file-saver'
+import QRCode from 'qrcode'
 
 const { t } = useI18n()
 const table = ref(null)
@@ -486,6 +496,31 @@ const downloadFile = (url) => {
     console.error('Download URL is empty');
   }
 };
+
+const downloadQRCode = async (url) => {
+  if (url) {
+    try {
+      // 生成二维码数据URL
+      const qrDataUrl = await QRCode.toDataURL(url, {
+        width: 300,
+        margin: 2
+      })
+
+      // 将数据URL转换为Blob
+      const blob = await fetch(qrDataUrl).then(res => res.blob())
+
+      // 使用file-saver保存文件
+      const qrName = `qrcode_${Date.now()}.png`;
+      saveAs(blob, qrName)
+    } catch (error) {
+      console.error('生成二维码失败:', error)
+      ElMessage.error(t('message.qrCodeGenerateFailed'))
+    }
+  } else {
+    console.error('下载URL为空')
+    ElMessage.error(t('message.downloadUrlEmpty'))
+  }
+}
 
 onMounted(async () => {
   await loadSites()
