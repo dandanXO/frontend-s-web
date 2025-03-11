@@ -33,10 +33,7 @@
           <VueQRCodeComponent class="qr-code" size="200" :text="qrCode" />
         </q-carousel-slide>
       </q-carousel> -->
-      <Carousel
-        v-bind="carouselSettings"
-        class="custom-carousel sharepopupslider"
-      >
+      <Carousel v-bind="carouselSettings" class="custom-carousel sharepopupslider">
         <Slide v-for="i in 6" :key="i">
           <div class="slide-content">
             <img class="slide-img" :src="require(`../spin-lucky-wheel/img/share-${i}.png`)" alt="Slide Image" />
@@ -94,7 +91,7 @@
           <a class="social-item" @click="handleShareToTikTok(selfTgurl)">
             <img src="../../../assets/images/earn-money/social-green-tiktok.png" />
           </a>
-          
+
           <a ref="tiktokRef" href="tiktok://" target="_blank" :style="{ display: 'none' }" />
           <a
             class="social-item"
@@ -126,18 +123,17 @@ import { userStore } from "stores/index";
 import VueQRCodeComponent from "vue-qrcode-component";
 import html2canvas from "html2canvas";
 
-import 'vue3-carousel/dist/carousel.css';
+import "vue3-carousel/dist/carousel.css";
 // import { Carousel, Slide, Navigation } from 'vue3-carousel';
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
+import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 const { t } = useI18n();
 const slide = ref(1);
 const props = defineProps(["modelValue", "prize"]);
 const emit = defineEmits(["update:modelValue", "hide"]);
 
-
 const carouselSettings = ref({
   itemsToShow: 1.2, // Ensures peeking effect
-  snapAlign: 'center',
+  snapAlign: "center",
   wrapAround: true,
   transition: 500,
   height: 200,
@@ -190,10 +186,29 @@ const takeScreenshot = async () => {
         // Convert to image and download
         const timeStamp = Date.now();
         const image = croppedCanvas.toDataURL("image/png");
-        const link = document.createElement("a");
-        link.href = image;
-        link.download = `b9share-1-${timeStamp}.png`;
-        link.click();
+
+        if (window.location.pathname === "/promotion") {
+          const target = window["cordova_iab"] ?? window["webkit"].messageHandlers["cordova_iab"];
+          target.postMessage(
+            JSON.stringify({
+              action: "qrcode",
+              item: image,
+              filename: `b9share-1-${timeStamp}.png`
+            })
+          );
+        } else {
+          const link = document.createElement("a");
+          link.href = image;
+          link.download = `b9share-1-${timeStamp}.png`;
+          link.click();
+        }
+
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "QR Code image saved to photo gallery.",
+          icon: "check_circle_outline"
+        });
       })
       .catch((err) => console.error("Screenshot error:", err));
   }
@@ -347,27 +362,27 @@ onMounted(() => {
   margin: 0 auto;
   overflow: hidden; /* Ensures no vertical scrolling */
   /* Small Parent Container */
-/* Carousel Styling */
-.custom-carousel {
-  width: 100%;
-}
+  /* Carousel Styling */
+  .custom-carousel {
+    width: 100%;
+  }
 
-// /* Slide Content */
-// .slide-content {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   padding: 0 5px
-// }
-.slide-content {
-  padding: 0 10px;
-}
-/* Slide Image */
-.slide-img {
-  width: 100%;
-  border-radius: 20px;
-}
+  // /* Slide Content */
+  // .slide-content {
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: center;
+  //   justify-content: center;
+  //   padding: 0 5px
+  // }
+  .slide-content {
+    padding: 0 10px;
+  }
+  /* Slide Image */
+  .slide-img {
+    width: 100%;
+    border-radius: 20px;
+  }
 }
 .sharepopupslider {
   .qr-code {
@@ -443,8 +458,6 @@ onMounted(() => {
 
   //   // }
   // }
-  
-  
 }
 
 .back-btn {
@@ -570,7 +583,6 @@ onMounted(() => {
         font-size: 10px;
         line-height: 16.47px;
         letter-spacing: 0px;
-
       }
     }
   }

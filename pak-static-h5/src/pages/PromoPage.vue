@@ -437,7 +437,7 @@ export default defineComponent({
               }
               store.token = extensionToken.value;
             } else if (isAndroid()) {
-              // store.h5Url = "http://192.168.68.95:9090";
+              // store.evip = "192.168.68.93:9090";
               const tgDomain = "https://" + store.evip;
               var preUrl = tgDomain + `/promotion?name=${promo.redirectUrl}&token=${store.token}`;
               // alert(preUrl);
@@ -459,9 +459,8 @@ export default defineComponent({
               ref.addEventListener("message", async function (event) {
                 if(event.data.action === "qrcode") {
                   const dataUrl = event.data.item;
-
                   await Filesystem.writeFile({
-                    path: `Picture/myreferral.jpg`,
+                    path: `Picture/${event.data.filename}`,
                     data: dataUrl,
                     directory: Directory.Documents,
                     recursive: true
