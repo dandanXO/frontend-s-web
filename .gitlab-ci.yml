@@ -248,13 +248,6 @@ deploy-lh-tutorials:
 
 #===============================================================================================
 
-deploy-live-manager-web:
-  extends: .s3-deploy
-  variables:
-    PROJECT: live-manager-web
-
-#===============================================================================================
-
 deploy-lh-maintenance:
   extends: .s3-deploy
   variables:
