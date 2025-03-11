@@ -5,7 +5,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'dashboard',
+      name: '仪表板',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
@@ -13,7 +13,7 @@ const router = createRouter({
     },
     {
       path: '/member-list',
-      name: 'member-list',
+      name: '会员列表',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.

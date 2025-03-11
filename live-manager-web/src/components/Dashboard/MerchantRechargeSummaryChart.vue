@@ -44,6 +44,9 @@ const setChartOptions = () => {
       legend: {
         labels: {
           color: textColor,
+          font: {
+            family: 'Inter', // Set the font family here
+          },
         },
       },
     },
@@ -53,6 +56,7 @@ const setChartOptions = () => {
           color: textColorSecondary,
           font: {
             weight: 500,
+            family: 'Inter',
           },
         },
         grid: {
@@ -63,6 +67,9 @@ const setChartOptions = () => {
       y: {
         ticks: {
           color: textColorSecondary,
+          font: {
+            family: 'Inter', // Set the font family here
+          },
         },
         grid: {
           color: surfaceBorder,
