@@ -421,7 +421,6 @@ async function loadRecord() {
   page.loading = false;
 };
 
-
 async function showDialog(type, row) {
   if (type === "SUPPLEMENT") {
     if (supplementForm.value) {
