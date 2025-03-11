@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <Chart type="bar" :data="chartData" :options="chartOptions" class="h-[30rem]" />
+    <Chart type="bar" :data="chartData" :options="chartOptions" style="height: 250px" />
   </div>
 </template>
 

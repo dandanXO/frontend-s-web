@@ -119,15 +119,15 @@
             <div style="display: flex; flex-direction: column">
               <div>
                 活动期间，活动仅计算电竞场馆中 BLAST 里斯本公开赛 2025 赛事，会员在 BLAST 里斯本公开赛 2025
-                赛事中当日累计负盈利≥500 元即可获得对应彩金； 
+                赛事中当日累计负盈利≥500 元即可获得对应救援金； 
               </div>
-              <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
+              <div class="hint">注：救援金不叠加派发，救援金按最高档位每日派发一次。</div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
             活动期间，活动仅计算 BLAST 里斯本公开赛 2025 赛事已结算的赛事当日总负盈利，次日 24
-            小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 5 倍流水即可出款；
+            小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，救援金 5 倍流水即可出款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
