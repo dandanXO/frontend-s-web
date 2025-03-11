@@ -15,8 +15,8 @@
     @mouseenter="handleWrapperMouseEnter"
     @mouseleave="handleWrapperMouseLeave"
   >
-    <template v-if="isFlvSupported">
-      <video ref="videoRef" class="livestream-video" @progress="handlePlayerProgress" />
+    <template v-if="isPlayerSupported">
+      <video ref="videoRef" class="livestream-video" crossorigin="anonymous" @progress="handlePlayerProgress" />
       <div ref="danmuRef" class="livestream-video-danmu" />
       <div
         class="livestream-video-controller"
@@ -59,15 +59,15 @@
           outline
           dense
           size="sm"
-          @click="handleUrlSelectionClick"
+          title="线路选择"
         >
-          {{ currentUrl.name }}
-          <q-popup-proxy ref="urlPopperRef" transition-show="scale" transition-hide="scale">
-            <q-card class="livestream-video-controller-url-popover">
+          {{ currentChannel.name }}
+          <q-popup-proxy ref="channelPopperRef" transition-show="scale" transition-hide="scale">
+            <q-card class="livestream-video-controller-popover channel">
               <q-list separator>
-                <q-item v-for="(url, index) in urls" :key="index" clickable @click="handleUrlChange(index)">
+                <q-item v-for="(channel, index) in channels" :key="index" clickable @click="handleChannelChange(index)">
                   <q-item-section>
-                    {{ url.name }}
+                    {{ channel.name }}
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -97,15 +97,23 @@
         </div>
       </div>
     </template>
-    <div v-else>不支援的浏览器</div>
+    <div v-else class="livestream-unsupported">不支援的浏览器</div>
   </div>
 </template>
 <script setup>
 import { onMounted, ref, toRefs, watch, onUnmounted, computed } from "vue";
+import { VideoPlayer } from "boot/videoPlayer";
 
 /** @type {import("flv.js").default.Config} */
 const DEFAULT_FLV_CONFIG = {
   enableWorker: true
+};
+
+/** @type {import("hls.js").HlsConfig} */
+const DEFAULT_HLS_CONFIG = {
+  enableWorker: true,
+  debug: false,
+  maxBufferLength: 10
 };
 
 const PLAYER_CONFIG_KEY = "lh-livestream-player-config";
@@ -133,45 +141,81 @@ const DANMU_CONFIG = {
   style: DANMU_STYLE
 };
 
-const props = defineProps(["danmuList", "urls"]);
-const { danmuList, urls } = toRefs(props);
+const DEFAULT_QUALITY = { value: -1, name: "自动" };
 
-/**  @type {import("vue").Ref<typeof import("flv.js").default | null>} */
-const flv = ref(null);
+const props = defineProps(["danmuList", "channels"]);
+const { danmuList, channels } = toRefs(props);
+
 const danmuJs = ref(null);
 
+/**  @type {import("vue").Ref<HTMLVideoElement | null>} */
 const videoRef = ref(null);
 const danmuRef = ref(null);
 const videoWrapperRef = ref(null);
+const channelPopperRef = ref(null);
+const qualityPopperRef = ref(null);
 const videoWrapperMouseLeaveTimer = ref(null);
 const showPlayerController = ref(false);
-const isFlvSupported = ref(true);
+const isPlayerSupported = ref(true);
+/** @type {import("vue").Ref< VideoPlayer | null>}*/
 const player = ref(null);
 const danmu = ref(null);
+const qualities = ref([DEFAULT_QUALITY]);
 const playerConfig = ref({
   isPause: false,
   volume: 50,
   isFullScreen: false,
-  isDanmuClose: false
+  isDanmuClose: false,
+  quality: -1,
+  channel: 0
 });
 
-const loadFlv = async () => {
-  const _flv = (await import("flv.js")).default;
-  flv.value = _flv;
-  if (flv.value.isSupported() && videoRef.value) {
-    player.value = flv.value.createPlayer(
-      {
-        type: "flv",
-        url: "http://207.148.73.114:8080/live/livestream.flv",
-        isLive: true
-      },
-      DEFAULT_FLV_CONFIG
-    );
-    player.value.on(flv.value.Events.ERROR, handlePlayerError);
-    player.value.attachMediaElement(videoRef.value);
-    player.value.load();
-    player.value.play();
-  }
+const currentChannel = computed(() => {
+  return channels.value[playerConfig.value.channel];
+});
+
+const loadPlayer = async () => {
+  player.value = new VideoPlayer(
+    {
+      mediaType: "hls",
+      url: currentChannel.value.url,
+      maxLatency: 10,
+      // ...DEFAULT_FLV_CONFIG,
+      ...DEFAULT_HLS_CONFIG
+    },
+    videoRef.value
+  );
+  await initPlayer();
+};
+
+// const loadFlv = async () => {
+//   const _flv = (await import("flv.js")).default;
+//   flv.value = _flv;
+//   if (flv.value.isSupported() && videoRef.value) {
+//     player.value = flv.value.createPlayer(
+//       {
+//         type: "flv",
+//         url: "http://207.148.73.114:8080/live/livestream.flv",
+//         isLive: true
+//       },
+//       DEFAULT_FLV_CONFIG
+//     );
+//     player.value.on(flv.value.Events.ERROR, handlePlayerError);
+//     player.value.attachMediaElement(videoRef.value);
+//     player.value.load();
+//     player.value.play();
+//   }
+// };
+
+const initPlayer = async () => {
+  if (!player.value) return;
+
+  await player.value.init();
+  isPlayerSupported.value = player.value.SupportPlayer !== "NONE";
+  player.value.on(player.value.Events.ERROR, handlePlayerError);
+  await player.value.load();
+  if (player.value.qualitySupported) getQualities();
+  player.value.play();
 };
 
 const loadDanmu = async () => {
@@ -204,6 +248,13 @@ const loadPlayerConfig = () => {
           break;
         case "isDanmuClose":
           handleDanmuChange(value);
+          break;
+        case "quality":
+          if (value < player.value.levels.length) {
+            handleQualityChange(value);
+          }
+          handleQualityChange(value);
+          break;
       }
     });
   }
@@ -258,27 +309,64 @@ const handleWrapperMouseEnter = () => {
   videoWrapperMouseLeaveTimer.value && clearTimeout(videoWrapperMouseLeaveTimer.value);
 };
 
+// const handleWrapperMouseLeave = () => {
+//   videoWrapperMouseLeaveTimer.value = setTimeout(() => {
+//     showPlayerController.value = false;
+//   }, 1500);
+// };
+
 const handleWrapperMouseLeave = () => {
   videoWrapperMouseLeaveTimer.value = setTimeout(() => {
     showPlayerController.value = false;
+    channelPopperRef.value.hide();
+    // qualityPopperRef.value.hide();
   }, 1500);
 };
 
 const handlePlayerProgress = () => {
   if (!videoRef.value || videoRef.value.paused) return;
-  const bufferedEnd = videoRef.value.buffered.end(0);
-  const delta = bufferedEnd - videoRef.value.currentTime;
-  if (delta > 10 || delta < 0) {
-    videoRef.value.currentTime = bufferedEnd - 0.5;
-  }
+  player.value.syncLive();
 };
 
-const handlePlayerError = (e) => {
+const handlePlayerError = (event, data) => {
   console.log(e);
   if (!playerConfig.value.isPause) {
     changePlayerConfig("isPause", true);
   }
 };
+
+const handleChannelChange = async (index) => {
+  qualities.value = [DEFAULT_QUALITY];
+  changePlayerConfig("quality", -1);
+  changePlayerConfig("channel", index);
+  player.value.changeSource(currentChannel.value.url);
+  channelPopperRef.value = false;
+  await initPlayer();
+};
+
+const handleQualityChange = (index) => {
+  changePlayerConfig("quality", index);
+  player.value.setQualityLevel(index);
+};
+
+const getQualities = () => {
+  const result = player.value.levels.map((level, index) => ({
+    value: index,
+    name: `${level.height}p`
+  }));
+  qualities.value.push(...result);
+};
+
+// watch(danmuList, () => {
+//   if (danmuList.value.length && danmu.value) {
+//     const _danmuList = danmuList.value.map((content, index) => ({
+//       ...DANMU_CONFIG,
+//       txt: content,
+//       id: Date.now() + index
+//     }));
+//     danmu.value.updateComments(_danmuList);
+//   }
+// });
 
 const generateRandomDanmu = () => {
   if (!danmu.value) return;
@@ -369,10 +457,12 @@ const handleUrlChange = (index) => {
 };
 
 onMounted(() => {
-  Promise.all([loadFlv(), loadDanmu()]).then(() => {
+  Promise.all([loadPlayer(), loadDanmu()]).then(() => {
     loadPlayerConfig();
     setInterval(generateRandomDanmu, Math.random() * 10000 + 6000);
   });
+
+  // Promise.all([loadPlayer(), loadDanmu()]).then(loadPlayerConfig);
 });
 </script>
 
@@ -383,6 +473,7 @@ onMounted(() => {
   position: fixed;
   top: 0;
   left: 0;
+  width: 100%;
 
   .livestream-video-danmu {
     position: absolute;
