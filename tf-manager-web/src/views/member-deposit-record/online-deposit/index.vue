@@ -151,15 +151,6 @@
             <el-tag v-if="scope.row.status === 'PENDING'">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column v-if="request.siteId !== 5" prop="paymentType" :label="t('fields.paymentType')" align="center" min-width="110" />
-        <el-table-column prop="privilegesName" :label="t('fields.privilege')" align="center" min-width="110">
-          <template #default="scope">
-            <span v-if="scope.row.privilegesName === null">-</span>
-            <span v-if="scope.row.privilegesName !== null">{{ scope.row.privilegesName }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="vip" :label="t('fields.vipLevel')" align="center" min-width="80" />
-        <el-table-column prop="currency" :label="t('fields.currency')" align="center" min-width="80" />
         <el-table-column v-if="request.siteId !== 5" prop="localCurrencyAmount" :label="t('fields.localCurrencyAmount')" align="center" min-width="180">
           <template #default="scope">
             $
@@ -169,6 +160,16 @@
           </template>
         </el-table-column>
         <el-table-column v-if="request.siteId !== 5" prop="currencyRate" :label="t('fields.currencyRate')" align="center" min-width="100" />
+        <el-table-column v-if="request.siteId !== 5" prop="paymentType" :label="t('fields.paymentType')" align="center" min-width="110" />
+        <el-table-column prop="privilegesName" :label="t('fields.privilege')" align="center" min-width="110">
+          <template #default="scope">
+            <span v-if="scope.row.privilegesName === null">-</span>
+            <span v-if="scope.row.privilegesName !== null">{{ scope.row.privilegesName }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="vip" :label="t('fields.vipLevel')" align="center" min-width="80" />
+        <el-table-column prop="currency" :label="t('fields.currency')" align="center" min-width="80" />
+
         <el-table-column prop="clientType" :label="t('fields.clientType')" align="center" min-width="110" />
         <el-table-column prop="walletType" :label="t('fields.walletType')" align="center" min-width="110" />
         <el-table-column prop="updateBy" :label="t('fields.updateBy')" align="center" min-width="110">
@@ -212,6 +213,11 @@
     </el-card>
 
     <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="580px">
+      <el-form style="padding-left: 50%;">
+        <el-form-item style="margin-bottom: -20px;margin-top: -80px;" :label="t('fields.depositAmount') + '：'">{{ Number(suppForm.depositAmount).toFixed(2) }}</el-form-item>
+        <el-form-item style="margin-bottom: -20px;" :label="t('fields.localCurrencyAmount') + '：'">{{ Number(suppForm.localCurrencyAmount).toFixed(2) }}</el-form-item>
+        <el-form-item style="margin-bottom: 0px;" :label="t('fields.currencyRate') + '：'">{{ suppForm.currencyRate }}</el-form-item>
+      </el-form>
       <el-form v-if="uiControl.dialogType === 'SUPPLEMENT'" ref="supplementForm" :model="suppForm" :rules="suppFormRule" :inline="true" size="small" label-width="180px">
         <el-form-item :label="t('fields.thirdSerialNo')" prop="thirdSerialNumber">
           <el-input v-model="suppForm.thirdSerialNumber" style="width: 250px" maxlength="50" />
@@ -324,6 +330,9 @@ const suppForm = reactive({
   supplementAmount: null,
   remark: null,
   siteId: null,
+  depositAmount: null,
+  localCurrencyAmount: null,
+  currencyRate: null
 });
 
 const cancelForm = reactive({
@@ -418,6 +427,9 @@ async function showDialog(type, row) {
     suppForm.depositDate = row.depositDate;
     suppForm.serialNumber = row.serialNumber;
     suppForm.supplementAmount = Number(row.localCurrencyAmount).toFixed(2);
+    suppForm.currencyRate = row.currencyRate;
+    suppForm.depositAmount = row.depositAmount;
+    suppForm.localCurrencyAmount = row.localCurrencyAmount;
     uiControl.dialogTitle = t('fields.supplementDeposit');
   } else if (type === "CANCEL") {
     if (cancelDepositForm.value) {
