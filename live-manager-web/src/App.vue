@@ -1,5 +1,8 @@
 <template>
-  <div class="layout">
+  <Toast />
+
+  <LoginView v-if="!isLoggedIn" />
+  <div class="layout" v-else>
     <HeaderComponent />
 
     <div class="content">
@@ -8,30 +11,22 @@
       </MegaMenu>
 
       <RouterView />
-      <!-- <Card>
-      <template #title>Simple Card</template>
-      <template #content>
-        <p class="m-0">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error
-          repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa
-          ratione quam perferendis esse, cupiditate neque quas!
-        </p>
-      </template>
-    </Card> -->
     </div>
   </div>
 </template>
 
 <script setup>
-import Button from 'primevue/button'
-import Menu from 'primevue/menu'
-import Card from 'primevue/card'
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { ref, provide } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import HeaderComponent from './components/Header/HeaderComponent.vue'
-
+import LoginView from './views/LoginView.vue'
+import Toast from 'primevue/toast'
 const router = useRouter()
+
+const isLoggedIn = ref(false)
+
+provide('isLoggedIn', isLoggedIn)
 
 const items = ref([
   {

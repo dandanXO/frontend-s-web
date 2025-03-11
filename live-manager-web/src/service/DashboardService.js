@@ -1,4 +1,13 @@
 export const DashboardService = {
+  logIn(username, password) {
+    return new Promise((resolve) => {
+      if (username === 'testloginname' && password === 'testpassword') {
+        resolve(true)
+      }
+
+      resolve(false)
+    })
+  },
   getRechargeSummary() {
     return Promise.resolve([
       {
