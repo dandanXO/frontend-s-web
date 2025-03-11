@@ -42,7 +42,7 @@
                 <div v-if="props.platformType === 'slot'" class="platform-menu-caption" v-html="'崭新玩法，感受精彩'" />
                 </div>
               </div>
-              <div class="platform-menu-img">
+              <div class="platform-menu-img" :class="props.platformType === 'slot' && 'slot-img'">
                 <img
                   :src="
                     require('@/components/pages/img/' +
@@ -311,6 +311,11 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     margin: -30px 0 -50px;
+
+    &.slot-img {
+      width: 220px;
+    } 
+
     img {
       width: 100%;
     }
