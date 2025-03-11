@@ -24,7 +24,7 @@ import LoginView from './views/LoginView.vue'
 import Toast from 'primevue/toast'
 const router = useRouter()
 
-const isLoggedIn = ref(false)
+const isLoggedIn = ref(true)
 
 provide('isLoggedIn', isLoggedIn)
 
@@ -97,13 +97,12 @@ const items = ref([
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 10px;
   gap: 10px;
 
   .content {
     width: 100%;
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 1fr 85%;
     gap: 10px;
   }
 }

@@ -18,7 +18,7 @@ onMounted(() => {
 })
 
 const chartData = ref()
-const chartOptions = ref()
+const chartOptions = ref({})
 
 const setChartData = () => {
   const documentStyle = getComputedStyle(document.body)
@@ -52,6 +52,9 @@ const setChartOptions = () => {
         labels: {
           usePointStyle: true,
           color: textColor,
+          font: {
+            family: 'Inter', // Set the font family here
+          },
         },
       },
     },

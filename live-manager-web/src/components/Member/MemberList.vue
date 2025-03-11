@@ -1,6 +1,8 @@
 <template>
   <div class="card">
     <DataTable
+      style="font-size: small"
+      :size="'small'"
       v-model:filters="filters"
       :value="customers"
       paginator
@@ -38,17 +40,9 @@
           <InputText v-model="filterModel.value" type="text" placeholder="Search by name" />
         </template>
       </Column>
-      <Column header="Country" filterField="country.name" style="min-width: 12rem">
+      <Column header="VIP" filterField="country.name" style="min-width: 12rem">
         <template #body="{ data }">
-          <div class="flex items-center gap-2">
-            <img
-              alt="flag"
-              src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
-              :class="`flag flag-${data.country.code}`"
-              style="width: 24px"
-            />
-            <span>{{ data.country.name }}</span>
-          </div>
+          {{ data.VIPStatus }}
         </template>
         <template #filter="{ filterModel }">
           <InputText v-model="filterModel.value" type="text" placeholder="Search by country" />
@@ -74,24 +68,14 @@
         </template>
       </Column>
       <Column
-        header="Agent"
+        header="真实姓名"
         filterField="representative"
         :showFilterMatchModes="false"
-        :filterMenuStyle="{ width: '14rem' }"
-        style="min-width: 14rem"
+        :filterMenuStyle="{ width: '8rem' }"
+        style="min-width: 8rem"
       >
         <template #body="{ data }">
-          <div
-            class="flex items-center gap-2"
-            style="display: flex; align-items: center; gap: 10px"
-          >
-            <img
-              :alt="data.representative.name"
-              :src="`https://primefaces.org/cdn/primevue/images/avatar/${data.representative.image}`"
-              style="width: 32px"
-            />
-            <span>{{ data.representative.name }}</span>
-          </div>
+          {{ data.representative.name }}
         </template>
         <template #filter="{ filterModel }">
           <MultiSelect
@@ -113,24 +97,63 @@
           </MultiSelect>
         </template>
       </Column>
-      <Column header="Date" filterField="date" dataType="date" style="min-width: 10rem">
+      <Column header="代理代码" filterField="date" dataType="date" style="min-width: 10rem">
         <template #body="{ data }">
-          {{ formatDate(data.date) }}
+          {{ data.identifier }}
         </template>
         <template #filter="{ filterModel }">
           <DatePicker v-model="filterModel.value" dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" />
         </template>
       </Column>
-      <Column header="Balance" filterField="balance" dataType="numeric" style="min-width: 10rem">
+      <Column header="上级用户名" filterField="balance" dataType="numeric" style="min-width: 10rem">
         <template #body="{ data }">
-          {{ formatCurrency(data.balance) }}
+          {{ data.linkedPhoneNumber }}
         </template>
         <template #filter="{ filterModel }">
           <InputNumber v-model="filterModel.value" mode="currency" currency="USD" locale="en-US" />
         </template>
       </Column>
+      <Column header="余额" filterField="balance" dataType="numeric" style="min-width: 10rem">
+        <template #body="{ data }"> $ {{ data.balance }} </template>
+        <template #filter="{ filterModel }">
+          <InputNumber v-model="filterModel.value" mode="currency" currency="USD" locale="en-US" />
+        </template>
+      </Column>
+      <Column header="注册时间" filterField="balance" dataType="date" style="min-width: 10rem">
+        <template #body="{ data }"> {{ data.date.toLocaleString() }} </template>
+        <template #filter="{ filterModel }">
+          <InputNumber v-model="filterModel.value" mode="currency" currency="USD" locale="en-US" />
+        </template>
+      </Column>
+      <Column header="会员组别" filterField="country.name" style="min-width: 12rem">
+        <template #body="{ data }">
+          {{ data.VIPStatus }}
+        </template>
+        <template #filter="{ filterModel }">
+          <InputText v-model="filterModel.value" type="text" placeholder="Search by country" />
+        </template>
+        <template #filterclear="{ filterCallback }">
+          <Button
+            type="button"
+            icon="pi pi-times"
+            @click="filterCallback()"
+            severity="secondary"
+          ></Button>
+        </template>
+        <template #filterapply="{ filterCallback }">
+          <Button
+            type="button"
+            icon="pi pi-check"
+            @click="filterCallback()"
+            severity="success"
+          ></Button>
+        </template>
+        <template #filterfooter>
+          <div class="px-4 pt-0 pb-4 text-center">Customized Buttons</div>
+        </template>
+      </Column>
       <Column
-        header="Status"
+        header="状态"
         field="status"
         :filterMenuStyle="{ width: '14rem' }"
         style="min-width: 12rem"
@@ -152,46 +175,37 @@
         </template>
       </Column>
       <Column
-        field="activity"
-        header="Activity"
-        :showFilterMatchModes="false"
+        header="会员类型"
+        field="status"
+        :filterMenuStyle="{ width: '14rem' }"
         style="min-width: 12rem"
       >
         <template #body="{ data }">
-          <ProgressBar :value="data.activity" :showValue="false" style="height: 6px"></ProgressBar>
+          <Tag :value="data.status" :severity="getSeverity(data.status)" />
         </template>
         <template #filter="{ filterModel }">
-          <Slider v-model="filterModel.value" range class="m-4"></Slider>
-          <div class="flex items-center justify-between px-2">
-            <span>{{ filterModel.value ? filterModel.value[0] : 0 }}</span>
-            <span>{{ filterModel.value ? filterModel.value[1] : 100 }}</span>
-          </div>
+          <Select
+            v-model="filterModel.value"
+            :options="statuses"
+            placeholder="Select One"
+            showClear
+          >
+            <template #option="slotProps">
+              <Tag :value="slotProps.option" :severity="getSeverity(slotProps.option)" />
+            </template>
+          </Select>
         </template>
       </Column>
-      <Column
-        field="verified"
-        header="Verified"
-        dataType="boolean"
-        bodyClass="text-center"
-        style="min-width: 8rem"
-      >
-        <template #body="{ data }">
-          <i
-            class="pi"
-            :class="{
-              'pi-check-circle text-green-500 ': data.verified,
-              'pi-times-circle text-red-500': !data.verified,
-            }"
-          ></i>
-        </template>
+      <Column header="站点" filterField="balance" dataType="numeric" style="min-width: 10rem">
+        <template #body="{ data }"> {{ data.service }} </template>
         <template #filter="{ filterModel }">
-          <label for="verified-filter" class="font-bold"> Verified </label>
-          <Checkbox
-            v-model="filterModel.value"
-            :indeterminate="filterModel.value === null"
-            binary
-            inputId="verified-filter"
-          />
+          <InputNumber v-model="filterModel.value" mode="currency" currency="USD" locale="en-US" />
+        </template>
+      </Column>
+      <Column header="最近登录" filterField="balance" dataType="numeric" style="min-width: 10rem">
+        <template #body="{ data }"> {{ data.date.toLocaleString() }} </template>
+        <template #filter="{ filterModel }">
+          <InputNumber v-model="filterModel.value" mode="currency" currency="USD" locale="en-US" />
         </template>
       </Column>
     </DataTable>

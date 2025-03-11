@@ -114,7 +114,7 @@ onMounted(() => {
   top: 0;
   left: 0;
   z-index: 0;
-  background: url('../assets/bg.jpg') center center no-repeat;
+  background: url('../assets/bg1.jpg') center center no-repeat;
   background-size: 100% 100%;
 }
 
@@ -123,7 +123,7 @@ onMounted(() => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #ffffff1c;
+  background: #00000040;
   padding: 30px;
   border-radius: 6px;
   display: flex;
