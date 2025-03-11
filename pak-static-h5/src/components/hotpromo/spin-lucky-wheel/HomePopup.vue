@@ -1,10 +1,9 @@
 <template>
-  <q-dialog
-    width="100%"
-    v-model="isShowSpinLuckyWheelPromoPopup"
-    class="spin-lucky-wheel-promo-popup"
-    @update:model-value="onCloseSpinLuckyWheelPromoPopup"
-  >
+
+<div class="spin-lucky-container">
+  <div class="controller-wrapper">
+      <slot name="controller" />
+    </div>
     <div class="spin-lucky-wheel-promo-popup-wrapper">
       <div class="banner-wrapper">
         <div class="pulse1"></div>
@@ -18,12 +17,8 @@
           src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/home-popup.png"
         />
       </div>
-      <div class="do-not-show-again-wrapper">
-        <q-checkbox v-model="isDoNotShowAgain">Do not show again</q-checkbox>
-      </div>
-      <q-btn icon="close" round dense v-close-popup class="popup-close" />
     </div>
-  </q-dialog>
+  </div>
 </template>
 <script setup>
 import { ref, onMounted, onActivated } from "vue";
@@ -35,7 +30,6 @@ const store = userStore();
 const isDoNotShowAgain = ref(false);
 
 const isShowSpinLuckyWheelPromoPopup = ref(false);
-
 const onCloseSpinLuckyWheelPromoPopup = () => {
   if (isDoNotShowAgain.value) {
     localStorage.setItem("SPIN_LUCKY_WHEEL_POPUP", Date.now());
@@ -169,5 +163,19 @@ defineExpose({
   position: absolute;
   right: 0;
   top: 0;
+}
+
+
+.spin-lucky-container {
+  max-width: 400px;
+  width: 100%;
+  padding: 16px;
+  position: relative;
+  overflow: visible;
+  border-radius: 12px;
+  .controller-wrapper {
+    width: fit-content;
+    margin: 0 12px 12px;
+  }
 }
 </style>

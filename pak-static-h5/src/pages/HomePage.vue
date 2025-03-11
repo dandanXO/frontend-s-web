@@ -1402,7 +1402,7 @@
           <img src="../assets/images/index/modal/luckyspin-title.png" />
         </div>
         <div class="luckyspin-container">
-          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
+          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="true" />
           <div class="luckyspin-title">
             <img src="../assets/images/index/modal/luckyspin-welcome.png" />
           </div>
@@ -1419,7 +1419,7 @@
     <q-dialog v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
       <CongratsModal>
         <template #controller>
-          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
+          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="true" />
         </template>
       </CongratsModal>
     </q-dialog>
@@ -1454,7 +1454,7 @@
   <q-dialog v-if="popupPromo === 'money-rain'" :model-value="true" persistent>
     <MoneyRainModal>
       <template #controller>
-        <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
+        <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="true" />
       </template>
     </MoneyRainModal>
     <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
@@ -1470,11 +1470,25 @@
     <q-btn class="mega-sharing-wheel-dialog-close" icon="close" round dense @click="closeDialog" />
     <MegaSharingWheelModal>
       <template #controller>
-        <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
+        <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="true" />
       </template>
     </MegaSharingWheelModal>
   </q-dialog>
 
+  <q-dialog
+    v-if="popupPromo === 'spin-lucky-wheel' && isShownSpinLuckyWheel"
+    full-width
+    :model-value="isShownSpinLuckyWheel"
+    class="spin-lucky-wheel-dialog"
+    persistent
+  >
+    <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
+    <SpinLuckyWheelPromoHomePopup ref="spinLuckyWheelPromoHomePopupRef">
+      <template #controller>
+        <PopupController v-model="popupPromo" :hasSpin="true" />
+      </template>
+    </SpinLuckyWheelPromoHomePopup>
+  </q-dialog>
   <q-dialog v-model="isMediaSettingsModal">
     <MediaSettingsComponent :media="mediaCode" />
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
@@ -1488,7 +1502,7 @@
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
 
   <SpinLuckyWheelPromoSticky v-show="isShownSpinLuckyWheel" />
-  <SpinLuckyWheelPromoHomePopup v-if="isShownSpinLuckyWheel" ref="spinLuckyWheelPromoHomePopupRef" />
+  <!-- <SpinLuckyWheelPromoHomePopup v-if="isShownSpinLuckyWheel || popupPromo === 'spin-lucky-wheel'" ref="spinLuckyWheelPromoHomePopupRef" /> -->
 </template>
 
 <script setup>
@@ -1582,7 +1596,6 @@ const gameModules = ref([Scrollbar, Navigation, Pagination]);
 const { t } = useI18n();
 const promoStore = usePromoStore();
 const { isShownSpinLuckyWheel } = storeToRefs(promoStore);
-
 // const isLuckyDrawModal = ref(false);
 // const isCongratsModal = ref(true);
 const isShowPrizeModal = ref(false);
@@ -3937,6 +3950,9 @@ const gotoFloatPromo = (val) => {
   } else if (val.type === "PROMO" && val.code === "pak-mega-sharing-wheel") {
     megaSharingWheelDialogModel.value = true;
     popupPromo.value = "mega-sharing-wheel";
+  } else if (val.type === "PROMO" && val.code === "pak-spin-lucky-wheel") {
+    popupPromo.value = "spin-lucky-wheel";
+    isShownSpinLuckyWheelModel.value = true;
   }
 
   if (val.type === "PROMO" && val.code === "interest-profit") {
@@ -4134,10 +4150,9 @@ watch(
   () => promoStore.isShownSpinLuckyWheel,
   async (val) => {
     await nextTick();
-    val && checkSpinLuckyWheelPromoHomePopupCanShow();
+    if (val) checkSpinLuckyWheelPromoHomePopupCanShow();
   }
 );
-
 // watch(
 //   () => route.query.register,
 //   (newValue) => {

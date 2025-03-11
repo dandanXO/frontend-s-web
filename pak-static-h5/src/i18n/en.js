@@ -289,7 +289,8 @@ export default {
     cat_sport: "Sport",
     cashGift: "Cash Gifts",
     welcomeNewPlayer: "Welcome New Players",
-    MegaSharingRoulette: "Mega Sharing Roulette"
+    MegaSharingRoulette: "Mega Sharing Roulette",
+    spinLuckyWheel: "Spin Lucky Wheel"
   },
   settings: {
     totalScore: "Total Score",

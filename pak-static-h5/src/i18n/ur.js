@@ -287,7 +287,8 @@ export default {
     cat_sport: "کھیل",
     cashGift: "نقدی تحفے",
     welcomeNewPlayer: "نئے کھلاڑیوں کو خوش آمدید",
-    MegaSharingRoulette: "میگا شیئرنگ رولیٹی"
+    MegaSharingRoulette: "میگا شیئرنگ رولیٹی",
+    spinLuckyWheel: "خوش قسمت پہیہ گھمائیں"
   },
   settings: {
     totalScore: "کل اسکور",
