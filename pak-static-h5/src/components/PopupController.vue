@@ -40,7 +40,7 @@ if (props.hasWheel && !isAdded.value) {
 }
 if (props.hasSpin && !isAdded.value) {
   promoList.value.push({ code: "spin-lucky-wheel", name: t("home.spinLuckyWheel") });
-}  
+}
 
 watch(props, (newVal, oldVal) => {
   if (newVal.hasWheel === true && isAdded.value === false) {
