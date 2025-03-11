@@ -213,12 +213,16 @@
     </el-card>
 
     <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="580px">
-      <el-form style="padding-left: 50%;">
-        <el-form-item style="margin-bottom: -20px;margin-top: -80px;" :label="t('fields.depositAmount') + '：'">{{ Number(suppForm.depositAmount).toFixed(2) }}</el-form-item>
-        <el-form-item style="margin-bottom: -20px;" :label="t('fields.localCurrencyAmount') + '：'">{{ Number(suppForm.localCurrencyAmount).toFixed(2) }}</el-form-item>
-        <el-form-item style="margin-bottom: 0px;" :label="t('fields.currencyRate') + '：'">{{ suppForm.currencyRate }}</el-form-item>
-      </el-form>
       <el-form v-if="uiControl.dialogType === 'SUPPLEMENT'" ref="supplementForm" :model="suppForm" :rules="suppFormRule" :inline="true" size="small" label-width="180px">
+        <el-form-item :label="t('fields.depositAmount')">
+          <el-input v-model="suppForm.depositAmount" style="width: 250px" maxlength="50" disabled />
+        </el-form-item>
+        <el-form-item :label="t('fields.localCurrencyAmount')">
+          <el-input v-model="suppForm.localCurrencyAmount" style="width: 250px" maxlength="50" disabled />
+        </el-form-item>
+        <el-form-item :label="t('fields.currencyRate')">
+          <el-input v-model="suppForm.currencyRate" style="width: 250px" maxlength="50" disabled />
+        </el-form-item>
         <el-form-item :label="t('fields.thirdSerialNo')" prop="thirdSerialNumber">
           <el-input v-model="suppForm.thirdSerialNumber" style="width: 250px" maxlength="50" />
         </el-form-item>
@@ -428,8 +432,8 @@ async function showDialog(type, row) {
     suppForm.serialNumber = row.serialNumber;
     suppForm.supplementAmount = Number(row.localCurrencyAmount).toFixed(2);
     suppForm.currencyRate = row.currencyRate;
-    suppForm.depositAmount = row.depositAmount;
-    suppForm.localCurrencyAmount = row.localCurrencyAmount;
+    suppForm.depositAmount = Number(row.depositAmount).toFixed(2);
+    suppForm.localCurrencyAmount = Number(row.localCurrencyAmount).toFixed(2);
     uiControl.dialogTitle = t('fields.supplementDeposit');
   } else if (type === "CANCEL") {
     if (cancelDepositForm.value) {
