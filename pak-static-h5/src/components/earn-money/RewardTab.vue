@@ -317,7 +317,7 @@
       </div>
     </div>
 
-    <q-dialog width="100%" v-model="modalSocialShare" presistent>
+    <q-dialog width="100%" v-model="modalSocialShare" persistent>
       <div class="popout-dialog">
         <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
 
