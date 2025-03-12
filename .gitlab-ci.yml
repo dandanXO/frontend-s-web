@@ -1069,6 +1069,20 @@ build-image-mx1-static-v1:
 
 #===============================================================================================
 
+build-live-manager-web:
+  extends: .build-projects
+  variables:
+    PROJECT: live-manager-web
+
+build-image-live-manager-web:
+  extends: .docker-build
+  variables:
+    PROJECT: live-manager-web
+  needs:
+    - build-live-manager-web
+
+#===============================================================================================
+
 build-kaka-static-web:
   extends: .build-projects
   variables:
