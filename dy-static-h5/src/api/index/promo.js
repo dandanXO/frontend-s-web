@@ -10,18 +10,6 @@ export function claimBonusItem(item) {
 export function claimBonusItem2(item) {
   return eventapi.put(`/bonus/claim/${item}`);
 }
-export function getVctBangkokInit(promoCode) {
-  const randNum = Math.floor(Math.random() * 1000) + 1;
-  return eventapi.get(`/session/competition/yesterday?promoCode=${promoCode}&v=${randNum}`);
-}
-export function getCompetitionLossWeeklyInit(promoCode) {
-  const randNum = Math.floor(Math.random() * 1000) + 1;
-  return eventapi.get(`/session/competition-loss/init?v=${randNum}`, {
-    params: {
-      promoCode
-    }
-  });
-}
 
 export function getSportMatchQuizInfo() {
   return eventapi.get(`/quiz/upcoming`, {});
@@ -401,56 +389,11 @@ export function claimVctcnBonus(promoCode) {
   return eventapi.post(`/session/competition-bet-platform/claimBonus?promoCode=${promoCode}&v=${randNum}`);
 }
 
-export function getBelgrade2025Init(promoCode) {
-  const randNum = Math.floor(Math.random() * 1000) + 1;
-  return eventapi.get(`/session/competition-single-bet/init?promoCode=${promoCode}&v=${randNum}`);
-}
-
-export function claimBelgrade2025Bonus(promoCode) {
-  const randNum = Math.floor(Math.random() * 1000) + 1;
-  return eventapi.post(`/session/competition-single-bet/claimBonus?promoCode=${promoCode}&v=${randNum}`);
-}
-
-export function claimCompetitionLossWeekly(promoCode) {
-  const randNum = Math.floor(Math.random() * 1000) + 1;
-  return eventapi.post(`/session/competition-loss/claim?v=${randNum}`, qs.stringify({ promoCode }));
-}
-
-export function claimVctBangkokBonus(promoCode) {
-  const randNum = Math.floor(Math.random() * 1000) + 1;
-  return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}&v=${randNum}`);
-}
-
-export function getPGLOnFireBuenosAires2025(promoCode) {
-  return eventapi.get(`/session/competition/yesterday?promoCode=${promoCode}`);
-}
-export function claimPGLOnFireBuenosAires2025(promoCode) {
-  return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
-}
-
 export function getSkyesportsSouvenir2025Bonus(promoCode) {
   return eventapi.get(`/session/competition-payout-deposit/init?promoCode=${promoCode}`);
 }
 export function claimSkyesportsSouvenir2025Bonus(promoCode) {
   return eventapi.post(`/session/competition-payout-deposit/claimBonus?promoCode=${promoCode}`);
-}
-
-export function initLanternFestivalBonus(promoCode) {
-  const randNum = Math.floor(Math.random() * 1000) + 1;
-  return eventapi.get(`/session/valid-bet-bonus/init?promoCode=${promoCode}&v=${randNum}`);
-}
-export function claimLanternFestivalBonus(promoCode) {
-  const randNum = Math.floor(Math.random() * 1000) + 1;
-  return eventapi.post(`/session/valid-bet-bonus/claimBonus?promoCode=${promoCode}&v=${randNum}`);
-}
-
-export function initLanternFestivalDeposit(promoCode) {
-  const randNum = Math.floor(Math.random() * 1000) + 1;
-  return eventapi.get(`/session/lantern-festival/init?promoCode=${promoCode}&v=${randNum}`);
-}
-export function claimLanternFestivalDeposit(promoCode) {
-  const randNum = Math.floor(Math.random() * 1000) + 1;
-  return eventapi.post(`/session/lantern-festival/claimBonus?promoCode=${promoCode}&v=${randNum}`);
 }
 
 export function getPGLBucharest2025Bonus(promoCode) {

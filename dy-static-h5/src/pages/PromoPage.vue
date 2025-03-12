@@ -1,11 +1,6 @@
 <template>
   <div class="promo-container">
-    <div
-      class="promo"
-      :class="{
-        dota2Pgql: selectedPromo.promoCode === 'dy2-dota2-pgl'
-      }"
-    >
+    <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="promoTabActive" align="justify">
         <q-tab v-for="(tab, i) in promoTypes" :key="i" :name="tab.name" :label="tab.label" />
       </q-tabs>
@@ -87,8 +82,7 @@
                   !isSpecialPromo &&
                   selectedPromo.promoCode !== 'lh1-ftd-promo' &&
                   selectedPromo.promoCode !== 'lh1-aijiasu' &&
-                  selectedPromo.promoCode !== 'lh1-eurocup-regen' &&
-                  selectedPromo.redirectUrl !== 'dy2-christmas-gashapon'
+                  selectedPromo.promoCode !== 'lh1-eurocup-regen'
                 "
               >
                 <img
@@ -98,58 +92,25 @@
                   style="display: block; width: 100%"
                 />
               </div>
-              <BlastPremierMarquee
-                v-if="
-                  selectedPromo?.redirectUrl === 'dy2-cs2-blast-2024' ||
-                  selectedPromo?.redirectUrl === 'bounty-blast-premier'
-                "
-              />
+              <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'bounty-blast-premier'" />
               <div
                 class="inner"
                 :class="{
-                  lhworldcup: selectedPromo.promoCode === 'dy2worldcup',
                   hongbaoyu: selectedPromo.promoCode === 'hongbaoyu',
-                  cs2:
-                    selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
-                    selectedPromo.promoCode === 'dy2-cs2-blast-2024' ||
-                    selectedPromo.promoCode === 'dy2-blast-premier-treasure',
                   msi: selectedPromo.promoCode === 'dy2-msi-promo',
                   dy12025pgls3: selectedPromo.promoCode === 'dy1-2025-pgl-s3',
-                  dyftd:
-                    selectedPromo.promoCode === 'lh1-ftd-promo' ||
-                    selectedPromo.promoCode === 'dy2-intel-esl' ||
-                    selectedPromo.redirectUrl === 'dy2-christmas-gashapon',
-                  dyEurocupHongbao: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
-                  lplSummer2024: selectedPromo.promoCode === 'dy2-lpl-summer24',
+                  dyftd: selectedPromo.promoCode === 'lh1-ftd-promo',
                   eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
-                  duanwujie: selectedPromo.promoCode === 'dy-duanwujie24',
-                  wukong: selectedPromo.redirectUrl === 'dy2-blackmyth-wukong',
-                  dy2s14: selectedPromo.redirectUrl === 'dy2-s14-vote',
                   lpllck: selectedPromo.promoCode === 'dy2-lpl-lck-bonus',
-                  'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus',
-                  midAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
-                  isValorantChampionTour2024: selectedPromo?.promoCode === 'dy2-valorant-champion-tour-2024',
-                  hongbaoyu2025: selectedPromo?.promoCode === 'dy2-cny2025-red-envelope'
+                  'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus'
                 }"
                 :style="{
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
                     ? `url(${imgURL + selectedPromo.mobileImgBackgroundUrl})`
                     : 'none',
-                  margin:
-                    selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ||
-                    selectedPromo.redirectUrl === 'dy1-lantern-festival-bonus'
-                      ? '0px auto'
-                      : '20px auto',
-                  'max-width':
-                    selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ||
-                    selectedPromo.redirectUrl === 'dy1-lantern-festival-bonus'
-                      ? 'unset'
-                      : '1400px',
-                  width:
-                    selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ||
-                    selectedPromo.redirectUrl === 'dy1-lantern-festival-bonus'
-                      ? '100%'
-                      : '95%'
+                  margin: '20px auto',
+                  'max-width': '1400px',
+                  width: '95%'
                 }"
               >
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
@@ -169,15 +130,8 @@
                   <div v-if="selectedPromo.redirectUrl === 'dy2-nba-water-battle'">
                     <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
                   </div>
-                  <div v-if="selectedPromo.redirectUrl === 'dy2-valorant-champion-tour-2024'">
-                    <ValorantChampionTour2024 :promo-code="selectedPromo.promoCode" />
-                  </div>
                   <div
-                    v-if="
-                      selectedPromo.id !== 259 &&
-                      selectedPromo.id !== 241 &&
-                      selectedPromo.redirectUrl !== 'dy2-christmas-gashapon'
-                    "
+                    v-if="selectedPromo.id !== 259 && selectedPromo.id !== 241"
                     v-html="selectedPromo.pageContent"
                   ></div>
                 </div>
@@ -244,20 +198,12 @@
                   />
                 </div>
               </div>
-              <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'dy2-cs2-blast-2024'" />
               <div
                 class="inner"
                 :class="{
-                  lhworldcup: selectedPromo.promoCode === 'dy2worldcup',
                   hongbaoyu: selectedPromo.promoCode === 'hongbaoyu',
-                  cs2:
-                    selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
-                    selectedPromo.promoCode === 'dy2-cs2-blast-2024',
                   msi: selectedPromo.promoCode === 'dy2-msi-promo',
-                  dyEurocupHongbao: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
-                  lplSummer2024: selectedPromo.promoCode === 'dy2-lpl-summer24',
-                  eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
-                  duanwujie: selectedPromo.promoCode === 'dy-duanwujie24'
+                  eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual'
                 }"
                 :style="{
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
@@ -327,15 +273,12 @@ import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/Blast
 import { useLocalStorage } from "@vueuse/core";
 import NBAWaterBattle from "src/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
-const ValorantChampionTour2024 = defineAsyncComponent(() => import("src/components/hotpromo/valorant-champion-tour-2024/ValorantChampionTour2024.vue"));
-
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
     BlastPremierMarquee,
-    NBAWaterBattle,
-    ValorantChampionTour2024
+    NBAWaterBattle
   },
   setup() {
     const store = userStore();
@@ -960,25 +903,6 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
 
-        &.isValorantChampionTour2024,
-        &.hongbaoyu2025 {
-          gap: 0;
-          margin: 0;
-          width: 100%;
-          background-repeat: no-repeat;
-          background-size: 100% auto;
-          background-color: #e7f1fd;
-          padding: 20px;
-        }
-
-        &.midAutumnWukong {
-          width: 100%;
-          margin: -15px 0 0;
-          background-repeat: no-repeat;
-          background-size: 100% auto;
-          background-color: #eaecfd;
-        }
-
         &.lpllck {
           width: 100%;
           margin: 0px;
@@ -995,39 +919,6 @@ export default defineComponent({
           background-color: #e7f1fd;
         }
 
-        &.lhworldcup {
-          background: #e7f1fd;
-          margin: 0px;
-          width: 100%;
-          padding: 0px 16px 20px;
-
-          img {
-            padding-top: 10px;
-            padding-bottom: 10px;
-          }
-
-          table {
-            p {
-              margin: 0px;
-            }
-
-            tr:first-child {
-              td {
-                background-image: linear-gradient(0deg, #0094ff, #19c6ff), linear-gradient(#2e3039, #2e3039);
-                color: #fff;
-              }
-            }
-
-            th {
-              background-color: inherit;
-            }
-
-            td {
-              background-color: inherit;
-            }
-          }
-        }
-
         &.eurocupManual {
           margin: 0;
           width: 100%;
@@ -1036,47 +927,10 @@ export default defineComponent({
           background-position: center center;
         }
 
-        &.duanwujie {
-          margin: 0px;
-          width: 100%;
-          background-size: 100% 100% !important;
-          padding-top: 0px !important;
-        }
-
-        &.wukong {
-          margin: 0px;
-          width: 100%;
-          background-repeat: no-repeat;
-          background-size: 100% auto;
-          background-color: #100a0e;
-          padding-top: 0px !important;
-        }
-        &.dy2s14 {
-          margin: 0;
-          width: 100%;
-        }
-
-        &.lplSummer2024 {
-          margin: 0;
-          width: 100%;
-
-          .hot-promo {
-            border-radius: 0px;
-          }
-        }
         &.dyftd {
           margin: 0px;
           width: 100%;
           gap: 0px;
-
-          .hot-promo {
-            border-radius: 0px;
-          }
-        }
-
-        &.dyEurocupHongbao {
-          margin: 0;
-          width: 100%;
 
           .hot-promo {
             border-radius: 0px;
@@ -1092,47 +946,9 @@ export default defineComponent({
           }
         }
 
-        &.cnystepgame {
-          margin: 0px;
-          width: 100%;
-          gap: 0px;
-
-          .hot-promo {
-            border-radius: 0px;
-          }
-        }
-
-        &.dy2gamesteps {
-          margin: 0px;
-          width: 100%;
-          gap: 0px;
-
-          .hot-promo {
-            border-radius: 0px;
-          }
-        }
-
         &.cny2024 {
           width: 100%;
         }
-        &.cs2 {
-          margin: 0;
-          padding: 10px;
-          width: 100%;
-        }
-        // &.cs2 {
-        //   margin: 0px;
-        //   width: 100%;
-        //   gap: 0px;
-        //   padding: 10px;
-        //   background: url(../assets/images/promotion/hotpromo/cs2/bg.png) no-repeat center center;
-        //   p {
-        //     padding: 12px;
-        //     color: #00dede;
-        //     font-family: Microsoft Yahei UI;
-        //     max-width: 100%;
-        //   }
-        // }
 
         &.msi {
           margin: 0px;
@@ -1318,10 +1134,6 @@ export default defineComponent({
       margin-left: auto;
       display: block;
     }
-  }
-
-  &.dota2Pgql {
-    background: #e7f1fd;
   }
 }
 
