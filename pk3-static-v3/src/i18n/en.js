@@ -118,6 +118,7 @@ export default {
     withdrawalAmount_rules_02: "Withdrawal amount must be greater than 0",
     withdrawalAmount_rules_03: "Insufficient withdrawal amount",
     withdrawalAmount_rules_04: "Withdrawal amount must be between",
+    withdrawalAmount_rules_05: "Withdraw Amount Must Not Have Decimals",
     realTimeExchangeRates: "Real-Time Exchange Rates",
     estimatedArrival: "Estimated Arrival",
     usdtSpecialNote:
