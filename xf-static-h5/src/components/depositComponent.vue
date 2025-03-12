@@ -653,7 +653,8 @@ function checkPrivilege(v) {
 }
 
 function selectedBank(value) {
-  form.bankId = value.value.id;
+  // debugger;
+  form.bankId = value.id;
 }
 
 function clearInfo() {
