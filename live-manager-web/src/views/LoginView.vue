@@ -63,7 +63,6 @@
 </template>
 
 <script setup>
-import Particles from 'particlesjs'
 import { onMounted, reactive, onUnmounted } from 'vue'
 import { Form } from '@primevue/forms'
 import { useToast } from 'primevue/usetoast'
