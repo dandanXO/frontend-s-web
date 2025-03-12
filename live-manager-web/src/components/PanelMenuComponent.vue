@@ -4,6 +4,9 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const items = ref([
   {
@@ -13,6 +16,9 @@ const items = ref([
       {
         label: '会员列表',
         icon: 'pi pi-user',
+        command: () => {
+          router.push('/member-list')
+        },
       },
       {
         label: '会员编辑日志',

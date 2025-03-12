@@ -58,11 +58,7 @@ import { useUserStore } from '@/stores/userStore'
 
 const store = useUserStore()
 
-const isLoading = ref(false)
-
 const items = ref([{}])
-
-const isLoggedIn = inject('isLoggedIn')
 
 const toast = useToast()
 

@@ -80,7 +80,7 @@ export const DashboardService = {
         },
         company: 'Benton, John B Jr',
         date: '2025/03/11 11:55:31', // Combining the dateTime from the other dataset
-        status: 'NORMAL', // Taking status from the phone data
+        status: '正常', // Taking status from the phone data
         verified: true,
         activity: 17,
         representative: {
@@ -103,7 +103,7 @@ export const DashboardService = {
         },
         company: 'Chanay, Jeffrey A Esq',
         date: '2025/03/11 11:55:30',
-        status: 'NORMAL',
+        status: '正常',
         verified: true,
         activity: 0,
         representative: {
@@ -126,7 +126,7 @@ export const DashboardService = {
         },
         company: 'Chemel, James L Cpa',
         date: '2025/03/11 11:55:28',
-        status: 'NORMAL',
+        status: '正常',
         verified: false,
         activity: 63,
         representative: {
@@ -149,7 +149,7 @@ export const DashboardService = {
         },
         company: 'Feltz Printing Service',
         date: '2025/03/11 11:55:27',
-        status: 'NORMAL',
+        status: '正常',
         verified: false,
         activity: 37,
         representative: {
@@ -172,7 +172,7 @@ export const DashboardService = {
         },
         company: 'Printing Dimensions',
         date: '2025/03/11 11:55:17',
-        status: 'NORMAL',
+        status: '正常',
         verified: true,
         activity: 33,
         representative: {
@@ -195,7 +195,7 @@ export const DashboardService = {
         },
         company: 'Chapman, Ross E Esq',
         date: '2025/03/11 11:55:16',
-        status: 'NORMAL',
+        status: '正常',
         verified: false,
         activity: 68,
         representative: {
@@ -218,7 +218,7 @@ export const DashboardService = {
         },
         company: 'Morlong Associates',
         date: '2025/03/11 11:55:16',
-        status: 'NORMAL',
+        status: '正常',
         verified: true,
         activity: 54,
         representative: {
@@ -241,7 +241,7 @@ export const DashboardService = {
         },
         company: 'Commercial Press',
         date: '2025/03/11 11:55:14',
-        status: 'NORMAL',
+        status: '正常',
         verified: true,
         activity: 69,
         representative: {
