@@ -1425,7 +1425,7 @@
           <img src="../assets/images/index/modal/luckyspin-title.png" />
         </div>
         <div class="luckyspin-container">
-          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="false" />
+          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="isShownSpinLuckyWheel" />
           <div class="luckyspin-title">
             <img src="../assets/images/index/modal/luckyspin-welcome.png" />
           </div>
@@ -1442,7 +1442,7 @@
     <q-dialog v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
       <CongratsModal>
         <template #controller>
-          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="false" />
+          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="isShownSpinLuckyWheel" />
         </template>
       </CongratsModal>
     </q-dialog>
@@ -1477,7 +1477,7 @@
   <q-dialog v-if="popupPromo === 'money-rain'" :model-value="true" persistent>
     <MoneyRainModal>
       <template #controller>
-        <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="false" />
+        <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="isShownSpinLuckyWheel" />
       </template>
     </MoneyRainModal>
     <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
