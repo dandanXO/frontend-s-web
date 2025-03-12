@@ -96,6 +96,17 @@
             <div class="game-platform-val">{{ e.platform }}</div>
           </div>
         </q-card-section>
+
+        <q-card-section class="bot-wrapper">
+          <div class="origin">
+            <div class="bet">Before Balance:</div>
+            <div class="game-platform">After Balance:</div>
+          </div>
+          <div class="origin-val">
+            <div class="bet-val win-amt">{{ convertToCommaAmount(e.beforeBalance, true) }}</div>
+            <div class="game-platform-val win-amt">{{ convertToCommaAmount(e.afterBalance, true) }}</div>
+          </div>
+        </q-card-section>
       </q-card>
 
       <q-card class="pagination-container">
@@ -499,6 +510,10 @@ onActivated(() => {
     align-items: center;
     justify-content: space-between;
     margin: 0.5rem 0 0 0;
+
+    .win-amt {
+      color: $positive;
+    }
 
     .origin {
       display: flex;
