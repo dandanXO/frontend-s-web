@@ -5,7 +5,6 @@ import Aura from '@primeuix/themes/aura'
 import './assets/main.scss'
 import 'primeicons/primeicons.css'
 import ToastService from 'primevue/toastservice'
-import Toast from 'primevue/toast'
 import App from './App.vue'
 import router from './router'
 import i18n from './i18n'
@@ -21,7 +20,7 @@ app.use(PrimeVue, {
     preset: Aura,
     options: {
       prefix: 'p',
-      darkModeSelector: 'light',
+      darkModeSelector: '.my-app-dark',
       cssLayer: false,
     },
   },

@@ -15,6 +15,7 @@
       </template>
       <template #end>
         <div class="flex items-center gap-2" style="display: flex; gap: 10px; align-items: center">
+          <ThemeToggle />
           <SiteToggle />
           <div style="display: flex; align-items: center; gap: 10px">
             <div
@@ -52,6 +53,7 @@
 import { ref, inject } from 'vue'
 import LangToggle from './LangToggle.vue'
 import SiteToggle from './SiteToggle.vue'
+import ThemeToggle from './ThemeToggle.vue'
 import BreacrumbComponent from './BreacrumbComponent.vue'
 import { useToast } from 'primevue/usetoast'
 import { useUserStore } from '@/stores/userStore'

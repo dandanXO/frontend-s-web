@@ -4,6 +4,7 @@ import { defineStore } from 'pinia'
 export const useUserStore = defineStore('user', () => {
   const isLoggedIn = ref(false)
   const isAuthLoading = ref(false)
+  const theme = ref('light')
 
   onBeforeMount(() => {
     const token = sessionStorage.getItem('token')
@@ -11,7 +12,19 @@ export const useUserStore = defineStore('user', () => {
     if (token) {
       isLoggedIn.value = true
     }
+
+    const theme = sessionStorage.getItem('theme')
+
+    if (theme && theme === 'dark') {
+      toggleDarkMode()
+    }
   })
 
-  return { isLoggedIn, isAuthLoading }
+  const toggleDarkMode = () => {
+    document.documentElement.classList.toggle('my-app-dark')
+    theme.value = 'dark'
+    sessionStorage.setItem('theme', theme.value)
+  }
+
+  return { isLoggedIn, isAuthLoading, theme, toggleDarkMode }
 })

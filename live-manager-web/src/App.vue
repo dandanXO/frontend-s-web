@@ -20,6 +20,7 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { RouterView } from 'vue-router'
 import HeaderComponent from './components/Header/HeaderComponent.vue'
 import PanelMenuComponent from './components/PanelMenuComponent.vue'

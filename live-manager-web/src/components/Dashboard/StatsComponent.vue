@@ -159,7 +159,6 @@ const layout = ref('grid')
 
 .stats-header {
   line-height: 18px;
-  color: rgba(0, 0, 0, 0.45);
   font-size: 16px;
   margin-bottom: 8px;
 }
