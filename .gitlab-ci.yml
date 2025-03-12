@@ -1073,6 +1073,7 @@ build-live-manager-web:
   extends: .build-projects
   variables:
     PROJECT: live-manager-web
+    NODE_VERSION: "20.17.0"
 
 build-image-live-manager-web:
   extends: .docker-build
