@@ -67,6 +67,7 @@ const onLogout = () => {
 
   setTimeout(() => {
     store.isLoggedIn = false
+    sessionStorage.removeItem('token')
     store.isAuthLoading = false
     toast.add({ severity: 'success', summary: '成功退出', life: 3000 })
   }, 2000)

@@ -17,20 +17,15 @@ const items = ref([
         label: '会员列表',
         icon: 'pi pi-user',
         command: () => {
-          router.push('/member-list')
+          router.push('/member/list')
         },
       },
       {
-        label: '会员编辑日志',
+        label: '新增会员',
         icon: 'pi pi-user',
-      },
-      {
-        label: '会员账号冻结记录',
-        icon: 'pi pi-user',
-      },
-      {
-        label: '会员平账记录',
-        icon: 'pi pi-user',
+        command: () => {
+          router.push('/member/add')
+        },
       },
     ],
   },

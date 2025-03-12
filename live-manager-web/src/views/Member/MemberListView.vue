@@ -1,12 +1,11 @@
 <template>
   <Card>
-    <template #title>会员列表</template>
     <template #content>
-      <MemberList />
+      <RouterView />
     </template>
   </Card>
 </template>
 
 <script setup>
-import MemberList from '@/components/Member/MemberList.vue'
+import { RouterView } from 'vue-router'
 </script>

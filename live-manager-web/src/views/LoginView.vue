@@ -94,6 +94,7 @@ const onFormSubmit = () => {
       if (result) {
         setTimeout(() => {
           store.isLoggedIn = true
+          sessionStorage.setItem('token', 'abc123')
           store.isAuthLoading = false
           toast.add({ severity: 'success', summary: t('loggedInSuccessfully'), life: 3000 })
         }, 2000)
