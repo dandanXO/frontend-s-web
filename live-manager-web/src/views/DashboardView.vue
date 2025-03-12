@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard">
+  <div class="dashboard" :key="theme">
     <div style="display: grid; grid-template-columns: 1fr; gap: 20px">
       <Card>
         <template #content>
@@ -63,6 +63,11 @@ import DepositAmountChart from '@/components/Dashboard/DepositAmountChart.vue'
 import RechargeSummary from '@/components/Dashboard/RechargeSummaryChart.vue'
 import MerchantRechargeSummaryChart from '@/components/Dashboard/MerchantRechargeSummaryChart.vue'
 import DepositorChart from '@/components/Dashboard/DepositorChart.vue'
+import { useUserStore } from '@/stores/userStore'
+import { storeToRefs } from 'pinia'
+
+const userStore = useUserStore()
+const { theme } = storeToRefs(userStore)
 </script>
 
 <style lang="scss" scoped>
