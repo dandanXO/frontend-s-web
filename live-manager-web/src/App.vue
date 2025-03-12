@@ -2,7 +2,7 @@
   <Toast />
 
   <LoginView v-if="!isLoggedIn" />
-  <BlockUI :blocked="store.isAuthLoading" v-else>
+  <BlockUI :blocked="store.isAuthLoading" style="width: 100vw; height: 100vh" v-else>
     <div class="layout">
       <HeaderComponent style="margin: 10px 10px 0" />
 
