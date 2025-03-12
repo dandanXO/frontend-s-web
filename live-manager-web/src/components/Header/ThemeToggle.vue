@@ -3,7 +3,6 @@
     :icon="theme === 'light' ? 'pi pi-sun' : 'pi pi-moon'"
     aria-label="Submit"
     severity="secondary"
-    outlined
     @click="toggleDarkMode"
   />
 </template>
