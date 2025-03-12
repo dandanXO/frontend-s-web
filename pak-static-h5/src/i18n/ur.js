@@ -564,6 +564,8 @@ export default {
     }
   },
   records: {
+    beforeBalance: "پہلے کا بیلنس:",
+    afterBalance: "بعد کا بیلنس:",
     gamePlatform: "گیم پلیٹ فارم",
     bet: "شرط",
     settle: "سیٹل",
