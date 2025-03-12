@@ -209,12 +209,12 @@
       }
 
       const checkFlutterChannel = (tokenObj) => {
-        if (window.flutter_inappwebview) {
+        if (window.flutter_inappwebview && window.flutter_inappwebview.callHandler) {
           callFlutterHandler(tokenObj);
         } else {
           console.log('FlutterChannel not available yet, waiting...');
           const interval = setInterval(() => {
-            if (window.flutter_inappwebview) {
+            if (window.flutter_inappwebview && window.flutter_inappwebview.callHandler) {
               callFlutterHandler(tokenObj);
               console.log('Message sent to Flutter after DOMContentLoaded');
               clearInterval(interval);
