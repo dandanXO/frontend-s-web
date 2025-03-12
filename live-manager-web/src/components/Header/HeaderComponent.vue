@@ -1,7 +1,7 @@
 <template>
   <div class="card" style="position: relative">
     <ProgressBar
-      v-if="isLoading"
+      v-if="store.isAuthLoading"
       mode="indeterminate"
       style="height: 6px; position: absolute; top: 0px; width: 100%"
     ></ProgressBar>
@@ -54,6 +54,9 @@ import LangToggle from './LangToggle.vue'
 import SiteToggle from './SiteToggle.vue'
 import BreacrumbComponent from './BreacrumbComponent.vue'
 import { useToast } from 'primevue/usetoast'
+import { useUserStore } from '@/stores/userStore'
+
+const store = useUserStore()
 
 const isLoading = ref(false)
 
@@ -64,11 +67,11 @@ const isLoggedIn = inject('isLoggedIn')
 const toast = useToast()
 
 const onLogout = () => {
-  isLoading.value = true
+  store.isAuthLoading = true
 
   setTimeout(() => {
-    isLoggedIn.value = false
-    isLoading.value = false
+    store.isLoggedIn = false
+    store.isAuthLoading = false
     toast.add({ severity: 'success', summary: '成功退出', life: 3000 })
   }, 2000)
 }
