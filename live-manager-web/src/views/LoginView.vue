@@ -1,6 +1,7 @@
 <template>
   <BlockUI :blocked="store.isAuthLoading" style="width: 100vw; height: 100vh">
     <LangToggle style="position: absolute; top: 20px; right: 20px; z-index: 1" />
+    <ThemeToggle style="position: absolute; top: 20px; left: 20px; z-index: 1" />
 
     <canvas class="background"></canvas>
     <Card class="login-form">
@@ -70,6 +71,7 @@ import { DashboardService } from '@/service/DashboardService'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import { useUserStore } from '@/stores/userStore'
 import LangToggle from '@/components/Header/LangToggle.vue'
+import ThemeToggle from '@/components/Header/ThemeToggle.vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()

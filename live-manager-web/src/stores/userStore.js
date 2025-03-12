@@ -21,8 +21,16 @@ export const useUserStore = defineStore('user', () => {
   })
 
   const toggleDarkMode = () => {
-    document.documentElement.classList.toggle('my-app-dark')
-    theme.value = 'dark'
+    const isDarkMode = document.documentElement.classList.contains('my-app-dark')
+
+    if (isDarkMode) {
+      document.documentElement.classList.remove('my-app-dark')
+      theme.value = 'light'
+    } else {
+      document.documentElement.classList.toggle('my-app-dark')
+      theme.value = 'dark'
+    }
+
     sessionStorage.setItem('theme', theme.value)
   }
 
