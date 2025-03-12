@@ -3053,6 +3053,8 @@ export default {
     validateFbIdRequired: 'Facebook ID is required',
     validateFbUrlRequired: 'Facebook URL is required',
     validateFbTokenRequired: 'Facebook Token is required',
+    qrCodeGenerateFailed: 'QR Code Generate Fail',
+    downloadUrlEmpty: 'Download Url Empty'
   },
   menu: {
     'Add Promo': 'Add Promo',
