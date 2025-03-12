@@ -1,13 +1,29 @@
 export const PWA_DATA_KEY = "BRA_PWA_DATA";
 export const INSTALLATION_STATUS_KEY = "BRA_INSTALLATION_STATUS";
-export const FBQ_INITIALIZED = 'BRA_FBQ_INITIALIZED';
+export const FBQ_INITIALIZED = "BRA_FBQ_INITIALIZED";
 
 export const domainLists = {
-
+  "mcgorq.com": {
+    affiliateCode: "1l8b81vo"
+  },
+  "pjg4n.com": {
+    affiliateCode: "1mdktmp0"
+  },
+  "pzdraq.com": {
+    affiliateCode: "1mzaq3u1"
+  }
 };
 
 export const affiliateLists = {
-
+  D8FDDA: {
+    adCode: "1l8b81vo"
+  },
+  C9BC22: {
+    adCode: "1mdktmp0"
+  },
+  F0498C: {
+    adCode: "1mzaq3u1"
+  }
 };
 
 export const fbqLists = {
