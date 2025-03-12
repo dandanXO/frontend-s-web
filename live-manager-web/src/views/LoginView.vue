@@ -1,6 +1,6 @@
 <template>
   <BlockUI :blocked="store.isAuthLoading" style="width: 100vw; height: 100vh">
-    <LangToggle style="position: absolute; top: 20px; right: 20px" />
+    <LangToggle style="position: absolute; top: 20px; right: 20px; z-index: 1" />
 
     <canvas class="background"></canvas>
     <Card class="login-form">
@@ -22,7 +22,7 @@
             >
               <InputText
                 type="text"
-                placeholder="Username"
+                :placeholder="$t('username')"
                 style="width: 100%"
                 v-model="loginForm.loginName"
                 :disabled="store.isAuthLoading"
@@ -35,7 +35,7 @@
               <section class="flex flex-col gap-2">
                 <Password
                   type="text"
-                  placeholder="Password"
+                  :placeholder="$t('password')"
                   :feedback="false"
                   toggleMask
                   fluid
@@ -71,6 +71,9 @@ import { DashboardService } from '@/service/DashboardService'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import { useUserStore } from '@/stores/userStore'
 import LangToggle from '@/components/Header/LangToggle.vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const store = useUserStore()
 
@@ -93,7 +96,7 @@ const onFormSubmit = () => {
         setTimeout(() => {
           store.isLoggedIn = true
           store.isAuthLoading = false
-          toast.add({ severity: 'success', summary: '成功登录', life: 3000 })
+          toast.add({ severity: 'success', summary: t('loggedInSuccessfully'), life: 3000 })
         }, 2000)
       }
     })
@@ -102,28 +105,7 @@ const onFormSubmit = () => {
     })
 }
 
-const initParticles = () => {
-  Particles.init({
-    selector: '.background',
-    color: ['#9ddafa', '#418cc5', '#dddff1', '#708ac6'],
-    connectParticles: true,
-    responsive: [
-      {
-        breakpoint: 10,
-        options: {
-          color: '#00C9B1',
-          maxParticles: 1,
-          connectParticles: false,
-          speed: 0.2,
-        },
-      },
-    ],
-  })
-}
-
-onMounted(() => {
-  // initParticles()
-})
+onMounted(() => {})
 
 onUnmounted(() => {})
 </script>

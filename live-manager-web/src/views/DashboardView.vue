@@ -24,7 +24,7 @@
 
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
       <Card>
-        <template #title>财务层次占比</template>
+        <template #title>{{ $t('dashboard.financialTierProportion') }}</template>
         <template #content>
           <FinancialProportionChart />
         </template>
@@ -39,14 +39,14 @@
 
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
       <Card>
-        <template #title>支付方式充值汇总</template>
+        <template #title>{{ $t('dashboard.rechargePaymentMethodSummary') }}</template>
         <template #content>
           <RechargeSummary />
         </template>
       </Card>
 
       <Card>
-        <template #title>商务充值汇总</template>
+        <template #title>{{ $t('dashboard.businessRechargeSummary') }}</template>
         <template #content>
           <MerchantRechargeSummaryChart />
         </template>
