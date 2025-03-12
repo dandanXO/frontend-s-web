@@ -301,9 +301,22 @@
         </template>
       </el-table-column>
       <el-table-column prop="version" :label="t('siteAppVersion.version')" width="150" />
-      <el-table-column prop="publishStatus" :label="t('siteAppVersion.publishStatus')" width="200">
-        <template #default="scope">
+      <el-table-column prop="publishStatus" :label="t('siteAppVersion.publishStatus')" width="150">
+        <!-- <template #default="scope">
           <span>{{ t(`siteAppVersion.${scope.row.publishStatus}`) }}</span>
+        </template> -->
+        <template #default="scope">
+          <el-switch
+            v-model="scope.row.publishStatus"
+            active-value="PUBLISHED"
+            inactive-value="PENDING"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            @change="changesPublishtatus(scope.row.id, scope.row.publishStatus)"
+          />
+          <!-- <span style="margin-left: 8px">
+            {{ t(`siteAppVersion.${scope.row.publishStatus}`) }}
+          </span> -->
         </template>
       </el-table-column>
       <el-table-column type="title" :label="t('fields.action')" :flex-grow="1">
@@ -361,7 +374,8 @@ import {
   updateSiteAppVersion,
   deleteSiteAppVersion,
   uploadApp,
-  uploadLogo
+  uploadLogo,
+  updateAppVersionState
 } from '../../../api/site-app-version'
 import { nextTick } from 'process'
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -742,6 +756,11 @@ const downloadQRCode = async (url) => {
     console.error('下载URL为空')
     ElMessage.error(t('message.downloadUrlEmpty'))
   }
+}
+
+async function changesPublishtatus(id, state) {
+  await updateAppVersionState(id, state);
+  ElMessage({ message: t('message.editSuccess'), type: "success" });
 }
 
 onMounted(async () => {
