@@ -14,108 +14,53 @@
         list.redirectUrl === 'dy2-refer-bonus'
       "
     />
-    
-    
-    
+
     <GoldenEggPromo v-if="list.redirectUrl === 'goldenegg'" />
-    
-    
+
     <HongBaoPreEurocupPromo
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
       :promo-param="list.param"
       v-if="listParam.type === 'hongbaoyu'"
     />
-    
 
-    
     <OuZuLianPromo v-if="list.redirectUrl === 'ouzulian'" />
-    <InsuranceSubmitPromo
-      v-if="list.redirectUrl === 'dy2-esport-safety' || list.redirectUrl === 'sport-safety'"
-      :platformType="list.redirectUrl === 'dy2-esport-safety' ? 'ESPORT' : 'SPORT'"
-    />
 
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend'" />
-    <EsportQuiz v-if="list.redirectUrl === 'Dongying-quiz'"></EsportQuiz>
     <EsportQuiz2 v-if="list.redirectUrl === 'dy2-quiz'"></EsportQuiz2>
-    <LotteryPromo v-if="list.redirectUrl === 'dy2-lottery'"></LotteryPromo>
-  
 
     <AsiaCup2024Promo
       v-if="list.redirectUrl === 'asian-cup-2024' || list.redirectUrl === 'dy-promo-application-A'"
     ></AsiaCup2024Promo>
-    
-    
 
-    
-
-    <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo'"></Cny2024Promo>
-    
     <SlotLacky8 v-if="list.redirectUrl === 'dy-lucky-slot'" :promo-code="list.promoCode" />
-    
-    
-    
-    
-    
-    
+
     <ChallengeComebackPromo v-if="list.redirectUrl === 'dy2-cycle-loss-refund'" :promo-code="list.promoCode" />
 
-    
-    
     <BountyBlastPremier v-if="list.redirectUrl === 'bounty-blast-premier'" :promo-code="list.promoCode" />
-    
-    <AgYuanxiaohongbao v-if="list.redirectUrl === 'dy1-ag-yuanxiaohongbao'" :promo-code="list.promoCode" />
-    
+
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao'" />
-    
-    
+
     <LivepokerRebate v-if="list.redirectUrl === 'dy2-livepoker-rebate'" :promo-code="list.promoCode" />
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img style="width: 100%; margin: 10px auto 0px" src="../assets/images/promotion/hotpromo/h5feedback.png" />
     </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     <SubmitClaimPromo v-if="list.redirectUrl === 'dy2-UCL'" :promo-code="list.promoCode" />
-    
+
     <PglS32025 v-if="list.redirectUrl === 'dy1-2025-pgl-s3'" :promo-code="list.promoCode" />
-    
+
     <PullbackTide v-if="list.redirectUrl === 'dy2-pullback-tide'" :promo-code="list.promoCode" />
     <Cba30Dream v-if="list.redirectUrl === 'dy2-cba30-dream'" :promo-code="list.promoCode" />
-    
-  
-    <KatowiceS25 v-if="list.redirectUrl === 'dy2-iem-katowice-2025'" :promo-code="list.promoCode" />
+
     <Lh1LplLck2025loss v-else-if="list.redirectUrl === 'dy2-lpl-lck-2025'" :promo-param="listParam" />
     <Blast2025S3 v-else-if="list.redirectUrl === 'dy2-blast-open-lisbon-2025'" :promo-code="list.promoCode" />
-    
-    <SkyesportsSouvenir2025
-      v-if="list.redirectUrl === 'dy2-skyesports-souvenir-2025'"
-      :promo-code="list.promoCode"
-    />
-    <LanternFestival2025
-      v-if="list.redirectUrl === 'dy1-lantern-festival-bonus'"
-      :promo-param="listParam"
-      :promo-code="list.promoCode"
-    />
-    <Dota2BlastSlam2025 v-else-if="list.redirectUrl === 'dy2-blast-slam-2025'" :promo-code="list.promoCode" />
-    <VctBangkok v-if="list.redirectUrl === 'dy2-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
-    
-    <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
-  
-    <HongBaoYu2025 v-if="list.redirectUrl === 'dy2-cny2025-red-envelope'" :promo-code="list.promoCode" />
+
+    <SkyesportsSouvenir2025 v-if="list.redirectUrl === 'dy2-skyesports-souvenir-2025'" :promo-code="list.promoCode" />
+
     <Monthly20HongBaoYu v-if="list.redirectUrl === 'dy2-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'dy-official-gift'" :params="list.param" />
     <PGLBucharest2025 v-if="list.redirectUrl === 'dy2-pgl-bucharest-2025'" :promo-code="list.promoCode" />
-    <PGLOnFireBuenosAires2025
-      v-if="list.redirectUrl === 'dy2-pgl-on-fire-buenos-aires-2025'"
-      :promo-code="list.promoCode"
-    />
     <EslProLeagueS21 v-else-if="list.redirectUrl === 'dy2-esl-pro-league-s21'" :promo-param="listParam" />
   </div>
 
@@ -142,14 +87,9 @@ import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import moment from "moment";
 import { useRouter } from "vue-router";
-import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
-import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
+
 import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue";
-import VctBangkok from "components/hotpromo/vct-bangkok/VctBangkok.vue";
 
-import AgYuanxiaohongbao from "./hotpromo/ag-yuanxiaohongbao/AgYuanxiaohongbao.vue";
-
-import LanternFestival2025 from "../components/hotpromo/lantern-festival-2025/LanternFestival2025.vue";
 const OfficialGiftPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/officialGift/OfficialGiftPromo.vue")
 );
@@ -161,21 +101,14 @@ const HongBaoPreEurocupPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue")
 );
 
-const InsuranceSubmitPromo = defineAsyncComponent(() =>
-  import("../components/hotpromo/insurancesubmit/insuranceSubmitPromo.vue")
-);
 const InviteFriendPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/invitefriend/inviteFriendPromo.vue")
 );
-const EsportQuiz = defineAsyncComponent(() => import("../components/hotpromo/esportquiz/EsportQuiz.vue"));
 const EsportQuiz2 = defineAsyncComponent(() => import("../components/hotpromo/esportquiz2/EsportQuiz.vue"));
-const LotteryPromo = defineAsyncComponent(() => import("../components/hotpromo/lottery/LotteryPromo.vue"));
 const PrivilegeInvite = defineAsyncComponent(() =>
   import("../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue")
 );
 const AsiaCup2024Promo = defineAsyncComponent(() => import("../components/hotpromo/asiacup2024/AsiaCup2024Promo.vue"));
-const Cny2024Promo = defineAsyncComponent(() => import("../components/hotpromo/cny2024/Cny2024Promo.vue"));
-
 
 const ChallengeComebackPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/challenge-comeback/ChallengeComeback.vue")
@@ -184,7 +117,6 @@ const ChallengeComebackPromo = defineAsyncComponent(() =>
 const BountyBlastPremier = defineAsyncComponent(() =>
   import("../components/hotpromo/bounty-blast/BountyBlastPremier.vue")
 );
-
 
 const fishHongbao = defineAsyncComponent(() => import("../components/hotpromo/fishHongbao/fishHongbao.vue"));
 
@@ -203,24 +135,10 @@ const PglS32025 = defineAsyncComponent(() => import("../components/hotpromo/pgl-
 const PullbackTide = defineAsyncComponent(() => import("./hotpromo/pullback-tide/PullbackTide.vue"));
 const Cba30Dream = defineAsyncComponent(() => import("./hotpromo/cba30-dream/Cba30Dream.vue"));
 
-
-const ChristmasGachapon = defineAsyncComponent(() => import("./hotpromo/christmas-gachapon/ChristmasGachapon.vue"));
-const VctcnMatchPromo = defineAsyncComponent(() =>
-  import("../components/hotpromo/vctcn-match-promo/VctcnMatchPromo.vue")
-);
-const Belgrade2025Promo = defineAsyncComponent(() =>
-  import("../components/hotpromo/belgrade-2025-promo/Belgrade2025Promo.vue")
-);
-const EslProLeagueS21 = defineAsyncComponent(() =>
-  import("./hotpromo/esl-pro-league-s21/EslProLeagueS21.vue")
-);
-const Dota2BlastSlam2025 = defineAsyncComponent(() => import("../components/hotpromo/dota2-blast-slam-2025/Dota2BlastSlam2025.vue"));
-const KatowiceS25 = defineAsyncComponent(()=>import("./hotpromo/katowice-s-25/KatowiceS25.vue"))
+const EslProLeagueS21 = defineAsyncComponent(() => import("./hotpromo/esl-pro-league-s21/EslProLeagueS21.vue"));
 import SkyesportsSouvenir2025 from "./hotpromo/skyesports-souvenir-2025/SkyesportsSouvenir2025.vue";
-import PGLOnFireBuenosAires2025 from "./hotpromo/pgl-on-fire-buenos-aires-2025/PGLOnFireBuenosAires2025.vue";
 import PGLBucharest2025 from "./hotpromo/pgl-bucharest-2025/PGLBucharest2025.vue";
-const Blast2025S3 = defineAsyncComponent(() =>
-  import("./hotpromo/Blast2025-s3/Blast2025S3.vue"))
+const Blast2025S3 = defineAsyncComponent(() => import("./hotpromo/Blast2025-s3/Blast2025S3.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -229,26 +147,18 @@ export default defineComponent({
   components: {
     Blast2025S3,
     EslProLeagueS21,
-    LanternFestival2025,
-    AgYuanxiaohongbao,
-    PGLOnFireBuenosAires2025,
     PGLBucharest2025,
     SkyesportsSouvenir2025,
-    KatowiceS25,
     OfficialGiftPromo,
     LivepokerRebate,
     BountyBlastPremier,
     fishHongbao,
     ClaimPromo,
     GoldenEggPromo,
-    InsuranceSubmitPromo,
     InviteFriendPromo,
-    EsportQuiz,
     EsportQuiz2,
-    LotteryPromo,
     PrivilegeInvite,
     AsiaCup2024Promo,
-    Cny2024Promo,
     HongBaoPreEurocupPromo,
     SlotLacky8,
     OuZuLianPromo,
@@ -258,11 +168,7 @@ export default defineComponent({
     Cba30Dream,
     ChallengeComebackPromo,
     Lh1LplLck2025loss,
-    Belgrade2025Promo,
-    HongBaoYu2025,
-    Monthly20HongBaoYu,
-    VctBangkok,
-    Dota2BlastSlam2025
+    Monthly20HongBaoYu
   },
   props: {
     list: {
