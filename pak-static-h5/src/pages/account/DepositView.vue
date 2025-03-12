@@ -105,7 +105,7 @@
             clearable
           >
             <template v-slot:prepend>
-              <span style="font-size: 26px" class="currency">
+              <span style="font-size: 16px" class="currency">
                 <template v-if="isUSDT">USDT</template>
                 <template v-else>{{ store.currency.value }}</template>
               </span>
@@ -1139,9 +1139,12 @@ onMounted(() => {
 }
 
 :deep(.q-field--filled.q-field--dark .q-field__control) {
+  // border-radius: 0.5rem;
+  // background: #0b0e0d !important;
+  // border: 1px solid #072a19;
   border-radius: 0.5rem;
-  background: #0b0e0d !important;
-  border: 1px solid #072a19;
+    border: 1px solid #FFFFFF14;
+    background: #292D2F !important;
 }
 
 :deep(.q-tab__label) {
@@ -1161,21 +1164,36 @@ onMounted(() => {
 
     .deposit-amt {
       border-radius: 4px;
-      background: #0b0e0d;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
       line-height: 1;
       padding: 3px 16px;
       width: 100%;
       height: 4rem;
       font-weight: 600;
       aspect-ratio: 106/64;
+      box-shadow: 0px 2px 0px 0px #2A3637;
+      background: #394142;
+      color: #FFFFFF80;
+
+      font-family: Microsoft YaHei UI;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 100%;
+      letter-spacing: 0.3px;
+      text-align: center;
+      vertical-align: middle;
+
 
       &.active {
         // background: #00b900;
         color: #000a01;
-        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        box-shadow: 0px 2px 0px 0px #1CCA6A;
+        background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+        color: #333333;
+
       }
     }
 
@@ -1186,6 +1204,7 @@ onMounted(() => {
       display: none;
 
       svg {
+        display: none;
         // background: #30bb1a;
         border-radius: 3px;
       }
@@ -1233,8 +1252,9 @@ onMounted(() => {
       }
 
       .currency {
-        color: #5f6061;
-        font-weight: 400;
+        color: #B2BDBF;
+        margin-top: 5px;
+        font-weight: 700;
       }
     }
   }
@@ -1374,7 +1394,7 @@ onMounted(() => {
   max-width: 468px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #0e1412;
+  background-color: #232626;
   // margin: 16px;
 }
 

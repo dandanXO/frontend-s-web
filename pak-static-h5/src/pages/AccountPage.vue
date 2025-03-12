@@ -311,7 +311,8 @@
                         <q-btn
                           no-caps
                           dense
-                          class="text-green"
+                          flat
+                          class="text-green q-pr-md"
                           :label="!startCountdownResendOTP && $t('form.send')"
                           :disable="!formDetail.phone || startCountdownResendOTP"
                           @click="openVerificationCodeDialog"
@@ -1491,7 +1492,8 @@ const openConfirmSignOutDialog = () => {
     &.item-click {
       &:after {
         content: "";
-        background: rgba(255, 255, 255, 0.05);
+        // background: rgba(255, 255, 255, 0.05);
+        background: unset;
         height: calc(100% - 36px);
         width: 100%;
         position: absolute;
@@ -1558,7 +1560,7 @@ const openConfirmSignOutDialog = () => {
 }
 
 .pc-tip-chg-pwd {
-  color: #00ae00;
+  color: #1CCA6A;
 }
 
 .pc-tip {
@@ -1582,11 +1584,16 @@ const openConfirmSignOutDialog = () => {
   border-radius: 8px;
   font-weight: 400;
   margin-top: auto;
-  color: #00ae00;
+  // color: #00ae00;
   padding: 10px 20px;
+    background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+    color: #333333;
+    font-weight: 700;
+    box-shadow: 0px 2px 0px 0px #1CCA6A;
+
 
   :deep(.q-icon) {
-    color: #00ae00;
+    color: #333333;
   }
 }
 

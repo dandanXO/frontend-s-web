@@ -354,31 +354,43 @@ onActivated(() => {
 <style scoped lang="scss">
 .bank-detail-container {
   .bank-detail-wrapper {
-    width: calc(100% - 2rem);
-    margin: 0 auto;
-    padding: 0rem 0 1rem;
+    // width: calc(100% - 2rem);
+    // margin: 0 auto;
+    // padding: 0rem 0 1rem;
+    padding: 10px;
 
     .bank-bind-item {
+
       // background: $white;
-      box-shadow: 0px -1px 3px 0px rgba(195, 212, 230, 0.5) inset;
-      border-radius: 10px;
+      // box-shadow: 0px -1px 3px 0px rgba(195, 212, 230, 0.5) inset;
+      // border-radius: 10px;
+      // display: flex;
+      // align-items: center;
+      // justify-content: space-around;
+      // flex-wrap: wrap;
+      // margin: 0 auto 14px;
+      // padding: 1rem;
+      // gap: 8px;
+      width: 100%;
       display: flex;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      justify-content: space-around;
-      flex-wrap: wrap;
-      margin: 0 auto 14px;
-      padding: 1rem;
-      gap: 8px;
+      gap: 15px;
 
       .bank-bind-btn {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 47.5%;
-        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        width: 100%;
+        // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        
+      background: #394142;
+      box-shadow: 0px 2px 0px 0px #2A3637;
+
         padding: 12px 5px;
         border-radius: 8px;
-        color: #000a01;
+        color: #ffffff;
         font-size: 1.15rem;
         white-space: nowrap;
         font-weight: 500;

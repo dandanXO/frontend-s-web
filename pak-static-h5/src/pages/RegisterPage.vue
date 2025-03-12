@@ -13,31 +13,33 @@
   <div class="register-container" :class="isRestrictedDomain ? 'w-domain' : ''">
     <div class="back-left" v-if="!isRestrictedDomain">
       <router-link :to="'/home'">
-        <img src="../assets/images/index/btn-back.png" />
+        <img src="../assets/images/index/btn-close.png" />
       </router-link>
     </div>
-    <div class="is-domain top-img">
+    <!-- <div class="is-domain top-img">
       <img src="../assets/images/index/register-topimg.png" />
     </div>
     <div class="no-domain register-form-logo-img">
       <img src="../assets/images/auth/b9-logo.png" />
-    </div>
+    </div> -->
     <div class="back-btn-img" v-if="isRestrictedDomain" @click="router.replace('/')">
       <img src="../assets/images/index/btn-back.png" />
     </div>
 
-    <div class="no-domain auth-tab-wrapper">
+    <!-- <div class="no-domain auth-tab-wrapper">
       <q-tabs v-model="regLoginTab" dense no-caps class="auth-tab-toggle" indicator-color="transparent" align="justify">
         <q-tab name="login" :label="$t('header.login')" />
         <q-tab name="register" :label="$t('header.register')" />
       </q-tabs>
-    </div>
+    </div> -->
+    <div class="reg-pg-title">{{ $t('header.register') }}</div>
+
 
     <div class="register-form-wrapper">
       <q-form class="rounded-borders">
         <InputRowGrid>
           <template #fields>
-            <InputField :label="$t('form.phone')">
+            <InputField>
               <template #input>
                 <q-input
                   type="tel"
@@ -64,7 +66,7 @@
               </template>
             </InputField>
 
-            <InputField :label="$t('form.password')">
+            <InputField>
               <template #input>
                 <q-input
                   ref="pwdRef"
@@ -199,6 +201,14 @@
         </div>
       --></q-form>
     </div>
+
+    <div class="no-domain mui-row q-mx-md q-mb-lg" :class="isAgreeReg ? 'checked' : ''">
+      <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
+        {{ $t("form.register_agree_01") }}
+        <a href="#" style="text-decoration: none; color: #61ff00">{{ $t("form.register_agree_02") }}</a>
+      </q-checkbox>
+    </div>
+
     <router-link to="/forgot-password" class="is-domain forget-pwd">Forget password</router-link>
 
     <div class="no-domain bottom-btn">
@@ -212,6 +222,10 @@
       >
         {{ $t("btn.confirm") }}
       </q-btn>
+
+      <div class="areyounew">
+        Already have an account? <a @click="regLoginTab = 'login'" class="green">Login</a>
+      </div>
 
       <div class="google-login-wrapper">
         <img v-if="languageVal === 'en'" style="width: 100%" src="../assets/images/index/logindirectly-en.png" />
@@ -264,14 +278,6 @@
       Already have an account?
       <router-link to="/login" class="login">Login</router-link>
     </div> -->
-
-    <div class="no-domain mui-row q-mt-sm q-mx-sm" :class="isAgreeReg ? 'checked' : ''">
-      <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
-        {{ $t("form.register_agree_01") }}
-        <a href="#" style="text-decoration: none; color: #61ff00">{{ $t("form.register_agree_02") }}</a>
-      </q-checkbox>
-    </div>
-
     <div class="no-domain btn-lists">
       <div class="list-item" @click="openCharity()">
         <img class="btn-icon" id="charity-icon" src="../assets/images/auth/charity-icon.png" />
@@ -338,9 +344,9 @@
         </div>
       </div>
     </div>
-    <div class="no-domain bottom-img">
+    <!-- <div class="no-domain bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -1112,9 +1118,13 @@ function charType(num) {
   display: flex;
   flex-direction: column;
   // justify-content: center;
-  background: url("../assets/images/auth/bg-login.png");
-  background-size: 100% 100%;
+  background: url("../assets/images/auth/top-login-bg.png");
+  background-size: cover;
   background-repeat: no-repeat;
+  padding-top: 250px;
+  @media screen and (min-width: 500px) {
+    padding-top: 300px;
+  }
   .is-domain {
     display: none;
   }
@@ -1171,6 +1181,7 @@ function charType(num) {
       padding: 3px 20px 8px;
       .btn-primary {
         background: linear-gradient(90deg, #29ed89 0%, #97e872 100%);
+        color: #000a01;
       }
       :deep(.q-btn__content) {
         font-weight: bolder;
@@ -1244,8 +1255,12 @@ function charType(num) {
 
 .back-left {
   position: fixed;
-  top: 16px;
-  left: 16px;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  img { 
+    width: 100%;
+  }
 }
 
 .register-form-logo-img {
@@ -1271,9 +1286,19 @@ function charType(num) {
     width: 2.25rem;
   }
 }
+.reg-pg-title {
+  font-family: Microsoft YaHei UI;
+font-weight: 700;
+font-size: 16px;
+line-height: 100%;
+letter-spacing: 0px;
+vertical-align: middle;
+color: #ffffff;
+padding: 0 20px;
+}
 
 .register-form-wrapper {
-  padding: 0 20px 20px;
+  padding: 0 20px 5px;
 
   :deep(.q-field__control) {
     height: 45px;
@@ -1349,16 +1374,16 @@ function charType(num) {
 
 .rmb-checked-box {
   font-size: 14px;
-  color: #91829d;
+  color: #eeeeee;
 
   :deep(.q-checkbox__bg) {
-    border-radius: 50%;
+    border-radius: 4px;
   }
   :deep(.q-checkbox__inner--truthy .q-checkbox__bg) {
-    background: #00ae00;
+    background: #21EF89;
 
     svg {
-      color: #fff;
+      color: #000000;
       padding: 2px;
     }
   }
@@ -1511,6 +1536,14 @@ function charType(num) {
   }
 }
 
+.areyounew {
+  margin: 15px 0;
+  .green {
+    color: #21EF89;
+    font-weight: 700;
+    cursor: pointer;
+  }
+}
 .google-login-wrapper {
   display: flex;
   flex-direction: column;

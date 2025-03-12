@@ -58,7 +58,7 @@
           >
             <template v-slot:no-option>
               <q-item>
-                <q-item-section class="text-grey">
+                <q-item-section class="text-grey isCentreDialog">
                   No account available
                   <router-link class="text-bright" to="/account/bank">
                     Add account
@@ -1097,7 +1097,7 @@ watch(
   max-width: 468px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #0e1412;
+  background-color: #232626;
 }
 
 .tutorial-link {

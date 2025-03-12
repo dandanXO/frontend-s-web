@@ -1,7 +1,7 @@
 <template>
   <div class="forgot-password-container">
     <div class="forgot-password-form-logo-img">
-      <img src="../assets/images/auth/login-logo.png" />
+      <img src="../assets/images/auth/login-logo-white.png" />
     </div>
 
     <q-form v-if="!isRequestSent" class="q-gutter-y-md rounded-borders">
@@ -33,7 +33,7 @@
       ></q-input> -->
 
       <div class="forgot-password-form-grid">
-        <span class="forgot-password-form-title">{{ $t("form.forgotPassword") }}</span>
+        <!-- <span class="forgot-password-form-title">{{ $t("form.forgotPassword") }}</span> -->
         <span class="forgot-password-form-desc">
           {{ $t("form.forgotPassword_desc") }}
         </span>
@@ -258,9 +258,9 @@
       </InputRowGrid>
     </q-form>
 
-    <div class="bottom-img">
+    <!-- <div class="bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -542,15 +542,9 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   // justify-content: center;
-  background: url("../assets/images/auth/bg-login.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-}
-
-.back-left {
-  position: fixed;
-  top: 16px;
-  left: 16px;
+  // background: url("../assets/images/auth/bg-login.png");
+  // background-size: 100% 100%;
+  // background-repeat: no-repeat;
 }
 
 .forgot-password-form-logo-img {
@@ -560,8 +554,8 @@ onMounted(() => {
   img {
     display: block;
     width: 100%;
-    max-width: 100px;
-    margin-bottom: 10px;
+    max-width: 120px;
+    margin: 25px auto;
   }
 }
 
@@ -588,11 +582,20 @@ onMounted(() => {
   }
 
   .forgot-password-form-desc {
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 25px;
-    color: #ffffff67;
+    // font-size: 16px;
+    // font-weight: 400;
+    // line-height: 25px;
+    // color: #ffffff67;
     width: 80%;
+    font-family: Microsoft YaHei UI;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0%;
+    text-align: center;
+    color: #B2BDBF;
+    margin: 0 auto;
+
   }
 }
 

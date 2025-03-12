@@ -58,7 +58,9 @@ export default {
     promo: "پرومو",
     earnMoney: "پیسے کمائیں",
     wallet: "پرس",
-    me: "میں"
+    me: "میں",
+    account: "اکاؤنٹ",
+    more: "مزید"
   },
   modal: {
     addToHomeScreen: {

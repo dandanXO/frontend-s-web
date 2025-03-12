@@ -166,7 +166,7 @@ export default defineComponent({
           }
         } else if (route.path === "/account") {
           prevPage.value = "/";
-          hasPage.value = false;
+          hasPage.value = true;
           pageName.value = "";
         } else if (route.path === "/account/bank") {
           hasPage.value = true;
@@ -284,7 +284,7 @@ export default defineComponent({
         } else if (route.path === "/forgot-password") {
           prevPage.value = "/login";
           hasPage.value = true;
-          pageName.value = "";
+          pageName.value = "Recover your password";
         } else if (route.path === "/live-casino") {
           hasPage.value = true;
           pageName.value = "Live Casino";
@@ -671,7 +671,7 @@ svg path {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 14rem;
+    width: 20rem;
     margin: 0 0.5rem;
     font-size: 16px;
     font-weight: bold;

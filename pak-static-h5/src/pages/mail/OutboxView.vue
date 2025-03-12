@@ -10,13 +10,13 @@
   </div>
 
   <q-dialog v-model="isPostCommentsModal">
-    <q-card class="post-dialog-card">
+    <div class="popout-dialog">
       <q-toolbar class="post-dialog-toolbar">
         <q-toolbar-title>{{ $t("btn.postComments") }}</q-toolbar-title>
         <q-btn flat v-close-popup round dense icon="close" />
       </q-toolbar>
       <WriteComponent @close-modal="closeModal" />
-    </q-card>
+    </div>
   </q-dialog>
 </template>
 <script setup>

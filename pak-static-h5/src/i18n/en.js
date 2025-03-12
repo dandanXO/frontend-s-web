@@ -59,7 +59,9 @@ export default {
     promo: "Promo",
     earnMoney: "Earn Money",
     wallet: "Wallet",
-    me: "Me"
+    me: "Me",
+    account: "Account",
+    more: "More"
   },
   modal: {
     addToHomeScreen: {

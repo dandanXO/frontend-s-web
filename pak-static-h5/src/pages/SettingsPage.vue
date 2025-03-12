@@ -1,5 +1,5 @@
 <template>
-  <ProfileSummary :homeProfile="true" />
+  <!-- <ProfileSummary :homeProfile="true" /> -->
 
   <q-page>
     <div class="top-setting-section">
@@ -9,41 +9,39 @@
         <img class="copy-icon" src="../assets/images/account/copy-icon.png" @click="handleCopyClick" />
       </div>
       <div class="top-total-score">
-        <div class="score-txt">{{ $t("settings.totalScore") }}</div>
+        <div class="score-txt">
+          <img src="../assets/images/account/total-score.png" />
+          {{ $t("settings.totalScore") }}</div>
         <div class="score-amount">{{ store.balance.toFixed(2) }}</div>
       </div>
-      <div class="top-section-inner">
-        <router-link to="/withdraw">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/withdraw-svg.svg" />
-          </div>
-          <div class="acct-nav-label">{{ $t("settings.withdraw") }}</div>
-        </router-link>
+      <!-- <div class="top-section-inner">
+      </div> -->
+    </div>
+
+    <div class="mid-setting-section">
+      <div class="acct-nav">
+        <!-- <h2>{{ $t("settings.otherServices") }}</h2> -->
+          <div class="top-section">
         <router-link to="/deposit">
           <div class="acct-nav-item">
             <img src="../assets/images/account/deposit-svg.svg" />
           </div>
           <div class="acct-nav-label">{{ $t("settings.deposit") }}</div>
         </router-link>
+            <router-link to="/withdraw">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/withdraw-svg.svg" />
+          </div>
+          <div class="acct-nav-label">{{ $t("settings.withdraw") }}</div>
+        </router-link>
+          </div>
+        <div class="acct-menu" id="id-acct-menu">
         <router-link to="/promo">
           <div class="acct-nav-item">
             <img src="../assets/images/account/promo-svg.svg" />
           </div>
           <div class="acct-nav-label">{{ $t("settings.promo") }}</div>
         </router-link>
-        <!-- <router-link to="/interest-profit">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/interest-svg.svg" />
-          </div>
-          <div class="acct-nav-label">{{ $t("settings.interestProfit") }}</div>
-        </router-link> -->
-      </div>
-    </div>
-
-    <div class="mid-setting-section">
-      <div class="acct-nav">
-        <h2>{{ $t("settings.otherServices") }}</h2>
-        <div class="acct-menu" id="id-acct-menu">
           <router-link to="/account/profile">
             <div class="acct-nav-item">
               <img src="../assets/images/account/personal-svg.svg" />
@@ -74,18 +72,7 @@
             </div>
             <div class="acct-nav-label">{{ $t("settings.order") }}</div>
           </router-link>
-          <router-link to="/account/message">
-            <div class="acct-nav-item">
-              <img src="../assets/images/account/message-svg.svg" />
-            </div>
-            <div class="acct-nav-label">{{ $t("settings.message") }}</div>
-          </router-link>
-          <router-link to="/account/feedback">
-            <div class="acct-nav-item">
-              <img src="../assets/images/account/feedback-svg.svg" />
-            </div>
-            <div class="acct-nav-label">{{ $t("settings.feedback") }}</div>
-          </router-link>
+          
           <router-link to="/vip">
             <div class="acct-nav-item">
               <img src="../assets/images/account/vip-svg.svg" />
@@ -98,9 +85,25 @@
             </div>
             <div class="acct-nav-label">{{ $t("settings.charity") }}</div>
           </a>
+          
+        </div>
+      </div>
+      <div class="bottom-setting-section">
+        <router-link to="/account/message">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/message-svg.png" />
+            </div>
+            <div class="acct-nav-label">{{ $t("settings.message") }}</div>
+          </router-link>
+          <router-link to="/account/feedback">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/feedback-svg.png" />
+            </div>
+            <div class="acct-nav-label">{{ $t("settings.feedback") }}</div>
+          </router-link>
           <a v-if="ui.promo_exchange === '1'" target="_blank" @click="handleExchangeClick">
             <div class="acct-nav-item">
-              <img src="../assets/images/account/exchange-svg.svg" />
+              <img src="../assets/images/account/exchange-svg.png" />
             </div>
             <div class="acct-nav-label">{{ $t("settings.exchange") }}</div>
           </a>
@@ -111,7 +114,6 @@
             </div>
             <div class="acct-nav-label">{{ $t("settings.transfer") }}</div>
           </a>
-        </div>
       </div>
 
       <q-card class="card-account-banner" v-if="btm_banners.length > 0">
@@ -160,6 +162,7 @@
 
       <a @click="openConfirmSignOutDialog">
         <div class="acct-logout">
+          <img src="../assets/images/index/menu/logout.png">
           <div class="acct-nav-label">{{ $t("settings.logout") }}</div>
         </div>
       </a>
@@ -335,8 +338,10 @@ const handleCopyClick = async () => {
 
 <style scoped lang="scss">
 .top-setting-section {
+  background: url(../assets/images/account/setting-bg.png)no-repeat center center;
+  padding-top: 175px;
+  background-size: cover;
   position: relative;
-  margin: 20px;
 
   .top-login-name {
     display: flex;
@@ -356,8 +361,6 @@ const handleCopyClick = async () => {
   }
 
   .top-total-score {
-    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-    padding: 20px 12px 30px;
     margin: 0 20px;
     border-radius: 4px;
     display: flex;
@@ -365,10 +368,16 @@ const handleCopyClick = async () => {
     align-items: center;
 
     .score-txt {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+      font-size: 14px;
+      gap: 5px;
     }
     .score-amount {
       font-weight: bold;
-      font-size: 20px;
+      font-size: 14px;
 
       &:before {
         content: "RS";
@@ -468,9 +477,45 @@ const handleCopyClick = async () => {
     letter-spacing: -0.0008em;
   }
 }
+.bottom-setting-section {
+  margin: 5px 20px 20px;
+  
+  border-radius: 10px;
+  background: #373C3D;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  a {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: #FFFFFF;
+    padding: 10px;
+    gap: 10px;
+
+    text-decoration: none;
+    font-weight: bold;
+    position: relative;
+    &:after {
+      content: "";
+      position: absolute;
+      right: 10px;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      background: url(../assets/images/common/goright.png)no-repeat center center;
+      background-size: cover;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
 
 .acct-nav {
-  margin: 20px;
+  margin: 5px 20px 20px;
+  background: #373C3D;
+  padding: 10px;
+  border-radius: 10px;
 
   .acct-title {
     display: flex;
@@ -490,9 +535,50 @@ const handleCopyClick = async () => {
     }
   }
 
+  .top-section {
+      width: 100%;
+      display: flex;
+      gap: 10px;
+      a {
+        display: flex;
+        width: 100%;
+        text-decoration: none;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        gap: 5px;
+        img {
+          width: 16px;
+          display: block;
+        }
+        &:nth-child(1) {
+          border-radius: 4px;
+          color: #333333;
+          font-weight: bold;
+          background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+          box-shadow: 0px 2.07px 0px 0px #1CCA6A;
+          
+          img {
+            filter: grayscale(1) brightness(0);
+          }
+        }
+        &:nth-child(2) {
+          border-radius: 4px;
+          color: #ffffff;
+          font-weight: bold;
+          background: #455152;
+          box-shadow: 0px 2px 0px 0px #2A3637;
+          img {
+            filter: grayscale(1) brightness(100);
+          }
+
+        }
+        
+        
+      }
+    }
   .acct-menu {
-    padding: 10px;
-    background: #2e30344f;
+    padding: 20px 0 0;
     border-radius: 4px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -512,31 +598,37 @@ const handleCopyClick = async () => {
       font-size: 14px;
       display: flex;
       flex-direction: column;
-      gap: 0px;
+      gap: 10px;
       width: 100%;
       text-align: center;
       align-items: center;
       justify-content: flex-start;
       margin: 0 auto;
 
-      &:active {
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-      }
+      // &:active {
+      //   background-color: rgba(255, 255, 255, 0.1);
+      //   border-radius: 8px;
+      // }
 
       .acct-nav-label {
         color: #fff;
-        font-size: 14px;
-        white-space: normal;
+        font-family: Microsoft YaHei UI;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 120%;
+        letter-spacing: 0px;
+        text-align: center;
+        vertical-align: middle;
+
       }
 
       .acct-nav-item {
         // background-color: #b9c8ff26;
         border-radius: 50%;
-        aspect-ratio: 1/1;
-        padding: 5px;
-        height: 56px;
-        width: 56px;
+        // aspect-ratio: 1/1;
+        // padding: 5px;
+        height: 22px;
+        width: 22px;
         cursor: pointer;
         display: flex;
         text-align: center;
@@ -546,7 +638,7 @@ const handleCopyClick = async () => {
         text-decoration: none;
 
         img {
-          width: 90%;
+          // width: 90%;
           fill: white;
           padding: 0;
         }
@@ -569,8 +661,8 @@ const handleCopyClick = async () => {
 }
 
 .acct-logout {
-  height: 60px;
-  background: #2e30344f;
+  // height: 60px;
+  // background: #2e30344f;
   // background-image: url("../assets/images/account/logout-btn.png");
   // background-repeat: no-repeat;
   width: calc(95% - 20px);
@@ -582,8 +674,10 @@ const handleCopyClick = async () => {
   align-items: center;
 
   .acct-nav-label {
-    color: rgba(206, 206, 206, 0.8);
-    font-size: 16px;
+    // color: rgba(206, 206, 206, 0.8);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
   }
 
   &:active {

@@ -1,6 +1,6 @@
 <template>
   <div class="no-info-container" :class="shortenContainer && 'shorten-container'">
-    <img class="" src="../assets/images/account/nodata-folder.png" alt="" />
+    <img class="" src="../assets/images/account/nodata-dino.png" alt="" />
     <div class="no-info-text">{{ noInfoTitle }}</div>
     <p>{{ $t("notify.haventFoundAnyRecord") }}</p>
   </div>

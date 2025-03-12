@@ -65,7 +65,7 @@
             margin: 6px 3px;
             height: 3px;
             min-height: 3px;
-            width: 33px;
+            width: 3px;
             padding: 0;
             background-color: rgba(255, 255, 255, 0.2);
           "
@@ -212,7 +212,16 @@
       <q-btn class="action-btn action-btn--withdrawal" @click="gotoSignIn()" no-caps label="Sign In"></q-btn>
       <q-btn class="action-btn action-btn--deposit" @click="gotoSignUp()" no-caps label="Sign Up" />
     </div> -->
-
+    <div class="hometop-categories">
+      <template v-for="(item, index) in translatedCategoriesList" :key="index">
+        <div v-if="item.icon !== 'lobby'" class="category" @click="activateSlide(item)" :style="{ backgroundImage: `url(${getImageUrl(item.icon)})` }">
+          <div class="cat-label">
+          {{ item.label }}
+        </div>
+        </div>
+      </template>
+    </div>
+<!-- 
     <swiper
       :slidesPerView="5"
       :spaceBetween="0"
@@ -238,9 +247,9 @@
       </template>
 
       <swiper-slide>
-        <!-- <div class="cat-selection-item"></div> -->
+        <!- <div class="cat-selection-item"></div> ->
       </swiper-slide>
-    </swiper>
+    </swiper> -->
 
     <!-- <pre>hotGameList{{ hotGameList }}</pre> -->
     <!-- <pre>pokerGameJILIList--{{ pokerGameJILIList }}</pre> -->
@@ -269,9 +278,6 @@
             <swiper
               :slidesPerView="3.5"
               :spaceBetween="10"
-              :scrollbar="{
-                hide: true
-              }"
               :modules="gameModules"
               class="platform-game-container"
             >
@@ -1132,7 +1138,7 @@
   </q-dialog>
 
   <q-dialog width="100%" class="announcement-dialog" v-model="isStationNotice">
-    <div class="popout-dialog" style="padding-top: 16px">
+    <div class="popout-dialog isCentreDialog" style="padding-top: 16px">
       <q-btn dense rounded icon="close" class="bg-white text-black announcement-close" v-close-popup />
       <q-card style="width: calc(100% - 0px); margin: auto; padding-left: 10px" class="announcement-card">
         <q-card-section class="q-mb-md">
@@ -1419,7 +1425,7 @@
   />
 
   <template v-if="isAndroid()">
-    <q-dialog v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
+    <q-dialog class="isCentreDialog" v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
       <div class="luckyspin-wrapper">
         <div class="luckyspin-header">
           <img src="../assets/images/index/modal/luckyspin-title.png" />
@@ -1439,7 +1445,7 @@
     </q-dialog>
   </template>
   <template v-else>
-    <q-dialog v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
+    <q-dialog class="isCentreDialog" v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
       <CongratsModal>
         <template #controller>
           <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="isShownSpinLuckyWheel" />
@@ -1458,7 +1464,7 @@
     @handleBtnClose="isShowCodeBonusModal = false"
   />
 
-  <q-dialog v-model="isShowPrizeModal">
+  <q-dialog class="isCentreDialog" v-model="isShowPrizeModal">
     <div class="congrats-container">
       <q-btn icon="close" round dense v-close-popup class="congrats-close" />
       <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div>
@@ -1474,7 +1480,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog v-if="popupPromo === 'money-rain'" :model-value="true" persistent>
+  <q-dialog class="isCentreDialog" v-if="popupPromo === 'money-rain'" :model-value="true" persistent>
     <MoneyRainModal>
       <template #controller>
         <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="true" />
@@ -1487,7 +1493,7 @@
     v-if="popupPromo === 'mega-sharing-wheel'"
     :model-value="megaSharingWheelDialogModel"
     full-width
-    class="mega-sharing-wheel-dialog"
+    class="isCentreDialog mega-sharing-wheel-dialog"
     persistent
   >
     <q-btn class="mega-sharing-wheel-dialog-close" icon="close" round dense @click="closeDialog" />
@@ -1502,7 +1508,7 @@
     v-if="popupPromo === 'spin-lucky-wheel' && isShownSpinLuckyWheel"
     full-width
     :model-value="isShownSpinLuckyWheel"
-    class="spin-lucky-wheel-dialog"
+    class="isCentreDialog spin-lucky-wheel-dialog"
     persistent
   >
     <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
@@ -1604,7 +1610,6 @@ const handleScroll = () => {
 
   lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
 };
-
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
 });
@@ -1768,12 +1773,12 @@ const playVideo = () => {
 };
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
-  { title: "Hot", label: t("home.menu_hot"), icon: "hot", active: false },
-  { title: "Slot", label: t("home.menu_slot"), icon: "slot", active: false },
   { title: "Live", label: t("home.menu_live"), icon: "live", active: false },
-  { title: "Sport", label: t("home.menu_sport"), icon: "sport", active: false },
+  { title: "Slot", label: t("home.menu_slot"), icon: "slot", active: false },
+  { title: "Hot", label: t("home.menu_hot"), icon: "hot", active: false },
+  { title: "Fish", label: t("home.menu_fish"), icon: "fish", active: false },
   { title: "Poker", label: t("home.menu_poker"), icon: "poker", active: false },
-  { title: "Fish", label: t("home.menu_fish"), icon: "fish", active: false }
+  { title: "Sport", label: t("home.menu_sport"), icon: "sport", active: false },
 ]);
 
 const isCsTabVisible = ref(false);
@@ -1790,6 +1795,9 @@ const translatedCategoriesList = computed(() => {
     label: t(`home.menu_${category.title.toLowerCase()}`)
   }));
 });
+const getImageUrl = (title) => {
+  return require(`../assets/images/index/category/hometop-${title.toLowerCase()}.png`);
+};
 
 const activeCategoryLabel = computed(() => {
   const activeCategory = translatedCategoriesList.value.find((category) => category.active);
@@ -4491,6 +4499,7 @@ const checkGoogleLoginSetPwd = () => {
   display: flex;
   margin-right: 0;
   padding-right: 0;
+  margin-bottom: 10px;
 }
 
 .notice-download {
@@ -4503,6 +4512,70 @@ const checkGoogleLoginSetPwd = () => {
     width: 32px;
     height: 32px;
     //filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
+  }
+} 
+.hometop-categories {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
+  grid-template-rows: auto auto; /* 2 rows */
+  gap: 15px;   
+  margin-bottom: 20px;   
+  .category {
+    padding: 4vh 0;
+      text-align: center;
+      font-size: 20px;
+      border-radius: 8px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 110px;
+    position: relative;
+    background-position: center center;
+  .cat-label {
+    position: absolute;
+    font-weight: bold;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+  }
+  /* Top row spans 2 columns each */
+  .category:nth-child(1), .category:nth-child(2) {
+      grid-column: span 2;
+      .cat-label {
+        position: absolute;
+        font-weight: bold;
+        top: 10px;
+        right: unset;
+        left: 10px;
+        display: flex;
+        gap: 5px;
+
+      }
+  }
+  .category:nth-child(1) {
+    .cat-label {
+      &:before {
+        content: "";
+        background: url(../assets/images/index/category/green-dice.png)no-repeat center center;
+        width: 30px;
+        background-size: contain;
+        height: 30px;
+      }
+    }
+  }
+  
+  .category:nth-child(2) {
+    .cat-label {
+
+      &:before {
+      content: "";
+      background: url(../assets/images/index/category/green-slot.png)no-repeat center center;
+      width: 30px;
+      background-size: contain;
+      height: 30px;
+    }
+    }
   }
 }
 
@@ -4536,8 +4609,10 @@ const checkGoogleLoginSetPwd = () => {
   margin-top: 10px;
   margin-bottom: 10px;
   position: relative;
-  border-radius: 40px;
+  border-radius: 40px 0 0 40px;
   overflow: hidden;
+
+  margin-right: -10px;
 
   .station-notice-wrapper {
     display: flex;
@@ -4549,6 +4624,8 @@ const checkGoogleLoginSetPwd = () => {
       rgba(255, 255, 255, 0.05) 53.13%,
       rgba(255, 255, 255, 0) 98.21%
     );
+    background: #ffffff0f;
+
 
     gap: 10px;
     padding: 5px 10px;
@@ -4559,7 +4636,7 @@ const checkGoogleLoginSetPwd = () => {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 28px;
+      height: 25px;
       width: 28px;
     }
 
@@ -4866,8 +4943,10 @@ const checkGoogleLoginSetPwd = () => {
 
   .popout-close {
     position: absolute;
-    right: 0px;
-    top: 80px;
+    // right: 0px;
+    // top: 80px;
+    right: 15px;
+    top: 15px;
     background: #cfcfcf;
     color: #787878;
   }

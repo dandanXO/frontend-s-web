@@ -96,6 +96,13 @@ const routes = [
       }
     ]
   },
+  
+  {
+    path: "/side-menu",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("components/SideMenu.vue") }],
+    meta: { requiresAuth: true }
+  },
   // {
   //   path: "/aviator",
   //   component: () => import("layouts/MainLayout.vue"),

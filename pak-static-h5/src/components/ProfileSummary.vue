@@ -21,133 +21,6 @@
       <!-- <div class="download-count">({{ topDownloadCount }}s)</div> -->
     </div>
   </div>
-
-  <div class="menu-open" :class="{ open: menuOpen }" @click="handleMenuBackgroundClick">
-    <div style="height: 56px" v-if="topDownload && !ui.hideDownload"></div>
-    <div class="side-menu" @click.stop>
-      <div class="side-menu-item side-menu-item__invite" @click="handleMenuRouteClick('/earn-money')">
-        <div>
-          {{ $t("sideNav.inviteToEarn") }}
-          <span>{{ $t("sideNav.shareYourExclusiveQRCode") }}</span>
-        </div>
-        <div class="item-icon">
-          <img src="../assets/images/auth/menu-invite.png" />
-        </div>
-      </div>
-
-      <div class="side-menu-item side-menu-item__checkin">
-        <div>
-          CHECK
-          <span>-IN</span>
-        </div>
-        <div class="item-icon">
-          <img src="../assets/images/auth/menu-checkin.png" />
-        </div>
-      </div>
-
-      <div class="side-menu-item side-menu-item__luckyspin">
-        <div>
-          LUCKY
-          <span>SPIN</span>
-        </div>
-        <div class="item-icon">
-          <img src="../assets/images/auth/menu-luckyspin.png" />
-        </div>
-      </div>
-
-      <div class="side-menu-item" @click="activateSlide('Slot')">
-        <div class="item-icon"><img src="../assets/images/auth/menu-slot.png" /></div>
-        {{ $t("sideNav.slots") }}
-      </div>
-      <div class="side-menu-item" @click="activateSlide('Live')">
-        <div class="item-icon"><img src="../assets/images/auth/menu-live.png" /></div>
-        {{ $t("sideNav.livecasino") }}
-      </div>
-      <div class="side-menu-item" @click="activateSlide('Fish')">
-        <div class="item-icon"><img src="../assets/images/auth/menu-fish.png" /></div>
-        {{ $t("sideNav.fishing") }}
-      </div>
-      <div class="side-menu-item" @click="activateSlide('Poker')">
-        <div class="item-icon"><img src="../assets/images/auth/menu-poker.png" /></div>
-        {{ $t("sideNav.poker") }}
-      </div>
-      <div class="side-menu-item" @click="activateSlide('Sport')">
-        <div class="item-icon"><img src="../assets/images/auth/menu-sport.png" /></div>
-        {{ $t("sideNav.sport") }}
-      </div>
-
-      <div class="side-menu-divider"></div>
-
-      <div class="side-menu-item side-menu-item__transparent" @click="openCSInNewTab(ui.CSAUrl)">
-        <div class="item-icon"><img src="../assets/images/auth/menu-livesupport.png" /></div>
-        {{ $t("sideNav.livesupport") }}
-      </div>
-
-      <!-- <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/account/feedback')">
-        <div class="item-icon"><img src="../assets/images/auth/menu-feedback.png" /></div>
-        {{ $t("sideNav.feedback") }}
-      </div> -->
-
-      <!--      <a class="side-menu-item side-menu-item__transparent" href="https://www.tiktok.com/@b9game" target="_blank">-->
-      <!--        <div class="item-icon">-->
-      <!--          <img src="../assets/images/auth/menu-tiktok.png" />-->
-      <!--        </div>-->
-      <!--        Tik Tok-->
-      <!--      </a>-->
-
-      <a class="side-menu-item side-menu-item__transparent" :href="ui.youtubeUrl" target="_blank">
-        <div class="item-icon">
-          <img src="../assets/images/index/youtube-web-icon.png" />
-        </div>
-        Youtube
-      </a>
-
-      <a class="side-menu-item side-menu-item__transparent" :href="ui.instagramUrl" target="_blank">
-        <div class="item-icon">
-          <img src="../assets/images/index/insta-web-icon.png" />
-        </div>
-        Instagram
-      </a>
-
-      <a class="side-menu-item side-menu-item__transparent" :href="ui.whatsappUrl" target="_blank">
-        <div class="item-icon"><img src="../assets/images/auth/menu-whatsapp.png" /></div>
-        Whatsapp
-      </a>
-
-      <router-link class="side-menu-item side-menu-item__transparent" to="/promo?name=pak-faq">
-        <div class="item-icon"><img src="../assets/images/auth/menu-faq.png" /></div>
-        Faq
-      </router-link>
-
-      <a class="side-menu-item side-menu-item__transparent" :href="ui.tiktokUrl" target="_blank" v-if="ui.tiktokUrl">
-        <div class="item-icon"><img src="../assets/images/auth/menu-tiktok.png" /></div>
-        TikTok
-      </a>
-
-      <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/language')">
-        <div class="item-icon">
-          <img :src="require(`../assets/images/auth/country-flag-${$t('lang.langVal')}.png`)" class="flag" />
-        </div>
-        {{ $t("sideNav.language") }}
-      </div>
-
-      <a
-        class="side-menu-item side-menu-item__download"
-        :href="ui.downloadAppUrl"
-        v-if="isSideDownload && !ui.hideDownload"
-      >
-        <div class="item-icon">
-          <img src="../assets/images/auth/download-icon.png" />
-        </div>
-        {{ $t("sideNav.downloadApp") }}
-      </a>
-
-      <!-- <div class="side-menu-item side-menu-item__transparent"> -->
-      <!-- <LangOptions /> -->
-      <!-- </div> -->
-    </div>
-  </div>
-
   <div
     class="infoboard-container"
     :class="{
@@ -158,12 +31,13 @@
   >
     <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
-      <div class="profile-menu">
+      <!-- <div class="profile-menu">
         <img src="../assets/images/auth/auth-menu.png" @click="toggleMenuOpen()" />
-      </div>
+      </div> -->
       <div class="profile-wrapper-extra">
         <div class="logo-img">
           <img src="../assets/images/auth/bg-logo-only.png" @click="onClickLogo" />
+          <span v-if="!ui.loggedIn && !store.hasToken()">B9.GAME</span>
         </div>
       </div>
       <div class="profile-wrapper" v-if="ui.loggedIn || store.hasToken()">
@@ -198,13 +72,22 @@
             </div>
           </template>
         </div>
+        <div class="gift-notifications">
 
-        <q-btn class="gift-wrapper" flat @click="showBonusModal">
-          <img src="../assets/images/auth/gift.png" />
-          <q-badge v-if="!!fastAccessPromoLength" class="gift-badge" floating rounded>
-            {{ fastAccessPromoLength }}
-          </q-badge>
-        </q-btn>
+          <q-btn class="notification-wrapper" flat @click="router.push('/account/message?from=' + route.path)">
+            <img src="../assets/images/auth/bell-icon.png" />
+            <q-badge v-if="store.unreadInboxMail > 0" class="bell-badge" floating rounded>
+              {{ store.unreadInboxMail }}
+            </q-badge>
+              
+          </q-btn>
+          <q-btn class="gift-wrapper" flat @click="showBonusModal">
+            <img src="../assets/images/auth/gift-icon.png" />
+            <q-badge v-if="fastAccessPromo.length > 0" class="gift-badge" floating rounded>
+              {{ fastAccessPromo.length }}
+            </q-badge>
+          </q-btn>
+        </div>
 
         <!-- <div>
           <q-btn square class="style-blue-btn" icon="add" dense @click="router.push('/deposit?from=' + route.path)" />
@@ -216,7 +99,6 @@
         <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown" unelevated>
           <template v-slot:label>
             <div class="profile-pic">
-              <div class="unread-total" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</div>
               <q-avatar size="50px">
                 <img :src="profileImagePath" />
               </q-avatar>
@@ -345,7 +227,7 @@ const getFastAccessPromo = () => {
 };
 
 const showBonusModal = () => {
-  isBonusModal.value = true;
+  isBonusModal.value = !isBonusModal.value;
 };
 const showNewPlayer = () => {
   isBonusModal.value = false;
@@ -429,6 +311,15 @@ const refreshBalance = () => {
 };
 
 const onClickLogo = () => {
+  if (props.homeProfile) {
+    activateSlide("Lobby");
+    return;
+  }
+  if (route.fullPath === "/home") {
+    // toggleMenuOpen();
+    
+    return;
+  }
   if (isAndroid()) {
     window.open("http://m.b9mega1.com/", "_blank");
     return;
@@ -645,7 +536,7 @@ onUnmounted(() => {
   position: fixed;
   top: 0;
   left: 0;
-  background: rgba(19, 19, 19, 0.9);
+  background: rgb(35, 38, 38);
   backdrop-filter: blur(4px);
   width: 100%;
   height: 100%;
@@ -820,7 +711,7 @@ onUnmounted(() => {
     &.home-profile {
       position: relative;
       width: 100%;
-      gap: 0;
+      gap: 10px;
       justify-content: space-between;
       align-items: center;
       padding: 0 12px;
@@ -840,7 +731,7 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 6px;
+    gap: 10px;
     padding-top: 8px;
     padding-bottom: 5px;
     margin-bottom: 4px;
@@ -896,31 +787,74 @@ onUnmounted(() => {
       display: flex;
       flex-direction: column;
       font-size: 16px;
+      width: 100%;
     }
+    .gift-notifications {
+      background: #FFFFFF0F;
+      display: flex;
+      border-radius: 10px;
+      padding: 5px;
 
-    .gift-wrapper {
-      background: rgba(0, 10, 1, 0.6);
-      // box-shadow: 0px 0px 5px 0px #ffffff4a inset;
-      border-radius: 8px;
-      position: relative;
-      border: none;
-      padding: 10px;
-      height: 40px;
-      width: 40px;
-
-      &:hover {
-        filter: brightness(1.2);
-      }
-
-      img {
-        max-width: 100%;
-      }
-
-      .gift-badge {
-        background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+      .notification-wrapper {
+        height: 20px;
+        width: 20px;
+        padding-right: 20px;
+        border-right: 1px solid #FFFFFF33;
+        img {
+          height: 20px;
+          width: 20px;
+        }
+        :deep(.q-badge--floating) {
+          top: 2px;
+          right: 2px;
+        }
+            .bell-badge {
+              background: #E30000;
         color: #fff;
       }
+      }
+      .gift-wrapper {
+        height: 20px;
+          width: 20px;
+    padding-left: 20px;
+
+        img {
+        height:20px;
+          width: 20px;
+        }
+        :deep(.q-badge--floating) {
+          top: 2px;
+          right: -4px;
+        }
+        .gift-badge {
+            background: #E30000;
+            color: #fff;
+          }
+      }
     }
+    // .gift-wrapper {
+    //   background: rgba(0, 10, 1, 0.6);
+    //   // box-shadow: 0px 0px 5px 0px #ffffff4a inset;
+    //   border-radius: 8px;
+    //   position: relative;
+    //   border: none;
+    //   padding: 10px;
+    //   height: 40px;
+    //   width: 40px;
+
+    //   &:hover {
+    //     filter: brightness(1.2);
+    //   }
+
+    //   img {
+    //     max-width: 100%;
+    //   }
+
+    //   .gift-badge {
+    //     background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+    //     color: #fff;
+    //   }
+    // }
 
     .profile-name {
       display: flex;
@@ -952,7 +886,9 @@ onUnmounted(() => {
       position: relative;
       // background: rgba(255, 255, 255, 0.24);
       // background: #192633;
-      background: rgba(0, 10, 1, 0.6);
+      // background: rgba(0, 10, 1, 0.6);
+      background: #FFFFFF0F;
+
       border-radius: 10px;
       display: flex;
       align-items: center;
@@ -961,6 +897,7 @@ onUnmounted(() => {
       min-width: 100px;
       width: 100%;
       min-height: 35px;
+      border: 1px solid #FFFFFF14;
 
       font-size: 14px;
       color: #fff;
@@ -972,15 +909,26 @@ onUnmounted(() => {
       }
 
       .currency-amount {
-        color: #8c968f;
+        color: #000000;
+        background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
         font-size: 12px;
-        margin-right: auto;
-        padding-right: 4px;
+        font-weight: 700;
+        margin-right: 10px;
+        border-radius: 50%;
+        padding: 5px;
+        font-family: Microsoft YaHei UI;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 100%;
+        letter-spacing: 0px;
+        vertical-align: middle;
+
       }
 
       .balance-amount {
         padding-right: 18px;
         white-space: nowrap;
+        width: 100%;
       }
     }
 
@@ -1008,15 +956,24 @@ onUnmounted(() => {
   .profile-wrapper-extra {
     display: flex;
     align-items: center;
-    width: 100%;
-    margin-left: 12px;
+    // width: 100%;
+    // max-width: 45px;
+    // margin-left: 12px;
   }
 
   .logo-img {
     width: 100%;
     margin: 0 auto;
     display: flex;
-
+    justify-content: flex-start;
+    align-items: flex-end;
+    font-family: Microsoft YaHei UI;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 30px;
+    letter-spacing: -4%;
+    text-align: center;
+    
     img {
       width: 32px;
       text-align: center;
@@ -1081,6 +1038,7 @@ onUnmounted(() => {
   background: linear-gradient(251.03deg, #89c543 7.46%, #2aae8b 91.87%);
   border-radius: 5px;
   animation: blink 1.5s infinite;
+  box-shadow: 0px 1.13px 0px 0px #1CCA6A;
 }
 
 .menu-line {
@@ -1125,7 +1083,7 @@ onUnmounted(() => {
 }
 
 .q-btn-dropdown--simple {
-  width: 80px !important;
+  width: 50px !important;
 }
 
 .q-item__label {

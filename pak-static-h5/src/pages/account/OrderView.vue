@@ -315,49 +315,41 @@ onActivated(() => {
 
 <style lang="scss" scoped>
 .order-option-tab {
-  background: url(../../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
-  background-size: 100% 100%;
+    background: #323738;
+    background-size: 100% 100%;
+    border-radius: 8px;
+    margin: 20px 16px 4px;
+    padding: 1px;
+    font-family: Microsoft YaHei UI;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0px;
+    text-align: center;color: #FFFFFF80;
+    vertical-align: middle;
 
-  border-radius: 8px;
-  width: calc(100% - 20px);
-  //margin-bottom: 10px;
-  margin: 10px auto;
-  aspect-ratio: 335/32;
 
   .right {
-    color: white;
+    padding: 12px 0;
     // background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-right.png) no-repeat center center;
     // background-size: 0;
   }
 
   .left {
-    color: white;
+    padding: 12px 0;
     // background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
     // background-size: 0;
   }
 
   :deep(.q-tab__label) {
     font-weight: 700;
+
   }
 
   :deep(.q-tab--active) {
+    background: #394142;
     color: white;
-    // background: url(../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
-    // background-size: 100% 100%;
-    background: linear-gradient(180deg, rgba(97, 255, 0, 0) 0%, rgba(97, 255, 0, 0.25) 50.5%, rgba(97, 255, 0, 0) 100%);
-    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
-
-    &:before {
-      content: "";
-      background-color: #70bc62;
-      height: 3px;
-      border-radius: 4px;
-      width: 30%;
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-    }
+      border-radius: 6px;
   }
 }
 

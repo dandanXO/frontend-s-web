@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="localIsShowDialog" @hide="handleBtnClose">
+  <q-dialog class="isCentreDialog" v-model="localIsShowDialog" @hide="handleBtnClose">
     <div class="congrats-container">
       <q-btn icon="close" round dense v-close-popup class="congrats-close" />
       <div class="congrats-header">

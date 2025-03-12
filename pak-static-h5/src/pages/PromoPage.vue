@@ -792,13 +792,14 @@ export default defineComponent({
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    color: #5f6061;
+    color: #FFFFFF80;
     font-weight: 400;
     width: 50%;
   }
 
   .vip-promo-tab-toggle {
-    background: url(../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
+    // background: url(../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
+    background: #323738;
     background-size: 100% 100%;
     border-radius: 8px;
     margin-bottom: 4px;
@@ -806,32 +807,34 @@ export default defineComponent({
     padding: 1px;
 
     :deep(.q-tab__label) {
-      font-weight: 400;
+      font-weight: 700;
+      // color: #FFFFFF80;
     }
 
     :deep(.q-tab--active) {
       color: white;
       // background: url(../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
       // background-size: 100% 100%;
-      background: linear-gradient(
-        180deg,
-        rgba(97, 255, 0, 0) 0%,
-        rgba(97, 255, 0, 0.25) 50.5%,
-        rgba(97, 255, 0, 0) 100%
-      );
-      box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+      // background: linear-gradient(
+      //   180deg,
+      //   rgba(97, 255, 0, 0) 0%,
+      //   rgba(97, 255, 0, 0.25) 50.5%,
+      //   rgba(97, 255, 0, 0) 100%
+      // );
+      // box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
 
-      &:before {
-        content: "";
-        background-color: #70bc62;
-        height: 3px;
-        border-radius: 4px;
-        width: 30%;
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-      }
+      // &:before {
+      //   content: "";
+      //   background-color: #70bc62;
+      //   height: 3px;
+      //   border-radius: 4px;
+      //   width: 30%;
+      //   position: absolute;
+      //   bottom: 0;
+      //   left: 50%;
+      //   transform: translateX(-50%);
+      // }
+      background: #394142;
     }
 
     :deep(.q-tab--active .q-tab__label) {

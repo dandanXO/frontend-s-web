@@ -13,31 +13,32 @@
   <div class="login-container" :class="isRestrictedDomain ? 'w-domain' : ''">
     <div class="back-left" v-if="!isRestrictedDomain">
       <router-link :to="'/home'">
-        <img src="../assets/images/index/btn-back.png" />
+        <img src="../assets/images/index/btn-close.png" />
       </router-link>
     </div>
-
+<!-- 
     <div class="is-domain top-img">
       <img src="../assets/images/index/register-topimg.png" />
     </div>
     <div class="no-domain login-form-logo-img">
       <img src="../assets/images/auth/b9-logo.png" />
-    </div>
+    </div> -->
     <div class="back-btn-img" v-if="isRestrictedDomain" @click="router.replace('/')">
       <img src="../assets/images/index/btn-back.png" />
     </div>
-    <div class="no-domain auth-tab-wrapper">
+    <!-- <div class="no-domain auth-tab-wrapper">
       <q-tabs v-model="regLoginTab" dense no-caps class="auth-tab-toggle" indicator-color="transparent" align="justify">
         <q-tab name="login" :label="$t('header.login')" />
         <q-tab name="register" :label="$t('header.register')" />
       </q-tabs>
-    </div>
+    </div> -->
+    <div class="login-pg-title">{{ $t('header.login') }}</div>
 
     <div class="login-form-wrapper">
       <q-form ref="loginFormRef" @submit="onSubmit">
         <InputRowGrid v-if="!loginType">
           <template #fields>
-            <InputField :label="$t('form.phone')">
+            <InputField>
               <template #input>
                 <!-- <q-icon name="lock" class="input-icon" /> -->
                 <q-input
@@ -65,7 +66,7 @@
               </template>
             </InputField>
 
-            <InputField :label="$t('form.password')">
+            <InputField>
               <template #input>
                 <q-input
                   ref="passwordRef"
@@ -146,6 +147,9 @@
       <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">
         {{ $t("btn.confirm") }}
       </q-btn>
+      <div class="areyounew">
+        Are you new to B9? <a @click="goRegister" class="green">Register</a>
+      </div>
 
       <div class="google-login-wrapper">
         <img v-if="languageVal === 'en'" style="width: 100%" src="../assets/images/index/logindirectly-en.png" />
@@ -260,9 +264,9 @@
       </div>
     </div>
 
-    <div class="no-domain bottom-img">
+    <!-- <div class="no-domain bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
-    </div>
+    </div> -->
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
@@ -1001,9 +1005,14 @@ export default defineComponent({
   flex-direction: column;
   // justify-content: center;
   padding-top: 20px;
-  background: url("../assets/images/auth/bg-login.png");
-  background-size: 100% 100%;
+  // background: url("../assets/images/auth/bg-login.png");
+  background: url("../assets/images/auth/top-login-bg.png");
+  background-size: cover;
   background-repeat: no-repeat;
+  padding-top: 250px;
+  @media screen and (min-width: 500px) {
+    padding-top: 300px;
+  }
   .is-domain {
     display: none;
   }
@@ -1019,6 +1028,7 @@ export default defineComponent({
     justify-content: flex-end;
     align-items: center;
     margin: 0 20px 20px;
+    text-decoration: none;
   }
   &.w-domain {
     background: url("../assets/images/auth/trianglebg.png");
@@ -1100,8 +1110,12 @@ export default defineComponent({
 
 .back-left {
   position: fixed;
-  top: 16px;
-  left: 16px;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  img { 
+    width: 100%;
+  }
 }
 
 .login-form-logo-img {
@@ -1127,7 +1141,16 @@ export default defineComponent({
     width: 2.25rem;
   }
 }
-
+.login-pg-title {
+  font-family: Microsoft YaHei UI;
+font-weight: 700;
+font-size: 16px;
+line-height: 100%;
+letter-spacing: 0px;
+vertical-align: middle;
+color: #ffffff;
+padding: 0 20px;
+}
 .btn-lists {
   display: flex;
   justify-content: space-evenly;
@@ -1262,6 +1285,7 @@ export default defineComponent({
   padding: 3px 20px 8px;
   .btn-primary {
     background: linear-gradient(90deg, #29ed89 0%, #97e872 100%);
+    color: #000a01;
   }
   :deep(.q-btn__content) {
     font-weight: bolder;
@@ -1322,6 +1346,14 @@ export default defineComponent({
   70% {
     -webkit-transform: scale(1);
     transform: scale(1);
+  }
+}
+.areyounew {
+  margin: 15px 0;
+  .green {
+    color: #21EF89;
+    font-weight: 700;
+    cursor: pointer;
   }
 }
 

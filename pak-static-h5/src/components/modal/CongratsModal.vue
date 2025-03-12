@@ -1,6 +1,6 @@
 <template>
   <!-- <div class="congrats-wrapper"> -->
-  <div class="congrats-container">
+  <div class="congrats-container isCentreDialog">
     <div v-if="$slots.controller" class="controller-wrapper">
       <slot name="controller" />
     </div>

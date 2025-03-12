@@ -25,10 +25,10 @@
       <q-linear-progress
         reverse
         rounded
-        size="15px"
+        size="8px"
         :value="progressBarRef"
         class="progress-bar"
-        color="grey"
+        color="grey-9"
       ></q-linear-progress>
       <div class="win-gift-text">{{ $t("settings.depositMonthlytoWinGifts") }}</div>
     </div>
@@ -80,15 +80,16 @@ const profileImagePath = computed(() => {
 
 <style lang="scss" scoped>
 .progress-container {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-gap: 10px;
-  align-items: center;
-  margin: 1.5rem 0 1rem 0;
-  // background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
-  border-radius: 8px;
-  min-height: 130px;
-  padding: 14px;
+  
+  display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5rem 0 1rem 0;
+    border-radius: 8px;
+    min-height: 130px;
 
   .left-container {
     position: relative;
@@ -146,19 +147,27 @@ const profileImagePath = computed(() => {
     flex-direction: column;
     gap: 8px;
     font-size: 12px;
+    font-weight: bold;
 
+    width: 100%;
+    background: linear-gradient(90deg, #323738 0%, #404F4E 100%);
+    padding: 15px;
+    border-radius: 10px;
     .amount-progress-container {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
+
     }
 
     .progress-bar {
       // border: 1px solid #fed87d;
       // background: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-      background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
+      // background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
       border-radius: 100px;
       color: #320b5b;
+      // background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+
     }
 
     .vip-text {
@@ -167,7 +176,10 @@ const profileImagePath = computed(() => {
     }
 
     .win-gift-text {
+      margin-top: 5px;
       text-align: right;
+      color: #B2BDBF;
+      font-weight: 400;
     }
   }
 }
