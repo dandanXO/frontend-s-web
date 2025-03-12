@@ -3005,6 +3005,8 @@ export default {
     validateFbIdRequired: 'Facebook ID 为必填',
     validateFbUrlRequired: 'Facebook URL 为必填',
     validateFbTokenRequired: 'Facebook Token 为必填',
+    qrCodeGenerateFailed: '生成二维码失败',
+    downloadUrlEmpty: '下载URL为空'
   },
   menu: {
     'Add Promo': '新增优惠',

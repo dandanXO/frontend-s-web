@@ -1688,7 +1688,9 @@ export default {
     roleMustOnlyOne: 'โปรดเลือกบทบาทที่ต้องได้รับอนุมัติ',
     validateIsSeamlessTransferRequired: 'จำเป็นสำหรับการไม่มีการโอน',
     validateVipSettingRequired: 'จำเป็นต้องตั้งค่าวีไอพี',
-    validatePayementTypesSettingRequired: 'จำเป็นต้องตั้งค่าการชำระเงิน'
+    validatePayementTypesSettingRequired: 'จำเป็นต้องตั้งค่าการชำระเงิน',
+    qrCodeGenerateFailed: 'การสร้างรหัส QR ล้มเหลว',
+    downloadUrlEmpty: 'URL ดาวน์โหลดว่างเปล่า'
   },
   menu: {
     undefined: 'ไม่ได้กำหนด',
