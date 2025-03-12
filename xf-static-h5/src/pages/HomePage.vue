@@ -111,7 +111,7 @@
           </template>
           <template v-else>
             <span>登录/注册后查看</span>
-            早上好，您还未登录
+            {{ greetingMessage }}，您还未登录
           </template>
         </div>
 
@@ -1122,6 +1122,12 @@ export default defineComponent({
         });
     };
 
+    const greetingMessage = computed(() => {
+      const now = new Date();
+      const hours = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Shanghai' })).getHours();
+      return hours >= 12 ? '下午好' : '早上好';
+    });
+
     onMounted(() => {
       getPlatList();
       loadData();
@@ -1232,7 +1238,8 @@ export default defineComponent({
       scrollToSlide,
       isOutdatedApp,
       platListLoading,
-      bannerLoading
+      bannerLoading,
+      greetingMessage
     };
   }
 });
