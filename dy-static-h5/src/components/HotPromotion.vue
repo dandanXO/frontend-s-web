@@ -57,7 +57,8 @@
     <Blast2025S3 v-else-if="list.redirectUrl === 'dy2-blast-open-lisbon-2025'" :promo-code="list.promoCode" />
 
     <SkyesportsSouvenir2025 v-if="list.redirectUrl === 'dy2-skyesports-souvenir-2025'" :promo-code="list.promoCode" />
-
+    <VctBangkok v-if="list.redirectUrl === 'dy2-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
+    
     <Monthly20HongBaoYu v-if="list.redirectUrl === 'dy2-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'dy-official-gift'" :params="list.param" />
     <PGLBucharest2025 v-if="list.redirectUrl === 'dy2-pgl-bucharest-2025'" :promo-code="list.promoCode" />
@@ -139,7 +140,7 @@ const EslProLeagueS21 = defineAsyncComponent(() => import("./hotpromo/esl-pro-le
 import SkyesportsSouvenir2025 from "./hotpromo/skyesports-souvenir-2025/SkyesportsSouvenir2025.vue";
 import PGLBucharest2025 from "./hotpromo/pgl-bucharest-2025/PGLBucharest2025.vue";
 const Blast2025S3 = defineAsyncComponent(() => import("./hotpromo/Blast2025-s3/Blast2025S3.vue"));
-
+import VctBangkok from "./hotpromo/vct-bangkok/VctBangkok.vue";
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -168,7 +169,8 @@ export default defineComponent({
     Cba30Dream,
     ChallengeComebackPromo,
     Lh1LplLck2025loss,
-    Monthly20HongBaoYu
+    Monthly20HongBaoYu,
+    VctBangkok
   },
   props: {
     list: {
