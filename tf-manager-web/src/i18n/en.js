@@ -3570,6 +3570,7 @@ export default {
     WITHDRAW_ERROR: 'Withdraw Error',
     DEPOSIT_ERROR: 'Deposit Error',
     JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: 'Task Idle(Bet Record Fetch)',
+    FIRST_DEPOSIT_FLUCTUATION: 'First deposit fluctuation'
   },
   domain: {
     domainMainType: {
