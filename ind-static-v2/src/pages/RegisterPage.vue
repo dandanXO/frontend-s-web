@@ -109,6 +109,7 @@
                   outlined
                   placeholder="Enter your OTP number"
                   label-color="brand"
+                  :disable="isOtpEnable"
                 >
                   <template v-slot:prepend>
                     <img class="white-svg" src="../assets/images/auth/otp.svg" />
@@ -438,6 +439,15 @@ export default defineComponent({
       ) {
         isLoading.value = false;
         $q.loading.hide();
+      } else if (regForm.referrer && isOtpEnable.value){
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "Please fill OTP number",
+          icon: "report_problem"
+        });
+        isLoading.value = false;
+        $q.loading.hide();
       } else {
         var qs = require("qs");
         const fpPromise = FingerprintJS.load();
@@ -562,7 +572,9 @@ export default defineComponent({
       }
     );
 
+    const isOtpEnable = ref(true);
     const openPhoneVeriDialog = () => {
+      isOtpEnable.value = false;
       loginNameRef.value.validate();
       if (!loginNameRef.value.hasError) {
         showCaptchaDialog.value = true;
@@ -621,7 +633,7 @@ export default defineComponent({
                 }
               },1000);
             }
-            
+
             getInnerCode();
           }
 
@@ -697,7 +709,8 @@ export default defineComponent({
       imgOnLoad,
       imgOnError,
       otpCountdown,
-      otpCountdownInterval
+      otpCountdownInterval,
+      isOtpEnable
     };
   }
 });
