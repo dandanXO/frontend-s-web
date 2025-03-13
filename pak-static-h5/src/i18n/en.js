@@ -570,6 +570,8 @@ export default {
     }
   },
   records: {
+    beforeBalance: "Before Balance:",
+    afterBalance: "After Balance:",
     gamePlatform: "Game Platform",
     bet: "Bet",
     settle: "Settle",

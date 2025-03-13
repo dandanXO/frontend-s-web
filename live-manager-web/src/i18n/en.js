@@ -1,0 +1,27 @@
+export default {
+  submit: 'Submit',
+  login: 'Login',
+  username: 'Username',
+  password: 'Password',
+  loggedInSuccessfully: 'Logged in successfully!',
+  statsComponent: {
+    totalFirstDeposit: 'Total First Deposit',
+    totalDeposits: 'Total Deposits',
+    totalAgentRecharge: 'Total Agent Recharge',
+    totalWithdrawals: 'Total Withdrawals',
+    totalCompanyWinLoss: 'Total Company Win/Loss',
+    totalValidBets: 'Total Valid Bets',
+    totalBonus: 'Total Bonus',
+    totalActiveMembers: 'Total Active Members',
+    totalVisits: 'Total Visits',
+    totalCompanyProfit: 'Total Company Profit',
+    amount: 'Amount',
+    pax: 'Pax',
+    transactions: 'Transactions',
+  },
+  dashboard: {
+    financialTierProportion: 'Financial Tier Proportion',
+    rechargePaymentMethodSummary: 'Summary of Recharge by Payment Methods',
+    businessRechargeSummary: 'Business Recharge Summary',
+  },
+}

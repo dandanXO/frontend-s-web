@@ -7,9 +7,9 @@
             <img src="../../assets/stats.svg" class="stats-icon" />
 
             <div>
-              <div class="stats-header">总首存</div>
-              <div class="stats-label">金额 : 23,400.00</div>
-              <div class="stats-label">人数 : 26</div>
+              <div class="stats-header">{{ $t('statsComponent.totalFirstDeposit') }}</div>
+              <div class="stats-label">{{ $t('statsComponent.amount') }} : 23,400.00</div>
+              <div class="stats-label">{{ $t('statsComponent.pax') }} : 26</div>
             </div>
           </div>
         </div>
@@ -19,10 +19,10 @@
             <img src="../../assets/stats.svg" class="stats-icon" />
 
             <div>
-              <div class="stats-header">总存款</div>
-              <div class="stats-label">金额 : 844,236.58</div>
-              <div class="stats-label">人数 : 1112</div>
-              <div class="stats-label">笔数 : 2,919</div>
+              <div class="stats-header">{{ $t('statsComponent.totalDeposits') }}</div>
+              <div class="stats-label">{{ $t('statsComponent.amount') }} : 844,236.58</div>
+              <div class="stats-label">{{ $t('statsComponent.pax') }} : 1112</div>
+              <div class="stats-label">{{ $t('statsComponent.transactions') }} : 2,919</div>
             </div>
           </div>
         </div>
@@ -32,10 +32,10 @@
             <img src="../../assets/stats.svg" class="stats-icon" />
 
             <div>
-              <div class="stats-header">总代充</div>
-              <div class="stats-label">金额 : 0.00</div>
-              <div class="stats-label">人数 : 0</div>
-              <div class="stats-label">笔数 : 0</div>
+              <div class="stats-header">{{ $t('statsComponent.totalAgentRecharge') }}</div>
+              <div class="stats-label">{{ $t('statsComponent.amount') }} : 0.00</div>
+              <div class="stats-label">{{ $t('statsComponent.pax') }} : 0</div>
+              <div class="stats-label">{{ $t('statsComponent.transactions') }} : 0</div>
             </div>
           </div>
         </div>
@@ -45,10 +45,10 @@
             <img src="../../assets/stats.svg" class="stats-icon" />
 
             <div>
-              <div class="stats-header">总提款</div>
-              <div class="stats-label">金额 : 621,040.00</div>
-              <div class="stats-label">人数 : 315</div>
-              <div class="stats-label">笔数 : 567</div>
+              <div class="stats-header">{{ $t('statsComponent.totalWithdrawals') }}</div>
+              <div class="stats-label">{{ $t('statsComponent.amount') }} : 621,040.00</div>
+              <div class="stats-label">{{ $t('statsComponent.pax') }} : 315</div>
+              <div class="stats-label">{{ $t('statsComponent.transactions') }} : 567</div>
             </div>
           </div>
         </div>
@@ -58,8 +58,8 @@
             <img src="../../assets/stats.svg" class="stats-icon" />
 
             <div>
-              <div class="stats-header">总公司输赢</div>
-              <div class="stats-label">金额 : 246,218.36</div>
+              <div class="stats-header">{{ $t('statsComponent.totalCompanyWinLoss') }}</div>
+              <div class="stats-label">{{ $t('statsComponent.amount') }} : 246,218.36</div>
             </div>
           </div>
         </div>
@@ -69,10 +69,10 @@
             <img src="../../assets/stats.svg" class="stats-icon" />
 
             <div>
-              <div class="stats-header">总有效投注</div>
-              <div class="stats-label">金额 : 5,468,690.46</div>
-              <div class="stats-label">人数 : 1656</div>
-              <div class="stats-label">笔数 : 782,508</div>
+              <div class="stats-header">{{ $t('statsComponent.totalValidBets') }}</div>
+              <div class="stats-label">{{ $t('statsComponent.amount') }} : 5,468,690.46</div>
+              <div class="stats-label">{{ $t('statsComponent.pax') }} : 1656</div>
+              <div class="stats-label">{{ $t('statsComponent.transactions') }} : 782,508</div>
             </div>
           </div>
         </div>
@@ -82,9 +82,9 @@
             <img src="../../assets/stats.svg" class="stats-icon" />
 
             <div>
-              <div class="stats-header">总彩金</div>
-              <div class="stats-label">金额 : 3,057.00</div>
-              <div class="stats-label">人数 : 27</div>
+              <div class="stats-header">{{ $t('statsComponent.totalBonus') }}</div>
+              <div class="stats-label">{{ $t('statsComponent.amount') }} : 3,057.00</div>
+              <div class="stats-label">{{ $t('statsComponent.pax') }} : 27</div>
             </div>
           </div>
         </div>
@@ -94,8 +94,8 @@
             <img src="../../assets/stats.svg" class="stats-icon" />
 
             <div>
-              <div class="stats-header">总活跃会员</div>
-              <div class="stats-label">人数 : 0</div>
+              <div class="stats-header">{{ $t('statsComponent.totalActiveMembers') }}</div>
+              <div class="stats-label">{{ $t('statsComponent.pax') }} : 0</div>
               <div class="stats-label">新注册会员 : 108</div>
             </div>
           </div>
@@ -106,8 +106,8 @@
             <img src="../../assets/stats.svg" class="stats-icon" />
 
             <div>
-              <div class="stats-header">总访问量</div>
-              <div class="stats-label">人数 : 0</div>
+              <div class="stats-header">{{ $t('statsComponent.totalVisits') }}</div>
+              <div class="stats-label">{{ $t('statsComponent.pax') }} : 0</div>
             </div>
           </div>
         </div>
@@ -117,8 +117,8 @@
             <img src="../../assets/stats.svg" class="stats-icon" />
 
             <div>
-              <div class="stats-header">总公司盈利</div>
-              <div class="stats-label">金额 : 243,161.36</div>
+              <div class="stats-header">{{ $t('statsComponent.totalCompanyProfit') }}</div>
+              <div class="stats-label">{{ $t('statsComponent.amount') }} : 243,161.36</div>
             </div>
           </div>
         </div>
@@ -153,13 +153,12 @@ const layout = ref('grid')
 
 .stats-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 15px;
 }
 
 .stats-header {
   line-height: 18px;
-  color: rgba(0, 0, 0, 0.45);
   font-size: 16px;
   margin-bottom: 8px;
 }

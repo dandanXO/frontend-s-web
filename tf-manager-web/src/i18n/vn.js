@@ -2440,6 +2440,8 @@ export default {
     validateFbIdRequired: 'Facebook ID là bắt buộc',
     validateFbUrlRequired: 'URL Facebook là bắt buộc',
     validateFbTokenRequired: 'Token Facebook là bắt buộc',
+    qrCodeGenerateFailed: 'Tạo mã QR không thành công',
+    downloadUrlEmpty: 'URL tải xuống trống'
   },
   menu: {
     'Add Promo': 'Thêm khuyến mãi',

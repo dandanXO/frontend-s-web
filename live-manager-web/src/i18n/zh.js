@@ -1,0 +1,27 @@
+export default {
+  submit: '提交',
+  login: '登录',
+  username: '账户',
+  password: '密码',
+  loggedInSuccessfully: '已成功登录！',
+  statsComponent: {
+    totalFirstDeposit: '总首存',
+    totalDeposits: '总存款',
+    totalAgentRecharge: '总代充',
+    totalWithdrawals: '总提款',
+    totalCompanyWinLoss: '总公司输赢',
+    totalValidBets: '总有效投注',
+    totalBonus: '总彩金',
+    totalActiveMembers: '总活跃会员',
+    totalVisits: '总访问量',
+    totalCompanyProfit: '总公司盈利',
+    amount: '金额',
+    pax: '人数',
+    transactions: '笔数',
+  },
+  dashboard: {
+    financialTierProportion: '财务层次占比',
+    rechargePaymentMethodSummary: '支付方式充值汇总',
+    businessRechargeSummary: '商务充值汇总',
+  },
+}

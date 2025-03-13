@@ -1,7 +1,7 @@
 <template>
   <div class="card" style="position: relative">
     <ProgressBar
-      v-if="isLoading"
+      v-if="store.isAuthLoading"
       mode="indeterminate"
       style="height: 6px; position: absolute; top: 0px; width: 100%"
     ></ProgressBar>
@@ -15,6 +15,7 @@
       </template>
       <template #end>
         <div class="flex items-center gap-2" style="display: flex; gap: 10px; align-items: center">
+          <ThemeToggle />
           <SiteToggle />
           <div style="display: flex; align-items: center; gap: 10px">
             <div
@@ -52,23 +53,24 @@
 import { ref, inject } from 'vue'
 import LangToggle from './LangToggle.vue'
 import SiteToggle from './SiteToggle.vue'
+import ThemeToggle from './ThemeToggle.vue'
 import BreacrumbComponent from './BreacrumbComponent.vue'
 import { useToast } from 'primevue/usetoast'
+import { useUserStore } from '@/stores/userStore'
 
-const isLoading = ref(false)
+const store = useUserStore()
 
 const items = ref([{}])
-
-const isLoggedIn = inject('isLoggedIn')
 
 const toast = useToast()
 
 const onLogout = () => {
-  isLoading.value = true
+  store.isAuthLoading = true
 
   setTimeout(() => {
-    isLoggedIn.value = false
-    isLoading.value = false
+    store.isLoggedIn = false
+    sessionStorage.removeItem('token')
+    store.isAuthLoading = false
     toast.add({ severity: 'success', summary: '成功退出', life: 3000 })
   }, 2000)
 }

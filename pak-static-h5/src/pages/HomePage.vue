@@ -1483,7 +1483,7 @@
   <q-dialog class="isCentreDialog" v-if="popupPromo === 'money-rain'" :model-value="true" persistent>
     <MoneyRainModal>
       <template #controller>
-        <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="true" />
+        <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="isShownSpinLuckyWheel" />
       </template>
     </MoneyRainModal>
     <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
@@ -4111,7 +4111,9 @@ onActivated(() => {
   checkGoogleLoginSetPwd();
 
   if (route.query.login === "true") {
-    popupPromo.value = "spin-lucky-wheel";
+    //TODO: change back.
+    popupPromo.value = "money-rain";
+    // popupPromo.value = "spin-lucky-wheel";
   }
 
   if (route.query.newPlayerGuide === "earn-money") {

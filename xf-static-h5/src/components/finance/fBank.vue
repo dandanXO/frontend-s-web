@@ -2,14 +2,16 @@
   <div>
     <q-select
       class="q-mt-md bank-selection"
-      filled
-      dense
       ref="refSelectBank"
       v-model="selectedBankId"
       :options="bankList"
       option-value="id"
+      rounded
+      outlined
+      padding="none"
       option-label="name"
       :rules="verifyBank"
+      bg-color="recinputstyle"
       @update:model-value="selectBank()"
     >
       <template v-slot:prepend>
@@ -93,16 +95,16 @@ defineExpose({ submitDeposit, validateBank });
   padding-bottom: 10px;
 
   :deep(.q-field__control) {
-    min-height: 46px;
-    height: 46px;
+    min-height: 56px;
+    height: 56px;
   }
   :deep(.q-field__native) {
-    min-height: 46px;
-    height: 46px;
+    min-height: 56px;
+    height: 56px;
   }
   :deep(.q-field__marginal) {
-    min-height: 46px;
-    height: 46px;
+    min-height: 56px;
+    height: 56px;
   }
 }
 </style>

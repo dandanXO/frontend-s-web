@@ -6,18 +6,24 @@ const router = createRouter({
     {
       path: '/',
       name: '仪表板',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../views/DashboardView.vue'),
     },
     {
-      path: '/member-list',
-      name: '会员列表',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
+      path: '/member',
+      name: '会员',
       component: () => import('../views/Member/MemberListView.vue'),
+      children: [
+        {
+          path: 'list',
+          name: '会员列表',
+          component: () => import('../components/Member/MemberList.vue'),
+        },
+        {
+          path: 'add',
+          name: '新增会员',
+          component: () => import('../components/Member/MemberAdd.vue'),
+        },
+      ],
     },
   ],
 })

@@ -1,6 +1,6 @@
 {
   "name": "pak-project",
-  "version": "1.0.33",
+  "version": "1.0.34",
   "description": "B9.GAME",
   "productName": "B9.GAME",
   "author": "KengHong <kenghongho@eagrp.net>",
@@ -20,7 +20,7 @@
     "dev:test": "dotenv -e .test.env quasar dev"
   },
   "dependencies": {
-    "@adjustcom/adjust-web-sdk": "^5.7.1",
+    "@adjustcom/adjust-web-sdk": "^5.7.2",
     "@aashu-dubey/capacitor-statusbar-safe-area": "^3.0.0",
     "@angular/core": "^17.0.6",
     "@capacitor/android": "^6.2.0",

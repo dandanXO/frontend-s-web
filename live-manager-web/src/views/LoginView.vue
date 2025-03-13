@@ -1,125 +1,115 @@
 <template>
-  <canvas class="background"></canvas>
-  <Card class="login-form" v-if="isLoading">
-    <template #content>
-      <LoadingSpinner />
-    </template>
-  </Card>
-  <Card class="login-form" v-else>
-    <template #content>
-      <img src="../assets/logo.png" height="80px;" style="display: flex; margin: 0 auto 20px" />
-      <Form
-        class="flex flex-col gap-4 w-full sm:w-56"
-        style="display: flex; flex-direction: column; gap: 15px"
-      >
-        <FormField
-          v-slot="$field"
-          as="section"
-          name="username"
-          initialValue=""
-          class="flex flex-col gap-2"
-        >
-          <InputText
-            type="text"
-            placeholder="Username"
-            style="width: 100%"
-            v-model="loginForm.loginName"
-            :disabled="isLoading"
-          />
-          <Message v-if="$field?.invalid" severity="error" size="small" variant="simple">{{
-            $field.error?.message
-          }}</Message>
-        </FormField>
-        <FormField v-slot="$field" asChild name="password" initialValue="">
-          <section class="flex flex-col gap-2">
-            <Password
-              type="text"
-              placeholder="Password"
-              :feedback="false"
-              toggleMask
-              fluid
-              v-model="loginForm.password"
-              :disabled="isLoading"
+  <BlockUI :blocked="store.isAuthLoading" style="width: 100vw; height: 100vh">
+    <LangToggle style="position: absolute; top: 20px; right: 20px; z-index: 1" />
+    <ThemeToggle style="position: absolute; top: 20px; left: 20px; z-index: 1" />
+
+    <canvas class="background"></canvas>
+    <Card class="login-form">
+      <template #content>
+        <LoadingSpinner v-if="store.isAuthLoading" />
+
+        <template v-else>
+          <img src="../assets/logo.png" height="80px;" style="display: flex; margin: 0 auto 20px" />
+          <Form
+            class="flex flex-col gap-4 w-full sm:w-56"
+            style="display: flex; flex-direction: column; gap: 15px"
+          >
+            <FormField
+              v-slot="$field"
+              as="section"
+              name="username"
+              initialValue=""
+              class="flex flex-col gap-2"
+            >
+              <InputText
+                type="text"
+                :placeholder="$t('username')"
+                style="width: 100%"
+                v-model="loginForm.loginName"
+                :disabled="store.isAuthLoading"
+              />
+              <Message v-if="$field?.invalid" severity="error" size="small" variant="simple">{{
+                $field.error?.message
+              }}</Message>
+            </FormField>
+            <FormField v-slot="$field" asChild name="password" initialValue="">
+              <section class="flex flex-col gap-2">
+                <Password
+                  type="text"
+                  :placeholder="$t('password')"
+                  :feedback="false"
+                  toggleMask
+                  fluid
+                  v-model="loginForm.password"
+                  :disabled="store.isAuthLoading"
+                />
+                <Message v-if="$field?.invalid" severity="error" size="small" variant="simple">{{
+                  $field.error?.message
+                }}</Message>
+              </section>
+            </FormField>
+            <Button
+              type="submit"
+              severity="info"
+              :label="$t('submit')"
+              style="width: 100%"
+              @click="onFormSubmit"
+              :disabled="store.isAuthLoading"
             />
-            <Message v-if="$field?.invalid" severity="error" size="small" variant="simple">{{
-              $field.error?.message
-            }}</Message>
-          </section>
-        </FormField>
-        <Button
-          type="submit"
-          severity="info"
-          label="Submit"
-          style="width: 100%"
-          @click="onFormSubmit"
-          :disabled="isLoading"
-        />
-      </Form>
-    </template>
-  </Card>
+          </Form>
+        </template>
+      </template>
+    </Card>
+  </BlockUI>
 </template>
 
 <script setup>
-import Particles from 'particlesjs'
-import { onMounted, reactive, inject, ref } from 'vue'
+import { onMounted, reactive, onUnmounted } from 'vue'
 import { Form } from '@primevue/forms'
 import { useToast } from 'primevue/usetoast'
 import { DashboardService } from '@/service/DashboardService'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import { useUserStore } from '@/stores/userStore'
+import LangToggle from '@/components/Header/LangToggle.vue'
+import ThemeToggle from '@/components/Header/ThemeToggle.vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
+const store = useUserStore()
 
 const loginForm = reactive({
   loginName: 'testloginname',
   password: 'testpassword',
 })
 
-const isLoading = ref(false)
-
 const toast = useToast()
 
-const isLoggedIn = inject('isLoggedIn')
-
 const onFormSubmit = () => {
-  isLoading.value = true
+  store.isAuthLoading = true
   console.log('here', loginForm)
+
   DashboardService.logIn(loginForm.loginName, loginForm.password)
     .then((result) => {
       console.log('here', result)
 
       if (result) {
         setTimeout(() => {
-          isLoggedIn.value = true
-          isLoading.value = false
-          toast.add({ severity: 'success', summary: '成功登录', life: 3000 })
+          store.isLoggedIn = true
+          sessionStorage.setItem('token', 'abc123')
+          store.isAuthLoading = false
+          toast.add({ severity: 'success', summary: t('loggedInSuccessfully'), life: 3000 })
         }, 2000)
       }
     })
     .catch(() => {
-      isLoading.value = false
+      store.isAuthLoading = false
     })
 }
 
-const initParticles = () => {
-  Particles.init({
-    selector: '.background',
-    color: ['#9ddafa', '#418cc5', '#dddff1', '#708ac6'],
-    connectParticles: true,
-    responsive: [
-      {
-        breakpoint: 10,
-        options: {
-          color: '#00C9B1',
-          maxParticles: 1,
-          connectParticles: false,
-          speed: 0.2,
-        },
-      },
-    ],
-  })
-}
+onMounted(() => {})
 
-onMounted(() => {
-  initParticles()
-})
+onUnmounted(() => {})
 </script>
 
 <style lang="scss" scoped>
