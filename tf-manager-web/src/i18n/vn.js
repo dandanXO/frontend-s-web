@@ -1880,7 +1880,7 @@ export default {
     displayEndTime: 'Hiển thị thời gian kết thúc',
     batchFrozenMember: 'Đóng băng thành viên hàng loạt',
     showLogo: 'hiển thị biểu tượng',
-    showTime: 'Show Time',
+    showTime: 'Show Count Down Time',
     specificMember: 'Specific Member',
     isSeamlessTransfer: 'Không cần chuyển nhượng',
     fromPlatform: 'Từ Nền tảng',

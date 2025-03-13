@@ -1298,7 +1298,7 @@ export default {
     configDescribes: 'Config Describes',
     batchFrozenMember: 'แช่แข็งสมาชิกแบบกลุ่ม',
     showLogo: 'แสดงไอคอน',
-    showTime: 'Show Time',
+    showTime: 'Show Count Down Time',
     specificMember: 'Specific Member',
     isSeamlessTransfer: 'ไม่มีการโอน',
     fromPlatform: 'จากแพลตฟอร์ม',
