@@ -204,6 +204,13 @@ export default defineComponent({
         return match ? decodeURIComponent(match[1]) : null;
       };
 
+      const getFbclid = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get("fbclid");
+      };
+
+      const fbc3 = getFbclid();
+
       const getFbClientId = () => {
         let result = /_fbp=(fb\.1\.\d+\.\d+)/.exec(window.document.cookie);
         if (!(result && result[1])) {
@@ -224,9 +231,10 @@ export default defineComponent({
         return rawFbp ? rawFbp : null;
       })();
 
+      const randUuid = generateEventID();
       const payload = new URLSearchParams({
         fbp: fbp || fbp2 || "",
-        fbc: fbc || fbclid2 || "",
+        fbc: fbc || fbclid2 || fbc3 || randUuid,
         siteCode: siteCode,
         linkId: linkId || ""
       });
@@ -248,7 +256,6 @@ export default defineComponent({
         .then((data) => {
           console.log("Success:", data);
           const randomValue = Math.floor(Math.random() * (999 - 300 + 1)) + 300;
-          const randUuid = generateEventID();
           if (data.data.sendEvent === "ftd") {
             fbq(
               "track",
