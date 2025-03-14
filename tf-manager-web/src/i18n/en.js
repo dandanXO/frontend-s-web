@@ -3440,6 +3440,8 @@ export default {
     publishStatus: 'Publish Status',
     PENDING: 'Pending',
     PUBLISHED: 'Published',
+    packageName: 'Package Name',
+    lastBuildTime: 'Last Build Time',
   },
   affiliateApk: {
     currentVersion: 'Current Version',

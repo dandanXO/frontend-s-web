@@ -305,6 +305,8 @@
           <span>{{ t(`siteAppVersion.${scope.row.publishStatus}`) }}</span>
         </template>
       </el-table-column>
+      <el-table-column prop="packageName" :label="t('siteAppVersion.packageName')" />
+      <el-table-column prop="lastBuildTime" :label="t('siteAppVersion.lastBuildTime')" />
       <el-table-column type="title" :label="t('fields.action')">
         <template #default="scope">
           <el-button
