@@ -4,13 +4,13 @@
       type="pie"
       :data="chartData"
       :options="chartOptions"
-      style="width: 100%; height: 100%; max-height: 400px; display: flex; justify-content: center"
+      style="height: 250px; display: flex; justify-content: center"
     />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 
 onMounted(() => {
   chartData.value = setChartData()
@@ -18,7 +18,7 @@ onMounted(() => {
 })
 
 const chartData = ref()
-const chartOptions = ref()
+const chartOptions = ref({})
 
 const setChartData = () => {
   const documentStyle = getComputedStyle(document.body)
@@ -52,6 +52,9 @@ const setChartOptions = () => {
         labels: {
           usePointStyle: true,
           color: textColor,
+          font: {
+            family: 'Inter', // Set the font family here
+          },
         },
       },
     },

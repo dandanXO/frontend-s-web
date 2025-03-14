@@ -954,7 +954,7 @@ export default defineComponent({
 }
 
 .upgrade-btn {
-  padding: 12px 40px 40px !important;
+  padding: 8px 20px 34px !important;
   // height: 27px;
   align-self: center;
   img {

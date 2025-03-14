@@ -289,7 +289,8 @@ export default {
     cat_sport: "Sport",
     cashGift: "Cash Gifts",
     welcomeNewPlayer: "Welcome New Players",
-    MegaSharingRoulette: "Mega Sharing Roulette"
+    MegaSharingRoulette: "Mega Sharing Roulette",
+    spinLuckyWheel: "Spin Lucky Wheel"
   },
   settings: {
     totalScore: "Total Score",
@@ -567,6 +568,8 @@ export default {
     }
   },
   records: {
+    beforeBalance: "Before Balance:",
+    afterBalance: "After Balance:",
     gamePlatform: "Game Platform",
     bet: "Bet",
     settle: "Settle",
@@ -631,6 +634,46 @@ export default {
     live: "LIVE",
     slot: "SLOT",
     vip: "VIP"
+  },
+  playerGuide: {
+    welcomeMessage: "Welcome to",
+    teachingHowToEarn: "Let us teach you how to make money easily!",
+    welcome: "Welcome!",
+    completeRegistration: "Complete registration and log in successfully",
+    startNow: "START NOW",
+    hotGames: "Hot Games",
+    experienceGame: "Experience the game and try it out without recharging",
+    tryItOut: "TRY IT OUT",
+    watchGameTutorial: "Watch the game tutorial video",
+    recharging: "Recharging",
+    rechargeDownloadApp: "After recharging, download the app and log in to get 28 extra bonuses",
+    depositNow: "DEPOSIT NOW",
+    depositTutorial: "Deposit Tutorial",
+    inviteFriends: "Invite Friends",
+    inviteReward: "How to earn money by sharing invitations",
+    shareNow: "SHARE NOW",
+    referTutorial: "Refer Tutorial",
+    withdrawal: "Withdrawal",
+    unlockTasks: "Unlock subsequent invitation reward tasks",
+    withdrawNow: "WITHDRAW NOW",
+    withdrawTutorial: "Withdraw Tutorial",
+    congratulations: "Congratulations!",
+    completeNoviceMission: "Congratulations on completing the novice mission!",
+    startGame: "START GAME",
+    expertGameplayGuide: "Watch the expert gameplay guide",
+    maxReward: "For every person invited, the maximum reward is",
+    rs: "RS",
+    extraBonus: "extra bonus for invited users’ first deposit",
+    lifetimeCommission: "Lifetime commission for invited users",
+    commissionDetails: "(regardless of winning or losing)",
+    arrivalTime: "Reminder of arrival time (usually",
+    minutes: "minutes)",
+    successfulWithdrawal: "Reminder of successful withdrawal (a prompt pops up after the funds arrive)",
+    shareandearn: "Share and Earn",
+    noSupport: "Your browser does not support the video tag.",
+    linkCopied: "Link copied to clipboard",
+    copyFailed: "Failed to copy link",
+    next: "Next"
   },
   hotPromo: {
     aviatorWheel: {

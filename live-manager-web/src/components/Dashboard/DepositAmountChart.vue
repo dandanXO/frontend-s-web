@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <Chart type="bar" :data="chartData" :options="chartOptions" class="h-[30rem]" />
+    <Chart type="bar" :data="chartData" :options="chartOptions" style="height: 250px" />
   </div>
 </template>
 
@@ -43,6 +43,9 @@ const setChartOptions = () => {
       legend: {
         labels: {
           color: textColor,
+          font: {
+            family: 'Inter', // Set the font family here
+          },
         },
       },
     },
@@ -52,6 +55,7 @@ const setChartOptions = () => {
           color: textColorSecondary,
           font: {
             weight: 500,
+            family: 'Inter',
           },
         },
         grid: {
@@ -62,6 +66,10 @@ const setChartOptions = () => {
       y: {
         ticks: {
           color: textColorSecondary,
+          font: {
+            weight: 500,
+            family: 'Inter',
+          },
         },
         grid: {
           color: surfaceBorder,

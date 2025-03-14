@@ -1975,6 +1975,7 @@ export default {
     tfCompetitionNameKr: '리그 이름 (한국어)',
     tfCompetitionNameTh: '리그 이름 (태국어)',
     traceId: 'Trace ID',
+    downloadQRCode: 'QR 코드 다운로드',
     normalCreate: '정상'
   },
   message: {
@@ -2468,7 +2469,9 @@ export default {
     validateAdjustColumnRequired: '전송하지 않으려면 필요합니다.',
     validateIsSeamlessTransferRequired: 'isSeamlessTransfer is required',
     validateVipSettingRequired: 'VIP 설정 필요',
-    validatePayementTypesSettingRequired: '결제 설정이 필요합니다'
+    validatePayementTypesSettingRequired: '결제 설정이 필요합니다',
+    qrCodeGenerateFailed: 'QR 코드 생성 실패',
+    downloadUrlEmpty: '다운로드 URL이 비어 있습니다.'
   },
   menu: {
     undefined: '',

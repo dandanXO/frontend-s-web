@@ -103,3 +103,12 @@ export const uploadLogo = async (formData, fileType) => {
       return Promise.reject(error)
     })
 }
+
+export const updateAppVersionState = async (id, state) => {
+  await https().request(
+    `/siteAppVersion/${id}/state?_method=PUT`,
+    Method.POST,
+    { state: state },
+    ContentType.form
+  )
+}

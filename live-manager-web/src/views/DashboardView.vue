@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard">
+  <div class="dashboard" :key="theme">
     <div style="display: grid; grid-template-columns: 1fr; gap: 20px">
       <Card>
         <template #content>
@@ -24,7 +24,7 @@
 
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
       <Card>
-        <template #title>财务层次占比</template>
+        <template #title>{{ $t('dashboard.financialTierProportion') }}</template>
         <template #content>
           <FinancialProportionChart />
         </template>
@@ -39,14 +39,14 @@
 
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
       <Card>
-        <template #title>支付方式充值汇总</template>
+        <template #title>{{ $t('dashboard.rechargePaymentMethodSummary') }}</template>
         <template #content>
           <RechargeSummary />
         </template>
       </Card>
 
       <Card>
-        <template #title>商务充值汇总</template>
+        <template #title>{{ $t('dashboard.businessRechargeSummary') }}</template>
         <template #content>
           <MerchantRechargeSummaryChart />
         </template>
@@ -63,6 +63,11 @@ import DepositAmountChart from '@/components/Dashboard/DepositAmountChart.vue'
 import RechargeSummary from '@/components/Dashboard/RechargeSummaryChart.vue'
 import MerchantRechargeSummaryChart from '@/components/Dashboard/MerchantRechargeSummaryChart.vue'
 import DepositorChart from '@/components/Dashboard/DepositorChart.vue'
+import { useUserStore } from '@/stores/userStore'
+import { storeToRefs } from 'pinia'
+
+const userStore = useUserStore()
+const { theme } = storeToRefs(userStore)
 </script>
 
 <style lang="scss" scoped>

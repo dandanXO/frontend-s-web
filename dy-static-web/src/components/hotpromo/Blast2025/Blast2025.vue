@@ -8,16 +8,14 @@
             投注嘉奖
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon claim-coin-icon">
-            </div>
+            <div class="reward-info-icon claim-coin-icon"></div>
             <div class="reward-info-content">
               昨日负盈利：
               <span class="amount">{{ totalLoss }}元</span>
             </div>
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon claim-gift-icon">
-            </div>
+            <div class="reward-info-icon claim-gift-icon"></div>
             <div class="reward-info-content">
               可领取救援金：
               <span class="amount">{{ bonus }}元</span>
@@ -47,7 +45,8 @@
         <div class="little-title" style="flex-direction: column; justify-content: flex-start; align-items: flex-start">
           <div class="ribbon">优惠详情</div>
           <div class="right">
-            会员在本站电竞场馆中，投注 BLAST 里斯本公开赛 当日累计负盈利达到 500 元及以上，次日即可领取救援金，最高可达 888 元！
+            会员在本站电竞场馆中，投注 BLAST 里斯本公开赛 当日累计负盈利达到 500 元及以上，次日即可领取救援金，最高可达
+            888 元！
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
@@ -99,39 +98,41 @@
           </tbody>
         </table>
 
-          
-
         <div class="livepoker-rebate-game-bottom">
           <div class="livepoker-rebate-game-bottom-left-title">
             <div class="livepoker-rebate-game-bottom-left-btn">
               <img src="../../../assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" width="22px" />
               <span>示例</span>
             </div>
-            VIP6 会员 A 在电竞场馆投注 BLAST 里斯本公开赛 2025 赛事，比赛期间当日累计负盈利为 6000 元，次日即可获得救援金 88 元。
+            VIP6 会员 A 在电竞场馆投注 BLAST 里斯本公开赛 2025 赛事，比赛期间当日累计负盈利为 6000
+            元，次日即可获得救援金 88 元。
           </div>
         </div>
       </div>
 
       <div class="livepoker-rebate-game-bottom-rule section-bg">
         <div class="title-img">活动规则</div>
-        <br/>
+        <br />
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
               <div>
-                活动期间，活动仅计算电竞场馆中 BLAST 里斯本公开赛 2025 赛事，会员在 BLAST 里斯本公开赛 2025 赛事中当日累计负盈利≥500 元即可获得对应彩金； 
+                活动期间，活动仅计算电竞场馆中 BLAST 里斯本公开赛 2025 赛事，会员在 BLAST 里斯本公开赛 2025
+                赛事中当日累计负盈利≥500 元即可获得对应救援金； 
               </div>
-              <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
+              <div class="hint">注：救援金不叠加派发，救援金按最高档位每日派发一次。</div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，活动仅计算 BLAST 里斯本公开赛 2025 赛事已结算的赛事当日总负盈利，次日 24 小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 5 倍流水即可出款；
+            活动期间，活动仅计算 BLAST 里斯本公开赛 2025 赛事已结算的赛事当日总负盈利，次日 24
+            小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，救援金 5 倍流水即可出款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为总负盈利内；
+            任何低于欧洲盘 1.7 或亚洲盘 0.7
+            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为总负盈利内；
           </div>
           <div class="item">
             <div class="item-num">4</div>
@@ -139,7 +140,8 @@
           </div>
           <div class="item">
             <div class="item-num">5</div>
-            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
+            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+            地址视为同一账户，若有违规者，将不享受此红利；
           </div>
           <div class="item">
             <div class="item-num">6</div>
@@ -154,7 +156,7 @@
 <script setup>
 import { onMounted, ref, defineProps } from "vue";
 import { ElMessageBox } from "element-plus";
-
+import { ResponseCode } from "@/api/response";
 import { claimCompetitionLoss, getCompetitionLossInit } from "@/api/index/promo";
 import { useNotify } from "@/hooks/notify";
 import { userStore } from "@/store";
@@ -190,6 +192,19 @@ const handleClaimBonus = () => {
           message: `成功领取`
         });
         fetchData();
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
+        notify({
+          type: "error",
+          message: res.message
+        });
       }
     })
     .catch((err) => {

@@ -17,6 +17,7 @@ import axios from "axios";
 import { getVisitorId } from "boot/utils";
 import { cached } from "boot/cache";
 import { useRoute, useRouter } from "vue-router";
+import { App } from "@capacitor/app";
 
 export default defineComponent({
   name: "App",
@@ -329,21 +330,35 @@ export default defineComponent({
           }
         });
       } else {
-        var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || "";
+        const savedAffiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || "";
+        let _affiliateCode = "";
 
         await api
           .get(
-            `/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${affiliateCode}&refer=${referral}`
+            `/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${savedAffiliateCode}&refer=${referral}`
           )
           .then((res) => {
             console.log(res);
-            const { facebookId = "" } = res.data;
+            const { affiliateCode = "", facebookId = "" } = res.data;
+            sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+            _affiliateCode = affiliateCode;
             if (facebookId) {
               fbq("init", facebookId);
               fbq("track", "PageView");
               store.isFbPixel = true;
             }
           });
+
+        api.get(`/app/adjust/params?affiliateCode=${_affiliateCode}`).then((res) => {
+          if (res.code === 0) {
+            sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+            if (res.data.adjust_register_event) {
+              ui.adjust_register_event = res.data.adjust_register_event;
+            }
+            affAppToken.value = res.data.adjust_app_token;
+            initAdjustEventTrack();
+          }
+        });
       }
     };
 

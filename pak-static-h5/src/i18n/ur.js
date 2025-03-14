@@ -287,7 +287,8 @@ export default {
     cat_sport: "کھیل",
     cashGift: "نقدی تحفے",
     welcomeNewPlayer: "نئے کھلاڑیوں کو خوش آمدید",
-    MegaSharingRoulette: "میگا شیئرنگ رولیٹی"
+    MegaSharingRoulette: "میگا شیئرنگ رولیٹی",
+    spinLuckyWheel: "خوش قسمت پہیہ گھمائیں"
   },
   settings: {
     totalScore: "کل اسکور",
@@ -563,6 +564,8 @@ export default {
     }
   },
   records: {
+    beforeBalance: "پہلے کا بیلنس:",
+    afterBalance: "بعد کا بیلنس:",
     gamePlatform: "گیم پلیٹ فارم",
     bet: "شرط",
     settle: "سیٹل",
@@ -627,6 +630,46 @@ export default {
     live: "لائیو",
     slot: "الیکٹرانک",
     vip: "وی آئی پی"
+  },
+  playerGuide: {
+    welcomeMessage: "آپ کو خوش آمدید",
+    teachingHowToEarn: "ہم آپ کو آسانی سے پیسہ کمانا سکھائیں گے!",
+    welcome: "خوش آمدید!",
+    completeRegistration: "رجسٹریشن مکمل کریں اور کامیابی سے لاگ ان کریں",
+    startNow: "ابھی شروع کریں",
+    hotGames: "مشہور گیمز",
+    experienceGame: "گیم کا تجربہ کریں اور بغیر ریچارج کیے آزمائیں",
+    tryItOut: "آزمائیں",
+    watchGameTutorial: "گیم ٹیوٹوریل ویڈیو دیکھیں",
+    recharging: "ریچارجنگ",
+    rechargeDownloadApp: "ریچارج کے بعد، ایپ ڈاؤن لوڈ کریں اور لاگ ان کریں تاکہ 28 اضافی بونس حاصل کریں",
+    depositNow: "ابھی جمع کریں",
+    depositTutorial: "جمع کروانے کا ٹیوٹوریل",
+    inviteFriends: "دوستوں کو مدعو کریں",
+    inviteReward: "دعوت نامے شیئر کرکے پیسے کمانے کا طریقہ",
+    shareNow: "ابھی شیئر کریں",
+    referTutorial: "رہنمائی سبق دیکھیں",
+    withdrawal: "رقم نکلوائیں",
+    unlockTasks: "بعد کے دعوتی انعامی مشنز کو ان لاک کریں",
+    withdrawNow: "ابھی نکلوائیں",
+    withdrawTutorial: "رقم نکالنے کا ٹیوٹوریل",
+    congratulations: "مبارک ہو!",
+    completeNoviceMission: "نئے کھلاڑی کے مشن کی تکمیل پر مبارکباد!",
+    startGame: "گیم شروع کریں",
+    expertGameplayGuide: "ماہرانہ گیم پلے گائیڈ دیکھیں",
+    maxReward: "ہر مدعو کرنے والے کے لیے زیادہ سے زیادہ انعام ہے",
+    rs: "روپے",
+    extraBonus: "مدعو صارفین کے پہلے جمع پر اضافی بونس",
+    lifetimeCommission: "مدعو صارفین کے لیے لائف ٹائم کمیشن",
+    commissionDetails: "(چاہے جیتیں یا ہاریں)",
+    arrivalTime: "پہنچنے کے وقت کی یاد دہانی (عام طور پر",
+    minutes: "منٹ)",
+    successfulWithdrawal: "کامیاب واپسی کی یاد دہانی (فنڈز کے پہنچنے کے بعد ایک پیغام ظاہر ہوتا ہے)",
+    shareandearn: "شیئر کریں اور کمائیں",
+    noSupport: "آپ کا براؤزر ویڈیو ٹیگ کو سپورٹ نہیں کرتا ہے۔",
+    linkCopied: "لنک کلپ بورڈ پر کاپی ہو گیا",
+    copyFailed: "لنک کاپی کرنے میں ناکامی",
+    next: "اگلا"
   },
   hotPromo: {
     aviatorWheel: {

@@ -2235,7 +2235,7 @@ export default {
     endHour: '结束小时',
     oldBetAmount: '老站流水金额',
     showLogo: '显示图标',
-    showTime: '显示时间',
+    showTime: '显示倒计时时间',
     adjustTarget: '平账目标',
     ignoreSettlement: '忽略结算',
     sendType: '发送方法',
@@ -2513,6 +2513,7 @@ export default {
     spinRecord: '转盘记录',
     pointsDistribution: '积分分布',
     traceId: 'Trace ID',
+    downloadQRCode: '二维码下载',
     normalCreate: '普通'
   },
   message: {
@@ -3004,6 +3005,8 @@ export default {
     validateFbIdRequired: 'Facebook ID 为必填',
     validateFbUrlRequired: 'Facebook URL 为必填',
     validateFbTokenRequired: 'Facebook Token 为必填',
+    qrCodeGenerateFailed: '生成二维码失败',
+    downloadUrlEmpty: '下载URL为空'
   },
   menu: {
     'Add Promo': '新增优惠',
@@ -3519,7 +3522,8 @@ export default {
     WITHDRAW_ERROR: '提款请求报错',
     DEPOSIT_ERROR: '存款请求报错',
     JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: '任务闲置 (注单捞取)',
-    OTP_FAIL: 'OTP 发送失败'
+    OTP_FAIL: 'OTP 发送失败',
+    FIRST_DEPOSIT_FLUCTUATION: '首存波动'
   },
   domain: {
     domainMainType: {

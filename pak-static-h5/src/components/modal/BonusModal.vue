@@ -2,6 +2,18 @@
   <div class="bonus-container" :class="{ 'has-top-download': hasTopDownload }">
     <q-btn icon="close" round dense flat v-close-popup class="bonus-close" />
     <div class="bonus-content-wrapper">
+      <div v-if="!store.hasDeposit" class="mission-item">
+        
+        <img class="mission-icon" src="../../assets/images/earn-money/newplayericon.png" />
+        <div class="mission-title-wrapper">
+          <div class="mission-title">
+            <span>New Player Guide</span>
+          </div>
+        </div>
+        <a @click="openNewPlayerGuide">
+          <q-btn flat class="details">{{ $t("btn.details") }}</q-btn>
+        </a>
+      </div>
       <div v-for="(mission, index) in promoList" :key="index" class="mission-item">
         <img class="mission-icon" :src="imgURL + mission.mobileFastAccessIconImgUrl" />
         <div class="mission-title-wrapper">
@@ -27,12 +39,22 @@
 </template>
 
 <script setup>
+import { userStore } from "stores/index";
+const emit = defineEmits(["open-new-player"]); 
+const store = userStore();
 const props = defineProps({
   hasTopDownload: Boolean,
-  promoList: Array
+  promoList: Array,
 });
 
 const imgURL = process.env.IMAGE_CDN + "/promo/";
+const openNewPlayerGuide = () => {
+  localStorage.setItem("newPlayerGuide", 1);
+  localStorage.removeItem("completeddepositguide");
+  localStorage.removeItem("completedreferguide");
+  localStorage.removeItem("completedwithdrawguide");
+  emit("open-new-player");
+}
 </script>
 
 <style lang="scss" scoped>

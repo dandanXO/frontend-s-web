@@ -144,7 +144,7 @@ onMounted(() => {
   api.get("/platform-competition").then((res) => {
     if (res.code === 0) {
       const uniqueCompetitionTypes = Array.from(new Set(res.data.map(({ competitionType }) => competitionType)));
-      competitionTypes.value = uniqueCompetitionTypes.reverse();
+      competitionTypes.value = uniqueCompetitionTypes;
 
       if (uniqueCompetitionTypes.length > 0) {
         selectedCompetitionType.value = uniqueCompetitionTypes[0];
