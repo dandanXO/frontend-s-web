@@ -38,7 +38,7 @@
       <div @mouseover="customerHovered = false">
         <router-link to="/app" class="sticky-sidebar-item">
           <img src="../../assets/images/home/sticky-sidebar/app-dl-icon.svg" />
-          <div>APP下载</div>
+          <div>APP 下载</div>
         </router-link>
       </div>
       <div @mouseover="customerHovered = false" class="sticky-sidebar-item" @click="scrollToTop">
@@ -69,7 +69,9 @@
       >
         <el-carousel-item v-for="(game, i) in floatDomain" :key="i">
           <div @click="openLink(game.code)" class="rocket-container">
-            <div class="rocket"><img :src="`${imgURL}/promo/${game.icon}`" /></div>
+            <div class="rocket">
+              <img :src="`${imgURL}/promo/${game.icon}`" />
+            </div>
           </div>
         </el-carousel-item>
       </el-carousel>
@@ -129,7 +131,12 @@
       >
         <el-carousel-item v-for="(promo, i) in floatPromo" :key="i">
           <div @click="gotoPromo(promo.code)" class="rocket-container">
-            <div class="rocket"><img :src="`${imgURL}/promo/${promo.icon}`" /></div>
+            <div class="rocket">
+              <img :src="`${imgURL}/promo/${promo.icon}`" />
+              <span v-if="promo.showTime" class="promo-remaining-time">
+                  {{ floatPromoRemainingTime[i] }}
+                </span>
+            </div>
           </div>
         </el-carousel-item>
       </el-carousel>
@@ -139,13 +146,14 @@
 <script>
 import { defineComponent, onMounted, ref, onBeforeUnmount, watch } from "vue";
 import { userStore } from "@/store";
-import { getAppDownloadUrlFromServer, getFloatingItems } from "@/api/index/site";
+import { getAppDownloadUrlFromServer, getFloatingItems, getLoggedInFloatingItems } from "@/api/index/site";
 import { uiStore } from "@/store/ui";
 import { useDark, useLocalStorage } from "@vueuse/core";
 import GameModal from "@/components/modal/GameModal.vue";
 import { useNotify } from "@/hooks/notify";
 import { useRouter } from "vue-router";
 import { ElMessageBox } from "element-plus";
+import moment from "moment";
 
 import { storeToRefs } from "pinia";
 export default defineComponent({
@@ -212,12 +220,14 @@ export default defineComponent({
       domainPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 260 };
     };
     const floatPromo = [];
+    const floatPromoRemainingTime = ref([]);
     const gamePromo = [];
     const floatDomain = [];
     const initFloating = () => {
       floatPromo.value = [];
       gamePromo.value = [];
-      getFloatingItems().then((res) => {
+      const api = store.token ? getLoggedInFloatingItems : getFloatingItems;
+      api().then((res) => {
         if (res.code === 0) {
           res.data.forEach((element) => {
             if (element.type === "PROMO") {
@@ -235,8 +245,11 @@ export default defineComponent({
           });
           checkFloatPromo();
           updatePromo(); // Initially update the displayed promo
+          updatePromoRemainingTime();
           // Update the displayed promo every 5 seconds
           setInterval(updatePromo, 3000);
+          
+          setInterval(updatePromoRemainingTime, 1000);
         } else {
           notify.error(res.message);
         }
@@ -317,6 +330,26 @@ export default defineComponent({
       currentPromo.value = floatPromo[currentPromoIndex.value];
       currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.length;
     };
+    const updatePromoRemainingTime = () => {
+      floatPromoRemainingTime.value = floatPromo.map((promo) => {
+        let result = "00:00:00";
+        if (promo?.endTime) {
+          // console.log(promo.endTime);
+          const now = moment(Date.now());
+          const endTime = moment(promo?.endTime);
+          const totalSeconds = endTime.diff(now, "seconds");
+          if (totalSeconds > 0) {
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            result = `${`${hours}`.padStart(2, 0)}:${`${minutes}`.padStart(2, 0)}:${`${seconds}`.padStart(2, 0)}`;
+          }
+        }
+        return result;
+      });
+
+      // console.log(floatPromoRemainingTime.value);
+    };
 
     const goToLiveChatPromo = () => {
       const currentRoute = router.currentRoute.value;
@@ -364,6 +397,8 @@ export default defineComponent({
     });
 
     return {
+      updatePromoRemainingTime,
+      floatPromoRemainingTime,
       store,
       customerHovered,
       scrollToTop,
@@ -467,6 +502,17 @@ export default defineComponent({
       width: 100px;
       cursor: pointer;
     }
+    .promo-remaining-time {
+        position: absolute;
+        bottom: 16%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 32px;
+        font-weight: bold;
+        color: #444;
+        // color: #eaff00;
+        // text-shadow: 2px 2px 0px #00000040;
+      }
   }
 }
 
