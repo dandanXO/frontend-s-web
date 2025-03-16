@@ -129,7 +129,7 @@
 
       }
 
-      if(androidVersion > 9) {
+      if(typeof androidVersion !== 'string' || androidVersion > 9) {
         initTracking();
       }
     </script>
@@ -167,6 +167,7 @@
       })
 
       const sendCloudWiseTrack = (request) => {
+        if(!window.cloudWiseQueue) return
         if(window.CloudWiseUtil && window.WEBVIEW_CLOUD_WISE) {
           request()
         } else {
@@ -205,6 +206,21 @@
             "user_id": tokenObj.s3,
           }))
         })
+      }
+
+      const checkFlutterChannel = (tokenObj) => {
+        if (window.flutter_inappwebview && window.flutter_inappwebview.callHandler) {
+          callFlutterHandler(tokenObj);
+        } else {
+          console.log('FlutterChannel not available yet, waiting...');
+          const interval = setInterval(() => {
+            if (window.flutter_inappwebview && window.flutter_inappwebview.callHandler) {
+              callFlutterHandler(tokenObj);
+              console.log('Message sent to Flutter after DOMContentLoaded');
+              clearInterval(interval);
+            }
+          }, 100);
+        }
       }
 
       if (
@@ -257,21 +273,13 @@
         }
 
         //Send Start Message to Flutter.
-        document.addEventListener("DOMContentLoaded", function () {
-          console.log('DOM fully loaded and parsed');
-          if (window.flutter_inappwebview) {
-            callFlutterHandler(tokenObj);
-          } else {
-            console.log('FlutterChannel not available yet, waiting...');
-            const interval = setInterval(() => {
-              if (window.flutter_inappwebview) {
-                callFlutterHandler(tokenObj);
-                console.log('Message sent to Flutter after DOMContentLoaded');
-                clearInterval(interval);
-              }
-            }, 100);
-          }
-        });
+        if(document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", function () {
+            checkFlutterChannel(tokenObj);
+          });
+        } else {
+          checkFlutterChannel(tokenObj);
+        }
 
         //NEw Event Listener for Flutter APp.
         window.notifyApp = function (message) {

@@ -151,15 +151,6 @@
             <el-tag v-if="scope.row.status === 'PENDING'">{{ t('depositStatus.' + scope.row.status) }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column v-if="request.siteId !== 5" prop="paymentType" :label="t('fields.paymentType')" align="center" min-width="110" />
-        <el-table-column prop="privilegesName" :label="t('fields.privilege')" align="center" min-width="110">
-          <template #default="scope">
-            <span v-if="scope.row.privilegesName === null">-</span>
-            <span v-if="scope.row.privilegesName !== null">{{ scope.row.privilegesName }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="vip" :label="t('fields.vipLevel')" align="center" min-width="80" />
-        <el-table-column prop="currency" :label="t('fields.currency')" align="center" min-width="80" />
         <el-table-column v-if="request.siteId !== 5" prop="localCurrencyAmount" :label="t('fields.localCurrencyAmount')" align="center" min-width="180">
           <template #default="scope">
             $
@@ -169,6 +160,16 @@
           </template>
         </el-table-column>
         <el-table-column v-if="request.siteId !== 5" prop="currencyRate" :label="t('fields.currencyRate')" align="center" min-width="100" />
+        <el-table-column v-if="request.siteId !== 5" prop="paymentType" :label="t('fields.paymentType')" align="center" min-width="110" />
+        <el-table-column prop="privilegesName" :label="t('fields.privilege')" align="center" min-width="110">
+          <template #default="scope">
+            <span v-if="scope.row.privilegesName === null">-</span>
+            <span v-if="scope.row.privilegesName !== null">{{ scope.row.privilegesName }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="vip" :label="t('fields.vipLevel')" align="center" min-width="80" />
+        <el-table-column prop="currency" :label="t('fields.currency')" align="center" min-width="80" />
+
         <el-table-column prop="clientType" :label="t('fields.clientType')" align="center" min-width="110" />
         <el-table-column prop="walletType" :label="t('fields.walletType')" align="center" min-width="110" />
         <el-table-column prop="updateBy" :label="t('fields.updateBy')" align="center" min-width="110">
@@ -213,6 +214,15 @@
 
     <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="580px">
       <el-form v-if="uiControl.dialogType === 'SUPPLEMENT'" ref="supplementForm" :model="suppForm" :rules="suppFormRule" :inline="true" size="small" label-width="180px">
+        <el-form-item :label="t('fields.depositAmount')">
+          <el-input v-model="suppForm.depositAmount" style="width: 250px" maxlength="50" disabled />
+        </el-form-item>
+        <el-form-item :label="t('fields.localCurrencyAmount')">
+          <el-input v-model="suppForm.localCurrencyAmount" style="width: 250px" maxlength="50" disabled />
+        </el-form-item>
+        <el-form-item :label="t('fields.currencyRate')">
+          <el-input v-model="suppForm.currencyRate" style="width: 250px" maxlength="50" disabled />
+        </el-form-item>
         <el-form-item :label="t('fields.thirdSerialNo')" prop="thirdSerialNumber">
           <el-input v-model="suppForm.thirdSerialNumber" style="width: 250px" maxlength="50" />
         </el-form-item>
@@ -324,6 +334,9 @@ const suppForm = reactive({
   supplementAmount: null,
   remark: null,
   siteId: null,
+  depositAmount: null,
+  localCurrencyAmount: null,
+  currencyRate: null
 });
 
 const cancelForm = reactive({
@@ -418,6 +431,9 @@ async function showDialog(type, row) {
     suppForm.depositDate = row.depositDate;
     suppForm.serialNumber = row.serialNumber;
     suppForm.supplementAmount = Number(row.localCurrencyAmount).toFixed(2);
+    suppForm.currencyRate = row.currencyRate;
+    suppForm.depositAmount = Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }).format(Number(row.depositAmount));
+    suppForm.localCurrencyAmount = Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }).format(Number(row.localCurrencyAmount));
     uiControl.dialogTitle = t('fields.supplementDeposit');
   } else if (type === "CANCEL") {
     if (cancelDepositForm.value) {

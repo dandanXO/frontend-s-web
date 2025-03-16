@@ -18,7 +18,7 @@
             <el-icon><Refresh style="color: #ffffff" /></el-icon>
           </div> -->
 
-          <el-button type="success" class="common-btn" @click="transferOutAllModal"><img src="@/assets/images/account/transfer.png">一键转出</el-button>
+          <el-button type="success" class="common-btn transfer-btn" @click="transferOutAllModal"><img src="@/assets/images/account/transfer.png">一键转出</el-button>
           
           </div>
         </div>
@@ -646,6 +646,11 @@ body .transferinout .el-dialog__header .el-dialog__title {
 .confirm-btn {
   width: 100%;
   cursor: pointer;
+}
+
+.transfer-btn{
+  font-size: 14px;
+  padding: 8px 16px !important;
 }
 </style>
 <style scoped lang="scss">

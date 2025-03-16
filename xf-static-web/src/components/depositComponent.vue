@@ -174,7 +174,7 @@
             <!-- <template #label></template> -->
             <span class="account-tip-text" style="
     font-family: PingFang SC;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 400;
     color: #B8B8B8; margin-bottom: 10px; display: block; width: 100%">
               <div v-html="activeMethod.msg"></div>
@@ -862,13 +862,13 @@ onMounted(() => {
           
           .el-form-item__label {
             font-family: PingFang SC;
-            font-size: 12px;
+            font-size: 15px;
             font-weight: 400;
             color:#B8B8B8;
           }
           .el-form-item__content {
             font-family: PingFang SC;
-            font-size: 12px;
+            font-size: 15px;
             font-weight: 400;
             color:#B8B8B8;
             display: flex;
@@ -880,7 +880,7 @@ onMounted(() => {
     }
     .spaced {
           font-family: PingFang SC;
-          font-size: 12px;
+          font-size: 15px;
           font-weight: 400;
           display: flex;
           justify-content: space-between;
@@ -1093,7 +1093,7 @@ onMounted(() => {
     border-radius: 8px;
     width: 100%;
     font-family: PingFang SC;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 400;
     line-height: 18px;
   }

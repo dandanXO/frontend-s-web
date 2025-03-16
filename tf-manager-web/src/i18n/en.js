@@ -2232,7 +2232,7 @@ export default {
     endHour: 'End Hour',
     oldBetAmount: 'Old Site Bet Amount',
     showLogo: 'Show Logo',
-    showTime: 'Show Time',
+    showTime: 'Show Count Down Time',
     adjustTarget: 'Adjust Target',
     ignoreSettlement: 'Ignore Settlement',
     sendType: 'Send Type',
@@ -2509,7 +2509,9 @@ export default {
     calculatedPts: 'Calculated Points',
     spinRecord: 'Spin Record',
     pointsDistribution: 'Points Distribution',
-    traceId: 'Trace ID'
+    traceId: 'Trace ID',
+    downloadQRCode: 'Download QRCode',
+    normalCreate: 'Normal'
   },
   message: {
     adsStatusOpen: 'Open',
@@ -3051,6 +3053,8 @@ export default {
     validateFbIdRequired: 'Facebook ID is required',
     validateFbUrlRequired: 'Facebook URL is required',
     validateFbTokenRequired: 'Facebook Token is required',
+    qrCodeGenerateFailed: 'QR Code Generate Fail',
+    downloadUrlEmpty: 'Download Url Empty'
   },
   menu: {
     'Add Promo': 'Add Promo',
@@ -3439,6 +3443,8 @@ export default {
     publishStatus: 'Publish Status',
     PENDING: 'Pending',
     PUBLISHED: 'Published',
+    packageName: 'Package Name',
+    lastBuildTime: 'Last Build Time',
   },
   affiliateApk: {
     currentVersion: 'Current Version',
@@ -3566,6 +3572,7 @@ export default {
     WITHDRAW_ERROR: 'Withdraw Error',
     DEPOSIT_ERROR: 'Deposit Error',
     JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: 'Task Idle(Bet Record Fetch)',
+    FIRST_DEPOSIT_FLUCTUATION: 'First deposit fluctuation'
   },
   domain: {
     domainMainType: {

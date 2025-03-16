@@ -243,7 +243,7 @@
                 type="file"
                 ref="inputLogo"
                 style="display: none"
-                accept="image/*"
+                accept=".png"
                 @change="attachLogo"
               />
               <el-button
@@ -280,32 +280,48 @@
       row-key="id"
       size="small"
       highlight-current-row
+      :resizable="true"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" />
-      <el-table-column prop="site" :label="t('fields.site')" />
-      <el-table-column prop="os" :label="t('siteAppVersion.os')">
+      <el-table-column type="selection" width="50" />
+      <el-table-column prop="site" :label="t('fields.site')" width="150" />
+      <el-table-column prop="os" :label="t('siteAppVersion.os')" width="150">
         <template #default="scope">
           <span>{{ t(`siteAppVersion.${scope.row.os}`) }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="appType" :label="t('siteAppVersion.appType')">
+      <el-table-column prop="appType" :label="t('siteAppVersion.appType')" width="150">
         <template #default="scope">
           <span>{{ t(`siteAppVersion.${scope.row.appType}`) }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="apkType" :label="t('siteAppVersion.apkType')">
+      <el-table-column prop="apkType" :label="t('siteAppVersion.apkType')" width="150">
         <template #default="scope">
           <span>{{ t(`siteAppVersion.${scope.row.apkType}`) }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="version" :label="t('siteAppVersion.version')" />
-      <el-table-column prop="publishStatus" :label="t('siteAppVersion.publishStatus')">
-        <template #default="scope">
+      <el-table-column prop="version" :label="t('siteAppVersion.version')" width="150" />
+      <el-table-column prop="publishStatus" :label="t('siteAppVersion.publishStatus')" width="150">
+        <!-- <template #default="scope">
           <span>{{ t(`siteAppVersion.${scope.row.publishStatus}`) }}</span>
+        </template> -->
+        <template #default="scope">
+          <el-switch
+            v-model="scope.row.publishStatus"
+            active-value="PUBLISHED"
+            inactive-value="PENDING"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            @change="changesPublishtatus(scope.row.id, scope.row.publishStatus)"
+          />
+          <!-- <span style="margin-left: 8px">
+            {{ t(`siteAppVersion.${scope.row.publishStatus}`) }}
+          </span> -->
         </template>
       </el-table-column>
-      <el-table-column type="title" :label="t('fields.action')">
+      <el-table-column prop="packageName" :label="t('siteAppVersion.packageName')" />
+      <el-table-column prop="lastBuildTime" :label="t('siteAppVersion.lastBuildTime')" />
+      <el-table-column type="title" :label="t('fields.action')" :flex-grow="1">
         <template #default="scope">
           <el-button
             icon="el-icon-edit"
@@ -321,6 +337,22 @@
             v-permission="['sys:site:appversion:del']"
             @click="removeApp(scope.row)"
           />
+          <el-button
+              size="mini"
+              type="success"
+              v-if="scope.row.displayPath !== null"
+              @click="downloadFile(scope.row.displayPath)"
+            >
+              {{ t('fields.download') }}
+            </el-button>
+            <el-button
+              size="mini"
+              type="primary"
+              v-if="scope.row.displayPath !== null"
+              @click="downloadQRCode(scope.row.displayPath)"
+            >
+              {{ t('fields.downloadQRCode') }}
+            </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -336,7 +368,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref, computed } from 'vue'
+import { onMounted, reactive, ref, computed, h } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
   getSiteAppVersion,
@@ -344,7 +376,8 @@ import {
   updateSiteAppVersion,
   deleteSiteAppVersion,
   uploadApp,
-  uploadLogo
+  uploadLogo,
+  updateAppVersionState
 } from '../../../api/site-app-version'
 import { nextTick } from 'process'
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -352,11 +385,14 @@ import { required } from '../../../utils/validate'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { getSiteListSimple } from '../../../api/site'
+import QRCode from 'qrcode'
+import { useSessionStorage } from "@vueuse/core";
 
 const { t } = useI18n()
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
+const appDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value
 
 let chooseImage = []
 
@@ -469,7 +505,9 @@ function showDialog(type) {
     if (appForm.value) {
       appForm.value.resetFields()
       uploadedApp.filePath = null
+      uploadedApp.logoFilePath = null
       form.filePath = null
+      form.logoFilePath = null
       form.id = null
     }
     // Clear the input file value when opening the dialog
@@ -649,7 +687,7 @@ async function attachLogo(event) {
   const fileNameParts = files.name.split('.')
   const fileExtension = fileNameParts[fileNameParts.length - 1].toLowerCase()
 
-  const allowFileType = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
+  const allowFileType = ['image/png']
   const dir = 'temp'
   if (!allowFileType.find(ftype => ftype.includes(files.type))) {
     ElMessage({ message: t('message.invalidFileType'), type: 'error' })
@@ -677,8 +715,54 @@ async function loadSites() {
 async function loadAppVersion() {
   const { data: ret } = await getSiteAppVersion(request)
 
+  ret.records.forEach(e => {
+    e.displayPath = ""
+    if (e.filePath) {
+      e.displayPath = appDir + '/' + e.filePath
+    }
+  })
   page.pages = ret.pages
   page.records = ret.records
+}
+
+const downloadFile = (url) => {
+  if (url) {
+    window.open(url, '_blank');
+  } else {
+    console.error('Download URL is empty');
+  }
+};
+
+const downloadQRCode = async (url) => {
+  if (url) {
+    try {
+      // 生成二维码数据URL
+      const qrDataUrl = await QRCode.toDataURL(url, {
+        width: 300,
+        margin: 2
+      })
+
+      // 显示二维码弹窗
+      ElMessageBox({
+        title: t('fields.downloadQRCode'),
+        message: h('img', { src: qrDataUrl, style: 'display: block; margin: 0 auto;' }),
+        customClass: 'qrcode-dialog',
+        showConfirmButton: false,
+        closeOnClickModal: true
+      })
+    } catch (error) {
+      console.error('生成二维码失败:', error)
+      ElMessage.error(t('message.qrCodeGenerateFailed'))
+    }
+  } else {
+    console.error('下载URL为空')
+    ElMessage.error(t('message.downloadUrlEmpty'))
+  }
+}
+
+async function changesPublishtatus(id, state) {
+  await updateAppVersionState(id, state);
+  ElMessage({ message: t('message.editSuccess'), type: "success" });
 }
 
 onMounted(async () => {
@@ -735,5 +819,11 @@ onMounted(async () => {
 td.el-table__cell img {
   width: 100px;
   height: 100px;
+}
+
+.qrcode-dialog {
+  .el-message-box__content {
+    padding: 20px;
+  }
 }
 </style>

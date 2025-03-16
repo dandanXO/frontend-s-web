@@ -429,10 +429,10 @@ const onCheckFtdCheckbox = (status) => {
   if(status === true) {
     if(extraPrivilegeId.value) {
       selectedPrivilege.value = { id: extraPrivilegeId.value, payTypes: paytypeWithPrivilege.value };
-      
-      if (!store.email || store.emailVerified !== true) {
-        showBindEmailDialog.value = true;
-      }
+
+      // if (!store.email || store.emailVerified !== true) {
+      //   showBindEmailDialog.value = true;
+      // }
     }
   } else {
     selectedPrivilege.value = undefined;
@@ -698,10 +698,10 @@ function clearInfo() {
 
 const depositAmtRef = ref("");
 async function confirmDeposit() {
-  if (extraPrivilegeId.value && (!store.email || store.emailVerified !== true)) {
-    showBindEmailDialog.value = true;
-    return;
-  }
+  // if (extraPrivilegeId.value && (!store.email || store.emailVerified !== true)) {
+  //   showBindEmailDialog.value = true;
+  //   return;
+  // }
 
   btnLoading.value = true;
   depositAmtRef.value.validate();

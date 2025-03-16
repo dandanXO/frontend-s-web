@@ -17,7 +17,7 @@
       </q-route-tab>
       <q-route-tab to="/earn-money" name="earn-money" class="center-menu" :ripple="false">
         <div class="footer-big-img earn-money">
-          <img :src="ui.footerIcon ? ui.footerIcon : require(`../assets/images/index/menu/icon-earnmoney.png`)" />
+          <img :src="ui.footerIcon ? ui.footerIcon : require(`../assets/images/index/menu/icon-earnmoney.gif`)" />
         </div>
         <span class="footer-label" style="padding-top: 0">{{ $t("bottomNav.earnMoney") }}</span>
       </q-route-tab>

@@ -4,7 +4,16 @@
     style="transition: background 0.5s ease-in-out"
     class="dynamic-bg"
   >
-    <ProfileSummary :homeProfile="true" @activateSlide="handleActivateSlide" />
+    <ProfileSummary :homeProfile="true" @activateSlide="handleActivateSlide" @showNewPlayer="showNewPlayer" />
+
+    <!--    <pre>-->
+    <!--      {{isNewPlayerModal}} <br/>-->
+    <!--      {{currentStep !== "END"}}<br/>-->
+    <!--      {{!isHotGameAdditionalSteps}}<br/>-->
+    <!--      {{!isAdditionalDepositSteps}}<br/>-->
+    <!--      {{!isAdditionalReferSteps}}<br/>-->
+    <!--     {{!isAdditionalWithdrawSteps}} <br/>-->
+    <!--    </pre>-->
 
     <q-carousel
       v-model="slide"
@@ -72,17 +81,24 @@
     </pre> -->
   </div>
   <div>
-    <q-page-sticky v-if="isCharityShow" position="bottom-right" :offset="charityDragPos" class="floating-btn">
-      <div v-touch-pan.prevent.mouse="moveCharityGif" @click="openCharityUrl">
-        <!--        <div class="hb-close">-->
-        <!--          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click.stop="isCharityShow = false" />-->
-        <!--        </div>-->
-        <img class="charity-gif" src="../assets/images/index/charity-float.gif" />
-      </div>
-    </q-page-sticky>
+    <!--    <q-page-sticky v-if="isCharityShow && isShowStickyIcons" position="bottom-right" :offset="charityDragPos" class="floating-btn scalable" :style="{ transform: `scale(${scaleValue})` }">-->
+    <!--      <div v-touch-pan.prevent.mouse="moveCharityGif" @click="openCharityUrl">-->
+    <!--        &lt;!&ndash;        <div class="hb-close">&ndash;&gt;-->
+    <!--        &lt;!&ndash;          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click.stop="isCharityShow = false" />&ndash;&gt;-->
+    <!--        &lt;!&ndash;        </div>&ndash;&gt;-->
+    <!--        <img class="charity-gif" src="../assets/images/index/charity-float.gif" />-->
+    <!--      </div>-->
+    <!--    </q-page-sticky>-->
   </div>
   <div class="home-wrapper" :class="detectAndroidVersion()">
-    <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
+    <q-page-sticky
+      v-if="isShowStickyIcons"
+      style="z-index: 3000"
+      position="bottom-right"
+      :offset="csDragPos"
+      class="floating-btn scalable"
+      :style="{ transform: `scale(${scaleValue})` }"
+    >
       <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef" @click="toggleCSTab">
         <div class="cs-icon-wrapper" :class="{ active: isCsTabVisible }">
           <a class="cs-icon youtube" :href="ui.youtubeUrl" target="_blank">
@@ -104,13 +120,25 @@
       </div>
     </q-page-sticky>
 
-    <q-page-sticky position="bottom-right" :offset="liveDragPos" class="floating-btn" v-if="isLiveUrlShow">
+    <q-page-sticky
+      position="bottom-right"
+      :offset="liveDragPos"
+      class="floating-btn scalable"
+      :style="{ transform: `scale(${scaleValue})` }"
+      v-if="isLiveUrlShow && isShowStickyIcons"
+    >
       <div v-touch-pan.prevent.mouse="moveLiveIcon" @click="openLiveInNewTab(ui.LiveUrl)">
         <div class="live-icon-wrapper"></div>
       </div>
     </q-page-sticky>
 
-    <q-page-sticky position="bottom-right" :offset="hbDragPos" class="floating-btn" v-if="isHbShow">
+    <q-page-sticky
+      position="bottom-right"
+      :offset="hbDragPos"
+      class="floating-btn scalable"
+      :style="{ transform: `scale(${scaleValue})` }"
+      v-if="isHbShow && isShowStickyIcons"
+    >
       <div>
         <!--        <div class="hb-close">-->
         <!--          <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click="isHbShow = false" />-->
@@ -132,13 +160,22 @@
               :key="i"
               :name="i"
               @click="gotoFloatPromo(promo)"
-              :img-src="`${imgURL}/promo/${promo.icon}`"
+              :img-src="promo.icon"
             >
               <!-- <img style="width: 100px" :src="`${imgURL}/promo/${promo.icon}`" /> -->
             </q-carousel-slide>
           </q-carousel>
         </div>
       </div>
+    </q-page-sticky>
+    <q-page-sticky
+      @click="isShowStickyIcons = !isShowStickyIcons"
+      position="bottom-right"
+      :offset="[0, 400]"
+      class="floating-btn scalable whitee"
+      :style="{ transform: `scale(${scaleValue})` }"
+    >
+      <img class="stickyopenclose" :class="{ open: !isShowStickyIcons }" src="../assets/images/index/open.png" />
     </q-page-sticky>
 
     <PushNotification
@@ -208,6 +245,17 @@
     <!-- <pre>hotGameList{{ hotGameList }}</pre> -->
     <!-- <pre>pokerGameJILIList--{{ pokerGameJILIList }}</pre> -->
 
+    <div v-if="showOverlay" class="highlight-overlay">
+      <div class="highlight-box" @click="handleGamePlay"></div>
+      <div class="next-btm-btn" @click="updateCurrentStep('3')">{{ $t("playerGuide.next") }}</div>
+      <div class="videolink" @click="playVideo()">
+        <img src="../assets/images/newplayerguide/video.png" />
+        {{ $t("playerGuide.watchGameTutorial") }}
+      </div>
+    </div>
+    <div ref="targetSection" class="target-section">
+      <!-- The section to scroll to -->
+    </div>
     <template v-for="category in categoriesList" :key="category.title">
       <template v-if="(category.title === 'Hot' && category.active) || (category.title === 'Lobby' && category.active)">
         <div class="games-selection-wrapper" id="hotgames">
@@ -1352,6 +1400,24 @@
     </q-card>
   </q-dialog>
 
+  <NewPlayerGuideModal
+    ref="modalGuide"
+    v-if="store.token && !store.hasDeposit"
+    :modelValue="isNewPlayerModal"
+    :currentStep="currentStep"
+    @update:runAviator="handleGamePlay"
+    @update:modelValue="handleModalUpdate"
+    @update:showSteps="handleAdditionalSteps"
+    @update:currentStep="updateCurrentStep"
+  />
+  <AdditionalSteps
+    v-if="isAdditionalDepositSteps || isAdditionalReferSteps || isAdditionalWithdrawSteps"
+    :currentAdditionalStep="currentAdditionalStep"
+    :currentType="currentType"
+    @updateStep="handleStepUpdate"
+    @closeGuide="closePlayerGuide"
+  />
+
   <template v-if="isAndroid()">
     <q-dialog v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
       <div class="luckyspin-wrapper">
@@ -1359,7 +1425,7 @@
           <img src="../assets/images/index/modal/luckyspin-title.png" />
         </div>
         <div class="luckyspin-container">
-          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
+          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="isShownSpinLuckyWheel" />
           <div class="luckyspin-title">
             <img src="../assets/images/index/modal/luckyspin-welcome.png" />
           </div>
@@ -1376,7 +1442,7 @@
     <q-dialog v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
       <CongratsModal>
         <template #controller>
-          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
+          <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="isShownSpinLuckyWheel" />
         </template>
       </CongratsModal>
     </q-dialog>
@@ -1411,7 +1477,7 @@
   <q-dialog v-if="popupPromo === 'money-rain'" :model-value="true" persistent>
     <MoneyRainModal>
       <template #controller>
-        <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
+        <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="isShownSpinLuckyWheel" />
       </template>
     </MoneyRainModal>
     <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
@@ -1427,11 +1493,25 @@
     <q-btn class="mega-sharing-wheel-dialog-close" icon="close" round dense @click="closeDialog" />
     <MegaSharingWheelModal>
       <template #controller>
-        <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" />
+        <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="true" />
       </template>
     </MegaSharingWheelModal>
   </q-dialog>
 
+  <q-dialog
+    v-if="popupPromo === 'spin-lucky-wheel' && isShownSpinLuckyWheel"
+    full-width
+    :model-value="isShownSpinLuckyWheel"
+    class="spin-lucky-wheel-dialog"
+    persistent
+  >
+    <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
+    <SpinLuckyWheelPromoHomePopup @close-dialog="closeDialog" ref="spinLuckyWheelPromoHomePopupRef">
+      <template #controller>
+        <PopupController v-model="popupPromo" :hasSpin="true" />
+      </template>
+    </SpinLuckyWheelPromoHomePopup>
+  </q-dialog>
   <q-dialog v-model="isMediaSettingsModal">
     <MediaSettingsComponent :media="mediaCode" />
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
@@ -1443,14 +1523,28 @@
   </q-dialog>
 
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
+
+  <SpinLuckyWheelPromoSticky v-show="isShownSpinLuckyWheel" />
+  <!-- <SpinLuckyWheelPromoHomePopup v-if="isShownSpinLuckyWheel || popupPromo === 'spin-lucky-wheel'" ref="spinLuckyWheelPromoHomePopupRef" /> -->
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch, onActivated, provide } from "vue";
+import {
+  onMounted,
+  onUnmounted,
+  ref,
+  reactive,
+  computed,
+  watch,
+  watchEffect,
+  onActivated,
+  provide,
+  nextTick
+} from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
-import { useQuasar, Platform } from "quasar";
+import { useQuasar, Platform, LocalStorage } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
@@ -1464,6 +1558,8 @@ import CongratsModal from "../components/modal/CongratsModal.vue";
 import LuckySpinWheel from "../components/hotpromo/newPlayerWheel/LuckySpinWheel.vue";
 import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
 import MediaSettingsComponent from "../components/MediaSettingsComponent.vue";
+import NewPlayerGuideModal from "../components/modal/NewPlayerGuideModal.vue";
+import AdditionalSteps from "../components/modal/AdditionalSteps.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { isAndroid } from "boot/utils";
@@ -1471,7 +1567,6 @@ import { useI18n } from "vue-i18n";
 import { eventapi } from "src/boot/axios";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
-// import { ref, onMounted, onUnmounted } from 'vue';
 import "swiper/css";
 import "swiper/css/scrollbar";
 import "swiper/css/navigation";
@@ -1486,14 +1581,44 @@ import PopupController from "src/components/PopupController.vue";
 import MegaSharingWheelModal from "src/components/hotpromo/megaSharingWheel/MegaSharingWheelModal.vue";
 import SetFirstPasswordModal from "src/components/modal/SetFirstPasswordModal.vue";
 import AddToHomeScreenModal from "src/components/modal/AddToHomeScreenModal.vue";
+import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
+import SpinLuckyWheelPromoHomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
+import { usePromoStore } from "src/stores/promo";
+import { storeToRefs } from "pinia";
+
 import CongratsReuseableModal from "src/components/modal/CongratsReuseableModal.vue";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
+const scaleValue = ref(1);
+let lastScrollTop = 0;
+const isShowStickyIcons = ref(true);
+const handleScroll = () => {
+  const currentScroll = window.scrollY;
+
+  if (currentScroll > lastScrollTop) {
+    // Scrolling down
+    scaleValue.value = 0;
+  } else {
+    // Scrolling up
+    scaleValue.value = 1;
+  }
+
+  lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+};
+
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const { t } = useI18n();
-
+const promoStore = usePromoStore();
+const { isShownSpinLuckyWheel } = storeToRefs(promoStore);
 // const isLuckyDrawModal = ref(false);
 // const isCongratsModal = ref(true);
 const isShowPrizeModal = ref(false);
@@ -1504,7 +1629,143 @@ const megaSharingWheelDialogModel = ref(true);
 const isAddToHomeScreen = ref(false);
 const isShowSetFirstPw = ref(false);
 const isShowCodeBonusModal = ref(false);
+const currentStep = ref(localStorage.getItem("newPlayerGuide") || "1");
+// Only show the guide if on `/home` or `/`
+const isNewPlayerModal = computed(() => {
+  return (
+    currentStep.value !== "END" &&
+    route.path !== "/language" &&
+    !isHotGameAdditionalSteps.value &&
+    !isAdditionalDepositSteps.value &&
+    !isAdditionalReferSteps.value &&
+    !isAdditionalWithdrawSteps.value
+  );
+});
+const handleModalUpdate = (value) => {
+  isNewPlayerModal.value = value;
+};
+const targetSection = ref();
+const showOverlay = ref();
+const disableScroll = () => {
+  document.body.style.overflow = "hidden"; // Disable scrolling
+};
 
+const enableScroll = () => {
+  document.body.style.overflow = ""; // Restore scrolling
+};
+const isHotGameAdditionalSteps = ref(false);
+const isAdditionalDepositSteps = ref(false);
+const isAdditionalReferSteps = ref(false);
+const isAdditionalWithdrawSteps = ref(false);
+const currentType = ref("deposit");
+const currentAdditionalStep = ref(1);
+
+const handleStepUpdate = (newStep) => {
+  currentAdditionalStep.value = newStep;
+};
+const handleAdditionalSteps = (index) => {
+  if (index === 2) {
+    isHotGameAdditionalSteps.value = true;
+    handleActivateSlide("Hot");
+    // Scroll to the target element
+    // Scroll to the target element
+    nextTick(() => {
+      if (targetSection.value) {
+        const offset = 130; // Adjust this offset as needed
+        const rect = targetSection.value.getBoundingClientRect();
+        const scrollTop = window.scrollY || document.documentElement.scrollTop; // Get current scroll position
+        const finalPosition = rect.top + scrollTop - offset;
+
+        // Smooth scroll to the calculated position
+        window.scrollTo({
+          top: finalPosition,
+          behavior: "smooth"
+        });
+      }
+    });
+    // Show overlay after scrolling
+    setTimeout(() => {
+      showOverlay.value = true;
+      disableScroll();
+    }, 500);
+  } else if (index === 3) {
+    currentAdditionalStep.value = 1;
+    currentType.value = "deposit";
+    isAdditionalDepositSteps.value = true;
+    disableScroll();
+  } else if (index === 4) {
+    currentAdditionalStep.value = 1;
+    currentType.value = "refer";
+    isAdditionalReferSteps.value = true;
+    disableScroll();
+  } else if (index === 5) {
+    currentAdditionalStep.value = 1;
+    currentType.value = "withdraw";
+    isAdditionalWithdrawSteps.value = true;
+    nextTick(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    disableScroll();
+  }
+};
+onUnmounted(() => {
+  enableScroll();
+});
+const resetSteps = () => {
+  isHotGameAdditionalSteps.value = false;
+  handleActivateSlide("Lobby");
+  showOverlay.value = false;
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+  enableScroll();
+};
+const updateCurrentStep = (newStep) => {
+  resetSteps();
+  currentStep.value = newStep;
+  // Optionally, update localStorage again in the parent component
+  localStorage.setItem("newPlayerGuide", newStep);
+};
+const closePlayerGuide = (skipStep) => {
+  if (skipStep === true) {
+    updateCurrentStep("5");
+    currentType.value = "withdraw";
+  }
+  isAdditionalReferSteps.value = false;
+  isAdditionalDepositSteps.value = false;
+  isAdditionalWithdrawSteps.value = false;
+  enableScroll();
+};
+const handleGamePlay = (elementName) => {
+  resetSteps();
+  sessionStorage.setItem("isFromNewPlayerGuide", JSON.stringify(true));
+  hotGameList.value.forEach((element) => {
+    console.log(elementName);
+    if (elementName === element.name.toLowerCase()) {
+      if (element.code === "aviator" || element.code === "229" || element.code === "124") {
+        playGame(
+          element.name,
+          element.platformCode,
+          element.code,
+          element.status,
+          element.gameType,
+          element.id,
+          element.demo
+        );
+      }
+    }
+  });
+};
+const modalGuide = ref(null); // Ensure this is defined
+
+const playVideo = () => {
+  isHotGameAdditionalSteps.value = false;
+  resetSteps();
+  if (modalGuide.value) {
+    modalGuide.value.showVideo(1); // Call showVideo with parameter 1
+  }
+};
 const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
   { title: "Hot", label: t("home.menu_hot"), icon: "hot", active: false },
@@ -1520,6 +1781,8 @@ const csTabRef = ref();
 
 const isLiveTabVisible = ref(false);
 const liveTabRef = ref();
+
+const spinLuckyWheelPromoHomePopupRef = ref();
 
 const translatedCategoriesList = computed(() => {
   return categoriesList.value.map((category) => ({
@@ -1583,17 +1846,17 @@ const isCharityShow = computed(() => {
   }
   return false;
 });
-const charityDragPos = ref([10, 240]);
+const charityDragPos = ref([10, 300]);
 const isDraggingCharityGif = ref(false);
 
-const csDragPos = ref([10, 0]);
+const csDragPos = ref([10, 80]);
 const isDraggingCsIcon = ref(false);
 
 const liveDragPos = ref([16, 0]);
 const isDraggingLiveIcon = ref(false);
 const isLiveUrlShow = ref(false);
 
-const hbDragPos = ref([10, 120]);
+const hbDragPos = ref([10, 180]);
 const isDraggingHbIcon = ref(false);
 const isHbShow = ref(true);
 const hbSlide = ref(0);
@@ -1603,7 +1866,7 @@ const slide = ref(0);
 const isFirstView = ref(false);
 const closeAlert = () => {
   // Create a new date object in GMT+5.5
-  const currentTimeInGMT55 = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+  const currentTimeInGMT55 = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Karachi" }));
 
   localStorage.setItem("indexImgTop", currentTimeInGMT55.getTime());
   isFirstView.value = false;
@@ -2167,6 +2430,10 @@ const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId
 
 const closeSlotModal = () => {
   fullGameDialog.value = false;
+};
+
+const showNewPlayer = () => {
+  currentStep.value = localStorage.getItem("newPlayerGuide");
 };
 
 const closeFullGameDialog = () => {
@@ -3179,7 +3446,7 @@ const imgURLPromo = imgURL + "/promo/";
 
 // const setWithExpiry = (key, value, interval) => {
 //   // Create a new date object in GMT+5.5
-//   const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+//   const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Karachi" }));
 
 //   const item = {
 //     value: value,
@@ -3556,7 +3823,18 @@ const loadCustomerAddress = () => {
     });
 };
 
-const hbPromo = ref([]);
+const floatPromo = ref([]);
+const hbPromo = computed(() => {
+  const result = [...floatPromo.value];
+  if (isCharityShow.value) {
+    result.push({
+      type: "DOMAIN",
+      code: ui.charityUrl,
+      icon: require("../assets/images/index/charity-float.gif")
+    });
+  }
+  return result;
+});
 
 const checkHbPromo = () => {
   api
@@ -3566,11 +3844,18 @@ const checkHbPromo = () => {
     })
     .then((data) => {
       // isHbShow.value = data.data.some((item) => item.code === "pak-redpacketrain");
-      hbPromo.value = data.data.filter(
-        (redirectList) =>
-          redirectList.code !== "pak-mega-sharing-wheel" ||
-          (redirectList.code === "pak-mega-sharing-wheel" && store.token && ui.promo_megaspin === "1")
-      );
+      floatPromo.value = data.data.reduce((result, promo) => {
+        if (
+          promo.code !== "pak-mega-sharing-wheel" ||
+          (promo.code === "pak-mega-sharing-wheel" && store.token && ui.promo_megaspin === "1")
+        ) {
+          result.push({
+            ...promo,
+            icon: `${imgURL}/promo/${promo.icon}`
+          });
+        }
+        return result;
+      }, []);
     });
 };
 
@@ -3688,6 +3973,9 @@ const gotoFloatPromo = (val) => {
   } else if (val.type === "PROMO" && val.code === "pak-mega-sharing-wheel") {
     megaSharingWheelDialogModel.value = true;
     popupPromo.value = "mega-sharing-wheel";
+  } else if (val.type === "PROMO" && val.code === "pak-spin-lucky-wheel") {
+    popupPromo.value = "spin-lucky-wheel";
+    isShownSpinLuckyWheelModel.value = true;
   }
 
   if (val.type === "PROMO" && val.code === "interest-profit") {
@@ -3707,6 +3995,57 @@ const gotoFloatPromo = (val) => {
   }
 };
 
+function checkDepositStep() {
+  if (isAdditionalDepositSteps.value) {
+    const currentActiveStep = localStorage.getItem("newPlayerGuide");
+    const completedGuide = localStorage.getItem("completeddepositguide");
+    if (completedGuide === "true") {
+      isAdditionalDepositSteps.value = false;
+      updateCurrentStep("4");
+    }
+  }
+}
+
+function checkReferStep() {
+  if (isAdditionalReferSteps.value && currentStep.value === "3") {
+    const completedGuide = localStorage.getItem("completedreferguide");
+    // alert("refer," + completedGuide);
+    if (completedGuide === "true") {
+      isAdditionalReferSteps.value = false;
+      updateCurrentStep("5");
+    }
+  }
+}
+
+// const checkGameTipStep = () => {
+//   const completedGuide = localStorage.getItem("completedlangguide");
+//   if (completedGuide === "true" && currentStep.value === "2") {
+//     updateCurrentStep("2");
+//   }
+// };
+
+function checkWithdrawStep() {
+  if (isAdditionalWithdrawSteps.value) {
+    const completedGuide = localStorage.getItem("completedwithdrawguide");
+    if (completedGuide === "true") {
+      isAdditionalWithdrawSteps.value = false;
+      updateCurrentStep("END");
+      currentAdditionalStep.value = 1;
+    }
+  }
+}
+
+const checkNewGuideSteps = () => {
+  checkDepositStep();
+  checkReferStep();
+  checkWithdrawStep();
+};
+
+// Keep watchers for real-time changes if necessary
+watch(() => isAdditionalDepositSteps.value, checkDepositStep, { immediate: false });
+watch(() => isAdditionalReferSteps.value, checkReferStep, { immediate: false });
+watch(() => isAdditionalWithdrawSteps.value, checkWithdrawStep, { immediate: false });
+
 const afterActivated = useCustomerTrigger(() => {
   checkShowImgTop();
   checkHbPromo();
@@ -3714,19 +4053,64 @@ const afterActivated = useCustomerTrigger(() => {
 
 const downloadAppRef = ref();
 
+const checkSpinLuckyWheelPromoHomePopupCanShow = () => {
+  if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP") && spinLuckyWheelPromoHomePopupRef.value) {
+    spinLuckyWheelPromoHomePopupRef.value.checkIsCanShowPopup();
+  }
+};
+
 onActivated(() => {
+  nextTick(() => {
+    if (
+      LocalStorage.getItem("completeddepositguide") === "true" &&
+      LocalStorage.getItem("completedreferguide") !== "true" &&
+      LocalStorage.getItem("newPlayerGuide") === "4"
+    ) {
+      currentType.value = "refer";
+      isAdditionalReferSteps.value = true;
+      disableScroll();
+      currentAdditionalStep.value = 1;
+    }
+  });
+  // alert(currentStep.value);
+  // alert(LocalStorage.getItem('completeddepositguide') === 'true')
+  // alert(LocalStorage.getItem('completeddepositguide') === true)
+  // if(LocalStorage.getItem('completeddepositguide') === 'true') {
+  //   // updateCurrentStep("4");
+  //   // handleAdditionalSteps(4);
+  //   // currentType.value = 'refer'
+  //   // isAdditionalReferSteps.value = true
+  //   // disableScroll();
+  //   // currentAdditionalStep.value = 1
+  //   nextTick(() => {
+  //     currentType.value = 'refer';
+  //     isAdditionalReferSteps.value = true;
+  //     disableScroll();
+  //     currentAdditionalStep.value = 1;
+  //   });
+  // }
+  // if (LocalStorage.getItem('completedreferguide') && LocalStorage.getItem('completedwithdrawguide')) {
+  //   isAdditionalWithdrawSteps.value = false
+  //   updateCurrentStep("END");
+  //   currentAdditionalStep.value = 1
+  // }
+
+  checkNewGuideSteps();
   store.getUnreadTotal();
   checkHash();
 
   checkSpinWheel();
   checkGoogleLoginSetPwd();
-  if (store.hasToken()) {
-    checkCodeBonusModal();
-  }
 
   if (route.query.login === "true") {
-    // isMoneyRainModal.value = true;
+    //TODO: change back.
     popupPromo.value = "money-rain";
+    // popupPromo.value = "spin-lucky-wheel";
+  }
+
+  if (route.query.newPlayerGuide === "earn-money") {
+    // debugger;
+    closePlayerGuide();
   }
 
   if (store.hasToken() && ui.promo_megaspin === "1") {
@@ -3764,6 +4148,10 @@ onMounted(() => {
   loadJILIPokerhGameList();
   ui.shouldFetchDownloadAppUrl = true;
 
+  if (store.hasToken()) {
+    checkCodeBonusModal();
+  }
+
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
   afterMounted();
@@ -3782,6 +4170,13 @@ watch(
   }
 );
 
+watch(
+  () => promoStore.isShownSpinLuckyWheel,
+  async (val) => {
+    await nextTick();
+    if (val) checkSpinLuckyWheelPromoHomePopupCanShow();
+  }
+);
 // watch(
 //   () => route.query.register,
 //   (newValue) => {
@@ -3806,13 +4201,16 @@ const checkCodeBonusModal = () => {
     }
   });
 };
+
 const checkSpinWheel = () => {
   if (store.hasToken() && isAndroid()) {
     setTimeout(() => {
       showSpinWheel();
     }, 750);
   } else if (store.hasToken() && !isAndroid()) {
-    showCongratsModal();
+    setTimeout(() => {
+      showCongratsModal();
+    }, 500);
   }
 };
 
@@ -3825,7 +4223,9 @@ const showSpinWheel = () => {
           isShowPrizeModal.value = true;
         } else if (res.data.showRoulette === "YES") {
           // isLuckyDrawModal.value = true;
-          popupPromo.value = "lucky-spin-wheel";
+          if (!promoStore.isShownSpinLuckyWheel) {
+            popupPromo.value = "lucky-spin-wheel";
+          }
         }
       }
     })
@@ -3836,10 +4236,12 @@ const showSpinWheel = () => {
 
 const showCongratsModal = () => {
   eventapi.get("/new-user-roulette/init").then((res) => {
-    if (res.code == 0) {
+    if (res.code === 0) {
       if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
         // isCongratsModal.value = true;
-        popupPromo.value = "lucky-spin-wheel";
+        if (!promoStore.isShownSpinLuckyWheel) {
+          popupPromo.value = "lucky-spin-wheel";
+        }
       }
     }
   });
@@ -3857,6 +4259,84 @@ const checkGoogleLoginSetPwd = () => {
 </script>
 
 <style scoped lang="scss">
+.highlight-overlay {
+  position: fixed;
+  // top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  flex-direction: column;
+
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // gap: 10px;
+  top: 13%;
+  .next-btm-btn {
+    cursor: pointer;
+    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+    padding: 10px;
+    font-family: Poppins;
+    font-weight: 700;
+    font-size: 2vh;
+    line-height: 2vh;
+    padding: 15px 35px;
+    letter-spacing: 0px;
+    text-align: center;
+    color: #000000;
+    border-radius: 8px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .videolink {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    color: #f3d235cc;
+    border-bottom: 1px solid #f3d235cc;
+    font-family: Poppins;
+    font-weight: 700;
+    font-size: 1.5vh;
+    line-height: 2vh;
+    padding-bottom: 5px;
+    cursor: pointer;
+
+    img {
+      width: 15px;
+    }
+  }
+}
+
+.highlight-box {
+  width: 98%;
+  margin: 0 auto;
+  height: 340px;
+  background: transparent;
+  border: 2px dashed #5dcd77;
+  box-shadow: 0px 0px 30px 0px #00e60091;
+  border-radius: 10px;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.8); /* Creates the cutout effect */
+  position: relative;
+  margin-bottom: 10px;
+  &:after {
+    position: absolute;
+    content: "";
+    background: url(../assets/images/newplayerguide/finger.png) no-repeat center center;
+    width: 10vh;
+    background-size: contain;
+    height: 10vh;
+    bottom: 20vh;
+    left: 10vh;
+    animation: moveFinger 1.5s ease-in-out infinite;
+  }
+}
 .q-page-container {
   min-height: 100vh;
 }
@@ -4651,6 +5131,7 @@ const checkGoogleLoginSetPwd = () => {
     transform: translateY(-50%);
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
+    pointer-events: none;
 
     &.youtube {
       left: -60px;
@@ -4679,6 +5160,7 @@ const checkGoogleLoginSetPwd = () => {
 
   &.active {
     .cs-icon {
+      pointer-events: unset;
       opacity: 1;
     }
   }
@@ -4962,13 +5444,34 @@ const checkGoogleLoginSetPwd = () => {
     }
   }
 }
-
+.q-page-container {
+  :not(.home-wrapper) > .floating-btn.scalable:first-child {
+    border-radius: 10px 0 0 0;
+  }
+}
 .floating-btn {
+  &.scalable {
+    transform-origin: center;
+    transition: transform 0.5s ease-in-out;
+    &.whitee {
+      border-radius: 10px 0 0 10px;
+      background: rgb(255 255 255 / 40%);
+      padding: 5px 10px 3px;
+    }
+  }
   z-index: 2001;
 
   img {
     width: 100%;
     max-width: 100px;
+    &.stickyopenclose {
+      width: 15px;
+      //  padding: 0px 40px;
+    }
+    &.open {
+      transform: rotateZ(180deg);
+      padding: 0px;
+    }
   }
 }
 
@@ -5497,5 +6000,28 @@ const checkGoogleLoginSetPwd = () => {
   transform: translateX(-50%);
   z-index: 1;
   pointer-events: all;
+}
+/* Keyframe animation to simulate finger moving towards the button */
+@keyframes moveFinger {
+  0% {
+    bottom: 60%; /* Start position */
+    right: -7vh; /* Start on the right */
+  }
+  25% {
+    bottom: 55%; /* Move up slightly */
+    right: -6vh; /* Move left slightly (towards the center) */
+  }
+  50% {
+    bottom: 50%; /* Move up further */
+    right: -5vh; /* Move further left */
+  }
+  75% {
+    bottom: 55%; /* Move back down slightly */
+    right: -6vh; /* Move back to the center */
+  }
+  100% {
+    bottom: 60%; /* End position */
+    right: -7vh; /* Back to the original position on the right */
+  }
 }
 </style>

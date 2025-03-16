@@ -318,7 +318,7 @@ $node-color: #45fefa;
       .node-text {
         gap: 5px;
         & > div {
-          font-size: 12px;
+          font-size: 15px;
           color: #ffffff;
         }
         img {
@@ -378,7 +378,7 @@ $node-color: #45fefa;
       min-width: 120px;
       padding: 15px 0;
       & > div {
-        font-size: 12px;
+        font-size: 15px;
         color: #ffffff;
       }
 
