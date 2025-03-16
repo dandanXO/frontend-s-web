@@ -236,13 +236,11 @@ async function loadMemberMoneyChange(frombutton) {
       query.createTime = JSON.parse(JSON.stringify(request.createTime))
       query.createTime[0] = formatInputTimeZone(
         query.createTime[0],
-        props.timeZone,
-        'start'
+        props.timeZone
       )
       query.createTime[1] = formatInputTimeZone(
         query.createTime[1],
-        props.timeZone,
-        'end'
+        props.timeZone
       )
       query.createTime = query.createTime.join(',')
     }
