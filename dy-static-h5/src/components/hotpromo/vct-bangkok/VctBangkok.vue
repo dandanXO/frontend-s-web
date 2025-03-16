@@ -12,7 +12,7 @@
             <div class="reward-info-icon claim-coin-icon">
             </div>
             <div class="reward-info-content">
-              昨日累计有效投注：
+              昨日累计有效投注:
               <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
@@ -27,7 +27,7 @@
         </div>
         <div class="livepoker-rebate-section-right">
           <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
-            <img src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn3.png" alt="" width="100%" />
+            <img src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/claim-btn3.png" alt="" width="100%" />
           </div>
         </div>
       </div>
@@ -35,11 +35,11 @@
         <div class="title-img">活动详情</div>
         <div class="little-title">
           <div class="ribbon">活动时间</div>
-          <div class="right">2025 年 2 月 20 日至 3 月 2 日</div>
+          <div class="right">3 月 13 日起</div>
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
-          <div class="right">活动期间，当日 VCT 曼谷大师赛累计有效投注≥1,000 元即可获得最高 1,388 元的奖金。</div>
+          <div class="right">活动期间，当日 VCT 冠军巡回赛累计有效投注≥1,000 元即可获得最高 1,388 元的奖金。</div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
           <thead>
@@ -52,40 +52,40 @@
           <tbody>
             <tr>
               <td>≥1,000</td>
-              <td>8 元</td>
-              <td rowspan="9">8 倍流水</td>
+              <td>8元</td>
+              <td rowspan="9">8倍流水</td>
             </tr>
             <tr>
               <td>≥3,000</td>
-              <td>28 元</td>
+              <td>28元</td>
             </tr>
             <tr>
               <td>≥5,000</td>
-              <td>58 元</td>
+              <td>58元</td>
             </tr>
             <tr>
               <td>≥10,000</td>
-              <td>88 元</td>
+              <td>88元</td>
             </tr>
             <tr>
               <td>≥30,000</td>
-              <td>128 元</td>
+              <td>128元</td>
             </tr>
             <tr>
               <td>≥50,000</td>
-              <td>288 元</td>
+              <td>288元</td>
             </tr>
             <tr>
               <td>≥100,000</td>
-              <td>588 元</td>
+              <td>588元</td>
             </tr>
             <tr>
               <td>≥300,000</td>
-              <td>888 元</td>
+              <td>888元</td>
             </tr>
             <tr>
               <td>≥500,000</td>
-              <td>1,388 元</td>
+              <td>1,388元</td>
             </tr>
           </tbody>
         </table>
@@ -94,13 +94,13 @@
           <div class="livepoker-rebate-game-bottom-left-title">
             <div class="livepoker-rebate-game-bottom-left-btn">
               <img
-                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/game-bottom-left-btn.png"
+                src="../../../assets/images/promotion/hotpromo/dy2-blast-premier/game-bottom-left-btn.png"
                 alt=""
                 style="width: 10px"
               />
               <span>例：</span>
             </div>
-            会员 在 2 月 20 日在 VCT 曼谷大师赛累计有效投注为 50,000 元，在 21 日 24 小时内可获得彩金：288 元
+            会员 在 2 月 20 日在 VCT 冠军巡回赛累计有效投注为 50,000 元，在 21 日 24 小时内可获得彩金：288 元
           </div>
         </div>
       </div>
@@ -112,15 +112,13 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              活动期间，活动仅计算电竞场馆中 VCT 曼谷大师赛，会员在当日 VCT 曼谷大师赛累计有效投注≥1000
-              元即可获得对应彩金，有效投注次日清零；
+              活动期间，活动仅计算电竞场馆中 VCT 冠军巡回赛，会员在当日 VCT 冠军巡回赛累计有效投注≥1000 元即可获得对应彩金，有效投注次日清零；
               <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，活动仅计算当日 VCT 曼谷大师赛已结算的赛事总有效投注，次日 24
-            小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 8 倍流水即可出款；
+            活动期间，活动仅计算当日 VCT 冠军巡回赛已结算的赛事总有效投注，次日 24 小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 8 倍流水即可出款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
@@ -261,7 +259,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-bg.png");
+  background: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/section-bg.png");
   background-size: 100% 100%;
   align-items: center;
   width: 100%;
@@ -353,7 +351,7 @@ onMounted(() => {
   gap: 8px;
 
   .title {
-    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-title.png");
+    background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/info-title.png");
     background-repeat: no-repeat;
     background-size: 100%;
     width: 240px;
@@ -367,7 +365,7 @@ onMounted(() => {
     align-items: flex-start;
     gap: 10px;
     .left {
-      background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-little-title-bg.png");
+      background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/info-little-title-bg.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       width: 64px;
@@ -451,7 +449,7 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   .title {
-    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/rule-title.png");
+    background-image: url("../../../assets/images/promotion/hotpromo/dy2-blast-premier/rule-title.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 240px;

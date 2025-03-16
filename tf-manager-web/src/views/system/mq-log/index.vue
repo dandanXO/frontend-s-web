@@ -10,8 +10,16 @@
     />
   </div>
   <div v-for="item in page.records" :key="item.topic">
-    <div>
-      <h5>{{ t('fields.mqLogProcessTopic') }} : {{ item.topic }}</h5>
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <h5>
+        {{ t('fields.mqLogProcessTopic') }} : {{ item.topic }}
+      </h5>
+      <el-button
+        icon="el-icon-delete"
+        size="mini"
+        type="delete"
+        @click="handleDeleteMqLog(item.topic)"
+      />
     </div>
     <el-table
       :data="item.list"
@@ -37,8 +45,9 @@
 </template>
 <script setup>
 import { onMounted, reactive } from 'vue'
-import { getMQLog } from '../../../api/mq-log'
+import { getMQLog, deleteMqLog } from '../../../api/mq-log'
 import { useI18n } from 'vue-i18n'
+import { ElMessage } from "element-plus"
 
 const { t } = useI18n()
 
@@ -94,6 +103,12 @@ function tableRowClassName({ row }) {
   } else {
     return 'red-row'
   }
+}
+
+async function handleDeleteMqLog(topic) {
+  await deleteMqLog(topic);
+  await loadMQLog();
+  ElMessage.success(t('message.deleteSuccess'));
 }
 
 onMounted(() => {

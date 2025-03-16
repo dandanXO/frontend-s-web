@@ -1298,7 +1298,7 @@ export default {
     configDescribes: 'Config Describes',
     batchFrozenMember: 'แช่แข็งสมาชิกแบบกลุ่ม',
     showLogo: 'แสดงไอคอน',
-    showTime: 'Show Time',
+    showTime: 'Show Count Down Time',
     specificMember: 'Specific Member',
     isSeamlessTransfer: 'ไม่มีการโอน',
     fromPlatform: 'จากแพลตฟอร์ม',
@@ -1345,7 +1345,9 @@ export default {
     tfCompetitionNameVn: 'ชื่อการแข่งขัน (วิทนาม)',
     tfCompetitionNameKr: 'ชื่อการแข่งขัน (คอร์ยา)',
     tfCompetitionNameTh: 'ชื่อการแข่งขัน (ไทย)',
-    traceId: 'Trace ID'
+    traceId: 'Trace ID',
+    downloadQRCode: 'ดาวน์โหลดรหัส QR',
+    normalCreate: 'ปกติ'
   },
   message: {
     startenddatemore3months: 'เวลาเริ่มและเสร็จสิ้นต้องไม่เกิน 3 เดือน',
@@ -1686,7 +1688,9 @@ export default {
     roleMustOnlyOne: 'โปรดเลือกบทบาทที่ต้องได้รับอนุมัติ',
     validateIsSeamlessTransferRequired: 'จำเป็นสำหรับการไม่มีการโอน',
     validateVipSettingRequired: 'จำเป็นต้องตั้งค่าวีไอพี',
-    validatePayementTypesSettingRequired: 'จำเป็นต้องตั้งค่าการชำระเงิน'
+    validatePayementTypesSettingRequired: 'จำเป็นต้องตั้งค่าการชำระเงิน',
+    qrCodeGenerateFailed: 'การสร้างรหัส QR ล้มเหลว',
+    downloadUrlEmpty: 'URL ดาวน์โหลดว่างเปล่า'
   },
   menu: {
     undefined: 'ไม่ได้กำหนด',

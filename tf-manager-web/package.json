@@ -47,6 +47,7 @@
     "nprogress": "^0.2.0",
     "path-to-regexp": "^6.2.0",
     "pinia": "^2.0.28",
+    "qrcode": "^1.5.4",
     "qrcode.vue": "^3.3.3",
     "reflect-metadata": "^0.1.13",
     "sortablejs": "^1.13.0",

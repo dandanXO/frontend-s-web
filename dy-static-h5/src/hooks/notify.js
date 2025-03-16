@@ -51,7 +51,16 @@ export const useNotify = () => {
       case "redPacket":
         Notify.create({
           ...option,
-          message: `领取彩金成功！彩金：${option.redPacket}元`,
+          message: `领取彩金成功！彩金：${option.params.redPacket}元`,
+          type: "positive",
+          position: "top",
+          icon: "check_circle_outline"
+        });
+        break;
+      case "red-packet":
+        Notify.create({
+          ...option,
+          message: `领取奖金成功！奖金：${option.params.redPacket}元`,
           type: "positive",
           position: "top",
           icon: "check_circle_outline"

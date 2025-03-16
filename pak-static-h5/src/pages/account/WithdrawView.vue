@@ -21,6 +21,9 @@
         <div class="title">{{ $t("withdraw.withdrawable") }}</div>
       </div>
     </div>
+    <div ref="targetSection" class="target-section">
+      <!-- The section to scroll to -->
+    </div>
     <div class="withdraw-section">
       <div class="account-content last">
         <div class="withdrawalmethod">
@@ -415,15 +418,15 @@
 
   <q-dialog width="100%" v-model="guestKYCDialog" persistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
+      <q-btn dense rounded icon="close" class="popout-close" @click="goBackPage" v-close-popup />
       <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
     </div>
   </q-dialog>
 
   <q-dialog width="100%" v-model="userKYCDialog" persistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
-      <KYCUserForm ref="kycUserFormRef" @closeUserKYCDialog="closeUserKYCDialog" />
+      <q-btn dense rounded icon="close" class="popout-close" @click="goBackPage" v-close-popup />
+      <KYCUserForm @closeUserKYCDialog="checkCloseUserKYCDialog" />
     </div>
   </q-dialog>
 
@@ -469,11 +472,18 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
+  <AdditionalSteps
+    v-if="isAdditionalWithdrawSteps"
+    :currentAdditionalStep="currentWithdrawStep"
+    :currentType="'withdraw'"
+    @updateStep="handleStepUpdate"
+    @closeGuide="closePlayerGuide"
+  />
 </template>
 
 <script setup>
 /* eslint-disable */
-import { defineComponent, reactive, ref, onActivated, computed, onMounted } from "vue";
+import { defineComponent, watch, nextTick, reactive, ref, onActivated, computed, onMounted } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -487,6 +497,7 @@ import { useRoute, useRouter } from "vue-router";
 import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
 import { useCheckKYC } from "src/hooks/checkKYC";
+import AdditionalSteps from "../../components/modal/AdditionalSteps.vue";
 // import MediaSettingsComponent from "../../components/MediaSettingsComponent.vue";
 
 const router = useRouter();
@@ -525,6 +536,15 @@ const withdrawalMethods = ref([]);
 const selectedWithdrawalMethod = ref([]);
 const isRefreshRemainWager = ref(false);
 
+const checkCloseUserKYCDialog = () => {
+  closeUserKYCDialog();
+
+  const completedGuide = localStorage.getItem("completedwithdrawguide");
+  if (route.query.isNewPlayer && completedGuide !== "true") {
+    isAdditionalWithdrawSteps.value = true;
+  }
+};
+
 const refreshRemainWager = () => {
   isRefreshRemainWager.value = true;
 
@@ -550,11 +570,29 @@ const checkNewUser = () => {
     getWithdrawalMethods();
   }
 };
+const isAdditionalWithdrawSteps = ref(false);
+
+const goBackPage = () => {
+  // if (route.query.isNewPlayer) {
+  //   setTimeout(() => {
+  //     userKYCDialog.value = true;
+  //   }, 250);
+  // } else {
+  //
+  // }
+  localStorage.setItem(`completedwithdrawguide`, JSON.stringify(true));
+  router.go(-1);
+};
 
 onMounted(() => {
   checkNewUser();
   store.getBalance();
   // loadPlatform()
+
+  const completedGuide = localStorage.getItem("completedwithdrawguide");
+  if (route.query.isNewPlayer && completedGuide !== "true" && userKYCDialog.value === false) {
+    isAdditionalWithdrawSteps.value = true;
+  }
 });
 
 onActivated(() => {
@@ -882,6 +920,44 @@ const openWithdrawTutorialVideo = () => {
   //   window.open("https://drive.google.com/file/d/1u796pIy2tqdLtRIqfGRDAQgKWa1guIG2/view?usp=sharing", "_blank");
   // }
 };
+const closePlayerGuide = () => {
+  isAdditionalWithdrawSteps.value = false;
+  if (currentWithdrawStep.value === 4) {
+    localStorage.setItem("newPlayerGuide", "4");
+  }
+  enableScroll();
+};
+const enableScroll = () => {
+  document.body.style.overflow = ""; // Restore scrolling
+};
+const currentWithdrawStep = ref(2);
+const handleStepUpdate = (newStep) => {
+  currentWithdrawStep.value = newStep;
+};
+const targetSection = ref();
+watch(
+  () => currentWithdrawStep.value,
+  (newVal) => {
+    if (newVal === 3) {
+      nextTick(() => {
+        setTimeout(() => {
+          if (targetSection.value && currentWithdrawStep.value === 3) {
+            const offset = 80;
+            const rect = targetSection.value.getBoundingClientRect();
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const finalPosition = rect.top + scrollTop - offset;
+
+            window.scrollTo({
+              top: finalPosition,
+              behavior: "smooth"
+            });
+          }
+        }, 100);
+      });
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped lang="scss">

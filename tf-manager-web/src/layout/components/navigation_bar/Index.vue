@@ -181,7 +181,7 @@ export default {
       return store.state.user.name
     })
     const sites = computed(() => {
-      return store.state.user.sites.filter(site => site.id !== 9999)
+      return store.state.user.sites.filter(site => site.id !== 9999 && site.status === true)
     })
     // const sites = ref([])
     // const loadSites = async () => {

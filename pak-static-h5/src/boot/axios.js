@@ -165,7 +165,7 @@ export default boot(({ app, router }) => {
     if (res.code !== ResponseCode.SUCCESS) {
       Loading.hide();
 
-      if (res.code === ResponseCode.ERROR_NO_PIXEL_CODE) {
+      if (res.code === ResponseCode.ERROR_NO_PIXEL_CODE || res.code === ResponseCode.ERROR_NO_PRIVILEGE) {
         return res;
       }
 

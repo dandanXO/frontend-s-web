@@ -17,6 +17,7 @@ import axios from "axios";
 import { getVisitorId } from "boot/utils";
 import { cached } from "boot/cache";
 import { useRoute, useRouter } from "vue-router";
+import { App } from "@capacitor/app";
 
 export default defineComponent({
   name: "App",
@@ -203,6 +204,13 @@ export default defineComponent({
         return match ? decodeURIComponent(match[1]) : null;
       };
 
+      const getFbclid = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get("fbclid");
+      };
+
+      const fbc3 = getFbclid();
+
       const getFbClientId = () => {
         let result = /_fbp=(fb\.1\.\d+\.\d+)/.exec(window.document.cookie);
         if (!(result && result[1])) {
@@ -223,9 +231,10 @@ export default defineComponent({
         return rawFbp ? rawFbp : null;
       })();
 
+      const randUuid = generateEventID();
       const payload = new URLSearchParams({
         fbp: fbp || fbp2 || "",
-        fbc: fbc || fbclid2 || "",
+        fbc: fbc || fbclid2 || fbc3 || randUuid,
         siteCode: siteCode,
         linkId: linkId || ""
       });
@@ -247,7 +256,6 @@ export default defineComponent({
         .then((data) => {
           console.log("Success:", data);
           const randomValue = Math.floor(Math.random() * (999 - 300 + 1)) + 300;
-          const randUuid = generateEventID();
           if (data.data.sendEvent === "ftd") {
             fbq(
               "track",
@@ -329,21 +337,35 @@ export default defineComponent({
           }
         });
       } else {
-        var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || "";
+        const savedAffiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || "";
+        let _affiliateCode = "";
 
         await api
           .get(
-            `/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${affiliateCode}&refer=${referral}`
+            `/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${savedAffiliateCode}&refer=${referral}`
           )
           .then((res) => {
             console.log(res);
-            const { facebookId = "" } = res.data;
+            const { affiliateCode = "", facebookId = "" } = res.data;
+            sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+            _affiliateCode = affiliateCode;
             if (facebookId) {
               fbq("init", facebookId);
               fbq("track", "PageView");
               store.isFbPixel = true;
             }
           });
+
+        api.get(`/app/adjust/params?affiliateCode=${_affiliateCode}`).then((res) => {
+          if (res.code === 0) {
+            sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+            if (res.data.adjust_register_event) {
+              ui.adjust_register_event = res.data.adjust_register_event;
+            }
+            affAppToken.value = res.data.adjust_app_token;
+            initAdjustEventTrack();
+          }
+        });
       }
     };
 

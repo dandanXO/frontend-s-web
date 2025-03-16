@@ -192,13 +192,13 @@
 import { defineComponent, ref } from "vue";
 import { userStore } from "@/store";
 import { getDevice } from "@/utils/utils";
-import { useDark } from "@vueuse/core";
+// import { useDark } from "@vueuse/core";
 
 export default defineComponent({
   setup() {
     const affiliateUrl = ref("https://xf1-affiliate.gwd4jptunz.com/xf/");
 
-    const isDark = useDark();
+    // const isDark = useDark();
 
     const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
       var left = (screen.width - popupWinWidth) * 2;
@@ -285,7 +285,7 @@ export default defineComponent({
       store,
       openWindow,
       affiliateUrl,
-      isDark,
+      // isDark,
       contact0,
       contact1,
       contact2,
@@ -434,6 +434,7 @@ export default defineComponent({
   padding: 0 8px;
   white-space: nowrap;
   font-size: 15px;
+  text-decoration: none;
 }
 
 .affiliate-main-title {

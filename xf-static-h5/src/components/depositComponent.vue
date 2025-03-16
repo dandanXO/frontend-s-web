@@ -12,10 +12,10 @@
             hide-bottom-space
             ref="subMsg0"
             label-color="brand"
-            clearable
             v-model="submitMessage[0]"
             rounded
             outlined
+            class="disable-btn"
             color="white"
             bg-color="recinputstyle"
           >
@@ -32,10 +32,10 @@
             hide-bottom-space
             ref="subMsg1"
             label-color="brand"
-            clearable
             v-model="submitMessage[1]"
             rounded
             outlined
+            class="disable-btn"
             color="white"
             bg-color="recinputstyle"
           >
@@ -52,10 +52,10 @@
             hide-bottom-space
             ref="subMsg2"
             label-color="brand"
-            clearable
             v-model="submitMessage[2]"
             rounded
             outlined
+            class="disable-btn"
             color="white"
             bg-color="recinputstyle"
           >
@@ -72,10 +72,10 @@
             hide-bottom-space
             ref="subMsg4"
             label-color="brand"
-            clearable
             v-model="submitMessage[4]"
             rounded
             outlined
+            class="disable-btn"
             color="white"
             bg-color="recinputstyle"
           >
@@ -92,10 +92,10 @@
             hide-bottom-space
             ref="subMsg3"
             label-color="brand"
-            clearable
             v-model="submitMessage[3]"
             rounded
             outlined
+            class="disable-btn"
             color="white"
             bg-color="recinputstyle"
           >
@@ -113,10 +113,10 @@
             hide-bottom-space
             ref="subMsg5"
             label-color="brand"
-            clearable
             v-model="submitMessage[5]"
             rounded
             outlined
+            class="disable-btn"
             color="white"
             bg-color="recinputstyle"
           >
@@ -434,23 +434,22 @@ const copybtntxt4 = ref("复制");
 const copybtntxt5 = ref("复制");
 const copyMessage = (position) => {
   let copyText = null;
-  copyText = eval(`subMsg${position}.value.innerText`);
-  // Create a temporary textarea element
+  copyText = submitMessage.value[position];
   const tempTextarea = document.createElement("textarea");
   tempTextarea.value = copyText;
   document.body.appendChild(tempTextarea);
-
-  // Select the text and copy it
   tempTextarea.select();
   document.execCommand("copy");
-
-  // Remove the temporary textarea element
   document.body.removeChild(tempTextarea);
   const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4, copybtntxt5];
   copybtntxt[position].value = "已复制";
-  // copyText.select()
-  // document.execCommand("copy")
-  // copybtntxt0.value = 'คัดลอกแล้ว'
+
+  $q.notify({
+    color: "positive",
+    position: "top",
+    message: `已复制成功`,
+    icon: "check_circle_outline"
+  });
 };
 const blurCode = () => {
   const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4, copybtntxt5];
@@ -653,7 +652,8 @@ function checkPrivilege(v) {
 }
 
 function selectedBank(value) {
-  form.bankId = value.value.id;
+  // debugger;
+  form.bankId = value.id;
 }
 
 function clearInfo() {
@@ -674,6 +674,16 @@ async function confirmDeposit() {
   btnLoading.value = true;
   depositAmtRef.value.validate();
   if (depositAmtRef.value.hasError) {
+    btnLoading.value = false;
+  } else if ((selectedPayType.value && bankCardList.value.length) && !form.bankId) {
+    // $q.notify({
+    //   color: "negative",
+    //   position: "top",
+    //   message: "请输入银行",
+    //   icon: "report_problem"
+    // });
+    payTypeClass.value?.$refs?.refSelectBank?.focus();
+    depositAmtRef.value.focus();
     btnLoading.value = false;
   } else {
     await cashier
@@ -957,6 +967,18 @@ onMounted(() => {
   background: linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c 100%);
   border-radius: 6px;
   padding: 24px 16px;
+
+  .q-field--disabled .q-field__control > div {
+    opacity: 1 !important;
+  }
+
+  .common-btn {
+    pointer-events: auto;
+  }
+
+  .disable-btn{
+    pointer-events: none;
+  }
 }
 
 .q-field--outlined .q-field__control:before {

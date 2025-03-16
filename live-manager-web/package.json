@@ -1,0 +1,33 @@
+{
+  "name": "live-manager-web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "format": "prettier --write src/",
+    "build:prod": "vite build"
+  },
+  "dependencies": {
+    "@primeuix/themes": "^1.0.0",
+    "@primevue/forms": "^4.3.1",
+    "chart.js": "^4.4.8",
+    "pinia": "^3.0.1",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.3.1",
+    "vue": "^3.5.13",
+    "vue-i18n": "^9.9.0",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@primevue/auto-import-resolver": "^4.3.1",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "prettier": "3.5.3",
+    "sass-embedded": "^1.85.1",
+    "unplugin-vue-components": "^28.4.1",
+    "vite": "^6.2.1",
+    "vite-plugin-vue-devtools": "^7.7.2"
+  }
+}

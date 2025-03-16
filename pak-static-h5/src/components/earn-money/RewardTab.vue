@@ -123,17 +123,15 @@
         </a>
         <a
           class="social-item"
-          :href="`instagram://sharesheet?text=${encodeURIComponent(
-            $t('earnMoney.reward.shareText', { url: selfTgurl })
-          )}`"
-          target="_blank"
+          @click="handleShareToInstagram(selfTgurl)"
         >
           <img src="../../assets/images/earn-money/social-instagram.png" />
         </a>
+        <a ref="instagramRef" href="https://www.instagram.com" target="_blank" :style="{ display: 'none' }" />
         <a class="social-item" @click="handleShareToTikTok(selfTgurl)">
           <img src="../../assets/images/earn-money/social-tiktok.png" />
         </a>
-        <a ref="tiktokRef" href="tiktok://" target="_blank" :style="{ display: 'none' }" />
+        <a ref="tiktokRef" href="https://www.tiktok.com" target="_blank" :style="{ display: 'none' }" />
         <a class="social-item" @click="modalSocialShare = true">
           <img src="../../assets/images/earn-money/social-more.png" />
         </a>
@@ -319,7 +317,7 @@
       </div>
     </div>
 
-    <q-dialog width="100%" v-model="modalSocialShare" presistent>
+    <q-dialog width="100%" v-model="modalSocialShare" persistent>
       <div class="popout-dialog">
         <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
 
@@ -327,7 +325,7 @@
           <div class="txt-title">Share and Earn</div>
           <!-- <div class="txt-content q-mt-md text-center">Share and Earn</div> -->
           <div class="modal-invite-share-social">
-            <a class="social-item" @click="handleShareToYoutube(selfTgurl)">
+            <a class="social-item" :href="ui.youtubeUrl" target="_blank">
               <img src="../../assets/images/earn-money/social-youtube.png" />
             </a>
             <a class="social-item" @click="handleShareToFacebookPost(selfTgurl)">
@@ -350,6 +348,7 @@ import { computed, onMounted, ref, watch } from "vue";
 import { copyToClipboard, useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { userStore } from "stores/index";
+import { useUI } from "stores/ui";
 import { useI18n } from "vue-i18n";
 import moment from "moment";
 import { convertToCommaAmount } from "src/boot/utils";
@@ -357,6 +356,7 @@ import { convertToCommaAmount } from "src/boot/utils";
 const $q = useQuasar();
 const store = userStore();
 const { t } = useI18n();
+const ui = useUI();
 
 const copyHrefLink = () => {
   navigator.clipboard
@@ -466,6 +466,7 @@ const getLatestInvitees = () => {
 const selfTgurl = ref("");
 const waUrl = ref("");
 const tiktokRef = ref();
+const instagramRef = ref();
 const youtubeRef = ref();
 
 const getRewardAmount = (type) => {
@@ -538,12 +539,18 @@ const handleShareToTikTok = (url) => {
   tiktokRef.value.click();
 };
 
+const handleShareToInstagram = (url) => {
+  const shareText = t("earnMoney.reward.shareText", { url });
+  copyToClipboard(shareText);
+  instagramRef.value.click();
+};
+
 const handleShareToYoutube = (url) => {
   const shareText = t("earnMoney.reward.shareText", { url });
   const youtubeShareUrl = `https://www.youtube.com/share?url=${encodeURIComponent(url)}&text=${encodeURIComponent(
     shareText
   )}`;
-  window.open(youtubeShareUrl, "_self");
+  window.open(youtubeShareUrl, "_blank");
 };
 
 const handleShareToFacebookPost = (url) => {

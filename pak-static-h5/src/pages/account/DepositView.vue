@@ -6,6 +6,9 @@
       <img src="../../assets/images/bonus/slot-ftd-img.png" />
     </div>
 
+    <div ref="targetSection" class="target-section">
+      <!-- The section to scroll to -->
+    </div>
     <div class="node-wrapper">
       <Node :key="nodeKey" :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
     </div>
@@ -325,14 +328,22 @@
 
   <q-dialog width="100%" v-model="userKYCDialog" persistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
-      <KYCUserForm ref="kycUserFormRef" @closeUserKYCDialog="closeUserKYCDialog" />
+      <q-btn dense rounded icon="close" class="popout-close" @click="goBackPage" v-close-popup />
+      <KYCUserForm @closeUserKYCDialog="checkCloseUserKYCDialog" />
     </div>
   </q-dialog>
+
+  <AdditionalSteps
+    v-if="isAdditionalDepositSteps"
+    :currentAdditionalStep="currentDepStep"
+    :currentType="'deposit'"
+    @updateStep="handleStepUpdate"
+    @closeGuide="closePlayerGuide"
+  />
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, watch, computed } from "vue";
+import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, watch, computed, nextTick } from "vue";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
@@ -349,6 +360,55 @@ import { useCheckKYC } from "src/hooks/checkKYC";
 import { storeToRefs } from "pinia";
 // import MediaSettingsComponent from "../../components/MediaSettingsComponent.vue";
 
+import AdditionalSteps from "../../components/modal/AdditionalSteps.vue";
+const closePlayerGuide = () => {
+  isAdditionalDepositSteps.value = false;
+  if (currentDepStep.value === 4) {
+    localStorage.setItem("newPlayerGuide", "4");
+  }
+  enableScroll();
+};
+const preventBodyScroll = (e) => {
+  const container = document.querySelector(".abs-container");
+  if (!container.contains(e.target)) {
+    e.preventDefault(); // Stop background scrolling
+  }
+};
+
+const disableScroll = () => {
+  document.body.style.overflow = "hidden"; // Prevent body scrolling
+  document.addEventListener("touchmove", preventBodyScroll, { passive: false });
+};
+
+const enableScroll = () => {
+  document.body.style.overflow = ""; // Restore body scroll
+  document.removeEventListener("touchmove", preventBodyScroll);
+};
+
+const targetSection = ref();
+const currentType = ref("deposit");
+const currentDepStep = ref(2);
+const handleStepUpdate = (newStep) => {
+  currentDepStep.value = newStep;
+
+  nextTick(() => {
+    setTimeout(() => {
+      console.log(currentDepStep.value);
+      if (currentDepStep.value === 3 && targetSection.value && isAdditionalDepositSteps.value) {
+        const offset = 20;
+        const rect = targetSection.value.getBoundingClientRect();
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const finalPosition = rect.top + scrollTop - offset;
+
+        window.scrollTo({
+          top: finalPosition,
+          behavior: "smooth"
+        });
+      }
+    }, 100);
+  });
+};
+
 const imgURL = process.env.IMAGE_CDN;
 
 var qs = require("qs");
@@ -362,6 +422,14 @@ const kycUserFormRef = ref(null);
 
 const { userKYCDialog, closeUserKYCDialog } = useCheckKYC(["mounted", "activated"], kycUserFormRef);
 
+const checkCloseUserKYCDialog = () => {
+  closeUserKYCDialog();
+
+  const completedGuide = localStorage.getItem("completeddepositguide");
+  if (route.query.isNewPlayer && completedGuide !== "true") {
+    isAdditionalDepositSteps.value = true;
+  }
+};
 const isBank2 = computed(() => {
   return activeMethod.value.code === "BANK-2";
 });
@@ -979,19 +1047,29 @@ watch(
   },
   { immediate: true }
 );
+const isAdditionalDepositSteps = ref(false);
 
-onActivated(() => {
-  // checkNewUser();
-  // refreshNode();
-  // console.log("onActivated deposit");
-});
+const goBackPage = () => {
+  // debugger;
+  // if (route.query.isNewPlayer) {
+  //   setTimeout(() => {
+  //     userKYCDialog.value = true;
+  //   }, 250);
+  // } else {
+  localStorage.setItem(`completeddepositguide`, JSON.stringify(true));
+  router.go(-1);
+  // }
+};
 
 onMounted(() => {
   initPay();
-  // checkNewUser();
   refreshNode();
   loadAppTabs();
   // console.log("onMounted deposit");
+  const completedGuide = localStorage.getItem("completeddepositguide");
+  if (route.query.isNewPlayer && completedGuide !== "true" && userKYCDialog.value === false) {
+    isAdditionalDepositSteps.value = true;
+  }
 });
 </script>
 

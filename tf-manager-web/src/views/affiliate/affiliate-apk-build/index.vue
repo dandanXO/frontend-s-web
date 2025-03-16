@@ -193,6 +193,14 @@
             >
               {{ t('fields.download') }}
             </el-button>
+            <el-button
+              size="mini"
+              type="primary"
+              v-if="scope.row.fileUrl !== null && scope.row.buildStatus === 'SUCCESS'"
+              @click="downloadQRCode(scope.row.fileUrl)"
+            >
+              {{ t('fields.downloadQRCode') }}
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -227,7 +235,7 @@
                 v-model="item.key"
               />
               :
-              <el-input style="width: 170px " v-model="item.value" />
+              <el-input style="width: 550px " v-model="item.value" />
               <el-button
                 v-if="index === param.length - 1"
                 icon="el-icon-plus"
@@ -276,8 +284,8 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted, computed } from 'vue'
-import { ElMessage } from 'element-plus'
+import { reactive, ref, onMounted, computed, h } from 'vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { hasPermission } from '../../../utils/util'
 import { useI18n } from 'vue-i18n'
 import {
@@ -292,6 +300,8 @@ import {
 // import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
+// import { saveAs } from 'file-saver'
+import QRCode from 'qrcode'
 
 const { t } = useI18n()
 const table = ref(null)
@@ -487,6 +497,33 @@ const downloadFile = (url) => {
   }
 };
 
+const downloadQRCode = async (url) => {
+  if (url) {
+    try {
+      // 生成二维码数据URL
+      const qrDataUrl = await QRCode.toDataURL(url, {
+        width: 300,
+        margin: 2
+      })
+
+      // 显示二维码弹窗
+      ElMessageBox({
+        title: t('fields.downloadQRCode'),
+        message: h('img', { src: qrDataUrl, style: 'display: block; margin: 0 auto;' }),
+        customClass: 'qrcode-dialog',
+        showConfirmButton: false,
+        closeOnClickModal: true
+      })
+    } catch (error) {
+      console.error('生成二维码失败:', error)
+      ElMessage.error(t('message.qrCodeGenerateFailed'))
+    }
+  } else {
+    console.error('下载URL为空')
+    ElMessage.error(t('message.downloadUrlEmpty'))
+  }
+}
+
 onMounted(async () => {
   await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
@@ -528,6 +565,12 @@ onMounted(async () => {
 
 .el-result {
   padding: 0;
+}
+
+.qrcode-dialog {
+  .el-message-box__content {
+    padding: 20px;
+  }
 }
 
 :deep(.el-table__row:not([class*='el-table__row--level-'])) {

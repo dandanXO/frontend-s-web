@@ -252,6 +252,16 @@
             </template>
           </el-table-column>
           <el-table-column prop="timeZone" :label="t('fields.timeZone')" width="150" />
+          <el-table-column prop="status" :label="t('fields.state')" width="80">
+            <template #default="scope">
+              <el-switch
+                v-model="scope.row.status"
+                active-color="#409EFF"
+                inactive-color="#F56C6C"
+                @change="changestatus(scope.row.id, scope.row.status)"
+              />
+            </template>
+          </el-table-column>
           <el-table-column :label="t('fields.operate')" align="right" fixed="right" min-width="200">
             <template #default="scope">
               <el-button icon="el-icon-edit" size="mini" type="success" @click="showEdit(scope.row)" />
@@ -270,7 +280,7 @@ import { nextTick, onMounted, reactive, ref, watch } from "vue";
 import draggable from "vuedraggable";
 import { required, size, isAlphaNumericUnderscore, isValidDomainURL } from "../../../utils/validate";
 import { ElMessage } from "element-plus";
-import { createSiteSteps, getSites, updateSite, getSiteListSimple, getSiteListSimpleNoParenId, updateSiteMenu } from "../../../api/site";
+import { createSiteSteps, getSites, updateSite, getSiteListSimple, getSiteListSimpleNoParenId, updateSiteMenu, updateSiteState } from "../../../api/site";
 import {
   createDomain,
   getDomains,
@@ -612,6 +622,26 @@ async function loadSiteMenu() {
   menus.list = children
   const { data: allSitesMenu } = await fetchAllSitesMenu()
   menus.allSiteList = allSitesMenu
+}
+
+async function changestatus(id, state) {
+  await updateSiteState(id, state);
+
+  // 更新 store 中的 sites 數據
+  const updatedSites = store.state.user.sites.map(site => {
+    if (site.id === id) {
+      return { ...site, status: state };
+    }
+    return site;
+  });
+
+  // 更新 store
+  store.commit('SET_LOGIN_USER', {
+    ...store.state.user,
+    sites: updatedSites
+  });
+
+  ElMessage({ message: t('message.editSuccess'), type: "success" });
 }
 
 watch(
