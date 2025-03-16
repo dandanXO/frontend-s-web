@@ -148,8 +148,8 @@
       </q-btn>
 
       <div class="google-login-wrapper">
-        <img v-if="languageVal === 'en'" style="width:100%;" src="../assets/images/index/logindirectly-en.png" />
-        <img v-else style="width:100%;" src="../assets/images/index/logindirectly-ur.png" />
+        <img v-if="languageVal === 'en'" style="width: 100%" src="../assets/images/index/logindirectly-en.png" />
+        <img v-else style="width: 100%" src="../assets/images/index/logindirectly-ur.png" />
         <template v-if="isAndroid()">
           <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onCapacitorGoogleSignin">
             <img
@@ -644,6 +644,20 @@ export default defineComponent({
                 getCode();
                 sessionStorage.removeItem("REFERRAL_CODE");
                 localStorage.removeItem("PWA_REFERRAL_CODE");
+                sessionStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
+
+                //TODO:: ???
+                // if (!localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
+                //   localStorage.setItem("SPIN_LUCKY_WHEEL_POPUP", true);
+                // } else
+                if (localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
+                  const currTime = Date.now();
+                  const prevTime = Number(localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP"));
+
+                  if (currTime - prevTime > 60 * 1000 * 60 * 24 * 30) {
+                    localStorage.setItem("SPIN_LUCKY_WHEEL_POPUP", true);
+                  }
+                }
 
                 if (isCheckRmb.value) {
                   localStorage.setItem(

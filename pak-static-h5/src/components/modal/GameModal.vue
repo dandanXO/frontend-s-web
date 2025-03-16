@@ -294,7 +294,11 @@ const isDepositZero = ref(false);
 const open = (gameName, platformCode, gameCode, gameType, demo, isChoice = false) => {
   const store = userStore();
   isDepositZero.value = (store.hasDeposit === false);
-
+  const _isFromNewPlayerGuide = sessionStorage.getItem("isFromNewPlayerGuide");
+  if (_isFromNewPlayerGuide) {
+    startGame(gameName, platformCode, gameCode, gameType, demo);
+    return;
+  }
   if (!isChoice && isDepositZero.value && demo) {
     // Store the parameters and show the dialog
     pendingGameParams.value = { gameName, platformCode, gameCode, gameType, demo };
@@ -380,17 +384,19 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
           }
         }
       }
-
-      const apiUrl = _isPlatformAllowNonLogin
-        ? `/game/launch?_time=${new Date().getTime()}`
-        : `/session/launch?_time=${new Date().getTime()}`;
+      const _isFromNewPlayerGuide = sessionStorage.getItem("isFromNewPlayerGuide");
+      const apiUrl =
+        _isPlatformAllowNonLogin || _isFromNewPlayerGuide
+          ? `/game/launch?_time=${new Date().getTime()}`
+          : `/session/launch?_time=${new Date().getTime()}`;
       let apiParam = {
         platform: platformCode,
         gameCode: gameCode,
         isMobile: Platform.is.mobile ? true : false,
         way: way
       };
-      if (_isPlatformAllowNonLogin) {
+
+      if (_isPlatformAllowNonLogin || _isFromNewPlayerGuide) {
         try {
           const demoInfo = JSON.parse(demo);
           if (!demoInfo.platformCode || !demoInfo.code) throw new Error();
@@ -404,6 +410,7 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
         } catch (_) {
           denyGameLaunch();
         }
+        sessionStorage.removeItem("isFromNewPlayerGuide");
       }
 
       api
@@ -1011,7 +1018,8 @@ defineExpose({
   // box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
   border-radius: 12px 12px 0 0;
-  margin: 0;
+    max-width: 500px;
+    margin: auto;
   .choices {
     display: flex;
     width: 100%;

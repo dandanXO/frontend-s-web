@@ -223,7 +223,8 @@
                   (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
                   `${$t('form.withdrawalAmount_rules_04')} ${selectedMethodItem.withdrawMin} - ${
                     selectedMethodItem.withdrawMax
-                  }`
+                  }`,
+                (val) => Number.isInteger(+val) || $t('form.withdrawalAmount_rules_05')
               ]"
               hide-bottom-space
               @focus="scrollToInput"

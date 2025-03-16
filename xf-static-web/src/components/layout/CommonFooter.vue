@@ -310,6 +310,7 @@ export default defineComponent({
       padding: 10px;
       color: $footer-link;
       font-size: 0.8rem;
+      text-align: center;
     }
   }
 }

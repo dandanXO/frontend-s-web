@@ -217,7 +217,7 @@
           <div class="submit-alert-message-item">
             <div class="">
               <p style="color: #fff; margin-top: 0px">取款需要绑定真实姓名</p>
-              <div style="font-size: 12px; color: #d1d1d1">为了您的资金安全，银行卡姓名需一致</div>
+              <div style="font-size: 15px; color: #d1d1d1">为了您的资金安全，银行卡姓名需一致</div>
             </div>
 
             <button type="primary" class="common-btn" @click="handleBindRealName">去绑定</button>
@@ -227,7 +227,7 @@
           <div class="submit-alert-message-item">
             <div class="">
               <p style="color: #fff; margin-top: 0px">取款需要绑定手机号</p>
-              <div style="font-size: 12px; color: #d1d1d1">为了您的资金安全，请绑定手机号</div>
+              <div style="font-size: 15px; color: #d1d1d1">为了您的资金安全，请绑定手机号</div>
             </div>
             <button type="primary" class="common-btn" @click="handleBindPhoneNumber">去绑定</button>
           </div>
@@ -782,7 +782,7 @@ export default defineComponent({
         background: #ffd800;
         padding: 5px;
         color: #000000;
-        font-size: 12px;
+        font-size: 15px;
         line-height: 10px;
         border-radius: 0 10px;
         font-weight: bold;
@@ -954,8 +954,8 @@ export default defineComponent({
 }
 
 .upgrade-btn {
-  padding: 1px 7px;
-  height: 27px;
+  padding: 8px 20px 34px !important;
+  // height: 27px;
   align-self: center;
   img {
     height: 25px;
@@ -969,7 +969,7 @@ export default defineComponent({
   gap: 28px;
   justify-content: space-between;
   width: 244px;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 400;
   line-height: 13.58px;
   color: #00a478;
@@ -998,13 +998,13 @@ export default defineComponent({
 
       .el-form-item__label {
         font-family: PingFang SC;
-        font-size: 12px;
+        font-size: 15px;
         font-weight: 400;
         color:#B8B8B8;
       }
       .el-form-item__content {
         font-family: PingFang SC;
-        font-size: 12px;
+        font-size: 15px;
         font-weight: 400;
         color:#B8B8B8;
         display: flex;

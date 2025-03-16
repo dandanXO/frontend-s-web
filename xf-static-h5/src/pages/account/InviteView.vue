@@ -307,7 +307,7 @@ onMounted(() => {
   font-size: 12px;
   display: block;
   margin-bottom: 15px;
-  border: 1px solid #aaa;
+  // border: 1px solid #aaa;
 }
 
 .share-link-div .copy-btn {

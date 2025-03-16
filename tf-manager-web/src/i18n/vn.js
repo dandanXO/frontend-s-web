@@ -1880,7 +1880,7 @@ export default {
     displayEndTime: 'Hiển thị thời gian kết thúc',
     batchFrozenMember: 'Đóng băng thành viên hàng loạt',
     showLogo: 'hiển thị biểu tượng',
-    showTime: 'Show Time',
+    showTime: 'Show Count Down Time',
     specificMember: 'Specific Member',
     isSeamlessTransfer: 'Không cần chuyển nhượng',
     fromPlatform: 'Từ Nền tảng',
@@ -1927,7 +1927,9 @@ export default {
     tfCompetitionNameVn: 'Tên giải đấu (Tiếng Việt)',
     tfCompetitionNameKr: 'Tên giải đấu (Tiếng Hàn)',
     tfCompetitionNameTh: 'Tên giải đấu (Tiếng Thái)',
-    traceId: 'Trace ID'
+    traceId: 'Trace ID',
+    downloadQRCode: 'Tải xuống mã QR',
+    normalCreate: 'Bình thường'
   },
   message: {
     startenddatemore3months:
@@ -2438,6 +2440,8 @@ export default {
     validateFbIdRequired: 'Facebook ID là bắt buộc',
     validateFbUrlRequired: 'URL Facebook là bắt buộc',
     validateFbTokenRequired: 'Token Facebook là bắt buộc',
+    qrCodeGenerateFailed: 'Tạo mã QR không thành công',
+    downloadUrlEmpty: 'URL tải xuống trống'
   },
   menu: {
     'Add Promo': 'Thêm khuyến mãi',
