@@ -297,7 +297,7 @@ export default defineComponent({
       var max = 12;
       if (selectedBankType.value === "alipay") {
         min = 11;
-        max = 20;
+        max = 25;
       } else if (selectedBankType.value === 'Bank') {
         var selectedBankCode = null;
         banksList.value.forEach(bank => {
