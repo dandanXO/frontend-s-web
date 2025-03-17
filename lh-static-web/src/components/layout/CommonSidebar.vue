@@ -19,10 +19,7 @@
       </div>
     </div>
     <div class="sticky-sidebar-items">
-      <div
-        class="sticky-sidebar-item"
-        @click="handleDarkModeClick"
-      >
+      <div class="sticky-sidebar-item" @click="handleDarkModeClick">
         <img v-if="isDark" src="@/assets/images/home/sticky-sidebar/light-mode-icon.svg" />
         <img v-else src="@/assets/images/home/sticky-sidebar/dark-mode-icon.svg" />
         <div>{{ isDark ? "白天" : "夜间" }}模式</div>
@@ -123,8 +120,8 @@
           </div>
         </div> -->
       <el-carousel
-        height="200px"
-        width="180px"
+        class="float-carousel"
+        height="130px"
         :indicator-position="floatPromo.length > 1 ? 'outside' : 'none'"
         arrow="never"
         :autoplay="true"
@@ -743,5 +740,14 @@ export default defineComponent({
 
 :deep(.el-carousel__indicators) {
   display: flex;
+}
+.float-carousel {
+  :deep(.el-carousel__indicators) {
+    width: 100% !important;
+  }
+  :deep(.el-carousel__indicator) {
+    padding-left: 2px;
+    padding-right: 2px;
+  }
 }
 </style>

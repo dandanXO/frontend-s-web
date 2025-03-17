@@ -3393,6 +3393,8 @@ export default {
     publishStatus: '发布状态',
     PENDING: '待发布',
     PUBLISHED: '已发布',
+    packageName: '包名',
+    lastBuildTime: '最后打包时间',
   },
   affiliateApk: {
     currentVersion: '当前版本',

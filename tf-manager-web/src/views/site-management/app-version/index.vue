@@ -319,6 +319,8 @@
           </span> -->
         </template>
       </el-table-column>
+      <el-table-column prop="packageName" :label="t('siteAppVersion.packageName')" />
+      <el-table-column prop="lastBuildTime" :label="t('siteAppVersion.lastBuildTime')" />
       <el-table-column type="title" :label="t('fields.action')" :flex-grow="1">
         <template #default="scope">
           <el-button
