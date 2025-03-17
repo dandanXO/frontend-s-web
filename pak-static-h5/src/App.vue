@@ -331,7 +331,7 @@ export default defineComponent({
           }
         });
       } else {
-        window.addEventListener("secondRedirection", async () => {
+        document.addEventListener("secondRedirection", async () => {
           const savedAffiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || "";
           let _affiliateCode = "";
           const referral = route.params.referralCode
