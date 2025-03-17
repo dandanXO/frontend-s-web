@@ -229,7 +229,7 @@ const bankCardInfo = reactive({
 });
 
 const validateBankLength = (val) => {
-  return (val.length > 10 && val.length < 21) || "长度应为11到20个字符";
+  return (val.length > 10 && val.length < 26) || "长度应为11到25个字符";
 };
 
 // NOTE: no chance to validate, e.g. member telephone = 44****77
