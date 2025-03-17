@@ -121,7 +121,8 @@
         </div> -->
       <el-carousel
         class="float-carousel"
-        height="130px"
+        height="200px"
+        width="180px"
         :indicator-position="floatPromo.length > 1 ? 'outside' : 'none'"
         arrow="never"
         :autoplay="true"
@@ -741,13 +742,13 @@ export default defineComponent({
 :deep(.el-carousel__indicators) {
   display: flex;
 }
-.float-carousel {
-  :deep(.el-carousel__indicators) {
-    width: 100% !important;
-  }
-  :deep(.el-carousel__indicator) {
-    padding-left: 2px;
-    padding-right: 2px;
-  }
-}
+// .float-carousel {
+//   :deep(.el-carousel__indicators) {
+//     width: 100% !important;
+//   }
+//   :deep(.el-carousel__indicator) {
+//     padding-left: 2px;
+//     padding-right: 2px;
+//   }
+// }
 </style>
