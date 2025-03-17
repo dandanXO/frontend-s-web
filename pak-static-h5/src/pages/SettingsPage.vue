@@ -721,14 +721,14 @@ const handleCopyClick = async () => {
 }
 
 .invite-share-link {
-      margin-top: 12px;
+      margin-top: 8px;
       background-color: #292D2E;
       padding: 4px;
       border-radius: 8px;
       display: flex;
       justify-content: space-between;
       min-height: 40px;
-      border: 1px solid #FFFFFF40;
+      border: 1px solid #FFFFFF14;
 
       .link-href {
         padding: 10px 16px;
@@ -746,7 +746,7 @@ const handleCopyClick = async () => {
         align-items: center;
         min-width: 70px;
         font-weight: bold;
-        border-radius: 12px;
+        border-radius: 5px;
         letter-spacing: -1px;
       }
     }

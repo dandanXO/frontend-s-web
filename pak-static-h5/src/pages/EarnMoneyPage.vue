@@ -96,7 +96,7 @@ watch(
       nextTick(() => {
         setTimeout(() => {
           if (targetSection.value && isAdditionalReferSteps.value) {
-            const offset = -760;
+            const offset = -700;
             const rect = targetSection.value.getBoundingClientRect();
             const scrollTop = window.scrollY || document.documentElement.scrollTop;
             const finalPosition = rect.top + scrollTop - offset;

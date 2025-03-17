@@ -241,10 +241,10 @@ const updateCurrentAdditionalStep = () => {
       // right: 11vh;
       right: 20%;
       bottom: 0;
-      .inner-line {
-        background: url(../../assets/images/newplayerguide/dep-point-1.png) no-repeat center center;
-        background-size: 60%;
-      }
+      // .inner-line {
+      //   background: url(../../assets/images/newplayerguide/dep-point-1.png) no-repeat center center;
+      //   background-size: 60%;
+      // }
     }
     &.step-2 {
       width: 50%;
@@ -388,10 +388,10 @@ const updateCurrentAdditionalStep = () => {
       // right: 11vh;
       right: 22%;
       bottom: 0;
-      .inner-line {
-        background: url(../../assets/images/newplayerguide/dep-point-1.png) no-repeat center center;
-        background-size: 60%;
-      }
+      // .inner-line {
+      //   background: url(../../assets/images/newplayerguide/dep-point-1.png) no-repeat center center;
+      //   background-size: 60%;
+      // }
     }
     &.step-2 {
       width: 50%;
