@@ -109,7 +109,7 @@
   </div>
 
   <div
-    class="rocket-wrapper"
+    class="rocket-wrapper-float"
     v-if="showFloatPromo"
     :class="'show-promo'"
     :style="{ top: promoPosition.top + 'px', left: promoPosition.left + 'px' }"
@@ -123,14 +123,15 @@
           </div>
         </div> -->
       <el-carousel
-        height="130px"
+        height="200px"
+        width="180px"
         :indicator-position="floatPromo.length > 1 ? 'outside' : 'none'"
         arrow="never"
         :autoplay="true"
         :interval="3000"
       >
         <el-carousel-item v-for="(promo, i) in floatPromo" :key="i">
-          <div @click="gotoPromo(promo.code)" class="rocket-container">
+          <div @click="gotoPromo(promo.code)" class="rocket-container-float">
             <div class="rocket">
               <img :src="`${imgURL}/promo/${promo.icon}`" />
               <span v-if="promo.showTime" class="promo-remaining-time">
@@ -493,13 +494,17 @@ export default defineComponent({
     z-index: 99;
     cursor: pointer;
   }
-
+  .rocket-container-float{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
   .rocket {
     pointer-events: none;
     user-select: none;
     img {
       display: block;
-      width: 100px;
+      width: 180px;
       cursor: pointer;
     }
     .promo-remaining-time {
@@ -515,6 +520,89 @@ export default defineComponent({
       }
   }
 }
+.rocket-wrapper-float{
+  position: fixed;
+  z-index: 666;
+
+  transition: all 0.3s;
+  display: none;
+  width: 200px;
+  height: 250px;
+  user-select: none; /* Disable text selection */
+
+  &.show-promo {
+    display: block;
+  }
+
+  &.domain-wrapper {
+    height: auto;
+    width: 155px;
+
+    .rocket {
+      img {
+        display: block;
+        width: 155px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &.show-rocket {
+    display: block;
+  }
+
+  &.show-domain {
+    display: block;
+  }
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+
+  .close-btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #333333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    font-size: 12px;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 99;
+    cursor: pointer;
+  }
+  .rocket-container-float{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .rocket {
+    pointer-events: none;
+    user-select: none;
+    img {
+      display: block;
+      width: 180px;
+      cursor: pointer;
+    }
+    .promo-remaining-time {
+        position: absolute;
+        bottom: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 24px;
+        font-weight: bold;
+        color: #444;
+        // color: #eaff00;
+        // text-shadow: 2px 2px 0px #00000040;
+      }
+  }
+}
+
 
 .additional-info-items {
   display: flex;
@@ -650,5 +738,10 @@ export default defineComponent({
   margin-left: 3px;
   position: absolute;
   // fill: #a3a3a3;
+}
+
+
+:deep(.el-carousel__indicators) {
+  display: flex;
 }
 </style>

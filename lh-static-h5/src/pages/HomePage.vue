@@ -590,15 +590,17 @@
         transition-prev="slide-right"
         animated
         :keep-alive="false"
+        autoplay
+        :autoplay-interval="3000"
         infinite
         size="xs"
       >
         <q-carousel-slide v-for="(promo, i) in floatPromo" :key="i" :name="i" @click="gotoFloatPromo(promo.code)">
           <div class="rocket-wrapper">
             <div class="rocket">
-              <img loading="lazy" style="width: 100px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" />
-              <span v-show="currentPromo.showTime" class="promo-remaining-time">
-                {{ floatPromoRemainingTime[1] }}
+              <img loading="lazy" style="width: 100px" :src="`${imgURLFloat}/promo/${promo.icon}`" />
+              <span v-show="promo.showTime" class="promo-remaining-time">
+                {{ floatPromoRemainingTime[i] }}
               </span>
             </div>
           </div>
@@ -1681,7 +1683,7 @@ export default defineComponent({
             // Update the displayed promo every 5 seconds
             updatePromoRemainingTime();
             setInterval(updatePromoRemainingTime, 1000);
-            setInterval(updatePromo, 3000);
+            // setInterval(updatePromo, 3000);
             updateRocket(); // Initially update the displayed promo
             // Update the displayed promo every 5 seconds
             setInterval(updateRocket, 3000);
@@ -1696,7 +1698,9 @@ export default defineComponent({
     const updatePromoRemainingTime = () => {
       floatPromoRemainingTime.value = floatPromo.value.map((promo) => {
         let result = "00:00:00";
-        if (promo?.endTime) {
+        
+        if (promo?.showTime) {
+          console.log(promo.title)
           const now = moment(Date.now());
           const endTime = moment(promo?.endTime);
           const totalSeconds = endTime.diff(now, "seconds");
@@ -1707,6 +1711,7 @@ export default defineComponent({
             result = `${`${hours}`.padStart(2, 0)}:${`${minutes}`.padStart(2, 0)}:${`${seconds}`.padStart(2, 0)}`;
           }
         }
+        console.log(result,'time');
         return result;
       });
     };
@@ -2003,14 +2008,14 @@ export default defineComponent({
   }
   .promo-remaining-time {
     position: absolute;
-    bottom: 1rem;
+    bottom: 2.41rem;
     left: 50%;
     transform: translateX(-50%);
     font-weight: bold;
     font-family: Arial;
     color: #444;
     // text-shadow: 2px 2px 0px #00000040;
-    font-size: 1.03rem;
+    font-size: 1.02rem;
   }
   
 }
