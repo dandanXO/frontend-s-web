@@ -133,8 +133,8 @@
             <div class="rocket">
               <img :src="`${imgURL}/promo/${promo.icon}`" />
               <span v-if="promo.showTime" class="promo-remaining-time">
-                  {{ floatPromoRemainingTime[i] }}
-                </span>
+                {{ floatPromoRemainingTime[i] }}
+              </span>
             </div>
           </div>
         </el-carousel-item>
@@ -196,7 +196,7 @@ export default defineComponent({
     const showDomain = ref(false);
     const hideRocket = () => {
       showRocket.value = false;
-      rocketPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 220 };
+      rocketPosition.value = { top: window.innerHeight - 300, left: window.innerWidth - 320 };
     };
     const openLink = (link) => {
       if (!isDragging.value && clickAllowed.value) {
@@ -215,8 +215,8 @@ export default defineComponent({
     const showFloatPromo = ref(false);
     const hideFloatPromo = () => {
       showFloatPromo.value = false;
-      promoPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 220 };
-      domainPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 260 };
+      promoPosition.value = { top: window.innerHeight - 300, left: window.innerWidth - 320 };
+      domainPosition.value = { top: window.innerHeight - 300, left: window.innerWidth - 360 };
     };
     const floatPromo = [];
     const floatPromoRemainingTime = ref([]);
@@ -247,7 +247,7 @@ export default defineComponent({
           updatePromoRemainingTime();
           // Update the displayed promo every 5 seconds
           setInterval(updatePromo, 3000);
-          
+
           setInterval(updatePromoRemainingTime, 1000);
         } else {
           notify.error(res.message);
@@ -256,7 +256,7 @@ export default defineComponent({
     };
     const checkFloatPromo = () => {
       if (gamePromo.length === 0) {
-        promoPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 220 };
+        promoPosition.value = { top: window.innerHeight - 300, left: window.innerWidth - 320 };
       }
       if (showRocket.value === false) {
         domainPosition.value = { top: window.innerHeight - 320, left: window.innerWidth - 260 };
@@ -269,8 +269,8 @@ export default defineComponent({
     };
 
     const domainPosition = ref({ top: window.innerHeight - 430, left: window.innerWidth - 240 });
-    const rocketPosition = ref({ top: window.innerHeight - 200, left: window.innerWidth - 220 });
-    const promoPosition = ref({ top: window.innerHeight - 320, left: window.innerWidth - 220 });
+    const rocketPosition = ref({ top: window.innerHeight - 300, left: window.innerWidth - 320 });
+    const promoPosition = ref({ top: window.innerHeight - 320, left: window.innerWidth - 320 });
     const isDragging = ref(false);
     const clickAllowed = ref(true);
     const shiftX = ref(0);
@@ -492,7 +492,7 @@ export default defineComponent({
     z-index: 99;
     cursor: pointer;
   }
-  .rocket-container-float{
+  .rocket-container-float {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -506,19 +506,19 @@ export default defineComponent({
       cursor: pointer;
     }
     .promo-remaining-time {
-        position: absolute;
-        bottom: 16%;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 32px;
-        font-weight: bold;
-        color: #444;
-        // color: #eaff00;
-        // text-shadow: 2px 2px 0px #00000040;
-      }
+      position: absolute;
+      bottom: 16%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 32px;
+      font-weight: bold;
+      color: #444;
+      // color: #eaff00;
+      // text-shadow: 2px 2px 0px #00000040;
+    }
   }
 }
-.rocket-wrapper-float{
+.rocket-wrapper-float {
   position: fixed;
   z-index: 666;
 
@@ -574,7 +574,7 @@ export default defineComponent({
     z-index: 99;
     cursor: pointer;
   }
-  .rocket-container-float{
+  .rocket-container-float {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -588,19 +588,18 @@ export default defineComponent({
       cursor: pointer;
     }
     .promo-remaining-time {
-        position: absolute;
-        bottom: 20%;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 24px;
-        font-weight: bold;
-        color: #444;
-        // color: #eaff00;
-        // text-shadow: 2px 2px 0px #00000040;
-      }
+      position: absolute;
+      bottom: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 24px;
+      font-weight: bold;
+      color: #444;
+      // color: #eaff00;
+      // text-shadow: 2px 2px 0px #00000040;
+    }
   }
 }
-
 
 .additional-info-items {
   display: flex;
@@ -737,7 +736,6 @@ export default defineComponent({
   position: absolute;
   // fill: #a3a3a3;
 }
-
 
 :deep(.el-carousel__indicators) {
   display: flex;
