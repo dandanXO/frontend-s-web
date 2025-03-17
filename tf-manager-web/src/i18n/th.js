@@ -790,6 +790,7 @@ export default {
     minno: 'กรุณาใส่ราคาขั้นต่ำ',
     maxno: 'กรุณาใส่ราคาสูงสุด',
     memberRemark: 'หมายเหตุสมาชิก',
+    memberReferWhitelist: 'รายชื่อที่อนุญาตให้เชิญสมาชิก',
     minActiveMemberCount: 'จำนวนสมาชิกที่ใช้งานขั้นต่ำ',
     minBalance: 'ยอดคงเหลือขั้นต่ำ',
     minDeposit: 'ฝากขั้นต่ำ',
