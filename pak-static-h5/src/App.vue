@@ -287,12 +287,6 @@ export default defineComponent({
     };
 
     const trackH5Affiliate = async () => {
-      const referral = route.params.referralCode
-        ? route.params.referralCode
-        : sessionStorage.getItem("REFERRAL_CODE")
-        ? sessionStorage.getItem("REFERRAL_CODE")
-        : localStorage.getItem("REG_REFERRAL_CODE") || "";
-
       const hostname = getDomainWithoutSubdomain();
       //FOR TESTING.
       // const hostname = "igooaa.com";
@@ -337,34 +331,41 @@ export default defineComponent({
           }
         });
       } else {
-        const savedAffiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || "";
-        let _affiliateCode = "";
+        window.addEventListener("secondRedirection", async () => {
+          const savedAffiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || "";
+          let _affiliateCode = "";
+          const referral = route.params.referralCode
+            ? route.params.referralCode
+            : sessionStorage.getItem("REFERRAL_CODE")
+            ? sessionStorage.getItem("REFERRAL_CODE")
+            : localStorage.getItem("REG_REFERRAL_CODE") || "";
 
-        await api
-          .get(
-            `/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${savedAffiliateCode}&refer=${referral}`
-          )
-          .then((res) => {
-            console.log(res);
-            const { affiliateCode = "", facebookId = "" } = res.data;
-            sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
-            _affiliateCode = affiliateCode;
-            if (facebookId) {
-              fbq("init", facebookId);
-              fbq("track", "PageView");
-              store.isFbPixel = true;
+          await api
+            .get(
+              `/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${savedAffiliateCode}&refer=${referral}`
+            )
+            .then((res) => {
+              console.log(res);
+              const { affiliateCode = "", facebookId = "" } = res.data;
+              sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+              _affiliateCode = affiliateCode;
+              if (facebookId) {
+                fbq("init", facebookId);
+                fbq("track", "PageView");
+                store.isFbPixel = true;
+              }
+            });
+
+          api.get(`/app/adjust/params?affiliateCode=${_affiliateCode}`).then((res) => {
+            if (res.code === 0) {
+              sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+              if (res.data.adjust_register_event) {
+                ui.adjust_register_event = res.data.adjust_register_event;
+              }
+              affAppToken.value = res.data.adjust_app_token;
+              initAdjustEventTrack();
             }
           });
-
-        api.get(`/app/adjust/params?affiliateCode=${_affiliateCode}`).then((res) => {
-          if (res.code === 0) {
-            sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-            if (res.data.adjust_register_event) {
-              ui.adjust_register_event = res.data.adjust_register_event;
-            }
-            affAppToken.value = res.data.adjust_app_token;
-            initAdjustEventTrack();
-          }
         });
       }
     };

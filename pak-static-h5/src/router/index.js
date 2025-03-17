@@ -10,6 +10,9 @@ import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
 import { useGtag } from "vue-gtag-next";
 
+let secondRedirectionEvent = new CustomEvent("secondRedirection");
+let redirectionCount = 0;
+
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
@@ -159,6 +162,15 @@ export default route(function (/* { store, ssrContext } */) {
         });
       } else {
         next();
+      }
+    }
+
+    if (secondRedirectionEvent) {
+      typeof redirectionCount === "number" && redirectionCount++;
+      if (redirectionCount > 1) {
+        document.dispatchEvent(secondRedirectionEvent);
+        secondRedirectionEvent = null;
+        redirectionCount = null;
       }
     }
   });
