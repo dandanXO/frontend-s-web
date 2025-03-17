@@ -315,10 +315,15 @@ export default defineComponent({
         } else if (route.path === "/promotion") {
           hasPage.value = true;
           pageName.value = t("header.promotion");
-          if (route.fullPath.indexOf("pak-faq") > -1) {
-            pageName.value = "FAQ";
-          }
           prevPage.value = "";
+        } else if (route.path === "/faq-page") {
+          hasPage.value = true;
+          pageName.value = t("header.effectiveRevenueFAQ");
+            if (route.query.from) {
+              prevPage.value = route.query.from;
+            } else {
+              prevPage.value = "/account";
+            }
         } else if (route.path === "/finance/deposit") {
           hasPage.value = true;
           pageName.value = t("header.deposit");

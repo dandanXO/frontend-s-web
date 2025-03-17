@@ -52,7 +52,8 @@ export default {
     referralRecord: "Referral Record",
     interestProfit: "Interest Profit",
     spinnerRules: "Rules",
-    spinnerHistory: "History"
+    spinnerHistory: "History",
+    effectiveRevenueFAQ: "Effective Revenue FAQ"
   },
   bottomNav: {
     home: "Home",
@@ -273,7 +274,9 @@ export default {
     telegram: "Telegram",
     whatsapp: "WhatsApp",
     language: "Language",
-    downloadApp: "Download APP"
+    downloadApp: "Download APP",
+    appDownload: "APP download",
+    experienceOneStopGaming: "Experience one-stop gaming!"
   },
   home: {
     menu_lobby: "Lobby",
@@ -400,6 +403,10 @@ export default {
       profitAndLoss: "User profit and loss"
     },
     reward: {
+      award: "Award",
+      title: "Invitation Rewards",
+      bettingCommission: "Betting Commission",
+      depositCommission: "Deposit Commission",
       myTotalIncome: "My Total Income",
       myTotalNumberOfInvites: "My Total Number Of Invites",
       invite: "Invitation Bonus",
@@ -596,7 +603,7 @@ export default {
     success: "Success",
     supplementSuccess: "Supplement Success",
     closed: "Closed",
-    orderNo: "Order NO.",
+    orderNo: "Order Number",
     bank: "BANK",
     noRecord: "No record",
     noMoreRecord: "No more record",
@@ -678,6 +685,7 @@ export default {
     next: "Next"
   },
   hotPromo: {
+    promoEndsOn: "Promo Ends On",
     aviatorWheel: {
       remainingDrawTimes: "Remaining draw times",
       congratulations: "Congratulations"

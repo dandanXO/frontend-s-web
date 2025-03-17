@@ -101,7 +101,7 @@ vertical-align: middle;
 
       // &:before {
       //   content: "";
-      //   background-color: #70bc62;
+      //   background-color: #21EF89;
       //   height: 3px;
       //   border-radius: 4px;
       //   width: 30%;

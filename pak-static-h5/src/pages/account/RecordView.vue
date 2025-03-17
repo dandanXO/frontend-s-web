@@ -54,10 +54,16 @@
       ></NoInfoComponent>
       <q-card v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
         <q-card-section class="top-wrapper">
-          <BetRefereceWithCopy :betId="e.betId" />
 
-          <div class="date-status-wrapper">
-            <q-btn
+          
+        </q-card-section>
+
+        <q-card-section class="mid-wrapper">
+          <div class="game-platform-val">
+            <img :src="require(`../../assets/images/index/logo/logo-${e.platform.toLowerCase()}.png`)">
+             / {{ e.platform }}
+          </div>
+          <q-btn flat
               :class="{
                 'btn--green': ['SETTLE', 'SETTLED', 'BET_N_SETTLE'].includes(e.betStatus),
                 'btn--red': ['CANCEL', 'ROLLBACK', 'PATCH'].includes(e.betStatus),
@@ -67,33 +73,17 @@
               }"
               :label="getRecordStatus(e.betStatus)"
             ></q-btn>
-            <div class="date">{{ normalDateTime(e.betTime) }}</div>
-          </div>
-        </q-card-section>
-
-        <q-card-section class="mid-wrapper">
-          RS
-          <span
-            :class="`${
-              ['SETTLE', 'SETTLED', 'BET_N_SETTLE'].includes(e.betStatus)
-                ? e.payout <= 0
-                  ? 'loss-amt'
-                  : 'win-amt'
-                : 'bet-amt'
-            }`"
-          >
-            {{ convertToCommaAmount(e.payout, true) }}
-          </span>
         </q-card-section>
 
         <q-card-section class="bot-wrapper">
           <div class="origin">
+            <div class="bet">Date:</div>
             <div class="bet">{{ $t("records.bet") }}</div>
-            <div class="game-platform">{{ $t("records.gamePlatform") }}</div>
+            <!-- <div class="game-platform">{{ $t("records.gamePlatform") }}</div> -->
           </div>
           <div class="origin-val">
+            <div class="bet-val">{{ normalDateTime(e.betTime) }}</div>
             <div class="bet-val">{{ convertToCommaAmount(e.bet, true) }}</div>
-            <div class="game-platform-val">{{ e.platform }}</div>
           </div>
         </q-card-section>
 
@@ -107,6 +97,7 @@
             <div class="game-platform-val win-amt">{{ convertToCommaAmount(e.afterBalance, true) }}</div>
           </div>
         </q-card-section>
+        <BetRefereceWithCopy :betId="e.betId" />
       </q-card>
 
       <q-card class="pagination-container">
@@ -370,34 +361,27 @@ onActivated(() => {
   }
 }
 .record-container {
-  border-radius: 0;
-  // background: rgba(21, 0, 37, 0.2);
-  box-shadow: none;
-  border-bottom: 1px solid #ffffff33;
-  background: transparent;
-  padding: 1rem;
-  margin-top: 0;
+  // border-radius: 0;
+  // // background: rgba(21, 0, 37, 0.2);
+  // box-shadow: none;
+  // border-bottom: 1px solid #ffffff33;
+  // background: transparent;
+  // padding: 1rem;
+  // margin-top: 0;
 
+  background: #292D2E;
+  border-radius: 6px;
+  box-shadow: none;
   .top-wrapper {
     display: grid;
-    grid-template-columns: 50% 50%;
+    padding: 1rem;
+    // grid-template-columns: 50% 50%;
     align-items: center;
-    margin: 0 0 0.5rem 0;
-
-    .bet-id-wrapper {
-      display: grid;
-      grid-template-columns: 90% 10%;
-    }
-
-    .bet-id {
-      font-size: smaller;
-      word-wrap: break-word;
-    }
 
     .date-status-wrapper {
       display: flex;
-      flex-direction: column;
       align-items: flex-end;
+      justify-content: space-between;
     }
 
     .date {
@@ -405,6 +389,34 @@ onActivated(() => {
       font-size: 0.825rem;
       font-weight: 700;
     }
+    .amt {
+      
+      span {
+        color: #fff;
+      }
+
+      .win-amt {
+        color: $positive;
+      }
+
+      .loss-amt {
+        color: $negative;
+      }
+    }
+  }
+
+  .mid-wrapper {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 2.25rem;
+    // background: rgba(21, 0, 37, 0.5);
+    margin: 0 -1rem;
+
+    padding: 0 .5rem;
+    display: flex;
+    margin: 0px;
+    width: 100%;
+    justify-content: space-between;
 
     .bet-btn {
       color: #5bf25c;
@@ -451,57 +463,47 @@ onActivated(() => {
     }
 
     .btn--orange {
-      color: #ff7a00;
+      color: #FBAB1B;
       font-size: 0.825rem;
       font-weight: 700;
       text-transform: capitalize;
       padding: 4px 10px;
       border-radius: 4px;
-      background: rgba(255, 122, 0, 0.2);
+      background: rgba(251, 171, 27, 0.2);
       min-height: unset;
     }
 
     .btn--red {
-      color: #b81212;
+      color: #FF3434;
       font-size: 0.825rem;
       font-weight: 700;
       text-transform: capitalize;
       padding: 4px 10px;
       border-radius: 4px;
-      background: rgba(184, 18, 18, 0.2);
+      background:rgba(255, 52, 52, 0.2);
       min-height: unset;
     }
 
     .btn--green {
-      color: #00b900;
+      color: #21EF89;
       font-size: 0.825rem;
       font-weight: 700;
       text-transform: capitalize;
       padding: 4px 10px;
       border-radius: 4px;
-      background: rgba(0, 185, 0, 0.2);
+      background: rgba(33, 239, 137, .2);
       min-height: unset;
     }
-  }
 
-  .mid-wrapper {
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 2.25rem;
-    // background: rgba(21, 0, 37, 0.5);
-    margin: 0 -1rem;
-    padding: 0 1rem;
-
-    span {
-      color: #fff;
-    }
-
-    .win-amt {
-      color: $positive;
-    }
-
-    .loss-amt {
-      color: $negative;
+    .game-platform-val {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+      font-size: 16px;
+      img {
+        height: 20px;
+      }
     }
   }
 
@@ -509,7 +511,7 @@ onActivated(() => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0.5rem 0 0 0;
+    margin: 10px;
 
     .win-amt {
       color: $positive;
@@ -520,6 +522,7 @@ onActivated(() => {
       flex-direction: column;
       justify-content: space-between;
       color: rgba(255, 255, 255, 0.5);
+      gap: 6px;
 
       .bet {
         font-size: 0.825rem;
@@ -533,21 +536,46 @@ onActivated(() => {
     }
 
     .origin-val {
+      gap: 6px;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
       justify-content: space-between;
       .bet-val {
         font-size: 0.825rem;
-        font-weight: 700;
+        color:#B2BDBF;
       }
-
+      
       .game-platform-val {
         font-size: 0.825rem;
         font-weight: 700;
       }
     }
   }
+  .order {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-size: 12px;
+    gap: 10px;
+    .bet-id {
+      font-size: smaller;
+      word-wrap: break-word;
+      color: #ffffff;
+      font-size: 13px;
+    }
+  }
+  .bet-id-wrapper {
+    display: flex;
+    background: #FFFFFF0F;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+
 }
 
 .pagination-container {

@@ -79,6 +79,14 @@ const routes = [
     children: [{ path: "", component: () => import("pages/InterestProfitPage.vue") }],
     meta: { requiresAuth: true }
   },
+  {
+    path: "/faq-page",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/FAQPage.vue") }],
+    meta: { requiresAuth: true }
+  },
+  
+
   // {
   //   path: "/bonus",
   //   component: () => import("layouts/MainLayout.vue"),

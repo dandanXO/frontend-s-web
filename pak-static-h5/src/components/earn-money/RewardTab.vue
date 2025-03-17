@@ -19,20 +19,22 @@
   <div class="reward-wrapper">
     <div class="earn-money-pots">
       <div class="pot-item">
+        <div class="item-img with-btn">
+          <div class="flex-item">
+            <img src="../../assets/images/earn-money/pot-item-01.png" />
+          </div>
+        </div>
+        <div class="item-desc">{{ $t("earnMoney.reward.myTotalIncome") }}</div>
         <div class="item-amount">
           RS {{ getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET") }}
         </div>
-        <div class="item-desc">{{ $t("earnMoney.reward.myTotalIncome") }}</div>
-        <div class="item-img with-btn">
-          <div class="flex-item">
-            <!-- <img src="../../assets/images/earn-money/pot-item-01.png" /> -->
-          </div>
-        </div>
       </div>
       <div class="pot-item pot-item__2">
+        <div class="item-img"><img src="../../assets/images/earn-money/pot-item-02.png" /></div>
+        <div class="item-desc">{{ $t("earnMoney.reward.myTotalNumberOfInvites") }}
         <div class="item-amount">{{ memberDetail.totalRefer ? memberDetail.totalRefer : "0" }}</div>
-        <div class="item-desc">{{ $t("earnMoney.reward.myTotalNumberOfInvites") }}</div>
-        <!--        <div class="item-img"><img src="../../assets/images/earn-money/pot-item-02.png" /></div>-->
+        </div>
+        <!--        -->
       </div>
     </div>
     <!-- banner.redirectUrl.includes("https://") -->
@@ -56,7 +58,8 @@
         <div class="item-title">{{ $t("earnMoney.reward.topUp") }}</div>
         <div class="item-icon"><img src="../../assets/images/earn-money/details-icon-02.png" /></div>
       </div>
-
+      </div>
+      <div class="earn-money-details-grid">
       <!-- <div class="details-item details-item" v-if="isShowBet"> -->
       <div class="details-item details-item">
         <div class="item-amount">
@@ -114,33 +117,13 @@
       </div>
 
       <div class="invite-share-social">
-        <a
-          class="social-item"
-          :href="`https://wa.me/?text=${encodeURIComponent($t('earnMoney.reward.shareText', { url: selfTgurl }))}`"
-          target="_blank"
-        >
-          <img src="../../assets/images/earn-money/social-whatsapp.png" />
-        </a>
-        <a
-          class="social-item"
-          @click="handleShareToInstagram(selfTgurl)"
-        >
-          <img src="../../assets/images/earn-money/social-instagram.png" />
-        </a>
-        <a ref="instagramRef" href="https://www.instagram.com" target="_blank" :style="{ display: 'none' }" />
-        <a class="social-item" @click="handleShareToTikTok(selfTgurl)">
-          <img src="../../assets/images/earn-money/social-tiktok.png" />
-        </a>
-        <a ref="tiktokRef" href="https://www.tiktok.com" target="_blank" :style="{ display: 'none' }" />
-        <a class="social-item" @click="modalSocialShare = true">
-          <img src="../../assets/images/earn-money/social-more.png" />
-        </a>
+        <ShareIcons :is-invite="true" :url="selfTgurl" />
       </div>
     </div>
 
     <div class="earn-money-invitation-rewards earn-money-card">
       <div class="earn-money-card-title">
-        <img :src="require(`../../assets/images/earn-money/invitation-rewards-title-${$t('lang.langVal')}.png`)" />
+        {{ $t("earnMoney.reward.title") }}
       </div>
       <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
         <thead>
@@ -172,7 +155,7 @@
 
     <div class="earn-money-betting-commission earn-money-card">
       <div class="earn-money-card-title">
-        <img :src="require(`../../assets/images/earn-money/betting-commission-title-${$t('lang.langVal')}.png`)" />
+        {{ $t("earnMoney.reward.bettingCommission") }}
       </div>
       <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
         <thead>
@@ -198,7 +181,7 @@
 
     <div class="earn-money-deposit-commission earn-money-card">
       <div class="earn-money-card-title">
-        <img :src="require(`../../assets/images/earn-money/deposit-commission-title-${$t('lang.langVal')}.png`)" />
+        {{ $t("earnMoney.reward.depositCommission") }}
       </div>
       <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
         <thead>
@@ -214,10 +197,13 @@
           </tr>
         </tbody>
       </table>
-      <div class="q-mt-md" v-html="$t('earnMoney.reward.note')"></div>
+      <div class="q-pa-md">
+        <div class="q-mt-md" v-html="$t('earnMoney.reward.note')"></div>
       <div class="q-mt-sm grey-txt" v-html="$t('earnMoney.reward.eligibility_tips')"></div>
       <div class="q-mt-sm red-txt" v-html="$t('earnMoney.reward.multiple_acc_hint')"></div>
-    </div>
+
+      </div>
+          </div>
 
     <!-- <div class="earn-money-friendcount">
       <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
@@ -245,15 +231,60 @@
       </div>
     </div> -->
 
-    <div class="earn-money-sent-ytd">
-      <div class="sent-ytd-icon">
-        <img src="../../assets/images/earn-money/sent-ytd-icon.png" />
+    <div class="earn-money-amt">
+      <div class="earn-money-amt-title"><div class="earn-money-amt-icon"></div>{{ $t("earnMoney.reward.award") }}</div>
+      <div class="earn-money-sent-ytd">
+        <div class="sent-ytd-amount" v-if="oneTimeBonusSetting.totalAmount">
+          {{ $t("earnMoney.reward.totalAmountSentAsOfYesterday") }}
+          <span><div class="sent-ytd-icon">
+          <img src="../../assets/images/earn-money/sent-ytd-icon.png" />
+        </div>
+          {{ store.currency.value }} {{ oneTimeBonusSetting.totalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</span>
+        </div>
       </div>
+      
 
-      <div class="sent-ytd-amount">
-        {{ $t("earnMoney.reward.totalAmountSentAsOfYesterday") }}
-        <span>{{ oneTimeBonusSetting.totalAmount }}</span>
+    <div class="earn-money-friendcount">
+      <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+        <!-- <tbody>
+          <tr>
+            <td style="color: #8c968f; font-size: 120%; width: 60%">{{ $t("earnMoney.reward.player") }}</td>
+            <td style="color: #8c968f; font-size: 120%; width: 40%">{{ $t("earnMoney.reward.money") }}</td>
+          </tr>
+        </tbody> -->
+      </table>
+      <div class="table-container" ref="tableContainer">
+        <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+          <template v-if="inviteesRecords && inviteesRecords.length === 0">
+            <tr>
+              <td colspan="2">{{ $t("notify.noRecord") }}</td>
+            </tr>
+          </template>
+          <template v-else>
+            <template v-for="(pair, index) in inviteesRecords" :key="index">
+              <tr>
+                <td style="width: 25%">
+                  <div class="player-details">
+                    {{ pair[0]?.loginName }}
+                  </div>
+                </td>
+                <td style="width: 25%">{{ store.currency.value }} {{ pair[0]?.finalAmount }}</td>
+                
+                <td v-if="pair[1]" style="width: 25%">
+                  <div class="player-details">
+                    {{ pair[1]?.loginName }}
+                  </div>
+                </td>
+                <td v-if="pair[1]" style="width: 25%">
+                  {{ store.currency.value }} {{ pair[1]?.finalAmount }}
+                </td>
+              </tr>
+            </template>
+
+          </template>
+        </table>
       </div>
+    </div>
     </div>
 
     <!-- <div class="earn-money-friendcount">
@@ -283,64 +314,6 @@
           </template>
         </table>
       </div> -->
-
-    <div class="earn-money-friendcount">
-      <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
-        <tbody>
-          <tr>
-            <td style="color: #8c968f; font-size: 120%; width: 60%">{{ $t("earnMoney.reward.player") }}</td>
-            <td style="color: #8c968f; font-size: 120%; width: 40%">{{ $t("earnMoney.reward.money") }}</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="table-container" ref="tableContainer">
-        <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
-          <template v-if="inviteesRecords && inviteesRecords.length === 0">
-            <tr>
-              <td colspan="2">{{ $t("notify.noRecord") }}</td>
-            </tr>
-          </template>
-          <template v-else>
-            <template v-for="(item, index) in inviteesRecords" :key="index">
-              <tr>
-                <td style="width: 60%">
-                  <div class="player-details">
-                    <img :src="getRandomImage(index)" width="30" />
-                    {{ item.loginName }}
-                  </div>
-                </td>
-                <td style="width: 40%">{{ store.currency.value }} {{ item.finalAmount }}</td>
-              </tr>
-            </template>
-          </template>
-        </table>
-      </div>
-    </div>
-
-    <q-dialog width="100%" v-model="modalSocialShare" persistent>
-      <div class="popout-dialog">
-        <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
-
-        <div class="popout-dialog-container">
-          <div class="txt-title">Share and Earn</div>
-          <!-- <div class="txt-content q-mt-md text-center">Share and Earn</div> -->
-          <div class="modal-invite-share-social">
-            <a class="social-item" :href="ui.youtubeUrl" target="_blank">
-              <img src="../../assets/images/earn-money/social-youtube.png" />
-            </a>
-            <a class="social-item" @click="handleShareToFacebookPost(selfTgurl)">
-              <img src="../../assets/images/earn-money/social-facebook.png" />
-            </a>
-            <a class="social-item" @click="handleShareToSMS(selfTgurl)">
-              <img src="../../assets/images/earn-money/social-sms.png" />
-            </a>
-            <a class="social-item" @click="handleShareToEmail(selfTgurl)">
-              <img src="../../assets/images/earn-money/social-email.png" />
-            </a>
-          </div>
-        </div>
-      </div>
-    </q-dialog>
   </div>
 </template>
 <script setup>
@@ -351,6 +324,7 @@ import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
 import { useI18n } from "vue-i18n";
 import moment from "moment";
+import ShareIcons from "../ShareIcons.vue";
 import { convertToCommaAmount } from "src/boot/utils";
 
 const $q = useQuasar();
@@ -449,11 +423,23 @@ const getLatestInvitees = () => {
       if (response.code === 0) {
         latestInvitees.value = response.data;
 
-        inviteesRecords.value = response.data.records;
-        inviteesRecords.value.push(...inviteesRecords.value);
-        inviteesRecords.value.push(...inviteesRecords.value);
-        inviteesRecords.value.push(...inviteesRecords.value);
-        inviteesRecords.value.push(...inviteesRecords.value);
+        // inviteesRecords.value = response.data.records;
+        // inviteesRecords.value.push(...inviteesRecords.value);
+        // inviteesRecords.value.push(...inviteesRecords.value);
+        // inviteesRecords.value.push(...inviteesRecords.value);
+        // inviteesRecords.value.push(...inviteesRecords.value);
+        
+        // Duplicate records 5 times dynamically
+        const repeatedRecords = Array(5).fill([...response.data.records]).flat();
+
+        // Pair the records
+        const chunkedRecords = [];
+        for (let i = 0; i < repeatedRecords.length; i += 2) {
+          chunkedRecords.push([repeatedRecords[i], repeatedRecords[i + 1]]);
+        }
+
+        // Assign to inviteesRecords
+        inviteesRecords.value = chunkedRecords;
         // startDisplayingRows();
         // setTimeout(startDisplayingRows, 10000);
       }
@@ -554,12 +540,7 @@ const handleShareToYoutube = (url) => {
 };
 
 const handleShareToFacebookPost = (url) => {
-  const shareText = t("earnMoney.reward.shareText");
-  const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-    url
-  )}&quote=${encodeURIComponent(shareText)}`;
-  copyToClipboard(shareText);
-  window.open(facebookShareUrl, "_blank");
+
 };
 
 const handleShareToSMS = (url) => {
@@ -610,24 +591,41 @@ watch(activeSetting, checkIsShowDetail);
   .earn-money-pots {
     margin-top: 12px;
     display: flex;
-    flex-direction: column;
     gap: 24px;
+    background: #373C3D;
+    padding: 10px;
+    border-radius: 10px;
 
     .pot-item {
-      background-image: url("../../assets/images/earn-money/pot-bg-01.png");
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: cover;
+      flex: 1;
       display: flex;
-      gap: 8px;
+      justify-content: center;
+      align-items: center;
       flex-direction: column;
-      padding: 28px 20px;
-      border-radius: 8px;
+      gap: 10px;
+      text-align: center;
       position: relative;
-
-      &__2 {
-        background-image: url("../../assets/images/earn-money/pot-bg-02.png");
+      &:nth-child(1) {
+        &:after {
+        content: "";
+        background: #434949;
+        height: 60%;
+        width: 1px;
+        position: absolute;
+        right: -5px;
+        }
       }
+      // background-image: url("../../assets/images/earn-money/pot-bg-01.png");
+      // background-repeat: no-repeat;
+      // background-position: center center;
+      // background-size: cover;
+      // display: flex;
+      // gap: 8px;
+      // flex-direction: column;
+      // padding: 28px 20px;
+      // border-radius: 8px;
+      // position: relative;
+
 
       .item-amount {
         color: #ffffff;
@@ -640,133 +638,158 @@ watch(activeSetting, checkIsShowDetail);
         color: #ffffff99;
         font-size: 12px;
       }
-
       .item-img {
-        position: absolute;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-
-        .flex-item {
-          display: flex;
-          gap: 3px;
-          justify-content: center;
-          align-items: center;
-          flex-direction: column;
-        }
-
-        .amount-div {
-          display: flex;
-          align-content: center;
-          align-items: center;
-          gap: 8px;
-        }
-
-        &.with-btn {
-          right: 4px;
-          top: 50%;
-          padding-right: 4px;
-        }
-
-        .title {
-          font-style: italic;
-          text-transform: uppercase;
-          position: relative;
-          font-size: 14px;
-          font-weight: bold;
-          line-height: 20.61px;
-          color: #fff;
-          //text-shadow:
-          //  -1px 1px 0 #fff,
-          //  1px 1px 0 #fff,
-          //  1px -1px 0 #fff,
-          //  -1px -1px 0 #fff;
-
-          //&::before {
-          //  content: attr(data-text);
-          //  position: absolute;
-          //  inset: 0;
-          //  z-index: -1;
-          //  -webkit-text-stroke: 1px #fff;
-          //}
-        }
-
+        width: 48px;
         img {
-          display: block;
           width: 100%;
-          max-width: 56px;
-        }
-
-        .amount {
-          position: relative;
-          background: linear-gradient(180deg, #fffee1 24.43%, #ffe69d 76.41%);
-          background-clip: text;
-          font-size: 18px;
-          font-weight: bold;
-          line-height: 20px;
-          color: transparent;
-
-          &::before {
-            content: attr(data-text);
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-            -webkit-text-stroke: 2px #ff3e27;
-          }
-        }
-
-        .currency {
-          position: relative;
-          font-size: 16px;
-          font-weight: bold;
-          line-height: 20.61px;
-          color: #ff3e27;
-          text-shadow: -1px 1px 0 #fff, 1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff;
-
-          &::before {
-            content: attr(data-text);
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-            -webkit-text-stroke: 1px #fff;
-          }
         }
       }
+      // .item-img {
+      //   position: absolute;
+      //   display: flex;
+      //   align-items: center;
+      //   gap: 5px;
+      //   right: 0;
+      //   top: 50%;
+      //   transform: translateY(-50%);
+
+      //   .flex-item {
+      //     display: flex;
+      //     gap: 3px;
+      //     justify-content: center;
+      //     align-items: center;
+      //     flex-direction: column;
+      //   }
+
+      //   .amount-div {
+      //     display: flex;
+      //     align-content: center;
+      //     align-items: center;
+      //     gap: 8px;
+      //   }
+
+      //   &.with-btn {
+      //     right: 4px;
+      //     top: 50%;
+      //     padding-right: 4px;
+      //   }
+
+      //   .title {
+      //     font-style: italic;
+      //     text-transform: uppercase;
+      //     position: relative;
+      //     font-size: 14px;
+      //     font-weight: bold;
+      //     line-height: 20.61px;
+      //     color: #fff;
+      //     //text-shadow:
+      //     //  -1px 1px 0 #fff,
+      //     //  1px 1px 0 #fff,
+      //     //  1px -1px 0 #fff,
+      //     //  -1px -1px 0 #fff;
+
+      //     //&::before {
+      //     //  content: attr(data-text);
+      //     //  position: absolute;
+      //     //  inset: 0;
+      //     //  z-index: -1;
+      //     //  -webkit-text-stroke: 1px #fff;
+      //     //}
+      //   }
+
+      //   img {
+      //     display: block;
+      //     width: 100%;
+      //     max-width: 56px;
+      //   }
+
+      //   .amount {
+      //     position: relative;
+      //     background: linear-gradient(180deg, #fffee1 24.43%, #ffe69d 76.41%);
+      //     background-clip: text;
+      //     font-size: 18px;
+      //     font-weight: bold;
+      //     line-height: 20px;
+      //     color: transparent;
+
+      //     &::before {
+      //       content: attr(data-text);
+      //       position: absolute;
+      //       inset: 0;
+      //       z-index: -1;
+      //       -webkit-text-stroke: 2px #ff3e27;
+      //     }
+      //   }
+
+      //   .currency {
+      //     position: relative;
+      //     font-size: 16px;
+      //     font-weight: bold;
+      //     line-height: 20.61px;
+      //     color: #ff3e27;
+      //     text-shadow: -1px 1px 0 #fff, 1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff;
+
+      //     &::before {
+      //       content: attr(data-text);
+      //       position: absolute;
+      //       inset: 0;
+      //       z-index: -1;
+      //       -webkit-text-stroke: 1px #fff;
+      //     }
+      //   }
+      // }
     }
   }
 
   .earn-money-details-grid {
-    display: flex;
+    // display: flex;
     // grid-template-columns: repeat(2, 1fr);
     // grid-gap: 12px;
-    gap: 12px;
+    // gap: 12px;
     margin-top: 16px;
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
+    background:#373C3D;
+    border-radius: 10px;
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    
 
     .details-item {
+      img {
+        width: 16px;
+      }
+      &:nth-child(1) {
+        &:after {
+        content: "";
+        background: #434949;
+        height: 60%;
+        width: 1px;
+        position: absolute;
+        right: -5px;
+        }
+      }
       display: flex;
       width: calc(50% - 6px);
-      flex-direction: column;
+      flex-direction: column-reverse;
       min-height: 100px;
       align-items: center;
       justify-content: center;
-      background-color: rgba(255, 255, 255, 0.05);
+      // background-color: rgba(255, 255, 255, 0.05);
       border-radius: 10px;
       position: relative;
+      gap: 10px;
 
       &__full {
         width: 100%;
       }
 
       .item-amount {
-        span {
-          font-size: 24px;
-          font-weight: bold;
-          color: #70bc62;
-        }
+        color: #ffffff;
+        font-size: 24px;
+        line-height: 1;
+        font-weight: bold;
       }
 
       .item-title {
@@ -774,32 +797,35 @@ watch(activeSetting, checkIsShowDetail);
         color: #8c968f;
       }
 
-      .item-icon {
-        position: absolute;
-        top: 12px;
-        left: 12px;
+      // .item-icon {
+      //   position: absolute;
+      //   top: 12px;
+      //   left: 12px;
 
-        img {
-          display: block;
-          width: 24px;
-        }
-      }
+      //   img {
+      //     display: block;
+      //     width: 24px;
+      //   }
+      // }
     }
   }
 
   .earn-money-invite {
-    background-color: rgba(255, 255, 255, 0.05);
+    // background-color: rgba(255, 255, 255, 0.05);
+    background:#373C3D;
     margin-top: 16px;
     border-radius: 10px;
     padding: 16px;
 
     .invite-title {
-      font-size: 22px;
+      font-size: 20px;
       color: #ffffff;
-      font-weight: bold;
+      font-weight: 700;
+      margin-bottom: 10px;
+      text-transform: capitalize;
     }
     .invite-desc {
-      font-size: 16px;
+      font-size: 14px;
       color: #8c968f;
     }
 
@@ -810,9 +836,10 @@ watch(activeSetting, checkIsShowDetail);
       gap: 12px;
 
       .listing-item {
-        border: 1px solid #ffffff0d;
-        background-color: rgba(255, 255, 255, 0.02);
-        border-radius: 12px;
+        // border: 1px solid #ffffff0d;
+        // background-color: rgba(255, 255, 255, 0.02);
+        background: #292D2E;
+        border-radius: 4px;
         display: flex;
         padding: 8px 16px;
         align-items: center;
@@ -831,47 +858,40 @@ watch(activeSetting, checkIsShowDetail);
 
     .invite-share-link {
       margin-top: 12px;
-      background-color: #0f0b0b;
+      background-color: #292D2E;
+      padding: 4px;
       border-radius: 8px;
       display: flex;
       justify-content: space-between;
 
       .link-href {
-        padding: 16px;
+        padding: 10px 16px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         font-size: 11px;
       }
       .link-copy {
-        color: #0f0b0b;
-        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        color: #ffffff;
+        background: #FFFFFF0F;
+
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 80px;
-        min-width: 98px;
+        min-width: 70px;
         font-weight: bold;
         border-radius: 12px;
         letter-spacing: -1px;
-        padding: 4px;
       }
     }
 
     .invite-share-social {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      // display: grid;
+      // grid-template-columns: repeat(4, 1fr);
       grid-gap: 12px;
       margin-top: 16px;
       // display: none !important;
-      .social-item {
-        img {
-          display: block;
-          width: 100%;
-          max-width: 50px;
-          margin: auto;
-        }
-      }
+      display: flex;
     }
   }
 
@@ -906,7 +926,7 @@ watch(activeSetting, checkIsShowDetail);
     table {
       tr {
         &:nth-child(even) {
-          background: #ffffff0d;
+          // background: #ffffff0d;
         }
 
         .player-details {
@@ -916,8 +936,9 @@ watch(activeSetting, checkIsShowDetail);
           gap: 8px;
         }
 
-        td:last-child {
-          color: #70bc62;
+        td:nth-child(2n) {
+          color: #21EF89;
+          font-weight: 700;
         }
       }
     }
@@ -942,7 +963,7 @@ watch(activeSetting, checkIsShowDetail);
   //       }
 
   //       td:last-child {
-  //         color: #70bc62;
+  //         color: #21EF89;
   //       }
   //     }
   //   }
@@ -955,40 +976,100 @@ watch(activeSetting, checkIsShowDetail);
       color: #b81212;
     }
   }
+  
+  .earn-money-amt {
+    background: #323738;
+    margin: 15px 0;
+    border-radius: 10px;
+    padding: 15px;
+    .earn-money-amt-title {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 10px;
+      font-family: Microsoft YaHei UI;
+      font-weight: 700;
+      font-size: 14.45px;
+      line-height: 23.12px;
+      vertical-align: middle;
+      text-transform: uppercase;
+      text-align: center;
+      .earn-money-amt-icon {
+        position: relative;
+        width: 16px;
+        height: 16px;
+        &::before {
+          content: "";
+          background: #45D81F4D;
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
+        &::after {
+          content: "";
+          background: #45D81F;
+          border-radius: 50%;
+          width: 8px;
+          height: 8px;
+          position: absolute;
+          left: 4px;
+          top: 4px;
 
+        }
+      }
+    }
+  }
   .earn-money-sent-ytd {
     margin-top: 16px;
-    background: #ffffff0d;
-    padding: 8px 16px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    gap: 16px;
+    // background: #ffffff0d;
+    // padding: 8px 16px;
+    // border-radius: 12px;
+    // display: flex;
+    // justify-content: space-around;
+    // align-items: center;
+    // gap: 16px;
 
+
+
+    .sent-ytd-amount {
+      color: #8c968f;
+      font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+      span {
+        font-family: Poppins;
+        font-weight: 900;
+        font-size: 16.94px;
+        line-height: 16.94px;
+        color: #21EF89;
+        letter-spacing: 0%;
+        vertical-align: middle;
+        text-transform: capitalize;
+        border: 1px solid #FFFFFF14;
+        border-radius: 4px;
+        padding: 15px;
+        width: 100%;
+        text-align: right;
+        background: #292D2E;
+      position:relative;   
     .sent-ytd-icon {
+      position: absolute;
+    width: 60px;
+    top: -5px;
+    left: 0;
       img {
         display: block;
         max-width: 80px;
         width: 100%;
       }
     }
-
-    .sent-ytd-amount {
-      color: #8c968f;
-      font-size: 14px;
-      span {
-        display: block;
-        width: 100%;
-        color: #ffd600;
-        font-size: 140%;
-        font-weight: bold;
-        background: #ffffff05;
-        text-align: center;
-        padding: 2px;
-        margin-top: 8px;
-        border: 1px solid #ffffff0d;
-        border-radius: 8px;
       }
     }
   }
@@ -1061,18 +1142,23 @@ watch(activeSetting, checkIsShowDetail);
 }
 
 .earn-money-card {
-  background-color: #1e371f;
-  border: 1px solid #337e3a;
-  border-radius: 10px;
-  padding: 0 16px 16px;
-  margin-top: calc(4% + 16px);
-  width: 100%;
+  background: #373C3D;
+    margin-top: 16px;
+    border-radius: 10px;
+    padding: 16px 0 0 0;
 
   .earn-money-card-title {
     width: 100%;
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
+    font-family: Microsoft YaHei UI;
+    font-weight: 700;
+    font-size: 14.45px;
+    line-height: 23.12px;
+    vertical-align: middle;
+    text-transform: uppercase;
+    text-align: center;
 
     img {
       width: 80%;
@@ -1095,10 +1181,13 @@ watch(activeSetting, checkIsShowDetail);
 
     thead {
       // background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
-      background: linear-gradient(180deg, #21b29c 0%, #87c646 100%);
+      // background: linear-gradient(180deg, #21b29c 0%, #87c646 100%);
+      
+    background: #373c3d;
 
       th {
-        color: #076b2c;
+        color: #FFFFFF80;
+
         font-weight: 700;
         font-size: 12px;
         min-width: 100px;
@@ -1148,7 +1237,7 @@ watch(activeSetting, checkIsShowDetail);
     color: #9f9f9f;
   }
   .red-txt {
-    color: red;
+    color: #FFC300;
   }
 }
 </style>

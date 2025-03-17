@@ -11,9 +11,10 @@ const props = defineProps(["label"]);
 
 <style lang="scss" scoped>
 .form-field-label {
-  margin-top: 6px;
+  // margin-top: 6px;
   // color: #98a6b4;
-    color: #ffffff;
+  margin: 3px 0;
+    color: #B2BDBF;
     font-weight: 700;
 }
 

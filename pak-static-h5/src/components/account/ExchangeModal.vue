@@ -4,6 +4,7 @@
     :modelValue="modelValue"
     persistent
     @update:modelValue="(value) => emit('update:modelValue', value)"
+    class="flex-end"
   >
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="emit('update:modelValue', false)" />

@@ -20,7 +20,7 @@
     <div class="right-container">
       <div class="amount-progress-container">
         <div class="vip-text">{{ store.vip }}</div>
-        <div class="progress-num">{{ `${progressRef} / ${maxProgress}` }}</div>
+        <div v-if="store.vip.replace('VIP', '') !== '12'" class="progress-num">{{ `${progressRef} / ${maxProgress}` }}</div>
       </div>
       <q-linear-progress
         reverse

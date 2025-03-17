@@ -129,7 +129,7 @@ const langVal = computed(() => i18nStoreLanguage.languageVal);
         font-weight: 700;
         line-height: 18px;
         text-align: center;
-        background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
+        background: linear-gradient(180deg, #21EF89 0%, #33562d 100%);
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
       }

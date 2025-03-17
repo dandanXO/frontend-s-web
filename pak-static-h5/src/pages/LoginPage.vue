@@ -195,28 +195,8 @@
       Don't have an account?
       <router-link to="/register" class="login">Register</router-link>
     </div> -->
-
     <div class="no-domain btn-lists">
-      <div class="list-item" @click="openCharity()">
-        <img class="btn-icon" id="charity-icon" src="../assets/images/auth/charity-icon.png" />
-        <div>Charity</div>
-      </div>
-      <div class="list-item" @click="openWhatsApp()">
-        <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
-        <div>WhatsApp</div>
-      </div>
-      <div class="list-item" @click="openYoutube()">
-        <img class="btn-icon" id="youtube-icon" src="../assets/images/auth/youtube-icon.png" />
-        <div>Youtube</div>
-      </div>
-      <div class="list-item" @click="openTiktok()">
-        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />
-        <div>Tiktok</div>
-      </div>
-      <div class="list-item" v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()">
-        <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
-        <div>{{ $t("btn.downloadApp") }}</div>
-      </div>
+      <ShareIcons />
     </div>
 
     <div class="is-domain social-container">
@@ -241,26 +221,7 @@
         </a>
       </div> -->
       <div class="btn-lists">
-        <div class="list-item" @click="openCharity()">
-          <img class="btn-icon" id="charity-icon" src="../assets/images/auth/charity-icon.png" />
-          <div>Charity</div>
-        </div>
-        <div class="list-item" @click="openWhatsApp()">
-          <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
-          <div>WhatsApp</div>
-        </div>
-        <div class="list-item" @click="openYoutube()">
-          <img class="btn-icon" id="youtube-icon" src="../assets/images/auth/youtube-icon.png" />
-          <div>Youtube</div>
-        </div>
-        <div class="list-item" @click="openTiktok()">
-          <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />
-          <div>TikTok</div>
-        </div>
-        <div class="list-item" v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()">
-          <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
-          <div>{{ $t("btn.downloadApp") }}</div>
-        </div>
+        <ShareIcons />
       </div>
     </div>
 
@@ -306,6 +267,7 @@ import { useRoute, useRouter } from "vue-router";
 import qs from "qs";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
+import ShareIcons from "../components/ShareIcons.vue"
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { isAndroid, trackNewUserFtd } from "boot/utils";
@@ -321,7 +283,8 @@ export default defineComponent({
   components: {
     // PrimaryButton,
     InputField,
-    InputRowGrid
+    InputRowGrid,
+    ShareIcons
     // RiArrowDropLeftLine
   },
   setup() {
@@ -461,26 +424,6 @@ export default defineComponent({
         const info = await App.getInfo();
         appVersionNo.value = info.version;
       }
-    };
-
-    const openWhatsApp = () => {
-      window.open(ui.whatsappUrl, "_blank");
-    };
-
-    const openInsta = () => {
-      window.open(ui.instagramUrl, "_blank");
-    };
-
-    const openTiktok = () => {
-      window.open(ui.tiktokUrl, "_blank");
-    };
-
-    const openYoutube = () => {
-      window.open(ui.youtubeUrl, "_blank");
-    };
-
-    const openCharity = () => {
-      window.open(ui.charityUrl, "_blank");
     };
 
     const thirdPartyLoginInfo = reactive({
@@ -850,13 +793,7 @@ export default defineComponent({
       const absoluteUrl = url;
       window.open(absoluteUrl, "_blank");
     };
-    const downloadApp = () => {
-      if (ui.downloadAppUrl) {
-        window.open(ui.downloadAppUrl, "_blank");
-      } else {
-        ui.getTopDownloadUrl().then(() => window.open(ui.downloadAppUrl, "_blank"));
-      }
-    };
+    
     const moveCsIcon = (ev) => {
       isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
 
@@ -943,17 +880,11 @@ export default defineComponent({
       csDragPos,
       isDraggingCsIcon,
       openCSInNewTab,
-      downloadApp,
       moveCsIcon,
       moveWhatsIcon,
       whatDragPos,
       loadCustomerAddress,
       ui,
-      openWhatsApp,
-      openInsta,
-      openTiktok,
-      openYoutube,
-      openCharity,
       isRestrictedDomain,
       router,
       onCapacitorGoogleSignin,
@@ -1020,6 +951,8 @@ export default defineComponent({
     display: unset;
     &.btn-lists {
       display: flex;
+      width: 95%;
+      margin: 0 auto;
     }
   }
   .forget-pwd {
@@ -1150,64 +1083,6 @@ letter-spacing: 0px;
 vertical-align: middle;
 color: #ffffff;
 padding: 0 20px;
-}
-.btn-lists {
-  display: flex;
-  justify-content: space-evenly;
-  gap: 0px;
-  width: 100%;
-  margin: 10px auto;
-  align-items: flex-start;
-  text-align: center;
-  .list-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 8px;
-    color: #9f9f9f;
-    font-size: 11px;
-    flex: 1;
-  }
-
-  .btn-icon {
-    width: 42px;
-    height: 42px;
-
-    &:active {
-      filter: brightness(0.85);
-      transform: translate(0px, 1px);
-    }
-  }
-  #cs-icon {
-    width: 70px;
-    height: 70px;
-  }
-  #whatapp-icon {
-    margin-top: 10px;
-    animation: smallbeat 2s infinite;
-  }
-  #charity-icon {
-    margin-top: 10px;
-    animation: smallbeat 2s infinite;
-    animation-delay: 0.4s;
-  }
-  #youtube-icon {
-    margin-top: 10px;
-    animation: smallbeat 2s infinite;
-    animation-delay: 0.8s;
-  }
-  #tiktok-icon {
-    margin-top: 10px;
-    animation: smallbeat 2s infinite;
-    animation-delay: 1.2s;
-  }
-  #download-icon {
-    margin-top: 10px;
-    animation: smallbeat 2s infinite;
-    animation-delay: 1.6s;
-    //filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
-  }
 }
 
 .login-form-wrapper {

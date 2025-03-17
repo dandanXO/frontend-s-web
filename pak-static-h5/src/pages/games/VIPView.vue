@@ -25,54 +25,8 @@
   <!--  </div>-->
 
   <div class="vip-container">
-    <Carousel
-      ref="vipCarouselRef"
-      :items-to-show="1.15"
-      :wrap-around="false"
-      :snapAlign="'start'"
-      v-model="vipCarouselIndex"
-    >
-      <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
-        <div class="carousel__item">
-          <div :class="`vipitem vipitem${vip.vipLevel}`">
-            <div class="vip-level-header">VIP{{ vip.vipLevel }}</div>
-
-            <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
-              <div class="upgrade-requirements" v-if="vipIndex !== vipItems.length - 1">
-                <span v-if="vip.vipLevel !== '0'">{{ $t("vip.accumulateDeposit") }}</span>
-                {{ vipItems[vipIndex + 1].ugprade }}
-              </div>
-
-              <div class="progress-bar-container">
-                <div class="progress-bar-outer-bar" v-if="vipIndex !== vipItems.length - 1">
-                  <span class="progress-bar-label">{{ currentVipLevelStats.progressBarText }}</span>
-
-                  <div
-                    class="progress-bar-inner-bar"
-                    :style="{ width: currentVipLevelStats.levelUpPercentage + '%' }"
-                  />
-                </div>
-
-                <div class="progress-bar-endpoint-label">
-                  {{ `VIP${+vip.vipLevel}` }}
-                </div>
-
-                <div class="progress-bar-endpoint-label">
-                  <template v-if="vipItems.length - 1 !== vip.vipLevel">
-                    {{ `VIP${vip.vipLevel + 1}` }}
-                  </template>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Slide>
-      <template #addons>
-        <Navigation />
-      </template>
-    </Carousel>
-
-    <div v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
+    <VIPCarousel :vipCarouselIndex="vipCarouselIndex" :onlyShowCurrentLevel="false" />
+    <div class="vip-details" v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
       <!--      <div class="vip-rewards">-->
       <!--        <div class="vip-reward-item">-->
       <!--          <div class="reward-desc">-->
@@ -291,8 +245,7 @@ import { watch, ref, onActivated, onMounted } from "vue";
 import ProfileSummary from "components/ProfileSummary.vue";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
-import { Carousel, Slide, Navigation } from "vue3-carousel";
-import "vue3-carousel/dist/carousel.css";
+import VIPCarousel from "components/VIPCarousel.vue";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 
@@ -501,71 +454,74 @@ const { vipItems, lastVipLevel } = rows.reduce(
   }
 );
 
-onActivated(() => {
-  store.getMemberInfo().then(() => {
-    const vipLevelNum = Number(store.vip.replace("VIP", ""));
-    vipLevel.value = vipLevelNum;
+// onActivated(() => {
+//   store.getMemberInfo().then(() => {
+//     const vipLevelNum = Number(store.vip.replace("VIP", ""));
+//     vipLevel.value = vipLevelNum;
 
-    // if vip0, show vip1 slide
-    if (vipLevelNum === 0) {
-      vipCarouselIndex.value = vipLevelNum;
-    }
-    // if vip level higher than existing info available, show last vip level slide
-    else if (vipLevelNum > lastVipLevel) {
-      // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
-      vipCarouselIndex.value = lastVipLevel - 1;
-    }
-    // show vip slide correspond to current vip level
-    else {
-      // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
-      vipCarouselIndex.value = vipLevelNum - 1;
-    }
+//     // if vip0, show vip1 slide
+//     if (vipLevelNum === 0) {
+//       vipCarouselIndex.value = vipLevelNum;
+//     }
+//     // if vip level higher than existing info available, show last vip level slide
+//     else if (vipLevelNum > lastVipLevel) {
+//       // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
+//       vipCarouselIndex.value = lastVipLevel - 1;
+//     }
+//     // show vip slide correspond to current vip level
+//     else {
+//       // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
+//       vipCarouselIndex.value = vipLevelNum - 1;
+//     }
 
-    vipCarouselRef.value.data.currentSlide.value = vipCarouselIndex.value;
-  });
-});
+//     vipCarouselRef.value.data.currentSlide.value = vipCarouselIndex.value;
+//   });
+// });
 
 onMounted(() => {
   checkMonthlyVipReceive();
 });
 
-watch(
-  () => vipCarouselIndex.value,
-  () => {
-    const carouselVipLevel =
-      vipCarouselIndex.value === vipCarouselRef.value.data.maxSlide.value ? 12 : Math.round(vipCarouselIndex.value) + 1;
+// watch(
+//   () => vipCarouselIndex.value,
+//   () => {
+//     const carouselVipLevel =
+//       vipCarouselIndex.value === vipCarouselRef.value.data.maxSlide.value ? 12 : Math.round(vipCarouselIndex.value) + 1;
 
-    const levelUpgrade = rows3.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
-    const monthlyReward = rows4.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
-    const dailyWithdrawalLimit = rows.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
+//     const levelUpgrade = rows3.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
+//     const monthlyReward = rows4.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
+//     const dailyWithdrawalLimit = rows.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
 
-    const vipInfo = vipItems.find(({ vipLevel }) => vipLevel === carouselVipLevel);
-    const vipLevel = Number(store.vip.replace("VIP", ""));
-    const currentDeposit = Number(store.getCurrentDeposit());
-    const upgradeStatus = vipInfo.ugprade;
-    const levelUpDeposit = +upgradeStatus.replace(/,/g, "");
+//     const vipInfo = vipItems.find(({ vipLevel }) => vipLevel === carouselVipLevel);
+//     const vipLevel = Number(store.vip.replace("VIP", ""));
+//     const currentDeposit = Number(store.getCurrentDeposit());
+//     const upgradeStatus = vipInfo.ugprade;
+//     const levelUpDeposit = +upgradeStatus.replace(/,/g, "");
 
-    const levelUpPercentage = (() => {
-      if (vipLevel > +vipInfo.vipLevel) {
-        return 100;
-      }
+//     const levelUpPercentage = (() => {
+//       if (vipLevel > +vipInfo.vipLevel) {
+//         return 100;
+//       }
 
-      return (currentDeposit / levelUpDeposit) * 100;
-    })();
+//       return (currentDeposit / levelUpDeposit) * 100;
+//     })();
 
-    // alert(vipLevel);
-    // alert(vipCarouselIndex.value);
-
-    currentVipLevelStats.value = {
-      levelUpgrade,
-      monthlyReward,
-      dailyWithdrawalLimit,
-      levelUpPercentage,
-      progressBarText: `${currentDeposit} / ${levelUpDeposit}`,
-      rewardUnlocked: vipLevel > vipCarouselIndex.value
-    };
-  }
-);
+//     // alert(vipLevel);
+//     // alert(vipCarouselIndex.value);
+//     let progressBarText = `${currentDeposit} / ${levelUpDeposit}`
+//     if (currentDeposit >= levelUpDeposit) {
+//       progressBarText = ` ${levelUpDeposit} /  ${levelUpDeposit}`
+//     }
+//     currentVipLevelStats.value = {
+//       levelUpgrade,
+//       monthlyReward,
+//       dailyWithdrawalLimit,
+//       levelUpPercentage,
+//       progressBarText: progressBarText,
+//       rewardUnlocked: vipLevel > vipCarouselIndex.value
+//     };
+//   }
+// );
 
 const columns2 = [
   {
@@ -850,79 +806,10 @@ const getMonthlyVip = () => {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" scoped>  
 .separator-line {
   border: 1px solid #49148f70;
   padding: 0 10px;
-}
-
-.vip-rewards {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  gap: 5px;
-
-  .vip-reward-item {
-    width: 120px;
-    height: 182px;
-    background: url("../../assets/images/vip/vip-reward-unlock-bg.png") no-repeat center center;
-    background-size: 100% 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 5px;
-    .reward-desc {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-
-      .bold {
-        font-weight: 800;
-      }
-
-      .icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 100px;
-        height: 35px;
-        width: 35px;
-      }
-
-      .title {
-        color: #fff;
-        font-size: 11px;
-        height: 35px;
-        line-height: 18px;
-      }
-
-      .reward-amt-wrapper {
-        background: #ffffff1a;
-        padding: 5px 15px;
-        max-width: 100px;
-        border-radius: 4px;
-        font-family: sans-serif;
-        font-size: 12px;
-
-        .reward-amt {
-          line-height: 12px;
-          word-wrap: break-word;
-          color: #fff;
-        }
-      }
-    }
-
-    .unlock-status {
-      display: flex;
-      justify-content: center;
-      padding: 10px;
-
-      img {
-        max-width: 20px;
-      }
-    }
-  }
 }
 
 .vip-promo-tab-wrapper {
@@ -974,7 +861,7 @@ const getMonthlyVip = () => {
 
       // &:before {
       //   content: "";
-      //   background-color: #70bc62;
+      //   background-color: #21EF89;
       //   height: 3px;
       //   border-radius: 4px;
       //   width: 30%;
@@ -993,163 +880,6 @@ const getMonthlyVip = () => {
   }
 }
 
-.vipitem {
-  position: relative;
-  display: flex;
-  flex-direction: column-reverse;
-  background-image: url("../../assets/images/vip/badge/banner-0.png");
-  background-repeat: no-repeat;
-  background-position: bottom center;
-  background-size: 100% 100%;
-  height: 190px;
-  width: 100%;
-  justify-content: flex-end;
-  font-size: 12px;
-
-  &1 {
-    background-image: url("../../assets/images/vip/badge/banner-1.png");
-  }
-  &2 {
-    background-image: url("../../assets/images/vip/badge/banner-2.png");
-  }
-  &3 {
-    background-image: url("../../assets/images/vip/badge/banner-3.png");
-  }
-  &4 {
-    background-image: url("../../assets/images/vip/badge/banner-4.png");
-  }
-  &5 {
-    background-image: url("../../assets/images/vip/badge/banner-5.png");
-  }
-  &6 {
-    background-image: url("../../assets/images/vip/badge/banner-6.png");
-  }
-  &7 {
-    background-image: url("../../assets/images/vip/badge/banner-7.png");
-  }
-  &8 {
-    background-image: url("../../assets/images/vip/badge/banner-8.png");
-  }
-  &9 {
-    background-image: url("../../assets/images/vip/badge/banner-9.png");
-  }
-  &10 {
-    background-image: url("../../assets/images/vip/badge/banner-10.png");
-  }
-  &11 {
-    background-image: url("../../assets/images/vip/badge/banner-11.png");
-  }
-  &12 {
-    background-image: url("../../assets/images/vip/badge/banner-12.png");
-  }
-
-  .vip-level-header {
-    font-family: "Poppins";
-    font-size: 30px;
-    font-weight: 800;
-    top: 25%;
-    left: 6%;
-    z-index: 1;
-    position: absolute;
-    color: #fff;
-
-    // svg {
-    //   font-family: Arial;
-    //   font-size: 10rem;
-    //   font-weight: bold;
-    //   position: absolute;
-    //   width: 125px;
-    //   height: 70px;
-    //   right: 0px;
-    //   top: 0px;
-    // }
-
-    // .svgText {
-    //   stroke: white;
-    //   stroke-width: 10px;
-    //   stroke-linejoin: round;
-    //   paint-order: stroke;
-    // }
-  }
-
-  .vip-contents {
-    padding-top: 60px;
-    color: #ffffff;
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    .title {
-      font-size: 18px;
-      line-height: 36px;
-    }
-
-    .progress-bar-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      position: absolute;
-      bottom: 10%;
-      left: 6%;
-      right: 6%;
-      flex-wrap: wrap;
-
-      .progress-bar-endpoint-label {
-        color: #fff;
-
-        &:last-child {
-          margin-left: auto;
-        }
-      }
-
-      .progress-bar-outer-bar {
-        // border: 1px solid #fff;
-        border-radius: 16px;
-        background: #ffffff4d;
-        width: 100%;
-        overflow: hidden;
-        position: relative;
-
-        .progress-bar-label {
-          position: absolute;
-          margin-left: auto;
-          margin-right: auto;
-          left: 0;
-          right: 0;
-          text-align: center;
-          color: #333;
-          font-size: 10px;
-          margin-top: -2px;
-        }
-      }
-
-      .progress-bar-inner-bar {
-        color: #fff;
-        border-radius: 16px;
-        // background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
-        background: #fff;
-        height: 12px;
-      }
-    }
-
-    .upgrade-requirements {
-      position: absolute;
-      margin: 10px 0px;
-      display: flex;
-      justify-content: flex-start;
-      gap: 10px;
-      font-size: 12px;
-      left: 20px;
-      top: 48%;
-      color: #fff;
-
-      span {
-        color: #fff;
-      }
-    }
-  }
-}
 </style>
 <style lang="scss">
 .carousel__item {
@@ -1163,7 +893,7 @@ const getMonthlyVip = () => {
 }
 
 .carousel__slide {
-  padding: 0px 10px 20px 10px;
+  padding: 0px 5px 10px;
 
   &.carousel__slide--next .vipitem,
   &.carousel__slide--prev .vipitem {
@@ -1183,15 +913,21 @@ const getMonthlyVip = () => {
 }
 
 .vip-container {
-  padding: 0 1.75rem;
+  // padding: 0 1.75rem;
   overflow: hidden;
   font-size: 1rem;
   text-align: center;
-
+.vip-details {
+  background:#373C3D;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
   .top-header {
-    color: #f1f1f1;
+    color: #FFFFFF80;
     // background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
-    background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
+    // background: linear-gradient(180deg, #21EF89 0%, #33562d 100%);
+    background: #323738;
   }
 
   .q-table__card {
@@ -1220,11 +956,13 @@ const getMonthlyVip = () => {
     }
   }
   thead > :first-child {
-    background: linear-gradient(270deg, #5d01b9 -0.1%, #b11bff 50.22%, #6a069c 97.6%);
+    // background: linear-gradient(270deg, #5d01b9 -0.1%, #b11bff 50.22%, #6a069c 97.6%);
+    // background: #FFFFFF0F
   }
   tbody > :nth-child(odd) {
     // background: rgba(21, 0, 37, 0.2);
-    background: rgba(112, 188, 98, 0.1);
+    // background: rgba(112, 188, 98, 0.1);
+    background: #FFFFFF0F;
 
     // background: #652c93;
     // background: #652c9315;
@@ -1265,23 +1003,24 @@ const getMonthlyVip = () => {
   }
 
   .hint-msg {
-    border-radius: 8px;
-    background: #111215;
-    padding: 10px;
-    margin: 0 0 1.25rem 0;
-    color: rgba(255, 255, 255, 0.7);
-    text-align: center;
-    font-weight: 400;
-    line-height: 19px;
+    // border-radius: 8px;
+    // background: #111215;
+    // padding: 10px;
+    // margin: 0 0 1.25rem 0;
+    // color: rgba(255, 255, 255, 0.7);
+    // text-align: center;
+    // font-weight: 400;
+    // line-height: 19px;
+    color: #B2BDBF;
   }
 
   .header-wrapper {
     display: flex;
     gap: 15px;
-    padding: 10px 0px 20px;
+    padding: 0 0px 20px;
 
     .header {
-      font-size: 26px;
+      font-size: 18px;
       font-weight: 800;
       line-height: 32px;
       text-align: left;
@@ -1290,11 +1029,11 @@ const getMonthlyVip = () => {
   }
 }
 
-@media (max-width: 410px) {
-  .vip-container {
-    padding: 0 0.75rem;
-  }
-}
+// @media (max-width: 410px) {
+//   .vip-container {
+//     padding: 0 0.75rem;
+//   }
+// }
 
 .receive-monthly {
   display: flex;

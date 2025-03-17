@@ -2,120 +2,98 @@
   <q-page class="write-letter">
     <div class="box-width">
       <q-form ref="formRef" :model="mailDetailList" class="q-px-md">
-        <div class="write-board-div q-py-sm">
-          <div class="top q-pb-md">
-            <div class="title">{{ $t("form.feedbackType") }}</div>
-          </div>
-          <q-select
-            name="title"
-            v-model="mailDetailList.feedbackType"
-            :options="feedbackTypes"
-            :label="`${mailDetailList.feedbackType || $t('form.feedbackType_select')}`"
-            ref="feedbackTypeRef"
-            :rules="[(val) => !!val || $t('form.feedbackType_pleaseSelect')]"
-            label-color="brand"
-            outlined
-            color="green"
-            bg-color="black"
-          />
-
-          <!--
-          <q-btn-dropdown style="width:100%;" color="brightbtn" :label="`${mailDetailList.feedbackType || '快捷输入'}`" menu-anchor="bottom end">
-            <q-list>
-              <q-item v-for="(item, i) in feedbackTypes" :key="i" clickable v-close-popup @click="onItemClick(item)">
-                <q-item-section>
-                  <q-item-label>{{ item }}</q-item-label>
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-btn-dropdown>
-          -->
+        <div class="pc-form">
+          <InputRowGrid>
+            <template #fields>
+              <InputField :label="$t('form.feedbackType')">
+                <template #input>
+                  <q-select
+                    outlined
+                    clearable
+                    :options="feedbackTypes"
+                    :display-value="`${mailDetailList.feedbackType || $t('form.feedbackType_select')}`"
+                    v-model="mailDetailList.feedbackType"
+                    :rules="[(val) => !!val || $t('form.feedbackType_pleaseSelect')]"
+                    ref="feedbackTypeRef"
+                    hide-bottom-space
+                    type="text"
+                  >
+                  </q-select>
+                </template>
+              </InputField>
+            </template>
+          </InputRowGrid>
+          <InputRowGrid>
+            <template #fields>
+              <InputField :label="$t('form.subjectTitle')">
+                <template #input>
+                  <q-input
+                    :rules="[
+                      (val) => (val && val.length > 0) || $t('form.subjectTitle_rules_01'),
+                      (val) => (val && val.length <= 200) || $t('form.subjectTitle_rules_02')
+                    ]"
+                    ref="titleRef"
+                    name="title"
+                    type="text"
+                    counter
+                    bottom-slots
+                    clearable
+                    maxlength="200"
+                    v-model="mailDetailList.title"
+                    class="textarea-input"
+                    label-color="brand"
+                    :placeholder="$t('form.subjectTitle_placeholder')"
+                  />
+                </template>
+              </InputField>
+            </template>
+          </InputRowGrid>
+          <InputRowGrid>
+            <template #fields>
+              <InputField :label="$t('form.uploadImage')">
+                <template #input>
+                  <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" />
+                </template>
+              </InputField>
+            </template>
+          </InputRowGrid>
+          <InputRowGrid>
+            <template #fields>
+              <InputField :label="$t('form.feedbackType')">
+                <template #input>
+                    <q-input
+                      ref="contentRef"
+                      :rules="[
+                        (val) => (val && val.length > 0) || $t('form.content_rules_01'),
+                        (val) => (val && val.length < 501) || $t('form.content_rules_02')
+                      ]"
+                      name="content"
+                      standout
+                      type="textarea"
+                      :auto-size="{ minRows: 4, maxRows: 16 }"
+                      class="textarea-input mail-txtarea q-mb-md"
+                      counter
+                      maxlength="500"
+                      v-model="mailDetailList.content"
+                      :placeholder="$t('form.content_placeholder')"
+                      label-color="brand"
+                    ></q-input>
+                </template>
+              </InputField>
+            </template>
+          </InputRowGrid>
         </div>
-        <div class="write-board-div q-py-sm">
-          <div class="top q-pb-md">
-            <div class="title">{{ $t("form.subjectTitle") }}</div>
-          </div>
-          <q-input
-            :rules="[
-              (val) => (val && val.length > 0) || $t('form.subjectTitle_rules_01'),
-              (val) => (val && val.length <= 200) || $t('form.subjectTitle_rules_02')
-            ]"
-            ref="titleRef"
-            name="title"
-            type="text"
-            counter
-            bottom-slots
-            maxlength="200"
-            v-model="mailDetailList.title"
-            class="textarea-input"
-            label-color="brand"
-            outlined
-            color="green"
-            :placeholder="$t('form.subjectTitle_placeholder')"
-            bg-color="black"
-          />
-        </div>
 
-        <!-- <InputRowGrid>
-          <template #fields>
-            <InputField :label="'Subject title'">
-              <template #input>
-                <q-input
-                  type="text"
-                  maxlength="200"
-                  v-model="mailDetailList.title"
-                  hide-bottom-space
-                  ref="titleRef"
-                  :rules="[
-                    (val) => (val && val.length > 0) || 'Please enter subject title',
-                    (val) => (val && val.length <= 200) || 'Subject title length is 200 words or less'
-                  ]"
-                  label-color="brand"
-                  outlined
-                  color="green"
-                  placeholder="Please enter subject title"
-                ></q-input>
-              </template>
-            </InputField>
-          </template>
-        </InputRowGrid> -->
-
-        <div class="write-board-div q-py-sm">
-          <div class="top q-pb-md title">{{ $t("form.uploadImage") }}</div>
-          <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" />
-        </div>
-
-        <div class="write-board-div q-py-sm">
-          <div class="top q-pb-md title">{{ $t("form.content") }}</div>
-          <q-input
-            ref="contentRef"
-            :rules="[
-              (val) => (val && val.length > 0) || $t('form.content_rules_01'),
-              (val) => (val && val.length < 501) || $t('form.content_rules_02')
-            ]"
-            name="content"
-            standout
-            type="textarea"
-            :auto-size="{ minRows: 4, maxRows: 16 }"
-            class="textarea-input mail-txtarea q-mb-md"
-            counter
-            maxlength="500"
-            v-model="mailDetailList.content"
-            :placeholder="$t('form.content_placeholder')"
-            label-color="brand"
-            outlined
-            color="green"
-            bg-color="black"
-          ></q-input>
-        </div>
         <div class="bottom-btn">
-          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">{{ $t("btn.post") }}</q-btn>
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">
+            {{ $t("btn.confirm") }}
+          </q-btn>
         </div>
       </q-form>
     </div>
   </q-page>
 
-  <q-dialog width="100%" v-model="modalSendSuccess" presistent>
+  <q-dialog class="flex-end" width="100%" v-model="modalSendSuccess" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">

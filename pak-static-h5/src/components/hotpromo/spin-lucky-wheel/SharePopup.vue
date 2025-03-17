@@ -68,7 +68,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="modalSocialShare" presistent>
+  <q-dialog class="flex-end" width="100%" v-model="modalSocialShare" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
 

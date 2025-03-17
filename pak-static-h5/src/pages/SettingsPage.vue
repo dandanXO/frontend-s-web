@@ -3,11 +3,42 @@
 
   <q-page>
     <div class="top-setting-section">
-      <div class="top-login-name">
-        <img src="../assets/images/account/login-name-icon.png" />
-        <div>ID: {{ store.nickName }}</div>
-        <img class="copy-icon" src="../assets/images/account/copy-icon.png" @click="handleCopyClick" />
+      <div class="top-profile">
+        <div class="profile">
+          <div class="profile-pic">
+            <q-avatar size="50px">
+              <img :src="profileImagePath" />
+            </q-avatar>
+            <div class="profile-pic-frame" v-if="!homeProfile"></div>
+
+            <div class="vip-details">
+              <img class="bg" src="../assets/images/index/vip-row1.png" alt="" />
+              <div class="vip-level">
+                <img src="../assets/images/index/viptext.png" alt="" />
+                {{ store.vip.replace('VIP', '') }}
+              </div>
+            </div>
+          </div>
+          <div class="top-name">
+
+            <div class="top-name-details">
+              <!-- <img src="../assets/images/account/login-name-icon.png" /> -->
+              <div>{{ store.realName }}</div>
+            </div>
+            <div class="top-copy-id">
+              <!-- <img src="../assets/images/account/login-name-icon.png" /> -->
+              <div>ID: {{ store.nickName }}</div>
+              <img class="copy-icon" src="../assets/images/account/copy-icon.png" @click="handleCopyClick" />
+            </div>
+          </div>
+        </div>
+        <RouterLink to="/account/profile" class="right">
+          <img src="../assets/images/account/rgtarrow.svg">
+        </RouterLink>
       </div>
+      <RouterLink to="/vip" class="top-vip">
+        <VIPCarousel :onlyShowCurrentLevel="true" :vipCarouselIndex="vipCarouselIndex" style="pointer-events: none;" />
+      </RouterLink>
       <div class="top-total-score">
         <div class="score-txt">
           <img src="../assets/images/account/total-score.png" />
@@ -17,7 +48,7 @@
       <!-- <div class="top-section-inner">
       </div> -->
     </div>
-
+    
     <div class="mid-setting-section">
       <div class="acct-nav">
         <!-- <h2>{{ $t("settings.otherServices") }}</h2> -->
@@ -115,7 +146,18 @@
             <div class="acct-nav-label">{{ $t("settings.transfer") }}</div>
           </a>
       </div>
-
+      <div class="bottom-setting-section invite-friends-section">
+        <div class="left-icon">
+          <img src="../assets/images/earn-money/invite-gift.png"/>
+        </div>
+        <div class="right-contents">
+          <div class="invite-title">{{ $t("earnMoney.reward.inviteFriendsViaLink") }}</div>
+          <div class="invite-share-link">
+            <div class="link-href">{{ selfTgurl }}</div>
+            <div class="link-copy" @click="copyHrefLink">{{ $t("earnMoney.reward.copyLink") }}</div>
+          </div>
+        </div>
+      </div>
       <q-card class="card-account-banner" v-if="btm_banners.length > 0">
         <q-card-section>
           <q-carousel
@@ -169,7 +211,7 @@
     </div>
   </q-page>
 
-  <q-dialog width="100%" v-model="confirmSignOutDialog" persistent>
+  <q-dialog class="flex-end" width="100%" v-model="confirmSignOutDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
@@ -189,10 +231,11 @@
 </template>
 
 <script setup>
-import { onActivated, ref } from "vue";
+import { onActivated, onMounted, ref, computed } from "vue";
 import { userStore } from "src/stores";
 import { useRoute, useRouter } from "vue-router";
 import { useQuasar } from "quasar";
+import VIPCarousel from "components/VIPCarousel.vue";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import ExchangeModal from "../components/account/ExchangeModal.vue";
 import TransferModal from "../components/account/TransferModal.vue";
@@ -201,6 +244,49 @@ import { useUI } from "stores/ui";
 import { Platform } from "quasar";
 import { t } from "src/boot/lang";
 
+
+const selfTgurl = ref("");
+const copyHrefLink = () => {
+  navigator.clipboard
+    .writeText(selfTgurl.value)
+    .then(() => {
+      $q.notify({
+        message: "Link copied to clipboard",
+        color: "positive",
+        position: "top",
+        timeout: 2000
+      });
+    })
+    .catch(() => {
+      $q.notify({
+        message: "Failed to copy link",
+        color: "negative",
+        position: "top",
+        timeout: 2000
+      });
+    });
+};
+const profileImg = [
+  {
+    imgPath: ["profile-pic"]
+  }
+];
+const randomProfileImg = computed(() => {
+  const storedImg = sessionStorage.getItem("PROFILE_IMG");
+  if (storedImg) {
+    return storedImg;
+  } else {
+    const randomProfile = profileImg[0];
+    const randomIndex = Math.floor(Math.random() * randomProfile.imgPath.length);
+    const imgPath = randomProfile.imgPath[randomIndex];
+    sessionStorage.setItem("PROFILE_IMG", imgPath);
+    return imgPath;
+  }
+});
+
+const profileImagePath = computed(() => {
+  return require(`../assets/images/account/${randomProfileImg.value}.png`);
+});
 const store = userStore();
 const router = useRouter();
 const route = useRoute();
@@ -249,6 +335,19 @@ onActivated(() => {
     showExchangeModal.value = true;
   }
 });
+onMounted(() => {
+  let tgDomain = window.location.origin + "/";
+  if (store.isApp()) {
+    tgDomain = store.evip ? "https://" + store.evip + "/" : store.h5Url;
+  }
+
+  api.get("/session/member/referralCode").then((res) => {
+    if (res.code === 0) {
+      selfTgurl.value = tgDomain + "refer/" + res.data;
+    }
+  });
+})
+const vipCarouselIndex = ref();
 
 const canTransfer = ref(false);
 const uplineId = ref();
@@ -338,27 +437,113 @@ const handleCopyClick = async () => {
 
 <style scoped lang="scss">
 .top-setting-section {
+  .top-profile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+    .profile {
+      display: flex;
+      width: 90%;
+      gap: 10px;
+      margin: 10px auto;
+      justify-content: flex-start;
+      align-items: center;
+      .top-name {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        .top-name-details {
+          font-family: Microsoft YaHei UI;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 120%;
+          letter-spacing: 0px;  
+          color: #ffffff;
+        }
+      }
+      .top-copy-id {
+        display: flex;
+        align-items: center;
+        font-family: Microsoft YaHei UI;
+        font-weight: 700;
+        font-size: 12.17px;
+        line-height: 120%;
+        letter-spacing: 0px;
+        color: #B3BEC0;
+        img {
+          width: 30px;
+          height: 30px;
+          margin-right: 8px;
+        }
+        .copy-icon {
+          width: 16px;
+          height: 16px;
+          margin-left: 8px;
+        }
+      }
+      .profile-pic-frame {
+          // background-image: url(../assets/images/common/profile-frame.png);
+          width: 70px;
+          height: 70px;
+          background-size: 100%;
+          position: absolute;
+          top: -8px;
+          left: -4px;
+        }
+      .profile-pic {
+          position: relative;
+          padding-bottom: 20px;
+        .vip-details {
+          position: relative;
+          margin-left: 20px;
+          margin-bottom: 5px;
+          margin-top: -15px;
+
+          img.bg {
+            display: block;
+            width: 55px;
+            position: absolute;
+            top: -2px;
+            left: -25px;
+          }
+
+          .vip-level {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            line-height: 1.1;
+            padding-top: 3px;
+            padding-bottom: 4px;
+            z-index: 3;
+            color: #ffffff;
+            font-weight: 700;
+            font-style: italic;
+            img {
+              width: 68%;
+              margin-left: -7px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .top-vip {
+    max-width: 400px;
+    width: 90%;
+    margin: 0 auto;
+    display: block;
+  }
   background: url(../assets/images/account/setting-bg.png)no-repeat center center;
   padding-top: 175px;
   background-size: cover;
   position: relative;
 
-  .top-login-name {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    margin: 0 20px 10px;
-    img {
-      width: 30px;
-      height: 30px;
-      margin-right: 8px;
-    }
-    .copy-icon {
-      width: 16px;
-      height: 16px;
-      margin-left: 8px;
-    }
-  }
 
   .top-total-score {
     margin: 0 20px;
@@ -510,6 +695,61 @@ const handleCopyClick = async () => {
     }
   }
 }
+
+.invite-friends-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: unset;
+  gap: 10px;
+  .left-icon {
+    width: 60px;
+    img {
+      width: 100%;
+    }
+  }
+  .right-contents {
+    font-family: Microsoft YaHei UI;
+    font-weight: 700;
+    font-size: 14.32px;
+    line-height: 120%;
+    letter-spacing: 0px;
+    max-width: 75%;
+
+    width: 100%;
+  }
+}
+
+.invite-share-link {
+      margin-top: 12px;
+      background-color: #292D2E;
+      padding: 4px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      min-height: 40px;
+      border: 1px solid #FFFFFF40;
+
+      .link-href {
+        padding: 10px 16px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 11px;
+      }
+      .link-copy {
+        color: #ffffff;
+        background: #FFFFFF0F;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 70px;
+        font-weight: bold;
+        border-radius: 12px;
+        letter-spacing: -1px;
+      }
+    }
 
 .acct-nav {
   margin: 5px 20px 20px;
@@ -672,7 +912,10 @@ const handleCopyClick = async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-
+  gap: 5px;
+  img {
+    width: 30px;
+  }
   .acct-nav-label {
     // color: rgba(206, 206, 206, 0.8);
     color: #ffffff;
@@ -694,7 +937,7 @@ const handleCopyClick = async () => {
   border-radius: 12px;
   width: 140px;
   height: 42px;
-  color: #70bc62;
+  color: #21EF89;
 }
 .btn-confirm {
   background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);

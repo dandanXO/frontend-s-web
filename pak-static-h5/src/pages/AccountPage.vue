@@ -159,7 +159,7 @@
     </q-card>
   </q-dialog> -->
 
-  <q-dialog v-model="showCaptchaDialog" width="100%">
+  <q-dialog class="flex-end" v-model="showCaptchaDialog" width="100%">
     <q-card width="100%">
       <q-card-section style="padding: 10px 20px" class="q-pa-md bg-dark text-white">OTP</q-card-section>
       <div style="padding: 20px">
@@ -180,7 +180,7 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="personalCenterDialog" presistent>
+  <q-dialog class="flex-end" width="100%" v-model="personalCenterDialog" persistent>
     <div class="popout-dialog">
       <q-btn
         dense
@@ -286,7 +286,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="bindEmailDialog" presistent>
+  <q-dialog class="flex-end" width="100%" v-model="bindEmailDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="text-white popout-close" @click="openBindEmailDialog()" v-close-popup />
       <div class="popout-dialog-container">
@@ -357,7 +357,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="changePasswordDialog" presistent>
+  <q-dialog class="flex-end" width="100%" v-model="changePasswordDialog" persistent>
     <div class="popout-dialog">
       <q-btn
         dense
@@ -464,7 +464,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="changeNewPasswordDialog" presistent>
+  <q-dialog class="flex-end" width="100%" v-model="changeNewPasswordDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">
@@ -560,21 +560,21 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="guestKYCDialog" presistent>
+  <q-dialog class="flex-end" width="100%" v-model="guestKYCDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="closeGuestKYCDialog" />
       <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="userKYCDialog" presistent>
+  <q-dialog class="flex-end" width="100%" v-model="userKYCDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="closeUserKYCDialog" />
       <KYCUserForm ref="kycUserFormRef" @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="verificationCodeDialog" presistent>
+  <q-dialog class="flex-end" width="100%" v-model="verificationCodeDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
       <div class="popout-dialog-container">
@@ -614,7 +614,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="confirmSignOutDialog" presistent>
+  <q-dialog class="flex-end" width="100%" v-model="confirmSignOutDialog" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">

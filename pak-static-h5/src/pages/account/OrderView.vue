@@ -24,26 +24,8 @@
     >
       <q-tab-panel name="withdrawal">
         <div v-for="(e, i) in withdrawalData" :key="`${e}-${i}`" class="order-table">
-          <div class="order-row order-row--title">
-            <div class="order-col">{{ $t("records.orderNo") }}</div>
-            <div class="order-col flex-c-end gap-8">
-              {{ e.serialNumber }}
 
-              <div @click="copyText(e.serialNumber)">
-                <img
-                  class="copy-btn btn-pointer"
-                  src="../../assets/images/account/content-copy.svg"
-                  size="24px"
-                  fill="#fff"
-                />
-              </div>
-            </div>
-          </div>
           <div class="order-row order-row--content">
-            <div class="order-subrow">
-              <div class="order-col">{{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
-              <div class="order-col">{{ $t("records.bank") }}</div>
-            </div>
             <div class="order-subrow">
               <div class="order-col">
                 <span class="txt-gray">{{ convertToGMT55(e.withdrawDate) }}</span>
@@ -53,7 +35,7 @@
                   {{ getWithdrawStatus(e.status) }}
                 </span> -->
 
-                <q-btn
+                <q-btn flat
                   :class="{
                     'btn--green': ['SUCCESS'].includes(e.status),
                     'btn--red': ['FAIL', 'STEP_5', 'FAIL_REVIEW'].includes(e.status),
@@ -76,12 +58,11 @@
                 ></q-btn>
               </div>
             </div>
+            <div class="order-subrow">
+              <div class="order-col">{{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
+              <div class="order-col">{{ $t("records.bank") }}</div>
+            </div>
           </div>
-        </div>
-      </q-tab-panel>
-
-      <q-tab-panel name="recharge">
-        <div v-for="(e, i) in depositData" :key="`${e}-${i}`" class="order-table">
           <div class="order-row order-row--title">
             <div class="order-col">{{ $t("records.orderNo") }}</div>
             <div class="order-col flex-c-end gap-8">
@@ -97,7 +78,19 @@
               </div>
             </div>
           </div>
+        </div>
+      </q-tab-panel>
+
+      <q-tab-panel name="recharge">
+        <div v-for="(e, i) in depositData" :key="`${e}-${i}`" class="order-table">
           <div class="order-row order-row--content">
+
+            <div class="order-subrow">
+              <div class="order-col">
+                <span class="txt-gray">{{ convertToGMT55(e.depositDate) }}</span>
+              </div>
+              <div class="order-col">{{ convertToCommaAmount(e.depositAmount, true) }}</div>
+            </div>
             <div class="order-subrow">
               <div class="order-col">{{ e.paymentType }}</div>
               <div class="order-col">
@@ -105,7 +98,7 @@
                   {{ getDepositStatus(e.status) }}
                 </span> -->
 
-                <q-btn
+                <q-btn flat
                   :class="{
                     'btn--green': ['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(e.status),
                     'btn--red': ['CLOSED'].includes(e.status),
@@ -115,11 +108,20 @@
                 ></q-btn>
               </div>
             </div>
-            <div class="order-subrow">
-              <div class="order-col">
-                <span class="txt-gray">{{ convertToGMT55(e.depositDate) }}</span>
+          </div>
+          <div class="order-row order-row--title">
+            <div class="order-col">{{ $t("records.orderNo") }}</div>
+            <div class="order-col flex-c-end gap-8">
+              {{ e.serialNumber }}
+
+              <div @click="copyText(e.serialNumber)">
+                <img
+                  class="copy-btn btn-pointer"
+                  src="../../assets/images/account/content-copy.svg"
+                  size="24px"
+                  fill="#fff"
+                />
               </div>
-              <div class="order-col">{{ convertToCommaAmount(e.depositAmount, true) }}</div>
             </div>
           </div>
         </div>
@@ -364,9 +366,13 @@ onActivated(() => {
   .order-table {
     // background: #171e2b80;
     // border-radius: 10px;
-    border-bottom: 1px solid #ffffff33;
-    padding: 6px 0px;
-    margin-bottom: 10px;
+    // border-bottom: 1px solid #ffffff33;
+    // padding: 6px 0px;
+    // margin-bottom: 10px;
+    background: #292D2E;
+    border-radius: 6px;
+    margin: 5px 5px 15px;
+    overflow: hidden;
     .order-row {
       display: flex;
       justify-content: space-between;
@@ -374,18 +380,43 @@ onActivated(() => {
       flex-wrap: wrap;
 
       &--title {
-        border-top-right-radius: 16px;
-        border-top-left-radius: 16px;
+        align-items: center;
+        // border-top-right-radius: 16px;
+        // border-top-left-radius: 16px;
+        background: #FFFFFF0F;
+        .order-col {
+          font-family: Microsoft YaHei UI;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 14px;
+          letter-spacing: 0px;
+          color:#B2BDBF;
+          &.flex-c-end {
+            color: #ffffff;
+          }
+        }
+
       }
 
       &--content {
         flex-wrap: wrap;
         flex-direction: column;
+        gap: 10px;
       }
 
       .order-subrow {
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        .order-col:nth-child(1) {
+
+          font-family: Microsoft YaHei UI;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 14px;
+        letter-spacing: 0px;
+        color: #ffffff;
+        }
       }
     }
 
@@ -399,7 +430,8 @@ onActivated(() => {
       }
 
       span.txt-gray {
-        color: #888888;
+        color: #B2BDBF;
+        font-size: 12px;
         // background: rgba(136, 136, 136, 0.2);
       }
 
@@ -429,37 +461,37 @@ onActivated(() => {
 }
 
 .btn--orange {
-  color: #ff7a00;
+  color: #FBAB1B;
   font-size: 0.825rem;
   font-weight: 700;
   text-transform: capitalize;
   padding: 4px 10px;
   border-radius: 4px;
-  background: rgba(255, 122, 0, 0.2);
+  background: rgba(251, 171, 27, 0.2);
   min-height: unset;
   margin-bottom: 4px;
 }
 
 .btn--red {
-  color: #b81212;
+  color: #FF3434;
   font-size: 0.825rem;
   font-weight: 700;
   text-transform: capitalize;
   padding: 4px 10px;
   border-radius: 4px;
-  background: rgba(184, 18, 18, 0.2);
+  background:rgba(255, 52, 52, 0.2);
   min-height: unset;
   margin-bottom: 4px;
 }
 
 .btn--green {
-  color: #00b900;
+  color: #21EF89;
   font-size: 0.825rem;
   font-weight: 700;
   text-transform: capitalize;
   padding: 4px 10px;
   border-radius: 4px;
-  background: rgba(0, 185, 0, 0.2);
+  background: rgba(33, 239, 137, .2);
   min-height: unset;
   margin-bottom: 4px;
 }

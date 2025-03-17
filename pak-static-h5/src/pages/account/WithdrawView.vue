@@ -60,7 +60,7 @@
               <q-item>
                 <q-item-section class="text-grey isCentreDialog">
                   No account available
-                  <router-link class="text-bright" to="/account/bank">
+                  <router-link class="text-positive" to="/account/bank">
                     Add account
                     <!-- {{
                       isUSDT || isEWALLET
@@ -72,7 +72,7 @@
               </q-item>
             </template>
             <template v-slot:option="scope">
-              <q-item v-bind="scope.itemProps">
+              <q-item class="isCentreDialog" v-bind="scope.itemProps">
                 <q-item-section avatar v-if="scope.opt.bankIcon">
                   <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
                 </q-item-section>
@@ -104,9 +104,6 @@
 
           <div class="bot-wrapper-card">
             <div class="bank-card-item" @click="goToBank()">
-              <div class="card-icon">
-                <q-icon key="md" size="md" name="add" />
-              </div>
               <div class="card-label">{{ $t("btn.addNewAccount") }}</div>
             </div>
           </div>
@@ -219,23 +216,17 @@
           <div class="bot-wrapper">
             <div class="info">
               <div class="desc-wrapper">
-                <div class="desc">{{ $t("withdraw.withdrewAmount") }}</div>
+                <div class="desc"><img src="../../assets/images/account/withdraw-amt.svg">{{ $t("withdraw.withdrewAmount") }}</div>
               </div>
-              <div class="desc">RS:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawAmount) }}</div>
+              <div class="desc"><img src="../../assets/images/account/right-green.svg"><span>RS:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawAmount) }}</span></div>
             </div>
 
             <div class="info">
               <div class="desc-wrapper">
-                <div class="desc">{{ $t("withdraw.withdrawMaxTimes") }}</div>
-              </div>
-              <div class="desc">{{ selectedWithdrawalMethod.withdrawMaxTimes }}</div>
-            </div>
-
-            <div class="info">
-              <div class="desc-wrapper">
-                <div class="desc">{{ $t("withdraw.remainWagers") }}</div>
+                <div class="desc"><img src="../../assets/images/account/remain-wagers.svg">{{ $t("withdraw.remainWagers") }}</div>
               </div>
               <div class="desc remain-wager-wrapper" @click="refreshRemainWager">
+                <img src="../../assets/images/account/right-green.svg">
                 <q-spinner v-if="isRefreshRemainWager" />
                 <span v-else>RS:{{ convertToCommaAmount(selectedWithdrawalMethod.remainWagers) }}</span>
                 <img
@@ -244,6 +235,13 @@
                   src="../../assets/images/account/refresh-icon.svg"
                 />
               </div>
+            </div>
+
+            <div class="info">
+              <div class="desc-wrapper">
+                <div class="desc"><img src="../../assets/images/account/withdraw-max.svg">{{ $t("withdraw.withdrawMaxTimes") }}</div>
+              </div>
+              <div class="desc" style="color: #FBAB1B">{{ selectedWithdrawalMethod.withdrawMaxTimes }}</div>
             </div>
           </div>
 
@@ -1036,11 +1034,12 @@ watch(
         width: 100%;
         color: white;
         border-radius: 3.125rem;
-        opacity: 0.8;
+        // opacity: 0.8;
         // background: linear-gradient(90deg, #157f42 -1.25%, rgba(44, 97, 67, 0) 104.06%);
-        background: linear-gradient(90deg, #70bc62 -1.25%, #131313 104.06%);
-        padding: 5px 10px;
-        text-transform: uppercase;
+        // background: linear-gradient(90deg, #13f129 -1.25%, #131313 104.06%);
+        
+        // padding: 5px 10px;
+        // text-transform: uppercase;
 
         .desc-wrapper {
           display: flex;
@@ -1089,19 +1088,20 @@ watch(
 }
 
 .bottom-btn {
+  
   margin-top: auto;
-  padding: 20px 0 40px;
-  position: fixed;
-  bottom: 0;
-  width: calc(100% - 32px);
-  max-width: 468px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #232626;
+  padding: 20px 15px 40px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 468px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #24262b;
 }
 
 .tutorial-link {
-  color: #70bc62;
+  color: #13f129;
   text-decoration: underline;
 }
 .step-desc-div {
@@ -1149,7 +1149,8 @@ watch(
 
     img {
       width: 100%;
-      padding: 5px;
+      background: #394142;
+      padding: 5px;        border-radius: 10px;
     }
 
     &.active {
@@ -1157,9 +1158,8 @@ watch(
       // color: #db7e42;
       // box-shadow: none;
       // filter: drop-shadow(0px 0px 3px #ffffff);
-      img {
-        border: 3px solid #64ba68;
-        border-radius: 10px;
+      img {    background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+
       }
 
       .type-name {
@@ -1212,9 +1212,11 @@ watch(
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 20px;
   margin: 1rem 0 0.5rem 0;
-
+  background: #373C3D;
+  padding: 10px;
+  border-radius: 10px;
   .info {
     display: flex;
     align-items: center;
@@ -1222,22 +1224,47 @@ watch(
     width: 100%;
     color: white;
     border-radius: 3.125rem;
-    opacity: 0.8;
-    // background: linear-gradient(90deg, #157f42 -1.25%, rgba(44, 97, 67, 0) 104.06%);
-    background: linear-gradient(90deg, #70bc62 -1.25%, #131313 104.06%);
-    padding: 5px 10px;
-    text-transform: uppercase;
+    font-size: 16px;
+    // opacity: 0.8;
+    // // background: linear-gradient(90deg, #157f42 -1.25%, rgba(44, 97, 67, 0) 104.06%);
+    // // background: linear-gradient(90deg, #13f129 -1.25%, #131313 104.06%);
+    // padding: 5px 10px;
+    // text-transform: uppercase;
 
     .desc-wrapper {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 5px;
+      color: #B2BDBF;
+      font-weight: 700;
+      .desc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+        font-family: Microsoft YaHei UI;
+font-weight: 700;
+line-height: 20px;
+letter-spacing: 2%;
+text-transform: capitalize;
+
+      }
     }
 
     .desc {
-      font-size: 0.825rem;
+      font-size: .925rem;
       font-weight: 400;
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+      align-items: center;
+      span {
+        color: #21EF89;
+        &.orange {
+          color: #FBAB1B;
+        }
+      }
       .refresh-btn-img {
         width: 20px;
         height: 20px;
@@ -1253,6 +1280,7 @@ watch(
       align-items: center;
       gap: 3px;
       cursor: pointer;
+      color: #21EF89;
     }
   }
 }
@@ -1265,25 +1293,34 @@ watch(
   align-items: center;
   justify-content: space-around;
   border-radius: 0.625rem;
-  background: #2e303466;
+  background: #373C3D;
   width: 100%;
 
   text-align: center;
   font-family: "Manrope", sans-serif;
   font-size: 1.1rem;
-  font-weight: 700;
+  font-weight: 400;
   aspect-ratio: 335/82;
 
   .balance {
-    margin: 0 0 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 15px 0;
+    // margin: 0 0 0 1rem;
   }
 
   .amount {
     font-size: 140%;
+    font-weight: 700;
   }
 
   .withdrawable {
-    margin: 0 1rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 15px 0;
+    // margin: 0 1rem 0 0;
   }
 
   .separator {
@@ -1293,8 +1330,7 @@ watch(
   }
 
   .title {
-    color: rgba(255, 255, 255, 0.5);
-    font-weight: 700;
+    color: #9F9F9F;
   }
 
   span {
@@ -1310,16 +1346,18 @@ watch(
   margin: 1rem 0 0.5rem 0;
 
   .bank-card-item {
-    padding: 3px;
-    border-radius: 1.25rem;
-    background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
+    padding: 8px;
+    border-radius: 8px;
     position: relative;
     transition: 0.3s all;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    color: #150025;
+    background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+    box-shadow: 0px 2px 0px 0px #1CCA6A;
+    text-transform: uppercase;
 
     .card-label {
       font-size: 1rem;

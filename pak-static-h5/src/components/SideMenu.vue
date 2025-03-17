@@ -8,9 +8,9 @@
           {{ $t("sideNav.inviteToEarn") }}
           <span>{{ $t("sideNav.shareYourExclusiveQRCode") }}</span>
         </div>
-        <div class="item-icon">
+        <!-- <div class="item-icon">
           <img src="../assets/images/auth/menu-invite.png" />
-        </div>
+        </div> -->
       </RouterLink>
 
       <div class="side-menu-item side-menu-item__checkin">
@@ -56,9 +56,9 @@
       <div class="side-menu-transparent-grp">
 
         <div class="side-menu-item side-menu-item__transparent" @click="openCSInNewTab(ui.CSAUrl)">
-        <div class="item-icon"><img src="../assets/images/auth/menu-livesupport.png" /></div>
-        {{ $t("sideNav.livesupport") }}
-      </div>
+          <div class="item-icon"><img src="../assets/images/auth/menu-livesupport.png" /></div>
+          {{ $t("sideNav.livesupport") }}
+        </div>
 
       <!-- <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/account/feedback')">
         <div class="item-icon"><img src="../assets/images/auth/menu-feedback.png" /></div>
@@ -91,7 +91,7 @@
         Whatsapp
       </a>
 
-      <router-link class="side-menu-item side-menu-item__transparent" to="/promo?name=pak-faq">
+      <router-link class="side-menu-item side-menu-item__transparent" to="/faq-page">
         <div class="item-icon"><img src="../assets/images/auth/menu-faq.png" /></div>
         Faq
       </router-link>
@@ -102,6 +102,15 @@
       </a>
 
       </div>
+      <RouterLink to="/earn-money" class="side-menu-item side-menu-item__appdownload">
+        <div>
+          {{ $t("sideNav.appDownload") }}
+          <span>{{ $t("sideNav.experienceOneStopGaming") }}</span>
+        </div>
+        <div class="right-icon">
+          <img :src="require(`../assets/images/auth/panda-app.png`)" />
+        </div>
+      </RouterLink>
       <RouterLink to="/language" class="side-menu-item">
         <div class="item-icon">
           <img :src="require(`../assets/images/auth/country-flag-${$t('lang.langVal')}.png`)" class="flag" />
@@ -174,9 +183,6 @@ const activateSlide = (item) => {
     padding: 10px 0;
     }
     .side-menu-item {
-        &__invite {
-            height: 100px;
-        }
       height: 50px;
       padding: 12px;
       display: flex;
@@ -189,7 +195,7 @@ const activateSlide = (item) => {
       font-weight: bold;
       line-height: 1.2;
       text-decoration: none;
-
+      position: relative;
       &__download {
         background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
         color: #000a01;
@@ -202,10 +208,26 @@ const activateSlide = (item) => {
           }
         }
       }
-
+      &:after {
+          content: ">";
+          position: absolute;
+          right: 20px;
+          top: 12px;
+          width: 25px;
+          height: 25px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 6px;
+          background: #464F50;
+          font-weight: bold;
+        }
       &__transparent {
         background-color: transparent;
         height: 40px;
+        &:after {
+          content: unset;
+        }
       }
 
       &__checkin {
@@ -254,6 +276,10 @@ const activateSlide = (item) => {
         line-height: 17.21px;
         letter-spacing: 0%;
         font-variant: small-caps;
+        height: 80px;
+        &:after {
+          content: unset;
+        }
 
         span {
           font-size: 14px;
@@ -268,14 +294,59 @@ const activateSlide = (item) => {
         }
       }
 
+      &__appdownload {
+        background: #373C3D;
+        font-size: 80%;
+        color: #ffffff;
+        font-family: Microsoft YaHei UI;
+        font-weight: 700;
+        font-size: 16.21px;
+        line-height: 17.21px;
+        letter-spacing: 0%;
+        height: 100px;
+        position: relative;
+        &:after {
+          content: "";
+          bottom: 0;
+          top: 0;
+          margin: auto;
+          background: url("../assets/images/auth/download-btn.png")no-repeat center center;
+        }
+        .right-icon {
+          height: 135%;
+          overflow: hidden;
+          padding-right: 0px;
+          max-width: 140px;
+
+          img {   
+            height: 180%;
+            margin: -25% 0 -25% -25%;
+          }
+        }
+
+        span {
+          font-size: 14px;
+          padding-top: 8px;
+          display: block;
+          color: #FFFFFF80;
+          font-weight: 400;
+        }
+
+        .item-icon {
+          margin-left: auto;
+          margin-top: -8px;
+        }
+      }
+
       .item-icon {
-        width: 30px;
-        margin-right: 4px;
+        width: 20px;
+        margin-right: 15px;
         display: flex;
         justify-content: center;
         align-items: center;
         img {
           display: block;
+          width: 100%;
 
           &.flag {
             width: 26px;

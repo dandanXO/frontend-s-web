@@ -641,7 +641,7 @@ const isValidCardAddress = () => {
     .withdrawal-summary {
       font-family: "Manrope", sans-serif;
       border-radius: 10px;
-      background: #370a40;
+      background: #373C3D;
       padding: 1rem;
       margin-top: 0;
       display: flex;
@@ -710,9 +710,9 @@ const isValidCardAddress = () => {
         margin: 1rem 0 0.5rem 0;
 
         .bank-card-item {
+          
           padding: 3px;
-          border-radius: 1.25rem;
-          background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+          border-radius: 8px;
           position: relative;
           transition: 0.3s all;
           width: 100%;
@@ -720,6 +720,10 @@ const isValidCardAddress = () => {
           align-items: center;
           justify-content: center;
           color: #150025;
+          background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+          box-shadow: 0px 2px 0px 0px #1CCA6A;
+
+
 
           .card-label {
             font-size: 1rem;
@@ -770,7 +774,8 @@ const isValidCardAddress = () => {
         align-items: center;
         justify-content: space-between;
         gap: 10px;
-        margin: 1rem 0 0.5rem 0;
+        // margin: 1rem 0 0.5rem 0;
+        background: #373C3D;
 
         .info {
           display: flex;
@@ -784,6 +789,14 @@ const isValidCardAddress = () => {
             align-items: center;
             justify-content: center;
             gap: 5px;
+            color: #B2BDBF;
+            font-family: Microsoft YaHei UI;
+            font-weight: 700;
+            font-size: 12px;
+            line-height: 20px;
+            letter-spacing: 2%;
+            vertical-align: middle;
+            text-transform: capitalize;
 
             .yel-dot {
               width: 0.25rem;
@@ -796,6 +809,7 @@ const isValidCardAddress = () => {
           .desc {
             font-size: 0.825rem;
             font-weight: 400;
+            color: #21EF89;
           }
         }
       }

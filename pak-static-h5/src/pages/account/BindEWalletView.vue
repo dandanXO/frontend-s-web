@@ -479,15 +479,18 @@ onActivated(() => {
 .common-sm-btn {
   padding: 6px 12px;
   display: flex;
-  border: 2px solid #b81212;
   box-shadow: unset;
   border-radius: 8px;
+    background: #292D2E;
+      border: 1px solid #21EF89;
 }
 
 .common-sm-white-btn {
   padding: 6px 12px;
   border-radius: 8px;
-  border: 2px solid transparent;
+  box-shadow: unset;
+    background: #292D2E;
+  border: 1px solid rgb(98 98 98);
 }
 
 .bind-container {
@@ -561,10 +564,14 @@ onActivated(() => {
           align-items: center;
           justify-content: center;
           font-size: 1rem;
+          flex: 1;
+          padding: 10px;
+          align-items: flex-start;
+          font-weight: bold;
           // width: 6.5rem;
 
           img {
-            width: 1.5rem;
+            width: 2.2rem;
             margin: 0 0.25rem;
           }
 

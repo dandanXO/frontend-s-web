@@ -48,7 +48,7 @@ const props = defineProps(['rankingBonusRatioList']);
             font-weight: 700;
             line-height: 18px;
             text-align: center;
-            background: linear-gradient(180deg, #70BC62 0%, #33562D 100%);
+            background: linear-gradient(180deg, #21EF89 0%, #33562D 100%);
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
         }

@@ -252,7 +252,7 @@
         <!--          1. Recharge tutorial:-->
         <!--          <a-->
         <!--            class="tutorial-link"-->
-        <!--            style="color: #70bc62; text-decoration: underline"-->
+        <!--            style="color: #21EF89; text-decoration: underline"-->
         <!--            href="https://drive.google.com/file/d/1UCBOIAxRfBZoq56zv5Md-XO-6eAzunWJ/view?usp=drivesdk"-->
         <!--            target="_blank"-->
         <!--          >-->
@@ -261,7 +261,7 @@
         <!--          /-->
         <!--          <a-->
         <!--            class="tutorial-link"-->
-        <!--            style="color: #70bc62; text-decoration: underline"-->
+        <!--            style="color: #21EF89; text-decoration: underline"-->
         <!--            href="https://drive.google.com/file/d/1fCCJPAHm2frmzBk05jc4v-c19-Bn3vvx/view"-->
         <!--            target="_blank"-->
         <!--          >-->
@@ -326,7 +326,7 @@
     </div>
   </q-dialog>-->
 
-  <q-dialog width="100%" v-model="userKYCDialog" persistent>
+  <q-dialog class="flex-end" width="100%" v-model="userKYCDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="goBackPage" v-close-popup />
       <KYCUserForm @closeUserKYCDialog="checkCloseUserKYCDialog" />
@@ -1168,7 +1168,7 @@ onMounted(() => {
       align-items: center;
       justify-content: center;
       line-height: 1;
-      padding: 3px 16px;
+      // padding: 3px 16px;
       width: 100%;
       height: 4rem;
       font-weight: 600;
@@ -1387,19 +1387,19 @@ onMounted(() => {
 
 .bottom-btn {
   margin-top: auto;
-  padding: 20px 0 40px;
-  position: fixed;
-  bottom: 0;
-  width: calc(100% - 32px);
-  max-width: 468px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #232626;
+  padding: 20px 15px 40px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 468px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #24262b;
   // margin: 16px;
 }
 
 .tutorial-link {
-  color: #70bc62;
+  color: #21EF89;
   text-decoration: underline;
 }
 

@@ -183,7 +183,7 @@ onActivated(() => {
     .detail-btn {
       border-radius: 30px;
       // background: radial-gradient(68.92% 68.92% at 50% 50%, #1D341D 0%, #466A45 100%);
-      background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
+      background: linear-gradient(180deg, #21EF89 0%, #33562d 100%);
       border: 1px solid #5d8956;
       font-size: 1rem;
       // font-weight: 700;

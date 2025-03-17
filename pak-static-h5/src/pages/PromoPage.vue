@@ -45,6 +45,7 @@
                       </div>
                       <div class="promo-info">
                         <span class="viewdetail">{{ promo.title }}</span>
+                        <span class="date">{{ $t('hotPromo.promoEndsOn') }}: {{ moment(promo.displayEndTime).format('YYYY-MM-DD') }}</span>
                       </div>
                     </a>
                   </div>
@@ -217,6 +218,7 @@ import { userStore } from "stores/index";
 import { i18nStore } from "src/router/language";
 import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
+import moment from "moment";
 // import { loadPromo } from "src/api/index/promo.js";
 // import { loadPromoBanner } from "src/api/index/promo";
 import ProfileSummary from "components/ProfileSummary.vue";
@@ -765,7 +767,8 @@ export default defineComponent({
       isOpenExtension,
       parsedParam,
       isMegaSharingWheelModal,
-      popupPromo
+      popupPromo,
+      moment
       // MediaSettingsComponent
     };
   }
@@ -825,7 +828,7 @@ export default defineComponent({
 
       // &:before {
       //   content: "";
-      //   background-color: #70bc62;
+      //   background-color: #21EF89;
       //   height: 3px;
       //   border-radius: 4px;
       //   width: 30%;
@@ -1055,9 +1058,12 @@ export default defineComponent({
           .promo-info {
             display: flex;
             justify-content: flex-start;
-            align-items: center;
-            background: #2b2b2b;
+            align-items: flex-start;
+            background: #292D2E;
 
+            padding: 10px 20px;
+            gap: 0px;
+            flex-direction: column;
             .viewdetail {
               // background: #002a35;
               color: #ffffff;
@@ -1066,17 +1072,19 @@ export default defineComponent({
               position: relative;
               width: 100%;
               z-index: 2;
-              bottom: 0px;
-              height: 40px;
+              height: 30px;
               overflow: hidden;
-              line-height: 40px;
-              padding: 0 100px 0 16px;
-
-              // background: linear-gradient(356.25deg, rgba(0, 0, 0, 0.6) -0.21%, rgba(0, 0, 0, 0.6) 93.65%);
-              background: #2b2b2b;
+              line-height: 30px;
               font-family: Poppins;
               font-size: 15.3px;
               font-weight: 700;
+              text-transform: uppercase;
+            }
+            .date {
+              color:#B2BDBF;
+              font-family: Microsoft YaHei UI;
+              font-weight: 400;
+              font-size: 12px;
             }
 
             .detail-arrow {
@@ -1209,7 +1217,7 @@ export default defineComponent({
             padding: 5px;
             text-align: center;
 
-            background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
+            background: linear-gradient(180deg, #21EF89 0%, #33562d 100%);
 
             &:first-child {
               border-top-left-radius: 8px;
@@ -1309,7 +1317,7 @@ export default defineComponent({
   .q-tab--active .q-tab__indicator {
     width: 100%;
     height: 2px;
-    background: #70bc62;
+    background: #21EF89;
   }
 
   .q-tab__label {

@@ -1,5 +1,5 @@
 <template>
-  <q-dialog width="100%" v-model="isUnbindModalOpen" presistent>
+  <q-dialog class="flex-end" width="100%" v-model="isUnbindModalOpen" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
@@ -61,6 +61,35 @@
 
   <q-page class="bank-detail-container">
     <div class="bank-detail-wrapper">
+      <div class="bank-bind-cards">
+        <div
+        v-for="(bankCard, bankCardIndex) in Object.values(bankCardList).flat()"
+        :key="`${bankCard}-${bankCardIndex}`"
+        class="bank-card"
+        :class="[bankCard.bankType.toLowerCase(), 
+                { 'active': selectedCard === bankCardIndex }]"  
+        @click="selectCard(bankCardIndex)"
+      >
+        <div class="left-container">
+          <div class="bank-name">
+            <img style="width: 30px" :src="imgURL + bankCard.bankIcon" />
+            <div>{{ bankCard.bankName }}</div>
+          </div>
+          <div class="bank-icon">
+            <img src="../../assets/images/account/bank-icon.png">   
+          </div>
+          <div class="bank-number-wrapper">
+            <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
+            <!-- <img
+              class="copy-btn"
+              src="../../assets/images/account/account-copy-icon.png"
+              @click="copy(bankCard.cardNumber)"
+            /> -->
+          </div>
+        </div>
+        <div class="right-container" @click="onUnbindClick(bankCard)">{{ $t("btn.untie") }}</div>
+      </div>
+      </div>
       <div class="bank-bind-item q-my-sm">
         <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/crypto')">
           <span>+添加虚拟币账户</span>
@@ -87,121 +116,7 @@
       <!-- <pre>bankCardList[BANK_CARD]--{{ bankCardList[BANK_CARD] }}</pre> -->
       <!-- <pre>bankCardList[EWALLET]--{{ bankCardList[EWALLET] }}</pre> -->
 
-      <div v-if="bankCardList[BANK_CARD].length" class="bank-detail-item q-my-sm" @click="onShowCardClick(BANK_CARD)">
-        <div class="bank-detail-type">{{ t("form.bankCard") }}</div>
-        <div :class="`bank-detail-arrow ${isCardVisible[BANK_CARD] ? 'rotate' : ''}`">></div>
-      </div>
-      <template v-if="isCardVisible[BANK_CARD]">
-        <div
-          v-for="(bankCard, bankCardIndex) in bankCardList[BANK_CARD]"
-          :key="`${bankCard}-${bankCardIndex}`"
-          class="bank-card"
-        >
-          <div class="left-container">
-            <div class="bank-name">
-              <img style="width: 30px" :src="imgURL + bankCard.bankIcon" />
-              <div>{{ bankCard.bankName }}</div>
-            </div>
-            <div class="bank-number-wrapper">
-              <div>Bank Account:&nbsp;</div>
-              <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
-              <!-- <img
-                class="copy-btn"
-                src="../../assets/images/account/account-copy-icon.png"
-                @click="copy(bankCard.cardNumber)"
-              /> -->
-            </div>
-          </div>
-          <div class="right-container" @click="onUnbindClick(bankCard)">{{ $t("btn.untie") }}</div>
-        </div>
-      </template>
-
-      <div v-if="bankCardList[CRYPTO].length" class="bank-detail-item q-my-sm" @click="onShowCardClick(CRYPTO)">
-        <div class="bank-detail-type">{{ t("form.cryptoAccount") }}</div>
-        <div :class="`bank-detail-arrow ${isCardVisible[CRYPTO] ? 'rotate' : ''}`">></div>
-      </div>
-      <template v-if="isCardVisible[CRYPTO]">
-        <div
-          v-for="(bankCard, bankCardIndex) in bankCardList[CRYPTO]"
-          :key="`${bankCard}-${bankCardIndex}`"
-          class="bank-card"
-        >
-          <div class="left-container">
-            <div class="bank-name">
-              <img style="width: 30px" :src="imgURL + bankCard.bankIcon" />
-              <div>{{ bankCard.bankName }}</div>
-            </div>
-            <div class="bank-number-wrapper">
-              <div>{{ t("form.cryptoAccount") }}:&nbsp;</div>
-              <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
-              <!-- <img
-                class="copy-btn"
-                src="../../assets/images/account/account-copy-icon.png"
-                @click="copy(bankCard.cardNumber)"
-              /> -->
-            </div>
-          </div>
-          <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>
-        </div>
-      </template>
-
-      <div v-if="bankCardList[EWALLET].length" class="bank-detail-item q-my-sm" @click="onShowCardClick(EWALLET)">
-        <div class="bank-detail-type">{{ $t("bank.virtualWallet") }}</div>
-        <div :class="`bank-detail-arrow ${isCardVisible[EWALLET] ? 'rotate' : ''}`">></div>
-      </div>
-      <template v-if="isCardVisible[EWALLET]">
-        <div
-          v-for="(bankCard, bankCardIndex) in bankCardList[EWALLET]"
-          :key="`${bankCard}-${bankCardIndex}`"
-          class="bank-card"
-        >
-          <div class="left-container">
-            <div class="bank-name">
-              <img style="width: 30px" :src="imgURL + bankCard.bankIcon" />
-              <div>{{ bankCard.bankName }}</div>
-            </div>
-            <div class="bank-number-wrapper">
-              <div>{{ $t("bank.virtualAccount") }}: &nbsp;</div>
-              <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
-              <!-- <img
-                class="copy-btn"
-                src="../../assets/images/account/account-copy-icon.png"
-                @click="copy(bankCard.cardNumber)"
-              /> -->
-            </div>
-          </div>
-          <div class="right-container" @click="onUnbindClick(bankCard)">{{ $t("btn.untie") }}</div>
-        </div>
-      </template>
-
-      <div v-if="bankCardList[ALIPAY].length" class="bank-detail-item q-my-sm" @click="onShowCardClick(ALIPAY)">
-        <div class="bank-detail-type">支付宝</div>
-        <div :class="`bank-detail-arrow ${isCardVisible[ALIPAY] ? 'rotate' : ''}`">></div>
-      </div>
-      <template v-if="isCardVisible[ALIPAY]">
-        <div
-          v-for="(bankCard, bankCardIndex) in bankCardList[ALIPAY]"
-          :key="`${bankCard}-${bankCardIndex}`"
-          class="bank-card"
-        >
-          <div class="left-container">
-            <div class="bank-name">
-              <img style="width: 30px" :src="imgURL + bankCard.bankIcon" />
-              <div>{{ bankCard.bankName }}</div>
-            </div>
-            <div class="bank-number-wrapper">
-              <div>gg卡号：</div>
-              <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
-              <!-- <img
-                class="copy-btn"
-                src="../../assets/images/account/account-copy-icon.png"
-                @click="copy(bankCard.cardNumber)"
-              /> -->
-            </div>
-          </div>
-          <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>
-        </div>
-      </template>
+      
     </div>
   </q-page>
 </template>
@@ -215,7 +130,12 @@ import * as _ from "lodash";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
 import { t } from "src/boot/lang";
+const selectedCard = ref(null);  // To keep track of the selected card
 
+// Function to select the card and toggle the active class
+const selectCard = (bankCardIndex) => {
+  selectedCard.value = bankCardIndex;
+};
 // constants (the string synced w/ BE API bankType)
 const BANK_CARD = "BANK";
 const CRYPTO = "CRYPTO";
@@ -438,24 +358,61 @@ onActivated(() => {
     .bank-card {
       // background: url(../../assets/images/account/bank-card-bg.png);
       box-shadow: inset 0px 0px 9px rgb(255, 255, 255, 0.3);
-      background-size: 100% 100%;
-      border-radius: 10px;
+      // background-size: 100% 100%;
+      border-radius: 20px;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       flex-wrap: wrap;
-      margin: 0 auto 14px;
-      padding: 1.25rem;
+      margin: 0 auto 20px;
+      padding: 1rem;
       gap: 15px;
-
+      margin-top: -150px;
+      min-height: 172px;
+      overflow: hidden;
+      position: relative;
+      transition: all .3s ease-in-out;
+      &.bank {
+        background: url(../../assets/images/account/bank-card-blue.png)no-repeat center center;
+        background-size: cover;
+      }
+      &.crypto {
+        background: url(../../assets/images/account/bank-card-red.png)no-repeat center center;
+        background-size: cover;
+      }
+      &.ewallet {
+        background: url(../../assets/images/account/bank-card-green.png)no-repeat center center;
+        background-size: cover;
+      }
+      &:nth-of-type(1) {
+        margin-top: 20px;
+      }
+      &.active { 
+        margin-bottom: 160px;
+        &:nth-child(1) {      
+          margin-top: 20px;
+        }
+        &:last-child {
+          margin-bottom: 20px;
+        }
+      }
       .left-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
         .bank-name {
           display: flex;
+          align-items: center;
           gap: 10px;
           // color: $font-2;
           font-size: 1.1rem;
           font-weight: 600;
-          margin: 0 0 0.5rem 0;
+        }
+        .bank-icon {
+          max-width: 60px;
+          img{ 
+            width: 100%;
+          }
         }
 
         .bank-number-wrapper {
@@ -464,9 +421,14 @@ onActivated(() => {
           // color: $font-1;
           font-size: 1rem;
           font-weight: 400;
+          font-family: "Courier Prime";
+          font-weight: 700;
+          font-size: 16.64px;
+          line-height: 100%;
+          letter-spacing: 0%;
 
           .bank-number {
-            max-width: 15rem;
+            // max-width: 15rem;
             word-break: break-all;
           }
 

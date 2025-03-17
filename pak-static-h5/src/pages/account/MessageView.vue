@@ -12,7 +12,7 @@
         v-if="!e.status && store.readMsgLists.indexOf(e.id) === -1"
       /> -->
         </div>
-        <div class="new-message-ribbon"></div>
+        <div class="new-message-ribbon" v-if="!e.readTime"></div>
      
       </div>
 

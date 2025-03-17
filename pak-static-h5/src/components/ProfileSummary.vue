@@ -35,8 +35,8 @@
         <img src="../assets/images/auth/auth-menu.png" @click="toggleMenuOpen()" />
       </div> -->
       <div class="profile-wrapper-extra">
-        <div class="logo-img">
-          <img src="../assets/images/auth/bg-logo-only.png" @click="onClickLogo" />
+        <div class="logo-img" style="cursor: pointer;" @click="onClickLogo">
+          <img src="../assets/images/auth/bg-logo-only.png" />
           <span v-if="!ui.loggedIn && !store.hasToken()">B9.GAME</span>
         </div>
       </div>
@@ -582,7 +582,6 @@ onUnmounted(() => {
       font-weight: bold;
       line-height: 1.2;
       text-decoration: none;
-
       &__download {
         background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
         color: #000a01;

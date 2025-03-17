@@ -51,7 +51,8 @@ export default {
     betRecord: "شرط لگانے کا ریکارڈ",
     referralRecord: "ریفرل کا ریکارڈ",
     interestProfit: "سود کا منافع",
-    spinnerRules: "قواعد"
+    spinnerRules: "قواعد",
+    effectiveRevenueFaq: "مؤثر آمدنی کے عمومی سوالات"
   },
   bottomNav: {
     home: "گھر/ہوم",
@@ -271,7 +272,9 @@ export default {
     telegram: "ٹیلیگرام",
     whatsapp: "واٹس ایپ",
     language: "زبان",
-    downloadApp: "ایپ ڈاؤن لوڈ کریں"
+    downloadApp: "ایپ ڈاؤن لوڈ کریں",
+    "appDownload": "ایپ ڈاؤن لوڈ",
+    "experienceOneStopGaming": "ایک جگہ پر مکمل گیمنگ کا تجربہ کریں!"
   },
   home: {
     menu_lobby: "لابی",
@@ -397,6 +400,10 @@ export default {
       profitAndLoss: "صارف کا منافع اور نقصان"
     },
     reward: {
+      "award": "ایوارڈ",
+      "title": "دعوتی انعامات",
+      "bettingCommission": "بیٹنگ کمیشن",
+      "depositCommission": "ڈپازٹ کمیشن",
       myTotalIncome: "میری کل آمدنی",
       myTotalNumberOfInvites: "میرے کل دعوتوں کی تعداد",
       invite: "دعوتی بونس",
@@ -674,6 +681,7 @@ export default {
     next: "اگلا"
   },
   hotPromo: {
+    "promoEndsOn": "پرومو ختم ہونے کی تاریخ",
     aviatorWheel: {
       remainingDrawTimes: "باقی قرعہ اندازی کے اوقات",
       congratulations: "مبارک ہو"

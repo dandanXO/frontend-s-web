@@ -279,26 +279,7 @@
       <router-link to="/login" class="login">Login</router-link>
     </div> -->
     <div class="no-domain btn-lists">
-      <div class="list-item" @click="openCharity()">
-        <img class="btn-icon" id="charity-icon" src="../assets/images/auth/charity-icon.png" />
-        <div>Charity</div>
-      </div>
-      <div class="list-item" @click="openWhatsApp()">
-        <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
-        <div>WhatsApp</div>
-      </div>
-      <div class="list-item" @click="openYoutube()">
-        <img class="btn-icon" id="youtube-icon" src="../assets/images/auth/youtube-icon.png" />
-        <div>Youtube</div>
-      </div>
-      <div class="list-item" @click="openTiktok()">
-        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />
-        <div>Tiktok</div>
-      </div>
-      <div class="list-item" v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()">
-        <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
-        <div>{{ $t("btn.downloadApp") }}</div>
-      </div>
+      <ShareIcons />
     </div>
     <div class="is-domain social-container">
       <div class="share">Share</div>
@@ -366,13 +347,14 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
 import { useI18n } from "vue-i18n";
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
-
+import ShareIcons from "src/components/ShareIcons.vue";
 export default defineComponent({
   name: "RegisterPage",
   methods: { isAndroid },
   components: {
     InputRowGrid,
-    InputField
+    InputField,
+    ShareIcons
     // PrimaryButton
   },
   setup() {
@@ -1132,6 +1114,8 @@ function charType(num) {
     display: unset;
     &.btn-lists {
       display: flex;
+      width: 95%;
+      margin: 0 auto;
     }
   }
   &.w-domain {
