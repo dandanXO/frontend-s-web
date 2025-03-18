@@ -121,8 +121,7 @@
         </div> -->
       <el-carousel
         class="float-carousel"
-        height="200px"
-        width="180px"
+        height="180px"
         :indicator-position="floatPromo.length > 1 ? 'outside' : 'none'"
         arrow="never"
         :autoplay="true"
@@ -524,8 +523,7 @@ export default defineComponent({
 
   transition: all 0.3s;
   display: none;
-  width: 200px;
-  height: 250px;
+  width: 160px;
   user-select: none; /* Disable text selection */
 
   &.show-promo {
@@ -584,7 +582,7 @@ export default defineComponent({
     user-select: none;
     img {
       display: block;
-      width: 180px;
+      width: 100%;
       cursor: pointer;
     }
     .promo-remaining-time {
@@ -598,6 +596,10 @@ export default defineComponent({
       // color: #eaff00;
       // text-shadow: 2px 2px 0px #00000040;
     }
+  }
+
+  :deep(.el-carousel__indicators) {
+    bottom: -8px;
   }
 }
 
