@@ -360,6 +360,8 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
 import { useI18n } from "vue-i18n";
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
+import { i18nStore } from "src/router/language";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -371,6 +373,8 @@ export default defineComponent({
   },
   setup() {
     const { t } = useI18n();
+    const i18nStoreLanguage = i18nStore();
+    const { languageVal } = storeToRefs(i18nStoreLanguage);
     const ui = useUI();
     const store = userStore();
     const verificationImg = ref("");
@@ -708,7 +712,7 @@ export default defineComponent({
                   message: "Registered successfully",
                   icon: "check_circle_outline"
                 });
-                localStorage.setItem("newPlayerGuide", 1)
+                localStorage.setItem("newPlayerGuide", 1);
                 //FB Tracking.
                 if (store.isFbPixel || store.isTkPixel) {
                   if (store.isFbPixel) {
@@ -1049,7 +1053,8 @@ export default defineComponent({
       isRestrictedDomain,
       router,
       onClickGoogleSignin,
-      onCapacitorGoogleSignin
+      onCapacitorGoogleSignin,
+      languageVal
     };
   }
 });
