@@ -53,6 +53,21 @@
             :value="item.id"
           />
         </el-select>
+        <el-select
+          clearable
+          v-model="request.status"
+          size="small"
+          :placeholder="t('fields.status')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+        >
+          <el-option
+            v-for="item in uiControl.status"
+            :key="item.key"
+            :label="t('common.status.' + item.displayName)"
+            :value="item.value"
+          />
+        </el-select>
         <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadMemberPrivilegeClaimStatusRecords">
           {{ t('fields.search') }}
         </el-button>
@@ -71,7 +86,7 @@
       :empty-text="t('fields.noData')"
     >
       <el-table-column prop="loginName" :label="t('fields.loginName')" width="150" />
-      <el-table-column prop="privilegeName" :label="t('fields.privilege')" width="200" />
+      <el-table-column prop="privilegeName" :label="t('fields.privilege')" width="300" />
       <el-table-column prop="status" :label="t('fields.status')" align="center" width="120">
         <template #default="scope">
           <el-tag v-if="scope.row.status === 'SUCCESS'" size="mini" type="success">{{ t('common.status.' + scope.row.status) }}</el-tag>
@@ -136,7 +151,10 @@ const defaultTime = [
 ];
 const uiControl = reactive({
   privilegeList: [],
-  messageVisible: false
+  status: [
+    { key: 1, displayName: 'SUCCESS', value: 'SUCCESS' },
+    { key: 2, displayName: 'FAIL', value: 'FAIL' },
+  ],
 });
 function convertDate(date) {
   return moment(date).endOf('day').format('YYYY-MM-DD HH:mm:ss');
@@ -189,6 +207,8 @@ async function loadPrivilegeList() {
 function resetQuery() {
   request.siteId = site.value.id;
   request.loginName = null;
+  request.privilegeId = null;
+  request.status = null;
   request.recordTime = [convertStartDate(new Date()), convertDate(new Date())];
 }
 
