@@ -52,12 +52,14 @@
             class="start-btn"
             no-caps
             size="lg"
-            :disable="activeClaim && (activeClaim.hasClaimed || !activeClaim.isOpen)"
+            :disable="activeClaim && !activeClaim.isOpen"
             @click="claimNewPlayerAccDeposit()"
           >
             <div class="q-mr-sm"><img src="./img/img-start.png" alt="" /></div>
-            <template v-if="activeClaim && activeClaim.hasClaimed">Claimed</template>
-            <template v-else>Claim now</template>
+            <template v-if="activeClaim && activeClaim.hasClaimed === 'YES'">Claimed</template>
+            <template v-if="activeClaim && activeClaim.hasClaimed === 'EXPIRED'">Expired</template>
+            <template v-if="activeClaim && activeClaim.hasClaimed === 'NO'">Claim now</template>
+            <!-- <template v-else>Claim now</template> -->
           </q-btn>
         </div>
 
@@ -81,7 +83,7 @@ const initNewPlayerAccDeposit = () => {
     if (res.code == 0) {
       let foundFirst = false;
       claimStatus.value = res.data.claimStatus.map((item) => {
-        if (!foundFirst && !item.isOpen) {
+        if (!foundFirst && item.highlight) {
           foundFirst = true;
           return { ...item, isActive: true };
         }
@@ -100,6 +102,7 @@ const claimNewPlayerAccDeposit = () => {
         position: "top",
         timeout: 2000
       });
+      initNewPlayerAccDeposit();
     }
   });
 };
