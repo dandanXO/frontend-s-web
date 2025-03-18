@@ -8,6 +8,8 @@ export default {
       OPEN: 'Open',
       CLOSE: 'Close',
       TEST: 'Test',
+      SUCCESS: 'Success',
+      FAIL: 'Fail'
     },
   },
   affiliate: {
@@ -995,6 +997,7 @@ export default {
     desktopBanner: 'Desktop Banner',
     deskTopBannerDark: 'Desktop Banner Dark',
     details: 'Details',
+    detailMsg: 'Detail Message',
     device: 'Device',
     dif: 'Deposit Difference',
     disable: 'Disable',
@@ -3087,6 +3090,7 @@ export default {
     'Member Vip Upgrade': 'Member VIP Upgrade',
     'Sync Member Tree': 'Sync Member Tree',
     Sport: 'Sport',
+    'Member Privilege Claim Status': 'Member Privilege Claim Status',
     Affiliate: 'Affiliate',
     'Affiliate Amount Adjust': 'Affiliate Amount Adjust',
     'Affiliate Summary': 'Affiliate Summary',

@@ -8,6 +8,8 @@ export default {
       OPEN: '开启',
       CLOSE: '关闭',
       TEST: '测试',
+      SUCCESS: '成功',
+      FAIL: '失败'
     },
   },
   affiliate: {
@@ -998,6 +1000,7 @@ export default {
     desktopBanner: '桌面广告图',
     desktopBannerDark: '桌面广告图（深色）',
     details: '信息',
+    detailMsg: '详情',
     device: '设备',
     dif: '存提差',
     disable: '禁用',
@@ -3039,6 +3042,7 @@ export default {
     'Member Vip Upgrade': '会员 VIP 升级记录',
     'Sync Member Tree': '同步邀请关系',
     Sport: '体育',
+    'Member Privilege Claim Status': '会员优惠领取状态',
     Affiliate: '代理',
     'Affiliate Amount Adjust': '代理平账记录',
     'Affiliate Summary': '代理总结',
