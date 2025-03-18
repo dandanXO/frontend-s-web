@@ -90,7 +90,7 @@ const goToMailDetail = (mail) => {
     width: 170px;
     border-radius: 6px;
     padding: 2px;
-    font-size: 11px;
+    font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -106,7 +106,7 @@ const goToMailDetail = (mail) => {
     width: 170px;
     border-radius: 6px;
     padding: 2px;
-    font-size: 11px;
+    font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -29,9 +29,9 @@
             <div>
               <p>{{ $t("inbox.mailBox") }}</p>
             </div>
-            <div style="width: 34%; text-align: right" @click="visible = false">
+            <div style="width: 34%; display: flex; justify-content: flex-end; align-items: center;" @click="visible = false">
               <img
-                style="height: 14px; width: 14px; margin-right: 12px"
+                style="height: 14px; width: 14px;"
                 :src="require(`../../assets/home/close.svg`)"
               />
             </div>
@@ -48,8 +48,8 @@
           <div class="dialog-action-item">
             <el-checkbox
               v-model="checked"
-              style="color: rgba(142, 142, 142, 1); font-size: 14px; font-weight: 400"
-              text-color="white"
+              style="color: rgba(142, 142, 142, 1); font-size: 14px; font-weight: 400;"
+              text-color="black"
             >
               {{ $t("inbox.noMoreToday") }}
             </el-checkbox>
@@ -253,5 +253,9 @@ watch(checked, (val) => {
 
 ::v-deep(.el-checkbox__input.is-checked + .el-checkbox__label) {
   color: white !important;
+}
+
+::v-deep(.el-checkbox__inner) {
+  border-color: #8e8e8e;
 }
 </style>
