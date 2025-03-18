@@ -86,7 +86,7 @@
       :empty-text="t('fields.noData')"
     >
       <el-table-column prop="loginName" :label="t('fields.loginName')" width="150" />
-      <el-table-column prop="privilegeName" :label="t('fields.privilege')" width="200" />
+      <el-table-column prop="privilegeName" :label="t('fields.privilege')" width="300" />
       <el-table-column prop="status" :label="t('fields.status')" align="center" width="120">
         <template #default="scope">
           <el-tag v-if="scope.row.status === 'SUCCESS'" size="mini" type="success">{{ t('common.status.' + scope.row.status) }}</el-tag>
