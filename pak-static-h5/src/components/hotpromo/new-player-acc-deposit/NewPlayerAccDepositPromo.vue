@@ -16,7 +16,11 @@
               <div class="tick-img">
                 <img
                   :src="
-                    item.hasClaimed === 'YES' ? require('./img/tick-icon-active.png') : require('./img/tick-icon.png')
+                    item.hasClaimed === 'YES'
+                      ? require('./img/tick-icon-active.png')
+                      : item.hasClaimed === 'NO'
+                      ? require('./img/tick-icon.png')
+                      : require('./img/tick-icon-expired.png')
                   "
                 />
               </div>
