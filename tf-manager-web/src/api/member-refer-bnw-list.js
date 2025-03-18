@@ -9,8 +9,8 @@ export const createBlacknWhitelist = (blanknWhitelist) => {
   return https().request("/refer-friend-bnw-list", Method.POST, blanknWhitelist, ContentType.form);
 };
 
-export const createBatchBlacknWhitelist = (blanknWhitelist, siteId) => {
-  return https(5 * 60 * 1000).request("/refer-friend-bnw-list/createBatch", Method.POST, { bnwList: JSON.stringify(blanknWhitelist), siteId: siteId }, ContentType.form);
+export const createBatchBlacknWhitelist = (blanknWhitelist, siteId, valueType) => {
+  return https(5 * 60 * 1000).request("/refer-friend-bnw-list/createBatch", Method.POST, { bnwList: JSON.stringify(blanknWhitelist), siteId: siteId, valueType: valueType }, ContentType.form);
 };
 
 export const deleteBlacknWhitelist = (ids) => {

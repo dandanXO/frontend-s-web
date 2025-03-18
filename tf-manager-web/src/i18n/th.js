@@ -285,6 +285,10 @@ export default {
     COMPLETED: 'เสร็จสมบูรณ์',
     EXPIRED: 'หมดอายุ'
   },
+  referFriendBnwType: {
+    Referer: 'Referer',
+    IP: "IP"
+  },
   fields: {
     account: 'บัญชี',
     accountHolder: 'ผู้ถือบัญชี',
@@ -1176,6 +1180,7 @@ export default {
     unlockUser: 'ปลดล็อคผู้ใช้',
     url: 'URL การเข้าถึง',
     unsettleCommission: 'ค่าคอมมิชชั่นที่ยังไม่ได้จัดการ',
+    uniqueValue: 'ค่า',
     update: 'อัพเดท',
     updateAlias: 'อัปเดตชื่อเล่น',
     updateBy: 'อัพเดทโดย',

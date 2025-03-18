@@ -493,6 +493,10 @@ export default {
     COMPLETED: '완료',
     EXPIRED: '만료'
   },
+  referFriendBnwType: {
+    Referer: 'Referer',
+    IP: "IP"
+  },
   fields: {
     account: '계정',
     accountHolder: '계정 소유자',
@@ -1653,6 +1657,7 @@ export default {
     unlockUser: '사용자 잠금 해제',
     url: '접속 URL',
     unsettleCommission: '미결 제휴 수수료',
+    uniqueValue: '값',
     update: '업데이트',
     updateAlias: '별명 업데이트',
     updateAwards: '상을 업데이트',

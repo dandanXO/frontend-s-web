@@ -473,6 +473,10 @@ export default {
     COMPLETED: 'Hoàn thành',
     EXPIRED: 'Hết hạn'
   },
+  referFriendBnwType: {
+    Referer: 'Referer',
+    IP: "IP"
+  },
   fields: {
     account: 'Tài khoản',
     accountHolder: 'Chủ sở hữu tài khoản',
@@ -1630,6 +1634,7 @@ export default {
     unlockUser: 'Mở Khóa Người Dùng',
     url: 'URL',
     unsettleCommission: 'Chưa Thanh Toán Hoa Hồng',
+    uniqueValue: 'Giá trị',
     update: 'Cập Nhật',
     updateAlias: 'Cập Nhật Bí Danh',
     updateAwards: 'Cập Nhật Giải Thưởng',

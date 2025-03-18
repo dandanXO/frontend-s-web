@@ -3,11 +3,24 @@
     <div class="header-container">
       <div class="search">
         <el-input
-          v-model="request.ip"
+          v-model="request.uniqueValue"
           size="small"
           style="width: 200px"
-          :placeholder="t('fields.ip')"
+          :placeholder="t('fields.uniqueValue')"
         />
+        <el-select
+          style="width: 200px; margin-left: 10px"
+          size="small"
+          v-model="request.valueType"
+          :placeholder="t('fields.type')"
+        >
+          <el-option
+            v-for="item in uiControl.type"
+            :key="item.key"
+            :label="t('referFriendBnwType.' + item.displayName)"
+            :value="item.value"
+          />
+        </el-select>
         <el-select
           clearable
           v-model="request.isBlacklist"
@@ -87,10 +100,10 @@
                 :empty-text="t('fields.noData')"
       >
         <el-table-column type="selection" width="55" />
-        <el-table-column prop="ip" :label="t('fields.ip')" min-width="150">
+        <el-table-column prop="uniqueValue" :label="t('fields.uniqueValue')" min-width="150">
           <template #default="scope">
-            <span v-if="scope.row.ip === null">-</span>
-            <span v-if="scope.row.ip !== null">{{ scope.row.ip }}</span>
+            <span v-if="scope.row.uniqueValue === null">-</span>
+            <span v-if="scope.row.uniqueValue !== null">{{ scope.row.uniqueValue }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="isBlacklist" :label="t('fields.status')" min-width="150">
@@ -163,8 +176,22 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.ip')" prop="ip">
-          <el-input style="width: 350px" v-model="form.ip" />
+        <el-form-item :label="t('fields.type')" prop="type">
+          <el-select
+            style="width: 350px"
+            v-model="form.valueType"
+            :placeholder="t('fields.type')"
+          >
+            <el-option
+              v-for="item in uiControl.type"
+              :key="item.key"
+              :label="t('referFriendBnwType.' + item.displayName)"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.uniqueValue')" prop="uniqueValue">
+          <el-input style="width: 350px" v-model="form.uniqueValue" />
         </el-form-item>
         <el-form-item :label="t('fields.status')" prop="isBlacklist">
           <el-radio-group
@@ -210,6 +237,19 @@
           @change="importToTable"
           hidden
         />
+        <el-select
+          style="width: 350px; margin-left: 10px;"
+          size="mini"
+          v-model="importType"
+          :placeholder="t('fields.type')"
+        >
+          <el-option
+            v-for="item in uiControl.type"
+            :key="item.key"
+            :label="t('referFriendBnwType.' + item.displayName)"
+            :value="item.value"
+          />
+        </el-select>
         <!-- <el-form
           ref="importRefForm"
           :model="importForm"
@@ -250,7 +290,7 @@
           size="small"
           :empty-text="t('fields.noData')"
         >
-          <el-table-column prop="ip" :label="t('fields.ip')" width="330" />
+          <el-table-column prop="uniqueValue" :label="t('fields.uniqueValue')" width="330" />
           <el-table-column prop="isBlacklist" :label="t('fields.status')" min-width="150">
           <template #default="scope">
             <el-tag v-if="scope.row.isBlacklist === 0" type="info">{{ t('priviCodeRedeemBnWStatus.whitelist') }}</el-tag>
@@ -300,18 +340,12 @@ const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 
 const EXPORT_LIST_HEADER = [
-  'IP',
+  'IP/loginName',
   'Blacklist (0:whitelist  1:blacklist)'
 ]
 
-// const EXPORT_MAPPING_PRIVI_HEADER = [
-//   'Privilege ID',
-//   'Privilege Name',
-//   'Privilege Code',
-// ]
-
 const IMPORT_LIST_HEADER = [
-  'ip',
+  'uniqueValue',
   'isBlacklist'
 ]
 
@@ -324,10 +358,15 @@ const uiControl = reactive({
     { key: 1, displayName: t('priviCodeRedeemBnWStatus.whitelist'), value: 0 },
     { key: 2, displayName: t('priviCodeRedeemBnWStatus.blacklist'), value: 1 },
   ],
+  type: [
+    { key: 1, displayName: 'Referer', value: 'UNIQUE_REFERER_LOGINNAME' },
+    { key: 2, displayName: 'IP', value: 'UNIQUE_IP' }
+  ],
 });
 const site = ref(null);
 const blacklistForm = ref(null);
 const dialogWidth = ref("580px");
+const importType = ref("UNIQUE_REFERER_LOGINNAME");
 
 let timeZone = null;
 const siteList = reactive({
@@ -354,7 +393,8 @@ const importedPage = reactive({
 const request = reactive({
   size: 30,
   current: 1,
-  ip: null,
+  uniqueValue: null,
+  valueType: "UNIQUE_REFERER_LOGINNAME",
   isBlacklist: 0,
   siteId: null,
   orderBy: 'createTime'
@@ -362,8 +402,8 @@ const request = reactive({
 
 const form = reactive({
   id: null,
-  siteId: null,
-  ip: null,
+  uniqueValue: null,
+  valueType: "UNIQUE_REFERER_LOGINNAME",
   isBlacklist: 0
 });
 
@@ -376,7 +416,8 @@ const form = reactive({
 // });
 
 function resetQuery() {
-  request.ip = null;
+  request.uniqueValue = null;
+  request.valueType = null;
   request.siteId = store.state.user.siteId
   request.isBlacklist = null;
 }
@@ -434,7 +475,7 @@ function create() {
   blacklistForm.value.validate(async (valid) => {
     form.id = null;
     if (valid) {
-      form.ip = form.ip.trim();
+      form.uniqueValue = form.uniqueValue.trim();
       await createBlacknWhitelist(form);
       uiControl.dialogVisible = false;
       await loadBlanknWhitelist();
@@ -573,6 +614,9 @@ function clearImport() {
 }
 
 async function confirmImport() {
+  if (importType.value === null) {
+    ElMessage({ message: t('message.refererBnWImport'), type: "error" });
+  }
   importedPage.buttonLoading = true;
   const recordCopy = { ...importedPage.records };
   const data = [];
@@ -590,10 +634,10 @@ async function confirmImport() {
   const records = [...data];
   do {
     if (records.length > 10000) {
-      await createBatchBlacknWhitelist(records.slice(0, 10000), request.siteId);
+      await createBatchBlacknWhitelist(records.slice(0, 10000), request.siteId, importType.value);
       records.splice(0, 10000);
     } else {
-      await createBatchBlacknWhitelist(records, request.siteId);
+      await createBatchBlacknWhitelist(records, request.siteId, importType.value);
       records.splice(0, records.length);
     }
   } while (records.length > 0)

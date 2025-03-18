@@ -591,6 +591,10 @@ export default {
     blacklist: 'Blacklist',
     whitelist: 'Whitelist'
   },
+  referFriendBnwType: {
+    Referer: 'Referer',
+    IP: "IP"
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -1863,6 +1867,7 @@ export default {
     unlockUser: 'Unlock User',
     url: 'Access URL',
     unsettleCommission: 'Unsettled Commission',
+    uniqueValue: 'Value',
     update: 'Update',
     updateAlias: 'Update Alias',
     updateAwards: 'Update Awards',
