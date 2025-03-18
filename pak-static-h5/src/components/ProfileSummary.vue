@@ -169,7 +169,7 @@
       </div>
       <div class="profile-wrapper" v-else>
         <q-btn no-caps unelevated class="btn-primary" @click="goLogin">{{ $t("header.login") }}</q-btn>
-        <q-btn no-caps unelevated class="btn-secondary" @click="router.push('/register')">
+        <q-btn no-caps unelevated class="btn-register" @click="router.push('/register')">
           {{ $t("header.register") }}
         </q-btn>
         <div class="btn-lang" @click="router.push('/language')"><img src="../assets/images/auth/icon-globe.png" /></div>

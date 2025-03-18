@@ -53,10 +53,10 @@
         noInfoTitle="You have reached the end of the page."
       ></NoInfoComponent>
       <q-card v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
-        <q-card-section class="top-wrapper">
+        <!-- <q-card-section class="top-wrapper">
 
           
-        </q-card-section>
+        </q-card-section> -->
 
         <q-card-section class="mid-wrapper">
           <div class="game-platform-val">
@@ -412,7 +412,7 @@ onActivated(() => {
     // background: rgba(21, 0, 37, 0.5);
     margin: 0 -1rem;
 
-    padding: 0 .5rem;
+    padding: 1rem 1rem .5rem;
     display: flex;
     margin: 0px;
     width: 100%;

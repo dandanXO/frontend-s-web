@@ -5553,7 +5553,7 @@ const checkGoogleLoginSetPwd = () => {
 .platform-game-container {
   display: grid;
   padding-top: 12px;
-  // margin-bottom: 12px;
+  margin-bottom: 12px;
   // column-gap: 8px;
   gap: 8px;
   // row-gap: 16px;
@@ -5618,6 +5618,9 @@ const checkGoogleLoginSetPwd = () => {
 
   .platform-game-item {
     position: relative;
+    > img {
+      min-height: 145px;
+    }
 
     &--img {
       background-size: cover;

@@ -141,14 +141,14 @@
         <router-link class="form-text" to="/register" style="color: #00ae00">Create account</router-link>
       </div> -->
     </div>
-    <router-link to="/forgot-password" class="forget-pwd">Forget password</router-link>
+    <router-link to="/forgot-password" class="forget-pwd">{{ $t("btn.forgetPwd") }}?</router-link>
 
     <div class="no-domain bottom-btn-primary">
       <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">
         {{ $t("btn.confirm") }}
       </q-btn>
       <div class="areyounew">
-        Are you new to B9? <a @click="goRegister" class="green">Register</a>
+        {{ $t("btn.areyounew") }} <a @click="goRegister" class="green">{{ $t("btn.register") }}</a>
       </div>
 
       <div class="google-login-wrapper">
@@ -276,6 +276,8 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
 import { useI18n } from "vue-i18n";
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
+import { i18nStore } from "src/router/language";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
   name: "LoginPage",
@@ -290,6 +292,8 @@ export default defineComponent({
   setup() {
     const { t } = useI18n();
     const ui = useUI();
+    const i18nStoreLanguage = i18nStore();
+    const { languageVal } = storeToRefs(i18nStoreLanguage);
     const tab = ref("login");
     const loginType = ref(false);
     const store = userStore();
@@ -888,7 +892,8 @@ export default defineComponent({
       isRestrictedDomain,
       router,
       onCapacitorGoogleSignin,
-      onClickGoogleSignin
+      onClickGoogleSignin,
+      languageVal
     };
   }
 });

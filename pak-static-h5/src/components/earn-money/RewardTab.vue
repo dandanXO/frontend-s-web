@@ -26,7 +26,7 @@
         </div>
         <div class="item-desc">{{ $t("earnMoney.reward.myTotalIncome") }}</div>
         <div class="item-amount">
-          RS {{ getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET") }}
+          RS {{ convertToCommaAmount(getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET")) || 0.00 }}
         </div>
       </div>
       <div class="pot-item pot-item__2">
@@ -43,7 +43,7 @@
       <div class="details-item">
         <div class="item-amount">
           Rs
-          <span>{{ getRewardAmount("ONE_TIME") }}</span>
+          <span>{{ convertToCommaAmount(getRewardAmount("ONE_TIME")) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.reward.invite") }}</div>
         <div class="item-icon"><img src="../../assets/images/earn-money/details-icon-01.png" /></div>
@@ -53,7 +53,7 @@
       <div class="details-item">
         <div class="item-amount">
           Rs
-          <span>{{ getRewardAmount("DEPOSIT") }}</span>
+          <span>{{ convertToCommaAmount(getRewardAmount("DEPOSIT")) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.reward.topUp") }}</div>
         <div class="item-icon"><img src="../../assets/images/earn-money/details-icon-02.png" /></div>
@@ -64,7 +64,7 @@
       <div class="details-item details-item">
         <div class="item-amount">
           Rs
-          <span>{{ getRewardAmount("BET") }}</span>
+          <span>{{ convertToCommaAmount(getRewardAmount("BET")) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.reward.bet") }}</div>
         <div class="item-icon"><img src="../../assets/images/earn-money/details-icon-03.png" /></div>
@@ -239,7 +239,7 @@
           <span><div class="sent-ytd-icon">
           <img src="../../assets/images/earn-money/sent-ytd-icon.png" />
         </div>
-          {{ store.currency.value }} {{ oneTimeBonusSetting.totalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</span>
+          {{ store.currency.value }} {{ convertToCommaAmount(oneTimeBonusSetting.totalAmount) }}</span>
         </div>
       </div>
       

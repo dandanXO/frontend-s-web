@@ -30,12 +30,16 @@
               <div class="order-col">
                 <span class="txt-gray">{{ convertToGMT55(e.withdrawDate) }}</span>
               </div>
-              <div class="order-col q-mt-sm">
                 <!-- <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
                   {{ getWithdrawStatus(e.status) }}
                 </span> -->
 
-                <q-btn flat
+                <div class="order-col">{{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
+
+            </div>
+            <div class="order-subrow">
+              <div class="order-col">{{ $t("records.bank") }}</div>
+              <div class="order-col"><q-btn flat
                   :class="{
                     'btn--green': ['SUCCESS'].includes(e.status),
                     'btn--red': ['FAIL', 'STEP_5', 'FAIL_REVIEW'].includes(e.status),
@@ -55,12 +59,7 @@
                     ].includes(e.status)
                   }"
                   :label="`${getWithdrawStatus(e.status)}`"
-                ></q-btn>
-              </div>
-            </div>
-            <div class="order-subrow">
-              <div class="order-col">{{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
-              <div class="order-col">{{ $t("records.bank") }}</div>
+                ></q-btn></div>
             </div>
           </div>
           <div class="order-row order-row--title">
@@ -427,6 +426,8 @@ onActivated(() => {
     .order-col {
       &:nth-child(even) {
         text-align: right;
+        color: #21EF89;
+        
       }
 
       span.txt-gray {

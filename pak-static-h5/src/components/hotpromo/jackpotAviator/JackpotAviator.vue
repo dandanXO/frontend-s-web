@@ -162,12 +162,14 @@ onMounted(() => {
 <style lang="scss" scoped>
 .jackpot {
   background: url("../../../assets/images/promotion/hotpromo/jackpot-aviator/jackpot-bg.png") no-repeat center center;
-  aspect-ratio: 1125/500;
+  // aspect-ratio: 1125/500;
+  aspect-ratio: 750 / 550;
   background-size: 100% 100%;
   position: relative;
 
   .rules-ribbon {
-    background-color: #30af88;
+    // background-color: #30af88;
+    background: linear-gradient(180deg, #FB4F77 0%, #DA093A 100%);
     position: absolute;
     width: 74px;
     height: 23px;
@@ -182,7 +184,8 @@ onMounted(() => {
   }
 
   .history-ribbon {
-    background-color: #30af88;
+    // background-color: #30af88;
+    background: linear-gradient(180deg, #FB4F77 0%, #DA093A 100%);
     position: absolute;
     width: 74px;
     height: 26px;
@@ -224,11 +227,11 @@ onMounted(() => {
 }
 
 .receive-btn {
-  background: linear-gradient(180deg, #61ff00 0%, #006ded 100%);
+  background: linear-gradient(180deg, #FB4F77 0%, #DA093A 100%);
   padding: 20px;
-  border-radius: 17px;
-  width: 236px;
-  height: 34px;
+  border-radius: 4px;
+  width: 202px;
+  height: 46px;
   display: flex;
   justify-content: center;
   align-items: center;

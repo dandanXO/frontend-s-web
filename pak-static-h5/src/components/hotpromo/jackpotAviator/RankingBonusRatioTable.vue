@@ -13,7 +13,7 @@
                     <img v-else-if="rbrListItem.rank === '3'" style="width:35px;margin:0;" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/3rd-place-crown.png" />
                     <span v-else>{{ rbrListItem.rank }}</span>
                 </div>
-                <div>{{ rbrListItem.bonusPerc?.toFixed(2) }}%</div>
+                <div class="bonus">{{ rbrListItem.bonusPerc?.toFixed(2) }}%</div>
             </div>
         </template>
     </div>
@@ -48,7 +48,7 @@ const props = defineProps(['rankingBonusRatioList']);
             font-weight: 700;
             line-height: 18px;
             text-align: center;
-            background: linear-gradient(180deg, #21EF89 0%, #33562D 100%);
+            background: linear-gradient(180deg, #FB4F77 0%, #DA093A 100%);
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
         }
@@ -67,11 +67,18 @@ const props = defineProps(['rankingBonusRatioList']);
         }
 
         &:nth-child(odd) {
-            background-color: #032503;
+            background-color: #323738;
         }
 
         &:nth-child(even) {
-            background-color: #113810;
+            background-color: #394142;
+        }
+        .bonus {
+            color: #DE4B48;
+        }
+        &:hover {
+            background: linear-gradient(180deg, #FB4F77 0%, #DA093A 100%);
+            color: #ffffff;
         }
     }
 }

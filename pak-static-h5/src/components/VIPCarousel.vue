@@ -377,6 +377,9 @@ watch(
     const levelUpDeposit = +upgradeStatus.replace(/,/g, "");
 
     const levelUpPercentage = (() => {
+      if (vipLevel === 0) {
+        return 0;
+      }
       if (vipLevel + 1 > +vipInfo.vipLevel) {
         return 100;
       }
@@ -580,6 +583,7 @@ $colors: (
         position:relative;
         // background: #6D96C6;
         min-width: 12px;
+        width: 0;
         .progress-bar-inner-bar-endpoint-circle {
             width: 36px;
             height: 36px;
@@ -641,6 +645,7 @@ $colors: (
   justify-content: flex-end;
   font-size: 12px;
   max-height: 165px;
+
 
   &1 {
     background-image: url("../assets/images/vip/badge/banner-1.png");

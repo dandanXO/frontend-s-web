@@ -1248,10 +1248,16 @@ const onCaptchaSubmit = () => {
           message: t("notify.emailVerificationSent"),
           icon: "check_circle_outline"
         });
-      } else color = "negative";
-
-      if (message) $q.notify({ message, color });
-
+      } else {
+        if (message) {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: message,
+            icon: "report_problem"
+          });
+        }
+      }
       console.log("onCaptchaSubmit", res);
     });
 };

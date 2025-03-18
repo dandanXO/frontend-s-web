@@ -77,7 +77,7 @@
             <div class="acct-nav-item">
               <img src="../assets/images/account/personal-svg.svg" />
             </div>
-            <div class="acct-nav-label">{{ $t("settings.personalCentre") }}</div>
+            <div class="acct-nav-label">{{ $t("settings.personalCenter") }}</div>
           </router-link>
           <router-link to="/account/record">
             <div class="acct-nav-item">

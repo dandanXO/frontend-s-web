@@ -93,7 +93,7 @@
 
       <router-link class="side-menu-item side-menu-item__transparent" to="/faq-page">
         <div class="item-icon"><img src="../assets/images/auth/menu-faq.png" /></div>
-        Faq
+        FAQ
       </router-link>
 
       <a class="side-menu-item side-menu-item__transparent" :href="ui.tiktokUrl" target="_blank" v-if="ui.tiktokUrl">

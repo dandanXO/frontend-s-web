@@ -57,7 +57,7 @@ export default {
   },
   bottomNav: {
     home: "Home",
-    promo: "Promo",
+    promo: "Promotion",
     earnMoney: "Earn Money",
     wallet: "Wallet",
     me: "Me",
@@ -89,7 +89,7 @@ export default {
     password_rules_01: "Please insert password",
     password_rules_02: "The characters of password must be above 6",
     forgotPassword: "Forgot Password",
-    forgotPassword_desc: "Please Provide email, We Will Send OTP To Your Registered Email.",
+    forgotPassword_desc: "Please provide email, we will send OTP to your registered email.",
     register_agree_01: "I have Agree To The ",
     register_agree_02: "Use Privacy Agreement",
     email: "Email",
@@ -100,7 +100,7 @@ export default {
     verificationCode: "Verification Code",
     verificationCode_placeholder: "Please enter Verification Code",
     verificationCode_rules_01: "Please insert Verification Code",
-    otp_sent_title: "OTP Has Been Sent To Your Email, Please Enter The OTP And New Password.",
+    otp_sent_title: "OTP has been sent to your email, please enter the OTP and new password.",
     otp: "OTP",
     otp_placeholder: "Please enter OTP",
     otp_rules_01: "Please insert OTP",
@@ -215,6 +215,8 @@ export default {
     register: "Register",
     confirm: "Confirm",
     submit: "Submit",
+    forgetPwd: "Forget Password",
+    areyounew: "Are you new to B9?",
     addNewAccount: "Add New Account",
     updated: "Updated",
     updating: "Updating...",
@@ -301,9 +303,9 @@ export default {
     totalScore: "Total Score",
     withdraw: "Withdraw",
     deposit: "Deposit",
-    promo: "Promo",
+    promo: "Promotion",
     otherServices: "Other Services",
-    personalCentre: "Personal Centre",
+    personalCenter: "Personal Center",
     record: "Record",
     discount: "Discount",
     bank: "Bank",
@@ -441,7 +443,7 @@ export default {
       betting_table: {
         header: {
           description: "Description",
-          commission: "Three-Level Commision"
+          commission: "Three-Level Commission"
         },
         row1: {
           description: "Invite players to place bets (win or lose) to earn rewards",
@@ -544,7 +546,7 @@ export default {
         username: {
           placeholder: "User name"
         },
-        searchButton: "Search"
+        searchButton: "SEARCH"
       },
       table: {
         username: "Username",

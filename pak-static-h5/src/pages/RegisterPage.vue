@@ -348,6 +348,9 @@ import { auth } from "../../firebase/firebaseConfig";
 import { useI18n } from "vue-i18n";
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 import ShareIcons from "src/components/ShareIcons.vue";
+import { i18nStore } from "src/router/language";
+import { storeToRefs } from "pinia";
+
 export default defineComponent({
   name: "RegisterPage",
   methods: { isAndroid },
@@ -361,6 +364,8 @@ export default defineComponent({
     const { t } = useI18n();
     const ui = useUI();
     const store = userStore();
+    const i18nStoreLanguage = i18nStore();
+    const { languageVal } = storeToRefs(i18nStoreLanguage);
     const verificationImg = ref("");
 
     const captchaRef = ref();
@@ -1037,7 +1042,8 @@ export default defineComponent({
       isRestrictedDomain,
       router,
       onClickGoogleSignin,
-      onCapacitorGoogleSignin
+      onCapacitorGoogleSignin,
+      languageVal
     };
   }
 });

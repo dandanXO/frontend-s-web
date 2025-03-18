@@ -71,8 +71,13 @@
 }
 
 .result-table {
-  .q-table__container {
-    background-color: transparent;
+  :deep(.q-table__container) {
+    .q-table__middle {
+      border-radius: unset !important;
+    }
+  }
+  :deep(.q-table__container) {
+    // background-color: transparent;
 
     :deep(table) {
       .top-header {

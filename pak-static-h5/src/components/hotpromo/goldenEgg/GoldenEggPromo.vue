@@ -52,7 +52,8 @@
     </div>
 
     <div class="activities-wrapper">
-      <img class="block-title" src="../../../assets/images/promotion/hotpromo/golden-egg/activities-title.png" />
+      <div class="block-title">Activities</div>
+      <!-- <img class="block-title" src="../../../assets/images/promotion/hotpromo/golden-egg/activities-title.png" /> -->
       <p>
         Enjoy the thrill of betting with Aviator! Your Aviator can win a staggering 3,216x with just one click! ! The
         prize pool for the top 50 is 1,250,000PKR!
@@ -67,7 +68,7 @@
     </div>
 
     <div class="ranking-wrapper">
-      <img class="block-title" src="../../../assets/images/promotion/hotpromo/golden-egg/ranking-title.png" />
+      <!-- <img class="block-title" src="../../../assets/images/promotion/hotpromo/golden-egg/ranking-title.png" /> -->
       <div class="ranking-list-wrapper">
         <img
           class="ranking-decoration"
@@ -75,6 +76,7 @@
         />
         <div class="ranking-list-slot" />
         <div class="ranking-list-content" :style="{ height: `${rankingListHeight}px` }">
+          <div class="ranking-block-title">Ranking and bonus</div>
           <div class="ranking-list-title">
             <span>TIME</span>
           </div>
@@ -341,7 +343,8 @@ onMounted(() => {
     .progressbar-inner {
       min-width: 1%;
       max-width: calc(100% - 4px);
-      background: url(../../../assets/images/promotion/hotpromo/golden-egg/progressbar-inner.png) no-repeat;
+      // background: url(../../../assets/images/promotion/hotpromo/golden-egg/progressbar-inner.png) no-repeat;
+      background: linear-gradient(90deg, #FF8B00 0%, #FDE30F 100%);
       position: absolute;
       height: 8px;
       top: 44px;
@@ -367,7 +370,7 @@ onMounted(() => {
   }
 
   .bets-wrapper {
-    margin-top: -4px;
+    margin-top: 8px;
     text-align: center;
     color: #9f9f9f;
   }
@@ -387,22 +390,38 @@ onMounted(() => {
       .ranking-list-slot {
         width: 100%;
         height: 25px;
-        background-color: #33562d;
-        border: 7px solid #6db85f;
-        border-radius: 12px;
+        border-radius: 20px;
       }
       .ranking-list-content {
         width: calc(100% - 24px);
         min-height: 30px;
         max-height: 318px;
         margin: -12px auto 0;
-        background: url(../../../assets/images/promotion/hotpromo/golden-egg/ranking-list-bg.png) no-repeat,
-          linear-gradient(36.43deg, #0e1e08 6.88%, #1b6026 100.29%);
+        // background: url(../../../assets/images/promotion/hotpromo/golden-egg/ranking-list-bg.png) no-repeat,
+        //   linear-gradient(36.43deg, #0e1e08 6.88%, #1b6026 100.29%);
+
+
         background-size: 100% 100%;
         padding: 16px 0 10px;
         border-bottom-left-radius: 6px;
         border-bottom-right-radius: 6px;
         position: relative;
+        .ranking-block-title {
+          color: #E0B690;
+          text-align: center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 0 auto 20px;
+          font-family: "Microsoft YaHei UI";
+          font-weight: 700;
+          font-size: 17.23px;
+          line-height: 100%;
+          letter-spacing: 0%;
+          text-align: center;
+          text-transform: uppercase;
+
+        }
         .ranking-list-title {
           display: flex;
           justify-content: space-between;
@@ -493,6 +512,15 @@ onMounted(() => {
 
 .block-title {
   width: 100%;
+  font-family: Poppins;
+  font-weight: 700;
+  font-size: 22.07px;
+  line-height: 100%;
+  letter-spacing: -0.69px;
+  text-align: left;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-bottom: 15px;
 }
 
 .prize-detail-wrapper {

@@ -15,7 +15,7 @@
 
     <!--        <div class="rule-item">{{ $t('hotPromo.jackpotAviator.rules1') }}</div><br/>-->
     <!--        <div class="rule-item">{{ $t('hotPromo.jackpotAviator.rules2') }}</div><br/>-->
-    <div style="text-align: center" class="rule-item">{{ $t("hotPromo.jackpotAviator.rankingBonusRatio") }}</div>
+    <div class="rule-item">{{ $t("hotPromo.jackpotAviator.rankingBonusRatio") }}:</div>
     <RankingBonusRatioTable :rankingBonusRatioList="props.rankingBonusRatioList" />
 
     <br />
@@ -80,6 +80,7 @@ const langVal = computed(() => i18nStoreLanguage.languageVal);
   .title-img {
     display: flex;
     margin: 0 auto;
+    filter: hue-rotate(215deg);
   }
 
   .back-btn {
@@ -102,7 +103,7 @@ const langVal = computed(() => i18nStoreLanguage.languageVal);
     font-weight: 400;
     line-height: 25px;
     text-align: left;
-    color: #9f9f9f;
+    color: #ffffff;
   }
 
   .ranking {
@@ -154,6 +155,7 @@ const langVal = computed(() => i18nStoreLanguage.languageVal);
       &:nth-child(even) {
         background-color: #113810;
       }
+      
     }
   }
 }

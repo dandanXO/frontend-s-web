@@ -453,6 +453,7 @@ const submitBankCard = () => {
             message: "Virtual wallet added successfully",
             icon: "check_circle_outline"
           });
+          bankCardInfo.cardNumber = ""
           router.push("/account/bank");
         }
       })
