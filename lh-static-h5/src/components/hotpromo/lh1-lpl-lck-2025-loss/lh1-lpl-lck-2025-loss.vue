@@ -43,7 +43,7 @@
             <div class="title-img">活动详情</div>
             <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
               <div class="ribbon">活动时间</div>
-              <div class="right">2025 年 3 月 10 日起</div>
+              <div class="right">2025 年 3月22日- 6月14日</div>
             </div>
             <div
               class="little-title"
@@ -190,7 +190,7 @@
             <div class="title-img">活动详情</div>
             <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
               <div class="ribbon">活动时间</div>
-              <div class="right">2025 年 3 月 10 日起</div>
+              <div class="right">2025 年 3月22日- 6月14日</div>
             </div>
             <div
               class="little-title"
