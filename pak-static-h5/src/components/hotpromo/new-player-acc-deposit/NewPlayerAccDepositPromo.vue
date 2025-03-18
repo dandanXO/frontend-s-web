@@ -5,8 +5,6 @@
         <img src="./img/bg-promo.png" alt="" />
       </div>
 
-      <!-- <pre>claimStatus---{{ claimStatus }}</pre> -->
-
       <div class="promo-content-container q-px-md">
         <div class="day-selections">
           <template v-for="item in claimStatus" :key="item">
@@ -21,48 +19,6 @@
             </div>
           </template>
         </div>
-
-        <!-- <div class="day-selections">
-          <div class="select-day">
-            <div class="day-img"><img src="./img/1.png" alt="" /></div>
-            <div class="day-txt">2 days</div>
-            <div class="tick-img">
-              <img src="./img/tick-icon.png" alt="" />
-            </div>
-          </div>
-
-          <div class="select-day active">
-            <div class="day-img"><img src="./img/2.png" alt="" /></div>
-            <div class="day-txt">3 days</div>
-            <div class="tick-img">
-              <img src="./img/tick-icon.png" alt="" />
-            </div>
-          </div>
-
-          <div class="select-day">
-            <div class="day-img"><img src="./img/3.png" alt="" /></div>
-            <div class="day-txt">7 days</div>
-            <div class="tick-img">
-              <img src="./img/tick-icon.png" alt="" />
-            </div>
-          </div>
-
-          <div class="select-day">
-            <div class="day-img"><img src="./img/4.png" alt="" /></div>
-            <div class="day-txt">15 days</div>
-            <div class="tick-img">
-              <img src="./img/tick-icon.png" alt="" />
-            </div>
-          </div>
-
-          <div class="select-day">
-            <div class="day-img"><img src="./img/5.png" alt="" /></div>
-            <div class="day-txt">30 days</div>
-            <div class="tick-img">
-              <img src="./img/tick-icon.png" alt="" />
-            </div>
-          </div>
-        </div> -->
 
         <div class="content-box">
           <!-- <div class="title-wrap">
@@ -84,17 +40,24 @@
             <div class="bonus-title">Bonus claim time</div>
             <div class="bonus-date">
               <div><img src="./img/icon-time.png" alt="" /></div>
-              2025-03-11 05:00
+              {{ activeClaim && formatDateTime(activeClaim.bonusClaimTime) }}
             </div>
 
             <div class="bonus-img">
               <img src="./img/img-bonus.png" alt="" />
             </div>
           </div>
-          <pre>claimStatus--- {{ claimStatus }}</pre>
-          <q-btn class="start-btn" no-caps size="lg" :disable="!claimStatus[1].hasClaimed">
+
+          <q-btn
+            class="start-btn"
+            no-caps
+            size="lg"
+            :disable="activeClaim && activeClaim.hasClaimed"
+            @click="claimNewPlayerAccDeposit()"
+          >
             <div class="q-mr-sm"><img src="./img/img-start.png" alt="" /></div>
-            Claim now
+            <template v-if="activeClaim && activeClaim.hasClaimed">Claimed</template>
+            <template v-else>Claim now</template>
           </q-btn>
         </div>
 
@@ -105,17 +68,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
-import moment from "moment";
-import { defineProps } from "vue";
 
 const $q = useQuasar();
 
 const claimStatus = ref([]);
 
-const intNewPlayerAccDeposit = () => {
+const initNewPlayerAccDeposit = () => {
   eventapi.get("/session/new-player-acc-deposit/init").then((res) => {
     if (res.code == 0) {
       let foundFirst = false;
@@ -130,6 +91,19 @@ const intNewPlayerAccDeposit = () => {
   });
 };
 
+const claimNewPlayerAccDeposit = () => {
+  eventapi.post("/session/new-player-acc-deposit/claim").then((res) => {
+    if (res.code === 0) {
+      $q.notify({
+        message: "Successfully Claimed",
+        color: "positive",
+        position: "top",
+        timeout: 2000
+      });
+    }
+  });
+};
+
 const setActive = (selectedItem) => {
   claimStatus.value = claimStatus.value.map((item) => ({
     ...item,
@@ -137,21 +111,25 @@ const setActive = (selectedItem) => {
   }));
 };
 
+const activeClaim = computed(() => claimStatus.value.find((item) => item.isActive));
+
+const formatDateTime = (timestamp) => {
+  const date = new Date(timestamp);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+
+  return `${year}-${month}-${day} ${hours}:${minutes}`;
+};
+
 onMounted(() => {
-  intNewPlayerAccDeposit();
+  initNewPlayerAccDeposit();
 });
 </script>
 
 <style lang="scss" scoped>
-// .promo-page {
-//   background-size: cover;
-//   background-image: url(./img/promo-bg.png);
-//   background-position: top center;
-// }
-
-.promo-content-container {
-}
-
 .day-selections {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
