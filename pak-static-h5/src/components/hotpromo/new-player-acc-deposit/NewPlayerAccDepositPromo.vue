@@ -14,13 +14,17 @@
               </div>
               <div class="day-txt">{{ item.day }} days</div>
               <div class="tick-img">
-                <img :src="item.hasClaimed ? require('./img/tick-icon-active.png') : require('./img/tick-icon.png')" />
+                <img
+                  :src="
+                    item.hasClaimed === 'YES' ? require('./img/tick-icon-active.png') : require('./img/tick-icon.png')
+                  "
+                />
               </div>
             </div>
           </template>
         </div>
 
-        <div class="content-box">
+        <div class="content-box" v-if="activeClaim">
           <!-- <div class="title-wrap">
             <div class="box-title">
               <div><img src="./img/icon-depositdays.png" alt="" /></div>
