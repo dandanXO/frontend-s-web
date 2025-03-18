@@ -35,7 +35,7 @@
       <div @mouseover="customerHovered = false">
         <router-link to="/app" class="sticky-sidebar-item">
           <img src="../../assets/images/home/sticky-sidebar/app-dl-icon.svg" />
-          <div>APP下载</div>
+          <div>APP 下载</div>
         </router-link>
       </div>
       <div @mouseover="customerHovered = false" class="sticky-sidebar-item" @click="scrollToTop">
@@ -66,7 +66,9 @@
       >
         <el-carousel-item v-for="(game, i) in floatDomain" :key="i">
           <div @click="openLink(game.code)" class="rocket-container">
-            <div class="rocket"><img :src="`${imgURL}/promo/${game.icon}`" /></div>
+            <div class="rocket">
+              <img :src="`${imgURL}/promo/${game.icon}`" />
+            </div>
           </div>
         </el-carousel-item>
       </el-carousel>
@@ -104,7 +106,7 @@
   </div>
 
   <div
-    class="rocket-wrapper"
+    class="rocket-wrapper-float"
     v-if="showFloatPromo"
     :class="'show-promo'"
     :style="{ top: promoPosition.top + 'px', left: promoPosition.left + 'px' }"
@@ -119,15 +121,21 @@
         </div> -->
       <el-carousel
         class="float-carousel"
-        height="130px"
+        height="200px"
+        width="180px"
         :indicator-position="floatPromo.length > 1 ? 'outside' : 'none'"
         arrow="never"
         :autoplay="true"
         :interval="3000"
       >
         <el-carousel-item v-for="(promo, i) in floatPromo" :key="i">
-          <div @click="gotoPromo(promo.code)" class="rocket-container">
-            <div class="rocket"><img :src="`${imgURL}/promo/${promo.icon}`" /></div>
+          <div @click="gotoPromo(promo.code)" class="rocket-container-float">
+            <div class="rocket">
+              <img :src="`${imgURL}/promo/${promo.icon}`" />
+              <span v-if="promo.showTime" class="promo-remaining-time">
+                {{ floatPromoRemainingTime[i] }}
+              </span>
+            </div>
           </div>
         </el-carousel-item>
       </el-carousel>
@@ -137,13 +145,14 @@
 <script>
 import { defineComponent, onMounted, ref, onBeforeUnmount, watch } from "vue";
 import { userStore } from "@/store";
-import { getAppDownloadUrlFromServer, getFloatingItems } from "@/api/index/site";
+import { getAppDownloadUrlFromServer, getFloatingItems, getLoggedInFloatingItems } from "@/api/index/site";
 import { uiStore } from "@/store/ui";
 import { useDark, useLocalStorage } from "@vueuse/core";
 import GameModal from "@/components/modal/GameModal.vue";
 import { useNotify } from "@/hooks/notify";
 import { useRouter } from "vue-router";
 import { ElMessageBox } from "element-plus";
+import moment from "moment";
 
 import { storeToRefs } from "pinia";
 export default defineComponent({
@@ -187,7 +196,7 @@ export default defineComponent({
     const showDomain = ref(false);
     const hideRocket = () => {
       showRocket.value = false;
-      rocketPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 220 };
+      rocketPosition.value = { top: window.innerHeight - 300, left: window.innerWidth - 320 };
     };
     const openLink = (link) => {
       if (!isDragging.value && clickAllowed.value) {
@@ -206,16 +215,18 @@ export default defineComponent({
     const showFloatPromo = ref(false);
     const hideFloatPromo = () => {
       showFloatPromo.value = false;
-      promoPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 220 };
-      domainPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 260 };
+      promoPosition.value = { top: window.innerHeight - 300, left: window.innerWidth - 320 };
+      domainPosition.value = { top: window.innerHeight - 300, left: window.innerWidth - 360 };
     };
     const floatPromo = [];
+    const floatPromoRemainingTime = ref([]);
     const gamePromo = [];
     const floatDomain = [];
     const initFloating = () => {
       floatPromo.value = [];
       gamePromo.value = [];
-      getFloatingItems().then((res) => {
+      const api = store.token ? getLoggedInFloatingItems : getFloatingItems;
+      api().then((res) => {
         if (res.code === 0) {
           res.data.forEach((element) => {
             if (element.type === "PROMO") {
@@ -233,8 +244,11 @@ export default defineComponent({
           });
           checkFloatPromo();
           updatePromo(); // Initially update the displayed promo
+          updatePromoRemainingTime();
           // Update the displayed promo every 5 seconds
           setInterval(updatePromo, 3000);
+
+          setInterval(updatePromoRemainingTime, 1000);
         } else {
           notify.error(res.message);
         }
@@ -242,7 +256,7 @@ export default defineComponent({
     };
     const checkFloatPromo = () => {
       if (gamePromo.length === 0) {
-        promoPosition.value = { top: window.innerHeight - 200, left: window.innerWidth - 220 };
+        promoPosition.value = { top: window.innerHeight - 300, left: window.innerWidth - 320 };
       }
       if (showRocket.value === false) {
         domainPosition.value = { top: window.innerHeight - 320, left: window.innerWidth - 260 };
@@ -255,8 +269,8 @@ export default defineComponent({
     };
 
     const domainPosition = ref({ top: window.innerHeight - 430, left: window.innerWidth - 240 });
-    const rocketPosition = ref({ top: window.innerHeight - 200, left: window.innerWidth - 220 });
-    const promoPosition = ref({ top: window.innerHeight - 320, left: window.innerWidth - 220 });
+    const rocketPosition = ref({ top: window.innerHeight - 300, left: window.innerWidth - 320 });
+    const promoPosition = ref({ top: window.innerHeight - 320, left: window.innerWidth - 320 });
     const isDragging = ref(false);
     const clickAllowed = ref(true);
     const shiftX = ref(0);
@@ -315,6 +329,26 @@ export default defineComponent({
       currentPromo.value = floatPromo[currentPromoIndex.value];
       currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.length;
     };
+    const updatePromoRemainingTime = () => {
+      floatPromoRemainingTime.value = floatPromo.map((promo) => {
+        let result = "00:00:00";
+        if (promo?.endTime) {
+          // console.log(promo.endTime);
+          const now = moment(Date.now());
+          const endTime = moment(promo?.endTime);
+          const totalSeconds = endTime.diff(now, "seconds");
+          if (totalSeconds > 0) {
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            result = `${`${hours}`.padStart(2, 0)}:${`${minutes}`.padStart(2, 0)}:${`${seconds}`.padStart(2, 0)}`;
+          }
+        }
+        return result;
+      });
+
+      // console.log(floatPromoRemainingTime.value);
+    };
 
     const goToLiveChatPromo = () => {
       const currentRoute = router.currentRoute.value;
@@ -362,6 +396,8 @@ export default defineComponent({
     });
 
     return {
+      updatePromoRemainingTime,
+      floatPromoRemainingTime,
       store,
       customerHovered,
       scrollToTop,
@@ -456,14 +492,111 @@ export default defineComponent({
     z-index: 99;
     cursor: pointer;
   }
-
+  .rocket-container-float {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
   .rocket {
     pointer-events: none;
     user-select: none;
     img {
       display: block;
-      width: 100px;
+      width: 180px;
       cursor: pointer;
+    }
+    .promo-remaining-time {
+      position: absolute;
+      bottom: 16%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 32px;
+      font-weight: bold;
+      color: #444;
+      // color: #eaff00;
+      // text-shadow: 2px 2px 0px #00000040;
+    }
+  }
+}
+.rocket-wrapper-float {
+  position: fixed;
+  z-index: 666;
+
+  transition: all 0.3s;
+  display: none;
+  width: 200px;
+  height: 250px;
+  user-select: none; /* Disable text selection */
+
+  &.show-promo {
+    display: block;
+  }
+
+  &.domain-wrapper {
+    height: auto;
+    width: 155px;
+
+    .rocket {
+      img {
+        display: block;
+        width: 155px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &.show-rocket {
+    display: block;
+  }
+
+  &.show-domain {
+    display: block;
+  }
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+
+  .close-btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #333333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    font-size: 12px;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 99;
+    cursor: pointer;
+  }
+  .rocket-container-float {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .rocket {
+    pointer-events: none;
+    user-select: none;
+    img {
+      display: block;
+      width: 180px;
+      cursor: pointer;
+    }
+    .promo-remaining-time {
+      position: absolute;
+      bottom: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 24px;
+      font-weight: bold;
+      color: #444;
+      // color: #eaff00;
+      // text-shadow: 2px 2px 0px #00000040;
     }
   }
 }
@@ -604,13 +737,16 @@ export default defineComponent({
   // fill: #a3a3a3;
 }
 
-.float-carousel {
-  :deep(.el-carousel__indicators) {
-    width: 100% !important;
-  }
-  :deep(.el-carousel__indicator) {
-    padding-left: 2px;
-    padding-right: 2px;
-  }
+:deep(.el-carousel__indicators) {
+  display: flex;
 }
+// .float-carousel {
+//   :deep(.el-carousel__indicators) {
+//     width: 100% !important;
+//   }
+//   :deep(.el-carousel__indicator) {
+//     padding-left: 2px;
+//     padding-right: 2px;
+//   }
+// }
 </style>
