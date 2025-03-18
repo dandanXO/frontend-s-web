@@ -14,7 +14,7 @@
               </div>
               <div class="day-txt">{{ item.day }} days</div>
               <div class="tick-img">
-                <img :src="item.isClaimed ? require('./img/tick-icon-active.png') : require('./img/tick-icon.png')" />
+                <img :src="item.hasClaimed ? require('./img/tick-icon-active.png') : require('./img/tick-icon.png')" />
               </div>
             </div>
           </template>
@@ -52,7 +52,7 @@
             class="start-btn"
             no-caps
             size="lg"
-            :disable="activeClaim && activeClaim.hasClaimed"
+            :disable="activeClaim && (activeClaim.hasClaimed || !activeClaim.isOpen)"
             @click="claimNewPlayerAccDeposit()"
           >
             <div class="q-mr-sm"><img src="./img/img-start.png" alt="" /></div>
@@ -81,7 +81,7 @@ const initNewPlayerAccDeposit = () => {
     if (res.code == 0) {
       let foundFirst = false;
       claimStatus.value = res.data.claimStatus.map((item) => {
-        if (!foundFirst && !item.hasClaimed) {
+        if (!foundFirst && !item.isOpen) {
           foundFirst = true;
           return { ...item, isActive: true };
         }
