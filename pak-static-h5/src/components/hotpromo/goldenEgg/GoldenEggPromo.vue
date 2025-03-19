@@ -77,16 +77,23 @@
         <div class="ranking-list-slot" />
         <div class="ranking-list-content" :style="{ height: `${rankingListHeight}px` }">
           <div class="ranking-block-title">Ranking and bonus</div>
-          <div class="ranking-list-title">
+          <!-- <div class="ranking-list-title">
             <span>TIME</span>
-          </div>
+          </div> -->
 
           <div class="ranking-list-table-wrapper">
             <table class="ranking-list-table">
+              <thead>
+                <tr>
+                    <th width="10%" align="center">{{$t('hotPromo.goldenEgg.ranking')}}</th>
+                    <th width="45%" align="center">{{ $t('hotPromo.goldenEgg.userName') }}</th>
+                    <th width="45%" align="center">{{ $t('hotPromo.goldenEgg.betVolume') }}</th>
+                  </tr>
+              </thead>
               <tbody>
                 <template v-if="rankingLists.length">
                   <tr v-for="(item, index) in rankingLists" :key="index">
-                    <td align="center">
+                    <td width="20%" align="center">
                       <div class="ranking-icon" :class="{ crown: index < 3 }">
                         <img
                           v-if="index < 3"
@@ -99,8 +106,8 @@
                         <span v-else>{{ index + 1 }}</span>
                       </div>
                     </td>
-                    <td align="center">{{ item.loginName }}</td>
-                    <td align="center">{{ convertToCommaAmount(item.amount) }} PKR</td>
+                    <td width="40%" align="center">{{ item.loginName }}</td>
+                    <td width="40%" align="center">{{ convertToCommaAmount(item.amount) }} PKR</td>
                   </tr>
                 </template>
                 <div v-else class="no-record">No Record</div>
@@ -258,7 +265,7 @@ onMounted(() => {
         position: relative;
         background: url(../../../assets/images/promotion/hotpromo/golden-egg/golden-egg-bg.png) no-repeat;
         background-size: cover;
-        aspect-ratio: 94/119;
+        aspect-ratio: 115 / 115;
         border: none;
         &.disabled {
           .golden-egg {
@@ -267,9 +274,9 @@ onMounted(() => {
           }
         }
         .golden-egg {
-          width: 64%;
+          width: 60%;
           position: absolute;
-          top: 24%;
+          top: 0%;
           left: 23%;
           margin-bottom: 0;
           &.shake {
@@ -277,18 +284,21 @@ onMounted(() => {
           }
           &.prize-item-opened {
             animation: none;
+            width: 88%;
+            top: -18%;
+            left: 8%;
           }
         }
         .hammer {
           width: 34px;
           position: absolute;
-          top: 35%;
-          left: 75%;
+          top: 10%;
+          left: 77%;
           animation: knock 0.5s linear 1;
         }
         .prize-info {
           position: absolute;
-          top: 37%;
+          top: 20%;
           left: 55%;
           transform: translateX(-50%);
           background: linear-gradient(180deg, rgba(246, 103, 56, 0.9) 0%, rgba(217, 54, 0, 0.9) 100%);
@@ -305,7 +315,7 @@ onMounted(() => {
       background: url(../../../assets/images/promotion/hotpromo/golden-egg/btn.png) no-repeat;
       background-size: cover;
       padding: 0 10px;
-      aspect-ratio: 258 / 78;
+      aspect-ratio: 300 / 80;
       margin: 30px auto 0;
       line-height: 16px;
       color: #fff;
@@ -389,22 +399,22 @@ onMounted(() => {
       }
       .ranking-list-slot {
         width: 100%;
-        height: 25px;
-        border-radius: 20px;
+        // height: 25px;
       }
       .ranking-list-content {
-        width: calc(100% - 24px);
-        min-height: 30px;
+        border-radius: 20px;
+        border: 1px solid #F4BB90;
+        background: linear-gradient(180deg, rgba(120, 76, 41, 0.8) 0%, rgba(44, 23, 9, 0.8) 100%);
+        // width: calc(100% - 24px);
+        min-height: 200px;
         max-height: 318px;
-        margin: -12px auto 0;
+        // margin: -12px auto 0;
         // background: url(../../../assets/images/promotion/hotpromo/golden-egg/ranking-list-bg.png) no-repeat,
         //   linear-gradient(36.43deg, #0e1e08 6.88%, #1b6026 100.29%);
 
 
         background-size: 100% 100%;
-        padding: 16px 0 10px;
-        border-bottom-left-radius: 6px;
-        border-bottom-right-radius: 6px;
+        padding: 16px 10px 10px;
         position: relative;
         .ranking-block-title {
           color: #E0B690;
@@ -469,11 +479,29 @@ onMounted(() => {
 
           .ranking-list-table {
             margin: 0;
+            thead {
+              border: 1px solid #F9CDA8;
+              border-radius: 20px;
+              display: table-caption;
+              overflow: hidden;
+            }
+            th {
+              padding: 12px;
+              background: linear-gradient(180deg, #794D2A 0%, #5A3A1E 51%, #341400 100%);
+            }
+            /* Apply colors to specific rows */
+            tr:nth-child(1) td,
+            tr:nth-child(2) td,
+            tr:nth-child(3) td {
+              color:#D88E4F; /* White text for contrast */
+            }
             td {
               border: none;
+              border-bottom: 1.38px solid #BB9473;
               background-color: unset;
-              color: #6db85f;
+              // color: #6db85f;
               font-weight: 700;
+              color:#E0B690;
             }
             .ranking-icon {
               display: flex;
@@ -501,7 +529,9 @@ onMounted(() => {
             .no-record {
               width: 100%;
               text-align: center;
-              color: #6db85f;
+              // color: #6db85f;
+              color: #ffffff;
+              padding: 35px 0;
             }
           }
         }
@@ -539,8 +569,11 @@ onMounted(() => {
     background: linear-gradient(180deg, #ffffff 0%, #fbd167 100%);
     background-clip: text;
     color: transparent;
+    font-family: Poppins;
     font-weight: 700;
-    font-size: 22px;
+    font-size: 18.26px;
+    line-height: 13.89px;
+    letter-spacing: 0px;
   }
   .confirm-btn {
     position: absolute;

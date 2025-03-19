@@ -771,6 +771,11 @@ export default {
       termsCondition2:
         "Players who open multiple accounts or fraudulent accounts will lose their eligibility to participate in events due to improper behavior on the platform, and the related accounts will be frozen.",
       termsCondition3: "Please be sure to read these terms and conditions carefully before participating in this event."
+    },
+    goldenEgg: {
+      ranking: "Ranking",
+      userName: "Username",
+      betVolume: "Bet Volume"
     }
   },
   maintenance: {

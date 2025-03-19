@@ -136,7 +136,8 @@
                     fish: selectedPromo.promoType.toLowerCase() === 'fish',
                     liveCasino: selectedPromo.promoType.toLowerCase() === 'live casino',
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game',
-                    isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel'
+                    isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel',
+                    isGoldenEgg: selectedPromo.redirectUrl === 'pak-aviator-golden-egg'
                   }"
                 >
                   <!-- <div class="top-float">
@@ -1181,6 +1182,41 @@ export default defineComponent({
         .select-promo-html {
           &.isSpinLuckyWheel {
             display: none;
+          }
+          &.isGoldenEgg {
+            table {
+              p {
+                margin: 0;
+              }
+              border: none;
+              td {
+                border: 0;
+                padding: 15px 0;
+              }
+              td:first-child {
+                border-right: 1px solid #FFFFFF1A;
+              }
+              tr:first-of-type td {
+                  background: #323738;
+                  color:#FFFFFF80;
+                  border: 0;
+                  &:first-child {
+                    border-radius: 10px 0 0 0;
+                  }
+                  &:last-child {
+                    border-radius: 0 10px 0 0;
+                  }
+              }
+              tr:nth-child(even) td {
+                background: #394142;
+              }
+              tr:nth-child(odd) td {
+                background: #323738;
+              }
+              tr:not(:first-of-type) td:last-child {
+                color: #FFD400;
+              }
+            }
           }
         }
 
