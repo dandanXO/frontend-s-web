@@ -607,6 +607,20 @@ const transformStyle = computed(() => {
           height: 15px;
           background: linear-gradient(90deg, #05078A 0%, #7D5CF2 100%);
           border-radius: 10px;
+          position: relative;
+
+          &:before {
+            content: "";
+            background: url(img/bar-sparkle.png) no-repeat center center;
+            position: absolute;
+            top: 0px;
+            left: 0;
+            right: 0;
+            width: 40px;
+            height: 15px;
+            margin-left: auto;
+            background-size: contain;
+          }
         }
       }
       .barnumbers {
