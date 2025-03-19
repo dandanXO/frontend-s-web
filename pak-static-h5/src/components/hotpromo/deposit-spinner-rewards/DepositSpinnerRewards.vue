@@ -608,6 +608,7 @@ const transformStyle = computed(() => {
           background: linear-gradient(90deg, #05078A 0%, #7D5CF2 100%);
           border-radius: 10px;
           position: relative;
+          overflow: hidden;
 
           &:before {
             content: "";
