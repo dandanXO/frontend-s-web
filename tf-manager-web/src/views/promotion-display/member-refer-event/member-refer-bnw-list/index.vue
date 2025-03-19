@@ -64,21 +64,21 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:member:code-redeem-bnw:add']"
+          v-permission="['sys:member:referer-friend-bnw:add']"
           @click="showDialog('CREATE')"
         >{{ t('fields.add') }}</el-button>
         <el-button
           icon="el-icon-upload"
           size="mini"
           type="success"
-          v-permission="['sys:member:code-redeem-bnw:import']"
+          v-permission="['sys:member:referer-friend-bnw:import']"
           @click="showDialog('IMPORT')"
         >
           {{ t('fields.massImport') }}
         </el-button>
         <el-button icon="el-icon-remove" size="mini" type="danger" @click="removeBlacklist()"
                    :disabled="uiControl.removeBtn"
-                   v-permission="['sys:member:code-redeem-bnw:del']"
+                   v-permission="['sys:member:referer-friend-bnw:del']"
         >
           {{ t('fields.delete') }}
         </el-button>
@@ -128,10 +128,10 @@
           :label="t('fields.operate')"
           align="right"
           fixed="right"
-          v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:member:code-redeem-bnw:del']))"
+          v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:member:referer-friend-bnw:del']))"
         >
           <template #default="scope">
-            <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:member:code-redeem-bnw:del']" @click="removeBlacklist(scope.row)" />
+            <el-button icon="el-icon-remove" size="mini" type="danger" v-permission="['sys:member:referer-friend-bnw:del']" @click="removeBlacklist(scope.row)" />
           </template>
         </el-table-column>
       </el-table>
