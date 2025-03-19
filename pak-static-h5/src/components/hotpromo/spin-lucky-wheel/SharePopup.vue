@@ -41,9 +41,9 @@
           </div>
         </Slide>
 
-        <!-- <template #addons>
-          <Navigation />
-        </template> -->
+        <template #addons>
+          <Pagination />
+        </template>
       </Carousel>
     </div>
     <div class="bottom-panel">
@@ -378,10 +378,21 @@ onMounted(() => {
   .slide-content {
     padding: 0 10px;
   }
+
+  :deep(.carousel__pagination-button) {
+    background-color: #f34648 !important;
+  }
+
+  :deep(.carousel__pagination-button--active) {
+    background-color: #E8282A !important;
+    width: 30px !important; 
+  }
+  
   /* Slide Image */
   .slide-img {
     width: 100%;
     border-radius: 20px;
+    border: 2.76px solid #E8282A;
   }
 }
 .sharepopupslider {
