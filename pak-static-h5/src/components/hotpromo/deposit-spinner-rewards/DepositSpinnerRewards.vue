@@ -486,7 +486,7 @@ const transformStyle = computed(() => {
       gap: 15px;
 
       .individual-btn {
-        background: #30af88;
+        background: #3F30AF;
         padding: 5px;
         color: #ffffff;
         text-align: center;
@@ -502,22 +502,19 @@ const transformStyle = computed(() => {
       font-size: 16px;
       font-weight: 700;
       line-height: 24px;
-      background: linear-gradient(92.28deg, #28ae90 0.45%, #70bf56 65.68%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #f9f9f9;
       span.orange {
-        background: linear-gradient(180deg, #ff7527 0%, #ffa011 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: #F9D649;
       }
     }
   }
   .deposit-now {
     text-decoration: none;
-    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-    width: 148px;
-    height: 40px;
-    color: #000a01;
+    background: url("img/deposit-now-btn-bg.png") center center no-repeat;
+    background-size: 100% 100%;
+    width: 197px;
+    height: 56px;
+    color: #fff;
     font-family: Poppins;
     font-size: 16px;
     font-weight: 700;
@@ -604,12 +601,12 @@ const transformStyle = computed(() => {
         width: 85vw;
         max-width: 100%;
         height: 17px;
-        background: linear-gradient(180deg, #0b4400 0%, #1c751c 100%);
-        border: 1px solid #5ea361;
+        background: linear-gradient(180deg, #131321 0%, #060339 50.1%, #131321 97.1%);
+        border: 1px solid #0055FF;
         border-radius: 10px;
         .innerbar {
           height: 15px;
-          background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+          background: linear-gradient(90deg, #05078A 0%, #7D5CF2 100%);
           border-radius: 10px;
         }
       }
@@ -735,7 +732,7 @@ const transformStyle = computed(() => {
     height: 84px;
     color: white;
     border-radius: 10px 10px 0 0;
-    background: radial-gradient(50% 40.87% at 50% 59.13%, #001501 0%, #002417 100%);
+    background: radial-gradient(50% 40.87% at 50% 59.13%, #2b2b2b 0%, #090024 100%);
     border: 1.5px solid #8c7b32;
     min-height: 22.5vw;
 
@@ -782,6 +779,8 @@ const transformStyle = computed(() => {
       align-items: center;
     }
     &:after {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
       content: "";
       background: linear-gradient(
         135.38deg,
