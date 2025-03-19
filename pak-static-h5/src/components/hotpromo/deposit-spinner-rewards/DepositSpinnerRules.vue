@@ -43,14 +43,12 @@
         width: 100%;
         padding: 10px;
         margin: 0 auto;
-        background: url(./img/bg-img.png)no-repeat center top;
-        background-size: contain;
+        background: url(./img/rules-bg-img.png)no-repeat center top;
+        background-size: cover;
         .rule-title {
             display: flex;
             justify-content: center;
-            background: linear-gradient(180deg, #13A89E 0%, #8CC63F 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #f9f9f9;
             font-family: Poppins;
             font-size: 16px;
             font-weight: 700;
@@ -58,6 +56,8 @@
             flex:2;
             justify-content: center;
             align-items: center;
+            width: 70%;
+            margin: 0 auto;
             &:before, &:after {
                 content: "";
                 background: url(./img/decal.png)no-repeat center center;

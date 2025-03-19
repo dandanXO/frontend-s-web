@@ -535,7 +535,6 @@ const transformStyle = computed(() => {
 
     border-top: 1px solid #ffe667;
     background: #032519;
-    // background-image: url(img/spinner-bg.png);
     background-position: center center;
     background-size: cover;
     @media screen and (min-width: 500px) {
@@ -698,9 +697,7 @@ const transformStyle = computed(() => {
       font-size: 12px;
       font-weight: 700;
       line-height: 18px;
-      background: linear-gradient(92.28deg, #28ae90 0.45%, #70bf56 65.68%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #f9f9f9;
     }
     .remainingamt {
       color: #ffee56;
