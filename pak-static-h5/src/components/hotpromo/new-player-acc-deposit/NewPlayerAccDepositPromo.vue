@@ -60,7 +60,7 @@
             class="start-btn"
             no-caps
             size="lg"
-            :disable="activeClaim && !activeClaim.isOpen && activeClaim.hasClaimed !== 'NO'"
+            :disable="activeClaim && (!activeClaim.isOpen || activeClaim.hasClaimed !== 'NO')"
             @click="claimNewPlayerAccDeposit()"
           >
             <div class="q-mr-sm"><img src="./img/img-start.png" alt="" /></div>
