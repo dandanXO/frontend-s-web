@@ -7,12 +7,12 @@
 
       <div class="promo-content-container q-px-md">
         <div class="day-selections">
-          <template v-for="item in claimStatus" :key="item">
+          <template v-for="(item, index) in claimStatus" :key="index">
             <div class="select-day" :class="{ active: item.isActive }" @click="setActive(item)">
               <div class="day-img">
-                <img :src="require(`./img/day-${item.day}.png`)" />
+                <img :src="require(`./img/day-${index + 1}.png`)" />
               </div>
-              <div class="day-txt">{{ item.day }} days</div>
+              <div class="day-txt">{{ item.day }} {{ item.day === 1 ? "day" : "days" }}</div>
               <div class="tick-img">
                 <img
                   :src="
@@ -75,16 +75,35 @@
       </div>
     </div>
   </div>
+
+  <q-dialog v-model="showPrizeDetail" persistent transition-show="scale" transition-hide="scale">
+    <div class="prize-popup">
+      <!-- <q-btn icon="close" flat round dense v-close-popup class="q-ml-auto" /> -->
+      <div class="prize-gold">
+        <img src="./img/prize-gold.png" width="150" />
+      </div>
+
+      <div class="prize-amount">Rs {{ bonusAmount }}</div>
+
+      <q-btn no-caps unelevated class="btn-primary" @click="handlePrizeDetailShow">
+        {{ $t("btn.confirm") }}
+      </q-btn>
+    </div>
+  </q-dialog>
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
+import { userStore } from "src/stores";
 
 const $q = useQuasar();
 
 const claimStatus = ref([]);
+const showPrizeDetail = ref(false);
+const store = userStore();
+const bonusAmount = ref(0);
 
 const initNewPlayerAccDeposit = () => {
   eventapi.get("/session/new-player-acc-deposit/init").then((res) => {
@@ -110,6 +129,8 @@ const claimNewPlayerAccDeposit = () => {
         position: "top",
         timeout: 2000
       });
+      bonusAmount.value = res.data;
+      showPrizeDetail.value = true;
       initNewPlayerAccDeposit();
     }
   });
@@ -137,6 +158,12 @@ const formatDateTime = (timestamp) => {
   };
 
   return new Intl.DateTimeFormat("en-GB", options).format(date).replace(",", "");
+};
+
+const handlePrizeDetailShow = () => {
+  initNewPlayerAccDeposit();
+  showPrizeDetail.value = false;
+  store.getBalance();
 };
 
 onMounted(() => {
@@ -300,5 +327,27 @@ onMounted(() => {
   color: #fff;
   text-align: center;
   margin-top: 16px;
+}
+
+.prize-popup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden !important;
+}
+
+.prize-gold {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  color: #c7c7c7;
+}
+
+.prize-amount {
+  font-size: 38px;
+  color: #ffffff;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 </style>
