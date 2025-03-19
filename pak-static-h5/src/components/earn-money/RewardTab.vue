@@ -170,8 +170,10 @@
             <td>{{ $t(`earnMoney.reward.betting_table.row1.commission`) }}</td>
           </tr>
           <tr v-for="index in 3" :key="index">
-            <td colspan="2">
+            <td>
               {{ $t(`earnMoney.reward.betting_table.row${index + 1}.description`) }}
+              </td>
+              <td>
               {{ $t(`earnMoney.reward.betting_table.row${index + 1}.commission`) }}
             </td>
           </tr>
@@ -1200,6 +1202,9 @@ watch(activeSetting, checkIsShowDetail);
         padding: 10px 4px;
         font-size: 12px;
         // border: 1px solid #ffffff1a;
+        &:last-child {
+          color: #21EF89;
+        }
       }
 
       tr {

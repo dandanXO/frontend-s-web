@@ -42,6 +42,10 @@
 
   <q-dialog width="100%" v-model="isShowHistoryPopup">
     <div class="history-container">
+    <q-btn style="
+    position: absolute;
+    right: 10px;
+    top: 10px; z-index: 99;" unelevated dense rounded icon="close" class="bg-greytext text-white popout-close" v-close-popup />
       <div class="congrats-highlight">
         <div class="congrats-title">{{ $t("hotPromo.jackpotAviator.jackpot") }}</div>
         <div class="congrats-prize">{{ store.currency.value }} {{ historyData.jackpotAmount }}</div>
@@ -241,13 +245,15 @@ onMounted(() => {
   font-weight: 900;
   line-height: 19.16px;
   text-align: center;
+  text-transform: uppercase;
 }
 
 .history-container {
-  background-color: #113413;
-  border: 1px solid #55c253;
-  border-radius: 5px;
+  background-color: #323738;
+  border: 1px solid #FF3838;
+  border-radius: 15px;
   width: 90%;
+  position: relative;
 
   .congrats-highlight {
     color: #fff96f;
@@ -276,6 +282,7 @@ onMounted(() => {
       line-height: 31.54px;
       text-align: center;
       color: #fff96f;
+      text-shadow: .97px .97px black;
     }
   }
 }

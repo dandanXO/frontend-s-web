@@ -807,7 +807,7 @@ const handleCopyClick = async () => {
           color: #ffffff;
           font-weight: bold;
           background: #455152;
-          box-shadow: 0px 2px 0px 0px #2A3637;
+          box-shadow: 0px 2.07px 0px 0px #2A3637;
           img {
             filter: grayscale(1) brightness(100);
           }

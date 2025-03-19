@@ -78,7 +78,7 @@
       <!-- <img src="../../assets/logo-coming.png" style="width: 80%" /> -->
     </q-dialog>
 
-    <q-dialog width="100%" v-model="isExitDialogOpen" presistent>
+    <q-dialog class="flex-end" width="100%" v-model="isExitDialogOpen" presistent>
       <div class="popout-dialog">
         <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
         <div class="popout-dialog-container">

@@ -248,11 +248,6 @@ const loadCustomerAddress = () => {
     });
 };
 
-const openCSInNewTab = (url) => {
-  const absoluteUrl = url;
-  window.open(absoluteUrl, "_blank");
-  menuOpen.value = false;
-};
 
 const activateSlide = (item) => {
   router

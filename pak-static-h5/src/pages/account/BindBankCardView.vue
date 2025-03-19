@@ -73,7 +73,7 @@
 
   <q-page class="bind-container">
     <div class="bind-wrapper">
-      <q-form class="bind-item">
+      <q-form ref="bankFormRef" class="bind-item">
         <q-label>
           <!-- {{ $t("form.virtualWalletType") }} -->
           Bank
@@ -244,7 +244,6 @@ import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
 
 const { t } = useI18n();
-
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);
 const selectedTypeToggleName = ref("EASYPAISA");
@@ -268,6 +267,7 @@ const router = useRouter();
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/payment/";
 
+const bankFormRef = ref();
 const bankCardRef = ref();
 const cardNumberRef = ref();
 const ifscRef = ref();
@@ -446,7 +446,8 @@ const submitBankCard = () => {
             message: "Virtual wallet added successfully",
             icon: "check_circle_outline"
           });
-          bankCardInfo.cardNumber = ""
+          bankCardInfo.cardNumber = "";
+          bankFormRef.value.reset();
           router.push("/account/bank");
         }
       })
@@ -464,6 +465,8 @@ const handleEnterKey = () => {
 
 onActivated(() => {
   loadBankCards();
+  bankCardInfo.cardNumber = ""
+  bankFormRef.value.reset();
 });
 </script>
 

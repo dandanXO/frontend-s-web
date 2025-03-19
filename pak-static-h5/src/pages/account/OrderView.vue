@@ -34,7 +34,7 @@
                   {{ getWithdrawStatus(e.status) }}
                 </span> -->
 
-                <div class="order-col">{{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
+                <div class="order-col orange">- {{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
 
             </div>
             <div class="order-subrow">
@@ -88,7 +88,7 @@
               <div class="order-col">
                 <span class="txt-gray">{{ convertToGMT55(e.depositDate) }}</span>
               </div>
-              <div class="order-col">{{ convertToCommaAmount(e.depositAmount, true) }}</div>
+              <div class="order-col">+{{ convertToCommaAmount(e.depositAmount, true) }}</div>
             </div>
             <div class="order-subrow">
               <div class="order-col">{{ e.paymentType }}</div>
@@ -401,6 +401,9 @@ onActivated(() => {
         flex-wrap: wrap;
         flex-direction: column;
         gap: 10px;
+        .order-col:nth-child(2) {
+        font-weight: 700;
+        }
       }
 
       .order-subrow {
@@ -427,6 +430,10 @@ onActivated(() => {
       &:nth-child(even) {
         text-align: right;
         color: #21EF89;
+        
+        &.orange {
+          color: #FBAB1B;
+        }
         
       }
 

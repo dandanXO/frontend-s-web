@@ -1,7 +1,7 @@
 <template>
   <q-page class="bind-container">
     <div class="bind-wrapper">
-      <q-form class="bind-item">
+      <q-form ref="bankFormRef" class="bind-item">
         <q-label>
           {{ $t("form.cryptoType") }}
           <em>*</em>
@@ -110,7 +110,7 @@ const store = userStore();
 const router = useRouter();
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/payment/";
-
+const bankFormRef = ref();
 const bankCardRef = ref();
 const cardNumberRef = ref();
 const ifscRef = ref();
@@ -310,6 +310,7 @@ const submitBankCard = () => {
             icon: "check_circle_outline"
           });
           bankCardInfo.cardNumber = ""
+          bankFormRef.value.reset();
           router.push("/account/bank");          
         }
       })
@@ -327,6 +328,8 @@ const handleEnterKey = () => {
 
 onActivated(() => {
   loadBankCards();
+  bankCardInfo.cardNumber = ""
+  bankFormRef.value.reset();
 });
 </script>
 

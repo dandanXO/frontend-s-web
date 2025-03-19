@@ -146,6 +146,10 @@ const activateSlide = (item) => {
     router.push(`/home#${item}`);
     console.log(item)
 };
+const openCSInNewTab = (url) => {
+  const absoluteUrl = url;
+  window.open(absoluteUrl, "_blank");
+};
 </script>
 <style lang="scss" scoped>
 

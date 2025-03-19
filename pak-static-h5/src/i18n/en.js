@@ -98,8 +98,8 @@ export default {
     email_rules_02: "Please enter valid email",
     send: "Send",
     verificationCode: "Verification Code",
-    verificationCode_placeholder: "Please enter Verification Code",
-    verificationCode_rules_01: "Please insert Verification Code",
+    verificationCode_placeholder: "Please enter verification code",
+    verificationCode_rules_01: "Please insert verification code",
     otp_sent_title: "OTP has been sent to your email, please enter the OTP and new password.",
     otp: "OTP",
     otp_placeholder: "Please enter OTP",
@@ -752,6 +752,9 @@ export default {
       ranksLeft: "Ranks Left",
       jackpot: "Jackpot",
       noRank: "No Rank",
+      rules: "Rules",
+      activityRules: "Activity rules",
+      termsConditions: "Terms & Conditions",
       rules1:
         "Daily Ranking Rewards: 1.5% of the platform's total daily pilot revenue will be included in the daily prize pool. This pool will be automatically distributed to players daily based on their positions in the daily rankings.",
       rules2:

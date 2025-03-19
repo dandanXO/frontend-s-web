@@ -13,7 +13,7 @@
             <div v-if="vip.vipLevel !== 12">
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
               <div class="upgrade-requirements" v-if="vipIndex !== vipItems.length - 1">
-                <span v-if="vip.vipLevel !== '0'">{{ $t("vip.accumulateDeposit") }}</span>
+                {{ $t("vip.accumulateDeposit") }}
                 {{ props.onlyShowCurrentLevel ? vipItems[vip.vipLevel + 1].ugprade : vipItems[vipIndex + 1].ugprade }}
               </div>
 
@@ -57,7 +57,7 @@
     </Carousel>
 </template>
 <script setup>
-import { defineModel, watch, onMounted, ref, computed } from 'vue';
+import { defineModel, watch, onMounted, ref, computed, nextTick } from 'vue';
 import { Carousel, Slide, Navigation } from 'vue3-carousel';
 import "vue3-carousel/dist/carousel.css";
 import { userStore } from "stores/index";
@@ -197,7 +197,7 @@ const rows = [
     extrareward: "2,888"
   }
 ];
-//row3 : Level Up Bonus.
+// row3 : Level Up Bonus.
 const rows3 = [
   {
     name: "VIP 1",
@@ -359,13 +359,14 @@ const { vipItems, lastVipLevel } = rows.reduce(
 );
 watch(
   () => vipCarouselIndex.value || props.isShowCurrentLevel,
-  () => {
+  async() => {
+    await nextTick();
     if (vipCarouselIndex.value === 12) {
         return
     }
     const carouselVipLevel =
-      vipCarouselIndex.value === vipCarouselRef.value.data.maxSlide.value ? 12 : Math.round(vipCarouselIndex.value) + 1;
-
+      vipCarouselIndex.value === vipCarouselRef.value && vipCarouselRef.value.data.maxSlide.value ? 12 : Math.round(vipCarouselIndex.value || 0) + 1;
+    console.log(carouselVipLevel)
     const levelUpgrade = rows3.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
     const monthlyReward = rows4.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
     const dailyWithdrawalLimit = rows.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
@@ -401,10 +402,12 @@ watch(
       progressBarText: progressBarText,
       rewardUnlocked: vipLevel > vipCarouselIndex.value
     };
-  }
+  },
+  { immediate: true } 
 );
 
 onMounted(() => {
+  
   store.getMemberInfo().then(() => {
     const vipLevelNum = Number(store.vip.replace("VIP", ""));
     vipLevel.value = vipLevelNum;
@@ -583,7 +586,6 @@ $colors: (
         position:relative;
         // background: #6D96C6;
         min-width: 12px;
-        width: 0;
         .progress-bar-inner-bar-endpoint-circle {
             width: 36px;
             height: 36px;
