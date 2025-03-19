@@ -1,17 +1,20 @@
 <template>
   <div id="money-container">
-    <span v-for="n in 190" :key="n"></span>
+    <!-- <span v-for="n in 190" :key="n"></span> -->
   </div>
 
   <div class="rain-money-bg" v-if="moneyRainTab === 'events'">
-    <img src="../../assets/images/index/money-rain/money-content-events.png" />
+    <!-- <img src="../../assets/images/index/money-rain/money-content-events.png" /> -->
   </div>
   <div class="rain-money-bg" v-if="moneyRainTab === 'records'">
-    <img src="../../assets/images/index/money-rain/money-content-records.png" />
+    <!-- <img src="../../assets/images/index/money-rain/money-content-records.png" /> -->
   </div>
   <div class="rain-money-title"><img src="../../assets/images/index/money-rain/money-rain-title.png" /></div>
 
   <div class="rain-money-tabs-wrapper">
+    <img class="decor-left" src="../../assets/images/index/money-rain/decor-left.png" />
+    <img class="decor-left-behind" src="../../assets/images/index/money-rain/decor-left-behind.png" />
+    <img class="decor-right" src="../../assets/images/index/money-rain/decor-right.png" />
     <div class="rain-money-tabs-container" :class="{ 'has-controller': !!$slots.controller }">
       <slot name="controller">
         <div class="logo-img"><img src="../../assets/images/auth/auth-logo-text-only.png" /></div>
@@ -33,7 +36,7 @@
 
       <div class="rain-money-tab-content" v-show="moneyRainTab === 'events'">
         <div class="content-sec">
-          <div class="treasure-img"><img src="../../assets/images/index/money-rain/baoxiang.gif" /></div>
+          <div class="treasure-img"><img src="../../assets/images/index/money-rain/treasure-img.png" /></div>
           <div class="rewind-title">
             Rewind time
             <span>
@@ -100,7 +103,7 @@
 
       <div class="rain-money-tab-content" v-show="moneyRainTab === 'records'">
         <div class="content-sec">
-          <div class="treasure-img"><img src="../../assets/images/index/money-rain/baoxiang.gif" /></div>
+          <div class="treasure-img"><img src="../../assets/images/index/money-rain/treasure-img.png" /></div>
           <div class="rewind-title">
             Rewind time
             <span>
@@ -205,7 +208,7 @@
       </div>
     </div>
   </div>
-
+  
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
     <div class="congrats-container">
@@ -419,29 +422,45 @@ onMounted(() => {
 }
 
 .rain-money-tabs {
-  background: #00b352;
   display: flex;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
   overflow: hidden;
   margin-top: 10px;
+  padding-bottom: 10px;
+  justify-content: space-around;
 
   .tab-header {
     padding: 12px;
-    width: 50%;
+    width: 143px;
+    height: 45px;
     text-align: center;
     font-weight: bold;
-    color: rgba(255, 255, 255, 0.6);
+    color: #AA1414;
+    position: relative;
+    background: #FFFFFF;
+    border-radius: 4px;
 
     &.active {
-      background: #00d461;
+      background: #EE4034;
       color: #ffffff;
+
+      &:before {
+        content: "";
+        height: 0;
+        width: 0;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-top: 12px solid #EE4034;
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translate(-30%, 0%);
+        margin: 0 0 0 -3px;
+      }
     }
   }
 }
 
 .rain-money-tab-content {
-  background: #00d461;
   min-height: 30dvh;
   height: calc(100dvh - 450px);
   overflow-y: auto;
@@ -450,6 +469,7 @@ onMounted(() => {
   border-bottom-right-radius: 12px;
 
   .content-footer {
+    color: #B90704;
     margin-top: 12px;
     .footer-title {
       font-weight: bold;
@@ -464,7 +484,7 @@ onMounted(() => {
   }
 
   .content-table {
-    background: #00b352;
+    background: #EE4034;
     padding: 8px;
     border-radius: 12px;
     margin-top: 12px;
@@ -493,7 +513,8 @@ onMounted(() => {
   }
 
   .content-timing {
-    background: #00b352;
+    color: #B90704;
+    // background: #00b352;
     padding: 8px;
     border-radius: 12px;
     text-align: center;
@@ -509,6 +530,7 @@ onMounted(() => {
 
     .timing-head {
       font-weight: bold;
+      color: #970503;
     }
     .timing-body {
       margin-top: 12px;
@@ -538,7 +560,7 @@ onMounted(() => {
   }
 
   .content-sec {
-    background: #00b352;
+    background: #F97474;
     padding: 8px;
     border-radius: 12px;
     display: flex;
@@ -585,7 +607,7 @@ onMounted(() => {
 
 .rain-money-title {
   width: 100%;
-  margin-bottom: -170px;
+  margin-bottom: -63px;
   max-width: 420px;
   z-index: 2;
   img {
@@ -595,17 +617,47 @@ onMounted(() => {
 }
 
 .rain-money-tabs-wrapper {
-  background: linear-gradient(149.95deg, #94febe 1.35%, #96f8ec 41.73%, #90fc9b 84.62%);
+  // background: linear-gradient(149.95deg, #94febe 1.35%, #96f8ec 41.73%, #90fc9b 84.62%);
   padding: 6px;
   border-radius: 12px;
-  margin: 16px;
+  margin: 26px;
   max-width: 400px;
 
+  .decor-left {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(0%, -50%);
+    z-index: 1;
+    width: 80px;
+  }
+
+  .decor-left-behind {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(0%, -50%);
+    z-index: 0;
+    width: 50px;
+  }
+
+  .decor-right {
+    position: absolute;
+    top: 50%;
+    right: -2%;
+    transform: translate(0%, -50%);
+    z-index: 1;
+    width: 80px;
+  }
+
+
   .rain-money-tabs-container {
-    background: linear-gradient(151.97deg, #fefefc 2.12%, #bbfdca 83.61%);
-    padding: 16px 10px 4px;
+    background: #FFE9D5;
+    border: 1.38px solid #FFC18A;
+    padding: 16px 10px 50px;
     border-radius: 12px;
-    // position: relative;
+    position: relative;
+    clip-path: polygon(100% 0%, 100% 95%, 50% 100%, 0% 95%, 0% 0%);
 
     &.has-controller {
       padding-top: 36px;

@@ -107,8 +107,8 @@ const handleNextClick = () => {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    background: var(--bg-color);
-    border: 1px solid var(--border-color);
+    background: #EE4034;
+    border: 1px solid #FFFFFF33;
     width: 25px;
     height: 25px;
     border-radius: 50%;
@@ -130,12 +130,12 @@ const handleNextClick = () => {
       font-weight: 700;
       place-content: center;
       line-height: 12px;
-      text-align: center;
+      text-align: left;
       color: var(--text-color);
       &.selected {
         background: var(--selected-bg-color);
         border-color: var(--selected-border-color);
-        border-radius: 4px;
+        border-radius: 5px;
         transform: scale(1.1);
         color: var(--selected-text-color);
       }
@@ -143,12 +143,12 @@ const handleNextClick = () => {
   }
 
   &.style-1 {
-    --bg-color: #88dfac;
-    --selected-bg-color: #ffed8f;
+    --bg-color: #fff;
+    --selected-bg-color: linear-gradient(180deg, #BE1F1F 0%, #AA1414 100%);
     --border-color: #ffffffcc;
-    --selected-border-color: #1effae;
-    --text-color: #fff;
-    --selected-text-color: #00b352;
+    --selected-border-color: #fff;
+    --text-color: #EE4034;
+    --selected-text-color: #fff;
     .swiper-btn-prev,
     .swiper-btn-next {
       background-clip: border-box;
@@ -157,7 +157,7 @@ const handleNextClick = () => {
     .promo-list-item {
       background-clip: border-box;
       &.selected {
-        box-shadow: 0px 4px 4px 0px #15ffab40 inset, 0px 2px 0px 0px #68df65;
+        border: 1px solid #FFFFFF;
       }
     }
   }
