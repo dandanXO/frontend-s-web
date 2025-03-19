@@ -3,12 +3,12 @@
     <div class="wheel-outer-wrapper">
       <!-- <span class="title">Countdown: {{ remainingTime }}</span> -->
       <div class="summary-wrapper">
-        <span class="prize">
+        <!-- <span class="prize">
          Rs
           <span class="amount">{{ info.accumulatedBonus }}</span>
-        </span>
+        </span> -->
 
-        <!-- <GradientTextAmount :amountText="`$ ${info.accumulatedBonus}`" /> -->
+        <GradientTextAmount :amountText="`${store.currency.label} ${info.accumulatedBonus}`" />
 
         <template v-if="extractionDifference > 0 && !info.hasWithdrawn">
           <ProgressBar />
@@ -42,14 +42,14 @@
         </div>
         <div class="foreground-wrapper">
           <div class="wheel-wrapper">
-            <img
+            <!-- <img
               class="decoration penguin"
               src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-penguin.png"
             />
             <img
               class="decoration ox"
               src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-ox.png"
-            />
+            /> -->
 
             <div class="countdown">
               {{ isWheelEnded ? "Next Round" : "Countdown" }}
@@ -72,14 +72,14 @@
               </button>
             </div>
 
-            <img
+            <!-- <img
               class="decoration tiger"
               src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-tiger.png"
             />
             <img
               class="decoration rabbit"
               src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-rabbit.png"
-            />
+            /> -->
             <CommonButton class="draw-btn" :class="{ disabled: isWheelEnded }" @click="handleInviteClick">
               Invite To Earn Spin
             </CommonButton>
@@ -95,10 +95,11 @@
     <q-dialog v-model="showRulesDialog">
       <div class="block-wrapper">
       <div class="title-wrapper">
-        <img
+        Activity Rules
+        <!-- <img
           style="width: 100%; max-width: 250px; padding: 0 0 5px 0"
           src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/activity-rules-title.png"
-        />
+        /> -->
       </div>
       <ol>
         <li>
@@ -147,7 +148,9 @@ import ProgressBar from "./ProgressBar.vue";
 // import CashOutPopup from "./CashOutPopup.vue";
 import SharePopup from "./SharePopup.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
+import { userStore } from "src/stores";
 
+const store = userStore();
 const emit = defineEmits(["reload"]);
 const props = defineProps(["info"]);
 const { info } = toRefs(props);
@@ -478,7 +481,7 @@ onUnmounted(() => {
       .winning-record-outer-wrapper {
         padding: 12px 14px;
         width: 100%;
-        background: #17aa2699;
+        background: linear-gradient(245.79deg, rgba(249, 0, 18, 0.6) 6.76%, rgba(255, 98, 66, 0.6) 102.95%);
         border: 1px solid #c4ffd599;
         border-radius: 8px;
 
@@ -504,7 +507,7 @@ onUnmounted(() => {
             }
             .amount {
               font-weight: 600;
-              color: #91ffab;
+              color: #FEBA02;
             }
             .name {
               text-align: center;
@@ -566,19 +569,20 @@ onUnmounted(() => {
             .btn {
               -webkit-user-drag: none;
               position: absolute;
-              top: 50%;
+              top: 48%;
               left: 50%;
               transform: translate(-50%, -50%);
               background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/wheel-btn.png);
               background-size: cover;
-              aspect-ratio: 1;
+              aspect-ratio: 250/300;
               border: none;
-              width: 158px;
+              width: 80px;
               max-width: 35%;
-              font-size: 20px;
+              font-size: 18px;
               font-weight: 700;
-              line-height: 24px;
-              color: #f33d31;
+              line-height: 20px;
+              color: #f9f9f9;
+              padding-top: 10px;
               &.disabled {
                 filter: grayscale(0.7);
                 opacity: 1 !important;
@@ -645,20 +649,20 @@ onUnmounted(() => {
       top: 2%;
       right: 7%;
       border: none;
-      background-color: #354c3f;
+      background-color: #C93F1E;
       border-radius: 87px;
       padding: 3px 6px;
-      color: #91ffab;
+      color: #EC9823;
     }
     .rules-btn {
       position: absolute;
       top: 2%;
       left: 9%;
       border: none;
-      background-color: #354c3f;
+      background-color: #C93F1E;
       border-radius: 87px;
       padding: 3px 6px;
-      color: #91ffab;
+      color: #EC9823;
     }
   }
 
@@ -669,19 +673,26 @@ onUnmounted(() => {
   }
 }
 .block-wrapper {
-    background-color: #1e1f24;
+    background-color: #2A2F3B;
     border-radius: 12px;
     padding: 16px 10px;
     width: 90%;
 
     .title-wrapper {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       gap: 8px;
-      font-size: 16px;
       font-weight: 700;
-      color: #cd91ff;
+      color: #f9f9f9;
+      font-weight: 700;
+      font-size: 22px;
+      line-height: 100%;
+      letter-spacing: 0px;
+      text-align: left;
+      text-transform: uppercase;
+      padding: 10px 5px 0px 10px;
+
 
       .title-decoration {
         display: flex;
@@ -729,8 +740,8 @@ onUnmounted(() => {
           .wheel-wrapper {
             .wheel-inner-wrapper {
               .btn {
-                font-size: 16px;
-                line-height: 20px;
+                font-size: 14px;
+                line-height: 18px;
               }
             }
           }
@@ -749,7 +760,7 @@ onUnmounted(() => {
 
           .wheel-wrapper {
             .countdown {
-              font-size: 14px;
+              font-size: 12px;
             }
           }
         }

@@ -31,7 +31,8 @@
         <CommonButton class="withdraw-btn" @click="$emit('envelopeClick')">Go withdraw now!</CommonButton>
         <span class="remaining-time">time left: {{ remainingTime }}</span>
       </div>
-      <img class="footer tiger" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-tiger.png" />
+      <img class="footer dragon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/footer.png" />
+      <!-- <img class="footer tiger" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-tiger.png" />
       <img
         class="footer rabbit"
         src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-rabbit.png"
@@ -39,7 +40,7 @@
       <img
         class="footer coin"
         src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/footer-coin.png"
-      />
+      /> -->
     </div>
   </div>
 </template>
@@ -256,6 +257,14 @@ onUnmounted(() => {
     .footer {
       position: absolute;
       -webkit-user-drag: none;
+
+      &.dragon {
+        left: 50%;
+        bottom: 0%;
+        transform: translateX(-50%);
+        width: 100%;
+        margin-bottom: 0 !important;
+      }
 
       &.tiger {
         left: -5.4%;

@@ -68,7 +68,7 @@ const handleTabClick = (tab) => {
 .record-dialog-inner-wrapper {
   width: 90%;
   max-width: 450px;
-  background-color: #82a17c;
+  background-color: #860000;
   border-radius: 14px;
   padding: 12px;
 
@@ -90,7 +90,7 @@ const handleTabClick = (tab) => {
       text-align: center;
 
       &.selected {
-        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        background: linear-gradient(356.25deg, #FF3A3E -0.21%, #CC1111 93.65%);
         color: #fff;
       }
     }
@@ -107,7 +107,7 @@ const handleTabClick = (tab) => {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    background: #119b8b99;
+    background: #9B111399;
     border: 1px solid #c4fff799;
     border-radius: 8px;
     padding: 12px;
@@ -155,7 +155,7 @@ const handleTabClick = (tab) => {
 
       .amount {
         font-weight: 900;
-        color: #91ffab;
+        color: #EC9823;
       }
     }
 
