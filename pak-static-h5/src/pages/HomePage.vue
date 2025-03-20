@@ -5237,11 +5237,12 @@ const checkGoogleLoginSetPwd = () => {
 }
 
 .cs-icon-wrapper {
-  width: 70px;
-  height: 76px;
+  width: 55px;
+  height: 55px;
   background: url("../assets/images/index/icon-cs.gif") no-repeat center center;
   background-size: contain;
   position: relative;
+  aspect-ratio: 500/500;
 
   &:active {
     filter: brightness(0.85);
