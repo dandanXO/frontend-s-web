@@ -117,15 +117,15 @@ const handleNextClick = () => {
   }
   .promo-list-wrapper {
     display: flex;
-    gap: 14px;
+    gap: 12px;
     align-items: stretch;
     justify-content: center;
     width: 100%;
     .promo-list-item {
       background: var(--bg-color);
       border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 5px 14px;
+      border-radius: 5px;
+      padding: 3px 8px 3px 5px;
       font-size: 10px;
       font-weight: 700;
       place-content: center;

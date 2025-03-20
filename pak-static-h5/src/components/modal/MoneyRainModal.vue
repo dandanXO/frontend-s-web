@@ -4,12 +4,11 @@
   </div>
 
   <div class="rain-money-bg" v-if="moneyRainTab === 'events'">
-    <!-- <img src="../../assets/images/index/money-rain/money-content-events.png" /> -->
+    <img src="../../assets/images/index/money-rain/money-rain-title.png" />
   </div>
   <div class="rain-money-bg" v-if="moneyRainTab === 'records'">
-    <!-- <img src="../../assets/images/index/money-rain/money-content-records.png" /> -->
+    <img src="../../assets/images/index/money-rain/money-rain-title.png" />
   </div>
-  <div class="rain-money-title"><img src="../../assets/images/index/money-rain/money-rain-title.png" /></div>
 
   <div class="rain-money-tabs-wrapper">
     <img class="decor-left" src="../../assets/images/index/money-rain/decor-left.png" />
@@ -19,11 +18,11 @@
       <slot name="controller">
         <div class="logo-img"><img src="../../assets/images/auth/auth-logo-text-only.png" /></div>
       </slot>
-      <div class="rain-money-header">
+      <!-- <div class="rain-money-header">
         <span class="orange">666,666PKR&nbsp;</span>
         <span class="green">every time maximum surplus</span>
         <span class="orange">&nbsp;66,666PKR</span>
-      </div>
+      </div> -->
 
       <div class="rain-money-tabs">
         <div class="tab-header" :class="{ active: moneyRainTab === 'events' }" @click="selectMoneyRainTab('events')">
@@ -206,7 +205,9 @@
           </div>
         </div>
       </div>
+
     </div>
+    <img class="return-enveloper-btn" src="../../assets/images/index/money-rain/return-red-envelope-btn.png" />
   </div>
   
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
@@ -429,15 +430,15 @@ onMounted(() => {
   justify-content: space-around;
 
   .tab-header {
-    padding: 12px;
+    padding: 6px;
     width: 143px;
-    height: 45px;
     text-align: center;
     font-weight: bold;
     color: #AA1414;
     position: relative;
     background: #FFFFFF;
     border-radius: 4px;
+    font-family: Poppins;
 
     &.active {
       background: #EE4034;
@@ -464,9 +465,10 @@ onMounted(() => {
   min-height: 30dvh;
   height: calc(100dvh - 450px);
   overflow-y: auto;
-  padding: 16px;
+  padding: 6px;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
+  font-family: Poppins;
 
   .content-footer {
     color: #B90704;
@@ -518,14 +520,14 @@ onMounted(() => {
     padding: 8px;
     border-radius: 12px;
     text-align: center;
-    margin-top: 12px;
+    margin-top: 6px;
 
     .timing-divider {
       display: block;
       height: 1px;
       width: 100%;
       background: rgba(255, 255, 255, 0.21);
-      margin: 12px 0;
+      margin: 6px 0;
     }
 
     .timing-head {
@@ -533,7 +535,7 @@ onMounted(() => {
       color: #970503;
     }
     .timing-body {
-      margin-top: 12px;
+      margin-top: 6px;
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
@@ -542,6 +544,7 @@ onMounted(() => {
         position: relative;
         padding-left: 13px;
         font-size: 12px;
+        letter-spacing: 0px;
 
         &:before {
           content: "";
@@ -561,7 +564,7 @@ onMounted(() => {
 
   .content-sec {
     background: #F97474;
-    padding: 8px;
+    padding: 0 8px;
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -596,12 +599,21 @@ onMounted(() => {
   }
 }
 
+.return-enveloper-btn {
+  width: 300px;
+  display: flex;
+  margin: 0 auto;
+  padding: 10px 0;
+}
+
 .rain-money-bg {
   display: block;
-  margin-bottom: -180px;
+  margin-bottom: -68px;
+  z-index: 1;
+  aspect-ratio: 1656 / 768;
   img {
     display: block;
-    width: 302px;
+    width: 400px;
   }
 }
 
@@ -622,6 +634,7 @@ onMounted(() => {
   border-radius: 12px;
   margin: 26px;
   max-width: 400px;
+  letter-spacing: -1px;
 
   .decor-left {
     position: absolute;
@@ -629,7 +642,7 @@ onMounted(() => {
     left: 0;
     transform: translate(0%, -50%);
     z-index: 1;
-    width: 80px;
+    width: 60px;
   }
 
   .decor-left-behind {
@@ -647,20 +660,20 @@ onMounted(() => {
     right: -2%;
     transform: translate(0%, -50%);
     z-index: 1;
-    width: 80px;
+    width: 60px;
   }
 
 
   .rain-money-tabs-container {
     background: #FFE9D5;
     border: 1.38px solid #FFC18A;
-    padding: 16px 10px 50px;
+    padding: 16px 20px 50px;
     border-radius: 12px;
     position: relative;
     clip-path: polygon(100% 0%, 100% 95%, 50% 100%, 0% 95%, 0% 0%);
 
     &.has-controller {
-      padding-top: 36px;
+      padding-top: 40px;
     }
 
     .logo-img {
