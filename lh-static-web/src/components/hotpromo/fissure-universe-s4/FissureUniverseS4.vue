@@ -48,7 +48,7 @@
           <thead>
             <tr>
               <th>累计有效投注</th>
-              <th>投注金</th>
+              <th>投注彩金</th>
               <th>流水倍数</th>
             </tr>
           </thead>
