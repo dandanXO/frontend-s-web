@@ -172,7 +172,7 @@
         <q-btn no-caps unelevated class="btn-register" @click="router.push('/register')">
           {{ $t("header.register") }}
         </q-btn>
-        <div class="btn-lang" @click="router.push('/language')"><img src="../assets/images/auth/icon-globe.png" /></div>
+        <div class="btn-lang" @click="router.push('/language')"><img src="../assets/images/auth/icon-globe.svg" /></div>
       </div>
     </div>
 
@@ -1110,7 +1110,7 @@ onUnmounted(() => {
 
 @keyframes hueBlink {
   0% {
-    filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(0%) contrast(0%);
+    filter: brightness(0) invert(100%) sepia(0%) saturate(3258%) hue-rotate(77deg) brightness(100%) contrast(100%);
   }
   100% {
     filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);

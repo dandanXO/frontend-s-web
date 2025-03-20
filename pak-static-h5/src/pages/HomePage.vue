@@ -187,7 +187,7 @@
       <div class="midd">
         <div class="station-notice-wrapper">
           <div class="volume">
-            <img src="../assets/images/index/icon-volume.png" />
+            <img src="../assets/images/index/icon-volume.svg" />
           </div>
           <div class="marquee-container">
             <marquee-text :repeat="5" :duration="announcementList.length * 500">
@@ -201,7 +201,7 @@
         </div>
       </div>
       <a class="notice-download" :href="ui.downloadAppUrl" v-if="downloadHeart && !ui.hideDownload">
-        <img src="../assets/images/auth/app-icon.png" />
+        <img src="../assets/images/auth/app-icon.svg" />
       </a>
     </div>
     <!-- <div class="top-action" v-if="store.hasToken()">
