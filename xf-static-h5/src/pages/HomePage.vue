@@ -33,7 +33,6 @@
       <template v-else>
         <q-carousel
           class="home"
-          autoplay
           navigation
           v-model="slide"
           swipeable
@@ -513,7 +512,7 @@ export default defineComponent({
             selectedTab.value = "lottery";
           } else if (fishTop <= stickyHeight) {
             selectedTab.value = "fishing";
-          }  else if (casualTop <= stickyHeight) {
+          } else if (casualTop <= stickyHeight) {
             selectedTab.value = "casual";
           } else if (esportTop <= stickyHeight) {
             selectedTab.value = "esport";
@@ -898,7 +897,7 @@ export default defineComponent({
               var casualObj = Object.assign({}, element);
               casualObj.gameCode = "casual";
               if (casualObj.code === "TFGaming") {
-                casualObj.title = casualObj.alias.split('、')[1];
+                casualObj.title = casualObj.alias.split("、")[1];
               } else {
                 casualObj.title = casualObj.name + " 小游戏";
               }
@@ -1124,8 +1123,8 @@ export default defineComponent({
 
     const greetingMessage = computed(() => {
       const now = new Date();
-      const hours = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Shanghai' })).getHours();
-      return hours >= 12 ? '下午好' : '早上好';
+      const hours = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Shanghai" })).getHours();
+      return hours >= 12 ? "下午好" : "早上好";
     });
 
     onMounted(() => {

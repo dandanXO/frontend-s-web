@@ -5,7 +5,7 @@ body {
   margin: 0%;
   font-size: 1rem;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #F0F7FF;
+  background-color: #f0f7ff;
 }
 
 * {
@@ -52,11 +52,16 @@ a:hover {
   display: flex;
   position: relative;
   justify-content: center;
+  align-items: center;
 }
 
 .top-wrapper img {
   width: 100%;
   max-width: 400px;
+}
+
+.xf-logo {
+  height: 74px;
 }
 
 .banner-wrapper {
@@ -75,19 +80,19 @@ a:hover {
 }
 
 .action-btn.lh-register {
-  background: url('../img/lh-register.png') no-repeat center center;
+  background: url("../img/lh-register.png") no-repeat center center;
   background-size: 100% 100%;
   aspect-ratio: 532/256;
 }
 
 .action-btn.dy-register {
-  background: url('../img/dy-register.png') no-repeat center center;
+  background: url("../img/dy-register.png") no-repeat center center;
   background-size: 100% 100%;
   aspect-ratio: 532/256;
 }
 
 .action-btn.download {
-  background: url('../img/app-dl.png') no-repeat center center;
+  background: url("../img/app-dl.png") no-repeat center center;
   background-size: 100% 100%;
   aspect-ratio: 532/256;
 }
@@ -175,7 +180,7 @@ a:hover {
 }
 
 .benefit {
-  background: url('../img/footer-left.png') no-repeat center center;
+  background: url("../img/footer-left.png") no-repeat center center;
   background-size: 100% 100%;
   width: 100%;
   aspect-ratio: 606/228;
@@ -183,7 +188,7 @@ a:hover {
 }
 
 .customer-service {
-  background: url('../img/footer-right.png') no-repeat center center;
+  background: url("../img/footer-right.png") no-repeat center center;
   background-size: 100% 100%;
   width: 100%;
   aspect-ratio: 606/228;
