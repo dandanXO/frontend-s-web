@@ -4,14 +4,15 @@
     <div v-if="$slots.controller" class="controller-wrapper">
       <slot name="controller" />
     </div>
+
     <q-btn icon="close" round dense v-close-popup class="congrats-close" />
-    <div class="congrats-header"><img src="../../assets/images/index/modal/congrats-header.png" /></div>
+    <!-- <div class="congrats-header"><img src="../../assets/images/index/modal/congrats-header.png" /></div>
     <div class="congrats-coupons"><img src="../../assets/images/index/modal/congrats-coupons.png" /></div>
     <div class="congrats-title">Get a free lucky draw ticket</div>
-    <div class="congrats-highlight">Download the app and log in to your account to get it</div>
+    <div class="congrats-highlight">Download the app and log in to your account to get it</div> -->
 
     <div class="congrats-button">
-      <q-btn no-caps unelevated class="btn-primary" :loading="false" :href="ui.downloadAppUrl">
+      <q-btn no-caps unelevated class="purple-bg" :loading="false" :href="ui.downloadAppUrl">
         {{ $t("btn.downloadNow") }}
       </q-btn>
     </div>
@@ -30,6 +31,12 @@ const ui = useUI();
   bottom: -60px;
   left: 50%;
   transform: translateX(-50%);
+
+  .purple-bg {
+    background: url(../../assets/images/index/modal/download-now-btn-bg.png) center center no-repeat;
+    background-size: 100% 100%;
+    aspect-ratio: 389/139;
+  }
 }
 .congrats-wrapper {
   overflow: hidden;
@@ -39,7 +46,6 @@ const ui = useUI();
   align-items: center;
 }
 .congrats-container {
-  background-color: #113413;
   max-width: 400px;
   width: 100%;
   padding: 16px;
@@ -47,17 +53,13 @@ const ui = useUI();
   overflow: visible;
   border-radius: 12px;
 
+  background: url(../../assets/images/index/modal/lucky-draw-ticket-bg.png) center center no-repeat;
+  background-size: 100% 100%;
+  aspect-ratio: 1106/1185;
+
   &:before {
     content: "";
-    background-image: url(../../assets/images/index/modal/congrats-container-light.png);
-    background-size: 100% 100%;
-    background-position: center center;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 150px;
-    position: absolute;
-    left: 0;
-    top: -150px;
+    background-image: unset;
   }
 
   .congrats-header {

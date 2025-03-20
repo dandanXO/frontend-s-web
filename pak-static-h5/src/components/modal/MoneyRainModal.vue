@@ -600,7 +600,7 @@ onMounted(() => {
 }
 
 .return-enveloper-btn {
-  width: 300px;
+  width: 280px;
   display: flex;
   margin: 0 auto;
   padding: 10px 0;
@@ -608,11 +608,11 @@ onMounted(() => {
 
 .rain-money-bg {
   display: block;
-  margin-bottom: -70px;
+  margin-bottom: -80px;
   z-index: 1;
   img {
     display: block;
-    width: 400px;
+    width: 370px;
     aspect-ratio: 1656 / 768;
   }
 }
