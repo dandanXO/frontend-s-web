@@ -53,15 +53,18 @@ a:hover {
   position: relative;
   justify-content: center;
   align-items: center;
+  width:100%;
 }
 
-.top-wrapper img {
+.top-wrapper img:not(.xf-logo) {
   width: 100%;
-  max-width: 400px;
+  max-width: 200px;
 }
 
 .xf-logo {
   height: 74px;
+  max-width: 100px;
+  padding: 16px 0px;
 }
 
 .banner-wrapper {
@@ -83,6 +86,13 @@ a:hover {
   background: url("../img/lh-register.png") no-repeat center center;
   background-size: 100% 100%;
   aspect-ratio: 532/256;
+}
+
+.action-btn.xf-register{
+  background: url("../img/xf-item.png") no-repeat center center;
+  background-size: 100% 100%;
+  aspect-ratio: 532/256;
+  margin: 4px 2px 4px;
 }
 
 .action-btn.dy-register {
