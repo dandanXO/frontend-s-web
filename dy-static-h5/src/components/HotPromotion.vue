@@ -58,11 +58,12 @@
 
     <SkyesportsSouvenir2025 v-if="list.redirectUrl === 'dy2-skyesports-souvenir-2025'" :promo-code="list.promoCode" />
     <VctBangkok v-if="list.redirectUrl === 'dy2-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
-    
+
     <Monthly20HongBaoYu v-if="list.redirectUrl === 'dy2-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'dy-official-gift'" :params="list.param" />
     <PGLBucharest2025 v-if="list.redirectUrl === 'dy2-pgl-bucharest-2025'" :promo-code="list.promoCode" />
     <EslProLeagueS21 v-else-if="list.redirectUrl === 'dy2-esl-pro-league-s21'" :promo-param="listParam" />
+    <FissureUniverseS4 v-if="list.redirectUrl === 'dy2-fissure-universe-s4'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -140,6 +141,7 @@ const EslProLeagueS21 = defineAsyncComponent(() => import("./hotpromo/esl-pro-le
 import SkyesportsSouvenir2025 from "./hotpromo/skyesports-souvenir-2025/SkyesportsSouvenir2025.vue";
 import PGLBucharest2025 from "./hotpromo/pgl-bucharest-2025/PGLBucharest2025.vue";
 const Blast2025S3 = defineAsyncComponent(() => import("./hotpromo/Blast2025-s3/Blast2025S3.vue"));
+const FissureUniverseS4 = defineAsyncComponent(() => import("./hotpromo/fissure-universe-s4/FissureUniverseS4.vue"));
 import VctBangkok from "./hotpromo/vct-bangkok/VctBangkok.vue";
 export default defineComponent({
   name: "HotPromo",
@@ -170,7 +172,8 @@ export default defineComponent({
     ChallengeComebackPromo,
     Lh1LplLck2025loss,
     Monthly20HongBaoYu,
-    VctBangkok
+    VctBangkok,
+    FissureUniverseS4
   },
   props: {
     list: {

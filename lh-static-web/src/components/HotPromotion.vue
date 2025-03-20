@@ -134,6 +134,7 @@
       :promo-param="listParam"
       :promo-code="list.promoCode"
     />
+    <FissureUniverseS4 v-if="list.redirectUrl === 'lh1-fissure-universe-s4'" :promo-code="list.promoCode" />
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -181,7 +182,7 @@ import LplPKlck2025loss from "../components/hotpromo/lpl-lck-2025-loss/lpl-lck-2
 import LanternFestival2025 from "../components/hotpromo/lantern-festival-2025/LanternFestival2025.vue";
 import LiveDailyRebates from "../components/hotpromo/live-daily-rebates/LiveDailyRebates.vue";
 import Dota2Pgl from "../components/hotpromo/dota2-pgl/Dota2Pgl.vue";
-import PglS32025 from "../components/hotpromo/pgl-s3-2025/PglS32025.vue"
+import PglS32025 from "../components/hotpromo/pgl-s3-2025/PglS32025.vue";
 import NewVipRebate from "../components/hotpromo/newVipRebate/NewVipRebate.vue";
 import LongNewVip from "../components/hotpromo/longNewVip/LongNewVip.vue";
 import NationalDay2024 from "../components/hotpromo/national-day-2024/NationalDay2024.vue";
@@ -255,6 +256,7 @@ import PGLOnFireBuenosAires2025 from "./hotpromo/pgl-on-fire-buenos-aires-2025/P
 import SkyesportsSouvenir2025 from "./hotpromo/skyesports-souvenir-2025/SkyesportsSouvenir2025.vue";
 import EslProLeagueS21 from "./hotpromo/esl-pro-league-s21/EslProLeagueS21.vue";
 import PGLBucharest2025 from "./hotpromo/pgl-bucharest-2025/PGLBucharest2025.vue";
+import FissureUniverseS4 from "./hotpromo/fissure-universe-s4/FissureUniverseS4.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -357,7 +359,8 @@ export default defineComponent({
     SkyesportsSouvenir2025,
     LanternFestival2025,
     EslProLeagueS21,
-    Blast2025
+    Blast2025,
+    FissureUniverseS4
   },
   props: {
     list: {
