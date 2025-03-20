@@ -238,7 +238,7 @@ import { userStore } from "stores/index";
 const router = useRouter();
 const store = userStore();
 const moneyRainTab = ref("events");
-const showPrizePopup = ref(true);
+const showPrizePopup = ref(false);
 const listingData = ref([]);
 const draftListing = ref([]);
 
