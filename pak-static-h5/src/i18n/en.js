@@ -688,6 +688,9 @@ export default {
   },
   hotPromo: {
     promoEndsOn: "Promo Ends On",
+    earnMoney: {
+      congratsOnGetting: "Congratulations on getting",
+    },
     aviatorWheel: {
       remainingDrawTimes: "Remaining draw times",
       congratulations: "Congratulations"

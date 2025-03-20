@@ -212,16 +212,19 @@
   
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
+    <div class="congrats-wrapper">
+      <div class="congrats-head">{{ $t('hotPromo.earnMoney.congratsOnGetting') }}</div>
     <div class="congrats-container">
-      <div class="congrats-header"><img src="../../assets/images/index/money-rain/congrats-header.png" /></div>
-      <div class="congrats-coupons"><img src="../../assets/images/index/money-rain/congrats-money.png" /></div>
+      <!-- <div class="congrats-header"><img src="../../assets/images/index/money-rain/congrats-header.png" /></div> -->
+      <!-- <div class="congrats-coupons"><img src="../../assets/images/index/money-rain/congrats-money.png" /></div> -->
       <div class="congrats-highlight">Rs {{ prizeAmount }}</div>
 
       <div class="congrats-button">
-        <q-btn no-caps unelevated class="btn-primary" :loading="false" @click="showPrizePopup = false">
-          {{ $t("btn.confirm") }}
+        <q-btn flat :loading="false" @click="showPrizePopup = false">
+          {{ $t("btn.recharge") }}
         </q-btn>
       </div>
+    </div>
     </div>
   </q-dialog>
 </template>
@@ -235,7 +238,7 @@ import { userStore } from "stores/index";
 const router = useRouter();
 const store = userStore();
 const moneyRainTab = ref("events");
-const showPrizePopup = ref(false);
+const showPrizePopup = ref(true);
 const listingData = ref([]);
 const draftListing = ref([]);
 
@@ -403,6 +406,63 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+.congrats-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url(../../assets/images/earn-money/congrats-bg.png)no-repeat top center;
+  background-color: rgba(0, 0, 0, .8);
+  width: 100%;
+    background-size: contain;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 100px;
+}
+.congrats-head {
+  margin-top: -100px;
+  font-family: "Poppins";
+  font-weight: 900;
+  font-size: 2.4rem;
+  line-height: 3.4rem;
+  max-width: 300px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #FFD288;
+  
+}
+.congrats-container {
+  position: relative;
+  background: url(../../assets/images/earn-money/congrats-card.png)no-repeat center center;
+  background-size: contain;
+  width: 75%;
+  height: 300px;
+  .congrats-highlight {
+    font-family: "Poppins";
+    font-weight: 700;
+    font-size: 3rem;
+    line-height: 100%;
+    letter-spacing: 0px;
+    text-align: center;
+    color: #F23030;
+    margin-top: 50px;
+  }
+  .congrats-button {
+    position: absolute;
+    bottom: 11.5%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    font-family: Poppins;
+    font-weight: 700;
+    font-size: 26.48px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    color: #ffffff;
+
+  }
+}
 .table-container {
   // max-height: 181px;
   max-height: 150px;

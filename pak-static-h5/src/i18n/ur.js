@@ -684,6 +684,9 @@ export default {
   },
   hotPromo: {
     "promoEndsOn": "پرومو ختم ہونے کی تاریخ",
+    earnMoney: {
+      congratsOnGetting: "مبارک ہو، آپ کو یہ حاصل ہوا"
+    },
     aviatorWheel: {
       remainingDrawTimes: "باقی قرعہ اندازی کے اوقات",
       congratulations: "مبارک ہو"
