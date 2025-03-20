@@ -608,12 +608,12 @@ onMounted(() => {
 
 .rain-money-bg {
   display: block;
-  margin-bottom: -68px;
+  margin-bottom: -70px;
   z-index: 1;
-  aspect-ratio: 1656 / 768;
   img {
     display: block;
     width: 400px;
+    aspect-ratio: 1656 / 768;
   }
 }
 
