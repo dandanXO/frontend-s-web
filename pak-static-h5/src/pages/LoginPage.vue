@@ -1182,7 +1182,7 @@ padding: 0 20px;
   display: flex;
   width: 70px;
   height: 76px;
-  background: url("../assets/images/index/icon-cs.png") no-repeat center center;
+  background: url("../assets/images/index/icon-cs.gif") no-repeat center center;
   background-size: contain;
 
   &:active {
