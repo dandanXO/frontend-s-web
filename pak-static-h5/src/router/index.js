@@ -10,8 +10,7 @@ import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
 import { useGtag } from "vue-gtag-next";
 
-let secondRedirectionEvent = new CustomEvent("secondRedirection");
-let redirectionCount = 0;
+let isRedirected = false;
 
 /*
  * If not building with SSR mode, you can
@@ -110,6 +109,8 @@ export default route(function (/* { store, ssrContext } */) {
     // }
     if (to.name === "agentCode") {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
+      user.isReferralReady = true;
+      isRedirected = true;
       if (to.query.reg) {
         next(`/register`);
       } else {
@@ -119,7 +120,14 @@ export default route(function (/* { store, ssrContext } */) {
     if (to.name === "referCode") {
       sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
       localStorage.removeItem("REG_REFERRAL_CODE");
+      user.isReferralReady = true;
+      isRedirected = true;
       next(`/register`);
+    }
+
+    if (!isRedirected) {
+      user.isReferralReady = true;
+      isRedirected = true;
     }
 
     if (to.name === "RegisterPage") {
@@ -162,15 +170,6 @@ export default route(function (/* { store, ssrContext } */) {
         });
       } else {
         next();
-      }
-    }
-
-    if (secondRedirectionEvent) {
-      typeof redirectionCount === "number" && redirectionCount++;
-      if (redirectionCount > 1) {
-        document.dispatchEvent(secondRedirectionEvent);
-        secondRedirectionEvent = null;
-        redirectionCount = null;
       }
     }
   });
