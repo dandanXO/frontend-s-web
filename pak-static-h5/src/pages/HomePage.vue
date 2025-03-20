@@ -6164,7 +6164,7 @@ const checkGoogleLoginSetPwd = () => {
 }
 
 .luckyspin-header {
-  margin: 0 auto -5%;
+  margin: 0 auto -7%;
   width: 90%;
   z-index: 2;
   img {
@@ -6179,13 +6179,13 @@ const checkGoogleLoginSetPwd = () => {
   background-size: 100% 100%;
   background-position: center center;
   background-color: #113413;
-  max-width: 400px;
+  max-width: 360px;
   width: 100%;
   padding: 16px;
   position: relative;
   // overflow: visible !important;
   border-radius: 12px;
-  padding: 16px;
+  padding: 30px 16px 16px 16px;
 
   .luckyspin-title {
     display: flex;

@@ -5,7 +5,7 @@
         <img src="../../../assets/images/promotion/hotpromo/newplayer-spinwheel/click-spin-btn.png" />
       </div>
       <div class="wheel-top-btn">
-        <img src="../../../assets/images/promotion/hotpromo/newplayer-spinwheel/click-spin-indicate.png" />
+        <!-- <img src="../../../assets/images/promotion/hotpromo/newplayer-spinwheel/click-spin-indicate.png" /> -->
       </div>
       <div class="spin-wheel-board">
         <div class="spin-wheel-frame">
@@ -22,10 +22,10 @@
     </div>
 
     <div class="remaining-draw-wrapper">
-      <p class="remaining-draw-text">
+      <span class="remaining-draw-text">
         {{ $t("hotPromo.aviatorWheel.remainingDrawTimes") }}:
         <span id="remaning-draw-amt">{{ remainingDraws }}</span>
-      </p>
+      </span>
     </div>
   </div>
 
@@ -253,8 +253,8 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 #remaning-draw-amt {
-  font-size: 20px;
-  color: #61ff00;
+  font-size: 13px;
+  color: #FEC778;
   font-weight: bold;
 }
 .spin-wheel-container {
@@ -270,10 +270,9 @@ onMounted(() => {
   width: 330px;
   height: 330px;
   margin: 0 auto;
-  // background: url(../../../assets/images/promotion/hotpromo/newplayer-spinwheel/spin-wheel-frame.png) no-repeat center
-  //   center;
-  // background: salmon;
-  background-size: 115%;
+  background: url(../../../assets/images/promotion/hotpromo/newplayer-spinwheel/spin-wheel-frame.png) no-repeat center
+    center;
+  background-size: 100%;
 }
 
 .wheel-frame {
@@ -344,7 +343,7 @@ onMounted(() => {
   }
 }
 .draw-btn {
-  width: 130px;
+  width: 80px;
   height: auto;
   aspect-ratio: 1/1;
   z-index: 25;
@@ -552,21 +551,27 @@ onMounted(() => {
 }
 
 .remaining-draw-wrapper {
-  background-image: url(../../../assets/images/promotion/hotpromo/newplayer-spinwheel/spin-wheel-highlight.png);
-  background-size: 75% 100%;
-  background-repeat: no-repeat;
-  background-position: center center;
+  // background-image: url(../../../assets/images/promotion/hotpromo/newplayer-spinwheel/spin-wheel-highlight.png);
+  // background-size: 75% 100%;
+  // background-repeat: no-repeat;
+  // background-position: center center;
+  margin-top: -30px;
+  margin-bottom: 8px;
   padding: 2px;
 
   .remaining-draw-text {
     color: #ffffff;
-    font-size: 20px;
+    font-size: 13px;
     // margin: 0px auto 15px;
     margin: auto;
     text-align: center;
     width: 300px;
     position: relative;
     z-index: 23;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -730,6 +735,25 @@ onMounted(() => {
     background-size: 70% 100%;
     background-position: center;
     margin-top: 16px;
+  }
+}
+</style>
+
+<style lang="scss">
+.pak-newplayer-welcome-spin-table {
+  border-collapse: collapse !important;
+
+  th {
+    background: linear-gradient(rgba(122,1,288, 100%), rgba(122,1,288, 85%)) !important;
+  }
+
+  td {
+    background-color: transparent !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  tbody {
+    background: linear-gradient(180deg, rgba(184, 83, 255, 0.63) 0%, rgba(122, 1, 228, 0.63) 100%) !important;
   }
 }
 </style>
