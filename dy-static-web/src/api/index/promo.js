@@ -552,7 +552,6 @@ export function claimBelgrade2025Bonus(promoCode) {
   return server.EVENT.post(`/session/competition-single-bet/claimBonus?promoCode=${promoCode}`);
 }
 
-
 export function getVctBangkokInit(promoCode) {
   return server.EVENT.get(`/session/competition/yesterday?promoCode=${promoCode}`);
 }
@@ -601,5 +600,12 @@ export function getPGLBucharest2025Bonus(promoCode) {
   return server.EVENT.get(`/session/competition/yesterday?promoCode=${promoCode}`);
 }
 export function claimPGLBucharest2025Bonus(promoCode) {
+  return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+
+export function getFissureUniverseS4Bonus(promoCode) {
+  return server.EVENT.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimFissureUniverseS4Bonus(promoCode) {
   return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
 }
