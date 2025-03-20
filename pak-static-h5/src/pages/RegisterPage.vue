@@ -526,6 +526,7 @@ export default defineComponent({
           thirdPartyLoginInfo.siteId = process.env.SITEID;
           thirdPartyLoginInfo.thirdParty = "GOOGLE";
           thirdPartyLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
+          thirdPartyLoginInfo.traceId = store.googleadid ? store.googleadid : store.aaid;
           thirdPartyLoginInfo.accessToken = user.authentication.accessToken;
           thirdPartyLoginInfo.idToken = user.authentication.idToken;
 
@@ -542,6 +543,8 @@ export default defineComponent({
                   message: "Google login successfully",
                   icon: "check_circle_outline"
                 });
+
+                trackRegisterSuccessEvent();
 
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
@@ -586,6 +589,7 @@ export default defineComponent({
             thirdPartyLoginInfo.siteId = process.env.SITEID;
             thirdPartyLoginInfo.thirdParty = "GOOGLE";
             thirdPartyLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
+            thirdPartyLoginInfo.traceId = store.googleadid ? store.googleadid : store.aaid;
             thirdPartyLoginInfo.accessToken = credential.accessToken;
             thirdPartyLoginInfo.idToken = credential.idToken;
 
@@ -602,6 +606,8 @@ export default defineComponent({
                     message: "Google login successfully",
                     icon: "check_circle_outline"
                   });
+
+                  trackRegisterSuccessEvent();
 
                   store.autoLogin(res.data);
                   sessionStorage.removeItem("REFERRAL_CODE");

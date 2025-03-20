@@ -1,8 +1,9 @@
-import { redirectToGame } from "./redirect.js";
+import { redirectToGame, getRedirectInfo } from "./redirect.js";
 
 if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) {
   const fbclid = localStorage.getItem("fbclid");
   redirectToGame(fbclid);
 } else {
-  window.location.replace(`${window.location.origin}/register`)
+  const redirectInfo = getRedirectInfo();
+  window.location.replace(redirectInfo.url);
 }
