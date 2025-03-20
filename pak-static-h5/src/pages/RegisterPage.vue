@@ -60,6 +60,9 @@
                     <q-icon name="smartphone" />
                     <div class="prepend-number">+92</div>
                   </template>
+                  <!-- <template v-if="isSpinReferrer" v-slot:append>
+                    <div @click="openPhoneVeriDialog" class="verify-btn">Send</div>
+                  </template> -->
                 </q-input>
               </template>
             </InputField>
@@ -213,7 +216,7 @@
         {{ $t("btn.confirm") }}
       </q-btn>
 
-      <div class="google-login-wrapper">
+      <div v-if="!isSpinReferrer" class="google-login-wrapper">
         <img v-if="languageVal === 'en'" style="width: 100%" src="../assets/images/index/logindirectly-en.png" />
         <img v-else style="width: 100%" src="../assets/images/index/logindirectly-ur.png" />
         <template v-if="isAndroid()">
@@ -341,6 +344,47 @@
     <div class="no-domain bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
     </div>
+  
+    <q-dialog width="100%" v-model="verificationCodeDialog" presistent>
+      <div class="popout-dialog">
+        <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
+        <div class="popout-dialog-container">
+          <div class="txt-title">{{ $t("form.captchaCodeCheck") }}</div>
+
+          <div class="pc-form">
+            <div class="pc-form-item">
+              <div class="pc-form-label">{{ $t("form.captchaCode") }}</div>
+              <div class="pc-form-input">
+                <q-input
+                  filled
+                  hide-bottom-space
+                  dense
+                  clearable
+                  :placeholder="$t('form.captchaCode_placeholder')"
+                  v-model="captchaRef"
+                  :rules="[
+                    (val) => (val && val.length > 0) || $t('form.captchaCode_rules_01'),
+                    (val) => (val && val.length > 3 && val.length < 5) || $t('form.captchaCode_rules_02')
+                  ]"
+                >
+                  <template v-slot:append>
+                    <img :src="verificationImg" @click="getCode" />
+                  </template>
+                </q-input>
+              </div>
+            </div>
+          </div>
+
+          <div class="bottom-btn">
+            <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onCaptchaSubmit">
+              {{ $t("btn.confirm") }}
+            </q-btn>
+            <!-- <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup @click="onCaptchaSubmit">Confirm</q-btn> -->
+          </div>
+        </div>
+      </div>
+    </q-dialog>
+
   </div>
 </template>
 
@@ -437,7 +481,7 @@ export default defineComponent({
     };
 
     const hasAffiliate = ref(false);
-
+    const isSpinReferrer = ref(false);
     const getAffiliateCode = () => {
       affCode.value = sessionStorage.getItem("AFFILIATE_CODE");
       // if (affCode.value) {
@@ -456,6 +500,12 @@ export default defineComponent({
       if (pwaRefCode) {
         // hasAffiliate.value = true;
         regForm.referrer = pwaRefCode;
+      }
+      const spinRefCode = sessionStorage.getItem("REFERRAL_SPIN_CODE");
+      if (spinRefCode) {
+        isSpinReferrer.value = true;
+        regForm.referrer = spinRefCode;
+        thirdPartyLoginInfo.referrer = refCode;
       }
     };
 
@@ -826,6 +876,7 @@ export default defineComponent({
       }
     };
 
+    
     // watch(
     //   () => regForm.password,
     //   () => {
@@ -863,13 +914,21 @@ export default defineComponent({
     //   }
     // );
 
-    const openPhoneVeriDialog = () => {
-      telRef.value.validate();
-      if (!telRef.value.hasError) {
-        showCaptchaDialog.value = true;
-        getInnerCode();
-      }
+    // const openPhoneVeriDialog = () => {
+    //   loginNameRef.value.validate();
+    //   if (!loginNameRef.value.hasError) {
+    //     openVerificationCodeDialog();
+    //     getInnerCode();
+    //   }
+    // };
+    
+    const verificationCodeDialog = ref(false);
+    const openVerificationCodeDialog = () => {
+      verificationCodeDialog.value = !verificationCodeDialog.value
+      captchaRef.value = "";
+      getCode();
     };
+
 
     const onCaptchaSubmit = () => {
       if (!regForm.telephone) {
@@ -1031,7 +1090,7 @@ export default defineComponent({
       onCaptchaSubmit,
       innerCaptchaRef,
       phoneVerificationImg,
-      openPhoneVeriDialog,
+      // openPhoneVeriDialog,
       phoneVerificationRef,
       isValidCnPhone,
       hasAffiliate,
@@ -1060,7 +1119,8 @@ export default defineComponent({
       router,
       onClickGoogleSignin,
       onCapacitorGoogleSignin,
-      languageVal
+      languageVal,
+      isSpinReferrer
     };
   }
 });
@@ -1392,6 +1452,17 @@ function charType(num) {
   font-size: 14px;
   color: #ffffff;
   margin-left: 8px;
+}
+.verify-btn {
+  color: #21EF89;
+  font-family: Poppins;
+font-weight: 500;
+font-size: 14px;
+line-height: 100%;
+letter-spacing: -0.08%;
+text-align: right;
+text-transform: capitalize;
+
 }
 
 .q-icon {

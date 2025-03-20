@@ -77,6 +77,7 @@ export default {
   },
   form: {
     phone: "Phone",
+    verifyPhone: "Verify phone number",
     phone_placeholder: "Please enter your mobile number",
     phone_rules_01: "Please insert Phone number",
     phone_rules_02: "The phone number must have 11 digits",
