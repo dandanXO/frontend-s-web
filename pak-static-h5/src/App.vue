@@ -331,7 +331,12 @@ export default defineComponent({
           }
         });
       } else {
-        document.addEventListener("secondRedirection", async () => {
+        const timer = setInterval(async () => {
+          if (store.isReferralReady) {
+            clearInterval(timer);
+          } else {
+            return;
+          }
           const savedAffiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || "";
           let _affiliateCode = "";
           const referral = route.params.referralCode
@@ -339,7 +344,6 @@ export default defineComponent({
             : sessionStorage.getItem("REFERRAL_CODE")
             ? sessionStorage.getItem("REFERRAL_CODE")
             : localStorage.getItem("REG_REFERRAL_CODE") || "";
-
           await api
             .get(
               `/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${savedAffiliateCode}&refer=${referral}`
@@ -366,7 +370,7 @@ export default defineComponent({
               initAdjustEventTrack();
             }
           });
-        });
+        }, 100);
       }
     };
 
