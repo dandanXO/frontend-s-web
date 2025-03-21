@@ -140,6 +140,10 @@ export default defineComponent({
         console.log("Init Web Adjust");
         console.log(affAppToken.value);
         const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        const savedAdjustReferrer = sessionStorage.getItem("ADJUST_REFERRER");
+        if (savedAdjustReferrer) {
+          AdjustWeb.setReferrer(encodeURIComponent(savedAdjustReferrer));
+        }
         AdjustWeb.initSdk({
           appToken: affAppToken.value,
           environment: "production",
