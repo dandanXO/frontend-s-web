@@ -32,7 +32,8 @@ api.interceptors.response.use(
   (response) => {
     if (
       response.data.code === ResponseCode.ERR_SYSTEM ||
-      response.data.code === ResponseCode.ERR_USER_NOT_FOUND
+      response.data.code === ResponseCode.ERR_USER_NOT_FOUND ||
+      response.data.code === ResponseCode.ERR_DB_ACCESS
     ) {
       eventBus.showToast({
         severity: 'error',
