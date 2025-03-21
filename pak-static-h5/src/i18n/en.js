@@ -76,6 +76,21 @@ export default {
     }
   },
   form: {
+    get_code: "Get Code",
+    otp_form: "OTP Number",
+    insert_otp_num: "Please insert OTP number",
+    otp_must_have_6: "The OTP number must have 6 digits",
+    enter_otp_num: "Enter your OTP number",
+    refresh_veri_code: "Refresh Verification Code",
+    send_otp: "Send OTP",
+
+    register_in_progress: "Registering in progress",
+    fill_in_otp: "Please fill OTP number",
+    register_success: "Registered successfully",
+    phone_cannot_empty: "Phone number cannot be empty",
+    otp_sent_phone_success: "OTP sent to phone successfully",
+    google_login_success: "Google login successfully",
+
     phone: "Phone",
     verifyPhone: "Verify phone number",
     phone_placeholder: "Please enter your mobile number",

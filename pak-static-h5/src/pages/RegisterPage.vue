@@ -63,7 +63,7 @@
                   </template>
                   <template v-if="regForm.referrer" v-slot:append>
                     <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">
-                      {{ otpCountdown > 0 ? `Get Code (${otpCountdown})` : "Get Code" }}
+                      {{ otpCountdown > 0 ? `Get Code (${otpCountdown})` : $t("form.get_code") }}
                     </q-btn>
                   </template>
                 </q-input>
@@ -123,7 +123,7 @@
             </InputField>
 
             <!--            -->
-            <InputField v-if="regForm.referrer && regForm.smsCodeId" label="OTP Number">
+            <InputField v-if="regForm.referrer && regForm.smsCodeId" :label="$t('form.otp_form')">
               <template #input>
                 <q-input
                   pattern="\d*"
@@ -132,13 +132,13 @@
                   hide-bottom-space
                   v-model="regForm.smsCode"
                   :rules="[
-                    (val) => (val && val.length > 0) || 'Please insert OTP number',
-                    (val) => (val && val.length === 6) || 'The OTP number must have 6 digits'
+                    (val) => (val && val.length > 0) || $t('form.insert_otp_num'),
+                    (val) => (val && val.length === 6) || $t('form.otp_must_have_6')
                   ]"
                   color="white"
                   class="landing-input"
                   outlined
-                  placeholder="Enter your OTP number"
+                  :placeholder="$t('form.enter_otp_num')"
                   label-color="brand"
                   :disable="isOtpEnable"
                 >
@@ -356,27 +356,27 @@
       <q-card class="captcha-form-wrapper" width="100%">
         <q-card-section class="q-pa-md text-white">
           <q-toolbar>
-            <q-toolbar-title>Verification Code</q-toolbar-title>
+            <q-toolbar-title>{{ $t("form.verificationCode") }}</q-toolbar-title>
             <q-btn flat v-close-popup round dense icon="close" />
           </q-toolbar>
         </q-card-section>
         <div class="q-px-lg q-pt-sm q-pb-lg">
           <q-card-section class="q-mb-md q-pa-md">
-            <q-input v-model="innerCaptchaRef" placeholder="Captcha Code">
+            <q-input v-model="innerCaptchaRef" :placeholder="$t(`form.captchaCode`)">
               <template v-slot:append>
                 <img
                   v-show="showImageCode"
                   :src="phoneVerificationImg"
                   @load="imgOnLoad"
                   @error="imgOnError"
-                  title="Refresh Verification Code"
+                  :title="$t(`form.refresh_veri_code`)"
                   style="margin-top: 6px; cursor: pointer"
                   @click="getInnerCode"
                 />
               </template>
             </q-input>
           </q-card-section>
-          <q-btn class="get-code-btn" @click="onCaptchaSubmit" label="Send OTP" />
+          <q-btn class="get-code-btn" @click="onCaptchaSubmit" :label="$t(`form.send_otp`)" />
         </div>
       </q-card>
     </q-dialog>
@@ -604,7 +604,7 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: "Google login successfully",
+                  message: t("form.google_login_success"),
                   icon: "check_circle_outline"
                 });
 
@@ -667,7 +667,7 @@ export default defineComponent({
                   $q.notify({
                     color: "positive",
                     position: "top",
-                    message: "Google login successfully",
+                    message: t("form.google_login_success"),
                     icon: "check_circle_outline"
                   });
 
@@ -733,7 +733,7 @@ export default defineComponent({
       verificationRef.value?.validate();
 
       $q.loading.show({
-        message: "Registering in progress"
+        message: t("form.register_in_progress")
       });
 
       isLoading.value = true;
@@ -750,7 +750,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: "Please fill OTP number",
+          message: t("form.fill_in_otp"),
           icon: "report_problem"
         });
         $q.loading.hide();
@@ -788,7 +788,7 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: "Registered successfully",
+                  message: t("form.register_success"),
                   icon: "check_circle_outline"
                 });
                 localStorage.setItem("newPlayerGuide", 1);
@@ -956,7 +956,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: "Phone number cannot be empty",
+          message: t("form.phone_cannot_empty"),
           icon: "report_problem"
         });
         getInnerCode();
@@ -972,7 +972,7 @@ export default defineComponent({
           })
         )
         .then((res) => {
-          let message = res.message || "OTP sent to phone successfully",
+          let message = res.message || t("form.otp_sent_phone_success"),
             color = "positive";
 
           if (res.code === 0) {
