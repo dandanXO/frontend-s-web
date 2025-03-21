@@ -11,8 +11,8 @@ export const DashboardService = {
       api
         .post('/member/login', formData)
         .then((response) => {
-          if (response.data.code == 0) {
-            const token = response.data.data.token
+          if (response.code == 0) {
+            const token = response.token
             sessionStorage.setItem('token', token)
             resolve(true)
           } else {
