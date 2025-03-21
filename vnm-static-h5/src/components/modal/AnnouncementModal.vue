@@ -13,7 +13,7 @@
               v-close-popup
               size="12px"
               class="close-icon"
-              @click="visible = false"
+              @click="handleDialogeClose"
             />
           </div>
           <div class="dialog-content">
@@ -78,6 +78,7 @@ import { api } from "boot/axios";
 import { useLocalStorage } from "@vueuse/core";
 import moment from "moment";
 import { useRouter } from "vue-router";
+import qs from "qs";
 
 const store = userStore();
 const router = useRouter();
@@ -100,8 +101,30 @@ const changeTab = (name) => {
   activeDot.value = 0;
 };
 
-const handleDotClick = (index) => {
-  activeDot.value = index;
+const handleDialogeClose = () => {
+  if (mailData.value.length > 0) {
+    const promises = mailData.value.map((mail) => {
+      if (mail.readTime === null || mail.readTime === 'null') {
+        return api.post(
+          "/session/pm/inbox/read",
+          qs.stringify({
+            id: mail.id
+          })
+        );
+      }
+      return Promise.resolve();
+    });
+
+    Promise.all(promises).then(() => {
+      visible.value = false;
+    }).catch(()=>{
+      visible.value = false;
+    });
+  } else {
+    visible.value = false;
+  }
+
+  
 };
 
 const hChageSlide = (val) => {
@@ -125,7 +148,9 @@ const handleDetail = (mail) => {
 const getInbox = () => {
   return api.get("/session/pm/inbox/popup");
 };
-
+const handleDotClick = ()=>{
+  visible.value = false;
+}
 onMounted(() => {
   if (!store.token) return;
 

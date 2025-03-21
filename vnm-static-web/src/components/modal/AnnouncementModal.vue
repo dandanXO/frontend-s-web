@@ -29,7 +29,7 @@
             <div>
               <p>{{ $t("inbox.mailBox") }}</p>
             </div>
-            <div style="width: 34%; display: flex; justify-content: flex-end; align-items: center;" @click="visible = false">
+            <div style="width: 34%; display: flex; justify-content: flex-end; align-items: center;" @click="handleClose">
               <img
                 style="height: 14px; width: 14px;"
                 :src="require(`../../assets/home/close.svg`)"
@@ -74,10 +74,11 @@
 import { ref, watch, onMounted } from "vue";
 import InboxComponent from "./InboxComponent.vue";
 import AnnouncementComponent from "./AnnouncementComponent.vue";
-import { popupMailBox } from "@/api/personal/mailbox";
+import { popupMailBox, readMail } from "@/api/personal/mailbox";
 import { userStore } from "@/store";
 import { useLocalStorage } from "@vueuse/core";
 import moment from "moment";
+
 
 import { i18nStore } from "@/store/language";
 import { storeToRefs } from "pinia";
@@ -119,6 +120,24 @@ onMounted(() => {
       }
     });
 });
+
+const handleClose = () => {
+  if (mailData.value.length > 0) {
+    const promises = mailData.value.map(mail => {
+      if (mail.readTime === null || mail.readTime === 'null') {
+        return readMail({ id: mail.id });
+      }
+      return Promise.resolve();
+    });
+    Promise.all(promises).then(() => {
+      visible.value = false;
+    }).catch(() => {
+      visible.value = false;
+    });
+  } else {
+    visible.value = false;
+  }
+};
 
 watch(
   () => store.token,
