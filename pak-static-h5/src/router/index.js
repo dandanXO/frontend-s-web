@@ -44,7 +44,9 @@ export default route(function (/* { store, ssrContext } */) {
     const ui = useUI();
     const $q = useQuasar();
 
-    const adjustReferrer = to.query.adjust_referrer;
+    if (to.query.adjust_referrer) {
+      sessionStorage.setItem("ADJUST_REFERRER", to.query.adjust_referrer);
+    }
 
     if (user.token && from && from.href) {
       user.getBalance();
@@ -115,9 +117,9 @@ export default route(function (/* { store, ssrContext } */) {
       isRedirected = true;
 
       if (to.query.reg) {
-        next({ path: "/register", query: { adjust_referrer: adjustReferrer } });
+        next("/register");
       } else {
-        next({ path: "/", query: { adjust_referrer: adjustReferrer } });
+        next("/");
       }
     }
     if (to.name === "referCode") {
@@ -125,7 +127,7 @@ export default route(function (/* { store, ssrContext } */) {
       localStorage.removeItem("REG_REFERRAL_CODE");
       user.isReferralReady = true;
       isRedirected = true;
-      next({ path: "/register", query: { adjust_referrer: adjustReferrer } });
+      next("/register");
     }
 
     if (!isRedirected) {
