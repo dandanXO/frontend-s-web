@@ -6,27 +6,7 @@
       class="countdown-sticky"
     >
       <picture class="gift-img">
-        <template v-if="info.wheelNo === 1">
-          <!--          <source-->
-          <!--            srcset="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/sticky/gift-300.png"-->
-          <!--            type="image/apng"-->
-          <!--          />-->
-          <img src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/sticky/gift-300.gif" />
-        </template>
-        <template v-if="info.wheelNo === 2">
-          <!--          <source-->
-          <!--            srcset="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/sticky/gift-600.png"-->
-          <!--            type="image/apng"-->
-          <!--          />-->
-          <img src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/sticky/gift-600.gif" />
-        </template>
-        <template v-if="info.wheelNo === 3">
-          <!--          <source-->
-          <!--            srcset="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/sticky/gift-1000.png"-->
-          <!--            type="image/apng"-->
-          <!--          />-->
-          <img src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/sticky/gift-1000.gif" />
-        </template>
+          <img src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/sticky/gift-500.gif" />
       </picture>
       <span class="remaining-time">{{ remainingTime }}</span>
       <img @click.stop="closeSticky()" class="close-btn" src="../../../assets/images/index/close-btn.png" />

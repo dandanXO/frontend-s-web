@@ -31,16 +31,17 @@ const info = ref({
 });
 
 const targetWithdrawAmount = computed(() => {
-  switch (info.value.wheelNo) {
-    case 3:
-      return 1000;
-    case 2:
-      return 600;
-    case 1:
-      return 300;
-    default:
-      return 0;
-  }
+  // switch (info.value.wheelNo) {
+  //   case 3:
+  //     return 1000;
+  //   case 2:
+  //     return 600;
+  //   case 1:
+  //     return 300;
+  //   default:
+  //     return 0;
+  // }
+  return 500;
 });
 
 const extractionDifference = computed(() =>
