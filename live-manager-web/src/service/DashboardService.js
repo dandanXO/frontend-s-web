@@ -12,7 +12,7 @@ export const DashboardService = {
         .post('/member/login', formData)
         .then((response) => {
           if (response.code == 0) {
-            const token = response.token
+            const token = response.data.token
             sessionStorage.setItem('token', token)
             resolve(true)
           } else {
