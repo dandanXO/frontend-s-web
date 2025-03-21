@@ -48,10 +48,18 @@
               </InputField>
             </div>
 
-            <div class="pc-form-item" :class="{ 'item-click': !formDetail.phoneVerified }"  @click="openVerifyPhoneDialog">
+            <div
+              class="pc-form-item"
+              :class="{ 'item-click': !formDetail.phoneVerified }"
+              @click="openVerifyPhoneDialog"
+            >
               <InputField :label="$t('form.phone')">
                 <template #input>
-                  <q-input v-model="formDetail.phone" outlined clearable hide-bottom-space readonly></q-input>
+                  <q-input v-model="formDetail.phone" outlined clearable hide-bottom-space readonly>
+                    <template v-if="!formDetail.phoneVerified" v-slot:append>
+                      <q-icon name="chevron_right" />
+                    </template>
+                  </q-input>
                 </template>
               </InputField>
             </div>
@@ -179,7 +187,6 @@
       </div>
     </q-card>
   </q-dialog> -->
-  
 
   <q-dialog width="100%" v-model="personalCenterDialog" persistent>
     <div class="popout-dialog">
@@ -356,7 +363,7 @@
       </div>
     </div>
   </q-dialog>
-  
+
   <q-dialog width="100%" v-model="verifyPhoneDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
@@ -848,8 +855,8 @@ const openBindEmailDialog = () => {
 };
 const verifyPhoneDialog = ref(false);
 const openVerifyPhoneDialog = () => {
-  verifyPhoneDialog.value = !verifyPhoneDialog.value
-}
+  verifyPhoneDialog.value = !verifyPhoneDialog.value;
+};
 
 const closeUserKYCDialog = (updateInfo) => {
   store.getMemberInfo().then(() => {
@@ -931,9 +938,7 @@ const openPhoneVerificationCodeDialog = () => {
     captchaPhoneRef.value = "";
     getCode();
   }
-}
-
-
+};
 
 const myMemberList = ref([]);
 
@@ -1583,7 +1588,6 @@ const sendPhoneDetails = () => {
       });
   }
 };
-
 
 const submitUpdateNewPwd = () => {
   passwordRef.value.validate();
