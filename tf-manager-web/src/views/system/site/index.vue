@@ -241,6 +241,7 @@
                   :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
                   :empty-text="t('fields.noData')"
         >
+          <el-table-column prop="id" :label="t('fields.siteId')" width="150" />
           <el-table-column prop="siteName" :label="t('fields.siteName')" width="150" />
           <el-table-column prop="siteCode" :label="t('fields.siteCode')" width="150" />
           <!-- <el-table-column prop="domainCount" :label="t('fields.domainCount')" width="150" /> -->
