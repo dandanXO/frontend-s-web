@@ -379,6 +379,7 @@
                     clearable
                     :placeholder="$t('form.phone_placeholder')"
                     v-model="updatePhoneInfo.telephone"
+                    :readonly="!!formDetail.phone"
                     ref="phoneRef"
                     hide-bottom-space
                     type="text"
@@ -858,6 +859,7 @@ const openVerifyPhoneDialog = () => {
   if (formDetail.phoneVerified) {
     return;
   }
+  updatePhoneInfo.telephone = formDetail.phone;
   verifyPhoneDialog.value = !verifyPhoneDialog.value;
 };
 
@@ -1397,7 +1399,7 @@ const onPhoneCaptchaSubmit = () => {
     .post(
       `/session/sendRegisteredPhoneOtp`,
       qs.stringify({
-        telephone: updatePhoneInfo.telephone,
+        ...(formDetail.phone ? {} : { telephone: updatePhoneInfo.telephone }),
         captchaCode: captchaPhoneRef.value,
         codeId: updateSecurityVerified.codeId
       })
@@ -1561,7 +1563,7 @@ const sendPhoneDetails = () => {
       .post(
         "/session/verifyRegisteredPhoneOtp",
         qs.stringify({
-          telephone: updatePhoneInfo.telephone,
+          ...(formDetail.phone ? {} : { telephone: updatePhoneInfo.telephone }),
           code: updatePhoneInfo.code,
           codeId: updatePhoneInfo.codeId
         })
