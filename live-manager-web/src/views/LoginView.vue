@@ -73,6 +73,7 @@ import { useUserStore } from '@/stores/userStore'
 import LangToggle from '@/components/Header/LangToggle.vue'
 import ThemeToggle from '@/components/Header/ThemeToggle.vue'
 import { useI18n } from 'vue-i18n'
+import router from '@/router'
 
 const { t } = useI18n()
 
@@ -87,19 +88,17 @@ const toast = useToast()
 
 const onFormSubmit = () => {
   store.isAuthLoading = true
-  console.log('here', loginForm)
 
   DashboardService.logIn(loginForm.loginName, loginForm.password)
     .then((result) => {
-      console.log('here', result)
-
       if (result) {
         setTimeout(() => {
-          store.isLoggedIn = true
-          sessionStorage.setItem('token', 'abc123')
+          router.push({ path: '/' })
           store.isAuthLoading = false
           toast.add({ severity: 'success', summary: t('loggedInSuccessfully'), life: 3000 })
         }, 2000)
+      } else {
+        store.isAuthLoading = false
       }
     })
     .catch(() => {

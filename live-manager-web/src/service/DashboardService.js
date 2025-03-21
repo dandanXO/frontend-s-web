@@ -1,11 +1,27 @@
+import api from '../api/api'
+
 export const DashboardService = {
   logIn(username, password) {
-    return new Promise((resolve) => {
-      if (username === 'testloginname' && password === 'testpassword') {
-        resolve(true)
-      }
+    return new Promise((resolve, reject) => {
+      const formData = new FormData()
 
-      resolve(false)
+      formData.append('loginName', username)
+      formData.append('password', password)
+
+      api
+        .post('/member/login', formData)
+        .then((response) => {
+          if (response.data.code == 0) {
+            const token = response.data.data.token
+            sessionStorage.setItem('token', token)
+            resolve(true)
+          } else {
+            resolve(false)
+          }
+        })
+        .catch((error) => {
+          reject(false)
+        })
     })
   },
   getRechargeSummary() {
