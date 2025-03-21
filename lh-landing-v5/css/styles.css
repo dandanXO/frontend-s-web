@@ -92,7 +92,6 @@ a:hover {
   background: url("../img/xf-item.png") no-repeat center center;
   background-size: 100% 100%;
   aspect-ratio: 532/256;
-  margin: 4px 2px 4px;
 }
 
 .action-btn.dy-register {
