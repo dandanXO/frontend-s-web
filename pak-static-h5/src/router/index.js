@@ -44,6 +44,8 @@ export default route(function (/* { store, ssrContext } */) {
     const ui = useUI();
     const $q = useQuasar();
 
+    const adjustReferrer = to.query.adjust_referrer;
+
     if (user.token && from && from.href) {
       user.getBalance();
     }
@@ -111,10 +113,11 @@ export default route(function (/* { store, ssrContext } */) {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
       user.isReferralReady = true;
       isRedirected = true;
+
       if (to.query.reg) {
-        next(`/register`);
+        next({ path: "/register", query: { adjust_referrer: adjustReferrer } });
       } else {
-        next(`/`);
+        next({ path: "/", query: { adjust_referrer: adjustReferrer } });
       }
     }
     if (to.name === "referCode") {
@@ -122,7 +125,7 @@ export default route(function (/* { store, ssrContext } */) {
       localStorage.removeItem("REG_REFERRAL_CODE");
       user.isReferralReady = true;
       isRedirected = true;
-      next(`/register`);
+      next({ path: "/register", query: { adjust_referrer: adjustReferrer } });
     }
 
     if (!isRedirected) {
