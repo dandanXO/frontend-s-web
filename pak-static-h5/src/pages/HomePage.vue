@@ -221,7 +221,7 @@
         </div>
       </template>
     </div>
-<!-- 
+<!--
     <swiper
       :slidesPerView="5"
       :spaceBetween="0"
@@ -284,11 +284,11 @@
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :slidesPerGroup="3"
               :spaceBetween="10"
               :modules="[Navigation, Grid]"
-              :grid="{ rows: 2, fill: 'row' }"
+              :grid="{ rows: 1, fill: 'row' }"
               :navigation="{ nextEl: '.custom-hot-next', prevEl: '.custom-hot-prev' }"
               class="platform-game-container"
             >
@@ -482,7 +482,7 @@
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="1.5"
+              :slidesPerView="2"
               :spaceBetween="15"
               :modules="[Navigation]"
               :navigation="{ nextEl: '.custom-live-next', prevEl: '.custom-live-prev' }"
@@ -588,10 +588,10 @@
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :modules="[Navigation, Grid]"
-              :grid="{ rows: 2, fill: 'row' }"
+              :grid="{ rows: 1, fill: 'row' }"
               :navigation="{ nextEl: '.custom-slot-next', prevEl: '.custom-slot-prev' }"
               class="platform-game-container"
             >
@@ -644,7 +644,7 @@
 
           <div class="platform-game-wrapper" v-else>
             <div
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -716,7 +716,7 @@
               :slidesPerView="3"
               :spaceBetween="10"
               :modules="[Navigation, Grid]"
-              :grid="{ rows: 2, fill: 'row' }"
+              :grid="{ rows: 1, fill: 'row' }"
               :navigation="{ nextEl: '.custom-poker-next', prevEl: '.custom-poker-prev' }"
               class="platform-game-container"
             >
@@ -766,7 +766,7 @@
 
           <div class="platform-game-wrapper" v-else>
             <div
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -834,10 +834,10 @@
 
           <div class="platform-game-wrapper">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :modules="[Navigation, Grid]"
-              :grid="{ rows: 2, fill: 'row' }"
+              :grid="{ rows: 1, fill: 'row' }"
               :navigation="{ nextEl: '.custom-fish-next', prevEl: '.custom-fish-prev' }"
               class="platform-game-container"
             >
@@ -4552,13 +4552,13 @@ const checkGoogleLoginSetPwd = () => {
     height: 32px;
     //filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
   }
-} 
+}
 .hometop-categories {
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
   grid-template-rows: auto auto; /* 2 rows */
-  gap: 15px;   
-  margin-bottom: 20px;   
+  gap: 15px;
+  margin-bottom: 20px;
   .category {
     padding: 4vh 0;
       text-align: center;
@@ -4606,7 +4606,7 @@ const checkGoogleLoginSetPwd = () => {
       }
     }
   }
-  
+
   .category:nth-child(2) {
     .cat-label {
 
@@ -5344,7 +5344,7 @@ const checkGoogleLoginSetPwd = () => {
 }
 
 .games-selection-wrapper {
-  .custom-hot-prev, 
+  .custom-hot-prev,
   .custom-live-prev,
   .custom-slot-prev,
   .custom-poker-prev,
@@ -5563,7 +5563,7 @@ const checkGoogleLoginSetPwd = () => {
 }
   &.live-casino {
     padding-top: 8px;
-    margin-bottom: 0px;
+    margin-bottom: 12px;
   }
 
   .swiper-scrollbar.swiper-scrollbar-horizontal {
