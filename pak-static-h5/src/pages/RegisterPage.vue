@@ -45,6 +45,7 @@
                   maxlength="11"
                   ref="loginNameRef"
                   hide-bottom-space
+                  clearable
                   v-model="regForm.loginName"
                   :rules="[
                     (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
@@ -60,9 +61,11 @@
                     <q-icon name="smartphone" />
                     <div class="prepend-number">+92</div>
                   </template>
-                  <!-- <template v-if="isSpinReferrer" v-slot:append>
-                    <div @click="openPhoneVeriDialog" class="verify-btn">Send</div>
-                  </template> -->
+                  <template v-if="regForm.referrer" v-slot:append>
+                    <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">
+                      {{ otpCountdown > 0 ? `Get Code (${otpCountdown})` : "Get Code" }}
+                    </q-btn>
+                  </template>
                 </q-input>
               </template>
             </InputField>
@@ -80,6 +83,7 @@
                   ]"
                   color="green"
                   outlined
+                  clearable
                   label-color="brand"
                   :placeholder="$t('form.password_placeholder')"
                 >
@@ -118,6 +122,33 @@
               </template>
             </InputField>
 
+            <!--            -->
+            <InputField v-if="regForm.referrer && regForm.smsCodeId" label="OTP Number">
+              <template #input>
+                <q-input
+                  pattern="\d*"
+                  maxlength="6"
+                  ref="verificationRef"
+                  hide-bottom-space
+                  v-model="regForm.smsCode"
+                  :rules="[
+                    (val) => (val && val.length > 0) || 'Please insert OTP number',
+                    (val) => (val && val.length === 6) || 'The OTP number must have 6 digits'
+                  ]"
+                  color="white"
+                  class="landing-input"
+                  outlined
+                  placeholder="Enter your OTP number"
+                  label-color="brand"
+                  :disable="isOtpEnable"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="key" />
+                  </template>
+                </q-input>
+              </template>
+            </InputField>
+
             <!-- <InputField :label="'Confirm Password'">
               <template #input>
                 <q-input
@@ -149,30 +180,6 @@
               </template>
             </InputField> -->
 
-            <!-- <InputField :label="'NRIC'">
-              <template #input>
-                <q-input
-                  type="tel"
-                  pattern="\d*"
-                  maxlength="13"
-                  ref="nricRef"
-                  hide-bottom-space
-                  v-model="regForm.nric"
-                  :rules="[
-                    (val) => (val && val.length > 0) || 'Please insert NRIC',
-                    (val) => (val && val.length === 13) || 'The NRIC must have 13 digits'
-                  ]"
-                  color="green"
-                  outlined
-                  label-color="brand"
-                  placeholder="Please enter your NRIC"
-                >
-                  <template v-slot:prepend>
-                    <q-icon name="person" />
-                  </template>
-                </q-input>
-              </template>
-            </InputField> -->
             <div style="visibility: hidden; position: absolute">
               <InputField :label="'Invitation Code (Optional)'">
                 <template #input>
@@ -344,52 +351,40 @@
     <div class="no-domain bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
     </div>
-  
-    <q-dialog width="100%" v-model="verificationCodeDialog" presistent>
-      <div class="popout-dialog">
-        <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
-        <div class="popout-dialog-container">
-          <div class="txt-title">{{ $t("form.captchaCodeCheck") }}</div>
 
-          <div class="pc-form">
-            <div class="pc-form-item">
-              <div class="pc-form-label">{{ $t("form.captchaCode") }}</div>
-              <div class="pc-form-input">
-                <q-input
-                  filled
-                  hide-bottom-space
-                  dense
-                  clearable
-                  :placeholder="$t('form.captchaCode_placeholder')"
-                  v-model="captchaRef"
-                  :rules="[
-                    (val) => (val && val.length > 0) || $t('form.captchaCode_rules_01'),
-                    (val) => (val && val.length > 3 && val.length < 5) || $t('form.captchaCode_rules_02')
-                  ]"
-                >
-                  <template v-slot:append>
-                    <img :src="verificationImg" @click="getCode" />
-                  </template>
-                </q-input>
-              </div>
-            </div>
-          </div>
-
-          <div class="bottom-btn">
-            <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onCaptchaSubmit">
-              {{ $t("btn.confirm") }}
-            </q-btn>
-            <!-- <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup @click="onCaptchaSubmit">Confirm</q-btn> -->
-          </div>
+    <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
+      <q-card class="captcha-form-wrapper" width="100%">
+        <q-card-section class="q-pa-md text-white">
+          <q-toolbar>
+            <q-toolbar-title>Verification Code</q-toolbar-title>
+            <q-btn flat v-close-popup round dense icon="close" />
+          </q-toolbar>
+        </q-card-section>
+        <div class="q-px-lg q-pt-sm q-pb-lg">
+          <q-card-section class="q-mb-md q-pa-md">
+            <q-input v-model="innerCaptchaRef" placeholder="Captcha Code">
+              <template v-slot:append>
+                <img
+                  v-show="showImageCode"
+                  :src="phoneVerificationImg"
+                  @load="imgOnLoad"
+                  @error="imgOnError"
+                  title="Refresh Verification Code"
+                  style="margin-top: 6px; cursor: pointer"
+                  @click="getInnerCode"
+                />
+              </template>
+            </q-input>
+          </q-card-section>
+          <q-btn class="get-code-btn" @click="onCaptchaSubmit" label="Send OTP" />
         </div>
-      </div>
+      </q-card>
     </q-dialog>
-
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, computed, watch, onActivated } from "vue";
+import { defineComponent, ref, reactive, onMounted, computed, watch, onActivated, onUnmounted } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
@@ -430,8 +425,15 @@ export default defineComponent({
     const phoneVerificationImg = ref("");
     const isAgreeReg = ref(true);
 
+    const showImageCode = ref(false);
+
+    const otpCountdown = ref();
+    const otpCountdownInterval = ref();
+
     const affCode = ref("");
     const isLoading = ref(false);
+
+    const isOtpEnable = ref(true);
 
     const regForm = reactive({
       loginName: "",
@@ -463,6 +465,18 @@ export default defineComponent({
       //   .catch((e) => {
       //     console.log(e);
       //   });
+    };
+
+    const imgOnLoad = () => (showImageCode.value = true);
+    const imgOnError = () => (showImageCode.value = false);
+
+    const openPhoneVeriDialog = () => {
+      isOtpEnable.value = false;
+      loginNameRef.value.validate();
+      if (!loginNameRef.value.hasError) {
+        showCaptchaDialog.value = true;
+        getInnerCode();
+      }
     };
 
     const getInnerCode = () => {
@@ -715,7 +729,8 @@ export default defineComponent({
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
-      // nricRef.value.validate();
+
+      verificationRef.value?.validate();
 
       $q.loading.show({
         message: "Registering in progress"
@@ -726,11 +741,19 @@ export default defineComponent({
       if (
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
-        // nricRef.value.hasError ||
+        verificationRef.value?.hasError ||
         isAgreeReg.value === false
       ) {
         $q.loading.hide();
         isLoading.value = false;
+      } else if (regForm.referrer && isOtpEnable.value) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "Please fill OTP number",
+          icon: "report_problem"
+        });
+        $q.loading.hide();
       } else {
         var qs = require("qs");
         const sidParam = store.googleadid || store.aaid || store.visitorId;
@@ -876,7 +899,6 @@ export default defineComponent({
       }
     };
 
-    
     // watch(
     //   () => regForm.password,
     //   () => {
@@ -921,17 +943,16 @@ export default defineComponent({
     //     getInnerCode();
     //   }
     // };
-    
+
     const verificationCodeDialog = ref(false);
     const openVerificationCodeDialog = () => {
-      verificationCodeDialog.value = !verificationCodeDialog.value
+      verificationCodeDialog.value = !verificationCodeDialog.value;
       captchaRef.value = "";
       getCode();
     };
 
-
     const onCaptchaSubmit = () => {
-      if (!regForm.telephone) {
+      if (!regForm.loginName) {
         $q.notify({
           color: "negative",
           position: "top",
@@ -945,7 +966,7 @@ export default defineComponent({
         .post(
           `/otp/sendSms`,
           qs.stringify({
-            telephone: regForm.telephone,
+            telephone: regForm.loginName,
             captchaCode: innerCaptchaRef.value,
             codeId: innerCodeId.value
           })
@@ -959,13 +980,32 @@ export default defineComponent({
             regForm.smsCode = "";
             regForm.smsCodeId = res.data.codeId;
             console.log(res.data.codeId);
+
+            // start otp countdown
+            otpCountdown.value = res.data.second || 60;
+            otpCountdownInterval.value = setInterval(() => {
+              if (otpCountdown.value > 0) {
+                otpCountdown.value = otpCountdown.value - 1;
+              }
+            }, 1000);
           } else {
             color = "negative";
+            if (res.code === 1402) {
+              message = `Please try again after ${res.data.second} seconds`;
+
+              // start otp countdown
+              otpCountdown.value = res.data.second || 60;
+              otpCountdownInterval.value = setInterval(() => {
+                if (otpCountdown.value > 0) {
+                  otpCountdown.value = otpCountdown.value - 1;
+                }
+              }, 1000);
+            }
             getInnerCode();
           }
 
           if (message) {
-            $q.notify({ message, color });
+            $q.notify({ message, color, position: "top" });
           }
 
           console.log("onCaptchaSubmit", res);
@@ -1068,6 +1108,20 @@ export default defineComponent({
       const currentDomain = window.location.hostname;
       return restrictedDomains.includes(currentDomain);
     });
+
+    watch(
+      () => otpCountdown.value,
+      () => {
+        if (otpCountdown.value === 0) {
+          clearInterval(otpCountdownInterval.value);
+        }
+      }
+    );
+
+    onUnmounted(() => {
+      clearInterval(otpCountdownInterval.value);
+    });
+
     return {
       header: "Register Account",
       regForm,
@@ -1120,7 +1174,14 @@ export default defineComponent({
       onClickGoogleSignin,
       onCapacitorGoogleSignin,
       languageVal,
-      isSpinReferrer
+      isSpinReferrer,
+      otpCountdown,
+      otpCountdownInterval,
+      isOtpEnable,
+      openPhoneVeriDialog,
+      imgOnLoad,
+      imgOnError,
+      showImageCode
     };
   }
 });
@@ -1174,6 +1235,12 @@ function charType(num) {
       font-weight: 700 !important;
     }
   }
+}
+
+.get-code-btn {
+  background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+  color: #000a01;
+  width: 100px;
 }
 
 .register-container {
@@ -1454,15 +1521,14 @@ function charType(num) {
   margin-left: 8px;
 }
 .verify-btn {
-  color: #21EF89;
+  color: #21ef89;
   font-family: Poppins;
-font-weight: 500;
-font-size: 14px;
-line-height: 100%;
-letter-spacing: -0.08%;
-text-align: right;
-text-transform: capitalize;
-
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: -0.08%;
+  text-align: right;
+  text-transform: capitalize;
 }
 
 .q-icon {
@@ -1590,6 +1656,14 @@ text-transform: capitalize;
   70% {
     -webkit-transform: scale(1);
     transform: scale(1);
+  }
+}
+
+.captcha-form-wrapper {
+  background: #0b0e0d;
+
+  :deep(.q-toolbar) {
+    background: #232325;
   }
 }
 
