@@ -16,14 +16,14 @@
         <span class="footer-label">{{ $t("bottomNav.promo") }}</span>
       </q-route-tab>
       <q-route-tab to="/earn-money" name="earn-money" :ripple="false">
-        <!-- <div class="footer-big-img earn-money">
-          <img :src="ui.footerIcon ? ui.footerIcon : require(`../assets/images/index/menu/icon-earnmoney.gif`)" />
-        </div> -->
-        <div class="footer-img">
+        <div class="footer-big-img earn-money">
+          <img style="width: 100%;" :src="ui.footerIcon ? ui.footerIcon : require(`../assets/images/index/menu/icon-earnmoneynew.gif`)" />
+        </div>
+        <!-- <div class="footer-img">
           <img class="inactive" src="../assets/images/index/menu/icon-earnmoney.png" />
           <img class="hover" src="../assets/images/index/menu/icon-earnmoney-hover.png" />
-        </div>
-        <span class="footer-label">{{ $t("bottomNav.earnMoney") }}</span>
+        </div> -->
+        <span class="footer-label" style="padding-top: 0">{{ $t("bottomNav.earnMoney") }}</span>
       </q-route-tab>
       <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" :ripple="false">
         <div class="footer-img">
@@ -80,9 +80,9 @@ const tab = ref("home");
   // }
 }
 
-.earn-money {
-  animation: blink 1.5s infinite;
-}
+// .earn-money {
+//   animation: blink 1.5s infinite;
+// }
 
 @keyframes blink {
   0% {

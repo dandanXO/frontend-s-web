@@ -212,7 +212,7 @@
       <q-btn class="action-btn action-btn--withdrawal" @click="gotoSignIn()" no-caps label="Sign In"></q-btn>
       <q-btn class="action-btn action-btn--deposit" @click="gotoSignUp()" no-caps label="Sign Up" />
     </div> -->
-    <div class="hometop-categories">
+    <!-- <div class="hometop-categories">
       <template v-for="(item, index) in translatedCategoriesList" :key="index">
         <div v-if="item.icon !== 'lobby'" class="category" @click="activateSlide(item)" :style="{ backgroundImage: `url(${getImageUrl(item.icon)})` }">
           <div class="cat-label">
@@ -220,7 +220,32 @@
         </div>
         </div>
       </template>
-    </div>
+    </div> -->
+    <swiper
+              :slidesPerView="4"
+              :slidesPerGroup="4"
+              :spaceBetween="10"
+              :modules="[Navigation, Grid]"
+              :navigation="{ nextEl: '.custom-hot-next', prevEl: '.custom-hot-prev' }"
+              class="hometop-categories"
+            >
+              <template v-for="(item, index) in translatedCategoriesList" :key="index">
+                <template v-if="item.icon !== 'lobby'">
+                  <swiper-slide
+                    @click="
+                      activateSlide(item)
+                    "
+                  >
+                    <div class="category">
+                      <img :src="`${getImageUrl(item.icon)}`">
+                      <div class="cat-label">
+                        {{ item.label }}
+                      </div>
+                    </div>
+                  </swiper-slide>
+                </template>
+              </template>
+            </swiper>
 <!--
     <swiper
       :slidesPerView="5"
@@ -4554,71 +4579,77 @@ const checkGoogleLoginSetPwd = () => {
   }
 }
 .hometop-categories {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
-  grid-template-rows: auto auto; /* 2 rows */
-  gap: 15px;
-  margin-bottom: 20px;
+  // display: grid;
+  // grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
+  // grid-template-rows: auto auto; /* 2 rows */
+  // gap: 15px;
+  // margin-bottom: 20px;
   .category {
-    padding: 4vh 0;
-      text-align: center;
-      font-size: 20px;
-      border-radius: 8px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    min-height: 110px;
-    @media screen and (min-width: 500px) {
-      min-height: 150px;
+    // padding: 4vh 0;
+    //   text-align: center;
+    //   font-size: 20px;
+    //   border-radius: 8px;
+    // background-size: cover;
+    // background-repeat: no-repeat;
+    // min-height: 110px;
+    img {
+      width: 100%;
     }
-    position: relative;
-    background-position: center center;
+    // @media screen and (min-width: 500px) {
+    //   min-height: 150px;
+    // }
+    // position: relative;
+    // background-position: center center;
+    // background-size: contain;
   .cat-label {
     position: absolute;
     font-weight: bold;
-    bottom: 5px;
+    bottom: 10px;
     left: 0;
     right: 0;
     margin: auto;
+    width: 100%;
+    text-align: center;
   }
   }
   /* Top row spans 2 columns each */
-  .category:nth-child(1), .category:nth-child(2) {
-      grid-column: span 2;
-      .cat-label {
-        position: absolute;
-        font-weight: bold;
-        top: 10px;
-        right: unset;
-        left: 10px;
-        display: flex;
-        gap: 5px;
+  // .category:nth-child(1), .category:nth-child(2) {
+  //     grid-column: span 2;
+  //     .cat-label {
+  //       position: absolute;
+  //       font-weight: bold;
+  //       top: 10px;
+  //       right: unset;
+  //       left: 10px;
+  //       display: flex;
+  //       gap: 5px;
 
-      }
-  }
-  .category:nth-child(1) {
-    .cat-label {
-      &:before {
-        content: "";
-        background: url(../assets/images/index/category/green-dice.png)no-repeat center center;
-        width: 30px;
-        background-size: contain;
-        height: 30px;
-      }
-    }
-  }
+  //     }
+  // }
+  // .category:nth-child(1) {
+  //   .cat-label {
+  //     &:before {
+  //       content: "";
+  //       background: url(../assets/images/index/category/green-dice.png)no-repeat center center;
+  //       width: 30px;
+  //       background-size: contain;
+  //       height: 30px;
+  //     }
+  //   }
+  // }
 
-  .category:nth-child(2) {
-    .cat-label {
+  // .category:nth-child(2) {
+  //   .cat-label {
 
-      &:before {
-      content: "";
-      background: url(../assets/images/index/category/green-slot.png)no-repeat center center;
-      width: 30px;
-      background-size: contain;
-      height: 30px;
-    }
-    }
-  }
+  //     &:before {
+  //     content: "";
+  //     background: url(../assets/images/index/category/green-slot.png)no-repeat center center;
+  //     width: 30px;
+  //     background-size: contain;
+  //     height: 30px;
+  //   }
+  //   }
+  // }
 }
 
 /* Heart beat animation */

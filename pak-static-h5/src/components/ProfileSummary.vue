@@ -920,7 +920,7 @@ onUnmounted(() => {
       }
 
       .balance-amount {
-        padding-right: 18px;
+        padding-right: 5px;
         white-space: nowrap;
         width: 100%;
       }
