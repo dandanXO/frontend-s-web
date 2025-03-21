@@ -855,6 +855,9 @@ const openBindEmailDialog = () => {
 };
 const verifyPhoneDialog = ref(false);
 const openVerifyPhoneDialog = () => {
+  if (formDetail.phoneVerified) {
+    return;
+  }
   verifyPhoneDialog.value = !verifyPhoneDialog.value;
 };
 

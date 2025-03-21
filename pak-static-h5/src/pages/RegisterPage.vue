@@ -63,7 +63,7 @@
                   </template>
                   <template v-if="regForm.referrer && spinRefCode" v-slot:append>
                     <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">
-                      {{ otpCountdown > 0 ? `Get Code (${otpCountdown})` : $t("form.get_code") }}
+                      {{ otpCountdown > 0 ? `RESEND (${otpCountdown})` : $t("form.get_code") }}
                     </q-btn>
                   </template>
                 </q-input>
@@ -748,7 +748,7 @@ export default defineComponent({
       ) {
         $q.loading.hide();
         isLoading.value = false;
-      } else if (regForm.referrer && isOtpEnable.value) {
+      } else if (regForm.referrer && isSpinReferrer.value === true && regForm.smsCodeId && isOtpEnable.value) {
         $q.notify({
           color: "negative",
           position: "top",
@@ -756,6 +756,7 @@ export default defineComponent({
           icon: "report_problem"
         });
         $q.loading.hide();
+        isLoading.value = false;
       } else {
         var qs = require("qs");
         const sidParam = store.googleadid || store.aaid || store.visitorId;
@@ -1243,7 +1244,8 @@ function charType(num) {
 .get-code-btn {
   background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
   color: #000a01;
-  width: 100px;
+  min-width: 100px;
+  max-width: 120px;
 }
 
 .register-container {
