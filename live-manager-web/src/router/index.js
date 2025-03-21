@@ -9,6 +9,11 @@ const router = createRouter({
       component: () => import('../views/DashboardView.vue'),
     },
     {
+      path: '/login',
+      name: '登录页',
+      component: () => import('../views/LoginView.vue'),
+    },
+    {
       path: '/member',
       name: '会员',
       component: () => import('../views/Member/MemberListView.vue'),

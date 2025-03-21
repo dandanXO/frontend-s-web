@@ -4,6 +4,7 @@ import PrimeVue from 'primevue/config'
 import Aura from '@primeuix/themes/aura'
 import './assets/main.scss'
 import 'primeicons/primeicons.css'
+import Toast from 'primevue/toast'
 import ToastService from 'primevue/toastservice'
 import App from './App.vue'
 import router from './router'
@@ -25,5 +26,7 @@ app.use(PrimeVue, {
     },
   },
 })
+
+app.component('Toast', Toast)
 
 app.mount('#app')
