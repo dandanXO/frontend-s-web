@@ -208,7 +208,7 @@ export default defineComponent({
           // setInterval(updatePromo, 3000);
           setInterval(updatePromoRemainingTime, 1000);
         } else {
-          ElMessage.error(res.message);
+          // ElMessage.error(res.message);
         }
       });
     };
