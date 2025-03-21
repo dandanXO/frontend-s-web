@@ -41,7 +41,7 @@ const targetWithdrawAmount = computed(() => {
   //   default:
   //     return 0;
   // }
-  return 500;
+  return 1000;
 });
 
 const extractionDifference = computed(() =>

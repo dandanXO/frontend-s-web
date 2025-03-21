@@ -6,7 +6,7 @@
       class="countdown-sticky"
     >
       <picture class="gift-img">
-          <img src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/sticky/gift-500.gif" />
+          <img src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/sticky/gift-1000.gif" />
       </picture>
       <span class="remaining-time">{{ remainingTime }}</span>
       <img @click.stop="closeSticky()" class="close-btn" src="../../../assets/images/index/close-btn.png" />
