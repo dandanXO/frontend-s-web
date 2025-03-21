@@ -1421,6 +1421,8 @@ const onPhoneCaptchaSubmit = () => {
           message: t("notify.smsSent"),
           icon: "check_circle_outline"
         });
+
+        updatePhoneInfo.codeId = res.data.codeId;
       } else color = "negative";
 
       if (message) $q.notify({ message, color });
@@ -1557,7 +1559,8 @@ const sendPhoneDetails = () => {
         "/session/verifyRegisteredPhoneOtp",
         qs.stringify({
           telephone: updatePhoneInfo.telephone,
-          codeId: updatePhoneInfo.code
+          code: updatePhoneInfo.code,
+          codeId: updatePhoneInfo.codeId
         })
       )
       .then((response) => {

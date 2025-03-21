@@ -267,7 +267,8 @@ export default {
     quitGameMessage: "کیا آپ واقعی خارج ہونا چاہتے ہیں؟ خود کو خارج کرنے کے لئے تصدیق کرنے کے لئے کلک کریں۔",
     signOutMessage: "کیا آپ واقعی لاگ آوٹ ہونا چاہتے ہیں؟",
     plsLoginToContinue: "براہ کرم جاری رکھنے کے لئے لاگ ان کریں",
-    copiedSuccessfully: "کامیابی سے کاپی کیا گیا"
+    copiedSuccessfully: "کامیابی سے کاپی کیا گیا",
+    smsSent: "ایس ایم ایس او ٹی پی کامیابی سے بھیج دیا گیا ہے"
   },
   sideNav: {
     inviteToEarn: "دعوت دیں اور کمائیں",

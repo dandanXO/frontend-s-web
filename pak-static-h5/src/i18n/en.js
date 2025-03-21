@@ -272,7 +272,8 @@ export default {
     quitGameMessage: "Are you sure want to quit? Click Confirm to quit the game.",
     signOutMessage: "Are you sure you want to sign out?",
     plsLoginToContinue: "Please login to continue",
-    copiedSuccessfully: "Copied Successfully"
+    copiedSuccessfully: "Copied Successfully",
+    smsSent: "SMS OTP has been sent successfully"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
