@@ -61,7 +61,7 @@
                     <q-icon name="smartphone" />
                     <div class="prepend-number">+92</div>
                   </template>
-                  <template v-if="regForm.referrer" v-slot:append>
+                  <template v-if="regForm.referrer && spinRefCode" v-slot:append>
                     <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">
                       {{ otpCountdown > 0 ? `Get Code (${otpCountdown})` : $t("form.get_code") }}
                     </q-btn>
@@ -435,6 +435,8 @@ export default defineComponent({
 
     const isOtpEnable = ref(true);
 
+    const spinRefCode = ref("");
+
     const regForm = reactive({
       loginName: "",
       password: "",
@@ -515,10 +517,10 @@ export default defineComponent({
         // hasAffiliate.value = true;
         regForm.referrer = pwaRefCode;
       }
-      const spinRefCode = sessionStorage.getItem("REFERRAL_SPIN_CODE");
-      if (spinRefCode) {
+      spinRefCode.value = sessionStorage.getItem("REFERRAL_SPIN_CODE");
+      if (spinRefCode.value) {
         isSpinReferrer.value = true;
-        regForm.referrer = spinRefCode;
+        regForm.referrer = spinRefCode.value;
         thirdPartyLoginInfo.referrer = refCode;
       }
     };
@@ -1181,7 +1183,8 @@ export default defineComponent({
       openPhoneVeriDialog,
       imgOnLoad,
       imgOnError,
-      showImageCode
+      showImageCode,
+      spinRefCode
     };
   }
 });
