@@ -436,7 +436,7 @@ export default defineComponent({
         monthlyBonus: "28",
         birthdayBonus: "38",
         cunsong: `存款至少100元可申请每月一次再存20% 最高奖金588元`,
-        drawTimes: "12"
+        drawTimes: "15"
       },
       {
         level: 3,
@@ -444,7 +444,7 @@ export default defineComponent({
         monthlyBonus: "88",
         birthdayBonus: "108",
         cunsong: `存款至少100元可申请每月一次再存20% 最高奖金888元`,
-        drawTimes: "12"
+        drawTimes: "15"
       },
       {
         level: 4,
@@ -452,7 +452,7 @@ export default defineComponent({
         monthlyBonus: "188",
         birthdayBonus: "388",
         cunsong: `存款至少100元可申请每周一次再存25% 最高奖金888元`,
-        drawTimes: "12"
+        drawTimes: "15"
       },
       {
         level: 5,
