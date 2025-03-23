@@ -285,6 +285,10 @@ export default {
     COMPLETED: 'เสร็จสมบูรณ์',
     EXPIRED: 'หมดอายุ'
   },
+  referFriendBnwType: {
+    Referer: 'Referer',
+    IP: "IP"
+  },
   fields: {
     account: 'บัญชี',
     accountHolder: 'ผู้ถือบัญชี',
@@ -790,6 +794,7 @@ export default {
     minno: 'กรุณาใส่ราคาขั้นต่ำ',
     maxno: 'กรุณาใส่ราคาสูงสุด',
     memberRemark: 'หมายเหตุสมาชิก',
+    memberReferWhitelist: 'รายชื่อที่อนุญาตให้เชิญสมาชิก',
     minActiveMemberCount: 'จำนวนสมาชิกที่ใช้งานขั้นต่ำ',
     minBalance: 'ยอดคงเหลือขั้นต่ำ',
     minDeposit: 'ฝากขั้นต่ำ',
@@ -1175,6 +1180,7 @@ export default {
     unlockUser: 'ปลดล็อคผู้ใช้',
     url: 'URL การเข้าถึง',
     unsettleCommission: 'ค่าคอมมิชชั่นที่ยังไม่ได้จัดการ',
+    uniqueValue: 'ค่า',
     update: 'อัพเดท',
     updateAlias: 'อัปเดตชื่อเล่น',
     updateBy: 'อัพเดทโดย',

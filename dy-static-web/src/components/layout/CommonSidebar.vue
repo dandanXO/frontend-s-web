@@ -36,11 +36,11 @@
             <div class="email-icon" />
             <span style="margin-left: 5px">cs@dy988.com</span>
           </div>
-          <div class="content-line"></div>
-          <div class="customer-num">
+          <!-- <div class="content-line"></div> -->
+          <!-- <div class="customer-num">
             <div class="phone-icon" />
             <span style="margin-left: 5px"><span class="customer_phone">852-81932110</span></span>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="app-download customer-div">

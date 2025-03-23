@@ -60,7 +60,7 @@
           <el-button type="primary" @click="submitForm" style="width: 100%">送出</el-button>
         </el-col>
         <el-col v-if="props.mode === 'update'" :span="6">
-          <TestTriggerButton title="MQ_LAST_CONSUME_TIME_CHECK" />
+          <TestTriggerButton title="OTP_FAIL" />
         </el-col>
       </el-row>
     </el-form>

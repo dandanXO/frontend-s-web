@@ -589,13 +589,19 @@
         transition-next="slide-left"
         transition-prev="slide-right"
         animated
+        :keep-alive="false"
+        autoplay
+        :autoplay-interval="3000"
         infinite
         size="xs"
       >
         <q-carousel-slide v-for="(promo, i) in floatPromo" :key="i" :name="i" @click="gotoFloatPromo(promo.code)">
           <div class="rocket-wrapper">
             <div class="rocket">
-              <img loading="lazy" style="width: 100px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" />
+              <img loading="lazy" style="width: 100px" :src="`${imgURLFloat}/promo/${promo.icon}`" />
+              <span v-show="promo.showTime" class="promo-remaining-time">
+                {{ floatPromoRemainingTime[i] }}
+              </span>
             </div>
           </div>
         </q-carousel-slide>
@@ -1633,7 +1639,7 @@ export default defineComponent({
     const gotoFloatPromo = (code) => {
       router.push(`/promo?name=${code}`);
     };
-    const floatPromo = [];
+    const floatPromo = ref([]);
     const gamePromo = [];
     const floatDomain = [];
     const openLink = (link) => {
@@ -1647,17 +1653,19 @@ export default defineComponent({
         }
       }
     };
+    const floatPromoRemainingTime = ref([]);
     const initFloating = () => {
       floatPromo.value = [];
       gamePromo.value = [];
       floatDomain.value = [];
+      const apiUrl = store.hasToken() ? "/session/loggedInRedirect" : "/redirect";
       api
-        .get("/redirect")
+        .get(apiUrl)
         .then((res) => {
           if (res.code === 0) {
             res.data.forEach((element) => {
               if (element.type === "PROMO") {
-                floatPromo.push(element);
+                floatPromo.value.push(element);
                 showFloatPromo.value = true;
               }
               if (element.type === "GAME") {
@@ -1673,7 +1681,9 @@ export default defineComponent({
             checkFloatPromo();
             updatePromo(); // Initially update the displayed promo
             // Update the displayed promo every 5 seconds
-            setInterval(updatePromo, 3000);
+            updatePromoRemainingTime();
+            setInterval(updatePromoRemainingTime, 1000);
+            // setInterval(updatePromo, 3000);
             updateRocket(); // Initially update the displayed promo
             // Update the displayed promo every 5 seconds
             setInterval(updateRocket, 3000);
@@ -1685,19 +1695,38 @@ export default defineComponent({
           console.log(err);
         });
     };
-
+    const updatePromoRemainingTime = () => {
+      floatPromoRemainingTime.value = floatPromo.value.map((promo) => {
+        let result = "00:00:00";
+        
+        if (promo?.showTime) {
+          console.log(promo.title)
+          const now = moment(Date.now());
+          const endTime = moment(promo?.endTime);
+          const totalSeconds = endTime.diff(now, "seconds");
+          if (totalSeconds > 0) {
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            result = `${`${hours}`.padStart(2, 0)}:${`${minutes}`.padStart(2, 0)}:${`${seconds}`.padStart(2, 0)}`;
+          }
+        }
+        console.log(result,'time');
+        return result;
+      });
+    };
     const currentPromo = ref(null);
     const currentPromoIndex = ref(0);
     const updatePromo = () => {
-      currentPromo.value = floatPromo[currentPromoIndex.value];
-      currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.length;
+      currentPromo.value = floatPromo.value[currentPromoIndex.value];
+      currentPromoIndex.value = ((currentPromoIndex.value + 1) % floatPromo.value.length)+1-1;
     };
 
     const currentRocket = ref(null);
     const currentRocketIndex = ref(0);
     const updateRocket = () => {
       currentRocket.value = gamePromo[currentRocketIndex.value];
-      currentRocketIndex.value = (currentRocketIndex.value + 1) % floatPromo.length;
+      currentRocketIndex.value = (currentRocketIndex.value + 1) % floatPromo.value.length;
     };
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
@@ -1818,6 +1847,8 @@ export default defineComponent({
     });
 
     return {
+      floatPromoRemainingTime,
+      updatePromoRemainingTime,
       imageLoading,
       slide: ref(0),
       clickHomePopupImg,
@@ -1975,6 +2006,18 @@ export default defineComponent({
   &:hover {
     filter: brightness(0.9);
   }
+  .promo-remaining-time {
+    position: absolute;
+    bottom: 2.41rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: bold;
+    font-family: Arial;
+    color: #444;
+    // text-shadow: 2px 2px 0px #00000040;
+    font-size: 1.02rem;
+  }
+  
 }
 
 .q-page-container {

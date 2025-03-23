@@ -360,6 +360,8 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
 import { useI18n } from "vue-i18n";
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
+import { i18nStore } from "src/router/language";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -371,6 +373,8 @@ export default defineComponent({
   },
   setup() {
     const { t } = useI18n();
+    const i18nStoreLanguage = i18nStore();
+    const { languageVal } = storeToRefs(i18nStoreLanguage);
     const ui = useUI();
     const store = userStore();
     const verificationImg = ref("");
@@ -522,6 +526,7 @@ export default defineComponent({
           thirdPartyLoginInfo.siteId = process.env.SITEID;
           thirdPartyLoginInfo.thirdParty = "GOOGLE";
           thirdPartyLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
+          thirdPartyLoginInfo.traceId = store.googleadid ? store.googleadid : store.aaid;
           thirdPartyLoginInfo.accessToken = user.authentication.accessToken;
           thirdPartyLoginInfo.idToken = user.authentication.idToken;
 
@@ -538,6 +543,8 @@ export default defineComponent({
                   message: "Google login successfully",
                   icon: "check_circle_outline"
                 });
+
+                trackRegisterSuccessEvent();
 
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
@@ -582,6 +589,7 @@ export default defineComponent({
             thirdPartyLoginInfo.siteId = process.env.SITEID;
             thirdPartyLoginInfo.thirdParty = "GOOGLE";
             thirdPartyLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
+            thirdPartyLoginInfo.traceId = store.googleadid ? store.googleadid : store.aaid;
             thirdPartyLoginInfo.accessToken = credential.accessToken;
             thirdPartyLoginInfo.idToken = credential.idToken;
 
@@ -598,6 +606,8 @@ export default defineComponent({
                     message: "Google login successfully",
                     icon: "check_circle_outline"
                   });
+
+                  trackRegisterSuccessEvent();
 
                   store.autoLogin(res.data);
                   sessionStorage.removeItem("REFERRAL_CODE");
@@ -673,12 +683,12 @@ export default defineComponent({
         isLoading.value = false;
       } else {
         var qs = require("qs");
-        const sidParam = store.aaid || store.googleadid || store.visitorId;
+        const sidParam = store.googleadid || store.aaid || store.visitorId;
 
         (async () => {
-          // if (store.aaid) {
-          //   regForm.traceId = store.aaid;
-          // }
+          if (store.aaid) {
+            regForm.traceId = store.aaid;
+          }
           regForm.sid = sidParam;
 
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
@@ -708,7 +718,7 @@ export default defineComponent({
                   message: "Registered successfully",
                   icon: "check_circle_outline"
                 });
-                localStorage.setItem("newPlayerGuide", 1)
+                localStorage.setItem("newPlayerGuide", 1);
                 //FB Tracking.
                 if (store.isFbPixel || store.isTkPixel) {
                   if (store.isFbPixel) {
@@ -1049,7 +1059,8 @@ export default defineComponent({
       isRestrictedDomain,
       router,
       onClickGoogleSignin,
-      onCapacitorGoogleSignin
+      onCapacitorGoogleSignin,
+      languageVal
     };
   }
 });
