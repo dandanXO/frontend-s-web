@@ -54,11 +54,16 @@ a:hover {
   justify-content: center;
   align-items: center;
   width:100%;
+  /*gap: 10px;*/
 }
 
 .top-wrapper img:not(.xf-logo) {
   width: 100%;
-  max-width: 200px;
+  max-width: 220px;
+}
+
+.lh-logo{
+
 }
 
 .xf-logo {
