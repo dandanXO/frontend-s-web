@@ -9,6 +9,11 @@ const router = createRouter({
       component: () => import('../views/DashboardView.vue'),
     },
     {
+      path: '/login',
+      name: '登录页',
+      component: () => import('../views/LoginView.vue'),
+    },
+    {
       path: '/member',
       name: '会员',
       component: () => import('../views/Member/MemberListView.vue'),
@@ -28,4 +33,14 @@ const router = createRouter({
   ],
 })
 
+router.beforeEach((to, from, next) => {
+  const token = sessionStorage.getItem('token')
+  const isLoginPage = to.path === '/login'
+
+  if (!token && !isLoginPage) {
+    next('/login')
+  } else {
+    next()
+  }
+})
 export default router

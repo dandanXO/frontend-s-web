@@ -8,6 +8,8 @@ export default {
       OPEN: 'Open',
       CLOSE: 'Close',
       TEST: 'Test',
+      SUCCESS: 'Success',
+      FAIL: 'Fail'
     },
   },
   affiliate: {
@@ -591,6 +593,10 @@ export default {
     blacklist: 'Blacklist',
     whitelist: 'Whitelist'
   },
+  referFriendBnwType: {
+    Referer: 'Referer',
+    IP: "IP"
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -648,6 +654,7 @@ export default {
     addCalculateAmountAdjust: "Calculated Account Adjustment",
     addMemberPrivilegeBlacklist: 'Add Member Privilege Blacklist',
     addMemberRebateRule: 'Add Member Rebate Rule',
+    addMemberReferWhitelist: 'Add Member Refer Whitelist',
     addMenu: 'Add Menu',
     addNodes: 'Add Nodes',
     addPayType: 'Add Pay Type',
@@ -995,6 +1002,7 @@ export default {
     desktopBanner: 'Desktop Banner',
     deskTopBannerDark: 'Desktop Banner Dark',
     details: 'Details',
+    detailMsg: 'Detail Message',
     device: 'Device',
     dif: 'Deposit Difference',
     disable: 'Disable',
@@ -1314,6 +1322,7 @@ export default {
     minno: 'Please insert min',
     maxno: 'Please insert max',
     memberRemark: 'Member Remark',
+    memberReferWhitelist: 'Member Refer Whitelist',
     minActiveMemberCount: 'Minimum Active Member Count',
     minBalance: 'Minimum Balance',
     minBonus: 'Minimum Bonus',
@@ -1380,6 +1389,7 @@ export default {
     notice: 'Notice',
     notRead: 'Not Read',
     notReplied: 'Not Replied',
+    notVerified: 'Not Verified',
     number: 'Number',
     oldMemberDepositAmount: 'Old Member Deposit Amount',
     oldMemberDepositCount: 'Old Member Deposit Count',
@@ -1861,6 +1871,7 @@ export default {
     unlockUser: 'Unlock User',
     url: 'Access URL',
     unsettleCommission: 'Unsettled Commission',
+    uniqueValue: 'Value',
     update: 'Update',
     updateAlias: 'Update Alias',
     updateAwards: 'Update Awards',
@@ -1892,6 +1903,7 @@ export default {
     validBetPerSpin: 'Valid Bet Per Spin',
     value: 'Value',
     vcallName: 'Landline phone number',
+    verified: 'Verified',
     verifyBy: 'Verify By',
     verifyTime: 'Verify Time',
     view: 'View',
@@ -2232,7 +2244,7 @@ export default {
     endHour: 'End Hour',
     oldBetAmount: 'Old Site Bet Amount',
     showLogo: 'Show Logo',
-    showTime: 'Show Time',
+    showTime: 'Show Count Down Time',
     adjustTarget: 'Adjust Target',
     ignoreSettlement: 'Ignore Settlement',
     sendType: 'Send Type',
@@ -3087,6 +3099,7 @@ export default {
     'Member Vip Upgrade': 'Member VIP Upgrade',
     'Sync Member Tree': 'Sync Member Tree',
     Sport: 'Sport',
+    'Member Privilege Claim Status': 'Member Privilege Claim Status',
     Affiliate: 'Affiliate',
     'Affiliate Amount Adjust': 'Affiliate Amount Adjust',
     'Affiliate Summary': 'Affiliate Summary',
@@ -3316,6 +3329,7 @@ export default {
     'Member Refer Event': 'Member Refer Event',
     'Member Refer Record': 'Member Refer Record',
     'Member Refer Reward List': 'Member Refer Reward List',
+    'Member Refer BnW List': 'Member Refer BnW List',
     'Refer Rebate': 'Refer Rebate',
     'Domain Access': 'Domain Access',
     'KRW Stats Report': 'KRW Statistics Report',
@@ -3443,6 +3457,8 @@ export default {
     publishStatus: 'Publish Status',
     PENDING: 'Pending',
     PUBLISHED: 'Published',
+    packageName: 'Package Name',
+    lastBuildTime: 'Last Build Time',
   },
   affiliateApk: {
     currentVersion: 'Current Version',
@@ -3570,6 +3586,7 @@ export default {
     WITHDRAW_ERROR: 'Withdraw Error',
     DEPOSIT_ERROR: 'Deposit Error',
     JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: 'Task Idle(Bet Record Fetch)',
+    FIRST_DEPOSIT_FLUCTUATION: 'First deposit fluctuation'
   },
   domain: {
     domainMainType: {

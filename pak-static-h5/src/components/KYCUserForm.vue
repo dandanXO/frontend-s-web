@@ -85,10 +85,10 @@ const isValidPhone = () => {
     return "Please Enter Phone Number";
   }
 
-  const phoneRegex = /^\d{11,20}$/;
+  const phoneRegex = /^\d{11}$/;
   const isValid = phoneRegex.test(phone);
 
-  return isValid ? true : "Phone Number must be 11 digits or more";
+  return isValid ? true : "Phone Number must be 11 digits";
 };
 
 const isAlphanumeric = (value, translation) => {

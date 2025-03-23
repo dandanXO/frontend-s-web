@@ -25,7 +25,7 @@
             <img class="white-svg" src="@/assets/images/auth/phone.svg" />
             <span class="prepend-number">{{ $t("form.prependNumber") }}</span>
           </template>
-          <template v-if="regForm.referrer" v-slot:append>
+          <template v-if="regForm.referrer && store.isShowOTP" v-slot:append>
             <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">{{ otpCountdown > 0 ? `Get Code (${otpCountdown})` : 'Get Code' }}</q-btn>
           </template>
         </q-input>
@@ -59,7 +59,7 @@
         </q-input>
 
         <q-input
-          v-if="regForm.referrer"
+          v-if="regForm.referrer && store.isShowOTP"
           pattern="\d*"
           maxlength="6"
           ref="verificationRef"
@@ -74,6 +74,7 @@
           outlined
           placeholder="Enter your OTP number"
           label-color="brand"
+          :disable="isOtpEnable"
         >
           <template v-slot:prepend>
             <img class="white-svg" src="../assets/images/auth/otp.svg" />
@@ -281,7 +282,15 @@ export default defineComponent({
       getCode();
       getReferralCode();
       getAffiliateCode();
+      checkReferralRegistration();
     });
+    const checkReferralRegistration = () => {
+      api.get("/config/uiconfigs").then((res) => {
+            if (res.code === 0) {
+                store.isShowOTP = res.data?.referral_registration_otp === 'OPEN';
+            }
+        })
+    }
 
     const trackRegisterSuccessEvent = () => {
       if (ui.adjust_register_event && isAndroid()) {
@@ -319,6 +328,14 @@ export default defineComponent({
         verificationRef.value?.hasError ||
         isAgreeReg.value === false
       ) {
+        $q.loading.hide();
+      } else if (regForm.referrer && store.isShowOTP && isOtpEnable.value){
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "Please fill OTP number",
+          icon: "report_problem"
+        });
         $q.loading.hide();
       } else {
         var qs = require("qs");
@@ -439,7 +456,9 @@ export default defineComponent({
       }
     );
 
+    const isOtpEnable = ref(true);
     const openPhoneVeriDialog = () => {
+      isOtpEnable.value = false;
       loginNameRef.value.validate();
       if (!loginNameRef.value.hasError) {
         showCaptchaDialog.value = true;
@@ -571,7 +590,9 @@ export default defineComponent({
       imgOnLoad,
       imgOnError,
       otpCountdown,
-      otpCountdownInterval
+      otpCountdownInterval,
+      isOtpEnable,
+      store
     };
   }
 });

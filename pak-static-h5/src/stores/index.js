@@ -60,7 +60,8 @@ export const userStore = defineStore("userStore", {
       ftd: "CLOSE",
       isTkPixel: false,
       isGoogleLogin: false,
-      isFirstLandOnHomePage: true
+      isFirstLandOnHomePage: true,
+      isReferralReady: false
     };
   },
   actions: {
@@ -127,7 +128,7 @@ export const userStore = defineStore("userStore", {
             SessionStorage.set("TOKEN", ret.data);
           }
           this.token = ret.data;
-          this.getMemberInfo('fromlogin')
+          this.getMemberInfo("fromlogin");
         } else {
           Notify.create({
             color: "negative",
@@ -157,7 +158,7 @@ export const userStore = defineStore("userStore", {
           } else {
             SessionStorage.set("TOKEN", ret.data);
           }
-          this.getMemberInfo('fromlogin')
+          this.getMemberInfo("fromlogin");
         } else {
           Notify.create({
             color: "negative",
@@ -263,14 +264,14 @@ export const userStore = defineStore("userStore", {
             this.evip = exclusive.wap;
           }
           this.unreadInboxMail = 0;
-          if (from === 'fromlogin') {
+          if (from === "fromlogin") {
             if (!this.hasDeposit) {
-              localStorage.setItem("newPlayerGuide", '1');
+              localStorage.setItem("newPlayerGuide", "1");
               localStorage.removeItem("completeddepositguide");
               localStorage.removeItem("completedreferguide");
               localStorage.removeItem("completedwithdrawguide");
             } else {
-              localStorage.setItem("newPlayerGuide", 'END');
+              localStorage.setItem("newPlayerGuide", "END");
             }
           }
           // this.unreadInboxMail = 16;

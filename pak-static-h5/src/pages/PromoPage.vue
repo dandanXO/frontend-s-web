@@ -62,7 +62,13 @@
 
             <div class="selected-promo-wrapper">
               <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
-              <div class="banner-container" v-if="selectedPromo.redirectUrl !== 'pak-jackpot-aviator'">
+              <div
+                class="banner-container"
+                v-if="
+                  selectedPromo.redirectUrl !== 'pak-jackpot-aviator' ||
+                  selectedPromo.redirectUrl !== 'new-player-acc-deposit'
+                "
+              >
                 <!-- <div
                     class="promo-bg"
                     :style="
@@ -75,7 +81,10 @@
                 <!-- <div class="promo-bg"> -->
                 <img
                   class="promo-content"
-                  :class="selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards' ? 'dpsr' : 'usual'"
+                  :class="
+                    (selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards' ? 'dpsr' : 'usual',
+                    selectedPromo.redirectUrl === 'new-player-acc-deposit' ? 'npad' : 'usual')
+                  "
                   :src="imgURL + selectedPromo.mobileBannerUrl"
                 />
                 <!-- </div> -->
@@ -112,6 +121,7 @@
                 class="inner"
                 :class="{
                   isJackpotAviator: selectedPromo.redirectUrl === 'pak-jackpot-aviator',
+                  isNewPlayerAccDeposit: selectedPromo.redirectUrl === 'new-player-acc-deposit',
                   isDepositSpinnerRewards: selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards',
                   isSpinLuckyWheel:
                     selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel-envelope'
@@ -1115,6 +1125,9 @@ export default defineComponent({
             border-radius: 15px;
             margin: 20px auto;
           }
+          &.npad {
+            display: none;
+          }
         }
 
         .promo-bg {
@@ -1176,6 +1189,13 @@ export default defineComponent({
           margin: 0;
           > div:nth-child(2) {
             display: none;
+          }
+        }
+        &.isNewPlayerAccDeposit {
+          width: 100%;
+
+          .select-promo-html {
+            padding: 16px;
           }
         }
 

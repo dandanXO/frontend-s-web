@@ -32,7 +32,7 @@
               <span class="name">{{ record.name }}</span>
               <span>
                 RECEIVE
-                <span class="amount">{{ `${store.currency.value} 500` }}</span>
+                <span class="amount">{{ `${store.currency.value} 5,000` }}</span>
               </span>
             </div>
           </div>
@@ -92,7 +92,7 @@
       </div>
       <ol>
         <li>
-          When the accumulated amount reaches {{ `${store.currency.value} 500` }}, you can apply for withdrawal (Rewards will add to your wallet
+          When the accumulated amount reaches {{ `${store.currency.value} 5,000` }}, you can apply for withdrawal (Rewards will add to your wallet
           directly).
         </li>
         <li>When there are no spin available, refer a new player to get a free spin.</li>
@@ -364,7 +364,7 @@ onUnmounted(() => {
           font-size: 40px;
         }
       }
-      
+
       .extraction-require-amount, .extraction-require-percentage {
         color: #fff;
         font-family: 'Poppins';
@@ -482,7 +482,7 @@ onUnmounted(() => {
           position: relative;
           width: 100%;
           height: 100%;
-          
+
           .wheel {
             width: 100% !important;
           }

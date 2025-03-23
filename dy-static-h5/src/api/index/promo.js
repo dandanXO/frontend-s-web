@@ -341,6 +341,15 @@ export function claimBelgradeBonus(promoCode) {
   return eventapi.post(`/session/bb-dacha-belgrade/claimBonus?v=${randNum}`, qs.stringify({ promoCode }));
 }
 
+export function getVctBangkokInit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition/yesterday?promoCode=${promoCode}&v=${randNum}`);
+}
+export function claimVctBangkokBonus(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}&v=${randNum}`);
+}
+
 export function getCompetitionBetDepositInit(promoCode) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.get(`/session/competition-bet-deposit/init?v=${randNum}`, {
@@ -400,5 +409,12 @@ export function getPGLBucharest2025Bonus(promoCode) {
   return eventapi.get(`/session/competition/yesterday?promoCode=${promoCode}`);
 }
 export function claimPGLBucharest2025Bonus(promoCode) {
+  return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+
+export function getFissureUniverseS4Bonus(promoCode) {
+  return eventapi.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimFissureUniverseS4Bonus(promoCode) {
   return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
 }

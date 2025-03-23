@@ -16,7 +16,7 @@
         <img src="../assets/images/index/btn-close.png" />
       </router-link>
     </div>
-<!-- 
+<!--
     <div class="is-domain top-img">
       <img src="../assets/images/index/register-topimg.png" />
     </div>
@@ -797,7 +797,7 @@ export default defineComponent({
       const absoluteUrl = url;
       window.open(absoluteUrl, "_blank");
     };
-    
+
     const moveCsIcon = (ev) => {
       isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
 
@@ -1051,7 +1051,7 @@ export default defineComponent({
   top: 10px;
   right: 10px;
   width: 30px;
-  img { 
+  img {
     width: 100%;
   }
 }

@@ -14,45 +14,59 @@
     <div class="main-wrapper">
       <div class="full-container">
         <div class="top-wrapper">
-          <img src="img/lh-dy-logo.png" alt="雷火 东赢 logo" title="雷火 东赢 logo" />
+          <img src="img/lh-dy-logo.png" alt="雷火 logo" title="雷火 logo" />
+          <img class="xf-logo" src="img/xf-logo.png" alt="兴发 logo" title="兴发 logo" />
         </div>
 
         <div id="image-container" class="banner-wrapper">
-          <img id="banner-img" src="img/01.png" alt="2024 欧洲杯" title="2024 欧洲杯" />
+          <img id="banner-img" src="img/01.jpg" alt="2024 欧洲杯" title="2024 欧洲杯" />
         </div>
 
         <!-- <a href="#" target="_blank"> -->
-          <div class="announcement-wrapper">
-              <marquee class="announcement-description">充值不上等问题联系在线客服</marquee>
-          </div>
+        <div class="announcement-wrapper">
+          <marquee class="announcement-description">充值不上等问题联系在线客服</marquee>
+        </div>
         <!-- </a> -->
 
         <div class="action-wrapper">
+
+
+
           <div>
-            <a href="#" target="_blank">
-              <div class="action-btn lh-register">
-              </div>
+            <a href="https://www.qual37n5.com" target="_blank">
+              <div class="action-btn lh-register"></div>
             </a>
           </div>
 
           <div>
-            <a href="#" target="_blank">
-              <div class="action-btn download">
-              </div>
+            <a href="https://www.qual37n5.com" target="_blank">
+              <div class="action-btn download"></div>
             </a>
           </div>
 
           <div>
-            <a href="#" target="_blank">
-              <div class="action-btn dy-register">
-              </div>
+            <a href="https://www.dy35445.com" target="_blank">
+              <div class="action-btn dy-register"></div>
             </a>
           </div>
 
           <div>
-            <a href="#" target="_blank">
-              <div class="action-btn download">
-              </div>
+            <a href="https://www.dy35445.com" target="_blank">
+              <div class="action-btn download"></div>
+            </a>
+          </div>
+
+
+
+          <div>
+            <a href="https://www.xf51160.com/" target="_blank">
+              <div class="action-btn xf-register"></div>
+            </a>
+          </div>
+
+          <div>
+            <a href="https://www.xf51160.com/" target="_blank">
+              <div class="action-btn download"></div>
             </a>
           </div>
         </div>
@@ -82,17 +96,17 @@
         </div>
       </div>
 
-<!--      <div class="main-sticky-wrapper" id="scrolldown-tbn">-->
-<!--        <a href="#" target="_blank">-->
-<!--          <div class="main-sticky-btn benefit">-->
-<!--          </div>-->
-<!--        </a>-->
+      <div class="main-sticky-wrapper" id="scrolldown-tbn">
+        <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&amp;k=QOfrYaC_LWnbU9DAaDyhqK5XIyV_KMAh&amp;authKey=kx2JZxcgUQDqO7hI5QoMQg8XYhMtWINsKpdAEMWy6AE%2FjYuTuiCl%2BwEKBN84ZpHf&amp;noverify=0&amp;group_code=7299559" target="_blank">
+          <div class="main-sticky-btn benefit">
+          </div>
+        </a>
 
-<!--        <a href="https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&;lang=zh-CN" target="_blank">-->
-<!--          <div class="main-sticky-btn customer-service">-->
-<!--          </div>-->
-<!--        </a>-->
-<!--      </div>-->
+        <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&amp;k=QOfrYaC_LWnbU9DAaDyhqK5XIyV_KMAh&amp;authKey=kx2JZxcgUQDqO7hI5QoMQg8XYhMtWINsKpdAEMWy6AE%2FjYuTuiCl%2BwEKBN84ZpHf&amp;noverify=0&amp;group_code=7299559" target="_blank">
+          <div class="main-sticky-btn customer-service">
+          </div>
+        </a>
+      </div>
     </div>
 
     <script>
@@ -135,21 +149,21 @@
         //   }
         // });
       });
-      
-    const images = ["img/01.png", "img/02.png", "img/03.png","img/04.png","img/05.png",];
-    let currentIndex = 0;
-    const imgElement = document.getElementById('banner-img');
 
-    function changeImage() {
-      imgElement.classList.add('fade-out');
-      setTimeout(() => {
-        currentIndex = (currentIndex + 1) % images.length;
-        imgElement.src = images[currentIndex];
-        imgElement.classList.remove('fade-out');
-      }, 1000); // 1 second duration for fade out
-    }
+      const images = ["img/01.jpg", "img/02.jpg", "img/03.jpg", "img/04.jpg", "img/05.jpg"];
+      let currentIndex = 0;
+      const imgElement = document.getElementById("banner-img");
 
-    setInterval(changeImage, 3000);
+      function changeImage() {
+        imgElement.classList.add("fade-out");
+        setTimeout(() => {
+          currentIndex = (currentIndex + 1) % images.length;
+          imgElement.src = images[currentIndex];
+          imgElement.classList.remove("fade-out");
+        }, 1000); // 1 second duration for fade out
+      }
+
+      setInterval(changeImage, 3000);
     </script>
   </body>
 </html>

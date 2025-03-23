@@ -473,6 +473,10 @@ export default {
     COMPLETED: 'Hoàn thành',
     EXPIRED: 'Hết hạn'
   },
+  referFriendBnwType: {
+    Referer: 'Referer',
+    IP: "IP"
+  },
   fields: {
     account: 'Tài khoản',
     accountHolder: 'Chủ sở hữu tài khoản',
@@ -527,6 +531,7 @@ export default {
     addMemberAmountAdjust: 'Thêm điều chỉnh số tiền thành viên',
     addMemberPrivilegeBlacklist: 'Thêm danh sách đen đặc quyền thành viên',
     addMemberRebateRule: 'Thêm quy tắc hoàn tiền thành viên',
+    addMemberReferWhitelist: 'Thêm danh sách trắng giới thiệu thành viên',
     addMenu: 'Thêm menu',
     addNodes: 'Thêm nút',
     addPayType: 'Thêm loại thanh toán',
@@ -1137,6 +1142,7 @@ export default {
     minno: 'Nhập giá trị tối thiểu',
     maxno: 'Nhập giá trị tối đa',
     memberRemark: 'Ghi chú thành viên',
+    memberReferWhitelist: 'Danh sách trắng giới thiệu thành viên',
     minActiveMemberCount: 'Số lượng thành viên hoạt động tối thiểu',
     minBalance: 'Số dư tối thiểu',
     minDeposit: 'Số tiền gửi tối thiểu',
@@ -1628,6 +1634,7 @@ export default {
     unlockUser: 'Mở Khóa Người Dùng',
     url: 'URL',
     unsettleCommission: 'Chưa Thanh Toán Hoa Hồng',
+    uniqueValue: 'Giá trị',
     update: 'Cập Nhật',
     updateAlias: 'Cập Nhật Bí Danh',
     updateAwards: 'Cập Nhật Giải Thưởng',
@@ -1880,7 +1887,7 @@ export default {
     displayEndTime: 'Hiển thị thời gian kết thúc',
     batchFrozenMember: 'Đóng băng thành viên hàng loạt',
     showLogo: 'hiển thị biểu tượng',
-    showTime: 'Show Time',
+    showTime: 'Show Count Down Time',
     specificMember: 'Specific Member',
     isSeamlessTransfer: 'Không cần chuyển nhượng',
     fromPlatform: 'Từ Nền tảng',

@@ -8,6 +8,8 @@ export default {
       OPEN: '开启',
       CLOSE: '关闭',
       TEST: '测试',
+      SUCCESS: '成功',
+      FAIL: '失败'
     },
   },
   affiliate: {
@@ -594,6 +596,11 @@ export default {
     blacklist: '黑名单',
     whitelist: '白名单'
   },
+  referFriendBnwType: {
+    Referer: '上级账号',
+    IP: "IP地址"
+
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -651,6 +658,7 @@ export default {
     addCalculateAmountAdjust: '存送平账',
     addMemberPrivilegeBlacklist: '新增会员优惠黑名单',
     addMemberRebateRule: '新增会员特殊返水条例',
+    addMemberReferWhitelist: '新增会员邀请白名单',
     addMenu: '新增菜单',
     addNodes: '新增节点',
     addPayType: '新增支付类型',
@@ -998,6 +1006,7 @@ export default {
     desktopBanner: '桌面广告图',
     desktopBannerDark: '桌面广告图（深色）',
     details: '信息',
+    detailMsg: '详情',
     device: '设备',
     dif: '存提差',
     disable: '禁用',
@@ -1299,6 +1308,7 @@ export default {
     memberProfitDownlineProfitUnsettleCommission: '代理盈利/下线盈利/上次结余',
     memberPrivilegeRecord: '会员优惠记录',
     memberRemark: '玩家备注',
+    memberReferWhitelist: '会员邀请白名单',
     memberReport: '会员报表',
     memberType: '会员类型',
     memberWithdrawLog: '会员提款日志',
@@ -1383,6 +1393,7 @@ export default {
     notRead: '未读',
     notReplied: '未回复',
     notRegister: '未注册',
+    notVerified: '未验证',
     number: '数字',
     oldMemberDepositAmount: '老用户存款金额',
     oldMemberDepositCount: '老用户存款次数',
@@ -1864,6 +1875,7 @@ export default {
     unlockSetting: '解锁设置',
     unlockUser: '解锁用户',
     unsettleCommission: '上次结余',
+    uniqueValue: '数值',
     url: '访问 URL',
     update: '更新',
     updateAlias: '更新别名',
@@ -1896,6 +1908,7 @@ export default {
     validBetPerSpin: '每次转盘所需有效投注',
     value: '值',
     vcallName: '座机号',
+    verified: '已验证',
     verifyBy: '验证者',
     verifyTime: '验证时间',
     view: '查看',
@@ -2235,7 +2248,7 @@ export default {
     endHour: '结束小时',
     oldBetAmount: '老站流水金额',
     showLogo: '显示图标',
-    showTime: '显示时间',
+    showTime: '显示倒计时时间',
     adjustTarget: '平账目标',
     ignoreSettlement: '忽略结算',
     sendType: '发送方法',
@@ -3039,6 +3052,7 @@ export default {
     'Member Vip Upgrade': '会员 VIP 升级记录',
     'Sync Member Tree': '同步邀请关系',
     Sport: '体育',
+    'Member Privilege Claim Status': '会员优惠领取状态',
     Affiliate: '代理',
     'Affiliate Amount Adjust': '代理平账记录',
     'Affiliate Summary': '代理总结',
@@ -3267,6 +3281,7 @@ export default {
     'Member Refer Event': '会员邀请活动',
     'Member Refer Record': '会员邀请记录',
     'Member Refer Reward List': '会员邀请奖励记录',
+    'Member Refer BnW List': '会员邀请白名单',
     'Refer Rebate': '邀请奖励',
     'Domain Access': '域名访问设置',
     'KRW Stats Report': '韩国站点数据报表',
@@ -3393,6 +3408,8 @@ export default {
     publishStatus: '发布状态',
     PENDING: '待发布',
     PUBLISHED: '已发布',
+    packageName: '包名',
+    lastBuildTime: '最后打包时间',
   },
   affiliateApk: {
     currentVersion: '当前版本',
@@ -3520,7 +3537,8 @@ export default {
     WITHDRAW_ERROR: '提款请求报错',
     DEPOSIT_ERROR: '存款请求报错',
     JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: '任务闲置 (注单捞取)',
-    OTP_FAIL: 'OTP 发送失败'
+    OTP_FAIL: 'OTP 发送失败',
+    FIRST_DEPOSIT_FLUCTUATION: '首存波动'
   },
   domain: {
     domainMainType: {

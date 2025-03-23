@@ -155,7 +155,8 @@
                 v-model="verificationForm.newPassword"
                 :rules="[
                   (val) => (val && val.length > 0) || $t('form.newPassword_rules_01'),
-                  (val) => val.length > 6 || $t('form.newPassword_rules_02')
+                  (val) => val.length > 5 || $t('form.newPassword_rules_02'),
+                  (val) => val.length < 13 || $t('form.newPassword_rules_03')
                 ]"
                 rounded
                 outlined
