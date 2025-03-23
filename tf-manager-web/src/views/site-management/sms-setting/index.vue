@@ -97,6 +97,9 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.type')" prop="type">
+          <el-input v-model="form.type" style="width: 350px" />
+        </el-form-item>
         <el-form-item :label="t('fields.signName')" prop="signName">
           <el-input v-model="form.signName" style="width: 350px" />
         </el-form-item>
@@ -185,6 +188,11 @@
         v-if="!hasRole(['SUB_TENANT'])"
       />
       <el-table-column prop="siteName" :label="t('fields.site')" width="120" />
+      <el-table-column
+        prop="type"
+        :label="t('fields.type')"
+        min-width="100"
+      />
       <el-table-column
         prop="signName"
         :label="t('fields.signName')"
@@ -357,6 +365,7 @@ const request = reactive({
 const form = reactive({
   id: null,
   siteId: null,
+  type: null,
   signName: null,
   secretId: null,
   secretKey: null,
@@ -369,6 +378,7 @@ const form = reactive({
 })
 
 const formRules = reactive({
+  type: [required(t('message.validateTypeRequired'))],
   signName: [required(t('message.validateSignNameRequired'))],
   secretId: [required(t('message.validateSecretIdRequired'))],
   secretKey: [required(t('message.validateSecretKeyRequired'))],

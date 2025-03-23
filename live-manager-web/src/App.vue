@@ -1,7 +1,8 @@
 <template>
   <Toast />
 
-  <LoginView v-if="!isLoggedIn" />
+  <RouterView v-if="router.currentRoute.value.path === '/login'" />
+
   <BlockUI :blocked="store.isAuthLoading" style="width: 100vw; height: 100vh" v-else>
     <div class="layout">
       <HeaderComponent style="margin: 10px 10px 0" />
@@ -20,18 +21,41 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, watch } from 'vue'
 import { RouterView } from 'vue-router'
 import HeaderComponent from './components/Header/HeaderComponent.vue'
 import PanelMenuComponent from './components/PanelMenuComponent.vue'
-import LoginView from './views/LoginView.vue'
-import Toast from 'primevue/toast'
+import { useToast } from 'primevue/usetoast'
 import { useUserStore } from '@/stores/userStore'
-import { storeToRefs } from 'pinia'
+import router from './router'
+import { eventBus } from './utils/eventBus'
 
 const store = useUserStore()
+const toast = useToast()
 
-const { isLoggedIn } = storeToRefs(store)
+let toastTimeout = ref(null)
+
+const processToastQueue = () => {
+  try {
+    if (eventBus.toastQueue.length > 0) {
+      const currentToast = eventBus.toastQueue[0]
+      toast.add(currentToast)
+
+      toastTimeout.value = setTimeout(() => {
+        eventBus.toastQueue.shift()
+        processToastQueue()
+      }, currentToast.life)
+    }
+  } catch (e) {}
+}
+watch(
+  () => eventBus.toastQueue,
+  (newQueue) => {
+    if (newQueue.length > 0) {
+      processToastQueue()
+    }
+  },
+)
 </script>
 
 <style lang="scss" scoped>

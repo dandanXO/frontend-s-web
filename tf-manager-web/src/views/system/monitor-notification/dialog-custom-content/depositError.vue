@@ -56,7 +56,7 @@
           <el-button type="primary" @click="submitForm" style="width: 100%">送出</el-button>
         </el-col>
         <el-col v-if="props.mode === 'update'" :span="6">
-          <TestTriggerButton title="BONUS_FLUCTUATION" />
+          <TestTriggerButton title="DEPOSIT_ERROR" />
         </el-col>
       </el-row>
     </el-form>

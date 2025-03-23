@@ -385,7 +385,7 @@
         </div>
         <div class="loading__text">Loading...</div>
       </div>
-      <div class="blank-iframe" id="iframe-container"></div>
+      <!-- <div class="blank-iframe" id="iframe-container"></div> -->
     </div>
 
     <div class="modal-open" style="display: none">
@@ -473,6 +473,7 @@
         .then((res) => {
           console.log("Success:", res);
           const { affiliateCode } = res.data;
+          localStorage.setItem("PWA_AFFILIATE_CODE", affiliateCode);
           // alert(affiliateCode);
 
           fetch(`https://ap1d5gcci.4kcjx19nzj8.com/app/adjust/params?affiliateCode=${affiliateCode}`, {

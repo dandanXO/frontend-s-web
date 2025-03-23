@@ -310,6 +310,8 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
 import { useI18n } from "vue-i18n";
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
+import { i18nStore } from "../router/language";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
   name: "LoginPage",
@@ -322,6 +324,8 @@ export default defineComponent({
   },
   setup() {
     const { t } = useI18n();
+    const i18nStoreLanguage = i18nStore();
+    const { languageVal } = storeToRefs(i18nStoreLanguage);
     const ui = useUI();
     const tab = ref("login");
     const loginType = ref(false);
@@ -953,7 +957,8 @@ export default defineComponent({
       isRestrictedDomain,
       router,
       onCapacitorGoogleSignin,
-      onClickGoogleSignin
+      onClickGoogleSignin,
+      languageVal
     };
   }
 });

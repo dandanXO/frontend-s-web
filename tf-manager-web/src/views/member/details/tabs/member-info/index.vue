@@ -277,6 +277,13 @@
             {{ t('fields.show') }}
           </el-button>
 
+          <el-tag v-if="memberDetail.phoneVerified" size="mini" type="success" style="float: right; margin-right: 10px">
+            {{ t('fields.verified') }}
+          </el-tag>
+          <el-tag v-else size="mini" type="danger" style="float: right; margin-right: 10px">
+            {{ t('fields.notVerified') }}
+          </el-tag>
+
           <el-button
             style="margin-left: 5px"
             icon="el-icon-phone"
@@ -318,6 +325,7 @@
           </template>
           <span v-if="memberDetail.email !== ''">{{ memberDetail.email }}</span>
           <span v-if="memberDetail.email === ''">-</span>
+
           <el-button
             type="info"
             size="mini"
@@ -328,6 +336,12 @@
           >
             {{ t('fields.show') }}
           </el-button>
+          <el-tag v-if="memberDetail.emailVerified" size="mini" type="success" style="float: right; margin-right: 10px">
+            {{ t('fields.verified') }}
+          </el-tag>
+          <el-tag v-else size="mini" type="danger" style="float: right; margin-right: 10px">
+            {{ t('fields.notVerified') }}
+          </el-tag>
         </el-descriptions-item>
         <el-descriptions-item
           label-align="left"
