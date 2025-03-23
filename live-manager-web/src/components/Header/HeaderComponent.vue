@@ -57,6 +57,7 @@ import ThemeToggle from './ThemeToggle.vue'
 import BreacrumbComponent from './BreacrumbComponent.vue'
 import { useToast } from 'primevue/usetoast'
 import { useUserStore } from '@/stores/userStore'
+import router from '@/router'
 
 const store = useUserStore()
 
@@ -68,9 +69,9 @@ const onLogout = () => {
   store.isAuthLoading = true
 
   setTimeout(() => {
-    store.isLoggedIn = false
     sessionStorage.removeItem('token')
     store.isAuthLoading = false
+    router.replace({ path: '/login' })
     toast.add({ severity: 'success', summary: '成功退出', life: 3000 })
   }, 2000)
 }

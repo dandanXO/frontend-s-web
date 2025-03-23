@@ -493,6 +493,10 @@ export default {
     COMPLETED: '완료',
     EXPIRED: '만료'
   },
+  referFriendBnwType: {
+    Referer: 'Referer',
+    IP: "IP"
+  },
   fields: {
     account: '계정',
     accountHolder: '계정 소유자',
@@ -547,6 +551,7 @@ export default {
     addMemberAmountAdjust: '회원 금액 조정 추가',
     addMemberPrivilegeBlacklist: '회원 특권 블랙리스트 추가',
     addMemberRebateRule: '회원 리베이트 규칙 추가',
+    addMemberReferWhitelist: '회원 초대 화이트리스트 추가',
     addMenu: '메뉴 추가',
     addNodes: '노드 추가',
     addPayType: '결제 유형 추가',
@@ -1158,6 +1163,7 @@ export default {
     minno: '최소값을 입력하세요',
     maxno: '최대값을 입력하세요',
     memberRemark: '회원 비고',
+    memberReferWhitelist: '회원 초대 화이트리스트',
     minActiveMemberCount: '최소 활동 회원 수',
     minBalance: '최소 잔액',
     minDeposit: '최소 입금',
@@ -1651,6 +1657,7 @@ export default {
     unlockUser: '사용자 잠금 해제',
     url: '접속 URL',
     unsettleCommission: '미결 제휴 수수료',
+    uniqueValue: '값',
     update: '업데이트',
     updateAlias: '별명 업데이트',
     updateAwards: '상을 업데이트',

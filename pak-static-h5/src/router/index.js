@@ -10,6 +10,8 @@ import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
 import { useGtag } from "vue-gtag-next";
 
+let isRedirected = false;
+
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
@@ -41,6 +43,10 @@ export default route(function (/* { store, ssrContext } */) {
     const user = userStore();
     const ui = useUI();
     const $q = useQuasar();
+
+    if (to.query.adjust_referrer) {
+      sessionStorage.setItem("ADJUST_REFERRER", to.query.adjust_referrer);
+    }
 
     if (user.token && from && from.href) {
       user.getBalance();
@@ -107,16 +113,26 @@ export default route(function (/* { store, ssrContext } */) {
     // }
     if (to.name === "agentCode") {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
+      user.isReferralReady = true;
+      isRedirected = true;
+
       if (to.query.reg) {
-        next(`/register`);
+        next("/register");
       } else {
-        next(`/`);
+        next("/");
       }
     }
     if (to.name === "referCode") {
       sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
       localStorage.removeItem("REG_REFERRAL_CODE");
-      next(`/register`);
+      user.isReferralReady = true;
+      isRedirected = true;
+      next("/register");
+    }
+
+    if (!isRedirected) {
+      user.isReferralReady = true;
+      isRedirected = true;
     }
 
     if (to.name === "RegisterPage") {

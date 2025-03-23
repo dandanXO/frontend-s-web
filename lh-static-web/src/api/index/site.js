@@ -16,6 +16,9 @@ export function getCSAFromServer() {
 export function getFloatingItems() {
   return server.REST.get("/redirect");
 }
+export function getLoggedInFloatingItems() {
+  return server.REST.get("/session/loggedInRedirect");
+}
 
 export function submitMemberStats(stats) {
   return server.REST.post("/memberStatistics/submit", stats);

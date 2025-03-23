@@ -623,3 +623,10 @@ export function getPGLBucharest2025Bonus(promoCode) {
 export function claimPGLBucharest2025Bonus(promoCode) {
   return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
 }
+
+export function getFissureUniverseS4Bonus(promoCode) {
+  return eventapi.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimFissureUniverseS4Bonus(promoCode) {
+  return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
