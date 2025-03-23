@@ -44,6 +44,10 @@ export default route(function (/* { store, ssrContext } */) {
     const ui = useUI();
     const $q = useQuasar();
 
+    if (to.query.adjust_referrer) {
+      sessionStorage.setItem("ADJUST_REFERRER", to.query.adjust_referrer);
+    }
+
     if (user.token && from && from.href) {
       user.getBalance();
     }
@@ -111,10 +115,11 @@ export default route(function (/* { store, ssrContext } */) {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
       user.isReferralReady = true;
       isRedirected = true;
+
       if (to.query.reg) {
-        next(`/register`);
+        next("/register");
       } else {
-        next(`/`);
+        next("/");
       }
     }
     if (to.name === "referCodeSpin") {
@@ -127,7 +132,7 @@ export default route(function (/* { store, ssrContext } */) {
       localStorage.removeItem("REG_REFERRAL_CODE");
       user.isReferralReady = true;
       isRedirected = true;
-      next(`/register`);
+      next("/register");
     }
 
     if (!isRedirected) {

@@ -54,11 +54,16 @@ a:hover {
   justify-content: center;
   align-items: center;
   width:100%;
+  /*gap: 10px;*/
 }
 
 .top-wrapper img:not(.xf-logo) {
   width: 100%;
-  max-width: 200px;
+  max-width: 220px;
+}
+
+.lh-logo{
+
 }
 
 .xf-logo {
@@ -92,7 +97,6 @@ a:hover {
   background: url("../img/xf-item.png") no-repeat center center;
   background-size: 100% 100%;
   aspect-ratio: 532/256;
-  margin: 4px 2px 4px;
 }
 
 .action-btn.dy-register {
