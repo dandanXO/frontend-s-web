@@ -32,7 +32,7 @@ const isLoading = ref(false);
 
 const selfTgurl = ref("");
 const copyShareLink = (selfTgurl) => {
-  const copiedText = `¿Quieres desbloquear tu recompensa de ${store.currency.value} 100 de inmediato? Haz clic en el enlace: ${selfTgurl}`;
+  const copiedText = `¿Quieres desbloquear tu recompensa de ${store.currency.value} 500 de inmediato? Haz clic en el enlace: ${selfTgurl}`;
 
   copyToClipboard(copiedText)
     .then(() => {
