@@ -1,7 +1,7 @@
 <template>
   <q-footer v-if="ui.footer" :style="ui.bottomInsetHeight > 0 ? `bottom: ${ui.bottomInsetHeight}px;` : ''" unelevated>
     <q-tabs v-model="tab" no-caps :breakpoint="0" align="justify" indicator-color="white" narrow-indicator>
-      <q-route-tab to="/home" name="home" exact :ripple="false">
+      <q-route-tab to="/home" name="home" id="home" :ripple="false">
         <div class="footer-img">
           <img class="inactive" src="../assets/images/index/menu/icon-home.png" />
           <img class="hover" src="../assets/images/index/menu/icon-home-hover.png" />
