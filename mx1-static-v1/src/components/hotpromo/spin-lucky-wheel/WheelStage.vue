@@ -32,7 +32,7 @@
               <span class="name">{{ record.name }}</span>
               <span>
                 RECIBE
-                <span class="amount">{{ `${store.currency.value} 100` }}</span>
+                <span class="amount">{{ `${store.currency.value} 500` }}</span>
               </span>
             </div>
           </div>
@@ -92,7 +92,7 @@
       </div>
       <ol>
         <li>
-          Cuando el monto acumulado alcance {{ `${store.currency.value} 100` }}, puedes solicitar el retiro (Las recompensas se agregarán directamente a tu billetera).
+          Cuando el monto acumulado alcance {{ `${store.currency.value} 500` }}, puedes solicitar el retiro (Las recompensas se agregarán directamente a tu billetera).
         </li>
         <li>Cuando no haya giros disponibles, invita a un nuevo jugador para obtener un giro gratis.</li>
         <li>
@@ -360,7 +360,7 @@ onUnmounted(() => {
           font-size: 40px;
         }
       }
-      
+
       .extraction-require-amount, .extraction-require-percentage {
         color: #fff;
         font-family: 'Poppins';
@@ -478,7 +478,7 @@ onUnmounted(() => {
           position: relative;
           width: 100%;
           height: 100%;
-          
+
           .wheel {
             width: 100% !important;
           }
