@@ -1,46 +1,40 @@
 <template>
   <q-page class="account-message-page">
+    <q-tabs dense
+      no-caps
+      indicator-color="transparent"
+      align="justify" v-model="activeTab" class="message-tab-toggle">
+        <q-tab name="activity" :label="$t('message.activity')">
+          <q-badge rounded color="#219efb" text-color="black" floating>{{unreadCount('activity')}}</q-badge>
+        </q-tab>
+        
+        <q-tab name="payment" :label="$t('message.payment')">
+          <q-badge rounded color="#219efb" text-color="black" floating>{{unreadCount('payment')}}</q-badge>
+        </q-tab>
+        
+        <q-tab name="system" :label="$t('message.system')">
+          <q-badge rounded color="#219efb" text-color="black" floating>{{unreadCount('system')}}</q-badge>
+        </q-tab>
+    </q-tabs>
     <LoadingComponent v-if="isLoading"></LoadingComponent>
-    <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Message"></NoInfoComponent>
-    <q-card v-else v-for="(e, i) in mailData" :key="`${e}-${i}`" class="msg-container">
-      <div class="time-wrapper">
-        <div class="time">{{ convertToGMT55(e.sendTime) }}
-         
-          <!-- <img
-        class="new-message-ribbon"
-        src="../../assets/images/message/new-message-ribbon.svg"
-        v-if="!e.status && store.readMsgLists.indexOf(e.id) === -1"
-      /> -->
-        </div>
-        <div class="new-message-ribbon" v-if="!e.readTime"></div>
-     
-      </div>
-
-      <div class="message-wrapper">
-        <q-card-section class="title">
-          <div>{{ e.title }}</div>
-        </q-card-section>
-        <q-card-section class="content">{{ e.content }}</q-card-section>
-
-        <q-card-section class="bottom-wrapper">
-          <q-btn class="detail-btn" @click="onDetailsClick(e)" flat unelevated>
-            {{ $t("btn.more") }}&nbsp;
-            <q-icon class="forward-icon" name="keyboard_arrow_down" size="medium" />
-          </q-btn>
-        </q-card-section>
-      </div>
-    </q-card>
+    <q-tab-panels v-model="activeTab" animated>
+      <q-tab-panel v-for="(items, tab) in filteredMessages" :key="tab" :name="tab">
+        <NoInfoComponent v-if="items.length === 0" noInfoTitle="No Message" />
+        <MessageCard v-else v-for="(e) in items" :key="e.id" :message="e" @details="onDetailsClick" />
+      </q-tab-panel>
+    </q-tab-panels>
   </q-page>
 </template>
 
 <script setup>
-import { ref, onMounted, onActivated } from "vue";
+import { ref, onMounted, onActivated, computed } from "vue";
 import { useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { userStore } from "stores/index";
 import { convertToGMT55 } from "src/boot/utils";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
+import MessageCard from "../../components/MessageCard.vue";
 
 const router = useRouter();
 const store = userStore();
@@ -62,9 +56,12 @@ const isActiveSlide = (e) => {
 };
 
 const isLoading = ref(true);
-const isNoInfo = ref(true);
+const isNoInfo = computed(() => {
+  return Object.values(filteredMessages.value).every((items) => items.length === 0);
+});
 const readIdLists = ref([]);
 const mailData = ref([]);
+const activeTab = ref("activity");
 const mailboxData = ref({
   type: null,
   orderBy: "sendTime"
@@ -81,9 +78,6 @@ const loadInbox = () => {
       if (response.code === 0) {
         const record = response.data.records;
         mailData.value = record;
-
-        if (record.length === 0) isNoInfo.value = true;
-        else isNoInfo.value = false;
       }
     })
     .catch((error) => {
@@ -100,6 +94,16 @@ const onDetailsClick = (mailData) => {
   // NOTE: /session/inbox/read api call inside message-detail page onMounted
   router.push("/account/message-detail");
 };
+const filteredMessages = computed(() => ({
+  activity: mailData.value.filter((e) => ["ACTIVITY", "MATCH"].includes(e.type)),
+  payment: mailData.value.filter((e) => e.type === "PAYMENT"),
+  system: mailData.value.filter((e) => ["NOTIFICATION", "ANNOUNCEMENT"].includes(e.type)),
+}));
+
+const unreadCount = (tab) => {
+  const messages = filteredMessages.value[tab] || [];
+  return messages.filter(message => !message.readTime).length;
+};
 
 onActivated(() => {
   loadInbox();
@@ -109,115 +113,76 @@ onActivated(() => {
 
 <style lang="scss" scoped>
 .account-message-page {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  // padding: 0 20px;
-  padding: 20px;
-}
-.msg-container {
-  padding: 1rem;
-  margin: 0;
-  border-radius: 10px;
-  // border: 1px solid rgba(255, 255, 255, 0.05);
-  // background: #2e30344f;
-  background: #323738;
-
-  position: relative;
-  box-shadow: none;
-  backdrop-filter: blur(4px);
-
-  &:has(.new-message-ribbon) {
-    //background: #2e30344f;
-    // border: 1px solid #00AE00
+  :deep(.q-tab-panels) {
+    background: transparent;
   }
-
-  .time-wrapper {
-    position: relative;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 5px;
-    margin-bottom: 15px;
-    font-weight: 700;
-    .new-message-ribbon {
-      // position: absolute;
-      // right: 0;
-      // top: 0;
-      // width: 30px;
-      // height: 30px;
-      background: #21EF89;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+  .message-tab-toggle {
+    // background: url(../../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
+    background: #323738;
+    background-size: 100% 100%;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    margin-top: 5px;
+    padding: 1px;
+    width: calc(100% - 32px);
+    margin: 16px auto 0;
+    .q-tab {
+      min-height: 45px;
+      border-radius: 8px;
+      color: #ffffff80;
+      font-weight: 400;
+      width: 50%;
+      .q-badge {
+        top: 10px;
+        right: -20px;
+      }
     }
 
-    .time {
-      font-size: 1rem;
-      // font-weight: 700;
-      color: #FFFFFFB2;
-
+    .right {
+      color: white;
+      // background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-right.png) no-repeat center center;
+      background-size: 0;
     }
-  }
 
-  .message-wrapper {
-    height: 100%;
-    width: 100%;
-    min-height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
+    .left {
+      color: white;
+      // background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
+      background-size: 0;
+    }
 
-  .title {
-    font-size: 16px;
-    font-weight: 700;
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 10px;
-
-    .status {
-      border-radius: 12.5rem;
-      background: rgba(255, 255, 255, 0.2);
-      font-size: 1rem;
+    :deep(.q-tab__label) {
       font-weight: 700;
-      padding: 0 1rem;
-      min-height: unset;
-      color: $negative;
+      // color: #FFFFFF80;
     }
-  }
 
-  .content {
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.5);
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* Limit to 2 lines */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    height: auto; /* Adjust automatically */
-    max-height: 40px; /* Adjust based on font-size & line-height */
-    line-height: 20px; /* Ensure spacing is correct */
-    margin-bottom: 15px;
-  }
+    :deep(.q-tab--active) {
+      color: white;
+      // background-size: 100% 100%;
+      // background: linear-gradient(
+      //   180deg,
+      //   rgba(97, 255, 0, 0) 0%,
+      //   rgba(97, 255, 0, 0.25) 50.5%,
+      //   rgba(97, 255, 0, 0) 100%
+      // );
+      // box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
 
-  .bottom-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin: 1rem 0 0 0;
+      // &:before {
+      //   content: "";
+      //   background-color: #21EF89;
+      //   height: 3px;
+      //   border-radius: 4px;
+      //   width: 30%;
+      //   position: absolute;
+      //   bottom: 0;
+      //   left: 50%;
+      //   transform: translateX(-50%);
+      // }
+      background: #394142;
 
-    .detail-btn {
-    font-size: 1rem;
-    padding: 0.2rem 1rem;
-    min-height: unset;
-    text-transform: capitalize;
-    background: #464F50;
-    border-radius: 6px;
-    display: flex
-;
-    justify-content: center;
-    font-weight: 700;
-    align-items: center;
+    }
+
+    :deep(.q-tab--active .q-tab__label) {
+      font-weight: 700 !important;
     }
   }
 }

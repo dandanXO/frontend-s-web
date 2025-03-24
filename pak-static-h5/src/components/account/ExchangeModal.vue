@@ -4,11 +4,10 @@
     :modelValue="modelValue"
     persistent
     @update:modelValue="(value) => emit('update:modelValue', value)"
-    class="flex-end"
   >
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="emit('update:modelValue', false)" />
-      <div class="popout-dialog-container">
+      <div class="popout-dialog-container" style="border-radius: 20px;">
         <div class="txt-title">{{ $t("form.exchangeTitle") }}</div>
         <div class="pc-form">
           <div class="pc-form-item">

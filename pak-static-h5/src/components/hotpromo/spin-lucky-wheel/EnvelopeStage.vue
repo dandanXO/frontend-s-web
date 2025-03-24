@@ -240,6 +240,8 @@ onUnmounted(() => {
         width: 80%;
         transform: translate(-50%, -50%);
         margin: 0 auto;
+        background-image: url('../../../assets/images/promotion/hotpromo/spin-lucky-wheel/common-btn-gold.png');
+        color: #8A2C05;
       }
 
       .remaining-time {

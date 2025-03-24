@@ -106,12 +106,12 @@
       <div class="prize-popup">
         <!-- <q-btn icon="close" flat round dense v-close-popup class="q-ml-auto" /> -->
         <div class="prize-gold">
-          <!--          <div class="prize-get">You get the reward</div>-->
+                   <div class="prize-get">You get {{ prizePopupBonusAmt }} PRK</div>
 
           <div class="prize-amount">{{ prizePopupBonusAmt }} PRK</div>
-        </div>
 
-        <q-btn no-caps unelevated class="btn-primary" @click="closeDialog">{{ $t("btn.claim") }}</q-btn>
+<q-btn no-caps rounded unelevated class="purple-bg" @click="closeDialog">{{ $t("btn.recharge") }}</q-btn>
+        </div>
       </div>
     </q-dialog>
   </div>
@@ -832,6 +832,9 @@ const transformStyle = computed(() => {
 .prize-popup {
   width: 100%;
   margin-bottom: 120px;
+  .purple-bg {
+    background: linear-gradient(90deg, #5856FF 0%, #262E99 100%);
+  }
 }
 .prize-gold {
   width: 95%;
@@ -843,29 +846,45 @@ const transformStyle = computed(() => {
 
   .prize-get {
     position: absolute;
-    bottom: 20%;
+    bottom: 28%;
     font-family: Manrope;
     font-size: 13px;
     font-weight: 700;
     line-height: 22.1px;
     text-align: center;
-    color: #ffffff;
+    color: #5254AD;
+
   }
   .prize-amount {
     position: absolute;
-    bottom: 5%;
+    bottom: 15%;
     font-family: Poppins;
     font-size: 30px;
     font-weight: 900;
     line-height: 45px;
     margin-bottom: 0px;
     text-align: center;
-    color: #fff96f;
-    text-shadow: 1px 1px #0000008a;
+    letter-spacing: -2px;
+    // color: #fff96f;
+    // text-shadow: 1px 1px #0000008a;
+    background: linear-gradient(270deg, #394AE2 0%, #6B89FF 52.5%, #394AE2 100%);
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke:.7px white; /* Creates the border */
 
     @media (max-width: 380px) {
       bottom: 3.5%;
     }
+  }
+  .q-btn.purple-bg {
+    position: absolute;
+    bottom: 5%;
+    width: 50%;
+    color:#EDE7FF;
+    font-weight: 700;
+    font-family: 'Poppins';
   }
 }
 </style>

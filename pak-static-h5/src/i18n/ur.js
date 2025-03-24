@@ -643,6 +643,11 @@ export default {
     slot: "الیکٹرانک",
     vip: "وی آئی پی"
   },
+  message: {
+    activity: "سرگرمی",
+    payment: "ادائیگی",
+    system: "نظام",
+  },
   playerGuide: {
     welcomeMessage: "آپ کو خوش آمدید",
     teachingHowToEarn: "ہم آپ کو آسانی سے پیسہ کمانا سکھائیں گے!",

@@ -58,6 +58,8 @@ const _modelValue = computed({
     left: 50%;
     width: 80%;
     transform: translateX(-50%);
+    background-image: url('../../../assets/images/promotion/hotpromo/spin-lucky-wheel/common-btn-gold.png');
+    color: #8A2C05;
   }
 }
 

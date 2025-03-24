@@ -31,13 +31,13 @@
 
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
     <div class="congrats-container">
-      <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header.png" /></div>
-      <div class="congrats-coupons"><img src="../../../assets/images/index/modal/congrats-coupons.png" /></div>
+      <!-- <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header.png" /></div>
+      <div class="congrats-coupons"><img src="../../../assets/images/index/modal/congrats-coupons.png" /></div> -->
       <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
       <div class="congrats-highlight">Rs28</div>
 
       <div class="congrats-button">
-        <q-btn no-caps unelevated class="btn-primary" :loading="false" @click="router.push('/deposit')">
+        <q-btn no-caps unelevated :loading="false" @click="router.push('/deposit')">
           {{ $t("btn.recharge") }}
         </q-btn>
       </div>
@@ -660,9 +660,12 @@ onMounted(() => {
 <style lang="scss" scoped>
 .congrats-button {
   position: absolute;
-  bottom: -60px;
+  bottom: 8%;
   left: 50%;
   transform: translateX(-50%);
+  background: url(img/purpleglow-btn.png)no-repeat center center;
+  background-size: contain;
+  padding: 8px 20px;
 }
 .congrats-wrapper {
   overflow: hidden;
@@ -672,26 +675,32 @@ onMounted(() => {
   align-items: center;
 }
 .congrats-container {
-  background-color: #113413;
+  // background-color: #113413;
   max-width: 400px;
   width: 100%;
   padding: 16px;
   position: relative;
   overflow: visible;
   border-radius: 12px;
+  background: url('img/modal-bg.png')no-repeat center center;
+  background-size: contain;
+  min-height: 500px;
 
   &:before {
-    content: "";
-    background-image: url(../../../assets/images/index/modal/congrats-container-light.png);
-    background-size: 100% 100%;
-    background-position: center center;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 150px;
-    position: absolute;
-    left: 0;
-    top: -150px;
+    display: none;
   }
+  // &:before {
+  //   content: "";
+  //   background-image: url(../../../assets/images/index/modal/congrats-container-light.png);
+  //   background-size: 100% 100%;
+  //   background-position: center center;
+  //   background-repeat: no-repeat;
+  //   width: 100%;
+  //   height: 150px;
+  //   position: absolute;
+  //   left: 0;
+  //   top: -150px;
+  // }
 
   .congrats-header {
     display: flex;
@@ -716,25 +725,44 @@ onMounted(() => {
   }
 
   .congrats-title {
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
+    // color: #ffffff;
+    // display: flex;
+    // justify-content: center;
+    // font-size: 16px;
+    // font-weight: bold;
+    // text-align: center;
+    color: #B573FF;
+    text-shadow: 0.57px 0.57px #00000040;
+    font-family: "Manrope";
+    font-weight: 700;
+    font-size: 13.9px;
+    line-height: 170%;
+    position: absolute;
+    top: 41%;
+    left: 0;
+    right: 0;
+    margin: auto;
+
   }
 
   .congrats-highlight {
-    color: #fff96f;
-    font-size: 26px;
-    font-weight: bold;
-    text-align: center;
-    background-image: url(../../../assets/images/index/modal/congrats-highlight-bg.png);
-    padding: 2px 12px;
-    background-repeat: no-repeat;
-    background-size: 70% 100%;
-    background-position: center;
-    margin-top: 16px;
+    // color: #fff96f;
+    // font-size: 26px;
+    // font-weight: bold;
+    // text-align: center;
+    // background-image: url(../../../assets/images/index/modal/congrats-highlight-bg.png);
+    padding: 15px 12px;
+    // background-repeat: no-repeat;
+    // background-size: 70% 100%;
+    // background-position: center;
+    // margin-top: 16px;
+    background: unset;
+    position: absolute;
+    top: 60%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    color: #CF3AFF;
   }
 }
 </style>
@@ -742,7 +770,20 @@ onMounted(() => {
 <style lang="scss">
 .pak-newplayer-welcome-spin-table {
   border-collapse: collapse !important;
-
+  tr:nth-child(2),tr:nth-child(4) {
+    td:nth-child(2) {
+      p {
+        color: #FFC554;
+      }
+    }
+  }
+  tr:nth-child(3) {
+    td:nth-child(2) {
+      p {
+        color: #6D8FF5;
+      }
+    }
+  }
   th {
     background: linear-gradient(rgba(122,1,288, 100%), rgba(122,1,288, 85%)) !important;
   }

@@ -647,6 +647,11 @@ export default {
     slot: "SLOT",
     vip: "VIP"
   },
+  message: {
+    activity: "Activity",
+    payment: "Payment",
+    system: "System",
+  },
   playerGuide: {
     welcomeMessage: "Welcome to",
     teachingHowToEarn: "Let us teach you how to make money easily!",

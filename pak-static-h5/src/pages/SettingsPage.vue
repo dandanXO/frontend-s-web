@@ -534,7 +534,8 @@ const handleCopyClick = async () => {
     display: block;
   }
   background: url(../assets/images/account/setting-bg.png)no-repeat center center;
-  padding-top: 175px;
+  // padding-top: 175px;
+  padding-top: 60px;
   background-size: cover;
   position: relative;
 
