@@ -11,7 +11,7 @@
     <div class="qr-wrapper invite-win-section">
       <q-spinner v-if="isLoading" :size="30" />
       <VueQRCodeComponent v-else id="the-qrcode" :size="120" :text="selfTgurl" class="qr-code" />
-      <span class="desc">Do you want to unlock your {{`${store.currency.value} 500`}} reward right away? Invite your friends for a free spin!</span>
+      <span class="desc">Do you want to unlock your {{`${store.currency.value} 5,000`}} reward right away? Invite your friends for a free spin!</span>
       <q-btn label="Save" :size="'150'" class="save-btn" @click="downloadQRImg()" />
     </div>
   </div>
@@ -32,7 +32,7 @@ const isLoading = ref(false);
 
 const selfTgurl = ref("");
 const copyShareLink = (selfTgurl) => {
-  const copiedText = `Do you want to unlock your ${store.currency.value} 500 reward right away? Click the link: ${selfTgurl}`;
+  const copiedText = `Do you want to unlock your ${store.currency.value} 5,000 reward right away? Click the link: ${selfTgurl}`;
 
   copyToClipboard(copiedText)
     .then(() => {
