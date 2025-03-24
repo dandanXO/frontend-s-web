@@ -20,6 +20,9 @@
       </div>
       <!-- <div class="download-count">({{ topDownloadCount }}s)</div> -->
     </div>
+  </div><div class="menu-open" :class="{ open: menuOpen }">
+    <div style="height: 56px" v-if="topDownload && !ui.hideDownload"></div>
+    <SideMenu @closeMenu="toggleMenuOpen()" />
   </div>
   <div
     class="infoboard-container"
@@ -31,9 +34,9 @@
   >
     <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
-      <!-- <div class="profile-menu">
-        <img src="../assets/images/auth/auth-menu.png" @click="toggleMenuOpen()" />
-      </div> -->
+      <div class="profile-menu">
+        <img src="../assets/images/auth/icon-more.png" @click="toggleMenuOpen()" />
+      </div>
       <div class="profile-wrapper-extra">
         <div class="logo-img" style="cursor: pointer;" @click="onClickLogo">
           <img src="../assets/images/auth/bg-logo-only.png" />
@@ -194,6 +197,7 @@ import { cached, TIME_EXPIRED } from "boot/cache";
 import { useI18n } from "vue-i18n";
 import LangOptions from "components/LangOptions";
 import BonusModal from "./modal/BonusModal.vue";
+import SideMenu from "components/SideMenu.vue";
 
 import { defineEmits } from "vue";
 import { useCustomerTrigger } from "src/hooks/trigger";
@@ -531,9 +535,10 @@ onUnmounted(() => {
 
   .side-menu {
     padding-top: 72px;
-    background-color: #131313;
-    width: 202px;
-    height: 100%;
+    // background-color: #131313;
+    // width: 202px;
+    // height: 100%;
+    height: calc(100vh - 50px);
     display: flex;
     flex-direction: column;
     padding-left: 16px;
@@ -778,7 +783,7 @@ onUnmounted(() => {
       .notification-wrapper {
         height: 20px;
         width: 20px;
-        padding-right: 20px;
+        // padding-right: 20px;
         border-right: 1px solid #FFFFFF33;
         img {
           height: 20px;
@@ -796,7 +801,7 @@ onUnmounted(() => {
       .gift-wrapper {
         height: 20px;
           width: 20px;
-    padding-left: 20px;
+    // padding-left: 20px;
 
         img {
         height:20px;
@@ -893,7 +898,7 @@ onUnmounted(() => {
         background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
         font-size: 12px;
         font-weight: 700;
-        margin-right: 10px;
+        margin-right: 3px;
         border-radius: 50%;
         padding: 5px;
         font-family: Microsoft YaHei UI;
@@ -926,10 +931,17 @@ onUnmounted(() => {
 
   .profile-menu {
     display: flex;
+    background: #FFFFFF0D;
+    padding: 5px;
+    border: 1px solid #ffffffc6;
+    backdrop-filter: blur(5.349878311157227px);
+    border-radius: 10px;
+    margin-top: 5px;
+    border-bottom-color: #ffffff0d;
 
     img {
       display: block;
-      width: 30px;
+      width: 20px;
     }
   }
 
@@ -992,6 +1004,7 @@ onUnmounted(() => {
     color: #ffffff;
     font-weight: 700;
     font-style: italic;
+    display: none ;
     img {
       width: 68%;
       margin-left: -7px;

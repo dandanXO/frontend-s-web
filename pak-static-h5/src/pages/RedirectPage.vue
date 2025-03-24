@@ -3,6 +3,7 @@
     <!--    <h1>Redirecting Soon...</h1>-->
     <!-- <h1 id="countdown">Waiting time : {{ countdown }} seconds;</h1> -->
     <!--    <p class="redirect-info">Please wait while we take you to your destination.</p>-->
+    
   </div>
 </template>
 
@@ -96,13 +97,26 @@ body {
   align-items: center;
   max-width: 500px;
   margin: auto;
-
-  @for $i from 1 through 10 {
-    &.special-bg-#{$i} {
-      background: url("../assets/images/redirect/#{$i}.png") no-repeat center center;
-      background-size: 100% 100%;
-    }
+  background: url("../assets/images/redirect/0.png") no-repeat center center;
+  background-size: contain;
+  background-color: #041814;
+  &:after {
+    background: url("../assets/images/redirect/logo.gif") no-repeat center center;
+    content: "";
+    position: absolute;
+    bottom: 2vh;
+    width: 80%;
+    height: 6vh;
+    // transform: translateX(50%, -50%);
+    background-size: contain;
+    
   }
+  // @for $i from 1 through 10 {
+  //   &.special-bg-#{$i} {
+  //     background: url("../assets/images/redirect/#{$i}.png") no-repeat center center;
+  //     background-size: 100% 100%;
+  //   }
+  // }
 }
 
 h1 {

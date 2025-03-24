@@ -1,12 +1,12 @@
 <template>
   <q-footer v-if="ui.footer" :style="ui.bottomInsetHeight > 0 ? `bottom: ${ui.bottomInsetHeight}px;` : ''" unelevated>
     <q-tabs v-model="tab" no-caps :breakpoint="0" align="justify" indicator-color="white" narrow-indicator>
-      <q-route-tab to="/side-menu" name="sidemenu" exact :ripple="false">
+      <q-route-tab to="/home" name="home" exact :ripple="false">
         <div class="footer-img">
           <img class="inactive" src="../assets/images/index/menu/icon-home.png" />
           <img class="hover" src="../assets/images/index/menu/icon-home-hover.png" />
         </div>
-        <span class="footer-label">{{ $t("bottomNav.more") }}</span>
+        <span class="footer-label">{{ $t("bottomNav.home") }}</span>
       </q-route-tab>
       <q-route-tab class="cs-web-id" to="/promo" id="cs-web-id" name="live" :ripple="false">
         <div class="footer-img">

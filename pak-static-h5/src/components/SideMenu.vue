@@ -1,7 +1,6 @@
 <template>
-<ProfileSummary :homeProfile="true" />
+<!-- <ProfileSummary :homeProfile="true" /> -->
 
-  <div class="menu-open">
     <div class="side-menu" @click.stop>
       <RouterLink to="/earn-money" class="side-menu-item side-menu-item__invite">
         <div>
@@ -133,16 +132,18 @@
       <!-- <LangOptions /> -->
       <!-- </div> -->
     </div>
-  </div>
 </template>
 <script setup>
+import { defineEmits } from "vue";
 
 import { useRouter } from "vue-router";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import { useUI } from "stores/ui";
+const emits = defineEmits(["closeMenu"]);
 const router = useRouter();
 const ui = useUI();
 const activateSlide = (item) => {
+  emits("closeMenu");
     router.push(`/home#${item}`);
     console.log(item)
 };
