@@ -278,6 +278,8 @@ const getGameLabel = (gameLabel) => {
     return "MG 电子";
   } else if (gameLabel === "AG") {
     return "XIN 电子";
+  } else if (gameLabel === "PPFP") {
+    return "PP熊猫 电子";
   } else {
     return gameLabel + " 电子";
   }
