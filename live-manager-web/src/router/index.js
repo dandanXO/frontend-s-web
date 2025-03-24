@@ -30,6 +30,18 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: '/stream',
+      name: '流媒体',
+      component: () => import('../views/Stream/StreamListView.vue'),
+      children: [
+        {
+          path: 'list',
+          name: '流媒体列表',
+          component: () => import('../components/Stream/StreamList.vue'),
+        },
+      ],
+    },
   ],
 })
 

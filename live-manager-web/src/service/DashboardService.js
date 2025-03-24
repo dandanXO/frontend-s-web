@@ -273,4 +273,24 @@ export const DashboardService = {
       },
     ])
   },
+
+  getStreamList() {
+    const token = sessionStorage.getItem('token')
+    return api
+      .get('/session/getSchedules', {
+        headers: {
+          'token': `${token}`
+        }
+      })
+      .then((response) => {
+        if (response.code === 0) {
+          return response.data
+        }
+        return []
+      })
+      .catch((error) => {
+        console.error('獲取流媒體列表失敗:', error)
+        return []
+      })
+  },
 }

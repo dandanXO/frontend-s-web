@@ -9,6 +9,19 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const items = ref([
+{
+    label: '流媒体',
+    icon: 'pi pi-user',
+    items: [
+      {
+        label: '流媒体列表',
+        icon: 'pi pi-user',
+        command: () => {
+          router.push('/stream/list')
+        },
+      },
+    ],
+  },
   {
     label: '会员',
     icon: 'pi pi-user',
