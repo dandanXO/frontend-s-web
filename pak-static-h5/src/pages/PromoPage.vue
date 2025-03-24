@@ -45,7 +45,9 @@
                       </div>
                       <div class="promo-info">
                         <span class="viewdetail">{{ promo.title }}</span>
-                        <span class="date">{{ $t('hotPromo.promoEndsOn') }}: {{ moment(promo.displayEndTime).format('YYYY-MM-DD') }}</span>
+                        <span class="date">
+                          {{ $t("hotPromo.promoEndsOn") }}: {{ moment(promo.displayEndTime).format("YYYY-MM-DD") }}
+                        </span>
                       </div>
                     </a>
                   </div>
@@ -806,7 +808,7 @@ export default defineComponent({
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    color: #FFFFFF80;
+    color: #ffffff80;
     font-weight: 400;
     width: 50%;
   }
@@ -921,7 +923,7 @@ export default defineComponent({
   min-height: calc(100vh - 160px);
 
   .all-promotions {
-    padding-bottom: 20px;
+    // padding-bottom: 20px;
     @keyframes fadein {
       100% {
         opacity: 1;
@@ -1070,7 +1072,7 @@ export default defineComponent({
             display: flex;
             justify-content: flex-start;
             align-items: flex-start;
-            background: #292D2E;
+            background: #292d2e;
 
             padding: 10px 20px;
             gap: 0px;
@@ -1092,7 +1094,7 @@ export default defineComponent({
               text-transform: uppercase;
             }
             .date {
-              color:#B2BDBF;
+              color: #b2bdbf;
               font-family: Microsoft YaHei UI;
               font-weight: 400;
               font-size: 12px;
@@ -1214,18 +1216,18 @@ export default defineComponent({
                 padding: 15px 0;
               }
               td:first-child {
-                border-right: 1px solid #FFFFFF1A;
+                border-right: 1px solid #ffffff1a;
               }
               tr:first-of-type td {
-                  background: #323738;
-                  color:#FFFFFF80;
-                  border: 0;
-                  &:first-child {
-                    border-radius: 10px 0 0 0;
-                  }
-                  &:last-child {
-                    border-radius: 0 10px 0 0;
-                  }
+                background: #323738;
+                color: #ffffff80;
+                border: 0;
+                &:first-child {
+                  border-radius: 10px 0 0 0;
+                }
+                &:last-child {
+                  border-radius: 0 10px 0 0;
+                }
               }
               tr:nth-child(even) td {
                 background: #394142;
@@ -1234,7 +1236,7 @@ export default defineComponent({
                 background: #323738;
               }
               tr:not(:first-of-type) td:last-child {
-                color: #FFD400;
+                color: #ffd400;
               }
             }
           }
@@ -1273,7 +1275,7 @@ export default defineComponent({
             padding: 5px;
             text-align: center;
 
-            background: linear-gradient(180deg, #21EF89 0%, #33562d 100%);
+            background: linear-gradient(180deg, #21ef89 0%, #33562d 100%);
 
             &:first-child {
               border-top-left-radius: 8px;
@@ -1373,7 +1375,7 @@ export default defineComponent({
   .q-tab--active .q-tab__indicator {
     width: 100%;
     height: 2px;
-    background: #21EF89;
+    background: #21ef89;
   }
 
   .q-tab__label {
