@@ -1182,20 +1182,6 @@ build-image-bgd-static-v1:
 
 #===============================================================================================
 
-build-xf-static-v2:
-  extends: .build-projects
-  variables:
-    PROJECT: xf-static-v2
-
-build-image-xf-static-v2:
-  extends: .docker-build
-  variables:
-    PROJECT: xf-static-v2
-  needs:
-    - build-xf-static-v2
-
-#===============================================================================================
-
 build-pk2-redirect-v3:
   extends: .build-projects
   variables:
