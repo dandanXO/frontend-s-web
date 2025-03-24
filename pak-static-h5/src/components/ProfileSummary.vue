@@ -105,11 +105,11 @@
               <div class="profile-pic-frame" v-if="!homeProfile"></div>
 
               <div class="vip-details">
-                <img class="bg" src="../assets/images/index/vip-row1.png" alt="" />
-                <div class="vip-level">
-                  <img src="../assets/images/index/viptext.png" alt="" />
-                  {{ store.vip.replace('VIP', '') }}
-                </div>
+                <img
+                  class="bg"
+                  :src="require(`../assets/images/index/vip-badge/vip-${store.vip.replace('VIP', '')}.png`)"
+                  alt=""
+                />
               </div>
             </div>
           </template>
@@ -265,12 +265,6 @@ const activateSlide = (item) => {
   menuOpen.value = false;
 };
 
-const profileImg = [
-  {
-    imgPath: ["profile-pic"]
-  }
-];
-
 const goLogin = () => {
   if (props.homeProfile) {
     emits("closeslot");
@@ -283,16 +277,15 @@ const randomProfileImg = computed(() => {
   if (storedImg) {
     return storedImg;
   } else {
-    const randomProfile = profileImg[0];
-    const randomIndex = Math.floor(Math.random() * randomProfile.imgPath.length);
-    const imgPath = randomProfile.imgPath[randomIndex];
+    const randomIndex = Math.floor(Math.random() * 24) + 1;
+    const imgPath = `image-${randomIndex}`;
     sessionStorage.setItem("PROFILE_IMG", imgPath);
     return imgPath;
   }
 });
 
 const profileImagePath = computed(() => {
-  return require(`../assets/images/account/${randomProfileImg.value}.png`);
+  return require(`../assets/images/account/profile/${randomProfileImg.value}.png`);
 });
 
 const isLoadingBalance = ref(false);
@@ -401,13 +394,6 @@ const isSideDownload = ref(false);
 const afterMounted = useCustomerTrigger(loadCustomerAddress);
 
 onMounted(() => {
-  if (!sessionStorage.getItem("PROFILE_IMG")) {
-    const randomProfile = profileImg[0];
-    const randomIndex = Math.floor(Math.random() * randomProfile.imgPath.length);
-    const imgPath = randomProfile.imgPath[randomIndex];
-    sessionStorage.setItem("PROFILE_IMG", imgPath);
-  }
-
   checkTopDownloadAppear();
   ui.shouldFetchDownloadAppUrl = true;
 

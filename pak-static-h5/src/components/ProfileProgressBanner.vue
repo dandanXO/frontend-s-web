@@ -7,10 +7,11 @@
         </q-avatar>
 
         <div class="vip-details" @click="onVipClick">
-          <img src="../assets/images/index/vip-row.png" alt="" />
-          <div class="vip-level">
-            {{ store.vip }}
-          </div>
+          <img
+            class="bg"
+            :src="require(`../assets/images/index/vip-badge/vip-${store.vip.replace('VIP', '')}.png`)"
+            alt=""
+          />
         </div>
       </div>
 
@@ -55,26 +56,20 @@ const progressRef = ref(store.currentDeposit.toFixed(2));
 let progressBarRef = ref();
 progressBarRef.value = 1 - progressRef.value / maxProgress;
 
-const profileImg = [
-  {
-    imgPath: ["profile-pic"]
-  }
-];
 const randomProfileImg = computed(() => {
   const storedImg = sessionStorage.getItem("PROFILE_IMG");
   if (storedImg) {
     return storedImg;
   } else {
-    const randomProfile = profileImg[0];
-    const randomIndex = Math.floor(Math.random() * randomProfile.imgPath.length);
-    const imgPath = randomProfile.imgPath[randomIndex];
+    const randomIndex = Math.floor(Math.random() * 24) + 1;
+    const imgPath = `image-${randomIndex}`;
     sessionStorage.setItem("PROFILE_IMG", imgPath);
     return imgPath;
   }
 });
 
 const profileImagePath = computed(() => {
-  return require(`../assets/images/account/${randomProfileImg.value}.png`);
+  return require(`../assets/images/account/profile/${randomProfileImg.value}.png`);
 });
 </script>
 
