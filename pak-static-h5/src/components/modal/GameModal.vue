@@ -367,7 +367,8 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
   if (store.memberType !== "TEST" && gameType === "TEST") {
     visibleComingSoon.value = true;
   } else {
-    const _isPlatformAllowNonLogin = isPlatformAllowNonLogin(demo);
+    // const _isPlatformAllowNonLogin = isPlatformAllowNonLogin(demo);
+    const _isPlatformAllowNonLogin = false;
     if (store.hasToken() || _isPlatformAllowNonLogin) {
       if (platformCode !== "LuckySport") {
         visible.value = true;
