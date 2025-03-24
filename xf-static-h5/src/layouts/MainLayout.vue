@@ -162,6 +162,10 @@ export default defineComponent({
             var platformName =
               route.query.platform == "BBINDY" ? "BBIN" : translateRecord(route.query.platform, "SLOT");
             pageName.value = `${platformName}游戏大厅`;
+
+            if(route.query.platform == "PPFP") {
+              pageName.value = "PP熊猫 电子";
+            }
           }
         } else if (route.path === "/forgot-account") {
           prevPage.value = "login";
@@ -416,6 +420,11 @@ export default defineComponent({
         id: "33",
         code: "CQ9",
         icon: "CQ9"
+      },
+      {
+        id: "162",
+        code: "PPFP",
+        icon: "PPFP"
       }
     ]);
 
