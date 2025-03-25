@@ -18,7 +18,7 @@
               v-model="agentAccountId"
               ref="agentAccountIdRef"
               hide-bottom-space
-              @keyup="checkAgentId()"
+              @keydown.enter="checkAgentId()"
               :rules="[(val) => (val && val.length > 0) || $t('form.telegramDiscordId_rules_01')]"
             >
               <template v-slot:append>
