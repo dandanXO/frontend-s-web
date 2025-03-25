@@ -240,7 +240,7 @@ export const slotPlatforms = [
   },
   {
     code: "PPFP",
-    cnname: "PP熊猫 电子",
+    cnname: "FP 电子",
     image: "PPFP",
     message: "",
     caption: "",
