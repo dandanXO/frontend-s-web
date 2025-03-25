@@ -3321,6 +3321,7 @@ export default {
     'Member Privilege Record Pak Export': '会员优惠记录导出 - 巴基斯坦',
     'Refer Spin Claim Record': '邀请转盘领取记录',
     'Refer Spin Record': '邀请转盘记录',
+    'Official CS Account': '官方客服账号'
   },
   google: {
     google_auth_menu: '谷歌验证',

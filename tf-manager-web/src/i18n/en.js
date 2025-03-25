@@ -3369,6 +3369,7 @@ export default {
     'Member Privilege Record Pak Export': 'Member Privilege Record Pak Export',
     'Refer Spin Claim Record': 'Refer Spin Claim Record',
     'Refer Spin Record': 'Refer Spin Record',
+    'Official CS Account': 'Official CS Account'
   },
   google: {
     google_auth_menu: 'Google Authenticator',
