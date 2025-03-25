@@ -270,11 +270,11 @@ const openCSInNewTab = (url) => {
         padding-left: 18px;
         font-size: 80%;
         color: #13553d;
-        font-family: Microsoft YaHei UI;
+        font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
         font-weight: 700;
         font-size: 20.21px;
         line-height: 17.21px;
-        letter-spacing: 0%;
+        letter-spacing: 0;
         font-variant: small-caps;
         height: 80px;
         &:after {
@@ -296,9 +296,8 @@ const openCSInNewTab = (url) => {
 
       &__appdownload {
         background: #373c3d;
-        font-size: 80%;
         color: #ffffff;
-        font-family: Microsoft YaHei UI;
+        font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
         font-weight: 700;
         font-size: 16.21px;
         line-height: 17.21px;

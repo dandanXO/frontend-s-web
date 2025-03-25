@@ -32,8 +32,7 @@
         <q-tab name="register" :label="$t('header.register')" />
       </q-tabs>
     </div> -->
-    <div class="reg-pg-title">{{ $t('header.register') }}</div>
-
+    <div class="reg-pg-title">{{ $t("header.register") }}</div>
 
     <div class="register-form-wrapper">
       <q-form class="rounded-borders">
@@ -224,7 +223,8 @@
       </q-btn>
 
       <div class="areyounew">
-        Already have an account? <a @click="regLoginTab = 'login'" class="green">Login</a>
+        Already have an account?
+        <a @click="regLoginTab = 'login'" class="green">Login</a>
       </div>
 
       <div class="google-login-wrapper">
@@ -1283,14 +1283,14 @@ function charType(num) {
   }
 }
 .reg-pg-title {
-  font-family: Microsoft YaHei UI;
-font-weight: 700;
-font-size: 16px;
-line-height: 100%;
-letter-spacing: 0px;
-vertical-align: middle;
-color: #ffffff;
-padding: 0 20px;
+  font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  color: #ffffff;
+  padding: 0 20px;
 }
 
 .register-form-wrapper {
@@ -1376,7 +1376,7 @@ padding: 0 20px;
     border-radius: 4px;
   }
   :deep(.q-checkbox__inner--truthy .q-checkbox__bg) {
-    background: #21EF89;
+    background: #21ef89;
 
     svg {
       color: #000000;
@@ -1535,7 +1535,7 @@ padding: 0 20px;
 .areyounew {
   margin: 15px 0;
   .green {
-    color: #21EF89;
+    color: #21ef89;
     font-weight: 700;
     cursor: pointer;
   }

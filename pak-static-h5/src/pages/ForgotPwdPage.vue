@@ -588,15 +588,14 @@ onMounted(() => {
     // line-height: 25px;
     // color: #ffffff67;
     width: 80%;
-    font-family: Microsoft YaHei UI;
+    font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
-    letter-spacing: 0%;
+    letter-spacing: 0;
     text-align: center;
-    color: #B2BDBF;
+    color: #b2bdbf;
     margin: 0 auto;
-
   }
 }
 

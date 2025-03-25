@@ -216,17 +216,26 @@
           <div class="bot-wrapper">
             <div class="info">
               <div class="desc-wrapper">
-                <div class="desc"><img src="../../assets/images/account/withdraw-amt.svg">{{ $t("withdraw.withdrewAmount") }}</div>
+                <div class="desc">
+                  <img src="../../assets/images/account/withdraw-amt.svg" />
+                  {{ $t("withdraw.withdrewAmount") }}
+                </div>
               </div>
-              <div class="desc"><img src="../../assets/images/account/right-green.svg"><span>RS:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawAmount) }}</span></div>
+              <div class="desc">
+                <img src="../../assets/images/account/right-green.svg" />
+                <span>RS:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawAmount) }}</span>
+              </div>
             </div>
 
             <div class="info">
               <div class="desc-wrapper">
-                <div class="desc"><img src="../../assets/images/account/remain-wagers.svg">{{ $t("withdraw.remainWagers") }}</div>
+                <div class="desc">
+                  <img src="../../assets/images/account/remain-wagers.svg" />
+                  {{ $t("withdraw.remainWagers") }}
+                </div>
               </div>
               <div class="desc remain-wager-wrapper" @click="refreshRemainWager">
-                <img src="../../assets/images/account/right-green.svg">
+                <img src="../../assets/images/account/right-green.svg" />
                 <q-spinner v-if="isRefreshRemainWager" />
                 <span v-else>RS:{{ convertToCommaAmount(selectedWithdrawalMethod.remainWagers) }}</span>
                 <img
@@ -239,9 +248,12 @@
 
             <div class="info">
               <div class="desc-wrapper">
-                <div class="desc"><img src="../../assets/images/account/withdraw-max.svg">{{ $t("withdraw.withdrawMaxTimes") }}</div>
+                <div class="desc">
+                  <img src="../../assets/images/account/withdraw-max.svg" />
+                  {{ $t("withdraw.withdrawMaxTimes") }}
+                </div>
               </div>
-              <div class="desc" style="color: #FBAB1B">{{ selectedWithdrawalMethod.withdrawMaxTimes }}</div>
+              <div class="desc" style="color: #fbab1b">{{ selectedWithdrawalMethod.withdrawMaxTimes }}</div>
             </div>
           </div>
 
@@ -1037,7 +1049,7 @@ watch(
         // opacity: 0.8;
         // background: linear-gradient(90deg, #157f42 -1.25%, rgba(44, 97, 67, 0) 104.06%);
         // background: linear-gradient(90deg, #13f129 -1.25%, #131313 104.06%);
-        
+
         // padding: 5px 10px;
         // text-transform: uppercase;
 
@@ -1088,16 +1100,15 @@ watch(
 }
 
 .bottom-btn {
-  
   margin-top: auto;
   padding: 20px 15px 40px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    max-width: 468px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #24262b;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: 468px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #24262b;
 }
 
 .tutorial-link {
@@ -1150,7 +1161,8 @@ watch(
     img {
       width: 100%;
       background: #394142;
-      padding: 5px;        border-radius: 10px;
+      padding: 5px;
+      border-radius: 10px;
     }
 
     &.active {
@@ -1158,8 +1170,8 @@ watch(
       // color: #db7e42;
       // box-shadow: none;
       // filter: drop-shadow(0px 0px 3px #ffffff);
-      img {    background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
-
+      img {
+        background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
       }
 
       .type-name {
@@ -1214,7 +1226,7 @@ watch(
   justify-content: space-between;
   gap: 20px;
   margin: 1rem 0 0.5rem 0;
-  background: #373C3D;
+  background: #373c3d;
   padding: 10px;
   border-radius: 10px;
   .info {
@@ -1236,33 +1248,32 @@ watch(
       align-items: center;
       justify-content: center;
       gap: 5px;
-      color: #B2BDBF;
+      color: #b2bdbf;
       font-weight: 700;
       .desc {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-        font-family: Microsoft YaHei UI;
-font-weight: 700;
-line-height: 20px;
-letter-spacing: 2%;
-text-transform: capitalize;
-
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 700;
+        line-height: 20px;
+        letter-spacing: 2%;
+        text-transform: capitalize;
       }
     }
 
     .desc {
-      font-size: .925rem;
+      font-size: 0.925rem;
       font-weight: 400;
       display: flex;
       gap: 5px;
       justify-content: center;
       align-items: center;
       span {
-        color: #21EF89;
+        color: #21ef89;
         &.orange {
-          color: #FBAB1B;
+          color: #fbab1b;
         }
       }
       .refresh-btn-img {
@@ -1280,7 +1291,7 @@ text-transform: capitalize;
       align-items: center;
       gap: 3px;
       cursor: pointer;
-      color: #21EF89;
+      color: #21ef89;
     }
   }
 }
@@ -1293,7 +1304,7 @@ text-transform: capitalize;
   align-items: center;
   justify-content: space-around;
   border-radius: 0.625rem;
-  background: #373C3D;
+  background: #373c3d;
   width: 100%;
 
   text-align: center;
@@ -1330,7 +1341,7 @@ text-transform: capitalize;
   }
 
   .title {
-    color: #9F9F9F;
+    color: #9f9f9f;
   }
 
   span {
@@ -1355,8 +1366,8 @@ text-transform: capitalize;
     align-items: center;
     justify-content: center;
     color: #150025;
-    background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
-    box-shadow: 0px 2px 0px 0px #1CCA6A;
+    background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+    box-shadow: 0px 2px 0px 0px #1cca6a;
     text-transform: uppercase;
 
     .card-label {

@@ -13,7 +13,7 @@
     />
     <img v-else class="title-img" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/rules-title.png" /> -->
     <div class="rule-common-title">
-      {{ $t('hotPromo.jackpotAviator.rules') }}
+      {{ $t("hotPromo.jackpotAviator.rules") }}
     </div>
     <!--        <div class="rule-item">{{ $t('hotPromo.jackpotAviator.rules1') }}</div><br/>-->
     <!--        <div class="rule-item">{{ $t('hotPromo.jackpotAviator.rules2') }}</div><br/>-->
@@ -34,9 +34,8 @@
       src="../../../assets/images/promotion/hotpromo/jackpot-aviator/activity-rules-title.png"
     /> -->
 
-    
     <div class="rule-common-title">
-      {{ $t('hotPromo.jackpotAviator.activityRules') }}
+      {{ $t("hotPromo.jackpotAviator.activityRules") }}
     </div>
     <ol class="rules">
       <li class="rule-item">{{ $t("hotPromo.jackpotAviator.activityRules1") }}</li>
@@ -59,7 +58,7 @@
     /> -->
 
     <div class="rule-common-title">
-      {{ $t('hotPromo.jackpotAviator.termsConditions') }}
+      {{ $t("hotPromo.jackpotAviator.termsConditions") }}
     </div>
     <ol class="rules">
       <li class="rule-item">{{ $t("hotPromo.jackpotAviator.termsCondition1") }}</li>
@@ -112,7 +111,7 @@ const langVal = computed(() => i18nStoreLanguage.languageVal);
     }
   }
   .rule-common-title {
-    color: #FFFFFF;
+    color: #ffffff;
     font-family: Poppins;
     font-weight: 700;
     font-size: 20.52px;
@@ -128,12 +127,11 @@ const langVal = computed(() => i18nStoreLanguage.languageVal);
     // line-height: 25px;
     text-align: left;
     color: #9f9f9f;
-    font-family: Microsoft YaHei UI;
+    font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 400;
     font-size: 16.55px;
     line-height: 34.48px;
     letter-spacing: 0px;
-
   }
 
   .ranking {
@@ -160,7 +158,7 @@ const langVal = computed(() => i18nStoreLanguage.languageVal);
         font-weight: 700;
         line-height: 18px;
         text-align: center;
-        background: linear-gradient(180deg, #21EF89 0%, #33562d 100%);
+        background: linear-gradient(180deg, #21ef89 0%, #33562d 100%);
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
       }
@@ -185,7 +183,6 @@ const langVal = computed(() => i18nStoreLanguage.languageVal);
       &:nth-child(even) {
         background-color: #113810;
       }
-      
     }
   }
 }

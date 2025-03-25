@@ -1143,8 +1143,8 @@ onMounted(() => {
   // background: #0b0e0d !important;
   // border: 1px solid #072a19;
   border-radius: 0.5rem;
-    border: 1px solid #FFFFFF14;
-    background: #292D2F !important;
+  border: 1px solid #ffffff14;
+  background: #292d2f !important;
 }
 
 :deep(.q-tab__label) {
@@ -1173,11 +1173,11 @@ onMounted(() => {
       height: 4rem;
       font-weight: 600;
       aspect-ratio: 106/64;
-      box-shadow: 0px 2px 0px 0px #2A3637;
+      box-shadow: 0px 2px 0px 0px #2a3637;
       background: #394142;
-      color: #FFFFFF80;
+      color: #ffffff80;
 
-      font-family: Microsoft YaHei UI;
+      font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-weight: 700;
       font-size: 16px;
       line-height: 100%;
@@ -1185,15 +1185,13 @@ onMounted(() => {
       text-align: center;
       vertical-align: middle;
 
-
       &.active {
         // background: #00b900;
         color: #000a01;
         // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-        box-shadow: 0px 2px 0px 0px #1CCA6A;
-        background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+        box-shadow: 0px 2px 0px 0px #1cca6a;
+        background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
         color: #333333;
-
       }
     }
 
@@ -1252,7 +1250,7 @@ onMounted(() => {
       }
 
       .currency {
-        color: #B2BDBF;
+        color: #b2bdbf;
         margin-top: 5px;
         font-weight: 700;
       }
@@ -1388,18 +1386,18 @@ onMounted(() => {
 .bottom-btn {
   margin-top: auto;
   padding: 20px 15px 40px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    max-width: 468px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #24262b;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: 468px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #24262b;
   // margin: 16px;
 }
 
 .tutorial-link {
-  color: #21EF89;
+  color: #21ef89;
   text-decoration: underline;
 }
 

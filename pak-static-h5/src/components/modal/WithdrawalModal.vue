@@ -572,8 +572,8 @@ const isValidCardAddress = () => {
   const result = !cardAddress
     ? "Please Enter Bank Ifsc Code"
     : cardAddress.length < 3
-      ? "Bank IFSC Code Must Be More Than 3 Characters"
-      : true;
+    ? "Bank IFSC Code Must Be More Than 3 Characters"
+    : true;
   return result;
 };
 </script>
@@ -641,7 +641,7 @@ const isValidCardAddress = () => {
     .withdrawal-summary {
       font-family: "Manrope", sans-serif;
       border-radius: 10px;
-      background: #373C3D;
+      background: #373c3d;
       padding: 1rem;
       margin-top: 0;
       display: flex;
@@ -710,7 +710,6 @@ const isValidCardAddress = () => {
         margin: 1rem 0 0.5rem 0;
 
         .bank-card-item {
-          
           padding: 3px;
           border-radius: 8px;
           position: relative;
@@ -720,10 +719,8 @@ const isValidCardAddress = () => {
           align-items: center;
           justify-content: center;
           color: #150025;
-          background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
-          box-shadow: 0px 2px 0px 0px #1CCA6A;
-
-
+          background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+          box-shadow: 0px 2px 0px 0px #1cca6a;
 
           .card-label {
             font-size: 1rem;
@@ -775,7 +772,7 @@ const isValidCardAddress = () => {
         justify-content: space-between;
         gap: 10px;
         // margin: 1rem 0 0.5rem 0;
-        background: #373C3D;
+        background: #373c3d;
 
         .info {
           display: flex;
@@ -789,8 +786,8 @@ const isValidCardAddress = () => {
             align-items: center;
             justify-content: center;
             gap: 5px;
-            color: #B2BDBF;
-            font-family: Microsoft YaHei UI;
+            color: #b2bdbf;
+            font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
             font-weight: 700;
             font-size: 12px;
             line-height: 20px;
@@ -809,7 +806,7 @@ const isValidCardAddress = () => {
           .desc {
             font-size: 0.825rem;
             font-weight: 400;
-            color: #21EF89;
+            color: #21ef89;
           }
         }
       }

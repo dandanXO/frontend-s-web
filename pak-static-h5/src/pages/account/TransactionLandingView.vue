@@ -57,13 +57,13 @@ watch(
     border-radius: 8px;
     margin: 20px 16px 4px;
     padding: 1px;
-    font-family: Microsoft YaHei UI;
-font-weight: 700;
-font-size: 14px;
-line-height: 100%;
-letter-spacing: 0px;
-text-align: center;
-vertical-align: middle;
+    font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0px;
+    text-align: center;
+    vertical-align: middle;
 
     .right {
       padding: 12px 0;
@@ -79,7 +79,7 @@ vertical-align: middle;
     }
 
     :deep(.q-tab) {
-      color: #FFFFFF80;
+      color: #ffffff80;
       // color: #5F6061;
       // // background: #101114;
       // border-radius: 0.375rem;

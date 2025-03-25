@@ -32,46 +32,47 @@
           </div>
         </div>
         <RouterLink to="/account/profile" class="right">
-          <img src="../assets/images/account/rgtarrow.svg">
+          <img src="../assets/images/account/rgtarrow.svg" />
         </RouterLink>
       </div>
       <RouterLink to="/vip" class="top-vip">
-        <VIPCarousel :onlyShowCurrentLevel="true" :vipCarouselIndex="vipCarouselIndex" style="pointer-events: none;" />
+        <VIPCarousel :onlyShowCurrentLevel="true" :vipCarouselIndex="vipCarouselIndex" style="pointer-events: none" />
       </RouterLink>
       <div class="top-total-score">
         <div class="score-txt">
           <img src="../assets/images/account/total-score.png" />
-          {{ $t("settings.totalScore") }}</div>
+          {{ $t("settings.totalScore") }}
+        </div>
         <div class="score-amount">{{ store.balance.toFixed(2) }}</div>
       </div>
       <!-- <div class="top-section-inner">
       </div> -->
     </div>
-    
+
     <div class="mid-setting-section">
       <div class="acct-nav">
         <!-- <h2>{{ $t("settings.otherServices") }}</h2> -->
-          <div class="top-section">
-        <router-link to="/deposit">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/deposit-svg.svg" />
-          </div>
-          <div class="acct-nav-label">{{ $t("settings.deposit") }}</div>
-        </router-link>
-            <router-link to="/withdraw">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/withdraw-svg.svg" />
-          </div>
-          <div class="acct-nav-label">{{ $t("settings.withdraw") }}</div>
-        </router-link>
-          </div>
+        <div class="top-section">
+          <router-link to="/deposit">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/deposit-svg.svg" />
+            </div>
+            <div class="acct-nav-label">{{ $t("settings.deposit") }}</div>
+          </router-link>
+          <router-link to="/withdraw">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/withdraw-svg.svg" />
+            </div>
+            <div class="acct-nav-label">{{ $t("settings.withdraw") }}</div>
+          </router-link>
+        </div>
         <div class="acct-menu" id="id-acct-menu">
-        <router-link to="/promo">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/promo-svg.svg" />
-          </div>
-          <div class="acct-nav-label">{{ $t("settings.promo") }}</div>
-        </router-link>
+          <router-link to="/promo">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/promo-svg.svg" />
+            </div>
+            <div class="acct-nav-label">{{ $t("settings.promo") }}</div>
+          </router-link>
           <router-link to="/account/profile">
             <div class="acct-nav-item">
               <img src="../assets/images/account/personal-svg.svg" />
@@ -102,7 +103,7 @@
             </div>
             <div class="acct-nav-label">{{ $t("settings.order") }}</div>
           </router-link>
-          
+
           <router-link to="/vip">
             <div class="acct-nav-item">
               <img src="../assets/images/account/vip-svg.svg" />
@@ -115,39 +116,38 @@
             </div>
             <div class="acct-nav-label">{{ $t("settings.charity") }}</div>
           </a>
-          
         </div>
       </div>
       <div class="bottom-setting-section">
         <router-link to="/account/message">
-            <div class="acct-nav-item">
-              <img src="../assets/images/account/message-svg.png" />
-            </div>
-            <div class="acct-nav-label">{{ $t("settings.message") }}</div>
-          </router-link>
-          <router-link to="/account/feedback">
-            <div class="acct-nav-item">
-              <img src="../assets/images/account/feedback-svg.png" />
-            </div>
-            <div class="acct-nav-label">{{ $t("settings.feedback") }}</div>
-          </router-link>
-          <a v-if="ui.promo_exchange === '1'" target="_blank" @click="handleExchangeClick">
-            <div class="acct-nav-item">
-              <img src="../assets/images/account/exchange-svg.png" />
-            </div>
-            <div class="acct-nav-label">{{ $t("settings.exchange") }}</div>
-          </a>
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/message-svg.png" />
+          </div>
+          <div class="acct-nav-label">{{ $t("settings.message") }}</div>
+        </router-link>
+        <router-link to="/account/feedback">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/feedback-svg.png" />
+          </div>
+          <div class="acct-nav-label">{{ $t("settings.feedback") }}</div>
+        </router-link>
+        <a v-if="ui.promo_exchange === '1'" target="_blank" @click="handleExchangeClick">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/exchange-svg.png" />
+          </div>
+          <div class="acct-nav-label">{{ $t("settings.exchange") }}</div>
+        </a>
 
-          <a v-if="canTransfer" target="_blank" @click="handleTransferClick">
-            <div class="acct-nav-item">
-              <img src="../assets/images/account/transfer-svg.svg" />
-            </div>
-            <div class="acct-nav-label">{{ $t("settings.transfer") }}</div>
-          </a>
+        <a v-if="canTransfer" target="_blank" @click="handleTransferClick">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/transfer-svg.svg" />
+          </div>
+          <div class="acct-nav-label">{{ $t("settings.transfer") }}</div>
+        </a>
       </div>
       <div class="bottom-setting-section invite-friends-section">
         <div class="left-icon">
-          <img src="../assets/images/earn-money/invite-gift.png"/>
+          <img src="../assets/images/earn-money/invite-gift.png" />
         </div>
         <div class="right-contents">
           <div class="invite-title">{{ $t("earnMoney.reward.inviteFriendsViaLink") }}</div>
@@ -203,7 +203,7 @@
 
       <a @click="openConfirmSignOutDialog">
         <div class="acct-logout">
-          <img src="../assets/images/index/menu/logout.png">
+          <img src="../assets/images/index/menu/logout.png" />
           <div class="acct-nav-label">{{ $t("settings.logout") }}</div>
         </div>
       </a>
@@ -242,7 +242,6 @@ import { api } from "boot/axios";
 import { useUI } from "stores/ui";
 import { Platform } from "quasar";
 import { t } from "src/boot/lang";
-
 
 const selfTgurl = ref("");
 const copyHrefLink = () => {
@@ -340,7 +339,7 @@ onMounted(() => {
       selfTgurl.value = tgDomain + "refer/" + res.data;
     }
   });
-})
+});
 const vipCarouselIndex = ref();
 
 const canTransfer = ref(false);
@@ -451,23 +450,23 @@ const handleCopyClick = async () => {
         align-items: flex-start;
         gap: 5px;
         .top-name-details {
-          font-family: Microsoft YaHei UI;
+          font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
           font-weight: 700;
           font-size: 16px;
           line-height: 120%;
-          letter-spacing: 0px;  
+          letter-spacing: 0px;
           color: #ffffff;
         }
       }
       .top-copy-id {
         display: flex;
         align-items: center;
-        font-family: Microsoft YaHei UI;
+        font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
         font-weight: 700;
         font-size: 12.17px;
         line-height: 120%;
         letter-spacing: 0px;
-        color: #B3BEC0;
+        color: #b3bec0;
         img {
           width: 30px;
           height: 30px;
@@ -480,17 +479,17 @@ const handleCopyClick = async () => {
         }
       }
       .profile-pic-frame {
-          // background-image: url(../assets/images/common/profile-frame.png);
-          width: 70px;
-          height: 70px;
-          background-size: 100%;
-          position: absolute;
-          top: -8px;
-          left: -4px;
-        }
+        // background-image: url(../assets/images/common/profile-frame.png);
+        width: 70px;
+        height: 70px;
+        background-size: 100%;
+        position: absolute;
+        top: -8px;
+        left: -4px;
+      }
       .profile-pic {
-          position: relative;
-          padding-bottom: 20px;
+        position: relative;
+        padding-bottom: 20px;
         .vip-details {
           position: relative;
           margin-left: 20px;
@@ -533,12 +532,11 @@ const handleCopyClick = async () => {
     margin: 0 auto;
     display: block;
   }
-  background: url(../assets/images/account/setting-bg.png)no-repeat center center;
+  background: url(../assets/images/account/setting-bg.png) no-repeat center center;
   // padding-top: 175px;
   padding-top: 60px;
   background-size: cover;
   position: relative;
-
 
   .top-total-score {
     margin: 0 20px;
@@ -659,9 +657,9 @@ const handleCopyClick = async () => {
 }
 .bottom-setting-section {
   margin: 5px 20px 20px;
-  
+
   border-radius: 10px;
-  background: #373C3D;
+  background: #373c3d;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -669,7 +667,7 @@ const handleCopyClick = async () => {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    color: #FFFFFF;
+    color: #ffffff;
     padding: 10px;
     gap: 10px;
 
@@ -683,7 +681,7 @@ const handleCopyClick = async () => {
       top: 0;
       bottom: 0;
       margin: auto;
-      background: url(../assets/images/common/goright.png)no-repeat center center;
+      background: url(../assets/images/common/goright.png) no-repeat center center;
       background-size: cover;
       width: 20px;
       height: 20px;
@@ -704,7 +702,7 @@ const handleCopyClick = async () => {
     }
   }
   .right-contents {
-    font-family: Microsoft YaHei UI;
+    font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 14.32px;
     line-height: 120%;
@@ -716,39 +714,39 @@ const handleCopyClick = async () => {
 }
 
 .invite-share-link {
-      margin-top: 8px;
-      background-color: #292D2E;
-      padding: 4px;
-      border-radius: 8px;
-      display: flex;
-      justify-content: space-between;
-      min-height: 40px;
-      border: 1px solid #FFFFFF14;
+  margin-top: 8px;
+  background-color: #292d2e;
+  padding: 4px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  min-height: 40px;
+  border: 1px solid #ffffff14;
 
-      .link-href {
-        padding: 10px 16px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-size: 11px;
-      }
-      .link-copy {
-        color: #ffffff;
-        background: #FFFFFF0F;
+  .link-href {
+    padding: 10px 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 11px;
+  }
+  .link-copy {
+    color: #ffffff;
+    background: #ffffff0f;
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-width: 70px;
-        font-weight: bold;
-        border-radius: 5px;
-        letter-spacing: -1px;
-      }
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 70px;
+    font-weight: bold;
+    border-radius: 5px;
+    letter-spacing: -1px;
+  }
+}
 
 .acct-nav {
   margin: 5px 20px 20px;
-  background: #373C3D;
+  background: #373c3d;
   padding: 10px;
   border-radius: 10px;
 
@@ -771,47 +769,44 @@ const handleCopyClick = async () => {
   }
 
   .top-section {
-      width: 100%;
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    a {
       display: flex;
-      gap: 10px;
-      a {
-        display: flex;
-        width: 100%;
-        text-decoration: none;
-        justify-content: center;
-        align-items: center;
-        padding: 10px;
-        gap: 5px;
-        img {
-          width: 16px;
-          display: block;
-        }
-        &:nth-child(1) {
-          border-radius: 4px;
-          color: #333333;
-          font-weight: bold;
-          background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
-          box-shadow: 0px 2.07px 0px 0px #1CCA6A;
-          
-          img {
-            filter: grayscale(1) brightness(0);
-          }
-        }
-        &:nth-child(2) {
-          border-radius: 4px;
-          color: #ffffff;
-          font-weight: bold;
-          background: #455152;
-          box-shadow: 0px 2.07px 0px 0px #2A3637;
-          img {
-            filter: grayscale(1) brightness(100);
-          }
+      width: 100%;
+      text-decoration: none;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      gap: 5px;
+      img {
+        width: 16px;
+        display: block;
+      }
+      &:nth-child(1) {
+        border-radius: 4px;
+        color: #333333;
+        font-weight: bold;
+        background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+        box-shadow: 0px 2.07px 0px 0px #1cca6a;
 
+        img {
+          filter: grayscale(1) brightness(0);
         }
-        
-        
+      }
+      &:nth-child(2) {
+        border-radius: 4px;
+        color: #ffffff;
+        font-weight: bold;
+        background: #455152;
+        box-shadow: 0px 2.07px 0px 0px #2a3637;
+        img {
+          filter: grayscale(1) brightness(100);
+        }
       }
     }
+  }
   .acct-menu {
     padding: 20px 0 0;
     border-radius: 4px;
@@ -847,14 +842,13 @@ const handleCopyClick = async () => {
 
       .acct-nav-label {
         color: #fff;
-        font-family: Microsoft YaHei UI;
+        font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
         font-weight: 700;
         font-size: 12px;
         line-height: 120%;
         letter-spacing: 0px;
         text-align: center;
         vertical-align: middle;
-
       }
 
       .acct-nav-item {
@@ -924,7 +918,6 @@ const handleCopyClick = async () => {
   }
 }
 
-
 .btn-cancel {
   // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
   // border: 1px solid #5d8956;
@@ -941,7 +934,7 @@ const handleCopyClick = async () => {
   background: #455152;
   color: #ffffff;
 
-  box-shadow: 0px 2px 0px 0px #2A3637;
+  box-shadow: 0px 2px 0px 0px #2a3637;
 }
 .btn-confirm {
   // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
@@ -951,16 +944,15 @@ const handleCopyClick = async () => {
   // height: 42px;
   // color: #fff;
   // border-radius: 12px;
-  
+
   font-weight: 700;
   width: 100%;
   padding: 10px 40px;
   font-size: 16px;
-  background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
   color: #000000;
-  box-shadow: 0px 2px 0px 0px #1CCA6A;
+  box-shadow: 0px 2px 0px 0px #1cca6a;
 }
-
 </style>
 
 <style lang="scss">

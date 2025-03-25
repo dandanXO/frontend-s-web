@@ -16,7 +16,7 @@
         <img src="../assets/images/index/btn-close.png" />
       </router-link>
     </div>
-<!--
+    <!--
     <div class="is-domain top-img">
       <img src="../assets/images/index/register-topimg.png" />
     </div>
@@ -32,7 +32,7 @@
         <q-tab name="register" :label="$t('header.register')" />
       </q-tabs>
     </div> -->
-    <div class="login-pg-title">{{ $t('header.login') }}</div>
+    <div class="login-pg-title">{{ $t("header.login") }}</div>
 
     <div class="login-form-wrapper">
       <q-form ref="loginFormRef" @submit="onSubmit">
@@ -148,7 +148,8 @@
         {{ $t("btn.confirm") }}
       </q-btn>
       <div class="areyounew">
-        {{ $t("btn.areyounew") }} <a @click="goRegister" class="green">{{ $t("btn.register") }}</a>
+        {{ $t("btn.areyounew") }}
+        <a @click="goRegister" class="green">{{ $t("btn.register") }}</a>
       </div>
 
       <div class="google-login-wrapper">
@@ -267,7 +268,7 @@ import { useRoute, useRouter } from "vue-router";
 import qs from "qs";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
-import ShareIcons from "../components/ShareIcons.vue"
+import ShareIcons from "../components/ShareIcons.vue";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { isAndroid, trackNewUserFtd } from "boot/utils";
@@ -1080,14 +1081,14 @@ export default defineComponent({
   }
 }
 .login-pg-title {
-  font-family: Microsoft YaHei UI;
-font-weight: 700;
-font-size: 16px;
-line-height: 100%;
-letter-spacing: 0px;
-vertical-align: middle;
-color: #ffffff;
-padding: 0 20px;
+  font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  color: #ffffff;
+  padding: 0 20px;
 }
 
 .login-form-wrapper {
@@ -1231,7 +1232,7 @@ padding: 0 20px;
 .areyounew {
   margin: 15px 0;
   .green {
-    color: #21EF89;
+    color: #21ef89;
     font-weight: 700;
     cursor: pointer;
   }

@@ -85,10 +85,10 @@
             <table class="ranking-list-table">
               <thead>
                 <tr>
-                    <th width="10%" align="center">{{$t('hotPromo.goldenEgg.ranking')}}</th>
-                    <th width="45%" align="center">{{ $t('hotPromo.goldenEgg.userName') }}</th>
-                    <th width="45%" align="center">{{ $t('hotPromo.goldenEgg.betVolume') }}</th>
-                  </tr>
+                  <th width="10%" align="center">{{ $t("hotPromo.goldenEgg.ranking") }}</th>
+                  <th width="45%" align="center">{{ $t("hotPromo.goldenEgg.userName") }}</th>
+                  <th width="45%" align="center">{{ $t("hotPromo.goldenEgg.betVolume") }}</th>
+                </tr>
               </thead>
               <tbody>
                 <template v-if="rankingLists.length">
@@ -354,7 +354,7 @@ onMounted(() => {
       min-width: 1%;
       max-width: calc(100% - 4px);
       // background: url(../../../assets/images/promotion/hotpromo/golden-egg/progressbar-inner.png) no-repeat;
-      background: linear-gradient(90deg, #FF8B00 0%, #FDE30F 100%);
+      background: linear-gradient(90deg, #ff8b00 0%, #fde30f 100%);
       position: absolute;
       height: 8px;
       top: 44px;
@@ -403,7 +403,7 @@ onMounted(() => {
       }
       .ranking-list-content {
         border-radius: 20px;
-        border: 1px solid #F4BB90;
+        border: 1px solid #f4bb90;
         background: linear-gradient(180deg, rgba(120, 76, 41, 0.8) 0%, rgba(44, 23, 9, 0.8) 100%);
         // width: calc(100% - 24px);
         min-height: 200px;
@@ -412,25 +412,23 @@ onMounted(() => {
         // background: url(../../../assets/images/promotion/hotpromo/golden-egg/ranking-list-bg.png) no-repeat,
         //   linear-gradient(36.43deg, #0e1e08 6.88%, #1b6026 100.29%);
 
-
         background-size: 100% 100%;
         padding: 16px 10px 10px;
         position: relative;
         .ranking-block-title {
-          color: #E0B690;
+          color: #e0b690;
           text-align: center;
           display: flex;
           justify-content: center;
           align-items: center;
           margin: 0 auto 20px;
-          font-family: "Microsoft YaHei UI";
+          font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
           font-weight: 700;
           font-size: 17.23px;
           line-height: 100%;
-          letter-spacing: 0%;
+          letter-spacing: 0;
           text-align: center;
           text-transform: uppercase;
-
         }
         .ranking-list-title {
           display: flex;
@@ -480,28 +478,28 @@ onMounted(() => {
           .ranking-list-table {
             margin: 0;
             thead {
-              border: 1px solid #F9CDA8;
+              border: 1px solid #f9cda8;
               border-radius: 20px;
               display: table-caption;
               overflow: hidden;
             }
             th {
               padding: 12px;
-              background: linear-gradient(180deg, #794D2A 0%, #5A3A1E 51%, #341400 100%);
+              background: linear-gradient(180deg, #794d2a 0%, #5a3a1e 51%, #341400 100%);
             }
             /* Apply colors to specific rows */
             tr:nth-child(1) td,
             tr:nth-child(2) td,
             tr:nth-child(3) td {
-              color:#D88E4F; /* White text for contrast */
+              color: #d88e4f; /* White text for contrast */
             }
             td {
               border: none;
-              border-bottom: 1.38px solid #BB9473;
+              border-bottom: 1.38px solid #bb9473;
               background-color: unset;
               // color: #6db85f;
               font-weight: 700;
-              color:#E0B690;
+              color: #e0b690;
             }
             .ranking-icon {
               display: flex;

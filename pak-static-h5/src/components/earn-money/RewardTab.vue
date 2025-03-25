@@ -26,13 +26,18 @@
         </div>
         <div class="item-desc">{{ $t("earnMoney.reward.myTotalIncome") }}</div>
         <div class="item-amount">
-          RS {{ convertToCommaAmount(getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET")) || 0.00 }}
+          RS
+          {{
+            convertToCommaAmount(getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET")) ||
+            0.0
+          }}
         </div>
       </div>
       <div class="pot-item pot-item__2">
         <div class="item-img"><img src="../../assets/images/earn-money/pot-item-02.png" /></div>
-        <div class="item-desc">{{ $t("earnMoney.reward.myTotalNumberOfInvites") }}
-        <div class="item-amount">{{ memberDetail.totalRefer ? memberDetail.totalRefer : "0" }}</div>
+        <div class="item-desc">
+          {{ $t("earnMoney.reward.myTotalNumberOfInvites") }}
+          <div class="item-amount">{{ memberDetail.totalRefer ? memberDetail.totalRefer : "0" }}</div>
         </div>
         <!--        -->
       </div>
@@ -58,8 +63,8 @@
         <div class="item-title">{{ $t("earnMoney.reward.topUp") }}</div>
         <div class="item-icon"><img src="../../assets/images/earn-money/details-icon-02.png" /></div>
       </div>
-      </div>
-      <div class="earn-money-details-grid">
+    </div>
+    <div class="earn-money-details-grid">
       <!-- <div class="details-item details-item" v-if="isShowBet"> -->
       <div class="details-item details-item">
         <div class="item-amount">
@@ -172,8 +177,8 @@
           <tr v-for="index in 3" :key="index">
             <td>
               {{ $t(`earnMoney.reward.betting_table.row${index + 1}.description`) }}
-              </td>
-              <td>
+            </td>
+            <td>
               {{ $t(`earnMoney.reward.betting_table.row${index + 1}.commission`) }}
             </td>
           </tr>
@@ -201,11 +206,10 @@
       </table>
       <div class="q-pa-md">
         <div class="q-mt-md" v-html="$t('earnMoney.reward.note')"></div>
-      <div class="q-mt-sm grey-txt" v-html="$t('earnMoney.reward.eligibility_tips')"></div>
-      <div class="q-mt-sm red-txt" v-html="$t('earnMoney.reward.multiple_acc_hint')"></div>
-
+        <div class="q-mt-sm grey-txt" v-html="$t('earnMoney.reward.eligibility_tips')"></div>
+        <div class="q-mt-sm red-txt" v-html="$t('earnMoney.reward.multiple_acc_hint')"></div>
       </div>
-          </div>
+    </div>
 
     <!-- <div class="earn-money-friendcount">
       <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
@@ -234,59 +238,60 @@
     </div> -->
 
     <div class="earn-money-amt">
-      <div class="earn-money-amt-title"><div class="earn-money-amt-icon"></div>{{ $t("earnMoney.reward.award") }}</div>
+      <div class="earn-money-amt-title">
+        <div class="earn-money-amt-icon"></div>
+        {{ $t("earnMoney.reward.award") }}
+      </div>
       <div class="earn-money-sent-ytd">
         <div class="sent-ytd-amount" v-if="oneTimeBonusSetting.totalAmount">
           {{ $t("earnMoney.reward.totalAmountSentAsOfYesterday") }}
-          <span><div class="sent-ytd-icon">
-          <img src="../../assets/images/earn-money/sent-ytd-icon.png" />
-        </div>
-          {{ store.currency.value }} {{ convertToCommaAmount(oneTimeBonusSetting.totalAmount) }}</span>
+          <span>
+            <div class="sent-ytd-icon">
+              <img src="../../assets/images/earn-money/sent-ytd-icon.png" />
+            </div>
+            {{ store.currency.value }} {{ convertToCommaAmount(oneTimeBonusSetting.totalAmount) }}
+          </span>
         </div>
       </div>
-      
 
-    <div class="earn-money-friendcount">
-      <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
-        <!-- <tbody>
+      <div class="earn-money-friendcount">
+        <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+          <!-- <tbody>
           <tr>
             <td style="color: #8c968f; font-size: 120%; width: 60%">{{ $t("earnMoney.reward.player") }}</td>
             <td style="color: #8c968f; font-size: 120%; width: 40%">{{ $t("earnMoney.reward.money") }}</td>
           </tr>
         </tbody> -->
-      </table>
-      <div class="table-container" ref="tableContainer">
-        <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
-          <template v-if="inviteesRecords && inviteesRecords.length === 0">
-            <tr>
-              <td colspan="2">{{ $t("notify.noRecord") }}</td>
-            </tr>
-          </template>
-          <template v-else>
-            <template v-for="(pair, index) in inviteesRecords" :key="index">
+        </table>
+        <div class="table-container" ref="tableContainer">
+          <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+            <template v-if="inviteesRecords && inviteesRecords.length === 0">
               <tr>
-                <td style="width: 25%">
-                  <div class="player-details">
-                    {{ pair[0]?.loginName }}
-                  </div>
-                </td>
-                <td style="width: 25%">{{ store.currency.value }} {{ pair[0]?.finalAmount }}</td>
-                
-                <td v-if="pair[1]" style="width: 25%">
-                  <div class="player-details">
-                    {{ pair[1]?.loginName }}
-                  </div>
-                </td>
-                <td v-if="pair[1]" style="width: 25%">
-                  {{ store.currency.value }} {{ pair[1]?.finalAmount }}
-                </td>
+                <td colspan="2">{{ $t("notify.noRecord") }}</td>
               </tr>
             </template>
+            <template v-else>
+              <template v-for="(pair, index) in inviteesRecords" :key="index">
+                <tr>
+                  <td style="width: 25%">
+                    <div class="player-details">
+                      {{ pair[0]?.loginName }}
+                    </div>
+                  </td>
+                  <td style="width: 25%">{{ store.currency.value }} {{ pair[0]?.finalAmount }}</td>
 
-          </template>
-        </table>
+                  <td v-if="pair[1]" style="width: 25%">
+                    <div class="player-details">
+                      {{ pair[1]?.loginName }}
+                    </div>
+                  </td>
+                  <td v-if="pair[1]" style="width: 25%">{{ store.currency.value }} {{ pair[1]?.finalAmount }}</td>
+                </tr>
+              </template>
+            </template>
+          </table>
+        </div>
       </div>
-    </div>
     </div>
 
     <!-- <div class="earn-money-friendcount">
@@ -430,9 +435,11 @@ const getLatestInvitees = () => {
         // inviteesRecords.value.push(...inviteesRecords.value);
         // inviteesRecords.value.push(...inviteesRecords.value);
         // inviteesRecords.value.push(...inviteesRecords.value);
-        
+
         // Duplicate records 5 times dynamically
-        const repeatedRecords = Array(5).fill([...response.data.records]).flat();
+        const repeatedRecords = Array(5)
+          .fill([...response.data.records])
+          .flat();
 
         // Pair the records
         const chunkedRecords = [];
@@ -541,9 +548,7 @@ const handleShareToYoutube = (url) => {
   window.open(youtubeShareUrl, "_blank");
 };
 
-const handleShareToFacebookPost = (url) => {
-
-};
+const handleShareToFacebookPost = (url) => {};
 
 const handleShareToSMS = (url) => {
   const shareText = t("earnMoney.reward.shareText", { url });
@@ -594,7 +599,7 @@ watch(activeSetting, checkIsShowDetail);
     margin-top: 12px;
     display: flex;
     gap: 24px;
-    background: #373C3D;
+    background: #373c3d;
     padding: 10px;
     border-radius: 10px;
 
@@ -609,12 +614,12 @@ watch(activeSetting, checkIsShowDetail);
       position: relative;
       &:nth-child(1) {
         &:after {
-        content: "";
-        background: #434949;
-        height: 60%;
-        width: 1px;
-        position: absolute;
-        right: -5px;
+          content: "";
+          background: #434949;
+          height: 60%;
+          width: 1px;
+          position: absolute;
+          right: -5px;
         }
       }
       // background-image: url("../../assets/images/earn-money/pot-bg-01.png");
@@ -627,7 +632,6 @@ watch(activeSetting, checkIsShowDetail);
       // padding: 28px 20px;
       // border-radius: 8px;
       // position: relative;
-
 
       .item-amount {
         color: #ffffff;
@@ -750,13 +754,12 @@ watch(activeSetting, checkIsShowDetail);
     // gap: 12px;
     margin-top: 16px;
     // flex-wrap: wrap;
-    background:#373C3D;
+    background: #373c3d;
     border-radius: 10px;
     display: flex;
     padding: 10px;
     justify-content: center;
     align-items: center;
-    
 
     .details-item {
       img {
@@ -764,12 +767,12 @@ watch(activeSetting, checkIsShowDetail);
       }
       &:nth-child(1) {
         &:after {
-        content: "";
-        background: #434949;
-        height: 60%;
-        width: 1px;
-        position: absolute;
-        right: -5px;
+          content: "";
+          background: #434949;
+          height: 60%;
+          width: 1px;
+          position: absolute;
+          right: -5px;
         }
       }
       display: flex;
@@ -814,7 +817,7 @@ watch(activeSetting, checkIsShowDetail);
 
   .earn-money-invite {
     // background-color: rgba(255, 255, 255, 0.05);
-    background:#373C3D;
+    background: #373c3d;
     margin-top: 16px;
     border-radius: 10px;
     padding: 16px;
@@ -840,7 +843,7 @@ watch(activeSetting, checkIsShowDetail);
       .listing-item {
         // border: 1px solid #ffffff0d;
         // background-color: rgba(255, 255, 255, 0.02);
-        background: #292D2E;
+        background: #292d2e;
         border-radius: 4px;
         display: flex;
         padding: 8px 16px;
@@ -860,7 +863,7 @@ watch(activeSetting, checkIsShowDetail);
 
     .invite-share-link {
       margin-top: 12px;
-      background-color: #292D2E;
+      background-color: #292d2e;
       padding: 4px;
       border-radius: 8px;
       display: flex;
@@ -875,7 +878,7 @@ watch(activeSetting, checkIsShowDetail);
       }
       .link-copy {
         color: #ffffff;
-        background: #FFFFFF0F;
+        background: #ffffff0f;
 
         display: flex;
         justify-content: center;
@@ -939,7 +942,7 @@ watch(activeSetting, checkIsShowDetail);
         }
 
         td:nth-child(2n) {
-          color: #21EF89;
+          color: #21ef89;
           font-weight: 700;
         }
       }
@@ -978,7 +981,7 @@ watch(activeSetting, checkIsShowDetail);
       color: #b81212;
     }
   }
-  
+
   .earn-money-amt {
     background: #323738;
     margin: 15px 0;
@@ -989,7 +992,7 @@ watch(activeSetting, checkIsShowDetail);
       justify-content: flex-start;
       align-items: center;
       gap: 10px;
-      font-family: Microsoft YaHei UI;
+      font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-weight: 700;
       font-size: 14.45px;
       line-height: 23.12px;
@@ -1002,7 +1005,7 @@ watch(activeSetting, checkIsShowDetail);
         height: 16px;
         &::before {
           content: "";
-          background: #45D81F4D;
+          background: #45d81f4d;
           width: 16px;
           height: 16px;
           border-radius: 50%;
@@ -1012,14 +1015,13 @@ watch(activeSetting, checkIsShowDetail);
         }
         &::after {
           content: "";
-          background: #45D81F;
+          background: #45d81f;
           border-radius: 50%;
           width: 8px;
           height: 8px;
           position: absolute;
           left: 4px;
           top: 4px;
-
         }
       }
     }
@@ -1034,44 +1036,42 @@ watch(activeSetting, checkIsShowDetail);
     // align-items: center;
     // gap: 16px;
 
-
-
     .sent-ytd-amount {
       color: #8c968f;
       font-size: 12px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 10px;
-    width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 10px;
+      width: 100%;
       span {
         font-family: Poppins;
         font-weight: 900;
         font-size: 16.94px;
         line-height: 16.94px;
-        color: #21EF89;
+        color: #21ef89;
         letter-spacing: 0%;
         vertical-align: middle;
         text-transform: capitalize;
-        border: 1px solid #FFFFFF14;
+        border: 1px solid #ffffff14;
         border-radius: 4px;
         padding: 15px;
         width: 100%;
         text-align: right;
-        background: #292D2E;
-      position:relative;   
-    .sent-ytd-icon {
-      position: absolute;
-    width: 60px;
-    top: -5px;
-    left: 0;
-      img {
-        display: block;
-        max-width: 80px;
-        width: 100%;
-      }
-    }
+        background: #292d2e;
+        position: relative;
+        .sent-ytd-icon {
+          position: absolute;
+          width: 60px;
+          top: -5px;
+          left: 0;
+          img {
+            display: block;
+            max-width: 80px;
+            width: 100%;
+          }
+        }
       }
     }
   }
@@ -1144,17 +1144,17 @@ watch(activeSetting, checkIsShowDetail);
 }
 
 .earn-money-card {
-  background: #373C3D;
-    margin-top: 16px;
-    border-radius: 10px;
-    padding: 16px 0 0 0;
+  background: #373c3d;
+  margin-top: 16px;
+  border-radius: 10px;
+  padding: 16px 0 0 0;
 
   .earn-money-card-title {
     width: 100%;
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
-    font-family: Microsoft YaHei UI;
+    font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 14.45px;
     line-height: 23.12px;
@@ -1184,11 +1184,11 @@ watch(activeSetting, checkIsShowDetail);
     thead {
       // background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
       // background: linear-gradient(180deg, #21b29c 0%, #87c646 100%);
-      
-    background: #373c3d;
+
+      background: #373c3d;
 
       th {
-        color: #FFFFFF80;
+        color: #ffffff80;
 
         font-weight: 700;
         font-size: 12px;
@@ -1203,7 +1203,7 @@ watch(activeSetting, checkIsShowDetail);
         font-size: 12px;
         // border: 1px solid #ffffff1a;
         &:last-child {
-          color: #21EF89;
+          color: #21ef89;
         }
       }
 
@@ -1242,7 +1242,7 @@ watch(activeSetting, checkIsShowDetail);
     color: #9f9f9f;
   }
   .red-txt {
-    color: #FFC300;
+    color: #ffc300;
   }
 }
 </style>

@@ -14,8 +14,8 @@ const props = defineProps(["label"]);
   // margin-top: 6px;
   // color: #98a6b4;
   margin: 3px 0;
-    color: #B2BDBF;
-    font-weight: 700;
+  color: #b2bdbf;
+  font-weight: 700;
 }
 
 .landing-input {
@@ -25,15 +25,15 @@ const props = defineProps(["label"]);
     border-radius: 10px;
     // background-color: #0b0e0d;
     background-color: #0b0e0d;
-    border: 1px solid #FFFFFF14;
-    background: #292D2E;
-    font-family: Microsoft YaHei UI;
+    border: 1px solid #ffffff14;
+    background: #292d2e;
+    font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 14px;
     line-height: 100%;
     letter-spacing: 0px;
     vertical-align: middle;
-    color: #B2BDBF;
+    color: #b2bdbf;
     height: unset;
   }
   :deep(.q-field__control):before {
@@ -47,7 +47,7 @@ const props = defineProps(["label"]);
     height: unset;
   }
   // :deep(.q-icon) {
-    
+
   //   background: #464f50;
   //   padding: 2px;
   //   border-radius: 5px;

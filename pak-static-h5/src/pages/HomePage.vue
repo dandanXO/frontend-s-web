@@ -222,31 +222,27 @@
       </template>
     </div> -->
     <swiper
-              :slidesPerView="4"
-              :slidesPerGroup="4"
-              :spaceBetween="10"
-              :modules="[Navigation, Grid]"
-              :navigation="{ nextEl: '.custom-hot-next', prevEl: '.custom-hot-prev' }"
-              class="hometop-categories"
-            >
-              <template v-for="(item, index) in translatedCategoriesList" :key="index">
-                <template v-if="item.icon !== 'lobby'">
-                  <swiper-slide
-                    @click="
-                      activateSlide(item)
-                    "
-                  >
-                    <div class="category">
-                      <img :src="`${getImageUrl(item.icon)}`">
-                      <div class="cat-label">
-                        {{ item.label }}
-                      </div>
-                    </div>
-                  </swiper-slide>
-                </template>
-              </template>
-            </swiper>
-<!--
+      :slidesPerView="4"
+      :slidesPerGroup="4"
+      :spaceBetween="10"
+      :modules="[Navigation, Grid]"
+      :navigation="{ nextEl: '.custom-hot-next', prevEl: '.custom-hot-prev' }"
+      class="hometop-categories"
+    >
+      <template v-for="(item, index) in translatedCategoriesList" :key="index">
+        <template v-if="item.icon !== 'lobby'">
+          <swiper-slide @click="activateSlide(item)">
+            <div class="category">
+              <img :src="`${getImageUrl(item.icon)}`" />
+              <div class="cat-label">
+                {{ item.label }}
+              </div>
+            </div>
+          </swiper-slide>
+        </template>
+      </template>
+    </swiper>
+    <!--
     <swiper
       :slidesPerView="5"
       :spaceBetween="0"
@@ -300,10 +296,10 @@
             <div v-if="category.title === 'Lobby' && category.active" class="side">
               <div class="all-btn" @click="handleActivateSlide('Hot')">
                 ALL
-                <img src="../assets/images/account/rgtarrow.svg">
+                <img src="../assets/images/account/rgtarrow.svg" />
               </div>
-              <div :class="`custom-hot-prev`"><img src="../assets/images/account/rgtarrow.svg"></div>
-              <div :class="`custom-hot-next`"><img src="../assets/images/account/rgtarrow.svg"></div>
+              <div :class="`custom-hot-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
+              <div :class="`custom-hot-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
             </div>
           </div>
 
@@ -498,10 +494,10 @@
             <div v-if="category.title === 'Lobby' && category.active" class="side">
               <div class="all-btn" @click="handleActivateSlide('Live')">
                 ALL
-                <img src="../assets/images/account/rgtarrow.svg">
+                <img src="../assets/images/account/rgtarrow.svg" />
               </div>
-              <div :class="`custom-live-prev`"><img src="../assets/images/account/rgtarrow.svg"></div>
-              <div :class="`custom-live-next`"><img src="../assets/images/account/rgtarrow.svg"></div>
+              <div :class="`custom-live-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
+              <div :class="`custom-live-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
             </div>
           </div>
 
@@ -604,10 +600,10 @@
             <div v-if="category.title === 'Lobby' && category.active" class="side">
               <div class="all-btn" @click="handleActivateSlide('Slot')">
                 ALL
-                <img src="../assets/images/account/rgtarrow.svg">
+                <img src="../assets/images/account/rgtarrow.svg" />
               </div>
-              <div :class="`custom-slot-prev`"><img src="../assets/images/account/rgtarrow.svg"></div>
-              <div :class="`custom-slot-next`"><img src="../assets/images/account/rgtarrow.svg"></div>
+              <div :class="`custom-slot-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
+              <div :class="`custom-slot-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
             </div>
           </div>
 
@@ -731,10 +727,10 @@
             <div v-if="category.title === 'Lobby' && category.active" class="side">
               <div class="all-btn" @click="handleActivateSlide('Fish')">
                 ALL
-                <img src="../assets/images/account/rgtarrow.svg">
+                <img src="../assets/images/account/rgtarrow.svg" />
               </div>
-              <div :class="`custom-fish-prev`"><img src="../assets/images/account/rgtarrow.svg"></div>
-              <div :class="`custom-fish-next`"><img src="../assets/images/account/rgtarrow.svg"></div>
+              <div :class="`custom-fish-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
+              <div :class="`custom-fish-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
             </div>
           </div>
 
@@ -1012,10 +1008,10 @@
             <div v-if="category.title === 'Lobby' && category.active" class="side">
               <div class="all-btn" @click="handleActivateSlide('Poker')">
                 ALL
-                <img src="../assets/images/account/rgtarrow.svg">
+                <img src="../assets/images/account/rgtarrow.svg" />
               </div>
-              <div :class="`custom-poker-prev`"><img src="../assets/images/account/rgtarrow.svg"></div>
-              <div :class="`custom-poker-next`"><img src="../assets/images/account/rgtarrow.svg"></div>
+              <div :class="`custom-poker-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
+              <div :class="`custom-poker-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
             </div>
           </div>
 
@@ -1271,7 +1267,7 @@
           <div class="fullgame-header">
             <div class="back-top-logo">
               <div class="back-header-btn" @click="closeSlotModal">
-                <img src="../assets/images/index/btn-back.png">
+                <img src="../assets/images/index/btn-back.png" />
               </div>
               <div class="game-logo-img">
                 <!-- <div
@@ -1288,12 +1284,18 @@
                 > -->
                 {{ subGameCode }}
               </div>
-          </div>
+            </div>
 
             <div class="fullgame-search q-ma-md">
               <div class="pc-form-input">
-                <q-input outlined
-                      color="green" v-model="searchText" :label="$t('btn.search')" clearable clear-icon="close">
+                <q-input
+                  outlined
+                  color="green"
+                  v-model="searchText"
+                  :label="$t('btn.search')"
+                  clearable
+                  clear-icon="close"
+                >
                   <template v-slot:prepend>
                     <q-icon name="search" size="20px" />
                   </template>
@@ -1844,7 +1846,7 @@ const categoriesList = ref([
   { title: "Live", label: t("home.menu_live"), icon: "live", active: false },
   { title: "Sport", label: t("home.menu_sport"), icon: "sport", active: false },
   { title: "Fish", label: t("home.menu_fish"), icon: "fish", active: false },
-  { title: "Poker", label: t("home.menu_poker"), icon: "poker", active: false },
+  { title: "Poker", label: t("home.menu_poker"), icon: "poker", active: false }
 ]);
 
 const isCsTabVisible = ref(false);
@@ -4601,16 +4603,16 @@ const checkGoogleLoginSetPwd = () => {
     // position: relative;
     // background-position: center center;
     // background-size: contain;
-  .cat-label {
-    position: absolute;
-    font-weight: bold;
-    bottom: 10px;
-    left: 0;
-    right: 0;
-    margin: auto;
-    width: 100%;
-    text-align: center;
-  }
+    .cat-label {
+      position: absolute;
+      font-weight: bold;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 100%;
+      text-align: center;
+    }
   }
   /* Top row spans 2 columns each */
   // .category:nth-child(1), .category:nth-child(2) {
@@ -4698,7 +4700,6 @@ const checkGoogleLoginSetPwd = () => {
       rgba(255, 255, 255, 0) 98.21%
     );
     background: #ffffff0f;
-
 
     gap: 10px;
     padding: 5px 10px;
@@ -5392,17 +5393,17 @@ const checkGoogleLoginSetPwd = () => {
   .custom-poker-next,
   .custom-fish-prev,
   .custom-fish-next {
-    background: #373C3D;
+    background: #373c3d;
     padding: 10px;
     border-radius: 6px;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.3s;
-}
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
 
   .custom-hot-prev.swiper-button-disabled,
   .custom-hot-next.swiper-button-disabled,
@@ -5424,7 +5425,7 @@ const checkGoogleLoginSetPwd = () => {
   .custom-poker-next.swiper-button-lock,
   .custom-fish-prev.swiper-button-lock,
   .custom-fish-next.swiper-button-lock {
-    background: #FFFFFF0F;
+    background: #ffffff0f;
     cursor: not-allowed;
   }
   &#live {
@@ -5482,22 +5483,21 @@ const checkGoogleLoginSetPwd = () => {
       // text-transform: uppercase;
       margin: 10px 0;
       color: #ffffff;
-      font-family: Microsoft YaHei UI;
+      font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-weight: 700;
       font-size: 14px;
       line-height: 100%;
       letter-spacing: 0%;
       text-transform: uppercase;
-
     }
     .side {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
       .all-btn {
-        background: #373C3D;
+        background: #373c3d;
         padding: 8px;
         border-radius: 6px;
         font-weight: 700;
@@ -5514,8 +5514,8 @@ const checkGoogleLoginSetPwd = () => {
   row-gap: 8px;
   margin-top: 10px;
   padding-bottom: 20px;
-    width: 90%;
-    margin: 0 auto;
+  width: 90%;
+  margin: 0 auto;
 
   .game-platform-item {
     width: 100%;
@@ -5590,8 +5590,8 @@ const checkGoogleLoginSetPwd = () => {
   gap: 8px;
   // row-gap: 16px;
   .swiper-slide {
-  height: auto;
-}
+    height: auto;
+  }
   &.live-casino {
     padding-top: 8px;
     margin-bottom: 12px;
@@ -5748,9 +5748,9 @@ const checkGoogleLoginSetPwd = () => {
     .back-top-logo {
       background: #323738;
       padding: 12px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
 
       .back-header-btn {
         width: 40px;
@@ -5766,9 +5766,8 @@ const checkGoogleLoginSetPwd = () => {
     // background: #1E1F24;
     background: #0b0b0c;
     border-radius: 4px;
-    background: #292D2E;
-    border: 1px solid #FFFFFF14;
-
+    background: #292d2e;
+    border: 1px solid #ffffff14;
   }
 }
 
@@ -6037,8 +6036,8 @@ const checkGoogleLoginSetPwd = () => {
   align-items: center;
   justify-content: center;
   color: #333333;
-  background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
-  box-shadow: 0px 2px 0px 0px #1CCA6A;
+  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+  box-shadow: 0px 2px 0px 0px #1cca6a;
   text-transform: uppercase;
   font-weight: 700;
 }

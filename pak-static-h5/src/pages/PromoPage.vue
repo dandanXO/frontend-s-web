@@ -1096,7 +1096,7 @@ export default defineComponent({
             }
             .date {
               color: #b2bdbf;
-              font-family: Microsoft YaHei UI;
+              font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
               font-weight: 400;
               font-size: 12px;
             }

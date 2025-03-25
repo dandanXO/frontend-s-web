@@ -11,15 +11,15 @@
 
   <q-dialog class="flex-end" v-model="isPostCommentsModal">
     <div class="popout-dialog post-comments-modal">
-          <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
-          
+      <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
+
       <div class="popout-dialog-container">
         <div class="txt-title">{{ $t("btn.postComments") }}</div>
-      <!-- <q-toolbar class="post-dialog-toolbar">
+        <!-- <q-toolbar class="post-dialog-toolbar">
         <q-toolbar-title>{{ $t("btn.postComments") }}</q-toolbar-title>
         <q-btn flat v-close-popup round dense icon="close" />
       </q-toolbar> -->
-      <WriteComponent @close-modal="closeModal" />
+        <WriteComponent @close-modal="closeModal" />
       </div>
     </div>
   </q-dialog>
@@ -120,7 +120,7 @@ onMounted(() => {
     // position: absolute;
     // left: 50%;
     // transform: translateX(-50%);
-    font-family: Microsoft YaHei UI;
+    font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 18px;
     line-height: 20.92px;

@@ -20,7 +20,8 @@
       </div>
       <!-- <div class="download-count">({{ topDownloadCount }}s)</div> -->
     </div>
-  </div><div class="menu-open" :class="{ open: menuOpen }">
+  </div>
+  <div class="menu-open" :class="{ open: menuOpen }">
     <div style="height: 56px" v-if="topDownload && !ui.hideDownload"></div>
     <SideMenu @closeMenu="toggleMenuOpen()" />
   </div>
@@ -38,7 +39,7 @@
         <img src="../assets/images/auth/icon-more.png" @click="toggleMenuOpen()" />
       </div>
       <div class="profile-wrapper-extra">
-        <div class="logo-img" style="cursor: pointer;" @click="onClickLogo">
+        <div class="logo-img" style="cursor: pointer" @click="onClickLogo">
           <img src="../assets/images/auth/bg-logo-only.png" />
           <span v-if="!ui.loggedIn && !store.hasToken()">B9.GAME</span>
         </div>
@@ -76,13 +77,11 @@
           </template>
         </div>
         <div class="gift-notifications">
-
           <q-btn class="notification-wrapper" flat @click="router.push('/account/message?from=' + route.path)">
             <img src="../assets/images/auth/bell-icon.png" />
             <q-badge v-if="store.unreadInboxMail > 0" class="bell-badge" floating rounded>
               {{ store.unreadInboxMail }}
             </q-badge>
-              
           </q-btn>
           <q-btn class="gift-wrapper" flat @click="showBonusModal">
             <img src="../assets/images/auth/gift-icon.png" />
@@ -180,7 +179,11 @@
     </div>
 
     <q-dialog v-model="isBonusModal" position="top" style="z-index: 2002">
-      <BonusModal :has-top-download="topDownload && !ui.hideDownload" :promo-list="fastAccessPromo" @openNewPlayer="showNewPlayer" />
+      <BonusModal
+        :has-top-download="topDownload && !ui.hideDownload"
+        :promo-list="fastAccessPromo"
+        @openNewPlayer="showNewPlayer"
+      />
     </q-dialog>
   </div>
 </template>
@@ -235,8 +238,8 @@ const showBonusModal = () => {
 };
 const showNewPlayer = () => {
   isBonusModal.value = false;
-  emits('showNewPlayer');
-}
+  emits("showNewPlayer");
+};
 
 const loadCustomerAddress = () => {
   cached
@@ -251,7 +254,6 @@ const loadCustomerAddress = () => {
       ui.CSAUrl = url;
     });
 };
-
 
 const activateSlide = (item) => {
   router
@@ -309,7 +311,7 @@ const onClickLogo = () => {
   }
   if (route.fullPath === "/home") {
     // toggleMenuOpen();
-    
+
     return;
   }
   if (isAndroid()) {
@@ -775,7 +777,7 @@ onUnmounted(() => {
       width: 100%;
     }
     .gift-notifications {
-      background: #FFFFFF0F;
+      background: #ffffff0f;
       display: flex;
       border-radius: 10px;
       padding: 5px;
@@ -784,7 +786,7 @@ onUnmounted(() => {
         height: 20px;
         width: 20px;
         // padding-right: 20px;
-        border-right: 1px solid #FFFFFF33;
+        border-right: 1px solid #ffffff33;
         img {
           height: 20px;
           width: 20px;
@@ -793,18 +795,18 @@ onUnmounted(() => {
           top: 2px;
           right: 2px;
         }
-            .bell-badge {
-              background: #E30000;
-        color: #fff;
-      }
+        .bell-badge {
+          background: #e30000;
+          color: #fff;
+        }
       }
       .gift-wrapper {
         height: 20px;
-          width: 20px;
-    // padding-left: 20px;
+        width: 20px;
+        // padding-left: 20px;
 
         img {
-        height:20px;
+          height: 20px;
           width: 20px;
         }
         :deep(.q-badge--floating) {
@@ -812,9 +814,9 @@ onUnmounted(() => {
           right: -4px;
         }
         .gift-badge {
-            background: #E30000;
-            color: #fff;
-          }
+          background: #e30000;
+          color: #fff;
+        }
       }
     }
     // .gift-wrapper {
@@ -872,7 +874,7 @@ onUnmounted(() => {
       // background: rgba(255, 255, 255, 0.24);
       // background: #192633;
       // background: rgba(0, 10, 1, 0.6);
-      background: #FFFFFF0F;
+      background: #ffffff0f;
 
       border-radius: 10px;
       display: flex;
@@ -882,7 +884,7 @@ onUnmounted(() => {
       min-width: 100px;
       width: 100%;
       min-height: 35px;
-      border: 1px solid #FFFFFF14;
+      border: 1px solid #ffffff14;
 
       font-size: 14px;
       color: #fff;
@@ -895,19 +897,18 @@ onUnmounted(() => {
 
       .currency-amount {
         color: #000000;
-        background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+        background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
         font-size: 12px;
         font-weight: 700;
         margin-right: 3px;
         border-radius: 50%;
         padding: 5px;
-        font-family: Microsoft YaHei UI;
+        font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
         font-weight: 700;
         font-size: 12px;
         line-height: 100%;
         letter-spacing: 0px;
         vertical-align: middle;
-
       }
 
       .balance-amount {
@@ -931,7 +932,7 @@ onUnmounted(() => {
 
   .profile-menu {
     display: flex;
-    background: #FFFFFF0D;
+    background: #ffffff0d;
     padding: 5px;
     border: 1px solid #ffffffc6;
     backdrop-filter: blur(5.349878311157227px);
@@ -959,13 +960,13 @@ onUnmounted(() => {
     display: flex;
     justify-content: flex-start;
     align-items: flex-end;
-    font-family: Microsoft YaHei UI;
+    font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 22px;
     line-height: 30px;
     letter-spacing: -4%;
     text-align: center;
-    
+
     img {
       width: 32px;
       text-align: center;
@@ -1004,7 +1005,7 @@ onUnmounted(() => {
     color: #ffffff;
     font-weight: 700;
     font-style: italic;
-    display: none ;
+    display: none;
     img {
       width: 68%;
       margin-left: -7px;
@@ -1031,7 +1032,7 @@ onUnmounted(() => {
   background: linear-gradient(251.03deg, #89c543 7.46%, #2aae8b 91.87%);
   border-radius: 5px;
   animation: blink 1.5s infinite;
-  box-shadow: 0px 1.13px 0px 0px #1CCA6A;
+  box-shadow: 0px 1.13px 0px 0px #1cca6a;
 }
 
 .menu-line {

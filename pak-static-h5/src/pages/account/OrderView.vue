@@ -24,22 +24,22 @@
     >
       <q-tab-panel name="withdrawal">
         <div v-for="(e, i) in withdrawalData" :key="`${e}-${i}`" class="order-table">
-
           <div class="order-row order-row--content">
             <div class="order-subrow">
               <div class="order-col">
                 <span class="txt-gray">{{ convertToGMT55(e.withdrawDate) }}</span>
               </div>
-                <!-- <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
+              <!-- <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
                   {{ getWithdrawStatus(e.status) }}
                 </span> -->
 
-                <div class="order-col orange">- {{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
-
+              <div class="order-col orange">- {{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
             </div>
             <div class="order-subrow">
               <div class="order-col">{{ $t("records.bank") }}</div>
-              <div class="order-col"><q-btn flat
+              <div class="order-col">
+                <q-btn
+                  flat
                   :class="{
                     'btn--green': ['SUCCESS'].includes(e.status),
                     'btn--red': ['FAIL', 'STEP_5', 'FAIL_REVIEW'].includes(e.status),
@@ -59,7 +59,8 @@
                     ].includes(e.status)
                   }"
                   :label="`${getWithdrawStatus(e.status)}`"
-                ></q-btn></div>
+                ></q-btn>
+              </div>
             </div>
           </div>
           <div class="order-row order-row--title">
@@ -83,7 +84,6 @@
       <q-tab-panel name="recharge">
         <div v-for="(e, i) in depositData" :key="`${e}-${i}`" class="order-table">
           <div class="order-row order-row--content">
-
             <div class="order-subrow">
               <div class="order-col">
                 <span class="txt-gray">{{ convertToGMT55(e.depositDate) }}</span>
@@ -97,7 +97,8 @@
                   {{ getDepositStatus(e.status) }}
                 </span> -->
 
-                <q-btn flat
+                <q-btn
+                  flat
                   :class="{
                     'btn--green': ['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(e.status),
                     'btn--red': ['CLOSED'].includes(e.status),
@@ -316,19 +317,19 @@ onActivated(() => {
 
 <style lang="scss" scoped>
 .order-option-tab {
-    background: #323738;
-    background-size: 100% 100%;
-    border-radius: 8px;
-    margin: 20px 16px 4px;
-    padding: 1px;
-    font-family: Microsoft YaHei UI;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 100%;
-    letter-spacing: 0px;
-    text-align: center;color: #FFFFFF80;
-    vertical-align: middle;
-
+  background: #323738;
+  background-size: 100% 100%;
+  border-radius: 8px;
+  margin: 20px 16px 4px;
+  padding: 1px;
+  font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #ffffff80;
+  vertical-align: middle;
 
   .right {
     padding: 12px 0;
@@ -344,13 +345,12 @@ onActivated(() => {
 
   :deep(.q-tab__label) {
     font-weight: 700;
-
   }
 
   :deep(.q-tab--active) {
     background: #394142;
     color: white;
-      border-radius: 6px;
+    border-radius: 6px;
   }
 }
 
@@ -368,7 +368,7 @@ onActivated(() => {
     // border-bottom: 1px solid #ffffff33;
     // padding: 6px 0px;
     // margin-bottom: 10px;
-    background: #292D2E;
+    background: #292d2e;
     border-radius: 6px;
     margin: 5px 5px 15px;
     overflow: hidden;
@@ -382,19 +382,18 @@ onActivated(() => {
         align-items: center;
         // border-top-right-radius: 16px;
         // border-top-left-radius: 16px;
-        background: #FFFFFF0F;
+        background: #ffffff0f;
         .order-col {
-          font-family: Microsoft YaHei UI;
+          font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
           font-weight: 400;
           font-size: 12px;
           line-height: 14px;
           letter-spacing: 0px;
-          color:#B2BDBF;
+          color: #b2bdbf;
           &.flex-c-end {
             color: #ffffff;
           }
         }
-
       }
 
       &--content {
@@ -402,7 +401,7 @@ onActivated(() => {
         flex-direction: column;
         gap: 10px;
         .order-col:nth-child(2) {
-        font-weight: 700;
+          font-weight: 700;
         }
       }
 
@@ -411,13 +410,12 @@ onActivated(() => {
         justify-content: space-between;
         align-items: center;
         .order-col:nth-child(1) {
-
-          font-family: Microsoft YaHei UI;
-        font-weight: 700;
-        font-size: 14px;
-        line-height: 14px;
-        letter-spacing: 0px;
-        color: #ffffff;
+          font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 14px;
+          letter-spacing: 0px;
+          color: #ffffff;
         }
       }
     }
@@ -429,16 +427,15 @@ onActivated(() => {
     .order-col {
       &:nth-child(even) {
         text-align: right;
-        color: #21EF89;
-        
+        color: #21ef89;
+
         &.orange {
-          color: #FBAB1B;
+          color: #fbab1b;
         }
-        
       }
 
       span.txt-gray {
-        color: #B2BDBF;
+        color: #b2bdbf;
         font-size: 12px;
         // background: rgba(136, 136, 136, 0.2);
       }
@@ -469,7 +466,7 @@ onActivated(() => {
 }
 
 .btn--orange {
-  color: #FBAB1B;
+  color: #fbab1b;
   font-size: 0.825rem;
   font-weight: 700;
   text-transform: capitalize;
@@ -481,25 +478,25 @@ onActivated(() => {
 }
 
 .btn--red {
-  color: #FF3434;
+  color: #ff3434;
   font-size: 0.825rem;
   font-weight: 700;
   text-transform: capitalize;
   padding: 4px 10px;
   border-radius: 4px;
-  background:rgba(255, 52, 52, 0.2);
+  background: rgba(255, 52, 52, 0.2);
   min-height: unset;
   margin-bottom: 4px;
 }
 
 .btn--green {
-  color: #21EF89;
+  color: #21ef89;
   font-size: 0.825rem;
   font-weight: 700;
   text-transform: capitalize;
   padding: 4px 10px;
   border-radius: 4px;
-  background: rgba(33, 239, 137, .2);
+  background: rgba(33, 239, 137, 0.2);
   min-height: unset;
   margin-bottom: 4px;
 }

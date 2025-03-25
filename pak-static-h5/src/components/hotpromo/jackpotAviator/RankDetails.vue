@@ -38,7 +38,7 @@ const props = defineProps(["rankDetails", "isLoadingRanking"]);
   background: #323738;
   color: #ffffff;
   display: grid;
-  grid-template-columns: .8fr 1fr 1fr;
+  grid-template-columns: 0.8fr 1fr 1fr;
   align-items: center;
   padding: 10px;
   position: fixed;
@@ -47,16 +47,17 @@ const props = defineProps(["rankDetails", "isLoadingRanking"]);
   min-height: 70px;
   max-width: 500px;
   font-size: 14px;
-  font-family: "Microsoft YaHei UI";
+  font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 700;
   line-height: 100%;
-  letter-spacing: 0%;
+  letter-spacing: 0;
   text-align: center;
   > div {
     position: relative;
   }
 
-  > div:nth-child(1), > div:nth-child(2) {
+  > div:nth-child(1),
+  > div:nth-child(2) {
     &:after {
       position: absolute;
       right: 0;
@@ -66,7 +67,12 @@ const props = defineProps(["rankDetails", "isLoadingRanking"]);
       content: "";
       width: 1px;
       height: 37px;
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 57%, rgba(255, 255, 255, 0) 100%);
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.5) 57%,
+        rgba(255, 255, 255, 0) 100%
+      );
     }
   }
 
@@ -90,7 +96,7 @@ const props = defineProps(["rankDetails", "isLoadingRanking"]);
   }
 
   .label {
-    color: #C84846;
+    color: #c84846;
   }
 
   .value {
