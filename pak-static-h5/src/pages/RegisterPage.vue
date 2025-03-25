@@ -46,6 +46,7 @@
                   maxlength="11"
                   ref="loginNameRef"
                   hide-bottom-space
+                  clearable
                   v-model="regForm.loginName"
                   :rules="[
                     (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
@@ -60,6 +61,11 @@
                   <template v-slot:prepend>
                     <q-icon name="smartphone" />
                     <div class="prepend-number">+92</div>
+                  </template>
+                  <template v-if="regForm.referrer && spinRefCode" v-slot:append>
+                    <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">
+                      {{ otpCountdown > 0 ? `RESEND (${otpCountdown})` : $t("form.get_code") }}
+                    </q-btn>
                   </template>
                 </q-input>
               </template>
@@ -78,6 +84,7 @@
                   ]"
                   color="green"
                   outlined
+                  clearable
                   label-color="brand"
                   :placeholder="$t('form.password_placeholder')"
                 >
@@ -116,6 +123,33 @@
               </template>
             </InputField>
 
+            <!--            -->
+            <InputField v-if="regForm.referrer && regForm.smsCodeId" :label="$t('form.otp_form')">
+              <template #input>
+                <q-input
+                  pattern="\d*"
+                  maxlength="6"
+                  ref="verificationRef"
+                  hide-bottom-space
+                  v-model="regForm.smsCode"
+                  :rules="[
+                    (val) => (val && val.length > 0) || $t('form.insert_otp_num'),
+                    (val) => (val && val.length === 6) || $t('form.otp_must_have_6')
+                  ]"
+                  color="white"
+                  class="landing-input"
+                  outlined
+                  :placeholder="$t('form.enter_otp_num')"
+                  label-color="brand"
+                  :disable="isOtpEnable"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="key" />
+                  </template>
+                </q-input>
+              </template>
+            </InputField>
+
             <!-- <InputField :label="'Confirm Password'">
               <template #input>
                 <q-input
@@ -147,30 +181,6 @@
               </template>
             </InputField> -->
 
-            <!-- <InputField :label="'NRIC'">
-              <template #input>
-                <q-input
-                  type="tel"
-                  pattern="\d*"
-                  maxlength="13"
-                  ref="nricRef"
-                  hide-bottom-space
-                  v-model="regForm.nric"
-                  :rules="[
-                    (val) => (val && val.length > 0) || 'Please insert NRIC',
-                    (val) => (val && val.length === 13) || 'The NRIC must have 13 digits'
-                  ]"
-                  color="green"
-                  outlined
-                  label-color="brand"
-                  placeholder="Please enter your NRIC"
-                >
-                  <template v-slot:prepend>
-                    <q-icon name="person" />
-                  </template>
-                </q-input>
-              </template>
-            </InputField> -->
             <div style="visibility: hidden; position: absolute">
               <InputField :label="'Invitation Code (Optional)'">
                 <template #input>
@@ -227,7 +237,7 @@
         <a @click="regLoginTab = 'login'" class="green">Login</a>
       </div>
 
-      <div class="google-login-wrapper">
+      <div v-if="!isSpinReferrer" class="google-login-wrapper">
         <img v-if="languageVal === 'en'" style="width: 100%" src="../assets/images/index/logindirectly-en.png" />
         <img v-else style="width: 100%" src="../assets/images/index/logindirectly-ur.png" />
         <template v-if="isAndroid()">
@@ -325,6 +335,35 @@
         </div>
       </div>
     </div>
+
+    <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
+      <q-card class="captcha-form-wrapper" width="100%">
+        <q-card-section class="q-pa-md text-white">
+          <q-toolbar>
+            <q-toolbar-title>{{ $t("form.verificationCode") }}</q-toolbar-title>
+            <q-btn flat v-close-popup round dense icon="close" />
+          </q-toolbar>
+        </q-card-section>
+        <div class="q-px-lg q-pt-sm q-pb-lg">
+          <q-card-section class="q-mb-md q-pa-md">
+            <q-input v-model="innerCaptchaRef" :placeholder="$t(`form.captchaCode`)">
+              <template v-slot:append>
+                <img
+                  v-show="showImageCode"
+                  :src="phoneVerificationImg"
+                  @load="imgOnLoad"
+                  @error="imgOnError"
+                  :title="$t(`form.refresh_veri_code`)"
+                  style="margin-top: 6px; cursor: pointer"
+                  @click="getInnerCode"
+                />
+              </template>
+            </q-input>
+          </q-card-section>
+          <q-btn class="get-code-btn" @click="onCaptchaSubmit" :label="$t(`form.send_otp`)" />
+        </div>
+      </q-card>
+    </q-dialog>
     <!-- <div class="no-domain bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
     </div> -->
@@ -332,7 +371,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, computed, watch, onActivated } from "vue";
+import { defineComponent, ref, reactive, onMounted, computed, watch, onActivated, onUnmounted } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
@@ -375,8 +414,17 @@ export default defineComponent({
     const phoneVerificationImg = ref("");
     const isAgreeReg = ref(true);
 
+    const showImageCode = ref(false);
+
+    const otpCountdown = ref();
+    const otpCountdownInterval = ref();
+
     const affCode = ref("");
     const isLoading = ref(false);
+
+    const isOtpEnable = ref(true);
+
+    const spinRefCode = ref("");
 
     const regForm = reactive({
       loginName: "",
@@ -410,6 +458,18 @@ export default defineComponent({
       //   });
     };
 
+    const imgOnLoad = () => (showImageCode.value = true);
+    const imgOnError = () => (showImageCode.value = false);
+
+    const openPhoneVeriDialog = () => {
+      isOtpEnable.value = false;
+      loginNameRef.value.validate();
+      if (!loginNameRef.value.hasError) {
+        showCaptchaDialog.value = true;
+        getInnerCode();
+      }
+    };
+
     const getInnerCode = () => {
       api
         .get("/member/verificationCode")
@@ -426,7 +486,7 @@ export default defineComponent({
     };
 
     const hasAffiliate = ref(false);
-
+    const isSpinReferrer = ref(false);
     const getAffiliateCode = () => {
       affCode.value = sessionStorage.getItem("AFFILIATE_CODE");
       // if (affCode.value) {
@@ -445,6 +505,12 @@ export default defineComponent({
       if (pwaRefCode) {
         // hasAffiliate.value = true;
         regForm.referrer = pwaRefCode;
+      }
+      spinRefCode.value = sessionStorage.getItem("REFERRAL_SPIN_CODE");
+      if (spinRefCode.value) {
+        isSpinReferrer.value = true;
+        regForm.referrer = spinRefCode.value;
+        thirdPartyLoginInfo.referrer = refCode;
       }
     };
 
@@ -529,7 +595,7 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: "Google login successfully",
+                  message: t("form.google_login_success"),
                   icon: "check_circle_outline"
                 });
 
@@ -592,7 +658,7 @@ export default defineComponent({
                   $q.notify({
                     color: "positive",
                     position: "top",
-                    message: "Google login successfully",
+                    message: t("form.google_login_success"),
                     icon: "check_circle_outline"
                   });
 
@@ -654,10 +720,11 @@ export default defineComponent({
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
-      // nricRef.value.validate();
+
+      verificationRef.value?.validate();
 
       $q.loading.show({
-        message: "Registering in progress"
+        message: t("form.register_in_progress")
       });
 
       isLoading.value = true;
@@ -665,9 +732,18 @@ export default defineComponent({
       if (
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
-        // nricRef.value.hasError ||
+        verificationRef.value?.hasError ||
         isAgreeReg.value === false
       ) {
+        $q.loading.hide();
+        isLoading.value = false;
+      } else if (regForm.referrer && isSpinReferrer.value === true && regForm.smsCodeId && isOtpEnable.value) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: t("form.fill_in_otp"),
+          icon: "report_problem"
+        });
         $q.loading.hide();
         isLoading.value = false;
       } else {
@@ -704,7 +780,7 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: "Registered successfully",
+                  message: t("form.register_success"),
                   icon: "check_circle_outline"
                 });
                 localStorage.setItem("newPlayerGuide", 1);
@@ -852,20 +928,27 @@ export default defineComponent({
     //   }
     // );
 
-    const openPhoneVeriDialog = () => {
-      telRef.value.validate();
-      if (!telRef.value.hasError) {
-        showCaptchaDialog.value = true;
-        getInnerCode();
-      }
+    // const openPhoneVeriDialog = () => {
+    //   loginNameRef.value.validate();
+    //   if (!loginNameRef.value.hasError) {
+    //     openVerificationCodeDialog();
+    //     getInnerCode();
+    //   }
+    // };
+
+    const verificationCodeDialog = ref(false);
+    const openVerificationCodeDialog = () => {
+      verificationCodeDialog.value = !verificationCodeDialog.value;
+      captchaRef.value = "";
+      getCode();
     };
 
     const onCaptchaSubmit = () => {
-      if (!regForm.telephone) {
+      if (!regForm.loginName) {
         $q.notify({
           color: "negative",
           position: "top",
-          message: "Phone number cannot be empty",
+          message: t("form.phone_cannot_empty"),
           icon: "report_problem"
         });
         getInnerCode();
@@ -875,13 +958,13 @@ export default defineComponent({
         .post(
           `/otp/sendSms`,
           qs.stringify({
-            telephone: regForm.telephone,
+            telephone: regForm.loginName,
             captchaCode: innerCaptchaRef.value,
             codeId: innerCodeId.value
           })
         )
         .then((res) => {
-          let message = res.message || "OTP sent to phone successfully",
+          let message = res.message || t("form.otp_sent_phone_success"),
             color = "positive";
 
           if (res.code === 0) {
@@ -889,13 +972,32 @@ export default defineComponent({
             regForm.smsCode = "";
             regForm.smsCodeId = res.data.codeId;
             console.log(res.data.codeId);
+
+            // start otp countdown
+            otpCountdown.value = res.data.second || 60;
+            otpCountdownInterval.value = setInterval(() => {
+              if (otpCountdown.value > 0) {
+                otpCountdown.value = otpCountdown.value - 1;
+              }
+            }, 1000);
           } else {
             color = "negative";
+            if (res.code === 1402) {
+              message = `Please try again after ${res.data.second} seconds`;
+
+              // start otp countdown
+              otpCountdown.value = res.data.second || 60;
+              otpCountdownInterval.value = setInterval(() => {
+                if (otpCountdown.value > 0) {
+                  otpCountdown.value = otpCountdown.value - 1;
+                }
+              }, 1000);
+            }
             getInnerCode();
           }
 
           if (message) {
-            $q.notify({ message, color });
+            $q.notify({ message, color, position: "top" });
           }
 
           console.log("onCaptchaSubmit", res);
@@ -998,6 +1100,20 @@ export default defineComponent({
       const currentDomain = window.location.hostname;
       return restrictedDomains.includes(currentDomain);
     });
+
+    watch(
+      () => otpCountdown.value,
+      () => {
+        if (otpCountdown.value === 0) {
+          clearInterval(otpCountdownInterval.value);
+        }
+      }
+    );
+
+    onUnmounted(() => {
+      clearInterval(otpCountdownInterval.value);
+    });
+
     return {
       header: "Register Account",
       regForm,
@@ -1020,7 +1136,7 @@ export default defineComponent({
       onCaptchaSubmit,
       innerCaptchaRef,
       phoneVerificationImg,
-      openPhoneVeriDialog,
+      // openPhoneVeriDialog,
       phoneVerificationRef,
       isValidCnPhone,
       hasAffiliate,
@@ -1049,7 +1165,16 @@ export default defineComponent({
       router,
       onClickGoogleSignin,
       onCapacitorGoogleSignin,
-      languageVal
+      languageVal,
+      isSpinReferrer,
+      otpCountdown,
+      otpCountdownInterval,
+      isOtpEnable,
+      openPhoneVeriDialog,
+      imgOnLoad,
+      imgOnError,
+      showImageCode,
+      spinRefCode
     };
   }
 });
@@ -1103,6 +1228,13 @@ function charType(num) {
       font-weight: 700 !important;
     }
   }
+}
+
+.get-code-btn {
+  background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+  color: #000a01;
+  min-width: 100px;
+  max-width: 120px;
 }
 
 .register-container {
@@ -1403,6 +1535,16 @@ function charType(num) {
   color: #ffffff;
   margin-left: 8px;
 }
+.verify-btn {
+  color: #21ef89;
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: -0.08%;
+  text-align: right;
+  text-transform: capitalize;
+}
 
 .q-icon {
   color: rgba(255, 255, 255, 0.3);
@@ -1529,6 +1671,14 @@ function charType(num) {
   70% {
     -webkit-transform: scale(1);
     transform: scale(1);
+  }
+}
+
+.captcha-form-wrapper {
+  background: #0b0e0d;
+
+  :deep(.q-toolbar) {
+    background: #232325;
   }
 }
 

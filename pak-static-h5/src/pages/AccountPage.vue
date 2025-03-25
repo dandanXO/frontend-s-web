@@ -48,10 +48,18 @@
               </InputField>
             </div>
 
-            <div class="pc-form-item" @click="openPersonalCenterDialog">
+            <div
+              class="pc-form-item"
+              :class="{ 'item-click': !formDetail.phoneVerified }"
+              @click="openVerifyPhoneDialog"
+            >
               <InputField :label="$t('form.phone')">
                 <template #input>
-                  <q-input v-model="formDetail.phone" outlined clearable hide-bottom-space readonly></q-input>
+                  <q-input v-model="formDetail.phone" outlined clearable hide-bottom-space readonly>
+                    <template v-if="!formDetail.phoneVerified" v-slot:append>
+                      <q-icon name="chevron_right" />
+                    </template>
+                  </q-input>
                 </template>
               </InputField>
             </div>
@@ -357,6 +365,81 @@
     </div>
   </q-dialog>
 
+  <q-dialog width="100%" v-model="verifyPhoneDialog" persistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">{{ $t("form.verifyPhone") }}</div>
+        <div class="pc-form">
+          <InputRowGrid>
+            <template #fields>
+              <InputField :label="$t('form.phone')">
+                <template #input>
+                  <q-input
+                    outlined
+                    clearable
+                    :placeholder="$t('form.phone_placeholder')"
+                    v-model="updatePhoneInfo.telephone"
+                    :readonly="!!formDetail.phone"
+                    ref="phoneRef"
+                    hide-bottom-space
+                    type="text"
+                    :rules="[
+                      (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
+                      (val) => (val && val.length === 11) || $t('form.phone_rules_01'),
+                      (val) => val.startsWith('03') || $t('form.phone_rules_03')
+                    ]"
+                  >
+                    <template v-slot:append>
+                      <div class="pc-form-side-btn">
+                        <q-btn
+                          no-caps
+                          dense
+                          class="text-green"
+                          :label="!startCountdownResendOTP && $t('form.send')"
+                          :disable="startCountdownResendOTP"
+                          @click="openPhoneVerificationCodeDialog"
+                        />
+                      </div>
+                    </template>
+                  </q-input>
+                </template>
+              </InputField>
+
+              <InputField :label="$t('form.code')">
+                <template #input>
+                  <q-input
+                    outlined
+                    clearable
+                    :placeholder="$t('form.code_placeholder')"
+                    v-model="updatePhoneInfo.code"
+                    ref="verifyPhoneCodeRef"
+                    hide-bottom-space
+                    type="text"
+                    :rules="[(val) => val.length !== 0 || $t('form.code_rules_01')]"
+                  >
+                    <template v-slot:append v-if="startCountdownResendOTP">{{ countdownOTP }}s</template>
+                  </q-input>
+                </template>
+              </InputField>
+            </template>
+          </InputRowGrid>
+        </div>
+
+        <div class="bottom-btn">
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="sendPhoneDetails">
+            {{ $t("btn.confirm") }}
+          </q-btn>
+        </div>
+
+        <!-- <div class="q-mt-md q-pl-lg q-pr-lg"> -->
+        <!-- <PrimaryButton :label="'Confirm'" :isSmall="true" :onClick="submitUpdatePwd" /> -->
+        <!-- <q-btn rounded flat no-caps class="btn-purple-pattern" @click="submitUpdatePwd">Confirm</q-btn> -->
+        <!-- </div> -->
+      </div>
+    </div>
+  </q-dialog>
+
   <q-dialog class="flex-end" width="100%" v-model="changePasswordDialog" persistent>
     <div class="popout-dialog">
       <q-btn
@@ -614,6 +697,45 @@
       </div>
     </div>
   </q-dialog>
+  <q-dialog width="100%" v-model="verificationPhoneCodeDialog" persistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">{{ $t("form.captchaCodeCheck") }}</div>
+
+        <div class="pc-form">
+          <div class="pc-form-item">
+            <div class="pc-form-label">{{ $t("form.captchaCode") }}</div>
+            <div class="pc-form-input">
+              <q-input
+                filled
+                hide-bottom-space
+                dense
+                clearable
+                :placeholder="$t('form.captchaCode_placeholder')"
+                v-model="captchaPhoneRef"
+                :rules="[
+                  (val) => (val && val.length > 0) || $t('form.captchaCode_rules_01'),
+                  (val) => (val && val.length > 3 && val.length < 5) || $t('form.captchaCode_rules_02')
+                ]"
+              >
+                <template v-slot:append>
+                  <img :src="verificationImg" @click="getCode" />
+                </template>
+              </q-input>
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-btn">
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onPhoneCaptchaSubmit">
+            {{ $t("btn.confirm") }}
+          </q-btn>
+          <!-- <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup @click="onCaptchaSubmit">Confirm</q-btn> -->
+        </div>
+      </div>
+    </div>
+  </q-dialog>
 
   <q-dialog class="flex-end" width="100%" v-model="confirmSignOutDialog" presistent>
     <div class="popout-dialog">
@@ -734,6 +856,14 @@ const openBindEmailDialog = () => {
     bindEmailDialog.value = !bindEmailDialog.value;
   }
 };
+const verifyPhoneDialog = ref(false);
+const openVerifyPhoneDialog = () => {
+  if (formDetail.phoneVerified) {
+    return;
+  }
+  updatePhoneInfo.telephone = formDetail.phone;
+  verifyPhoneDialog.value = !verifyPhoneDialog.value;
+};
 
 const closeUserKYCDialog = (updateInfo) => {
   store.getMemberInfo().then(() => {
@@ -807,6 +937,14 @@ const openVerificationCodeDialog = () => {
   // getCode();
 
   getCode();
+};
+const openPhoneVerificationCodeDialog = () => {
+  phoneRef.value.validate();
+  if (!phoneRef.value.hasError) {
+    verificationPhoneCodeDialog.value = !verificationPhoneCodeDialog.value;
+    captchaPhoneRef.value = "";
+    getCode();
+  }
 };
 
 const myMemberList = ref([]);
@@ -1020,6 +1158,7 @@ const emailRef = ref();
 const phoneOtpRef = ref();
 
 const captchaRef = ref();
+const captchaPhoneRef = ref();
 const showCaptchaDialog = ref(false);
 const showVerificationTokenInput = ref(false);
 
@@ -1262,7 +1401,48 @@ const onCaptchaSubmit = () => {
       console.log("onCaptchaSubmit", res);
     });
 };
+const verificationPhoneCodeDialog = ref(false);
+const onPhoneCaptchaSubmit = () => {
+  api
+    .post(
+      `/session/sendRegisteredPhoneOtp`,
+      qs.stringify({
+        ...(formDetail.phone ? {} : { telephone: updatePhoneInfo.telephone }),
+        captchaCode: captchaPhoneRef.value,
+        codeId: updateSecurityVerified.codeId
+      })
+    )
+    .then((res) => {
+      let message = res.message,
+        color = "positive";
+      if (res.code === 0) {
+        verificationPhoneCodeDialog.value = false;
+        startCountdownResendOTP.value = true;
 
+        countdownOTP.value = 59;
+        let timer = setInterval(() => {
+          countdownOTP.value -= 1;
+          if (countdownOTP.value === 0) {
+            clearInterval(timer);
+            startCountdownResendOTP.value = false;
+          }
+        }, 1000);
+
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: t("notify.smsSent"),
+          icon: "check_circle_outline"
+        });
+
+        updatePhoneInfo.codeId = res.data.codeId;
+      } else color = "negative";
+
+      if (message) $q.notify({ message, color });
+
+      console.log("onCaptchaSubmit", res);
+    });
+};
 const isPwd = ref(true);
 const oldPasswordRef = ref();
 const passwordRef = ref();
@@ -1280,6 +1460,11 @@ const updateEmailInfo = reactive({
   codeId: ""
 });
 
+const updatePhoneInfo = reactive({
+  telephone: "",
+  code: "",
+  codeId: ""
+});
 const updateEmailRef = ref();
 const updateEmailCodeRef = ref();
 
@@ -1355,6 +1540,52 @@ const submitUpdateEmail = () => {
           bindEmailDialog.value = false;
           formDetail.email = updateEmailInfo.email;
           formDetail.emailVerified = true;
+
+          // setTimeout(() => {
+          //   startRefresh();
+          // }, 2000);
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: response.message,
+            icon: "report_problem"
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }
+};
+
+const phoneRef = ref();
+const verifyPhoneCodeRef = ref();
+const sendPhoneDetails = () => {
+  phoneRef.value.validate();
+  verifyPhoneCodeRef.value.validate();
+
+  if (phoneRef.value.hasError || verifyPhoneCodeRef.value.hasError) {
+  } else {
+    api
+      .post(
+        "/session/verifyRegisteredPhoneOtp",
+        qs.stringify({
+          ...(formDetail.phone ? {} : { telephone: updatePhoneInfo.telephone }),
+          code: updatePhoneInfo.code,
+          codeId: updatePhoneInfo.codeId
+        })
+      )
+      .then((response) => {
+        if (response.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: "Phone verified successfully",
+            icon: "check_circle_outline"
+          });
+          verifyPhoneDialog.value = false;
+          formDetail.phoneVerified = true;
 
           // setTimeout(() => {
           //   startRefresh();
@@ -1630,7 +1861,7 @@ const openConfirmSignOutDialog = () => {
   // height: 42px;
   // color: #fff;
   // border-radius: 12px;
-  
+
   font-weight: 700;
   width: 100%;
   padding: 10px 40px;

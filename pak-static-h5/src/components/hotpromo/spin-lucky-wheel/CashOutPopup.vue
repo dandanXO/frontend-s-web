@@ -1,7 +1,7 @@
 <template>
   <q-dialog v-model="_modelValue" @hide="hideCashOutPopup" @show="handleDialogShow">
     <div v-if="isShowInviteWins" class="invite-wins">
-      <InviteWins />
+      <SharePopup ref="sharePopupRef" v-model="isShowInviteWins" />
     </div>
     <div class="cash-out" v-else>
       <GradientTextAmount v-if="isShowTextAmount" :amountText="`CASH OUT COSTS  ${extractionDifference}$`" />
@@ -28,7 +28,7 @@ import { computed, inject, ref } from "vue";
 import CommonButton from "./CommonButton.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
 import ProgressBar from "./ProgressBar.vue";
-import InviteWins from "./InviteWins.vue";
+import SharePopup from "./SharePopup.vue";
 
 const props = defineProps(["modelValue", "prize"]);
 const emit = defineEmits(["update:modelValue", "hide"]);

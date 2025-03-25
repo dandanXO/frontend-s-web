@@ -1,4 +1,5 @@
 <template>
+  <pre>info --- {{ info }}</pre>
   <div class="wheel-stage-wrapper">
     <div class="wheel-outer-wrapper">
       <!-- <span class="title">Countdown: {{ remainingTime }}</span> -->
@@ -362,7 +363,7 @@ onUnmounted(() => {
           font-size: 40px;
         }
       }
-      
+
       .extraction-require-amount, .extraction-require-percentage {
         color: #fff;
         font-family: 'Poppins';
