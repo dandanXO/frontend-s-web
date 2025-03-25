@@ -126,7 +126,7 @@
 
           <q-tr class="top-header">
             <q-td>
-              <div><img src="../../assets/images/vip/vip-col-level.png" /></div>
+              <div><img style="width: 30px;" src="../../assets/images/vip/vip-col-level.png" /></div>
             </q-td>
             <q-td>
               {{ $t("vip.upgrade") }}
@@ -149,7 +149,7 @@
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <template v-if="colIndex === 1 || colIndex === 3">
                 <div style="justify-content: flex-start; padding-left: 20px; display: flex; align-items: center; gap: 4px">
-                  <img src="../../assets/images/vip/vip-coins.png" />
+                  <img src="../../assets/images/vip/vip-coins.svg" />
                   <span>{{ col.value }}</span>
                 </div>
               </template>

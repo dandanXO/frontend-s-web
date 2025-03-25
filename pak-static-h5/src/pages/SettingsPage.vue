@@ -40,7 +40,7 @@
       </RouterLink>
       <div class="top-total-score">
         <div class="score-txt">
-          <img src="../assets/images/account/total-score.png" />
+          <img src="../assets/images/account/total-score.svg" />
           {{ $t("settings.totalScore") }}
         </div>
         <div class="score-amount">{{ store.balance.toFixed(2) }}</div>
@@ -121,19 +121,19 @@
       <div class="bottom-setting-section">
         <router-link to="/account/message">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/message-svg.png" />
+            <img src="../assets/images/account/message-svg.svg" />
           </div>
           <div class="acct-nav-label">{{ $t("settings.message") }}</div>
         </router-link>
         <router-link to="/account/feedback">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/feedback-svg.png" />
+            <img src="../assets/images/account/feedback-svg.svg" />
           </div>
           <div class="acct-nav-label">{{ $t("settings.feedback") }}</div>
         </router-link>
         <a v-if="ui.promo_exchange === '1'" target="_blank" @click="handleExchangeClick">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/exchange-svg.png" />
+            <img src="../assets/images/account/exchange-svg.svg" />
           </div>
           <div class="acct-nav-label">{{ $t("settings.exchange") }}</div>
         </a>
@@ -147,7 +147,7 @@
       </div>
       <div class="bottom-setting-section invite-friends-section">
         <div class="left-icon">
-          <img src="../assets/images/earn-money/invite-gift.png" />
+          <img src="../assets/images/earn-money/invite-gift.svg" />
         </div>
         <div class="right-contents">
           <div class="invite-title">{{ $t("earnMoney.reward.inviteFriendsViaLink") }}</div>
