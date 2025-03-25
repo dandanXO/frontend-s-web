@@ -226,7 +226,6 @@
       :slidesPerGroup="4"
       :spaceBetween="10"
       :modules="[Navigation, Grid]"
-      :navigation="{ nextEl: '.custom-hot-next', prevEl: '.custom-hot-prev' }"
       class="hometop-categories"
     >
       <template v-for="(item, index) in translatedCategoriesList" :key="index">

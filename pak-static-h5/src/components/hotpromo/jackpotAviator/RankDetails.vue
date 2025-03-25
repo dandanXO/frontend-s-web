@@ -46,7 +46,7 @@ const props = defineProps(["rankDetails", "isLoadingRanking"]);
   width: 100%;
   min-height: 70px;
   max-width: 500px;
-  font-size: 14px;
+  font-size: 12px;
   font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 700;
   line-height: 100%;
