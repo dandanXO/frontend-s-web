@@ -412,7 +412,7 @@
                 <div class="platform-logo">
                   <img loading="lazy" :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
                 </div>
-                <div class="platform-title">{{ item.title }}</div>
+                <div class="platform-title">{{ item?.alias || item.title }}</div>
                 <div class="platform-subtitle">{{ item.subtitle }}</div>
                 <div class="platform-rebate">
                   最高返水
