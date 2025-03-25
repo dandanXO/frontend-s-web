@@ -606,7 +606,7 @@ watch(activeSetting, checkIsShowDetail);
     .pot-item {
       flex: 1;
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       flex-direction: column;
       gap: 10px;
@@ -615,13 +615,18 @@ watch(activeSetting, checkIsShowDetail);
       &__2 {
         img {
           max-width: 45px;
+          display:block;
+          margin: 0px auto;
+          padding-top: 10px;
+          padding-bottom: 8px;
         }
       }
       &:nth-child(1) {
         &:after {
           content: "";
           background: #434949;
-          height: 60%;
+          height: 70%;
+          top: 15%;
           width: 1px;
           position: absolute;
           right: -5px;
@@ -768,7 +773,7 @@ watch(activeSetting, checkIsShowDetail);
 
     .details-item {
       img {
-        width: 20px;
+        width: 26px;
       }
       &:nth-child(1) {
         &:after {

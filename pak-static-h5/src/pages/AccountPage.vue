@@ -1658,7 +1658,7 @@ const openConfirmSignOutDialog = () => {
 
 <style lang="scss" scoped>
 .personal-center-container {
-  padding: 0 20px;
+  padding: 0 20px 20px;
 }
 
 .progress-container {
