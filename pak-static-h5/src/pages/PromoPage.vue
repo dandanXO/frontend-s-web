@@ -1030,6 +1030,7 @@ export default defineComponent({
 
           .promo-img-wrapper {
             position: relative;
+            max-height: 145px;
             overflow: hidden;
             // border-radius: 10px 10px 0 0;
 

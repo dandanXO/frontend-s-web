@@ -17,10 +17,10 @@
                 <img
                   :src="
                     item.hasClaimed === 'YES'
-                      ? require('./img/tick-icon-active.png')
+                      ? require('./img/tick-icon-active.svg')
                       : item.hasClaimed === 'NO'
-                      ? require('./img/tick-icon.png')
-                      : require('./img/tick-icon-expired.png')
+                      ? require('./img/tick-icon.svg')
+                      : require('./img/tick-icon-expired.svg')
                   "
                 />
               </div>
@@ -47,7 +47,7 @@
           <div class="bonus-box">
             <div class="bonus-title">Bonus claim time</div>
             <div class="bonus-date">
-              <div><img src="./img/icon-time.png" alt="" /></div>
+              <div><img src="./img/icon-time.svg" alt="" /></div>
               {{ activeClaim && formatDateTime(activeClaim.bonusClaimTime) }}
             </div>
 
@@ -63,7 +63,7 @@
             :disable="activeClaim && (!activeClaim.isOpen || activeClaim.hasClaimed !== 'NO')"
             @click="claimNewPlayerAccDeposit()"
           >
-            <div class="q-mr-sm"><img src="./img/img-start.png" alt="" /></div>
+            <div class="q-mr-sm"><img src="./img/img-start.svg" alt="" /></div>
             <template v-if="activeClaim && activeClaim.hasClaimed === 'YES'">Claimed</template>
             <template v-if="activeClaim && activeClaim.hasClaimed === 'EXPIRED'">Expired</template>
             <template v-if="activeClaim && activeClaim.hasClaimed === 'NO'">Claim now</template>
@@ -289,6 +289,7 @@ onMounted(() => {
       display: flex;
       gap: 6px;
       justify-content: center;
+      align-items: center;
 
       img {
         margin-top: 4px;
