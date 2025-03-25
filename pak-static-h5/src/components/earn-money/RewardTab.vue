@@ -142,14 +142,14 @@
           <tr v-for="(item, index) in oneTimeBonusSetting.settingList" :key="index">
             <td>
               <template v-if="index < 3">
-                <img :src="require(`../../assets/images/earn-money/no${index + 1}.svg`)" alt="Level Image" />
+                <img style="max-width: 25px;" :src="require(`../../assets/images/earn-money/no${index + 1}.png`)" alt="Level Image" />
               </template>
               LEVEL {{ index + 1 }}
             </td>
             <td>{{ item.minReferCount }} ~ {{ item.maxReferCount }}</td>
             <td>
               <div class="reward-coin-container">
-                <img class="reward-coin" src="../../assets/images/earn-money/invite-reward-coin.svg" />
+                <img class="reward-coin" src="../../assets/images/earn-money/invite-reward-coin.png" />
                 {{ item.bonusAmount }}
               </div>
             </td>
@@ -247,7 +247,7 @@
           {{ $t("earnMoney.reward.totalAmountSentAsOfYesterday") }}
           <span>
             <div class="sent-ytd-icon">
-              <img src="../../assets/images/earn-money/sent-ytd-icon.svg" />
+              <img src="../../assets/images/earn-money/sent-ytd-icon.png" />
             </div>
             {{ store.currency.value }} {{ convertToCommaAmount(oneTimeBonusSetting.totalAmount) }}
           </span>
@@ -614,9 +614,7 @@ watch(activeSetting, checkIsShowDetail);
       position: relative;
       &__2 {
         img {
-          padding: 7px;
-          margin-top: 7px;
-          margin-bottom: -7px;
+          max-width: 45px;
         }
       }
       &:nth-child(1) {
@@ -652,7 +650,7 @@ watch(activeSetting, checkIsShowDetail);
         font-size: 12px;
       }
       .item-img {
-        width: 48px;
+        width: 65px;
         img {
           width: 100%;
         }

@@ -1228,7 +1228,7 @@ onMounted(() => {
       margin: 20px auto 0px auto;
 
       .deposit-input {
-        background-color: #0b0e0d;
+        // background-color: #0b0e0d;
         border-radius: 5px;
         width: 100%;
         height: 46px;

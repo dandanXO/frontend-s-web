@@ -1547,7 +1547,7 @@
   </q-dialog>
 
   <q-dialog class="isCentreDialog" v-if="popupPromo === 'money-rain'" :model-value="true" persistent>
-    <MoneyRainModal>
+    <MoneyRainModal @closeModal="closeDialog">
       <template #controller>
         <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="isShownSpinLuckyWheel" />
       </template>

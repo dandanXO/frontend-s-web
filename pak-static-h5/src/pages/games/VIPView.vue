@@ -149,7 +149,7 @@
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <template v-if="colIndex === 1 || colIndex === 3">
                 <div style="justify-content: flex-start; padding-left: 20px; display: flex; align-items: center; gap: 4px">
-                  <img src="../../assets/images/vip/vip-coins.svg" />
+                  <img style="max-width: 25px;" src="../../assets/images/vip/vip-coins.png" />
                   <span>{{ col.value }}</span>
                 </div>
               </template>

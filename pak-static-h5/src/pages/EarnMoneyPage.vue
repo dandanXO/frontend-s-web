@@ -143,7 +143,7 @@ watch(
       white-space: normal;
     margin: 0;
     padding: 0;
-    border-radius: 12px;
+    border-radius: 6px;
 
     }
     :deep(.q-tab__label) {

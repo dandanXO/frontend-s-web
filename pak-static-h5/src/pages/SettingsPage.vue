@@ -147,7 +147,7 @@
       </div>
       <div class="bottom-setting-section invite-friends-section">
         <div class="left-icon">
-          <img src="../assets/images/earn-money/invite-gift.svg" />
+          <img src="../assets/images/earn-money/invite-gift.png" />
         </div>
         <div class="right-contents">
           <div class="invite-title">{{ $t("earnMoney.reward.inviteFriendsViaLink") }}</div>
