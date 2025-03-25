@@ -78,12 +78,12 @@
           <span>首页</span>
         </q-route-tab>
 
-        <q-route-tab v-if="$q.dark.isActive"  to="/hotmatch" name="hotmatch">
+        <q-route-tab v-if="$q.dark.isActive" to="/hotmatch" name="hotmatch">
           <div class="inactive footer-icon flag" />
           <div class="hover footer-icon flag" />
           <span>赛程</span>
         </q-route-tab>
-        <q-route-tab v-else  to="/hotmatch" name="hotmatch">
+        <q-route-tab v-else to="/hotmatch" name="hotmatch">
           <div class="inactive footer-icon flag-w" />
           <div class="hover footer-icon flag-w" />
           <span>赛程</span>
@@ -223,8 +223,8 @@ export default defineComponent({
             pageName.value = `${platformName}游戏大厅`;
           }
 
-          if(route.query.platform == "PPFP") {
-            pageName.value = "PP熊猫 电子";
+          if (route.query.platform == "PPFP") {
+            pageName.value = "FP 电子";
           }
         } else if (route.path === "/fishing") {
           prevPage.value = "";
@@ -557,7 +557,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-:deep(body.desktop .q-hoverable:hover>.q-focus-helper) {
+:deep(body.desktop .q-hoverable:hover > .q-focus-helper) {
   opacity: 0;
 }
 
@@ -620,15 +620,15 @@ svg path {
     }
   }
   &.flag-w {
-      width: 20px;
-      background: url("../assets/images/footer/flag-white-active.svg") no-repeat center center;
-      background-size: 100% 100%;
+    width: 20px;
+    background: url("../assets/images/footer/flag-white-active.svg") no-repeat center center;
+    background-size: 100% 100%;
 
-      &.inactive {
-        background: url("../assets/images/footer/flag-white.svg") no-repeat center center;
-        background-size: 100% 100%;
-      }
+    &.inactive {
+      background: url("../assets/images/footer/flag-white.svg") no-repeat center center;
+      background-size: 100% 100%;
     }
+  }
 
   &.wallet {
     background: url("../assets/images/footer/footer-icons.svg") no-repeat center center;
