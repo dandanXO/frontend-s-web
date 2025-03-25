@@ -1,7 +1,7 @@
 <template>
   <!-- <ProfileSummary :homeProfile="true" /> -->
 
-  <div class="side-menu" @click.stop>
+  <div class="left-side-menu" @click.stop>
     <RouterLink to="/earn-money" class="side-menu-item side-menu-item__invite">
       <div>
         {{ $t("sideNav.inviteToEarn") }}
@@ -155,15 +155,16 @@ const openCSInNewTab = (url) => {
     margin-left: 0;
   }
 
-  .side-menu {
+  .left-side-menu {
     width: 100%;
-    height: 100%;
+    padding-top: 72px;
+    height: calc(100vh - 50px);
     display: flex;
     flex-direction: column;
+    padding-left: 16px;
+    padding-right: 16px;
     gap: 12px;
     transition: 0.3s all;
-    padding: 16px;
-
     overflow-y: auto;
 
     .side-menu-divider {
