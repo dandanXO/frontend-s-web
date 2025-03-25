@@ -114,7 +114,7 @@
     </q-dialog>
     <WheelResultDialog v-model="showResultDialog" :prize="prize" @hide="$emit('reload')" />
     <RecordDialog v-model="showRecordDialog" />
-    <!-- <CashOutPopup ref="cashOutPopupRef" v-model="isCashOutPopupVisible" /> -->
+    <CashOutPopup ref="cashOutPopupRef" v-model="isCashOutPopupVisible" />
     <SharePopup ref="sharePopupRef" v-model="isSharePopupVisible" />
   </div>
 </template>
@@ -128,7 +128,7 @@ import { useRouter } from "vue-router";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import ProgressBar from "./ProgressBar.vue";
-// import CashOutPopup from "./CashOutPopup.vue";
+import CashOutPopup from "./CashOutPopup.vue";
 import SharePopup from "./SharePopup.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
 
@@ -164,8 +164,8 @@ const prizeIndex = ref(0);
 const timer = ref();
 const prize = ref(0);
 const winningRecordRef = ref();
-// const isCashOutPopupVisible = ref(false);
-// const cashOutPopupRef = ref();
+const isCashOutPopupVisible = ref(false);
+const cashOutPopupRef = ref();
 const isSharePopupVisible = ref(false);
 const sharePopupRef = ref();
 const winningRecord = ref([]);
