@@ -108,7 +108,7 @@ const props = defineProps(["rankDetails", "isLoadingRanking"]);
   .bottom {
     padding: 5px;
     min-height: 50px;
-    font-size: 14px;
+    font-size: 12px;
     letter-spacing: -1px;
   }
 }
