@@ -84,6 +84,7 @@
               Invite To Earn Spin
             </CommonButton>
             <span v-if="isWheelEnded" class="next-spin-remaining-time">This round has ended.</span>
+            <span v-if="!isWheelEnded" class="next-spin-remaining-time">Countdown to next free spins: {{ nextFreeSpinRemainingTime }}</span>
           </div>
         </div>
       </div>
@@ -91,7 +92,7 @@
       <button class="rules-btn" @click="handleRulesClick">Rules</button>
       <button class="record-btn" @click="handleRecordClick">Record</button>
     </div>
-    
+
     <q-dialog v-model="showRulesDialog">
       <div class="block-wrapper">
       <div class="title-wrapper">
@@ -101,30 +102,13 @@
         />
       </div>
       <ol>
-        <li>
-          When the accumulated amount reaches, you can apply for withdrawal (Rewards will add to your wallet directly).
-        </li>
-        <li>When there are no spins available, refer a new player to get a free spin.</li>
-        <li>
-          Each round of the event lasts for 24, 48, or 72 hours. After 24, 48, or 72 hours, the accumulated bonus and
-          invitation records will be reset, and a new round will start.
-        </li>
-        <li>Each user can enjoy one free spin upon their first participation in the lucky spin.</li>
-        <li>
-          Users can randomly receive bonus rewards through the lucky spin. The reset time is 24 hours for the first
-          stage, 48 hours for the second stage, and 72 hours for the third stage.
-        </li>
-        <li>
-          After completing a stage, the user will automatically enter the next stage. If the stage is not completed, it
-          will be reset and restarted.
-        </li>
-        <li>
-          Upon reaching the third stage, the event will continuously reset the third stage based on the cycle time.
-        </li>
-        <li>
-          The right to interpret the event belongs to B9GAME. If you have any questions, please contact customer
-          service.
-        </li>
+        <li>When the accumulated amount reaches 1000 PKR, you can apply for a withdrawal (the reward will be directly added to your wallet).</li>
+        <li>When there are no available spins, referring a new player to register and deposit will earn you free spins.</li>
+        <li>The event lasts for 3 days. After the event ends, the accumulated rewards will be reset, and the event will restart.</li>
+        <li>Each user can enjoy one free spin per day, which will be added at 00:00 daily.</li>
+        <li>Once the application is approved, the bonus will be directly credited to your wallet.</li>
+        <li>The bonus must be rolled over once before it can be withdrawn.</li>
+        <li>The invitee must verify their phone number, register using the inviter's referral link, and must not have a duplicate IP address to qualify for the referral.</li>
       </ol>
     </div>
     </q-dialog>
@@ -328,13 +312,13 @@ const updateCountdownTime = () => {
     isWheelEnded.value = true;
   }
 
-  const nextFreeSpinEndTime = moment().add(1, "days").startOf("day");
+  const nextFreeSpinEndTime = moment().tz("Asia/Karachi").add(1, "days").startOf("day");
   if (timer.value) {
     clearInterval(timer.value);
   }
   timer.value = setInterval(() => {
     remainingTime.value = getRemainingTime(endTime);
-    // nextFreeSpinRemainingTime.value = getRemainingTime(nextFreeSpinEndTime);
+    nextFreeSpinRemainingTime.value = getRemainingTime(nextFreeSpinEndTime);
     if (winningRecordRef.value) {
       const isScrollToEnd = winningRecordRef.value.scrollTop >= winningRecordRef.value.offsetHeight;
       winningRecordRef.value.scrollTo({
@@ -635,6 +619,8 @@ onUnmounted(() => {
           .next-spin-remaining-time {
             font-weight: 700;
             color: #fff;
+            display: block;
+            margin-top: -8px;
           }
         }
       }
@@ -662,7 +648,7 @@ onUnmounted(() => {
     }
   }
 
-  
+
 
   > div:not(:last-child) {
     margin-bottom: 12px;
