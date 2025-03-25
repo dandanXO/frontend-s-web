@@ -1,17 +1,15 @@
 <template>
   <div class="card">
     <DataTable
-      style="font-size: small"
-      :size="'small'"
-      v-model:filters="filters"
       :value="streams"
-      paginator
-      showGridlines
+      :paginator="true"
       :rows="10"
-      dataKey="id"
-      filterDisplay="menu"
       :loading="loading"
-      :globalFilterFields="['title', 'status', 'streamStatus']"
+      dataKey="eventId"
+      :filters="filters"
+      filterDisplay="menu"
+      :globalFilterFields="['eventTitle', 'streamStatus']"
+      responsiveLayout="scroll"
     >
       <template #header>
         <div class="flex justify-between" style="display: flex; gap: 8px">
@@ -31,166 +29,211 @@
           </IconField>
         </div>
       </template>
-      <template #empty> 暫無數據 </template>
-      <template #loading> 正在加載數據，請稍候... </template>
 
-      <Column field="title" header="標題" style="min-width: 20rem">
-        <template #body="{ data }">
-          {{ data.title }}
+      <Column field="eventTitle" header="標題" sortable>
+        <template #body="slotProps">
+          {{ slotProps.data.eventTitle }}
         </template>
       </Column>
 
-      <Column field="streamStatus" header="直播狀態" style="min-width: 8rem">
-        <template #body="{ data }">
-          <Tag :value="getStreamStatusText(data.streamStatus)" :severity="getStreamStatusSeverity(data.streamStatus)" />
+      <Column field="streamStatus" header="狀態" sortable>
+        <template #body="slotProps">
+          <Tag :severity="getStatusSeverity(slotProps.data.streamStatus)" :value="getStatusLabel(slotProps.data.streamStatus)" />
         </template>
       </Column>
 
-      <Column field="startTime" header="開始時間" style="min-width: 12rem">
-        <template #body="{ data }">
-          {{ formatDateTime(data.startTime) }}
+      <Column field="createTime" header="創建時間" sortable>
+        <template #body="slotProps">
+          {{ formatDateTime(slotProps.data.createTime) }}
         </template>
       </Column>
 
-      <Column field="sort" header="排序" style="min-width: 6rem">
-        <template #body="{ data }">
-          {{ data.sort }}
+      <Column field="updateTime" header="更新時間" sortable>
+        <template #body="slotProps">
+          {{ formatDateTime(slotProps.data.updateTime) }}
         </template>
       </Column>
 
-      <Column field="streamId" header="串流ID" style="min-width: 8rem">
-        <template #body="{ data }">
-          {{ data.streamId }}
+      <Column field="streamerName" header="主播" sortable>
+        <template #body="slotProps">
+          {{ slotProps.data.streamerName || '未分配' }}
         </template>
       </Column>
 
-      <Column field="createBy" header="創建者" style="min-width: 8rem">
-        <template #body="{ data }">
-          {{ data.createBy }}
+      <Column field="streamId" header="串流ID" sortable>
+        <template #body="slotProps">
+          {{ slotProps.data.streamId }}
         </template>
       </Column>
 
-      <Column field="updateTime" header="更新時間" style="min-width: 12rem">
-        <template #body="{ data }">
-          {{ formatDateTime(data.updateTime) }}
-        </template>
-      </Column>
-
-      <Column field="operations" header="操作" style="min-width: 8rem">
-        <template #body="{ data }">
-          <Button
-            icon="pi pi-video"
-            :size="'small'"
-            severity="info"
-            text
-            @click="viewStream(data)"
-            v-tooltip.top="'查看直播'"
-          />
+      <Column header="操作">
+        <template #body="slotProps">
+          <Button icon="pi pi-eye" class="p-button-rounded p-button-info mr-2" @click="viewStream(slotProps.data)" />
         </template>
       </Column>
     </DataTable>
-
-    <StreamPlayer
-      :visible="showPlayer"
-      :stream-data="selectedStream"
-      @update:visible="(val) => showPlayer = val"
-    />
   </div>
+
+  <StreamPlayer
+    :visible="showPlayer"
+    :stream="selectedStream"
+    @update:visible="(val) => showPlayer = val"
+  />
+
+  <Dialog
+    v-model:visible="deleteDialog"
+    :style="{ width: '450px' }"
+    header="確認"
+    :modal="true"
+  >
+    <div class="confirmation-content">
+      <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+      <span>確定要刪除這個直播嗎？</span>
+    </div>
+    <template #footer>
+      <Button label="取消" icon="pi pi-times" class="p-button-text" @click="deleteDialog = false" />
+      <Button label="確定" icon="pi pi-check" class="p-button-danger" @click="confirmDelete" />
+    </template>
+  </Dialog>
 </template>
 
-<script setup>
-import { ref, onMounted } from 'vue'
-import { DashboardService } from '@/service/DashboardService'
-import { FilterMatchMode, FilterOperator } from '@primevue/core/api'
-import StreamPlayer from './StreamPlayer.vue'
+<script>
+// 根據路由判斷獲取數據的方法
+import { DashboardService } from '@/service/DashboardService';
 
-const streams = ref([])
-const filters = ref()
-const loading = ref(false)
-const showPlayer = ref(false)
-const selectedStream = ref(null)
+export default {
+  props: {
+    fetchDataMethod: {
+      type: Function,
+      default: () => DashboardService.getStreamList
+    }
+  }
+}
+</script>
+
+<script setup>
+import { ref, onMounted, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import StreamPlayer from './StreamPlayer.vue';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
+import Dialog from 'primevue/dialog';
+import Tag from 'primevue/tag';
+
+const route = useRoute();
+const router = useRouter();
+
+const streams = ref([]);
+const loading = ref(false);
+const showPlayer = ref(false);
+const selectedStream = ref(null);
+const deleteDialog = ref(false);
+const streamToDelete = ref(null);
+
+const filters = ref({
+  global: { value: null, matchMode: 'contains' }
+});
+
+// 清除數據
+const clearData = () => {
+  streams.value = [];
+  loading.value = false;
+  showPlayer.value = false;
+  selectedStream.value = null;
+  deleteDialog.value = false;
+  streamToDelete.value = null;
+  filters.value = {
+    global: { value: null, matchMode: 'contains' }
+  };
+};
+
+// 清除過濾器
+const clearFilter = () => {
+  filters.value = {
+    global: { value: null, matchMode: 'contains' }
+  };
+};
+
+// 獲取直播列表
+const fetchStreams = async () => {
+  try {
+    clearData();
+    loading.value = true;
+    // 根據當前路由設置數據獲取方法
+    console.log(route.path);
+    const dataMethod = route.path.includes('/my-streams') ? DashboardService.getMyStreams : DashboardService.getStreamList;
+    const response = await dataMethod();
+    console.log(response);
+    streams.value = response;
+  } catch (error) {
+    console.error('獲取直播列表失敗:', error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+// 監聽路由變化，重新獲取數據
+watch(
+  () => route.path,
+  () => {
+    fetchStreams();
+  }
+);
+
+// 格式化日期時間
+const formatDateTime = (timestamp) => {
+  if (!timestamp) return '';
+  return new Date(timestamp).toLocaleString('zh-TW');
+};
+
+// 獲取狀態標籤
+const getStatusLabel = (status) => {
+  const statusMap = {
+    0: '初始化',
+    1: '準備中',
+    2: '開始啟動',
+    3: '啟動完成',
+    4: '直播中',
+    5: '異常',
+    6: '已停止',
+    7: '已結束'
+  };
+  return statusMap[status] || '未知狀態';
+};
+
+// 獲取狀態樣式
+const getStatusSeverity = (status) => {
+  const severityMap = {
+    0: 'info',
+    1: 'info',
+    2: 'warning',
+    3: 'success',
+    4: 'success',
+    5: 'danger',
+    6: 'warning',
+    7: 'danger'
+  };
+  return severityMap[status] || 'info';
+};
+
+// 查看直播
+const viewStream = (stream) => {
+  selectedStream.value = {
+    ...stream,
+    title: stream.eventTitle,
+    playUrls: {
+      hls: stream.cdnPlayUrlsHls,
+      flv: stream.cdnPlayUrlsFlv
+    }
+  };
+  showPlayer.value = true;
+};
 
 onMounted(() => {
-  loading.value = true
-  DashboardService.getStreamList()
-    .then((data) => {
-      streams.value = data
-    })
-    .finally(() => {
-      loading.value = false
-    })
-})
-
-const initFilters = () => {
-  filters.value = {
-    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    title: {
-      operator: FilterOperator.AND,
-      constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
-    },
-  }
-}
-
-initFilters()
-
-const clearFilter = () => {
-  initFilters()
-}
-
-const formatDateTime = (dateStr) => {
-  if (!dateStr) return ''
-  return new Date(dateStr).toLocaleString('zh-TW', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-  })
-}
-
-const getStreamStatusText = (status) => {
-  switch (status) {
-    case 0:
-      return '初始化'
-    case 1:
-      return '準備'
-    case 2:
-      return '開始啟動'
-    case 3:
-      return '啟動完成'
-    case 4:
-      return '進行中'
-    case 5:
-      return '異常'
-    case 6:
-      return '停止'
-    case 7:
-      return '結束'
-    default:
-      return '未知狀態'
-  }
-}
-
-const getStreamStatusSeverity = (status) => {
-  switch (status) {
-    case 1:
-      return 'warning'
-    case 2:
-      return 'success'
-    case 3:
-      return 'info'
-    case 4:
-      return 'danger'
-    default:
-      return null
-  }
-}
-
-const viewStream = (stream) => {
-  selectedStream.value = stream
-  showPlayer.value = true
-}
+  fetchStreams();
+});
 </script>
 
 <style scoped>

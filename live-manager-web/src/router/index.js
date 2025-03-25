@@ -40,6 +40,11 @@ const router = createRouter({
           name: '流媒体列表',
           component: () => import('../components/Stream/StreamList.vue'),
         },
+        {
+          path: 'my-streams',
+          name: '我的直播',
+          component: () => import('../components/Stream/StreamList.vue'),
+        },
       ],
     },
   ],
