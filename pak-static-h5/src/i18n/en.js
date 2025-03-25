@@ -53,7 +53,8 @@ export default {
     interestProfit: "Interest Profit",
     spinnerRules: "Rules",
     spinnerHistory: "History",
-    effectiveRevenueFAQ: "Effective Revenue FAQ"
+    effectiveRevenueFAQ: "Effective Revenue FAQ",
+    customerServiceVerifer: "Customer Service Verifier"
   },
   bottomNav: {
     home: "Home",
@@ -209,7 +210,10 @@ export default {
     amount: "Amount",
     amount_placeholder: "Please Enter Amount",
     amount_rule_01: "Please Enter Amount",
-    all: "All"
+    all: "All",
+    telegramDiscordId: "Telegram Discord ID",
+    telegramDiscordId_placeholder: "Enter the Telegram Discord ID",
+    telegramDiscordId_rules_01: "Please insert the Telegram Discord ID"
   },
   btn: {
     login: "Login",
@@ -650,7 +654,14 @@ export default {
   message: {
     activity: "Activity",
     payment: "Payment",
-    system: "System",
+    system: "System"
+  },
+  customerServiceVerifier: {
+    mainTitle: "B9.GAME",
+    subTitle: "Customer Service Verifier",
+    contentPara01:
+      "To prevent scams using B9.GAME's list, you can verify the Telegram or Discord account you are chatting&nbsp;with ",
+    contentPara02: "Please enter the agent account ID and click the Check button"
   },
   playerGuide: {
     welcomeMessage: "Welcome to",
@@ -695,7 +706,7 @@ export default {
   hotPromo: {
     promoEndsOn: "Promo Ends On",
     earnMoney: {
-      congratsOnGetting: "Congratulations on getting",
+      congratsOnGetting: "Congratulations on getting"
     },
     aviatorWheel: {
       remainingDrawTimes: "Remaining draw times",

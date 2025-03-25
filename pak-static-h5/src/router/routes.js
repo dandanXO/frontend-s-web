@@ -85,7 +85,12 @@ const routes = [
     children: [{ path: "", component: () => import("pages/FAQPage.vue") }],
     meta: { requiresAuth: true }
   },
-  
+  {
+    path: "/cs-verifier",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/CsVerifierPage.vue") }],
+    meta: { requiresAuth: true }
+  },
 
   // {
   //   path: "/bonus",
@@ -104,7 +109,7 @@ const routes = [
       }
     ]
   },
-  
+
   {
     path: "/side-menu",
     component: () => import("layouts/MainLayout.vue"),

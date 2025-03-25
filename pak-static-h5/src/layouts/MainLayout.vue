@@ -324,6 +324,14 @@ export default defineComponent({
             } else {
               prevPage.value = "/account";
             }
+        } else if (route.path === "/cs-verifier") {
+          hasPage.value = true;
+          pageName.value = t("header.customerServiceVerifer");
+            if (route.query.from) {
+              prevPage.value = route.query.from;
+            } else {
+              prevPage.value = "/account";
+            }
         } else if (route.path === "/finance/deposit") {
           hasPage.value = true;
           pageName.value = t("header.deposit");

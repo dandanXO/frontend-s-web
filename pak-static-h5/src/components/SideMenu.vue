@@ -96,6 +96,10 @@
         <div class="item-icon"><img src="../assets/images/auth/menu-faq.png" /></div>
         FAQ
       </router-link>
+      <router-link class="side-menu-item side-menu-item__transparent" to="/cs-verifier">
+        <div class="item-icon"><img src="../assets/images/auth/menu-cs-verifier.png" /></div>
+        Customer Service Verifier
+      </router-link>
     </div>
     <RouterLink to="/earn-money" class="side-menu-item side-menu-item__appdownload">
       <div>

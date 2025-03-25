@@ -52,7 +52,8 @@ export default {
     referralRecord: "ریفرل کا ریکارڈ",
     interestProfit: "سود کا منافع",
     spinnerRules: "قواعد",
-    effectiveRevenueFaq: "مؤثر آمدنی کے عمومی سوالات"
+    effectiveRevenueFaq: "مؤثر آمدنی کے عمومی سوالات",
+    customerServiceVerifer: "کسٹمر سروس ویری فائر"
   },
   bottomNav: {
     home: "گھر/ہوم",
@@ -207,7 +208,10 @@ export default {
     amount: "رقم",
     amount_placeholder: "براہ کرم رقم درج کریں",
     amount_rule_01: "براہ کرم رقم درج کریں",
-    all: "سب"
+    all: "سب",
+    telegramDiscordId: "ٹیلیگرام ڈسکارڈ آئی ڈی",
+    telegramDiscordId_placeholder: "ٹیلیگرام ڈسکارڈ آئی ڈی درج کریں",
+    telegramDiscordId_rules_01: "براہ کرم ٹیلیگرام ڈسکارڈ آئی ڈی درج کریں"
   },
   btn: {
     login: "لاگ ان",
@@ -648,6 +652,12 @@ export default {
     payment: "ادائیگی",
     system: "نظام",
   },
+  customerServiceVerifier: {
+    mainTitle: "B9.GAME",
+    subTitle: "کسٹمر سروس ویریفائر",
+    contentPara01: "B9.GAME کی فہرست کا استعمال کرتے ہوئے دھوکہ دہی سے بچنے کے لیے، آپ جس ٹیلیگرام یا ڈسکارڈ اکاؤنٹ سے بات کر رہے ہیں، اسے تصدیق&nbsp;کر&nbsp;سکتے&nbsp;ہیں",
+    contentPara02: "براہ کرم ایجنٹ اکاؤنٹ آئی ڈی درج کریں اور چیک بٹن پر کلک کریں"
+},
   playerGuide: {
     welcomeMessage: "آپ کو خوش آمدید",
     teachingHowToEarn: "ہم آپ کو آسانی سے پیسہ کمانا سکھائیں گے!",
