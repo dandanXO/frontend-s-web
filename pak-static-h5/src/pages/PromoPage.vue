@@ -206,7 +206,7 @@
   </q-dialog>
 
   <q-dialog v-model="isMoneyRainModal" width="100%">
-    <MoneyRainModal />
+    <MoneyRainModal @closeModal="isMoneyRainModal = false" />
     <q-btn icon="close" round dense v-close-popup @click="backToPromoList()" class="money-rain-close" />
   </q-dialog>
 

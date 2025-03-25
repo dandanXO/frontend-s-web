@@ -207,7 +207,7 @@
       </div>
 
     </div>
-    <img class="return-enveloper-btn" src="../../assets/images/index/money-rain/return-red-envelope-btn.png" />
+    <img @click="closeModalHandler" class="return-enveloper-btn" src="../../assets/images/index/money-rain/return-red-envelope-btn.png" />
   </div>
   
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
@@ -230,7 +230,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive } from "vue";
+import { onMounted, ref, reactive, defineEmits } from "vue";
 import { eventapi } from "src/boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
@@ -241,12 +241,15 @@ const moneyRainTab = ref("events");
 const showPrizePopup = ref(false);
 const listingData = ref([]);
 const draftListing = ref([]);
-
+const emit = defineEmits(["closeModal"]);
 const convertToTwoDecimalAmount = (amount) => {
   let formattedAmount = parseFloat(amount).toFixed(2);
   return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
+const closeModalHandler = () => {
+  emit("closeModal");
+};
 const oriListing = {
   roleId: "55****66",
   amount: "1.3",
