@@ -130,7 +130,7 @@ const handleNextClick = () => {
       font-weight: 700;
       place-content: center;
       line-height: 12px;
-      text-align: left;
+      text-align: center;
       color: var(--text-color);
       &.selected {
         background: var(--selected-bg-color);

@@ -1,6 +1,6 @@
 <template>
   <div id="money-container">
-    <!-- <span v-for="n in 190" :key="n"></span> -->
+    <span v-for="n in 10" :key="n" :class="`decor-${Math.floor(Math.random() * (2 - 1 + 1) + 1)}`"></span>
   </div>
 
   <div class="rain-money-bg" v-if="moneyRainTab === 'events'">
@@ -11,9 +11,9 @@
   </div>
 
   <div class="rain-money-tabs-wrapper">
-    <img class="decor-left" src="../../assets/images/index/money-rain/decor-left.png" />
-    <img class="decor-left-behind" src="../../assets/images/index/money-rain/decor-left-behind.png" />
-    <img class="decor-right" src="../../assets/images/index/money-rain/decor-right.png" />
+    <!-- <img class="decor-left" src="../../assets/images/index/money-rain/decor-left.png" /> -->
+    <!-- <img class="decor-left-behind" src="../../assets/images/index/money-rain/decor-left-behind.png" /> -->
+    <!-- <img class="decor-right" src="../../assets/images/index/money-rain/decor-right.png" /> -->
     <div class="rain-money-tabs-container" :class="{ 'has-controller': !!$slots.controller }">
       <slot name="controller">
         <div class="logo-img"><img src="../../assets/images/auth/auth-logo-text-only.png" /></div>
@@ -794,13 +794,22 @@ onMounted(() => {
   // height: 77px;
   width: calc(50px + var(--random-size) * 50px); /* Random width between 50px and 100px */
   height: calc(38.5px + var(--random-size) * 38.5px); /* Maintain aspect ratio */
-  background-image: url("../../assets/images/index/money-rain/money-img.png");
-  background-size: cover;
+  background-image: url("../../assets/images/index/money-rain/money-rain-decor-1.png");
+  background-size: contain;
+  background-repeat: no-repeat;
   animation: fall linear infinite;
   animation-duration: calc(4s + var(--random-duration) * 10s); // Random duration between 2s and 5s
   animation-delay: calc(var(--random-delay) * 2s); // Random delay between 0s and 2s
   --random-x: calc(var(--random-x));
   left: -100px;
+
+  &.decor-2 {
+    background-image: url("../../assets/images/index/money-rain/money-rain-decor-2.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: calc(50px + var(--random-size) * 50px); /* Random width between 50px and 100px */
+    height: calc(38.5px + var(--random-size) * 38.5px); /* Maintain aspect ratio */
+  }
   // pointer-events: none;
 }
 

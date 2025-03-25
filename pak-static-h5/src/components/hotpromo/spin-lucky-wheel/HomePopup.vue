@@ -14,7 +14,7 @@
         <img
           @click="goToPromo"
           class="banner"
-          src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/home-popup.png"
+          src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/home-popup.gif"
         />
       </div>
     </div>
