@@ -1,63 +1,62 @@
 <template>
-<!-- <ProfileSummary :homeProfile="true" /> -->
+  <!-- <ProfileSummary :homeProfile="true" /> -->
 
-    <div class="side-menu" @click.stop>
-      <RouterLink to="/earn-money" class="side-menu-item side-menu-item__invite">
-        <div>
-          {{ $t("sideNav.inviteToEarn") }}
-          <span>{{ $t("sideNav.shareYourExclusiveQRCode") }}</span>
-        </div>
-        <!-- <div class="item-icon">
+  <div class="side-menu" @click.stop>
+    <RouterLink to="/earn-money" class="side-menu-item side-menu-item__invite">
+      <div>
+        {{ $t("sideNav.inviteToEarn") }}
+        <span>{{ $t("sideNav.shareYourExclusiveQRCode") }}</span>
+      </div>
+      <!-- <div class="item-icon">
           <img src="../assets/images/auth/menu-invite.png" />
         </div> -->
-      </RouterLink>
+    </RouterLink>
 
-      <div class="side-menu-item side-menu-item__checkin">
-        <div>
-          CHECK
-          <span>-IN</span>
-        </div>
-        <div class="item-icon">
-          <img src="../assets/images/auth/menu-checkin.png" />
-        </div>
+    <div class="side-menu-item side-menu-item__checkin">
+      <div>
+        CHECK
+        <span>-IN</span>
       </div>
+      <div class="item-icon">
+        <img src="../assets/images/auth/menu-checkin.png" />
+      </div>
+    </div>
 
-      <div class="side-menu-item side-menu-item__luckyspin">
-        <div>
-          LUCKY
-          <span>SPIN</span>
-        </div>
-        <div class="item-icon">
-          <img src="../assets/images/auth/menu-luckyspin.png" />
-        </div>
+    <div class="side-menu-item side-menu-item__luckyspin">
+      <div>
+        LUCKY
+        <span>SPIN</span>
       </div>
+      <div class="item-icon">
+        <img src="../assets/images/auth/menu-luckyspin.png" />
+      </div>
+    </div>
 
-      <div class="side-menu-item" @click="activateSlide('Slot')">
-        <div class="item-icon"><img src="../assets/images/auth/menu-slot.png" /></div>
-        {{ $t("sideNav.slots") }}
+    <div class="side-menu-item" @click="activateSlide('Slot')">
+      <div class="item-icon"><img src="../assets/images/auth/menu-slot.png" /></div>
+      {{ $t("sideNav.slots") }}
+    </div>
+    <div class="side-menu-item" @click="activateSlide('Live')">
+      <div class="item-icon"><img src="../assets/images/auth/menu-live.png" /></div>
+      {{ $t("sideNav.livecasino") }}
+    </div>
+    <div class="side-menu-item" @click="activateSlide('Fish')">
+      <div class="item-icon"><img src="../assets/images/auth/menu-fish.png" /></div>
+      {{ $t("sideNav.fishing") }}
+    </div>
+    <div class="side-menu-item" @click="activateSlide('Poker')">
+      <div class="item-icon"><img src="../assets/images/auth/menu-poker.png" /></div>
+      {{ $t("sideNav.poker") }}
+    </div>
+    <div class="side-menu-item" @click="activateSlide('Sport')">
+      <div class="item-icon"><img src="../assets/images/auth/menu-sport.png" /></div>
+      {{ $t("sideNav.sport") }}
+    </div>
+    <div class="side-menu-transparent-grp">
+      <div class="side-menu-item side-menu-item__transparent" @click="openCSInNewTab(ui.CSAUrl)">
+        <div class="item-icon"><img src="../assets/images/auth/menu-livesupport.png" /></div>
+        {{ $t("sideNav.livesupport") }}
       </div>
-      <div class="side-menu-item" @click="activateSlide('Live')">
-        <div class="item-icon"><img src="../assets/images/auth/menu-live.png" /></div>
-        {{ $t("sideNav.livecasino") }}
-      </div>
-      <div class="side-menu-item" @click="activateSlide('Fish')">
-        <div class="item-icon"><img src="../assets/images/auth/menu-fish.png" /></div>
-        {{ $t("sideNav.fishing") }}
-      </div>
-      <div class="side-menu-item" @click="activateSlide('Poker')">
-        <div class="item-icon"><img src="../assets/images/auth/menu-poker.png" /></div>
-        {{ $t("sideNav.poker") }}
-      </div>
-      <div class="side-menu-item" @click="activateSlide('Sport')">
-        <div class="item-icon"><img src="../assets/images/auth/menu-sport.png" /></div>
-        {{ $t("sideNav.sport") }}
-      </div>
-      <div class="side-menu-transparent-grp">
-
-        <div class="side-menu-item side-menu-item__transparent" @click="openCSInNewTab(ui.CSAUrl)">
-          <div class="item-icon"><img src="../assets/images/auth/menu-livesupport.png" /></div>
-          {{ $t("sideNav.livesupport") }}
-        </div>
 
       <!-- <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/account/feedback')">
         <div class="item-icon"><img src="../assets/images/auth/menu-feedback.png" /></div>
@@ -89,49 +88,46 @@
         <div class="item-icon"><img src="../assets/images/auth/menu-whatsapp.png" /></div>
         Whatsapp
       </a>
-
-      <router-link class="side-menu-item side-menu-item__transparent" to="/faq-page">
-        <div class="item-icon"><img src="../assets/images/auth/menu-faq.png" /></div>
-        FAQ
-      </router-link>
-
       <a class="side-menu-item side-menu-item__transparent" :href="ui.tiktokUrl" target="_blank" v-if="ui.tiktokUrl">
         <div class="item-icon"><img src="../assets/images/auth/menu-tiktok.png" /></div>
         TikTok
       </a>
-
-      </div>
-      <RouterLink to="/earn-money" class="side-menu-item side-menu-item__appdownload">
-        <div>
-          {{ $t("sideNav.appDownload") }}
-          <span>{{ $t("sideNav.experienceOneStopGaming") }}</span>
-        </div>
-        <div class="right-icon">
-          <img :src="require(`../assets/images/auth/panda-app.png`)" />
-        </div>
-      </RouterLink>
-      <RouterLink to="/language" class="side-menu-item">
-        <div class="item-icon">
-          <img :src="require(`../assets/images/auth/country-flag-${$t('lang.langVal')}.png`)" class="flag" />
-        </div>
-        {{ $t("sideNav.language") }}
-      </RouterLink>
-
-      <a
-        class="side-menu-item side-menu-item__download"
-        :href="ui.downloadAppUrl"
-        v-if="isSideDownload && !ui.hideDownload"
-      >
-        <div class="item-icon">
-          <img src="../assets/images/auth/download-icon.png" />
-        </div>
-        {{ $t("sideNav.downloadApp") }}
-      </a>
-
-      <!-- <div class="side-menu-item side-menu-item__transparent"> -->
-      <!-- <LangOptions /> -->
-      <!-- </div> -->
+      <router-link class="side-menu-item side-menu-item__transparent" to="/faq-page">
+        <div class="item-icon"><img src="../assets/images/auth/menu-faq.png" /></div>
+        FAQ
+      </router-link>
     </div>
+    <RouterLink to="/earn-money" class="side-menu-item side-menu-item__appdownload">
+      <div>
+        {{ $t("sideNav.appDownload") }}
+        <span>{{ $t("sideNav.experienceOneStopGaming") }}</span>
+      </div>
+      <div class="right-icon">
+        <img :src="require(`../assets/images/auth/panda-app.png`)" />
+      </div>
+    </RouterLink>
+    <RouterLink to="/language" class="side-menu-item">
+      <div class="item-icon">
+        <img :src="require(`../assets/images/auth/country-flag-${$t('lang.langVal')}.png`)" class="flag" />
+      </div>
+      {{ $t("sideNav.language") }}
+    </RouterLink>
+
+    <a
+      class="side-menu-item side-menu-item__download"
+      :href="ui.downloadAppUrl"
+      v-if="isSideDownload && !ui.hideDownload"
+    >
+      <div class="item-icon">
+        <img src="../assets/images/auth/download-icon.png" />
+      </div>
+      {{ $t("sideNav.downloadApp") }}
+    </a>
+
+    <!-- <div class="side-menu-item side-menu-item__transparent"> -->
+    <!-- <LangOptions /> -->
+    <!-- </div> -->
+  </div>
 </template>
 <script setup>
 import { defineEmits } from "vue";
@@ -144,8 +140,8 @@ const router = useRouter();
 const ui = useUI();
 const activateSlide = (item) => {
   emits("closeMenu");
-    router.push(`/home#${item}`);
-    console.log(item)
+  router.push(`/home#${item}`);
+  console.log(item);
 };
 const openCSInNewTab = (url) => {
   const absoluteUrl = url;
@@ -153,7 +149,6 @@ const openCSInNewTab = (url) => {
 };
 </script>
 <style lang="scss" scoped>
-
 .menu-open {
   background: #232626;
   &.open {
@@ -179,22 +174,21 @@ const openCSInNewTab = (url) => {
       margin-bottom: 4px;
     }
     .side-menu-transparent-grp {
-    background: #373C3D;
-    border-radius: 6px;
-    display: flex
-;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px 0;
+      background: #373c3d;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px 0;
     }
     .side-menu-item {
       height: 50px;
       padding: 12px;
       display: flex;
       align-items: center;
-    //   width: 170px;
-        width: 100%;
-        background: #373C3D;
+      //   width: 170px;
+      width: 100%;
+      background: #373c3d;
       border-radius: 6px;
       color: #ffffff;
       font-weight: bold;
@@ -214,19 +208,19 @@ const openCSInNewTab = (url) => {
         }
       }
       &:after {
-          content: ">";
-          position: absolute;
-          right: 20px;
-          top: 12px;
-          width: 25px;
-          height: 25px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          border-radius: 6px;
-          background: #464F50;
-          font-weight: bold;
-        }
+        content: ">";
+        position: absolute;
+        right: 20px;
+        top: 12px;
+        width: 25px;
+        height: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 6px;
+        background: #464f50;
+        font-weight: bold;
+      }
       &__transparent {
         background-color: transparent;
         height: 40px;
@@ -270,11 +264,11 @@ const openCSInNewTab = (url) => {
       }
 
       &__invite {
-        background: url(../assets/images/common/minibannerbg.png)no-repeat center center;
+        background: url(../assets/images/common/minibannerbg.png) no-repeat center center;
         background-size: cover;
         padding-left: 18px;
         font-size: 80%;
-        color: #13553D;
+        color: #13553d;
         font-family: Microsoft YaHei UI;
         font-weight: 700;
         font-size: 20.21px;
@@ -300,7 +294,7 @@ const openCSInNewTab = (url) => {
       }
 
       &__appdownload {
-        background: #373C3D;
+        background: #373c3d;
         font-size: 80%;
         color: #ffffff;
         font-family: Microsoft YaHei UI;
@@ -315,7 +309,7 @@ const openCSInNewTab = (url) => {
           bottom: 0;
           top: 0;
           margin: auto;
-          background: url("../assets/images/auth/download-btn.png")no-repeat center center;
+          background: url("../assets/images/auth/download-btn.png") no-repeat center center;
         }
         .right-icon {
           height: 135%;
@@ -323,7 +317,7 @@ const openCSInNewTab = (url) => {
           padding-right: 0px;
           max-width: 140px;
 
-          img {   
+          img {
             height: 180%;
             margin: -25% 0 -25% -25%;
           }
@@ -333,7 +327,7 @@ const openCSInNewTab = (url) => {
           font-size: 14px;
           padding-top: 8px;
           display: block;
-          color: #FFFFFF80;
+          color: #ffffff80;
           font-weight: 400;
         }
 
