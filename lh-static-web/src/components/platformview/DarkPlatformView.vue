@@ -100,7 +100,7 @@
           <div class="plat-options-container">
             <template v-for="(item, index) in platformsListDisplay" :key="index">
               <!-- <div class="plat-option" @click="switchPlat(item)" :class="{ active: selectedPlat === item.code }"> -->
-              <div class="plat-option" @click="clickPlat(item)" :class="{ active: selectedPlat === item.code }">
+              <div class="plat-option" @click="clickPlat(item)" :class="{ active: selectedPlat === item.code, long: item.code === 'PPFP' }">
                 <!-- <img
                     :src="
                     require(`../../assets/game/plat-logo-${item.code.toLowerCase()}${
@@ -110,6 +110,7 @@
                   /> -->
                 <div class="text">
                   <span v-if="item.code === 'AG'">XIN</span>
+                  <span v-else-if="item.code === 'PPFP'">PP熊猫 电子</span>
                   <span v-else>{{ item.code }}</span>
                 </div>
               </div>
