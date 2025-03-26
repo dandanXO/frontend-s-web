@@ -6,73 +6,68 @@
       :loading-claim="loadingClaim"
       @daily-slot="handleSlot()"
     />
-    
+
     <WelcomeTaskPromo v-if="list.redirectUrl === 'lh1-welcomenewuser'" />
     <InviteFriendPromo v-if="list.redirectUrl === 'lh1-invitefriend'" />
-    
+
     <OuZuLianPromo v-if="list.redirectUrl === 'ouzulian'" />
     <SubmitClaimPromo v-if="list.redirectUrl === 'LH1-UCL'" :promo-code="list.promoCode" />
-    
-    
+
     <EsportQuiz v-if="list.redirectUrl === 'lh1-quiz'" />
-    
+
     <GiftPromo v-if="list.redirectUrl === 'lh1-gift'" />
     <AppHongBao v-if="list.redirectUrl === 'lh1-app-hongbao'" :promo-code="list.promoCode" :params="list.param" />
-    
+
     <HongBaoPreEurocup v-if="listParam.type === 'hongbaoyu'" :promo-code="list.promoCode" :params="list.param" />
-    
-    
+
     <Cny2024Promo v-if="list.redirectUrl === 'lh1-cny2024-promo'" />
-    
+
     <div style="text-align: center" v-if="list.redirectUrl === 'lh1-feedback-award'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
         src="../assets/images/promotion/hotpromo/lhfeedback/feedback.png"
       />
     </div>
-    
-    
+
     <PrivilegeInvite v-if="list.redirectUrl === 'lh1-invite'" />
-    
+
     <newFootballFight v-if="list.redirectUrl === 'lh1-football'" :promo-code="list.promoCode" />
     <Cba30Dream v-if="list.redirectUrl === 'lh1-cba30-dream'" :promo-code="list.promoCode" />
-    
+
     <LplPKlck2025loss
       v-if="list.redirectUrl === 'lh1-lpl-lck-2025-loss'"
       :promo-param="listParam"
       :promo-code="list.promoCode"
     />
-    
+
     <LiveDailyRebates v-if="list.redirectUrl === 'lh1-live-daily-rebates'" :promo-code="list.promoCode" />
-    
+
     <NewVipRebate v-if="list.redirectUrl === 'lh1-newvip-rebate'" :promo-code="list.promoCode" />
     <LongNewVip v-if="list.redirectUrl === 'lh1-vip'" :promo-code="list.promoCode" />
-    
-    
+
     <CnyStepGame2024Promo v-if="list.redirectUrl === 'lh1-cny-step-game'"></CnyStepGame2024Promo>
-    
+
     <Summoner v-if="list.redirectUrl === 'lh1-summon-event'" :promo-code="list.promoCode" />
     <DailyCheckin v-if="list.redirectUrl === 'lh1-daily-checkin'" :promo-info="list" />
-    
-    
+
     <slotLucky8 v-if="list.redirectUrl === 'lh1-slot-lucky8'" :promo-code="list.promoCode" />
     <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao'" />
-    
+
     <DepositRebate2 v-if="list.redirectUrl === 'lh1-deposit-rebate2'" />
-    
+
     <Aijiasu v-if="list.redirectUrl === 'lh1-aijiasu'" />
-    
+
     <newplayerGuide v-if="list.redirectUrl === 'lh1-newplayer-guide'" />
-    
+
     <ChallengeComeBackPromo v-if="list.redirectUrl === 'lh1-cycle-loss-refund'" :promo-code="list.promoCode" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'lh-official-gift'" :params="list.param" />
     <DailiPromo v-if="list.redirectUrl === 'lh1-all-daili'" :params="list.param" />
     <SlotLossBonusPromo v-if="list.redirectUrl === 'lh1-weekly-slot-loss-bonus'" />
-    
+
     <PGLBucharest2025 v-if="list.redirectUrl === 'lh1-pgl-bucharest-2025'" :promo-code="list.promoCode" />
     <VctBangkok v-if="list.redirectUrl === 'lh1-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
     <Blast2025 v-if="list.redirectUrl === 'lh1-blast-open-lisbon-2025'" :promo-code="list.promoCode" />
-    
+
     <DarkModePromo v-if="list.redirectUrl === 'lh1-dark-mode'" />
     <SkyesportsSouvenir2025 v-if="list.redirectUrl === 'lh1-skyesports-souvenir-2025'" :promo-code="list.promoCode" />
     <EslProLeagueS21
@@ -81,6 +76,7 @@
       :promo-code="list.promoCode"
     />
     <FissureUniverseS4 v-if="list.redirectUrl === 'lh1-fissure-universe-s4'" :promo-code="list.promoCode" />
+    <FpSlotPromo v-if="list.redirectUrl === 'lh1-fp-slot'" :promo-code="list.promoCode" />
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -142,6 +138,7 @@ import SkyesportsSouvenir2025 from "./hotpromo/skyesports-souvenir-2025/Skyespor
 import EslProLeagueS21 from "./hotpromo/esl-pro-league-s21/EslProLeagueS21.vue";
 import PGLBucharest2025 from "./hotpromo/pgl-bucharest-2025/PGLBucharest2025.vue";
 import FissureUniverseS4 from "./hotpromo/fissure-universe-s4/FissureUniverseS4.vue";
+import FpSlotPromo from "./hotpromo/fp-slot-promo/FpSlotPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -183,7 +180,8 @@ export default defineComponent({
     SkyesportsSouvenir2025,
     EslProLeagueS21,
     Blast2025,
-    FissureUniverseS4
+    FissureUniverseS4,
+    FpSlotPromo
   },
   props: {
     list: {
