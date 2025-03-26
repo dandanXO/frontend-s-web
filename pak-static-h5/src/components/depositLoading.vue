@@ -8,7 +8,9 @@ import { cashier } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 // import {Preferences} from "@capacitor/preferences";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const qs = require("qs");
 
 // async function pDepo(deposit) {
@@ -88,7 +90,7 @@ const router = useRouter();
 
 onMounted(async () => {
   $q.loading.show({
-    message: "Loading..."
+    message: t('btn.loading') + "..."
   });
   if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit") {
     let params = localStorage.getItem("formDetails");

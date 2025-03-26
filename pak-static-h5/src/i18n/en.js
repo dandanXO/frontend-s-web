@@ -286,6 +286,8 @@ export default {
     freeTrial: "Free trial"
   },
   notify: {
+    loggingIn: "Logging in...",
+    loggingOut: "Logging out...",
     phoneVerifySuccessful: "Phone verified successfully",
     emailAlreadyUsed: "Email already used. Please try another email.",
     virtualWalletAddedSuccessfully: "Virtual wallet added successfully",
@@ -463,6 +465,7 @@ export default {
   },
   earnMoney: {
     title: "Bonus Pot Arrived",
+    noDataAvailable: "No Data available",
     tabs: {
       reward: "Reward",
       teamManagement: "Team management",

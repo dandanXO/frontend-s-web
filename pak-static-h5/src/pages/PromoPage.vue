@@ -216,7 +216,7 @@
   </q-dialog>
 
   <q-dialog width="100%" v-if="isOpenExtension" v-model="isOpenExtension" class="dark-grey-dialog">
-    <div class="dialog-mid-text">Loading...</div>
+    <div class="dialog-mid-text">{{$t('btn.loading')}}...</div>
   </q-dialog>
 </template>
 

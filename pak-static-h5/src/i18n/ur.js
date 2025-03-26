@@ -285,6 +285,8 @@ export default {
     freeTrial: "مفت آزمائش"
   },
   notify: {
+    loggingIn: "لاگ ان ہو رہا ہے",
+    loggingOut: "لاگ آؤٹ ہو رہا ہے",
     phoneVerifySuccessful: "فون کامیابی سے تصدیق ہو گئی",
     emailAlreadyUsed: "ای میل پہلے ہی استعمال ہو چکی ہے۔ براہ کرم دوسرا ای میل آزما لیں۔",
     bankAddedSuccessfully: "بینک کارڈ کامیابی سے شامل کر لیا گیا",
@@ -462,6 +464,7 @@ export default {
   },
   earnMoney: {
     title: "بونس پوٹ آ گیا",
+    noDataAvailable: "کوئی ڈیٹا دستیاب نہیں ہے",
     tabs: {
       reward: "انعام",
       teamManagement: "ٹیم کا انتظام",

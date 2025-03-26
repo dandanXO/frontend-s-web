@@ -797,7 +797,7 @@ const logout = () => {
   loadingLogout.value = true;
 
   $q.loading.show({
-    message: "Logging out..."
+    message: t('notify.loggingOut')
   });
 
   store.memberLogout().then(() => {

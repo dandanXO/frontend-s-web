@@ -13,7 +13,7 @@
 
   <q-inner-loading class="loading-spinner-div" :showing="isLoading">
     <q-spinner-gears size="50px" color="brightbtn" />
-    <div class="label" style="color: #fff">Loading...</div>
+    <div class="label" style="color: #fff">{{$t('btn.loading')}}...</div>
   </q-inner-loading>
 
   <div class="reward-wrapper">

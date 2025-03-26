@@ -58,6 +58,8 @@
         row-key="name"
         style="overflow-x: scroll"
         flat
+        :loading-label="$t('btn.loading')"
+        :no-data-label="$t('earnMoney.noDataAvailable')"
       >
         <template v-slot:header>
           <q-tr class="top-header">

@@ -62,6 +62,8 @@
         :rows-per-page-options="[0]"
         style="overflow-x: scroll"
         class="monthly-deposit-table"
+        :loading-label="$t('btn.loading')"
+        :no-data-label="$t('earnmoney.noDataAvailable')"
       >
         <template v-slot:header>
           <q-tr class="top-header">
