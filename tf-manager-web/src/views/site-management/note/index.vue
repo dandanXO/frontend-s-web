@@ -3,7 +3,7 @@
     <div class="header-container" v-if="hasRole(['TENANT','ADMIN'])">
       <div class="btn-group">
         <el-button icon="el-icon-plus" size="mini" type="primary" @click="uiControl.addNewNoteVisible = true"
-                   v-permission="['sys:site:ip:create']"
+                   v-permission="['sys:note:add']"
         >
           {{ t('fields.add') }}
         </el-button>
@@ -92,6 +92,7 @@
                 circle
               />
               <el-button
+                v-permission="['sys:note:delete']"
                 type="danger"
                 size="mini"
                 icon="el-icon-delete"
@@ -273,11 +274,11 @@ async function removeNote(index) {
   await loadIpLabel()
 }
 
-function submit() {
+async function submit() {
   noteForm.content = content.value
-  createNote(noteForm)
+  await createNote(noteForm)
   uiControl.addNewNoteVisible = false
-  loadIpLabel()
+  await loadIpLabel()
 }
 
 onMounted(async() => {
