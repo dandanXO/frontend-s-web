@@ -13,7 +13,7 @@
         <template v-slot>
           <div class="radio-label">
             <img :src="require(`../assets/images/auth/country-flag-ur.png`)" class="flag" />
-            <span class="text">Brazil</span>
+            <span class="text">Pakistan</span>
           </div>
         </template>
       </q-radio>
