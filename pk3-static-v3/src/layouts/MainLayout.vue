@@ -72,7 +72,8 @@
           {{ $t("bottomNav.promo") }}
         </q-route-tab>
         <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" class="center-menu" :ripple="false">
-          <img src="@/assets/images/index/menu/deposit-icon.png" />
+          <img v-if="languageVal === 'ur'" src="@/assets/images/index/menu/deposit-icon-ur.svg" />
+          <img v-else src="@/assets/images/index/menu/deposit-icon.svg" />
         </q-route-tab>
         <q-route-tab to="/earn-money" name="earn-money" :ripple="false">
           <img class="inactive" src="@/assets/images/index/menu/earn-icon.png" />

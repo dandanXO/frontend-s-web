@@ -258,7 +258,8 @@ export default {
     failed: "ناکام ہو گیا",
     updateSucceed: "اپ ڈیٹ کامیاب ہو گیا",
     unbindSucceed: "کامیابی سے ان بائنڈ ہو گیا",
-    withdrawalSubmitSucceed: "واپسی جمع کرانے میں کامیاب"
+    withdrawalSubmitSucceed: "واپسی جمع کرانے میں کامیاب",
+    newPasswordUpdatedSuccessfully: "نیا پاس ورڈ کامیابی سے اپ ڈیٹ ہو گیا"
   },
   sideNav: {
     inviteToEarn: "کمانے کے لئے مدعو کریں",
@@ -605,6 +606,9 @@ export default {
       days: "دنوں",
       signIn: "سائن ان کریں",
       signedIn: "سائن ان ہو گیا"
+    },
+    spinLuckyWheel: {
+      doNotShowAgain: "دوبارہ نہ دکھائیں"
     }
   },
   maintenance: {

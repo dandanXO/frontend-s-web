@@ -258,7 +258,8 @@ export default {
     failed: "Failed",
     updateSucceed: "Update Successful",
     unbindSucceed: "Unbound Successfully",
-    withdrawalSubmitSucceed: "Withdrawal Submit Successful"
+    withdrawalSubmitSucceed: "Withdrawal Submit Successful",
+    newPasswordUpdatedSuccessfully: "New password updated successfully"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -606,6 +607,9 @@ export default {
       days: "days",
       signIn: "Sign in",
       signedIn: "Signed in"
+    },
+    spinLuckyWheel: {
+      doNotShowAgain: 'Do not show again'
     }
   },
   maintenance: {

@@ -114,7 +114,7 @@ const onUpdateCardClick = (bankCardDetails, type) => {
       $q.notify({
         color: "negative",
         position: "top",
-        message: "Please fill in your personal details",
+        message: t("notify.pleaseFillInPersonalDetails"),
         icon: "report_problem"
       });
       router.push("/account/profile");
