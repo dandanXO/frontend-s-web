@@ -143,3 +143,48 @@ export const updateBetStatusTypeTidb = async (query) => {
     ContentType.form
   )
 }
+
+export const getMemberBetRecordsTiDB = query => {
+  return https().request(
+    '/memberBetRecord/tidb',
+    Method.GET,
+    query,
+    ContentType.form
+  )
+}
+
+export const requestExportMemberBetRecordTiDB = query => {
+  return https().request(
+    '/memberBetRecord/exportTiDB',
+    Method.GET,
+    query,
+    ContentType.form
+  )
+}
+
+export const getMemberBetRecordByPlatformListTiDB = query => {
+  return https().request(
+    '/memberBetRecord/byPlatformTiDB',
+    Method.GET,
+    query,
+    ContentType.form
+  )
+}
+
+export const getMemberBetRecordByPlatformListTotalTiDB = query => {
+  return https().request(
+    '/memberBetRecord/byPlatformTotalTiDB',
+    Method.GET,
+    query,
+    ContentType.form
+  )
+}
+
+export const getMemberBetRecordListTiDB = query => {
+  return https().request(
+    '/memberBetRecord/list-tidb',
+    Method.GET,
+    query,
+    ContentType.form
+  )
+}
