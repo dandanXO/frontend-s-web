@@ -566,7 +566,9 @@ export default {
     level: "سطح",
     turnover: "ٹرن اوور",
     serialNumber: "سیریل نمبر",
-    vipUpgradeBonus: "وی آئی پی اپ گریڈ بونس"
+    vipUpgradeBonus: "وی آئی پی اپ گریڈ بونس",
+    loss: "نقصان",
+    profit: "فائدہ"
   },
   appUpdate: {
     updateHeader: "اپ ڈیٹ کا اعلان",
