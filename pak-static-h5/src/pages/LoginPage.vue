@@ -520,11 +520,11 @@ export default defineComponent({
                   icon: "check_circle_outline"
                 });
 
-                if (res.data.isFirstTime) {
+                if (res.data?.isFirstTime) {
                   trackRegisterSuccessEvent();
                 }
 
-                store.autoLogin(res.data.token);
+                store.autoLogin(res.data?.token || res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {
                   router.push("/home");
@@ -586,11 +586,11 @@ export default defineComponent({
                     icon: "check_circle_outline"
                   });
 
-                  if (res.data.isFirstTime) {
+                  if (res.data?.isFirstTime) {
                     trackRegisterSuccessEvent();
                   }
 
-                  store.autoLogin(res.data.token);
+                  store.autoLogin(res.data?.token || res.data);
                   sessionStorage.removeItem("REFERRAL_CODE");
                   if (store.hasToken()) {
                     router.push("/home");
