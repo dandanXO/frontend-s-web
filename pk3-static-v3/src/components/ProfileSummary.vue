@@ -105,6 +105,15 @@
               </q-item-section>
             </q-item>
 
+            <q-item clickable v-close-popup @click="router.push('/language?from=' + route.path)">
+              <q-item-section avatar>
+                <q-avatar icon="language" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>{{ $t("sideNav.language") }}</q-item-label>
+              </q-item-section>
+            </q-item>
+
             <q-item clickable v-close-popup @click="onLogout()">
               <q-item-section avatar>
                 <q-avatar icon="logout" />
@@ -119,6 +128,7 @@
       <div class="profile-wrapper" v-else>
         <q-btn no-caps @click="goLogin()">{{ $t("header.login") }}</q-btn>
         <q-btn class="btn-style-crimson" no-caps @click="router.push('/register')">{{ $t("header.register") }}</q-btn>
+        <div class="btn-lang" @click="router.push('/language')"><img src="../assets/images/auth/icon-globe.png" /></div>
       </div>
     </div>
   </div>
