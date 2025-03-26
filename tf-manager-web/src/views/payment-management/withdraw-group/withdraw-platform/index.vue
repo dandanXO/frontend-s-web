@@ -147,7 +147,7 @@
         </el-row>
         <el-row>
           <el-form-item :label="t('fields.balanceUrl')" prop="balanceUrl">
-            <el-input v-model="form.balanceUrl" style="width: 600px;" @blur="form.balanceUrl = form.balanceUrl.trim()"/>
+            <el-input v-model="form.balanceUrl" style="width: 600px;" @blur="form.balanceUrl = form.balanceUrl.trim()" />
           </el-form-item>
         </el-row>
         <el-row>
