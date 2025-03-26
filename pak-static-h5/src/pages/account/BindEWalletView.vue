@@ -260,6 +260,7 @@ const onTypeToggleBtnClick = (index, name) => {
   selectedTypeToggleName.value = name;
   bankCardInfo.bankId = bankList.value[index].id;
   bankCardInfo.currencyId = bankList.value[index].currencyIds;
+  bankCardInfo.cardAddress = "";
 };
 
 const categoryToggleList = ref(["EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20"]);
