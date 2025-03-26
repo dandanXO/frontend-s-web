@@ -946,7 +946,8 @@ export default defineComponent({
   background: url("../assets/images/auth/top-login-bg.png");
   background-size: cover;
   background-repeat: no-repeat;
-  padding-top: 250px;
+  // padding-top: 250px;
+  padding-top: 295px;
   @media screen and (min-width: 500px) {
     padding-top: 300px;
   }

@@ -294,7 +294,7 @@
             <div class="txt-style">{{ $t("home.cat_hotgames") }}</div>
             <div v-if="category.title === 'Lobby' && category.active" class="side">
               <div class="all-btn" @click="handleActivateSlide('Hot')">
-                ALL
+                {{ $t("home.menu_all") }}
                 <img src="../assets/images/account/rgtarrow.svg" />
               </div>
               <div :class="`custom-hot-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
@@ -492,7 +492,7 @@
             <div class="txt-style">{{ $t("home.cat_livecasino") }}</div>
             <div v-if="category.title === 'Lobby' && category.active" class="side">
               <div class="all-btn" @click="handleActivateSlide('Live')">
-                ALL
+                {{ $t("home.menu_all") }}
                 <img src="../assets/images/account/rgtarrow.svg" />
               </div>
               <div :class="`custom-live-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
@@ -598,7 +598,7 @@
             <div class="txt-style">{{ $t("home.cat_slotsgame") }}</div>
             <div v-if="category.title === 'Lobby' && category.active" class="side">
               <div class="all-btn" @click="handleActivateSlide('Slot')">
-                ALL
+                {{ $t("home.menu_all") }}
                 <img src="../assets/images/account/rgtarrow.svg" />
               </div>
               <div :class="`custom-slot-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
@@ -725,7 +725,7 @@
             <div class="txt-style">{{ $t("home.cat_fishing") }}</div>
             <div v-if="category.title === 'Lobby' && category.active" class="side">
               <div class="all-btn" @click="handleActivateSlide('Fish')">
-                ALL
+                {{ $t("home.menu_all") }}
                 <img src="../assets/images/account/rgtarrow.svg" />
               </div>
               <div :class="`custom-fish-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
@@ -1006,7 +1006,7 @@
             <div class="txt-style">{{ $t("home.cat_poker") }}</div>
             <div v-if="category.title === 'Lobby' && category.active" class="side">
               <div class="all-btn" @click="handleActivateSlide('Poker')">
-                ALL
+                {{ $t("home.menu_all") }}
                 <img src="../assets/images/account/rgtarrow.svg" />
               </div>
               <div :class="`custom-poker-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>

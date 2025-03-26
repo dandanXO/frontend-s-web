@@ -233,8 +233,8 @@
       </q-btn>
 
       <div class="areyounew">
-        Already have an account?
-        <a @click="regLoginTab = 'login'" class="green">Login</a>
+        {{ $t("btn.alreadyhaveacct") }}
+        <a @click="regLoginTab = 'login'" class="green">{{ $t("btn.login") }}</a>
       </div>
 
       <div v-if="!isSpinReferrer" class="google-login-wrapper">
@@ -1247,7 +1247,8 @@ function charType(num) {
   background: url("../assets/images/auth/top-login-bg.png");
   background-size: cover;
   background-repeat: no-repeat;
-  padding-top: 250px;
+  // padding-top: 250px;
+  padding-top: 295px;
   @media screen and (min-width: 500px) {
     padding-top: 300px;
   }

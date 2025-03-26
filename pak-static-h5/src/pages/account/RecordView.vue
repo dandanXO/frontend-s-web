@@ -89,8 +89,8 @@
 
         <q-card-section class="bot-wrapper">
           <div class="origin">
-            <div class="bet">Before Balance:</div>
-            <div class="game-platform">After Balance:</div>
+            <div class="bet">{{$t('records.beforeBalance')}}:</div>
+            <div class="game-platform">{{$t('records.afterBalance')}}:</div>
           </div>
           <div class="origin-val">
             <div class="bet-val win-amt">{{ convertToCommaAmount(e.beforeBalance, true) }}</div>

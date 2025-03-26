@@ -7,6 +7,7 @@ export default {
     login: "Login",
     register: "Register",
     download: "Download",
+    getFreeSpins: "Get free spins on the APP",
     withdraw: "Withdraw",
     personalCenter: "Personal Center",
     deposit: "Deposit",
@@ -238,6 +239,7 @@ export default {
     submit: "Submit",
     forgetPwd: "Forget Password",
     areyounew: "Are you new to B9?",
+    alreadyhaveacct: "Already have an account?",
     addNewAccount: "Add New Account",
     updated: "Updated",
     updating: "Updating...",
@@ -300,9 +302,11 @@ export default {
     language: "Language",
     downloadApp: "Download APP",
     appDownload: "APP download",
-    experienceOneStopGaming: "Experience one-stop gaming!"
+    experienceOneStopGaming: "Experience one-stop gaming!",
+    customerServiceVerifier: "Customer Service Verifier"
   },
   home: {
+    menu_all: "ALL",
     menu_lobby: "Lobby",
     menu_hot: "Hot",
     menu_live: "Live",
