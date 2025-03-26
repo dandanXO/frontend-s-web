@@ -926,6 +926,13 @@ export default defineComponent({
           0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset ;
         background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) ;
       }
+
+      .item-num__pseudo {
+        height: 28px !important;
+        width: 28px !important;
+        min-width: 28px;
+        display: flex;
+      }
     }
 
     &.cny {
