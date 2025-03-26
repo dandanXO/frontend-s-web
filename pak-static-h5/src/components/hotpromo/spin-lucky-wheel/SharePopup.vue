@@ -6,7 +6,7 @@
       </a>
       <div class="page-title-wrapper">
         <div class="title-container">
-          <span class="title">Share</span>
+          <span class="title">{{ $t("hotPromo.share") }}</span>
         </div>
       </div>
       <div />
@@ -51,11 +51,11 @@
         <div class="invite-share-social">
           <a class="social-item" @click="modalSocialShare = true">
             <img src="../spin-lucky-wheel/img/share-icon.png" />
-            <span class="grey">Share</span>
+            <span class="grey">{{ $t("hotPromo.share") }}</span>
           </a>
           <a class="social-item" @click="takeScreenshot">
             <img src="../spin-lucky-wheel/img/download-icon.png" />
-            <span class="grey">Save Image</span>
+            <span class="grey">{{ $t("hotPromo.save_image") }}</span>
           </a>
           <a class="social-item" @click="copyHrefLink">
             <!-- <div class="link-href">{{ selfTgurl }}</div> -->

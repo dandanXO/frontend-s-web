@@ -4,7 +4,7 @@
       <img src="../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/title-activities.png" />
     </div>
     <div class="activities-content">
-      The more consecutive days of deposit requirements you complete, the more extra bonus you will get
+      {{ $t("hotPromo.consecutiveDepositBonus") }}
     </div>
     <div class="activities-btn" @click="claimBonus" :class="hasClaimed && 'disabled'">
       <img src="../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/deposit-btn-1.png" />
@@ -15,13 +15,13 @@
           class="calendar-icon"
           src="../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/daycal.png"
         />
-        Current Sign-in:
+        {{ $t("hotPromo.currentSignIn") }}:
       </div>
-      <div class="noOfDays">Day {{ currentDay }}</div>
+      <div class="noOfDays">{{ $t("hotPromo.signIn7Days.day") }} {{ currentDay }}</div>
     </div>
     <div class="activities-stats-container">
       <div class="stats-info">
-        <div class="info-title">Deposits of the day</div>
+        <div class="info-title">{{ $t("hotPromo.deposits_of_the_day") }}</div>
         <div class="info-progress">
           <q-linear-progress :value="progressDeposit" rounded size="16px" class="info-linear-progress">
             <div class="info-label">
@@ -31,12 +31,12 @@
           <div class="info-linear-amt">
             {{ rules[bonusSeq] ? rules[bonusSeq].minDeposit : 0 }}
             <br />
-            RS
+            {{ $t("hotPromo.rs") }}
           </div>
         </div>
       </div>
       <div class="stats-info">
-        <div class="info-title">Number of daily wager</div>
+        <div class="info-title">{{ $t("hotPromo.dailyWagerCount") }}</div>
         <div class="info-progress">
           <q-linear-progress :value="progressDailyWager" rounded size="16px" class="info-linear-progress">
             <div class="info-label">
@@ -46,7 +46,7 @@
           <div class="info-linear-amt">
             {{ rules[bonusSeq] ? rules[bonusSeq].minDeposit * betTimes : 0 }}
             <br />
-            RS
+            {{ $t("hotPromo.rs") }}
           </div>
         </div>
       </div>
@@ -61,7 +61,7 @@
           { isReceived: (i === bonusSeq && hasClaimed) || i < bonusSeq }
         ]"
       >
-        <div class="box-ribbon">Day {{ i + 1 }}</div>
+        <div class="box-ribbon">{{ $t("hotPromo.signIn7Days.day") }} {{ i + 1 }}</div>
         <div class="box-cal">
           <img
             v-if="i === bonusSeq && !isReceivedToday"
@@ -86,9 +86,9 @@
           <div class="box-title">Max {{ rule.bonusAmount }}rs</div>
           <div class="box-subtitle" v-if="(i === bonusSeq && hasClaimed) || i < bonusSeq">
             <img :src="require(`../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/tick.png`)" />
-            Received
+            {{ $t("hotPromo.received") }}
           </div>
-          <div class="box-subtitle" v-else>Deposit {{ rule.minDeposit }}rs</div>
+          <div class="box-subtitle" v-else>{{ $t("hotPromo.deposit") }} {{ rule.minDeposit }}{{ $t("hotPromo.rs") }}</div>
         </div>
       </div>
     </div>
@@ -96,7 +96,7 @@
       <div class="notice-img">
         <img src="../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/alert-img.png" />
       </div>
-      <div>Notice : This promotion is not counted towards CASINO and SPORTS wager!</div>
+      <div>{{ $t("hotPromo.promoExclusionNotice") }}</div>
     </div>
   </div>
 </template>

@@ -17,12 +17,12 @@
 
         <button v-else-if="!info.hasWithdrawn" class="receive-btn" @click="handleReceiveClick">
           <img src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/coin-2.png" />
-          <span>RECEIVE</span>
+          <span>{{ $t("hotPromo.receive") }}</span>
         </button>
 
         <button v-else-if="info.hasWithdrawn" class="receive-btn disabled">
           <img src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/coin-2.png" />
-          <span>RECEIVED</span>
+          <span>{{ $t("hotPromo.received") }}</span>
         </button>
 
         <div class="winning-record-outer-wrapper">
@@ -32,12 +32,12 @@
                 <span>{{ moment(record.recordTime).format("MM-DD HH:mm:ss") }}</span>
                 <span class="name">{{ record.loginName }}</span>
                 <span>
-                  RECEIVE
-                  <span class="amount">Rs{{ record.bonus }}</span>
+                  {{ $t("hotPromo.receive") }}
+                  <span class="amount">{{ $t("hotPromo.rs") }}{{ record.bonus }}</span>
                 </span>
               </div>
             </template>
-            <div v-else class="no-record-text">No Records</div>
+            <div v-else class="no-record-text">{{ $t("hotPotmo.no_records") }}</div>
           </div>
         </div>
         <div class="foreground-wrapper">
@@ -52,7 +52,7 @@
             /> -->
 
             <div class="countdown">
-              {{ isWheelEnded ? "Next Round" : "Countdown" }}
+              {{ isWheelEnded ? $t("hotPromo.next_round") : $t("hotPromo.countdown") }}
               : {{ remainingTime }}
             </div>
             <div class="wheel-inner-wrapper">
@@ -66,9 +66,9 @@
                 src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/wheel-indicate.png"
               />
               <button class="btn" :class="{ disabled: !info.availableSpin }" @click="handleWheelClick">
-                rotate
+                {{ $t("hotPromo.rotate") }}
                 <br />
-                {{ info.availableSpin }} time
+                {{ info.availableSpin }} {{ $t("hotPromo.time") }}
               </button>
             </div>
 
@@ -81,35 +81,35 @@
               src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-rabbit.png"
             /> -->
             <CommonButton class="draw-btn" :class="{ disabled: isWheelEnded }" @click="handleInviteClick">
-              Invite To Earn Spin
+              {{ $t("hotPromo.invite_to_earn_spin") }}
             </CommonButton>
-            <span v-if="isWheelEnded" class="next-spin-remaining-time">This round has ended.</span>
-            <span v-if="!isWheelEnded" class="next-spin-remaining-time">Countdown to next free spins: {{ nextFreeSpinRemainingTime }}</span>
+            <span v-if="isWheelEnded" class="next-spin-remaining-time">{{ $t("hotPromo.this_round_has_ended") }}</span>
+            <span v-if="!isWheelEnded" class="next-spin-remaining-time">{{ $t("hotPromo.countdown_to_next_free_spins") }}: {{ nextFreeSpinRemainingTime }}</span>
           </div>
         </div>
       </div>
 
-      <button class="rules-btn" @click="handleRulesClick">Rules</button>
-      <button class="record-btn" @click="handleRecordClick">Record</button>
+      <button class="rules-btn" @click="handleRulesClick">{{ $t("hotPromo.rules") }}</button>
+      <button class="record-btn" @click="handleRecordClick">{{ $t("hotPromo.record") }}</button>
     </div>
 
     <q-dialog v-model="showRulesDialog">
       <div class="block-wrapper">
       <div class="title-wrapper">
-        Activity Rules
+        {{ $t("hotPromo.activityRules") }}
         <!-- <img
           style="width: 100%; max-width: 250px; padding: 0 0 5px 0"
           src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/activity-rules-title.png"
         /> -->
       </div>
       <ol>
-        <li>When the accumulated amount reaches 1000 PKR, you can apply for a withdrawal (the reward will be directly added to your wallet).</li>
-        <li>When there are no available spins, referring a new player to register and deposit will earn you free spins.</li>
-        <li>The event lasts for 3 days. After the event ends, the accumulated rewards will be reset, and the event will restart.</li>
-        <li>Each user can enjoy one free spin per day, which will be added at 00:00 daily.</li>
-        <li>Once the application is approved, the bonus will be directly credited to your wallet.</li>
-        <li>The bonus must be rolled over once before it can be withdrawn.</li>
-        <li>The invitee must verify their phone number, register using the inviter's referral link, and must not have a duplicate IP address to qualify for the referral.</li>
+        <li>{{ $t("content.message1") }}</li>
+        <li>{{ $t("content.message2") }}</li>
+        <li>{{ $t("content.message3") }}</li>
+        <li>{{ $t("content.message4") }}</li>
+        <li>{{ $t("content.message5") }}</li>
+        <li>{{ $t("content.message6") }}</li>
+        <li>{{ $t("content.message7") }}</li>
       </ol>
     </div>
     </q-dialog>
@@ -133,6 +133,7 @@ import CashOutPopup from "./CashOutPopup.vue";
 import SharePopup from "./SharePopup.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
 import { userStore } from "src/stores";
+import { t } from "src/boot/lang";
 
 const store = userStore();
 const emit = defineEmits(["reload"]);

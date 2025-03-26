@@ -32,7 +32,7 @@
           </Transition>
         </button>
       </div>
-      <button class="claim-btn">Remaining times：{{ availableDraw }}</button>
+      <button class="claim-btn">{{ $t("hotPromo.remainingTimes") }}:{{ availableDraw }}</button>
     </div>
 
     <div class="progressbar-wrapper">
@@ -47,23 +47,21 @@
     </div>
 
     <div class="bets-wrapper">
-      Current Valid Bets: {{ convertToCommaAmount(validBet) }}/{{ convertToCommaAmount(minValidBet) }}
+      {{$t("hotPromo.current_valid_bets")}}: {{ convertToCommaAmount(validBet) }}/{{ convertToCommaAmount(minValidBet) }}
       PKR
     </div>
 
     <div class="activities-wrapper">
-      <div class="block-title">Activities</div>
+      <div class="block-title">{{ $t("hotPromo.activities") }}</div>
       <!-- <img class="block-title" src="../../../assets/images/promotion/hotpromo/golden-egg/activities-title.png" /> -->
       <p>
-        Enjoy the thrill of betting with Aviator! Your Aviator can win a staggering 3,216x with just one click! ! The
-        prize pool for the top 50 is 1,250,000PKR!
+        {{ $t("content.aviatorPromoIntro") }}
       </p>
       <p>
-        When betting in Aviator every day, when the effective betting amount reaches 888PKR, you can get the chance to
-        smash the golden egg (SUNEHRI ANDY). Maximum reward: 88,888PKR, the probability of winning is 3.6%
+        {{ $t("content.aviatorGoldenEgg") }}
       </p>
       <p style="color: #fff">
-        When betting on Aviator, the player with the highest cumulative turnover will qualify for first place.
+        {{ $t("content.aviatorTopTurnover") }}
       </p>
     </div>
 
@@ -76,7 +74,7 @@
         />
         <div class="ranking-list-slot" />
         <div class="ranking-list-content" :style="{ height: `${rankingListHeight}px` }">
-          <div class="ranking-block-title">Ranking and bonus</div>
+          <div class="ranking-block-title">{{ $t("hotPromo.ranking_and_bonus") }}</div>
           <!-- <div class="ranking-list-title">
             <span>TIME</span>
           </div> -->
@@ -110,7 +108,7 @@
                     <td width="40%" align="center">{{ convertToCommaAmount(item.amount) }} PKR</td>
                   </tr>
                 </template>
-                <div v-else class="no-record">No Record</div>
+                <div v-else class="no-record">{{ $t("hotPromo.noRecords") }}</div>
               </tbody>
             </table>
           </div>

@@ -12,7 +12,7 @@
               <div class="day-img">
                 <img :src="require(`./img/day-${index + 1}.png`)" />
               </div>
-              <div class="day-txt">{{ item.day }} {{ item.day === 1 ? "day" : "days" }}</div>
+              <div class="day-txt">{{ item.day }} {{ item.day === 1 ? $t("hotPromo.signIn7Days.day") : $t("hotPromo.signIn7Days.days") }}</div>
               <div class="tick-img">
                 <img
                   :src="
@@ -45,7 +45,7 @@
           </div> -->
 
           <div class="bonus-box">
-            <div class="bonus-title">Bonus claim time</div>
+            <div class="bonus-title">{{ $t("hotPromo.bonus_claim_time") }}</div>
             <div class="bonus-date">
               <div><img src="./img/icon-time.svg" alt="" /></div>
               {{ activeClaim && formatDateTime(activeClaim.bonusClaimTime) }}
@@ -64,14 +64,14 @@
             @click="claimNewPlayerAccDeposit()"
           >
             <div class="q-mr-sm"><img src="./img/img-start.svg" alt="" /></div>
-            <template v-if="activeClaim && activeClaim.hasClaimed === 'YES'">Claimed</template>
-            <template v-if="activeClaim && activeClaim.hasClaimed === 'EXPIRED'">Expired</template>
-            <template v-if="activeClaim && activeClaim.hasClaimed === 'NO'">Claim now</template>
+            <template v-if="activeClaim && activeClaim.hasClaimed === 'YES'">{{$t("hotPromo.claimed")}}</template>
+            <template v-if="activeClaim && activeClaim.hasClaimed === 'EXPIRED'">{{$t("hotPromo.signIn7Days.expired")}}</template>
+            <template v-if="activeClaim && activeClaim.hasClaimed === 'NO'">{{$t("hotPromo.claim_now")}}</template>
             <!-- <template v-else>Claim now</template> -->
           </q-btn>
         </div>
 
-        <div class="content-para">The registration time starts from the time the registration is completed.</div>
+        <div class="content-para">{{ $t("content.title1") }}</div>
       </div>
     </div>
   </div>

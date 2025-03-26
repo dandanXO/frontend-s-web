@@ -107,7 +107,7 @@
                   to="/earn-money"
                 >
                   <img src="../assets/images/bonus/share-icon.png" />
-                  <span>Earn Money</span>
+                  <span>{{ $t("hotPromo.earnMoney.earnMoney") }}</span>
                 </RouterLink>
                 <div class="content-title" v-if="selectedPromo.redirectUrl !== 'pak-deposit-spinner-rewards'">
                   {{ selectedPromo.title }}

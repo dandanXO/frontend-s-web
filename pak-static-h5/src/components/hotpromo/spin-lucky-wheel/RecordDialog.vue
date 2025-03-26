@@ -3,10 +3,10 @@
     <div class="record-dialog-inner-wrapper">
       <div class="tab-wrapper">
         <div class="tab" :class="{ selected: currentTab === 'invitation' }" @click="handleTabClick('invitation')">
-          Invitation records
+          {{ $t("hotPromo.invitationRecords") }}
         </div>
         <div class="tab" :class="{ selected: currentTab === 'lottery' }" @click="handleTabClick('lottery')">
-          Lottery records
+          {{ $t("hotPromo.lotteryRecords") }}
         </div>
       </div>
 
@@ -21,7 +21,9 @@
                   <!-- <span>Invitation successful</span> -->
                 </div>
               </template>
-              <span v-else class="no-record-text">No Records</span>
+              <span v-else class="no-record-text">
+                {{ $t("hotPromo.noRecords") }}
+              </span>
             </div>
           </q-tab-panel>
           <q-tab-panel name="lottery">
@@ -29,10 +31,12 @@
               <template v-if="info.records.length">
                 <div v-for="(record, index) in info.records" :key="index" class="record">
                   <span>{{ moment(record.recordTime).format("MM-DD HH:mm:ss") }}</span>
-                  <span class="amount">Rs{{ record.bonus }}</span>
+                  <span class="amount"> {{$t("hotPromo.rs")}} {{ record.bonus }}</span>
                 </div>
               </template>
-              <span v-else class="no-record-text">No Records</span>
+              <span v-else class="no-record-text">
+                {{ $t("hotPromo.noRecords") }}
+              </span>
             </div>
           </q-tab-panel>
         </q-tab-panels>

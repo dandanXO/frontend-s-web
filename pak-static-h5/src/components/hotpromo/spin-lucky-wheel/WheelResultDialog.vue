@@ -1,8 +1,8 @@
 <template>
   <q-dialog v-model="_modelValue" @hide="$emit('hide')">
     <div class="wheel-result-wrapper">
-      <span class="prize">+Rs{{ props.prize }}</span>
-      <span class="desc">Withdraw money over Rs{{ targetWithdrawAmount }}</span>
+      <span class="prize">+{{ $t("hotPromo.rs") }}{{ props.prize }}</span>
+      <span class="desc">{{$t("hotPromo.withdraw_money_over_rs") }}{{ targetWithdrawAmount }}</span>
       <CommonButton class="close-btn" v-close-popup>Okay</CommonButton>
     </div>
   </q-dialog>

@@ -4,7 +4,7 @@
       <SharePopup ref="sharePopupRef" v-model="isShowInviteWins" />
     </div>
     <div class="cash-out" v-else>
-      <GradientTextAmount v-if="isShowTextAmount" :amountText="`CASH OUT COSTS  ${extractionDifference}$`" />
+      <GradientTextAmount v-if="isShowTextAmount" :amountText="`${$t('hotPromo.CASH_OUT_COSTS')}  ${extractionDifference}$`" />
       <div v-else class="text-amount-placeholder"></div>
       <!-- <span class="next-spin-remaining-time">COUNTDOWN: {{ nextFreeSpinRemainingTime }}</span> -->
       <div class="cash-out-backdrop-wrapper">
@@ -19,7 +19,7 @@
         />
       </div>
       <ProgressBar :isShowDetails="true" />
-      <CommonButton class="invite-wins-btn" @click="showInviteWins">Invitation wins</CommonButton>
+      <CommonButton class="invite-wins-btn" @click="showInviteWins">{{ $t("hotPromo.invitation_wins") }}</CommonButton>
     </div>
   </q-dialog>
 </template>

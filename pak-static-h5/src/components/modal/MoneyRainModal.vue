@@ -26,10 +26,10 @@
 
       <div class="rain-money-tabs">
         <div class="tab-header" :class="{ active: moneyRainTab === 'events' }" @click="selectMoneyRainTab('events')">
-          Events
+          {{ $t("hotPromo.events") }}
         </div>
         <div class="tab-header" :class="{ active: moneyRainTab === 'records' }" @click="selectMoneyRainTab('records')">
-          Records
+          {{ $t("hotPromo.record") }}
         </div>
       </div>
 
@@ -37,11 +37,11 @@
         <div class="content-sec">
           <div class="treasure-img"><img src="../../assets/images/index/money-rain/treasure-img.png" /></div>
           <div class="rewind-title">
-            Rewind time
+            {{$t("hotPromo.rewind_time")}}
             <span>
-              <template v-if="nextRainTime.nowIsRain">starts now</template>
+              <template v-if="nextRainTime.nowIsRain">{{$t("hotPromo.starts_now")}}</template>
 
-              <template v-else>starts at {{ nextRainTime.rainStartNext }}</template>
+              <template v-else>{{ $t("hotPromo.starts_at") }} {{ nextRainTime.rainStartNext }}</template>
             </span>
           </div>
 
@@ -58,7 +58,7 @@
           </div>
         </div>
         <div class="content-timing">
-          <div class="timing-head">Every Friday, Saturday, and Sunday</div>
+          <div class="timing-head">{{ $t("hotPromo.every_friday_saturday_and_sunday") }}</div>
           <div class="timing-body">
             <span>00:00-00:59</span>
             <span>12:00-12:59</span>
@@ -69,7 +69,7 @@
 
           <div class="timing-divider"></div>
 
-          <div class="timing-head">On Other Days, Three Times Daily</div>
+          <div class="timing-head">>{{ $t("hotPromo.on_other_days_three_times_daily") }}</div>
           <div class="timing-body">
             <span>00:00-00:59</span>
             <span>12:00-12:59</span>
@@ -82,20 +82,25 @@
             Limited to
             <span>3000 Participants</span>
           </div> -->
-          <div class="footer-title q-mt-sm">Terms and Conditions:</div>
+          <div class="footer-title q-mt-sm">{{ $t("hotPromo.terms_and_Conditions") }}:</div>
           <div class="footer-content">
-            Each round of cash rain freely distributes 666,666 PKR.
+            {{ $t("content.cashRainIntro") }}
+            
             <br />
-            Maximum cashback amount per round: 66,666 PKR.
+            {{ $t("content.cashRainMaxPerRound") }}
+            
             <br />
-            Each round freely distributes cashback.
+            {{ $t("content.cashRainFreeDistribution") }}
+            
             <br />
-            Maintain a historical deposit of ≥300 PKR and complete daily bets of ≥100+ PKR to claim your reward for
-            free.
+            {{ $t("content.cashRainClaimCondition") }}
+            
             <br />
-            The received money can be directly used for playing games or withdrawing.
+            {{ $t("content.cashRainUsage") }}
+            
             <br />
-            The higher the VIP membership level, the greater the amount received.
+            {{ $t("content.cashRainVIP") }}
+            
           </div>
         </div>
       </div>
@@ -104,11 +109,11 @@
         <div class="content-sec">
           <div class="treasure-img"><img src="../../assets/images/index/money-rain/treasure-img.png" /></div>
           <div class="rewind-title">
-            Rewind time
+            {{ $t("hotPromo.rewind_time") }}
             <span>
-              <template v-if="nextRainTime.nowIsRain">starts now</template>
+              <template v-if="nextRainTime.nowIsRain">{{ $t("hotPromo.starts_now") }}</template>
 
-              <template v-else>starts at {{ nextRainTime.rainStartNext }}</template>
+              <template v-else>{{ $t("hotPromo.starts_at") }} {{ nextRainTime.rainStartNext }}</template>
             </span>
           </div>
         </div>
@@ -137,15 +142,15 @@
         </div> -->
 
         <div class="content-table">
-          <div class="table-title">List of winners</div>
+          <div class="table-title">{{ $t("hotPromo.list_of_winners") }}</div>
 
           <div class="table-data">
             <table border="0" cellpadding="4" cellspacing="0" width="100%">
               <thead>
                 <tr>
-                  <td>Name</td>
-                  <td>Date</td>
-                  <td>Amount</td>
+                  <td>{{ $t("hotPromo.name") }}</td>
+                  <td>{{ $t("hotPromo.date") }}</td>
+                  <td>{{ $t("hotPromo.amount") }}</td>
                 </tr>
               </thead>
               <!-- <tbody>
@@ -186,9 +191,9 @@
               <table border="0" cellpadding="4" cellspacing="0" width="100%">
                 <thead style="opacity: 0">
                   <tr>
-                    <td>Name</td>
-                    <td>Date</td>
-                    <td>Amount</td>
+                  <td>{{ $t("hotPromo.name") }}</td>
+                  <td>{{ $t("hotPromo.date") }}</td>
+                  <td>{{ $t("hotPromo.amount") }}</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -196,7 +201,7 @@
                     <tr>
                       <td>{{ item.name }}</td>
                       <td style="font-size: 70%">{{ item.date }}</td>
-                      <td style="font-size: 80%">Rs {{ item.amount }}</td>
+                      <td style="font-size: 80%">{{ $t("hotPromo.rs") }} {{ item.amount }}</td>
                     </tr>
                   </template>
                 </tbody>
@@ -217,7 +222,7 @@
     <div class="congrats-container">
       <!-- <div class="congrats-header"><img src="../../assets/images/index/money-rain/congrats-header.png" /></div> -->
       <!-- <div class="congrats-coupons"><img src="../../assets/images/index/money-rain/congrats-money.png" /></div> -->
-      <div class="congrats-highlight">Rs {{ prizeAmount }}</div>
+      <div class="congrats-highlight"> {{ $t("hotPromo.rs") }}{{ prizeAmount }}</div>
 
       <div class="congrats-button">
         <q-btn flat :loading="false" @click="showPrizePopup = false">
