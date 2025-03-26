@@ -162,7 +162,7 @@ const openCSInNewTab = (url) => {
   .left-side-menu {
     width: 100%;
     padding-top: 72px;
-    height: calc(100vh - 50px);
+    height: calc(100dvh - 70px);
     display: flex;
     flex-direction: column;
     padding-left: 16px;
