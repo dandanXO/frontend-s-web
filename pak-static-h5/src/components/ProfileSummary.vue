@@ -14,7 +14,7 @@
         </a>
       </div> -->
 
-      <div class="download-text">Get Free Spins on the APP</div>
+      <div class="download-text">{{ $t("header.getFreeSpins") }}</div>
       <div class="download-btn-yel">
         <a :href="ui.downloadAppUrl">{{ $t("header.download") }}</a>
       </div>

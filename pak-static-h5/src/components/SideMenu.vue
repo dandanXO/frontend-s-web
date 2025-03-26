@@ -98,7 +98,7 @@
       </router-link>
       <router-link class="side-menu-item side-menu-item__transparent" to="/cs-verifier">
         <div class="item-icon"><img src="../assets/images/auth/menu-cs-verifier.png" /></div>
-        Customer Service Verifier
+        {{ $t('sideNav.customerServiceVerifier') }}
       </router-link>
     </div>
     <RouterLink to="/earn-money" class="side-menu-item side-menu-item__appdownload">
@@ -162,7 +162,7 @@ const openCSInNewTab = (url) => {
   .left-side-menu {
     width: 100%;
     padding-top: 72px;
-    height: calc(100vh - 50px);
+    height: calc(100dvh - 70px);
     display: flex;
     flex-direction: column;
     padding-left: 16px;

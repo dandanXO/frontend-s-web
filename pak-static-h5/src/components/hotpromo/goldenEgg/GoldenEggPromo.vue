@@ -262,8 +262,10 @@ onMounted(() => {
         display: block;
         position: relative;
         background: url(../../../assets/images/promotion/hotpromo/golden-egg/golden-egg-bg.png) no-repeat;
-        background-size: cover;
-        aspect-ratio: 115 / 115;
+        background-size: contain;
+    aspect-ratio: 135 / 135;
+    border: none;
+    background-position: center top;
         border: none;
         &.disabled {
           .golden-egg {

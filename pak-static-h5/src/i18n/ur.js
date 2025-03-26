@@ -9,6 +9,7 @@ export default {
     login: "لاگ ان",
     register: "رجسٹر",
     download: "ڈاؤن لوڈ کریں",
+    getFreeSpins: "ایپ پر مفت اسپنز حاصل کریں",
     withdraw: "واپسی",
     personalCenter: "شخصی مرکز",
     deposit: "جمع کروائیں",
@@ -235,6 +236,7 @@ export default {
     submit: "جمع کرائیں",
     forgetPwd: "پاس ورڈ بھول گئے",
     areyounew: "کیا آپ B9 پر نئے ہیں؟",
+    alreadyhaveacct: "کیا آپ کے پاس پہلے سے اکاؤنٹ ہے؟",
     addNewAccount: "نیا اکاؤنٹ شامل کریں",
     updated: "اپ ڈیٹ کیا گیا",
     updating: "اپ ڈیٹ کیا جا رہا ہے...",
@@ -297,9 +299,11 @@ export default {
     language: "زبان",
     downloadApp: "ایپ ڈاؤن لوڈ کریں",
     "appDownload": "ایپ ڈاؤن لوڈ",
-    "experienceOneStopGaming": "ایک جگہ پر مکمل گیمنگ کا تجربہ کریں!"
+    "experienceOneStopGaming": "ایک جگہ پر مکمل گیمنگ کا تجربہ کریں!",
+    customerServiceVerifier: "کسٹمر سروس تصدیق کنندہ"
   },
   home: {
+    menu_all: "سب",
     menu_lobby: "لابی",
     menu_hot: "ہاٹ/اہم",
     menu_live: "کیسینو",
