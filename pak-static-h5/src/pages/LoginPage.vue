@@ -84,12 +84,13 @@
                     <q-icon name="lock" />
                   </template>
                   <template v-slot:append>
-                    <q-icon
+                    <!-- <q-icon
                       color="gray-3"
                       :name="isPwd ? 'visibility_off' : 'visibility'"
                       class="cursor-pointer"
                       @click="isPwd = !isPwd"
-                    />
+                    /> -->
+                    <img style="width: 20px;" class="cursor-pointer" @click="isPwd = !isPwd" :src="require(`../assets/images/common/visibility${isPwd?'_off':''}.png`)">
                   </template>
                 </q-input>
               </template>
@@ -948,6 +949,7 @@ export default defineComponent({
   background-repeat: no-repeat;
   // padding-top: 250px;
   padding-top: 295px;
+  padding-bottom: 20px;
   @media screen and (min-width: 500px) {
     padding-top: 300px;
   }

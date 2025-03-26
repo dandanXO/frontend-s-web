@@ -451,7 +451,7 @@ const submitBankCard = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "Virtual wallet added successfully",
+            message: t('notify.virtualWalletAddedSuccessfully'),
             icon: "check_circle_outline"
           });
           bankCardInfo.cardNumber = ""

@@ -59,6 +59,7 @@ import { Carousel, Slide, Navigation } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
 import { userStore } from "stores/index";
 import { useQuasar } from "quasar";
+import { useI18n } from "vue-i18n";
 const props = defineProps({
   onlyShowCurrentLevel: {
     type: Boolean,
@@ -77,6 +78,7 @@ const filteredVipItems = computed(() => {
   return vipItems;
 });
 const store = userStore();
+const { t } = useI18n();
 const $q = useQuasar();
 const vipCarouselRef = ref();
 const vipLevel = ref("");
@@ -180,7 +182,7 @@ const rows = [
   {
     name: "VIP 11",
     ugprade: "3,000,000",
-    reward: "Unlimited",
+    reward: t('vip.unlimited'),
     flow: "58,888",
     invitee: 90,
     extrareward: "1,188"
@@ -188,7 +190,7 @@ const rows = [
   {
     name: "VIP 12",
     ugprade: "5,000,000",
-    reward: "Unlimited",
+    reward: t('vip.unlimited'),
     flow: "88,888",
     invitee: 100,
     extrareward: "2,888"

@@ -55,8 +55,9 @@ export default {
     referralRecord: "ریفرل کا ریکارڈ",
     interestProfit: "سود کا منافع",
     spinnerRules: "قواعد",
-    effectiveRevenueFaq: "مؤثر آمدنی کے عمومی سوالات",
-    customerServiceVerifer: "کسٹمر سروس ویری فائر"
+    effectiveRevenueFAQ: "مؤثر آمدنی کے عمومی سوالات",
+    customerServiceVerifer: "کسٹمر سروس ویری فائر",
+    recoverPwd: "اپنا پاس ورڈ بازیافت کریں"
   },
   bottomNav: {
     home: "گھر/ہوم",
@@ -96,6 +97,7 @@ export default {
     otp_sent_phone_success: "او ٹی پی کامیابی سے فون پر بھیج دیا گیا",
     google_login_success: "گوگل لاگ اِن کامیابی سے ہو گیا",
     phone: "فون نمبر",
+    verifyPhone: "فون نمبر کی تصدیق کریں",
     phone_placeholder: "براہ کرم اپنا موبائل نمبر درج کریں",
     phone_rules_01: "براہ کرم فون نمبر درج کریں",
     phone_rules_02: "فون نمبر میں 11 ہندسے ہونے چاہئیں",
@@ -227,7 +229,16 @@ export default {
     all: "سب",
     telegramDiscordId: "ٹیلیگرام ڈسکارڈ آئی ڈی",
     telegramDiscordId_placeholder: "ٹیلیگرام ڈسکارڈ آئی ڈی درج کریں",
-    telegramDiscordId_rules_01: "براہ کرم ٹیلیگرام ڈسکارڈ آئی ڈی درج کریں"
+    telegramDiscordId_rules_01: "براہ کرم ٹیلیگرام ڈسکارڈ آئی ڈی درج کریں",
+    "redemptionBonusAmount": "بونس کی رقم",
+    "followSteps": "براہ کرم درج ذیل مراحل پر عمل کریں:",
+    "subscribeWhatsapp": "انعامی کوڈ حاصل کرنے کے لیے آفیشل واٹس ایپ چینل کو سبسکرائب کریں۔ (محدود مقدار، پہلے آئیں پہلے پائیں!)",
+    "enterBonusCode": "اس صفحے پر بونس کوڈ درج کریں۔ کوڈ ریڈیم کرنے کے بعد، بونس براہ راست آپ کے اکاؤنٹ میں جمع ہو جائے گا اور فوری طور پر استعمال کیا جا سکتا ہے۔",
+    "redeemWithinValidity": "کوڈ کو میعاد ختم ہونے سے پہلے ریڈیم کریں۔",
+    "wagerRequirement": "جیت کی رقم نکالنے سے پہلے بونس کی 1 گنا واجب الادا شرط پوری کریں۔",
+    "redemptionFailure": "اگر اہلیت کی شرائط پوری نہ ہوں تو ریڈیم کرنے میں ناکامی ہو سکتی ہے۔ سسٹم کی تصدیق حتمی ہوگی۔",
+    "accountOwnerOnly": "صرف اکاؤنٹ کا مالک ہی کوڈ ریڈیم کر سکتا ہے۔",
+    "unauthorizedMethods": "بوٹس، دھوکہ دہی یا کسی بھی غیر مجاز طریقے کے استعمال سے اکاؤنٹ پر پابندی اور بونس کی ضبطی ہو جائے گی۔"
   },
   btn: {
     login: "لاگ ان",
@@ -269,9 +280,17 @@ export default {
     details: "تفصیلات",
     transfer: "تبادلہ کرنا",
     signinWithGoogle: "Google",
-    goNow: "اب جائیں"
+    goNow: "اب جائیں",
+    playReal: "حقیقی کھیلیں",
+    freeTrial: "مفت آزمائش"
   },
   notify: {
+    phoneVerifySuccessful: "فون کامیابی سے تصدیق ہو گئی",
+    emailAlreadyUsed: "ای میل پہلے ہی استعمال ہو چکی ہے۔ براہ کرم دوسرا ای میل آزما لیں۔",
+    bankAddedSuccessfully: "بینک کارڈ کامیابی سے شامل کر لیا گیا",
+    virtualWalletAddedSuccessfully: "ورچوئل والیٹ کامیابی سے شامل کر لیا گیا",
+    newpasswordupdated: "نیا پاس ورڈ کامیابی سے اپ ڈیٹ کر لیا گیا",
+    withdrewSuccessfully: "کامیابی سے رقم نکال لی",
     noRecord: "کوئی ریکارڈ نہیں",
     haventFoundAnyRecord: "کوئی ریکارڈ نہیں ملا",
     updatedSuccessfully: "کامیابی سے اپ ڈیٹ کیا گیا",
@@ -292,6 +311,7 @@ export default {
     fishing: "ماہی گیری",
     poker: "پوکر",
     sport: "کھیل",
+    esport: "ای اسپورٹس",
     livesupport: "لائیو سپورٹ",
     feedback: "رائے",
     telegram: "ٹیلیگرام",
@@ -351,7 +371,20 @@ export default {
     select_privilege: "خصوصی اختیار منتخب کریں",
     incorrectPrivilege: "آپ کی جمع کروائی گئی ڈپازٹ پروموشن غلط ہے۔ براہ کرم دوبارہ ڈپازٹ جمع کرنے کی کوشش کریں۔",
     useFtdPrivilege: "سلاٹ پہلی جمع کی مراعات کا استعمال کریں",
-    unlimited: "لامحدود"
+    unlimited: "لامحدود",
+    "wagerRequirement": "واجر کی شرط (نکالنے کے لیے): آپ کی جمع رقم کا 10 گنا",
+    "wagerRequirementEg": "مثال کے طور پر: 100 روپے جمع کروائیں، 1,000 روپے واجرت درکار ہوگی",
+    "rechargeTutorial": "ری چارج کا طریقہ",
+    "picture": "تصویر",
+    "video": "ویڈیو",
+    "mindepositnotcredit": "کم از کم ڈپازٹ: 10 USDT، 10 USDT سے کم ڈپازٹ کریڈٹ نہیں کیا جائے گا۔",
+    "depositnotrecovered": "مندرجہ بالا ایڈریس پر کوئی غیر کرنسی اثاثہ جمع نہ کریں، ورنہ اثاثے واپس نہیں کیے جائیں گے۔",
+    "operatingSafe": "برائے کرم تصدیق کریں کہ آپریٹنگ ماحول محفوظ ہے تاکہ معلومات میں رد و بدل یا لیک ہونے سے بچا جا سکے۔",
+    "transferAmountMatch": "منتقلی کی رقم آپ کے بنائے گئے آرڈر سے مماثل ہونی چاہیے، ورنہ رقم کامیابی سے کریڈٹ نہیں ہو سکے گی۔",
+    "donotcanceldeposit": "نوٹ: رقم کی منتقلی کے بعد ڈپازٹ آرڈر منسوخ نہ کریں۔",
+    "fillinwallet": "صحیح والیٹ اکاؤنٹ نمبر درج کریں",
+    "fillincnic": "صحیح شناختی کارڈ نمبر درج کریں",
+    "submittedAmtConsistent": "جمع کروائی گئی رقم ادائیگی کی رقم کے مطابق ہونی چاہیے، ورنہ یہ خود بخود کریڈٹ نہیں ہوگی۔"
   },
   withdraw: {
     cashBalance: "کیش بیلنس",
@@ -362,7 +395,15 @@ export default {
     remainWagers: "باقی شرطیں",
     withdrawTutorial: "نکالنے کا ٹیوٹوریل",
     withdrawalMethodInMaintenance:
-      "یہ چینل فی الحال {startTime} سے {endTime} تک دیکھ بھال کے تحت ہے۔ براہ کرم رقم نکلوانے کے لیے دیگر چینلز کا استعمال کریں۔ شکریہ!"
+      "یہ چینل فی الحال {startTime} سے {endTime} تک دیکھ بھال کے تحت ہے۔ براہ کرم رقم نکلوانے کے لیے دیگر چینلز کا استعمال کریں۔ شکریہ!",
+    "noAcctAvailable": "کوئی اکاؤنٹ دستیاب نہیں",
+    "addAcct": "اکاؤنٹ شامل کریں",
+    "picture": "تصویر",
+    "video": "ویڈیو",
+    "bindCardCorrectFormat": "اپنے والیٹ/بینک کارڈ کو درست فارمیٹ میں لنک کریں۔",
+    "dailyWalletLimit": "روزانہ والیٹ کی حد: PKR 50,000۔ اس حد سے تجاوز نہ کریں۔ آپ نکالنے کے لیے متعدد والیٹس شامل کر سکتے ہیں۔",
+    "donotexceeddaily": "روزانہ بینک کارڈ کی حد: PKR 500,000۔ اس حد سے تجاوز نہ کریں۔ آپ نکالنے کے لیے متعدد بینک کارڈز شامل کر سکتے ہیں۔",
+    "blockchainwithdrawfast": "بلاک چین والیٹ (USDT) نکاسی کے لیے کوئی حد نہیں ہے، اور منتقلی بہت تیز ہوتی ہے۔"
   },
   bank: {
     virtualWallet: "ورچوئل والٹ",
@@ -398,6 +439,7 @@ export default {
     confirm: "تصدیق کریں"
   },
   vip: {
+    unlimited: "لامحدود",
     receiveMonthlyRewards: "ماہانہ انعامات وصول کریں",
     received: "وصول کیا",
     receive: "وصول کریں",
@@ -600,6 +642,7 @@ export default {
     }
   },
   records: {
+    date: "تاریخ",
     beforeBalance: "پہلے کا بیلنس:",
     afterBalance: "بعد کا بیلنس:",
     gamePlatform: "گیم پلیٹ فارم",
@@ -671,6 +714,7 @@ export default {
     activity: "سرگرمی",
     payment: "ادائیگی",
     system: "نظام",
+    noMessage: "کوئی پیغام نہیں"
   },
   customerServiceVerifier: {
     mainTitle: "B9.GAME",
@@ -716,7 +760,8 @@ export default {
     noSupport: "آپ کا براؤزر ویڈیو ٹیگ کو سپورٹ نہیں کرتا ہے۔",
     linkCopied: "لنک کلپ بورڈ پر کاپی ہو گیا",
     copyFailed: "لنک کاپی کرنے میں ناکامی",
-    next: "اگلا"
+    next: "اگلا",
+    service: "سروس"
   },
   hotPromo: {
     name: "نام",

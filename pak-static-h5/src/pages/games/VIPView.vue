@@ -248,7 +248,8 @@ import { userStore } from "stores/index";
 import VIPCarousel from "components/VIPCarousel.vue";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
-
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 const $q = useQuasar();
 
 const vipLevel = ref("");
@@ -416,7 +417,7 @@ const rows = [
   {
     name: "VIP 11",
     ugprade: "3,000,000",
-    reward: "Unlimited",
+    reward: t('vip.unlimited'),
     flow: "58,888",
     invitee: 90,
     extrareward: "1,188"
@@ -424,7 +425,7 @@ const rows = [
   {
     name: "VIP 12",
     ugprade: "5,000,000",
-    reward: "Unlimited",
+    reward: t('vip.unlimited'),
     flow: "88,888",
     invitee: 100,
     extrareward: "2,888"

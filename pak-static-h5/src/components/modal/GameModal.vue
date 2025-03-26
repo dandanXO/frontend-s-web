@@ -83,7 +83,7 @@
         <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
         <div class="popout-dialog-container">
           <div class="txt-content q-mt-md text-center">{{ $t("notify.quitGameMessage") }}</div>
-          <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+          <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container popout-btns">
             <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
             <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="closeDialog()" v-close-popup />
           </div>
@@ -115,8 +115,8 @@
       <q-card class="bottom-panel">
         <q-card-section class="row justify-center">
           <div class="choices">
-            <div @click="handleChooseGame(false)">Play Real</div>
-            <div @click="handleChooseGame(true)">Free Trial</div>
+            <div @click="handleChooseGame(false)">{{ $t('btn.playReal') }}</div>
+            <div @click="handleChooseGame(true)">{{ $t('btn.freeTrial') }}</div>
           </div>
         </q-card-section>
       </q-card>
@@ -947,6 +947,9 @@ defineExpose({
     }
   }
 
+  .popout-btns {
+    width: 100%;
+  }
   .btn-cancel {
     // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
     // border: 1px solid #5d8956;
@@ -955,7 +958,7 @@ defineExpose({
     // border-radius: 12px;
     font-weight: 700;
     width: 100%;
-    padding: 10px 40px;
+    padding: 10px 10px;
     font-size: 16px;
     background: #455152;
     color: #ffffff;
@@ -972,7 +975,7 @@ defineExpose({
     // border-radius: 12px;
     font-weight: 700;
     width: 100%;
-    padding: 10px 40px;
+    padding: 10px 10px;
     font-size: 16px;
     background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
     color: #000000;

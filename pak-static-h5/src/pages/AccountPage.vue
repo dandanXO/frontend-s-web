@@ -916,7 +916,7 @@ const openVerificationCodeDialog = () => {
           $q.notify({
             color: "negative",
             position: "top",
-            message: "Email already used. Please try another email.",
+            message: t('notify.emailAlreadyUsed'),
             icon: "report_problem"
           });
         } else {
@@ -948,7 +948,6 @@ const openPhoneVerificationCodeDialog = () => {
 };
 
 const myMemberList = ref([]);
-
 let isNoInfoRef = ref(true);
 if (myMemberList.value.length) isNoInfoRef.value = true;
 
@@ -1581,7 +1580,7 @@ const sendPhoneDetails = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "Phone verified successfully",
+            message: t('notify.phoneVerifySuccessful'),
             icon: "check_circle_outline"
           });
           verifyPhoneDialog.value = false;

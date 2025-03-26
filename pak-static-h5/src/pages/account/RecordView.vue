@@ -77,7 +77,7 @@
 
         <q-card-section class="bot-wrapper">
           <div class="origin">
-            <div class="bet">Date:</div>
+            <div class="bet">{{$t('records.date')}}:</div>
             <div class="bet">{{ $t("records.bet") }}</div>
             <!-- <div class="game-platform">{{ $t("records.gamePlatform") }}</div> -->
           </div>

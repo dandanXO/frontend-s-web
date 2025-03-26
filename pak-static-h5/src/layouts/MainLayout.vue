@@ -284,22 +284,22 @@ export default defineComponent({
         } else if (route.path === "/forgot-password") {
           prevPage.value = "/login";
           hasPage.value = true;
-          pageName.value = "Recover your password";
+          pageName.value = t("header.recoverPwd");
         } else if (route.path === "/live-casino") {
           hasPage.value = true;
-          pageName.value = "Live Casino";
+          pageName.value = t("sideNav.livecasino");
         } else if (route.path === "/poker") {
           hasPage.value = true;
-          pageName.value = "Poker";
+          pageName.value = t("sideNav.poker");
         } else if (route.path === "/e-sport") {
           hasPage.value = true;
-          pageName.value = "E-Sports";
+          pageName.value = t("sideNav.esport");
         } else if (route.path === "/sport") {
           hasPage.value = true;
-          pageName.value = "Sports";
+          pageName.value = t("sideNav.sport");
         } else if (route.path === "/fish") {
           hasPage.value = true;
-          pageName.value = "Fishing";
+          pageName.value = t("sideNav.fishing");
         } else if (route.path === "/promo") {
           hasPage.value = false;
           pageName.value = t("header.promotion");
