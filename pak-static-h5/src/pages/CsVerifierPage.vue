@@ -62,16 +62,39 @@
 import { onMounted, ref } from "vue";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
+import { useQuasar } from "quasar";
+import { api } from "boot/axios";
 
-const agentAccountId = ref();
+const $q = useQuasar();
+const agentAccountId = ref("");
 const agentAccountIdRef = ref();
 
 const accountValid = ref(false);
 const accountVerifiedDialog = ref(false);
 
 const checkAgentId = () => {
-  accountVerifiedDialog.value = true;
-  accountValid.value = false;
+  if (agentAccountId.value === "") {
+    agentAccountIdRef.value.focus();
+  } else {
+    $q.loading.show({
+      message: "Checking customer service account..."
+    });
+
+    const csAccount = agentAccountId.value;
+    const csApiUrl = `/official-cs-acc/verify?csAccount=${csAccount}`;
+    api
+      .get(csApiUrl)
+      .then((res) => {
+        if (res.code === 0) {
+          accountVerifiedDialog.value = true;
+          accountValid.value = res.data;
+          $q.loading.hide();
+        }
+      })
+      .catch((e) => {
+        $q.loading.hide();
+      });
+  }
 };
 
 onMounted(() => {});

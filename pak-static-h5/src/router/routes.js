@@ -89,7 +89,7 @@ const routes = [
     path: "/cs-verifier",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/CsVerifierPage.vue") }],
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: false }
   },
 
   // {
