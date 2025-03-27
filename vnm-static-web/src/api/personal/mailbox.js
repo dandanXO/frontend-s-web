@@ -9,7 +9,11 @@ export function loadMailbox(type, pageNum, pageSize) {
 }
 
 export function popupMailBox() {
-  return server.REST.get("/session/pm/inbox/popup", {});
+  return server.REST.get("/session/pm/inbox/popup", {
+    params: {
+      type: 'unread'
+    }
+  });
 }
 
 export function mailInbox(mailQuery) {

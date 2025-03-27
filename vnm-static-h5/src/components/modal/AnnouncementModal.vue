@@ -146,7 +146,11 @@ const handleDetail = (mail) => {
 };
 
 const getInbox = () => {
-  return api.get("/session/pm/inbox/popup");
+  return api.get("/session/pm/inbox/popup", {
+    params: {
+      type: 'unread'
+    }
+  });
 };
 const handleDotClick = ()=>{
   visible.value = false;
