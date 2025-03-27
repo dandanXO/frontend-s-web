@@ -64,6 +64,7 @@
     <PGLBucharest2025 v-if="list.redirectUrl === 'dy2-pgl-bucharest-2025'" :promo-code="list.promoCode" />
     <EslProLeagueS21 v-else-if="list.redirectUrl === 'dy2-esl-pro-league-s21'" :promo-param="listParam" />
     <FissureUniverseS4 v-if="list.redirectUrl === 'dy2-fissure-universe-s4'" :promo-code="list.promoCode" />
+    <IemMelbourne2025 v-if="list.redirectUrl === 'dy2-iem-melbourne-2025'" :promo-code="list.promoCode" />
     <NewFootball v-if="list.redirectUrl === 'dy2-football'" :promo-code="list.promoCode" />
   </div>
 
@@ -137,6 +138,7 @@ const PGLBucharest2025 = defineAsyncComponent(() =>
 );
 const Blast2025S3 = defineAsyncComponent(() => import("./hotpromo/Blast2025-s3/Blast2025S3.vue"));
 const FissureUniverseS4 = defineAsyncComponent(() => import("./hotpromo/fissure-universe-s4/FissureUniverseS4.vue"));
+const IemMelbourne2025 = defineAsyncComponent(() => import("./hotpromo/iem-melbourne-2025/IemMelbourne2025.vue"));
 const NewFootball = defineAsyncComponent(() => import("../components/hotpromo/NewFootball/NewFootball.vue"));
 const VctBangkok = defineAsyncComponent(() => import("./hotpromo/vct-bangkok/VctBangkok.vue"));
 
@@ -171,6 +173,7 @@ export default defineComponent({
     Monthly20HongBaoYu,
     VctBangkok,
     FissureUniverseS4,
+    IemMelbourne2025,
     NewFootball
   },
   props: {
