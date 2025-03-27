@@ -375,6 +375,10 @@ onMounted(() => {
     padding-right: 10px;
     position: relative;
 
+    .q-btn{
+      white-space: nowrap;
+    }
+
     .unread-total {
       position: absolute;
       right: 0px;

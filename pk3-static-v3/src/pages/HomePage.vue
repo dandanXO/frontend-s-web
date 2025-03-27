@@ -2636,7 +2636,7 @@ const getVersionNo = async () => {
     const appType = "ALL";
     const affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
     // alert(affiliateCode) ;
-    const res = await api.get(`/app/india/getAppData?affiliateCode=${affiliateCode}`);
+    const res = await api.get(`/app/india/getAppData?affiliateCode=${affiliateCode}&appVersion=${info.version}`);
     // console.log(res);
     if (res.code === 0) {
       // alert(JSON.stringify(res.data));
@@ -2662,6 +2662,7 @@ const getVersionNo = async () => {
     }
   }
 };
+
 
 const getAppData = async () => {
   const affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
@@ -3960,7 +3961,7 @@ onBeforeUnmount(() => {
       overflow: hidden;
       text-overflow: ellipsis;
       // max-width: 100px;
-      
+
       &.isHideGameTitle {
         display: none;
       }
