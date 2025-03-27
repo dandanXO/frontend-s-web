@@ -203,7 +203,7 @@ const depositCards = ref([
       .deposit-content {
         flex: 3;
         display: flex;
-        // flex-direction: column;
+        flex-direction: column;
         gap: 10px;
         justify-content: space-between;
         height: 100%;
