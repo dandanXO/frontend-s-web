@@ -1912,7 +1912,9 @@ const checkHash = () => {
   if (hash) {
     handleActivateSlide(hash);
   } else {
-    router.replace({ hash: `Lobby` });
+    if (route.path === '/home') {
+      router.replace({ hash: `Lobby` });
+    }
   }
 };
 
