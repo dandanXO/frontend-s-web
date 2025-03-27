@@ -108,6 +108,7 @@ export default {
     password_rules_02: "The characters of password must be above 6",
     forgotPassword: "Forgot Password",
     forgotPassword_desc: "Please provide email, we will send OTP to your registered email.",
+    forgotPasswordPhone_desc: "Please provide phone number, we will send OTP to your registered phone.",
     register_agree_01: "I have Agree To The ",
     register_agree_02: "Use Privacy Agreement",
     email: "Email",
@@ -119,6 +120,7 @@ export default {
     verificationCode_placeholder: "Please enter verification code",
     verificationCode_rules_01: "Please insert verification code",
     otp_sent_title: "OTP has been sent to your email, please enter the OTP and new password.",
+    otp_phone_sent_title: "OTP has been sent to your phone, please enter the OTP and new password.",
     otp: "OTP",
     otp_placeholder: "Please enter OTP",
     otp_rules_01: "Please insert OTP",
@@ -303,7 +305,11 @@ export default {
     signOutMessage: "Are you sure you want to sign out?",
     plsLoginToContinue: "Please login to continue",
     copiedSuccessfully: "Copied Successfully",
-    smsSent: "SMS OTP has been sent successfully"
+    smsSent: "SMS OTP has been sent successfully",
+    tryagain: "Please try again after {seconds} seconds",
+    submitting: "Submitting...",
+    sendingVerificationCode: "Sending verification code...",
+    passwordResetCompleted: "Password reset completed",
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",

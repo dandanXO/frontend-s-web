@@ -106,6 +106,7 @@ export default {
     password_rules_02: "پاس ورڈ کے حروف 6 سے زیادہ ہونے چاہئیں",
     forgotPassword: "پاس ورڈ بھول گئے؟",
     forgotPassword_desc: "براہ کرم ای میل فراہم کریں، ہم آپ کے رجسٹرڈ ای میل پر OTP بھیجیں گے۔",
+    forgotPasswordPhone_desc: "براہ کرم اپنا فون نمبر فراہم کریں، ہم آپ کے رجسٹرڈ فون پر OTP بھیجیں گے۔",
     register_agree_01: "میں نے اس سے اتفاق کیا ہے ",
     register_agree_02: "رازداری کے معاہدے کا استعمال کریں",
     email: "ای میل",
@@ -117,6 +118,7 @@ export default {
     verificationCode_placeholder: "براہ کرم تصدیقی کوڈ درج کریں",
     verificationCode_rules_01: "براہ کرم تصدیقی کوڈ درج کریں",
     otp_sent_title: "OTP آپ کی ای میل پر بھیجا گیا ہے، براہ کرم OTP اور نیا پاس ورڈ درج کریں۔",
+    otp_phone_sent_title: "OTP آپ کے فون پر بھیج دیا گیا ہے، براہ کرم OTP اور نیا پاسورڈ درج کریں۔",
     otp: "OTP",
     otp_placeholder: "براہ کرم OTP درج کریں",
     otp_rules_01: "براہ کرم OTP درج کریں",
@@ -301,7 +303,11 @@ export default {
     signOutMessage: "کیا آپ واقعی لاگ آوٹ ہونا چاہتے ہیں؟",
     plsLoginToContinue: "براہ کرم جاری رکھنے کے لئے لاگ ان کریں",
     copiedSuccessfully: "کامیابی سے کاپی کیا گیا",
-    smsSent: "ایس ایم ایس او ٹی پی کامیابی سے بھیج دیا گیا ہے"
+    smsSent: "ایس ایم ایس او ٹی پی کامیابی سے بھیج دیا گیا ہے",
+    tryagain: "براہ کرم {seconds} سیکنڈ بعد دوبارہ کوشش کریں",
+    submitting: "جمع کر رہا ہے...",
+    sendingVerificationCode: "ویری فیکیشن کوڈ بھیجا جا رہا ہے...",
+    passwordResetCompleted: "پاسورڈ ری سیٹ مکمل ہو چکا ہے"
   },
   sideNav: {
     inviteToEarn: "دعوت دیں اور کمائیں",

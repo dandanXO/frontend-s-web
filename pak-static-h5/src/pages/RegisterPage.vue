@@ -984,7 +984,7 @@ export default defineComponent({
           } else {
             color = "negative";
             if (res.code === 1402) {
-              message = `Please try again after ${res.data.second} seconds`;
+              message = t('notify.tryagain', { seconds: res.data.second });
 
               // start otp countdown
               otpCountdown.value = res.data.second || 60;
@@ -1232,10 +1232,12 @@ function charType(num) {
 }
 
 .get-code-btn {
-  background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-  color: #000a01;
+  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+  color: #000000;
+  box-shadow: 0px 2px 0px 0px #1cca6a;
   min-width: 100px;
   max-width: 120px;
+  font-weight: bold;
 }
 
 .register-container {
