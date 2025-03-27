@@ -319,19 +319,19 @@ export default defineComponent({
         } else if (route.path === "/faq-page") {
           hasPage.value = true;
           pageName.value = t("header.effectiveRevenueFAQ");
-            if (route.query.from) {
-              prevPage.value = route.query.from;
-            } else {
-              prevPage.value = "/account";
-            }
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "/account";
+          }
         } else if (route.path === "/cs-verifier") {
           hasPage.value = true;
           pageName.value = t("header.customerServiceVerifer");
-            if (route.query.from) {
-              prevPage.value = route.query.from;
-            } else {
-              prevPage.value = "/account";
-            }
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "/account";
+          }
         } else if (route.path === "/finance/deposit") {
           hasPage.value = true;
           pageName.value = t("header.deposit");
@@ -574,7 +574,7 @@ export default defineComponent({
       if (ui.firstScreenLoading) {
         setTimeout(() => {
           ui.firstScreenLoading = false;
-        }, 500);
+        }, 2200);
       }
     };
 
@@ -703,9 +703,25 @@ svg path {
   transform: translateX(-50%);
   width: 500px;
   max-width: 100%;
-  background: url(../assets/images/index/first-screen-loading.png) no-repeat;
-  background-size: cover;
-  background-position: center center;
+  //background-image: url(../assets/images/index/first-screen-loading.png);
+  background-image: url("../assets/images/redirect/0.png");
+
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: top center;
   z-index: 10000;
+
+  &:after {
+    background: url("../assets/images/redirect/logo.gif") no-repeat center center;
+    content: "";
+    position: absolute;
+    bottom: 2vh;
+    width: 80%;
+    left: 10%;
+    right: 10%;
+    height: 6vh;
+    // transform: translateX(50%, -50%);
+    background-size: contain;
+  }
 }
 </style>
