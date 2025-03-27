@@ -71,7 +71,8 @@ const loadInbox = () => {
     .get("/session/pm/inbox", {
       params: {
         type: mailboxData.value.type,
-        orderBy: mailboxData.value.orderBy
+        orderBy: mailboxData.value.orderBy,
+        size: 100
       }
     })
     .then((response) => {

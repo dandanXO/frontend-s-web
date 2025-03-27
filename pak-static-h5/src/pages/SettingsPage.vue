@@ -952,6 +952,8 @@ const handleCopyClick = async () => {
   background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
   color: #000000;
   box-shadow: 0px 2px 0px 0px #1cca6a;
+  border-radius: 4px;
+  height: unset;
 }
 </style>
 

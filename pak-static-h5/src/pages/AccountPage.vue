@@ -1492,7 +1492,7 @@ const submitUpdatePwd = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "New password updated successfully",
+            message: t('notfiy.newpasswordupdated'),
             icon: "check_circle_outline"
           });
           // router.go("/account");
@@ -1622,7 +1622,7 @@ const submitUpdateNewPwd = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "New password updated successfully",
+            message: t('notfiy.newpasswordupdated'),
             icon: "check_circle_outline"
           });
           // router.go("/account");
@@ -1868,6 +1868,8 @@ const openConfirmSignOutDialog = () => {
   background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
   color: #000000;
   box-shadow: 0px 2px 0px 0px #1CCA6A;
+  border-radius: 4px;
+  height: unset;
 }
 
 .bottom-btn {

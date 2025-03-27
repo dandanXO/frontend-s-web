@@ -53,6 +53,7 @@
     position: relative;
     overflow: visible;
     border-radius: 12px;
+    background-color: unset;
   
     // &:before {
     //   content: "";
@@ -116,7 +117,7 @@
     font-weight: bold;
     width: 70%;
     font-size: 23px;
-    padding-bottom: 25px;
+    padding-bottom: 35px;
   }
 }
   .congrats-highlight {

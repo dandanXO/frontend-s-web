@@ -80,7 +80,7 @@
                   <div class="deposit-steps">
                     <div class="dep-step">
                       <img src="../../assets/images/newplayerguide/step-01.png" />
-                      Bank Transfer {{ $t('playerGuide.bankTransfer') }}
+                      {{ $t('playerGuide.bankTransfer') }}
                     </div>
                     <div class="dep-step">
                       <img src="../../assets/images/newplayerguide/step-02.png" />
@@ -88,7 +88,7 @@
                     </div>
                     <div class="dep-step">
                       <img src="../../assets/images/newplayerguide/step-03.png" />
-                      USDT digital currency {{ $t('playerGuide.digital currency') }}
+                      USDT {{ $t('playerGuide.digital currency') }}
                     </div>
                   </div>
                 </div>
@@ -140,7 +140,7 @@
                 <div class="withdraw-steps">
                   <div class="withdraw-step">
                     <img src="../../assets/images/newplayerguide/step-01.png" />
-                    Bank account withdrawal
+                    {{ $t('playerGuide.bankAccountWithdrawal')}}
                   </div>
                   <div class="withdraw-step">
                     <img src="../../assets/images/newplayerguide/step-02.png" />
@@ -148,7 +148,7 @@
                   </div>
                   <div class="withdraw-step">
                     <img src="../../assets/images/newplayerguide/step-03.png" />
-                    USDT digital currency withdrawal
+                    USDT {{ $t('playerGuide.digitalCurrencyWithdrawal')}}
                   </div>
                 </div>
                 <ul class="note">

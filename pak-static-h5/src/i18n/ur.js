@@ -55,9 +55,7 @@ export default {
     referralRecord: "ریفرل کا ریکارڈ",
     interestProfit: "سود کا منافع",
     spinnerRules: "قواعد",
-    effectiveRevenueFAQ: "مؤثر آمدنی کے عمومی سوالات",
-    customerServiceVerifer: "کسٹمر سروس ویری فائر",
-    recoverPwd: "اپنا پاس ورڈ بازیافت کریں"
+    effectiveRevenueFAQ: "مؤثر آمدنی کے عمومی سوالات"
   },
   bottomNav: {
     home: "گھر/ہوم",
@@ -322,7 +320,8 @@ export default {
     downloadApp: "ایپ ڈاؤن لوڈ کریں",
     "appDownload": "ایپ ڈاؤن لوڈ",
     "experienceOneStopGaming": "ایک جگہ پر مکمل گیمنگ کا تجربہ کریں!",
-    customerServiceVerifier: "کسٹمر سروس تصدیق کنندہ"
+    customerServiceVerifier: "کسٹمر سروس تصدیق کنندہ",
+    recoverPwd: "اپنا پاس ورڈ بازیافت کریں"
   },
   home: {
     menu_all: "سب",
@@ -646,8 +645,8 @@ export default {
   },
   records: {
     date: "تاریخ",
-    beforeBalance: "پہلے کا بیلنس:",
-    afterBalance: "بعد کا بیلنس:",
+    beforeBalance: "پہلے کا بیلنس",
+    afterBalance: "بعد کا بیلنس",
     gamePlatform: "گیم پلیٹ فارم",
     bet: "شرط",
     settle: "سیٹل",
@@ -764,7 +763,22 @@ export default {
     linkCopied: "لنک کلپ بورڈ پر کاپی ہو گیا",
     copyFailed: "لنک کاپی کرنے میں ناکامی",
     next: "اگلا",
-    service: "سروس"
+    service: "سروس",
+    "deposit1": "مینو میں والیٹ پر کلک کریں",
+    "deposit2": "ڈپازٹ ٹیب منتخب کریں",
+    "deposit3": "بینک منتخب کریں",
+    "deposit4": "رقم درج کریں اور جمع کروانے پر کلک کریں",
+    "refer1": "دعوت نامے شیئر کرکے پیسہ کمانے کا طریقہ",
+    "refer2": "مینو میں 'پیسہ کمائیں' پر کلک کریں",
+    "refer3": "لنک کے ذریعے دوستوں کو مدعو کریں",
+    "withdraw1": "نیچے والے مینو میں والیٹ پر کلک کریں",
+    "withdraw2": "وتھڈرا ٹیب منتخب کریں",
+    "withdraw3": "وتھڈرا کی رقم درج کریں",
+    "withdraw4": "وتھڈرا کی درخواست کی تصدیق کریں",
+    "bankTransfer": "بینک ٹرانسفر",
+    "digitalCurrency": "ڈیجیٹل کرنسی",
+    "bankAccountWithdrawal": "بینک اکاؤنٹ سے نکاسی",
+    "digitalCurrencyWithdrawal": "ڈیجیٹل کرنسی سے نکاسی"
   },
   hotPromo: {
     name: "نام",
