@@ -58,6 +58,7 @@
 
     <SkyesportsSouvenir2025 v-if="list.redirectUrl === 'dy2-skyesports-souvenir-2025'" :promo-code="list.promoCode" />
     <VctBangkok v-if="list.redirectUrl === 'dy2-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
+    <elsOne2025 v-if="list.redirectUrl === 'dy2-esl-one-raleigh-2025'" :promo-code="list.promoCode" />
 
     <Monthly20HongBaoYu v-if="list.redirectUrl === 'dy2-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'dy-official-gift'" :params="list.param" />
@@ -139,12 +140,13 @@ const Blast2025S3 = defineAsyncComponent(() => import("./hotpromo/Blast2025-s3/B
 const FissureUniverseS4 = defineAsyncComponent(() => import("./hotpromo/fissure-universe-s4/FissureUniverseS4.vue"));
 const NewFootball = defineAsyncComponent(() => import("../components/hotpromo/NewFootball/NewFootball.vue"));
 const VctBangkok = defineAsyncComponent(() => import("./hotpromo/vct-bangkok/VctBangkok.vue"));
-
+const elsOne2025 = defineAsyncComponent(() => import("./hotpromo/elsOne2025/elsOne2025.vue"));
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    elsOne2025,
     Blast2025S3,
     EslProLeagueS21,
     PGLBucharest2025,
