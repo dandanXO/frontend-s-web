@@ -68,7 +68,13 @@
 
       <Column header="操作">
         <template #body="slotProps">
-          <Button icon="pi pi-eye" class="p-button-rounded p-button-info mr-2" @click="viewStream(slotProps.data)" />
+          <Button 
+            icon="pi pi-eye" 
+            class="p-button-rounded p-button-info mr-2" 
+            @click="viewStream(slotProps.data)"
+            :disabled="!canPreview(slotProps.data.streamStatus)"
+            :tooltip="getPreviewTooltip(slotProps.data.streamStatus)"
+          />
         </template>
       </Column>
     </DataTable>
@@ -162,10 +168,8 @@ const fetchStreams = async () => {
     clearData();
     loading.value = true;
     // 根據當前路由設置數據獲取方法
-    console.log(route.path);
     const dataMethod = route.path.includes('/my-streams') ? DashboardService.getMyStreams : DashboardService.getStreamList;
     const response = await dataMethod();
-    console.log(response);
     streams.value = response;
   } catch (error) {
     console.error('獲取直播列表失敗:', error);
@@ -218,16 +222,32 @@ const getStatusSeverity = (status) => {
   return severityMap[status] || 'info';
 };
 
+// 檢查是否可以預覽
+const canPreview = (status) => {
+  return status >= 0 && status <= 4;
+};
+
+// 獲取預覽按鈕提示
+const getPreviewTooltip = (status) => {
+  return canPreview(status) ? '點擊預覽' : '當前狀態無法預覽';
+};
+
 // 查看直播
 const viewStream = (stream) => {
-  selectedStream.value = {
-    ...stream,
-    title: stream.eventTitle,
-    playUrls: {
-      hls: stream.cdnPlayUrlsHls,
-      flv: stream.cdnPlayUrlsFlv
-    }
-  };
+  if (!canPreview(stream.streamStatus)) {
+    return;
+  }
+
+  if (stream.cdnPlayUrlsHls !== null) {
+    selectedStream.value = {
+      ...stream,
+      title: stream.eventTitle,
+      playUrls: {
+        hls: stream.cdnPlayUrlsHls,
+        flv: stream.cdnPlayUrlsFlv
+      }
+    };
+  }
   showPlayer.value = true;
 };
 
