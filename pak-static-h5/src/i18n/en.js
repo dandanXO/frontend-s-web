@@ -230,7 +230,16 @@ export default {
     all: "All",
     telegramDiscordId: "Telegram Discord ID",
     telegramDiscordId_placeholder: "Enter the Telegram Discord ID",
-    telegramDiscordId_rules_01: "Please insert the Telegram Discord ID"
+    telegramDiscordId_rules_01: "Please insert the Telegram Discord ID",
+    redemptionBonusAmount: "Bonus amount",
+    "followSteps": "Please follow the steps below:",
+    "subscribeWhatsapp": "Subscribe to the official WhatsApp channel to receive your reward code. (Limited quantity, first come first served!)",
+    "enterBonusCode": "Enter the bonus code on this page. Once redeemed, the bonus will be credited directly to your account and can be used immediately.",
+    "redeemWithinValidity": "Redeem the code within the validity period.",
+    "wagerRequirement": "Wager 1x the bonus amount before withdrawing your winnings.",
+    "redemptionFailure": "Redemption may fail if eligibility conditions are not met. System verification is final.",
+    "accountOwnerOnly": "Only the account owner can redeem the code.",
+    "unauthorizedMethods": "Using bots, cheating, or any unauthorized methods will result in a ban and forfeiture of the bonus."
   },
   btn: {
     login: "Login",
@@ -272,9 +281,18 @@ export default {
     details: "Details",
     transfer: "Transfer",
     signinWithGoogle: "Google",
-    goNow: "Go Now"
+    goNow: "Go Now",
+    playReal: "Play real",
+    freeTrial: "Free trial"
   },
   notify: {
+    loggingIn: "Logging in...",
+    loggingOut: "Logging out...",
+    phoneVerifySuccessful: "Phone verified successfully",
+    emailAlreadyUsed: "Email already used. Please try another email.",
+    virtualWalletAddedSuccessfully: "Virtual wallet added successfully",
+    newpasswordupdated: "New password updated successfully",
+    withdrewSuccessfully: "Withdrew successfully",
     noRecord: "No Record",
     haventFoundAnyRecord: "Haven't found any record",
     updatedSuccessfully: "Updated successfully",
@@ -295,6 +313,7 @@ export default {
     fishing: "Fishing",
     poker: "Poker",
     sport: "Sport",
+    esport: "E-sports",
     livesupport: "Live Support",
     feedback: "Feedback",
     telegram: "Telegram",
@@ -303,7 +322,8 @@ export default {
     downloadApp: "Download APP",
     appDownload: "APP download",
     experienceOneStopGaming: "Experience one-stop gaming!",
-    customerServiceVerifier: "Customer Service Verifier"
+    customerServiceVerifier: "Customer Service Verifier",
+    recoverPwd: "Recover your password"
   },
   home: {
     menu_all: "ALL",
@@ -354,7 +374,20 @@ export default {
     select_privilege: "Select Privilege",
     incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again.",
     useFtdPrivilege: "Use Slot First Deposit Privilege",
-    unlimited: "Unlimited"
+    unlimited: "Unlimited",
+    wagerRequirement: "Wager requirement (to withdrawal): 10 times of your deposit amount",
+    wagerRequirementEg: "Eg. Deposit 100 Rs, require 1,000 Rs wager",
+    rechargeTutorial: "Recharge tutorial",
+    picture: "Picture",
+    video: "Video",
+    mindepositnotcredit: "Minimum deposit: 10USDT, deposits less than 10USDT will not be credited.",
+    depositnotrecovered: "Do not deposit any non-currency assets to the above address, or the assets will not be recovered.",
+    operatingSafe: "Please confirm that the operating environment is safe to avoid information being tampered with or leaked.",
+    transferAmountMatch: "The transfer amount must match the order you created, otherwise the money cannot be credited successfully.",
+    donotcanceldeposit: "Note: do not cancel the deposit order after the money has been transferred.",
+    fillinwallet: "Fill in the correct wallet account number",
+    fillincnic: "Fill in the correct CNIC number",
+    submittedAmtConsistent: "The submitted amount must be consistent with the payment amount, otherwise it will not be automatically credited."
   },
   withdraw: {
     cashBalance: "Cash Balance",
@@ -364,8 +397,15 @@ export default {
     dailyLimit: "Daily Limit",
     remainWagers: "Remain Wagers",
     withdrawTutorial: "Withdraw Tutorial",
-    withdrawalMethodInMaintenance:
-      "This channel is currently under maintenance from {startTime} to {endTime}. Please use other channels for withdrawal operations. Thank you!"
+    withdrawalMethodInMaintenance: "This channel is currently under maintenance from {startTime} to {endTime}. Please use other channels for withdrawal operations. Thank you!",
+    noAcctAvailable: "No account available",
+    addAcct: "Add account",
+    picture: "Picture",
+    video: "Video",
+    bindCardCorrectFormat: "Bind your wallet/bank card using the correct format.",
+    dailyWalletLimit: "Daily wallet limit: PKR 50,000. Do not exceed this limit. You can add multiple wallets for withdrawals.",
+    donotexceeddaily: "Daily bank card limit: PKR 500,000. Do not exceed this limit. You can add multiple bank cards for withdrawals.",
+    blockchainwithdrawfast: "For blockchain wallet (USDT) withdrawals, there is no limit, and transfers are very fast.",
   },
   bank: {
     virtualWallet: "eWallet",
@@ -401,6 +441,7 @@ export default {
     confirm: "Confirm"
   },
   vip: {
+    unlimited: "Unlimited",
     receiveMonthlyRewards: "Receive monthly rewards",
     received: "Received",
     receive: "Receive",
@@ -424,6 +465,7 @@ export default {
   },
   earnMoney: {
     title: "Bonus Pot Arrived",
+    noDataAvailable: "No Data available",
     tabs: {
       reward: "Reward",
       teamManagement: "Team management",
@@ -605,8 +647,9 @@ export default {
     }
   },
   records: {
-    beforeBalance: "Before Balance:",
-    afterBalance: "After Balance:",
+    date: "Date",
+    beforeBalance: "Before Balance",
+    afterBalance: "After Balance",
     gamePlatform: "Game Platform",
     bet: "Bet",
     settle: "Settle",
@@ -675,7 +718,8 @@ export default {
   message: {
     activity: "Activity",
     payment: "Payment",
-    system: "System"
+    system: "System",
+    noMessage: "No messages"
   },
   customerServiceVerifier: {
     mainTitle: "B9.GAME",
@@ -722,7 +766,23 @@ export default {
     noSupport: "Your browser does not support the video tag.",
     linkCopied: "Link copied to clipboard",
     copyFailed: "Failed to copy link",
-    next: "Next"
+    next: "Next",
+    service: "Service",
+    "deposit1": "Click on wallet in the menu",
+    "deposit2": "Select deposit tab",
+    "deposit3": "Select bank",
+    "deposit4": "Update amount and click Submit",
+    "refer1": "How to earn money by sharing invitations",
+    "refer2": "Click on earn money in the menu",
+    "refer3": "Invite friends through the link",
+    "withdraw1": "Click on wallet in the bottom menu",
+    "withdraw2": "Select withdrawal tab",
+    "withdraw3": "Enter withdrawal amount",
+    "withdraw4": "Confirm withdrawal request",
+    bankTransfer: "Bank transfer",
+    digitalCurrency: "digital currency",
+    bankAccountWithdrawal: "Bank account withdrawal",
+    digitalCurrencyWithdrawal: "digital currency withdrawal"
   },
   hotPromo: {
     name: "Name",

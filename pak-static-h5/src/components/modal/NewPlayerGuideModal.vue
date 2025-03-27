@@ -10,6 +10,7 @@
       <div class="svc">
         <a class="cs-icon cs" :href="ui.CSAUrl" target="_blank">
           <img src="../../assets/images/newplayerguide/service.png" />
+          <span class="svc-txt">{{$t('playerGuide.service')}}</span>
         </a>
       </div>
       <div class="close-dialog" @click="closeDialog">
@@ -79,7 +80,7 @@
                   <div class="deposit-steps">
                     <div class="dep-step">
                       <img src="../../assets/images/newplayerguide/step-01.png" />
-                      Bank Transfer
+                      {{ $t('playerGuide.bankTransfer') }}
                     </div>
                     <div class="dep-step">
                       <img src="../../assets/images/newplayerguide/step-02.png" />
@@ -87,7 +88,7 @@
                     </div>
                     <div class="dep-step">
                       <img src="../../assets/images/newplayerguide/step-03.png" />
-                      USDT digital currency
+                      USDT {{ $t('playerGuide.digital currency') }}
                     </div>
                   </div>
                 </div>
@@ -139,7 +140,7 @@
                 <div class="withdraw-steps">
                   <div class="withdraw-step">
                     <img src="../../assets/images/newplayerguide/step-01.png" />
-                    Bank account withdrawal
+                    {{ $t('playerGuide.bankAccountWithdrawal')}}
                   </div>
                   <div class="withdraw-step">
                     <img src="../../assets/images/newplayerguide/step-02.png" />
@@ -147,7 +148,7 @@
                   </div>
                   <div class="withdraw-step">
                     <img src="../../assets/images/newplayerguide/step-03.png" />
-                    USDT digital currency withdrawal
+                    USDT {{ $t('playerGuide.digitalCurrencyWithdrawal')}}
                   </div>
                 </div>
                 <ul class="note">
@@ -634,6 +635,23 @@ defineExpose({ showVideo });
     z-index: 99;
     img {
       width: 100%;
+    }
+    a {
+      position: relative;
+
+      .svc-txt {    
+        position: absolute;
+        bottom: 6px;
+        color: #1DAB98;
+        -webkit-text-stroke: .5px white;
+        right: 0;
+        left: 0;
+        margin: auto;
+        text-align: center;
+        font-family: "Poppins";
+        font-weight: 900;
+        letter-spacing: -1px;
+      }
     }
   }
   .step {

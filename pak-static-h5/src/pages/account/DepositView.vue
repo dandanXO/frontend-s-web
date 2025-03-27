@@ -209,8 +209,8 @@
     </div>
 
     <div class="q-mt-lg" style="color: #576373" v-if="activeMethod.privilegeId || isFtdPrivilegePayType">
-      <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
-      <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
+      <div class="q-mt-sm">{{ $t('deposit.wagerRequirement') }}</div>
+      <div class="q-mt-sm">{{ $t('deposit.wagerRequirementEg') }}</div>
     </div>
 
     <div class="q-mt-lg step-desc-div q-mb-lg">
@@ -219,33 +219,32 @@
       </template>
       <template v-else-if="isUSDT">
         <p>
-          1. Recharge tutorial:
-          <span class="tutorial-link" @click="openDepositPage">Picture</span>
+          1. {{ $t('deposit.rechargeTutorial') }}:
+          <span class="tutorial-link" @click="openDepositPage">{{ $t('deposit.picture') }}</span>
           /
-          <span class="tutorial-link" @click="openDepositVideo">Video</span>
+          <span class="tutorial-link" @click="openDepositVideo">{{ $t('deposit.video') }}</span>
         </p>
-        <p>2. Minimum deposit: 10USDT, deposits less than 10USDT will not be credited.</p>
-        <p>3. Do not deposit any non-currency assets to the above address, or the assets will not be recovered.</p>
+        <p>2. {{ $t('deposit.mindepositnotcredit') }}</p>
+        <p>3. {{ $t('deposit.depositnotrecovered') }}</p>
         <p>
-          4. Please confirm that the operating environment is safe to avoid information being tampered with or leaked.
+          4. {{ $t('deposit.operatingSafe') }}
         </p>
         <p>
-          5. The transfer amount must match the order you created, otherwise the money cannot be credited successfully.
+          5. {{ $t('deposit.transferAmountMatch') }}
         </p>
-        <p>6. Note: do not cancel the deposit order after the money has been transferred.</p>
+        <p>6. {{ $t('deposit.donotcanceldeposit') }}</p>
       </template>
       <template v-else>
         <p>
-          1. Recharge tutorial:
-          <span class="tutorial-link" @click="openDepositPage">Picture</span>
+          1. {{ $t('deposit.rechargeTutorial') }}:
+          <span class="tutorial-link" @click="openDepositPage">{{ $t('deposit.picture') }}</span>
           /
-          <span class="tutorial-link" @click="openDepositVideo">Video</span>
+          <span class="tutorial-link" @click="openDepositVideo">{{ $t('deposit.video') }}</span>
         </p>
-        <p>2. Fill in the correct wallet account number</p>
-        <p>3. Fill in the correct CNIC number</p>
+        <p>2. {{ $t('deposit.fillinwallet') }}</p>
+        <p>3. {{ $t('deposit.fillincnic') }}</p>
         <p>
-          4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically
-          credited.
+          4. {{ $t('deposit.submittedAmtConsistent') }}
         </p>
 
         <!--        <p>-->

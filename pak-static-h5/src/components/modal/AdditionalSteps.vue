@@ -60,8 +60,10 @@
 
 <script setup>
 import { ref, watch, computed, onMounted, onUnmounted } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 const router = useRouter();
+const { t } = useI18n();
 const props = defineProps({ currentAdditionalStep: Number, currentType: String });
 const emit = defineEmits(["updateStep", "closeGuide"]);
 const localStep = ref(props.currentAdditionalStep); // Local step variable
@@ -93,25 +95,25 @@ const localTypeStep = () => {
 };
 // Deposit steps
 const additionalDepSteps = ref([
-  { step: 1, instruction: "Click on wallet in the menu" },
-  { step: 2, instruction: "Select deposit tab" },
-  { step: 3, instruction: "Select bank" },
-  { step: 4, instruction: "Update amount and click Submit" }
+  { step: 1, instruction: t('playerGuide.deposit1') },
+  { step: 2, instruction: t('playerGuide.deposit2') },
+  { step: 3, instruction: t('playerGuide.deposit3') },
+  { step: 4, instruction: t('playerGuide.deposit4') }
 ]);
 
 // Referral steps
 const additionalReferSteps = ref([
-  { step: 1, instruction: "How to earn money by sharing invitations" },
-  { step: 2, instruction: "Click on earn money in the menu" },
-  { step: 3, instruction: "Invite friends through the link" }
+  { step: 1, instruction: t('playerGuide.refer1') },
+  { step: 2, instruction: t('playerGuide.refer2') },
+  { step: 3, instruction: t('playerGuide.refer3') }
 ]);
 
 // Withdrawal steps
 const additionalWithdrawSteps = ref([
-  { step: 1, instruction: "Click on wallet in the bottom menu" },
-  { step: 2, instruction: "Select withdrawal tab" },
-  { step: 3, instruction: "Enter withdrawal amount" },
-  { step: 4, instruction: "Confirm withdrawal request" }
+  { step: 1, instruction: t('playerGuide.withdraw1') },
+  { step: 2, instruction: t('playerGuide.withdraw2') },
+  { step: 3, instruction: t('playerGuide.withdraw3') },
+  { step: 4, instruction: t('playerGuide.withdraw4') }
 ]);
 
 // Dynamically determine which steps to use

@@ -797,7 +797,7 @@ const logout = () => {
   loadingLogout.value = true;
 
   $q.loading.show({
-    message: "Logging out..."
+    message: t('notify.loggingOut')
   });
 
   store.memberLogout().then(() => {
@@ -916,7 +916,7 @@ const openVerificationCodeDialog = () => {
           $q.notify({
             color: "negative",
             position: "top",
-            message: "Email already used. Please try another email.",
+            message: t('notify.emailAlreadyUsed'),
             icon: "report_problem"
           });
         } else {
@@ -948,7 +948,6 @@ const openPhoneVerificationCodeDialog = () => {
 };
 
 const myMemberList = ref([]);
-
 let isNoInfoRef = ref(true);
 if (myMemberList.value.length) isNoInfoRef.value = true;
 
@@ -1493,7 +1492,7 @@ const submitUpdatePwd = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "New password updated successfully",
+            message: t('notfiy.newpasswordupdated'),
             icon: "check_circle_outline"
           });
           // router.go("/account");
@@ -1581,7 +1580,7 @@ const sendPhoneDetails = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "Phone verified successfully",
+            message: t('notify.phoneVerifySuccessful'),
             icon: "check_circle_outline"
           });
           verifyPhoneDialog.value = false;
@@ -1623,7 +1622,7 @@ const submitUpdateNewPwd = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "New password updated successfully",
+            message: t('notfiy.newpasswordupdated'),
             icon: "check_circle_outline"
           });
           // router.go("/account");
@@ -1869,6 +1868,8 @@ const openConfirmSignOutDialog = () => {
   background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
   color: #000000;
   box-shadow: 0px 2px 0px 0px #1CCA6A;
+  border-radius: 4px;
+  height: unset;
 }
 
 .bottom-btn {

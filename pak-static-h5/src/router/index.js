@@ -9,7 +9,7 @@ import { Platform, useQuasar } from "quasar";
 import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
 import { useGtag } from "vue-gtag-next";
-
+import { t } from "src/boot/lang";
 let isRedirected = false;
 
 /*
@@ -175,7 +175,7 @@ export default route(function (/* { store, ssrContext } */) {
         $q.notify({
           color: "negative",
           position: "top",
-          message: "Please login to continue",
+          message: t('notify.plsLoginToContinue'),
           icon: "report_problem"
         });
       } else {

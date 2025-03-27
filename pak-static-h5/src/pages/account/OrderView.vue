@@ -13,7 +13,7 @@
     </q-tabs>
 
     <LoadingComponent v-if="isLoading[orderOptionTab]"></LoadingComponent>
-    <NoInfoComponent v-else-if="isNoInfo[orderOptionTab]" noInfoTitle="No Record"></NoInfoComponent>
+    <NoInfoComponent v-else-if="isNoInfo[orderOptionTab]" :noInfoTitle="$t('notify.noRecord')"></NoInfoComponent>
     <q-tab-panels
       v-else
       class="order-option-tab-panel"

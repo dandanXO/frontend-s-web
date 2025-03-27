@@ -76,7 +76,7 @@
       <q-form ref="bankFormRef" class="bind-item">
         <q-label>
           <!-- {{ $t("form.virtualWalletType") }} -->
-          Bank
+          {{ $t("settings.bank") }}
           <em>*</em>
         </q-label>
         <div class="type-toggle">
@@ -443,7 +443,7 @@ const submitBankCard = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "Virtual wallet added successfully",
+            message: t('notify.bankAddedSuccessfully'),
             icon: "check_circle_outline"
           });
           bankCardInfo.cardNumber = "";

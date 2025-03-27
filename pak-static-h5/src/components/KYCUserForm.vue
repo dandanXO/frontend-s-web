@@ -271,21 +271,16 @@ defineExpose({
   box-shadow: 0px 2px 0px 0px #2A3637;
 }
 .btn-confirm {
-  // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-  // border: 1px solid #5d8956;
-  // font-weight: 700;
-  // width: 140px;
-  // height: 42px;
-  // color: #fff;
-  // border-radius: 12px;
   
   font-weight: 700;
   width: 100%;
-  padding: 10px 40px;
+  padding: 10px 10px;
   font-size: 16px;
-  background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
   color: #000000;
-  box-shadow: 0px 2px 0px 0px #1CCA6A;
+  box-shadow: 0px 2px 0px 0px #1cca6a;
+  border-radius: 4px;
+  height: unset;
 }
 
 

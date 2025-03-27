@@ -19,7 +19,7 @@
     <LoadingComponent v-if="isLoading"></LoadingComponent>
     <q-tab-panels v-model="activeTab" animated>
       <q-tab-panel v-for="(items, tab) in filteredMessages" :key="tab" :name="tab">
-        <NoInfoComponent v-if="items.length === 0" noInfoTitle="No Message" />
+        <NoInfoComponent v-if="items.length === 0" :noInfoTitle="$t('message.noMessage')" />
         <MessageCard v-else v-for="(e) in items" :key="e.id" :message="e" @details="onDetailsClick" />
       </q-tab-panel>
     </q-tab-panels>
@@ -71,7 +71,8 @@ const loadInbox = () => {
     .get("/session/pm/inbox", {
       params: {
         type: mailboxData.value.type,
-        orderBy: mailboxData.value.orderBy
+        orderBy: mailboxData.value.orderBy,
+        size: 100
       }
     })
     .then((response) => {

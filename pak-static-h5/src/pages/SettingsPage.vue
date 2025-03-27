@@ -218,7 +218,7 @@
 
         <div class="txt-content q-mt-md text-center">{{ $t("notify.signOutMessage") }}</div>
 
-        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+        <div style="width: 100%;" class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
           <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
           <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="logout" />
         </div>
@@ -360,7 +360,7 @@ const logout = () => {
   loadingLogout.value = true;
 
   $q.loading.show({
-    message: "Logging out..."
+    message: t('notify.loggingOut')
   });
 
   store.memberLogout().then(() => {
@@ -929,7 +929,7 @@ const handleCopyClick = async () => {
   // height: 42px;
   font-weight: 700;
   width: 100%;
-  padding: 10px 40px;
+  padding: 10px 10px;
   font-size: 16px;
   background: #455152;
   color: #ffffff;
@@ -947,11 +947,13 @@ const handleCopyClick = async () => {
 
   font-weight: 700;
   width: 100%;
-  padding: 10px 40px;
+  padding: 10px 10px;
   font-size: 16px;
   background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
   color: #000000;
   box-shadow: 0px 2px 0px 0px #1cca6a;
+  border-radius: 4px;
+  height: unset;
 }
 </style>
 

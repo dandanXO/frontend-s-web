@@ -326,11 +326,13 @@ onMounted(() => {
   
   font-weight: 700;
   width: 100%;
-  padding: 10px 40px;
+  padding: 10px 10px;
   font-size: 16px;
   background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
   color: #000000;
   box-shadow: 0px 2px 0px 0px #1CCA6A;
+  border-radius: 4px;
+  height: unset;
 }
 
 </style>

@@ -1896,6 +1896,7 @@ const activateSlide = (item) => {
   const category = categoriesList.value.find((cat) => cat.title === item.title);
   if (category) {
     category.active = true;
+    router.replace({ hash: `#${category.label}` });
   }
 };
 
@@ -1911,7 +1912,9 @@ const checkHash = () => {
   if (hash) {
     handleActivateSlide(hash);
   } else {
-    handleActivateSlide("Lobby");
+    if (route.path === '/home') {
+      router.replace({ hash: `Lobby` });
+    }
   }
 };
 
@@ -4238,13 +4241,13 @@ onMounted(() => {
 
 watch(
   () => route.hash,
-  (newHash) => {
-    if (newHash) {
+  (newHash, oldHash) => {
+    // Check if the hash is different (including when it's empty)
+    if (newHash !== oldHash) {
       checkHash();
     }
   }
 );
-
 watch(
   () => promoStore.isShownSpinLuckyWheel,
   async (val) => {

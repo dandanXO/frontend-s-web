@@ -59,9 +59,9 @@
             <template v-slot:no-option>
               <q-item>
                 <q-item-section class="text-grey isCentreDialog">
-                  No account available
+                  {{ $t('withdraw.noAcctAvailable')}}
                   <router-link class="text-positive" to="/account/bank">
-                    Add account
+                    {{ $t('withdraw.addAcct')}}
                     <!-- {{
                       isUSDT || isEWALLET
                         ? $t("lang.withdraw_add") + " " + chooseCard()
@@ -365,17 +365,16 @@
       <div class="q-mt-sm step-desc-div q-mb-lg">
         <p>
           {{ $t("withdraw.withdrawTutorial") }}
-          <span class="tutorial-link" @click="isWithdrawTutorial = true">Picture</span>
+          <span class="tutorial-link" @click="isWithdrawTutorial = true">{{ $t('withdraw.picture')}}</span>
           /
-          <span class="tutorial-link" @click="openWithdrawTutorialVideo">Video</span>
+          <span class="tutorial-link" @click="openWithdrawTutorialVideo">{{ $t('withdraw.video')}}</span>
         </p>
-        <p>1.Bind your wallet/bank card using the correct format.</p>
-        <p>2.Daily wallet limit: PKR 50,000. Do not exceed this limit. You can add multiple wallets for withdrawals.</p>
+        <p>1. {{ $t('withdraw.bindCardCorrectFormat') }}</p>
+        <p>2. {{ $t('withdraw.dailyWalletLimit') }}</p>
         <p>
-          3.Daily bank card limit: PKR 500,000. Do not exceed this limit. You can add multiple bank cards for
-          withdrawals.
+          3. {{ $t('withdraw.donotexceeddaily') }}
         </p>
-        <p>4.For blockchain wallet (USDT) withdrawals, there is no limit, and transfers are very fast.</p>
+        <p>4.{{ $t('withdraw.blockchainwithdrawfast')}}</p>
       </div>
     </template>
 
@@ -667,7 +666,7 @@ const submitWithdraw = async () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "Withdrew successfully",
+            message: t('notify.withdrewSuccessfully'),
             icon: "check_circle_outline"
           });
           getWithdrawalMethods();
