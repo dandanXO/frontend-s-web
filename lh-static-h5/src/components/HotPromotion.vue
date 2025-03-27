@@ -72,6 +72,7 @@
     <PglS32025 v-else-if="list.redirectUrl === 'lh1-2025-pgl-s3'" :promo-param="listParam" />
     <FissureUniverseS4 v-else-if="list.redirectUrl === 'lh1-fissure-universe-s4'" :promo-code="list.promoCode" />
     <FpSlotPromo v-else-if="list.redirectUrl === 'lh1-fp-slot'" :promo-code="list.promoCode" />
+    <elsOne2025 v-else-if="list.redirectUrl === 'lh1-esl-one-raleigh-2025'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -175,12 +176,14 @@ const PGLBucharest2025 = defineAsyncComponent(() => import("./hotpromo/pgl-bucha
 
 const Blast2025S3 = defineAsyncComponent(() => import("./hotpromo/Blast2025-s3/Blast2025S3.vue"));
 const FpSlotPromo = defineAsyncComponent(() => import("./hotpromo/fp-slot-promo/FpSlotPromo.vue"));
+const elsOne2025 = defineAsyncComponent(() => import("./hotpromo/elsOne2025/elsOne2025.vue"));
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    elsOne2025,
     Blast2025S3,
     Dota2Pgl,
     PglS32025,
