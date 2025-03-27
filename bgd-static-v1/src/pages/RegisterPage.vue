@@ -493,7 +493,7 @@ export default defineComponent({
                   icon: "check_circle_outline"
                 });
 
-                store.autoLogin(res.data);
+                store.autoLogin(res.data?.token || res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {
                   router.push("/home");
@@ -553,7 +553,7 @@ export default defineComponent({
                     icon: "check_circle_outline"
                   });
 
-                  store.autoLogin(res.data);
+                  store.autoLogin(res.data?.token || res.data);
                   sessionStorage.removeItem("REFERRAL_CODE");
                   if (store.hasToken()) {
                     router.push("/home");
