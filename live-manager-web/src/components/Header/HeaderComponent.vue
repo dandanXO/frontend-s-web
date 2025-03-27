@@ -28,14 +28,6 @@
                 margin-right: 10px;
               "
             ></div>
-            <div>Mobile: <span style="font-weight: bold">15</span></div>
-            <div>PC: <span style="font-weight: bold">11</span></div>
-            <div>
-              <span style="color: #409eff">提现终审</span>: <span style="font-weight: bold">0</span>
-            </div>
-            <div>
-              <span style="color: #409eff">风险终审</span>: <span style="font-weight: bold">0</span>
-            </div>
           </div>
           <LangToggle />
           <Avatar
