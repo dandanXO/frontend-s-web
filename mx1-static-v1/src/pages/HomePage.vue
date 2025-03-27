@@ -2784,7 +2784,7 @@ const getVersionNo = async () => {
     const appType = "ALL";
     const affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
     // alert(affiliateCode) ;
-    const res = await api.get(`/app/india/getAppData?affiliateCode=${affiliateCode}`);
+    const res = await api.get(`/app/india/getAppData?affiliateCode=${affiliateCode}&appVersion=${info.version}`);
     // console.log(res);
     if (res.code === 0) {
       // alert(JSON.stringify(res.data));
@@ -3066,7 +3066,7 @@ onMounted(() => {
   loadCustomerAddress();
   checkHbPromo();
   checkSpinLuckyWheelPromo();
-  
+
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
   if (Platform.is.android && Platform.is.capacitor) {
