@@ -726,8 +726,8 @@ onMounted(() => {
 
   .congrats-title {
     // color: #ffffff;
-    // display: flex;
-    // justify-content: center;
+    display: flex;
+    justify-content: center;
     // font-size: 16px;
     // font-weight: bold;
     // text-align: center;
@@ -742,7 +742,7 @@ onMounted(() => {
     left: 0;
     right: 0;
     margin: auto;
-
+    letter-spacing: -1px;
   }
 
   .congrats-highlight {
@@ -763,6 +763,8 @@ onMounted(() => {
     right: 0;
     margin: auto;
     color: #CF3AFF;
+    display: flex;
+    justify-content: center;
   }
 }
 </style>

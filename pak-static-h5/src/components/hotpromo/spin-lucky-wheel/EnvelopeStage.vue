@@ -29,7 +29,7 @@
         <span class="prize">{{$t("hotPromo.rs")}}{{ prizeList[selectedIndex]?.prize }}</span>
         <span class="desc">{{$t("hotPromo.withdraw_money_over_rs") }} {{ targetWithdrawAmount }}</span>
         <CommonButton class="withdraw-btn" @click="$emit('envelopeClick')">{{ $t("hotPromo.go_withdraw_now") }}</CommonButton>
-        <span class="remaining-time">{{ $t("hotPromo.time_left ") }}: {{ remainingTime }}</span>
+        <span class="remaining-time">{{ $t("hotPromo.time_left") }}: {{ remainingTime }}</span>
       </div>
       <img class="footer dragon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/footer.png" />
       <!-- <img class="footer tiger" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-tiger.png" />
