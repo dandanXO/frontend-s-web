@@ -117,6 +117,7 @@
               </div>
 
               <div
+                v-if="HotPromotion"
                 class="inner"
                 :class="{
                   isJackpotAviator: selectedPromo.redirectUrl === 'pak-jackpot-aviator',
@@ -217,7 +218,7 @@
 </template>
 
 <script lang="js">
-import { ref, computed, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated } from "vue";
+import { ref, computed, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated, defineAsyncComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached } from "src/boot/cache";
@@ -230,7 +231,6 @@ import { SessionStorage } from "quasar";
 // import { loadPromo } from "src/api/index/promo.js";
 // import { loadPromoBanner } from "src/api/index/promo";
 import ProfileSummary from "components/ProfileSummary.vue";
-import HotPromotion from "components/HotPromotion";
 import GameModal from "components/modal/GameModal.vue";
 import { t } from "src/boot/lang";
 // import HotPromotion from 'components/HotPromotion'
@@ -239,6 +239,11 @@ import MegaSharingWheelModal from "src/components/hotpromo/megaSharingWheel/Mega
 import { Directory, Filesystem } from "@capacitor/filesystem";
 // import MediaSettingsComponent from "components/MediaSettingsComponent.vue";
 
+let HotPromotion = null;
+if(process.env.MODE === 'spa') {
+  HotPromotion = defineAsyncComponent(() => import("components/HotPromotion.vue"));
+}
+
 export default defineComponent({
   name: "PromoView",
   components: {
@@ -246,7 +251,8 @@ export default defineComponent({
     HotPromotion,
     ProfileSummary,
     MoneyRainModal,
-    MegaSharingWheelModal
+    MegaSharingWheelModal,
+    HotPromotion
     // MediaSettingsComponent
   },
   setup() {

@@ -2,10 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
   {
-    path: '/redirect',
-    component: () => import('pages/RedirectPage.vue'), // Your new redirect page
-  },
-  {
     path: "/",
     redirect: "/home"
     // children: [{ path: "", component: () => import("pages/LandingPage.vue") }],
@@ -715,4 +711,12 @@ const routes = [
     component: () => import("pages/ErrorNotFound.vue")
   }
 ];
+
+if (process.env.MODE === "spa") {
+  routes.push({
+    path: "/redirect",
+    component: () => import("pages/RedirectPage.vue") // Your new redirect page
+  });
+}
+
 export default routes;
