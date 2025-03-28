@@ -71,6 +71,7 @@
     <EslProLeagueS21 v-else-if="list.redirectUrl === 'lh1-esl-pro-league-s21'" :promo-param="listParam" />
     <PglS32025 v-else-if="list.redirectUrl === 'lh1-2025-pgl-s3'" :promo-param="listParam" />
     <FissureUniverseS4 v-else-if="list.redirectUrl === 'lh1-fissure-universe-s4'" :promo-code="list.promoCode" />
+    <YaLLa2025 v-else-if="list.redirectUrl === 'lh1-yalla-compass-qatar-2025'" :promo-code="list.promoCode" />
     <FpSlotPromo v-else-if="list.redirectUrl === 'lh1-fp-slot'" :promo-code="list.promoCode" />
   </div>
 
@@ -108,6 +109,8 @@ import SkyesportsSouvenir2025 from "./hotpromo/skyesports-souvenir-2025/Skyespor
 import Dota2Pgl from "components/hotpromo/dota2-pgl/Dota2Pgl.vue";
 import PglS32025 from "components/hotpromo/pgl-s3-2025/PglS32025.vue";
 import FissureUniverseS4 from "./hotpromo/fissure-universe-s4/FissureUniverseS4.vue";
+import YaLLa2025 from "./hotpromo/YaLLa2025/YaLLa2025.vue";
+
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
 const DragonCardPromo = defineAsyncComponent(() => import("../components/hotpromo/dragoncard/dragonCardPromo.vue"));
 const FeedbackAwardPromo = defineAsyncComponent(() =>
@@ -181,6 +184,7 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    YaLLa2025,
     Blast2025S3,
     Dota2Pgl,
     PglS32025,
