@@ -80,7 +80,7 @@
       :promo-code="list.promoCode"
     />
     <FissureUniverseS4 v-if="list.redirectUrl === 'dy2-fissure-universe-s4'" :promo-code="list.promoCode" />
-
+    <YaLLa2025 v-if="list.redirectUrl === 'dy2-yalla-compass-qatar-2025'" :promo-code="list.promoCode" />
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -151,12 +151,14 @@ import PGLBucharest2025 from "./hotpromo/pgl-bucharest-2025/PGLBucharest2025.vue
 import Blast2025 from "../components/hotpromo/Blast2025/Blast2025.vue";
 import FootballFight from "@/components/hotpromo/newFootballfight/FootballFight.vue";
 import FissureUniverseS4 from "./hotpromo/fissure-universe-s4/FissureUniverseS4.vue";
+import YaLLa2025 from "./hotpromo/YaLLa2025/YaLLa2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    YaLLa2025,
     FootballFight,
     Blast2025,
     EslProLeagueS21,
