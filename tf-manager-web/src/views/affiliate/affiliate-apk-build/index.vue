@@ -329,7 +329,8 @@ const request = reactive({
   current: 1,
   loginName: null,
   affiliateCode: null,
-  siteCode: null
+  siteCode: null,
+  siteId: null
 })
 
 const form = reactive({
@@ -344,6 +345,7 @@ function resetQuery() {
   request.loginName = null
   request.affiliateCode = null
   request.siteCode = site.value ? site.value.siteCode : null
+  request.siteId = store.state.user.siteId
 }
 
 function checkQuery() {
@@ -528,9 +530,11 @@ onMounted(async () => {
   await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = list.sites.find(s => s.siteName === store.state.user.siteName);
+    request.siteId = site.value.id
     request.siteCode = site.value.siteCode;
   } else {
     site.value = list.sites.find(s => s.siteName === store.state.user.siteName);
+    request.siteId = site.value.id;
     request.siteCode = site.value.siteCode;
   }
 

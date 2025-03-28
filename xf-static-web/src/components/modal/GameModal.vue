@@ -42,7 +42,10 @@
         </div>
       </div> -->
       <div>
-        <span class="bottom-button" @click="showDrawer">存款</span>
+        <span class="top-button" @click="showDrawer">存款</span>
+      </div>
+      <div>
+        <span class="more-button" @click="copyGameLink">复制网址</span>
       </div>
     </div>
     <el-drawer
@@ -134,6 +137,7 @@ import { storeToRefs } from "pinia";
 import DepositComponent from "@/components/depositComponent.vue";
 import { ElMessageBox } from "element-plus";
 // import { Modal } from "ant-design-vue";
+import { writeClipboard } from "@/utils/clipboard";
 
 const store = userStore();
 const { token } = storeToRefs(store);
@@ -149,6 +153,12 @@ const showDrawer = () => {
   quickTransferTab.value = false;
   drawerVisible.value = true;
 };
+
+const copyGameLink = () => {
+  if (src.value) {
+    writeClipboard(src.value)
+  }
+}
 
 const onClose = () => {
   drawerVisible.value = false;
@@ -419,10 +429,10 @@ defineExpose({
   display: flex;
   height: 100%;
   flex-direction: column;
-  justify-content: space-between;
   top: 0;
   background: #201f2a;
-  .bottom-button {
+  .more-button,
+  .top-button {
     display: block;
     font-size: 13px;
     text-align: center;
@@ -439,6 +449,10 @@ defineExpose({
     width: 25px;
     padding-top: 10px;
     padding-bottom: 10px;
+  }
+
+  .more-button {
+    margin-top: 24px;
   }
 }
 :deep(.ant-drawer-content) {

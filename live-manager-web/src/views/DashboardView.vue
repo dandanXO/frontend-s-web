@@ -1,12 +1,5 @@
 <template>
   <div class="dashboard" :key="theme">
-    <div style="display: grid; grid-template-columns: 1fr; gap: 20px">
-      <Card>
-        <template #content>
-          <StatsComponent />
-        </template>
-      </Card>
-    </div>
 
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
       <Card>

@@ -229,7 +229,7 @@
             </li>
             <li>
               <span class="step-number">4</span>
-              <div class="content">USDT 存款方式不支持参与首存活动。</div>
+              <div class="content">成长攻略与钱包冲刺活动符合参与支付类型（ERC20，TRC20，K豆，数字人民币，EBPay，OKPay，808钱包）。</div>
             </li>
             <li>
               <span class="step-number">5</span>

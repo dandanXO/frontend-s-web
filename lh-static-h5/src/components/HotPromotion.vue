@@ -71,6 +71,9 @@
     <EslProLeagueS21 v-else-if="list.redirectUrl === 'lh1-esl-pro-league-s21'" :promo-param="listParam" />
     <PglS32025 v-else-if="list.redirectUrl === 'lh1-2025-pgl-s3'" :promo-param="listParam" />
     <FissureUniverseS4 v-else-if="list.redirectUrl === 'lh1-fissure-universe-s4'" :promo-code="list.promoCode" />
+    <IemMelbourne2025 v-else-if="list.redirectUrl === 'lh1-iem-melbourne-2025'" :promo-code="list.promoCode" />
+    <FpSlotPromo v-else-if="list.redirectUrl === 'lh1-fp-slot'" :promo-code="list.promoCode" />
+    <elsOne2025 v-else-if="list.redirectUrl === 'lh1-esl-one-raleigh-2025'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -107,6 +110,7 @@ import SkyesportsSouvenir2025 from "./hotpromo/skyesports-souvenir-2025/Skyespor
 import Dota2Pgl from "components/hotpromo/dota2-pgl/Dota2Pgl.vue";
 import PglS32025 from "components/hotpromo/pgl-s3-2025/PglS32025.vue";
 import FissureUniverseS4 from "./hotpromo/fissure-universe-s4/FissureUniverseS4.vue";
+import IemMelbourne2025 from "./hotpromo/iem-melbourne-2025/IemMelbourne2025.vue";
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
 const DragonCardPromo = defineAsyncComponent(() => import("../components/hotpromo/dragoncard/dragonCardPromo.vue"));
 const FeedbackAwardPromo = defineAsyncComponent(() =>
@@ -173,12 +177,15 @@ const EslProLeagueS21 = defineAsyncComponent(() => import("./hotpromo/esl-pro-le
 const PGLBucharest2025 = defineAsyncComponent(() => import("./hotpromo/pgl-bucharest-2025/PGLBucharest2025.vue"));
 
 const Blast2025S3 = defineAsyncComponent(() => import("./hotpromo/Blast2025-s3/Blast2025S3.vue"));
+const FpSlotPromo = defineAsyncComponent(() => import("./hotpromo/fp-slot-promo/FpSlotPromo.vue"));
+const elsOne2025 = defineAsyncComponent(() => import("./hotpromo/elsOne2025/elsOne2025.vue"));
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    elsOne2025,
     Blast2025S3,
     Dota2Pgl,
     PglS32025,
@@ -229,7 +236,9 @@ export default defineComponent({
     PGLOnFireBuenosAires2025,
     SkyesportsSouvenir2025,
     EslProLeagueS21,
-    FissureUniverseS4
+    FissureUniverseS4,
+    IemMelbourne2025,
+    FpSlotPromo
   },
   props: {
     list: {

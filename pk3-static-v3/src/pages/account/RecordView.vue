@@ -51,7 +51,7 @@
           <div class="date">{{ e.betTime }}</div>
           <q-btn
             :class="`${e.payout > 0 ? 'bet-btn' : 'loss-btn'}`"
-            :label="`${e.payout > 0 ? 'Profit' : 'Loss'}`"
+            :label="`${e.payout > 0 ? t('records.profit') : t('records.loss')}`"
           ></q-btn>
         </q-card-section>
 
@@ -62,8 +62,8 @@
 
         <q-card-section class="bot-wrapper">
           <div class="origin">
-            <div class="bet">Bet</div>
-            <div class="game-platform">Game Platform</div>
+            <div class="bet">{{ $t('records.bet') }}</div>
+            <div class="game-platform">{{ $t('records.gamePlatform') }}</div>
           </div>
           <div class="origin-val">
             <div class="bet-val">{{ convertToCommaAmount(e.bet, false) }}</div>
@@ -91,6 +91,7 @@ import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
 import { convertToCommaAmount, displayPlatform } from "src/boot/utils";
 import { useQuasar } from "quasar";
+import { t } from "@/boot/lang";
 
 const router = useRouter();
 const store = userStore();

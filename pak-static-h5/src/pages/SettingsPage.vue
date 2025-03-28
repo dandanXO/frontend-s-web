@@ -138,12 +138,12 @@
           <div class="acct-nav-label">{{ $t("settings.exchange") }}</div>
         </a>
 
-        <a v-if="canTransfer" target="_blank" @click="handleTransferClick">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/transfer-svg.svg" />
-          </div>
-          <div class="acct-nav-label">{{ $t("settings.transfer") }}</div>
-        </a>
+<!--        <a v-if="canTransfer" target="_blank" @click="handleTransferClick">-->
+<!--          <div class="acct-nav-item">-->
+<!--            <img src="../assets/images/account/transfer-svg.svg" />-->
+<!--          </div>-->
+<!--          <div class="acct-nav-label">{{ $t("settings.transfer") }}</div>-->
+<!--        </a>-->
       </div>
       <div class="bottom-setting-section invite-friends-section">
         <div class="left-icon">

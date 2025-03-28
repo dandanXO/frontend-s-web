@@ -682,6 +682,39 @@ const formRules = reactive({
   frequency: [required(t('message.validateFrequencyRequired'))],
   siteId: [required(t('message.validateSiteRequired'))],
   type: [required(t('message.validateAdsTypeRequired'))],
+  desktopImgUrl: [
+    {
+      validator: (rule, value, callback) => {
+        if (form.type === 'IMG' && !value) {
+          callback(new Error(t('message.validateDesktopImageRequired')))
+        } else {
+          callback()
+        }
+      }
+    }
+  ],
+  mobileImgUrl: [
+    {
+      validator: (rule, value, callback) => {
+        if (form.type === 'IMG' && !value) {
+          callback(new Error(t('message.validateMobileImageRequired')))
+        } else {
+          callback()
+        }
+      }
+    }
+  ],
+  content: [
+    {
+      validator: (rule, value, callback) => {
+        if (form.type === 'TEXT' && !value) {
+          callback(new Error(t('message.validateContentRequired')))
+        } else {
+          callback()
+        }
+      }
+    }
+  ]
 })
 
 const siteList = reactive({

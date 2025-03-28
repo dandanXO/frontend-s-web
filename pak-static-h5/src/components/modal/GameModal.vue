@@ -286,14 +286,14 @@ const goToDeposit = () => {
 };
 
 const platformCodeImg = ref();
-const isPlatformAllowNonLogin = (demo) => !store.hasToken() || (demo && isDepositZero.value);
+const isPlatformAllowNonLogin = (demo) => demo && isDepositZero.value;
 const isChooseGameDialog = ref(false);
 const pendingGameParams = ref(null);
 
 const isDepositZero = ref(false);
 const open = (gameName, platformCode, gameCode, gameType, demo, isChoice = false) => {
   const store = userStore();
-  isDepositZero.value = (store.hasDeposit === false);
+  isDepositZero.value = store.hasDeposit === false;
   const _isFromNewPlayerGuide = sessionStorage.getItem("isFromNewPlayerGuide");
   if (_isFromNewPlayerGuide) {
     startGame(gameName, platformCode, gameCode, gameType, demo);
@@ -305,13 +305,13 @@ const open = (gameName, platformCode, gameCode, gameType, demo, isChoice = false
     isChooseGameDialog.value = true;
     return;
   }
-  console.log(demo)
+  console.log(demo);
   // Proceed with the game launch
   startGame(gameName, platformCode, gameCode, gameType, demo);
 };
 const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
   const store = userStore();
-  console.log(store.getCurrentDeposit())
+  console.log(store.getCurrentDeposit());
   // debugger;
   // AppFullscreen.request()
   isInnerHtmlSrc.value = false;
@@ -968,7 +968,7 @@ defineExpose({
   }
 
   .btn-confirm {
-    
+
   font-weight: 700;
   width: 100%;
   padding: 10px 10px;
@@ -1033,27 +1033,27 @@ defineExpose({
   left: 0;
   right: 0;
   z-index: 99999;
-  // height: 120px; 
+  // height: 120px;
   background: #131313;
   // box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
   border-radius: 12px 12px 0 0;
-    max-width: 500px;
-    margin: auto;
+  max-width: 500px;
+  margin: auto;
   .choices {
     display: flex;
     width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-     div {
+    div {
       width: 100%;
-    padding: 15px;
-    text-align: center;
-     &:last-child {
-      border-top: 1px solid #ffffff;
-     }
-     }
+      padding: 15px;
+      text-align: center;
+      &:last-child {
+        border-top: 1px solid #ffffff;
+      }
+    }
   }
 }
 </style>

@@ -38,7 +38,10 @@
                 <div>
                 <div v-if="props.platformType !== 'slot'" class="platform-menu-title" v-html="item.cnname" />
                 <div v-if="props.platformType !== 'slot'" class="platform-menu-caption" v-html="item.caption" />
-                <div v-if="props.platformType === 'slot'" class="platform-menu-title" v-html="item.code + '电子'" />
+
+                <div v-if="props.platformType === 'slot' && item?.alias" class="platform-menu-title" v-html="item?.alias" />
+                <div v-else-if="props.platformType === 'slot'" class="platform-menu-title" v-html="item.code + '电子'" />
+                
                 <div v-if="props.platformType === 'slot'" class="platform-menu-caption" v-html="'崭新玩法，感受精彩'" />
                 </div>
               </div>
