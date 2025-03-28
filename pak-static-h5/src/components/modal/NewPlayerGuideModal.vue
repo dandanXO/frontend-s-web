@@ -88,7 +88,7 @@
                     </div>
                     <div class="dep-step">
                       <img src="../../assets/images/newplayerguide/step-03.png" />
-                      USDT {{ $t('playerGuide.digital currency') }}
+                      USDT {{ $t('playerGuide.digitalCurrency') }}
                     </div>
                   </div>
                 </div>
