@@ -1492,7 +1492,7 @@ const submitUpdatePwd = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: t('notfiy.newpasswordupdated'),
+            message: t('notify.newpasswordupdated'),
             icon: "check_circle_outline"
           });
           // router.go("/account");
@@ -1622,7 +1622,7 @@ const submitUpdateNewPwd = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: t('notfiy.newpasswordupdated'),
+            message: t('notify.newpasswordupdated'),
             icon: "check_circle_outline"
           });
           // router.go("/account");
