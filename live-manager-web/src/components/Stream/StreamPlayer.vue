@@ -13,6 +13,33 @@
         <h3>{{ streamTitle }}</h3>
       </div>
     </template>
+    <div class="stream-info">
+      <div class="info-item">
+        <span class="label">直播串流ID:</span>
+        <span class="value">{{ stream.streamId }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">主播:</span>
+        <span class="value">{{ stream.streamerName }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">當前質量:</span>
+        <span class="value">{{ currentQuality }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">當前播放鏈結:</span>
+        <div class="url-container">
+          <span class="url-text">{{ getCurrentPlayUrl() }}</span>
+          <Button 
+            icon="pi pi-copy" 
+            severity="secondary" 
+            text 
+            @click="copyUrl(getCurrentPlayUrl())"
+            v-tooltip.top="'複製鏈結'"
+          />
+        </div>
+      </div>
+    </div>
     <div class="video-container">
       <video
         ref="videoPlayer"
@@ -26,6 +53,7 @@
       >
       </video>
     </div>
+
     <template #footer>
       <div class="quality-selector">
         <Button
@@ -48,6 +76,7 @@ import videojs from 'video.js'
 import 'video.js/dist/video-js.min.css'
 import '@videojs/http-streaming'
 import flvjs from 'flv.js'
+import { useToast } from 'primevue/usetoast'
 
 const props = defineProps({
   visible: {
@@ -78,61 +107,112 @@ const availableQualities = ref([
   { label: '1080P', value: 'p1080' },
   { label: '720P', value: 'p720' },
   { label: '540P', value: 'p540' },
-  { label: 'original', value: 'originalUrl' }
+  { label: 'original', value: 'original' }
 ])
+
+// 初始化 toast 服務
+const toast = useToast()
 
 // 註冊 FLV 插件
 const registerFlvPlugin = () => {
-  const Plugin = videojs.getPlugin('plugin');
-  class FlvJsPlugin extends Plugin {
-    constructor(player, options) {
-      super(player, options);
-      this.flvPlayer = null;
-      this.player = player;
-      
-      player.on('dispose', () => {
+  if (!videojs.getPlugin('flvjs')) {
+    const Plugin = videojs.getPlugin('plugin');
+    
+    class FlvJsPlugin extends Plugin {
+      constructor(player, options) {
+        super(player, options);
+        this.flvPlayer = null;
+        this.player = player;
+        
+        player.on('dispose', () => {
+          if (this.flvPlayer) {
+            this.flvPlayer.destroy();
+            this.flvPlayer = null;
+          }
+        });
+      }
+
+      src(source) {
+        // 先銷毀現有的 flv 播放器
         if (this.flvPlayer) {
           this.flvPlayer.destroy();
+          this.flvPlayer = null;
         }
-      });
-    }
 
-    src(source) {
-      if (this.flvPlayer) {
-        this.flvPlayer.destroy();
+        if (source.type === 'video/x-flv' || source.src.indexOf('.flv') > -1) {
+          if (flvjs.isSupported()) {
+            const flvOptions = {
+              type: 'flv',
+              url: source.src,
+              isLive: true,
+              hasAudio: true,
+              hasVideo: true,
+              cors: true,
+              enableStashBuffer: false,
+              stashInitialSize: 128,
+              enableWorker: true,
+              lazyLoad: false
+            };
+
+            console.log('創建 FLV 播放器，配置:', flvOptions);
+
+            this.flvPlayer = flvjs.createPlayer(flvOptions);
+            const mediaElement = this.player.tech().el();
+            
+            this.flvPlayer.attachMediaElement(mediaElement);
+            this.flvPlayer.load();
+
+            // 添加 FLV 播放器事件監聽
+            this.flvPlayer.on(flvjs.Events.ERROR, (errorType, errorDetail) => {
+              console.error('FLV 播放器錯誤:', errorType, errorDetail);
+            });
+
+            this.flvPlayer.on(flvjs.Events.LOADING_COMPLETE, () => {
+              console.log('FLV 載入完成');
+            });
+
+            return true;
+          }
+        }
+        return false;
       }
 
-      if (source.type === 'video/x-flv') {
-        this.flvPlayer = flvjs.createPlayer({
-          type: 'flv',
-          url: source.src,
-          isLive: true,
-          hasAudio: true,
-          hasVideo: true,
-        });
-        this.flvPlayer.attachMediaElement(this.player.tech().el());
-        this.flvPlayer.load();
+      dispose() {
+        if (this.flvPlayer) {
+          this.flvPlayer.destroy();
+          this.flvPlayer = null;
+        }
       }
     }
+    
+    videojs.registerPlugin('flvjs', FlvJsPlugin);
   }
-  videojs.registerPlugin('flvjs', FlvJsPlugin);
 }
 
 // 初始化播放器
-const initializePlayer = () => {
+const initializePlayer = async () => {
   if (videoPlayer.value && !player.value) {
-    registerFlvPlugin();
-    const playUrl = props.stream?.cdnPlayUrlsHls[currentQuality.value].playUrl;
+    try {
+      registerFlvPlugin();
+      
+      const playUrl = props.stream?.supplierCdnPullUrl[currentQuality.value]?.flvUrl;
+      console.log('初始播放地址:', playUrl);
 
-    console.log('播放地址:', playUrl)
-    const options = {
-      autoplay: false,
-      controls: true,
-      preload: 'auto',
-      fluid: true,
-      aspectRatio: '16:9',
-      techOrder: ['html5'],
-      plugins: {
+      const options = {
+        autoplay: false,
+        controls: true,
+        preload: 'auto',
+        fluid: true,
+        aspectRatio: '16:9',
+        techOrder: ['html5', 'flvjs'],
+        html5: {
+          nativeVideoTracks: false,
+          nativeAudioTracks: false,
+          nativeTextTracks: false,
+          hls: {
+            overrideNative: true
+          }
+        },
         flvjs: {
           mediaDataSource: {
             isLive: true,
@@ -140,84 +220,116 @@ const initializePlayer = () => {
             withCredentials: false
           }
         }
-      },
-      sources: [{
-        src: playUrl || '',
-        type: 'video/x-flv'
-      }]
+      };
+
+      player.value = videojs(videoPlayer.value, options);
+      
+      // 等待播放器準備完成
+      await new Promise(resolve => {
+        player.value.ready(() => {
+          resolve();
+        });
+      });
+      
+      // 添加事件監聽
+      player.value.on('waiting', () => {
+        isLoading.value = true;
+      });
+
+      player.value.on('playing', () => {
+        isLoading.value = false;
+      });
+
+      player.value.on('error', (error) => {
+        console.error('播放器錯誤:', error);
+        isLoading.value = false;
+      });
+      
+      isInitialized.value = true;
+    } catch (error) {
+      console.error('初始化播放器失敗:', error);
+      isInitialized.value = false;
     }
-
-    player.value = videojs(videoPlayer.value, options)
-    player.value.flvjs(); // 初始化 FLV 插件
-    isInitialized.value = true
-
-    // 添加事件監聽
-    player.value.on('waiting', () => {
-      isLoading.value = true
-    })
-
-    player.value.on('playing', () => {
-      isLoading.value = false
-    })
-
-    player.value.on('error', (error) => {
-      console.error('播放器錯誤:', error)
-      isLoading.value = false
-    })
   }
 }
 
-// 開始播放指定質量的流
-const startStreaming = async () => {
-  if (!player.value || !props.stream) return
+// 開始播放
+const startPlay = async () => {
+  if (!player.value || !props.stream) {
+    console.warn('播放器未初始化或無串流數據');
+    return;
+  }
 
   try {
-    isLoading.value = true
-    await player.value.pause()
+    isLoading.value = true;
+    const currentSource = props.stream?.supplierCdnPullUrl[currentQuality.value]?.flvUrl;
+    console.log('當前播放地址:', currentSource);
 
-    const currentSource = props.stream?.cdnPlayUrlsFlv[currentQuality.value].playUrl;
-
-    console.log('當前播放地址:', currentSource)
     if (!currentSource) {
       throw new Error('無效的播放地址');
     }
 
-    player.value.src({
-      src: currentSource,
-      type: currentQuality.value === 'flv' ? 'video/x-flv' : 'application/x-mpegURL'
-    })
+    // 創建新的 FLV 播放器實例
+    if (flvjs.isSupported()) {
+      const flvPlayer = flvjs.createPlayer({
+        type: 'flv',
+        url: currentSource,
+        isLive: true,
+        hasAudio: true,
+        hasVideo: true,
+        cors: true,
+        enableStashBuffer: false,
+        stashInitialSize: 128,
+        enableWorker: true,
+        lazyLoad: false
+      });
 
-    await player.value.load()
-    await player.value.play()
+      // 獲取視頻元素
+      const videoElement = player.value.tech().el();
+      
+      // 清理舊的播放器
+      if (player.value.flvPlayer) {
+        player.value.flvPlayer.destroy();
+      }
+      
+      // 保存新的 FLV 播放器實例
+      player.value.flvPlayer = flvPlayer;
+
+      // 附加到視頻元素
+      flvPlayer.attachMediaElement(videoElement);
+      flvPlayer.load();
+
+      // 監聽錯誤
+      flvPlayer.on(flvjs.Events.ERROR, (errorType, errorDetail) => {
+        console.error('FLV Player Error:', errorType, errorDetail);
+      });
+
+      
+    } else {
+      throw new Error('當前瀏覽器不支持 FLV 播放');
+    }
+
   } catch (error) {
-    console.error('播放錯誤:', error)
-    console.log('當前播放地址:', currentSource)
+    console.error('播放錯誤:', error);
   } finally {
-    isLoading.value = false
+    isLoading.value = false;
   }
 }
 
 // 切換視頻質量
 const changeQuality = (quality) => {
-  if (isLoading.value) return
-  currentQuality.value = quality
-
-  const src = quality === 'flv' 
-    ? props.stream?.cdnPlayUrlsFlv[currentQuality.value].playUrl 
-    : props.stream?.cdnPlayUrlsHls[currentQuality.value].playUrl;
+  if (isLoading.value || !player.value) return;
+  
+  currentQuality.value = quality;
+  const src = props.stream?.supplierCdnPullUrl[quality]?.flvUrl;
   
   if (!src) {
     console.error('無效的播放地址');
     return;
   }
 
-  if (player.value) {
-    player.value.src({
-      src: src,
-      type: quality === 'flv' ? 'video/x-flv' : 'application/x-mpegURL'
-    });
-  }
-  startStreaming()
+  console.log('切換畫質:', quality, '地址:', src);
+  startPlay();
 }
 
 // 監聽對話框的可見性變化
@@ -227,44 +339,61 @@ watch(() => props.visible, async (newValue) => {
     await nextTick()
     
     if (!isInitialized.value) {
-      initializePlayer()
+      await initializePlayer()
     }
     
-    if (isInitialized.value) {
-      await startStreaming()
+    if (player.value && isInitialized.value) {
+      console.log('初始載入開始播放')
+      await startPlay()
     }
   } else {
     if (player.value) {
-      player.value.pause()
-      isLoading.value = false
+      try {
+        await player.value.pause();
+        player.value.reset();
+      } catch (error) {
+        console.warn('關閉播放器時發生錯誤:', error);
+      }
+      isLoading.value = false;
     }
   }
-})
-
-// 監聽串流數據變化
-watch(() => props.stream, async () => {
-  if (props.visible && props.stream?.playUrls) {
-    await startStreaming()
-  }
-})
-
-// 關閉對話框時的處理
-const onHide = () => {
-  if (player.value) {
-    player.value.pause()
-    player.value.reset()
-    isLoading.value = false
-  }
-  emit('update:visible', false)
-}
+}, { immediate: true })
 
 // 組件卸載時清理播放器
 onBeforeUnmount(() => {
   if (player.value) {
-    player.value.dispose()
-    isInitialized.value = false
+    if (player.value.flvPlayer) {
+      player.value.flvPlayer.destroy();
+    }
+    player.value.dispose();
+    player.value = null;
+    isInitialized.value = false;
   }
 })
+
+const getCurrentPlayUrl = () => {
+  if (!props.stream) return '';
+  return props.stream.supplierCdnPullUrl?.[currentQuality.value]?.flvUrl || '';
+}
+
+const copyUrl = async (url) => {
+  try {
+    await navigator.clipboard.writeText(url);
+    toast.add({ 
+      severity: 'success', 
+      summary: '成功', 
+      detail: '鏈結已複製到剪貼簿', 
+      life: 3000 
+    });
+  } catch (err) {
+    toast.add({ 
+      severity: 'error', 
+      summary: '錯誤', 
+      detail: '複製失敗', 
+      life: 3000 
+    });
+  }
+}
 </script>
 
 <style scoped>
@@ -304,4 +433,46 @@ onBeforeUnmount(() => {
   width: 100%;
   height: 100%;
 }
-</style> 
+
+.stream-info {
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  margin: 1rem;
+}
+
+.info-item {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.info-item .label {
+  font-weight: bold;
+  min-width: 120px;
+  color: #666;
+}
+
+.info-item .value {
+  color: #333;
+  word-break: break-all;
+}
+
+.url-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.url-text {
+  flex: 1;
+  word-break: break-all;
+  font-family: monospace;
+  background-color: #eee;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+</style>
