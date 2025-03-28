@@ -107,6 +107,14 @@ module.exports = configure(function (ctx) {
             }
           ]);
         }
+
+        if (ctx.mode.capacitor) {
+          chain.module
+            .rule("tt")
+            .test([/src\/assets\/images\/redirect\/.*\..+$/])
+            .use("loader", "null-loader");
+        }
+      },
       extendWebpack(chain) {
         if (ctx.mode.capacitor) {
           chain.plugins.forEach((plugin) => {
