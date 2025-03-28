@@ -42,10 +42,15 @@
 
   <q-dialog width="100%" v-model="isShowHistoryPopup">
     <div class="history-container">
-    <q-btn style="
-    position: absolute;
-    right: 10px;
-    top: 10px; z-index: 99;" unelevated dense rounded icon="close" class="bg-greytext text-white popout-close" v-close-popup />
+      <q-btn
+        style="position: absolute; right: 10px; top: 10px; z-index: 99"
+        unelevated
+        dense
+        rounded
+        icon="close"
+        class="bg-greytext text-white popout-close"
+        v-close-popup
+      />
       <div class="congrats-highlight">
         <div class="congrats-title">{{ $t("hotPromo.jackpotAviator.jackpot") }}</div>
         <div class="congrats-prize">{{ store.currency.value }} {{ historyData.jackpotAmount }}</div>
@@ -74,7 +79,8 @@ const store = userStore();
 const mode = ref("MAIN");
 const timeframe = ref("DAILY");
 const isShowHistoryPopup = ref(false);
-const isShowClaimPrizePopup = ref(true);
+const isShowClaimPrizePopup = ref(false);
+
 const claimPrizeAmt = ref(0);
 const rankingList = ref([]);
 const historyData = ref({});
@@ -173,7 +179,7 @@ onMounted(() => {
 
   .rules-ribbon {
     // background-color: #30af88;
-    background: linear-gradient(180deg, #FB4F77 0%, #DA093A 100%);
+    background: linear-gradient(180deg, #fb4f77 0%, #da093a 100%);
     position: absolute;
     width: 74px;
     height: 23px;
@@ -189,7 +195,7 @@ onMounted(() => {
 
   .history-ribbon {
     // background-color: #30af88;
-    background: linear-gradient(180deg, #FB4F77 0%, #DA093A 100%);
+    background: linear-gradient(180deg, #fb4f77 0%, #da093a 100%);
     position: absolute;
     width: 74px;
     height: 26px;
@@ -231,7 +237,7 @@ onMounted(() => {
 }
 
 .receive-btn {
-  background: linear-gradient(180deg, #FB4F77 0%, #DA093A 100%);
+  background: linear-gradient(180deg, #fb4f77 0%, #da093a 100%);
   padding: 20px;
   border-radius: 4px;
   width: 202px;
@@ -250,7 +256,7 @@ onMounted(() => {
 
 .history-container {
   background-color: #323738;
-  border: 1px solid #FF3838;
+  border: 1px solid #ff3838;
   border-radius: 15px;
   width: 90%;
   position: relative;
@@ -282,7 +288,7 @@ onMounted(() => {
       line-height: 31.54px;
       text-align: center;
       color: #fff96f;
-      text-shadow: .97px .97px black;
+      text-shadow: 0.97px 0.97px black;
     }
   }
 }
