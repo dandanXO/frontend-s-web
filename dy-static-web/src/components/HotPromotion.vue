@@ -68,6 +68,7 @@
     <HongBaoYu2025 v-if="list.redirectUrl === 'dy2-cny2025-red-envelope'" :promo-code="list.promoCode" />
     <Monthly20HongBaoYu v-if="list.redirectUrl === 'dy2-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
     <Blast2025 v-if="list.redirectUrl === 'dy2-blast-open-lisbon-2025'" :promo-code="list.promoCode" />
+    <elsOne2025 v-if="list.redirectUrl === 'dy2-esl-one-raleigh-2025'" :promo-code="list.promoCode" />
     <SkyesportsSouvenir2025 v-if="list.redirectUrl === 'dy2-skyesports-souvenir-2025'" :promo-code="list.promoCode" />
     <PGLOnFireBuenosAires2025
       v-if="list.redirectUrl === 'dy2-pgl-on-fire-buenos-aires-2025'"
@@ -81,6 +82,9 @@
     />
     <FissureUniverseS4 v-if="list.redirectUrl === 'dy2-fissure-universe-s4'" :promo-code="list.promoCode" />
     <YaLLa2025 v-if="list.redirectUrl === 'dy2-yalla-compass-qatar-2025'" :promo-code="list.promoCode" />
+    <IemMelbourne2025 v-if="list.redirectUrl === 'dy2-iem-melbourne-2025'" :promo-code="list.promoCode" />
+    <PglWallachiaS4 v-if="list.redirectUrl === 'dy2-pgl-wallachia-s4'" :promo-code="list.promoCode" />
+
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -149,9 +153,13 @@ import LanternFestival2025 from "../components/hotpromo/lantern-festival-2025/La
 import EslProLeagueS21 from "./hotpromo/esl-pro-league-s21/EslProLeagueS21.vue";
 import PGLBucharest2025 from "./hotpromo/pgl-bucharest-2025/PGLBucharest2025.vue";
 import Blast2025 from "../components/hotpromo/Blast2025/Blast2025.vue";
+import elsOne2025 from "../components/hotpromo/elsOne2025/elsOne2025.vue";
+
 import FootballFight from "@/components/hotpromo/newFootballfight/FootballFight.vue";
 import FissureUniverseS4 from "./hotpromo/fissure-universe-s4/FissureUniverseS4.vue";
 import YaLLa2025 from "./hotpromo/YaLLa2025/YaLLa2025.vue";
+import IemMelbourne2025 from "./hotpromo/iem-melbourne-2025/IemMelbourne2025.vue";
+import PglWallachiaS4 from "./hotpromo/pgl-wallachia-s4/PglWallachiaS4.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -161,6 +169,7 @@ export default defineComponent({
     YaLLa2025,
     FootballFight,
     Blast2025,
+    elsOne2025,
     EslProLeagueS21,
     LanternFestival2025,
     AgYuanxiaohongbao,
@@ -195,7 +204,9 @@ export default defineComponent({
     Belgrade2025Promo,
     HongBaoYu2025,
     Monthly20HongBaoYu,
-    FissureUniverseS4
+    FissureUniverseS4,
+    IemMelbourne2025,
+    PglWallachiaS4
   },
   props: {
     list: {

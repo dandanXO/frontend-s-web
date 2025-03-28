@@ -1,4 +1,5 @@
 import api from '../api/api'
+import axios from 'axios'
 
 export const DashboardService = {
   logIn(username, password) {
@@ -272,5 +273,45 @@ export const DashboardService = {
         service: 'PAKWIN',
       },
     ])
+  },
+
+  getStreamList() {
+    const token = sessionStorage.getItem('token')
+    return api
+      .get('/session/getSchedules', {
+        headers: {
+          'token': `${token}`
+        }
+      })
+      .then((response) => {
+        if (response.code === 0) {
+          return response.data || [];
+        }
+        return [];
+      })
+      .catch((error) => {
+        console.error('獲取流媒體列表失敗:', error)
+        return [];
+      })
+  },
+
+  // 獲取我的直播列表
+  getMyStreams() {
+    const token = sessionStorage.getItem('token')
+    return api.get('/session/getMySchedule', {
+      headers: {
+        'token': `${token}`
+      }
+    })
+    .then((response) => {
+      if (response.code === 0) {
+        return response.data || [];
+      }
+      return [];
+    })
+    .catch((error) => {
+      console.error('獲取流媒體列表失敗:', error)
+      return [];
+    })
   },
 }
