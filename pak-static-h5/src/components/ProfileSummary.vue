@@ -101,7 +101,7 @@
         <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown" unelevated>
           <template v-slot:label>
             <div class="profile-pic">
-              <q-avatar size="50px">
+              <q-avatar size="40px">
                 <img :src="profileImagePath" />
               </q-avatar>
               <div class="profile-pic-frame" v-if="!homeProfile"></div>
@@ -932,17 +932,11 @@ onUnmounted(() => {
 
   .profile-menu {
     display: flex;
-    background: #ffffff0d;
     padding: 5px;
-    border: 1px solid #ffffffc6;
-    backdrop-filter: blur(5.349878311157227px);
-    border-radius: 10px;
-    margin-top: 5px;
-    border-bottom-color: #ffffff0d;
 
     img {
       display: block;
-      width: 20px;
+      width: 40px;
     }
   }
 
@@ -986,7 +980,7 @@ onUnmounted(() => {
 
   img.bg {
     display: block;
-    width: 55px;
+    width: 45px;
     position: absolute;
     top: -2px;
     left: -25px;

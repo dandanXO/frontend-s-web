@@ -858,3 +858,7 @@ body.body--dark .q-footer {
     right: -1px;
   }
 }
+
+.q-field--outlined.q-field--highlighted .q-field__control:after {
+  border-width: 1px;
+}

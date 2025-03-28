@@ -66,16 +66,20 @@ watch(
     vertical-align: middle;
 
     .right {
-      padding: 12px 0;
+      // padding: 12px 0;
       color: white;
       // background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-right.png) no-repeat center center;
       background-size: 0;
     }
 
     .left {
-      padding: 12px 0;
+      // padding: 12px 0;
       color: white;
       // background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
+    }
+
+    :deep(.q-tabs__content) {
+      height: 44px;
     }
 
     :deep(.q-tab) {

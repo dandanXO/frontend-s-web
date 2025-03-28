@@ -54,7 +54,7 @@
     </div>
     <div class="side-menu-transparent-grp">
       <div class="side-menu-item side-menu-item__transparent" @click="openCSInNewTab(ui.CSAUrl)">
-        <div class="item-icon"><img src="../assets/images/auth/menu-livesupport.png" /></div>
+        <div class="item-icon"><img src="../assets/images/auth/menu-livesupport.svg" /></div>
         {{ $t("sideNav.livesupport") }}
       </div>
 
@@ -72,32 +72,32 @@
 
       <a class="side-menu-item side-menu-item__transparent" :href="ui.youtubeUrl" target="_blank">
         <div class="item-icon">
-          <img src="../assets/images/index/youtube-web-icon.png" />
+          <img src="../assets/images/index/youtube-web-icon.svg" />
         </div>
         Youtube
       </a>
 
       <a class="side-menu-item side-menu-item__transparent" :href="ui.instagramUrl" target="_blank">
         <div class="item-icon">
-          <img src="../assets/images/index/insta-web-icon.png" />
+          <img src="../assets/images/index/insta-web-icon.svg" />
         </div>
         Instagram
       </a>
 
       <a class="side-menu-item side-menu-item__transparent" :href="ui.whatsappUrl" target="_blank">
-        <div class="item-icon"><img src="../assets/images/auth/menu-whatsapp.png" /></div>
+        <div class="item-icon"><img src="../assets/images/auth/menu-whatsapp.svg" /></div>
         Whatsapp
       </a>
       <a class="side-menu-item side-menu-item__transparent" :href="ui.tiktokUrl" target="_blank" v-if="ui.tiktokUrl">
-        <div class="item-icon"><img src="../assets/images/auth/menu-tiktok.png" /></div>
+        <div class="item-icon"><img src="../assets/images/auth/menu-tiktok.svg" /></div>
         TikTok
       </a>
       <router-link class="side-menu-item side-menu-item__transparent" to="/faq-page">
-        <div class="item-icon"><img src="../assets/images/auth/menu-faq.png" /></div>
+        <div class="item-icon"><img src="../assets/images/auth/menu-faq.svg" /></div>
         FAQ
       </router-link>
       <router-link class="side-menu-item side-menu-item__transparent" to="/cs-verifier">
-        <div class="item-icon"><img src="../assets/images/auth/menu-cs-verifier.png" /></div>
+        <div class="item-icon"><img src="../assets/images/auth/menu-cs-verifier.svg" /></div>
         {{ $t('sideNav.customerServiceVerifier') }}
       </router-link>
     </div>

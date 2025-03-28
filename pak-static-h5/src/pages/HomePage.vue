@@ -4727,7 +4727,7 @@ const checkGoogleLoginSetPwd = () => {
       margin-right: 10px;
       cursor: pointer;
       // color: #5F6061;
-      color: #bacef1;
+      color: #ffffff80;
       font-family: "Poppins";
       font-size: 12px;
       font-weight: 400;
