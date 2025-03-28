@@ -32,69 +32,51 @@
         <div class="title-img">活动详情</div>
         <div class="little-title">
           <div class="ribbon">活动时间</div>
-          <div class="right">2025 年 04 月 21 日至 2025 年 04 月 27 日</div>
+          <div class="right">2025 年 04 月 15 日至 2025 年 04 月 20 日</div>
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
-          <div class="right">
-            在 IEM 墨尔本 2025 赛事期间当天累计有效投注≥1,500 元在次日即可获得对应档位的奖金，最高可获得 1088+288 元
-          </div>
+          <div class="right">在 YaLLa Compass 春季赛 2025 赛事期间当天累计有效投注≥1000 元并存款≥200 元在次日即可获得对应档位的奖金，最高可获 888 元</div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
           <thead>
             <tr>
-              <th>总有效投注</th>
-              <th>总投注嘉奖</th>
-              <th>东赢加赠金</th>
+              <th>当日存款</th>
+              <th>累计有效投注</th>
+              <th>投注彩金</th>
               <th>流水倍数</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>≥1,500</td>
-              <td>18 元</td>
+              <td rowspan="7">≥200</td>
+              <td>≥1,000</td>
               <td>8 元</td>
-              <td rowspan="9">5 倍流水</td>
-            </tr>
-            <tr>
-              <td>≥3,000</td>
-              <td>38 元</td>
-              <td>10 元</td>
+              <td rowspan="7">6 倍流水</td>
             </tr>
             <tr>
               <td>≥5,000</td>
-              <td>58 元</td>
-              <td>18 元</td>
-            </tr>
-            <tr>
-              <td>≥10,000</td>
-              <td>88 元</td>
               <td>28 元</td>
             </tr>
             <tr>
-              <td>≥30,000</td>
-              <td>108 元</td>
+              <td>≥10,000</td>
               <td>58 元</td>
             </tr>
             <tr>
+              <td>≥30,000</td>
+              <td>128 元</td>
+            </tr>
+            <tr>
               <td>≥50,000</td>
-              <td>188 元</td>
-              <td>68 元</td>
+              <td>288 元</td>
             </tr>
             <tr>
               <td>≥100,000</td>
-              <td>288 元</td>
-              <td>88 元</td>
+              <td>558 元</td>
             </tr>
             <tr>
-              <td>≥300,000</td>
-              <td>588 元</td>
-              <td>108 元</td>
-            </tr>
-            <tr>
-              <td>≥500,000</td>
-              <td>1,088 元</td>
-              <td>288 元</td>
+              <td>≥200,000</td>
+              <td>888 元</td>
             </tr>
           </tbody>
         </table>
@@ -109,8 +91,7 @@
               />
               <span>示例</span>
             </div>
-            会员在IM电竞IEM 墨尔本 2025赛事 投注5,000元后又在东赢电竞投注IEM 墨尔本
-            2025投注5,000元，累计有效投注为10000元，东赢有效投注为5000元，在次日可获投注嘉奖88元+东赢加赠金18元，共106元。 
+            4 月 16 日会员 A 在 YaLLa Compass 春季赛 2025 赛事期间存款 200 元并且累计有效投注为 20000 元，4 月 17 日即可在优惠页面点击【领取】获得投注奖金 58 元。
           </div>
         </div>
       </div>
@@ -122,19 +103,17 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              活动期间，投注IEM 墨尔本 2025有效投注≥1,500元或以上可获的对应总投注嘉奖，若在东赢电竞场馆进行投注IEM
-              墨尔本 2025可获加赠奖励金额。 
+              活动期间，会员当日投注 YaLLa Compass 春季赛 2025 有效投注≥1,000 元且存款≥200 元可获得对应投注奖金，满足条件的会员可进入优惠界面点击【领取】按钮获得投注奖金，奖金 6 倍流水即可提款； 
               <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            IEM 墨尔本 2025 投注嘉奖在结算后 24 小时内有效，可登入优惠界面点击【领取】按钮获得，彩金 5 倍流水即可提款；
+            YaLLa Compass 春季赛 2025 投注奖金在结算后 24 小时内有效，每天只能领取一次，超出活动时间未领取不予补偿； 
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            任何低于欧洲盘 1.7 或亚洲盘 0.7
-            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+            任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内； 
           </div>
           <div class="item">
             <div class="item-num">4</div>
@@ -142,12 +121,11 @@
           </div>
           <div class="item">
             <div class="item-num">5</div>
-            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
-            地址视为同一账户，若有违规者，将不享受此红利； 
+            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利； 
           </div>
           <div class="item">
             <div class="item-num">6</div>
-            为避免文字理解差异，东赢电竞保留此活动最终解释权；
+            为避免文字理解差异，雷火电竞保留此活动最终解释权；
           </div>
         </div>
       </div>
@@ -157,7 +135,7 @@
 
 <script setup>
 import { onMounted, ref, toRefs } from "vue";
-import { getIemMelbourne2025Bonus, claimIemMelbourne2025Bonus } from "../../../api/index/promo";
+import { getCompetitionBetDepositInit, claimCompetitionBetDepositBonus } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 
@@ -173,7 +151,7 @@ const loadingClaim = ref(false);
 
 const handleClaimBonus = () => {
   loadingClaim.value = true;
-  claimIemMelbourne2025Bonus(promoCode.value)
+  claimCompetitionBetDepositBonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
         notify({
@@ -196,7 +174,7 @@ const handleClaimBonus = () => {
 
 const fetchData = async () => {
   loadingClaim.value = true;
-  getIemMelbourne2025Bonus(promoCode.value)
+  getCompetitionBetDepositInit(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
         totalValidBet.value = res.data.totalValidBet;
@@ -509,28 +487,5 @@ onMounted(() => {
     color: #00a1ff;
     font-weight: 600;
   }
-}
-.claim-title-icon {
-  background: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/section-title-img.png") no-repeat
-    center center !important;
-  background-size: 100% 100% !important;
-}
-
-.claim-coin-icon {
-  background: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon1.png") no-repeat center
-    center !important;
-  background-size: 100% 100% !important;
-}
-
-.claim-gift-icon {
-  background: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon2.png") no-repeat center
-    center !important;
-  background-size: 100% 100% !important;
-}
-
-.claim-stacked-coins-icon {
-  background: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon3.png") no-repeat center
-    center !important;
-  background-size: 100% 100% !important;
 }
 </style>

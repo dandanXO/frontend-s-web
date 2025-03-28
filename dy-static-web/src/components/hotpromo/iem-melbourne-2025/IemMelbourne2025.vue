@@ -38,12 +38,12 @@
         <div class="title-img">活动详情</div>
         <div class="little-title">
           <div class="ribbon">活动时间</div>
-          <div class="right">2025年04月21日至2025年04月27日</div>
+          <div class="right">2025 年 04 月 21 日至 2025 年 04 月 27 日</div>
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
           <div class="right">
-            在IEM 墨尔本 2025赛事期间当天累计有效投注≥1,500元在次日即可获得对应档位的奖金，最高可获得1088+288元
+            在 IEM 墨尔本 2025 赛事期间当天累计有效投注≥1,500 元在次日即可获得对应档位的奖金，最高可获得 1088+288 元
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
@@ -58,49 +58,49 @@
           <tbody>
             <tr>
               <td>≥1,500</td>
-              <td>18元</td>
-              <td>8元</td>
-              <td rowspan="9">5倍流水</td>
+              <td>18 元</td>
+              <td>8 元</td>
+              <td rowspan="9">5 倍流水</td>
             </tr>
             <tr>
               <td>≥3,000</td>
-              <td>38元</td>
-              <td>10元</td>
+              <td>38 元</td>
+              <td>10 元</td>
             </tr>
             <tr>
               <td>≥5,000</td>
-              <td>58元</td>
-              <td>18元</td>
+              <td>58 元</td>
+              <td>18 元</td>
             </tr>
             <tr>
               <td>≥10,000</td>
-              <td>88元</td>
-              <td>28元</td>
+              <td>88 元</td>
+              <td>28 元</td>
             </tr>
             <tr>
               <td>≥30,000</td>
-              <td>108元</td>
-              <td>58元</td>
+              <td>108 元</td>
+              <td>58 元</td>
             </tr>
             <tr>
               <td>≥50,000</td>
-              <td>188元</td>
-              <td>68元</td>
+              <td>188 元</td>
+              <td>68 元</td>
             </tr>
             <tr>
               <td>≥100,000</td>
-              <td>288元</td>
-              <td>88元</td>
+              <td>288 元</td>
+              <td>88 元</td>
             </tr>
             <tr>
               <td>≥300,000</td>
-              <td>588元</td>
-              <td>108元</td>
+              <td>588 元</td>
+              <td>108 元</td>
             </tr>
             <tr>
               <td>≥500,000</td>
-              <td>1,088元</td>
-              <td>288元</td>
+              <td>1,088 元</td>
+              <td>288 元</td>
             </tr>
           </tbody>
         </table>
@@ -130,7 +130,7 @@
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            IEM 墨尔本 2025投注嘉奖在结算后24小时内有效，可登入优惠界面点击【领取】按钮获得，彩金5倍流水即可提款；
+            IEM 墨尔本 2025 投注嘉奖在结算后 24 小时内有效，可登入优惠界面点击【领取】按钮获得，彩金 5 倍流水即可提款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
