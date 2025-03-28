@@ -10,7 +10,7 @@
           <div class="reward-info">
             <div class="reward-info-icon claim-coin-icon"></div>
             <div class="reward-info-content">
-              活动期间总有效投注：
+              昨日总有效投注：
               <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
@@ -32,69 +32,57 @@
         <div class="title-img">活动详情</div>
         <div class="little-title">
           <div class="ribbon">活动时间</div>
-          <div class="right">2025 年 04 月 21 日至 2025 年 04 月 27 日</div>
+          <div class="right">2025年4月19日至2025年4月29日</div>
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
-          <div class="right">
-            在 IEM 墨尔本 2025 赛事期间当天累计有效投注≥1,500 元在次日即可获得对应档位的奖金，最高可获得 1088+288 元
-          </div>
+          <div class="right">活动期间在PGL 瓦拉几亚 S4当日总有效投注≥2,000 元即可获得最高1288元的投注金</div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
           <thead>
             <tr>
-              <th>总有效投注</th>
-              <th>总投注嘉奖</th>
-              <th>东赢加赠金</th>
+              <th>当日总有效投注</th>
+              <th>投注金</th>
               <th>流水倍数</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>≥1,500</td>
-              <td>18 元</td>
-              <td>8 元</td>
-              <td rowspan="9">5 倍流水</td>
-            </tr>
-            <tr>
-              <td>≥3,000</td>
-              <td>38 元</td>
-              <td>10 元</td>
+              <td>≥2,000</td>
+              <td>18元</td>
+              <td rowspan="9">6倍流水</td>
             </tr>
             <tr>
               <td>≥5,000</td>
-              <td>58 元</td>
-              <td>18 元</td>
+              <td>28元</td>
             </tr>
             <tr>
               <td>≥10,000</td>
-              <td>88 元</td>
-              <td>28 元</td>
+              <td>58元</td>
             </tr>
             <tr>
               <td>≥30,000</td>
-              <td>108 元</td>
-              <td>58 元</td>
+              <td>88元</td>
             </tr>
             <tr>
               <td>≥50,000</td>
-              <td>188 元</td>
-              <td>68 元</td>
+              <td>188元</td>
             </tr>
             <tr>
               <td>≥100,000</td>
-              <td>288 元</td>
-              <td>88 元</td>
+              <td>288元</td>
             </tr>
             <tr>
               <td>≥300,000</td>
-              <td>588 元</td>
-              <td>108 元</td>
+              <td>588元</td>
             </tr>
             <tr>
-              <td>≥500,000</td>
-              <td>1,088 元</td>
-              <td>288 元</td>
+              <td>≥5,000,000</td>
+              <td>888元</td>
+            </tr>
+            <tr>
+              <td>≥10,000,000</td>
+              <td>1,288元</td>
             </tr>
           </tbody>
         </table>
@@ -109,8 +97,7 @@
               />
               <span>示例</span>
             </div>
-            会员在 IM 电竞 IEM 墨尔本 2025 赛事 投注 5,000 元后又在东赢电竞投注 IEM 墨尔本
-            2025 投注 5,000 元，累计有效投注为 10000 元，东赢有效投注为 5000 元，在次日可获投注嘉奖 88 元 + 东赢加赠金 18 元，共 106 元。 
+            会员 在PGL 瓦拉几亚 S4赛事期间当日总有效投注 50,000 元，在次日 24 小时内可获得彩金：188元
           </div>
         </div>
       </div>
@@ -122,32 +109,33 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              活动期间，投注 IEM 墨尔本 2025 有效投注≥1,500 元或以上可获的对应总投注嘉奖，若在东赢电竞场馆进行投注 IEM
-              墨尔本 2025 可获加赠奖励金额。 
-              <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
+              活动期间，活动仅计算电竞场馆中PGL 瓦拉几亚 S4赛事，会员在PGL 瓦拉几亚 S4赛事期间当日累计有效投注≥2,000
+              元即可获得对应彩金，有效投注过期清零；
+              <div class="hint">注：奖金不叠加派发，奖金按最高档位派发一次。</div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            IEM 墨尔本 2025 投注嘉奖在结算后 24 小时内有效，可登入优惠界面点击【领取】按钮获得，彩金 5 倍流水即可提款；
+            活动期间，活动仅计算PGL 瓦拉几亚 S4已结算的赛事当日总有效投注，次日 24
+            小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 6倍流水即可出款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
             任何低于欧洲盘 1.7 或亚洲盘 0.7
-            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还,将不计算为总有效投注额内；
           </div>
           <div class="item">
             <div class="item-num">4</div>
-            根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户； 
+            根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
           </div>
           <div class="item">
             <div class="item-num">5</div>
             此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
-            地址视为同一账户，若有违规者，将不享受此红利； 
+            地址视为同一账户，若有违规者，将不享受此红利；
           </div>
           <div class="item">
             <div class="item-num">6</div>
-            为避免文字理解差异，东赢电竞保留此活动最终解释权；
+            为避免文字理解差异，雷火电竞保留此活动最终解释权；
           </div>
         </div>
       </div>
@@ -157,7 +145,7 @@
 
 <script setup>
 import { onMounted, ref, toRefs } from "vue";
-import { getIemMelbourne2025Bonus, claimIemMelbourne2025Bonus } from "../../../api/index/promo";
+import { getPglWallachiaS4Bonus, claimPglWallachiaS4Bonus } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 
@@ -173,7 +161,7 @@ const loadingClaim = ref(false);
 
 const handleClaimBonus = () => {
   loadingClaim.value = true;
-  claimIemMelbourne2025Bonus(promoCode.value)
+  claimPglWallachiaS4Bonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
         notify({
@@ -196,7 +184,7 @@ const handleClaimBonus = () => {
 
 const fetchData = async () => {
   loadingClaim.value = true;
-  getIemMelbourne2025Bonus(promoCode.value)
+  getPglWallachiaS4Bonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
         totalValidBet.value = res.data.totalValidBet;
@@ -509,28 +497,5 @@ onMounted(() => {
     color: #00a1ff;
     font-weight: 600;
   }
-}
-.claim-title-icon {
-  background: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/section-title-img.png") no-repeat
-    center center !important;
-  background-size: 100% 100% !important;
-}
-
-.claim-coin-icon {
-  background: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon1.png") no-repeat center
-    center !important;
-  background-size: 100% 100% !important;
-}
-
-.claim-gift-icon {
-  background: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon2.png") no-repeat center
-    center !important;
-  background-size: 100% 100% !important;
-}
-
-.claim-stacked-coins-icon {
-  background: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon3.png") no-repeat center
-    center !important;
-  background-size: 100% 100% !important;
 }
 </style>

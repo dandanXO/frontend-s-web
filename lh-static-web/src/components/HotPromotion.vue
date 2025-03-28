@@ -77,6 +77,7 @@
     />
     <FissureUniverseS4 v-if="list.redirectUrl === 'lh1-fissure-universe-s4'" :promo-code="list.promoCode" />
     <IemMelbourne2025 v-if="list.redirectUrl === 'lh1-iem-melbourne-2025'" :promo-code="list.promoCode" />
+    <PglWallachiaS4 v-if="list.redirectUrl === 'lh1-pgl-wallachia-s4'" :promo-code="list.promoCode" />
     <FpSlotPromo v-if="list.redirectUrl === 'lh1-fp-slot'" :promo-code="list.promoCode" />
     <elsOne2025 v-if="list.redirectUrl === 'lh1-esl-one-raleigh-2025'" :promo-code="list.promoCode" />
 
@@ -141,6 +142,7 @@ import EslProLeagueS21 from "./hotpromo/esl-pro-league-s21/EslProLeagueS21.vue";
 import PGLBucharest2025 from "./hotpromo/pgl-bucharest-2025/PGLBucharest2025.vue";
 import FissureUniverseS4 from "./hotpromo/fissure-universe-s4/FissureUniverseS4.vue";
 import IemMelbourne2025 from "./hotpromo/iem-melbourne-2025/IemMelbourne2025.vue";
+import PglWallachiaS4 from "./hotpromo/pgl-wallachia-s4/PglWallachiaS4.vue";
 import FpSlotPromo from "./hotpromo/fp-slot-promo/FpSlotPromo.vue";
 import elsOne2025 from "../components/hotpromo/elsOne2025/elsOne2025.vue";
 
@@ -187,6 +189,7 @@ export default defineComponent({
     Blast2025,
     FissureUniverseS4,
     IemMelbourne2025,
+    PglWallachiaS4,
     FpSlotPromo
   },
   props: {

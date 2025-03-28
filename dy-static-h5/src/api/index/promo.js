@@ -425,3 +425,10 @@ export function getIemMelbourne2025Bonus(promoCode) {
 export function claimIemMelbourne2025Bonus(promoCode) {
   return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
 }
+
+export function getPglWallachiaS4Bonus(promoCode) {
+  return eventapi.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimPglWallachiaS4Bonus(promoCode) {
+  return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
