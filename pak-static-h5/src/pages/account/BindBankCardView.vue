@@ -476,7 +476,7 @@ onActivated(() => {
   display: flex;
   border: 1px solid #21EF89;
   box-shadow: unset;
-  border-radius: 8px;
+  border-radius: 6px;
     background: #292D2E;
 }
 

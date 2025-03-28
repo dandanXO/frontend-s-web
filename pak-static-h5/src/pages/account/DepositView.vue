@@ -1250,7 +1250,6 @@ onMounted(() => {
 
       .currency {
         color: #b2bdbf;
-        margin-top: 5px;
         font-weight: 700;
       }
     }

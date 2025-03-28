@@ -802,7 +802,7 @@ body.body--dark .q-footer {
   background: transparent;
   height: 34px;
   font-weight: 600;
-  border-radius: 6px;
+  border-radius: 4px;
   color: #21ef89;
   border: 1px solid #21ef89;
   padding: 5px;
@@ -862,4 +862,8 @@ body.body--dark .q-footer {
 
 .q-field--outlined.q-field--highlighted .q-field__control:after {
   border-width: 1px;
+}
+
+.q-field__control, .q-field__marginal {
+  height: 40px !important;
 }

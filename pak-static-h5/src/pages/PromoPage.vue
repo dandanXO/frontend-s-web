@@ -17,7 +17,7 @@
 
   <div class="promo-container">
     <div class="promo">
-      <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
+      <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify" active-color="green">
         <q-tab
           v-for="(tab, i) in tabItems"
           :key="i"

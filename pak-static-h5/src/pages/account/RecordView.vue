@@ -4,30 +4,28 @@
       <q-form layout="inline" :model="searchForm">
         <div class="date-field">
           <q-input filled v-model="searchForm.startDate" readonly>
-            <template v-slot:prepend>
-              <q-icon name="calendar_today" class="cursor-pointer text-green-7">
-                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+            <template v-slot:append>
+              <img src="../../assets/images/earn-money/calendar-icon.svg" />
+              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                   <q-date v-model="searchForm.startDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
                     <div class="row items-center justify-end">
                       <q-btn v-close-popup label="Close" color="white" flat />
                     </div>
                   </q-date>
                 </q-popup-proxy>
-              </q-icon>
             </template>
           </q-input>
           <span>to</span>
           <q-input filled v-model="searchForm.endDate" readonly>
-            <template v-slot:prepend>
-              <q-icon name="calendar_today" class="cursor-pointer text-green-7">
-                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+            <template v-slot:append>
+              <img src="../../assets/images/earn-money/calendar-icon.svg" />
+              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                   <q-date v-model="searchForm.endDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
                     <div class="row items-center justify-end">
                       <q-btn v-close-popup label="Close" color="white" flat />
                     </div>
                   </q-date>
                 </q-popup-proxy>
-              </q-icon>
             </template>
           </q-input>
         </div>
@@ -317,17 +315,11 @@ onActivated(() => {
       padding: 0px 12px;
     }
 
-    .q-field__control,
-    .q-field__marginal {
-      //border: 1px solid #b478ff4d;
-      height: unset;
-    }
 
     .q-field {
-      border: 1px solid #78ff814d;
-      background: #28292b;
+      background: #2f3136;
       padding: 4px 3px;
-      border-radius: 8px;
+      border-radius: 0px;
     }
 
     .q-field__native {

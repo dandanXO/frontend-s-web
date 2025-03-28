@@ -714,9 +714,10 @@ onUnmounted(() => {
         padding: 11vw 7vw 0;
 
         .winning-record-outer-wrapper {
+          padding: 8px 10px;
           .winning-record-wrapper {
             .winning-record-item > span {
-              font-size: 10px;
+              font-size: 9px;
             }
           }
         }
