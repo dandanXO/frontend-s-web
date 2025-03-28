@@ -51,7 +51,7 @@
             <tr>
               <th>总有效投注</th>
               <th>总投注嘉奖</th>
-              <th>雷火加赠金</th>
+              <th>东赢加赠金</th>
               <th>流水倍数</th>
             </tr>
           </thead>
@@ -110,8 +110,8 @@
               <img src="@/assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
               <span>示例</span>
             </div>
-            会员在IM电竞IEM 墨尔本 2025赛事 投注5,000元后又在雷火电竞投注IEM 墨尔本
-            2025投注5,000元，累计有效投注为10000元，雷火有效投注为5000元，在次日可获投注嘉奖88元+雷火加赠金18元，共106元。 
+            会员在IM电竞IEM 墨尔本 2025赛事 投注5,000元后又在东赢电竞投注IEM 墨尔本
+            2025投注5,000元，累计有效投注为10000元，东赢有效投注为5000元，在次日可获投注嘉奖88元+东赢加赠金18元，共106元。 
           </div>
         </div>
       </div>
@@ -123,7 +123,7 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              活动期间，投注IEM 墨尔本 2025有效投注≥1,500元或以上可获的对应总投注嘉奖，若在雷火电竞场馆进行投注IEM
+              活动期间，投注IEM 墨尔本 2025有效投注≥1,500元或以上可获的对应总投注嘉奖，若在东赢电竞场馆进行投注IEM
               墨尔本 2025可获加赠奖励金额。 
               <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
             </div>
@@ -148,7 +148,7 @@
           </div>
           <div class="item">
             <div class="item-num">6</div>
-            为避免文字理解差异，雷火电竞保留此活动最终解释权；
+            为避免文字理解差异，东赢电竞保留此活动最终解释权；
           </div>
         </div>
       </div>
