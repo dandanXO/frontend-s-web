@@ -107,6 +107,23 @@ module.exports = configure(function (ctx) {
             }
           ]);
         }
+      extendWebpack(chain) {
+        if (ctx.mode.capacitor) {
+          chain.plugins.forEach((plugin) => {
+            if (plugin.constructor.name === "CopyPlugin") {
+              const publicPath = path.resolve(__dirname, "public");
+              plugin.patterns.forEach((pattern) => {
+                if (pattern.from === publicPath) {
+                  pattern.globOptions.ignore = [
+                    ...pattern.globOptions.ignore,
+                    "**/public/static/**",
+                    "**/public/*.ico"
+                  ];
+                }
+              });
+            }
+          });
+        }
       },
 
       // Add a hook to copy assets after the build
