@@ -114,6 +114,7 @@ body.platform-ios .q-dialog__inner--minimized > div:not(.popout-dialog) {
 .page-title {
   width: 100%;
   min-height: 40px;
+  height: 49px;
   // background: linear-gradient(#83838336, #83838336), url("../assets/images/index/auth-bg.png");
   // background-image: url("../assets/images/auth/main-auth-bg.png");
   background: #323738;
@@ -440,7 +441,7 @@ body.body--dark .q-footer {
   display: none;
 }
 .text-brand {
-  color: #bacef1;
+  color: #B2BDBF;
 }
 .bg-brand {
   background: #063c50;
@@ -495,7 +496,7 @@ body.body--dark .q-footer {
 }
 .bg-darkbtn {
   background: #212534;
-  color: #bacef1;
+  color: #B2BDBF;
 }
 .menu-title {
   color: #db7e42;

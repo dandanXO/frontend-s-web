@@ -1401,7 +1401,7 @@ onMounted(() => {
 }
 
 .step-desc-div {
-  color: #bacef1;
+  color: #B2BDBF;
 
   p {
     margin: 5px 0px;
@@ -1427,7 +1427,7 @@ onMounted(() => {
 </style>
 <style scoped>
 .description-text {
-  color: #bacef1;
+  color: #B2BDBF;
 }
 :deep(.description-text p) {
   margin: 5px 0px !important;

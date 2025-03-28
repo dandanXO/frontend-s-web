@@ -56,10 +56,10 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   gap: 10px;
-  color: #bacef1;
+  color: #B2BDBF;
 
   .btn {
-    color: #bacef1;
+    color: #B2BDBF;
     text-decoration: none;
     position: relative;
     background: #212534;
@@ -81,7 +81,7 @@ export default defineComponent({
       align-items: center;
 
       svg {
-        fill: #bacef1;
+        fill: #B2BDBF;
       }
     }
   }

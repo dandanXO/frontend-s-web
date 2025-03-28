@@ -488,7 +488,7 @@ export default defineComponent({
       width: 150px;
       text-align: center;
       font-size: 24px;
-      color: #bacef1;
+      color: #B2BDBF;
     }
     .agent-contact-ways {
     }
@@ -497,7 +497,7 @@ export default defineComponent({
     }
     .agent-ways-way {
       font-size: 16px;
-      color: #bacef1;
+      color: #B2BDBF;
     }
     .agent-ways-val {
       font-size: 16px;

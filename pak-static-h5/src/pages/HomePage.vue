@@ -4532,7 +4532,7 @@ const checkGoogleLoginSetPwd = () => {
 
     .q-icon {
       font-size: 24px;
-      color: #bacef1;
+      color: #B2BDBF;
     }
 
     .headicon {
@@ -4546,7 +4546,7 @@ const checkGoogleLoginSetPwd = () => {
       line-height: 0.8rem;
       display: flex;
       flex-direction: column;
-      color: #bacef1;
+      color: #B2BDBF;
 
       .download-title {
         font-size: 0.8rem;
@@ -4755,7 +4755,7 @@ const checkGoogleLoginSetPwd = () => {
   height: 35px;
   justify-content: space-evenly;
   align-items: center;
-  color: #bacef1;
+  color: #B2BDBF;
   font-size: 12px;
 
   .logo {
@@ -4779,7 +4779,7 @@ const checkGoogleLoginSetPwd = () => {
     align-items: center;
     gap: 30px;
     text-decoration: none;
-    color: #bacef1;
+    color: #B2BDBF;
 
     .log {
       white-space: normal;
@@ -4806,7 +4806,7 @@ const checkGoogleLoginSetPwd = () => {
     flex: 1;
     padding: 10px;
     border-right: 1px solid #45475f;
-    color: #bacef1;
+    color: #B2BDBF;
     font-size: 16px;
   }
 
@@ -4859,7 +4859,7 @@ const checkGoogleLoginSetPwd = () => {
       margin: 0 0 5px;
       background-image: linear-gradient(0deg, #1a1c28 0, #212534 100%), linear-gradient(#2d879c, #2d879c);
       border-radius: 6px;
-      color: #bacef1;
+      color: #B2BDBF;
       display: flex;
       align-items: center;
       padding: 3px 0;
@@ -4887,7 +4887,7 @@ const checkGoogleLoginSetPwd = () => {
       min-width: 60px;
       margin: 0 0 5px;
       background-image: linear-gradient(0deg, #1a1c28 0, #212534 100%), linear-gradient(#2d879c, #2d879c);
-      color: #bacef1;
+      color: #B2BDBF;
       display: flex;
       align-items: center;
       padding: 3px 0;

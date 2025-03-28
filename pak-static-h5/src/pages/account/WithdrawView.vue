@@ -1116,7 +1116,7 @@ watch(
 }
 .step-desc-div {
   margin-bottom: 105px;
-  color: #bacef1;
+  color: #B2BDBF;
 
   p {
     margin: 5px 0px;

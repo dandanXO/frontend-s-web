@@ -350,7 +350,7 @@ onMounted(() => {
   display: flex;
   font-size: 20px;
   line-height: 20px;
-  color: #bacef1;
+  color: #B2BDBF;
   width: 100%;
   justify-content: space-evenly;
   align-items: center;
