@@ -1912,7 +1912,7 @@ const checkHash = () => {
   if (hash) {
     handleActivateSlide(hash);
   } else {
-    if (route.path === '/home') {
+    if (route.path === "/home") {
       router.replace({ hash: `Lobby` });
     }
   }
@@ -4053,7 +4053,7 @@ const gotoFloatPromo = (val) => {
     popupPromo.value = "mega-sharing-wheel";
   } else if (val.type === "PROMO" && val.code === "pak-spin-lucky-wheel") {
     popupPromo.value = "spin-lucky-wheel";
-    isShownSpinLuckyWheelModel.value = true;
+    isShownSpinLuckyWheel.value = true;
   }
 
   if (val.type === "PROMO" && val.code === "interest-profit") {
@@ -4182,8 +4182,8 @@ onActivated(() => {
 
   if (route.query.login === "true") {
     //TODO: change back.
-    popupPromo.value = "money-rain";
-    // popupPromo.value = "spin-lucky-wheel";
+    // popupPromo.value = "money-rain";
+    popupPromo.value = "spin-lucky-wheel";
   }
 
   if (route.query.newPlayerGuide === "earn-money") {
@@ -4532,7 +4532,7 @@ const checkGoogleLoginSetPwd = () => {
 
     .q-icon {
       font-size: 24px;
-      color: #B2BDBF;
+      color: #b2bdbf;
     }
 
     .headicon {
@@ -4546,7 +4546,7 @@ const checkGoogleLoginSetPwd = () => {
       line-height: 0.8rem;
       display: flex;
       flex-direction: column;
-      color: #B2BDBF;
+      color: #b2bdbf;
 
       .download-title {
         font-size: 0.8rem;
@@ -4755,7 +4755,7 @@ const checkGoogleLoginSetPwd = () => {
   height: 35px;
   justify-content: space-evenly;
   align-items: center;
-  color: #B2BDBF;
+  color: #b2bdbf;
   font-size: 12px;
 
   .logo {
@@ -4779,7 +4779,7 @@ const checkGoogleLoginSetPwd = () => {
     align-items: center;
     gap: 30px;
     text-decoration: none;
-    color: #B2BDBF;
+    color: #b2bdbf;
 
     .log {
       white-space: normal;
@@ -4806,7 +4806,7 @@ const checkGoogleLoginSetPwd = () => {
     flex: 1;
     padding: 10px;
     border-right: 1px solid #45475f;
-    color: #B2BDBF;
+    color: #b2bdbf;
     font-size: 16px;
   }
 
@@ -4859,7 +4859,7 @@ const checkGoogleLoginSetPwd = () => {
       margin: 0 0 5px;
       background-image: linear-gradient(0deg, #1a1c28 0, #212534 100%), linear-gradient(#2d879c, #2d879c);
       border-radius: 6px;
-      color: #B2BDBF;
+      color: #b2bdbf;
       display: flex;
       align-items: center;
       padding: 3px 0;
@@ -4887,7 +4887,7 @@ const checkGoogleLoginSetPwd = () => {
       min-width: 60px;
       margin: 0 0 5px;
       background-image: linear-gradient(0deg, #1a1c28 0, #212534 100%), linear-gradient(#2d879c, #2d879c);
-      color: #B2BDBF;
+      color: #b2bdbf;
       display: flex;
       align-items: center;
       padding: 3px 0;
