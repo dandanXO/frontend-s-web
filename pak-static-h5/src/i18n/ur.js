@@ -75,7 +75,21 @@ export default {
     }
   },
   form: {
+    get_code: "حاصل کریں",
+    otp_form: "او ٹی پی نمبر",
+    insert_otp_num: "براہ کرم او ٹی پی نمبر درج کریں",
+    otp_must_have_6: "او ٹی پی نمبر میں 6 ہندسے ہونے چاہئیں",
+    enter_otp_num: "اپنا او ٹی پی نمبر درج کریں",
+    refresh_veri_code: "توثیقی کوڈ تازہ کریں",
+    send_otp: "بھیجیں",
+    register_in_progress: "رجسٹریشن جاری ہے",
+    fill_in_otp: "براہ کرم او ٹی پی نمبر درج کریں",
+    register_success: "رجسٹریشن کامیاب ہو گئی",
+    phone_cannot_empty: "فون نمبر خالی نہیں ہو سکتا",
+    otp_sent_phone_success: "او ٹی پی کامیابی سے فون پر بھیج دیا گیا",
+    google_login_success: "گوگل لاگ اِن کامیابی سے ہو گیا",
     phone: "فون نمبر",
+    verifyPhone: "فون نمبر کی تصدیق کریں",
     phone_placeholder: "براہ کرم اپنا موبائل نمبر درج کریں",
     phone_rules_01: "براہ کرم فون نمبر درج کریں",
     phone_rules_02: "فون نمبر میں 11 ہندسے ہونے چاہئیں",
@@ -246,6 +260,14 @@ export default {
     goNow: "اب جائیں"
   },
   notify: {
+    loggingIn: "لاگ ان ہو رہا ہے",
+    loggingOut: "لاگ آؤٹ ہو رہا ہے",
+    phoneVerifySuccessful: "فون کامیابی سے تصدیق ہو گئی",
+    emailAlreadyUsed: "ای میل پہلے ہی استعمال ہو چکی ہے۔ براہ کرم دوسرا ای میل آزما لیں۔",
+    bankAddedSuccessfully: "بینک کارڈ کامیابی سے شامل کر لیا گیا",
+    virtualWalletAddedSuccessfully: "ورچوئل والیٹ کامیابی سے شامل کر لیا گیا",
+    newpasswordupdated: "نیا پاس ورڈ کامیابی سے اپ ڈیٹ کر لیا گیا",
+    withdrewSuccessfully: "کامیابی سے رقم نکال لی",
     noRecord: "کوئی ریکارڈ نہیں",
     haventFoundAnyRecord: "کوئی ریکارڈ نہیں ملا",
     updatedSuccessfully: "کامیابی سے اپ ڈیٹ کیا گیا",
@@ -255,7 +277,12 @@ export default {
     quitGameMessage: "کیا آپ واقعی خارج ہونا چاہتے ہیں؟ خود کو خارج کرنے کے لئے تصدیق کرنے کے لئے کلک کریں۔",
     signOutMessage: "کیا آپ واقعی لاگ آوٹ ہونا چاہتے ہیں؟",
     plsLoginToContinue: "براہ کرم جاری رکھنے کے لئے لاگ ان کریں",
-    copiedSuccessfully: "کامیابی سے کاپی کیا گیا"
+    copiedSuccessfully: "کامیابی سے کاپی کیا گیا",
+    smsSent: "ایس ایم ایس او ٹی پی کامیابی سے بھیج دیا گیا ہے",
+    tryagain: "براہ کرم {seconds} سیکنڈ بعد دوبارہ کوشش کریں",
+    submitting: "جمع کر رہا ہے...",
+    sendingVerificationCode: "ویری فیکیشن کوڈ بھیجا جا رہا ہے...",
+    passwordResetCompleted: "پاسورڈ ری سیٹ مکمل ہو چکا ہے"
   },
   sideNav: {
     inviteToEarn: "دعوت دیں اور کمائیں",
