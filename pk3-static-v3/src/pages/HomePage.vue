@@ -190,7 +190,7 @@
                         ></div>
                       </div>
 
-                      <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
+                      <div :class="{ isHideGameTitle }" class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                     </div>
                   </swiper-slide>
                 </template>
@@ -217,7 +217,7 @@
                         ></div>
                       </div>
 
-                      <div class="platform-game-title">
+                      <div :class="{ isHideGameTitle }" class="platform-game-title">
                         {{ truncateText(item.alias ? item.alias : item.name, 22) }}
                       </div>
                     </div>
@@ -255,7 +255,7 @@
                         }"
                       ></div>
                     </div>
-                    <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
+                    <div :class="{ isHideGameTitle }" class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                   </div>
                 </template>
 
@@ -280,7 +280,7 @@
                         }"
                       ></div>
                     </div>
-                    <div class="platform-game-title">
+                    <div :class="{ isHideGameTitle }" class="platform-game-title">
                       {{ truncateText(item.alias ? item.alias : item.name, 22) }}
                     </div>
                   </div>
@@ -393,7 +393,7 @@
                     <img src="@/assets/images/index/hot.png" />
                   </div>
 
-                  <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
+                  <div :class="{ isHideGameTitle }" class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
                 </div>
               </template>
             </div>
@@ -547,7 +547,7 @@
                       ></div>
                     </div>
 
-                    <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
+                    <div :class="{ isHideGameTitle }" class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                   </div>
                 </swiper-slide>
               </template>
@@ -579,7 +579,7 @@
                       ></div>
                     </div>
 
-                    <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
+                    <div :class="{ isHideGameTitle }" class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                   </div>
                 </swiper-slide>
               </template>
@@ -611,7 +611,7 @@
                       ></div>
                     </div>
 
-                    <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
+                    <div :class="{ isHideGameTitle }" class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                   </div>
                 </swiper-slide>
               </template>
@@ -644,7 +644,7 @@
                     }"
                   ></div>
                 </div>
-                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
+                <div :class="{ isHideGameTitle }" class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
               </div>
             </template>
 
@@ -673,7 +673,7 @@
                     }"
                   ></div>
                 </div>
-                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
+                <div :class="{ isHideGameTitle }" class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
               </div>
             </template>
 
@@ -702,7 +702,7 @@
                     }"
                   ></div>
                 </div>
-                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
+                <div :class="{ isHideGameTitle }" class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
               </div>
             </template>
           </div>
@@ -918,7 +918,7 @@
                             }"
                           ></div>
                         </div>
-                        <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
+                        <div :class="{ isHideGameTitle }" class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
 
                         <div
                           class="game-platform-label game-platform-label--hot"
@@ -956,7 +956,7 @@
                             }"
                           ></div>
                         </div>
-                        <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
+                        <div :class="{ isHideGameTitle }" class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
 
                         <div
                           class="game-platform-label game-platform-label--hot"
@@ -1030,6 +1030,8 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import MarqueeText from "vue-marquee-text-component";
 import HomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
 import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
+import { storeToRefs } from 'pinia';
+import { i18nStore } from "src/router/language";
 
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
@@ -1589,6 +1591,8 @@ const banners = ref([
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
+const { languageVal } = storeToRefs(i18nStore());
+const isHideGameTitle = computed(() => languageVal.value === 'ur');
 
 const allGames = ref(null);
 const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
@@ -2632,7 +2636,7 @@ const getVersionNo = async () => {
     const appType = "ALL";
     const affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
     // alert(affiliateCode) ;
-    const res = await api.get(`/app/india/getAppData?affiliateCode=${affiliateCode}`);
+    const res = await api.get(`/app/india/getAppData?affiliateCode=${affiliateCode}&appVersion=${info.version}`);
     // console.log(res);
     if (res.code === 0) {
       // alert(JSON.stringify(res.data));
@@ -2658,6 +2662,7 @@ const getVersionNo = async () => {
     }
   }
 };
+
 
 const getAppData = async () => {
   const affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
@@ -3801,6 +3806,10 @@ onBeforeUnmount(() => {
       height: 30px;
       display: flex;
       word-break: break-all;
+
+      &.isHideGameTitle {
+        display: none;
+      }
       // justify-content: center;
       // background: linear-gradient(270deg, #370f59 -0.1%, #57009d 50.22%, #340c56 97.6%);
     }
@@ -3952,6 +3961,10 @@ onBeforeUnmount(() => {
       overflow: hidden;
       text-overflow: ellipsis;
       // max-width: 100px;
+
+      &.isHideGameTitle {
+        display: none;
+      }
     }
 
     img {

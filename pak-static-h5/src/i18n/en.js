@@ -76,7 +76,22 @@ export default {
     }
   },
   form: {
+    get_code: "Get Code",
+    otp_form: "OTP Number",
+    insert_otp_num: "Please insert OTP number",
+    otp_must_have_6: "The OTP number must have 6 digits",
+    enter_otp_num: "Enter your OTP number",
+    refresh_veri_code: "Refresh Verification Code",
+    send_otp: "Send OTP",
+
+    register_in_progress: "Registering in progress",
+    fill_in_otp: "Please fill OTP number",
+    register_success: "Registered successfully",
+    phone_cannot_empty: "Phone number cannot be empty",
+    otp_sent_phone_success: "OTP sent to phone successfully",
+    google_login_success: "Google login successfully",
     phone: "Phone",
+    verifyPhone: "Verify phone number",
     phone_placeholder: "Please enter your mobile number",
     phone_rules_01: "Please insert Phone number",
     phone_rules_02: "The phone number must have 11 digits",
@@ -248,8 +263,15 @@ export default {
     goNow: "Go Now"
   },
   notify: {
+    loggingIn: "Logging in...",
+    loggingOut: "Logging out...",
+    phoneVerifySuccessful: "Phone verified successfully",
+    emailAlreadyUsed: "Email already used. Please try another email.",
+    virtualWalletAddedSuccessfully: "Virtual wallet added successfully",
+    newpasswordupdated: "New password updated successfully",
+    withdrewSuccessfully: "Withdrew successfully",
     noRecord: "No Record",
-    haventFoundAnyRecord: "Haven’t found any record",
+    haventFoundAnyRecord: "Haven't found any record",
     updatedSuccessfully: "Updated successfully",
     emailVerificationSent: "Email verification sent",
     messageSent: "Message Sent",
@@ -257,7 +279,12 @@ export default {
     quitGameMessage: "Are you sure want to quit? Click Confirm to quit the game.",
     signOutMessage: "Are you sure you want to sign out?",
     plsLoginToContinue: "Please login to continue",
-    copiedSuccessfully: "Copied Successfully"
+    copiedSuccessfully: "Copied Successfully",
+    smsSent: "SMS OTP has been sent successfully",
+    tryagain: "Please try again after {seconds} seconds",
+    submitting: "Submitting...",
+    sendingVerificationCode: "Sending verification code...",
+    passwordResetCompleted: "Password reset completed"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",

@@ -222,6 +222,10 @@ export default defineComponent({
               route.query.platform == "BBINDY" ? "BBIN" : translateRecord(route.query.platform, "slot");
             pageName.value = `${platformName}游戏大厅`;
           }
+
+          if (route.query.platform == "PPFP") {
+            pageName.value = "FP 电子";
+          }
         } else if (route.path === "/fishing") {
           prevPage.value = "";
           hasPage.value = true;
@@ -553,7 +557,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-:deep(body.desktop .q-hoverable:hover>.q-focus-helper) {
+:deep(body.desktop .q-hoverable:hover > .q-focus-helper) {
   opacity: 0;
 }
 
@@ -616,9 +620,9 @@ svg path {
     }
   }
   &.flag-w {
-      width: 20px;
-      background: url("../assets/images/footer/flag-white-active.svg") no-repeat center center;
-      background-size: 100% 100%;
+    width: 20px;
+    background: url("../assets/images/footer/flag-white-active.svg") no-repeat center center;
+    background-size: 100% 100%;
 
       &.inactive {
         background: url("../assets/images/footer/flag-white.svg") no-repeat center center;

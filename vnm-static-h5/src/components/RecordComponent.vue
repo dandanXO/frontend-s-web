@@ -440,8 +440,8 @@ export default defineComponent({
 
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
     const getImageLink = (linkId) => {
-      // reminderForm.photos = linkId;
-      reminderForm.photos = `${imgURL}/${linkId}`;
+      reminderForm.photos = linkId;
+      // reminderForm.photos = `${imgURL}/${linkId}`;
     };
 
     const submitReminder = () => {

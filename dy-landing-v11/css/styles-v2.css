@@ -111,17 +111,20 @@ a {
   position: relative;
 }
 
-.banner-btn-wrapper {
+/* .banner-btn-wrapper {
   position: absolute;
   display: block;
   left: 22%;
   right: 16%;
   bottom: -1%;
   z-index: 1;
-}
+} */
 
 .banner-btn {
-  width: 100%;
+  position: relative;
+  z-index: 1;
+  width: 60%;
+  margin-top: 12px;
 }
 
 .swing {
