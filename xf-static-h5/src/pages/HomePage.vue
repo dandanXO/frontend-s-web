@@ -164,7 +164,7 @@
                     <GameBoard
                       v-for="(item, i) in slot"
                       :key="i"
-                      :title="item.title"
+                      :title="item?.alias || item.title"
                       :name="item.name"
                       :code="item.code"
                       :icon="item.icon"

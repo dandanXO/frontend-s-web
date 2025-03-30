@@ -55,7 +55,8 @@ export const userStore = defineStore("userStore", {
         targetWithdrawAmount: 0,
         spinChance: 0,
         status: ""
-      }
+      },
+      isShowOtp: false
     };
   },
   actions: {

@@ -181,6 +181,7 @@ import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
+import { t } from "@/boot/lang";
 
 var qs = require("qs");
 
@@ -195,7 +196,7 @@ const checkNewUser = () => {
     $q.notify({
       color: "negative",
       position: "top",
-      message: "Please fill in your personal details",
+      message: t("notify.pleaseFillInPersonalDetails"),
       icon: "report_problem"
     });
     router.push(`/account/profile`);

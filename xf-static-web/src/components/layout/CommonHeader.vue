@@ -165,7 +165,7 @@
             <span>余额</span>
             <span class="amount">
               <span v-if="isLoadingBalance">Loading...</span>
-              <span v-if="!isLoadingBalance">￥{{ store.balance }}</span>
+              <span v-if="!isLoadingBalance">￥{{ Math.trunc(store.balance * 100) / 100 }}</span>
             </span>
             <el-icon>
               <Refresh />

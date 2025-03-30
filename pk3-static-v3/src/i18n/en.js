@@ -258,7 +258,8 @@ export default {
     failed: "Failed",
     updateSucceed: "Update Successful",
     unbindSucceed: "Unbound Successfully",
-    withdrawalSubmitSucceed: "Withdrawal Submit Successful"
+    withdrawalSubmitSucceed: "Withdrawal Submit Successful",
+    newPasswordUpdatedSuccessfully: "New password updated successfully"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -529,15 +530,15 @@ export default {
     }
   },
   records: {
-    gamePlatform: "Platform Permainan",
-    bet: "Taruhan",
-    settle: "Selesaikan",
-    settled: "Telah Diselesaikan",
-    betAndSettle: "Taruhan dan Selesaikan",
-    cancel: "Batal",
+    gamePlatform: "Game Platform",
+    bet: "Bet",
+    settle: "Settle",
+    settled: "Settled",
+    betAndSettle: "Bet and Settle",
+    cancel: "Cancel",
     rollback: "Rollback",
     patch: "Patch",
-    unsettled: "Belum Diselesaikan",
+    unsettled: "Unsettled",
     jackpot: "Jackpot",
     bonus: "Bonus",
     amount: "Amount",
@@ -566,7 +567,9 @@ export default {
     level: "Level",
     turnover: "Turnover",
     serialNumber: "Serial Number",
-    vipUpgradeBonus: "VIP Upgrade Bonus"
+    vipUpgradeBonus: "VIP Upgrade Bonus",
+    loss: "Loss",
+    profit: "Profit"
   },
   appUpdate: {
     updateHeader: "Update Announcement",
@@ -606,6 +609,9 @@ export default {
       days: "days",
       signIn: "Sign in",
       signedIn: "Signed in"
+    },
+    spinLuckyWheel: {
+      doNotShowAgain: 'Do not show again'
     }
   },
   maintenance: {
@@ -703,6 +709,10 @@ export default {
     15201: "Old password is incorrect",
     15202: "New password must not match the old password",
     21000: "This game is already in your favorite games list",
+    25001: "Wheel event not participated in",
+    25002: "You have already claimed the reward.",
+    25003: "Wheel event has not reached the withdrawal amount",
+    25004: "Wheel event already participated in",
     25005: "The wheel activity has reached the withdrawal amount.",
     30000: "Member data not found",
     30001: "Member has already received the promotion",

@@ -780,6 +780,11 @@
             background-size: 100% 100%;
             box-shadow: $active-color-dark-shadow;
 
+            &.long {
+              background: url("../../assets/slot/button-bg-long.svg");
+              background-size: 100% 100%;
+            }
+
             .text {
               color: $color-white;
             }

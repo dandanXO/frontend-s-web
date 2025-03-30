@@ -21,6 +21,7 @@
     "@element-plus/icons": "^0.0.11",
     "@element-plus/icons-vue": "^1.1.4",
     "@tinymce/tinymce-vue": "^4.0.7",
+    "@vueup/vue-quill": "^1.2.0",
     "@vueuse/core": "^11.0.3",
     "axios-mapper": "^0.5.4",
     "chalk": "^4.1.0",

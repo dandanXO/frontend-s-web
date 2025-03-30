@@ -109,25 +109,25 @@
         </el-row>
         <el-row>
           <el-form-item :label="t('fields.mallName')" prop="mallName">
-            <el-input v-model="form.mallName" style="width: 320px;" />
+            <el-input v-model="form.mallName" style="width: 320px;" @blur="form.mallName = form.mallName.trim()" />
           </el-form-item>
           <el-form-item :label="t('fields.mallCode')" prop="mallCode">
-            <el-input v-model="form.mallCode" style="width: 320px;" />
+            <el-input v-model="form.mallCode" style="width: 320px;" @blur="form.mallCode = form.mallCode.trim()" />
           </el-form-item>
         </el-row>
         <el-row>
           <el-form-item :label="t('fields.mallKey')" prop="mallKey">
-            <el-input v-model="form.mallKey" :rows="2" type="textarea" style="width: 600px;" />
+            <el-input v-model="form.mallKey" :rows="2" type="textarea" style="width: 600px;" @blur="form.mallKey = form.mallKey.trim()" />
           </el-form-item>
         </el-row>
         <el-row>
           <el-form-item :label="t('fields.mallExtraKey')" prop="mallExtraKey">
-            <el-input v-model="form.mallExtraKey" :rows="2" type="textarea" style="width: 600px;" />
+            <el-input v-model="form.mallExtraKey" :rows="2" type="textarea" style="width: 600px;" @blur="form.mallExtraKey = form.mallExtraKey.trim()" />
           </el-form-item>
         </el-row>
         <el-row>
           <el-form-item :label="t('fields.extraParam')" prop="extraParam">
-            <el-input v-model="form.extraParam" :rows="2" type="textarea" style="width: 600px;" />
+            <el-input v-model="form.extraParam" :rows="2" type="textarea" style="width: 600px;" @blur="form.extraParam = form.extraParam.trim()" />
           </el-form-item>
         </el-row>
         <el-row>
@@ -137,17 +137,17 @@
         </el-row>
         <el-row>
           <el-form-item :label="t('fields.requestUrl')" prop="requestUrl">
-            <el-input v-model="form.requestUrl" style="width: 600px;" />
+            <el-input v-model="form.requestUrl" style="width: 600px;" @blur="form.requestUrl = form.requestUrl.trim()" />
           </el-form-item>
         </el-row>
         <el-row>
           <el-form-item :label="t('fields.callbackUrl')" prop="callbackUrl">
-            <el-input v-model="form.callbackUrl" style="width: 600px;" />
+            <el-input v-model="form.callbackUrl" style="width: 600px;" @blur="form.callbackUrl = form.callbackUrl.trim()" />
           </el-form-item>
         </el-row>
         <el-row>
           <el-form-item :label="t('fields.balanceUrl')" prop="balanceUrl">
-            <el-input v-model="form.balanceUrl" style="width: 600px;" />
+            <el-input v-model="form.balanceUrl" style="width: 600px;" @blur="form.balanceUrl = form.balanceUrl.trim()" />
           </el-form-item>
         </el-row>
         <el-row>

@@ -1160,6 +1160,7 @@ const vipItems = reactive([
     vipTitle: "最强王者"
   }
 ]);
+const maxVipLevel = ref(0);
 const formatPercentageRange = (range) => {
   const percentages = range.split(" - "); // Split the range into two percentages
   const formattedPercentages = percentages.map(
@@ -1204,6 +1205,7 @@ const initVIPTable = async (wLoad) => {
   runVipAPI(res);
 };
 const runVipAPI = (res) => {
+  let _maxVipLevel = 0
   if (res.code === 0) {
     const { vipBonusVOList } = res.data;
 
@@ -1243,6 +1245,9 @@ const runVipAPI = (res) => {
           ...vipBonusItem
         });
       }
+      if (vipBonusItem.vipLevel > _maxVipLevel) {
+        _maxVipLevel = vipBonusItem.vipLevel
+      }
     });
     currentDepAmt.value = res.data.currentDepositAmount;
     currentBetAmt.value = res.data.currentBetAmount;
@@ -1255,6 +1260,7 @@ const runVipAPI = (res) => {
     currentRedPacketAmount.value = res.data.currentRedPacketAmount;
     getVipLevelProgress(vipLevel.value, "bet");
     isDataLoaded.value = true;
+    maxVipLevel.value = _maxVipLevel
   } else {
     notify({ type: "error", message: res.message });
   }
@@ -1376,7 +1382,11 @@ const slideTo = (vipIndex) => {
     currentSlide.value = 0;
     return;
   }
-  currentSlide.value = vipLevel;
+  if(vipLevel === maxVipLevel.value) {
+    currentSlide.value = maxVipLevel.value -1;
+  }else {
+    currentSlide.value = vipLevel;
+  }
 };
 function formatNumber(value, type) {
   if (value === undefined) {
