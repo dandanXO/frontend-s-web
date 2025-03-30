@@ -45,7 +45,7 @@
           <thead>
             <tr>
               <th>当日下注金额</th>
-              <th>投注金</th>
+              <th>彩金</th>
               <th>流水倍数</th>
             </tr>
           </thead>

@@ -5,13 +5,13 @@
         <div class="livepoker-rebate-section-left">
           <div class="livepoker-rebate-section-title">
             <div class="claim-title-icon"></div>
-            投注礼金
+            投注嘉奖
           </div>
           <div class="reward-info">
             <div class="reward-info-icon claim-coin-icon"></div>
             <div class="reward-info-content">
-              昨日累计有效投注：
-              <span class="amount">{{ totalLoss }}元</span>
+              活动期间总有效投注：
+              <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
           <div class="reward-info">
@@ -23,8 +23,8 @@
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
-            <img src="../../../assets/promo/lh-livepoker-rebate/reward-btn.png" alt="" width="100%" />
+          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0, loading: loadingClaim }">
+            <img src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn3.png" alt="" width="100%" />
           </div>
         </div>
       </div>
@@ -32,23 +32,27 @@
         <div class="title-img">活动详情</div>
         <div class="little-title">
           <div class="ribbon">活动时间</div>
-          <div class="right">2025 年 04 月 07 日至 2025 年 04 月 13 日  </div>
+          <div class="right">2025 年 04 月 15 日至 2025 年 04 月 20 日</div>
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
-          <div class="right">活动期间，当日 2025 ESL One 罗利有效投注≥1,500 元即可获得 最高 1388 元的奖励金</div>
+          <div class="right">在 YaLLa Compass 春季赛 2025 赛事期间当天累计有效投注≥1000 元并存款≥200 元在次日即可获得对应档位的奖金，最高可获 888 元</div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
-          <tbody>
+          <thead>
             <tr>
-              <th>有效投注</th>
-              <th>投注金</th>
+              <th>当日存款</th>
+              <th>累计有效投注</th>
+              <th>投注彩金</th>
               <th>流水倍数</th>
             </tr>
+          </thead>
+          <tbody>
             <tr>
-              <td>≥1,500</td>
+              <td rowspan="7">≥200</td>
+              <td>≥1,000</td>
               <td>8 元</td>
-              <td :rowspan="9">6 倍流水</td>
+              <td rowspan="7">6 倍流水</td>
             </tr>
             <tr>
               <td>≥5,000</td>
@@ -59,12 +63,8 @@
               <td>58 元</td>
             </tr>
             <tr>
-              <td>≥15,000</td>
-              <td>88 元</td>
-            </tr>
-            <tr>
               <td>≥30,000</td>
-              <td>168 元</td>
+              <td>128 元</td>
             </tr>
             <tr>
               <td>≥50,000</td>
@@ -72,15 +72,11 @@
             </tr>
             <tr>
               <td>≥100,000</td>
-              <td>588 元</td>
+              <td>558 元</td>
             </tr>
             <tr>
-              <td>≥300,000</td>
+              <td>≥200,000</td>
               <td>888 元</td>
-            </tr>
-            <tr>
-              <td>≥500,000</td>
-              <td>1,388 元</td>
             </tr>
           </tbody>
         </table>
@@ -88,10 +84,14 @@
         <div class="livepoker-rebate-game-bottom">
           <div class="livepoker-rebate-game-bottom-left-title">
             <div class="livepoker-rebate-game-bottom-left-btn">
-              <img src="../../../assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" width="22px" />
+              <img
+                src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/game-bottom-left-btn.png"
+                alt=""
+                style="width: 10px"
+              />
               <span>示例</span>
             </div>
-            用户 A 在 04 月 08 日投注 2025 ESL One 罗利有效投注 50,000 元，用户 A 在次日 24 小时内可获得彩金：288 元
+            4 月 16 日会员 A 在 YaLLa Compass 春季赛 2025 赛事期间存款 200 元并且累计有效投注为 20000 元，4 月 17 日即可在优惠页面点击【领取】获得投注奖金 58 元。
           </div>
         </div>
       </div>
@@ -103,31 +103,25 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              <div>
-                活动期间，活动仅计算电竞场馆中 2025 ESL One 罗利，会员在当日 2025 ESL One 罗利中累计有效投注≥1,500
-                元即可获得对应彩金，有效投注次日清零；
-              </div>
-              <div class="hint">注：救援金不叠加派发，救援金按最高档位每日派发一次。</div>
+              活动期间，会员当日投注 YaLLa Compass 春季赛 2025 有效投注≥1,000 元且存款≥200 元可获得对应投注奖金，满足条件的会员可进入优惠界面点击【领取】按钮获得投注奖金，奖金 6 倍流水即可提款； 
+              <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，活动仅计算当日 2025 ESL One 罗利已结算的赛事总有效投注，次日 24
-            小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 6 倍流水即可出款；
+            YaLLa Compass 春季赛 2025 投注奖金在结算后 24 小时内有效，每天只能领取一次，超出活动时间未领取不予补偿； 
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            任何低于欧洲盘 1.7 或亚洲盘 0.7
-            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+            任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内； 
           </div>
           <div class="item">
             <div class="item-num">4</div>
-            根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
+            根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户； 
           </div>
           <div class="item">
             <div class="item-num">5</div>
-            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
-            地址视为同一账户，若有违规者，将不享受此红利；
+            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利； 
           </div>
           <div class="item">
             <div class="item-num">6</div>
@@ -140,93 +134,61 @@
 </template>
 
 <script setup>
-import { onMounted, ref, defineProps } from "vue";
-import { ElMessageBox } from "element-plus";
-import { ResponseCode } from "@/api/response";
-import { claimVctBangkokBonus, getVctBangkokInit } from "@/api/index/promo";
-import { useNotify } from "@/hooks/notify";
-import { userStore } from "@/store";
+import { onMounted, ref, toRefs } from "vue";
+import { getCompetitionBetDepositInit, claimCompetitionBetDepositBonus } from "../../../api/index/promo";
+import { useNotify } from "src/hooks/notify";
+import { userStore } from "src/stores";
 
 const props = defineProps(["promoCode"]);
-const promoCode = ref(props.promoCode);
+const { promoCode } = toRefs(props);
+
 const notify = useNotify();
 const store = userStore();
 
-const totalLoss = ref(0);
+const totalValidBet = ref(0);
 const bonus = ref(0);
+const loadingClaim = ref(false);
 
 const handleClaimBonus = () => {
-  if (!store.hasToken()) {
-    ElMessageBox.alert("请登录后再操作", "系统提示", {
-      autofocus: false,
-      center: true,
-      confirmButtonText: "确认",
-      showClose: false,
-      buttonSize: "large",
-      closeOnClickModal: true
-    }).then(() => {
-      store.loginPageVisible = true;
-    });
-    return;
-  }
-
-  claimVctBangkokBonus(promoCode.value)
+  loadingClaim.value = true;
+  claimCompetitionBetDepositBonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
         notify({
           type: "success",
           message: `成功领取`
         });
-        fetchData();
-      } else if (
-        !(
-          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
-          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
-          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
-          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
-          res.code === ResponseCode.ERROR_SYSTEM
-        )
-      ) {
+        store.getBalance();
+      } else {
         notify({
           type: "error",
           message: res.message
         });
       }
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {})
+    .finally(() => {
+      loadingClaim.value = false;
     });
 };
 
 const fetchData = async () => {
-  if (!store.hasToken()) {
-    ElMessageBox.alert("请登录后再操作", "系统提示", {
-      autofocus: false,
-      center: true,
-      confirmButtonText: "确认",
-      showClose: false,
-      buttonSize: "large",
-      closeOnClickModal: true
-    }).then(() => {
-      store.loginPageVisible = true;
+  loadingClaim.value = true;
+  getCompetitionBetDepositInit(promoCode.value)
+    .then((res) => {
+      if (res.code === 0) {
+        totalValidBet.value = res.data.totalValidBet;
+        bonus.value = res.data.bonus;
+      }
+    })
+    .catch(() => {})
+    .finally(() => {
+      loadingClaim.value = false;
     });
-    return;
-  }
-  try {
-    const res = await getVctBangkokInit(props.promoCode);
-    totalLoss.value = res.data?.totalValidBet || 0;
-    bonus.value = res.data?.bonus || 0;
-  } catch (error) {
-    console.log(error);
-  }
 };
 
 onMounted(() => {
   if (!store.token) {
-    // notify({
-    //   message: "请登录后操作",
-    //   type: "error"
-    // });
     return;
   }
   fetchData();
@@ -238,41 +200,47 @@ onMounted(() => {
   display: flex;
   justify-content: center;
 }
+
 .livepoker-rebate-container {
-  width: 1200px;
+  width: 100%;
   height: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .livepoker-rebate-section {
   box-shadow: 0px 0px 4px 0px #01497b0f;
-  padding: 30px 40px;
+  padding: 20px 12px 40px;
   border-radius: 12px;
   border: 1px solid #acd4f6;
-  margin-top: 40px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  background: url("../../../assets/promo/lh-livepoker-rebate/section-bg.png");
+  background: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/section-bg.png");
   background-size: 100% 100%;
+  align-items: center;
+  width: 100%;
 
   .livepoker-rebate-section-left {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 100%;
   }
 
   .livepoker-rebate-section-right {
-    width: 254px;
+    width: 180px;
+    margin-top: 20px;
 
     .bonus-image {
-      cursor: pointer;
       width: 100%;
+      cursor: pointer;
 
-      &:hover {
-        filter: brightness(0.9);
-      }
       &:active {
+        filter: brightness(0.85);
         transform: translate(0px, 1px);
-        opacity: 0.9;
       }
 
       &.disabled {
@@ -280,11 +248,17 @@ onMounted(() => {
         cursor: not-allowed;
         pointer-events: none;
       }
+
+      &.loading {
+        cursor: not-allowed;
+        opacity: 0.8;
+      }
     }
   }
 
   .livepoker-rebate-section-title {
-    font-size: 24px;
+    color: #000000;
+    font-size: 16px;
     line-height: 1;
     font-weight: 600;
     display: flex;
@@ -309,16 +283,16 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   .livepoker-rebate-game-bottom-left-title {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 22.4px;
-    color: #ff4343;
-  }
-  .livepoker-rebate-game-bottom-left-btn {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 600;
     line-height: 22.4px;
-    color: #ff4343;
+    color: #ff5d5d !important;
+  }
+  .livepoker-rebate-game-bottom-left-btn {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 22.4px;
+    color: #ff5d5d !important;
     cursor: pointer;
     display: flex;
     justify-content: flex-start;
@@ -333,46 +307,47 @@ onMounted(() => {
   margin-top: 40px;
   background: #f2f8fe;
   border-radius: 12px;
-  padding: 40px;
+  padding: 20px 12px 12px;
   border: 1px solid #acd4f6;
   box-shadow: 0px 0px 4px 0px #01497b0f;
   display: flex;
   flex-direction: column;
-  // align-items: center;
-  gap: 20px;
+  gap: 8px;
 
   .title {
-    background-image: url("../../../assets/promo/lh-livepoker-rebate/info-title.png");
+    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-title.png");
     background-repeat: no-repeat;
-    background-size: 100% 100%;
-    width: 738px;
-    height: 44px;
-    margin: 0 auto 40px;
+    background-size: 100%;
+    width: 240px;
+    height: 26px;
+    margin: 0 auto;
   }
   .little-title {
     display: flex;
+    flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     gap: 10px;
     .left {
-      background-image: url("../../../assets/promo/lh-livepoker-rebate/info-little-title-bg.png");
+      background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-little-title-bg.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
-      width: 120px;
-      height: 36px;
+      width: 64px;
+      height: 20px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 16px;
+      font-size: 12px;
       font-weight: 600;
       line-height: 23.33px;
       color: #ffffff;
       margin-right: 16px;
     }
     .right {
-      font-size: 20px;
+      font-size: 12px;
       font-weight: 400;
       line-height: 28px;
+      color: #000000;
     }
   }
 }
@@ -382,12 +357,11 @@ onMounted(() => {
   height: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  table-layout: fixed;
   text-align: center;
   vertical-align: middle;
   th {
-    height: 56px;
-    font-size: 20px;
+    height: 36px;
+    font-size: 12px;
     font-weight: 400;
     line-height: 28px;
     color: #fff;
@@ -416,9 +390,10 @@ onMounted(() => {
     }
   }
   td {
+    background: transparent;
     border: 1px solid #acd4f6;
-    height: 56px;
-    font-size: 20px;
+    height: 36px;
+    font-size: 12px;
     font-weight: 400;
     line-height: 28px;
     color: #000000;
@@ -431,38 +406,39 @@ onMounted(() => {
   margin-top: 40px;
   background: #f2f8fe;
   border-radius: 12px;
-  padding: 40px;
+  padding: 20px 12px 12px;
   border: 1px solid #acd4f6;
   box-shadow: 0px 0px 4px 0px #01497b0f;
   display: flex;
   flex-direction: column;
   align-items: center;
   .title {
-    background-image: url("../../../assets/promo/lh-livepoker-rebate/rule-title.png");
+    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/rule-title.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    width: 738px;
-    height: 44px;
+    width: 240px;
+    height: 20px;
     margin-bottom: 20px;
   }
   .content {
-    font-size: 20px;
+    font-size: 12px;
     font-weight: 400;
-    line-height: 36px;
+    line-height: 20px;
     color: #000000;
+    padding: 8px;
     .item {
-      padding-left: 24px;
       display: flex;
       gap: 10px;
+      align-items: baseline;
 
       .item-num {
         color: #ffffff;
-        font-size: 20px;
+        font-size: 12px;
         line-height: 1;
         border-radius: 50%;
-        height: 28px !important;
-        width: 28px !important;
-        min-width: 28px;
+        height: 16px !important;
+        width: 16px !important;
+        min-width: 16px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -471,10 +447,10 @@ onMounted(() => {
       }
 
       .hint {
-        font-size: 18px;
+        // font-size: 12px;
         font-weight: 400;
         line-height: 22.4px;
-        color: #ff4343;
+        color: #ff0000;
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -494,8 +470,8 @@ onMounted(() => {
 }
 
 .reward-info-icon {
-  width: 24px;
-  height: 24px;
+  width: 16px;
+  height: 16px;
   margin-right: 10px;
 }
 
@@ -504,31 +480,12 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 20px;
-  gap: 24px;
+  font-size: 12px;
+  color: black;
 
   .amount {
     color: #00a1ff;
     font-weight: 600;
   }
-}
-.claim-title-icon {
-  background: url("../../../assets/promo/lh-livepoker-rebate/section-title-img.png") no-repeat center center !important;
-  background-size: 100% 100% !important;
-}
-
-.claim-coin-icon {
-  background: url("../../../assets/promo/lh-livepoker-rebate/reward-icon1.png") no-repeat center center !important;
-  background-size: 100% 100% !important;
-}
-
-.claim-gift-icon {
-  background: url("../../../assets/promo/lh-livepoker-rebate/reward-icon2.png") no-repeat center center !important;
-  background-size: 100% 100% !important;
-}
-
-.claim-stacked-coins-icon {
-  background: url("../../../assets/promo/lh-livepoker-rebate/reward-icon3.png") no-repeat center center !important;
-  background-size: 100% 100% !important;
 }
 </style>

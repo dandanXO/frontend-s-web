@@ -440,7 +440,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog class="flex-end" width="100%" v-model="changePasswordDialog" persistent>
+  <q-dialog width="100%" v-model="changePasswordDialog" presistent>
     <div class="popout-dialog">
       <q-btn
         dense
@@ -1585,7 +1585,7 @@ const sendPhoneDetails = () => {
           });
           verifyPhoneDialog.value = false;
           formDetail.phoneVerified = true;
-
+          store.phoneVerified = true;
           // setTimeout(() => {
           //   startRefresh();
           // }, 2000);

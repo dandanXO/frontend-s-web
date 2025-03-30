@@ -81,7 +81,9 @@
       :promo-code="list.promoCode"
     />
     <FissureUniverseS4 v-if="list.redirectUrl === 'dy2-fissure-universe-s4'" :promo-code="list.promoCode" />
+    <YaLLa2025 v-if="list.redirectUrl === 'dy2-yalla-compass-qatar-2025'" :promo-code="list.promoCode" />
     <IemMelbourne2025 v-if="list.redirectUrl === 'dy2-iem-melbourne-2025'" :promo-code="list.promoCode" />
+    <PglWallachiaS4 v-if="list.redirectUrl === 'dy2-pgl-wallachia-s4'" :promo-code="list.promoCode" />
 
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
@@ -155,13 +157,16 @@ import elsOne2025 from "../components/hotpromo/elsOne2025/elsOne2025.vue";
 
 import FootballFight from "@/components/hotpromo/newFootballfight/FootballFight.vue";
 import FissureUniverseS4 from "./hotpromo/fissure-universe-s4/FissureUniverseS4.vue";
+import YaLLa2025 from "./hotpromo/YaLLa2025/YaLLa2025.vue";
 import IemMelbourne2025 from "./hotpromo/iem-melbourne-2025/IemMelbourne2025.vue";
+import PglWallachiaS4 from "./hotpromo/pgl-wallachia-s4/PglWallachiaS4.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    YaLLa2025,
     FootballFight,
     Blast2025,
     elsOne2025,
@@ -200,7 +205,8 @@ export default defineComponent({
     HongBaoYu2025,
     Monthly20HongBaoYu,
     FissureUniverseS4,
-    IemMelbourne2025
+    IemMelbourne2025,
+    PglWallachiaS4
   },
   props: {
     list: {

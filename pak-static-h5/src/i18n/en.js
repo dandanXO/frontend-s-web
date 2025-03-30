@@ -95,7 +95,6 @@ export default {
     phone_cannot_empty: "Phone number cannot be empty",
     otp_sent_phone_success: "OTP sent to phone successfully",
     google_login_success: "Google login successfully",
-
     phone: "Phone",
     verifyPhone: "Verify phone number",
     phone_placeholder: "Please enter your mobile number",

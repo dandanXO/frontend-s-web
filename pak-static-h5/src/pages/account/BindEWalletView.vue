@@ -426,6 +426,12 @@ const submitBankCard = () => {
     cardNumberRef.value.validate();
   }
 
+  if (selectedTypeToggleName.value === 'JAZZCASH'){
+    if (ifscRef.value) {
+      ifscRef.value.validate();
+    }
+  }
+
   // if (!isOtpSent.value) {
   //   $q.notify({
   //     color: "negative",
@@ -441,7 +447,8 @@ const submitBankCard = () => {
     !(
       (bankCardRef.value && bankCardRef.value.hasError) ||
       (cardNumberRef.value && cardNumberRef.value.hasError) ||
-      (phoneVerificationRef.value && phoneVerificationRef.value.hasError)
+      (phoneVerificationRef.value && phoneVerificationRef.value.hasError) ||
+      (selectedTypeToggleName.value === 'JAZZCASH' && ifscRef.value && ifscRef.value.hasError)
     )
   ) {
     // API call
