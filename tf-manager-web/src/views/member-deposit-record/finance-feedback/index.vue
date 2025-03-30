@@ -545,7 +545,8 @@ async function showDialog(record) {
 }
 
 function fixOldImgUrl(url) {
-  return url.replace(/https:\/\/(.*?)\/\//g, 'https://$1/');
+  const _url = url.replace(/(\.com)(order)/, "$1/$2");
+  return _url.replace(/https:\/\/(.*?)\/\//g, 'https://$1/');
 }
 </script>
 

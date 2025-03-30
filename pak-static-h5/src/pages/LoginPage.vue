@@ -304,7 +304,7 @@ import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
-import { isAndroid, trackNewUserFtd } from "boot/utils";
+import { isAndroid, isInPwa, trackNewUserFtd } from "boot/utils";
 import { App } from "@capacitor/app";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
@@ -520,7 +520,11 @@ export default defineComponent({
                   icon: "check_circle_outline"
                 });
 
-                store.autoLogin(res.data);
+                if (res.data?.isFirstTime) {
+                  trackRegisterSuccessEvent();
+                }
+
+                store.autoLogin(res.data?.token || res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {
                   router.push("/home");
@@ -582,7 +586,11 @@ export default defineComponent({
                     icon: "check_circle_outline"
                   });
 
-                  store.autoLogin(res.data);
+                  if (res.data?.isFirstTime) {
+                    trackRegisterSuccessEvent();
+                  }
+
+                  store.autoLogin(res.data?.token || res.data);
                   sessionStorage.removeItem("REFERRAL_CODE");
                   if (store.hasToken()) {
                     router.push("/home");
@@ -821,6 +829,26 @@ export default defineComponent({
     };
 
     const regLoginTab = ref("login");
+
+    const trackRegisterSuccessEvent = () => {
+      if (!ui.adjust_register_event) return;
+      if (isInPwa()) {
+        console.log(ui.adjust_register_event);
+        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        AdjustWeb.trackEvent({
+          eventToken: ui.adjust_register_event
+        });
+      } else if (Platform.is.android && Platform.is.capacitor) {
+        var adjustEvent = new AdjustEvent(ui.adjust_register_event);
+        // alert(affRegEvent.value);
+        Adjust.trackEvent(adjustEvent);
+      } else {
+        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        AdjustWeb.trackEvent({
+          eventToken: ui.adjust_register_event
+        });
+      }
+    };
 
     watch(
       () => regLoginTab.value,

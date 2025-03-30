@@ -24,7 +24,7 @@
             <img class="white-svg" src="@/assets/images/auth/phone.svg" />
             <span class="prepend-number">{{ $t("form.prependNumber") }}</span>
           </template>
-          <template v-if="regForm.referrer" v-slot:append>
+          <template v-if="regForm.referrer && store.isShowOTP" v-slot:append>
             <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">{{ otpCountdown > 0 ? `รับรหัส (${otpCountdown})` : 'รับรหัส' }}</q-btn>
           </template>
         </q-input>
@@ -58,7 +58,7 @@
         </q-input>
 
         <q-input
-          v-if="regForm.referrer"
+          v-if="regForm.referrer && store.isShowOTP"
           pattern="\d*"
           maxlength="6"
           ref="verificationRef"
@@ -282,7 +282,16 @@ export default defineComponent({
       getCode();
       getReferralCode();
       getAffiliateCode();
+      checkReferralRegistration();
     });
+
+    const checkReferralRegistration = () => {
+      api.get("/config/uiconfigs").then((res) => {
+            if (res.code === 0) {
+                store.isShowOTP = res.data?.referral_registration_otp === 'OPEN';
+            }
+        })
+    }
 
     const trackRegisterSuccessEvent = () => {
       if (ui.adjust_register_event && isAndroid()) {
@@ -321,7 +330,7 @@ export default defineComponent({
         isAgreeReg.value === false
       ) {
         $q.loading.hide();
-      } else if (regForm.referrer && isOtpEnable.value){
+      } else if (regForm.referrer && store.isShowOTP && isOtpEnable.value){
         $q.notify({
           color: "negative",
           position: "top",
@@ -583,7 +592,8 @@ export default defineComponent({
       imgOnError,
       otpCountdown,
       otpCountdownInterval,
-      isOtpEnable
+      isOtpEnable,
+      store
     };
   }
 });

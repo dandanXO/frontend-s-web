@@ -260,6 +260,7 @@ const onTypeToggleBtnClick = (index, name) => {
   selectedTypeToggleName.value = name;
   bankCardInfo.bankId = bankList.value[index].id;
   bankCardInfo.currencyId = bankList.value[index].currencyIds;
+  bankCardInfo.cardAddress = "";
 };
 
 const categoryToggleList = ref(["EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20"]);
@@ -424,6 +425,12 @@ const submitBankCard = () => {
     cardNumberRef.value.validate();
   }
 
+  if (selectedTypeToggleName.value === 'JAZZCASH'){
+    if (ifscRef.value) {
+      ifscRef.value.validate();
+    }
+  }
+
   // if (!isOtpSent.value) {
   //   $q.notify({
   //     color: "negative",
@@ -439,7 +446,8 @@ const submitBankCard = () => {
     !(
       (bankCardRef.value && bankCardRef.value.hasError) ||
       (cardNumberRef.value && cardNumberRef.value.hasError) ||
-      (phoneVerificationRef.value && phoneVerificationRef.value.hasError)
+      (phoneVerificationRef.value && phoneVerificationRef.value.hasError) ||
+      (selectedTypeToggleName.value === 'JAZZCASH' && ifscRef.value && ifscRef.value.hasError)
     )
   ) {
     // API call

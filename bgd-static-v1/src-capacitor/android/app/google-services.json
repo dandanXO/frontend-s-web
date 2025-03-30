@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "744708244334",
-    "project_id": "win7-449102",
-    "storage_bucket": "win7-449102.firebasestorage.app"
+    "project_number": "810789988123",
+    "project_id": "unique-antonym-449102-r5",
+    "storage_bucket": "unique-antonym-449102-r5.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:744708244334:android:413dae912edc21344e777f",
+        "mobilesdk_app_id": "1:810789988123:android:4b5fe3c56f773e0e07d5be",
         "android_client_info": {
           "package_name": "com.ind.appb9bgd"
         }
       },
       "oauth_client": [
         {
-          "client_id": "744708244334-a4hv7318fu2gulikk7q8h2m5os3qvt22.apps.googleusercontent.com",
+          "client_id": "810789988123-hc6so17mi6tsap55vbnjekj67sc1mupq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ind.appb9bgd",
-            "certificate_hash": "efce7ee52f37ef107b6f5539c018c3973fe890c2"
+            "certificate_hash": "e23e5f0cfae541689a6e9bc653bfb4d4ce0219c3"
           }
         },
         {
-          "client_id": "744708244334-p9m6a7aphelep9i5ulafb16chtfdjuq3.apps.googleusercontent.com",
+          "client_id": "810789988123-qmf1q3k4bv43h5qlngsrbak8v1jq5p9r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA4bGzMPksJqfX5z4upZvRP0YPOEEk0tjI"
+          "current_key": "AIzaSyAIfOXGyC8z_uqCcJ4fI14chMWUkzGoL3o"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "744708244334-p9m6a7aphelep9i5ulafb16chtfdjuq3.apps.googleusercontent.com",
+              "client_id": "810789988123-qmf1q3k4bv43h5qlngsrbak8v1jq5p9r.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

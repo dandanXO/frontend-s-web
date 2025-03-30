@@ -573,8 +573,8 @@ async function loadPlatfromAccount() {
 }
 
 async function loadPlatforms() {
-  const { data: ret } = await getPlatformNames()
-  platforms.list = ret
+  const { data: ret } = await getPlatformNames(site.value.id)
+  platforms.list = ret.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 async function loadSites() {
@@ -722,6 +722,7 @@ async function changePlatformAccountStatus(id, status) {
 onMounted(async () => {
   await loadSites()
   request.siteId = sites.list[0].id
+  site.value = sites.list[0]
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = sites.list.find(
       s => s.siteName === store.state.user.siteName

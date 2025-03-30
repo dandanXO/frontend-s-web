@@ -3,11 +3,18 @@
     <LoadingComponent v-if="isLoading"></LoadingComponent>
     <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('records.noMessage')"></NoInfoComponent>
     <q-card v-else v-for="(e, i) in mailData" :key="`${e}-${i}`" class="msg-container">
-      <img
-        class="new-message-ribbon"
-        src="@/assets/images/message/new-message-ribbon.svg"
-        v-if="!e.status && store.readMsgLists.indexOf(e.id) === -1"
-      />
+      <template v-if="!e.status && store.readMsgLists.indexOf(e.id) === -1">
+        <img
+          v-if="languageVal === 'ur'"
+          class="new-message-ribbon"
+          src="@/assets/images/message/new-message-ribbon-ur.svg"
+        />
+        <img
+          v-else
+          class="new-message-ribbon"
+          src="@/assets/images/message/new-message-ribbon.svg"
+        />
+      </template>
 
       <div class="message-wrapper">
         <q-card-section class="title">
@@ -36,7 +43,11 @@ import { convertToGMT5Date } from "@/boot/utils";
 import LoadingComponent from "@/components/LoadingComponent.vue";
 import NoInfoComponent from "@/components/NoInfoComponent.vue";
 import { userStore } from "@/stores/index";
+import { i18nStore } from "@/router/language";
+import { storeToRefs } from "pinia";
 
+const i18nStoreLanguage = i18nStore();
+const { languageVal } = storeToRefs(i18nStoreLanguage);
 const router = useRouter();
 const store = userStore();
 const isLoading = ref(true);

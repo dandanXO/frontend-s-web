@@ -80,8 +80,8 @@ const { t } = useI18n()
 const store = useUserStore()
 
 const loginForm = reactive({
-  loginName: 'testloginname',
-  password: 'testpassword',
+  loginName: 'paul001',
+  password: '111111',
 })
 
 const toast = useToast()

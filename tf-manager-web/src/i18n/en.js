@@ -794,6 +794,7 @@ export default {
     betRebateDetails: 'Bet Rebate Record Details',
     betRebateRecord: 'Bet Rebate Record',
     betRecords: 'Bet Records',
+    betRecordsTidb: 'Bet Records TiDB',
     betStatus: 'Bet Status',
     betTime: 'Bet Time',
     betTotal: 'Total Bet',
@@ -1283,6 +1284,7 @@ export default {
     memberBankCardRecord: 'Member Bank Card Record',
     memberBetRecord: 'Member Bet Record',
     memberBetRecordByPlatform: 'Platform Bet Summary',
+    memberBetRecordByPlatformTidb: 'Platform Bet Summary TiDB',
     memberCommission: 'Member Commission',
     memberConsolidateReport: 'Member Consolidate Report',
     memberDetailDeposit: 'Total Deposit Amount',
@@ -3089,6 +3091,7 @@ export default {
     'Member Transfer Record': 'Member Transfer Record',
     'Member VIP': 'Member VIP',
     'Member Bet Record': 'Member Bet Record',
+    'Member Bet Record TiDB': 'Member Bet Record TiDB',
     'PG Pending': 'PG Pending Records',
     'Member Privilege': 'Member Privilege',
     'Member Rollover Record': 'Member Rollover Record',
@@ -3375,6 +3378,8 @@ export default {
     'Member Privilege Record Pak Export': 'Member Privilege Record Pak Export',
     'Refer Spin Claim Record': 'Refer Spin Claim Record',
     'Refer Spin Record': 'Refer Spin Record',
+    'Official CS Account': 'Official CS Account',
+    'Site Note': 'Notes'
   },
   google: {
     google_auth_menu: 'Google Authenticator',
