@@ -18,12 +18,12 @@
           <img src="../../assets/images/index/download/benefits-emoji.png" alt="" />
         </div>
         <div class="more-benefits-txt">{{ $t("modal.addToHomeScreen.enjoyMoreBenefits") }}</div>
-        <q-btn v-if="Platform.is.ios" no-caps unelevated class="btn-secondary" @click="handleIosBtnClick">
+        <q-btn v-if="Platform.is.ios" no-caps unelevated class="btn-custom" color="#EFFFD1" @click="handleIosBtnClick">
           <img class="os-logo" src="../../assets/images/index/download/ios-logo.png" />
           {{ $t("modal.addToHomeScreen.appAndWeb") }}
         </q-btn>
-        <q-btn v-else no-caps unelevated class="btn-primary" :href="ui.downloadAppUrl" @click="closeDialog">
-          <img class="os-logo" src="../../assets/images/index/download/android-logo-black.png" />
+        <q-btn v-else no-caps unelevated class="btn-custom" color="#EFFFD1" :href="ui.downloadAppUrl" @click="closeDialog">
+          <img class="os-logo" src="../../assets/images/index/download/android-logo-green.png" />
           {{ $t("modal.addToHomeScreen.app") }}
         </q-btn>
       </div>
@@ -83,18 +83,22 @@ watch(
   background-position: top center;
   background-size: cover;
   background-color: #fff;
-  border-top-left-radius: 36px;
-  border-top-right-radius: 36px;
+  // border-top-left-radius: 36px;
+  // border-top-right-radius: 36px;
+  border-radius: 36px !important;
+  margin: 10px;
   color: #000;
   padding: 32px 16px 16px;
 
   .add-to-homescreen-download {
     position: absolute;
-    top: -80px;
+    top: -60px;
     display: flex;
     justify-content: center;
     width: 100%;
-    margin-left: -12px;
+    left: 0;
+    right: 0;
+    margin: auto;
     img {
       display: block;
       width: 100%;
@@ -105,20 +109,20 @@ watch(
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 15px;
     .app-logo {
       width: 76px;
       height: 76px;
-      margin-right: 15px;
     }
     .add-to-homescreen-content {
-      margin-right: 15px;
+      // margin-right: 15px;
       // font-weight: 600;
       font-size: 14px;
     }
   }
 
   .continue-to-h5 {
-    color: #24ee89;
+    color: #82D81D;
     text-decoration: none;
     font-weight: 600;
     width: 100%;
@@ -132,11 +136,11 @@ watch(
     position: relative;
     .more-benefits-emoji {
       position: absolute;
-      top: -48px;
+      top: -60px;
       right: 0;
       img {
         display: block;
-        width: 44px;
+        width: 46px;
       }
     }
     .more-benefits-txt {
@@ -164,41 +168,49 @@ watch(
     }
   }
 
-  .btn-primary {
-    background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-    box-shadow: 0px 2.16px 0px 0px #1cca6a;
-    color: #333;
-    font-size: 16px;
-    height: 46px;
-    border-radius: 24px;
-    text-transform: uppercase;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
+  // .btn-primary {
+  //   background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+  //   box-shadow: 0px 2.16px 0px 0px #1cca6a;
+  //   color: #333;
+  //   font-size: 16px;
+  //   height: 46px;
+  //   border-radius: 24px;
+  //   text-transform: uppercase;
+  //   width: 80%;
+  //   margin-left: auto;
+  //   margin-right: auto;
+  //   display: flex;
+  // }
+  .btn-custom {
+    background: url('../../assets/images/index/continue-btn-bg.png')no-repeat center center;
+    width: 70%;
+    margin: 0 auto;
+    background-size: cover;
+    padding: 5px;
     display: flex;
   }
-  .btn-secondary {
-    background-color: transparent;
-    color: #333;
-    font-size: 16px;
-    height: 46px;
-    // border: 1px solid #4488ff;
-    border-radius: 10px;
-    width: 80%;
-    background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-    box-shadow: 0px 2.16px 0px 0px #1cca6a;
-    border-radius: 24px;
-    text-transform: uppercase;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-  }
-  .btn-secondary::before {
-    background: none;
-  }
+  // .btn-secondary {
+  //   background-color: transparent;
+  //   color: #333;
+  //   font-size: 16px;
+  //   height: 46px;
+  //   // border: 1px solid #4488ff;
+  //   border-radius: 10px;
+  //   width: 80%;
+  //   background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+  //   box-shadow: 0px 2.16px 0px 0px #1cca6a;
+  //   border-radius: 24px;
+  //   text-transform: uppercase;
+  //   margin-left: auto;
+  //   margin-right: auto;
+  //   display: flex;
+  // }
+  // .btn-secondary::before {
+  //   background: none;
+  // }
 
   .os-logo {
-    width: 30px;
+    // width: 30px;
     height: 30px;
     margin-right: 8px;
     filter: grayscale(1);

@@ -806,7 +806,7 @@ export default defineComponent({
   margin: 0 auto;
 
   .q-tab {
-    min-height: 45px;
+    min-height: 44px;
     border-radius: 8px;
     color: #ffffff80;
     font-weight: 400;

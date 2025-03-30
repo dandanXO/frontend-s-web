@@ -84,6 +84,7 @@ watch(
 
     :deep(.q-tab) {
       color: #ffffff80;
+      min-height: unset;
       // color: #5F6061;
       // // background: #101114;
       // border-radius: 0.375rem;

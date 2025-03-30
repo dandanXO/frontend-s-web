@@ -1356,21 +1356,35 @@ watch(
   margin: 1rem 0 0.5rem 0;
 
   .bank-card-item {
-    padding: 8px;
-    border-radius: 8px;
-    position: relative;
-    transition: 0.3s all;
+    // padding: 8px;
+    // border-radius: 8px;
+    // position: relative;
+    // transition: 0.3s all;
+    // width: 100%;
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
+    // color: #150025;
+    // background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+    // box-shadow: 0px 2px 0px 0px #1cca6a;
+    // text-transform: uppercase;
+    
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #150025;
+    height: 40px;
     background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+    color: #000000;
     box-shadow: 0px 2px 0px 0px #1cca6a;
+    font-weight: 700;
+    border-radius: 4px;
+    border: 1px solid #21ef89;
+    padding: 5px;
+    min-width: 68px;
     text-transform: uppercase;
-
     .card-label {
-      font-size: 1rem;
+      font-size: 1.2rem;
       font-weight: 700;
     }
 

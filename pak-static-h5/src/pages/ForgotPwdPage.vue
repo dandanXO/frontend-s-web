@@ -209,7 +209,7 @@
                 </template>
               </InputField>
 
-              <InputField :label="$t('form.verificationCode')">
+              <!-- <InputField :label="$t('form.verificationCode')">
                 <template #input>
                   <q-input
                     ref="captchaRef"
@@ -228,7 +228,7 @@
                     </template>
                   </q-input>
                 </template>
-              </InputField>
+              </InputField> -->
 
               <InputField v-if="passwordForm.smsCodeId" :label="$t('form.otp_form')">
                 <template #input>
@@ -489,7 +489,7 @@
                 </template>
               </InputField>
 
-              <InputField :label="$t('form.verificationCode')">
+              <!-- <InputField :label="$t('form.verificationCode')">
                 <template #input>
                   <q-input
                     ref="captchaRef"
@@ -508,7 +508,7 @@
                     </template>
                   </q-input>
                 </template>
-              </InputField>
+              </InputField> -->
 
               <InputField v-if="passwordForm.smsCodeId" :label="$t('form.otp_form')">
                 <template #input>
@@ -857,19 +857,19 @@ const onSubmitForgotPwd = (type) => {
 const onVerifyForgotPassword = (type) => {
   codeRef.value.validate();
   newPwdRef.value.validate();
-  captchaRef.value.validate();
 
   $q.loading.show({
     message: t('notify.submitting')
   });
 
-  if (codeRef.value.hasError || newPwdRef.value.hasError || captchaRef.value.hasError) {
+  if (codeRef.value.hasError || newPwdRef.value.hasError) {
     $q.loading.hide();
   } else {
     if (type === 'phone') {
       verificationForm.codeId = SessionStorage.getItem("phoneCodeId");
       // verificationForm.email = passwordForm.email;
       verificationForm.phone = passwordForm.phone;
+      // verificationForm.captchaCode = SessionStorage.getItem("phoneCaptchaCode");
 
       api
         .post("/otp/verifyForgetPasswordPhone", qs.stringify(verificationForm))
@@ -924,7 +924,7 @@ const onVerifyForgotPassword = (type) => {
 const verificationForm = reactive({
   // phone: "",
   code: "",
-  captchaCode: "",
+  // captchaCode: "",
   codeId: currentTab.value === 'email' ? SessionStorage.getItem("emailCodeId") : SessionStorage.getItem("phoneCodeId"),
   newPassword: ""
 });

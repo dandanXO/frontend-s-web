@@ -8,9 +8,14 @@
   <div class="msg-detail-container">
     <div class="send-time">{{ mailDataRef.sendTime && convertToGMT55(mailDataRef.sendTime) }}</div>
     <div class="header">
-      <div class="title">{{ mailDataRef.title }}</div>
+      <div class="title">
+        <span v-html="mailDataRef.title"></span>
+      </div>
     </div>
-    <div class="content">{{ mailDataRef.content }}</div>
+    <div class="content">
+      
+      <span v-html="mailDataRef.content"></span>
+    </div>
   </div>
 </template>
 

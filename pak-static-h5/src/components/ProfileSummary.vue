@@ -698,7 +698,7 @@ onUnmounted(() => {
     &.home-profile {
       position: relative;
       width: 100%;
-      gap: 10px;
+      gap: 5px;
       justify-content: space-between;
       align-items: center;
       padding: 0 12px;
@@ -932,11 +932,10 @@ onUnmounted(() => {
 
   .profile-menu {
     display: flex;
-    padding: 5px;
-
+    // padding: 5px;
     img {
       display: block;
-      width: 40px;
+      width: 35px;
     }
   }
 

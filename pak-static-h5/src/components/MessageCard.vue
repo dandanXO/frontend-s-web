@@ -5,9 +5,9 @@
         <div class="new-message-ribbon" v-if="!message.readTime"></div>
       </div>
   
-      <q-card-section class="title">{{ message.title }}</q-card-section>
+      <q-card-section class="title"><span v-html="message.title"></span></q-card-section>
       <q-card-section class="content">
-        <span>{{ shortenedContent }}</span>
+        <span v-html="shortenedContent"></span>
         <q-btn v-if="isLongContent" @click="expand = !expand" flat color="primary" size="sm">
           <!-- {{ expand ? "Show Less" : "Show More" }} -->
         </q-btn>

@@ -128,7 +128,7 @@ onActivated(() => {
     width: calc(100% - 32px);
     margin: 16px auto 0;
     .q-tab {
-      min-height: 45px;
+      min-height: 44px;
       border-radius: 8px;
       color: #ffffff80;
       font-weight: 400;
