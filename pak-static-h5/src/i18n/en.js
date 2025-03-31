@@ -233,14 +233,17 @@ export default {
     telegramDiscordId_placeholder: "Enter the Telegram Discord ID",
     telegramDiscordId_rules_01: "Please insert the Telegram Discord ID",
     redemptionBonusAmount: "Bonus amount",
-    "followSteps": "Please follow the steps below:",
-    "subscribeWhatsapp": "Subscribe to the official WhatsApp channel to receive your reward code. (Limited quantity, first come first served!)",
-    "enterBonusCode": "Enter the bonus code on this page. Once redeemed, the bonus will be credited directly to your account and can be used immediately.",
-    "redeemWithinValidity": "Redeem the code within the validity period.",
-    "wagerRequirement": "Wager 1x the bonus amount before withdrawing your winnings.",
-    "redemptionFailure": "Redemption may fail if eligibility conditions are not met. System verification is final.",
-    "accountOwnerOnly": "Only the account owner can redeem the code.",
-    "unauthorizedMethods": "Using bots, cheating, or any unauthorized methods will result in a ban and forfeiture of the bonus."
+    followSteps: "Please follow the steps below:",
+    subscribeWhatsapp:
+      "Subscribe to the official WhatsApp channel to receive your reward code. (Limited quantity, first come first served!)",
+    enterBonusCode:
+      "Enter the bonus code on this page. Once redeemed, the bonus will be credited directly to your account and can be used immediately.",
+    redeemWithinValidity: "Redeem the code within the validity period.",
+    wagerRequirement: "Wager 1x the bonus amount before withdrawing your winnings.",
+    redemptionFailure: "Redemption may fail if eligibility conditions are not met. System verification is final.",
+    accountOwnerOnly: "Only the account owner can redeem the code.",
+    unauthorizedMethods:
+      "Using bots, cheating, or any unauthorized methods will result in a ban and forfeiture of the bonus."
   },
   btn: {
     login: "Login",
@@ -308,7 +311,7 @@ export default {
     tryagain: "Please try again after {seconds} seconds",
     submitting: "Submitting...",
     sendingVerificationCode: "Sending verification code...",
-    passwordResetCompleted: "Password reset completed",
+    passwordResetCompleted: "Password reset completed"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -386,13 +389,17 @@ export default {
     picture: "Picture",
     video: "Video",
     mindepositnotcredit: "Minimum deposit: 10USDT, deposits less than 10USDT will not be credited.",
-    depositnotrecovered: "Do not deposit any non-currency assets to the above address, or the assets will not be recovered.",
-    operatingSafe: "Please confirm that the operating environment is safe to avoid information being tampered with or leaked.",
-    transferAmountMatch: "The transfer amount must match the order you created, otherwise the money cannot be credited successfully.",
+    depositnotrecovered:
+      "Do not deposit any non-currency assets to the above address, or the assets will not be recovered.",
+    operatingSafe:
+      "Please confirm that the operating environment is safe to avoid information being tampered with or leaked.",
+    transferAmountMatch:
+      "The transfer amount must match the order you created, otherwise the money cannot be credited successfully.",
     donotcanceldeposit: "Note: do not cancel the deposit order after the money has been transferred.",
     fillinwallet: "Fill in the correct wallet account number",
     fillincnic: "Fill in the correct CNIC number",
-    submittedAmtConsistent: "The submitted amount must be consistent with the payment amount, otherwise it will not be automatically credited."
+    submittedAmtConsistent:
+      "The submitted amount must be consistent with the payment amount, otherwise it will not be automatically credited."
   },
   withdraw: {
     cashBalance: "Cash Balance",
@@ -402,15 +409,18 @@ export default {
     dailyLimit: "Daily Limit",
     remainWagers: "Remain Wagers",
     withdrawTutorial: "Withdraw Tutorial",
-    withdrawalMethodInMaintenance: "This channel is currently under maintenance from {startTime} to {endTime}. Please use other channels for withdrawal operations. Thank you!",
+    withdrawalMethodInMaintenance:
+      "This channel is currently under maintenance from {startTime} to {endTime}. Please use other channels for withdrawal operations. Thank you!",
     noAcctAvailable: "No account available",
     addAcct: "Add account",
     picture: "Picture",
     video: "Video",
     bindCardCorrectFormat: "Bind your wallet/bank card using the correct format.",
-    dailyWalletLimit: "Daily wallet limit: PKR 50,000. Do not exceed this limit. You can add multiple wallets for withdrawals.",
-    donotexceeddaily: "Daily bank card limit: PKR 500,000. Do not exceed this limit. You can add multiple bank cards for withdrawals.",
-    blockchainwithdrawfast: "For blockchain wallet (USDT) withdrawals, there is no limit, and transfers are very fast.",
+    dailyWalletLimit:
+      "Daily wallet limit: PKR 50,000. Do not exceed this limit. You can add multiple wallets for withdrawals.",
+    donotexceeddaily:
+      "Daily bank card limit: PKR 500,000. Do not exceed this limit. You can add multiple bank cards for withdrawals.",
+    blockchainwithdrawfast: "For blockchain wallet (USDT) withdrawals, there is no limit, and transfers are very fast."
   },
   bank: {
     virtualWallet: "eWallet",
@@ -503,7 +513,7 @@ export default {
       totalAmountSentAsOfYesterday: "Total amount sent as of yesterday",
       player: "Player",
       money: "Money",
-      eligibility_tips: "1. Invitee's deposit must be ≥ 300.",
+      eligibility_tips: "1. The invitee's deposit must be ≥ 300 or have a valid bet turnover of 1000.",
       betting_tips:
         "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
       deposit_tips: "Deposit Commission: <br />Earn a 5% rebate on the first deposit of each new member you refer.",
@@ -773,17 +783,17 @@ export default {
     copyFailed: "Failed to copy link",
     next: "Next",
     service: "Service",
-    "deposit1": "Click on wallet in the menu",
-    "deposit2": "Select deposit tab",
-    "deposit3": "Select bank",
-    "deposit4": "Update amount and click Submit",
-    "refer1": "How to earn money by sharing invitations",
-    "refer2": "Click on earn money in the menu",
-    "refer3": "Invite friends through the link",
-    "withdraw1": "Click on wallet in the bottom menu",
-    "withdraw2": "Select withdrawal tab",
-    "withdraw3": "Enter withdrawal amount",
-    "withdraw4": "Confirm withdrawal request",
+    deposit1: "Click on wallet in the menu",
+    deposit2: "Select deposit tab",
+    deposit3: "Select bank",
+    deposit4: "Update amount and click Submit",
+    refer1: "How to earn money by sharing invitations",
+    refer2: "Click on earn money in the menu",
+    refer3: "Invite friends through the link",
+    withdraw1: "Click on wallet in the bottom menu",
+    withdraw2: "Select withdrawal tab",
+    withdraw3: "Enter withdrawal amount",
+    withdraw4: "Confirm withdrawal request",
     bankTransfer: "Bank transfer",
     digitalCurrency: "digital currency",
     bankAccountWithdrawal: "Bank account withdrawal",
@@ -805,34 +815,35 @@ export default {
     activities: "Activities",
     current_valid_bets: "Current Valid Bets",
     remainingTimes: "Remaining times",
-    "promoExclusionNotice": "Notice: This promotion is not counted towards CASINO and SPORTS wager!",
+    promoExclusionNotice: "Notice: This promotion is not counted towards CASINO and SPORTS wager!",
     deposit: "Deposit",
-    "dailyWagerCount": "Number of daily wager",
+    dailyWagerCount: "Number of daily wager",
     deposits_of_the_day: "Deposits of the day",
-    "currentSignIn": "Current Sign-in",
-    "consecutiveDepositBonus": "The more consecutive days of deposit requirements you complete, the more extra bonus you will get.",
+    currentSignIn: "Current Sign-in",
+    consecutiveDepositBonus:
+      "The more consecutive days of deposit requirements you complete, the more extra bonus you will get.",
     save_image: "Save Image",
     share: "Share",
     CASH_OUT_COSTS: "CASH OUT COSTS",
     invitation_wins: "Invitation wins",
     next_round: "Next Round",
     countdown: "Countdown",
-    "invitationRecords": "Invitation records",
-    "lotteryRecords": "Lottery records",
-    "noRecords": "No Records",
+    invitationRecords: "Invitation records",
+    lotteryRecords: "Lottery records",
+    noRecords: "No Records",
     activityRules: "Activity rules",
     record: "Record",
     rules: "Rules",
     countdown_to_next_free_spins: "Countdown to next free spins",
     this_round_has_ended: "This round has ended.",
     invite_to_earn_spin: "Invite to earn spin",
-    "time": "time",
+    time: "time",
     rotate: "rotate",
     no_records: "No records",
     receive: "Receive",
     received: "Received",
     time_left: "time left",
-    go_withdraw_now:"Go withdraw now",
+    go_withdraw_now: "Go withdraw now",
     rs: "RS",
     withdraw_money_over_rs: "Withdraw money over Rs",
     claim_now: "Claim now",
@@ -1099,22 +1110,30 @@ export default {
     58005: "Congrats, You have Completed All Tasks"
   },
   content: {
-    title1:"The registration time starts from the time the registration is completed.",
-    "message1": "When the accumulated amount reaches 1000 PKR, you can apply for a withdrawal (the reward will be directly added to your wallet).",
-    "message2": "When there are no available spins, referring a new player to register and deposit will earn you free spins.",
-    "message3": "The event lasts for 3 days. After the event ends, the accumulated rewards will be reset, and the event will restart.",
-    "message4": "Each user can enjoy one free spin per day, which will be added at 00:00 daily.",
-    "message5": "Once the application is approved, the bonus will be directly credited to your wallet.",
-    "message6": "The bonus must be rolled over once before it can be withdrawn.",
-    "message7": "The invitee must verify their phone number, register using the inviter's referral link, and must not have a duplicate IP address to qualify for the referral.",
-    "aviatorPromoIntro": "Enjoy the thrill of betting with Aviator! Your Aviator can win a staggering 3,216x with just one click! The prize pool for the top 50 is 1,250,000 PKR!",
-    "aviatorGoldenEgg": "When betting in Aviator every day, when the effective betting amount reaches 888 PKR, you can get the chance to smash the golden egg (SUNEHRI ANDY). Maximum reward: 88,888 PKR, the probability of winning is 3.6%",
-    "aviatorTopTurnover": "When betting on Aviator, the player with the highest cumulative turnover will qualify for first place.",
-    "cashRainIntro": "Each round of cash rain freely distributes 666,666 PKR.",
-    "cashRainMaxPerRound": "Maximum cashback amount per round: 66,666 PKR.",
-    "cashRainFreeDistribution": "Each round freely distributes cashback.",
-    "cashRainClaimCondition": "Maintain a historical deposit of ≥300 PKR and complete daily bets of ≥100+ PKR to claim your reward for free.",
-    "cashRainUsage": "The received money can be directly used for playing games or withdrawing.",
-    "cashRainVIP": "The higher the VIP membership level, the greater the amount received."
+    title1: "The registration time starts from the time the registration is completed.",
+    message1:
+      "When the accumulated amount reaches 1000 PKR, you can apply for a withdrawal (the reward will be directly added to your wallet).",
+    message2:
+      "When there are no available spins, referring a new player to register and deposit will earn you free spins.",
+    message3:
+      "The event lasts for 3 days. After the event ends, the accumulated rewards will be reset, and the event will restart.",
+    message4: "Each user can enjoy one free spin per day, which will be added at 00:00 daily.",
+    message5: "Once the application is approved, the bonus will be directly credited to your wallet.",
+    message6: "The bonus must be rolled over once before it can be withdrawn.",
+    message7:
+      "The invitee must verify their phone number, register using the inviter's referral link, and must not have a duplicate IP address to qualify for the referral.",
+    aviatorPromoIntro:
+      "Enjoy the thrill of betting with Aviator! Your Aviator can win a staggering 3,216x with just one click! The prize pool for the top 50 is 1,250,000 PKR!",
+    aviatorGoldenEgg:
+      "When betting in Aviator every day, when the effective betting amount reaches 888 PKR, you can get the chance to smash the golden egg (SUNEHRI ANDY). Maximum reward: 88,888 PKR, the probability of winning is 3.6%",
+    aviatorTopTurnover:
+      "When betting on Aviator, the player with the highest cumulative turnover will qualify for first place.",
+    cashRainIntro: "Each round of cash rain freely distributes 666,666 PKR.",
+    cashRainMaxPerRound: "Maximum cashback amount per round: 66,666 PKR.",
+    cashRainFreeDistribution: "Each round freely distributes cashback.",
+    cashRainClaimCondition:
+      "Maintain a historical deposit of ≥300 PKR and complete daily bets of ≥100+ PKR to claim your reward for free.",
+    cashRainUsage: "The received money can be directly used for playing games or withdrawing.",
+    cashRainVIP: "The higher the VIP membership level, the greater the amount received."
   }
 };
