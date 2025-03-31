@@ -17,6 +17,8 @@ const fs = require("fs-extra");
 const isImageCompress = true;
 
 const ImageminPlugin = require("imagemin-webpack-plugin").default;
+const IgnorePlugin = require("webpack").IgnorePlugin;
+const NormalModuleReplacementPlugin = require("webpack").NormalModuleReplacementPlugin;
 
 module.exports = configure(function (ctx) {
   return {
@@ -72,7 +74,7 @@ module.exports = configure(function (ctx) {
       // preloadChunks: true,
       // showProgress: false,
       // gzip: true,
-      // analyze: true,
+      analyze: true,
 
       // Options below are automatically set depending on the env, set them if you want to override
       // extractCSS: false,
@@ -95,6 +97,18 @@ module.exports = configure(function (ctx) {
 
       chainWebpack(chain) {
         chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
+        chain.plugin("ignore-plugin").use(IgnorePlugin, [
+          {
+            resourceRegExp: /^\.\/locale$/,
+            contextRegExp: /moment$/
+          }
+        ]);
+        chain
+          .plugin("normal-module-replacement-plugin")
+          .use(NormalModuleReplacementPlugin, [
+            /moment-timezone\/data\/packed\/latest.json/,
+            require.resolve(path.resolve(__dirname, "misc/timezone.json"))
+          ]);
 
         // Add Image Compression
         if (process.env.NODE_ENV === "production" && isImageCompress) {
