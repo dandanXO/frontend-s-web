@@ -24,7 +24,7 @@
         </div>
         <div class="livepoker-rebate-section-right">
           <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
-            <img src="../../../assets/promo/lh-livepoker-rebate/reward-btn.png" alt="" width="100%" />
+            <img src="../../../assets/promo/lh-livepoker-rebate/new-reward-btn.png" alt="" width="100%" />
           </div>
         </div>
       </div>
