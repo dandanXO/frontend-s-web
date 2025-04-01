@@ -309,17 +309,17 @@ const routes = [
     ],
     meta: { requiresAuth: true }
   },
-  {
-    path: "/account/promotion",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/account/PromotionView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
+  // {
+  //   path: "/account/promotion",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [
+  //     {
+  //       path: "",
+  //       component: () => import("pages/account/PromotionView.vue")
+  //     }
+  //   ],
+  //   meta: { requiresAuth: true }
+  // },
   {
     path: "/deposit",
     component: () => import("layouts/MainLayout.vue"),
