@@ -1531,15 +1531,15 @@
   />
 
   <q-dialog class="isCentreDialog" v-model="isShowPrizeModal">
-    <div class="congrats-container">
+    <div class="congrats-container" :class="{ ur: languageVal === 'ur' }">
       <q-btn icon="close" round dense v-close-popup class="congrats-close" />
-      <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div>
-      <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-coupons.png" /></div>
-      <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
+      <!-- <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div> -->
+      <!-- <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-coupons.png" /></div> -->
+      <!-- <div class="congrats-title">You get a coupon，Recharge $300 Get</div> -->
       <div class="congrats-highlight">Rs28</div>
 
       <div class="congrats-button">
-        <q-btn no-caps unelevated class="btn-primary" :loading="false" @click="router.push('/deposit?from=/home')">
+        <q-btn no-caps unelevated class="recharge-btn" :loading="false" @click="router.push('/deposit?from=/home')">
           {{ $t("btn.recharge") }}
         </q-btn>
       </div>
@@ -1661,6 +1661,11 @@ import { storeToRefs } from "pinia";
 
 import CongratsReuseableModal from "src/components/modal/CongratsReuseableModal.vue";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
+import { i18nStore } from "src/router/language";
+
+const i18nStoreLanguage = i18nStore();
+const { languageVal } = storeToRefs(i18nStoreLanguage);
+
 const scaleValue = ref(1);
 let lastScrollTop = 0;
 const isShowStickyIcons = ref(true);
@@ -6109,9 +6114,10 @@ const checkGoogleLoginSetPwd = () => {
 // }
 
 .congrats-button {
-  display: flex;
-  justify-content: center;
-  margin-top: 16px;
+  position: absolute;
+  bottom: 0%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .congrats-wrapper {
@@ -6123,26 +6129,32 @@ const checkGoogleLoginSetPwd = () => {
 }
 
 .congrats-container {
-  background-color: #113413;
-  max-width: 400px;
-  width: 100%;
+  background: url(../assets/images/index/modal/prize-modal-bg.png) center center no-repeat;
+  background-size: 100% 100%;
+  aspect-ratio: 738/923;
+  width: 375px;
+  height: 469px;
   padding: 16px;
   position: relative;
   overflow: visible;
-  border-radius: 12px;
 
-  &:before {
-    content: "";
-    background-image: url(../assets/images/index/modal/congrats-container-light.png);
+  &.ur {
+    background: url(../assets/images/index/modal/prize-modal-bg-ur.png) center center no-repeat;
     background-size: 100% 100%;
-    background-position: center center;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 150px;
-    position: absolute;
-    left: 0;
-    top: -150px;
   }
+
+  // &:before {
+  //   content: "";
+  //   background-image: url(../assets/images/index/modal/congrats-container-light.png);
+  //   background-size: 100% 100%;
+  //   background-position: center center;
+  //   background-repeat: no-repeat;
+  //   width: 100%;
+  //   height: 150px;
+  //   position: absolute;
+  //   left: 0;
+  //   top: -150px;
+  // }
 
   .congrats-header {
     display: flex;
@@ -6176,7 +6188,12 @@ const checkGoogleLoginSetPwd = () => {
   }
 
   .congrats-highlight {
-    color: #fff96f;
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    color: #CF3AFF;
     font-size: 26px;
     font-weight: bold;
     text-align: center;
@@ -6186,6 +6203,14 @@ const checkGoogleLoginSetPwd = () => {
     background-size: 70% 100%;
     background-position: center;
     margin-top: 16px;
+  }
+
+  .recharge-btn {
+    background: url(../assets/images/index/modal/download-now-btn-bg.png) center center no-repeat;
+    background-size: 100% 100%;
+    aspect-ratio: 389/139;
+    width: 130px;
+    height: 45px
   }
 }
 
