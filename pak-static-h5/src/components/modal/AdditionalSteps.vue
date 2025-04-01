@@ -1,5 +1,9 @@
 <template>
-  <div style="padding-bottom: env(safe-area-inset-bottom);" class="abs-container" :class="`abs-${localType}-${localStep}`">
+  <div
+    style="padding-bottom: env(safe-area-inset-bottom)"
+    class="abs-container"
+    :class="`abs-${localType}-${localStep}`"
+  >
     <div class="player-guide" :class="`${localType}-mode`">
       <div class="steps-portion" :class="`steptopmain-${currentAdditionalStep} ${localType}-mode`">
         <!-- <img class="abs-line" :class="`${localType} step-${localStep}`" v-if="localType === 'deposit'" :src="require(`../../assets/images/newplayerguide/line-${localType}-${localStep}.png`)"> -->
@@ -35,15 +39,17 @@
               {{ currentAdditionalStep }} / {{ currentSteps.length }}
             </div>
             <div class="buttons">
-            <div
-              @click="updateCurrentAdditionalStep"
-              :class="{ whand: localType === 'refer' && localStep === 1 }"
-              class="bottom-button"
-            >
-              {{ localType === "refer" && localStep === 1 ? $t("playerGuide.tryItOut") : $t("playerGuide.next") }}
+              <div
+                @click="updateCurrentAdditionalStep"
+                :class="{ whand: localType === 'refer' && localStep === 1 }"
+                class="bottom-button"
+              >
+                {{ localType === "refer" && localStep === 1 ? $t("playerGuide.tryItOut") : $t("playerGuide.next") }}
+              </div>
+              <div @click="updateToWithdrawStep" class="next-button" v-if="localType === 'refer' && localStep === 1">
+                {{ $t("playerGuide.next") }}
+              </div>
             </div>
-            <div @click="updateToWithdrawStep" class="next-button" v-if="localType === 'refer' && localStep === 1">{{ $t("playerGuide.next") }}</div>
-          </div>
           </div>
         </div>
       </div>
@@ -95,25 +101,25 @@ const localTypeStep = () => {
 };
 // Deposit steps
 const additionalDepSteps = ref([
-  { step: 1, instruction: t('playerGuide.deposit1') },
-  { step: 2, instruction: t('playerGuide.deposit2') },
-  { step: 3, instruction: t('playerGuide.deposit3') },
-  { step: 4, instruction: t('playerGuide.deposit4') }
+  { step: 1, instruction: t("playerGuide.deposit1") },
+  { step: 2, instruction: t("playerGuide.deposit2") },
+  { step: 3, instruction: t("playerGuide.deposit3") },
+  { step: 4, instruction: t("playerGuide.deposit4") }
 ]);
 
 // Referral steps
 const additionalReferSteps = ref([
-  { step: 1, instruction: t('playerGuide.refer1') },
-  { step: 2, instruction: t('playerGuide.refer2') },
-  { step: 3, instruction: t('playerGuide.refer3') }
+  { step: 1, instruction: t("playerGuide.refer1") },
+  { step: 2, instruction: t("playerGuide.refer2") },
+  { step: 3, instruction: t("playerGuide.refer3") }
 ]);
 
 // Withdrawal steps
 const additionalWithdrawSteps = ref([
-  { step: 1, instruction: t('playerGuide.withdraw1') },
-  { step: 2, instruction: t('playerGuide.withdraw2') },
-  { step: 3, instruction: t('playerGuide.withdraw3') },
-  { step: 4, instruction: t('playerGuide.withdraw4') }
+  { step: 1, instruction: t("playerGuide.withdraw1") },
+  { step: 2, instruction: t("playerGuide.withdraw2") },
+  { step: 3, instruction: t("playerGuide.withdraw3") },
+  { step: 4, instruction: t("playerGuide.withdraw4") }
 ]);
 
 // Dynamically determine which steps to use
@@ -127,7 +133,7 @@ const updateToWithdrawStep = () => {
   emit("closeGuide", true);
   localStorage.setItem(`completedreferguide`, JSON.stringify(true));
   localStorage.setItem(`newPlayerGuide`, 5);
-}
+};
 const updateCurrentAdditionalStep = () => {
   // debugger;
   if (localType.value === "deposit") {
@@ -187,14 +193,14 @@ const updateCurrentAdditionalStep = () => {
   margin: auto;
   max-height: 100dvh; /* Ensure content does not get cut off */
   // overscroll-behavior: contain;
-    // &.abs-refer-3 {
-    //   top: 860px;
-    // }
-    // &.abs-withdraw-3 {
-      
-    //   top: 175px;
+  // &.abs-refer-3 {
+  //   top: 860px;
+  // }
+  // &.abs-withdraw-3 {
 
-    // }
+  //   top: 175px;
+
+  // }
   .main-highlight-box {
     width: 100%;
     position: absolute;
@@ -472,7 +478,10 @@ const updateCurrentAdditionalStep = () => {
       z-index: 9999;
       &.deposit {
         &.step-1 {
-          @media screen  and (min-width: 360px) and (max-width: 375px) {
+          width: 49%;
+          top: 95%;
+          left: 30%;
+          @media screen and (min-width: 360px) and (max-width: 375px) {
             width: 18vh;
             top: 54vh;
             left: 18vh;
@@ -482,12 +491,12 @@ const updateCurrentAdditionalStep = () => {
             top: 60svh;
             left: 30svh;
           }
-          width: 49%;
-          top: 95%;
-          left: 30%;
         }
         &.step-2 {
-          @media screen  and (min-width: 360px) and (max-width: 375px) {
+          width: 40dvh;
+          top: -14dvh;
+          left: -6dvh;
+          @media screen and (min-width: 360px) and (max-width: 375px) {
             width: 36svh;
             top: -3svh;
             left: 2svh;
@@ -497,12 +506,12 @@ const updateCurrentAdditionalStep = () => {
             top: -3svh;
             left: 2svh;
           }
-          width: 40dvh;
-          top: -14dvh;
-          left: -6dvh;
         }
         &.step-3 {
-          @media screen  and (min-width: 360px) and (max-width: 375px) {
+          width: 14svh;
+          left: 3svh;
+          top: -12svh;
+          @media screen and (min-width: 360px) and (max-width: 375px) {
             width: 16svh;
             left: 5svh;
             top: -9svh;
@@ -512,12 +521,12 @@ const updateCurrentAdditionalStep = () => {
             top: -11svh;
             left: 8svh;
           }
-          width: 14svh;
-          left: 3svh;
-          top: -12svh;
         }
         &.step-4 {
-          @media screen  and (min-width: 360px) and (max-width: 375px) {
+          width: 27dvh;
+          top: 38dvh;
+          left: 11dvh;
+          @media screen and (min-width: 360px) and (max-width: 375px) {
             width: 16svh;
             left: 20svh;
             top: 51svh;
@@ -527,14 +536,15 @@ const updateCurrentAdditionalStep = () => {
             top: 57svh;
             left: 29svh;
           }
-          width: 27dvh;
-          top: 38dvh;
-          left: 11dvh;
         }
       }
       &.refer {
         &.step-2 {
-          @media screen  and (min-width: 360px) and (max-width: 375px) {
+          width: 15dvh;
+          top: 45dvh;
+          left: 15dvh;
+          transform: rotate(25deg);
+          @media screen and (min-width: 360px) and (max-width: 375px) {
             width: 10svh;
             left: 23svh;
             top: 53svh;
@@ -544,14 +554,12 @@ const updateCurrentAdditionalStep = () => {
             top: 59svh;
             left: 29svh;
           }
-          width: 15dvh;
-          top: 45dvh;
-          left: 15dvh;
-          transform: rotate(25deg);
         }
         &.step-3 {
-          
-          @media screen  and (min-width: 360px) and (max-width: 375px) {
+          width: 43dvh;
+          top: -15dvh;
+          left: 0dvh;
+          @media screen and (min-width: 360px) and (max-width: 375px) {
             width: 38svh;
             left: 5svh;
             top: -4svh;
@@ -561,14 +569,14 @@ const updateCurrentAdditionalStep = () => {
             left: 8svh;
             top: -3svh;
           }
-          width: 43dvh;
-          top: -15dvh;
-          left: 0dvh;
         }
       }
       &.withdraw {
         &.step-1 {
-          @media screen  and (min-width: 360px) and (max-width: 375px) {
+          width: 49%;
+          top: 95%;
+          left: 30%;
+          @media screen and (min-width: 360px) and (max-width: 375px) {
             width: 18vh;
             top: 54vh;
             left: 18vh;
@@ -578,13 +586,13 @@ const updateCurrentAdditionalStep = () => {
             top: 60svh;
             left: 30svh;
           }
-          width: 49%;
-          top: 95%;
-          left: 30%;
         }
-        
+
         &.step-2 {
-          @media screen  and (min-width: 360px) and (max-width: 375px) {
+          width: 37dvh;
+          top: -14dvh;
+          left: 4dvh;
+          @media screen and (min-width: 360px) and (max-width: 375px) {
             width: 40svh;
             top: -10svh;
             left: 8svh;
@@ -594,12 +602,12 @@ const updateCurrentAdditionalStep = () => {
             top: -12svh;
             left: 10svh;
           }
-          width: 37dvh;
-          top: -14dvh;
-          left: 4dvh;
         }
         &.step-3 {
-          @media screen  and (min-width: 360px) and (max-width: 375px) {
+          width: 13dvh;
+          left: 7dvh;
+          top: -7dvh;
+          @media screen and (min-width: 360px) and (max-width: 375px) {
             width: 14svh;
             left: 5svh;
             top: -2svh;
@@ -609,12 +617,12 @@ const updateCurrentAdditionalStep = () => {
             top: -3svh;
             left: 10svh;
           }
-          width: 13dvh;
-          left: 7dvh;
-          top: -7dvh;
         }
         &.step-4 {
-          @media screen  and (min-width: 360px) and (max-width: 375px) {
+          width: 25dvh;
+          left: 14dvh;
+          top: 39dvh;
+          @media screen and (min-width: 360px) and (max-width: 375px) {
             width: 16svh;
             left: 20svh;
             top: 52svh;
@@ -624,9 +632,6 @@ const updateCurrentAdditionalStep = () => {
             top: 58svh;
             left: 28svh;
           }
-          width: 25dvh;
-          left: 14dvh;
-          top: 39dvh;
         }
       }
     }
@@ -805,11 +810,11 @@ const updateCurrentAdditionalStep = () => {
             bottom: 0;
             right: 0;
             animation: moveFinger 1.5s ease-in-out infinite;
+            z-index: 99;
             @media screen and (min-width: 400px) {
               width: 70px;
               height: 70px;
             }
-            z-index: 99;
           }
         }
       }
