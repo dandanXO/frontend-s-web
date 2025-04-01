@@ -79,6 +79,7 @@
     <YaLLa2025 v-if="list.redirectUrl === 'lh1-yalla-compass-qatar-2025'" :promo-code="list.promoCode" />
     <IemMelbourne2025 v-if="list.redirectUrl === 'lh1-iem-melbourne-2025'" :promo-code="list.promoCode" />
     <PglWallachiaS4 v-if="list.redirectUrl === 'lh1-pgl-wallachia-s4'" :promo-code="list.promoCode" />
+    <Cct2025 v-if="list.redirectUrl === 'lh1-cct-global-finals-2025'" :promo-code="list.promoCode" />
     <FpSlotPromo v-if="list.redirectUrl === 'lh1-fp-slot'" :promo-code="list.promoCode" />
     <elsOne2025 v-if="list.redirectUrl === 'lh1-esl-one-raleigh-2025'" :promo-code="list.promoCode" />
 
@@ -146,6 +147,8 @@ import YaLLa2025 from "./hotpromo/YaLLa2025/YaLLa2025.vue";
 
 import IemMelbourne2025 from "./hotpromo/iem-melbourne-2025/IemMelbourne2025.vue";
 import PglWallachiaS4 from "./hotpromo/pgl-wallachia-s4/PglWallachiaS4.vue";
+
+import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
 import FpSlotPromo from "./hotpromo/fp-slot-promo/FpSlotPromo.vue";
 import elsOne2025 from "../components/hotpromo/elsOne2025/elsOne2025.vue";
 
@@ -156,6 +159,7 @@ export default defineComponent({
   components: {
     YaLLa2025,
     elsOne2025,
+    Cct2025,
     SubmitClaimPromo,
     newFootballFight,
     newplayerGuide,
