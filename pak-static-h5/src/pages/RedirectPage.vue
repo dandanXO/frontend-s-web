@@ -61,7 +61,7 @@ onMounted(() => {
         clearInterval(timer);
         router.replace(redirectPath);
       }
-    }, 1000);
+    }, 750);
   }
 });
 </script>
@@ -101,7 +101,7 @@ body {
   background-size: contain;
   background-color: #041814;
   &:after {
-    background: url("../assets/images/redirect/logo.gif") no-repeat center center;
+    background: url("../assets/images/redirect/logo-5.gif") no-repeat center center;
     content: "";
     position: absolute;
     bottom: 2vh;
