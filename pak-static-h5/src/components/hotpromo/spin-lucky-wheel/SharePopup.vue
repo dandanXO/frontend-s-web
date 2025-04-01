@@ -76,23 +76,6 @@
         <div class="txt-title">Share and Earn</div>
         <!-- <div class="txt-content q-mt-md text-center">Share and Earn</div> -->
         <div class="modal-invite-share-social">
-          <a class="social-item" @click="handleShareToYoutube(selfTgurl)">
-            <img src="../../../assets/images/earn-money/social-youtube.png" />
-          </a>
-          <a class="social-item" @click="handleShareToFacebookPost(selfTgurl)">
-            <img src="../../../assets/images/earn-money/social-facebook.png" />
-          </a>
-          <a class="social-item" @click="handleShareToSMS(selfTgurl)">
-            <img src="../../../assets/images/earn-money/social-sms.png" />
-          </a>
-          <a class="social-item" @click="handleShareToEmail(selfTgurl)">
-            <img src="../../../assets/images/earn-money/social-email.png" />
-          </a>
-          <a class="social-item" @click="handleShareToTikTok(selfTgurl)">
-            <img src="../../../assets/images/earn-money/social-green-tiktok.png" />
-          </a>
-
-          <a ref="tiktokRef" href="tiktok://" target="_blank" :style="{ display: 'none' }" />
           <a
             class="social-item"
             :href="`https://wa.me/?text=${encodeURIComponent($t('earnMoney.reward.shareText', { url: selfTgurl }))}`"
@@ -100,6 +83,11 @@
           >
             <img src="../../../assets/images/earn-money/social-green-whatsapp.png" />
           </a>
+
+          <a class="social-item" @click="handleShareToFacebookPost(selfTgurl)">
+            <img src="../../../assets/images/earn-money/social-facebook.png" />
+          </a>
+
           <a
             class="social-item"
             :href="`instagram://sharesheet?text=${encodeURIComponent(
@@ -107,7 +95,24 @@
             )}`"
             target="_blank"
           >
-            <img src="../../../assets/images/earn-money/social-green-instagram.png" />
+          <img src="../../../assets/images/earn-money/social-green-instagram.png" />
+        </a>
+        
+        <a class="social-item" @click="handleShareToTikTok(selfTgurl)">
+          <img src="../../../assets/images/earn-money/social-green-tiktok.png" />
+        </a>
+        <a ref="tiktokRef" href="tiktok://" target="_blank" :style="{ display: 'none' }" />
+
+          <a class="social-item" @click="handleShareToYoutube(selfTgurl)">
+            <img src="../../../assets/images/earn-money/social-youtube.png" />
+          </a>
+          
+          <a class="social-item" @click="handleShareToSMS(selfTgurl)">
+            <img src="../../../assets/images/earn-money/social-sms.png" />
+          </a>
+
+          <a class="social-item" @click="handleShareToEmail(selfTgurl)">
+            <img src="../../../assets/images/earn-money/social-email.png" />
           </a>
         </div>
       </div>

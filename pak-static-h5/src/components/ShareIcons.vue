@@ -7,28 +7,28 @@
         <img class="btn-icon" id="whatapp-icon" :src="require(`../assets/images/auth/whatsapp-${isInvite ? 'neon' : 'grey'}.png`)" />
         <!-- <div>WhatsApp</div> -->
       </div>
-      <div class="list-item" @click="openYoutube()">
-        <img class="btn-icon" id="youtube-icon" :src="require(`../assets/images/auth/youtube-${isInvite ? 'neon' : 'grey'}.png`)" />
-        <!-- <div>Youtube</div> -->
-      </div>
       <div v-if="isInvite" class="list-item" @click="openFacebook()">
         <img class="btn-icon" id="facebook-icon" :src="require(`../assets/images/auth/facebook-${isInvite ? 'neon' : 'grey'}.png`)" />
       </div>
-      <div v-if="isInvite" class="list-item" @click="openMail()">
-        <img class="btn-icon" id="mail-icon" :src="require(`../assets/images/auth/mail-${isInvite ? 'neon' : 'grey'}.png`)" />
-      </div>
-      <div v-if="isInvite" class="list-item" @click="openSMS()">
-        <img class="btn-icon" id="mail-icon" :src="require(`../assets/images/auth/sms-${isInvite ? 'neon' : 'grey'}.png`)" />
+      <a ref="instagramRef" href="https://www.instagram.com" target="_blank" :style="{ display: 'none' }" />
+      <div class="list-item" @click="openInsta()">
+        <img class="btn-icon" id="insta-icon" :src="require(`../assets/images/auth/insta-${isInvite ? 'neon' : 'grey'}.png`)" />
+        <!-- <div>WhatsApp</div> -->
       </div>
       <a ref="tiktokRef" href="https://www.tiktok.com" target="_blank" :style="{ display: 'none' }" />
       <div class="list-item" @click="openTiktok()">
         <img class="btn-icon" id="tiktok-icon" :src="require(`../assets/images/auth/tiktok-${isInvite ? 'neon' : 'grey'}.png`)" />
         <!-- <div>Tiktok</div> -->
       </div>
-      <a ref="instagramRef" href="https://www.instagram.com" target="_blank" :style="{ display: 'none' }" />
-      <div class="list-item" @click="openInsta()">
-        <img class="btn-icon" id="insta-icon" :src="require(`../assets/images/auth/insta-${isInvite ? 'neon' : 'grey'}.png`)" />
-        <!-- <div>WhatsApp</div> -->
+      <div class="list-item" @click="openYoutube()">
+        <img class="btn-icon" id="youtube-icon" :src="require(`../assets/images/auth/youtube-${isInvite ? 'neon' : 'grey'}.png`)" />
+        <!-- <div>Youtube</div> -->
+      </div>
+      <div v-if="isInvite" class="list-item" @click="openSMS()">
+        <img class="btn-icon" id="mail-icon" :src="require(`../assets/images/auth/sms-${isInvite ? 'neon' : 'grey'}.png`)" />
+      </div>
+      <div v-if="isInvite" class="list-item" @click="openMail()">
+        <img class="btn-icon" id="mail-icon" :src="require(`../assets/images/auth/mail-${isInvite ? 'neon' : 'grey'}.png`)" />
       </div>
       <div class="list-item" v-if="!isAndroid() && !ui.hideDownload && !isInvite" @click="downloadApp()">
         <img class="btn-icon" id="download-icon" :src="require(`../assets/images/auth/app-${isInvite ? 'neon' : 'grey'}.png`)" />
