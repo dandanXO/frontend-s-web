@@ -115,6 +115,7 @@
   </q-dialog>
 </template>
 <script setup>
+import { useUI } from "stores/ui";
 import { computed, onMounted, ref, nextTick } from "vue";
 import { copyToClipboard, useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
@@ -220,6 +221,7 @@ const takeScreenshot = async () => {
 //   showInviteWins
 // });
 
+const ui = useUI();
 const modalSocialShare = ref(false);
 const copybtntxt = ref("Copy");
 const copyinput = ref(null);
@@ -254,9 +256,8 @@ const handleShareToTikTok = (url) => {
 
 const handleShareToYoutube = (url) => {
   const shareText = t("earnMoney.reward.shareText", { url });
-  const youtubeShareUrl = `https://www.youtube.com/share?url=${encodeURIComponent(url)}&text=${encodeURIComponent(
-    shareText
-  )}`;
+  copyToClipboard(shareText);
+  const youtubeShareUrl = ui.youtubeUrl;
   window.open(youtubeShareUrl, "_self");
 };
 
@@ -384,15 +385,15 @@ onMounted(() => {
   }
 
   :deep(.carousel__pagination-button--active) {
-    background-color: #E8282A !important;
-    width: 30px !important; 
+    background-color: #e8282a !important;
+    width: 30px !important;
   }
-  
+
   /* Slide Image */
   .slide-img {
     width: 100%;
     border-radius: 20px;
-    border: 2.76px solid #E8282A;
+    border: 2.76px solid #e8282a;
   }
 }
 .sharepopupslider {

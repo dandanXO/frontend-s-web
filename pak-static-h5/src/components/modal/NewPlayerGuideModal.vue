@@ -1,7 +1,7 @@
 <template>
   <q-dialog
     width="100%"
-    style="padding-bottom: env(safe-area-inset-bottom);"
+    style="padding-bottom: env(safe-area-inset-bottom)"
     :modelValue="modelValue"
     presistent
     @update:modelValue="(value) => emit('update:modelValue', value)"
@@ -10,7 +10,7 @@
       <div class="svc">
         <a class="cs-icon cs" :href="ui.CSAUrl" target="_blank">
           <img src="../../assets/images/newplayerguide/service.png" />
-          <span class="svc-txt">{{$t('playerGuide.service')}}</span>
+          <span class="svc-txt">{{ $t("playerGuide.service") }}</span>
         </a>
       </div>
       <div class="close-dialog" @click="closeDialog">
@@ -37,7 +37,7 @@
                 <div class="midimg" v-if="index + 1 === 1 || index + 1 === 2">
                   <img :src="require(`../../assets/images/newplayerguide/step-mid-${index + 1}.png`)" />
                 </div>
-                <div class="mid-content" :class="{show: index + 1 === 4}">
+                <div class="mid-content" :class="{ show: index + 1 === 4 }">
                   <div class="ins">{{ step.instruction }}</div>
                   <div class="amt">{{ step.earnableAmt }}RS</div>
                 </div>
@@ -62,7 +62,10 @@
                   <div class="hotitems">
                     <div class="hotitem" v-for="i in 3" :key="i">
                       <span class="hot"><img src="../../assets/images/newplayerguide/tophot.png" /></span>
-                      <img @click="showVideo(index, i)" :src="require(`../../assets/images/newplayerguide/hot-0${i}.png`)" />
+                      <img
+                        @click="showVideo(index, i)"
+                        :src="require(`../../assets/images/newplayerguide/hot-0${i}.png`)"
+                      />
                     </div>
                   </div>
                 </div>
@@ -80,7 +83,7 @@
                   <div class="deposit-steps">
                     <div class="dep-step">
                       <img src="../../assets/images/newplayerguide/step-01.png" />
-                      {{ $t('playerGuide.bankTransfer') }}
+                      {{ $t("playerGuide.bankTransfer") }}
                     </div>
                     <div class="dep-step">
                       <img src="../../assets/images/newplayerguide/step-02.png" />
@@ -88,7 +91,7 @@
                     </div>
                     <div class="dep-step">
                       <img src="../../assets/images/newplayerguide/step-03.png" />
-                      USDT {{ $t('playerGuide.digitalCurrency') }}
+                      USDT {{ $t("playerGuide.digitalCurrency") }}
                     </div>
                   </div>
                 </div>
@@ -140,7 +143,7 @@
                 <div class="withdraw-steps">
                   <div class="withdraw-step">
                     <img src="../../assets/images/newplayerguide/step-01.png" />
-                    {{ $t('playerGuide.bankAccountWithdrawal')}}
+                    {{ $t("playerGuide.bankAccountWithdrawal") }}
                   </div>
                   <div class="withdraw-step">
                     <img src="../../assets/images/newplayerguide/step-02.png" />
@@ -148,7 +151,7 @@
                   </div>
                   <div class="withdraw-step">
                     <img src="../../assets/images/newplayerguide/step-03.png" />
-                    USDT {{ $t('playerGuide.digitalCurrencyWithdrawal')}}
+                    USDT {{ $t("playerGuide.digitalCurrencyWithdrawal") }}
                   </div>
                 </div>
                 <ul class="note">
@@ -204,16 +207,16 @@
               <!-- <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dRPcJyisLUI?si=ok64lVuE9jWtcnGr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
             </div>
             <div class="buttons">
-            <div class="bottom-button" @click="runInnerSteps(index + 1)">
-              <!--              <span v-if="index + 1 === 4">-->
-              <!--                <img src="../../assets/images/newplayerguide/share-icon.png" />-->
-              <!--              </span>-->
-              {{ step.buttonTxt }}
+              <div class="bottom-button" @click="runInnerSteps(index + 1)">
+                <!--              <span v-if="index + 1 === 4">-->
+                <!--                <img src="../../assets/images/newplayerguide/share-icon.png" />-->
+                <!--              </span>-->
+                {{ step.buttonTxt }}
+              </div>
+              <div class="next-button" @click="nextDialog(index + 1, true)">
+                {{ $t("playerGuide.next") }}
+              </div>
             </div>
-            <div class="next-button" @click="nextDialog(index + 1, true)">
-              {{ $t("playerGuide.next") }}
-            </div>
-          </div>
           </div>
         </div>
       </template>
@@ -306,9 +309,9 @@ const showVideo = (i, vidIndex) => {
   if (i + 1 === 2) {
     const gameOptions = ["aviator", "mines", "7up7down"];
     let randomIndex = Math.floor(Math.random() * gameOptions.length);
-    
+
     if (vidIndex) {
-      randomIndex = vidIndex - 1
+      randomIndex = vidIndex - 1;
     }
     selectedGame.value = gameOptions[randomIndex];
   }
@@ -414,14 +417,14 @@ const runInnerSteps = (index) => {
   }
 };
 const closeDialog = () => {
-  let nextStep = 'END'
+  let nextStep = "END";
   // Update localStorage
   localStorage.setItem("newPlayerGuide", nextStep);
 
   // Emit the updated step to the parent component
   emit("update:modelValue", false); // Close the dialog
   emit("update:currentStep", nextStep); // Pass the next step to the parent component
-}
+};
 // Close the dialog and move to the next step
 const nextDialog = (index, goNext) => {
   if (isVideo.value === false) {
@@ -453,9 +456,8 @@ const nextDialog = (index, goNext) => {
         emit("update:modelValue", true); // Open the dialog again
       }, 100); // You can adjust this timeout if needed
     }
-
   }
-  
+
   let nextStep = (Number(currentStep.value) + 1).toString();
   if (Number(currentStep.value) === 5) {
     nextStep = "END";
@@ -505,9 +507,11 @@ const handleShareToTikTok = (url) => {
 
 const handleShareToYoutube = (url) => {
   const shareText = t("earnMoney.reward.shareText", { url });
-  const youtubeShareUrl = `https://www.youtube.com/share?url=${encodeURIComponent(url)}&text=${encodeURIComponent(
-    shareText
-  )}`;
+  // const youtubeShareUrl = `https://www.youtube.com/share?url=${encodeURIComponent(url)}&text=${encodeURIComponent(
+  //   shareText
+  // )}`;
+  copyToClipboard(shareText);
+  const youtubeShareUrl = ui.youtubeUrl;
   window.open(youtubeShareUrl, "_self");
 };
 
@@ -639,11 +643,11 @@ defineExpose({ showVideo });
     a {
       position: relative;
 
-      .svc-txt {    
+      .svc-txt {
         position: absolute;
         bottom: 6px;
-        color: #1DAB98;
-        -webkit-text-stroke: .5px white;
+        color: #1dab98;
+        -webkit-text-stroke: 0.5px white;
         right: 0;
         left: 0;
         margin: auto;
@@ -664,7 +668,7 @@ defineExpose({ showVideo });
         bottom: 0;
       }
     }
-    
+
     &.step-5 .main-box .withdraw-section .withdrawitems {
       width: 80%;
     }
@@ -823,7 +827,7 @@ defineExpose({ showVideo });
         gap: 5px;
         margin-left: auto;
         // margin-top: 30px;
-        
+
         justify-content: space-between;
         align-items: center;
         font-weight: bold;
@@ -892,7 +896,7 @@ defineExpose({ showVideo });
             width: 50%;
             height: 60px;
           }
-          
+
           @supports (-webkit-touch-callout: none) {
             top: 30svh;
           }
@@ -1166,12 +1170,12 @@ defineExpose({ showVideo });
           right: 0;
           z-index: 9999;
           animation: moveFinger 1.5s ease-in-out infinite;
-        @media screen and (min-width: 400px) {
-          width: 70px;
-          height: 70px;
+          @media screen and (min-width: 400px) {
+            width: 70px;
+            height: 70px;
+          }
         }
-        }
-        
+
         @media screen and (min-width: 400px) {
           font-size: 16px;
         }
