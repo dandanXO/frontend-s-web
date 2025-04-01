@@ -13,20 +13,32 @@
     >
       <template #header>
         <div class="flex justify-between" style="display: flex; gap: 8px">
-          <Button
-            :size="'small'"
-            type="button"
-            icon="pi pi-filter-slash"
-            label="清除"
-            outlined
-            @click="clearFilter()"
-          />
+          <div style="display: flex; gap: 8px">
+            
+            <Button
+              :size="'small'"
+              type="button"
+              icon="pi pi-filter-slash"
+              label="清除"
+              outlined
+              @click="clearFilter()"
+            />
+          </div>
           <IconField>
             <InputIcon>
               <i class="pi pi-search" />
             </InputIcon>
             <InputText v-model="filters['global'].value" placeholder="關鍵詞搜索" :size="'small'" />
           </IconField>
+          <Button
+              :size="'small'"
+              type="button"
+              icon="pi pi-refresh"
+              label="重新載入"
+              severity="info"
+              @click="fetchStreams"
+              :loading="loading"
+            />
         </div>
       </template>
 
