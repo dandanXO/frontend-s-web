@@ -9,7 +9,9 @@ import { Platform, useQuasar } from "quasar";
 import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
 import { useGtag } from "vue-gtag-next";
-import { t } from "src/boot/lang";
+import { i18n, t } from "src/boot/lang";
+import { i18nStore } from "./language";
+import { DEFAULT_LANG } from "src/constant/lang";
 let isRedirected = false;
 
 /*
@@ -43,6 +45,14 @@ export default route(function (/* { store, ssrContext } */) {
     const user = userStore();
     const ui = useUI();
     const $q = useQuasar();
+    const i18nStoreLanguage = i18nStore();
+    const { availableLocales } = i18n.global;
+    const { lang } = to.query;
+
+    if (!i18nStoreLanguage.isLangInitialized && lang) {
+      const locale = availableLocales.includes(lang) ? lang : DEFAULT_LANG;
+      i18nStoreLanguage.initializeLang(locale);
+    }
 
     if (to.query.adjust_referrer) {
       sessionStorage.setItem("ADJUST_REFERRER", to.query.adjust_referrer);
@@ -175,7 +185,7 @@ export default route(function (/* { store, ssrContext } */) {
         $q.notify({
           color: "negative",
           position: "top",
-          message: t('notify.plsLoginToContinue'),
+          message: t("notify.plsLoginToContinue"),
           icon: "report_problem"
         });
       } else {

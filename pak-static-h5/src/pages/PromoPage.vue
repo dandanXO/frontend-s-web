@@ -216,7 +216,7 @@
   </q-dialog>
 
   <q-dialog width="100%" v-if="isOpenExtension" v-model="isOpenExtension" class="dark-grey-dialog">
-    <div class="dialog-mid-text">{{$t('btn.loading')}}...</div>
+    <div class="dialog-mid-text">{{ $t("btn.loading") }}...</div>
   </q-dialog>
 </template>
 
@@ -454,7 +454,7 @@ export default defineComponent({
             } else if (isAndroid()) {
               // store.evip = "192.168.68.93:9090";
               const tgDomain = "https://" + store.evip;
-              var preUrl = tgDomain + `/promotion?name=${promo.redirectUrl}&token=${store.token}`;
+              var preUrl = tgDomain + `/promotion?name=${promo.redirectUrl}&token=${store.token}&lang=${langVal.value}`;
               // alert(preUrl);
               console.log(preUrl);
               // promoSrc.value= preUrl;
