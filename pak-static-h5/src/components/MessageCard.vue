@@ -14,6 +14,13 @@
       </q-card-section>
   
       <q-card-section class="bottom-wrapper">
+
+        <q-btn class="detail-btn" v-if="redirectType === 'INNER'" :to="message.redirectUrl" flat unelevated>
+          {{ message?.redirectButton || $t("message.visitLink") }} <q-icon name="keyboard_arrow_right" size="medium" />
+        </q-btn>
+        <q-btn class="detail-btn" v-else-if="redirectType === 'OUTER'" :href="message.redirectUrl" target="_blank" flat unelevated>
+          {{ message?.redirectButton || $t("message.visitLink") }} <q-icon name="keyboard_arrow_right" size="medium" />
+        </q-btn>
         <q-btn class="detail-btn" @click="$emit('details', message)" flat unelevated>
           {{ $t("btn.more") }} <q-icon name="keyboard_arrow_down" size="medium" />
         </q-btn>
@@ -29,6 +36,7 @@
   
   const isLongContent = computed(() => props.message.content.length > 50);
   const shortenedContent = computed(() => (expand.value ? props.message.content : props.message.content.slice(0, 50) + "..."));
+  const redirectType = props.message.redirectType;
   
   const convertToGMT55 = (date) => date; // Replace with actual conversion logic
   </script><style lang="scss" scoped>
@@ -130,6 +138,7 @@
     align-items: center;
     justify-content: flex-end;
     margin: 1rem 0 0 0;
+    gap: 0.5rem;
 
     .detail-btn {
     font-size: 1rem;

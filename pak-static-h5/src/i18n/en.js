@@ -734,7 +734,8 @@ export default {
     activity: "Activity",
     payment: "Payment",
     system: "System",
-    noMessage: "No messages"
+    noMessage: "No messages",
+    visitLink: "Visit link"
   },
   customerServiceVerifier: {
     mainTitle: "B9.GAME",

@@ -727,7 +727,8 @@ export default {
     activity: "سرگرمی",
     payment: "ادائیگی",
     system: "نظام",
-    noMessage: "کوئی پیغام نہیں"
+    noMessage: "کوئی پیغام نہیں",
+    visitLink: "لنک دیکھیں"
   },
   customerServiceVerifier: {
     mainTitle: "B9.GAME",
