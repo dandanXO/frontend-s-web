@@ -3,7 +3,6 @@
     <!--    <h1>Redirecting Soon...</h1>-->
     <!-- <h1 id="countdown">Waiting time : {{ countdown }} seconds;</h1> -->
     <!--    <p class="redirect-info">Please wait while we take you to your destination.</p>-->
-    
   </div>
 </template>
 
@@ -61,7 +60,7 @@ onMounted(() => {
         clearInterval(timer);
         router.replace(redirectPath);
       }
-    }, 750);
+    }, 1000);
   }
 });
 </script>
@@ -101,7 +100,7 @@ body {
   background-size: contain;
   background-color: #041814;
   &:after {
-    background: url("../assets/images/redirect/logo-5.gif") no-repeat center center;
+    background: url("../assets/images/redirect/logo.gif") no-repeat center center;
     content: "";
     position: absolute;
     bottom: 2vh;
@@ -109,7 +108,6 @@ body {
     height: 6vh;
     // transform: translateX(50%, -50%);
     background-size: contain;
-    
   }
   // @for $i from 1 through 10 {
   //   &.special-bg-#{$i} {

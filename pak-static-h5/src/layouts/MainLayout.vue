@@ -85,7 +85,7 @@
     <FooterSection />
   </q-layout>
 
-  <div class="first-screen-loading" v-show="ui.firstScreenLoading" />
+  <div class="first-screen-loading" :class="isPromoPage ? 'ispromo-screen' : ''" v-show="ui.firstScreenLoading" />
 </template>
 
 <script>
@@ -568,13 +568,22 @@ export default defineComponent({
       }
       return ui.slotLists;
     });
-    // console.log(platformsList.value);
+
+    const isPromoPage = computed(() => {
+      return window.location.pathname === "/promotion";
+    });
 
     const checkFirstScreen = () => {
       if (ui.firstScreenLoading) {
-        setTimeout(() => {
-          ui.firstScreenLoading = false;
-        }, 2200);
+        if (isPromoPage.value === true) {
+          setTimeout(() => {
+            ui.firstScreenLoading = false;
+          }, 600);
+        } else {
+          setTimeout(() => {
+            ui.firstScreenLoading = false;
+          }, 2000);
+        }
       }
     };
 
@@ -604,6 +613,7 @@ export default defineComponent({
       route,
       scrollPageRef,
       pageName,
+      isPromoPage,
       hasPage,
       ui,
       prevPage,
@@ -703,16 +713,14 @@ svg path {
   transform: translateX(-50%);
   width: 500px;
   max-width: 100%;
-  //background-image: url(../assets/images/index/first-screen-loading.png);
   background-image: url("../assets/images/redirect/0.png");
-
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-position: top center;
   z-index: 10000;
 
   &:after {
-    background: url("../assets/images/redirect/logo.gif") no-repeat center center;
+    background: url("../assets/images/redirect/logo-2s.gif") no-repeat center center;
     content: "";
     position: absolute;
     bottom: 2vh;
@@ -720,8 +728,15 @@ svg path {
     left: 10%;
     right: 10%;
     height: 6vh;
-    // transform: translateX(50%, -50%);
     background-size: contain;
+  }
+
+  &.ispromo-screen {
+    background-image: url(../assets/images/index/first-screen-loading.png);
+
+    &:after {
+      display: none;
+    }
   }
 }
 </style>
