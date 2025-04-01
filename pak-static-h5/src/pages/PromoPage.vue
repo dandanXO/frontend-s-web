@@ -117,7 +117,6 @@
               </div>
 
               <div
-                v-if="HotPromotion"
                 class="inner"
                 :class="{
                   isJackpotAviator: selectedPromo.redirectUrl === 'pak-jackpot-aviator',
@@ -133,7 +132,8 @@
                     <div>asdasd</div>
                   </template>
                   <template v-else><HotPromotion :list="selectedPromo" /></template> -->
-                  <HotPromotion :list="selectedPromo" />
+                  <!-- <HotPromotion :list="selectedPromo" /> -->
+                  <component v-if="HotPromotion" :is="HotPromotion" :list="selectedPromo" />
                   <!-- promo.redirectUrl -->
                 </div>
                 <div
@@ -233,26 +233,18 @@ import { SessionStorage } from "quasar";
 import ProfileSummary from "components/ProfileSummary.vue";
 import GameModal from "components/modal/GameModal.vue";
 import { t } from "src/boot/lang";
-// import HotPromotion from 'components/HotPromotion'
 import MoneyRainModal from "components/modal/MoneyRainModal.vue";
 import MegaSharingWheelModal from "src/components/hotpromo/megaSharingWheel/MegaSharingWheelModal.vue";
 import { Directory, Filesystem } from "@capacitor/filesystem";
 // import MediaSettingsComponent from "components/MediaSettingsComponent.vue";
 
-let HotPromotion = null;
-if(process.env.MODE === 'spa') {
-  HotPromotion = defineAsyncComponent(() => import("components/HotPromotion.vue"));
-}
-
 export default defineComponent({
   name: "PromoView",
   components: {
     GameModal,
-    HotPromotion,
     ProfileSummary,
     MoneyRainModal,
     MegaSharingWheelModal,
-    HotPromotion
     // MediaSettingsComponent
   },
   setup() {
@@ -291,6 +283,11 @@ export default defineComponent({
     const isFetchingPromo = ref(false);
     const extensionState = ref(false);
     const extensionToken = ref("");
+
+    const HotPromotion = computed(() => process.env.MODE === 'spa' ?
+      defineAsyncComponent(() => import('components/HotPromotion.vue')) :
+      null
+    );
 
     const checkExtension = () => {
       if (route.path === "/promotion") {
@@ -781,7 +778,8 @@ export default defineComponent({
       isOpenExtension,
       parsedParam,
       isMegaSharingWheelModal,
-      popupPromo
+      popupPromo,
+      HotPromotion
       // MediaSettingsComponent
     };
   }
