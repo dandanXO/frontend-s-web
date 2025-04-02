@@ -13,7 +13,7 @@
   <div class="login-container" :class="isRestrictedDomain ? 'w-domain' : ''">
     <div class="back-left" v-if="!isRestrictedDomain">
       <router-link :to="'/home'">
-        <img src="../assets/images/index/btn-close.png" />
+        <img src="../assets/images/index/btn-house.png" />
       </router-link>
     </div>
     <!--
