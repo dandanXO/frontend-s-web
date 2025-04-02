@@ -73,8 +73,6 @@
     class="award-modal hongbaoyu-modal"
     width="100%"
     v-model="isClaimModal"
-    :no-backdrop-dismiss="promoId !== 567 && promoId !== 669 ? true : false"
-    no-esc-dismiss
   >
     <div class="modal-div">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
@@ -89,11 +87,11 @@
         />
         <img v-else :src="require(`../../../assets/images/promo/hotpromo/upgradehongbao/red-packet-opened.png`)" />
 
-        <div v-if="promoId !== 567 && promoId !== 669" class="grats">{{ $t("lang.hong_congrats") }}</div>
+        <!-- <div v-if="promoId !== 567 && promoId !== 669" class="grats">{{ $t("lang.hong_congrats") }}</div> -->
         <div v-if="promoId !== 567 && promoId !== 669" class="amount">{{ winAmount }}</div>
         <div v-else class="amount-halloween">{{ winAmount }}</div>
 
-        <div
+        <div v-if="promoId === 567 || promoId === 669"
           class="get-btn"
           :class="promoId === 567 || promoId === 669 ? 'get-btn-halloween' : ''"
           @click="getPromotionPrize"
@@ -393,8 +391,8 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     top: 0;
-    margin-top: 48%;
-    color: #f23b1d;
+    margin-top: 23%;
+    color: #ffff8b;
     font-size: 35px;
     font-weight: bold;
   }
