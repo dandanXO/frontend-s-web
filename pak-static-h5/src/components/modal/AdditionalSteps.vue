@@ -8,13 +8,9 @@
       <div class="steps-portion" :class="`steptopmain-${currentAdditionalStep} ${localType}-mode`">
         <!-- <img class="abs-line" :class="`${localType} step-${localStep}`" v-if="localType === 'deposit'" :src="require(`../../assets/images/newplayerguide/line-${localType}-${localStep}.png`)"> -->
 
-        <img
-          v-if="imagePath"
-          class="abs-line"
-          :class="`${localType} step-${localStep}`"
-          :src="imagePath"
-          alt="Guide Line"
-        />
+        <div v-if="imagePath" class="abs-line-wrapper" :style="absLineStyle">
+          <img class="abs-line" :class="`${localType} step-${localStep}`" :src="imagePath" alt="Guide Line" />
+        </div>
         <div class="top" :class="{ hide: localType === 'refer' && localStep === 3 }">
           <img :src="require(`../../assets/images/newplayerguide/step-top-${localTypeStep()}.png`)" />
           <div class="title" v-if="localType === 'withdraw'">{{ $t("playerGuide.recharging") }}</div>
@@ -40,6 +36,7 @@
             </div>
             <div class="buttons">
               <div
+                ref="bottomButtonRef"
                 @click="updateCurrentAdditionalStep"
                 :class="{ whand: localType === 'refer' && localStep === 1 }"
                 class="bottom-button"
@@ -54,6 +51,7 @@
         </div>
       </div>
       <div
+        ref="highlightBoxRef"
         class="green-highlight-box"
         :class="`step-${currentAdditionalStep} ${localType}-mode`"
         @click="updateCurrentAdditionalStep"
@@ -65,15 +63,132 @@
 </template>
 
 <script setup>
-import { ref, watch, computed, onMounted, onUnmounted } from "vue";
+import { useElementBounding, useWindowSize } from "@vueuse/core";
+import { ref, watch, computed, onMounted, nextTick } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+
+const absLineStyleMap = new Map([
+  [
+    "deposit-1",
+    {
+      top: (buttonRect, highlightRect) => `${buttonRect.bottom.value}px`,
+      left: (buttonRect, highlightRect) => `${buttonRect.left.value}px`,
+      right: (buttonRect, highlightRect) => `calc(100vw - ${highlightRect.right.value}px)`,
+      bottom: (buttonRect, highlightRect) => `calc(100svh - ${highlightRect.top.value}px)`
+    }
+  ],
+  [
+    "deposit-2",
+    {
+      top: (buttonRect, highlightRect) => `${highlightRect.bottom.value}px`,
+      left: (buttonRect, highlightRect) => `${buttonRect.x.value - 221}px`,
+      right: (buttonRect, highlightRect) => "",
+      bottom: (buttonRect, highlightRect) =>
+        `calc(100svh - ${buttonRect.top.value + buttonRect.height.value / 2}px - 12px)`
+    }
+  ],
+  [
+    "deposit-3",
+    {
+      top: (buttonRect, highlightRect) => `${highlightRect.bottom.value}px`,
+      left: (buttonRect, highlightRect) => `${buttonRect.x.value - 138}px`,
+      right: (buttonRect, highlightRect) => "",
+      bottom: (buttonRect, highlightRect) =>
+        `calc(100svh - ${buttonRect.top.value + buttonRect.height.value / 2}px - 2px)`
+    }
+  ],
+  [
+    "deposit-4",
+    {
+      top: (buttonRect, highlightRect) => `${buttonRect.y.value + 10}px`,
+      left: (buttonRect, highlightRect) => `${buttonRect.x.value + buttonRect.width.value / 2 - 87}px`,
+      right: (buttonRect, highlightRect) => "",
+      bottom: (buttonRect, highlightRect) => `calc(100svh - ${highlightRect.y.value + 29}px)`
+    }
+  ],
+  [
+    "refer-2",
+    {
+      top: (buttonRect, highlightRect) => `${buttonRect.y.value + buttonRect.height.value / 2}px`,
+      left: (buttonRect, highlightRect) => `${buttonRect.x.value - 10}px`,
+      right: (buttonRect, highlightRect) => `calc(100vw - ${buttonRect.right.value + 10}px)`,
+      bottom: (buttonRect, highlightRect) => `calc(100svh - ${highlightRect.y.value + 14}px)`
+    }
+  ],
+  [
+    "refer-3",
+    {
+      top: (buttonRect, highlightRect) => `${highlightRect.bottom.value - 73}px`,
+      left: (buttonRect, highlightRect, width) => `${(width.value - 500) / 2}px`,
+      right: (buttonRect, highlightRect) => "",
+      bottom: (buttonRect, highlightRect) => `calc(100svh - ${buttonRect.top.value + 50}px)`
+    }
+  ],
+  [
+    "withdraw-1",
+    {
+      top: (buttonRect, highlightRect) => `${buttonRect.bottom.value}px`,
+      left: (buttonRect, highlightRect) => `${buttonRect.x.value}px`,
+      right: (buttonRect, highlightRect) => `calc(100vw - ${highlightRect.right.value}px)`,
+      bottom: (buttonRect, highlightRect) => `calc(100svh - ${highlightRect.top.value}px)`
+    }
+  ],
+  [
+    "withdraw-2",
+    {
+      top: (buttonRect, highlightRect) => `${highlightRect.bottom.value - highlightRect.height.value / 2}px`,
+      left: (buttonRect, highlightRect) => "",
+      right: (buttonRect, highlightRect) => "",
+      bottom: (buttonRect, highlightRect) => `calc(100svh - ${buttonRect.y.value + buttonRect.height.value / 2 + 10}px)`
+    }
+  ],
+  [
+    "withdraw-3",
+    {
+      top: (buttonRect, highlightRect) => `${highlightRect.bottom.value}px`,
+      left: (buttonRect, highlightRect) => `${(width.value - 500) / 2 + 120}px`,
+      right: (buttonRect, highlightRect) => "",
+      bottom: (buttonRect, highlightRect) => `calc(100svh - ${buttonRect.y.value + buttonRect.height.value / 2 + 10}px)`
+    }
+  ],
+  [
+    "withdraw-4",
+    {
+      top: (buttonRect, highlightRect) => `${buttonRect.bottom.value - 37}px`,
+      left: (buttonRect, highlightRect) => `${buttonRect.x.value - 40}px`,
+      right: (buttonRect, highlightRect) => "",
+      bottom: (buttonRect, highlightRect) => `calc(100svh - ${highlightRect.y.value + 27}px)`
+    }
+  ]
+]);
+
 const router = useRouter();
 const { t } = useI18n();
+
 const props = defineProps({ currentAdditionalStep: Number, currentType: String });
 const emit = defineEmits(["updateStep", "closeGuide"]);
 const localStep = ref(props.currentAdditionalStep); // Local step variable
 const localType = ref(props.currentType);
+const bottomButtonRef = ref(null);
+const highlightBoxRef = ref(null);
+
+const buttonRect = useElementBounding(bottomButtonRef);
+const highlightRect = useElementBounding(highlightBoxRef);
+const { width, height } = useWindowSize();
+
+const absLineStyle = computed(() => {
+  if (!bottomButtonRef.value) return {};
+  const styleKey = `${localType.value}-${localStep.value}`;
+  const absLineStyle = absLineStyleMap.get(styleKey);
+  if (!absLineStyle) return {};
+  return {
+    top: absLineStyle.top(buttonRect, highlightRect, width, height),
+    left: absLineStyle.left(buttonRect, highlightRect, width, height),
+    right: absLineStyle.right(buttonRect, highlightRect, width, height),
+    bottom: absLineStyle.bottom(buttonRect, highlightRect, width, height)
+  };
+});
 
 const imagePath = computed(() => {
   try {
@@ -170,6 +285,13 @@ const updateCurrentAdditionalStep = () => {
     localStorage.setItem(`completed${localType.value}guide`, JSON.stringify(true));
   }
 };
+
+onMounted(() => {
+  setTimeout(() => {
+    buttonRect.update();
+    highlightRect.update();
+  });
+});
 </script>
 <style lang="scss" scoped>
 .abs-container {
@@ -215,8 +337,6 @@ const updateCurrentAdditionalStep = () => {
     margin: auto;
   }
   .green-highlight-box.deposit-mode {
-    width: 80px;
-    height: 80px;
     position: absolute;
     right: 11vh;
     bottom: 0;
@@ -244,10 +364,12 @@ const updateCurrentAdditionalStep = () => {
       }
     }
     &.step-1 {
-      width: 80px;
-      height: 80px;
+      width: 16vw;
+      height: 16vw;
+      max-width: 80px;
+      max-height: 80px;
       // right: 11vh;
-      right: 20%;
+      right: 22%;
       bottom: 0;
       // .inner-line {
       //   background: url(../../assets/images/newplayerguide/dep-point-1.png) no-repeat center center;
@@ -257,7 +379,7 @@ const updateCurrentAdditionalStep = () => {
     &.step-2 {
       width: 50%;
       height: 75px;
-      top: 70px;
+      top: 56px;
       left: 5px;
       right: unset;
     }
@@ -339,8 +461,10 @@ const updateCurrentAdditionalStep = () => {
     &.step-3 {
       width: 95%;
       max-width: 500px;
-      height: 125px;
-      top: 95px;
+      height: 33vw;
+      max-height: 145px;
+      min-height: 125px;
+      top: 85px;
       bottom: unset;
       left: 0;
       right: 0;
@@ -404,14 +528,16 @@ const updateCurrentAdditionalStep = () => {
     &.step-2 {
       width: 50%;
       height: 75px;
-      top: 70px;
+      top: 55px;
       right: 5px;
       left: unset;
     }
     &.step-3 {
       width: 95%;
       max-width: 500px;
-      height: 100px;
+      height: 26vw;
+      max-height: 130px;
+      min-height: 100px;
       top: 60px;
       bottom: unset;
       left: 0;
@@ -472,168 +598,144 @@ const updateCurrentAdditionalStep = () => {
         width: 75% !important;
       }
     }
-    .abs-line {
-      position: absolute;
+    .abs-line-wrapper {
+      position: fixed;
       pointer-events: none;
       z-index: 9999;
-      &.deposit {
-        &.step-1 {
-          width: 49%;
-          top: 95%;
-          left: 30%;
-          @media screen and (min-width: 360px) and (max-width: 375px) {
-            width: 18vh;
-            top: 54vh;
-            left: 18vh;
-          }
-          @supports (-webkit-touch-callout: none) {
-            width: 16svh;
-            top: 60svh;
-            left: 30svh;
-          }
-        }
-        &.step-2 {
-          width: 40dvh;
-          top: -14dvh;
-          left: -6dvh;
-          @media screen and (min-width: 360px) and (max-width: 375px) {
-            width: 36svh;
-            top: -3svh;
-            left: 2svh;
-          }
-          @supports (-webkit-touch-callout: none) {
-            width: 44svh;
-            top: -3svh;
-            left: 2svh;
-          }
-        }
-        &.step-3 {
-          width: 14svh;
-          left: 3svh;
-          top: -12svh;
-          @media screen and (min-width: 360px) and (max-width: 375px) {
-            width: 16svh;
-            left: 5svh;
-            top: -9svh;
-          }
-          @supports (-webkit-touch-callout: none) {
-            width: 18svh;
-            top: -11svh;
-            left: 8svh;
-          }
-        }
-        &.step-4 {
-          width: 27dvh;
-          top: 38dvh;
-          left: 11dvh;
-          @media screen and (min-width: 360px) and (max-width: 375px) {
-            width: 16svh;
-            left: 20svh;
-            top: 51svh;
-          }
-          @supports (-webkit-touch-callout: none) {
-            width: 12svh;
-            top: 57svh;
-            left: 29svh;
-          }
-        }
-      }
-      &.refer {
-        &.step-2 {
-          width: 15dvh;
-          top: 45dvh;
-          left: 15dvh;
-          transform: rotate(25deg);
-          @media screen and (min-width: 360px) and (max-width: 375px) {
-            width: 10svh;
-            left: 23svh;
-            top: 53svh;
-          }
-          @supports (-webkit-touch-callout: none) {
-            width: 9svh;
-            top: 59svh;
-            left: 29svh;
-          }
-        }
-        &.step-3 {
-          width: 43dvh;
-          top: -15dvh;
-          left: 0dvh;
-          @media screen and (min-width: 360px) and (max-width: 375px) {
-            width: 38svh;
-            left: 5svh;
-            top: -4svh;
-          }
-          @supports (-webkit-touch-callout: none) {
-            width: 43svh;
-            left: 8svh;
-            top: -3svh;
-          }
-        }
-      }
-      &.withdraw {
-        &.step-1 {
-          width: 49%;
-          top: 95%;
-          left: 30%;
-          @media screen and (min-width: 360px) and (max-width: 375px) {
-            width: 18vh;
-            top: 54vh;
-            left: 18vh;
-          }
-          @supports (-webkit-touch-callout: none) {
-            width: 16svh;
-            top: 60svh;
-            left: 30svh;
-          }
-        }
+    }
+    .abs-line {
+      width: 100%;
+      height: 100%;
+      // &.deposit {
+      //   &.step-1 {
+      //     width: 33%;
+      //     top: 96%;
+      //     left: 40%;
+      //     height: calc(50svh - 45% - 80px);
+      //     // TODO: 111
+      //   }
+      //   &.step-2 {
+      //     left: -1%;
+      //     bottom: 20svh;
+      //     height: calc(50svh + 25% - 50px);
+      //   }
+      //   &.step-3 {
+      //     left: 16.5%;
+      //     bottom: 8%;
+      //     height: calc(50svh + 33% - 50px);
+      //   }
+      //   &.step-4 {
+      //     width: 27dvh;
+      //     top: 38dvh;
+      //     left: 11dvh;
+      //     @media screen and (min-width: 360px) and (max-width: 375px) {
+      //       width: 16svh;
+      //       left: 20svh;
+      //       top: 51svh;
+      //     }
+      //     @supports (-webkit-touch-callout: none) {
+      //       width: 12svh;
+      //       top: 57svh;
+      //       left: 29svh;
+      //     }
+      //   }
+      // }
+      // &.refer {
+      //   &.step-2 {
+      //     width: 15dvh;
+      //     top: 45dvh;
+      //     left: 15dvh;
+      //     transform: rotate(25deg);
+      //     @media screen and (min-width: 360px) and (max-width: 375px) {
+      //       width: 10svh;
+      //       left: 23svh;
+      //       top: 53svh;
+      //     }
+      //     @supports (-webkit-touch-callout: none) {
+      //       width: 9svh;
+      //       top: 59svh;
+      //       left: 29svh;
+      //     }
+      //   }
+      //   &.step-3 {
+      //     width: 43dvh;
+      //     top: -15dvh;
+      //     left: 0dvh;
+      //     @media screen and (min-width: 360px) and (max-width: 375px) {
+      //       width: 38svh;
+      //       left: 5svh;
+      //       top: -4svh;
+      //     }
+      //     @supports (-webkit-touch-callout: none) {
+      //       width: 43svh;
+      //       left: 8svh;
+      //       top: -3svh;
+      //     }
+      //   }
+      // }
+      // &.withdraw {
+      //   &.step-1 {
+      //     width: 49%;
+      //     top: 95%;
+      //     left: 30%;
+      //     @media screen and (min-width: 360px) and (max-width: 375px) {
+      //       width: 18vh;
+      //       top: 54vh;
+      //       left: 18vh;
+      //     }
+      //     @supports (-webkit-touch-callout: none) {
+      //       width: 16svh;
+      //       top: 60svh;
+      //       left: 30svh;
+      //     }
+      //   }
 
-        &.step-2 {
-          width: 37dvh;
-          top: -14dvh;
-          left: 4dvh;
-          @media screen and (min-width: 360px) and (max-width: 375px) {
-            width: 40svh;
-            top: -10svh;
-            left: 8svh;
-          }
-          @supports (-webkit-touch-callout: none) {
-            width: 45svh;
-            top: -12svh;
-            left: 10svh;
-          }
-        }
-        &.step-3 {
-          width: 13dvh;
-          left: 7dvh;
-          top: -7dvh;
-          @media screen and (min-width: 360px) and (max-width: 375px) {
-            width: 14svh;
-            left: 5svh;
-            top: -2svh;
-          }
-          @supports (-webkit-touch-callout: none) {
-            width: 16svh;
-            top: -3svh;
-            left: 10svh;
-          }
-        }
-        &.step-4 {
-          width: 25dvh;
-          left: 14dvh;
-          top: 39dvh;
-          @media screen and (min-width: 360px) and (max-width: 375px) {
-            width: 16svh;
-            left: 20svh;
-            top: 52svh;
-          }
-          @supports (-webkit-touch-callout: none) {
-            width: 12svh;
-            top: 58svh;
-            left: 28svh;
-          }
-        }
-      }
+      //   &.step-2 {
+      //     width: 37dvh;
+      //     top: -14dvh;
+      //     left: 4dvh;
+      //     @media screen and (min-width: 360px) and (max-width: 375px) {
+      //       width: 40svh;
+      //       top: -10svh;
+      //       left: 8svh;
+      //     }
+      //     @supports (-webkit-touch-callout: none) {
+      //       width: 45svh;
+      //       top: -12svh;
+      //       left: 10svh;
+      //     }
+      //   }
+      //   &.step-3 {
+      //     width: 13dvh;
+      //     left: 7dvh;
+      //     top: -7dvh;
+      //     @media screen and (min-width: 360px) and (max-width: 375px) {
+      //       width: 14svh;
+      //       left: 5svh;
+      //       top: -2svh;
+      //     }
+      //     @supports (-webkit-touch-callout: none) {
+      //       width: 16svh;
+      //       top: -3svh;
+      //       left: 10svh;
+      //     }
+      //   }
+      //   &.step-4 {
+      //     width: 25dvh;
+      //     left: 14dvh;
+      //     top: 39dvh;
+      //     @media screen and (min-width: 360px) and (max-width: 375px) {
+      //       width: 16svh;
+      //       left: 20svh;
+      //       top: 52svh;
+      //     }
+      //     @supports (-webkit-touch-callout: none) {
+      //       width: 12svh;
+      //       top: 58svh;
+      //       left: 28svh;
+      //     }
+      //   }
+      // }
     }
     .top {
       width: 90%;
