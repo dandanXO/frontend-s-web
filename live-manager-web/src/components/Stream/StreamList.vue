@@ -72,9 +72,15 @@
         </template>
       </Column>
 
-      <Column field="streamId" header="串流ID" sortable>
+      <Column field="supplierStreamId" header="供應商串流ID" sortable>
         <template #body="slotProps">
-          {{ slotProps.data.streamId }}
+          {{ slotProps.data.supplierStreamId }}
+        </template>
+      </Column>
+
+      <Column field="streamerStreamId" header="主播串流ID" sortable>
+        <template #body="slotProps">
+          {{ slotProps.data.streamerStreamId }}
         </template>
       </Column>
 

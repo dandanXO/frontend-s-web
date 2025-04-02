@@ -10,24 +10,28 @@
   >
     <template #header>
       <div class="dialog-header">
-        <h3>{{ streamTitle }}</h3>
+        <h3>{{ streamTitle }} - {{ formatQuality(currentQuality) }}</h3>
       </div>
     </template>
     <div class="stream-info">
-      <div class="info-item">
-        <span class="label">直播串流ID:</span>
-        <span class="value">{{ stream.streamId }}</span>
-      </div>
       <div class="info-item">
         <span class="label">主播:</span>
         <span class="value">{{ stream.streamerName }}</span>
       </div>
       <div class="info-item">
-        <span class="label">當前質量:</span>
-        <span class="value">{{ currentQuality }}</span>
+        <span class="label">供應商串流ID:</span>
+        <span class="value">{{ stream.supplierStreamId }}</span>
       </div>
       <div class="info-item">
-        <span class="label">當前播放鏈結:</span>
+        <span class="label">主播串流ID:</span>
+        <span class="value">{{ stream.streamerStreamId }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">當前質量:</span>
+        <span class="value">{{ formatQuality(currentQuality) }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">供應商播放鏈結:</span>
         <div class="url-container">
           <span class="url-text">{{ getCurrentPlayUrl() }}</span>
           <Button 
@@ -35,6 +39,19 @@
             severity="secondary" 
             text 
             @click="copyUrl(getCurrentPlayUrl())"
+            v-tooltip.top="'複製鏈結'"
+          />
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="label">主播播放鏈結:</span>
+        <div class="url-container">
+          <span class="url-text">{{ getStreamerPlayUrl() }}</span>
+          <Button 
+            icon="pi pi-copy" 
+            severity="secondary" 
+            text 
+            @click="copyUrl(getStreamerPlayUrl())"
             v-tooltip.top="'複製鏈結'"
           />
         </div>
@@ -253,6 +270,16 @@ const initializePlayer = async () => {
   }
 }
 
+// 格式化質量顯示
+const formatQuality = (quality) => {
+  if (!quality) return '';
+  // 如果是 p540 格式，轉換為 540P
+  if (quality.startsWith('p')) {
+    return quality.substring(1).toUpperCase() + 'P';
+  }
+  return quality;
+};
+
 // 開始播放
 const startPlay = async () => {
   if (!player.value || !props.stream) {
@@ -262,7 +289,9 @@ const startPlay = async () => {
 
   try {
     isLoading.value = true;
-    const currentSource = props.stream?.supplierCdnPullUrl[currentQuality.value]?.flvUrl;
+    // 以主播流鏈結為主, 如果沒有的話, 再以供應商流鏈結為主
+    const currentSource = 
+      props.stream?.streamerCdnPullUrl?.[currentQuality.value]?.flvUrl || props.stream?.supplierCdnPullUrl?.[currentQuality.value]?.flvUrl;
     console.log('當前播放地址:', currentSource);
 
     if (!currentSource) {
@@ -374,6 +403,11 @@ onBeforeUnmount(() => {
 const getCurrentPlayUrl = () => {
   if (!props.stream) return '';
   return props.stream.supplierCdnPullUrl?.[currentQuality.value]?.flvUrl || '';
+}
+
+const getStreamerPlayUrl = () => {
+  if (!props.stream) return '';
+  return props.stream.streamerCdnPullUrl?.[currentQuality.value]?.flvUrl || '';
 }
 
 const copyUrl = async (url) => {
