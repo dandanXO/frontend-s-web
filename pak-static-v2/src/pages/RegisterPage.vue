@@ -475,8 +475,6 @@ export default defineComponent({
                     ttq.track("CompleteRegistration", { content_type: "product" }, { event_id: Date.now() });
                   }
 
-                  trackRegisterSuccessEvent();
-
                   document.addEventListener("ftdSuccess", trackNewUserFtd);
                   if (isInPwa()) {
                     localStorage.setItem("newUserFtd", regForm.loginName);
@@ -485,6 +483,8 @@ export default defineComponent({
                   }
                   localStorage.setItem("REG_REFERRAL_CODE", regForm.referrer);
                 }
+
+                trackRegisterSuccessEvent();
 
                 sessionStorage.removeItem("REFERRAL_CODE");
 
