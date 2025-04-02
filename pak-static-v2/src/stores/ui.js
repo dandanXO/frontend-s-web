@@ -24,7 +24,8 @@ export const useUI = defineStore("ui-store", {
       youtubeUrl: "",
       footerIcon: "",
       maintenanceStartTime: "",
-      maintenanceEndTime: ""
+      maintenanceEndTime: "",
+      adjust_register_event: ""
     };
   },
   actions: {
