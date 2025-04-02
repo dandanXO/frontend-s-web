@@ -1,5 +1,5 @@
 <template>
-  <q-dialog class="flex-end" width="100%" v-model="isUnbindModalOpen" presistent>
+  <q-dialog  width="100%" v-model="isUnbindModalOpen" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">

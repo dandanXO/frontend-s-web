@@ -61,7 +61,7 @@
           ></iframe>
         </template>
 
-        <q-dialog class="flex-end" width="100%" v-model="drawerVisible" presistent>
+        <q-dialog  width="100%" v-model="drawerVisible" presistent>
           <div class="popout-dialog">
             <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
             <div class="popout-dialog-container-gold">

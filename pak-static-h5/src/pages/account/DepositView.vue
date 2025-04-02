@@ -325,7 +325,7 @@
     </div>
   </q-dialog>-->
 
-  <q-dialog class="flex-end" width="100%" v-model="userKYCDialog" persistent>
+  <q-dialog  width="100%" v-model="userKYCDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="goBackPage" v-close-popup />
       <KYCUserForm @closeUserKYCDialog="checkCloseUserKYCDialog" />
