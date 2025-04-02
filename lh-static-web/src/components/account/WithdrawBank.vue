@@ -44,7 +44,11 @@
         </div>
         <div class="bank-card-item" @click="bankCardModal('bank')">
           <img width="24" height="24" class="fill-424f72" src="../../assets/home/links-line.svg" />
-          <span class="lock-card-txt">添加银行卡 / 支付宝 / 电子钱包 / 虚拟币</span>
+          <span class="lock-card-txt">
+            添加银行卡
+            <template v-if="alipayAvailable">/ 支付宝</template>
+            &nbsp;/ 电子钱包 / 虚拟币
+          </span>
         </div>
       </div>
     </div>
@@ -240,7 +244,7 @@
 </template>
 
 <script lang="js">
-import { defineComponent, reactive, ref, onMounted, watch } from "vue";
+import { defineComponent, reactive, ref, onMounted, watch, computed } from "vue";
 import { getVerificationCode } from "@/api/index/login";
 import { ElMessageBox } from "element-plus";
 // import { ExclamationCircleOutlined } from "@ant-design/icons-vue"
@@ -416,12 +420,12 @@ export default defineComponent({
         pageCount: 1
       }
     ]);
-    const bankTypes = [
+    const bankTypes = computed(() => [
       { value: "Bank", text: "银行卡" },
-      { value: "alipay", text: "支付宝" },
+      ...(alipayAvailable.value ? [{ value: "alipay", text: "支付宝" }] : []),
       { value: "Crypto", text: "数字货币" },
       { value: "e-Wallet", text: "电子钱包" }
-    ];
+    ]);
     const personalState = reactive({
       memberInfo: {},
       bankCardList: []
@@ -525,6 +529,7 @@ export default defineComponent({
       getTime();
       loadCards();
       loadInfo();
+      setNewBankTypes();
     });
 
     const handleCurrentChange = (val) => {
@@ -612,6 +617,24 @@ export default defineComponent({
         }
       });
     };
+
+    const alipayAvailable = ref(false);
+    const setNewBankTypes = () => {
+      if (bankCardModalState.banks.length === 0) {
+        loadBanks()
+          .then((res) => {
+            if (res.code === 0) {
+              alipayAvailable.value = res.data.some(item =>
+                item.code.toLowerCase().includes("alipay")
+              );
+            }
+          })
+          .catch((error) => {
+            console.error("Error loading banks:", error);
+          });
+      }
+    };
+
     const selectedBankType = ref("Bank");
     const selectBankType = () => {
       banksList.value = [];
@@ -1005,7 +1028,9 @@ export default defineComponent({
       isSZPAY,
       loginCountdown,
       initCountdownTimer,
-      countdownTimer
+      countdownTimer,
+      alipayAvailable,
+      setNewBankTypes
     };
   }
 });
