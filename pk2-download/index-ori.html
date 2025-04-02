@@ -1104,23 +1104,6 @@
   </footer>
 </div>
 <script type="text/javascript">
-  // const searchParams = new URLSearchParams(window.location.search);
-  // let affidValue = searchParams.get('id');
-  // const campaignname = searchParams.get('campaignname');
-  // const campaignid = searchParams.get('campaignid');
-  // const adsetid = searchParams.get('adsetid');
-  // const adsetname = searchParams.get('adsetname');
-  // const adname = searchParams.get('adname');
-  // const adid = searchParams.get('adid');
-  // const fbclid = searchParams.get('fbclid');
-  // const fbpid = searchParams.get('fbpid');
-  // const autoDownload = searchParams.get("autoDownload");
-
-  //
-
-  // var apiUrl = '';
-  // var adjustUrlCode = '';
-  // getApiUrl();
 
   const searchParams = new URLSearchParams(window.location.search);
   let affidValue = searchParams.get("p0") || searchParams.get("id");
@@ -1168,17 +1151,6 @@
       downloadApk(code, pp, fbclid, fbpid);
     }
 
-    // try {
-    //     const response = await fetch(`https://tljwn.plan2wtion.com/app/download/affiliate/url?siteCode=IND&affiliateCode=${affidValue}`);
-    //     const data = await response.json();
-    //     if (data) {
-    //         console.log("data", data);
-    //         apiUrl = data.data.url;
-    //         adjustUrlCode = data.data.adjustUrlCode;
-    //     }
-    // } catch (error) {
-    //     console.log(error)
-    // }
   }
 
   function getQueryVariable(variable) {
@@ -1220,7 +1192,7 @@
     const link = document.createElement("a");
     link.style.display = "none";
     link.href = url;
-    link.download = "ph1-app-1.0.1.apk";
+    link.download = "pk2-app-1.0.1.apk";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
