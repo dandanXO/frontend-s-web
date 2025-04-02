@@ -85,7 +85,7 @@ body.body--dark .q-header {
 .flex-end .q-dialog__inner--minimized,
 .q-dialog__inner--minimized:has(.flex-end) {
   /* Apply styles to .q-dialog__inner--minimized only if it has a child .isCentreDialog */
-  align-items: flex-end;
+  // align-items: flex-end;
 }
 .q-item--active {
   // color: #fdd835;
