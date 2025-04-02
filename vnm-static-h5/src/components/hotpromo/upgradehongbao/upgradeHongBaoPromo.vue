@@ -18,6 +18,11 @@
           width="200"
           v-else-if="promoId === 669"
         />
+        <img
+          src="../../../assets/images/promo/hotpromo/upgradehongbao/hung-king-claim-btn.png"
+          width="200"
+          v-else-if="promoId === 756"
+        />
         <img v-else src="../../../assets/images/promo/hotpromo/upgradehongbao/red-packet.png" width="200" />
       </div>
 
