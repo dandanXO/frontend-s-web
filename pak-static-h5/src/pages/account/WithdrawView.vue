@@ -1402,3 +1402,9 @@ watch(
   backdrop-filter: blur(12px);
 }
 </style>
+
+<style lang="scss"> 
+.q-field__control, .q-field__marginal {
+  height: auto !important;
+}
+</style>

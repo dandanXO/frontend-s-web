@@ -974,11 +974,11 @@ export default defineComponent({
   // justify-content: center;
   padding-top: 20px;
   // background: url("../assets/images/auth/bg-login.png");
-  background: url("../assets/images/auth/top-login-bg.png");
+  background: url("../assets/images/auth/top-login-bg.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   // padding-top: 250px;
-  padding-top: 295px;
+  padding-top: 265px;
   padding-bottom: 20px;
   @media screen and (min-width: 500px) {
     padding-top: 300px;
@@ -1125,7 +1125,7 @@ export default defineComponent({
 }
 
 .login-form-wrapper {
-  padding: 0 20px 20px 20px;
+  padding: 0 20px 15px 20px;
 
   :deep(.q-field__control) {
     height: 45px;

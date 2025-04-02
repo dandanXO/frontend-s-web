@@ -1251,11 +1251,11 @@ function charType(num) {
   display: flex;
   flex-direction: column;
   // justify-content: center;
-  background: url("../assets/images/auth/top-login-bg.png");
+  background: url("../assets/images/auth/top-login-bg.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   // padding-top: 250px;
-  padding-top: 295px;
+  padding-top: 265px;
   padding-bottom: 20px;
   @media screen and (min-width: 500px) {
     padding-top: 300px;
