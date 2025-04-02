@@ -251,6 +251,7 @@ import { userStore } from "stores/index";
 import { useLocalStorage } from "@vueuse/core";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
+import { useI18n } from "vue-i18n";
 
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);
@@ -269,6 +270,7 @@ const onCategoryToggleBtnClick = (index) => {
   selectedCategoryToggleIndex.value = index;
 };
 
+const { t } = useI18n();
 const qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
