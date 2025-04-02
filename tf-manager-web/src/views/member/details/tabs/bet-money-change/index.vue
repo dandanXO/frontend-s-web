@@ -289,7 +289,7 @@
               size="mini"
               style="float: right;"
               v-permission="['sys:member:detail:updateBetStatus']"
-              @click="showDialog(scope.row.transactionId)"
+              @click="showDialog(scope.row.transactionId, scope.row.betTime)"
               v-if="scope.row.betStatus === 'BET'"
             >
               {{ t('fields.update') }}
@@ -436,6 +436,7 @@ const updateBetStatusForm = ref(null)
 const betStatusTypeForm = reactive({
   transactionId: null,
   betStatus: null,
+  betTime: null
 })
 
 const uiControl = reactive({
@@ -650,15 +651,20 @@ function setRowClass({ row }) {
     : ''
 }
 
-const showDialog = async transactionId => {
+const showDialog = async (transactionId, betTime) => {
   betStatusTypeForm.transactionId = transactionId
   betStatusTypeForm.betStatus = betStatusType.list[0].value
+  betStatusTypeForm.betTime = betTime
   uiControl.dialogTitle = t('fields.betStatus')
   uiControl.dialogVisible = true
 }
 
 async function editBetStatusType() {
-  await updateBetStatusType(betStatusTypeForm.transactionId, betStatusTypeForm.betStatus);
+  const query = checkQuery();
+  query.transactionId = betStatusTypeForm.transactionId;
+  query.betStatus = betStatusTypeForm.betStatus;
+  query.transactionBetTime = betStatusTypeForm.betTime;
+  await updateBetStatusType(query);
   uiControl.dialogVisible = false
 
   ElMessage({
