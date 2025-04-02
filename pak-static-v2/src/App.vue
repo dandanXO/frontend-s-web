@@ -100,10 +100,6 @@ export default defineComponent({
         console.log(affAppToken.value);
         var adjustConfig = new AdjustConfig(affAppToken.value, AdjustConfig.EnvironmentProduction);
         adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
-        adjustConfig.setAttributionCallbackListener(function (e) {
-          console.log("setAttributionCallbackListener");
-          console.log(e);
-        });
         Adjust.create(adjustConfig);
         setTimeout(() => {
           // Adjust.getAdid().then((aaid) => {
