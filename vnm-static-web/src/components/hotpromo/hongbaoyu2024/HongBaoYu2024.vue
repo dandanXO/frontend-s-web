@@ -14,6 +14,11 @@
           width="350"
           v-else-if="promoId === 669"
         />
+        <img
+          src="../../../assets/images/promotion/hotpromo/hongbaoyu2024/hung-king-claim-btn.png"
+          width="350"
+          v-else-if="promoId === 756"
+        />
         <img v-else src="../../../assets/images/promotion/hotpromo/hongbaoyu2024/red-packet.png" width="350" />
       </div>
     </div>
@@ -385,7 +390,7 @@ onMounted(() => {
   margin-right: 20%;
   align-items: center;
   justify-content: center;
-  box-shadow: 0px 3px 3px 3px rgba(0,0,0,0.3);
+  box-shadow: 0px 3px 3px 3px rgba(0, 0, 0, 0.3);
 }
 </style>
 
