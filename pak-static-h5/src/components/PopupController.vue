@@ -63,7 +63,9 @@ const controllerStyle = computed(() => {
     case "mega-sharing-wheel":
       return "style-2";
     case "money-rain":
+      return "style-1";
     case "lucky-spin-wheel":
+      return "lucky-spin-wheel";
     case "spin-lucky-wheel":
     default:
       return "style-1";
@@ -167,6 +169,14 @@ const handleNextClick = () => {
     --border-color: #ffffffcc;
     --selected-border-color: #fff;
     --text-color: #fff;
+    --selected-text-color: #fff;
+  }
+  &.lucky-spin-wheel{
+    --bg-color: #fff;
+    --selected-bg-color: linear-gradient(180deg, #8045FE 0%, #A958FF 100%);
+    --border-color: #ffffffcc;
+    --selected-border-color: #fff;
+    --text-color: rgba(181, 115, 255, 1);
     --selected-text-color: #fff;
   }
 }
