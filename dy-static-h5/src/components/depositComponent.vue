@@ -147,7 +147,7 @@
           :options="unselectedPrivileges"
           v-model="selectedPrivilege"
           emit-value
-          v-if="hasPrivilege && !isUSDT"
+          v-if="hasPrivilege"
           :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
           clearable
           @update:model-value="checkMinDepositAmt"
@@ -329,8 +329,9 @@ const blurCode = () => {
 
 const verifyDepositAmount = ref([
   (val) => !!val || "请输入金额",
+  (val) => (val && /^\d+$/.test(val)) || (val && isUSDT.value) || "存款金额不能带有小数",
   (val) =>
-    val > calculatedMinDeposit.value - 1 ||
+    val >= calculatedMinDeposit.value ||
     "存款应介于 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
   (val) =>
     val < activeMethod.value.depositMax + 1 ||
@@ -462,7 +463,14 @@ function checkMinDepositAmt() {
   if (!selectedPrivilege.value) {
     calculatedMinDeposit.value = activeMethod.value.depositMin;
   } else {
-    calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, selectedPrivilege.value.depositMin);
+    if (isUSDT.value) {
+      calculatedMinDeposit.value = Math.max(
+        activeMethod.value.depositMin,
+        parseFloat(selectedPrivilege.value.depositMin / activeMethod.value.currencyRate).toFixed(2)
+      );
+    } else {
+      calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, selectedPrivilege.value.depositMin);
+    }
   }
 }
 
