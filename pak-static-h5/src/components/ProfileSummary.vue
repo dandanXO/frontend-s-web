@@ -116,10 +116,10 @@
             </div>
           </template>
 
-          <q-list style="background: #19242e" dense unelevated flat class="dropdown-list">
+          <q-list style="background: #323738; padding: 5px 0px;" dense unelevated flat class="dropdown-list">
             <q-item clickable v-close-popup @click="onVipClick">
               <q-item-section avatar>
-                <q-avatar icon="diamond" />
+                <img src="../assets/images/account/vip-svg.svg" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>{{ $t("settings.vip") }}</q-item-label>
@@ -128,7 +128,7 @@
 
             <q-item clickable v-close-popup @click="router.push('/account/message?from=' + route.path)">
               <q-item-section avatar>
-                <q-avatar icon="mail" />
+                <img src="../assets/images/account/message-svg.svg" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>
@@ -140,7 +140,7 @@
 
             <q-item clickable v-close-popup @click="router.push('/account/order?from=' + route.path)">
               <q-item-section avatar>
-                <q-avatar icon="receipt" />
+                <img src="../assets/images/account/order-svg.svg" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>{{ $t("settings.order") }}</q-item-label>
@@ -151,7 +151,7 @@
 
             <q-item clickable v-close-popup @click="router.push('/account/bank?from=' + route.path)">
               <q-item-section avatar>
-                <q-avatar icon="account_balance" />
+                <img src="../assets/images/account/bank-svg.svg" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>{{ $t("settings.bank") }}</q-item-label>
@@ -160,7 +160,7 @@
 
             <q-item clickable v-close-popup @click="onLogout()">
               <q-item-section avatar>
-                <q-avatar icon="logout" />
+                <img src="../assets/images/account/logout-icon.svg" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>{{ $t("settings.logout") }}</q-item-label>
@@ -1047,7 +1047,8 @@ onUnmounted(() => {
 }
 
 .message-amt {
-  background-color: #00ae00;
+  color: #323738;
+  background-color: #24ee89;
   border-radius: 30px;
   width: 20px;
   height: 20px;
@@ -1057,8 +1058,8 @@ onUnmounted(() => {
   line-height: 1;
   font-size: 10px;
   position: absolute;
-  bottom: 5px;
-  left: 15px;
+  bottom: 13px;
+  left: 5px;
   font-weight: bold;
 }
 </style>
@@ -1080,7 +1081,7 @@ onUnmounted(() => {
 
 .q-avatar {
   i.q-icon {
-    color: #7b80a9;
+    color: #b3bec1;
   }
 }
 
