@@ -100,7 +100,7 @@ export default defineComponent({
         console.log(affAppToken.value);
         var adjustConfig = new AdjustConfig(affAppToken.value, AdjustConfig.EnvironmentProduction);
         adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
-        Adjust.create(adjustConfig);
+        Adjust.initSdk(adjustConfig);
         setTimeout(() => {
           // Adjust.getAdid().then((aaid) => {
           //   console.log("aaid");
