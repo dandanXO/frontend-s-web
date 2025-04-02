@@ -142,6 +142,7 @@
           @selected="selectedBank"
           @successful="isDeposited = true"
         ></BankComponent>
+
         <q-select
           style="width: 100%"
           ref="offerRef"
@@ -152,7 +153,7 @@
           :options="unselectedPrivileges"
           v-model="selectedPrivilege"
           emit-value
-          v-if="hasPrivilege && !isUSDT"
+          v-if="hasPrivilege"
           :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
           clearable
           @update:model-value="checkMinDepositAmt"
@@ -299,7 +300,7 @@
           :options="unselectedPrivileges"
           v-model="selectedPrivilege"
           emit-value
-          v-if="hasPrivilege && !isUSDT"
+          v-if="hasPrivilege"
           :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
           clearable
           @update:model-value="checkMinDepositAmt"
@@ -684,7 +685,14 @@ function checkMinDepositAmt() {
   if (!selectedPrivilege.value) {
     calculatedMinDeposit.value = activeMethod.value.depositMin;
   } else {
-    calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, selectedPrivilege.value.depositMin);
+    if (isUSDT.value) {
+      calculatedMinDeposit.value = Math.max(
+        activeMethod.value.depositMin,
+        parseFloat(selectedPrivilege.value.depositMin / activeMethod.value.currencyRate).toFixed(2)
+      );
+    } else {
+      calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, selectedPrivilege.value.depositMin);
+    }
   }
 }
 
