@@ -430,7 +430,6 @@ async function onSelect(value) {
 }
 
 function checkMinDepositAmt(value) {
-  debugger;
   if (!selectedPrivilege.value || !value) {
     calculatedMinDeposit.value = activeMethod.value.depositMin;
   } else {

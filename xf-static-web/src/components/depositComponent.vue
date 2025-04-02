@@ -69,7 +69,7 @@
           :inline="false"
           label-suffix=":"
         >
-        <div class="common-title">存款金额</div>
+          <div class="common-title">存款金额</div>
           <el-space style="flex-direction: column; display: flex; justify-content: flex-start; align-items: flex-start">
             <el-form-item class="helptxt marginnone" prop="localAmount">
               <el-input
@@ -85,11 +85,12 @@
               </el-select>
             </el-form-item>
             <div class="account-tip spaced">
-              <span>单笔存款：</span><span>{{ calculatedMinDeposit ? calculatedMinDeposit : 0 }}
-              {{ isUSDT ? "USDT" : store.currency.label }} -
-              {{ activeMethod.depositMax ? activeMethod.depositMax : "No Limit" }}
-              {{ isUSDT ? "USDT" : store.currency.label }}
-            </span>
+              <span>单笔存款：</span>
+              <span>
+                {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }} {{ isUSDT ? "USDT" : store.currency.label }} -
+                {{ activeMethod.depositMax ? activeMethod.depositMax : "No Limit" }}
+                {{ isUSDT ? "USDT" : store.currency.label }}
+              </span>
             </div>
           </el-space>
 
@@ -124,11 +125,11 @@
               @selected="selectedBank"
             ></BankComponent>
           </el-form-item>
-          <el-form-item prop="privilegeId" name="privilegeId" v-if="hasPrivilege && !isUSDT" label="优惠">
+          <el-form-item prop="privilegeId" name="privilegeId" v-if="hasPrivilege" label="优惠">
             <el-select
               v-model="selectedPrivilege"
               placeholder="选择优惠"
-              @select="checkMinDepositAmt"
+              @change="checkMinDepositAmt"
               @focus="loadPrivilege(activeMethod)"
               clearable
               style="max-width: 200px"
@@ -139,12 +140,11 @@
             </el-select>
           </el-form-item>
 
-
           <div>
-              <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn btn-confirm">
-                确定
-              </el-button>
-            </div>
+            <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn btn-confirm">
+              确定
+            </el-button>
+          </div>
           <div
             class="rollover-info"
             v-if="selectedPromo && selectedPromo.name && (selectedPromo.gameTypeRollover || selectedPromo.rollover)"
@@ -172,11 +172,18 @@
           </el-form-item> -->
           <el-form-item v-if="selectedPayType" class="tip">
             <!-- <template #label></template> -->
-            <span class="account-tip-text" style="
-    font-family: PingFang SC;
-    font-size: 15px;
-    font-weight: 400;
-    color: #B8B8B8; margin-bottom: 10px; display: block; width: 100%">
+            <span
+              class="account-tip-text"
+              style="
+                font-family: PingFang SC;
+                font-size: 15px;
+                font-weight: 400;
+                color: #b8b8b8;
+                margin-bottom: 10px;
+                display: block;
+                width: 100%;
+              "
+            >
               <div v-html="activeMethod.msg"></div>
               <!-- {{ activeMethod.msg }} -->
             </span>
@@ -212,7 +219,6 @@
                 <p style="color: #fff; margin-top: 0px">存款需要绑定真实姓名</p>
                 <div class="sub-msg">为了您的资金安全，银行卡姓名需一致</div>
               </div>
-
             </div>
           </div>
           <div v-if="!store.phone">
@@ -224,10 +230,14 @@
             </div>
           </div>
           <div class="dialog-footer">
-            <button type="primary" class="common-btn outlined" @click="isShowSubmitDialog = false">
-              暂不认证
+            <button type="primary" class="common-btn outlined" @click="isShowSubmitDialog = false">暂不认证</button>
+            <button
+              type="primary"
+              class="common-btn"
+              @click="!store.phone ? handleBindPhoneNumber : handleBindRealName"
+            >
+              去绑定
             </button>
-            <button type="primary" class="common-btn" @click="!store.phone ? handleBindPhoneNumber : handleBindRealName">去绑定</button>
           </div>
         </div>
       </el-dialog>
@@ -474,13 +484,20 @@ async function onSelect(value) {
     checkMinDepositAmt();
   }
 }
-function checkMinDepositAmt(value, option) {
-  if (!selectedPrivilege.value || !option) {
+function checkMinDepositAmt(value) {
+  if (!selectedPrivilege.value || !value) {
     calculatedMinDeposit.value = activeMethod.value.depositMin;
   } else {
     unselectedPrivileges.value.forEach((element) => {
-      if (element.id === option.key) {
-        calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, element.depositMin);
+      if (element.id === value) {
+        if (isUSDT.value) {
+          calculatedMinDeposit.value = Math.max(
+            activeMethod.value.depositMin,
+            parseFloat(element.depositMin / activeMethod.value.currencyRate).toFixed(2)
+          );
+        } else {
+          calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, element.depositMin);
+        }
       }
     });
   }
@@ -831,7 +848,7 @@ onMounted(() => {
     }
   }
   .node-wrapper {
-    border-bottom: 1px solid #FFFFFF1A;
+    border-bottom: 1px solid #ffffff1a;
     // margin: 30px -30px;
     padding: 20px 0;
     // background: url(../../assets/images/common/bg.jpg);
@@ -852,49 +869,46 @@ onMounted(() => {
       position: relative;
       .el-form-item {
         margin-bottom: 10px;
-        color:#B8B8B8;
+        color: #b8b8b8;
         &.spaced {
-
           display: flex;
           justify-content: space-between;
-          color: #B8B8B8;
+          color: #b8b8b8;
           margin: 0;
-          
+
           .el-form-item__label {
             font-family: PingFang SC;
             font-size: 15px;
             font-weight: 400;
-            color:#B8B8B8;
+            color: #b8b8b8;
           }
           .el-form-item__content {
             font-family: PingFang SC;
             font-size: 15px;
             font-weight: 400;
-            color:#B8B8B8;
+            color: #b8b8b8;
             display: flex;
             justify-content: flex-end;
-
           }
         }
       }
     }
     .spaced {
-          font-family: PingFang SC;
-          font-size: 15px;
-          font-weight: 400;
-          display: flex;
-          justify-content: space-between;
-          color: #B8B8B8;
-          margin: 0;
-          .el-form-item__label {
-            color:#B8B8B8;
-          }
-          .el-form-item__content {
-            display: flex;
-            justify-content: flex-end;
-
-          }
-        }
+      font-family: PingFang SC;
+      font-size: 15px;
+      font-weight: 400;
+      display: flex;
+      justify-content: space-between;
+      color: #b8b8b8;
+      margin: 0;
+      .el-form-item__label {
+        color: #b8b8b8;
+      }
+      .el-form-item__content {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
 
     .ant-form.ant-form-horizontal .ant-form-item .ant-form-item-control-input-content .ant-input {
       background: #23263c;
@@ -995,7 +1009,7 @@ onMounted(() => {
     width: 100%;
     border-radius: 10px;
     background-size: 120%;
-    background-color:#32CEED;
+    background-color: #32ceed;
 
     &:hover {
       opacity: 0.9;
@@ -1082,11 +1096,10 @@ onMounted(() => {
     font-size: 14px;
   }
   .el-dialog__body {
-    background: #1B1B1C;
+    background: #1b1b1c;
   }
-
 }
-.dialog-footer{
+.dialog-footer {
   display: flex;
   gap: 10px;
   .common-btn {
@@ -1103,19 +1116,19 @@ onMounted(() => {
   width: 100%;
 }
 .account-content .deposit-container .deposit-form .el-form-item .el-input__wrapper {
-    font-family: PingFang SC;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 22.4px;
-    text-align: center;
-    color: #b8b8b8;
-    // background-color: #2a313e;
-    background: #262627;
-    border: 1px solid #3c3c3d;
-    background-clip: padding-box;
-    // border: 1px solid #333c4b;
-    padding: 8px 15px;
-    border-radius: 8px;
-    margin-bottom: 5px;
-  }
+  font-family: PingFang SC;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22.4px;
+  text-align: center;
+  color: #b8b8b8;
+  // background-color: #2a313e;
+  background: #262627;
+  border: 1px solid #3c3c3d;
+  background-clip: padding-box;
+  // border: 1px solid #333c4b;
+  padding: 8px 15px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+}
 </style>

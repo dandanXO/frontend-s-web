@@ -249,7 +249,7 @@
           :options="unselectedPrivileges"
           v-model="selectedPrivilege"
           emit-value
-          v-if="hasPrivilege && !isUSDT"
+          v-if="hasPrivilege"
           :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
           clearable
           style="width: 100%"
@@ -639,7 +639,14 @@ function checkMinDepositAmt() {
   if (!selectedPrivilege.value) {
     calculatedMinDeposit.value = activeMethod.value.depositMin;
   } else {
-    calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, selectedPrivilege.value.depositMin);
+    if (isUSDT.value) {
+      calculatedMinDeposit.value = Math.max(
+        activeMethod.value.depositMin,
+        parseFloat(selectedPrivilege.value.depositMin / activeMethod.value.currencyRate).toFixed(2)
+      );
+    } else {
+      calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, selectedPrivilege.value.depositMin);
+    }
   }
 }
 
@@ -675,7 +682,7 @@ async function confirmDeposit() {
   depositAmtRef.value.validate();
   if (depositAmtRef.value.hasError) {
     btnLoading.value = false;
-  } else if ((selectedPayType.value && bankCardList.value.length) && !form.bankId) {
+  } else if (selectedPayType.value && bankCardList.value.length && !form.bankId) {
     // $q.notify({
     //   color: "negative",
     //   position: "top",
@@ -976,7 +983,7 @@ onMounted(() => {
     pointer-events: auto;
   }
 
-  .disable-btn{
+  .disable-btn {
     pointer-events: none;
   }
 }
