@@ -441,12 +441,12 @@ $colors: (
   #d34cfc,
   #fc4cc4,
   #efa1f6,
-  #d89053,
-  #c75d33,
+  #FF9D86,
   #5bfc49,
   #efe639,
   #67c2ac,
-  #fc4c4f
+  #ff7879,
+  #d89053
 );
 @for $i from 0 through length($colors) - 1 {
   .vipitem#{$i} {

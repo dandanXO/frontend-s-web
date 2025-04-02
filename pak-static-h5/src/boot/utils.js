@@ -107,14 +107,14 @@ export const normalDateTime = (dateTime) => {
   return moment(dateTime).format("YYYY-MM-DD HH:mm:ss");
 };
 
-export const convertToCommaAmount = (amount, isForceDecimal) => {
+export const convertToCommaAmount = (amount, isForceDecimal, minimumFractionDigits = 2) => {
   if (amount === null) {
     return 0;
   }
   if (isNonNumericString(amount)) {
     return amount;
   }
-  return parseFloat(amount).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return parseFloat(amount).toLocaleString("en-US", { minimumFractionDigits, maximumFractionDigits: 2 });
 };
 
 function isNonNumericString(value) {

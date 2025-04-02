@@ -28,7 +28,7 @@
         <div class="item-amount">
           RS
           {{
-            convertToCommaAmount(getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET")) ||
+            convertToCommaAmount(getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET"), null, 0) ||
             0.0
           }}
         </div>
@@ -48,7 +48,7 @@
       <div class="details-item">
         <div class="item-amount">
           Rs
-          <span>{{ convertToCommaAmount(getRewardAmount("ONE_TIME")) }}</span>
+          <span>{{ convertToCommaAmount(getRewardAmount("ONE_TIME"), null, 0) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.reward.invite") }}</div>
         <div class="item-icon"><img src="../../assets/images/earn-money/details-icon-01.png" /></div>
@@ -58,7 +58,7 @@
       <div class="details-item">
         <div class="item-amount">
           Rs
-          <span>{{ convertToCommaAmount(getRewardAmount("DEPOSIT")) }}</span>
+          <span>{{ convertToCommaAmount(getRewardAmount("DEPOSIT"), null, 0) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.reward.topUp") }}</div>
         <div class="item-icon"><img src="../../assets/images/earn-money/details-icon-02.png" /></div>
@@ -69,7 +69,7 @@
       <div class="details-item details-item">
         <div class="item-amount">
           Rs
-          <span>{{ convertToCommaAmount(getRewardAmount("BET")) }}</span>
+          <span>{{ convertToCommaAmount(getRewardAmount("BET"), null, 0) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.reward.bet") }}</div>
         <div class="item-icon"><img src="../../assets/images/earn-money/details-icon-03.png" /></div>
@@ -645,7 +645,7 @@ watch(activeSetting, checkIsShowDetail);
 
       .item-amount {
         color: #ffffff;
-        font-size: 24px;
+        font-size: 20px;
         line-height: 1;
         font-weight: bold;
       }
@@ -802,7 +802,7 @@ watch(activeSetting, checkIsShowDetail);
 
       .item-amount {
         color: #ffffff;
-        font-size: 24px;
+        font-size: 20px;
         line-height: 1;
         font-weight: bold;
       }
