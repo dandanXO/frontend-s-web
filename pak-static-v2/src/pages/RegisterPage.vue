@@ -433,9 +433,12 @@ export default defineComponent({
         isLoading.value = false;
       } else {
         var qs = require("qs");
-        const sidParam = store.visitorId;
+        const sidParam = store.googleadid || store.aaid || store.visitorId;
 
         (async () => {
+          if (store.aaid) {
+            regForm.traceId = store.aaid;
+          }
           regForm.sid = sidParam;
 
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
