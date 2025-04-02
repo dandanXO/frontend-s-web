@@ -62,7 +62,7 @@
         :no-data-label="$t('earnMoney.noDataAvailable')"
       >
         <template v-slot:header>
-          <q-tr class="top-header">
+          <q-tr class="table-header">
             <q-td v-for="(header, index) in tableHeaders" :key="index">
               {{ header.label }}
             </q-td>
@@ -70,7 +70,7 @@
         </template>
 
         <template v-slot:body="props">
-          <q-tr :props="props">
+          <q-tr :props="props" :class="props.rowIndex % 2 === 0 ? 'table-tr-even' : 'table-tr-odd'">
             <q-td v-for="col in props.cols" :key="col.name" :props="props">
               <span v-if="col.field === 'loginName'">
                 <span class="span-username" @click="searchByReferral(props)">{{ col.value }}</span>
@@ -339,5 +339,14 @@ onMounted(() => {
   color: #5F6061;
   width: 100%;
   display: block;
+}
+.table-header{
+  background-color: #2B2B2B;
+}
+.table-tr-odd{
+  background-color: #2B2B2B;
+}
+.table-tr-even{
+  background-color:  #333333;
 }
 </style>

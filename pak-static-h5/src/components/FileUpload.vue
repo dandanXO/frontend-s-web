@@ -7,17 +7,24 @@
     clearable
     :class="file? '' : 'hasFile'"
   >
-    
-    <img style="
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: 0 auto;" v-if="!file" src="../assets/images/common/image-icon.png">
     <!-- Display error message -->
     <!-- <template v-slot:error="{ error }">
       <div class="text-negative">{{ error }}</div>
     </template> -->
+    <template v-slot:prepend>
+      <img style="
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 32px;
+    width: 32px;" v-if="!file" src="../assets/images/common/image-icon.png">
+    </template>
+
   </q-file>
+ 
 </template>
 
 <script>
@@ -101,6 +108,7 @@ export default defineComponent({
   color: #ffffff !important;
 }
 .q-field__control-container {
+  height: 100%;
   flex-direction: column-reverse;
     justify-content: center;
     align-items: center;
@@ -108,6 +116,9 @@ export default defineComponent({
 }
 .q-file .q-field__native {
   display: block;
+}
+:deep(.q-field__control):after {
+ height: 100%;
 }
 .hasFile { 
   :deep(.q-field__control-container) {
