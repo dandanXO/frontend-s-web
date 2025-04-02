@@ -44,7 +44,7 @@
         />
         <img v-else :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu2024/red-packet-opened.png`)" />
         <!-- <img src="../../../assets/images/promotion/hotpromo/red-packet-opened.png" /> -->
-        <div v-if="promoId !== 567 && promoId !== 669" class="grats">{{ $t("promo.congrats") }}</div>
+        <!-- <div v-if="promoId !== 567 && promoId !== 669" class="grats">{{ $t("promo.congrats") }}</div> -->
 
         <div v-if="promoId !== 567 && promoId !== 669" class="amount">{{ winAmount }}</div>
         <div v-else-if="promoId === 669" class="amount-halloween">{{ winAmount }}</div>
@@ -337,8 +337,10 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     top: 0;
-    margin-top: 250px;
-    color: #f23b1d;
+    // margin-top: 250px;
+    margin-top: 110px;
+    color: #ffff8b;
+    // color: #f23b1d;
     font-size: 50px;
     font-weight: bold;
   }
@@ -395,9 +397,13 @@ onMounted(() => {
 </style>
 
 <style lang="scss">
+.el-overlay-dialog:has(.hongbaoyu-modal) {
+  background: #000000ae;
+}
 .hongbaoyu-modal {
   .el-dialog__header .el-dialog__headerbtn {
     display: none !important;
   }
+  
 }
 </style>
