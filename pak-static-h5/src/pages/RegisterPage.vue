@@ -1257,14 +1257,21 @@ function charType(num) {
   // padding-top: 250px;
   padding-top: 265px;
   padding-bottom: 20px;
-  @media screen and (min-width: 500px) {
-    padding-top: 300px;
+
+  @media screen and (max-width: 400px) {
+    padding-top: 235px;
   }
+
   .is-domain {
     display: none;
   }
   .no-domain {
     display: unset;
+
+    @media screen and (max-width: 400px) {
+      margin-bottom: 10px;
+    }
+
     &.btn-lists {
       display: flex;
       width: 95%;
@@ -1513,6 +1520,10 @@ function charType(num) {
   font-size: 14px;
   color: #eeeeee;
 
+  @media screen and (max-width: 400px) {
+    font-size: 12px;
+  }
+
   :deep(.q-checkbox__bg) {
     border-radius: 4px;
   }
@@ -1627,6 +1638,34 @@ function charType(num) {
   }
 }
 
+
+.q-btn {
+    @media screen and (max-width: 400px) {
+      min-height: 35px;
+      height: 35px;
+    }
+
+  :deep(.q-btn__content) {
+    @media screen and (max-width: 400px) {
+      font-size: 13px;
+    }
+  }
+}
+
+.bottom-btn-primary {
+  .btn-primary {
+    @media screen and (max-width: 400px) {
+      min-height: 35px;
+      height: 35px;
+    }
+  }
+  :deep(.q-btn__content) {
+    @media screen and (max-width: 400px) {
+      font-size: 13px;
+    }
+  }
+}
+
 .bottom-img {
   text-align: center;
   margin-top: 28px;
@@ -1693,6 +1732,12 @@ function charType(num) {
 
 .areyounew {
   margin: 15px 0;
+
+  @media screen and (max-width: 400px) {
+    margin: 10px 0;
+    font-size: 12px;
+  }
+
   .green {
     color: #21ef89;
     font-weight: 700;
