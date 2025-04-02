@@ -974,14 +974,14 @@ export default defineComponent({
   // justify-content: center;
   padding-top: 20px;
   // background: url("../assets/images/auth/bg-login.png");
-  background: url("../assets/images/auth/top-login-bg.png");
+  background: url("../assets/images/auth/top-login-bg.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   // padding-top: 250px;
-  padding-top: 295px;
+  padding-top: 265px;
   padding-bottom: 20px;
-  @media screen and (min-width: 500px) {
-    padding-top: 300px;
+  @media screen and (max-width: 400px) {
+    padding-top: 235px;
   }
   .is-domain {
     display: none;
@@ -1001,6 +1001,11 @@ export default defineComponent({
     align-items: center;
     margin: 0 20px 20px;
     text-decoration: none;
+
+    @media screen and (max-width: 400px) {
+      margin: 0 20px 10px;
+      font-size: 12px;
+    }
   }
   &.w-domain {
     background: url("../assets/images/auth/trianglebg.png");
@@ -1125,7 +1130,11 @@ export default defineComponent({
 }
 
 .login-form-wrapper {
-  padding: 0 20px 20px 20px;
+  padding: 0 20px 15px 20px;
+
+  @media screen and (max-width: 400px) {
+    padding: 0 20px 10px 20px;
+  }
 
   :deep(.q-field__control) {
     height: 45px;
@@ -1200,10 +1209,18 @@ export default defineComponent({
   .btn-primary {
     background: linear-gradient(90deg, #29ed89 0%, #97e872 100%);
     color: #000a01;
+    @media screen and (max-width: 400px) {
+      min-height: 35px;
+      height: 35px;
+    }
   }
   :deep(.q-btn__content) {
     font-weight: bolder;
     font-size: 16px;
+    
+    @media screen and (max-width: 400px) {
+      font-size: 13px;
+    }
   }
 }
 
@@ -1264,6 +1281,12 @@ export default defineComponent({
 }
 .areyounew {
   margin: 15px 0;
+
+  @media screen and (max-width: 400px) {
+    margin: 10px 0;
+    font-size: 12px;
+  }
+
   .green {
     color: #21ef89;
     font-weight: 700;
