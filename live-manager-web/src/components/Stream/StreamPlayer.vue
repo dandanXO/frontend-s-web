@@ -2,7 +2,7 @@
   <Dialog
     :visible="visible"
     :modal="true"
-    :style="{ width: '80vw' }"
+    :style="{ width: '90vw' }"
     :maximizable="true"
     :closable="true"
     @hide="onHide"
@@ -57,20 +57,49 @@
         </div>
       </div>
     </div>
-    <div class="video-container">
-      <video
-        ref="videoPlayer"
-        id="streamPlayer"
-        class="video-js vjs-big-play-centered"
-        controls
-        preload="auto"
-        width="100%"
-        height="auto"
-        data-setup="{}"
-      >
-      </video>
-    </div>
+    <div class="players-container">
+      <div class="player-section">
+        <h3>供應商播放器</h3>
+        <div class="video-container">
+          <div v-if="supplierLoadError" class="error-overlay">
+            <i class="pi pi-exclamation-triangle" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+            <p>{{ supplierLoadError }}</p>
+          </div>
+          <video
+            ref="supplierPlayer"
+            id="supplierPlayer"
+            class="video-js vjs-big-play-centered"
+            controls
+            preload="auto"
+            width="100%"
+            height="auto"
+            data-setup="{}"
+          >
+          </video>
+        </div>
+      </div>
 
+      <div class="player-section">
+        <h3>主播播放器</h3>
+        <div class="video-container">
+          <div v-if="streamerLoadError" class="error-overlay">
+            <i class="pi pi-exclamation-triangle" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+            <p>{{ streamerLoadError }}</p>
+          </div>
+          <video
+            ref="streamerPlayer"
+            id="streamerPlayer"
+            class="video-js vjs-big-play-centered"
+            controls
+            preload="auto"
+            width="100%"
+            height="auto"
+            data-setup="{}"
+          >
+          </video>
+        </div>
+      </div>
+    </div>
     <template #footer>
       <div class="quality-selector">
         <Button
@@ -114,8 +143,10 @@ const props = defineProps({
 
 const emit = defineEmits(['update:visible'])
 
-const videoPlayer = ref(null)
-const player = ref(null)
+const supplierPlayer = ref(null)
+const streamerPlayer = ref(null)
+const supplierPlayerInstance = ref(null)
+const streamerPlayerInstance = ref(null)
 const streamTitle = ref('')
 const currentQuality = ref('p1080')
 const isLoading = ref(false)
@@ -126,6 +157,8 @@ const availableQualities = ref([
   { label: '540P', value: 'p540' },
   { label: 'original', value: 'original' }
 ])
+const supplierLoadError = ref(null)
+const streamerLoadError = ref(null)
 
 // 初始化 toast 服務
 const toast = useToast()
@@ -207,14 +240,11 @@ const registerFlvPlugin = () => {
 }
 
 // 初始化播放器
-const initializePlayer = async () => {
-  if (videoPlayer.value && !player.value) {
+const initializePlayers = async () => {
+  // 初始化供應商播放器
+  if (supplierPlayer.value && !supplierPlayerInstance.value) {
     try {
       registerFlvPlugin();
-      
-      const playUrl = props.stream?.supplierCdnPullUrl[currentQuality.value]?.flvUrl;
-      console.log('初始播放地址:', playUrl);
-
       const options = {
         autoplay: false,
         controls: true,
@@ -238,34 +268,44 @@ const initializePlayer = async () => {
           }
         }
       };
-
-      player.value = videojs(videoPlayer.value, options);
-      
-      // 等待播放器準備完成
-      await new Promise(resolve => {
-        player.value.ready(() => {
-          resolve();
-        });
-      });
-      
-      // 添加事件監聽
-      player.value.on('waiting', () => {
-        isLoading.value = true;
-      });
-
-      player.value.on('playing', () => {
-        isLoading.value = false;
-      });
-
-      player.value.on('error', (error) => {
-        console.error('播放器錯誤:', error);
-        isLoading.value = false;
-      });
-      
-      isInitialized.value = true;
+      supplierPlayerInstance.value = videojs(supplierPlayer.value, options);
     } catch (error) {
-      console.error('初始化播放器失敗:', error);
-      isInitialized.value = false;
+      console.error('初始化供應商播放器失敗:', error);
+      supplierLoadError.value = '播放器初始化失敗';
+    }
+  }
+  
+  // 初始化主播播放器
+  if (streamerPlayer.value && !streamerPlayerInstance.value) {
+    try {
+      registerFlvPlugin();
+      const options = {
+        autoplay: false,
+        controls: true,
+        preload: 'auto',
+        fluid: true,
+        aspectRatio: '16:9',
+        techOrder: ['html5', 'flvjs'],
+        html5: {
+          nativeVideoTracks: false,
+          nativeAudioTracks: false,
+          nativeTextTracks: false,
+          hls: {
+            overrideNative: true
+          }
+        },
+        flvjs: {
+          mediaDataSource: {
+            isLive: true,
+            cors: true,
+            withCredentials: false
+          }
+        }
+      };
+      streamerPlayerInstance.value = videojs(streamerPlayer.value, options);
+    } catch (error) {
+      console.error('初始化主播播放器失敗:', error);
+      streamerLoadError.value = '播放器初始化失敗';
     }
   }
 }
@@ -282,27 +322,49 @@ const formatQuality = (quality) => {
 
 // 開始播放
 const startPlay = async () => {
-  if (!player.value || !props.stream) {
-    console.warn('播放器未初始化或無串流數據');
-    return;
-  }
-
-  try {
-    isLoading.value = true;
-    // 以主播流鏈結為主, 如果沒有的話, 再以供應商流鏈結為主
-    const currentSource = 
-      props.stream?.streamerCdnPullUrl?.[currentQuality.value]?.flvUrl || props.stream?.supplierCdnPullUrl?.[currentQuality.value]?.flvUrl;
-    console.log('當前播放地址:', currentSource);
-
-    if (!currentSource) {
-      throw new Error('無效的播放地址');
+  // 播放供應商串流
+  if (supplierPlayerInstance.value) {
+    try {
+      supplierLoadError.value = null;
+      const supplierUrl = props.stream?.supplierCdnPullUrl?.[currentQuality.value]?.flvUrl;
+      if (supplierUrl) {
+        await playStream(supplierPlayerInstance.value, supplierUrl, 'supplier');
+      } else {
+        supplierLoadError.value = '無效的播放地址';
+      }
+    } catch (error) {
+      console.error('供應商播放錯誤:', error);
+      supplierLoadError.value = '串流載入失敗';
     }
+  }
+  
+  // 播放主播串流
+  if (streamerPlayerInstance.value) {
+    try {
+      streamerLoadError.value = null;
+      const streamerUrl = props.stream?.streamerCdnPullUrl?.[currentQuality.value]?.flvUrl;
+      if (streamerUrl) {
+        await playStream(streamerPlayerInstance.value, streamerUrl, 'streamer');
+      } else {
+        streamerLoadError.value = '無效的播放地址';
+      }
+    } catch (error) {
+      console.error('主播播放錯誤:', error);
+      streamerLoadError.value = '串流載入失敗';
+    }
+  }
+}
 
-    // 創建新的 FLV 播放器實例
+// 播放指定串流
+const playStream = async (playerInstance, url, type) => {
+  if (!playerInstance || !url) return;
+  
+  try {
+    await playerInstance.pause();
     if (flvjs.isSupported()) {
       const flvPlayer = flvjs.createPlayer({
         type: 'flv',
-        url: currentSource,
+        url: url,
         isLive: true,
         hasAudio: true,
         hasVideo: true,
@@ -312,76 +374,83 @@ const startPlay = async () => {
         enableWorker: true,
         lazyLoad: false
       });
-
-      // 獲取視頻元素
-      const videoElement = player.value.tech().el();
       
-      // 清理舊的播放器
-      if (player.value.flvPlayer) {
-        player.value.flvPlayer.destroy();
+      const videoElement = playerInstance.tech().el();
+      if (playerInstance.flvPlayer) {
+        playerInstance.flvPlayer.destroy();
       }
       
-      // 保存新的 FLV 播放器實例
-      player.value.flvPlayer = flvPlayer;
-
-      // 附加到視頻元素
+      playerInstance.flvPlayer = flvPlayer;
       flvPlayer.attachMediaElement(videoElement);
       flvPlayer.load();
-
-      // 監聽錯誤
-      flvPlayer.on(flvjs.Events.ERROR, (errorType, errorDetail) => {
-        console.error('FLV Player Error:', errorType, errorDetail);
-      });
-
       
-    } else {
-      throw new Error('當前瀏覽器不支持 FLV 播放');
+      flvPlayer.on(flvjs.Events.ERROR, (errorType, errorDetail) => {
+        console.error(`${type} FLV Player Error:`, errorType, errorDetail);
+        if (type === 'supplier') {
+          supplierLoadError.value = '串流載入失敗';
+        } else {
+          streamerLoadError.value = '串流載入失敗';
+        }
+      });
     }
-
   } catch (error) {
-    console.error('播放錯誤:', error);
-  } finally {
-    isLoading.value = false;
+    throw error;
   }
 }
 
 // 切換視頻質量
 const changeQuality = (quality) => {
-  if (isLoading.value || !player.value) return;
+  if (isLoading.value || !supplierPlayerInstance.value || !streamerPlayerInstance.value) return;
   
   currentQuality.value = quality;
-  const src = props.stream?.supplierCdnPullUrl[quality]?.flvUrl;
+  const supplierSrc = props.stream?.supplierCdnPullUrl[quality]?.flvUrl;
+  const streamerSrc = props.stream?.streamerCdnPullUrl[quality]?.flvUrl;
   
-  if (!src) {
+  if (!supplierSrc || !streamerSrc) {
     console.error('無效的播放地址');
     return;
   }
 
-  console.log('切換畫質:', quality, '地址:', src);
+  console.log('切換畫質:', quality, '供應商地址:', supplierSrc, '主播地址:', streamerSrc);
   startPlay();
 }
 
 // 監聽對話框的可見性變化
 watch(() => props.visible, async (newValue) => {
   if (newValue) {
+    supplierLoadError.value = null;
+    streamerLoadError.value = null;
     streamTitle.value = props.stream?.title || '直播'
     await nextTick()
     
     if (!isInitialized.value) {
-      await initializePlayer()
+      await initializePlayers()
     }
     
-    if (player.value && isInitialized.value) {
-      console.log('初始載入開始播放')
+    if (supplierPlayerInstance.value && isInitialized.value) {
+      console.log('初始載入開始播放供應商串流')
+      await startPlay()
+    }
+    if (streamerPlayerInstance.value && isInitialized.value) {
+      console.log('初始載入開始播放主播串流')
       await startPlay()
     }
   } else {
-    if (player.value) {
+    if (supplierPlayerInstance.value) {
       try {
-        await player.value.pause();
-        player.value.reset();
+        await supplierPlayerInstance.value.pause();
+        supplierPlayerInstance.value.reset();
       } catch (error) {
-        console.warn('關閉播放器時發生錯誤:', error);
+        console.warn('關閉供應商播放器時發生錯誤:', error);
+      }
+      isLoading.value = false;
+    }
+    if (streamerPlayerInstance.value) {
+      try {
+        await streamerPlayerInstance.value.pause();
+        streamerPlayerInstance.value.reset();
+      } catch (error) {
+        console.warn('關閉主播播放器時發生錯誤:', error);
       }
       isLoading.value = false;
     }
@@ -508,5 +577,27 @@ const copyUrl = async (url) => {
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   font-size: 0.9em;
+}
+
+.error-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  z-index: 2;
+  text-align: center;
+  padding: 1rem;
+}
+
+.error-overlay p {
+  margin: 0;
+  font-size: 1.1rem;
 }
 </style>
