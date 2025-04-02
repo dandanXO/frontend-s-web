@@ -1168,17 +1168,10 @@ build-image-id1-static-v1:
 
 #===============================================================================================
 
-build-bgd-static-v1:
-  extends: .build-projects
+deploy-pk2-download:
+  extends: .s3-deploy
   variables:
-    PROJECT: bgd-static-v1
-
-build-image-bgd-static-v1:
-  extends: .docker-build
-  variables:
-    PROJECT: bgd-static-v1
-  needs:
-    - build-bgd-static-v1
+    PROJECT: pk2-download
 
 #===============================================================================================
 
