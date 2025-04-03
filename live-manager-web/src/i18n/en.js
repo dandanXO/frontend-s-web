@@ -24,4 +24,16 @@ export default {
     rechargePaymentMethodSummary: 'Summary of Recharge by Payment Methods',
     businessRechargeSummary: 'Business Recharge Summary',
   },
+  stream: {
+    horizontal: 'Horizontal',
+    vertical: 'Vertical',
+    host: 'Host',
+    supplierStreamID: 'Supplier Stream ID',
+    hostStreamID: 'Host Stream ID',
+    currentQuality: 'Current Quality',
+    supplierPlaybackLink: 'Supplier Playback Link',
+    hostPlaybackLink: 'Host Playback Link',
+    supplierPlayer: 'Supplier Player',
+    hostPlayer: 'Host Player',
+  },
 }

@@ -16,7 +16,7 @@
       <template #end>
         <div class="flex items-center gap-2" style="display: flex; gap: 10px; align-items: center">
           <ThemeToggle />
-          <SiteToggle />
+          <!-- <SiteToggle /> -->
           <div style="display: flex; align-items: center; gap: 10px">
             <div
               style="
