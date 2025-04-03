@@ -92,11 +92,9 @@ const onFormSubmit = () => {
   DashboardService.logIn(loginForm.loginName, loginForm.password)
     .then((result) => {
       if (result) {
-        setTimeout(() => {
-          router.push({ path: '/' })
-          store.isAuthLoading = false
-          toast.add({ severity: 'success', summary: t('loggedInSuccessfully'), life: 3000 })
-        }, 2000)
+        router.push({ path: '/' })
+        store.isAuthLoading = false
+        toast.add({ severity: 'success', summary: t('loggedInSuccessfully'), life: 3000 })
       } else {
         store.isAuthLoading = false
       }
