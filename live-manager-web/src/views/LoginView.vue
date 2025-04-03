@@ -1,6 +1,6 @@
 <template>
   <BlockUI :blocked="store.isAuthLoading" style="width: 100vw; height: 100vh">
-    <LangToggle style="position: absolute; top: 20px; right: 20px; z-index: 1" />
+    <!-- <LangToggle style="position: absolute; top: 20px; right: 20px; z-index: 1" /> -->
     <ThemeToggle style="position: absolute; top: 20px; left: 20px; z-index: 1" />
 
     <canvas class="background"></canvas>
