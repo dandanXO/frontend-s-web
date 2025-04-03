@@ -291,6 +291,7 @@ export default {
     phoneVerifySuccessful: "فون کامیابی سے تصدیق ہو گئی",
     emailAlreadyUsed: "ای میل پہلے ہی استعمال ہو چکی ہے۔ براہ کرم دوسرا ای میل آزما لیں۔",
     bankAddedSuccessfully: "بینک کارڈ کامیابی سے شامل کر لیا گیا",
+    cryptoAccountAddedSuccessfully: "کرپٹو اکاؤنٹ کامیابی کے ساتھ شامل کر دیا گیا",
     virtualWalletAddedSuccessfully: "ورچوئل والیٹ کامیابی سے شامل کر لیا گیا",
     newpasswordupdated: "نیا پاس ورڈ کامیابی سے اپ ڈیٹ کر لیا گیا",
     withdrewSuccessfully: "کامیابی سے رقم نکال لی",
