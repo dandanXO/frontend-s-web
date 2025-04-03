@@ -17,6 +17,9 @@
         <el-form-item :label="t('fields.code')" prop="code">
           <el-input v-model="form.code" style="width: 350px;" disabled />
         </el-form-item>
+        <el-form-item :label="t('fields.gameName')" prop="gameName">
+          <el-input v-model="form.gameName" style="width: 350px;" disabled />
+        </el-form-item>
         <!-- <el-form-item :label="t('fields.status')" prop="status">
           <el-radio-group v-model="form.status">
             <el-radio
@@ -84,6 +87,7 @@
       :empty-text="t('fields.noData')"
     >
       <el-table-column prop="code" :label="t('fields.code')" />
+      <el-table-column prop="gameName" :label="t('fields.gameName')" />
       <!-- <el-table-column prop="status" :label="t('fields.status')">
         <template #default="scope">
           <el-tag v-if="scope.row.status === 'OPEN'" type="success">
@@ -183,6 +187,7 @@ const request = reactive({
 const form = reactive({
   id: null,
   code: null,
+  gameName: null,
   status: 'OPEN',
   startHour: null,
   endHour: null,
@@ -225,6 +230,7 @@ async function showEdit(config) {
   form.id = config.id
   form.siteId = config.siteId
   form.code = config.code
+  form.gameName = config.gameName
   form.status = config.status
   form.startHour = config.startHour
   form.endHour = config.endHour
