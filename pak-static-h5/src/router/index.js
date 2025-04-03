@@ -95,6 +95,12 @@ export default route(function (/* { store, ssrContext } */) {
 
     if (Platform.is.capacitor && Platform.is.android) {
       StatusBar.hide();
+      const isFirstTime = localStorage.getItem("isFirstTimeInApp");
+
+      if (!isFirstTime) { // If it's the first time
+        localStorage.setItem("isFirstTimeInApp", 'true'); // Mark as visited
+        next("/register");
+      }
     }
 
     const getTkPixelId = sessionStorage.getItem("TK_PIXEL_ID");

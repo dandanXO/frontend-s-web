@@ -74,7 +74,7 @@
         row-key="name"
         :loading="loading"
         :rows-per-page-options="[0]"
-        style="overflow-x: scroll"
+        style="overflow-x: auto; border-radius: 10px;"
         class="monthly-deposit-table q-mt-md"
         :loading-label="$t('btn.loading')"
         :no-data-label="$t('earnMoney.noDataAvailable')"
@@ -419,3 +419,29 @@ onMounted(() => {
 });
 </script>
 <style scoped lang="scss" src="../../css/page/earnMoney.scss"></style>
+<style lang="scss">
+
+thead {
+  .q-tr.top-header {
+  background-color: #323738;
+  color: #B2BDBF;
+
+  }
+}
+tbody {
+
+  .q-tr {
+  td {
+    border-bottom: 0 !important;
+  }
+  &:nth-child(even){
+    background-color: #373C3D;
+    color: #ffffff;
+  }
+  &:nth-child(odd){
+  background-color: #FFFFFF0F;
+  color: #ffffff;
+  }
+}
+}
+</style>

@@ -56,7 +56,7 @@
         :loading="loading"
         class="monthly-deposit-table q-mt-md"
         row-key="name"
-        style="overflow-x: scroll"
+        style="overflow-x: auto; border-radius: 10px;"
         flat
         :loading-label="$t('btn.loading')"
         :no-data-label="$t('earnMoney.noDataAvailable')"
@@ -341,12 +341,20 @@ onMounted(() => {
   display: block;
 }
 .table-header{
-  background-color: #2B2B2B;
+  background-color: #323738;
+  color: #B2BDBF;
+}
+.q-tr {
+  td {
+    border-bottom: 0 !important;
+  }
 }
 .table-tr-odd{
-  background-color: #2B2B2B;
+  background-color: #373C3D;
+  color: #ffffff;
 }
 .table-tr-even{
-  background-color:  #333333;
+  background-color: #FFFFFF0F;
+  color: #ffffff;
 }
 </style>

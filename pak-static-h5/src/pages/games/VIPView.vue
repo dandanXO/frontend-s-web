@@ -107,8 +107,7 @@
         :rows="rows"
         row-key="name"
         :rows-per-page-options="[0]"
-        style="overflow-x: scroll"
-        class="monthly-deposit-table"
+        class=""
       >
         <template v-slot:header="props">
           <q-tr :props="props" style="display: none">
@@ -807,7 +806,7 @@ const getMonthlyVip = () => {
 };
 </script>
 
-<style lang="scss" scoped>  
+<style lang="scss" scoped>
 .separator-line {
   border: 1px solid #49148f70;
   padding: 0 10px;
@@ -884,6 +883,14 @@ const getMonthlyVip = () => {
 
 </style>
 <style lang="scss">
+/* Hide scrollbar but keep functionality */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: transparent;
+}
 .carousel__item {
   min-height: 170px;
   width: 100%;

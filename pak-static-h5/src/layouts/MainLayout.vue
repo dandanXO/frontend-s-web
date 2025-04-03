@@ -17,10 +17,10 @@
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" :class="pageName === '' && 'page-title__empty'" v-if="hasPage">
-        <a @click="goToPrevPage(prevPage)" class="q-mt-sm">
+        <a @click="route.path === '/deposit' || route.path === '/withdraw' || route.path === '/account' ? goToPrevPage('/') : goToPrevPage(prevPage)" class="q-mt-sm">
           <img
             class="house-icon"
-            v-if="route.path === '/deposit' || route.path === '/withdraw'"
+            v-if="route.path === '/deposit' || route.path === '/withdraw' || route.path === '/account'"
             src="../assets/images/index/btn-house.png"
             width="30"
           />
