@@ -226,7 +226,7 @@
                 placeholder="Enter Your Phone"
                 v-model="formDetail.phone"
                 :rules="[(_) => isValidPhone()]"
-                :disable="startCountdownResendOTP"
+                :disable="startCountdownPhoneResendOTP"
               >
                 <template v-slot:append>
                   <div class="pc-form-side-btn">
@@ -234,8 +234,8 @@
                       no-caps
                       dense
                       class="bg-yellow text-black"
-                      :label="!startCountdownResendOTP && 'Get Code'"
-                      :disable="!formDetail.phone || startCountdownResendOTP"
+                      :label="!startCountdownPhoneResendOTP && 'Get Code'"
+                      :disable="!formDetail.phone || startCountdownPhoneResendOTP"
                       @click="openVerificationCodeDialog"
                     />
                   </div>
@@ -255,7 +255,7 @@
                 v-model="formDetail.phoneOtpRef"
                 :rules="[(_) => isValidOTP()]"
               >
-                <template v-slot:append v-if="startCountdownResendOTP">{{ countdownOTP }}s</template>
+                <template v-slot:append v-if="startCountdownPhoneResendOTP">{{ countdownPhoneOTP }}s</template>
               </q-input>
             </div>
           </div>
@@ -396,8 +396,8 @@
                           no-caps
                           dense
                           class="text-green"
-                          :label="!startCountdownResendOTP && $t('form.send')"
-                          :disable="startCountdownResendOTP"
+                          :label="!startCountdownPhoneResendOTP && $t('form.send')"
+                          :disable="startCountdownPhoneResendOTP"
                           @click="openPhoneVerificationCodeDialog"
                         />
                       </div>
@@ -418,7 +418,7 @@
                     type="text"
                     :rules="[(val) => val.length !== 0 || $t('form.code_rules_01')]"
                   >
-                    <template v-slot:append v-if="startCountdownResendOTP">{{ countdownOTP }}s</template>
+                    <template v-slot:append v-if="startCountdownPhoneResendOTP">{{ countdownPhoneOTP }}s</template>
                   </q-input>
                 </template>
               </InputField>
@@ -1347,7 +1347,9 @@ const goToPage = (page) => {
 
 let verificationCodeID = "";
 const startCountdownResendOTP = ref(false);
+const startCountdownPhoneResendOTP = ref(false);
 const countdownOTP = ref();
+const countdownPhoneOTP = ref();
 
 const onCaptchaSubmit = () => {
   api
@@ -1416,14 +1418,14 @@ const onPhoneCaptchaSubmit = () => {
         color = "positive";
       if (res.code === 0) {
         verificationPhoneCodeDialog.value = false;
-        startCountdownResendOTP.value = true;
+        startCountdownPhoneResendOTP.value = true;
 
-        countdownOTP.value = 59;
+        countdownPhoneOTP.value = 59;
         let timer = setInterval(() => {
-          countdownOTP.value -= 1;
-          if (countdownOTP.value === 0) {
+          countdownPhoneOTP.value -= 1;
+          if (countdownPhoneOTP.value === 0) {
             clearInterval(timer);
-            startCountdownResendOTP.value = false;
+            startCountdownPhoneResendOTP.value = false;
           }
         }, 1000);
 
