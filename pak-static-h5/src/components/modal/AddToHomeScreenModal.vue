@@ -22,7 +22,15 @@
           <img class="os-logo" src="../../assets/images/index/download/ios-logo.png" />
           {{ $t("modal.addToHomeScreen.appAndWeb") }}
         </q-btn>
-        <q-btn v-else no-caps unelevated class="btn-custom" color="#EFFFD1" :href="ui.downloadAppUrl" @click="closeDialog">
+        <q-btn
+          v-else
+          no-caps
+          unelevated
+          class="btn-custom"
+          color="#EFFFD1"
+          :href="ui.downloadAppUrl"
+          @click="closeDialog"
+        >
           <img class="os-logo" src="../../assets/images/index/download/android-logo-green.png" />
           {{ $t("modal.addToHomeScreen.app") }}
         </q-btn>
@@ -86,13 +94,13 @@ watch(
   // border-top-left-radius: 36px;
   // border-top-right-radius: 36px;
   border-radius: 36px !important;
-  margin: 10px;
+  margin: 60px 10px 10px;
   color: #000;
   padding: 32px 16px 16px;
 
   .add-to-homescreen-download {
     position: absolute;
-    top: -60px;
+    top: 0px;
     display: flex;
     justify-content: center;
     width: 100%;
@@ -122,7 +130,7 @@ watch(
   }
 
   .continue-to-h5 {
-    color: #82D81D;
+    color: #82d81d;
     text-decoration: none;
     font-weight: 600;
     width: 100%;
@@ -182,7 +190,7 @@ watch(
   //   display: flex;
   // }
   .btn-custom {
-    background: url('../../assets/images/index/continue-btn-bg.png')no-repeat center center;
+    background: url("../../assets/images/index/continue-btn-bg.png") no-repeat center center;
     width: 70%;
     margin: 0 auto;
     background-size: cover;
