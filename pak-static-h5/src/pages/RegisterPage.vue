@@ -646,8 +646,11 @@ export default defineComponent({
         });
     };
 
+    const isRegisterAdjustSent = ref(false);
     const trackRegisterSuccessEvent = () => {
-      if (!ui.adjust_register_event) return;
+      if (isRegisterAdjustSent.value || !ui.adjust_register_event) return;
+      isRegisterAdjustSent.value = true;
+
       if (isInPwa()) {
         console.log(ui.adjust_register_event);
         const AdjustWeb = require("@adjustcom/adjust-web-sdk");
