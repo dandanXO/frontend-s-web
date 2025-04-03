@@ -294,6 +294,7 @@ export default {
     loggingOut: "Logging out...",
     phoneVerifySuccessful: "Phone verified successfully",
     emailAlreadyUsed: "Email already used. Please try another email.",
+    bankAddedSuccessfully: "Bank card added successfully",
     virtualWalletAddedSuccessfully: "Virtual wallet added successfully",
     newpasswordupdated: "New password updated successfully",
     withdrewSuccessfully: "Withdrew successfully",
