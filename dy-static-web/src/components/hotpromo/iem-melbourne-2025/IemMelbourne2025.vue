@@ -110,8 +110,8 @@
               <img src="@/assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
               <span>示例</span>
             </div>
-            会员在IM电竞IEM 墨尔本 2025赛事 投注5,000元后又在东赢电竞投注IEM 墨尔本
-            2025投注5,000元，累计有效投注为10000元，东赢有效投注为5000元，在次日可获投注嘉奖88元+东赢加赠金18元，共106元。 
+            会员在 IM 电竞 IEM 墨尔本 2025 赛事 投注 5,000 元后又在东赢电竞投注 IEM 墨尔本
+            2025 投注 5,000 元，累计有效投注为 10000 元，东赢有效投注为 5000 元，在次日可获投注嘉奖 88 元 + 东赢加赠金 18 元，共 106 元。 
           </div>
         </div>
       </div>
@@ -123,8 +123,8 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              活动期间，投注IEM 墨尔本 2025有效投注≥1,500元或以上可获的对应总投注嘉奖，若在东赢电竞场馆进行投注IEM
-              墨尔本 2025可获加赠奖励金额。 
+              活动期间，投注 IEM 墨尔本 2025 有效投注≥1,500 元或以上可获的对应总投注嘉奖，若在东赢电竞场馆进行投注 IEM
+              墨尔本 2025 可获加赠奖励金额。 
               <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
             </div>
           </div>
@@ -160,7 +160,7 @@
 import { useNotify } from "@/hooks/notify";
 import { onMounted, ref, defineProps } from "vue";
 import { userStore } from "@/store";
-import { getIemMelbourne2025Bonus, claimIemMelbourne2025Bonus } from "@/api/index/promo";
+import { getVctcnInit, claimVctcnBonus } from "@/api/index/promo";
 
 const props = defineProps(["promoCode", "params"]);
 const promoCode = ref(props.promoCode);
@@ -174,7 +174,7 @@ const bonus = ref(0);
 
 const fetchData = async () => {
   loadingClaim.value = true;
-  getIemMelbourne2025Bonus(promoCode.value)
+  getVctcnInit(promoCode.value)
     .then((res) => {
       totalValidBet.value = res.data.totalValidBet;
       bonus.value = res.data.bonus;
@@ -187,7 +187,7 @@ const fetchData = async () => {
 
 const handleClaimBonus = () => {
   loadingClaim.value = true;
-  claimIemMelbourne2025Bonus(promoCode.value)
+  claimVctcnBonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
         notify({
@@ -264,6 +264,7 @@ onMounted(() => {
       }
 
       &.disabled {
+        filter: grayscale(100%);
         cursor: not-allowed;
         pointer-events: none;
       }

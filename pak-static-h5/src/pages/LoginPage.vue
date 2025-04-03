@@ -475,7 +475,7 @@ export default defineComponent({
                 });
 
                 if (res.data?.isFirstTime) {
-                  trackRegisterSuccessEvent();
+                  trackRegisterSuccessEventFromLogin();
                 }
 
                 store.autoLogin(res.data?.token || res.data);
@@ -541,7 +541,7 @@ export default defineComponent({
                   });
 
                   if (res.data?.isFirstTime) {
-                    trackRegisterSuccessEvent();
+                    trackRegisterSuccessEventFromLogin();
                   }
 
                   store.autoLogin(res.data?.token || res.data);
@@ -784,8 +784,11 @@ export default defineComponent({
 
     const regLoginTab = ref("login");
 
-    const trackRegisterSuccessEvent = () => {
-      if (!ui.adjust_register_event) return;
+    const isRegisterAdjustSentFromLogin = ref(false);
+    const trackRegisterSuccessEventFromLogin = () => {
+      if (isRegisterAdjustSentFromLogin.value || !ui.adjust_register_event) return;
+      isRegisterAdjustSentFromLogin.value = true;
+
       if (isInPwa()) {
         console.log(ui.adjust_register_event);
         const AdjustWeb = require("@adjustcom/adjust-web-sdk");

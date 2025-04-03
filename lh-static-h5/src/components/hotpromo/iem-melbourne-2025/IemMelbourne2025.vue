@@ -32,12 +32,12 @@
         <div class="title-img">活动详情</div>
         <div class="little-title">
           <div class="ribbon">活动时间</div>
-          <div class="right">2025年04月21日至2025年04月27日</div>
+          <div class="right">2025 年 04 月 21 日至 2025 年 04 月 27 日</div>
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
           <div class="right">
-            在IEM 墨尔本 2025赛事期间当天累计有效投注≥1,500元在次日即可获得对应档位的奖金，最高可获得1088+288元
+            在 IEM 墨尔本 2025 赛事期间当天累计有效投注≥1,500 元在次日即可获得对应档位的奖金，最高可获得 1088+288 元
           </div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
@@ -52,49 +52,49 @@
           <tbody>
             <tr>
               <td>≥1,500</td>
-              <td>18元</td>
-              <td>8元</td>
-              <td rowspan="9">5倍流水</td>
+              <td>18 元</td>
+              <td>8 元</td>
+              <td rowspan="9">5 倍流水</td>
             </tr>
             <tr>
               <td>≥3,000</td>
-              <td>38元</td>
-              <td>10元</td>
+              <td>38 元</td>
+              <td>10 元</td>
             </tr>
             <tr>
               <td>≥5,000</td>
-              <td>58元</td>
-              <td>18元</td>
+              <td>58 元</td>
+              <td>18 元</td>
             </tr>
             <tr>
               <td>≥10,000</td>
-              <td>88元</td>
-              <td>28元</td>
+              <td>88 元</td>
+              <td>28 元</td>
             </tr>
             <tr>
               <td>≥30,000</td>
-              <td>108元</td>
-              <td>58元</td>
+              <td>108 元</td>
+              <td>58 元</td>
             </tr>
             <tr>
               <td>≥50,000</td>
-              <td>188元</td>
-              <td>68元</td>
+              <td>188 元</td>
+              <td>68 元</td>
             </tr>
             <tr>
               <td>≥100,000</td>
-              <td>288元</td>
-              <td>88元</td>
+              <td>288 元</td>
+              <td>88 元</td>
             </tr>
             <tr>
               <td>≥300,000</td>
-              <td>588元</td>
-              <td>108元</td>
+              <td>588 元</td>
+              <td>108 元</td>
             </tr>
             <tr>
               <td>≥500,000</td>
-              <td>1,088元</td>
-              <td>288元</td>
+              <td>1,088 元</td>
+              <td>288 元</td>
             </tr>
           </tbody>
         </table>
@@ -109,8 +109,8 @@
               />
               <span>示例</span>
             </div>
-            会员在IM电竞IEM 墨尔本 2025赛事 投注5,000元后又在雷火电竞投注IEM 墨尔本
-            2025投注5,000元，累计有效投注为10000元，雷火有效投注为5000元，在次日可获投注嘉奖88元+雷火加赠金18元，共106元。 
+            会员在 IM 电竞 IEM 墨尔本 2025 赛事 投注 5,000 元后又在雷火电竞投注 IEM 墨尔本
+            2025 投注 5,000 元，累计有效投注为 10000 元，雷火有效投注为 5000 元，在次日可获投注嘉奖 88 元 + 雷火加赠金 18 元，共 106 元。 
           </div>
         </div>
       </div>
@@ -122,14 +122,14 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              活动期间，投注IEM 墨尔本 2025有效投注≥1,500元或以上可获的对应总投注嘉奖，若在雷火电竞场馆进行投注IEM
-              墨尔本 2025可获加赠奖励金额。 
+              活动期间，投注 IEM 墨尔本 2025 有效投注≥1,500 元或以上可获的对应总投注嘉奖，若在雷火电竞场馆进行投注 IEM
+              墨尔本 2025 可获加赠奖励金额。 
               <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            IEM 墨尔本 2025投注嘉奖在结算后24小时内有效，可登入优惠界面点击【领取】按钮获得，彩金5倍流水即可提款；
+            IEM 墨尔本 2025 投注嘉奖在结算后 24 小时内有效，可登入优惠界面点击【领取】按钮获得，彩金 5 倍流水即可提款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
@@ -157,7 +157,7 @@
 
 <script setup>
 import { onMounted, ref, toRefs } from "vue";
-import { getIemMelbourne2025Bonus, claimIemMelbourne2025Bonus } from "../../../api/index/promo";
+import { getVctcnInit, claimVctcnBonus } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 
@@ -173,7 +173,7 @@ const loadingClaim = ref(false);
 
 const handleClaimBonus = () => {
   loadingClaim.value = true;
-  claimIemMelbourne2025Bonus(promoCode.value)
+  claimVctcnBonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
         notify({
@@ -196,7 +196,7 @@ const handleClaimBonus = () => {
 
 const fetchData = async () => {
   loadingClaim.value = true;
-  getIemMelbourne2025Bonus(promoCode.value)
+  getVctcnInit(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
         totalValidBet.value = res.data.totalValidBet;

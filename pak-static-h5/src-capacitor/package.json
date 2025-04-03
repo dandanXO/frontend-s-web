@@ -21,7 +21,7 @@
     "@capacitor/splash-screen": "^6.0.3",
     "@capacitor/status-bar": "^6.0.2",
     "@codetrix-studio/capacitor-google-auth": "^3.4.0-rc.4",
-    "com.adjust.sdk": "^4.38.1",
+    "com.adjust.sdk": "^5.0.4",
     "cordova-plugin-file": "^8.0.0",
     "cordova-plugin-inappbrowser": "^5.0.0",
     "cordova-plugin-screen-orientation": "^3.0.3",
