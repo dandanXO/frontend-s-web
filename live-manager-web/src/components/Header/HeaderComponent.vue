@@ -29,7 +29,7 @@
               "
             ></div>
           </div>
-          <LangToggle />
+          <!-- <LangToggle /> -->
           <Avatar
             image="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80"
             shape="circle"
@@ -42,9 +42,8 @@
 </template>
 
 <script setup>
-import { ref, inject } from 'vue'
+import { ref } from 'vue'
 import LangToggle from './LangToggle.vue'
-import SiteToggle from './SiteToggle.vue'
 import ThemeToggle from './ThemeToggle.vue'
 import BreacrumbComponent from './BreacrumbComponent.vue'
 import { useToast } from 'primevue/usetoast'
@@ -60,12 +59,10 @@ const toast = useToast()
 const onLogout = () => {
   store.isAuthLoading = true
 
-  setTimeout(() => {
-    sessionStorage.removeItem('token')
-    store.isAuthLoading = false
-    router.replace({ path: '/login' })
-    toast.add({ severity: 'success', summary: '成功退出', life: 3000 })
-  }, 2000)
+  sessionStorage.removeItem('token')
+  store.isAuthLoading = false
+  router.replace({ path: '/login' })
+  toast.add({ severity: 'success', summary: '成功退出', life: 3000 })
 }
 </script>
 

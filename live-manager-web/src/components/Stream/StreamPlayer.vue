@@ -14,128 +14,113 @@
       </div>
     </template>
 
+    <Tabs v-model:value="currentPlayerType" @update:value="changeQuality(currentQuality)">
+      <TabList>
+        <Tab :value="playerType.value" v-for="playerType in playerTypes">{{
+          playerType.label
+        }}</Tab>
+      </TabList>
+    </Tabs>
+
+    <div class="stream-info">
+      <div class="info-item">
+        <span class="label">{{ $t('stream.host') }}</span>
+        <span class="value">{{ stream.streamerName }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">{{ $t('stream.supplierStreamID') }}</span>
+        <span class="value">{{ stream.supplierStreamId }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">{{ $t('stream.hostStreamID') }}</span>
+        <span class="value">{{ stream.streamerStreamId }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">{{ $t('stream.currentQuality') }}</span>
+        <span class="value">{{ formatQuality(currentQuality) }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">{{ $t('stream.supplierPlaybackLink') }}</span>
+        <div class="url-container">
+          <span class="url-text">{{ getCurrentPlayUrl() }}</span>
+          <Button
+            icon="pi pi-copy"
+            severity="secondary"
+            text
+            @click="copyUrl(getCurrentPlayUrl())"
+            v-tooltip.top="'複製鏈結'"
+          />
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="label">{{ $t('stream.hostPlaybackLink') }}</span>
+        <div class="url-container">
+          <span class="url-text">{{ getStreamerPlayUrl() }}</span>
+          <Button
+            icon="pi pi-copy"
+            severity="secondary"
+            text
+            @click="copyUrl(getStreamerPlayUrl())"
+            v-tooltip.top="'複製鏈結'"
+          />
+        </div>
+      </div>
+    </div>
+
     <Tabs v-model:value="currentQuality" @update:value="changeQuality(currentQuality)">
       <TabList>
         <Tab :value="quality.value" v-for="quality in availableQualities">{{ quality.label }}</Tab>
       </TabList>
-
-      <div class="stream-info">
-        <div class="info-item">
-          <span class="label">{{ $t('stream.host') }}</span>
-          <span class="value">{{ stream.streamerName }}</span>
-        </div>
-        <div class="info-item">
-          <span class="label">{{ $t('stream.supplierStreamID') }}</span>
-          <span class="value">{{ stream.supplierStreamId }}</span>
-        </div>
-        <div class="info-item">
-          <span class="label">{{ $t('stream.hostStreamID') }}</span>
-          <span class="value">{{ stream.streamerStreamId }}</span>
-        </div>
-        <div class="info-item">
-          <span class="label">{{ $t('stream.currentQuality') }}</span>
-          <span class="value">{{ formatQuality(currentQuality) }}</span>
-        </div>
-        <div class="info-item">
-          <span class="label">{{ $t('stream.supplierPlaybackLink') }}</span>
-          <div class="url-container">
-            <span class="url-text">{{ getCurrentPlayUrl() }}</span>
-            <Button
-              icon="pi pi-copy"
-              severity="secondary"
-              text
-              @click="copyUrl(getCurrentPlayUrl())"
-              v-tooltip.top="'複製鏈結'"
-            />
-          </div>
-        </div>
-        <div class="info-item">
-          <span class="label">{{ $t('stream.hostPlaybackLink') }}</span>
-          <div class="url-container">
-            <span class="url-text">{{ getStreamerPlayUrl() }}</span>
-            <Button
-              icon="pi pi-copy"
-              severity="secondary"
-              text
-              @click="copyUrl(getStreamerPlayUrl())"
-              v-tooltip.top="'複製鏈結'"
-            />
-          </div>
-        </div>
-      </div>
-      <div class="players-container">
-        <div
-          class="player-layout-toggle"
-          :title="playerLayoutToggle ? $t('stream.vertical') : $t('stream.horizontal')"
-        >
-          <img
-            v-if="playerLayoutToggle"
-            @click="playerLayoutToggle = false"
-            width="30px"
-            src="../../assets/horizontal-icon.svg"
-          />
-          <img
-            v-else
-            @click="playerLayoutToggle = true"
-            width="30px"
-            src="../../assets/vertical-icon.svg"
-          />
-        </div>
-
-        <Splitter :layout="playerLayoutToggle ? 'horizontal' : 'vertical'">
-          <SplitterPanel class="flex items-center justify-center" :size="10" :minSize="10">
-            <div class="player-section">
-              <h4>{{ $t('stream.supplierPlayer') }}</h4>
-              <div class="video-container">
-                <div v-if="supplierLoadError" class="error-overlay">
-                  <i
-                    class="pi pi-exclamation-triangle"
-                    style="font-size: 2rem; margin-bottom: 1rem"
-                  ></i>
-                  <p>{{ supplierLoadError }}</p>
-                </div>
-                <video
-                  ref="supplierPlayer"
-                  id="supplierPlayer"
-                  class="video-js vjs-big-play-centered"
-                  controls
-                  preload="auto"
-                  width="100%"
-                  height="auto"
-                  data-setup="{}"
-                ></video>
-              </div>
-            </div>
-          </SplitterPanel>
-          <SplitterPanel class="flex items-center justify-center" :size="10">
-            <div class="player-section">
-              <h4>{{ $t('stream.hostPlayer') }}</h4>
-              <div class="video-container">
-                <div v-if="streamerLoadError" class="error-overlay">
-                  <i
-                    class="pi pi-exclamation-triangle"
-                    style="font-size: 2rem; margin-bottom: 1rem"
-                  ></i>
-                  <p>{{ streamerLoadError }}</p>
-                </div>
-                <video
-                  ref="streamerPlayer"
-                  id="streamerPlayer"
-                  class="video-js vjs-big-play-centered"
-                  controls
-                  preload="auto"
-                  width="100%"
-                  height="auto"
-                  data-setup="{}"
-                ></video>
-              </div></div
-          ></SplitterPanel>
-        </Splitter>
-      </div>
     </Tabs>
 
+    <div class="players-container">
+      <div
+        class="player-section"
+        :style="`display:${currentPlayerType === 'supplier' ? 'block' : 'none'}`"
+      >
+        <div class="video-container">
+          <div v-if="supplierLoadError" class="error-overlay">
+            <i class="pi pi-exclamation-triangle" style="font-size: 2rem; margin-bottom: 1rem"></i>
+            <p>{{ supplierLoadError }}</p>
+          </div>
+          <video
+            ref="supplierPlayer"
+            id="supplierPlayer"
+            class="video-js vjs-big-play-centered"
+            controls
+            preload="auto"
+            width="100%"
+            height="auto"
+            data-setup="{}"
+          ></video>
+        </div>
+      </div>
+
+      <div
+        class="player-section"
+        :style="`display:${currentPlayerType === 'host' ? 'block' : 'none'}`"
+      >
+        <div class="video-container">
+          <div v-if="streamerLoadError" class="error-overlay">
+            <i class="pi pi-exclamation-triangle" style="font-size: 2rem; margin-bottom: 1rem"></i>
+            <p>{{ streamerLoadError }}</p>
+          </div>
+          <video
+            ref="streamerPlayer"
+            id="streamerPlayer"
+            class="video-js vjs-big-play-centered"
+            controls
+            preload="auto"
+            width="100%"
+            height="auto"
+            data-setup="{}"
+          ></video>
+        </div>
+      </div>
+    </div>
+
     <template #footer>
-      <div class="quality-selector">
+      <!-- <div class="quality-selector">
         <Button
           v-for="quality in availableQualities"
           :key="quality.label"
@@ -145,7 +130,7 @@
           class="mr-2"
           @click="changeQuality(quality.value)"
         />
-      </div>
+      </div> -->
     </template>
   </Dialog>
 </template>
@@ -184,9 +169,14 @@ const streamerPlayer = ref(null)
 const supplierPlayerInstance = ref(null)
 const streamerPlayerInstance = ref(null)
 const streamTitle = ref('')
+const currentPlayerType = ref('supplier')
 const currentQuality = ref('p1080')
 const isLoading = ref(false)
 const isInitialized = ref(false)
+const playerTypes = ref([
+  { label: '供应商播放器', value: 'supplier' },
+  { label: '主播播放器', value: 'host' },
+])
 const availableQualities = ref([
   { label: '1080P', value: 'p1080' },
   { label: '720P', value: 'p720' },
@@ -658,20 +648,22 @@ const copyUrl = async (url) => {
   margin: 1rem;
 }
 
-.player-layout-toggle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  position: absolute;
-  right: 1.2rem;
-  top: 1rem;
-  padding: 5px;
-  border-radius: 20px;
-  cursor: pointer;
-}
-
 :deep(.p-tab) {
   font-family: 'Inter';
+}
+
+.my-app-dark {
+  .stream-info {
+    background-color: #252525;
+  }
+
+  .url-text {
+    background-color: #333333;
+  }
+
+  .info-item .label,
+  .info-item .value {
+    color: #fff;
+  }
 }
 </style>
