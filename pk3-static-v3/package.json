@@ -48,7 +48,7 @@
     "imagemin-webpack-plugin": "^2.4.2",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.47",
-    "onesignal-cordova-plugin": "^5.2.3",
+    "onesignal-cordova-plugin": "^5.2.11",
     "pinia": "^2.0.17",
     "qs": "^6.11.0",
     "quasar": "^2.7.7",
