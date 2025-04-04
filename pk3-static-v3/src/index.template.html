@@ -36,6 +36,13 @@
           self.globalThis = self;
         }
       }
+
+      // Polyfill for replaceAll
+      if (!String.prototype.replaceAll) {
+        String.prototype.replaceAll = function (search, replacement) {
+          return this.split(search).join(replacement);
+        };
+      }
       // Now you can use globalThis safely
       // console.log(globalThis);
     </script>
