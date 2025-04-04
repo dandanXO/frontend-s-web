@@ -69,7 +69,7 @@
 
           <div class="timing-divider"></div>
 
-          <div class="timing-head">>{{ $t("hotPromo.on_other_days_three_times_daily") }}</div>
+          <div class="timing-head">{{ $t("hotPromo.on_other_days_three_times_daily") }}</div>
           <div class="timing-body">
             <span>00:00-00:59</span>
             <span>12:00-12:59</span>

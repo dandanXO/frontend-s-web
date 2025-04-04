@@ -768,7 +768,7 @@ watch(activeSetting, checkIsShowDetail);
     border-radius: 10px;
     display: flex;
     padding: 10px;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 
     .details-item {
@@ -810,6 +810,9 @@ watch(activeSetting, checkIsShowDetail);
       .item-title {
         font-size: 16px;
         color: #8c968f;
+      }
+      .item-icon {
+        height: 30px;
       }
 
       // .item-icon {

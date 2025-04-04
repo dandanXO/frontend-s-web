@@ -88,15 +88,19 @@ watch(
 .add-to-homescreen-container {
   // background-color: rgba(255, 255, 255, 0.75);
   background-image: url("../../assets/images/index/download/download-bg.png");
-  background-position: top center;
-  background-size: cover;
-  background-color: #fff;
-  // border-top-left-radius: 36px;
-  // border-top-right-radius: 36px;
+  
+  background-position: bottom center;
+    background-repeat: no-repeat;
+  background-size: contain;
   border-radius: 36px !important;
-  margin: 60px 10px 10px;
+  /* margin: 60px 10px 10px; */
   color: #000;
   padding: 32px 16px 16px;
+  height: 310px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin: 10px;
 
   .add-to-homescreen-download {
     position: absolute;
@@ -107,10 +111,13 @@ watch(
     left: 0;
     right: 0;
     margin: auto;
+    height: 93px;
+    z-index: 9999;
     img {
       display: block;
       width: 100%;
       max-width: 120px;
+      height: 93px;
     }
   }
   .add-to-homescreen-top {

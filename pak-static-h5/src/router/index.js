@@ -92,7 +92,6 @@ export default route(function (/* { store, ssrContext } */) {
       }
       user.token = to.query.token;
     }
-
     if (Platform.is.capacitor && Platform.is.android) {
       StatusBar.hide();
       const isFirstTime = localStorage.getItem("isFirstTimeInApp");

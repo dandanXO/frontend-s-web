@@ -661,13 +661,13 @@ defineExpose({ showVideo });
   .step {
     padding-bottom: 40px;
     width: 100%;
-    &.step-5 .top {
-      width: 80%;
-      margin: 0 auto;
-      .title {
-        bottom: 0;
-      }
-    }
+    // &.step-5 .top {
+    //   width: 80%;
+    //   margin: 0 auto;
+    //   .title {
+    //     bottom: 20px;
+    //   }
+    // }
 
     &.step-5 .main-box .withdraw-section .withdrawitems {
       width: 80%;
@@ -698,7 +698,7 @@ defineExpose({ showVideo });
         color: #ffffff;
         text-shadow: -1px -1px 0 #215f25, 1px -1px 0 #215f25, -1px 1px 0 #215f25, 1px 1px 0 #215f25;
         text-transform: uppercase;
-        bottom: 15%;
+        bottom: 14%;
         width: 80%;
         margin: 0 auto;
         left: 0;

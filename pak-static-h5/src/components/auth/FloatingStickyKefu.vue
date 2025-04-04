@@ -2,7 +2,7 @@
     <q-page-sticky
       v-if="ui.CSAUrl"
       style="z-index: 3000"
-      position="bottom-right"
+      position="top-right"
       :offset="csDragPos"
       class="floating-btn scalable"
       :style="{ transform: `scale(${scaleValue})` }"
@@ -20,7 +20,7 @@ import { ref } from 'vue';
 import { useUI } from "stores/ui";
 
 const scaleValue = ref(1);
-const csDragPos = ref([10, 170]);
+const csDragPos = ref([10, 200]);
 const isDraggingCsIcon = ref(false);
 const ui = useUI();
 

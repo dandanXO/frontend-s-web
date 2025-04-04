@@ -582,7 +582,15 @@ onMounted(() => {
       &.steptopmain-3.deposit-mode {
         // top: 35vh;
         top: 25dvh;
+        // .title {
+        //   bottom: 1.2vh;
+        // }
       }
+      // &.steptopmain-4.deposit-mode {
+      //   .title {
+      //     bottom: 1.3vh;
+      //   }
+      // }
       // &.steptopmain-3.refer-mode {
       //   top: 35vh;
       // }
@@ -594,7 +602,7 @@ onMounted(() => {
         // top: 35vh;
         top: 25dvh;
       }
-      &.steptopmain-2 .top {
+      &.steptopmain-2.refer-mode .top {
         width: 75% !important;
       }
     }
@@ -755,7 +763,7 @@ onMounted(() => {
         color: #ffffff;
         text-shadow: -1px -1px 0 #215f25, 1px -1px 0 #215f25, -1px 1px 0 #215f25, 1px 1px 0 #215f25;
         text-transform: uppercase;
-        bottom: 1vh;
+        bottom: 1.3vh;
         width: 80%;
         margin: 0 auto;
         left: 0;

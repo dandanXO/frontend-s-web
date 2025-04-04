@@ -516,6 +516,12 @@ onUnmounted(() => {
       opacity: 1;
       transition: 1s all;
     }
+    .download-logo {
+      width: 35px;
+      img{ 
+        width: 100%;
+      }
+    }
   }
 }
 
@@ -908,6 +914,10 @@ onUnmounted(() => {
         font-size: 12px;
         line-height: 100%;
         letter-spacing: 0px;
+        
+    height: 25px;
+    width: 25px;
+    line-height: 16px;
         vertical-align: middle;
       }
 
