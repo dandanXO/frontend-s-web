@@ -59,7 +59,9 @@ module.exports = configure(function (ctx) {
       postcss: {
         configFile: true
       },
-      // transpile: false,
+      transpile: true,
+      transpileDependencies: [/node_modules\/chart\.js/],
+
       // publicPath: '/',
 
       // Add dependencies for transpiling with Babel (Array of string/regex)
@@ -101,18 +103,27 @@ module.exports = configure(function (ctx) {
           // })
         );
 
-        // cfg.module.rules.push({
-        //   test: /\.(jpe?g|png|gif|svg)$/i,
-        //   type: "asset/resource",
-        //   generator: {
-        //     filename: "img/[name].[hash:8][ext]"
-        //   },
-        //   parser: {
-        //     dataUrlCondition: {
-        //       maxSize: 10 * 1024
-        //     }
-        //   }
-        // });
+        cfg.module.rules.push({
+          test: /\.m?js$/,
+          include: [
+            path.resolve(__dirname, 'node_modules/chart.js'),
+          ],
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                ['@babel/preset-env', {
+                  targets: {
+                    chrome: '67'
+                  },
+                  useBuiltIns: 'entry',
+                  corejs: 3
+                }]
+              ],
+              plugins: ['@babel/plugin-proposal-class-properties']
+            }
+          }
+        });
 
         cfg.optimization.minimizer = [
           new TerserPlugin({
