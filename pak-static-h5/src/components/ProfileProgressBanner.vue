@@ -23,14 +23,20 @@
         <div class="vip-text">{{ store.vip }}</div>
         <div v-if="store.vip.replace('VIP', '') !== '12'" class="progress-num">{{ `${progressRef} / ${maxProgress}` }}</div>
       </div>
-      <q-linear-progress
-        reverse
-        rounded
-        size="8px"
-        :value="progressBarRef"
-        class="progress-bar"
-        color="grey-9"
-      ></q-linear-progress>
+      <div class="progress-bar-outer">
+        <q-linear-progress
+          reverse
+          rounded
+          size="8px"
+          :value="progressBarRef"
+          class="custom-progress-bar"
+          color="grey-9"
+        />
+        <div
+          class="progress-circle"
+          :style="{ right: `calc(${progressBarRef * 100}% - 12px)` }"
+        ></div>
+      </div>
       <div class="win-gift-text">{{ $t("settings.depositMonthlytoWinGifts") }}</div>
     </div>
   </div>
@@ -74,6 +80,28 @@ const profileImagePath = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+.progress-bar-outer {
+  position: relative;
+  height: 16px;
+  width: 100%;
+}
+
+.custom-progress-bar {
+  position: relative;
+  z-index: 1;
+}
+
+.progress-circle {
+  position: absolute;
+  top: -4px;
+  width: 16px;
+  height: 16px;
+  background-color: #21EF89;
+  border: 4px solid rgb(59 143 102);
+  border-radius: 50%;
+  z-index: 2;
+  transition: left 0.3s ease;
+}
 .progress-container {
   
   display: flex;
@@ -146,12 +174,13 @@ const profileImagePath = computed(() => {
 
     width: 100%;
     background: linear-gradient(90deg, #323738 0%, #404F4E 100%);
-    padding: 15px;
+    // padding: 15px;
+    padding: 5px 15px;
     border-radius: 10px;
     .amount-progress-container {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
 
     }
 
@@ -171,7 +200,7 @@ const profileImagePath = computed(() => {
     }
 
     .win-gift-text {
-      margin-top: 5px;
+      // margin-top: 5px;
       text-align: right;
       color: #B2BDBF;
       font-weight: 400;
