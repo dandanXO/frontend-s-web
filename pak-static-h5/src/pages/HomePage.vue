@@ -202,6 +202,7 @@
       </div>
       <a class="notice-download" :href="ui.whatsappUrl" target="_blank">
         <img src="../assets/images/auth/whatsapp-icon-side.png" />
+        <img class="absolute-hot" src="../assets/images/index/hot.gif" />
       </a>
     </div>
     <!-- <div class="top-action" v-if="store.hasToken()">
@@ -4579,6 +4580,17 @@ const checkGoogleLoginSetPwd = () => {
   display: flex;
   align-items: center;
   animation: beat 1.5s infinite;
+  position:relative;
+  .absolute-hot {
+    position: absolute;
+    right: -5px;
+    top: 6px;
+    width: 18px;
+    height: unset;
+    img { 
+      width: 100%
+    }
+  }
 
   img {
     display: block;

@@ -1,7 +1,8 @@
 <template>
-  <div class="list-item" @click="openWhatsApp()">
-    <img class="btn-icon" id="whatapp-icon"
+  <div class="list-item" id="whatapp-icon" @click="openWhatsApp()">
+    <img class="btn-icon" 
       :src="require(`../assets/images/auth/whatsapp-${isInvite ? 'neon' : 'colored'}.png`)" />
+      <img class="absolute-hot" src="../assets/images/index/hot.gif" />
     <!-- <div>WhatsApp</div> -->
   </div>
   <div v-if="isInvite" class="list-item" @click="openFacebook()">
@@ -163,6 +164,7 @@ const downloadApp = () => {
   text-align: center;
 
   .list-item {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -173,10 +175,20 @@ const downloadApp = () => {
     flex: 1;
   }
 
+
+  .absolute-hot {
+    position: absolute;
+    right: 3px;
+    top: -6px;
+    width: 18px;
+    height: unset;
+    img { 
+      width: 18px;
+    }
+  }
   .btn-icon {
     width: 40px;
     height: 40px;
-
     &:active {
       filter: brightness(0.85);
       transform: translate(0px, 1px);
