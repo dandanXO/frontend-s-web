@@ -2529,7 +2529,10 @@ export default {
     pointsDistribution: '积分分布',
     traceId: 'Trace ID',
     downloadQRCode: '二维码下载',
-    normalCreate: '普通'
+    normalCreate: '普通',
+    costTime: '耗时',
+    requestHeader: '请求头',
+    response: '响应',
   },
   message: {
     adsStatusOpen: '开',
@@ -3331,7 +3334,8 @@ export default {
     'Refer Spin Claim Record': '邀请转盘领取记录',
     'Refer Spin Record': '邀请转盘记录',
     'Official CS Account': '官方客服账号',
-    'Site Note': '便签板'
+    'Site Note': '便签板',
+    'Adjust Event': '追踪事件',
   },
   google: {
     google_auth_menu: '谷歌验证',
