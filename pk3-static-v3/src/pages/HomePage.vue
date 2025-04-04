@@ -24,6 +24,7 @@
         :key="i"
         :name="i"
         class="column no-wrap flex-center"
+        style="min-height:170px;"
         :img-src="returnBannerUrl(banner)"
         @click="gotoPromo(banner)"
       ></q-carousel-slide>
