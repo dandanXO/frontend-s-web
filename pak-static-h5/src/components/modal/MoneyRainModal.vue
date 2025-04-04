@@ -838,3 +838,13 @@ onMounted(() => {
   }
 }
 </style>
+<style lang="scss">
+
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  </style>

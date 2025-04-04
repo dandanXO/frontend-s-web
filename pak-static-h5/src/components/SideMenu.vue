@@ -97,7 +97,7 @@
         FAQ
       </router-link>
       <router-link class="side-menu-item side-menu-item__transparent" to="/cs-verifier">
-        <div class="item-icon"><img src="../assets/images/auth/menu-cs-verifier.svg" /></div>
+        <div class="item-icon"><img src="../assets/images/auth/menu-cs-verifier.png" /></div>
         {{ $t('sideNav.customerServiceVerifier') }}
       </router-link>
     </div>
@@ -170,6 +170,8 @@ const openCSInNewTab = (url) => {
     gap: 12px;
     transition: 0.3s all;
     overflow-y: auto;
+    max-width: 500px;
+    margin: 0 auto;
 
     .side-menu-divider {
       background: rgba(255, 255, 255, 0.05);

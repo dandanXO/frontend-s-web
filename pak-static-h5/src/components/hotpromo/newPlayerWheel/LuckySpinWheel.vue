@@ -771,6 +771,10 @@ onMounted(() => {
 
 <style lang="scss">
 .pak-newplayer-welcome-spin-table {
+  p {
+    margin: 0;
+    padding: 8px;
+  }
   border-collapse: collapse !important;
   tr:nth-child(2),tr:nth-child(4) {
     td:nth-child(2) {

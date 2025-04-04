@@ -908,15 +908,15 @@ onUnmounted(() => {
         font-weight: 700;
         margin-right: 3px;
         border-radius: 50%;
-        padding: 5px;
+        padding: 3px 5px;
         font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
         font-weight: 700;
         font-size: 12px;
         line-height: 100%;
         letter-spacing: 0px;
-        
-    height: 25px;
-    width: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     line-height: 16px;
         vertical-align: middle;
       }

@@ -81,7 +81,8 @@ const props = defineProps(["rankDetails", "isLoadingRanking"]);
   }
 
   &.isNotInApp {
-    bottom: 95px;
+    // bottom: 95px;
+    bottom: 45px;
   }
 
   .column {

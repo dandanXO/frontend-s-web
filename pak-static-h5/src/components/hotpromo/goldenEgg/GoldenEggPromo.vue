@@ -413,7 +413,7 @@ onMounted(() => {
         //   linear-gradient(36.43deg, #0e1e08 6.88%, #1b6026 100.29%);
 
         background-size: 100% 100%;
-        padding: 16px 10px 10px;
+        padding: 10px 10px 10px;
         position: relative;
         .ranking-block-title {
           color: #e0b690;
@@ -424,7 +424,7 @@ onMounted(() => {
           margin: 0 auto 20px;
           font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
           font-weight: 700;
-          font-size: 17.23px;
+          font-size: 1rem;
           line-height: 100%;
           letter-spacing: 0;
           text-align: center;
@@ -479,12 +479,16 @@ onMounted(() => {
             margin: 0;
             thead {
               border: 1px solid #f9cda8;
-              border-radius: 20px;
+              border-radius: 10px;
               display: table-caption;
               overflow: hidden;
             }
             th {
-              padding: 12px;
+              padding: 5px;
+              text-align: right;
+              color: #E0B690;
+              font-weight: 600;
+              font-family: "Poppins";
               background: linear-gradient(180deg, #794d2a 0%, #5a3a1e 51%, #341400 100%);
             }
             /* Apply colors to specific rows */
@@ -528,7 +532,7 @@ onMounted(() => {
               width: 100%;
               text-align: center;
               // color: #6db85f;
-              color: #ffffff;
+              color: #E0B690;
               padding: 35px 0;
             }
           }
