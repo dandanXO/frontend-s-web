@@ -346,6 +346,7 @@ onUnmounted(() => {
     background-size: 100% 100%;
     aspect-ratio: 343 / 656;
     position: relative;
+    min-height: 600px;
 
     .summary-wrapper {
       display: flex;
@@ -527,6 +528,7 @@ onUnmounted(() => {
               border: none;
               width: 158px;
               max-width: 35%;
+              height: 40%;
               font-size: 20px;
               font-weight: 700;
               line-height: 24px;
@@ -577,6 +579,11 @@ onUnmounted(() => {
             position: relative;
             max-width: 70%;
             margin: -5% auto 0;
+            height: 100px;
+
+            &.common-btn {
+              background-size: 100% 100%;
+            }
           }
 
           .next-spin-remaining-time {
