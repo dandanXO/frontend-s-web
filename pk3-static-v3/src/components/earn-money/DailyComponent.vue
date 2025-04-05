@@ -465,13 +465,13 @@ onMounted(() => {
   .info-container {
     display: flex;
     flex-direction: column;
-    gap: 15px;
     margin-top: 12px;
     .info-row {
       display: flex;
       gap: 15px;
       background: linear-gradient(180deg, rgba(139, 54, 248, 0.4) 0%, rgba(51, 74, 214, 0.4) 100%);
       border-radius: 12px;
+      margin-bottom: 15px;
     }
 
     .info-content-item {

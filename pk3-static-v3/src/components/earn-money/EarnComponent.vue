@@ -140,7 +140,6 @@ onMounted(() => {
   .desc-title-wrapper {
     display: flex;
     align-items: center;
-    gap: 5px;
 
     .number {
       background: red;
@@ -150,6 +149,7 @@ onMounted(() => {
       text-align: center;
       border-radius: 6.25rem;
       background: rgba(252, 245, 104, 0.2);
+      margin-right: 5px;
     }
 
     .desc-title {
