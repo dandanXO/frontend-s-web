@@ -121,6 +121,7 @@ defineExpose({
   .bg-yellow{
     margin-left: auto;
     margin-right: 12px;
+    margin-bottom: 10px;
   }
 
     .banner {

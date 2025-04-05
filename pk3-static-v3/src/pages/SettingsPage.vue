@@ -106,6 +106,7 @@
               :name="i"
               class="column no-wrap flex-center"
               :img-src="banner.mobileImageUrl"
+              style="min-height: 150px;"
             ></q-carousel-slide>
           </q-carousel>
         </q-card-section>
