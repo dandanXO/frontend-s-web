@@ -163,7 +163,10 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
       $q.loading.show({ message: "加载中..." });
 
-      if (way !== "H5") {
+      if (store.nickName === "npr101") {
+        alert("1");
+      }
+      if (way !== "H5" && way !== "IOS") {
         //Change to open at same page.
         if (platformCode === "platformType") {
           api
