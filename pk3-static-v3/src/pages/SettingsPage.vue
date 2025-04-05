@@ -406,6 +406,7 @@ const logout = () => {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 50px;
 
   .acct-nav-label {
     color: rgba(206, 206, 206, 0.8);
