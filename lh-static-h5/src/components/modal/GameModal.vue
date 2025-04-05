@@ -244,9 +244,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
                 window.open(response.data, "_blank");
               }
             } else if (platformCode === "PG") {
-              if (store.nickName === "npr101") {
-                alert("WebClip22");
-              }
               srcData = srcData.replace(/\\\"/g, '"').replace(/\n/g, "");
               src.value = srcData;
               visible.value = true;
