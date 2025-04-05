@@ -163,9 +163,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
       $q.loading.show({ message: "加载中..." });
 
-      if (store.nickName === "npr101") {
-        alert("1");
-      }
       if (way !== "H5" && way !== "IOS") {
         //Change to open at same page.
         if (platformCode === "platformType") {
@@ -258,13 +255,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
                 window.open(response.data, "_blank");
               }
             } else if (platformCode === "PG") {
-              if (store.nickName === "npr101") {
-                alert("WebClip");
-              }
               if (isiOSWebClip.value) {
-                if (store.nickName === "npr101") {
-                  alert("WebClip2");
-                }
                 srcData = srcData.replace(/\\\"/g, '"').replace(/\n/g, "");
                 const blob = new Blob([srcData], { type: "text/html" });
                 src.value = URL.createObjectURL(blob);
