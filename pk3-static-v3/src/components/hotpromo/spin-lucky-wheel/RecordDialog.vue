@@ -70,14 +70,26 @@ const getRecords = () => {
   const lotteryRecordApi = eventapi.get("/refer-spin/amount-record");
   isLoading.value = true;
 
-  Promise.allSettled([invitationRecordApi, lotteryRecordApi])
+  // Custom function to mimic Promise.allSettled
+  function customAllSettled(promises) {
+    return Promise.all(
+      promises.map((promise) =>
+        promise
+          .then((value) => ({ status: "fulfilled", value }))
+          .catch((reason) => ({ status: "rejected", reason }))
+      )
+    );
+  }
+
+  // Use the custom function in your logic
+  customAllSettled([invitationRecordApi, lotteryRecordApi])
     .then(([invitationRes, lotteryRes]) => {
       console.log(invitationRes, lotteryRes);
-      if (invitationRes?.value.code === 0) {
-        invitationRecords.value = invitationRes?.value.data;
+      if (invitationRes?.status === "fulfilled" && invitationRes?.value?.code === 0) {
+        invitationRecords.value = invitationRes.value.data;
       }
-      if (lotteryRes?.value.code === 0) {
-        lotteryRecords.value = lotteryRes?.value.data;
+      if (lotteryRes?.status === "fulfilled" && lotteryRes?.value?.code === 0) {
+        lotteryRecords.value = lotteryRes.value.data;
       }
     })
     .finally(() => {
