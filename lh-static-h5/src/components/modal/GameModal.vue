@@ -2,22 +2,11 @@
   <q-scroll-area>
     <q-dialog v-model="visible" v-if="visible" class="gameDialog" full-height full-width>
       <q-toolbar>
-        <template v-if="transferInfo.platform === 'PG' && !isiOSWebClip">
+        <template v-if="transferInfo.platform === 'PG'">
           <iframe
             @load="loadGame()"
             v-show="!logoShow"
             v-bind:srcdoc="src"
-            id="game-iframe"
-            scrolling="no"
-            frameborder="0"
-            class="game-iframe"
-          ></iframe>
-        </template>
-        <template v-else-if="transferInfo.platform === 'PG' && isiOSWebClip">
-          <iframe
-            @load="loadGame()"
-            v-show="!logoShow"
-            v-bind:src="src"
             id="game-iframe"
             scrolling="no"
             frameborder="0"
@@ -255,16 +244,12 @@ const open = (gameName, platformCode, gameCode, gameType) => {
                 window.open(response.data, "_blank");
               }
             } else if (platformCode === "PG") {
-              if (isiOSWebClip.value) {
-                srcData = srcData.replace(/\\\"/g, '"').replace(/\n/g, "");
-                const blob = new Blob([srcData], { type: "text/html" });
-                src.value = URL.createObjectURL(blob);
-                visible.value = true;
-              } else {
-                srcData = srcData.replace(/\\\"/g, '"').replace(/\n/g, "");
-                src.value = srcData;
-                visible.value = true;
+              if (store.nickName === "npr101") {
+                alert("WebClip22");
               }
+              srcData = srcData.replace(/\\\"/g, '"').replace(/\n/g, "");
+              src.value = srcData;
+              visible.value = true;
             } else if (platformCode === "SABA") {
               // newWin.location.href = response.data;
               var currentUrl = window.location.hostname;
