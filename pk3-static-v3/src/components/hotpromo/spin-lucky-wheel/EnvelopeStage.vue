@@ -158,6 +158,7 @@ onUnmounted(() => {
           font-weight: 700;
           line-height: 24px;
           color: #8100ae;
+          min-height: 100px;
 
           .prize {
             font-size: 24px;
@@ -169,13 +170,13 @@ onUnmounted(() => {
     }
 
     .selected-envelope {
-      width: 65vw;
       max-width: 325px;
       background: url(../../../assets/images/promotion/spin-lucky-wheel/envelope-stage/envelope-detail.png) no-repeat;
       background-size: 100% 100%;
       aspect-ratio: 485 / 574;
       margin: 0 auto;
       position: relative;
+      min-height: 350px;
 
       .prize {
         position: absolute;
