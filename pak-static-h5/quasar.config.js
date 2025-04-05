@@ -114,7 +114,11 @@ module.exports = configure(function (ctx) {
 
         cfg.module.rules.push({
           test: /\.m?js$/,
-          include: [path.resolve(__dirname, "node_modules/chart.js")],
+          include: [
+            path.resolve(__dirname, "node_modules/vue-chartjs"),
+            path.resolve(__dirname, "node_modules/@fingerprintjs/fingerprintjs"),
+            path.resolve(__dirname, "node_modules/@fingerprintjs/fingerprintjs-pro-vue-v3")
+          ],
           use: {
             loader: "babel-loader",
             options: {
@@ -130,7 +134,7 @@ module.exports = configure(function (ctx) {
                   }
                 ]
               ],
-              plugins: ["@babel/plugin-proposal-class-properties"]
+              plugins: ["@babel/plugin-proposal-class-properties", "@babel/plugin-proposal-optional-chaining"]
             }
           }
         });

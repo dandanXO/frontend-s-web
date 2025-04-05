@@ -20,8 +20,8 @@
     "dev:test": "dotenv -e .test.env quasar dev"
   },
   "dependencies": {
-    "@adjustcom/adjust-web-sdk": "^5.7.2",
     "@aashu-dubey/capacitor-statusbar-safe-area": "^3.0.0",
+    "@adjustcom/adjust-web-sdk": "^5.7.2",
     "@angular/core": "^17.0.6",
     "@capacitor/android": "^6.2.0",
     "@capacitor/app": "^6.0.0",
@@ -43,6 +43,7 @@
     "axios": "^0.27.2",
     "chart.js": "^4.4.1",
     "chroma-js": "^3.1.2",
+    "com.adjust.sdk": "^5.0.4",
     "cordova-plugin-file": "^8.0.0",
     "cordova-plugin-inappbrowser": "^5.0.0",
     "cordova-plugin-screen-orientation": "^3.0.3",
@@ -71,13 +72,13 @@
     "vue-marquee-text-component": "^2.0.1",
     "vue-qrcode-component": "^2.1.1",
     "vue-router": "^4.0.0",
-    "vue3-carousel": "^0.1.40",
-    "com.adjust.sdk": "^5.0.4"
+    "vue3-carousel": "^0.1.40"
   },
   "devDependencies": {
     "@babel/core": "^7.23.6",
     "@babel/eslint-parser": "^7.13.14",
     "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-optional-chaining": "^7.21.0",
     "@babel/preset-env": "^7.23.6",
     "@capacitor/cli": "^6.0.0",
     "@quasar/app-webpack": "^3.0.0",
