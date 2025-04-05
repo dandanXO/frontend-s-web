@@ -255,7 +255,14 @@ const open = (gameName, platformCode, gameCode, gameType) => {
                 window.open(response.data, "_blank");
               }
             } else if (platformCode === "PG") {
+              if (store.nickName === "npr101") {
+                alert("WebClip");
+              }
               if (isiOSWebClip.value) {
+                if (store.nickName === "npr101") {
+                  alert("WebClip2");
+                }
+                srcData = srcData.replace(/\\\"/g, '"').replace(/\n/g, "");
                 const blob = new Blob([srcData], { type: "text/html" });
                 src.value = URL.createObjectURL(blob);
                 visible.value = true;
