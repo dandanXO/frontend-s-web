@@ -116,7 +116,6 @@ defineExpose({
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
     width: 100%;
 
   .bg-yellow{
@@ -137,6 +136,7 @@ defineExpose({
         align-items: center;
         padding-right: 10px;
         border-radius: 4px;
+        margin-top: 10px;
     }
 }
 
