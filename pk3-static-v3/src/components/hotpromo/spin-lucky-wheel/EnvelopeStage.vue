@@ -136,11 +136,13 @@ onUnmounted(() => {
         align-items: flex-start;
         justify-content: center;
         background: url(../../../assets/images/promotion/spin-lucky-wheel/envelope-stage/envelope-close.png) no-repeat;
-        background-size: cover;
+        background-size: 100% 100%;
         aspect-ratio: 109 / 133;
         border: none;
         padding: 13% 0 0;
         // transition: backg;
+        height: 110px;
+        background-position: center;
 
         &.selected,
         &.unselected {
@@ -170,7 +172,7 @@ onUnmounted(() => {
       width: 65vw;
       max-width: 325px;
       background: url(../../../assets/images/promotion/spin-lucky-wheel/envelope-stage/envelope-detail.png) no-repeat;
-      background-size: cover;
+      background-size: 100% 100%;
       aspect-ratio: 485 / 574;
       margin: 0 auto;
       position: relative;
@@ -193,6 +195,11 @@ onUnmounted(() => {
         width: 80%;
         transform: translate(-50%, -50%);
         margin: 0 auto;
+        height: 100px;
+
+        &.common-btn {
+          background-size: 100% 100%;
+        }
       }
 
       .remaining-time {
