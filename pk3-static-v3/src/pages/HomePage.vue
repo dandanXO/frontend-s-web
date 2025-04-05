@@ -4203,7 +4203,7 @@ onBeforeUnmount(() => {
     width: 100%;
     border-radius: 8px;
     background-repeat: no-repeat;
-    min-height: 90px;
+    min-height: 120px;
   }
 }
 
