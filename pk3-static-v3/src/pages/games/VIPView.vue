@@ -90,8 +90,8 @@
             </div>
           </div>
           <div class="unlock-status">
-            <img v-if="currentVipLevelStats.rewardUnlocked" src="@/assets/images/vip/vip-reward-unlocked-icon.png" />
-            <img v-else src="@/assets/images/vip/vip-reward-locked-icon.png" />
+            <img width="20px" height="20px" v-if="currentVipLevelStats.rewardUnlocked" src="@/assets/images/vip/vip-reward-unlocked-icon.png" />
+            <img width="20px" height="20px" v-else src="@/assets/images/vip/vip-reward-locked-icon.png" />
           </div>
         </div>
         <div class="vip-reward-item">
