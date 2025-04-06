@@ -11,6 +11,7 @@
     "test": "echo \"No test specified\" && exit 0",
     "android": "quasar build -m capacitor -T android",
     "dev:test": "dotenv -e .test.env quasar dev",
+    "dev:staging": "dotenv -e .staging.env quasar dev",
     "build:test": "dotenv -e .test.env quasar build",
     "build:prod": "dotenv -e .prod.env quasar build",
     "build:staging": "dotenv -e .staging.env quasar build",

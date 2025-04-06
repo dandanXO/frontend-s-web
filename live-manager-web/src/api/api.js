@@ -41,6 +41,16 @@ api.interceptors.response.use(
         detail: response.data.message,
       })
       return Promise.reject(new Error(response.data.message))
+    } else if (response.data.code === ResponseCode.ERR_MULTI_LOGGED_IN) {
+      eventBus.showToast({
+        severity: 'error',
+        summary: 'Error',
+        detail: response.data.message,
+      })
+
+      sessionStorage.removeItem('token')
+      router.push({ name: 'login' })
+      return Promise.reject(new Error(response.data.message))
     }
     return response.data
   },

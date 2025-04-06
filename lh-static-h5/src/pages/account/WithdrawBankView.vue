@@ -59,7 +59,7 @@
           <img v-else class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
           <span>+添加电子钱包</span>
         </div>
-        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/alipay')">
+        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/alipay')" v-if="alipayAvailable">
           <img v-if="$q.dark.isActive" class="bank-bind-img" src="../../assets/images/download/active-tab-bg-dark.png" />
           <img v-else class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
           <span>+添加支付宝</span>
@@ -334,8 +334,25 @@ const formatCardNumber = (cardNumber) => {
   return firstFourDigits + maskedPortion + lastFourDigits;
 };
 
+const alipayAvailable = ref(false);
+const setNewBankTypes = () => {
+  api
+    .get("/session/withdraw/card")
+    .then((res) => {
+      if (res.code === 0) {
+        alipayAvailable.value = res.data.some(item =>
+          item.code.toLowerCase().includes("alipay")
+        );
+      }
+    })
+    .catch((error) => {
+      console.error("Error loading banks:", error);
+    });
+};
+
 onActivated(() => {
   loadCards();
+  setNewBankTypes();
 });
 </script>
 
@@ -363,6 +380,7 @@ onActivated(() => {
         align-items: center;
         justify-content: center;
         width: 47.5%;
+        margin: auto;
 
         .bank-bind-img {
           margin-left: auto;

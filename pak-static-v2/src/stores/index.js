@@ -57,6 +57,7 @@ export const userStore = defineStore("userStore", {
       ftd: "CLOSE",
       isTkPixel: false,
       hasUpdatedOneSignal: false,
+      isReferralReady: false
     };
   },
   actions: {

@@ -66,14 +66,18 @@
               <div
                 class="game-platform"
                 @click="openGame('IM体育', 'IM', '')"
-                style="margin-top: 125px; margin-left: 36px"
+                style="margin-top: 48px; margin-left: 46px"
               >
                 <img src="../assets/home/IM.png" />
                 <div>IM体育</div>
               </div>
-              <div class="game-platform" @click="openGame('SABA体育', 'SABA', '')" style="margin-left: 19px">
-                <img src="../assets/home/dy.png" />
+              <div class="game-platform" @click="openGame('SABA体育', 'SABA', '')" style="margin-left: 28px">
+                <img src="../assets/home/saba.png" style="width: 75px" />
                 <div>SABA体育</div>
+              </div>
+              <div class="game-platform" @click="openGame('熊猫体育', 'PM', '')" style="margin-left: 18px">
+                <img src="../assets/home/pm.png" style="width: 75px" />
+                <div>熊猫体育</div>
               </div>
             </div>
           </div>
@@ -87,20 +91,24 @@
             <div class="back">
               <div
                 class="game-platform"
-                @click="openGame('AG真人', 'AG', '')"
-                style="margin-top: 48px; margin-left: 46px"
+                @click="openGame('DB真人', 'PMLIVE', '')"
+                 style="margin-top: 48px; margin-left: 46px"
               >
-                <img src="../assets/home/ag.png" />
+                <img src="../assets/home/db.png" style="width: 75px" />
+                <div>DB真人</div>
+              </div>
+              <div class="game-platform" @click="openGame('AG真人', 'AG', '')" style="margin-left: 30px">
+                <img src="../assets/home/ag.png" style="width: 75px" />
                 <div>AG真人</div>
               </div>
-              <div class="game-platform" @click="openGame('欧博真人', 'ALLBET', '')" style="margin-left: 30px">
+              <!-- <div class="game-platform" @click="openGame('欧博真人', 'ALLBET', '')" style="margin-left: 30px">
                 <img src="../assets/home/allbet.png" />
                 <div>欧博真人</div>
-              </div>
+              </div> -->
               <div
                 class="game-platform"
                 @click="openGame('BBIN真人', 'BBINDY', 'bblive_lobby_pc')"
-                style="margin-left: 14px"
+                style="margin-left: 19px"
               >
                 <img src="../assets/home/bbin.png" />
                 <div>BBIN真人</div>
@@ -613,7 +621,7 @@ watch(
 
 .index-container {
   background: url(../assets/home/index_bg_dsj.png) center 1280px no-repeat;
-  font-family: 'PingFang SC';
+  font-family: "PingFang SC";
 
   .index-top-btn-container {
     display: flex;
@@ -639,7 +647,7 @@ watch(
         padding-left: 60px;
         background-repeat: no-repeat;
         text-decoration: none;
-        font-family: 'PingFang SC';
+        font-family: "PingFang SC";
 
         &.deposit {
           background-image: url(../assets/home/btn_bg_deposit.png);

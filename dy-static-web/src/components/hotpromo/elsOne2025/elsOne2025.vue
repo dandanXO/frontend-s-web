@@ -24,7 +24,13 @@
         </div>
         <div class="livepoker-rebate-section-right">
           <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
-            <img src="../../../assets/promo/lh-livepoker-rebate/reward-btn.png" alt="" width="100%" />
+            <img
+              v-if="bonus <= 0"
+              src="@/assets/promo/lh-livepoker-rebate/reward-btn-3-disabled.png"
+              alt=""
+              width="100%"
+            />
+            <img v-else src="@/assets/promo/lh-livepoker-rebate/reward-btn-3.png" alt="" width="100%" />
           </div>
         </div>
       </div>
@@ -40,49 +46,49 @@
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
           <tbody>
-                <tr>
-                  <th>有效投注</th>
-                  <th>彩金</th>
-                  <th>流水倍数</th>
-                </tr>
-                <tr>
-                  <td>≥1,500</td>
-                  <td>8 元</td>
-                  <td :rowspan="9">6 倍流水</td>
-                </tr>
-                <tr>
-                  <td>≥5,000</td>
-                  <td>28 元</td>
-                </tr>
-                <tr>
-                  <td>≥10,000</td>
-                  <td>58 元</td>
-                </tr>
-                <tr>
-                  <td>≥15,000</td>
-                  <td>88 元</td>
-                </tr>
-                <tr>
-                  <td>≥30,000</td>
-                  <td>168 元</td>
-                </tr>
-                <tr>
-                  <td>≥50,000</td>
-                  <td>288 元</td>
-                </tr>
-                <tr>
-                  <td>≥100,000</td>
-                  <td>588 元</td>
-                </tr>
-                <tr>
-                  <td>≥300,000</td>
-                  <td>888 元</td>
-                </tr>
-                <tr>
-                  <td>≥500,000</td>
-                  <td>1,388 元</td>
-                </tr>
-              </tbody>
+            <tr>
+              <th>有效投注</th>
+              <th>彩金</th>
+              <th>流水倍数</th>
+            </tr>
+            <tr>
+              <td>≥1,500</td>
+              <td>8 元</td>
+              <td :rowspan="9">6 倍流水</td>
+            </tr>
+            <tr>
+              <td>≥5,000</td>
+              <td>28 元</td>
+            </tr>
+            <tr>
+              <td>≥10,000</td>
+              <td>58 元</td>
+            </tr>
+            <tr>
+              <td>≥15,000</td>
+              <td>88 元</td>
+            </tr>
+            <tr>
+              <td>≥30,000</td>
+              <td>168 元</td>
+            </tr>
+            <tr>
+              <td>≥50,000</td>
+              <td>288 元</td>
+            </tr>
+            <tr>
+              <td>≥100,000</td>
+              <td>588 元</td>
+            </tr>
+            <tr>
+              <td>≥300,000</td>
+              <td>888 元</td>
+            </tr>
+            <tr>
+              <td>≥500,000</td>
+              <td>1,388 元</td>
+            </tr>
+          </tbody>
         </table>
 
         <div class="livepoker-rebate-game-bottom">
@@ -104,18 +110,21 @@
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
               <div>
-                活动期间，活动仅计算电竞场馆中 2025 ESL One 罗利，会员在当日 2025 ESL One 罗利中累计有效投注≥1,500 元即可获得对应彩金，有效投注次日清零；
+                活动期间，活动仅计算电竞场馆中 2025 ESL One 罗利，会员在当日 2025 ESL One 罗利中累计有效投注≥1,500
+                元即可获得对应彩金，有效投注次日清零；
               </div>
               <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，活动仅计算当日 2025 ESL One 罗利已结算的赛事总有效投注，次日 24 小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 6 倍流水即可出款；
+            活动期间，活动仅计算当日 2025 ESL One 罗利已结算的赛事总有效投注，次日 24
+            小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 6 倍流水即可出款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+            任何低于欧洲盘 1.7 或亚洲盘 0.7
+            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
           </div>
           <div class="item">
             <div class="item-num">4</div>
@@ -123,7 +132,8 @@
           </div>
           <div class="item">
             <div class="item-num">5</div>
-            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
+            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+            地址视为同一账户，若有违规者，将不享受此红利；
           </div>
           <div class="item">
             <div class="item-num">6</div>
@@ -272,7 +282,7 @@ onMounted(() => {
       }
 
       &.disabled {
-        filter: grayscale(100%);
+        //filter: grayscale(100%);
         cursor: not-allowed;
         pointer-events: none;
       }

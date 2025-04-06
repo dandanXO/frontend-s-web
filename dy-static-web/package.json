@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "cross-env NODE_ENV=development dotenv -e .env.development vue-cli-service serve",
     "serve:test": "cross-env NODE_ENV=development dotenv -e .env.test vue-cli-service serve",
+    "serve:staging": "cross-env NODE_ENV=development dotenv -e .env.staging vue-cli-service serve",
     "build:dev": "cross-env NODE_ENV=development  dotenv -e .env.development vue-cli-service build",
     "build:test": "cross-env NODE_ENV=development  dotenv -e .env.test vue-cli-service build",
     "build:staging": "cross-env NODE_ENV=production  dotenv -e .env.staging vue-cli-service build",

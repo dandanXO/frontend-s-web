@@ -10,7 +10,7 @@
           <div class="reward-info">
             <div class="reward-info-icon claim-coin-icon"></div>
             <div class="reward-info-content">
-              当日总有效投注:
+              昨日总有效投注:
               <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
@@ -38,7 +38,7 @@
         <div class="title-img">活动详情</div>
         <div class="little-title">
           <div class="ribbon">活动时间</div>
-          <div class="right">2025年4月5日至2025年 4月13日</div>
+          <div class="right">2025年4月6日至2025年 4月14日</div>
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
