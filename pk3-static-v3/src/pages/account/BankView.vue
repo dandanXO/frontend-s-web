@@ -382,7 +382,6 @@ onActivated(() => {
 .bank-add-lists {
   display: flex;
   align-items: center;
-  gap: 12px;
   justify-content: center;
   width: calc(100% - 20px);
   margin: 0 auto 12px;
@@ -400,6 +399,7 @@ onActivated(() => {
     padding: 1rem 8px;
     height: 50px;
     justify-content: center;
+    margin: 0 6px;
 
     .card-update,
     .card-unlink {

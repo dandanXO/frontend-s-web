@@ -13,20 +13,32 @@
     >
       <template #header>
         <div class="flex justify-between" style="display: flex; gap: 8px">
-          <Button
-            :size="'small'"
-            type="button"
-            icon="pi pi-filter-slash"
-            label="清除"
-            outlined
-            @click="clearFilter()"
-          />
+          <div style="display: flex; gap: 8px">
+            
+            <Button
+              :size="'small'"
+              type="button"
+              icon="pi pi-filter-slash"
+              label="清除"
+              outlined
+              @click="clearFilter()"
+            />
+          </div>
           <IconField>
             <InputIcon>
               <i class="pi pi-search" />
             </InputIcon>
             <InputText v-model="filters['global'].value" placeholder="關鍵詞搜索" :size="'small'" />
           </IconField>
+          <Button
+              :size="'small'"
+              type="button"
+              icon="pi pi-refresh"
+              label="重新載入"
+              severity="info"
+              @click="fetchStreams"
+              :loading="loading"
+            />
         </div>
       </template>
 
@@ -60,9 +72,15 @@
         </template>
       </Column>
 
-      <Column field="streamId" header="串流ID" sortable>
+      <Column field="supplierStreamId" header="供應商串流ID" sortable>
         <template #body="slotProps">
-          {{ slotProps.data.streamId }}
+          {{ slotProps.data.supplierStreamId }}
+        </template>
+      </Column>
+
+      <Column field="streamerStreamId" header="主播串流ID" sortable>
+        <template #body="slotProps">
+          {{ slotProps.data.streamerStreamId }}
         </template>
       </Column>
 

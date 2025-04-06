@@ -106,11 +106,11 @@ export default defineComponent({
         console.log(affAppToken.value);
         var adjustConfig = new AdjustConfig(affAppToken.value, AdjustConfig.EnvironmentProduction);
         adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
-        adjustConfig.setAttributionCallbackListener(function (e) {
-          console.log("setAttributionCallbackListener");
-          console.log(e);
-        });
-        Adjust.create(adjustConfig);
+        // adjustConfig.setAttributionCallbackListener(function (e) {
+        //   console.log("setAttributionCallbackListener");
+        //   console.log(e);
+        // });
+        Adjust.initSdk(adjustConfig);
         setTimeout(() => {
           // Adjust.getAdid().then((aaid) => {
           //   console.log("aaid");

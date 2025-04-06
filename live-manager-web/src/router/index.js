@@ -7,10 +7,15 @@ const router = createRouter({
       path: '/',
       name: '仪表板',
       component: () => import('../views/DashboardView.vue'),
+      redirect: (to) => {
+        return {
+          path: '/stream/list',
+        }
+      },
     },
     {
       path: '/login',
-      name: '登录页',
+      name: 'login',
       component: () => import('../views/LoginView.vue'),
     },
     {

@@ -392,6 +392,26 @@ export default defineComponent({
       getAffiliateCode();
     });
 
+    const trackRegisterSuccessEvent = () => {
+      if (!ui.adjust_register_event) return;
+      if (isInPwa()) {
+        console.log(ui.adjust_register_event);
+        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        AdjustWeb.trackEvent({
+          eventToken: ui.adjust_register_event
+        });
+      } else if (Platform.is.android && Platform.is.capacitor) {
+        var adjustEvent = new AdjustEvent(ui.adjust_register_event);
+        // alert(affRegEvent.value);
+        Adjust.trackEvent(adjustEvent);
+      } else {
+        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        AdjustWeb.trackEvent({
+          eventToken: ui.adjust_register_event
+        });
+      }
+    };
+
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
@@ -413,9 +433,12 @@ export default defineComponent({
         isLoading.value = false;
       } else {
         var qs = require("qs");
-        const sidParam = store.visitorId;
+        const sidParam = store.googleadid || store.aaid || store.visitorId;
 
         (async () => {
+          if (store.aaid) {
+            regForm.traceId = store.aaid;
+          }
           regForm.sid = sidParam;
 
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
@@ -464,20 +487,7 @@ export default defineComponent({
                   localStorage.setItem("REG_REFERRAL_CODE", regForm.referrer);
                 }
 
-                //ADJUST TRACKEVENT.
-                // debugger;
-                // if (Platform.is.android && Platform.is.capacitor) {
-                //   affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
-                //   var adjustEvent = new AdjustEvent(affRegEvent.value);
-                //   // alert(affRegEvent.value);
-                //   Adjust.trackEvent(adjustEvent);
-                // } else {
-                //   affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
-                //   const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-                //   AdjustWeb.trackEvent({
-                //     eventToken: affRegEvent.value
-                //   });
-                // }
+                trackRegisterSuccessEvent();
 
                 sessionStorage.removeItem("REFERRAL_CODE");
 
