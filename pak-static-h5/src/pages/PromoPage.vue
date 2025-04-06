@@ -135,7 +135,8 @@
                     <div>asdasd</div>
                   </template>
                   <template v-else><HotPromotion :list="selectedPromo" /></template> -->
-                  <HotPromotion :list="selectedPromo" />
+                  <!-- <HotPromotion :list="selectedPromo" /> -->
+                  <component v-if="HotPromotion" :is="HotPromotion" :list="selectedPromo" />
                   <!-- promo.redirectUrl -->
                 </div>
                 <div
@@ -221,7 +222,7 @@
 </template>
 
 <script lang="js">
-import { ref, computed, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated } from "vue";
+import { ref, computed, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated, defineAsyncComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached } from "src/boot/cache";
@@ -235,10 +236,8 @@ import moment from "moment";
 // import { loadPromo } from "src/api/index/promo.js";
 // import { loadPromoBanner } from "src/api/index/promo";
 import ProfileSummary from "components/ProfileSummary.vue";
-import HotPromotion from "components/HotPromotion";
 import GameModal from "components/modal/GameModal.vue";
 import { t } from "src/boot/lang";
-// import HotPromotion from 'components/HotPromotion'
 import MoneyRainModal from "components/modal/MoneyRainModal.vue";
 import MegaSharingWheelModal from "src/components/hotpromo/megaSharingWheel/MegaSharingWheelModal.vue";
 import { Directory, Filesystem } from "@capacitor/filesystem";
@@ -248,10 +247,9 @@ export default defineComponent({
   name: "PromoView",
   components: {
     GameModal,
-    HotPromotion,
     ProfileSummary,
     MoneyRainModal,
-    MegaSharingWheelModal
+    MegaSharingWheelModal,
     // MediaSettingsComponent
   },
   setup() {
@@ -290,6 +288,11 @@ export default defineComponent({
     const isFetchingPromo = ref(false);
     const extensionState = ref(false);
     const extensionToken = ref("");
+
+    const HotPromotion = computed(() => process.env.MODE === 'spa' ?
+      defineAsyncComponent(() => import('components/HotPromotion.vue')) :
+      null
+    );
 
     const checkExtension = () => {
       if (route.path === "/promotion") {
@@ -781,6 +784,7 @@ export default defineComponent({
       parsedParam,
       isMegaSharingWheelModal,
       popupPromo,
+      HotPromotion,
       moment
       // MediaSettingsComponent
     };

@@ -21,6 +21,8 @@ const fs = require("fs-extra");
 const isImageCompress = true;
 
 const ImageminPlugin = require("imagemin-webpack-plugin").default;
+const IgnorePlugin = require("webpack").IgnorePlugin;
+const NormalModuleReplacementPlugin = require("webpack").NormalModuleReplacementPlugin;
 
 const ContextReplacementPlugin = require("webpack").ContextReplacementPlugin;
 
@@ -82,7 +84,7 @@ module.exports = configure(function (ctx) {
       // preloadChunks: true,
       // showProgress: false,
       // gzip: true,
-      // analyze: true,
+      analyze: false,
 
       minify: true,
       uglifyOptions: {
@@ -169,10 +171,39 @@ module.exports = configure(function (ctx) {
             }
           }
         };
+
+        if (ctx.mode.capacitor) {
+          chain.plugins.forEach((plugin) => {
+            if (plugin.constructor.name === "CopyPlugin") {
+              const publicPath = path.resolve(__dirname, "public");
+              plugin.patterns.forEach((pattern) => {
+                if (pattern.from === publicPath) {
+                  pattern.globOptions.ignore = [
+                    ...pattern.globOptions.ignore,
+                    "**/public/static/**",
+                    "**/public/*.ico"
+                  ];
+                }
+              });
+            }
+          });
+        }
       },
       chainWebpack(chain) {
         chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
         chain.resolve.alias.set("@", path.resolve(__dirname, "src")); // shortcut for src
+        chain.plugin("ignore-plugin").use(IgnorePlugin, [
+          {
+            resourceRegExp: /^\.\/locale$/,
+            contextRegExp: /moment$/
+          }
+        ]);
+        chain
+          .plugin("normal-module-replacement-plugin")
+          .use(NormalModuleReplacementPlugin, [
+            /moment-timezone\/data\/packed\/latest.json/,
+            require.resolve(path.resolve(__dirname, "misc/timezone.json"))
+          ]);
 
         if (process.env.NODE_ENV === "production" && isImageCompress) {
           chain.plugin("imagemin-webpack-plugin").use(ImageminPlugin, [

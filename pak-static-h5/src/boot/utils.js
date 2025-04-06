@@ -79,7 +79,7 @@ export const getTimeout = (key) => {
     : 0; // No timeout found
 };
 
-export const getImageUrl = (srcPath) => require(`/src/assets/${srcPath}`);
+// export const getImageUrl = (srcPath) => require(`/src/assets/${srcPath}`);
 
 export const updateDate = (val) => {
   const gapDate = new Date().getTime() - val * 24 * 60 * 60 * 1000;
