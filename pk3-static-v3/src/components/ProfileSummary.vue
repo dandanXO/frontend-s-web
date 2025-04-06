@@ -367,13 +367,16 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 12px;
     padding-top: 10px;
     padding-bottom: 10px;
     margin-bottom: 4px;
     width: 100%;
     padding-right: 10px;
     position: relative;
+
+    > * {
+      margin-left: 12px;
+    }
 
     .q-btn{
       white-space: nowrap;
@@ -566,7 +569,9 @@ onMounted(() => {
   }
 
   .infoboard-container .profile-wrapper {
-    gap: 4px;
+    > * {
+      margin-left: 4px;
+    }
   }
 
   .infoboard-container .infoboard-wrapper.home-profile {
@@ -631,9 +636,11 @@ onMounted(() => {
 .btn-lang {
   display: flex;
   width: 24px;
+  height: 24px;
   img {
     display: block !important;
     width: 24px !important;
+    height: 24px !important;
     filter: brightness(1.2) invert(20%) sepia(40%) saturate(200%) hue-rotate(280deg) brightness(130%) contrast(80%);
     // filter: brightness(1) sepia(0) hue-rotate(0deg) saturate(1);
     animation: hueBlink 1s infinite;
