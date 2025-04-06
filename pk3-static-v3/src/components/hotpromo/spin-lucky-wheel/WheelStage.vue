@@ -3,11 +3,6 @@
     <div class="wheel-outer-wrapper">
       <!-- <span class="title">Countdown: {{ remainingTime }}</span> -->
       <div class="summary-wrapper">
-        <!-- <span class="prize">
-          $
-          <span class="amount">{{ info.currAmount }}</span>
-        </span> -->
-
         <GradientTextAmount :amountText="`${store.currency.value} ${info.currAmount}`" />
 
         <template v-if="extractionDifference > 0 && info.status === 'IN_PROGRESS'">
@@ -346,13 +341,17 @@ onUnmounted(() => {
     background-size: 100% 100%;
     aspect-ratio: 343 / 656;
     position: relative;
+    min-height: 650px;
 
     .summary-wrapper {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
       padding: 58px 34px 0;
+
+      > * {
+        margin-top: 8px;
+      }
 
       .prize {
         margin-top: 4px;
@@ -527,6 +526,7 @@ onUnmounted(() => {
               border: none;
               width: 158px;
               max-width: 35%;
+              height: 40%;
               font-size: 20px;
               font-weight: 700;
               line-height: 24px;
@@ -577,6 +577,11 @@ onUnmounted(() => {
             position: relative;
             max-width: 70%;
             margin: -5% auto 0;
+            height: 100px;
+
+            &.common-btn {
+              background-size: 100% 100%;
+            }
           }
 
           .next-spin-remaining-time {
@@ -650,7 +655,7 @@ onUnmounted(() => {
   .wheel-stage-wrapper {
     .wheel-outer-wrapper {
       .summary-wrapper {
-        padding: 11vw 7vw 0;
+        padding: 9vw 7vw 0;
 
         .winning-record-outer-wrapper {
           .winning-record-wrapper {

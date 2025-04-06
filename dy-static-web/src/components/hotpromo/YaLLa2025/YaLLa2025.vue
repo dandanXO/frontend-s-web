@@ -10,7 +10,7 @@
           <div class="reward-info">
             <div class="reward-info-icon claim-coin-icon"></div>
             <div class="reward-info-content">
-              活动期间总有效投注：
+              昨日总有效投注：
               <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
@@ -104,13 +104,13 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              活动期间，会员当日投注 YaLLa Compass 春季赛 2025 有效投注≥1,000 元且存款≥200 元可获得对应投注奖金，满足条件的会员可进入优惠界面点击【领取】按钮获得投注奖金，奖金 6 倍流水即可提款； 
+              活动期间，活动仅计算电竞场馆中 YaLLa Compass 春季赛 2025，会员在当日 YaLLa Compass 春季赛 2025 中累计有效投注≥1,000 元且存款≥200 元可获得对应投注奖金，有效投注次日清零；
               <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            YaLLa Compass 春季赛 2025 投注奖金在结算后 24 小时内有效，每天只能领取一次，超出活动时间未领取不予补偿； 
+            活动期间，活动仅计算当日 YaLLa Compass 春季赛 2025 已结算的赛事总有效投注，次日 24 小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 6 倍流水即可出款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
@@ -242,6 +242,7 @@ onMounted(() => {
       }
 
       &.disabled {
+        filter: grayscale(100%);
         cursor: not-allowed;
         pointer-events: none;
       }

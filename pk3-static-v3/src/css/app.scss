@@ -589,8 +589,17 @@ body.body--dark .q-footer {
 
 .y-n-container {
   display: flex;
-  gap: 24px;
   justify-content: center;
+
+  > * {
+    &:first-child {
+      margin-right: 10px;
+    }
+
+    &:nth-child(2) {
+      margin-left: 10px;
+    }
+  }
 }
 
 .btn-click {

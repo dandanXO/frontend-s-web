@@ -1,59 +1,7 @@
 <template>
   <q-scroll-area>
     <q-dialog v-model="visible" v-if="visible" class="gameDialog" full-height full-width>
-      <!--      <q-page-sticky id="sticky-item" position="bottom-right" style="z-index:999999;" :offset="fabPos"-->
-      <!--                     v-touch-pan.prevent.mouse="moveFab"-->
-      <!--      >-->
-      <!--        <q-btn-->
-      <!--            @click="closeDialog()"-->
-      <!--            icon="close"-->
-      <!--            direction="up"-->
-      <!--            color="decent"-->
-      <!--            class="bg-brightbtn close-btn"-->
-      <!--            rounded-->
-      <!--        >-->
-      <!--        </q-btn>-->
-      <!--      </q-page-sticky>-->
-      <!-- <q-toolbar>
-      <q-avatar>
-        <img src="https://cdn.quasar.dev/logo-v2/svg/logo.svg" />
-      </q-avatar>
-
-      <q-toolbar-title
-        ><span class="text-weight-bold">Quasar</span> Framework</q-toolbar-title
-      >
-
-      <q-btn flat round dense icon="close" v-close-popup />
-    </q-toolbar> -->
       <q-toolbar>
-        <!--        <div class="topActions">-->
-        <!--          <q-toolbar-title></q-toolbar-title>-->
-        <!--          <q-btn-->
-        <!--              v-if="!drawerVisible"-->
-        <!--              flat-->
-        <!--              @click="closeDialog()"-->
-        <!--              round-->
-        <!--              dense-->
-        <!--              icon="close"-->
-        <!--          />-->
-        <!--          <q-btn-->
-        <!--              v-if="!drawerVisible"-->
-        <!--              flat-->
-        <!--              @click="drawerVisible = !drawerVisible"-->
-        <!--              round-->
-        <!--              dense-->
-        <!--              icon="menu_open"-->
-        <!--          />-->
-        <!--          <q-btn-->
-        <!--              v-if="drawerVisible"-->
-        <!--              flat-->
-        <!--              @click="drawerVisible = !drawerVisible"-->
-        <!--              round-->
-        <!--              dense-->
-        <!--              icon="read_more"-->
-        <!--          />-->
-        <!--        </div>-->
-
         <template v-if="transferInfo.platform === 'PG'">
           <iframe
             @load="loadGame()"
@@ -76,64 +24,6 @@
             class="game-iframe"
           ></iframe>
         </template>
-        <!--        <q-drawer-->
-        <!--            v-model="drawerVisible"-->
-        <!--            :breakpoint="500"-->
-        <!--            overlay-->
-        <!--            bordered-->
-        <!--            class="bg-primary"-->
-        <!--            side="right"-->
-        <!--        >-->
-        <!--          <div class="q-pa-sm q-pt-sm">-->
-        <!--            <div>-->
-        <!--              &lt;!&ndash; Uncomment for quick Transfer &ndash;&gt;-->
-        <!--              &lt;!&ndash; <q-btn-group push>-->
-        <!--                <q-btn-->
-        <!--                  size="sm"-->
-        <!--                  :color="quickTransferTab ? 'white' : 'primary'"-->
-        <!--                  glossy-->
-        <!--                  :text-color="quickTransferTab ? 'black' : 'white'"-->
-        <!--                  push-->
-        <!--                  label="Quick Transfer"-->
-        <!--                  icon="multiple_stop"-->
-        <!--                  @click="quickTransferTab = true"-->
-        <!--                />-->
-
-        <!--                <q-btn-->
-        <!--                  size="sm"-->
-        <!--                  :color="!quickTransferTab ? 'white' : 'primary'"-->
-        <!--                  glossy-->
-        <!--                  :text-color="!quickTransferTab ? 'black' : 'white'"-->
-        <!--                  push-->
-        <!--                  label="Bank Transfer"-->
-        <!--                  icon="account_balance"-->
-        <!--                  @click="quickTransferTab = false"-->
-        <!--                />-->
-        <!--              </q-btn-group> &ndash;&gt;-->
-
-        <!--              &lt;!&ndash; <template v-if="quickTransferTab">-->
-        <!--                <div class="numbers">-->
-        <!--                  <div class="instruction">Transfer amount to platform</div>-->
-
-        <!--                  <q-btn-->
-        <!--                    class="full-width"-->
-        <!--                    push-->
-        <!--                    glossy-->
-        <!--                    color="brand"-->
-        <!--                    v-for="(val, valIndex) in values"-->
-        <!--                    :key="valIndex"-->
-        <!--                    @click="submitTransfer(val)"-->
-        <!--                  >-->
-        <!--                    {{ val }}-->
-        <!--                  </q-btn>-->
-        <!--                </div>-->
-        <!--              </template> &ndash;&gt;-->
-        <!--              <template v-if="!quickTransferTab">-->
-        <!--                <DepositComponent/>-->
-        <!--              </template>-->
-        <!--            </div>-->
-        <!--          </div>-->
-        <!--        </q-drawer>-->
       </q-toolbar>
     </q-dialog>
     <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">
@@ -144,12 +34,12 @@
 <script setup id="GameModal">
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
-import { ref, defineExpose, reactive, shallowRef } from "vue";
+import { defineExpose, reactive, ref, shallowRef, computed } from "vue";
 import { isAndroid, isHuaweiPhone } from "boot/utils";
 
 import { storeToRefs } from "pinia";
 import { api } from "boot/axios";
-import { useQuasar, Platform, AppFullscreen, openURL } from "quasar";
+import { AppFullscreen, Platform, useQuasar } from "quasar";
 import { useNotify } from "src/hooks/notify";
 
 const notify = useNotify();
@@ -158,15 +48,8 @@ const $q = useQuasar();
 const store = userStore();
 const { token } = storeToRefs(store);
 
-const formRef = ref();
-const payTypeClass = ref();
-var payMethods = reactive([]);
-const paymentNode = ref([]);
-const activeMethod = ref({});
 const bankCardList = ref([]);
-const privilegeList = ref([]);
 const selectedPayType = shallowRef("");
-const isPaymentLoading = ref(true);
 
 const fabPos = ref([18, 18]);
 const draggingFab = ref(false);
@@ -177,40 +60,9 @@ const moveFab = (ev) => {
   fabPos.value = [fabPos.value[0] - ev.delta.x, fabPos.value[1] - ev.delta.y];
 };
 
-const isMobileDrawerActive = ref(false);
-const values = ref(["100", "200", "300", "500", "1000"]);
-const hasPrivilege = ref(false);
-const quickTransferTab = ref(false);
-
-const checkAmount = reactive({
-  flag: true,
-  errorMessage: ""
+const isiOSWebClip = computed(() => {
+  return Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone;
 });
-
-function selectPayType(value) {
-  if (value) {
-    if (value.payType === "BANK") {
-      selectedPayType.value = Bank;
-      if (!value.extra) {
-        bankCardList.value = [];
-        form.bankId = null;
-      } else if (value.extra.banks) {
-        bankCardList.value = value.extra.banks;
-      }
-    } else if (value.payType === "TruePay") {
-      selectedPayType.value = TruePay;
-      if (!value.extra) {
-        bankCardList.value = [];
-        form.bankId = null;
-      } else if (value.extra.banks) {
-        bankCardList.value = value.extra.banks;
-      }
-    } else if (value.payType === "OFFLINE") {
-      selectedPayType.value = Offline;
-      form.bankId = null;
-    }
-  }
-}
 
 const drawerVisible = ref(false);
 
@@ -235,7 +87,7 @@ const submitTransfer = (amount) => {
       if (response.code === 0) {
         notify({
           type: "success",
-          message: "转账成功",
+          message: "转账成功"
         });
         isClicked.value = amount;
         if (token) {
@@ -300,7 +152,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
       $q.loading.show({ message: "加载中..." });
 
-      if (way !== "H5") {
+      if (way !== "H5" && way !== "IOS") {
         //Change to open at same page.
         if (platformCode === "platformType") {
           api
@@ -322,7 +174,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               $q.loading.hide();
               notify({
                 type: "error",
-                message: err.message,
+                message: err.message
               });
             });
           return;
@@ -348,7 +200,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             $q.loading.hide();
             notify({
               type: "error",
-              message: err.message,
+              message: err.message
             });
           });
       } else {
@@ -399,17 +251,17 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               // newWin.location.href = response.data;
               var currentUrl = window.location.hostname;
               window.location.href = response.data + `&homeUrl=${currentUrl}`;
-            }  else {
+            } else {
               window.location.href = srcData;
             }
 
             //NO NEED LIAO
-          // else if (platformCode === "PM") {
-          //     let url = new URL(srcData);
-          //     srcData = `${url.origin}/#/eurocup?${url.searchParams.toString()}`;
-          //     src.value = srcData;
-          //     visible.value = true;
-          //   }
+            // else if (platformCode === "PM") {
+            //     let url = new URL(srcData);
+            //     srcData = `${url.origin}/#/eurocup?${url.searchParams.toString()}`;
+            //     src.value = srcData;
+            //     visible.value = true;
+            //   }
 
             // newWin.location.href = response.data;
             // window.location.href = response.data;
@@ -418,7 +270,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             $q.loading.hide();
             notify({
               type: "error",
-              message: err.message,
+              message: err.message
             });
           });
       }

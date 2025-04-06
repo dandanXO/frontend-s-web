@@ -3,4 +3,5 @@ export const ResponseCode = {
   ERR_SYSTEM: 500,
   ERR_USER_NOT_FOUND: 1001,
   ERR_DB_ACCESS: 1003,
+  ERR_MULTI_LOGGED_IN: 604,
 }

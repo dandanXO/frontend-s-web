@@ -86,7 +86,7 @@
                 </div>
                 <q-select
                   v-model="selectedBankType"
-                  :options="[{ name: '银行卡' }, { name: '支付宝' }, { name: '数字货币' }, { name: '电子钱包' }]"
+                  :options="bankTypeOptions"
                   option-label="name"
                   option-value="name"
                   @update:model-value="selectBankType(opt)"
@@ -447,6 +447,7 @@ export default defineComponent({
         console.log("error", error);
       });
       loadCards();
+      setNewBankTypes();
     });
     const showCard = (item, index) => {
       // if (index === isCardActive.value) {
@@ -950,6 +951,29 @@ export default defineComponent({
       }
     });
 
+    const bankTypeOptions = computed(() => [
+      { name: "银行卡" },
+      ...(alipayAvailable.value ? [{  name: "支付宝" }] : []),
+      {  name: "数字货币" },
+      {  name: "电子钱包" }
+    ]);
+
+    const alipayAvailable = ref(false);
+    const setNewBankTypes = () => {
+      api
+        .get("/session/withdraw/card")
+        .then((res) => {
+          if (res.code === 0) {
+            alipayAvailable.value = res.data.some(item =>
+              item.code.toLowerCase().includes("alipay")
+            );
+          }
+        })
+        .catch((error) => {
+          console.error("Error loading banks:", error);
+        });
+    };
+
     watch(
       () => bankCardInfo.bankId,
       (newVal, oldVal) => {
@@ -1026,6 +1050,9 @@ export default defineComponent({
       isSendOtp,
       isSZPAY,
       otpCountdownCount,
+      bankTypeOptions,
+      alipayAvailable,
+      setNewBankTypes
     };
   }
 });

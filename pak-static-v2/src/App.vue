@@ -93,84 +93,196 @@ export default defineComponent({
     const channelValue = ref("");
     const affAppToken = ref("");
 
-    // const initAdjustEventTrack = () => {
-    //   if (isAndroid()) {
-    //     //Android App.
-    //     console.log("Init Adjust Sdk");
-    //     console.log(affAppToken.value);
-    //     var adjustConfig = new AdjustConfig(affAppToken.value, AdjustEnvironment.Production);
-    //     adjustConfig.setLogLevel(AdjustLogLevel.Verbose);
-    //     adjustConfig.setAttributionCallbackListener(function (e) {
-    //       console.log("setAttributionCallbackListener");
-    //       console.log(e);
-    //     });
-    //
-    //     Adjust.create(adjustConfig);
-    //     setTimeout(() => {
-    //
-    //       // Adjust.getAdid().then((aaid) => {
-    //       //   console.log("aaid");
-    //       //   console.log(aaid);
-    //       //   if(store.aaid===""){
-    //       //     store.aaid = aaid;
-    //       //   }
-    //       // });
-    //
-    //       Adjust.getGoogleAdId().then((googleid) => {
-    //         console.log("Google AdID");
-    //         console.log(googleid);
-    //         if(!googleid || googleid==='00000000-0000-0000-0000-000000000000'){
-    //           (async () => {
-    //             Adjust.getAttribution().then((attribution) => {
-    //               console.log("Attribution 2");
-    //               console.log(attribution);
-    //               store.aaid = attribution.adid;
-    //             });
-    //           })();
-    //         }else{
-    //           store.googleadid = googleid;
-    //         }
-    //       });
-    //     }, 0);
-    //   } else {
-    //     //Normal WEb / H5 / iOS WEbclip.
-    //     console.log("Init Web Adjust");
-    //     console.log(affAppToken.value);
-    //     const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-    //     AdjustWeb.initSdk({
-    //       appToken: affAppToken.value,
-    //       environment: "production",
-    //       attributionCallback: function (e, attribution) {
-    //         // e: internal event name, can be ignored
-    //         // attribution: details about the changed attribution
-    //         console.log("CALLBACK");
-    //         console.log(attribution);
-    //         store.aaid = attribution && attribution.adid ? attribution.adid : "";
-    //       }
-    //     });
-    //     setTimeout(() => {
-    //       const attribution = AdjustWeb.getAttribution();
-    //       console.log("Web Adid");
-    //       console.log(attribution);
-    //       store.aaid = attribution ? attribution.adid : "";
-    //     }, 1500);
-    //   }
-    // };
+    const initAdjustEventTrack = () => {
+      if (isAndroid()) {
+        //Android App.
+        console.log("Init Adjust Sdk");
+        console.log(affAppToken.value);
+        var adjustConfig = new AdjustConfig(affAppToken.value, AdjustConfig.EnvironmentProduction);
+        adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
+        Adjust.initSdk(adjustConfig);
+        setTimeout(() => {
+          // Adjust.getAdid().then((aaid) => {
+          //   console.log("aaid");
+          //   console.log(aaid);
+          //   if (store.aaid === "") {
+          //     store.aaid = aaid;
+          //   }
+          // });
+          Adjust.getGoogleAdId((googleid) => {
+            console.log("Google AdID");
+            console.log(googleid);
+            if (!googleid || googleid === "00000000-0000-0000-0000-000000000000") {
+              (async () => {
+                Adjust.getAdid(function (adid) {
+                  console.log("Attribution 2");
+                  console.log(adid);
+                  store.aaid = adid;
+                });
+              })();
+            } else {
+              store.googleadid = googleid;
+            }
+          });
+        }, 0);
+      } else {
+        //Normal WEb / H5 / iOS WEbclip.
+        console.log("Init Web Adjust");
+        console.log(affAppToken.value);
+        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        const savedAdjustReferrer = sessionStorage.getItem("ADJUST_REFERRER");
+        if (savedAdjustReferrer) {
+          AdjustWeb.setReferrer(encodeURIComponent(savedAdjustReferrer));
+        }
+        AdjustWeb.initSdk({
+          appToken: affAppToken.value,
+          environment: "production",
+          logLevel: "verbose",
+          attributionCallback: function (e, attribution) {
+            // e: internal event name, can be ignored
+            // attribution: details about the changed attribution
+            console.log("CALLBACK");
+            console.log(attribution);
+            // store.aaid = attribution && attribution.adid ? attribution.adid : "";
+          }
+        });
+        setTimeout(() => {
+          AdjustWeb.waitForWebUUID().then((webUuid) => {
+            console.log("Web UUID");
+            console.log(webUuid);
+            store.aaid = webUuid ? webUuid : "";
+          });
+        }, 100);
+      }
+    };
 
-    const trackH5Affiliate = () => {
-      // const omitSites = ["bw3.genoortisy.com"];
-      // var affiliateCode = "";
-      // sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
-      // api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
-      //   if (res.code === 0) {
-      //     sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-      //     sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
-      //     sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
-      //     affAppToken.value = res.data.adjust_app_token;
-      //     // initAdjustEventTrack();
-      //     // alert(affAppToken.value);
-      //   }
-      // });
+    const getDomainWithoutSubdomain = () => {
+      let hostname = window.location.hostname;
+      let parts = hostname.split(".");
+
+      // 处理 localhost 和 IP
+      if (parts.length <= 2 || /^\d+\.\d+\.\d+\.\d+$/.test(hostname) || hostname === "localhost") {
+        return hostname; // 直接返回 IP 或 localhost
+      }
+
+      return parts.slice(1).join("."); // 去掉第一个 subdomain
+    };
+
+    const getRbParams = () => {
+      const params = JSON.parse(localStorage.getItem(`__rb_${process.env.ROUTER_BASE}_params`));
+      // alert(params);
+
+      if (!params) {
+        console.warn("No params found in localStorage");
+        return null;
+      }
+
+      const extractParams = (paramsString) => {
+        const result = {};
+        const pairs = paramsString.split("&");
+        pairs.forEach((pair) => {
+          const [key, value] = pair.split("=");
+          if (key && value) {
+            result[key] = decodeURIComponent(value);
+          }
+        });
+        return result;
+      };
+
+      const parsedParams = extractParams(params);
+      return {
+        linkId: parsedParams["link_id"] ?? "",
+        fbclid: parsedParams["fbclid"] ?? "",
+        adCode: parsedParams["adCode"] ?? ""
+      };
+    };
+
+    const trackH5Affiliate = async () => {
+      const hostname = getDomainWithoutSubdomain();
+      //FOR TESTING.
+      // const hostname = "igooaa.com";
+
+      if (isInPwa()) {
+        api.get(`/app/pwa/log?step=OPEN&siteCode=${process.env.SITE}`).then((res2) => {
+          console.log("OPEN");
+        });
+
+        var { adCode } = getRbParams() || {};
+        if (!adCode) {
+          adCode = "";
+        }
+        let _affiliateCode = "";
+        //Use thisApi to get AffiliateCode/FbPixelId/ WebPushId for PWA.
+        await api
+          .get(`/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${adCode}`)
+          .then((res) => {
+            const { affiliateCode = "", facebookId = "", pushId = "" } = res.data;
+            sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+            _affiliateCode = affiliateCode;
+            console.log("Init FB");
+            // if (facebookId) {
+            //   fbq("init", facebookId);
+            //   fbq("track", "PageView");
+            //   store.isFbPixel = true;
+            //   sendFacebookInfo();
+            // }
+            // if (pushId) {
+            //   initEngageLabPush(pushId);
+            // }
+          });
+
+        api.get(`/app/adjust/params?affiliateCode=${_affiliateCode}`).then((res) => {
+          if (res.code === 0) {
+            sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+            if (res.data.adjust_register_event) {
+              ui.adjust_register_event = res.data.adjust_register_event;
+            }
+            affAppToken.value = res.data.adjust_app_token;
+            initAdjustEventTrack();
+          }
+        });
+      } else {
+        const timer = setInterval(async () => {
+          if (store.isReferralReady) {
+            clearInterval(timer);
+          } else {
+            return;
+          }
+          const savedAffiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || "";
+          let _affiliateCode = "";
+          const referral = route.params.referralCode
+            ? route.params.referralCode
+            : sessionStorage.getItem("REFERRAL_CODE")
+            ? sessionStorage.getItem("REFERRAL_CODE")
+            : localStorage.getItem("REG_REFERRAL_CODE") || "";
+          await api
+            .get(
+              `/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${savedAffiliateCode}&refer=${referral}`
+            )
+            .then((res) => {
+              console.log(res);
+              const { affiliateCode = "", facebookId = "" } = res.data;
+              sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+              _affiliateCode = affiliateCode;
+              if (facebookId) {
+                fbq("init", facebookId);
+                fbq("track", "PageView");
+                store.isFbPixel = true;
+              }
+            });
+
+          api.get(`/app/adjust/params?affiliateCode=${_affiliateCode}`).then((res) => {
+            if (res.code === 0) {
+              sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+              if (res.data.adjust_register_event) {
+                ui.adjust_register_event = res.data.adjust_register_event;
+              }
+              affAppToken.value = res.data.adjust_app_token;
+              initAdjustEventTrack();
+            }
+          });
+        }, 100);
+      }
     };
 
     const onDeviceReady = () => {
@@ -193,16 +305,19 @@ export default defineComponent({
                   if (json && json.channel) {
                     sessionStorage.setItem("AFFILIATE_CODE", json.channel);
                     channelValue.value = sessionStorage.getItem("AFFILIATE_CODE");
-                    // api.get(`/app/adjust/params?affiliateCode=${channelValue.value}`).then((res) => {
-                    //   if (res.code === 0) {
-                    //     sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-                    //     sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
-                    //     sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
-                    //     affAppToken.value = res.data.adjust_app_token;
-                    //     // initAdjustEventTrack();
-                    //     // alert(affAppToken.value);
-                    //   }
-                    // });
+                    api.get(`/app/adjust/params?affiliateCode=${channelValue.value}`).then((res) => {
+                      if (res.code === 0) {
+                        sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+                        sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
+                        sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+                        if (res.data.adjust_register_event) {
+                          ui.adjust_register_event = res.data.adjust_register_event;
+                        }
+                        affAppToken.value = res.data.adjust_app_token;
+                        initAdjustEventTrack();
+                        // alert(affAppToken.value);
+                      }
+                    });
                   }
                 };
 
