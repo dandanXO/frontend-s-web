@@ -27,8 +27,9 @@ const _modelValue = computed({
   max-width: 375px;
   background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/envelope-simply.png) no-repeat;
   aspect-ratio: 290 / 296;
-  background-size: cover;
+  background-size: 100% 100%;
   position: relative;
+  min-height: 300px;
 
   .prize {
     position: absolute;
@@ -42,10 +43,15 @@ const _modelValue = computed({
 
   .close-btn {
     position: absolute;
-    bottom: 2%;
+    bottom: 5%;
     left: 50%;
     width: 80%;
     transform: translateX(-50%);
+    height: 100px;
+
+    &.common-btn {
+      background-size: 100% 100%;
+    }
   }
 }
 

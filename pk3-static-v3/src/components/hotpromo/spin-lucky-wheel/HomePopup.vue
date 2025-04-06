@@ -116,12 +116,12 @@ defineExpose({
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
     width: 100%;
 
   .bg-yellow{
     margin-left: auto;
     margin-right: 12px;
+    margin-bottom: 10px;
   }
 
     .banner {
@@ -137,6 +137,7 @@ defineExpose({
         align-items: center;
         padding-right: 10px;
         border-radius: 4px;
+        margin-top: 10px;
     }
 }
 

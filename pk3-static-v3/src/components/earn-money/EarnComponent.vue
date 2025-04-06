@@ -140,7 +140,6 @@ onMounted(() => {
   .desc-title-wrapper {
     display: flex;
     align-items: center;
-    gap: 5px;
 
     .number {
       background: red;
@@ -150,6 +149,7 @@ onMounted(() => {
       text-align: center;
       border-radius: 6.25rem;
       background: rgba(252, 245, 104, 0.2);
+      margin-right: 5px;
     }
 
     .desc-title {
@@ -271,7 +271,6 @@ onMounted(() => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
     padding: 25px;
 
     .qr-code {
@@ -286,6 +285,7 @@ onMounted(() => {
       font-weight: 700;
       border-radius: 0.5rem;
       background: linear-gradient(188deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
+      margin-top: 10px;
     }
   }
 }
