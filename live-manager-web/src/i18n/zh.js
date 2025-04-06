@@ -24,4 +24,16 @@ export default {
     rechargePaymentMethodSummary: '支付方式充值汇总',
     businessRechargeSummary: '商务充值汇总',
   },
+  stream: {
+    horizontal: '水平',
+    vertical: '垂直',
+    host: '主播',
+    supplierStreamID: '供應商串流ID',
+    hostStreamID: '主播串流ID',
+    currentQuality: '當前質量',
+    supplierPlaybackLink: '供應商播放鏈結',
+    hostPlaybackLink: '主播播放鏈結',
+    supplierPlayer: '供應商播放器',
+    hostPlayer: '主播播放器',
+  },
 }
