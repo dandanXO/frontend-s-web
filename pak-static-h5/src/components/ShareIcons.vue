@@ -143,13 +143,24 @@ const downloadApp = () => {
   grid-template-columns: repeat(4, 1fr);
 
   .list-item {
-
+    position: relative;
 
     img {
       display: block;
       width: 100%;
       max-width: 50px;
       margin: auto;
+      
+  &.absolute-hot {
+    position: absolute;
+    right: -4px;
+    top: -6px;
+    width: 18px;
+    height: unset;
+    img { 
+      width: 18px;
+    }
+  }
     }
   }
 }

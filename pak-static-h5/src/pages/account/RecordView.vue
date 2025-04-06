@@ -85,7 +85,7 @@
           </div>
         </q-card-section>
 
-        <q-card-section class="bot-wrapper">
+        <q-card-section class="bot-wrapper last">
           <div class="origin">
             <div class="bet">{{$t('records.beforeBalance')}}</div>
             <div class="game-platform">{{$t('records.afterBalance')}}</div>
@@ -503,7 +503,10 @@ onActivated(() => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 10px;
+    margin: 0 10px;
+    &.last {
+      margin-bottom: 10px;
+    }
 
     .win-amt {
       color: $positive;

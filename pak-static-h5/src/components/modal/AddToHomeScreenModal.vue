@@ -102,6 +102,7 @@ watch(
   justify-content: flex-end;
   margin: 10px;
 
+  max-width: 430px;
   .add-to-homescreen-download {
     position: absolute;
     top: 0px;
@@ -124,7 +125,10 @@ watch(
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 15px;
+    // gap: 15px;
+    :not(:last-child) {
+      margin-right: 15px;
+    }
     .app-logo {
       width: 76px;
       height: 76px;

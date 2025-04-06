@@ -168,7 +168,7 @@ const profileImagePath = computed(() => {
     top: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    // gap: 8px;
     font-size: 12px;
     font-weight: bold;
 
@@ -177,6 +177,10 @@ const profileImagePath = computed(() => {
     // padding: 15px;
     padding: 5px 15px;
     border-radius: 10px;
+    
+    :not(:last-child) {
+      margin-bottom: 8px;
+    }
     .amount-progress-container {
       display: flex;
       justify-content: space-between;

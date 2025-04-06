@@ -1223,11 +1223,15 @@ watch(
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  // gap: 20px;
   margin: 1rem 0 0.5rem 0;
   background: #373c3d;
   padding: 10px;
   border-radius: 10px;
+  
+  :not(:last-child) {
+    margin-bottom: 5px;
+  }
   .info {
     display: flex;
     align-items: center;
@@ -1236,6 +1240,9 @@ watch(
     color: white;
     border-radius: 3.125rem;
     font-size: 16px;
+    :not(:last-child) {
+      margin-right: 20px;
+    }
     // opacity: 0.8;
     // // background: linear-gradient(90deg, #157f42 -1.25%, rgba(44, 97, 67, 0) 104.06%);
     // // background: linear-gradient(90deg, #13f129 -1.25%, #131313 104.06%);

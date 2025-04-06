@@ -1303,7 +1303,10 @@ export default defineComponent({
 .google-login-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  // gap: 10px;
   margin-top: 25px;
+  img { 
+    margin-bottom: 10px;
+  }
 }
 </style>

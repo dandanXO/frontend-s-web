@@ -296,7 +296,10 @@ onActivated(() => {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 15px;
+      
+      :not(:last-child) {
+        margin-bottom: 15px;
+      }
 
       .bank-bind-btn {
         display: flex;
@@ -399,11 +402,17 @@ onActivated(() => {
       .left-container {
         display: flex;
         flex-direction: column;
-        gap: 15px;
+        // gap: 15px;
+        :not(:last-child) {
+          margin-right: 15px;
+        }
         .bank-name {
           display: flex;
           align-items: center;
-          gap: 10px;
+          // gap: 10px;
+          :not(:last-child) {
+            margin-right: 10px;
+          }
           // color: $font-2;
           font-size: 1.1rem;
           font-weight: 600;

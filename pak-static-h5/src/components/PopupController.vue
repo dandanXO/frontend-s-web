@@ -101,7 +101,7 @@ const handleNextClick = () => {
   --text-color: #fff;
   --selected-text-color: #00b352;
   display: flex;
-  gap: 14px;
+  // gap: 14px;
   align-items: center;
   .swiper-btn-prev,
   .swiper-btn-next {
@@ -119,7 +119,7 @@ const handleNextClick = () => {
   }
   .promo-list-wrapper {
     display: flex;
-    gap: 12px;
+    // gap: 12px;
     align-items: stretch;
     justify-content: center;
     width: 100%;
@@ -142,6 +142,9 @@ const handleNextClick = () => {
         color: var(--selected-text-color);
       }
     }
+  }
+  .promo-list-wrapper :not(:last-child) {
+      margin-right: 12px;
   }
 
   &.style-1 {
@@ -179,5 +182,8 @@ const handleNextClick = () => {
     --text-color: rgba(181, 115, 255, 1);
     --selected-text-color: #fff;
   }
+}
+.popup-controller-wrapper :not(:last-child) {
+  margin-right: 14px;
 }
 </style>

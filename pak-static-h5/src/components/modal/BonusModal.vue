@@ -104,6 +104,7 @@ const openNewPlayerGuide = () => {
       max-width: 248px;
       margin-bottom: -24px;
       margin-right: 24px;
+      height: 60px;
     }
   }
 
@@ -115,6 +116,9 @@ const openNewPlayerGuide = () => {
     max-height: 60vh;
     overflow-y: auto;
     .mission-item {
+      a {
+        text-decoration: none;
+      }
       display: flex;
       align-items: center;
       gap: 7px;

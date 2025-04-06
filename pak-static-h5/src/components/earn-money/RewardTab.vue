@@ -609,7 +609,9 @@ watch(activeSetting, checkIsShowDetail);
       justify-content: flex-start;
       align-items: center;
       flex-direction: column;
-      gap: 10px;
+      :not(:last-child) {
+        margin-bottom: 10px;
+      }
       text-align: center;
       position: relative;
       &__2 {
@@ -648,6 +650,7 @@ watch(activeSetting, checkIsShowDetail);
         font-size: 20px;
         line-height: 1;
         font-weight: bold;
+        margin-top: 10px;
       }
 
       .item-desc {
@@ -851,7 +854,10 @@ watch(activeSetting, checkIsShowDetail);
       margin-top: 12px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      // gap: 12px;
+      :not(:last-child) {
+        margin-bottom: 12px;
+      }
 
       .listing-item {
         // border: 1px solid #ffffff0d;
@@ -862,7 +868,10 @@ watch(activeSetting, checkIsShowDetail);
         padding: 8px 16px;
         align-items: center;
         line-height: 1;
-        gap: 12px;
+        // gap: 12px;
+        // :not(:last-child) {
+        //   margin-right: 12px;
+        // }
         color: #8c968f;
 
         span.list-num {
@@ -870,6 +879,7 @@ watch(activeSetting, checkIsShowDetail);
           font-size: 24px;
           color: #ffd600;
           font-weight: bold;
+          margin-right: 12px;
         }
       }
     }
@@ -906,10 +916,13 @@ watch(activeSetting, checkIsShowDetail);
     .invite-share-social {
       // display: grid;
       // grid-template-columns: repeat(4, 1fr);
-      grid-gap: 12px;
+      // grid-gap: 12px;
       margin-top: 16px;
       // display: none !important;
       display: flex;
+        :not(:last-child) {
+      margin-right: 12px;
+    }
     }
   }
 
@@ -1004,7 +1017,7 @@ watch(activeSetting, checkIsShowDetail);
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      gap: 10px;
+      // gap: 10px;
       font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-weight: 700;
       font-size: 14.45px;
@@ -1014,6 +1027,7 @@ watch(activeSetting, checkIsShowDetail);
       text-align: center;
       .earn-money-amt-icon {
         position: relative;
+        margin-right: 10px;
         width: 16px;
         height: 16px;
         &::before {
@@ -1056,9 +1070,10 @@ watch(activeSetting, checkIsShowDetail);
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
-      gap: 10px;
+      // gap: 10px;
       width: 100%;
       span {
+        margin-top: 10px;
         font-family: Poppins;
         font-weight: 900;
         font-size: 16.94px;

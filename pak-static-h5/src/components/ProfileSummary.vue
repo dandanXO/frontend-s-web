@@ -436,7 +436,10 @@ onUnmounted(() => {
 
   .download-container {
     display: flex;
-    gap: 16px;
+    // gap: 16px;
+    :not(:last-child) {
+      margin-right: 16px;
+    }
     width: 100%;
     align-items: center;
     transition: 0.3s all;
@@ -724,7 +727,10 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 10px;
+    
+    :not(:last-child) {
+      margin-right: 10px;
+    }
     padding-top: 8px;
     padding-bottom: 5px;
     margin-bottom: 4px;
@@ -939,14 +945,18 @@ onUnmounted(() => {
       }
     }
   }
-
   .profile-menu {
     display: flex;
     // padding: 5px;
     img {
       display: block;
-      width: 35px;
+      // width: 35px;
+      width: 30px;
+      height: 30px;
     }
+  }
+  .profile-menu:not(:last-child) {
+    margin-right: 3px;
   }
 
   .profile-wrapper-extra {
@@ -1048,7 +1058,7 @@ onUnmounted(() => {
   // }
 
   .infoboard-container .profile-wrapper {
-    gap: 4px;
+    
   }
 
   .infoboard-container .infoboard-wrapper.home-profile {

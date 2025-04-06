@@ -158,16 +158,24 @@ const openCSInNewTab = (url) => {
   &.open {
     margin-left: 0;
   }
+@supports (height: 100dvh) {
+  .left-side-menu {
+    height: calc(100dvh - 70px); /* modern browsers */
+  }
+}
 
   .left-side-menu {
     width: 100%;
     padding-top: 72px;
-    height: calc(100dvh - 70px);
+    height: calc(100vh - 70px);
     display: flex;
     flex-direction: column;
     padding-left: 16px;
     padding-right: 16px;
-    gap: 12px;
+    // gap: 12px;
+    :not(:last-child) {
+      margin-bottom: 12px;
+    }
     transition: 0.3s all;
     overflow-y: auto;
     max-width: 500px;
@@ -185,7 +193,7 @@ const openCSInNewTab = (url) => {
       border-radius: 6px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      // gap: 10px;
       padding: 10px 0;
     }
     .side-menu-item {
@@ -309,6 +317,7 @@ const openCSInNewTab = (url) => {
         line-height: 17.21px;
         letter-spacing: 0%;
         height: 100px;
+        min-height: 100px;
         position: relative;
         &:after {
           content: "";
@@ -326,6 +335,7 @@ const openCSInNewTab = (url) => {
           img {
             height: 180%;
             margin: -25% 0 -25% -25%;
+            min-height: 184px;
           }
         }
 

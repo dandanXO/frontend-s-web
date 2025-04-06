@@ -726,7 +726,10 @@ defineExpose({ showVideo });
       margin: -30px auto 0;
       border-radius: 16px;
       display: flex;
-      gap: 15px;
+      // gap: 15px;
+      > div:not(:last-child) {
+        margin-bottom: 15px;
+      }
       flex-direction: column;
       justify-content: center;
       align-items: center;
@@ -864,7 +867,10 @@ defineExpose({ showVideo });
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 10px;
+        // gap: 10px;
+        > div:not(:last-child) {
+          margin-bottom: 10px;
+        }
         position: relative;
         .abs-line {
           position: absolute;
@@ -918,7 +924,10 @@ defineExpose({ showVideo });
           display: flex;
           justify-content: center;
           align-items: center;
-          gap: 10px;
+          // gap: 10px;
+          > div:not(:last-child) {
+            margin-right: 10px;
+          }
           .hotitem {
             position: relative;
             .watchTutorial {
@@ -950,7 +959,10 @@ defineExpose({ showVideo });
           align-items: center;
           width: 90%;
           margin: 5px auto;
-          gap: 10px;
+          // gap: 10px;
+          > div:not(:last-child) {
+          margin-right: 10px;
+        }
           .deposititem {
             img {
               width: 100%;
@@ -961,16 +973,20 @@ defineExpose({ showVideo });
       .deposit-steps {
         display: flex;
         flex-direction: column;
-        gap: 5px;
+        // gap: 5px;
         width: 90%;
         margin: 0 auto;
+        > div:not(:last-child) {
+          margin-bottom: 5px;
+        }
         .dep-step {
           display: flex;
-          gap: 10px;
+          // gap: 10px;
           justify-content: flex-start;
           align-items: center;
           img {
             width: 2.5vh;
+            margin-right: 10px;
           }
         }
       }
@@ -1039,7 +1055,11 @@ defineExpose({ showVideo });
           width: 90%;
           // margin: 20px auto;
           margin: 5px auto;
-          gap: 10px;
+          // gap: 10px;
+        
+          > div:not(:last-child) {
+            margin-right: 10px;
+          }
           .withdrawitem {
             img {
               width: 100%;
@@ -1061,17 +1081,18 @@ defineExpose({ showVideo });
       .withdraw-steps {
         display: flex;
         flex-direction: column;
-        gap: 0px;
+        // gap: 0px;
         margin: 5px auto;
         .withdraw-step {
           font-weight: bold;
           display: flex;
           font-size: 10px;
-          gap: 10px;
+          // gap: 10px;
           justify-content: flex-start;
           align-items: center;
           img {
             width: 2.5vh;
+            margin-right: 10px;
           }
         }
       }
@@ -1108,7 +1129,11 @@ defineExpose({ showVideo });
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 20px;
+        // gap: 20px;
+        :not(:last-child) {
+          margin-right: 15px;
+        }
+
       }
       .next-button {
         text-transform: uppercase;

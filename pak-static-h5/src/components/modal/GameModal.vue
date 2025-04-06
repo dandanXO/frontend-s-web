@@ -964,6 +964,7 @@ defineExpose({
     color: #ffffff;
 
     box-shadow: 0px 2px 0px 0px #2A3637;
+    text-align: center !important;
 
   }
 
@@ -978,6 +979,7 @@ defineExpose({
   box-shadow: 0px 2px 0px 0px #1cca6a;
   border-radius: 4px;
   height: unset;
+  text-align: center !important;
   }
 }
 

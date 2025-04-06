@@ -1037,7 +1037,7 @@
                     data-aos-once="true"
                     data-aos-anchor="#slotsgames"
                   >
-                    <div class="platform-game-img">
+                    <div class="platform-game-img pokerportion">
                       <div
                         class="game--bg"
                         :style="{
@@ -1084,7 +1084,7 @@
                   class="platform-game-item btn-effect"
                   @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id, item.demo)"
                 >
-                  <div class="platform-game-img">
+                  <div class="platform-game-img pokerportion">
                     <div
                       class="game--bg"
                       :style="{
@@ -5486,7 +5486,10 @@ const checkGoogleLoginSetPwd = () => {
     }
     .side {
       display: flex;
-      gap: 10px;
+      // gap: 10px;
+      :not(:last-child) {
+        margin-right: 10px;
+      }
       justify-content: center;
       align-items: center;
       margin: 0;
@@ -5581,6 +5584,7 @@ const checkGoogleLoginSetPwd = () => {
   padding-top: 12px;
   margin-bottom: 12px;
   // column-gap: 8px;
+  min-height: 120px;
   gap: 8px;
   // row-gap: 16px;
   .swiper-slide {
@@ -5607,6 +5611,9 @@ const checkGoogleLoginSetPwd = () => {
     grid-template-columns: repeat(3, 1fr);
     column-gap: 8px;
     row-gap: 16px;
+    .platform-game-img {
+      height: 140px;
+    }
   }
 
   &.sport-platform {
@@ -5997,7 +6004,11 @@ const checkGoogleLoginSetPwd = () => {
   background: transparent;
   // background-image: url("../assets/images/index/item-game-maintenance.png");
   border-radius: 8px;
-
+  height: 100px;
+  &.pokerportion {
+    
+    height: 140px;
+  }
   .game--bg {
     background-size: 100% 100%;
     background-position: center center;

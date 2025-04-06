@@ -439,7 +439,10 @@ const handleCopyClick = async () => {
     .profile {
       display: flex;
       width: 90%;
-      gap: 10px;
+      // gap: 10px;
+      :not(:last-child) {
+        margin-right: 10px;
+      }
       margin: 10px auto;
       justify-content: flex-start;
       align-items: center;
@@ -551,7 +554,10 @@ const handleCopyClick = async () => {
       align-items: center;
       font-weight: 700;
       font-size: 14px;
-      gap: 5px;
+      // gap: 5px;
+      :not(:last-child) {
+        margin-right: 5px;
+      }
     }
     .score-amount {
       font-weight: bold;
@@ -669,8 +675,10 @@ const handleCopyClick = async () => {
     align-items: center;
     color: #ffffff;
     padding: 10px;
-    gap: 10px;
-
+    // gap: 10px;
+    :not(:last-child) {
+      margin-right: 10px;
+    }
     text-decoration: none;
     font-weight: bold;
     position: relative;
@@ -694,7 +702,10 @@ const handleCopyClick = async () => {
   justify-content: center;
   align-items: center;
   flex-direction: unset;
-  gap: 10px;
+  // gap: 10px;
+  :not(:last-child) {
+    margin-right: 10px;
+  }
   .left-icon {
     width: 60px;
     img {
@@ -771,7 +782,10 @@ const handleCopyClick = async () => {
   .top-section {
     width: 100%;
     display: flex;
-    gap: 10px;
+    // gap: 10px;
+    :not(:last-child) {
+      margin-right: 10px;
+    }
     a {
       display: flex;
       width: 100%;
@@ -828,7 +842,9 @@ const handleCopyClick = async () => {
       font-size: 14px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      > div {
+        margin-bottom: 10px;
+      }
       width: 100%;
       text-align: center;
       align-items: center;
@@ -901,7 +917,10 @@ const handleCopyClick = async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  // gap: 5px;
+  :not(:last-child) {
+    margin-right: 5px;
+  }
   img {
     width: 30px;
   }

@@ -149,7 +149,12 @@ const absLineStyleMap = new Map([
       top: (buttonRect, highlightRect) => `${highlightRect.bottom.value}px`,
       left: (buttonRect, highlightRect) => `${(width.value - 500) / 2 + 120}px`,
       right: (buttonRect, highlightRect) => "",
-      bottom: (buttonRect, highlightRect) => `calc(100svh - ${buttonRect.y.value + buttonRect.height.value / 2 + 10}px)`
+      // bottom: (buttonRect, highlightRect) => `calc(100svh - ${buttonRect.y.value + buttonRect.height.value / 2 + 10}px)`
+      bottom: (buttonRect, highlightRect) => {
+        const viewportHeight = window.innerHeight;
+        const offset = buttonRect.y.value + buttonRect.height.value / 2 + 10;
+        return `${viewportHeight - offset}px`;
+      }
     }
   ],
   [
@@ -581,6 +586,7 @@ onMounted(() => {
       align-items: center;
       &.steptopmain-3.deposit-mode {
         // top: 35vh;
+        top: 25vh;
         top: 25dvh;
         // .title {
         //   bottom: 1.2vh;
@@ -596,10 +602,14 @@ onMounted(() => {
       // }
       &.steptopmain-3.withdraw-mode {
         // top: 35vh;
-        top: 25dvh;
+        top: 25vh;
+        @supports(height: 100dvh) {
+          top: 25dvh;
+        }
       }
       &.steptopmain-2.withdraw-mode {
         // top: 35vh;
+        top: 25vh;
         top: 25dvh;
       }
       &.steptopmain-2.refer-mode .top {
@@ -788,7 +798,11 @@ onMounted(() => {
       margin: -45px auto 0;
       border-radius: 16px;
       display: flex;
-      gap: 25px;
+      // gap: 25px;
+      
+      > div:not(:last-child) {
+        margin-bottom: 25px;
+      }
       flex-direction: column;
       justify-content: center;
       align-items: center;
@@ -859,7 +873,11 @@ onMounted(() => {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 20px;
+        // gap: 20px;
+        
+        > div:not(:last-child) {
+          margin-right: 20px;
+        }
       }
       .next-button {
         text-transform: uppercase;
@@ -883,7 +901,10 @@ onMounted(() => {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 10px;
+        // gap: 10px;
+        > div:not(:last-child) {
+          margin-right: 10px;
+        }
       }
       .bottom-button {
         cursor: pointer;

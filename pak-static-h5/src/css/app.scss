@@ -237,6 +237,7 @@ body.body--dark .q-footer {
     background-position: center center;
     background-size: cover;
     aspect-ratio: 22/7;
+    min-height: 100px;
   }
 }
 
@@ -693,6 +694,8 @@ body.body--dark .q-footer {
   width: 100%;
   max-width: 500px;
   position: relative;
+  margin-top: auto;
+  min-height: 200px;
   .popout-close {
     position: absolute;
     // right: 20px;
@@ -746,10 +749,12 @@ body.body--dark .q-footer {
     color: #9f9f9f;
   }
 }
-
+.btn-cancel {
+  margin-right: 24px;
+}
 .y-n-container {
   display: flex;
-  gap: 24px;
+  // gap: 24px;
   justify-content: center;
 }
 
