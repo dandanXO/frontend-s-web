@@ -515,7 +515,7 @@ export default {
       totalAmountSentAsOfYesterday: "Total amount sent as of yesterday",
       player: "Player",
       money: "Money",
-      eligibility_tips: "1. The invitee's deposit must be ≥ 300 or have a valid bet turnover of 1000.",
+      eligibility_tips: "1. The invitee's deposit must be ≥ 600 or have a valid bet turnover of 1000. ",
       betting_tips:
         "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
       deposit_tips: "Deposit Commission: <br />Earn a 5% rebate on the first deposit of each new member you refer.",

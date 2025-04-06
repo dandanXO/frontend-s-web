@@ -2525,7 +2525,10 @@ export default {
     pointsDistribution: 'Points Distribution',
     traceId: 'Trace ID',
     downloadQRCode: 'Download QRCode',
-    normalCreate: 'Normal'
+    normalCreate: 'Normal',
+    costTime: 'Cost Time',
+    requestHeader: 'Request Header',
+    response: 'Response',
   },
   message: {
     adsStatusOpen: 'Open',
@@ -3379,7 +3382,8 @@ export default {
     'Refer Spin Claim Record': 'Refer Spin Claim Record',
     'Refer Spin Record': 'Refer Spin Record',
     'Official CS Account': 'Official CS Account',
-    'Site Note': 'Notes'
+    'Site Note': 'Notes',
+    'Adjust Event': 'Trace Event',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
