@@ -34,7 +34,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-webpack/boot-files
-    boot: ["axios", "cache", "lang"],
+    boot: ["polyfill","axios", "cache", "lang"],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
     css: ["app.scss"],
@@ -60,8 +60,9 @@ module.exports = configure(function (ctx) {
         configFile: true
       },
       transpile: true,
-      transpileDependencies: [/node_modules\/chart\.js/],
-
+      transpileDependencies: [
+        /node_modules\/(vue|pinia|vue-i18n|@intlify|@capacitor|vue-router|swiper)/
+      ],
       // publicPath: '/',
 
       // Add dependencies for transpiling with Babel (Array of string/regex)
@@ -103,24 +104,36 @@ module.exports = configure(function (ctx) {
           // })
         );
 
+
         cfg.module.rules.push({
-          test: /\.m?js$/,
-          include: [
-            path.resolve(__dirname, 'node_modules/chart.js'),
-          ],
+          test: /\.(m?js|cjs|js)$/,
+          exclude: /node_modules\/(?!(@vue|vue|vue-i18n|pinia|@intlify|@capacitor|vue-router|swiper))/,
           use: {
             loader: 'babel-loader',
             options: {
+              cacheDirectory: true,
               presets: [
-                ['@babel/preset-env', {
-                  targets: {
-                    chrome: '67'
-                  },
-                  useBuiltIns: 'entry',
-                  corejs: 3
-                }]
+                [
+                  '@babel/preset-env',
+                  {
+                    targets: {
+                      chrome: '50',
+                      android: '6',
+                      ios: '10',
+                      safari: '10',
+                      ie: '11'
+                    },
+                    useBuiltIns: 'entry',
+                    corejs: 3
+                  }
+                ]
               ],
-              plugins: ['@babel/plugin-proposal-class-properties']
+              plugins: [
+                '@babel/plugin-proposal-class-properties',
+                '@babel/plugin-proposal-optional-chaining',
+                '@babel/plugin-proposal-nullish-coalescing-operator',
+                '@babel/plugin-transform-spread'
+              ]
             }
           }
         });
@@ -128,8 +141,12 @@ module.exports = configure(function (ctx) {
         cfg.optimization.minimizer = [
           new TerserPlugin({
             terserOptions: {
+              ecma: 5,
               compress: {
-                drop_console: true // 移除 console.log
+                drop_console: true
+              },
+              output: {
+                comments: false
               }
             }
           })
@@ -157,8 +174,13 @@ module.exports = configure(function (ctx) {
         };
       },
       chainWebpack(chain) {
+        // chain.resolve.alias.set(
+        //   'vue',
+        //   path.resolve(__dirname, 'node_modules/vue/dist/vue.runtime.esm-browser.js')
+        // );
         chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
         chain.resolve.alias.set("@", path.resolve(__dirname, "src")); // shortcut for src
+
 
         if (process.env.NODE_ENV === "production" && isImageCompress) {
           chain.plugin("imagemin-webpack-plugin").use(ImageminPlugin, [
