@@ -93,14 +93,14 @@ module.exports = configure(function (ctx) {
           new CleanWebpackPlugin(),
           new ContextReplacementPlugin(/moment[\/\\]locale$/, /zh-cn/),
           new ESLintPlugin({ extensions: ["js", "vue"] }),
-          new CompressionWebpackPlugin({
-            filename: '[path][base].gz', // Ensure it’s unique or not colliding
-            algorithm: "gzip",
-            exclude: /\.gz$/, // important
-            test: /\.(css|html|svg)$/,
-            threshold: 10240,
-            minRatio: 0.8
-          })
+          // new CompressionWebpackPlugin({
+          //   filename: '[path][base].gz', // Ensure it’s unique or not colliding
+          //   algorithm: "gzip",
+          //   exclude: /\.gz$/, // important
+          //   test: /\.(css|html|svg)$/,
+          //   threshold: 10240,
+          //   minRatio: 0.8
+          // })
         );
 
 
