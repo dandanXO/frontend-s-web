@@ -117,7 +117,7 @@ const refreshBalance = () => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 4px;
+    padding-top: 14px;
 
     .info-balance-wrapper {
       display: flex;
@@ -148,7 +148,7 @@ const refreshBalance = () => {
     }
     .info-link-wrapper {
       display: flex;
-      gap: 14px;
+      // gap: 14px;
 
       .info-link-item {
         display: flex;
@@ -160,6 +160,12 @@ const refreshBalance = () => {
         line-height: 16px;
         color: #35648f;
         text-decoration: none;
+        margin-left: 14px;
+
+        &:first-child{
+          margin-left: 0;
+        }
+
         img {
           height: 100%;
           width: 10vw;

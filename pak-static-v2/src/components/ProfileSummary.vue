@@ -534,10 +534,13 @@ onMounted(() => {
 
   .download-container {
     display: flex;
-    gap: 16px;
+    // gap: 16px;
     width: 100%;
     align-items: center;
     transition: 0.3s all;
+    > * {
+      margin-left: 16px;
+    }
 
     .download-icon {
       width: 50px;
@@ -641,10 +644,13 @@ onMounted(() => {
     flex-direction: column;
     padding-left: 16px;
     padding-right: 16px;
-    gap: 12px;
+    // gap: 12px;
     transition: 0.3s all;
-
     overflow-y: auto;
+
+    > * {
+      margin-bottom: 12px;
+    }
 
     .side-menu-divider {
       background: #3636360d;
@@ -826,12 +832,16 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 6px;
+    // gap: 6px;
     padding-top: 8px;
     padding-bottom: 5px;
     margin-bottom: 4px;
     width: 100%;
     position: relative;
+
+    > * {
+      margin-left: 6px;
+    }
 
     .btn-lang {
       img {
@@ -958,6 +968,7 @@ onMounted(() => {
     img {
       display: block;
       width: 30px;
+      height: 30px;
     }
   }
 
@@ -971,12 +982,13 @@ onMounted(() => {
   .logo-img {
     width: 100%;
     margin: 0 auto;
-    display: flex;
+    // display: flex;
 
     img {
       max-width: 115px;
       width: 100%;
       text-align: center;
+      display: block;
     }
   }
 

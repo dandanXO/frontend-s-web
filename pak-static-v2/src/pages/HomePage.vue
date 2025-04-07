@@ -4576,6 +4576,8 @@ const showCongratsModal = () => {
     .game-platform-img {
       // background-color: #cccccc;
       width: 100%;
+      height: 0;
+      padding-bottom: 100%;
       aspect-ratio: 1/1;
       background-size: cover;
       background-position: center center;
@@ -4584,6 +4586,8 @@ const showCongratsModal = () => {
       border-radius: 20px;
 
       &.game-fish {
+        height: 0;
+        padding-bottom: calc(1.2 / 1 * 100);
         aspect-ratio: 1/1.2;
       }
 
@@ -4984,6 +4988,8 @@ const showCongratsModal = () => {
 .platform-game-img {
   // background-color: #cccccc;
   width: 100%;
+  height: 0;
+  padding-bottom: calc(1.2 / 1 * 100);
   aspect-ratio: 1/1.2;
   background-size: cover;
   background-position: center center;
@@ -5139,6 +5145,7 @@ const showCongratsModal = () => {
       display: block;
       width: 100%;
       max-width: 320px;
+      height: 60px;
     }
   }
 

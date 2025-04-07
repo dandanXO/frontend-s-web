@@ -885,6 +885,7 @@ function charType(num) {
     display: block;
     width: 100%;
     max-width: 140px;
+    height: 41px;
     margin-bottom: 10px;
   }
 }

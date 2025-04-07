@@ -408,7 +408,7 @@ onActivated(() => {
         display: flex;
         flex-wrap: wrap;
         box-shadow: unset;
-        gap: 20px;
+        // gap: 20px;
 
         .content {
           display: flex;
@@ -416,6 +416,8 @@ onActivated(() => {
           justify-content: center;
           font-size: 1rem;
           // width: 6.5rem;
+          margin-right: 16px;
+          margin-bottom: 16px;
 
           img {
             width: 1.5rem;

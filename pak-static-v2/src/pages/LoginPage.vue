@@ -750,6 +750,7 @@ export default defineComponent({
     width: 100%;
     max-width: 140px;
     margin-bottom: 10px;
+    height: 41px;
   }
 }
 
