@@ -4187,26 +4187,28 @@ onBeforeUnmount(() => {
 }
 
 .platform-game-img {
-  // background-color: #cccccc;
   width: 100%;
-  aspect-ratio: 1/1.2;
+  position: relative;
   background-size: cover;
   background-position: center center;
-  position: relative;
   background-image: url("@/assets/images/index/mini-game-bg.png");
   border-radius: 8px;
+  padding-bottom: 120%;
   min-height: 90px;
 
   .game--bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-size: 100% 100%;
     background-position: center center;
-    height: 100%;
-    width: 100%;
-    border-radius: 8px;
     background-repeat: no-repeat;
-    min-height: 120px;
+    border-radius: 8px;
   }
 }
+
 
 .loader-container {
   width: 100%;
