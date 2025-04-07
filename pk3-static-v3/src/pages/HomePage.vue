@@ -2122,7 +2122,7 @@ const loadHotGameList = () => {
           });
 
           console.log("End");
-          console.log(JSON.stringify(hotGameList.value));
+          // console.log(JSON.stringify(hotGameList.value));
           isHotGameLoading.value = false;
         });
     });
@@ -2334,7 +2334,7 @@ const loadJDBFishGameList = () => {
       fishGameJDBList.value = res;
 
       console.log("JSD");
-      console.log(JSON.stringify(fishGameJDBList.value));
+      // console.log(JSON.stringify(fishGameJDBList.value));
     });
 };
 
