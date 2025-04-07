@@ -2081,6 +2081,8 @@ export default {
     notificationType: 'Notification Type',
     notificationContent: 'Notification Content',
     unbind: 'unbind',
+    unbindTelephone: 'Unbind Telephone',
+    unbindEmail: 'Unbind Email',
     winloss: 'winloss',
     profit2: 'Dep-With',
     affiliateBetRebateRecord: 'Affiliate Bet Rebate Record',
@@ -2525,10 +2527,7 @@ export default {
     pointsDistribution: 'Points Distribution',
     traceId: 'Trace ID',
     downloadQRCode: 'Download QRCode',
-    normalCreate: 'Normal',
-    costTime: 'Cost Time',
-    requestHeader: 'Request Header',
-    response: 'Response',
+    normalCreate: 'Normal'
   },
   message: {
     adsStatusOpen: 'Open',
@@ -2682,6 +2681,8 @@ export default {
     transferSuccess: 'Transfer Success',
     twoPasswordNotMatch: 'Two password does not match',
     unbindSuccess: 'Unbind member bank card success',
+    unbindTelephoneSuccess: 'Unbind Member Telephone Success',
+    unbindEmailSuccess: 'Unbind Member Email Success',
     unlockMemberSuccess: 'Unlock Member Success',
     unlockUserSuccess: 'Unlock User Success',
     updateBelongTypeSuccess: 'Update Web Belong Type Success',
@@ -3382,8 +3383,7 @@ export default {
     'Refer Spin Claim Record': 'Refer Spin Claim Record',
     'Refer Spin Record': 'Refer Spin Record',
     'Official CS Account': 'Official CS Account',
-    'Site Note': 'Notes',
-    'Adjust Event': 'Trace Event',
+    'Site Note': 'Notes'
   },
   google: {
     google_auth_menu: 'Google Authenticator',
