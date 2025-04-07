@@ -87,5 +87,49 @@ export const DashboardService = {
         console.error('更改我的直播狀態失敗:', error)
         return null
       })
+  },
+
+  // 獲取敏感字列表
+  getSensitiveWords() {
+    const token = sessionStorage.getItem('token')
+
+    return api.get('/session/sensitive-words', {
+      headers: {
+        'token': `${token}`
+      }
+    })
+  },
+
+  // 新增敏感字
+  addSensitiveWord(data) {
+    const token = sessionStorage.getItem('token')
+
+    return api.post('/session/sensitive-words', data, {
+      headers: {
+        'token': `${token}`
+      }
+    })
+  },
+
+  // 更新敏感字
+  updateSensitiveWord(data) {
+    const token = sessionStorage.getItem('token')
+
+    return api.put(`/session/sensitive-words/${data.id}`, data, {
+      headers: {
+        'token': `${token}`
+      }
+    })
+  },
+
+  // 刪除敏感字
+  deleteSensitiveWord(id) {
+    const token = sessionStorage.getItem('token')
+
+    return api.delete(`/session/sensitive-words/${id}`, {
+      headers: {
+        'token': `${token}`
+      }
+    })
   }
 }

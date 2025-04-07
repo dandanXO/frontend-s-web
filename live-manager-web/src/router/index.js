@@ -4,38 +4,6 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: '仪表板',
-      component: () => import('../views/DashboardView.vue'),
-      redirect: (to) => {
-        return {
-          path: '/stream/list',
-        }
-      },
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: () => import('../views/LoginView.vue'),
-    },
-    {
-      path: '/member',
-      name: '会员',
-      component: () => import('../views/Member/MemberListView.vue'),
-      children: [
-        {
-          path: 'list',
-          name: '会员列表',
-          component: () => import('../components/Member/MemberList.vue'),
-        },
-        {
-          path: 'add',
-          name: '新增会员',
-          component: () => import('../components/Member/MemberAdd.vue'),
-        },
-      ],
-    },
-    {
       path: '/stream',
       name: '流媒体',
       component: () => import('../views/Stream/StreamListView.vue'),
@@ -49,6 +17,18 @@ const router = createRouter({
           path: 'my-streams',
           name: '我的直播',
           component: () => import('../components/Stream/StreamList.vue'),
+        },
+      ],
+    },
+    {
+      path: '/sensitive-word',
+      name: '後台管理',
+      component: () => import('../components/Sensitive-word/SensitiveWordList.vue'),
+      children: [
+        {
+          path: 'list',
+          name: '敏感字列表',
+          component: () => import('../components/Sensitive-word/SensitiveWordList.vue'),
         },
       ],
     },
