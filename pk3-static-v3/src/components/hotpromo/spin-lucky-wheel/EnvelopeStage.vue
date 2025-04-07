@@ -7,23 +7,19 @@
         alt="get cash every day"
       />
       <div v-if="envelopeStatus === 'idle'" class="envelope-wrapper">
-        <button
-          v-for="(prize, index) in prizeList"
-          :key="index"
-          class="envelope-item"
-          :class="prize.status"
-          @click="handleEnvelopeClick(index)"
-        >
-          <div v-if="prize.status !== 'idle'" class="prize-wrapper">
-            <span>
-              {{ prize.status === "selected" ? "Winning" : `BONUS ${index + 1}` }}
-            </span>
-            <br />
-            <span class="prize">
-              {{ prize.prize }}
-            </span>
-          </div>
-        </button>
+        <div class="aspect-box" v-for="(prize, index) in prizeList" :key="index">
+          <button class="envelope-item" :class="prize.status" @click="handleEnvelopeClick(index)">
+            <div v-if="prize.status !== 'idle'" class="prize-wrapper">
+              <span>
+                {{ prize.status === "selected" ? "Winning" : `BONUS ${index + 1}` }}
+              </span>
+              <br />
+              <span class="prize">
+                {{ prize.prize }}
+              </span>
+            </div>
+          </button>
+        </div>
       </div>
       <div v-else class="selected-envelope">
         <span class="prize">{{ store.currency.value }} {{ prizeList[selectedIndex]?.prize }}</span>
@@ -131,49 +127,62 @@ onUnmounted(() => {
       gap: 12px;
       grid-template-columns: repeat(3, 1fr);
 
-      .envelope-item {
-        display: flex;
-        align-items: flex-start;
-        justify-content: center;
-        background: url(../../../assets/images/promotion/spin-lucky-wheel/envelope-stage/envelope-close.png) no-repeat;
-        background-size: cover;
-        aspect-ratio: 109 / 133;
-        border: none;
-        padding: 13% 0 0;
-        // transition: backg;
+      .aspect-box {
+        position: relative;
+        width: 100%;
+        padding-bottom: 122%;
 
-        &.selected,
-        &.unselected {
-          background-image: url(../../../assets/images/promotion/spin-lucky-wheel/envelope-stage/envelope-opened.png);
-        }
+        .envelope-item {
+          width: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
 
-        &.unselected {
-          opacity: 0.6;
-        }
+          display: flex;
+          align-items: center;
+          justify-content: center;
 
-        .prize-wrapper {
-          font-size: 20px;
-          font-weight: 700;
-          line-height: 24px;
-          color: #8100ae;
+          background: url(../../../assets/images/promotion/spin-lucky-wheel/envelope-stage/envelope-close.png) no-repeat
+            center center;
+          background-size: 100% 100%;
+          border: none;
 
-          .prize {
-            font-size: 24px;
-            font-weight: 900;
-            line-height: 28px;
+          &.selected,
+          &.unselected {
+            background-image: url(../../../assets/images/promotion/spin-lucky-wheel/envelope-stage/envelope-opened.png);
+          }
+
+          &.unselected {
+            opacity: 0.6;
+          }
+
+          .prize-wrapper {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 24px;
+            color: #8100ae;
+            min-height: 100px;
+
+            .prize {
+              font-size: 24px;
+              font-weight: 900;
+              line-height: 28px;
+            }
           }
         }
       }
     }
 
     .selected-envelope {
-      width: 65vw;
       max-width: 325px;
       background: url(../../../assets/images/promotion/spin-lucky-wheel/envelope-stage/envelope-detail.png) no-repeat;
-      background-size: cover;
+      background-size: 100% 100%;
       aspect-ratio: 485 / 574;
       margin: 0 auto;
       position: relative;
+      min-height: 350px;
 
       .prize {
         position: absolute;
@@ -193,6 +202,11 @@ onUnmounted(() => {
         width: 80%;
         transform: translate(-50%, -50%);
         margin: 0 auto;
+        height: 100px;
+
+        &.common-btn {
+          background-size: 100% 100%;
+        }
       }
 
       .remaining-time {

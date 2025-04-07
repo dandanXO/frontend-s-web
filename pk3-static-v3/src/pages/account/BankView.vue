@@ -63,7 +63,7 @@
                 <div class="copy-update" @click.stop.prevent="onUpdateCardClick(item, item.bankType)">
                   <q-icon size="sm" name="settings" />
                 </div>
-                <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(item.cardNumber)" />
+                <q-icon class="content_copy" size="xs" name="content_copy" @click.stop.prevent="copy(item.cardNumber)" />
               </div>
             </div>
           </div>
@@ -95,7 +95,7 @@
                 <div class="copy-update" @click.stop.prevent="onUpdateCardClick(item, item.bankType)">
                   <q-icon size="sm" name="settings" />
                 </div>
-                <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(item.cardNumber)" />
+                <q-icon class="content_copy" size="xs" name="content_copy" @click.stop.prevent="copy(item.cardNumber)" />
               </div>
             </div>
           </div>
@@ -127,7 +127,7 @@
                 <div class="copy-update" @click.stop.prevent="onUpdateCardClick(item, item.bankType)">
                   <q-icon size="sm" name="settings" />
                 </div>
-                <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(item.cardNumber)" />
+                <q-icon class="content_copy" size="xs" name="content_copy" @click.stop.prevent="copy(item.cardNumber)" />
               </div>
             </div>
           </div>
@@ -382,7 +382,6 @@ onActivated(() => {
 .bank-add-lists {
   display: flex;
   align-items: center;
-  gap: 12px;
   justify-content: center;
   width: calc(100% - 20px);
   margin: 0 auto 12px;
@@ -400,6 +399,7 @@ onActivated(() => {
     padding: 1rem 8px;
     height: 50px;
     justify-content: center;
+    margin: 0 6px;
 
     .card-update,
     .card-unlink {
@@ -498,8 +498,11 @@ onActivated(() => {
       .item-copy {
         color: #5c46e7;
         display: flex;
-        gap: 6px;
         align-items: center;
+
+        .content_copy {
+          margin-left: 6px;
+        }
       }
     }
   }

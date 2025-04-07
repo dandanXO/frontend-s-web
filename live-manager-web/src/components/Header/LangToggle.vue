@@ -26,6 +26,9 @@ onMounted(() => {
 
   if (selectedLang) {
     selectedLanguage.value = selectedLang
+  } else {
+    selectedLanguage.value = languages.value.find(({ code }) => code === 'zh')
+    localStorage.setItem('languageLocale', 'zh')
   }
 })
 

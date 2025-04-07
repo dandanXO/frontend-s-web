@@ -87,7 +87,7 @@
                 highlight-current-row
                 v-loading="page.loading"
                 :empty-text="t('fields.noData')"
-                sortable
+                @sort-change="sort"
       >
         <el-table-column prop="loginName" :label="t('fields.loginName')" align="center" min-width="120">
           <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
@@ -471,6 +471,16 @@ function distributeRebate() {
     ElMessage({ message: t('message.rebateSuccess'), type: "success" });
   });
 }
+
+const sort = (column) => {
+  request.orderBy = column.prop;
+  if (column.order === "descending") {
+    request.sortType = "DESC";
+  } else {
+    request.sortType = "ASC";
+  }
+  loadLossRebateRecords();
+};
 
 onMounted(async() => {
   await loadSites();

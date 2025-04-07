@@ -24,6 +24,7 @@
         :key="i"
         :name="i"
         class="column no-wrap flex-center"
+        style="min-height:170px;"
         :img-src="returnBannerUrl(banner)"
         @click="gotoPromo(banner)"
       ></q-carousel-slide>
@@ -2630,7 +2631,7 @@ const getVersionNo = async () => {
     const info = await App.getInfo();
     // console.log("APP Info");
     // console.log(info);
-    var current_version = parseInt(info.version.replaceAll(".", ""));
+    var current_version = parseInt(info.version.split(".").join(""));
     // alert("Cur:" + current_version);
     // info.version && info.build
     const appType = "ALL";
@@ -2642,7 +2643,7 @@ const getVersionNo = async () => {
       // alert(JSON.stringify(res.data));
       var version_info = res.data.version;
       var min_version = res.data.minVersion;
-      var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
+      var latest_ver_no = parseInt(version_info.split(".").join(""));
       // alert(latest_ver_no);
       download_url.value = res.data.downloadUrl;
       console.log("H5 Url");
@@ -2654,7 +2655,7 @@ const getVersionNo = async () => {
       }
 
       if (min_version) {
-        var min_ver_no = parseInt(min_version.replaceAll(".", ""));
+        var min_ver_no = parseInt(min_version.split(".").join(""));
         if (min_ver_no > current_version) {
           isOutdatedApp.value = true;
         }
@@ -3791,6 +3792,7 @@ onBeforeUnmount(() => {
         height: 100%;
         width: 100%;
         background-repeat: no-repeat;
+        min-height: 100px;
       }
     }
 
@@ -4185,24 +4187,28 @@ onBeforeUnmount(() => {
 }
 
 .platform-game-img {
-  // background-color: #cccccc;
   width: 100%;
-  aspect-ratio: 1/1.2;
+  position: relative;
   background-size: cover;
   background-position: center center;
-  position: relative;
   background-image: url("@/assets/images/index/mini-game-bg.png");
   border-radius: 8px;
+  padding-bottom: 120%;
+  min-height: 90px;
 
   .game--bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-size: 100% 100%;
     background-position: center center;
-    height: 100%;
-    width: 100%;
-    border-radius: 8px;
     background-repeat: no-repeat;
+    border-radius: 8px;
   }
 }
+
 
 .loader-container {
   width: 100%;

@@ -1,6 +1,6 @@
 <template>
   <BlockUI :blocked="store.isAuthLoading" style="width: 100vw; height: 100vh">
-    <LangToggle style="position: absolute; top: 20px; right: 20px; z-index: 1" />
+    <!-- <LangToggle style="position: absolute; top: 20px; right: 20px; z-index: 1" /> -->
     <ThemeToggle style="position: absolute; top: 20px; left: 20px; z-index: 1" />
 
     <canvas class="background"></canvas>
@@ -70,7 +70,6 @@ import { useToast } from 'primevue/usetoast'
 import { DashboardService } from '@/service/DashboardService'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import { useUserStore } from '@/stores/userStore'
-import LangToggle from '@/components/Header/LangToggle.vue'
 import ThemeToggle from '@/components/Header/ThemeToggle.vue'
 import { useI18n } from 'vue-i18n'
 import router from '@/router'
@@ -88,15 +87,13 @@ const toast = useToast()
 
 const onFormSubmit = () => {
   store.isAuthLoading = true
-
+  store.loginName = loginForm.loginName
   DashboardService.logIn(loginForm.loginName, loginForm.password)
     .then((result) => {
       if (result) {
-        setTimeout(() => {
-          router.push({ path: '/' })
-          store.isAuthLoading = false
-          toast.add({ severity: 'success', summary: t('loggedInSuccessfully'), life: 3000 })
-        }, 2000)
+        router.push({ path: '/' })
+        store.isAuthLoading = false
+        toast.add({ severity: 'success', summary: t('loggedInSuccessfully'), life: 3000 })
       } else {
         store.isAuthLoading = false
       }

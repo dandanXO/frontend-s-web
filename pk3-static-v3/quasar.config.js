@@ -1,4 +1,8 @@
 /* eslint-env node */
+const TerserPlugin = require("terser-webpack-plugin");
+const CompressionWebpackPlugin = require("compression-webpack-plugin");
+
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 /*
  * This file runs in a Node context (it's NOT transpiled by Babel), so use only
@@ -12,11 +16,12 @@ const ESLintPlugin = require("eslint-webpack-plugin");
 const path = require("path");
 
 const { configure } = require("quasar/wrappers");
-const fs = require("fs-extra");
 
 const isImageCompress = true;
 
 const ImageminPlugin = require("imagemin-webpack-plugin").default;
+
+const ContextReplacementPlugin = require("webpack").ContextReplacementPlugin;
 
 module.exports = configure(function (ctx) {
   return {
@@ -51,8 +56,12 @@ module.exports = configure(function (ctx) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-build
     build: {
       vueRouterMode: "history", // available values: 'hash', 'history'
+      postcss: {
+        configFile: true
+      },
+      transpile: true,
+      transpileDependencies: [/node_modules\/chart\.js/],
 
-      // transpile: false,
       // publicPath: '/',
 
       // Add dependencies for transpiling with Babel (Array of string/regex)
@@ -79,15 +88,78 @@ module.exports = configure(function (ctx) {
 
       // https://v2.quasar.dev/quasar-cli-webpack/handling-webpack
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
+      extendWebpack(cfg) {
+        cfg.plugins.push(
+          new CleanWebpackPlugin(),
+          new ContextReplacementPlugin(/moment[\/\\]locale$/, /zh-cn/),
+          new ESLintPlugin({ extensions: ["js", "vue"] }),
+          // new CompressionWebpackPlugin({
+          //   filename: '[path][base].gz', // Ensure it’s unique or not colliding
+          //   algorithm: "gzip",
+          //   exclude: /\.gz$/, // important
+          //   test: /\.(css|html|svg)$/,
+          //   threshold: 10240,
+          //   minRatio: 0.8
+          // })
+        );
 
-      // chainWebpack(chain) {
-      //   chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
-      // }
+        cfg.module.rules.push({
+          test: /\.m?js$/,
+          include: [
+            path.resolve(__dirname, 'node_modules/chart.js'),
+          ],
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                ['@babel/preset-env', {
+                  targets: {
+                    chrome: '67'
+                  },
+                  useBuiltIns: 'entry',
+                  corejs: 3
+                }]
+              ],
+              plugins: ['@babel/plugin-proposal-class-properties']
+            }
+          }
+        });
+
+        cfg.optimization.minimizer = [
+          new TerserPlugin({
+            terserOptions: {
+              compress: {
+                drop_console: true // 移除 console.log
+              }
+            }
+          })
+        ];
+
+        cfg.optimization = {
+          splitChunks: {
+            chunks: "all",
+            maxInitialRequests: Infinity,
+            minSize: 3000,
+            cacheGroups: {
+              vendor: {
+                test: /[\\/]node_modules[\\/]/,
+                name(module) {
+                  if (module.context) {
+                    const match = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/);
+                    const packageName = match ? match[1] : null;
+                    return packageName ? `npm.${packageName.replace("@", "")}` : null;
+                  }
+                  return null;
+                }
+              }
+            }
+          }
+        };
+      },
       chainWebpack(chain) {
         chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
         chain.resolve.alias.set("@", path.resolve(__dirname, "src")); // shortcut for src
 
-        // Add Image Compression
         if (process.env.NODE_ENV === "production" && isImageCompress) {
           chain.plugin("imagemin-webpack-plugin").use(ImageminPlugin, [
             {
@@ -98,9 +170,8 @@ module.exports = configure(function (ctx) {
             }
           ]);
         }
+        // chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
       },
-
-      // Add a hook to copy assets after the build
       afterBuild({ cfg }) {
         const fs = require("fs-extra");
         const sourceDir = path.resolve(__dirname, "src/assets");

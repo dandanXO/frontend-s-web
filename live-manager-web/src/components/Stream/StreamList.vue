@@ -13,20 +13,32 @@
     >
       <template #header>
         <div class="flex justify-between" style="display: flex; gap: 8px">
-          <Button
-            :size="'small'"
-            type="button"
-            icon="pi pi-filter-slash"
-            label="清除"
-            outlined
-            @click="clearFilter()"
-          />
+          <div style="display: flex; gap: 8px">
+            
+            <Button
+              :size="'small'"
+              type="button"
+              icon="pi pi-filter-slash"
+              label="清除"
+              outlined
+              @click="clearFilter()"
+            />
+          </div>
           <IconField>
             <InputIcon>
               <i class="pi pi-search" />
             </InputIcon>
             <InputText v-model="filters['global'].value" placeholder="關鍵詞搜索" :size="'small'" />
           </IconField>
+          <Button
+              :size="'small'"
+              type="button"
+              icon="pi pi-refresh"
+              label="重新載入"
+              severity="info"
+              @click="fetchStreams"
+              :loading="loading"
+            />
         </div>
       </template>
 
@@ -36,7 +48,7 @@
         </template>
       </Column>
 
-      <Column field="streamStatus" header="狀態" sortable>
+      <Column field="streamStatus" header="源流狀態" sortable>
         <template #body="slotProps">
           <Tag :severity="getStatusSeverity(slotProps.data.streamStatus)" :value="getStatusLabel(slotProps.data.streamStatus)" />
         </template>
@@ -60,12 +72,22 @@
         </template>
       </Column>
 
-      <Column field="streamId" header="串流ID" sortable>
+      <Column field="supplierStreamId" header="供應商串流ID" sortable>
         <template #body="slotProps">
-          {{ slotProps.data.streamId }}
+          {{ slotProps.data.supplierStreamId }}
         </template>
       </Column>
 
+      <Column field="streamerStreamId" header="主播串流ID" sortable>
+        <template #body="slotProps">
+          {{ slotProps.data.streamerStreamId }}
+        </template>
+      </Column>
+      <Column field="streamerStatus" header="直播主狀態" sortable>
+        <template #body="slotProps">
+          <Tag :severity="getStreamerStatusSeverity(slotProps.data.streamerStatus)" :value="getStreamerStatusLabel(slotProps.data.streamerStatus)" />
+        </template>
+      </Column>
       <Column header="操作">
         <template #body="slotProps">
           <Button 
@@ -84,6 +106,7 @@
     :visible="showPlayer"
     :stream="selectedStream"
     @update:visible="(val) => showPlayer = val"
+    @reload="fetchStreams"
   />
 
   <Dialog
@@ -119,7 +142,7 @@ export default {
 
 <script setup>
 import { ref, onMounted, watch } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import { useRoute } from 'vue-router';
 import StreamPlayer from './StreamPlayer.vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -129,7 +152,6 @@ import Dialog from 'primevue/dialog';
 import Tag from 'primevue/tag';
 
 const route = useRoute();
-const router = useRouter();
 
 const streams = ref([]);
 const loading = ref(false);
@@ -222,6 +244,24 @@ const getStatusSeverity = (status) => {
   return severityMap[status] || 'info';
 };
 
+
+// 獲取直播主狀態標籤
+const getStreamerStatusLabel = (status) => {
+  const statusMap = {
+    0: '停止直播',
+    1: '開始直播',
+  }
+  return statusMap[status] || 'info';
+};
+
+// 獲取直播主狀態樣式
+const getStreamerStatusSeverity = (status) => {
+  const severityMap = {
+    0: 'danger',
+    1: 'success',
+  }
+  return severityMap[status] || 'info';
+};
 // 檢查是否可以預覽
 const canPreview = (status) => {
   return status >= 0 && status <= 4;

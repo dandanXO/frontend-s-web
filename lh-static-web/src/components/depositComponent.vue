@@ -114,12 +114,12 @@
               @selected="selectedBank"
             ></BankComponent>
           </el-form-item>
-          <el-form-item prop="privilegeId" name="privilegeId" v-if="hasPrivilege && !isUSDT" label="优惠">
+          <el-form-item prop="privilegeId" name="privilegeId" v-if="hasPrivilege" label="优惠">
             <el-select
               v-model="selectedPrivilege"
               class="privilege-select"
               placeholder="选择优惠"
-              @select="checkMinDepositAmt"
+              @change="checkMinDepositAmt"
               @focus="loadPrivilege(activeMethod)"
               fit-input-width
               clearable
@@ -355,7 +355,7 @@ async function loadPrivilege(val) {
   privilegeList.value = [];
   freePrivilege.value = null;
   await loadPrivileges(val.paymentId).then((d) => {
-    if (d.code == 0) {
+    if (d.code === 0) {
       privilegeList.value = d.data.privileges;
       freePrivilege.value = null;
       unselectedPrivileges.value = [];
@@ -429,13 +429,20 @@ async function onSelect(value) {
   }
 }
 
-function checkMinDepositAmt(value, option) {
-  if (!selectedPrivilege.value || !option) {
+function checkMinDepositAmt(value) {
+  if (!selectedPrivilege.value || !value) {
     calculatedMinDeposit.value = activeMethod.value.depositMin;
   } else {
     unselectedPrivileges.value.forEach((element) => {
-      if (element.id === option.key) {
-        calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, element.depositMin);
+      if (element.id === value) {
+        if (isUSDT.value) {
+          calculatedMinDeposit.value = Math.max(
+            activeMethod.value.depositMin,
+            parseFloat(element.depositMin / activeMethod.value.currencyRate).toFixed(2)
+          );
+        } else {
+          calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, element.depositMin);
+        }
       }
     });
   }
@@ -997,6 +1004,5 @@ onMounted(() => {
       border: 1px solid #3a93ce;
     }
   }
-
 }
 </style>

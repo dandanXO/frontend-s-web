@@ -72,7 +72,7 @@
     "vue-qrcode-component": "^2.1.1",
     "vue-router": "^4.0.0",
     "vue3-carousel": "^0.1.40",
-    "com.adjust.sdk": "^4.38.1"
+    "com.adjust.sdk": "^5.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.23.6",
