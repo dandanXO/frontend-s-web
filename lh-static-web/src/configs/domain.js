@@ -305,5 +305,6 @@ export const globalAndCNLinks = [
   "lh53808.cc",
   "lh98976.cc",
   "lh05737.com",
-  "lh63597.com"
+  "lh63597.com",
+  "lh81378.com"
 ];
