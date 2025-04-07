@@ -1,7 +1,7 @@
 <template>
   <div class="activities-container">
     <div class="activities-title">
-      <img src="../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/title-activities.png" />
+      <img width="160px" height="40px" src="../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/title-activities.png" />
     </div>
     <div class="activities-content">
       {{ $t("hotPromo.consecutiveDepositBonus") }}
@@ -318,6 +318,8 @@ onActivated(() => {
 
       .calendar-icon {
         width: 15px;
+        height: 15px;
+        margin-right: 5px;
       }
     }
     .noOfDays {

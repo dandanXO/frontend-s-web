@@ -38,7 +38,7 @@
     <div class="progressbar-wrapper">
       <div
         class="progressbar-progress"
-        :style="{ left: `clamp(10px, calc(${betProgress}% + 2px), calc(100% - 10px))` }"
+        :style="{ left: betProgress < 90 ? `calc(${betProgress}% + 12px)` : `calc(${betProgress}% - 12px)` }"
       >
         {{ betProgress }}%
       </div>
@@ -255,18 +255,20 @@ onMounted(() => {
 
   .prize-outer-wrapper {
     .prize-inner-wrapper {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      display: flex;
       gap: 10px;
       .prize-item {
+        flex: 0 0 calc(100% / 3); /* Each item takes one-third of the container's width */
+        box-sizing: border-box;
         display: block;
         position: relative;
         background: url(../../../assets/images/promotion/hotpromo/golden-egg/golden-egg-bg.png) no-repeat;
         background-size: contain;
-    aspect-ratio: 135 / 135;
-    border: none;
-    background-position: center top;
+        aspect-ratio: 135 / 135;
         border: none;
+        background-position: center top;
+        border: none;
+        min-height: 105px;
         &.disabled {
           .golden-egg {
             animation: none;
@@ -320,6 +322,7 @@ onMounted(() => {
       line-height: 16px;
       color: #fff;
       font-weight: 900;
+      min-height: 35px;
     }
   }
 
@@ -367,6 +370,7 @@ onMounted(() => {
       top: 0;
       transform: translateX(-50%);
       height: 40px;
+      width: 42px;
       background: url(../../../assets/images/promotion/hotpromo/golden-egg/progressbar-progress-bg.png) no-repeat 100%
         100%;
       background-size: cover;

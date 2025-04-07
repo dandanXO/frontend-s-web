@@ -80,8 +80,16 @@ const handleTabClick = (tab) => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
     margin-bottom: 12px;
+    > * {
+      &:first-child {
+        margin-right: 6px;
+      }
+
+      &:nth-child(2) {
+        margin-left: 6px;
+      }
+    }
 
     .tab {
       flex: 1;
