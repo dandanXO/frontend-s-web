@@ -173,7 +173,7 @@ module.exports = configure(function (ctx) {
         };
 
         if (ctx.mode.capacitor) {
-          chain.plugins.forEach((plugin) => {
+          cfg.plugins.forEach((plugin) => {
             if (plugin.constructor.name === "CopyPlugin") {
               const publicPath = path.resolve(__dirname, "public");
               plugin.patterns.forEach((pattern) => {
