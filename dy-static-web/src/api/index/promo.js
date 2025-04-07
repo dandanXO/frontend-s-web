@@ -1,5 +1,6 @@
 import { server } from "@/utils/request";
 import cached from "@/utils/cache";
+import { userStore } from "@/store";
 
 export function loadPromo(isLogin = false) {
   return server.REST.get("/opt-session/promo/page");
@@ -622,4 +623,43 @@ export function getPglWallachiaS4Bonus(promoCode) {
 }
 export function claimPglWallachiaS4Bonus(promoCode) {
   return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+
+export function claimItems(status, level) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  if (status === "upgrade") {
+    return server.EVENT.post("/vip-bonus/claim-upgrade-bonus?_method=PUT", { vipLevel: level });
+  }
+  if (status === "birthday") {
+    return server.EVENT.put("/vip-bonus/claim-birthday-bonus");
+  }
+  if (status === "retain") {
+    return server.EVENT.post("/vip-bonus/claim-first-retain?_method=PUT", { vipLevel: level });
+  }
+  if (status === "monthly") {
+    return server.EVENT.put("/vip-bonus/claim-monthly-bonus");
+  }
+  if (status === "yearlyRetain") {
+    return server.EVENT.post("/vip-bonus/claim-yearly-retain?_method=PUT", { vipLevel: level });
+  }
+  if (status === "coupon") {
+    return server.EVENT.put("/vip-bonus/claim-coupon");
+  }
+  if (status === "redPacket") {
+    return server.EVENT.put("/vip-bonus/claim-red-packet");
+  }
+  if (status === "all") {
+    return server.EVENT.put("/vip-bonus/claim-all");
+  }
+}
+
+export function getVIPDetailsNotLoggedIn() {
+  const store = userStore();
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/get-vip-bonus-detail?siteId=${store.siteId}&v=${randNum}`);
+}
+
+export function getVIPDetails() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/vip-bonus/get-detail?v=${randNum}`);
 }
