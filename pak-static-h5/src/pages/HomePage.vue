@@ -37,6 +37,7 @@
         class="column no-wrap flex-center"
         :img-src="returnBannerUrl(banner)"
         @click="gotoPromo(banner)"
+        style="min-height:130px;"
       ></q-carousel-slide>
 
       <!-- :img-src="require(`../assets/images/index/${banner.mobileImageUrl}`)" -->

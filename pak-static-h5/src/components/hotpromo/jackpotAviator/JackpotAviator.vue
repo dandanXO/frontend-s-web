@@ -176,6 +176,7 @@ onMounted(() => {
   aspect-ratio: 750 / 550;
   background-size: 100% 100%;
   position: relative;
+  min-height: 275px;
 
   .rules-ribbon {
     // background-color: #30af88;

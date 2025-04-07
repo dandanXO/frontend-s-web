@@ -195,9 +195,12 @@ const openCSInNewTab = (url) => {
       flex-direction: column;
       // gap: 10px;
       padding: 10px 0;
+      min-height: 372px;
     }
     .side-menu-item {
       height: 50px;
+      min-height: 50px;
+      line-height: 50px;
       padding: 12px;
       display: flex;
       align-items: center;
@@ -239,6 +242,8 @@ const openCSInNewTab = (url) => {
       &__transparent {
         background-color: transparent;
         height: 40px;
+        min-height: 40px;
+        line-height: 40px;
         &:after {
           content: unset;
         }
@@ -291,6 +296,7 @@ const openCSInNewTab = (url) => {
         letter-spacing: 0;
         font-variant: small-caps;
         height: 80px;
+        min-height: 80px;
         &:after {
           content: unset;
         }

@@ -375,15 +375,18 @@ onUnmounted(() => {
   .wheel-outer-wrapper {
     background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/bg.png) no-repeat;
     background-size: 100% 100%;
-    aspect-ratio: 343 / 656;
     position: relative;
+    min-height: 650px;
 
     .summary-wrapper {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
       padding: 58px 34px 0;
+
+      > * {
+        margin-top: 10px;
+      }
 
       .prize {
         margin-top: 4px;
@@ -477,9 +480,11 @@ onUnmounted(() => {
           overflow: hidden;
 
           .winning-record-item {
-            display: grid;
+            display: flex;
+            justify-content: space-between;
             gap: 4px;
-            grid-template-columns: 3fr minmax(40px, 2fr) 3fr;
+            min-height: 20px;
+
             > span {
               line-height: 20px;
               flex: 1;
@@ -488,6 +493,7 @@ onUnmounted(() => {
               overflow: hidden;
               &:last-child {
                 text-align: right;
+                min-width: 100px;
               }
             }
             .amount {
@@ -553,6 +559,7 @@ onUnmounted(() => {
 
             .btn {
               -webkit-user-drag: none;
+              height: 96px;
               position: absolute;
               top: 48%;
               left: 50%;
@@ -563,7 +570,7 @@ onUnmounted(() => {
               border: none;
               width: 80px;
               max-width: 35%;
-              font-size: 18px;
+              font-size: 16px;
               font-weight: 700;
               line-height: 20px;
               color: #f9f9f9;
@@ -614,6 +621,10 @@ onUnmounted(() => {
             position: relative;
             max-width: 70%;
             margin: -5% auto 0;
+            min-height: 100px;
+            &.common-btn {
+              background-size: 100% 100%;
+            }
 
             &.disabled {
               filter: grayscale(0.7);

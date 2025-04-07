@@ -100,6 +100,11 @@ const handleDialogShow = () => {
     width: 65%;
     aspect-ratio: 228 / 90;
     margin: 2px auto;
+    min-height: 100px;
+
+    &.common-btn {
+      background-size: 100% 100%;
+    }
 
     &:active {
       transform: translateY(2px);

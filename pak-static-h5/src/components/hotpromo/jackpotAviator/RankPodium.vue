@@ -49,6 +49,7 @@ const props = defineProps(['rankingList', 'isLoadingRanking']);
     position: relative;
     font-family: 'Poppins';
     letter-spacing: -1px;
+    min-height: 152px;
 
     .podium-silver {
         background-size: 100% 100%;

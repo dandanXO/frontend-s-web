@@ -170,11 +170,12 @@ onUnmounted(() => {
         justify-content: center;
         background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/envelope-close.png)
           no-repeat;
-        background-size: cover;
+        background-size: 100% 100%;
         aspect-ratio: 109 / 133;
         border: none;
         padding: 13% 0 0;
         // transition: backg;
+        min-height: 126px;
 
         &.selected,
         &.unselected {
@@ -201,14 +202,14 @@ onUnmounted(() => {
     }
 
     .selected-envelope {
-      width: 65vw;
       max-width: 325px;
       background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/envelope-detail.png)
         no-repeat;
-      background-size: cover;
+      background-size: 100% 100%;
       aspect-ratio: 485 / 574;
       margin: 0 auto;
       position: relative;
+      min-height: 330px;
 
       .prize {
         position: absolute;
@@ -242,6 +243,11 @@ onUnmounted(() => {
         margin: 0 auto;
         background-image: url('../../../assets/images/promotion/hotpromo/spin-lucky-wheel/common-btn-gold.png');
         color: #8A2C05;
+        min-height: 100px;
+
+        &.common-btn {
+          background-size: 100% 100%;
+        }
       }
 
       .remaining-time {
