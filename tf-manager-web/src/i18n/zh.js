@@ -2085,6 +2085,8 @@ export default {
     notificationType: '通知类型',
     notificationContent: '通知内容',
     unbind: '解绑',
+    unbindTelephone: '解绑手机号',
+    unbindEmail: '解绑邮箱',
     winloss: '总输赢',
     profit2: '存提差',
     affiliateBetRebateRecord: '代理投注返水记录',
@@ -2529,10 +2531,7 @@ export default {
     pointsDistribution: '积分分布',
     traceId: 'Trace ID',
     downloadQRCode: '二维码下载',
-    normalCreate: '普通',
-    costTime: '耗时',
-    requestHeader: '请求头',
-    response: '响应',
+    normalCreate: '普通'
   },
   message: {
     adsStatusOpen: '开',
@@ -2658,6 +2657,8 @@ export default {
     transferSuccess: '转账成功',
     twoPasswordNotMatch: '重新输入密码不相同',
     unbindSuccess: '成功解绑会员银行卡',
+    unbindTelephoneSuccess: '成功解绑会员手机号',
+    unbindEmailSuccess: '成功解绑会员邮箱',
     unlockMemberSuccess: '成功解锁账号',
     unlockUserSuccess: '成功解锁用户',
     updateBelongTypeSuccess: '网页类型更新成功',
@@ -3334,8 +3335,7 @@ export default {
     'Refer Spin Claim Record': '邀请转盘领取记录',
     'Refer Spin Record': '邀请转盘记录',
     'Official CS Account': '官方客服账号',
-    'Site Note': '便签板',
-    'Adjust Event': '追踪事件',
+    'Site Note': '便签板'
   },
   google: {
     google_auth_menu: '谷歌验证',
