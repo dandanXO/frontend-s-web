@@ -368,7 +368,7 @@ onActivated(() => {
       flex-wrap: wrap;
       margin: 0 auto 14px;
       padding: 1rem;
-      gap: 8px;
+      // gap: 8px;
 
       .bank-bind-btn {
         display: flex;
@@ -383,6 +383,8 @@ onActivated(() => {
         font-size: 1.15rem;
         white-space: nowrap;
         font-weight: 500;
+        margin-right: 8px;
+        margin-bottom: 8px;
         // flex: 1;
         //   font-weight: 500;
 

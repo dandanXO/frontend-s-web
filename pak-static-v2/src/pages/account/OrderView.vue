@@ -291,6 +291,8 @@ onActivated(() => {
   width: calc(100% - 20px);
   //margin-bottom: 10px;
   margin: 10px auto;
+  height: 0;
+  padding-bottom: calc(32 / 335 * 100);
   aspect-ratio: 335/32;
 
   .right {

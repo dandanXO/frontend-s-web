@@ -295,7 +295,12 @@ watch(
   align-items: flex-start;
   justify-content: space-between;
   margin: 0px auto;
-  gap: 8px;
+  // gap: 8px;
+
+  > div:first-child{
+    margin-right: 8px
+  }
+
   .game-left-list {
     overflow-y: scroll;
     overflow-x: hidden;
@@ -326,9 +331,9 @@ watch(
       }
 
       .platform-icon-placeholder {
-        // aspect-ratio: 42 / 45;
         height: 0;
         padding-bottom: 107.14%;
+        aspect-ratio: 42 / 45;
       }
 
       .platform-icon {
@@ -407,9 +412,9 @@ watch(
         grid-template-columns: repeat(3, 1fr);
         gap: 14px 10px;
         .platform-img-frame {
-          // aspect-ratio: 90 / 106;
           height: 0;
           padding-bottom: 94.34%;
+          aspect-ratio: 90 / 106;
         }
       }
     }
@@ -466,6 +471,8 @@ watch(
         height: auto;
         background-size: contain;
         background-repeat: no-repeat;
+        height: 0;
+        padding-bottom: 34.92%;
         aspect-ratio: 819/295;
       }
 
@@ -477,6 +484,8 @@ watch(
         background-size: 100% 100%;
         background-position: top center;
         background-repeat: no-repeat;
+        height: 0;
+        padding-bottom: 34.92%;
         aspect-ratio: 819/295;
         position: relative;
         overflow: hidden;

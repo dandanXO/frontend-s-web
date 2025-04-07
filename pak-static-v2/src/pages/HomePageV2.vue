@@ -4253,6 +4253,7 @@ const showCongratsModal = () => {
       display: block;
       width: 100%;
       max-width: 320px;
+      height: 60px;
     }
   }
 

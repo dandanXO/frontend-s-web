@@ -651,6 +651,8 @@ const isValidCardAddress = () => {
       text-align: center;
       font-size: 1.1rem;
       font-weight: 700;
+      height: 0;
+      padding-bottom: 24.47%;
       aspect-ratio: 335/82;
 
       .balance {
