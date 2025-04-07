@@ -92,7 +92,7 @@ export const DashboardService = {
   // 獲取敏感字列表
   getSensitiveWords() {
     const token = sessionStorage.getItem('token')
-
+    
     return api.get('/session/sensitive-words', {
       headers: {
         'token': `${token}`
@@ -106,7 +106,8 @@ export const DashboardService = {
 
     return api.post('/session/sensitive-words', data, {
       headers: {
-        'token': `${token}`
+        'token': `${token}`,
+        'Content-Type': 'application/json'
       }
     })
   },
@@ -114,10 +115,11 @@ export const DashboardService = {
   // 更新敏感字
   updateSensitiveWord(data) {
     const token = sessionStorage.getItem('token')
-
+    
     return api.put(`/session/sensitive-words/${data.id}`, data, {
       headers: {
-        'token': `${token}`
+        'token': `${token}`,
+        'Content-Type': 'application/json'
       }
     })
   },
@@ -125,7 +127,7 @@ export const DashboardService = {
   // 刪除敏感字
   deleteSensitiveWord(id) {
     const token = sessionStorage.getItem('token')
-
+    
     return api.delete(`/session/sensitive-words/${id}`, {
       headers: {
         'token': `${token}`

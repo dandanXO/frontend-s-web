@@ -55,9 +55,14 @@
             {{ slotProps.data.word }}
           </template>
         </Column>
-        <Column field="createdAt" header="建立時間" sortable>
+        <Column field="createTime" header="建立時間" sortable>
           <template #body="slotProps">
-            {{ formatDate(slotProps.data.createdAt) }}
+            {{ formatDateTime(slotProps.data.createTime) }}
+          </template>
+        </Column>
+        <Column field="createBy" header="建立者" sortable>
+          <template #body="slotProps">
+            {{ slotProps.data.createBy }}
           </template>
         </Column>
         <Column header="操作" :exportable="false" style="min-width:8rem">
@@ -117,7 +122,9 @@
   import { ref, onMounted } from 'vue'
   import { useToast } from 'primevue/usetoast'
   import { DashboardService } from '@/service/DashboardService'
-  
+  import { useI18n } from 'vue-i18n'
+
+  const t = useI18n()
   const toast = useToast()
   const loading = ref(false)
   const sensitiveWords = ref([])
@@ -126,6 +133,7 @@
   const dialogMode = ref('add') // 'add' 或 'edit'
   const editingWord = ref({
     id: null,
+    siteId: 1,
     word: ''
   })
   
@@ -154,11 +162,11 @@
     'global': { value: null, matchMode: FilterMatchMode.CONTAINS }
   })
   
-  // 格式化日期
-  const formatDate = (date) => {
-    if (!date) return ''
-    return new Date(date).toLocaleString()
-  }
+  // 格式化日期時間
+  const formatDateTime = (timestamp) => {
+    if (!timestamp) return '';
+    return new Date(timestamp).toLocaleString('zh-TW');
+  };
   
   // 清除數據
   const clearData = () => {
@@ -166,7 +174,7 @@
     loading.value = false;
     dialogVisible.value = false;
     deleteDialogVisible.value = false;
-    editingWord.value = { id: null, word: '' };
+    editingWord.value = { id: null, word: '', siteId: 1 };
     filters.value = {
       global: { value: null, matchMode: FilterMatchMode.CONTAINS }
     };
@@ -230,16 +238,27 @@
   
     try {
       if (dialogMode.value === 'add') {
-        await DashboardService.addSensitiveWord(editingWord.value)
-        toast.add({ severity: 'success', summary: '成功', detail: '新增敏感字成功', life: 3000 })
+        const response = await DashboardService.addSensitiveWord(editingWord.value)
+        console.log(response)
+        console.log(response.code)
+        console.log(response.message)
+        if (response.code === 0) {
+          toast.add({ severity: 'success', summary: '成功', detail: '新增敏感字成功', life: 3000 })
+        } else {
+          toast.add({ severity: 'error', summary: '錯誤', detail: response.message, life: 3000 })
+        }
       } else {
-        await DashboardService.updateSensitiveWord(editingWord.value)
-        toast.add({ severity: 'success', summary: '成功', detail: '更新敏感字成功', life: 3000 })
+        const response = await DashboardService.updateSensitiveWord(editingWord.value)
+        if (response.code === 0) {
+          toast.add({ severity: 'success', summary: '成功', detail: '更新敏感字成功', life: 3000 })
+        } else {
+          toast.add({ severity: 'error', summary: '錯誤', detail: response.message, life: 3000 })
+        }
       }
       closeDialog()
       await fetchSensitiveWords()
     } catch (error) {
-      toast.add({ severity: 'error', summary: '錯誤', detail: '操作失敗', life: 3000 })
+      toast.add({ severity: 'error', summary: '錯誤', detail: t('sensitiveWord.errorUpdateSensitiveWord'), life: 3000 })
     }
   }
   
@@ -252,10 +271,14 @@
   // 刪除敏感字
   const deleteWord = async () => {
     try {
-      await DashboardService.deleteSensitiveWord(editingWord.value.id)
-      toast.add({ severity: 'success', summary: '成功', detail: '刪除敏感字成功', life: 3000 })
-      deleteDialogVisible.value = false
-      await fetchSensitiveWords()
+      const response = await DashboardService.deleteSensitiveWord(editingWord.value.id)
+      if (response.code === 0) {
+        toast.add({ severity: 'success', summary: '成功', detail: '刪除敏感字成功', life: 3000 })
+        deleteDialogVisible.value = false
+        await fetchSensitiveWords()
+      } else {
+        toast.add({ severity: 'error', summary: '錯誤', detail: response.message, life: 3000 })
+      }
     } catch (error) {
       toast.add({ severity: 'error', summary: '錯誤', detail: '刪除失敗', life: 3000 })
     }
