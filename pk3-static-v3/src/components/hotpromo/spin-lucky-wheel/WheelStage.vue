@@ -443,8 +443,8 @@ onUnmounted(() => {
 
           .winning-record-item {
             display: grid;
-            gap: 8px;
-            grid-template-columns: 2fr minmax(40px, 1fr) 2fr;
+            gap: 4px;
+            grid-template-columns: 88px minmax(40px, 1fr) 2fr;
             > span {
               line-height: 20px;
               flex: 1;
