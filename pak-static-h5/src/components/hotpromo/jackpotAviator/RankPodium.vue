@@ -71,6 +71,7 @@ const props = defineProps(['rankingList', 'isLoadingRanking']);
             aspect-ratio: 66/93;
             background-size: 100% 100%;
             min-height: 30px;
+            min-width: 21px;
         }
 
         .right-wing {
@@ -78,6 +79,7 @@ const props = defineProps(['rankingList', 'isLoadingRanking']);
             aspect-ratio: 66/93;
             background-size: 100% 100%;
             min-height: 30px;
+            min-width: 21px;
         }
     }
 
@@ -101,6 +103,7 @@ const props = defineProps(['rankingList', 'isLoadingRanking']);
             background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/gold-left-wing.png') no-repeat center center;
             aspect-ratio: 90/141;
             background-size: 100% 100%;
+            min-width: 25px;
             min-height: 40px;
         }
 
@@ -108,6 +111,7 @@ const props = defineProps(['rankingList', 'isLoadingRanking']);
             background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/gold-right-wing.png') no-repeat center center;
             aspect-ratio: 90/141;
             background-size: 100% 100%;
+            min-width: 25px;
             min-height: 40px;
         }
     }
@@ -131,6 +135,7 @@ const props = defineProps(['rankingList', 'isLoadingRanking']);
             background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/bronze-left-wing.png') no-repeat center center;
             aspect-ratio: 63/90;
             background-size: 100% 100%;
+            min-width: 21px;
             min-height: 30px;
         }
 
@@ -138,6 +143,7 @@ const props = defineProps(['rankingList', 'isLoadingRanking']);
             background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/bronze-right-wing.png') no-repeat center center;
             aspect-ratio: 63/90;
             background-size: 100% 100%;
+            min-width: 21px;
             min-height: 30px;
         }
     }
