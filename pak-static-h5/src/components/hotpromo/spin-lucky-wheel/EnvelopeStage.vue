@@ -191,6 +191,7 @@ onUnmounted(() => {
           font-weight: 700;
           line-height: 24px;
           color: #f33d31;
+          min-height: 110px;
 
           .prize {
             font-size: 24px;

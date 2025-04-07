@@ -149,6 +149,7 @@ watch(
     :deep(.q-tab__label) {
       font-weight: 700;
       // color: #FFFFFF80;
+      margin: 5px 15px;
     }
     :deep(.q-tab--active) {
           color: white;

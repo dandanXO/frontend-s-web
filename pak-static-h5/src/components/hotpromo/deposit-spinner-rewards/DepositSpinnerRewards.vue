@@ -475,7 +475,6 @@ const transformStyle = computed(() => {
   background: url(img/bg-img.png) no-repeat center top;
   .top {
     display: flex;
-    gap: 10px;
     margin: 20px 0px;
     .side-buttons {
       font-weight: 600;
@@ -484,6 +483,7 @@ const transformStyle = computed(() => {
       display: flex;
       flex-direction: column;
       gap: 15px;
+      margin-right: 10px;
 
       .individual-btn {
         background: #3F30AF;

@@ -1056,7 +1056,6 @@ watch(
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 5px;
         }
 
         .desc {
@@ -1266,6 +1265,10 @@ watch(
         line-height: 20px;
         letter-spacing: 2%;
         text-transform: capitalize;
+
+        img {
+          margin-right: 5px;
+        }
       }
     }
 

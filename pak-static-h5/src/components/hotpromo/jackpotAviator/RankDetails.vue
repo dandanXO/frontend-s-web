@@ -88,7 +88,11 @@ const props = defineProps(["rankDetails", "isLoadingRanking"]);
   .column {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    
+    > * {
+      margin-top: 8px;
+    }
+    
     padding: 10px;
     align-items: flex-start;
     &:last-child {
