@@ -614,19 +614,19 @@ onUnmounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 8px;
       font-size: 16px;
       font-weight: 700;
       color: #cd91ff;
 
       .title-decoration {
         display: flex;
-        gap: 12px;
+        margin: 0 8px;
         > div {
           width: 8px;
           height: 8px;
           transform: rotate(45deg);
           background-color: #cd91ff;
+          margin: 0 6px;
         }
       }
     }

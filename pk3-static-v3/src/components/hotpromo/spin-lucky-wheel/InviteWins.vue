@@ -198,13 +198,13 @@ onMounted(() => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
     padding: 25px;
 
     .qr-code {
       padding: 10px;
       border-radius: 0.625rem;
       background: #fff;
+      margin-bottom: 10px;
     }
 
     .save-btn {
@@ -214,6 +214,7 @@ onMounted(() => {
       border-radius: 0.5rem;
       background: linear-gradient(180deg, #FFA600 0%, #FF3B00 100%);
       border: 1px solid #E8C4FF33;
+      margin-top: 10px;
     }
   }
 }

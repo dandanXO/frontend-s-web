@@ -63,7 +63,7 @@
                 <div class="copy-update" @click.stop.prevent="onUpdateCardClick(item, item.bankType)">
                   <q-icon size="sm" name="settings" />
                 </div>
-                <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(item.cardNumber)" />
+                <q-icon class="content_copy" size="xs" name="content_copy" @click.stop.prevent="copy(item.cardNumber)" />
               </div>
             </div>
           </div>
@@ -95,7 +95,7 @@
                 <div class="copy-update" @click.stop.prevent="onUpdateCardClick(item, item.bankType)">
                   <q-icon size="sm" name="settings" />
                 </div>
-                <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(item.cardNumber)" />
+                <q-icon class="content_copy" size="xs" name="content_copy" @click.stop.prevent="copy(item.cardNumber)" />
               </div>
             </div>
           </div>
@@ -127,7 +127,7 @@
                 <div class="copy-update" @click.stop.prevent="onUpdateCardClick(item, item.bankType)">
                   <q-icon size="sm" name="settings" />
                 </div>
-                <q-icon size="xs" name="content_copy" @click.stop.prevent="copy(item.cardNumber)" />
+                <q-icon class="content_copy" size="xs" name="content_copy" @click.stop.prevent="copy(item.cardNumber)" />
               </div>
             </div>
           </div>
@@ -498,8 +498,11 @@ onActivated(() => {
       .item-copy {
         color: #5c46e7;
         display: flex;
-        gap: 6px;
         align-items: center;
+
+        .content_copy {
+          margin-left: 6px;
+        }
       }
     }
   }
