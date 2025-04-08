@@ -164,7 +164,7 @@ const vipAccId = computed(() => {
 });
 
 const isCNWeb = computed(() => {
-  if (window.location.host.includes("localhost") || window.location.host.includes("127.0.0.1") || window.location.host.includes("lh1-") || window.location.host.includes("dy2-") || window.location.host.includes("xf1-")) {
+  if (window.location.host.includes("localhost") || window.location.host.includes("psnaback") || window.location.host.includes("127.0.0.1") || window.location.host.includes("lh1-") || window.location.host.includes("dy2-") || window.location.host.includes("xf1-")) {
     return true;
   }
   return false;
