@@ -1138,8 +1138,13 @@ watch(activeSetting, checkIsShowDetail);
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
   margin: 4px auto 16px;
+
+  > * {
+    &:not(:nth-child(1)) {
+      margin-left: 1rem;
+    }
+  }
 
   .tab-button {
     width: 30vw;
