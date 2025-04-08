@@ -1452,7 +1452,6 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
     margin: 4px 0;
     border-radius: 5px;
     background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
@@ -1468,6 +1467,7 @@ export default defineComponent({
       margin: 0px;
       display: inline-block;
       height: auto;
+      margin-right: 10px;
     }
 
     span {
