@@ -197,9 +197,11 @@ body.body--dark .q-footer {
   margin: 0 auto;
   background: transparent;
   border-radius: 4px;
-  height: 0;
-  padding-bottom: calc(171 / 475 * 100);
-  aspect-ratio: 475 / 171;
+  // height: 0;
+  // height: 100px;
+  // padding-bottom: calc(171 / 475 * 100) + px;
+  // aspect-ratio: 475 / 171;
+  // min-height: 100px;
 
   .q-panel > div {
     background-repeat: no-repeat;
