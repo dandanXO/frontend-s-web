@@ -121,7 +121,6 @@ const openNewPlayerGuide = () => {
       }
       display: flex;
       align-items: center;
-      gap: 7px;
       padding: 8px 8px 8px 6px;
       background-color: #81ff9e1a;
       border-radius: 8px;
@@ -129,6 +128,7 @@ const openNewPlayerGuide = () => {
       .mission-icon {
         width: 40px;
         max-width: 10vw;
+        margin-right: 7px;
       }
       .mission-title-wrapper {
         display: flex;

@@ -339,25 +339,47 @@ const store = userStore();
 const { t } = useI18n();
 const ui = useUI();
 
+const fallbackCopyTextToClipboard = (text) => {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  document.body.removeChild(textarea);
+};
+
 const copyHrefLink = () => {
-  navigator.clipboard
-    .writeText(selfTgurl.value)
-    .then(() => {
-      $q.notify({
-        message: "Link copied to clipboard",
-        color: "positive",
-        position: "top",
-        timeout: 2000
+  const textToCopy = selfTgurl.value;
+  
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        $q.notify({
+          message: "Link copied to clipboard",
+          color: "positive",
+          position: "top",
+          timeout: 2000,
+        });
+      })
+      .catch(() => {
+        $q.notify({
+          message: "Failed to copy link, using fallback method.",
+          color: "negative",
+          position: "top",
+          timeout: 2000,
+        });
+        fallbackCopyTextToClipboard(textToCopy);
       });
-    })
-    .catch(() => {
-      $q.notify({
-        message: "Failed to copy link",
-        color: "negative",
-        position: "top",
-        timeout: 2000
-      });
+  } else {
+    $q.notify({
+      message: "Link copied to clipboard",
+      color: "positive",
+      position: "top",
+      timeout: 2000,
     });
+    fallbackCopyTextToClipboard(textToCopy);
+  }
 };
 
 const oneTimeBonusSetting = ref([]);

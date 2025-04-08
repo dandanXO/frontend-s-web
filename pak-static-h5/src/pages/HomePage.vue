@@ -1211,7 +1211,7 @@
           <q-tab-panels v-model="activeKey" animated>
             <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
               <q-list style="min-height: auto">
-                <div v-for="(ann, idx) in announcementList" :key="idx">
+                <div v-for="(ann, idx) in announcementList" :key="idx" style="min-height:50px;">
                   <span v-if="ann.typeId === tab.id">
                     <q-expansion-item
                       style="max-height: 75vh; overflow: auto"

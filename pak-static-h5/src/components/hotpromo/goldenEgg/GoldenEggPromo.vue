@@ -257,6 +257,7 @@ onMounted(() => {
     .prize-inner-wrapper {
       display: flex;
       gap: 10px;
+      flex-wrap: wrap;
       .prize-item {
         flex: 0 0 calc(100% / 3); /* Each item takes one-third of the container's width */
         box-sizing: border-box;
