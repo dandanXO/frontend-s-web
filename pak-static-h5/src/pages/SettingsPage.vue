@@ -251,6 +251,13 @@ const fallbackCopyTextToClipboard = (text) => {
   textarea.select();
   document.execCommand("copy");
   document.body.removeChild(textarea);
+
+  $q.notify({
+    message: "Link copied to clipboard",
+    color: "positive",
+    position: "top",
+    timeout: 2000,
+  });
 };
 
 const copyHrefLink = () => {
@@ -268,21 +275,9 @@ const copyHrefLink = () => {
         });
       })
       .catch(() => {
-        $q.notify({
-          message: "Failed to copy link, using fallback method.",
-          color: "negative",
-          position: "top",
-          timeout: 2000,
-        });
         fallbackCopyTextToClipboard(textToCopy);
       });
   } else {
-    $q.notify({
-      message: "Link copied to clipboard",
-      color: "positive",
-      position: "top",
-      timeout: 2000,
-    });
     fallbackCopyTextToClipboard(textToCopy);
   }
 };
