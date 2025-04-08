@@ -438,7 +438,7 @@ onMounted(() => {
 .rain-money-tab-content {
   background: #309cff;;
   min-height: 30dvh;
-  height: calc(100dvh - 450px);
+  height: calc(100vh - 450px);
   overflow-y: auto;
   padding: 16px;
   border-bottom-left-radius: 12px;
@@ -576,6 +576,11 @@ onMounted(() => {
   }
 }
 
+@supports (height: 100dvh) {
+  .rain-money-tab-content {
+    height: calc(100dvh - 450px); /* Preferred on modern mobile browsers */
+  }
+}
 .rain-money-bg {
   display: block;
   margin-bottom: -190px;
@@ -609,7 +614,7 @@ onMounted(() => {
     padding: 16px 10px 4px;
     border-radius: 12px;
     // position: relative;
-    max-height: 325px;
+    // max-height: 325px;
 
     .logo-img {
       width: 100%;
