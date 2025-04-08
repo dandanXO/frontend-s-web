@@ -743,8 +743,9 @@ watch(activeSetting, checkIsShowDetail);
           width: 14px;
           font-size: 24px;
           background: linear-gradient(270deg, #3080f4 0%, #70b1ff 100%);
-          background-clip: text;
-          color: transparent;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          color: #3080f4;
           font-weight: bold;
           margin-right: 8px;
         }
@@ -844,9 +845,10 @@ watch(activeSetting, checkIsShowDetail);
         }
 
         td:last-child {
-          background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-          background-clip: text;
-          color: transparent;
+          // background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+          // background-clip: text;
+          // color: transparent;
+          color: #73b2ff;
         }
       }
     }
@@ -910,9 +912,10 @@ watch(activeSetting, checkIsShowDetail);
         span {
           display: block;
           width: 100%;
-          background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-          background-clip: text;
-          color: transparent;
+          // background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+          // background-clip: text;
+          // color: transparent;
+          color: #73b2ff;
           font-size: 140%;
           font-weight: bold;
           text-align: center;

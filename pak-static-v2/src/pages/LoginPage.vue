@@ -766,9 +766,13 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 8px;
+    // gap: 8px;
     color: #9f9f9f;
     font-size: 12px;
+    
+    :not(:last-child) {
+      margin-bottom: 8px;
+    }
   }
 
   .btn-icon {

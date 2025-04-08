@@ -99,7 +99,7 @@
         >
           <div class="left-container">
             <div class="bank-name">
-              <img style="width: 30px" :src="imgURL + bankCard.bankIcon" />
+              <img style="width: 30px; max-height: 30px;" :src="imgURL + bankCard.bankIcon" />
               <div>{{ bankCard.bankName }}</div>
             </div>
             <div class="bank-number-wrapper">
@@ -442,7 +442,10 @@ onActivated(() => {
       .left-container {
         .bank-name {
           display: flex;
-          gap: 10px;
+          // gap: 10px;
+          :not(:last-child) {
+            margin-right: 10px;
+          }
           color: #424f72;
           font-size: 1.1rem;
           font-weight: 600;

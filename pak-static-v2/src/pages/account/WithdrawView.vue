@@ -1032,6 +1032,7 @@ const openWithdrawTutorialVideo = () => {
 }
 .step-desc-div {
   color: #000;
+  margin-bottom: 100px;
 
   p {
     margin: 5px 0px;
@@ -1180,7 +1181,10 @@ const openWithdrawTutorialVideo = () => {
     .remain-wager-wrapper {
       display: flex;
       align-items: center;
-      gap: 3px;
+      
+      :not(:last-child) {
+        margin-right: 3px;
+      }
       cursor: pointer;
     }
   }
@@ -1271,7 +1275,7 @@ const openWithdrawTutorialVideo = () => {
 .withdraw-selection {
   :deep(.q-field__control) {
     --q-primary: #424f72;
-    height: 46px;
+    // height: 46px;
     background-color: #fff;
     box-shadow: 0px 0px 8px 0px #a9c9ea inset;
 

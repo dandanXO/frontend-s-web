@@ -209,6 +209,7 @@ body.body--dark .q-footer {
     height: 0;
     padding-bottom: calc(7 / 22 * 100);
     aspect-ratio: 22 / 7;
+    min-height: 100px;
   }
   .q-carousel__navigation--bottom {
     bottom: -5px;
@@ -231,6 +232,7 @@ body.body--dark .q-footer {
     height: 0;
     padding-bottom: calc(7 / 22 * 100);
     aspect-ratio: 22/7;
+    min-height: 100px;
   }
 }
 
@@ -688,8 +690,11 @@ body.body--dark .q-footer {
 
 .y-n-container {
   display: flex;
-  gap: 24px;
+  // gap: 24px;
   justify-content: center;
+  > :not(:last-child) {
+    margin-right: 20px;
+  }
 }
 
 .btn-click {

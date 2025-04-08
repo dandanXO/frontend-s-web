@@ -350,7 +350,9 @@ onActivated(() => {
       display: flex;
       justify-content: space-between;
       padding: 8px 12px;
-      flex-wrap: wrap;
+      // flex-wrap: wrap;
+      flex-direction: column;
+      align-items: flex-start;
 
       &--title {
         border-top-right-radius: 16px;
@@ -365,6 +367,7 @@ onActivated(() => {
       .order-subrow {
         display: flex;
         justify-content: space-between;
+        width: 100%;
       }
     }
 
