@@ -3690,7 +3690,7 @@ const showCongratsModal = () => {
     .game-platform-img {
       // background-color: #cccccc;
       width: 100%;
-      aspect-ratio: 1/1;
+      // aspect-ratio: 1/1;
       background-size: cover;
       background-position: center center;
       position: relative;
@@ -3700,12 +3700,13 @@ const showCongratsModal = () => {
 
 
       &.game-fish {
-        aspect-ratio: 1/1.2;
+        // aspect-ratio: 1/1.2;
         min-height: 100px;
 
       }
 
       .game--bg {
+        min-height: 100px;
         border-radius: 8px;
         background-size: 100% 100%;
         background-position: top center;
