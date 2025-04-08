@@ -400,12 +400,12 @@ watch(
     }
 
     .game-lists {
-      gap: 8px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      margin-bottom: 8px;
+      // gap: 8px;
+      // display: flex;
+      // flex-direction: column;
+      // justify-content: flex-start;
+      // align-items: center;
+      // margin-bottom: 8px;
 
       :not(:last-child) {
         margin-bottom: 8px;
@@ -419,6 +419,7 @@ watch(
           height: 0;
           padding-bottom: 94.34%;
           aspect-ratio: 90 / 106;
+          min-height: 100px;
         }
       }
     }
@@ -488,16 +489,17 @@ watch(
         background-size: 100% 100%;
         background-position: top center;
         background-repeat: no-repeat;
-        height: 0;
-        padding-bottom: 34.92%;
+        // height: 0;
+        // padding-bottom: 34.92%;
         // aspect-ratio: 819/295;
-        min-height: 120px;
+        // min-height: 120px;
         position: relative;
         overflow: hidden;
         display: grid;
         grid-template-columns: 50% 50%;
         box-shadow: 4px 4px 4px 0px #0000000d;
 
+        min-height: 125px;
         .platform-content {
           width: 100%;
           display: flex;

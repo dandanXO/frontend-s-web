@@ -438,7 +438,7 @@ onMounted(() => {
 .rain-money-tab-content {
   background: #309cff;;
   min-height: 30dvh;
-  height: calc(100vh - 450px);
+  height: calc(100vh - 550px);
   overflow-y: auto;
   padding: 16px;
   border-bottom-left-radius: 12px;

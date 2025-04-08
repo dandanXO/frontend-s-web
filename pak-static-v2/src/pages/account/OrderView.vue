@@ -292,8 +292,9 @@ onActivated(() => {
   //margin-bottom: 10px;
   margin: 10px auto;
   height: 0;
-  padding-bottom: calc(32 / 335 * 100);
+  // padding-bottom: calc(32 / 335 * 100);
   aspect-ratio: 335/32;
+  min-height: 50px;
 
   .right {
     color: white;
