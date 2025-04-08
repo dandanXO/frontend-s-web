@@ -407,6 +407,10 @@ watch(
       align-items: center;
       margin-bottom: 8px;
 
+      :not(:last-child) {
+        margin-bottom: 8px;
+      }
+      position: relative;
       &.hot {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -486,7 +490,8 @@ watch(
         background-repeat: no-repeat;
         height: 0;
         padding-bottom: 34.92%;
-        aspect-ratio: 819/295;
+        // aspect-ratio: 819/295;
+        min-height: 120px;
         position: relative;
         overflow: hidden;
         display: grid;
