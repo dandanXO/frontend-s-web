@@ -511,7 +511,11 @@ onMounted(() => {
     .timing-body {
       margin-top: 12px;
       display: flex;
-      gap: 6px;
+      // gap: 6px;
+      :not(:last-child) {
+        margin-right: 6px;
+        margin-bottom: 6px;
+      }
       flex-wrap: wrap;
       justify-content: center;
       span {
@@ -605,6 +609,7 @@ onMounted(() => {
     padding: 16px 10px 4px;
     border-radius: 12px;
     // position: relative;
+    max-height: 325px;
 
     .logo-img {
       width: 100%;

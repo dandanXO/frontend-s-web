@@ -89,12 +89,14 @@ const refreshBalance = () => {
   .marquee-wrapper {
     display: flex;
     align-items: center;
-    gap: 10px;
+    // gap: 10px;
     font-size: 12px;
     font-weight: 500;
     line-height: 16.8px;
     color: #35648f;
-
+    :not(:last-child) {
+      margin-right: 10px;
+    }
     .download-app-btn {
       display: flex;
       &:hover {
@@ -121,7 +123,7 @@ const refreshBalance = () => {
 
     .info-balance-wrapper {
       display: flex;
-      align-items: end;
+      align-items: flex-end;
       gap: 5px;
       font-size: 14px;
       font-weight: 600;
@@ -129,6 +131,7 @@ const refreshBalance = () => {
       color: #35648f80;
 
       > span {
+        // padding-top: 10px;
         padding-bottom: 6px;
       }
 

@@ -194,8 +194,8 @@
           <q-tr :props="props">
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <template v-if="colIndex === 1 || colIndex === 3">
-                <div style="justify-content: flex-end; display: flex; align-items: center; gap: 4px">
-                  <img src="../../assets/images/vip/vip-coins.png" />
+                <div style="justify-content: flex-end; display: flex; align-items: center; ">
+                  <img style="margin-right: 4px;" src="../../assets/images/vip/vip-coins.png" />
                   <span>{{ col.value }}</span>
                 </div>
               </template>
@@ -976,7 +976,7 @@ const getMonthlyVip = () => {
     .progress-bar-container {
       display: flex;
       align-items: center;
-      gap: 10px;
+      // gap: 10px;
       position: absolute;
       bottom: 10%;
       left: 6%;
@@ -994,6 +994,7 @@ const getMonthlyVip = () => {
       .progress-bar-outer-bar {
         // border: 1px solid #fff;
         border-radius: 16px;
+        margin-bottom: 10px;
         background: #ffffff4d;
         width: 100%;
         overflow: hidden;
