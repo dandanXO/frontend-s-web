@@ -123,7 +123,7 @@ export default {
     profit: 'member profit ',
     risk: 'risk level ',
     monthlyProfit: 'Thirty Days profit ',
-    noAutoWithdrawalGamePlatform: 'no Auto Withdrawal Game Platform',
+    noAutoWithdrawalGamePlatform: 'no Auto Review Game Platform',
     week: ' week',
     month: ' month',
   },

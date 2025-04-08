@@ -122,7 +122,7 @@ export default {
     profit: '会员盈利',
     risk: '风险等级',
     monthlyProfit: '30 天盈利',
-    noAutoWithdrawalGamePlatform: '禁止自动提款游戏平台',
+    noAutoWithdrawalGamePlatform: '禁止自动审核游戏平台',
     week: '周内',
     month: '月内',
   },
