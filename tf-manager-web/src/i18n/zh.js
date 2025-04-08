@@ -121,7 +121,10 @@ export default {
     todayWithdrawCount: '当天提款笔数',
     profit: '会员盈利',
     risk: '风险等级',
-    monthlyProfit: '30 天盈利'
+    monthlyProfit: '30 天盈利',
+    noAutoWithdrawalGamePlatform: '禁止自动提款游戏平台',
+    week: '周内',
+    month: '月内',
   },
   outboxStatus: {
     0: '未回复',

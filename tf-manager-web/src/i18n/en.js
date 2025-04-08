@@ -122,7 +122,10 @@ export default {
     todayWithdrawCount: 'Today withdraw count ',
     profit: 'member profit ',
     risk: 'risk level ',
-    monthlyProfit: 'Thirty Days profit '
+    monthlyProfit: 'Thirty Days profit ',
+    noAutoWithdrawalGamePlatform: 'no Auto Withdrawal Game Platform',
+    week: ' week',
+    month: ' month',
   },
   outboxStatus: {
     0: 'Not reply yet',
