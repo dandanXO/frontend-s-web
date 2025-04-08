@@ -12,15 +12,28 @@
       <div class="dialog-header">
         <h3>{{ streamTitle }} - {{ formatQuality(currentQuality) }}</h3>
       </div>
+
     </template>
 
-    <Tabs v-model:value="currentPlayerType" @update:value="changeQuality(currentQuality)">
-      <TabList>
-        <Tab :value="playerType.value" v-for="playerType in playerTypes">{{
-          playerType.label
-        }}</Tab>
-      </TabList>
-    </Tabs>
+    <div class="stream-control-btn">
+      <div class="control-container">
+        <Tabs v-model:value="currentPlayerType" @update:value="changeQuality(currentQuality)">
+          <TabList>
+            <Tab :value="playerType.value" v-for="playerType in playerTypes">{{
+              playerType.label
+            }}</Tab>
+          </TabList>
+        </Tabs>
+        <div class="flex-spacer"></div>
+        <Button
+          v-if="isOwnStream"
+          :label="isLiveStream ? '關閉直播' : '開始直播'"
+          :severity="isLiveStream ? 'danger' : 'success'"
+          :loading="isStatusChanging"
+          @click="toggleStreamStatus"
+        />
+      </div>
+    </div>
 
     <div class="stream-info">
       <div class="info-item">
@@ -118,31 +131,21 @@
         </div>
       </div>
     </div>
-
-    <template #footer>
-      <!-- <div class="quality-selector">
-        <Button
-          v-for="quality in availableQualities"
-          :key="quality.label"
-          :label="quality.label"
-          :severity="currentQuality === quality.value ? 'success' : 'secondary'"
-          :size="'small'"
-          class="mr-2"
-          @click="changeQuality(quality.value)"
-        />
-      </div> -->
-    </template>
   </Dialog>
 </template>
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
+import { useUserStore } from '@/stores/userStore'
+import { DashboardService } from '@/service/DashboardService'
 import videojs from 'video.js'
 import 'video.js/dist/video-js.min.css'
 import '@videojs/http-streaming'
 import flvjs from 'flv.js'
 import { useToast } from 'primevue/usetoast'
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
 const props = defineProps({
   visible: {
     type: Boolean,
@@ -160,9 +163,8 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['update:visible'])
+const emit = defineEmits(['update:visible', 'reload'])
 
-const playerLayoutToggle = ref(true)
 const player = ref(null)
 const supplierPlayer = ref(null)
 const streamerPlayer = ref(null)
@@ -183,12 +185,30 @@ const availableQualities = ref([
   { label: '540P', value: 'p540' },
   { label: 'Original', value: 'original' },
 ])
+
+// 清除數據
+const clearData = () => {
+  streams.value = [];
+  loading.value = false;
+};
+
 const supplierLoadError = ref(null)
 const streamerLoadError = ref(null)
+const isOwnStream = ref(false)
+const isLiveStream = ref(false)
+const isStatusChanging = ref(false)
+const streams = ref([])
+const loading = ref(false)
 
 // 初始化 toast 服務
 const toast = useToast()
 
+// 初始化 store
+const userStore = useUserStore()
+
+const checkStreamStatus = () => {
+  isLiveStream.value = props.stream?.streamerStatus
+}
 // 註冊 FLV 插件
 const registerFlvPlugin = () => {
   if (!videojs.getPlugin('flvjs')) {
@@ -441,6 +461,52 @@ const changeQuality = (quality) => {
   startPlay()
 }
 
+// 檢查是否是自己的直播
+const checkStreamOwnership = () => {
+  const loginName = userStore.loginName;
+  isOwnStream.value = props.stream?.streamerName === loginName;
+}
+
+// 切換直播狀態
+const toggleStreamStatus = async () => {
+  try {
+    isStatusChanging.value = true
+    const newStatus = isLiveStream.value
+    
+    // 調用 API 更新直播狀態
+    DashboardService.changeMyStreamStatus(props.stream.streamerStreamId, !newStatus)
+    
+    // 更新狀態
+    isLiveStream.value = !isLiveStream.value
+    
+    // 顯示成功提示
+    toast.add({
+      severity: 'success',
+      summary: '成功',
+      detail: isLiveStream.value ? '直播已開始' : '直播已關閉',
+      life: 3000
+    })
+  } catch (error) {
+    console.error('切換直播狀態失敗:', error)
+    toast.add({
+      severity: 'error',
+      summary: '錯誤',
+      detail: '切換直播狀態失敗',
+      life: 3000
+    })
+  } finally {
+    isStatusChanging.value = false
+    props.stream.streamerStatus = isLiveStream.value
+    onHide();
+    // 觸發重新載入事件
+    emit('reload')
+  }
+}
+
+// 關閉對話框
+const onHide = () => {
+  emit('update:visible', false)
+}
 // 監聽對話框的可見性變化
 watch(
   () => props.visible,
@@ -463,6 +529,12 @@ watch(
         console.log('初始載入開始播放主播串流')
         await startPlay()
       }
+
+      // 檢查直播所有權
+      checkStreamOwnership()
+      // 使用 checkStreamStatus 來設置初始狀態
+      checkStreamStatus()
+
     } else {
       if (supplierPlayerInstance.value) {
         try {
@@ -485,6 +557,14 @@ watch(
     }
   },
   { immediate: true },
+)
+
+// 添加對 stream 的監聽以更新狀態
+watch(
+  () => props.stream?.streamerStatus,
+  () => {
+    checkStreamStatus()
+  }
 )
 
 // 組件卸載時清理播放器
@@ -665,5 +745,25 @@ const copyUrl = async (url) => {
   .info-item .value {
     color: #fff;
   }
+}
+
+.control-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.flex-spacer {
+  flex: 1;
+}
+
+:deep(.p-tabview-nav) {
+  display: flex;
+  align-items: center;
+}
+
+.stream-control-btn {
+  width: 100%;
+  padding: 0.5rem 1rem;
 }
 </style>

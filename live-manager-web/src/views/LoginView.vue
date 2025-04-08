@@ -70,7 +70,6 @@ import { useToast } from 'primevue/usetoast'
 import { DashboardService } from '@/service/DashboardService'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import { useUserStore } from '@/stores/userStore'
-import LangToggle from '@/components/Header/LangToggle.vue'
 import ThemeToggle from '@/components/Header/ThemeToggle.vue'
 import { useI18n } from 'vue-i18n'
 import router from '@/router'
@@ -88,7 +87,7 @@ const toast = useToast()
 
 const onFormSubmit = () => {
   store.isAuthLoading = true
-
+  store.loginName = loginForm.loginName
   DashboardService.logIn(loginForm.loginName, loginForm.password)
     .then((result) => {
       if (result) {

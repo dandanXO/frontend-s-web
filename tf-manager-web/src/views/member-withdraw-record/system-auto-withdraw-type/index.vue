@@ -91,7 +91,18 @@
                     style="width: 300px;"
                   >
                     <el-option
-                      v-for="item in reviewRuleTypeList.list.filter(x => !form.reviewRuleList.some(y => y.variable === x.value))"
+                      v-for="item in reviewRuleTypeList.list.filter(x => {
+                        if ([16, 17, 18].includes(x.key)) {
+                          const hasPlatformRule = form.reviewRuleList.some(y => {
+                            const ruleKey = reviewRuleTypeList.list.find(r => r.value === y.variable)?.key;
+                            return [16, 17, 18].includes(ruleKey);
+                          });
+                          if (hasPlatformRule) {
+                            return false;
+                          }
+                        }
+                        return !form.reviewRuleList.some(y => y.variable === x.value);
+                      })"
                       :key="item.value"
                       :label="item.name"
                       :value="item.value"
@@ -168,6 +179,23 @@
                       :key="item.id"
                       :label="item.levelName"
                       :value="item.id"
+                    />
+                  </el-select>
+                </template>
+                <template v-else-if="scope.row.variable && scope.row.variable.includes('betCountByPlatform')">
+                  <el-select
+                    v-model="scope.row.value"
+                    size="small"
+                    filterable
+                    multiple
+                    :placeholder="t('fields.pleaseChoose')"
+                    style="width: 200px;"
+                  >
+                    <el-option
+                      v-for="item in list.gamePlatforms"
+                      :key="item.id"
+                      :label="item.code"
+                      :value="item.code"
                     />
                   </el-select>
                 </template>
@@ -616,6 +644,7 @@ import { isPak, isIndiaSite, isPh1, isBr1, isNga, isId1 } from '@/utils/site'
 import { getFinancialLevels } from "../../../api/financial-level";
 import { getVipList } from "../../../api/vip";
 import { selectList } from '../../../api/risk-level'
+import { getPlatformsBySite } from '../../../api/platform'
 
 const { t } = useI18n()
 const store = useStore()
@@ -655,6 +684,7 @@ const list = reactive({
   reviewRuleRecord: [],
   vips: [],
   risks: [],
+  gamePlatforms: [],
 })
 const page = reactive({
   pages: 1,
@@ -694,8 +724,11 @@ const ruleType = reactive({
     { key: 11, name: t('withdrawRuleType.balanceAfterWithdrawal') + t('withdrawRuleType.min'), value: '#afterBalance>' },
     { key: 12, name: t('withdrawRuleType.vip'), value: "matches '.*,' + T(String).valueOf(#vipLevel) + ',.*'" },
     { key: 13, name: t('withdrawRuleType.risk'), value: "matches '.*,' + T(String).valueOf(#riskId) + ',.*'" },
-    { key: 6, name: t('withdrawRuleType.monthlyProfit') + t('withdrawRuleType.max'), value: '#monthlyProfit<' },
-    { key: 6, name: t('withdrawRuleType.monthlyProfit') + t('withdrawRuleType.min'), value: '#monthlyProfit>' }
+    { key: 14, name: t('withdrawRuleType.monthlyProfit') + t('withdrawRuleType.max'), value: '#monthlyProfit<' },
+    { key: 15, name: t('withdrawRuleType.monthlyProfit') + t('withdrawRuleType.min'), value: '#monthlyProfit>' },
+    { key: 16, name: t('withdrawRuleType.noAutoWithdrawalGamePlatform') + '(' + 1 + t('withdrawRuleType.week') + ')', value: '#betCountByPlatform_7' },
+    { key: 17, name: t('withdrawRuleType.noAutoWithdrawalGamePlatform') + '(' + 2 + t('withdrawRuleType.week') + ')', value: '#betCountByPlatform_14' },
+    { key: 18, name: t('withdrawRuleType.noAutoWithdrawalGamePlatform') + '(' + 1 + t('withdrawRuleType.month') + ')', value: '#betCountByPlatform_30' },
   ],
 })
 
@@ -778,6 +811,11 @@ async function loadCurrency() {
   list.currencies = ret
 }
 
+async function loadGamePlatforms() {
+  const { data: ret } = await getPlatformsBySite(request.siteId)
+  list.gamePlatforms = ret
+}
+
 async function loadAutoPaymentType() {
   const { data: ret } = await getSystemAutoPaymentTypeList(request)
   ret.forEach(item => {
@@ -811,7 +849,6 @@ async function loadWithdrawReviewRule() {
     item.siteId = request.siteId
   })
   list.reviewRuleRecord = reviewRule
-  console.log(list.reviewRuleRecord)
 }
 
 function createVariableValueString(originalData) {
@@ -864,14 +901,13 @@ function getValue(str, keyword) {
 function getValueList(str) {
   const conditionRegex = /(#\w+)\s*(<=|>=|==|<|>)\s*(-?\d+)/g;
   const matchesRegex = /\(([^)]+)\)\s+matches\s+'(.*)'/g;
+  const platformRegex = /#betCountByPlatform_([a-zA-Z0-9_]+)_(\d+)/g;
   const results = [];
   let match;
-
   if (!str) {
     results.push({ variable: '', operator: '', value: null });
     return results;
   }
-
   function extractConditions(conditionStr) {
     while ((match = conditionRegex.exec(conditionStr)) !== null) {
       const variable = match[1] + match[2];
@@ -885,12 +921,18 @@ function getValueList(str) {
       const innerValue = expression.replace(/[^0-9,]+/g, '').split(',').filter(item => item !== '').map(Number);
       results.push({ variable: "matches '" + pattern + "'", operator: 'matches', value: innerValue });
     }
+    while ((match = platformRegex.exec(conditionStr)) !== null) {
+      const platformList = match[1].split('_');
+      const numericPart = match[2];
+      const variable = '#betCountByPlatform_' + numericPart;
+      const value = platformList;
+      results.push({ variable, operator: '', value });
+    }
   }
   const andConditions = str.split(/\s+and\s+/).filter(condition => condition.trim());
   for (const condition of andConditions) {
     extractConditions(condition.trim());
   }
-
   results.push({ variable: '', operator: '', value: null });
   return results.length > 0 ? results : null;
 }
@@ -1141,6 +1183,12 @@ function createConditionString(data) {
       if (variable.includes('matches')) {
         return `(',' + '${value}' + ',') ${variable}`;
       }
+      if (variable.startsWith("#betCountByPlatform_") && value instanceof Array) {
+        const parts = variable.split('_');
+        const platforms = value.join('_');
+        const numberPart = parts[parts.length - 1];
+        return `#betCountByPlatform_${platforms}_${numberPart}`;
+      }
       return `${variable} ${value}`;
     }
     return null;
@@ -1214,6 +1262,7 @@ onMounted(async() => {
     await loadVips()
     await loadRiskLevels()
     await loadWithdrawReviewRule()
+    await loadGamePlatforms()
   }
 })
 </script>

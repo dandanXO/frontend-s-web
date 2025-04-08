@@ -89,12 +89,14 @@ const refreshBalance = () => {
   .marquee-wrapper {
     display: flex;
     align-items: center;
-    gap: 10px;
+    // gap: 10px;
     font-size: 12px;
     font-weight: 500;
     line-height: 16.8px;
     color: #35648f;
-
+    :not(:last-child) {
+      margin-right: 10px;
+    }
     .download-app-btn {
       display: flex;
       &:hover {
@@ -117,11 +119,11 @@ const refreshBalance = () => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 4px;
+    padding-top: 14px;
 
     .info-balance-wrapper {
       display: flex;
-      align-items: end;
+      align-items: flex-end;
       gap: 5px;
       font-size: 14px;
       font-weight: 600;
@@ -129,6 +131,7 @@ const refreshBalance = () => {
       color: #35648f80;
 
       > span {
+        // padding-top: 10px;
         padding-bottom: 6px;
       }
 
@@ -148,7 +151,7 @@ const refreshBalance = () => {
     }
     .info-link-wrapper {
       display: flex;
-      gap: 14px;
+      // gap: 14px;
 
       .info-link-item {
         display: flex;
@@ -160,6 +163,12 @@ const refreshBalance = () => {
         line-height: 16px;
         color: #35648f;
         text-decoration: none;
+        margin-left: 14px;
+
+        &:first-child{
+          margin-left: 0;
+        }
+
         img {
           height: 100%;
           width: 10vw;

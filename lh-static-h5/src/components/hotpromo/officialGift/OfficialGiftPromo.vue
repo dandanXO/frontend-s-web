@@ -23,7 +23,9 @@
         <span>认准雷火电竞官方 VIP 客服管理</span>
       </div>
       <div class="detail-block-content">
-        <span class="detail-block-content-description">添加以下您的雷火专属 VIP 客服：福利咨询，专属服务，赛事推荐专属红包</span>
+        <span class="detail-block-content-description">
+          添加以下您的雷火专属 VIP 客服：福利咨询，专属服务，赛事推荐专属红包
+        </span>
         <div class="detail-block-content-voxis">
           <img src="./img/voxis.svg" />
           <span class="detail-block-content-voxis__url">Amico 客服号：{{ currentVoxisId }}</span>
@@ -88,8 +90,12 @@ const paramsObj = computed(() => {
 });
 
 const currentVoxisId = computed(() => {
-  const key = `${vip.value.toLocaleLowerCase()}_voxis_id`;
-  return paramsObj.value[key] || "";
+  if (typeof vip.value === "string") {
+    const key = `${vip.value.toLocaleLowerCase()}_voxis_id`;
+    return paramsObj.value[key] || "";
+  } else {
+    return paramsObj?.value?.["vip1_voxis_id"] ?? "";
+  }
 });
 
 function isHuaweiBrowser() {
@@ -165,7 +171,7 @@ const handleCopyClick = async () => {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    background: #2D4065;
+    background: #2d4065;
     box-shadow: 0px 0px 4px 0px #01497b0f;
     padding: 12px;
     border: 1px solid #f2f8fe;
@@ -213,14 +219,14 @@ const handleCopyClick = async () => {
       gap: 12px;
       position: relative;
       padding: 12px;
-      background-color: #212B4AE0;
+      background-color: #212b4ae0;
       border-radius: 12px;
 
       .detail-block-content-description {
         font-size: 0.7rem;
         font-weight: 600;
         line-height: 1.07rem;
-        color: #FFFFFF99;
+        color: #ffffff99;
       }
 
       .detail-block-content-voxis {
@@ -267,7 +273,7 @@ const handleCopyClick = async () => {
       grid-template-columns: repeat(2, 1fr);
       .reason-block-content-reason {
         border-radius: 10px;
-        background-color: #212B4AE0;
+        background-color: #212b4ae0;
         padding: 4px;
         .reason-block-content-reason__inner {
           display: flex;
@@ -330,7 +336,7 @@ const handleCopyClick = async () => {
         font-size: 1rem;
         font-weight: 600;
         line-height: 1rem;
-        color: #FFFFFF99;
+        color: #ffffff99;
         a {
           text-decoration: underline;
         }

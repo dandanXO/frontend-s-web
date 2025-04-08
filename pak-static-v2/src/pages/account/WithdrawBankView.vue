@@ -99,7 +99,7 @@
         >
           <div class="left-container">
             <div class="bank-name">
-              <img style="width: 30px" :src="imgURL + bankCard.bankIcon" />
+              <img style="width: 30px; max-height: 30px;" :src="imgURL + bankCard.bankIcon" />
               <div>{{ bankCard.bankName }}</div>
             </div>
             <div class="bank-number-wrapper">
@@ -368,7 +368,7 @@ onActivated(() => {
       flex-wrap: wrap;
       margin: 0 auto 14px;
       padding: 1rem;
-      gap: 8px;
+      // gap: 8px;
 
       .bank-bind-btn {
         display: flex;
@@ -383,6 +383,8 @@ onActivated(() => {
         font-size: 1.15rem;
         white-space: nowrap;
         font-weight: 500;
+        margin-right: 8px;
+        margin-bottom: 8px;
         // flex: 1;
         //   font-weight: 500;
 
@@ -440,7 +442,10 @@ onActivated(() => {
       .left-container {
         .bank-name {
           display: flex;
-          gap: 10px;
+          // gap: 10px;
+          :not(:last-child) {
+            margin-right: 10px;
+          }
           color: #424f72;
           font-size: 1.1rem;
           font-weight: 600;

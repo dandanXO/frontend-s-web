@@ -443,8 +443,8 @@ onUnmounted(() => {
 
           .winning-record-item {
             display: grid;
-            gap: 8px;
-            grid-template-columns: 2fr minmax(40px, 1fr) 2fr;
+            gap: 4px;
+            grid-template-columns: 88px minmax(40px, 1fr) 2fr;
             > span {
               line-height: 20px;
               flex: 1;
@@ -614,19 +614,19 @@ onUnmounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 8px;
       font-size: 16px;
       font-weight: 700;
       color: #cd91ff;
 
       .title-decoration {
         display: flex;
-        gap: 12px;
+        margin: 0 8px;
         > div {
           width: 8px;
           height: 8px;
           transform: rotate(45deg);
           background-color: #cd91ff;
+          margin: 0 6px;
         }
       }
     }

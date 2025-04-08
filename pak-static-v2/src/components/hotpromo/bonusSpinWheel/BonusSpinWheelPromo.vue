@@ -334,8 +334,12 @@ onMounted(() => {
 }
 .draw-btn {
   width: 80px;
-  height: auto;
+  height: 0;
+  // padding-bottom: 106.8%; /* 220 / 206 * 100 */
+  
+  padding-bottom: 23.8%;
   aspect-ratio: 206/220;
+  min-height: 80px;
   z-index: 25;
   position: absolute;
   top: calc(50%);

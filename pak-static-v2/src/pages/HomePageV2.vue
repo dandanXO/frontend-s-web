@@ -3696,9 +3696,13 @@ const showCongratsModal = () => {
       position: relative;
       background-image: url("../assets/images/index/mini-game-bg.png");
       border-radius: 20px;
+       min-height: 100px;
+
 
       &.game-fish {
         aspect-ratio: 1/1.2;
+        min-height: 100px;
+
       }
 
       .game--bg {
@@ -4253,6 +4257,7 @@ const showCongratsModal = () => {
       display: block;
       width: 100%;
       max-width: 320px;
+      height: 60px;
     }
   }
 

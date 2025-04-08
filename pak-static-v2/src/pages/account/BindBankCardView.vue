@@ -546,13 +546,15 @@ onActivated(() => {
         display: flex;
         flex-wrap: wrap;
         box-shadow: unset;
-        gap: 20px;
+        // gap: 20px;
 
         .content {
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 1rem;
+          margin-right: 16px;
+          margin-bottom: 16px;
           // width: 6.5rem;
 
           img {

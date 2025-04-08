@@ -527,7 +527,7 @@ watch(activeSetting, checkIsShowDetail);
     margin-top: 12px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    // gap: 24px;
 
     .pot-item {
       background-image: url("../../assets/images/earn-money/pot-bg-01.png");
@@ -540,6 +540,7 @@ watch(activeSetting, checkIsShowDetail);
       padding: 28px 20px;
       border-radius: 8px;
       position: relative;
+      margin-bottom: 24px;
 
       &__2 {
         background-image: url("../../assets/images/earn-money/pot-bg-02.png");
@@ -655,7 +656,7 @@ watch(activeSetting, checkIsShowDetail);
     display: flex;
     // grid-template-columns: repeat(2, 1fr);
     // grid-gap: 12px;
-    gap: 12px;
+    // gap: 12px;
     margin-top: 16px;
     flex-wrap: wrap;
 
@@ -670,6 +671,8 @@ watch(activeSetting, checkIsShowDetail);
       box-shadow: 0px 4px 4px 0px #0000001a;
       border-radius: 10px;
       position: relative;
+      margin-bottom: 12px;
+      margin-right: 6px;
 
       &__full {
         width: 100%;
@@ -722,7 +725,7 @@ watch(activeSetting, checkIsShowDetail);
       margin-top: 12px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      // gap: 12px;
 
       .listing-item {
         background-color: #f7f8fb;
@@ -734,14 +737,17 @@ watch(activeSetting, checkIsShowDetail);
         line-height: 1;
         gap: 12px;
         color: #8c968f;
+        margin-bottom: 12px;
 
         span.list-num {
           width: 14px;
           font-size: 24px;
           background: linear-gradient(270deg, #3080f4 0%, #70b1ff 100%);
-          background-clip: text;
-          color: transparent;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          color: #3080f4;
           font-weight: bold;
+          margin-right: 8px;
         }
       }
     }
@@ -839,9 +845,10 @@ watch(activeSetting, checkIsShowDetail);
         }
 
         td:last-child {
-          background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-          background-clip: text;
-          color: transparent;
+          // background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+          // background-clip: text;
+          // color: transparent;
+          color: #73b2ff;
         }
       }
     }
@@ -905,9 +912,10 @@ watch(activeSetting, checkIsShowDetail);
         span {
           display: block;
           width: 100%;
-          background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-          background-clip: text;
-          color: transparent;
+          // background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+          // background-clip: text;
+          // color: transparent;
+          color: #73b2ff;
           font-size: 140%;
           font-weight: bold;
           text-align: center;
