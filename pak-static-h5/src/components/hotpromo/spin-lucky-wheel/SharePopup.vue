@@ -329,8 +329,8 @@ const copyHrefLink = () => {
       });
   } else {
     $q.notify({
-      message: "Clipboard API not supported, using fallback method.",
-      color: "negative",
+      message: "Link copied to clipboard",
+      color: "positive",
       position: "top",
       timeout: 2000,
     });
