@@ -1,0 +1,76 @@
+# Dart/Pub
+.dart_tool/
+.packages
+.pub-cache/
+build/
+
+# Flutter
+.flutter-plugins
+.flutter-plugins-dependencies
+.flutter-versions
+.fvm/
+.pub/
+generated_plugin_registrant.dart
+
+# Environment files
+.env
+.env.*
+
+# Android
+android/.gradle/
+android/captures/
+android/app/build/
+*.keystore
+
+# iOS
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/App.framework
+ios/Runner.xcworkspace/
+ios/Pods/
+ios/Podfile.lock
+ios/.symlinks/
+ios/Flutter/ephemeral/
+ios/build/
+
+# Xcode
+*.xcodeproj/*.pbxuser
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+*.xcuserdata/
+DerivedData/
+*.xcuserstate
+
+# macOS
+macos/Flutter/ephemeral/
+macos/Flutter/GeneratedPluginRegistrant.swift
+macos/build/
+
+# Web
+build/web/
+
+# Windows
+windows/Flutter/ephemeral/
+windows/build/
+
+# Linux
+linux/Flutter/ephemeral/
+linux/build/
+
+# VS Code
+.vscode/
+.history/
+
+# IntelliJ / Android Studio
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Files that can be user/device specific
+*.swp
+*.lock
+*.log
+.DS_Store
+Thumbs.db
