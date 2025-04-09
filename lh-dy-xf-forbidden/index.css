@@ -1,6 +1,6 @@
 @font-face{
     font-family: PingFang SC;
-    src: url('pingfang.woff2'), format('woff2');
+    src: url('pingfang.ttf'), format('ttf');
 }
 
 body {
@@ -19,6 +19,14 @@ body {
     align-items: center;
 }
 
+.container.h5 {
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    min-width: 100vw;
+    background-size: 100% 100%;
+}
+
 .section {
     background: url('./images/ip-restrict-section-bg.png') center center no-repeat;
     background-size: 100% 100%;
@@ -30,6 +38,11 @@ body {
     align-items: center;
     padding: 20px;
 }
+.section.h5 {
+    width: 90%;
+    height: auto;
+    gap: 50px;
+}
 
 .header {
     font-family: PingFang SC;
@@ -38,6 +51,10 @@ body {
     line-height: 100%;
     letter-spacing: 0;
     text-align: center;
+}
+
+.header.h5 {
+    font-size: 80px;
 }
 
 .link {
@@ -54,6 +71,10 @@ body {
     color: #666666;
 }
 
+.desc.h5 {
+    font-size: 24px;
+}
+
 .ip-origin {
     font-family: PingFang SC;
     font-weight: 600;
@@ -68,10 +89,14 @@ body {
     font-family: PingFang SC;
     font-weight: 600;
     font-size: 20px;
-    line-height: 30px;
+    line-height: 50px;
     letter-spacing: 0;
     text-align: center;
     color: #666666;
+}
+
+.desc-2.h5 {
+    font-size: 28px;
 }
 
 .contact-btn {
@@ -88,6 +113,11 @@ body {
     &:hover {
         filter: brightness(0.9);
     }
+}
+
+.contact-btn.h5 {
+    min-height: 80px;
+    width: 100%;
 }
 
 .container.dark {
