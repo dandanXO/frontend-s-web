@@ -428,7 +428,7 @@ const logout = () => {
   border-radius: 10px 10px 0px 0px;
   border-color: transparent;
   box-shadow: none;
-
+  min-height: 100px;
   .account-banner-img {
     width: 100%;
     border-radius: 10px 10px 0px 0px;
