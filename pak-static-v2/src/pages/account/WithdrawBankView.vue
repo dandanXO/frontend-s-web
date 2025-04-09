@@ -128,7 +128,7 @@
         >
           <div class="left-container">
             <div class="bank-name">
-              <img style="width: 30px" :src="imgURL + bankCard.bankIcon" />
+              <img style="width: 30px; height: 30px;" :src="imgURL + bankCard.bankIcon" />
               <div>{{ bankCard.bankName }}</div>
             </div>
             <div class="bank-number-wrapper">
@@ -190,7 +190,7 @@
               <div>{{ bankCard.bankName }}</div>
             </div>
             <div class="bank-number-wrapper">
-              <div>gg卡号：</div>
+              <div>gg 卡号：</div>
               <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
               <!-- <img
                 class="copy-btn"
