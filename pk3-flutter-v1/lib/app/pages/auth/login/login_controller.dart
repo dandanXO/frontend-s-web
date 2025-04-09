@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:pk3_flutter_v1/app/data/api/auth_api.dart';
 
 class LoginController extends GetxController {
@@ -11,6 +12,9 @@ class LoginController extends GetxController {
       loginName: loginName.value,
       password: password.value,
     );
-    print('response: ${response.data.toString()}');
+
+    print(response.data?.token);
+    final storage = GetStorage();
+    storage.write('token', response.data?.token);
   }
 }

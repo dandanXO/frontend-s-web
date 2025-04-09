@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 
 enum HttpMethod { get, post }
@@ -49,8 +51,19 @@ class HttpRequest {
           );
           break;
       }
+      final resData = response.data;
 
-      return response.data;
+      if (resData is Map || resData is List) {
+        return resData;
+      } else {
+        final decodeRes = jsonDecode(resData);
+        final int code = int.tryParse(decodeRes['code'].toString()) ?? -1;
+
+        if (code > 0) {
+          // handle errors
+        }
+        return decodeRes;
+      }
     } on DioException catch (e) {
       if (showErrorMessage) {
         print('[HttpRequest] Error: ${e.response?.data ?? e.message}');

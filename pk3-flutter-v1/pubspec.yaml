@@ -39,6 +39,12 @@ dependencies:
   #网络库
   dio: ^5.8.0+1
 
+  #本地储存
+  get_storage: ^2.1.1
+
+  #自适应插件
+  flutter_screenutil: ^5.9.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
