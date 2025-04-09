@@ -121,7 +121,9 @@ const handleEnvelopeClick = (index) => {
     updateRemainingTime();
     timer.value = setInterval(updateRemainingTime, 1000);
     isClaiming.value = false;
-  });
+  }).catch((err) => {
+    isClaiming.value = false;
+  })
 };
 
 const updateRemainingTime = () => {
