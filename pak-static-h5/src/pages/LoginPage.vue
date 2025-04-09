@@ -35,7 +35,7 @@
     <div class="login-pg-title">{{ $t("header.login") }}</div>
 
     <div class="login-form-wrapper">
-      <FloatingStickyKefu />
+      <!-- <FloatingStickyKefu /> -->
       <q-form ref="loginFormRef" @submit="onSubmit">
         <InputRowGrid v-if="!loginType">
           <template #fields>
@@ -283,7 +283,7 @@ import { useI18n } from "vue-i18n";
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
-import FloatingStickyKefu from "../components/auth/FloatingStickyKefu.vue";
+// import FloatingStickyKefu from "../components/auth/FloatingStickyKefu.vue";
 
 export default defineComponent({
   name: "LoginPage",
@@ -293,7 +293,7 @@ export default defineComponent({
     InputField,
     InputRowGrid,
     ShareIcons,
-    FloatingStickyKefu
+    // FloatingStickyKefu
     // RiArrowDropLeftLine
   },
   setup() {

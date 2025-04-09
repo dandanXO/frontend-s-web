@@ -19,9 +19,6 @@
       v-model="slide"
       id="home"
       class="home"
-      data-aos-duration="1200"
-      data-aos-once="true"
-      data-aos="fade-in"
       transition-next="slide-left"
       transition-prev="slide-right"
       animated
@@ -34,10 +31,9 @@
         v-for="(banner, i) in banners"
         :key="i"
         :name="i"
-        class="column no-wrap flex-center"
+        class="column no-wrap flex-center banner-slide"
         :img-src="returnBannerUrl(banner)"
         @click="gotoPromo(banner)"
-        style="min-height:130px;"
       ></q-carousel-slide>
 
       <!-- :img-src="require(`../assets/images/index/${banner.mobileImageUrl}`)" -->
