@@ -365,6 +365,10 @@ const getQualities = () => {
   qualities.value = result;
 };
 
+const pause = () => {
+  handlePauseChange(true);
+};
+
 const loadData = () => Promise.all([loadPlayer(), loadDanmu()]).then(loadPlayerConfig);
 
 watch(danmuList, () => {
@@ -389,6 +393,10 @@ onMounted(() => {
 onUnmounted(() => {
   player.value.destroy();
   danmu.value.stop();
+});
+
+defineExpose({
+  pause
 });
 </script>
 <style lang="scss" scoped>

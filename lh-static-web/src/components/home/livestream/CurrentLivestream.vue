@@ -22,7 +22,7 @@
       <span class="current-livestream__match-info__team-name">{{ livestreamData.awayNameZh }}</span>
     </div>
 
-    <button class="current-livestream__bet-btn">投一注</button>
+    <button class="current-livestream__bet-btn" @click="$emit('click')">投一注</button>
   </div>
 </template>
 <script setup>
@@ -32,6 +32,7 @@ defineProps({
     default: () => ({})
   }
 });
+defineEmits(["click"]);
 </script>
 <style lang="scss" scoped>
 @import "@/scss/pages/livestream.scss";

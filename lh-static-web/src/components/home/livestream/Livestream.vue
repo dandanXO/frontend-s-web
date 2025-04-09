@@ -6,10 +6,11 @@
     />
     <div class="livestream-inner-wrapper">
       <LivestreamList v-model="currentLive" class="livestream-list" :list />
-      <CurrentLivestream :livestream-data="currentLiveData" />
+      <CurrentLivestream :livestream-data="currentLiveData" @click="handleBetClick" />
       <LivestreamChat class="livestream-chat" :messages="fullMessages" @send-chat-message="handleSendChatMessage" />
-      <LivestreamVideo :danmuList :livestream-data="currentLiveData" />
+      <LivestreamVideo ref="livestreamVideoRef" :danmuList :livestream-data="currentLiveData" />
     </div>
+    <GameModal ref="gameModalRef"></GameModal>
   </div>
 </template>
 <script setup>
@@ -20,6 +21,7 @@ import LivestreamVideo from "@/components/home/livestream/LivestreamVideo.vue";
 import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from "vue";
 import { userStore } from "@/store";
 import { getChatHistory, getLivestreamList, sendChat } from "@/api/index/livestream";
+import GameModal from "@/components/modal/GameModal.vue";
 
 const MESSAGE_SYNC_INTERVAL = 1000 * 2; // 2 seconds
 const MESSAGE_HISTORY_DANMU_FIRE_GAP = 10;
@@ -34,6 +36,8 @@ const currentLive = ref(0);
 const messageTimer = ref(null);
 const lastSyncMessageTime = ref(Date.now());
 const unsortMessages = ref([]);
+const gameModalRef = ref(null);
+const livestreamVideoRef = ref(null);
 // const channels = ref([
 //   {
 //     name: "线路1",
@@ -135,6 +139,12 @@ const syncMessages = () => {
   messageTimer.value = setTimeout(() => {
     syncMessages();
   }, MESSAGE_SYNC_INTERVAL);
+};
+
+const handleBetClick = () => {
+  if (!gameModalRef.value || !livestreamVideoRef.value) return;
+  livestreamVideoRef.value.pause();
+  gameModalRef.value.open("IM体育", "IM");
 };
 
 watch(currentLiveData, () => {
