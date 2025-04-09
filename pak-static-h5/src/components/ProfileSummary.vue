@@ -109,7 +109,7 @@
               <div class="vip-details">
                 <img
                   class="bg"
-                  :src="require(`../assets/images/index/vip-badge/vip-${store.vip.replace('VIP', '')}.png`)"
+                  :src="require(`../assets/images/index/vip-badge/vip-${store.vip ? store.vip.replace('VIP', '') : '0'}.png`)"
                   alt=""
                 />
               </div>
@@ -521,7 +521,7 @@ onUnmounted(() => {
     }
     .download-logo {
       width: 35px;
-      img{ 
+      img{
         width: 100%;
       }
     }
@@ -727,7 +727,7 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    
+
     > :not(:last-child) {
       margin-right: 10px;
     }
@@ -1058,7 +1058,7 @@ onUnmounted(() => {
   // }
 
   .infoboard-container .profile-wrapper {
-    
+
   }
 
   .infoboard-container .infoboard-wrapper.home-profile {
