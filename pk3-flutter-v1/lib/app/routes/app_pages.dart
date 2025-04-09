@@ -1,4 +1,5 @@
-// import 'package:amico/app/middleware/index.dart';
+import 'package:pk3_flutter_v1/app/pages/home/home_binding.dart';
+import 'package:pk3_flutter_v1/app/pages/home/home_screen.dart';
 import 'package:pk3_flutter_v1/app/pages/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,6 +32,11 @@ class AppPages {
       name: Routes.login,
       page: () => const LoginScreen(),
       binding: LoginBinding(),
+    ),
+    _pageBuilder(
+      name: Routes.home,
+      page: () => const HomeScreen(),
+      binding: HomeBinding(),
     ),
   ];
 }

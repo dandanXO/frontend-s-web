@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:pk3_flutter_v1/app/data/http/http.dart';
 import 'package:pk3_flutter_v1/app/data/models/responses/single_response.dart';
 import 'package:pk3_flutter_v1/app/data/models/responses/login_response.dart';
@@ -24,10 +23,8 @@ class AuthApi {
       showLoading: true,
     );
 
-    final decoded = jsonDecode(response);
-
     final parsed = SingleResponse<LoginResponse>.fromJson(
-      decoded,
+      response,
       (d) => LoginResponse.fromJson({'token': d}),
     );
 

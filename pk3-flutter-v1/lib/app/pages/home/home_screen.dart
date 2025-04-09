@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:pk3_flutter_v1/app/widgets/app_layout.dart';
 
 class HomeScreen extends StatelessWidget {
-  final String title;
-
-  const HomeScreen({super.key, required this.title});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: const Center(child: Text('Welcome!')),
+    return AppLayout(
+      title: 'Home',
+      showAppBar: true,
+      showBottomNav: true,
+      child: const Center(child: Text('Welcome!')),
     );
   }
 }
