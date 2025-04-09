@@ -1,48 +1,58 @@
 <template>
   <div class="livestream-list-wrapper">
     <div
-      v-for="i in 10"
-      :key="i"
+      v-for="(live, index) in list"
+      :key="live"
       class="livestream-list-item"
       :class="{
-        selected: i === 1
+        selected: model === index
       }"
+      @click="handleLivestreamClick(index)"
     >
-      <div class="livestream-list-item__title">英格兰足总杯赛</div>
+      <div class="livestream-list-item__title">{{ live.title }}</div>
       <div class="livestream-list-item__match-info">
         <div class="livestream-list-item__match-info__team">
           <div class="livestream-list-item__match-info__team-emblem">
-            <img src="@/assets/home/livestream/mock.png" />
+            <img :src="live.homeIcon" loading="lazy" />
           </div>
-          <span class="livestream-list-item__match-info__team-name">莱顿东方</span>
+          <span class="livestream-list-item__match-info__team-name">{{ live.homeNameZh }}</span>
         </div>
 
         <div class="livestream-list-item__match-info__date">
-          <div v-if="i % 2 === 0" class="livestream-list-item__match-info__date__on-air">正在直播</div>
-          <div v-else class="livestream-list-item__match-info__date__date">今日22:30</div>
+          <div v-if="live.status" class="livestream-list-item__match-info__date__on-air">正在直播</div>
+          <div v-else class="livestream-list-item__match-info__date__date">
+            {{ moment(live.eventStartTime).format("HH:MM") }}
+          </div>
           <span class="livestream-list-item__match-info__date__vs">VS</span>
         </div>
 
         <div class="livestream-list-item__match-info__team">
           <div class="livestream-list-item__match-info__team-emblem">
-            <img src="@/assets/home/livestream/mock.png" />
+            <img :src="live.awayIcon" loading="lazy" />
           </div>
-          <span class="livestream-list-item__match-info__team-name">莱顿东方</span>
+          <span class="livestream-list-item__match-info__team-name">{{ live.awayNameZh }}</span>
         </div>
       </div>
       <div class="livestream-list-item__badge-wrapper">
         <div class="livestream-list-item__badge">
-          <img src="@/assets/home/livestream/mock-2.png" />
-          终于换我播曼城了
+          <img :src="live.avatar" loading="lazy" />
+          {{ live.name }}
         </div>
       </div>
     </div>
   </div>
 </template>
 <script setup>
+import moment from "moment";
 defineProps({
   list: Array
 });
+
+const model = defineModel({ type: Number });
+
+const handleLivestreamClick = (index) => {
+  model.value = index;
+};
 </script>
 <style lang="scss" scoped>
 @import "@/scss/pages/livestream.scss";
@@ -152,6 +162,7 @@ defineProps({
         font-size: 11px;
         line-height: 15px;
         img {
+          border-radius: 50%;
           max-width: 22px;
         }
       }

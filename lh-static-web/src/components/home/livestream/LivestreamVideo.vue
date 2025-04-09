@@ -42,7 +42,7 @@
         </div>
 
         <div class="livestream-video-controller-group">
-          <el-popover
+          <!-- <el-popover
             ref="channelPopperRef"
             popper-class="livestream-video-controller-popover channel"
             placement="top"
@@ -69,7 +69,7 @@
                 </button>
               </div>
             </div>
-          </el-popover>
+          </el-popover> -->
           <el-popover
             ref="qualityPopperRef"
             popper-class="livestream-video-controller-popover quality"
@@ -161,10 +161,10 @@ const DANMU_CONFIG = {
   style: DANMU_STYLE
 };
 
-const DEFAULT_QUALITY = { value: -1, name: "自动" };
+const DEFAULT_QUALITY = "original";
 
-const props = defineProps(["danmuList", "channels"]);
-const { danmuList, channels } = toRefs(props);
+const props = defineProps(["danmuList", "channels", "livestreamData"]);
+const { danmuList, channels, livestreamData } = toRefs(props);
 
 const danmuJs = ref(null);
 
@@ -180,25 +180,43 @@ const isPlayerSupported = ref(true);
 /** @type {import("vue").Ref< VideoPlayer | null>}*/
 const player = ref(null);
 const danmu = ref(null);
-const qualities = ref([DEFAULT_QUALITY]);
+const qualities = ref([]);
 const playerConfig = ref({
   isPause: false,
   volume: 50,
   isFullScreen: false,
   isDanmuClose: false,
-  quality: -1,
+  quality: DEFAULT_QUALITY,
   channel: 0
 });
 
-const currentChannel = computed(() => {
-  return channels.value[playerConfig.value.channel];
+const videoSource = computed(() => {
+  if (!livestreamData.value) return {};
+  return livestreamData.value.status
+    ? livestreamData.value.streamerCdnPullUrl
+    : livestreamData.value.supplierCdnPullUrl;
 });
 
+const currentVideoUrl = computed(() => {
+  if (!videoSource.value) return "";
+  const result = Object.entries(videoSource.value).find(([key, value]) => {
+    return key === playerConfig.value.quality;
+  });
+  return result[1]?.hls_url ?? "";
+});
+
+// const currentChannel = computed(() => {
+//   if (!channels.value.length) return {};
+//   return channels.value[playerConfig.value.channel];
+// });
+
 const loadPlayer = async () => {
+  getQualities();
   player.value = new VideoPlayer(
     {
       mediaType: "hls",
-      url: currentChannel.value.url,
+      // url: currentChannel.value.url,
+      url: currentVideoUrl.value,
       maxLatency: 10,
       // ...DEFAULT_FLV_CONFIG,
       ...DEFAULT_HLS_CONFIG
@@ -208,15 +226,13 @@ const loadPlayer = async () => {
   await initPlayer();
 };
 
-const initPlayer = async () => {
+const initPlayer = async (play = false) => {
   if (!player.value) return;
-
   await player.value.init();
   isPlayerSupported.value = player.value.SupportPlayer !== "NONE";
   player.value.on(player.value.Events.ERROR, handlePlayerError);
-  await player.value.load();
-  if (player.value.qualitySupported) getQualities();
-  player.value.play();
+  await player.value.load(play);
+  // if (player.value.qualitySupported) getQualities();
 };
 
 const loadDanmu = async () => {
@@ -251,9 +267,6 @@ const loadPlayerConfig = () => {
           handleDanmuChange(value);
           break;
         case "quality":
-          if (value < player.value.levels.length) {
-            handleQualityChange(value);
-          }
           handleQualityChange(value);
           break;
       }
@@ -308,8 +321,8 @@ const handleWrapperMouseEnter = () => {
 const handleWrapperMouseLeave = () => {
   videoWrapperMouseLeaveTimer.value = setTimeout(() => {
     showPlayerController.value = false;
-    channelPopperRef.value.hide();
-    qualityPopperRef.value.hide();
+    channelPopperRef.value?.hide();
+    qualityPopperRef.value?.hide();
   }, 1500);
 };
 
@@ -325,26 +338,34 @@ const handlePlayerError = (event, data) => {
   }
 };
 
-const handleChannelChange = async (index) => {
-  qualities.value = [DEFAULT_QUALITY];
-  changePlayerConfig("quality", -1);
-  changePlayerConfig("channel", index);
-  player.value.changeSource(currentChannel.value.url);
-  await initPlayer();
-};
+// const handleChannelChange = async (index) => {
+//   qualities.value = [DEFAULT_QUALITY];
+//   changePlayerConfig("quality", -1);
+//   changePlayerConfig("channel", index);
+//   player.value.changeSource(currentChannel.value.url);
+//   await initPlayer();
+// };
 
-const handleQualityChange = (index) => {
-  changePlayerConfig("quality", index);
-  player.value.setQualityLevel(index);
+const handleQualityChange = async (level) => {
+  const _level = videoSource.value[level] ? level : DEFAULT_QUALITY;
+  changePlayerConfig("quality", _level);
+  // player.value.setQualityLevel(index);
+  player.value.changeSource(videoSource.value[_level].hls_url);
+  await initPlayer(true);
 };
 
 const getQualities = () => {
-  const result = player.value.levels.map((level, index) => ({
-    value: index,
-    name: `${level.height}p`
+  if (!videoSource.value) return;
+  const result = Object.entries(videoSource.value).map(([level, value], index) => ({
+    value: level,
+    name: level,
+    url: value.hls_url
   }));
-  qualities.value.push(...result);
+
+  qualities.value = result;
 };
+
+const loadData = () => Promise.all([loadPlayer(), loadDanmu()]).then(loadPlayerConfig);
 
 watch(danmuList, () => {
   if (danmuList.value.length && danmu.value) {
@@ -357,8 +378,12 @@ watch(danmuList, () => {
   }
 });
 
+watch(livestreamData, () => {
+  loadData();
+});
+
 onMounted(() => {
-  Promise.all([loadPlayer(), loadDanmu()]).then(loadPlayerConfig);
+  // loadData();
 });
 
 onUnmounted(() => {
@@ -456,6 +481,7 @@ onUnmounted(() => {
     object-fit: contain;
     width: 100%;
     height: 100%;
+    background: #000;
   }
 }
 </style>

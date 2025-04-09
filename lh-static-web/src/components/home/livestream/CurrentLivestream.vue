@@ -2,28 +2,37 @@
   <div class="current-livestream-wrapper">
     <div class="current-livestream__streamer-info-wrapper">
       <div class="current-livestream__streamer-info">
-        <img src="@/assets/home/livestream/mock-2.png" />
-        <span class="current-livestream__streamer-info__name">⭐️满满⭐</span>
+        <div class="current-livestream__streamer-info__avatar">
+          <img :src="livestreamData.avatar" loading="lazy" />
+        </div>
+        <span class="current-livestream__streamer-info__name">{{ livestreamData.name }}</span>
         <div class="current-livestream__streamer-info__on-air">正在直播</div>
       </div>
     </div>
 
     <div class="current-livestream__match-info">
-      <span class="current-livestream__match-info__team-name">莱顿东方</span>
+      <span class="current-livestream__match-info__team-name">{{ livestreamData.homeNameZh }}</span>
       <div class="current-livestream__match-info__team-emblem">
-        <img src="@/assets/home/livestream/mock.png" />
+        <img :src="livestreamData.homeIcon" loading="lazy" />
       </div>
       <div class="current-livestream__match-info__team-vs">VS</div>
       <div class="current-livestream__match-info__team-emblem">
-        <img src="@/assets/home/livestream/mock.png" />
+        <img :src="livestreamData.awayIcon" loading="lazy" />
       </div>
-      <span class="current-livestream__match-info__team-name">莱顿东方</span>
+      <span class="current-livestream__match-info__team-name">{{ livestreamData.awayNameZh }}</span>
     </div>
 
     <button class="current-livestream__bet-btn">投一注</button>
   </div>
 </template>
-<script setup></script>
+<script setup>
+defineProps({
+  livestreamData: {
+    type: Object,
+    default: () => ({})
+  }
+});
+</script>
 <style lang="scss" scoped>
 @import "@/scss/pages/livestream.scss";
 
@@ -50,7 +59,7 @@
       img {
         max-width: 40px;
         display: block;
-        margin-bottom: 3px;
+        border-radius: 50%;
       }
       .current-livestream__streamer-info__name {
         font-size: 15px;
@@ -61,6 +70,13 @@
         @include livestream-on-air;
         position: absolute;
         bottom: -4px;
+      }
+      .current-livestream__streamer-info__avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
       }
     }
   }
