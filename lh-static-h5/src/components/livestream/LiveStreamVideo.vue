@@ -103,6 +103,7 @@
 <script setup>
 import { onMounted, ref, toRefs, watch, onUnmounted, computed } from "vue";
 import { VideoPlayer } from "boot/videoPlayer";
+import { useRoute, useRouter } from "vue-router";
 
 /** @type {import("flv.js").default.Config} */
 const DEFAULT_FLV_CONFIG = {
@@ -456,13 +457,14 @@ const handleUrlChange = (index) => {
   urlPopperRef.value?.hide();
 };
 
+const route = useRoute();
+const router = useRouter();
+
 onMounted(() => {
   Promise.all([loadPlayer(), loadDanmu()]).then(() => {
     loadPlayerConfig();
-    setInterval(generateRandomDanmu, Math.random() * 10000 + 6000);
+    // setInterval(generateRandomDanmu, Math.random() * 10000 + 6000);
   });
-
-  // Promise.all([loadPlayer(), loadDanmu()]).then(loadPlayerConfig);
 });
 </script>
 

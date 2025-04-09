@@ -39,9 +39,44 @@
         </q-btn-toggle>
       </div>
 
+      <!-- <pre>
+        liveStreamList-- {{ liveStreamList }}
+      </pre> -->
+
       <template v-if="tabValue === 'liveStream'">
         <div class="selection-container q-px-md">
-          <router-link to="/livestream/streamplayer" class="selection-item">
+          <template v-for="(item, index) in liveStreamList" :key="index">
+            <router-link
+              :to="{
+                path: '/livestream/streamplayer',
+                query: {
+                  streamId: item.id
+                }
+              }"
+              class="selection-item"
+            >
+              <!-- // put item.supplierCdnPullUrl + item.streamerCdnPushUrl + streanerCdnPullUrl to the next page. -->
+              <div class="item-img"><img src="../../assets/images/livestream/img-placeholder-stream.png" alt="" /></div>
+              <div class="item-content">
+                <div class="content-title">
+                  <!-- 德国甲级联赛 -->
+                  {{ item.homeNameZh }}
+                </div>
+                <div class="content-desc">{{ item.homeNameZh }} VS {{ item.awayNameZh }}</div>
+              </div>
+              <div class="item-float-content">
+                <div class="content-float float-user">
+                  <div class="user-avatar"><img src="https://cdn.quasar.dev/img/avatar.png" /></div>
+                  <div>悦悦</div>
+                </div>
+                <div class="content-float float-filled">
+                  <div>正在直播</div>
+                </div>
+              </div>
+            </router-link>
+          </template>
+
+          <!-- <router-link to="/livestream/streamplayer" class="selection-item">
             <div class="item-img"><img src="../../assets/images/livestream/img-placeholder-stream.png" alt="" /></div>
             <div class="item-content">
               <div class="content-title">德国甲级联赛</div>
@@ -56,9 +91,9 @@
                 <div>正在直播</div>
               </div>
             </div>
-          </router-link>
+          </router-link> -->
 
-          <div class="selection-item">
+          <!-- <div class="selection-item">
             <div class="item-img"><img src="../../assets/images/livestream/img-placeholder.png" alt="" /></div>
             <div class="item-content">
               <div class="content-title">2025LCK杯</div>
@@ -74,9 +109,9 @@
                 <div>7人预约</div>
               </div>
             </div>
-          </div>
+          </div> -->
 
-          <div class="selection-item">
+          <!-- <div class="selection-item">
             <div class="item-img"><img src="../../assets/images/livestream/img-placeholder.png" alt="" /></div>
             <div class="item-content">
               <div class="content-title">2025LCK杯</div>
@@ -131,7 +166,7 @@
               <div class="content-title">2025LCK杯</div>
               <div class="content-desc">T1 vs Nongshim RedForce</div>
             </div>
-          </div>
+          </div> -->
         </div>
       </template>
 
@@ -201,11 +236,13 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref, computed, reactive } from "vue";
 import moment from "moment";
 import { api } from "boot/axios";
+import { cached } from "boot/cache";
 import GameModal from "components/modal/GameModal.vue";
 
+const qs = require("qs");
 const tabValue = ref("liveStream");
 const hotMatches = ref([]);
 const competitionTypes = ref([]);
@@ -231,6 +268,44 @@ const openGame = (gameName, code, gameCode) => {
   gameRef.value.open(gameName, code, gameCode);
 };
 
+const liveStreamList = ref([]);
+
+const liveStreamStatusInfo = reactive({
+  status: 1
+});
+
+const getLiveUrlList = () => {
+  // .post("/session/bankCard", qs.stringify(bankCardInfo))
+  api.post("/live/list", qs.stringify(liveStreamStatusInfo)).then((res) => {
+    if (res.code === 0) {
+      liveStreamList.value = res.data.records;
+    }
+
+    // else {
+    //   liveStreamList.value = [
+    //     {
+    //       id: 36,
+    //       sportId: 1,
+    //       homeNameZh: "萨尔茨堡红牛",
+    //       homeNameEn: "Red Bull Salzburg",
+    //       homeIcon: "https://cdn.sportnanoapi.com/football/team/4e07d3ac5c7d1f02fba7fa4c14c8ee76.png",
+    //       awayNameZh: "米德尔斯堡f'lüflü",
+    //       awayNameEn: "Middlesbrough",
+    //       awayIcon: "https://cdn.sportnanoapi.com/football/team/f08f87259dc2abc1449b67081e8b7f83.png",
+    //       eventStartTime: 1744100397000,
+    //       title: "test--frank1",
+    //       supplierCdnPullUrl:
+    //         '{"540p": {"flv_url": "https://ozqak6.me/live/MA02K_540p.flv?txSecret=b285142e3fd7a2f3be8c0a0f2d9c8e17&txTime=20250408143049", "hls_url": "https://ozqak6.me/live/MA02K_540p.m3u8?txSecret=b285142e3fd7a2f3be8c0a0f2d9c8e17&txTime=20250408143049"}, "720p": {"flv_url": "https://ozqak6.me/live/MA02K_720p.flv?txSecret=b285142e3fd7a2f3be8c0a0f2d9c8e17&txTime=20250408143049", "hls_url": "https://ozqak6.me/live/MA02K_720p.m3u8?txSecret=b285142e3fd7a2f3be8c0a0f2d9c8e17&txTime=20250408143049"}, "1080p": {"flv_url": "https://ozqak6.me/live/MA02K_1080p.flv?txSecret=b285142e3fd7a2f3be8c0a0f2d9c8e17&txTime=20250408143049", "hls_url": "https://ozqak6.me/live/MA02K_1080p.m3u8?txSecret=b285142e3fd7a2f3be8c0a0f2d9c8e17&txTime=20250408143049"}, "original": {"flv_url": "https://ozqak6.me/live/MA02K.flv?txSecret=b285142e3fd7a2f3be8c0a0f2d9c8e17&txTime=20250408143049", "hls_url": "https://ozqak6.me/live/MA02K.m3u8?txSecret=b285142e3fd7a2f3be8c0a0f2d9c8e17&txTime=20250408143049"}}',
+    //       streamerCdnPushUrl:
+    //         "rtmp://209959.push.tlivecloud.com/live/streamer/K7NBK?txSecret=734aa7a8c9c3ac8510d95eeefa5d6dcc&txTime=20250409030219",
+    //       streamerCdnPullUrl:
+    //         '{"540p": {"flv_url": "https://ozqak6.me/live/streamer/K7NBK_540p.flv?txSecret=734aa7a8c9c3ac8510d95eeefa5d6dcc&txTime=20250409030219", "hls_url": "https://ozqak6.me/live/streamer/K7NBK_540p.m3u8?txSecret=734aa7a8c9c3ac8510d95eeefa5d6dcc&txTime=20250409030219"}, "720p": {"flv_url": "https://ozqak6.me/live/streamer/K7NBK_720p.flv?txSecret=734aa7a8c9c3ac8510d95eeefa5d6dcc&txTime=20250409030219", "hls_url": "https://ozqak6.me/live/streamer/K7NBK_720p.m3u8?txSecret=734aa7a8c9c3ac8510d95eeefa5d6dcc&txTime=20250409030219"}, "1080p": {"flv_url": "https://ozqak6.me/live/streamer/K7NBK_1080p.flv?txSecret=734aa7a8c9c3ac8510d95eeefa5d6dcc&txTime=20250409030219", "hls_url": "https://ozqak6.me/live/streamer/K7NBK_1080p.m3u8?txSecret=734aa7a8c9c3ac8510d95eeefa5d6dcc&txTime=20250409030219"}, "original": {"flv_url": "https://ozqak6.me/live/streamer/K7NBK.flv?txSecret=734aa7a8c9c3ac8510d95eeefa5d6dcc&txTime=20250409030219", "hls_url": "https://ozqak6.me/live/streamer/K7NBK.m3u8?txSecret=734aa7a8c9c3ac8510d95eeefa5d6dcc&txTime=20250409030219"}}'
+    //     }
+    //   ];
+    // }
+  });
+};
+
 onMounted(() => {
   api.get("/platform-competition").then((res) => {
     if (res.code === 0) {
@@ -243,6 +318,8 @@ onMounted(() => {
       }
     }
   });
+
+  getLiveUrlList();
 });
 </script>
 

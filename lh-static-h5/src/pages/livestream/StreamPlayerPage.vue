@@ -1,7 +1,10 @@
 <template>
   <q-page ref="pageContainer" class="page-style">
     <!-- <div class="video-wrapper" :style="videoStyle"> -->
-    <LiveStreamVideo :danmuList :channels />
+    <template v-if="liveStreamReady">
+      <LiveStreamVideo :danmuList :channels />
+    </template>
+
     <!-- </div> -->
 
     <div class="transfer-mid-div">
@@ -21,19 +24,34 @@
     </div>
 
     <LiveStreamChatMessages class="livestream-chat" :messages @send-chat-message="handleSendChatMessage" />
+
+    <!-- <pre style="color: salmon">selectedLiveStream -- {{ selectedLiveStream }}</pre> -->
+
+    <!-- <pre style="color: blue">... {{ selectedLiveStream.supplierCdnPullUrl }}</pre> -->
+
+    <!-- <pre style="color: green">
+  ~~~{{ selectedLiveStream.supplierCdnPullUrl ? selectedLiveStream.supplierCdnPullUrl["540p"] : "Loading..." }}
+    </pre> -->
+
+    <!-- <pre style="color: salmon">liveStreamList -- {{ liveStreamList }}</pre> -->
   </q-page>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, nextTick } from "vue";
+import { ref, onActivated, onUnmounted, nextTick, reactive, watch } from "vue";
 import Danmu from "danmu.js";
 import MarqueeText from "vue-marquee-text-component";
 import { userStore } from "stores/index";
 import LiveStreamVideo from "../../components/livestream/LiveStreamVideo.vue";
 import LiveStreamChatMessages from "../../components/livestream/LiveStreamChatMessages.vue";
 import { useQuasar } from "quasar";
+import { api } from "boot/axios";
+import { useRoute, useRouter } from "vue-router";
 
 const $q = useQuasar();
+const qs = require("qs");
+const route = useRoute();
+const router = useRouter();
 const videoElement = ref(null);
 const danmuContainer = ref(null);
 const chatMessage = ref("");
@@ -55,9 +73,14 @@ const urls = ref([
 ]);
 
 const channels = ref([
-  { name: "线路1", url: "https://sample.vodobox.net/skate_phantom_flex_4k/skate_phantom_flex_4k.m3u8" },
-  { name: "线路2", url: "https://cdn.jwplayer.com/manifests/pZxWPRg4.m3u8" }
+  // { name: "线路1", url: "https://sample.vodobox.net/skate_phantom_flex_4k/skate_phantom_flex_4k.m3u8" },
+  // { name: "线路2", url: "https://cdn.jwplayer.com/manifests/pZxWPRg4.m3u8" }
   // { name: "线路3", url: "https://content.jwplatform.com/manifests/vM7nH0Kl.m3u8" }
+
+  { name: "540p", url: "" },
+  { name: "720p", url: "" },
+  { name: "1080p", url: "" },
+  { name: "Original", url: "" }
 ]);
 
 // Initialize Danmu.js for chat overlay
@@ -163,6 +186,123 @@ const handleSendChatMessage = (message) => {
   });
   danmuList.value = [message];
 };
+
+// const selectedStreamId = reactive({
+//   streamId: route.query.streamId
+// });
+
+const selectedLiveStream = reactive({
+  id: null,
+  sportId: null,
+  homeNameZh: null,
+  homeNameEn: null,
+  homeIcon: null,
+  awayNameZh: null,
+  awayNameEn: null,
+  awayIcon: null,
+  eventStartTime: null,
+  title: null,
+  streamerStatus: null,
+  supplierCdnPullUrl: null,
+  streamerCdnPullUrl: null,
+  name: null,
+  avatar: null
+});
+
+const getSelectedLiveStream = () => {
+  api.get(`/live/${route.query.streamId}`).then((res) => {
+    if (res.code === 0) {
+      // selectedLiveStream.value = res.data.records;
+
+      // temporary date
+      // selectedLiveStream = {
+      (selectedLiveStream.id = 41),
+        (selectedLiveStream.sportId = 1),
+        (selectedLiveStream.homeNameZh = "日本"),
+        (selectedLiveStream.homeNameEn = "jacket"),
+        (selectedLiveStream.homeIcon = "1/53ebfb0e-316f-48c3-8e2f-890e9cccaf62.jpg"),
+        (selectedLiveStream.awayNameZh = "美國"),
+        (selectedLiveStream.awayNameEn = "testgin"),
+        (selectedLiveStream.awayIcon = "1/0f3b6265-1f81-4fd1-9ceb-e2cd64a57402.jpg"),
+        (selectedLiveStream.eventStartTime = 1744185234000),
+        (selectedLiveStream.title = "paul0409-01"),
+        (selectedLiveStream.streamerStatus = 1),
+        (selectedLiveStream.supplierCdnPullUrl = JSON.parse(
+          '{"540p": {"flv_url": "https://ozqak6.me/live/F974R_540p.flv?txSecret=fbdc9221abd13d8487a7123008c1b2ea&txTime=20250409135439", "hls_url": "https://ozqak6.me/live/F974R_540p.m3u8?txSecret=fbdc9221abd13d8487a7123008c1b2ea&txTime=20250409135439"}, "720p": {"flv_url": "https://ozqak6.me/live/F974R_720p.flv?txSecret=fbdc9221abd13d8487a7123008c1b2ea&txTime=20250409135439", "hls_url": "https://ozqak6.me/live/F974R_720p.m3u8?txSecret=fbdc9221abd13d8487a7123008c1b2ea&txTime=20250409135439"}, "1080p": {"flv_url": "https://ozqak6.me/live/F974R_1080p.flv?txSecret=fbdc9221abd13d8487a7123008c1b2ea&txTime=20250409135439", "hls_url": "https://ozqak6.me/live/F974R_1080p.m3u8?txSecret=fbdc9221abd13d8487a7123008c1b2ea&txTime=20250409135439"}, "original": {"flv_url": "https://ozqak6.me/live/F974R.flv?txSecret=fbdc9221abd13d8487a7123008c1b2ea&txTime=20250409135439", "hls_url": "https://ozqak6.me/live/F974R.m3u8?txSecret=fbdc9221abd13d8487a7123008c1b2ea&txTime=20250409135439"}}'
+        )),
+        (selectedLiveStream.streamerCdnPullUrl = JSON.parse(
+          '{"540p": {"flv_url": "https://ozqak6.me/live/streamer/F974R_540p.flv?txSecret=0ed62dff7b7fb358d6795424782246ea&txTime=20250409143727", "hls_url": "https://ozqak6.me/live/streamer/F974R_540p.m3u8?txSecret=0ed62dff7b7fb358d6795424782246ea&txTime=20250409143727"}, "720p": {"flv_url": "https://ozqak6.me/live/streamer/F974R_720p.flv?txSecret=0ed62dff7b7fb358d6795424782246ea&txTime=20250409143727", "hls_url": "https://ozqak6.me/live/streamer/F974R_720p.m3u8?txSecret=0ed62dff7b7fb358d6795424782246ea&txTime=20250409143727"}, "1080p": {"flv_url": "https://ozqak6.me/live/streamer/F974R_1080p.flv?txSecret=0ed62dff7b7fb358d6795424782246ea&txTime=20250409143727", "hls_url": "https://ozqak6.me/live/streamer/F974R_1080p.m3u8?txSecret=0ed62dff7b7fb358d6795424782246ea&txTime=20250409143727"}, "original": {"flv_url": "https://ozqak6.me/live/streamer/F974R.flv?txSecret=0ed62dff7b7fb358d6795424782246ea&txTime=20250409143727", "hls_url": "https://ozqak6.me/live/streamer/F974R.m3u8?txSecret=0ed62dff7b7fb358d6795424782246ea&txTime=20250409143727"}}'
+        )),
+        (selectedLiveStream.name = "paul001"),
+        (selectedLiveStream.avatar = "paul002");
+      // };
+    }
+  });
+};
+
+const selectedHistory = reactive({
+  siteId: 7,
+  streamId: route.query.streamId,
+  recordTime: ["1744187432264", Date.now().toString()]
+});
+
+const getSelectedLiveHistory = () => {
+  api.post("/live/history", selectedHistory).then((res) => {
+    if (res.code === 0) {
+      // selectedLiveStream.value = res.data.records;
+    }
+  });
+};
+
+const liveStreamReady = ref(false);
+
+onActivated(async () => {
+  // Make initial API calls to load the live stream and history
+  await getSelectedLiveStream();
+  await getSelectedLiveHistory();
+
+  // Define a function to poll the `selectedLiveStream.supplierCdnPullUrl`
+  const pollForLiveStreamData = async () => {
+    // Check if supplierCdnPullUrl has data
+    if (selectedLiveStream.supplierCdnPullUrl) {
+      // Populate channels when supplierCdnPullUrl is available
+      channels.value = [
+        { name: "540p", url: selectedLiveStream.supplierCdnPullUrl["540p"].hls_url },
+        { name: "720p", url: selectedLiveStream.supplierCdnPullUrl["720p"].hls_url },
+        { name: "1080p", url: selectedLiveStream.supplierCdnPullUrl["1080p"].hls_url },
+        { name: "Original", url: selectedLiveStream.supplierCdnPullUrl["original"].hls_url }
+      ];
+
+      liveStreamReady.value = true;
+    } else {
+      // If no data yet, wait a bit before checking again
+      setTimeout(() => {
+        pollForLiveStreamData(); // Recursively call the function to keep checking
+      }, 500); // Check again after 500ms (can adjust as needed)
+    }
+  };
+
+  // Start polling for live stream data
+  await pollForLiveStreamData();
+});
+
+// watch(
+//   () => selectedLiveStream.supplierCdnPullUrl,
+//   (newValue) => {
+//     if (newValue) {
+//       // Once supplierCdnPullUrl is populated, update channels and set liveStreamReady
+//       channels.value = [
+//         { name: "540p", url: newValue["540p"].hls_url },
+//         { name: "720p", url: newValue["720p"].hls_url },
+//         { name: "1080p", url: newValue["1080p"].hls_url },
+//         { name: "Original", url: newValue["original"].hls_url }
+//       ];
+
+//       liveStreamReady.value = true;
+//     }
+//   },
+//   { immediate: true } // This will trigger the watcher immediately
+// );
 </script>
 
 <style scoped lang="scss">

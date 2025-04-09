@@ -133,7 +133,7 @@ const generateRandomMessages = () => {
 
 // Start generating random messages every 2-5 seconds
 onMounted(() => {
-  messageInterval = setInterval(generateRandomMessages, Math.random() * 10000 + 2000);
+  // messageInterval = setInterval(generateRandomMessages, Math.random() * 10000 + 2000);
 });
 
 // Stop generating messages when component is destroyed
