@@ -23,6 +23,7 @@ import { getChatHistory, getLivestreamList, sendChat } from "@/api/index/livestr
 
 const MESSAGE_SYNC_INTERVAL = 1000 * 10; // 2 seconds
 const MESSAGE_HISTORY_DANMU_FIRE_GAP = 10;
+const MAXIMUM_MESSAGE_LENGTH = 1000;
 
 const store = userStore();
 
@@ -118,7 +119,14 @@ const syncMessages = () => {
         }, []);
         const combinedMessages = [...unsortMessages.value, ...messagesFromApi];
         combinedMessages.sort((a, b) => a.time - b.time);
-        messages.value.push(...combinedMessages);
+        const messageLength = messages.value.length;
+        const combinedMessagesLength = combinedMessages.length;
+        if (messageLength + combinedMessagesLength > MAXIMUM_MESSAGE_LENGTH) {
+          const excessMessages = messageLength + combinedMessagesLength - MAXIMUM_MESSAGE_LENGTH;
+          messages.value = [...messages.value.slice(messageLength - excessMessages), ...combinedMessages];
+        } else {
+          messages.value.push(...combinedMessages);
+        }
         unsortMessages.value = [];
         danmuList.value = messagesFromApi.map((item) => item.content);
       }
