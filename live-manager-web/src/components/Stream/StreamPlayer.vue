@@ -471,22 +471,25 @@ const changeQuality = (quality) => {
 
 // 檢查是否是自己的直播
 const checkStreamOwnership = () => {
-  const loginName = userStore.loginName;
+  const loginName = sessionStorage.getItem('loginName');
   isOwnStream.value = props.stream?.streamerName === loginName;
 }
 
 // 切換直播狀態
 const toggleStreamStatus = async () => {
+  let success = false; // 添加一個標誌來追蹤 API 是否成功
   try {
     isStatusChanging.value = true
-    const newStatus = isLiveStream.value
-    
+    const targetStatus = !isLiveStream.value // 先確定目標狀態
+
     // 調用 API 更新直播狀態
-    DashboardService.changeMyStreamStatus(props.stream.streamerStreamId, !newStatus)
-    
-    // 更新狀態
-    isLiveStream.value = !isLiveStream.value
-    
+    await DashboardService.changeMyStreamStatus(props.stream.streamerStreamId, targetStatus)
+
+    // 更新本地狀態 (僅在 API 成功後)
+    isLiveStream.value = targetStatus
+
+    success = true; // 標記 API 成功
+
     // 顯示成功提示
     toast.add({
       severity: 'success',
@@ -494,6 +497,7 @@ const toggleStreamStatus = async () => {
       detail: isLiveStream.value ? '直播已開始' : '直播已關閉',
       life: 3000
     })
+
   } catch (error) {
     console.error('切換直播狀態失敗:', error)
     toast.add({
@@ -504,10 +508,15 @@ const toggleStreamStatus = async () => {
     })
   } finally {
     isStatusChanging.value = false
-    props.stream.streamerStatus = isLiveStream.value
+    // 關閉對話框
     onHide();
-    // 觸發重新載入事件
-    emit('reload')
+    console.log('關閉視窗')
+
+    // 只有在 API 成功時才觸發重新載入
+    if (success) {
+      emit('reload')
+      console.log('重新載入')
+    }
   }
 }
 

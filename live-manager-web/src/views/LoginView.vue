@@ -87,7 +87,7 @@ const toast = useToast()
 
 const onFormSubmit = () => {
   store.isAuthLoading = true
-  store.loginName = loginForm.loginName
+  sessionStorage.setItem('loginName', loginForm.loginName)
   DashboardService.logIn(loginForm.loginName, loginForm.password)
     .then((result) => {
       if (result) {
