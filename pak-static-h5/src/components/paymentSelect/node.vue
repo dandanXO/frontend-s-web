@@ -237,9 +237,11 @@ $node-color: #b81212;
       // background: rgba(255,255,255, .2);
       .node-text {
         .node-txt-img {
-          border-color: $node-color;
-          border-width: 2px;
+          // border-color: $node-color;
+          // border-width: 2px;
           box-shadow: unset;
+          background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+
 
           // &:before {
           //   display: block;
@@ -385,6 +387,7 @@ $node-color: #b81212;
         border: 2px solid transparent;
         border-radius: 10px;
         padding: 4px 4px;
+        background: #394142;
 
         img {
           background-color: transparent;

@@ -153,7 +153,7 @@ onMounted(() => {
     .get("/session/member/referralCode")
     .then((res) => {
       if (res.code === 0) {
-        selfTgurl.value = tgDomain + "refer/" + res.data;
+        selfTgurl.value = tgDomain + "referSpin/" + res.data;
         isLoading.value = false;
       }
     })

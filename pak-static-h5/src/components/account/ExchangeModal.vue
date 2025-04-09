@@ -7,7 +7,7 @@
   >
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="emit('update:modelValue', false)" />
-      <div class="popout-dialog-container">
+      <div class="popout-dialog-container" style="border-radius: 20px;">
         <div class="txt-title">{{ $t("form.exchangeTitle") }}</div>
         <div class="pc-form">
           <div class="pc-form-item">
@@ -51,7 +51,7 @@
             </InputField>
           </div>
         </div>
-        <div class="error-text bonus-amt-txt">Bonus amount: 9-9999</div>
+        <div class="error-text bonus-amt-txt">{{ $t('form.redemptionBonusAmount') }}: 9-9999</div>
 
         <q-btn
           :loading="btnLoading"
@@ -76,18 +76,21 @@
           />
         </div>
         <div class="error-text" :style="isInvalidCode ? 'margin-top: 20px;' : 'margin-top: 0;'">
-          Please follow the steps below:
+          {{ $t("form.followSteps") }}  
           <br />
-          Subscribe to the official WhatsApp channel to receive your reward code. (Limited quantity, first come first
-          served!) Enter the bonus code on this page. Once redeemed, the bonus will be credited directly to your account
-          and can be used immediately.
+          {{ $t("form.subscribeWhatsapp") }}  
           <br />
-          Redeem the code within the validity period. Wager 1x the bonus amount before withdrawing your winnings.
+          {{ $t("form.enterBonusCode") }}  
           <br />
-          Redemption may fail if eligibility conditions are not met. System verification is final.
+          {{ $t("form.redeemWithinValidity") }}  
           <br />
-          Only the account owner can redeem the code. Using bots, cheating, or any unauthorized methods will result in a
-          ban and forfeiture of the bonus.
+          {{ $t("form.wagerRequirement") }}  
+          <br />
+          {{ $t("form.redemptionFailure") }}  
+          <br />
+          {{ $t("form.accountOwnerOnly") }}  
+          <br />
+          {{ $t("form.unauthorizedMethods") }}
         </div>
       </div>
     </div>

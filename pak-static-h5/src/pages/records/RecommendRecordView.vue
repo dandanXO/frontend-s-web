@@ -67,7 +67,7 @@ onMounted(() => {
         width: 100%;
         gap: 10px;
         .label {
-            color: #bacef1;
+            color: #B2BDBF;
         }
     }
 </style>

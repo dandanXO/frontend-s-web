@@ -61,7 +61,7 @@
           ></iframe>
         </template>
 
-        <q-dialog width="100%" v-model="drawerVisible" presistent>
+        <q-dialog  width="100%" v-model="drawerVisible" presistent>
           <div class="popout-dialog">
             <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
             <div class="popout-dialog-container-gold">
@@ -78,12 +78,12 @@
       <!-- <img src="../../assets/logo-coming.png" style="width: 80%" /> -->
     </q-dialog>
 
-    <q-dialog width="100%" v-model="isExitDialogOpen" presistent>
+    <q-dialog class="flex-end" width="100%" v-model="isExitDialogOpen" presistent>
       <div class="popout-dialog">
         <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
         <div class="popout-dialog-container">
           <div class="txt-content q-mt-md text-center">{{ $t("notify.quitGameMessage") }}</div>
-          <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+          <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container popout-btns">
             <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
             <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="closeDialog()" v-close-popup />
           </div>
@@ -111,17 +111,17 @@
       </q-card>
     </q-dialog>
     <q-dialog v-model="isChooseGameDialog" transition-show="fade" transition-hide="fade">
-      <div class="dialog-wrapper">
-        <q-card class="bottom-panel">
-          <q-card-section class="row justify-center">
-            <div class="choices">
-              <div @click="handleChooseGame(false)">Play Real</div>
-              <div @click="handleChooseGame(true)">Free Trial</div>
-            </div>
-          </q-card-section>
-        </q-card>
-      </div>
-    </q-dialog>
+    <div class="dialog-wrapper">
+      <q-card class="bottom-panel">
+        <q-card-section class="row justify-center">
+          <div class="choices">
+            <div @click="handleChooseGame(false)">{{ $t('btn.playReal') }}</div>
+            <div @click="handleChooseGame(true)">{{ $t('btn.freeTrial') }}</div>
+          </div>
+        </q-card-section>
+      </q-card>
+    </div>
+  </q-dialog>
   </q-scroll-area>
 </template>
 <script setup id="GameModal">
@@ -767,17 +767,20 @@ defineExpose({
 // }
 
 .popout-dialog {
-  width: 90%;
+  // width: 90%;
 
+  // max-width: 500px;
+  // position: relative;
+  // padding-top: 90px;
+  // padding-right: 10px;
+  width: 100%;
   max-width: 500px;
   position: relative;
-  padding-top: 90px;
-  padding-right: 10px;
 
   .popout-close {
     position: absolute;
-    right: 0px;
-    top: 80px;
+    right: 15px;
+    top: 15px;
   }
 
   .popout-dialog-container-gold {
@@ -944,20 +947,39 @@ defineExpose({
     }
   }
 
+  .popout-btns {
+    width: 100%;
+  }
   .btn-cancel {
-    background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
-    border: 1px solid #5d8956;
+    // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
+    // border: 1px solid #5d8956;
+    // font-weight: 700;
+    // color: #ffffff;
+    // border-radius: 12px;
     font-weight: 700;
+    width: 100%;
+    padding: 10px 10px;
+    font-size: 16px;
+    background: #455152;
     color: #ffffff;
-    border-radius: 12px;
+
+    box-shadow: 0px 2px 0px 0px #2A3637;
+    text-align: center !important;
+
   }
 
   .btn-confirm {
-    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-    border: 1px solid #5d8956;
-    font-weight: 700;
-    color: #fff;
-    border-radius: 12px;
+
+  font-weight: 700;
+  width: 100%;
+  padding: 10px 10px;
+  font-size: 16px;
+  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+  color: #000000;
+  box-shadow: 0px 2px 0px 0px #1cca6a;
+  border-radius: 4px;
+  height: unset;
+  text-align: center !important;
   }
 }
 

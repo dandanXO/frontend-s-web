@@ -7,6 +7,7 @@ export default {
     login: "لاگ ان",
     register: "رجسٹر",
     download: "ڈاؤن لوڈ کریں",
+    getFreeSpins: "ایپ پر مفت اسپنز حاصل کریں",
     withdraw: "واپسی",
     personalCenter: "شخصی مرکز",
     deposit: "جمع کروائیں",
@@ -51,14 +52,17 @@ export default {
     betRecord: "شرط لگانے کا ریکارڈ",
     referralRecord: "ریفرل کا ریکارڈ",
     interestProfit: "سود کا منافع",
-    spinnerRules: "قواعد"
+    spinnerRules: "قواعد",
+    effectiveRevenueFAQ: "مؤثر آمدنی کے عمومی سوالات"
   },
   bottomNav: {
     home: "گھر/ہوم",
     promo: "پرومو",
     earnMoney: "پیسے کمائیں",
     wallet: "پرس",
-    me: "میں"
+    me: "میں",
+    account: "اکاؤنٹ",
+    more: "مزید"
   },
   modal: {
     addToHomeScreen: {
@@ -100,6 +104,7 @@ export default {
     password_rules_02: "پاس ورڈ کے حروف 6 سے زیادہ ہونے چاہئیں",
     forgotPassword: "پاس ورڈ بھول گئے؟",
     forgotPassword_desc: "براہ کرم ای میل فراہم کریں، ہم آپ کے رجسٹرڈ ای میل پر OTP بھیجیں گے۔",
+    forgotPasswordPhone_desc: "براہ کرم اپنا فون نمبر فراہم کریں، ہم آپ کے رجسٹرڈ فون پر OTP بھیجیں گے۔",
     register_agree_01: "میں نے اس سے اتفاق کیا ہے ",
     register_agree_02: "رازداری کے معاہدے کا استعمال کریں",
     email: "ای میل",
@@ -111,6 +116,7 @@ export default {
     verificationCode_placeholder: "براہ کرم تصدیقی کوڈ درج کریں",
     verificationCode_rules_01: "براہ کرم تصدیقی کوڈ درج کریں",
     otp_sent_title: "OTP آپ کی ای میل پر بھیجا گیا ہے، براہ کرم OTP اور نیا پاس ورڈ درج کریں۔",
+    otp_phone_sent_title: "OTP آپ کے فون پر بھیج دیا گیا ہے، براہ کرم OTP اور نیا پاسورڈ درج کریں۔",
     otp: "OTP",
     otp_placeholder: "براہ کرم OTP درج کریں",
     otp_rules_01: "براہ کرم OTP درج کریں",
@@ -218,13 +224,31 @@ export default {
     amount: "رقم",
     amount_placeholder: "براہ کرم رقم درج کریں",
     amount_rule_01: "براہ کرم رقم درج کریں",
-    all: "سب"
+    all: "سب",
+    telegramDiscordId: "ٹیلیگرام ڈسکارڈ آئی ڈی",
+    telegramDiscordId_placeholder: "ٹیلیگرام ڈسکارڈ آئی ڈی درج کریں",
+    telegramDiscordId_rules_01: "براہ کرم ٹیلیگرام ڈسکارڈ آئی ڈی درج کریں",
+    redemptionBonusAmount: "بونس کی رقم",
+    followSteps: "براہ کرم درج ذیل مراحل پر عمل کریں:",
+    subscribeWhatsapp:
+      "انعامی کوڈ حاصل کرنے کے لیے آفیشل واٹس ایپ چینل کو سبسکرائب کریں۔ (محدود مقدار، پہلے آئیں پہلے پائیں!)",
+    enterBonusCode:
+      "اس صفحے پر بونس کوڈ درج کریں۔ کوڈ ریڈیم کرنے کے بعد، بونس براہ راست آپ کے اکاؤنٹ میں جمع ہو جائے گا اور فوری طور پر استعمال کیا جا سکتا ہے۔",
+    redeemWithinValidity: "کوڈ کو میعاد ختم ہونے سے پہلے ریڈیم کریں۔",
+    wagerRequirement: "جیت کی رقم نکالنے سے پہلے بونس کی 1 گنا واجب الادا شرط پوری کریں۔",
+    redemptionFailure: "اگر اہلیت کی شرائط پوری نہ ہوں تو ریڈیم کرنے میں ناکامی ہو سکتی ہے۔ سسٹم کی تصدیق حتمی ہوگی۔",
+    accountOwnerOnly: "صرف اکاؤنٹ کا مالک ہی کوڈ ریڈیم کر سکتا ہے۔",
+    unauthorizedMethods:
+      "بوٹس، دھوکہ دہی یا کسی بھی غیر مجاز طریقے کے استعمال سے اکاؤنٹ پر پابندی اور بونس کی ضبطی ہو جائے گی۔"
   },
   btn: {
     login: "لاگ ان",
     register: "رجسٹر",
     confirm: "تصدیق کریں",
     submit: "جمع کرائیں",
+    forgetPwd: "پاس ورڈ بھول گئے",
+    areyounew: "کیا آپ B9 پر نئے ہیں؟",
+    alreadyhaveacct: "کیا آپ کے پاس پہلے سے اکاؤنٹ ہے؟",
     addNewAccount: "نیا اکاؤنٹ شامل کریں",
     updated: "اپ ڈیٹ کیا گیا",
     updating: "اپ ڈیٹ کیا جا رہا ہے...",
@@ -257,7 +281,9 @@ export default {
     details: "تفصیلات",
     transfer: "تبادلہ کرنا",
     signinWithGoogle: "Google",
-    goNow: "اب جائیں"
+    goNow: "اب جائیں",
+    playReal: "حقیقی کھیلیں",
+    freeTrial: "مفت آزمائش"
   },
   notify: {
     loggingIn: "لاگ ان ہو رہا ہے",
@@ -265,6 +291,7 @@ export default {
     phoneVerifySuccessful: "فون کامیابی سے تصدیق ہو گئی",
     emailAlreadyUsed: "ای میل پہلے ہی استعمال ہو چکی ہے۔ براہ کرم دوسرا ای میل آزما لیں۔",
     bankAddedSuccessfully: "بینک کارڈ کامیابی سے شامل کر لیا گیا",
+    cryptoAccountAddedSuccessfully: "کرپٹو اکاؤنٹ کامیابی کے ساتھ شامل کر دیا گیا",
     virtualWalletAddedSuccessfully: "ورچوئل والیٹ کامیابی سے شامل کر لیا گیا",
     newpasswordupdated: "نیا پاس ورڈ کامیابی سے اپ ڈیٹ کر لیا گیا",
     withdrewSuccessfully: "کامیابی سے رقم نکال لی",
@@ -292,14 +319,20 @@ export default {
     fishing: "ماہی گیری",
     poker: "پوکر",
     sport: "کھیل",
+    esport: "ای اسپورٹس",
     livesupport: "لائیو سپورٹ",
     feedback: "رائے",
     telegram: "ٹیلیگرام",
     whatsapp: "واٹس ایپ",
     language: "زبان",
-    downloadApp: "ایپ ڈاؤن لوڈ کریں"
+    downloadApp: "ایپ ڈاؤن لوڈ کریں",
+    appDownload: "ایپ ڈاؤن لوڈ",
+    experienceOneStopGaming: "ایک جگہ پر مکمل گیمنگ کا تجربہ کریں!",
+    customerServiceVerifier: "کسٹمر سروس تصدیق کنندہ",
+    recoverPwd: "اپنا پاس ورڈ بازیافت کریں"
   },
   home: {
+    menu_all: "سب",
     menu_lobby: "لابی",
     menu_hot: "ہاٹ/اہم",
     menu_live: "کیسینو",
@@ -324,7 +357,7 @@ export default {
     deposit: "جمع کرائیں",
     promo: "پرومو",
     otherServices: "دیگر خدمات",
-    personalCentre: "شخصی مرکز",
+    personalCenter: "شخصی مرکز",
     record: "ریکارڈ",
     discount: "ڈسکاؤنٹ",
     bank: "بینک",
@@ -347,7 +380,22 @@ export default {
     select_privilege: "خصوصی اختیار منتخب کریں",
     incorrectPrivilege: "آپ کی جمع کروائی گئی ڈپازٹ پروموشن غلط ہے۔ براہ کرم دوبارہ ڈپازٹ جمع کرنے کی کوشش کریں۔",
     useFtdPrivilege: "سلاٹ پہلی جمع کی مراعات کا استعمال کریں",
-    unlimited: "لامحدود"
+    unlimited: "لامحدود",
+    wagerRequirement: "واجر کی شرط (نکالنے کے لیے): آپ کی جمع رقم کا 10 گنا",
+    wagerRequirementEg: "مثال کے طور پر: 100 روپے جمع کروائیں، 1,000 روپے واجرت درکار ہوگی",
+    rechargeTutorial: "ری چارج کا طریقہ",
+    picture: "تصویر",
+    video: "ویڈیو",
+    mindepositnotcredit: "کم از کم ڈپازٹ: 10 USDT، 10 USDT سے کم ڈپازٹ کریڈٹ نہیں کیا جائے گا۔",
+    depositnotrecovered: "مندرجہ بالا ایڈریس پر کوئی غیر کرنسی اثاثہ جمع نہ کریں، ورنہ اثاثے واپس نہیں کیے جائیں گے۔",
+    operatingSafe:
+      "برائے کرم تصدیق کریں کہ آپریٹنگ ماحول محفوظ ہے تاکہ معلومات میں رد و بدل یا لیک ہونے سے بچا جا سکے۔",
+    transferAmountMatch:
+      "منتقلی کی رقم آپ کے بنائے گئے آرڈر سے مماثل ہونی چاہیے، ورنہ رقم کامیابی سے کریڈٹ نہیں ہو سکے گی۔",
+    donotcanceldeposit: "نوٹ: رقم کی منتقلی کے بعد ڈپازٹ آرڈر منسوخ نہ کریں۔",
+    fillinwallet: "صحیح والیٹ اکاؤنٹ نمبر درج کریں",
+    fillincnic: "صحیح شناختی کارڈ نمبر درج کریں",
+    submittedAmtConsistent: "جمع کروائی گئی رقم ادائیگی کی رقم کے مطابق ہونی چاہیے، ورنہ یہ خود بخود کریڈٹ نہیں ہوگی۔"
   },
   withdraw: {
     cashBalance: "کیش بیلنس",
@@ -358,7 +406,17 @@ export default {
     remainWagers: "باقی شرطیں",
     withdrawTutorial: "نکالنے کا ٹیوٹوریل",
     withdrawalMethodInMaintenance:
-      "یہ چینل فی الحال {startTime} سے {endTime} تک دیکھ بھال کے تحت ہے۔ براہ کرم رقم نکلوانے کے لیے دیگر چینلز کا استعمال کریں۔ شکریہ!"
+      "یہ چینل فی الحال {startTime} سے {endTime} تک دیکھ بھال کے تحت ہے۔ براہ کرم رقم نکلوانے کے لیے دیگر چینلز کا استعمال کریں۔ شکریہ!",
+    noAcctAvailable: "کوئی اکاؤنٹ دستیاب نہیں",
+    addAcct: "اکاؤنٹ شامل کریں",
+    picture: "تصویر",
+    video: "ویڈیو",
+    bindCardCorrectFormat: "اپنے والیٹ/بینک کارڈ کو درست فارمیٹ میں لنک کریں۔",
+    dailyWalletLimit:
+      "روزانہ والیٹ کی حد: PKR 50,000۔ اس حد سے تجاوز نہ کریں۔ آپ نکالنے کے لیے متعدد والیٹس شامل کر سکتے ہیں۔",
+    donotexceeddaily:
+      "روزانہ بینک کارڈ کی حد: PKR 500,000۔ اس حد سے تجاوز نہ کریں۔ آپ نکالنے کے لیے متعدد بینک کارڈز شامل کر سکتے ہیں۔",
+    blockchainwithdrawfast: "بلاک چین والیٹ (USDT) نکاسی کے لیے کوئی حد نہیں ہے، اور منتقلی بہت تیز ہوتی ہے۔"
   },
   bank: {
     virtualWallet: "ورچوئل والٹ",
@@ -394,6 +452,7 @@ export default {
     confirm: "تصدیق کریں"
   },
   vip: {
+    unlimited: "لامحدود",
     receiveMonthlyRewards: "ماہانہ انعامات وصول کریں",
     received: "وصول کیا",
     receive: "وصول کریں",
@@ -416,6 +475,7 @@ export default {
   },
   earnMoney: {
     title: "بونس پوٹ آ گیا",
+    noDataAvailable: "کوئی ڈیٹا دستیاب نہیں ہے",
     tabs: {
       reward: "انعام",
       teamManagement: "ٹیم کا انتظام",
@@ -423,6 +483,10 @@ export default {
       profitAndLoss: "صارف کا منافع اور نقصان"
     },
     reward: {
+      award: "ایوارڈ",
+      title: "دعوتی انعامات",
+      bettingCommission: "بیٹنگ کمیشن",
+      depositCommission: "ڈپازٹ کمیشن",
       myTotalIncome: "میری کل آمدنی",
       myTotalNumberOfInvites: "میرے کل دعوتوں کی تعداد",
       invite: "دعوتی بونس",
@@ -592,8 +656,9 @@ export default {
     }
   },
   records: {
-    beforeBalance: "پہلے کا بیلنس:",
-    afterBalance: "بعد کا بیلنس:",
+    date: "تاریخ",
+    beforeBalance: "پہلے کا بیلنس",
+    afterBalance: "بعد کا بیلنس",
     gamePlatform: "گیم پلیٹ فارم",
     bet: "شرط",
     settle: "سیٹل",
@@ -659,6 +724,20 @@ export default {
     slot: "الیکٹرانک",
     vip: "وی آئی پی"
   },
+  message: {
+    activity: "سرگرمی",
+    payment: "ادائیگی",
+    system: "نظام",
+    noMessage: "کوئی پیغام نہیں",
+    visitLink: "لنک دیکھیں"
+  },
+  customerServiceVerifier: {
+    mainTitle: "B9.GAME",
+    subTitle: "کسٹمر سروس ویریفائر",
+    contentPara01:
+      "B9.GAME کی فہرست کا استعمال کرتے ہوئے دھوکہ دہی سے بچنے کے لیے، آپ جس ٹیلیگرام یا ڈسکارڈ اکاؤنٹ سے بات کر رہے ہیں، اسے تصدیق&nbsp;کر&nbsp;سکتے&nbsp;ہیں",
+    contentPara02: "براہ کرم ایجنٹ اکاؤنٹ آئی ڈی درج کریں اور چیک بٹن پر کلک کریں"
+  },
   playerGuide: {
     welcomeMessage: "آپ کو خوش آمدید",
     teachingHowToEarn: "ہم آپ کو آسانی سے پیسہ کمانا سکھائیں گے!",
@@ -697,9 +776,79 @@ export default {
     noSupport: "آپ کا براؤزر ویڈیو ٹیگ کو سپورٹ نہیں کرتا ہے۔",
     linkCopied: "لنک کلپ بورڈ پر کاپی ہو گیا",
     copyFailed: "لنک کاپی کرنے میں ناکامی",
-    next: "اگلا"
+    next: "اگلا",
+    service: "سروس",
+    deposit1: "مینو میں والیٹ پر کلک کریں",
+    deposit2: "ڈپازٹ ٹیب منتخب کریں",
+    deposit3: "بینک منتخب کریں",
+    deposit4: "رقم درج کریں اور جمع کروانے پر کلک کریں",
+    refer1: "دعوت نامے شیئر کرکے پیسہ کمانے کا طریقہ",
+    refer2: "مینو میں 'پیسہ کمائیں' پر کلک کریں",
+    refer3: "لنک کے ذریعے دوستوں کو مدعو کریں",
+    withdraw1: "نیچے والے مینو میں والیٹ پر کلک کریں",
+    withdraw2: "وتھڈرا ٹیب منتخب کریں",
+    withdraw3: "وتھڈرا کی رقم درج کریں",
+    withdraw4: "وتھڈرا کی درخواست کی تصدیق کریں",
+    bankTransfer: "بینک ٹرانسفر",
+    digitalCurrency: "ڈیجیٹل کرنسی",
+    bankAccountWithdrawal: "بینک اکاؤنٹ سے نکاسی",
+    digitalCurrencyWithdrawal: "ڈیجیٹل کرنسی سے نکاسی"
   },
   hotPromo: {
+    name: "نام",
+    date: "تاریخ",
+    amount: "رقم",
+    list_of_winners: "فاتحین کی فہرست",
+    terms_and_Conditions: "شرائط و ضوابط",
+    on_other_days_three_times_daily: "دوسرے دن، روزانہ تین مرتبہ",
+    every_friday_saturday_and_sunday: "ہر جمعہ، ہر ہفتہ، اور ہر اتوار",
+    starts_now: "اب شروع ہوتا ہے",
+    starts_at: "اب شروع ہوتا ہے",
+    rewind_time: "وقت پیچھے کریں",
+    events: "تقریبات",
+    ranking_and_bonus: "رینکنگ اور بونس",
+    activities: "سرگرمیاں",
+    current_valid_bets: "موجودہ معتبر شرط",
+    remainingTimes: "باقی اوقات",
+    promoExclusionNotice: "نوٹس: اس پروموشن کو کیسینو اور اسپورٹس کی شرطوں میں شمار نہیں کیا جائے گا!",
+    deposit: "جمع",
+    dailyWagerCount: "یومیہ شرطوں کی تعداد",
+    deposits_of_the_day: "آج کی جمع",
+    currentSignIn: "موجودہ سائن ان",
+    consecutiveDepositBonus:
+      "جتنے زیادہ مسلسل دنوں تک آپ ڈپازٹ کی شرائط پوری کریں گے، اتنا ہی زیادہ اضافی بونس حاصل کریں گے۔",
+    save_image: "تصویر محفوظ کریں",
+    share: "شیئر کریں",
+    CASH_OUT_COSTS: "نکالنے کی لاگت",
+    invitation_wins: "دعوت جیت",
+    next_round: "اگلے راؤنڈ کا وقت",
+    countdown: "شمار کرنا",
+    invitationRecords: "دعوتی ریکارڈ",
+    lotteryRecords: "قرعہ اندازی کے ریکارڈ",
+    noRecords: "کوئی ریکارڈ نہیں",
+    activityRules: "سرگرمی کے قواعد",
+    record: "ریکارڈ",
+    rules: "قواعد",
+    this_round_has_ended: "یہ راؤنڈ ختم ہو گیا ہے",
+    countdown_to_next_free_spins: "اگلے مفت اسپن کا شمار",
+    invite_to_earn_spin: "دعوت دیں اور اسپن کمائیں",
+    time: "وقت",
+    rotate: "گھماؤ",
+    no_records: "کوئی ریکارڈ نہیں",
+    receive: "وصول کریں",
+    received: "وصول کیا",
+    time_left: "بچا ہوا وقت",
+    go_withdraw_now: "ابھی نکالو",
+    rs: "روپے",
+    withdraw_money_over_rs: "روپے سے زیادہ رقم نکالیں۔",
+    claim_now: "ابھی دعوت کریں",
+    claimed: "دعوت کر لیا",
+    bonus_claim_time: "بونس دعوت کا وقت",
+    promoEndsOn: "پرومو ختم ہونے کی تاریخ",
+    earnMoney: {
+      earnMoney: "پیسہ کمائیں",
+      congratsOnGetting: "مبارک ہو، آپ کو یہ حاصل ہوا"
+    },
     aviatorWheel: {
       remainingDrawTimes: "باقی قرعہ اندازی کے اوقات",
       congratulations: "مبارک ہو"
@@ -764,6 +913,9 @@ export default {
       ranksLeft: "باقی درجہ بندی",
       jackpot: "جیک پاٹ",
       noRank: "کوئی درجہ",
+      rules: "قواعد",
+      activityRules: "سرگرمی کے قواعد",
+      termsConditions: "شرائط و ضوابط",
       rules1:
         "روزانہ کی درجہ بندی کا انعام: پلیٹ فارم کے روزانہ کے مجموعی کاروبار کا 1.5% روزانہ انعامی پول میں شامل کیا جائے گا، یہ پول کھلاڑی کی روزانہ کی درجہ بندی میں اس کی جگہ کے مطابق روزانہ خودبخود تقسیم کیا جائے گا۔",
       rules2:
@@ -779,6 +931,11 @@ export default {
       termsCondition2:
         "کھلاڑی جو متعدد اکاؤنٹس یا دھوکہ دہی کے اکاؤنٹس کھولتے ہیں ان کو پلیٹ فارم پر ان کی نامناسب سرگرمی کی وجہ سے سرگرمی میں حصہ لینے کے لیے نااہل کر دیا جائے گا اور متعلقہ اکاؤنٹس کو منجمد کر دیا جائے گا۔",
       termsCondition3: "اس سرگرمی میں حصہ لینے سے پہلے براہ کرم ان شرائط و ضوابط کو غور سے پڑھیں۔"
+    },
+    goldenEgg: {
+      ranking: "درجہ بندی",
+      userName: "صارف نام",
+      betVolume: "شرط کی حجم"
     }
   },
   maintenance: {
@@ -945,5 +1102,31 @@ export default {
     58003: "ایونٹ کی معیاد ختم ہو چکی ہے",
     58004: "شرکت نہیں کر سکتے۔ پچھلے کام مکمل کرنے میں ناکام رہے ہیں۔",
     58005: "مبارک ہو، آپ نے تمام کام مکمل کر لیے ہیں۔"
+  },
+  content: {
+    title1: "رجسٹریشن کا وقت اس وقت سے شروع ہوتا ہے جب رجسٹریشن مکمل ہو جاتی ہے۔",
+    message1:
+      "جب جمع شدہ رقم 1000 روپے تک پہنچ جائے تو آپ رقم نکالنے کی درخواست دے سکتے ہیں (انعام براہ راست آپ کے والیٹ میں شامل کر دیا جائے گا)۔",
+    message2: "جب کوئی دستیاب اسپنز نہ ہوں تو کسی نئے کھلاڑی کو رجسٹر اور ڈپازٹ کروانے پر آپ کو مفت اسپنز ملیں گے۔",
+    message3:
+      "یہ ایونٹ 3 دن تک جاری رہے گا۔ ایونٹ ختم ہونے کے بعد جمع شدہ انعامات ری سیٹ کر دیے جائیں گے اور ایونٹ دوبارہ شروع ہو جائے گا۔",
+    message4: "ہر صارف کو روزانہ ایک مفت اسپن ملے گا، جو روزانہ رات 00:00 بجے شامل کیا جائے گا۔",
+    message5: "درخواست منظور ہونے کے بعد بونس براہ راست آپ کے والیٹ میں جمع کر دیا جائے گا۔",
+    message6: "بونس نکالنے سے پہلے کم از کم ایک بار استعمال (رول اوور) کرنا ضروری ہے۔",
+    message7:
+      "مدعو کردہ صارف کو اپنا فون نمبر تصدیق کرنا ہوگا، دعوت دینے والے کے ریفرل لنک سے رجسٹریشن کرنا ہوگی، اور اس کا IP ایڈریس منفرد ہونا چاہیے تاکہ ریفرل اہل ہو۔",
+    aviatorPromoIntro:
+      "Aviator کے ساتھ بیٹنگ کا جوش محسوس کریں! صرف ایک کلک سے آپ کا Aviator حیران کن 3,216 گنا جیت سکتا ہے! ٹاپ 50 کے لیے انعامی رقم 1,250,000 روپے ہے!",
+    aviatorGoldenEgg:
+      "ہر روز Aviator پر بیٹنگ کرتے ہوئے، جب مؤثر بیٹنگ کی رقم 888 روپے تک پہنچ جائے، تو آپ کو سنہری انڈا (SUNEHRI ANDY) توڑنے کا موقع ملتا ہے۔ زیادہ سے زیادہ انعام: 88,888 روپے، جیتنے کا امکان: 3.6٪",
+    aviatorTopTurnover:
+      "Aviator پر بیٹنگ کے دوران، سب سے زیادہ مجموعی ٹرن اوور والا کھلاڑی پہلی پوزیشن کے لیے اہل ہو گا۔",
+    cashRainIntro: "ہر راؤنڈ میں کیش رین کے ذریعے مفت میں 666,666 روپے تقسیم کیے جاتے ہیں۔",
+    cashRainMaxPerRound: "ہر راؤنڈ میں زیادہ سے زیادہ کیش بیک رقم: 66,666 روپے۔",
+    cashRainFreeDistribution: "ہر راؤنڈ میں کیش بیک مفت تقسیم کیا جاتا ہے۔",
+    cashRainClaimCondition:
+      "انعام حاصل کرنے کے لیے کم از کم 300 روپے کا تاریخی ڈپازٹ برقرار رکھیں اور روزانہ کم از کم 100 روپے کی شرطیں مکمل کریں۔",
+    cashRainUsage: "موصول شدہ رقم کو گیم کھیلنے یا نکلوانے کے لیے براہ راست استعمال کیا جا سکتا ہے۔",
+    cashRainVIP: "جتنا زیادہ VIP ممبرشپ لیول ہوگا، اتنی ہی زیادہ رقم حاصل ہوگی۔"
   }
 };

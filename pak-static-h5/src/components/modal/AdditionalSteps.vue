@@ -1,16 +1,16 @@
 <template>
-  <div style="padding-bottom: env(safe-area-inset-bottom);" class="abs-container" :class="`abs-${localType}-${localStep}`">
+  <div
+    style="padding-bottom: env(safe-area-inset-bottom)"
+    class="abs-container"
+    :class="`abs-${localType}-${localStep}`"
+  >
     <div class="player-guide" :class="`${localType}-mode`">
       <div class="steps-portion" :class="`steptopmain-${currentAdditionalStep} ${localType}-mode`">
         <!-- <img class="abs-line" :class="`${localType} step-${localStep}`" v-if="localType === 'deposit'" :src="require(`../../assets/images/newplayerguide/line-${localType}-${localStep}.png`)"> -->
 
-        <img
-          v-if="imagePath"
-          class="abs-line"
-          :class="`${localType} step-${localStep}`"
-          :src="imagePath"
-          alt="Guide Line"
-        />
+        <div v-if="imagePath" class="abs-line-wrapper" :style="absLineStyle">
+          <img class="abs-line" :class="`${localType} step-${localStep}`" :src="imagePath" alt="Guide Line" />
+        </div>
         <div class="top" :class="{ hide: localType === 'refer' && localStep === 3 }">
           <img :src="require(`../../assets/images/newplayerguide/step-top-${localTypeStep()}.png`)" />
           <div class="title" v-if="localType === 'withdraw'">{{ $t("playerGuide.recharging") }}</div>
@@ -35,19 +35,23 @@
               {{ currentAdditionalStep }} / {{ currentSteps.length }}
             </div>
             <div class="buttons">
-            <div
-              @click="updateCurrentAdditionalStep"
-              :class="{ whand: localType === 'refer' && localStep === 1 }"
-              class="bottom-button"
-            >
-              {{ localType === "refer" && localStep === 1 ? $t("playerGuide.tryItOut") : $t("playerGuide.next") }}
+              <div
+                ref="bottomButtonRef"
+                @click="updateCurrentAdditionalStep"
+                :class="{ whand: localType === 'refer' && localStep === 1 }"
+                class="bottom-button"
+              >
+                {{ localType === "refer" && localStep === 1 ? $t("playerGuide.tryItOut") : $t("playerGuide.next") }}
+              </div>
+              <div @click="updateToWithdrawStep" class="next-button" v-if="localType === 'refer' && localStep === 1">
+                {{ $t("playerGuide.next") }}
+              </div>
             </div>
-            <div @click="updateToWithdrawStep" class="next-button" v-if="localType === 'refer' && localStep === 1">{{ $t("playerGuide.next") }}</div>
-          </div>
           </div>
         </div>
       </div>
       <div
+        ref="highlightBoxRef"
         class="green-highlight-box"
         :class="`step-${currentAdditionalStep} ${localType}-mode`"
         @click="updateCurrentAdditionalStep"
@@ -59,13 +63,137 @@
 </template>
 
 <script setup>
-import { ref, watch, computed, onMounted, onUnmounted } from "vue";
+import { useElementBounding, useWindowSize } from "@vueuse/core";
+import { ref, watch, computed, onMounted, nextTick } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+
+const absLineStyleMap = new Map([
+  [
+    "deposit-1",
+    {
+      top: (buttonRect, highlightRect) => `${buttonRect.bottom.value}px`,
+      left: (buttonRect, highlightRect) => `${buttonRect.left.value}px`,
+      right: (buttonRect, highlightRect) => `calc(100vw - ${highlightRect.right.value}px)`,
+      bottom: (buttonRect, highlightRect) => `calc(100svh - ${highlightRect.top.value}px)`
+    }
+  ],
+  [
+    "deposit-2",
+    {
+      top: (buttonRect, highlightRect) => `${highlightRect.bottom.value}px`,
+      left: (buttonRect, highlightRect) => `${buttonRect.x.value - 221}px`,
+      right: (buttonRect, highlightRect) => "",
+      bottom: (buttonRect, highlightRect) =>
+        `calc(100svh - ${buttonRect.top.value + buttonRect.height.value / 2}px - 12px)`
+    }
+  ],
+  [
+    "deposit-3",
+    {
+      top: (buttonRect, highlightRect) => `${highlightRect.bottom.value}px`,
+      left: (buttonRect, highlightRect) => `${buttonRect.x.value - 138}px`,
+      right: (buttonRect, highlightRect) => "",
+      bottom: (buttonRect, highlightRect) =>
+        `calc(100svh - ${buttonRect.top.value + buttonRect.height.value / 2}px - 2px)`
+    }
+  ],
+  [
+    "deposit-4",
+    {
+      top: (buttonRect, highlightRect) => `${buttonRect.y.value + 10}px`,
+      left: (buttonRect, highlightRect) => `${buttonRect.x.value + buttonRect.width.value / 2 - 87}px`,
+      right: (buttonRect, highlightRect) => "",
+      bottom: (buttonRect, highlightRect) => `calc(100svh - ${highlightRect.y.value + 29}px)`
+    }
+  ],
+  [
+    "refer-2",
+    {
+      top: (buttonRect, highlightRect) => `${buttonRect.y.value + buttonRect.height.value / 2}px`,
+      left: (buttonRect, highlightRect) => `${buttonRect.x.value - 10}px`,
+      right: (buttonRect, highlightRect) => `calc(100vw - ${buttonRect.right.value + 10}px)`,
+      bottom: (buttonRect, highlightRect) => `calc(100svh - ${highlightRect.y.value + 14}px)`
+    }
+  ],
+  [
+    "refer-3",
+    {
+      top: (buttonRect, highlightRect) => `${highlightRect.bottom.value - 73}px`,
+      left: (buttonRect, highlightRect, width) => `${(width.value - 500) / 2}px`,
+      right: (buttonRect, highlightRect) => "",
+      bottom: (buttonRect, highlightRect) => `calc(100svh - ${buttonRect.top.value + 50}px)`
+    }
+  ],
+  [
+    "withdraw-1",
+    {
+      top: (buttonRect, highlightRect) => `${buttonRect.bottom.value}px`,
+      left: (buttonRect, highlightRect) => `${buttonRect.x.value}px`,
+      right: (buttonRect, highlightRect) => `calc(100vw - ${highlightRect.right.value}px)`,
+      bottom: (buttonRect, highlightRect) => `calc(100svh - ${highlightRect.top.value}px)`
+    }
+  ],
+  [
+    "withdraw-2",
+    {
+      top: (buttonRect, highlightRect) => `${highlightRect.bottom.value - highlightRect.height.value / 2}px`,
+      left: (buttonRect, highlightRect) => "",
+      right: (buttonRect, highlightRect) => "",
+      bottom: (buttonRect, highlightRect) => `calc(100svh - ${buttonRect.y.value + buttonRect.height.value / 2 + 10}px)`
+    }
+  ],
+  [
+    "withdraw-3",
+    {
+      top: (buttonRect, highlightRect) => `${highlightRect.bottom.value}px`,
+      left: (buttonRect, highlightRect) => `${(width.value - 500) / 2 + 120}px`,
+      right: (buttonRect, highlightRect) => "",
+      // bottom: (buttonRect, highlightRect) => `calc(100svh - ${buttonRect.y.value + buttonRect.height.value / 2 + 10}px)`
+      bottom: (buttonRect, highlightRect) => {
+        const viewportHeight = window.innerHeight;
+        const offset = buttonRect.y.value + buttonRect.height.value / 2 + 10;
+        return `${viewportHeight - offset}px`;
+      }
+    }
+  ],
+  [
+    "withdraw-4",
+    {
+      top: (buttonRect, highlightRect) => `${buttonRect.bottom.value - 37}px`,
+      left: (buttonRect, highlightRect) => `${buttonRect.x.value - 40}px`,
+      right: (buttonRect, highlightRect) => "",
+      bottom: (buttonRect, highlightRect) => `calc(100svh - ${highlightRect.y.value + 27}px)`
+    }
+  ]
+]);
+
 const router = useRouter();
+const { t } = useI18n();
+
 const props = defineProps({ currentAdditionalStep: Number, currentType: String });
 const emit = defineEmits(["updateStep", "closeGuide"]);
 const localStep = ref(props.currentAdditionalStep); // Local step variable
 const localType = ref(props.currentType);
+const bottomButtonRef = ref(null);
+const highlightBoxRef = ref(null);
+
+const buttonRect = useElementBounding(bottomButtonRef);
+const highlightRect = useElementBounding(highlightBoxRef);
+const { width, height } = useWindowSize();
+
+const absLineStyle = computed(() => {
+  if (!bottomButtonRef.value) return {};
+  const styleKey = `${localType.value}-${localStep.value}`;
+  const absLineStyle = absLineStyleMap.get(styleKey);
+  if (!absLineStyle) return {};
+  return {
+    top: absLineStyle.top(buttonRect, highlightRect, width, height),
+    left: absLineStyle.left(buttonRect, highlightRect, width, height),
+    right: absLineStyle.right(buttonRect, highlightRect, width, height),
+    bottom: absLineStyle.bottom(buttonRect, highlightRect, width, height)
+  };
+});
 
 const imagePath = computed(() => {
   try {
@@ -93,25 +221,25 @@ const localTypeStep = () => {
 };
 // Deposit steps
 const additionalDepSteps = ref([
-  { step: 1, instruction: "Click on wallet in the menu" },
-  { step: 2, instruction: "Select deposit tab" },
-  { step: 3, instruction: "Select bank" },
-  { step: 4, instruction: "Update amount and click Submit" }
+  { step: 1, instruction: t("playerGuide.deposit1") },
+  { step: 2, instruction: t("playerGuide.deposit2") },
+  { step: 3, instruction: t("playerGuide.deposit3") },
+  { step: 4, instruction: t("playerGuide.deposit4") }
 ]);
 
 // Referral steps
 const additionalReferSteps = ref([
-  { step: 1, instruction: "How to earn money by sharing invitations" },
-  { step: 2, instruction: "Click on earn money in the menu" },
-  { step: 3, instruction: "Invite friends through the link" }
+  { step: 1, instruction: t("playerGuide.refer1") },
+  { step: 2, instruction: t("playerGuide.refer2") },
+  { step: 3, instruction: t("playerGuide.refer3") }
 ]);
 
 // Withdrawal steps
 const additionalWithdrawSteps = ref([
-  { step: 1, instruction: "Click on wallet in the bottom menu" },
-  { step: 2, instruction: "Select withdrawal tab" },
-  { step: 3, instruction: "Enter withdrawal amount" },
-  { step: 4, instruction: "Confirm withdrawal request" }
+  { step: 1, instruction: t("playerGuide.withdraw1") },
+  { step: 2, instruction: t("playerGuide.withdraw2") },
+  { step: 3, instruction: t("playerGuide.withdraw3") },
+  { step: 4, instruction: t("playerGuide.withdraw4") }
 ]);
 
 // Dynamically determine which steps to use
@@ -125,7 +253,7 @@ const updateToWithdrawStep = () => {
   emit("closeGuide", true);
   localStorage.setItem(`completedreferguide`, JSON.stringify(true));
   localStorage.setItem(`newPlayerGuide`, 5);
-}
+};
 const updateCurrentAdditionalStep = () => {
   // debugger;
   if (localType.value === "deposit") {
@@ -162,6 +290,13 @@ const updateCurrentAdditionalStep = () => {
     localStorage.setItem(`completed${localType.value}guide`, JSON.stringify(true));
   }
 };
+
+onMounted(() => {
+  setTimeout(() => {
+    buttonRect.update();
+    highlightRect.update();
+  });
+});
 </script>
 <style lang="scss" scoped>
 .abs-container {
@@ -185,14 +320,14 @@ const updateCurrentAdditionalStep = () => {
   margin: auto;
   max-height: 100dvh; /* Ensure content does not get cut off */
   // overscroll-behavior: contain;
-    // &.abs-refer-3 {
-    //   top: 860px;
-    // }
-    // &.abs-withdraw-3 {
-      
-    //   top: 175px;
+  // &.abs-refer-3 {
+  //   top: 860px;
+  // }
+  // &.abs-withdraw-3 {
 
-    // }
+  //   top: 175px;
+
+  // }
   .main-highlight-box {
     width: 100%;
     position: absolute;
@@ -207,8 +342,6 @@ const updateCurrentAdditionalStep = () => {
     margin: auto;
   }
   .green-highlight-box.deposit-mode {
-    width: 80px;
-    height: 80px;
     position: absolute;
     right: 11vh;
     bottom: 0;
@@ -236,20 +369,22 @@ const updateCurrentAdditionalStep = () => {
       }
     }
     &.step-1 {
-      width: 80px;
-      height: 80px;
+      width: 16vw;
+      height: 16vw;
+      max-width: 80px;
+      max-height: 80px;
       // right: 11vh;
-      right: 20%;
+      right: 22%;
       bottom: 0;
-      .inner-line {
-        background: url(../../assets/images/newplayerguide/dep-point-1.png) no-repeat center center;
-        background-size: 60%;
-      }
+      // .inner-line {
+      //   background: url(../../assets/images/newplayerguide/dep-point-1.png) no-repeat center center;
+      //   background-size: 60%;
+      // }
     }
     &.step-2 {
       width: 50%;
       height: 75px;
-      top: 70px;
+      top: 56px;
       left: 5px;
       right: unset;
     }
@@ -331,8 +466,10 @@ const updateCurrentAdditionalStep = () => {
     &.step-3 {
       width: 95%;
       max-width: 500px;
-      height: 125px;
-      top: 95px;
+      height: 33vw;
+      max-height: 145px;
+      min-height: 125px;
+      top: 85px;
       bottom: unset;
       left: 0;
       right: 0;
@@ -388,22 +525,24 @@ const updateCurrentAdditionalStep = () => {
       // right: 11vh;
       right: 22%;
       bottom: 0;
-      .inner-line {
-        background: url(../../assets/images/newplayerguide/dep-point-1.png) no-repeat center center;
-        background-size: 60%;
-      }
+      // .inner-line {
+      //   background: url(../../assets/images/newplayerguide/dep-point-1.png) no-repeat center center;
+      //   background-size: 60%;
+      // }
     }
     &.step-2 {
       width: 50%;
       height: 75px;
-      top: 70px;
+      top: 55px;
       right: 5px;
       left: unset;
     }
     &.step-3 {
       width: 95%;
       max-width: 500px;
-      height: 100px;
+      height: 26vw;
+      max-height: 130px;
+      min-height: 100px;
       top: 60px;
       bottom: unset;
       left: 0;
@@ -447,186 +586,174 @@ const updateCurrentAdditionalStep = () => {
       align-items: center;
       &.steptopmain-3.deposit-mode {
         // top: 35vh;
+        top: 25vh;
         top: 25dvh;
+        // .title {
+        //   bottom: 1.2vh;
+        // }
       }
+      // &.steptopmain-4.deposit-mode {
+      //   .title {
+      //     bottom: 1.3vh;
+      //   }
+      // }
       // &.steptopmain-3.refer-mode {
       //   top: 35vh;
       // }
       &.steptopmain-3.withdraw-mode {
         // top: 35vh;
-        top: 25dvh;
+        top: 25vh;
+        @supports(height: 100dvh) {
+          top: 25dvh;
+        }
       }
       &.steptopmain-2.withdraw-mode {
         // top: 35vh;
+        top: 25vh;
         top: 25dvh;
       }
-      &.steptopmain-2 .top {
+      &.steptopmain-2.refer-mode .top {
         width: 75% !important;
       }
     }
-    .abs-line {
-      position: absolute;
+    .abs-line-wrapper {
+      position: fixed;
       pointer-events: none;
       z-index: 9999;
-      &.deposit {
-        &.step-1 {
-          @media screen  and (min-width: 360px) and (max-width: 375px) {
-            width: 18vh;
-            top: 54vh;
-            left: 18vh;
-          }
-          @supports (-webkit-touch-callout: none) {
-            width: 16svh;
-            top: 60svh;
-            left: 30svh;
-          }
-          width: 49%;
-          top: 95%;
-          left: 30%;
-        }
-        &.step-2 {
-          @media screen  and (min-width: 360px) and (max-width: 375px) {
-            width: 36svh;
-            top: -3svh;
-            left: 2svh;
-          }
-          @supports (-webkit-touch-callout: none) {
-            width: 44svh;
-            top: -3svh;
-            left: 2svh;
-          }
-          width: 40dvh;
-          top: -14dvh;
-          left: -6dvh;
-        }
-        &.step-3 {
-          @media screen  and (min-width: 360px) and (max-width: 375px) {
-            width: 16svh;
-            left: 5svh;
-            top: -9svh;
-          }
-          @supports (-webkit-touch-callout: none) {
-            width: 18svh;
-            top: -11svh;
-            left: 8svh;
-          }
-          width: 14svh;
-          left: 3svh;
-          top: -12svh;
-        }
-        &.step-4 {
-          @media screen  and (min-width: 360px) and (max-width: 375px) {
-            width: 16svh;
-            left: 20svh;
-            top: 51svh;
-          }
-          @supports (-webkit-touch-callout: none) {
-            width: 12svh;
-            top: 57svh;
-            left: 29svh;
-          }
-          width: 27dvh;
-          top: 38dvh;
-          left: 11dvh;
-        }
-      }
-      &.refer {
-        &.step-2 {
-          @media screen  and (min-width: 360px) and (max-width: 375px) {
-            width: 10svh;
-            left: 23svh;
-            top: 53svh;
-          }
-          @supports (-webkit-touch-callout: none) {
-            width: 9svh;
-            top: 59svh;
-            left: 29svh;
-          }
-          width: 15dvh;
-          top: 45dvh;
-          left: 15dvh;
-          transform: rotate(25deg);
-        }
-        &.step-3 {
-          
-          @media screen  and (min-width: 360px) and (max-width: 375px) {
-            width: 38svh;
-            left: 5svh;
-            top: -4svh;
-          }
-          @supports (-webkit-touch-callout: none) {
-            width: 43svh;
-            left: 8svh;
-            top: -3svh;
-          }
-          width: 43dvh;
-          top: -15dvh;
-          left: 0dvh;
-        }
-      }
-      &.withdraw {
-        &.step-1 {
-          @media screen  and (min-width: 360px) and (max-width: 375px) {
-            width: 18vh;
-            top: 54vh;
-            left: 18vh;
-          }
-          @supports (-webkit-touch-callout: none) {
-            width: 16svh;
-            top: 60svh;
-            left: 30svh;
-          }
-          width: 49%;
-          top: 95%;
-          left: 30%;
-        }
-        
-        &.step-2 {
-          @media screen  and (min-width: 360px) and (max-width: 375px) {
-            width: 40svh;
-            top: -10svh;
-            left: 8svh;
-          }
-          @supports (-webkit-touch-callout: none) {
-            width: 45svh;
-            top: -12svh;
-            left: 10svh;
-          }
-          width: 37dvh;
-          top: -14dvh;
-          left: 4dvh;
-        }
-        &.step-3 {
-          @media screen  and (min-width: 360px) and (max-width: 375px) {
-            width: 14svh;
-            left: 5svh;
-            top: -2svh;
-          }
-          @supports (-webkit-touch-callout: none) {
-            width: 16svh;
-            top: -3svh;
-            left: 10svh;
-          }
-          width: 13dvh;
-          left: 7dvh;
-          top: -7dvh;
-        }
-        &.step-4 {
-          @media screen  and (min-width: 360px) and (max-width: 375px) {
-            width: 16svh;
-            left: 20svh;
-            top: 52svh;
-          }
-          @supports (-webkit-touch-callout: none) {
-            width: 12svh;
-            top: 58svh;
-            left: 28svh;
-          }
-          width: 25dvh;
-          left: 14dvh;
-          top: 39dvh;
-        }
-      }
+    }
+    .abs-line {
+      width: 100%;
+      height: 100%;
+      // &.deposit {
+      //   &.step-1 {
+      //     width: 33%;
+      //     top: 96%;
+      //     left: 40%;
+      //     height: calc(50svh - 45% - 80px);
+      //     // TODO: 111
+      //   }
+      //   &.step-2 {
+      //     left: -1%;
+      //     bottom: 20svh;
+      //     height: calc(50svh + 25% - 50px);
+      //   }
+      //   &.step-3 {
+      //     left: 16.5%;
+      //     bottom: 8%;
+      //     height: calc(50svh + 33% - 50px);
+      //   }
+      //   &.step-4 {
+      //     width: 27dvh;
+      //     top: 38dvh;
+      //     left: 11dvh;
+      //     @media screen and (min-width: 360px) and (max-width: 375px) {
+      //       width: 16svh;
+      //       left: 20svh;
+      //       top: 51svh;
+      //     }
+      //     @supports (-webkit-touch-callout: none) {
+      //       width: 12svh;
+      //       top: 57svh;
+      //       left: 29svh;
+      //     }
+      //   }
+      // }
+      // &.refer {
+      //   &.step-2 {
+      //     width: 15dvh;
+      //     top: 45dvh;
+      //     left: 15dvh;
+      //     transform: rotate(25deg);
+      //     @media screen and (min-width: 360px) and (max-width: 375px) {
+      //       width: 10svh;
+      //       left: 23svh;
+      //       top: 53svh;
+      //     }
+      //     @supports (-webkit-touch-callout: none) {
+      //       width: 9svh;
+      //       top: 59svh;
+      //       left: 29svh;
+      //     }
+      //   }
+      //   &.step-3 {
+      //     width: 43dvh;
+      //     top: -15dvh;
+      //     left: 0dvh;
+      //     @media screen and (min-width: 360px) and (max-width: 375px) {
+      //       width: 38svh;
+      //       left: 5svh;
+      //       top: -4svh;
+      //     }
+      //     @supports (-webkit-touch-callout: none) {
+      //       width: 43svh;
+      //       left: 8svh;
+      //       top: -3svh;
+      //     }
+      //   }
+      // }
+      // &.withdraw {
+      //   &.step-1 {
+      //     width: 49%;
+      //     top: 95%;
+      //     left: 30%;
+      //     @media screen and (min-width: 360px) and (max-width: 375px) {
+      //       width: 18vh;
+      //       top: 54vh;
+      //       left: 18vh;
+      //     }
+      //     @supports (-webkit-touch-callout: none) {
+      //       width: 16svh;
+      //       top: 60svh;
+      //       left: 30svh;
+      //     }
+      //   }
+
+      //   &.step-2 {
+      //     width: 37dvh;
+      //     top: -14dvh;
+      //     left: 4dvh;
+      //     @media screen and (min-width: 360px) and (max-width: 375px) {
+      //       width: 40svh;
+      //       top: -10svh;
+      //       left: 8svh;
+      //     }
+      //     @supports (-webkit-touch-callout: none) {
+      //       width: 45svh;
+      //       top: -12svh;
+      //       left: 10svh;
+      //     }
+      //   }
+      //   &.step-3 {
+      //     width: 13dvh;
+      //     left: 7dvh;
+      //     top: -7dvh;
+      //     @media screen and (min-width: 360px) and (max-width: 375px) {
+      //       width: 14svh;
+      //       left: 5svh;
+      //       top: -2svh;
+      //     }
+      //     @supports (-webkit-touch-callout: none) {
+      //       width: 16svh;
+      //       top: -3svh;
+      //       left: 10svh;
+      //     }
+      //   }
+      //   &.step-4 {
+      //     width: 25dvh;
+      //     left: 14dvh;
+      //     top: 39dvh;
+      //     @media screen and (min-width: 360px) and (max-width: 375px) {
+      //       width: 16svh;
+      //       left: 20svh;
+      //       top: 52svh;
+      //     }
+      //     @supports (-webkit-touch-callout: none) {
+      //       width: 12svh;
+      //       top: 58svh;
+      //       left: 28svh;
+      //     }
+      //   }
+      // }
     }
     .top {
       width: 90%;
@@ -646,7 +773,7 @@ const updateCurrentAdditionalStep = () => {
         color: #ffffff;
         text-shadow: -1px -1px 0 #215f25, 1px -1px 0 #215f25, -1px 1px 0 #215f25, 1px 1px 0 #215f25;
         text-transform: uppercase;
-        bottom: 1vh;
+        bottom: 1.3vh;
         width: 80%;
         margin: 0 auto;
         left: 0;
@@ -671,7 +798,11 @@ const updateCurrentAdditionalStep = () => {
       margin: -45px auto 0;
       border-radius: 16px;
       display: flex;
-      gap: 25px;
+      // gap: 25px;
+      
+      > div:not(:last-child) {
+        margin-bottom: 25px;
+      }
       flex-direction: column;
       justify-content: center;
       align-items: center;
@@ -742,7 +873,11 @@ const updateCurrentAdditionalStep = () => {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 20px;
+        // gap: 20px;
+        
+        > div:not(:last-child) {
+          margin-right: 20px;
+        }
       }
       .next-button {
         text-transform: uppercase;
@@ -766,7 +901,10 @@ const updateCurrentAdditionalStep = () => {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 10px;
+        // gap: 10px;
+        > div:not(:last-child) {
+          margin-right: 10px;
+        }
       }
       .bottom-button {
         cursor: pointer;
@@ -803,11 +941,11 @@ const updateCurrentAdditionalStep = () => {
             bottom: 0;
             right: 0;
             animation: moveFinger 1.5s ease-in-out infinite;
+            z-index: 99;
             @media screen and (min-width: 400px) {
               width: 70px;
               height: 70px;
             }
-            z-index: 99;
           }
         }
       }

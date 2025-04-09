@@ -49,6 +49,10 @@ installBtn.addEventListener("click", async () => {
       const urlParams = new URLSearchParams(window.location.search);
       const fbclid = urlParams.get("fbclid");
       const referral = urlParams.get("refer");
+      // const referralSpin = urlParams.get("referSpin");
+      // if (referralSpin) {
+      //   localStorage.setItem("SPIN_REFERRAL_CODE", referralSpin);
+      // }
       if (referral) {
         localStorage.setItem("PWA_REFERRAL_CODE", referral);
       }

@@ -3,12 +3,12 @@
     <div class="wheel-outer-wrapper">
       <!-- <span class="title">Countdown: {{ remainingTime }}</span> -->
       <div class="summary-wrapper">
-        <span class="prize">
+        <!-- <span class="prize">
          Rs
           <span class="amount">{{ info.accumulatedBonus }}</span>
-        </span>
+        </span> -->
 
-        <!-- <GradientTextAmount :amountText="`$ ${info.accumulatedBonus}`" /> -->
+        <GradientTextAmount :amountText="`${store.currency.label} ${info.accumulatedBonus}`" />
 
         <template v-if="extractionDifference > 0 && !info.hasWithdrawn">
           <ProgressBar />
@@ -17,12 +17,12 @@
 
         <button v-else-if="!info.hasWithdrawn" class="receive-btn" @click="handleReceiveClick">
           <img src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/coin-2.png" />
-          <span>RECEIVE</span>
+          <span>{{ $t("hotPromo.receive") }}</span>
         </button>
 
         <button v-else-if="info.hasWithdrawn" class="receive-btn disabled">
           <img src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/coin-2.png" />
-          <span>RECEIVED</span>
+          <span>{{ $t("hotPromo.received") }}</span>
         </button>
 
         <div class="winning-record-outer-wrapper">
@@ -32,27 +32,27 @@
                 <span>{{ moment(record.recordTime).format("MM-DD HH:mm:ss") }}</span>
                 <span class="name">{{ record.loginName }}</span>
                 <span>
-                  RECEIVE
-                  <span class="amount">Rs{{ record.bonus }}</span>
+                  {{ $t("hotPromo.receive") }}
+                  <span class="amount">{{ $t("hotPromo.rs") }}{{ record.bonus }}</span>
                 </span>
               </div>
             </template>
-            <div v-else class="no-record-text">No Records</div>
+            <div v-else class="no-record-text">{{ $t("hotPotmo.no_records") }}</div>
           </div>
         </div>
         <div class="foreground-wrapper">
           <div class="wheel-wrapper">
-            <img
+            <!-- <img
               class="decoration penguin"
               src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-penguin.png"
             />
             <img
               class="decoration ox"
               src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-ox.png"
-            />
+            /> -->
 
             <div class="countdown">
-              {{ isWheelEnded ? "Next Round" : "Countdown" }}
+              {{ isWheelEnded ? $t("hotPromo.next_round") : $t("hotPromo.countdown") }}
               : {{ remainingTime }}
             </div>
             <div class="wheel-inner-wrapper">
@@ -66,71 +66,56 @@
                 src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/wheel-indicate.png"
               />
               <button class="btn" :class="{ disabled: !info.availableSpin }" @click="handleWheelClick">
-                rotate
+                {{ $t("hotPromo.rotate") }}
                 <br />
-                {{ info.availableSpin }} time
+                {{ info.availableSpin }} {{ $t("hotPromo.time") }}
               </button>
             </div>
 
-            <img
+            <!-- <img
               class="decoration tiger"
               src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-tiger.png"
             />
             <img
               class="decoration rabbit"
               src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-rabbit.png"
-            />
+            /> -->
             <CommonButton class="draw-btn" :class="{ disabled: isWheelEnded }" @click="handleInviteClick">
-              Invite To Earn Spin
+              {{ $t("hotPromo.invite_to_earn_spin") }}
             </CommonButton>
-            <span v-if="isWheelEnded" class="next-spin-remaining-time">This round has ended.</span>
+            <span v-if="isWheelEnded" class="next-spin-remaining-time">{{ $t("hotPromo.this_round_has_ended") }}</span>
+            <span v-if="!isWheelEnded" class="next-spin-remaining-time">{{ $t("hotPromo.countdown_to_next_free_spins") }}: {{ nextFreeSpinRemainingTime }}</span>
           </div>
         </div>
       </div>
 
-      <button class="rules-btn" @click="handleRulesClick">Rules</button>
-      <button class="record-btn" @click="handleRecordClick">Record</button>
+      <button class="rules-btn" @click="handleRulesClick">{{ $t("hotPromo.rules") }}</button>
+      <button class="record-btn" @click="handleRecordClick">{{ $t("hotPromo.record") }}</button>
     </div>
-    
+
     <q-dialog v-model="showRulesDialog">
       <div class="block-wrapper">
       <div class="title-wrapper">
-        <img
+        {{ $t("hotPromo.activityRules") }}
+        <!-- <img
           style="width: 100%; max-width: 250px; padding: 0 0 5px 0"
           src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/activity-rules-title.png"
-        />
+        /> -->
       </div>
       <ol>
-        <li>
-          When the accumulated amount reaches, you can apply for withdrawal (Rewards will add to your wallet directly).
-        </li>
-        <li>When there are no spins available, refer a new player to get a free spin.</li>
-        <li>
-          Each round of the event lasts for 24, 48, or 72 hours. After 24, 48, or 72 hours, the accumulated bonus and
-          invitation records will be reset, and a new round will start.
-        </li>
-        <li>Each user can enjoy one free spin upon their first participation in the lucky spin.</li>
-        <li>
-          Users can randomly receive bonus rewards through the lucky spin. The reset time is 24 hours for the first
-          stage, 48 hours for the second stage, and 72 hours for the third stage.
-        </li>
-        <li>
-          After completing a stage, the user will automatically enter the next stage. If the stage is not completed, it
-          will be reset and restarted.
-        </li>
-        <li>
-          Upon reaching the third stage, the event will continuously reset the third stage based on the cycle time.
-        </li>
-        <li>
-          The right to interpret the event belongs to B9GAME. If you have any questions, please contact customer
-          service.
-        </li>
+        <li>{{ $t("content.message1") }}</li>
+        <li>{{ $t("content.message2") }}</li>
+        <li>{{ $t("content.message3") }}</li>
+        <li>{{ $t("content.message4") }}</li>
+        <li>{{ $t("content.message5") }}</li>
+        <li>{{ $t("content.message6") }}</li>
+        <li>{{ $t("content.message7") }}</li>
       </ol>
     </div>
     </q-dialog>
     <WheelResultDialog v-model="showResultDialog" :prize="prize" @hide="$emit('reload')" />
     <RecordDialog v-model="showRecordDialog" />
-    <!-- <CashOutPopup ref="cashOutPopupRef" v-model="isCashOutPopupVisible" /> -->
+    <CashOutPopup ref="cashOutPopupRef" v-model="isCashOutPopupVisible" />
     <SharePopup ref="sharePopupRef" v-model="isSharePopupVisible" />
   </div>
 </template>
@@ -144,10 +129,13 @@ import { useRouter } from "vue-router";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import ProgressBar from "./ProgressBar.vue";
-// import CashOutPopup from "./CashOutPopup.vue";
+import CashOutPopup from "./CashOutPopup.vue";
 import SharePopup from "./SharePopup.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
+import { userStore } from "src/stores";
+import { t } from "src/boot/lang";
 
+const store = userStore();
 const emit = defineEmits(["reload"]);
 const props = defineProps(["info"]);
 const { info } = toRefs(props);
@@ -180,8 +168,8 @@ const prizeIndex = ref(0);
 const timer = ref();
 const prize = ref(0);
 const winningRecordRef = ref();
-// const isCashOutPopupVisible = ref(false);
-// const cashOutPopupRef = ref();
+const isCashOutPopupVisible = ref(false);
+const cashOutPopupRef = ref();
 const isSharePopupVisible = ref(false);
 const sharePopupRef = ref();
 const winningRecord = ref([]);
@@ -328,13 +316,13 @@ const updateCountdownTime = () => {
     isWheelEnded.value = true;
   }
 
-  const nextFreeSpinEndTime = moment().add(1, "days").startOf("day");
+  const nextFreeSpinEndTime = moment().tz("Asia/Karachi").add(1, "days").startOf("day");
   if (timer.value) {
     clearInterval(timer.value);
   }
   timer.value = setInterval(() => {
     remainingTime.value = getRemainingTime(endTime);
-    // nextFreeSpinRemainingTime.value = getRemainingTime(nextFreeSpinEndTime);
+    nextFreeSpinRemainingTime.value = getRemainingTime(nextFreeSpinEndTime);
     if (winningRecordRef.value) {
       const isScrollToEnd = winningRecordRef.value.scrollTop >= winningRecordRef.value.offsetHeight;
       winningRecordRef.value.scrollTo({
@@ -387,15 +375,18 @@ onUnmounted(() => {
   .wheel-outer-wrapper {
     background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/bg.png) no-repeat;
     background-size: 100% 100%;
-    aspect-ratio: 343 / 656;
     position: relative;
+    min-height: 650px;
 
     .summary-wrapper {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
       padding: 58px 34px 0;
+
+      > * {
+        margin-top: 10px;
+      }
 
       .prize {
         margin-top: 4px;
@@ -478,7 +469,7 @@ onUnmounted(() => {
       .winning-record-outer-wrapper {
         padding: 12px 14px;
         width: 100%;
-        background: #17aa2699;
+        background: linear-gradient(245.79deg, rgba(249, 0, 18, 0.6) 6.76%, rgba(255, 98, 66, 0.6) 102.95%);
         border: 1px solid #c4ffd599;
         border-radius: 8px;
 
@@ -489,9 +480,11 @@ onUnmounted(() => {
           overflow: hidden;
 
           .winning-record-item {
-            display: grid;
+            display: flex;
+            justify-content: space-between;
             gap: 4px;
-            grid-template-columns: 3fr minmax(40px, 2fr) 3fr;
+            min-height: 20px;
+
             > span {
               line-height: 20px;
               flex: 1;
@@ -500,11 +493,12 @@ onUnmounted(() => {
               overflow: hidden;
               &:last-child {
                 text-align: right;
+                min-width: 100px;
               }
             }
             .amount {
               font-weight: 600;
-              color: #91ffab;
+              color: #FEBA02;
             }
             .name {
               text-align: center;
@@ -565,20 +559,22 @@ onUnmounted(() => {
 
             .btn {
               -webkit-user-drag: none;
+              height: 96px;
               position: absolute;
-              top: 50%;
+              top: 48%;
               left: 50%;
               transform: translate(-50%, -50%);
               background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/wheel-btn.png);
               background-size: cover;
-              aspect-ratio: 1;
+              aspect-ratio: 250/300;
               border: none;
-              width: 158px;
+              width: 80px;
               max-width: 35%;
-              font-size: 20px;
+              font-size: 16px;
               font-weight: 700;
-              line-height: 24px;
-              color: #f33d31;
+              line-height: 20px;
+              color: #f9f9f9;
+              padding-top: 10px;
               &.disabled {
                 filter: grayscale(0.7);
                 opacity: 1 !important;
@@ -625,6 +621,10 @@ onUnmounted(() => {
             position: relative;
             max-width: 70%;
             margin: -5% auto 0;
+            min-height: 100px;
+            &.common-btn {
+              background-size: 100% 100%;
+            }
 
             &.disabled {
               filter: grayscale(0.7);
@@ -635,6 +635,8 @@ onUnmounted(() => {
           .next-spin-remaining-time {
             font-weight: 700;
             color: #fff;
+            display: block;
+            margin-top: -8px;
           }
         }
       }
@@ -645,43 +647,50 @@ onUnmounted(() => {
       top: 2%;
       right: 7%;
       border: none;
-      background-color: #354c3f;
+      background-color: #C93F1E;
       border-radius: 87px;
       padding: 3px 6px;
-      color: #91ffab;
+      color: #EC9823;
     }
     .rules-btn {
       position: absolute;
       top: 2%;
       left: 9%;
       border: none;
-      background-color: #354c3f;
+      background-color: #C93F1E;
       border-radius: 87px;
       padding: 3px 6px;
-      color: #91ffab;
+      color: #EC9823;
     }
   }
 
-  
+
 
   > div:not(:last-child) {
     margin-bottom: 12px;
   }
 }
 .block-wrapper {
-    background-color: #1e1f24;
+    background-color: #2A2F3B;
     border-radius: 12px;
     padding: 16px 10px;
     width: 90%;
 
     .title-wrapper {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       gap: 8px;
-      font-size: 16px;
       font-weight: 700;
-      color: #cd91ff;
+      color: #f9f9f9;
+      font-weight: 700;
+      font-size: 22px;
+      line-height: 100%;
+      letter-spacing: 0px;
+      text-align: left;
+      text-transform: uppercase;
+      padding: 10px 5px 0px 10px;
+
 
       .title-decoration {
         display: flex;
@@ -716,9 +725,10 @@ onUnmounted(() => {
         padding: 11vw 7vw 0;
 
         .winning-record-outer-wrapper {
+          padding: 8px 10px;
           .winning-record-wrapper {
             .winning-record-item > span {
-              font-size: 10px;
+              font-size: 9px;
             }
           }
         }
@@ -729,8 +739,8 @@ onUnmounted(() => {
           .wheel-wrapper {
             .wheel-inner-wrapper {
               .btn {
-                font-size: 16px;
-                line-height: 20px;
+                font-size: 14px;
+                line-height: 18px;
               }
             }
           }
@@ -749,7 +759,7 @@ onUnmounted(() => {
 
           .wheel-wrapper {
             .countdown {
-              font-size: 14px;
+              font-size: 12px;
             }
           }
         }

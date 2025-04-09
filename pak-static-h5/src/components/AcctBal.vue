@@ -256,7 +256,7 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     gap: 5px;
-    color: #bacef1;
+    color: #B2BDBF;
 
     .mainbal {
       border-right: 1px solid #c8c7cc;
@@ -351,7 +351,7 @@ onMounted(() => {
 
           .name-wrapper {
             word-break: break-all;
-            color: #bacef1;
+            color: #B2BDBF;
 
             .plat-name {
 

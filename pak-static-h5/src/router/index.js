@@ -9,7 +9,9 @@ import { Platform, useQuasar } from "quasar";
 import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
 import { useGtag } from "vue-gtag-next";
-
+import { i18n, t } from "src/boot/lang";
+import { i18nStore } from "./language";
+import { DEFAULT_LANG } from "src/constant/lang";
 let isRedirected = false;
 
 /*
@@ -43,6 +45,14 @@ export default route(function (/* { store, ssrContext } */) {
     const user = userStore();
     const ui = useUI();
     const $q = useQuasar();
+    const i18nStoreLanguage = i18nStore();
+    const { availableLocales } = i18n.global;
+    const { lang } = to.query;
+
+    if (!i18nStoreLanguage.isLangInitialized && lang) {
+      const locale = availableLocales.includes(lang) ? lang : DEFAULT_LANG;
+      i18nStoreLanguage.initializeLang(locale);
+    }
 
     if (to.query.adjust_referrer) {
       sessionStorage.setItem("ADJUST_REFERRER", to.query.adjust_referrer);
@@ -82,9 +92,14 @@ export default route(function (/* { store, ssrContext } */) {
       }
       user.token = to.query.token;
     }
-
     if (Platform.is.capacitor && Platform.is.android) {
       StatusBar.hide();
+      const isFirstTime = localStorage.getItem("isFirstTimeInApp");
+
+      if (!isFirstTime) { // If it's the first time
+        localStorage.setItem("isFirstTimeInApp", 'true'); // Mark as visited
+        next("/register");
+      }
     }
 
     const getTkPixelId = sessionStorage.getItem("TK_PIXEL_ID");
@@ -121,6 +136,11 @@ export default route(function (/* { store, ssrContext } */) {
       } else {
         next("/");
       }
+    }
+    if (to.name === "referCodeSpin") {
+      sessionStorage.setItem("REFERRAL_SPIN_CODE", to.params.referralSpinCode);
+      localStorage.removeItem("REG_REFERRAL_CODE");
+      next(`/register`);
     }
     if (to.name === "referCode") {
       sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
@@ -170,7 +190,7 @@ export default route(function (/* { store, ssrContext } */) {
         $q.notify({
           color: "negative",
           position: "top",
-          message: "Please login to continue",
+          message: t("notify.plsLoginToContinue"),
           icon: "report_problem"
         });
       } else {

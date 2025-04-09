@@ -1,54 +1,83 @@
 <template>
-  <ProfileSummary :homeProfile="true" />
+  <!-- <ProfileSummary :homeProfile="true" /> -->
 
   <q-page>
     <div class="top-setting-section">
-      <div class="top-login-name">
-        <img src="../assets/images/account/login-name-icon.png" />
-        <div>ID: {{ store.nickName }}</div>
-        <img class="copy-icon" src="../assets/images/account/copy-icon.png" @click="handleCopyClick" />
+      <div class="top-profile">
+        <div class="profile">
+          <div class="profile-pic">
+            <q-avatar size="50px">
+              <img :src="profileImagePath" />
+            </q-avatar>
+            <div class="profile-pic-frame" v-if="!homeProfile"></div>
+
+            <div class="vip-details">
+              <img
+                class="bg"
+                :src="require(`../assets/images/index/vip-badge/vip-${store.vip.replace('VIP', '')}.png`)"
+                alt=""
+              />
+            </div>
+          </div>
+          <div class="top-name">
+            <div class="top-name-details">
+              <!-- <img src="../assets/images/account/login-name-icon.png" /> -->
+              <div>{{ store.realName }}</div>
+            </div>
+            <div class="top-copy-id">
+              <!-- <img src="../assets/images/account/login-name-icon.png" /> -->
+              <div>ID: {{ store.nickName }}</div>
+              <img class="copy-icon" src="../assets/images/account/copy-icon.png" @click="handleCopyClick" />
+            </div>
+          </div>
+        </div>
+        <RouterLink to="/account/profile" class="right">
+          <img src="../assets/images/account/rgtarrow.svg" />
+        </RouterLink>
       </div>
+      <RouterLink to="/vip" class="top-vip">
+        <VIPCarousel :onlyShowCurrentLevel="true" :vipCarouselIndex="vipCarouselIndex" style="pointer-events: none" />
+      </RouterLink>
       <div class="top-total-score">
-        <div class="score-txt">{{ $t("settings.totalScore") }}</div>
+        <div class="score-txt">
+          <img src="../assets/images/account/total-score.svg" />
+          {{ $t("settings.totalScore") }}
+        </div>
         <div class="score-amount">{{ store.balance.toFixed(2) }}</div>
       </div>
-      <div class="top-section-inner">
-        <router-link to="/withdraw">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/withdraw-svg.svg" />
-          </div>
-          <div class="acct-nav-label">{{ $t("settings.withdraw") }}</div>
-        </router-link>
-        <router-link to="/deposit">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/deposit-svg.svg" />
-          </div>
-          <div class="acct-nav-label">{{ $t("settings.deposit") }}</div>
-        </router-link>
-        <router-link to="/promo">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/promo-svg.svg" />
-          </div>
-          <div class="acct-nav-label">{{ $t("settings.promo") }}</div>
-        </router-link>
-        <!-- <router-link to="/interest-profit">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/interest-svg.svg" />
-          </div>
-          <div class="acct-nav-label">{{ $t("settings.interestProfit") }}</div>
-        </router-link> -->
-      </div>
+      <!-- <div class="top-section-inner">
+      </div> -->
     </div>
 
     <div class="mid-setting-section">
       <div class="acct-nav">
-        <h2>{{ $t("settings.otherServices") }}</h2>
+        <!-- <h2>{{ $t("settings.otherServices") }}</h2> -->
+        <div class="top-section">
+          <router-link to="/deposit">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/deposit-svg.svg" />
+            </div>
+            <div class="acct-nav-label">{{ $t("settings.deposit") }}</div>
+          </router-link>
+          <router-link to="/withdraw">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/withdraw-svg.svg" />
+            </div>
+            <div class="acct-nav-label">{{ $t("settings.withdraw") }}</div>
+          </router-link>
+        </div>
         <div class="acct-menu" id="id-acct-menu">
+          <router-link to="/promo">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/promo-svg.svg" />
+            </div>
+            <div class="acct-nav-label">{{ $t("settings.promo") }}</div>
+          </router-link>
           <router-link to="/account/profile">
             <div class="acct-nav-item">
               <img src="../assets/images/account/personal-svg.svg" />
             </div>
-            <div class="acct-nav-label">{{ $t("settings.personalCentre") }}</div>
+            <div class="acct-nav-label">{{ $t("settings.personalCenter") }}</div>
           </router-link>
           <router-link to="/account/record">
             <div class="acct-nav-item">
@@ -74,18 +103,7 @@
             </div>
             <div class="acct-nav-label">{{ $t("settings.order") }}</div>
           </router-link>
-          <router-link to="/account/message">
-            <div class="acct-nav-item">
-              <img src="../assets/images/account/message-svg.svg" />
-            </div>
-            <div class="acct-nav-label">{{ $t("settings.message") }}</div>
-          </router-link>
-          <router-link to="/account/feedback">
-            <div class="acct-nav-item">
-              <img src="../assets/images/account/feedback-svg.svg" />
-            </div>
-            <div class="acct-nav-label">{{ $t("settings.feedback") }}</div>
-          </router-link>
+
           <router-link to="/vip">
             <div class="acct-nav-item">
               <img src="../assets/images/account/vip-svg.svg" />
@@ -98,22 +116,47 @@
             </div>
             <div class="acct-nav-label">{{ $t("settings.charity") }}</div>
           </a>
-          <a v-if="ui.promo_exchange === '1'" target="_blank" @click="handleExchangeClick">
-            <div class="acct-nav-item">
-              <img src="../assets/images/account/exchange-svg.svg" />
-            </div>
-            <div class="acct-nav-label">{{ $t("settings.exchange") }}</div>
-          </a>
-
-          <!-- <a v-if="canTransfer" target="_blank" @click="handleTransferClick">
-            <div class="acct-nav-item">
-              <img src="../assets/images/account/transfer-svg.svg" />
-            </div>
-            <div class="acct-nav-label">{{ $t("settings.transfer") }}</div>
-          </a> -->
         </div>
       </div>
+      <div class="bottom-setting-section">
+        <router-link to="/account/message">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/message-svg.svg" />
+          </div>
+          <div class="acct-nav-label">{{ $t("settings.message") }}</div>
+        </router-link>
+        <router-link to="/account/feedback">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/feedback-svg.svg" />
+          </div>
+          <div class="acct-nav-label">{{ $t("settings.feedback") }}</div>
+        </router-link>
+        <a v-if="ui.promo_exchange === '1'" target="_blank" @click="handleExchangeClick">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/exchange-svg.svg" />
+          </div>
+          <div class="acct-nav-label">{{ $t("settings.exchange") }}</div>
+        </a>
 
+<!--        <a v-if="canTransfer" target="_blank" @click="handleTransferClick">-->
+<!--          <div class="acct-nav-item">-->
+<!--            <img src="../assets/images/account/transfer-svg.svg" />-->
+<!--          </div>-->
+<!--          <div class="acct-nav-label">{{ $t("settings.transfer") }}</div>-->
+<!--        </a>-->
+      </div>
+      <div class="bottom-setting-section invite-friends-section">
+        <div class="left-icon">
+          <img src="../assets/images/earn-money/invite-gift.png" />
+        </div>
+        <div class="right-contents">
+          <div class="invite-title">{{ $t("earnMoney.reward.inviteFriendsViaLink") }}</div>
+          <div class="invite-share-link">
+            <div class="link-href">{{ selfTgurl }}</div>
+            <div class="link-copy" @click="copyHrefLink">{{ $t("earnMoney.reward.copyLink") }}</div>
+          </div>
+        </div>
+      </div>
       <q-card class="card-account-banner" v-if="btm_banners.length > 0">
         <q-card-section>
           <q-carousel
@@ -160,13 +203,14 @@
 
       <a @click="openConfirmSignOutDialog">
         <div class="acct-logout">
+          <img src="../assets/images/index/menu/logout.png" />
           <div class="acct-nav-label">{{ $t("settings.logout") }}</div>
         </div>
       </a>
     </div>
   </q-page>
 
-  <q-dialog width="100%" v-model="confirmSignOutDialog" persistent>
+  <q-dialog class="flex-end" width="100%" v-model="confirmSignOutDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
@@ -174,7 +218,7 @@
 
         <div class="txt-content q-mt-md text-center">{{ $t("notify.signOutMessage") }}</div>
 
-        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+        <div style="width: 100%;" class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
           <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
           <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="logout" />
         </div>
@@ -186,10 +230,11 @@
 </template>
 
 <script setup>
-import { onActivated, ref } from "vue";
+import { onActivated, onMounted, ref, computed } from "vue";
 import { userStore } from "src/stores";
 import { useRoute, useRouter } from "vue-router";
 import { useQuasar } from "quasar";
+import VIPCarousel from "components/VIPCarousel.vue";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import ExchangeModal from "../components/account/ExchangeModal.vue";
 import TransferModal from "../components/account/TransferModal.vue";
@@ -198,6 +243,60 @@ import { useUI } from "stores/ui";
 import { Platform } from "quasar";
 import { t } from "src/boot/lang";
 
+const selfTgurl = ref("");
+const fallbackCopyTextToClipboard = (text) => {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  document.body.removeChild(textarea);
+
+  $q.notify({
+    message: "Link copied to clipboard",
+    color: "positive",
+    position: "top",
+    timeout: 2000,
+  });
+};
+
+const copyHrefLink = () => {
+  const textToCopy = selfTgurl.value;
+  
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        $q.notify({
+          message: "Link copied to clipboard",
+          color: "positive",
+          position: "top",
+          timeout: 2000,
+        });
+      })
+      .catch(() => {
+        fallbackCopyTextToClipboard(textToCopy);
+      });
+  } else {
+    fallbackCopyTextToClipboard(textToCopy);
+  }
+};
+
+const randomProfileImg = computed(() => {
+  const storedImg = sessionStorage.getItem("PROFILE_IMG");
+  if (storedImg) {
+    return storedImg;
+  } else {
+    const randomIndex = Math.floor(Math.random() * 24) + 1;
+    const imgPath = `image-${randomIndex}`;
+    sessionStorage.setItem("PROFILE_IMG", imgPath);
+    return imgPath;
+  }
+});
+
+const profileImagePath = computed(() => {
+  return require(`../assets/images/account/profile/${randomProfileImg.value}.png`);
+});
 const store = userStore();
 const router = useRouter();
 const route = useRoute();
@@ -246,6 +345,19 @@ onActivated(() => {
     showExchangeModal.value = true;
   }
 });
+onMounted(() => {
+  let tgDomain = window.location.origin + "/";
+  if (store.isApp()) {
+    tgDomain = store.evip ? "https://" + store.evip + "/" : store.h5Url;
+  }
+
+  api.get("/session/member/referralCode").then((res) => {
+    if (res.code === 0) {
+      selfTgurl.value = tgDomain + "refer/" + res.data;
+    }
+  });
+});
+const vipCarouselIndex = ref();
 
 const canTransfer = ref(false);
 const uplineId = ref();
@@ -265,7 +377,7 @@ const logout = () => {
   loadingLogout.value = true;
 
   $q.loading.show({
-    message: "Logging out..."
+    message: t('notify.loggingOut')
   });
 
   store.memberLogout().then(() => {
@@ -335,29 +447,118 @@ const handleCopyClick = async () => {
 
 <style scoped lang="scss">
 .top-setting-section {
-  position: relative;
-  margin: 20px;
-
-  .top-login-name {
+  .top-profile {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
-    margin: 0 20px 10px;
-    img {
-      width: 30px;
-      height: 30px;
-      margin-right: 8px;
-    }
-    .copy-icon {
-      width: 16px;
-      height: 16px;
-      margin-left: 8px;
+    width: 90%;
+    margin: 0 auto;
+    .profile {
+      display: flex;
+      width: 90%;
+      // gap: 10px;
+      :not(:last-child) {
+        margin-right: 10px;
+      }
+      margin: 10px auto;
+      justify-content: flex-start;
+      align-items: center;
+      .top-name {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        .top-name-details {
+          font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 120%;
+          letter-spacing: 0px;
+          color: #ffffff;
+        }
+      }
+      .top-copy-id {
+        display: flex;
+        align-items: center;
+        font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 700;
+        font-size: 12.17px;
+        line-height: 120%;
+        letter-spacing: 0px;
+        color: #b3bec0;
+        img {
+          width: 30px;
+          height: 30px;
+          margin-right: 8px;
+        }
+        .copy-icon {
+          width: 16px;
+          height: 16px;
+          margin-left: 8px;
+        }
+      }
+      .profile-pic-frame {
+        // background-image: url(../assets/images/common/profile-frame.png);
+        width: 70px;
+        height: 70px;
+        background-size: 100%;
+        position: absolute;
+        top: -8px;
+        left: -4px;
+      }
+      .profile-pic {
+        position: relative;
+        padding-bottom: 20px;
+        .vip-details {
+          position: relative;
+          margin-left: 20px;
+          margin-bottom: 5px;
+          margin-top: -15px;
+
+          img.bg {
+            display: block;
+            width: 55px;
+            position: absolute;
+            top: -2px;
+            left: -25px;
+          }
+
+          .vip-level {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            line-height: 1.1;
+            padding-top: 3px;
+            padding-bottom: 4px;
+            z-index: 3;
+            color: #ffffff;
+            font-weight: 700;
+            font-style: italic;
+            img {
+              width: 68%;
+              margin-left: -7px;
+            }
+          }
+        }
+      }
     }
   }
+  .top-vip {
+    max-width: 400px;
+    width: 90%;
+    margin: 0 auto;
+    display: block;
+  }
+  background: url(../assets/images/account/setting-bg.png) no-repeat center center;
+  // padding-top: 175px;
+  padding-top: 60px;
+  background-size: cover;
+  position: relative;
 
   .top-total-score {
-    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-    padding: 20px 12px 30px;
     margin: 0 20px;
     border-radius: 4px;
     display: flex;
@@ -365,10 +566,19 @@ const handleCopyClick = async () => {
     align-items: center;
 
     .score-txt {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+      font-size: 14px;
+      // gap: 5px;
+      :not(:last-child) {
+        margin-right: 5px;
+      }
     }
     .score-amount {
       font-weight: bold;
-      font-size: 20px;
+      font-size: 14px;
 
       &:before {
         content: "RS";
@@ -468,9 +678,105 @@ const handleCopyClick = async () => {
     letter-spacing: -0.0008em;
   }
 }
+.bottom-setting-section {
+  margin: 5px 20px 20px;
+
+  border-radius: 10px;
+  background: #373c3d;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  a {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: #ffffff;
+    padding: 10px;
+    // gap: 10px;
+    :not(:last-child) {
+      margin-right: 10px;
+    }
+    text-decoration: none;
+    font-weight: bold;
+    position: relative;
+    &:after {
+      content: "";
+      position: absolute;
+      right: 10px;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      background: url(../assets/images/common/goright.png) no-repeat center center;
+      background-size: cover;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.invite-friends-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: unset;
+  // gap: 10px;
+  :not(:last-child) {
+    margin-right: 10px;
+  }
+  .left-icon {
+    width: 60px;
+    img {
+      width: 100%;
+    }
+  }
+  .right-contents {
+    font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 14.32px;
+    line-height: 120%;
+    letter-spacing: 0px;
+    max-width: 75%;
+
+    width: 100%;
+  }
+}
+
+.invite-share-link {
+  margin-top: 8px;
+  background-color: #292d2e;
+  padding: 4px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  min-height: 40px;
+  border: 1px solid #ffffff14;
+
+  .link-href {
+    padding: 10px 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 11px;
+  }
+  .link-copy {
+    color: #ffffff;
+    background: #ffffff0f;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 70px;
+    font-weight: bold;
+    border-radius: 5px;
+    letter-spacing: -1px;
+  }
+}
 
 .acct-nav {
-  margin: 20px;
+  margin: 5px 20px 20px;
+  background: #373c3d;
+  padding: 10px;
+  border-radius: 10px;
 
   .acct-title {
     display: flex;
@@ -490,9 +796,50 @@ const handleCopyClick = async () => {
     }
   }
 
+  .top-section {
+    width: 100%;
+    display: flex;
+    // gap: 10px;
+    :not(:last-child) {
+      margin-right: 10px;
+    }
+    a {
+      display: flex;
+      width: 100%;
+      text-decoration: none;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      gap: 5px;
+      img {
+        width: 16px;
+        display: block;
+      }
+      &:nth-child(1) {
+        border-radius: 4px;
+        color: #333333;
+        font-weight: bold;
+        background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+        box-shadow: 0px 2.07px 0px 0px #1cca6a;
+
+        img {
+          filter: grayscale(1) brightness(0);
+        }
+      }
+      &:nth-child(2) {
+        border-radius: 4px;
+        color: #ffffff;
+        font-weight: bold;
+        background: #455152;
+        box-shadow: 0px 2.07px 0px 0px #2a3637;
+        img {
+          filter: grayscale(1) brightness(100);
+        }
+      }
+    }
+  }
   .acct-menu {
-    padding: 10px;
-    background: #2e30344f;
+    padding: 20px 0 0;
     border-radius: 4px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -512,31 +859,38 @@ const handleCopyClick = async () => {
       font-size: 14px;
       display: flex;
       flex-direction: column;
-      gap: 0px;
+      > div {
+        margin-bottom: 10px;
+      }
       width: 100%;
       text-align: center;
       align-items: center;
       justify-content: flex-start;
       margin: 0 auto;
 
-      &:active {
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-      }
+      // &:active {
+      //   background-color: rgba(255, 255, 255, 0.1);
+      //   border-radius: 8px;
+      // }
 
       .acct-nav-label {
         color: #fff;
-        font-size: 14px;
-        white-space: normal;
+        font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 120%;
+        letter-spacing: 0px;
+        text-align: center;
+        vertical-align: middle;
       }
 
       .acct-nav-item {
         // background-color: #b9c8ff26;
         border-radius: 50%;
-        aspect-ratio: 1/1;
-        padding: 5px;
-        height: 56px;
-        width: 56px;
+        // aspect-ratio: 1/1;
+        // padding: 5px;
+        height: 22px;
+        width: 22px;
         cursor: pointer;
         display: flex;
         text-align: center;
@@ -546,7 +900,7 @@ const handleCopyClick = async () => {
         text-decoration: none;
 
         img {
-          width: 90%;
+          // width: 90%;
           fill: white;
           padding: 0;
         }
@@ -569,8 +923,8 @@ const handleCopyClick = async () => {
 }
 
 .acct-logout {
-  height: 60px;
-  background: #2e30344f;
+  // height: 60px;
+  // background: #2e30344f;
   // background-image: url("../assets/images/account/logout-btn.png");
   // background-repeat: no-repeat;
   width: calc(95% - 20px);
@@ -580,10 +934,18 @@ const handleCopyClick = async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-
+  // gap: 5px;
+  :not(:last-child) {
+    margin-right: 5px;
+  }
+  img {
+    width: 30px;
+  }
   .acct-nav-label {
-    color: rgba(206, 206, 206, 0.8);
-    font-size: 16px;
+    // color: rgba(206, 206, 206, 0.8);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
   }
 
   &:active {
@@ -594,22 +956,40 @@ const handleCopyClick = async () => {
 
 .btn-cancel {
   // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
+  // border: 1px solid #5d8956;
+  // font-weight: 700;
+  // color: #fff;
+  // border: 1px solid #ffffff80;
+  // border-radius: 12px;
+  // width: 140px;
+  // height: 42px;
   font-weight: 700;
-  color: #fff;
-  border: 1px solid #1baa99;
-  border-radius: 12px;
-  width: 140px;
-  height: 42px;
-  color: #70bc62;
+  width: 100%;
+  padding: 10px 10px;
+  font-size: 16px;
+  background: #455152;
+  color: #ffffff;
+
+  box-shadow: 0px 2px 0px 0px #2a3637;
 }
 .btn-confirm {
-  background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-  border: 1px solid #5d8956;
+  // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+  // border: 1px solid #5d8956;
+  // font-weight: 700;
+  // width: 140px;
+  // height: 42px;
+  // color: #fff;
+  // border-radius: 12px;
+
   font-weight: 700;
-  width: 140px;
-  height: 42px;
-  color: #fff;
-  border-radius: 12px;
+  width: 100%;
+  padding: 10px 10px;
+  font-size: 16px;
+  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+  color: #000000;
+  box-shadow: 0px 2px 0px 0px #1cca6a;
+  border-radius: 4px;
+  height: unset;
 }
 </style>
 

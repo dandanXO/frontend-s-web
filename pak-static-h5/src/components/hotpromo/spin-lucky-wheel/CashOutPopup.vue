@@ -1,10 +1,10 @@
 <template>
   <q-dialog v-model="_modelValue" @hide="hideCashOutPopup" @show="handleDialogShow">
     <div v-if="isShowInviteWins" class="invite-wins">
-      <InviteWins />
+      <SharePopup ref="sharePopupRef" v-model="isShowInviteWins" />
     </div>
     <div class="cash-out" v-else>
-      <GradientTextAmount v-if="isShowTextAmount" :amountText="`CASH OUT COSTS  ${extractionDifference}$`" />
+      <GradientTextAmount v-if="isShowTextAmount" :amountText="`${$t('hotPromo.CASH_OUT_COSTS')}  ${extractionDifference}$`" />
       <div v-else class="text-amount-placeholder"></div>
       <!-- <span class="next-spin-remaining-time">COUNTDOWN: {{ nextFreeSpinRemainingTime }}</span> -->
       <div class="cash-out-backdrop-wrapper">
@@ -19,7 +19,7 @@
         />
       </div>
       <ProgressBar :isShowDetails="true" />
-      <CommonButton class="invite-wins-btn" @click="showInviteWins">Invitation wins</CommonButton>
+      <CommonButton class="invite-wins-btn" @click="showInviteWins">{{ $t("hotPromo.invitation_wins") }}</CommonButton>
     </div>
   </q-dialog>
 </template>
@@ -28,7 +28,7 @@ import { computed, inject, ref } from "vue";
 import CommonButton from "./CommonButton.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
 import ProgressBar from "./ProgressBar.vue";
-import InviteWins from "./InviteWins.vue";
+import SharePopup from "./SharePopup.vue";
 
 const props = defineProps(["modelValue", "prize"]);
 const emit = defineEmits(["update:modelValue", "hide"]);
@@ -100,6 +100,11 @@ const handleDialogShow = () => {
     width: 65%;
     aspect-ratio: 228 / 90;
     margin: 2px auto;
+    min-height: 100px;
+
+    &.common-btn {
+      background-size: 100% 100%;
+    }
 
     &:active {
       transform: translateY(2px);

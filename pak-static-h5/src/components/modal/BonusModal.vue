@@ -104,6 +104,7 @@ const openNewPlayerGuide = () => {
       max-width: 248px;
       margin-bottom: -24px;
       margin-right: 24px;
+      height: 60px;
     }
   }
 
@@ -115,9 +116,11 @@ const openNewPlayerGuide = () => {
     max-height: 60vh;
     overflow-y: auto;
     .mission-item {
+      a {
+        text-decoration: none;
+      }
       display: flex;
       align-items: center;
-      gap: 7px;
       padding: 8px 8px 8px 6px;
       background-color: #81ff9e1a;
       border-radius: 8px;
@@ -125,6 +128,7 @@ const openNewPlayerGuide = () => {
       .mission-icon {
         width: 40px;
         max-width: 10vw;
+        margin-right: 7px;
       }
       .mission-title-wrapper {
         display: flex;
@@ -170,5 +174,6 @@ const openNewPlayerGuide = () => {
   position: absolute;
   bottom: 10px;
   right: 10px;
+  z-index: 99;
 }
 </style>

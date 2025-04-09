@@ -42,6 +42,15 @@
 
   <q-dialog width="100%" v-model="isShowHistoryPopup">
     <div class="history-container">
+      <q-btn
+        style="position: absolute; right: 10px; top: 10px; z-index: 99"
+        unelevated
+        dense
+        rounded
+        icon="close"
+        class="bg-greytext text-white popout-close"
+        v-close-popup
+      />
       <div class="congrats-highlight">
         <div class="congrats-title">{{ $t("hotPromo.jackpotAviator.jackpot") }}</div>
         <div class="congrats-prize">{{ store.currency.value }} {{ historyData.jackpotAmount }}</div>
@@ -71,6 +80,7 @@ const mode = ref("MAIN");
 const timeframe = ref("DAILY");
 const isShowHistoryPopup = ref(false);
 const isShowClaimPrizePopup = ref(false);
+
 const claimPrizeAmt = ref(0);
 const rankingList = ref([]);
 const historyData = ref({});
@@ -162,12 +172,15 @@ onMounted(() => {
 <style lang="scss" scoped>
 .jackpot {
   background: url("../../../assets/images/promotion/hotpromo/jackpot-aviator/jackpot-bg.png") no-repeat center center;
-  aspect-ratio: 1125/500;
+  // aspect-ratio: 1125/500;
+  aspect-ratio: 750 / 550;
   background-size: 100% 100%;
   position: relative;
+  min-height: 275px;
 
   .rules-ribbon {
-    background-color: #30af88;
+    // background-color: #30af88;
+    background: linear-gradient(180deg, #fb4f77 0%, #da093a 100%);
     position: absolute;
     width: 74px;
     height: 23px;
@@ -182,7 +195,8 @@ onMounted(() => {
   }
 
   .history-ribbon {
-    background-color: #30af88;
+    // background-color: #30af88;
+    background: linear-gradient(180deg, #fb4f77 0%, #da093a 100%);
     position: absolute;
     width: 74px;
     height: 26px;
@@ -224,11 +238,11 @@ onMounted(() => {
 }
 
 .receive-btn {
-  background: linear-gradient(180deg, #61ff00 0%, #006ded 100%);
+  background: linear-gradient(180deg, #fb4f77 0%, #da093a 100%);
   padding: 20px;
-  border-radius: 17px;
-  width: 236px;
-  height: 34px;
+  border-radius: 4px;
+  width: 202px;
+  height: 46px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -238,13 +252,15 @@ onMounted(() => {
   font-weight: 900;
   line-height: 19.16px;
   text-align: center;
+  text-transform: uppercase;
 }
 
 .history-container {
-  background-color: #113413;
-  border: 1px solid #55c253;
-  border-radius: 5px;
+  background-color: #323738;
+  border: 1px solid #ff3838;
+  border-radius: 15px;
   width: 90%;
+  position: relative;
 
   .congrats-highlight {
     color: #fff96f;
@@ -273,6 +289,7 @@ onMounted(() => {
       line-height: 31.54px;
       text-align: center;
       color: #fff96f;
+      text-shadow: 0.97px 0.97px black;
     }
   }
 }

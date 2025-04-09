@@ -167,7 +167,7 @@
     </q-card>
   </q-dialog> -->
 
-  <q-dialog v-model="showCaptchaDialog" width="100%">
+  <q-dialog  v-model="showCaptchaDialog" width="100%">
     <q-card width="100%">
       <q-card-section style="padding: 10px 20px" class="q-pa-md bg-dark text-white">OTP</q-card-section>
       <div style="padding: 20px">
@@ -188,7 +188,7 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="personalCenterDialog" presistent>
+  <q-dialog  width="100%" v-model="personalCenterDialog" persistent>
     <div class="popout-dialog">
       <q-btn
         dense
@@ -226,7 +226,7 @@
                 placeholder="Enter Your Phone"
                 v-model="formDetail.phone"
                 :rules="[(_) => isValidPhone()]"
-                :disable="startCountdownResendOTP"
+                :disable="startCountdownPhoneResendOTP"
               >
                 <template v-slot:append>
                   <div class="pc-form-side-btn">
@@ -234,8 +234,8 @@
                       no-caps
                       dense
                       class="bg-yellow text-black"
-                      :label="!startCountdownResendOTP && 'Get Code'"
-                      :disable="!formDetail.phone || startCountdownResendOTP"
+                      :label="!startCountdownPhoneResendOTP && 'Get Code'"
+                      :disable="!formDetail.phone || startCountdownPhoneResendOTP"
                       @click="openVerificationCodeDialog"
                     />
                   </div>
@@ -255,7 +255,7 @@
                 v-model="formDetail.phoneOtpRef"
                 :rules="[(_) => isValidOTP()]"
               >
-                <template v-slot:append v-if="startCountdownResendOTP">{{ countdownOTP }}s</template>
+                <template v-slot:append v-if="startCountdownPhoneResendOTP">{{ countdownPhoneOTP }}s</template>
               </q-input>
             </div>
           </div>
@@ -294,7 +294,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="bindEmailDialog" presistent>
+  <q-dialog  width="100%" v-model="bindEmailDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="text-white popout-close" @click="openBindEmailDialog()" v-close-popup />
       <div class="popout-dialog-container">
@@ -319,7 +319,8 @@
                         <q-btn
                           no-caps
                           dense
-                          class="text-green"
+                          flat
+                          class="text-green q-pr-md"
                           :label="!startCountdownResendOTP && $t('form.send')"
                           :disable="!formDetail.phone || startCountdownResendOTP"
                           @click="openVerificationCodeDialog"
@@ -395,8 +396,8 @@
                           no-caps
                           dense
                           class="text-green"
-                          :label="!startCountdownResendOTP && $t('form.send')"
-                          :disable="startCountdownResendOTP"
+                          :label="!startCountdownPhoneResendOTP && $t('form.send')"
+                          :disable="startCountdownPhoneResendOTP"
                           @click="openPhoneVerificationCodeDialog"
                         />
                       </div>
@@ -417,7 +418,7 @@
                     type="text"
                     :rules="[(val) => val.length !== 0 || $t('form.code_rules_01')]"
                   >
-                    <template v-slot:append v-if="startCountdownResendOTP">{{ countdownOTP }}s</template>
+                    <template v-slot:append v-if="startCountdownPhoneResendOTP">{{ countdownPhoneOTP }}s</template>
                   </q-input>
                 </template>
               </InputField>
@@ -547,7 +548,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="changeNewPasswordDialog" presistent>
+  <q-dialog  width="100%" v-model="changeNewPasswordDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">
@@ -643,21 +644,21 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="guestKYCDialog" presistent>
+  <q-dialog  width="100%" v-model="guestKYCDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="closeGuestKYCDialog" />
       <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="userKYCDialog" presistent>
+  <q-dialog  width="100%" v-model="userKYCDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="closeUserKYCDialog" />
       <KYCUserForm ref="kycUserFormRef" @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="verificationCodeDialog" presistent>
+  <q-dialog  width="100%" v-model="verificationCodeDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
       <div class="popout-dialog-container">
@@ -696,7 +697,6 @@
       </div>
     </div>
   </q-dialog>
-
   <q-dialog width="100%" v-model="verificationPhoneCodeDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
@@ -737,7 +737,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="confirmSignOutDialog" presistent>
+  <q-dialog  width="100%" v-model="confirmSignOutDialog" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">
@@ -797,7 +797,7 @@ const logout = () => {
   loadingLogout.value = true;
 
   $q.loading.show({
-    message: "Logging out..."
+    message: t('notify.loggingOut')
   });
 
   store.memberLogout().then(() => {
@@ -826,7 +826,17 @@ const startRefresh = async () => {
 const personalCenterDialog = ref(false);
 const openPersonalCenterDialog = () => {
   loadKYCInfo();
-  personalCenterDialog.value = true;
+  // if (store.guest && !personalState.memberInfo.realName) {
+  //   // openNewChangePasswordDialog();
+  //   openGuestKYCDialog();
+  // } else if (!store.guest && !personalState.memberInfo.realName) {
+  //   openUserKYCDialog();
+  // } else {
+  //   return false;
+  // }
+  // } else if (!personalState.memberInfo.realName || !personalState.memberInfo.phone || !personalState.memberInfo.email) {
+  //   personalCenterDialog.value = true;
+  // }
 };
 
 const closePersonalCenterDialog = () => {
@@ -846,7 +856,6 @@ const openBindEmailDialog = () => {
     bindEmailDialog.value = !bindEmailDialog.value;
   }
 };
-
 const verifyPhoneDialog = ref(false);
 const openVerifyPhoneDialog = () => {
   if (formDetail.phoneVerified) {
@@ -907,7 +916,7 @@ const openVerificationCodeDialog = () => {
           $q.notify({
             color: "negative",
             position: "top",
-            message: "Email already used. Please try another email.",
+            message: t('notify.emailAlreadyUsed'),
             icon: "report_problem"
           });
         } else {
@@ -929,7 +938,6 @@ const openVerificationCodeDialog = () => {
 
   getCode();
 };
-
 const openPhoneVerificationCodeDialog = () => {
   phoneRef.value.validate();
   if (!phoneRef.value.hasError) {
@@ -940,7 +948,6 @@ const openPhoneVerificationCodeDialog = () => {
 };
 
 const myMemberList = ref([]);
-
 let isNoInfoRef = ref(true);
 if (myMemberList.value.length) isNoInfoRef.value = true;
 
@@ -1150,9 +1157,9 @@ const emailRef = ref();
 const phoneOtpRef = ref();
 
 const captchaRef = ref();
+const captchaPhoneRef = ref();
 const showCaptchaDialog = ref(false);
 const showVerificationTokenInput = ref(false);
-const captchaPhoneRef = ref();
 
 const updateState = () => {
   const updateInfo = {};
@@ -1340,50 +1347,9 @@ const goToPage = (page) => {
 
 let verificationCodeID = "";
 const startCountdownResendOTP = ref(false);
+const startCountdownPhoneResendOTP = ref(false);
 const countdownOTP = ref();
-
-const verificationPhoneCodeDialog = ref(false);
-const onPhoneCaptchaSubmit = () => {
-  api
-    .post(
-      `/session/sendRegisteredPhoneOtp`,
-      qs.stringify({
-        ...(formDetail.phone ? {} : { telephone: updatePhoneInfo.telephone }),
-        captchaCode: captchaPhoneRef.value,
-        codeId: updateSecurityVerified.codeId
-      })
-    )
-    .then((res) => {
-      let message = res.message,
-        color = "positive";
-      if (res.code === 0) {
-        verificationPhoneCodeDialog.value = false;
-        startCountdownResendOTP.value = true;
-
-        countdownOTP.value = 59;
-        let timer = setInterval(() => {
-          countdownOTP.value -= 1;
-          if (countdownOTP.value === 0) {
-            clearInterval(timer);
-            startCountdownResendOTP.value = false;
-          }
-        }, 1000);
-
-        $q.notify({
-          color: "positive",
-          position: "top",
-          message: t("notify.smsSent"),
-          icon: "check_circle_outline"
-        });
-
-        updatePhoneInfo.codeId = res.data.codeId;
-      } else color = "negative";
-
-      if (message) $q.notify({ message, color });
-
-      console.log("onCaptchaSubmit", res);
-    });
-};
+const countdownPhoneOTP = ref();
 
 const onCaptchaSubmit = () => {
   api
@@ -1423,6 +1389,54 @@ const onCaptchaSubmit = () => {
           message: t("notify.emailVerificationSent"),
           icon: "check_circle_outline"
         });
+      } else {
+        if (message) {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: message,
+            icon: "report_problem"
+          });
+        }
+      }
+      console.log("onCaptchaSubmit", res);
+    });
+};
+const verificationPhoneCodeDialog = ref(false);
+const onPhoneCaptchaSubmit = () => {
+  api
+    .post(
+      `/session/sendRegisteredPhoneOtp`,
+      qs.stringify({
+        ...(formDetail.phone ? {} : { telephone: updatePhoneInfo.telephone }),
+        captchaCode: captchaPhoneRef.value,
+        codeId: updateSecurityVerified.codeId
+      })
+    )
+    .then((res) => {
+      let message = res.message,
+        color = "positive";
+      if (res.code === 0) {
+        verificationPhoneCodeDialog.value = false;
+        startCountdownPhoneResendOTP.value = true;
+
+        countdownPhoneOTP.value = 59;
+        let timer = setInterval(() => {
+          countdownPhoneOTP.value -= 1;
+          if (countdownPhoneOTP.value === 0) {
+            clearInterval(timer);
+            startCountdownPhoneResendOTP.value = false;
+          }
+        }, 1000);
+
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: t("notify.smsSent"),
+          icon: "check_circle_outline"
+        });
+
+        updatePhoneInfo.codeId = res.data.codeId;
       } else color = "negative";
 
       if (message) $q.notify({ message, color });
@@ -1430,7 +1444,6 @@ const onCaptchaSubmit = () => {
       console.log("onCaptchaSubmit", res);
     });
 };
-
 const isPwd = ref(true);
 const oldPasswordRef = ref();
 const passwordRef = ref();
@@ -1453,7 +1466,6 @@ const updatePhoneInfo = reactive({
   code: "",
   codeId: ""
 });
-
 const updateEmailRef = ref();
 const updateEmailCodeRef = ref();
 
@@ -1482,7 +1494,7 @@ const submitUpdatePwd = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "New password updated successfully",
+            message: t('notify.newpasswordupdated'),
             icon: "check_circle_outline"
           });
           // router.go("/account");
@@ -1570,13 +1582,12 @@ const sendPhoneDetails = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: t("notify.phoneVerifySuccessful"),
+            message: t('notify.phoneVerifySuccessful'),
             icon: "check_circle_outline"
           });
           verifyPhoneDialog.value = false;
           formDetail.phoneVerified = true;
           store.phoneVerified = true;
-
           // setTimeout(() => {
           //   startRefresh();
           // }, 2000);
@@ -1613,7 +1624,7 @@ const submitUpdateNewPwd = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "New password updated successfully",
+            message: t('notify.newpasswordupdated'),
             icon: "check_circle_outline"
           });
           // router.go("/account");
@@ -1648,7 +1659,7 @@ const openConfirmSignOutDialog = () => {
 
 <style lang="scss" scoped>
 .personal-center-container {
-  padding: 0 20px;
+  padding: 0 20px 20px;
 }
 
 .progress-container {
@@ -1720,7 +1731,8 @@ const openConfirmSignOutDialog = () => {
     &.item-click {
       &:after {
         content: "";
-        background: rgba(255, 255, 255, 0.05);
+        // background: rgba(255, 255, 255, 0.05);
+        background: unset;
         height: calc(100% - 36px);
         width: 100%;
         position: absolute;
@@ -1787,7 +1799,7 @@ const openConfirmSignOutDialog = () => {
 }
 
 .pc-tip-chg-pwd {
-  color: #00ae00;
+  color: #1CCA6A;
 }
 
 .pc-tip {
@@ -1811,32 +1823,55 @@ const openConfirmSignOutDialog = () => {
   border-radius: 8px;
   font-weight: 400;
   margin-top: auto;
-  color: #00ae00;
+  // color: #00ae00;
   padding: 10px 20px;
+    background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+    color: #333333;
+    font-weight: 700;
+    box-shadow: 0px 2px 0px 0px #1CCA6A;
+
 
   :deep(.q-icon) {
-    color: #00ae00;
+    color: #333333;
   }
 }
 
 .btn-cancel {
-  background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
-  border: 1px solid #5d8956;
+  // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
+  // border: 1px solid #5d8956;
+  // font-weight: 700;
+  // color: #fff;
+  // border: 1px solid #ffffff80;
+  // border-radius: 12px;
+  // width: 140px;
+  // height: 42px;
   font-weight: 700;
-  color: #fff;
-  border: 1px solid #ffffff80;
-  border-radius: 12px;
-  width: 140px;
-  height: 42px;
+  width: 100%;
+  padding: 10px 40px;
+  font-size: 16px;
+  background: #455152;
+  color: #ffffff;
+
+  box-shadow: 0px 2px 0px 0px #2A3637;
 }
 .btn-confirm {
-  background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-  border: 1px solid #5d8956;
+  // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+  // border: 1px solid #5d8956;
+  // font-weight: 700;
+  // width: 140px;
+  // height: 42px;
+  // color: #fff;
+  // border-radius: 12px;
+
   font-weight: 700;
-  width: 140px;
-  height: 42px;
-  color: #fff;
-  border-radius: 12px;
+  width: 100%;
+  padding: 10px 40px;
+  font-size: 16px;
+  background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+  color: #000000;
+  box-shadow: 0px 2px 0px 0px #1CCA6A;
+  border-radius: 4px;
+  height: unset;
 }
 
 .bottom-btn {

@@ -64,7 +64,7 @@ export default defineComponent({
   gap: 10px;
 
   .label {
-    color: #bacef1;
+    color: #B2BDBF;
   }
 }
 </style>
