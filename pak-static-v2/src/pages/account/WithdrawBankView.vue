@@ -128,7 +128,7 @@
         >
           <div class="left-container">
             <div class="bank-name">
-              <img style="width: 30px; height: 30px;" :src="imgURL + bankCard.bankIcon" />
+              <img style="width: 30px; max-height: 30px;" :src="imgURL + bankCard.bankIcon" />
               <div>{{ bankCard.bankName }}</div>
             </div>
             <div class="bank-number-wrapper">
@@ -157,7 +157,7 @@
         >
           <div class="left-container">
             <div class="bank-name">
-              <img style="width: 30px" :src="imgURL + bankCard.bankIcon" />
+              <img style="width: 30px;max-height: 30px;" :src="imgURL + bankCard.bankIcon" />
               <div>{{ bankCard.bankName }}</div>
             </div>
             <div class="bank-number-wrapper">
