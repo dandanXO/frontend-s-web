@@ -453,7 +453,17 @@ const submitBankCard = () => {
             message: "Virtual wallet added successfully",
             icon: "check_circle_outline"
           });
+          bankCardRef.value = ''
+          cardNumberRef.value = ''
+          phoneVerificationRef.value = ''
+          bankCardInfo.bankId= undefined
+          bankCardInfo.cardNumber= ""
+          bankCardInfo.cardAccount= store.realName
+          bankCardInfo.cardAddress= ""
+          bankCardInfo.telephone= store.phone
+          bankCardInfo.currencyId= ""
           router.push("/account/bank");
+
         }
       })
       .catch((error) => {
