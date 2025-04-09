@@ -251,7 +251,7 @@ const getStreamerStatusLabel = (status) => {
     0: '停止直播',
     1: '開始直播',
   }
-  return statusMap[status] || 'info';
+  return statusMap[status] || '未知狀態';
 };
 
 // 獲取直播主狀態樣式
