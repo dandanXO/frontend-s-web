@@ -39,9 +39,9 @@ body {
     padding: 20px;
 }
 .section.h5 {
-    width: 90%;
+    width: 80%;
     height: auto;
-    gap: 50px;
+    gap: 15px;
 }
 
 .header {
@@ -54,7 +54,7 @@ body {
 }
 
 .header.h5 {
-    font-size: 80px;
+    font-size: 26px;
 }
 
 .link {
@@ -72,7 +72,7 @@ body {
 }
 
 .desc.h5 {
-    font-size: 24px;
+    font-size: 12px;
 }
 
 .ip-origin {
@@ -96,7 +96,8 @@ body {
 }
 
 .desc-2.h5 {
-    font-size: 28px;
+    font-size: 14px;
+    line-height: 20px;
 }
 
 .contact-btn {
@@ -116,7 +117,7 @@ body {
 }
 
 .contact-btn.h5 {
-    min-height: 80px;
+    min-height: 44px;
     width: 100%;
 }
 
@@ -155,4 +156,9 @@ body {
     background-size: 100% 100%;
     width: 137px;
     height: 44px;
+}
+
+.contact-btn.dark.h5 {
+    min-height: 44px;
+    width: 100%;
 }
