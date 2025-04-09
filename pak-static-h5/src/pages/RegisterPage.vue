@@ -35,7 +35,7 @@
     <div class="reg-pg-title">{{ $t("header.register") }}</div>
 
     <div class="register-form-wrapper">
-      <FloatingStickyKefu />
+      <!-- <FloatingStickyKefu /> -->
       <q-form class="rounded-borders">
         <InputRowGrid>
           <template #fields>
@@ -391,7 +391,7 @@ import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
 import ShareIcons from "src/components/ShareIcons.vue";
-import FloatingStickyKefu from "../components/auth/FloatingStickyKefu.vue";
+// import FloatingStickyKefu from "../components/auth/FloatingStickyKefu.vue";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -400,7 +400,7 @@ export default defineComponent({
     InputRowGrid,
     InputField,
     ShareIcons,
-    FloatingStickyKefu
+    // FloatingStickyKefu
     // PrimaryButton
   },
   setup() {

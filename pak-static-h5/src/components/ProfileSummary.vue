@@ -728,7 +728,7 @@ onUnmounted(() => {
     align-items: center;
     justify-content: flex-end;
     
-    :not(:last-child) {
+    > :not(:last-child) {
       margin-right: 10px;
     }
     padding-top: 8px;
