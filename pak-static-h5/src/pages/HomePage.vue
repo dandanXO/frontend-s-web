@@ -4183,7 +4183,7 @@ onActivated(() => {
   checkSpinWheel();
   checkGoogleLoginSetPwd();
 
-  if (route.query.login === "true") {
+  if (route.query.login === "true" || route.query.register === "true") {
     //TODO: change back.
     // popupPromo.value = "money-rain";
     popupPromo.value = "spin-lucky-wheel";
