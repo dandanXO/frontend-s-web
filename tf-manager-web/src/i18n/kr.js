@@ -2574,6 +2574,7 @@ export default {
     Suspend: '정지',
     Promotion: '프로모션',
     'Privilege Info': '특권 정보',
+    'Privilege Competition List': 'Privilege Competition List',
     'Home Banner': '홈 배너',
     'Promotion pages': '프로모션 페이지',
     'Edit Promo': '프로모션 수정',

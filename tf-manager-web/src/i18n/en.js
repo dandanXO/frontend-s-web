@@ -3177,6 +3177,7 @@ export default {
     Suspend: 'Suspend',
     Promotion: 'Promotion',
     'Privilege Info': 'Privilege Info',
+    'Privilege Competition List': 'Privilege Competition List',
     'Home Banner': 'Home Banner',
     'Promotion pages': 'Promotion pages',
     'Edit Promo': 'Edit Promo',

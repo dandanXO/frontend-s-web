@@ -2549,6 +2549,7 @@ export default {
     Suspend: 'Đình chỉ',
     Promotion: 'Khuyến mãi',
     'Privilege Info': 'Thông tin đặc quyền',
+    'Privilege Competition List': 'Privilege Competition List',
     'Home Banner': 'Banner trang chủ',
     'Promotion pages': 'Trang khuyến mãi',
     'Edit Promo': 'Chỉnh sửa khuyến mãi',

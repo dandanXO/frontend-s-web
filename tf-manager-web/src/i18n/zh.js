@@ -3128,6 +3128,7 @@ export default {
     Suspend: '暂不处理',
     Promotion: '优惠',
     'Privilege Info': '优惠列表',
+    'Privilege Competition List': '优惠匹配赛事列表',
     'Home Banner': '首页广告',
     'Promotion pages': '优惠页面',
     'Edit Promo': '编辑优惠页面',
