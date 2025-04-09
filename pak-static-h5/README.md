@@ -75,8 +75,8 @@ npx cap run android -l --host=192.168.10.22 --port=9090
 
 1. open src-capacitor/android/app/build.gradle
 2. Edit Version No:
-  -     versionCode 7
-        versionName "1.0"
+  -     versionCode 36
+        versionName "1.0.36"
 3. Rebuild Apk.
 
 
