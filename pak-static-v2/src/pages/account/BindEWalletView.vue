@@ -383,6 +383,7 @@ const onCaptchaSubmit = () => {
 
 const bankList = ref([]);
 const loadBankCards = () => {
+  cardNumberRef.value.resetValidation();
   bankList.value = [];
   store.getMemberInfo().then(() => {
     if (!store.realName) {

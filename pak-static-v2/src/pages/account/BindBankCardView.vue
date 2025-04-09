@@ -261,7 +261,7 @@ const selectedCategoryToggleIndex = ref(0);
 const onCategoryToggleBtnClick = (index) => {
   selectedCategoryToggleIndex.value = index;
 };
-
+const resetValidation = ref()
 const qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
@@ -378,6 +378,7 @@ const onCaptchaSubmit = () => {
 const bankList = ref([]);
 const loadBankCards = () => {
   bankList.value = [];
+  cardNumberRef.value.resetValidation()
   store.getMemberInfo().then(() => {
     if (!store.realName) {
       $q.notify({
