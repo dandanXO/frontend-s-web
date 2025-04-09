@@ -21,7 +21,7 @@ import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from "vue";
 import { userStore } from "@/store";
 import { getChatHistory, getLivestreamList, sendChat } from "@/api/index/livestream";
 
-const MESSAGE_SYNC_INTERVAL = 1000 * 10; // 2 seconds
+const MESSAGE_SYNC_INTERVAL = 1000 * 2; // 2 seconds
 const MESSAGE_HISTORY_DANMU_FIRE_GAP = 10;
 const MAXIMUM_MESSAGE_LENGTH = 1000;
 
@@ -123,7 +123,7 @@ const syncMessages = () => {
         const combinedMessagesLength = combinedMessages.length;
         if (messageLength + combinedMessagesLength > MAXIMUM_MESSAGE_LENGTH) {
           const excessMessages = messageLength + combinedMessagesLength - MAXIMUM_MESSAGE_LENGTH;
-          messages.value = [...messages.value.slice(messageLength - excessMessages), ...combinedMessages];
+          messages.value = [...messages.value.slice(excessMessages), ...combinedMessages];
         } else {
           messages.value.push(...combinedMessages);
         }

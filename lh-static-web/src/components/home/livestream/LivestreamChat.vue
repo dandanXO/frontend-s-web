@@ -47,8 +47,12 @@ watch(
   messages,
   async () => {
     if (chatListRef.value) {
+      const isAtBottom =
+        chatListRef.value.scrollTop + chatListRef.value.clientHeight >= chatListRef.value.scrollHeight - 10;
       await nextTick();
-      chatListRef.value.scrollTop = chatListRef.value.scrollHeight;
+      if (isAtBottom) {
+        chatListRef.value.scrollTop = chatListRef.value.scrollHeight;
+      }
     }
   },
   { deep: true }
