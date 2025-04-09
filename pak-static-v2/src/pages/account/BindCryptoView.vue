@@ -309,6 +309,12 @@ const submitBankCard = () => {
             message: "Virtual wallet added successfully",
             icon: "check_circle_outline"
           });
+          bankCardInfo.bankId= undefined
+          bankCardInfo.cardNumber= ""
+          bankCardInfo.cardAccount= store.realName
+          bankCardInfo.cardAddress= ""
+          bankCardInfo.telephone= store.phone
+          bankCardInfo.currencyId= ""
           router.push("/account/bank");
         }
       })

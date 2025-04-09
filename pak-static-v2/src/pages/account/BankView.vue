@@ -190,6 +190,7 @@ const unbind = () => {
         message: "Unbind succeed",
         icon: "check_circle_outline"
       });
+      unbindField.bankCardNumber = "";
       loadCards();
     }
   });
