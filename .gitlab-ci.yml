@@ -1189,6 +1189,12 @@ deploy-pk2-download:
 
 #===============================================================================================
 
+deploy-pk2-download-v2:
+  extends: .s3-deploy
+  variables:
+    PROJECT: pk2-download-v2
+
+#===============================================================================================
 build-pk2-redirect-v3:
   extends: .build-projects
   variables:
