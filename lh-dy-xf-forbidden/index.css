@@ -19,12 +19,22 @@ body {
     align-items: center;
 }
 
-.container.h5 {
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    min-width: 100vw;
-    background-size: 100% 100%;
+.logo-bottom {
+    width: 124px;
+    height: 60px;
+}
+
+.logo-top {
+    display: none;
+}
+
+.grid {
+    width: 500px;
+}
+
+.globe {
+    width: 650px;
+    height: auto;
 }
 
 .section {
@@ -38,11 +48,6 @@ body {
     align-items: center;
     padding: 20px;
 }
-.section.h5 {
-    width: 80%;
-    height: auto;
-    gap: 15px;
-}
 
 .header {
     font-family: PingFang SC;
@@ -51,10 +56,6 @@ body {
     line-height: 100%;
     letter-spacing: 0;
     text-align: center;
-}
-
-.header.h5 {
-    font-size: 26px;
 }
 
 .link {
@@ -69,10 +70,6 @@ body {
     letter-spacing: 0;
     text-align: center;
     color: #666666;
-}
-
-.desc.h5 {
-    font-size: 12px;
 }
 
 .ip-origin {
@@ -95,11 +92,6 @@ body {
     color: #666666;
 }
 
-.desc-2.h5 {
-    font-size: 14px;
-    line-height: 20px;
-}
-
 .contact-btn {
     background: url('./images/contact-btn.svg') center center no-repeat;
     background-size: 100% 100%;
@@ -114,11 +106,6 @@ body {
     &:hover {
         filter: brightness(0.9);
     }
-}
-
-.contact-btn.h5 {
-    min-height: 44px;
-    width: 100%;
 }
 
 .container.dark {
@@ -158,7 +145,60 @@ body {
     height: 44px;
 }
 
-.contact-btn.dark.h5 {
-    min-height: 44px;
-    width: 100%;
+@media (width <= 800px) {
+    .container {
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        min-width: 100vw;
+        background-size: 100% 100%;
+    }
+
+    .grid {
+        width: 100%;
+        height: auto;
+    }
+
+    .globe {
+        width: 200px;
+        height: auto;
+    }
+    
+    .logo-top {
+        display: block;
+        width: 100px;
+        height: auto;
+    }
+    .logo-bottom {
+        display: none;
+    }
+
+    .section {
+        width: 80%;
+        height: auto;
+        gap: 15px;
+    }
+
+    .header {
+        font-size: 26px;
+    }
+
+    .desc {
+        font-size: 12px;
+    }
+
+    .desc-2 {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .contact-btn {
+        min-height: 44px;
+        width: 100%;
+    }
+
+    .contact-btn.dark {
+        min-height: 44px;
+        width: 100%;
+    }
 }
