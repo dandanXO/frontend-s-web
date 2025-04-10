@@ -1,38 +1,38 @@
 <template>
-  <div class="list-item" id="whatapp-icon" @click="openWhatsApp()">
+  <div class="list-item" id="whatapp-icon ddd" @click="openWhatsApp()">
     <img class="btn-icon" 
-      :src="require(`../assets/images/auth/whatsapp-${isInvite ? 'neon' : 'colored'}.png`)" />
+      :src="require(`../assets/images/auth/whatsapp-new.png`)" />
       <img class="absolute-hot" src="../assets/images/index/hot.gif" />
     <!-- <div>WhatsApp</div> -->
   </div>
   <div v-if="isInvite" class="list-item" @click="openFacebook()">
     <img class="btn-icon" id="facebook-icon"
-      :src="require(`../assets/images/auth/facebook-${isInvite ? 'neon' : 'colored'}.png`)" />
+      :src="require(`../assets/images/auth/facebook-new.png`)" />
   </div>
   <a ref="tiktokRef" href="https://www.tiktok.com" target="_blank" :style="{ display: 'none' }" />
   <div class="list-item" @click="openTiktok()">
     <img class="btn-icon" id="tiktok-icon"
-      :src="require(`../assets/images/auth/tiktok-${isInvite ? 'neon' : 'colored'}.png`)" />
+      :src="require(`../assets/images/auth/tiktok-new.png`)" />
     <!-- <div>Tiktok</div> -->
   </div>
   <a ref="instagramRef" href="https://www.instagram.com" target="_blank" :style="{ display: 'none' }" />
   <div class="list-item" @click="openInsta()">
     <img class="btn-icon" id="insta-icon"
-      :src="require(`../assets/images/auth/insta-${isInvite ? 'neon' : 'colored'}.png`)" />
+      :src="require(`../assets/images/auth/insta-new.png`)" />
     <!-- <div>WhatsApp</div> -->
   </div>
   <div class="list-item" @click="openYoutube()">
     <img class="btn-icon" id="youtube-icon"
-      :src="require(`../assets/images/auth/youtube-${isInvite ? 'neon' : 'colored'}.png`)" />
+      :src="require(`../assets/images/auth/youtube-new.png`)" />
     <!-- <div>Youtube</div> -->
   </div>
   <div v-if="isInvite" class="list-item" @click="openSMS()">
     <img class="btn-icon" id="mail-icon"
-      :src="require(`../assets/images/auth/sms-${isInvite ? 'neon' : 'grey'}.png`)" />
+      :src="require(`../assets/images/auth/sms-new.png`)" />
   </div>
   <div v-if="isInvite" class="list-item" @click="openMail()">
     <img class="btn-icon" id="mail-icon"
-      :src="require(`../assets/images/auth/mail-${isInvite ? 'neon' : 'grey'}.png`)" />
+      :src="require(`../assets/images/auth/mail-new.png`)" />
   </div>
   <div v-if="!isInvite" class="list-item" @click="openCharity()">
     <img class="btn-icon" id="charity-icon"
@@ -164,7 +164,10 @@ const downloadApp = () => {
     }
   }
 }
-
+.btn-icon {
+    width: 38px !important;
+    height: 38px !important;
+  }
 .btn-lists {
   display: flex;
   justify-content: space-evenly;
