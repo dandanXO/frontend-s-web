@@ -30,12 +30,6 @@
               <div class="text-center">足球</div>
             </div>
           </template>
-          <!-- <template v-slot:three>
-            <div class="row items-center no-wrap">
-              <q-icon left name="sports_soccer" />
-              <div class="text-center">lan球</div>
-            </div>
-          </template> -->
         </q-btn-toggle>
       </div>
 
@@ -65,10 +59,10 @@
                 <div class="content-desc">{{ item.homeNameZh }} VS {{ item.awayNameZh }}</div>
               </div>
               <div class="item-float-content">
-                <div class="content-float float-user">
+                <!-- <div class="content-float float-user">
                   <div class="user-avatar"><img src="https://cdn.quasar.dev/img/avatar.png" /></div>
                   <div>悦悦</div>
-                </div>
+                </div> -->
                 <div class="content-float float-filled">
                   <div>正在直播</div>
                 </div>

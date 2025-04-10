@@ -153,8 +153,8 @@ onBeforeUnmount(() => {
     padding: 16px;
     overflow: auto;
     height: 100%;
-    margin-top: calc(56.25vw + 38px); // background: salmon;
-    max-height: calc(100dvh - 56.25vw - 38px - 60px);
+    margin-top: calc(46.25vw + 38px); // background: salmon;
+    max-height: calc(100dvh - 46.25vw - 38px - 60px);
     .livestream-chat-item {
       display: flex;
       flex-direction: column;
