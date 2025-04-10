@@ -103,6 +103,7 @@
             <p>{{ supplierLoadError }}</p>
           </div>
           <video
+	          :key="`${currentQuality}-${currentPlayerType}`"
             ref="supplierPlayer"
             id="supplierPlayer"
             class="video-js vjs-big-play-centered"
@@ -126,6 +127,7 @@
               <p>{{ streamerLoadError }}</p>
             </div>
             <video
+	            :key="`${currentQuality}-${currentPlayerType}`"
               ref="streamerPlayer"
               id="streamerPlayer"
               class="video-js vjs-big-play-centered"
@@ -355,6 +357,9 @@ const changeQuality = async (quality) => {
   console.log(`[changeQuality] Streamer URL is valid now: ${isStreamerUrlValidNow}`);
   console.log(`[changeQuality] Supplier instance: ${!!supplierPlayerInstance.value}, Streamer instance: ${!!streamerPlayerInstance.value}`);
 
+  destroyVideoPlayer();
+  initVideoPlayer();
+  return;
 
   // 4. 更新供應商播放器 (如果實例存在)
   if (supplierPlayerInstance.value) {
@@ -452,6 +457,46 @@ const toggleStreamStatus = async () => {
   }
 }
 
+const initVideoPlayer = async () => {
+  console.log('Stream prop received:', JSON.parse(JSON.stringify(props.stream)))
+  isInitialized.value = true
+  supplierLoadError.value = null
+  streamerLoadError.value = null
+  streamTitle.value = props.stream?.title || '直播'
+  await nextTick()
+
+  await initializePlayers()
+
+  console.log('對話框顯示，初始化流程完成')
+  checkStreamOwnership()
+  checkStreamStatus()
+
+  // 初始顯示時，如果 streamer URL 無效且預設選中 host，切換回 supplier
+  if (currentPlayerType.value === 'host' && !streamerHasValidUrl.value) {
+    currentPlayerType.value = 'supplier'
+  }
+}
+
+const destroyVideoPlayer = () => {
+  // 清理播放器
+  const disposePlayer = (instanceRef) => {
+    if (instanceRef.value) {
+      try {
+        console.log(`準備銷毀播放器: ${instanceRef.value.id()}`)
+        instanceRef.value.dispose() // 使用 dispose 徹底清理
+        instanceRef.value = null // 清空引用
+      } catch (error) {
+        console.warn('銷毀播放器時發生錯誤:', error)
+      }
+    }
+  }
+  disposePlayer(supplierPlayerInstance)
+  disposePlayer(streamerPlayerInstance)
+  isLoading.value = false
+  isInitialized.value = false // *** 重置初始化狀態 ***
+  console.log('對話框隱藏，播放器已銷毀')
+}
+
 // 關閉對話框
 const onHide = () => {
   emit('update:visible', false)
@@ -461,45 +506,12 @@ watch(
   () => props.visible,
   async (newValue) => {
     if (newValue) {
-      console.log('Stream prop received:', JSON.parse(JSON.stringify(props.stream)));
-      isInitialized.value = true;
-      supplierLoadError.value = null;
-      streamerLoadError.value = null;
-      streamTitle.value = props.stream?.title || '直播';
-      await nextTick();
-
-      await initializePlayers();
-
-      console.log('對話框顯示，初始化流程完成');
-      checkStreamOwnership();
-      checkStreamStatus();
-
-       // 初始顯示時，如果 streamer URL 無效且預設選中 host，切換回 supplier
-       if (currentPlayerType.value === 'host' && !streamerHasValidUrl.value) {
-           currentPlayerType.value = 'supplier';
-       }
-
+      initVideoPlayer();
     } else {
-      // 清理播放器
-      const disposePlayer = (instanceRef) => {
-          if (instanceRef.value) {
-              try {
-                  console.log(`準備銷毀播放器: ${instanceRef.value.id()}`);
-                  instanceRef.value.dispose(); // 使用 dispose 徹底清理
-                  instanceRef.value = null; // 清空引用
-              } catch (error) {
-                  console.warn('銷毀播放器時發生錯誤:', error);
-              }
-          }
-      };
-      disposePlayer(supplierPlayerInstance);
-      disposePlayer(streamerPlayerInstance);
-      isLoading.value = false;
-      isInitialized.value = false; // *** 重置初始化狀態 ***
-      console.log('對話框隱藏，播放器已銷毀');
+      destroyVideoPlayer();
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 // 組件卸載時清理播放器
@@ -554,6 +566,11 @@ const handlePlayerTypeChange = (newType) => {
     });
   } else {
     currentPlayerType.value = newType;
+
+    destroyVideoPlayer();
+    initVideoPlayer();
+    return;
+
     if (newType === 'supplier' && supplierPlayerInstance.value) {
       startPlay(supplierPlayerInstance, props.stream?.supplierCdnPullUrl?.[currentQuality.value]?.hlsUrl, '供應商', supplierLoadError);
     } else if (newType === 'host' && streamerPlayerInstance.value) {
