@@ -937,9 +937,10 @@ watch(activeSetting, checkIsShowDetail);
       margin-top: 16px;
       // display: none !important;
       display: flex;
-        :not(:last-child) {
-      margin-right: 12px;
-    }
+      justify-content: space-around;
+    //     :not(:last-child) {
+    //   margin-right: 12px;
+    // }
     }
   }
 
