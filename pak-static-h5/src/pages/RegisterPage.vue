@@ -390,7 +390,7 @@ import { useI18n } from "vue-i18n";
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
-import ShareIcons from "src/components/ShareIcons.vue";
+import ShareIcons from "src/components/LoginAndRegisterShareIcons.vue";
 // import FloatingStickyKefu from "../components/auth/FloatingStickyKefu.vue";
 
 export default defineComponent({
