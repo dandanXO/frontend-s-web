@@ -5654,7 +5654,7 @@ const checkGoogleLoginSetPwd = () => {
     }
 
     &--img {
-      background-size: cover;
+      background-size: 100% 100%;
       background-position: center center;
       height: 100%;
       width: 100%;
