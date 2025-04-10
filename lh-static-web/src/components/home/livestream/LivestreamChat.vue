@@ -91,11 +91,13 @@ watch(
 
       .livestream-chat-item__message {
         @include livestream-content-block;
+        max-width: 100%;
         padding: 6px 9px;
         border-top-left-radius: 0;
         font-size: 11px;
         line-height: 15px;
         color: #333333;
+        word-wrap: break-word;
       }
     }
   }
