@@ -35,9 +35,11 @@
       </q-form>
     </div>
   </div>
+  <GameModal ref="gameRef" />
 </template>
 <script setup>
 import { computed, nextTick, ref, toRefs, watch, onMounted, onBeforeUnmount, onUnmounted } from "vue";
+import GameModal from "components/modal/GameModal.vue";
 
 const props = defineProps(["messages"]);
 const { messages } = toRefs(props);
@@ -64,77 +66,14 @@ watch(
   { deep: true }
 );
 
-// generate stimulation chat
-let messageInterval = null;
-const randomUsernames = [
-  "进球大师99",
-  "足球狂热者",
-  "射手王",
-  "传球专家",
-  "VAR不行",
-  "点球英雄",
-  "红牌裁判",
-  "越位巫师",
-  "过人之神",
-  "反击之王",
-  "头球怪兽",
-  "超级替补",
-  "防守之墙",
-  "门神",
-  "任意球传奇",
-  "金靴奖",
-  "狂热球迷",
-  "横幅制作人",
-  "球场歌手",
-  "最后时刻英雄"
-];
+const gameRef = ref();
 
-const randomMessages = [
-  "比赛结束！精彩比赛！⚽",
-  "太棒的传球！🔥",
-  "裁判你瞎了吗？！🤬",
-  "又是越位？！🤦‍♂️",
-  "VAR真是毁了足球 😡",
-  "精彩进球！🚀",
-  "门将今天真是神勇！🧤",
-  "传控流最强！👏",
-  "这是什么恶意犯规！😬",
-  "红牌来了！🟥",
-  "反击开始，GO GO GO！⚡",
-  "头球进了！🎯",
-  "该换人了！🔄",
-  "点球！🥅",
-  "加时赛戏剧性时刻！⏳",
-  "大家加油，前场压上！🔥",
-  "防守啊，防守！🏰",
-  "神扑！🧤",
-  "0-0无聊比赛... 😴",
-  "中场在哪里？！🤔",
-  "90+5的绝杀来了！🚀",
-  "我们需要奇迹！🙏"
-];
-
-// Function to generate random chat messages
-const generateRandomMessages = () => {
-  const messageCount = Math.floor(Math.random() * 2) + 2; // Random between 2 to 6 messages
-
-  for (let i = 0; i < messageCount; i++) {
-    const randomUsernameIndex = Math.floor(Math.random() * randomUsernames.length);
-    const randomMessageIndex = Math.floor(Math.random() * randomMessages.length);
-
-    const randomMessage = {
-      name: randomUsernames[randomUsernameIndex],
-      content: randomMessages[randomMessageIndex]
-    };
-
-    messages.value.push(randomMessage);
-  }
+const openGame = (gameName, code, gameCode) => {
+  gameRef.value.open(gameName, code, gameCode);
 };
 
 // Start generating random messages every 2-5 seconds
-onMounted(() => {
-  // messageInterval = setInterval(generateRandomMessages, Math.random() * 10000 + 2000);
-});
+onMounted(() => {});
 
 // Stop generating messages when component is destroyed
 onBeforeUnmount(() => {
@@ -153,8 +92,10 @@ onBeforeUnmount(() => {
     padding: 16px;
     overflow: auto;
     height: 100%;
-    margin-top: calc(46.25vw + 38px); // background: salmon;
-    max-height: calc(100dvh - 46.25vw - 38px - 60px);
+    margin-top: calc(56.25vw + 38px);
+    max-height: calc(100dvh - 56.25vw - 38px - 60px);
+    // background: salmon;
+
     .livestream-chat-item {
       display: flex;
       flex-direction: column;
@@ -188,12 +129,14 @@ onBeforeUnmount(() => {
     // padding: 6px 12px;
     position: fixed;
     bottom: 0;
+
     left: 0;
     width: 100%;
     z-index: 2001;
     height: 60px;
     display: flex;
     align-items: center;
+    transition: 0.3s all;
 
     .livestream-chat-input-inner-wrapper {
       display: flex;

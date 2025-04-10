@@ -1,10 +1,6 @@
 <template>
   <q-page ref="pageContainer" class="page-style">
-    <!-- <div class="video-wrapper" :style="videoStyle"> -->
-    <!-- <template v-if="liveStreamReady"> -->
     <LiveStreamVideo :danmuList :livestream-data="currentLiveData" />
-    <!-- </template> -->
-    <!-- </div> -->
 
     <div class="transfer-mid-div">
       <div class="station-notice-wrapper" @click="showAnnouncementDialog">
@@ -21,19 +17,7 @@
         </marquee-text>
       </div>
     </div>
-    <!-- <pre>currentLiveDatastreamId -- {{ currentLiveData.streamId }}</pre> -->
     <LiveStreamChatMessages class="livestream-chat" :messages @send-chat-message="handleSendChatMessage" />
-
-    <!-- <pre style="color: salmon">danmuList --{{ danmuList }}</pre> -->
-    <!-- <pre style="color: salmon">selectedLiveStream -- {{ selectedLiveStream }}</pre> -->
-
-    <!-- <pre style="color: blue">... {{ selectedLiveStream.supplierCdnPullUrl }}</pre> -->
-
-    <!-- <pre style="color: green">
-  ~~~{{ selectedLiveStream.supplierCdnPullUrl ? selectedLiveStream.supplierCdnPullUrl["540p"] : "Loading..." }}
-    </pre> -->
-
-    <!-- <pre style="color: salmon">liveStreamList -- {{ liveStreamList }}</pre> -->
   </q-page>
 </template>
 
@@ -65,28 +49,8 @@ const announcementList = ref(["禁止发表任何广告、低俗色情、辱骂�
 const chatContainer = ref(null);
 const pageContainer = ref(null);
 const store = userStore();
-const isDanmuShow = ref(true);
 
 let danmu = null;
-let chatInterval = null;
-let randomChatInterval = null;
-
-const urls = ref([
-  { name: "线路1", url: "" },
-  { name: "线路2", url: "" },
-  { name: "线路3", url: "" }
-]);
-
-// const channels = ref([
-//   // { name: "线路1", url: "https://sample.vodobox.net/skate_phantom_flex_4k/skate_phantom_flex_4k.m3u8" },
-//   // { name: "线路2", url: "https://cdn.jwplayer.com/manifests/pZxWPRg4.m3u8" }
-//   // { name: "线路3", url: "https://content.jwplatform.com/manifests/vM7nH0Kl.m3u8" }
-
-//   { name: "540p", url: "" },
-//   { name: "720p", url: "" },
-//   { name: "1080p", url: "" },
-//   { name: "Original", url: "" }
-// ]);
 
 const list = ref([]);
 const currentLive = ref(0);
@@ -94,9 +58,15 @@ const messageTimer = ref(null);
 const lastSyncMessageTime = ref(Date.now());
 const unsortMessages = ref([]);
 
+// const currentLiveData = computed(() => {
+//   if (!list.value.length) return {};
+//   return list.value[currentLive.value];
+// });
+
 const currentLiveData = computed(() => {
-  if (!list.value.length) return {};
-  return list.value[currentLive.value];
+  const streamIdFromQuery = route.query.streamId;
+  if (!streamIdFromQuery || !list.value.length) return {};
+  return list.value.find((item) => item.streamId == streamIdFromQuery) || {};
 });
 
 const fullMessages = computed(() => {
@@ -238,9 +208,9 @@ const getData = () => {
       });
       list.value = parsedData;
 
-      getLivestreamDetail(currentLiveData.value.streamId).then((res) => {
-        console.log(res);
-      });
+      // getLivestreamDetail(currentLiveData.value.streamId).then((res) => {
+      //   console.log(res);
+      // });
     }
   });
 };
@@ -302,119 +272,6 @@ watch(currentLiveData, () => {
   syncMessages();
 });
 
-const selectedLiveStream = reactive({
-  id: null,
-  sportId: null,
-  homeNameZh: null,
-  homeNameEn: null,
-  homeIcon: null,
-  awayNameZh: null,
-  awayNameEn: null,
-  awayIcon: null,
-  eventStartTime: null,
-  title: null,
-  streamerStatus: null,
-  supplierCdnPullUrl: null,
-  streamerCdnPullUrl: null,
-  name: null,
-  avatar: null
-});
-
-const getSelectedLiveStream = () => {
-  api.get(`/live/${route.query.streamId}`).then((res) => {
-    if (res.code === 0) {
-      // selectedLiveStream.value = res.data.records;
-
-      // temporary date
-      // selectedLiveStream = {
-      (selectedLiveStream.id = 41),
-        (selectedLiveStream.sportId = 1),
-        (selectedLiveStream.homeNameZh = "日本"),
-        (selectedLiveStream.homeNameEn = "jacket"),
-        (selectedLiveStream.homeIcon = "1/53ebfb0e-316f-48c3-8e2f-890e9cccaf62.jpg"),
-        (selectedLiveStream.awayNameZh = "美國"),
-        (selectedLiveStream.awayNameEn = "testgin"),
-        (selectedLiveStream.awayIcon = "1/0f3b6265-1f81-4fd1-9ceb-e2cd64a57402.jpg"),
-        (selectedLiveStream.eventStartTime = 1744185234000),
-        (selectedLiveStream.title = "paul0409-01"),
-        (selectedLiveStream.streamerStatus = 1),
-        (selectedLiveStream.supplierCdnPullUrl = JSON.parse(
-          '{"540p": {"flv_url": "https://ozqak6.me/live/F974R_540p.flv?txSecret=fbdc9221abd13d8487a7123008c1b2ea&txTime=20250409135439", "hls_url": "https://ozqak6.me/live/F974R_540p.m3u8?txSecret=fbdc9221abd13d8487a7123008c1b2ea&txTime=20250409135439"}, "720p": {"flv_url": "https://ozqak6.me/live/F974R_720p.flv?txSecret=fbdc9221abd13d8487a7123008c1b2ea&txTime=20250409135439", "hls_url": "https://ozqak6.me/live/F974R_720p.m3u8?txSecret=fbdc9221abd13d8487a7123008c1b2ea&txTime=20250409135439"}, "1080p": {"flv_url": "https://ozqak6.me/live/F974R_1080p.flv?txSecret=fbdc9221abd13d8487a7123008c1b2ea&txTime=20250409135439", "hls_url": "https://ozqak6.me/live/F974R_1080p.m3u8?txSecret=fbdc9221abd13d8487a7123008c1b2ea&txTime=20250409135439"}, "original": {"flv_url": "https://ozqak6.me/live/F974R.flv?txSecret=fbdc9221abd13d8487a7123008c1b2ea&txTime=20250409135439", "hls_url": "https://ozqak6.me/live/F974R.m3u8?txSecret=fbdc9221abd13d8487a7123008c1b2ea&txTime=20250409135439"}}'
-        )),
-        (selectedLiveStream.streamerCdnPullUrl = JSON.parse(
-          '{"540p": {"flv_url": "https://ozqak6.me/live/streamer/F974R_540p.flv?txSecret=0ed62dff7b7fb358d6795424782246ea&txTime=20250409143727", "hls_url": "https://ozqak6.me/live/streamer/F974R_540p.m3u8?txSecret=0ed62dff7b7fb358d6795424782246ea&txTime=20250409143727"}, "720p": {"flv_url": "https://ozqak6.me/live/streamer/F974R_720p.flv?txSecret=0ed62dff7b7fb358d6795424782246ea&txTime=20250409143727", "hls_url": "https://ozqak6.me/live/streamer/F974R_720p.m3u8?txSecret=0ed62dff7b7fb358d6795424782246ea&txTime=20250409143727"}, "1080p": {"flv_url": "https://ozqak6.me/live/streamer/F974R_1080p.flv?txSecret=0ed62dff7b7fb358d6795424782246ea&txTime=20250409143727", "hls_url": "https://ozqak6.me/live/streamer/F974R_1080p.m3u8?txSecret=0ed62dff7b7fb358d6795424782246ea&txTime=20250409143727"}, "original": {"flv_url": "https://ozqak6.me/live/streamer/F974R.flv?txSecret=0ed62dff7b7fb358d6795424782246ea&txTime=20250409143727", "hls_url": "https://ozqak6.me/live/streamer/F974R.m3u8?txSecret=0ed62dff7b7fb358d6795424782246ea&txTime=20250409143727"}}'
-        )),
-        (selectedLiveStream.name = "paul001"),
-        (selectedLiveStream.avatar = "paul002");
-      // };
-    }
-  });
-};
-
-const selectedHistory = reactive({
-  siteId: 7,
-  streamId: route.query.streamId,
-  recordTime: ["1744187432264", Date.now().toString()]
-});
-
-// const getSelectedLiveHistory = () => {
-//   api.post("/live/history", selectedHistory).then((res) => {
-//     if (res.code === 0) {
-//       // selectedLiveStream.value = res.data.records;
-//     }
-//   });
-// };
-
-// const liveStreamReady = ref(false);
-
-// onActivated(async () => {
-//   // Make initial API calls to load the live stream and history
-//   await getSelectedLiveStream();
-//   await getSelectedLiveHistory();
-
-//   // Define a function to poll the `selectedLiveStream.supplierCdnPullUrl`
-//   const pollForLiveStreamData = async () => {
-//     // Check if supplierCdnPullUrl has data
-//     if (selectedLiveStream.supplierCdnPullUrl) {
-//       // Populate channels when supplierCdnPullUrl is available
-//       // channels.value = [
-//       //   { name: "540p", url: selectedLiveStream.supplierCdnPullUrl["540p"].hls_url },
-//       //   { name: "720p", url: selectedLiveStream.supplierCdnPullUrl["720p"].hls_url },
-//       //   { name: "1080p", url: selectedLiveStream.supplierCdnPullUrl["1080p"].hls_url },
-//       //   { name: "Original", url: selectedLiveStream.supplierCdnPullUrl["original"].hls_url }
-//       // ];
-
-//       liveStreamReady.value = true;
-//     } else {
-//       // If no data yet, wait a bit before checking again
-//       setTimeout(() => {
-//         pollForLiveStreamData(); // Recursively call the function to keep checking
-//       }, 500); // Check again after 500ms (can adjust as needed)
-//     }
-//   };
-
-//   // Start polling for live stream data
-//   await pollForLiveStreamData();
-// });
-
-// watch(
-//   () => selectedLiveStream.supplierCdnPullUrl,
-//   (newValue) => {
-//     if (newValue) {
-//       // Once supplierCdnPullUrl is populated, update channels and set liveStreamReady
-//       channels.value = [
-//         { name: "540p", url: newValue["540p"].hls_url },
-//         { name: "720p", url: newValue["720p"].hls_url },
-//         { name: "1080p", url: newValue["1080p"].hls_url },
-//         { name: "Original", url: newValue["original"].hls_url }
-//       ];
-
-//       liveStreamReady.value = true;
-//     }
-//   },
-//   { immediate: true } // This will trigger the watcher immediately
-// );
-
 onMounted(() => {
   getData();
   syncMessages();
@@ -462,16 +319,16 @@ onUnmounted(() => {
 .transfer-mid-div {
   position: fixed;
   left: 0;
-  top: calc(46.25vw);
+  top: calc(56.25vw);
 }
 
 /* Chat Messages */
 .chat-container {
   position: fixed;
-  top: calc(46.25vw + 38px); /* Height of video (16:9 aspect ratio) */
+  top: calc(56.25vw + 38px); /* Height of video (16:9 aspect ratio) */
   left: 0;
   width: 100%;
-  height: calc(100dvh - 46.25vw - 60px - 38px);
+  height: calc(100dvh - 56.25vw - 60px - 38px);
   overflow-y: auto;
   padding: 10px;
   box-sizing: border-box;
