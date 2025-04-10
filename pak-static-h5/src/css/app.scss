@@ -214,9 +214,9 @@ body.body--dark .q-footer {
   .q-panel > div {
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: cover;
+    background-size: 100% 100%;
     border-radius: 12px;
-    min-height: 120px;
+    min-height: 150px;
     // aspect-ratio: 22 / 7;
   }
   .q-carousel__navigation--bottom {
