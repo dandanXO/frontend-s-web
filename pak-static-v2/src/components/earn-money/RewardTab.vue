@@ -226,7 +226,7 @@
               <tr>
                 <td style="width: 60%">
                   <div class="player-details">
-                    <img :src="getRandomImage(index)" width="30" />
+                    <img :src="getRandomImage(index)" width="30" style="margin-right: 8px;" />
                     {{ item.loginName }}
                   </div>
                 </td>
@@ -278,24 +278,40 @@ const store = userStore();
 const { t } = useI18n();
 
 const copyHrefLink = () => {
-  navigator.clipboard
-    .writeText(selfTgurl.value)
-    .then(() => {
-      $q.notify({
-        message: "Link copied to clipboard",
-        color: "positive",
-        position: "top",
-        timeout: 2000
+  const textToCopy = selfTgurl.value;
+  
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        $q.notify({
+          message: "Link copied to clipboard",
+          color: "positive",
+          position: "top",
+          timeout: 2000,
+        });
+      })
+      .catch(() => {
+        fallbackCopyTextToClipboard(textToCopy);
       });
-    })
-    .catch(() => {
-      $q.notify({
-        message: "Failed to copy link",
-        color: "negative",
-        position: "top",
-        timeout: 2000
-      });
-    });
+  } else {
+    fallbackCopyTextToClipboard(textToCopy);
+  }
+};
+const fallbackCopyTextToClipboard = (text) => {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  document.body.removeChild(textarea);
+
+  $q.notify({
+    message: "Link copied to clipboard",
+    color: "positive",
+    position: "top",
+    timeout: 2000,
+  });
 };
 
 const oneTimeBonusSetting = ref([]);
@@ -837,7 +853,6 @@ watch(activeSetting, checkIsShowDetail);
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 8px;
         }
 
         td {
