@@ -552,6 +552,7 @@ onMounted(() => {
       .content-title {
         font-size: 18px;
         font-weight: bold;
+        color: #000000;
       }
       .content-desc {
         color: #7a80a1;
