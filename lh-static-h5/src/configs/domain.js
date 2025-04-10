@@ -81,6 +81,7 @@ export const globalLinks = [
 ];
 
 export const globalAndCNLinks = [
+  "lh99196.com",
   "fhh138.cc",
   "lh9i7.cc",
   "lh11w.cc",
