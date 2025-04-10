@@ -272,7 +272,7 @@ import { useRoute, useRouter } from "vue-router";
 import qs from "qs";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
-import ShareIcons from "../components/ShareIcons.vue";
+import ShareIcons from "../components/LoginAndRegisterShareIcons.vue";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { isAndroid, isInPwa, trackNewUserFtd } from "boot/utils";
@@ -996,7 +996,8 @@ export default defineComponent({
     display: unset;
     &.btn-lists {
       display: flex;
-      width: 95%;
+      width: 100%;
+      justify-self: space-around;
       margin: 0 auto;
     }
   }
