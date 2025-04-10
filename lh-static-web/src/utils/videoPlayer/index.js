@@ -14,6 +14,12 @@ import { _hls, initHls } from "./hls";
  * @property {MediaType} mediaType - media source type
  */
 
+/**
+ * custom event names
+ * @typedef {Object} CustomEvents
+ * @type {{ AUTO_PLAY_FAILED: string }}
+ */
+
 export class VideoPlayer {
   /**
    * @param {VideoPlayerConfig} config - video element
@@ -28,8 +34,12 @@ export class VideoPlayer {
     this._url = url;
     this.qualitySupported = false;
     this._maxLatency = maxLiveLatency || 10;
-    /** @type { typeof import('hls.js').Events | import('flv.js').default.Events} */
+    /** @type { typeof import('hls.js').Events | import('flv.js').default.Events | CustomEvents} */
     this.Events = {};
+    this._customEvents = {
+      AUTO_PLAY_FAILED: "AUTO_PLAY_FAILED"
+    };
+    this._eventTarget = new EventTarget();
     /** @type {SupportPlayer} */
     this.SupportPlayer = "NONE";
 
@@ -58,7 +68,7 @@ export class VideoPlayer {
         return;
       } else if (_hls.isSupported()) {
         this.qualitySupported = true;
-        this.Events = _hls.Events;
+        this.Events = Object.assign({}, this._customEvents, _hls.Events);
         this.SupportPlayer = "FULL";
       } else {
         this.SupportPlayer = "ORIGIN";
@@ -69,7 +79,7 @@ export class VideoPlayer {
         this.SupportPlayer = "NONE";
       } else {
         this.qualitySupported = false;
-        this.Events = this._player.Events;
+        this.Events = Object.assign({}, this._customEvents, this._player.Events);
       }
     }
   }
@@ -81,15 +91,15 @@ export class VideoPlayer {
       }, 5000);
 
       if (this._mediaType === "hls") {
-        this._player.on(this.Events.MANIFEST_PARSED, () => {
-          startPlay && this.play();
+        this._player.on(this.Events.MANIFEST_PARSED, async () => {
+          startPlay && (await this.play());
           resolve();
         });
         this._player.loadSource(this._url);
         this._player.attachMedia(this.videoEl);
       } else {
-        this._player.on(this.Events.LOADING_COMPLETE, () => {
-          startPlay && this.play();
+        this._player.on(this.Events.LOADING_COMPLETE, async () => {
+          startPlay && (await this.play());
           resolve();
         });
         this._player.attachMediaElement(this.videoEl);
@@ -98,11 +108,15 @@ export class VideoPlayer {
     });
   }
 
-  play() {
-    if (this._mediaType === "hls") {
-      this.videoEl.play();
-    } else {
-      this._player.play();
+  async play() {
+    try {
+      if (this._mediaType === "hls") {
+        await this.videoEl.play();
+      } else {
+        await this._player.play();
+      }
+    } catch (e) {
+      this._eventTarget.dispatchEvent(new Event(this._customEvents.AUTO_PLAY_FAILED));
     }
   }
 
@@ -146,6 +160,14 @@ export class VideoPlayer {
 
     if (latestPosition - currentTime > this._maxLatency) {
       this.videoEl.currentTime = latestPosition;
+    }
+  }
+
+  on(event, handler) {
+    if (Object.keys(this._customEvents).includes(event)) {
+      this._eventTarget.addEventListener(event, handler);
+    } else {
+      this._player.on(event, handler);
     }
   }
 

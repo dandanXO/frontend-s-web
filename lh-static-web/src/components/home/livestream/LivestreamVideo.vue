@@ -116,6 +116,12 @@
           </button>
         </div>
       </div>
+      <div v-if="showUnmuteMask" class="livestream-video-muted-mask" @click.stop>
+        <button class="btn" @click="handleUnmuteClick">
+          <img src="@/assets/home/livestream/icon-volume-off.png" />
+        </button>
+        <span>点击取消静音</span>
+      </div>
     </template>
     <div v-else class="livestream-unsupported">不支援的浏览器</div>
   </div>
@@ -178,6 +184,7 @@ const videoWrapperMouseLeaveTimer = ref(null);
 const showPlayerController = ref(false);
 const isPlayerSupported = ref(true);
 const isPlayerConfigLoaded = ref(false);
+const showUnmuteMask = ref(false);
 /** @type {import("vue").Ref< VideoPlayer | null>}*/
 const player = ref(null);
 const danmu = ref(null);
@@ -207,6 +214,8 @@ const currentVideoUrl = computed(() => {
   return result[1]?.hls_url ?? "";
 });
 
+const disableVideoController = computed(() => showUnmuteMask.value);
+
 // const currentChannel = computed(() => {
 //   if (!channels.value.length) return {};
 //   return channels.value[playerConfig.value.channel];
@@ -233,6 +242,7 @@ const initPlayer = async (play = false) => {
   await player.value.init();
   isPlayerSupported.value = player.value.SupportPlayer !== "NONE";
   player.value.on(player.value.Events.ERROR, handlePlayerError);
+  player.value.on(player.value.Events.AUTO_PLAY_FAILED, handleAutoPlayFailed);
   await player.value.load(play);
   // if (player.value.qualitySupported) getQualities();
 };
@@ -318,11 +328,13 @@ const handleVolumeChange = (e) => {
 };
 
 const handleWrapperMouseEnter = () => {
+  if (disableVideoController.value) return;
   showPlayerController.value = true;
   videoWrapperMouseLeaveTimer.value && clearTimeout(videoWrapperMouseLeaveTimer.value);
 };
 
 const handleWrapperMouseLeave = () => {
+  if (disableVideoController.value) return;
   videoWrapperMouseLeaveTimer.value = setTimeout(() => {
     showPlayerController.value = false;
     channelPopperRef.value?.hide();
@@ -340,6 +352,12 @@ const handlePlayerError = (event, data) => {
   if (!playerConfig.value.isPause) {
     changePlayerConfig("isPause", true);
   }
+};
+
+const handleAutoPlayFailed = () => {
+  showUnmuteMask.value = true;
+  videoRef.value.muted = true;
+  player.value.play();
 };
 
 // const handleChannelChange = async (index) => {
@@ -368,6 +386,12 @@ const getQualities = () => {
   }));
 
   qualities.value = result;
+};
+
+const handleUnmuteClick = () => {
+  if (!videoRef.value) return;
+  videoRef.value.muted = false;
+  showUnmuteMask.value = false;
 };
 
 const pause = () => {
@@ -453,11 +477,6 @@ defineExpose({
       gap: 10px;
     }
 
-    .btn {
-      background-color: transparent;
-      -webkit-user-drag: none;
-    }
-
     img {
       max-width: 24px;
     }
@@ -490,11 +509,29 @@ defineExpose({
     }
   }
 
+  .btn {
+    background-color: transparent;
+    -webkit-user-drag: none;
+  }
+
   .livestream-video {
     object-fit: contain;
     width: 100%;
     height: 100%;
     background: #000;
+  }
+
+  .livestream-video-muted-mask {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #0000004d;
+    width: 100%;
+    height: 100%;
+    color: #fff;
   }
 }
 </style>
