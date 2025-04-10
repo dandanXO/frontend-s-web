@@ -1,13 +1,12 @@
 import { userStore } from "@/store";
 import { server } from "@/utils/request";
-import { head } from "lodash";
 
 export const getLivestreamList = () => {
-  return server.REST.post("/live/list?status=1");
+  return server.REST.post("/live/list");
 };
 
-export const getLivestreamDetail = (livestreamId) => {
-  return server.REST.get(`/live/${livestreamId}`);
+export const getLivestreamDetail = (livestreamId, abortController) => {
+  return server.REST.get(`/live/${livestreamId}`, { abortController });
 };
 
 export const getChatHistory = (payload) => {

@@ -177,6 +177,7 @@ const qualityPopperRef = ref(null);
 const videoWrapperMouseLeaveTimer = ref(null);
 const showPlayerController = ref(false);
 const isPlayerSupported = ref(true);
+const isPlayerConfigLoaded = ref(false);
 /** @type {import("vue").Ref< VideoPlayer | null>}*/
 const player = ref(null);
 const danmu = ref(null);
@@ -192,7 +193,8 @@ const playerConfig = ref({
 
 const videoSource = computed(() => {
   if (!livestreamData.value) return {};
-  return livestreamData.value.status
+  // TODO: wait for api
+  return livestreamData.value.streamerStatus
     ? livestreamData.value.streamerCdnPullUrl
     : livestreamData.value.supplierCdnPullUrl;
 });
@@ -223,7 +225,7 @@ const loadPlayer = async () => {
     },
     videoRef.value
   );
-  await initPlayer();
+  await initPlayer(true);
 };
 
 const initPlayer = async (play = false) => {
@@ -247,6 +249,7 @@ const loadDanmu = async () => {
 };
 
 const loadPlayerConfig = () => {
+  if (isPlayerConfigLoaded.value) return;
   let finalPlayerConfig = playerConfig.value;
   try {
     const savedPlayerConfigStr = localStorage.getItem(PLAYER_CONFIG_KEY);
@@ -271,6 +274,7 @@ const loadPlayerConfig = () => {
           break;
       }
     });
+    isPlayerConfigLoaded.value = true;
   }
 };
 
@@ -348,6 +352,7 @@ const handlePlayerError = (event, data) => {
 
 const handleQualityChange = async (level) => {
   const _level = videoSource.value[level] ? level : DEFAULT_QUALITY;
+  if (_level === playerConfig.value.quality) return;
   changePlayerConfig("quality", _level);
   // player.value.setQualityLevel(index);
   player.value.changeSource(videoSource.value[_level].hls_url);

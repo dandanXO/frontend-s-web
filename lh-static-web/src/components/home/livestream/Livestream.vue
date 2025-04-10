@@ -20,24 +20,30 @@ import LivestreamChat from "@/components/home/livestream/LivestreamChat.vue";
 import LivestreamVideo from "@/components/home/livestream/LivestreamVideo.vue";
 import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from "vue";
 import { userStore } from "@/store";
-import { getChatHistory, getLivestreamList, sendChat } from "@/api/index/livestream";
+import { getChatHistory, getLivestreamDetail, getLivestreamList, sendChat } from "@/api/index/livestream";
 import GameModal from "@/components/modal/GameModal.vue";
+import { useNotify } from "@/hooks/notify";
 
 const MESSAGE_SYNC_INTERVAL = 1000 * 2; // 2 seconds
 const MESSAGE_HISTORY_DANMU_FIRE_GAP = 10;
 const MAXIMUM_MESSAGE_LENGTH = 1000;
 
+const LIVESTREAM_SYNC_INTERVAL = 1000 * 10; // 10 seconds
+
 const store = userStore();
+const notify = useNotify();
 
 const messages = ref([]);
 const danmuList = ref([]);
 const list = ref([]);
 const currentLive = ref(0);
 const messageTimer = ref(null);
+const livestreamTimer = ref(null);
 const lastSyncMessageTime = ref(Date.now());
 const unsortMessages = ref([]);
 const gameModalRef = ref(null);
 const livestreamVideoRef = ref(null);
+const livestreamSyncAbortController = ref(null);
 // const channels = ref([
 //   {
 //     name: "线路1",
@@ -72,24 +78,26 @@ const handleSendChatMessage = (message) => {
   danmuList.value = [message];
 };
 
+const parseLivestreamData = (data) => {
+  let parsedSupplierUrl = {};
+  let parsedStreamerUrl = {};
+  try {
+    parsedSupplierUrl = JSON.parse(data.supplierCdnPullUrl);
+    parsedStreamerUrl = JSON.parse(data.streamerCdnPullUrl);
+  } catch (e) {
+  } finally {
+    return {
+      ...data,
+      supplierCdnPullUrl: parsedSupplierUrl,
+      streamerCdnPullUrl: parsedStreamerUrl
+    };
+  }
+};
+
 const getData = () => {
   getLivestreamList().then((res) => {
     if (res.code === 0) {
-      const parsedData = res.data.records.map((record) => {
-        let parsedSupplierUrl = {};
-        let parsedStreamerUrl = {};
-        try {
-          parsedSupplierUrl = JSON.parse(record.supplierCdnPullUrl);
-          parsedStreamerUrl = JSON.parse(record.streamerCdnPullUrl);
-        } catch (e) {
-        } finally {
-          return {
-            ...record,
-            supplierCdnPullUrl: parsedSupplierUrl,
-            streamerCdnPullUrl: parsedStreamerUrl
-          };
-        }
-      });
+      const parsedData = res.data.records.map(parseLivestreamData);
       list.value = parsedData;
     }
   });
@@ -147,17 +155,59 @@ const handleBetClick = () => {
   gameModalRef.value.open("IM体育", "IM");
 };
 
-watch(currentLiveData, () => {
+const syncLivestreamInfo = async () => {
+  if (!currentLiveData.value?.streamId) return;
+  livestreamSyncAbortController.value = new AbortController();
+  getLivestreamDetail(currentLiveData.value.streamId, livestreamSyncAbortController).then((res) => {
+    if (res.code === 0) {
+      if (currentLiveData.value.streamerStatus === res.data.streamerStatus) return;
+      // TODO: wait for api
+      const notifyMessage = res.data.streamerStatus
+        ? "主播已开播，即将切换至主播直播"
+        : "主播已下播，即将切换至赛事直播";
+      notify({
+        message: notifyMessage,
+        type: "info",
+        duration: 2000
+      });
+      const parsedData = parseLivestreamData(res.data);
+      list.value[currentLive.value] = {
+        ...currentLiveData.value,
+        streamerStatus: parsedData.streamerStatus,
+        streamerCdnPullUrl: parsedData.streamerCdnPullUrl,
+        supplierCdnPullUrl: parsedData.supplierCdnPullUrl
+      };
+    }
+  });
+};
+
+const resetSyncLivestreamInterval = (startNewInterval = false) => {
+  if (livestreamTimer.value) {
+    clearInterval(livestreamTimer.value);
+    livestreamTimer.value = null;
+  }
+  if (startNewInterval) {
+    livestreamTimer.value = setInterval(() => {
+      syncLivestreamInfo();
+    }, LIVESTREAM_SYNC_INTERVAL);
+  }
+};
+
+watch(currentLive, () => {
   messages.value = [];
   unsortMessages.value = [];
   danmuList.value = [];
   lastSyncMessageTime.value = Date.now();
   syncMessages();
+  livestreamSyncAbortController.value && livestreamSyncAbortController.value.abort();
+  resetSyncLivestreamInterval(true);
 });
 
 onMounted(() => {
   getData();
   syncMessages();
+  syncLivestreamInfo();
+  resetSyncLivestreamInterval(true);
 });
 
 onUnmounted(() => {
@@ -165,6 +215,7 @@ onUnmounted(() => {
     clearTimeout(messageTimer.value);
     messageTimer.value = null;
   }
+  resetSyncLivestreamInterval();
 });
 </script>
 <style lang="scss" scoped>

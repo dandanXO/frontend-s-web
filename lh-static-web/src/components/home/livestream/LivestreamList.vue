@@ -19,9 +19,9 @@
         </div>
 
         <div class="livestream-list-item__match-info__date">
-          <div v-if="live.status" class="livestream-list-item__match-info__date__on-air">正在直播</div>
+          <div v-if="live.liveStatus" class="livestream-list-item__match-info__date__on-air">正在直播</div>
           <div v-else class="livestream-list-item__match-info__date__date">
-            {{ moment(live.eventStartTime).format("HH:MM") }}
+            {{ getDisplayDateTime(live.eventStartTime) }}
           </div>
           <span class="livestream-list-item__match-info__date__vs">VS</span>
         </div>
@@ -52,6 +52,20 @@ const model = defineModel({ type: Number });
 
 const handleLivestreamClick = (index) => {
   model.value = index;
+};
+
+const getDisplayDateTime = (date) => {
+  const now = moment();
+  const eventDate = moment(date);
+  const diffInDays = eventDate.diff(now, "days");
+
+  if (diffInDays === 0) {
+    return eventDate.format("今日 HH:mm");
+  } else if (diffInDays === 1) {
+    return eventDate.format("明日 HH:mm");
+  } else {
+    return eventDate.format("MM/DD");
+  }
 };
 </script>
 <style lang="scss" scoped>
