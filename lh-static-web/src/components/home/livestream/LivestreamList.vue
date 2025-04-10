@@ -43,14 +43,21 @@
   </div>
 </template>
 <script setup>
+import { useNotify } from "@/hooks/notify";
 import moment from "moment";
-defineProps({
+const props = defineProps({
   list: Array
 });
 
 const model = defineModel({ type: Number });
 
+const notify = useNotify();
+
 const handleLivestreamClick = (index) => {
+  if (!props.list[index].liveStatus) {
+    notify.info("该赛事未开始");
+    return;
+  }
   model.value = index;
 };
 
@@ -179,6 +186,48 @@ const getDisplayDateTime = (date) => {
           border-radius: 50%;
           max-width: 22px;
         }
+      }
+    }
+  }
+}
+
+.dark {
+  .livestream-list-wrapper {
+    .livestream-list-item {
+      &.selected {
+        background: url("@/assets/home/livestream/livestream-item-bg-dark.png") no-repeat center center;
+        background-size: 100% 100%;
+        background-clip: border-box;
+        border-color: transparent;
+        &::after {
+          border-top: 10px solid #6691ff;
+        }
+
+        .livestream-list-item__match-info__date {
+          .livestream-list-item__match-info__date__vs {
+            color: #fff;
+          }
+        }
+      }
+    }
+    .livestream-list-item__title {
+      color: #fff;
+    }
+
+    .livestream-list-item__match-info {
+      .livestream-list-item__match-info__team {
+        .livestream-list-item__match-info__team-emblem {
+          @include livestream-team-emblem;
+        }
+        .livestream-list-item__match-info__team-name {
+          color: #fff;
+        }
+      }
+    }
+
+    .livestream-list-item__match-info__date {
+      .livestream-list-item__match-info__date__date {
+        color: #fff;
       }
     }
   }

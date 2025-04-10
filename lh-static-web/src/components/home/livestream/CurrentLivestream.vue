@@ -114,4 +114,32 @@ defineEmits(["click"]);
     color: #fff;
   }
 }
+
+.dark {
+  .current-livestream-wrapper {
+    .current-livestream__streamer-info-wrapper {
+      background: #405471;
+      box-shadow: none;
+
+      .current-livestream__streamer-info {
+        .current-livestream__streamer-info__name {
+          color: #fff;
+        }
+      }
+    }
+    .current-livestream__match-info {
+      .current-livestream__match-info__team-name,
+      .current-livestream__match-info__team-vs {
+        color: #fff;
+      }
+    }
+
+    .current-livestream__bet-btn {
+      background: url("@/assets/home/livestream/livestream-item-bg-dark.png") no-repeat center center;
+      background-size: 100% 100%;
+      box-shadow: none;
+      border-radius: 6px;
+    }
+  }
+}
 </style>

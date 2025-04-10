@@ -7,7 +7,14 @@
     @mouseleave="handleWrapperMouseLeave"
   >
     <template v-if="isPlayerSupported">
-      <video ref="videoRef" class="livestream-video" crossorigin="anonymous" @progress="handlePlayerProgress" />
+      <video
+        ref="videoRef"
+        class="livestream-video"
+        crossorigin="anonymous"
+        playsinline
+        webkit-playsinline
+        @progress="handlePlayerProgress"
+      />
       <div ref="danmuRef" class="livestream-video-danmu" />
       <div
         class="livestream-video-controller"
@@ -116,8 +123,8 @@
           </button>
         </div>
       </div>
-      <div v-if="showUnmuteMask" class="livestream-video-muted-mask" @click.stop>
-        <button class="btn" @click="handleUnmuteClick">
+      <div v-if="showUnmuteMask" class="livestream-video-muted-mask" @click.stop="handleUnmuteClick">
+        <button class="btn">
           <img src="@/assets/home/livestream/icon-volume-off.png" />
         </button>
         <span>点击取消静音</span>
@@ -487,16 +494,78 @@ defineExpose({
       gap: 10px;
 
       input[type="range"] {
-        // -webkit-appearance: none;
-        &::-webkit-slider-runnable-track,
-        &::-webkit-slider-thumb,
-        &::-moz-range-track,
-        &::-moz-range-thumb,
-        &::-ms-track,
-        &::-ms-fill-lower,
-        &::-ms-fill-upper,
+        -webkit-appearance: none;
+        appearance: none;
+
+        &::-webkit-slider-runnable-track {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 100%;
+          height: 8px;
+          background: #ffffff99;
+          border-radius: 8px;
+          border-color: transparent;
+          border-width: 0;
+          color: transparent;
+        }
+        &::-moz-range-track {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 100%;
+          height: 8px;
+          background: #ffffff99;
+          border-radius: 8px;
+          border-color: transparent;
+          border-width: 0;
+          color: transparent;
+        }
+        &::-ms-track {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 100%;
+          height: 8px;
+          background: #ffffff99;
+          border-radius: 8px;
+          border-color: transparent;
+          border-width: 0;
+          color: transparent;
+        }
+
+        &::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          position: relative;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 20px;
+          height: 20px;
+          background: #12a3ff;
+          border-radius: 50%;
+          cursor: pointer;
+        }
+        &::-moz-range-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          position: relative;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 20px;
+          height: 20px;
+          background: #12a3ff;
+          border-radius: 50%;
+          cursor: pointer;
+        }
         &::-ms-thumb {
-          background: red;
+          -webkit-appearance: none;
+          appearance: none;
+          position: relative;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 20px;
+          height: 20px;
+          background: #12a3ff;
+          border-radius: 50%;
+          cursor: pointer;
         }
       }
     }

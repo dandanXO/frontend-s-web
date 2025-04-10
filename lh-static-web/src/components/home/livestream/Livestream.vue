@@ -231,7 +231,7 @@ onUnmounted(() => {
     gap: var(--grid-gap);
     padding: 18px;
     border: 2px solid #fff;
-    border-radius: 15px;
+    border-radius: 14px;
     box-shadow: 0px 0px 5.76px 4.72px #22446e21 inset;
 
     .livestream-list {
@@ -242,6 +242,14 @@ onUnmounted(() => {
       grid-column: 2;
       height: 633px;
     }
+  }
+}
+
+.dark {
+  .livestream-inner-wrapper {
+    background: url("@/assets/home/livestream/livestream-bg-dark.png") no-repeat center center;
+    background-size: 100% 100%;
+    border: none;
   }
 }
 </style>

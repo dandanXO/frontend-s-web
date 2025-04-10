@@ -64,7 +64,7 @@ watch(
 .livestream-chat-wrapper {
   display: flex;
   flex-direction: column;
-  background: #edf6ff;
+  background-color: #edf6ff;
   border: 0.94px solid #ffffff;
   border-radius: 15px;
   box-shadow: 0px 3.77px 20.76px 0px #00000026;
@@ -126,8 +126,53 @@ watch(
         color: #4c88f8;
         &:disabled {
           cursor: not-allowed;
-          color: #b0b0b0;
-          border-color: #b0b0b0;
+          color: #b0b0b0 !important;
+          border-color: #b0b0b0 !important;
+        }
+      }
+    }
+  }
+}
+
+.dark {
+  .livestream-chat-wrapper {
+    background-color: #17223e;
+    box-shadow: 2px 4px 10px 0px #00194b52;
+    border: none;
+
+    .livestream-chat-list {
+      .livestream-chat-item {
+        .livestream-chat-item__name {
+          color: #fff;
+        }
+
+        .livestream-chat-item__message {
+          background-color: #2e4065;
+          box-shadow: 0px 2px 8px 0px #0000001a;
+          color: #fff;
+        }
+      }
+    }
+
+    .livestream-chat-input-wrapper {
+      background-color: #333e5e;
+      box-shadow: 0px -6px 10px 0px #0000001a;
+      .livestream-chat-input-inner-wrapper {
+        background-color: #697eb330;
+        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+
+        .livestream-chat-input {
+          --el-input-bg-color: transparent;
+          --el-input-text-color: #fff;
+          background-color: transparent;
+          box-shadow: none;
+        }
+
+        .livestream-chat-input-btn {
+          background: linear-gradient(180deg, rgba(72, 100, 181, 0.5) 0%, rgba(25, 39, 85, 0.5) 100%);
+          border: 0.84px solid #799df8;
+          box-shadow: 0px 6.75px 6.75px 0px #08253d73;
+          color: #fff;
         }
       }
     }
