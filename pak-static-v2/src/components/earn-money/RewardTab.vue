@@ -143,26 +143,84 @@
     <div class="earn-money-friendcount">
       <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
         <tr>
+          <td style="color: #424f72; font-size: 120%">{{ $t("earnMoney.reward.level") }}</td>
           <td style="color: #424f72; font-size: 120%">{{ $t("earnMoney.reward.friendCount") }}</td>
           <td style="color: #424f72; font-size: 120%">{{ $t("earnMoney.reward.inviteBonus") }}</td>
         </tr>
 
         <template v-for="(item, index) in oneTimeBonusSetting.settingList" :key="index">
           <tr>
+            <td>
+              LEVEL {{ index + 1 }}
+            </td>
             <td>{{ item.minReferCount }} ~ {{ item.maxReferCount }}</td>
             <td>{{ store.currency.value }} {{ item.bonusAmount }}</td>
           </tr>
         </template>
       </table>
 
+      <div class="earn-money-betting-commission earn-money-card">
+      <div class="earn-money-card-title">
+        {{ $t("earnMoney.reward.bettingCommission") }}
+      </div>
+      <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+        <thead>
+          <tr>
+            <th style="color:#424f72; font-weight: normal;">{{ $t("earnMoney.reward.betting_table.header.description") }}</th>
+            <th style="color:#424f72; font-weight: normal;">{{ $t("earnMoney.reward.betting_table.header.commission") }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ $t(`earnMoney.reward.betting_table.row1.description`) }}</td>
+            <td>{{ $t(`earnMoney.reward.betting_table.row1.commission`) }}</td>
+          </tr>
+          <tr v-for="index in 3" :key="index">
+            <td>
+              {{ $t(`earnMoney.reward.betting_table.row${index + 1}.description`) }}
+            </td>
+            <td>
+              {{ $t(`earnMoney.reward.betting_table.row${index + 1}.commission`) }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="earn-money-deposit-commission earn-money-card">
+      <div class="earn-money-card-title">
+        {{ $t("earnMoney.reward.depositCommission") }}
+      </div>
+      <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+        <thead>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:#424f72; font-weight: normal;">{{ $t("earnMoney.reward.deposit_table.header.description") }}</td>
+            <td style="color:#424f72; font-weight: normal;">{{ $t("earnMoney.reward.deposit_table.header.commission") }}</td>
+          </tr>
+          <tr v-for="index in 1" :key="index">
+            <td>{{ $t(`earnMoney.reward.deposit_table.row${index}.description`) }}</td>
+            <td>{{ $t(`earnMoney.reward.deposit_table.row${index}.commission`) }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- <div class="q-pa-md">
+        <div class="q-mt-md" v-html="$t('earnMoney.reward.note')"></div>
+        <div class="q-mt-sm grey-txt" v-html="$t('earnMoney.reward.eligibility_tips')"></div>
+        <div class="q-mt-sm red-txt" v-html="$t('earnMoney.reward.multiple_acc_hint')"></div>
+      </div> -->
+    </div>
       <div class="table-hint q-pa-md">
         <div class="q-mt-sm" v-html="$t('earnMoney.reward.eligibility_tips')"></div>
 
-        <div class="q-mt-sm" v-html="$t('earnMoney.reward.betting_tips')"></div>
+        <!-- <div class="q-mt-sm" v-html="$t('earnMoney.reward.betting_tips')"></div>
 
-        <div class="q-mt-sm" v-html="$t('earnMoney.reward.deposit_tips')"></div>
+        <div class="q-mt-sm" v-html="$t('earnMoney.reward.deposit_tips')"></div> -->
 
-        <div class="q-mt-sm" v-html="$t('earnMoney.reward.multiple_acc_hint')"></div>
+      </div>
+      <div class="note-hint q-pa-md">
+        <div style="color: #ffa900;" v-html="$t('earnMoney.reward.multiple_acc_hint')"></div>
       </div>
     </div>
 
@@ -818,6 +876,9 @@ watch(activeSetting, checkIsShowDetail);
   .earn-money-friendcount {
     margin-top: 16px;
     width: 100%;
+    .earn-money-card-title {
+      padding: 10px;
+    }
     .table-container {
       max-height: 181px;
       overflow-y: auto;

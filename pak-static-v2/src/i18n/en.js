@@ -339,6 +339,9 @@ export default {
       myTotalIncome: "My Total Income",
       myTotalNumberOfInvites: "My Total Number Of Invites",
       invite: "Invitation Bonus",
+      bettingCommission: "Betting Commission",
+      depositCommission: "Deposit Commission",
+      note: "Note:",
       topUp: "Deposit Bonus",
       bet: "Bet Bonus",
       eligibleRefer: "Eligible Refer",
@@ -348,6 +351,7 @@ export default {
       inviteList_02: "Register via link",
       inviteList_03: "Complete deposit after registration",
       copyLink: "Copy Link",
+      level: "Level",
       friendCount: "Friend Count",
       inviteBonus: "Invite Bonus",
       totalAmountSentAsOfYesterday: "Total amount sent as of yesterday",
@@ -363,7 +367,39 @@ export default {
     `,
       shareTitle: "97PKR Share and Earn",
       shareText:
-        "97PKR Share and Earn:\n\tEarn up to 1000 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
+        "97PKR Share and Earn:\n\tEarn up to 1000 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}",
+      betting_table: {
+        header: {
+          description: "Description",
+          commission: "Three-Level Commission"
+        },
+        row1: {
+          description: "Invite players to place bets (win or lose) to earn rewards",
+          commission: "0.6%"
+        },
+        row2: {
+          description: "First-Level Commission",
+          commission: "0.3%"
+        },
+        row3: {
+          description: "Second-Level Commission",
+          commission: "0.2%"
+        },
+        row4: {
+          description: "Third-Level Commission",
+          commission: "0.1%"
+        }
+      },
+      deposit_table: {
+        header: {
+          description: "Description",
+          commission: "Deposit Commission"
+        },
+        row1: {
+          description: "Invite players to make their first deposit and receive a reward.",
+          commission: "5%"
+        }
+      }
     },
     teamManagement: {
       searchField: {
