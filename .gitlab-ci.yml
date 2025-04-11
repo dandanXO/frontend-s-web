@@ -773,6 +773,13 @@ deploy-lh-landing-v13:
 
 #===============================================================================================
 
+deploy-lh-dy-xf-forbidden:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-dy-xf-forbidden
+
+#===============================================================================================
+
 deploy-lh-redirect:
   extends: .s3-deploy
   variables:
