@@ -169,7 +169,7 @@ const DANMU_STYLE = {
 };
 
 const DANMU_CONFIG = {
-  duration: 5000,
+  duration: 10000,
   start: 0,
   style: DANMU_STYLE
 };
