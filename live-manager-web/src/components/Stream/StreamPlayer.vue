@@ -72,15 +72,15 @@
         </div>
       </div>
       <div class="info-item">
-        <span class="label">{{ $t('stream.hostPlaybackLink') }}</span>
+        <span class="label">{{ $t('stream.hostPushLink') }}</span>
         <div class="url-container">
-          <span class="url-text">{{ getStreamerPlayUrl() }}</span>
+          <span class="url-text">{{ stream.streamerCdnPushUrl }}</span>
           <Button
-            icon="pi pi-copy"
-            severity="secondary"
-            text
-            @click="copyUrl(getStreamerPlayUrl())"
-            v-tooltip.top="'複製鏈結'"
+          icon="pi pi-copy"
+          severity="secondary"
+          text
+          @click="copyUrl(stream.streamerCdnPushUrl)"
+          v-tooltip.top="'複製鏈結'"
           />
         </div>
       </div>
