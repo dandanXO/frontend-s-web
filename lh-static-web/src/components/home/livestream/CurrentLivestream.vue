@@ -78,6 +78,12 @@ defineEmits(["click"]);
         justify-content: center;
         width: 40px;
         height: 40px;
+        img {
+          @include img-pseudo;
+          max-width: 100%;
+          width: 100%;
+          aspect-ratio: 1;
+        }
       }
     }
   }

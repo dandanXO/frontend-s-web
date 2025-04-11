@@ -182,9 +182,12 @@ const getDisplayDateTime = (date) => {
         margin-left: -7px;
         font-size: 11px;
         line-height: 15px;
+        color: #000000;
         img {
+          @include img-pseudo;
           border-radius: 50%;
-          max-width: 22px;
+          width: 22px;
+          aspect-ratio: 1;
         }
       }
     }
