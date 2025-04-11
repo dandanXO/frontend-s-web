@@ -125,11 +125,25 @@ onBeforeUnmount(() => {
     height: 100%;
     margin-top: calc(56.25vw + 38px);
     max-height: calc(100dvh - 56.25vw - 38px - 60px);
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    // Firefox
+    scrollbar-width: thin;
+    scrollbar-color: #c4c4c4 #b8d1ff;
 
-    .livestream-chat-list::-webkit-scrollbar {
-      display: none;
+    // WebKit Browsers
+    &::-webkit-scrollbar {
+      width: 8px;
+      border-radius:40px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #c4c4c4;
+      border-radius: 50px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #c4c4c4;
+      border-radius: 50px;
+      border: 2px solid #c4c4c4;
     }
 
     .livestream-chat-item {

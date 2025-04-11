@@ -106,19 +106,6 @@ export class VideoPlayer {
     }
   }
 
-  // play() {
-  //   if (this._mediaType === "hls") {
-  //     this.videoEl.play().catch((error) => {
-  //       console.error("Autoplay failed:", error);
-  //     });
-  //   } else {
-  //     this._player.play().catch((error) => {
-  //       console.error("Autoplay failed:", error);
-  //       // alert("Autoplay is restricted by your browser. Please click to play the video.");
-  //     });
-  //   }
-  // }
-
   pause() {
     if (this._mediaType === "hls") {
       this.videoEl.pause();
