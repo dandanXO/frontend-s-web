@@ -4,7 +4,7 @@
     style="transition: background 0.5s ease-in-out"
     class="dynamic-bg"
   >
-    <ProfileSummary :homeProfile="true" @activateSlide="handleActivateSlide" @showNewPlayer="showNewPlayer" />
+    <ProfileSummary :showRedemption="isShowRedemptionInPopup" :homeProfile="true" @activateSlide="handleActivateSlide" @showNewPlayer="showNewPlayer" />
 
     <!--    <pre>-->
     <!--      {{isNewPlayerModal}} <br/>-->
@@ -1706,8 +1706,20 @@ const isShowSetFirstPw = ref(false);
 const isShowCodeBonusModal = ref(false);
 const currentStep = ref(localStorage.getItem("newPlayerGuide") || "1");
 // Only show the guide if on `/home` or `/`
+// const isNewPlayerModal = computed(() => {
+//   return (
+//     currentStep.value !== "END" &&
+//     route.path !== "/language" &&
+//     !isHotGameAdditionalSteps.value &&
+//     !isAdditionalDepositSteps.value &&
+//     !isAdditionalReferSteps.value &&
+//     !isAdditionalWithdrawSteps.value
+//   );
+// });
+const showNewPlayerModal = ref(false);
 const isNewPlayerModal = computed(() => {
   return (
+    showNewPlayerModal.value && // <-- manual trigger
     currentStep.value !== "END" &&
     route.path !== "/language" &&
     !isHotGameAdditionalSteps.value &&
@@ -2515,6 +2527,7 @@ const closeSlotModal = () => {
 
 const showNewPlayer = () => {
   currentStep.value = localStorage.getItem("newPlayerGuide");
+  showNewPlayerModal.value = true
 };
 
 const closeFullGameDialog = () => {
@@ -4277,11 +4290,12 @@ const hasInviteWheelPromo = ref(false);
 const handleReceiveCodeBonus = () => {
   router.push({ path: "/account", query: { openCodeModal: "true" } });
 };
-
+const isShowRedemptionInPopup = ref(false);
 const checkCodeBonusModal = () => {
   eventapi.get("/session/promo-code-bonus/checkBonus").then((res) => {
     if (res.data.hasUnclaimed) {
       isShowCodeBonusModal.value = true;
+      isShowRedemptionInPopup.value = true;
     }
   });
 };

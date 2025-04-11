@@ -14,6 +14,18 @@
           <q-btn flat class="details">{{ $t("btn.details") }}</q-btn>
         </a>
       </div>
+      <div v-if="hasRedemptionBonus" class="mission-item">
+        
+        <img class="mission-icon" src="../../assets/images/earn-money/redemptionicon.png" />
+        <div class="mission-title-wrapper">
+          <div class="mission-title">
+            <span>Redemption Code</span>
+          </div>
+        </div>
+        <RouterLink to="/account?openCodeModal=true">
+          <q-btn flat class="details">{{ $t("btn.details") }}</q-btn>
+        </RouterLink>
+      </div>
       <div v-for="(mission, index) in promoList" :key="index" class="mission-item">
         <img class="mission-icon" :src="imgURL + mission.mobileFastAccessIconImgUrl" />
         <div class="mission-title-wrapper">
@@ -43,6 +55,7 @@ import { userStore } from "stores/index";
 const emit = defineEmits(["open-new-player"]); 
 const store = userStore();
 const props = defineProps({
+  hasRedemptionBonus: Boolean,
   hasTopDownload: Boolean,
   promoList: Array,
 });

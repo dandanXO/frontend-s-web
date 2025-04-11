@@ -182,6 +182,7 @@
       <BonusModal
         :has-top-download="topDownload && !ui.hideDownload"
         :promo-list="fastAccessPromo"
+        :has-redemption-bonus="showRedemption"
         @openNewPlayer="showNewPlayer"
       />
     </q-dialog>
@@ -205,7 +206,7 @@ import SideMenu from "components/SideMenu.vue";
 import { defineEmits } from "vue";
 import { useCustomerTrigger } from "src/hooks/trigger";
 
-const props = defineProps(["homeProfile"]);
+const props = defineProps(["homeProfile", "showRedemption"]);
 const emits = defineEmits(["closeslot", "activateSlide", "showNewPlayer"]);
 const route = useRoute();
 const router = useRouter();
@@ -828,6 +829,7 @@ onUnmounted(() => {
         .gift-badge {
           background: #e30000;
           color: #fff;
+          display: none;
         }
       }
     }
