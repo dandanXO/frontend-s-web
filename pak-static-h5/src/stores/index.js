@@ -264,16 +264,16 @@ export const userStore = defineStore("userStore", {
             this.evip = exclusive.wap;
           }
           this.unreadInboxMail = 0;
-          // if (from === "fromlogin") {
-          //   if (!this.hasDeposit) {
-          //     localStorage.setItem("newPlayerGuide", "1");
-          //     localStorage.removeItem("completeddepositguide");
-          //     localStorage.removeItem("completedreferguide");
-          //     localStorage.removeItem("completedwithdrawguide");
-          //   } else {
-          //     localStorage.setItem("newPlayerGuide", "END");
-          //   }
-          // }
+          if (from === "fromlogin") {
+            if (!this.hasDeposit) {
+              localStorage.setItem("newPlayerGuide", "1");
+              localStorage.removeItem("completeddepositguide");
+              localStorage.removeItem("completedreferguide");
+              localStorage.removeItem("completedwithdrawguide");
+            } else {
+              localStorage.setItem("newPlayerGuide", "END");
+            }
+          }
           // this.unreadInboxMail = 16;
           this.getBalance();
         } else {
