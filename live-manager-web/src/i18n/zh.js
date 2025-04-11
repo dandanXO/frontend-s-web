@@ -33,6 +33,7 @@ export default {
     currentQuality: '當前質量',
     supplierPlaybackLink: '供應商播放鏈結',
     hostPlaybackLink: '主播播放鏈結',
+    hostPushLink: '主播推流鏈結',
     supplierPlayer: '供應商播放器',
     hostPlayer: '主播播放器',
   },

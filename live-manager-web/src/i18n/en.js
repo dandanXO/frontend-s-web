@@ -33,6 +33,7 @@ export default {
     currentQuality: 'Current Quality',
     supplierPlaybackLink: 'Supplier Playback Link',
     hostPlaybackLink: 'Host Playback Link',
+    hostPushLink: 'Host Push Link',
     supplierPlayer: 'Supplier Player',
     hostPlayer: 'Host Player',
   },
