@@ -10,14 +10,7 @@ export const getLivestreamDetail = (livestreamId) => {
 };
 
 export const getChatHistory = (payload) => {
-  const requestOptions =
-    // method: "POST",
-    payload;
-  // headers: {
-  //   token: userStore().token,
-  //   "Content-Type": "application/json"
-  // }
-  // let rstUrl = process.env.RST_API.split(",")[0];
+  const requestOptions = payload;
 
   api
     .post("/live/history", requestOptions)
@@ -31,15 +24,7 @@ export const getChatHistory = (payload) => {
 };
 
 export const sendChat = (payload) => {
-  const requestOptions =
-    // method: "POST",
-    payload;
-  // headers: {
-  //   token: userStore().token,
-  //   "Content-Type": "application/json"
-  // }
-
-  // let rstUrl = process.env.RST_API.split(",")[0];
+  const requestOptions = payload;
 
   api
     .post("/session/live/message", requestOptions)

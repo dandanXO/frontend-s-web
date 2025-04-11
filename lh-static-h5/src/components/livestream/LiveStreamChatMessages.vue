@@ -1,5 +1,5 @@
 <template>
-  <div class="livestream-chat-wrapper">
+  <div class="livestream-chat-wrapper" :class="$q.dark.isActive ? 'dark' : 'white'">
     <div ref="chatListRef" class="livestream-chat-list">
       <div v-for="(message, index) in messages" :key="index" class="livestream-chat-item">
         <div class="livestream-chat-item__name">{{ message.name }}</div>
@@ -8,7 +8,7 @@
     </div>
     <div class="livestream-chat-input-wrapper" :style="chatBoxStyle">
       <q-form class="livestream-chat-input-inner-wrapper q-px-md" @submit.enter.prevent>
-        <q-btn class="bet-btn" rounded label="投一注" />
+        <q-btn class="bet-btn" rounded label="投一注" @click="openGame('', 'IM', '', '')" />
 
         <q-input
           v-model="messageToSend"
@@ -37,10 +37,18 @@
   </div>
   <GameModal ref="gameRef" />
 </template>
+
 <script setup>
 import { computed, nextTick, ref, toRefs, watch, onMounted, onBeforeUnmount, onUnmounted } from "vue";
 import GameModal from "components/modal/GameModal.vue";
+import { userStore } from "stores/index";
+import { useQuasar } from "quasar";
+import { useRoute, useRouter } from "vue-router";
 
+const store = userStore();
+const $q = useQuasar();
+const route = useRoute();
+const router = useRouter();
 const props = defineProps(["messages"]);
 const { messages } = toRefs(props);
 const emit = defineEmits(["sendChatMessage"]);
@@ -69,13 +77,36 @@ watch(
 const gameRef = ref();
 
 const openGame = (gameName, code, gameCode) => {
-  gameRef.value.open(gameName, code, gameCode);
+  if (!store.hasToken()) {
+    const currentPath = router.currentRoute.value.fullPath;
+    $q.dialog({
+      class: "q-px-md q-pt-md",
+      title: "系统提示",
+      message: "请登录后再操作",
+      ok: {
+        push: true,
+        color: "primary",
+        label: "去登录",
+        tabindex: 1
+      },
+      cancel: {
+        push: true,
+        color: "warning",
+        label: "取消",
+        tabindex: 0
+      },
+      persistent: true
+    }).onOk(() => {
+      router.push(`/login?redirect=${encodeURIComponent(currentPath)}`);
+    });
+    return;
+  } else {
+    gameRef.value.open(gameName, code, gameCode);
+  }
 };
 
-// Start generating random messages every 2-5 seconds
 onMounted(() => {});
 
-// Stop generating messages when component is destroyed
 onBeforeUnmount(() => {
   clearInterval(messageInterval);
 });
@@ -94,7 +125,12 @@ onBeforeUnmount(() => {
     height: 100%;
     margin-top: calc(56.25vw + 38px);
     max-height: calc(100dvh - 56.25vw - 38px - 60px);
-    // background: salmon;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    .livestream-chat-list::-webkit-scrollbar {
+      display: none;
+    }
 
     .livestream-chat-item {
       display: flex;
@@ -119,7 +155,10 @@ onBeforeUnmount(() => {
         color: #333333;
         background: #ffffff;
         box-shadow: 0px 2px 8px 0px #0000001a;
-        border-radius: 0px 50px 50px 50px;
+        border-radius: 0px 16px 16px 16px;
+        word-break: break-all;
+        overflow-wrap: break-word;
+        white-space: normal;
       }
     }
   }
@@ -133,7 +172,7 @@ onBeforeUnmount(() => {
     left: 0;
     width: 100%;
     z-index: 2001;
-    height: 60px;
+    height: 70px;
     display: flex;
     align-items: center;
     transition: 0.3s all;
@@ -160,8 +199,8 @@ onBeforeUnmount(() => {
       }
       .livestream-chat-input-btn {
         background-color: transparent;
-        border: 0.94px solid #4c88f8;
-        border-radius: 13.21px;
+        border: 1px solid #4c88f8 !important;
+        border-radius: 40px;
         padding: 5.66px 17.56px;
         font-size: 13px;
         line-height: 18px;
@@ -207,5 +246,75 @@ onBeforeUnmount(() => {
   background: linear-gradient(180deg, #1745ff 0%, #69fffa 100%);
   color: #fff;
   white-space: nowrap;
+  border: 2px solid transparent;
+}
+
+.livestream-chat-wrapper.dark {
+  // background: #0f182e;
+  .livestream-chat-list {
+    .livestream-chat-item {
+      .livestream-chat-item__name {
+        color: #ffffff;
+      }
+      .livestream-chat-item__message {
+        background: #2e4065;
+        color: #ffffff;
+      }
+    }
+  }
+  .livestream-chat-input-wrapper {
+    background: #0f182e;
+
+    .livestream-chat-input-btn {
+      background: linear-gradient(180deg, rgba(72, 100, 181, 0.5) 0%, rgba(25, 39, 85, 0.5) 100%) !important;
+      border-color: #369eff !important;
+      color: #ffffff !important;
+    }
+  }
+
+  .bet-btn {
+    color: #fff;
+    white-space: nowrap;
+    border-radius: 50px;
+    // background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%) !important;
+    border-color: #369eff !important;
+    background-image: url(../../assets/images/livestream/button-active.png) !important;
+    background-size: 100% 100% !important;
+    background-position: center center;
+  }
+}
+</style>
+
+<style lang="scss" scoped>
+@media (orientation: landscape) {
+  .livestream-chat-wrapper {
+    width: 45%;
+    height: 100%;
+    margin-left: auto;
+    right: 0;
+    position: fixed;
+
+    .livestream-chat-list {
+      flex: 1;
+      padding: 16px;
+      overflow: auto;
+      height: 100%;
+      margin-top: 0;
+      max-height: calc(100dvh - 70px);
+      background: #f3f7fd;
+    }
+  }
+
+  .livestream-chat-input-wrapper {
+    width: 45% !important;
+    right: 0 !important;
+    left: auto !important;
+  }
+
+  .livestream-chat-wrapper.dark {
+    .livestream-chat-list {
+      background: #0f182e !important;
+    }
+  }
 }
 </style>

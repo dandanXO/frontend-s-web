@@ -65,7 +65,8 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/deposittest" ||
       to.path === "/privilege/invite" ||
       to.path === "/maintenance" ||
-      to.path === "/affiliatepage"
+      to.path === "/affiliatepage" ||
+      to.path ==="/livestream/streamplayer"
     ) {
       ui.hiddenFooter();
       ui.currentRuntime = "IN_APP_BROWSER";

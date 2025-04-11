@@ -1,5 +1,5 @@
 <template>
-  <q-page ref="pageContainer" class="page-style">
+  <div ref="pageContainer" class="page-style">
     <LiveStreamVideo :danmuList :livestream-data="currentLiveData" />
 
     <div class="transfer-mid-div">
@@ -18,7 +18,7 @@
       </div>
     </div>
     <LiveStreamChatMessages class="livestream-chat" :messages @send-chat-message="handleSendChatMessage" />
-  </q-page>
+  </div>
 </template>
 
 <script setup>
@@ -148,6 +148,7 @@ const danmuList = ref([]);
 const handleSendChatMessage = (message) => {
   if (!store.hasToken()) {
     // store.loginPageVisible = true;
+    const currentPath = router.currentRoute.value.fullPath;
     $q.dialog({
       class: "q-px-md q-pt-md",
       title: "系统提示",
@@ -166,27 +167,27 @@ const handleSendChatMessage = (message) => {
       },
       persistent: true
     }).onOk(() => {
-      router.push("/login");
+      router.push(`/login?redirect=${encodeURIComponent(currentPath)}`);
     });
     return;
   }
 
-  sendChat({
-    content: message,
-    streamId: currentLiveData.value.id
-  });
-
-  messages.value.push({
-    content: message,
-    name: store.nickName,
-    time: Date.now()
-  });
-  danmuList.value = [message];
+  api
+    .post(`/session/live/message`, {
+      content: message,
+      streamId: currentLiveData.value.id
+    })
+    .then((res) => {
+      if (res.code === 0) {
+        messages.value.push({
+          content: res.data,
+          name: store.nickName,
+          time: Date.now()
+        });
+        danmuList.value = [res.data];
+      }
+    });
 };
-
-// const selectedStreamId = reactive({
-//   streamId: route.query.streamId
-// });
 
 const getData = () => {
   getLivestreamList().then((res) => {
@@ -228,7 +229,7 @@ const syncMessages = () => {
 
   if (pastTime > MESSAGE_SYNC_INTERVAL) {
     lastSyncMessageTime.value = now;
-    console.log("params::", params);
+    // console.log("params::", params);
 
     api.post(`/live/history`, params).then((res) => {
       // getChatHistory(params).then((res) => {
@@ -395,5 +396,13 @@ onUnmounted(() => {
 
 .page-style {
   color: #e8f2fe;
+}
+
+@media (orientation: landscape) {
+  // body {
+  //   background-color: lightblue;
+  // }
+
+  .livestream-chat{}
 }
 </style>

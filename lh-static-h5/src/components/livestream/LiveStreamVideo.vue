@@ -15,6 +15,10 @@
     @mouseleave="handleWrapperMouseLeave"
   >
     <template v-if="isPlayerSupported">
+      <div v-if="isFirstPlay" class="first-play" @click="firstPlayVideo()">
+        <q-icon name="play_arrow" color="white" size="80px" />
+      </div>
+
       <video
         ref="videoRef"
         class="livestream-video"
@@ -42,6 +46,25 @@
             <img v-if="playerConfig.isPause" src="../../assets/images/livestream/icon-play.png" />
             <img v-else src="../../assets/images/livestream/icon-pause.png" />
           </q-btn>
+        </div>
+
+        <div class="livestream-video-controller-volume-group">
+          <q-btn flat class="livestream-video-controller-volume-btn btn" title="音量">
+            <img src="../../assets/images/livestream/icon-volume.png" />
+          </q-btn>
+
+          <q-slider
+            class="volume-slider"
+            v-model="playerConfig.volume"
+            @change="handleVolumeChange"
+            :min="0"
+            :max="100"
+            :step="1"
+            color="primary"
+            track-color="grey-4"
+            thumb-color="primary"
+            style="width: 90px"
+          />
         </div>
 
         <q-btn
@@ -97,9 +120,14 @@
 
     <div v-else class="livestream-unsupported">不支援的浏览器</div>
   </div>
+
+  <!-- <pre style="color: salmon">
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+  playerConfig --{{ playerConfig }}
+  </pre> -->
 </template>
 <script setup>
-import { onMounted, ref, toRefs, watch, onUnmounted, computed } from "vue";
+import { onMounted, ref, toRefs, watch, onUnmounted, computed, onActivated, nextTick, onBeforeUnmount } from "vue";
 import { VideoPlayer } from "boot/videoPlayer";
 
 /** @type {import("flv.js").default.Config} */
@@ -186,6 +214,7 @@ const currentVideoUrl = computed(() => {
 
 const loadPlayer = async () => {
   getQualities();
+  // console.log("currentVideoUrl::", currentVideoUrl.value);
   player.value = new VideoPlayer(
     {
       mediaType: "hls",
@@ -200,7 +229,7 @@ const loadPlayer = async () => {
   await initPlayer();
 };
 
-const initPlayer = async (play = false) => {
+const initPlayer = async (play = true) => {
   if (!player.value) return;
   await player.value.init();
   isPlayerSupported.value = player.value.SupportPlayer !== "NONE";
@@ -256,14 +285,20 @@ const changePlayerConfig = (key, value) => {
   localStorage.setItem(PLAYER_CONFIG_KEY, playConfigStr);
 };
 
+const handleVolumeChange = (value) => {
+  console.log("value:: ", value);
+  changePlayerConfig("volume", parseInt(value));
+  if (videoRef.value) {
+    videoRef.value.volume = value / 100;
+  }
+};
+
 const handlePauseChange = (value) => {
   changePlayerConfig("isPause", value);
   if (playerConfig.value.isPause) {
     player.value.pause();
-    console.log("pause");
   } else {
     player.value.play();
-    console.log("play");
   }
 };
 
@@ -300,16 +335,11 @@ const handleFullScreenChange = (value) => {
   } else {
     if (document.fullscreenElement) {
       document.exitFullscreen();
+      screen.orientation?.lock?.("portrait").catch((err) => {
+        console.warn("Failed to lock orientation to portrait:", err);
+      });
     }
   }
-};
-
-const handleVolumeChange = (e) => {
-  const value = e.target.value;
-  changePlayerConfig("volume", parseInt(value));
-  videoRef.value.volume = value / 100;
-
-  console.log(value);
 };
 
 const handleWrapperMouseEnter = () => {
@@ -373,11 +403,40 @@ watch(danmuList, () => {
   }
 });
 
-onMounted(() => {
+const isFirstPlay = ref(true);
+const firstPlayVideo = () => {
+  isFirstPlay.value = false;
+  player.value.play();
+};
+
+const mediaQuery = window.matchMedia("(orientation: landscape)");
+
+const handleOrientationChange = (e) => {
+  if (e.matches) {
+    // Landscape mode
+    if (!playerConfig.value.isFullScreen) {
+      handleFullScreenChange(true);
+    }
+  } else {
+    // Portrait mode
+    if (playerConfig.value.isFullScreen) {
+      handleFullScreenChange(false);
+    }
+  }
+};
+
+onActivated(() => {
   Promise.all([loadPlayer(), loadDanmu()]).then(() => {
     loadPlayerConfig();
-    // setInterval(generateRandomDanmu, Math.random() * 10000 + 6000);
   });
+  mediaQuery.addEventListener("change", handleOrientationChange);
+  // Run it once on mount
+  handleOrientationChange(mediaQuery);
+  // player.value.play();
+});
+
+onBeforeUnmount(() => {
+  mediaQuery.removeEventListener("change", handleOrientationChange);
 });
 </script>
 
@@ -435,7 +494,8 @@ onMounted(() => {
 
       .livestream-video-controller-pause-btn,
       .livestream-video-controller-danmu-btn,
-      .livestream-video-controller-fullscreen-btn {
+      .livestream-video-controller-fullscreen-btn,
+      .livestream-video-controller-volume-btn {
         width: 24px;
       }
     }
@@ -451,7 +511,7 @@ onMounted(() => {
     .livestream-video-controller-volume-group {
       display: flex;
       align-items: center;
-      gap: 10px;
+      // gap: 10px;
 
       input[type="range"] {
         // -webkit-appearance: none;
@@ -513,5 +573,45 @@ onMounted(() => {
 
 .livestream-video-controller-url-btn {
   margin-left: auto;
+}
+
+.volume-slider {
+  :deep(.q-slider__thumb) {
+    top: 0;
+  }
+}
+
+.first-play {
+  background: #000000;
+  opacity: 0.7;
+  width: 100%;
+  height: 100%;
+  z-index: 8;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+}
+</style>
+
+<style lang="scss" scoped>
+@media (orientation: landscape) {
+  .livestream-video-wrapper {
+    width: 55%;
+    height: calc(100%);
+    // opacity: 0;
+  }
+
+  .back-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    text-align: left;
+    width: 100%;
+    font-size: 12px;
+    display: flex;
+    margin-right: auto;
+  }
 }
 </style>
