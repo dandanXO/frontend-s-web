@@ -1,5 +1,19 @@
 <template>
   <div class="livestream-chat-wrapper">
+    <div class="livestream-chat-announcement-wrapper">
+      <img class="livestream-chat-announcement-icon" src="@/assets/home/announcement/announcement-img.png" />
+      <Vue3Marquee
+        :clone="false"
+        :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 1 + 10 : 70"
+      >
+        <div
+          v-for="(word, index) in announcementList"
+          :key="index"
+          v-html="word"
+          class="livestream-chat-announcement-marquee"
+        />
+      </Vue3Marquee>
+    </div>
     <div ref="chatListRef" class="livestream-chat-list">
       <div v-for="(message, index) in messages" :key="index" class="livestream-chat-item">
         <div class="livestream-chat-item__name">{{ message.name }}</div>
@@ -28,6 +42,7 @@
 </template>
 <script setup>
 import { computed, nextTick, ref, toRefs, watch } from "vue";
+import { Vue3Marquee } from "vue3-marquee";
 
 const props = defineProps(["messages"]);
 const { messages } = toRefs(props);
@@ -35,12 +50,23 @@ const emit = defineEmits(["sendChatMessage"]);
 
 const messageToSend = ref("");
 const chatListRef = ref(null);
+const announcementList = ref(["禁止发表任何广告、低俗色情、辱骂平台等违规言论!"]);
 
 const isMessageSendable = computed(() => messageToSend.value.trim().length > 0);
 
 const handleSendChatMessage = () => {
   emit("sendChatMessage", messageToSend.value);
   messageToSend.value = "";
+};
+
+const calculateMaxContentLength = () => {
+  let maxLength = 0;
+  for (const announcement of announcementList.value) {
+    if (announcement.length > maxLength) {
+      maxLength = announcement.length;
+    }
+  }
+  return maxLength;
 };
 
 watch(
@@ -62,17 +88,34 @@ watch(
 @import "@/scss/pages/livestream.scss";
 
 .livestream-chat-wrapper {
+  @include livestream-content-block;
   display: flex;
   flex-direction: column;
   background-color: #edf6ff;
-  border: 0.94px solid #ffffff;
-  border-radius: 15px;
-  box-shadow: 0px 3.77px 20.76px 0px #00000026;
   overflow: hidden;
+
+  .livestream-chat-announcement-wrapper {
+    @include livestream-content-block;
+    display: flex;
+    align-items: center;
+    padding: 6px 16px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    .livestream-chat-announcement-icon {
+      margin-right: 8px;
+      max-width: 20px;
+    }
+
+    .livestream-chat-announcement-marquee {
+      font-size: 12px;
+      color: #7a80a1;
+    }
+  }
 
   .livestream-chat-list {
     flex: 1;
-    padding: 17px 11px 0;
+    padding: 4px 11px 0;
     overflow: auto;
 
     .livestream-chat-item {
@@ -141,6 +184,14 @@ watch(
     background-color: #17223e;
     box-shadow: 2px 4px 10px 0px #00194b52;
     border: none;
+
+    .livestream-chat-announcement-wrapper {
+      background-color: #333e5e;
+      box-shadow: 2px 4px 10px 0px #0000001a;
+      .livestream-chat-announcement-marquee {
+        color: #d8d8d8;
+      }
+    }
 
     .livestream-chat-list {
       .livestream-chat-item {
