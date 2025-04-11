@@ -88,7 +88,7 @@
       </div>
     </q-page-sticky>
 
-    <q-page-sticky position="bottom-left" :offset="hbDragPos" class="floating-btn" v-if="isHbShow">
+    <q-page-sticky position="bottom-right" :offset="hbDragPos" class="floating-btn" v-if="isHbShow">
       <div>
         <div class="hb-close">
           <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click="isHbShow = false" />
@@ -622,7 +622,7 @@ const liveDragPos = ref([16, 0]);
 const isDraggingLiveIcon = ref(false);
 const isLiveUrlShow = ref(false);
 
-const hbDragPos = ref([10, 0]);
+const hbDragPos = ref([10, 100]);
 const isDraggingHbIcon = ref(false);
 const isHbShow = ref(true);
 const hbSlide = ref(0);
