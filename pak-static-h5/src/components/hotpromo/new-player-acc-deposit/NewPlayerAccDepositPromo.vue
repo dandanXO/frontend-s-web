@@ -17,7 +17,7 @@
                 <img
                   :src="
                     item.hasClaimed === 'YES'
-                      ? require('./img/tick-icon-active.svg')
+                      ? require('./img/tick-icon-active.png')
                       : item.hasClaimed === 'NO'
                       ? require('./img/tick-icon.svg')
                       : require('./img/tick-icon-expired.svg')
