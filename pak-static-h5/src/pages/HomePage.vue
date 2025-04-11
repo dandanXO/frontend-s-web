@@ -4065,7 +4065,10 @@ const gotoFloatPromo = (val) => {
     } else {
       router.push("/promo");
     }
+  }else if(val.type === "PROMO"){
+    router.push(`/promo?name=${val.code}`);
   }
+
 
   if (val.type === "DOMAIN") {
     window.open(val.code, "_blank");
@@ -4584,7 +4587,7 @@ const checkGoogleLoginSetPwd = () => {
     top: 6px;
     width: 18px;
     height: unset;
-    img { 
+    img {
       width: 100%
     }
   }
@@ -6003,7 +6006,7 @@ const checkGoogleLoginSetPwd = () => {
   border-radius: 8px;
   height: 100px;
   &.pokerportion {
-    
+
     height: 140px;
   }
   .game--bg {
