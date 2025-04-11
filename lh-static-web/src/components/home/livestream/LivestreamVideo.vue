@@ -36,13 +36,13 @@
             <button class="livestream-video-controller-volume-btn btn" title="音量">
               <img src="@/assets/home/livestream/icon-volume.png" />
             </button>
-            <input
-              class=""
-              type="range"
-              min="0"
-              max="100"
-              step="1"
-              :value="playerConfig.volume"
+            <el-slider
+              class="livestream-video-controller-volume-slider"
+              v-model="playerConfig.volume"
+              :min="0"
+              :max="100"
+              :step="1"
+              :show-tooltip="false"
               @input="handleVolumeChange"
             />
           </div>
@@ -328,8 +328,7 @@ const handleFullScreenChange = (value) => {
   }
 };
 
-const handleVolumeChange = (e) => {
-  const value = e.target.value;
+const handleVolumeChange = (value) => {
   changePlayerConfig("volume", parseInt(value));
   videoRef.value.volume = value / 100;
 };
@@ -493,80 +492,9 @@ defineExpose({
       align-items: center;
       gap: 10px;
 
-      input[type="range"] {
-        -webkit-appearance: none;
-        appearance: none;
-
-        &::-webkit-slider-runnable-track {
-          -webkit-appearance: none;
-          appearance: none;
-          width: 100%;
-          height: 8px;
-          background: #ffffff99;
-          border-radius: 8px;
-          border-color: transparent;
-          border-width: 0;
-          color: transparent;
-        }
-        &::-moz-range-track {
-          -webkit-appearance: none;
-          appearance: none;
-          width: 100%;
-          height: 8px;
-          background: #ffffff99;
-          border-radius: 8px;
-          border-color: transparent;
-          border-width: 0;
-          color: transparent;
-        }
-        &::-ms-track {
-          -webkit-appearance: none;
-          appearance: none;
-          width: 100%;
-          height: 8px;
-          background: #ffffff99;
-          border-radius: 8px;
-          border-color: transparent;
-          border-width: 0;
-          color: transparent;
-        }
-
-        &::-webkit-slider-thumb {
-          -webkit-appearance: none;
-          appearance: none;
-          position: relative;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 20px;
-          height: 20px;
-          background: #12a3ff;
-          border-radius: 50%;
-          cursor: pointer;
-        }
-        &::-moz-range-thumb {
-          -webkit-appearance: none;
-          appearance: none;
-          position: relative;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 20px;
-          height: 20px;
-          background: #12a3ff;
-          border-radius: 50%;
-          cursor: pointer;
-        }
-        &::-ms-thumb {
-          -webkit-appearance: none;
-          appearance: none;
-          position: relative;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 20px;
-          height: 20px;
-          background: #12a3ff;
-          border-radius: 50%;
-          cursor: pointer;
-        }
+      .livestream-video-controller-volume-slider {
+        width: 10vw;
+        max-width: 100px;
       }
     }
 
@@ -606,7 +534,7 @@ defineExpose({
 </style>
 <style lang="scss">
 .el-popover.el-popper.livestream-video-controller-popover {
-  background-color: #0000004d !important;
+  background-color: #4f4f4fb3 !important;
   border: none !important;
   min-width: unset;
   padding: 8px 0;
