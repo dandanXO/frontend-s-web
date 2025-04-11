@@ -69,13 +69,23 @@ const handleSendChatMessage = (message) => {
   sendChat({
     content: message,
     streamId: currentLiveData.value.id
+  }).then((res) => {
+    if (res.code === 0) {
+      const parsedMessage = res.data;
+      messages.value.push({
+        content: parsedMessage,
+        name: store.nickName,
+        time: Date.now()
+      });
+      danmuList.value = [parsedMessage];
+    } else {
+      notify({
+        message: "讯息发送失败",
+        type: "error",
+        duration: 2000
+      });
+    }
   });
-  messages.value.push({
-    content: message,
-    name: store.nickName,
-    time: Date.now()
-  });
-  danmuList.value = [message];
 };
 
 const parseLivestreamData = (data) => {
