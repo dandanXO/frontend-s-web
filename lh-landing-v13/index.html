@@ -109,20 +109,43 @@
         const hostname = window.location.host.replace("www.", "");
         // console.log(hostname, "dan");
 
-        const contactInfo = {};
+        const contactInfo = {
+          "31190.town": {
+            group1Title: "超级活动群",
+            group1Number: "178572309",
+            group2Title: "回归群",
+            group2Number: "141317950",
+            landingPageLink: "https://am787.cc", // You can set a default link or leave it empty
+            redirectUrl: "https://www.lh75717.com",
+            claimUrl: "https://www.lh75717.com",
+            agent1ID: "vip515",
+            agent2ID: "vip516"
+          },
+          "70677.town": {
+            group1Title: "超级活动群",
+            group1Number: "178572309",
+            group2Title: "回归群",
+            group2Number: "141317950",
+            landingPageLink: "https://am787.cc", // You can set a default link or leave it empty
+            redirectUrl: "https://www.lh75717.com",
+            claimUrl: "https://www.lh75717.com",
+            agent1ID: "vip515",
+            agent2ID: "vip516"
+          },
+        }
 
         // Default content if no hostname matches
         const defaultInfo = {
-          group1Title: "福利群：",
-          group1Number: "110662830",
-          group2Title: "彩金群： ",
-          group2Number: "1042640798",
-          landingPageLink: "https://am787.cc", // You can set a default link or leave it empty
-          redirectUrl: "https://www.lh31791.com",
-          claimUrl: "https://www.lh31791.com",
-          agent1ID: "vip520",
-          agent2ID: "vip521"
-        };
+            group1Title: "超级活动群",
+            group1Number: "178572309",
+            group2Title: "回归群",
+            group2Number: "141317950",
+            landingPageLink: "https://am787.cc", // You can set a default link or leave it empty
+            redirectUrl: "https://www.lh75717.com",
+            claimUrl: "https://www.lh75717.com",
+            agent1ID: "vip515",
+            agent2ID: "vip516"
+          }
 
         const selectedInfo = contactInfo[hostname] || defaultInfo;
         console.log("ENd Info");
