@@ -33,7 +33,7 @@
           <VueQRCodeComponent class="qr-code" size="200" :text="qrCode" />
         </q-carousel-slide>
       </q-carousel> -->
-      <Carousel v-bind="carouselSettings" class="custom-carousel sharepopupslider">
+      <Carousel v-bind="carouselSettings" class="custom-carousel sharepopupslider" v-model="activeSlide">
         <Slide v-for="i in 6" :key="i">
           <div class="slide-content">
             <img class="slide-img" :src="require(`../spin-lucky-wheel/img/share-${i}.png`)" alt="Slide Image" />
@@ -78,7 +78,7 @@
         <div class="modal-invite-share-social">
           <a
             class="social-item"
-            :href="`https://wa.me/?text=${encodeURIComponent($t('earnMoney.reward.shareText', { url: selfTgurl }))}`"
+            :href="`https://wa.me/?text=${encodeURIComponent(shareCaption + ' ' + selfTgurl)}`"
             target="_blank"
           >
             <img src="../../../assets/images/earn-money/social-green-whatsapp.png" />
@@ -97,7 +97,7 @@
           >
           <img src="../../../assets/images/earn-money/social-green-instagram.png" />
         </a>
-        
+
         <a class="social-item" @click="handleShareToTikTok(selfTgurl)">
           <img src="../../../assets/images/earn-money/social-green-tiktok.png" />
         </a>
@@ -106,7 +106,7 @@
           <a class="social-item" @click="handleShareToYoutube(selfTgurl)">
             <img src="../../../assets/images/earn-money/social-youtube.png" />
           </a>
-          
+
           <a class="social-item" @click="handleShareToSMS(selfTgurl)">
             <img src="../../../assets/images/earn-money/social-sms.png" />
           </a>
@@ -121,7 +121,7 @@
 </template>
 <script setup>
 import { useUI } from "stores/ui";
-import { computed, onMounted, ref, nextTick } from "vue";
+import { computed, onMounted, ref, nextTick, watch } from "vue";
 import { copyToClipboard, useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
 import { api } from "boot/axios";
@@ -313,7 +313,7 @@ const fallbackCopyTextToClipboard = (text) => {
 
 const copyHrefLink = () => {
   const textToCopy = selfTgurl.value;
-  
+
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard
       .writeText(textToCopy)
@@ -336,6 +336,23 @@ const copyHrefLink = () => {
 const qrCode = computed(() => {
   return selfTgurl.value;
 });
+
+const shareCaptions = [
+  "Main bohot kismat wala hoon! Mujhe abhi B9GAME se free bonus mila hai, 100% asli! Aao aur try karo! ",
+  "Abhi abhi withdraw kiya! B9GAME ne waqai paise diye, jaldi aao aur apna free bonus lo! ",
+  "100% asli free bonus, sirf limited time ke liye! Maine le liya hai! ",
+  "Mauqa yahan hai! Abhi B9GAME par register karo, aur main guarantee deta hoon ke tumhe bhi free bonus milega! ",
+  "Bhai, ek ehsaan karo! Mujhe withdraw karne mein madad do, aur mil kar B9GAME ka free bonus lo! ",
+  "Bas itna chahiye ke tum is par click karo, aur mil kar free bonus lo! ",
+]
+
+const activeSlide = ref(0)
+const shareCaption = ref(shareCaptions[activeSlide.value])
+
+watch(activeSlide, (newIndex) => {
+  shareCaption.value = shareCaptions[newIndex]
+})
+
 onMounted(() => {
   let tgDomain = location.origin;
   if (store.isApp()) {

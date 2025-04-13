@@ -157,6 +157,8 @@ export default {
     currentPassword_rules_01: "براہ کرم موجودہ پاس ورڈ درج کریں",
     pleaseCompleteKYC: "براہ کرم KYC مکمل کریں",
     bindEmail: "ای میل بائنڈ کریں",
+    linkedEmail: "منسلک ای میل",
+    otpVerification: "او ٹی پی تصدیق",
     code: "کوڈ",
     code_placeholder: "تصدیقی کوڈ درج کریں",
     code_rules_01: "تصدیقی کوڈ درکار ہے",
