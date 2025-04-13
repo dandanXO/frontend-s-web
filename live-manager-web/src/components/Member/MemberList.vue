@@ -120,13 +120,6 @@ const loading = ref(false)
 
 onMounted(() => {
   loading.value = true
-
-  setTimeout(() => {
-    DashboardService.getMembersList().then((data) => {
-      customers.value = data
-      loading.value = false
-    })
-  }, 2000)
 })
 
 const initFilters = () => {

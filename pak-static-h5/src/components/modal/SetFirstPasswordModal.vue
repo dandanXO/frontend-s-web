@@ -76,7 +76,8 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
-
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 const qs = require("qs");
 const $q = useQuasar();
 const emit = defineEmits(["closeDialog"]);
@@ -111,7 +112,7 @@ const submit = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "New password updated successfully",
+            message: t('notify.newpasswordupdated'),
             icon: "check_circle_outline"
           });
           // store.getMemberInfo();

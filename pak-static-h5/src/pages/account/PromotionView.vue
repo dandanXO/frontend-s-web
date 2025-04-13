@@ -180,7 +180,7 @@ export default defineComponent({
   display: grid;
   grid-template-columns: repeat(3, 1fr);
       font-size: 11px;
-      color: #bacef1;
+      color: #B2BDBF;
       padding: 20px 0;
     .promo-item {
       display: flex;

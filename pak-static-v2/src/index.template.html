@@ -25,6 +25,15 @@
     <script type="text/javascript">
       // Polyfill for globalThis
       if (typeof globalThis === "undefined") {
+        Object.defineProperty(Object.prototype, '__magic__', {
+          get: function () {
+            return this;
+          },
+          configurable: true
+        });
+        __magic__.globalThis = __magic__;
+        delete Object.prototype.__magic__;
+
         if (typeof window !== "undefined") {
           // Browser environment
           window.globalThis = window;
@@ -35,6 +44,14 @@
           // Web workers
           self.globalThis = self;
         }
+      }
+
+
+      // Polyfill for replaceAll
+      if (!String.prototype.replaceAll) {
+        String.prototype.replaceAll = function (search, replacement) {
+          return this.split(search).join(replacement);
+        };
       }
       // Now you can use globalThis safely
       // console.log(globalThis);

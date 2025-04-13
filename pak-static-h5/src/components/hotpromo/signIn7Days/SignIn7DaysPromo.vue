@@ -225,7 +225,7 @@ onMounted(() => {
     border-radius: 8px;
     font-size: 16px;
     font-weight: bold;
-    color: #70bc62;
+    color: #21EF89;
     text-transform: uppercase;
     line-height: 1;
     gap: 12px;

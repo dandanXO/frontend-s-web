@@ -948,7 +948,7 @@ const openWithdrawTutorialVideo = () => {
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      // gap: 10px;
       margin: 1rem 0 0.5rem 0;
 
       .info {
@@ -963,6 +963,8 @@ const openWithdrawTutorialVideo = () => {
         background: linear-gradient(90deg, #70bc62 -1.25%, #131313 104.06%);
         padding: 5px 10px;
         text-transform: uppercase;
+        margin-right: 10px;
+        margin-bottom: 10px;
 
         .desc-wrapper {
           display: flex;
@@ -993,6 +995,8 @@ const openWithdrawTutorialVideo = () => {
     margin: auto;
     border-radius: 6px;
     background: #5c46e7;
+    height: 0;
+    padding-bottom: calc(46 / 335 * 100);
     aspect-ratio: 335/46;
 
     &:before {
@@ -1028,6 +1032,7 @@ const openWithdrawTutorialVideo = () => {
 }
 .step-desc-div {
   color: #000;
+  margin-bottom: 100px;
 
   p {
     margin: 5px 0px;
@@ -1061,6 +1066,7 @@ const openWithdrawTutorialVideo = () => {
     text-align: center;
     position: relative;
     cursor: pointer;
+    margin-bottom: 12px;
 
     .withdraw-img {
       border: 2px solid transparent;
@@ -1136,7 +1142,7 @@ const openWithdrawTutorialVideo = () => {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  // gap: 10px;
   margin: 1rem 0 0.5rem 0;
 
   .info {
@@ -1150,6 +1156,7 @@ const openWithdrawTutorialVideo = () => {
     background: linear-gradient(270deg, #3080f4 0%, #70b1ff 100%);
     padding: 5px 10px;
     text-transform: uppercase;
+    margin-bottom: 10px;
 
     .desc-wrapper {
       display: flex;
@@ -1174,14 +1181,17 @@ const openWithdrawTutorialVideo = () => {
     .remain-wager-wrapper {
       display: flex;
       align-items: center;
-      gap: 3px;
+      
+      :not(:last-child) {
+        margin-right: 3px;
+      }
       cursor: pointer;
     }
   }
 }
 
 .withdrawal-summary {
-  padding: 16px;
+  padding: 36px 16px 40px;
   margin-top: 0;
   margin-bottom: 16px;
   display: flex;
@@ -1195,7 +1205,9 @@ const openWithdrawTutorialVideo = () => {
   font-family: "Manrope", sans-serif;
   font-size: 1.1rem;
   font-weight: 700;
-  aspect-ratio: 335/82;
+  // height: 0;
+  // padding-bottom: calc(82 / 335 * 100);
+  // aspect-ratio: 335/82;
 
   .balance {
     margin: 0 0 0 1rem;
@@ -1263,7 +1275,7 @@ const openWithdrawTutorialVideo = () => {
 .withdraw-selection {
   :deep(.q-field__control) {
     --q-primary: #424f72;
-    height: 46px;
+    // height: 46px;
     background-color: #fff;
     box-shadow: 0px 0px 8px 0px #a9c9ea inset;
 

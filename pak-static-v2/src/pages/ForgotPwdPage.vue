@@ -557,6 +557,7 @@ onMounted(() => {
     width: 100%;
     max-width: 100px;
     margin-bottom: 10px;
+    max-height: 30px;
   }
 }
 

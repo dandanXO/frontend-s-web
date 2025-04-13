@@ -3,10 +3,10 @@
     <div class="record-dialog-inner-wrapper">
       <div class="tab-wrapper">
         <div class="tab" :class="{ selected: currentTab === 'invitation' }" @click="handleTabClick('invitation')">
-          Invitation records
+          {{ $t("hotPromo.invitationRecords") }}
         </div>
         <div class="tab" :class="{ selected: currentTab === 'lottery' }" @click="handleTabClick('lottery')">
-          Lottery records
+          {{ $t("hotPromo.lotteryRecords") }}
         </div>
       </div>
 
@@ -21,7 +21,9 @@
                   <!-- <span>Invitation successful</span> -->
                 </div>
               </template>
-              <span v-else class="no-record-text">No Records</span>
+              <span v-else class="no-record-text">
+                {{ $t("hotPromo.noRecords") }}
+              </span>
             </div>
           </q-tab-panel>
           <q-tab-panel name="lottery">
@@ -29,10 +31,12 @@
               <template v-if="info.records.length">
                 <div v-for="(record, index) in info.records" :key="index" class="record">
                   <span>{{ moment(record.recordTime).format("MM-DD HH:mm:ss") }}</span>
-                  <span class="amount">Rs{{ record.bonus }}</span>
+                  <span class="amount"> {{$t("hotPromo.rs")}} {{ record.bonus }}</span>
                 </div>
               </template>
-              <span v-else class="no-record-text">No Records</span>
+              <span v-else class="no-record-text">
+                {{ $t("hotPromo.noRecords") }}
+              </span>
             </div>
           </q-tab-panel>
         </q-tab-panels>
@@ -68,7 +72,7 @@ const handleTabClick = (tab) => {
 .record-dialog-inner-wrapper {
   width: 90%;
   max-width: 450px;
-  background-color: #82a17c;
+  background-color: #860000;
   border-radius: 14px;
   padding: 12px;
 
@@ -76,8 +80,16 @@ const handleTabClick = (tab) => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
     margin-bottom: 12px;
+    > * {
+      &:first-child {
+        margin-right: 6px;
+      }
+
+      &:nth-child(2) {
+        margin-left: 6px;
+      }
+    }
 
     .tab {
       flex: 1;
@@ -90,7 +102,7 @@ const handleTabClick = (tab) => {
       text-align: center;
 
       &.selected {
-        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        background: linear-gradient(356.25deg, #FF3A3E -0.21%, #CC1111 93.65%);
         color: #fff;
       }
     }
@@ -107,7 +119,7 @@ const handleTabClick = (tab) => {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    background: #119b8b99;
+    background: #9B111399;
     border: 1px solid #c4fff799;
     border-radius: 8px;
     padding: 12px;
@@ -155,7 +167,7 @@ const handleTabClick = (tab) => {
 
       .amount {
         font-weight: 900;
-        color: #91ffab;
+        color: #EC9823;
       }
     }
 

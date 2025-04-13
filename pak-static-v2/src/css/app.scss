@@ -197,14 +197,21 @@ body.body--dark .q-footer {
   margin: 0 auto;
   background: transparent;
   border-radius: 4px;
-  aspect-ratio: 475 / 171;
+  // height: 0;
+  // height: 100px;
+  // padding-bottom: calc(171 / 475 * 100) + px;
+  // aspect-ratio: 475 / 171;
+  // min-height: 100px;
 
   .q-panel > div {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 100% 100%;
     border-radius: 12px;
+    height: 0;
+    padding-bottom: calc(7 / 22 * 100);
     aspect-ratio: 22 / 7;
+    min-height: 120px;
   }
   .q-carousel__navigation--bottom {
     bottom: -5px;
@@ -224,7 +231,10 @@ body.body--dark .q-footer {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    height: 0;
+    padding-bottom: calc(7 / 22 * 100);
     aspect-ratio: 22/7;
+    min-height: 120px;
   }
 }
 
@@ -682,8 +692,11 @@ body.body--dark .q-footer {
 
 .y-n-container {
   display: flex;
-  gap: 24px;
+  // gap: 24px;
   justify-content: center;
+  > :not(:last-child) {
+    margin-right: 20px;
+  }
 }
 
 .btn-click {

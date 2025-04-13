@@ -265,18 +265,26 @@
             {{ memberDetail.telephone }}
           </span>
           <span v-if="memberDetail.telephone === null">-</span>
-
           <el-button
             type="info"
             size="mini"
             style="float: right;"
+            v-permission="['sys:member:unbind:telephone']"
+            @click="showUnbindDetail('UNBIND_TELEPHONE', memberDetail.telephone)"
+            :disabled="memberDetail.telephone === ''"
+          >
+            {{ t('fields.unbind') }}
+          </el-button>
+          <el-button
+            type="info"
+            size="mini"
+            style="margin-right: 2px;float: right;"
             v-permission="['sys:member:detail:unmask']"
             @click="unmaskDetail('TELEPHONE')"
             :disabled="memberDetail.telephone === null"
           >
             {{ t('fields.show') }}
           </el-button>
-
           <el-tag v-if="memberDetail.phoneVerified" size="mini" type="success" style="float: right; margin-right: 10px">
             {{ t('fields.verified') }}
           </el-tag>
@@ -324,12 +332,21 @@
             </div>
           </template>
           <span v-if="memberDetail.email !== ''">{{ memberDetail.email }}</span>
-          <span v-if="memberDetail.email === ''">-</span>
-
+          <span v-if="memberDetail.email === '' && memberDetail.email === null">-</span>
           <el-button
             type="info"
             size="mini"
             style="float: right;"
+            v-permission="['sys:member:unbind:email']"
+            @click="showUnbindDetail('UNBIND_EMAIL', memberDetail.email)"
+            :disabled="memberDetail.email === ''"
+          >
+            {{ t('fields.unbind') }}
+          </el-button>
+          <el-button
+            type="info"
+            size="mini"
+            style="margin-right:2px;float: right;"
             :disabled="memberDetail.email === ''"
             v-permission="['sys:member:detail:unmask']"
             @click="unmaskDetail('EMAIL')"
@@ -1707,6 +1724,22 @@
           </el-button>
         </div>
       </el-form>
+      <el-form
+        v-if="uiControl.dialogType === 'UNBIND_TELEPHONE' || uiControl.dialogType === 'UNBIND_EMAIL'"
+        ref="unbindForm"
+        size="small"
+        label-width="150px"
+      >
+        <div>{{ uiControl.dialogTitle }} <b> {{ unbindValue }} </b> ?</div>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="unbindMemberDetail(uiControl.dialogType)">
+            {{ t('fields.confirm') }}
+          </el-button>
+        </div>
+      </el-form>
     </el-dialog>
   </div>
 </template>
@@ -1747,7 +1780,9 @@ import {
   updateWithdrawType,
   toggleMemberWallet,
   walletBalance,
-  updateOpenTransfer
+  updateOpenTransfer,
+  unbindTelephone,
+  unbindEmail
 } from '../../../../../api/member'
 import { getPlatformsBySite } from '../../../../../api/platform'
 import { selectIpLabelAll } from '../../../../../api/ip-label'
@@ -1821,6 +1856,7 @@ export default defineComponent({
     const updateModelForm = ref(null)
     const sendSmsForm = ref(null)
     const updateWithdrawTypeForm = ref(null)
+    const unbindValue = ref(null)
 
     const freezeType = reactive({
       list: [
@@ -2521,6 +2557,29 @@ export default defineComponent({
       })
     }
 
+    const unbindMemberDetail = async (type) => {
+      console.log(type)
+      let successMsg = "-"
+      if (type === "UNBIND_TELEPHONE") {
+        await unbindTelephone(props.mbrId, site.id)
+        successMsg = t('message.unbindTelephoneSuccess')
+      } else if (type === "UNBIND_EMAIL") {
+        await unbindEmail(props.mbrId, site.id)
+        successMsg = t('message.unbindEmailSuccess')
+      } else {
+        return;
+      }
+      const data = await getMemberDetails(props.mbrId, site.id)
+      Object.keys({ ...data.data }).forEach(detailField => {
+        memberDetail[detailField] = data.data[detailField]
+      })
+      uiControl.dialogVisible = false
+      ElMessage({
+        message: successMsg,
+        type: 'success',
+      })
+    }
+
     const loadBalance = async () => {
       const platform = await getPlatformsBySite(memberDetail.siteId)
       for (const item of platform.data) {
@@ -2616,6 +2675,17 @@ export default defineComponent({
         uiControl.dialogTitle = t('fields.telephone')
       }
       showDialog('UNMASK')
+    }
+
+    async function showUnbindDetail(type, value) {
+      if (type === 'UNBIND_TELEPHONE') {
+        unbindValue.value = value
+        uiControl.dialogTitle = t('fields.unbindTelephone')
+      } else if (type === 'UNBIND_EMAIL') {
+        unbindValue.value = value
+        uiControl.dialogTitle = t('fields.unbindEmail')
+      }
+      showDialog(type)
     }
 
     async function unlock() {
@@ -2866,7 +2936,10 @@ export default defineComponent({
       updateWithdrawTypeForm,
       hasPermission,
       changeOpenTransferState,
-      isPak
+      isPak,
+      showUnbindDetail,
+      unbindValue,
+      unbindMemberDetail
     }
   },
 })

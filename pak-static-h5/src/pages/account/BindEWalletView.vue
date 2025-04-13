@@ -73,7 +73,7 @@
 
   <q-page class="bind-container">
     <div class="bind-wrapper">
-      <q-form class="bind-item">
+      <q-form ref="bankFormRef" class="bind-item">
         <q-label>
           {{ $t("form.virtualWalletType") }}
           <em>*</em>
@@ -251,6 +251,7 @@ import { userStore } from "stores/index";
 import { useLocalStorage } from "@vueuse/core";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
+import { useI18n } from "vue-i18n";
 
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);
@@ -269,6 +270,7 @@ const onCategoryToggleBtnClick = (index) => {
   selectedCategoryToggleIndex.value = index;
 };
 
+const { t } = useI18n();
 const qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
@@ -276,6 +278,7 @@ const router = useRouter();
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/payment/";
 
+const bankFormRef = ref();
 const bankCardRef = ref();
 const cardNumberRef = ref();
 const ifscRef = ref();
@@ -458,9 +461,11 @@ const submitBankCard = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "Virtual wallet added successfully",
+            message: t('notify.virtualWalletAddedSuccessfully'),
             icon: "check_circle_outline"
           });
+          bankCardInfo.cardNumber = ""
+          bankFormRef.value.reset();
           router.push("/account/bank");
         }
       })
@@ -478,6 +483,8 @@ const handleEnterKey = () => {
 
 onActivated(() => {
   bankCardInfo.cardAddress = "";
+  bankCardInfo.cardNumber = ""
+  bankFormRef.value.reset();
 
   loadBankCards();
 });
@@ -487,15 +494,18 @@ onActivated(() => {
 .common-sm-btn {
   padding: 6px 12px;
   display: flex;
-  border: 2px solid #b81212;
   box-shadow: unset;
-  border-radius: 8px;
+  border-radius: 6px;
+    background: #292D2E;
+      border: 1px solid #21EF89;
 }
 
 .common-sm-white-btn {
   padding: 6px 12px;
   border-radius: 8px;
-  border: 2px solid transparent;
+  box-shadow: unset;
+    background: #292D2E;
+  border: 1px solid rgb(98 98 98);
 }
 
 .bind-container {
@@ -569,10 +579,14 @@ onActivated(() => {
           align-items: center;
           justify-content: center;
           font-size: 1rem;
+          flex: 1;
+          padding: 10px;
+          align-items: flex-start;
+          font-weight: bold;
           // width: 6.5rem;
 
           img {
-            width: 1.5rem;
+            width: 2.2rem;
             margin: 0 0.25rem;
           }
 

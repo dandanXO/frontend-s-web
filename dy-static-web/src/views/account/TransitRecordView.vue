@@ -112,7 +112,7 @@
 
                 <template v-if="tbl.dataIndex === 'subType'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    {{ getSubType(scope.row.subType) }}
+                    {{ getSubType(scope.row.subType, scope.row.type) }}
                   </div>
                 </template>
 
@@ -344,9 +344,9 @@
         </el-tab-pane>
         <el-tab-pane name="gameBetRecord" label="投注记录">
           <div v-if="searchForm.gameBetRecord.platform.length === 0" class="payout-total">
-            <div>总投注: {{ totalBetRecord.totalBet }}</div>
-            <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
-            <div>总有效投注: {{ totalBetRecord.totalValidBet }}</div>
+            <div>总投注：{{ totalBetRecord.totalBet }}</div>
+            <div>总派彩：{{ totalBetRecord.totalPayout }}</div>
+            <div>总有效投注：{{ totalBetRecord.totalValidBet }}</div>
           </div>
           <div>
             <el-form layout="inline" :model="searchForm.gameBetRecord">
@@ -1105,7 +1105,7 @@ export default defineComponent({
           searchForm[v].startDate = chgDate(7);
           searchForm[v].endDate = chgDate(0);
           if(v === "gameBetRecord") {
-            // 结束时间如果不跟开始时间一个月，则从当月1号开始
+            // 结束时间如果不跟开始时间一个月，则从当月 1 号开始
             if(moment(searchForm[v].startDate).format("YYYY-MM") !== moment(searchForm[v].endDate).format("YYYY-MM")) {
               searchForm[v].startDate = moment(searchForm[v].endDate).format("YYYY-MM") + "-01";
             }
@@ -1335,9 +1335,9 @@ export default defineComponent({
         return ''
       }
       if (platformName === 'AG') {
-        return 'AG真人' // AG
+        return 'AG 真人' // AG
       } else if (platformName === 'BBINDY') {
-        return 'BBIN真人' // BBINDY
+        return 'BBIN 真人' // BBINDY
       }  else if (platformName === 'KY') {
         return '开元棋牌' // KY
       }  else if (platformName === 'KYDY') {
@@ -1347,30 +1347,40 @@ export default defineComponent({
       }  else if (platformName === 'DT') {
         return '大唐棋牌' // DT
       }  else if (platformName === 'TCG') {
-        return 'TCG彩票' // TCG
+        return 'TCG 彩票' // TCG
       }  else if (platformName === 'SGWin') {
         return '双赢彩票' // SGWin
       } else if (platformName === 'PTDY') {
-        return 'PT电子' // SGWin
+        return 'PT 电子' // SGWin
       } else if (platformName === 'PGDY') {
-        return 'PG电子' // SGWin
+        return 'PG 电子' // SGWin
       } else {
         return platformName
       }
     }
 
-    const getSubType = (subType) => {
-      if (!subType) {
-        return ''
+    const getSubType = (subType, type) => {
+      // return subType + "_" + type;
+      if (!type) {
+        return "";
       }
-      if (subType === 'DEPOSIT') {
-        return '转进' // 转进
-      } else if (subType === 'WITHDRAW') {
-        return '转出' // 转出
+      if (type === "WITHDRAW_FAIL") {
+        return "转账失败";
+      }
+      if (subType === "DEPOSIT") {
+        return "转进"; // 转进
+      } else if (subType === "WITHDRAW") {
+        return "转出"; // 转出
+      } else if (type === "WITHDRAW") {
+        return "转出"; // 转出
+      } else if (type === "DEPOSIT") {
+        return "转进"; // 转出
+      }else if (type === "VIP_REBATE"|| subType === "VIP_REBATE"){
+        return "VIP 返水"; // VIP 返水
       } else {
-        return subType
+        return subType;
       }
-    }
+    };
 
     const getWithdrawStatus = (withdrawStatus) => {
       if (withdrawStatus === 'APPLY') {
@@ -1418,7 +1428,7 @@ export default defineComponent({
         return ''
       }
       if (depositType === 'BANK') {
-        return 'VIP转卡' // VIP转卡
+        return 'VIP 转卡' // VIP 转卡
       } else if (depositType === 'USDTERC') {
         return 'USDT ERC' // USDT ERC
       } else if (depositType === 'USDTTRC') {
@@ -1438,11 +1448,11 @@ export default defineComponent({
       } else if (depositType === 'WECHATCODE') {
         return '微信支付' // 微信支付
       } else if (depositType === 'QQCODE') {
-        return 'QQ支付' // QQ支付
+        return 'QQ 支付' // QQ 支付
       } else if (depositType === 'KDPAY') {
-        return 'K豆' // K豆
+        return 'K 豆' // K 豆
       } else if (depositType === 'BLBPAY') {
-        return '808钱包' // 808钱包
+        return '808 钱包' // 808 钱包
       } else if (depositType === 'DDPAY') {
         return '钉钉' // 钉钉
       } else if (depositType === 'HBPAY') {

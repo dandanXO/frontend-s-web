@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="localIsShowDialog" @hide="handleBtnClose">
+  <q-dialog class="isCentreDialog" v-model="localIsShowDialog" @hide="handleBtnClose">
     <div class="congrats-container">
       <q-btn icon="close" round dense v-close-popup class="congrats-close" />
       <div class="congrats-header">
@@ -63,6 +63,7 @@ watch(
 </script>
 <style lang="scss" scoped>
 .congrats-container {
+  background-image: unset;
   background-color: #1e371f;
   border: 1px solid #337e3a;
   border-radius: 10px !important;
@@ -72,6 +73,8 @@ watch(
   position: relative;
   overflow: visible;
   border-radius: 12px;
+  height: unset;
+  aspect-ratio: unset;
 
   &:before {
     content: "";
@@ -121,7 +124,8 @@ watch(
     color: #fff96f;
     font-size: 45px;
     text-align: center;
-    background-image: url(../../assets/images/index/modal/congrats-highlight-bg.png);
+    background: linear-gradient(90deg, transparent, #fff96f29, transparent);
+    // background-image: url(../../assets/images/index/modal/congrats-highlight-bg.png);
     padding: 0 12px;
     background-repeat: no-repeat;
     background-size: 70% 100%;

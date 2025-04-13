@@ -4,19 +4,27 @@
     v-model="file"
     label-color="brand"
     outlined
-    :label="$t('form.uploadImage')"
-    color="green"
-    bg-color="black"
     clearable
+    :class="file? '' : 'hasFile'"
   >
-    <template v-slot:prepend>
-      <q-icon name="cloud_upload" />
-    </template>
     <!-- Display error message -->
     <!-- <template v-slot:error="{ error }">
       <div class="text-negative">{{ error }}</div>
     </template> -->
+    <template v-slot:prepend>
+      <img style="
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 32px;
+    width: 32px;" v-if="!file" src="../assets/images/common/image-icon.png">
+    </template>
+
   </q-file>
+ 
 </template>
 
 <script>
@@ -95,8 +103,27 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .q-uploader .q-uploader-upload-btn {
   color: #ffffff !important;
+}
+.q-field__control-container {
+  height: 100%;
+  flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.q-file .q-field__native {
+  display: block;
+}
+:deep(.q-field__control):after {
+ height: 100%;
+}
+.hasFile { 
+  :deep(.q-field__control-container) {
+    display: flex; padding: 30px 0; justify-content: center;
+
+  }
 }
 </style>

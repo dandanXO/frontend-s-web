@@ -291,7 +291,10 @@ onActivated(() => {
   width: calc(100% - 20px);
   //margin-bottom: 10px;
   margin: 10px auto;
+  height: 0;
+  // padding-bottom: calc(32 / 335 * 100);
   aspect-ratio: 335/32;
+  min-height: 50px;
 
   .right {
     color: white;
@@ -348,7 +351,9 @@ onActivated(() => {
       display: flex;
       justify-content: space-between;
       padding: 8px 12px;
-      flex-wrap: wrap;
+      // flex-wrap: wrap;
+      flex-direction: column;
+      align-items: flex-start;
 
       &--title {
         border-top-right-radius: 16px;
@@ -363,6 +368,7 @@ onActivated(() => {
       .order-subrow {
         display: flex;
         justify-content: space-between;
+        width: 100%;
       }
     }
 

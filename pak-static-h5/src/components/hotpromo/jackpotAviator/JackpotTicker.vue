@@ -1,8 +1,36 @@
 <template>
     <div class="jackpot-plate">
-        <svg v-if="jackpotAmt > 0" class="jackpot-number" data-v-40789f9c="" xmlns="http://www.w3.org/2000/svg" width="150" height="35" viewBox="0 0 150 35">
-            <text data-v-40789f9c="" x="20" y="20">{{ convertToCommaAmount(jackpotAmt) }}</text>
-        </svg>
+        <svg 
+  v-if="jackpotAmt > 0" 
+  class="jackpot-number" 
+  xmlns="http://www.w3.org/2000/svg" 
+  width="150" 
+  height="35" 
+  viewBox="0 0 150 35"
+>
+  <!-- Define Gradient -->
+  <defs>
+    <linearGradient id="textGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="13.04%" stop-color="#FDF9EB"/>
+      <stop offset="78.93%" stop-color="#CB8F24"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Text with Gradient Fill -->
+  <text 
+    x="50%" 
+    y="60%" 
+    dominant-baseline="middle" 
+    text-anchor="middle" 
+    font-size="16" 
+    font-weight="bold" 
+    fill="url(#textGradient)" 
+    stroke="black" 
+    stroke-width="1"
+  >
+    {{ convertToCommaAmount(jackpotAmt) }}
+  </text>
+</svg>
         <span v-else>-</span>
     </div>
 </template>
@@ -62,30 +90,31 @@ onMounted(() => {
 <style lang="scss" scoped>
 .jackpot-plate {
     background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/jackpot-plate.png') no-repeat center center;
-    aspect-ratio: 381/66;
-    background-size: 100% 100%;
-    width: 38%;
+    background-size: contain;
+    width: 100%;
+    height: 80px;
     position: absolute;
-    top: 70%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Poppins';
+    font-family: "Poppins";
 
     .jackpot-number {
         transform: rotateX(45deg);
+        margin-top: -5px;
 
         text {
-            fill: #FFF9FF;
-            stroke: #1E826A;
-            stroke-width: 1;
-            margin: 0;
-            font-family: 'Poppins';
-            font-size: 22px;
-            font-weight: bold;
-            letter-spacing: -1px;
+            font-family: Poppins;
+            font-weight: 900;
+            font-size: 23.52px;
+            line-height: 19.86px;
+            letter-spacing: 0px;
+            text-align: center;
+            text-transform: uppercase;
+
         }
     }
 }

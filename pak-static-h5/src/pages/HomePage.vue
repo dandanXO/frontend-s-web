@@ -4,7 +4,7 @@
     style="transition: background 0.5s ease-in-out"
     class="dynamic-bg"
   >
-    <ProfileSummary :homeProfile="true" @activateSlide="handleActivateSlide" @showNewPlayer="showNewPlayer" />
+    <ProfileSummary :showRedemption="isShowRedemptionInPopup" :homeProfile="true" @activateSlide="handleActivateSlide" @showNewPlayer="showNewPlayer" />
 
     <!--    <pre>-->
     <!--      {{isNewPlayerModal}} <br/>-->
@@ -19,9 +19,6 @@
       v-model="slide"
       id="home"
       class="home"
-      data-aos-duration="1200"
-      data-aos-once="true"
-      data-aos="fade-in"
       transition-next="slide-left"
       transition-prev="slide-right"
       animated
@@ -34,7 +31,7 @@
         v-for="(banner, i) in banners"
         :key="i"
         :name="i"
-        class="column no-wrap flex-center"
+        class="column no-wrap flex-center banner-slide"
         :img-src="returnBannerUrl(banner)"
         @click="gotoPromo(banner)"
       ></q-carousel-slide>
@@ -65,7 +62,7 @@
             margin: 6px 3px;
             height: 3px;
             min-height: 3px;
-            width: 33px;
+            width: 3px;
             padding: 0;
             background-color: rgba(255, 255, 255, 0.2);
           "
@@ -187,7 +184,7 @@
       <div class="midd">
         <div class="station-notice-wrapper">
           <div class="volume">
-            <img src="../assets/images/index/icon-volume.png" />
+            <img src="../assets/images/index/icon-volume.svg" />
           </div>
           <div class="marquee-container">
             <marquee-text :repeat="5" :duration="announcementList.length * 500">
@@ -200,8 +197,9 @@
           </div>
         </div>
       </div>
-      <a class="notice-download" :href="ui.downloadAppUrl" v-if="downloadHeart && !ui.hideDownload">
-        <img src="../assets/images/auth/app-icon.png" />
+      <a class="notice-download" :href="ui.whatsappUrl" target="_blank">
+        <img src="../assets/images/auth/whatsapp-icon-side.png" />
+        <img class="absolute-hot" src="../assets/images/index/hot.gif" />
       </a>
     </div>
     <!-- <div class="top-action" v-if="store.hasToken()">
@@ -212,7 +210,36 @@
       <q-btn class="action-btn action-btn--withdrawal" @click="gotoSignIn()" no-caps label="Sign In"></q-btn>
       <q-btn class="action-btn action-btn--deposit" @click="gotoSignUp()" no-caps label="Sign Up" />
     </div> -->
-
+    <!-- <div class="hometop-categories">
+      <template v-for="(item, index) in translatedCategoriesList" :key="index">
+        <div v-if="item.icon !== 'lobby'" class="category" @click="activateSlide(item)" :style="{ backgroundImage: `url(${getImageUrl(item.icon)})` }">
+          <div class="cat-label">
+          {{ item.label }}
+        </div>
+        </div>
+      </template>
+    </div> -->
+    <swiper
+      :slidesPerView="4"
+      :slidesPerGroup="4"
+      :spaceBetween="10"
+      :modules="[Navigation, Grid]"
+      class="hometop-categories"
+    >
+      <template v-for="(item, index) in translatedCategoriesList" :key="index">
+        <template v-if="item.icon !== 'lobby'">
+          <swiper-slide @click="activateSlide(item)">
+            <div class="category">
+              <img :src="`${getImageUrl(item.icon)}`" />
+              <div class="cat-label">
+                {{ item.label }}
+              </div>
+            </div>
+          </swiper-slide>
+        </template>
+      </template>
+    </swiper>
+    <!--
     <swiper
       :slidesPerView="5"
       :spaceBetween="0"
@@ -238,9 +265,9 @@
       </template>
 
       <swiper-slide>
-        <!-- <div class="cat-selection-item"></div> -->
+        <!- <div class="cat-selection-item"></div> ->
       </swiper-slide>
-    </swiper>
+    </swiper> -->
 
     <!-- <pre>hotGameList{{ hotGameList }}</pre> -->
     <!-- <pre>pokerGameJILIList--{{ pokerGameJILIList }}</pre> -->
@@ -263,16 +290,24 @@
             <!-- <img src="../assets/images/index/menu-label-hotgames.png" class="label-img" /> -->
             <img src="../assets/images/index/menu-label-icon-hotgames.png" class="label-img" />
             <div class="txt-style">{{ $t("home.cat_hotgames") }}</div>
+            <div v-if="category.title === 'Lobby' && category.active" class="side">
+              <div class="all-btn" @click="handleActivateSlide('Hot')">
+                {{ $t("home.menu_all") }}
+                <img src="../assets/images/account/rgtarrow.svg" />
+              </div>
+              <div :class="`custom-hot-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
+              <div :class="`custom-hot-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
+            </div>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
+              :slidesPerGroup="3"
               :spaceBetween="10"
-              :scrollbar="{
-                hide: true
-              }"
-              :modules="gameModules"
+              :modules="[Navigation, Grid]"
+              :grid="{ rows: 1, fill: 'row' }"
+              :navigation="{ nextEl: '.custom-hot-next', prevEl: '.custom-hot-prev' }"
               class="platform-game-container"
             >
               <template v-for="(item, index) in hotGameList" :key="index">
@@ -453,16 +488,22 @@
             <!-- <span class="txt-style">Live Casino</span> -->
             <img src="../assets/images/index/menu-label-icon-livecasino.png" class="label-img" />
             <div class="txt-style">{{ $t("home.cat_livecasino") }}</div>
+            <div v-if="category.title === 'Lobby' && category.active" class="side">
+              <div class="all-btn" @click="handleActivateSlide('Live')">
+                {{ $t("home.menu_all") }}
+                <img src="../assets/images/account/rgtarrow.svg" />
+              </div>
+              <div :class="`custom-live-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
+              <div :class="`custom-live-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
+            </div>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="1.5"
+              :slidesPerView="2"
               :spaceBetween="15"
-              :scrollbar="{
-                hide: true
-              }"
-              :modules="gameModules"
+              :modules="[Navigation]"
+              :navigation="{ nextEl: '.custom-live-next', prevEl: '.custom-live-prev' }"
               class="platform-game-container live-casino"
             >
               <template v-for="(item, index) in livecasino" :key="index">
@@ -553,16 +594,23 @@
             <!-- <span class="txt-style">Slots Games</span> -->
             <img src="../assets/images/index/menu-label-icon-slotsgame.png" class="label-img" />
             <div class="txt-style">{{ $t("home.cat_slotsgame") }}</div>
+            <div v-if="category.title === 'Lobby' && category.active" class="side">
+              <div class="all-btn" @click="handleActivateSlide('Slot')">
+                {{ $t("home.menu_all") }}
+                <img src="../assets/images/account/rgtarrow.svg" />
+              </div>
+              <div :class="`custom-slot-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
+              <div :class="`custom-slot-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
+            </div>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
-              :scrollbar="{
-                hide: true
-              }"
-              :modules="gameModules"
+              :modules="[Navigation, Grid]"
+              :grid="{ rows: 1, fill: 'row' }"
+              :navigation="{ nextEl: '.custom-slot-next', prevEl: '.custom-slot-prev' }"
               class="platform-game-container"
             >
               <template v-for="(item, index) in slot" :key="index">
@@ -614,7 +662,7 @@
 
           <div class="platform-game-wrapper" v-else>
             <div
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
               :scrollbar="{
                 hide: true
@@ -664,118 +712,6 @@
       </template>
 
       <template
-        v-if="(category.title === 'Poker' && category.active) || (category.title === 'Lobby' && category.active)"
-      >
-        <div class="games-selection-wrapper" id="Poker">
-          <div class="title-game">
-            <!-- <img src="../assets/images/index/menu-label-poker.png" class="label-img" /> -->
-            <img src="../assets/images/index/menu-label-icon-poker.png" class="label-img" />
-            <div class="txt-style">{{ $t("home.cat_poker") }}</div>
-          </div>
-
-          <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
-            <swiper
-              :slidesPerView="3.5"
-              :spaceBetween="10"
-              :scrollbar="{
-                hide: true
-              }"
-              :modules="gameModules"
-              class="platform-game-container"
-            >
-              <template v-for="(item, index) in pokerGameJILIList" :key="index">
-                <!-- <template v-if="item.code === 'JILI'"> -->
-                <swiper-slide
-                  class="platform-game-item btn-effect"
-                  @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id, item.demo)"
-                >
-                  <div
-                    data-aos="zoom-in"
-                    :data-aos-delay="100 * index"
-                    data-aos-duration="1200"
-                    data-aos-once="true"
-                    data-aos-anchor="#slotsgames"
-                  >
-                    <div class="platform-game-img">
-                      <div
-                        class="game--bg"
-                        :style="{
-                          backgroundImage: (() => {
-                            try {
-                              return `url(${require(`../assets/images/index/poker/item-game-${item.code.toLowerCase()}.png`)})`;
-                            } catch (e) {
-                              try {
-                                return `url(${imgURLGame}${item.icon})`;
-                              } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
-                              }
-                            }
-                          })()
-                        }"
-                      ></div>
-                    </div>
-
-                    <div v-if="index < 3" class="burning-hot">
-                      <img src="../assets/images/index/hot.png" />
-                    </div>
-
-                    <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
-                  </div>
-                </swiper-slide>
-                <!-- </template> -->
-              </template>
-            </swiper>
-          </div>
-
-          <div class="platform-game-wrapper" v-else>
-            <div
-              :slidesPerView="3.5"
-              :spaceBetween="10"
-              :scrollbar="{
-                hide: true
-              }"
-              :modules="gameModules"
-              class="platform-game-container grid-view"
-            >
-              <template v-for="(item, index) in pokerGameJILIList" :key="index">
-                <!-- <template v-if="item.code === 'JILI'"> -->
-                <div
-                  class="platform-game-item btn-effect"
-                  @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id, item.demo)"
-                >
-                  <div class="platform-game-img">
-                    <div
-                      class="game--bg"
-                      :style="{
-                        backgroundImage: (() => {
-                          try {
-                            return `url(${require(`../assets/images/index/poker/item-game-${item.code.toLowerCase()}.png`)})`;
-                          } catch (e) {
-                            try {
-                              return `url(${imgURLGame}${item.icon})`;
-                            } catch (e) {
-                              return `url(https://m.b9mega1.com/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
-                            }
-                          }
-                        })()
-                      }"
-                    ></div>
-                  </div>
-
-                  <div v-if="index < 3" class="burning-hot">
-                    <img src="../assets/images/index/hot.png" />
-                  </div>
-
-                  <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
-                </div>
-                <!-- </template> -->
-              </template>
-            </div>
-          </div>
-        </div>
-      </template>
-
-      <template
         v-if="(category.title === 'Fish' && category.active) || (category.title === 'Lobby' && category.active)"
       >
         <div class="games-selection-wrapper" id="Fish" v-if="category.title === 'Lobby' && category.active">
@@ -785,16 +721,23 @@
             <!-- <span class="txt-style">Fishing</span> -->
             <img src="../assets/images/index/menu-label-icon-fishing.png" class="label-img" />
             <div class="txt-style">{{ $t("home.cat_fishing") }}</div>
+            <div v-if="category.title === 'Lobby' && category.active" class="side">
+              <div class="all-btn" @click="handleActivateSlide('Fish')">
+                {{ $t("home.menu_all") }}
+                <img src="../assets/images/account/rgtarrow.svg" />
+              </div>
+              <div :class="`custom-fish-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
+              <div :class="`custom-fish-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
+            </div>
           </div>
 
           <div class="platform-game-wrapper">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
-              :scrollbar="{
-                hide: true
-              }"
-              :modules="gameModules"
+              :modules="[Navigation, Grid]"
+              :grid="{ rows: 1, fill: 'row' }"
+              :navigation="{ nextEl: '.custom-fish-next', prevEl: '.custom-fish-prev' }"
               class="platform-game-container"
             >
               <template v-for="(item, index) in fishGameJILIList" :key="index">
@@ -1052,6 +995,125 @@
       </template>
 
       <template
+        v-if="(category.title === 'Poker' && category.active) || (category.title === 'Lobby' && category.active)"
+      >
+        <div class="games-selection-wrapper" id="Poker">
+          <div class="title-game">
+            <!-- <img src="../assets/images/index/menu-label-poker.png" class="label-img" /> -->
+            <img src="../assets/images/index/menu-label-icon-poker.png" class="label-img" />
+            <div class="txt-style">{{ $t("home.cat_poker") }}</div>
+            <div v-if="category.title === 'Lobby' && category.active" class="side">
+              <div class="all-btn" @click="handleActivateSlide('Poker')">
+                {{ $t("home.menu_all") }}
+                <img src="../assets/images/account/rgtarrow.svg" />
+              </div>
+              <div :class="`custom-poker-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
+              <div :class="`custom-poker-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
+            </div>
+          </div>
+
+          <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
+            <swiper
+              :slidesPerView="3"
+              :spaceBetween="10"
+              :modules="[Navigation, Grid]"
+              :grid="{ rows: 1, fill: 'row' }"
+              :navigation="{ nextEl: '.custom-poker-next', prevEl: '.custom-poker-prev' }"
+              class="platform-game-container"
+            >
+              <template v-for="(item, index) in pokerGameJILIList" :key="index">
+                <!-- <template v-if="item.code === 'JILI'"> -->
+                <swiper-slide
+                  class="platform-game-item btn-effect"
+                  @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id, item.demo)"
+                >
+                  <div
+                    data-aos="zoom-in"
+                    :data-aos-delay="100 * index"
+                    data-aos-duration="1200"
+                    data-aos-once="true"
+                    data-aos-anchor="#slotsgames"
+                  >
+                    <div class="platform-game-img pokerportion">
+                      <div
+                        class="game--bg"
+                        :style="{
+                          backgroundImage: (() => {
+                            try {
+                              return `url(${require(`../assets/images/index/poker/item-game-${item.code.toLowerCase()}.png`)})`;
+                            } catch (e) {
+                              try {
+                                return `url(${imgURLGame}${item.icon})`;
+                              } catch (e) {
+                                return `url(https://m.b9mega1.com/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
+                              }
+                            }
+                          })()
+                        }"
+                      ></div>
+                    </div>
+
+                    <div v-if="index < 3" class="burning-hot">
+                      <img src="../assets/images/index/hot.png" />
+                    </div>
+
+                    <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
+                  </div>
+                </swiper-slide>
+                <!-- </template> -->
+              </template>
+            </swiper>
+          </div>
+
+          <div class="platform-game-wrapper" v-else>
+            <div
+              :slidesPerView="4"
+              :spaceBetween="10"
+              :scrollbar="{
+                hide: true
+              }"
+              :modules="gameModules"
+              class="platform-game-container grid-view"
+            >
+              <template v-for="(item, index) in pokerGameJILIList" :key="index">
+                <!-- <template v-if="item.code === 'JILI'"> -->
+                <div
+                  class="platform-game-item btn-effect"
+                  @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id, item.demo)"
+                >
+                  <div class="platform-game-img pokerportion">
+                    <div
+                      class="game--bg"
+                      :style="{
+                        backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/index/poker/item-game-${item.code.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                            try {
+                              return `url(${imgURLGame}${item.icon})`;
+                            } catch (e) {
+                              return `url(https://m.b9mega1.com/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
+                            }
+                          }
+                        })()
+                      }"
+                    ></div>
+                  </div>
+
+                  <div v-if="index < 3" class="burning-hot">
+                    <img src="../assets/images/index/hot.png" />
+                  </div>
+
+                  <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
+                </div>
+                <!-- </template> -->
+              </template>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <template
         v-if="(category.title === 'Sport' && category.active) || (category.title === 'Lobby' && category.active)"
       >
         <div class="games-selection-wrapper" id="Sport">
@@ -1145,7 +1207,7 @@
           <q-tab-panels v-model="activeKey" animated>
             <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
               <q-list style="min-height: auto">
-                <div v-for="(ann, idx) in announcementList" :key="idx">
+                <div v-for="(ann, idx) in announcementList" :key="idx" style="min-height:50px;">
                   <span v-if="ann.typeId === tab.id">
                     <q-expansion-item
                       style="max-height: 75vh; overflow: auto"
@@ -1196,16 +1258,16 @@
     class="fullgame-dialog"
   >
     <q-card class="fullgame-card" id="fullgame">
-      <ProfileSummary @closeslot="closeSlotModal" :homeProfile="true" />
+      <!-- <ProfileSummary @closeslot="closeSlotModal" :homeProfile="true" /> -->
       <q-card-section>
         <div class="home-wrapper fullgame-wrapper">
           <div class="fullgame-header">
-            <div class="q-mt-sm q-mb-md">
-              <q-btn dense rounded icon="chevron_left" class="back-btn text-white" size="16px" v-close-popup />
-            </div>
-            <div>
+            <div class="back-top-logo">
+              <div class="back-header-btn" @click="closeSlotModal">
+                <img src="../assets/images/index/btn-back.png" />
+              </div>
               <div class="game-logo-img">
-                <div
+                <!-- <div
                   class="game-logo"
                   :style="{
                     backgroundImage: (() => {
@@ -1216,18 +1278,26 @@
                       }
                     })()
                   }"
-                >
-                  &nbsp;
-                </div>
+                > -->
+                {{ subGameCode }}
               </div>
             </div>
 
-            <div class="fullgame-search">
-              <q-input standout v-model="searchText" :label="$t('btn.search')" clearable clear-icon="close">
-                <template v-slot:prepend>
-                  <q-icon name="search" size="20px" />
-                </template>
-              </q-input>
+            <div class="fullgame-search q-ma-md">
+              <div class="pc-form-input">
+                <q-input
+                  outlined
+                  color="green"
+                  v-model="searchText"
+                  :label="$t('btn.search')"
+                  clearable
+                  clear-icon="close"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="search" size="20px" />
+                  </template>
+                </q-input>
+              </div>
             </div>
           </div>
 
@@ -1419,7 +1489,7 @@
   />
 
   <template v-if="isAndroid()">
-    <q-dialog v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
+    <q-dialog class="isCentreDialog" v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
       <div class="luckyspin-wrapper">
         <div class="luckyspin-header">
           <img src="../assets/images/index/modal/luckyspin-title.png" />
@@ -1439,7 +1509,7 @@
     </q-dialog>
   </template>
   <template v-else>
-    <q-dialog v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
+    <q-dialog class="isCentreDialog" v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
       <CongratsModal>
         <template #controller>
           <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="isShownSpinLuckyWheel" />
@@ -1458,24 +1528,24 @@
     @handleBtnClose="isShowCodeBonusModal = false"
   />
 
-  <q-dialog v-model="isShowPrizeModal">
-    <div class="congrats-container">
+  <q-dialog class="isCentreDialog" v-model="isShowPrizeModal">
+    <div class="congrats-container" :class="{ ur: languageVal === 'ur' }">
       <q-btn icon="close" round dense v-close-popup class="congrats-close" />
-      <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div>
-      <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-coupons.png" /></div>
-      <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
+      <!-- <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div> -->
+      <!-- <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-coupons.png" /></div> -->
+      <!-- <div class="congrats-title">You get a coupon，Recharge $300 Get</div> -->
       <div class="congrats-highlight">Rs28</div>
 
       <div class="congrats-button">
-        <q-btn no-caps unelevated class="btn-primary" :loading="false" @click="router.push('/deposit?from=/home')">
+        <q-btn no-caps unelevated class="recharge-btn" :loading="false" @click="router.push('/deposit?from=/home')">
           {{ $t("btn.recharge") }}
         </q-btn>
       </div>
     </div>
   </q-dialog>
 
-  <q-dialog v-if="popupPromo === 'money-rain'" :model-value="true" persistent>
-    <MoneyRainModal>
+  <q-dialog class="isCentreDialog" v-if="popupPromo === 'money-rain'" :model-value="true" persistent>
+    <MoneyRainModal @closeModal="closeDialog">
       <template #controller>
         <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="isShownSpinLuckyWheel" />
       </template>
@@ -1487,7 +1557,7 @@
     v-if="popupPromo === 'mega-sharing-wheel'"
     :model-value="megaSharingWheelDialogModel"
     full-width
-    class="mega-sharing-wheel-dialog"
+    class="isCentreDialog mega-sharing-wheel-dialog"
     persistent
   >
     <q-btn class="mega-sharing-wheel-dialog-close" icon="close" round dense @click="closeDialog" />
@@ -1502,7 +1572,7 @@
     v-if="popupPromo === 'spin-lucky-wheel' && isShownSpinLuckyWheel"
     full-width
     :model-value="isShownSpinLuckyWheel"
-    class="spin-lucky-wheel-dialog"
+    class="isCentreDialog spin-lucky-wheel-dialog"
     persistent
   >
     <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
@@ -1570,10 +1640,11 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/scrollbar";
 import "swiper/css/navigation";
+import "swiper/css/grid";
 import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 // Import Swiper modules
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core";
+import SwiperCore, { Navigation, Grid, Pagination, Scrollbar, A11y } from "swiper/core";
 import { onClickOutside, useEventListener } from "@vueuse/core";
 import { useCustomerTrigger } from "src/hooks/trigger";
 import chroma from "chroma-js";
@@ -1588,6 +1659,11 @@ import { storeToRefs } from "pinia";
 
 import CongratsReuseableModal from "src/components/modal/CongratsReuseableModal.vue";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
+import { i18nStore } from "src/router/language";
+
+const i18nStoreLanguage = i18nStore();
+const { languageVal } = storeToRefs(i18nStoreLanguage);
+
 const scaleValue = ref(1);
 let lastScrollTop = 0;
 const isShowStickyIcons = ref(true);
@@ -1604,7 +1680,6 @@ const handleScroll = () => {
 
   lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
 };
-
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
 });
@@ -1614,7 +1689,7 @@ onUnmounted(() => {
 });
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
-const gameModules = ref([Scrollbar, Navigation, Pagination]);
+const gameModules = ref([Navigation, Pagination]);
 
 const { t } = useI18n();
 const promoStore = usePromoStore();
@@ -1631,8 +1706,20 @@ const isShowSetFirstPw = ref(false);
 const isShowCodeBonusModal = ref(false);
 const currentStep = ref(localStorage.getItem("newPlayerGuide") || "1");
 // Only show the guide if on `/home` or `/`
+// const isNewPlayerModal = computed(() => {
+//   return (
+//     currentStep.value !== "END" &&
+//     route.path !== "/language" &&
+//     !isHotGameAdditionalSteps.value &&
+//     !isAdditionalDepositSteps.value &&
+//     !isAdditionalReferSteps.value &&
+//     !isAdditionalWithdrawSteps.value
+//   );
+// });
+const showNewPlayerModal = ref(false);
 const isNewPlayerModal = computed(() => {
   return (
+    showNewPlayerModal.value && // <-- manual trigger
     currentStep.value !== "END" &&
     route.path !== "/language" &&
     !isHotGameAdditionalSteps.value &&
@@ -1772,8 +1859,8 @@ const categoriesList = ref([
   { title: "Slot", label: t("home.menu_slot"), icon: "slot", active: false },
   { title: "Live", label: t("home.menu_live"), icon: "live", active: false },
   { title: "Sport", label: t("home.menu_sport"), icon: "sport", active: false },
-  { title: "Poker", label: t("home.menu_poker"), icon: "poker", active: false },
-  { title: "Fish", label: t("home.menu_fish"), icon: "fish", active: false }
+  { title: "Fish", label: t("home.menu_fish"), icon: "fish", active: false },
+  { title: "Poker", label: t("home.menu_poker"), icon: "poker", active: false }
 ]);
 
 const isCsTabVisible = ref(false);
@@ -1790,6 +1877,9 @@ const translatedCategoriesList = computed(() => {
     label: t(`home.menu_${category.title.toLowerCase()}`)
   }));
 });
+const getImageUrl = (title) => {
+  return require(`../assets/images/index/category/hometop-${title.toLowerCase()}.png`);
+};
 
 const activeCategoryLabel = computed(() => {
   const activeCategory = translatedCategoriesList.value.find((category) => category.active);
@@ -1821,6 +1911,7 @@ const activateSlide = (item) => {
   const category = categoriesList.value.find((cat) => cat.title === item.title);
   if (category) {
     category.active = true;
+    router.replace({ hash: `#${category.label}` });
   }
 };
 
@@ -1836,7 +1927,9 @@ const checkHash = () => {
   if (hash) {
     handleActivateSlide(hash);
   } else {
-    handleActivateSlide("Lobby");
+    if (route.path === "/home") {
+      router.replace({ hash: `Lobby` });
+    }
   }
 };
 
@@ -2434,6 +2527,7 @@ const closeSlotModal = () => {
 
 const showNewPlayer = () => {
   currentStep.value = localStorage.getItem("newPlayerGuide");
+  showNewPlayerModal.value = true
 };
 
 const closeFullGameDialog = () => {
@@ -3975,7 +4069,7 @@ const gotoFloatPromo = (val) => {
     popupPromo.value = "mega-sharing-wheel";
   } else if (val.type === "PROMO" && val.code === "pak-spin-lucky-wheel") {
     popupPromo.value = "spin-lucky-wheel";
-    isShownSpinLuckyWheelModel.value = true;
+    isShownSpinLuckyWheel.value = true;
   }
 
   if (val.type === "PROMO" && val.code === "interest-profit") {
@@ -3984,7 +4078,10 @@ const gotoFloatPromo = (val) => {
     } else {
       router.push("/promo");
     }
+  }else if(val.type === "PROMO"){
+    router.push(`/promo?name=${val.code}`);
   }
+
 
   if (val.type === "DOMAIN") {
     window.open(val.code, "_blank");
@@ -4102,10 +4199,10 @@ onActivated(() => {
   checkSpinWheel();
   checkGoogleLoginSetPwd();
 
-  if (route.query.login === "true") {
+  if (route.query.login === "true" || route.query.register === "true") {
     //TODO: change back.
-    popupPromo.value = "money-rain";
-    // popupPromo.value = "spin-lucky-wheel";
+    // popupPromo.value = "money-rain";
+    popupPromo.value = "spin-lucky-wheel";
   }
 
   if (route.query.newPlayerGuide === "earn-money") {
@@ -4153,7 +4250,7 @@ onMounted(() => {
   }
 
   AOS.init();
-  SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+  SwiperCore.use([Grid, Navigation, Pagination, A11y]);
   afterMounted();
 
   if (Platform.is.android && Platform.is.capacitor) {
@@ -4163,13 +4260,13 @@ onMounted(() => {
 
 watch(
   () => route.hash,
-  (newHash) => {
-    if (newHash) {
+  (newHash, oldHash) => {
+    // Check if the hash is different (including when it's empty)
+    if (newHash !== oldHash) {
       checkHash();
     }
   }
 );
-
 watch(
   () => promoStore.isShownSpinLuckyWheel,
   async (val) => {
@@ -4193,11 +4290,12 @@ const hasInviteWheelPromo = ref(false);
 const handleReceiveCodeBonus = () => {
   router.push({ path: "/account", query: { openCodeModal: "true" } });
 };
-
+const isShowRedemptionInPopup = ref(false);
 const checkCodeBonusModal = () => {
   eventapi.get("/session/promo-code-bonus/checkBonus").then((res) => {
     if (res.data.hasUnclaimed) {
       isShowCodeBonusModal.value = true;
+      isShowRedemptionInPopup.value = true;
     }
   });
 };
@@ -4345,10 +4443,6 @@ const checkGoogleLoginSetPwd = () => {
   height: calc(100vh - 380px);
 }
 
-:deep(.q-mb-md) {
-  margin-bottom: 0;
-}
-
 .modal-update-div {
   .modalcontent {
     background: #fff;
@@ -4458,7 +4552,7 @@ const checkGoogleLoginSetPwd = () => {
 
     .q-icon {
       font-size: 24px;
-      color: #bacef1;
+      color: #b2bdbf;
     }
 
     .headicon {
@@ -4472,7 +4566,7 @@ const checkGoogleLoginSetPwd = () => {
       line-height: 0.8rem;
       display: flex;
       flex-direction: column;
-      color: #bacef1;
+      color: #b2bdbf;
 
       .download-title {
         font-size: 0.8rem;
@@ -4493,12 +4587,24 @@ const checkGoogleLoginSetPwd = () => {
   display: flex;
   margin-right: 0;
   padding-right: 0;
+  margin-bottom: 10px;
 }
 
 .notice-download {
   display: flex;
   align-items: center;
   animation: beat 1.5s infinite;
+  position:relative;
+  .absolute-hot {
+    position: absolute;
+    right: -5px;
+    top: 6px;
+    width: 18px;
+    height: unset;
+    img {
+      width: 100%
+    }
+  }
 
   img {
     display: block;
@@ -4507,30 +4613,78 @@ const checkGoogleLoginSetPwd = () => {
     //filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
   }
 }
+.hometop-categories {
+  // display: grid;
+  // grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
+  // grid-template-rows: auto auto; /* 2 rows */
+  // gap: 15px;
+  // margin-bottom: 20px;
+  .category {
+    // padding: 4vh 0;
+    //   text-align: center;
+    //   font-size: 20px;
+    //   border-radius: 8px;
+    // background-size: cover;
+    // background-repeat: no-repeat;
+    // min-height: 110px;
+    img {
+      width: 100%;
+    }
+    // @media screen and (min-width: 500px) {
+    //   min-height: 150px;
+    // }
+    // position: relative;
+    // background-position: center center;
+    // background-size: contain;
+    .cat-label {
+      position: absolute;
+      font-weight: bold;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 100%;
+      text-align: center;
+    }
+  }
+  /* Top row spans 2 columns each */
+  // .category:nth-child(1), .category:nth-child(2) {
+  //     grid-column: span 2;
+  //     .cat-label {
+  //       position: absolute;
+  //       font-weight: bold;
+  //       top: 10px;
+  //       right: unset;
+  //       left: 10px;
+  //       display: flex;
+  //       gap: 5px;
 
-/* Heart beat animation */
-@keyframes beat {
-  0% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-  14% {
-    -webkit-transform: scale(1.3);
-    transform: scale(1.3);
-  }
+  //     }
+  // }
+  // .category:nth-child(1) {
+  //   .cat-label {
+  //     &:before {
+  //       content: "";
+  //       background: url(../assets/images/index/category/green-dice.png)no-repeat center center;
+  //       width: 30px;
+  //       background-size: contain;
+  //       height: 30px;
+  //     }
+  //   }
+  // }
 
-  28% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-  42% {
-    -webkit-transform: scale(1.3);
-    transform: scale(1.3);
-  }
-  70% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
+  // .category:nth-child(2) {
+  //   .cat-label {
+
+  //     &:before {
+  //     content: "";
+  //     background: url(../assets/images/index/category/green-slot.png)no-repeat center center;
+  //     width: 30px;
+  //     background-size: contain;
+  //     height: 30px;
+  //   }
+  //   }
+  // }
 }
 
 .midd {
@@ -4538,8 +4692,10 @@ const checkGoogleLoginSetPwd = () => {
   margin-top: 10px;
   margin-bottom: 10px;
   position: relative;
-  border-radius: 40px;
+  border-radius: 40px 0 0 40px;
   overflow: hidden;
+
+  margin-right: -10px;
 
   .station-notice-wrapper {
     display: flex;
@@ -4551,6 +4707,7 @@ const checkGoogleLoginSetPwd = () => {
       rgba(255, 255, 255, 0.05) 53.13%,
       rgba(255, 255, 255, 0) 98.21%
     );
+    background: #ffffff0f;
 
     gap: 10px;
     padding: 5px 10px;
@@ -4561,7 +4718,7 @@ const checkGoogleLoginSetPwd = () => {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 28px;
+      height: 25px;
       width: 28px;
     }
 
@@ -4576,7 +4733,7 @@ const checkGoogleLoginSetPwd = () => {
       margin-right: 10px;
       cursor: pointer;
       // color: #5F6061;
-      color: #bacef1;
+      color: #ffffff80;
       font-family: "Poppins";
       font-size: 12px;
       font-weight: 400;
@@ -4604,7 +4761,7 @@ const checkGoogleLoginSetPwd = () => {
   height: 35px;
   justify-content: space-evenly;
   align-items: center;
-  color: #bacef1;
+  color: #b2bdbf;
   font-size: 12px;
 
   .logo {
@@ -4628,7 +4785,7 @@ const checkGoogleLoginSetPwd = () => {
     align-items: center;
     gap: 30px;
     text-decoration: none;
-    color: #bacef1;
+    color: #b2bdbf;
 
     .log {
       white-space: normal;
@@ -4655,7 +4812,7 @@ const checkGoogleLoginSetPwd = () => {
     flex: 1;
     padding: 10px;
     border-right: 1px solid #45475f;
-    color: #bacef1;
+    color: #b2bdbf;
     font-size: 16px;
   }
 
@@ -4708,7 +4865,7 @@ const checkGoogleLoginSetPwd = () => {
       margin: 0 0 5px;
       background-image: linear-gradient(0deg, #1a1c28 0, #212534 100%), linear-gradient(#2d879c, #2d879c);
       border-radius: 6px;
-      color: #bacef1;
+      color: #b2bdbf;
       display: flex;
       align-items: center;
       padding: 3px 0;
@@ -4736,7 +4893,7 @@ const checkGoogleLoginSetPwd = () => {
       min-width: 60px;
       margin: 0 0 5px;
       background-image: linear-gradient(0deg, #1a1c28 0, #212534 100%), linear-gradient(#2d879c, #2d879c);
-      color: #bacef1;
+      color: #b2bdbf;
       display: flex;
       align-items: center;
       padding: 3px 0;
@@ -4868,8 +5025,10 @@ const checkGoogleLoginSetPwd = () => {
 
   .popout-close {
     position: absolute;
-    right: 0px;
-    top: 80px;
+    // right: 0px;
+    // top: 80px;
+    right: 15px;
+    top: 15px;
     background: #cfcfcf;
     color: #787878;
   }
@@ -5040,14 +5199,19 @@ const checkGoogleLoginSetPwd = () => {
 }
 
 .game-logo-img {
-  height: 30px;
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-
+  // height: 30px;
+  // position: absolute;
+  // top: 20px;
+  // left: 50%;
+  // transform: translateX(-50%);
+  font-weight: 700;
+  font-size: 20px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
   .game-logo {
-    width: 30vw;
+    width: 35vw;
     background-position: center;
     height: 100%;
     background-repeat: no-repeat;
@@ -5087,7 +5251,7 @@ const checkGoogleLoginSetPwd = () => {
 }
 
 .home-wrapper {
-  width: calc(100% - 16px);
+  width: calc(100% - 20px);
   margin: auto;
 }
 
@@ -5113,11 +5277,12 @@ const checkGoogleLoginSetPwd = () => {
 }
 
 .cs-icon-wrapper {
-  width: 70px;
-  height: 76px;
-  background: url("../assets/images/index/icon-cs.png") no-repeat center center;
+  width: 55px;
+  height: 55px;
+  background: url("../assets/images/index/icon-cs.gif") no-repeat center center;
   background-size: contain;
   position: relative;
+  aspect-ratio: 500/500;
 
   &:active {
     filter: brightness(0.85);
@@ -5219,6 +5384,58 @@ const checkGoogleLoginSetPwd = () => {
 }
 
 .games-selection-wrapper {
+  .custom-hot-prev,
+  .custom-live-prev,
+  .custom-slot-prev,
+  .custom-poker-prev,
+  .custom-fish-prev {
+    transform: rotateZ(180deg);
+  }
+  .custom-hot-prev,
+  .custom-hot-next,
+  .custom-live-prev,
+  .custom-live-next,
+  .custom-slot-prev,
+  .custom-slot-next,
+  .custom-poker-prev,
+  .custom-poker-next,
+  .custom-fish-prev,
+  .custom-fish-next {
+    background: #373c3d;
+    padding: 10px;
+    border-radius: 6px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .custom-hot-prev.swiper-button-disabled,
+  .custom-hot-next.swiper-button-disabled,
+  .custom-live-prev.swiper-button-disabled,
+  .custom-live-next.swiper-button-disabled,
+  .custom-slot-prev.swiper-button-disabled,
+  .custom-slot-next.swiper-button-disabled,
+  .custom-poker-prev.swiper-button-disabled,
+  .custom-poker-next.swiper-button-disabled,
+  .custom-fish-prev.swiper-button-disabled,
+  .custom-fish-next.swiper-button-disabled,
+  .custom-hot-prev.swiper-button-lock,
+  .custom-hot-next.swiper-button-lock,
+  .custom-live-prev.swiper-button-lock,
+  .custom-live-next.swiper-button-lock,
+  .custom-slot-prev.swiper-button-lock,
+  .custom-slot-next.swiper-button-lock,
+  .custom-poker-prev.swiper-button-lock,
+  .custom-poker-next.swiper-button-lock,
+  .custom-fish-prev.swiper-button-lock,
+  .custom-fish-next.swiper-button-lock {
+    background: #ffffff0f;
+    cursor: not-allowed;
+  }
   &#live {
     margin-bottom: 10px;
   }
@@ -5253,36 +5470,63 @@ const checkGoogleLoginSetPwd = () => {
     display: flex;
     gap: 6px;
     align-items: center;
+    justify-content: space-between;
     // background-image: url("../assets/images/index/title-bg.png");
     // background-repeat: no-repeat;
     // background-size: cover;
     // background-position: center center;
 
     .label-img {
-      display: block;
+      display: none;
       width: auto;
       height: 20px;
     }
 
     .txt-style {
       // font-family: "Dongle", sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      line-height: 1;
-      text-transform: uppercase;
+      // font-size: 16px;
+      // font-weight: 700;
+      // letter-spacing: 1px;
+      // line-height: 1;
+      // text-transform: uppercase;
+      margin: 10px 0;
       color: #ffffff;
+      font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 100%;
+      letter-spacing: 0%;
+      text-transform: uppercase;
+    }
+    .side {
+      display: flex;
+      // gap: 10px;
+      :not(:last-child) {
+        margin-right: 10px;
+      }
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      .all-btn {
+        background: #373c3d;
+        padding: 8px;
+        border-radius: 6px;
+        font-weight: 700;
+        cursor: pointer;
+      }
     }
   }
 }
 
 .game-platform-wrapper {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   column-gap: 6px;
   row-gap: 8px;
   margin-top: 10px;
   padding-bottom: 20px;
+  width: 90%;
+  margin: 0 auto;
 
   .game-platform-item {
     width: 100%;
@@ -5310,16 +5554,16 @@ const checkGoogleLoginSetPwd = () => {
     .game-platform-img {
       // background-color: #cccccc;
       width: 100%;
-      aspect-ratio: 1/1;
+      aspect-ratio: 1/1.2;
       background-size: cover;
       background-position: center center;
       position: relative;
       background-image: url("../assets/images/index/mini-game-bg.png");
       border-radius: 20px;
 
-      &.game-fish {
-        aspect-ratio: 1/1.2;
-      }
+      // &.game-fish {
+      //   aspect-ratio: 1/1.2;
+      // }
 
       .game--bg {
         border-radius: 8px;
@@ -5341,7 +5585,7 @@ const checkGoogleLoginSetPwd = () => {
       line-height: 1.3;
       text-align: left;
       height: 30px;
-      display: flex;
+      display: none;
       word-break: break-all;
       // justify-content: center;
       // background: linear-gradient(270deg, #370f59 -0.1%, #57009d 50.22%, #340c56 97.6%);
@@ -5352,14 +5596,17 @@ const checkGoogleLoginSetPwd = () => {
 .platform-game-container {
   display: grid;
   padding-top: 12px;
-  // margin-bottom: 12px;
-  column-gap: 8px;
-  row-gap: 16px;
-  padding-bottom: 10px;
-
+  margin-bottom: 12px;
+  // column-gap: 8px;
+  min-height: 120px;
+  gap: 8px;
+  // row-gap: 16px;
+  .swiper-slide {
+    height: auto;
+  }
   &.live-casino {
     padding-top: 8px;
-    margin-bottom: 0px;
+    margin-bottom: 12px;
   }
 
   .swiper-scrollbar.swiper-scrollbar-horizontal {
@@ -5378,6 +5625,9 @@ const checkGoogleLoginSetPwd = () => {
     grid-template-columns: repeat(3, 1fr);
     column-gap: 8px;
     row-gap: 16px;
+    .platform-game-img {
+      height: 140px;
+    }
   }
 
   &.sport-platform {
@@ -5393,6 +5643,7 @@ const checkGoogleLoginSetPwd = () => {
     position: relative;
 
     &--img {
+      border-radius: 6px;
       background-size: cover;
       background-position: center center;
       height: 100%;
@@ -5415,9 +5666,12 @@ const checkGoogleLoginSetPwd = () => {
 
   .platform-game-item {
     position: relative;
+    > img {
+      min-height: 145px;
+    }
 
     &--img {
-      background-size: cover;
+      background-size: 100% 100%;
       background-position: center center;
       height: 100%;
       width: 100%;
@@ -5496,16 +5750,30 @@ const checkGoogleLoginSetPwd = () => {
 
 .fullgame-wrapper {
   padding: 0;
+  margin: 0;
+  width: 100%;
 
   .fullgame-header {
     // background-image: url(../assets/images/index/fullgame-banner.jpg);
     position: sticky;
-    top: 60px;
+    top: 0px;
     // background: salmon;
     z-index: 99;
-    margin: 0 -2.5%;
     // min-height: 200px;
-    padding: 12px;
+    .back-top-logo {
+      background: #323738;
+      padding: 12px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      .back-header-btn {
+        width: 40px;
+        img {
+          width: 100%;
+        }
+      }
+    }
   }
 
   .fullgame-search {
@@ -5513,6 +5781,8 @@ const checkGoogleLoginSetPwd = () => {
     // background: #1E1F24;
     background: #0b0b0c;
     border-radius: 4px;
+    background: #292d2e;
+    border: 1px solid #ffffff14;
   }
 }
 
@@ -5748,7 +6018,11 @@ const checkGoogleLoginSetPwd = () => {
   background: transparent;
   // background-image: url("../assets/images/index/item-game-maintenance.png");
   border-radius: 8px;
+  height: 100px;
+  &.pokerportion {
 
+    height: 140px;
+  }
   .game--bg {
     background-size: 100% 100%;
     background-position: center center;
@@ -5771,17 +6045,20 @@ const checkGoogleLoginSetPwd = () => {
 }
 
 .btn-more-games {
-  display: flex;
-  justify-content: center;
-  margin: auto;
-  border: 2px solid #5eb673;
-  padding: 12px 16px;
-  width: 160px;
+  padding: 8px;
   border-radius: 8px;
-  color: rgba(206, 206, 206, 0.8);
-  font-size: 16px;
-  margin-top: 20px;
-  margin-bottom: 40px;
+  position: relative;
+  transition: 0.3s all;
+  width: 90%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333333;
+  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+  box-shadow: 0px 2px 0px 0px #1cca6a;
+  text-transform: uppercase;
+  font-weight: 700;
 }
 
 .back-btn {
@@ -5849,9 +6126,10 @@ const checkGoogleLoginSetPwd = () => {
 // }
 
 .congrats-button {
-  display: flex;
-  justify-content: center;
-  margin-top: 16px;
+  position: absolute;
+  bottom: 0%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .congrats-wrapper {
@@ -5863,26 +6141,32 @@ const checkGoogleLoginSetPwd = () => {
 }
 
 .congrats-container {
-  background-color: #113413;
-  max-width: 400px;
-  width: 100%;
+  background: url(../assets/images/index/modal/prize-modal-bg.png) center center no-repeat;
+  background-size: 100% 100%;
+  aspect-ratio: 738/923;
+  width: 375px;
+  height: 469px;
   padding: 16px;
   position: relative;
   overflow: visible;
-  border-radius: 12px;
 
-  &:before {
-    content: "";
-    background-image: url(../assets/images/index/modal/congrats-container-light.png);
+  &.ur {
+    background: url(../assets/images/index/modal/prize-modal-bg-ur.png) center center no-repeat;
     background-size: 100% 100%;
-    background-position: center center;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 150px;
-    position: absolute;
-    left: 0;
-    top: -150px;
   }
+
+  // &:before {
+  //   content: "";
+  //   background-image: url(../assets/images/index/modal/congrats-container-light.png);
+  //   background-size: 100% 100%;
+  //   background-position: center center;
+  //   background-repeat: no-repeat;
+  //   width: 100%;
+  //   height: 150px;
+  //   position: absolute;
+  //   left: 0;
+  //   top: -150px;
+  // }
 
   .congrats-header {
     display: flex;
@@ -5916,7 +6200,12 @@ const checkGoogleLoginSetPwd = () => {
   }
 
   .congrats-highlight {
-    color: #fff96f;
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    color: #CF3AFF;
     font-size: 26px;
     font-weight: bold;
     text-align: center;
@@ -5926,6 +6215,14 @@ const checkGoogleLoginSetPwd = () => {
     background-size: 70% 100%;
     background-position: center;
     margin-top: 16px;
+  }
+
+  .recharge-btn {
+    background: url(../assets/images/index/modal/download-now-btn-bg.png) center center no-repeat;
+    background-size: 100% 100%;
+    aspect-ratio: 389/139;
+    width: 130px;
+    height: 45px
   }
 }
 
@@ -5937,7 +6234,7 @@ const checkGoogleLoginSetPwd = () => {
 }
 
 .luckyspin-header {
-  margin: 0 auto -5%;
+  margin: 0 auto -7%;
   width: 90%;
   z-index: 2;
   img {
@@ -5952,13 +6249,13 @@ const checkGoogleLoginSetPwd = () => {
   background-size: 100% 100%;
   background-position: center center;
   background-color: #113413;
-  max-width: 400px;
+  max-width: 360px;
   width: 100%;
   padding: 16px;
   position: relative;
   // overflow: visible !important;
   border-radius: 12px;
-  padding: 16px;
+  padding: 30px 16px 16px 16px;
 
   .luckyspin-title {
     display: flex;

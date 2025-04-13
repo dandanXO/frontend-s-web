@@ -14,140 +14,17 @@
         </a>
       </div> -->
 
-      <div class="download-text">Get Free Spins on the APP</div>
+      <div class="download-text">{{ $t("header.getFreeSpins") }}</div>
       <div class="download-btn-yel">
         <a :href="ui.downloadAppUrl">{{ $t("header.download") }}</a>
       </div>
       <!-- <div class="download-count">({{ topDownloadCount }}s)</div> -->
     </div>
   </div>
-
-  <div class="menu-open" :class="{ open: menuOpen }" @click="handleMenuBackgroundClick">
+  <div class="menu-open" :class="{ open: menuOpen }">
     <div style="height: 56px" v-if="topDownload && !ui.hideDownload"></div>
-    <div class="side-menu" @click.stop>
-      <div class="side-menu-item side-menu-item__invite" @click="handleMenuRouteClick('/earn-money')">
-        <div>
-          {{ $t("sideNav.inviteToEarn") }}
-          <span>{{ $t("sideNav.shareYourExclusiveQRCode") }}</span>
-        </div>
-        <div class="item-icon">
-          <img src="../assets/images/auth/menu-invite.png" />
-        </div>
-      </div>
-
-      <div class="side-menu-item side-menu-item__checkin">
-        <div>
-          CHECK
-          <span>-IN</span>
-        </div>
-        <div class="item-icon">
-          <img src="../assets/images/auth/menu-checkin.png" />
-        </div>
-      </div>
-
-      <div class="side-menu-item side-menu-item__luckyspin">
-        <div>
-          LUCKY
-          <span>SPIN</span>
-        </div>
-        <div class="item-icon">
-          <img src="../assets/images/auth/menu-luckyspin.png" />
-        </div>
-      </div>
-
-      <div class="side-menu-item" @click="activateSlide('Slot')">
-        <div class="item-icon"><img src="../assets/images/auth/menu-slot.png" /></div>
-        {{ $t("sideNav.slots") }}
-      </div>
-      <div class="side-menu-item" @click="activateSlide('Live')">
-        <div class="item-icon"><img src="../assets/images/auth/menu-live.png" /></div>
-        {{ $t("sideNav.livecasino") }}
-      </div>
-      <div class="side-menu-item" @click="activateSlide('Fish')">
-        <div class="item-icon"><img src="../assets/images/auth/menu-fish.png" /></div>
-        {{ $t("sideNav.fishing") }}
-      </div>
-      <div class="side-menu-item" @click="activateSlide('Poker')">
-        <div class="item-icon"><img src="../assets/images/auth/menu-poker.png" /></div>
-        {{ $t("sideNav.poker") }}
-      </div>
-      <div class="side-menu-item" @click="activateSlide('Sport')">
-        <div class="item-icon"><img src="../assets/images/auth/menu-sport.png" /></div>
-        {{ $t("sideNav.sport") }}
-      </div>
-
-      <div class="side-menu-divider"></div>
-
-      <div class="side-menu-item side-menu-item__transparent" @click="openCSInNewTab(ui.CSAUrl)">
-        <div class="item-icon"><img src="../assets/images/auth/menu-livesupport.png" /></div>
-        {{ $t("sideNav.livesupport") }}
-      </div>
-
-      <!-- <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/account/feedback')">
-        <div class="item-icon"><img src="../assets/images/auth/menu-feedback.png" /></div>
-        {{ $t("sideNav.feedback") }}
-      </div> -->
-
-      <!--      <a class="side-menu-item side-menu-item__transparent" href="https://www.tiktok.com/@b9game" target="_blank">-->
-      <!--        <div class="item-icon">-->
-      <!--          <img src="../assets/images/auth/menu-tiktok.png" />-->
-      <!--        </div>-->
-      <!--        Tik Tok-->
-      <!--      </a>-->
-
-      <a class="side-menu-item side-menu-item__transparent" :href="ui.youtubeUrl" target="_blank">
-        <div class="item-icon">
-          <img src="../assets/images/index/youtube-web-icon.png" />
-        </div>
-        Youtube
-      </a>
-
-      <a class="side-menu-item side-menu-item__transparent" :href="ui.instagramUrl" target="_blank">
-        <div class="item-icon">
-          <img src="../assets/images/index/insta-web-icon.png" />
-        </div>
-        Instagram
-      </a>
-
-      <a class="side-menu-item side-menu-item__transparent" :href="ui.whatsappUrl" target="_blank">
-        <div class="item-icon"><img src="../assets/images/auth/menu-whatsapp.png" /></div>
-        Whatsapp
-      </a>
-
-      <router-link class="side-menu-item side-menu-item__transparent" to="/promo?name=pak-faq">
-        <div class="item-icon"><img src="../assets/images/auth/menu-faq.png" /></div>
-        Faq
-      </router-link>
-
-      <a class="side-menu-item side-menu-item__transparent" :href="ui.tiktokUrl" target="_blank" v-if="ui.tiktokUrl">
-        <div class="item-icon"><img src="../assets/images/auth/menu-tiktok.png" /></div>
-        TikTok
-      </a>
-
-      <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/language')">
-        <div class="item-icon">
-          <img :src="require(`../assets/images/auth/country-flag-${$t('lang.langVal')}.png`)" class="flag" />
-        </div>
-        {{ $t("sideNav.language") }}
-      </div>
-
-      <a
-        class="side-menu-item side-menu-item__download"
-        :href="ui.downloadAppUrl"
-        v-if="isSideDownload && !ui.hideDownload"
-      >
-        <div class="item-icon">
-          <img src="../assets/images/auth/download-icon.png" />
-        </div>
-        {{ $t("sideNav.downloadApp") }}
-      </a>
-
-      <!-- <div class="side-menu-item side-menu-item__transparent"> -->
-      <!-- <LangOptions /> -->
-      <!-- </div> -->
-    </div>
+    <SideMenu @closeMenu="toggleMenuOpen()" />
   </div>
-
   <div
     class="infoboard-container"
     :class="{
@@ -159,11 +36,12 @@
     <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-menu">
-        <img src="../assets/images/auth/auth-menu.png" @click="toggleMenuOpen()" />
+        <img src="../assets/images/auth/icon-more.png" @click="toggleMenuOpen()" />
       </div>
       <div class="profile-wrapper-extra">
-        <div class="logo-img">
-          <img src="../assets/images/auth/bg-logo-only.png" @click="onClickLogo" />
+        <div class="logo-img" style="cursor: pointer" @click="onClickLogo">
+          <img src="../assets/images/auth/bg-logo-only.png" />
+          <span v-if="!ui.loggedIn && !store.hasToken()">B9.GAME</span>
         </div>
       </div>
       <div class="profile-wrapper" v-if="ui.loggedIn || store.hasToken()">
@@ -198,13 +76,20 @@
             </div>
           </template>
         </div>
-
-        <q-btn class="gift-wrapper" flat @click="showBonusModal">
-          <img src="../assets/images/auth/gift.png" />
-          <q-badge v-if="!!fastAccessPromoLength" class="gift-badge" floating rounded>
-            {{ fastAccessPromoLength }}
-          </q-badge>
-        </q-btn>
+        <div class="gift-notifications">
+          <q-btn class="notification-wrapper" flat @click="router.push('/account/message?from=' + route.path)">
+            <img src="../assets/images/auth/bell-icon.png" />
+            <q-badge v-if="store.unreadInboxMail > 0" class="bell-badge" floating rounded>
+              {{ store.unreadInboxMail }}
+            </q-badge>
+          </q-btn>
+          <q-btn class="gift-wrapper" flat @click="showBonusModal">
+            <img src="../assets/images/auth/gift-icon.png" />
+            <q-badge v-if="fastAccessPromo.length > 0" class="gift-badge" floating rounded>
+              {{ fastAccessPromo.length }}
+            </q-badge>
+          </q-btn>
+        </div>
 
         <!-- <div>
           <q-btn square class="style-blue-btn" icon="add" dense @click="router.push('/deposit?from=' + route.path)" />
@@ -216,26 +101,25 @@
         <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown" unelevated>
           <template v-slot:label>
             <div class="profile-pic">
-              <div class="unread-total" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</div>
-              <q-avatar size="50px">
+              <q-avatar size="40px">
                 <img :src="profileImagePath" />
               </q-avatar>
               <div class="profile-pic-frame" v-if="!homeProfile"></div>
 
               <div class="vip-details">
-                <img class="bg" src="../assets/images/index/vip-row1.png" alt="" />
-                <div class="vip-level">
-                  <img src="../assets/images/index/viptext.png" alt="" />
-                  {{ store.vip.replace('VIP', '') }}
-                </div>
+                <img
+                  class="bg"
+                  :src="require(`../assets/images/index/vip-badge/vip-${store.vip ? store.vip.replace('VIP', '') : '0'}.png`)"
+                  alt=""
+                />
               </div>
             </div>
           </template>
 
-          <q-list style="background: #19242e" dense unelevated flat class="dropdown-list">
+          <q-list style="background: #323738; padding: 5px 0px;" dense unelevated flat class="dropdown-list">
             <q-item clickable v-close-popup @click="onVipClick">
               <q-item-section avatar>
-                <q-avatar icon="diamond" />
+                <img src="../assets/images/account/vip-svg.svg" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>{{ $t("settings.vip") }}</q-item-label>
@@ -244,7 +128,7 @@
 
             <q-item clickable v-close-popup @click="router.push('/account/message?from=' + route.path)">
               <q-item-section avatar>
-                <q-avatar icon="mail" />
+                <img src="../assets/images/account/message-svg.svg" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>
@@ -256,7 +140,7 @@
 
             <q-item clickable v-close-popup @click="router.push('/account/order?from=' + route.path)">
               <q-item-section avatar>
-                <q-avatar icon="receipt" />
+                <img src="../assets/images/account/order-svg.svg" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>{{ $t("settings.order") }}</q-item-label>
@@ -267,7 +151,7 @@
 
             <q-item clickable v-close-popup @click="router.push('/account/bank?from=' + route.path)">
               <q-item-section avatar>
-                <q-avatar icon="account_balance" />
+                <img src="../assets/images/account/bank-svg.svg" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>{{ $t("settings.bank") }}</q-item-label>
@@ -276,7 +160,7 @@
 
             <q-item clickable v-close-popup @click="onLogout()">
               <q-item-section avatar>
-                <q-avatar icon="logout" />
+                <img src="../assets/images/account/logout-icon.svg" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>{{ $t("settings.logout") }}</q-item-label>
@@ -287,15 +171,20 @@
       </div>
       <div class="profile-wrapper" v-else>
         <q-btn no-caps unelevated class="btn-primary" @click="goLogin">{{ $t("header.login") }}</q-btn>
-        <q-btn no-caps unelevated class="btn-secondary" @click="router.push('/register')">
+        <q-btn no-caps unelevated class="btn-register" @click="router.push('/register')">
           {{ $t("header.register") }}
         </q-btn>
-        <div class="btn-lang" @click="router.push('/language')"><img src="../assets/images/auth/icon-globe.png" /></div>
+        <div class="btn-lang" @click="router.push('/language')"><img src="../assets/images/auth/icon-globe.svg" /></div>
       </div>
     </div>
 
     <q-dialog v-model="isBonusModal" position="top" style="z-index: 2002">
-      <BonusModal :has-top-download="topDownload && !ui.hideDownload" :promo-list="fastAccessPromo" @openNewPlayer="showNewPlayer" />
+      <BonusModal
+        :has-top-download="topDownload && !ui.hideDownload"
+        :promo-list="fastAccessPromo"
+        :has-redemption-bonus="showRedemption"
+        @openNewPlayer="showNewPlayer"
+      />
     </q-dialog>
   </div>
 </template>
@@ -312,11 +201,12 @@ import { cached, TIME_EXPIRED } from "boot/cache";
 import { useI18n } from "vue-i18n";
 import LangOptions from "components/LangOptions";
 import BonusModal from "./modal/BonusModal.vue";
+import SideMenu from "components/SideMenu.vue";
 
 import { defineEmits } from "vue";
 import { useCustomerTrigger } from "src/hooks/trigger";
 
-const props = defineProps(["homeProfile"]);
+const props = defineProps(["homeProfile", "showRedemption"]);
 const emits = defineEmits(["closeslot", "activateSlide", "showNewPlayer"]);
 const route = useRoute();
 const router = useRouter();
@@ -345,12 +235,12 @@ const getFastAccessPromo = () => {
 };
 
 const showBonusModal = () => {
-  isBonusModal.value = true;
+  isBonusModal.value = !isBonusModal.value;
 };
 const showNewPlayer = () => {
   isBonusModal.value = false;
-  emits('showNewPlayer');
-}
+  emits("showNewPlayer");
+};
 
 const loadCustomerAddress = () => {
   cached
@@ -364,12 +254,6 @@ const loadCustomerAddress = () => {
       var url = data.liveUrl1;
       ui.CSAUrl = url;
     });
-};
-
-const openCSInNewTab = (url) => {
-  const absoluteUrl = url;
-  window.open(absoluteUrl, "_blank");
-  menuOpen.value = false;
 };
 
 const activateSlide = (item) => {
@@ -388,12 +272,6 @@ const activateSlide = (item) => {
   menuOpen.value = false;
 };
 
-const profileImg = [
-  {
-    imgPath: ["profile-pic"]
-  }
-];
-
 const goLogin = () => {
   if (props.homeProfile) {
     emits("closeslot");
@@ -406,16 +284,15 @@ const randomProfileImg = computed(() => {
   if (storedImg) {
     return storedImg;
   } else {
-    const randomProfile = profileImg[0];
-    const randomIndex = Math.floor(Math.random() * randomProfile.imgPath.length);
-    const imgPath = randomProfile.imgPath[randomIndex];
+    const randomIndex = Math.floor(Math.random() * 24) + 1;
+    const imgPath = `image-${randomIndex}`;
     sessionStorage.setItem("PROFILE_IMG", imgPath);
     return imgPath;
   }
 });
 
 const profileImagePath = computed(() => {
-  return require(`../assets/images/account/${randomProfileImg.value}.png`);
+  return require(`../assets/images/account/profile/${randomProfileImg.value}.png`);
 });
 
 const isLoadingBalance = ref(false);
@@ -429,6 +306,15 @@ const refreshBalance = () => {
 };
 
 const onClickLogo = () => {
+  if (props.homeProfile) {
+    activateSlide("Lobby");
+    return;
+  }
+  if (route.fullPath === "/home") {
+    // toggleMenuOpen();
+
+    return;
+  }
   if (isAndroid()) {
     window.open("http://m.b9mega1.com/", "_blank");
     return;
@@ -515,13 +401,6 @@ const isSideDownload = ref(false);
 const afterMounted = useCustomerTrigger(loadCustomerAddress);
 
 onMounted(() => {
-  if (!sessionStorage.getItem("PROFILE_IMG")) {
-    const randomProfile = profileImg[0];
-    const randomIndex = Math.floor(Math.random() * randomProfile.imgPath.length);
-    const imgPath = randomProfile.imgPath[randomIndex];
-    sessionStorage.setItem("PROFILE_IMG", imgPath);
-  }
-
   checkTopDownloadAppear();
   ui.shouldFetchDownloadAppUrl = true;
 
@@ -558,7 +437,10 @@ onUnmounted(() => {
 
   .download-container {
     display: flex;
-    gap: 16px;
+    // gap: 16px;
+    :not(:last-child) {
+      margin-right: 16px;
+    }
     width: 100%;
     align-items: center;
     transition: 0.3s all;
@@ -638,6 +520,12 @@ onUnmounted(() => {
       opacity: 1;
       transition: 1s all;
     }
+    .download-logo {
+      width: 35px;
+      img{
+        width: 100%;
+      }
+    }
   }
 }
 
@@ -645,7 +533,7 @@ onUnmounted(() => {
   position: fixed;
   top: 0;
   left: 0;
-  background: rgba(19, 19, 19, 0.9);
+  background: rgb(35, 38, 38);
   backdrop-filter: blur(4px);
   width: 100%;
   height: 100%;
@@ -659,9 +547,10 @@ onUnmounted(() => {
 
   .side-menu {
     padding-top: 72px;
-    background-color: #131313;
-    width: 202px;
-    height: 100%;
+    // background-color: #131313;
+    // width: 202px;
+    // height: 100%;
+    height: calc(100vh - 50px);
     display: flex;
     flex-direction: column;
     padding-left: 16px;
@@ -691,7 +580,6 @@ onUnmounted(() => {
       font-weight: bold;
       line-height: 1.2;
       text-decoration: none;
-
       &__download {
         background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
         color: #000a01;
@@ -820,7 +708,7 @@ onUnmounted(() => {
     &.home-profile {
       position: relative;
       width: 100%;
-      gap: 0;
+      gap: 5px;
       justify-content: space-between;
       align-items: center;
       padding: 0 12px;
@@ -840,7 +728,10 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 6px;
+
+    > :not(:last-child) {
+      margin-right: 10px;
+    }
     padding-top: 8px;
     padding-bottom: 5px;
     margin-bottom: 4px;
@@ -896,31 +787,75 @@ onUnmounted(() => {
       display: flex;
       flex-direction: column;
       font-size: 16px;
+      width: 100%;
     }
+    .gift-notifications {
+      background: #ffffff0f;
+      display: flex;
+      border-radius: 10px;
+      padding: 5px;
 
-    .gift-wrapper {
-      background: rgba(0, 10, 1, 0.6);
-      // box-shadow: 0px 0px 5px 0px #ffffff4a inset;
-      border-radius: 8px;
-      position: relative;
-      border: none;
-      padding: 10px;
-      height: 40px;
-      width: 40px;
-
-      &:hover {
-        filter: brightness(1.2);
+      .notification-wrapper {
+        height: 20px;
+        width: 20px;
+        // padding-right: 20px;
+        border-right: 1px solid #ffffff33;
+        img {
+          height: 20px;
+          width: 20px;
+        }
+        :deep(.q-badge--floating) {
+          top: 2px;
+          right: 2px;
+        }
+        .bell-badge {
+          background: #e30000;
+          color: #fff;
+        }
       }
+      .gift-wrapper {
+        height: 20px;
+        width: 20px;
+        // padding-left: 20px;
 
-      img {
-        max-width: 100%;
-      }
-
-      .gift-badge {
-        background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
-        color: #fff;
+        img {
+          height: 20px;
+          width: 20px;
+        }
+        :deep(.q-badge--floating) {
+          top: 2px;
+          right: -4px;
+        }
+        .gift-badge {
+          background: #e30000;
+          color: #fff;
+          display: none;
+        }
       }
     }
+    // .gift-wrapper {
+    //   background: rgba(0, 10, 1, 0.6);
+    //   // box-shadow: 0px 0px 5px 0px #ffffff4a inset;
+    //   border-radius: 8px;
+    //   position: relative;
+    //   border: none;
+    //   padding: 10px;
+    //   height: 40px;
+    //   width: 40px;
+
+    //   &:hover {
+    //     filter: brightness(1.2);
+    //   }
+
+    //   img {
+    //     max-width: 100%;
+    //   }
+
+    //   .gift-badge {
+    //     background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+    //     color: #fff;
+    //   }
+    // }
 
     .profile-name {
       display: flex;
@@ -952,7 +887,9 @@ onUnmounted(() => {
       position: relative;
       // background: rgba(255, 255, 255, 0.24);
       // background: #192633;
-      background: rgba(0, 10, 1, 0.6);
+      // background: rgba(0, 10, 1, 0.6);
+      background: #ffffff0f;
+
       border-radius: 10px;
       display: flex;
       align-items: center;
@@ -961,6 +898,7 @@ onUnmounted(() => {
       min-width: 100px;
       width: 100%;
       min-height: 35px;
+      border: 1px solid #ffffff14;
 
       font-size: 14px;
       color: #fff;
@@ -972,15 +910,29 @@ onUnmounted(() => {
       }
 
       .currency-amount {
-        color: #8c968f;
+        color: #000000;
+        background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
         font-size: 12px;
-        margin-right: auto;
-        padding-right: 4px;
+        font-weight: 700;
+        margin-right: 3px;
+        border-radius: 50%;
+        padding: 3px 5px;
+        font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 100%;
+        letter-spacing: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 16px;
+        vertical-align: middle;
       }
 
       .balance-amount {
-        padding-right: 18px;
+        padding-right: 5px;
         white-space: nowrap;
+        width: 100%;
       }
     }
 
@@ -995,27 +947,40 @@ onUnmounted(() => {
       }
     }
   }
-
   .profile-menu {
     display: flex;
-
+    // padding: 5px;
     img {
       display: block;
+      // width: 35px;
       width: 30px;
+      height: 30px;
     }
+  }
+  .profile-menu:not(:last-child) {
+    margin-right: 3px;
   }
 
   .profile-wrapper-extra {
     display: flex;
     align-items: center;
-    width: 100%;
-    margin-left: 12px;
+    // width: 100%;
+    // max-width: 45px;
+    // margin-left: 12px;
   }
 
   .logo-img {
     width: 100%;
     margin: 0 auto;
     display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 30px;
+    letter-spacing: -4%;
+    text-align: center;
 
     img {
       width: 32px;
@@ -1036,7 +1001,7 @@ onUnmounted(() => {
 
   img.bg {
     display: block;
-    width: 55px;
+    width: 45px;
     position: absolute;
     top: -2px;
     left: -25px;
@@ -1055,6 +1020,7 @@ onUnmounted(() => {
     color: #ffffff;
     font-weight: 700;
     font-style: italic;
+    display: none;
     img {
       width: 68%;
       margin-left: -7px;
@@ -1081,6 +1047,7 @@ onUnmounted(() => {
   background: linear-gradient(251.03deg, #89c543 7.46%, #2aae8b 91.87%);
   border-radius: 5px;
   animation: blink 1.5s infinite;
+  box-shadow: 0px 1.13px 0px 0px #1cca6a;
 }
 
 .menu-line {
@@ -1093,7 +1060,7 @@ onUnmounted(() => {
   // }
 
   .infoboard-container .profile-wrapper {
-    gap: 4px;
+
   }
 
   .infoboard-container .infoboard-wrapper.home-profile {
@@ -1102,7 +1069,8 @@ onUnmounted(() => {
 }
 
 .message-amt {
-  background-color: #00ae00;
+  color: #323738;
+  background-color: #24ee89;
   border-radius: 30px;
   width: 20px;
   height: 20px;
@@ -1112,8 +1080,8 @@ onUnmounted(() => {
   line-height: 1;
   font-size: 10px;
   position: absolute;
-  bottom: 5px;
-  left: 15px;
+  bottom: 13px;
+  left: 5px;
   font-weight: bold;
 }
 </style>
@@ -1125,7 +1093,7 @@ onUnmounted(() => {
 }
 
 .q-btn-dropdown--simple {
-  width: 80px !important;
+  width: 50px !important;
 }
 
 .q-item__label {
@@ -1135,7 +1103,7 @@ onUnmounted(() => {
 
 .q-avatar {
   i.q-icon {
-    color: #7b80a9;
+    color: #b3bec1;
   }
 }
 
@@ -1158,7 +1126,7 @@ onUnmounted(() => {
 
 @keyframes hueBlink {
   0% {
-    filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(0%) contrast(0%);
+    filter: brightness(0) invert(100%) sepia(0%) saturate(3258%) hue-rotate(77deg) brightness(100%) contrast(100%);
   }
   100% {
     filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);

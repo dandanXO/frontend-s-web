@@ -48,7 +48,7 @@
         </template>
       </Column>
 
-      <Column field="streamStatus" header="狀態" sortable>
+      <Column field="streamStatus" header="源流狀態" sortable>
         <template #body="slotProps">
           <Tag :severity="getStatusSeverity(slotProps.data.streamStatus)" :value="getStatusLabel(slotProps.data.streamStatus)" />
         </template>
@@ -83,7 +83,11 @@
           {{ slotProps.data.streamerStreamId }}
         </template>
       </Column>
-
+      <Column field="streamerStatus" header="直播主狀態" sortable>
+        <template #body="slotProps">
+          <Tag :severity="getStreamerStatusSeverity(slotProps.data.streamerStatus)" :value="getStreamerStatusLabel(slotProps.data.streamerStatus)" />
+        </template>
+      </Column>
       <Column header="操作">
         <template #body="slotProps">
           <Button 
@@ -102,6 +106,7 @@
     :visible="showPlayer"
     :stream="selectedStream"
     @update:visible="(val) => showPlayer = val"
+    @reload="fetchStreams"
   />
 
   <Dialog
@@ -137,7 +142,7 @@ export default {
 
 <script setup>
 import { ref, onMounted, watch } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import { useRoute } from 'vue-router';
 import StreamPlayer from './StreamPlayer.vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -147,7 +152,6 @@ import Dialog from 'primevue/dialog';
 import Tag from 'primevue/tag';
 
 const route = useRoute();
-const router = useRouter();
 
 const streams = ref([]);
 const loading = ref(false);
@@ -240,6 +244,24 @@ const getStatusSeverity = (status) => {
   return severityMap[status] || 'info';
 };
 
+
+// 獲取直播主狀態標籤
+const getStreamerStatusLabel = (status) => {
+  const statusMap = {
+    0: '停止直播',
+    1: '開始直播',
+  }
+  return statusMap[status] || '未知狀態';
+};
+
+// 獲取直播主狀態樣式
+const getStreamerStatusSeverity = (status) => {
+  const severityMap = {
+    0: 'danger',
+    1: 'success',
+  }
+  return severityMap[status] || 'info';
+};
 // 檢查是否可以預覽
 const canPreview = (status) => {
   return status >= 0 && status <= 4;

@@ -760,10 +760,10 @@ onMounted(() => {
     border-bottom: 2px solid rgba(255, 255, 255, 0.2);
 
     &.active {
-      color: #70bc62;
+      color: #21EF89;
       &:before {
         content: "";
-        background-color: #70bc62;
+        background-color: #21EF89;
         position: absolute;
         bottom: -2px;
         width: 40%;

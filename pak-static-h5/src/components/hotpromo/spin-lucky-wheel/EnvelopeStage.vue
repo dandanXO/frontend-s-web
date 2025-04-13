@@ -26,12 +26,13 @@
         </button>
       </div>
       <div v-else class="selected-envelope">
-        <span class="prize">Rs{{ prizeList[selectedIndex]?.prize }}</span>
-        <span class="desc">Withdraw money over Rs{{ targetWithdrawAmount }}</span>
-        <CommonButton class="withdraw-btn" @click="$emit('envelopeClick')">Go withdraw now!</CommonButton>
-        <span class="remaining-time">time left: {{ remainingTime }}</span>
+        <span class="prize">{{$t("hotPromo.rs")}}{{ prizeList[selectedIndex]?.prize }}</span>
+        <span class="desc">{{$t("hotPromo.withdraw_money_over_rs") }} {{ targetWithdrawAmount }}</span>
+        <CommonButton class="withdraw-btn" @click="$emit('envelopeClick')">{{ $t("hotPromo.go_withdraw_now") }}</CommonButton>
+        <span class="remaining-time">{{ $t("hotPromo.time_left") }}: {{ remainingTime }}</span>
       </div>
-      <img class="footer tiger" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-tiger.png" />
+      <img class="footer dragon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/footer.png" />
+      <!-- <img class="footer tiger" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-tiger.png" />
       <img
         class="footer rabbit"
         src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-rabbit.png"
@@ -39,7 +40,7 @@
       <img
         class="footer coin"
         src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/footer-coin.png"
-      />
+      /> -->
     </div>
   </div>
 </template>
@@ -120,7 +121,9 @@ const handleEnvelopeClick = (index) => {
     updateRemainingTime();
     timer.value = setInterval(updateRemainingTime, 1000);
     isClaiming.value = false;
-  });
+  }).catch((err) => {
+    isClaiming.value = false;
+  })
 };
 
 const updateRemainingTime = () => {
@@ -169,11 +172,12 @@ onUnmounted(() => {
         justify-content: center;
         background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/envelope-close.png)
           no-repeat;
-        background-size: cover;
+        background-size: 100% 100%;
         aspect-ratio: 109 / 133;
         border: none;
         padding: 13% 0 0;
         // transition: backg;
+        min-height: 126px;
 
         &.selected,
         &.unselected {
@@ -189,6 +193,7 @@ onUnmounted(() => {
           font-weight: 700;
           line-height: 24px;
           color: #f33d31;
+          min-height: 110px;
 
           .prize {
             font-size: 24px;
@@ -200,14 +205,14 @@ onUnmounted(() => {
     }
 
     .selected-envelope {
-      width: 65vw;
       max-width: 325px;
       background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/envelope-detail.png)
         no-repeat;
-      background-size: cover;
+      background-size: 100% 100%;
       aspect-ratio: 485 / 574;
       margin: 0 auto;
       position: relative;
+      min-height: 330px;
 
       .prize {
         position: absolute;
@@ -239,6 +244,13 @@ onUnmounted(() => {
         width: 80%;
         transform: translate(-50%, -50%);
         margin: 0 auto;
+        background-image: url('../../../assets/images/promotion/hotpromo/spin-lucky-wheel/common-btn-gold.png');
+        color: #8A2C05;
+        min-height: 100px;
+
+        &.common-btn {
+          background-size: 100% 100%;
+        }
       }
 
       .remaining-time {
@@ -256,6 +268,14 @@ onUnmounted(() => {
     .footer {
       position: absolute;
       -webkit-user-drag: none;
+
+      &.dragon {
+        left: 50%;
+        bottom: 0%;
+        transform: translateX(-50%);
+        width: 100%;
+        margin-bottom: 0 !important;
+      }
 
       &.tiger {
         left: -5.4%;

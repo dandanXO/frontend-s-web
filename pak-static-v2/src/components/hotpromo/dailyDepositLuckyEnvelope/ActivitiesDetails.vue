@@ -276,6 +276,7 @@ onActivated(() => {
       display: block;
       width: 100%;
       max-width: 160px;
+      max-height: 35px;
     }
   }
 
@@ -314,10 +315,14 @@ onActivated(() => {
     margin: 10px auto;
     .current {
       display: flex;
-      gap: 5px;
+      // gap: 5px;
+      :not(.last-child) {
+        margin-right: 5px;
+      }
 
       .calendar-icon {
         width: 15px;
+        max-height: 15px;
       }
     }
     .noOfDays {

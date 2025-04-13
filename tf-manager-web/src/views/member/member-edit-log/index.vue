@@ -547,7 +547,7 @@ async function toCheck(val) {
     type: 'warning',
     beforeClose: async (action, instance, done) => {
       if (action === 'cancel') {
-        await fail(val.id, request.siteId)
+        await fail(val, request.siteId)
         await loadMemberEditLog()
         ElMessage({
           message: t('message.updateToFailSuccess'),
@@ -557,7 +557,7 @@ async function toCheck(val) {
       } else if (action === 'close') {
         done()
       } else {
-        await check(val.id, request.siteId)
+        await check(val, request.siteId)
         await loadMemberEditLog()
         ElMessage({ message: t('message.updateSuccess'), type: 'success' })
         done()

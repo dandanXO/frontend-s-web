@@ -52,3 +52,11 @@ export const deletePrivilegeInfo = (ids) => {
 export const updatePrivilegeInfoState = (id, state) => {
   return https().request(`/privilegeInfo/${id}/state?_method=PUT`, Method.POST, { state: state }, ContentType.form);
 };
+
+export const getPrivilegeMatch = (privilegeInfo) => {
+  return https().request("/privilegeInfo/queryMatch", Method.GET, privilegeInfo, ContentType.form);
+};
+
+export const updatePrivilegeMatch = (privilegeInfo) => {
+  return https().request(`/privilegeInfo/match/${privilegeInfo.id}?_method=PUT`, Method.POST, privilegeInfo, ContentType.form);
+};
