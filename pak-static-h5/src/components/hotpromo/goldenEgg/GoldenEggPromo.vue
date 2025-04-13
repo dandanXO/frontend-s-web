@@ -32,13 +32,13 @@
           </Transition>
         </button>
       </div>
-      <button class="claim-btn">Remaining times：{{ availableDraw }}</button>
+      <button class="claim-btn">{{ $t("hotPromo.remainingTimes") }}:{{ availableDraw }}</button>
     </div>
 
     <div class="progressbar-wrapper">
       <div
         class="progressbar-progress"
-        :style="{ left: `clamp(10px, calc(${betProgress}% + 2px), calc(100% - 10px))` }"
+        :style="{ left: betProgress < 90 ? `calc(${betProgress}% + 12px)` : `calc(${betProgress}% - 12px)` }"
       >
         {{ betProgress }}%
       </div>
@@ -47,27 +47,26 @@
     </div>
 
     <div class="bets-wrapper">
-      Current Valid Bets: {{ convertToCommaAmount(validBet) }}/{{ convertToCommaAmount(minValidBet) }}
+      {{$t("hotPromo.current_valid_bets")}}: {{ convertToCommaAmount(validBet) }}/{{ convertToCommaAmount(minValidBet) }}
       PKR
     </div>
 
     <div class="activities-wrapper">
-      <img class="block-title" src="../../../assets/images/promotion/hotpromo/golden-egg/activities-title.png" />
+      <div class="block-title">{{ $t("hotPromo.activities") }}</div>
+      <!-- <img class="block-title" src="../../../assets/images/promotion/hotpromo/golden-egg/activities-title.png" /> -->
       <p>
-        Enjoy the thrill of betting with Aviator! Your Aviator can win a staggering 3,216x with just one click! ! The
-        prize pool for the top 50 is 1,250,000PKR!
+        {{ $t("content.aviatorPromoIntro") }}
       </p>
       <p>
-        When betting in Aviator every day, when the effective betting amount reaches 888PKR, you can get the chance to
-        smash the golden egg (SUNEHRI ANDY). Maximum reward: 88,888PKR, the probability of winning is 3.6%
+        {{ $t("content.aviatorGoldenEgg") }}
       </p>
       <p style="color: #fff">
-        When betting on Aviator, the player with the highest cumulative turnover will qualify for first place.
+        {{ $t("content.aviatorTopTurnover") }}
       </p>
     </div>
 
     <div class="ranking-wrapper">
-      <img class="block-title" src="../../../assets/images/promotion/hotpromo/golden-egg/ranking-title.png" />
+      <!-- <img class="block-title" src="../../../assets/images/promotion/hotpromo/golden-egg/ranking-title.png" /> -->
       <div class="ranking-list-wrapper">
         <img
           class="ranking-decoration"
@@ -75,16 +74,24 @@
         />
         <div class="ranking-list-slot" />
         <div class="ranking-list-content" :style="{ height: `${rankingListHeight}px` }">
-          <div class="ranking-list-title">
+          <div class="ranking-block-title">{{ $t("hotPromo.ranking_and_bonus") }}</div>
+          <!-- <div class="ranking-list-title">
             <span>TIME</span>
-          </div>
+          </div> -->
 
           <div class="ranking-list-table-wrapper">
             <table class="ranking-list-table">
+              <thead>
+                <tr>
+                  <th width="10%" align="center">{{ $t("hotPromo.goldenEgg.ranking") }}</th>
+                  <th width="45%" align="center">{{ $t("hotPromo.goldenEgg.userName") }}</th>
+                  <th width="45%" align="center">{{ $t("hotPromo.goldenEgg.betVolume") }}</th>
+                </tr>
+              </thead>
               <tbody>
                 <template v-if="rankingLists.length">
                   <tr v-for="(item, index) in rankingLists" :key="index">
-                    <td align="center">
+                    <td width="20%" align="center">
                       <div class="ranking-icon" :class="{ crown: index < 3 }">
                         <img
                           v-if="index < 3"
@@ -97,11 +104,11 @@
                         <span v-else>{{ index + 1 }}</span>
                       </div>
                     </td>
-                    <td align="center">{{ item.loginName }}</td>
-                    <td align="center">{{ convertToCommaAmount(item.amount) }} PKR</td>
+                    <td width="40%" align="center">{{ item.loginName }}</td>
+                    <td width="40%" align="center">{{ convertToCommaAmount(item.amount) }} PKR</td>
                   </tr>
                 </template>
-                <div v-else class="no-record">No Record</div>
+                <div v-else class="no-record">{{ $t("hotPromo.noRecords") }}</div>
               </tbody>
             </table>
           </div>
@@ -248,16 +255,21 @@ onMounted(() => {
 
   .prize-outer-wrapper {
     .prize-inner-wrapper {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      display: flex;
       gap: 10px;
+      flex-wrap: wrap;
       .prize-item {
+        flex: 0 0 calc(100% / 3); /* Each item takes one-third of the container's width */
+        box-sizing: border-box;
         display: block;
         position: relative;
         background: url(../../../assets/images/promotion/hotpromo/golden-egg/golden-egg-bg.png) no-repeat;
-        background-size: cover;
-        aspect-ratio: 94/119;
+        background-size: contain;
+        aspect-ratio: 135 / 135;
         border: none;
+        background-position: center top;
+        border: none;
+        min-height: 105px;
         &.disabled {
           .golden-egg {
             animation: none;
@@ -265,9 +277,9 @@ onMounted(() => {
           }
         }
         .golden-egg {
-          width: 64%;
+          width: 60%;
           position: absolute;
-          top: 24%;
+          top: 0%;
           left: 23%;
           margin-bottom: 0;
           &.shake {
@@ -275,18 +287,21 @@ onMounted(() => {
           }
           &.prize-item-opened {
             animation: none;
+            width: 88%;
+            top: -18%;
+            left: 8%;
           }
         }
         .hammer {
           width: 34px;
           position: absolute;
-          top: 35%;
-          left: 75%;
+          top: 10%;
+          left: 77%;
           animation: knock 0.5s linear 1;
         }
         .prize-info {
           position: absolute;
-          top: 37%;
+          top: 20%;
           left: 55%;
           transform: translateX(-50%);
           background: linear-gradient(180deg, rgba(246, 103, 56, 0.9) 0%, rgba(217, 54, 0, 0.9) 100%);
@@ -303,11 +318,12 @@ onMounted(() => {
       background: url(../../../assets/images/promotion/hotpromo/golden-egg/btn.png) no-repeat;
       background-size: cover;
       padding: 0 10px;
-      aspect-ratio: 258 / 78;
+      aspect-ratio: 300 / 80;
       margin: 30px auto 0;
       line-height: 16px;
       color: #fff;
       font-weight: 900;
+      min-height: 35px;
     }
   }
 
@@ -341,7 +357,8 @@ onMounted(() => {
     .progressbar-inner {
       min-width: 1%;
       max-width: calc(100% - 4px);
-      background: url(../../../assets/images/promotion/hotpromo/golden-egg/progressbar-inner.png) no-repeat;
+      // background: url(../../../assets/images/promotion/hotpromo/golden-egg/progressbar-inner.png) no-repeat;
+      background: linear-gradient(90deg, #ff8b00 0%, #fde30f 100%);
       position: absolute;
       height: 8px;
       top: 44px;
@@ -354,6 +371,7 @@ onMounted(() => {
       top: 0;
       transform: translateX(-50%);
       height: 40px;
+      width: 42px;
       background: url(../../../assets/images/promotion/hotpromo/golden-egg/progressbar-progress-bg.png) no-repeat 100%
         100%;
       background-size: cover;
@@ -367,7 +385,7 @@ onMounted(() => {
   }
 
   .bets-wrapper {
-    margin-top: -4px;
+    margin-top: 8px;
     text-align: center;
     color: #9f9f9f;
   }
@@ -386,23 +404,37 @@ onMounted(() => {
       }
       .ranking-list-slot {
         width: 100%;
-        height: 25px;
-        background-color: #33562d;
-        border: 7px solid #6db85f;
-        border-radius: 12px;
+        // height: 25px;
       }
       .ranking-list-content {
-        width: calc(100% - 24px);
-        min-height: 30px;
+        border-radius: 20px;
+        border: 1px solid #f4bb90;
+        background: linear-gradient(180deg, rgba(120, 76, 41, 0.8) 0%, rgba(44, 23, 9, 0.8) 100%);
+        // width: calc(100% - 24px);
+        min-height: 200px;
         max-height: 318px;
-        margin: -12px auto 0;
-        background: url(../../../assets/images/promotion/hotpromo/golden-egg/ranking-list-bg.png) no-repeat,
-          linear-gradient(36.43deg, #0e1e08 6.88%, #1b6026 100.29%);
+        // margin: -12px auto 0;
+        // background: url(../../../assets/images/promotion/hotpromo/golden-egg/ranking-list-bg.png) no-repeat,
+        //   linear-gradient(36.43deg, #0e1e08 6.88%, #1b6026 100.29%);
+
         background-size: 100% 100%;
-        padding: 16px 0 10px;
-        border-bottom-left-radius: 6px;
-        border-bottom-right-radius: 6px;
+        padding: 10px 10px 10px;
         position: relative;
+        .ranking-block-title {
+          color: #e0b690;
+          text-align: center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 0 auto 20px;
+          font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+          font-weight: 700;
+          font-size: 1rem;
+          line-height: 100%;
+          letter-spacing: 0;
+          text-align: center;
+          text-transform: uppercase;
+        }
         .ranking-list-title {
           display: flex;
           justify-content: space-between;
@@ -450,11 +482,33 @@ onMounted(() => {
 
           .ranking-list-table {
             margin: 0;
+            thead {
+              border: 1px solid #f9cda8;
+              border-radius: 10px;
+              display: table-caption;
+              overflow: hidden;
+            }
+            th {
+              padding: 5px;
+              text-align: right;
+              color: #E0B690;
+              font-weight: 600;
+              font-family: "Poppins";
+              background: linear-gradient(180deg, #794d2a 0%, #5a3a1e 51%, #341400 100%);
+            }
+            /* Apply colors to specific rows */
+            tr:nth-child(1) td,
+            tr:nth-child(2) td,
+            tr:nth-child(3) td {
+              color: #d88e4f; /* White text for contrast */
+            }
             td {
               border: none;
+              border-bottom: 1.38px solid #bb9473;
               background-color: unset;
-              color: #6db85f;
+              // color: #6db85f;
               font-weight: 700;
+              color: #e0b690;
             }
             .ranking-icon {
               display: flex;
@@ -482,7 +536,9 @@ onMounted(() => {
             .no-record {
               width: 100%;
               text-align: center;
-              color: #6db85f;
+              // color: #6db85f;
+              color: #E0B690;
+              padding: 35px 0;
             }
           }
         }
@@ -493,6 +549,15 @@ onMounted(() => {
 
 .block-title {
   width: 100%;
+  font-family: Poppins;
+  font-weight: 700;
+  font-size: 22.07px;
+  line-height: 100%;
+  letter-spacing: -0.69px;
+  text-align: left;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-bottom: 15px;
 }
 
 .prize-detail-wrapper {
@@ -511,8 +576,11 @@ onMounted(() => {
     background: linear-gradient(180deg, #ffffff 0%, #fbd167 100%);
     background-clip: text;
     color: transparent;
+    font-family: Poppins;
     font-weight: 700;
-    font-size: 22px;
+    font-size: 18.26px;
+    line-height: 13.89px;
+    letter-spacing: 0px;
   }
   .confirm-btn {
     position: absolute;

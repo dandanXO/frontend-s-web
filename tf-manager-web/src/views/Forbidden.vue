@@ -5,7 +5,7 @@
         <div>
           <span class="title1">ACCESS RESTRICTED</span>
           <br>
-          <span class="title2">{{ ipAddress ? "访问" : "账号" }}受到限制</span>
+          <span class="title2">{{ ipAddress ? '访问' : '账号' }}受到限制</span>
         </div>
         <br>
         <div v-if="ipAddress">
@@ -13,9 +13,7 @@
             您的IP地址为:
             <span id="data">{{ ipAddress }}</span>
             <span class="ipLock">
-              <img
-                src="../assets/403-images/lock_icon.png"
-              >
+              <img src="../assets/403-images/lock_icon.png">
             </span>
           </span>
         </div>
@@ -24,9 +22,7 @@
             您的账号为:
             <span id="data">{{ loginName }}</span>
             <span class="ipLock">
-              <img
-                src="../assets/403-images/lock_icon.png"
-              >
+              <img src="../assets/403-images/lock_icon.png">
             </span>
           </span>
         </div>
@@ -36,9 +32,7 @@
             您的URL域名为:
             <span id="data1">{{ hostName }}</span>
             <span class="ipLock">
-              <img
-                src="../assets/403-images/lock_icon.png"
-              >
+              <img src="../assets/403-images/lock_icon.png">
             </span>
           </span>
         </div>
@@ -57,9 +51,23 @@
         </div>
 
         <div class="back-text" @click="backtoMain">
-          Back to Main Page.<br>
+          Back to Main Page.
+          <br>
           返回主页面。
         </div>
+
+        <div
+          class="super-highlight"
+          style="margin-top: 12px;margin-bottom: 8px"
+          v-if="isCNWeb"
+        >
+          下载
+          <a href="https://am35.cc" target="_blank">am35.cc</a>
+          加
+          <span>{{ vipAccId }}</span>
+          客服号协助处理
+        </div>
+
         <div class="decs cn">
           <p>
             <b>
@@ -114,28 +122,53 @@
 </template>
 
 <script setup>
+/* eslint-disable */
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
-const ipAddress = sessionStorage.getItem('myIPAddress') || "";
-const loginName = sessionStorage.getItem('myloginName') || "";
+const ipAddress = sessionStorage.getItem('myIPAddress') || ''
+const loginName = sessionStorage.getItem('myloginName') || ''
 
 const backtoMain = () => {
   router.push('/')
 }
-const hostName = window.location.hostname;
+const hostName = window.location.hostname
 // Get the current date
-const currentDateTime = new Date();
+const currentDateTime = new Date()
 
-const month = currentDateTime.getMonth() + 1; // Months are zero-indexed
-const day = currentDateTime.getDate();
-const year = currentDateTime.getFullYear();
+const month = currentDateTime.getMonth() + 1 // Months are zero-indexed
+const day = currentDateTime.getDate()
+const year = currentDateTime.getFullYear()
 
-const hours = currentDateTime.getHours();
-const minutes = currentDateTime.getMinutes().toString().padStart(2, '0');
-const seconds = currentDateTime.getSeconds().toString().padStart(2, '0');
+const hours = currentDateTime.getHours()
+const minutes = currentDateTime
+  .getMinutes()
+  .toString()
+  .padStart(2, '0')
+const seconds = currentDateTime
+  .getSeconds()
+  .toString()
+  .padStart(2, '0')
 
-const formattedDate = `${month}/${day}/${year}`;
-const formattedTime = `${hours}:${minutes}:${seconds}`;
+const formattedDate = `${month}/${day}/${year}`
+const formattedTime = `${hours}:${minutes}:${seconds}`
+
+const vipAccId = computed(() => {
+  if(window.location.host.includes("dy2-")){
+    return "DY8888"
+  }else if(window.location.host.includes("xf1-")){
+    return "XF8888"
+  }else{
+    return "LH6888";
+  }
+});
+
+const isCNWeb = computed(() => {
+  if (window.location.host.includes("localhost") || window.location.host.includes("psnaback") || window.location.host.includes("127.0.0.1") || window.location.host.includes("lh1-") || window.location.host.includes("dy2-") || window.location.host.includes("xf1-")) {
+    return true;
+  }
+  return false;
+})
 
 </script>
 
@@ -153,10 +186,10 @@ const formattedTime = `${hours}:${minutes}:${seconds}`;
 }
 .back-text {
   background: #ff0000;
-    display: inline-block;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 20px;
+  display: inline-block;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 20px;
 }
 
 p {
@@ -179,8 +212,8 @@ p {
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-    width: 95%;
-    text-align: center;
+  width: 95%;
+  text-align: center;
 }
 
 .decs {
@@ -229,9 +262,9 @@ p {
   border-radius: 0 6px 6px 0;
   margin-right: -65px;
   margin-left: 20px;
-    img {
-       width: 14px;
-    }
+  img {
+    width: 14px;
+  }
 }
 
 .en {
@@ -251,6 +284,20 @@ p {
 .highlight {
   color: #3a3a3a;
   font-weight: bold;
+}
+
+.super-highlight {
+  color: #3a3a3a;
+  font-weight: bold;
+  font-size: 18px;
+
+  a {
+    color: darkblue;
+  }
+
+  span{
+    color: #ff0015;
+  }
 }
 
 @media (max-width: 1440px) {

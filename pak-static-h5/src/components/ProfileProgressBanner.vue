@@ -7,10 +7,11 @@
         </q-avatar>
 
         <div class="vip-details" @click="onVipClick">
-          <img src="../assets/images/index/vip-row.png" alt="" />
-          <div class="vip-level">
-            {{ store.vip }}
-          </div>
+          <img
+            class="bg"
+            :src="require(`../assets/images/index/vip-badge/vip-${store.vip.replace('VIP', '')}.png`)"
+            alt=""
+          />
         </div>
       </div>
 
@@ -20,16 +21,22 @@
     <div class="right-container">
       <div class="amount-progress-container">
         <div class="vip-text">{{ store.vip }}</div>
-        <div class="progress-num">{{ `${progressRef} / ${maxProgress}` }}</div>
+        <div v-if="store.vip.replace('VIP', '') !== '12'" class="progress-num">{{ `${progressRef} / ${maxProgress}` }}</div>
       </div>
-      <q-linear-progress
-        reverse
-        rounded
-        size="15px"
-        :value="progressBarRef"
-        class="progress-bar"
-        color="grey"
-      ></q-linear-progress>
+      <div class="progress-bar-outer">
+        <q-linear-progress
+          reverse
+          rounded
+          size="8px"
+          :value="progressBarRef"
+          class="custom-progress-bar"
+          color="grey-9"
+        />
+        <div
+          class="progress-circle"
+          :style="{ right: `calc(${progressBarRef * 100}% - 12px)` }"
+        ></div>
+      </div>
       <div class="win-gift-text">{{ $t("settings.depositMonthlytoWinGifts") }}</div>
     </div>
   </div>
@@ -55,40 +62,57 @@ const progressRef = ref(store.currentDeposit.toFixed(2));
 let progressBarRef = ref();
 progressBarRef.value = 1 - progressRef.value / maxProgress;
 
-const profileImg = [
-  {
-    imgPath: ["profile-pic"]
-  }
-];
 const randomProfileImg = computed(() => {
   const storedImg = sessionStorage.getItem("PROFILE_IMG");
   if (storedImg) {
     return storedImg;
   } else {
-    const randomProfile = profileImg[0];
-    const randomIndex = Math.floor(Math.random() * randomProfile.imgPath.length);
-    const imgPath = randomProfile.imgPath[randomIndex];
+    const randomIndex = Math.floor(Math.random() * 24) + 1;
+    const imgPath = `image-${randomIndex}`;
     sessionStorage.setItem("PROFILE_IMG", imgPath);
     return imgPath;
   }
 });
 
 const profileImagePath = computed(() => {
-  return require(`../assets/images/account/${randomProfileImg.value}.png`);
+  return require(`../assets/images/account/profile/${randomProfileImg.value}.png`);
 });
 </script>
 
 <style lang="scss" scoped>
+.progress-bar-outer {
+  position: relative;
+  height: 16px;
+  width: 100%;
+}
+
+.custom-progress-bar {
+  position: relative;
+  z-index: 1;
+}
+
+.progress-circle {
+  position: absolute;
+  top: -4px;
+  width: 16px;
+  height: 16px;
+  background-color: #21EF89;
+  border: 4px solid rgb(59 143 102);
+  border-radius: 50%;
+  z-index: 2;
+  transition: left 0.3s ease;
+}
 .progress-container {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-gap: 10px;
-  align-items: center;
-  margin: 1.5rem 0 1rem 0;
-  // background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
-  border-radius: 8px;
-  min-height: 130px;
-  padding: 14px;
+  
+  display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5rem 0 1rem 0;
+    border-radius: 8px;
+    min-height: 130px;
 
   .left-container {
     position: relative;
@@ -144,21 +168,34 @@ const profileImagePath = computed(() => {
     top: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    // gap: 8px;
     font-size: 12px;
+    font-weight: bold;
 
+    width: 100%;
+    background: linear-gradient(90deg, #323738 0%, #404F4E 100%);
+    // padding: 15px;
+    padding: 5px 15px;
+    border-radius: 10px;
+    
+    :not(:last-child) {
+      margin-bottom: 8px;
+    }
     .amount-progress-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
+
     }
 
     .progress-bar {
       // border: 1px solid #fed87d;
       // background: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-      background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
+      // background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
       border-radius: 100px;
       color: #320b5b;
+      // background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+
     }
 
     .vip-text {
@@ -167,7 +204,10 @@ const profileImagePath = computed(() => {
     }
 
     .win-gift-text {
+      // margin-top: 5px;
       text-align: right;
+      color: #B2BDBF;
+      font-weight: 400;
     }
   }
 }

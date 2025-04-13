@@ -70,6 +70,8 @@ onMounted(() => {
 
 .video-container {
   position: relative;
+  height: 0;
+  padding-bottom: 56.25%;
   aspect-ratio: 16 / 9;
   max-width: 100%;
   background: #000;

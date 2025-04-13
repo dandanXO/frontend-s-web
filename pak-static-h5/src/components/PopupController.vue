@@ -63,7 +63,9 @@ const controllerStyle = computed(() => {
     case "mega-sharing-wheel":
       return "style-2";
     case "money-rain":
+      return "style-1";
     case "lucky-spin-wheel":
+      return "lucky-spin-wheel";
     case "spin-lucky-wheel":
     default:
       return "style-1";
@@ -99,7 +101,7 @@ const handleNextClick = () => {
   --text-color: #fff;
   --selected-text-color: #00b352;
   display: flex;
-  gap: 14px;
+  // gap: 14px;
   align-items: center;
   .swiper-btn-prev,
   .swiper-btn-next {
@@ -107,8 +109,8 @@ const handleNextClick = () => {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    background: var(--bg-color);
-    border: 1px solid var(--border-color);
+    background: #EE4034;
+    border: 1px solid #FFFFFF33;
     width: 25px;
     height: 25px;
     border-radius: 50%;
@@ -117,15 +119,15 @@ const handleNextClick = () => {
   }
   .promo-list-wrapper {
     display: flex;
-    gap: 14px;
+    // gap: 12px;
     align-items: stretch;
     justify-content: center;
     width: 100%;
     .promo-list-item {
       background: var(--bg-color);
       border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 5px 14px;
+      border-radius: 5px;
+      padding: 3px 8px 3px 5px;
       font-size: 10px;
       font-weight: 700;
       place-content: center;
@@ -135,20 +137,23 @@ const handleNextClick = () => {
       &.selected {
         background: var(--selected-bg-color);
         border-color: var(--selected-border-color);
-        border-radius: 4px;
+        border-radius: 5px;
         transform: scale(1.1);
         color: var(--selected-text-color);
       }
     }
   }
+  .promo-list-wrapper :not(:last-child) {
+      margin-right: 12px;
+  }
 
   &.style-1 {
-    --bg-color: #88dfac;
-    --selected-bg-color: #ffed8f;
+    --bg-color: #fff;
+    --selected-bg-color: linear-gradient(180deg, #BE1F1F 0%, #AA1414 100%);
     --border-color: #ffffffcc;
-    --selected-border-color: #1effae;
-    --text-color: #fff;
-    --selected-text-color: #00b352;
+    --selected-border-color: #fff;
+    --text-color: #EE4034;
+    --selected-text-color: #fff;
     .swiper-btn-prev,
     .swiper-btn-next {
       background-clip: border-box;
@@ -157,7 +162,7 @@ const handleNextClick = () => {
     .promo-list-item {
       background-clip: border-box;
       &.selected {
-        box-shadow: 0px 4px 4px 0px #15ffab40 inset, 0px 2px 0px 0px #68df65;
+        border: 1px solid #FFFFFF;
       }
     }
   }
@@ -169,5 +174,16 @@ const handleNextClick = () => {
     --text-color: #fff;
     --selected-text-color: #fff;
   }
+  &.lucky-spin-wheel{
+    --bg-color: #fff;
+    --selected-bg-color: linear-gradient(180deg, #8045FE 0%, #A958FF 100%);
+    --border-color: #ffffffcc;
+    --selected-border-color: #fff;
+    --text-color: rgba(181, 115, 255, 1);
+    --selected-text-color: #fff;
+  }
+}
+.popup-controller-wrapper :not(:last-child) {
+  margin-right: 14px;
 }
 </style>

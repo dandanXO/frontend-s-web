@@ -56,11 +56,13 @@
         :loading="loading"
         class="monthly-deposit-table q-mt-md"
         row-key="name"
-        style="overflow-x: scroll"
+        style="overflow-x: auto; border-radius: 10px;"
         flat
+        :loading-label="$t('btn.loading')"
+        :no-data-label="$t('earnMoney.noDataAvailable')"
       >
         <template v-slot:header>
-          <q-tr class="top-header">
+          <q-tr class="table-header">
             <q-td v-for="(header, index) in tableHeaders" :key="index">
               {{ header.label }}
             </q-td>
@@ -68,7 +70,7 @@
         </template>
 
         <template v-slot:body="props">
-          <q-tr :props="props">
+          <q-tr :props="props" :class="props.rowIndex % 2 === 0 ? 'table-tr-even' : 'table-tr-odd'">
             <q-td v-for="col in props.cols" :key="col.name" :props="props">
               <span v-if="col.field === 'loginName'">
                 <span class="span-username" @click="searchByReferral(props)">{{ col.value }}</span>
@@ -97,14 +99,16 @@
       </q-table>
 
       <div class="pagination">
-        <q-btn @click="prevPage" :disabled="currentPage === 1" icon="chevron_left" round color="green"></q-btn>
+        <q-btn @click="prevPage" :disabled="currentPage === 1" icon="chevron_left" 
+          class="rounded-borders"
+          color="neontb"></q-btn>
         <span>{{ currentPage }} / {{ totalPages }}</span>
         <q-btn
           @click="nextPage"
           :disabled="currentPage === totalPages"
           icon="chevron_right"
-          round
-          color="green"
+          class="rounded-borders"
+          color="neontb"
         ></q-btn>
       </div>
       
@@ -335,5 +339,22 @@ onMounted(() => {
   color: #5F6061;
   width: 100%;
   display: block;
+}
+.table-header{
+  background-color: #323738;
+  color: #B2BDBF;
+}
+.q-tr {
+  td {
+    border-bottom: 0 !important;
+  }
+}
+.table-tr-odd{
+  background-color: #373C3D;
+  color: #ffffff;
+}
+.table-tr-even{
+  background-color: #FFFFFF0F;
+  color: #ffffff;
 }
 </style>

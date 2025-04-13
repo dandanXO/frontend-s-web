@@ -1,8 +1,10 @@
 <template>
     <div class="bet-id-wrapper">
+      <div class="order">
         <div class="bet-id" ref="betIdRef">{{ props.betId }}</div>
+      </div>
         <img v-if="hasCopied" src="../../assets/images/account/copied-btn.svg" />
-        <img v-else src="../../assets/images/account/copy-btn.svg" @click="copyMessage()" />
+        <img v-else src="../../assets/images/account/copy-btn-white.svg" @click="copyMessage()" />
     </div>
 </template>
 

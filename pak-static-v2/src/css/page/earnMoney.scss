@@ -7,7 +7,10 @@
   .search-field__date-range {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    // gap: 1rem;
+    > *:not(:last-child) {
+      margin-right: 1rem;
+    }
     .q-field--filled {
       border-radius: 5px;
       :deep(input) {
@@ -22,7 +25,11 @@
 
   .search-field__radio-row {
     display: flex;
-    gap: 2rem;
+    // gap: 2rem;
+    
+    > *:not(:last-child) {
+      margin-right: 2rem;
+    }
   }
 
   .search-field__input-with-btn {
@@ -157,9 +164,10 @@
       span {
         font-size: 16px;
         font-weight: bold;
-        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-        background-clip: text;
-        color: transparent;
+        // background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+        // background-clip: text;
+        // color: transparent;
+        color: #73b2ff;
       }
     }
 

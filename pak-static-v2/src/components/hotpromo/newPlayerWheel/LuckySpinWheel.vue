@@ -346,6 +346,8 @@ onMounted(() => {
 .draw-btn {
   width: 130px;
   height: auto;
+  height: 0;
+  padding-bottom: 40%;
   aspect-ratio: 1/1;
   z-index: 25;
   position: absolute;
@@ -698,6 +700,7 @@ onMounted(() => {
       display: block;
       width: 100%;
       max-width: 320px;
+      height: 60px;
     }
   }
 

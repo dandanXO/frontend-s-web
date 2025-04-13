@@ -1,7 +1,7 @@
 <template>
   <q-footer v-if="ui.footer" :style="ui.bottomInsetHeight > 0 ? `bottom: ${ui.bottomInsetHeight}px;` : ''" unelevated>
     <q-tabs v-model="tab" no-caps :breakpoint="0" align="justify" indicator-color="white" narrow-indicator>
-      <q-route-tab to="/home" name="home" exact :ripple="false">
+      <q-route-tab to="/home" name="home" id="home" :ripple="false">
         <div class="footer-img">
           <img class="inactive" src="../assets/images/index/menu/icon-home.png" />
           <img class="hover" src="../assets/images/index/menu/icon-home-hover.png" />
@@ -15,11 +15,18 @@
         </div>
         <span class="footer-label">{{ $t("bottomNav.promo") }}</span>
       </q-route-tab>
-      <q-route-tab to="/earn-money" name="earn-money" class="center-menu" :ripple="false">
+      <q-route-tab to="/earn-money" name="earn-money" :ripple="false">
         <div class="footer-big-img earn-money">
-          <img :src="ui.footerIcon ? ui.footerIcon : require(`../assets/images/index/menu/icon-earnmoney.gif`)" />
+          <img
+            style="width: 100%"
+            :src="ui.footerIcon ? ui.footerIcon : require(`../assets/images/index/menu/icon-earnmoneynew.gif`)"
+          />
         </div>
-        <span class="footer-label" style="padding-top: 0">{{ $t("bottomNav.earnMoney") }}</span>
+        <!-- <div class="footer-img">
+          <img class="inactive" src="../assets/images/index/menu/icon-earnmoney.png" />
+          <img class="hover" src="../assets/images/index/menu/icon-earnmoney-hover.png" />
+        </div> -->
+        <!-- <span class="footer-label" style="padding-top: 0">{{ $t("bottomNav.earnMoney") }}</span> -->
       </q-route-tab>
       <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" :ripple="false">
         <div class="footer-img">
@@ -33,7 +40,7 @@
           <img class="inactive" src="../assets/images/index/menu/icon-account.png" />
           <img class="hover" src="../assets/images/index/menu/icon-account-hover.png" />
         </div>
-        <span class="footer-label">{{ $t("bottomNav.me") }}</span>
+        <span class="footer-label">{{ $t("bottomNav.account") }}</span>
       </q-route-tab>
     </q-tabs>
   </q-footer>
@@ -57,28 +64,28 @@ const tab = ref("home");
     display: none;
   }
 
-  &::after {
-    content: "";
-    display: block;
-    position: absolute;
-    width: 42px;
-    height: 38px;
+  // &::after {
+  //   content: "";
+  //   display: block;
+  //   position: absolute;
+  //   width: 42px;
+  //   height: 38px;
 
-    top: 6px;
-    pointer-events: none;
-    left: 50%;
-    // margin-top: -10px;
-    transform: translateX(-50%);
-    background-size: contain;
-    background-image: url("../assets/images/index/menu/icon-hover.png");
-    background-repeat: no-repeat;
-    // background-image: url("../assets/images/account/shadow2-bg.png");
-  }
+  //   top: 6px;
+  //   pointer-events: none;
+  //   left: 50%;
+  //   // margin-top: -10px;
+  //   transform: translateX(-50%);
+  //   background-size: contain;
+  //   background-image: url("../assets/images/index/menu/icon-hover.png");
+  //   background-repeat: no-repeat;
+  //   // background-image: url("../assets/images/account/shadow2-bg.png");
+  // }
 }
 
-.earn-money {
-  animation: blink 1.5s infinite;
-}
+// .earn-money {
+//   animation: blink 1.5s infinite;
+// }
 
 @keyframes blink {
   0% {

@@ -96,7 +96,7 @@ watch(
       nextTick(() => {
         setTimeout(() => {
           if (targetSection.value && isAdditionalReferSteps.value) {
-            const offset = -760;
+            const offset = -700;
             const rect = targetSection.value.getBoundingClientRect();
             const scrollTop = window.scrollY || document.documentElement.scrollTop;
             const finalPosition = rect.top + scrollTop - offset;
@@ -127,9 +127,9 @@ watch(
   }
 
   .children-tab {
-    background: url(../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
+    // background: url(../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
     background-size: 100% 100%;
-
+    background: #323738;
     border-radius: 8px;
     width: 100%;
     // width: calc(100% - 20px);
@@ -137,39 +137,28 @@ watch(
     overflow-x: auto;
     //margin-bottom: 10px;
     margin: 10px auto;
-
-    :deep(.q-tab__label) {
-      font-weight: 700;
-      font-size: 12px;
-    }
-
+    font-size: 12px;
     :deep(.q-tab) {
       min-width: 110px;
       white-space: normal;
-    }
+    margin: 0;
+    padding: 0;
+    border-radius: 6px;
 
+    }
+    :deep(.q-tab__label) {
+      font-weight: 700;
+      // color: #FFFFFF80;
+      margin: 5px 15px;
+    }
     :deep(.q-tab--active) {
-      color: white;
-      background: linear-gradient(
-        180deg,
-        rgba(97, 255, 0, 0) 0%,
-        rgba(97, 255, 0, 0.25) 50.5%,
-        rgba(97, 255, 0, 0) 100%
-      );
-      box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
-
-      &:before {
-        content: "";
-        background-color: #70bc62;
-        height: 3px;
-        border-radius: 4px;
-        width: 30%;
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-      }
-    }
+          color: white;
+          background: #394142;
+        }
+    
+        :deep(.q-tab--active .q-tab__label) {
+          font-weight: 700 !important;
+        }
   }
 
   .children-tab-panel {

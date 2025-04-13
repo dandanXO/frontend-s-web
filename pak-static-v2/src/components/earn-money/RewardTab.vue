@@ -143,26 +143,84 @@
     <div class="earn-money-friendcount">
       <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
         <tr>
+          <td style="color: #424f72; font-size: 120%">{{ $t("earnMoney.reward.level") }}</td>
           <td style="color: #424f72; font-size: 120%">{{ $t("earnMoney.reward.friendCount") }}</td>
           <td style="color: #424f72; font-size: 120%">{{ $t("earnMoney.reward.inviteBonus") }}</td>
         </tr>
 
         <template v-for="(item, index) in oneTimeBonusSetting.settingList" :key="index">
           <tr>
+            <td>
+              LEVEL {{ index + 1 }}
+            </td>
             <td>{{ item.minReferCount }} ~ {{ item.maxReferCount }}</td>
             <td>{{ store.currency.value }} {{ item.bonusAmount }}</td>
           </tr>
         </template>
       </table>
 
+      <div class="earn-money-betting-commission earn-money-card">
+      <div class="earn-money-card-title">
+        {{ $t("earnMoney.reward.bettingCommission") }}
+      </div>
+      <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+        <thead>
+          <tr>
+            <th style="color:#424f72; font-weight: normal;">{{ $t("earnMoney.reward.betting_table.header.description") }}</th>
+            <th style="color:#424f72; font-weight: normal;">{{ $t("earnMoney.reward.betting_table.header.commission") }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ $t(`earnMoney.reward.betting_table.row1.description`) }}</td>
+            <td>{{ $t(`earnMoney.reward.betting_table.row1.commission`) }}</td>
+          </tr>
+          <tr v-for="index in 3" :key="index">
+            <td>
+              {{ $t(`earnMoney.reward.betting_table.row${index + 1}.description`) }}
+            </td>
+            <td>
+              {{ $t(`earnMoney.reward.betting_table.row${index + 1}.commission`) }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="earn-money-deposit-commission earn-money-card">
+      <div class="earn-money-card-title">
+        {{ $t("earnMoney.reward.depositCommission") }}
+      </div>
+      <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+        <thead>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:#424f72; font-weight: normal;">{{ $t("earnMoney.reward.deposit_table.header.description") }}</td>
+            <td style="color:#424f72; font-weight: normal;">{{ $t("earnMoney.reward.deposit_table.header.commission") }}</td>
+          </tr>
+          <tr v-for="index in 1" :key="index">
+            <td>{{ $t(`earnMoney.reward.deposit_table.row${index}.description`) }}</td>
+            <td>{{ $t(`earnMoney.reward.deposit_table.row${index}.commission`) }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- <div class="q-pa-md">
+        <div class="q-mt-md" v-html="$t('earnMoney.reward.note')"></div>
+        <div class="q-mt-sm grey-txt" v-html="$t('earnMoney.reward.eligibility_tips')"></div>
+        <div class="q-mt-sm red-txt" v-html="$t('earnMoney.reward.multiple_acc_hint')"></div>
+      </div> -->
+    </div>
       <div class="table-hint q-pa-md">
         <div class="q-mt-sm" v-html="$t('earnMoney.reward.eligibility_tips')"></div>
 
-        <div class="q-mt-sm" v-html="$t('earnMoney.reward.betting_tips')"></div>
+        <!-- <div class="q-mt-sm" v-html="$t('earnMoney.reward.betting_tips')"></div>
 
-        <div class="q-mt-sm" v-html="$t('earnMoney.reward.deposit_tips')"></div>
+        <div class="q-mt-sm" v-html="$t('earnMoney.reward.deposit_tips')"></div> -->
 
-        <div class="q-mt-sm" v-html="$t('earnMoney.reward.multiple_acc_hint')"></div>
+      </div>
+      <div class="note-hint q-pa-md">
+        <div style="color: #ffa900;" v-html="$t('earnMoney.reward.multiple_acc_hint')"></div>
       </div>
     </div>
 
@@ -226,7 +284,7 @@
               <tr>
                 <td style="width: 60%">
                   <div class="player-details">
-                    <img :src="getRandomImage(index)" width="30" />
+                    <img :src="getRandomImage(index)" width="30" style="margin-right: 8px;" />
                     {{ item.loginName }}
                   </div>
                 </td>
@@ -278,24 +336,40 @@ const store = userStore();
 const { t } = useI18n();
 
 const copyHrefLink = () => {
-  navigator.clipboard
-    .writeText(selfTgurl.value)
-    .then(() => {
-      $q.notify({
-        message: "Link copied to clipboard",
-        color: "positive",
-        position: "top",
-        timeout: 2000
+  const textToCopy = selfTgurl.value;
+  
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        $q.notify({
+          message: "Link copied to clipboard",
+          color: "positive",
+          position: "top",
+          timeout: 2000,
+        });
+      })
+      .catch(() => {
+        fallbackCopyTextToClipboard(textToCopy);
       });
-    })
-    .catch(() => {
-      $q.notify({
-        message: "Failed to copy link",
-        color: "negative",
-        position: "top",
-        timeout: 2000
-      });
-    });
+  } else {
+    fallbackCopyTextToClipboard(textToCopy);
+  }
+};
+const fallbackCopyTextToClipboard = (text) => {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  document.body.removeChild(textarea);
+
+  $q.notify({
+    message: "Link copied to clipboard",
+    color: "positive",
+    position: "top",
+    timeout: 2000,
+  });
 };
 
 const oneTimeBonusSetting = ref([]);
@@ -527,7 +601,7 @@ watch(activeSetting, checkIsShowDetail);
     margin-top: 12px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    // gap: 24px;
 
     .pot-item {
       background-image: url("../../assets/images/earn-money/pot-bg-01.png");
@@ -540,6 +614,7 @@ watch(activeSetting, checkIsShowDetail);
       padding: 28px 20px;
       border-radius: 8px;
       position: relative;
+      margin-bottom: 24px;
 
       &__2 {
         background-image: url("../../assets/images/earn-money/pot-bg-02.png");
@@ -655,7 +730,7 @@ watch(activeSetting, checkIsShowDetail);
     display: flex;
     // grid-template-columns: repeat(2, 1fr);
     // grid-gap: 12px;
-    gap: 12px;
+    // gap: 12px;
     margin-top: 16px;
     flex-wrap: wrap;
 
@@ -670,6 +745,8 @@ watch(activeSetting, checkIsShowDetail);
       box-shadow: 0px 4px 4px 0px #0000001a;
       border-radius: 10px;
       position: relative;
+      margin-bottom: 12px;
+      margin-right: 6px;
 
       &__full {
         width: 100%;
@@ -722,7 +799,7 @@ watch(activeSetting, checkIsShowDetail);
       margin-top: 12px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      // gap: 12px;
 
       .listing-item {
         background-color: #f7f8fb;
@@ -734,14 +811,17 @@ watch(activeSetting, checkIsShowDetail);
         line-height: 1;
         gap: 12px;
         color: #8c968f;
+        margin-bottom: 12px;
 
         span.list-num {
           width: 14px;
           font-size: 24px;
           background: linear-gradient(270deg, #3080f4 0%, #70b1ff 100%);
-          background-clip: text;
-          color: transparent;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          color: #3080f4;
           font-weight: bold;
+          margin-right: 8px;
         }
       }
     }
@@ -796,6 +876,9 @@ watch(activeSetting, checkIsShowDetail);
   .earn-money-friendcount {
     margin-top: 16px;
     width: 100%;
+    .earn-money-card-title {
+      padding: 10px;
+    }
     .table-container {
       max-height: 181px;
       overflow-y: auto;
@@ -831,7 +914,6 @@ watch(activeSetting, checkIsShowDetail);
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 8px;
         }
 
         td {
@@ -839,9 +921,10 @@ watch(activeSetting, checkIsShowDetail);
         }
 
         td:last-child {
-          background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-          background-clip: text;
-          color: transparent;
+          // background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+          // background-clip: text;
+          // color: transparent;
+          color: #73b2ff;
         }
       }
     }
@@ -905,9 +988,10 @@ watch(activeSetting, checkIsShowDetail);
         span {
           display: block;
           width: 100%;
-          background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-          background-clip: text;
-          color: transparent;
+          // background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+          // background-clip: text;
+          // color: transparent;
+          color: #73b2ff;
           font-size: 140%;
           font-weight: bold;
           text-align: center;

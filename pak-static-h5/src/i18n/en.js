@@ -7,6 +7,7 @@ export default {
     login: "Login",
     register: "Register",
     download: "Download",
+    getFreeSpins: "Get free spins on the APP",
     withdraw: "Withdraw",
     personalCenter: "Personal Center",
     deposit: "Deposit",
@@ -52,14 +53,18 @@ export default {
     referralRecord: "Referral Record",
     interestProfit: "Interest Profit",
     spinnerRules: "Rules",
-    spinnerHistory: "History"
+    spinnerHistory: "History",
+    effectiveRevenueFAQ: "Effective Revenue FAQ",
+    customerServiceVerifer: "Customer Service Verifier"
   },
   bottomNav: {
     home: "Home",
-    promo: "Promo",
+    promo: "Promotion",
     earnMoney: "Earn Money",
     wallet: "Wallet",
-    me: "Me"
+    me: "Me",
+    account: "Account",
+    more: "More"
   },
   modal: {
     addToHomeScreen: {
@@ -101,7 +106,8 @@ export default {
     password_rules_01: "Please insert password",
     password_rules_02: "The characters of password must be above 6",
     forgotPassword: "Forgot Password",
-    forgotPassword_desc: "Please Provide email, We Will Send OTP To Your Registered Email.",
+    forgotPassword_desc: "Please provide email, we will send OTP to your registered email.",
+    forgotPasswordPhone_desc: "Please provide phone number, we will send OTP to your registered phone.",
     register_agree_01: "I have Agree To The ",
     register_agree_02: "Use Privacy Agreement",
     email: "Email",
@@ -110,9 +116,10 @@ export default {
     email_rules_02: "Please enter valid email",
     send: "Send",
     verificationCode: "Verification Code",
-    verificationCode_placeholder: "Please enter Verification Code",
-    verificationCode_rules_01: "Please insert Verification Code",
-    otp_sent_title: "OTP Has Been Sent To Your Email, Please Enter The OTP And New Password.",
+    verificationCode_placeholder: "Please enter verification code",
+    verificationCode_rules_01: "Please insert verification code",
+    otp_sent_title: "OTP has been sent to your email, please enter the OTP and new password.",
+    otp_phone_sent_title: "OTP has been sent to your phone, please enter the OTP and new password.",
     otp: "OTP",
     otp_placeholder: "Please enter OTP",
     otp_rules_01: "Please insert OTP",
@@ -154,6 +161,8 @@ export default {
     currentPassword_rules_01: "Please insert current password",
     pleaseCompleteKYC: "Please Complete KYC",
     bindEmail: "Bind Email",
+    linkedEmail: "Linked Email",
+    otpVerification: "OTP Verification",
     code: "Code",
     code_placeholder: "Enter verification code",
     code_rules_01: "Verification code is required",
@@ -180,9 +189,9 @@ export default {
     virtualWallet_rules_03: "The eWallet must have 11 digits",
     virtualWallet_rules_04: "The eWallet cannot have decimal points",
     virtualWallet_warmReminder:
-      "Warm reminder: If the cardholder’s name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
+      "Warm reminder: If the cardholder's name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
     virtualWallet_warmReminder_02:
-      "Warm reminder：The Identity ID must match the real identity information (13-digit CNIC), otherwise, you will not be able to receive the withdrawal amount. Thank you. ",
+      "Warm reminder: The Identity ID must match the real identity information (13-digit CNIC), otherwise, you will not be able to receive the withdrawal amount. Thank you. ",
     virtualWallet_untie: "Please enter untie eWallet",
     bankCard: "Bank Card",
     bankCard_untie: "Please enter untie bank card",
@@ -221,13 +230,31 @@ export default {
     amount: "Amount",
     amount_placeholder: "Please Enter Amount",
     amount_rule_01: "Please Enter Amount",
-    all: "All"
+    all: "All",
+    telegramDiscordId: "Telegram Discord ID",
+    telegramDiscordId_placeholder: "Enter the Telegram Discord ID",
+    telegramDiscordId_rules_01: "Please insert the Telegram Discord ID",
+    redemptionBonusAmount: "Bonus amount",
+    followSteps: "Please follow the steps below:",
+    subscribeWhatsapp:
+      "Subscribe to the official WhatsApp channel to receive your reward code. (Limited quantity, first come first served!)",
+    enterBonusCode:
+      "Enter the bonus code on this page. Once redeemed, the bonus will be credited directly to your account and can be used immediately.",
+    redeemWithinValidity: "Redeem the code within the validity period.",
+    wagerRequirement: "Wager 1x the bonus amount before withdrawing your winnings.",
+    redemptionFailure: "Redemption may fail if eligibility conditions are not met. System verification is final.",
+    accountOwnerOnly: "Only the account owner can redeem the code.",
+    unauthorizedMethods:
+      "Using bots, cheating, or any unauthorized methods will result in a ban and forfeiture of the bonus."
   },
   btn: {
     login: "Login",
     register: "Register",
     confirm: "Confirm",
     submit: "Submit",
+    forgetPwd: "Forget Password",
+    areyounew: "Are you new to B9?",
+    alreadyhaveacct: "Already have an account?",
     addNewAccount: "Add New Account",
     updated: "Updated",
     updating: "Updating...",
@@ -260,14 +287,18 @@ export default {
     details: "Details",
     transfer: "Transfer",
     signinWithGoogle: "Google",
-    goNow: "Go Now"
+    goNow: "Go Now",
+    playReal: "Play real",
+    freeTrial: "Free trial"
   },
   notify: {
     loggingIn: "Logging in...",
     loggingOut: "Logging out...",
     phoneVerifySuccessful: "Phone verified successfully",
     emailAlreadyUsed: "Email already used. Please try another email.",
+    bankAddedSuccessfully: "Bank card added successfully",
     virtualWalletAddedSuccessfully: "Virtual wallet added successfully",
+    cryptoAccountAddedSuccessfully: "Crypto account added successfully",
     newpasswordupdated: "New password updated successfully",
     withdrewSuccessfully: "Withdrew successfully",
     noRecord: "No Record",
@@ -294,14 +325,20 @@ export default {
     fishing: "Fishing",
     poker: "Poker",
     sport: "Sport",
+    esport: "E-sports",
     livesupport: "Live Support",
     feedback: "Feedback",
     telegram: "Telegram",
     whatsapp: "WhatsApp",
     language: "Language",
-    downloadApp: "Download APP"
+    downloadApp: "Download APP",
+    appDownload: "APP download",
+    experienceOneStopGaming: "Experience one-stop gaming!",
+    customerServiceVerifier: "Customer Service Verifier",
+    recoverPwd: "Recover your password"
   },
   home: {
+    menu_all: "ALL",
     menu_lobby: "Lobby",
     menu_hot: "Hot",
     menu_live: "Live",
@@ -324,9 +361,9 @@ export default {
     totalScore: "Total Score",
     withdraw: "Withdraw",
     deposit: "Deposit",
-    promo: "Promo",
+    promo: "Promotion",
     otherServices: "Other Services",
-    personalCentre: "Personal Centre",
+    personalCenter: "Personal Center",
     record: "Record",
     discount: "Discount",
     bank: "Bank",
@@ -349,7 +386,24 @@ export default {
     select_privilege: "Select Privilege",
     incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again.",
     useFtdPrivilege: "Use Slot First Deposit Privilege",
-    unlimited: "Unlimited"
+    unlimited: "Unlimited",
+    wagerRequirement: "Wager requirement (to withdrawal): 10 times of your deposit amount",
+    wagerRequirementEg: "Eg. Deposit 100 Rs, require 1,000 Rs wager",
+    rechargeTutorial: "Recharge tutorial",
+    picture: "Picture",
+    video: "Video",
+    mindepositnotcredit: "Minimum deposit: 10USDT, deposits less than 10USDT will not be credited.",
+    depositnotrecovered:
+      "Do not deposit any non-currency assets to the above address, or the assets will not be recovered.",
+    operatingSafe:
+      "Please confirm that the operating environment is safe to avoid information being tampered with or leaked.",
+    transferAmountMatch:
+      "The transfer amount must match the order you created, otherwise the money cannot be credited successfully.",
+    donotcanceldeposit: "Note: do not cancel the deposit order after the money has been transferred.",
+    fillinwallet: "Fill in the correct wallet account number",
+    fillincnic: "Fill in the correct CNIC number",
+    submittedAmtConsistent:
+      "The submitted amount must be consistent with the payment amount, otherwise it will not be automatically credited."
   },
   withdraw: {
     cashBalance: "Cash Balance",
@@ -360,7 +414,17 @@ export default {
     remainWagers: "Remain Wagers",
     withdrawTutorial: "Withdraw Tutorial",
     withdrawalMethodInMaintenance:
-      "This channel is currently under maintenance from {startTime} to {endTime}. Please use other channels for withdrawal operations. Thank you!"
+      "This channel is currently under maintenance from {startTime} to {endTime}. Please use other channels for withdrawal operations. Thank you!",
+    noAcctAvailable: "No account available",
+    addAcct: "Add account",
+    picture: "Picture",
+    video: "Video",
+    bindCardCorrectFormat: "Bind your wallet/bank card using the correct format.",
+    dailyWalletLimit:
+      "Daily wallet limit: PKR 50,000. Do not exceed this limit. You can add multiple wallets for withdrawals.",
+    donotexceeddaily:
+      "Daily bank card limit: PKR 500,000. Do not exceed this limit. You can add multiple bank cards for withdrawals.",
+    blockchainwithdrawfast: "For blockchain wallet (USDT) withdrawals, there is no limit, and transfers are very fast."
   },
   bank: {
     virtualWallet: "eWallet",
@@ -396,6 +460,7 @@ export default {
     confirm: "Confirm"
   },
   vip: {
+    unlimited: "Unlimited",
     receiveMonthlyRewards: "Receive monthly rewards",
     received: "Received",
     receive: "Receive",
@@ -419,6 +484,7 @@ export default {
   },
   earnMoney: {
     title: "Bonus Pot Arrived",
+    noDataAvailable: "No Data available",
     tabs: {
       reward: "Reward",
       teamManagement: "Team management",
@@ -426,6 +492,10 @@ export default {
       profitAndLoss: "User profit and loss"
     },
     reward: {
+      award: "Award",
+      title: "Invitation Rewards",
+      bettingCommission: "Betting Commission",
+      depositCommission: "Deposit Commission",
       myTotalIncome: "My Total Income",
       myTotalNumberOfInvites: "My Total Number Of Invites",
       invite: "Invitation Bonus",
@@ -460,7 +530,7 @@ export default {
       betting_table: {
         header: {
           description: "Description",
-          commission: "Three-Level Commision"
+          commission: "Three-Level Commission"
         },
         row1: {
           description: "Invite players to place bets (win or lose) to earn rewards",
@@ -563,7 +633,7 @@ export default {
         username: {
           placeholder: "User name"
         },
-        searchButton: "Search"
+        searchButton: "SEARCH"
       },
       table: {
         username: "Username",
@@ -596,8 +666,9 @@ export default {
     }
   },
   records: {
-    beforeBalance: "Before Balance:",
-    afterBalance: "After Balance:",
+    date: "Date",
+    beforeBalance: "Before Balance",
+    afterBalance: "After Balance",
     gamePlatform: "Game Platform",
     bet: "Bet",
     settle: "Settle",
@@ -622,7 +693,7 @@ export default {
     success: "Success",
     supplementSuccess: "Supplement Success",
     closed: "Closed",
-    orderNo: "Order NO.",
+    orderNo: "Order Number",
     bank: "BANK",
     noRecord: "No record",
     noMoreRecord: "No more record",
@@ -663,6 +734,20 @@ export default {
     slot: "SLOT",
     vip: "VIP"
   },
+  message: {
+    activity: "Activity",
+    payment: "Payment",
+    system: "System",
+    noMessage: "No messages",
+    visitLink: "Visit link"
+  },
+  customerServiceVerifier: {
+    mainTitle: "B9.GAME",
+    subTitle: "Customer Service Verifier",
+    contentPara01:
+      "To prevent scams using B9.GAME's list, you can verify the Telegram or Discord account you are chatting&nbsp;with ",
+    contentPara02: "Please enter the agent account ID and click the Check button"
+  },
   playerGuide: {
     welcomeMessage: "Welcome to",
     teachingHowToEarn: "Let us teach you how to make money easily!",
@@ -691,7 +776,7 @@ export default {
     expertGameplayGuide: "Watch the expert gameplay guide",
     maxReward: "For every person invited, the maximum reward is",
     rs: "RS",
-    extraBonus: "extra bonus for invited users’ first deposit",
+    extraBonus: "extra bonus for invited users' first deposit",
     lifetimeCommission: "Lifetime commission for invited users",
     commissionDetails: "(regardless of winning or losing)",
     arrivalTime: "Reminder of arrival time (usually",
@@ -701,9 +786,79 @@ export default {
     noSupport: "Your browser does not support the video tag.",
     linkCopied: "Link copied to clipboard",
     copyFailed: "Failed to copy link",
-    next: "Next"
+    next: "Next",
+    service: "Service",
+    deposit1: "Click on wallet in the menu",
+    deposit2: "Select deposit tab",
+    deposit3: "Select bank",
+    deposit4: "Update amount and click Submit",
+    refer1: "How to earn money by sharing invitations",
+    refer2: "Click on earn money in the menu",
+    refer3: "Invite friends through the link",
+    withdraw1: "Click on wallet in the bottom menu",
+    withdraw2: "Select withdrawal tab",
+    withdraw3: "Enter withdrawal amount",
+    withdraw4: "Confirm withdrawal request",
+    bankTransfer: "Bank transfer",
+    digitalCurrency: "digital currency",
+    bankAccountWithdrawal: "Bank account withdrawal",
+    digitalCurrencyWithdrawal: "digital currency withdrawal"
   },
   hotPromo: {
+    name: "Name",
+    date: "Date",
+    amount: "Amount",
+    list_of_winners: "List of Winners",
+    terms_and_Conditions: "Terms and Conditions",
+    on_other_days_three_times_daily: "On Other Days, Three Times Daily",
+    every_friday_saturday_and_sunday: "Every Friday, Saturday, and Sunday",
+    starts_now: "Starts now",
+    starts_at: "Starts at",
+    rewind_time: "Rewind time",
+    events: "Events",
+    ranking_and_bonus: "Ranking and Bonus",
+    activities: "Activities",
+    current_valid_bets: "Current Valid Bets",
+    remainingTimes: "Remaining times",
+    promoExclusionNotice: "Notice: This promotion is not counted towards CASINO and SPORTS wager!",
+    deposit: "Deposit",
+    dailyWagerCount: "Number of daily wager",
+    deposits_of_the_day: "Deposits of the day",
+    currentSignIn: "Current Sign-in",
+    consecutiveDepositBonus:
+      "The more consecutive days of deposit requirements you complete, the more extra bonus you will get.",
+    save_image: "Save Image",
+    share: "Share",
+    CASH_OUT_COSTS: "CASH OUT COSTS",
+    invitation_wins: "Invitation wins",
+    next_round: "Next Round",
+    countdown: "Countdown",
+    invitationRecords: "Invitation records",
+    lotteryRecords: "Lottery records",
+    noRecords: "No Records",
+    activityRules: "Activity rules",
+    record: "Record",
+    rules: "Rules",
+    countdown_to_next_free_spins: "Countdown to next free spins",
+    this_round_has_ended: "This round has ended.",
+    invite_to_earn_spin: "Invite to earn spin",
+    time: "time",
+    rotate: "rotate",
+    no_records: "No records",
+    receive: "Receive",
+    received: "Received",
+    time_left: "time left",
+    go_withdraw_now: "Go withdraw now",
+    rs: "RS",
+    withdraw_money_over_rs: "Withdraw money over Rs",
+    claim_now: "Claim now",
+    claimed: "Claimed",
+    bonus_claim_time: "Bonus claim time",
+    promoEndsOn: "Promo Ends On",
+    earnMoney: {
+      earnMoney: "Earn Money",
+      congratsOnGetting: "Congratulations on getting"
+    },
     aviatorWheel: {
       remainingDrawTimes: "Remaining draw times",
       congratulations: "Congratulations"
@@ -768,6 +923,9 @@ export default {
       ranksLeft: "Ranks Left",
       jackpot: "Jackpot",
       noRank: "No Rank",
+      rules: "Rules",
+      activityRules: "Activity rules",
+      termsConditions: "Terms & Conditions",
       rules1:
         "Daily Ranking Rewards: 1.5% of the platform's total daily pilot revenue will be included in the daily prize pool. This pool will be automatically distributed to players daily based on their positions in the daily rankings.",
       rules2:
@@ -784,6 +942,11 @@ export default {
       termsCondition2:
         "Players who open multiple accounts or fraudulent accounts will lose their eligibility to participate in events due to improper behavior on the platform, and the related accounts will be frozen.",
       termsCondition3: "Please be sure to read these terms and conditions carefully before participating in this event."
+    },
+    goldenEgg: {
+      ranking: "Ranking",
+      userName: "Username",
+      betVolume: "Bet Volume"
     }
   },
   maintenance: {
@@ -950,5 +1113,32 @@ export default {
     58003: "Event have expired",
     58004: "Cannot Participate. Previous Tasks Has Failed to Accomplish.",
     58005: "Congrats, You have Completed All Tasks"
+  },
+  content: {
+    title1: "The registration time starts from the time the registration is completed.",
+    message1:
+      "When the accumulated amount reaches 1000 PKR, you can apply for a withdrawal (the reward will be directly added to your wallet).",
+    message2:
+      "When there are no available spins, referring a new player to register and deposit will earn you free spins.",
+    message3:
+      "The event lasts for 3 days. After the event ends, the accumulated rewards will be reset, and the event will restart.",
+    message4: "Each user can enjoy one free spin per day, which will be added at 00:00 daily.",
+    message5: "Once the application is approved, the bonus will be directly credited to your wallet.",
+    message6: "The bonus must be rolled over once before it can be withdrawn.",
+    message7:
+      "The invitee must verify their phone number, register using the inviter's referral link, and must not have a duplicate IP address to qualify for the referral.",
+    aviatorPromoIntro:
+      "Enjoy the thrill of betting with Aviator! Your Aviator can win a staggering 3,216x with just one click! The prize pool for the top 50 is 1,250,000 PKR!",
+    aviatorGoldenEgg:
+      "When betting in Aviator every day, when the effective betting amount reaches 888 PKR, you can get the chance to smash the golden egg (SUNEHRI ANDY). Maximum reward: 88,888 PKR, the probability of winning is 3.6%",
+    aviatorTopTurnover:
+      "When betting on Aviator, the player with the highest cumulative turnover will qualify for first place.",
+    cashRainIntro: "Each round of cash rain freely distributes 666,666 PKR.",
+    cashRainMaxPerRound: "Maximum cashback amount per round: 66,666 PKR.",
+    cashRainFreeDistribution: "Each round freely distributes cashback.",
+    cashRainClaimCondition:
+      "Maintain a historical deposit of ≥300 PKR and complete daily bets of ≥100+ PKR to claim your reward for free.",
+    cashRainUsage: "The received money can be directly used for playing games or withdrawing.",
+    cashRainVIP: "The higher the VIP membership level, the greater the amount received."
   }
 };

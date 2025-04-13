@@ -67,6 +67,7 @@ const ui = useUI();
       display: block;
       width: 100%;
       max-width: 320px;
+      height: 60px;
     }
   }
 

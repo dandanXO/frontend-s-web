@@ -60,7 +60,10 @@ const progressBarIndicatePosition = computed(() => {
     top: 0;
     left: 0;
     height: 100%;
-    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+    background: linear-gradient(356.25deg, #3b156e -0.21%, #8100ae 93.65%);
+    background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/progress-bar-bg.png)
+      no-repeat;
+    background-size: cover;
     border-radius: 4px;
   }
 

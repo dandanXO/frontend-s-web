@@ -1,0 +1,157 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap');
+
+
+body {
+  margin: 0;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+}
+
+.main-container {
+  max-width: 500px;
+  background-color: #E9F2FD;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  box-shadow: 0px 3.59px 7.18px 0px #0000001A;
+  height: 44px;
+  padding: 4px 0;
+  display: grid;
+  align-content: center;
+  justify-content: center;
+}
+
+.header-logo {
+  width: 100px;
+  min-height: 26px;
+}
+
+.top-info-container {
+  background: url(../imgs/top-banner.png)no-repeat center center;
+  background-size: contain;
+  border-radius: 10px;
+  /* margin: 10px 18px 0;
+  padding: 8px 0px 5px; */
+  /* min-height: 170px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+   margin: 10px 18px 0;
+    padding: 5px;
+    height: 32vw;
+    max-height: 200px;
+}
+
+.top-info-container p {
+  font-family: Inter;
+  color: #3D4A57;
+  text-shadow:
+    -1px -1px 0 white,
+     1px -1px 0 white,
+    -1px  1px 0 white,
+     1px  1px 0 white;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+    margin: 0 0 10px;
+}
+
+.info-highlight-txt {
+  font-family: Inter;
+  color: #5A49D0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.banner-container {
+  padding: 8px 16px;
+}
+
+.banner {
+  width: 100%;
+  margin-bottom: 8px;
+}
+.banner:last-child {
+  margin: 0 5px 0;
+  width: calc(100% - 10px);
+}
+
+.download-info-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: row-reverse;
+  padding-left: 20px;
+  overflow: hidden;
+}
+.download-promotional-img {
+  width: 30%;
+  flex:1;
+  margin-left: -40px;
+  margin-right: -50px;
+}
+
+.download-content {
+  flex: 1;
+  padding: 40px 0;
+}
+
+.download-txt-bg {
+  background: linear-gradient(90deg, #6FB0FF 0%, #3180F4 100%);
+  border-radius: 4px;
+  padding: 6px;
+  font-size: 9px;
+  font-weight: 500;
+  color: #fff;
+  text-align: center;
+}
+
+.download-txt {
+  padding: 8px 6px;
+  font-size: 8px;
+  font-weight: 600;
+  color: #354AD6;
+
+  text-align: center;
+}
+
+.download-btn-container {
+  position: sticky;
+  bottom: 0;
+}
+
+.download-btn-info {    
+  width: 185px;
+  position: absolute;
+  bottom: 54px;
+  left: 20px;
+}
+
+.download-btn {
+  height: 48px;
+  width: calc(100% - 40px);
+  background: linear-gradient(270deg, #FFB701 0%, #FF3F00 100%);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 74px;
+  font-weight: 700;
+  margin: 4px 20px;
+}
+
+.download-btn:hover {
+  background: linear-gradient(270deg, #FFB701 0%, #FF3F00 100%);
+
+}

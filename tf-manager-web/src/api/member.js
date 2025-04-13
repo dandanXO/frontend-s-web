@@ -567,3 +567,21 @@ export const updateOpenTransfer = (memberId, siteId, state) => {
     ContentType.form
   )
 }
+
+export const unbindTelephone = (id, siteId) => {
+  return https().request(
+    `/member/${id}/unbindTelephone?_method=PUT`,
+    Method.POST,
+    { siteId: siteId },
+    ContentType.form
+  )
+}
+
+export const unbindEmail = (id, siteId) => {
+  return https().request(
+    `/member/${id}/unbindEmail?_method=PUT`,
+    Method.POST,
+    { siteId: siteId },
+    ContentType.form
+  )
+}

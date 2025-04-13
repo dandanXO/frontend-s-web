@@ -1,6 +1,6 @@
 <template>
   <div class="no-info-container" :class="shortenContainer && 'shorten-container'">
-    <img class="" src="../assets/images/account/nodata-folder.png" alt="" />
+    <img class="" src="../assets/images/account/nodata-box.png" alt="" />
     <div class="no-info-text">{{ noInfoTitle }}</div>
     <p>{{ $t("notify.haventFoundAnyRecord") }}</p>
   </div>
@@ -13,7 +13,7 @@ const props = defineProps(["noInfoTitle", "shortenContainer"]);
 <style scoped lang="scss">
 .no-info-container {
   width: 100%;
-  min-height: calc(100vh - 130px);
+  min-height: calc(100vh - 200px);
   display: flex;
   flex-direction: column;
   align-items: center;

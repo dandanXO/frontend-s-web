@@ -28,6 +28,8 @@ const onBtnClick = () => {
   margin: 26px 0;
   width: 100%;
   //height: 46px;
+  height: 0;
+  padding-bottom: 14.24%;
   aspect-ratio: 295/42;
   // background: radial-gradient(68.92% 68.92% at 50% 50%, #00550E 0%, #57CD69 100%);
   background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);

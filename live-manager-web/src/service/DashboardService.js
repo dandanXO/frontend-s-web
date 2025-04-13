@@ -25,256 +25,8 @@ export const DashboardService = {
         })
     })
   },
-  getRechargeSummary() {
-    return Promise.resolve([
-      {
-        id: '1',
-        channel: 'BANK',
-        amount: '119',
-        percentage: '1.55 %',
-        fund: '384950.00',
-        fundPercentage: '7.66 %',
-      },
-      {
-        id: '2',
-        channel: 'ALIPAY',
-        amount: '411',
-        percentage: '5.35 %',
-        fund: '149009.00',
-        fundPercentage: '2.97 %',
-      },
-      {
-        id: '2',
-        channel: 'ALIPAY',
-        amount: '411',
-        percentage: '5.35 %',
-        fund: '149009.00',
-        fundPercentage: '2.97 %',
-      },
-      {
-        id: '3',
-        channel: 'SZPAY',
-        amount: '1709',
-        percentage: '22.27 %',
-        fund: '441994.86',
-        fundPercentage: '8.80 %',
-      },
-      {
-        id: '4',
-        channel: 'USDTTRC',
-        amount: '82',
-        percentage: '1.06 %',
-        fund: '370344.47',
-        fundPercentage: '7.37 %',
-      },
-      {
-        id: '5',
-        channel: 'BLBPAY',
-        amount: '382',
-        percentage: '4.97 %',
-        fund: '393904.00',
-        fundPercentage: '7.84 %',
-      },
-      {
-        id: '6',
-        channel: 'KDPAY',
-        amount: '608',
-        percentage: '7.92 %',
-        fund: '477787.00',
-        fundPercentage: '9.51 %',
-      },
-    ])
-  },
 
-  getMembersList() {
-    return Promise.resolve([
-      {
-        id: 1000,
-        name: '03202518975', // Replacing the name field with the phone number
-        country: {
-          name: 'Algeria',
-          code: 'dz',
-        },
-        company: 'Benton, John B Jr',
-        date: '2025/03/11 11:55:31', // Combining the dateTime from the other dataset
-        status: '正常', // Taking status from the phone data
-        verified: true,
-        activity: 17,
-        representative: {
-          name: 'Ioni Bowcher',
-          image: 'ionibowcher.png',
-        },
-        balance: 70663,
-        VIPStatus: 'VIP0',
-        identifier: '-',
-        linkedPhoneNumber: '03888888888',
-        amount: '$ 0.00',
-        service: 'PAKWIN',
-      },
-      {
-        id: 1001,
-        name: '10036753',
-        country: {
-          name: 'Egypt',
-          code: 'eg',
-        },
-        company: 'Chanay, Jeffrey A Esq',
-        date: '2025/03/11 11:55:30',
-        status: '正常',
-        verified: true,
-        activity: 0,
-        representative: {
-          name: 'Amy Elsner',
-          image: 'amyelsner.png',
-        },
-        balance: 82429,
-        VIPStatus: 'VIP0',
-        identifier: '-',
-        linkedPhoneNumber: '03598556012',
-        amount: '$ 0.00',
-        service: 'PAKWIN',
-      },
-      {
-        id: 1002,
-        name: '03704399159',
-        country: {
-          name: 'Panama',
-          code: 'pa',
-        },
-        company: 'Chemel, James L Cpa',
-        date: '2025/03/11 11:55:28',
-        status: '正常',
-        verified: false,
-        activity: 63,
-        representative: {
-          name: 'Asiya Javayant',
-          image: 'asiyajavayant.png',
-        },
-        balance: 28334,
-        VIPStatus: 'VIP0',
-        identifier: '58708B',
-        linkedPhoneNumber: '03131999997',
-        amount: '$ 0.00',
-        service: 'PAKWIN',
-      },
-      {
-        id: 1003,
-        name: '03455329632',
-        country: {
-          name: 'Slovenia',
-          code: 'si',
-        },
-        company: 'Feltz Printing Service',
-        date: '2025/03/11 11:55:27',
-        status: '正常',
-        verified: false,
-        activity: 37,
-        representative: {
-          name: 'Xuxue Feng',
-          image: 'xuxuefeng.png',
-        },
-        balance: 88521,
-        VIPStatus: 'VIP0',
-        identifier: '58708B',
-        linkedPhoneNumber: '03678967893',
-        amount: '$ 0.00',
-        service: 'PAKWIN',
-      },
-      {
-        id: 1004,
-        name: '03454049246',
-        country: {
-          name: 'South Africa',
-          code: 'za',
-        },
-        company: 'Printing Dimensions',
-        date: '2025/03/11 11:55:17',
-        status: '正常',
-        verified: true,
-        activity: 33,
-        representative: {
-          name: 'Asiya Javayant',
-          image: 'asiyajavayant.png',
-        },
-        balance: 93905,
-        VIPStatus: 'VIP0',
-        identifier: '58708B',
-        linkedPhoneNumber: '03435854592',
-        amount: '$ 0.00',
-        service: 'PAKWIN',
-      },
-      {
-        id: 1005,
-        name: '03002701387',
-        country: {
-          name: 'Egypt',
-          code: 'eg',
-        },
-        company: 'Chapman, Ross E Esq',
-        date: '2025/03/11 11:55:16',
-        status: '正常',
-        verified: false,
-        activity: 68,
-        representative: {
-          name: 'Ivan Magalhaes',
-          image: 'ivanmagalhaes.png',
-        },
-        balance: 50041,
-        VIPStatus: 'VIP0',
-        identifier: '58708B',
-        linkedPhoneNumber: '03598556006',
-        amount: '$ 0.00',
-        service: 'PAKWIN',
-      },
-      {
-        id: 1006,
-        name: '03554360407',
-        country: {
-          name: 'Paraguay',
-          code: 'py',
-        },
-        company: 'Morlong Associates',
-        date: '2025/03/11 11:55:16',
-        status: '正常',
-        verified: true,
-        activity: 54,
-        representative: {
-          name: 'Ivan Magalhaes',
-          image: 'ivanmagalhaes.png',
-        },
-        balance: 58706,
-        VIPStatus: 'VIP0',
-        identifier: '58708B',
-        linkedPhoneNumber: '03178925574',
-        amount: '$ 0.00',
-        service: 'PAKWIN',
-      },
-      {
-        id: 1007,
-        name: '03074501173',
-        country: {
-          name: 'Serbia',
-          code: 'rs',
-        },
-        company: 'Commercial Press',
-        date: '2025/03/11 11:55:14',
-        status: '正常',
-        verified: true,
-        activity: 69,
-        representative: {
-          name: 'Onyama Limba',
-          image: 'onyamalimba.png',
-        },
-        balance: 26640,
-        VIPStatus: 'VIP0',
-        identifier: '58708B',
-        linkedPhoneNumber: '03327007799',
-        amount: '$ 0.00',
-        service: 'PAKWIN',
-      },
-    ])
-  },
-
+  // 獲取流媒體列表
   getStreamList() {
     const token = sessionStorage.getItem('token')
     return api
@@ -314,4 +66,72 @@ export const DashboardService = {
       return [];
     })
   },
+
+  // 更改我的直播狀態
+  changeMyStreamStatus(streamId, streamerStatus) {
+    const token = sessionStorage.getItem('token')
+    return api.put(`/session/changeMyScheduleStatus/${streamId}`, {
+      streamerStatus
+    }, {
+      headers: {
+        'token': `${token}`
+      }
+    })
+    .then((response) => {
+      if (response.code === 0) {
+        return response.data
+      }
+      return null
+      })
+      .catch((error) => {
+        console.error('更改我的直播狀態失敗:', error)
+        return null
+      })
+  },
+
+  // 獲取敏感字列表
+  getSensitiveWords() {
+    const token = sessionStorage.getItem('token')
+    
+    return api.get('/session/sensitive-words', {
+      headers: {
+        'token': `${token}`
+      }
+    })
+  },
+
+  // 新增敏感字
+  addSensitiveWord(data) {
+    const token = sessionStorage.getItem('token')
+
+    return api.post('/session/sensitive-words', data, {
+      headers: {
+        'token': `${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+  },
+
+  // 更新敏感字
+  updateSensitiveWord(data) {
+    const token = sessionStorage.getItem('token')
+    
+    return api.put(`/session/sensitive-words/${data.id}`, data, {
+      headers: {
+        'token': `${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+  },
+
+  // 刪除敏感字
+  deleteSensitiveWord(id) {
+    const token = sessionStorage.getItem('token')
+    
+    return api.delete(`/session/sensitive-words/${id}`, {
+      headers: {
+        'token': `${token}`
+      }
+    })
+  }
 }

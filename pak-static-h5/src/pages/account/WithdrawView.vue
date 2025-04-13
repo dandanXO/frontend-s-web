@@ -58,10 +58,10 @@
           >
             <template v-slot:no-option>
               <q-item>
-                <q-item-section class="text-grey">
-                  No account available
-                  <router-link class="text-bright" to="/account/bank">
-                    Add account
+                <q-item-section class="text-grey isCentreDialog">
+                  {{ $t('withdraw.noAcctAvailable')}}
+                  <router-link class="text-positive" to="/account/bank">
+                    {{ $t('withdraw.addAcct')}}
                     <!-- {{
                       isUSDT || isEWALLET
                         ? $t("lang.withdraw_add") + " " + chooseCard()
@@ -72,7 +72,7 @@
               </q-item>
             </template>
             <template v-slot:option="scope">
-              <q-item v-bind="scope.itemProps">
+              <q-item class="isCentreDialog" v-bind="scope.itemProps">
                 <q-item-section avatar v-if="scope.opt.bankIcon">
                   <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
                 </q-item-section>
@@ -104,9 +104,6 @@
 
           <div class="bot-wrapper-card">
             <div class="bank-card-item" @click="goToBank()">
-              <div class="card-icon">
-                <q-icon key="md" size="md" name="add" />
-              </div>
               <div class="card-label">{{ $t("btn.addNewAccount") }}</div>
             </div>
           </div>
@@ -219,23 +216,26 @@
           <div class="bot-wrapper">
             <div class="info">
               <div class="desc-wrapper">
-                <div class="desc">{{ $t("withdraw.withdrewAmount") }}</div>
+                <div class="desc">
+                  <img src="../../assets/images/account/withdraw-amt.svg" />
+                  {{ $t("withdraw.withdrewAmount") }}
+                </div>
               </div>
-              <div class="desc">RS:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawAmount) }}</div>
+              <div class="desc">
+                <img src="../../assets/images/account/right-green.svg" />
+                <span>RS:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawAmount) }}</span>
+              </div>
             </div>
 
             <div class="info">
               <div class="desc-wrapper">
-                <div class="desc">{{ $t("withdraw.withdrawMaxTimes") }}</div>
-              </div>
-              <div class="desc">{{ selectedWithdrawalMethod.withdrawMaxTimes }}</div>
-            </div>
-
-            <div class="info">
-              <div class="desc-wrapper">
-                <div class="desc">{{ $t("withdraw.remainWagers") }}</div>
+                <div class="desc">
+                  <img src="../../assets/images/account/remain-wagers.svg" />
+                  {{ $t("withdraw.remainWagers") }}
+                </div>
               </div>
               <div class="desc remain-wager-wrapper" @click="refreshRemainWager">
+                <img src="../../assets/images/account/right-green.svg" />
                 <q-spinner v-if="isRefreshRemainWager" />
                 <span v-else>RS:{{ convertToCommaAmount(selectedWithdrawalMethod.remainWagers) }}</span>
                 <img
@@ -244,6 +244,16 @@
                   src="../../assets/images/account/refresh-icon.svg"
                 />
               </div>
+            </div>
+
+            <div class="info">
+              <div class="desc-wrapper">
+                <div class="desc">
+                  <img src="../../assets/images/account/withdraw-max.svg" />
+                  {{ $t("withdraw.withdrawMaxTimes") }}
+                </div>
+              </div>
+              <div class="desc" style="color: #fbab1b">{{ selectedWithdrawalMethod.withdrawMaxTimes }}</div>
             </div>
           </div>
 
@@ -355,17 +365,16 @@
       <div class="q-mt-sm step-desc-div q-mb-lg">
         <p>
           {{ $t("withdraw.withdrawTutorial") }}
-          <span class="tutorial-link" @click="isWithdrawTutorial = true">Picture</span>
+          <span class="tutorial-link" @click="isWithdrawTutorial = true">{{ $t('withdraw.picture')}}</span>
           /
-          <span class="tutorial-link" @click="openWithdrawTutorialVideo">Video</span>
+          <span class="tutorial-link" @click="openWithdrawTutorialVideo">{{ $t('withdraw.video')}}</span>
         </p>
-        <p>1.Bind your wallet/bank card using the correct format.</p>
-        <p>2.Daily wallet limit: PKR 50,000. Do not exceed this limit. You can add multiple wallets for withdrawals.</p>
+        <p>1. {{ $t('withdraw.bindCardCorrectFormat') }}</p>
+        <p>2. {{ $t('withdraw.dailyWalletLimit') }}</p>
         <p>
-          3.Daily bank card limit: PKR 500,000. Do not exceed this limit. You can add multiple bank cards for
-          withdrawals.
+          3. {{ $t('withdraw.donotexceeddaily') }}
         </p>
-        <p>4.For blockchain wallet (USDT) withdrawals, there is no limit, and transfers are very fast.</p>
+        <p>4.{{ $t('withdraw.blockchainwithdrawfast')}}</p>
       </div>
     </template>
 
@@ -657,7 +666,7 @@ const submitWithdraw = async () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "Withdrew successfully",
+            message: t('notify.withdrewSuccessfully'),
             icon: "check_circle_outline"
           });
           getWithdrawalMethods();
@@ -1036,17 +1045,17 @@ watch(
         width: 100%;
         color: white;
         border-radius: 3.125rem;
-        opacity: 0.8;
+        // opacity: 0.8;
         // background: linear-gradient(90deg, #157f42 -1.25%, rgba(44, 97, 67, 0) 104.06%);
-        background: linear-gradient(90deg, #70bc62 -1.25%, #131313 104.06%);
-        padding: 5px 10px;
-        text-transform: uppercase;
+        // background: linear-gradient(90deg, #13f129 -1.25%, #131313 104.06%);
+
+        // padding: 5px 10px;
+        // text-transform: uppercase;
 
         .desc-wrapper {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 5px;
         }
 
         .desc {
@@ -1090,23 +1099,23 @@ watch(
 
 .bottom-btn {
   margin-top: auto;
-  padding: 20px 0 40px;
+  padding: 20px 15px 40px;
   position: fixed;
   bottom: 0;
-  width: calc(100% - 32px);
+  width: 100%;
   max-width: 468px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #0e1412;
+  background-color: #24262b;
 }
 
 .tutorial-link {
-  color: #70bc62;
+  color: #13f129;
   text-decoration: underline;
 }
 .step-desc-div {
   margin-bottom: 105px;
-  color: #bacef1;
+  color: #B2BDBF;
 
   p {
     margin: 5px 0px;
@@ -1149,7 +1158,9 @@ watch(
 
     img {
       width: 100%;
+      background: #394142;
       padding: 5px;
+      border-radius: 10px;
     }
 
     &.active {
@@ -1158,8 +1169,7 @@ watch(
       // box-shadow: none;
       // filter: drop-shadow(0px 0px 3px #ffffff);
       img {
-        border: 3px solid #64ba68;
-        border-radius: 10px;
+        background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
       }
 
       .type-name {
@@ -1212,9 +1222,15 @@ watch(
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  // gap: 20px;
   margin: 1rem 0 0.5rem 0;
-
+  background: #373c3d;
+  padding: 10px;
+  border-radius: 10px;
+  
+  :not(:last-child) {
+    margin-bottom: 5px;
+  }
   .info {
     display: flex;
     align-items: center;
@@ -1222,22 +1238,53 @@ watch(
     width: 100%;
     color: white;
     border-radius: 3.125rem;
-    opacity: 0.8;
-    // background: linear-gradient(90deg, #157f42 -1.25%, rgba(44, 97, 67, 0) 104.06%);
-    background: linear-gradient(90deg, #70bc62 -1.25%, #131313 104.06%);
-    padding: 5px 10px;
-    text-transform: uppercase;
+    font-size: 16px;
+    :not(:last-child) {
+      margin-right: 20px;
+    }
+    // opacity: 0.8;
+    // // background: linear-gradient(90deg, #157f42 -1.25%, rgba(44, 97, 67, 0) 104.06%);
+    // // background: linear-gradient(90deg, #13f129 -1.25%, #131313 104.06%);
+    // padding: 5px 10px;
+    // text-transform: uppercase;
 
     .desc-wrapper {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 5px;
+      color: #b2bdbf;
+      font-weight: 700;
+      .desc {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 700;
+        line-height: 20px;
+        letter-spacing: 2%;
+        text-transform: capitalize;
+
+        img {
+          margin-right: 5px;
+        }
+      }
     }
 
     .desc {
-      font-size: 0.825rem;
+      font-size: 0.925rem;
       font-weight: 400;
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+      align-items: center;
+      span {
+        color: #21ef89;
+        &.orange {
+          color: #fbab1b;
+        }
+      }
       .refresh-btn-img {
         width: 20px;
         height: 20px;
@@ -1253,6 +1300,7 @@ watch(
       align-items: center;
       gap: 3px;
       cursor: pointer;
+      color: #21ef89;
     }
   }
 }
@@ -1265,25 +1313,34 @@ watch(
   align-items: center;
   justify-content: space-around;
   border-radius: 0.625rem;
-  background: #2e303466;
+  background: #373c3d;
   width: 100%;
 
   text-align: center;
   font-family: "Manrope", sans-serif;
   font-size: 1.1rem;
-  font-weight: 700;
+  font-weight: 400;
   aspect-ratio: 335/82;
 
   .balance {
-    margin: 0 0 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 15px 0;
+    // margin: 0 0 0 1rem;
   }
 
   .amount {
     font-size: 140%;
+    font-weight: 700;
   }
 
   .withdrawable {
-    margin: 0 1rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 15px 0;
+    // margin: 0 1rem 0 0;
   }
 
   .separator {
@@ -1293,8 +1350,7 @@ watch(
   }
 
   .title {
-    color: rgba(255, 255, 255, 0.5);
-    font-weight: 700;
+    color: #9f9f9f;
   }
 
   span {
@@ -1310,19 +1366,35 @@ watch(
   margin: 1rem 0 0.5rem 0;
 
   .bank-card-item {
-    padding: 3px;
-    border-radius: 1.25rem;
-    background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
-    position: relative;
-    transition: 0.3s all;
+    // padding: 8px;
+    // border-radius: 8px;
+    // position: relative;
+    // transition: 0.3s all;
+    // width: 100%;
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
+    // color: #150025;
+    // background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+    // box-shadow: 0px 2px 0px 0px #1cca6a;
+    // text-transform: uppercase;
+    
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
-
+    height: 40px;
+    background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+    color: #000000;
+    box-shadow: 0px 2px 0px 0px #1cca6a;
+    font-weight: 700;
+    border-radius: 4px;
+    border: 1px solid #21ef89;
+    padding: 5px;
+    min-width: 68px;
+    text-transform: uppercase;
     .card-label {
-      font-size: 1rem;
+      font-size: 1.2rem;
       font-weight: 700;
     }
 
@@ -1338,5 +1410,11 @@ watch(
 .error-dialog {
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(12px);
+}
+</style>
+
+<style lang="scss"> 
+.q-field__control, .q-field__marginal {
+  height: auto !important;
 }
 </style>

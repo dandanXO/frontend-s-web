@@ -90,8 +90,12 @@ const paramsObj = computed(() => {
 });
 
 const currentVoxisId = computed(() => {
-  const key = `${vip.value.toLocaleLowerCase()}_voxis_id`;
-  return paramsObj?.value?.[key] ?? paramsObj?.value?.["vip1_voxis_id"] ?? "";
+  if (typeof vip.value === "string") {
+    const key = `${vip.value.toLocaleLowerCase()}_voxis_id`;
+    return paramsObj?.value?.[key] ?? paramsObj?.value?.["vip1_voxis_id"] ?? "";
+  } else {
+    return paramsObj?.value?.["vip1_voxis_id"] ?? "";
+  }
 });
 
 function isHuaweiBrowser() {
