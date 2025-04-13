@@ -161,6 +161,8 @@ export default {
     currentPassword_rules_01: "Please insert current password",
     pleaseCompleteKYC: "Please Complete KYC",
     bindEmail: "Bind Email",
+    linkedEmail: "Linked Email",
+    otpVerification: "OTP Verification",
     code: "Code",
     code_placeholder: "Enter verification code",
     code_rules_01: "Verification code is required",

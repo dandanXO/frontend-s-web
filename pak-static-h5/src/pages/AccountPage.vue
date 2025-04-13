@@ -29,6 +29,7 @@
                 <template #input>
                   <q-input v-model="formDetail.email" outlined clearable hide-bottom-space readonly>
                     <template v-slot:append v-if="!formDetail.emailVerified">
+                      <span class="small-txt">{{ $t("form.linkedEmail") }}</span>
                       <q-icon name="chevron_right" />
                     </template>
                   </q-input>
@@ -57,6 +58,7 @@
                 <template #input>
                   <q-input v-model="formDetail.phone" outlined clearable hide-bottom-space readonly>
                     <template v-if="!formDetail.phoneVerified" v-slot:append>
+                      <span class="small-txt">{{ $t("form.otpVerification") }}</span>
                       <q-icon name="chevron_right" />
                     </template>
                   </q-input>
@@ -1740,6 +1742,11 @@ const openConfirmSignOutDialog = () => {
         left: 0;
         border-radius: 8px;
       }
+    }
+
+    .small-txt {
+      font-weight: normal;
+      font-size: 12px;
     }
   }
   .pc-form-label {
