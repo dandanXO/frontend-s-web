@@ -17,12 +17,12 @@
           <div style="display: flex; justify-content: space-between; align-items: center">
             <div>
               <q-icon name="mail" />
-              {{ det.title }}
+              <span v-html="det.title"></span>
             </div>
             <q-chip color="brand" size="sm" label="Read" v-if="det.isRead && det.isRead !== 0" />
           </div>
           <div class="text-grey mailcontents" :style="`height: ${isSelectedMail === det.title ? 'auto' : '0px'}`">
-            {{ det.content }}
+            <span v-html="det.content"></span>
           </div>
 
           <div class="text-grey date q-mt-sm">

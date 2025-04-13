@@ -1132,7 +1132,11 @@ onMounted(() => {
       width: 100%;
       height: 4rem;
       font-weight: 600;
-      aspect-ratio: 106/64;
+      // height: 0;
+      // padding-bottom: calc(64 / 106 * 100);
+      // aspect-ratio: 106/64;
+      min-height: 60px;
+      // padding-left: 14px;
 
       &.active {
         // background: #00b900;
@@ -1303,6 +1307,8 @@ onMounted(() => {
   border-radius: 6px;
   background: #5c46e7;
   width: 100%;
+  height: 0;
+  padding-bottom: calc(46 / 335 * 100);
   aspect-ratio: 335/46;
 
   &:before {

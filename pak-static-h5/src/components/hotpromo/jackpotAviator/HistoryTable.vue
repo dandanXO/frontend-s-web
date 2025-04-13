@@ -72,13 +72,21 @@ const props = defineProps(['historyList']);
                 margin:0;
             }
         }
-
+        
         &:nth-child(odd) {
-            background-color: #032503;
+            background-color: #323738;
+            
         }
 
         &:nth-child(even) {
-            background-color: #113810;
+            background: #394142;
+        }
+        &:hover {
+            background: linear-gradient(180deg, #FB4F77 0%, #DA093A 100%);
+            color: #ffffff;
+        }
+        .betVolume {
+            color: #DE4B48;
         }
     }
 }

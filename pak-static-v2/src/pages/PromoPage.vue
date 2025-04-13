@@ -828,6 +828,10 @@ export default defineComponent({
   right: 0 !important;
   top: 0 !important;
   z-index: 9;
+  :deep(.q-icon) {
+    fill: #000000 !important;
+    color: #000000;
+  }
 }
 </style>
 <style lang="scss">
@@ -1268,6 +1272,9 @@ export default defineComponent({
     display: flex;
     align-items: center;
     gap: 4px;
+    > *:not(:last-child) {
+      margin-right: 4px;
+    }
     img {
       display: block;
       width: 30px;

@@ -17,8 +17,14 @@
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" :class="pageName === '' && 'page-title__empty'" v-if="hasPage">
-        <a @click="goToPrevPage(prevPage)" class="q-mt-sm">
-          <img src="../assets/images/index/btn-back.png" width="30" />
+        <a @click="route.path === '/deposit' || route.path === '/withdraw' || route.path === '/account' ? goToPrevPage('/') : goToPrevPage(prevPage)" class="q-mt-sm">
+          <img
+            class="house-icon"
+            v-if="route.path === '/deposit' || route.path === '/withdraw' || route.path === '/account'"
+            src="../assets/images/index/btn-house.png"
+            width="30"
+          />
+          <img v-else src="../assets/images/index/btn-back.png" width="30" />
           <!-- <q-icon class="header-icon" name="arrow_back_ios"></q-icon> -->
           <!-- <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">Back</span> -->
         </a>
@@ -85,7 +91,7 @@
     <FooterSection />
   </q-layout>
 
-  <div class="first-screen-loading" v-show="ui.firstScreenLoading" />
+  <div class="first-screen-loading" :class="isPromoPage ? 'ispromo-screen' : ''" v-show="ui.firstScreenLoading" />
 </template>
 
 <script>
@@ -166,7 +172,7 @@ export default defineComponent({
           }
         } else if (route.path === "/account") {
           prevPage.value = "/";
-          hasPage.value = false;
+          hasPage.value = true;
           pageName.value = "";
         } else if (route.path === "/account/bank") {
           hasPage.value = true;
@@ -284,22 +290,22 @@ export default defineComponent({
         } else if (route.path === "/forgot-password") {
           prevPage.value = "/login";
           hasPage.value = true;
-          pageName.value = "";
+          pageName.value = t("sideNav.recoverPwd");
         } else if (route.path === "/live-casino") {
           hasPage.value = true;
-          pageName.value = "Live Casino";
+          pageName.value = t("sideNav.livecasino");
         } else if (route.path === "/poker") {
           hasPage.value = true;
-          pageName.value = "Poker";
+          pageName.value = t("sideNav.poker");
         } else if (route.path === "/e-sport") {
           hasPage.value = true;
-          pageName.value = "E-Sports";
+          pageName.value = t("sideNav.esport");
         } else if (route.path === "/sport") {
           hasPage.value = true;
-          pageName.value = "Sports";
+          pageName.value = t("sideNav.sport");
         } else if (route.path === "/fish") {
           hasPage.value = true;
-          pageName.value = "Fishing";
+          pageName.value = t("sideNav.fishing");
         } else if (route.path === "/promo") {
           hasPage.value = false;
           pageName.value = t("header.promotion");
@@ -315,10 +321,23 @@ export default defineComponent({
         } else if (route.path === "/promotion") {
           hasPage.value = true;
           pageName.value = t("header.promotion");
-          if (route.fullPath.indexOf("pak-faq") > -1) {
-            pageName.value = "FAQ";
-          }
           prevPage.value = "";
+        } else if (route.path === "/faq-page") {
+          hasPage.value = true;
+          pageName.value = t("header.effectiveRevenueFAQ");
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "/account";
+          }
+        } else if (route.path === "/cs-verifier") {
+          hasPage.value = true;
+          pageName.value = t("header.customerServiceVerifer");
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "/account";
+          }
         } else if (route.path === "/finance/deposit") {
           hasPage.value = true;
           pageName.value = t("header.deposit");
@@ -555,13 +574,22 @@ export default defineComponent({
       }
       return ui.slotLists;
     });
-    // console.log(platformsList.value);
+
+    const isPromoPage = computed(() => {
+      return window.location.pathname === "/promotion";
+    });
 
     const checkFirstScreen = () => {
       if (ui.firstScreenLoading) {
-        setTimeout(() => {
-          ui.firstScreenLoading = false;
-        }, 500);
+        if (isPromoPage.value === true) {
+          setTimeout(() => {
+            ui.firstScreenLoading = false;
+          }, 600);
+        } else {
+          setTimeout(() => {
+            ui.firstScreenLoading = false;
+          }, 2000);
+        }
       }
     };
 
@@ -591,6 +619,7 @@ export default defineComponent({
       route,
       scrollPageRef,
       pageName,
+      isPromoPage,
       hasPage,
       ui,
       prevPage,
@@ -671,7 +700,7 @@ svg path {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 14rem;
+    width: 20rem;
     margin: 0 0.5rem;
     font-size: 16px;
     font-weight: bold;
@@ -690,9 +719,35 @@ svg path {
   transform: translateX(-50%);
   width: 500px;
   max-width: 100%;
-  background: url(../assets/images/index/first-screen-loading.png) no-repeat;
-  background-size: cover;
-  background-position: center center;
+  background-image: url("../assets/images/redirect/0.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: top center;
   z-index: 10000;
+
+  &:after {
+    background: url("../assets/images/redirect/logo-2s.gif") no-repeat center center;
+    content: "";
+    position: absolute;
+    bottom: 2vh;
+    width: 80%;
+    left: 10%;
+    right: 10%;
+    height: 6vh;
+    background-size: contain;
+  }
+
+  &.ispromo-screen {
+    background-size: auto 100%;
+    background-image: url(../assets/images/index/first-screen-loading.png);
+
+    &:after {
+      display: none;
+    }
+  }
+}
+
+.house-icon {
+  animation: beat 1.5s infinite;
 }
 </style>

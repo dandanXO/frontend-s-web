@@ -8,7 +8,7 @@
     </q-inner-loading>
     <div v-if="!loading">
       <q-infinite-scroll @load="onLoad" :offset="250">
-        <q-card v-for="(det, n) in truncatedList" :key="n" class="q-pa-sm" style="background: #212534; color: #bacef1;">
+        <q-card v-for="(det, n) in truncatedList" :key="n" class="q-pa-sm" style="background: #212534; color: #B2BDBF;">
           <div class="table-data" v-for="(head, e) in headers" :key="e">
             <div class="label">
               {{ head.label }}

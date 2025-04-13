@@ -1778,6 +1778,7 @@ export default {
     Suspend: 'ระงับ',
     Promotion: 'โปรโมชั่น',
     'Privilege Info': 'ข้อมูลสิทธิพิเศษ',
+    'Privilege Competition List': 'Privilege Competition List',
     'Home Banner': 'แบนเนอร์หน้าแรก',
     'Promotion pages': 'หน้าโปรโมชั่น',
     'Edit Promo': 'แก้ไขโปรโมชั่น',

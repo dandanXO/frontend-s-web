@@ -676,8 +676,8 @@ export default defineComponent({
       console.log("pak-static-h5 0220");
 
       handleRedirect();
-      // const info = await App.getInfo();
-      // console.log(info);
+
+      //COMMENT IT FOR TESTING In EMULATOR.
       checkIfVirtualMachine();
       checkServerStatus();
       checkSID();

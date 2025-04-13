@@ -5,7 +5,7 @@
         <img src="../../../assets/images/promotion/hotpromo/newplayer-spinwheel/click-spin-btn.png" />
       </div>
       <div class="wheel-top-btn">
-        <img src="../../../assets/images/promotion/hotpromo/newplayer-spinwheel/click-spin-indicate.png" />
+        <!-- <img src="../../../assets/images/promotion/hotpromo/newplayer-spinwheel/click-spin-indicate.png" /> -->
       </div>
       <div class="spin-wheel-board">
         <div class="spin-wheel-frame">
@@ -22,22 +22,22 @@
     </div>
 
     <div class="remaining-draw-wrapper">
-      <p class="remaining-draw-text">
+      <span class="remaining-draw-text">
         {{ $t("hotPromo.aviatorWheel.remainingDrawTimes") }}:
         <span id="remaning-draw-amt">{{ remainingDraws }}</span>
-      </p>
+      </span>
     </div>
   </div>
 
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
     <div class="congrats-container">
-      <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header.png" /></div>
-      <div class="congrats-coupons"><img src="../../../assets/images/index/modal/congrats-coupons.png" /></div>
+      <!-- <div class="congrats-header"><img src="../../../assets/images/index/modal/congrats-header.png" /></div>
+      <div class="congrats-coupons"><img src="../../../assets/images/index/modal/congrats-coupons.png" /></div> -->
       <div class="congrats-title">You get a coupon，Recharge $300 Get</div>
       <div class="congrats-highlight">Rs28</div>
 
       <div class="congrats-button">
-        <q-btn no-caps unelevated class="btn-primary" :loading="false" @click="router.push('/deposit')">
+        <q-btn no-caps unelevated :loading="false" @click="router.push('/deposit')">
           {{ $t("btn.recharge") }}
         </q-btn>
       </div>
@@ -253,8 +253,8 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 #remaning-draw-amt {
-  font-size: 20px;
-  color: #61ff00;
+  font-size: 13px;
+  color: #FEC778;
   font-weight: bold;
 }
 .spin-wheel-container {
@@ -270,10 +270,9 @@ onMounted(() => {
   width: 330px;
   height: 330px;
   margin: 0 auto;
-  // background: url(../../../assets/images/promotion/hotpromo/newplayer-spinwheel/spin-wheel-frame.png) no-repeat center
-  //   center;
-  // background: salmon;
-  background-size: 115%;
+  background: url(../../../assets/images/promotion/hotpromo/newplayer-spinwheel/spin-wheel-frame.png) no-repeat center
+    center;
+  background-size: 100%;
 }
 
 .wheel-frame {
@@ -344,7 +343,7 @@ onMounted(() => {
   }
 }
 .draw-btn {
-  width: 130px;
+  width: 80px;
   height: auto;
   aspect-ratio: 1/1;
   z-index: 25;
@@ -552,21 +551,27 @@ onMounted(() => {
 }
 
 .remaining-draw-wrapper {
-  background-image: url(../../../assets/images/promotion/hotpromo/newplayer-spinwheel/spin-wheel-highlight.png);
-  background-size: 75% 100%;
-  background-repeat: no-repeat;
-  background-position: center center;
+  // background-image: url(../../../assets/images/promotion/hotpromo/newplayer-spinwheel/spin-wheel-highlight.png);
+  // background-size: 75% 100%;
+  // background-repeat: no-repeat;
+  // background-position: center center;
+  margin-top: -30px;
+  margin-bottom: 8px;
   padding: 2px;
 
   .remaining-draw-text {
     color: #ffffff;
-    font-size: 20px;
+    font-size: 13px;
     // margin: 0px auto 15px;
     margin: auto;
     text-align: center;
     width: 300px;
     position: relative;
     z-index: 23;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -655,9 +660,12 @@ onMounted(() => {
 <style lang="scss" scoped>
 .congrats-button {
   position: absolute;
-  bottom: -60px;
+  bottom: 8%;
   left: 50%;
   transform: translateX(-50%);
+  background: url(img/purpleglow-btn.png)no-repeat center center;
+  background-size: contain;
+  padding: 8px 20px;
 }
 .congrats-wrapper {
   overflow: hidden;
@@ -667,26 +675,32 @@ onMounted(() => {
   align-items: center;
 }
 .congrats-container {
-  background-color: #113413;
+  // background-color: #113413;
   max-width: 400px;
   width: 100%;
   padding: 16px;
   position: relative;
   overflow: visible;
   border-radius: 12px;
+  background: url('img/modal-bg.png')no-repeat center center;
+  background-size: contain;
+  min-height: 500px;
 
   &:before {
-    content: "";
-    background-image: url(../../../assets/images/index/modal/congrats-container-light.png);
-    background-size: 100% 100%;
-    background-position: center center;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 150px;
-    position: absolute;
-    left: 0;
-    top: -150px;
+    display: none;
   }
+  // &:before {
+  //   content: "";
+  //   background-image: url(../../../assets/images/index/modal/congrats-container-light.png);
+  //   background-size: 100% 100%;
+  //   background-position: center center;
+  //   background-repeat: no-repeat;
+  //   width: 100%;
+  //   height: 150px;
+  //   position: absolute;
+  //   left: 0;
+  //   top: -150px;
+  // }
 
   .congrats-header {
     display: flex;
@@ -711,25 +725,82 @@ onMounted(() => {
   }
 
   .congrats-title {
-    color: #ffffff;
+    // color: #ffffff;
     display: flex;
     justify-content: center;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
+    // font-size: 16px;
+    // font-weight: bold;
+    // text-align: center;
+    color: #B573FF;
+    text-shadow: 0.57px 0.57px #00000040;
+    font-family: "Manrope";
+    font-weight: 700;
+    font-size: 13.9px;
+    line-height: 170%;
+    position: absolute;
+    top: 41%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    letter-spacing: -1px;
   }
 
   .congrats-highlight {
-    color: #fff96f;
-    font-size: 26px;
-    font-weight: bold;
-    text-align: center;
-    background-image: url(../../../assets/images/index/modal/congrats-highlight-bg.png);
-    padding: 2px 12px;
-    background-repeat: no-repeat;
-    background-size: 70% 100%;
-    background-position: center;
-    margin-top: 16px;
+    // color: #fff96f;
+    // font-size: 26px;
+    // font-weight: bold;
+    // text-align: center;
+    // background-image: url(../../../assets/images/index/modal/congrats-highlight-bg.png);
+    padding: 15px 12px;
+    // background-repeat: no-repeat;
+    // background-size: 70% 100%;
+    // background-position: center;
+    // margin-top: 16px;
+    background: unset;
+    position: absolute;
+    top: 60%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    color: #CF3AFF;
+    display: flex;
+    justify-content: center;
+  }
+}
+</style>
+
+<style lang="scss">
+.pak-newplayer-welcome-spin-table {
+  p {
+    margin: 0;
+    padding: 8px;
+  }
+  border-collapse: collapse !important;
+  tr:nth-child(2),tr:nth-child(4) {
+    td:nth-child(2) {
+      p {
+        color: #FFC554;
+      }
+    }
+  }
+  tr:nth-child(3) {
+    td:nth-child(2) {
+      p {
+        color: #6D8FF5;
+      }
+    }
+  }
+  th {
+    background: linear-gradient(rgba(122,1,288, 100%), rgba(122,1,288, 85%)) !important;
+  }
+
+  td {
+    background-color: transparent !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  tbody {
+    background: linear-gradient(180deg, rgba(184, 83, 255, 0.63) 0%, rgba(122, 1, 228, 0.63) 100%) !important;
   }
 }
 </style>

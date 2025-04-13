@@ -1,7 +1,7 @@
 <template>
   <q-dialog
     width="100%"
-    style="padding-bottom: env(safe-area-inset-bottom);"
+    style="padding-bottom: env(safe-area-inset-bottom)"
     :modelValue="modelValue"
     presistent
     @update:modelValue="(value) => emit('update:modelValue', value)"
@@ -10,6 +10,7 @@
       <div class="svc">
         <a class="cs-icon cs" :href="ui.CSAUrl" target="_blank">
           <img src="../../assets/images/newplayerguide/service.png" />
+          <span class="svc-txt">{{ $t("playerGuide.service") }}</span>
         </a>
       </div>
       <div class="close-dialog" @click="closeDialog">
@@ -36,7 +37,7 @@
                 <div class="midimg" v-if="index + 1 === 1 || index + 1 === 2">
                   <img :src="require(`../../assets/images/newplayerguide/step-mid-${index + 1}.png`)" />
                 </div>
-                <div class="mid-content" :class="{show: index + 1 === 4}">
+                <div class="mid-content" :class="{ show: index + 1 === 4 }">
                   <div class="ins">{{ step.instruction }}</div>
                   <div class="amt">{{ step.earnableAmt }}RS</div>
                 </div>
@@ -61,7 +62,10 @@
                   <div class="hotitems">
                     <div class="hotitem" v-for="i in 3" :key="i">
                       <span class="hot"><img src="../../assets/images/newplayerguide/tophot.png" /></span>
-                      <img @click="showVideo(index, i)" :src="require(`../../assets/images/newplayerguide/hot-0${i}.png`)" />
+                      <img
+                        @click="showVideo(index, i)"
+                        :src="require(`../../assets/images/newplayerguide/hot-0${i}.png`)"
+                      />
                     </div>
                   </div>
                 </div>
@@ -79,7 +83,7 @@
                   <div class="deposit-steps">
                     <div class="dep-step">
                       <img src="../../assets/images/newplayerguide/step-01.png" />
-                      Bank Transfer
+                      {{ $t("playerGuide.bankTransfer") }}
                     </div>
                     <div class="dep-step">
                       <img src="../../assets/images/newplayerguide/step-02.png" />
@@ -87,7 +91,7 @@
                     </div>
                     <div class="dep-step">
                       <img src="../../assets/images/newplayerguide/step-03.png" />
-                      USDT digital currency
+                      USDT {{ $t("playerGuide.digitalCurrency") }}
                     </div>
                   </div>
                 </div>
@@ -139,7 +143,7 @@
                 <div class="withdraw-steps">
                   <div class="withdraw-step">
                     <img src="../../assets/images/newplayerguide/step-01.png" />
-                    Bank account withdrawal
+                    {{ $t("playerGuide.bankAccountWithdrawal") }}
                   </div>
                   <div class="withdraw-step">
                     <img src="../../assets/images/newplayerguide/step-02.png" />
@@ -147,7 +151,7 @@
                   </div>
                   <div class="withdraw-step">
                     <img src="../../assets/images/newplayerguide/step-03.png" />
-                    USDT digital currency withdrawal
+                    USDT {{ $t("playerGuide.digitalCurrencyWithdrawal") }}
                   </div>
                 </div>
                 <ul class="note">
@@ -203,16 +207,16 @@
               <!-- <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dRPcJyisLUI?si=ok64lVuE9jWtcnGr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
             </div>
             <div class="buttons">
-            <div class="bottom-button" @click="runInnerSteps(index + 1)">
-              <!--              <span v-if="index + 1 === 4">-->
-              <!--                <img src="../../assets/images/newplayerguide/share-icon.png" />-->
-              <!--              </span>-->
-              {{ step.buttonTxt }}
+              <div class="bottom-button" @click="runInnerSteps(index + 1)">
+                <!--              <span v-if="index + 1 === 4">-->
+                <!--                <img src="../../assets/images/newplayerguide/share-icon.png" />-->
+                <!--              </span>-->
+                {{ step.buttonTxt }}
+              </div>
+              <div class="next-button" @click="nextDialog(index + 1, true)">
+                {{ $t("playerGuide.next") }}
+              </div>
             </div>
-            <div class="next-button" @click="nextDialog(index + 1, true)">
-              {{ $t("playerGuide.next") }}
-            </div>
-          </div>
           </div>
         </div>
       </template>
@@ -305,9 +309,9 @@ const showVideo = (i, vidIndex) => {
   if (i + 1 === 2) {
     const gameOptions = ["aviator", "mines", "7up7down"];
     let randomIndex = Math.floor(Math.random() * gameOptions.length);
-    
+
     if (vidIndex) {
-      randomIndex = vidIndex - 1
+      randomIndex = vidIndex - 1;
     }
     selectedGame.value = gameOptions[randomIndex];
   }
@@ -413,14 +417,14 @@ const runInnerSteps = (index) => {
   }
 };
 const closeDialog = () => {
-  let nextStep = 'END'
+  let nextStep = "END";
   // Update localStorage
   localStorage.setItem("newPlayerGuide", nextStep);
 
   // Emit the updated step to the parent component
   emit("update:modelValue", false); // Close the dialog
   emit("update:currentStep", nextStep); // Pass the next step to the parent component
-}
+};
 // Close the dialog and move to the next step
 const nextDialog = (index, goNext) => {
   if (isVideo.value === false) {
@@ -452,9 +456,8 @@ const nextDialog = (index, goNext) => {
         emit("update:modelValue", true); // Open the dialog again
       }, 100); // You can adjust this timeout if needed
     }
-
   }
-  
+
   let nextStep = (Number(currentStep.value) + 1).toString();
   if (Number(currentStep.value) === 5) {
     nextStep = "END";
@@ -471,25 +474,42 @@ const nextDialog = (index, goNext) => {
 };
 // Share
 
+const fallbackCopyTextToClipboard = (text) => {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  document.body.removeChild(textarea);
+
+  $q.notify({
+    message: "Link copied to clipboard",
+    color: "positive",
+    position: "top",
+    timeout: 2000,
+  });
+};
+
 const copyHrefLink = () => {
-  navigator.clipboard
-    .writeText(selfTgurl.value)
-    .then(() => {
-      $q.notify({
-        message: t("playerGuide.linkCopied"),
-        color: "positive",
-        position: "top",
-        timeout: 2000
+  const textToCopy = selfTgurl.value;
+  
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        $q.notify({
+          message: "Link copied to clipboard",
+          color: "positive",
+          position: "top",
+          timeout: 2000,
+        });
+      })
+      .catch(() => {
+        fallbackCopyTextToClipboard(textToCopy);
       });
-    })
-    .catch(() => {
-      $q.notify({
-        message: t("playerGuide.copyFailed"),
-        color: "negative",
-        position: "top",
-        timeout: 2000
-      });
-    });
+  } else {
+    fallbackCopyTextToClipboard(textToCopy);
+  }
 };
 const selfTgurl = ref("");
 const waUrl = ref("");
@@ -504,9 +524,11 @@ const handleShareToTikTok = (url) => {
 
 const handleShareToYoutube = (url) => {
   const shareText = t("earnMoney.reward.shareText", { url });
-  const youtubeShareUrl = `https://www.youtube.com/share?url=${encodeURIComponent(url)}&text=${encodeURIComponent(
-    shareText
-  )}`;
+  // const youtubeShareUrl = `https://www.youtube.com/share?url=${encodeURIComponent(url)}&text=${encodeURIComponent(
+  //   shareText
+  // )}`;
+  copyToClipboard(shareText);
+  const youtubeShareUrl = ui.youtubeUrl;
   window.open(youtubeShareUrl, "_self");
 };
 
@@ -635,18 +657,35 @@ defineExpose({ showVideo });
     img {
       width: 100%;
     }
+    a {
+      position: relative;
+
+      .svc-txt {
+        position: absolute;
+        bottom: 6px;
+        color: #1dab98;
+        -webkit-text-stroke: 0.5px white;
+        right: 0;
+        left: 0;
+        margin: auto;
+        text-align: center;
+        font-family: "Poppins";
+        font-weight: 900;
+        letter-spacing: -1px;
+      }
+    }
   }
   .step {
     padding-bottom: 40px;
     width: 100%;
-    &.step-5 .top {
-      width: 80%;
-      margin: 0 auto;
-      .title {
-        bottom: 0;
-      }
-    }
-    
+    // &.step-5 .top {
+    //   width: 80%;
+    //   margin: 0 auto;
+    //   .title {
+    //     bottom: 20px;
+    //   }
+    // }
+
     &.step-5 .main-box .withdraw-section .withdrawitems {
       width: 80%;
     }
@@ -676,7 +715,7 @@ defineExpose({ showVideo });
         color: #ffffff;
         text-shadow: -1px -1px 0 #215f25, 1px -1px 0 #215f25, -1px 1px 0 #215f25, 1px 1px 0 #215f25;
         text-transform: uppercase;
-        bottom: 15%;
+        bottom: 14%;
         width: 80%;
         margin: 0 auto;
         left: 0;
@@ -704,7 +743,10 @@ defineExpose({ showVideo });
       margin: -30px auto 0;
       border-radius: 16px;
       display: flex;
-      gap: 15px;
+      // gap: 15px;
+      > div:not(:last-child) {
+        margin-bottom: 15px;
+      }
       flex-direction: column;
       justify-content: center;
       align-items: center;
@@ -805,7 +847,7 @@ defineExpose({ showVideo });
         gap: 5px;
         margin-left: auto;
         // margin-top: 30px;
-        
+
         justify-content: space-between;
         align-items: center;
         font-weight: bold;
@@ -842,7 +884,10 @@ defineExpose({ showVideo });
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 10px;
+        // gap: 10px;
+        > div:not(:last-child) {
+          margin-bottom: 10px;
+        }
         position: relative;
         .abs-line {
           position: absolute;
@@ -874,7 +919,7 @@ defineExpose({ showVideo });
             width: 50%;
             height: 60px;
           }
-          
+
           @supports (-webkit-touch-callout: none) {
             top: 30svh;
           }
@@ -896,7 +941,10 @@ defineExpose({ showVideo });
           display: flex;
           justify-content: center;
           align-items: center;
-          gap: 10px;
+          // gap: 10px;
+          > div:not(:last-child) {
+            margin-right: 10px;
+          }
           .hotitem {
             position: relative;
             .watchTutorial {
@@ -928,7 +976,10 @@ defineExpose({ showVideo });
           align-items: center;
           width: 90%;
           margin: 5px auto;
-          gap: 10px;
+          // gap: 10px;
+          > div:not(:last-child) {
+          margin-right: 10px;
+        }
           .deposititem {
             img {
               width: 100%;
@@ -939,16 +990,20 @@ defineExpose({ showVideo });
       .deposit-steps {
         display: flex;
         flex-direction: column;
-        gap: 5px;
+        // gap: 5px;
         width: 90%;
         margin: 0 auto;
+        > div:not(:last-child) {
+          margin-bottom: 5px;
+        }
         .dep-step {
           display: flex;
-          gap: 10px;
+          // gap: 10px;
           justify-content: flex-start;
           align-items: center;
           img {
             width: 2.5vh;
+            margin-right: 10px;
           }
         }
       }
@@ -956,12 +1011,19 @@ defineExpose({ showVideo });
       .share-steps {
         display: flex;
         flex-direction: column;
-        gap: 5px;
         margin: 10px auto;
         font-size: 12px;
+
+        > * {
+          margin-top: 5px;
+        }
         .share-step {
           display: flex;
-          gap: 10px;
+          > * {
+            &:first-child {
+              margin-right: 10px;
+            }
+          }
           justify-content: flex-start;
           align-items: flex-start;
           .yellow {
@@ -1017,7 +1079,11 @@ defineExpose({ showVideo });
           width: 90%;
           // margin: 20px auto;
           margin: 5px auto;
-          gap: 10px;
+          // gap: 10px;
+        
+          > div:not(:last-child) {
+            margin-right: 10px;
+          }
           .withdrawitem {
             img {
               width: 100%;
@@ -1039,17 +1105,18 @@ defineExpose({ showVideo });
       .withdraw-steps {
         display: flex;
         flex-direction: column;
-        gap: 0px;
+        // gap: 0px;
         margin: 5px auto;
         .withdraw-step {
           font-weight: bold;
           display: flex;
           font-size: 10px;
-          gap: 10px;
+          // gap: 10px;
           justify-content: flex-start;
           align-items: center;
           img {
             width: 2.5vh;
+            margin-right: 10px;
           }
         }
       }
@@ -1086,7 +1153,11 @@ defineExpose({ showVideo });
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 20px;
+        // gap: 20px;
+        :not(:last-child) {
+          margin-right: 15px;
+        }
+
       }
       .next-button {
         text-transform: uppercase;
@@ -1148,12 +1219,12 @@ defineExpose({ showVideo });
           right: 0;
           z-index: 9999;
           animation: moveFinger 1.5s ease-in-out infinite;
-        @media screen and (min-width: 400px) {
-          width: 70px;
-          height: 70px;
+          @media screen and (min-width: 400px) {
+            width: 70px;
+            height: 70px;
+          }
         }
-        }
-        
+
         @media screen and (min-width: 400px) {
           font-size: 16px;
         }

@@ -38,7 +38,7 @@
         <div class="title-img">活动详情</div>
         <div class="little-title">
           <div class="ribbon">活动时间</div>
-          <div class="right">2025 年 04 月 07 日至 2025 年 04 月 13 日  </div>
+          <div class="right">2025 年 04 月 08 日至 2025 年 04 月 14 日  </div>
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
@@ -46,49 +46,49 @@
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
           <tbody>
-            <tr>
-              <th>有效投注</th>
-              <th>彩金</th>
-              <th>流水倍数</th>
-            </tr>
-            <tr>
-              <td>≥1,500</td>
-              <td>8 元</td>
-              <td :rowspan="9">6 倍流水</td>
-            </tr>
-            <tr>
-              <td>≥5,000</td>
-              <td>28 元</td>
-            </tr>
-            <tr>
-              <td>≥10,000</td>
-              <td>58 元</td>
-            </tr>
-            <tr>
-              <td>≥15,000</td>
-              <td>88 元</td>
-            </tr>
-            <tr>
-              <td>≥30,000</td>
-              <td>168 元</td>
-            </tr>
-            <tr>
-              <td>≥50,000</td>
-              <td>288 元</td>
-            </tr>
-            <tr>
-              <td>≥100,000</td>
-              <td>588 元</td>
-            </tr>
-            <tr>
-              <td>≥300,000</td>
-              <td>888 元</td>
-            </tr>
-            <tr>
-              <td>≥500,000</td>
-              <td>1,388 元</td>
-            </tr>
-          </tbody>
+                <tr>
+                  <th>有效投注</th>
+                  <th>奖励金</th>
+                  <th>流水倍数</th>
+                </tr>
+                <tr>
+                  <td>≥1,500</td>
+                  <td>8 元</td>
+                  <td :rowspan="9">6 倍流水</td>
+                </tr>
+                <tr>
+                  <td>≥5,000</td>
+                  <td>28 元</td>
+                </tr>
+                <tr>
+                  <td>≥10,000</td>
+                  <td>58 元</td>
+                </tr>
+                <tr>
+                  <td>≥15,000</td>
+                  <td>88 元</td>
+                </tr>
+                <tr>
+                  <td>≥30,000</td>
+                  <td>168 元</td>
+                </tr>
+                <tr>
+                  <td>≥50,000</td>
+                  <td>288 元</td>
+                </tr>
+                <tr>
+                  <td>≥100,000</td>
+                  <td>588 元</td>
+                </tr>
+                <tr>
+                  <td>≥300,000</td>
+                  <td>888 元</td>
+                </tr>
+                <tr>
+                  <td>≥500,000</td>
+                  <td>1,388 元</td>
+                </tr>
+              </tbody>
         </table>
 
         <div class="livepoker-rebate-game-bottom">
@@ -113,7 +113,7 @@
                 活动期间，活动仅计算电竞场馆中 2025 ESL One 罗利，会员在当日 2025 ESL One 罗利中累计有效投注≥1,500
                 元即可获得对应彩金，有效投注次日清零；
               </div>
-              <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
+              <div class="hint">注：奖励金不叠加派发，奖励金按最高档位每日派发一次。</div>
             </div>
           </div>
           <div class="item">

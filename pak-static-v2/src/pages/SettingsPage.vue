@@ -246,7 +246,7 @@ const logout = () => {
   }
 
   .top-section-inner {
-    background: #002b8296;
+    // background: #002b8296;
     border-radius: 4px;
     width: 100%;
     margin: -20px auto 0px;
@@ -259,6 +259,7 @@ const logout = () => {
     height: auto;
     margin-bottom: 10px;
     backdrop-filter: blur(4px);
+    background-color: rgb(55 95 172 / 74%);
 
     a {
       text-decoration: none;
@@ -427,7 +428,7 @@ const logout = () => {
   border-radius: 10px 10px 0px 0px;
   border-color: transparent;
   box-shadow: none;
-
+  min-height: 100px;
   .account-banner-img {
     width: 100%;
     border-radius: 10px 10px 0px 0px;

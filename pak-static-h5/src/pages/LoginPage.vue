@@ -13,31 +13,33 @@
   <div class="login-container" :class="isRestrictedDomain ? 'w-domain' : ''">
     <div class="back-left" v-if="!isRestrictedDomain">
       <router-link :to="'/home'">
-        <img src="../assets/images/index/btn-back.png" />
+        <img src="../assets/images/index/btn-house.png" />
       </router-link>
     </div>
-
+    <!--
     <div class="is-domain top-img">
       <img src="../assets/images/index/register-topimg.png" />
     </div>
     <div class="no-domain login-form-logo-img">
       <img src="../assets/images/auth/b9-logo.png" />
-    </div>
+    </div> -->
     <div class="back-btn-img" v-if="isRestrictedDomain" @click="router.replace('/')">
       <img src="../assets/images/index/btn-back.png" />
     </div>
-    <div class="no-domain auth-tab-wrapper">
+    <!-- <div class="no-domain auth-tab-wrapper">
       <q-tabs v-model="regLoginTab" dense no-caps class="auth-tab-toggle" indicator-color="transparent" align="justify">
         <q-tab name="login" :label="$t('header.login')" />
         <q-tab name="register" :label="$t('header.register')" />
       </q-tabs>
-    </div>
+    </div> -->
+    <div class="login-pg-title">{{ $t("header.login") }}</div>
 
     <div class="login-form-wrapper">
+      <!-- <FloatingStickyKefu /> -->
       <q-form ref="loginFormRef" @submit="onSubmit">
         <InputRowGrid v-if="!loginType">
           <template #fields>
-            <InputField :label="$t('form.phone')">
+            <InputField>
               <template #input>
                 <!-- <q-icon name="lock" class="input-icon" /> -->
                 <q-input
@@ -65,7 +67,7 @@
               </template>
             </InputField>
 
-            <InputField :label="$t('form.password')">
+            <InputField>
               <template #input>
                 <q-input
                   ref="passwordRef"
@@ -83,12 +85,13 @@
                     <q-icon name="lock" />
                   </template>
                   <template v-slot:append>
-                    <q-icon
+                    <!-- <q-icon
                       color="gray-3"
                       :name="isPwd ? 'visibility_off' : 'visibility'"
                       class="cursor-pointer"
                       @click="isPwd = !isPwd"
-                    />
+                    /> -->
+                    <img style="width: 20px;" class="cursor-pointer" @click="isPwd = !isPwd" :src="require(`../assets/images/common/visibility${isPwd?'_off':''}.png`)">
                   </template>
                 </q-input>
               </template>
@@ -140,20 +143,25 @@
         <router-link class="form-text" to="/register" style="color: #00ae00">Create account</router-link>
       </div> -->
     </div>
-    <router-link to="/forgot-password" class="forget-pwd">Forget password</router-link>
+    <router-link to="/forgot-password" class="forget-pwd">{{ $t("btn.forgetPwd") }}?</router-link>
 
     <div class="no-domain bottom-btn-primary">
       <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">
         {{ $t("btn.confirm") }}
       </q-btn>
+      <div class="areyounew">
+        {{ $t("btn.areyounew") }}
+        <a @click="goRegister" class="green">{{ $t("btn.register") }}</a>
+      </div>
 
       <div class="google-login-wrapper">
-        <img v-if="languageVal === 'en'" style="width: 100%" src="../assets/images/index/logindirectly-en.png" />
-        <img v-else style="width: 100%" src="../assets/images/index/logindirectly-ur.png" />
+        <img v-if="languageVal === 'en'" style="width: 100%" src="../assets/images/index/logindirectly-en.svg" />
+        <img v-else style="width: 100%" src="../assets/images/index/logindirectly-ur.svg" />
         <template v-if="isAndroid()">
           <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onCapacitorGoogleSignin">
             <img
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABd1BMVEUAAADxRznpQzXpRDXqQzXqQzXqQzXqRDbrQzTfQEDpRDbqQzXrQzX/VSvoRjbqQzXqQzXpQzfnQDjqQzTbSSTqQzXqQzXqQjTqQzTqQjTqQzXqQzXpRDT/MzPqQzTrQzb/xgD0khbrSTLqQzXrQzb8vAbqRDT7uwTwbiTtSTf6vAX7vARDhvX7vAX7vAZDhvX7vQZChPT7vARChPTzuwiCsDY3pFtEg/RChPVBhfP8uwY1p1RChfNChfRAivS5tR80qFMyqFRChfVChfRChfQzp1Q0qFM0qFMzmWYAgIA6nYFBh/BChPNAn2A0qFMzqFM0qFQ0p1MzqFMzqVM0qFNChfMA//84p1A0qFNChfRGhPY0qFM0plw9j8Iktkk0p1Q0qFM0qFM0qFIzqlUtpVozqVM0qFM0qFM0qFM0qFMzqFM0qFMzqVI1p0/qQzX7vAX5qgztVy36twdChfTfuRBXq0U0qFM/qU43oXVAieE1pV8+jsj///9xjqGrAAAAbnRSTlMAEmqx4vb022cIgPB9BiHQxhcgtAfP5JJrbOP6dQV6sAns/vtMW4Sx7w7ir2f4hn6Hh7Bw/uQORGhWWoOE/Rju+0wy9cl9+nUFAmXuVQjO5JJraYvbxgEg4eUdz+YyB4Dz+ZgPEWiv4Pb137ZzHX5o7HUAAAABYktHRHzRtiBfAAAAB3RJTUUH6AYXEzsig/8aPAAAAQJJREFUKM9jYCAAGJmYWVjZ2Jk5GFGEObnY8qCAm4cXIc7Hn4cEBARh4kIsyOJ5wiIwc0TBfDFxCUlxKSRxBh6QsLSMLIjNKycPF1dQVMrLU1bBdKhqfkFhnhoWH6jn5xdpaGKR0MrPz9eGMIvhQAfI0wVK6KFL6EMlDNAlDKFGGaFLGAN5Rvn5JqZmYAlzELAASVgCeVb5JaVl1gjH2ADFbe1AHrQvLytzcISJOzkDJVzATNcyIHBz9wCxPb28QSb5gCV8/UAyZf4BgUHBIWUVlcXFoWEQ3eERZUigqjoyCmZueDSyTEwswiVx8Qkw4cSkZJQQS0lNS8/IzMrOySWUbAAwR2hJPoYcuAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNC0wNi0yM1QxOTo1OTozMyswMDowMBiqq7wAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjQtMDYtMjNUMTk6NTk6MzMrMDA6MDBp9xMAAAAAAElFTkSuQmCC"
+              width="24px"
+              src="../assets/images/index/google-icon.svg"
             />
 
             &nbsp;
@@ -162,8 +170,9 @@
         </template>
         <template v-else>
           <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onClickGoogleSignin">
-            <img
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABd1BMVEUAAADxRznpQzXpRDXqQzXqQzXqQzXqRDbrQzTfQEDpRDbqQzXrQzX/VSvoRjbqQzXqQzXpQzfnQDjqQzTbSSTqQzXqQzXqQjTqQzTqQjTqQzXqQzXpRDT/MzPqQzTrQzb/xgD0khbrSTLqQzXrQzb8vAbqRDT7uwTwbiTtSTf6vAX7vARDhvX7vAX7vAZDhvX7vQZChPT7vARChPTzuwiCsDY3pFtEg/RChPVBhfP8uwY1p1RChfNChfRAivS5tR80qFMyqFRChfVChfRChfQzp1Q0qFM0qFMzmWYAgIA6nYFBh/BChPNAn2A0qFMzqFM0qFQ0p1MzqFMzqVM0qFNChfMA//84p1A0qFNChfRGhPY0qFM0plw9j8Iktkk0p1Q0qFM0qFM0qFIzqlUtpVozqVM0qFM0qFM0qFM0qFMzqFM0qFMzqVI1p0/qQzX7vAX5qgztVy36twdChfTfuRBXq0U0qFM/qU43oXVAieE1pV8+jsj///9xjqGrAAAAbnRSTlMAEmqx4vb022cIgPB9BiHQxhcgtAfP5JJrbOP6dQV6sAns/vtMW4Sx7w7ir2f4hn6Hh7Bw/uQORGhWWoOE/Rju+0wy9cl9+nUFAmXuVQjO5JJraYvbxgEg4eUdz+YyB4Dz+ZgPEWiv4Pb137ZzHX5o7HUAAAABYktHRHzRtiBfAAAAB3RJTUUH6AYXEzsig/8aPAAAAQJJREFUKM9jYCAAGJmYWVjZ2Jk5GFGEObnY8qCAm4cXIc7Hn4cEBARh4kIsyOJ5wiIwc0TBfDFxCUlxKSRxBh6QsLSMLIjNKycPF1dQVMrLU1bBdKhqfkFhnhoWH6jn5xdpaGKR0MrPz9eGMIvhQAfI0wVK6KFL6EMlDNAlDKFGGaFLGAN5Rvn5JqZmYAlzELAASVgCeVb5JaVl1gjH2ADFbe1AHrQvLytzcISJOzkDJVzATNcyIHBz9wCxPb28QSb5gCV8/UAyZf4BgUHBIWUVlcXFoWEQ3eERZUigqjoyCmZueDSyTEwswiVx8Qkw4cSkZJQQS0lNS8/IzMrOySWUbAAwR2hJPoYcuAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNC0wNi0yM1QxOTo1OTozMyswMDowMBiqq7wAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjQtMDYtMjNUMTk6NTk6MzMrMDA6MDBp9xMAAAAAAElFTkSuQmCC"
+           <img
+              width="24px"
+              src="../assets/images/index/google-icon.svg"
             />
 
             &nbsp;
@@ -191,28 +200,8 @@
       Don't have an account?
       <router-link to="/register" class="login">Register</router-link>
     </div> -->
-
     <div class="no-domain btn-lists">
-      <div class="list-item" @click="openCharity()">
-        <img class="btn-icon" id="charity-icon" src="../assets/images/auth/charity-icon.png" />
-        <div>Charity</div>
-      </div>
-      <div class="list-item" @click="openWhatsApp()">
-        <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
-        <div>WhatsApp</div>
-      </div>
-      <div class="list-item" @click="openYoutube()">
-        <img class="btn-icon" id="youtube-icon" src="../assets/images/auth/youtube-icon.png" />
-        <div>Youtube</div>
-      </div>
-      <div class="list-item" @click="openTiktok()">
-        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />
-        <div>Tiktok</div>
-      </div>
-      <div class="list-item" v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()">
-        <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
-        <div>{{ $t("btn.downloadApp") }}</div>
-      </div>
+      <ShareIcons />
     </div>
 
     <div class="is-domain social-container">
@@ -237,32 +226,13 @@
         </a>
       </div> -->
       <div class="btn-lists">
-        <div class="list-item" @click="openCharity()">
-          <img class="btn-icon" id="charity-icon" src="../assets/images/auth/charity-icon.png" />
-          <div>Charity</div>
-        </div>
-        <div class="list-item" @click="openWhatsApp()">
-          <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
-          <div>WhatsApp</div>
-        </div>
-        <div class="list-item" @click="openYoutube()">
-          <img class="btn-icon" id="youtube-icon" src="../assets/images/auth/youtube-icon.png" />
-          <div>Youtube</div>
-        </div>
-        <div class="list-item" @click="openTiktok()">
-          <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />
-          <div>TikTok</div>
-        </div>
-        <div class="list-item" v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()">
-          <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
-          <div>{{ $t("btn.downloadApp") }}</div>
-        </div>
+        <ShareIcons />
       </div>
     </div>
 
-    <div class="no-domain bottom-img">
+    <!-- <div class="no-domain bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
-    </div>
+    </div> -->
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
@@ -302,6 +272,7 @@ import { useRoute, useRouter } from "vue-router";
 import qs from "qs";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
+import ShareIcons from "../components/LoginAndRegisterShareIcons.vue";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { isAndroid, isInPwa, trackNewUserFtd } from "boot/utils";
@@ -310,8 +281,9 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
 import { useI18n } from "vue-i18n";
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
-import { i18nStore } from "../router/language";
+import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
+// import FloatingStickyKefu from "../components/auth/FloatingStickyKefu.vue";
 
 export default defineComponent({
   name: "LoginPage",
@@ -319,14 +291,16 @@ export default defineComponent({
   components: {
     // PrimaryButton,
     InputField,
-    InputRowGrid
+    InputRowGrid,
+    ShareIcons,
+    // FloatingStickyKefu
     // RiArrowDropLeftLine
   },
   setup() {
     const { t } = useI18n();
+    const ui = useUI();
     const i18nStoreLanguage = i18nStore();
     const { languageVal } = storeToRefs(i18nStoreLanguage);
-    const ui = useUI();
     const tab = ref("login");
     const loginType = ref(false);
     const store = userStore();
@@ -461,26 +435,6 @@ export default defineComponent({
         const info = await App.getInfo();
         appVersionNo.value = info.version;
       }
-    };
-
-    const openWhatsApp = () => {
-      window.open(ui.whatsappUrl, "_blank");
-    };
-
-    const openInsta = () => {
-      window.open(ui.instagramUrl, "_blank");
-    };
-
-    const openTiktok = () => {
-      window.open(ui.tiktokUrl, "_blank");
-    };
-
-    const openYoutube = () => {
-      window.open(ui.youtubeUrl, "_blank");
-    };
-
-    const openCharity = () => {
-      window.open(ui.charityUrl, "_blank");
     };
 
     const thirdPartyLoginInfo = reactive({
@@ -625,7 +579,7 @@ export default defineComponent({
 
     const onSubmit = () => {
       $q.loading.show({
-        message: "Logging in"
+        message: t('notify.loggingIn')
       });
       const sidParam = store.visitorId;
 
@@ -635,7 +589,7 @@ export default defineComponent({
           passwordRef.value.validate();
           // verificationRef.value.validate();
           $q.loading.show({
-            message: "Logging in"
+            message: t('notify.loggingIn')
           });
           // || verificationRef.value.hasError
           if (loginNameRef.value.hasError || passwordRef.value.hasError) {
@@ -702,7 +656,7 @@ export default defineComponent({
           telephoneRef.value.validate();
           phoneVerificationRef.value.validate();
           $q.loading.show({
-            message: "Logging in"
+            message: t('notify.loggingIn')
           });
           if (telephoneRef.value.hasError || phoneVerificationRef.value.hasError) {
             $q.loading.hide();
@@ -881,13 +835,7 @@ export default defineComponent({
       const absoluteUrl = url;
       window.open(absoluteUrl, "_blank");
     };
-    const downloadApp = () => {
-      if (ui.downloadAppUrl) {
-        window.open(ui.downloadAppUrl, "_blank");
-      } else {
-        ui.getTopDownloadUrl().then(() => window.open(ui.downloadAppUrl, "_blank"));
-      }
-    };
+
     const moveCsIcon = (ev) => {
       isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
 
@@ -974,17 +922,11 @@ export default defineComponent({
       csDragPos,
       isDraggingCsIcon,
       openCSInNewTab,
-      downloadApp,
       moveCsIcon,
       moveWhatsIcon,
       whatDragPos,
       loadCustomerAddress,
       ui,
-      openWhatsApp,
-      openInsta,
-      openTiktok,
-      openYoutube,
-      openCharity,
       isRestrictedDomain,
       router,
       onCapacitorGoogleSignin,
@@ -1037,9 +979,16 @@ export default defineComponent({
   flex-direction: column;
   // justify-content: center;
   padding-top: 20px;
-  background: url("../assets/images/auth/bg-login.png");
-  background-size: 100% 100%;
+  // background: url("../assets/images/auth/bg-login.png");
+  background: url("../assets/images/auth/top-login-bg.jpg");
+  background-size: cover;
   background-repeat: no-repeat;
+  // padding-top: 250px;
+  padding-top: 265px;
+  padding-bottom: 20px;
+  @media screen and (max-width: 400px) {
+    padding-top: 235px;
+  }
   .is-domain {
     display: none;
   }
@@ -1047,6 +996,9 @@ export default defineComponent({
     display: unset;
     &.btn-lists {
       display: flex;
+      width: 100%;
+      justify-self: space-around;
+      margin: 0 auto;
     }
   }
   .forget-pwd {
@@ -1055,6 +1007,12 @@ export default defineComponent({
     justify-content: flex-end;
     align-items: center;
     margin: 0 20px 20px;
+    text-decoration: none;
+
+    @media screen and (max-width: 400px) {
+      margin: 0 20px 10px;
+      font-size: 12px;
+    }
   }
   &.w-domain {
     background: url("../assets/images/auth/trianglebg.png");
@@ -1136,8 +1094,12 @@ export default defineComponent({
 
 .back-left {
   position: fixed;
-  top: 16px;
-  left: 16px;
+  top: 15px;
+  right: 15px;
+  width: 30px;
+  img {
+    width: 100%;
+  }
 }
 
 .login-form-logo-img {
@@ -1163,68 +1125,23 @@ export default defineComponent({
     width: 2.25rem;
   }
 }
-
-.btn-lists {
-  display: flex;
-  justify-content: space-evenly;
-  gap: 0px;
-  width: 100%;
-  margin: 10px auto;
-  align-items: flex-start;
-  text-align: center;
-  .list-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 8px;
-    color: #9f9f9f;
-    font-size: 11px;
-    flex: 1;
-  }
-
-  .btn-icon {
-    width: 42px;
-    height: 42px;
-
-    &:active {
-      filter: brightness(0.85);
-      transform: translate(0px, 1px);
-    }
-  }
-  #cs-icon {
-    width: 70px;
-    height: 70px;
-  }
-  #whatapp-icon {
-    margin-top: 10px;
-    animation: smallbeat 2s infinite;
-  }
-  #charity-icon {
-    margin-top: 10px;
-    animation: smallbeat 2s infinite;
-    animation-delay: 0.4s;
-  }
-  #youtube-icon {
-    margin-top: 10px;
-    animation: smallbeat 2s infinite;
-    animation-delay: 0.8s;
-  }
-  #tiktok-icon {
-    margin-top: 10px;
-    animation: smallbeat 2s infinite;
-    animation-delay: 1.2s;
-  }
-  #download-icon {
-    margin-top: 10px;
-    animation: smallbeat 2s infinite;
-    animation-delay: 1.6s;
-    //filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
-  }
+.login-pg-title {
+  font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  color: #ffffff;
+  padding: 0 20px;
 }
 
 .login-form-wrapper {
-  padding: 0 20px 20px 20px;
+  padding: 0 20px 15px 20px;
+
+  @media screen and (max-width: 400px) {
+    padding: 0 20px 10px 20px;
+  }
 
   :deep(.q-field__control) {
     height: 45px;
@@ -1298,10 +1215,19 @@ export default defineComponent({
   padding: 3px 20px 8px;
   .btn-primary {
     background: linear-gradient(90deg, #29ed89 0%, #97e872 100%);
+    color: #000a01;
+    @media screen and (max-width: 400px) {
+      min-height: 35px;
+      height: 35px;
+    }
   }
   :deep(.q-btn__content) {
     font-weight: bolder;
     font-size: 16px;
+    
+    @media screen and (max-width: 400px) {
+      font-size: 13px;
+    }
   }
 }
 
@@ -1314,7 +1240,7 @@ export default defineComponent({
   display: flex;
   width: 70px;
   height: 76px;
-  background: url("../assets/images/index/icon-cs.png") no-repeat center center;
+  background: url("../assets/images/index/icon-cs.gif") no-repeat center center;
   background-size: contain;
 
   &:active {
@@ -1360,11 +1286,28 @@ export default defineComponent({
     transform: scale(1);
   }
 }
+.areyounew {
+  margin: 15px 0;
+
+  @media screen and (max-width: 400px) {
+    margin: 10px 0;
+    font-size: 12px;
+  }
+
+  .green {
+    color: #21ef89;
+    font-weight: 700;
+    cursor: pointer;
+  }
+}
 
 .google-login-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  // gap: 10px;
   margin-top: 25px;
+  img { 
+    margin-bottom: 10px;
+  }
 }
 </style>

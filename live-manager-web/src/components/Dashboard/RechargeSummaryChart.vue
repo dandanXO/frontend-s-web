@@ -23,7 +23,6 @@ import { ref, onMounted } from 'vue'
 import { DashboardService } from '@/service/DashboardService'
 
 onMounted(() => {
-  DashboardService.getRechargeSummary().then((data) => (summary.value = data))
 })
 
 const summary = ref()

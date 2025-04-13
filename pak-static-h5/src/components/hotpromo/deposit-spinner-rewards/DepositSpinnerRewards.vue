@@ -106,12 +106,12 @@
       <div class="prize-popup">
         <!-- <q-btn icon="close" flat round dense v-close-popup class="q-ml-auto" /> -->
         <div class="prize-gold">
-          <!--          <div class="prize-get">You get the reward</div>-->
+                   <div class="prize-get">You get {{ prizePopupBonusAmt }} PRK</div>
 
           <div class="prize-amount">{{ prizePopupBonusAmt }} PRK</div>
-        </div>
 
-        <q-btn no-caps unelevated class="btn-primary" @click="closeDialog">{{ $t("btn.claim") }}</q-btn>
+<q-btn no-caps rounded unelevated class="purple-bg" @click="closeDialog">{{ $t("btn.recharge") }}</q-btn>
+        </div>
       </div>
     </q-dialog>
   </div>
@@ -475,7 +475,6 @@ const transformStyle = computed(() => {
   background: url(img/bg-img.png) no-repeat center top;
   .top {
     display: flex;
-    gap: 10px;
     margin: 20px 0px;
     .side-buttons {
       font-weight: 600;
@@ -484,9 +483,10 @@ const transformStyle = computed(() => {
       display: flex;
       flex-direction: column;
       gap: 15px;
+      margin-right: 10px;
 
       .individual-btn {
-        background: #30af88;
+        background: #3F30AF;
         padding: 5px;
         color: #ffffff;
         text-align: center;
@@ -502,22 +502,19 @@ const transformStyle = computed(() => {
       font-size: 16px;
       font-weight: 700;
       line-height: 24px;
-      background: linear-gradient(92.28deg, #28ae90 0.45%, #70bf56 65.68%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #f9f9f9;
       span.orange {
-        background: linear-gradient(180deg, #ff7527 0%, #ffa011 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: #F9D649;
       }
     }
   }
   .deposit-now {
     text-decoration: none;
-    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-    width: 148px;
-    height: 40px;
-    color: #000a01;
+    background: url("img/deposit-now-btn-bg.png") center center no-repeat;
+    background-size: 100% 100%;
+    width: 197px;
+    height: 56px;
+    color: #fff;
     font-family: Poppins;
     font-size: 16px;
     font-weight: 700;
@@ -538,7 +535,6 @@ const transformStyle = computed(() => {
 
     border-top: 1px solid #ffe667;
     background: #032519;
-    // background-image: url(img/spinner-bg.png);
     background-position: center center;
     background-size: cover;
     @media screen and (min-width: 500px) {
@@ -604,13 +600,28 @@ const transformStyle = computed(() => {
         width: 85vw;
         max-width: 100%;
         height: 17px;
-        background: linear-gradient(180deg, #0b4400 0%, #1c751c 100%);
-        border: 1px solid #5ea361;
+        background: linear-gradient(180deg, #131321 0%, #060339 50.1%, #131321 97.1%);
+        border: 1px solid #0055FF;
         border-radius: 10px;
         .innerbar {
           height: 15px;
-          background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+          background: linear-gradient(90deg, #05078A 0%, #7D5CF2 100%);
           border-radius: 10px;
+          position: relative;
+          overflow: hidden;
+
+          &:before {
+            content: "";
+            background: url(img/bar-sparkle.png) no-repeat center center;
+            position: absolute;
+            top: 0px;
+            left: 0;
+            right: 0;
+            width: 40px;
+            height: 15px;
+            margin-left: auto;
+            background-size: contain;
+          }
         }
       }
       .barnumbers {
@@ -701,9 +712,7 @@ const transformStyle = computed(() => {
       font-size: 12px;
       font-weight: 700;
       line-height: 18px;
-      background: linear-gradient(92.28deg, #28ae90 0.45%, #70bf56 65.68%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #f9f9f9;
     }
     .remainingamt {
       color: #ffee56;
@@ -735,7 +744,7 @@ const transformStyle = computed(() => {
     height: 84px;
     color: white;
     border-radius: 10px 10px 0 0;
-    background: radial-gradient(50% 40.87% at 50% 59.13%, #001501 0%, #002417 100%);
+    background: radial-gradient(50% 40.87% at 50% 59.13%, #2b2b2b 0%, #090024 100%);
     border: 1.5px solid #8c7b32;
     min-height: 22.5vw;
 
@@ -782,6 +791,8 @@ const transformStyle = computed(() => {
       align-items: center;
     }
     &:after {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
       content: "";
       background: linear-gradient(
         135.38deg,
@@ -821,6 +832,9 @@ const transformStyle = computed(() => {
 .prize-popup {
   width: 100%;
   margin-bottom: 120px;
+  .purple-bg {
+    background: linear-gradient(90deg, #5856FF 0%, #262E99 100%);
+  }
 }
 .prize-gold {
   width: 95%;
@@ -832,29 +846,45 @@ const transformStyle = computed(() => {
 
   .prize-get {
     position: absolute;
-    bottom: 20%;
+    bottom: 28%;
     font-family: Manrope;
     font-size: 13px;
     font-weight: 700;
     line-height: 22.1px;
     text-align: center;
-    color: #ffffff;
+    color: #5254AD;
+
   }
   .prize-amount {
     position: absolute;
-    bottom: 5%;
+    bottom: 15%;
     font-family: Poppins;
     font-size: 30px;
     font-weight: 900;
     line-height: 45px;
     margin-bottom: 0px;
     text-align: center;
-    color: #fff96f;
-    text-shadow: 1px 1px #0000008a;
+    letter-spacing: -2px;
+    // color: #fff96f;
+    // text-shadow: 1px 1px #0000008a;
+    background: linear-gradient(270deg, #394AE2 0%, #6B89FF 52.5%, #394AE2 100%);
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke:.7px white; /* Creates the border */
 
     @media (max-width: 380px) {
       bottom: 3.5%;
     }
+  }
+  .q-btn.purple-bg {
+    position: absolute;
+    bottom: 5%;
+    width: 50%;
+    color:#EDE7FF;
+    font-weight: 700;
+    font-family: 'Poppins';
   }
 }
 </style>

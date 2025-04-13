@@ -399,9 +399,9 @@
         </el-tab-pane>
         <el-tab-pane name="gameBetRecord" label="投注记录">
           <div class="payout-total">
-            <div>总投注: {{ totalBetRecord.totalBet }}</div>
-            <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
-            <div>总有效投注: {{ totalBetRecord.totalValidBet }}</div>
+            <div>总投注：{{ totalBetRecord.totalBet }}</div>
+            <div>总派彩：{{ totalBetRecord.totalPayout }}</div>
+            <div>总有效投注：{{ totalBetRecord.totalValidBet }}</div>
           </div>
           <div>
             <el-form layout="inline" :model="searchForm.gameBetRecord">
@@ -1153,7 +1153,7 @@ export default defineComponent({
             searchForm[v].startDate = chgDate(7);
             searchForm[v].endDate = chgDate(0);
             if (v === "gameBetRecord") {
-              // 结束时间如果不跟开始时间一个月，则从当月1号开始
+              // 结束时间如果不跟开始时间一个月，则从当月 1 号开始
               if (
                 moment(searchForm[v].startDate).format("YYYY-MM") !== moment(searchForm[v].endDate).format("YYYY-MM")
               ) {
@@ -1419,11 +1419,11 @@ export default defineComponent({
         return "";
       }
       if (platformName === "AG") {
-        return "AG真人、XIN电子"; // AG
+        return "AG 真人、XIN 电子"; // AG
       } else if (platformName === "AGF") {
-        return "AG捕鱼"; // AGF
+        return "AG 捕鱼"; // AGF
       } else if (platformName === "BBINDY") {
-        return "BBIN真人"; // BBINDY
+        return "BBIN 真人"; // BBINDY
       } else if (platformName === "KY") {
         return "开元棋牌"; // KY
       } else if (platformName === "KYDY") {
@@ -1431,11 +1431,11 @@ export default defineComponent({
       } else if (platformName === "DT") {
         return "大唐棋牌"; // DT
       } else if (platformName === "TCG") {
-        return "TCG彩票"; // TCG
+        return "TCG 彩票"; // TCG
       } else if (platformName === "PINNACLE") {
-        return "AP体育"; // AP
+        return "AP 体育"; // AP
       } else if (platformName === "EBET") {
-        return "WE真人"; // EBET
+        return "WE 真人"; // EBET
       } else if (platformName === "ALLBET") {
         return "欧博真人"; // EBET
       } else if (platformName === "LEG") {
@@ -1445,41 +1445,41 @@ export default defineComponent({
       } else if (platformName === "GFLC") {
         return "高登棋牌"; // DT
       } else if (platformName === "PT") {
-        return "PT电子"; // PTDY
+        return "PT 电子"; // PTDY
       } else if (platformName === "PG") {
-        return "PG电子"; // PGDY
+        return "PG 电子"; // PGDY
       } else if (platformName === "SW") {
-        return "SW电子"; // PGDY
+        return "SW 电子"; // PGDY
       } else if (platformName === "SABA") {
         return "沙巴体育"; // PGDY
       } else if (platformName === "BG") {
-        return "BG真人"; // PGDY
+        return "BG 真人"; // PGDY
       } else if (platformName === "Evo") {
-        return "Evo真人"; // PGDY
+        return "Evo 真人"; // PGDY
       } else if (platformName === "BBIN") {
-        return "BBIN真人"; // PGDY
+        return "BBIN 真人"; // PGDY
       } else if (platformName === "WE") {
-        return "WE真人"; // PGDY
+        return "WE 真人"; // PGDY
       } else if (platformName === "PMLIVE") {
-        return "DB真人"; // PGDY
+        return "DB 真人"; // PGDY
       } else if (platformName === "PM") {
         return "熊猫体育"; // PGDY
       } else if (platformName === "FB") {
-        return "FB体育"; // PGDY
+        return "FB 体育"; // PGDY
       } else if (platformName === "PMFISH") {
-        return "DB捕鱼";
+        return "DB 捕鱼";
       } else if (platformName === "RG") {
-        return "RG电竞";
+        return "RG 电竞";
       } else if (platformName === "IM") {
-        return "IM体育";
+        return "IM 体育";
       } else if (platformName === "IA") {
-        return "IA电竞";
+        return "IA 电竞";
       } else if (platformName === "TFGaming") {
         return "雷火电竞";
       } else if (platformName === "IMES") {
-        return "IM电竞";
+        return "IM 电竞";
       } else if (platformName === "GPS") {
-        return "GPS决战中途岛";
+        return "GPS 决战中途岛";
       } else {
         return platformName;
       }
@@ -1487,7 +1487,6 @@ export default defineComponent({
 
     const getSubType = (subType, type) => {
       // return subType + "_" + type;
-
       if (!type) {
         return "";
       }
@@ -1502,6 +1501,8 @@ export default defineComponent({
         return "转出"; // 转出
       } else if (type === "DEPOSIT") {
         return "转进"; // 转出
+      }else if (type === "VIP_REBATE"|| subType === "VIP_REBATE"){
+        return "VIP 返水"; // VIP 返水
       } else {
         return subType;
       }
@@ -1553,7 +1554,7 @@ export default defineComponent({
         return "";
       }
       if (depositType === "BANK") {
-        return "VIP转卡"; // VIP转卡
+        return "VIP 转卡"; // VIP 转卡
       } else if (depositType === "USDTERC") {
         return "USDT ERC"; // USDT ERC
       } else if (depositType === "USDTTRC") {
@@ -1573,11 +1574,11 @@ export default defineComponent({
       } else if (depositType === "WECHATCODE") {
         return "微信支付"; // 微信支付
       } else if (depositType === "QQCODE") {
-        return "QQ支付"; // QQ支付
+        return "QQ 支付"; // QQ 支付
       } else if (depositType === "KDPAY") {
-        return "K豆"; // K豆
+        return "K 豆"; // K 豆
       } else if (depositType === "BLBPAY") {
-        return "808钱包"; // 808钱包
+        return "808 钱包"; // 808 钱包
       } else if (depositType === "DDPAY") {
         return "钉钉"; // 钉钉
       } else if (depositType === "HBPAY") {

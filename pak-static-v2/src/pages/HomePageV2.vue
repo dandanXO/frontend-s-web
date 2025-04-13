@@ -88,7 +88,7 @@
       </div>
     </q-page-sticky>
 
-    <q-page-sticky position="bottom-left" :offset="hbDragPos" class="floating-btn" v-if="isHbShow">
+    <q-page-sticky position="bottom-right" :offset="hbDragPos" class="floating-btn" v-if="isHbShow">
       <div>
         <div class="hb-close">
           <q-btn dense rounded icon="close" class="bg-grey text-black" size="sm" @click="isHbShow = false" />
@@ -622,7 +622,7 @@ const liveDragPos = ref([16, 0]);
 const isDraggingLiveIcon = ref(false);
 const isLiveUrlShow = ref(false);
 
-const hbDragPos = ref([10, 0]);
+const hbDragPos = ref([10, 100]);
 const isDraggingHbIcon = ref(false);
 const isHbShow = ref(true);
 const hbSlide = ref(0);
@@ -3690,18 +3690,23 @@ const showCongratsModal = () => {
     .game-platform-img {
       // background-color: #cccccc;
       width: 100%;
-      aspect-ratio: 1/1;
+      // aspect-ratio: 1/1;
       background-size: cover;
       background-position: center center;
       position: relative;
       background-image: url("../assets/images/index/mini-game-bg.png");
       border-radius: 20px;
+       min-height: 100px;
+
 
       &.game-fish {
-        aspect-ratio: 1/1.2;
+        // aspect-ratio: 1/1.2;
+        min-height: 100px;
+
       }
 
       .game--bg {
+        min-height: 100px;
         border-radius: 8px;
         background-size: 100% 100%;
         background-position: top center;
@@ -4253,6 +4258,7 @@ const showCongratsModal = () => {
       display: block;
       width: 100%;
       max-width: 320px;
+      height: 60px;
     }
   }
 

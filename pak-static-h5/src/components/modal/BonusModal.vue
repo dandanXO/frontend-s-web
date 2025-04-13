@@ -14,6 +14,18 @@
           <q-btn flat class="details">{{ $t("btn.details") }}</q-btn>
         </a>
       </div>
+      <div v-if="hasRedemptionBonus" class="mission-item">
+        
+        <img class="mission-icon" src="../../assets/images/earn-money/redemptionicon.png" />
+        <div class="mission-title-wrapper">
+          <div class="mission-title">
+            <span>Redemption Code</span>
+          </div>
+        </div>
+        <RouterLink to="/account?openCodeModal=true">
+          <q-btn flat class="details">{{ $t("btn.details") }}</q-btn>
+        </RouterLink>
+      </div>
       <div v-for="(mission, index) in promoList" :key="index" class="mission-item">
         <img class="mission-icon" :src="imgURL + mission.mobileFastAccessIconImgUrl" />
         <div class="mission-title-wrapper">
@@ -43,6 +55,7 @@ import { userStore } from "stores/index";
 const emit = defineEmits(["open-new-player"]); 
 const store = userStore();
 const props = defineProps({
+  hasRedemptionBonus: Boolean,
   hasTopDownload: Boolean,
   promoList: Array,
 });
@@ -104,6 +117,7 @@ const openNewPlayerGuide = () => {
       max-width: 248px;
       margin-bottom: -24px;
       margin-right: 24px;
+      height: 60px;
     }
   }
 
@@ -115,9 +129,11 @@ const openNewPlayerGuide = () => {
     max-height: 60vh;
     overflow-y: auto;
     .mission-item {
+      a {
+        text-decoration: none;
+      }
       display: flex;
       align-items: center;
-      gap: 7px;
       padding: 8px 8px 8px 6px;
       background-color: #81ff9e1a;
       border-radius: 8px;
@@ -125,6 +141,7 @@ const openNewPlayerGuide = () => {
       .mission-icon {
         width: 40px;
         max-width: 10vw;
+        margin-right: 7px;
       }
       .mission-title-wrapper {
         display: flex;
@@ -170,5 +187,6 @@ const openNewPlayerGuide = () => {
   position: absolute;
   bottom: 10px;
   right: 10px;
+  z-index: 99;
 }
 </style>

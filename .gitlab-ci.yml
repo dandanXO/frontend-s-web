@@ -227,6 +227,13 @@ deploy-dy-landing-v11:
 
 #===============================================================================================
 
+deploy-dy-landing-v13:
+  extends: .s3-deploy
+  variables:
+    PROJECT: dy-landing-v13
+
+#===============================================================================================
+
 deploy-lh-download:
   extends: .s3-deploy
   variables:
@@ -759,6 +766,20 @@ deploy-lh-landing-v12:
 
 #===============================================================================================
 
+deploy-lh-landing-v13:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-landing-v13
+
+#===============================================================================================
+
+deploy-lh-dy-xf-forbidden:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-dy-xf-forbidden
+
+#===============================================================================================
+
 deploy-lh-redirect:
   extends: .s3-deploy
   variables:
@@ -1175,6 +1196,12 @@ deploy-pk2-download:
 
 #===============================================================================================
 
+deploy-pk2-download-v2:
+  extends: .s3-deploy
+  variables:
+    PROJECT: pk2-download-v2
+
+#===============================================================================================
 build-pk2-redirect-v3:
   extends: .build-projects
   variables:
