@@ -1212,7 +1212,7 @@ export default defineComponent({
                   sessionStorage.removeItem('POPUP');
                   localStorage.setItem('POPUP', JSON.stringify(popupExpiryMap.value));
               }
-              
+
               // popupList.value = res.data;
               // // if (res.data[id] !== null) {
               // if (isImpt === null) {
@@ -1698,7 +1698,7 @@ export default defineComponent({
     const updatePromoRemainingTime = () => {
       floatPromoRemainingTime.value = floatPromo.value.map((promo) => {
         let result = "00:00:00";
-        
+
         if (promo?.showTime) {
           console.log(promo.title)
           const now = moment(Date.now());
@@ -1711,7 +1711,7 @@ export default defineComponent({
             result = `${`${hours}`.padStart(2, 0)}:${`${minutes}`.padStart(2, 0)}:${`${seconds}`.padStart(2, 0)}`;
           }
         }
-        console.log(result,'time');
+        // console.log(result,'time');
         return result;
       });
     };
@@ -1828,7 +1828,7 @@ export default defineComponent({
       } catch {
 
       }
-      
+
       if (sessionStorage.getItem("regSuccessGuideVisible")) {
         store.regSuccessGuideVisible = true;
         sessionStorage.removeItem("regSuccessGuideVisible");
@@ -2017,7 +2017,7 @@ export default defineComponent({
     // text-shadow: 2px 2px 0px #00000040;
     font-size: 1.02rem;
   }
-  
+
 }
 
 .q-page-container {

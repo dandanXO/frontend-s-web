@@ -776,7 +776,7 @@ export default {
     1000: "Error de Inicio de Sesión en el nombre de usuario o la contraseña",
     1001: "Cuenta cerrada",
     1002: "La cuenta es para miembros registrados",
-    1004: "El nombre de usuario solo puede consistir en números y letras.",
+    1004: "La cuenta está bloqueada temporalmente por ingresar la contraseña incorrecta varias veces.",
     1011: "La cuenta actual ya ha vinculado un número de teléfono.",
     1012: "La cuenta actual ya ha vinculado una dirección de correo electrónico.",
     1013: "La cuenta actual ya ha vinculado una fecha de nacimiento.",
