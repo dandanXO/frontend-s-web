@@ -293,7 +293,11 @@ export default defineComponent({
     const isPromoDetailPage = ref(false);
 
     const backToPromoList = () => {
-      if (window.location.pathname === "/promotion") {
+      if (isWebview.value) {
+        router.replace(`/wv-promotion?token=${SessionStorage.getItem("TOKEN")}`)
+        isPromoDetail.value = false
+      }
+      else if (window.location.pathname === "/promotion") {
         window.location.href = "xfapp:/promo";
       } else {
         router.push("/promo");
@@ -410,7 +414,11 @@ export default defineComponent({
               isOpenExtension.value = false;
             });
         } else {
-          if (route.query.fromAccount) {
+          if (isWebview.value) {
+            isPromoDetail.value = true;
+            selectedPromo.value = promo;
+          }
+          else if (route.query.fromAccount) {
             router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
           } else {
             router.push({ path: "/promo", query: { name: promo.redirectUrl } });
