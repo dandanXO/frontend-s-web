@@ -47,11 +47,23 @@ export default route(function (/* { store, ssrContext } */) {
     const $q = useQuasar();
     const i18nStoreLanguage = i18nStore();
     const { availableLocales } = i18n.global;
-    const { lang } = to.query;
+    const { lang, gaid } = to.query;
 
     if (!i18nStoreLanguage.isLangInitialized && lang) {
       const locale = availableLocales.includes(lang) ? lang : DEFAULT_LANG;
       i18nStoreLanguage.initializeLang(locale);
+    }
+
+    if (!user.isCheckGaid) {
+      const isFromGooglePackage = !!gaid;
+      const savedIsFromGooglePackage = SessionStorage.getItem("IS_FROM_GOOGLE_PACKAGE");
+      if (savedIsFromGooglePackage === null) {
+        SessionStorage.setItem("IS_FROM_GOOGLE_PACKAGE", isFromGooglePackage);
+        user.isFromGooglePackage = isFromGooglePackage;
+      } else {
+        user.isFromGooglePackage = savedIsFromGooglePackage;
+      }
+      user.isCheckGaid = true;
     }
 
     if (to.query.adjust_referrer) {
@@ -97,8 +109,8 @@ export default route(function (/* { store, ssrContext } */) {
       // const isFirstTime = localStorage.getItem("isFirstTimeInApp");
 
       // if (!isFirstTime) { // If it's the first time
-        // localStorage.setItem("isFirstTimeInApp", 'true'); // Mark as visited
-        // next("/register");
+      // localStorage.setItem("isFirstTimeInApp", 'true'); // Mark as visited
+      // next("/register");
       // }
     }
 
