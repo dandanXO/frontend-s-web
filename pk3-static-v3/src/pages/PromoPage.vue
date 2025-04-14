@@ -1,6 +1,7 @@
 <template>
   <!-- <q-card-section class="page-title">优惠活动</q-card-section> -->
-  <ProfileSummary v-if="!extensionState" :homeProfile="true" />
+
+  <ProfileSummary v-if="!extensionState && !isWebview" :homeProfile="true" />
   <div class="vip-promo-tab-wrapper" v-if="!isPromoDetail">
     <q-tabs
       v-model="vipPromoTab"
@@ -196,6 +197,7 @@ export default defineComponent({
 
     const isFetchingPromo = ref(false);
     const extensionState = ref(false);
+    const isWebview = ref(false)
     const extensionToken = ref("");
     const isOpenExtension = ref(false);
 
@@ -206,6 +208,12 @@ export default defineComponent({
         extensionState.value = true;
       }
     };
+
+    const checkWebview = () => {
+      if (route.path === "/wv-promotion") {
+        isWebview.value = true
+      }
+    }
 
     const tab = ref("all");
     const tabItems = [
@@ -264,7 +272,10 @@ export default defineComponent({
     watch(
       () => vipPromoTab.value,
       () => {
-        if (vipPromoTab.value === "vip") {
+        if (isWebview.value) {
+          router.push(`/wv-vip?token=${SessionStorage.getItem("TOKEN")}`)
+        }
+        else if (vipPromoTab.value === "vip") {
           router.push("/vip");
         }
       }
@@ -273,7 +284,7 @@ export default defineComponent({
     watch(
       () => route.path,
       () => {
-        if (route.path === "/promo") {
+        if (route.path === "/promo" || route.path === "/wv-promotion") {
           vipPromoTab.value = "promo";
         }
       }
@@ -585,6 +596,7 @@ export default defineComponent({
 
     onMounted(() => {
       checkExtension();
+      checkWebview();
     });
 
     const swipeLeft = () => {
@@ -632,6 +644,7 @@ export default defineComponent({
       isFtdPromoEnded,
       isFetchingPromo,
       extensionState,
+      isWebview,
       isOpenExtension
     };
   }

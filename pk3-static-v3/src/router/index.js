@@ -46,7 +46,9 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/forgot-password" ||
       to.path === "/withdraw" ||
       to.path === "/deposit" ||
-      to.path === "/promotion"
+      to.path === "/promotion" ||
+      to.path === "/wv-promotion" ||
+      to.path === "/wv-vip"
     ) {
       ui.hiddenFooter();
     } else {
@@ -62,7 +64,7 @@ export default route(function (/* { store, ssrContext } */) {
       window.location.href = "xfapp:" + to.fullPath;
     }
 
-    if (to.path === "/promotion") {
+    if (to.path === "/promotion" || to.path === "/wv-promotion") {
       // debugger;
       if (isAndroid()) {
         localStorage.setItem("TOKEN", to.query.token);

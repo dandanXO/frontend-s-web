@@ -66,6 +66,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/wv-vip",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", name: "vip", component: () => import("pages/games/VIPView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
     path: "/agent/:affiliateCode",
     name: "agentCode",
     component: () => {}
@@ -140,6 +146,12 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/PromoPage.vue") }],
     meta: { requiresAuth: true, isApp: true }
+  },
+  {
+    path: "/wv-promotion",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/PromoPage.vue") }],
+    meta: { requiresAuth: true }
   },
   {
     path: "/withdraw",
