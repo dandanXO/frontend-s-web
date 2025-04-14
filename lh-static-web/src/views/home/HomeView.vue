@@ -4,7 +4,6 @@
     <div class="home-mid-section">
       <HomeAnnouncement></HomeAnnouncement>
       <!-- <EurocupHomePageBanner /> -->
-       <Livestream/>
       <HomeHotMatch :openGame="openGame"/>
       <HomeDownload></HomeDownload>
       <HomeHotGame></HomeHotGame>
@@ -27,7 +26,6 @@ import HomeHotMatch from "@/components/home/hotmatch/HotMatch.vue";
 import HomeHotGame from "@/components/home/hotgame/index.vue";
 import HomeService from "@/components/home/service/index.vue";
 import { userStore } from "@/store";
-import Livestream from "@/components/home/livestream/Livestream.vue";
 // import EurocupHomePageBanner from "@/components/home/EurocupHomePageBanner.vue";
 // import NewMemberGuide from '@/components/home/NewMemberGuide.vue'
 
