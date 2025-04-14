@@ -57,11 +57,19 @@ export default route(function (/* { store, ssrContext } */) {
     if (!user.isCheckGaid) {
       const isFromGooglePackage = !!gaid;
       const savedIsFromGooglePackage = SessionStorage.getItem("IS_FROM_GOOGLE_PACKAGE");
+      const savedGaid = SessionStorage.getItem("GAID_FROM_GOOGLE_PACKAGE");
       if (savedIsFromGooglePackage === null) {
         SessionStorage.setItem("IS_FROM_GOOGLE_PACKAGE", isFromGooglePackage);
         user.isFromGooglePackage = isFromGooglePackage;
+        if (isFromGooglePackage) {
+          SessionStorage.setItem("GAID_FROM_GOOGLE_PACKAGE", gaid);
+          user.aaid = gaid;
+        }
       } else {
         user.isFromGooglePackage = savedIsFromGooglePackage;
+        if (savedGaid) {
+          user.aaid = savedGaid;
+        }
       }
       user.isCheckGaid = true;
     }
