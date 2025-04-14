@@ -13,6 +13,7 @@
         <el-option key="3" value="th">th</el-option>
         <el-option key="4" value="vi">vi</el-option>
         <el-option key="5" value="kr">kr</el-option>
+        <el-option key="6" value="ur">ur</el-option>
       </el-select>
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">

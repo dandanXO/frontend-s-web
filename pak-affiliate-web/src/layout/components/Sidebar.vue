@@ -17,6 +17,7 @@
         >
           <el-option key="1" value="en">en</el-option>
           <el-option key="5" value="kr">kr</el-option>
+          <el-option key="6" value="ur">ur</el-option>
         </el-select>
       </div>
       <div class="row-item">
