@@ -472,7 +472,7 @@ export default defineComponent({
       // console.log("Ok Online.");
       const sidParam = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
       store.visitorId = sidParam;
-      const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
+      const way = (Platform.is.capacitor && Platform.is.android) || store.isFromGooglePackage ? "ANDROID" : "H5";
       const sid = store.aaid || store.visitorId;
 
       if (sidParam) {
@@ -696,7 +696,14 @@ export default defineComponent({
           false
         );
       } else {
-        trackH5Affiliate();
+        const timer = setInterval(() => {
+          if (store.isCheckGaid) {
+            clearInterval(timer);
+            if (!store.isFromGooglePackage) {
+              trackH5Affiliate();
+            }
+          }
+        }, 100);
       }
 
       document.addEventListener("visibilitychange", handleVisibilityChange);
