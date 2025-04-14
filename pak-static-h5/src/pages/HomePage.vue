@@ -4196,7 +4196,7 @@ onActivated(() => {
   store.getUnreadTotal();
   checkHash();
 
-  checkSpinWheel();
+  // checkSpinWheel();
   checkGoogleLoginSetPwd();
 
   if (route.query.login === "true" || route.query.register === "true") {
@@ -4216,7 +4216,7 @@ onActivated(() => {
 
   if (route.query.token) {
     store.autoLogin(route.query.token);
-    checkSpinWheel();
+    // checkSpinWheel();
 
     if (store.hasToken() && ui.promo_megaspin === "1") {
       hasInviteWheelPromo.value = true;
