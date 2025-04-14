@@ -47,7 +47,7 @@ export default route(function (/* { store, ssrContext } */) {
     const $q = useQuasar();
     const i18nStoreLanguage = i18nStore();
     const { availableLocales } = i18n.global;
-    const { lang, gaid } = to.query;
+    const { lang, gaid, affiliateCode } = to.query;
 
     if (!i18nStoreLanguage.isLangInitialized && lang) {
       const locale = availableLocales.includes(lang) ? lang : DEFAULT_LANG;
@@ -64,6 +64,9 @@ export default route(function (/* { store, ssrContext } */) {
         if (isFromGooglePackage) {
           SessionStorage.setItem("GAID_FROM_GOOGLE_PACKAGE", gaid);
           user.aaid = gaid;
+        }
+        if (affiliateCode) {
+          sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
         }
       } else {
         user.isFromGooglePackage = savedIsFromGooglePackage;
