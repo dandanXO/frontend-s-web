@@ -124,6 +124,10 @@ a {
   z-index: 1;
 } */
 
+#tf88Url-btn {
+  animation: breathing 5s ease-out infinite normal;
+}
+
 .banner-btn {
   position: relative;
   z-index: 1;
@@ -229,5 +233,31 @@ a {
 @media screen and (max-width: 450px) {
   .contact-item {
     font-size: 0.8rem;
+  }
+}
+
+@keyframes breathing {
+  0% {
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+
+  25% {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+
+  60% {
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+
+  100% {
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
   }
 }
