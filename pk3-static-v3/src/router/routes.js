@@ -44,6 +44,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/wv-earn-money",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/EarnMoneyPage.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
     path: "/language",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/LanguagePage.vue") }],
@@ -61,6 +67,12 @@ const routes = [
   },
   {
     path: "/vip",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", name: "vip", component: () => import("pages/games/VIPView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/wv-vip",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", name: "vip", component: () => import("pages/games/VIPView.vue") }],
     meta: { requiresAuth: true }
@@ -140,6 +152,12 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/PromoPage.vue") }],
     meta: { requiresAuth: true, isApp: true }
+  },
+  {
+    path: "/wv-promotion",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/PromoPage.vue") }],
+    meta: { requiresAuth: true }
   },
   {
     path: "/withdraw",
