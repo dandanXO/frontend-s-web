@@ -57,9 +57,8 @@ export default defineComponent({
           sid: sidParam,
           siteCode: process.env.VUE_APP_SITE
         };
-        if (process.env.NODE_ENV === "production") {
-          submitMemberStats(params);
-        }
+
+        submitMemberStats(params);
       }
     };
 
