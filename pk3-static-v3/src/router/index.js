@@ -48,7 +48,8 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/deposit" ||
       to.path === "/promotion" ||
       to.path === "/wv-promotion" ||
-      to.path === "/wv-vip"
+      to.path === "/wv-vip" ||
+      to.path === "/wv-earn-money"
     ) {
       ui.hiddenFooter();
     } else {
@@ -64,7 +65,7 @@ export default route(function (/* { store, ssrContext } */) {
       window.location.href = "xfapp:" + to.fullPath;
     }
 
-    if (to.path === "/promotion" || to.path === "/wv-promotion") {
+    if (to.path === "/promotion" || to.path === "/wv-promotion" || to.path === "/wv-earn-money") {
       // debugger;
       if (isAndroid()) {
         localStorage.setItem("TOKEN", to.query.token);

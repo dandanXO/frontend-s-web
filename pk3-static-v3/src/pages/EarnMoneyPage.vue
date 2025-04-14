@@ -1,8 +1,15 @@
 <template>
-  <ProfileSummary :homeProfile="true" />
+  <ProfileSummary v-if="route.path !== '/wv-earn-money'" :homeProfile="true" />
 
   <div class="earn-money">
-    <q-tabs v-model="activeKey" class="earn-money-tabs" color="black" no-caps indicator-color="transparent">
+    <q-tabs
+      v-model="activeKey"
+      class="earn-money-tabs"
+      :class="{ webview: route.path === '/wv-earn-money' }"
+      color="black"
+      no-caps
+      indicator-color="transparent"
+    >
       <q-tab name="about">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
           <path
@@ -83,12 +90,15 @@
 </template>
 
 <script setup>
+import { useRoute } from "vue-router";
 import AgencyPolicy from "@/components/earn-money/AgencyPolicy.vue";
 import DailyComponent from "@/components/earn-money/DailyComponent.vue";
 import EarnComponent from "@/components/earn-money/EarnComponent.vue";
 import MyMember from "@/components/earn-money/MyMember.vue";
 import ProfileSummary from "@/components/ProfileSummary.vue";
 import { ref } from "vue";
+
+const route = useRoute();
 
 const activeKey = ref("about");
 const tabsOrder = ["about", "history", "daily", "earn"];
@@ -120,6 +130,10 @@ const swipeRight = () => {
     width: 100%;
     padding-bottom: 6px;
     padding-top: 12px;
+
+    &.webview {
+      top: 0;
+    }
 
     :deep(.q-tabs__content) {
       background: #422171;
