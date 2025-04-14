@@ -77,8 +77,20 @@ a:hover {
 }
 
 .action-wrapper {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  /*grid-template-columns: 1fr 1fr;*/
+}
+
+.action-wrapper > div {
+  height: auto;
+  width: 50vw
+}
+
+.action-wrapper > div > a {
+  display: block;
 }
 
 .action-btn {
@@ -169,8 +181,16 @@ a:hover {
 }
 
 .game-inner-wrapper {
-  display: grid;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
   grid-template-columns: repeat(3, 1fr);
+}
+
+.game-inner-wrapper > img{
+  width: 50%;
 }
 
 .main-sticky-wrapper {
@@ -206,6 +226,7 @@ a:hover {
   background-size: 100% 100%;
   width: 100%;
   aspect-ratio: 606/228;
+  min-height: 50px;
 }
 
 #image-container {
@@ -215,6 +236,7 @@ a:hover {
   height: auto;
   min-height: 120px;
   margin-bottom: 10px;
+  min-height: 50px;
   box-sizing: border-box;
 }
 
@@ -263,7 +285,7 @@ a:hover {
     font-size: 12px;
   }
 
-  .game-inner-wrapper {
-    grid-template-columns: 1fr;
+  .game-inner-wrapper > img{
+    width: 100%;
   }
 }
