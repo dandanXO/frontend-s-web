@@ -801,6 +801,7 @@ export default {
     1000: "Kesalahan nama login atau kata sandi",
     1001: "Akun ditutup",
     1002: "Akun untuk afiliasi",
+    1004: "Akun telah dikunci. Silakan coba lagi setelah 60 menit atau hubungi layanan pelanggan untuk membuka kuncinya.",
     1300: "Jumlah harus lebih besar dari 0",
     1301: "Kartu ini tidak didukung",
     1302: "Mata uang ini tidak didukung",

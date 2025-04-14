@@ -29,6 +29,7 @@ export default {
     1000: "Login name or password error",
     1001: "Account is closed",
     1002: "Account is for affiliates",
+    1004: "The account has been locked. Please try again after 60 minutes or contact customer service to unlock it.",
     1004: "Username can only consist of numbers and letters.",
     1011: "The current account has already bound a phone number",
     1012: "The current account has already bound an email address",
