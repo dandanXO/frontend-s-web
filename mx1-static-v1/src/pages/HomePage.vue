@@ -2481,7 +2481,7 @@ const loadJDBFishGameList = () => {
       fishGameJDBList.value = res;
 
       console.log("JSD");
-      console.log(JSON.stringify(fishGameJDBList.value));
+      // console.log(JSON.stringify(fishGameJDBList.value));
     });
 };
 

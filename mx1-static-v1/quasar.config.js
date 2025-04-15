@@ -10,6 +10,7 @@
 
 const ESLintPlugin = require("eslint-webpack-plugin");
 const path = require("path");
+const TerserPlugin = require("terser-webpack-plugin");
 
 const { configure } = require("quasar/wrappers");
 const fs = require("fs-extra");
@@ -29,7 +30,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-webpack/boot-files
-    boot: ["axios", "cache", "lang"],
+    boot: ["polyfill", "axios", "cache", "lang"],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
     css: ["app.scss"],
@@ -54,7 +55,10 @@ module.exports = configure(function (ctx) {
 
       // transpile: false,
       // publicPath: '/',
-
+      transpile: true,
+      transpileDependencies: [
+        /node_modules\/(vue|pinia|vue-i18n|@intlify|@capacitor|vue-router|swiper)/
+      ],
       // Add dependencies for transpiling with Babel (Array of string/regex)
       // (from node_modules, which are by default not transpiled).
       // Applies only if "transpile" is set to true.
@@ -80,6 +84,91 @@ module.exports = configure(function (ctx) {
       // chainWebpack(chain) {
       //   chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
       // }
+      extendWebpack(cfg) {
+        cfg.plugins.push(
+          new CleanWebpackPlugin(),
+          new ContextReplacementPlugin(/moment[\/\\]locale$/, /zh-cn/),
+          new ESLintPlugin({ extensions: ["js", "vue"] }),
+          // new CompressionWebpackPlugin({
+          //   filename: '[path][base].gz', // Ensure it’s unique or not colliding
+          //   algorithm: "gzip",
+          //   exclude: /\.gz$/, // important
+          //   test: /\.(css|html|svg)$/,
+          //   threshold: 10240,
+          //   minRatio: 0.8
+          // })
+        );
+
+
+        cfg.module.rules.push({
+          test: /\.(m?js|cjs|js)$/,
+          exclude: /node_modules\/(?!(@vue|vue|vue-i18n|pinia|@intlify|@capacitor|vue-router|swiper))/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true,
+              presets: [
+                [
+                  '@babel/preset-env',
+                  {
+                    targets: {
+                      chrome: '50',
+                      android: '6',
+                      ios: '10',
+                      safari: '10',
+                      ie: '11'
+                    },
+                    useBuiltIns: 'entry',
+                    corejs: 3
+                  }
+                ]
+              ],
+              plugins: [
+                '@babel/plugin-proposal-class-properties',
+                '@babel/plugin-proposal-optional-chaining',
+                '@babel/plugin-proposal-nullish-coalescing-operator',
+                '@babel/plugin-transform-spread'
+              ]
+            }
+          }
+        });
+
+        cfg.optimization.minimizer = [
+          new TerserPlugin({
+            terserOptions: {
+              ecma: 5,
+              compress: {
+                drop_console: true
+              },
+              output: {
+                comments: false
+              }
+            }
+          })
+        ];
+
+        cfg.optimization = {
+          splitChunks: {
+            chunks: "all",
+            maxInitialRequests: Infinity,
+            minSize: 3000,
+            cacheGroups: {
+              vendor: {
+                test: /[\\/]node_modules[\\/]/,
+                name(module) {
+                  if (module.context) {
+                    const match = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/);
+                    const packageName = match ? match[1] : null;
+                    return packageName ? `npm.${packageName.replace("@", "")}` : null;
+                  }
+                  return null;
+                }
+              }
+            }
+          }
+        };
+      },
+
       chainWebpack(chain) {
         chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
         chain.resolve.alias.set("@", path.resolve(__dirname, "src")); // shortcut for src
