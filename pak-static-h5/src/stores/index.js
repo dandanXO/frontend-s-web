@@ -16,7 +16,7 @@ const createFtdEvent = (triggeredPixels) => {
 export const userStore = defineStore("userStore", {
   state: () => {
     const getStoreToken = () => {
-      if (isAndroid() || isInPwa() || this.isFromGooglePackage) {
+      if (isAndroid() || isInPwa()) {
         return LocalStorage.getItem("TOKEN", "");
       } else {
         return SessionStorage.getItem("TOKEN") || "";
