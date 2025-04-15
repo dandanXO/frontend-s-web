@@ -492,7 +492,7 @@ const fallbackCopyTextToClipboard = (text) => {
 
 const copyHrefLink = () => {
   const textToCopy = selfTgurl.value;
-  
+
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard
       .writeText(textToCopy)
@@ -1019,13 +1019,14 @@ defineExpose({ showVideo });
         }
         .share-step {
           display: flex;
+          justify-content: flex-start;
+          align-items: flex-start;
           > * {
             &:first-child {
               margin-right: 10px;
             }
           }
-          justify-content: flex-start;
-          align-items: flex-start;
+
           .yellow {
             color: #ffc664;
           }
@@ -1080,7 +1081,7 @@ defineExpose({ showVideo });
           // margin: 20px auto;
           margin: 5px auto;
           // gap: 10px;
-        
+
           > div:not(:last-child) {
             margin-right: 10px;
           }
