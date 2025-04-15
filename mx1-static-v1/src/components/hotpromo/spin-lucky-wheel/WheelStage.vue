@@ -619,6 +619,7 @@ onUnmounted(() => {
       font-size: 16px;
       font-weight: 700;
       color: #cd91ff;
+      text-align: center;
 
       .title-decoration {
         display: flex;
