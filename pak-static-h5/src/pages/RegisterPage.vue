@@ -1193,7 +1193,8 @@ export default defineComponent({
       imgOnLoad,
       imgOnError,
       showImageCode,
-      spinRefCode
+      spinRefCode,
+      store
     };
   }
 });
