@@ -11,7 +11,8 @@
 const ESLintPlugin = require("eslint-webpack-plugin");
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
-
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const ContextReplacementPlugin = require("webpack").ContextReplacementPlugin;
 const { configure } = require("quasar/wrappers");
 const fs = require("fs-extra");
 
