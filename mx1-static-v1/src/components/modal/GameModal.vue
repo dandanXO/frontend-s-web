@@ -69,8 +69,8 @@
         <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
         <div class="popout-dialog-container">
           <div class="txt-content q-mt-md text-center">{{ $t("notify.quitGameMessage") }}</div>
-          <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
-            <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
+          <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container" style="gap:0px;">
+            <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup style="margin-right: 24px;" />
             <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="closeDialog()" v-close-popup />
           </div>
         </div>
