@@ -401,7 +401,6 @@ onMounted(() => {
 
   .subtitle-wrapper {
     display: flex;
-    gap: 20px;
     color: rgba(255, 255, 255, 0.7);
     font-size: 0.9375rem;
     font-weight: 500;
@@ -415,11 +414,12 @@ onMounted(() => {
     .chart-cat {
       display: flex;
       align-items: center;
-      gap: 5px;
+      margin-left: 10px;
 
       .square {
         width: 10px;
         height: 10px;
+        margin-right: 5px;
 
         &.m {
           background: #ec77ff;
@@ -467,13 +467,23 @@ onMounted(() => {
   .info-container {
     display: flex;
     flex-direction: column;
-    gap: 15px;
     margin-top: 12px;
+
+    > * {
+      margin-bottom: 15px;
+    }
     .info-row {
       display: flex;
-      gap: 15px;
       background: linear-gradient(180deg, rgba(139, 54, 248, 0.4) 0%, rgba(51, 74, 214, 0.4) 100%);
       border-radius: 12px;
+
+      &:first-child {
+        margin-right: 7.5px;
+      }
+
+      &:nth-child(2) {
+        margin-left: 7.5px;
+      }
     }
 
     .info-content-item {
@@ -496,7 +506,6 @@ onMounted(() => {
       }
       &.longer-item {
         flex-direction: row;
-        gap: 36px;
 
         .longer-group {
           flex: 1;
@@ -510,6 +519,14 @@ onMounted(() => {
             background: rgba(255, 255, 255, 0.25);
             right: -20px;
             top: -10px;
+          }
+
+          &:first-child {
+            margin-right: 18px;
+          }
+
+          &:nth-child(2) {
+            margin-left: 18px;
           }
         }
 
@@ -550,7 +567,6 @@ onMounted(() => {
 
       .info-title {
         display: flex;
-        gap: 8px;
 
         &.f-wrap {
           flex-wrap: wrap;
@@ -561,12 +577,14 @@ onMounted(() => {
         img {
           display: block;
           width: 27px;
+          margin-right: 8px;
         }
       }
 
       .info-txt {
         margin-top: 4px;
         font-weight: 700;
+        margin-right: 8px;
       }
     }
   }

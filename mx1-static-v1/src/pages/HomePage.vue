@@ -26,6 +26,7 @@
         class="column no-wrap flex-center"
         :img-src="returnBannerUrl(banner)"
         @click="gotoPromo(banner)"
+        style="min-height:150px;"
       ></q-carousel-slide>
 
       <template v-slot:navigation-icon="{ active, onClick }">
@@ -2481,7 +2482,7 @@ const loadJDBFishGameList = () => {
       fishGameJDBList.value = res;
 
       console.log("JSD");
-      console.log(JSON.stringify(fishGameJDBList.value));
+      // console.log(JSON.stringify(fishGameJDBList.value));
     });
 };
 
@@ -3926,11 +3927,11 @@ onBeforeUnmount(() => {
       position: relative;
       background-image: url("@/assets/images/index/mini-game-bg.png");
       border-radius: 8px;
-
+      
       &.game-fish {
         aspect-ratio: 1/1.2;
       }
-
+      
       .game--bg {
         border-radius: 8px;
         background-size: 100% 100%;
@@ -3938,6 +3939,7 @@ onBeforeUnmount(() => {
         height: 100%;
         width: 100%;
         background-repeat: no-repeat;
+        min-height: 100px;
       }
     }
 
@@ -4333,6 +4335,7 @@ onBeforeUnmount(() => {
   border-radius: 8px;
 
   .game--bg {
+    min-height: 110px;
     background-size: 100% 100%;
     background-position: center center;
     height: 100%;

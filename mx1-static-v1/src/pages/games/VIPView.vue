@@ -874,7 +874,10 @@ const swipeRight = () => {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      
+      > * {
+        margin-top: 10px;
+      }
 
       .bold {
         font-weight: 800;

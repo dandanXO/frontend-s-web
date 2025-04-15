@@ -106,6 +106,7 @@ onUnmounted(() => {
     background: url("../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/sticky.png") no-repeat center center;
     background-size: contain;
     position: relative;
+    height: 100px;
 
     .close-btn {
         position: absolute;
