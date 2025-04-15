@@ -571,6 +571,27 @@ export default {
       remainingDrawTimes: "Remaining draw times",
       congratulations: "Congratulations"
     },
+    depositSpinWheel: {
+      instruction: "Complete the deposit task to participate in the wheel activity and get a bonus of up to ",
+      depositNow: "Deposit Now",
+      upto: "UP to",
+      remainingTimes: "Remaining times",
+      depositSpin: "Deposit Rs {min} to get 1 spin.",
+      spin: "Spin",
+      rules: "Rules",
+      activityRules: "Activity rules",
+      rule_01:
+        "The activity includes four types of carousels: Silver, Gold, Diamond, and Special. You can unlock different levels of carousels by recharging. The higher the level, the more generous the rewards will be.",
+      rule_02: "Every draw has a 100% chance of winning a prize.",
+      rule_03: "All rewards will be deposited directly into your wallet.",
+      rule_04: "The bonus requires one turnover to withdraw.",
+      rule_05:
+        "The right to interpret this event belongs to B9.game. If you have any questions, please contact customer service.",
+      silver: "Silver",
+      gold: "Gold",
+      diamond: "Diamond",
+      supreme: "Supreme"
+    },
     signIn7Days: {
       continuousSignIn: "Continuous sign-in:",
       expired: "Expired",
@@ -578,7 +599,7 @@ export default {
       days: "days",
       signIn: "Sign in",
       signedIn: "Signed in"
-    }
+    },
   },
   maintenance: {
     underMaintenance: "Under maintenance",

@@ -43,7 +43,9 @@
                     <a @click="showPromoDetails(promo)">
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
-                          <img class="promo-content" :src="imgURL + promo.displayMobileImgUrl" />
+                          <img class="promo-content"
+                          :class="selectedPromo.redirectUrl === 'pk2-refer-wheel-spin' ? 'dpsr' : 'usual'"
+                          :src="imgURL + promo.displayMobileImgUrl" />
                         </div>
                       </div>
                       <div class="promo-info">
@@ -77,14 +79,19 @@
                 <!-- <div class="promo-bg"> -->
                 <img
                   class="promo-content"
+                  :class="selectedPromo.redirectUrl === 'pk2-refer-wheel-spin' ? 'dpsr' : 'usual'"
                   :src="imgURL + selectedPromo.displayMobileBannerUrl"
                   style="display: block; width: 100%"
                 />
                 <!-- </div> -->
               </div>
 
-              <div class="promo-content-inner">
-                <div class="content-title">{{ selectedPromo.title }}</div>
+              <div class="promo-content-inner"
+                :style="selectedPromo.redirectUrl === 'pk2-refer-wheel-spin' ? 'border:0; padding: 0;' : ''"
+              >
+                <div class="content-title" v-if="selectedPromo.redirectUrl !== 'pk2-refer-wheel-spin'">
+                  {{ selectedPromo.title }}
+                </div>
                 <div class="content-para" v-if="parsedParamSub">{{ parsedParamSub }}</div>
                 <div class="content-date" v-if="parsedParamDate">
                   <div><img src="../assets/images/promotion/calendar-icon.png" /></div>
@@ -92,7 +99,11 @@
                 </div>
               </div>
 
-              <div class="inner">
+              <div class="inner"
+                :class="{
+                  isDepositSpinnerRewards: selectedPromo.redirectUrl === 'pk2-refer-wheel-spin'
+                }"
+              >
                 <div v-if="selectedPromo.hasPromo">
                   <!-- <pre>selectedPromo{{ selectedPromo }}</pre>
                   <template v-if="selectedPromo.promoCode === 'pak-red-envelope-rain'">
@@ -1027,7 +1038,20 @@ export default defineComponent({
     .selected-promo-wrapper {
       .banner-container {
         width: 100%;
-
+        .promo-content {
+          &.usual {
+            display: block;
+            width: 100%;
+          }
+          &.dpsr {
+            display: block;
+            width: 100%;
+            border-radius: 15px;
+          }
+          &.npad {
+            display: none;
+          }
+        }
         .promo-bg {
           background-size: cover;
           background-repeat: no-repeat;
@@ -1068,7 +1092,15 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
         padding-bottom: 40px;
-
+        &.isDepositSpinnerRewards {
+          border-radius: 0;
+          width: 100%;
+          padding: 0;
+          margin: 0;
+          > div:nth-child(2) {
+            display: none;
+          }
+        }
         p {
           font-size: 14px;
         }

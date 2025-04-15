@@ -1,5 +1,5 @@
 <template>
-  <div class="hot-promo">
+  <div class="hot-promo" :style="list.redirectUrl === 'pk2-refer-wheel-spin' ? 'border-radius: 0;' : ''">
     <ClaimPromo
       v-if="isCommonPromo && store.hasToken()"
       :promo-id="list.id"
@@ -17,6 +17,10 @@
     <InterestProfitPromo v-if="list.redirectUrl === 'pk2-interest-profit' && !isCommonPromo && store.token" />
     <NewPlayersPromo v-if="list.redirectUrl === 'pk2-new-players' && !isCommonPromo && store.token" :list="list" />
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'pk2-slot-ftd' && store.token" :params="list.param" />
+    <DepositSpinnerRewards
+      v-if="list.redirectUrl === 'pk2-refer-wheel-spin' && store.token"
+      :params="list.param"
+    />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -51,12 +55,14 @@ import RedPacketRainPromo from "../components/hotpromo/redPacketRain/RedPacketRa
 import InterestProfitPromo from "../components/hotpromo/interestProfit/InterestProfitPromo.vue";
 import NewPlayersPromo from "../components/hotpromo/newPlayers/NewPlayersPromo.vue";
 import SlotFtdPromo from "../components/hotpromo/slotFtdPromo/SlotFtdPromo.vue";
+import DepositSpinnerRewards from "./hotpromo/deposit-spinner-rewards/DepositSpinnerRewards.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    DepositSpinnerRewards,
     ClaimPromo,
     HongBaoYuPromo,
     BonusSpinWheelPromo,
@@ -122,6 +128,7 @@ export default defineComponent({
       this.list.redirectUrl === "pk2-newplayer-welcome-spin" ||
       this.list.redirectUrl === "pk2-redpacketrain" ||
       this.list.redirectUrl === "pk2-interest-profit" ||
+      this.list.redirectUrl === "pk2-refer-wheel-spin" ||
       this.list.redirectUrl === "pk2-new-players" ||
       this.list.redirectUrl === "pk2-slot-ftd" ||
       this.list.id === 40
