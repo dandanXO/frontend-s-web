@@ -1072,7 +1072,8 @@ const checkPlatform = () => {
   //Is iOS Webclip App || Is Android Apk
   if (
     (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) ||
-    (Platform.is.android && Platform.is.capacitor)
+    (Platform.is.android && Platform.is.capacitor) ||
+    store.isFromGooglePackage
   ) {
     downloadHeart.value = false;
     isH5.value = false;
@@ -2734,11 +2735,11 @@ watch(
 // );
 
 const checkSpinWheel = () => {
-  if (store.hasToken() && isAndroid()) {
+  if (store.hasToken() && (isAndroid() || store.isFromGooglePackage)) {
     setTimeout(() => {
       showSpinWheel();
     }, 750);
-  } else if (store.hasToken() && !isAndroid()) {
+  } else if (store.hasToken() && !isAndroid() && !store.isFromGooglePackage) {
     showCongratsModal();
   }
 };
@@ -3696,13 +3697,11 @@ const showCongratsModal = () => {
       position: relative;
       background-image: url("../assets/images/index/mini-game-bg.png");
       border-radius: 20px;
-       min-height: 100px;
-
+      min-height: 100px;
 
       &.game-fish {
         // aspect-ratio: 1/1.2;
         min-height: 100px;
-
       }
 
       .game--bg {

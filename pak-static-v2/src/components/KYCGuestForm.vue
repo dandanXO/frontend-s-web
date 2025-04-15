@@ -153,7 +153,7 @@ const updateNewGuestState = () => {
           icon: "check_circle_outline"
         });
 
-        if (isAndroid()) {
+        if (isAndroid() || store.isFromGooglePackage) {
           LocalStorage.set("TOKEN", r.data, 86400);
         } else {
           SessionStorage.set("TOKEN", r.data);
