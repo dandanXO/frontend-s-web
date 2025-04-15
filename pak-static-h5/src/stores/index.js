@@ -16,7 +16,7 @@ const createFtdEvent = (triggeredPixels) => {
 export const userStore = defineStore("userStore", {
   state: () => {
     const getStoreToken = () => {
-      if (isAndroid() || isInPwa()) {
+      if (isAndroid() || isInPwa() || this.isFromGooglePackage) {
         return LocalStorage.getItem("TOKEN", "");
       } else {
         return SessionStorage.getItem("TOKEN") || "";
@@ -68,7 +68,7 @@ export const userStore = defineStore("userStore", {
   },
   actions: {
     hasToken() {
-      if (isAndroid() || isInPwa()) {
+      if (isAndroid() || isInPwa() || this.isFromGooglePackage) {
         // console.log("android");
         if (LocalStorage.getItem("TOKEN", "") !== "") {
           return true;
@@ -124,7 +124,7 @@ export const userStore = defineStore("userStore", {
       var string = qs.stringify(loginInfo);
       return api.post("/member/pakLogin", string).then((ret) => {
         if (ret.code === 0) {
-          if (isAndroid() || isInPwa()) {
+          if (isAndroid() || isInPwa() || this.isFromGooglePackage) {
             LocalStorage.set("TOKEN", ret.data, 86400);
           } else {
             SessionStorage.set("TOKEN", ret.data);
@@ -155,7 +155,7 @@ export const userStore = defineStore("userStore", {
       var string = qs.stringify(loginInfo);
       return api.post("/member/mobileLogin", string).then((ret) => {
         if (ret.code === 0) {
-          if (isAndroid() || isInPwa()) {
+          if (isAndroid() || isInPwa() || this.isFromGooglePackage) {
             LocalStorage.set("TOKEN", ret.data, 86400);
           } else {
             SessionStorage.set("TOKEN", ret.data);
@@ -214,7 +214,10 @@ export const userStore = defineStore("userStore", {
       //   req.headers.token = token;
       //   return req;
       // });
-      this.token = isAndroid() || isInPwa() ? LocalStorage.getItem("TOKEN") : SessionStorage.getItem("TOKEN");
+      this.token =
+        isAndroid() || isInPwa() || this.isFromGooglePackage
+          ? LocalStorage.getItem("TOKEN")
+          : SessionStorage.getItem("TOKEN");
       return api.get("/session/member").then((response) => {
         if (response.code === 0) {
           const {
@@ -325,7 +328,7 @@ export const userStore = defineStore("userStore", {
     },
     autoLogin(token) {
       const ui = useUI();
-      if (isAndroid() || isInPwa()) {
+      if (isAndroid() || isInPwa() || this.isFromGooglePackage) {
         LocalStorage.set("TOKEN", token, 86400);
         ui.showLoggedIn();
       } else {

@@ -4,7 +4,12 @@
     style="transition: background 0.5s ease-in-out"
     class="dynamic-bg"
   >
-    <ProfileSummary :showRedemption="isShowRedemptionInPopup" :homeProfile="true" @activateSlide="handleActivateSlide" @showNewPlayer="showNewPlayer" />
+    <ProfileSummary
+      :showRedemption="isShowRedemptionInPopup"
+      :homeProfile="true"
+      @activateSlide="handleActivateSlide"
+      @showNewPlayer="showNewPlayer"
+    />
 
     <!--    <pre>-->
     <!--      {{isNewPlayerModal}} <br/>-->
@@ -1207,7 +1212,7 @@
           <q-tab-panels v-model="activeKey" animated>
             <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
               <q-list style="min-height: auto">
-                <div v-for="(ann, idx) in announcementList" :key="idx" style="min-height:50px;">
+                <div v-for="(ann, idx) in announcementList" :key="idx" style="min-height: 50px">
                   <span v-if="ann.typeId === tab.id">
                     <q-expansion-item
                       style="max-height: 75vh; overflow: auto"
@@ -2399,7 +2404,8 @@ const checkPlatform = () => {
   //Is iOS Webclip App || Is Android Apk
   if (
     (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) ||
-    (Platform.is.android && Platform.is.capacitor)
+    (Platform.is.android && Platform.is.capacitor) ||
+    store.isFromGooglePackage
   ) {
     downloadHeart.value = false;
     isH5.value = false;
@@ -2527,7 +2533,7 @@ const closeSlotModal = () => {
 
 const showNewPlayer = () => {
   currentStep.value = localStorage.getItem("newPlayerGuide");
-  showNewPlayerModal.value = true
+  showNewPlayerModal.value = true;
 };
 
 const closeFullGameDialog = () => {
@@ -4078,10 +4084,9 @@ const gotoFloatPromo = (val) => {
     } else {
       router.push("/promo");
     }
-  }else if(val.type === "PROMO"){
+  } else if (val.type === "PROMO") {
     router.push(`/promo?name=${val.code}`);
   }
-
 
   if (val.type === "DOMAIN") {
     window.open(val.code, "_blank");
@@ -4224,7 +4229,7 @@ onActivated(() => {
   }
   afterActivated();
 
-  if (!(Platform.is.android && Platform.is.capacitor)) {
+  if (!(Platform.is.android && Platform.is.capacitor) && !store.isFromGooglePackage) {
     if (!sessionStorage.getItem("add_to_homescreen")) {
       setTimeout(() => {
         isAddToHomeScreen.value = true;
@@ -4594,7 +4599,7 @@ const checkGoogleLoginSetPwd = () => {
   display: flex;
   align-items: center;
   animation: beat 1.5s infinite;
-  position:relative;
+  position: relative;
   .absolute-hot {
     position: absolute;
     right: -5px;
@@ -4602,7 +4607,7 @@ const checkGoogleLoginSetPwd = () => {
     width: 18px;
     height: unset;
     img {
-      width: 100%
+      width: 100%;
     }
   }
 
@@ -6025,7 +6030,6 @@ const checkGoogleLoginSetPwd = () => {
   border-radius: 8px;
   height: 100px;
   &.pokerportion {
-
     height: 140px;
   }
   .game--bg {
@@ -6210,7 +6214,7 @@ const checkGoogleLoginSetPwd = () => {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 80%;
-    color: #CF3AFF;
+    color: #cf3aff;
     font-size: 26px;
     font-weight: bold;
     text-align: center;
@@ -6227,7 +6231,7 @@ const checkGoogleLoginSetPwd = () => {
     background-size: 100% 100%;
     aspect-ratio: 389/139;
     width: 130px;
-    height: 45px
+    height: 45px;
   }
 }
 

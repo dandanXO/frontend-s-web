@@ -109,14 +109,18 @@
               <div class="vip-details">
                 <img
                   class="bg"
-                  :src="require(`../assets/images/index/vip-badge/vip-${store.vip ? store.vip.replace('VIP', '') : '0'}.png`)"
+                  :src="
+                    require(`../assets/images/index/vip-badge/vip-${
+                      store.vip ? store.vip.replace('VIP', '') : '0'
+                    }.png`)
+                  "
                   alt=""
                 />
               </div>
             </div>
           </template>
 
-          <q-list style="background: #323738; padding: 5px 0px;" dense unelevated flat class="dropdown-list">
+          <q-list style="background: #323738; padding: 5px 0px" dense unelevated flat class="dropdown-list">
             <q-item clickable v-close-popup @click="onVipClick">
               <q-item-section avatar>
                 <img src="../assets/images/account/vip-svg.svg" />
@@ -405,7 +409,7 @@ onMounted(() => {
   ui.shouldFetchDownloadAppUrl = true;
 
   sideLang.value = store.memberType === "TEST";
-  if (isAndroid() || isInPwa()) {
+  if (isAndroid() || isInPwa() || store.isFromGooglePackage) {
     isSideDownload.value = false;
   } else {
     isSideDownload.value = true;
@@ -522,7 +526,7 @@ onUnmounted(() => {
     }
     .download-logo {
       width: 35px;
-      img{
+      img {
         width: 100%;
       }
     }
@@ -922,10 +926,10 @@ onUnmounted(() => {
         font-size: 12px;
         line-height: 100%;
         letter-spacing: 0px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    line-height: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: 16px;
         vertical-align: middle;
       }
 
@@ -1060,7 +1064,6 @@ onUnmounted(() => {
   // }
 
   .infoboard-container .profile-wrapper {
-
   }
 
   .infoboard-container .infoboard-wrapper.home-profile {
