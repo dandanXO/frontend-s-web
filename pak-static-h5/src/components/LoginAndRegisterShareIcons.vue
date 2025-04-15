@@ -39,11 +39,11 @@
       :src="require(`../assets/images/auth/charity-new.png`)" />
     <!-- <div>Charity</div> -->
   </div>
-  <div class="list-item" v-if="!isAndroid() && !ui.hideDownload && !isInvite" @click="downloadApp()">
+  <!-- <div class="list-item" v-if="!isAndroid() && !ui.hideDownload && !isInvite" @click="downloadApp()">
     <img class="btn-icon" id="download-icon"
       :src="require(`../assets/images/auth/app-new.png`)" />
-    <!-- <div>{{ $t("btn.downloadApp") }}</div> -->
-  </div>
+    <!- <div>{{ $t("btn.downloadApp") }}</div> ->
+  </div> -->
 </template>
 <script setup>
 import { ref } from "vue";
