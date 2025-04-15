@@ -345,6 +345,8 @@ onUnmounted(() => {
     .envelope-stage-inner-wrapper {
       .envelope-wrapper {
         .envelope-item {
+          
+          min-height: 100px;
           .prize-wrapper {
             font-size: 14px;
             line-height: 18px;
