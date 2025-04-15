@@ -58,7 +58,7 @@ module.exports = configure(function (ctx) {
       // publicPath: '/',
       transpile: true,
       transpileDependencies: [
-        /node_modules\/(vue|pinia|vue-i18n|@intlify|@capacitor|vue-router|swiper)/
+        /node_modules\/(vue|pinia|chart|vue-i18n|@intlify|@capacitor|vue-router|swiper)/
       ],
       // Add dependencies for transpiling with Babel (Array of string/regex)
       // (from node_modules, which are by default not transpiled).

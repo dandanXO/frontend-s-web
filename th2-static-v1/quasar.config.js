@@ -61,7 +61,7 @@ module.exports = configure(function (ctx) {
         configFile: true
       },
       transpile: true,
-      transpileDependencies: [/node_modules\/(vue|pinia|vue-i18n|@intlify|@capacitor|vue-router|swiper)/],
+      transpileDependencies: [/node_modules\/(vue|pinia|chart|vue-i18n|@intlify|@capacitor|vue-router|swiper)/],
       // transpile: false,
       // publicPath: '/',
 
