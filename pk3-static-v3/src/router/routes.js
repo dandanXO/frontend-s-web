@@ -74,7 +74,7 @@ const routes = [
   {
     path: "/wv-vip",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", name: "vip", component: () => import("pages/games/VIPView.vue") }],
+    children: [{ path: "", name: "vipapp", component: () => import("pages/games/VIPView.vue") }],
     meta: { requiresAuth: true }
   },
   {
