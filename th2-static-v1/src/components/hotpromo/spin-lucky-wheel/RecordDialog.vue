@@ -18,7 +18,7 @@
                 <div v-for="(record, index) in invitationRecords" :key="index" class="record">
                   <span>{{ moment(record.referTime).format("MM-DD HH:mm:ss") }}</span>
                   <span class="name">{{ record.loginName }}</span>
-<!--                  <span>Invitation successful</span>-->
+                  <!--                  <span>Invitation successful</span>-->
                 </div>
               </template>
               <span v-else class="no-record-text">ไม่มีบันทึก</span>
@@ -69,14 +69,23 @@ const getRecords = () => {
   const lotteryRecordApi = eventapi.get("/refer-spin/amount-record");
   isLoading.value = true;
 
-  Promise.allSettled([invitationRecordApi, lotteryRecordApi])
+  // Custom function to mimic Promise.allSettled
+  function customAllSettled(promises) {
+    return Promise.all(
+      promises.map((promise) =>
+        promise.then((value) => ({ status: "fulfilled", value })).catch((reason) => ({ status: "rejected", reason }))
+      )
+    );
+  }
+
+  customAllSettled([invitationRecordApi, lotteryRecordApi])
     .then(([invitationRes, lotteryRes]) => {
       console.log(invitationRes, lotteryRes);
-      if (invitationRes?.value.code === 0) {
-        invitationRecords.value = invitationRes?.value.data;
+      if (invitationRes?.status === "fulfilled" && invitationRes?.value?.code === 0) {
+        invitationRecords.value = invitationRes.value.data;
       }
-      if (lotteryRes?.value.code === 0) {
-        lotteryRecords.value = lotteryRes?.value.data;
+      if (lotteryRes?.status === "fulfilled" && lotteryRes?.value?.code === 0) {
+        lotteryRecords.value = lotteryRes.value.data;
       }
     })
     .finally(() => {
@@ -95,10 +104,19 @@ const getRecords = () => {
 
   .tab-wrapper {
     display: flex;
-    align-items:stretch;
+    align-items: stretch;
     justify-content: space-between;
-    gap: 12px;
     margin-bottom: 12px;
+
+    > * {
+      &:first-child {
+        margin-right: 6px;
+      }
+
+      &:nth-child(2) {
+        margin-left: 6px;
+      }
+    }
 
     .tab {
       flex: 1;
@@ -106,7 +124,7 @@ const getRecords = () => {
       border-radius: 12px;
       padding: 10px 8px;
       font-size: 16px;
-      display:flex;
+      display: flex;
       line-height: 16px;
       align-items: center;
       justify-content: center;

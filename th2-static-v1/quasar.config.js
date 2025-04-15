@@ -1,4 +1,8 @@
 /* eslint-env node */
+const TerserPlugin = require("terser-webpack-plugin");
+const CompressionWebpackPlugin = require("compression-webpack-plugin");
+
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 /*
  * This file runs in a Node context (it's NOT transpiled by Babel), so use only
@@ -18,6 +22,8 @@ const isImageCompress = true;
 
 const ImageminPlugin = require("imagemin-webpack-plugin").default;
 
+const ContextReplacementPlugin = require("webpack").ContextReplacementPlugin;
+
 module.exports = configure(function (ctx) {
   return {
     // https://v2.quasar.dev/quasar-cli-webpack/supporting-ts
@@ -29,7 +35,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-webpack/boot-files
-    boot: ["axios", "cache", "lang"],
+    boot: ["polyfill", "axios", "cache", "lang"],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
     css: ["app.scss"],
@@ -51,7 +57,11 @@ module.exports = configure(function (ctx) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-build
     build: {
       vueRouterMode: "history", // available values: 'hash', 'history'
-
+      postcss: {
+        configFile: true
+      },
+      transpile: true,
+      transpileDependencies: [/node_modules\/(vue|pinia|vue-i18n|@intlify|@capacitor|vue-router|swiper)/],
       // transpile: false,
       // publicPath: '/',
 
@@ -79,7 +89,91 @@ module.exports = configure(function (ctx) {
 
       // https://v2.quasar.dev/quasar-cli-webpack/handling-webpack
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
+      // https://v2.quasar.dev/quasar-cli-webpack/handling-webpack
+      // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
+      extendWebpack(cfg) {
+        cfg.plugins.push(
+          new CleanWebpackPlugin(),
+          new ContextReplacementPlugin(/moment[\/\\]locale$/, /zh-cn/),
+          new ESLintPlugin({ extensions: ["js", "vue"] })
+          // new CompressionWebpackPlugin({
+          //   filename: '[path][base].gz', // Ensure it’s unique or not colliding
+          //   algorithm: "gzip",
+          //   exclude: /\.gz$/, // important
+          //   test: /\.(css|html|svg)$/,
+          //   threshold: 10240,
+          //   minRatio: 0.8
+          // })
+        );
 
+        cfg.module.rules.push({
+          test: /\.(m?js|cjs|js)$/,
+          exclude: /node_modules\/(?!(@vue|vue|vue-i18n|pinia|@intlify|@capacitor|vue-router|swiper))/,
+          use: {
+            loader: "babel-loader",
+            options: {
+              cacheDirectory: true,
+              presets: [
+                [
+                  "@babel/preset-env",
+                  {
+                    targets: {
+                      chrome: "50",
+                      android: "6",
+                      ios: "10",
+                      safari: "10",
+                      ie: "11"
+                    },
+                    useBuiltIns: "entry",
+                    corejs: 3
+                  }
+                ]
+              ],
+              plugins: [
+                "@babel/plugin-proposal-class-properties",
+                "@babel/plugin-proposal-optional-chaining",
+                "@babel/plugin-proposal-nullish-coalescing-operator",
+                "@babel/plugin-transform-spread"
+              ]
+            }
+          }
+        });
+
+        cfg.optimization.minimizer = [
+          new TerserPlugin({
+            terserOptions: {
+              ecma: 5,
+              compress: {
+                drop_console: true
+              },
+              output: {
+                comments: false
+              }
+            }
+          })
+        ];
+
+        cfg.optimization = {
+          splitChunks: {
+            chunks: "all",
+            maxInitialRequests: Infinity,
+            minSize: 3000,
+            cacheGroups: {
+              vendor: {
+                test: /[\\/]node_modules[\\/]/,
+                name(module) {
+                  if (module.context) {
+                    const match = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/);
+                    const packageName = match ? match[1] : null;
+                    return packageName ? `npm.${packageName.replace("@", "")}` : null;
+                  }
+                  return null;
+                }
+              }
+            }
+          }
+        };
+      },
       // chainWebpack(chain) {
       //   chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
       // }
