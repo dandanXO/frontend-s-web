@@ -342,7 +342,7 @@ onUnmounted(() => {
     background-size: 100% 100%;
     aspect-ratio: 343 / 656;
     position: relative;
-    min-height: 650px;
+    min-height: 720px;
 
     .summary-wrapper {
       display: flex;
@@ -669,7 +669,7 @@ onUnmounted(() => {
         }
 
         .foreground-wrapper {
-          padding-top: 7vw;
+          padding-top: 5vw;
 
           .wheel-wrapper {
             .wheel-inner-wrapper {

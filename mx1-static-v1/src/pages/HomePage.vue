@@ -3939,7 +3939,7 @@ onBeforeUnmount(() => {
         height: 100%;
         width: 100%;
         background-repeat: no-repeat;
-        min-height: 100px;
+        min-height: 110px;
       }
     }
 
@@ -4335,7 +4335,7 @@ onBeforeUnmount(() => {
   border-radius: 8px;
 
   .game--bg {
-    min-height: 110px;
+    min-height: 150px;
     background-size: 100% 100%;
     background-position: center center;
     height: 100%;
