@@ -162,7 +162,7 @@
       <div class="google-login-wrapper">
         <img v-if="languageVal === 'en'" style="width: 100%" src="../assets/images/index/logindirectly-en.svg" />
         <img v-else style="width: 100%" src="../assets/images/index/logindirectly-ur.svg" />
-        <template v-if="isAndroid() || store.isFromGooglePackage">
+        <template v-if="isAndroid()">
           <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onCapacitorGoogleSignin">
             <img width="24px" src="../assets/images/index/google-icon.svg" />
 
