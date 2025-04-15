@@ -5627,6 +5627,11 @@ const checkGoogleLoginSetPwd = () => {
     row-gap: 16px;
     .platform-game-img {
       height: 140px;
+
+      @media(max-width: 375px){
+        max-height: 105px;
+        height: auto;
+      }
     }
   }
 

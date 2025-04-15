@@ -125,7 +125,7 @@
 
           <q-tr class="top-header">
             <q-td>
-              <div><img style="width: 30px;" src="../../assets/images/vip/vip-col-level.png" /></div>
+              <div><img style="width: 30px" src="../../assets/images/vip/vip-col-level.png" /></div>
             </q-td>
             <q-td>
               {{ $t("vip.upgrade") }}
@@ -147,8 +147,8 @@
           <q-tr :props="props">
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <template v-if="colIndex === 1 || colIndex === 3">
-                <div style="justify-content: flex-start; padding-left: 20px; display: flex; align-items: center;">
-                  <img style="max-width: 25px; margin-right: 4px;" src="../../assets/images/vip/vip-coins.png" />
+                <div style="justify-content: flex-start; padding-left: 20px; display: flex; align-items: center">
+                  <img style="max-width: 25px; margin-right: 4px" src="../../assets/images/vip/vip-coins.png" />
                   <span>{{ col.value }}</span>
                 </div>
               </template>
@@ -416,7 +416,7 @@ const rows = [
   {
     name: "VIP 11",
     ugprade: "3,000,000",
-    reward: t('vip.unlimited'),
+    reward: t("vip.unlimited"),
     flow: "58,888",
     invitee: 90,
     extrareward: "1,188"
@@ -424,7 +424,7 @@ const rows = [
   {
     name: "VIP 12",
     ugprade: "5,000,000",
-    reward: t('vip.unlimited'),
+    reward: t("vip.unlimited"),
     flow: "88,888",
     invitee: 100,
     extrareward: "2,888"
@@ -818,7 +818,7 @@ const getMonthlyVip = () => {
   .q-tab {
     min-height: 44px;
     border-radius: 8px;
-    color: #FFFFFF80;
+    color: #ffffff80;
 
     width: 50%;
   }
@@ -872,7 +872,6 @@ const getMonthlyVip = () => {
       //   transform: translateX(-50%);
       // }
       background: #394142;
-
     }
 
     :deep(.q-tab--active .q-tab__label) {
@@ -880,7 +879,6 @@ const getMonthlyVip = () => {
     }
   }
 }
-
 </style>
 <style lang="scss">
 /* Hide scrollbar but keep functionality */
@@ -926,14 +924,15 @@ const getMonthlyVip = () => {
   overflow: hidden;
   font-size: 1rem;
   text-align: center;
-.vip-details {
-  background:#373C3D;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
+  .vip-details {
+    background: #373c3d;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
   .top-header {
-    color: #FFFFFF80;
+    color: #ffffff80;
     // background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
     // background: linear-gradient(180deg, #21EF89 0%, #33562d 100%);
     background: #323738;
@@ -971,7 +970,7 @@ const getMonthlyVip = () => {
   tbody > :nth-child(odd) {
     // background: rgba(21, 0, 37, 0.2);
     // background: rgba(112, 188, 98, 0.1);
-    background: #FFFFFF0F;
+    background: #ffffff0f;
 
     // background: #652c93;
     // background: #652c9315;
@@ -1020,7 +1019,7 @@ const getMonthlyVip = () => {
     // text-align: center;
     // font-weight: 400;
     // line-height: 19px;
-    color: #B2BDBF;
+    color: #b2bdbf;
   }
 
   .header-wrapper {
@@ -1092,6 +1091,26 @@ const getMonthlyVip = () => {
       img {
         width: 20px;
       }
+    }
+  }
+}
+
+@media (max-width: 375px) {
+  .q-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    overflow-x: scroll;
+
+    .text-center {
+      padding: 0px;
+    }
+
+    .text-right {
+      > div {
+        padding-left: 0px !important;
+      }
+      padding: 0px;
     }
   }
 }
