@@ -3,11 +3,6 @@
     <div class="wheel-outer-wrapper">
       <!-- <span class="title">Countdown: {{ remainingTime }}</span> -->
       <div class="summary-wrapper">
-        <!-- <span class="prize">
-          $
-          <span class="amount">{{ info.currAmount }}</span>
-        </span> -->
-
         <GradientTextAmount :amountText="`${store.currency.value} ${info.currAmount}`" />
 
         <template v-if="extractionDifference > 0 && info.status === 'IN_PROGRESS'">
@@ -48,7 +43,7 @@
             <div class="countdown">รอบถัดไป: {{ remainingTime }}</div>
             <div class="wheel-inner-wrapper">
               <img
-                style="width: 100%;"
+                style="width: 100%"
                 ref="spinWheelRef"
                 class="wheel"
                 src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/wheel-bg.png"
@@ -74,7 +69,9 @@
             />
             <CommonButton v-if="isClaimedStatus" class="draw-btn disabled">เชิญเพื่อรับการหมุน</CommonButton>
             <CommonButton v-else class="draw-btn" @click="handleInviteClick">เชิญเพื่อรับการหมุน</CommonButton>
-            <span class="next-spin-remaining-time" v-if="!isClaimedStatus">นับถอยหลังสู่การหมุนฟรีครั้งต่อไป: {{ nextFreeSpinRemainingTime }}</span>
+            <span class="next-spin-remaining-time" v-if="!isClaimedStatus">
+              นับถอยหลังสู่การหมุนฟรีครั้งต่อไป: {{ nextFreeSpinRemainingTime }}
+            </span>
           </div>
         </div>
       </div>
@@ -93,26 +90,22 @@
       </div>
       <ol>
         <li>
-          เมื่อจำนวนเงินสะสมถึง {{ store.currency.value }}500 คุณสามารถสมัครถอนเงินได้ (รางวัลจะถูกเพิ่มในกระเป๋าเงินของคุณโดยตรง)
+          เมื่อจำนวนเงินสะสมถึง {{ store.currency.value }}500 คุณสามารถสมัครถอนเงินได้
+          (รางวัลจะถูกเพิ่มในกระเป๋าเงินของคุณโดยตรง)
         </li>
         <li>เมื่อไม่มีการหมุนให้ใช้งาน แนะนำผู้เล่นใหม่เพื่อรับการหมุนฟรี</li>
-        <li>
-          กิจกรรมนี้จะมีระยะเวลา 3 วัน หลังจากกิจกรรมสิ้นสุด โบนัสสะสมจะถูกรีเซ็ตและกิจกรรมจะเริ่มใหม่อีกครั้ง
-        </li>
+        <li>กิจกรรมนี้จะมีระยะเวลา 3 วัน หลังจากกิจกรรมสิ้นสุด โบนัสสะสมจะถูกรีเซ็ตและกิจกรรมจะเริ่มใหม่อีกครั้ง</li>
         <li>
           ผู้ใช้แต่ละคนสามารถเพลิดเพลินกับโอกาสในการหมุนฟรีหนึ่งครั้งต่อวัน การหมุนฟรีจะถูกเพิ่มในเวลา 12:00 น. ทุกวัน
         </li>
         <li>หลังจากที่ใบสมัครได้รับการอนุมัติ โบนัสจะถูกฝากเข้ากระเป๋าเงินของคุณโดยตรง</li>
         <li>โบนัสจำเป็นต้องหมุนเวียนหนึ่งครั้งก่อนที่จะสามารถถอนได้</li>
+        <li>ผู้รับเชิญต้องผูกหมายเลขโทรศัพท์ของตนและลงทะเบียนผ่านลิงก์เชิญของผู้เชิญเพื่อรับการพิจารณาการแนะนำ</li>
         <li>
-          ผู้รับเชิญต้องผูกหมายเลขโทรศัพท์ของตนและลงทะเบียนผ่านลิงก์เชิญของผู้เชิญเพื่อรับการพิจารณาการแนะนำ
+          ยิ่งผู้รับเชิญของคุณเล่นมากเท่าไหร่ รางวัลการหมุนครั้งต่อไปของคุณก็จะยิ่งสูงขึ้นเท่านั้น เชิญเพื่อน ๆ
+          และชนะรางวัลมากขึ้นไปด้วยกัน!
         </li>
-        <li>
-          ยิ่งผู้รับเชิญของคุณเล่นมากเท่าไหร่ รางวัลการหมุนครั้งต่อไปของคุณก็จะยิ่งสูงขึ้นเท่านั้น เชิญเพื่อน ๆ และชนะรางวัลมากขึ้นไปด้วยกัน!
-        </li>
-        <li>
-          สิทธิ์ในการตีความกิจกรรมเป็นของ 55Ace หากคุณมีคำถามใด ๆ กรุณาติดต่อฝ่ายบริการลูกค้า
-        </li>
+        <li>สิทธิ์ในการตีความกิจกรรมเป็นของ 55Ace หากคุณมีคำถามใด ๆ กรุณาติดต่อฝ่ายบริการลูกค้า</li>
       </ol>
     </div>
     <WheelResultDialog v-model="showResultDialog" :prize="prize" @hide="$emit('reload')" />
@@ -129,7 +122,7 @@ import RecordDialog from "./RecordDialog.vue";
 import { useRouter } from "vue-router";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
-import ProgressBar from './ProgressBar.vue';
+import ProgressBar from "./ProgressBar.vue";
 import CashOutPopup from "./CashOutPopup.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
 import { userStore } from "@/stores/index";
@@ -138,7 +131,6 @@ const store = userStore();
 const emit = defineEmits(["reload"]);
 const props = defineProps(["info"]);
 const { info } = toRefs(props);
-
 
 const TOTAL_ITEMS = 6;
 const DEFAULT_SPEED = 1;
@@ -169,11 +161,11 @@ const prize = ref(0);
 const winningRecordRef = ref();
 const isCashOutPopupVisible = ref(false);
 const cashOutPopupRef = ref();
-const isClaimedStatus = computed(() => info.value.status === 'CLAIMED');
+const isClaimedStatus = computed(() => info.value.status === "CLAIMED");
 
-provide('nextFreeSpinRemainingTime', nextFreeSpinRemainingTime);
-provide('remainingTime', remainingTime);
-const extractionDifference = inject('extractionDifference');
+provide("nextFreeSpinRemainingTime", nextFreeSpinRemainingTime);
+provide("remainingTime", remainingTime);
+const extractionDifference = inject("extractionDifference");
 
 const winningRecord = computed(() => {
   const result = [];
@@ -296,9 +288,11 @@ const handleRecordClick = () => {
 
 const updateCountdownTime = () => {
   // console.log("updateCountdownTime")
-  const endTime = isClaimedStatus.value ? moment().tz("Asia/Bangkok").add(1, "days").startOf("day") : moment(info.value.startTime).tz("Asia/Bangkok").add(3, "days");
+  const endTime = isClaimedStatus.value
+    ? moment().tz("Asia/Bangkok").add(1, "days").startOf("day")
+    : moment(info.value.startTime).tz("Asia/Bangkok").add(3, "days");
   const nextFreeSpinEndTime = moment().tz("Asia/Bangkok").add(1, "days").startOf("day");
-  if(timer.value){
+  if (timer.value) {
     clearTimeout(timer.value);
   }
   timer.value = setInterval(() => {
@@ -312,7 +306,7 @@ const updateCountdownTime = () => {
       });
     }
   }, 1000);
-}
+};
 
 onMounted(() => {
   for (let i = 0; i < TOTAL_ITEMS; i++) {
@@ -322,7 +316,6 @@ onMounted(() => {
 
   updateCountdownTime();
 });
-
 
 defineExpose({
   updateCountdownTime
@@ -341,16 +334,17 @@ onUnmounted(() => {
   .wheel-outer-wrapper {
     background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/bg.png) no-repeat;
     background-size: 100% 100%;
-    aspect-ratio: 343 / 656;
     position: relative;
+    min-height: 720px;
 
     .summary-wrapper {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
       padding: 58px 34px 0;
-
+      > * {
+        margin-top: 8px;
+      }
       .prize {
         margin-top: 4px;
         margin-bottom: -12px;
@@ -361,10 +355,11 @@ onUnmounted(() => {
           font-size: 40px;
         }
       }
-      
-      .extraction-require-amount, .extraction-require-percentage {
+
+      .extraction-require-amount,
+      .extraction-require-percentage {
         color: #fff;
-        font-family: 'Poppins';
+        font-family: "Poppins";
         font-weight: 400;
         font-size: 12px;
         line-height: 16px;
@@ -373,7 +368,7 @@ onUnmounted(() => {
 
         .amount {
           font-weight: 500;
-          color: #FEBA02;
+          color: #feba02;
         }
       }
 
@@ -430,7 +425,7 @@ onUnmounted(() => {
       .winning-record-outer-wrapper {
         padding: 12px 14px;
         width: 100%;
-        background-color: #1E1F24;
+        background-color: #1e1f24;
         border-radius: 8px;
 
         .winning-record-wrapper {
@@ -441,8 +436,8 @@ onUnmounted(() => {
 
           .winning-record-item {
             display: grid;
-            gap: 8px;
-            grid-template-columns: 2fr minmax(40px, 1fr) 2fr;
+            gap: 4px;
+            grid-template-columns: 88px minmax(40px, 1fr) 2fr;
             > span {
               line-height: 20px;
               flex: 1;
@@ -497,7 +492,7 @@ onUnmounted(() => {
             position: relative;
             top: 0;
             padding: 0 20px;
-            
+
             .indicate {
               -webkit-user-drag: none;
               position: absolute;
@@ -520,6 +515,7 @@ onUnmounted(() => {
               border: none;
               width: 158px;
               max-width: 35%;
+              height: 40%;
               font-size: 20px;
               font-weight: 700;
               line-height: 24px;
@@ -570,6 +566,11 @@ onUnmounted(() => {
             position: relative;
             max-width: 70%;
             margin: -5% auto 0;
+            height: 100px;
+
+            &.common-btn {
+              background-size: 100% 100%;
+            }
           }
 
           .next-spin-remaining-time {
@@ -602,19 +603,19 @@ onUnmounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 8px;
       font-size: 16px;
       font-weight: 700;
       color: #cd91ff;
 
       .title-decoration {
         display: flex;
-        gap: 12px;
+        margin: 0 8px;
         > div {
           width: 8px;
           height: 8px;
           transform: rotate(45deg);
           background-color: #cd91ff;
+          margin: 0 6px;
         }
       }
     }
@@ -643,7 +644,7 @@ onUnmounted(() => {
   .wheel-stage-wrapper {
     .wheel-outer-wrapper {
       .summary-wrapper {
-        padding: 11vw 7vw 0;
+        padding: 9vw 7vw 0;
 
         .winning-record-outer-wrapper {
           .winning-record-wrapper {
@@ -654,7 +655,7 @@ onUnmounted(() => {
         }
 
         .foreground-wrapper {
-          padding-top: 7vw;
+          padding-top: 5vw;
 
           .wheel-wrapper {
             .wheel-inner-wrapper {
@@ -703,7 +704,7 @@ onUnmounted(() => {
   width: 100%;
 
   &:active {
-      transform: translateY(2px);
+    transform: translateY(2px);
   }
 }
 </style>

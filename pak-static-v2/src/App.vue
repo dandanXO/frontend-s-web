@@ -490,7 +490,14 @@ export default defineComponent({
           false
         );
       } else {
-        trackH5Affiliate();
+        const timer = setInterval(() => {
+          if (store.isCheckGaid) {
+            clearInterval(timer);
+            if (!store.isFromGooglePackage) {
+              trackH5Affiliate();
+            }
+          }
+        }, 100);
       }
 
       document.addEventListener("visibilitychange", handleVisibilityChange);

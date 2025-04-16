@@ -311,10 +311,20 @@ const fallbackCopyTextToClipboard = (text) => {
   });
 };
 
-const copyHrefLink = () => {
+const copyHrefLink = async () => {
   const textToCopy = selfTgurl.value;
 
-  if (navigator.clipboard && navigator.clipboard.writeText) {
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: "b9.game",
+        text: "Pakistan real money games",
+        url: textToCopy
+      });
+    } catch (err) {
+      fallbackCopyTextToClipboard(textToCopy);
+    }
+  } else if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard
       .writeText(textToCopy)
       .then(() => {
@@ -634,6 +644,10 @@ onMounted(() => {
         font-size: 10px;
         line-height: 16.47px;
         letter-spacing: 0px;
+        @media screen and (max-width: 400px) {
+          font-size: 2.4vw;
+          
+        }
       }
     }
   }

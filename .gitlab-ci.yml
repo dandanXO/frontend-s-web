@@ -891,6 +891,19 @@ build-image-telegram-web:
     - build-telegram-web
 #===============================================================================================
 
+build-pak-affiliate-web:
+  extends: .build-projects
+  variables:
+    PROJECT: pak-affiliate-web
+
+build-image-pak-affiliate-web:
+  extends: .docker-build
+  variables:
+    PROJECT: pak-affiliate-web
+  needs:
+    - build-pak-affiliate-web
+#===============================================================================================
+
 build-pak-static-web:
   extends: .build-projects
   variables:

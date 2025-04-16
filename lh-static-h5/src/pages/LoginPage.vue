@@ -471,14 +471,7 @@ export default defineComponent({
 
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-
-                  if (jumpUrl.includes("livestream")) {
-                    router.push(jumpUrl).then(() => {
-                      router.go(jumpUrl);
-                    });
-                  } else {
-                    router.go(jumpUrl);
-                  }
+                  router.go(jumpUrl);
                 }
               })
               .catch((error) => {

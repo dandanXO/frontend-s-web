@@ -300,7 +300,7 @@ export default {
     virtualWalletAddedSuccessfully: "Virtual wallet added successfully",
     cryptoAccountAddedSuccessfully: "Crypto account added successfully",
     newpasswordupdated: "New password updated successfully",
-    withdrewSuccessfully: "Withdrew successfully",
+    withdrewSuccessfully: "Withdraw successfully",
     noRecord: "No Record",
     haventFoundAnyRecord: "Haven't found any record",
     updatedSuccessfully: "Updated successfully",
@@ -923,7 +923,6 @@ export default {
       ranksLeft: "Ranks Left",
       jackpot: "Jackpot",
       noRank: "No Rank",
-      rules: "Rules",
       activityRules: "Activity rules",
       termsConditions: "Terms & Conditions",
       rules1:

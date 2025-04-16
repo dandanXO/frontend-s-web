@@ -193,6 +193,7 @@ const handleTabClick = (tab) => {
     .tab-wrapper {
       .tab {
         font-size: 12px;
+        padding: 10px 30px;
       }
     }
   }

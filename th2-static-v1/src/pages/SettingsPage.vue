@@ -106,6 +106,7 @@
               :name="i"
               class="column no-wrap flex-center"
               :img-src="banner.mobileImageUrl"
+              style="min-height: 150px"
               @click="goToPage(banner)"
             ></q-carousel-slide>
           </q-carousel>
@@ -411,6 +412,7 @@ const logout = () => {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 50px;
 
   .acct-nav-label {
     color: rgba(206, 206, 206, 0.8);

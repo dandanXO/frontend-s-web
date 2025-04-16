@@ -99,7 +99,12 @@
                       class="cursor-pointer"
                       @click="isPwd = !isPwd"
                     /> -->
-                    <img style="width: 20px;" class="cursor-pointer" @click="isPwd = !isPwd" :src="require(`../assets/images/common/visibility${isPwd?'_off':''}.png`)">
+                    <img
+                      style="width: 20px"
+                      class="cursor-pointer"
+                      @click="isPwd = !isPwd"
+                      :src="require(`../assets/images/common/visibility${isPwd ? '_off' : ''}.png`)"
+                    />
                   </template>
                 </q-input>
                 <!-- <div v-if="regForm.password" class="password-str-div">
@@ -399,7 +404,7 @@ export default defineComponent({
   components: {
     InputRowGrid,
     InputField,
-    ShareIcons,
+    ShareIcons
     // FloatingStickyKefu
     // PrimaryButton
   },
@@ -707,7 +712,7 @@ export default defineComponent({
 
     const isRegisterAdjustSent = ref(false);
     const trackRegisterSuccessEvent = () => {
-      if (isRegisterAdjustSent.value || !ui.adjust_register_event) return;
+      if (isRegisterAdjustSent.value || !ui.adjust_register_event || store.isFromGooglePackage) return;
       isRegisterAdjustSent.value = true;
 
       if (isInPwa()) {
@@ -776,6 +781,9 @@ export default defineComponent({
               if (Platform.is.android) {
                 regForm.regDevice = "ANDROID";
               }
+            }
+            if (store.isFromGooglePackage) {
+              regForm.regDevice = "ANDROID";
             }
           }
 
@@ -994,7 +1002,7 @@ export default defineComponent({
           } else {
             color = "negative";
             if (res.code === 1402) {
-              message = t('notify.tryagain', { seconds: res.data.second });
+              message = t("notify.tryagain", { seconds: res.data.second });
 
               // start otp countdown
               otpCountdown.value = res.data.second || 60;
@@ -1185,7 +1193,8 @@ export default defineComponent({
       imgOnLoad,
       imgOnError,
       showImageCode,
-      spinRefCode
+      spinRefCode,
+      store
     };
   }
 });
@@ -1644,12 +1653,11 @@ function charType(num) {
   }
 }
 
-
 .q-btn {
-    @media screen and (max-width: 400px) {
-      min-height: 35px;
-      height: 35px;
-    }
+  @media screen and (max-width: 400px) {
+    min-height: 35px;
+    height: 35px;
+  }
 
   :deep(.q-btn__content) {
     @media screen and (max-width: 400px) {

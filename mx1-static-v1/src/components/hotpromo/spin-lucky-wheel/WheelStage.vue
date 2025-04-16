@@ -342,13 +342,17 @@ onUnmounted(() => {
     background-size: 100% 100%;
     aspect-ratio: 343 / 656;
     position: relative;
+    min-height: 720px;
 
     .summary-wrapper {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
       padding: 58px 34px 0;
+
+      > * {
+        margin-top: 8px;
+      }
 
       .prize {
         margin-top: 4px;
@@ -440,8 +444,8 @@ onUnmounted(() => {
 
           .winning-record-item {
             display: grid;
-            gap: 8px;
-            grid-template-columns: 2fr minmax(40px, 1fr) 2fr;
+            gap: 4px;
+            grid-template-columns: 88px minmax(40px, 1fr) 2fr;
             > span {
               line-height: 20px;
               flex: 1;
@@ -491,7 +495,7 @@ onUnmounted(() => {
             background-size: 100% 100%;
             aspect-ratio: 295 / 24;
             margin: 4px 24px 16px;
-            font-size: 13px;
+            font-size: 16px;
             font-weight: 700;
             color: #fff;
           }
@@ -523,6 +527,7 @@ onUnmounted(() => {
               border: none;
               width: 158px;
               max-width: 35%;
+              height: 40%;
               font-size: 20px;
               font-weight: 700;
               line-height: 24px;
@@ -573,14 +578,17 @@ onUnmounted(() => {
             position: relative;
             max-width: 70%;
             margin: -5% auto 0;
-            font-size: 16px;
+            height: 100px;
+            font-size: 15px;
+
+            &.common-btn {
+              background-size: 100% 100%;
+            }
           }
 
           .next-spin-remaining-time {
             font-weight: 700;
             color: #fff;
-            font-size: 13px;
-            letter-spacing: 0px;
           }
         }
       }
@@ -608,19 +616,20 @@ onUnmounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 8px;
       font-size: 16px;
       font-weight: 700;
       color: #cd91ff;
+      text-align: center;
 
       .title-decoration {
         display: flex;
-        gap: 12px;
+        margin: 0 8px;
         > div {
           width: 8px;
           height: 8px;
           transform: rotate(45deg);
           background-color: #cd91ff;
+          margin: 0 6px;
         }
       }
     }
@@ -649,7 +658,7 @@ onUnmounted(() => {
   .wheel-stage-wrapper {
     .wheel-outer-wrapper {
       .summary-wrapper {
-        padding: 11vw 7vw 0;
+        padding: 9vw 7vw 0;
 
         .winning-record-outer-wrapper {
           .winning-record-wrapper {
@@ -660,7 +669,7 @@ onUnmounted(() => {
         }
 
         .foreground-wrapper {
-          padding-top: 7vw;
+          padding-top: 5vw;
 
           .wheel-wrapper {
             .wheel-inner-wrapper {
@@ -685,7 +694,7 @@ onUnmounted(() => {
 
           .wheel-wrapper {
             .countdown {
-              font-size: 12px;
+              font-size: 14px;
             }
           }
         }
