@@ -28,14 +28,15 @@ body {
     display: none;
 }
 
-.grid {
+/* .grid {
     width: 500px;
-}
+} */
 
 .globe {
     width: 650px;
     height: auto;
 }
+
 
 .section {
     background: url('./images/ip-restrict-section-bg.png') center center no-repeat;
@@ -109,13 +110,16 @@ body {
 }
 
 .container.dark {
-    background: url('./images/ip-restrict-bg-dark.jpg') center center no-repeat;
+    background: url('./images/ip-restrict-bg-dark.png') center center no-repeat;
     background-size: cover;
+    justify-content: flex-start;
+    padding-left: 6vw;
 }
 
 .section.dark {
     background: url('./images/ip-restrict-section-bg-dark.png') center center no-repeat;
     background-size: 100% 100%;
+    backdrop-filter: blur(10px);
 }
 
 .desc.dark {
@@ -168,13 +172,23 @@ body {
       border-radius: 4px;
       background: rgba(23, 34, 62, 1);
       color: rgba(255, 255, 255, 1);
+    }
 
+    .item_in.xf {
+        justify-content: space-evenly;
+        border-radius: 12px;
     }
 
     /* 紅色框（圖片placeholder） */
     .image-placeholder {
       width: 50px;
       margin: 0px auto;
+    }
+
+    .image-placeholder.xf {
+        width: 100%;
+        max-width: 91px;
+        margin: 0 auto;
     }
 
     /* 文字區塊 */
@@ -199,6 +213,12 @@ body {
         background-size: 100% 100%;
     }
 
+    .container.dark {
+        padding-left: unset;
+        justify-content: center;
+        background-position: 85% 0;
+    }
+
     .grid {
         width: 100%;
         height: auto;
@@ -208,7 +228,7 @@ body {
         width: 200px;
         height: auto;
     }
-    
+
     .logo-top {
         display: block;
         width: 100px;
@@ -239,7 +259,7 @@ body {
 
     .contact-btn {
         min-height: 44px;
-        width: 100%;        
+        width: 100%;
         background-image: url('./images/m-contact-btn.svg');
     }
 
