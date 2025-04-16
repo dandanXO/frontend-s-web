@@ -145,6 +145,7 @@
         </q-expansion-item>
       </q-list>
     </div>
+    <q-input style="width: 100%; opacity: 0" filled color="white" ref="copyinput" v-model="text_copied" />
   </q-page>
 </template>
 
@@ -174,24 +175,23 @@ const maskCardNumber = (cardNumber) => {
   return `*******${cardNumber.slice(-4)}`;
 };
 
-const copy = (val) => {
-  copyToClipboard(val)
-    .then(() => {
-      $q.notify({
-        color: "position",
-        position: "top",
-        message: `${val} ${t("notify.copiedtoClipboard")}`,
-        icon: "check_circle_outline"
-      });
-    })
-    .catch(() => {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: t("notify.failed"),
-        icon: "report_problem"
-      });
+const copyinput = ref(null);
+const text_copied = ref("");
+const copy = (text) => {
+  text_copied.value = text;
+  setTimeout(() => {
+    const copyText = copyinput.value;
+
+    copyText.select();
+    document.execCommand("copy");
+
+    $q.notify({
+      color: "positive",
+      position: "top",
+      message: `${text} ${t("notify.copiedtoClipboard")}`,
+      icon: "check_circle_outline"
     });
+  }, 100);
 };
 
 // unbind dialog
