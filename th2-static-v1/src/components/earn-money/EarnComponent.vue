@@ -100,13 +100,27 @@ const downloadQRImg = async () => {
       console.error("Error saving QR Code image:", error);
     }
   } else {
-    const link = window.document.createElement("a");
-    const imgElement = document.querySelector('img[alt="Scan me!"]');
-    link.href = imgElement.src;
-    link.download = "myreferral";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      html2canvas(document.querySelector("#the-qrcode")).then(async function (canvas) {
+        document.body.appendChild(canvas);
+        const dataUrl = canvas.toDataURL("image/jpeg");
+        // console.log(dataUrl);
+
+        const link = window.document.createElement("a");
+        link.href = dataUrl;
+        link.download = "myreferral";
+
+        document.body.appendChild(link);
+
+        link.click();
+        document.body.removeChild(link);
+
+        canvas.style.display = "none";
+        document.body.removeChild(canvas);
+      });
+    } catch (error) {
+      console.error("Error saving QR Code image:", error);
+    }
   }
 };
 
@@ -140,7 +154,6 @@ onMounted(() => {
   .desc-title-wrapper {
     display: flex;
     align-items: center;
-    gap: 5px;
 
     .number {
       background: red;
@@ -150,6 +163,7 @@ onMounted(() => {
       text-align: center;
       border-radius: 6.25rem;
       background: rgba(252, 245, 104, 0.2);
+      margin-right: 5px;
     }
 
     .desc-title {
@@ -272,7 +286,6 @@ onMounted(() => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
     padding: 25px;
 
     .qr-code {
@@ -287,6 +300,7 @@ onMounted(() => {
       font-weight: 700;
       border-radius: 0.5rem;
       background: linear-gradient(188deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
+      margin-top: 10px;
     }
   }
 }

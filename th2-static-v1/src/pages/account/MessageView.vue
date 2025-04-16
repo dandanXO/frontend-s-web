@@ -89,12 +89,12 @@ onActivated(() => {
 .account-message-page {
   display: flex;
   flex-direction: column;
-  gap: 20px;
   padding: 0 20px;
 }
 .msg-container {
   padding: 1rem;
   margin: 0;
+  margin-top: 10px;
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   background: #171e2b;
