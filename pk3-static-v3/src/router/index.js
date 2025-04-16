@@ -65,7 +65,7 @@ export default route(function (/* { store, ssrContext } */) {
       window.location.href = "xfapp:" + to.fullPath;
     }
 
-    if (to.path === "/promotion" || to.path === "/wv-promotion" || to.path === "/wv-earn-money") {
+    if (to.path === "/promotion" || to.path === "/wv-promotion" || to.path === "/wv-earn-money" || to.path === "/wv-vip") {
       // debugger;
       if (isAndroid()) {
         localStorage.setItem("TOKEN", to.query.token);
