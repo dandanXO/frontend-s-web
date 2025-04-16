@@ -604,6 +604,11 @@ export default {
     IP: "IP地址"
 
   },
+  fastAccessButtonMode: {
+    DETAILS: '详情',
+    API_REDIRECT: 'API&跳转',
+    API_CLAIM: 'API&领取',
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -644,6 +649,7 @@ export default {
     addDomain: '新增域名',
     addEmail: '新增邮件',
     addFinancialLevel: '新增会员组别',
+    addFastAccessPromo: '新增快速浏览优惠',
     addGame: '新增游戏',
     addGameMatch: '新增赛事',
     addGameQuiz: '新增竞猜',
@@ -832,6 +838,7 @@ export default {
     bydatedesc: '日期低到高',
     bulkApprove: '批量批准',
     bulkWithdraw: '批量提款',
+    buttonMode: '按键显示模式',
     callbackUrl: '回调地址',
     cancel: '取消',
     cancelAll: '全部取消',
@@ -872,6 +879,7 @@ export default {
     choiceThree: '题目三选项',
     claimRecord: '领取记录',
     claimTime: '领取时间',
+    claimApiUrl: '领取Api Url',
     claimableRebate: '可领取返水金额',
     className: '类别名',
     clearingSum: '结算总和',
@@ -909,6 +917,7 @@ export default {
     copyTo: '复制到',
     copyToOtherLevel: '复制到其他会员组别',
     copyWithdrawPlatform: '复制提款平台',
+    countDown: '显示倒数计时',
     country: '国家',
     countryImage: '国家图像',
     createBy: '创建人',
@@ -1062,6 +1071,7 @@ export default {
     editDetails: '编辑信息',
     editEmail: '编辑邮件',
     editFinancialLevel: '编辑会员组别',
+    editFastAcesssPromo: '编辑快速浏览优惠',
     editGame: '编辑游戏',
     editGameMatch: '编辑赛事',
     editGift: '编辑奖品',
@@ -1205,6 +1215,7 @@ export default {
     imageSize: '图像尺寸',
     import: '导入',
     inbox: '收件箱',
+    initApiUrl: '初始化Api Url',
     ineligible: '不符合',
     innerSetting: '内圈几率设置',
     ip: '访问 IP',
@@ -3339,7 +3350,8 @@ export default {
     'Refer Spin Claim Record': '邀请转盘领取记录',
     'Refer Spin Record': '邀请转盘记录',
     'Official CS Account': '官方客服账号',
-    'Site Note': '便签板'
+    'Site Note': '便签板',
+    'Fast Access Promo': '快速浏览优惠'
   },
   google: {
     google_auth_menu: '谷歌验证',
