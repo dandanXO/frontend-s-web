@@ -40,3 +40,7 @@ export const batchUpdateFrozenMember = (members, siteId, remarks) => {
 export const rejectRecord = (id, recordTime) => {
   return https().request("/refer-friend-reward/reject?_method=PUT", Method.POST, { id: id, recordTime: recordTime }, ContentType.form);
 }
+
+export const exportPakMemberReferSummaryBulk = (form) => {
+  return https().request("/refer-friend/bulk-summary-pak-export", Method.GET, form, ContentType.form);
+}
