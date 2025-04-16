@@ -426,7 +426,6 @@ function create() {
 
 function showAndResetButtonMode() {
   showButtonModeField()
-  resetAllButtonModeAmount()
 }
 
 function showButtonModeField() {
@@ -446,7 +445,7 @@ function showButtonModeField() {
 function resetAllButtonModeAmount(){
   form.initApiUrl = null;
   form.claimApiUrl = null;
-  form.buttonMode = 'DETAILS'
+  form.buttonMode = "DETAILS"
   form.id = null;
   form.promoPageId = null;
 }
