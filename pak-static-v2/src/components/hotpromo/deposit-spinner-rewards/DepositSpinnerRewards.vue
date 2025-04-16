@@ -504,7 +504,7 @@ const transformStyle = computed(() => {
       font-weight: 700;
       line-height: 24px;
       color: rgba(102, 167, 255, 1);
-      text-shadow: 
+      text-shadow:
       -1px -1px 0 #fff,
       1px -1px 0 #fff,
       -1px 1px 0 #fff,
@@ -552,6 +552,7 @@ const transformStyle = computed(() => {
     }
   }
   .bg {
+    width: 100%;
     margin-top: -85px;
     margin-top: -22.5vw;
     height: 100%;
