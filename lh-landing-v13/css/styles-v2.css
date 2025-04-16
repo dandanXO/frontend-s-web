@@ -123,9 +123,27 @@ a {
   bottom: -1%;
   z-index: 1;
 } */
- #tf88Url-btn {
-   animation: breathing 5s ease-out infinite normal;
- }
+#tf88Url-btn {
+  animation: pressDown 0.65s infinite;
+}
+
+@keyframes pressDown {
+  0% {
+    transform: translateY(0);
+  }
+  10% {
+    transform: translateY(8px);
+  }
+  70% {
+    transform: translateY(8px);
+  }
+  80% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
 
 .banner-btn {
   position: relative;
@@ -232,31 +250,5 @@ a {
 @media screen and (max-width: 450px) {
   .contact-item {
     font-size: 0.8rem;
-  }
-}
-
-@keyframes breathing {
-  0% {
-    -webkit-transform: scale(0.9);
-    -ms-transform: scale(0.9);
-    transform: scale(0.9);
-  }
-
-  25% {
-    -webkit-transform: scale(1);
-    -ms-transform: scale(1);
-    transform: scale(1);
-  }
-
-  60% {
-    -webkit-transform: scale(0.9);
-    -ms-transform: scale(0.9);
-    transform: scale(0.9);
-  }
-
-  100% {
-    -webkit-transform: scale(0.9);
-    -ms-transform: scale(0.9);
-    transform: scale(0.9);
   }
 }
