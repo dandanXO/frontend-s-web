@@ -13,7 +13,11 @@
         </div>
       </div>
 
-      <img class="livepoker-rebate-banner" src="@/assets/images/promotion/hotpromo/yu-e-bao/banner.png" @click="handleBannerClick" />
+      <img
+        class="livepoker-rebate-banner"
+        src="@/assets/images/promotion/hotpromo/yu-e-bao/banner.png"
+        @click="handleBannerClick"
+      />
 
       <template v-if="tabValue === 0">
         <div>
@@ -111,18 +115,34 @@
               <div class="sub-title">一、「余额宝」界面功能说明</div>
               <div class="with-step">
                 <img class="tutorial-img" src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-interest-1.png" />
-                <img
-                  class="tutorial-img interest-1-step-1"
-                  src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-interest-1-step-1.png"
-                />
-                <img
-                  class="tutorial-img interest-1-step-2"
-                  src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-interest-1-step-2.png"
-                />
-                <img
-                  class="tutorial-img interest-1-step-3"
-                  src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-interest-1-step-3.png"
-                />
+                <template v-if="isDark">
+                  <img
+                    class="tutorial-img interest-1-step-1"
+                    src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-interest-1-step-1-dark.png"
+                  />
+                  <img
+                    class="tutorial-img interest-1-step-2"
+                    src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-interest-1-step-2-dark.png"
+                  />
+                  <img
+                    class="tutorial-img interest-1-step-3"
+                    src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-interest-1-step-3-dark.png"
+                  />
+                </template>
+                <template v-else>
+                  <img
+                    class="tutorial-img interest-1-step-1"
+                    src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-interest-1-step-1.png"
+                  />
+                  <img
+                    class="tutorial-img interest-1-step-2"
+                    src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-interest-1-step-2.png"
+                  />
+                  <img
+                    class="tutorial-img interest-1-step-3"
+                    src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-interest-1-step-3.png"
+                  />
+                </template>
               </div>
             </div>
             <div class="content-block">
@@ -239,8 +259,10 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useDark } from "@vueuse/core";
 
 const router = useRouter();
+const isDark = useDark();
 
 const tabs = ref(["余额宝2.0", "获得利息攻略", "领取任务教程", "领取奖金教程"]);
 const tabValue = ref(0);
@@ -675,6 +697,13 @@ const handleBannerClick = () => {
   .title-wrapper {
     span {
       color: #fff;
+    }
+  }
+  .content-wrapper {
+    .content-block {
+      .hint {
+        color: #fff;
+      }
     }
   }
 }

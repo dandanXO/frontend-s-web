@@ -456,7 +456,7 @@ const handleBannerClick = () => {
 .livepoker-rebate-game-info {
   width: 100%;
   height: 100%;
-  margin-top: 40px;
+  margin-top: 16px;
   background: #f2f8fe;
   border-radius: 12px;
   padding: 20px 12px 12px;
@@ -554,7 +554,7 @@ const handleBannerClick = () => {
 .livepoker-rebate-game-bottom-rule {
   width: 100%;
   height: 100%;
-  margin-top: 40px;
+  margin-top: 16px;
   background: #f2f8fe;
   border-radius: 12px;
   padding: 20px 12px 12px;
@@ -747,6 +747,31 @@ const handleBannerClick = () => {
 
     &:last-child {
       margin-bottom: 0;
+    }
+  }
+}
+
+.body--dark{
+  .stress-block {
+    color: #333333 !important;
+  }
+  .livepoker-rebate-game-bottom-rule {
+    .content {
+      .item {
+        .item-desc {
+          :first-child {
+            color: #ff0000 !important;
+          }
+          .hint {
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+  .title-wrapper {
+    span {
+      color: #fff;
     }
   }
 }
