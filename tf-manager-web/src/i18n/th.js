@@ -1472,6 +1472,7 @@ export default {
     updateToUnderReviewSuccess: 'อัปเดตเป็นอยู่ระหว่างตรวจสอบสำเร็จ',
     updateUserTypeSuccess: 'อัปเดตประเภทผู้ใช้งานสำเร็จ',
     updateVIPLevelSuccess: 'อัปเดตความสำเร็จระดับ VIP',
+    uploadLimitExceeded: 'จำนวนที่อัปโหลดต้องไม่เกิน {count} รายการ',
     useCommaToSeparateDomain: 'กรุณาใช้ "," เพื่อแยกชื่อโดเมนหากใส่หลายโดเมน',
     validateAdsTypeRequired: 'ต้องระบุประเภทโฆษณา',
     validateActionRequired: 'จำเป็นต้องมีการดำเนินการ',

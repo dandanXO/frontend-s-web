@@ -520,6 +520,14 @@ function handleFileImport(event) {
     const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
     const jsonData = XLSX.utils.sheet_to_json(firstSheet);
 
+    // 检查上传数量是否超过100个
+    if (jsonData.length > 100) {
+      ElMessage.error(t('message.uploadLimitExceeded', { count: 100 }));
+      exportLoading.value = false;
+      event.target.value = '';
+      return;
+    }
+
     exportMemberList.value = jsonData.map(item => ({
       loginName: item.loginName
     }));
