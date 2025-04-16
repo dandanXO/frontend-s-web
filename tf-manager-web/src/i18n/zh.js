@@ -2696,6 +2696,7 @@ export default {
     updateVIPLevelSuccess: '更新 VIP 等级成功',
     updateWithdrawTypeSuccess: '更新提款类型成功',
     updateShareRatioSuccess: '更新佣金比例成功',
+    uploadLimitExceeded: '上传的数量不能超过{count}个',
     useCommaToSeparateDomain: '如要加入多个域名，请使用"," 来分开',
     validateActionRequired: '动作必填',
     validateActivePlayerRequired: '活跃玩家必填',

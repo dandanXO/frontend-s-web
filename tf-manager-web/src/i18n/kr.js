@@ -2459,6 +2459,7 @@ export default {
     selectPopupTime: '팝업 시간을 선택하세요.',
     updateAffiliateLevelSuccess: '가맹점 레벨 변경 성공',
     updateShareRatioSuccess: '공유율 업데이트 성공',
+    uploadLimitExceeded: '최대 {count}개까지 업로드 가능합니다',
     validateShareRatioFormat: '공유 비율은 0 에서 1 사이여야 합니다.',
     validateMinDayRegLimitRequired: '최소 일일 등록 제한이 필요합니다',
     validateMaxDayRegLimitRequired: '최대 일일 등록 제한이 필요합니다',

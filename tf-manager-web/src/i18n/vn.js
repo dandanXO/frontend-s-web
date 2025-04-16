@@ -2112,6 +2112,7 @@ export default {
     updateToUnderReviewSuccess: 'Cập nhật để đang xem xét thành công',
     updateUserTypeSuccess: 'Cập nhật loại người dùng thành công',
     updateVIPLevelSuccess: 'Cập nhật cấp độ VIP thành công',
+    uploadLimitExceeded: 'Chỉ được tải lên tối đa {count} tên đăng nhập',
     useCommaToSeparateDomain: 'Sử dụng dấu phẩy để phân tách các miền',
     validateAdsTypeRequired: 'Loại quảng cáo là bắt buộc',
     validateActionRequired: 'Hành động là bắt buộc',
