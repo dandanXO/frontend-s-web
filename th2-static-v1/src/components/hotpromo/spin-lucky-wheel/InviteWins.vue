@@ -17,11 +17,12 @@
       <q-btn label="บันทึก" :size="'150'" class="save-btn" @click="downloadQRImg()" />
     </div>
   </div>
+  <q-input style="width: 100%; opacity: 0" filled color="white" ref="copyinput" v-model="text_copied" />
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useQuasar, copyToClipboard, Platform } from "quasar";
+import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import VueQRCodeComponent from "vue-qrcode-component";
@@ -33,26 +34,24 @@ const store = userStore();
 const isLoading = ref(false);
 
 const selfTgurl = ref("");
-const copyShareLink = (selfTgurl) => {
-  const copiedText = `คุณต้องการปลดล็อกรางวัลของคุณ ${store.currency.value}500 ทันทีหรือไม่? คลิกที่ลิงก์: ${selfTgurl}`;
+const copyinput = ref(null);
+const text_copied = ref("");
+const copyShareLink = () => {
+  const copiedText = `คุณต้องการปลดล็อกรางวัลของคุณ ${store.currency.value}500 ทันทีหรือไม่? คลิกที่ลิงก์: ${selfTgurl.value}`;
+  text_copied.value = copiedText;
+  setTimeout(() => {
+    const copyText = copyinput.value;
 
-  copyToClipboard(copiedText)
-    .then(() => {
-      $q.notify({
-        color: "position",
-        position: "top",
-        message: `${selfTgurl} คัดลอกไปยังคลิปบอร์ด`,
-        icon: "check_circle_outline"
-      });
-    })
-    .catch(() => {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: "Failed",
-        icon: "report_problem"
-      });
+    copyText.select();
+    document.execCommand("copy");
+
+    $q.notify({
+      color: "positive",
+      position: "top",
+      message: `${selfTgurl.value} คัดลอกไปยังคลิปบอร์ด`,
+      icon: "check_circle_outline"
     });
+  }, 100);
 };
 
 const downloadQRImg = async () => {
