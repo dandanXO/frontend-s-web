@@ -561,7 +561,8 @@ export default {
     zh: '汉语',
     th: '泰语',
     kr: '韩语',
-    vn: '越南语'
+    vn: '越南语',
+    ur: '乌尔都语'
   },
   rewardStatus: {
     PENDING: '审核中',

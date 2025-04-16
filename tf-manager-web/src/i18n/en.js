@@ -558,7 +558,8 @@ export default {
     zh: 'Chinese',
     th: 'Thai',
     kr: 'Korean',
-    vn: 'Vietnamese'
+    vn: 'Vietnamese',
+    ur: 'Urdu'
   },
   rewardStatus: {
     PENDING: 'PENDING',

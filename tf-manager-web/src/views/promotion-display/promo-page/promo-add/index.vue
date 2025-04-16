@@ -31,6 +31,26 @@
           </el-form-item>
         </el-row>
         <el-row>
+          <el-form-item :label="t('fields.language')" prop="language">
+            <el-select
+              v-model="form.language"
+              size="small"
+              :placeholder="t('fields.language')"
+              class="filter-item"
+              style="width: 350px"
+              default-first-option
+              @focus="getLanguage"
+            >
+              <el-option
+                v-for="item in languageList.list"
+                :key="item"
+                :label="t('language.' + item)"
+                :value="item"
+              />
+            </el-select>
+          </el-form-item>
+        </el-row>
+        <el-row>
           <el-form-item :label="t('fields.title')" prop="title">
             <el-col :span="24">
               <el-input v-model="form.title" class="form-input" />
@@ -1419,7 +1439,7 @@ import { useI18n } from 'vue-i18n'
 import { getVipList } from '../../../../api/vip'
 import moment from 'moment'
 import { isVnm, isXF, isThai, isDY, isLH } from '@/utils/site'
-import { getSupportDarkMode } from '@/api/config'
+import { getSupportDarkMode, getConfigList } from '@/api/config'
 import { getActivePromoType } from "@/api/promo-type";
 import { useSessionStorage } from "@vueuse/core";
 
@@ -1448,6 +1468,9 @@ const siteType = reactive({
 
 const vipList = reactive({
   list: [],
+})
+const languageList = reactive({
+  list: []
 })
 const uploadedImage = reactive({
   url: null,
@@ -2228,6 +2251,17 @@ function getName(nameStr) {
   }
 }
 
+async function getLanguage() {
+  languageList.list = []
+  const { data: lang } = await getConfigList("language_list", form.siteId)
+  if (lang[0].value) {
+    const arr = lang[0].value.split(',')
+    for (const a of arr) {
+      languageList.list.push(a)
+    }
+  }
+}
+
 onMounted(async () => {
   await loadSites()
   imageForm.siteId = store.state.user.siteId
@@ -2251,6 +2285,7 @@ onMounted(async () => {
     }
     await addParam()
     await loadPromoTypes()
+    await getLanguage()
   }
 })
 </script>
