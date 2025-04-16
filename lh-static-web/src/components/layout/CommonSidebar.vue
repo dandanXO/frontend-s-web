@@ -351,7 +351,7 @@ export default defineComponent({
 
     const goToLiveChatPromo = () => {
       const currentRoute = router.currentRoute.value;
-      if (store.vip !== "" && store.vip !== "VIP0") {
+      if (store.vip !== "") {
         const currentName = currentRoute.query.name;
         if (currentRoute.path === "/promotion" && currentName !== "lh-official-gift") {
           router.push(`/promotion?name=lh-official-gift`).then(() => {
@@ -361,15 +361,25 @@ export default defineComponent({
           router.push(`/promotion?name=lh-official-gift`);
         }
       } else {
-        ElMessageBox.alert("暂未开放", {
-          autofocus: false,
+        ElMessageBox.alert("请登录后再操作", "系统提示", {
           center: true,
           confirmButtonText: "确认",
           showClose: false,
-          buttonSize: "large",
-          closeOnClickModal: true
+          buttonSize: "large"
+        }).then(() => {
+          store.loginPageVisible = true;
+          // router.push("/login");
+          // emits("open-login-dialog");
         });
-        return;
+        // ElMessageBox.alert("暂未开放", {
+        //   autofocus: false,
+        //   center: true,
+        //   confirmButtonText: "确认",
+        //   showClose: false,
+        //   buttonSize: "large",
+        //   closeOnClickModal: true
+        // });
+        // return;
       }
     };
 
