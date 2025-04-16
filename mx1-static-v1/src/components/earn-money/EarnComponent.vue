@@ -39,7 +39,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import VueQRCodeComponent from "vue-qrcode-component";
-import { copyToClipboard, Platform, useQuasar } from "quasar";
+import { Platform, useQuasar } from "quasar";
 
 import { api } from "@/boot/axios";
 import { t } from "@/boot/lang";

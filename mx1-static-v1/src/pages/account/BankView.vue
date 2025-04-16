@@ -166,7 +166,7 @@
 
 <script setup>
 import { onActivated, reactive, ref } from "vue";
-import { copyToClipboard, useQuasar } from "quasar";
+import { useQuasar } from "quasar";
 
 import ConfirmButton from "@/atoms/ConfirmButton.vue";
 import DialogHeader from "@/atoms/DialogHeader.vue";
