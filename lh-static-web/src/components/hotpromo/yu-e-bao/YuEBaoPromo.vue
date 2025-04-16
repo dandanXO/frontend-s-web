@@ -13,17 +13,17 @@
         </div>
       </div>
 
-      <img class="livepoker-rebate-banner" src="@/assets/promo/yu-e-bao/banner.png" @click="handleBannerClick" />
+      <img class="livepoker-rebate-banner" src="@/assets/images/promotion/hotpromo/yu-e-bao/banner.png" @click="handleBannerClick" />
 
       <template v-if="tabValue === 0">
         <div>
           <div class="livepoker-rebate-game-info section-bg">
             <div class="title-wrapper">
-              <img src="@/assets/promo/yu-e-bao/title-img-left.png" />
+              <img src="@/assets/images/promotion/hotpromo/yu-e-bao/title-img-left.png" />
               <span>余额宝2.0</span>
-              <img src="@/assets/promo/yu-e-bao/title-img-right.png" />
+              <img src="@/assets/images/promotion/hotpromo/yu-e-bao/title-img-right.png" />
             </div>
-            <img src="@/assets/promo/yu-e-bao/stress-content.png" />
+            <img src="@/assets/images/promotion/hotpromo/yu-e-bao/stress-content.png" />
             <div class="little-title">
               <div class="ribbon">活动时间</div>
               <div class="right bold">2025.5.1-永久</div>
@@ -42,9 +42,9 @@
 
           <div class="livepoker-rebate-game-bottom-rule section-bg">
             <div class="title-wrapper">
-              <img src="@/assets/promo/yu-e-bao/title-img-left.png" />
+              <img src="@/assets/images/promotion/hotpromo/yu-e-bao/title-img-left.png" />
               <span>余额宝常见问题解析</span>
-              <img src="@/assets/promo/yu-e-bao/title-img-right.png" />
+              <img src="@/assets/images/promotion/hotpromo/yu-e-bao/title-img-right.png" />
             </div>
             <br />
             <div class="content">
@@ -101,37 +101,37 @@
       <template v-if="tabValue === 1">
         <div class="livepoker-rebate-game-info section-bg">
           <div class="title-wrapper">
-            <img src="@/assets/promo/yu-e-bao/title-img-left.png" />
+            <img src="@/assets/images/promotion/hotpromo/yu-e-bao/title-img-left.png" />
             <span>获得利息攻略</span>
-            <img src="@/assets/promo/yu-e-bao/title-img-right.png" />
+            <img src="@/assets/images/promotion/hotpromo/yu-e-bao/title-img-right.png" />
           </div>
 
           <div class="content-wrapper">
             <div class="content-block">
               <div class="sub-title">一、「余额宝」界面功能说明</div>
               <div class="with-step">
-                <img class="tutorial-img" src="@/assets/promo/yu-e-bao/tutorial-interest-1.png" />
+                <img class="tutorial-img" src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-interest-1.png" />
                 <img
                   class="tutorial-img interest-1-step-1"
-                  src="@/assets/promo/yu-e-bao/tutorial-interest-1-step-1.png"
+                  src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-interest-1-step-1.png"
                 />
                 <img
                   class="tutorial-img interest-1-step-2"
-                  src="@/assets/promo/yu-e-bao/tutorial-interest-1-step-2.png"
+                  src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-interest-1-step-2.png"
                 />
                 <img
                   class="tutorial-img interest-1-step-3"
-                  src="@/assets/promo/yu-e-bao/tutorial-interest-1-step-3.png"
+                  src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-interest-1-step-3.png"
                 />
               </div>
             </div>
             <div class="content-block">
               <div class="sub-title">二、「余额宝钱包」利息激活</div>
-              <img class="tutorial-img" src="@/assets/promo/yu-e-bao/tutorial-interest-2.png" />
+              <img class="tutorial-img" src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-interest-2.png" />
               <div class="tutorial-desc">1.打开首页-登录账号-点击右上角我的头像</div>
-              <img class="tutorial-img" src="@/assets/promo/yu-e-bao/tutorial-interest-3.png" />
+              <img class="tutorial-img" src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-interest-3.png" />
               <div class="tutorial-desc">2.点击余额宝</div>
-              <img class="tutorial-img" src="@/assets/promo/yu-e-bao/tutorial-interest-4.png" />
+              <img class="tutorial-img" src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-interest-4.png" />
               <div class="tutorial-desc">3.进入余额宝利息界面有余额即可激活，利息将自动发放至中心钱包</div>
             </div>
             <div class="content-block">
@@ -144,16 +144,16 @@
       <template v-if="tabValue === 2">
         <div class="livepoker-rebate-game-info section-bg">
           <div class="title-wrapper">
-            <img src="@/assets/promo/yu-e-bao/title-img-left.png" />
+            <img src="@/assets/images/promotion/hotpromo/yu-e-bao/title-img-left.png" />
             <span>领取任务教程</span>
-            <img src="@/assets/promo/yu-e-bao/title-img-right.png" />
+            <img src="@/assets/images/promotion/hotpromo/yu-e-bao/title-img-right.png" />
           </div>
 
           <div class="content-wrapper">
             <div class="content-block">
-              <img class="tutorial-img" src="@/assets/promo/yu-e-bao/tutorial-mission-1.png" />
+              <img class="tutorial-img" src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-mission-1.png" />
               <div class="tutorial-desc">1.打开雷火官网，点击账号头像区域</div>
-              <img class="tutorial-img" src="@/assets/promo/yu-e-bao/tutorial-mission-2.png" />
+              <img class="tutorial-img" src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-mission-2.png" />
               <div class="tutorial-desc">
                 2.点击「
                 <span class="blue">转账</span>
@@ -161,7 +161,7 @@
                 <span class="blue">一键回收</span>
                 」
               </div>
-              <img class="tutorial-img" src="@/assets/promo/yu-e-bao/tutorial-mission-3.png" />
+              <img class="tutorial-img" src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-mission-3.png" />
               <div class="tutorial-desc">
                 3.点击「
                 <span class="blue">余额宝</span>
@@ -169,17 +169,17 @@
                 <span class="blue">开启</span>
                 」
               </div>
-              <img class="tutorial-img" src="@/assets/promo/yu-e-bao/tutorial-mission-4.png" />
+              <img class="tutorial-img" src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-mission-4.png" />
               <div class="tutorial-desc">
                 提示：若进入余额宝后，未显示任何余额宝任务则说明您的中心钱包金额低于活动最低档位
               </div>
-              <img class="tutorial-img" src="@/assets/promo/yu-e-bao/tutorial-mission-5.png" />
+              <img class="tutorial-img" src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-mission-5.png" />
               <div class="tutorial-desc">
                 4.点击「
                 <span class="blue">立即开启</span>
                 」，即可开启您的余额宝任务
               </div>
-              <img class="tutorial-img" src="@/assets/promo/yu-e-bao/tutorial-mission-6.png" />
+              <img class="tutorial-img" src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-mission-6.png" />
               <div class="tutorial-desc">5.在此界面可以查看任务的完成情况内容</div>
             </div>
             <div class="content-block">
@@ -192,16 +192,16 @@
       <template v-if="tabValue === 3">
         <div class="livepoker-rebate-game-info section-bg">
           <div class="title-wrapper">
-            <img src="@/assets/promo/yu-e-bao/title-img-left.png" />
+            <img src="@/assets/images/promotion/hotpromo/yu-e-bao/title-img-left.png" />
             <span>领取奖金教程</span>
-            <img src="@/assets/promo/yu-e-bao/title-img-right.png" />
+            <img src="@/assets/images/promotion/hotpromo/yu-e-bao/title-img-right.png" />
           </div>
 
           <div class="content-wrapper">
             <div class="content-block">
-              <img class="tutorial-img" src="@/assets/promo/yu-e-bao/tutorial-prize-1.png" />
+              <img class="tutorial-img" src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-prize-1.png" />
               <div class="tutorial-desc">1.打开雷火官网，点击账号头像区域</div>
-              <img class="tutorial-img" src="@/assets/promo/yu-e-bao/tutorial-prize-2.png" />
+              <img class="tutorial-img" src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-prize-2.png" />
               <div class="tutorial-desc">
                 2.点击「
                 <span class="blue">余额宝</span>
@@ -211,19 +211,19 @@
                 <span class="blue">待领取</span>
                 」
               </div>
-              <img class="tutorial-img" src="@/assets/promo/yu-e-bao/tutorial-prize-3.png" />
+              <img class="tutorial-img" src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-prize-3.png" />
               <div class="tutorial-desc">
                 3.找到对应彩金，点击「
                 <span class="blue">立即领取</span>
                 」
               </div>
-              <img class="tutorial-img" src="@/assets/promo/yu-e-bao/tutorial-prize-4.png" />
+              <img class="tutorial-img" src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-prize-4.png" />
               <div class="tutorial-desc">
                 4.点击「
                 <span class="blue">立即开启</span>
                 」，即可开启您的余额宝任务
               </div>
-              <img class="tutorial-img" src="@/assets/promo/yu-e-bao/tutorial-prize-5.png" />
+              <img class="tutorial-img" src="@/assets/images/promotion/hotpromo/yu-e-bao/tutorial-prize-5.png" />
               <div class="tutorial-desc">5.在此界面可以查看任务的完成情况内容</div>
             </div>
             <div class="content-block">
