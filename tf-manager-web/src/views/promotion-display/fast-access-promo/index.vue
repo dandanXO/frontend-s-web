@@ -24,6 +24,21 @@
           />
         </el-select>
         <el-select
+          clearable
+          v-model="request.showFastAccess"
+          size="small"
+          :placeholder="t('fields.showFastAccess')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+        >
+          <el-option
+            v-for="item in uiControl.fastAccessState"
+            :key="item.key"
+            :label="item.displayName"
+            :value="item.value"
+          />
+        </el-select>
+        <el-select
           v-model="request.siteId"
           size="small"
           :placeholder="t('fields.site')"
@@ -153,6 +168,27 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <el-row>
+          <el-form-item :label="t('fields.showFastAccess')" prop="showFastAccess">
+            <el-switch
+              v-model="form.showFastAccess"
+              :active-value="1"
+              :inactive-value="0"
+              active-color="#409EFF"
+              inactive-color="#F56C6C"
+            />
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-form-item :label="t('fields.fastAccessSeq')" prop="fastAccessSeq">
+            <el-col :span="7">
+              <el-input-number
+                v-model="form.fastAccessSeq"
+                controls-position="right"
+              />
+            </el-col>
+          </el-form-item>
+        </el-row>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -208,7 +244,7 @@
               :inactive-value="0"
               active-color="#409EFF"
               inactive-color="#F56C6C"
-              @change="changeFastAccessState(scope.row.promoPageId, scope.row.showFastAccess)"
+              @change="changeFastAccessState(scope.row.id, scope.row.showFastAccess)"
             />
           </div>
           <div v-else>
@@ -217,6 +253,7 @@
           </div>
         </template>
       </el-table-column>
+      <el-table-column prop="fastAccessSeq" :label="t('fields.fastAccessSeq')" />
       <el-table-column type="title" :label="t('fields.action')"
                        width="150"
       >
@@ -251,8 +288,8 @@ import {required} from '../../../utils/validate'
 import {useStore} from '../../../store';
 import {TENANT} from "../../../store/modules/user/action-types";
 import {useI18n} from "vue-i18n";
-import { getFastAccessPromo, createFastAccessPromo, updateFastAccessPromo } from '../../../api/fast-access-promo'
-import { getSimplePromoPageList, updateFastAccessState } from '../../../api/promoPages'
+import { getFastAccessPromo, createFastAccessPromo, updateFastAccessPromo, updateFastAccessState } from '../../../api/fast-access-promo'
+import { getSimplePromoPageList } from '../../../api/promoPages'
 import { hasPermission } from "@/utils/util";
 
 const {t} = useI18n();
@@ -287,6 +324,10 @@ const uiControl = reactive({
     { key: 2, displayName: t('fastAccessButtonMode.API_REDIRECT'), value: 'API_REDIRECT' },
     { key: 3, displayName: t('fastAccessButtonMode.API_CLAIM'), value: 'API_CLAIM' }
   ],
+  fastAccessState: [
+    { key: 1, displayName: t('common.status.OPEN'), value: 1 },
+    { key: 2, displayName: t('common.status.CLOSE'), value: 0 },
+  ],
 })
 
 const request = reactive({
@@ -304,7 +345,9 @@ const form = reactive({
   buttonMode: 'DETAILS',
   countDown: false,
   initApiUrl: null,
-  claimApiUrl: null
+  claimApiUrl: null,
+  showFastAccess: false,
+  fastAccessSeq: 99,
 })
 
 
@@ -389,7 +432,6 @@ async function loadSites() {
 
 async function loadsimplePromoPages() {
   const {data: resp} = await getSimplePromoPageList(request.siteId)
-  console.log(resp)
   promoPage.list = resp
 }
 
@@ -470,9 +512,9 @@ function submit() {
 }
 
 async function changeFastAccessState(id, status) {
-  await updateFastAccessState(id, status)
+  await updateFastAccessState(id, status, request.siteId)
   ElMessage({ message: t('message.updateSuccess'), type: 'success' })
-  await loadPromoPages()
+  await loadFastAccessPromo()
 }
 
 

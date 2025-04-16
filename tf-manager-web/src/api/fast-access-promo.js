@@ -12,3 +12,7 @@ export const createFastAccessPromo = (rain) => {
 export const updateFastAccessPromo = (rain) => {
   return https().request("/fast-access-promo/update?_method=PUT", Method.POST, rain, ContentType.json);
 };
+
+export const updateFastAccessState = async (id, state, siteId) => {
+  await https().request(`/fast-access-promo/${id}/fastAccessState?_method=PUT`, Method.POST, { state: state, siteId: siteId }, ContentType.form);
+};
