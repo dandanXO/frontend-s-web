@@ -342,7 +342,7 @@ const onClickRotate = () => {
     });
     return;
   }
-  eventapi.post(`/session/deposit-wheel/spin?promoCode=pk2-refer-wheel-spin&wheelType=${wheelType}`).then((res) => {
+  eventapi.post(`/session/deposit-wheel/spin?promoCode=pk2-deposit-wheel&wheelType=${wheelType}`).then((res) => {
     if (res.code === 0) {
       let result = getIndexByName(res.data.bonus.toString());
 
@@ -388,7 +388,7 @@ const roll = (result) => {
 const init = () => {
   return new Promise((resolve, reject) => {
     return eventapi
-      .get("/session/deposit-wheel/init?promoCode=pk2-refer-wheel-spin")
+      .get("/session/deposit-wheel/init?promoCode=pk2-deposit-wheel")
       .then((res) => {
         if (res.code === 0) {
           spinWheelDetails.value = res.data;
