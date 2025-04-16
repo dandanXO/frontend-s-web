@@ -44,7 +44,7 @@
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
                           <img class="promo-content"
-                          :class="selectedPromo.redirectUrl === 'pk2-refer-wheel-spin' ? 'dpsr' : 'usual'"
+                          :class="selectedPromo.redirectUrl === 'pk2-deposit-wheel' ? 'dpsr' : 'usual'"
                           :src="imgURL + promo.displayMobileImgUrl" />
                         </div>
                       </div>
@@ -81,19 +81,19 @@
                 <!-- <div class="promo-bg"> -->
                 <img
                   class="promo-content"
-                  :class="selectedPromo.redirectUrl === 'pk2-refer-wheel-spin' ? 'dpsr' :  selectedPromo.redirectUrl === 'new-player-acc-deposit' ? 'npad' : 'usual'"
+                  :class="selectedPromo.redirectUrl === 'pk2-deposit-wheel' ? 'dpsr' :  selectedPromo.redirectUrl === 'new-player-acc-deposit' ? 'npad' : 'usual'"
                   :src="imgURL + selectedPromo.displayMobileBannerUrl"
                 />
                 <!-- </div> -->
               </div>
 
               <div class="promo-content-inner"
-                   :style="selectedPromo.redirectUrl === 'pk2-refer-wheel-spin' ? 'border:0; padding: 0;' : ''"
+                   :style="selectedPromo.redirectUrl === 'pk2-deposit-wheel' ? 'border:0; padding: 0;' : ''"
               v-if="
                   selectedPromo.redirectUrl !== 'pk2-jackpot-aviator' &&
                   selectedPromo.redirectUrl !== 'new-player-acc-deposit'
                 ">
-                <div class="content-title" v-if="selectedPromo.redirectUrl !== 'pk2-refer-wheel-spin'">{{ selectedPromo.title }}</div>
+                <div class="content-title" v-if="selectedPromo.redirectUrl !== 'pk2-deposit-wheel'">{{ selectedPromo.title }}</div>
                 <div class="content-para" v-if="parsedParamSub">{{ parsedParamSub }}</div>
                 <div class="content-date" v-if="parsedParamDate">
                   <div><img src="../assets/images/promotion/calendar-icon.png" /></div>
@@ -105,7 +105,7 @@
               :class="{
                   isJackpotAviator: selectedPromo.redirectUrl === 'pk2-jackpot-aviator',
                   isNewPlayerAccDeposit: selectedPromo.redirectUrl === 'new-player-acc-deposit',
-                  isDepositSpinnerRewards: selectedPromo.redirectUrl === 'pk2-refer-wheel-spin'
+                  isDepositSpinnerRewards: selectedPromo.redirectUrl === 'pk2-deposit-wheel'
                 }">
                 <div v-if="selectedPromo.hasPromo">
                   <!-- <pre>selectedPromo{{ selectedPromo }}</pre>

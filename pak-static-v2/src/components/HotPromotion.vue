@@ -1,5 +1,5 @@
 <template>
-  <div class="hot-promo" :style="list.redirectUrl === 'pk2-refer-wheel-spin' ? 'border-radius: 0;' : ''">
+  <div class="hot-promo" :style="list.redirectUrl === 'pk2-deposit-wheel' ? 'border-radius: 0;' : ''">
     <ClaimPromo
       v-if="isCommonPromo && store.hasToken()"
       :promo-id="list.id"
@@ -18,7 +18,7 @@
     <NewPlayersPromo v-if="list.redirectUrl === 'pk2-new-players' && !isCommonPromo && store.token" :list="list" />
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'pk2-slot-ftd' && store.token" :params="list.param" />
     <DepositSpinnerRewards
-      v-if="list.redirectUrl === 'pk2-refer-wheel-spin' && store.token"
+      v-if="list.redirectUrl === 'pk2-deposit-wheel' && store.token"
       :params="list.param"
     />
     <JackpotAviator
@@ -137,7 +137,7 @@ export default defineComponent({
       this.list.redirectUrl === "pk2-newplayer-welcome-spin" ||
       this.list.redirectUrl === "pk2-redpacketrain" ||
       this.list.redirectUrl === "pk2-interest-profit" ||
-      this.list.redirectUrl === "pk2-refer-wheel-spin" ||
+      this.list.redirectUrl === "pk2-deposit-wheel" ||
       this.list.redirectUrl === "pk2-new-players" ||
       this.list.redirectUrl === "pk2-slot-ftd" ||
       this.list.redirectUrl === "new-player-acc-deposit" ||
