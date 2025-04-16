@@ -1238,10 +1238,12 @@ onMounted(() => {
 
       img {
         display: block;
-        width: 100%;
-        max-width: max-content;
+        width: auto;
+        max-width: 100%;
+        max-height: 60px;
+        height: auto;
         border-radius: 6px;
-        max-height:60px;
+        margin: 0 auto;
       }
     }
 

@@ -90,8 +90,8 @@
             </div>
           </div>
           <div class="unlock-status">
-            <img v-if="currentVipLevelStats.rewardUnlocked" src="@/assets/images/vip/vip-reward-unlocked-icon.png" />
-            <img v-else src="@/assets/images/vip/vip-reward-locked-icon.png" />
+            <img class="unlocked-icon" width="20px" height="20px" v-if="currentVipLevelStats.rewardUnlocked" src="@/assets/images/vip/vip-reward-unlocked-icon.png" />
+            <img class="locked-icon" width="20px" height="20px" v-else src="@/assets/images/vip/vip-reward-locked-icon.png" />
           </div>
         </div>
         <div class="vip-reward-item">
@@ -109,8 +109,8 @@
             </div>
           </div>
           <div class="unlock-status">
-            <img v-if="currentVipLevelStats.rewardUnlocked" src="@/assets/images/vip/vip-reward-unlocked-icon.png" />
-            <img v-else src="@/assets/images/vip/vip-reward-locked-icon.png" />
+            <img class="unlocked-icon" v-if="currentVipLevelStats.rewardUnlocked" src="@/assets/images/vip/vip-reward-unlocked-icon.png" />
+            <img class="locked-icon" v-else src="@/assets/images/vip/vip-reward-locked-icon.png" />
           </div>
         </div>
         <div class="vip-reward-item">
@@ -130,8 +130,8 @@
             </div>
           </div>
           <div class="unlock-status">
-            <img v-if="currentVipLevelStats.rewardUnlocked" src="@/assets/images/vip/vip-reward-unlocked-icon.png" />
-            <img v-else src="@/assets/images/vip/vip-reward-locked-icon.png" />
+            <img class="unlocked-icon" v-if="currentVipLevelStats.rewardUnlocked" src="@/assets/images/vip/vip-reward-unlocked-icon.png" />
+            <img class="locked-icon" v-else src="@/assets/images/vip/vip-reward-locked-icon.png" />
           </div>
         </div>
       </div>
@@ -874,7 +874,10 @@ const swipeRight = () => {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      
+      > * {
+        margin-top: 10px;
+      }
 
       .bold {
         font-weight: 800;
@@ -923,9 +926,16 @@ const swipeRight = () => {
       justify-content: center;
       padding: 10px;
 
-      img {
-        max-width: 20px;
+      .unlocked-icon {
+        width: 16px;
+        height: 16px;
       }
+
+      .locked-icon {
+        width: 14px;
+        height: 16px;
+      }
+
     }
   }
 }

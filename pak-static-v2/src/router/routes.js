@@ -325,6 +325,17 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/spinnerRules",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("components/hotpromo/deposit-spinner-rewards/DepositSpinnerRules.vue")
+      }
+    ],
+    meta: { requiresAuth: true }
+  },
+  {
     path: "/deposit",
     component: () => import("layouts/MainLayout.vue"),
     children: [

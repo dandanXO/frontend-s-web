@@ -1270,11 +1270,11 @@ export default defineComponent({
     display: flex;
     align-items: center;
     line-height: 1 !important;
-    gap: 8px;
     font-size: 14px;
 
     img {
       width: 14px !important;
+      margin-right: 8px;
     }
   }
 }

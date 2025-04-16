@@ -147,7 +147,7 @@ export const userStore = defineStore("userStore", {
         regDevice = "IOS";
       } else {
         regDevice = Platform.is.mobile ? "H5" : "WEB";
-        if (Platform.is.capacitor && Platform.is.android) {
+        if ((Platform.is.capacitor && Platform.is.android)  || this.isFromGooglePackage) {
           regDevice = "ANDROID";
         }
       }

@@ -77,11 +77,11 @@ const handleConfirmClick = (route) => {
 .radio-label {
   display: flex;
   align-items: center;
-  gap: 6px;
 
   img {
     display: block;
     width: 28px;
+    margin-right: 6px;
   }
 }
 

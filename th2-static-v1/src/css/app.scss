@@ -8,7 +8,7 @@ html {
 }
 // app global css in SCSS form
 body {
-  font-family: 'Manrope', sans-serif;
+  font-family: "Manrope", sans-serif;
   background: #ffffff;
   letter-spacing: 1px;
 }
@@ -86,7 +86,7 @@ body.platform-ios .q-dialog__inner--minimized > div:not(.popout-dialog) {
 }
 
 .game-title {
-  font-family: 'Manrope', sans-serif;
+  font-family: "Manrope", sans-serif;
   font-size: 50px;
   line-height: 60px;
   color: #db7e42;
@@ -124,7 +124,7 @@ body.platform-ios .q-dialog__inner--minimized > div:not(.popout-dialog) {
     right: 1.5rem;
     min-width: 22px;
 
-    &.header-right-long{
+    &.header-right-long {
       width: 60px;
     }
   }
@@ -134,12 +134,13 @@ body.platform-ios .q-dialog__inner--minimized > div:not(.popout-dialog) {
     font-size: 22px;
   }
 
-  .header-back{
+  .header-back {
     color: #fff;
     font-size: 18px;
-    line-height:22px;
+    line-height: 22px;
 
-    &:active,&:visited{
+    &:active,
+    &:visited {
       text-decoration: none;
     }
   }
@@ -374,7 +375,7 @@ body.body--dark .q-footer {
   -webkit-text-fill-color: #db7e42;
   font-size: 28px;
   text-align: center;
-  font-family: 'Manrope', sans-serif;
+  font-family: "Manrope", sans-serif;
   padding: 15px;
   display: flex;
   gap: 20px;
@@ -387,7 +388,7 @@ body.body--dark .q-footer {
   -webkit-text-fill-color: #db7e42;
   font-size: 28px;
   text-align: center;
-  font-family: 'Manrope', sans-serif;
+  font-family: "Manrope", sans-serif;
   padding: 10px;
   display: flex;
   gap: 20px;
@@ -589,8 +590,17 @@ body.body--dark .q-footer {
 
 .y-n-container {
   display: flex;
-  gap: 24px;
   justify-content: center;
+
+  > * {
+    &:first-child {
+      margin-right: 10px;
+    }
+
+    &:nth-child(2) {
+      margin-left: 10px;
+    }
+  }
 }
 
 .btn-click {
@@ -608,8 +618,8 @@ body.body--dark .q-footer {
   border-radius: 8px;
 }
 
-.btn-style-crimson{
-  background: linear-gradient(180deg, #B42614 0%, #7B0101 100%);
+.btn-style-crimson {
+  background: linear-gradient(180deg, #b42614 0%, #7b0101 100%);
   border-radius: 8px;
 }
 
@@ -638,4 +648,6 @@ body.body--dark .q-footer {
   }
 }
 
-.input:-webkit-autofill {transition: background-color 5000s ease-in-out 0s;}
+.input:-webkit-autofill {
+  transition: background-color 5000s ease-in-out 0s;
+}

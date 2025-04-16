@@ -24,6 +24,7 @@
         :key="i"
         :name="i"
         class="column no-wrap flex-center"
+        style="min-height: 170px"
         :img-src="returnBannerUrl(banner)"
         @click="gotoPromo(banner)"
       ></q-carousel-slide>
@@ -2126,7 +2127,9 @@ const loadHotGameList = () => {
           gameLists = res;
 
           hotlists = hotlists.map((item1) => {
-            const matchingItem = gameLists.find((item2) => item1.type === "game" && item1.code === item2.code && item1.platform === item2.platformCode);
+            const matchingItem = gameLists.find(
+              (item2) => item1.type === "game" && item1.code === item2.code && item1.platform === item2.platformCode
+            );
             return { ...matchingItem, ...item1 };
           });
 
@@ -2871,17 +2874,17 @@ const hbSlide = ref(0);
 const hbPromo = ref([]);
 
 const checkSpinLuckyWheelPromo = async () => {
-  if(store.token) {
+  if (store.token) {
     const res = await eventapi.post("/refer-spin/check");
     store.spinWheelLuckyPromoInfo = { ...store.spinWheelLuckyPromoInfo, ...res.data };
   }
 
   if (sessionStorage.getItem("isReload")) {
     sessionStorage.removeItem("isReload");
-    sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
+    sessionStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
   }
 
-  if (!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+  if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
     spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
   }
 };
@@ -2922,7 +2925,7 @@ let intervalId;
 
 onActivated(() => {
   store.getUnreadTotal();
-  if(!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+  if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
     spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
   }
 });
@@ -3812,6 +3815,7 @@ onBeforeUnmount(() => {
         height: 100%;
         width: 100%;
         background-repeat: no-repeat;
+        min-height: 100px;
       }
     }
 
@@ -4199,14 +4203,18 @@ onBeforeUnmount(() => {
 .platform-game-img {
   // background-color: #cccccc;
   width: 100%;
-  aspect-ratio: 1/1.2;
+  // aspect-ratio: 1/1.2;
   background-size: cover;
   background-position: center center;
   position: relative;
   background-image: url("@/assets/images/index/mini-game-bg.png");
   border-radius: 8px;
+  padding-bottom: 120%;
 
   .game--bg {
+    position: absolute;
+    top: 0;
+    left: 0;
     background-size: 100% 100%;
     background-position: center center;
     height: 100%;

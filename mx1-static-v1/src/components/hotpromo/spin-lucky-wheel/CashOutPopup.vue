@@ -90,8 +90,7 @@ const handleDialogShow = () => {
         position: absolute;
         top: 22%;
         width: 100%;
-        font-size: 26px;
-        letter-spacing: -1px;
+        font-size: 30px;
         font-weight: 900;
         color: #8100ae;
         text-align: center;
@@ -101,7 +100,12 @@ const handleDialogShow = () => {
         width: 65%;
         aspect-ratio: 228 / 90;
         margin: 2px auto;
-        font-size: 14px;
+        min-height: 90px;
+        font-size: 15px;
+
+        &.common-btn {
+            background-size: 100% 100%;
+        }
 
         &:active {
             transform: translateY(2px);
@@ -122,20 +126,20 @@ const handleDialogShow = () => {
     justify-content: center;
     font-family: Inter;
     font-weight: 700;
-    font-size: 19px;
+    font-size: 20px;
     line-height: 24.2px;
     letter-spacing: 0px;
 }
 
 @media screen and (max-width: 400px) {
     .next-spin-remaining-time {
-        font-size: 17px;
+        font-size: 18px;
     }
 }
 
 @media screen and (max-width: 350px) {
     .next-spin-remaining-time {
-        font-size: 13px;
+        font-size: 14px;
     }
 }
 

@@ -370,13 +370,13 @@ const rows3 = [
   .desc-wrapper {
     display: flex;
     align-items: center;
-    gap: 15px;
     margin: 0 0 25px 0;
     letter-spacing: 0.5px;
 
     img {
       width: 56px;
       height: 56px;
+      margin-right: 15px;
     }
   }
 

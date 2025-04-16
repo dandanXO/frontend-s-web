@@ -259,7 +259,7 @@ onMounted(() => {
       gap: 10px;
       flex-wrap: wrap;
       .prize-item {
-        flex: 0 0 calc(100% / 3); /* Each item takes one-third of the container's width */
+        flex: 0 0 calc(100% / 3.5); /* Each item takes one-third of the container's width */
         box-sizing: border-box;
         display: block;
         position: relative;
@@ -270,6 +270,11 @@ onMounted(() => {
         background-position: center top;
         border: none;
         min-height: 105px;
+        @media screen and (max-width: 400px) {
+          
+        min-height: 80px;
+          
+        }
         &.disabled {
           .golden-egg {
             animation: none;

@@ -165,7 +165,6 @@ onMounted(() => {
 .invite-win-container {
   display: flex;
   flex-direction: column;
-  gap: 15px;
 
   .referral-link-wrapper {
     display: flex;
@@ -199,13 +198,14 @@ onMounted(() => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
     padding: 25px;
+    margin-top: 15px;
 
     .qr-code {
       padding: 10px;
       border-radius: 0.625rem;
       background: #fff;
+      margin-bottom: 10px;
     }
 
     .save-btn {
@@ -215,6 +215,7 @@ onMounted(() => {
       border-radius: 0.5rem;
       background: linear-gradient(180deg, #FFA600 0%, #FF3B00 100%);
       border: 1px solid #E8C4FF33;
+      margin-top: 10px;
     }
   }
 }
@@ -227,7 +228,6 @@ onMounted(() => {
 
 @media screen and (max-width: 400px) {
   .invite-win-container {
-    gap: 10px;
 
     .referral-link-wrapper {
       gap: 5px;
@@ -238,6 +238,7 @@ onMounted(() => {
 
     .qr-wrapper {
       padding: 10px;
+      margin-top: 10px;
     }
   }
 }
@@ -247,7 +248,6 @@ onMounted(() => {
     padding: 35px 15px 0;
   }
   .invite-win-container {
-    gap: 10px;
 
     .referral-link-wrapper {
       gap: 5px;

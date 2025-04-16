@@ -44,7 +44,7 @@ export default boot(({ app, router }) => {
 
   const onRequest = (config) => {
     let token;
-    if (isAndroid() || isInPwa()) {
+    if (isAndroid() || isInPwa() || store.isFromGooglePackage) {
       token = LocalStorage.getItem("TOKEN");
     } else {
       token = SessionStorage.getItem("TOKEN");
