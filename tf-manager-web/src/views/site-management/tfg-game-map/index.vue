@@ -516,6 +516,10 @@ function handleFromPlatformChange(val) {
   } else if (val === "jili") {
     selectedPlatformGameCode.list = [
       { key: 1, name: 'Mines', value: '229' },
+      { key: 2, name: '7up7down', value: '124' },
+      { key: 3, name: 'Dragon & Tiger', value: '123' },
+      { key: 4, name: 'Sic Bo', value: '125' },
+      { key: 5, name: 'Andar Bahar', value: '79' },
     ]
   }
 }
