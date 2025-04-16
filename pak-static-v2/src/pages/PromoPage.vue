@@ -43,7 +43,9 @@
                     <a @click="showPromoDetails(promo)">
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
-                          <img class="promo-content" :src="imgURL + promo.displayMobileImgUrl" />
+                          <img class="promo-content"
+                          :class="selectedPromo.redirectUrl === 'pk2-refer-wheel-spin' ? 'dpsr' : 'usual'"
+                          :src="imgURL + promo.displayMobileImgUrl" />
                         </div>
                       </div>
                       <div class="promo-info">
@@ -79,21 +81,19 @@
                 <!-- <div class="promo-bg"> -->
                 <img
                   class="promo-content"
+                  :class="selectedPromo.redirectUrl === 'pk2-refer-wheel-spin' ? 'dpsr' :  selectedPromo.redirectUrl === 'new-player-acc-deposit' ? 'npad' : 'usual'"
                   :src="imgURL + selectedPromo.displayMobileBannerUrl"
-                  :class="
-                    (
-                    selectedPromo.redirectUrl === 'new-player-acc-deposit' ? 'npad' : 'usual')
-                  "
                 />
                 <!-- </div> -->
               </div>
 
               <div class="promo-content-inner"
+                   :style="selectedPromo.redirectUrl === 'pk2-refer-wheel-spin' ? 'border:0; padding: 0;' : ''"
               v-if="
                   selectedPromo.redirectUrl !== 'pk2-jackpot-aviator' &&
                   selectedPromo.redirectUrl !== 'new-player-acc-deposit'
                 ">
-                <div class="content-title">{{ selectedPromo.title }}</div>
+                <div class="content-title" v-if="selectedPromo.redirectUrl !== 'pk2-refer-wheel-spin'">{{ selectedPromo.title }}</div>
                 <div class="content-para" v-if="parsedParamSub">{{ parsedParamSub }}</div>
                 <div class="content-date" v-if="parsedParamDate">
                   <div><img src="../assets/images/promotion/calendar-icon.png" /></div>
@@ -101,10 +101,11 @@
                 </div>
               </div>
 
-              <div class="inner" 
+              <div class="inner"
               :class="{
                   isJackpotAviator: selectedPromo.redirectUrl === 'pk2-jackpot-aviator',
-                  isNewPlayerAccDeposit: selectedPromo.redirectUrl === 'new-player-acc-deposit'
+                  isNewPlayerAccDeposit: selectedPromo.redirectUrl === 'new-player-acc-deposit',
+                  isDepositSpinnerRewards: selectedPromo.redirectUrl === 'pk2-refer-wheel-spin'
                 }">
                 <div v-if="selectedPromo.hasPromo">
                   <!-- <pre>selectedPromo{{ selectedPromo }}</pre>
@@ -1041,16 +1042,19 @@ export default defineComponent({
       .banner-container {
         width: 100%;
         .promo-content {
-          
           &.usual {
             display: block;
             width: 100%;
+          }
+          &.dpsr {
+            display: block;
+            width: 100%;
+            border-radius: 15px;
           }
           &.npad {
             display: none;
           }
         }
-
         .promo-bg {
           background-size: cover;
           background-repeat: no-repeat;
@@ -1058,7 +1062,7 @@ export default defineComponent({
           overflow: hidden;
           height: 220px;
         }
-        
+
 
         // &:after {
         //   content: "";
@@ -1092,7 +1096,15 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
         padding-bottom: 40px;
-
+        &.isDepositSpinnerRewards {
+          border-radius: 0;
+          width: 100%;
+          padding: 0;
+          margin: 0;
+          > div:nth-child(2) {
+            display: none;
+          }
+        }
         p {
           font-size: 14px;
         }
@@ -1148,7 +1160,7 @@ export default defineComponent({
           tr:nth-child(even) {
             background-color: #d7e9ff;
           }
-          
+
         }
 
         &.isJackpotAviator {
