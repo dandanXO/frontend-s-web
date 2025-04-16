@@ -23,7 +23,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useQuasar, copyToClipboard, Platform } from "quasar";
+import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import VueQRCodeComponent from "vue-qrcode-component";
