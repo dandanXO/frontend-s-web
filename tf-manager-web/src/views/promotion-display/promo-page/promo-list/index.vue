@@ -38,6 +38,21 @@
             :value="item.value"
           />
         </el-select>
+        <el-select
+          v-model="request.language"
+          size="small"
+          :placeholder="t('fields.language')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+          @focus="getLanguage"
+        >
+          <el-option
+            v-for="item in languageList.list"
+            :key="item"
+            :label="t('language.' + item)"
+            :value="item"
+          />
+        </el-select>
 
         <!-- <el-select
           v-model="request.siteId"
@@ -109,6 +124,12 @@
       <el-table-column prop="promoCode" :label="t('fields.code')" min-width="150" />
       <el-table-column prop="redirectUrl" :label="t('fields.redirect')" min-width="150" />
       <el-table-column prop="siteName" :label="t('fields.site')" min-width="120" />
+      <el-table-column prop="language" :label="t('fields.language')" align="center" min-width="120">
+        <template #default="scope">
+          <span v-if="scope.row.language">{{ t('language.' + scope.row.language) }}</span>
+          <span v-else>-</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="labelType" :label="t('fields.label')" min-width="80">
         <template #default="scope">
           <div v-if="scope.row.labelType === 0">{{ t('promoLabel.new') }}</div>
@@ -243,6 +264,7 @@ import { useStore } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { isVnm } from '@/utils/site'
+import { getConfigList } from '@/api/config'
 
 const { t } = useI18n()
 const store = useStore()
@@ -251,6 +273,9 @@ const site = ref(null)
 let choosePromo = []
 const siteList = reactive({
   list: [],
+})
+const languageList = reactive({
+  list: []
 })
 
 const uiControl = reactive({
@@ -276,6 +301,7 @@ const request = reactive({
   status: null,
   siteId: null,
   siteType: null,
+  language: null
 })
 
 const page = reactive({
@@ -288,6 +314,7 @@ function resetQuery() {
   request.status = null
   request.siteType = "main"
   request.siteId = store.state.user.siteId
+  request.language = null
   uiControl.showSiteType = false;
 }
 
@@ -370,6 +397,17 @@ async function changeFastAccessState(id, status) {
   await loadPromoPages()
 }
 
+async function getLanguage() {
+  languageList.list = []
+  const { data: lang } = await getConfigList("language_list", request.siteId)
+  if (lang.length > 0 && lang[0].value) {
+    const arr = lang[0].value.split(',')
+    for (const a of arr) {
+      languageList.list.push(a)
+    }
+  }
+}
+
 // async function changeSite() {
 //   request.siteType = 'main'
 //   if (isVnm(request.siteId)) {
@@ -399,6 +437,7 @@ onMounted(async () => {
     uiControl.showSiteType = false;
   }
   request.siteType = "main";
+  await getLanguage()
   await loadPromoPages()
 })
 </script>

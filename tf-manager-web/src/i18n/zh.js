@@ -561,7 +561,8 @@ export default {
     zh: '汉语',
     th: '泰语',
     kr: '韩语',
-    vn: '越南语'
+    vn: '越南语',
+    ur: '乌尔都语'
   },
   rewardStatus: {
     PENDING: '审核中',
@@ -2808,6 +2809,7 @@ export default {
     validateIpRequired: 'IP 必填',
     validateJobNameRequired: '任务名称必填',
     validateLabelRequired: '标签必填',
+    validateLanguageRequired: '语言必选',
     validateLevelRequired: '级别必填',
     validateLevelNameRequired: '级别名称必填',
     validateLevelUpCreditRequired: '升级金额必填',
