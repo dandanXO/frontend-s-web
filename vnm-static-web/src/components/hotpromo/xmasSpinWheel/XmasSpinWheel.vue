@@ -2,19 +2,19 @@
     <div class="container">
         <div class="spin-wheel-container">
             <div :class="`draw-btn click-pointer ${remainingDraws <= 0 ? 'disabled' : ''}`" @click="spinWheel">
-                <img src="./../../../assets/images/promotion/hotpromo/xmas-spinwheel/click-spin-btn.png" />
+                <img src="./../../../assets/images/promotion/hotpromo/xmas-spinwheel/click-spin-btn2.png" />
             </div>
             <div class="wheel-stage">
-                <img src="./../../../assets/images/promotion/hotpromo/xmas-spinwheel/spin-wheel-stage.png" />
-            </div>
-            <div class="santa-hat">
-                <img src="./../../../assets/images/promotion/hotpromo/xmas-spinwheel/spin-wheel-santa-hat.png" />
+                <img src="./../../../assets/images/promotion/hotpromo/xmas-spinwheel/spin-wheel-stage2.png" />
             </div>
             <div class="spin-wheel-board">
                 <div class="spin-wheel-frame">
+                    <div class="spin-wheel-pointer">
+                        <img src="./../../../assets/images/promotion/hotpromo/xmas-spinwheel/pointer.png" alt="">
+                    </div>
                     <div id="spin-wheel-id" class="spin-wheel">
                         <img id="spin-wheel-bg" class="wheel-bg"
-                            src="./../../../assets/images/promotion/hotpromo/xmas-spinwheel/spin-wheel-bg.png" />
+                            src="./../../../assets/images/promotion/hotpromo/xmas-spinwheel/spin-wheel-bg2.png" />
                         <div id="spin-wheel-number" class="spin-wheel-number" style="display:none;">
                         </div>
                     </div>
@@ -29,14 +29,14 @@
 
     <el-dialog v-model="showPrizePopup" class="prizePopupContainer">
         <div class="wrapper">
-            <div class="popup-header bold-text golden-text">恭喜!</div>
+            <!-- <div class="popup-header bold-text golden-text">恭喜!</div> -->
             <div class="content">
-                <div class="bold-text">您获得</div>
+                <!-- <div class="bold-text">您获得</div> -->
                 <div class="bold-text golden-text">{{ prizePopupBonusAmt }}</div>
-                <div class="bold-text">元</div>
-                <div class="action-btn" @click="showPrizePopup.value = false">
+                <!-- <div class="bold-text">元</div> -->
+                <!-- <div class="action-btn" @click="showPrizePopup.value = false">
                     立即领取
-                </div>
+                </div> -->
             </div>
         </div>
     </el-dialog>
@@ -45,14 +45,17 @@
 import { ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
+import { claimDrawEvent } from "@/api/promotion/drawEvent";
 // import {
 //     receiveLuckydrawBonus
 // } from "@/api/promotion/xmasSpinWheel";
 
+const PRIZE_ARRAY = [-999, 88, -999, 28, 8888, 38, -999, 888 - 999, -18]
 const store = userStore();
+const props = defineProps(["promoCode"]);
 
 // spin wheel constants
-const TOTAL_ITEMS = 8;
+const TOTAL_ITEMS = 10;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
@@ -199,12 +202,18 @@ const spinWheel = () => {
         return;
     }
 
-    spin(1, () => {
-            showPrizePopup.value = true;
-            prizePopupBonusAmt.value = 1;
-            remainingDraws.value = 1
-        });
-
+    claimDrawEvent(props.promoCode).then((res) => {
+        if (res.code === 0) {
+            const index = PRIZE_ARRAY.findIndex((item) => item === res.data[0].bonus)
+            spin(index, () => {
+                showPrizePopup.value = true;
+                prizePopupBonusAmt.value = res.data[0].bonusName;
+                // remainingDraws.value = 1
+            });
+        }else{
+            ElMessage.error(res.message);
+        }
+    })
 }
 
 onMounted(() => {
@@ -229,9 +238,12 @@ onMounted(() => {
 
 .spin-wheel-frame {
     position: relative;
-    width: 675px;
-    height: 675px;
+    width: 360px;
+    height: 360px;
     margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .wheel-frame {
@@ -245,6 +257,14 @@ onMounted(() => {
     height: 100%;
 }
 
+.spin-wheel-pointer {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    z-index: 1;
+}
+
 .chosen-color-bg {
     position: absolute;
     z-index: 3;
@@ -254,21 +274,9 @@ onMounted(() => {
     width: 230px;
 }
 
-.spin-wheel {
-    position: absolute;
-    z-index: 2;
-    top: 0px;
-    left: 0px;
-    width: 675px;
-    height: 675px;
-}
+.spin-wheel {}
 
 .wheel-bg {
-    width: 100%;
-    height: 100%;
-}
-
-.wheel-stage {
     width: 100%;
     height: 100%;
 }
@@ -293,12 +301,12 @@ onMounted(() => {
 }
 
 .draw-btn {
-    width: 195px;
+    width: 66px;
     height: auto;
     aspect-ratio: 206/220;
     z-index: 25;
     position: absolute;
-    top: calc(50%);
+    top: calc(47%);
     left: 50%;
     transform: translate(-50%, -50%);
 
@@ -328,31 +336,12 @@ onMounted(() => {
 }
 
 .wheel-stage {
-    width: 730px;
     height: auto;
     z-index: 20;
     position: absolute;
-    top: calc(50%);
+    top: 0%;
     left: 50%;
-    transform: translate(-50%, 60%);
-
-    img {
-        width: 100%;
-    }
-}
-
-.santa-hat {
-    width: 420px;
-    height: auto;
-    z-index: 20;
-    position: absolute;
-    top: calc(50%);
-    left: 50%;
-    transform: translate(-5%, -115%) rotate(6deg);
-
-    img {
-        width: 100%;
-    }
+    transform: translate(-50%, 0);
 }
 
 .draw-btn img {
@@ -384,9 +373,7 @@ onMounted(() => {
 }
 
 .prizePopupContainer {
-    width: 480px;
-    height: 620px;
-    background: url("./../../../assets/images/promotion/hotpromo/xmas-spinwheel/prize-popup.png");
+    background: url("./../../../assets/images/promotion/hotpromo/xmas-spinwheel/prize-popup2.png");
     background-size: 100% 100%;
     box-shadow: none;
 

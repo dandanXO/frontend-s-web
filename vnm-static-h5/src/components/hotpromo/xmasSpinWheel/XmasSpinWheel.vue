@@ -198,10 +198,10 @@ const reset = () => {
 const spinWheel = () => {
     claimDrawEvent(props.promoCode).then((data) => {
         if (data.code == 0) {
-            spin(PRIZE_ARRAY.indexOf(data.data.bonus), () => {
+            spin(PRIZE_ARRAY.indexOf(data.data[0].bonus), () => {
                 showPrizePopup.value = true;
-                prizePopupBonusAmt.value = data.data.bonusName;
-                remainingDraws.value = data.data.remaining
+                prizePopupBonusAmt.value = data.data[0].bonusName;
+                // remainingDraws.value = data.data.remaining
             });
         } else {
             $q.notify({
@@ -210,11 +210,12 @@ const spinWheel = () => {
                 // message: res.message
                 message: t("error." + data.code)
             });
-            spin(PRIZE_ARRAY.indexOf(88), () => {
-                showPrizePopup.value = true;
-                prizePopupBonusAmt.value = '88 VNDP';
-                remainingDraws.value = 1
-            });        
+            //test
+            // spin(PRIZE_ARRAY.indexOf(88), () => {
+            //     showPrizePopup.value = true;
+            //     prizePopupBonusAmt.value = '88 VNDP';
+            //     remainingDraws.value = 1
+            // });        
         }
     })
     
