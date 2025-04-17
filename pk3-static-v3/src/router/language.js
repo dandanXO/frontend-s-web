@@ -1,10 +1,13 @@
 import { ref } from "vue";
 import vueI18n from "../i18n";
 import { defineStore } from "pinia";
+import { DEFAULT_LANG } from "src/constant/lang";
 
 export const i18nStore = defineStore("i18nStore", () => {
-  const languageLocale = localStorage.getItem("languageLocale") || "en";
+  const languageLocale = localStorage.getItem("languageLocale") || DEFAULT_LANG;
   const languageVal = ref(languageLocale);
+  const isLangInitialized = ref(false);
+
   function setLanguage(l) {
     languageVal.value = l;
     // when vue-i18n is being used with legacy: false, note that i18n.global.locale is a ref, so we must set it via .value:
@@ -14,5 +17,10 @@ export const i18nStore = defineStore("i18nStore", () => {
     // vueI18n.global.locale = l;
     localStorage.setItem("languageLocale", l);
   }
-  return { languageVal, setLanguage };
+
+  const initializeLang = (lang) => {
+    setLanguage(lang);
+    isLangInitialized.value = true;
+  };
+  return { languageVal, setLanguage, isLangInitialized, initializeLang };
 });

@@ -7,6 +7,9 @@ import routes from "./routes";
 import { StatusBar } from "@capacitor/status-bar";
 import { Platform, SessionStorage } from "quasar";
 import { isAndroid } from "boot/utils";
+import { i18nStore } from "./language";
+import i18n from "src/i18n";
+import { DEFAULT_LANG } from "src/constant/lang";
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
@@ -35,6 +38,14 @@ export default route(function (/* { store, ssrContext } */) {
   Router.beforeEach((to, from, next) => {
     const user = userStore();
     const ui = useUI();
+    const i18nStorageLanguage = i18nStore();
+    const { availableLocales } = i18n.global;
+    const { lang } = to.query;
+
+    if (!i18nStorageLanguage.isLangInitialized && lang) {
+      const locale = availableLocales.includes(lang) ? lang : DEFAULT_LANG;
+      i18nStorageLanguage.initializeLang(locale);
+    }
 
     if (user.token && from && from.href) {
       user.getBalance();
@@ -65,7 +76,12 @@ export default route(function (/* { store, ssrContext } */) {
       window.location.href = "xfapp:" + to.fullPath;
     }
 
-    if (to.path === "/promotion" || to.path === "/wv-promotion" || to.path === "/wv-earn-money" || to.path === "/wv-vip") {
+    if (
+      to.path === "/promotion" ||
+      to.path === "/wv-promotion" ||
+      to.path === "/wv-earn-money" ||
+      to.path === "/wv-vip"
+    ) {
       // debugger;
       if (isAndroid()) {
         localStorage.setItem("TOKEN", to.query.token);
