@@ -8,7 +8,7 @@
                 <img src="./../../../assets/images/promotion/hotpromo/xmas-spinwheel/spin-wheel-stage.png" />
             </div>
             <div class="santa-hat">
-                <img src="./../../../assets/images/promotion/hotpromo/xmas-spinwheel/spin-wheel-santa-hat.png" />
+                <img src="./../../../assets/images/promotion/hotpromo/xmas-spinwheel/pointer.png" />
             </div>
             <!-- <div class="beer-decor">
                 <img src="./../../../assets/images/promotion/hotpromo/xmas-spinwheel/beer-decor.png" />
@@ -31,14 +31,14 @@
     <q-dialog v-model="showPrizePopup">
         <div class="prizePopupContainer">
             <div class="wrapper">
-                <div class="popup-header bold-text golden-text">恭喜!</div>
+                <!-- <div class="popup-header bold-text golden-text">恭喜!</div> -->
                 <div class="content">
-                    <div class="bold-text">您获得</div>
-                    <div class="bold-text golden-text">{{ prizePopupBonusAmt }}</div>
-                    <div class="bold-text">元</div>
+                    <!-- <div class="bold-text">您获得</div> -->
+                    <div class="bold-text ">{{ prizePopupBonusAmt }}</div>
+                    <!-- <div class="bold-text">元</div>
                     <div class="action-btn" @click="showPrizePopup = false">
                         立即领取
-                    </div>
+                    </div>  -->
                 </div>
             </div>
         </div>
@@ -46,19 +46,24 @@
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
-// import { ElMessage } from "element-plus";
-import { eventapi } from "src/boot/axios";
+import { claimDrawEvent } from "@/api/promo/drawEvent";
+import { useQuasar } from "quasar";
+import { useI18n } from "vue-i18n";
 
+const props = defineProps(["promoCode"]);
 // spin wheel constants
-const TOTAL_ITEMS = 8;
+const TOTAL_ITEMS = 10;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
+const PRIZE_ARRAY = [-999,88,-999,28,8888,38,-999,888-999,-18]
 
 // spin wheel element refs
 const spinBoardRef = ref();
 const spinNumRef = ref();
 const drawBtnRef = ref();
+const { t } = useI18n();
+const $q = useQuasar();
 
 const spinButtonDisable = ref(false);
 const degreesToStopAt = ref([]);
@@ -191,30 +196,28 @@ const reset = () => {
 }
 
 const spinWheel = () => {
-    // if (spinButtonDisable.value === true) {
-    //     return;
-    // }
-
-    // if (remainingDraws.value <= 0) {
-    //     // ElMessage.error("剩余抽奖次数：0");
-    //     return;
-    // }
-
-    // eventapi.get('/receiveLuckydrawBonus').then(() => {
-    //     if (data.code == 0) {
-            
-    //     } else {
-    //         error(data);
-    //     }
-    // }).catch(() => {
-    // })
-
-    spin(1, () => {
+    claimDrawEvent(props.promoCode).then((data) => {
+        if (data.code == 0) {
+            spin(PRIZE_ARRAY.indexOf(data.data.bonus), () => {
                 showPrizePopup.value = true;
-                prizePopupBonusAmt.value = 1;
-                remainingDraws.value = 1
+                prizePopupBonusAmt.value = data.data.bonusName;
+                remainingDraws.value = data.data.remaining
             });
-
+        } else {
+            $q.notify({
+                color: "negative",
+                position: "top",
+                // message: res.message
+                message: t("error." + data.code)
+            });
+            spin(PRIZE_ARRAY.indexOf(88), () => {
+                showPrizePopup.value = true;
+                prizePopupBonusAmt.value = '88 VNDP';
+                remainingDraws.value = 1
+            });        
+        }
+    })
+    
 }
 
 onMounted(() => {
@@ -338,31 +341,32 @@ onMounted(() => {
 }
 
 .wheel-stage {
-    width: 475px;
-    height: auto;
+    width: 200px;
+    height: 150px;
     z-index: 20;
     position: absolute;
-    top: calc(50%);
+    top: calc(-28%);
     left: 50%;
     transform: translate(-50%, 50%);
 
     img {
-        width: 100%;
+        // width: 30px;
+        // height: 300px;
     }
 }
 
 .santa-hat {
-    width: 250px;
-    height: auto;
-    z-index: 20;
+    width: 40px;
+    height: 40px;
+    z-index: 23;
     position: absolute;
-    top: calc(50%);
-    left: 50%;
-    transform: translate(0%, -111%) rotate(9deg);
+    top: calc(10%);
+    left: 45%;
+    transform: translate(0%, -111%) rotate(0deg);
     ;
 
     img {
-        width: 100%;
+        
     }
 }
 
@@ -418,8 +422,8 @@ onMounted(() => {
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        width: 300px;
-        height: 432px;
+        width: 200px;
+        height: 132px;
         gap: 45px;
         background: url("./../../../assets/images/promotion/hotpromo/xmas-spinwheel/prize-popup.png");
         background-size: 100% 100%;
