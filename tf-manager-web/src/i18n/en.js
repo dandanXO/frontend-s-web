@@ -1559,6 +1559,7 @@ export default {
     redeemedBy: 'Redeemed By',
     redeemCode: 'Redeem Code',
     redeemPoints: 'Redeem Points',
+    redepositRate: 'Repeat Deposit Rate',
     redirect: 'Redirect',
     redirectRecord: 'Redirect Record',
     redirectMember: 'Redirect Specific Member',
@@ -2721,6 +2722,7 @@ export default {
     updateVIPLevelSuccess: 'Update VIP Level Success',
     updateWithdrawTypeSuccess: 'Update Withdraw Type Success',
     updateShareRatioSuccess: 'Update Share Ratio Success',
+    uploadLimitExceeded: 'Upload Records Cannot More Than {count}',
     useCommaToSeparateDomain:
       'Please use "," to separate domain name if insert multiple domain',
     validateAdsTypeRequired: 'Ads Type is required',
