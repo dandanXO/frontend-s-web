@@ -144,7 +144,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.language')" prop="language">
+        <el-form-item v-if="languageList.list.length > 0" :label="t('fields.language')" prop="language">
           <el-select
             v-model="form.language"
             size="small"
@@ -152,7 +152,6 @@
             class="filter-item"
             style="width: 350px"
             default-first-option
-            @focus="getLanguage"
           >
             <el-option
               v-for="item in languageList.list"
@@ -843,7 +842,8 @@ const form = reactive({
   remark: null,
   state: true,
   displayStartTime: "2020-01-01 00:00:00",
-  displayEndTime: "2030-01-01 23:59:59"
+  displayEndTime: "2030-01-01 23:59:59",
+  language: null
 })
 
 const imageForm = reactive({
@@ -871,6 +871,7 @@ const formRules = reactive({
   sequence: [required(t('message.validateSequenceRequired'))],
   category: [required(t('message.validateCategoryRequired'))],
   siteId: [required(t('message.validateSiteRequired'))],
+  language: [required(t('message.validateLanguageRequired'))]
 })
 
 const imageFormRules = reactive({
@@ -1203,7 +1204,7 @@ async function loadDarkMode() {
 async function getLanguage() {
   languageList.list = []
   const { data: lang } = await getConfigList("language_list", request.siteId)
-  if (lang[0].value) {
+  if (lang.length > 0 && lang[0].value) {
     const arr = lang[0].value.split(',')
     for (const a of arr) {
       languageList.list.push(a)

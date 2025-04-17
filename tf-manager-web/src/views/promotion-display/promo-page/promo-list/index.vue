@@ -400,7 +400,7 @@ async function changeFastAccessState(id, status) {
 async function getLanguage() {
   languageList.list = []
   const { data: lang } = await getConfigList("language_list", request.siteId)
-  if (lang[0].value) {
+  if (lang.length > 0 && lang[0].value) {
     const arr = lang[0].value.split(',')
     for (const a of arr) {
       languageList.list.push(a)

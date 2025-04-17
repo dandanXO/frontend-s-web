@@ -2807,6 +2807,7 @@ export default {
     validateIpRequired: 'IP 必填',
     validateJobNameRequired: '任务名称必填',
     validateLabelRequired: '标签必填',
+    validateLanguageRequired: '语言必选',
     validateLevelRequired: '级别必填',
     validateLevelNameRequired: '级别名称必填',
     validateLevelUpCreditRequired: '升级金额必填',
