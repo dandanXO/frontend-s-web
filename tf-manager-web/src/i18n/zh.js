@@ -1562,6 +1562,7 @@ export default {
     redeemedBy: '领取人',
     redeemCode: '兑换码',
     redeemPoints: '兑换分数',
+    redepositRate: '复存率',
     redirect: '域名转址',
     redirectRecord: '浮窗记录',
     redirectMember: '指定玩家显示',

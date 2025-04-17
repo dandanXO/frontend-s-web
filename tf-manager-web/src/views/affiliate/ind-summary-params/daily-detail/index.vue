@@ -307,6 +307,12 @@
           align="center"
           width="120"
         />
+        <el-table-column
+          prop="redepositRate"
+          :label="t('fields.redepositRate')"
+          align="center"
+          width="120"
+        />
       </el-table>
       <el-pagination
         class="pagination"
@@ -562,7 +568,8 @@ function getSummaries(param) {
           index === 4 ||
           index === 6 ||
           index === 18 ||
-          index === 19
+          index === 19 ||
+          index === 20
         ) {
           sums[index] = total.data[prop]
         } else if (index === 7 || index === 12 || index === 13) {
