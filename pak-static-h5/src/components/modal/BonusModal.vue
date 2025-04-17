@@ -3,7 +3,6 @@
     <q-btn icon="close" round dense flat v-close-popup class="bonus-close" />
     <div class="bonus-content-wrapper">
       <div v-if="!store.hasDeposit" class="mission-item">
-        
         <img class="mission-icon" src="../../assets/images/earn-money/newplayericon.png" />
         <div class="mission-title-wrapper">
           <div class="mission-title">
@@ -11,11 +10,12 @@
           </div>
         </div>
         <a @click="openNewPlayerGuide">
-          <q-btn flat class="details">{{ $t("btn.details") }}</q-btn>
+          <q-btn flat class="details">
+            {{ $t("btn.details") }}
+          </q-btn>
         </a>
       </div>
       <div v-if="hasRedemptionBonus" class="mission-item">
-        
         <img class="mission-icon" src="../../assets/images/earn-money/redemptionicon.png" />
         <div class="mission-title-wrapper">
           <div class="mission-title">
@@ -40,7 +40,10 @@
           </q-icon> -->
         </div>
         <RouterLink :to="{ path: '/promo', query: { name: mission.redirectUrl } }">
-          <q-btn flat class="details">{{ $t("btn.details") }}</q-btn>
+          <q-btn flat class="details">
+            {{ $t("btn.details") }}
+            <span v-if="mission.countDown === true">12231312</span>
+          </q-btn>
         </RouterLink>
       </div>
     </div>
@@ -51,14 +54,19 @@
 </template>
 
 <script setup>
+import { api, eventapi } from "boot/axios";
 import { userStore } from "stores/index";
-const emit = defineEmits(["open-new-player"]); 
+import { onMounted, ref } from "vue";
+const emit = defineEmits(["open-new-player"]);
 const store = userStore();
 const props = defineProps({
   hasRedemptionBonus: Boolean,
   hasTopDownload: Boolean,
-  promoList: Array,
+  promoList: Array
 });
+
+const isInit = ref(false);
+const isLoaded = ref(false);
 
 const imgURL = process.env.IMAGE_CDN + "/promo/";
 const openNewPlayerGuide = () => {
@@ -67,7 +75,48 @@ const openNewPlayerGuide = () => {
   localStorage.removeItem("completedreferguide");
   localStorage.removeItem("completedwithdrawguide");
   emit("open-new-player");
-}
+};
+
+onMounted(() => {
+  if (isInit.value === false) {
+    isInit.value = true;
+
+    const apiPromises = props.promoList.map((promo, index) => {
+      const { initApiUrl, promoCode, buttonMode } = promo;
+
+      if (buttonMode === "API_REDIRECT" && initApiUrl) {
+        console.log("Calling API:", initApiUrl);
+        console.log("Calling API:", initApiUrl);
+        return eventapi
+          .get(`${initApiUrl}?promoCode=${promoCode}`)
+          .then((res) => {
+            if (res.code === 0) {
+              console.log("API response:", res);
+              // 给 promoList[index] 加一个 response 参数
+              promo.response = res.data || null;
+            } else {
+              promo.response = null;
+            }
+          })
+          .catch((err) => {
+            console.error("API failed:", err);
+            promo.response = null;
+          });
+      } else {
+        // 如果没有 initApiUrl，返回一个 resolved Promise
+        promo.response = null;
+        return Promise.resolve();
+      }
+    });
+
+    Promise.all(apiPromises).then(() => {
+      isLoaded.value = true;
+      console.log("All APIs finished");
+
+      console.log(props.promoList);
+    });
+  }
+});
 </script>
 
 <style lang="scss" scoped>
@@ -164,9 +213,11 @@ const openNewPlayerGuide = () => {
       }
 
       .q-btn {
+        width: 108px;
         border-radius: 4px;
         font-weight: 700;
         text-transform: none;
+        line-height: 19px;
 
         &.details {
           background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);

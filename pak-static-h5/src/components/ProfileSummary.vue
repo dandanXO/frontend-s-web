@@ -227,7 +227,7 @@ const isBonusModal = ref(false);
 const fastAccessPromo = ref([]);
 
 const getFastAccessPromo = () => {
-  api.get("/opt-session/promo/page?showFastAccess=1").then((res) => {
+  api.get("/promo/fast-access-promo").then((res) => {
     if (res.code === 0) {
       if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
         fastAccessPromo.value = res.data;
@@ -714,7 +714,7 @@ onUnmounted(() => {
       width: 100%;
       // gap: 5px;
       gap: unset;
-      :not(:last-child) { 
+      :not(:last-child) {
         margin-right: 2px;
       }
       justify-content: space-between;
