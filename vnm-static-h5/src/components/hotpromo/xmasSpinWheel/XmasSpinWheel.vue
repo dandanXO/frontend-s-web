@@ -70,50 +70,12 @@ const degreesToStopAt = ref([]);
 const showPrizePopup = ref(false);
 const prizePopupBonusAmt = ref(10000);
 const remainingDraws = ref(5);
-const winnersList = ref([
-    {
-        username: 'abc*********',
-        prize: '五等奖：288元'
-    }, {
-        username: 'def*********',
-        prize: '五等奖：388元'
-    },
-    {
-        username: 'abc*********',
-        prize: '五等奖：288元'
-    }, {
-        username: 'def*********',
-        prize: '五等奖：388元'
-    },
-    {
-        username: 'abc*********',
-        prize: '五等奖：288元'
-    }, {
-        username: 'def*********',
-        prize: '五等奖：388元'
-    },
-    {
-        username: 'abc*********',
-        prize: '五等奖：288元'
-    }, {
-        username: 'def*********',
-        prize: '五等奖：388元'
-    },
-    {
-        username: 'abc*********',
-        prize: '五等奖：288元'
-    }, {
-        username: 'def*********',
-        prize: '五等奖：388元'
-    },
-    {
-        username: 'abc*********',
-        prize: '五等奖：288元'
-    }, {
-        username: 'def*********',
-        prize: '五等奖：388元'
-    }
-]);
+const validBet = ref(0);
+const minValidBet = ref(0);
+const availableDraw = ref(0);
+const usedDraw = ref(0);
+const totalDraw = ref(0);
+
 
 let finalDegree = 0;
 let speed = 1;
@@ -221,7 +183,28 @@ const spinWheel = () => {
     
 }
 
+const initPage = () => {
+  drawEventInit(props.promoCode).then((res) => {
+    if (res.code === 0) {
+      const { data } = res;
+      validBet.value = data.validBet;
+      minValidBet.value = data.minValidBet;
+      availableDraw.value = data.availableDraw;
+      usedDraw.value = data.usedDraw;
+      totalDraw.value = data.totalDraw;
+    } else {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: t("error." + res.code)
+      });
+    }
+  });
+};
+
+
 onMounted(() => {
+    initPage
     // calc no of spin wheel items and potential stops
     for (var i = 0; i < TOTAL_ITEMS; i++) {
         var the_degree = FULL_DEGREE / TOTAL_ITEMS * i * -1;

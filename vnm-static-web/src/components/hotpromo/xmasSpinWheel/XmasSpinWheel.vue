@@ -45,7 +45,7 @@
 import { ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
-import { claimDrawEvent } from "@/api/promotion/drawEvent";
+import { claimDrawEvent, drawEventInit } from "@/api/promotion/drawEvent";
 // import {
 //     receiveLuckydrawBonus
 // } from "@/api/promotion/xmasSpinWheel";
@@ -70,50 +70,14 @@ const degreesToStopAt = ref([]);
 const showPrizePopup = ref(false);
 const prizePopupBonusAmt = ref();
 const remainingDraws = ref(5);
-const winnersList = ref([
-    {
-        username: 'abc*********',
-        prize: '五等奖：288元'
-    }, {
-        username: 'def*********',
-        prize: '五等奖：388元'
-    },
-    {
-        username: 'abc*********',
-        prize: '五等奖：288元'
-    }, {
-        username: 'def*********',
-        prize: '五等奖：388元'
-    },
-    {
-        username: 'abc*********',
-        prize: '五等奖：288元'
-    }, {
-        username: 'def*********',
-        prize: '五等奖：388元'
-    },
-    {
-        username: 'abc*********',
-        prize: '五等奖：288元'
-    }, {
-        username: 'def*********',
-        prize: '五等奖：388元'
-    },
-    {
-        username: 'abc*********',
-        prize: '五等奖：288元'
-    }, {
-        username: 'def*********',
-        prize: '五等奖：388元'
-    },
-    {
-        username: 'abc*********',
-        prize: '五等奖：288元'
-    }, {
-        username: 'def*********',
-        prize: '五等奖：388元'
-    }
-]);
+
+const validBet = ref(0);
+const minValidBet = ref(0);
+const availableDraw = ref(0);
+const usedDraw = ref(0);
+const totalDraw = ref(0);
+
+
 
 let finalDegree = 0;
 let speed = 1;
@@ -216,7 +180,25 @@ const spinWheel = () => {
     })
 }
 
+const initPage = () => {
+  drawEventInit(props.promoCode).then((res) => {
+    if (res.code === 0) {
+      const { data } = res;
+      validBet.value = data.validBet;
+      minValidBet.value = data.minValidBet;
+      availableDraw.value = data.availableDraw;
+      usedDraw.value = data.usedDraw;
+      totalDraw.value = data.totalDraw;
+    } else {
+      ElMessage.error(res.message);
+    }
+  });
+};
+
+
+
 onMounted(() => {
+    initPage()
     // calc no of spin wheel items and potential stops
     for (var i = 0; i < TOTAL_ITEMS; i++) {
         var the_degree = FULL_DEGREE / TOTAL_ITEMS * i * -1;
@@ -306,7 +288,7 @@ onMounted(() => {
     aspect-ratio: 206/220;
     z-index: 25;
     position: absolute;
-    top: calc(47%);
+    top: calc(50%);
     left: 50%;
     transform: translate(-50%, -50%);
 
