@@ -10,6 +10,9 @@
             <div class="santa-hat">
                 <img src="./../../../assets/images/promotion/hotpromo/xmas-spinwheel/spin-wheel-santa-hat.png" />
             </div>
+            <!-- <div class="beer-decor">
+                <img src="./../../../assets/images/promotion/hotpromo/xmas-spinwheel/beer-decor.png" />
+            </div> -->
             <div class="spin-wheel-board">
                 <div class="spin-wheel-frame">
                     <div id="spin-wheel-id" class="spin-wheel">
@@ -22,34 +25,29 @@
             </div>
         </div>
 
-        <!-- <div class="remaining-draw-wrapper">
-            <p class="remaining-draw-text">剩余抽奖次数：<span id="remaning-draw-amt">{{ remainingDraws }}</span></p>
-        </div> -->
+       
     </div>
 
-    <el-dialog v-model="showPrizePopup" class="prizePopupContainer">
-        <div class="wrapper">
-            <div class="popup-header bold-text golden-text">恭喜!</div>
-            <div class="content">
-                <div class="bold-text">您获得</div>
-                <div class="bold-text golden-text">{{ prizePopupBonusAmt }}</div>
-                <div class="bold-text">元</div>
-                <div class="action-btn" @click="showPrizePopup.value = false">
-                    立即领取
+    <q-dialog v-model="showPrizePopup">
+        <div class="prizePopupContainer">
+            <div class="wrapper">
+                <div class="popup-header bold-text golden-text">恭喜!</div>
+                <div class="content">
+                    <div class="bold-text">您获得</div>
+                    <div class="bold-text golden-text">{{ prizePopupBonusAmt }}</div>
+                    <div class="bold-text">元</div>
+                    <div class="action-btn" @click="showPrizePopup = false">
+                        立即领取
+                    </div>
                 </div>
             </div>
         </div>
-    </el-dialog>
+    </q-dialog>
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
-import { ElMessage } from "element-plus";
-import { userStore } from "@/store";
-// import {
-//     receiveLuckydrawBonus
-// } from "@/api/promotion/xmasSpinWheel";
-
-const store = userStore();
+// import { ElMessage } from "element-plus";
+import { eventapi } from "src/boot/axios";
 
 // spin wheel constants
 const TOTAL_ITEMS = 8;
@@ -65,7 +63,7 @@ const drawBtnRef = ref();
 const spinButtonDisable = ref(false);
 const degreesToStopAt = ref([]);
 const showPrizePopup = ref(false);
-const prizePopupBonusAmt = ref();
+const prizePopupBonusAmt = ref(10000);
 const remainingDraws = ref(5);
 const winnersList = ref([
     {
@@ -134,10 +132,13 @@ const spin = (prizeIndex, stopCallback) => {
         spinNumRef.value.style.transform = transformValue;
     }, 1);
 
+    // 5s + api return
     stopSpin(prizeIndex, stopCallback);
 }
 
 const stopSpin = (prizeIndex, stopCallback) => {
+    // call api
+
     let spinTimeEnd = false;
     let isApiReturned = true;
     setTimeout(() => {
@@ -190,20 +191,29 @@ const reset = () => {
 }
 
 const spinWheel = () => {
-    if (spinButtonDisable.value === true) {
-        return;
-    }
+    // if (spinButtonDisable.value === true) {
+    //     return;
+    // }
 
-    if (remainingDraws.value <= 0) {
-        ElMessage.error("剩余抽奖次数：0");
-        return;
-    }
+    // if (remainingDraws.value <= 0) {
+    //     // ElMessage.error("剩余抽奖次数：0");
+    //     return;
+    // }
+
+    // eventapi.get('/receiveLuckydrawBonus').then(() => {
+    //     if (data.code == 0) {
+            
+    //     } else {
+    //         error(data);
+    //     }
+    // }).catch(() => {
+    // })
 
     spin(1, () => {
-            showPrizePopup.value = true;
-            prizePopupBonusAmt.value = 1;
-            remainingDraws.value = 1
-        });
+                showPrizePopup.value = true;
+                prizePopupBonusAmt.value = 1;
+                remainingDraws.value = 1
+            });
 
 }
 
@@ -223,14 +233,14 @@ onMounted(() => {
 <style lang="scss">
 .spin-wheel-container {
     position: relative;
-    margin-bottom: 80px;
+    margin: 80px 0px;
     text-align: center;
 }
 
 .spin-wheel-frame {
     position: relative;
-    width: 675px;
-    height: 675px;
+    width: 330px;
+    height: 330px;
     margin: 0 auto;
 }
 
@@ -259,8 +269,8 @@ onMounted(() => {
     z-index: 2;
     top: 0px;
     left: 0px;
-    width: 675px;
-    height: 675px;
+    width: 330px;
+    height: 330px;
 }
 
 .wheel-bg {
@@ -293,7 +303,7 @@ onMounted(() => {
 }
 
 .draw-btn {
-    width: 195px;
+    width: 100px;
     height: auto;
     aspect-ratio: 206/220;
     z-index: 25;
@@ -328,13 +338,13 @@ onMounted(() => {
 }
 
 .wheel-stage {
-    width: 730px;
+    width: 475px;
     height: auto;
     z-index: 20;
     position: absolute;
     top: calc(50%);
     left: 50%;
-    transform: translate(-50%, 60%);
+    transform: translate(-50%, 50%);
 
     img {
         width: 100%;
@@ -342,13 +352,29 @@ onMounted(() => {
 }
 
 .santa-hat {
-    width: 420px;
+    width: 250px;
     height: auto;
     z-index: 20;
     position: absolute;
     top: calc(50%);
     left: 50%;
-    transform: translate(-5%, -115%) rotate(6deg);
+    transform: translate(0%, -111%) rotate(9deg);
+    ;
+
+    img {
+        width: 100%;
+    }
+}
+
+.beer-decor {
+    width: 150px;
+    height: auto;
+    z-index: 20;
+    position: absolute;
+    top: calc(50%);
+    left: 50%;
+    transform: translate(-168%, -128%);
+    ;
 
     img {
         width: 100%;
@@ -384,22 +410,23 @@ onMounted(() => {
 }
 
 .prizePopupContainer {
-    width: 480px;
-    height: 620px;
-    background: url("./../../../assets/images/promotion/hotpromo/xmas-spinwheel/prize-popup.png");
-    background-size: 100% 100%;
-    box-shadow: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     .wrapper {
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        height: 585px;
-        gap: 55px;
+        width: 300px;
+        height: 432px;
+        gap: 45px;
+        background: url("./../../../assets/images/promotion/hotpromo/xmas-spinwheel/prize-popup.png");
+        background-size: 100% 100%;
 
         .bold-text {
             font-family: sans-serif;
-            font-size: 35px;
+            font-size: 20px;
             font-weight: 700;
             letter-spacing: 1px;
             text-align: center;
@@ -407,7 +434,7 @@ onMounted(() => {
         }
 
         .golden-text {
-            font-size: 55px;
+            font-size: 25px;
             letter-spacing: 2px;
             background: linear-gradient(94.81deg, #F6FF8C 7.45%, #FFBA88 95.9%),
                 linear-gradient(360deg, #FF932F 9.54%, #FFFCA9 86.08%);
@@ -417,7 +444,7 @@ onMounted(() => {
 
         .popup-header {
             letter-spacing: normal;
-            font-size: 30px;
+            font-size: 25px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -425,24 +452,24 @@ onMounted(() => {
         }
 
         .content {
-            height: 260px;
+            height: 220px;
             display: flex;
             flex-direction: column;
             justify-content: space-around;
             align-items: center;
-            padding: 30px;
+            padding: 20px;
 
             .action-btn {
                 background: url("./../../../assets/images/promotion/hotpromo/xmas-spinwheel/prize-popup-action-btn.png");
                 background-size: 100% 100%;
                 width: 80%;
                 height: 100%;
-                max-height: 65px;
+                max-height: 50px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 color: #C12C1E;
-                font-size: 30px;
+                font-size: 16px;
                 font-weight: bold;
                 cursor: pointer;
             }
@@ -465,16 +492,17 @@ onMounted(() => {
 
 .promo-info-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
     justify-content: center;
     align-items: center;
-    margin-bottom: 150px;
+    gap: 50px;
+    padding: 20px 0px 150px;
 
     .promo-info-banner {
         background: url("./../../../assets/images/promotion/hotpromo/xmas-spinwheel/promo-info-banner.png");
         background-size: 100% 100%;
-        width: 400px;
-        height: 383px;
+        width: 300px;
+        height: 287px;
         margin: auto;
         display: flex;
         flex-direction: column;
@@ -488,13 +516,13 @@ onMounted(() => {
         line-height: 30px;
         text-align: center;
         color: #ffffff;
-        padding: 30px;
+        padding: 25px;
 
     }
 
     .promo-info-content {
         height: 100%;
-        max-height: 220px;
+        max-height: 140px;
         overflow-y: auto;
 
         .event-info-item {
