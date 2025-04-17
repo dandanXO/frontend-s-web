@@ -397,6 +397,7 @@ import { useStore } from '../../../store';
 import { TENANT } from "../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 import moment from 'moment'
+import { getConfigList } from "@/api/tf-gaming-config";
 
 const { t } = useI18n();
 const store = useStore();
@@ -442,13 +443,14 @@ const exportGameMappingTemplate = reactive({
 let chooseGame = []
 
 const fromPlatform = reactive({
-  list: [
-    { key: 1, name: 'Spribe', value: 'spribe' },
-    { key: 2, name: 'Jili', value: 'jili' },
-  ],
+  list: [],
 })
 
 const selectedPlatformGameCode = reactive({
+  list: [],
+})
+
+const configList = reactive({
   list: [],
 })
 
@@ -509,19 +511,15 @@ const sites = reactive({
 })
 
 function handleFromPlatformChange(val) {
-  if (val === "spribe") {
-    selectedPlatformGameCode.list = [
-      { key: 1, name: 'Avaitor', value: 'aviator' },
-    ]
-  } else if (val === "jili") {
-    selectedPlatformGameCode.list = [
-      { key: 1, name: 'Mines', value: '229' },
-      { key: 2, name: '7up7down', value: '124' },
-      { key: 3, name: 'Dragon & Tiger', value: '123' },
-      { key: 4, name: 'Sic Bo', value: '125' },
-      { key: 5, name: 'Andar Bahar', value: '79' },
-    ]
-  }
+  const finalList = [];
+  configList.list.forEach(data => {
+    if (data.platform === val) {
+      finalList.push({ key: data.key, name: data.gameName, value: data.gameCode })
+    }
+  });
+  request.fromGameCode = null;
+  form.fromGameCode = null;
+  selectedPlatformGameCode.list = finalList;
 }
 
 function resetQuery() {
@@ -545,6 +543,32 @@ async function loadSites() {
 function changePage(page) {
   request.current = page
   loadGame()
+}
+
+async function loadConfigList() {
+  const { data: ret } = await getConfigList(request.siteId)
+  const finalList = [];
+  const finalPlatformList = [];
+  ret.forEach(data => {
+    if (data.status === "OPEN") {
+      const arr = data.code.split("_");
+      if (arr.length > 1) {
+        finalList.push({ key: data.id, platform: arr[0], gameCode: arr[1], gameName: data.gameName });
+        finalPlatformList.push({ key: data.id, name: arr[0], value: arr[0] })
+      } else {
+        finalList.push({ key: data.id, platform: 'spribe', gameCode: arr[0], gameName: data.gameName });
+        finalPlatformList.push({ key: data.id, name: 'spribe', value: 'spribe' })
+      }
+    }
+  })
+  configList.list = finalList;
+
+  fromPlatform.list = finalPlatformList.reduce((platform, current) => {
+    if (!platform.some(plat => plat.name === current.name)) {
+      platform.push(current);
+    }
+    return platform;
+  }, []);
 }
 
 function showDialog(type) {
@@ -812,6 +836,7 @@ onMounted(async () => {
     request.siteId = sites.list[0].id;
   }
   form.siteId = request.siteId
+  await loadConfigList();
   await loadGame();
 })
 </script>
