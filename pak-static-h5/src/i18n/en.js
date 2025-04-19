@@ -1115,17 +1115,13 @@ export default {
   },
   content: {
     title1: "The registration time starts from the time the registration is completed.",
-    message1:
-      "When the accumulated amount reaches 1000 PKR, you can apply for a withdrawal (the reward will be directly added to your wallet).",
-    message2:
-      "When there are no available spins, referring a new player to register and deposit will earn you free spins.",
+    message1: "Once your accumulated amount reaches 1000 PKR, you can withdraw.",
+    message2: "When you have no spins left, invite new players to register and deposit to earn additional free spins.",
     message3:
-      "The event lasts for 3 days. After the event ends, the accumulated rewards will be reset, and the event will restart.",
+      "The event lasts for 3 days. After the event ends, accumulated rewards will be reset and the event will restart.",
     message4: "Each user can enjoy one free spin per day, which will be added at 00:00 daily.",
-    message5: "Once the application is approved, the bonus will be directly credited to your wallet.",
-    message6: "The bonus must be rolled over once before it can be withdrawn.",
-    message7:
-      "The invitee must verify their phone number, register using the inviter's referral link, and must not have a duplicate IP address to qualify for the referral.",
+    message5:
+      "The invitee must verify their phone number and must not have a duplicate IP address to qualify for the referral reward.",
     aviatorPromoIntro:
       "Enjoy the thrill of betting with Aviator! Your Aviator can win a staggering 3,216x with just one click! The prize pool for the top 50 is 1,250,000 PKR!",
     aviatorGoldenEgg:
