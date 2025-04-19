@@ -10,13 +10,13 @@
       </div>
       <a class="additional-info-item" @click.stop.prevent="goToLiveChatPromo()">
         <!-- <img src="../../assets/images/home/sticky-sidebar/email-icon.svg" /> -->
-        <img src="@/components/hotpromo/officialGift/img/voxis.svg" />
+        <img style="margin-right: 8px" src="@/components/hotpromo/officialGift/img/voxis.svg" />
         <span style="margin-left: 5px">专属客服</span>
       </a>
-      <div class="additional-info-item">
-        <img src="../../assets/images/home/sticky-sidebar/phone-icon.svg" />
-        <span style="margin-left: 5px"><span class="customer_phone">+85281701071</span></span>
-      </div>
+      <!--      <div class="additional-info-item">-->
+      <!--        <img src="../../assets/images/home/sticky-sidebar/phone-icon.svg" />-->
+      <!--        <span style="margin-left: 5px"><span class="customer_phone">+85281701071</span></span>-->
+      <!--      </div>-->
     </div>
     <div class="sticky-sidebar-items">
       <div class="sticky-sidebar-item" @click="handleDarkModeClick">
