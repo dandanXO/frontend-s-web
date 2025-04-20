@@ -668,8 +668,8 @@ function setWidth(exportData, maxLength) {
             ? maxLength[key]
             : 10
           : maxLength[key] >= value.length + 2
-          ? maxLength[key]
-          : value.length + 2
+            ? maxLength[key]
+            : value.length + 2
     })
   })
 }

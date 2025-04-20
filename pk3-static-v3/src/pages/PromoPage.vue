@@ -162,6 +162,7 @@ import { t } from "@/boot/lang";
 import { useUI } from "@/stores/ui";
 import {useQuasar,SessionStorage} from "quasar";
 import {isAndroid} from "boot/utils";
+import { i18nStore } from "src/router/language";
 export default defineComponent({
   name: "PromoView",
   components: {
@@ -194,12 +195,15 @@ export default defineComponent({
     const router = useRouter();
     const $q = useQuasar();
     const ui = useUI();
+    const i18nStoreLanguage = i18nStore();
 
     const isFetchingPromo = ref(false);
     const extensionState = ref(false);
     const isWebview = ref(false)
     const extensionToken = ref("");
     const isOpenExtension = ref(false);
+
+    const langVal = computed(() => i18nStoreLanguage.languageVal)
 
     const checkExtension = () => {
       if (route.path === "/promotion") {
@@ -369,7 +373,7 @@ export default defineComponent({
             store.token = extensionToken.value;
           } else if (isAndroid()) {
             // store.h5Url = "http://192.168.68.86:9090/";
-            var preUrl = store.h5Url + `promotion?name=${promo.redirectUrl}&token=${store.token}`;
+            var preUrl = store.h5Url + `promotion?name=${promo.redirectUrl}&token=${store.token}&lang=${langVal.value}`;
             // alert(preUrl);
             console.log(preUrl);
             // promoSrc.value= preUrl;

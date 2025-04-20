@@ -328,6 +328,12 @@
         align="center"
         width="120"
       />
+      <el-table-column
+        prop="redepositRate"
+        :label="t('fields.redepositRate')"
+        align="center"
+        width="120"
+      />
     </el-table>
 
     <el-pagination
@@ -664,7 +670,7 @@ function getSummaries(param) {
           index === 23 ||
           index === 6 ||
           index === 4 || index === 12 ||
-          index === 13 || index === 14 || index === 15 || index === 24 || index === 25) {
+          index === 13 || index === 14 || index === 15 || index === 24 || index === 25 || index === 26) {
           sums[index] = totalPage.records[0][prop]
         } else if (index === 5) {
           // profit depositWithdrawal = deposit - withdrawal

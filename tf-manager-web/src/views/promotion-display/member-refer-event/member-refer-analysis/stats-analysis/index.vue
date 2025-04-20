@@ -27,6 +27,14 @@
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">
           {{ t('fields.reset') }}
         </el-button>
+        <el-button
+          size="mini"
+          type="primary"
+          @click="openExportDialog"
+          v-permission="['sys:privi:member-refer-friend-analysis:export']"
+        >
+          {{ t('fields.requestExportToExcel') }}
+        </el-button>
       </div>
     </div>
     <el-table
@@ -87,6 +95,92 @@
       @size-change="loadStatsAnalysis"
     />
   </div>
+
+  <el-dialog
+    :title="t('fields.requestExportToExcel')"
+    v-model="exportDialogVisible"
+    append-to-body
+    width="900px"
+    style="height: 600px;"
+  >
+    <div style="height: 500px; overflow-y: auto;">
+      <el-form :inline="true" size="small" label-width="180px">
+        <el-form-item :label="t('fields.recordDate')">
+          <el-date-picker
+            v-model="exportRequest.recordTime"
+            type="daterange"
+            format="DD/MM/YYYY"
+            value-format="YYYY-MM-DD"
+            range-separator=":"
+            :start-placeholder="t('fields.startDate')"
+            :end-placeholder="t('fields.endDate')"
+            :shortcuts="shortcuts"
+          />
+        </el-form-item>
+        <el-button
+          icon="el-icon-upload"
+          size="mini"
+          type="success"
+          @click="chooseExportFile"
+        >
+          {{ t('fields.import') }}
+        </el-button>
+        <el-button
+          icon="el-icon-download"
+          size="mini"
+          type="primary"
+          @click="downloadTemplate"
+        >
+          {{ t('fields.downloadTemplate') }}
+        </el-button>
+      </el-form>
+
+      <input
+        id="exportFile"
+        type="file"
+        accept=".csv, .xlsx, .xls"
+        @change="handleFileImport"
+        hidden
+      >
+
+      <el-table
+        :data="exportMemberList"
+        v-loading="exportLoading"
+        size="small"
+        :empty-text="t('fields.noData')"
+        style="margin-top: 15px"
+      >
+        <el-table-column prop="loginName" :label="t('fields.loginName')" />
+      </el-table>
+
+      <div class="dialog-footer" style="margin-top: 15px">
+        <el-button
+          type="primary"
+          :disabled="exportMemberList.length === 0"
+          @click="confirmExport"
+          :loading="exportButtonLoading"
+        >
+          {{ t('fields.requestExportToExcel') }}
+        </el-button>
+        <el-button @click="exportDialogVisible = false">
+          {{ t('fields.cancel') }}
+        </el-button>
+      </div>
+    </div>
+  </el-dialog>
+
+  <el-dialog :title="t('fields.exportToExcel')" v-model="messageVisible" append-to-body width="500px"
+             :close-on-click-modal="false" :close-on-press-escape="false"
+  >
+    <span>{{ t('message.requestExportToExcelDone1') }}</span>
+    <router-link :to="`/site-management/download-manager`">
+      <el-link type="primary">
+        {{ t('menu.DownloadManager') }}
+      </el-link>
+    </router-link>
+    <span>{{ t('message.requestExportToExcelDone2') }}</span>
+  </el-dialog>
+
 </template>
 
 <script setup>
@@ -98,8 +192,10 @@ import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 import moment from "moment";
 import { getShortcuts } from "@/utils/datetime";
-import { getAnalysisRecord } from "@/api/member-refer-friend-analysis";
+import { getAnalysisRecord, getAnalysisRecordExport } from "@/api/member-refer-friend-analysis";
 import { getSiteListSimple } from "@/api/site";
+import { ElMessage } from "element-plus";
+import * as XLSX from 'xlsx'
 
 const { t } = useI18n();
 const store = useStore();
@@ -216,6 +312,116 @@ const sort = (column) => {
   }
   loadStatsAnalysis();
 };
+
+// 新增导出相关状态
+const messageVisible = ref(false)
+const exportDialogVisible = ref(false)
+const exportLoading = ref(false)
+const exportButtonLoading = ref(false)
+const exportMemberList = ref([])
+
+const exportRequest = reactive({
+  recordTime: [convertDate(new Date()), convertDate(new Date())],
+  loginNames: []
+})
+
+const EXPORT_LOGIN_NAME_HEADER = ['loginName']
+
+function setWidth(exportData, maxLength) {
+  exportData.map(data => {
+    Object.keys(data).map(key => {
+      const value = data[key];
+
+      maxLength[key] =
+        typeof value === 'number'
+          ? maxLength[key] >= 10
+            ? maxLength[key]
+            : 10
+          : maxLength[key] >= value.length + 2
+            ? maxLength[key]
+            : value.length + 2
+    });
+  });
+}
+
+function openExportDialog() {
+  exportDialogVisible.value = true
+  messageVisible.value = false
+  exportMemberList.value = []
+  exportRequest.loginNames = []
+  exportRequest.recordTime = [convertDate(new Date()), convertDate(new Date())]
+}
+
+function chooseExportFile() {
+  document.getElementById('exportFile').click()
+}
+
+function handleFileImport(event) {
+  exportLoading.value = true
+  const file = event.target.files[0]
+  const reader = new FileReader()
+
+  reader.onload = (e) => {
+    const data = new Uint8Array(e.target.result)
+    const workbook = XLSX.read(data, { type: 'array' })
+    const firstSheet = workbook.Sheets[workbook.SheetNames[0]]
+    const jsonData = XLSX.utils.sheet_to_json(firstSheet)
+
+    // 检查上传数量是否超过100个
+    if (jsonData.length > 100) {
+      ElMessage.error(t('message.uploadLimitExceeded', { count: 100 }));
+      exportLoading.value = false;
+      event.target.value = '';
+      return;
+    }
+
+    exportMemberList.value = jsonData.map(item => ({
+      loginName: item.loginName
+    }))
+
+    exportRequest.loginNames = exportMemberList.value.map(m => m.loginName)
+    exportLoading.value = false
+  }
+
+  reader.readAsArrayBuffer(file)
+  event.target.value = '' // 重置input
+}
+
+async function downloadTemplate() {
+  const exportData = [EXPORT_LOGIN_NAME_HEADER]
+  const maxLength = []
+  const ws = XLSX.utils.aoa_to_sheet(exportData)
+  setWidth(exportData, maxLength)
+  ws['!cols'] = maxLength.map(w => ({ width: w }))
+
+  const wb = XLSX.utils.book_new()
+  wb.SheetNames.push('Member_Refer_Analysis_Stats')
+  wb.Sheets.Member_Refer_Analysis_Stats = ws
+  XLSX.writeFile(wb, 'Member_Refer_Analysis_Stats_Template.xlsx')
+}
+
+async function confirmExport() {
+  exportButtonLoading.value = true
+
+  try {
+    const query = {
+      recordTime: exportRequest.recordTime.join(','),
+      referrerNames: exportRequest.loginNames.join(','),
+      requestBy: store.state.user.name,
+      requestTime: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
+      siteId: request.siteId
+    }
+    const { data: ret } = await getAnalysisRecordExport(query)
+    if (ret) {
+      messageVisible.value = true
+      exportDialogVisible.value = false
+    }
+  } catch (error) {
+    ElMessage.error(t('message.exportFailed'))
+  } finally {
+    exportButtonLoading.value = false
+  }
+}
 
 onMounted(async () => {
   await loadSites();

@@ -1357,6 +1357,7 @@ export default {
     redeemedBy: '교환자',
     redeemCode: '리딤 코드',
     redeemPoints: '포인트 교환',
+    redepositRate: '재예치율',
     redirect: '리디렉트',
     redirectRecord: 'Redirect Record',
     redirectMember: 'Redirect Specific Member',
