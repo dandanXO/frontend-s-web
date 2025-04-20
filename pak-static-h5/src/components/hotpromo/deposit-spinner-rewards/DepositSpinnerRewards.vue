@@ -262,22 +262,24 @@ const prizePopupBonusAmt = ref(0);
 const sliderRef = ref(null);
 const showDialog = ref(false);
 const prizeResult = ref("");
-const { lengthX } = useSwipe(sliderRef, {
-  passive: false,
+const { lengthX, lengthY } = useSwipe(sliderRef, {
+  passive: true,
   onSwipeEnd() {
     const screenWidth = window.innerWidth;
     const tabWidth = screenWidth > 500 ? 80 : screenWidth * 0.8; // Ensure proper calculation
 
-    if (lengthX.value > tabWidth * 0.2) {
-      // 20% of tab width
-      // Swipe right → Move to next tab
-      if (activeTab.value < tabs.length - 1) {
-        setTab(activeTab.value + 1);
-      }
-    } else if (lengthX.value < -tabWidth * 0.2) {
-      // Swipe left → Move to previous tab
-      if (activeTab.value > 0) {
-        setTab(activeTab.value - 1);
+    // Only trigger swipe logic if horizontal swipe is more significant than vertical swipe
+    if (Math.abs(lengthX.value) > Math.abs(lengthY.value)) {
+      if (lengthX.value > tabWidth * 0.2) {
+        // Swipe right → Move to next tab
+        if (activeTab.value < tabs.length - 1) {
+          setTab(activeTab.value + 1);
+        }
+      } else if (lengthX.value < -tabWidth * 0.2) {
+        // Swipe left → Move to previous tab
+        if (activeTab.value > 0) {
+          setTab(activeTab.value - 1);
+        }
       }
     }
   }

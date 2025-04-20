@@ -82,6 +82,7 @@
     <Cct2025 v-if="list.redirectUrl === 'lh1-cct-global-finals-2025'" :promo-code="list.promoCode" />
     <FpSlotPromo v-if="list.redirectUrl === 'lh1-fp-slot'" :promo-code="list.promoCode" />
     <elsOne2025 v-if="list.redirectUrl === 'lh1-esl-one-raleigh-2025'" :promo-code="list.promoCode" />
+    <YuEBaoPromo v-if="list.redirectUrl === 'lh1-yu-e-bao'" :promo-code="list.promoCode" :params="list.param" />
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -151,6 +152,7 @@ import PglWallachiaS4 from "./hotpromo/pgl-wallachia-s4/PglWallachiaS4.vue";
 import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
 import FpSlotPromo from "./hotpromo/fp-slot-promo/FpSlotPromo.vue";
 import elsOne2025 from "../components/hotpromo/elsOne2025/elsOne2025.vue";
+import YuEBaoPromo from "./hotpromo/yu-e-bao/YuEBaoPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -198,7 +200,8 @@ export default defineComponent({
     FissureUniverseS4,
     IemMelbourne2025,
     PglWallachiaS4,
-    FpSlotPromo
+    FpSlotPromo,
+    YuEBaoPromo
   },
   props: {
     list: {

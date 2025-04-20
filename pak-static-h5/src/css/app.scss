@@ -868,6 +868,14 @@ body.body--dark .q-footer {
   }
 }
 
+.login-register-notify-div{
+  margin-top: 20vh;
+
+  .q-notification__message{
+    font-size: 16px;
+  }
+}
+
 .q-field--outlined.q-field--highlighted .q-field__control:after {
   border-width: 1px;
 }

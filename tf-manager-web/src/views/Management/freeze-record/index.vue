@@ -93,6 +93,9 @@
         >
           {{ t('fields.massImport') }}
         </el-button>
+        <el-button size="mini" type="primary" @click="requestExportExcel">
+          {{ t('fields.requestExportToExcel') }}
+        </el-button>
       </div>
     </div>
     <el-table
@@ -203,7 +206,7 @@
     >
       {{ t('fields.import') }}
     </el-button>
-    <input 
+    <input
       id="importFile"
       type="file"
       accept=".xlsx, .xls"
@@ -242,7 +245,7 @@
           :placeholder="t('fields.freezeType')"
           style="width: 350px;"
         >
-          <el-option 
+          <el-option
             v-for="item in uiControl.freezeType"
             :key="item.key"
             :label="item.name"
@@ -256,7 +259,7 @@
           :placeholder="t('fields.reason')"
           style="width: 350px;"
         >
-          <el-option 
+          <el-option
             v-for="item in uiControl.freezeReason"
             :key="item.key"
             :label="item.name"
@@ -265,40 +268,38 @@
         </el-select>
       </el-form-item>
     </el-form>
-    <el-table 
-      :data="importedPage.records.slice(
-        importedPage.size * (importedPage.current - 1),
-        importedPage.size * importedPage.current
-      )"
+    <el-table
+      :data="
+        importedPage.records.slice(
+          importedPage.size * (importedPage.current - 1),
+          importedPage.size * importedPage.current
+        )
+      "
       v-loading="importedPage.loading"
       ref="table"
       row-key="id"
       size="small"
       :empty-text="t('fields.noData')"
     >
-      <el-table-column 
+      <el-table-column
         prop="memberId"
         :label="t('fields.memberId')"
         width="250"
       />
-      <el-table-column 
+      <el-table-column
         prop="loginName"
         :label="t('fields.loginName')"
         width="250"
       />
-      <el-table-column 
-        prop="remark"
-        :label="t('fields.remark')"
-        width="250"
-      />
+      <el-table-column prop="remark" :label="t('fields.remark')" width="250" />
     </el-table>
     <el-pagination
-        class="pagination"
-        @current-change="changeImportedPage"
-        layout="prev, pager, next"
-        :page-size="importedPage.size"
-        :page-count="importedPage.pages"
-        :current-page="importedPage.current"
+      class="pagination"
+      @current-change="changeImportedPage"
+      layout="prev, pager, next"
+      :page-size="importedPage.size"
+      :page-count="importedPage.pages"
+      :current-page="importedPage.current"
     />
     <div class="dialog-footer">
       <el-button
@@ -312,12 +313,30 @@
       <el-button @click="clearImport">{{ t('fields.cancel') }}</el-button>
     </div>
   </el-dialog>
+
+  <el-dialog
+    v-permission="['sys:member:freeze:export']"
+    :title="t('fields.exportToExcel')"
+    v-model="uiControl.messageVisible"
+    append-to-body
+    width="500px"
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+  >
+    <span>{{ t('message.requestExportToExcelDone1') }}</span>
+    <router-link :to="`/site-management/download-manager`">
+      <el-link type="primary">
+        {{ t('menu.DownloadManager') }}
+      </el-link>
+    </router-link>
+    <span>{{ t('message.requestExportToExcelDone2') }}</span>
+  </el-dialog>
 </template>
 
 <script setup>
 import moment from 'moment'
 import { onMounted, reactive, computed, ref } from 'vue'
-import { getFreezeRecords } from '../../../api/freeze'
+import { getFreezeRecords, getExportMemberFreeze } from '../../../api/freeze'
 import { useI18n } from 'vue-i18n'
 import { useStore } from '../../../store'
 import { getSiteListSimple } from '../../../api/site'
@@ -390,14 +409,14 @@ const uiControl = reactive({
     { key: 1, name: t('types.gameViolation'), value: 'Game Violation' },
     { key: 2, name: t('types.memberRequest'), value: 'Member Request' },
     { key: 3, name: t('types.others'), value: 'Others' },
-  ]
+  ],
 })
 
 const importForm = reactive({
   siteId: null,
   freezeType: null,
   reason: null,
-  remark: null
+  remark: null,
 })
 
 const importedPage = reactive({
@@ -406,10 +425,10 @@ const importedPage = reactive({
   loading: false,
   size: 10,
   current: 1,
-  buttonLoading: false
+  buttonLoading: false,
 })
 
-const IMPORT_FREEZE_LIST = ["loginName", "remark"]
+const IMPORT_FREEZE_LIST = ['loginName', 'remark']
 
 function resetQuery() {
   request.memberName = null
@@ -466,6 +485,35 @@ async function loadFreezeRecords() {
   page.pages = ret.pages
   page.records = ret.records
   page.loading = false
+}
+
+async function requestExportExcel() {
+  const requestCopy = { ...request }
+  const query = {}
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value
+    }
+  })
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
+  if (request.createTime.length === 2) {
+    query.createTime = JSON.parse(JSON.stringify(request.createTime))
+    query.createTime[0] = formatInputTimeZone(
+      query.createTime[0],
+      timeZone,
+      'start'
+    )
+    query.createTime[1] = formatInputTimeZone(
+      query.createTime[1],
+      timeZone,
+      'end'
+    )
+    query.createTime = query.createTime.join(',')
+  }
+  const { data: ret } = await getExportMemberFreeze(query)
+  if (ret) {
+    uiControl.messageVisible = true
+  }
 }
 
 function changePage(page) {
@@ -620,7 +668,7 @@ onMounted(async () => {
       s => s.siteName === store.state.user.siteName
     )
     request.siteId = site.value.id
-    importForm.siteId  = site.value.id
+    importForm.siteId = site.value.id
   }
   loadFreezeRecords()
 })

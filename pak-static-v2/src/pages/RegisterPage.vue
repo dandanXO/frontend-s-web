@@ -451,6 +451,9 @@ export default defineComponent({
                 regForm.regDevice = "ANDROID";
               }
             }
+            if (store.isFromGooglePackage) {
+              regForm.regDevice = "ANDROID";
+            }
           }
 
           if (regForm.regHost.indexOf("http://localhost") > -1) {
@@ -1030,7 +1033,7 @@ function charType(num) {
     // gap: 8px;
     color: #9f9f9f;
     font-size: 12px;
-    
+
     :not(:last-child) {
       margin-bottom: 8px;
     }

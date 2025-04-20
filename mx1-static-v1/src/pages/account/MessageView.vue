@@ -89,7 +89,6 @@ onActivated(() => {
 .account-message-page {
   display: flex;
   flex-direction: column;
-  gap: 20px;
   padding: 0 20px;
 }
 .msg-container {
@@ -100,6 +99,7 @@ onActivated(() => {
   background: #171e2b;
   position: relative;
   box-shadow: none;
+  margin-bottom: 10px;
 
   &:has(.new-message-ribbon) {
     background: #27344a;

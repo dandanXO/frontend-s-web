@@ -29,6 +29,7 @@ export const errorMessages = {
   1000: "Error de Inicio de Sesión en el nombre de usuario o la contraseña",
   1001: "Cuenta cerrada",
   1002: "La cuenta es para miembros registrados",
+  1004: "La cuenta está bloqueada temporalmente por ingresar la contraseña incorrecta varias veces.",
   1300: "El importe debe ser un número superior a 0",
   1301: "Esta tarjeta no es compatible",
   1302: "Esta moneda no es compatible",

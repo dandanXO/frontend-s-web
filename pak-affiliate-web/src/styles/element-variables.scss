@@ -1,0 +1,77 @@
+/* Element Variables */
+
+// Override Element UI variables
+$--color-primary: #f5b033;
+$--color-success: #13ce66;
+$--color-warning: #ffba00;
+$--color-danger: #ff4949;
+$--color-info: #5d5d5d;
+$--button-font-weight: 400;
+$--color-text-regular: #1f2d3d;
+$--border-color-light: #dfe4ed;
+$--border-color-lighter: #e6ebf5;
+$--table-border: 1px solid#dfe6ec;
+
+// Icon font path, required
+//$--font-path: '~element-plus/lib/theme-chalk/fonts';
+
+// Apply overrided variables in Element UI
+//@import "~element-plus/packages/theme-chalk/src/index";
+
+// The :export directive is the magic sauce for webpack
+// https://mattferderer.com/use-sass-variables-in-typescript-and-javascript
+:export {
+  theme: $--color-primary;
+}
+
+.el-button{
+  background: #46794f;
+  border:1px solid #305637;
+  color:#fff;
+
+  &:hover{
+    color: #fff;
+    opacity: 0.9;
+    background: #04cb8f;
+    border:1px solid #305637;
+  }
+  &:focus{
+    background: #05a47b;
+    border:1px solid #305637;
+  }
+  &:active{
+    filter: brightness(1.2);
+    border:1px solid #305637;
+  }
+}
+
+.el-button--primary.is-plain{
+  color: #46794f;
+  border:1px solid #305637;
+
+  &:hover{
+    opacity: 0.9;
+    background: #04cb8f;
+    border:1px solid #305637;
+  }
+  &:focus{
+    background: #05a47b;
+    border:1px solid #305637;
+  }
+}
+
+.el-tabs__item{
+
+  &:hover{
+    color: #05a47b;
+  }
+
+  &.is-active{
+    color: #05a47b;
+  }
+
+}
+
+.el-tabs__active-bar{
+  background: #05a47b
+}

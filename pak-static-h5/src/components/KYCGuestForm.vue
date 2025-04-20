@@ -153,7 +153,7 @@ const updateNewGuestState = () => {
           icon: "check_circle_outline"
         });
 
-        if (isAndroid() || isInPwa()) {
+        if (isAndroid() || isInPwa() || store.isFromGooglePackage) {
           LocalStorage.set("TOKEN", r.data, 86400);
         } else {
           SessionStorage.set("TOKEN", r.data);
@@ -286,7 +286,6 @@ const updateNewGuestState = () => {
   }
 }
 
-
 .btn-cancel {
   // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
   // border: 1px solid #5d8956;
@@ -303,10 +302,9 @@ const updateNewGuestState = () => {
   background: #455152;
   color: #ffffff;
 
-  box-shadow: 0px 2px 0px 0px #2A3637;
+  box-shadow: 0px 2px 0px 0px #2a3637;
 }
 .btn-confirm {
-  
   font-weight: 700;
   width: 100%;
   padding: 10px 10px;

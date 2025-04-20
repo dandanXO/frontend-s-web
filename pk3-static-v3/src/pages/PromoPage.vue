@@ -1,6 +1,7 @@
 <template>
   <!-- <q-card-section class="page-title">优惠活动</q-card-section> -->
-  <ProfileSummary v-if="!extensionState" :homeProfile="true" />
+
+  <ProfileSummary v-if="!extensionState && !isWebview" :homeProfile="true" />
   <div class="vip-promo-tab-wrapper" v-if="!isPromoDetail">
     <q-tabs
       v-model="vipPromoTab"
@@ -161,6 +162,7 @@ import { t } from "@/boot/lang";
 import { useUI } from "@/stores/ui";
 import {useQuasar,SessionStorage} from "quasar";
 import {isAndroid} from "boot/utils";
+import { i18nStore } from "src/router/language";
 export default defineComponent({
   name: "PromoView",
   components: {
@@ -193,11 +195,15 @@ export default defineComponent({
     const router = useRouter();
     const $q = useQuasar();
     const ui = useUI();
+    const i18nStoreLanguage = i18nStore();
 
     const isFetchingPromo = ref(false);
     const extensionState = ref(false);
+    const isWebview = ref(false)
     const extensionToken = ref("");
     const isOpenExtension = ref(false);
+
+    const langVal = computed(() => i18nStoreLanguage.languageVal)
 
     const checkExtension = () => {
       if (route.path === "/promotion") {
@@ -206,6 +212,12 @@ export default defineComponent({
         extensionState.value = true;
       }
     };
+
+    const checkWebview = () => {
+      if (route.path === "/wv-promotion") {
+        isWebview.value = true
+      }
+    }
 
     const tab = ref("all");
     const tabItems = [
@@ -264,7 +276,10 @@ export default defineComponent({
     watch(
       () => vipPromoTab.value,
       () => {
-        if (vipPromoTab.value === "vip") {
+        if (isWebview.value) {
+          router.push(`/wv-vip?token=${SessionStorage.getItem("TOKEN")}`)
+        }
+        else if (vipPromoTab.value === "vip") {
           router.push("/vip");
         }
       }
@@ -273,7 +288,7 @@ export default defineComponent({
     watch(
       () => route.path,
       () => {
-        if (route.path === "/promo") {
+        if (route.path === "/promo" || route.path === "/wv-promotion") {
           vipPromoTab.value = "promo";
         }
       }
@@ -282,7 +297,11 @@ export default defineComponent({
     const isPromoDetailPage = ref(false);
 
     const backToPromoList = () => {
-      if (window.location.pathname === "/promotion") {
+      if (isWebview.value) {
+        router.replace(`/wv-promotion?token=${SessionStorage.getItem("TOKEN")}`)
+        isPromoDetail.value = false
+      }
+      else if (window.location.pathname === "/promotion") {
         window.location.href = "xfapp:/promo";
       } else {
         router.push("/promo");
@@ -354,7 +373,7 @@ export default defineComponent({
             store.token = extensionToken.value;
           } else if (isAndroid()) {
             // store.h5Url = "http://192.168.68.86:9090/";
-            var preUrl = store.h5Url + `promotion?name=${promo.redirectUrl}&token=${store.token}`;
+            var preUrl = store.h5Url + `promotion?name=${promo.redirectUrl}&token=${store.token}&lang=${langVal.value}`;
             // alert(preUrl);
             console.log(preUrl);
             // promoSrc.value= preUrl;
@@ -399,7 +418,11 @@ export default defineComponent({
               isOpenExtension.value = false;
             });
         } else {
-          if (route.query.fromAccount) {
+          if (isWebview.value) {
+            isPromoDetail.value = true;
+            selectedPromo.value = promo;
+          }
+          else if (route.query.fromAccount) {
             router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
           } else {
             router.push({ path: "/promo", query: { name: promo.redirectUrl } });
@@ -585,6 +608,7 @@ export default defineComponent({
 
     onMounted(() => {
       checkExtension();
+      checkWebview();
     });
 
     const swipeLeft = () => {
@@ -632,6 +656,7 @@ export default defineComponent({
       isFtdPromoEnded,
       isFetchingPromo,
       extensionState,
+      isWebview,
       isOpenExtension
     };
   }

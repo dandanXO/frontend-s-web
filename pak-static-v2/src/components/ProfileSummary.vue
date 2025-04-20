@@ -488,7 +488,7 @@ onMounted(() => {
   ui.shouldFetchDownloadAppUrl = true;
 
   sideLang.value = store.memberType === "TEST";
-  if (isAndroid() || isInPwa()) {
+  if (isAndroid() || isInPwa() || store.isFromGooglePackage) {
     isSideDownload.value = false;
   } else {
     isSideDownload.value = true;

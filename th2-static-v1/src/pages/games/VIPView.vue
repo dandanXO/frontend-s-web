@@ -47,7 +47,7 @@
               </div>
 
               <div class="progress-bar-container">
-                <div class="progress-bar-endpoint-label">
+                <div class="progress-bar-endpoint-label left-endpoint-label">
                   {{ `V${+vip.vipLevel - 1}` }}
                 </div>
                 <div class="progress-bar-outer-bar">
@@ -58,7 +58,7 @@
                     :style="{ width: currentVipLevelStats.levelUpPercentage + '%' }"
                   />
                 </div>
-                <div class="progress-bar-endpoint-label">
+                <div class="progress-bar-endpoint-label right-endpoint-label">
                   {{ `V${vip.vipLevel}` }}
                 </div>
               </div>
@@ -90,8 +90,12 @@
             </div>
           </div>
           <div class="unlock-status">
-            <img v-if="currentVipLevelStats.rewardUnlocked" src="@/assets/images/vip/vip-reward-unlocked-icon.png" />
-            <img v-else src="@/assets/images/vip/vip-reward-locked-icon.png" />
+            <img
+              class="unlocked-icon"
+              v-if="currentVipLevelStats.rewardUnlocked"
+              src="@/assets/images/vip/vip-reward-unlocked-icon.png"
+            />
+            <img class="locked-icon" v-else src="@/assets/images/vip/vip-reward-locked-icon.png" />
           </div>
         </div>
         <div class="vip-reward-item">
@@ -109,8 +113,12 @@
             </div>
           </div>
           <div class="unlock-status">
-            <img v-if="currentVipLevelStats.rewardUnlocked" src="@/assets/images/vip/vip-reward-unlocked-icon.png" />
-            <img v-else src="@/assets/images/vip/vip-reward-locked-icon.png" />
+            <img
+              class="unlocked-icon"
+              v-if="currentVipLevelStats.rewardUnlocked"
+              src="@/assets/images/vip/vip-reward-unlocked-icon.png"
+            />
+            <img class="locked-icon" v-else src="@/assets/images/vip/vip-reward-locked-icon.png" />
           </div>
         </div>
         <div class="vip-reward-item">
@@ -130,8 +138,12 @@
             </div>
           </div>
           <div class="unlock-status">
-            <img v-if="currentVipLevelStats.rewardUnlocked" src="@/assets/images/vip/vip-reward-unlocked-icon.png" />
-            <img v-else src="@/assets/images/vip/vip-reward-locked-icon.png" />
+            <img
+              class="unlocked-icon"
+              v-if="currentVipLevelStats.rewardUnlocked"
+              src="@/assets/images/vip/vip-reward-unlocked-icon.png"
+            />
+            <img class="locked-icon" v-else src="@/assets/images/vip/vip-reward-locked-icon.png" />
           </div>
         </div>
       </div>
@@ -876,8 +888,9 @@ const swipeRight = () => {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
-
+      > * {
+        margin-top: 8px;
+      }
       .bold {
         font-weight: 800;
         white-space: nowrap;
@@ -925,6 +938,15 @@ const swipeRight = () => {
       justify-content: center;
       padding: 10px;
 
+      .unlocked-icon {
+        width: 16px;
+        height: 16px;
+      }
+
+      .locked-icon {
+        width: 14px;
+        height: 16px;
+      }
       img {
         max-width: 20px;
       }
@@ -1097,7 +1119,6 @@ const swipeRight = () => {
     .progress-bar-container {
       display: flex;
       align-items: center;
-      gap: 10px;
       position: absolute;
       bottom: 10%;
       left: 6%;
@@ -1105,6 +1126,14 @@ const swipeRight = () => {
 
       .progress-bar-endpoint-label {
         color: #333;
+      }
+
+      .left-endpoint-label {
+        margin-right: 10px;
+      }
+
+      .right-endpoint-label {
+        margin-left: 10px;
       }
 
       .progress-bar-outer-bar {

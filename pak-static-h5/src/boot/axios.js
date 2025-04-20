@@ -76,7 +76,7 @@ export default boot(({ app, router }) => {
     // }
 
     let token;
-    if (isAndroid() || isInPwa()) {
+    if (isAndroid() || isInPwa() || store.isFromGooglePackage) {
       token = LocalStorage.getItem("TOKEN");
     } else {
       token = SessionStorage.getItem("TOKEN");
@@ -255,10 +255,16 @@ export default boot(({ app, router }) => {
           LocalStorage.remove("TOKEN");
           window.location.href = "/";
         }
+
+        const isLoginRegPage = window.location.pathname === "/login" || window.location.pathname === "/register";
+        const timeoutTime = isLoginRegPage ? 3000 : 1000;
+        const notifyClass = isLoginRegPage ? "login-register-notify-div" : "";
+
         Notify.create({
           type: "negative",
-          timeout: 1000,
+          timeout: timeoutTime,
           position: "top",
+          classes: notifyClass,
           // message: res.message || "错误"
           message:
             i18n.global.t("error." + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error"

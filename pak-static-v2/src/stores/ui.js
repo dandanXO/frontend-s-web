@@ -62,7 +62,7 @@ export const useUI = defineStore("ui-store", {
     hideDownload() {
       const store = userStore();
       const hasReferralCode = !!sessionStorage.getItem("REFERRAL_CODE");
-      if (isInPwa()) return true;
+      if (isInPwa() || store.isFromGooglePackage) return true;
       if (!store.token && hasReferralCode) return true;
       return false;
     }

@@ -40,6 +40,30 @@ export default route(function (/* { store, ssrContext } */) {
     const user = userStore();
     const ui = useUI();
     const $q = useQuasar();
+    const { gaid, affiliateCode } = to.query;
+
+    if (!user.isCheckGaid) {
+      const isFromGooglePackage = !!gaid;
+      const savedIsFromGooglePackage = SessionStorage.getItem("IS_FROM_GOOGLE_PACKAGE");
+      const savedGaid = SessionStorage.getItem("GAID_FROM_GOOGLE_PACKAGE");
+      if (savedIsFromGooglePackage === null) {
+        SessionStorage.setItem("IS_FROM_GOOGLE_PACKAGE", isFromGooglePackage);
+        user.isFromGooglePackage = isFromGooglePackage;
+        if (isFromGooglePackage) {
+          SessionStorage.setItem("GAID_FROM_GOOGLE_PACKAGE", gaid);
+          user.aaid = gaid;
+        }
+        if (affiliateCode) {
+          sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+        }
+      } else {
+        user.isFromGooglePackage = savedIsFromGooglePackage;
+        if (savedGaid) {
+          user.aaid = savedGaid;
+        }
+      }
+      user.isCheckGaid = true;
+    }
 
     if (to.query.adjust_referrer) {
       sessionStorage.setItem("ADJUST_REFERRER", to.query.adjust_referrer);

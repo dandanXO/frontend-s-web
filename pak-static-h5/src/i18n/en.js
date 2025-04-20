@@ -300,7 +300,7 @@ export default {
     virtualWalletAddedSuccessfully: "Virtual wallet added successfully",
     cryptoAccountAddedSuccessfully: "Crypto account added successfully",
     newpasswordupdated: "New password updated successfully",
-    withdrewSuccessfully: "Withdrew successfully",
+    withdrewSuccessfully: "Withdraw successfully",
     noRecord: "No Record",
     haventFoundAnyRecord: "Haven't found any record",
     updatedSuccessfully: "Updated successfully",
@@ -517,7 +517,7 @@ export default {
       totalAmountSentAsOfYesterday: "Total amount sent as of yesterday",
       player: "Player",
       money: "Money",
-      eligibility_tips: "1. The invitee's deposit must be ≥ 600 or have a valid bet turnover of 1000. ",
+      eligibility_tips: "1. Invitee's deposit must be ≥ 300.",
       betting_tips:
         "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
       deposit_tips: "Deposit Commission: <br />Earn a 5% rebate on the first deposit of each new member you refer.",
@@ -923,7 +923,6 @@ export default {
       ranksLeft: "Ranks Left",
       jackpot: "Jackpot",
       noRank: "No Rank",
-      rules: "Rules",
       activityRules: "Activity rules",
       termsConditions: "Terms & Conditions",
       rules1:
@@ -1116,17 +1115,13 @@ export default {
   },
   content: {
     title1: "The registration time starts from the time the registration is completed.",
-    message1:
-      "When the accumulated amount reaches 1000 PKR, you can apply for a withdrawal (the reward will be directly added to your wallet).",
-    message2:
-      "When there are no available spins, referring a new player to register and deposit will earn you free spins.",
+    message1: "Once your accumulated amount reaches 1000 PKR, you can withdraw.",
+    message2: "When you have no spins left, invite new players to register and deposit to earn additional free spins.",
     message3:
-      "The event lasts for 3 days. After the event ends, the accumulated rewards will be reset, and the event will restart.",
+      "The event lasts for 3 days. After the event ends, accumulated rewards will be reset and the event will restart.",
     message4: "Each user can enjoy one free spin per day, which will be added at 00:00 daily.",
-    message5: "Once the application is approved, the bonus will be directly credited to your wallet.",
-    message6: "The bonus must be rolled over once before it can be withdrawn.",
-    message7:
-      "The invitee must verify their phone number, register using the inviter's referral link, and must not have a duplicate IP address to qualify for the referral.",
+    message5:
+      "The invitee must verify their phone number and must not have a duplicate IP address to qualify for the referral reward.",
     aviatorPromoIntro:
       "Enjoy the thrill of betting with Aviator! Your Aviator can win a staggering 3,216x with just one click! The prize pool for the top 50 is 1,250,000 PKR!",
     aviatorGoldenEgg:

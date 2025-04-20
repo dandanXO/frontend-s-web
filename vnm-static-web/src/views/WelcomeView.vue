@@ -60,8 +60,12 @@
 import VueQRCodeComponent from 'vue-qrcode-component';
 import { useI18n } from "vue-i18n";
 import { uiStore } from "@/store/ui";
+import { onMounted } from 'vue';
 const { t } = useI18n();
 const ui = uiStore()
+onMounted(() => {
+    ui.getAppDownloadUrl();
+})
 </script>
 
 <style lang="scss" scoped>
