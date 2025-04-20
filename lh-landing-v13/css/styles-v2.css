@@ -123,6 +123,27 @@ a {
   bottom: -1%;
   z-index: 1;
 } */
+#tf88Url-btn {
+  animation: pressDown 0.65s infinite;
+}
+
+@keyframes pressDown {
+  0% {
+    transform: translateY(0);
+  }
+  10% {
+    transform: translateY(8px);
+  }
+  70% {
+    transform: translateY(8px);
+  }
+  80% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
 
 .banner-btn {
   position: relative;

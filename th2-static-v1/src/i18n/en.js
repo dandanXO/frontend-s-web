@@ -813,7 +813,7 @@ export default {
     1000: "Login name or password error",
     1001: "Account is closed",
     1002: "Account is for affiliates",
-    1004: "The account is temporarily locked due to entering the wrong password many times",
+    1004: "The account has been locked. Please try again after 60 minutes or contact customer service to unlock it.",
     1011: "The current account has already bound a phone number",
     1012: "The current account has already bound an email address",
     1013: "The current account has already bound a birthday",

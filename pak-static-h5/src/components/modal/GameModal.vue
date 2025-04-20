@@ -61,7 +61,7 @@
           ></iframe>
         </template>
 
-        <q-dialog  width="100%" v-model="drawerVisible" presistent>
+        <q-dialog width="100%" v-model="drawerVisible" presistent>
           <div class="popout-dialog">
             <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
             <div class="popout-dialog-container-gold">
@@ -111,17 +111,17 @@
       </q-card>
     </q-dialog>
     <q-dialog v-model="isChooseGameDialog" transition-show="fade" transition-hide="fade">
-    <div class="dialog-wrapper">
-      <q-card class="bottom-panel">
-        <q-card-section class="row justify-center">
-          <div class="choices">
-            <div @click="handleChooseGame(false)">{{ $t('btn.playReal') }}</div>
-            <div @click="handleChooseGame(true)">{{ $t('btn.freeTrial') }}</div>
-          </div>
-        </q-card-section>
-      </q-card>
-    </div>
-  </q-dialog>
+      <div class="dialog-wrapper">
+        <q-card class="bottom-panel">
+          <q-card-section class="row justify-center">
+            <div class="choices">
+              <div @click="handleChooseGame(false)">{{ $t("btn.playReal") }}</div>
+              <div @click="handleChooseGame(true)">{{ $t("btn.freeTrial") }}</div>
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
+    </q-dialog>
   </q-scroll-area>
 </template>
 <script setup id="GameModal">
@@ -382,6 +382,9 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
           if (Platform.is.android) {
             way = "ANDROID";
           }
+        }
+        if (store.isFromGooglePackage) {
+          way = "ANDROID";
         }
       }
       const _isFromNewPlayerGuide = sessionStorage.getItem("isFromNewPlayerGuide");
@@ -963,23 +966,21 @@ defineExpose({
     background: #455152;
     color: #ffffff;
 
-    box-shadow: 0px 2px 0px 0px #2A3637;
+    box-shadow: 0px 2px 0px 0px #2a3637;
     text-align: center !important;
-
   }
 
   .btn-confirm {
-
-  font-weight: 700;
-  width: 100%;
-  padding: 10px 10px;
-  font-size: 16px;
-  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-  color: #000000;
-  box-shadow: 0px 2px 0px 0px #1cca6a;
-  border-radius: 4px;
-  height: unset;
-  text-align: center !important;
+    font-weight: 700;
+    width: 100%;
+    padding: 10px 10px;
+    font-size: 16px;
+    background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+    color: #000000;
+    box-shadow: 0px 2px 0px 0px #1cca6a;
+    border-radius: 4px;
+    height: unset;
+    text-align: center !important;
   }
 }
 

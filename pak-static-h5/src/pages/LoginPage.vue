@@ -91,7 +91,12 @@
                       class="cursor-pointer"
                       @click="isPwd = !isPwd"
                     /> -->
-                    <img style="width: 20px;" class="cursor-pointer" @click="isPwd = !isPwd" :src="require(`../assets/images/common/visibility${isPwd?'_off':''}.png`)">
+                    <img
+                      style="width: 20px"
+                      class="cursor-pointer"
+                      @click="isPwd = !isPwd"
+                      :src="require(`../assets/images/common/visibility${isPwd ? '_off' : ''}.png`)"
+                    />
                   </template>
                 </q-input>
               </template>
@@ -159,10 +164,7 @@
         <img v-else style="width: 100%" src="../assets/images/index/logindirectly-ur.svg" />
         <template v-if="isAndroid()">
           <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onCapacitorGoogleSignin">
-            <img
-              width="24px"
-              src="../assets/images/index/google-icon.svg"
-            />
+            <img width="24px" src="../assets/images/index/google-icon.svg" />
 
             &nbsp;
             {{ $t("btn.signinWithGoogle") }}
@@ -170,10 +172,7 @@
         </template>
         <template v-else>
           <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onClickGoogleSignin">
-           <img
-              width="24px"
-              src="../assets/images/index/google-icon.svg"
-            />
+            <img width="24px" src="../assets/images/index/google-icon.svg" />
 
             &nbsp;
             {{ $t("btn.signinWithGoogle") }}
@@ -292,7 +291,7 @@ export default defineComponent({
     // PrimaryButton,
     InputField,
     InputRowGrid,
-    ShareIcons,
+    ShareIcons
     // FloatingStickyKefu
     // RiArrowDropLeftLine
   },
@@ -579,7 +578,7 @@ export default defineComponent({
 
     const onSubmit = () => {
       $q.loading.show({
-        message: t('notify.loggingIn')
+        message: t("notify.loggingIn")
       });
       const sidParam = store.visitorId;
 
@@ -589,7 +588,7 @@ export default defineComponent({
           passwordRef.value.validate();
           // verificationRef.value.validate();
           $q.loading.show({
-            message: t('notify.loggingIn')
+            message: t("notify.loggingIn")
           });
           // || verificationRef.value.hasError
           if (loginNameRef.value.hasError || passwordRef.value.hasError) {
@@ -656,7 +655,7 @@ export default defineComponent({
           telephoneRef.value.validate();
           phoneVerificationRef.value.validate();
           $q.loading.show({
-            message: t('notify.loggingIn')
+            message: t("notify.loggingIn")
           });
           if (telephoneRef.value.hasError || phoneVerificationRef.value.hasError) {
             $q.loading.hide();
@@ -786,7 +785,7 @@ export default defineComponent({
 
     const isRegisterAdjustSentFromLogin = ref(false);
     const trackRegisterSuccessEventFromLogin = () => {
-      if (isRegisterAdjustSentFromLogin.value || !ui.adjust_register_event) return;
+      if (isRegisterAdjustSentFromLogin.value || !ui.adjust_register_event || store.isFromGooglePackage) return;
       isRegisterAdjustSentFromLogin.value = true;
 
       if (isInPwa()) {
@@ -1224,7 +1223,7 @@ export default defineComponent({
   :deep(.q-btn__content) {
     font-weight: bolder;
     font-size: 16px;
-    
+
     @media screen and (max-width: 400px) {
       font-size: 13px;
     }
@@ -1306,7 +1305,7 @@ export default defineComponent({
   flex-direction: column;
   // gap: 10px;
   margin-top: 25px;
-  img { 
+  img {
     margin-bottom: 10px;
   }
 }

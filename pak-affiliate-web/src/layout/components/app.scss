@@ -1,0 +1,153 @@
+.page-container {
+    margin: 10px 20px;
+    font-family: 'NanumNeo';
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-item {
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #cfd8dc;
+    font-family: 'NanumNeo';
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.panel-header {
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.custom-table-wrapper {
+  overflow: auto;
+}
+
+.custom-table {
+    width: 100%;
+    border: 0;
+    border-collapse: collapse;
+
+    tr:hover > td {
+      background-color: #ddecf3 !important;
+    }
+  
+    th {
+      background: $primary-700;
+      text-align: left;
+      color: #fff;
+      font-family: 'NanumNeo';
+      white-space: nowrap;
+    }
+  
+    th,
+    td {
+      padding: 5px;
+      font-family: 'NanumNeo';
+      font-size: 13px;
+      font-weight: 400;
+      border-color: #cfd8dc;
+      height: 40px;
+    }
+
+    td {
+      .vip-name-wrapper {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        line-height: 16px;
+        color: #000;
+      
+        .vip-badge {
+          background-color: #20a8d8;
+          color: #fff;
+          width: fit-content;
+          font-size: 10px;
+          width: 16px;
+          height: 16px;
+          border-radius: 4px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      
+        .login-name {
+          font-weight: bold;
+        }
+      }
+    }
+
+    .bgGreen {
+      background-color: #f4fff8;
+    }
+
+    .textGreen {
+      color: #4dbd74;
+      font-weight: bold;
+    }
+
+    .bgRed {
+      background-color: #fff5f5;
+    }
+
+    .textRed {
+      color: #f86c6b;
+      font-weight: bold;
+    }
+
+    .bgYellow {
+      background-color: #fffef7;
+    }
+
+    .bgGrey {
+      background-color: #eceff1;
+    }
+
+    .textCenter {
+      text-align: center;
+    }
+    
+    .textRight {
+      text-align: right;
+    }
+
+    .colorBox {
+      color: #fff;
+      font-size: 11px;
+      padding: 5px;
+      border-radius: 3px;
+      width: 60px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .orange {
+      background-color: #f0ad4e;
+    }
+
+    .purple {
+      background-color: #a462dd;
+    }
+
+    .blue {
+      background-color: #0384fc;
+    }
+  }
+
+  .table-footer {
+    font-size: small;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .money-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 20px;
+    text-align: right;
+  
+    .won-icon {
+      color: #9f9f9f;
+    }
+  }

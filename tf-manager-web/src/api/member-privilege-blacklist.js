@@ -16,3 +16,7 @@ export const createBatchBlacklist = (blacklist) => {
 export const deleteBlacklist = (ids) => {
   return https().request(`/privilegeBlacklist?_method=DELETE`, Method.POST, { ids: ids.join(",") }, ContentType.form);
 };
+
+export const getExportMemberPrivilegeBlacklist = (query) => {
+  return https().request("/privilegeBlacklist/export", Method.GET, query, ContentType.form);
+};

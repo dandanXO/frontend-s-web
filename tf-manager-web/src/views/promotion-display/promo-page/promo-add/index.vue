@@ -31,6 +31,24 @@
           </el-form-item>
         </el-row>
         <el-row>
+          <el-form-item v-if="languageList.list.length > 0" :label="t('fields.language')" prop="language">
+            <el-select
+              v-model="form.language"
+              size="small"
+              :placeholder="t('fields.language')"
+              class="filter-item"
+              style="width: 350px"
+            >
+              <el-option
+                v-for="item in languageList.list"
+                :key="item"
+                :label="t('language.' + item)"
+                :value="item"
+              />
+            </el-select>
+          </el-form-item>
+        </el-row>
+        <el-row>
           <el-form-item :label="t('fields.title')" prop="title">
             <el-col :span="24">
               <el-input v-model="form.title" class="form-input" />
@@ -299,7 +317,7 @@
     </el-tab-pane>
     <el-tab-pane :label="t('fields.image')" name="image">
       <el-form
-        ref="promoForm"
+        ref="promoImageForm"
         :model="form"
         :rules="formRules"
         :inline="true"
@@ -1419,7 +1437,7 @@ import { useI18n } from 'vue-i18n'
 import { getVipList } from '../../../../api/vip'
 import moment from 'moment'
 import { isVnm, isXF, isThai, isDY, isLH } from '@/utils/site'
-import { getSupportDarkMode } from '@/api/config'
+import { getSupportDarkMode, getConfigList } from '@/api/config'
 import { getActivePromoType } from "@/api/promo-type";
 import { useSessionStorage } from "@vueuse/core";
 
@@ -1433,6 +1451,7 @@ const inputImage = ref(null)
 const imageFormRef = ref(null)
 const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
 const promoForm = ref(null)
+const promoImageForm = ref(null)
 const param = ref([])
 const inputValue = ref('')
 const InputRef = ref(null)
@@ -1448,6 +1467,9 @@ const siteType = reactive({
 
 const vipList = reactive({
   list: [],
+})
+const languageList = reactive({
+  list: []
 })
 const uploadedImage = reactive({
   url: null,
@@ -1494,7 +1516,8 @@ const form = reactive({
   desktopFastAccessIconImgUrlDark: null,
   mobileFastAccessIconImgUrl: null,
   mobileFastAccessIconImgUrlDark: null,
-  fastAccessSeq: 99
+  fastAccessSeq: 99,
+  language: null
 })
 
 const imageForm = reactive({
@@ -1560,6 +1583,7 @@ const formRules = reactive({
   sequence: [required(t('message.validateSequenceRequired'))],
   // vips: [required(t('message.validateVIPRequired'))],
   affiliates: [required(t('message.validateAffiliateCodeRequired'))],
+  language: [required(t('message.validateLanguageRequired'))]
 })
 
 const imageFormRules = reactive({
@@ -1811,11 +1835,15 @@ function getInput(value) {
 function create() {
   promoForm.value.validate(async valid => {
     if (valid) {
-      form.param = constructParam()
-      await createPromoPages(form)
-      // redirect to promotion pages
-      back()
-      ElMessage({ message: t('message.addSuccess'), type: 'success' })
+      promoImageForm.value.validate(async imageValid => {
+        if (imageValid) {
+          form.param = constructParam()
+          await createPromoPages(form)
+          // redirect to promotion pages
+          back()
+          ElMessage({ message: t('message.addSuccess'), type: 'success' })
+        }
+      })
     }
   })
 }
@@ -1823,11 +1851,15 @@ function create() {
 function edit() {
   promoForm.value.validate(async valid => {
     if (valid) {
-      form.param = constructParam()
-      await updatePromoPages(form)
-      // redirect to promotion pages
-      back()
-      ElMessage({ message: t('message.editSuccess'), type: 'success' })
+      promoImageForm.value.validate(async imageValid => {
+        if (imageValid) {
+          form.param = constructParam()
+          await updatePromoPages(form)
+          // redirect to promotion pages
+          back()
+          ElMessage({ message: t('message.editSuccess'), type: 'success' })
+        }
+      })
     }
   })
 }
@@ -2228,6 +2260,17 @@ function getName(nameStr) {
   }
 }
 
+async function getLanguage() {
+  languageList.list = []
+  const { data: lang } = await getConfigList("language_list", form.siteId)
+  if (lang.length > 0 && lang[0].value) {
+    const arr = lang[0].value.split(',')
+    for (const a of arr) {
+      languageList.list.push(a)
+    }
+  }
+}
+
 onMounted(async () => {
   await loadSites()
   imageForm.siteId = store.state.user.siteId
@@ -2239,6 +2282,7 @@ onMounted(async () => {
     form.siteId = siteList.list[0].id
   }
   form.siteType = "main";
+  await getLanguage()
   if (route.name.includes('Edit')) {
     uiControl.titleDisable = true
     await loadForm(route.params.id)

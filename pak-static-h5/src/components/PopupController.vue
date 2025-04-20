@@ -38,7 +38,7 @@ const promoList = ref([
 if (props.hasWheel && !isAdded.value) {
   promoList.value.push({ code: "mega-sharing-wheel", name: t("home.MegaSharingRoulette") });
 }
-if (props.hasSpin && !isAdded.value) {
+if (props.hasSpin && !isAddedSpin.value) {
   promoList.value.push({ code: "spin-lucky-wheel", name: t("home.spinLuckyWheel") });
 }
 

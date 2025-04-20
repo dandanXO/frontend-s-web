@@ -558,7 +558,8 @@ export default {
     zh: 'Chinese',
     th: 'Thai',
     kr: 'Korean',
-    vn: 'Vietnamese'
+    vn: 'Vietnamese',
+    ur: 'Urdu'
   },
   rewardStatus: {
     PENDING: 'PENDING',
@@ -600,6 +601,11 @@ export default {
     Referer: 'Referer',
     IP: "IP"
   },
+  fastAccessButtonMode: {
+    DETAILS: 'DETAILS',
+    API_REDIRECT: 'API & REDIRECT',
+    API_CLAIM: 'API & CLAIM',
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -640,6 +646,7 @@ export default {
     addDomain: 'Add Domain',
     addEmail: 'Add Email',
     addFinancialLevel: 'Add Financial Level',
+    addFastAccessPromo: 'Add Fast Access Promo',
     addGame: 'Add Game',
     addGameMatch: 'Add Game Match',
     addGameQuiz: 'Add Game Quiz',
@@ -828,6 +835,7 @@ export default {
     bydatedesc: 'Sort by date DESC',
     bulkApprove: 'Bulk Approve',
     bulkWithdraw: 'Bulk Withdraw',
+    buttonMode: 'Button Display Mode',
     callbackUrl: 'Callback URL',
     cancel: 'Cancel',
     cancelAll: 'Cancel All',
@@ -868,6 +876,7 @@ export default {
     choiceThree: 'Question Three Choices',
     claimRecord: 'Claim Record',
     claimTime: 'Claim Time',
+    claimApiUrl: 'Claim Api Url',
     claimableRebate: 'Claimable Rebate',
     className: 'Class Name',
     clearingSum: 'Clearing Sum',
@@ -903,6 +912,7 @@ export default {
     copy: 'Copy',
     copyPayment: 'Copying payment',
     copyWithdrawPlatform: 'Copying Withdraw Platform',
+    countDown: 'Show Countdown',
     copyTo: 'Copy to',
     copyToOtherLevel: 'Copy to other level',
     country: 'Country',
@@ -1058,6 +1068,7 @@ export default {
     editDetails: 'Edit Details',
     editEmail: 'Edit Email',
     editFinancialLevel: 'Edit Financial Level',
+    editFastAcesssPromo: 'Edit Fast Acess Promo',
     editGame: 'Edit Game',
     editGameMatch: 'Edit Game Match',
     editGift: 'Edit Gift',
@@ -1199,6 +1210,7 @@ export default {
     imageSize: 'Image Size',
     import: 'Import',
     inbox: 'Inbox',
+    initApiUrl: 'Init Api Url',
     ineligible: 'Ineligible',
     innerSetting: 'Inner Wheel Setting',
     ip: 'Access IP',
@@ -1547,6 +1559,7 @@ export default {
     redeemedBy: 'Redeemed By',
     redeemCode: 'Redeem Code',
     redeemPoints: 'Redeem Points',
+    redepositRate: 'Repeat Deposit Rate',
     redirect: 'Redirect',
     redirectRecord: 'Redirect Record',
     redirectMember: 'Redirect Specific Member',
@@ -2709,6 +2722,7 @@ export default {
     updateVIPLevelSuccess: 'Update VIP Level Success',
     updateWithdrawTypeSuccess: 'Update Withdraw Type Success',
     updateShareRatioSuccess: 'Update Share Ratio Success',
+    uploadLimitExceeded: 'Upload Records Cannot More Than {count}',
     useCommaToSeparateDomain:
       'Please use "," to separate domain name if insert multiple domain',
     validateAdsTypeRequired: 'Ads Type is required',
@@ -2825,6 +2839,7 @@ export default {
     validateIpRequired: 'IP is required',
     validateJobNameRequired: 'Job Name is required',
     validateLabelRequired: 'Label is required',
+    validateLanguageRequired: 'Language is required',
     validateLevelRequired: 'Level is required',
     validateLevelNameRequired: 'Level Name is required',
     validateLevelUpCreditRequired: 'Level Up Credit is required',
@@ -3387,7 +3402,8 @@ export default {
     'Refer Spin Claim Record': 'Refer Spin Claim Record',
     'Refer Spin Record': 'Refer Spin Record',
     'Official CS Account': 'Official CS Account',
-    'Site Note': 'Notes'
+    'Site Note': 'Notes',
+    'Fast Access Promo': 'Fast Access Promo'
   },
   google: {
     google_auth_menu: 'Google Authenticator',
