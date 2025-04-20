@@ -400,12 +400,16 @@ export default defineComponent({
     };
 
     const loadBanner = () => {
+      const params = {
+        category: "PROMO",
+        language: langVal.value
+      }
       // loadPromoBanner("PROMO").then((res) => {
       //   if (res.code === 0) {
       //       banner.value = res.data[0]
       //   }
       // })
-      api.get("/opt-session/promo/banner?category=PROMO").then((response) => {
+      api.get("/opt-session/promo/banner", {params}).then((response) => {
         if (response.code === 0) {
           banner.value = response.data[0];
           // console.log(banner.value)
@@ -555,7 +559,7 @@ export default defineComponent({
         }
       })
 
-      const platformApiUrl = "/opt-session/promo/page";
+      const platformApiUrl = `/opt-session/promo/page?language=${langVal.value}`;
 
       // isFetchingPromo.value = window.location.pathname === "/promotion";
       isFetchingPromo.value = true;

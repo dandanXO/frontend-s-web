@@ -19,9 +19,13 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from "vue";
 
 import { api } from "boot/axios";
+import { i18nStore } from "src/router/language";
+
+const i18nStoreLanguage = i18nStore();
+
 const faqPage = ref("");
 const faqList = ref([]); // This will store the structured FAQ data
 
@@ -44,7 +48,7 @@ const parseFAQ = () => {
       currentQuestion = firstChild.innerText.trim();
       faqItems.push({
         question: currentQuestion,
-        answer: secondChild.innerText.trim(),
+        answer: secondChild.innerText.trim()
       });
     }
   }
@@ -53,30 +57,28 @@ const parseFAQ = () => {
 };
 
 const getFAQDetails = () => {
-
-  const platformApiUrl = "/opt-session/promo/page";
+  const platformApiUrl = `/opt-session/promo/page?language=${i18nStoreLanguage.languageVal}`;
   api
     .get(platformApiUrl)
     .then((res) => {
-      if (res.code === 0) { 
+      if (res.code === 0) {
         var promoItems = res.data;
-        console.log(promoItems)
-        promoItems.forEach(element => {
-          console.log(element)
-          if (element.promoCode === 'pak-faq') {
-            faqPage.value = element.pageContent
-            console.log(faqPage.value)
+        console.log(promoItems);
+        promoItems.forEach((element) => {
+          console.log(element);
+          if (element.promoCode === "pak-faq") {
+            faqPage.value = element.pageContent;
+            console.log(faqPage.value);
             parseFAQ();
           }
         });
       }
     })
-    .catch((e) => {
-    });
+    .catch((e) => {});
 };
 onMounted(() => {
   getFAQDetails();
-})
+});
 </script>
 
 <style lang="scss" scoped>
@@ -84,16 +86,16 @@ onMounted(() => {
   font-weight: 700;
 }
 :deep(.q-expansion-item__toggle-icon) {
-    font-size: 14px;
-    padding: 5px;
-    background: #464F50;
-    border-radius: 6px;
-    fill: #B3BEC0;
+  font-size: 14px;
+  padding: 5px;
+  background: #464f50;
+  border-radius: 6px;
+  fill: #b3bec0;
 }
 :deep(.q-expansion-item__content > .q-card) {
-  border-radius: 6px;margin: 10px 0;
+  border-radius: 6px;
+  margin: 10px 0;
   font-weight: 400;
-    padding: 15px;
-    
+  padding: 15px;
 }
 </style>
