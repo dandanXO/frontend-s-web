@@ -558,7 +558,8 @@ export default {
     zh: 'Chinese',
     th: 'Thai',
     kr: 'Korean',
-    vn: 'Vietnamese'
+    vn: 'Vietnamese',
+    ur: 'Urdu'
   },
   rewardStatus: {
     PENDING: 'PENDING',
@@ -2838,6 +2839,7 @@ export default {
     validateIpRequired: 'IP is required',
     validateJobNameRequired: 'Job Name is required',
     validateLabelRequired: 'Label is required',
+    validateLanguageRequired: 'Language is required',
     validateLevelRequired: 'Level is required',
     validateLevelNameRequired: 'Level Name is required',
     validateLevelUpCreditRequired: 'Level Up Credit is required',
