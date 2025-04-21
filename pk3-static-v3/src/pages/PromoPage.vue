@@ -348,6 +348,8 @@ export default defineComponent({
         });
         router.push(`/login`);
       } else {
+        scrollToTop();
+
         if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
           router.push({ path: "/account/vip" });
         } else if (promo.redirectUrl && promo.redirectUrl.includes("SigninBonus")) {
@@ -563,6 +565,10 @@ export default defineComponent({
     const allGames = ref(null);
     const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
       allGames.value.open(gameName, platformCode, gameCode, gameType);
+    };
+
+    const scrollToTop = () => {
+      window.scroll({ behavior: "smooth", left: 0, top: 0 });
     };
 
     const goToVip = () => {
