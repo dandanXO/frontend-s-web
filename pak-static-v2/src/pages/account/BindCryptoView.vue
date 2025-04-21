@@ -263,8 +263,7 @@ const loadBankCards = () => {
               if (bankType === "CRYPTO") bankList.value.push(data);
             }
 
-            bankCardInfo.bankId = bankList.value[0].id;
-            bankCardInfo.currencyId = bankList.value[0].currencyIds;
+            onTypeToggleBtnClick(0, bankList.value[0].name);
           }
         })
         .catch((e) => {
