@@ -1336,7 +1336,7 @@ export default {
     redeemedBy: 'Đã đổi bởi',
     redeemCode: 'Mã đổi thưởng',
     redeemPoints: 'Đổi điểm',
-    redepositRate: 'Tỷ lệ nạp lại',
+    redepositRate: 'Tỷ lệ nạp lại (%)',
     redirect: 'Chuyển hướng',
     redirectRecord: 'Redirect Record',
     redirectMember: 'Redirect Specific Member',

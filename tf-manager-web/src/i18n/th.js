@@ -949,7 +949,7 @@ export default {
     recordTime: 'บันทึกเวลา',
     redeemedBy: 'แลกโดย',
     redeemCode: 'รหัสแลกรางวัล',
-    redepositRate: 'อัตราการฝากซ้ำ',
+    redepositRate: 'อัตราการฝากซ้ำ (%)',
     redirect: 'เปลี่ยนเส้นทาง',
     redirectRecord: 'Redirect Record',
     redirectMember: 'Redirect Specific Member',
