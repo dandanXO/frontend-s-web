@@ -39,171 +39,125 @@
       <q-form class="rounded-borders">
         <InputRowGrid>
           <template #fields>
-            <InputField>
-              <template #input>
-                <q-input
-                  type="tel"
-                  pattern="\d*"
-                  maxlength="11"
-                  ref="loginNameRef"
-                  hide-bottom-space
-                  clearable
-                  v-model="regForm.loginName"
-                  :rules="[
-                    (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-                    (val) => (val && val.length === 11) || $t('form.phone_rules_01'),
-                    (val) => val.startsWith('03') || $t('form.phone_rules_03')
-                  ]"
-                  color="green"
-                  outlined
-                  label-color="brand"
-                  :placeholder="$t('form.phone_placeholder')"
-                >
-                  <template v-slot:prepend>
-                    <q-icon name="smartphone" />
-                    <div class="prepend-number">+92</div>
-                  </template>
-                  <template v-if="regForm.referrer && spinRefCode" v-slot:append>
-                    <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">
-                      {{ otpCountdown > 0 ? `RESEND (${otpCountdown})` : $t("form.get_code") }}
-                    </q-btn>
-                  </template>
-                </q-input>
-              </template>
-            </InputField>
-
-            <InputField>
-              <template #input>
-                <q-input
-                  ref="pwdRef"
-                  hide-bottom-space
-                  v-model="regForm.password"
-                  :type="isPwd ? 'password' : 'text'"
-                  :rules="[
-                    (val) => (val && val.length > 0) || $t('form.password_rules_01'),
-                    (val) => val.length > 6 || $t('form.password_rules_02')
-                  ]"
-                  color="green"
-                  outlined
-                  clearable
-                  label-color="brand"
-                  :placeholder="$t('form.password_placeholder')"
-                >
-                  <template v-slot:prepend>
-                    <q-icon name="lock" />
-                  </template>
-                  <template v-slot:append>
-                    <!-- <q-icon
-                      color="gray-3"
-                      :name="isPwd ? 'visibility_off' : 'visibility'"
-                      class="cursor-pointer"
-                      @click="isPwd = !isPwd"
-                    /> -->
-                    <img
-                      style="width: 20px"
-                      class="cursor-pointer"
-                      @click="isPwd = !isPwd"
-                      :src="require(`../assets/images/common/visibility${isPwd ? '_off' : ''}.png`)"
-                    />
-                  </template>
-                </q-input>
-                <!-- <div v-if="regForm.password" class="password-str-div">
-                  <span
-                    :class="{
-                      'weak-pwd': pwdStrength == 'weak',
-                      'normal-pwd': pwdStrength == 'normal',
-                      'strong-pwd': pwdStrength == 'strong'
-                    }"
-                  >
-                    Weak
-                  </span>
-                  <span
-                    :class="{
-                      'normal-pwd': pwdStrength == 'normal',
-                      'strong-pwd': pwdStrength == 'strong'
-                    }"
-                  >
-                    Good
-                  </span>
-                  <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
-                </div> -->
-              </template>
-            </InputField>
-
-            <!--            -->
-            <InputField v-if="regForm.referrer && regForm.smsCodeId" :label="$t('form.otp_form')">
-              <template #input>
-                <q-input
-                  pattern="\d*"
-                  maxlength="6"
-                  ref="verificationRef"
-                  hide-bottom-space
-                  v-model="regForm.smsCode"
-                  :rules="[
-                    (val) => (val && val.length > 0) || $t('form.insert_otp_num'),
-                    (val) => (val && val.length === 6) || $t('form.otp_must_have_6')
-                  ]"
-                  color="white"
-                  class="landing-input"
-                  outlined
-                  :placeholder="$t('form.enter_otp_num')"
-                  label-color="brand"
-                  :disable="isOtpEnable"
-                >
-                  <template v-slot:prepend>
-                    <q-icon name="key" />
-                  </template>
-                </q-input>
-              </template>
-            </InputField>
-
-            <!-- <InputField :label="'Confirm Password'">
-              <template #input>
-                <q-input
-                  ref="confirmPwdRef"
-                  hide-bottom-space
-                  :type="isCfmPwd ? 'password' : 'text'"
-                  v-model="regForm.confirmPwd"
-                  lazy-rules
-                  :rules="[
-                    (val) => (val && val.length > 0) || 'Please insert password',
-                    (val) => val === regForm.password || 'Password does not match'
-                  ]"
-                  color="green"
-                  outlined
-                  label-color="brand"
-                >
-                  <template v-slot:prepend>
-                    <q-icon name="lock" />
-                  </template>
-                  <template v-slot:append>
-                    <q-icon
-                      color="gray-3"
-                      :name="isCfmPwd ? 'visibility_off' : 'visibility'"
-                      class="cursor-pointer"
-                      @click="isCfmPwd = !isCfmPwd"
-                    />
-                  </template>
-                </q-input>
-              </template>
-            </InputField> -->
-
-            <div style="visibility: hidden; position: absolute">
-              <InputField :label="'Invitation Code (Optional)'">
+            <template v-if="ui.siteType === 'DEFAULT'">
+              <InputField>
                 <template #input>
                   <q-input
-                    v-if="!hasAffiliate"
-                    ref="affiliateCodeRef"
+                    type="tel"
+                    pattern="\d*"
+                    maxlength="11"
+                    ref="loginNameRef"
                     hide-bottom-space
-                    v-model="regForm.referrer"
-                    label-color="brand"
-                    outlined
+                    clearable
+                    v-model="regForm.loginName"
+                    :rules="[
+                      (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
+                      (val) => (val && val.length === 11) || $t('form.phone_rules_01'),
+                      (val) => val.startsWith('03') || $t('form.phone_rules_03')
+                    ]"
                     color="green"
-                    placeholder="Enter Invitation Code (Optional)"
-                  />
+                    outlined
+                    label-color="brand"
+                    :placeholder="$t('form.phone_placeholder')"
+                  >
+                    <template v-slot:prepend>
+                      <q-icon name="smartphone" />
+                      <div class="prepend-number">+92</div>
+                    </template>
+                    <template v-if="regForm.referrer && spinRefCode" v-slot:append>
+                      <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">
+                        {{ otpCountdown > 0 ? `RESEND (${otpCountdown})` : $t("form.get_code") }}
+                      </q-btn>
+                    </template>
+                  </q-input>
                 </template>
               </InputField>
-            </div>
+
+              <PasswordField v-model="regForm.password" ref="pwdRef" />
+
+              <!--            -->
+              <InputField v-if="regForm.referrer && regForm.smsCodeId" :label="$t('form.otp_form')">
+                <template #input>
+                  <q-input
+                    pattern="\d*"
+                    maxlength="6"
+                    ref="verificationRef"
+                    hide-bottom-space
+                    v-model="regForm.smsCode"
+                    :rules="[
+                      (val) => (val && val.length > 0) || $t('form.insert_otp_num'),
+                      (val) => (val && val.length === 6) || $t('form.otp_must_have_6')
+                    ]"
+                    color="white"
+                    class="landing-input"
+                    outlined
+                    :placeholder="$t('form.enter_otp_num')"
+                    label-color="brand"
+                    :disable="isOtpEnable"
+                  >
+                    <template v-slot:prepend>
+                      <q-icon name="key" />
+                    </template>
+                  </q-input>
+                </template>
+              </InputField>
+
+              <!-- <InputField :label="'Confirm Password'">
+                <template #input>
+                  <q-input
+                    ref="confirmPwdRef"
+                    hide-bottom-space
+                    :type="isCfmPwd ? 'password' : 'text'"
+                    v-model="regForm.confirmPwd"
+                    lazy-rules
+                    :rules="[
+                      (val) => (val && val.length > 0) || 'Please insert password',
+                      (val) => val === regForm.password || 'Password does not match'
+                    ]"
+                    color="green"
+                    outlined
+                    label-color="brand"
+                  >
+                    <template v-slot:prepend>
+                      <q-icon name="lock" />
+                    </template>
+                    <template v-slot:append>
+                      <q-icon
+                        color="gray-3"
+                        :name="isCfmPwd ? 'visibility_off' : 'visibility'"
+                        class="cursor-pointer"
+                        @click="isCfmPwd = !isCfmPwd"
+                      />
+                    </template>
+                  </q-input>
+                </template>
+              </InputField> -->
+
+              <div style="visibility: hidden; position: absolute">
+                <InputField :label="'Invitation Code (Optional)'">
+                  <template #input>
+                    <q-input
+                      v-if="!hasAffiliate"
+                      ref="affiliateCodeRef"
+                      hide-bottom-space
+                      v-model="regForm.referrer"
+                      label-color="brand"
+                      outlined
+                      color="green"
+                      placeholder="Enter Invitation Code (Optional)"
+                    />
+                  </template>
+                </InputField>
+              </div>
+            </template>
+            <CuracaoRegisterForm
+              v-else-if="ui.siteType === 'CURACAO'"
+              ref="curacaoRegisterFormRef"
+              v-model:login-name="regForm.loginName"
+              v-model:realName="regForm.realName"
+              v-model:birthday="regForm.birthday"
+              v-model:password="regForm.password"
+            />
           </template>
         </InputRowGrid>
 
@@ -244,7 +198,7 @@
         <a @click="regLoginTab = 'login'" class="green">{{ $t("btn.login") }}</a>
       </div>
 
-      <div v-if="!isSpinReferrer" class="google-login-wrapper">
+      <div v-if="!isSpinReferrer && ui.siteType === 'DEFAULT'" class="google-login-wrapper">
         <img v-if="languageVal === 'en'" style="width: 100%" src="../assets/images/index/logindirectly-en.svg" />
         <img v-else style="width: 100%" src="../assets/images/index/logindirectly-ur.svg" />
         <template v-if="isAndroid()">
@@ -396,6 +350,8 @@ import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
 import ShareIcons from "src/components/LoginAndRegisterShareIcons.vue";
+import CuracaoRegisterForm from "src/components/register/curacao/CuracaoRegisterForm.vue";
+import PasswordField from "src/components/register/common/PasswordField.vue";
 // import FloatingStickyKefu from "../components/auth/FloatingStickyKefu.vue";
 
 export default defineComponent({
@@ -404,7 +360,9 @@ export default defineComponent({
   components: {
     InputRowGrid,
     InputField,
-    ShareIcons
+    ShareIcons,
+    PasswordField,
+    CuracaoRegisterForm
     // FloatingStickyKefu
     // PrimaryButton
   },
@@ -449,8 +407,34 @@ export default defineComponent({
       referrer: "",
       smsCodeId: "",
       smsCode: "",
-      traceId: ""
+      traceId: "",
+      realName: "",
+      birthday: ""
     });
+
+    const registerApiParams = computed(() => {
+      const result = Object.assign({}, regForm);
+      switch (ui.siteType) {
+        case "CURACAO":
+          result.registerType = "email";
+          break;
+        default:
+          delete result.email;
+          delete result.realName;
+          delete result.birthday;
+      }
+      return result;
+    });
+
+    const registerApiPath = computed(() => {
+      switch (ui.siteType) {
+        case "CURACAO":
+          return "/member/bgdRegister";
+        default:
+          return "/member/indRegister";
+      }
+    });
+
     const getCode = () => {
       // api
       //   .get("/member/verificationCode")
@@ -531,6 +515,7 @@ export default defineComponent({
     const emailRef = ref();
     const verificationRef = ref();
     const phoneVerificationRef = ref();
+    const curacaoRegisterFormRef = ref();
     const $q = useQuasar();
     const route = useRoute();
 
@@ -734,10 +719,21 @@ export default defineComponent({
     };
 
     const onSubmit = () => {
-      loginNameRef.value.validate();
-      pwdRef.value.validate();
+      switch (ui.siteType) {
+        case "CURACAO":
+          curacaoRegisterFormRef.value.validate();
+          break;
+        default:
+          loginNameRef.value?.validate();
+          pwdRef.value?.validate();
+          verificationRef.value?.validate();
+      }
 
-      verificationRef.value?.validate();
+      const hasError =
+        loginNameRef.value?.hasError ||
+        pwdRef.value?.hasError ||
+        verificationRef.value?.hasError ||
+        curacaoRegisterFormRef.value?.hasError;
 
       $q.loading.show({
         message: t("form.register_in_progress")
@@ -745,12 +741,7 @@ export default defineComponent({
 
       isLoading.value = true;
 
-      if (
-        loginNameRef.value.hasError ||
-        pwdRef.value.hasError ||
-        verificationRef.value?.hasError ||
-        isAgreeReg.value === false
-      ) {
+      if (hasError || isAgreeReg.value === false) {
         $q.loading.hide();
         isLoading.value = false;
       } else if (regForm.referrer && isSpinReferrer.value === true && regForm.smsCodeId && isOtpEnable.value) {
@@ -792,7 +783,7 @@ export default defineComponent({
           }
 
           api
-            .post("/member/indRegister", qs.stringify(regForm))
+            .post(registerApiPath.value, qs.stringify(registerApiParams.value))
             .then((ret) => {
               const res = ret;
               if (res.code === 0) {
@@ -1146,7 +1137,6 @@ export default defineComponent({
       verificationRef,
       onSubmit,
       isValidEmail,
-      isPwd: ref(true),
       isCfmPwd: ref(true),
       getCode,
       getInnerCode,
@@ -1194,7 +1184,8 @@ export default defineComponent({
       imgOnError,
       showImageCode,
       spinRefCode,
-      store
+      store,
+      curacaoRegisterFormRef
     };
   }
 });

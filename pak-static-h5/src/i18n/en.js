@@ -245,7 +245,14 @@ export default {
     redemptionFailure: "Redemption may fail if eligibility conditions are not met. System verification is final.",
     accountOwnerOnly: "Only the account owner can redeem the code.",
     unauthorizedMethods:
-      "Using bots, cheating, or any unauthorized methods will result in a ban and forfeiture of the bonus."
+      "Using bots, cheating, or any unauthorized methods will result in a ban and forfeiture of the bonus.",
+    real_name_placeholder: "Please enter your real name",
+    real_name_rules_01: "Please insert your real name",
+    birthday_placeholder: "Please enter your birthday",
+    birthday_rules_01: "Please insert your birthday",
+    address: "Address",
+    address_placeholder: "Please enter your address",
+    address_rules_01: "Please insert your address"
   },
   btn: {
     login: "Login",
