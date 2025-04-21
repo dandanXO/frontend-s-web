@@ -56,7 +56,7 @@ const TOTAL_ITEMS = 10;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
-const PRIZE_ARRAY = [-999, 88, -999, 28, 8888, 38, -999, 888 - 999, -18];
+const PRIZE_ARRAY = [-999, 88, -998, 28, 8888, 38, -997, 888, -996, 18];
 
 // spin wheel element refs
 const spinBoardRef = ref();

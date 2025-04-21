@@ -52,7 +52,7 @@ import { claimDrawEvent, drawEventInit } from "@/api/promotion/drawEvent";
 //     receiveLuckydrawBonus
 // } from "@/api/promotion/xmasSpinWheel";
 
-const PRIZE_ARRAY = [-999, 88, -999, 28, 8888, 38, -999, 888 - 999, -18];
+const PRIZE_ARRAY = [-999, 88, -998, 28, 8888, 38, -997, 888, -996, 18];
 const store = userStore();
 const props = defineProps(["promoCode"]);
 
