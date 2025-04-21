@@ -307,6 +307,7 @@ export default {
     signOutMessage: "کیا آپ واقعی لاگ آوٹ ہونا چاہتے ہیں؟",
     plsLoginToContinue: "براہ کرم جاری رکھنے کے لئے لاگ ان کریں",
     copiedSuccessfully: "کامیابی سے کاپی کیا گیا",
+    claimedSuccessfully: "کامیابی سے کلیم کر لیا گیا",
     smsSent: "ایس ایم ایس او ٹی پی کامیابی سے بھیج دیا گیا ہے",
     tryagain: "براہ کرم {seconds} سیکنڈ بعد دوبارہ کوشش کریں",
     submitting: "جمع کر رہا ہے...",

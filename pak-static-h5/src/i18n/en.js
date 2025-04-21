@@ -311,6 +311,7 @@ export default {
     signOutMessage: "Are you sure you want to sign out?",
     plsLoginToContinue: "Please login to continue",
     copiedSuccessfully: "Copied Successfully",
+    claimedSuccessfully: "Claimed Successfully",
     smsSent: "SMS OTP has been sent successfully",
     tryagain: "Please try again after {seconds} seconds",
     submitting: "Submitting...",

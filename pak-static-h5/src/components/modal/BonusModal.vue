@@ -26,14 +26,23 @@
             </q-tooltip>
           </q-icon> -->
         </div>
-        <RouterLink :to="{ path: '/promo', query: { name: mission.redirectUrl } }">
-          <q-btn class="details" flat>
+        <!-- <RouterLink :to="{ path: '/promo', query: { name: mission.redirectUrl } }">
+          <q-btn :loading="!isLoaded"  class="details" flat>
             {{ mission.buttonMode === "API_CLAIM" ? $t("btn.claim") : $t("btn.details") }}
             <span class="countdown-span" v-if="mission.countDown === true && mission.response?.eligible === true">
               {{ mission.getCountDownStr }}
             </span>
           </q-btn>
-        </RouterLink>
+        </RouterLink> -->
+        <q-btn :loading="mission.buttonMode === 'API_CLAIM' ? isClaimLoading || !isLoaded : !isLoaded" class="details" flat @click="handleClick(mission)">
+          {{ mission.buttonMode === "API_CLAIM" ? $t("btn.claim") : $t("btn.details") }}
+          <span
+            class="countdown-span"
+            v-if="mission.countDown === true && mission.response?.eligible === true"
+          >
+            {{ mission.getCountDownStr }}
+          </span>
+        </q-btn>
       </div>
 
       <div v-if="!store.hasDeposit" class="mission-item">
@@ -44,7 +53,7 @@
           </div>
         </div>
         <a @click="openNewPlayerGuide">
-          <q-btn flat class="details">
+          <q-btn :loading="!isLoaded" flat class="details">
             {{ $t("btn.details") }}
           </q-btn>
         </a>
@@ -60,16 +69,59 @@
 import { api, eventapi } from "boot/axios";
 import { userStore } from "stores/index";
 import { onMounted, onUnmounted, ref } from "vue";
+import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
+
+const $q = useQuasar();
 const emit = defineEmits(["open-new-player"]);
 const store = userStore();
+const router = useRouter();
 const props = defineProps({
   hasRedemptionBonus: Boolean,
   hasTopDownload: Boolean,
   promoList: Array
 });
+const handleClick = async(mission) => {
+  if (mission.buttonMode === 'API_CLAIM') {
+    await claimApi(mission.claimApiUrl, mission.promoCode)
+  } else {
+    router.push({ path: '/promo', query: { name: mission.redirectUrl } })
+  }
+
+}
+async function claimApi(apiUrl, promoCode) {
+  if (!apiUrl) {
+    console.warn('Missing claimApiUrl')
+    return
+  }
+
+  try {
+    isClaimLoading.value = true
+    console.log("Calling claim API:", apiUrl)
+
+    const res = await eventapi.post(`${apiUrl}?promoCode=${promoCode}`)
+
+    if (res.code === 0) {
+      $q.notify({
+        type: "positive",
+        position: "top",
+        message: t('notify.claimedSuccessfully'),
+        icon: "check_circle_outline"
+      });
+    } else {
+    }
+  } catch (err) {
+    console.error('Claim API error:', err)
+  } finally {
+    isClaimLoading.value = false
+  }
+}
 
 const isInit = ref(false);
 const isLoaded = ref(false);
+const isClaimLoading = ref(false);
 const countdownTimerList = ref();
 
 const imgURL = process.env.IMAGE_CDN + "/promo/";
@@ -157,15 +209,16 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .bonus-container {
-  background-color: #1e371f;
-  border: 1px solid #337e3a;
-  border-radius: 10px !important;
+  // background-color: #1e371f;
+  background: linear-gradient(325.86deg, #0E1E08 5.38%, #1B6026 98.11%);
+
+  border: 1px solid #9FE871;
+  border-radius: 16px !important;
   max-width: 400px;
   width: 100%;
   padding: 16px;
   position: relative;
   overflow: visible;
-  border-radius: 12px;
   margin-bottom: -100px;
   margin-top: 60px;
 
@@ -184,7 +237,7 @@ onMounted(() => {
   }
 
   &.has-top-download {
-    margin-top: 116px;
+    margin-top: 130px;
   }
 
   .bonus-header {
@@ -193,7 +246,8 @@ onMounted(() => {
     // margin-top: -18px;
     // z-index: 2;
     position: absolute;
-    bottom: 5px;
+    top: -20px;
+    // bottom: 5px;
     width: 100%;
 
     img {
@@ -207,7 +261,8 @@ onMounted(() => {
   }
 
   .bonus-content-wrapper {
-    margin: 0 auto 29px;
+    // margin: 0 auto 29px;
+    margin: 30px auto 0;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -219,10 +274,14 @@ onMounted(() => {
       }
       display: flex;
       align-items: center;
-      padding: 8px 8px 8px 6px;
-      background-color: #81ff9e1a;
+      // padding: 8px 8px 8px 6px;
+      padding: 0 0 0 6px;
+      // background-color: #81ff9e1a;
       border-radius: 8px;
-
+      min-height: 50px;
+      background: #FFFFFF0D;
+      border: 1px solid #55C2530D;
+      box-shadow: 0px 4px 4px 0px #0000000D;
       .mission-icon {
         width: 40px;
         max-width: 10vw;
@@ -249,11 +308,14 @@ onMounted(() => {
       }
 
       .q-btn {
+        min-width: 115px;
         width: 115px;
         border-radius: 4px;
         font-weight: 700;
         text-transform: none;
         line-height: 19px;
+
+        min-height: 50px;
 
         &.details {
           background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
@@ -282,7 +344,7 @@ onMounted(() => {
 
 .bonus-close {
   position: absolute;
-  bottom: 10px;
+  top: 5px;
   right: 10px;
   z-index: 99;
 }
