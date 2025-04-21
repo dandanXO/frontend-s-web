@@ -262,8 +262,7 @@ const loadBankCards = () => {
               if (bankType === "CRYPTO") bankList.value.push(data);
             }
 
-            bankCardInfo.bankId = bankList.value[0].id;
-            bankCardInfo.currencyId = bankList.value[0].currencyIds;
+            onTypeToggleBtnClick(0, bankList.value[0].name);
           }
         })
         .catch((e) => {
@@ -306,12 +305,12 @@ const submitBankCard = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: t('notify.cryptoAccountAddedSuccessfully'),
+            message: t("notify.cryptoAccountAddedSuccessfully"),
             icon: "check_circle_outline"
           });
-          bankCardInfo.cardNumber = ""
+          bankCardInfo.cardNumber = "";
           bankFormRef.value.reset();
-          router.push("/account/bank");          
+          router.push("/account/bank");
         }
       })
       .catch((error) => {
@@ -328,7 +327,7 @@ const handleEnterKey = () => {
 
 onActivated(() => {
   loadBankCards();
-  bankCardInfo.cardNumber = ""
+  bankCardInfo.cardNumber = "";
   bankFormRef.value.reset();
 });
 </script>
@@ -337,17 +336,17 @@ onActivated(() => {
 .common-sm-btn {
   padding: 6px 12px;
   display: flex;
-  border: 1px solid #21EF89;
+  border: 1px solid #21ef89;
   box-shadow: unset;
   border-radius: 6px;
-  background: #292D2E;
+  background: #292d2e;
 }
 
 .common-sm-white-btn {
   padding: 6px 12px;
   border-radius: 8px;
-  background: #292D2E;
-    border: 1px solid rgb(98 98 98);
+  background: #292d2e;
+  border: 1px solid rgb(98 98 98);
 }
 
 .bind-container {
