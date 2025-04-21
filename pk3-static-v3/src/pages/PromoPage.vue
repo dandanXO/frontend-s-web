@@ -510,7 +510,15 @@ export default defineComponent({
           const paramJson = JSON.parse(selectedPromo.value.param);
           console.log(paramJson);
           if (paramJson && paramJson.page) {
-            router.push(paramJson.page);
+            if (isWebview.value) {
+              if(paramJson.page.includes("vip")){
+                router.push(`/wv-vip?token=${SessionStorage.getItem("TOKEN")}`)
+              }else if(paramJson.page.includes("earn-money")){
+                document.location.href = "app://earn-money"
+              }
+            }else{
+              router.push(paramJson.page);
+            }
           } else if (paramJson && paramJson.html) {
             window.open(paramJson.html, "_blank");
           } else if (paramJson && paramJson.game) {
