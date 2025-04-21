@@ -286,6 +286,13 @@
     "isRead": "Đã đọc",
     "unread": "Chưa đọc"
   },
+  "inbox": {
+    "contactCS": "Liên Hệ CSKH",
+    "viewDetails": "Đọc thêm",
+    "imptAnnouncement": "Thông báo quan trọng",
+    "mailBox": "Tin Nhắn",
+    "noMoreToday": "Không nhắc lại hôm nay"
+  },
   "withdraw": {
     "withdraw": "Rút tiền",
     "upgradeWithdraw": "Nâng cấp tốc độ xử lý",

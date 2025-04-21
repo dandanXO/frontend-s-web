@@ -25,7 +25,9 @@
                     <div :class="`mailbox-title ${m.readTime ? 'read' : 'unread'}`">
                       <el-tag type="info" v-if="m.readTime">{{ $t('mail.isRead') }}</el-tag>
                       <el-tag type="danger" v-else>{{ $t('mail.unread') }}</el-tag>
-                      {{ m.title }}
+                      <div  style="margin-left:12px; line-height: 0;">
+                        <div v-html="m.title "></div>
+                      </div>
                     </div>
                     <ArrowDown :class="`mailbox-accordion ${m.isOpen ? 'open' : ''}`"></ArrowDown>
                   </div>
@@ -88,7 +90,7 @@
                 <template v-for="(m, mi) in mailboxState.mailboxList.sent.list" :key="m.id">
                   <div :class="`mailbox-item`" @click="m.isOpen = !m.isOpen">
                     <div class="mailbox-preview">
-                      <div :class="mailbox-title">
+                      <div :class="`mailbox-title`">
                         {{ m.title }}
                       </div>
                       <ArrowDown :class="`mailbox-accordion ${m.isOpen ? 'open' : ''}`"></ArrowDown>
@@ -487,6 +489,7 @@ const onSubmit = () => {
 
       .mailbox-item,
       .mailbox-content-wrapper {
+        overflow: auto;
         margin-bottom: 10px;
         padding: 0 15px;
       }
@@ -520,7 +523,8 @@ const onSubmit = () => {
             font-size: 14px;
             line-height: 14px;
             color: #7a80a1;
-
+            display: flex;
+            align-items: flex-start;
             &.read {
             }
 
@@ -543,7 +547,7 @@ const onSubmit = () => {
 
       .mailbox-content-wrapper {
         max-height: 0;
-        overflow: hidden;
+        overflow: auto;
         transition: 0.5s;
         color: #7a80a1;
 
