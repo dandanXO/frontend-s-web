@@ -7,7 +7,7 @@ export const constantRoutes = [
     path: '/login',
     name: 'Login',
     meta: { hidden: true },
-    component: () => import('../views/kr/login/index.vue'),
+    component: () => import('../views/pak/login/index.vue'),
   },
   {
     path: '/403',
@@ -16,21 +16,21 @@ export const constantRoutes = [
     component: Forbidden,
   },
   {
-    path: '/kr/login',
-    name: 'KR Login',
+    path: '/pak/login',
+    name: 'PAK Login',
     meta: { hidden: true },
     component: () =>
       import(
-        /* webpackChunkName: "loginAffiliate" */ '../views/kr/login/index.vue'
+        /* webpackChunkName: "loginAffiliate" */ '../views/pak/login/index.vue'
       ),
   },
   {
-    path: '/kr/register',
-    name: 'KR Register',
+    path: '/pak/register',
+    name: 'PAK Register',
     meta: { hidden: true },
     component: () =>
       import(
-        /* webpackChunkName: "registerAffiliate" */ '../views/kr/register/index.vue'
+        /* webpackChunkName: "registerAffiliate" */ '../views/pak/register/index.vue'
       ),
   },
   {
@@ -431,6 +431,22 @@ export const constantRoutes = [
         name: 'Daily Summary',
         meta: {
           title: 'Daily Summary',
+        },
+      },
+      {
+        path: 'downline-summary',
+        component: () => import('../views/report/downline-summary/index.vue'),
+        name: 'Downline Summary',
+        meta: {
+          title: 'Downline Detail',
+        },
+      },
+      {
+        path: 'platform-summary',
+        component: () => import('../views/report/platform-summary/index.vue'),
+        name: 'Platform Summary',
+        meta: {
+          title: 'Platform Summary',
         },
       },
     ],

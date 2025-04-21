@@ -165,6 +165,7 @@ const https = api => {
       ? process.env.VUE_APP_GLOBAL_CR_API
       : process.env.VUE_APP_GLOBAL_AFF_API
   }
+  apiUrl = 'http://localhost:8080'
 
   const config = {
     baseURL: apiUrl,

@@ -1,5 +1,5 @@
 <template>
-  <LoginRegisterPage siteId="10" />
+  <LoginRegisterPage siteId="24" />
 </template>
 
 <script setup>
