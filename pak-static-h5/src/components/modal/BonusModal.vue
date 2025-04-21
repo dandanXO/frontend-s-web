@@ -2,19 +2,6 @@
   <div class="bonus-container" :class="{ 'has-top-download': hasTopDownload }">
     <q-btn icon="close" round dense flat v-close-popup class="bonus-close" />
     <div class="bonus-content-wrapper">
-      <div v-if="!store.hasDeposit" class="mission-item">
-        <img class="mission-icon" src="../../assets/images/earn-money/newplayericon.png" />
-        <div class="mission-title-wrapper">
-          <div class="mission-title">
-            <span>New Player Guide</span>
-          </div>
-        </div>
-        <a @click="openNewPlayerGuide">
-          <q-btn flat class="details">
-            {{ $t("btn.details") }}
-          </q-btn>
-        </a>
-      </div>
       <div v-if="hasRedemptionBonus" class="mission-item">
         <img class="mission-icon" src="../../assets/images/earn-money/redemptionicon.png" />
         <div class="mission-title-wrapper">
@@ -40,11 +27,27 @@
           </q-icon> -->
         </div>
         <RouterLink :to="{ path: '/promo', query: { name: mission.redirectUrl } }">
-          <q-btn flat class="details">
-            {{ $t("btn.details") }}
-            <span v-if="mission.countDown === true">12231312</span>
+          <q-btn class="details" flat>
+            {{ mission.buttonMode === "API_CLAIM" ? $t("btn.claim") : $t("btn.details") }}
+            <span class="countdown-span" v-if="mission.countDown === true && mission.response?.eligible === true">
+              {{ mission.getCountDownStr }}
+            </span>
           </q-btn>
         </RouterLink>
+      </div>
+
+      <div v-if="!store.hasDeposit" class="mission-item">
+        <img class="mission-icon" src="../../assets/images/earn-money/newplayericon.png" />
+        <div class="mission-title-wrapper">
+          <div class="mission-title">
+            <span>New Player Guide</span>
+          </div>
+        </div>
+        <a @click="openNewPlayerGuide">
+          <q-btn flat class="details">
+            {{ $t("btn.details") }}
+          </q-btn>
+        </a>
       </div>
     </div>
     <div class="bonus-header">
@@ -56,7 +59,7 @@
 <script setup>
 import { api, eventapi } from "boot/axios";
 import { userStore } from "stores/index";
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 const emit = defineEmits(["open-new-player"]);
 const store = userStore();
 const props = defineProps({
@@ -67,6 +70,7 @@ const props = defineProps({
 
 const isInit = ref(false);
 const isLoaded = ref(false);
+const countdownTimerList = ref();
 
 const imgURL = process.env.IMAGE_CDN + "/promo/";
 const openNewPlayerGuide = () => {
@@ -76,6 +80,30 @@ const openNewPlayerGuide = () => {
   localStorage.removeItem("completedwithdrawguide");
   emit("open-new-player");
 };
+
+function getCountdownWithDays(endTime) {
+  const now = Date.now();
+  let diff = Math.max(0, endTime - now);
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  diff %= 1000 * 60 * 60 * 24;
+
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  diff %= 1000 * 60 * 60;
+
+  const minutes = Math.floor(diff / (1000 * 60));
+  diff %= 1000 * 60;
+
+  const seconds = Math.floor(diff / 1000);
+
+  const pad = (num) => String(num).padStart(2, "0");
+
+  return `${days}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+}
+
+onUnmounted(() => {
+  clearInterval(countdownTimerList.value);
+});
 
 onMounted(() => {
   if (isInit.value === false) {
@@ -114,6 +142,14 @@ onMounted(() => {
       console.log("All APIs finished");
 
       console.log(props.promoList);
+
+      countdownTimerList.value = setInterval(() => {
+        props.promoList.forEach((promo, index) => {
+          if (promo.countDown && promo.response && promo.response.eligible === true) {
+            promo.getCountDownStr = getCountdownWithDays(promo.response.promoEndTime);
+          }
+        });
+      }, 1000);
     });
   }
 });
@@ -213,7 +249,7 @@ onMounted(() => {
       }
 
       .q-btn {
-        width: 108px;
+        width: 115px;
         border-radius: 4px;
         font-weight: 700;
         text-transform: none;
@@ -222,6 +258,16 @@ onMounted(() => {
         &.details {
           background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
           color: #000a01;
+        }
+
+        :deep(.q-btn__content) {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .countdown-span {
+          color: #d47c00;
+          font-size: 12px;
         }
 
         &.no-reward {
