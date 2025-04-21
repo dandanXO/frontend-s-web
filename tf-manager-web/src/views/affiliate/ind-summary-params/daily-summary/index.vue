@@ -539,7 +539,11 @@ function getSummaries(param) {
           index === 21
         ) {
           // withdrawCount, registerCount, ftdCount, totalDepositCount, totalBetCount
-          sums[index] = total.data[prop]
+          if (index === 21) {
+            sums[index] = total.data[prop] + " %"
+          } else {
+            sums[index] = total.data[prop]
+          }
         } else if (index === 7 || index === 12 || index === 14) {
           // const pageRowCount = Number(page.records.reduce((sum, row) => {
           //   return sum + Number(row[prop])

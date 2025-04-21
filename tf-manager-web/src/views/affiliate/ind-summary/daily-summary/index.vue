@@ -675,7 +675,11 @@ function getSummaries(param) {
           index === 6 ||
           index === 4 || index === 12 ||
           index === 13 || index === 14 || index === 15 || index === 24 || index === 25 || index === 26) {
-          sums[index] = totalPage.records[0][prop]
+          if (index === 26) {
+            sums[index] = totalPage.records[0][prop] + " %"
+          } else {
+            sums[index] = totalPage.records[0][prop]
+          }
         } else if (index === 5) {
           // profit depositWithdrawal = deposit - withdrawal
           sums[index] =
