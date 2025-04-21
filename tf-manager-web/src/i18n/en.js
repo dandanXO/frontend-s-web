@@ -1559,7 +1559,7 @@ export default {
     redeemedBy: 'Redeemed By',
     redeemCode: 'Redeem Code',
     redeemPoints: 'Redeem Points',
-    redepositRate: 'Repeat Deposit Rate (%)',
+    redepositRate: 'Repeat Deposit Rate',
     redirect: 'Redirect',
     redirectRecord: 'Redirect Record',
     redirectMember: 'Redirect Specific Member',

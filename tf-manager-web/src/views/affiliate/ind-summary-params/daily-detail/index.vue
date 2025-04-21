@@ -312,7 +312,11 @@
           :label="t('fields.redepositRate')"
           align="center"
           width="120"
-        />
+        >
+          <template #default="scope">
+            {{ scope.row.redepositRate }} %
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         class="pagination"
