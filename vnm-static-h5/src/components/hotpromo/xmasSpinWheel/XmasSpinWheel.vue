@@ -68,7 +68,7 @@ const $q = useQuasar();
 const spinButtonDisable = ref(false);
 const degreesToStopAt = ref([]);
 const showPrizePopup = ref(false);
-const prizePopupBonusAmt = ref(0);
+const prizePopupBonusAmt = ref();
 const remainingDraws = ref(5);
 const validBet = ref(0);
 const minValidBet = ref(0);
@@ -397,15 +397,15 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    width: 200px;
-    height: 132px;
+    width: 300px;
+    height: 122px;
     gap: 45px;
     background: url("./../../../assets/images/promotion/hotpromo/xmas-spinwheel/prize-popup.png");
     background-size: 100% 100%;
 
     .bold-text {
       font-family: sans-serif;
-      font-size: 20px;
+      font-size: 28px;
       font-weight: 700;
       letter-spacing: 1px;
       text-align: center;
@@ -432,7 +432,7 @@ onMounted(() => {
 
     .content {
       height: auto;
-      margin-bottom: 20px;
+      margin-bottom: 0px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -440,7 +440,7 @@ onMounted(() => {
       padding: 20px;
 
       .action-btn {
-        background: url("./../../../assets/images/promotion/hotpromo/xmas-spinwheel/prize-popup-action-btn.png");
+        //background: url("./../../../assets/images/promotion/hotpromo/xmas-spinwheel/prize-popup-action-btn.png");
         background-size: 100% 100%;
         width: 80%;
         height: 100%;

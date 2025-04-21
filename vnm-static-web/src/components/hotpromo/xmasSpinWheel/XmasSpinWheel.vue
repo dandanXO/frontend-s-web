@@ -365,6 +365,7 @@ onMounted(() => {
   background-size: 100% 100%;
   box-shadow: none;
   width: 446px;
+  margin-top: 25vh;
   height: 178px;
 
   .wrapper {
@@ -376,7 +377,7 @@ onMounted(() => {
 
     .bold-text {
       font-family: sans-serif;
-      font-size: 55px;
+      font-size: 48px;
       font-weight: bold;
       letter-spacing: 1px;
       text-align: center;
@@ -410,7 +411,7 @@ onMounted(() => {
       padding: 30px;
 
       .action-btn {
-        background: url("./../../../assets/images/promotion/hotpromo/xmas-spinwheel/prize-popup-action-btn.png");
+        //background: url("./../../../assets/images/promotion/hotpromo/xmas-spinwheel/prize-popup-action-btn.png");
         background-size: 100% 100%;
         width: 80%;
         height: 100%;
