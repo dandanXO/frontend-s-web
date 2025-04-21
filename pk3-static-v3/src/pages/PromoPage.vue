@@ -545,11 +545,24 @@ export default defineComponent({
           console.log("PArse Error");
         }
       } else if (selectedPromo.value.redirectUrl === "EarnMoney") {
-        router.push("/earn-money");
+        if (isWebview.value) {
+          document.location.href = "app://earn-money"
+        }else{
+          router.push("/earn-money");
+        }
       } else if (selectedPromo.value.redirectUrl === "VIPrewards") {
-        router.push("/vip");
+        if (isWebview.value) {
+          router.push(`/wv-vip?token=${SessionStorage.getItem("TOKEN")}`)
+        }else{
+          router.push("/vip");
+        }
       } else if (selectedPromo.value.redirectUrl === "Deposit") {
-        router.push("/deposit?from=/promo");
+        if (isWebview.value) {
+          document.location.href = "app://deposit"
+        }else{
+          router.push("/deposit?from=/promo");
+        }
+
       } else if (selectedPromo.value.redirectUrl === "Withdraw") {
         router.push("/withdraw?from=/promo");
       } else if (
