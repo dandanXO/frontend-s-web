@@ -512,7 +512,7 @@ export default defineComponent({
           if (paramJson && paramJson.page) {
             if (isWebview.value) {
               if(paramJson.page.includes("vip")){
-                router.push(`/wv-vip?token=${SessionStorage.getItem("TOKEN")}`)
+                document.location.href = "app://vip"
               }else if(paramJson.page.includes("earn-money")){
                 document.location.href = "app://earn-money"
               }
