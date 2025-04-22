@@ -1,9 +1,15 @@
 <template>
   <div class="container">
     <div class="spin-wheel-container">
-      <div :class="`draw-btn click-pointer ${remainingDraws <= 0 ? 'disabled' : ''}`" @click="spinWheel">
-        <img src="./../../../assets/images/promotion/hotpromo/xmas-spinwheel/click-spin-btn2.png" />
-      </div>
+        <div class="time_bg" >
+            <img src="./../../../assets/images/promotion/hotpromo/xmas-spinwheel/time_bg.png" />
+            <div class="availableDraw">
+                {{ availableDraw }}
+            </div>
+        </div>
+        <div :class="`draw-btn click-pointer`" @click="spinWheel">
+            <img src="./../../../assets/images/promotion/hotpromo/xmas-spinwheel/click-spin-btn2.png" />
+        </div>
       <div class="wheel-stage">
         <img src="./../../../assets/images/promotion/hotpromo/xmas-spinwheel/spin-wheel-stage2.png" />
       </div>
@@ -48,9 +54,12 @@ import { ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import { claimDrawEvent, drawEventInit } from "@/api/promotion/drawEvent";
+import { useI18n } from "vue-i18n";
 // import {
 //     receiveLuckydrawBonus
 // } from "@/api/promotion/xmasSpinWheel";
+
+const { t } = useI18n();
 
 const PRIZE_ARRAY = [-999, 88, -998, 28, 8888, 38, -997, 888, -996, 18];
 const store = userStore();
@@ -158,12 +167,16 @@ const reset = () => {
 };
 
 const spinWheel = () => {
+    if(!store.token) {
+        ElMessage.error(t("common.loginRequired"));
+        return;
+    }
   if (spinButtonDisable.value === true) {
     return;
   }
 
   if (remainingDraws.value <= 0) {
-    ElMessage.error("剩余抽奖次数：0");
+    ElMessage.error(t("common.no_lottery_opportunities"));
     return;
   }
 
@@ -178,11 +191,12 @@ const spinWheel = () => {
       const index = PRIZE_ARRAY.findIndex((item) => item === res.data[0].bonus);
       spin(index, () => {
         showPrizePopup.value = true;
-        prizePopupBonusAmt.value = res.data[0].bonusName;
-        // remainingDraws.value = 1
+        prizePopupBonusAmt.value = t('common.get_price')+' '+res.data[0].bonusName;
+        remainingDraws.value = res.data.remaining
+        availableDraw.value = res.data.remaining
       });
     } else {
-      ElMessage.error(res.message);
+      ElMessage.error(t(`response.${res.code}`));
     }
   });
 };
@@ -194,6 +208,7 @@ const initPage = () => {
       validBet.value = data.validBet;
       minValidBet.value = data.minValidBet;
       availableDraw.value = data.availableDraw;
+      remainingDraws.value = data.availableDraw;
       usedDraw.value = data.usedDraw;
       totalDraw.value = data.totalDraw;
     } else {
@@ -217,10 +232,23 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+.container{
+    padding: 24px 0px;
+    background-image: url("./../../../assets/images/promotion/hotpromo/xmas-spinwheel/bg.png");
+    background-repeat: no-repeat; 
+    background-size: 100% 100%;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .spin-wheel-container {
-  position: relative;
-  margin-bottom: 80px;
-  text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    // margin-bottom: 80px;
+    text-align: center;
 }
 
 .spin-wheel-frame {
@@ -287,7 +315,18 @@ onMounted(() => {
   width: 100%;
   height: 100%;
 }
-
+.time_bg{
+    position: absolute;
+    right: -10%;
+    top: 0%;
+}
+.availableDraw{
+    position: absolute;
+    top: calc(60%);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 32px;
+}
 .draw-btn {
   width: 66px;
   height: auto;
@@ -377,7 +416,7 @@ onMounted(() => {
 
     .bold-text {
       font-family: sans-serif;
-      font-size: 48px;
+      font-size: 22px;
       font-weight: bold;
       letter-spacing: 1px;
       text-align: center;
@@ -408,7 +447,7 @@ onMounted(() => {
       flex-direction: column;
       justify-content: space-around;
       align-items: center;
-      padding: 30px;
+      padding: 50px;
 
       .action-btn {
         //background: url("./../../../assets/images/promotion/hotpromo/xmas-spinwheel/prize-popup-action-btn.png");

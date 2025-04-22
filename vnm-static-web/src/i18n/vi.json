@@ -80,6 +80,9 @@
     "login_here": "Đăng nhập tại đây"
   },
   "common": {
+    "get_price":"Chúc mừng, bạn đã nhận được",
+    "no_lottery_opportunities": "Tài khoản Quý Khách không có hoặc đã sử dụng hết cơ hội quay thưởng.",
+    "loginRequired": "Vui lòng đăng nhập tài khoản.",
     "login": "Đăng nhập",
     "register": "Đăng ký",
     "edit": "Chỉnh sửa",
@@ -883,6 +886,7 @@
     "35009": "Đặc quyền sẽ có hiệu lực sớm",
     "35010": "Thành viên 35010 không thể nhận đặc quyền này",
     "35011": "Thành viên 35011 không thể nhận đặc quyền này.",
+    "35013": "EIP của pháp sư",
     "37001": "Đã hết thời gian nhận Lì Xì",
     "37004": "Tất cả bao lì xì đã được phát hết! Vui lòng chờ đợi lần tiếp theo. Cảm ơn bạn đã tham gia.",
     "45000": "Chưa đạt đến số tiền tối thiểu để rút",

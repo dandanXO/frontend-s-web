@@ -1,7 +1,13 @@
 <template>
   <div class="container">
     <div class="spin-wheel-container">
-      <div :class="`draw-btn click-pointer ${remainingDraws <= 0 ? 'disabled' : ''}`" @click="spinWheel">
+      <div class="time_bg" >
+          <img src="./../../../assets/images/promotion/hotpromo/xmas-spinwheel/time_bg.png" />
+          <div class="availableDraw">
+              {{ availableDraw }}
+          </div>
+      </div>
+      <div :class="`draw-btn click-pointer`" @click="spinWheel">
         <img src="./../../../assets/images/promotion/hotpromo/xmas-spinwheel/click-spin-btn.png" />
       </div>
       <div class="wheel-stage">
@@ -46,10 +52,12 @@
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
-import { claimDrawEvent } from "@/api/promo/drawEvent";
+import { drawEventInit, claimDrawEvent } from "@/api/promo/drawEvent";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
+import { userStore } from "src/stores";
 
+const store = userStore();
 const props = defineProps(["promoCode"]);
 // spin wheel constants
 const TOTAL_ITEMS = 10;
@@ -156,12 +164,33 @@ const reset = () => {
 };
 
 const spinWheel = () => {
+    console.log(store,'adan')
+    if(!store.hasToken()) {
+        $q.notify({
+            color: "negative",
+            position: "top",
+            message: t("lang.loginRequired")
+        });
+        return;
+    }
+
+    if (remainingDraws.value <= 0) {
+        $q.notify({
+        color: "negative",
+        position: "top",
+        // message: res.message
+        message: t("lang.no_lottery_opportunities")
+      });
+    return;
+  }
+
   claimDrawEvent(props.promoCode).then((data) => {
     if (data.code == 0) {
       spin(PRIZE_ARRAY.indexOf(data.data[0].bonus), () => {
         showPrizePopup.value = true;
-        prizePopupBonusAmt.value = data.data[0].bonusName;
-        // remainingDraws.value = data.data.remaining
+        prizePopupBonusAmt.value = t('lang.get_price')+' '+res.data[0].bonusName;
+        remainingDraws.value = data.data.remaining
+        availableDraw.value = data.data.remaining
       });
     } else {
       $q.notify({
@@ -170,12 +199,12 @@ const spinWheel = () => {
         // message: res.message
         message: t("error." + data.code)
       });
-      //test
-      // spin(PRIZE_ARRAY.indexOf(88), () => {
-      //     showPrizePopup.value = true;
-      //     prizePopupBonusAmt.value = '88 VNDP';
-      //     remainingDraws.value = 1
-      // });
+        //   test
+    //   spin(PRIZE_ARRAY.indexOf(88), () => {
+    //       showPrizePopup.value = true;
+    //       prizePopupBonusAmt.value = t('lang.get_price')+' '+'88 VNDP';
+    //       remainingDraws.value = 1
+    //   });
     }
   });
 };
@@ -187,6 +216,7 @@ const initPage = () => {
       validBet.value = data.validBet;
       minValidBet.value = data.minValidBet;
       availableDraw.value = data.availableDraw;
+      remainingDraws.value = data.availableDraw;
       usedDraw.value = data.usedDraw;
       totalDraw.value = data.totalDraw;
     } else {
@@ -200,7 +230,7 @@ const initPage = () => {
 };
 
 onMounted(() => {
-  initPage;
+  initPage();
   // calc no of spin wheel items and potential stops
   for (var i = 0; i < TOTAL_ITEMS; i++) {
     var the_degree = (FULL_DEGREE / TOTAL_ITEMS) * i * -1;
@@ -214,6 +244,16 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+.container{
+    padding: 24px 0px;
+    background-image: url("./../../../assets/images/promotion/hotpromo/xmas-spinwheel/bg.png");
+    background-repeat: no-repeat; 
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .spin-wheel-container {
   position: relative;
   margin: 80px 0px;
@@ -255,6 +295,19 @@ onMounted(() => {
   width: 330px;
   height: 330px;
 }
+.time_bg{
+    width: 160px;
+    position: absolute;
+    right: -5%;
+    top: -24%;
+}
+.availableDraw{
+    position: absolute;
+    top: calc(60%);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 32px;
+}
 
 .wheel-bg {
   width: 100%;
@@ -286,7 +339,7 @@ onMounted(() => {
 }
 
 .draw-btn {
-  width: 100px;
+  width: 4rem;
   height: auto;
   aspect-ratio: 206/220;
   z-index: 25;
@@ -405,7 +458,7 @@ onMounted(() => {
 
     .bold-text {
       font-family: sans-serif;
-      font-size: 28px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 1px;
       text-align: center;

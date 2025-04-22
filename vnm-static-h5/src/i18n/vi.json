@@ -1,5 +1,8 @@
 {
   "lang": {
+    "get_price":"Chúc mừng, bạn đã nhận được",
+    "no_lottery_opportunities": "Tài khoản Quý Khách không có hoặc đã sử dụng hết cơ hội quay thưởng.",
+    "loginRequired": "Vui lòng đăng nhập tài khoản.",
     "langVal": "vi",
     "app_download_title": "Tải ứng dụng",
     "app_download_desc": "Cược trực tiếp số 1 Châu Á",
