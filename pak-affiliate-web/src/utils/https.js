@@ -135,37 +135,16 @@ const https = api => {
   const store = useStore()
   const token = store.state.user.token
   const currentHost = window.location.host
-  const lh2Host = 'lh1-affiliate.lhf2ifpudro.com'
-  const xf1Host = 'affiliate-web.gwd4jptunz.com'
-  const xf2Host = 'xf1-affiliate.gwd4jptunz.com'
   const isAff = api === 'affiliate'
   const isCr = api === 'cashier'
   let apiUrl = process.env.VUE_APP_RST_API
 
   console.log(currentHost)
-  const isLocalhost =
-    currentHost.indexOf('localhost') > -1 ||
-    currentHost.indexOf('127.0.0.1') > -1
-  //Only Global or China.
-  if (
-    currentHost.indexOf('-cn') > -1 ||
-    currentHost.indexOf(lh2Host) > -1 ||
-    currentHost.indexOf(xf1Host) > -1 ||
-    currentHost.indexOf(xf2Host) > -1
-  ) {
-    apiUrl = isAff
-      ? process.env.VUE_APP_RST_API
-      : isCr
-      ? process.env.VUE_APP_CR_API
-      : process.env.VUE_APP_AFF_API
-  } else {
-    apiUrl = isAff
-      ? process.env.VUE_APP_GLOBAL_RST_API
-      : isCr
-      ? process.env.VUE_APP_GLOBAL_CR_API
-      : process.env.VUE_APP_GLOBAL_AFF_API
-  }
-  apiUrl = 'http://localhost:8080'
+  apiUrl = isAff
+    ? process.env.VUE_APP_RST_API
+    : isCr
+    ? process.env.VUE_APP_CR_API
+    : process.env.VUE_APP_AFF_API
 
   const config = {
     baseURL: apiUrl,
