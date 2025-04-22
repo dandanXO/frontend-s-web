@@ -280,9 +280,10 @@ body.body--dark .q-footer {
 }
 
 .q-footer {
+
   // margin-top: 30px;
   background: transparent !important;
-  bottom: 0px;
+  bottom: env(safe-area-inset-bottom, 0);
 
   // height: 86px;
 
