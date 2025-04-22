@@ -14,7 +14,9 @@ export const DashboardService = {
         .then((response) => {
           if (response.code == 0) {
             const token = response.data.token
+            const userId = response.data.id
             sessionStorage.setItem('token', token)
+            sessionStorage.setItem('userId', userId)
             resolve(true)
           } else {
             resolve(false)

@@ -1,5 +1,6 @@
 import { storeToRefs } from "pinia";
 import { userStore } from "src/stores";
+import { useUI } from "src/stores/ui";
 import { nextTick, onActivated, onMounted, ref } from "vue";
 
 /**
@@ -21,6 +22,7 @@ export const useCheckKYC = (checkTiming = [], kycUserFormRef) => {
   const store = userStore();
   const { realName, guest, phone } = storeToRefs(store);
   const { getMemberInfo } = store;
+  const ui = useUI();
 
   const userKYCDialog = ref(false);
   const guestKYCDialog = ref(false);
@@ -46,16 +48,23 @@ export const useCheckKYC = (checkTiming = [], kycUserFormRef) => {
   };
 
   const loadInfo = async () => {
-    if (realName.value === null || phone.value === null) {
-      if (guest.value) {
-        openGuestKYCDialog();
-      } else {
-        openUserKYCDialog();
-        await nextTick();
-        if (kycUserFormRef.value) {
-          kycUserFormRef.value.loadCurrentInfo();
+    switch (ui.siteType) {
+      case "CURACAO":
+        const savedAddress = localStorage.getItem("PAK_ADDRESS");
+        if (!savedAddress) openUserKYCDialog();
+        break;
+      default:
+        if (realName.value === null || phone.value === null) {
+          if (guest.value) {
+            openGuestKYCDialog();
+          } else {
+            openUserKYCDialog();
+          }
         }
-      }
+    }
+    await nextTick();
+    if (kycUserFormRef.value) {
+      kycUserFormRef.value.loadCurrentInfo();
     }
   };
 

@@ -280,9 +280,10 @@ body.body--dark .q-footer {
 }
 
 .q-footer {
+
   // margin-top: 30px;
   background: transparent !important;
-  bottom: 0px;
+  bottom: env(safe-area-inset-bottom, 0);
 
   // height: 86px;
 
@@ -865,6 +866,14 @@ body.body--dark .q-footer {
     bottom: -1px;
     left: -1px;
     right: -1px;
+  }
+}
+
+.login-register-notify-div{
+  margin-top: 20vh;
+
+  .q-notification__message{
+    font-size: 16px;
   }
 }
 

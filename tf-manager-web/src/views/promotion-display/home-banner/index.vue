@@ -39,6 +39,21 @@
             :value="item.value"
           />
         </el-select>
+        <el-select
+          v-model="request.language"
+          size="small"
+          :placeholder="t('fields.language')"
+          class="filter-item"
+          style="width: 120px; margin-left: 5px"
+          @focus="getLanguage"
+        >
+          <el-option
+            v-for="item in languageList.list"
+            :key="item"
+            :label="t('language.' + item)"
+            :value="item"
+          />
+        </el-select>
 
         <!-- <el-select
           v-model="request.siteId"
@@ -126,6 +141,23 @@
               :key="item.id"
               :label="item.siteName"
               :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item v-if="languageList.list.length > 0" :label="t('fields.language')" prop="language">
+          <el-select
+            v-model="form.language"
+            size="small"
+            :placeholder="t('fields.language')"
+            class="filter-item"
+            style="width: 350px"
+            default-first-option
+          >
+            <el-option
+              v-for="item in languageList.list"
+              :key="item"
+              :label="t('language.' + item)"
+              :value="item"
             />
           </el-select>
         </el-form-item>
@@ -470,6 +502,12 @@
         </template>
       </el-table-column>
       <el-table-column prop="siteName" :label="t('fields.site')" />
+      <el-table-column prop="language" :label="t('fields.language')" align="center" min-width="120">
+        <template #default="scope">
+          <span v-if="scope.row.language">{{ t('language.' + scope.row.language) }}</span>
+          <span v-else>-</span>
+        </template>
+      </el-table-column>
       <!-- <el-table-column prop="state" :label="t('fields.state')">
         <template #default="scope">
           <el-switch
@@ -692,7 +730,7 @@ import { hasPermission } from '../../../utils/util'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
-import { getSupportDarkMode } from "@/api/config";
+import { getSupportDarkMode, getConfigList } from "@/api/config";
 import { isXF, isThai, isDY, isLH, isVnm } from '@/utils/site'
 import { useSessionStorage } from "@vueuse/core";
 
@@ -712,6 +750,9 @@ const siteList = reactive({
 const imageList = reactive({
   dataList: [],
   pages: 0,
+})
+const languageList = reactive({
+  list: []
 })
 const selectedImage = reactive({
   id: 0,
@@ -775,6 +816,7 @@ const request = reactive({
   state: null,
   siteId: null,
   siteType: null,
+  language: null
 })
 
 const imageRequest = reactive({
@@ -800,7 +842,8 @@ const form = reactive({
   remark: null,
   state: true,
   displayStartTime: "2020-01-01 00:00:00",
-  displayEndTime: "2030-01-01 23:59:59"
+  displayEndTime: "2030-01-01 23:59:59",
+  language: null
 })
 
 const imageForm = reactive({
@@ -828,6 +871,7 @@ const formRules = reactive({
   sequence: [required(t('message.validateSequenceRequired'))],
   category: [required(t('message.validateCategoryRequired'))],
   siteId: [required(t('message.validateSiteRequired'))],
+  language: [required(t('message.validateLanguageRequired'))]
 })
 
 const imageFormRules = reactive({
@@ -843,6 +887,7 @@ function resetQuery() {
   request.state = null
   request.siteType = "main"
   request.siteId = store.state.user.siteId
+  request.language = null
   uiControl.showSiteType = false;
 }
 
@@ -1156,6 +1201,17 @@ async function loadDarkMode() {
 //   }
 // }
 
+async function getLanguage() {
+  languageList.list = []
+  const { data: lang } = await getConfigList("language_list", request.siteId)
+  if (lang.length > 0 && lang[0].value) {
+    const arr = lang[0].value.split(',')
+    for (const a of arr) {
+      languageList.list.push(a)
+    }
+  }
+}
+
 onMounted(async () => {
   await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
@@ -1173,6 +1229,7 @@ onMounted(async () => {
   }
   request.siteType = "main";
   await loadDarkMode()
+  await getLanguage()
   await loadHomebanner()
 })
 </script>
