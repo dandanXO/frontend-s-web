@@ -1027,6 +1027,7 @@ export default {
     53005: "Investment has already been settled",
     53006: "Cannot submit, the ongoing interest has reached the maximum limit",
     53007: "Insufficient balance",
+    58500: "No Available Spin",
     10000: "Insufficient remaining balance error",
     10001: "Withdrawal error",
     10002: "Deposit error",
@@ -1121,6 +1122,7 @@ export default {
     58005: "Congrats, You have Completed All Tasks"
   },
   content: {
+    nospinleft: "No spins left",
     title1: "The registration time starts from the time the registration is completed.",
     message1: "Once your accumulated amount reaches 1000 PKR, you can withdraw.",
     message2: "When you have no spins left, invite new players to register and deposit to earn additional free spins.",
