@@ -307,6 +307,7 @@ onMounted(() => {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 32px;
+    color: #fff;
 }
 
 .wheel-bg {

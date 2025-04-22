@@ -326,6 +326,7 @@ onMounted(() => {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 32px;
+    color: #fff;
 }
 .draw-btn {
   width: 66px;
