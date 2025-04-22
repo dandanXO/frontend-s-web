@@ -317,7 +317,7 @@ onMounted(() => {
 }
 .time_bg{
     position: absolute;
-    right: -10%;
+    right: -80%;
     top: 0%;
 }
 .availableDraw{
