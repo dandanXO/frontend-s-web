@@ -673,7 +673,7 @@ export default defineComponent({
     };
 
     onMounted(async () => {
-      console.log("pk4-static-h5 0220");
+      console.log("pk4-static-h5 RUN");
 
       handleRedirect();
 
