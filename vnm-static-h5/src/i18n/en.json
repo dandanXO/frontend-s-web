@@ -1,5 +1,8 @@
 {
   "lang": {
+    "get_price":"Congratulations, you have received",
+    "no_lottery_opportunities": "No lottery opportunities",
+    "loginRequired": "Login required",
     "langVal": "en",
     "app_download_title": "TF88appDownload",
     "app_download_desc": "Asia's No. 1 Live Roll",
