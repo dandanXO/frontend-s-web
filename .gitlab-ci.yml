@@ -1116,6 +1116,20 @@ build-image-mx1-static-v1:
 
 #===============================================================================================
 
+build-au1-static-h5:
+  extends: .build-projects
+  variables:
+    PROJECT: au1-static-h5
+
+build-image-au1-static-h5:
+  extends: .docker-build
+  variables:
+    PROJECT: au1-static-h5
+  needs:
+    - build-au1-static-h5
+
+#===============================================================================================
+
 build-live-manager-web:
   extends: .build-projects
   variables:
