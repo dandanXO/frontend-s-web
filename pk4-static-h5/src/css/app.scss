@@ -293,6 +293,7 @@ body.body--dark .q-footer {
     background-size: 100% 100%;
     background-position: bottom center;
 
+    border-top: 1px solid #1A2239;
     // padding-bottom: 10px;
     // padding-top: 16px;
     // // background: #323738;
@@ -383,6 +384,12 @@ body.body--dark .q-footer {
     }
   }
 
+  .footer-label {
+    padding-top: 10px;
+    color: #3F4C6B;
+    font-weight: bold;
+  }
+
   img {
     opacity: 1;
     // height: 20px;
@@ -426,10 +433,6 @@ body.body--dark .q-footer {
         display: block;
       }
     }
-  }
-
-  .footer-label {
-    padding-top: 10px;
   }
 }
 .q-field--standout.q-field--dark.q-field--highlighted .q-field__control,

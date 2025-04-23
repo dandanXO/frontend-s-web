@@ -1,6 +1,6 @@
 <template>
   <div style="height: 56px" v-if="topDownload && !ui.hideDownload"></div>
-  <div style="height: 140px"></div>
+  <div style="height: 130px"></div>
 
   <div class="top-download" v-if="topDownload && !ui.hideDownload">
     <div class="download-container">
@@ -11,7 +11,7 @@
       <!-- <div class="download-btn">
         <a :href="topDownloadUrl">
           <img src="../assets/images/index/download/top-download-btn.png" />
-        </a>
+      </a>
       </div> -->
 
       <div class="download-text">{{ $t("header.getFreeSpins") }}</div>
@@ -21,7 +21,7 @@
       <!-- <div class="download-count">({{ topDownloadCount }}s)</div> -->
     </div>
   </div>
-  <div class="menu-open" :class="{ open: menuOpen }" :style="topDownload && !ui.hideDownload ? 'margin-top: 56px; height: calc(100% - 56px);' : 'margin-top: 0;height: 0px;'">
+  <div class="menu-open" :class="{ open: menuOpen }" :style="topDownload && !ui.hideDownload ? 'margin-top: 56px; height: calc(100% - 56px);' : 'margin-top: unset;height: unset;'">
     <!-- <div style="height: 56px" v-if="topDownload && !ui.hideDownload"></div> -->
     <SideMenu @closeMenu="toggleMenuOpen()" />
   </div>
