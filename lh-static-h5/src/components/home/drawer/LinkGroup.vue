@@ -1,6 +1,6 @@
 <template>
   <div class="link-group-wrapper">
-    <linkable-button v-for="link in links" :key="link.href" :to="link.href">
+    <linkable-button v-for="link in links" :key="link.href" :to="link.href" :outerlink="link.outerlink">
       <div class="link-content-wrapper">
         <img :src="$q.dark.isActive ? link.iconDark : link.icon" />
         <span>{{ link.label }}</span>
@@ -10,6 +10,7 @@
 </template>
 <script setup>
 import { ref } from "vue";
+import { useSessionStorage } from "@vueuse/core";
 
 import LinkableButton from "components/home/drawer/LinkableButton.vue";
 import LinkCommunicationImg from "assets/images/home/link-communication.svg";
@@ -18,8 +19,13 @@ import LinkCustomerServiceImg from "assets/images/home/link-customer-service.svg
 import LinkCommunicationDarkImg from "assets/images/home/link-communication-dark.svg";
 import LinkVipDarkImg from "assets/images/home/link-vip-dark.svg";
 import LinkCustomerDarkServiceImg from "assets/images/home/link-customer-service-dark.svg";
+import LinkCustomerService2Img from "assets/images/home/link-customer-service2.svg";
+import LinkCustomerDarkService2Img from "assets/images/home/link-customer-service2-dark.svg";
+
+const customService = useSessionStorage("CUSTOM_SERVICE", '');
 
 const links = ref([
+  { icon: LinkCustomerService2Img, label: "专属客服", href: "/account/inbox", outerlink: customService, iconDark: LinkCustomerDarkService2Img },
   { icon: LinkCommunicationImg, label: "消息中心", href: "/account/inbox", iconDark: LinkCommunicationDarkImg },
   { icon: LinkVipImg, label: "VIP特权", href: "/account/vip", iconDark: LinkVipDarkImg },
   { icon: LinkCustomerServiceImg, label: "联系客服", href: "/liveChat", iconDark: LinkCustomerDarkServiceImg }
