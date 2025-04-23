@@ -2,6 +2,22 @@
   <!-- <ProfileSummary :homeProfile="true" /> -->
 
   <div class="left-side-menu" @click.stop>
+    <div class="topbar">
+
+      <RouterLink to="/language" class="side-menu-item">
+      <div class="item-icon__language">
+        {{ $t('lang.langVal') }}
+        <div class="icon-flag">
+          <img :src="require(`../assets/images/auth/country-flag-circle-${$t('lang.langVal')}.png`)" class="flag" />
+        </div>
+      </div>
+      <!-- {{ $t("sideNav.language") }} -->
+    </RouterLink>
+
+    <div class="close-btn" @click="closeSideMenu()">
+      <img src="../assets/images/index/close-btn-white.png">
+    </div>
+    </div>
     <!-- <RouterLink to="/earn-money" class="side-menu-item side-menu-item__invite">
       <div>
         {{ $t("sideNav.inviteToEarn") }}
@@ -55,7 +71,7 @@
     <div class="side-menu-divider" />
     <div class="side-menu-transparent-grp">
       <div class="side-menu-item side-menu-item__transparent" @click="openCSInNewTab(ui.CSAUrl)">
-        <div class="item-icon"><img src="../assets/images/auth/menu-livesupport.svg" /></div>
+        <div class="item-icon"><img src="../assets/images/auth/menu-livesupport.png" /></div>
         {{ $t("sideNav.livesupport") }}
       </div>
 
@@ -73,28 +89,28 @@
 
       <a class="side-menu-item side-menu-item__transparent" :href="ui.youtubeUrl" target="_blank">
         <div class="item-icon">
-          <img src="../assets/images/index/youtube-web-icon.svg" />
+          <img src="../assets/images/auth/menu-youtube.png" />
         </div>
         Youtube
       </a>
 
       <a class="side-menu-item side-menu-item__transparent" :href="ui.instagramUrl" target="_blank">
         <div class="item-icon">
-          <img src="../assets/images/index/insta-web-icon.svg" />
+          <img src="../assets/images/auth/menu-instagram.png" />
         </div>
         Instagram
       </a>
 
       <a class="side-menu-item side-menu-item__transparent" :href="ui.whatsappUrl" target="_blank">
-        <div class="item-icon"><img src="../assets/images/auth/menu-whatsapp.svg" /></div>
+        <div class="item-icon"><img src="../assets/images/auth/menu-whatsapp.png" /></div>
         Whatsapp
       </a>
       <a class="side-menu-item side-menu-item__transparent" :href="ui.tiktokUrl" target="_blank" v-if="ui.tiktokUrl">
-        <div class="item-icon"><img src="../assets/images/auth/menu-tiktok.svg" /></div>
+        <div class="item-icon"><img src="../assets/images/auth/menu-tiktok.png" /></div>
         TikTok
       </a>
       <router-link class="side-menu-item side-menu-item__transparent" to="/faq-page">
-        <div class="item-icon"><img src="../assets/images/auth/menu-faq.svg" /></div>
+        <div class="item-icon"><img src="../assets/images/auth/menu-faq.png" /></div>
         FAQ
       </router-link>
       <router-link class="side-menu-item side-menu-item__transparent" to="/cs-verifier">
@@ -122,16 +138,6 @@
         <img :src="require(`../assets/images/auth/app-download.png`)" />
       </div>
     </RouterLink>
-    <RouterLink to="/language" class="side-menu-item">
-      <div class="item-icon__language" style="margin-left: auto;">
-        {{ $t('lang.langVal') }}
-        <div class="icon-flag">
-          <img :src="require(`../assets/images/auth/country-flag-${$t('lang.langVal')}.png`)" class="flag" />
-        </div>
-      </div>
-      <!-- {{ $t("sideNav.language") }} -->
-    </RouterLink>
-
     <a
       class="side-menu-item side-menu-item__download"
       :href="ui.downloadAppUrl"
@@ -162,6 +168,9 @@ const activateSlide = (item) => {
   router.push(`/home#${item}`);
   console.log(item);
 };
+const closeSideMenu = () => {
+  emits("closeMenu");
+}
 const openCSInNewTab = (url) => {
   const absoluteUrl = url;
   window.open(absoluteUrl, "_blank");
@@ -186,7 +195,7 @@ const openCSInNewTab = (url) => {
     width: 100%;
     // padding-top: 72px;
     // height: calc(100vh - 70px);
-    padding-top: 16px;
+    padding-top: 5px;
     // height: calc(100- 16px);
     height: 100%;
     display: flex;
@@ -199,6 +208,17 @@ const openCSInNewTab = (url) => {
     max-width: 500px;
     margin: 0 auto;
 
+    .topbar {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      .close-btn {
+        width: 20px;
+        img {
+          width: 100%;
+        }
+      }
+    }
     .side-menu-divider {
       // background: rgba(255, 255, 255, 0.05);
       background: linear-gradient(90deg, #333B54 0%, rgba(51, 59, 84, 0) 100%);
@@ -226,7 +246,7 @@ const openCSInNewTab = (url) => {
       display: flex;
       align-items: center;
       //   width: 170px;
-      width: 100%;
+      // width: 100%;
       // background: #373c3d;
       border-radius: 6px;
       color: #ffffff;
@@ -371,7 +391,7 @@ const openCSInNewTab = (url) => {
         min-height: 70px;
         position: relative;
         padding: 10px 15px;
-        margin: 15px 0px;
+        margin: 10px 0px;
         &:after {
           // content: "";
           // bottom: 0;
@@ -435,21 +455,21 @@ const openCSInNewTab = (url) => {
       }
 
       .item-icon__language {
-        width: 20px;
         margin-right: 15px;
         display: flex;
     justify-content: center;
     text-transform: uppercase;
-    width: 50px;
     background: #283048;
-    padding: 0 10px;
+    padding: 10px;
+    align-items: center;
     border-radius: 4px;
         img {
           display: block;
           width: 100%;
 
           &.flag {
-            width: 26px;
+            margin-left: 10px;
+            width: 20px;
           }
         }
       }

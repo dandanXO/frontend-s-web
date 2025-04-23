@@ -949,6 +949,61 @@ export default {
       betVolume: "Bet Volume"
     }
   },
+  shareAffiliate: {
+    login: 'Login',
+    secondLevelTitle: 'Second-level agent-dividend system',
+    agentType: 'Agent Type',
+    merchantModel: 'Merchants Monthly Dividend Model (Cumulative)',
+    investmentPromotion: 'Investment promotion',
+    activeMembers: 'Number of active and valid members',
+    monthlyDividend: 'Monthly dividend (cumulative), net profit - commission ratio',
+
+    generalAgentTitle: 'General agent weekly dividend model (non-accumulative) - unlimited contract',
+    generalAgent: 'General Agent',
+    weeklyDividend: 'Weekly dividend (not cumulative), net profit - commission ratio',
+
+    memberDefinition: 'Definition of active and valid members:',
+    memberCriteria: 'Active members with cumulative deposits ≥ 1000PKR or valid bets ≥ 10000PKR during the week',
+
+    profitFormulaTitle: 'Net profit formula:',
+    profitFormula: 'Net profit = win/loss value - discount, code washing - operating cost (8% platform fee) - recharge fee cost (deposit amount * 5%)',
+
+    backendTitle: 'The backend allows you to change the following indicator parameters at any time',
+    dividends: 'Dividends:',
+    dividendRequirements: 'Requirements for the number of people, Dividend ratio',
+
+    qualifiedDefinition: 'Definition of qualified and valid members:',
+    effectiveBets: 'Effective betting amount',
+    cumulativeRecharge: 'Cumulative recharge amount',
+
+    profitDeduction: 'Net profit deduction item ratio',
+    deductionDetails: 'Game wins and losses - Promotions - Platform game package points - Recharge and withdrawal fees',
+
+    modelDescription: 'Description of the agent dividend model',
+    generalCalc1: 'General calculation',
+    basicSame: '- The basic calculation is the same as the normal calculation',
+    lossBySuperior: '- If there is a situation where the left and right lines of a superior agent cancel each other out, the superior agent will still bear the loss',
+    noSuperiorLoss: '- However, when the dividends received by the superior agent are insufficient to pay all the subordinate agents, the platform will make up for it',
+
+    generalCalculation: 'General calculation:',
+    calcExample1: `B1 dividend = -200 x 30% = -60 -> 0<br>` +
+              `B2 dividend = 300 x 20% = 60<br>` +
+              `A profit and loss = B1 + B2 = 100<br>` +
+              `A dividend = 100 x 40% = 40<br>` +
+              `A needs to pay B1 60, which is 20 platform subsidies, and A's net income is 0<br>` +
+              `The platform pays 60`,
+
+    noGeneralCalculation: 'No general calculation',
+    sameCalc: '- The basic calculation is the same as the normal calculation',
+    cancelledLines: '- If a superior agent has two lines that cancel each other out, the superior agent will only bear its own part of the loss',
+    subAgentNoLoss: '- The subordinate agent will not bear any loss',
+    platformInvestment: '- Negative dividends of the agent team that makes profits are the platform\'s investment',
+
+    calcExample2: `B1 dividend = -200 x 30% = -60 -> 0<br>` +
+              `B2 dividend = 300 x 20% = 60<br>` +
+              `A profit and loss = -200 x (40%-30%) + 300 x (40%-20%) = -20 + 60 = 40<br>` +
+              `Total platform contribution = 60 + 40 = 100`,
+  },
   maintenance: {
     underMaintenance: "Under maintenance",
     content01: "Our website is currently undergoing maintenance...",
