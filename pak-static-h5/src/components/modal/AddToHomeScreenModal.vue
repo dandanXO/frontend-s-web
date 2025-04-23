@@ -91,8 +91,10 @@ watch(
   
   background-position: bottom center;
     background-repeat: no-repeat;
-  background-size: contain;
+  background-size: 100% 100%;
   border-radius: 36px !important;
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
   /* margin: 60px 10px 10px; */
   color: #000;
   padding: 32px 16px 16px;
@@ -100,12 +102,11 @@ watch(
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  margin: 10px;
 
   max-width: 430px;
   .add-to-homescreen-download {
     position: absolute;
-    top: 0px;
+    top: -15px;
     display: flex;
     justify-content: center;
     width: 100%;
@@ -117,8 +118,8 @@ watch(
     img {
       display: block;
       width: 100%;
-      max-width: 120px;
-      height: 93px;
+      max-width: 125px;
+      height: 115px;
     }
   }
   .add-to-homescreen-top {
@@ -141,7 +142,7 @@ watch(
   }
 
   .continue-to-h5 {
-    color: #82d81d;
+    color: #24EE89;
     text-decoration: none;
     font-weight: 600;
     width: 100%;
@@ -173,6 +174,7 @@ watch(
       right: 50px;
       z-index: 2;
       font-size: 13px;
+
       &::after {
         content: "";
         position: absolute;
@@ -201,12 +203,20 @@ watch(
   //   display: flex;
   // }
   .btn-custom {
-    background: url("../../assets/images/index/continue-btn-bg.png") no-repeat center center;
+    background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
     width: 70%;
     margin: 0 auto;
-    background-size: cover;
     padding: 5px;
     display: flex;
+    border-radius: 58px;
+    box-shadow: 0px 2.16px 0px 0px #1CCA6A;
+    color: #333 !important;
+    font-family: Microsoft YaHei UI;
+    font-weight: 700;
+    font-size: 17px;
+    text-align: center;
+    text-transform: uppercase;
+
   }
   // .btn-secondary {
   //   background-color: transparent;
@@ -232,7 +242,7 @@ watch(
     // width: 30px;
     height: 30px;
     margin-right: 8px;
-    filter: grayscale(1);
+    filter: grayscale(1) invert(1);
   }
 }
 
@@ -256,12 +266,15 @@ watch(
 }
 
 .close-btn {
-  background-color: #9e9e9e;
-  color: #fff;
+  background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+  color: #333;
   position: absolute;
   right: 20px;
-  top: 70px;
+  top: 52px;
   font-size: 0.6em;
   z-index: 10000;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
 }
 </style>
