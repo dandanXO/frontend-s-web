@@ -280,9 +280,10 @@ body.body--dark .q-footer {
 }
 
 .q-footer {
+
   // margin-top: 30px;
   background: transparent !important;
-  bottom: 0px;
+  bottom: env(safe-area-inset-bottom, 0);
 
   // height: 86px;
 
@@ -308,6 +309,7 @@ body.body--dark .q-footer {
   font-size: 11px;
   align-self: flex-end;
   background: #323738;
+  height: 70px;
   // background: rgba(0, 0, 0, 0.6);
   // backdrop-filter: blur(20px);
   &:first-child {

@@ -1,19 +1,32 @@
 <template>
-  <router-link class="link-button-wrapper" :to="to">
+  <a class="link-button-wrapper" @click="handleRouter">
     <div class="link-button-content-wrapper">
       <slot />
     </div>
     <div class="right">
       <img :src="$q.dark.isActive ? ArrowRightDarkImg : ArrowRightImg" />
     </div>
-  </router-link>
+  </a>
 </template>
 <script setup>
+import { useRouter } from 'vue-router'
 import ArrowRightImg from "assets/images/home/arrow-right.png";
 import ArrowRightDarkImg from "assets/images/home/arrow-right-dark.png";
-defineProps({
-  to: String
+const props = defineProps({
+  to: String,
+  outerlink: String
 });
+
+const router = useRouter()
+
+const handleRouter = () => {
+  console.log(props.outerlink)
+  if (props.outerlink) {
+    window.open(props.outerlink, '_blank')
+  } else {
+    router.push({ path: props.to })
+  }
+};
 </script>
 <style scoped lang="scss">
 .link-button-wrapper {

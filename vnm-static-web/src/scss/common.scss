@@ -106,14 +106,15 @@ body {
   .is-active {
     .el-carousel__button {
       color: #fff;
-      // background: #518bf7;
-      border-radius: 10px;
+
+      background: radial-gradient(150% 150% at 50% -50%, #a6ffff 0%, #0075ff 100%);
+      border-radius: 100%;
       // box-shadow: 0 0 0 1px #518bf7;
       // border: 1px solid white;
-      background: url(../assets/images/common/ball.png) no-repeat center center;
+      // background: url(../assets/images/common/ball.png) no-repeat center center;
       background-size: contain;
-      width: 25px;
-      height: 25px;
+      width: 12px;
+      height: 12px;
     }
   }
   .SLOT {

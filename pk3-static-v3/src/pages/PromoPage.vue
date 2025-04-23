@@ -36,9 +36,9 @@
                 <div
                   v-for="(promo, i) in filteredArray"
                   :key="i"
-                  data-aos="zoom-in"
-                  data-aos-easing="ease-out"
-                  data-aos-duration="1000"
+                  v-bind:data-aos="!isWebview ? 'zoom-in' : null"
+                  v-bind:data-aos-easing="!isWebview ? 'ease-out' : null"
+                  v-bind:data-aos-duration="!isWebview ? '1000' : null"
                 >
                   <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
@@ -348,6 +348,8 @@ export default defineComponent({
         });
         router.push(`/login`);
       } else {
+        scrollToTop();
+
         if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
           router.push({ path: "/account/vip" });
         } else if (promo.redirectUrl && promo.redirectUrl.includes("SigninBonus")) {
@@ -508,7 +510,15 @@ export default defineComponent({
           const paramJson = JSON.parse(selectedPromo.value.param);
           console.log(paramJson);
           if (paramJson && paramJson.page) {
-            router.push(paramJson.page);
+            if (isWebview.value) {
+              if(paramJson.page.includes("vip")){
+                document.location.href = "app://vip"
+              }else if(paramJson.page.includes("earn-money")){
+                document.location.href = "app://earn-money"
+              }
+            }else{
+              router.push(paramJson.page);
+            }
           } else if (paramJson && paramJson.html) {
             window.open(paramJson.html, "_blank");
           } else if (paramJson && paramJson.game) {
@@ -543,11 +553,24 @@ export default defineComponent({
           console.log("PArse Error");
         }
       } else if (selectedPromo.value.redirectUrl === "EarnMoney") {
-        router.push("/earn-money");
+        if (isWebview.value) {
+          document.location.href = "app://earn-money"
+        }else{
+          router.push("/earn-money");
+        }
       } else if (selectedPromo.value.redirectUrl === "VIPrewards") {
-        router.push("/vip");
+        if (isWebview.value) {
+          router.push(`/wv-vip?token=${SessionStorage.getItem("TOKEN")}`)
+        }else{
+          router.push("/vip");
+        }
       } else if (selectedPromo.value.redirectUrl === "Deposit") {
-        router.push("/deposit?from=/promo");
+        if (isWebview.value) {
+          document.location.href = "app://deposit"
+        }else{
+          router.push("/deposit?from=/promo");
+        }
+
       } else if (selectedPromo.value.redirectUrl === "Withdraw") {
         router.push("/withdraw?from=/promo");
       } else if (
@@ -563,6 +586,10 @@ export default defineComponent({
     const allGames = ref(null);
     const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
       allGames.value.open(gameName, platformCode, gameCode, gameType);
+    };
+
+    const scrollToTop = () => {
+      window.scroll({ behavior: "smooth", left: 0, top: 0 });
     };
 
     const goToVip = () => {

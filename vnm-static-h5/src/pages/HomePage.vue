@@ -511,6 +511,7 @@
   </q-dialog>
 
   <GameModal ref="allGames"></GameModal>
+  <AnnouncementModal />
 
   <q-dialog
     width="100%"
@@ -695,6 +696,7 @@ import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import LangOptions from "components/LangOptions";
 import SitePopout from "components/modal/SitePopout.vue";
+import AnnouncementModal from "components/modal/AnnouncementModal";
 import MarqueeText from "vue-marquee-text-component";
 import { App } from "@capacitor/app";
 
@@ -748,7 +750,8 @@ export default defineComponent({
     GameList,
     SlotPromotion,
     SlotGameList,
-    SitePopout
+    SitePopout,
+    AnnouncementModal
   },
   setup() {
     const { t } = useI18n();
@@ -1431,7 +1434,7 @@ export default defineComponent({
     // const unreadInboxMail = ref(0);
     // const getUnreadTotal = () => {
     //   if (store.token) {
-    //     return api.get("/session/inbox/getUnreadTotal").then((res) => {
+    //     return api.get("/session/pm/inbox/getUnreadTotal").then((res) => {
     //       if (res.code === 0) {
     //         unreadInboxMail.value = res.data;
     //       }
@@ -2065,6 +2068,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800;900&display=swap");
+
 .home-news {
   width: calc(100% - 2rem);
   margin: 0 auto 32px;
@@ -2112,11 +2116,13 @@ export default defineComponent({
       }
     }
   }
+
   .home-news-bottom-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     column-gap: 8px;
     row-gap: 8px;
+
     .bottom-news {
       display: flex;
       border-radius: 12px;
@@ -2283,6 +2289,7 @@ export default defineComponent({
   height: auto;
   border-radius: 16px;
   aspect-ratio: 1000/400;
+
   .q-panel > div {
     background-repeat: no-repeat;
     background-position: center center;
@@ -2298,9 +2305,11 @@ export default defineComponent({
   .swiper-wrapper {
     margin-bottom: 25px;
   }
+
   height: unset;
   background: transparent;
 }
+
 :deep(.q-carousel.float .q-carousel__navigation .q-btn) {
   margin: 0;
   padding: 0;
@@ -2415,6 +2424,7 @@ export default defineComponent({
   background: #fff;
   box-shadow: 0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset, 0px 4px 10px 0px;
   font-family: "Roboto";
+
   .hot-match-div {
     background-image: url("../assets/images/home/match-icon.png");
     background-repeat: no-repeat;
@@ -2521,6 +2531,7 @@ export default defineComponent({
       background: #ffffffcc;
       margin-top: 50px;
       padding: 0;
+
       .welcome-header {
         display: flex;
         flex-direction: column;
@@ -2528,12 +2539,15 @@ export default defineComponent({
         justify-content: center;
         align-items: center;
         width: 100%;
+
         &__ball {
           margin-bottom: -10px;
+
           img {
             display: block;
           }
         }
+
         &__title {
           color: #000000;
           font-size: 20px;
@@ -2542,13 +2556,16 @@ export default defineComponent({
           text-align: center;
         }
       }
+
       .section {
         display: flex;
         gap: 10px;
         padding: 10px;
+
         &.last {
           padding-top: 0;
         }
+
         .section-card {
           box-shadow: 0px 0px 10px 0px #0000001a;
           background: #ffffffcc;
@@ -2560,6 +2577,7 @@ export default defineComponent({
           gap: 10px;
           align-items: center;
           flex: 1;
+
           .main-header {
             color: #424f72;
             font-size: 16px;
@@ -2568,6 +2586,7 @@ export default defineComponent({
             text-align: center;
             width: 85%;
           }
+
           .main-text {
             width: 95%;
             color: #7a80a1;
@@ -2576,16 +2595,20 @@ export default defineComponent({
             line-height: 16px;
             text-align: center;
           }
+
           .slide-img {
             width: 80%;
             margin: 0 auto;
+
             &.full {
               width: 100%;
             }
+
             img {
               width: 100%;
             }
           }
+
           .slide-qr {
             background: url("../assets/images/welcome/welcome-qrbg.png") no-repeat center center;
             background-size: contain;
@@ -2595,6 +2618,7 @@ export default defineComponent({
             justify-content: center;
             align-items: center;
           }
+
           .lastline {
             color: #424f72;
             font-size: 12px;
@@ -2602,6 +2626,7 @@ export default defineComponent({
             line-height: 16px;
             text-align: center;
           }
+
           .deposit-btn {
             display: flex;
             justify-content: center;
@@ -2616,6 +2641,7 @@ export default defineComponent({
         }
       }
     }
+
     background: $white;
     // height: 232px;
     height: auto;
@@ -2784,6 +2810,7 @@ export default defineComponent({
 
     .game-platform {
       position: relative;
+
       span {
         position: absolute;
         text-align: center;
@@ -2978,6 +3005,7 @@ export default defineComponent({
     animation: fadeIn 1.5s;
   }
 }
+
 .rebates-absolute {
   display: flex;
   justify-content: center;
@@ -3023,10 +3051,12 @@ export default defineComponent({
     background: transparent;
     box-shadow: none;
   }
+
   .q-card__section {
     background: none;
     box-shadow: none;
   }
+
   .q-card-section {
     background: transparent;
     box-shadow: none;
@@ -3161,6 +3191,7 @@ export default defineComponent({
     transform: translateX(0);
   }
 }
+
 @keyframes tilt-shaking {
   0% {
     transform: rotate(0deg);
@@ -3178,6 +3209,7 @@ export default defineComponent({
     transform: rotate(0deg);
   }
 }
+
 .red-envelope {
   animation: tilt-shaking 1s infinite;
 }
@@ -3337,6 +3369,7 @@ export default defineComponent({
             margin-left: -3px;
           }
         }
+
         span {
           background: linear-gradient(180deg, #087df6 0%, #0011ac 100%);
           -webkit-background-clip: text;
@@ -3382,6 +3415,7 @@ export default defineComponent({
     width: calc(100% - 2rem);
     height: 125px;
     margin: auto;
+
     :deep(.swiper-pagination) {
       //bottom: -20px;
       position: relative;
@@ -3457,6 +3491,7 @@ export default defineComponent({
         font-size: 16px;
         text-align: center;
       }
+
       .match-time {
         color: #444444;
         font-size: 13px;
@@ -3497,6 +3532,7 @@ export default defineComponent({
         display: flex;
         align-items: center;
         justify-content: center;
+
         img {
           width: unset;
           height: 40px;

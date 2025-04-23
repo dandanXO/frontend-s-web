@@ -259,9 +259,9 @@ watch(
   background-color: #9e9e9e;
   color: #fff;
   position: absolute;
-  right: 16px;
-  top: 16px;
+  right: 20px;
+  top: 70px;
   font-size: 0.6em;
-  display: none;
+  z-index: 10000;
 }
 </style>

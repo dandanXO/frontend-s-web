@@ -6,7 +6,9 @@
     <PokerCashback v-if="list.redirectUrl === 'vi-poker-cashback'" />
     <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone'" :promo-code="list.promoCode" />
     <NewPlayerPromo v-if="list.redirectUrl === 'vnm-newplayer-welcome'" :promo-code="list.promoCode" />
-    <CnyLuckyDraw v-if="list.redirectUrl === 'vnm-2025-cny-lucky-draw'" :promo-code="list.promoCode" />
+    <CnyLuckyDraw v-if="list.redirectrl === 'vnm-2025-cny-lucky-draw'" :promo-code="list.promoCode" />
+    <xmasSpinWheel v-if="list.redirectUrl === 'vnm-lucky-spin'" :promo-code="list.promoCode" />
+    
     <HongBaoYu2024
       v-if="listParam.type === 'redpacket' && store.token"
       :promo-id="list.id"
@@ -55,11 +57,13 @@ import { userStore } from "@/store";
 import moment from "moment";
 import NewPlayerPromo from "@/components/hotpromo/newPlayer/NewPlayerPromo.vue";
 import CnyLuckyDraw from "@/components/hotpromo/2025-cny-lucky-draw/2025CnyLuckyDraw.vue";
+import xmasSpinWheel from "@/components/hotpromo/xmasSpinWheel/XmasSpinWheel.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   components: {
+    xmasSpinWheel,
     DailyLoginPromo,
     LotteryPromo,
     PennyBank,
