@@ -684,7 +684,6 @@ export default defineComponent({
       store.getVIPInfo();
       // getVersionNo();
       getPromoImage();
-      getCustomService();
       if (store.isApp()) {
         var btmSwiper = document.getElementById("id-acct-menu");
         btmSwiper.classList.add("shorter-menu");
@@ -941,11 +940,6 @@ export default defineComponent({
     };
 
     const customService = useSessionStorage("CUSTOM_SERVICE", '');
-    const getCustomService = () => {
-      api.get('/config/uiconfigs').then((res) => {
-        customService.value = res.data.specialCS
-      })
-    }
     const handleClickCustomService = () => {
       window.open(customService.value, '_blank')
     }

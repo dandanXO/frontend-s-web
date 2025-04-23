@@ -12,7 +12,7 @@ import axios from "axios";
 import { cached } from "boot/cache";
 import { getVisitorId } from "boot/utils";
 import { useUI } from "stores/ui";
-import { useLocalStorage } from "@vueuse/core";
+import { useLocalStorage, useSessionStorage } from "@vueuse/core";
 import { useRouter } from "vue-router";
 import NotificationWrapper from "./components/notification/NotificationWrapper.vue";
 import { useH5Only } from "src/hooks/h5Only.js";
@@ -38,7 +38,12 @@ export default defineComponent({
     if (darkModeFromStorage.value) {
       $q.dark.set(true);
     }
-
+    const customService = useSessionStorage("CUSTOM_SERVICE", '');
+    const getCustomService = () => {
+      api.get('/config/uiconfigs').then((res) => {
+        customService.value = res.data.specialCS
+      })
+    }
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
       (async () => {
@@ -201,7 +206,7 @@ export default defineComponent({
 
       checkSessStorageItem();
       checkDarkMode();
-
+      getCustomService();
       h5Only(() => {
         checkServerStatus();
         checkSID();
