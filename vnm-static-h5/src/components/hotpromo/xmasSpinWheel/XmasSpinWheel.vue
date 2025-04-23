@@ -188,7 +188,8 @@ const spinWheel = () => {
     if (data.code == 0) {
       spin(PRIZE_ARRAY.indexOf(data.data[0].bonus), () => {
         showPrizePopup.value = true;
-        prizePopupBonusAmt.value = t('lang.get_price')+' '+res.data[0].bonusName;
+        //t('common.get_price')+' '+
+        prizePopupBonusAmt.value = res.data[0].bonusName;
         remainingDraws.value = data.data.remaining
         availableDraw.value = data.data.remaining
       });
