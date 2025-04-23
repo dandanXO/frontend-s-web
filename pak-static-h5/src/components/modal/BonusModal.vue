@@ -34,13 +34,18 @@
             </span>
           </q-btn>
         </RouterLink> -->
-        <q-btn :loading="mission.buttonMode === 'API_CLAIM' ? isClaimLoading || !isLoaded : !isLoaded" class="details" flat @click="handleClick(mission)">
-          {{ mission.buttonMode === "API_CLAIM" ? $t("btn.claim") : $t("btn.details") }}
-          <span
-            class="countdown-span"
-            v-if="mission.countDown === true && mission.response?.eligible === true"
-          >
-            {{ mission.getCountDownStr }}
+        <q-btn
+          :loading="mission.buttonMode === 'API_CLAIM' ? isClaimLoading : false"
+          class="details"
+          :class="{
+            'no-reward': mission.buttonMode === 'DETAILS'
+          }"
+          flat
+          @click="handleClick(mission)"
+        >
+          {{ promoCountdown[mission.promoCode].btnText }}
+          <span class="countdown-span" v-if="mission.countDown === true && mission.response?.eligible === true">
+            {{ promoCountdown[mission.promoCode].countDown }}
           </span>
         </q-btn>
       </div>
@@ -68,7 +73,7 @@
 <script setup>
 import { api, eventapi } from "boot/axios";
 import { userStore } from "stores/index";
-import { onMounted, onUnmounted, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
@@ -83,39 +88,38 @@ const props = defineProps({
   hasTopDownload: Boolean,
   promoList: Array
 });
-const handleClick = async(mission) => {
-  if (mission.buttonMode === 'API_CLAIM') {
-    await claimApi(mission.claimApiUrl, mission.promoCode)
+const handleClick = async (mission) => {
+  if (mission.buttonMode === "API_CLAIM") {
+    await claimApi(mission.claimApiUrl, mission.promoCode);
   } else {
-    router.push({ path: '/promo', query: { name: mission.redirectUrl } })
+    router.push({ path: "/promo", query: { name: mission.redirectUrl } });
   }
-
-}
+};
 async function claimApi(apiUrl, promoCode) {
   if (!apiUrl) {
-    console.warn('Missing claimApiUrl')
-    return
+    console.warn("Missing claimApiUrl");
+    return;
   }
 
   try {
-    isClaimLoading.value = true
-    console.log("Calling claim API:", apiUrl)
+    isClaimLoading.value = true;
+    console.log("Calling claim API:", apiUrl);
 
-    const res = await eventapi.post(`${apiUrl}?promoCode=${promoCode}`)
+    const res = await eventapi.post(`${apiUrl}?promoCode=${promoCode}`);
 
     if (res.code === 0) {
       $q.notify({
         type: "positive",
         position: "top",
-        message: t('notify.claimedSuccessfully'),
+        message: t("notify.claimedSuccessfully"),
         icon: "check_circle_outline"
       });
     } else {
     }
   } catch (err) {
-    console.error('Claim API error:', err)
+    console.error("Claim API error:", err);
   } finally {
-    isClaimLoading.value = false
+    isClaimLoading.value = false;
   }
 }
 
@@ -123,6 +127,31 @@ const isInit = ref(false);
 const isLoaded = ref(false);
 const isClaimLoading = ref(false);
 const countdownTimerList = ref();
+const now = ref(Date.now());
+
+const promoCountdown = computed(() =>
+  props.promoList.reduce((result, promo) => {
+    result[promo.promoCode] = {};
+    if (promo.countDown && promo.response && promo.response.eligible === true) {
+      result[promo.promoCode].countDown = getCountdownWithDays(promo.response.promoEndTime);
+    }
+    switch (promo.buttonMode) {
+      case "API_CLAIM":
+        result[promo.promoCode].btnText = t("btn.claim");
+        break;
+      case "API_REDIRECT":
+        result[promo.promoCode].btnText = t("btn.details");
+        break;
+      case "DETAILS":
+        result[promo.promoCode].btnText = t("btn.check");
+        break;
+      default:
+        result[promo.promoCode].btnText = t("btn.check");
+    }
+
+    return result;
+  }, {})
+);
 
 const imgURL = process.env.IMAGE_CDN + "/promo/";
 const openNewPlayerGuide = () => {
@@ -158,61 +187,18 @@ onUnmounted(() => {
 });
 
 onMounted(() => {
-  if (isInit.value === false) {
-    isInit.value = true;
-
-    const apiPromises = props.promoList.map((promo, index) => {
-      const { initApiUrl, promoCode, buttonMode } = promo;
-
-      if (buttonMode === "API_REDIRECT" && initApiUrl) {
-        console.log("Calling API:", initApiUrl);
-        console.log("Calling API:", initApiUrl);
-        return eventapi
-          .get(`${initApiUrl}?promoCode=${promoCode}`)
-          .then((res) => {
-            if (res.code === 0) {
-              console.log("API response:", res);
-              // 给 promoList[index] 加一个 response 参数
-              promo.response = res.data || null;
-            } else {
-              promo.response = null;
-            }
-          })
-          .catch((err) => {
-            console.error("API failed:", err);
-            promo.response = null;
-          });
-      } else {
-        // 如果没有 initApiUrl，返回一个 resolved Promise
-        promo.response = null;
-        return Promise.resolve();
-      }
-    });
-
-    Promise.all(apiPromises).then(() => {
-      isLoaded.value = true;
-      console.log("All APIs finished");
-
-      console.log(props.promoList);
-
-      countdownTimerList.value = setInterval(() => {
-        props.promoList.forEach((promo, index) => {
-          if (promo.countDown && promo.response && promo.response.eligible === true) {
-            promo.getCountDownStr = getCountdownWithDays(promo.response.promoEndTime);
-          }
-        });
-      }, 1000);
-    });
-  }
+  setInterval(() => {
+    now.value = Date.now();
+  }, 1000);
 });
 </script>
 
 <style lang="scss" scoped>
 .bonus-container {
   // background-color: #1e371f;
-  background: linear-gradient(325.86deg, #0E1E08 5.38%, #1B6026 98.11%);
+  background: linear-gradient(325.86deg, #0e1e08 5.38%, #1b6026 98.11%);
 
-  border: 1px solid #9FE871;
+  border: 1px solid #9fe871;
   border-radius: 16px !important;
   max-width: 400px;
   width: 100%;
@@ -279,9 +265,9 @@ onMounted(() => {
       // background-color: #81ff9e1a;
       border-radius: 8px;
       min-height: 50px;
-      background: #FFFFFF0D;
-      border: 1px solid #55C2530D;
-      box-shadow: 0px 4px 4px 0px #0000000D;
+      background: #ffffff0d;
+      border: 1px solid #55c2530d;
+      box-shadow: 0px 4px 4px 0px #0000000d;
       .mission-icon {
         width: 40px;
         max-width: 10vw;
@@ -333,9 +319,9 @@ onMounted(() => {
         }
 
         &.no-reward {
-          background: linear-gradient(90deg, rgba(36, 238, 137, 0.156) 0%, rgba(36, 238, 137, 0.078) 100%);
-          box-shadow: 0px 0px 5px 0px #ffffff4a inset;
-          color: #ffffff99;
+          background: transparent;
+          color: #81a285;
+          text-transform: uppercase;
         }
       }
     }

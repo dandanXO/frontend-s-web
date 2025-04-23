@@ -296,7 +296,8 @@ export default {
     signinWithGoogle: "Google",
     goNow: "Go Now",
     playReal: "Play real",
-    freeTrial: "Free trial"
+    freeTrial: "Free trial",
+    check: "Check"
   },
   notify: {
     loggingIn: "Logging in...",

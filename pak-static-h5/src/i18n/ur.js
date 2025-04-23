@@ -292,7 +292,8 @@ export default {
     signinWithGoogle: "Google",
     goNow: "اب جائیں",
     playReal: "حقیقی کھیلیں",
-    freeTrial: "مفت آزمائش"
+    freeTrial: "مفت آزمائش",
+    check: "چیک کریں"
   },
   notify: {
     loggingIn: "لاگ ان ہو رہا ہے",

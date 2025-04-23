@@ -86,7 +86,10 @@
           <q-btn class="gift-wrapper" flat @click="showBonusModal">
             <img src="../assets/images/auth/gift-icon.png" />
             <q-badge v-if="fastAccessPromo.length > 0" class="gift-badge" floating rounded>
-              {{ fastAccessPromo.length }}
+              <q-spinner v-if="isFastAccessPromoCounting" size="16px" color="white" />
+              <template v-else>
+                {{ eligiblePromoCount }}
+              </template>
             </q-badge>
           </q-btn>
         </div>
@@ -194,12 +197,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, onUnmounted, watch, provide } from "vue";
+import { ref, onMounted, computed, onUnmounted, watch, provide, shallowRef } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, isAndroid, isInPwa } from "src/boot/utils";
-import { api } from "boot/axios";
+import { api, eventapi } from "boot/axios";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { useI18n } from "vue-i18n";
@@ -219,24 +222,61 @@ const store = userStore();
 const ui = useUI();
 const i18nStoreLanguage = i18nStore();
 
-
 const isScrolled = ref(false);
+const eligiblePromoCount = ref(0);
+const isFastAccessPromoCounting = ref(false);
+const fastAccessPromoAbortController = ref(null);
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 0;
 };
 
 const isBonusModal = ref(false);
-const fastAccessPromo = ref([]);
+const fastAccessPromo = shallowRef([]);
 
 const getFastAccessPromo = () => {
-  api.get(`/promo/fast-access-promo?language=${i18nStoreLanguage.languageVal}`).then((res) => {
+  isFastAccessPromoCounting.value = true;
+  api.get(`/promo/fast-access-promo?language=${i18nStoreLanguage.languageVal}`).then(async (res) => {
     if (res.code === 0) {
+      let _fastAccessPromo;
       if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
-        fastAccessPromo.value = res.data;
+        _fastAccessPromo = res.data;
       } else {
-        fastAccessPromo.value = res.data.filter((item) => item.privilegeStatus !== "TEST");
+        _fastAccessPromo = res.data.filter((item) => item.privilegeStatus !== "TEST");
       }
+
+      const apiQueue = [];
+      fastAccessPromoAbortController.value?.abort();
+      fastAccessPromoAbortController.value = new AbortController();
+      _fastAccessPromo.forEach((promo) => {
+        if (promo.buttonMode === "API_REDIRECT" && promo.initApiUrl) {
+          apiQueue.push(() =>
+            eventapi
+              .get(`${promo.initApiUrl}?promoCode=${promo.promoCode}`, {
+                signal: fastAccessPromoAbortController.value.signal
+              })
+              .then((res) => ({ apiRes: res, promoCode: promo.promoCode }))
+          );
+        }
+      });
+
+      const initApiResList = await Promise.allSettled(apiQueue.map((apiCall) => apiCall()));
+      for (const initApiRes of initApiResList) {
+        if (initApiRes.status === "fulfilled") {
+          const { apiRes, promoCode } = initApiRes.value;
+          const _currentFastAccessPromo = _fastAccessPromo.find((promo) => promo.promoCode === promoCode);
+          if (_currentFastAccessPromo) {
+            _currentFastAccessPromo.response = apiRes.code === 0 ? apiRes.data : null;
+          }
+          console.log(initApiRes.value.apiRes);
+          if (initApiRes.value.apiRes.data.eligible) {
+            eligiblePromoCount.value++;
+          }
+        }
+      }
+      isFastAccessPromoCounting.value = false;
+
+      fastAccessPromo.value = _fastAccessPromo;
     }
   });
 };
@@ -346,7 +386,7 @@ const topDownloadcloseBtn = ref(true);
 
 const topDownloadCount = ref(6);
 
-provide('topDownload', topDownload);
+provide("topDownload", topDownload);
 
 const closeTopdownload = () => {
   topDownload.value = false;
@@ -845,8 +885,17 @@ onUnmounted(() => {
         .gift-badge {
           background: #e30000;
           color: #fff;
-          display: none;
         }
+      }
+
+      .bell-badge,
+      .gift-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        padding: 0;
       }
     }
     // .gift-wrapper {
