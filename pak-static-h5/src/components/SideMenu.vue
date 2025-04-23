@@ -100,7 +100,7 @@
         {{ $t('sideNav.customerServiceVerifier') }}
       </router-link>
     </div>
-    <RouterLink v-if="!isAndroid()" to="/earn-money" class="side-menu-item side-menu-item__appdownload">
+    <a v-if="!isAndroid()" :href="ui.downloadAppUrl" class="side-menu-item side-menu-item__appdownload">
       <div>
         {{ $t("sideNav.appDownload") }}
         <span>{{ $t("sideNav.experienceOneStopGaming") }}</span>
@@ -108,7 +108,7 @@
       <div class="right-icon">
         <img :src="require(`../assets/images/auth/panda-app.png`)" />
       </div>
-    </RouterLink>
+    </a>
     <RouterLink to="/language" class="side-menu-item">
       <div class="item-icon">
         <img :src="require(`../assets/images/auth/country-flag-${$t('lang.langVal')}.png`)" class="flag" />
