@@ -61,7 +61,13 @@ const tab = ref("home");
   position: relative;
 
   .q-tab__indicator {
-    display: none;
+    // display: none;
+    background: #0854C3;
+
+    top: -3.5px;
+    width: 40px;
+    height: 7px;
+    border-radius: 5px;
   }
 
   // &::after {

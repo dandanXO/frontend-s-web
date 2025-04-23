@@ -24,9 +24,11 @@ const props = defineProps(["label"]);
     padding-right: 10px;
     border-radius: 10px;
     // background-color: #0b0e0d;
-    background-color: #0b0e0d;
+    // background-color: #0b0e0d;
+
     border: 1px solid #ffffff14;
-    background: #292d2e;
+    background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+
     font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 14px;

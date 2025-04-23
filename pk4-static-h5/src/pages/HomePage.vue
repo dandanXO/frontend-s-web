@@ -4671,6 +4671,7 @@ const checkGoogleLoginSetPwd = () => {
       margin: auto;
       width: 100%;
       text-align: center;
+      color: #000000;
     }
   }
   /* Top row spans 2 columns each */
