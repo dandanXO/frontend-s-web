@@ -194,7 +194,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, onUnmounted } from "vue";
+import { ref, onMounted, computed, onUnmounted, watch } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
@@ -209,6 +209,7 @@ import SideMenu from "components/SideMenu.vue";
 
 import { defineEmits } from "vue";
 import { useCustomerTrigger } from "src/hooks/trigger";
+import { i18nStore } from "src/router/language";
 
 const props = defineProps(["homeProfile", "showRedemption"]);
 const emits = defineEmits(["closeslot", "activateSlide", "showNewPlayer"]);
@@ -216,6 +217,7 @@ const route = useRoute();
 const router = useRouter();
 const store = userStore();
 const ui = useUI();
+const i18nStoreLanguage = i18nStore();
 
 const isScrolled = ref(false);
 
@@ -403,6 +405,8 @@ const handleBackBtn = () => {
 const isSideDownload = ref(false);
 
 const afterMounted = useCustomerTrigger(loadCustomerAddress);
+
+watch(() => i18nStoreLanguage.languageVal, getFastAccessPromo);
 
 onMounted(() => {
   checkTopDownloadAppear();

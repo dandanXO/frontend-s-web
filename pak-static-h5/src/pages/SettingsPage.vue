@@ -138,12 +138,12 @@
           <div class="acct-nav-label">{{ $t("settings.exchange") }}</div>
         </a>
 
-<!--        <a v-if="canTransfer" target="_blank" @click="handleTransferClick">-->
-<!--          <div class="acct-nav-item">-->
-<!--            <img src="../assets/images/account/transfer-svg.svg" />-->
-<!--          </div>-->
-<!--          <div class="acct-nav-label">{{ $t("settings.transfer") }}</div>-->
-<!--        </a>-->
+        <!--        <a v-if="canTransfer" target="_blank" @click="handleTransferClick">-->
+        <!--          <div class="acct-nav-item">-->
+        <!--            <img src="../assets/images/account/transfer-svg.svg" />-->
+        <!--          </div>-->
+        <!--          <div class="acct-nav-label">{{ $t("settings.transfer") }}</div>-->
+        <!--        </a>-->
       </div>
       <div class="bottom-setting-section invite-friends-section">
         <div class="left-icon">
@@ -218,7 +218,7 @@
 
         <div class="txt-content q-mt-md text-center">{{ $t("notify.signOutMessage") }}</div>
 
-        <div style="width: 100%;" class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+        <div style="width: 100%" class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
           <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
           <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="logout" />
         </div>
@@ -242,6 +242,7 @@ import { api } from "boot/axios";
 import { useUI } from "stores/ui";
 import { Platform } from "quasar";
 import { t } from "src/boot/lang";
+import { i18nStore } from "src/router/language";
 
 const selfTgurl = ref("");
 const fallbackCopyTextToClipboard = (text) => {
@@ -256,13 +257,13 @@ const fallbackCopyTextToClipboard = (text) => {
     message: "Link copied to clipboard",
     color: "positive",
     position: "top",
-    timeout: 2000,
+    timeout: 2000
   });
 };
 
 const copyHrefLink = () => {
   const textToCopy = selfTgurl.value;
-  
+
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard
       .writeText(textToCopy)
@@ -271,7 +272,7 @@ const copyHrefLink = () => {
           message: "Link copied to clipboard",
           color: "positive",
           position: "top",
-          timeout: 2000,
+          timeout: 2000
         });
       })
       .catch(() => {
@@ -303,13 +304,18 @@ const route = useRoute();
 const qs = require("qs");
 const $q = useQuasar();
 const ui = useUI();
+const i18nStoreLanguage = i18nStore();
 
 const slide = ref(0);
 const imgURL = process.env.IMAGE_CDN + "/promo/";
 const btm_banners = ref([]);
 const getPromoImage = () => {
+  const params = {
+    category: "CENTERPROMO",
+    language: i18nStoreLanguage.languageVal
+  };
   api
-    .get("/opt-session/promo/banner?category=CENTERPROMO")
+    .get("/opt-session/promo/banner", { params })
     .then((res) => {
       if (res.code === 0) {
         btm_banners.value = res.data;
@@ -377,7 +383,7 @@ const logout = () => {
   loadingLogout.value = true;
 
   $q.loading.show({
-    message: t('notify.loggingOut')
+    message: t("notify.loggingOut")
   });
 
   store.memberLogout().then(() => {
