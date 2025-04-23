@@ -283,7 +283,13 @@ body.body--dark .q-footer {
 
   // margin-top: 30px;
   background: transparent !important;
-  bottom: env(safe-area-inset-bottom, 0);
+  bottom: 0;
+
+  .q-tabs{
+    border-radius: 13px 13px 0 0;
+    background: #323738;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
 
   // height: 86px;
 
