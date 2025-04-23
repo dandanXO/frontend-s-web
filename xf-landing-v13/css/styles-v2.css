@@ -1,0 +1,254 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0%;
+  font-size: 1rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #080a16;
+  position: relative;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  display: block;
+  margin: 0 auto;
+}
+
+a {
+  transition: 0.3s all;
+}
+
+.showMobile {
+  display: block;
+}
+
+.showDesktop {
+  display: none;
+}
+
+.full-container {
+  height: 100dvh;
+  overflow: auto;
+  /* margin-bottom: 20px; */
+}
+
+.main-wrapper {
+  background-image: url(../imgs/bg-mobile.png);
+  background-position: top center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* min-height: 100vh; */
+  max-width: 550px;
+  margin: auto;
+}
+
+.top-wrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
+.top-bg {
+  width: 100%;
+  margin: -20px 0;
+}
+
+.top-bg img {
+  width: 100%;
+  pointer-events: none;
+  /* padding: 20px 20px 0 20px; */
+}
+
+.top-logo {
+  display: block;
+  position: absolute;
+  top: clamp(10px, 5vw, 40px);
+  margin: 0 auto;
+  width: 70vw;
+  max-width: 385px;
+}
+
+.title-text {
+  margin: 0px;
+  background: linear-gradient(180deg, #ff7d7f 21.28%, #e90e12 84.04%);
+  -webkit-background-clip: text; /* Clips the background to the text */
+  -webkit-text-fill-color: transparent; /* Makes the text itself transparent */
+  background-clip: text; /* For non-Webkit browsers that support it */
+  color: transparent;
+  -webkit-text-stroke: 0.5px white;
+  font-weight: bold;
+  font-size: 22px;
+  text-align: center;
+}
+
+.top-logo img {
+  width: 100%;
+  /* max-width: 120px; */
+}
+
+.top-cs {
+  display: block;
+  max-width: 190px;
+  position: fixed;
+  right: 0;
+  top: 40px;
+  width: 25%;
+}
+
+.top-cs img {
+  width: 100%;
+}
+
+.banner-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  margin: -1% auto 0;
+  width: 50vw;
+  max-width: 275px;
+}
+
+/* .banner-btn-wrapper {
+  position: absolute;
+  display: block;
+  left: 22%;
+  right: 16%;
+  bottom: -1%;
+  z-index: 1;
+} */
+#tf88Url-btn {
+  animation: pressDown 0.65s infinite;
+}
+
+@keyframes pressDown {
+  0% {
+    transform: translateY(0);
+  }
+  10% {
+    transform: translateY(8px);
+  }
+  70% {
+    transform: translateY(8px);
+  }
+  80% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.banner-btn {
+  position: relative;
+  z-index: 1;
+  max-width: 100%;
+  padding-right: 20px;
+}
+
+.swing {
+  animation: swing 1.2s linear infinite;
+  transform: all 0.5s;
+}
+
+@keyframes swing {
+  0%,
+  100% {
+    transform: translateX(-5px);
+  }
+
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+.sub-title-img {
+  padding: 10px 16px 20px;
+}
+
+.sub-title-img img {
+  display: block;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+}
+
+.contact-wrapper {
+  background: url(../imgs/contact-bg.png);
+  aspect-ratio: 735 / 739;
+  background-size: 100% 100%;
+  padding: 14% 7% 32%;
+  margin-top: 40px;
+}
+
+.contact-content {
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.contact-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.contact-item {
+  padding: 4px 10px;
+  border-radius: 8px;
+  display: flex;
+  gap: 8px;
+  font-size: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  color: #ffffffcc;
+}
+
+.contact-item .icon {
+  width: 36px;
+  flex-shrink: 0;
+}
+
+.contact-item .service-icon {
+  width: 15vw;
+  max-width: 82px;
+}
+
+.contact-item img {
+  width: 100%;
+}
+
+.contact-item.w-50 {
+  justify-content: center;
+  background: url(../imgs/contact-info-bg-short.png);
+  background-size: 100% 100%;
+  width: calc(50% - 4px);
+  aspect-ratio: 305 / 88;
+}
+
+.contact-item.w-100 {
+  background: url(../imgs/contact-info-bg.png);
+  background-size: 100% 100%;
+  width: 100%;
+  aspect-ratio: 627 / 88;
+  padding: 4px 24px;
+}
+
+.contact-item .title {
+  color: #fff;
+}
+
+@media screen and (max-width: 450px) {
+  .contact-item {
+    font-size: 0.8rem;
+  }
+}
