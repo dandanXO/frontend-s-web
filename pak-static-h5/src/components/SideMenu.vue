@@ -100,7 +100,7 @@
         {{ $t('sideNav.customerServiceVerifier') }}
       </router-link>
     </div>
-    <RouterLink to="/earn-money" class="side-menu-item side-menu-item__appdownload">
+    <RouterLink v-if="!isAndroid()" to="/earn-money" class="side-menu-item side-menu-item__appdownload">
       <div>
         {{ $t("sideNav.appDownload") }}
         <span>{{ $t("sideNav.experienceOneStopGaming") }}</span>
@@ -134,7 +134,7 @@
 </template>
 <script setup>
 import { defineEmits, inject } from "vue";
-
+import { isAndroid } from "boot/utils";
 import { useRouter } from "vue-router";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import { useUI } from "stores/ui";
