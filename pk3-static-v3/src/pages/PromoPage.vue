@@ -36,9 +36,9 @@
                 <div
                   v-for="(promo, i) in filteredArray"
                   :key="i"
-                  data-aos="zoom-in"
-                  data-aos-easing="ease-out"
-                  data-aos-duration="1000"
+                  v-bind:data-aos="!isWebview ? 'zoom-in' : null"
+                  v-bind:data-aos-easing="!isWebview ? 'ease-out' : null"
+                  v-bind:data-aos-duration="!isWebview ? '1000' : null"
                 >
                   <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
