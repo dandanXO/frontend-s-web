@@ -164,6 +164,13 @@ deploy-xf-landing-v11:
 
 #===============================================================================================
 
+deploy-xf-landing-v13:
+  extends: .s3-deploy
+  variables:
+    PROJECT: xf-landing-v13
+
+#===============================================================================================
+
 deploy-tha-download:
   extends: .s3-deploy
   variables:
