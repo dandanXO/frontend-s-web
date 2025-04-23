@@ -20,6 +20,12 @@
           <!--          <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>-->
         </div>
       </div>
+      <div class="right">
+        <div class="custom-service" @click="handleClickCustomService">
+          <img src="../assets/images/account/custom-service.png" alt="">
+          <span>专属客服</span>
+        </div>
+      </div>
     </div>
 
     <div class="vipcard">
@@ -558,7 +564,7 @@
 import { defineComponent, ref, reactive, computed, onMounted, onBeforeUnmount, onActivated } from "vue";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
-import { useLocalStorage } from "@vueuse/core";
+import { useLocalStorage, useSessionStorage } from "@vueuse/core";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { Cropper } from "vue-advanced-cropper";
@@ -932,6 +938,11 @@ export default defineComponent({
         window.location.reload();
       });
     };
+
+    const customService = useSessionStorage("CUSTOM_SERVICE", '');
+    const handleClickCustomService = () => {
+      window.open(customService.value, '_blank')
+    }
     return {
       header: "Account",
       logout,
@@ -972,7 +983,8 @@ export default defineComponent({
       cropperRef,
       change,
       timestamp,
-      isLoadingUpload
+      isLoadingUpload,
+      handleClickCustomService
     };
   }
 });
@@ -982,7 +994,7 @@ export default defineComponent({
 .profile {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   padding: 8px 15px 4px;
   gap: 10px;
   width: 100%;
@@ -1012,6 +1024,23 @@ export default defineComponent({
       height: 50px;
       aspect-ratio: 1/1;
       border-radius: 50%;
+    }
+  }
+
+  .right {
+    .custom-service {
+      width: 84px;
+      height: 24px;
+      border-radius: 8px;
+      background: linear-gradient(106.6deg, #5DB5FF 35.17%, #4B0FFF 101.26%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      font-size: 12px;
+      color: white;
+      cursor: pointer;
     }
   }
 
