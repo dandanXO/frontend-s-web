@@ -229,7 +229,7 @@ const isBonusModal = ref(false);
 const fastAccessPromo = ref([]);
 
 const getFastAccessPromo = () => {
-  api.get("/promo/fast-access-promo").then((res) => {
+  api.get(`/promo/fast-access-promo?language=${i18nStoreLanguage.languageVal}`).then((res) => {
     if (res.code === 0) {
       if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
         fastAccessPromo.value = res.data;
