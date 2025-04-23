@@ -1,417 +1,459 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>雷火电竞体育官网</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>雷火电竞体育官网</title>
 
-  <link rel="stylesheet" type="text/css" href="css/styles.css" />
-  <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
 
-  <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
-</head>
-<body id="lh-landing-v3-1">
-<div class="main-wrapper">
-  <div class="top-wrapper">
-    <div class="top-image-board">
-      <div class="top-logo">
-        <img src="img/lh-logo.png" class="logo-v1" alt="雷火 TFGAMING" title="雷火 TFGAMING" />
-      </div>
-    </div>
-
-    <div class="title-img"><img src="img/title-img.png" /></div>
-
-    <div class="hongbao-btn">
-      <div class="head-pattern-img head-pattern-img__01"><img src="img/head-pattern-01.png" alt="" /></div>
-      <div class="head-pattern-img head-pattern-img__02"><img src="img/head-pattern-02.png" alt="" /></div>
-      <a href="https://www.lh63798.com/" id="link-url" target="_self" class="pointer-btn">
-        <img src="img/btn-register.png" alt="claim-btn" />
-      </a>
-    </div>
-
-    <div class="content-desc">
-      <img src="img/board2.png" alt="" />
-    </div>
-
-    <div class="content-cat">
-      <img src="img/content-cat.png" alt="" width="80%" />
-    </div>
-
-    <div class="subtitle-img subtitle-img__start">
-      <img src="img/subtitle-img-01.png" alt="" />
-    </div>
-
-    <div class="content-container">
-      <div class="content-item">
-        <div class="item-icon"><img src="img/icon-cs.png" /></div>
-        <div class="item-txt">客服ID:vip0002</div>
-        <div class="item-btns">
-          <a id="voxis-download-1" target="_blank" class="btn-brown-dark">下载</a>
-          <a href="#" class="btn-brown-light" onclick="copyText('vip0002')">复制</a>
+    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
+  </head>
+  <body id="lh-landing-v3-1">
+    <div class="main-wrapper">
+      <div class="top-wrapper">
+        <div class="top-image-board">
+          <div class="top-logo">
+            <img src="img/lh-logo.png" class="logo-v1" alt="雷火 TFGAMING" title="雷火 TFGAMING" />
+          </div>
         </div>
-      </div>
 
-      <div class="content-item">
-        <div class="item-icon"><img src="img/icon-cs.png" /></div>
-        <div class="item-txt">客服ID:vip0003</div>
-        <div class="item-btns">
-          <a id="voxis-download-2" target="_blank" class="btn-brown-dark">下载</a>
-          <a href="#" class="btn-brown-light" onclick="copyText('vip0003')">复制</a>
+        <div class="title-img"><img src="img/title-img.png" /></div>
+
+        <div class="hongbao-btn">
+          <div class="head-pattern-img head-pattern-img__01"><img src="img/head-pattern-01.png" alt="" /></div>
+          <div class="head-pattern-img head-pattern-img__02"><img src="img/head-pattern-02.png" alt="" /></div>
+          <a href="https://www.lh63798.com/" id="link-url" target="_self" class="pointer-btn">
+            <img src="img/btn-register.png" alt="claim-btn" />
+          </a>
         </div>
-      </div>
 
-      <div class="content-item">
-        <div class="item-icon"><img src="img/icon-prize.png" /></div>
-        <div class="item-txt">彩金QQ群:<span id="group1-number">822752460</span></div>
-        <div class="item-btns">
-          <a href="#" class="btn-brown-light" id="click1-number" data-id="822752460" onclick="copyText2(this)">复制</a>
+        <div class="content-desc">
+          <img src="img/board2.png" alt="" />
         </div>
-      </div>
 
-      <!-- <div class="content-item">
+        <div class="content-cat">
+          <img src="img/content-cat.png" alt="" width="80%" />
+        </div>
+
+        <div class="subtitle-img subtitle-img__start">
+          <img src="img/subtitle-img-01.png" alt="" />
+        </div>
+
+        <div class="content-container">
+          <div class="content-item">
+            <div class="item-icon"><img src="img/icon-cs.png" /></div>
+            <div class="item-txt">
+              客服ID:
+              <span id="agent-1">vip0002</span>
+            </div>
+            <div class="item-btns">
+              <a id="voxis-download-1" target="_blank" class="btn-brown-dark">下载</a>
+              <a href="#" class="btn-brown-light" id="agent-1-copy" data-id="vip0002" onclick="copyText2(this)">复制</a>
+            </div>
+          </div>
+
+          <div class="content-item">
+            <div class="item-icon"><img src="img/icon-cs.png" /></div>
+            <div class="item-txt">
+              客服ID:
+              <span id="agent-2">vip0003</span>
+            </div>
+            <div class="item-btns">
+              <a id="voxis-download-2" target="_blank" class="btn-brown-dark">下载</a>
+              <a href="#" class="btn-brown-light" id="agent-2-copy" data-id="vip0003" onclick="copyText2(this)">复制</a>
+            </div>
+          </div>
+
+          <div class="content-item">
+            <div class="item-icon"><img src="img/icon-prize.png" /></div>
+            <div class="item-txt">
+              彩金QQ群:
+              <span id="group1-number">822752460</span>
+            </div>
+            <div class="item-btns">
+              <a href="#" class="btn-brown-light" id="click1-number" data-id="822752460" onclick="copyText2(this)">
+                复制
+              </a>
+            </div>
+          </div>
+
+          <div class="content-item" id="group2-item">
+            <div class="item-icon"><img src="img/icon-prize.png" /></div>
+            <div class="item-txt">
+              彩金QQ群:
+              <span id="group2-number">822752460</span>
+            </div>
+            <div class="item-btns">
+              <a href="#" class="btn-brown-light" id="click2-number" data-id="822752460" onclick="copyText2(this)">
+                复制
+              </a>
+            </div>
+          </div>
+
+          <!-- <div class="content-item">
     <div class="item-icon"><img src="img/icon-prize.png" /></div>
     <div class="item-txt">彩金QQ群:819110976</div>
     <div class="item-btns">
       <a href="#" class="btn-brown-light" onclick="copyText('819110976')">复制</a>
     </div>
   </div> -->
+        </div>
+
+        <div class="subtitle-img">
+          <img src="img/title1.png" alt="" />
+        </div>
+
+        <div class="table-img">
+          <table class="deposit-table">
+            <thead>
+              <tr>
+                <td>存款金额</td>
+                <td>包赔彩金</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>100</td>
+                <td>100</td>
+              </tr>
+              <tr>
+                <td>200</td>
+                <td>200</td>
+              </tr>
+              <tr>
+                <td>500</td>
+                <td>300</td>
+              </tr>
+              <tr>
+                <td>1000</td>
+                <td>500</td>
+              </tr>
+              <tr>
+                <td>2000</td>
+                <td>1000</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="btm-text">包赔优惠 彩3倍水 不限游戏</p>
+        </div>
+
+        <div class="subtitle-img">
+          <img src="img/subtitle-img-03.png" alt="" />
+        </div>
+
+        <div class="table-img">
+          <table class="deposit-table">
+            <thead>
+              <tr>
+                <td>存款金额</td>
+                <td>首存彩金</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>100</td>
+                <td>38</td>
+              </tr>
+              <tr>
+                <td>200</td>
+                <td>68</td>
+              </tr>
+              <tr>
+                <td>500</td>
+                <td>108</td>
+              </tr>
+              <tr>
+                <td>1000</td>
+                <td>188</td>
+              </tr>
+              <tr>
+                <td>3000</td>
+                <td>388</td>
+              </tr>
+              <tr>
+                <td>5000</td>
+                <td>688</td>
+              </tr>
+              <tr>
+                <td>10000</td>
+                <td>1000</td>
+              </tr>
+              <tr>
+                <td>20000</td>
+                <td>1888</td>
+              </tr>
+              <tr>
+                <td>30000</td>
+                <td>2888</td>
+              </tr>
+              <tr>
+                <td>50000</td>
+                <td>4888</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="btm-text">本彩1倍水 彩金1倍水 不限游戏</p>
+        </div>
+
+        <div class="subtitle-img">
+          <img src="img/title2.png" alt="" />
+        </div>
+
+        <div class="table-img">
+          <table class="deposit-table smaller-table">
+            <thead>
+              <tr>
+                <td>存款金额</td>
+                <td>彩1倍水</td>
+                <td>彩6倍水</td>
+                <td>彩10倍水</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>200</td>
+                <td>8</td>
+                <td>20</td>
+                <td>38</td>
+              </tr>
+              <tr>
+                <td>300</td>
+                <td>10</td>
+                <td>38</td>
+                <td>58</td>
+              </tr>
+              <tr>
+                <td>500</td>
+                <td>18</td>
+                <td>58</td>
+                <td>88</td>
+              </tr>
+              <tr>
+                <td>1000</td>
+                <td>38</td>
+                <td>88</td>
+                <td>118</td>
+              </tr>
+              <tr>
+                <td>3000</td>
+                <td>88</td>
+                <td>158</td>
+                <td>188</td>
+              </tr>
+              <tr>
+                <td>5000</td>
+                <td>108</td>
+                <td>218</td>
+                <td>288</td>
+              </tr>
+              <tr>
+                <td>10000</td>
+                <td>288</td>
+                <td>588</td>
+                <td>888</td>
+              </tr>
+              <tr>
+                <td>30000</td>
+                <td>688</td>
+                <td>1188</td>
+                <td>1588</td>
+              </tr>
+              <tr>
+                <td>50000</td>
+                <td>1288</td>
+                <td>2588</td>
+                <td>3888</td>
+              </tr>
+              <tr>
+                <td>100000</td>
+                <td>1888</td>
+                <td>2588</td>
+                <td>3888</td>
+              </tr>
+              <tr>
+                <td>200000</td>
+                <td>2888</td>
+                <td>5888</td>
+                <td>8888</td>
+              </tr>
+              <tr>
+                <td>500000</td>
+                <td>6666</td>
+                <td>18888</td>
+                <td>25888</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="btm-text">复存优惠彩金 流水可选</p>
+        </div>
+
+        <div class="subtitle-img">
+          <img src="img/title4.png" alt="" />
+        </div>
+
+        <div class="table-img">
+          <table class="deposit-table">
+            <thead>
+              <tr>
+                <td>等级</td>
+                <td>邀请彩金</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>V 1-2</td>
+                <td>8</td>
+              </tr>
+              <tr>
+                <td>V 3-4</td>
+                <td>28</td>
+              </tr>
+              <tr>
+                <td>V 5-6</td>
+                <td>68</td>
+              </tr>
+              <tr>
+                <td>V 7-8</td>
+                <td>108</td>
+              </tr>
+              <tr>
+                <td>V 9-10</td>
+                <td>118</td>
+              </tr>
+              <tr>
+                <td>V 11-12</td>
+                <td>388</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="btm-text">添加好友 彩金5倍水 不限游戏</p>
+        </div>
+      </div>
     </div>
 
-    <div class="subtitle-img">
-      <img src="img/title1.png" alt="" />
-    </div>
+    <script type="text/javascript">
+      function updateContactInfoByHostname() {
+        const hostname = window.location.host.replace("www.", "");
+        const contactInfo = {
+          "m935.vip": {
+            group1Number: "612811785",
+            agent1: "vip0002",
+            agent2: "vip0003",
+            landingPageLink: "https://am35.cc/",
+            linkUrl: "https://www.lh30509.com"
+          },
+          "lh8v6.com": {
+            group1Number: "822752460",
+            agent1: "vip0002",
+            agent2: "vip0003",
+            landingPageLink: "https://am35.cc/",
+            linkUrl: "https://www.lh999.cc"
+          },
+          "774891.com": {
+            group1Number: "822752460",
+            agent1: "vip0002",
+            agent2: "vip0003",
+            landingPageLink: "https://am35.cc/",
+            linkUrl: "https://www.lh999.cc"
+          },
+          "512105.com": {
+            group1Number: "884663921",
+            group2Number: "1030686462",
+            agent1: "viplh16999",
+            agent2: "viplh1623",
+            landingPageLink: "https://am35.cc/",
+            linkUrl: "https://www.lh999.cc"
+          }
+        };
 
-    <div class="table-img">
+        const defaultInfo = {
+          group1Number: "822752460",
+          agent1: "vip0002",
+          agent2: "vip0003",
+          landingPageLink: "https://am35.cc/", // You can set a default link or leave it empty
+          linkUrl: "https://www.lh63798.com/"
+        };
 
-      <table class="deposit-table">
-        <thead>
-        <tr>
-          <td>存款金额</td>
-          <td>包赔彩金</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>100</td>
-          <td>100</td>
-        </tr>
-        <tr>
-          <td>200</td>
-          <td>200</td>
-        </tr>
-        <tr>
-          <td>500</td>
-          <td>300</td>
-        </tr>
-        <tr>
-          <td>1000</td>
-          <td>500</td>
-        </tr>
-        <tr>
-          <td>2000</td>
-          <td>1000</td>
-        </tr>
-        </tbody>
-      </table>
+        const selectedInfo = contactInfo[hostname] || defaultInfo;
+        console.log("ENd Info");
+        console.log(selectedInfo);
 
-      <p class="btm-text">包赔优惠 彩3倍水 不限游戏</p>
-    </div>
-
-    <div class="subtitle-img">
-      <img src="img/subtitle-img-03.png" alt="" />
-    </div>
-
-    <div class="table-img">
-      <table class="deposit-table">
-        <thead>
-        <tr>
-          <td>存款金额</td>
-          <td>首存彩金</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>100</td>
-          <td>38</td>
-        </tr>
-        <tr>
-          <td>200</td>
-          <td>68</td>
-        </tr>
-        <tr>
-          <td>500</td>
-          <td>108</td>
-        </tr>
-        <tr>
-          <td>1000</td>
-          <td>188</td>
-        </tr>
-        <tr>
-          <td>3000</td>
-          <td>388</td>
-        </tr>
-        <tr>
-          <td>5000</td>
-          <td>688</td>
-        </tr>
-        <tr>
-          <td>10000</td>
-          <td>1000</td>
-        </tr>
-        <tr>
-          <td>20000</td>
-          <td>1888</td>
-        </tr>
-        <tr>
-          <td>30000</td>
-          <td>2888</td>
-        </tr>
-        <tr>
-          <td>50000</td>
-          <td>4888</td>
-        </tr>
-        </tbody>
-      </table>
-
-      <p class="btm-text">本彩1倍水 彩金1倍水 不限游戏</p>
-    </div>
-
-    <div class="subtitle-img">
-      <img src="img/title2.png" alt="" />
-    </div>
-
-    <div class="table-img">
-
-      <table class="deposit-table smaller-table">
-        <thead>
-        <tr>
-          <td>存款金额</td>
-          <td>彩1倍水</td>
-          <td>彩6倍水</td>
-          <td>彩10倍水</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>200</td>
-          <td>8</td>
-          <td>20</td>
-          <td>38</td>
-        </tr>
-        <tr>
-          <td>300</td>
-          <td>10</td>
-          <td>38</td>
-          <td>58</td>
-        </tr>
-        <tr>
-          <td>500</td>
-          <td>18</td>
-          <td>58</td>
-          <td>88</td>
-        </tr>
-        <tr>
-          <td>1000</td>
-          <td>38</td>
-          <td>88</td>
-          <td>118</td>
-        </tr>
-        <tr>
-          <td>3000</td>
-          <td>88</td>
-          <td>158</td>
-          <td>188</td>
-        </tr>
-        <tr>
-          <td>5000</td>
-          <td>108</td>
-          <td>218</td>
-          <td>288</td>
-        </tr>
-        <tr>
-          <td>10000</td>
-          <td>288</td>
-          <td>588</td>
-          <td>888</td>
-        </tr>
-        <tr>
-          <td>30000</td>
-          <td>688</td>
-          <td>1188</td>
-          <td>1588</td>
-        </tr>
-        <tr>
-          <td>50000</td>
-          <td>1288</td>
-          <td>2588</td>
-          <td>3888</td>
-        </tr>
-        <tr>
-          <td>100000</td>
-          <td>1888</td>
-          <td>2588</td>
-          <td>3888</td>
-        </tr>
-        <tr>
-          <td>200000</td>
-          <td>2888</td>
-          <td>5888</td>
-          <td>8888</td>
-        </tr>
-        <tr>
-          <td>500000</td>
-          <td>6666</td>
-          <td>18888</td>
-          <td>25888</td>
-        </tr>
-
-        </tbody>
-      </table>
-      <p class="btm-text">复存优惠彩金 流水可选</p>
-    </div>
-
-    <div class="subtitle-img">
-      <img src="img/title4.png" alt="" />
-    </div>
-
-    <div class="table-img">
-
-      <table class="deposit-table">
-        <thead>
-        <tr>
-          <td>等级</td>
-          <td>邀请彩金</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>V 1-2</td>
-          <td>8</td>
-        </tr>
-        <tr>
-          <td>V 3-4</td>
-          <td>28</td>
-        </tr>
-        <tr>
-          <td>V 5-6</td>
-          <td>68</td>
-        </tr>
-        <tr>
-          <td>V 7-8</td>
-          <td>108</td>
-        </tr>
-        <tr>
-          <td>V 9-10</td>
-          <td>118</td>
-        </tr>
-        <tr>
-          <td>V 11-12</td>
-          <td>388</td>
-        </tr>
-        </tbody>
-      </table>
-      <p class="btm-text">添加好友 彩金5倍水 不限游戏</p>
-
-    </div>
-  </div>
-</div>
-
-<script type="text/javascript">
-
-
-  function updateContactInfoByHostname() {
-    const hostname = window.location.host.replace("www.", "");
-    const contactInfo = {
-      "m935.vip": {
-        group1Number: "612811785",
-        landingPageLink: "https://am35.cc/",
-        linkUrl : "https://www.lh30509.com"
-      },
-      "lh8v6.com": {
-        group1Number: "822752460",
-        landingPageLink: "https://am35.cc/",
-        linkUrl : "https://www.lh999.cc"
-      },
-      "774891.com": {
-        group1Number: "822752460",
-        landingPageLink: "https://am35.cc/",
-        linkUrl : "https://www.lh999.cc"
+        // document.getElementById("group1-title").textContent = selectedInfo.group1Title;
+        document.getElementById("group1-number").textContent = selectedInfo.group1Number;
+        document.getElementById("click1-number").dataset.id = selectedInfo.group1Number;
+        document.getElementById("agent-1-copy").dataset.id = selectedInfo.agent1;
+        document.getElementById("agent-2-copy").dataset.id = selectedInfo.agent2;
+        document.getElementById("agent-1").textContent = selectedInfo.agent1;
+        document.getElementById("agent-2").textContent = selectedInfo.agent2;
+        // document.getElementById("group2-title").textContent = selectedInfo.group2Title;
+        // document.getElementById("group2-number").textContent = selectedInfo.group2Number;
+        // document.getElementById("landing-page-link1").href = selectedInfo.landingPageLink;
+        // document.getElementById("landing-page-link2").href = selectedInfo.landingPageLink;
+        // document.getElementById("landing-page-link3").href = selectedInfo.landingPageLink;
+        document.getElementById("link-url").href = selectedInfo.linkUrl;
+        if (selectedInfo.group2Number) {
+          document.getElementById("group2-item").style.display = "flex";
+          document.getElementById("group2-number").textContent = selectedInfo.group2Number;
+          document.getElementById("click2-number").dataset.id = selectedInfo.group2Number;
+        }
       }
-    }
 
-    const defaultInfo = {
-      group1Number: "822752460",
-      landingPageLink: "https://am35.cc/", // You can set a default link or leave it empty
-      linkUrl : "https://www.lh63798.com/"
-    };
+      function checkPlatform() {
+        $("#voxis-download-1").attr("href", "https://am35.cc/");
+        $("#voxis-download-2").attr("href", "https://am35.cc/");
+      }
 
-    const selectedInfo = contactInfo[hostname] || defaultInfo;
-    console.log("ENd Info");
-    console.log(selectedInfo);
+      function copyText2(eve) {
+        var text = $(eve).data("id");
 
-    // document.getElementById("group1-title").textContent = selectedInfo.group1Title;
-    document.getElementById("group1-number").textContent = selectedInfo.group1Number;
-    document.getElementById("click1-number").dataset.id = selectedInfo.group1Number;
-    // document.getElementById("group2-title").textContent = selectedInfo.group2Title;
-    // document.getElementById("group2-number").textContent = selectedInfo.group2Number;
-    // document.getElementById("landing-page-link1").href = selectedInfo.landingPageLink;
-    // document.getElementById("landing-page-link2").href = selectedInfo.landingPageLink;
-    // document.getElementById("landing-page-link3").href = selectedInfo.landingPageLink;
-    document.getElementById("link-url").href = selectedInfo.linkUrl;
-  }
+        navigator.clipboard
+          .writeText(text)
+          .then(() => {
+            alert("复制成功！");
+            console.log("Text copied to clipboard!");
+          })
+          .catch((err) => {
+            console.error("Failed to copy text:", err);
+          });
+      }
 
-  function checkPlatform() {
-    $("#voxis-download-1").attr("href", "https://am35.cc/");
-    $("#voxis-download-2").attr("href", "https://am35.cc/");
-  }
+      function copyText(text) {
+        navigator.clipboard
+          .writeText(text)
+          .then(() => {
+            alert("复制成功！");
+            console.log("Text copied to clipboard!");
+          })
+          .catch((err) => {
+            console.error("Failed to copy text:", err);
+          });
+      }
 
-  function copyText2(eve){
-    var text= $(eve).data("id");
-
-    navigator.clipboard
-      .writeText(text)
-      .then(() => {
-        alert("复制成功！");
-        console.log("Text copied to clipboard!");
-      })
-      .catch((err) => {
-        console.error("Failed to copy text:", err);
+      $(document).ready(function (e) {
+        checkPlatform();
+        updateContactInfoByHostname();
       });
-  }
+    </script>
 
-  function copyText(text) {
-    navigator.clipboard
-      .writeText(text)
-      .then(() => {
-        alert("复制成功！");
-        console.log("Text copied to clipboard!");
-      })
-      .catch((err) => {
-        console.error("Failed to copy text:", err);
-      });
-  }
+    <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
 
-  $(document).ready(function (e) {
-    checkPlatform();
-    updateContactInfoByHostname();
-  });
-</script>
+    <script type="text/javascript">
+      var hostname = window.location.hostname;
+      console.log(hostname);
+      //Change Info
 
-<script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
-
-<script type="text/javascript">
-  var hostname = window.location.hostname;
-  console.log(hostname);
-  //Change Info
-
-  //LA 51.la
-  if (hostname.indexOf("80656.biz") > -1) {
-    LA.init({ id: "KTVV87lyO4TjT6Mj", ck: "KTVV87lyO4TjT6Mj" });
-  } else if (hostname.indexOf("lh98.luxe") > -1) {
-    LA.init({ id: "KcV24Z8TmdDEGogX", ck: "KcV24Z8TmdDEGogX" });
-  } else {
-    LA.init({ id: "KRuQK5p2m1d1JJJC", ck: "KRuQK5p2m1d1JJJC", autoTrack: true });
-  }
-</script>
-</body>
+      //LA 51.la
+      if (hostname.indexOf("80656.biz") > -1) {
+        LA.init({ id: "KTVV87lyO4TjT6Mj", ck: "KTVV87lyO4TjT6Mj" });
+      } else if (hostname.indexOf("lh98.luxe") > -1) {
+        LA.init({ id: "KcV24Z8TmdDEGogX", ck: "KcV24Z8TmdDEGogX" });
+      } else {
+        LA.init({ id: "KRuQK5p2m1d1JJJC", ck: "KRuQK5p2m1d1JJJC", autoTrack: true });
+      }
+    </script>
+  </body>
 </html>
