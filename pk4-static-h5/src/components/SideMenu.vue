@@ -3,7 +3,28 @@
 
   <div class="left-side-menu" @click.stop>
     <div class="topbar">
+        <RouterLink to="/vip" style="padding: 0;" no-caps :ripple="false" unelevated>
+          
+          <div class="profile-pic" :class="store.vip ? 'vip-' + store.vip.replace('VIP', '') : 'vip-0'">
+              <q-avatar size="40px">
+                <img :src="profileImagePath" />
+              </q-avatar>
+              <div class="profile-pic-frame" v-if="!homeProfile"></div>
 
+              <div class="vip-details">
+                <img
+                  class="bg"
+                  :src="
+                    require(`../assets/images/index/vip-badge/vip-${
+                      store.vip ? store.vip.replace('VIP', '') : '0'
+                    }.png`)
+                  "
+                  alt=""
+                />
+              </div>
+            </div>
+        </RouterLink>
+    <div class="right-top">
       <RouterLink to="/language" class="side-menu-item">
       <div class="item-icon__language">
         {{ $t('lang.langVal') }}
@@ -17,6 +38,7 @@
     <div class="close-btn" @click="closeSideMenu()">
       <img src="../assets/images/index/close-btn-white.png">
     </div>
+  </div>
     </div>
     <!-- <RouterLink to="/earn-money" class="side-menu-item side-menu-item__invite">
       <div>
@@ -122,7 +144,7 @@
     <div class="side-menu-divider" />
     <RouterLink to="/earn-money" class="side-menu-item side-menu-item__invitetoearn">
       <div>
-        {{ $t("sideNav.appDownload") }}
+        {{ $t("sideNav.inviteToEarn") }}
         <span>{{ $t("sideNav.shareYourExclusiveQRCode") }}</span>
       </div>
       <div class="right-icon">
@@ -155,19 +177,37 @@
   </div>
 </template>
 <script setup>
-import { defineEmits } from "vue";
+import { defineEmits, computed } from "vue";
 
 import { useRouter } from "vue-router";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import { useUI } from "stores/ui";
+import { userStore } from "stores/index";
 const emits = defineEmits(["closeMenu"]);
 const router = useRouter();
+const store = userStore();
 const ui = useUI();
 const activateSlide = (item) => {
   emits("closeMenu");
   router.push(`/home#${item}`);
   console.log(item);
 };
+
+
+const randomProfileImg = computed(() => {
+  const storedImg = sessionStorage.getItem("PROFILE_IMG");
+  if (storedImg) {
+    return storedImg;
+  } else {
+    const randomIndex = Math.floor(Math.random() * 24) + 1;
+    const imgPath = `image-${randomIndex}`;
+    sessionStorage.setItem("PROFILE_IMG", imgPath);
+    return imgPath;
+  }
+});
+const profileImagePath = computed(() => {
+  return require(`../assets/images/account/profile/${randomProfileImg.value}.png`);
+});
 const closeSideMenu = () => {
   emits("closeMenu");
 }
@@ -177,6 +217,33 @@ const openCSInNewTab = (url) => {
 };
 </script>
 <style lang="scss" scoped>
+
+$colors: (
+  #6d96c6,
+  #8c9b6a,
+  #4ca1fc,
+  #4c5efc,
+  #d34cfc,
+  #fc4cc4,
+  #efa1f6,
+  #FF9D86,
+  #5bfc49,
+  #efe639,
+  #67c2ac,
+  #ff7879,
+  #d89053
+);
+@for $i from 1 through length($colors) {
+  $color: nth($colors, $i);
+  .vip-#{$i - 1} .q-avatar {
+    border: 2px solid $color;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+  }
+}
 .menu-open {
   // background: #232626;
   background: #1B2339;
@@ -210,8 +277,13 @@ const openCSInNewTab = (url) => {
 
     .topbar {
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
         align-items: center;
+        .right-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        }
       .close-btn {
         width: 20px;
         img {
@@ -475,5 +547,61 @@ const openCSInNewTab = (url) => {
       }
     }
   }
+  
+  .profile-pic {
+      position: relative;
+      width: 50px;
+      height: 50px;
+      padding-top: 8px;
+      text-align: center;
+      
+      // margin: 6px 6px 6px 12px;
+    }
+
+    .profile-pic-frame {
+      // background-image: url(../assets/images/common/profile-frame.png);
+      // width: 70px;
+      // height: 70px;
+      // background-size: 100%;
+      // position: absolute;
+      // top: -8px;
+      // left: -4px;
+    }
+
+    .vip-details {
+  position: relative;
+  margin-bottom: 5px;
+  margin-top: -15px;
+
+  img.bg {
+    display: block;
+    width: 45px;
+    position: absolute;
+    top: -2px;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+
+  .vip-level {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    line-height: 1.1;
+    padding-top: 3px;
+    padding-bottom: 4px;
+    z-index: 3;
+    color: #ffffff;
+    font-weight: 700;
+    font-style: italic;
+    display: none;
+    img {
+      width: 68%;
+      margin-left: -7px;
+    }
+  }
+}
 }
 </style>

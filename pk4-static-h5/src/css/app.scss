@@ -117,7 +117,9 @@ body.platform-ios .q-dialog__inner--minimized > div:not(.popout-dialog) {
   height: 49px;
   // background: linear-gradient(#83838336, #83838336), url("../assets/images/index/auth-bg.png");
   // background-image: url("../assets/images/auth/main-auth-bg.png");
-  background: #323738;
+  // background: #323738;
+  background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+
 
   background-size: cover;
   background-repeat: no-repeat;
@@ -294,6 +296,7 @@ body.body--dark .q-footer {
     background-position: bottom center;
 
     border-top: 1px solid #1A2239;
+    overflow: unset !important;
     // padding-bottom: 10px;
     // padding-top: 16px;
     // // background: #323738;
@@ -365,9 +368,9 @@ body.body--dark .q-footer {
   }
 
   .footer-img {
-    height: 20px;
     width: 20px;
-    padding-top: 5px;
+    height: 30px;
+    padding-top: 15px;
     img {
       width: 100%;
     }
@@ -381,13 +384,14 @@ body.body--dark .q-footer {
 
     img {
       display: block;
-    }
+  }
   }
 
   .footer-label {
     padding-top: 10px;
     color: #3F4C6B;
     font-weight: bold;
+    padding-bottom: 10px;
   }
 
   img {

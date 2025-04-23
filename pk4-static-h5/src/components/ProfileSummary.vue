@@ -99,80 +99,6 @@
           <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
           <q-chip v-if="store.unreadInboxMail" class="notification" color="red" size="xs"></q-chip>
         </div> -->
-        <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown" unelevated>
-          <template v-slot:label>
-            <div class="profile-pic">
-              <q-avatar size="40px">
-                <img :src="profileImagePath" />
-              </q-avatar>
-              <div class="profile-pic-frame" v-if="!homeProfile"></div>
-
-              <div class="vip-details">
-                <img
-                  class="bg"
-                  :src="
-                    require(`../assets/images/index/vip-badge/vip-${
-                      store.vip ? store.vip.replace('VIP', '') : '0'
-                    }.png`)
-                  "
-                  alt=""
-                />
-              </div>
-            </div>
-          </template>
-
-          <q-list style="background: #323738; padding: 5px 0px" dense unelevated flat class="dropdown-list">
-            <q-item clickable v-close-popup @click="onVipClick">
-              <q-item-section avatar>
-                <img src="../assets/images/account/vip-svg.svg" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ $t("settings.vip") }}</q-item-label>
-              </q-item-section>
-            </q-item>
-
-            <q-item clickable v-close-popup @click="router.push('/account/message?from=' + route.path)">
-              <q-item-section avatar>
-                <img src="../assets/images/account/message-svg.svg" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>
-                  <span class="message-amt" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</span>
-                  {{ $t("settings.message") }}
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-
-            <q-item clickable v-close-popup @click="router.push('/account/order?from=' + route.path)">
-              <q-item-section avatar>
-                <img src="../assets/images/account/order-svg.svg" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ $t("settings.order") }}</q-item-label>
-              </q-item-section>
-            </q-item>
-
-            <hr class="menu-line" />
-
-            <q-item clickable v-close-popup @click="router.push('/account/bank?from=' + route.path)">
-              <q-item-section avatar>
-                <img src="../assets/images/account/bank-svg.svg" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ $t("settings.bank") }}</q-item-label>
-              </q-item-section>
-            </q-item>
-
-            <q-item clickable v-close-popup @click="onLogout()">
-              <q-item-section avatar>
-                <img src="../assets/images/account/logout-icon.svg" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ $t("settings.logout") }}</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-btn-dropdown>
       </div>
       <div class="profile-wrapper" v-else>
         <q-btn no-caps unelevated class="btn-primary" @click="goLogin">{{ $t("header.login") }}</q-btn>
@@ -284,21 +210,6 @@ const goLogin = () => {
   router.push("/login");
 };
 
-const randomProfileImg = computed(() => {
-  const storedImg = sessionStorage.getItem("PROFILE_IMG");
-  if (storedImg) {
-    return storedImg;
-  } else {
-    const randomIndex = Math.floor(Math.random() * 24) + 1;
-    const imgPath = `image-${randomIndex}`;
-    sessionStorage.setItem("PROFILE_IMG", imgPath);
-    return imgPath;
-  }
-});
-
-const profileImagePath = computed(() => {
-  return require(`../assets/images/account/profile/${randomProfileImg.value}.png`);
-});
 
 const isLoadingBalance = ref(false);
 const refreshBalance = () => {
@@ -827,17 +738,19 @@ onUnmounted(() => {
       flex-direction: column;
       font-size: 16px;
       width: 100%;
+      margin-right: 8px;
     }
     .gift-notifications {
       background: #ffffff0f;
       display: flex;
       border-radius: 10px;
-      padding: 5px;
+      padding: 5px 0;
       margin: 0;
 
       .notification-wrapper {
-        height: 20px;
-        width: 20px;
+        // height: 20px;
+        // width: 20px;
+        padding: 0px 10px;
         // padding-right: 20px;
         border-right: 1px solid #ffffff33;
         img {
@@ -854,8 +767,10 @@ onUnmounted(() => {
         }
       }
       .gift-wrapper {
-        height: 20px;
-        width: 20px;
+        // height: 20px;
+        // width: 20px;
+        
+        padding: 0px 10px;
         // padding-left: 20px;
 
         img {
@@ -953,11 +868,11 @@ onUnmounted(() => {
       }
 
       .currency-amount {
-        color: #000000;
-        background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+        color: #ffffff;
+        background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
         font-size: 12px;
         font-weight: 700;
-        margin-right: 3px;
+        margin-right: 8px;
         border-radius: 50%;
         padding: 3px 5px;
         font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -970,6 +885,8 @@ onUnmounted(() => {
         align-items: center;
         line-height: 16px;
         vertical-align: middle;
+        min-width: 24px;
+        min-height: 24px;
       }
 
       .balance-amount {
@@ -1089,10 +1006,13 @@ onUnmounted(() => {
 .style-blue-btn {
   // background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
   // background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
-  background: linear-gradient(251.03deg, #89c543 7.46%, #2aae8b 91.87%);
+  // background: linear-gradient(251.03deg, #89c543 7.46%, #2aae8b 91.87%);
   border-radius: 5px;
   animation: blink 1.5s infinite;
-  box-shadow: 0px 1.13px 0px 0px #1cca6a;
+  // box-shadow: 0px 1.13px 0px 0px #1cca6a;
+  box-shadow: 0px 1.13px 0px 0px #A3E2FF;
+  background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+
 }
 
 .menu-line {
