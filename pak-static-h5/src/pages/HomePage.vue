@@ -311,7 +311,7 @@
               :slidesPerGroup="3"
               :spaceBetween="10"
               :modules="[Navigation, Grid]"
-              :grid="{ rows: 1, fill: 'row' }"
+              :grid="{ rows: 2, fill: 'row' }"
               :navigation="{ nextEl: '.custom-hot-next', prevEl: '.custom-hot-prev' }"
               class="platform-game-container"
             >

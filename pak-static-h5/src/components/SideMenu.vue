@@ -1,7 +1,6 @@
 <template>
   <!-- <ProfileSummary :homeProfile="true" /> -->
-
-  <div class="left-side-menu" @click.stop>
+  <div class="left-side-menu" :class="{ fullHeight: !topDownload }" @click.stop>
     <RouterLink to="/earn-money" class="side-menu-item side-menu-item__invite">
       <div>
         {{ $t("sideNav.inviteToEarn") }}
@@ -134,7 +133,7 @@
   </div>
 </template>
 <script setup>
-import { defineEmits } from "vue";
+import { defineEmits, inject } from "vue";
 
 import { useRouter } from "vue-router";
 import ProfileSummary from "../components/ProfileSummary.vue";
@@ -142,6 +141,7 @@ import { useUI } from "stores/ui";
 const emits = defineEmits(["closeMenu"]);
 const router = useRouter();
 const ui = useUI();
+const topDownload = inject('topDownload');
 const activateSlide = (item) => {
   emits("closeMenu");
   router.push(`/home#${item}`);
@@ -161,6 +161,10 @@ const openCSInNewTab = (url) => {
 @supports (height: 100dvh) {
   .left-side-menu {
     height: calc(100dvh - 70px); /* modern browsers */
+
+    &.fullHeight {
+      height: calc(100dvh - 20px); /* modern browsers */
+    }
   }
 }
 
@@ -168,6 +172,11 @@ const openCSInNewTab = (url) => {
     width: 100%;
     padding-top: 72px;
     height: calc(100vh - 70px);
+
+    &.fullHeight {
+      height: calc(100vh - 20px);
+    }
+
     display: flex;
     flex-direction: column;
     padding-left: 16px;
