@@ -194,7 +194,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, onUnmounted } from "vue";
+import { ref, onMounted, computed, onUnmounted, provide } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
@@ -216,6 +216,7 @@ const route = useRoute();
 const router = useRouter();
 const store = userStore();
 const ui = useUI();
+
 
 const isScrolled = ref(false);
 
@@ -342,6 +343,8 @@ const topDownload = ref(false);
 const topDownloadcloseBtn = ref(true);
 
 const topDownloadCount = ref(6);
+
+provide('topDownload', topDownload);
 
 const closeTopdownload = () => {
   topDownload.value = false;
