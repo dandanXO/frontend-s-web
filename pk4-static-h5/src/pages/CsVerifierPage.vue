@@ -33,7 +33,7 @@
     <div class="content-para q-mt-lg">{{ $t("customerServiceVerifier.contentPara02") }}</div>
   </div>
 
-  <q-dialog class="flex-end" width="100%" v-model="accountVerifiedDialog" persistent>
+  <q-dialog  width="100%" v-model="accountVerifiedDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">

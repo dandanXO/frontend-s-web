@@ -717,15 +717,14 @@ body.body--dark .q-footer {
     top: 20px;
   }
   .popout-close {
-    position: absolute;
+    position: fixed;
     // right: 20px;
     // top: 30px;
     right: 15px;
     top: 15px;
     // background: #cfcfcf;
     // color: #787878;
-    border-radius: 5px;
-    background: #464f50;
+    // color: #787878;
   }
 
   .txt-title {

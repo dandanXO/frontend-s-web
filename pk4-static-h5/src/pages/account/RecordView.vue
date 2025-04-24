@@ -317,9 +317,9 @@ onActivated(() => {
 
 
     .q-field {
-      background: #2f3136;
       padding: 4px 3px;
-      border-radius: 0px;
+      background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+      border-radius: 12px;
     }
 
     .q-field__native {

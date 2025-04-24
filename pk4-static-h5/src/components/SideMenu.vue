@@ -245,7 +245,7 @@ const emits = defineEmits(["closeMenu"]);
 const router = useRouter();
 const store = userStore();
 const ui = useUI();
-const isLanguageDialog = ref(true)
+const isLanguageDialog = ref(false)
 import { convertToCommaAmount } from "src/boot/utils";
 
 

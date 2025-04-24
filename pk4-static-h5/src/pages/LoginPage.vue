@@ -25,7 +25,7 @@
                   v-model="loginForm.loginName" :rules="[
                     (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
                     (val) => (val && val.length === 11) || $t('form.phone_rules_02')
-                  ]" label-color="brand" autocomplete="username" outlined color="green"
+                  ]" label-color="brand" autocomplete="username" outlined color="blue"
                   :placeholder="$t('form.phone_placeholder')">
                   <template v-slot:prepend>
                     <q-icon name="smartphone" />
@@ -40,7 +40,7 @@
                 <q-input ref="passwordRef" hide-bottom-space v-model="loginForm.password"
                   :type="isPwd ? 'password' : 'text'"
                   :rules="[(val) => (val && val.length > 0) || $t('form.password_rules_01')]" label-color="brand"
-                  autocomplete="current-password" outlined color="green" :placeholder="$t('form.password_placeholder')">
+                  autocomplete="current-password" outlined color="blue" :placeholder="$t('form.password_placeholder')">
                   <template v-slot:prepend>
                     <q-icon name="lock" />
                   </template>

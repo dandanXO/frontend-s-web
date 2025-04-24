@@ -780,11 +780,11 @@ defineExpose({
   max-width: 500px;
   position: relative;
 
-  .popout-close {
-    position: absolute;
-    right: 15px;
-    top: 15px;
-  }
+  // .popout-close {
+  //   position: absolute;
+  //   right: 15px;
+  //   top: 15px;
+  // }
 
   .popout-dialog-container-gold {
     // background-image: url(../../assets/images/index/popout/deposit-bg.png);

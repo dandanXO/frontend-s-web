@@ -5162,13 +5162,13 @@ const checkGoogleLoginSetPwd = () => {
   padding-right: 10px;
 
   .popout-close {
-    position: absolute;
+    position: fixed;
     // right: 0px;
     // top: 80px;
     right: 15px;
     top: 15px;
-    background: #cfcfcf;
-    color: #787878;
+    // background: #cfcfcf;
+    // color: #787878;
   }
 
   .popout-dialog-container--yel {
@@ -5826,7 +5826,8 @@ const checkGoogleLoginSetPwd = () => {
   .platform-game-item {
     position: relative;
     > img {
-      min-height: 145px;
+      // min-height: 145px;    
+      min-height: 120px;
     }
 
     &--img {

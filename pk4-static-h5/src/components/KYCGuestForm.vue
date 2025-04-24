@@ -286,35 +286,35 @@ const updateNewGuestState = () => {
   }
 }
 
-.btn-cancel {
-  // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
-  // border: 1px solid #5d8956;
-  // font-weight: 700;
-  // color: #fff;
-  // border: 1px solid #ffffff80;
-  // border-radius: 12px;
-  // width: 140px;
-  // height: 42px;
-  font-weight: 700;
-  width: 100%;
-  padding: 10px 40px;
-  font-size: 16px;
-  background: #455152;
-  color: #ffffff;
+// .btn-cancel {
+//   // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
+//   // border: 1px solid #5d8956;
+//   // font-weight: 700;
+//   // color: #fff;
+//   // border: 1px solid #ffffff80;
+//   // border-radius: 12px;
+//   // width: 140px;
+//   // height: 42px;
+//   font-weight: 700;
+//   width: 100%;
+//   padding: 10px 40px;
+//   font-size: 16px;
+//   background: #455152;
+//   color: #ffffff;
 
-  box-shadow: 0px 2px 0px 0px #2a3637;
-}
-.btn-confirm {
-  font-weight: 700;
-  width: 100%;
-  padding: 10px 10px;
-  font-size: 16px;
-  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-  color: #000000;
-  box-shadow: 0px 2px 0px 0px #1cca6a;
-  border-radius: 4px;
-  height: unset;
-}
+//   box-shadow: 0px 2px 0px 0px #2a3637;
+// }
+// .btn-confirm {
+//   font-weight: 700;
+//   width: 100%;
+//   padding: 10px 10px;
+//   font-size: 16px;
+//   background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+//   color: #000000;
+//   box-shadow: 0px 2px 0px 0px #1cca6a;
+//   border-radius: 4px;
+//   height: unset;
+// }
 
 .style-btn-confirm {
   color: #4a38b9;
