@@ -148,7 +148,7 @@
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <template v-if="colIndex === 1 || colIndex === 2">
                 <div style="justify-content: flex-start; padding-left: 20px; display: flex; align-items: center">
-                  <img style="max-width: 25px; margin-right: 4px" src="../../assets/images/vip/vip-coins.png" />
+                  <img class="vip-coin-icon" src="../../assets/images/vip/vip-coins.png" />
                   <span>{{ col.value }}</span>
                 </div>
               </template>
@@ -950,9 +950,9 @@ const getMonthlyVip = () => {
         width: calc(50% - 16px);
       }
 
-      @media (max-width: 410px) {
-        width: calc(50%);
-      }
+      // @media (max-width: 410px) {
+      //   width: calc(50% - 16px);
+      // }
 
       @media (max-width: 375px) {
         left: 85px;
@@ -968,6 +968,14 @@ const getMonthlyVip = () => {
     background: #121829;
     > :nth-child(2) {
       color: #fff;
+    }
+  }
+
+  .vip-coin-icon {
+    max-width: 20px;
+    margin-right: 4px;
+    @media (max-width: 375px) {
+      max-width: 16px;
     }
   }
 
@@ -1018,7 +1026,27 @@ const getMonthlyVip = () => {
   tbody > .q-tr {
     > :nth-child(3) {
       padding: 0 1.5rem;
+
+      @media (max-width: 400px) {
+        padding: 0 0.8rem;
+      }
+
+      @media (max-width: 390px) {
+        padding: 0 0.25rem;
+      }
+
+      @media (max-width: 375px) {
+        padding: 0;
+        span {
+          overflow-wrap: anywhere;
+          white-space: unset;
+        }
+      }
     }
+  }
+
+  .q-td {
+    font-size: 0.7rem;
   }
 
   span.amt-text {
