@@ -1,6 +1,6 @@
 # AU1 App (au1-h5-project)
 
-Philippines H5 APP
+Australia H5 APP
 
 - Node Version >= 16.17.0
 - H5 + Android APP
