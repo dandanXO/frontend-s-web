@@ -146,9 +146,9 @@
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-              <template v-if="colIndex === 1 || colIndex === 3">
+              <template v-if="colIndex === 1 || colIndex === 2">
                 <div style="justify-content: flex-start; padding-left: 20px; display: flex; align-items: center">
-                  <img style="max-width: 25px; margin-right: 4px" src="../../assets/images/vip/vip-coins.png" />
+                  <img class="vip-coin-icon" src="../../assets/images/vip/vip-coins.png" />
                   <span>{{ col.value }}</span>
                 </div>
               </template>
@@ -871,7 +871,7 @@ const getMonthlyVip = () => {
       //   left: 50%;
       //   transform: translateX(-50%);
       // }
-      background: #394142;
+      background: linear-gradient(90deg, #0287f2 0%, #0664d2 100%);
     }
 
     :deep(.q-tab--active .q-tab__label) {
@@ -925,17 +925,58 @@ const getMonthlyVip = () => {
   font-size: 1rem;
   text-align: center;
   .vip-details {
-    background: #373c3d;
+    background: linear-gradient(90deg, #1c273d 0%, #12192b 100%);
+
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
+  }
+
+  .q-table__container {
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 75px;
+      width: calc(50% - 30px);
+      height: 100%;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255, 163, 107, 0.6) 0%, rgba(255, 163, 107, 0) 100%);
+      z-index: 2;
+
+      @media (max-width: 450px) {
+        width: calc(50% - 16px);
+      }
+
+      // @media (max-width: 410px) {
+      //   width: calc(50% - 16px);
+      // }
+
+      @media (max-width: 375px) {
+        left: 85px;
+        width: calc(50% - 30px);
+      }
+    }
   }
 
   .top-header {
     color: #ffffff80;
     // background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
     // background: linear-gradient(180deg, #21EF89 0%, #33562d 100%);
-    background: #323738;
+    background: #121829;
+    > :nth-child(2) {
+      color: #fff;
+    }
+  }
+
+  .vip-coin-icon {
+    max-width: 20px;
+    margin-right: 4px;
+    @media (max-width: 375px) {
+      max-width: 16px;
+    }
   }
 
   .q-table__card {
@@ -979,6 +1020,33 @@ const getMonthlyVip = () => {
     // background: rgba(21, 0, 37, 0.5);
     // background: #502175;
     // background: #00ae000c;
+    background: #121829;
+  }
+
+  tbody > .q-tr {
+    > :nth-child(3) {
+      padding: 0 1.5rem;
+
+      @media (max-width: 400px) {
+        padding: 0 0.8rem;
+      }
+
+      @media (max-width: 390px) {
+        padding: 0 0.25rem;
+      }
+
+      @media (max-width: 375px) {
+        padding: 0;
+        span {
+          overflow-wrap: anywhere;
+          white-space: unset;
+        }
+      }
+    }
+  }
+
+  .q-td {
+    font-size: 0.7rem;
   }
 
   span.amt-text {
