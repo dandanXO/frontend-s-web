@@ -1173,7 +1173,7 @@ onMounted(() => {
       font-weight: 600;
       aspect-ratio: 106/64;
       box-shadow: 0px 2px 0px 0px #2a3637;
-      background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+      // background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
       color: #ffffff80;
 
       font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
