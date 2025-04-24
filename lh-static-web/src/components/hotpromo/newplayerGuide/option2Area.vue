@@ -346,7 +346,7 @@
           <div class="title">成长攻略</div>
         </div>
         <div class="title">
-          已累计充值：
+          总存款已累计充值：
           <span style="color: rgba(0, 136, 215, 1)">{{ depositAmount }}</span>
           元
         </div>
@@ -388,7 +388,7 @@
           <div class="title">钱包冲刺</div>
         </div>
         <div class="title">
-          已累计充值：
+          虚拟币与电子钱包已累计充值：
           <span style="color: rgba(0, 136, 215, 1)">{{ depositWalletAmount }}</span>
           元
         </div>
@@ -569,7 +569,7 @@ onMounted(async () => {
     display: flex;
     flex-direction: column;
     padding: 10px;
-    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
     border: 1px solid #e3e8f0;
     border-radius: 10px;
     margin-top: 20px;
@@ -686,7 +686,7 @@ onMounted(async () => {
   }
 
   thead {
-    background: linear-gradient(180deg, #41B9FF -21.81%, #0085E8 95.54%);
+    background: linear-gradient(180deg, #41b9ff -21.81%, #0085e8 95.54%);
     color: white;
   }
   thead th {

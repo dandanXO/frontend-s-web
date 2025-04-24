@@ -289,7 +289,7 @@
           <div class="title">成长攻略</div>
         </div>
         <div class="title">
-          已累计充值：
+          总存款已累计充值：
           <span style="color: rgba(0, 136, 215, 1)">{{ depositAmount }}</span>
           元
         </div>
@@ -332,7 +332,7 @@
           <div class="title">钱包冲刺</div>
         </div>
         <div class="title">
-          已累计充值：
+          虚拟币与电子钱包已累计充值：
           <span style="color: rgba(0, 136, 215, 1)">{{ depositWalletAmount }}</span>
           元
         </div>
@@ -521,7 +521,7 @@ onMounted(async () => {
     display: flex;
     flex-direction: column;
     padding: 10px;
-    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
     border: 1px solid #e3e8f0;
     border-radius: 10px;
     margin-top: 20px;
@@ -573,7 +573,7 @@ onMounted(async () => {
 
     .first-title {
       display: flex;
-      font-size: 24px;
+      font-size: 20px;
       justify-content: flex-start;
       align-items: center;
     }
@@ -586,7 +586,7 @@ onMounted(async () => {
       margin-top: 0px;
       color: white;
       font-weight: 600;
-      font-size: 24px;
+      font-size: 20px;
     }
   }
 
@@ -619,24 +619,15 @@ onMounted(async () => {
     display: flex;
     justify-content: space-between;
     .big-icon {
-      width: 24px;
-      height: 24px;
+      width: 1rem;
       margin-right: 8px;
-      margin-bottom: 0px;
+      margin-bottom: 0px !important;
     }
     .title {
       margin-top: 4px;
-      color: #000;
+      color: #fff;
       font-weight: 600;
-      font-size: 24px;
-
-      @media (max-width: 450px) {
-        font-size: 19px;
-      }
-
-      @media (max-width: 420px) {
-        font-size: 16px;
-      }
+      font-size: 1rem;
     }
   }
   .reward-description {
@@ -803,7 +794,8 @@ onMounted(async () => {
     background: url("../../../assets/images/promotion/hotpromo/newplayerguide/sport.png") no-repeat center center;
     background-size: cover;
     &-active {
-      background: url("../../../assets/images/promotion/hotpromo/newplayerguide/sport-active.png") no-repeat center center;
+      background: url("../../../assets/images/promotion/hotpromo/newplayerguide/sport-active.png") no-repeat center
+        center;
       background-size: cover;
     }
   }
@@ -822,7 +814,8 @@ onMounted(async () => {
     background: url("../../../assets/images/promotion/hotpromo/newplayerguide/real.png") no-repeat center center;
     background-size: cover;
     &-active {
-      background: url("../../../assets/images/promotion/hotpromo/newplayerguide/real-active.png") no-repeat center center;
+      background: url("../../../assets/images/promotion/hotpromo/newplayerguide/real-active.png") no-repeat center
+        center;
       background-size: cover;
     }
   }
@@ -831,7 +824,8 @@ onMounted(async () => {
     background: url("../../../assets/images/promotion/hotpromo/newplayerguide/card.png") no-repeat center center;
     background-size: cover;
     &-active {
-      background: url("../../../assets/images/promotion/hotpromo/newplayerguide/card-active.png") no-repeat center center;
+      background: url("../../../assets/images/promotion/hotpromo/newplayerguide/card-active.png") no-repeat center
+        center;
       background-size: cover;
     }
   }
@@ -840,7 +834,8 @@ onMounted(async () => {
     background: url("../../../assets/images/promotion/hotpromo/newplayerguide/slot.png") no-repeat center center;
     background-size: cover;
     &-active {
-      background: url("../../../assets/images/promotion/hotpromo/newplayerguide/slot-active.png") no-repeat center center;
+      background: url("../../../assets/images/promotion/hotpromo/newplayerguide/slot-active.png") no-repeat center
+        center;
       background-size: cover;
     }
   }
@@ -849,7 +844,8 @@ onMounted(async () => {
     background: url("../../../assets/images/promotion/hotpromo/newplayerguide/fish.png") no-repeat center center;
     background-size: cover;
     &-active {
-      background: url("../../../assets/images/promotion/hotpromo/newplayerguide/fish-active.png") no-repeat center center;
+      background: url("../../../assets/images/promotion/hotpromo/newplayerguide/fish-active.png") no-repeat center
+        center;
       background-size: cover;
     }
   }
@@ -960,24 +956,15 @@ onMounted(async () => {
   display: flex;
   justify-content: space-between;
   .big-icon {
-    width: 24px;
-    height: 24px;
+    width: 1rem;
     margin-right: 8px;
-    margin-bottom: 0px;
+    margin-bottom: 0px !important;
   }
   .title {
     margin-top: 4px;
     color: #000;
     font-weight: 600;
-    font-size: 24px;
-
-    @media (max-width: 450px) {
-      font-size: 19px;
-    }
-
-    @media (max-width: 420px) {
-      font-size: 16px;
-    }
+    font-size: 1rem;
   }
 }
 .reward-description {
