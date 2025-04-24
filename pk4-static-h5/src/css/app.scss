@@ -946,3 +946,13 @@ body.body--dark .q-footer {
     transform: scale(1);
   }
 }
+
+.panel {
+  background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+  color: #fff;
+
+  &.highlighted {
+    background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+  }
+}
+
