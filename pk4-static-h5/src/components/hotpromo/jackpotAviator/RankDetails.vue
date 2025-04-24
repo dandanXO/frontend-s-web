@@ -35,7 +35,7 @@ const props = defineProps(["rankDetails", "isLoadingRanking"]);
 .bottom {
   // background: linear-gradient(180deg, #0d5819 0%, #082a23 100%);
   // border: 1px solid #258838;
-  background: #323738;
+  background: #3237384D;
   color: #ffffff;
   display: grid;
   grid-template-columns: 0.8fr 1fr 1fr;

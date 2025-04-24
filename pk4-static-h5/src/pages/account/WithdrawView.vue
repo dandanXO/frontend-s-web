@@ -1158,7 +1158,7 @@ watch(
 
     img {
       width: 100%;
-      background: #394142;
+      background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
       padding: 5px;
       border-radius: 10px;
     }

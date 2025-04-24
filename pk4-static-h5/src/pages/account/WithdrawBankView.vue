@@ -308,7 +308,7 @@ onActivated(() => {
         width: 100%;
         // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
         
-      background: #394142;
+      background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
       box-shadow: 0px 2px 0px 0px #2A3637;
 
         padding: 12px 5px;

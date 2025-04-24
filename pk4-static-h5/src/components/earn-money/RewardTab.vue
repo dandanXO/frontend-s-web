@@ -1035,6 +1035,7 @@ watch(activeSetting, checkIsShowDetail);
   }
 
   .earn-money-amt {
+    background: #3237384D;
     margin: 15px 0;
     border-radius: 10px;
     padding: 15px;

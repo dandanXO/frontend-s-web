@@ -127,6 +127,8 @@ watch(
   }
 
   .children-tab {
+    // background: url(../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
+    background-size: 100% 100%;
     background: #32373880;
     border-radius: 8px;
     width: 100%;

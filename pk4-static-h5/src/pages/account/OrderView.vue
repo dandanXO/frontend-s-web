@@ -317,7 +317,7 @@ onActivated(() => {
 
 <style lang="scss" scoped>
 .order-option-tab {
-  background: #323738;
+  background: #3237384D;
   background-size: 100% 100%;
   border-radius: 8px;
   margin: 20px 16px 4px;
@@ -351,7 +351,7 @@ onActivated(() => {
   }
 
   :deep(.q-tab--active) {
-    background: #394142;
+    background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
     color: white;
     border-radius: 6px;
   }

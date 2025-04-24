@@ -119,7 +119,7 @@ onActivated(() => {
   }
   .message-tab-toggle {
     // background: url(../../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
-    background: #323738;
+    background: #3237384D;
     background-size: 100% 100%;
     border-radius: 8px;
     margin-bottom: 4px;
@@ -178,7 +178,8 @@ onActivated(() => {
       //   left: 50%;
       //   transform: translateX(-50%);
       // }
-      background: #394142;
+      // background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+      background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
 
     }
 
