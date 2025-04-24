@@ -1110,7 +1110,7 @@ watch(
 }
 
 .tutorial-link {
-  color: #056FDC;
+  color: #21a7ef;
   text-decoration: underline;
 }
 .step-desc-div {
@@ -1279,7 +1279,7 @@ watch(
       justify-content: center;
       align-items: center;
       span {
-        color: #056FDC;
+        color: #21a7ef;
         &.orange {
           color: #fbab1b;
         }
