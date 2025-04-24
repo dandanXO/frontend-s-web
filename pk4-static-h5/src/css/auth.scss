@@ -142,10 +142,10 @@
     color: #363C4A;
     margin-left: 8px;
 }
-
-.q-icon {
-    color: #77829B;
-}
+// Removed this cause its affecting the error popup icon
+// .q-icon {
+//     color: #77829B;
+// }
 
 :deep(.q-tab__label) {
     color: #ffffff;
