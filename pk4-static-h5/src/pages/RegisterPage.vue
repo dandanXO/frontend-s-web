@@ -707,50 +707,6 @@ export default defineComponent({
       }
     };
 
-    // watch(
-    //   () => regForm.password,
-    //   () => {
-    //     pwdStrength.value = "";
-
-    //     var pwd = regForm.password;
-    //     var result = 0;
-    //     for (var i = 0, len = pwd.length; i < len; ++i) {
-    //       result |= charType(pwd.charCodeAt(i));
-    //     }
-
-    //     var level = 0;
-    //     for (var i = 0; i <= 4; i++) {
-    //       if (result & 1) {
-    //         level++;
-    //       }
-    //       result = result >>> 1;
-    //     }
-    //     if (pwd.length >= 6) {
-    //       switch (level) {
-    //         case 1:
-    //           pwdStrength.value = "weak";
-    //           break;
-    //         case 2:
-    //           pwdStrength.value = "normal";
-    //           break;
-    //         case 3:
-    //         case 4:
-    //           pwdStrength.value = "strong";
-    //           break;
-    //       }
-    //     } else {
-    //       pwdStrength.value = "weak";
-    //     }
-    //   }
-    // );
-
-    // const openPhoneVeriDialog = () => {
-    //   loginNameRef.value.validate();
-    //   if (!loginNameRef.value.hasError) {
-    //     openVerificationCodeDialog();
-    //     getInnerCode();
-    //   }
-    // };
 
     const verificationCodeDialog = ref(false);
     const openVerificationCodeDialog = () => {
@@ -1012,9 +968,9 @@ function charType(num) {
 
 <style scoped lang="scss">
 .get-code-btn {
-  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-  color: #000000;
-  box-shadow: 0px 2px 0px 0px #1cca6a;
+  background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+  color: #fff;
+  box-shadow: 0px 0.5px 2px 0px #0667D599;
   min-width: 100px;
   max-width: 120px;
   font-weight: bold;
