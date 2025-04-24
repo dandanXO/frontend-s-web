@@ -58,7 +58,7 @@
           </div>
         </div>
         <a @click="openNewPlayerGuide">
-          <q-btn :loading="!isLoaded" flat class="details">
+          <q-btn flat class="details">
             {{ $t("btn.details") }}
           </q-btn>
         </a>

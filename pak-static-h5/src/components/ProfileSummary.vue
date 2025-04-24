@@ -463,7 +463,9 @@ onMounted(() => {
   }
   afterMounted();
   window.addEventListener("scroll", handleScroll);
-  getFastAccessPromo();
+  if (store.token) {
+    getFastAccessPromo();
+  }
 });
 
 onUnmounted(() => {
