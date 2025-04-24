@@ -1302,8 +1302,4 @@ watch(activeSetting, checkIsShowDetail);
     color: #ffc300;
   }
 }
-
-.panel {
-    background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
-}
 </style>

@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <div class="withdrawal-summary">
+    <div class="withdrawal-summary panel">
       <div class="balance">
         <q-skeleton v-if="isLoadingWithdrawalMethod" style="height: 20px" />
         <span v-else class="amount">{{ convertToCommaAmount(store.balance, false) }}</span>
@@ -213,7 +213,7 @@
             </template>
           </InputRowGrid>
 
-          <div class="bot-wrapper">
+          <div class="bot-wrapper panel">
             <div class="info">
               <div class="desc-wrapper">
                 <div class="desc">
@@ -1110,7 +1110,7 @@ watch(
 }
 
 .tutorial-link {
-  color: #13f129;
+  color: #056FDC;
   text-decoration: underline;
 }
 .step-desc-div {
@@ -1169,7 +1169,7 @@ watch(
       // box-shadow: none;
       // filter: drop-shadow(0px 0px 3px #ffffff);
       img {
-        background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+        background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
       }
 
       .type-name {
@@ -1224,7 +1224,6 @@ watch(
   justify-content: space-between;
   // gap: 20px;
   margin: 1rem 0 0.5rem 0;
-  background: #373c3d;
   padding: 10px;
   border-radius: 10px;
   
@@ -1280,7 +1279,7 @@ watch(
       justify-content: center;
       align-items: center;
       span {
-        color: #21ef89;
+        color: #056FDC;
         &.orange {
           color: #fbab1b;
         }
@@ -1313,7 +1312,6 @@ watch(
   align-items: center;
   justify-content: space-around;
   border-radius: 0.625rem;
-  background: #373c3d;
   width: 100%;
 
   text-align: center;
@@ -1384,12 +1382,10 @@ watch(
     align-items: center;
     justify-content: center;
     height: 40px;
-    background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-    color: #000000;
-    box-shadow: 0px 2px 0px 0px #1cca6a;
+    background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+    color: #fff;
     font-weight: 700;
-    border-radius: 4px;
-    border: 1px solid #21ef89;
+    border-radius: 12px;
     padding: 5px;
     min-width: 68px;
     text-transform: uppercase;
