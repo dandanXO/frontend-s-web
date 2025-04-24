@@ -341,7 +341,7 @@ onMounted(() => {
   display: block;
 }
 .table-header{
-  background-color: #323738;
+  background-color: transparent;
   color: #B2BDBF;
 }
 .q-tr {
@@ -356,5 +356,9 @@ onMounted(() => {
 .table-tr-even{
   background-color: #FFFFFF0F;
   color: #ffffff;
+}
+
+.monthly-deposit-table {
+  background: #121829;
 }
 </style>
