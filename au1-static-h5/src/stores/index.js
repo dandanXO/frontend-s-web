@@ -44,7 +44,7 @@ export const userStore = defineStore("userStore", {
       readMsgLists: [],
       aaid: "",
       googleadid: "",
-      h5Url: "https://phl.55ace.com/",
+      h5Url: "https://au1-h5.psnaback.com/",
       hasUpdatedOneSignal: false,
       paytypeWithPrivilege: "",
       extraPrivilegeId: "",
