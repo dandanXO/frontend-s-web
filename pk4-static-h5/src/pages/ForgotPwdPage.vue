@@ -12,7 +12,7 @@
       <template v-if="currentTab === 'phone'">
         <div class="auth-pg-title-wrapper">
           <div class="auth-pg-title">{{ $t("form.recoverPwd") }}</div>
-          <div class="auth-pg-desc">{{ $t("form.forgotPasswordPhone_desc") }}</div>
+          <div class="auth-pg-desc">{{ isRequestSent ? $t("form.otp_phone_sent_title") : $t("form.forgotPasswordPhone_desc") }}</div>
         </div>
 
         <div class="no-domain pwd-tab-wrapper">
@@ -69,7 +69,6 @@
         </q-form>
 
         <q-form v-else class="q-gutter-y-md rounded-borders">
-          <p class="text-center">{{ $t("form.otp_phone_sent_title") }}</p>
           <InputRowGrid>
             <template #fields>
               <InputField :label="$t('form.otp')">
@@ -141,7 +140,7 @@
       <template v-if="currentTab === 'email'">
         <div class="auth-pg-title-wrapper">
           <div class="auth-pg-title">{{ $t("form.recoverPwd") }}</div>
-          <div class="auth-pg-desc">{{ $t("form.forgotPassword_desc") }}</div>
+          <div class="auth-pg-desc">{{ isRequestSent ?  $t("form.otp_sent_title") : $t("form.forgotPassword_desc") }}</div>
         </div>
 
         <div class="no-domain pwd-tab-wrapper">
@@ -211,7 +210,6 @@
         </q-form>
 
         <q-form v-else class="q-gutter-y-md rounded-borders">
-          <p class="text-center">{{ $t("form.otp_sent_title") }}</p>
           <InputRowGrid>
             <template #fields>
               <InputField :label="$t('form.otp')">
