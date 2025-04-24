@@ -230,8 +230,8 @@ import { convertToCommaAmount } from "src/boot/utils";
 
 
 // progress bar
-const maxProgress = store.levelUpDeposit.toFixed(2);
-const progressRef = ref(store.currentDeposit.toFixed(2));
+// const maxProgress = store.levelUpDeposit.toFixed(2);
+// const progressRef = ref(store.currentDeposit.toFixed(2));
 
 const progressBarRef = computed(() => {
   return 1 - store.currentDeposit / store.levelUpDeposit;
