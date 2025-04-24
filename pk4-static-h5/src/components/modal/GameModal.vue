@@ -78,9 +78,9 @@
       <!-- <img src="../../assets/logo-coming.png" style="width: 80%" /> -->
     </q-dialog>
 
-    <q-dialog class="flex-end" width="100%" v-model="isExitDialogOpen" presistent>
+    <q-dialog width="100%" v-model="isExitDialogOpen" presistent>
       <div class="popout-dialog">
-        <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
+        <!-- <q-btn dense rounded icon="close" class="popout-close" v-close-popup /> -->
         <div class="popout-dialog-container">
           <div class="txt-content q-mt-md text-center">{{ $t("notify.quitGameMessage") }}</div>
           <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container popout-btns">
@@ -770,13 +770,13 @@ defineExpose({
 // }
 
 .popout-dialog {
-  // width: 90%;
+  width: 90%;
 
   // max-width: 500px;
   // position: relative;
   // padding-top: 90px;
   // padding-right: 10px;
-  width: 100%;
+  // width: 100%;
   max-width: 500px;
   position: relative;
 
@@ -953,35 +953,35 @@ defineExpose({
   .popout-btns {
     width: 100%;
   }
-  .btn-cancel {
-    // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
-    // border: 1px solid #5d8956;
-    // font-weight: 700;
-    // color: #ffffff;
-    // border-radius: 12px;
-    font-weight: 700;
-    width: 100%;
-    padding: 10px 10px;
-    font-size: 16px;
-    background: #455152;
-    color: #ffffff;
+  // .btn-cancel {
+  //   // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
+  //   // border: 1px solid #5d8956;
+  //   // font-weight: 700;
+  //   // color: #ffffff;
+  //   // border-radius: 12px;
+  //   font-weight: 700;
+  //   width: 100%;
+  //   padding: 10px 10px;
+  //   font-size: 16px;
+  //   background: #455152;
+  //   color: #ffffff;
 
-    box-shadow: 0px 2px 0px 0px #2a3637;
-    text-align: center !important;
-  }
+  //   box-shadow: 0px 2px 0px 0px #2a3637;
+  //   text-align: center !important;
+  // }
 
-  .btn-confirm {
-    font-weight: 700;
-    width: 100%;
-    padding: 10px 10px;
-    font-size: 16px;
-    background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-    color: #000000;
-    box-shadow: 0px 2px 0px 0px #1cca6a;
-    border-radius: 4px;
-    height: unset;
-    text-align: center !important;
-  }
+  // .btn-confirm {
+  //   font-weight: 700;
+  //   width: 100%;
+  //   padding: 10px 10px;
+  //   font-size: 16px;
+  //   background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+  //   color: #000000;
+  //   box-shadow: 0px 2px 0px 0px #1cca6a;
+  //   border-radius: 4px;
+  //   height: unset;
+  //   text-align: center !important;
+  // }
 }
 
 .loader-container {

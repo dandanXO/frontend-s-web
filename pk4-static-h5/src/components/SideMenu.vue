@@ -3,43 +3,62 @@
 
   <div class="left-side-menu" @click.stop>
     <div class="topbar">
-        <RouterLink to="/vip" style="padding: 0;" no-caps :ripple="false" unelevated>
-          
-          <div class="profile-pic" :class="store.vip ? 'vip-' + store.vip.replace('VIP', '') : 'vip-0'">
-              <q-avatar size="40px">
-                <img :src="profileImagePath" />
-              </q-avatar>
-              <div class="profile-pic-frame" v-if="!homeProfile"></div>
+      <RouterLink to="/vip" style="padding: 0;" no-caps :ripple="false" unelevated>
+        <div class="profile-pic" :class="store.vip ? 'vip-' + store.vip.replace('VIP', '') : 'vip-0'">
+            <q-avatar size="40px">
+              <img :src="profileImagePath" />
+            </q-avatar>
+            <div class="profile-pic-frame" v-if="!homeProfile"></div>
 
-              <div class="vip-details">
-                <img
-                  class="bg"
-                  :src="
-                    require(`../assets/images/index/vip-badge/vip-${
-                      store.vip ? store.vip.replace('VIP', '') : '0'
-                    }.png`)
-                  "
-                  alt=""
-                />
-              </div>
+            <div class="vip-details">
+              <img
+                class="bg"
+                :src="
+                  require(`../assets/images/index/vip-badge/vip-${
+                    store.vip ? store.vip.replace('VIP', '') : '0'
+                  }.png`)
+                "
+                alt=""
+              />
             </div>
-        </RouterLink>
-    <div class="right-top">
-      <RouterLink to="/language" class="side-menu-item">
-      <div class="item-icon__language">
-        {{ $t('lang.langVal') }}
-        <div class="icon-flag">
-          <img :src="require(`../assets/images/auth/country-flag-circle-${$t('lang.langVal')}.png`)" class="flag" />
         </div>
+      </RouterLink>
+      <div class="right-top">
+        <RouterLink to="/language" class="side-menu-item">
+        <div class="item-icon__language">
+          {{ $t('lang.langVal') }}
+          <div class="icon-flag">
+            <img :src="require(`../assets/images/auth/country-flag-circle-${$t('lang.langVal')}.png`)" class="flag" />
+          </div>
+        </div>
+        <!-- {{ $t("sideNav.language") }} -->
+      </RouterLink>
+      <div class="close-btn" @click="closeSideMenu()">
+        <img src="../assets/images/index/close-btn-white.png">
       </div>
-      <!-- {{ $t("sideNav.language") }} -->
-    </RouterLink>
-
-    <div class="close-btn" @click="closeSideMenu()">
-      <img src="../assets/images/index/close-btn-white.png">
     </div>
   </div>
-    </div>
+  <div class="vipbar">
+    
+    <div class="progress-bar-outer">
+        <q-linear-progress
+          reverse
+          rounded
+          size="8px"
+          :value="progressBarRef"
+          class="custom-progress-bar"
+        />
+        <div
+          class="progress-circle"
+          :style="{ right: `calc(${progressBarRef * 100}% - 12px)` }"
+        ></div>
+      </div>
+      <div class="progress-bar-level">
+        <span>{{ store.vip }}</span>
+        
+        <span>{{ 'VIP' + (Number(store.vip.replace('VIP', '')) + 1) }}</span>
+      </div>
+  </div>
     <!-- <RouterLink to="/earn-money" class="side-menu-item side-menu-item__invite">
       <div>
         {{ $t("sideNav.inviteToEarn") }}
@@ -170,14 +189,34 @@
       </div>
       {{ $t("sideNav.downloadApp") }}
     </a>
-
+    <a @click="openConfirmSignOutDialog">
+        <div class="acct-logout">
+          <img src="../assets/images/index/menu/logout.png" />
+          <div class="acct-nav-label">{{ $t("settings.logout") }}</div>
+        </div>
+      </a>
     <!-- <div class="side-menu-item side-menu-item__transparent"> -->
     <!-- <LangOptions /> -->
     <!-- </div> -->
   </div>
+  <q-dialog width="100%" v-model="confirmSignOutDialog" persistent>
+    <div class="popout-dialog">
+      <q-btn dense icon="close" class="text-white top-right" flat v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">{{ $t("btn.signOut") }}</div>
+
+        <div class="txt-content q-mt-md text-center">{{ $t("notify.signOutMessage") }}</div>
+
+        <div style="width: 100%;" class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+          <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
+          <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="logout" />
+        </div>
+      </div>
+    </div>
+  </q-dialog>
 </template>
 <script setup>
-import { defineEmits, computed } from "vue";
+import { defineEmits, computed, ref } from "vue";
 
 import { useRouter } from "vue-router";
 import ProfileSummary from "../components/ProfileSummary.vue";
@@ -187,6 +226,20 @@ const emits = defineEmits(["closeMenu"]);
 const router = useRouter();
 const store = userStore();
 const ui = useUI();
+import { convertToCommaAmount } from "src/boot/utils";
+
+
+// progress bar
+// const maxProgress = store.levelUpDeposit.toFixed(2);
+// const progressRef = ref(store.currentDeposit.toFixed(2));
+
+const progressBarRef = computed(() => {
+  return 1 - store.currentDeposit / store.levelUpDeposit;
+});
+const confirmSignOutDialog = ref(false);
+const openConfirmSignOutDialog = () => {
+  confirmSignOutDialog.value = !confirmSignOutDialog.value;
+};
 const activateSlide = (item) => {
   emits("closeMenu");
   router.push(`/home#${item}`);
@@ -285,10 +338,43 @@ $colors: (
         align-items: center;
         }
       .close-btn {
-        width: 20px;
+        width: 10px;
         img {
           width: 100%;
         }
+      }
+    }
+    .vipbar {
+    position: relative;
+    z-index: 1;
+    margin-top: 20px;
+      :deep(.q-linear-progress__track--dark) {
+
+        background: linear-gradient(90deg, #30DAFE 0%, #FFFFFF 100%);
+
+      }
+      :deep(.q-linear-progress__model--determinate) {
+        
+        background: #65727C;
+      }
+    .progress-circle {
+      position: absolute;
+      top: -4px;
+      width: 16px;
+      height: 16px;
+      // background-color: #21EF89;
+      // border: 4px solid rgb(59 143 102);
+      background: radial-gradient(59.37% 59.37% at 50% 50%, #D7EEFF 0%, #60B4FD 53.85%, #63E6FF 80.81%);
+      border-radius: 50%;
+      z-index: 2;
+      transition: left 0.3s ease;
+    }
+      .progress-bar-level {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 700;
+        font-size: 10px;
+        margin-top: 5px;
       }
     }
     .side-menu-divider {
@@ -310,6 +396,38 @@ $colors: (
       // padding: 10px 0;
       // min-height: 372px;
     }
+
+.acct-logout {
+  // height: 60px;
+  // background: #2e30344f;
+  // background-image: url("../assets/images/account/logout-btn.png");
+  // background-repeat: no-repeat;
+  width: calc(95% - 20px);
+  margin: 20px auto;
+  // aspect-ratio: 335/40;
+  // background-size: 100% 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // gap: 5px;
+  :not(:last-child) {
+    margin-right: 5px;
+  }
+  img {
+    width: 30px;
+  }
+  .acct-nav-label {
+    // color: rgba(206, 206, 206, 0.8);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  &:active {
+    filter: brightness(1.2);
+    transform: translate(0px, 1px);
+  }
+}
     .side-menu-item {
       height: 50px;
       min-height: 50px;
@@ -532,7 +650,7 @@ $colors: (
     justify-content: center;
     text-transform: uppercase;
     background: #283048;
-    padding: 10px;
+    padding: 5px 8px;
     align-items: center;
     border-radius: 4px;
         img {
@@ -604,4 +722,18 @@ $colors: (
   }
 }
 }
+    .progress-bar {
+      // border: 1px solid #fed87d;
+      // background: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
+      // background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
+      border-radius: 100px;
+      color: #320b5b;
+      // background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+
+    }
+
+    .vip-text {
+      font-size: 20px;
+      font-weight: 700;
+    }
 </style>

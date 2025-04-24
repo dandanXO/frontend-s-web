@@ -5,6 +5,7 @@ export default {
   },
   header: {
     login: "Login",
+    welcomeMsg: "Welcome to B9",
     register: "Register",
     download: "Download",
     getFreeSpins: "Get free spins on the APP",
@@ -110,7 +111,7 @@ export default {
     forgotPassword_desc: "Please provide email, we will send OTP to your registered email.",
     forgotPasswordPhone_desc: "Please provide phone number, we will send OTP to your registered phone.",
     register_agree_01: "I have Agree To The ",
-    register_agree_02: "Use Privacy Agreement",
+    register_agree_02: "「Use Privacy Agreement」",
     email: "Email",
     email_placeholder: "Please enter email",
     email_rules_01: "Please insert email",
@@ -246,7 +247,7 @@ export default {
     redemptionFailure: "Redemption may fail if eligibility conditions are not met. System verification is final.",
     accountOwnerOnly: "Only the account owner can redeem the code.",
     unauthorizedMethods:
-      "Using bots, cheating, or any unauthorized methods will result in a ban and forfeiture of the bonus."
+      "Using bots, cheating, or any unauthorized methods will result in a ban and forfeiture of the bonus.",
   },
   btn: {
     login: "Login",
@@ -347,6 +348,7 @@ export default {
     menu_slot: "Slot",
     menu_poker: "Poker",
     menu_sport: "Sport",
+    cat_games: "games",
     cat_hotgames: "Hot Games",
     cat_livecasino: "Live Casino",
     cat_slotsgame: "Slots Game",

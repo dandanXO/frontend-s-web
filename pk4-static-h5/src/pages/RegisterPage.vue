@@ -1,64 +1,33 @@
 <template>
-  <!--  <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">-->
-  <!--    <div v-touch-pan.prevent.mouse="moveCsIcon" @click="openCSInNewTab(ui.CSAUrl)">-->
-  <!--      <div class="cs-icon-wrapper"></div>-->
-  <!--    </div>-->
-  <!--  </q-page-sticky>-->
-  <!--  <q-page-sticky position="bottom-right" :offset="whatDragPos" class="floating-btn">-->
-  <!--    <div v-touch-pan.prevent.mouse="moveWhatsIcon" @click="openWhatsApp()">-->
-  <!--      <div class="whatsapp-icon-wrapper"></div>-->
-  <!--    </div>-->
-  <!--  </q-page-sticky>-->
-
-  <div class="register-container" :class="isRestrictedDomain ? 'w-domain' : ''">
+  <div class="auth-container" :class="isRestrictedDomain ? 'w-domain' : ''">
+    <img class="top-left-logo" src="../assets/images/auth/b9-logo.svg" />
     <div class="back-left" v-if="!isRestrictedDomain">
       <router-link :to="'/home'">
-        <img src="../assets/images/index/btn-house.png" />
+        <img src="../assets/images/index/close-btn.png" />
       </router-link>
     </div>
-    <!-- <div class="is-domain top-img">
-      <img src="../assets/images/index/register-topimg.png" />
-    </div>
-    <div class="no-domain register-form-logo-img">
-      <img src="../assets/images/auth/b9-logo.png" />
-    </div> -->
+
     <div class="back-btn-img" v-if="isRestrictedDomain" @click="router.replace('/')">
       <img src="../assets/images/index/btn-back.png" />
     </div>
 
-    <!-- <div class="no-domain auth-tab-wrapper">
-      <q-tabs v-model="regLoginTab" dense no-caps class="auth-tab-toggle" indicator-color="transparent" align="justify">
-        <q-tab name="login" :label="$t('header.login')" />
-        <q-tab name="register" :label="$t('header.register')" />
-      </q-tabs>
-    </div> -->
-    <div class="reg-pg-title">{{ $t("header.register") }}</div>
+    <div class="auth-form-wrapper">
+      <div class="auth-pg-title-wrapper">
+        <div class="auth-pg-title">{{ $t("header.register") }}</div>
+        <div class="auth-pg-desc">{{ $t("header.welcomeMsg") }}</div>
+      </div>
 
-    <div class="register-form-wrapper">
-      <!-- <FloatingStickyKefu /> -->
       <q-form class="rounded-borders">
         <InputRowGrid>
           <template #fields>
             <InputField>
               <template #input>
-                <q-input
-                  type="tel"
-                  pattern="\d*"
-                  maxlength="11"
-                  ref="loginNameRef"
-                  hide-bottom-space
-                  clearable
-                  v-model="regForm.loginName"
-                  :rules="[
+                <q-input type="tel" pattern="\d*" maxlength="11" ref="loginNameRef" hide-bottom-space clearable
+                  v-model="regForm.loginName" :rules="[
                     (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
                     (val) => (val && val.length === 11) || $t('form.phone_rules_01'),
                     (val) => val.startsWith('03') || $t('form.phone_rules_03')
-                  ]"
-                  color="green"
-                  outlined
-                  label-color="brand"
-                  :placeholder="$t('form.phone_placeholder')"
-                >
+                  ]" color="green" outlined label-color="brand" :placeholder="$t('form.phone_placeholder')">
                   <template v-slot:prepend>
                     <q-icon name="smartphone" />
                     <div class="prepend-number">+92</div>
@@ -74,21 +43,12 @@
 
             <InputField>
               <template #input>
-                <q-input
-                  ref="pwdRef"
-                  hide-bottom-space
-                  v-model="regForm.password"
-                  :type="isPwd ? 'password' : 'text'"
+                <q-input ref="pwdRef" hide-bottom-space v-model="regForm.password" :type="isPwd ? 'password' : 'text'"
                   :rules="[
                     (val) => (val && val.length > 0) || $t('form.password_rules_01'),
                     (val) => val.length > 6 || $t('form.password_rules_02')
-                  ]"
-                  color="green"
-                  outlined
-                  clearable
-                  label-color="brand"
-                  :placeholder="$t('form.password_placeholder')"
-                >
+                  ]" color="green" outlined clearable label-color="brand"
+                  :placeholder="$t('form.password_placeholder')">
                   <template v-slot:prepend>
                     <q-icon name="lock" />
                   </template>
@@ -99,57 +59,22 @@
                       class="cursor-pointer"
                       @click="isPwd = !isPwd"
                     /> -->
-                    <img
-                      style="width: 20px"
-                      class="cursor-pointer"
-                      @click="isPwd = !isPwd"
-                      :src="require(`../assets/images/common/visibility${isPwd ? '_off' : ''}.png`)"
-                    />
+                    <img style="width: 20px" class="cursor-pointer" @click="isPwd = !isPwd"
+                      :src="require(`../assets/images/common/visibility${isPwd ? '_off' : ''}.png`)" />
                   </template>
                 </q-input>
-                <!-- <div v-if="regForm.password" class="password-str-div">
-                  <span
-                    :class="{
-                      'weak-pwd': pwdStrength == 'weak',
-                      'normal-pwd': pwdStrength == 'normal',
-                      'strong-pwd': pwdStrength == 'strong'
-                    }"
-                  >
-                    Weak
-                  </span>
-                  <span
-                    :class="{
-                      'normal-pwd': pwdStrength == 'normal',
-                      'strong-pwd': pwdStrength == 'strong'
-                    }"
-                  >
-                    Good
-                  </span>
-                  <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
-                </div> -->
               </template>
             </InputField>
 
             <!--            -->
             <InputField v-if="regForm.referrer && regForm.smsCodeId" :label="$t('form.otp_form')">
               <template #input>
-                <q-input
-                  pattern="\d*"
-                  maxlength="6"
-                  ref="verificationRef"
-                  hide-bottom-space
-                  v-model="regForm.smsCode"
+                <q-input pattern="\d*" maxlength="6" ref="verificationRef" hide-bottom-space v-model="regForm.smsCode"
                   :rules="[
                     (val) => (val && val.length > 0) || $t('form.insert_otp_num'),
                     (val) => (val && val.length === 6) || $t('form.otp_must_have_6')
-                  ]"
-                  color="white"
-                  class="landing-input"
-                  outlined
-                  :placeholder="$t('form.enter_otp_num')"
-                  label-color="brand"
-                  :disable="isOtpEnable"
-                >
+                  ]" color="white" class="landing-input" outlined :placeholder="$t('form.enter_otp_num')"
+                  label-color="brand" :disable="isOtpEnable">
                   <template v-slot:prepend>
                     <q-icon name="key" />
                   </template>
@@ -157,190 +82,88 @@
               </template>
             </InputField>
 
-            <!-- <InputField :label="'Confirm Password'">
-              <template #input>
-                <q-input
-                  ref="confirmPwdRef"
-                  hide-bottom-space
-                  :type="isCfmPwd ? 'password' : 'text'"
-                  v-model="regForm.confirmPwd"
-                  lazy-rules
-                  :rules="[
-                    (val) => (val && val.length > 0) || 'Please insert password',
-                    (val) => val === regForm.password || 'Password does not match'
-                  ]"
-                  color="green"
-                  outlined
-                  label-color="brand"
-                >
-                  <template v-slot:prepend>
-                    <q-icon name="lock" />
-                  </template>
-                  <template v-slot:append>
-                    <q-icon
-                      color="gray-3"
-                      :name="isCfmPwd ? 'visibility_off' : 'visibility'"
-                      class="cursor-pointer"
-                      @click="isCfmPwd = !isCfmPwd"
-                    />
-                  </template>
-                </q-input>
-              </template>
-            </InputField> -->
 
             <div style="visibility: hidden; position: absolute">
               <InputField :label="'Invitation Code (Optional)'">
                 <template #input>
-                  <q-input
-                    v-if="!hasAffiliate"
-                    ref="affiliateCodeRef"
-                    hide-bottom-space
-                    v-model="regForm.referrer"
-                    label-color="brand"
-                    outlined
-                    color="green"
-                    placeholder="Enter Invitation Code (Optional)"
-                  />
+                  <q-input v-if="!hasAffiliate" ref="affiliateCodeRef" hide-bottom-space v-model="regForm.referrer"
+                    label-color="brand" outlined color="green" placeholder="Enter Invitation Code (Optional)" />
                 </template>
               </InputField>
             </div>
           </template>
         </InputRowGrid>
 
-        <!-- <div style="margin-top: 30px">
-          <PrimaryButton :onClick="onSubmit" :label="'Register'" :disabled="!isAgreeReg" :loading="isLoading" />
-        </div> -->
-
-        <!--
-          <div class="tip-container">
-          <router-link class="landing-tip" to="/login">Already A Member? Sign In Now</router-link>
-        </div>
-      --></q-form>
-    </div>
-
-    <div class="no-domain mui-row q-mx-md q-mb-lg" :class="isAgreeReg ? 'checked' : ''">
-      <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
-        {{ $t("form.register_agree_01") }}
-        <a href="#" style="text-decoration: none; color: #61ff00">{{ $t("form.register_agree_02") }}</a>
-      </q-checkbox>
-    </div>
-
-    <router-link to="/forgot-password" class="is-domain forget-pwd">Forget password</router-link>
-
-    <div class="no-domain bottom-btn">
-      <q-btn
-        class="btn-primary btn-primary__full"
-        no-caps
-        unelevated
-        :disabled="!isAgreeReg"
-        :loading="isLoading"
-        @click="onSubmit"
-      >
-        {{ $t("btn.confirm") }}
-      </q-btn>
-
-      <div class="areyounew">
-        {{ $t("btn.alreadyhaveacct") }}
-        <a @click="regLoginTab = 'login'" class="green">{{ $t("btn.login") }}</a>
+      </q-form>
+      <div class="no-domain" :class="isAgreeReg ? 'checked' : ''">
+        <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
+          {{ $t("form.register_agree_01") }}
+          <a href="#" style="text-decoration: none; color: #82B4EA">{{ $t("form.register_agree_02") }}</a>
+        </q-checkbox>
       </div>
 
-      <div v-if="!isSpinReferrer" class="google-login-wrapper">
-        <img v-if="languageVal === 'en'" style="width: 100%" src="../assets/images/index/logindirectly-en.svg" />
-        <img v-else style="width: 100%" src="../assets/images/index/logindirectly-ur.svg" />
-        <template v-if="isAndroid()">
-          <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onCapacitorGoogleSignin">
-            <img
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABd1BMVEUAAADxRznpQzXpRDXqQzXqQzXqQzXqRDbrQzTfQEDpRDbqQzXrQzX/VSvoRjbqQzXqQzXpQzfnQDjqQzTbSSTqQzXqQzXqQjTqQzTqQjTqQzXqQzXpRDT/MzPqQzTrQzb/xgD0khbrSTLqQzXrQzb8vAbqRDT7uwTwbiTtSTf6vAX7vARDhvX7vAX7vAZDhvX7vQZChPT7vARChPTzuwiCsDY3pFtEg/RChPVBhfP8uwY1p1RChfNChfRAivS5tR80qFMyqFRChfVChfRChfQzp1Q0qFM0qFMzmWYAgIA6nYFBh/BChPNAn2A0qFMzqFM0qFQ0p1MzqFMzqVM0qFNChfMA//84p1A0qFNChfRGhPY0qFM0plw9j8Iktkk0p1Q0qFM0qFM0qFIzqlUtpVozqVM0qFM0qFM0qFM0qFMzqFM0qFMzqVI1p0/qQzX7vAX5qgztVy36twdChfTfuRBXq0U0qFM/qU43oXVAieE1pV8+jsj///9xjqGrAAAAbnRSTlMAEmqx4vb022cIgPB9BiHQxhcgtAfP5JJrbOP6dQV6sAns/vtMW4Sx7w7ir2f4hn6Hh7Bw/uQORGhWWoOE/Rju+0wy9cl9+nUFAmXuVQjO5JJraYvbxgEg4eUdz+YyB4Dz+ZgPEWiv4Pb137ZzHX5o7HUAAAABYktHRHzRtiBfAAAAB3RJTUUH6AYXEzsig/8aPAAAAQJJREFUKM9jYCAAGJmYWVjZ2Jk5GFGEObnY8qCAm4cXIc7Hn4cEBARh4kIsyOJ5wiIwc0TBfDFxCUlxKSRxBh6QsLSMLIjNKycPF1dQVMrLU1bBdKhqfkFhnhoWH6jn5xdpaGKR0MrPz9eGMIvhQAfI0wVK6KFL6EMlDNAlDKFGGaFLGAN5Rvn5JqZmYAlzELAASVgCeVb5JaVl1gjH2ADFbe1AHrQvLytzcISJOzkDJVzATNcyIHBz9wCxPb28QSb5gCV8/UAyZf4BgUHBIWUVlcXFoWEQ3eERZUigqjoyCmZueDSyTEwswiVx8Qkw4cSkZJQQS0lNS8/IzMrOySWUbAAwR2hJPoYcuAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNC0wNi0yM1QxOTo1OTozMyswMDowMBiqq7wAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjQtMDYtMjNUMTk6NTk6MzMrMDA6MDBp9xMAAAAAAElFTkSuQmCC"
-            />
+      <router-link to="/forgot-password" class="is-domain forget-pwd">Forget password</router-link>
 
-            &nbsp;
-            {{ $t("btn.signinWithGoogle") }}
-          </q-btn>
-        </template>
-        <template v-else>
-          <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onClickGoogleSignin">
-            <img
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABd1BMVEUAAADxRznpQzXpRDXqQzXqQzXqQzXqRDbrQzTfQEDpRDbqQzXrQzX/VSvoRjbqQzXqQzXpQzfnQDjqQzTbSSTqQzXqQzXqQjTqQzTqQjTqQzXqQzXpRDT/MzPqQzTrQzb/xgD0khbrSTLqQzXrQzb8vAbqRDT7uwTwbiTtSTf6vAX7vARDhvX7vAX7vAZDhvX7vQZChPT7vARChPTzuwiCsDY3pFtEg/RChPVBhfP8uwY1p1RChfNChfRAivS5tR80qFMyqFRChfVChfRChfQzp1Q0qFM0qFMzmWYAgIA6nYFBh/BChPNAn2A0qFMzqFM0qFQ0p1MzqFMzqVM0qFNChfMA//84p1A0qFNChfRGhPY0qFM0plw9j8Iktkk0p1Q0qFM0qFM0qFIzqlUtpVozqVM0qFM0qFM0qFM0qFMzqFM0qFMzqVI1p0/qQzX7vAX5qgztVy36twdChfTfuRBXq0U0qFM/qU43oXVAieE1pV8+jsj///9xjqGrAAAAbnRSTlMAEmqx4vb022cIgPB9BiHQxhcgtAfP5JJrbOP6dQV6sAns/vtMW4Sx7w7ir2f4hn6Hh7Bw/uQORGhWWoOE/Rju+0wy9cl9+nUFAmXuVQjO5JJraYvbxgEg4eUdz+YyB4Dz+ZgPEWiv4Pb137ZzHX5o7HUAAAABYktHRHzRtiBfAAAAB3RJTUUH6AYXEzsig/8aPAAAAQJJREFUKM9jYCAAGJmYWVjZ2Jk5GFGEObnY8qCAm4cXIc7Hn4cEBARh4kIsyOJ5wiIwc0TBfDFxCUlxKSRxBh6QsLSMLIjNKycPF1dQVMrLU1bBdKhqfkFhnhoWH6jn5xdpaGKR0MrPz9eGMIvhQAfI0wVK6KFL6EMlDNAlDKFGGaFLGAN5Rvn5JqZmYAlzELAASVgCeVb5JaVl1gjH2ADFbe1AHrQvLytzcISJOzkDJVzATNcyIHBz9wCxPb28QSb5gCV8/UAyZf4BgUHBIWUVlcXFoWEQ3eERZUigqjoyCmZueDSyTEwswiVx8Qkw4cSkZJQQS0lNS8/IzMrOySWUbAAwR2hJPoYcuAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNC0wNi0yM1QxOTo1OTozMyswMDowMBiqq7wAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjQtMDYtMjNUMTk6NTk6MzMrMDA6MDBp9xMAAAAAAElFTkSuQmCC"
-            />
+      <div class="no-domain bottom-btn-primary">
+        <q-btn class="btn-primary btn-primary__full" no-caps unelevated :disabled="!isAgreeReg" :loading="isLoading"
+          @click="onSubmit">
+          {{ $t("btn.confirm") }}
+        </q-btn>
 
-            &nbsp;
-            {{ $t("btn.signinWithGoogle") }}
-          </q-btn>
-        </template>
-      </div>
-    </div>
+        <div v-if="!isSpinReferrer" class="google-login-wrapper">
+          <img v-if="languageVal === 'en'" style="width: 100%" src="../assets/images/index/logindirectly-en.svg" />
+          <img v-else style="width: 100%" src="../assets/images/index/logindirectly-ur.svg" />
+          <template v-if="isAndroid()">
+            <q-btn no-caps unelevated class="google-btn btn-secondary btn-secondary__full" @click="onCapacitorGoogleSignin">
+              <img width="24px" src="../assets/images/index/google-icon.svg" />
 
-    <div class="is-domain bottom-btn-primary">
-      <q-btn
-        class="btn-primary btn-primary__full"
-        no-caps
-        unelevated
-        :disabled="!isAgreeReg"
-        :loading="isLoading"
-        @click="onSubmit"
-      >
-        {{ $t("btn.register") }}
-      </q-btn>
-    </div>
+              &nbsp;
+              {{ $t("btn.signinWithGoogle") }}
+            </q-btn>
+          </template>
+          <template v-else>
+            <q-btn no-caps unelevated class="google-btn btn-secondary btn-secondary__full" @click="onClickGoogleSignin">
+              <img width="24px" src="../assets/images/index/google-icon.svg" />
 
-    <div class="is-domain bottom-btn">
-      <!-- <router-link to="/login"> -->
-      <q-btn unelevated @click="router.replace('/login')">
-        {{ $t("btn.login") }}
-      </q-btn>
-      <!-- </router-link> -->
-    </div>
-
-    <!-- <div class="is-domain has-acct">
-      Already have an account?
-      <router-link to="/login" class="login">Login</router-link>
-    </div> -->
-    <div class="no-domain btn-lists">
-      <ShareIcons />
-    </div>
-    <div class="is-domain social-container">
-      <div class="share">Share</div>
-      <!-- <div class="social-items">
-        <a @click="openWhatsApp()" id="Whatsapp" class="social-item">
-          <img src="../assets/images/auth/social_wa.png" />
-        </a>
-
-        <a v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()" id="Download" class="social-item">
-          <img src="../assets/images/auth/social_dl.png" />
-        </a>
-        <a @click="openYoutube()" id="Youtube" class="social-item">
-          <img src="../assets/images/auth/youtube-icc.png" />
-        </a>
-        <a @click="openTiktok()" id="TikTok" class="social-item" target="_blank">
-          <img src="../assets/images/auth/tiktok.png" />
-        </a>
-
-        <a @click="openCharity()" id="Instagram" class="social-item" target="_blank">
-          <img src="../assets/images/auth/social_charity.png" />
-        </a>
-      </div> -->
-      <div class="btn-lists">
-        <div class="list-item" @click="openWhatsApp()">
-          <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
-          <div>WhatsApp</div>
-        </div>
-        <div class="list-item" @click="openCharity()">
-          <img class="btn-icon" id="charity-icon" src="../assets/images/auth/charity-icon.png" />
-          <div>Charity</div>
-        </div>
-        <div class="list-item" @click="openYoutube()">
-          <img class="btn-icon" id="youtube-icon" src="../assets/images/auth/youtube-icon.png" />
-          <div>Youtube</div>
-        </div>
-        <div class="list-item" @click="openTiktok()">
-          <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />
-          <div>TikTok</div>
-        </div>
-        <div class="list-item" v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()">
-          <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
-          <div>{{ $t("btn.downloadApp") }}</div>
+              &nbsp;
+              {{ $t("btn.signinWithGoogle") }}
+            </q-btn>
+          </template>
         </div>
       </div>
+
+      <hr style="background: #F1F3F5;height: 2px;border: none;width: 100%;margin: 20px 0;" />
+
+        <div class="areyounew">
+          {{ $t("btn.alreadyhaveacct") }}
+          <a @click="regLoginTab = 'login'" class="blue">{{ $t("btn.login") }}</a>
+        </div>
+
+        
+
+      <div class="is-domain bottom-btn-primary">
+        <q-btn class="btn-primary btn-primary__full" no-caps unelevated :disabled="!isAgreeReg" :loading="isLoading"
+          @click="onSubmit">
+          {{ $t("btn.register") }}
+        </q-btn>
+      </div>
+
+      <div class="is-domain bottom-btn">
+        <!-- <router-link to="/login"> -->
+        <q-btn unelevated @click="router.replace('/login')">
+          {{ $t("btn.login") }}
+        </q-btn>
+        <!-- </router-link> -->
+      </div>
+
+      <div class="regulated-and-licensed">
+        <img class="regulated-logo" src="../assets/images/auth/regulated-and-licensed.png" />
+        <div class="text">
+          <div class="text-1">Regulated & Licensed</div>
+          <div class="text-2">by the Govemment of Couracao</div>
+        </div>
+      </div>
+
     </div>
 
     <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
@@ -355,15 +178,9 @@
           <q-card-section class="q-mb-md q-pa-md">
             <q-input v-model="innerCaptchaRef" :placeholder="$t(`form.captchaCode`)">
               <template v-slot:append>
-                <img
-                  v-show="showImageCode"
-                  :src="phoneVerificationImg"
-                  @load="imgOnLoad"
-                  @error="imgOnError"
-                  :title="$t(`form.refresh_veri_code`)"
-                  style="margin-top: 6px; cursor: pointer"
-                  @click="getInnerCode"
-                />
+                <img v-show="showImageCode" :src="phoneVerificationImg" @load="imgOnLoad" @error="imgOnError"
+                  :title="$t(`form.refresh_veri_code`)" style="margin-top: 6px; cursor: pointer"
+                  @click="getInnerCode" />
               </template>
             </q-input>
           </q-card-section>
@@ -371,9 +188,6 @@
         </div>
       </q-card>
     </q-dialog>
-    <!-- <div class="no-domain bottom-img">
-      <img src="../assets/images/auth/login-img2.png" />
-    </div> -->
   </div>
 </template>
 
@@ -395,18 +209,14 @@ import { useI18n } from "vue-i18n";
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
-import ShareIcons from "src/components/LoginAndRegisterShareIcons.vue";
-// import FloatingStickyKefu from "../components/auth/FloatingStickyKefu.vue";
+import "../css/auth.scss";
 
 export default defineComponent({
   name: "RegisterPage",
   methods: { isAndroid },
   components: {
     InputRowGrid,
-    InputField,
-    ShareIcons
-    // FloatingStickyKefu
-    // PrimaryButton
+    InputField
   },
   setup() {
     const { t } = useI18n();
@@ -452,19 +262,6 @@ export default defineComponent({
       traceId: ""
     });
     const getCode = () => {
-      // api
-      //   .get("/member/verificationCode")
-      //   .then((response) => {
-      //     if (response.code === 0) {
-      //       verificationImg.value = "data:image/png;base64," + response.data.img;
-      //       regForm.codeId = response.data.id;
-      //       regForm.captchaCode = "0000";
-      //       // verificationRef.value.resetValidation();
-      //     }
-      //   })
-      //   .catch((e) => {
-      //     console.log(e);
-      //   });
     };
 
     const imgOnLoad = () => (showImageCode.value = true);
@@ -910,50 +707,6 @@ export default defineComponent({
       }
     };
 
-    // watch(
-    //   () => regForm.password,
-    //   () => {
-    //     pwdStrength.value = "";
-
-    //     var pwd = regForm.password;
-    //     var result = 0;
-    //     for (var i = 0, len = pwd.length; i < len; ++i) {
-    //       result |= charType(pwd.charCodeAt(i));
-    //     }
-
-    //     var level = 0;
-    //     for (var i = 0; i <= 4; i++) {
-    //       if (result & 1) {
-    //         level++;
-    //       }
-    //       result = result >>> 1;
-    //     }
-    //     if (pwd.length >= 6) {
-    //       switch (level) {
-    //         case 1:
-    //           pwdStrength.value = "weak";
-    //           break;
-    //         case 2:
-    //           pwdStrength.value = "normal";
-    //           break;
-    //         case 3:
-    //         case 4:
-    //           pwdStrength.value = "strong";
-    //           break;
-    //       }
-    //     } else {
-    //       pwdStrength.value = "weak";
-    //     }
-    //   }
-    // );
-
-    // const openPhoneVeriDialog = () => {
-    //   loginNameRef.value.validate();
-    //   if (!loginNameRef.value.hasError) {
-    //     openVerificationCodeDialog();
-    //     getInnerCode();
-    //   }
-    // };
 
     const verificationCodeDialog = ref(false);
     const openVerificationCodeDialog = () => {
@@ -1214,225 +967,24 @@ function charType(num) {
 </script>
 
 <style scoped lang="scss">
-.auth-tab-wrapper {
-  width: 90%;
-  margin: 0 auto;
-
-  .q-tab {
-    min-height: 45px;
-    border-radius: 8px;
-    color: #5f6061;
-    font-weight: 400;
-    width: 50%;
-  }
-
-  .auth-tab-toggle {
-    // background: url(../assets/images/auth/auth-tab-active.png) no-repeat center center;
-    // background-size: 100% 100%;
-    border-radius: 8px;
-    margin-bottom: 4px;
-    margin-top: 0px;
-    padding: 1px;
-
-    :deep(.q-tab__label) {
-      font-weight: 400;
-    }
-
-    :deep(.q-tab--active) {
-      color: white;
-      background: url(../assets/images/auth/auth-tab-active.png) no-repeat center center;
-      background-size: 100% 100%;
-    }
-
-    :deep(.q-tab--active .q-tab__label) {
-      font-weight: 700 !important;
-    }
-  }
-}
-
 .get-code-btn {
-  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-  color: #000000;
-  box-shadow: 0px 2px 0px 0px #1cca6a;
+  background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+  color: #fff;
+  box-shadow: 0px 0.5px 2px 0px #0667D599;
   min-width: 100px;
   max-width: 120px;
   font-weight: bold;
 }
 
-.register-container {
-  min-height: 100dvh;
-  // padding: 16px;
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column;
-  // justify-content: center;
-  background: url("../assets/images/auth/top-login-bg.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  // padding-top: 250px;
-  padding-top: 265px;
-  padding-bottom: 20px;
-
-  @media screen and (max-width: 400px) {
-    padding-top: 235px;
-  }
-
-  .is-domain {
-    display: none;
-  }
-  .no-domain {
-    display: unset;
-
-    @media screen and (max-width: 400px) {
-      margin-bottom: 10px;
-    }
-
-    &.btn-lists {
-      display: flex;
-      width: 95%;
-      margin: 0 auto;
-    }
-  }
-  &.w-domain {
-    background: url("../assets/images/auth/trianglebg.png");
-    background-size: 100% 100%;
-    padding-top: 0;
-    .no-domain {
-      display: none;
-    }
-    .is-domain {
-      display: block;
-      &.top-img {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-        img {
-          width: calc(100% - 32px);
-          margin-left: -5px;
-        }
-      }
-    }
-
-    .bottom-btn {
-      border: 2px solid transparent;
-      border-radius: 4px;
-      background-image: linear-gradient(#131313, #131313), linear-gradient(180deg, #33b085 0%, #68bd5c 100%);
-      background-origin: border-box;
-      background-clip: content-box, border-box;
-      margin: 3px 20px 8px;
-      padding: 0;
-
-      .q-btn {
-        height: 44px;
-        width: 100%;
-        :deep(.q-btn__content) {
-          background: linear-gradient(90deg, #29ed89 0%, #97e872 100%);
-          -webkit-background-clip: text;
-          color: transparent;
-          font-weight: bolder;
-          font-size: 16px;
-        }
-      }
-    }
-    .bottom-btn-primary {
-      border: none;
-      padding: 3px 20px 8px;
-      .btn-primary {
-        background: linear-gradient(90deg, #29ed89 0%, #97e872 100%);
-        color: #000a01;
-      }
-      :deep(.q-btn__content) {
-        font-weight: bolder;
-        font-size: 16px;
-      }
-    }
-
-    .has-acct {
-      width: 90%;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      gap: 5px;
-      margin: 10px auto;
-      color: #9f9f9f;
-      a {
-        color: #83e977;
-      }
-    }
-    .forget-pwd {
-      color: #9f9f9f;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      margin: 0 20px 20px;
-    }
-    .social-container {
-      margin: 10px auto;
-      width: 95%;
-      position: sticky;
-      top: calc(100vh - 70px);
-      left: 0;
-      right: 0;
-      .share {
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        gap: 10px;
-        color: #ffffff33;
-        &:before,
-        &:after {
-          content: "";
-          width: 100%;
-          flex: 1;
-          height: 1px;
-          background-color: #ffffff33;
-        }
-      }
-      .social-items {
-        display: flex;
-        justify-content: space-between;
-        width: 95%;
-        margin: 0 auto;
-        align-items: center;
-        .social-item {
-          border: 1px solid #ffffff33;
-          padding: 10px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          border-radius: 8px;
-          animation: smallbeat 2s infinite;
-        }
-      }
-      .btn-lists {
-        margin: 0;
-      }
-    }
-  }
-}
 
 .back-left {
   position: fixed;
   top: 15px;
   right: 15px;
   width: 30px;
-  img {
-    width: 100%;
-  }
-}
 
-.register-form-logo-img {
-  margin-top: -10px;
-  padding: 0 16px;
-  display: flex;
-  justify-content: center;
-  text-align: center;
   img {
-    display: inline-block;
     width: 100%;
-    max-width: 140px;
-    margin-bottom: 10px;
   }
 }
 
@@ -1441,45 +993,10 @@ function charType(num) {
   position: absolute;
   top: 14px;
   right: 14px;
+
   img {
     width: 2.25rem;
   }
-}
-.reg-pg-title {
-  font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 100%;
-  letter-spacing: 0px;
-  vertical-align: middle;
-  color: #ffffff;
-  padding: 0 20px;
-}
-
-.register-form-wrapper {
-  padding: 0 20px 5px;
-
-  :deep(.q-field__control) {
-    height: 45px;
-
-    .q-field__marginal {
-      height: 45px;
-    }
-  }
-}
-
-.page-header {
-  background-image: linear-gradient(to right, #de4545, #db7e42);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 28px;
-  text-align: center;
-  font-family: "Manrope", sans-serif;
-  padding: 10px;
-  display: flex;
-  gap: 20px;
-  align-content: center;
-  justify-content: center;
 }
 
 .verification {
@@ -1493,60 +1010,27 @@ function charType(num) {
   align-items: center;
 }
 
-.password-str-div {
-  display: flex;
-  align-items: center;
-  margin-top: 3px;
-  margin-bottom: 5px;
-  justify-content: space-evenly;
-  gap: 5px;
-  height: 50px;
-
-  span {
-    padding: 8px 3px;
-    //border: 1px solid #fff;
-    border-radius: 5px;
-    background: #434343;
-    width: 33%;
-    text-align: center;
-  }
-
-  span.weak-pwd {
-    background: var(--q-negative);
-  }
-
-  span.normal-pwd {
-    background: var(--q-warning);
-    color: #000000;
-  }
-
-  span.strong-pwd {
-    //background: linear-gradient(to right, #de4545, #db7e42) !important;
-    background: var(--q-positive);
-    font-weight: 600;
-  }
-}
-
 .q-toolbar {
   background: #33bcd4;
 }
 
 .rmb-checked-box {
-  font-size: 14px;
-  color: #eeeeee;
-
-  @media screen and (max-width: 400px) {
-    font-size: 12px;
-  }
+  color: #B2BDBF;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 100%;
+  margin-top: 10px;
 
   :deep(.q-checkbox__bg) {
     border-radius: 4px;
   }
+
   :deep(.q-checkbox__inner--truthy .q-checkbox__bg) {
-    background: #21ef89;
+    background: #047ce7;
+    color: #047ce7;
 
     svg {
-      color: #000000;
+      color: #fff;
       padding: 2px;
     }
   }
@@ -1565,11 +1049,6 @@ function charType(num) {
   font-weight: 700;
 }
 
-.prepend-number {
-  font-size: 14px;
-  color: #ffffff;
-  margin-left: 8px;
-}
 .verify-btn {
   color: #21ef89;
   font-family: Poppins;
@@ -1581,159 +1060,10 @@ function charType(num) {
   text-transform: capitalize;
 }
 
-.q-icon {
-  color: rgba(255, 255, 255, 0.3);
-}
-
-:deep(.q-tab__label) {
-  color: #ffffff;
-}
 
 .bottom-btn {
   // margin-top: auto;
   padding: 3px 20px 8px;
-}
-
-.btn-lists {
-  display: flex;
-  justify-content: space-evenly;
-  gap: 0px;
-  width: 100%;
-  margin: 10px auto;
-  align-items: flex-start;
-  text-align: center;
-  .list-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 8px;
-    color: #9f9f9f;
-    font-size: 11px;
-    flex: 1;
-  }
-
-  .btn-icon {
-    width: 42px;
-    height: 42px;
-
-    &:active {
-      filter: brightness(0.85);
-      transform: translate(0px, 1px);
-    }
-  }
-  #cs-icon {
-    width: 70px;
-    height: 70px;
-  }
-  #whatapp-icon {
-    margin-top: 10px;
-    animation: smallbeat 2s infinite;
-  }
-  #charity-icon {
-    margin-top: 10px;
-    animation: smallbeat 2s infinite;
-    animation-delay: 0.4s;
-  }
-  #youtube-icon {
-    margin-top: 10px;
-    animation: smallbeat 2s infinite;
-    animation-delay: 0.8s;
-  }
-  #tiktok-icon {
-    margin-top: 10px;
-    animation: smallbeat 2s infinite;
-    animation-delay: 1.2s;
-  }
-  #download-icon {
-    margin-top: 10px;
-    animation: smallbeat 2s infinite;
-    animation-delay: 1.6s;
-    //filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
-  }
-}
-
-.q-btn {
-  @media screen and (max-width: 400px) {
-    min-height: 35px;
-    height: 35px;
-  }
-
-  :deep(.q-btn__content) {
-    @media screen and (max-width: 400px) {
-      font-size: 13px;
-    }
-  }
-}
-
-.bottom-btn-primary {
-  .btn-primary {
-    @media screen and (max-width: 400px) {
-      min-height: 35px;
-      height: 35px;
-    }
-  }
-  :deep(.q-btn__content) {
-    @media screen and (max-width: 400px) {
-      font-size: 13px;
-    }
-  }
-}
-
-.bottom-img {
-  text-align: center;
-  margin-top: 28px;
-}
-
-.cs-icon-wrapper {
-  display: flex;
-  width: 70px;
-  height: 76px;
-  background: url("../assets/images/index/icon-cs.gif") no-repeat center center;
-  background-size: contain;
-
-  &:active {
-    filter: brightness(0.85);
-    transform: translate(0px, 1px);
-  }
-}
-
-.whatsapp-icon-wrapper {
-  display: flex;
-  width: 60px;
-  height: 60px;
-  background: url("../assets/images/auth/whatsapp-icon.png") no-repeat center center;
-  background-size: contain;
-  animation: smallbeat 2s infinite;
-
-  &:active {
-    filter: brightness(0.85);
-    transform: translate(0px, 1px);
-  }
-}
-
-@keyframes smallbeat {
-  0% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-  14% {
-    -webkit-transform: scale(1.2);
-    transform: scale(1.3);
-  }
-
-  28% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-  42% {
-    -webkit-transform: scale(1.2);
-    transform: scale(1.3);
-  }
-  70% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
 }
 
 .captcha-form-wrapper {
@@ -1741,30 +1071,6 @@ function charType(num) {
 
   :deep(.q-toolbar) {
     background: #232325;
-  }
-}
-
-.areyounew {
-  margin: 15px 0;
-
-  @media screen and (max-width: 400px) {
-    margin: 10px 0;
-    font-size: 12px;
-  }
-
-  .green {
-    color: #21ef89;
-    font-weight: 700;
-    cursor: pointer;
-  }
-}
-.google-login-wrapper {
-  display: flex;
-  flex-direction: column;
-  // gap: 10px;
-  margin-top: 25px;
-  img {
-    margin-bottom: 10px;
   }
 }
 </style>

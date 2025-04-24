@@ -5,6 +5,7 @@ export default {
   },
   header: {
     login: "لاگ ان",
+    loginDesc: "B9 میں خوش آمدید",
     register: "رجسٹر",
     download: "ڈاؤن لوڈ کریں",
     getFreeSpins: "ایپ پر مفت اسپنز حاصل کریں",
@@ -241,7 +242,7 @@ export default {
     redemptionFailure: "اگر اہلیت کی شرائط پوری نہ ہوں تو ریڈیم کرنے میں ناکامی ہو سکتی ہے۔ سسٹم کی تصدیق حتمی ہوگی۔",
     accountOwnerOnly: "صرف اکاؤنٹ کا مالک ہی کوڈ ریڈیم کر سکتا ہے۔",
     unauthorizedMethods:
-      "بوٹس، دھوکہ دہی یا کسی بھی غیر مجاز طریقے کے استعمال سے اکاؤنٹ پر پابندی اور بونس کی ضبطی ہو جائے گی۔"
+      "بوٹس، دھوکہ دہی یا کسی بھی غیر مجاز طریقے کے استعمال سے اکاؤنٹ پر پابندی اور بونس کی ضبطی ہو جائے گی۔",
   },
   btn: {
     login: "لاگ ان",
@@ -342,6 +343,7 @@ export default {
     menu_slot: "سلاٹ ",
     menu_poker: "پوکر",
     menu_sport: "کھیل",
+    cat_games: "گرم",
     cat_hotgames: "گرم کھیل",
     cat_livecasino: "لائیو کیسینو",
     cat_slotsgame: "سلاٹس کھیل",
