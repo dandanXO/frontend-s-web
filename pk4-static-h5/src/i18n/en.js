@@ -348,6 +348,7 @@ export default {
     menu_slot: "Slot",
     menu_poker: "Poker",
     menu_sport: "Sport",
+    cat_games: "games",
     cat_hotgames: "Hot Games",
     cat_livecasino: "Live Casino",
     cat_slotsgame: "Slots Game",

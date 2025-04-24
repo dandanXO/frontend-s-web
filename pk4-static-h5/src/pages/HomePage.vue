@@ -269,7 +269,7 @@
                 <img src="../assets/images/account/rgtarrow.svg" />
               </div>
               <div class="games-length">
-                {{ hotGameList.length }} games
+                {{ hotGameList.length }} {{ $t("home.cat_games") }}
               </div>
               <div :class="`custom-hot-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
               <div :class="`custom-hot-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
@@ -471,6 +471,9 @@
                 {{ $t("home.menu_all") }}
                 <img src="../assets/images/account/rgtarrow.svg" />
               </div>
+              <div class="games-length">
+                {{ livecasino.length }} {{ $t("home.cat_games") }}
+              </div>
               <div :class="`custom-live-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
               <div :class="`custom-live-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
             </div>
@@ -578,6 +581,9 @@
               <div class="all-btn" @click="handleActivateSlide('Slot')">
                 {{ $t("home.menu_all") }}
                 <img src="../assets/images/account/rgtarrow.svg" />
+              </div>
+              <div class="games-length">
+                {{ slot.length }} {{ $t("home.cat_games") }}
               </div>
               <div :class="`custom-slot-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
               <div :class="`custom-slot-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
@@ -707,6 +713,9 @@
               <div class="all-btn" @click="handleActivateSlide('Fish')">
                 {{ $t("home.menu_all") }}
                 <img src="../assets/images/account/rgtarrow.svg" />
+              </div>
+              <div class="games-length">
+                {{ fishGameJILIList.length }} {{ $t("home.cat_games") }}
               </div>
               <div :class="`custom-fish-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
               <div :class="`custom-fish-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
@@ -993,6 +1002,9 @@
                 {{ $t("home.menu_all") }}
                 <img src="../assets/images/account/rgtarrow.svg" />
               </div>
+              <div class="games-length">
+                {{ pokerGameJILIList.length }} {{ $t("home.cat_games") }}
+              </div>
               <div :class="`custom-poker-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
               <div :class="`custom-poker-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
             </div>
@@ -1116,6 +1128,9 @@
                 {{ $t("home.menu_all") }}
                 <img src="../assets/images/account/rgtarrow.svg" />
               </div>
+              <div class="games-length">
+                {{ sport.length }} {{ $t("home.cat_games") }}
+              </div>
               <div :class="`custom-sport-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
               <div :class="`custom-sport-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
             </div>
@@ -1149,6 +1164,61 @@
         </div>
       </template>
     </template>
+          <div class="download-app-buttons">
+            <div class="app app_ios">
+              <div class="icon">
+                <img src="../assets/images/index/app-ios.png">
+              </div>
+              <div class="app-text">
+                <div class="type">App</div>
+                <div class="version">iOS version</div>
+              </div>
+              <div class="right-btn">
+                <img src="../assets/images/index/btn-right.png">
+              </div>
+
+            </div>
+            <div class="app app_android">
+              <div class="icon">
+                
+                <img src="../assets/images/index/app-android.png">
+              </div>
+              <div class="app-text">
+                <div class="type">App</div>
+                <div class="version">Android version</div>
+              </div>
+              
+              <div class="right-btn">
+                <img src="../assets/images/index/btn-right.png">
+              </div>
+            </div>
+          </div>
+          <div class="support-button">
+            <div class="supp-left">
+              <div class="supp-main">24/7 support</div>
+              <div class="supp-sub">If you still have questions, please contact us</div>
+            </div>
+            
+            <q-btn class="btn-primary" :href="ui.CSAUrl" target="_blank">Chat</q-btn>
+            
+            <!-- <a class="btn-primary" :href="ui.CSAUrl" target="_blank">
+              <img src="../assets/images/index/cs-cs.png" />
+            </a> -->
+          </div>
+          
+        <swiper
+          :slidesPerView="5.5"
+          class="social-icons"
+          :spaceBetween="10"
+        >
+          <template v-for="(icon, index) in socialicons" :key="index">
+              <swiper-slide @click="gotoSocial(icon)">
+                <div class="category">
+                  <img :src="require(`../assets/images/index/home-social-${icon.name}.png`)"  />
+                </div>
+              </swiper-slide>
+          </template>
+        </swiper>
   </div>
 
   <GameModal
@@ -2420,6 +2490,26 @@ const checkPlatform = () => {
 // });
 const qs = require("qs");
 const $q = useQuasar();
+const socialicons = ref([
+  {
+    name: "telegram",
+  },
+  {
+    name: "mail",
+  },
+  {
+    name: "instagram",
+  },
+  {
+    name: "whatsapp",
+  },
+  {
+    name: "facebook",
+  },
+  {
+    name: "tiktok",
+  },
+])
 const banners = ref([
   {
     mobileImageUrl: "empty-banner.png"
@@ -4638,6 +4728,17 @@ const checkGoogleLoginSetPwd = () => {
   }
 }
 }
+.social-icons {
+  margin: 20px auto 30px;
+.category {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  img {
+    width: 100%;
+  }
+}
+}
 .hometop-categories {
   // display: grid;
   // grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
@@ -5563,6 +5664,9 @@ const checkGoogleLoginSetPwd = () => {
       .games-length {
         color: #3F4C6B;
         font-weight: 700;
+        line-height: 8px;
+        margin-bottom: 8px;
+        text-transform: uppercase;
       }
     }
   }
@@ -5750,6 +5854,67 @@ const checkGoogleLoginSetPwd = () => {
     img {
       display: block;
       width: 100%;
+    }
+  }
+}
+.download-app-buttons {
+  display: flex;
+  margin: 20px auto;
+  .app {
+    border: 1px solid #1A2239;
+    border-radius: 12px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+    width: 100%;
+    
+    font-family: Microsoft YaHei UI;
+      font-weight: 700;
+      font-size: 12px;
+    .icon {
+      width: 26px;
+      margin-right: 10px;
+      img {
+        width: 100%;
+      }
+    }
+    .right-btn {
+      width: 10px;
+      margin-left: auto;
+      img {
+        width: 100%;
+      }
+    }
+    .type {
+      color:#FFFFFF66;
+      text-transform: uppercase;
+    }
+    .version {
+      color: #ffffff;
+    }
+    &.app_ios {
+      margin-right: 10px;
+    }
+  }
+}
+.support-button {
+  background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  margin: 10px auto;
+  justify-content: space-between;
+  align-items: center;
+  .supp-left{ 
+    font-weight: 700;
+    font-size: 11px;
+
+    .supp-main {
+      color: #ffffff;
+    }
+    .supp-sub {
+      color: #FFFFFF66;
     }
   }
 }

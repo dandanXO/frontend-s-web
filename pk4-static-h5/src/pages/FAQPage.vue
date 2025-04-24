@@ -86,7 +86,7 @@ onMounted(() => {
 :deep(.q-expansion-item__toggle-icon) {
     font-size: 14px;
     padding: 5px;
-    background: #464F50;
+    background: #252C46;
     border-radius: 6px;
     fill: #B3BEC0;
 }

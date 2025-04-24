@@ -343,6 +343,7 @@ export default {
     menu_slot: "سلاٹ ",
     menu_poker: "پوکر",
     menu_sport: "کھیل",
+    cat_games: "گرم",
     cat_hotgames: "گرم کھیل",
     cat_livecasino: "لائیو کیسینو",
     cat_slotsgame: "سلاٹس کھیل",

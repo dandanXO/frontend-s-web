@@ -750,7 +750,7 @@ onUnmounted(() => {
       .notification-wrapper {
         // height: 20px;
         // width: 20px;
-        padding: 0px 10px;
+        padding: 0px 12px;
         // padding-right: 20px;
         border-right: 1px solid #ffffff33;
         img {
@@ -759,7 +759,7 @@ onUnmounted(() => {
         }
         :deep(.q-badge--floating) {
           top: 2px;
-          right: 2px;
+          right: 4px;
         }
         .bell-badge {
           background: #e30000;
@@ -770,7 +770,7 @@ onUnmounted(() => {
         // height: 20px;
         // width: 20px;
         
-        padding: 0px 10px;
+        padding: 0px 12px;
         // padding-left: 20px;
 
         img {

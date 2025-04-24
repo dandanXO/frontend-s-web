@@ -7,28 +7,28 @@
   </div>
   <div v-if="isInvite" class="list-item" @click="openFacebook()">
     <img class="btn-icon" id="facebook-icon"
-      :src="require(`../assets/images/auth/facebook-new.png`)" />
+      :src="require(`../assets/images/index/home-social-facebook.png`)" />
   </div>
   <a ref="tiktokRef" href="https://www.tiktok.com" target="_blank" :style="{ display: 'none' }" />
   <div class="list-item" @click="openTiktok()">
     <img class="btn-icon" id="tiktok-icon"
-      :src="require(`../assets/images/auth/tiktok-new.png`)" />
+      :src="require(`../assets/images/index/home-social-tiktok.png`)" />
     <!-- <div>Tiktok</div> -->
   </div>
   <a ref="instagramRef" href="https://www.instagram.com" target="_blank" :style="{ display: 'none' }" />
   <div class="list-item" @click="openInsta()">
     <img class="btn-icon" id="insta-icon"
-      :src="require(`../assets/images/auth/insta-new.png`)" />
+      :src="require(`../assets/images/index/home-social-instagram.png`)" />
     <!-- <div>WhatsApp</div> -->
   </div>
   <div class="list-item" @click="openYoutube()">
     <img class="btn-icon" id="youtube-icon"
-      :src="require(`../assets/images/auth/youtube-new.png`)" />
+      :src="require(`../assets/images/index/home-social-youtube.png`)" />
     <!-- <div>Youtube</div> -->
   </div>
   <div v-if="isInvite" class="list-item" @click="openSMS()">
     <img class="btn-icon" id="mail-icon"
-      :src="require(`../assets/images/auth/sms-new.png`)" />
+      :src="require(`../assets/images/index/home-social-mail.png`)" />
   </div>
   <div v-if="isInvite" class="list-item" @click="openMail()">
     <img class="btn-icon" id="mail-icon"
