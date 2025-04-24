@@ -5906,10 +5906,6 @@ const checkGoogleLoginSetPwd = () => {
   margin: 10px auto;
   justify-content: space-between;
   align-items: center;
-  .btn-primary {
-    
-  border-radius: 20px;
-  }
   .supp-left{ 
     font-weight: 700;
     font-size: 11px;
