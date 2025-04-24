@@ -871,7 +871,7 @@ const getMonthlyVip = () => {
       //   left: 50%;
       //   transform: translateX(-50%);
       // }
-      background: #394142;
+      background: linear-gradient(90deg, #0287f2 0%, #0664d2 100%);
     }
 
     :deep(.q-tab--active .q-tab__label) {
@@ -925,17 +925,50 @@ const getMonthlyVip = () => {
   font-size: 1rem;
   text-align: center;
   .vip-details {
-    background: #373c3d;
+    background: linear-gradient(90deg, #1c273d 0%, #12192b 100%);
+
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
+  }
+
+  .q-table__container {
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 75px;
+      width: calc(50% - 30px);
+      height: 100%;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255, 163, 107, 0.6) 0%, rgba(255, 163, 107, 0) 100%);
+      z-index: 2;
+
+      @media (max-width: 450px) {
+        width: calc(50% - 16px);
+      }
+
+      @media (max-width: 410px) {
+        width: calc(50%);
+      }
+
+      @media (max-width: 375px) {
+        left: 85px;
+        width: calc(50% - 30px);
+      }
+    }
   }
 
   .top-header {
     color: #ffffff80;
     // background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
     // background: linear-gradient(180deg, #21EF89 0%, #33562d 100%);
-    background: #323738;
+    background: #121829;
+    > :nth-child(2) {
+      color: #fff;
+    }
   }
 
   .q-table__card {
@@ -979,6 +1012,7 @@ const getMonthlyVip = () => {
     // background: rgba(21, 0, 37, 0.5);
     // background: #502175;
     // background: #00ae000c;
+    background: #121829;
   }
 
   span.amt-text {
