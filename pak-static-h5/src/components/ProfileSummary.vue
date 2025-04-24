@@ -194,7 +194,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, onUnmounted, provide } from "vue";
+import { ref, onMounted, computed, onUnmounted, watch, provide } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
@@ -209,6 +209,7 @@ import SideMenu from "components/SideMenu.vue";
 
 import { defineEmits } from "vue";
 import { useCustomerTrigger } from "src/hooks/trigger";
+import { i18nStore } from "src/router/language";
 
 const props = defineProps(["homeProfile", "showRedemption"]);
 const emits = defineEmits(["closeslot", "activateSlide", "showNewPlayer"]);
@@ -216,6 +217,7 @@ const route = useRoute();
 const router = useRouter();
 const store = userStore();
 const ui = useUI();
+const i18nStoreLanguage = i18nStore();
 
 
 const isScrolled = ref(false);
@@ -228,7 +230,11 @@ const isBonusModal = ref(false);
 const fastAccessPromo = ref([]);
 
 const getFastAccessPromo = () => {
-  api.get("/opt-session/promo/page?showFastAccess=1").then((res) => {
+  const params = {
+    showFastAccess: 1,
+    language: i18nStoreLanguage.languageVal
+  };
+  api.get("/opt-session/promo/page", { params }).then((res) => {
     if (res.code === 0) {
       if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
         fastAccessPromo.value = res.data;
@@ -406,6 +412,8 @@ const handleBackBtn = () => {
 const isSideDownload = ref(false);
 
 const afterMounted = useCustomerTrigger(loadCustomerAddress);
+
+watch(() => i18nStoreLanguage.languageVal, getFastAccessPromo);
 
 onMounted(() => {
   checkTopDownloadAppear();
@@ -717,7 +725,7 @@ onUnmounted(() => {
       width: 100%;
       // gap: 5px;
       gap: unset;
-      :not(:last-child) { 
+      :not(:last-child) {
         margin-right: 2px;
       }
       justify-content: space-between;
