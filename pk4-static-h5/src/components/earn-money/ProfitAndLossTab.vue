@@ -423,7 +423,7 @@ onMounted(() => {
 
 thead {
   .q-tr.top-header {
-  background-color: #323738;
+  background-color: transparent;
   color: #B2BDBF;
 
   }
@@ -443,5 +443,9 @@ tbody {
   color: #ffffff;
   }
 }
+}
+
+.monthly-deposit-table {
+  background: #121829;
 }
 </style>
