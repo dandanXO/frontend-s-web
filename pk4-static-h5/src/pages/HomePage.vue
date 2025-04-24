@@ -3887,11 +3887,11 @@ const truncateText = (text, maxLength) => {
     //   return text.substring(2);
   }
 
-  // if (window.innerWidth <= 450) {
-  //   return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
-  // } else {
-  //   return text;
-  // }
+  if (window.innerWidth <= 450) {
+    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+  } else {
+    return text;
+  }
 };
 
 const closeDepositDialog = () => {
@@ -5840,7 +5840,7 @@ const checkGoogleLoginSetPwd = () => {
     }
 
     .platform-game-title {
-      text-align: left;
+      // text-align: left;
       margin-top: 6px;
       color: #ffffff;
       font-weight: bold;
@@ -5848,7 +5848,12 @@ const checkGoogleLoginSetPwd = () => {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 100px;
+      // max-width: 100px;
+      text-align: center;
+    background: linear-gradient(180deg, transparent 0%, black 40%, transparent 60%);
+    margin-top: -25px;
+    padding-top: 40px;
+    position: relative;
     }
 
     img {
@@ -5984,7 +5989,7 @@ const checkGoogleLoginSetPwd = () => {
     z-index: 99;
     // min-height: 200px;
     .back-top-logo {
-      background: #323738;
+      background: #3237384D;
       padding: 12px;
       display: flex;
       justify-content: flex-start;

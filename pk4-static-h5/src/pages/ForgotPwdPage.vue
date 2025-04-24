@@ -851,7 +851,7 @@ onMounted(() => {
       //   left: 50%;
       //   transform: translateX(-50%);
       // }
-      background: #394142;
+      background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
 
       background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
       box-shadow: 0px 0.5px 2px 0px #0667D599;

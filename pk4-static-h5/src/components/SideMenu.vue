@@ -3,7 +3,7 @@
 
   <div class="left-side-menu" @click.stop>
     <div class="topbar">
-      <RouterLink to="/vip" style="padding: 0;" no-caps :ripple="false" unelevated>
+      <RouterLink v-if="store.token" to="/vip" style="padding: 0;" no-caps :ripple="false" unelevated>
         <div class="profile-pic" :class="store.vip ? 'vip-' + store.vip.replace('VIP', '') : 'vip-0'">
             <q-avatar size="40px">
               <img :src="profileImagePath" />
@@ -23,8 +23,13 @@
             </div>
         </div>
       </RouterLink>
+      <div v-else>
+        <RouterLink class="reg-btn" to="/register">
+          {{ $t('header.register') }}
+        </RouterLink>
+      </div>
       <div class="right-top">
-        <RouterLink to="/language" class="side-menu-item">
+        <a @click="isLanguageDialog = !isLanguageDialog" class="side-menu-item">
         <div class="item-icon__language">
           {{ $t('lang.langVal') }}
           <div class="icon-flag">
@@ -32,7 +37,7 @@
           </div>
         </div>
         <!-- {{ $t("sideNav.language") }} -->
-      </RouterLink>
+      </a>
       <div class="close-btn" @click="closeSideMenu()">
         <img src="../assets/images/index/close-btn-white.png">
       </div>
@@ -214,18 +219,33 @@
       </div>
     </div>
   </q-dialog>
+  <q-dialog v-model="isLanguageDialog">
+    
+    <div class="popout-dialog">
+      <q-btn dense icon="close" class="text-white top-right" flat v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">{{ $t("lang.language") }}</div>
+
+        <div class="txt-content q-mt-md text-center" style="width: 100%;">
+          <LanguagePage />
+        </div>
+      </div>
+    </div>
+  </q-dialog>
 </template>
 <script setup>
 import { defineEmits, computed, ref } from "vue";
 
 import { useRouter } from "vue-router";
 import ProfileSummary from "../components/ProfileSummary.vue";
+import LanguagePage from "../pages/LanguagePage.vue";
 import { useUI } from "stores/ui";
 import { userStore } from "stores/index";
 const emits = defineEmits(["closeMenu"]);
 const router = useRouter();
 const store = userStore();
 const ui = useUI();
+const isLanguageDialog = ref(true)
 import { convertToCommaAmount } from "src/boot/utils";
 
 
@@ -342,6 +362,14 @@ $colors: (
         img {
           width: 100%;
         }
+      }
+      .reg-btn {
+        background: linear-gradient(270deg, #089E4E 0%, #2CAC64 100%);
+        box-shadow: 0px 0px 4px 0px #089E4EB2;
+        border-radius: 15px;
+        padding: 10px;
+        text-decoration: none;
+        color: #ffffff;
       }
     }
     .vipbar {

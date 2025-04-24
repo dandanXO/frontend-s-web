@@ -5,7 +5,7 @@ export default {
   },
   header: {
     login: "لاگ ان",
-    loginDesc: "B9 میں خوش آمدید",
+    welcomeMsg: "B9 میں خوش آمدید",
     register: "رجسٹر",
     download: "ڈاؤن لوڈ کریں",
     getFreeSpins: "ایپ پر مفت اسپنز حاصل کریں",
@@ -58,6 +58,7 @@ export default {
   },
   bottomNav: {
     home: "گھر/ہوم",
+    agent: "ایجنٹ",
     promo: "پرومو",
     earnMoney: "پیسے کمائیں",
     wallet: "پرس",

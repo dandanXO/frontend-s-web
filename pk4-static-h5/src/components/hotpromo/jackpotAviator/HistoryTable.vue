@@ -79,7 +79,7 @@ const props = defineProps(['historyList']);
         }
 
         &:nth-child(even) {
-            background: #394142;
+            background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
         }
         &:hover {
             background: linear-gradient(180deg, #FB4F77 0%, #DA093A 100%);

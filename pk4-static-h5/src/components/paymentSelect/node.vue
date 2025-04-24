@@ -387,6 +387,7 @@ $node-color: #b81212;
         border: 2px solid transparent;
         border-radius: 10px;
         padding: 4px 4px;
+        background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
 
         img {
           background-color: transparent;

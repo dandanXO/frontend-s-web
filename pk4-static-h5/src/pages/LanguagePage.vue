@@ -30,11 +30,11 @@
     <!-- <pre>group---{{ group }}</pre>
     <pre>languageVal--{{ languageVal }}</pre> -->
 
-    <div class="bottom-btn">
+    <!-- <div class="bottom-btn">
       <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="handleConfirmClick('/')">
         {{ $t("btn.confirm") }}
       </q-btn>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -77,7 +77,13 @@ const handleConfirmClick = (route) => {
     &:last-child {
       border-color: transparent;
     }
-
+    :deep(.q-radio__inner--truthy .non-selectable) {
+      background: url(../assets/images/common/lang.png)no-repeat center center;
+      background-size: contain;
+    }
+    :deep(.q-radio__bg path) {
+      fill: transparent;
+    }
     :deep(.q-radio__inner) {
       margin-left: auto;
     }
