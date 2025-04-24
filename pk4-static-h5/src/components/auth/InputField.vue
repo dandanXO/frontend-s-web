@@ -24,11 +24,9 @@ const props = defineProps(["label"]);
     padding-right: 10px;
     border-radius: 10px;
     // background-color: #0b0e0d;
-    // background-color: #0b0e0d;
-
+    background-color: #EAEFF9;
     border: 1px solid #ffffff14;
-    background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
-
+    background: #EAEFF9;
     font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 14px;
@@ -47,6 +45,9 @@ const props = defineProps(["label"]);
   }
   :deep(.q-field__marginal) {
     height: unset;
+  }
+  :deep(.q-field__native) {
+    color: #7F8591;
   }
   // :deep(.q-icon) {
 
