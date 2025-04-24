@@ -10,8 +10,7 @@
       <div class="carousel__item">
         <div :class="`vipitem vipitem${vip.vipLevel}`">
           <div class="vip-level-header">
-            <img :src="require('../assets/images/vip/vipword.png')" />
-            {{ vip.vipLevel }}
+            <img :src="require(`../assets/images/vip/badge/viplvl-${vip.vipLevel}.png`)" />
           </div>
           <div v-if="vip.vipLevel !== 12">
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
@@ -22,7 +21,7 @@
 
               <div class="progress-bar-container">
                 <div class="progress-bar-outer-bar" v-if="vipIndex !== vipItems.length - 1">
-                  <span class="progress-bar-label">{{ currentVipLevelStats.progressBarText }}</span>
+                  <!-- <span class="progress-bar-label">{{ currentVipLevelStats.progressBarText }}</span> -->
 
                   <div class="progress-bar-inner-bar" :style="{ width: currentVipLevelStats.levelUpPercentage + '%' }">
                     <div class="progress-bar-inner-bar-endpoint-circle">
@@ -182,7 +181,7 @@ const rows = [
   {
     name: "VIP 11",
     ugprade: "3,000,000",
-    reward: t('vip.unlimited'),
+    reward: t("vip.unlimited"),
     flow: "58,888",
     invitee: 90,
     extrareward: "1,188"
@@ -190,7 +189,7 @@ const rows = [
   {
     name: "VIP 12",
     ugprade: "5,000,000",
-    reward: t('vip.unlimited'),
+    reward: t("vip.unlimited"),
     flow: "88,888",
     invitee: 100,
     extrareward: "2,888"
@@ -433,40 +432,91 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+// $colors: (
+//   #6d96c6,
+//   #8c9b6a,
+//   #4ca1fc,
+//   #4c5efc,
+//   #d34cfc,
+//   #fc4cc4,
+//   #efa1f6,
+//   #ff9d86,
+//   #5bfc49,
+//   #efe639,
+//   #67c2ac,
+//   #ff7879,
+//   #d89053
+// );
+// @for $i from 0 through length($colors) - 1 {
+//   .vipitem#{$i} {
+//     .progress-bar-inner-bar {
+//       background: nth($colors, $i + 1); // Match color with vipitem
+
+//       .progress-bar-inner-bar-endpoint-circle {
+//         background: rgba(nth($colors, $i + 1), 0.16); /* 16% opacity */
+//       }
+
+//       .progress-bar-inner-bar-endpoint-circle__outer {
+//         background: rgba(nth($colors, $i + 1), 0.25); /* 25% opacity */
+//       }
+
+//       .progress-bar-inner-bar-endpoint-circle__inner {
+//         background: nth($colors, $i + 1); // Full color
+//       }
+//     }
+//   }
+// }
+
 $colors: (
-  #6d96c6,
-  #8c9b6a,
-  #4ca1fc,
-  #4c5efc,
-  #d34cfc,
-  #fc4cc4,
-  #efa1f6,
-  #FF9D86,
-  #5bfc49,
-  #efe639,
-  #67c2ac,
-  #ff7879,
-  #d89053
+  #4a75d9,
+  #523014,
+  #780f70,
+  #be2526,
+  #076b0a,
+  #172266,
+  #5a0c3a,
+  #4b6b7a,
+  #230e6b,
+  #6e191a,
+  #0a1d5c,
+  #2a161b,
+  #523014
 );
 @for $i from 0 through length($colors) - 1 {
   .vipitem#{$i} {
-    .progress-bar-inner-bar {
-      background: nth($colors, $i + 1); // Match color with vipitem
-
-      .progress-bar-inner-bar-endpoint-circle {
-        background: rgba(nth($colors, $i + 1), 0.16); /* 16% opacity */
-      }
-
-      .progress-bar-inner-bar-endpoint-circle__outer {
-        background: rgba(nth($colors, $i + 1), 0.25); /* 25% opacity */
-      }
-
-      .progress-bar-inner-bar-endpoint-circle__inner {
-        background: nth($colors, $i + 1); // Full color
-      }
+    .progress-bar-container {
+      color: nth($colors, $i + 1);
+    }
+    .upgrade-requirements {
+      color: rgba(nth($colors, $i + 1), 0.6);
     }
   }
 }
+
+$gradients: (
+  linear-gradient(90deg, #9ec2fa 0%, #4077de 100%),
+  linear-gradient(90deg, #e5b888 0%, #b08240 100%),
+  linear-gradient(90deg, #e268d9 0%, #780f70 100%),
+  linear-gradient(90deg, #ff5f60 0%, #ae0536 100%),
+  linear-gradient(90deg, #35a042 0%, #7ee98b 100%),
+  linear-gradient(90deg, #121f55 0%, #6e91f6 100%),
+  linear-gradient(90deg, #f534a5 0%, #ffa2d9 100%),
+  linear-gradient(90deg, #4b6b7a 0%, #c5ddff 100%),
+  linear-gradient(90deg, #f330d7 0%, #8448ff 100%),
+  linear-gradient(90deg, #fa5540 0%, #ffa397 100%),
+  linear-gradient(90deg, #0a1d5c 0%, #8c52d5 100%),
+  linear-gradient(90deg, #ad95b5 0%, #2a161b 100%),
+  linear-gradient(90deg, #0e9bef 0%, #977fb2 100%)
+);
+
+@for $i from 0 through length($gradients) - 1 {
+  .vipitem#{$i} {
+    .progress-bar-inner-bar {
+      background: nth($gradients, $i + 1);
+    }
+  }
+}
+
 .vip-rewards {
   display: flex;
   justify-content: space-around;
@@ -536,7 +586,7 @@ $colors: (
   }
 }
 .vip-contents {
-  color: #ffffff;
+  // color: #ffffff;
   border-radius: 20px;
   display: flex;
   justify-content: center;
@@ -550,17 +600,17 @@ $colors: (
   .progress-bar-container {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     position: absolute;
-    bottom: 8%;
+    bottom: 12%;
     left: 6%;
     right: 6%;
     flex-wrap: wrap;
-    width: 60%;
+    width: 82%;
+    font-weight: bolder;
+    font-size: 0.6rem;
 
     .progress-bar-endpoint-label {
-      color: #fff;
-
       &:last-child {
         margin-left: auto;
       }
@@ -573,6 +623,7 @@ $colors: (
       width: 100%;
       // overflow: hidden;
       position: relative;
+      height: 8px;
 
       .progress-bar-label {
         position: absolute;
@@ -591,10 +642,10 @@ $colors: (
       color: #fff;
       border-radius: 16px;
       // background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
-      height: 12px;
+      height: 8px;
       position: relative;
       // background: #6D96C6;
-      min-width: 12px;
+      // min-width: 12px;
       .progress-bar-inner-bar-endpoint-circle {
         width: 36px;
         height: 36px;
@@ -632,13 +683,15 @@ $colors: (
     justify-content: flex-start;
     gap: 10px;
     font-size: 12px;
-    left: 15px;
-    top: 36%;
-    color: #fff;
+    left: 6%;
+    bottom: 25%;
+    font-size: 0.85rem;
+    font-weight: bolder;
+    // color: #fff;
 
-    span {
-      color: #fff;
-    }
+    // span {
+    //   color: #fff;
+    // }
   }
 }
 .vipitem {
@@ -650,11 +703,11 @@ $colors: (
   background-position: bottom center;
   background-size: 100% 100%;
   // max-width: 346px;
-  height: 36vw;
+  height: 45vw;
   width: 100%;
   justify-content: flex-end;
   font-size: 12px;
-  max-height: 165px;
+  max-height: 220px;
 
   &1 {
     background-image: url("../assets/images/vip/badge/banner-1.png");
@@ -695,12 +748,12 @@ $colors: (
 
   .vip-level-header {
     img {
-      width: 55px;
+      width: 72px;
     }
     font-family: "Fugaz One";
     font-size: 30px;
-    top: 15%;
-    left: 4%;
+    top: 24%;
+    left: 6%;
     z-index: 1;
     position: absolute;
     color: #fff;

@@ -2,7 +2,7 @@
     min-height: 100dvh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-top;
     align-items: center;
     background-color: #090F1E;
 
@@ -84,6 +84,7 @@
     justify-content: center;
     align-items: center;
     padding: 0px 20px 10px;
+    text-align: center;
 }
 
 .auth-pg-title {
@@ -98,16 +99,16 @@
 .auth-pg-desc {
     font-weight: 400;
     font-size: 12px;
-    line-height: 100%;
     letter-spacing: 0px;
     color: #090F1E;
+    line-height: 15px;
 }
 
 .auth-form-wrapper {
     margin: 0 auto;
     background-color: #fff;
     width: 329px;
-    min-height: 535px;
+    min-height: fit-content;
     border-radius: 15px;
     padding: 20px;
     margin-top: 70px;
@@ -187,20 +188,11 @@
         box-shadow: none;
         border: none;
         border-radius: 12px;
-
-        @media screen and (max-width: 400px) {
-            min-height: 35px;
-            height: 35px;
-        }
     }
 
     :deep(.q-btn__content) {
         font-weight: bolder;
         font-size: 16px;
-
-        @media screen and (max-width: 400px) {
-            font-size: 13px;
-        }
     }
 }
 

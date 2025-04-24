@@ -289,7 +289,7 @@ export default defineComponent({
           pageName.value = t("header.forgotAccount");
         } else if (route.path === "/forgot-password") {
           prevPage.value = "/login";
-          hasPage.value = true;
+          hasPage.value = false;
           pageName.value = t("sideNav.recoverPwd");
         } else if (route.path === "/live-casino") {
           hasPage.value = true;
