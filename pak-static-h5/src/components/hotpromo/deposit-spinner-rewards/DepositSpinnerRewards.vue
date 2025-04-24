@@ -75,22 +75,14 @@
             />
             <img class="spintop" :src="require(`./img/spin-top-${index + 1}.png`)" />
             <template v-if="index === 3">
-              <img
-                class="spingo"
-                :src="require(`./img/spingo-${index + 1}.png`)"
-              />
+              <img class="spingo" :src="require(`./img/spingo-${index + 1}.png`)" />
               <span class="spinnum">
                 {{ $t("hotPromo.depositSpinWheel.spin") }} {{ "* " + (tab.times1 + tab.times2) }}
               </span>
             </template>
             <template v-else>
-              <img
-                class="spingo"
-                @click="onClickRotate"
-                @touchstart="onClickRotate"
-                :src="require(`./img/spingo-${index + 1}.png`)"
-              />
-              <span class="spinnum" @click="onClickRotate" @touchstart="onClickRotate">
+              <img class="spingo" @click="onClickRotate" :src="require(`./img/spingo-${index + 1}.png`)" />
+              <span class="spinnum" @click="onClickRotate">
                 {{ $t("hotPromo.depositSpinWheel.spin") }} {{ "* " + (tab.times1 + tab.times2) }}
               </span>
             </template>
@@ -106,11 +98,11 @@
       <div class="prize-popup">
         <!-- <q-btn icon="close" flat round dense v-close-popup class="q-ml-auto" /> -->
         <div class="prize-gold">
-                   <div class="prize-get">You get {{ prizePopupBonusAmt }} PRK</div>
+          <div class="prize-get">You get {{ prizePopupBonusAmt }} PRK</div>
 
           <div class="prize-amount">{{ prizePopupBonusAmt }} PRK</div>
 
-<q-btn no-caps rounded unelevated class="purple-bg" @click="closeDialog">{{ $t("btn.recharge") }}</q-btn>
+          <q-btn no-caps rounded unelevated class="purple-bg" @click="closeDialog">{{ $t("btn.recharge") }}</q-btn>
         </div>
       </div>
     </q-dialog>
@@ -121,9 +113,11 @@ import { onMounted, onUnmounted, ref, reactive, nextTick, computed } from "vue";
 import { useSwipe } from "@vueuse/core";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
+import { useI18n } from "vue-i18n";
 
 const rolling = ref(false);
 const activeTab = ref(0);
+const { t } = useI18n();
 const $q = useQuasar();
 const tabs = reactive([
   {
@@ -318,7 +312,7 @@ const onClickRotate = () => {
     $q.notify({
       color: "warning",
       position: "top",
-      message: "No spins left",
+      message: t("content.nospinleft"),
       icon: "report_problem"
     });
     return;
@@ -339,7 +333,7 @@ const onClickRotate = () => {
     $q.notify({
       color: "warning",
       position: "top",
-      message: "No spins left",
+      message: t("content.nospinleft"),
       icon: "report_problem"
     });
     return;
@@ -488,7 +482,7 @@ const transformStyle = computed(() => {
       margin-right: 10px;
 
       .individual-btn {
-        background: #3F30AF;
+        background: #3f30af;
         padding: 5px;
         color: #ffffff;
         text-align: center;
@@ -506,7 +500,7 @@ const transformStyle = computed(() => {
       line-height: 24px;
       color: #f9f9f9;
       span.orange {
-        color: #F9D649;
+        color: #f9d649;
       }
     }
   }
@@ -603,11 +597,11 @@ const transformStyle = computed(() => {
         max-width: 100%;
         height: 17px;
         background: linear-gradient(180deg, #131321 0%, #060339 50.1%, #131321 97.1%);
-        border: 1px solid #0055FF;
+        border: 1px solid #0055ff;
         border-radius: 10px;
         .innerbar {
           height: 15px;
-          background: linear-gradient(90deg, #05078A 0%, #7D5CF2 100%);
+          background: linear-gradient(90deg, #05078a 0%, #7d5cf2 100%);
           border-radius: 10px;
           position: relative;
           overflow: hidden;
@@ -835,7 +829,7 @@ const transformStyle = computed(() => {
   width: 100%;
   margin-bottom: 120px;
   .purple-bg {
-    background: linear-gradient(90deg, #5856FF 0%, #262E99 100%);
+    background: linear-gradient(90deg, #5856ff 0%, #262e99 100%);
   }
 }
 .prize-gold {
@@ -854,8 +848,7 @@ const transformStyle = computed(() => {
     font-weight: 700;
     line-height: 22.1px;
     text-align: center;
-    color: #5254AD;
-
+    color: #5254ad;
   }
   .prize-amount {
     position: absolute;
@@ -869,12 +862,12 @@ const transformStyle = computed(() => {
     letter-spacing: -2px;
     // color: #fff96f;
     // text-shadow: 1px 1px #0000008a;
-    background: linear-gradient(270deg, #394AE2 0%, #6B89FF 52.5%, #394AE2 100%);
+    background: linear-gradient(270deg, #394ae2 0%, #6b89ff 52.5%, #394ae2 100%);
 
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke:.7px white; /* Creates the border */
+    -webkit-text-stroke: 0.7px white; /* Creates the border */
 
     @media (max-width: 380px) {
       bottom: 3.5%;
@@ -884,9 +877,9 @@ const transformStyle = computed(() => {
     position: absolute;
     bottom: 5%;
     width: 50%;
-    color:#EDE7FF;
+    color: #ede7ff;
     font-weight: 700;
-    font-family: 'Poppins';
+    font-family: "Poppins";
   }
 }
 </style>

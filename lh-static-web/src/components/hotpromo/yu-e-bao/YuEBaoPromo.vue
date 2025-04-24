@@ -257,11 +257,12 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { ref, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import { useDark } from "@vueuse/core";
 
 const router = useRouter();
+const route = useRoute();
 const isDark = useDark();
 
 const tabs = ref(["余额宝2.0", "获得利息攻略", "领取任务教程", "领取奖金教程"]);
@@ -270,6 +271,12 @@ const tabValue = ref(0);
 const handleBannerClick = () => {
   router.push("/center/balance-interest-plan");
 };
+
+onMounted(() => {
+  if (route.path.includes("tutorial") || JSON.stringify(route.query).includes("tutorial")) {
+    tabValue.value = 1; 
+  }
+});
 </script>
 
 <style scoped lang="scss">

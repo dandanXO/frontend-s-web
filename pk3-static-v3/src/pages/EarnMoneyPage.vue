@@ -149,7 +149,7 @@ const swipeRight = () => {
       height: 55px;
       width: 25%;
       background: #4f26a6;
-      font-size: 12px;
+      font-size: 9px;
       font-weight: 500;
       border: 2px solid #303030;
     }

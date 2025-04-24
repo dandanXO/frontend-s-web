@@ -1,0 +1,186 @@
+.search-field {
+  color: #9f9f9f;
+  margin-bottom: 1.6rem;
+  > div {
+    margin-bottom: 1rem;
+  }
+  .search-field__date-range {
+    display: flex;
+    align-items: center;
+    > * {
+      &:not(:nth-child(1)) {
+        margin-left: 1rem;
+      }
+    }
+    .q-field--filled {
+      background-color: #ffffff0d;
+      :deep(input) {
+        color: #9f9f9f;
+      }
+    }
+  }
+
+  .search-field__radio-row {
+    display: flex;
+    gap: 2rem;
+
+    :deep(.q-radio__bg path) {
+      fill: #21A7EF;
+    }
+  }
+
+  .search-field__input-with-btn {
+    display: flex;
+    background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+    border: 1px solid #FFFFFF14;
+    border-radius: 4px;
+    padding-left: 1rem;
+
+    .q-input {
+      width: 100%;
+      :deep(input) {
+        color: #9f9f9f;
+      }
+    }
+
+    .q-btn {
+      max-width: 106px;
+      position: relative;
+    }
+
+    :deep(.q-field__control) {
+      height: unset;
+    }
+  }
+
+  .search-field__select {
+    :deep(.form-field-label) {
+      color: inherit;
+    }
+
+    .q-select {
+      max-width: 147px;
+    }
+
+    :deep(.q-field__control) {
+      background-color: #ffffff0d;
+      height: unset;
+    }
+
+    :deep(.q-field__native),
+    :deep(.q-field__marginal) {
+      color: #9f9f9f;
+    }
+  }
+}
+.span-username {
+  color: #21EF89;
+}
+
+.result-table {
+  :deep(.q-table__container) {
+    .q-table__middle {
+      border-radius: unset !important;
+    }
+  }
+  :deep(.q-table__container) {
+    // background-color: transparent;
+
+    :deep(table) {
+      .top-header {
+        color: #f1f1f1;
+
+        td {
+          font-size: 12px;
+        }
+      }
+
+      thead {
+        td {
+          font-size: 1rem;
+          font-weight: 700;
+          line-height: 1;
+          text-align: left;
+          border-width: 0px !important;
+          // background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
+          background: #3237384D;
+        }
+      }
+
+      tbody {
+        > :nth-child(odd) {
+          background: #FFFFFF0F;
+        }
+        > :nth-child(even) {
+          background: #373C3D;
+        }
+
+        td {
+          border: none;
+          .win {
+            color: #21EF89;
+          }
+          .loss {
+            color: #dc1a00;
+          }
+        }
+      }
+    }
+  }
+}
+
+.sum-wrapper {
+  position: relative;
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+
+  .loading-board {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.3);
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    .loading-spinner {
+    }
+  }
+
+  .sum-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+    border-radius: 8px;
+    padding: 12px 6px;
+    .item-amount {
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+
+      span {
+        font-size: 16px;
+        font-weight: bold;
+        color: #21A7EF;
+      }
+    }
+    .item-title {
+      font-size: 12px;
+      color: #8c968f;
+      text-align: center;
+    }
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  align-items: center;
+}

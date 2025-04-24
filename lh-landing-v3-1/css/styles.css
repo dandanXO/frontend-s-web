@@ -306,7 +306,7 @@ a:hover {
   margin-top: 0px;
 }
 
-.content-cat img{
+.content-cat img {
   width: 90%;
   margin: 0 auto;
 }
@@ -561,46 +561,46 @@ a:hover {
   display: none;
 }
 
-.deposit-table{
+.deposit-table {
   width: 100%;
-  text-align:center;
+  text-align: center;
   border-collapse: collapse;
 }
 
-.deposit-table td{
-  border: 1px solid #FFE1D0;
-  color: #FFF5C0;
+.deposit-table td {
+  border: 1px solid #ffe1d0;
+  color: #fff5c0;
 
   font-weight: bold;
   height: 45px;
 }
 
-.deposit-table thead tr:first-child{
+.deposit-table thead tr:first-child {
   border-radius: 20px;
 }
 
-.deposit-table tbody td{
-  background: #1E1B1C95;
+.deposit-table tbody td {
+  background: #1e1b1c95;
   font-size: 1.6rem;
 }
 
-.deposit-table thead{
-  background: #533C1ACC;
+.deposit-table thead {
+  background: #533c1acc;
 }
 
-.deposit-table thead td{
-  background: linear-gradient(180deg, #FFFFFF 0%, #FF9458 100%);
+.deposit-table thead td {
+  background: linear-gradient(180deg, #ffffff 0%, #ff9458 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: 1.6rem;
   font-weight: bold;
 }
 
-.btm-text{
+.btm-text {
   width: 100%;
-  text-align:center;
-  color:#fff;
-  font-size:1.15rem;
+  text-align: center;
+  color: #fff;
+  font-size: 1.15rem;
   margin-top: 5px;
   margin-bottom: 20px;
 }
@@ -624,10 +624,10 @@ a:hover {
     flex-direction: column;
   }
 
-  .smaller-table thead td{
+  .smaller-table thead td {
     font-size: 1.3rem;
   }
-  .smaller-table tbody td{
+  .smaller-table tbody td {
     font-size: 1.3rem;
   }
 }
@@ -636,8 +636,6 @@ a:hover {
   .top-image-board {
     background-position: center center;
   }
-
-
 
   .top-board {
     gap: 8px;
@@ -676,8 +674,12 @@ a:hover {
   }
 }
 
-@media screen and (max-width: 360px){
-  .item-btns{
+@media screen and (max-width: 360px) {
+  .item-btns {
     margin-right: 4px;
   }
+}
+
+#group2-item {
+  display: none;
 }

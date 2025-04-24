@@ -16,7 +16,6 @@
         <template #header>
           <div class="flex justify-between" style="display: flex; gap: 8px">
             <div style="display: flex; gap: 8px">
-              <!-- 清除過濾器按鈕 -->
               <Button
                 :size="'small'"
                 type="button"
@@ -27,11 +26,11 @@
               />
             </div>
             <!-- 搜尋框 -->
-            <IconField>
+            <IconField class="search-container">
               <InputIcon>
-                <i class="pi pi-search" />
+                <i class="pi pi-search search-icon" />
               </InputIcon>
-              <InputText v-model="filters['global'].value" placeholder="關鍵詞搜索" :size="'small'" />
+              <InputText v-model="filters['global'].value" placeholder="關鍵詞搜索" :size="'small'" class="search-input" />
             </IconField>
             <!-- 重新載入按鈕 -->
             <Button
@@ -44,7 +43,12 @@
               :loading="loading"
             />
 
-            <Button label="新增敏感字" icon="pi pi-plus" @click="openDialog()" />
+            <Button 
+              :size="'small'"
+              label="新增敏感字" 
+              icon="pi pi-plus" 
+              @click="openDialog()" 
+            />
 
           </div>
         </template>
@@ -299,5 +303,61 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .search-container {
+    width: 100%;
+    max-width: 230px;
+  }
+
+  /* 自定義圖標樣式 */
+  :deep(.p-input-icon-left i) {
+    color: #666; /* 修改圖標顏色 */
+    font-size: 1.5rem; /* 修改圖標大小 */
+  }
+
+  /* 在懸停時改變圖標顏色 */
+  :deep(.p-input-icon-left:hover i) {
+    color: #3B82F6;
+  }
+
+  /* 搜索圖標樣式 */
+  :deep(.search-icon) {
+    color: #6B7280; /* 深灰色圖標 */
+    font-size: 0.7rem; /* 調整大小 */
+    transition: color 0.3s ease; /* 平滑過渡 */
+  }
+
+  /* 當搜索框獲得焦點時的圖標樣式 */
+  :deep(.p-inputtext:focus ~ .p-input-icon-left i) {
+    color: #3B82F6; /* 藍色高亮 */
+  }
+
+  /* 搜索容器樣式 */
+  .search-container {
+    min-width: 200px; /* 設置最小寬度 */
+    position: relative;
+  }
+
+  /* 搜索輸入框樣式 */
+  :deep(.search-input) {
+    transition: all 0.3s ease;
+    border-radius: 4px; /* 圓角邊框 */
+  }
+
+  /* 搜索輸入框獲得焦點時的樣式 */
+  :deep(.search-input:focus) {
+    border-color: #3B82F6; /* 藍色邊框 */
+    box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.25); /* 輕微發光效果 */
+  }
+
+  /* 如果需要調整圖標位置 */
+  :deep(.p-input-icon-left) {
+    display: flex;
+    align-items: center;
+  }
+
+  :deep(.p-input-icon-left i) {
+    margin-left: 0.5rem; /* 調整左邊距 */
   }
   </style> 

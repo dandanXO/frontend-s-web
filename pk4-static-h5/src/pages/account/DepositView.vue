@@ -1,0 +1,1433 @@
+<template>
+  <!-- <DepositComponent /> -->
+  <!-- <pre>{{ paymentNode.value }}</pre> -->
+  <div class="deposit-wrapper">
+    <div class="slot-ftd-section" v-if="isFtdPrivilege && isFtdPrivilegePayType">
+      <img src="../../assets/images/bonus/slot-ftd-img.png" />
+    </div>
+
+    <div ref="targetSection" class="target-section">
+      <!-- The section to scroll to -->
+    </div>
+    <div class="node-wrapper">
+      <Node :key="nodeKey" :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
+    </div>
+
+    <div class="flex-between-c q-pb-sm">
+      <div class="lil-title q-mt-sm q-mr-lg">{{ $t("deposit.selectAmount") }}</div>
+
+      <div class="q-ml-md q-mt-sm font-small" v-if="isBank2">{{ $t("deposit.minimum_amt_requirement") }}</div>
+    </div>
+
+    <div class="deposit-item-container q-mt-sm">
+      <template v-for="(item, index) in depositItems" :key="index">
+        <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
+          <q-badge v-if="activeMethod.privilegeId" color="green" floating rounded>+{{ item.hotLabel }}</q-badge>
+          <q-badge v-if="isFtdPrivilegePayType" color="green" floating rounded>
+            +{{ getFtdCommaAmount(item.amount) }}
+          </q-badge>
+          <div :class="['deposit-amt', item.isActive && 'active', 'panel']">{{ convertToCommaAmount(item.amount) }}</div>
+          <div :class="['deposit-svg', item.isActive && 'active']">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path
+                d="M8.12492 11.118L14.0828 5L15 5.94102L8.12492 13L4 8.76474L4.9165 7.82373L8.12492 11.118Z"
+                fill="white"
+              />
+            </svg>
+          </div>
+        </div>
+      </template>
+    </div>
+
+    <div v-if="isDisplay" class="inner-cont" style="overflow: auto">
+      <div class="submit-message">
+        <div class="line">
+          <span>Bank Name:</span>
+          <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
+          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('0')">
+            {{ copybtntxt0 }}
+          </q-btn>
+        </div>
+        <div class="line">
+          <span>Bank Account:</span>
+          <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
+          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('1')">
+            {{ copybtntxt1 }}
+          </q-btn>
+        </div>
+        <div class="line">
+          <span>Bank Card Number:</span>
+          <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
+          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('2')">
+            {{ copybtntxt2 }}
+          </q-btn>
+        </div>
+        <div class="line">
+          <span>Deposit Amount:</span>
+          <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
+          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('3')">
+            {{ copybtntxt3 }}
+          </q-btn>
+        </div>
+      </div>
+    </div>
+
+    <div class="deposit-container" v-else>
+      <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
+        <div class="deposit-enter-amt">
+          <div class="lil-title flex-div" style="justify-content: space-between">
+            <q-checkbox
+              v-model="isFtdPrivilegeEnable"
+              v-if="store.ftd === 'OPEN' && paytypeWithPrivilege.indexOf(activeMethod.payType) > -1"
+            >
+              {{ $t("deposit.useFtdPrivilege") }}
+            </q-checkbox>
+            <div v-else>&nbsp;</div>
+            <!--            {{ $t("form.depositAmount") }}-->
+            <!--            ({{ convertToCommaAmount(amountDepositMin) }} - {{ convertToCommaAmount(amountDepositMax) }} RS)-->
+            <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">
+              {{ $t("deposit.depositTutorial") }}
+            </div>
+          </div>
+
+          <div v-if="isBank2" class="font-small" style="width: calc(100% - 18px); margin: 10px auto 8px">
+            {{ $t("deposit.please_pay_exact_amt") }}
+          </div>
+          <q-input
+            class="deposit-input q-mt-sm"
+            ref="depositAmtRef"
+            name="localAmount"
+            hide-bottom-space
+            filled
+            v-model="form.localAmount"
+            :rules="verifyDepositAmount"
+            dense
+            clearable
+          >
+            <template v-slot:prepend>
+              <span style="font-size: 16px" class="currency">
+                <template v-if="isUSDT">USDT</template>
+                <template v-else>{{ store.currency.value }}</template>
+              </span>
+            </template>
+          </q-input>
+        </div>
+
+        <!-- <q-select
+          v-else
+          ref="depositAmtRef"
+          label="Select Amount"
+          name="localAmount"
+          filled
+          :options="amountList"
+          v-model="form.localAmount"
+          color="bright"
+          :rules="verifyDepositAmount"
+          padding="none"
+        >
+          <template v-slot:prepend>
+            <span style="font-size: 26px" class="currency">
+              {{ store.currency.value }}
+            </span>
+          </template>
+        </q-select> -->
+
+        <!-- <div class="q-mt-md q-mb-md text-grey-7">
+          Minimum Amount:
+          {{ calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0 }}
+          <br />
+          Maximum Amount:
+          {{
+            activeMethod.depositMax
+              ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value)
+              : "No Limit"
+          }}
+        </div> -->
+
+        <div v-if="isUSDT && activeMethod.currencyRate" class="q-mt-lg" label="Exchange rate">
+          <span style="color: #fff">
+            <template v-if="form.localAmount > 0">{{ form.localAmount }}</template>
+            <template v-else>1.00</template>
+            USDT ≈
+            <template v-if="form.localAmount > 0">
+              {{ convertToTwoDecimalAmount(form.localAmount * activeMethod.currencyRate) }}
+            </template>
+            <template v-else>{{ activeMethod.currencyRate }}</template>
+
+            {{ store.currency.value }}
+          </span>
+        </div>
+
+        <BankComponent
+          v-show="selectedPayType && bankCardList.length"
+          ref="payTypeClass"
+          :is="selectedPayType"
+          v-model="form.bankId"
+          :bank-list="bankCardList"
+          @selected="selectedBank"
+          @successful="isDeposited = true"
+        ></BankComponent>
+
+        <q-select
+          style="width: 100%; margin-top: 25px"
+          ref="offerRef"
+          class="deposit-selection q-mt-xs"
+          :label="$t('deposit.select_privilege')"
+          filled
+          :options="unselectedPrivileges"
+          v-model="selectedPrivilege"
+          emit-value
+          v-if="hasPrivilege && unselectedPrivileges.length > 0"
+          :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
+          clearable
+        >
+          <template v-slot:option="scope">
+            <q-item v-bind="scope.itemProps">
+              <q-item-section>
+                <q-item-label style="text-overflow: ellipsis; overflow: auto; white-space: nowrap">
+                  {{ scope.opt.name }}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </template>
+        </q-select>
+
+        <!--        <div-->
+        <!--          class="rollover-info"-->
+        <!--          v-if="-->
+        <!--            selectedPrivilege &&-->
+        <!--            selectedPrivilege.name &&-->
+        <!--            (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)-->
+        <!--          "-->
+        <!--        >-->
+        <!--          <p v-if="selectedPrivilege.gameTypeRollover && selectedPromo.gameTypeRollover !== '{}'">-->
+        <!--            {{ getRollOverText(selectedPrivilege.gameTypeRollover) }}-->
+        <!--          </p>-->
+        <!--          <p v-else>Wagering Requirements (Deposit + Bonus): {{ selectedPrivilege.rollover }}x</p>-->
+        <!--        </div>-->
+      </q-form>
+    </div>
+
+    <div class="q-mt-lg" style="color: #576373" v-if="activeMethod.privilegeId || isFtdPrivilegePayType">
+      <div class="q-mt-sm">{{ $t('deposit.wagerRequirement') }}</div>
+      <div class="q-mt-sm">{{ $t('deposit.wagerRequirementEg') }}</div>
+    </div>
+
+    <div class="q-mt-lg step-desc-div q-mb-lg">
+      <template v-if="activeMethod.msg">
+        <div class="description-text" v-html="activeMethod.msg"></div>
+      </template>
+      <template v-else-if="isUSDT">
+        <p>
+          1. {{ $t('deposit.rechargeTutorial') }}:
+          <span class="tutorial-link" @click="openDepositPage">{{ $t('deposit.picture') }}</span>
+          /
+          <span class="tutorial-link" @click="openDepositVideo">{{ $t('deposit.video') }}</span>
+        </p>
+        <p>2. {{ $t('deposit.mindepositnotcredit') }}</p>
+        <p>3. {{ $t('deposit.depositnotrecovered') }}</p>
+        <p>
+          4. {{ $t('deposit.operatingSafe') }}
+        </p>
+        <p>
+          5. {{ $t('deposit.transferAmountMatch') }}
+        </p>
+        <p>6. {{ $t('deposit.donotcanceldeposit') }}</p>
+      </template>
+      <template v-else>
+        <p>
+          1. {{ $t('deposit.rechargeTutorial') }}:
+          <span class="tutorial-link" @click="openDepositPage">{{ $t('deposit.picture') }}</span>
+          /
+          <span class="tutorial-link" @click="openDepositVideo">{{ $t('deposit.video') }}</span>
+        </p>
+        <p>2. {{ $t('deposit.fillinwallet') }}</p>
+        <p>3. {{ $t('deposit.fillincnic') }}</p>
+        <p>
+          4. {{ $t('deposit.submittedAmtConsistent') }}
+        </p>
+
+        <!--        <p>-->
+        <!--          1. Recharge tutorial:-->
+        <!--          <a-->
+        <!--            class="tutorial-link"-->
+        <!--            style="color: #21EF89; text-decoration: underline"-->
+        <!--            href="https://drive.google.com/file/d/1UCBOIAxRfBZoq56zv5Md-XO-6eAzunWJ/view?usp=drivesdk"-->
+        <!--            target="_blank"-->
+        <!--          >-->
+        <!--            Picture-->
+        <!--          </a>-->
+        <!--          /-->
+        <!--          <a-->
+        <!--            class="tutorial-link"-->
+        <!--            style="color: #21EF89; text-decoration: underline"-->
+        <!--            href="https://drive.google.com/file/d/1fCCJPAHm2frmzBk05jc4v-c19-Bn3vvx/view"-->
+        <!--            target="_blank"-->
+        <!--          >-->
+        <!--            Video-->
+        <!--          </a>-->
+        <!--        </p>-->
+        <!--        <p>-->
+        <!--          2. After payment is completed, you need to submit the last 5 digits of TID, otherwise it will not be-->
+        <!--          automatically credited.-->
+        <!--        </p>-->
+        <!--        <p>3. Fill in the correct wallet account.</p>-->
+        <!--        <p>4. The amount submitted must be consistent with the payment amount.</p>-->
+      </template>
+    </div>
+    <!-- <MediaSettingsComponent /> -->
+    <div class="bottom-content" style="height: 60px"></div>
+
+    <div class="bottom-btn">
+      <q-btn
+        no-caps
+        unelevated
+        class="btn-primary btn-primary__full bottom-fixed"
+        :loading="isLoadingInitPay || btnLoading"
+        @click="confirmDeposit"
+      >
+        {{ $t("btn.submit") }}
+      </q-btn>
+      <!--      <div class="tutorial-link q-mt-sm" @click="openDepositPage">{{ $t("deposit.depositTutorial") }}</div>-->
+    </div>
+  </div>
+
+  <q-dialog width="100%" v-model="isDepositTutorial">
+    <q-card style="width: 90%; max-width: 500px; margin: 0 auto" class="text-white">
+      <q-card-section>
+        <div class="close-alert" v-close-popup>
+          <q-icon size="24px" name="close"></q-icon>
+        </div>
+        <img src="../../assets/images/account/tutorial-deposit.jpg" class="tutorial-img" width="100%" />
+      </q-card-section>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="isDeposited">
+    <q-card style="width: 100%">
+      <q-card-section style="padding: 10px 20px" class="q-pa-md bg-primary text-white">Deposited</q-card-section>
+      <div style="padding: 20px">
+        <q-card-section class="q-mb-md q-pa-md">
+          You will be redirected to your bank page to complete the deposit.
+          <br />
+          <br />
+          After deposited successfully, it will be reflected here.
+        </q-card-section>
+        <q-btn @click="clearInfo" label="Understood" class="bg-yellow text-black" />
+      </div>
+    </q-card>
+  </q-dialog>
+
+  <!-- <q-dialog width="100%" v-model="guestKYCDialog" persistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
+      <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
+    </div>
+  </q-dialog>-->
+
+  <q-dialog  width="100%" v-model="userKYCDialog" persistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="popout-close" @click="goBackPage" v-close-popup />
+      <KYCUserForm @closeUserKYCDialog="checkCloseUserKYCDialog" />
+    </div>
+  </q-dialog>
+
+  <AdditionalSteps
+    v-if="isAdditionalDepositSteps"
+    :currentAdditionalStep="currentDepStep"
+    :currentType="'deposit'"
+    @updateStep="handleStepUpdate"
+    @closeGuide="closePlayerGuide"
+  />
+</template>
+
+<script setup>
+import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, watch, computed, nextTick } from "vue";
+import Node from "../../components/paymentSelect/node.vue";
+import BankComponent from "components/finance/fBank";
+import { api, cashier } from "boot/axios";
+import { Platform, useQuasar, openURL } from "quasar";
+import { userStore } from "stores/index";
+import { useRoute, useRouter } from "vue-router";
+import { convertToCommaAmount, generateEventID, trackNewUserFtd } from "src/boot/utils";
+// import KYCGuestForm from "../../components/KYCGuestForm.vue";
+import KYCUserForm from "../../components/KYCUserForm.vue";
+// import PrimaryButton from "src/components/auth/PrimaryButton.vue";
+// import DepositComponent from "../../components/depositComponent.vue";
+import { t } from "src/boot/lang";
+import { useCheckKYC } from "src/hooks/checkKYC";
+import { storeToRefs } from "pinia";
+// import MediaSettingsComponent from "../../components/MediaSettingsComponent.vue";
+
+import AdditionalSteps from "../../components/modal/AdditionalSteps.vue";
+const closePlayerGuide = () => {
+  isAdditionalDepositSteps.value = false;
+  if (currentDepStep.value === 4) {
+    localStorage.setItem("newPlayerGuide", "4");
+  }
+  enableScroll();
+};
+const preventBodyScroll = (e) => {
+  const container = document.querySelector(".abs-container");
+  if (!container.contains(e.target)) {
+    e.preventDefault(); // Stop background scrolling
+  }
+};
+
+const disableScroll = () => {
+  document.body.style.overflow = "hidden"; // Prevent body scrolling
+  document.addEventListener("touchmove", preventBodyScroll, { passive: false });
+};
+
+const enableScroll = () => {
+  document.body.style.overflow = ""; // Restore body scroll
+  document.removeEventListener("touchmove", preventBodyScroll);
+};
+
+const targetSection = ref();
+const currentType = ref("deposit");
+const currentDepStep = ref(2);
+const handleStepUpdate = (newStep) => {
+  currentDepStep.value = newStep;
+
+  nextTick(() => {
+    setTimeout(() => {
+      console.log(currentDepStep.value);
+      if (currentDepStep.value === 3 && targetSection.value && isAdditionalDepositSteps.value) {
+        const offset = 20;
+        const rect = targetSection.value.getBoundingClientRect();
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const finalPosition = rect.top + scrollTop - offset;
+
+        window.scrollTo({
+          top: finalPosition,
+          behavior: "smooth"
+        });
+      }
+    }, 100);
+  });
+};
+
+const imgURL = process.env.IMAGE_CDN;
+
+var qs = require("qs");
+const store = userStore();
+const { ftd } = storeToRefs(store);
+const router = useRouter();
+const route = useRoute();
+const emits = defineEmits(["closeModal"]);
+
+const kycUserFormRef = ref(null);
+
+const { userKYCDialog, closeUserKYCDialog } = useCheckKYC(["mounted", "activated"], kycUserFormRef);
+
+const checkCloseUserKYCDialog = () => {
+  closeUserKYCDialog();
+
+  const completedGuide = localStorage.getItem("completeddepositguide");
+  if (route.query.isNewPlayer && completedGuide !== "true") {
+    isAdditionalDepositSteps.value = true;
+  }
+};
+const isBank2 = computed(() => {
+  return activeMethod.value.code === "BANK-2";
+});
+
+const isFormFilled = ref(false);
+const isDeposited = ref(false);
+const btnLoading = ref(false);
+const payTypeClass = ref();
+const payMethods = ref([]);
+const paymentNode = ref([]);
+const activeMethod = ref({});
+const bankCardList = ref([]);
+const amountList = ref([]);
+const amountDepositMin = ref();
+const amountDepositMax = ref();
+const privilegeList = ref([]);
+const unselectedPrivileges = ref([]);
+const selectedPrivilege = ref("");
+const selectedPayType = shallowRef("");
+const freePrivilege = ref([]);
+const hasPrivilege = ref(false);
+const isUSDT = ref(false);
+const isDisplay = ref(false);
+const submitMessage = ref([]);
+const subMsg0 = ref();
+const subMsg1 = ref();
+const subMsg2 = ref();
+const subMsg3 = ref();
+
+const copybtntxt0 = ref("复制");
+const copybtntxt1 = ref("复制");
+const copybtntxt2 = ref("复制");
+const copybtntxt3 = ref("复制");
+const extraPrivilegeId = ref();
+const paytypeWithPrivilege = ref("");
+const isFtdPrivilegeEnable = ref(false);
+
+const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
+const isFtdPrivilege = computed(
+  () => extraPrivilegeId.value && ftd.value === "OPEN" && isFtdPrivilegeEnable.value === true
+);
+
+const isFtdPrivilegePayType = computed(
+  () => isFtdPrivilege.value && paytypeWithPrivilege.value.indexOf(activeMethod.value.payType) > -1
+);
+
+const copyMessage = (position) => {
+  let copyText = null;
+  copyText = eval(`subMsg${position}.value.innerText`);
+  // Create a temporary textarea element
+  const tempTextarea = document.createElement("textarea");
+  tempTextarea.value = copyText;
+  document.body.appendChild(tempTextarea);
+
+  // Select the text and copy it
+  tempTextarea.select();
+  document.execCommand("copy");
+
+  // Remove the temporary textarea element
+  document.body.removeChild(tempTextarea);
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  copybtntxt[position].value = "Copied";
+};
+
+const blurCode = () => {
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  copybtntxt.forEach((element) => {
+    element.value = "Copy";
+  });
+};
+
+const verifyDepositAmount = ref([
+  (val) => !!val || t("form.depositAmount_placeholder"),
+  (val) =>
+    val > calculatedMinDeposit.value - 1 ||
+    t("form.depositAmount_rules_01") + calculatedMinDeposit.value + "-" + calculatedMaxDeposit.value,
+  (val) =>
+    val < calculatedMaxDeposit.value + 1 ||
+    t("form.depositAmount_rules_01") + calculatedMinDeposit.value + "-" + calculatedMaxDeposit.value
+]);
+
+const form = reactive({
+  paymentId: null,
+  privilegeId: null,
+  localAmount: null,
+  bankId: null
+});
+
+const $q = useQuasar();
+const calculatedMinDeposit = ref("");
+const calculatedMaxDeposit = ref("");
+
+// const depositItems = reactive([
+//   { amount: 300, hotLabel: 15, isActive: false },
+//   { amount: 500, hotLabel: 25, isActive: false },
+//   { amount: 800, hotLabel: 40, isActive: false },
+//   { amount: 1000, hotLabel: 50, isActive: false },
+//   { amount: 3000, hotLabel: 150, isActive: false },
+//   { amount: 5000, hotLabel: 250, isActive: false },
+//   { amount: 10000, hotLabel: 500, isActive: false },
+//   { amount: 30000, hotLabel: 2000, isActive: false },
+//   { amount: 50000, hotLabel: 4000, isActive: false }
+//   // { amount: 30000, hotLabel: 1500, isActive: false },
+//   // { amount: 50000, hotLabel: 2500, isActive: false }
+// ]);
+
+const depositItems = ref([]);
+
+const handleDepositItemClick = (index) => {
+  depositItems.value.forEach((item, i) => {
+    item.isActive = i === index;
+    if (i === index) {
+      form.localAmount = item.amount;
+    }
+  });
+};
+
+const getFtdCommaAmount = (amount) => {
+  const currencyRate = isUSDT.value ? activeMethod.value : 1;
+  const bonusAmount = amount * 0.5 * currencyRate;
+  if (bonusAmount < 999) {
+    return bonusAmount.toFixed(0) + "Pkr";
+  } else {
+    return "999Pkr";
+  }
+};
+
+const handleDepositNodeClick = (item) => {
+  activeMethod.value = item;
+};
+
+const isLoadingInitPay = ref(true);
+function initPay() {
+  isLoadingInitPay.value = true;
+  $q.loading.show({
+    message: t("btn.loading_plsWait")
+  });
+
+  if (route.query.privilegeId) {
+    extraPrivilegeId.value = route.query.privilegeId;
+  } else {
+    extraPrivilegeId.value = undefined;
+  }
+
+  payMethods.value = [];
+
+  cashier.get("/session/deposit/index/").then((res) => {
+    $q.loading.hide();
+    isLoadingInitPay.value = false;
+
+    if (res.code === 0) {
+      payMethods.value = [];
+      const d = res.data;
+      d.payments.forEach((element) => {
+        element.promoValue = "";
+        element.promoStyle = "right: -5px; top: 0px; padding: 20px;";
+        payMethods.value.push(element);
+      });
+      if (payMethods.value.length > 0) {
+        activeMethod.value = payMethods.value[0];
+      }
+      if (payMethods.value[0].extra && payMethods.value[0].extra.banks) {
+        bankCardList.value = payMethods.value[0].extra.banks;
+      }
+    }
+
+    if (!((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit")) {
+      let isBacked = localStorage.getItem("isBacked");
+      isBacked = isBacked ? JSON.parse(isBacked) : false;
+      if (isBacked === true) {
+        isDeposited.value = true;
+      }
+    }
+    localStorage.removeItem("isBacked");
+  });
+}
+
+function selectPayType(value) {
+  if (value) {
+    selectedPayType.value = value.payType;
+    if (selectedPayType.value && selectedPayType.value.includes("USDT")) {
+      isUSDT.value = true;
+    } else {
+      isUSDT.value = false;
+    }
+    if (value.extra && value.extra.amountArr) {
+      amountList.value = value.extra.amountArr;
+    }
+
+    if (value.extra && value.extra.banks) {
+      bankCardList.value = value.extra.banks;
+    }
+    if (value.depositMin) {
+      amountDepositMin.value = value.depositMin;
+    }
+    if (value.depositMax) {
+      amountDepositMax.value = value.depositMax;
+    } else {
+      bankCardList.value = [];
+      form.bankId = null;
+    }
+  }
+}
+
+const depositForm = ref(null);
+const onSelect = (value) => {
+  depositItems.value.forEach((item) => (item.isActive = false));
+
+  isDisplay.value = false;
+
+  clearInfo();
+  if (depositAmtRef.value) {
+    depositAmtRef.value.resetValidation();
+  }
+
+  if (value) {
+    if (value.group) {
+      value.children.forEach((element) => {
+        if (element.hasActive) {
+          activeMethod.value = element;
+          depositItems.value = element.extra.amountArr.map((item) => ({
+            amount: parseInt(item),
+            isActive: false
+          }));
+          checkPrivilege(element);
+        }
+      });
+    } else {
+      activeMethod.value = value;
+      depositItems.value = value.extra.amountArr.map((item) => ({
+        amount: parseInt(item),
+        isActive: false
+      }));
+      checkPrivilege(value);
+    }
+  }
+  // console.log("THIS");
+  // console.log(activeMethod.value);
+};
+
+function checkMinDepositAmt(val) {
+  // api won't return min and max values from now on, currently min set to 100
+  calculatedMinDeposit.value = val.depositMin;
+  calculatedMaxDeposit.value = val.depositMax;
+}
+
+function checkPrivilege(v) {
+  selectPayType(v);
+  if (v.paymentId !== null && v.paymentId !== undefined) {
+    loadPrivilege(v);
+    checkMinDepositAmt(v);
+    // unselectedPrivileges.value = [];
+  }
+}
+
+async function loadPrivilege(val) {
+  privilegeList.value = [];
+  hasPrivilege.value = false;
+  await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
+    if (res.code === 0) {
+      privilegeList.value = res.data.privileges;
+      hasPrivilege.value = true;
+      unselectedPrivileges.value = [];
+      freePrivilege.value = [];
+      privilegeList.value.map((p) => {
+        if (p.payTypes.indexOf(val.payType) >= 0) {
+          if (p.triggerType == "FREE") {
+            freePrivilege.value.push(p);
+          } else {
+            unselectedPrivileges.value.push(p);
+          }
+        }
+      });
+    } else {
+      hasPrivilege.value = false;
+      privilegeList.value = [];
+    }
+  });
+}
+
+function selectedBank(value) {
+  form.bankId = value.value.id;
+}
+
+function clearInfo() {
+  isDeposited.value = false;
+  form.localAmount = null;
+  selectedPrivilege.value = "";
+  if (depositForm.value) {
+    depositForm.value.reset();
+  }
+  // checkMinDepositAmt();
+}
+
+const depositAmtRef = ref("");
+async function confirmDeposit() {
+  btnLoading.value = true;
+  depositAmtRef.value.validate();
+  if (depositAmtRef.value.hasError) {
+    btnLoading.value = false;
+  } else {
+    await cashier
+      .get(`/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`)
+      .then((d) => {
+        if (d.code === 11002) {
+          if (d.data && d.data.suggestion) {
+            form.localAmount = d.data.suggestion;
+          }
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: d.message,
+            icon: "report_problem"
+          });
+
+          btnLoading.value = false;
+        } else {
+          const currentPayType = activeMethod.value.payType;
+          const allSelectedPrivilege = [selectedPrivilege.value, ...freePrivilege.value];
+          const hasIncorrectPrivilege = allSelectedPrivilege.some((privilege) => {
+            if (!privilege || typeof privilege !== "object") return false;
+            return privilege.payTypes.indexOf(currentPayType) === -1;
+          });
+
+          if (hasIncorrectPrivilege) {
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: t("deposit.incorrectPrivilege"),
+              icon: "report_problem"
+            });
+            throw Error();
+          }
+
+          if (freePrivilege.value.length) {
+            const freePrivilegeIdStr = freePrivilege.value.map((privilege) => privilege.id).join(",");
+            if (selectedPrivilege.value) {
+              form.privilegeId = selectedPrivilege.value.id + "," + freePrivilegeIdStr;
+            } else {
+              form.privilegeId = "," + freePrivilegeIdStr;
+            }
+          } else {
+            if (selectedPrivilege.value) {
+              form.privilegeId = selectedPrivilege.value.id;
+            } else {
+              form.privilegeId = null;
+            }
+          }
+          form.paymentId = activeMethod.value.paymentId;
+
+          if (activeMethod.value.privilegeId) {
+            form.privilegeId = activeMethod.value.privilegeId;
+          }
+
+          if (isFtdPrivilegePayType.value && extraPrivilegeId.value && isFtdPrivilegeEnable.value) {
+            form.privilegeId = extraPrivilegeId.value;
+          }
+
+          const copy = { ...form };
+          const data = {};
+          Object.entries(copy).forEach(([key, value]) => {
+            if (value) {
+              data[key] = value;
+            }
+          });
+          data.bankCardId = 0;
+
+          pDepo(data);
+        }
+      })
+      .catch((e) => {
+        btnLoading.value = false;
+      });
+  }
+}
+
+async function pDepo(deposit) {
+  const obj = {
+    bankCardId: deposit.bankCardId,
+    localAmount: deposit.localAmount,
+    paymentId: deposit.paymentId,
+    bankId: deposit.bankId,
+    privilegeId: deposit.privilegeId
+  };
+
+  if (deposit.privilegeId) {
+    obj.privilegeId = deposit.privilegeId;
+  }
+  await cashier
+    .post("/session/payment/submit", qs.stringify(obj))
+    .then((res) => {
+      if (res.code === 0) {
+        const response = res.data.result;
+
+        //FB Tracking.
+        if (store.isOldFBPixel || (store.isFbPixel && store.memberType === "TEST")) {
+          const randUuid = generateEventID();
+          fbq(
+            "track",
+            "Purchase",
+            {
+              currency: "PKR",
+              value: obj.localAmount
+            },
+            { eventID: randUuid }
+          );
+        }
+
+        if (store.isTkPixel) {
+          ttq.track(
+            "Purchase",
+            {
+              currency: "PKR",
+              value: obj.localAmount,
+              content_type: "product"
+            },
+            { event_id: Date.now() }
+          );
+        }
+
+        if (store.isOldFBPixel || store.isTkPixel) {
+          // localStorage.setItem(
+          //   "UserPurchaseComplete",
+          //   JSON.stringify({ loginName: store.nickName, currentBalance: store.balance })
+          // );
+          document.addEventListener("ftdPurchaseSuccess", trackNewUserFtd, { once: true });
+        }
+
+        if (res.data.result.payResultType === "OFFLINE") {
+        }
+        if (res.data.result.payResultType === "RENDER_HTML") {
+          isDisplay.value = true;
+          const submitResult = res.data.result.data;
+          submitMessage.value = submitResult.split(",");
+        } else {
+          if (isTikTokInAppBrowser()) {
+            window.location.href = response.requestUrl;
+            return;
+          }
+          if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit") {
+            if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
+              const newWin = window.open(`/`, `_self`);
+              if (response.payResultType === "GET_SUBMIT") {
+                newWin.location.href = response.requestUrl;
+              }
+              if (response.payResultType === "POST_SUBMIT") {
+                if (response.paramKey === null || response.paramKey === "") {
+                  newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                } else {
+                  newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                }
+              }
+            } else {
+              const newWin = window.open(`/`);
+              if (!newWin) {
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message:
+                    "Unable to open the recharge page. Please check if your browser is blocking pop-up pages and change the settings to 'Allow pop-ups' before attempting to recharge again.",
+                  icon: "report_problem"
+                });
+                btnLoading.value = false;
+                return;
+              }
+              newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+              if (response.payResultType === "GET_SUBMIT") {
+                newWin.location.href = response.requestUrl;
+              }
+              if (response.payResultType === "POST_SUBMIT") {
+                if (response.paramKey === null || response.paramKey === "") {
+                  newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                } else {
+                  newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                }
+              }
+            }
+          } else {
+            localStorage.setItem("formDetails", JSON.stringify(form));
+            if (response.payResultType === "GET_SUBMIT") {
+              if (
+                (Platform.is.desktop || Platform.is.webkit) &&
+                !Platform.is.capacitor &&
+                Platform.is.name !== "webkit"
+              ) {
+                location.href = response.requestUrl;
+              } else {
+                openURL(response.requestUrl);
+              }
+            }
+            if (response.payResultType === "POST_SUBMIT") {
+              localStorage.setItem("responseDetails", JSON.stringify(response));
+              if (response.paramKey === null || response.paramKey === "") {
+                if (store.getDeviceType() == "ANDROID") {
+                  var preUrl =
+                    "https://" +
+                    store.evip +
+                    `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+
+                  const newWin = window.open(preUrl, `_blank`);
+                } else {
+                  router.push(
+                    `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
+                  );
+                }
+              } else {
+                router.push(
+                  `/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
+                );
+              }
+            }
+          }
+        }
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: res.message,
+          icon: "report_problem"
+        });
+      }
+    })
+    .catch((error) => {
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: error.message,
+      //   icon: "report_problem"
+      // });
+    })
+    .then(() => {
+      btnLoading.value = false;
+    });
+}
+
+// Detect if is inside TikTok in-app browser
+const isTikTokInAppBrowser = () => {
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+  return ua.indexOf("ByteLocale") > -1;
+};
+
+const nodeKey = ref(0);
+const refreshNode = () => {
+  // Update the key to force re-render
+  nodeKey.value += 1;
+};
+
+const isDepositTutorial = ref(false);
+
+const langSelect = localStorage.getItem("languageLocale") ?? "";
+
+const openDepositPage = () => {
+  // alert(selectedPayType.value);
+  if (selectedPayType.value === "EASYPAISA") {
+    window.open("https://drive.google.com/file/d/13QWAalASV5S5KvF77XErugrnfiw_-Ca1/view?usp=drive_link", "_blank");
+  } else if (selectedPayType.value === "JAZZCASH") {
+    // isDepositTutorial.value= true;
+    window.open("https://drive.google.com/file/d/13QWAalASV5S5KvF77XErugrnfiw_-Ca1/view?usp=drive_link", "_blank");
+  } else {
+    window.open("https://drive.google.com/file/d/13QWAalASV5S5KvF77XErugrnfiw_-Ca1/view?usp=drive_link", "_blank");
+  }
+};
+
+const openDepositVideo = () => {
+  if (langSelect === "ur") {
+    window.open("https://drive.google.com/file/d/1EQaqmujVTheOKvk0bczhqLa2cL30jKBu/view?usp=sharing", "_blank");
+  } else {
+    window.open("https://drive.google.com/file/d/1y-PJqF2C4MBEvtuPL3RDnfnl9teMs-zI/view?usp=drive_link", "_blank");
+  }
+  // if (selectedPayType.value === "EASYPAISA") {
+  //   window.open("https://drive.google.com/file/d/1xBIZuDG1yY6Zeo-RF8-M-3I3E6o9VddX/view", "_blank");
+  // } else if (selectedPayType.value === "JAZZCASH") {
+  //   window.open("https://drive.google.com/file/d/1wTnGejKAFXqtup1HqNZu6w_8e8Z8LQez/view", "_blank");
+  // } else {
+  //   window.open("https://drive.google.com/file/d/1WakPk-541lVptQ8kODH1BIit84H92TMu/view", "_blank");
+  // }
+};
+
+const loadAppTabs = () => {
+  api.get("/opt-session/getPakAppTabs").then((res) => {
+    if (res.code === 0) {
+      const { data } = res;
+
+      if (data && data.deposit) {
+        store.paytypeWithPrivilege = data.deposit.paytypeWithPrivilege;
+        store.extraPrivilegeId = data.deposit.ftdPrivilegeId;
+        extraPrivilegeId.value = data.deposit.ftdPrivilegeId;
+
+        // selectedItemPrivilegeId.value = store.extraPrivilegeId;
+
+        paytypeWithPrivilege.value = data.deposit.paytypeWithPrivilege;
+      }
+      if (data && data.hasOwnProperty("ftd")) {
+        store.ftd = data.ftd;
+
+        if (store.ftd) {
+          //   isFtdPrivilegeEnable.value = true;
+        }
+      }
+    }
+  });
+};
+
+const convertToTwoDecimalAmount = (amount) => {
+  let formattedAmount = parseFloat(amount).toFixed(2);
+  return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
+watch(
+  isFromFtdPromo,
+  (val) => {
+    if (val) {
+      isFtdPrivilegeEnable.value = true;
+    }
+  },
+  { immediate: true }
+);
+const isAdditionalDepositSteps = ref(false);
+
+const goBackPage = () => {
+  // debugger;
+  // if (route.query.isNewPlayer) {
+  //   setTimeout(() => {
+  //     userKYCDialog.value = true;
+  //   }, 250);
+  // } else {
+  localStorage.setItem(`completeddepositguide`, JSON.stringify(true));
+  router.go(-1);
+  // }
+};
+
+onMounted(() => {
+  initPay();
+  refreshNode();
+  loadAppTabs();
+  // console.log("onMounted deposit");
+  const completedGuide = localStorage.getItem("completeddepositguide");
+  if (route.query.isNewPlayer && completedGuide !== "true" && userKYCDialog.value === false) {
+    isAdditionalDepositSteps.value = true;
+  }
+});
+</script>
+
+<style scoped lang="scss">
+.deposit-tabs {
+  width: 100%;
+  margin: 0 16px;
+  border-radius: 0.5rem;
+  background: #1b2232;
+}
+
+.submit-message {
+  // width: calc(100% - 40px);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  height: auto;
+  gap: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  color: #000000;
+
+  .line {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    // width: calc(100% - 30px);
+    width: 100%;
+    align-items: center;
+    font-size: 14px;
+    align-items: center;
+    background: #55009a;
+    padding: 15px 10px;
+
+    span:first-child {
+      // flex: 1;
+      color: #ffdf38;
+      width: 80px;
+    }
+
+    span.info {
+      flex: 3;
+      color: #fff;
+    }
+
+    button {
+      width: 80px;
+    }
+  }
+}
+
+.additional-tips {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ff0000;
+  font-size: 14px;
+}
+
+.q-select__dialog .q-field__control {
+  background: #ffdf38 !important;
+  color: #222222;
+}
+
+:deep(.q-field--filled.q-field--dark .q-field__control) {
+  // border-radius: 0.5rem;
+  // background: #0b0e0d !important;
+  // border: 1px solid #072a19;
+  border-radius: 0.5rem;
+  border: 1px solid #ffffff14;
+  background: #292d2f !important;
+}
+
+:deep(.q-tab__label) {
+  font-weight: 600;
+}
+
+.deposit-item-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 10px;
+  column-gap: 10px;
+
+  .deposit-item {
+    margin: auto;
+    position: relative;
+    width: 100%;
+
+    .deposit-amt {
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      // padding: 3px 16px;
+      width: 100%;
+      height: 4rem;
+      font-weight: 600;
+      aspect-ratio: 106/64;
+      box-shadow: 0px 2px 0px 0px #2a3637;
+      // background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+      color: #ffffff80;
+
+      font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 100%;
+      letter-spacing: 0.3px;
+      text-align: center;
+      vertical-align: middle;
+
+      &.active {
+        // background: #00b900;
+        color: #000a01;
+        // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+        color: #fff;
+      }
+    }
+
+    .deposit-svg {
+      position: absolute;
+      right: 0;
+      bottom: -5px;
+      display: none;
+
+      svg {
+        display: none;
+        // background: #30bb1a;
+        border-radius: 3px;
+      }
+
+      &.active {
+        display: block;
+      }
+    }
+  }
+}
+
+.deposit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .deposit-form {
+    // width: 90%;
+    width: 100%;
+
+    .deposit-enter-amt {
+      margin: 20px auto 0px auto;
+
+      .deposit-input {
+        // background-color: #0b0e0d;
+        border-radius: 5px;
+        width: 100%;
+        height: 46px;
+
+        :deep(.q-field__control) {
+          height: 46px;
+        }
+      }
+
+      .deposit-selection {
+        background-color: #0b0e0d;
+        border-radius: 5px;
+        width: 100%;
+        height: 46px;
+
+        :deep(.q-field__control) {
+          height: 46px;
+        }
+      }
+
+      .currency {
+        color: #b2bdbf;
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+.deposit-options {
+  margin: 16px auto 0 auto;
+  // width: 90%;
+
+  .deposit-option-container {
+    // display: grid;
+    // grid-template-columns: repeat(5, 1fr);
+    display: flex;
+    gap: 12px;
+  }
+
+  .deposit-option-btn-wrapper {
+    position: relative;
+  }
+
+  .deposit-option-btn {
+    color: #cccccc;
+    background: #1d2635;
+    border: 3px solid transparent;
+    // height: 38px;
+    border-radius: 0.375rem;
+    // aspect-ratio: 77/38;
+
+    &.active {
+      background: #b81212;
+      box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+    }
+
+    &.label-on-discount {
+      position: relative;
+      &:after {
+        content: "";
+        // background-image: url(../../assets/images/index/popout/label-discount.png);
+        background-repeat: no-repeat;
+        display: block;
+        position: absolute;
+        top: -4px;
+        right: -5px;
+        width: 30px;
+        height: 30px;
+        background-size: 100%;
+      }
+    }
+  }
+
+  .selected-svg {
+    position: absolute;
+    right: 1px;
+    bottom: 1px;
+    display: none;
+
+    svg {
+      background: #b81212;
+      border-radius: 3px;
+    }
+
+    &.active {
+      display: block;
+    }
+  }
+}
+
+:deep(.q-btn) {
+  font-weight: 600;
+}
+
+.btn-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 600;
+  height: 46px;
+  transition: 0.3s all;
+  color: #ffffff;
+  margin: auto;
+  border-radius: 6px;
+  background: #5c46e7;
+  width: 100%;
+  aspect-ratio: 335/46;
+
+  &:before {
+    box-shadow: none;
+  }
+
+  &.disabled {
+    opacity: 0.7;
+  }
+}
+
+.lil-title {
+  color: #d0d0d0;
+  font-weight: 600;
+  white-space: nowrap;
+
+  span {
+    color: #b81212;
+  }
+}
+
+.flex-between-c {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.font-small {
+  font-size: 12px;
+}
+
+.flex-div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.deposit-wrapper {
+  // width: 95%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100dvh - 168px);
+}
+
+.bottom-btn {
+  margin-top: auto;
+  padding: 20px 15px 40px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: 468px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #24262b;
+  // margin: 16px;
+}
+
+.tutorial-link {
+  color: #21A7EF;
+  text-decoration: underline;
+}
+
+.step-desc-div {
+  color: #B2BDBF;
+
+  p {
+    margin: 5px 0px;
+  }
+}
+
+.close-alert {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.slot-ftd-section {
+  width: 100%;
+  margin: 10px auto 10px;
+
+  img {
+    width: 100%;
+  }
+}
+</style>
+<style scoped>
+.description-text {
+  color: #B2BDBF;
+}
+:deep(.description-text p) {
+  margin: 5px 0px !important;
+}
+</style>

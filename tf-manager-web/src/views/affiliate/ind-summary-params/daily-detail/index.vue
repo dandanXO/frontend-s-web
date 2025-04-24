@@ -312,7 +312,11 @@
           :label="t('fields.redepositRate')"
           align="center"
           width="120"
-        />
+        >
+          <template #default="scope">
+            {{ scope.row.redepositRate }} %
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         class="pagination"
@@ -571,7 +575,11 @@ function getSummaries(param) {
           index === 19 ||
           index === 20
         ) {
-          sums[index] = total.data[prop]
+          if (index === 20) {
+            sums[index] = total.data[prop] + " %"
+          } else {
+            sums[index] = total.data[prop]
+          }
         } else if (index === 7 || index === 12 || index === 13) {
           // const pageRowCount = Number(page.records.reduce((sum, row) => {
           //   return sum + Number(row[prop])
