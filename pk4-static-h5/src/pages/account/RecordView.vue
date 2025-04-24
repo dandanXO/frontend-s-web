@@ -225,6 +225,65 @@ const searchRecord = (isNewSearch) => {
       const { code, data } = response;
       if (code === 0) {
         const records = data.records;
+        // const records =
+        //  [
+        //     {
+        //         "memberId": "1892775770378010626",
+        //         "betId": "CFQBE65150406J4304200MGJXEISC6DEA",
+        //         "transactionId": "CFQBE65150406J4304200MGJXEISC6DEA_20250414094313",
+        //         "loginName": "03987654444",
+        //         "vipName": null,
+        //         "gameAccountName": null,
+        //         "platform": "TFGaming",
+        //         "bet": 16.000000,
+        //         "validBet": 16.000000,
+        //         "payout": 0.000000,
+        //         "companyProfit": null,
+        //         "beforeBalance": 1884.000000,
+        //         "afterBalance": 1884.000000,
+        //         "betStatus": "SETTLE",
+        //         "gameType": "CASUAL",
+        //         "gameName": "Aviator",
+        //         "affiliateName": null,
+        //         "betTime": "2025-04-14 14:43:12",
+        //         "settleTime": "2025-04-14 14:43:12",
+        //         "result": "LOSS",
+        //         "sportBetResult": null,
+        //         "currency": "PKR",
+        //         "content": null,
+        //         "competitionName": null,
+        //         "fetchTime": null,
+        //         "remark": null
+        //     },
+        //     {
+        //         "memberId": "1892775770378010626",
+        //         "betId": "CFQBE65150406J4304200MGJXEISC6DEA",
+        //         "transactionId": "CFQBE65150406J4304200MGJXEISC6DEA",
+        //         "loginName": "03987654444",
+        //         "vipName": null,
+        //         "gameAccountName": null,
+        //         "platform": "TFGaming",
+        //         "bet": 16.000000,
+        //         "validBet": 0.000000,
+        //         "payout": null,
+        //         "companyProfit": null,
+        //         "beforeBalance": 1900.000000,
+        //         "afterBalance": 1884.000000,
+        //         "betStatus": "BET",
+        //         "gameType": "CASUAL",
+        //         "gameName": "Aviator",
+        //         "affiliateName": null,
+        //         "betTime": "2025-04-14 14:43:04",
+        //         "settleTime": null,
+        //         "result": "LOSS",
+        //         "sportBetResult": null,
+        //         "currency": "PKR",
+        //         "content": null,
+        //         "competitionName": null,
+        //         "fetchTime": null,
+        //         "remark": null
+        //     }
+        // ];
         pagination.total = data.length;
         pagination.pages = data.pages;
         pagination.pagingState = data.pagingState;
@@ -303,8 +362,8 @@ onActivated(() => {
 .search-container {
   border-radius: 0.5rem;
   background: transparent;
-  padding: 1rem;
-  margin-top: 0;
+  padding: 1rem 0;
+  // margin-top: 0;
 
   .date-field {
     display: flex;
@@ -317,7 +376,7 @@ onActivated(() => {
 
 
     .q-field {
-      padding: 4px 3px;
+      padding: 8px 0px;
       background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
       border-radius: 12px;
     }
@@ -361,7 +420,9 @@ onActivated(() => {
   // padding: 1rem;
   // margin-top: 0;
 
-  background: #292D2E;
+  // background: #292D2E;
+  background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+
   border-radius: 6px;
   box-shadow: none;
   .top-wrapper {
@@ -581,7 +642,8 @@ onActivated(() => {
   border-bottom: 0;
 
   .pagination-btn {
-    background: #58b475;
+    // background: #58b475;
+    background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
     font-size: 20px;
     width: 40px;
     height: 40px;

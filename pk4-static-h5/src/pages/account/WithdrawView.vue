@@ -182,7 +182,7 @@
 
           <InputRowGrid>
             <template #fields>
-              <InputField
+              <InputField :isDark="true"
                 :label="`${$t('form.withdrawalAmount')} (${convertToCommaAmount(selectedWithdrawalMethod.withdrawMin)} -
           ${convertToCommaAmount(selectedWithdrawalMethod.withdrawMax)} RS)`"
               >

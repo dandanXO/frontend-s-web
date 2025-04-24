@@ -247,6 +247,9 @@ body.body--dark .q-footer {
 .q-card {
   margin: 10px;
   // border-radius: 10px;
+  &--dark {
+    box-shadow: none;
+  }
 }
 .q-card__section--vert {
   padding: 0;
@@ -438,9 +441,9 @@ body.body--dark .q-footer {
     }
   }
 }
-.q-field--standout.q-field--dark.q-field--highlighted .q-field__control,
-.q-field--standout.q-field--dark.q-field--highlighted .q-field__native,
-.q-field--standout.q-field--dark.q-field--highlighted .q-field__marginal {
+.dark .q-field--standout.q-field--dark.q-field--highlighted .q-field__control,
+.dark .q-field--standout.q-field--dark.q-field--highlighted .q-field__native,
+.dark .q-field--standout.q-field--dark.q-field--highlighted .q-field__marginal {
   background: unset;
   color: #ffffff;
 }
@@ -552,6 +555,7 @@ body.body--dark .q-footer {
 // }
 .q-field__marginal {
   font-size: 16px;
+  height: unset;
 }
 .q-field--filled.q-field--readonly .q-field__control:before {
   border-bottom: 0;
@@ -921,7 +925,7 @@ body.body--dark .q-footer {
 
 .q-field__control,
 .q-field__marginal {
-  height: 40px !important;
+  height: unset;
 }
 
 /* Heart beat animation */

@@ -435,8 +435,10 @@ tbody {
     border-bottom: 0 !important;
   }
   &:nth-child(even){
-    background-color: #373C3D;
+    // background-color: #373C3D;
     color: #ffffff;
+    
+    background-color: #0665D3;
   }
   &:nth-child(odd){
   background-color: #FFFFFF0F;

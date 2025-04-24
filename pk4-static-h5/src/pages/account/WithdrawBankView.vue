@@ -307,16 +307,18 @@ onActivated(() => {
         justify-content: center;
         width: 100%;
         // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-        
-      background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
-      box-shadow: 0px 2px 0px 0px #2A3637;
+        background: #161D2E;
+
+      // background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+      // box-shadow: 0px 2px 0px 0px #2A3637;
 
         padding: 12px 5px;
         border-radius: 8px;
-        color: #ffffff;
+        color: #8B9CC2;
+        font-weight: bold;
+        
         font-size: 1.15rem;
         white-space: nowrap;
-        font-weight: 500;
         // flex: 1;
         //   font-weight: 500;
 

@@ -20,7 +20,7 @@
 
         <InputRowGrid>
           <template #fields>
-            <InputField :label="$t('form.cryptoAccount')">
+            <InputField :isDark="true" :label="$t('form.cryptoAccount')">
               <template #input>
                 <q-input
                   type="text"
@@ -333,19 +333,25 @@ onActivated(() => {
 </script>
 
 <style lang="scss">
+
 .common-sm-btn {
   padding: 6px 12px;
   display: flex;
-  border: 1px solid #21ef89;
+  // border: 1px solid #21EF89;
+  border: none;
   box-shadow: unset;
   border-radius: 6px;
-  background: #292d2e;
+  background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+
+    // background: #292D2E;
 }
 
 .common-sm-white-btn {
   padding: 6px 12px;
   border-radius: 8px;
-  background: #292d2e;
+    box-shadow: unset;
+  // background: #292D2E;
+  background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
   border: 1px solid rgb(98 98 98);
 }
 

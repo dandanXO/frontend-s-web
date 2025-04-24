@@ -1,7 +1,7 @@
 <template>
   <q-page class="write-letter">
     <div class="box-width">
-      <q-form ref="formRef" :model="mailDetailList" class="q-px-md">
+      <q-form ref="formRef" :model="mailDetailList">
         <div class="write-board-div q-py-sm">
           <div class="top q-pb-md">
             <div class="title">Feedback type</div>

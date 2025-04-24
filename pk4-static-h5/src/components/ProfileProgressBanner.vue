@@ -1,6 +1,6 @@
 <template>
   <div class="progress-container">
-    <div class="left-container">
+    <div class="left-container" :class="`vipitem${store.vip.replace('VIP', '')}`">
       <div class="profile-pic">
         <q-avatar size="50px">
           <img :src="profileImagePath" />
@@ -80,7 +80,9 @@ const profileImagePath = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-$colors: (
+
+
+$textcolors: (
   #4a75d9,
   #523014,
   #780f70,
@@ -95,6 +97,40 @@ $colors: (
   #2a161b,
   #523014
 );
+
+@for $i from 1 through length($textcolors) {
+  $color: nth($textcolors, $i);
+  .vipitem#{$i - 1} .win-gift-text, .vipitem#{$i - 1} .amount-progress-container {
+    color: $color;
+  }
+}
+$colors: (
+  #6D98FC,
+  #CD9321,
+  #D46ECC,
+  #F43F40,
+  #4CB759,
+  #6487EC,
+  #F130A1,
+  #728BAD,
+  #A43FFF,
+  #9769EA,
+  #5370E0,
+  #806888,
+  #1090ED
+);
+
+@for $i from 1 through length($colors) {
+  $color: nth($colors, $i);
+  .vipitem#{$i - 1} .q-avatar {
+    border: 2px solid $color;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+  }
+}
 @for $i from 0 through length($colors) - 1 {
   .vipitem#{$i} {
     &.right-container {
@@ -252,7 +288,7 @@ $gradients: (
     .win-gift-text {
       // margin-top: 5px;
       text-align: right;
-      color: #B2BDBF;
+      // color: #B2BDBF;
       font-weight: 400;
     }
   }

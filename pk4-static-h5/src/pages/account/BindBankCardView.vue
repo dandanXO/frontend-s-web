@@ -94,7 +94,7 @@
 
         <InputRowGrid>
           <template #fields>
-            <InputField :label="$t('bankCard.nameofCardAcc')">
+            <InputField :isDark="true" :label="$t('bankCard.nameofCardAcc')">
               <template #input>
                 <q-input
                   outlined
@@ -113,7 +113,7 @@
         <InputRowGrid>
           <template #fields>
             <!-- <InputField :label="$t('form.virtualWallet')"> -->
-            <InputField :label="$t('bankCard.bankAccountNum')">
+            <InputField :isDark="true" :label="$t('bankCard.bankAccountNum')">
               <template #input>
                 <q-input
                   outlined
@@ -474,17 +474,21 @@ onActivated(() => {
 .common-sm-btn {
   padding: 6px 12px;
   display: flex;
-  border: 1px solid #21EF89;
+  // border: 1px solid #21EF89;
+  border: none;
   box-shadow: unset;
   border-radius: 6px;
-    background: #292D2E;
+  background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+
+    // background: #292D2E;
 }
 
 .common-sm-white-btn {
   padding: 6px 12px;
   border-radius: 8px;
     box-shadow: unset;
-  background: #292D2E;
+  // background: #292D2E;
+  background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
   border: 1px solid rgb(98 98 98);
 }
 

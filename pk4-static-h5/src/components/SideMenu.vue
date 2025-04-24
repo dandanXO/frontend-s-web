@@ -43,7 +43,7 @@
       </div>
     </div>
   </div>
-  <div class="vipbar">
+  <div v-if="store.token" class="vipbar">
     
     <div class="progress-bar-outer">
         <q-linear-progress
@@ -175,16 +175,20 @@
         <img :src="require(`../assets/images/auth/invite-earn.png`)" />
       </div>
     </RouterLink>
-    <RouterLink to="/earn-money" class="side-menu-item side-menu-item__appdownload">
-      <div>
+    
+    <a
+      class="side-menu-item side-menu-item__appdownload"
+      :href="ui.downloadAppUrl"
+    >
+    <div>
         {{ $t("sideNav.appDownload") }}
         <span>{{ $t("sideNav.experienceOneStopGaming") }}</span>
       </div>
       <div class="right-icon">
         <img :src="require(`../assets/images/auth/app-download.png`)" />
       </div>
-    </RouterLink>
-    <a
+    </a>
+    <!-- <a
       class="side-menu-item side-menu-item__download"
       :href="ui.downloadAppUrl"
       v-if="isSideDownload && !ui.hideDownload"
@@ -193,8 +197,8 @@
         <img src="../assets/images/auth/download-icon.png" />
       </div>
       {{ $t("sideNav.downloadApp") }}
-    </a>
-    <a @click="openConfirmSignOutDialog">
+    </a> -->
+    <a v-if="store.token" @click="openConfirmSignOutDialog">
         <div class="acct-logout">
           <img src="../assets/images/index/menu/logout.png" />
           <div class="acct-nav-label">{{ $t("settings.logout") }}</div>
@@ -249,6 +253,12 @@ const isLanguageDialog = ref(false)
 import { convertToCommaAmount } from "src/boot/utils";
 
 
+const logout = () => {
+  store.memberLogout().then(() => {
+    // location.reload();
+    router.push("/home");
+  });
+};
 // progress bar
 // const maxProgress = store.levelUpDeposit.toFixed(2);
 // const progressRef = ref(store.currentDeposit.toFixed(2));
@@ -290,21 +300,20 @@ const openCSInNewTab = (url) => {
 };
 </script>
 <style lang="scss" scoped>
-
 $colors: (
-  #6d96c6,
-  #8c9b6a,
-  #4ca1fc,
-  #4c5efc,
-  #d34cfc,
-  #fc4cc4,
-  #efa1f6,
-  #FF9D86,
-  #5bfc49,
-  #efe639,
-  #67c2ac,
-  #ff7879,
-  #d89053
+  #6D98FC,
+  #CD9321,
+  #D46ECC,
+  #F43F40,
+  #4CB759,
+  #6487EC,
+  #F130A1,
+  #728BAD,
+  #A43FFF,
+  #9769EA,
+  #5370E0,
+  #806888,
+  #1090ED
 );
 @for $i from 1 through length($colors) {
   $color: nth($colors, $i);
@@ -334,10 +343,10 @@ $colors: (
   .left-side-menu {
     width: 100%;
     // padding-top: 72px;
-    // height: calc(100vh - 70px);
+    height: 100vh;
     padding-top: 5px;
     // height: calc(100- 16px);
-    height: 100%;
+    // height: 100%;
     display: flex;
     flex-direction: column;
     padding-left: 16px;

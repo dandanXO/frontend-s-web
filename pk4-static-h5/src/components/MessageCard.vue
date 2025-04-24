@@ -97,7 +97,9 @@ const goToOuterLink = (link) => {
       // top: 0;
       // width: 30px;
       // height: 30px;
-      background: #21ef89;
+      // background: #21ef89;
+      background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+
       width: 6px;
       height: 6px;
       border-radius: 50%;

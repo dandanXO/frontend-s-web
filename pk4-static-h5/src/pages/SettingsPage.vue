@@ -3,7 +3,7 @@
 
   <q-page>
     <div class="top-setting-section">
-      <div class="top-profile">
+      <div class="top-profile" :class="`vipitem${store.vip.replace('VIP', '')}`">
         <div class="profile">
           <div class="profile-pic">
             <q-avatar size="50px">
@@ -571,7 +571,9 @@ const handleCopyClick = async () => {
       align-items: center;
       font-weight: 700;
       font-size: 14px;
-      margin-right: 10px;
+      img {    width: 30px;
+        margin-right: 10px;
+      }
       // gap: 5px;
     }
     .score-amount {
@@ -1002,6 +1004,32 @@ const handleCopyClick = async () => {
 //   padding-bottom: 20px !important;
 // }
 
+$colors: (
+  #6D98FC,
+  #CD9321,
+  #D46ECC,
+  #F43F40,
+  #4CB759,
+  #6487EC,
+  #F130A1,
+  #728BAD,
+  #A43FFF,
+  #9769EA,
+  #5370E0,
+  #806888,
+  #1090ED
+);
+@for $i from 1 through length($colors) {
+  $color: nth($colors, $i);
+  .vipitem#{$i - 1} .q-avatar {
+    border: 2px solid $color;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+  }
+}
 .q-page {
   min-height: 0 !important;
 }
