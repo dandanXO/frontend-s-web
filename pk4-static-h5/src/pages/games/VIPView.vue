@@ -146,7 +146,7 @@
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-              <template v-if="colIndex === 1 || colIndex === 3">
+              <template v-if="colIndex === 1 || colIndex === 2">
                 <div style="justify-content: flex-start; padding-left: 20px; display: flex; align-items: center">
                   <img style="max-width: 25px; margin-right: 4px" src="../../assets/images/vip/vip-coins.png" />
                   <span>{{ col.value }}</span>
@@ -1013,6 +1013,12 @@ const getMonthlyVip = () => {
     // background: #502175;
     // background: #00ae000c;
     background: #121829;
+  }
+
+  tbody > .q-tr {
+    > :nth-child(3) {
+      padding: 0 1.5rem;
+    }
   }
 
   span.amt-text {
