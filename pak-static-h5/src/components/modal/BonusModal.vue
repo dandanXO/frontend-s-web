@@ -10,7 +10,7 @@
           </div>
         </div>
         <RouterLink to="/account?openCodeModal=true">
-          <q-btn flat class="details">{{ $t("btn.details") }}</q-btn>
+          <q-btn flat class="details detail">{{ $t("btn.details") }}</q-btn>
         </RouterLink>
       </div>
       <div v-for="(mission, index) in promoList" :key="index" class="mission-item">
@@ -59,7 +59,7 @@
           </div>
         </div>
         <a @click="openNewPlayerGuide">
-          <q-btn flat class="details">
+          <q-btn flat class="details detail">
             {{ $t("btn.details") }}
           </q-btn>
         </a>
