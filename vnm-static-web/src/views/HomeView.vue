@@ -2,9 +2,11 @@
   <div class="home" :class="store?.theme === 'CNY' ? 'cny-bg' : ''">
     <HomeViewLayoutAdapter />
   </div>
+  <AnnouncementModal />
 </template>
 
 <script setup>
+import AnnouncementModal from "@/components/modal/AnnouncementModal.vue";
 import HomeViewLayoutAdapter from "@/components/home/HomeViewLayoutAdapter.vue";
 import { userStore } from "@/store/index";
 

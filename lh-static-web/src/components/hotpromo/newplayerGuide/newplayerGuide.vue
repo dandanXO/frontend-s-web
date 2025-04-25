@@ -229,7 +229,7 @@
             </li>
             <li>
               <span class="step-number">4</span>
-              <div class="content">成长攻略与钱包冲刺活动符合参与支付类型（ERC20，TRC20，K豆，数字人民币，EBPay，OKPay，808钱包）。</div>
+              <div class="content">成长攻略与钱包冲刺活动仅计算虚拟货币与电子钱包存款，支付类型为：（ERC20，TRC20，K豆，数字人民币，EBPay，OKPay，808钱包）。</div>
             </li>
             <li>
               <span class="step-number">5</span>

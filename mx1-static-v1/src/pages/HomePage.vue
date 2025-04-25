@@ -4327,21 +4327,23 @@ onBeforeUnmount(() => {
 .platform-game-img {
   // background-color: #cccccc;
   width: 100%;
-  aspect-ratio: 1/1.2;
+  position: relative;
   background-size: cover;
   background-position: center center;
-  position: relative;
   background-image: url("@/assets/images/index/mini-game-bg.png");
   border-radius: 8px;
+  padding-bottom: 120%;
 
   .game--bg {
-    min-height: 150px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-size: 100% 100%;
     background-position: center center;
-    height: 100%;
-    width: 100%;
-    border-radius: 8px;
     background-repeat: no-repeat;
+    border-radius: 8px;
   }
 }
 

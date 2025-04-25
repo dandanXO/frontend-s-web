@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "serve:staging": "dotenv -e .env.staging vite",
     "preview": "vite preview",
     "format": "prettier --write src/",
-    "build:prod": "vite build"
+    "build:prod": "dotenv -e .env.production vite build",
+    "build:staging": "dotenv -e .env.staging vite build"
   },
   "dependencies": {
     "@primeuix/themes": "^1.0.0",
@@ -28,6 +30,8 @@
   "devDependencies": {
     "@primevue/auto-import-resolver": "^4.3.1",
     "@vitejs/plugin-vue": "^5.2.1",
+    "dotenv": "^16.5.0",
+    "dotenv-cli": "^8.0.0",
     "prettier": "3.5.3",
     "sass-embedded": "^1.85.1",
     "unplugin-vue-components": "^28.4.1",

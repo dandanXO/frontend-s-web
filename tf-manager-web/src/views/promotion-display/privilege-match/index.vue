@@ -161,8 +161,6 @@
 
 <script setup>
 import { computed, onMounted, reactive, ref, nextTick } from 'vue'
-import moment from 'moment'
-import { required } from '../../../utils/validate'
 import { ElMessage } from 'element-plus'
 import {
   updatePrivilegeMatch,
@@ -173,7 +171,6 @@ import { hasPermission } from '../../../utils/util'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
-import JsonEditor from 'json-editor-vue3'
 
 const { t } = useI18n()
 const store = useStore()

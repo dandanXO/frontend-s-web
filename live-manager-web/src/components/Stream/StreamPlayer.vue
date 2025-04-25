@@ -413,8 +413,11 @@ const changeQuality = async (quality) => {
 
 // 檢查是否是自己的直播
 const checkStreamOwnership = () => {
-  const loginName = sessionStorage.getItem('loginName');
-  isOwnStream.value = props.stream?.streamerName === loginName;
+  const userId = sessionStorage.getItem('userId');
+  console.log('===== 檢查是否為自己的直播 =====')
+  console.log('userId:', userId)
+  console.log('props.stream.liveStreamerId:', props.stream.liveStreamerId)
+  isOwnStream.value = props.stream?.liveStreamerId == userId;
 }
 
 // 切換直播狀態

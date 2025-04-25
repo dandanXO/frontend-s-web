@@ -1,22 +1,21 @@
 <template>
   <div class="announcement-component">
-    <el-carousel class="banner-slider" :autoplay="false" :interval="5000">
+    <el-carousel class="banner-slider" :autoplay="false" :interval="5000" @change="handleChange">
       <el-carousel-item class="banner-container" v-for="item in mailData" :key="item.id">
         <div class="announcement-title" v-html="item.title"></div>
         <template v-if="item.content">
           <div class="announcement-content" v-html="item.content"></div>
         </template>
-
       </el-carousel-item>
     </el-carousel>
     <div class="announcement-footer">
       <div class="footer-button-1" @click="store.openLiveChat()">
-        {{ $t('inbox.contactCS') }}
+        {{ $t("inbox.contactCS") }}
         <!-- <img src="@/assets/images/home/sticky-sidebar/cs-icon.svg" /> -->
       </div>
-      
-      <div class="footer-button-2" @click="goToMailDetail(item)">
-        {{ $t('inbox.viewDetails') }}
+
+      <div class="footer-button-2" @click="goToMailDetail()">
+        {{ $t("inbox.viewDetails") }}
         <!-- <el-icon :size="20">
           <img src="../../assets/home/arrow-drop-right-line.svg" />
         </el-icon> -->
@@ -28,9 +27,10 @@
 <script setup>
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
+import { ref, defineProps } from "vue";
 
 const router = useRouter();
-
+const carouselIndex = ref(0);
 const props = defineProps({
   mailData: {
     type: Array,
@@ -38,10 +38,13 @@ const props = defineProps({
   }
 });
 const store = userStore();
-
-const goToMailDetail = (mail) => {
-  console.log(mail);
-  router.push(`/center/mailbox?mailid=${mail.id}&type=${mail.type}`);
+const handleChange = (index) => {
+  carouselIndex.value = index;
+};
+const goToMailDetail = () => {
+  router.push(
+    `/center/mailbox?mailid=${props.mailData[carouselIndex.value].id}&type=${props.mailData[carouselIndex.value].type}`
+  );
 };
 </script>
 
@@ -78,23 +81,21 @@ const goToMailDetail = (mail) => {
   justify-content: space-between;
   gap: 12px;
   align-items: center;
-  
 
-  .footer-button-1{
+  .footer-button-1 {
     box-shadow: 0px 1.59px 1.59px 0px rgba(147, 199, 255, 1) inset;
-    background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
     color: #fff;
     height: 38px;
     width: 170px;
     border-radius: 6px;
     padding: 2px;
-    font-size: 11px;
+    font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .footer-button-2{
-    
+  .footer-button-2 {
     background: linear-gradient(180deg, rgba(214, 233, 255, 0.83) 5.34%, rgba(255, 255, 255, 0) 102.78%);
     box-shadow: 0px 1.59px 1.59px 0px rgba(147, 199, 255, 1) inset;
     box-shadow: 0px -1.27px 1.27px 0px rgba(39, 94, 193, 1) inset;
@@ -104,7 +105,7 @@ const goToMailDetail = (mail) => {
     width: 170px;
     border-radius: 6px;
     padding: 2px;
-    font-size: 11px;
+    font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -139,7 +140,7 @@ const goToMailDetail = (mail) => {
     }
   }
 }
-.banner-slider{
+.banner-slider {
   height: 400px;
 }
 </style>

@@ -233,7 +233,11 @@ router.beforeEach((to, from, next) => {
   // console.log(window.location.href)
   if (isOperaPixelUrl()) {
     // console.log("5svn88.com 2")
-    otag("init", "adv10336256983680");
+    if (window.location.href.indexOf("t138f156.com") > -1) {
+      otag("init", "adv10336256983680_12252089602688_v2");
+    } else {
+      otag("init", "adv10336256983680");
+    }
     store.isOperaPixelB = true;
   } else if (window.location.href.indexOf("tf68688.com") > -1) {
     fbq("init", "1123673335564806");

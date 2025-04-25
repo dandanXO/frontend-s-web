@@ -129,10 +129,10 @@ export const toGMT7 = (dateTime, format = "DD/MM/YYYY hh:mm A") => {
 export const isOperaPixelUrl = () => {
   if (
     window.location.href.indexOf("5svn88.com") > -1 ||
-    window.location.href.indexOf("tfpromo88.com") > -1 ||
     window.location.href.indexOf("tf88bof.com") > -1 ||
     window.location.href.indexOf("tslotf88.com") > -1 ||
-    window.location.href.indexOf("tfnohu18.com") > -1
+    window.location.href.indexOf("tfnohu18.com") > -1 ||
+    window.location.href.indexOf("t138f156.com") > -1
   ) {
     return true;
   }

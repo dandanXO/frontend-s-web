@@ -245,7 +245,14 @@ export default {
     redemptionFailure: "Redemption may fail if eligibility conditions are not met. System verification is final.",
     accountOwnerOnly: "Only the account owner can redeem the code.",
     unauthorizedMethods:
-      "Using bots, cheating, or any unauthorized methods will result in a ban and forfeiture of the bonus."
+      "Using bots, cheating, or any unauthorized methods will result in a ban and forfeiture of the bonus.",
+    real_name_placeholder: "Please enter your real name",
+    real_name_rules_01: "Please insert your real name",
+    birthday_placeholder: "Please enter your birthday",
+    birthday_rules_01: "Please insert your birthday",
+    address: "Address",
+    address_placeholder: "Please enter your address",
+    address_rules_01: "Please insert your address"
   },
   btn: {
     login: "Login",
@@ -517,7 +524,7 @@ export default {
       totalAmountSentAsOfYesterday: "Total amount sent as of yesterday",
       player: "Player",
       money: "Money",
-      eligibility_tips: "1. The invitee's deposit must be ≥ 600 or have a valid bet turnover of 1000. ",
+      eligibility_tips: "1. Invitee's deposit must be ≥ 300.",
       betting_tips:
         "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
       deposit_tips: "Deposit Commission: <br />Earn a 5% rebate on the first deposit of each new member you refer.",
@@ -1020,6 +1027,7 @@ export default {
     53005: "Investment has already been settled",
     53006: "Cannot submit, the ongoing interest has reached the maximum limit",
     53007: "Insufficient balance",
+    58500: "No Available Spin",
     10000: "Insufficient remaining balance error",
     10001: "Withdrawal error",
     10002: "Deposit error",
@@ -1114,18 +1122,15 @@ export default {
     58005: "Congrats, You have Completed All Tasks"
   },
   content: {
+    nospinleft: "No spins left",
     title1: "The registration time starts from the time the registration is completed.",
-    message1:
-      "When the accumulated amount reaches 1000 PKR, you can apply for a withdrawal (the reward will be directly added to your wallet).",
-    message2:
-      "When there are no available spins, referring a new player to register and deposit will earn you free spins.",
+    message1: "Once your accumulated amount reaches 1000 PKR, you can withdraw.",
+    message2: "When you have no spins left, invite new players to register and deposit to earn additional free spins.",
     message3:
-      "The event lasts for 3 days. After the event ends, the accumulated rewards will be reset, and the event will restart.",
+      "The event lasts for 3 days. After the event ends, accumulated rewards will be reset and the event will restart.",
     message4: "Each user can enjoy one free spin per day, which will be added at 00:00 daily.",
-    message5: "Once the application is approved, the bonus will be directly credited to your wallet.",
-    message6: "The bonus must be rolled over once before it can be withdrawn.",
-    message7:
-      "The invitee must verify their phone number, register using the inviter's referral link, and must not have a duplicate IP address to qualify for the referral.",
+    message5:
+      "The invitee must verify their phone number and must not have a duplicate IP address to qualify for the referral reward.",
     aviatorPromoIntro:
       "Enjoy the thrill of betting with Aviator! Your Aviator can win a staggering 3,216x with just one click! The prize pool for the top 50 is 1,250,000 PKR!",
     aviatorGoldenEgg:

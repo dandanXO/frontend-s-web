@@ -8,7 +8,6 @@
     <link rel="stylesheet" type="text/css" href="css/styles-v2.css" />
     <link rel="icon" href="imgs/favicon2.ico" type="image/x-icon" />
 
-
     <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
   </head>
 
@@ -85,7 +84,7 @@
             </div>
 
             <a href="https://www.am787.cc" id="landing-page-link2" target="_blank" style="width: 100%">
-              <img src="./imgs/contact-download.png" width="100%" />
+              <img src="imgs/contact-download1.png" width="100%" />
             </a>
           </div>
         </div>
@@ -109,7 +108,30 @@
         const hostname = window.location.host.replace("www.", "");
         // console.log(hostname, "dan");
 
-        const contactInfo = {};
+        const contactInfo = {
+          "51656.my": {
+            group1Title: "时来运转",
+            group1Number: "1037968465",
+            group2Title: "赢天下",
+            group2Number: "869525882",
+            landingPageLink: "https://am787.cc", // You can set a default link or leave it empty
+            redirectUrl: "https://www.dy78313.com",
+            claimUrl: "https://www.dy78313.com",
+            agent1ID: "vip120",
+            agent2ID: "vip121"
+          },
+          "056044.com": {
+            group1Title: "时来运转",
+            group1Number: "1037968465",
+            group2Title: "赢天下",
+            group2Number: "869525882",
+            landingPageLink: "https://am787.cc", // You can set a default link or leave it empty
+            redirectUrl: "https://www.dy78313.com",
+            claimUrl: "https://www.dy78313.com",
+            agent1ID: "vip120",
+            agent2ID: "vip121"
+          }
+        };
 
         // Default content if no hostname matches
         const defaultInfo = {
@@ -132,8 +154,8 @@
         document.getElementById("group1-number").textContent = selectedInfo.group1Number;
         document.getElementById("group2-title").textContent = selectedInfo.group2Title;
         document.getElementById("group2-number").textContent = selectedInfo.group2Number;
-        document.getElementById("group3-title").textContent = selectedInfo.group3Title;
-        document.getElementById("group3-number").textContent = selectedInfo.group3Number;
+        // document.getElementById("group3-title").textContent = selectedInfo.group3Title;
+        // document.getElementById("group3-number").textContent = selectedInfo.group3Number;
         document.getElementById("landing-page-link1").href = selectedInfo.landingPageLink;
         document.getElementById("landing-page-link2").href = selectedInfo.landingPageLink;
         document.getElementById("landing-page-link3").href = selectedInfo.landingPageLink;
@@ -169,11 +191,12 @@
       if (hostname.indexOf("41109.cc") > -1) {
         LA.init({ id: "KgmmimSiDYduYTQq", ck: "KgmmimSiDYduYTQq" });
       } else if (hostname.indexOf("19115.town") > -1) {
-        LA.init({ id:"KmP1Q5mhKZb7P0Ho", ck:"KmP1Q5mhKZb7P0Ho" });
-      }else if (hostname.indexOf("056044.com") > -1){
-        LA.init({id:"KmdZsfvLew362PGI",ck:"KmdZsfvLew362PGI"})
+        LA.init({ id: "KmP1Q5mhKZb7P0Ho", ck: "KmP1Q5mhKZb7P0Ho" });
+      } else if (hostname.indexOf("056044.com") > -1) {
+        LA.init({ id: "KmdZsfvLew362PGI", ck: "KmdZsfvLew362PGI" });
+      } else if (hostname.indexOf("51656.my") > -1) {
+        LA.init({ id: "KmtCikwaLOJCSqU4", ck: "KmtCikwaLOJCSqU4" });
       }
     </script>
   </body>
 </html>
-

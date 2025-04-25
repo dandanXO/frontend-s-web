@@ -81,6 +81,9 @@
     "login_here": "Login here"
   },
   "common": {
+    "get_price":"Congratulations, you have received",
+    "no_lottery_opportunities": "No lottery opportunities",
+    "loginRequired": "Login required",
     "login": "Login",
     "register": "Register",
     "edit": "Edit",
@@ -286,6 +289,13 @@
     "content": "Content",
     "isRead": "Read",
     "unread": "Unread"
+  },
+  "inbox": {
+    "contactCS": "Contact Customer Support",
+    "viewDetails": "View Details",
+    "imptAnnouncement": "Important Announcement",
+    "mailBox": "Inbox Message",
+    "noMoreToday": "Do not remind me again today"
   },
   "withdraw": {
     "withdraw": "Withdraw",
@@ -876,6 +886,7 @@
     "35009": "The privilege will take effect soon",
     "35010": "35010 Member cannot receive this privilege",
     "35011": "35011 Member cannot receive this privilege.",
+    "35013": "same ip",
     "37001": "Time to receive Lucky Money has expired",
     "37004": "All red envelopes have been distributed! Please look forward to the next one. Thank you for participating.",
     "45000": "Minimum withdrawal amount not reached",

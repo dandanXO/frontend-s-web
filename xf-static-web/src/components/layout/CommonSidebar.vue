@@ -29,13 +29,13 @@
             <RiMailFill />
             <span style="margin-left: 5px">cs@xf969.com</span>
           </div>
-          <div class="content-line"></div>
-          <div class="customer-num">
-            <RiPhoneFill />
-            <span style="margin-left: 5px">
-              <span class="customer_phone">852-81929166</span>
-            </span>
-          </div>
+          <!--          <div class="content-line"></div>-->
+          <!--          <div class="customer-num">-->
+          <!--            <RiPhoneFill />-->
+          <!--            <span style="margin-left: 5px">-->
+          <!--              <span class="customer_phone">852-81929166</span>-->
+          <!--            </span>-->
+          <!--          </div>-->
         </div>
       </div>
       <div class="app-download customer-div">
