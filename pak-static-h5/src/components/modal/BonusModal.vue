@@ -324,7 +324,7 @@ onMounted(() => {
           background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
           background-clip: text;
           color: transparent;
-          font-size: 10px;
+          font-size: 13px;
           text-transform: none;
           font-family: initial;
         }
