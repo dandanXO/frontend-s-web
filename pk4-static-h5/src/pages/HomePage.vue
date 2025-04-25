@@ -2500,9 +2500,6 @@ const socialicons = ref([
     name: "whatsapp",
   },
   {
-    name: "sms",
-  },
-  {
     name: "mail",
   },
   {
@@ -2516,6 +2513,9 @@ const socialicons = ref([
   },
   {
     name: "youtube",
+  },
+  {
+    name: "sms",
   },
 ])
 const gotoSocial = (icon) => {
