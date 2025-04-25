@@ -143,10 +143,10 @@ const promoCountdown = computed(() =>
         result[promo.promoCode].btnText = t("btn.details");
         break;
       case "DETAILS":
-        result[promo.promoCode].btnText = t("btn.check");
+        result[promo.promoCode].btnText = t("btn.details");
         break;
       default:
-        result[promo.promoCode].btnText = t("btn.check");
+        result[promo.promoCode].btnText = t("btn.details");
     }
 
     return result;
@@ -321,7 +321,6 @@ onMounted(() => {
         &.no-reward {
           background: transparent;
           color: #81a285;
-          text-transform: uppercase;
         }
       }
     }

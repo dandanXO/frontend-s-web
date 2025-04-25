@@ -223,7 +223,7 @@ const ui = useUI();
 const i18nStoreLanguage = i18nStore();
 
 const isScrolled = ref(false);
-const eligiblePromoCount = ref(0);
+const eligiblePromoCount = ref(1);
 const isFastAccessPromoCounting = ref(false);
 const fastAccessPromoAbortController = ref(null);
 
@@ -235,6 +235,7 @@ const isBonusModal = ref(false);
 const fastAccessPromo = shallowRef([]);
 
 const getFastAccessPromo = () => {
+  if (!store.token) return;
   isFastAccessPromoCounting.value = true;
   api.get(`/promo/fast-access-promo?language=${i18nStoreLanguage.languageVal}`).then(async (res) => {
     if (res.code === 0) {
@@ -450,6 +451,7 @@ const isSideDownload = ref(false);
 const afterMounted = useCustomerTrigger(loadCustomerAddress);
 
 watch(() => i18nStoreLanguage.languageVal, getFastAccessPromo);
+watch(() => store.token, getFastAccessPromo);
 
 onMounted(() => {
   checkTopDownloadAppear();
@@ -463,9 +465,7 @@ onMounted(() => {
   }
   afterMounted();
   window.addEventListener("scroll", handleScroll);
-  if (store.token) {
-    getFastAccessPromo();
-  }
+  getFastAccessPromo();
 });
 
 onUnmounted(() => {
