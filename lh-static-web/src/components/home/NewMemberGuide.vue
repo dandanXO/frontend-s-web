@@ -11,7 +11,7 @@
         <div>
           <img src="../../assets/home/guide/step1-arrow.png" alt="" />
         </div>
-        <div class="subtitle">点击跟随新用户小指南</div>
+        <div class="subtitle">点击跟随新用户小指南 <br />绑定手机号有<span>彩金</span>赠送</div>
 
         <div class="next-button" @click="handleNext(2)">好的</div>
       </div>
@@ -261,6 +261,10 @@ onMounted(() => {
       font-size: 20px;
       color: white;
       text-align: center;
+
+      span {
+        color: #3AEFFF;
+      }
     }
 
     .page-count {
@@ -280,7 +284,7 @@ onMounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-top: 12px;
+      margin-top: 8px;
       cursor: pointer;
     }
   }

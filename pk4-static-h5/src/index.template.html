@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= productName %></title>
+
+    <meta charset="utf-8" />
+    <meta name="description" content="<%= productDescription %>" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta
+      name="viewport"
+      content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width<% if (ctx.mode.cordova || ctx.mode.capacitor) { %>, viewport-fit=cover<% } %>"
+    />
+    <meta property="og:title" content="Pakistan real money games" />
+    <meta property="og:description" content="Pakistan real money games" />
+    <meta property="og:image" content="http://m.b9mega1.com/logo/icon.jpg" />
+    <meta property="og:image:secure_url" content="http://m.b9mega1.com/logo/icon.jpg" />
+    <meta property="og:url" content="http://m.b9mega1.com/" />
+    <meta name="google-signin-client_id" content="224522131575-tao52ramaq70tl8eclgcqe6pdotdd7gg.apps.googleusercontent.com">
+
+    <link rel="apple-touch-icon" sizes="256x256" href="icons/icon-256x256.png" />
+    <link rel="shortcut icon" type="image/png" href="pak-favicon.ico" />
+    <link rel="icon" type="image/ico" href="pak-favicon.ico" />
+
+    <!-- PolyFill Script To Support Lower Version of Browser/Device -->
+    <script type="text/javascript">
+      // Polyfill for globalThis
+      if (typeof globalThis === "undefined") {
+        Object.defineProperty(Object.prototype, '__magic__', {
+          get: function () {
+            return this;
+          },
+          configurable: true
+        });
+        __magic__.globalThis = __magic__;
+        delete Object.prototype.__magic__;
+
+        if (typeof window !== "undefined") {
+          // Browser environment
+          window.globalThis = window;
+        } else if (typeof global !== "undefined") {
+          // Node.js environment
+          global.globalThis = global;
+        } else if (typeof self !== "undefined") {
+          // Web workers
+          self.globalThis = self;
+        }
+      }
+
+
+      // Polyfill for replaceAll
+      if (!String.prototype.replaceAll) {
+        String.prototype.replaceAll = function (search, replacement) {
+          return this.split(search).join(replacement);
+        };
+      }
+      // Now you can use globalThis safely
+      // console.log(globalThis);
+    </script>
+
+    <!-- Meta Pixel Code -->
+    <script>
+      if (!window.fbq) {
+        !(function(f, b, e, v, n, t, s) {
+          if (f.fbq) return;
+          n = f.fbq = function() {
+            n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+          };
+          if (!f._fbq) f._fbq = n;
+          n.push = n;
+          n.loaded = !0;
+          n.version = "2.0";
+          n.queue = [];
+          t = b.createElement(e);
+          t.async = !0;
+          t.src = v;
+          s = b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t, s);
+        })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+      }
+    </script>
+<!--    <noscript>-->
+<!--      <img-->
+<!--        height="1"-->
+<!--        width="1"-->
+<!--        style="display: none"-->
+<!--        src="https://www.facebook.com/tr?id=864258358743236&ev=PageView&noscript=1"-->
+<!--      />-->
+<!--    </noscript>-->
+
+    <% if (!ctx.mode.cordova && !ctx.mode.capacitor) { %>
+    <script>
+      var CWRUMLICENCE = "wS0n2SF8WRCb0fAkjFLvksRizrsrej3YJXtoAysvtGDccqu1vHLn0Ya**jMIRAizN";
+    </script>
+    <script
+      src="https://apm-int.cloudwise.com/api/browser/settings/v70/js?app_key=wS0n2SF8WRCb0fAkjFLvksRizrsrej3YJXtoAysvtGDccqu1vHLn0Ya**jMIRAizN"
+      async
+    ></script>
+    <% } %>
+    <!-- TikTok Pixel Code -->
+    <script>
+      !(function (w, d, t) {
+        w.TiktokAnalyticsObject = t;
+        var ttq = (w[t] = w[t] || []);
+        (ttq.methods = [
+          "page",
+          "track",
+          "identify",
+          "instances",
+          "debug",
+          "on",
+          "off",
+          "once",
+          "ready",
+          "alias",
+          "group",
+          "enableCookie",
+          "disableCookie"
+        ]),
+          (ttq.setAndDefer = function (t, e) {
+            t[e] = function () {
+              t.push([e].concat(Array.prototype.slice.call(arguments, 0)));
+            };
+          });
+        for (var i = 0; i < ttq.methods.length; i++) ttq.setAndDefer(ttq, ttq.methods[i]);
+        (ttq.instance = function (t) {
+          for (var e = ttq._i[t] || [], n = 0; n < ttq.methods.length; n++) ttq.setAndDefer(e, ttq.methods[n]);
+          return e;
+        }),
+          (ttq.load = function (e, n) {
+            var i = "https://analytics.tiktok.com/i18n/pixel/events.js";
+            (ttq._i = ttq._i || {}),
+              (ttq._i[e] = []),
+              (ttq._i[e]._u = i),
+              (ttq._t = ttq._t || {}),
+              (ttq._t[e] = +new Date()),
+              (ttq._o = ttq._o || {}),
+              (ttq._o[e] = n || {});
+            var o = document.createElement("script");
+            (o.type = "text/javascript"), (o.async = !0), (o.src = i + "?sdkid=" + e + "&lib=" + t);
+            var a = document.getElementsByTagName("script")[0];
+            a.parentNode.insertBefore(o, a);
+          });
+      })(window, document, "ttq");
+    </script>
+    <!-- End TikTok Pixel Code -->
+
+    <script>
+      (function () {
+        var s = document.createElement('script');
+        s.src = 'static/pwa/js/webpush/webPushSdk.produce.min.2.2.1.js';
+        s.async = true;
+        var s0 = document.getElementsByTagName('script')[0];
+        s0.parentNode.insertBefore(s, s0);
+      })();
+    </script>
+  </head>
+  <body id="pk4-static-h5">
+    <!-- DO NOT touch the following DIV -->
+    <div id="q-app"></div>
+  </body>
+</html>

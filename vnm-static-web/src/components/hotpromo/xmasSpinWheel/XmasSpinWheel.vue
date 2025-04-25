@@ -191,7 +191,8 @@ const spinWheel = () => {
       const index = PRIZE_ARRAY.findIndex((item) => item === res.data[0].bonus);
       spin(index, () => {
         showPrizePopup.value = true;
-        prizePopupBonusAmt.value = t('common.get_price')+' '+res.data[0].bonusName;
+        //t('common.get_price')+' '+
+        prizePopupBonusAmt.value = res.data[0].bonusName;
         remainingDraws.value = res.data.remaining
         availableDraw.value = res.data.remaining
       });
@@ -317,7 +318,7 @@ onMounted(() => {
 }
 .time_bg{
     position: absolute;
-    right: -10%;
+    right: -80%;
     top: 0%;
 }
 .availableDraw{
@@ -326,6 +327,7 @@ onMounted(() => {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 32px;
+    color: #fff;
 }
 .draw-btn {
   width: 66px;

@@ -283,7 +283,13 @@ body.body--dark .q-footer {
 
   // margin-top: 30px;
   background: transparent !important;
-  bottom: env(safe-area-inset-bottom, 0);
+  bottom: 0;
+
+  .q-tabs{
+    border-radius: 13px 13px 0 0;
+    background: #323738;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
 
   // height: 86px;
 
@@ -309,6 +315,7 @@ body.body--dark .q-footer {
   font-size: 11px;
   align-self: flex-end;
   background: #323738;
+  height: 70px;
   // background: rgba(0, 0, 0, 0.6);
   // backdrop-filter: blur(20px);
   &:first-child {

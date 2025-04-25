@@ -1,7 +1,6 @@
 <template>
   <!-- <ProfileSummary :homeProfile="true" /> -->
-
-  <div class="left-side-menu" @click.stop>
+  <div class="left-side-menu" :class="{ fullHeight: !topDownload }" @click.stop>
     <RouterLink to="/earn-money" class="side-menu-item side-menu-item__invite">
       <div>
         {{ $t("sideNav.inviteToEarn") }}
@@ -98,10 +97,10 @@
       </router-link>
       <router-link class="side-menu-item side-menu-item__transparent" to="/cs-verifier">
         <div class="item-icon"><img src="../assets/images/auth/menu-cs-verifier.png" /></div>
-        {{ $t('sideNav.customerServiceVerifier') }}
+        {{ $t("sideNav.customerServiceVerifier") }}
       </router-link>
     </div>
-    <RouterLink to="/earn-money" class="side-menu-item side-menu-item__appdownload">
+    <a v-if="!isAndroid()" :href="ui.downloadAppUrl" class="side-menu-item side-menu-item__appdownload">
       <div>
         {{ $t("sideNav.appDownload") }}
         <span>{{ $t("sideNav.experienceOneStopGaming") }}</span>
@@ -109,7 +108,7 @@
       <div class="right-icon">
         <img :src="require(`../assets/images/auth/panda-app.png`)" />
       </div>
-    </RouterLink>
+    </a>
     <RouterLink to="/language" class="side-menu-item">
       <div class="item-icon">
         <img :src="require(`../assets/images/auth/country-flag-${$t('lang.langVal')}.png`)" class="flag" />
@@ -117,16 +116,12 @@
       {{ $t("sideNav.language") }}
     </RouterLink>
 
-    <a
-      class="side-menu-item side-menu-item__download"
-      :href="ui.downloadAppUrl"
-      v-if="isSideDownload && !ui.hideDownload"
-    >
-      <div class="item-icon">
-        <img src="../assets/images/auth/download-icon.png" />
-      </div>
-      {{ $t("sideNav.downloadApp") }}
-    </a>
+    <!--    <a class="side-menu-item side-menu-item__download" :href="ui.downloadAppUrl" v-if="!ui.hideDownload">-->
+    <!--      <div class="item-icon">-->
+    <!--        <img src="../assets/images/auth/download-icon.png" />-->
+    <!--      </div>-->
+    <!--      {{ $t("sideNav.downloadApp") }}-->
+    <!--    </a>-->
 
     <!-- <div class="side-menu-item side-menu-item__transparent"> -->
     <!-- <LangOptions /> -->
@@ -134,14 +129,15 @@
   </div>
 </template>
 <script setup>
-import { defineEmits } from "vue";
-
+import { defineEmits, inject } from "vue";
+import { isAndroid } from "boot/utils";
 import { useRouter } from "vue-router";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import { useUI } from "stores/ui";
 const emits = defineEmits(["closeMenu"]);
 const router = useRouter();
 const ui = useUI();
+const topDownload = inject("topDownload");
 const activateSlide = (item) => {
   emits("closeMenu");
   router.push(`/home#${item}`);
@@ -158,16 +154,25 @@ const openCSInNewTab = (url) => {
   &.open {
     margin-left: 0;
   }
-@supports (height: 100dvh) {
-  .left-side-menu {
-    height: calc(100dvh - 70px); /* modern browsers */
+  @supports (height: 100dvh) {
+    .left-side-menu {
+      height: calc(100dvh - 70px); /* modern browsers */
+
+      &.fullHeight {
+        height: calc(100dvh - 20px); /* modern browsers */
+      }
+    }
   }
-}
 
   .left-side-menu {
     width: 100%;
     padding-top: 72px;
     height: calc(100vh - 70px);
+
+    &.fullHeight {
+      height: calc(100vh - 20px);
+    }
+
     display: flex;
     flex-direction: column;
     padding-left: 16px;

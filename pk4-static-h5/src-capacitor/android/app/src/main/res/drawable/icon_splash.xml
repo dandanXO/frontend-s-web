@@ -1,0 +1,10 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+  <item>
+    <color android:color="@android:color/transparent" />
+  </item>
+  <item>
+    <bitmap
+      android:gravity="fill"
+      android:src="@drawable/bgicon" />
+  </item>
+</layer-list>

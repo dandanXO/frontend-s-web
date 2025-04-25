@@ -573,7 +573,7 @@ async function loadPlatfromAccount() {
 }
 
 async function loadPlatforms() {
-  const { data: ret } = await getPlatformNames(site.value.id)
+  const { data: ret } = await getPlatformNames()
   platforms.list = ret.sort((a, b) => a.name.localeCompare(b.name));
 }
 

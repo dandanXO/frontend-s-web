@@ -21,6 +21,7 @@
     style="background: #090b19"
     v-touch-swipe.left="swipeLeft"
     v-touch-swipe.right="swipeRight"
+    :class="{ wv: extensionState || isWebview }"
   >
     <div class="promo">
       <!-- <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify"> -->
@@ -36,9 +37,9 @@
                 <div
                   v-for="(promo, i) in filteredArray"
                   :key="i"
-                  data-aos="zoom-in"
-                  data-aos-easing="ease-out"
-                  data-aos-duration="1000"
+                  v-bind:data-aos="!isWebview ? 'zoom-in' : null"
+                  v-bind:data-aos-easing="!isWebview ? 'ease-out' : null"
+                  v-bind:data-aos-duration="!isWebview ? '1000' : null"
                 >
                   <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
@@ -110,7 +111,7 @@
                     class="join-container"
                     v-if="!selectedParam || (selectedParam && !selectedParam.hidebottom)"
                     :style="{
-                      bottom: extensionState ? '0' : `calc(72px + ${ui.bottomInsetHeight}px)`
+                      bottom: extensionState || isWebview ? '0' : `calc(72px + ${ui.bottomInsetHeight}px)`
                     }"
                   >
                     <div class="promo-date">
@@ -788,6 +789,10 @@ export default defineComponent({
 .promo-container {
   color: #ffffff;
   min-height: calc(100vh - 160px);
+
+  &.wv {
+    min-height: 100vh;
+  }
 
   .all-promotions {
     padding-bottom: 20px;
