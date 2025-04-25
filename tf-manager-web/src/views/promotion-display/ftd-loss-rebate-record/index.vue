@@ -101,6 +101,16 @@
             $ <span v-formatter="{data: scope.row.loss,type: 'money'}" />
           </template>
         </el-table-column>
+        <el-table-column prop="rebateBase" :label="t('fields.rebateBase')" align="center" min-width="100" sortable>
+          <template #default="scope">
+            $ <span v-formatter="{data: scope.row.rebateBase,type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="rebatePercentage" :label="t('fields.rebatePercentage')" align="center" min-width="100" sortable>
+          <template #default="scope">
+            {{ Number(scope.row.rebatePercentage).toFixed(2) }} %
+          </template>
+        </el-table-column>
         <el-table-column prop="rebate" :label="t('fields.rebateAmount')" align="center" min-width="100" sortable>
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.rebate,type: 'money'}" />

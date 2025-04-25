@@ -1516,6 +1516,7 @@ export default {
     reasonType: 'Reason Type',
     reasonTemplate: 'Reason Template',
     rebate: 'Rebate',
+    rebateBase: 'Rebate Base',
     rebateDistributeTime: 'Rebate Distribute Time',
     rebateLevel: 'Rebate Level',
     rebatePercentage: 'Rebate %',

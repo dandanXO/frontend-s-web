@@ -1520,6 +1520,7 @@ export default {
     reasonType: '原因类型',
     reasonTemplate: '原因模板',
     rebate: '返水',
+    rebateBase: '返水基数',
     rebateDistributeTime: '返水发放时间',
     rebateLevel: '返水等级',
     rebatePercentage: '返水比例 %',
