@@ -258,6 +258,8 @@ const getFastAccessPromo = () => {
               })
               .then((res) => ({ apiRes: res, promoCode: promo.promoCode }))
           );
+        } else if (promo.buttonMode === "CLAIM_REDIRECT") {
+          eligiblePromoCount.value++;
         }
       });
 
@@ -269,7 +271,7 @@ const getFastAccessPromo = () => {
           if (_currentFastAccessPromo) {
             _currentFastAccessPromo.response = apiRes.code === 0 ? apiRes.data : null;
           }
-          console.log(initApiRes.value.apiRes);
+
           if (initApiRes.value.apiRes.data.eligible) {
             eligiblePromoCount.value++;
           }

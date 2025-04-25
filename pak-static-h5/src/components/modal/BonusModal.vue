@@ -38,7 +38,8 @@
           :loading="mission.buttonMode === 'API_CLAIM' ? isClaimLoading : false"
           class="details"
           :class="{
-            'no-reward': mission.buttonMode === 'DETAILS'
+            'no-reward': mission.buttonMode === 'DETAILS',
+            detail: mission.buttonMode === 'API_REDIRECT'
           }"
           flat
           @click="handleClick(mission)"
@@ -144,6 +145,9 @@ const promoCountdown = computed(() =>
         break;
       case "DETAILS":
         result[promo.promoCode].btnText = t("btn.details");
+        break;
+      case "CLAIM_REDIRECT":
+        result[promo.promoCode].btnText = t("btn.claim");
         break;
       default:
         result[promo.promoCode].btnText = t("btn.details");
@@ -321,6 +325,28 @@ onMounted(() => {
         &.no-reward {
           background: transparent;
           color: #81a285;
+        }
+
+        &.detail {
+          background: transparent;
+          border: 1px solid transparent;
+          ::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            background-image: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+            background-origin: border-box;
+            mask-image: linear-gradient(white, white), linear-gradient(white, white);
+            mask-clip: padding-box, border-box;
+            mask-composite: exclude, add;
+          }
+          :deep(.q-btn__content) {
+            background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%) 1px;
+            background-clip: text;
+            color: transparent;
+          }
         }
       }
     }
