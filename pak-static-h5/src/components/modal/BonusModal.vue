@@ -304,8 +304,9 @@ onMounted(() => {
         font-weight: 700;
         text-transform: none;
         line-height: 19px;
-
-        min-height: 50px;
+        padding: 2px 16px;
+        min-height: 42px;
+        margin-right: 4px;
 
         &.details {
           background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
@@ -315,11 +316,17 @@ onMounted(() => {
         :deep(.q-btn__content) {
           display: flex;
           flex-direction: column;
+          text-transform: uppercase;
+          font-family: Poppins;
         }
 
         .countdown-span {
-          color: #d47c00;
-          font-size: 12px;
+          background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+          background-clip: text;
+          color: transparent;
+          font-size: 10px;
+          text-transform: none;
+          font-family: initial;
         }
 
         &.no-reward {
@@ -329,7 +336,6 @@ onMounted(() => {
 
         &.detail {
           background: transparent;
-          border: 1px solid transparent;
           ::after {
             content: "";
             position: absolute;
@@ -343,7 +349,7 @@ onMounted(() => {
             mask-composite: exclude, add;
           }
           :deep(.q-btn__content) {
-            background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%) 1px;
+            background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
             background-clip: text;
             color: transparent;
           }
