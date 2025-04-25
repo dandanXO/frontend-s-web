@@ -1,12 +1,12 @@
 <template>
   <span class="form-field-label">{{ props.label }}</span>
-  <div class="landing-input">
+  <div class="landing-input" :class="props.isDark ? 'dark' : 'light'">
     <slot name="input"></slot>
   </div>
 </template>
 
 <script setup>
-const props = defineProps(["label"]);
+const props = defineProps(["label", "isDark"]);
 </script>
 
 <style lang="scss" scoped>
@@ -18,15 +18,16 @@ const props = defineProps(["label"]);
   font-weight: 700;
 }
 
+
 .landing-input {
   :deep(.q-field__control) {
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 10px;
     // background-color: #0b0e0d;
-    background-color: #EAEFF9;
+    // background-color: #EAEFF9;
     border: 1px solid #ffffff14;
-    background: #EAEFF9;
+    // background: #EAEFF9;
     font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 14px;
@@ -55,5 +56,19 @@ const props = defineProps(["label"]);
   //   padding: 2px;
   //   border-radius: 5px;
   // }
+  
+&.dark {
+  :deep(.q-field__control) {
+    background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+  }
+}
+&.light {
+  
+  :deep(.q-field__control) {
+    background: #EAEFF9;
+    color: #7F8591;
+
+  }
+}
 }
 </style>

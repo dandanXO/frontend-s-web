@@ -260,7 +260,7 @@
 
   <q-dialog width="100%" v-model="modalSocialShare" persistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
+      <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
 
       <div class="popout-dialog-container">
         <div class="txt-title">{{ $t("playerGuide.shareandearn") }}</div>

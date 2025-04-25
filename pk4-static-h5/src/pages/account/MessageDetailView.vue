@@ -82,7 +82,9 @@ onActivated(() => {
 
 .msg-detail-container {
   padding: 20px;
-  background: #3237384D;
+  // background: #3237384D;
+  background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+
   border-radius: 10px;
   margin: 20px;
     .send-time {

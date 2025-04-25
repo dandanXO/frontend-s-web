@@ -21,7 +21,7 @@
       <!-- <div class="download-count">({{ topDownloadCount }}s)</div> -->
     </div>
   </div>
-  <div class="menu-open" :class="{ open: menuOpen }" :style="topDownload && !ui.hideDownload ? 'margin-top: 56px; height: calc(100% - 56px);' : 'margin-top: unset;height: unset;'">
+  <div class="menu-open" :class="{ open: menuOpen }">
     <!-- <div style="height: 56px" v-if="topDownload && !ui.hideDownload"></div> -->
     <SideMenu @closeMenu="toggleMenuOpen()" />
   </div>
@@ -337,6 +337,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="scss">
+
 .top-download {
   position: fixed;
   top: 0;
@@ -459,7 +460,8 @@ onUnmounted(() => {
   width: 273px;
   height: 100%;
   display: block;
-  z-index: 2002;
+  // z-index: 2002;
+  z-index: 2004;
   transition: 0.3s all;
   margin-right: -100%;
   &.open {

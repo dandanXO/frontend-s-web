@@ -241,7 +241,7 @@ $node-color: #b81212;
           // border-width: 2px;
           box-shadow: unset;
           background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
-
+          
 
           // &:before {
           //   display: block;
@@ -384,7 +384,7 @@ $node-color: #b81212;
         width: 60px;
         height: 60px;
         margin-bottom: 5px;
-        border: 2px solid transparent;
+        // border: 2px solid transparent;
         border-radius: 10px;
         padding: 4px 4px;
         // background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);

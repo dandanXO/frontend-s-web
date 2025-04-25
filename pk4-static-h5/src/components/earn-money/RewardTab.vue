@@ -1221,7 +1221,8 @@ watch(activeSetting, checkIsShowDetail);
     vertical-align: middle;
     text-transform: uppercase;
     text-align: center;
-    padding: 10px 20px;
+    // padding: 10px 20px;
+    padding: 10px 40px;
     width: fit-content;
     margin: -17px auto 20px auto;
 

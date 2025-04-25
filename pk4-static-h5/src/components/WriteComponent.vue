@@ -1,7 +1,7 @@
 <template>
   <q-page class="write-letter">
     <div class="box-width">
-      <q-form ref="formRef" :model="mailDetailList" class="q-px-md">
+      <q-form ref="formRef" :model="mailDetailList">
         <div class="pc-form">
           <InputRowGrid>
             <template #fields>
@@ -93,9 +93,9 @@
     </div>
   </q-page>
 
-  <q-dialog class="flex-end" width="100%" v-model="modalSendSuccess" presistent>
+  <q-dialog  width="100%" v-model="modalSendSuccess" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
+      <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">{{ $t("notify.messageSent") }}</div>
         <div class="txt-content q-mt-md text-center">{{ $t("notify.feedbackSentSuccess") }}</div>

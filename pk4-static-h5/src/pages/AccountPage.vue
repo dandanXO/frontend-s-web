@@ -13,7 +13,7 @@
               @click="openPersonalCenterDialog()"
               class="pc-form-item"
             >
-              <InputField :label="$t('form.fullName')">
+              <InputField :isDark="true" :label="$t('form.fullName')">
                 <template #input>
                   <q-input v-model="formDetail.realName" outlined clearable hide-bottom-space readonly>
                     <template v-slot:append v-if="formDetail.realName === null">
@@ -25,7 +25,7 @@
             </div>
 
             <div class="pc-form-item" :class="{ 'item-click': !formDetail.emailVerified }" @click="openBindEmailDialog">
-              <InputField :label="$t('form.email')">
+              <InputField :isDark="true" :label="$t('form.email')">
                 <template #input>
                   <q-input v-model="formDetail.email" outlined clearable hide-bottom-space readonly>
                     <template v-slot:append v-if="!formDetail.emailVerified">
@@ -38,7 +38,7 @@
             </div>
 
             <div class="pc-form-item item-click" @click="openChangePasswordDialog">
-              <InputField :label="$t('form.password')">
+              <InputField :isDark="true" :label="$t('form.password')">
                 <template #input>
                   <q-input v-model="formDetail.phone" outlined clearable hide-bottom-space readonly type="password">
                     <template v-slot:append>
@@ -54,7 +54,7 @@
               :class="{ 'item-click': !formDetail.phoneVerified }"
               @click="openVerifyPhoneDialog"
             >
-              <InputField :label="$t('form.phone')">
+              <InputField :isDark="true" :label="$t('form.phone')">
                 <template #input>
                   <q-input v-model="formDetail.phone" outlined clearable hide-bottom-space readonly>
                     <template v-if="!formDetail.phoneVerified" v-slot:append>
@@ -137,7 +137,7 @@
               @click="startRefresh"
             >
               <template v-slot:loading>
-                <q-spinner class="on-left" style="color: #00ae00" />
+                <q-spinner class="on-left" style="color: #ffffff" />
                 {{ $t("btn.updating") }}
               </template>
             </q-btn>
@@ -190,7 +190,7 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog  width="100%" v-model="personalCenterDialog" persistent>
+  <q-dialog width="100%" v-model="personalCenterDialog" persistent>
     <div class="popout-dialog">
       <q-btn
         dense
@@ -235,6 +235,7 @@
                     <q-btn
                       no-caps
                       dense
+                      flat
                       class="bg-yellow text-black"
                       :label="!startCountdownPhoneResendOTP && 'Get Code'"
                       :disable="!formDetail.phone || startCountdownPhoneResendOTP"
@@ -296,9 +297,9 @@
     </div>
   </q-dialog>
 
-  <q-dialog  width="100%" v-model="bindEmailDialog" persistent>
+  <q-dialog width="100%" v-model="bindEmailDialog" persistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="text-white popout-close" @click="openBindEmailDialog()" v-close-popup />
+      <q-btn dense rounded flat icon="close" class="text-white popout-close" @click="openBindEmailDialog()" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">{{ $t("form.bindEmail") }}</div>
         <div class="pc-form">
@@ -322,7 +323,7 @@
                           no-caps
                           dense
                           flat
-                          class="text-green q-pr-md"
+                          class="text-blue q-pr-md"
                           :label="!startCountdownResendOTP && $t('form.send')"
                           :disable="!formDetail.phone || startCountdownResendOTP"
                           @click="openVerificationCodeDialog"
@@ -378,7 +379,8 @@
               <InputField :label="$t('form.phone')">
                 <template #input>
                   <q-input
-                    outlined
+                    dense
+                    filled
                     clearable
                     :placeholder="$t('form.phone_placeholder')"
                     v-model="updatePhoneInfo.telephone"
@@ -397,7 +399,8 @@
                         <q-btn
                           no-caps
                           dense
-                          class="text-green"
+                          flat
+                          class="text-blue"
                           :label="!startCountdownPhoneResendOTP && $t('form.send')"
                           :disable="startCountdownPhoneResendOTP"
                           @click="openPhoneVerificationCodeDialog"
@@ -741,7 +744,7 @@
 
   <q-dialog  width="100%" v-model="confirmSignOutDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
+      <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">Sign Out</div>
 
@@ -1757,18 +1760,19 @@ const openConfirmSignOutDialog = () => {
     position: relative;
 
     :deep(.q-field__control) {
-      background: rgba(255, 255, 255, 0.15) !important;
+     background: #EAEFF9 !important;
       border-radius: 4px;
     }
 
     :deep(.q-field__native) {
-      color: rgba(255, 255, 255, 0.6);
+      color: #7F8591;
+      
     }
   }
 
   .pc-form-side-btn {
     position: relative;
-    right: -12px;
+    // right: -12px;
 
     :deep(.q-btn-item) {
       height: 38px;
@@ -1806,7 +1810,7 @@ const openConfirmSignOutDialog = () => {
 }
 
 .pc-tip-chg-pwd {
-  color: #1CCA6A;
+  color: #0664D2;
 }
 
 .pc-tip {
@@ -1832,54 +1836,56 @@ const openConfirmSignOutDialog = () => {
   margin-top: auto;
   // color: #00ae00;
   padding: 10px 20px;
-    background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
-    color: #333333;
+    // background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+    background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+
+    color: #ffffff;
     font-weight: 700;
-    box-shadow: 0px 2px 0px 0px #1CCA6A;
+    // box-shadow: 0px 2px 0px 0px #1CCA6A;
 
 
   :deep(.q-icon) {
-    color: #333333;
+    color: #ffffff;
   }
 }
 
-.btn-cancel {
-  // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
-  // border: 1px solid #5d8956;
-  // font-weight: 700;
-  // color: #fff;
-  // border: 1px solid #ffffff80;
-  // border-radius: 12px;
-  // width: 140px;
-  // height: 42px;
-  font-weight: 700;
-  width: 100%;
-  padding: 10px 40px;
-  font-size: 16px;
-  background: #455152;
-  color: #ffffff;
+// .btn-cancel {
+//   // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
+//   // border: 1px solid #5d8956;
+//   // font-weight: 700;
+//   // color: #fff;
+//   // border: 1px solid #ffffff80;
+//   // border-radius: 12px;
+//   // width: 140px;
+//   // height: 42px;
+//   font-weight: 700;
+//   width: 100%;
+//   padding: 10px 40px;
+//   font-size: 16px;
+//   background: #455152;
+//   color: #ffffff;
 
-  box-shadow: 0px 2px 0px 0px #2A3637;
-}
-.btn-confirm {
-  // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-  // border: 1px solid #5d8956;
-  // font-weight: 700;
-  // width: 140px;
-  // height: 42px;
-  // color: #fff;
-  // border-radius: 12px;
+//   box-shadow: 0px 2px 0px 0px #2A3637;
+// }
+// .btn-confirm {
+//   // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+//   // border: 1px solid #5d8956;
+//   // font-weight: 700;
+//   // width: 140px;
+//   // height: 42px;
+//   // color: #fff;
+//   // border-radius: 12px;
 
-  font-weight: 700;
-  width: 100%;
-  padding: 10px 40px;
-  font-size: 16px;
-  background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
-  color: #000000;
-  box-shadow: 0px 2px 0px 0px #1CCA6A;
-  border-radius: 4px;
-  height: unset;
-}
+//   font-weight: 700;
+//   width: 100%;
+//   padding: 10px 40px;
+//   font-size: 16px;
+//   background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+//   color: #000000;
+//   box-shadow: 0px 2px 0px 0px #1CCA6A;
+//   border-radius: 4px;
+//   height: unset;
+// }
 
 .bottom-btn {
   display: flex;

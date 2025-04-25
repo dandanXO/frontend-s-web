@@ -1164,21 +1164,24 @@ const getMonthlyVip = () => {
 }
 
 @media (max-width: 375px) {
-  .q-table {
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
-    overflow-x: scroll;
+  .vip-container {
 
-    .text-center {
-      padding: 0px;
-    }
+    .q-table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      overflow-x: scroll;
 
-    .text-right {
-      > div {
-        padding-left: 0px !important;
+      .text-center {
+        padding: 0px;
       }
-      padding: 0px;
+
+      .text-right {
+        > div {
+          padding-left: 0px !important;
+        }
+        padding: 0px;
+      }
     }
   }
 }

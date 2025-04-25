@@ -27,7 +27,7 @@
                     (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
                     (val) => (val && val.length === 11) || $t('form.phone_rules_01'),
                     (val) => val.startsWith('03') || $t('form.phone_rules_03')
-                  ]" color="green" outlined label-color="brand" :placeholder="$t('form.phone_placeholder')">
+                  ]" color="blue" outlined label-color="brand" :placeholder="$t('form.phone_placeholder')">
                   <template v-slot:prepend>
                     <q-icon name="smartphone" />
                     <div class="prepend-number">+92</div>
@@ -47,7 +47,7 @@
                   :rules="[
                     (val) => (val && val.length > 0) || $t('form.password_rules_01'),
                     (val) => val.length > 6 || $t('form.password_rules_02')
-                  ]" color="green" outlined clearable label-color="brand"
+                  ]" color="blue" outlined clearable label-color="brand"
                   :placeholder="$t('form.password_placeholder')">
                   <template v-slot:prepend>
                     <q-icon name="lock" />
@@ -87,7 +87,7 @@
               <InputField :label="'Invitation Code (Optional)'">
                 <template #input>
                   <q-input v-if="!hasAffiliate" ref="affiliateCodeRef" hide-bottom-space v-model="regForm.referrer"
-                    label-color="brand" outlined color="green" placeholder="Enter Invitation Code (Optional)" />
+                    label-color="brand" outlined color="blue" placeholder="Enter Invitation Code (Optional)" />
                 </template>
               </InputField>
             </div>

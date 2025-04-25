@@ -1205,7 +1205,6 @@
               <img src="../assets/images/index/cs-cs.png" />
             </a> -->
           </div>
-          
         <swiper
           :slidesPerView="5.5"
           class="social-icons"
@@ -1214,13 +1213,17 @@
           <template v-for="(icon, index) in socialicons" :key="index">
               <swiper-slide @click="gotoSocial(icon)">
                 <div class="category">
+                  <img class="absolute-hot" src="../assets/images/index/hot.gif" v-if="icon.name === 'whatsapp'" />
                   <img :src="require(`../assets/images/index/home-social-${icon.name}.png`)"  />
                 </div>
               </swiper-slide>
           </template>
         </swiper>
   </div>
+  <div style="display: none;">
 
+    <ShareIcons ref="shareRef" />
+  </div>
   <GameModal
     v-if="route.path !== '/account/profile'"
     ref="allGames"
@@ -1696,6 +1699,7 @@ import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
 import MediaSettingsComponent from "../components/MediaSettingsComponent.vue";
 import NewPlayerGuideModal from "../components/modal/NewPlayerGuideModal.vue";
 import AdditionalSteps from "../components/modal/AdditionalSteps.vue";
+import ShareIcons from "../components/ShareIcons.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { isAndroid } from "boot/utils";
@@ -2490,9 +2494,13 @@ const checkPlatform = () => {
 // });
 const qs = require("qs");
 const $q = useQuasar();
+const shareRef = ref();
 const socialicons = ref([
   {
-    name: "telegram",
+    name: "whatsapp",
+  },
+  {
+    name: "sms",
   },
   {
     name: "mail",
@@ -2500,16 +2508,39 @@ const socialicons = ref([
   {
     name: "instagram",
   },
-  {
-    name: "whatsapp",
-  },
-  {
-    name: "facebook",
-  },
+  // {
+  //   name: "facebook",
+  // },
   {
     name: "tiktok",
   },
+  {
+    name: "youtube",
+  },
 ])
+const gotoSocial = (icon) => {
+  if (icon.name === 'whatsapp') {
+    shareRef.value.openWhatsApp();
+  }
+  if (icon.name === 'sms') {
+    shareRef.value.openSMS();
+  }
+  if (icon.name === 'mail') {
+    shareRef.value.openMail();
+  }
+  if (icon.name === 'instagram') {
+    shareRef.value.openInsta();
+  }
+  if (icon.name === 'facebook') {
+    shareRef.value.openFacebook();
+  }
+  if (icon.name === 'tiktok') {
+    shareRef.value.openTiktok();
+  }
+  if (icon.name === 'youtube') {
+    shareRef.value.openYoutube();
+  }
+}
 const banners = ref([
   {
     mobileImageUrl: "empty-banner.png"
@@ -4734,8 +4765,20 @@ const checkGoogleLoginSetPwd = () => {
   width: 100%;
   max-width: 100%;
   overflow: hidden;
+  padding: 5px;
   img {
     width: 100%;
+    
+    &.absolute-hot {
+      position: absolute;
+      right: -10px;
+      top: 0px;
+      width: 18px;
+      height: unset;
+      img { 
+        width: 25px;
+      }
+    }
   }
 }
 }
@@ -5162,13 +5205,13 @@ const checkGoogleLoginSetPwd = () => {
   padding-right: 10px;
 
   .popout-close {
-    position: absolute;
+    position: fixed;
     // right: 0px;
     // top: 80px;
     right: 15px;
     top: 15px;
-    background: #cfcfcf;
-    color: #787878;
+    // background: #cfcfcf;
+    // color: #787878;
   }
 
   .popout-dialog-container--yel {
@@ -5826,7 +5869,8 @@ const checkGoogleLoginSetPwd = () => {
   .platform-game-item {
     position: relative;
     > img {
-      min-height: 145px;
+      // min-height: 145px;    
+      min-height: 120px;
     }
 
     &--img {

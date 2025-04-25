@@ -1141,9 +1141,11 @@ onMounted(() => {
   // border-radius: 0.5rem;
   // background: #0b0e0d !important;
   // border: 1px solid #072a19;
-  border-radius: 0.5rem;
-  border: 1px solid #ffffff14;
-  background: #292d2f !important;
+  // border-radius: 0.5rem;
+  // border: 1px solid #ffffff14;
+  // background: #292d2f !important;
+  background: linear-gradient(90deg, #1C273D 0%, #12192B 100%) !important;
+  border: none;
 }
 
 :deep(.q-tab__label) {
@@ -1172,7 +1174,8 @@ onMounted(() => {
       height: 4rem;
       font-weight: 600;
       aspect-ratio: 106/64;
-      box-shadow: 0px 2px 0px 0px #2a3637;
+      // box-shadow: 0px 2px 0px 0px #2a3637;
+      border: 1px solid #FFFFFF14;
       // background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
       color: #ffffff80;
 

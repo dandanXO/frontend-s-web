@@ -5,15 +5,15 @@
       indicator-color="transparent"
       align="justify" v-model="activeTab" class="message-tab-toggle">
         <q-tab name="activity" :label="$t('message.activity')">
-          <q-badge rounded color="#219efb" text-color="black" floating>{{unreadCount('activity')}}</q-badge>
+          <q-badge rounded color="white" text-color="black" floating>{{unreadCount('activity')}}</q-badge>
         </q-tab>
         
         <q-tab name="payment" :label="$t('message.payment')">
-          <q-badge rounded color="#219efb" text-color="black" floating>{{unreadCount('payment')}}</q-badge>
+          <q-badge rounded color="white" text-color="black" floating>{{unreadCount('payment')}}</q-badge>
         </q-tab>
         
         <q-tab name="system" :label="$t('message.system')">
-          <q-badge rounded color="#219efb" text-color="black" floating>{{unreadCount('system')}}</q-badge>
+          <q-badge rounded color="white" text-color="black" floating>{{unreadCount('system')}}</q-badge>
         </q-tab>
     </q-tabs>
     <LoadingComponent v-if="isLoading"></LoadingComponent>

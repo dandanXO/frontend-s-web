@@ -371,7 +371,9 @@ onActivated(() => {
     // border-bottom: 1px solid #ffffff33;
     // padding: 6px 0px;
     // margin-bottom: 10px;
-    background: #292d2e;
+    // background: #292d2e;
+    background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+
     border-radius: 6px;
     margin: 5px 5px 15px;
     overflow: hidden;

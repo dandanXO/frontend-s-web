@@ -247,6 +247,9 @@ body.body--dark .q-footer {
 .q-card {
   margin: 10px;
   // border-radius: 10px;
+  &--dark {
+    box-shadow: none;
+  }
 }
 .q-card__section--vert {
   padding: 0;
@@ -438,9 +441,9 @@ body.body--dark .q-footer {
     }
   }
 }
-.q-field--standout.q-field--dark.q-field--highlighted .q-field__control,
-.q-field--standout.q-field--dark.q-field--highlighted .q-field__native,
-.q-field--standout.q-field--dark.q-field--highlighted .q-field__marginal {
+.dark .q-field--standout.q-field--dark.q-field--highlighted .q-field__control,
+.dark .q-field--standout.q-field--dark.q-field--highlighted .q-field__native,
+.dark .q-field--standout.q-field--dark.q-field--highlighted .q-field__marginal {
   background: unset;
   color: #ffffff;
 }
@@ -552,6 +555,7 @@ body.body--dark .q-footer {
 // }
 .q-field__marginal {
   font-size: 16px;
+  height: unset;
 }
 .q-field--filled.q-field--readonly .q-field__control:before {
   border-bottom: 0;
@@ -717,15 +721,14 @@ body.body--dark .q-footer {
     top: 20px;
   }
   .popout-close {
-    position: absolute;
+    position: fixed;
     // right: 20px;
     // top: 30px;
     right: 15px;
     top: 15px;
     // background: #cfcfcf;
     // color: #787878;
-    border-radius: 5px;
-    background: #464f50;
+    // color: #787878;
   }
 
   .txt-title {
@@ -922,7 +925,7 @@ body.body--dark .q-footer {
 
 .q-field__control,
 .q-field__marginal {
-  height: 40px !important;
+  height: unset;
 }
 
 /* Heart beat animation */

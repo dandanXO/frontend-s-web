@@ -1,7 +1,7 @@
 <template>
   <div class="list-item" id="whatapp-icon ddd" @click="openWhatsApp()">
     <img class="btn-icon" 
-      :src="require(`../assets/images/auth/whatsapp-new.png`)" />
+      :src="require(`../assets/images/index/home-social-whatsapp.png`)" />
       <img class="absolute-hot" src="../assets/images/index/hot.gif" />
     <!-- <div>WhatsApp</div> -->
   </div>
@@ -32,7 +32,7 @@
   </div>
   <div v-if="isInvite" class="list-item" @click="openMail()">
     <img class="btn-icon" id="mail-icon"
-      :src="require(`../assets/images/auth/mail-new.png`)" />
+      :src="require(`../assets/images/index/home-social-mail.png`)" />
   </div>
   <div v-if="!isInvite" class="list-item" @click="openCharity()">
     <img class="btn-icon" id="charity-icon"
@@ -136,6 +136,16 @@ const downloadApp = () => {
     ui.getTopDownloadUrl().then(() => window.open(ui.downloadAppUrl, "_blank"));
   }
 };
+
+defineExpose({
+  openWhatsApp,
+  openInsta,
+  openFacebook,
+  openTiktok,
+  openYoutube,
+  openSMS,
+  openMail
+});
 </script>
 <style lang="scss" scoped>
 .invite-share-social {
@@ -165,8 +175,9 @@ const downloadApp = () => {
   }
 }
 .btn-icon {
-    width: 38px !important;
-    height: 38px !important;
+    // width: 38px !important;
+    // height: 38px !important;
+    height: 30px;
   }
 .btn-lists {
   display: flex;

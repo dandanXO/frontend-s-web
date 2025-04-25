@@ -1,7 +1,7 @@
 <template>
   <q-page class="write-letter">
     <div class="box-width">
-      <q-form ref="formRef" :model="mailDetailList" class="q-px-md">
+      <q-form ref="formRef" :model="mailDetailList">
         <div class="write-board-div q-py-sm">
           <div class="top q-pb-md">
             <div class="title">Feedback type</div>
@@ -117,7 +117,7 @@
 
   <q-dialog width="100%" v-model="modalSendSuccess" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
+      <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">Message Sent</div>
         <div class="txt-content q-mt-md text-center">Your feedback has been sent successfully!</div>
@@ -297,42 +297,42 @@ onMounted(() => {
   color: #8c968f;
 }
 
-.btn-cancel {
-  // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
-  // border: 1px solid #5d8956;
-  // font-weight: 700;
-  // color: #fff;
-  // border: 1px solid #ffffff80;
-  // border-radius: 12px;
-  // width: 140px;
-  // height: 42px;
-  font-weight: 700;
-  width: 100%;
-  padding: 10px 40px;
-  font-size: 16px;
-  background: #455152;
-  color: #ffffff;
+// .btn-cancel {
+//   // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
+//   // border: 1px solid #5d8956;
+//   // font-weight: 700;
+//   // color: #fff;
+//   // border: 1px solid #ffffff80;
+//   // border-radius: 12px;
+//   // width: 140px;
+//   // height: 42px;
+//   font-weight: 700;
+//   width: 100%;
+//   padding: 10px 40px;
+//   font-size: 16px;
+//   background: #455152;
+//   color: #ffffff;
 
-  box-shadow: 0px 2px 0px 0px #2A3637;
-}
-.btn-confirm {
-  // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-  // border: 1px solid #5d8956;
-  // font-weight: 700;
-  // width: 140px;
-  // height: 42px;
-  // color: #fff;
-  // border-radius: 12px;
+//   box-shadow: 0px 2px 0px 0px #2A3637;
+// }
+// .btn-confirm {
+//   // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+//   // border: 1px solid #5d8956;
+//   // font-weight: 700;
+//   // width: 140px;
+//   // height: 42px;
+//   // color: #fff;
+//   // border-radius: 12px;
   
-  font-weight: 700;
-  width: 100%;
-  padding: 10px 10px;
-  font-size: 16px;
-  background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
-  color: #000000;
-  box-shadow: 0px 2px 0px 0px #1CCA6A;
-  border-radius: 4px;
-  height: unset;
-}
+//   font-weight: 700;
+//   width: 100%;
+//   padding: 10px 10px;
+//   font-size: 16px;
+//   background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+//   color: #000000;
+//   box-shadow: 0px 2px 0px 0px #1CCA6A;
+//   border-radius: 4px;
+//   height: unset;
+// }
 
 </style>
