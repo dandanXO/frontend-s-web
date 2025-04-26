@@ -36,7 +36,7 @@
               <div class="order-col orange">- {{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
             </div>
             <div class="order-subrow">
-              <div class="order-col">{{ $t("records.bank") }}</div>
+              <div class="order-col">{{ e.bankName ? e.bankName : $t("records.bank") }}</div>
               <div class="order-col">
                 <q-btn
                   flat
