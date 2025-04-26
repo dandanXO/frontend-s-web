@@ -88,9 +88,9 @@ watch(
 .add-to-homescreen-container {
   // background-color: rgba(255, 255, 255, 0.75);
   background-image: url("../../assets/images/index/download/download-bg.png");
-  
+
   background-position: bottom center;
-    background-repeat: no-repeat;
+  background-repeat: no-repeat;
   background-size: 100% 100%;
   border-radius: 36px !important;
   border-bottom-left-radius: 0px !important;
@@ -98,6 +98,7 @@ watch(
   /* margin: 60px 10px 10px; */
   color: #000;
   padding: 32px 16px 16px;
+  position: relative;
   height: 310px;
   display: flex;
   flex-direction: column;
@@ -142,7 +143,7 @@ watch(
   }
 
   .continue-to-h5 {
-    color: #24EE89;
+    color: #24ee89;
     text-decoration: none;
     font-weight: 600;
     width: 100%;
@@ -203,20 +204,19 @@ watch(
   //   display: flex;
   // }
   .btn-custom {
-    background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+    background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
     width: 70%;
     margin: 0 auto;
     padding: 5px;
     display: flex;
     border-radius: 58px;
-    box-shadow: 0px 2.16px 0px 0px #1CCA6A;
+    box-shadow: 0px 2.16px 0px 0px #1cca6a;
     color: #333 !important;
     font-family: Microsoft YaHei UI;
     font-weight: 700;
     font-size: 17px;
     text-align: center;
     text-transform: uppercase;
-
   }
   // .btn-secondary {
   //   background-color: transparent;
@@ -266,7 +266,7 @@ watch(
 }
 
 .close-btn {
-  background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
   color: #333;
   position: absolute;
   right: 20px;
