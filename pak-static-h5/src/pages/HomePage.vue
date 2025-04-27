@@ -311,7 +311,7 @@
               :slidesPerGroup="3"
               :spaceBetween="10"
               :modules="[Navigation, Grid]"
-              :grid="{ rows: 1, fill: 'row' }"
+              :grid="{ rows: 2, fill: 'row' }"
               :navigation="{ nextEl: '.custom-hot-next', prevEl: '.custom-hot-prev' }"
               class="platform-game-container"
             >
@@ -3558,8 +3558,12 @@ const imgURLPromo = imgURL + "/promo/";
 // };
 
 function loadData() {
+  const params = {
+    category: "HOME",
+    language: languageVal.value
+  };
   api
-    .get("/opt-session/promo/banner?category=HOME")
+    .get("/opt-session/promo/banner", { params })
     .then((res) => {
       if (res.code === 0) {
         banners.value = [];
@@ -4279,6 +4283,8 @@ watch(
     if (val) checkSpinLuckyWheelPromoHomePopupCanShow();
   }
 );
+
+watch(languageVal, loadData);
 // watch(
 //   () => route.query.register,
 //   (newValue) => {
@@ -5633,7 +5639,7 @@ const checkGoogleLoginSetPwd = () => {
     .platform-game-img {
       height: 140px;
 
-      @media(max-width: 375px){
+      @media (max-width: 375px) {
         max-height: 105px;
         height: auto;
       }

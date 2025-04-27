@@ -2,7 +2,7 @@
   <div class="popout-dialog-container">
     <div class="txt-title">{{ $t("form.pleaseCompleteKYC") }}</div>
     <div class="pc-form">
-      <div class="pc-form-item">
+      <div v-if="showRealNameField" class="pc-form-item">
         <div class="pc-form-label">{{ $t("form.fullName") }}</div>
         <div class="pc-form-input">
           <q-input
@@ -15,7 +15,7 @@
           />
         </div>
       </div>
-      <div v-if="!store.phone" class="pc-form-item">
+      <div v-if="showPhoneField" class="pc-form-item">
         <div class="pc-form-label">{{ $t("form.phone") }}</div>
         <div class="pc-form-input">
           <q-input
@@ -33,6 +33,23 @@
           </q-input>
         </div>
       </div>
+      <div v-if="ui.siteType === 'CURACAO'" class="pc-form-item">
+        <div class="pc-form-label">{{ $t("form.address") }}</div>
+        <div class="pc-form-input">
+          <q-input
+            filled
+            dense
+            clearable
+            :placeholder="$t('form.address_placeholder')"
+            v-model="formDetail.address"
+            :rules="[(_) => isValidAddress()]"
+          >
+            <template v-slot:prepend>
+              <q-icon name="home" />
+            </template>
+          </q-input>
+        </div>
+      </div>
     </div>
 
     <q-btn
@@ -41,7 +58,11 @@
       flat
       no-caps
       class="btn-primary btn-primary__full"
-      :disabled="isValidName() !== true || (!store.phone && isValidPhone() !== true)"
+      :disabled="
+        (showRealNameField && isValidName() !== true) ||
+        (showPhoneField && isValidPhone() !== true) ||
+        (showAddressField && isValidAddress() !== true)
+      "
       @click="submitKYCNewUser"
     >
       {{ $t("btn.submit") }}
@@ -56,6 +77,7 @@ import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "src/stores";
 import { useRouter } from "vue-router";
 import { t } from "src/boot/lang";
+import { useUI } from "src/stores/ui";
 
 const emits = defineEmits(["test"]);
 
@@ -63,6 +85,7 @@ const qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
 const router = useRouter();
+const ui = useUI();
 
 const btnLoading = ref(false);
 
@@ -77,6 +100,10 @@ const isValidName = () => {
     : true;
   return result;
 };
+
+const showPhoneField = computed(() => !store.phone && ui.siteType !== "CURACAO");
+const showRealNameField = computed(() => ui.siteType !== "CURACAO");
+const showAddressField = computed(() => ui.siteType === "CURACAO");
 
 const isValidPhone = () => {
   const { phone } = formDetail;
@@ -96,6 +123,11 @@ const isAlphanumeric = (value, translation) => {
   return passwordPattern.test(value) || `${translation} must be alphanumeric`;
 };
 
+const isValidAddress = () => {
+  const { address } = formDetail;
+  return (address && address.length > 0) || t("form.address_rules_01");
+};
+
 const formDetail = reactive([]);
 
 const submitKYCNewUser = () => {
@@ -107,6 +139,18 @@ const updateNewUserState = () => {
   const updateInfo = {};
   updateInfo.realName = formDetail.realName;
   updateInfo.phone = formDetail.phone;
+
+  if (ui.siteType === "CURACAO") {
+    localStorage.setItem("PAK_ADDRESS", formDetail.address);
+    $q.notify({
+      color: "positive",
+      position: "top",
+      message: "Updated successfully",
+      icon: "check_circle_outline"
+    });
+    emits("closeUserKYCDialog", updateInfo);
+    return;
+  }
 
   api
     .post("/session/account", qs.stringify(updateInfo))
@@ -251,7 +295,6 @@ defineExpose({
   }
 }
 
-
 .btn-cancel {
   // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
   // border: 1px solid #5d8956;
@@ -268,10 +311,9 @@ defineExpose({
   background: #455152;
   color: #ffffff;
 
-  box-shadow: 0px 2px 0px 0px #2A3637;
+  box-shadow: 0px 2px 0px 0px #2a3637;
 }
 .btn-confirm {
-  
   font-weight: 700;
   width: 100%;
   padding: 10px 10px;
@@ -282,7 +324,6 @@ defineExpose({
   border-radius: 4px;
   height: unset;
 }
-
 
 .style-btn-confirm {
   color: #4a38b9;

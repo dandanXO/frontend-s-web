@@ -11,7 +11,7 @@
         <div>
           <img src="../../assets/images/home/guide/step1-arrow.png" alt="" style="height: 54px;"/>
         </div>
-        <div class="description">点击跟随新用户小指南</div>
+        <div class="description">点击跟随新用户小指南 <br />绑定手机号有<span>彩金</span>赠送</div>
 
         <div class="next-button" @click="handleNext(2)">好的</div>
       </div>
@@ -227,6 +227,10 @@ onMounted(() => {
       text-align: center;
       flex: 1;
       align-content: center;
+
+      span {
+        color: #3aefff;
+      }
     }
 
     .step-txt {

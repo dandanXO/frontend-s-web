@@ -1,5 +1,8 @@
 {
   "lang": {
+    "get_price":"Congratulations, you have received",
+    "no_lottery_opportunities": "No lottery opportunities",
+    "loginRequired": "Login required",
     "langVal": "en",
     "app_download_title": "TF88appDownload",
     "app_download_desc": "Asia's No. 1 Live Roll",
@@ -778,6 +781,11 @@
     "outbox": "Outbox",
     "write": "Write",
     "go_back": "Go Back",
+    "inbox_contactCS": "Contact Customer Support",
+    "inbox_viewDetails": "View Details",
+    "inbox_imptAnnouncement": "Important Announcement",
+    "inbox_mailBox": "Inbox Message",
+    "inbox_noMoreToday": "Do not remind me again today",
     "please_specific_title": "Please specific title.",
     "length_should_less_255": "Length should be less than 255",
     "subject": "Subject",

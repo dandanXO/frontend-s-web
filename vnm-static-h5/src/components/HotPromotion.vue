@@ -23,6 +23,11 @@
       :promo-id="list.id"
       :promo-code="list.promoCode"
     />
+    <xmasSpinWheel
+      v-if="list.redirectUrl === 'vnm-lucky-spin'"
+      :promo-id="list.id"
+      :promo-code="list.promoCode"
+    />
     <AseanM2024
       v-if="
         list.redirectUrl === 'dudoan-asean2024' ||
@@ -75,12 +80,13 @@ import NewPlayerPromo from "@/components/hotpromo/newPlayer/NewPlayerPromo.vue";
 import CnyLuckyDraw from "@/components/hotpromo/2025-cny-lucky-draw/2025CnyLuckyDraw.vue";
 import AseanM2024 from "@/components/hotpromo/aseanM2024/AseanM2024.vue";
 import ChristmasNewYear from "@/components/hotpromo/christmas-new-year/ChristmasNewYear.vue";
-
+import xmasSpinWheel from "@/components/hotpromo/xmasSpinWheel/XmasSpinWheel.vue";
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    xmasSpinWheel,
     tf88Baohiemvon,
     LotteryPromo,
     DailyLoginPromo,

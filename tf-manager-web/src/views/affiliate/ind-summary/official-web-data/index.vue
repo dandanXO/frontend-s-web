@@ -307,7 +307,11 @@
           :label="t('fields.redepositRate')"
           align="center"
           width="120"
-        />
+        >
+          <template #default="scope">
+            {{ scope.row.redepositRate }} %
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         class="pagination"
@@ -471,7 +475,11 @@ function getSummaries(param) {
           index === 24 ||
           index === 25
         ) {
-          sums[index] = total.data[prop]
+          if (index === 25) {
+            sums[index] = total.data[prop] + " %"
+          } else {
+            sums[index] = total.data[prop]
+          }
         } else if (index === 5) {
           // profit depositWithdrawal = deposit - withdrawal
           sums[index] =
