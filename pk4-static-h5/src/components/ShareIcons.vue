@@ -27,8 +27,8 @@
     <!-- <div>Youtube</div> -->
   </div>
   <div v-if="isInvite" class="list-item" @click="openSMS()">
-    <img class="btn-icon" id="mail-icon"
-      :src="require(`../assets/images/index/home-social-mail.png`)" />
+    <img class="btn-icon" id="sms-icon"
+      :src="require(`../assets/images/index/home-social-sms.png`)" />
   </div>
   <div v-if="isInvite" class="list-item" @click="openMail()">
     <img class="btn-icon" id="mail-icon"
