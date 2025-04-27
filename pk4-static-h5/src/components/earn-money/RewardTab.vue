@@ -17,7 +17,7 @@
   </q-inner-loading>
 
   <div class="reward-wrapper">
-    <div class="earn-money-pots">
+    <div class="earn-money-pots panel">
       <div class="pot-item">
         <div class="item-img with-btn">
           <div class="flex-item">
@@ -43,7 +43,7 @@
       </div>
     </div>
     <!-- banner.redirectUrl.includes("https://") -->
-    <div class="earn-money-details-grid">
+    <div class="earn-money-details-grid panel">
       <!-- <div class="details-item" v-if="isShowOnetime"> -->
       <div class="details-item">
         <div class="item-amount">
@@ -64,7 +64,7 @@
         <div class="item-icon"><img src="../../assets/images/earn-money/details-icon-02.png" /></div>
       </div>
     </div>
-    <div class="earn-money-details-grid">
+    <div class="earn-money-details-grid panel">
       <!-- <div class="details-item details-item" v-if="isShowBet"> -->
       <div class="details-item details-item">
         <div class="item-amount">
@@ -95,7 +95,7 @@
         </div> -->
     </div>
 
-    <div class="earn-money-invite">
+    <div class="earn-money-invite panel">
       <div class="invite-title">{{ $t("earnMoney.reward.inviteFriendsViaLink") }}</div>
       <div class="invite-desc">{{ $t("earnMoney.reward.howToGetInvitationBonus") }}</div>
 
@@ -126,7 +126,7 @@
       </div>
     </div>
 
-    <div class="earn-money-invitation-rewards earn-money-card">
+    <div class="earn-money-invitation-rewards earn-money-card panel">
       <div class="earn-money-card-title">
         {{ $t("earnMoney.reward.title") }}
       </div>
@@ -158,7 +158,7 @@
       </table>
     </div>
 
-    <div class="earn-money-betting-commission earn-money-card">
+    <div class="earn-money-betting-commission earn-money-card panel">
       <div class="earn-money-card-title">
         {{ $t("earnMoney.reward.bettingCommission") }}
       </div>
@@ -186,7 +186,7 @@
       </table>
     </div>
 
-    <div class="earn-money-deposit-commission earn-money-card">
+    <div class="earn-money-deposit-commission earn-money-card panel">
       <div class="earn-money-card-title">
         {{ $t("earnMoney.reward.depositCommission") }}
       </div>
@@ -237,7 +237,7 @@
       </div>
     </div> -->
 
-    <div class="earn-money-amt">
+    <div class="earn-money-amt panel">
       <div class="earn-money-amt-title">
         <div class="earn-money-amt-icon"></div>
         {{ $t("earnMoney.reward.award") }}
@@ -626,7 +626,6 @@ watch(activeSetting, checkIsShowDetail);
     margin-top: 12px;
     display: flex;
     gap: 24px;
-    background: #373c3d;
     padding: 10px;
     border-radius: 10px;
 
@@ -794,7 +793,6 @@ watch(activeSetting, checkIsShowDetail);
     // gap: 12px;
     margin-top: 16px;
     // flex-wrap: wrap;
-    background: #373c3d;
     border-radius: 10px;
     display: flex;
     padding: 10px;
@@ -803,7 +801,7 @@ watch(activeSetting, checkIsShowDetail);
 
     .details-item {
       img {
-        width: 26px;
+        width: 30px;
       }
       &:nth-child(1) {
         &:after {
@@ -842,6 +840,8 @@ watch(activeSetting, checkIsShowDetail);
         color: #8c968f;
       }
       .item-icon {
+        display: flex;
+        margin: auto;
         height: 30px;
       }
 
@@ -859,8 +859,6 @@ watch(activeSetting, checkIsShowDetail);
   }
 
   .earn-money-invite {
-    // background-color: rgba(255, 255, 255, 0.05);
-    background: #373c3d;
     margin-top: 16px;
     border-radius: 10px;
     padding: 16px;
@@ -887,9 +885,8 @@ watch(activeSetting, checkIsShowDetail);
       }
 
       .listing-item {
-        // border: 1px solid #ffffff0d;
-        // background-color: rgba(255, 255, 255, 0.02);
-        background: #292d2e;
+        background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+        border: 1px solid #FFFFFF14;
         border-radius: 4px;
         display: flex;
         padding: 8px 16px;
@@ -913,7 +910,8 @@ watch(activeSetting, checkIsShowDetail);
 
     .invite-share-link {
       margin-top: 12px;
-      background-color: #292d2e;
+      background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+      border: 1px solid #FFFFFF14;
       padding: 4px;
       border-radius: 8px;
       display: flex;
@@ -996,7 +994,7 @@ watch(activeSetting, checkIsShowDetail);
         }
 
         td:nth-child(2n) {
-          color: #21ef89;
+          color: #21A7EF;
           font-weight: 700;
         }
       }
@@ -1022,7 +1020,7 @@ watch(activeSetting, checkIsShowDetail);
   //       }
 
   //       td:last-child {
-  //         color: #21EF89;
+  //         color: #21A7EF;
   //       }
   //     }
   //   }
@@ -1037,10 +1035,12 @@ watch(activeSetting, checkIsShowDetail);
   }
 
   .earn-money-amt {
-    background: #323738;
+    background: #3237384D;
     margin: 15px 0;
     border-radius: 10px;
     padding: 15px;
+    border: 1px solid #FFFFFF1A;
+    
     .earn-money-amt-title {
       display: flex;
       justify-content: flex-start;
@@ -1060,7 +1060,7 @@ watch(activeSetting, checkIsShowDetail);
         height: 16px;
         &::before {
           content: "";
-          background: #45d81f4d;
+          background: #21A7EF4D;
           width: 16px;
           height: 16px;
           border-radius: 50%;
@@ -1070,7 +1070,7 @@ watch(activeSetting, checkIsShowDetail);
         }
         &::after {
           content: "";
-          background: #45d81f;
+          background: #21A7EF;
           border-radius: 50%;
           width: 8px;
           height: 8px;
@@ -1106,16 +1106,16 @@ watch(activeSetting, checkIsShowDetail);
         font-weight: 900;
         font-size: 16.94px;
         line-height: 16.94px;
-        color: #21ef89;
+        color: #21A7EF;
         letter-spacing: 0%;
         vertical-align: middle;
         text-transform: capitalize;
-        border: 1px solid #ffffff14;
+        background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+        border: 1px solid #FFFFFF14;
         border-radius: 4px;
         padding: 15px;
         width: 100%;
         text-align: right;
-        background: #292d2e;
         position: relative;
         .sent-ytd-icon {
           position: absolute;
@@ -1178,7 +1178,7 @@ watch(activeSetting, checkIsShowDetail);
     width: 30vw;
     text-align: center;
     border-radius: 4px;
-    border: 1px solid #466a45;
+    background: #32373880;
     padding: 5px 4px;
     height: 36px;
     display: flex;
@@ -1187,7 +1187,7 @@ watch(activeSetting, checkIsShowDetail);
 
     &.active {
       font-weight: bold;
-      background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+      background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
     }
 
     &:active {
@@ -1205,16 +1205,15 @@ watch(activeSetting, checkIsShowDetail);
 }
 
 .earn-money-card {
-  background: #373c3d;
-  margin-top: 16px;
+  margin-top: 26px;
   border-radius: 10px;
-  padding: 16px 0 0 0;
+  border: 1px solid #FFFFFF1A;
 
   .earn-money-card-title {
-    width: 100%;
+    background: url("../../assets/images/earn-money/panel-header-bg.png") center center no-repeat;
+    background-size: 100% 100%;
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
     font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 14.45px;
@@ -1222,6 +1221,10 @@ watch(activeSetting, checkIsShowDetail);
     vertical-align: middle;
     text-transform: uppercase;
     text-align: center;
+    // padding: 10px 20px;
+    padding: 10px 40px;
+    width: fit-content;
+    margin: -17px auto 20px auto;
 
     img {
       width: 80%;
@@ -1243,11 +1246,6 @@ watch(activeSetting, checkIsShowDetail);
     border-top-right-radius: 10px;
 
     thead {
-      // background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
-      // background: linear-gradient(180deg, #21b29c 0%, #87c646 100%);
-
-      background: #373c3d;
-
       th {
         color: #ffffff80;
 
@@ -1264,7 +1262,7 @@ watch(activeSetting, checkIsShowDetail);
         font-size: 12px;
         // border: 1px solid #ffffff1a;
         &:last-child {
-          color: #21ef89;
+          color: #21A7EF;
         }
       }
 

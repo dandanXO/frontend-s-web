@@ -129,7 +129,7 @@ watch(
   .children-tab {
     // background: url(../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
     background-size: 100% 100%;
-    background: #323738;
+    background: #32373880;
     border-radius: 8px;
     width: 100%;
     // width: calc(100% - 20px);
@@ -153,7 +153,7 @@ watch(
     }
     :deep(.q-tab--active) {
           color: white;
-          background: #394142;
+          background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
         }
     
         :deep(.q-tab--active .q-tab__label) {

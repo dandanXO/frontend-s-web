@@ -317,7 +317,7 @@ onActivated(() => {
 
 <style lang="scss" scoped>
 .order-option-tab {
-  background: #323738;
+  background: #3237384D;
   background-size: 100% 100%;
   border-radius: 8px;
   margin: 20px 16px 4px;
@@ -351,7 +351,7 @@ onActivated(() => {
   }
 
   :deep(.q-tab--active) {
-    background: #394142;
+    background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
     color: white;
     border-radius: 6px;
   }
@@ -371,7 +371,9 @@ onActivated(() => {
     // border-bottom: 1px solid #ffffff33;
     // padding: 6px 0px;
     // margin-bottom: 10px;
-    background: #292d2e;
+    // background: #292d2e;
+    background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+
     border-radius: 6px;
     margin: 5px 5px 15px;
     overflow: hidden;

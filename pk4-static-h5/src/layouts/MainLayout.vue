@@ -18,13 +18,13 @@
       </q-card-section>
       <q-card-section class="page-title" :class="pageName === '' && 'page-title__empty'" v-if="hasPage">
         <a @click="route.path === '/deposit' || route.path === '/withdraw' || route.path === '/account' ? goToPrevPage('/') : goToPrevPage(prevPage)" class="q-mt-sm">
-          <img
+          <!-- <img
             class="house-icon"
             v-if="route.path === '/deposit' || route.path === '/withdraw' || route.path === '/account'"
             src="../assets/images/index/btn-house.png"
             width="30"
-          />
-          <img v-else src="../assets/images/index/btn-back.png" width="30" />
+          /> -->
+          <img src="../assets/images/index/btn-back.png" width="30" />
           <!-- <q-icon class="header-icon" name="arrow_back_ios"></q-icon> -->
           <!-- <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">Back</span> -->
         </a>
@@ -289,7 +289,7 @@ export default defineComponent({
           pageName.value = t("header.forgotAccount");
         } else if (route.path === "/forgot-password") {
           prevPage.value = "/login";
-          hasPage.value = true;
+          hasPage.value = false;
           pageName.value = t("sideNav.recoverPwd");
         } else if (route.path === "/live-casino") {
           hasPage.value = true;

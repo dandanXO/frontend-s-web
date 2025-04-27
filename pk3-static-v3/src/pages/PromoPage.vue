@@ -21,6 +21,7 @@
     style="background: #090b19"
     v-touch-swipe.left="swipeLeft"
     v-touch-swipe.right="swipeRight"
+    :class="{ wv: extensionState || isWebview }"
   >
     <div class="promo">
       <!-- <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify"> -->
@@ -110,7 +111,7 @@
                     class="join-container"
                     v-if="!selectedParam || (selectedParam && !selectedParam.hidebottom)"
                     :style="{
-                      bottom: extensionState ? '0' : `calc(72px + ${ui.bottomInsetHeight}px)`
+                      bottom: extensionState || isWebview ? '0' : `calc(72px + ${ui.bottomInsetHeight}px)`
                     }"
                   >
                     <div class="promo-date">
@@ -788,6 +789,10 @@ export default defineComponent({
 .promo-container {
   color: #ffffff;
   min-height: calc(100vh - 160px);
+
+  &.wv {
+    min-height: 100vh;
+  }
 
   .all-promotions {
     padding-bottom: 20px;

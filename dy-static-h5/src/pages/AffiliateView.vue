@@ -27,11 +27,11 @@
           <img src="../assets/images/affiliate/tglogo.png" alt="Telegram Icon" class="contact-icon" />
           <div class="contact-details">
             <span class="contact-name">Telegram</span>
-            <span class="contact-id">@dyhykf001</span>
+            <span class="contact-id">@dyghs_01</span>
           </div>
         </div>
         <div class="contact-actions">
-          <button class="copy-button" @click="copyText('@dyhykf001')">复制</button>
+          <button class="copy-button" @click="copyText('@dyghs_01')">复制</button>
           <a target="_blank" class="download-button" href="https://telegram.org/" rel="noopener">下载</a>
         </div>
       </div>

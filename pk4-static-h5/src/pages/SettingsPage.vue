@@ -3,7 +3,7 @@
 
   <q-page>
     <div class="top-setting-section">
-      <div class="top-profile">
+      <div class="top-profile" :class="`vipitem${store.vip.replace('VIP', '')}`">
         <div class="profile">
           <div class="profile-pic">
             <q-avatar size="50px">
@@ -40,7 +40,7 @@
       </RouterLink>
       <div class="top-total-score">
         <div class="score-txt">
-          <img src="../assets/images/account/total-score.svg" />
+          <img src="../assets/images/account/total-score.png" />
           {{ $t("settings.totalScore") }}
         </div>
         <div class="score-amount">{{ store.balance.toFixed(2) }}</div>
@@ -53,16 +53,16 @@
       <div class="acct-nav">
         <!-- <h2>{{ $t("settings.otherServices") }}</h2> -->
         <div class="top-section">
-          <router-link to="/deposit">
-            <div class="acct-nav-item">
+          <router-link to="/deposit" class="dep-btn">
+            <!-- <div class="acct-nav-item">
               <img src="../assets/images/account/deposit-svg.svg" />
-            </div>
+            </div> -->
             <div class="acct-nav-label">{{ $t("settings.deposit") }}</div>
           </router-link>
-          <router-link to="/withdraw">
-            <div class="acct-nav-item">
+          <router-link to="/withdraw" class="wdw-btn">
+            <!-- <div class="acct-nav-item">
               <img src="../assets/images/account/withdraw-svg.svg" />
-            </div>
+            </div> -->
             <div class="acct-nav-label">{{ $t("settings.withdraw") }}</div>
           </router-link>
         </div>
@@ -210,7 +210,7 @@
     </div>
   </q-page>
 
-  <q-dialog class="flex-end" width="100%" v-model="confirmSignOutDialog" persistent>
+  <q-dialog  width="100%" v-model="confirmSignOutDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
@@ -571,10 +571,10 @@ const handleCopyClick = async () => {
       align-items: center;
       font-weight: 700;
       font-size: 14px;
-      // gap: 5px;
-      :not(:last-child) {
-        margin-right: 5px;
+      img {    width: 30px;
+        margin-right: 10px;
       }
+      // gap: 5px;
     }
     .score-amount {
       font-weight: bold;
@@ -682,7 +682,7 @@ const handleCopyClick = async () => {
   margin: 5px 20px 20px;
 
   border-radius: 10px;
-  background: #373c3d;
+  background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -743,7 +743,8 @@ const handleCopyClick = async () => {
 
 .invite-share-link {
   margin-top: 8px;
-  background-color: #292d2e;
+  // background-color: #292d2e;
+  background: #252C46;
   padding: 4px;
   border-radius: 8px;
   display: flex;
@@ -774,10 +775,10 @@ const handleCopyClick = async () => {
 
 .acct-nav {
   margin: 5px 20px 20px;
-  background: #373c3d;
-  padding: 10px;
+    background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
   border-radius: 10px;
 
+  padding: 20px 0 0;
   .acct-title {
     display: flex;
     margin-top: 4px;
@@ -819,22 +820,26 @@ const handleCopyClick = async () => {
         border-radius: 4px;
         color: #333333;
         font-weight: bold;
-        background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-        box-shadow: 0px 2.07px 0px 0px #1cca6a;
+        background: url(../assets/images/account/dep-btn.png)no-repeat center center;
+        background-size: contain;
+        // background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+        // box-shadow: 0px 2.07px 0px 0px #1cca6a;
 
-        img {
-          filter: grayscale(1) brightness(0);
-        }
+        // img {
+        //   filter: grayscale(1) brightness(0);
+        // }
       }
       &:nth-child(2) {
         border-radius: 4px;
         color: #ffffff;
         font-weight: bold;
-        background: #455152;
-        box-shadow: 0px 2.07px 0px 0px #2a3637;
-        img {
-          filter: grayscale(1) brightness(100);
-        }
+        background: url(../assets/images/account/wdw-btn.png)no-repeat center center;
+        background-size: contain;
+        // background: #455152;
+        // box-shadow: 0px 2.07px 0px 0px #2a3637;
+        // img {
+        //   filter: grayscale(1) brightness(100);
+        // }
       }
     }
   }
@@ -897,6 +902,7 @@ const handleCopyClick = async () => {
         align-items: center;
         justify-content: center;
         color: #000;
+        filter: brightness(100);
         text-decoration: none;
 
         img {
@@ -954,43 +960,43 @@ const handleCopyClick = async () => {
   }
 }
 
-.btn-cancel {
-  // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
-  // border: 1px solid #5d8956;
-  // font-weight: 700;
-  // color: #fff;
-  // border: 1px solid #ffffff80;
-  // border-radius: 12px;
-  // width: 140px;
-  // height: 42px;
-  font-weight: 700;
-  width: 100%;
-  padding: 10px 10px;
-  font-size: 16px;
-  background: #455152;
-  color: #ffffff;
+// .btn-cancel {
+//   // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
+//   // border: 1px solid #5d8956;
+//   // font-weight: 700;
+//   // color: #fff;
+//   // border: 1px solid #ffffff80;
+//   // border-radius: 12px;
+//   // width: 140px;
+//   // height: 42px;
+//   font-weight: 700;
+//   width: 100%;
+//   padding: 10px 10px;
+//   font-size: 16px;
+//   background: #455152;
+//   color: #ffffff;
 
-  box-shadow: 0px 2px 0px 0px #2a3637;
-}
-.btn-confirm {
-  // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-  // border: 1px solid #5d8956;
-  // font-weight: 700;
-  // width: 140px;
-  // height: 42px;
-  // color: #fff;
-  // border-radius: 12px;
+//   box-shadow: 0px 2px 0px 0px #2a3637;
+// }
+// .btn-confirm {
+//   // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+//   // border: 1px solid #5d8956;
+//   // font-weight: 700;
+//   // width: 140px;
+//   // height: 42px;
+//   // color: #fff;
+//   // border-radius: 12px;
 
-  font-weight: 700;
-  width: 100%;
-  padding: 10px 10px;
-  font-size: 16px;
-  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-  color: #000000;
-  box-shadow: 0px 2px 0px 0px #1cca6a;
-  border-radius: 4px;
-  height: unset;
-}
+//   font-weight: 700;
+//   width: 100%;
+//   padding: 10px 10px;
+//   font-size: 16px;
+//   background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+//   color: #000000;
+//   box-shadow: 0px 2px 0px 0px #1cca6a;
+//   border-radius: 4px;
+//   height: unset;
+// }
 </style>
 
 <style lang="scss">
@@ -998,6 +1004,32 @@ const handleCopyClick = async () => {
 //   padding-bottom: 20px !important;
 // }
 
+$colors: (
+  #6D98FC,
+  #CD9321,
+  #D46ECC,
+  #F43F40,
+  #4CB759,
+  #6487EC,
+  #F130A1,
+  #728BAD,
+  #A43FFF,
+  #9769EA,
+  #5370E0,
+  #806888,
+  #1090ED
+);
+@for $i from 1 through length($colors) {
+  $color: nth($colors, $i);
+  .vipitem#{$i - 1} .q-avatar {
+    border: 2px solid $color;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+  }
+}
 .q-page {
   min-height: 0 !important;
 }

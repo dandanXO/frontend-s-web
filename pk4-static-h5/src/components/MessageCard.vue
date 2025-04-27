@@ -70,7 +70,9 @@ const goToOuterLink = (link) => {
   margin-bottom: 15px;
   // border: 1px solid rgba(255, 255, 255, 0.05);
   // background: #2e30344f;
-  background: #323738;
+  background: #3237384D;
+  background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+  border: 1px solid #000000;
 
   position: relative;
   box-shadow: none;
@@ -95,7 +97,9 @@ const goToOuterLink = (link) => {
       // top: 0;
       // width: 30px;
       // height: 30px;
-      background: #21ef89;
+      // background: #21ef89;
+      background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+
       width: 6px;
       height: 6px;
       border-radius: 50%;
@@ -161,10 +165,10 @@ const goToOuterLink = (link) => {
 
     .detail-btn {
       font-size: 1rem;
-      padding: 0.2rem 1rem;
+      padding: .5rem 1rem;
       min-height: unset;
       text-transform: capitalize;
-      background: #464f50;
+      background: #252C46;
       border-radius: 6px;
       display: flex;
       justify-content: center;

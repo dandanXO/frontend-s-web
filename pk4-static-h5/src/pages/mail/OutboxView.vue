@@ -9,7 +9,7 @@
     </q-btn>
   </div>
 
-  <q-dialog class="flex-end" v-model="isPostCommentsModal">
+  <q-dialog v-model="isPostCommentsModal">
     <div class="popout-dialog post-comments-modal">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
 

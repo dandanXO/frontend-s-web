@@ -42,7 +42,7 @@
           <div class="order-row order-row--content">
             <div class="order-subrow">
               <div class="order-col withdraw-amount">{{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
-              <div class="order-col">{{ $t("records.bank") }}</div>
+              <div class="order-col">{{ e.currencyName }}</div>
             </div>
             <div class="order-subrow">
               <div class="order-col">

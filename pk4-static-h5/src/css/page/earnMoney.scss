@@ -23,12 +23,16 @@
   .search-field__radio-row {
     display: flex;
     gap: 2rem;
+
+    :deep(.q-radio__bg path) {
+      fill: #21A7EF;
+    }
   }
 
   .search-field__input-with-btn {
     display: flex;
+    background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
     border: 1px solid #FFFFFF14;
-    background: #292D2E;
     border-radius: 4px;
     padding-left: 1rem;
 
@@ -70,7 +74,7 @@
   }
 }
 .span-username {
-  color: #21EF89;
+  color: #FF9500;
 }
 
 .result-table {
@@ -99,7 +103,7 @@
           text-align: left;
           border-width: 0px !important;
           // background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
-          background: #323738;
+          background: #3237384D;
         }
       }
 
@@ -152,7 +156,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgba(255, 255, 255, 0.05);
+    background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
     border-radius: 8px;
     padding: 12px 6px;
     .item-amount {
@@ -163,7 +167,7 @@
       span {
         font-size: 16px;
         font-weight: bold;
-        color: #21EF89;
+        color: #21A7EF;
       }
     }
     .item-title {

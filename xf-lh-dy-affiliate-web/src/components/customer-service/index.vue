@@ -133,7 +133,7 @@ const telegramLink = () => {
   } else if (props.siteId === '1') {
     return '@xf100200'
   } else if (props.siteId === '6') {
-    return '@dyhykf001'
+    return '@dyghs_01'
   } else {
     return '@leihuo123'
   }

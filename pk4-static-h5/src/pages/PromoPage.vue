@@ -17,7 +17,7 @@
 
   <div class="promo-container">
     <div class="promo">
-      <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify" active-color="green">
+      <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify" active-color="white">
         <q-tab
           v-for="(tab, i) in tabItems"
           :key="i"
@@ -819,7 +819,7 @@ export default defineComponent({
 
   .vip-promo-tab-toggle {
     // background: url(../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
-    background: #323738;
+    background: #3237384D;
     background-size: 100% 100%;
     border-radius: 8px;
     margin-bottom: 4px;
@@ -854,7 +854,7 @@ export default defineComponent({
       //   left: 50%;
       //   transform: translateX(-50%);
       // }
-      background: #394142;
+      background: linear-gradient(90deg, #0287f2 0%, #0664d2 100%);
     }
 
     :deep(.q-tab--active .q-tab__label) {
@@ -1224,7 +1224,7 @@ export default defineComponent({
                 border-right: 1px solid #ffffff1a;
               }
               tr:first-of-type td {
-                background: #323738;
+                background: #3237384D;
                 color: #ffffff80;
                 border: 0;
                 &:first-child {
@@ -1235,10 +1235,10 @@ export default defineComponent({
                 }
               }
               tr:nth-child(even) td {
-                background: #394142;
+                background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
               }
               tr:nth-child(odd) td {
-                background: #323738;
+                background: #3237384D;
               }
               tr:not(:first-of-type) td:last-child {
                 color: #ffd400;
@@ -1357,8 +1357,9 @@ export default defineComponent({
   }
 
   .q-tab {
-    min-height: 40px;
+    min-height: 16px;
     color: #8c968f;
+    padding: 0 10px;
   }
 
   .q-tab__content {
@@ -1367,20 +1368,19 @@ export default defineComponent({
 
   .q-tab--active {
     color: #fff;
+    background: linear-gradient(90deg, #0287f2 0%, #0664d2 100%);
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 12px;
   }
 
   .q-tab__label {
     font-size: 13px;
+    line-height: 1rem;
   }
 
-  .q-tab--inactive {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-  }
-
-  .q-tab--active .q-tab__indicator {
-    width: 100%;
-    height: 2px;
-    background: #21ef89;
+  .q-tab .q-tab__indicator {
+    display: none;
   }
 
   .q-tab__label {

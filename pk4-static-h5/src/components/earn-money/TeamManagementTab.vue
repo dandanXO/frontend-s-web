@@ -101,14 +101,14 @@
       <div class="pagination">
         <q-btn @click="prevPage" :disabled="currentPage === 1" icon="chevron_left" 
           class="rounded-borders"
-          color="neontb"></q-btn>
+          color="neonblue"></q-btn>
         <span>{{ currentPage }} / {{ totalPages }}</span>
         <q-btn
           @click="nextPage"
           :disabled="currentPage === totalPages"
           icon="chevron_right"
           class="rounded-borders"
-          color="neontb"
+          color="neonblue"
         ></q-btn>
       </div>
       
@@ -341,7 +341,7 @@ onMounted(() => {
   display: block;
 }
 .table-header{
-  background-color: #323738;
+  background-color: transparent;
   color: #B2BDBF;
 }
 .q-tr {
@@ -356,5 +356,9 @@ onMounted(() => {
 .table-tr-even{
   background-color: #FFFFFF0F;
   color: #ffffff;
+}
+
+.monthly-deposit-table {
+  background: #121829;
 }
 </style>

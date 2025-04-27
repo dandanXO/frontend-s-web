@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md cs-verifier">
-    <div class="flex justify-center">
+    <div class="flex justify-center csv-icon">
       <img src="../assets/images/cs-verifier/csv-icon.png" alt="" />
     </div>
     <div class="main-title">B9.GAME</div>
@@ -9,7 +9,7 @@
 
     <InputRowGrid class="q-mt-lg">
       <template #fields>
-        <InputField>
+        <InputField :isDark="true">
           <template #input>
             <q-input
               outlined
@@ -22,7 +22,7 @@
               :rules="[(val) => (val && val.length > 0) || $t('form.telegramDiscordId_rules_01')]"
             >
               <template v-slot:append>
-                <div @click="checkAgentId()"><img src="../assets/images/cs-verifier/search-btn.png" alt="" /></div>
+                <div @click="checkAgentId()"><img style="width: 20px;" src="../assets/images/cs-verifier/search-btn.png" alt="" /></div>
               </template>
             </q-input>
           </template>
@@ -33,7 +33,7 @@
     <div class="content-para q-mt-lg">{{ $t("customerServiceVerifier.contentPara02") }}</div>
   </div>
 
-  <q-dialog class="flex-end" width="100%" v-model="accountVerifiedDialog" persistent>
+  <q-dialog width="100%" v-model="accountVerifiedDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
@@ -102,10 +102,17 @@ onMounted(() => {});
 
 <style lang="scss" scoped>
 .cs-verifier {
+  .csv-icon {
+    width: 120px;
+    margin: 0 auto;
+    img {
+      width: 100%;
+    }
+  }
   .main-title {
     display: flex;
     justify-content: center;
-    color: #21ef89;
+    color: #0286F1;
     font-weight: 700;
     font-size: 18.46px;
     margin-top: 16px;

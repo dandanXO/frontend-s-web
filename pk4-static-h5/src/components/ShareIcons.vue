@@ -1,38 +1,38 @@
 <template>
   <div class="list-item" id="whatapp-icon ddd" @click="openWhatsApp()">
     <img class="btn-icon" 
-      :src="require(`../assets/images/auth/whatsapp-new.png`)" />
+      :src="require(`../assets/images/index/home-social-whatsapp.png`)" />
       <img class="absolute-hot" src="../assets/images/index/hot.gif" />
     <!-- <div>WhatsApp</div> -->
   </div>
   <div v-if="isInvite" class="list-item" @click="openFacebook()">
     <img class="btn-icon" id="facebook-icon"
-      :src="require(`../assets/images/auth/facebook-new.png`)" />
+      :src="require(`../assets/images/index/home-social-facebook.png`)" />
   </div>
   <a ref="tiktokRef" href="https://www.tiktok.com" target="_blank" :style="{ display: 'none' }" />
   <div class="list-item" @click="openTiktok()">
     <img class="btn-icon" id="tiktok-icon"
-      :src="require(`../assets/images/auth/tiktok-new.png`)" />
+      :src="require(`../assets/images/index/home-social-tiktok.png`)" />
     <!-- <div>Tiktok</div> -->
   </div>
   <a ref="instagramRef" href="https://www.instagram.com" target="_blank" :style="{ display: 'none' }" />
   <div class="list-item" @click="openInsta()">
     <img class="btn-icon" id="insta-icon"
-      :src="require(`../assets/images/auth/insta-new.png`)" />
+      :src="require(`../assets/images/index/home-social-instagram.png`)" />
     <!-- <div>WhatsApp</div> -->
   </div>
   <div class="list-item" @click="openYoutube()">
     <img class="btn-icon" id="youtube-icon"
-      :src="require(`../assets/images/auth/youtube-new.png`)" />
+      :src="require(`../assets/images/index/home-social-youtube.png`)" />
     <!-- <div>Youtube</div> -->
   </div>
   <div v-if="isInvite" class="list-item" @click="openSMS()">
-    <img class="btn-icon" id="mail-icon"
-      :src="require(`../assets/images/auth/sms-new.png`)" />
+    <img class="btn-icon" id="sms-icon"
+      :src="require(`../assets/images/index/home-social-sms.png`)" />
   </div>
   <div v-if="isInvite" class="list-item" @click="openMail()">
     <img class="btn-icon" id="mail-icon"
-      :src="require(`../assets/images/auth/mail-new.png`)" />
+      :src="require(`../assets/images/index/home-social-mail.png`)" />
   </div>
   <div v-if="!isInvite" class="list-item" @click="openCharity()">
     <img class="btn-icon" id="charity-icon"
@@ -136,6 +136,16 @@ const downloadApp = () => {
     ui.getTopDownloadUrl().then(() => window.open(ui.downloadAppUrl, "_blank"));
   }
 };
+
+defineExpose({
+  openWhatsApp,
+  openInsta,
+  openFacebook,
+  openTiktok,
+  openYoutube,
+  openSMS,
+  openMail
+});
 </script>
 <style lang="scss" scoped>
 .invite-share-social {
@@ -165,8 +175,9 @@ const downloadApp = () => {
   }
 }
 .btn-icon {
-    width: 38px !important;
-    height: 38px !important;
+    // width: 38px !important;
+    // height: 38px !important;
+    height: 30px;
   }
 .btn-lists {
   display: flex;

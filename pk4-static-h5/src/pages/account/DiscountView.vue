@@ -11,8 +11,8 @@
       <div class="discount-row discount-row--content">
         <div class="discount-col">{{ e.privilegeName }}</div>
         <div class="discount-col">
-          {{ $t("records.amount") }}:
-          <span class="txt-yellow">{{ convertToTwoDecimalAmount(e.amount) }}</span>
+          <!-- {{ $t("records.amount") }}: -->
+          <span class="text-primary">{{ convertToTwoDecimalAmount(e.amount) }}</span>
         </div>
       </div>
     </div>
@@ -98,10 +98,12 @@ onActivated(() => {
 
 <style lang="scss" scoped>
 .discount-table {
-  background: #171e2b80;
+  // background: #171e2b80;
+  background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+
   border-radius: 10px;
   padding: 6px 4px;
-  margin-bottom: 10px;
+  margin: 10px;
 
   .discount-row {
     display: flex;
@@ -121,7 +123,7 @@ onActivated(() => {
 
   .discount-col {
     width: 50%;
-
+    font-weight: bold;
     &:nth-child(even) {
       text-align: right;
     }

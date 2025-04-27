@@ -16,7 +16,7 @@
         v-for="(item, i) in list"
       >
         <div class="node-text">
-          <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
+          <div class="node-txt-img panel"><img :src="imgURL + item.nodeIcon" /></div>
           <div class="overflow txt-title">{{ item.nodeName }}</div>
           <div class="payment-range-div" v-if="level > 1 && item.depositMax === 9999999">
             {{ displayWithThousand(item.depositMin) }} - {{ $t("deposit.unlimited") }}
@@ -240,8 +240,8 @@ $node-color: #b81212;
           // border-color: $node-color;
           // border-width: 2px;
           box-shadow: unset;
-          background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
-
+          background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+          
 
           // &:before {
           //   display: block;
@@ -384,10 +384,10 @@ $node-color: #b81212;
         width: 60px;
         height: 60px;
         margin-bottom: 5px;
-        border: 2px solid transparent;
+        // border: 2px solid transparent;
         border-radius: 10px;
         padding: 4px 4px;
-        background: #394142;
+        // background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
 
         img {
           background-color: transparent;

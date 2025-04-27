@@ -6,7 +6,7 @@
     @update:modelValue="(value) => emit('update:modelValue', value)"
   >
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" @click="emit('update:modelValue', false)" />
+      <q-btn dense flat rounded icon="close" class="popout-close" @click="emit('update:modelValue', false)" />
       <div class="popout-dialog-container" style="border-radius: 20px;">
         <div class="txt-title">{{ $t("form.exchangeTitle") }}</div>
         <div class="pc-form">
@@ -199,9 +199,9 @@ const closeRedeemSuccessDialog = () => {
     border-radius: 5px;
     position: relative;
 
-    :deep(.q-field__native) {
-      color: #ffffff;
-    }
+    // :deep(.q-field__native) {
+    //   color: #ffffff;
+    // }
   }
 
   .pc-form-side-btn {

@@ -26,7 +26,7 @@
           <q-badge v-if="isFtdPrivilegePayType" color="green" floating rounded>
             +{{ getFtdCommaAmount(item.amount) }}
           </q-badge>
-          <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
+          <div :class="['deposit-amt', item.isActive && 'active', 'panel']">{{ convertToCommaAmount(item.amount) }}</div>
           <div :class="['deposit-svg', item.isActive && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path
@@ -1141,9 +1141,11 @@ onMounted(() => {
   // border-radius: 0.5rem;
   // background: #0b0e0d !important;
   // border: 1px solid #072a19;
-  border-radius: 0.5rem;
-  border: 1px solid #ffffff14;
-  background: #292d2f !important;
+  // border-radius: 0.5rem;
+  // border: 1px solid #ffffff14;
+  // background: #292d2f !important;
+  background: linear-gradient(90deg, #1C273D 0%, #12192B 100%) !important;
+  border: none;
 }
 
 :deep(.q-tab__label) {
@@ -1172,8 +1174,9 @@ onMounted(() => {
       height: 4rem;
       font-weight: 600;
       aspect-ratio: 106/64;
-      box-shadow: 0px 2px 0px 0px #2a3637;
-      background: #394142;
+      // box-shadow: 0px 2px 0px 0px #2a3637;
+      border: 1px solid #FFFFFF14;
+      // background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
       color: #ffffff80;
 
       font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -1188,9 +1191,8 @@ onMounted(() => {
         // background: #00b900;
         color: #000a01;
         // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-        box-shadow: 0px 2px 0px 0px #1cca6a;
-        background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-        color: #333333;
+        background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+        color: #fff;
       }
     }
 
@@ -1395,7 +1397,7 @@ onMounted(() => {
 }
 
 .tutorial-link {
-  color: #21ef89;
+  color: #21A7EF;
   text-decoration: underline;
 }
 
