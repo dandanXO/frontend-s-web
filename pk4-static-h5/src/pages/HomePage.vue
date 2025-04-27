@@ -2500,9 +2500,6 @@ const socialicons = ref([
     name: "whatsapp",
   },
   {
-    name: "sms",
-  },
-  {
     name: "mail",
   },
   {
@@ -2516,6 +2513,9 @@ const socialicons = ref([
   },
   {
     name: "youtube",
+  },
+  {
+    name: "sms",
   },
 ])
 const gotoSocial = (icon) => {
@@ -5894,10 +5894,11 @@ const checkGoogleLoginSetPwd = () => {
       text-overflow: ellipsis;
       // max-width: 100px;
       text-align: center;
-    background: linear-gradient(180deg, transparent 0%, black 40%, transparent 60%);
-    margin-top: -25px;
-    padding-top: 40px;
-    position: relative;
+      background: linear-gradient(180deg, transparent 0%, black 40%, transparent 60%);
+      margin-top: -25px;
+      padding-top: 40px;
+      position: relative;
+      max-width: 30vw;
     }
 
     img {
