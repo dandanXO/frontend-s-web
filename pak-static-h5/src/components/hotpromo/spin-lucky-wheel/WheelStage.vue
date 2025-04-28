@@ -17,7 +17,7 @@
 
         <template v-if="extractionDifference > 0 && !info.hasWithdrawn">
           <ProgressBar />
-          <div class="cash-out-btn" :class="{ disabled: isWheelEnded }" @click="isCashOutPopupVisible = true" />
+          <div class="cash-out-btn" :class="{ disabled: isWheelEnded }" @click="handleWithdrawClick" />
         </template>
 
         <button v-else-if="!info.hasWithdrawn" class="receive-btn" @click="handleReceiveClick">
@@ -114,6 +114,52 @@
       </ol>
     </div>
 
+    <q-dialog v-model="showWithdrawDialog">
+          <div class="withdraw-container">
+            <img v-if="languageVal === 'ur'" class="withdraw-header" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/withdraw-header-ur.png" />
+            <img v-else class="withdraw-header" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/withdraw-header.png" />
+            <div class="withdraw-amount">
+              <img class="cash" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/cash-icon.png" />
+              <RedGradientTextAmount :amountText="`${info.accumulatedBonus}`"  />
+              <img class="currency" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/rs-text.svg" />
+            </div>
+            <img v-if="languageVal === 'ur'" class="payment-method-header" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/payment-method-header-ur.svg" />
+            <img v-else class="payment-method-header" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/payment-method-header.svg" />
+            <div class="progress">
+              <div class="progress-item">
+                <img class="icon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/checked.svg" />
+                <div>{{ $t("hotPromo.spinReferWheel.paymentRequestSubmitted") }}</div>
+              </div>
+    
+              <div class="progress-item">
+                <img class="icon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/line.svg" /><div></div>
+              </div>
+    
+              <div class="progress-item">
+                <img class="icon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/checked.svg" />
+                <div>
+                  {{ $t("hotPromo.spinReferWheel.stillNeedToMakeWithdrawal") }} {{ extractionDifference }}
+                </div>
+              </div>
+    
+              <div class="progress-item">
+                <img class="icon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/line.svg" /><div></div>
+              </div>
+    
+              <div class="progress-item">
+                <img v-if="extractionDifference <= 0" class="icon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/checked.svg" />
+                <img v-else class="icon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/unchecked.svg" /><div>{{ info.claimBonus }} RS {{ $t("hotPromo.spinReferWheel.willBePaidToYourRsAccount") }}</div>
+              </div>
+            </div>
+    
+            <div class="desc">* {{ $t("hotPromo.spinReferWheel.referFriendToRegister") }}</div>
+    
+            <div class="invite-friends-btn" @click="handleInviteClick">
+              {{ $t("hotPromo.spinReferWheel.inviteFriendsToHelp") }}
+            </div>
+          </div>
+        </q-dialog>
+
     <WheelResultDialog v-model="showResultDialog" :prize="prize" @hide="$emit('reload')" />
     <RecordDialog v-model="showRecordDialog" />
     <CashOutPopup ref="cashOutPopupRef" v-model="isCashOutPopupVisible" />
@@ -135,6 +181,7 @@ import SharePopup from "./SharePopup.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
 import { userStore } from "src/stores";
 import { t } from "src/boot/lang";
+import RedGradientTextAmount from "./withdrawDialog/GradientTextAmount.vue";
 
 const store = userStore();
 const emit = defineEmits(["reload"]);
@@ -156,6 +203,7 @@ const $q = useQuasar();
 const remainingTime = ref("");
 const nextFreeSpinRemainingTime = ref("");
 const showRecordDialog = ref(false);
+const showWithdrawDialog = ref(false);
 const showResultDialog = ref(false);
 const spinWheelRef = ref();
 const spinButtonDisable = ref(false);
@@ -297,6 +345,10 @@ const handleReceiveClick = () => {
 
 const handleRecordClick = () => {
   showRecordDialog.value = true;
+};
+
+const handleWithdrawClick = () => {
+  showWithdrawDialog.value = true;
 };
 
 const updateCountdownTime = () => {
@@ -779,6 +831,85 @@ onUnmounted(() => {
   &.disabled {
     filter: grayscale(0.7);
     pointer-events: none;
+  }
+}
+
+.withdraw-container {
+  background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw-bg.png) no-repeat;
+  background-size: 100% 100%;
+  width: 320px;
+  height: 450px;
+  padding: 10px 20px;
+
+  .withdraw-header {
+    width: 250px;
+    display: flex;
+    margin: 0 auto;
+  }
+
+  .withdraw-amount {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    margin: 0 auto;
+
+    .cash {
+      width: 35px;
+      height: 35px;
+    }
+
+    .currency {
+      width: 35px;
+      height: 35px;
+    }
+  }
+
+  .progress {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    background-color: #EC0105;
+    padding: 10px;
+    border-radius: 16px;
+    margin: 10px 0;
+
+    .progress-item {
+      display: flex;
+      align-items: center;
+      font-size: 10px;
+
+      .icon {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .desc {
+    color: #A42628;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0px;
+  }
+
+  .invite-friends-btn {
+    background: linear-gradient(270deg, #F43030 0%, #FF7070 100%);
+    font-weight: 700;
+    font-size: 12.76px;
+    line-height: 16.67px;
+    letter-spacing: 0px;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 10px;
+    color: #fff;
+    border-radius: 6px;
+    margin-top: 10px;
   }
 }
 </style>

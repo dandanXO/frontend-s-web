@@ -944,6 +944,15 @@ export default {
       ranking: "درجہ بندی",
       userName: "صارف نام",
       betVolume: "شرط کی حجم"
+    },
+    spinReferWheel: {
+      paymentRequestSubmitted: "ادائیگی کی درخواست جمع کر دی گئی",
+      stillNeedToMakeWithdrawal: "ابھی واپسی کرنی ہے",
+      willBePaidToYourRsAccount: "آپ کے RS اکاؤنٹ میں ادائیگی کی جائے گی",
+      inviteFriendsToHelp: "دوستوں کو مدد کے لئے مدعو کریں",
+      referFriendToRegister: "دوست کو رجسٹر کرنے، جمع کرنے اور اپنے فون کی تصدیق کرنے کے لئے بھیجیں تاکہ مفت اسپنز جیت سکیں",
+      only: "صرف",
+      toGo: "باقی ہے"
     }
   },
   maintenance: {
