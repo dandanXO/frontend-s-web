@@ -242,11 +242,12 @@ watch(modalType, (val) => {
   }
 });
 
-watch(
+const unwatchBalance = watch(
   () => store.balance,
   () => {
     if (isDuringInitial.value) return;
     store.getMemberInfo().then(recheckBalance);
+    if (store.depositCount > 2) unwatchBalance();
   }
 );
 
