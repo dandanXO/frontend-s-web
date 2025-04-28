@@ -83,6 +83,11 @@
     <FpSlotPromo v-if="list.redirectUrl === 'lh1-fp-slot'" :promo-code="list.promoCode" />
     <elsOne2025 v-if="list.redirectUrl === 'lh1-esl-one-raleigh-2025'" :promo-code="list.promoCode" />
     <YuEBaoPromo v-if="list.redirectUrl === 'lh1-yu-e-bao'" :promo-code="list.promoCode" :params="list.param" />
+    <BlastRival2025
+      v-if="list.redirectUrl === 'lh1-blast-rivals-2025-s1'"
+      :promo-code="list.promoCode"
+      :params="list.param"
+    />
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -153,6 +158,7 @@ import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
 import FpSlotPromo from "./hotpromo/fp-slot-promo/FpSlotPromo.vue";
 import elsOne2025 from "../components/hotpromo/elsOne2025/elsOne2025.vue";
 import YuEBaoPromo from "./hotpromo/yu-e-bao/YuEBaoPromo.vue";
+import BlastRival2025 from "./hotpromo/BlastRival2025/BlastRival2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -201,7 +207,8 @@ export default defineComponent({
     IemMelbourne2025,
     PglWallachiaS4,
     FpSlotPromo,
-    YuEBaoPromo
+    YuEBaoPromo,
+    BlastRival2025
   },
   props: {
     list: {
