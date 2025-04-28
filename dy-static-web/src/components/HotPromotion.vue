@@ -84,6 +84,7 @@
     <YaLLa2025 v-if="list.redirectUrl === 'dy2-yalla-compass-qatar-2025'" :promo-code="list.promoCode" />
     <IemMelbourne2025 v-if="list.redirectUrl === 'dy2-iem-melbourne-2025'" :promo-code="list.promoCode" />
     <PglWallachiaS4 v-if="list.redirectUrl === 'dy2-pgl-wallachia-s4'" :promo-code="list.promoCode" />
+    <BlastRival2025 v-if="list.redirectUrl === 'dy2-blast-rivals-2025-s1'" :promo-code="list.promoCode" />
     <Cct2025 v-if="list.redirectUrl === 'dy2-cct-global-finals-2025'" :promo-code="list.promoCode" />
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
@@ -161,6 +162,7 @@ import YaLLa2025 from "./hotpromo/YaLLa2025/YaLLa2025.vue";
 import IemMelbourne2025 from "./hotpromo/iem-melbourne-2025/IemMelbourne2025.vue";
 import PglWallachiaS4 from "./hotpromo/pgl-wallachia-s4/PglWallachiaS4.vue";
 import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
+import BlastRival2025 from "./hotpromo/BlastRival2025/BlastRival2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -208,7 +210,8 @@ export default defineComponent({
     Monthly20HongBaoYu,
     FissureUniverseS4,
     IemMelbourne2025,
-    PglWallachiaS4
+    PglWallachiaS4,
+    BlastRival2025
   },
   props: {
     list: {
