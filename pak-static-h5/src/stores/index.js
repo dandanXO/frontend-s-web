@@ -63,7 +63,8 @@ export const userStore = defineStore("userStore", {
       isFirstLandOnHomePage: true,
       isReferralReady: false,
       isFromGooglePackage: false,
-      isCheckGaid: false
+      isCheckGaid: false,
+      depositCount: 0
     };
   },
   actions: {
@@ -147,7 +148,7 @@ export const userStore = defineStore("userStore", {
         regDevice = "IOS";
       } else {
         regDevice = Platform.is.mobile ? "H5" : "WEB";
-        if ((Platform.is.capacitor && Platform.is.android)  || this.isFromGooglePackage) {
+        if ((Platform.is.capacitor && Platform.is.android) || this.isFromGooglePackage) {
           regDevice = "ANDROID";
         }
       }
@@ -237,7 +238,8 @@ export const userStore = defineStore("userStore", {
             hasDeposit,
             currentDeposit,
             levelUpDeposit,
-            guest
+            guest,
+            depositCount
           } = response.data;
 
           this.id = id;
@@ -256,6 +258,7 @@ export const userStore = defineStore("userStore", {
           this.levelUpDeposit = parseFloat(levelUpDeposit);
           this.hasDeposit = hasDeposit;
           this.guest = guest;
+          this.depositCount = depositCount;
 
           if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
             OneSignal.login(this.nickName);

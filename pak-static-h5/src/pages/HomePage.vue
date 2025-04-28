@@ -1602,10 +1602,7 @@
   <SpinLuckyWheelPromoSticky v-show="isShownSpinLuckyWheel" />
   <!-- <SpinLuckyWheelPromoHomePopup v-if="isShownSpinLuckyWheel || popupPromo === 'spin-lucky-wheel'" ref="spinLuckyWheelPromoHomePopupRef" /> -->
 
-  <q-dialog v-model="isDepositPromo">
-    <!-- update :depositPromoType for viewing different types. eg: 1,2,3,4,5... -->
-    <DepositPromoModal @closeDialog="isDepositPromo = false" :depositPromoType="1" />
-  </q-dialog>
+  <DepositPromoModal />
 </template>
 
 <script setup>
@@ -1713,7 +1710,6 @@ const isMediaSettingsModal = ref(false);
 const popupPromo = ref("");
 const megaSharingWheelDialogModel = ref(true);
 const isAddToHomeScreen = ref(false);
-const isDepositPromo = ref(false);
 const isShowSetFirstPw = ref(false);
 const isShowCodeBonusModal = ref(false);
 const currentStep = ref(localStorage.getItem("newPlayerGuide") || "1");
@@ -4247,27 +4243,7 @@ onActivated(() => {
       }, 2000);
     }
   }
-
-  if (!(Platform.is.android && Platform.is.capacitor) && !store.isFromGooglePackage) {
-    const raw = sessionStorage.getItem("deposit_modal_popup");
-    if (raw) {
-      const data = JSON.parse(raw);
-      const now = new Date().getTime();
-      if (now > data.expiry) {
-        sessionStorage.removeItem("deposit_modal_popup");
-        showDepositModalPopup();
-      }
-    } else {
-      showDepositModalPopup();
-    }
-  }
 });
-
-const showDepositModalPopup = () => {
-  setTimeout(() => {
-    isDepositPromo.value = true;
-  }, 2000);
-};
 
 const afterMounted = useCustomerTrigger(loadCustomerAddress);
 
