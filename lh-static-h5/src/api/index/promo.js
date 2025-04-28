@@ -644,13 +644,17 @@ export function getPglWallachiaS4Bonus(promoCode) {
 export function claimPglWallachiaS4Bonus(promoCode) {
   return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
 }
-
 export function getMesaInit() {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.get(`/session/competition/yesterday?promoCode=lh1-mesa-nomadic-masters-spring-2025&v=${randNum}`);
 }
-
 export function claimMesaBonus() {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.post(`/session/competition/claimBonus?promoCode=lh1-mesa-nomadic-masters-spring-2025&v=${randNum}`);
+}
+export function getBlastRival2025Bonus(promoCode) {
+  return eventapi.get(`/session/competition-loss/init?promoCode=${promoCode}`);
+}
+export function claimBlastRival2025Bonus(promoCode) {
+  return eventapi.post(`/session/competition-loss/claim?promoCode=${promoCode}`);
 }
