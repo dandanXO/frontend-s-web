@@ -13,7 +13,7 @@
       <div class="livestream-list-item__match-info">
         <div class="livestream-list-item__match-info__team">
           <div class="livestream-list-item__match-info__team-emblem">
-            <img :src="live.homeIcon" loading="lazy" />
+            <img :src="imgURL + live.homeIcon" loading="lazy" />
           </div>
           <span class="livestream-list-item__match-info__team-name">{{ live.homeNameZh }}</span>
         </div>
@@ -28,14 +28,14 @@
 
         <div class="livestream-list-item__match-info__team">
           <div class="livestream-list-item__match-info__team-emblem">
-            <img :src="live.awayIcon" loading="lazy" />
+            <img :src="imgURL + live.awayIcon" loading="lazy" />
           </div>
           <span class="livestream-list-item__match-info__team-name">{{ live.awayNameZh }}</span>
         </div>
       </div>
       <div class="livestream-list-item__badge-wrapper">
         <div class="livestream-list-item__badge">
-          <img :src="live.avatar" loading="lazy" />
+          <img :src="imgURL + live.avatar" loading="lazy" />
           {{ live.name }}
         </div>
       </div>
@@ -50,8 +50,10 @@
 </template>
 <script setup>
 import { useNotify } from "@/hooks/notify";
+import { useLocalStorage } from "@vueuse/core";
 import moment from "moment";
 import { onMounted, onUnmounted, ref } from "vue";
+
 const props = defineProps({
   list: Array,
   isLivestreamListLoading: Boolean
@@ -61,6 +63,7 @@ const model = defineModel({ type: Number });
 const emit = defineEmits(["scroll-reach-right"]);
 
 const notify = useNotify();
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
 const livestreamListWrapperRef = ref(null);
 

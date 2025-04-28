@@ -36,6 +36,7 @@ import { getChatHistory, getLivestreamDetail, getLivestreamList, sendChat } from
 import GameModal from "@/components/modal/GameModal.vue";
 import { useNotify } from "@/hooks/notify";
 import { extractVipLevelFromVipStr } from "@/utils/utils";
+import { useSessionStorage } from "@vueuse/core";
 
 /**
  * @typedef {Object} Message
@@ -46,6 +47,8 @@ import { extractVipLevelFromVipStr } from "@/utils/utils";
  * @property {string|null} profilePhoto
  */
 
+const LATEST_WATCH_LIVESTREAM_ID_KEY = "LH_WEB_LATEST_WATCH_LIVESTREAM";
+
 const MESSAGE_SYNC_INTERVAL = 1000 * 2; // 2 seconds
 const MESSAGE_HISTORY_DANMU_FIRE_GAP = 10;
 const MAXIMUM_MESSAGE_LENGTH = 5000;
@@ -55,6 +58,7 @@ const MAXIMUM_MESSAGE_PROCESS_DELAY_COUNT = 5;
 
 const store = userStore();
 const notify = useNotify();
+const latestWatchLivestreamId = useSessionStorage(LATEST_WATCH_LIVESTREAM_ID_KEY, null);
 
 /**
  * chat message list
@@ -163,9 +167,24 @@ const getData = () => {
         const parsedData = res.data.records.map(parseLivestreamData);
         list.value.push(...parsedData);
         if (parsedData.length && livestreamListMeta.value.current === 1) {
-          const earliestLivestream = parsedData.findIndex((livestream) => livestream.liveStatus);
-          if (earliestLivestream !== -1) {
-            currentLive.value = earliestLivestream;
+          const { earliestLivestreamIndex, latestWatchLivestreamIndex } = parsedData.reduce(
+            (result, livestream, index) => {
+              if (!livestream.liveStatus) return;
+              if (result.earliestLivestreamIndex === -1) {
+                result.earliestLivestreamIndex = index;
+              }
+              if (latestWatchLivestreamId.value && livestream.streamId === latestWatchLivestreamId.value) {
+                result.latestWatchLivestreamIndex = index;
+              }
+              return result;
+            },
+            { earliestLivestreamIndex: -1, latestWatchLivestreamIndex: -1 }
+          );
+
+          if (latestWatchLivestreamIndex !== -1) {
+            currentLive.value = latestWatchLivestreamIndex;
+          } else if (earliestLivestreamIndex !== -1) {
+            currentLive.value = earliestLivestreamIndex;
           }
         }
         livestreamListMeta.value.current++;
@@ -321,6 +340,11 @@ watch(currentLive, () => {
   syncMessages();
   livestreamSyncAbortController.value && livestreamSyncAbortController.value.abort();
   resetSyncLivestreamInterval(true);
+});
+
+watch(currentLiveData, (livestream) => {
+  if (!livestream) return;
+  latestWatchLivestreamId.value = livestream.streamId;
 });
 
 onMounted(() => {
