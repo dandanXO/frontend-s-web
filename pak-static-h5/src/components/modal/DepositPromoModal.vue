@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { ref, watch, computed, onMounted } from "vue";
+import { ref, watch, computed, onMounted, onActivated, onDeactivated } from "vue";
 import { useUI } from "stores/ui";
 import { useRouter } from "vue-router";
 import { eventapi } from "src/boot/axios";
@@ -87,7 +87,6 @@ const handleAppLoginPromoClaim = async () => {
         icon: "error"
       });
       router.push("/account/profile");
-      showModal.value = false;
     } else {
       try {
         const res = await eventapi.post("/session/app-login-bonus/claimBonus?promoCode=pak-app-login-phone-bonus");
@@ -122,10 +121,8 @@ const btnAction = () => {
     case 3:
     case 4:
       router.push("/deposit");
-      showModal.value = false;
       break;
     case 5:
-      showModal.value = false;
       router.push("/promo?name=pak-lucky-10-day-bonus");
   }
 };
@@ -250,6 +247,17 @@ const unwatchBalance = watch(
     if (store.depositCount > 2) unwatchBalance();
   }
 );
+
+onActivated(() => {
+  if (isDuringInitial.value) return;
+  recheckBalance();
+});
+
+onDeactivated(() => {
+  modalIndex.value = 1;
+  modalType.value = "";
+  showModal.value = false;
+});
 
 onMounted(() => {
   setTimeout(() => {
