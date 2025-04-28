@@ -3,7 +3,7 @@
     <div class="current-livestream__streamer-info-wrapper">
       <div class="current-livestream__streamer-info">
         <div class="current-livestream__streamer-info__avatar">
-          <img :src="livestreamData.avatar" loading="lazy" />
+          <img :src="imgURL + livestreamData.avatar" loading="lazy" />
         </div>
         <span class="current-livestream__streamer-info__name">{{ livestreamData.name }}</span>
         <div v-if="livestreamData.liveStatus" class="current-livestream__streamer-info__on-air">正在直播</div>
@@ -13,11 +13,11 @@
     <div class="current-livestream__match-info">
       <span class="current-livestream__match-info__team-name">{{ livestreamData.homeNameZh }}</span>
       <div class="current-livestream__match-info__team-emblem">
-        <img :src="livestreamData.homeIcon" loading="lazy" />
+        <img :src="imgURL + livestreamData.homeIcon" loading="lazy" />
       </div>
       <div class="current-livestream__match-info__team-vs">VS</div>
       <div class="current-livestream__match-info__team-emblem">
-        <img :src="livestreamData.awayIcon" loading="lazy" />
+        <img :src="imgURL + livestreamData.awayIcon" loading="lazy" />
       </div>
       <span class="current-livestream__match-info__team-name">{{ livestreamData.awayNameZh }}</span>
     </div>
@@ -26,6 +26,8 @@
   </div>
 </template>
 <script setup>
+import { useLocalStorage } from "@vueuse/core";
+
 defineProps({
   livestreamData: {
     type: Object,
@@ -33,6 +35,8 @@ defineProps({
   }
 });
 defineEmits(["click"]);
+
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 </script>
 <style lang="scss" scoped>
 @import "@/scss/pages/livestream.scss";
