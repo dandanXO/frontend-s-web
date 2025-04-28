@@ -23,11 +23,11 @@ import { useUI } from "stores/ui";
 import { useRouter } from "vue-router";
 import { eventapi } from "src/boot/axios";
 import { userStore } from "src/stores";
-import { isAndroid, isInPwa } from "src/boot/utils";
+import { isAndroid } from "src/boot/utils";
 import moment from "moment";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
-import { useLocalStorage, useSessionStorage } from "@vueuse/core";
+import { useLocalStorage } from "@vueuse/core";
 
 const KEY = "PAK_APP_LOGIN_PHONE_BONUS_LAST_CHECK_TIMESTAMP";
 
@@ -56,6 +56,7 @@ const statusFromApi = ref({
   hadClaim: false,
   isAppLogin: false
 });
+const isActivated = ref(true);
 
 const combinedStatus = computed(() => ({
   ...statusFromApi.value,
@@ -145,10 +146,10 @@ const checkAppLogin = async () => {
 };
 
 const checkLucky10DayPromo = async () => {
-  if (!isLuckyDay.value) return;
+  // if (!isLuckyDay.value) return;
   try {
     const res = await eventapi.get("/session/lucky-day/init?promoCode=pak-lucky-10-day-bonus");
-    if (res.code === 0 && res.data?.isClaimable) {
+    if (res.code === 0) {
       modalType.value = "LUCKY_10_DAY";
     }
   } catch (e) {
@@ -159,35 +160,35 @@ const checkLucky10DayPromo = async () => {
 const checkModalType = async () => {
   switch (modalIndex.value) {
     case 1:
-      if (shouldShowModalAgain()) {
+      if (shouldShowModalAgain(modalIndex.value)) {
         checkAppLogin();
       } else {
         showNextModal();
       }
       break;
     case 2:
-      if (combinedStatus.value.depositCount === 0 && shouldShowModalAgain()) {
+      if (combinedStatus.value.depositCount === 0 && shouldShowModalAgain(modalIndex.value)) {
         modalType.value = "FIRST_DEPOSIT";
       } else {
         showNextModal();
       }
       break;
     case 3:
-      if (combinedStatus.value.depositCount === 1 && store.balance <= 50 && shouldShowModalAgain()) {
+      if (combinedStatus.value.depositCount === 1 && store.balance <= 50 && shouldShowModalAgain(modalIndex.value)) {
         modalType.value = "FIRST_DEPOSIT_AMOUNT";
       } else {
         showNextModal();
       }
       break;
     case 4:
-      if (combinedStatus.value.depositCount === 2 && store.balance <= 10 && shouldShowModalAgain()) {
+      if (combinedStatus.value.depositCount === 2 && store.balance <= 10 && shouldShowModalAgain(modalIndex.value)) {
         modalType.value = "SECONDARY_DEPOSIT_AMOUNT";
       } else {
         showNextModal();
       }
       break;
     case 5:
-      if (shouldShowModalAgain()) {
+      if (shouldShowModalAgain(modalIndex.value)) {
         checkLucky10DayPromo();
       }
       break;
@@ -195,22 +196,23 @@ const checkModalType = async () => {
 };
 
 const recheckBalance = () => {
-  if (store.depositCount === 1 && store.balance <= 50) {
+  if (store.depositCount === 1 && store.balance <= 50 && shouldShowModalAgain(3)) {
     modalIndex.value = 3;
     modalType.value = "FIRST_DEPOSIT_AMOUNT";
-  } else if (store.depositCount === 2 && store.balance <= 10) {
+  } else if (store.depositCount === 2 && store.balance <= 10 && shouldShowModalAgain(4)) {
     modalIndex.value = 4;
     modalType.value = "SECONDARY_DEPOSIT_AMOUNT";
   }
 };
 
 const showNextModal = () => {
+  if (!isActivated.value) return;
   modalIndex.value++;
   checkModalType();
 };
 
-const shouldShowModalAgain = () => {
-  const lastCheckTime = lastCheck.value[modalIndex.value];
+const shouldShowModalAgain = (index) => {
+  const lastCheckTime = lastCheck.value[index];
   if (lastCheckTime) {
     const now = Date.now();
     const diff = now - lastCheckTime;
@@ -249,11 +251,14 @@ const unwatchBalance = watch(
 );
 
 onActivated(() => {
+  isActivated.value = true;
   if (isDuringInitial.value) return;
   recheckBalance();
 });
 
 onDeactivated(() => {
+  handleDialogClose();
+  isActivated.value = false;
   modalIndex.value = 1;
   modalType.value = "";
   showModal.value = false;
