@@ -183,6 +183,9 @@
               football1: selectedPromo.promoCode === 'dy2-football'
             }"
           >
+            <div v-if="selectedPromo.redirectUrl === 'dy2-mesa-nomadic-masters-spring-2025'">
+              <MesaPromo :promoCode="selectedPromo.promoCode" />
+            </div>
             <div v-if="selectedPromo.redirectUrl === 'dy2-nba-water-battle'">
               <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
             </div>
@@ -226,6 +229,7 @@ import HotPromotion from "@/components/HotPromotion";
 import { useLocalStorage } from "@vueuse/core";
 import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
+const MesaPromo = defineAsyncComponent(() => import("@/components/hotpromo/mesa/MesaPromo.vue"));
 const YallaCompass = defineAsyncComponent(() => import("@/components/hotpromo/yalla-compass/YallaCompass.vue"));
 const BbdachaBelgrade = defineAsyncComponent(() => import("@/components/hotpromo/bbdacha-belgrade/BbdachaBelgrade.vue"));
 const ValorantChampionTour2024 = defineAsyncComponent(() => import("@/components/hotpromo/valorant-champion-tour-2024/ValorantChampionTour2024.vue"));
@@ -238,7 +242,8 @@ export default defineComponent({
     NBAWaterBattle,
     YallaCompass,
     BbdachaBelgrade,
-    ValorantChampionTour2024
+    ValorantChampionTour2024,
+    MesaPromo
   },
   setup() {
     const store = userStore();

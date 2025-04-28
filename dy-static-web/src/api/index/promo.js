@@ -623,3 +623,13 @@ export function getPglWallachiaS4Bonus(promoCode) {
 export function claimPglWallachiaS4Bonus(promoCode) {
   return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
 }
+
+
+export function getMesaInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/session/competition/yesterday?promoCode=dy2-mesa-nomadic-masters-spring-2025&v=${randNum}`);
+}
+export function claimMesaBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.post(`/session/competition/claimBonus?promoCode=dy2-mesa-nomadic-masters-spring-2025&v=${randNum}`);
+}
