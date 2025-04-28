@@ -223,7 +223,7 @@ const getStatusLabel = (status) => {
     2: '開始啟動',
     3: '啟動完成',
     4: '直播中',
-    5: '異常',
+    5: '已結束',
     6: '已停止',
     7: '已結束'
   };
@@ -239,7 +239,7 @@ const getStatusSeverity = (status) => {
     3: 'success',
     4: 'success',
     5: 'danger',
-    6: 'warning',
+    6: 'danger',
     7: 'danger'
   };
   return severityMap[status] || 'info';
