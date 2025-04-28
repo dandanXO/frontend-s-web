@@ -182,6 +182,9 @@ import GradientTextAmount from "./GradientTextAmount.vue";
 import { userStore } from "src/stores";
 import { t } from "src/boot/lang";
 import RedGradientTextAmount from "./withdrawDialog/GradientTextAmount.vue";
+import { i18nStore } from "src/router/language";
+
+const { languageVal } = storeToRefs(i18nStore());
 
 const store = userStore();
 const emit = defineEmits(["reload"]);
