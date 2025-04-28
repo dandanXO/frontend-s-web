@@ -67,8 +67,8 @@
                 <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
                   {{ isLoadingBalance ? `${$t("btn.loading")}...` : convertToCommaAmount(store.balance, false) }}
                 </span>
-
-                <q-btn square class="style-blue-btn" icon="wallet" dense @click="handleBackBtn()" />
+                <div v-if="promoPercentage" class="promo-percentage">{{ promoPercentage }} {{ $t('records.bonus') }}</div>
+                <q-btn square class="style-blue-btn" :style="promoPercentage !== '' ? 'margin-right: 14px; margin-top: 10px;': ''" icon="wallet" dense @click="handleBackBtn()" />
                 <!-- <div class="btn-refresh">
                   <q-icon name="sync" size="16px" color="white-7"></q-icon>
                 </div> -->
@@ -218,8 +218,14 @@ const router = useRouter();
 const store = userStore();
 const ui = useUI();
 const i18nStoreLanguage = i18nStore();
-
-
+const promoPercentage = computed(() => {
+  if (store.depositCount === 0) {
+    return '53%';
+  } else if (store.depositCount === 1) {
+    return '35%';
+  }
+  return ''; // Optional: for other cases if needed
+});
 const isScrolled = ref(false);
 
 const handleScroll = () => {
@@ -924,6 +930,20 @@ onUnmounted(() => {
       color: #fff;
       font-weight: bold;
       // border: 1px solid #2c323b;
+      .promo-percentage {
+        position: absolute;
+        // background: #ff0000;
+        padding: 2px 2px 7px;
+        border-radius: 5px;
+        font-size: 8px;
+        right: 0;
+        top: 0;
+        z-index: 2000;
+        background: url(../assets/images/index/redpromo-bg.png)no-repeat center center;
+        background-size: contain;
+        width: 70px;
+        text-align: center;
+      }
 
       &:active {
         filter: brightness(0.75);
