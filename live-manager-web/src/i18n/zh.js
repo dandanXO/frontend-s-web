@@ -3,7 +3,10 @@ export default {
   login: '登录',
   username: '账户',
   password: '密码',
-  loggedInSuccessfully: '已成功登录！',
+  LOGIN_SUCCESS: '已成功登录！',
+  LOGIN_FAIL: '登录失败！',
+  ERROR_LOGIN_NAME_OR_PASSWORD_ERROR: '账户或密码不匹配！',
+  ERROR_LOGIN_NAME_NOT_EXIST: '账户不存在！',
   statsComponent: {
     totalFirstDeposit: '总首存',
     totalDeposits: '总存款',
