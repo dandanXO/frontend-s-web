@@ -183,6 +183,7 @@ import { userStore } from "src/stores";
 import { t } from "src/boot/lang";
 import RedGradientTextAmount from "./withdrawDialog/GradientTextAmount.vue";
 import { i18nStore } from "src/router/language";
+import { storeToRefs } from "pinia";
 
 const { languageVal } = storeToRefs(i18nStore());
 
