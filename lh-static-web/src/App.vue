@@ -102,6 +102,8 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      console.log("0428");
+
       checkServerStatus();
       checkSID();
 
