@@ -40,8 +40,7 @@ const store = userStore();
 const router = useRouter();
 const $q = useQuasar();
 const { t } = useI18n();
-const lastCheck =
-  isAndroid() || isInPwa() || store.isFromGooglePackage ? useLocalStorage(KEY, {}) : useSessionStorage(KEY, {});
+const lastCheck = useLocalStorage(KEY, {});
 
 const hideModalForAWeek = ref(false);
 /**
@@ -88,6 +87,7 @@ const handleAppLoginPromoClaim = async () => {
         icon: "error"
       });
       router.push("/account/profile");
+      showModal.value = false;
     } else {
       try {
         const res = await eventapi.post("/session/app-login-bonus/claimBonus?promoCode=pak-app-login-phone-bonus");
@@ -99,6 +99,7 @@ const handleAppLoginPromoClaim = async () => {
             icon: "check_circle_outline"
           });
           store.getBalance();
+          showModal.value = false;
         }
       } catch (e) {
         console.error(e);
@@ -121,8 +122,10 @@ const btnAction = () => {
     case 3:
     case 4:
       router.push("/deposit");
+      showModal.value = false;
       break;
     case 5:
+      showModal.value = false;
       router.push("/promo?name=pak-lucky-10-day-bonus");
   }
 };
@@ -196,10 +199,10 @@ const checkModalType = async () => {
 
 const recheckBalance = () => {
   if (store.depositCount === 1 && store.balance <= 50) {
-    modalIndex.value = 2;
+    modalIndex.value = 3;
     modalType.value = "FIRST_DEPOSIT_AMOUNT";
   } else if (store.depositCount === 2 && store.balance <= 10) {
-    modalIndex.value = 3;
+    modalIndex.value = 4;
     modalType.value = "SECONDARY_DEPOSIT_AMOUNT";
   }
 };
@@ -243,7 +246,7 @@ watch(
   () => store.balance,
   () => {
     if (isDuringInitial.value) return;
-    recheckBalance();
+    store.getMemberInfo().then(recheckBalance);
   }
 );
 

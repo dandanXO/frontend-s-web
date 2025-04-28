@@ -1070,6 +1070,7 @@ export default {
     30005: "Turnover has not reached the requirements",
     30006: "Members listed as account holders are prohibited from receiving this privilege",
     30007: "Member deposit does not meet the requirements",
+    30008: "The user’s client does not meet the requirements.",
     30009: "Deposit/Betting requirements not met.",
     30101: "Existing users cannot participate in this promotion.",
     31000: "Promotion not found",
