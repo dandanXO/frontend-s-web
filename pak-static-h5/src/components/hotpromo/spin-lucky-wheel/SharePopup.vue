@@ -95,13 +95,13 @@
             )}`"
             target="_blank"
           >
-          <img src="../../../assets/images/earn-money/social-green-instagram.png" />
-        </a>
+            <img src="../../../assets/images/earn-money/social-green-instagram.png" />
+          </a>
 
-        <a class="social-item" @click="handleShareToTikTok(selfTgurl)">
-          <img src="../../../assets/images/earn-money/social-green-tiktok.png" />
-        </a>
-        <a ref="tiktokRef" href="tiktok://" target="_blank" :style="{ display: 'none' }" />
+          <a class="social-item" @click="handleShareToTikTok(selfTgurl)">
+            <img src="../../../assets/images/earn-money/social-green-tiktok.png" />
+          </a>
+          <a ref="tiktokRef" href="tiktok://" target="_blank" :style="{ display: 'none' }" />
 
           <a class="social-item" @click="handleShareToYoutube(selfTgurl)">
             <img src="../../../assets/images/earn-money/social-youtube.png" />
@@ -307,7 +307,7 @@ const fallbackCopyTextToClipboard = (text) => {
     message: "Link copied to clipboard",
     color: "positive",
     position: "top",
-    timeout: 2000,
+    timeout: 2000
   });
 };
 
@@ -318,7 +318,7 @@ const copyHrefLink = async () => {
     try {
       await navigator.share({
         title: "b9.game",
-        text: "Pakistan real money games",
+        text: `Pakistan real money games ${textToCopy}`,
         url: textToCopy
       });
     } catch (err) {
@@ -332,7 +332,7 @@ const copyHrefLink = async () => {
           message: "Link copied to clipboard",
           color: "positive",
           position: "top",
-          timeout: 2000,
+          timeout: 2000
         });
       })
       .catch(() => {
@@ -353,15 +353,15 @@ const shareCaptions = [
   "Main bohot kismat wala hoon! Mujhe abhi B9GAME se free bonus mila hai, 100% asli! Aao aur try karo! ",
   "Bas itna chahiye ke tum is par click karo, aur mil kar free bonus lo! ",
   "Bhai, ek ehsaan karo! Mujhe withdraw karne mein madad do, aur mil kar B9GAME ka free bonus lo! ",
-  "Abhi abhi withdraw kiya! B9GAME ne waqai paise diye, jaldi aao aur apna free bonus lo! ",
-]
+  "Abhi abhi withdraw kiya! B9GAME ne waqai paise diye, jaldi aao aur apna free bonus lo! "
+];
 
-const activeSlide = ref(0)
-const shareCaption = ref(shareCaptions[activeSlide.value])
+const activeSlide = ref(0);
+const shareCaption = ref(shareCaptions[activeSlide.value]);
 
 watch(activeSlide, (newIndex) => {
-  shareCaption.value = shareCaptions[newIndex]
-})
+  shareCaption.value = shareCaptions[newIndex];
+});
 
 onMounted(() => {
   let tgDomain = location.origin;
@@ -646,7 +646,6 @@ onMounted(() => {
         letter-spacing: 0px;
         @media screen and (max-width: 400px) {
           font-size: 2.4vw;
-          
         }
       }
     }
