@@ -6,7 +6,7 @@
           <img :src="livestreamData.avatar" loading="lazy" />
         </div>
         <span class="current-livestream__streamer-info__name">{{ livestreamData.name }}</span>
-        <div class="current-livestream__streamer-info__on-air">正在直播</div>
+        <div v-if="livestreamData.liveStatus" class="current-livestream__streamer-info__on-air">正在直播</div>
       </div>
     </div>
 

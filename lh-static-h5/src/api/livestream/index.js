@@ -1,19 +1,19 @@
 import { userStore } from "../../stores";
 import { api } from "../../boot/axios";
 
-export const getLivestreamList = () => {
-  return api.post("/live/list?status=1");
+export const getLivestreamList = (page) => {
+  return api.post(`/live/list?current=${page}`);
 };
 
 export const getLivestreamDetail = (livestreamId) => {
   return api.get(`/live/${livestreamId}`);
 };
 
-export const getChatHistory = (payload) => {
+export const getChatHistory = (payload, current) => {
   const requestOptions = payload;
 
   api
-    .post("/live/history", requestOptions)
+    .post(`/live/history?current=${current}&sortType=ASC`, requestOptions)
     .then((response) => {
       // return response.json();
       return response;

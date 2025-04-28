@@ -1,14 +1,32 @@
 <template>
-  <div class="livestream-chat-wrapper" :class="$q.dark.isActive ? 'dark' : 'white'">
+  <div class="livestream-chat-wrapper" :class="isDark ? 'dark' : 'white'">
     <div ref="chatListRef" class="livestream-chat-list">
       <div v-for="(message, index) in messages" :key="index" class="livestream-chat-item">
-        <div class="livestream-chat-item__name">{{ message.name }}</div>
-        <div class="livestream-chat-item__message">{{ message.content }}</div>
+        <img
+          class="livestream-chat-item__vip-badge"
+          :src="require(`../../assets/images/livestream/chat/vip-badge-${message.vip}${isDark ? '-dark' : '-light'}.png`)"
+          loading="lazy"
+          width="44"
+        />
+        <img
+          v-if="message.profilePhoto && message.profilePhoto.includes('default')"
+          class="livestream-chat-item__profile-photo"
+          :src="require(`../../assets/images/profile/${message.profilePhoto}.png`)"
+        />
+        <img
+          v-else-if="message.profilePhoto"
+          class="livestream-chat-item__profile-photo"
+          :src="`${profilePhotoDir}${message.profilePhoto}?v=${now}`"
+          loading="lazy"
+        />
+        <img v-else class="livestream-chat-item__profile-photo" src="../../assets/images/account/avatar.png" />
+        <span class="livestream-chat-item__name">{{ message.name }}：</span>
+        <span class="livestream-chat-item__message">{{ message.content }}</span>
       </div>
     </div>
     <div class="livestream-chat-input-wrapper" :style="chatBoxStyle">
       <q-form class="livestream-chat-input-inner-wrapper q-px-md" @submit.enter.prevent>
-        <q-btn class="bet-btn" rounded label="投一注" @click="openGame('', 'IM', '', '')" />
+        <q-btn class="bet-btn" rounded label="投一注" @click="openGame('IM体育', 'IM', '', '')" />
 
         <q-input
           v-model="messageToSend"
@@ -44,6 +62,9 @@ import GameModal from "components/modal/GameModal.vue";
 import { userStore } from "stores/index";
 import { useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
+import { useLocalStorage } from "@vueuse/core";
+
+const now = Date.now();
 
 const store = userStore();
 const $q = useQuasar();
@@ -56,6 +77,8 @@ const emit = defineEmits(["sendChatMessage"]);
 const messageToSend = ref("");
 const chatListRef = ref(null);
 
+const isDark = computed(() => $q.dark.isActive);
+const profilePhotoDir = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/profile/"
 const isMessageSendable = computed(() => messageToSend.value.trim().length > 0);
 
 const handleSendChatMessage = () => {
@@ -119,15 +142,16 @@ onBeforeUnmount(() => {
   overflow: hidden;
 
   .livestream-chat-list {
-    flex: 1;
+    flex-grow: 1;
     padding: 16px;
     overflow: auto;
-    height: 100%;
-    margin-top: calc(56.25vw + 38px);
-    max-height: calc(100dvh - 56.25vw - 38px - 60px);
+    height: 100dvh;
+    margin-top: calc(56.25vw + 27px);
+    max-height: calc(100dvh - 56.25vw - 27px - 60px);
     // Firefox
     scrollbar-width: thin;
     scrollbar-color: #c4c4c4 #b8d1ff;
+    background-color: #E8F2FE;
 
     // WebKit Browsers
     &::-webkit-scrollbar {
@@ -147,32 +171,33 @@ onBeforeUnmount(() => {
     }
 
     .livestream-chat-item {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
+      background-color: #ffffff80;
+      border-radius: 4px;
+      width: max-content;
+      max-width: 100%;
+      padding: 6px 8px 0.5px;
+      margin-bottom: 8px;
+      word-wrap: break-word;
+      font-size: 12px;
       margin-bottom: 12px;
 
+      > *:not(:last-child) {
+        margin-right: 4px;
+      }
+
+      .livestream-chat-item__profile-photo {
+        max-width: 18px;
+        border-radius: 50%;
+      }
+
       .livestream-chat-item__name {
-        margin-bottom: 4px;
-        font-size: 12px;
-        line-height: 15px;
-        font-weight: 600;
-        color: #333333;
+        color: #666666;
+        vertical-align: super;
       }
 
       .livestream-chat-item__message {
-        // @include livestream-content-block;
-        padding: 6px 9px;
-        border-top-left-radius: 0;
-        font-size: 12px;
-        line-height: 15px;
         color: #333333;
-        background: #ffffff;
-        box-shadow: 0px 2px 8px 0px #0000001a;
-        border-radius: 0px 16px 16px 16px;
-        word-break: break-all;
-        overflow-wrap: break-word;
-        white-space: normal;
+        vertical-align: super;
       }
     }
   }
@@ -182,7 +207,7 @@ onBeforeUnmount(() => {
     // padding: 6px 12px;
     position: fixed;
     bottom: 0;
-
+    box-shadow: 0px -6px 15px 0px #0000001A;
     left: 0;
     width: 100%;
     z-index: 2001;
@@ -266,18 +291,21 @@ onBeforeUnmount(() => {
 .livestream-chat-wrapper.dark {
   // background: #0f182e;
   .livestream-chat-list {
+    background-color: #1A2338;
     .livestream-chat-item {
+      background-color: #2e406580;
+
       .livestream-chat-item__name {
-        color: #ffffff;
+        color: #b5b5b5;
       }
       .livestream-chat-item__message {
-        background: #2e4065;
         color: #ffffff;
       }
     }
   }
   .livestream-chat-input-wrapper {
     background: #0f182e;
+    box-shadow: 0px -1.4px 5.24px 0px #DADADA66;
 
     .livestream-chat-input-btn {
       background: linear-gradient(180deg, rgba(72, 100, 181, 0.5) 0%, rgba(25, 39, 85, 0.5) 100%) !important;

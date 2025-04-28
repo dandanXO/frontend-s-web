@@ -210,3 +210,10 @@ export const customCloudWiseRecord = (userId, data = {}) => {
     );
   }
 };
+
+export const extractVipLevelFromVipStr = (vipStr) => {
+  if (!vipStr) return 0;
+  const match = vipStr.match(/VIP(\d+)/);
+  return match ? parseInt(match[1], 10) : 0;
+};
+

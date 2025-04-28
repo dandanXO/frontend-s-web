@@ -8,12 +8,14 @@
           <img v-if="$q.dark.isActive" src="../../assets/images/home/transfer-announce-icon-dark.svg" />
           <img v-else src="../../assets/images/home/announce-icon.png" />
         </div>
-        <marquee-text :repeat="5" :duration="announcementList.length * 10">
-          <div v-if="announcementList">
-            <span v-for="(announcement, i) in announcementList" :key="i">
-              {{ announcement }}
-            </span>
-          </div>
+        <marquee-text
+          :key="displayAnnouncementList.join('-')"
+          :repeat="5"
+          :duration="displayAnnouncementList.length * 10"
+        >
+          <span v-for="(announcement, i) in displayAnnouncementList" :key="i">
+            {{ announcement }}
+          </span>
         </marquee-text>
       </div>
     </div>
@@ -32,10 +34,14 @@ import { useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { useRoute, useRouter } from "vue-router";
 import { getChatHistory, getLivestreamList, sendChat, getLivestreamDetail } from "../../api/livestream";
+import { extractVipLevelFromVipStr } from "src/boot/utils";
 
-const MESSAGE_SYNC_INTERVAL = 1000 * 10; // 2 seconds
+const MESSAGE_SYNC_INTERVAL = 1000 * 2; // 2 seconds
 const MESSAGE_HISTORY_DANMU_FIRE_GAP = 10;
-const MAXIMUM_MESSAGE_LENGTH = 1000;
+const MAXIMUM_MESSAGE_LENGTH = 2000;
+
+// const DEFAULT_ANNOUNCEMENT = "";
+const DEFAULT_ANNOUNCEMENT = "禁止发表任何广告、低俗色情、辱骂平台等违规言论!";
 
 const $q = useQuasar();
 const qs = require("qs");
@@ -57,11 +63,23 @@ const currentLive = ref(0);
 const messageTimer = ref(null);
 const lastSyncMessageTime = ref(Date.now());
 const unsortMessages = ref([]);
+const userVipLevel = computed(() => extractVipLevelFromVipStr(store.vip));
 
-// const currentLiveData = computed(() => {
-//   if (!list.value.length) return {};
-//   return list.value[currentLive.value];
-// });
+const current = ref(1);
+const liveStartTime = ref();
+const livestreamListMeta = ref({
+  current: 1,
+  max: 1
+});
+const processedUserName = ref();
+const isFirstMessageSync = ref(true);
+const isProcessingMessageHistory = ref(false);
+const messagesHistoryMeta = ref({
+  current: 1,
+  max: 1
+});
+const isLivestreaming = computed(() => !!currentLiveData.value?.liveStatus);
+const latestProcessedMessageId = ref(-1);
 
 const currentLiveData = computed(() => {
   const streamIdFromQuery = route.query.streamId;
@@ -71,6 +89,12 @@ const currentLiveData = computed(() => {
 
 const fullMessages = computed(() => {
   return messages.value.concat(unsortMessages.value);
+});
+
+const displayAnnouncementList = computed(() => {
+  const msg = currentLiveData.value.roomMessage?.trim();
+  const validMsg = msg ? [msg] : [DEFAULT_ANNOUNCEMENT];
+  return validMsg.filter(Boolean);
 });
 
 // Initialize Danmu.js for chat overlay
@@ -179,18 +203,26 @@ const handleSendChatMessage = (message) => {
     })
     .then((res) => {
       if (res.code === 0) {
+        const { content, name } = res.data;
         messages.value.push({
-          content: res.data,
-          name: store.nickName,
-          time: Date.now()
+          content,
+          name,
+          time: Date.now(),
+          vip: userVipLevel.value,
+          profilePhoto: store.profilePhoto
         });
-        danmuList.value = [res.data];
+        danmuList.value = [content];
+        if (!processedUserName.value) {
+          processedUserName.value = name;
+        }
       }
     });
 };
 
 const getData = () => {
-  getLivestreamList().then((res) => {
+  if (livestreamListMeta.value.current > livestreamListMeta.value.max) return;
+  // isLivestreamListLoading.value = true;
+  getLivestreamList(livestreamListMeta.value.current).then((res) => {
     if (res.code === 0) {
       const parsedData = res.data.records.map((record) => {
         let parsedSupplierUrl = {};
@@ -208,10 +240,6 @@ const getData = () => {
         }
       });
       list.value = parsedData;
-
-      // getLivestreamDetail(currentLiveData.value.streamId).then((res) => {
-      //   console.log(res);
-      // });
     }
   });
 };
@@ -224,52 +252,108 @@ const syncMessages = () => {
   const params = {
     siteId: process.env.SITEID,
     streamId: currentLiveData.value.id,
-    recordTime: [lastSyncMessageTime.value, now]
+    recordTime: [liveStartTime.value, now]
   };
 
-  if (pastTime > MESSAGE_SYNC_INTERVAL) {
+  if (pastTime > MESSAGE_SYNC_INTERVAL && !isProcessingMessageHistory.value) {
     lastSyncMessageTime.value = now;
-    // console.log("params::", params);
+    if (!isLivestreaming.value) return;
+    isProcessingMessageHistory.value = true;
+    api
+      .post(`/live/history?current=${messagesHistoryMeta.value.current}&sortType=ASC`, params)
+      .then(async (res) => {
+        if (res.code === 0) {
+          // console.log("records:::", res.data.records);
+          const requestQueue = [];
+          const messagesFromApi = formatHistoryMessages(res.data.records);
+          const remainingPage = res.data.pages - messagesHistoryMeta.value.current;
+          messagesHistoryMeta.value.max = res.data.pages;
 
-    api.post(`/live/history`, params).then((res) => {
-      // getChatHistory(params).then((res) => {
-      if (res.code === 0) {
-        const messagesFromApi = res.data.reduce((result, record) => {
-          if (record.name !== store.nickName) {
-            result.push({
-              content: record.content,
-              name: record.name,
-              time: record.createTime
-            });
+          for (let i = 0; i < remainingPage; i++) {
+            requestQueue.push(syncMessagesPerPage(params, ++messagesHistoryMeta.value.current));
           }
 
-          return result;
-        }, []);
-        const combinedMessages = [...unsortMessages.value, ...messagesFromApi];
-        combinedMessages.sort((a, b) => a.time - b.time);
-        const messageLength = messages.value.length;
-        const combinedMessagesLength = combinedMessages.length;
-        if (messageLength + combinedMessagesLength > MAXIMUM_MESSAGE_LENGTH) {
-          const excessMessages = messageLength + combinedMessagesLength - MAXIMUM_MESSAGE_LENGTH;
-          messages.value = [...messages.value.slice(excessMessages), ...combinedMessages];
-        } else {
-          messages.value.push(...combinedMessages);
+          const remainingPageRes = await Promise.allSettled(requestQueue);
+          for (const _res of remainingPageRes) {
+            if (_res.status === "rejected") {
+              console.error(_res.reason);
+              continue;
+            }
+            messagesFromApi.push(..._res.value);
+          }
+
+          latestProcessedMessageId.value = messagesFromApi[messagesFromApi.length - 1]?.id;
+          // console.log("messagesFromApi::", messagesFromApi);
+          // console.log("latestProcessedMessageId::", latestProcessedMessageId.value);
+
+          const combinedMessages = [...unsortMessages.value, ...messagesFromApi];
+          combinedMessages.sort((a, b) => a.time - b.time);
+          const messageLength = messages.value.length;
+          const combinedMessagesLength = combinedMessages.length;
+          if (messageLength + combinedMessagesLength > MAXIMUM_MESSAGE_LENGTH) {
+            const excessMessages = messageLength + combinedMessagesLength - MAXIMUM_MESSAGE_LENGTH;
+            messages.value = [...messages.value.slice(excessMessages), ...combinedMessages];
+          } else {
+            messages.value.push(...combinedMessages);
+          }
+          unsortMessages.value = [];
+          if (isFirstMessageSync.value) {
+            isFirstMessageSync.value = false;
+          } else {
+            danmuList.value = messagesFromApi.map((item) => item.content);
+          }
         }
-        unsortMessages.value = [];
-        danmuList.value = messagesFromApi.map((item) => item.content);
-      }
-    });
+      })
+      .finally(() => {
+        isProcessingMessageHistory.value = false;
+      });
   }
   messageTimer.value = setTimeout(() => {
     syncMessages();
   }, MESSAGE_SYNC_INTERVAL);
 };
 
+const syncMessagesPerPage = async (params, current) => {
+  try {
+    const res = await api.post(`/live/history?current=${current}&sortType=ASC`, params);
+    return formatHistoryMessages(res.data.records);
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+};
+
+const seenMessageIds = new Set();
+
+const formatHistoryMessages = (messages) => {
+  return messages.reduce((result, record) => {
+    const isDifferentUser = record.name !== processedUserName.value;
+    const isNew = !seenMessageIds.has(record.id);
+
+    if (isDifferentUser && isNew) {
+      seenMessageIds.add(record.id);
+      result.push({
+        content: record.content,
+        name: record.name,
+        time: record.createTime,
+        vip: extractVipLevelFromVipStr(record.vip),
+        profilePhoto: record.profilePhoto
+      });
+    }
+
+    return result;
+  }, []);
+};
+
 watch(currentLiveData, () => {
   messages.value = [];
   unsortMessages.value = [];
   danmuList.value = [];
-  lastSyncMessageTime.value = Date.now();
+  processedUserName.value = "";
+  seenMessageIds.clear();
+  latestProcessedMessageId.value = -1;
+  lastSyncMessageTime.value = currentLiveData.value?.eventStartTime || Date.now();
+  liveStartTime.value = lastSyncMessageTime.value;
   syncMessages();
 });
 
@@ -396,13 +480,5 @@ onUnmounted(() => {
 
 .page-style {
   color: #e8f2fe;
-}
-
-@media (orientation: landscape) {
-  // body {
-  //   background-color: lightblue;
-  // }
-
-  .livestream-chat{}
 }
 </style>

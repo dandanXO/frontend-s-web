@@ -7,7 +7,7 @@
         :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 1 + 10 : 70"
       >
         <div
-          v-for="(word, index) in announcementList"
+          v-for="(word, index) in displayAnnouncementList"
           :key="index"
           v-html="word"
           class="livestream-chat-announcement-marquee"
@@ -16,8 +16,26 @@
     </div>
     <div ref="chatListRef" class="livestream-chat-list">
       <div v-for="(message, index) in messages" :key="index" class="livestream-chat-item">
-        <div class="livestream-chat-item__name">{{ message.name }}</div>
-        <div class="livestream-chat-item__message">{{ message.content }}</div>
+        <img
+          class="livestream-chat-item__vip-badge"
+          :src="require(`@/assets/home/livestream/chat/vip-badge-${message.vip}${isDark ? '-dark' : '-light'}.png`)"
+          loading="lazy"
+          width="44"
+        />
+        <img
+          v-if="message.profilePhoto && message.profilePhoto.includes('default')"
+          class="livestream-chat-item__profile-photo"
+          :src="require(`@/assets/images/profile/${message.profilePhoto}.png`)"
+        />
+        <img
+          v-else-if="message.profilePhoto"
+          class="livestream-chat-item__profile-photo"
+          :src="`${profilePhotoDir}${message.profilePhoto}?v=${now}`"
+          loading="lazy"
+        />
+        <img v-else class="livestream-chat-item__profile-photo" src="@/assets/images/home/profile-pic.png" />
+        <span class="livestream-chat-item__name">{{ message.name }}：</span>
+        <span class="livestream-chat-item__message">{{ message.content }}</span>
       </div>
     </div>
     <div class="livestream-chat-input-wrapper">
@@ -25,7 +43,8 @@
         <el-input
           v-model="messageToSend"
           class="livestream-chat-input"
-          placeholder="请输入聊天内容"
+          :placeholder="isLivestreamExisted ? '请输入聊天内容' : ''"
+          :disabled="!isLivestreamExisted"
           autocomplete="off"
         />
         <button
@@ -41,18 +60,31 @@
   </div>
 </template>
 <script setup>
+import { useDark, useLocalStorage } from "@vueuse/core";
 import { computed, nextTick, ref, toRefs, watch } from "vue";
 import { Vue3Marquee } from "vue3-marquee";
 
-const props = defineProps(["messages"]);
-const { messages } = toRefs(props);
+const now = Date.now();
+const DEFAULT_ANNOUNCEMENT = "禁止发表任何广告、低俗色情、辱骂平台等违规言论!";
+
+const props = defineProps(["messages", "livestreamData"]);
+const { messages, livestreamData } = toRefs(props);
 const emit = defineEmits(["sendChatMessage"]);
+
+const isDark = useDark();
+const profilePhotoDir = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/profile/";
 
 const messageToSend = ref("");
 const chatListRef = ref(null);
-const announcementList = ref(["禁止发表任何广告、低俗色情、辱骂平台等违规言论!"]);
 
-const isMessageSendable = computed(() => messageToSend.value.trim().length > 0);
+const isLivestreamExisted = computed(() => typeof livestreamData.value?.id === "number");
+const isMessageSendable = computed(() => messageToSend.value.trim().length > 0 && isLivestreamExisted.value);
+const displayAnnouncementList = computed(() => {
+  if (livestreamData.value?.roomMessage) {
+    return [livestreamData.value?.roomMessage];
+  }
+  return [DEFAULT_ANNOUNCEMENT];
+});
 
 const handleSendChatMessage = () => {
   emit("sendChatMessage", messageToSend.value);
@@ -61,7 +93,7 @@ const handleSendChatMessage = () => {
 
 const calculateMaxContentLength = () => {
   let maxLength = 0;
-  for (const announcement of announcementList.value) {
+  for (const announcement of displayAnnouncementList.value) {
     if (announcement.length > maxLength) {
       maxLength = announcement.length;
     }
@@ -115,32 +147,36 @@ watch(
 
   .livestream-chat-list {
     flex: 1;
-    padding: 4px 11px 0;
+    padding: 12px 11px 0;
     overflow: auto;
 
     .livestream-chat-item {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      margin-bottom: 11.32px;
+      background-color: #ffffff80;
+      border-radius: 4px;
+      width: max-content;
+      max-width: 100%;
+      padding: 6px 8px 0.5px;
+      margin-bottom: 8px;
+      word-wrap: break-word;
+      font-size: 12px;
+
+      > *:not(:last-child) {
+        margin-right: 4px;
+      }
+
+      .livestream-chat-item__profile-photo {
+        max-width: 18px;
+        border-radius: 50%;
+      }
 
       .livestream-chat-item__name {
-        margin-bottom: 5.7px;
-        font-size: 11px;
-        line-height: 15px;
-        font-weight: 600;
-        color: #333333;
+        color: #666666;
+        vertical-align: super;
       }
 
       .livestream-chat-item__message {
-        @include livestream-content-block;
-        max-width: 100%;
-        padding: 6px 9px;
-        border-top-left-radius: 0;
-        font-size: 11px;
-        line-height: 15px;
         color: #333333;
-        word-wrap: break-word;
+        vertical-align: super;
       }
     }
   }
@@ -159,6 +195,12 @@ watch(
 
       .livestream-chat-input {
         background: #f7f8fb;
+        &.is-disabled {
+          background-color: transparent;
+          :deep(.el-input__wrapper) {
+            background-color: transparent;
+          }
+        }
       }
       .livestream-chat-input-btn {
         background-color: transparent;
@@ -195,13 +237,13 @@ watch(
 
     .livestream-chat-list {
       .livestream-chat-item {
+        background-color: #2e406580;
+
         .livestream-chat-item__name {
-          color: #fff;
+          color: #b5b5b5;
         }
 
         .livestream-chat-item__message {
-          background-color: #2e4065;
-          box-shadow: 0px 2px 8px 0px #0000001a;
           color: #fff;
         }
       }

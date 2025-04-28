@@ -655,7 +655,9 @@ svg {
   padding: 2px 10px;
   justify-content: center;
   align-items: center;
-  font-size: 1.2rem;
+  font-size: .75rem;
+  box-shadow: 0px 4px 4px 0px #0000000F;
+  background-color: #fff;
 
   .volume {
     display: flex;
@@ -663,7 +665,7 @@ svg {
     align-items: center;
 
     img {
-      width: 28px;
+      width: 24px;
       height: auto;
     }
   }
@@ -774,6 +776,7 @@ svg {
 
   .station-notice-wrapper {
     font-size: 12px;
+    background: linear-gradient(180deg, #384E79 2.08%, #2C3D61 47.5%, #212E4C 100%);
     span {
       color: #fff;
     }

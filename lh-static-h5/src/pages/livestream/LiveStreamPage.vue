@@ -1,5 +1,5 @@
 <template>
-  <div :class="$q.dark.isActive ? 'dark' : 'white'">
+  <div class="livestream-page-container" :class="$q.dark.isActive ? 'dark' : 'white'">
     <div class="row justify-center q-pa-md">
       <q-btn-toggle
         v-model="tabValue"
@@ -33,17 +33,9 @@
     </div>
 
     <template v-if="tabValue === 'liveStream'">
-      <div class="selection-container q-px-md">
+      <div ref="selectionContainerRef" class="selection-container q-px-md">
         <template v-for="(item, index) in liveStreamList" :key="index">
-          <router-link
-            :to="{
-              path: '/livestream/streamplayer',
-              query: {
-                streamId: item.streamId
-              }
-            }"
-            class="selection-item"
-          >
+          <button class="selection-item" @click="handleLivestreamClick(item)">
             <!-- // put item.supplierCdnPullUrl + item.streamerCdnPushUrl + streanerCdnPullUrl to the next page. -->
             <div class="item-img"><img src="../../assets/images/livestream/img-placeholder-stream.png" alt="" /></div>
             <div class="item-content">
@@ -62,12 +54,18 @@
                 </div>
                 <div>{{ item.name }}</div>
               </div>
-              <div class="content-float float-filled" v-if="item.liveStatus === 1">
-                <div>正在直播</div>
+              <div class="content-float" :class="{ 'float-filled': item.liveStatus }">
+                <div v-if="item.liveStatus">正在直播</div>
+                <div v-else>
+                  {{ getDisplayDateTime(item.eventStartTime) }}
+                </div>
               </div>
             </div>
-          </router-link>
+          </button>
         </template>
+        <div v-if="isLivestreamListLoading" class="selection-container__loading-wrapper">
+          <q-spinner size="3em" />
+        </div>
       </div>
     </template>
 
@@ -116,10 +114,12 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed, reactive } from "vue";
+import { onMounted, ref, computed, reactive, watch, onUnmounted } from "vue";
 import moment from "moment";
 import { api } from "boot/axios";
 import GameModal from "components/modal/GameModal.vue";
+import { useRouter } from "vue-router";
+import { useNotify } from "src/hooks/notify";
 
 const qs = require("qs");
 const tabValue = ref("liveStream");
@@ -127,6 +127,8 @@ const hotMatches = ref([]);
 const competitionTypes = ref([]);
 const selectedCompetitionType = ref();
 const imgUrl = process.env.IMAGE_CDN;
+const router = useRouter();
+const notify = useNotify();
 
 const now = moment().format("YYYY-MM-DD HH:mm:ss");
 
@@ -142,6 +144,10 @@ const hotMatchesByType = computed(() => {
 });
 
 const gameRef = ref();
+const selectionContainerRef = ref();
+const currentPage = ref(1);
+const maxPage = ref(1);
+const isLivestreamListLoading = ref(false);
 
 const openGame = (gameName, code, gameCode) => {
   gameRef.value.open(gameName, code, gameCode);
@@ -153,13 +159,68 @@ const liveStreamStatusInfo = reactive({
 });
 
 const getLiveUrlList = () => {
-  // .post("/session/bankCard", qs.stringify(bankCardInfo))
-  api.post("/live/list", qs.stringify(liveStreamStatusInfo)).then((res) => {
-    if (res.code === 0) {
-      liveStreamList.value = res.data.records;
+  isLivestreamListLoading.value = true;
+  api
+    .post(`/live/list?current=${currentPage.value}`)
+    .then((res) => {
+      if (res.code === 0) {
+        liveStreamList.value.push(...res.data.records);
+        maxPage.value = res.data.pages;
+        currentPage.value++;
+      }
+    })
+    .finally(() => {
+      isLivestreamListLoading.value = false;
+    });
+};
+
+const getDisplayDateTime = (date) => {
+  const now = moment();
+  const eventDate = moment(date);
+  const diffInDays = eventDate.diff(now, "days");
+
+  if (diffInDays === 0) {
+    return eventDate.format("今日 HH:mm");
+  } else if (diffInDays === 1) {
+    return eventDate.format("明日 HH:mm");
+  } else {
+    return eventDate.format("MM/DD");
+  }
+};
+
+const handleLivestreamClick = (livestream) => {
+  console.log(livestream);
+  if (!livestream.liveStatus) {
+    notify({
+      message: "直播未开始",
+      timeout: 500,
+      type: "info"
+    });
+    return;
+  }
+  router.push({
+    path: "/livestream/streamplayer",
+    query: {
+      streamId: livestream.streamId
     }
   });
 };
+
+const handleListScroll = () => {
+  const threshold = 50;
+  const isBottom =
+    selectionContainerRef.value.scrollHeight - selectionContainerRef.value.scrollTop <=
+    selectionContainerRef.value.clientHeight + threshold;
+
+  if (isBottom && currentPage.value < maxPage.value && !isLivestreamListLoading.value) {
+    getLiveUrlList();
+  }
+};
+
+watch(selectionContainerRef, (val) => {
+  if (!val) return;
+  selectionContainerRef.value.addEventListener("scroll", handleListScroll);
+});
 
 onMounted(() => {
   api.get("/platform-competition").then((res) => {
@@ -176,10 +237,21 @@ onMounted(() => {
 
   getLiveUrlList();
 });
+
+onUnmounted(() => {
+  if (selectionContainerRef.value) {
+    selectionContainerRef.value.removeEventListener("scroll", handleListScroll);
+  }
+});
 </script>
 
 <style lang="scss" scoped>
+.livestream-page-container {
+  height: calc(100vh - 64px);
+}
 .white {
+  background: url("../../assets/images/livestream/livestream-bg-light.png") no-repeat center center;
+  background-size: 100% 100%;
   .hot-match-container {
     box-shadow: 0px -2.78px 2.78px 0px rgba(195, 212, 230, 1) inset, 0px 1.39px 0px 0px rgba(167, 194, 221, 1);
     margin: 8px 10px;
@@ -349,6 +421,7 @@ onMounted(() => {
 }
 
 .dark {
+  background: url("../../assets/images/livestream/livestream-bg-dark.png") no-repeat top center;
   .top-toggle-menu {
     width: 100%;
     padding: 6px;
@@ -393,6 +466,8 @@ onMounted(() => {
       width: 100%;
       background: #273354;
       box-shadow: 0px 4px 4px 0px #10264517;
+      border: none;
+      padding: 0;
 
       .item-content {
         padding: 3px 6px;
@@ -404,6 +479,12 @@ onMounted(() => {
         .content-desc {
           color: #7a80a1;
         }
+      }
+    }
+
+    .selection-container__loading-wrapper {
+      .q-spinner {
+        fill: #fff;
       }
     }
   }
@@ -581,6 +662,8 @@ onMounted(() => {
     border-radius: 8px;
     overflow: hidden;
     position: relative;
+    border: none;
+    padding: 0;
 
     .item-float-content {
       position: absolute;
@@ -644,6 +727,15 @@ onMounted(() => {
       .content-desc {
         color: #7a80a1;
       }
+    }
+  }
+
+  .selection-container__loading-wrapper {
+    display: flex;
+    justify-content: center;
+    grid-column: 1 / -1;
+    .q-spinner {
+      color: #4c88f8;
     }
   }
 }

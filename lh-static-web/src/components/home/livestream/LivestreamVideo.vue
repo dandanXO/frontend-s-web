@@ -6,6 +6,7 @@
     @mouseenter="handleWrapperMouseEnter"
     @mouseleave="handleWrapperMouseLeave"
   >
+  current video url: {{ currentVideoUrl}}
     <template v-if="isPlayerSupported">
       <video
         ref="videoRef"
@@ -123,11 +124,14 @@
           </button>
         </div>
       </div>
-      <div v-if="showUnmuteMask" class="livestream-video-muted-mask" @click.stop="handleUnmuteClick">
+      <div v-if="showUnmuteMask" class="livestream-video-mask" @click.stop="handleUnmuteClick">
         <button class="btn">
           <img src="@/assets/home/livestream/icon-volume-off.png" />
         </button>
         <span>点击取消静音</span>
+      </div>
+      <div v-if="!isLivestreaming" class="livestream-video-mask" @click.stop>
+        <span>直播尚未开始</span>
       </div>
     </template>
     <div v-else class="livestream-unsupported">不支援的浏览器</div>
@@ -176,8 +180,8 @@ const DANMU_CONFIG = {
 
 const DEFAULT_QUALITY = "original";
 
-const props = defineProps(["danmuList", "channels", "livestreamData"]);
-const { danmuList, channels, livestreamData } = toRefs(props);
+const props = defineProps(["danmuList", "channels", "livestreamData", "isLivestreaming"]);
+const { danmuList, channels, livestreamData, isLivestreaming } = toRefs(props);
 
 const danmuJs = ref(null);
 
@@ -207,7 +211,6 @@ const playerConfig = ref({
 
 const videoSource = computed(() => {
   if (!livestreamData.value) return {};
-  // TODO: wait for api
   return livestreamData.value.streamerStatus
     ? livestreamData.value.streamerCdnPullUrl
     : livestreamData.value.supplierCdnPullUrl;
@@ -221,7 +224,7 @@ const currentVideoUrl = computed(() => {
   return result[1]?.hls_url ?? "";
 });
 
-const disableVideoController = computed(() => showUnmuteMask.value);
+const disableVideoController = computed(() => showUnmuteMask.value || !isLivestreaming.value);
 
 // const currentChannel = computed(() => {
 //   if (!channels.value.length) return {};
@@ -251,12 +254,14 @@ const initPlayer = async (play = false) => {
   player.value.on(player.value.Events.ERROR, handlePlayerError);
   player.value.on(player.value.Events.AUTO_PLAY_FAILED, handleAutoPlayFailed);
   await player.value.load(play);
-  // if (player.value.qualitySupported) getQualities();
 };
 
 const loadDanmu = async () => {
-  const _danmu = (await import("danmu.js")).default;
-  danmuJs.value = _danmu;
+  if (danmu.value) return;
+  if (!danmuJs.value) {
+    const _danmu = (await import("danmu.js")).default;
+    danmuJs.value = _danmu;
+  }
   if (danmuRef.value) {
     danmu.value = new danmuJs.value({
       ...DEFAULT_DANMU_CONFIG,
@@ -302,6 +307,8 @@ const changePlayerConfig = (key, value) => {
 };
 
 const handlePauseChange = (value) => {
+  if (!player.value) return;
+
   changePlayerConfig("isPause", value);
   if (playerConfig.value.isPause) {
     player.value.pause();
@@ -418,6 +425,7 @@ watch(danmuList, () => {
 });
 
 watch(livestreamData, () => {
+  if (!isLivestreaming.value) return;
   loadData();
 });
 
@@ -426,8 +434,8 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  player.value.destroy();
-  danmu.value.stop();
+  player.value && player.value.destroy();
+  danmu.value && danmu.value.stop();
 });
 
 defineExpose({
@@ -518,7 +526,7 @@ defineExpose({
     background: #000;
   }
 
-  .livestream-video-muted-mask {
+  .livestream-video-mask {
     position: absolute;
     inset: 0;
     display: flex;

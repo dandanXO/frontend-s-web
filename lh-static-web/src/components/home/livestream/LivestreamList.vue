@@ -1,5 +1,5 @@
 <template>
-  <div class="livestream-list-wrapper">
+  <div ref="livestreamListWrapperRef" class="livestream-list-wrapper">
     <div
       v-for="(live, index) in list"
       :key="live"
@@ -40,18 +40,29 @@
         </div>
       </div>
     </div>
+    <div
+      v-if="isLivestreamListLoading"
+      v-loading="true"
+      element-loading-background="transparent"
+      class="livestream-list__pseudo"
+    />
   </div>
 </template>
 <script setup>
 import { useNotify } from "@/hooks/notify";
 import moment from "moment";
+import { onMounted, onUnmounted, ref } from "vue";
 const props = defineProps({
-  list: Array
+  list: Array,
+  isLivestreamListLoading: Boolean
 });
 
 const model = defineModel({ type: Number });
+const emit = defineEmits(["scroll-reach-right"]);
 
 const notify = useNotify();
+
+const livestreamListWrapperRef = ref(null);
 
 const handleLivestreamClick = (index) => {
   if (!props.list[index].liveStatus) {
@@ -74,6 +85,27 @@ const getDisplayDateTime = (date) => {
     return eventDate.format("MM/DD");
   }
 };
+
+const handleLivestreamListScroll = () => {
+  const threshold = 50;
+  const isRight =
+    livestreamListWrapperRef.value.scrollLeft + livestreamListWrapperRef.value.clientWidth >=
+    livestreamListWrapperRef.value.scrollWidth - threshold;
+
+  if (isRight && !props.isLivestreamListLoading) {
+    emit("scroll-reach-right");
+  }
+};
+
+onMounted(() => {
+  if (!livestreamListWrapperRef.value) return;
+  livestreamListWrapperRef.value.addEventListener("scroll", handleLivestreamListScroll);
+});
+
+onUnmounted(() => {
+  if (!livestreamListWrapperRef.value) return;
+  livestreamListWrapperRef.value.removeEventListener("scroll", handleLivestreamListScroll);
+});
 </script>
 <style lang="scss" scoped>
 @import "@/scss/pages/livestream.scss";
@@ -81,10 +113,10 @@ const getDisplayDateTime = (date) => {
 .livestream-list-wrapper {
   display: flex;
   gap: 18.87px;
-  padding: 0 18px 26px;
+  padding: 0 18px 18px 0;
   align-items: center;
   overflow: auto;
-  margin: 0 -14px -28px -18px;
+  margin: 0 -14px -28px 0;
 
   .livestream-list-item {
     @include livestream-content-block;
@@ -192,6 +224,14 @@ const getDisplayDateTime = (date) => {
       }
     }
   }
+
+  .livestream-list__pseudo {
+    flex: 0 0 calc(25% - 12.87px);
+    height: 100%;
+    :deep(.path) {
+      stroke: #4c88f8;
+    }
+  }
 }
 
 .dark {
@@ -212,25 +252,31 @@ const getDisplayDateTime = (date) => {
           }
         }
       }
-    }
-    .livestream-list-item__title {
-      color: #fff;
-    }
 
-    .livestream-list-item__match-info {
-      .livestream-list-item__match-info__team {
-        .livestream-list-item__match-info__team-emblem {
-          @include livestream-team-emblem;
+      .livestream-list-item__title {
+        color: #fff;
+      }
+      .livestream-list-item__match-info {
+        .livestream-list-item__match-info__team {
+          .livestream-list-item__match-info__team-emblem {
+            @include livestream-team-emblem;
+          }
+          .livestream-list-item__match-info__team-name {
+            color: #fff;
+          }
         }
-        .livestream-list-item__match-info__team-name {
+      }
+
+      .livestream-list-item__match-info__date {
+        .livestream-list-item__match-info__date__date {
           color: #fff;
         }
       }
     }
 
-    .livestream-list-item__match-info__date {
-      .livestream-list-item__match-info__date__date {
-        color: #fff;
+    .livestream-list__pseudo {
+      :deep(.path) {
+        stroke: #fff;
       }
     }
   }
