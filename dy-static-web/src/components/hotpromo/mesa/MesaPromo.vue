@@ -21,7 +21,7 @@
                 <img class="icon-img" src="@/assets/promo/lh-livepoker-rebate/reward-icon1.png" alt="" width="100%" />
               </div>
               <div class="reward-info-content">
-                当日累计有效投注：
+                昨日累计有效投注：
                 <span class="amount">{{ formatNumber(totalValidBet) }}元</span>
               </div>
             </div>
