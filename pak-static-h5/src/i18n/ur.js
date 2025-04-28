@@ -485,6 +485,11 @@ export default {
   earnMoney: {
     title: "بونس پوٹ آ گیا",
     noDataAvailable: "کوئی ڈیٹا دستیاب نہیں ہے",
+    person: "شخص",
+    youSuccessfullyInvited: "آپ نے کامیابی سے مدعو کیا",
+    level: "لیول",
+    only: "صرف",
+    awayFrom: "دور",
     tabs: {
       reward: "انعام",
       teamManagement: "ٹیم کا انتظام",
