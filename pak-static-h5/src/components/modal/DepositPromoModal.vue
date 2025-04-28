@@ -146,10 +146,10 @@ const checkAppLogin = async () => {
 };
 
 const checkLucky10DayPromo = async () => {
-  // if (!isLuckyDay.value) return;
+  if (!isLuckyDay.value) return;
   try {
     const res = await eventapi.get("/session/lucky-day/init?promoCode=pak-lucky-10-day-bonus");
-    if (res.code === 0) {
+    if (res.code === 0 && res.data?.isClaimable) {
       modalType.value = "LUCKY_10_DAY";
     }
   } catch (e) {
