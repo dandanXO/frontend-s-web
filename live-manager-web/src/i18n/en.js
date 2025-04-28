@@ -3,7 +3,10 @@ export default {
   login: 'Login',
   username: 'Username',
   password: 'Password',
-  loggedInSuccessfully: 'Logged in successfully!',
+  LOGIN_SUCCESS: 'Logged in successfully!',
+  LOGIN_FAIL: 'Login failed!',
+  ERROR_LOGIN_NAME_OR_PASSWORD_ERROR: 'Username or password is incorrect!',
+  ERROR_LOGIN_NAME_NOT_EXIST: 'Username does not exist!',
   statsComponent: {
     totalFirstDeposit: 'Total First Deposit',
     totalDeposits: 'Total Deposits',
