@@ -49,12 +49,12 @@
         <div class="info-item">
           <span class="label">{{ $t('stream.hostPushLink') }}</span>
           <div class="url-container">
-            <span class="url-text">{{ stream.streamerCdnPushUrl }}</span>
+            <span class="url-text">{{ getAfterCdnUrl(stream.streamerCdnPushUrl) }}</span>
             <Button
               icon="pi pi-copy"
               severity="secondary"
               text
-              @click="copyUrl(stream.streamerCdnPushUrl)"
+              @click="copyUrl(getAfterCdnUrl(stream.streamerCdnPushUrl))"
               v-tooltip.top="'複製鏈結'"
             />
           </div>
@@ -637,6 +637,15 @@ const getCurrentPlayUrl = () => {
 const getStreamerPlayUrl = () => {
   if (!props.stream) return ''
   return props.stream.streamerCdnPullUrl?.[currentQuality.value]?.hlsUrl || ''
+}
+
+const getAfterCdnUrl = (url) => {
+  const [path, query] = url.split('?');
+
+  const newPath = path.substring(0, path.lastIndexOf('/'));
+
+  const result = newPath + '?' + query;
+  return result;
 }
 
 const copyUrl = async (url) => {
