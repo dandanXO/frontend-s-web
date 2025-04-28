@@ -162,9 +162,18 @@
               :key="i"
               :name="i"
               @click="gotoFloatPromo(promo)"
-              :img-src="promo.icon"
+              style="padding: 0;"
             >
               <!-- <img style="width: 100px" :src="`${imgURL}/promo/${promo.icon}`" /> -->
+              <template v-if="promo.code === 'spin-lucky-wheel' && isShownSpinLuckyWheel">
+                <SpinLuckyWheelPromoSticky style="width: 100%;" />
+              </template>
+              <template v-else-if="promo.code === 'spin-lucky-wheel' && !isShownSpinLuckyWheel">
+                <img :src="promo.icon">
+              </template>
+              <template v-else>
+                <img :src="promo.icon">
+              </template>
             </q-carousel-slide>
           </q-carousel>
         </div>
@@ -1582,9 +1591,9 @@
   >
     <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
     <SpinLuckyWheelPromoHomePopup @close-dialog="closeDialog" ref="spinLuckyWheelPromoHomePopupRef">
-      <template #controller>
+      <!-- <template #controller>
         <PopupController v-model="popupPromo" :hasSpin="true" />
-      </template>
+      </template> -->
     </SpinLuckyWheelPromoHomePopup>
   </q-dialog>
   <q-dialog v-model="isMediaSettingsModal">
@@ -1599,7 +1608,6 @@
 
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
 
-  <SpinLuckyWheelPromoSticky v-show="isShownSpinLuckyWheel" />
   <!-- <SpinLuckyWheelPromoHomePopup v-if="isShownSpinLuckyWheel || popupPromo === 'spin-lucky-wheel'" ref="spinLuckyWheelPromoHomePopupRef" /> -->
 </template>
 
@@ -5699,7 +5707,7 @@ const checkGoogleLoginSetPwd = () => {
     .platform-game-title {
       text-align: left;
       margin-top: 6px;
-      color: #ffffff;
+      color: #ffffff; 
       font-weight: bold;
       font-size: 14px;
       white-space: nowrap;

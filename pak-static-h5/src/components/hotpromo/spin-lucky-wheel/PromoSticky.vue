@@ -1,5 +1,5 @@
 <template>
-  <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn" v-if="remainingTime && isShowSticky">
+  <!-- <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn" v-if="remainingTime && isShowSticky"> -->
     <div
       v-touch-pan.prevent.mouse="moveCsIcon"
       @click="router.push('promo?name=spin-lucky-wheel')"
@@ -9,9 +9,9 @@
           <img src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/sticky/gift-1000.gif" />
       </picture>
       <span class="remaining-time">{{ remainingTime }}</span>
-      <img @click.stop="closeSticky()" class="close-btn" src="../../../assets/images/index/close-btn.png" />
+      <!-- <img @click.stop="closeSticky()" class="close-btn" src="../../../assets/images/index/close-btn.png" /> -->
     </div>
-  </q-page-sticky>
+  <!-- </q-page-sticky> -->
 </template>
 <script setup>
 import { userStore } from "src/stores";

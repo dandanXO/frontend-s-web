@@ -124,6 +124,45 @@
       <div class="invite-share-social">
         <ShareIcons :is-invite="true" :url="selfTgurl" />
       </div>
+      <div class="person-level-away">
+        <div class="person-level-title">
+          <img class="mini-icon" src="../../assets/images/earn-money/oneperson.png"> 
+          <div class="text">
+            Only <span class="text-person">{{person}} person</span> away from <span class="text-level">Level {{level + 1}}</span>
+          </div>
+        </div>
+        <div class="person-level-away-bar-container">
+          <div class="outer-bar-container">
+            <div class="outer-bar">
+              <div class="inner-bar" :style="{ width: currentPersonPercentage + '%' }"></div>
+              <div class="checkpoint check0">
+                <div class="noOfPerson">0</div>
+              </div>
+              <div class="checkpoint" style="left: 33%">
+              <div class="level">Level 1</div>
+              <img v-if="currentPersonPercentage >= 33" src="../../assets/images/earn-money/level-active.png">
+              <img v-else src="../../assets/images/earn-money/level-inactive.png">
+              
+              <div class="noOfPerson">1 person</div>
+            </div>
+            <div class="checkpoint" style="left: 66%">
+              <div class="level">Level 2</div>
+              <img v-if="currentPersonPercentage >= 66" src="../../assets/images/earn-money/level-active.png">
+              <img v-else src="../../assets/images/earn-money/level-inactive.png">
+              
+              <div class="noOfPerson">2 person</div>
+            </div>
+            <div class="checkpoint" style="left: 95%">
+              <div class="level">Level 3</div>
+              <img v-if="currentPersonPercentage >= 100" src="../../assets/images/earn-money/level-active.png">
+              <img v-else src="../../assets/images/earn-money/level-inactive.png">
+              
+              <div class="noOfPerson">3 person</div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="earn-money-invitation-rewards earn-money-card">
@@ -338,7 +377,25 @@ const $q = useQuasar();
 const store = userStore();
 const { t } = useI18n();
 const ui = useUI();
-
+const person = ref(1);
+const personsPerLevel = 1;
+const level = ref(1);
+const currentPersonPercentage = computed(() => {
+  const remainder = person.value % personsPerLevel; // how many persons into the current level
+  if (remainder === 0 && person.value !== 0) {
+    if (level.value === 1) {
+      return 33;
+    } else if (level.value === 2) {
+      return 66;
+    } else if (level.value === 3) {
+      return 100;
+    } else {
+      return 0;
+    }
+  } else {
+    return (remainder / personsPerLevel) * 100;
+  }
+});
 const fallbackCopyTextToClipboard = (text) => {
   const textarea = document.createElement("textarea");
   textarea.value = text;
@@ -952,7 +1009,87 @@ watch(activeSetting, checkIsShowDetail);
     //   margin-right: 12px;
     // }
     }
-  }
+    .person-level-away {
+      margin-top: 30px;
+      .person-level-title {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        img {
+          width: 30px;
+          margin-right: 10px;
+        }
+        .text {
+          font-weight: bold;
+          .text-person {
+            background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
+          .text-level {
+              background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+          }
+        }
+      }
+      .person-level-away-bar-container {
+        margin: 10px 0 0;
+        border: 1px solid #FFFFFF14;
+        border-radius: 4px;
+        padding: 10px 5px;
+        position: relative;
+        .outer-bar-container {
+          position: relative;
+          height: 10px;
+          width: 90%;
+          margin: 50px auto;
+          .outer-bar {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          background: #E6E6E680; /* light gray background */
+          border-radius: 10px;
+        }
+
+        .inner-bar {
+          height: 100%;
+          background-color: #4caf50; /* green progress */
+          border-radius: 10px 0 0 10px;
+          transition: width 0.3s ease;
+        }
+
+        .checkpoint {
+          position: absolute;
+          top: -40px;
+          bottom: 0;
+          width: 50px;
+          height: 50px;
+          transform: translateX(-50%);
+          &.check0 {
+            left: 25px;
+            top: 22px;
+            height: unset;
+          }
+          img {
+            width: 100%;
+          }
+          .level {
+            position: absolute;
+            font-size: 11px;
+            text-align: center;
+            width: 100%;
+          }
+          .noOfPerson {
+            font-size: 10px;
+            font-weight: bold;
+          }
+        }
+        }
+        
+      }
+    }
+   }
 
   .earn-money-friendcount {
     margin-top: 16px;
