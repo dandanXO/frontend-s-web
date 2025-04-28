@@ -432,3 +432,14 @@ export function getPglWallachiaS4Bonus(promoCode) {
 export function claimPglWallachiaS4Bonus(promoCode) {
   return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
 }
+
+
+export function getMesaInit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition/yesterday?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function claimMesaBonus(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}&v=${randNum}`);
+}
