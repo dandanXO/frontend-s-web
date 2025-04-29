@@ -58,7 +58,7 @@
       </q-card-section>
     </q-card>
     
-    <q-dialog width="100%" v-model="isPageInfoDialog" persistent>
+    <q-dialog width="100%" v-model="isDaySelectionDialog" persistent>
       <div class="popout-dialog">
         <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
         <div class="popout-dialog-container">
@@ -71,12 +71,12 @@
       </div>
     </q-dialog>
     
-    <q-dialog width="100%" v-model="isDaySelectionDialog" persistent>
+    <q-dialog width="100%" v-model="isPageInfoDialog" persistent>
       <div class="popout-dialog">
         <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
         <div class="popout-dialog-container">
 
-          <div class="txt-title">{{ $t("btn.signOut") }}</div>
+          <div class="txt-title">{{ $t("btn.reminder") }}</div>
           <div class="txt-content q-mt-md text-center">
             <div class="overview-info">
               <ul class="info-top">
