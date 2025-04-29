@@ -379,6 +379,11 @@ export default {
     exchange: "ایکسچینج",
     transfer: "تبادلہ کرنا"
   },
+  dividend: {
+    myDividend: "میرا حصہ",
+    contractManagement: "معاہدہ انتظام",
+    dividendRecord: "حصہ ریکارڈ"
+  },
   deposit: {
     selectAmount: "رقم منتخب کریں",
     minimum_amt_requirement: "کم از کم جمع رقم 1000 ہے، کوئی زیادہ سے زیادہ حد نہیں ہے۔",

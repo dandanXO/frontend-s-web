@@ -381,7 +381,12 @@ export default {
     depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
     interestProfit: "Interest Profit",
     exchange: "Exchange",
-    transfer: "Transfer"
+    transfer: "Transfer",
+  },
+  dividend: {
+    myDividend: 'My Dividend',
+    contractManagement: 'Contract Management',
+    dividendRecord: 'Dividend Record'
   },
   deposit: {
     selectAmount: "Select Amount",

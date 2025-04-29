@@ -350,7 +350,25 @@ const routes = [
   {
     path: "/account/dividend",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/account/WithdrawBankView.vue") }],
+    children: [{ path: "", component: () => import("pages/account/DividendView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/dividend/my-dividend",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/DividendView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/dividend/contract-management",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/DividendView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/dividend/dividend-record",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/DividendView.vue") }],
     meta: { requiresAuth: true }
   },
   // {
