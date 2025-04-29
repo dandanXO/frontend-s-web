@@ -67,8 +67,9 @@
               <div
                 class="banner-container"
                 v-if="
-                  selectedPromo.redirectUrl !== 'pak-jackpot-aviator' ||
-                  selectedPromo.redirectUrl !== 'new-player-acc-deposit'
+                  selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
+                  selectedPromo.redirectUrl !== 'new-player-acc-deposit' &&
+                  selectedPromo.redirectUrl !== 'spin-lucky-wheel'
                 "
               >
                 <!-- <div
