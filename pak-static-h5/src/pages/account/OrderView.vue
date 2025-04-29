@@ -12,7 +12,7 @@
       <q-tab class="right" name="recharge" :label="$t('order.recharge')" />
     </q-tabs>
 
-    <LoadingComponent v-if="isLoading[orderOptionTab]"></LoadingComponent>
+    <LoadingComponent v-if="isLoading[orderOptionTab] && !withdrawalData && !depositData"></LoadingComponent>
     <NoInfoComponent v-else-if="isNoInfo[orderOptionTab]" :noInfoTitle="$t('notify.noRecord')"></NoInfoComponent>
     <q-tab-panels
       v-else
@@ -23,7 +23,7 @@
       transition-next="fade"
     >
       <q-tab-panel name="withdrawal">
-        <q-infinite-scroll @load="loadMore" :initial-index="0" :offset="10" :disable="isEnded.withdrawal">
+        <q-infinite-scroll @load="loadMore" :initial-index="0" :offset="50" :disable="isEnded.withdrawal">
           <div v-for="(e, i) in withdrawalData" :key="`${e}-${i}`" class="order-table">
             <div class="order-row order-row--content">
               <div class="order-subrow">
@@ -80,11 +80,17 @@
               </div>
             </div>
           </div>
+
+          <template v-slot:loading>
+            <div class="row justify-center q-my-md">
+              <q-spinner-dots color="primary" size="40px" />
+            </div>
+          </template>
         </q-infinite-scroll>
       </q-tab-panel>
 
       <q-tab-panel name="recharge">
-        <q-infinite-scroll @load="loadMore" :initial-index="0" :offset="10" :disable="isEnded.recharge">
+        <q-infinite-scroll @load="loadMore" :initial-index="0" :offset="50" :disable="isEnded.recharge">
           <div v-for="(e, i) in depositData" :key="`${e}-${i}`" class="order-table">
             <div class="order-row order-row--content">
               <div class="order-subrow">
@@ -128,6 +134,12 @@
               </div>
             </div>
           </div>
+
+          <template v-slot:loading>
+            <div class="row justify-center q-my-md">
+              <q-spinner-dots color="primary" size="40px" />
+            </div>
+          </template>
         </q-infinite-scroll>
       </q-tab-panel>
     </q-tab-panels>
@@ -186,41 +198,42 @@ const setTime = () => {
 
 const withdrawalData = ref([]);
 const searchWithdrawalRecord = () => {
-  isLoading.withdrawal = true;
-  withdrawalData.value = [];
+  return new Promise((resolve, reject) => {
+    isLoading.withdrawal = true;
 
-  const { startDate, endDate } = searchForm;
+    const { startDate, endDate } = searchForm;
 
-  const gmtStartDate = convertToGMT8(startDate);
-  const gmtEndDate = convertToGMT8(endDate);
-  api
-    .get("/session/member/withdraw", {
-      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: currentWith.value, size: 10 }
-    })
-    .then((response) => {
-      if (response.code === 0) {
-        const data = response.data.records;
+    const gmtStartDate = convertToGMT8(startDate);
+    const gmtEndDate = convertToGMT8(endDate);
+    api
+      .get("/session/member/withdraw", {
+        params: { startDate: gmtStartDate, endDate: gmtEndDate, current: currentWith.value, size: 10 }
+      })
+      .then((response) => {
+        if (response.code === 0) {
+          const data = response.data.records;
 
-        currentWith.value++;
-        withdrawalData.value.push(...data);
+          currentWith.value++;
+          withdrawalData.value.push(...data);
 
-        if (data.length === 0) {
-          isNoInfo.withdrawal = true;
-        } else {
-          isNoInfo.withdrawal = false;
+          if (data.length === 0) {
+            isNoInfo.withdrawal = true;
+          } else {
+            isNoInfo.withdrawal = false;
+          }
+
+          if (response.data.records.length < 10) {
+            isEnded.withdrawal = true;
+          }
         }
-
-        if (response.data.records.length === 0) {
-          isEnded.withdrawal = true;
-        }
-      }
-    })
-    .catch((error) => {
-      isEnded.withdrawal = true;
-    })
-    .then(() => {
-      isLoading.withdrawal = false;
-    });
+      })
+      .catch((error) => {
+        isEnded.withdrawal = true;
+      })
+      .then(() => {
+        isLoading.withdrawal = false;
+      });
+  });
 };
 
 const copyinput = ref(null);
@@ -248,45 +261,59 @@ const copyText = (text) => {
 
 const depositData = ref([]);
 const searchDepositRecord = () => {
-  isLoading.recharge = true;
-  depositData.value = [];
+  return new Promise((resolve, reject) => {
+    isLoading.recharge = true;
 
-  const { startDate, endDate } = searchForm;
-  const gmtStartDate = convertToGMT8(startDate);
-  const gmtEndDate = convertToGMT8(endDate);
-  api
-    .get("/session/member/deposit", {
-      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: currentDep.value, size: 10 }
-    })
-    .then((response) => {
-      if (response.code === 0) {
-        const data = response.data.records;
-        depositData.value.push(...data);
+    const { startDate, endDate } = searchForm;
+    const gmtStartDate = convertToGMT8(startDate);
+    const gmtEndDate = convertToGMT8(endDate);
+    api
+      .get("/session/member/deposit", {
+        params: { startDate: gmtStartDate, endDate: gmtEndDate, current: currentDep.value, size: 10 }
+      })
+      .then((response) => {
+        if (response.code === 0) {
+          const data = response.data.records;
+          depositData.value.push(...data);
 
-        currentDep.value++;
+          currentDep.value++;
 
-        if (data.length === 0) {
-          isNoInfo.recharge = true;
-        } else {
-          isNoInfo.recharge = false;
+          if (data.length === 0) {
+            isNoInfo.recharge = true;
+          } else {
+            isNoInfo.recharge = false;
+          }
+
+          if (response.data.records.length < 10) {
+            isEnded.recharge = true;
+          }
         }
-
-        if (response.data.records.length === 0) {
-          isEnded.recharge = true;
-        }
-      }
-    })
-    .catch((error) => {
-      isEnded.recharge = true;
-    })
-    .then(() => {
-      isLoading.recharge = false;
-    });
+      })
+      .catch((error) => {
+        isEnded.recharge = true;
+      })
+      .then(() => {
+        isLoading.recharge = false;
+      });
+  });
 };
 
-const infiniteDone = ref(false);
-const loadMore = () => {
+const loadMore = (index, done) => {
   console.log("LOAD MORe");
+
+  if (orderOptionTab.value === "withdrawal") {
+    setTimeout(() => {
+      searchWithdrawalRecord().then((afterr) => {
+        done();
+      });
+    }, 2000);
+  } else {
+    setTimeout(() => {
+      searchDepositRecord().then((afterr) => {
+        done();
+      });
+    }, 2000);
+  }
 };
 
 const getWithdrawStatus = (withdrawStatus) => {
