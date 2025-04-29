@@ -81,7 +81,7 @@ const handleDialogClose = () => {
 
 const handleAppLoginPromoClaim = async () => {
   if (isAndroid() || store.isFromGooglePackage) {
-    if (!combinedStatus.value.hadBindEmail || !combinedStatus.value.hadBindPhone) {
+    if (!combinedStatus.value.hadBindPhone) {
       $q.notify({
         type: "negative",
         position: "top",
