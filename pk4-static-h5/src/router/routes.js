@@ -624,6 +624,17 @@ const routes = [
     ],
     meta: { requiresAuth: false }
   },
+  {
+    path: "/affiliate/overview",
+    component: () => import("layouts/AffiliateLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/affiliate/OverviewPage.vue")
+      }
+    ],
+    meta: { requiresAuth: false }
+  },
   // {
   //   path: "/account/personal",
   //   component: () => import("layouts/MainLayout.vue"),
