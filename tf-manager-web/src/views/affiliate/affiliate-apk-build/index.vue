@@ -79,7 +79,7 @@
         <el-table-column
           prop="alias"
           :label="t('fields.alias')"
-          width="150"
+          width="250"
         >
           <template #default="scope">
             {{ scope.row.alias !== null ? scope.row.alias : scope.row.loginName }}
