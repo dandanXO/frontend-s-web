@@ -42,13 +42,6 @@
         </div>
         <span class="footer-label">{{ $t("bottomNav.account") }}</span>
       </q-route-tab>
-      <q-route-tab to="/account/dividend/my-dividend" name="dividend" :ripple="false">
-        <div class="footer-img">
-          <img class="inactive" src="../assets/images/index/menu/icon-dividend.svg" />
-          <img class="hover" src="../assets/images/index/menu/icon-dividend-hover.svg" />
-        </div>
-        <span class="footer-label">{{ $t("bottomNav.dividend") }}</span>
-      </q-route-tab>
     </q-tabs>
   </q-footer>
 </template>

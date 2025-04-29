@@ -349,13 +349,13 @@ const routes = [
   },
   {
     path: "/account/dividend",
-    component: () => import("layouts/MainLayout.vue"),
+    component: () => import("layouts/AffiliateLayout.vue"),
     children: [{ path: "", component: () => import("pages/account/DividendView.vue") }],
     meta: { requiresAuth: true }
   },
   {
     path: "/account/dividend/my-dividend",
-    component: () => import("layouts/MainLayout.vue"),
+    component: () => import("layouts/AffiliateLayout.vue"),
     children: [{ path: "", component: () => import("pages/account/DividendView.vue") }],
     meta: { requiresAuth: true }
   },
@@ -612,6 +612,17 @@ const routes = [
       }
     ],
     meta: { requiresAuth: true }
+  },
+  {
+    path: "/affiliate/agent",
+    component: () => import("layouts/AffiliateLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/affiliate/AffiliateAccountPage.vue")
+      }
+    ],
+    meta: { requiresAuth: false }
   },
   // {
   //   path: "/account/personal",

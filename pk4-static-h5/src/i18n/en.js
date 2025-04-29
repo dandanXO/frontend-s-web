@@ -67,6 +67,7 @@ export default {
     me: "Me",
     account: "Account",
     more: "More",
+    announcement: "Announcement",
     dividend: "Dividend"
   },
   modal: {
@@ -382,6 +383,18 @@ export default {
     interestProfit: "Interest Profit",
     exchange: "Exchange",
     transfer: "Transfer",
+    "agentAccount": "Agent Account",
+  },
+  affiliateSettings: {
+    "overview": "Overview",
+    "accountRecord": "Account Record",
+    "teamManagement": "Team Management",
+    "teamPnl": "Team P&L",
+    "teamBetting": "Team Betting",
+    "editRebate": "Edit Rebate",
+    "securityCenter": "Security Center",
+    "internalMessage": "Internal Message",
+    "customerService": "Customer Service"
   },
   dividend: {
     myDividend: 'My Dividend',
