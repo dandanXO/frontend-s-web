@@ -386,7 +386,9 @@ export default {
   dividend: {
     myDividend: 'My Dividend',
     contractManagement: 'Contract Management',
-    dividendRecord: 'Dividend Record'
+    dividendRecord: 'Dividend Record',
+    activeMember: 'Active Member',
+    dividendRate: 'Dividend Rate'
   },
   deposit: {
     selectAmount: "Select Amount",

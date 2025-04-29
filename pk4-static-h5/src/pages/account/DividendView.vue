@@ -26,12 +26,13 @@
   import MyDividend from "../account/dividend/MyDividend.vue";
   
   const route = useRoute();
-  const activeKey = ref("");
+  const activeKey = ref("my-dividend");
   
   watch(
     () => route.path,
     () => {
-      if (route.path === "/account/dividend") {
+        console.log('here', route)
+      if (route.path === "/account/dividend/my-dividend") {
         activeKey.value = "my-dividend";
       } else if (route.path === "/account/dividend/contract-management") {
         activeKey.value = "contract-management";
