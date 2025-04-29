@@ -43,8 +43,8 @@
         <el-input
           v-model="messageToSend"
           class="livestream-chat-input"
-          :placeholder="isLivestreamExisted ? '请输入聊天内容' : ''"
-          :disabled="!isLivestreamExisted"
+          :placeholder="inputConfig.placeholder"
+          :disabled="inputConfig.disabled"
           autocomplete="off"
         />
         <button
@@ -60,6 +60,7 @@
   </div>
 </template>
 <script setup>
+import { userStore } from "@/store";
 import { useDark, useLocalStorage } from "@vueuse/core";
 import { computed, nextTick, ref, toRefs, watch } from "vue";
 import { Vue3Marquee } from "vue3-marquee";
@@ -67,23 +68,40 @@ import { Vue3Marquee } from "vue3-marquee";
 const now = Date.now();
 const DEFAULT_ANNOUNCEMENT = "禁止发表任何广告、低俗色情、辱骂平台等违规言论!";
 
-const props = defineProps(["messages", "livestreamData"]);
-const { messages, livestreamData } = toRefs(props);
+const props = defineProps(["messages", "livestreamData", "vipStatus"]);
+const { messages, livestreamData, vipStatus } = toRefs(props);
 const emit = defineEmits(["sendChatMessage"]);
 
 const isDark = useDark();
 const profilePhotoDir = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/profile/";
+const store = userStore();
 
 const messageToSend = ref("");
 const chatListRef = ref(null);
 
 const isLivestreamExisted = computed(() => typeof livestreamData.value?.id === "number");
-const isMessageSendable = computed(() => messageToSend.value.trim().length > 0 && isLivestreamExisted.value);
+const isMessageSendable = computed(
+  () => messageToSend.value.trim().length > 0 && isLivestreamExisted.value && vipStatus.value
+);
 const displayAnnouncementList = computed(() => {
   if (livestreamData.value?.roomMessage) {
     return [livestreamData.value?.roomMessage];
   }
   return [DEFAULT_ANNOUNCEMENT];
+});
+const inputConfig = computed(() => {
+  let disabled = false;
+  let placeholder = "请输入聊天内容";
+  if (!store.token || !vipStatus.value || !isLivestreamExisted.value) {
+    disabled = true;
+    if (!vipStatus.value) placeholder = "VIP特权不足，无法发言";
+    if (!store.token) placeholder = "请登录后发言";
+    if (!isLivestreamExisted.value) placeholder = "直播尚未开始";
+  }
+  return {
+    disabled,
+    placeholder
+  };
 });
 
 const handleSendChatMessage = () => {

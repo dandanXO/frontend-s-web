@@ -18,6 +18,7 @@
         class="livestream-chat"
         :messages="fullMessages"
         :livestream-data="currentLiveData"
+        :vip-status
         @send-chat-message="handleSendChatMessage"
       />
       <LivestreamVideo ref="livestreamVideoRef" :danmuList :livestream-data="currentLiveData" :is-livestreaming />
@@ -30,7 +31,7 @@ import LivestreamList from "@/components/home/livestream/LivestreamList.vue";
 import CurrentLivestream from "@/components/home/livestream/CurrentLivestream.vue";
 import LivestreamChat from "@/components/home/livestream/LivestreamChat.vue";
 import LivestreamVideo from "@/components/home/livestream/LivestreamVideo.vue";
-import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { userStore } from "@/store";
 import { getChatHistory, getLivestreamDetail, getLivestreamList, sendChat } from "@/api/index/livestream";
 import GameModal from "@/components/modal/GameModal.vue";
@@ -89,6 +90,7 @@ const messagesHistoryMeta = ref({
   max: 1
 });
 const latestProcessedMessageId = ref(-1);
+const vipStatus = ref(false);
 // const channels = ref([
 //   {
 //     name: "线路1",
@@ -165,6 +167,7 @@ const getData = () => {
     .then((res) => {
       if (res.code === 0) {
         const parsedData = res.data.streamList.map(parseLivestreamData);
+        vipStatus.value = !!res.data.vipStatus;
         list.value.push(...parsedData);
         if (parsedData.length && livestreamListMeta.value.current === 1) {
           const { earliestLivestreamIndex, latestWatchLivestreamIndex } = parsedData.reduce(
@@ -298,6 +301,7 @@ const syncLivestreamInfo = async () => {
   livestreamSyncAbortController.value = new AbortController();
   getLivestreamDetail(currentLiveData.value.streamId, livestreamSyncAbortController).then((res) => {
     if (res.code === 0) {
+      vipStatus.value = !!res.data.vipStatus;
       if (currentLiveData.value.streamerStatus === res.data.streamerStatus) return;
       const notifyMessage = res.data.streamerStatus
         ? "主播已开播，即将切换至主播直播"
