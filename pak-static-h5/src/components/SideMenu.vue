@@ -116,7 +116,7 @@
       {{ $t("sideNav.language") }}
     </RouterLink>
 
-    <div v-if="ui.siteType !== 'CURACAO'" class="side-menu-item license">
+    <div v-if="ui.siteType === 'CURACAO'" class="side-menu-item license">
       <img class="license-img" src="../assets/images/license/curacao-license.png" />
       <div class="license-text-wrapper">
         <span class="license-text__title">{{ $t("sideNav.license.curacao.title") }}</span>
