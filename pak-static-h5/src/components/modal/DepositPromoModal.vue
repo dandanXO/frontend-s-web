@@ -136,6 +136,8 @@ const checkAppLogin = async () => {
       const res = await eventapi.get("/session/app-login-bonus/popUp?promoCode=pak-app-login-phone-bonus");
       if (res.code === 0 && res.data) {
         modalType.value = "APP_LOGIN_APK";
+      } else {
+        showNextModal();
       }
     } else if (!combinedStatus.value.isAppLogin) {
       modalType.value = "APP_LOGIN_H5";
