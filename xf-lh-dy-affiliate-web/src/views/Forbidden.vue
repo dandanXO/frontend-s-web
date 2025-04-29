@@ -62,6 +62,19 @@
           Back to Main Page.<br>
           返回主页面。
         </div>
+
+        <div
+          class="super-highlight"
+          style="margin-top: 12px;margin-bottom: 8px"
+          v-if="isCNWeb"
+        >
+          下载
+          <a href="https://am35.cc" target="_blank">am35.cc</a>
+          加
+          <span>{{ vipAccId }}</span>
+          客服号协助处理
+        </div>
+
         <div class="decs cn">
           <p>
             <b>
@@ -116,6 +129,8 @@
 </template>
 
 <script setup>
+/* eslint-disable */
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 const ipAddress = sessionStorage.getItem('myIPAddress') || "";
@@ -138,6 +153,25 @@ const seconds = currentDateTime.getSeconds().toString().padStart(2, '0');
 
 const formattedDate = `${month}/${day}/${year}`;
 const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+console.log(window.location.pathname)
+
+const vipAccId = computed(() => {
+  if(window.location.host.includes("dy2-")){
+    return "DY8888"
+  }else if(window.location.host.includes("xf1-")){
+    return "XF8888"
+  }else{
+    return "LH6888";
+  }
+});
+
+const isCNWeb = computed(() => {
+  if (window.location.host.includes("localhost") || window.location.host.includes("psnaback") || window.location.host.includes("127.0.0.1") || window.location.host.includes("lh1-") || window.location.host.includes("dy2-") || window.location.host.includes("xf1-")) {
+    return true;
+  }
+  return false;
+})
 
 </script>
 
@@ -253,6 +287,20 @@ p {
 .highlight {
   color: #3a3a3a;
   font-weight: bold;
+}
+
+.super-highlight {
+  color: #3a3a3a;
+  font-weight: bold;
+  font-size: 18px;
+
+  a {
+    color: darkblue;
+  }
+
+  span{
+    color: #ff0015;
+  }
 }
 
 @media (max-width: 1440px) {

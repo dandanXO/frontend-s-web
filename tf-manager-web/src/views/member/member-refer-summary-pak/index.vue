@@ -50,6 +50,15 @@
         <el-button size="mini" type="warning" @click="resetQuery()">
           {{ t('fields.reset') }}
         </el-button>
+        <el-button
+          size="mini"
+          type="primary"
+          @click="openExportDialog"
+          style="margin-left: 5px"
+          v-permission="['sys:member-refer-pak:summary-bulk-export']"
+        >
+          {{ t('fields.requestExportToExcel') }}
+        </el-button>
       </div>
     </div>
     <el-card class="box-card" shadow="never" style="margin-top: 40px">
@@ -166,6 +175,92 @@
         :current-page="request.current"
       />
     </el-card>
+
+    <el-dialog
+      :title="t('fields.requestExportToExcel')"
+      v-model="uiControl.exportDialogVisible"
+      append-to-body
+      width="900px"
+      style="height: 600px;"
+    >
+      <div style="height: 500px; overflow-y: auto;">
+        <el-form :inline="true" size="small" label-width="180px">
+          <el-form-item :label="t('fields.recordDate')">
+            <el-date-picker
+              v-model="exportRequest.recordTime"
+              type="daterange"
+              format="DD/MM/YYYY"
+              value-format="YYYY-MM-DD"
+              range-separator=":"
+              :start-placeholder="t('fields.startDate')"
+              :end-placeholder="t('fields.endDate')"
+              :shortcuts="shortcuts"
+            />
+          </el-form-item>
+          <el-button
+            icon="el-icon-upload"
+            size="mini"
+            type="success"
+            @click="chooseExportFile"
+          >
+            {{ t('fields.import') }}
+          </el-button>
+          <el-button
+            icon="el-icon-download"
+            size="mini"
+            type="primary"
+            @click="downloadTemplate"
+          >
+            {{ t('fields.downloadTemplate') }}
+          </el-button>
+        </el-form>
+
+        <input
+          id="exportFile"
+          type="file"
+          accept=".csv, .xlsx, .xls"
+          @change="handleFileImport"
+          hidden
+        >
+
+        <el-table
+          :data="exportMemberList"
+          v-loading="exportLoading"
+          size="small"
+          :empty-text="t('fields.noData')"
+          style="margin-top: 15px"
+        >
+          <el-table-column prop="loginName" :label="t('fields.loginName')" />
+        </el-table>
+
+        <div class="dialog-footer" style="margin-top: 15px">
+          <el-button
+            type="primary"
+            :disabled="exportMemberList.length === 0"
+            @click="confirmExport"
+            :loading="exportButtonLoading"
+          >
+            {{ t('fields.requestExportToExcel') }}
+          </el-button>
+          <el-button @click="uiControl.exportDialogVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+        </div>
+      </div>
+
+    </el-dialog>
+
+    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
+               :close-on-click-modal="false" :close-on-press-escape="false"
+    >
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.DownloadManager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
+    </el-dialog>
   </div>
 </template>
 
@@ -173,6 +268,7 @@
 /* eslint-disabled */
 import { computed, reactive, ref, onMounted } from 'vue'
 import {
+  exportPakMemberReferSummaryBulk,
   getPakMemberReferSummary
 } from '../../../api/member-refer-event'
 import { getSiteListSimple } from '../../../api/site'
@@ -184,6 +280,8 @@ import { useRouter } from "vue-router";
 import { getShortcuts } from '@/utils/datetime'
 import moment from "moment/moment";
 import { useThrottleFn } from '@vueuse/core'
+import * as XLSX from 'xlsx';
+import { ElMessage } from 'element-plus'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -211,7 +309,9 @@ const uiControl = reactive({
   referrer: null,
   referrerPath: [],
   referrerIdPath: [],
-  isButtonDisabled: false
+  isButtonDisabled: false,
+  messageVisible: false,
+  exportDialogVisible: false
 })
 
 const page = reactive({
@@ -348,6 +448,120 @@ function changePage(page) {
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site.filter(e => e.id === 11 || e.id === 19)
+}
+
+// 新增下载模块
+const EXPORT_LOGIN_NAME_HEADER = [
+  'loginName',
+]
+
+function setWidth(exportData, maxLength) {
+  exportData.map(data => {
+    Object.keys(data).map(key => {
+      const value = data[key];
+
+      maxLength[key] =
+        typeof value === 'number'
+          ? maxLength[key] >= 10
+            ? maxLength[key]
+            : 10
+          : maxLength[key] >= value.length + 2
+            ? maxLength[key]
+            : value.length + 2
+    });
+  });
+}
+
+async function downloadTemplate() {
+  const exportMemberReferSummaryPak = [EXPORT_LOGIN_NAME_HEADER]
+  const maxLengthAdmountAdjust = []
+  const wsMemberRefererSummaryPak = XLSX.utils.aoa_to_sheet(exportMemberReferSummaryPak)
+  setWidth(exportMemberReferSummaryPak, maxLengthAdmountAdjust)
+  const wsAdmountAdjustCols = maxLengthAdmountAdjust.map(w => {
+    return { width: w }
+  })
+  wsMemberRefererSummaryPak['!cols'] = wsAdmountAdjustCols
+
+  const wb = XLSX.utils.book_new()
+  wb.SheetNames.push('Member_Refer_Summary_Pak')
+  wb.Sheets.Member_Refer_Summary_Pak = wsMemberRefererSummaryPak
+  XLSX.writeFile(wb, 'Member_Refer_Summary_Pak.xlsx')
+}
+
+// 新增导出相关状态
+const exportLoading = ref(false);
+const exportButtonLoading = ref(false);
+const exportMemberList = ref([]);
+
+const exportRequest = reactive({
+  recordTime: [defaultStartDate, defaultEndDate],
+  loginNames: []
+});
+
+function openExportDialog() {
+  uiControl.exportDialogVisible = true
+  exportMemberList.value = [];
+  exportRequest.loginNames = [];
+  exportRequest.recordTime = [defaultStartDate, defaultEndDate];
+}
+
+function chooseExportFile() {
+  document.getElementById('exportFile').click();
+}
+
+function handleFileImport(event) {
+  exportLoading.value = true;
+  const file = event.target.files[0];
+  const reader = new FileReader();
+
+  reader.onload = (e) => {
+    const data = new Uint8Array(e.target.result);
+    const workbook = XLSX.read(data, { type: 'array' });
+    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+    const jsonData = XLSX.utils.sheet_to_json(firstSheet);
+
+    // 检查上传数量是否超过100个
+    if (jsonData.length > 100) {
+      ElMessage.error(t('message.uploadLimitExceeded', { count: 100 }));
+      exportLoading.value = false;
+      event.target.value = '';
+      return;
+    }
+
+    exportMemberList.value = jsonData.map(item => ({
+      loginName: item.loginName
+    }));
+
+    exportRequest.loginNames = exportMemberList.value.map(m => m.loginName);
+    console.log("loginNames : ", exportRequest.loginNames)
+    exportLoading.value = false;
+  };
+
+  reader.readAsArrayBuffer(file);
+  event.target.value = ''; // 重置input
+}
+
+async function confirmExport() {
+  exportButtonLoading.value = true;
+
+  try {
+    const query = {
+      recordTime: exportRequest.recordTime.join(','),
+      loginNames: exportRequest.loginNames.join(','),
+      requestBy: store.state.user.name,
+      requestTime: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
+      siteId: request.siteId
+    };
+    const { data: ret } = await exportPakMemberReferSummaryBulk(query);
+    if (ret) {
+      uiControl.messageVisible = true;
+      uiControl.exportDialogVisible = false;
+    }
+  } catch (error) {
+    ElMessage.error(t('message.exportFailed'));
+  } finally {
+    exportButtonLoading.value = false;
+  }
 }
 
 onMounted(async () => {

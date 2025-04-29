@@ -812,6 +812,7 @@ export default {
     1000: "Erro no nome de login ou senha",
     1001: "Conta está fechada",
     1002: "Conta é para afiliados",
+    1004: "A conta foi bloqueada. Por favor, tente novamente após 60 minutos ou entre em contato com o atendimento ao cliente para desbloqueá-la.",
     1300: "O valor deve ser um número maior que 0",
     1301: "Este cartão não é suportado",
     1302: "Esta moeda não é suportada",

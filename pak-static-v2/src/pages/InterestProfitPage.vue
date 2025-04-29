@@ -583,6 +583,8 @@ onMounted(() => {
   // background-color: #1f1f1f;
   background: url(../assets/images/index/interest-bg.png) no-repeat;
   background-size: cover;
+  height: 0;
+  padding-bottom: calc(136 / 343 * 100);
   aspect-ratio: 343 / 136;
   color: #fff;
 }

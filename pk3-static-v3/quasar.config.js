@@ -61,7 +61,7 @@ module.exports = configure(function (ctx) {
       },
       transpile: true,
       transpileDependencies: [
-        /node_modules\/(vue|pinia|vue-i18n|@intlify|@capacitor|vue-router|swiper)/
+        /node_modules\/(vue|pinia|chart|vue-i18n|@intlify|@capacitor|vue-router|swiper)/
       ],
       // publicPath: '/',
 
@@ -75,7 +75,6 @@ module.exports = configure(function (ctx) {
       // showProgress: false,
       // gzip: true,
       // analyze: true,
-
       minify: true,
       uglifyOptions: {
         compress: {
@@ -181,6 +180,10 @@ module.exports = configure(function (ctx) {
         chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
         chain.resolve.alias.set("@", path.resolve(__dirname, "src")); // shortcut for src
 
+        // chain.resolve.alias.set(
+        //   'moment-timezone/data/packed/latest.json',
+        //   path.resolve(__dirname, 'src/directives/only-karachi.json')
+        // );
 
         if (process.env.NODE_ENV === "production" && isImageCompress) {
           chain.plugin("imagemin-webpack-plugin").use(ImageminPlugin, [
@@ -236,7 +239,7 @@ module.exports = configure(function (ctx) {
 
     // animations: 'all', // --- includes all animations
     // https://quasar.dev/options/animations
-    animations: "all",
+    animations: [],
 
     // https://v2.quasar.dev/quasar-cli-webpack/developing-ssr/configuring-ssr
     ssr: {

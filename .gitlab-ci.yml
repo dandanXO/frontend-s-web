@@ -164,6 +164,13 @@ deploy-xf-landing-v11:
 
 #===============================================================================================
 
+deploy-xf-landing-v13:
+  extends: .s3-deploy
+  variables:
+    PROJECT: xf-landing-v13
+
+#===============================================================================================
+
 deploy-tha-download:
   extends: .s3-deploy
   variables:
@@ -224,6 +231,13 @@ deploy-dy-landing-v11:
   extends: .s3-deploy
   variables:
     PROJECT: dy-landing-v11
+
+#===============================================================================================
+
+deploy-dy-landing-v13:
+  extends: .s3-deploy
+  variables:
+    PROJECT: dy-landing-v13
 
 #===============================================================================================
 
@@ -759,6 +773,20 @@ deploy-lh-landing-v12:
 
 #===============================================================================================
 
+deploy-lh-landing-v13:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-landing-v13
+
+#===============================================================================================
+
+deploy-lh-dy-xf-forbidden:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-dy-xf-forbidden
+
+#===============================================================================================
+
 deploy-lh-redirect:
   extends: .s3-deploy
   variables:
@@ -870,6 +898,19 @@ build-image-telegram-web:
     - build-telegram-web
 #===============================================================================================
 
+build-pak-affiliate-web:
+  extends: .build-projects
+  variables:
+    PROJECT: pak-affiliate-web
+
+build-image-pak-affiliate-web:
+  extends: .docker-build
+  variables:
+    PROJECT: pak-affiliate-web
+  needs:
+    - build-pak-affiliate-web
+#===============================================================================================
+
 build-pak-static-web:
   extends: .build-projects
   variables:
@@ -895,6 +936,19 @@ build-image-pak-static-h5:
   needs:
     - build-pak-static-h5
 
+#===============================================================================================
+
+build-pk4-static-h5:
+  extends: .build-projects
+  variables:
+    PROJECT: pk4-static-h5
+
+build-image-pk4-static-h5:
+  extends: .docker-build
+  variables:
+    PROJECT: pk4-static-h5
+  needs:
+    - build-pk4-static-h5
 #===============================================================================================
 
 build-pak-landing-v1:
@@ -1069,6 +1123,20 @@ build-image-mx1-static-v1:
 
 #===============================================================================================
 
+build-au1-static-h5:
+  extends: .build-projects
+  variables:
+    PROJECT: au1-static-h5
+
+build-image-au1-static-h5:
+  extends: .docker-build
+  variables:
+    PROJECT: au1-static-h5
+  needs:
+    - build-au1-static-h5
+
+#===============================================================================================
+
 build-live-manager-web:
   extends: .build-projects
   variables:
@@ -1175,6 +1243,12 @@ deploy-pk2-download:
 
 #===============================================================================================
 
+deploy-pk2-download-v2:
+  extends: .s3-deploy
+  variables:
+    PROJECT: pk2-download-v2
+
+#===============================================================================================
 build-pk2-redirect-v3:
   extends: .build-projects
   variables:

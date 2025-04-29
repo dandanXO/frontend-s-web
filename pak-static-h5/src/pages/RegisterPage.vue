@@ -13,179 +13,151 @@
   <div class="register-container" :class="isRestrictedDomain ? 'w-domain' : ''">
     <div class="back-left" v-if="!isRestrictedDomain">
       <router-link :to="'/home'">
-        <img src="../assets/images/index/btn-back.png" />
+        <img src="../assets/images/index/btn-house.png" />
       </router-link>
     </div>
-    <div class="is-domain top-img">
+    <!-- <div class="is-domain top-img">
       <img src="../assets/images/index/register-topimg.png" />
     </div>
     <div class="no-domain register-form-logo-img">
       <img src="../assets/images/auth/b9-logo.png" />
-    </div>
+    </div> -->
     <div class="back-btn-img" v-if="isRestrictedDomain" @click="router.replace('/')">
       <img src="../assets/images/index/btn-back.png" />
     </div>
 
-    <div class="no-domain auth-tab-wrapper">
+    <!-- <div class="no-domain auth-tab-wrapper">
       <q-tabs v-model="regLoginTab" dense no-caps class="auth-tab-toggle" indicator-color="transparent" align="justify">
         <q-tab name="login" :label="$t('header.login')" />
         <q-tab name="register" :label="$t('header.register')" />
       </q-tabs>
-    </div>
+    </div> -->
+    <div class="reg-pg-title">{{ $t("header.register") }}</div>
 
     <div class="register-form-wrapper">
+      <!-- <FloatingStickyKefu /> -->
       <q-form class="rounded-borders">
         <InputRowGrid>
           <template #fields>
-            <InputField :label="$t('form.phone')">
-              <template #input>
-                <q-input
-                  type="tel"
-                  pattern="\d*"
-                  maxlength="11"
-                  ref="loginNameRef"
-                  hide-bottom-space
-                  v-model="regForm.loginName"
-                  :rules="[
-                    (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-                    (val) => (val && val.length === 11) || $t('form.phone_rules_01'),
-                    (val) => val.startsWith('03') || $t('form.phone_rules_03')
-                  ]"
-                  color="green"
-                  outlined
-                  label-color="brand"
-                  :placeholder="$t('form.phone_placeholder')"
-                >
-                  <template v-slot:prepend>
-                    <q-icon name="smartphone" />
-                    <div class="prepend-number">+92</div>
-                  </template>
-                </q-input>
-              </template>
-            </InputField>
-
-            <InputField :label="$t('form.password')">
-              <template #input>
-                <q-input
-                  ref="pwdRef"
-                  hide-bottom-space
-                  v-model="regForm.password"
-                  :type="isPwd ? 'password' : 'text'"
-                  :rules="[
-                    (val) => (val && val.length > 0) || $t('form.password_rules_01'),
-                    (val) => val.length > 6 || $t('form.password_rules_02')
-                  ]"
-                  color="green"
-                  outlined
-                  label-color="brand"
-                  :placeholder="$t('form.password_placeholder')"
-                >
-                  <template v-slot:prepend>
-                    <q-icon name="lock" />
-                  </template>
-                  <template v-slot:append>
-                    <q-icon
-                      color="gray-3"
-                      :name="isPwd ? 'visibility_off' : 'visibility'"
-                      class="cursor-pointer"
-                      @click="isPwd = !isPwd"
-                    />
-                  </template>
-                </q-input>
-                <!-- <div v-if="regForm.password" class="password-str-div">
-                  <span
-                    :class="{
-                      'weak-pwd': pwdStrength == 'weak',
-                      'normal-pwd': pwdStrength == 'normal',
-                      'strong-pwd': pwdStrength == 'strong'
-                    }"
-                  >
-                    Weak
-                  </span>
-                  <span
-                    :class="{
-                      'normal-pwd': pwdStrength == 'normal',
-                      'strong-pwd': pwdStrength == 'strong'
-                    }"
-                  >
-                    Good
-                  </span>
-                  <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
-                </div> -->
-              </template>
-            </InputField>
-
-            <!-- <InputField :label="'Confirm Password'">
-              <template #input>
-                <q-input
-                  ref="confirmPwdRef"
-                  hide-bottom-space
-                  :type="isCfmPwd ? 'password' : 'text'"
-                  v-model="regForm.confirmPwd"
-                  lazy-rules
-                  :rules="[
-                    (val) => (val && val.length > 0) || 'Please insert password',
-                    (val) => val === regForm.password || 'Password does not match'
-                  ]"
-                  color="green"
-                  outlined
-                  label-color="brand"
-                >
-                  <template v-slot:prepend>
-                    <q-icon name="lock" />
-                  </template>
-                  <template v-slot:append>
-                    <q-icon
-                      color="gray-3"
-                      :name="isCfmPwd ? 'visibility_off' : 'visibility'"
-                      class="cursor-pointer"
-                      @click="isCfmPwd = !isCfmPwd"
-                    />
-                  </template>
-                </q-input>
-              </template>
-            </InputField> -->
-
-            <!-- <InputField :label="'NRIC'">
-              <template #input>
-                <q-input
-                  type="tel"
-                  pattern="\d*"
-                  maxlength="13"
-                  ref="nricRef"
-                  hide-bottom-space
-                  v-model="regForm.nric"
-                  :rules="[
-                    (val) => (val && val.length > 0) || 'Please insert NRIC',
-                    (val) => (val && val.length === 13) || 'The NRIC must have 13 digits'
-                  ]"
-                  color="green"
-                  outlined
-                  label-color="brand"
-                  placeholder="Please enter your NRIC"
-                >
-                  <template v-slot:prepend>
-                    <q-icon name="person" />
-                  </template>
-                </q-input>
-              </template>
-            </InputField> -->
-            <div style="visibility: hidden; position: absolute">
-              <InputField :label="'Invitation Code (Optional)'">
+            <template v-if="ui.siteType === 'DEFAULT'">
+              <InputField>
                 <template #input>
                   <q-input
-                    v-if="!hasAffiliate"
-                    ref="affiliateCodeRef"
+                    type="tel"
+                    pattern="\d*"
+                    maxlength="11"
+                    ref="loginNameRef"
                     hide-bottom-space
-                    v-model="regForm.referrer"
-                    label-color="brand"
-                    outlined
+                    clearable
+                    v-model="regForm.loginName"
+                    :rules="[
+                      (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
+                      (val) => (val && val.length === 11) || $t('form.phone_rules_01'),
+                      (val) => val.startsWith('03') || $t('form.phone_rules_03')
+                    ]"
                     color="green"
-                    placeholder="Enter Invitation Code (Optional)"
-                  />
+                    outlined
+                    label-color="brand"
+                    :placeholder="$t('form.phone_placeholder')"
+                  >
+                    <template v-slot:prepend>
+                      <q-icon name="smartphone" />
+                      <div class="prepend-number">+92</div>
+                    </template>
+                    <template v-if="regForm.referrer && spinRefCode" v-slot:append>
+                      <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">
+                        {{ otpCountdown > 0 ? `RESEND (${otpCountdown})` : $t("form.get_code") }}
+                      </q-btn>
+                    </template>
+                  </q-input>
                 </template>
               </InputField>
-            </div>
+
+              <PasswordField v-model="regForm.password" ref="pwdRef" />
+
+              <!--            -->
+              <InputField v-if="regForm.referrer && regForm.smsCodeId" :label="$t('form.otp_form')">
+                <template #input>
+                  <q-input
+                    pattern="\d*"
+                    maxlength="6"
+                    ref="verificationRef"
+                    hide-bottom-space
+                    v-model="regForm.smsCode"
+                    :rules="[
+                      (val) => (val && val.length > 0) || $t('form.insert_otp_num'),
+                      (val) => (val && val.length === 6) || $t('form.otp_must_have_6')
+                    ]"
+                    color="white"
+                    class="landing-input"
+                    outlined
+                    :placeholder="$t('form.enter_otp_num')"
+                    label-color="brand"
+                    :disable="isOtpEnable"
+                  >
+                    <template v-slot:prepend>
+                      <q-icon name="key" />
+                    </template>
+                  </q-input>
+                </template>
+              </InputField>
+
+              <!-- <InputField :label="'Confirm Password'">
+                <template #input>
+                  <q-input
+                    ref="confirmPwdRef"
+                    hide-bottom-space
+                    :type="isCfmPwd ? 'password' : 'text'"
+                    v-model="regForm.confirmPwd"
+                    lazy-rules
+                    :rules="[
+                      (val) => (val && val.length > 0) || 'Please insert password',
+                      (val) => val === regForm.password || 'Password does not match'
+                    ]"
+                    color="green"
+                    outlined
+                    label-color="brand"
+                  >
+                    <template v-slot:prepend>
+                      <q-icon name="lock" />
+                    </template>
+                    <template v-slot:append>
+                      <q-icon
+                        color="gray-3"
+                        :name="isCfmPwd ? 'visibility_off' : 'visibility'"
+                        class="cursor-pointer"
+                        @click="isCfmPwd = !isCfmPwd"
+                      />
+                    </template>
+                  </q-input>
+                </template>
+              </InputField> -->
+
+              <div style="visibility: hidden; position: absolute">
+                <InputField :label="'Invitation Code (Optional)'">
+                  <template #input>
+                    <q-input
+                      v-if="!hasAffiliate"
+                      ref="affiliateCodeRef"
+                      hide-bottom-space
+                      v-model="regForm.referrer"
+                      label-color="brand"
+                      outlined
+                      color="green"
+                      placeholder="Enter Invitation Code (Optional)"
+                    />
+                  </template>
+                </InputField>
+              </div>
+            </template>
+            <CuracaoRegisterForm
+              v-else-if="ui.siteType === 'CURACAO'"
+              ref="curacaoRegisterFormRef"
+              v-model:login-name="regForm.loginName"
+              v-model:realName="regForm.realName"
+              v-model:birthday="regForm.birthday"
+              v-model:password="regForm.password"
+            />
           </template>
         </InputRowGrid>
 
@@ -199,6 +171,14 @@
         </div>
       --></q-form>
     </div>
+
+    <div class="no-domain mui-row q-mx-md q-mb-lg" :class="isAgreeReg ? 'checked' : ''">
+      <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
+        {{ $t("form.register_agree_01") }}
+        <a href="#" style="text-decoration: none; color: #61ff00">{{ $t("form.register_agree_02") }}</a>
+      </q-checkbox>
+    </div>
+
     <router-link to="/forgot-password" class="is-domain forget-pwd">Forget password</router-link>
 
     <div class="no-domain bottom-btn">
@@ -213,9 +193,14 @@
         {{ $t("btn.confirm") }}
       </q-btn>
 
-      <div class="google-login-wrapper">
-        <img v-if="languageVal === 'en'" style="width: 100%" src="../assets/images/index/logindirectly-en.png" />
-        <img v-else style="width: 100%" src="../assets/images/index/logindirectly-ur.png" />
+      <div class="areyounew">
+        {{ $t("btn.alreadyhaveacct") }}
+        <a @click="regLoginTab = 'login'" class="green">{{ $t("btn.login") }}</a>
+      </div>
+
+      <div v-if="!isSpinReferrer && ui.siteType === 'DEFAULT'" class="google-login-wrapper">
+        <img v-if="languageVal === 'en'" style="width: 100%" src="../assets/images/index/logindirectly-en.svg" />
+        <img v-else style="width: 100%" src="../assets/images/index/logindirectly-ur.svg" />
         <template v-if="isAndroid()">
           <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onCapacitorGoogleSignin">
             <img
@@ -264,35 +249,8 @@
       Already have an account?
       <router-link to="/login" class="login">Login</router-link>
     </div> -->
-
-    <div class="no-domain mui-row q-mt-sm q-mx-sm" :class="isAgreeReg ? 'checked' : ''">
-      <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
-        {{ $t("form.register_agree_01") }}
-        <a href="#" style="text-decoration: none; color: #61ff00">{{ $t("form.register_agree_02") }}</a>
-      </q-checkbox>
-    </div>
-
     <div class="no-domain btn-lists">
-      <div class="list-item" @click="openCharity()">
-        <img class="btn-icon" id="charity-icon" src="../assets/images/auth/charity-icon.png" />
-        <div>Charity</div>
-      </div>
-      <div class="list-item" @click="openWhatsApp()">
-        <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
-        <div>WhatsApp</div>
-      </div>
-      <div class="list-item" @click="openYoutube()">
-        <img class="btn-icon" id="youtube-icon" src="../assets/images/auth/youtube-icon.png" />
-        <div>Youtube</div>
-      </div>
-      <div class="list-item" @click="openTiktok()">
-        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />
-        <div>Tiktok</div>
-      </div>
-      <div class="list-item" v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()">
-        <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
-        <div>{{ $t("btn.downloadApp") }}</div>
-      </div>
+      <ShareIcons />
     </div>
     <div class="is-domain social-container">
       <div class="share">Share</div>
@@ -338,14 +296,43 @@
         </div>
       </div>
     </div>
-    <div class="no-domain bottom-img">
+
+    <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
+      <q-card class="captcha-form-wrapper" width="100%">
+        <q-card-section class="q-pa-md text-white">
+          <q-toolbar>
+            <q-toolbar-title>{{ $t("form.verificationCode") }}</q-toolbar-title>
+            <q-btn flat v-close-popup round dense icon="close" />
+          </q-toolbar>
+        </q-card-section>
+        <div class="q-px-lg q-pt-sm q-pb-lg">
+          <q-card-section class="q-mb-md q-pa-md">
+            <q-input v-model="innerCaptchaRef" :placeholder="$t(`form.captchaCode`)">
+              <template v-slot:append>
+                <img
+                  v-show="showImageCode"
+                  :src="phoneVerificationImg"
+                  @load="imgOnLoad"
+                  @error="imgOnError"
+                  :title="$t(`form.refresh_veri_code`)"
+                  style="margin-top: 6px; cursor: pointer"
+                  @click="getInnerCode"
+                />
+              </template>
+            </q-input>
+          </q-card-section>
+          <q-btn class="get-code-btn" @click="onCaptchaSubmit" :label="$t(`form.send_otp`)" />
+        </div>
+      </q-card>
+    </q-dialog>
+    <!-- <div class="no-domain bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, computed, watch, onActivated } from "vue";
+import { defineComponent, ref, reactive, onMounted, computed, watch, onActivated, onUnmounted } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
@@ -362,21 +349,29 @@ import { useI18n } from "vue-i18n";
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
+import ShareIcons from "src/components/LoginAndRegisterShareIcons.vue";
+import CuracaoRegisterForm from "src/components/register/curacao/CuracaoRegisterForm.vue";
+import PasswordField from "src/components/register/common/PasswordField.vue";
+// import FloatingStickyKefu from "../components/auth/FloatingStickyKefu.vue";
 
 export default defineComponent({
   name: "RegisterPage",
   methods: { isAndroid },
   components: {
     InputRowGrid,
-    InputField
+    InputField,
+    ShareIcons,
+    PasswordField,
+    CuracaoRegisterForm
+    // FloatingStickyKefu
     // PrimaryButton
   },
   setup() {
     const { t } = useI18n();
-    const i18nStoreLanguage = i18nStore();
-    const { languageVal } = storeToRefs(i18nStoreLanguage);
     const ui = useUI();
     const store = userStore();
+    const i18nStoreLanguage = i18nStore();
+    const { languageVal } = storeToRefs(i18nStoreLanguage);
     const verificationImg = ref("");
 
     const captchaRef = ref();
@@ -386,8 +381,17 @@ export default defineComponent({
     const phoneVerificationImg = ref("");
     const isAgreeReg = ref(true);
 
+    const showImageCode = ref(false);
+
+    const otpCountdown = ref();
+    const otpCountdownInterval = ref();
+
     const affCode = ref("");
     const isLoading = ref(false);
+
+    const isOtpEnable = ref(true);
+
+    const spinRefCode = ref("");
 
     const regForm = reactive({
       loginName: "",
@@ -403,8 +407,34 @@ export default defineComponent({
       referrer: "",
       smsCodeId: "",
       smsCode: "",
-      traceId: ""
+      traceId: "",
+      realName: "",
+      birthday: ""
     });
+
+    const registerApiParams = computed(() => {
+      const result = Object.assign({}, regForm);
+      switch (ui.siteType) {
+        case "CURACAO":
+          result.registerType = "email";
+          break;
+        default:
+          delete result.email;
+          delete result.realName;
+          delete result.birthday;
+      }
+      return result;
+    });
+
+    const registerApiPath = computed(() => {
+      switch (ui.siteType) {
+        case "CURACAO":
+          return "/member/bgdRegister";
+        default:
+          return "/member/indRegister";
+      }
+    });
+
     const getCode = () => {
       // api
       //   .get("/member/verificationCode")
@@ -419,6 +449,18 @@ export default defineComponent({
       //   .catch((e) => {
       //     console.log(e);
       //   });
+    };
+
+    const imgOnLoad = () => (showImageCode.value = true);
+    const imgOnError = () => (showImageCode.value = false);
+
+    const openPhoneVeriDialog = () => {
+      isOtpEnable.value = false;
+      loginNameRef.value.validate();
+      if (!loginNameRef.value.hasError) {
+        showCaptchaDialog.value = true;
+        getInnerCode();
+      }
     };
 
     const getInnerCode = () => {
@@ -437,7 +479,7 @@ export default defineComponent({
     };
 
     const hasAffiliate = ref(false);
-
+    const isSpinReferrer = ref(false);
     const getAffiliateCode = () => {
       affCode.value = sessionStorage.getItem("AFFILIATE_CODE");
       // if (affCode.value) {
@@ -457,6 +499,12 @@ export default defineComponent({
         // hasAffiliate.value = true;
         regForm.referrer = pwaRefCode;
       }
+      spinRefCode.value = sessionStorage.getItem("REFERRAL_SPIN_CODE");
+      if (spinRefCode.value) {
+        isSpinReferrer.value = true;
+        regForm.referrer = spinRefCode.value;
+        thirdPartyLoginInfo.referrer = refCode;
+      }
     };
 
     const loginNameRef = ref();
@@ -467,6 +515,7 @@ export default defineComponent({
     const emailRef = ref();
     const verificationRef = ref();
     const phoneVerificationRef = ref();
+    const curacaoRegisterFormRef = ref();
     const $q = useQuasar();
     const route = useRoute();
 
@@ -540,7 +589,7 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: "Google login successfully",
+                  message: t("form.google_login_success"),
                   icon: "check_circle_outline"
                 });
 
@@ -605,7 +654,7 @@ export default defineComponent({
                   $q.notify({
                     color: "positive",
                     position: "top",
-                    message: "Google login successfully",
+                    message: t("form.google_login_success"),
                     icon: "check_circle_outline"
                   });
 
@@ -648,7 +697,7 @@ export default defineComponent({
 
     const isRegisterAdjustSent = ref(false);
     const trackRegisterSuccessEvent = () => {
-      if (isRegisterAdjustSent.value || !ui.adjust_register_event) return;
+      if (isRegisterAdjustSent.value || !ui.adjust_register_event || store.isFromGooglePackage) return;
       isRegisterAdjustSent.value = true;
 
       if (isInPwa()) {
@@ -670,22 +719,38 @@ export default defineComponent({
     };
 
     const onSubmit = () => {
-      loginNameRef.value.validate();
-      pwdRef.value.validate();
-      // nricRef.value.validate();
+      switch (ui.siteType) {
+        case "CURACAO":
+          curacaoRegisterFormRef.value.validate();
+          break;
+        default:
+          loginNameRef.value?.validate();
+          pwdRef.value?.validate();
+          verificationRef.value?.validate();
+      }
+
+      const hasError =
+        loginNameRef.value?.hasError ||
+        pwdRef.value?.hasError ||
+        verificationRef.value?.hasError ||
+        curacaoRegisterFormRef.value?.hasError;
 
       $q.loading.show({
-        message: "Registering in progress"
+        message: t("form.register_in_progress")
       });
 
       isLoading.value = true;
 
-      if (
-        loginNameRef.value.hasError ||
-        pwdRef.value.hasError ||
-        // nricRef.value.hasError ||
-        isAgreeReg.value === false
-      ) {
+      if (hasError || isAgreeReg.value === false) {
+        $q.loading.hide();
+        isLoading.value = false;
+      } else if (regForm.referrer && isSpinReferrer.value === true && regForm.smsCodeId && isOtpEnable.value) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: t("form.fill_in_otp"),
+          icon: "report_problem"
+        });
         $q.loading.hide();
         isLoading.value = false;
       } else {
@@ -708,6 +773,9 @@ export default defineComponent({
                 regForm.regDevice = "ANDROID";
               }
             }
+            if (store.isFromGooglePackage) {
+              regForm.regDevice = "ANDROID";
+            }
           }
 
           if (regForm.regHost.indexOf("http://localhost") > -1) {
@@ -715,14 +783,14 @@ export default defineComponent({
           }
 
           api
-            .post("/member/indRegister", qs.stringify(regForm))
+            .post(registerApiPath.value, qs.stringify(registerApiParams.value))
             .then((ret) => {
               const res = ret;
               if (res.code === 0) {
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: "Registered successfully",
+                  message: t("form.register_success"),
                   icon: "check_circle_outline"
                 });
                 localStorage.setItem("newPlayerGuide", 1);
@@ -870,20 +938,27 @@ export default defineComponent({
     //   }
     // );
 
-    const openPhoneVeriDialog = () => {
-      telRef.value.validate();
-      if (!telRef.value.hasError) {
-        showCaptchaDialog.value = true;
-        getInnerCode();
-      }
+    // const openPhoneVeriDialog = () => {
+    //   loginNameRef.value.validate();
+    //   if (!loginNameRef.value.hasError) {
+    //     openVerificationCodeDialog();
+    //     getInnerCode();
+    //   }
+    // };
+
+    const verificationCodeDialog = ref(false);
+    const openVerificationCodeDialog = () => {
+      verificationCodeDialog.value = !verificationCodeDialog.value;
+      captchaRef.value = "";
+      getCode();
     };
 
     const onCaptchaSubmit = () => {
-      if (!regForm.telephone) {
+      if (!regForm.loginName) {
         $q.notify({
           color: "negative",
           position: "top",
-          message: "Phone number cannot be empty",
+          message: t("form.phone_cannot_empty"),
           icon: "report_problem"
         });
         getInnerCode();
@@ -893,13 +968,13 @@ export default defineComponent({
         .post(
           `/otp/sendSms`,
           qs.stringify({
-            telephone: regForm.telephone,
+            telephone: regForm.loginName,
             captchaCode: innerCaptchaRef.value,
             codeId: innerCodeId.value
           })
         )
         .then((res) => {
-          let message = res.message || "OTP sent to phone successfully",
+          let message = res.message || t("form.otp_sent_phone_success"),
             color = "positive";
 
           if (res.code === 0) {
@@ -907,13 +982,32 @@ export default defineComponent({
             regForm.smsCode = "";
             regForm.smsCodeId = res.data.codeId;
             console.log(res.data.codeId);
+
+            // start otp countdown
+            otpCountdown.value = res.data.second || 60;
+            otpCountdownInterval.value = setInterval(() => {
+              if (otpCountdown.value > 0) {
+                otpCountdown.value = otpCountdown.value - 1;
+              }
+            }, 1000);
           } else {
             color = "negative";
+            if (res.code === 1402) {
+              message = t("notify.tryagain", { seconds: res.data.second });
+
+              // start otp countdown
+              otpCountdown.value = res.data.second || 60;
+              otpCountdownInterval.value = setInterval(() => {
+                if (otpCountdown.value > 0) {
+                  otpCountdown.value = otpCountdown.value - 1;
+                }
+              }, 1000);
+            }
             getInnerCode();
           }
 
           if (message) {
-            $q.notify({ message, color });
+            $q.notify({ message, color, position: "top" });
           }
 
           console.log("onCaptchaSubmit", res);
@@ -1016,6 +1110,20 @@ export default defineComponent({
       const currentDomain = window.location.hostname;
       return restrictedDomains.includes(currentDomain);
     });
+
+    watch(
+      () => otpCountdown.value,
+      () => {
+        if (otpCountdown.value === 0) {
+          clearInterval(otpCountdownInterval.value);
+        }
+      }
+    );
+
+    onUnmounted(() => {
+      clearInterval(otpCountdownInterval.value);
+    });
+
     return {
       header: "Register Account",
       regForm,
@@ -1029,7 +1137,6 @@ export default defineComponent({
       verificationRef,
       onSubmit,
       isValidEmail,
-      isPwd: ref(true),
       isCfmPwd: ref(true),
       getCode,
       getInnerCode,
@@ -1038,7 +1145,7 @@ export default defineComponent({
       onCaptchaSubmit,
       innerCaptchaRef,
       phoneVerificationImg,
-      openPhoneVeriDialog,
+      // openPhoneVeriDialog,
       phoneVerificationRef,
       isValidCnPhone,
       hasAffiliate,
@@ -1067,7 +1174,18 @@ export default defineComponent({
       router,
       onClickGoogleSignin,
       onCapacitorGoogleSignin,
-      languageVal
+      languageVal,
+      isSpinReferrer,
+      otpCountdown,
+      otpCountdownInterval,
+      isOtpEnable,
+      openPhoneVeriDialog,
+      imgOnLoad,
+      imgOnError,
+      showImageCode,
+      spinRefCode,
+      store,
+      curacaoRegisterFormRef
     };
   }
 });
@@ -1123,6 +1241,15 @@ function charType(num) {
   }
 }
 
+.get-code-btn {
+  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+  color: #000000;
+  box-shadow: 0px 2px 0px 0px #1cca6a;
+  min-width: 100px;
+  max-width: 120px;
+  font-weight: bold;
+}
+
 .register-container {
   min-height: 100dvh;
   // padding: 16px;
@@ -1130,16 +1257,31 @@ function charType(num) {
   display: flex;
   flex-direction: column;
   // justify-content: center;
-  background: url("../assets/images/auth/bg-login.png");
-  background-size: 100% 100%;
+  background: url("../assets/images/auth/top-login-bg.jpg");
+  background-size: cover;
   background-repeat: no-repeat;
+  // padding-top: 250px;
+  padding-top: 265px;
+  padding-bottom: 20px;
+
+  @media screen and (max-width: 400px) {
+    padding-top: 235px;
+  }
+
   .is-domain {
     display: none;
   }
   .no-domain {
     display: unset;
+
+    @media screen and (max-width: 400px) {
+      margin-bottom: 10px;
+    }
+
     &.btn-lists {
       display: flex;
+      width: 95%;
+      margin: 0 auto;
     }
   }
   &.w-domain {
@@ -1189,6 +1331,7 @@ function charType(num) {
       padding: 3px 20px 8px;
       .btn-primary {
         background: linear-gradient(90deg, #29ed89 0%, #97e872 100%);
+        color: #000a01;
       }
       :deep(.q-btn__content) {
         font-weight: bolder;
@@ -1262,8 +1405,12 @@ function charType(num) {
 
 .back-left {
   position: fixed;
-  top: 16px;
-  left: 16px;
+  top: 15px;
+  right: 15px;
+  width: 30px;
+  img {
+    width: 100%;
+  }
 }
 
 .register-form-logo-img {
@@ -1289,9 +1436,19 @@ function charType(num) {
     width: 2.25rem;
   }
 }
+.reg-pg-title {
+  font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  color: #ffffff;
+  padding: 0 20px;
+}
 
 .register-form-wrapper {
-  padding: 0 20px 20px;
+  padding: 0 20px 5px;
 
   :deep(.q-field__control) {
     height: 45px;
@@ -1367,16 +1524,20 @@ function charType(num) {
 
 .rmb-checked-box {
   font-size: 14px;
-  color: #91829d;
+  color: #eeeeee;
+
+  @media screen and (max-width: 400px) {
+    font-size: 12px;
+  }
 
   :deep(.q-checkbox__bg) {
-    border-radius: 50%;
+    border-radius: 4px;
   }
   :deep(.q-checkbox__inner--truthy .q-checkbox__bg) {
-    background: #00ae00;
+    background: #21ef89;
 
     svg {
-      color: #fff;
+      color: #000000;
       padding: 2px;
     }
   }
@@ -1399,6 +1560,16 @@ function charType(num) {
   font-size: 14px;
   color: #ffffff;
   margin-left: 8px;
+}
+.verify-btn {
+  color: #21ef89;
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: -0.08%;
+  text-align: right;
+  text-transform: capitalize;
 }
 
 .q-icon {
@@ -1473,6 +1644,33 @@ function charType(num) {
   }
 }
 
+.q-btn {
+  @media screen and (max-width: 400px) {
+    min-height: 35px;
+    height: 35px;
+  }
+
+  :deep(.q-btn__content) {
+    @media screen and (max-width: 400px) {
+      font-size: 13px;
+    }
+  }
+}
+
+.bottom-btn-primary {
+  .btn-primary {
+    @media screen and (max-width: 400px) {
+      min-height: 35px;
+      height: 35px;
+    }
+  }
+  :deep(.q-btn__content) {
+    @media screen and (max-width: 400px) {
+      font-size: 13px;
+    }
+  }
+}
+
 .bottom-img {
   text-align: center;
   margin-top: 28px;
@@ -1482,7 +1680,7 @@ function charType(num) {
   display: flex;
   width: 70px;
   height: 76px;
-  background: url("../assets/images/index/icon-cs.png") no-repeat center center;
+  background: url("../assets/images/index/icon-cs.gif") no-repeat center center;
   background-size: contain;
 
   &:active {
@@ -1529,10 +1727,35 @@ function charType(num) {
   }
 }
 
+.captcha-form-wrapper {
+  background: #0b0e0d;
+
+  :deep(.q-toolbar) {
+    background: #232325;
+  }
+}
+
+.areyounew {
+  margin: 15px 0;
+
+  @media screen and (max-width: 400px) {
+    margin: 10px 0;
+    font-size: 12px;
+  }
+
+  .green {
+    color: #21ef89;
+    font-weight: 700;
+    cursor: pointer;
+  }
+}
 .google-login-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  // gap: 10px;
   margin-top: 25px;
+  img {
+    margin-bottom: 10px;
+  }
 }
 </style>

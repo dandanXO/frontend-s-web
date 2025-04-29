@@ -38,3 +38,7 @@ export const getActivePromoPageList = (siteId) => {
 export const updateFastAccessState = async (id, state) => {
   await https().request(`/promo-pages/${id}/fastAccessState?_method=PUT`, Method.POST, { state: state }, ContentType.form);
 };
+
+export const getSimplePromoPageList = (siteId) => {
+  return https().request(`/promo-pages/simple-list`, Method.GET, { siteId: siteId }, ContentType.form);
+};

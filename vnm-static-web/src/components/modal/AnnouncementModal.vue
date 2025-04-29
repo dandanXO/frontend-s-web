@@ -21,16 +21,19 @@
               :src="require(`../../assets/home/announcement/tab-announcement-active-${languageVal}.png`)"
               alt=""
             />
-            <p v-else>{{ $t('inbox.imptAnnouncement') }}</p>
+            <p v-else>{{ $t("inbox.imptAnnouncement") }}</p>
           </div>
           <div class="dialog-tab-item" :class="currentTab === 'inbox' ? 'active' : ''" @click="currentTab = 'inbox'">
             <!-- <img v-if="currentTab === 'inbox'" :src="require(`../../assets/home/announcement/tab-inbox-active-${languageVal}.png`)" alt="" /> -->
-            <div style="width: 33.3%; height: 1px;"></div>
+            <div style="width: 33.3%; height: 1px"></div>
             <div>
-              <p >{{ $t('inbox.mailBox') }}</p>
+              <p>{{ $t("inbox.mailBox") }}</p>
             </div>
-            <div style="width: 34%; text-align: right;" @click="visible=false">
-              <img style="height: 14px; width: 14px; margin-right: 12px;" :src="require(`../../assets/home/close.svg`)">
+            <div style="width: 34%; display: flex; justify-content: flex-end; align-items: center;" @click="handleClose">
+              <img
+                style="height: 14px; width: 14px;"
+                :src="require(`../../assets/home/close.svg`)"
+              />
             </div>
           </div>
         </div>
@@ -43,7 +46,13 @@
         </div>
         <div class="dialog-action-row today-not-remind">
           <div class="dialog-action-item">
-            <el-checkbox v-model="checked" style="color: rgba(142, 142, 142, 1); font-size: 14px; font-weight: 400;" text-color="white">{{ $t('inbox.noMoreToday') }}</el-checkbox>
+            <el-checkbox
+              v-model="checked"
+              style="color: rgba(142, 142, 142, 1); font-size: 14px; font-weight: 400;"
+              text-color="black"
+            >
+              {{ $t("inbox.noMoreToday") }}
+            </el-checkbox>
           </div>
         </div>
       </div>
@@ -65,10 +74,11 @@
 import { ref, watch, onMounted } from "vue";
 import InboxComponent from "./InboxComponent.vue";
 import AnnouncementComponent from "./AnnouncementComponent.vue";
-import { popupMailBox } from "@/api/personal/mailbox";
+import { popupMailBox, readMail } from "@/api/personal/mailbox";
 import { userStore } from "@/store";
 import { useLocalStorage } from "@vueuse/core";
 import moment from "moment";
+
 
 import { i18nStore } from "@/store/language";
 import { storeToRefs } from "pinia";
@@ -76,38 +86,58 @@ const i18nStoreLanguage = i18nStore();
 const { languageVal } = storeToRefs(i18nStoreLanguage);
 
 const store = userStore();
-const lastAnnouncementDateStr = useLocalStorage("LH_LAST_ANNOUNCEMENT_DATE", null);
+const lastAnnouncementDateStr = useLocalStorage("LH_LAST_ANNOUNCEMENT_DATE", moment("1990-12-25"));
 
-const visible = ref(true);
+const visible = ref(false);
 const currentTab = ref("inbox");
 const checked = ref(false);
 const mailData = ref([]);
 const announceData = ref([]);
 
 onMounted(() => {
-  // if (!store.token) return;
-  //
-  // if (lastAnnouncementDateStr.value) {
-  //   const today = moment();
-  //   const lastAnnouncementDate = moment(lastAnnouncementDateStr.value);
-  //   const diff = today.diff(lastAnnouncementDate, "days");
-  //   if (!diff) return;
-  // }
-  // popupMailBox()
-  //   .then((res) => {
-  //     if (res.code === 0) {
-  //       mailData.value = res.data;
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   })
-  //   .finally(() => {
-  //     if (mailData.value.length > 0) {
-  //       visible.value = true;
-  //     }
-  //   });
+  if (!store.token) return;
+
+  if (lastAnnouncementDateStr.value) {
+    const today = moment();
+    const lastAnnouncementDate = moment(lastAnnouncementDateStr.value);
+    const diff = today.diff(lastAnnouncementDate, "days");
+    if (!diff) return
+
+    lastAnnouncementDateStr.value = moment()
+  }
+  popupMailBox()
+    .then((res) => {
+      if (res.code === 0) {
+        mailData.value = res.data;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      if (mailData.value.length > 0) {
+        visible.value = true;
+      }
+    });
 });
+
+const handleClose = () => {
+  if (mailData.value.length > 0) {
+    const promises = mailData.value.map(mail => {
+      if (mail.readTime === null || mail.readTime === 'null') {
+        return readMail({ id: mail.id });
+      }
+      return Promise.resolve();
+    });
+    Promise.all(promises).then(() => {
+      visible.value = false;
+    }).catch(() => {
+      visible.value = false;
+    });
+  } else {
+    visible.value = false;
+  }
+};
 
 watch(
   () => store.token,
@@ -221,8 +251,6 @@ watch(checked, (val) => {
       justify-content: flex-end;
     }
   }
-
-  
 }
 
 .dialog-action-item {
@@ -230,19 +258,23 @@ watch(checked, (val) => {
   justify-content: center;
   align-items: center;
   margin-bottom: 12px;
-    &.close-icon {
-      justify-content: center;
-      cursor: pointer;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: #ffffff99;
-      border: 1px solid #ffffffb2;
-      fill: black;
-    }
+  &.close-icon {
+    justify-content: center;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #ffffff99;
+    border: 1px solid #ffffffb2;
+    fill: black;
   }
+}
 
 ::v-deep(.el-checkbox__input.is-checked + .el-checkbox__label) {
   color: white !important;
+}
+
+::v-deep(.el-checkbox__inner) {
+  border-color: #8e8e8e;
 }
 </style>

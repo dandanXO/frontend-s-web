@@ -10,13 +10,13 @@
       </div>
       <a class="additional-info-item" @click.stop.prevent="goToLiveChatPromo()">
         <!-- <img src="../../assets/images/home/sticky-sidebar/email-icon.svg" /> -->
-        <img src="@/components/hotpromo/officialGift/img/voxis.svg" />
+        <img style="margin-right: 8px" src="@/components/hotpromo/officialGift/img/voxis.svg" />
         <span style="margin-left: 5px">专属客服</span>
       </a>
-      <div class="additional-info-item">
-        <img src="../../assets/images/home/sticky-sidebar/phone-icon.svg" />
-        <span style="margin-left: 5px"><span class="customer_phone">+85281701071</span></span>
-      </div>
+      <!--      <div class="additional-info-item">-->
+      <!--        <img src="../../assets/images/home/sticky-sidebar/phone-icon.svg" />-->
+      <!--        <span style="margin-left: 5px"><span class="customer_phone">+85281701071</span></span>-->
+      <!--      </div>-->
     </div>
     <div class="sticky-sidebar-items">
       <div class="sticky-sidebar-item" @click="handleDarkModeClick">
@@ -351,7 +351,7 @@ export default defineComponent({
 
     const goToLiveChatPromo = () => {
       const currentRoute = router.currentRoute.value;
-      if (store.vip !== "" && store.vip !== "VIP0") {
+      if (store.vip !== "") {
         const currentName = currentRoute.query.name;
         if (currentRoute.path === "/promotion" && currentName !== "lh-official-gift") {
           router.push(`/promotion?name=lh-official-gift`).then(() => {
@@ -361,15 +361,25 @@ export default defineComponent({
           router.push(`/promotion?name=lh-official-gift`);
         }
       } else {
-        ElMessageBox.alert("暂未开放", {
-          autofocus: false,
+        ElMessageBox.alert("请登录后再操作", "系统提示", {
           center: true,
           confirmButtonText: "确认",
           showClose: false,
-          buttonSize: "large",
-          closeOnClickModal: true
+          buttonSize: "large"
+        }).then(() => {
+          store.loginPageVisible = true;
+          // router.push("/login");
+          // emits("open-login-dialog");
         });
-        return;
+        // ElMessageBox.alert("暂未开放", {
+        //   autofocus: false,
+        //   center: true,
+        //   confirmButtonText: "确认",
+        //   showClose: false,
+        //   buttonSize: "large",
+        //   closeOnClickModal: true
+        // });
+        // return;
       }
     };
 

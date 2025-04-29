@@ -24,7 +24,9 @@
         <span>认准雷火电竞官方 VIP 客服管理</span>
       </div>
       <div class="detail-block-content">
-        <span class="detail-block-content-description">添加以下您的雷火专属 VIP 客服：福利咨询，专属服务，赛事推荐专属红包</span>
+        <span class="detail-block-content-description">
+          添加以下您的雷火专属 VIP 客服：福利咨询，专属服务，赛事推荐专属红包
+        </span>
         <div class="detail-block-content-voxis">
           <img src="@/components/hotpromo/officialGift/img/voxis.svg" />
           <span class="detail-block-content-voxis__url">Amico 客服号：{{ currentVoxisId }}</span>
@@ -90,8 +92,12 @@ const paramsObj = computed(() => {
 });
 
 const currentVoxisId = computed(() => {
-  const key = `${vip.value.toLocaleLowerCase()}_voxis_id`;
-  return paramsObj.value[key] || "";
+  if (typeof vip.value === "string") {
+    const key = `${vip.value.toLocaleLowerCase()}_voxis_id`;
+    return paramsObj.value[key] || "";
+  } else {
+    return paramsObj?.value?.["vip1_voxis_id"] ?? "";
+  }
 });
 
 const handleCopyClick = () => writeClipboard(currentVoxisId.value);
@@ -120,7 +126,7 @@ const handleCopyClick = () => writeClipboard(currentVoxisId.value);
     .official-gift-block-title {
       max-width: 966px;
       margin: 0 auto;
-      background: url('./img/web-title-dark.png') no-repeat;
+      background: url("./img/web-title-dark.png") no-repeat;
       background-size: contain;
       height: 44px;
       width: 100%;
@@ -137,7 +143,7 @@ const handleCopyClick = () => writeClipboard(currentVoxisId.value);
   }
 
   .detail-block {
-    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
 
     .detail-block-title {
       display: flex;
@@ -162,14 +168,14 @@ const handleCopyClick = () => writeClipboard(currentVoxisId.value);
       gap: 12px;
       position: relative;
       padding: 20px;
-      background: #212B4AE0;
+      background: #212b4ae0;
       border-radius: 12px;
 
       .detail-block-content-description {
         font-size: 16px;
         font-weight: 600;
         line-height: 22.4px;
-        color: #FFFFFF99;
+        color: #ffffff99;
       }
 
       .detail-block-content-voxis {
@@ -198,7 +204,7 @@ const handleCopyClick = () => writeClipboard(currentVoxisId.value);
           border: 1px solid #0092ff;
           border-radius: 100px;
           padding: 3px 24px;
-          color: #0092FF;
+          color: #0092ff;
           &:hover {
             filter: brightness(0.7);
           }
@@ -215,7 +221,7 @@ const handleCopyClick = () => writeClipboard(currentVoxisId.value);
   }
 
   .reason-block {
-    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
 
     .official-gift-block-title {
       margin-bottom: 20px;
@@ -227,7 +233,7 @@ const handleCopyClick = () => writeClipboard(currentVoxisId.value);
       grid-template-columns: repeat(3, 1fr);
       .reason-block-content-reason {
         border-radius: 10px;
-        background-color: #212B4AE0;
+        background-color: #212b4ae0;
         padding: 4px;
         .reason-block-content-reason__inner {
           display: flex;
@@ -242,7 +248,7 @@ const handleCopyClick = () => writeClipboard(currentVoxisId.value);
           }
           span {
             margin-bottom: 16px;
-            color: #FFFFFF;
+            color: #ffffff;
           }
         }
       }
@@ -255,7 +261,7 @@ const handleCopyClick = () => writeClipboard(currentVoxisId.value);
     justify-content: space-between;
     align-items: center;
     padding: 40px 80px;
-    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
     background-size: cover;
 
     .download-block-left-side {
@@ -287,10 +293,10 @@ const handleCopyClick = () => writeClipboard(currentVoxisId.value);
         font-size: 20px;
         font-weight: 600;
         line-height: 28px;
-        color: #FFFFFF99;
+        color: #ffffff99;
         a {
           text-decoration: underline;
-          color: #0092FF;
+          color: #0092ff;
         }
       }
     }
@@ -337,7 +343,7 @@ const handleCopyClick = () => writeClipboard(currentVoxisId.value);
     margin: 0 auto;
     max-width: 966px;
     margin: 0 auto;
-    background: url('./img/web-title.png') no-repeat;
+    background: url("./img/web-title.png") no-repeat;
     background-size: contain;
     height: 44px;
     width: 100%;

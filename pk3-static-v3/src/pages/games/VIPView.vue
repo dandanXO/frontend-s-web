@@ -1,5 +1,5 @@
 <template>
-  <ProfileSummary :homeProfile="true" />
+  <ProfileSummary v-if="route.path !== '/wv-vip'" :homeProfile="true" />
   <div class="vip-promo-tab-wrapper">
     <q-tabs
       v-model="vipPromoTab"
@@ -353,7 +353,7 @@
 <script setup>
 import { onActivated, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-
+import { SessionStorage } from "quasar";
 import { convertToCommaAmount } from "@/boot/utils";
 import ProfileSummary from "@/components/ProfileSummary.vue";
 import { userStore } from "@/stores/index";
@@ -379,7 +379,9 @@ const vipCarouselRef = ref();
 watch(
   () => vipPromoTab.value,
   () => {
-    if (vipPromoTab.value === "promo") {
+    if (route.path === "/wv-vip") {
+      router.push(`/wv-promotion?token=${SessionStorage.getItem("TOKEN")}`);
+    } else if (vipPromoTab.value === "promo") {
       router.push("/promo");
     }
   }
@@ -388,7 +390,7 @@ watch(
 watch(
   () => route.path,
   () => {
-    if (route.path === "/vip") {
+    if (route.path === "/vip" || route.path === "/wv-vip") {
       vipPromoTab.value = "vip";
     }
   }

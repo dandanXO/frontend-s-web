@@ -127,7 +127,7 @@
 
         <div class="txt-content q-mt-md text-center">{{ $t("notify.signOutMessage") }}</div>
 
-        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container" style="gap:0px">
           <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
           <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="logout" />
         </div>
@@ -411,6 +411,7 @@ const logout = () => {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 50px;
 
   .acct-nav-label {
     color: rgba(206, 206, 206, 0.8);
@@ -431,6 +432,7 @@ const logout = () => {
   border-radius: 8px;
   width: 140px;
   height: 42px;
+  margin-right: 24px;
 }
 .btn-confirm {
   background: linear-gradient(187.94deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);

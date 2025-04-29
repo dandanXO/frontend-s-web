@@ -494,12 +494,15 @@ onMounted(() => {
       }
       &.longer-item {
         flex-direction: row;
-        gap: 36px;
+        // gap: 36px;
 
         .longer-group {
           flex: 1;
           position: relative;
 
+          &:first-child {
+            margin-right: 36px;
+          }
           &:first-child:before {
             content: "";
             position: absolute;
@@ -548,7 +551,6 @@ onMounted(() => {
 
       .info-title {
         display: flex;
-        gap: 8px;
 
         &.f-wrap {
           flex-wrap: wrap;
@@ -559,6 +561,7 @@ onMounted(() => {
         img {
           display: block;
           width: 27px;
+          margin-right: 8px;
         }
       }
 

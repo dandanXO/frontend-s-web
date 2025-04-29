@@ -66,9 +66,18 @@ export const useUI = defineStore("ui-store", {
     hideDownload() {
       const store = userStore();
       const hasReferralCode = !!sessionStorage.getItem("REFERRAL_CODE");
-      if (isInPwa()) return true;
+      if (isInPwa() || store.isFromGooglePackage) return true;
       if (!store.token && hasReferralCode) return true;
       return false;
+    },
+    siteType() {
+      const hostname = window.location.hostname;
+      switch (hostname) {
+        case "cuw.b9.game":
+          return "CURACAO";
+        default:
+          return "DEFAULT";
+      }
     }
   }
 });

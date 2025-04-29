@@ -4194,7 +4194,7 @@ onBeforeUnmount(() => {
   background-image: url("@/assets/images/index/mini-game-bg.png");
   border-radius: 8px;
   padding-bottom: 120%;
-  min-height: 90px;
+  // min-height: 90px;
 
   .game--bg {
     position: absolute;

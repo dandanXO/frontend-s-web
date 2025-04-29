@@ -349,6 +349,9 @@ const open = (gameName, platformCode, gameCode, gameType, demo) => {
             way = "ANDROID";
           }
         }
+        if (store.isFromGooglePackage) {
+          way = "ANDROID";
+        }
       }
 
       const apiUrl = _isPlatformAllowNonLogin

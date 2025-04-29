@@ -6,7 +6,7 @@
       </a>
       <div class="page-title-wrapper">
         <div class="title-container">
-          <span class="title">Share</span>
+          <span class="title">{{ $t("hotPromo.share") }}</span>
         </div>
       </div>
       <div />
@@ -33,7 +33,7 @@
           <VueQRCodeComponent class="qr-code" size="200" :text="qrCode" />
         </q-carousel-slide>
       </q-carousel> -->
-      <Carousel v-bind="carouselSettings" class="custom-carousel sharepopupslider">
+      <Carousel v-bind="carouselSettings" class="custom-carousel sharepopupslider" v-model="activeSlide">
         <Slide v-for="i in 6" :key="i">
           <div class="slide-content">
             <img class="slide-img" :src="require(`../spin-lucky-wheel/img/share-${i}.png`)" alt="Slide Image" />
@@ -41,9 +41,9 @@
           </div>
         </Slide>
 
-        <!-- <template #addons>
-          <Navigation />
-        </template> -->
+        <template #addons>
+          <Pagination />
+        </template>
       </Carousel>
     </div>
     <div class="bottom-panel">
@@ -51,11 +51,11 @@
         <div class="invite-share-social">
           <a class="social-item" @click="modalSocialShare = true">
             <img src="../spin-lucky-wheel/img/share-icon.png" />
-            <span class="grey">Share</span>
+            <span class="grey">{{ $t("hotPromo.share") }}</span>
           </a>
           <a class="social-item" @click="takeScreenshot">
             <img src="../spin-lucky-wheel/img/download-icon.png" />
-            <span class="grey">Save Image</span>
+            <span class="grey">{{ $t("hotPromo.save_image") }}</span>
           </a>
           <a class="social-item" @click="copyHrefLink">
             <!-- <div class="link-href">{{ selfTgurl }}</div> -->
@@ -68,7 +68,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="modalSocialShare" presistent>
+  <q-dialog class="flex-end" width="100%" v-model="modalSocialShare" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
 
@@ -76,30 +76,18 @@
         <div class="txt-title">Share and Earn</div>
         <!-- <div class="txt-content q-mt-md text-center">Share and Earn</div> -->
         <div class="modal-invite-share-social">
-          <a class="social-item" @click="handleShareToYoutube(selfTgurl)">
-            <img src="../../../assets/images/earn-money/social-youtube.png" />
-          </a>
-          <a class="social-item" @click="handleShareToFacebookPost(selfTgurl)">
-            <img src="../../../assets/images/earn-money/social-facebook.png" />
-          </a>
-          <a class="social-item" @click="handleShareToSMS(selfTgurl)">
-            <img src="../../../assets/images/earn-money/social-sms.png" />
-          </a>
-          <a class="social-item" @click="handleShareToEmail(selfTgurl)">
-            <img src="../../../assets/images/earn-money/social-email.png" />
-          </a>
-          <a class="social-item" @click="handleShareToTikTok(selfTgurl)">
-            <img src="../../../assets/images/earn-money/social-green-tiktok.png" />
-          </a>
-
-          <a ref="tiktokRef" href="tiktok://" target="_blank" :style="{ display: 'none' }" />
           <a
             class="social-item"
-            :href="`https://wa.me/?text=${encodeURIComponent($t('earnMoney.reward.shareText', { url: selfTgurl }))}`"
+            :href="`https://wa.me/?text=${encodeURIComponent(shareCaption + ' ' + selfTgurl)}`"
             target="_blank"
           >
             <img src="../../../assets/images/earn-money/social-green-whatsapp.png" />
           </a>
+
+          <a class="social-item" @click="handleShareToFacebookPost(selfTgurl)">
+            <img src="../../../assets/images/earn-money/social-facebook.png" />
+          </a>
+
           <a
             class="social-item"
             :href="`instagram://sharesheet?text=${encodeURIComponent(
@@ -109,13 +97,31 @@
           >
             <img src="../../../assets/images/earn-money/social-green-instagram.png" />
           </a>
+
+          <a class="social-item" @click="handleShareToTikTok(selfTgurl)">
+            <img src="../../../assets/images/earn-money/social-green-tiktok.png" />
+          </a>
+          <a ref="tiktokRef" href="tiktok://" target="_blank" :style="{ display: 'none' }" />
+
+          <a class="social-item" @click="handleShareToYoutube(selfTgurl)">
+            <img src="../../../assets/images/earn-money/social-youtube.png" />
+          </a>
+
+          <a class="social-item" @click="handleShareToSMS(selfTgurl)">
+            <img src="../../../assets/images/earn-money/social-sms.png" />
+          </a>
+
+          <a class="social-item" @click="handleShareToEmail(selfTgurl)">
+            <img src="../../../assets/images/earn-money/social-email.png" />
+          </a>
         </div>
       </div>
     </div>
   </q-dialog>
 </template>
 <script setup>
-import { computed, onMounted, ref, nextTick } from "vue";
+import { useUI } from "stores/ui";
+import { computed, onMounted, ref, nextTick, watch } from "vue";
 import { copyToClipboard, useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
 import { api } from "boot/axios";
@@ -220,6 +226,7 @@ const takeScreenshot = async () => {
 //   showInviteWins
 // });
 
+const ui = useUI();
 const modalSocialShare = ref(false);
 const copybtntxt = ref("Copy");
 const copyinput = ref(null);
@@ -254,9 +261,8 @@ const handleShareToTikTok = (url) => {
 
 const handleShareToYoutube = (url) => {
   const shareText = t("earnMoney.reward.shareText", { url });
-  const youtubeShareUrl = `https://www.youtube.com/share?url=${encodeURIComponent(url)}&text=${encodeURIComponent(
-    shareText
-  )}`;
+  copyToClipboard(shareText);
+  const youtubeShareUrl = ui.youtubeUrl;
   window.open(youtubeShareUrl, "_self");
 };
 
@@ -289,30 +295,74 @@ const $q = useQuasar();
 const store = userStore();
 const selfTgurl = ref("");
 const tiktokRef = ref();
-const copyHrefLink = () => {
-  navigator.clipboard
-    .writeText(selfTgurl.value)
-    .then(() => {
-      $q.notify({
-        message: "Link copied to clipboard",
-        color: "positive",
-        position: "top",
-        timeout: 2000
+const fallbackCopyTextToClipboard = (text) => {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  document.body.removeChild(textarea);
+
+  $q.notify({
+    message: "Link copied to clipboard",
+    color: "positive",
+    position: "top",
+    timeout: 2000
+  });
+};
+
+const copyHrefLink = async () => {
+  const textToCopy = selfTgurl.value;
+
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: "b9.game",
+        text: `Pakistan real money games ${textToCopy}`,
+        url: textToCopy
       });
-    })
-    .catch(() => {
-      $q.notify({
-        message: "Failed to copy link",
-        color: "negative",
-        position: "top",
-        timeout: 2000
+    } catch (err) {
+      fallbackCopyTextToClipboard(textToCopy);
+    }
+  } else if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        $q.notify({
+          message: "Link copied to clipboard",
+          color: "positive",
+          position: "top",
+          timeout: 2000
+        });
+      })
+      .catch(() => {
+        fallbackCopyTextToClipboard(textToCopy);
       });
-    });
+  } else {
+    fallbackCopyTextToClipboard(textToCopy);
+  }
 };
 
 const qrCode = computed(() => {
   return selfTgurl.value;
 });
+
+const shareCaptions = [
+  "Mauqa yahan hai! Abhi B9GAME par register karo, aur main guarantee deta hoon ke tumhe bhi free bonus milega! ",
+  "100% asli free bonus, sirf limited time ke liye! Maine le liya hai! ",
+  "Main bohot kismat wala hoon! Mujhe abhi B9GAME se free bonus mila hai, 100% asli! Aao aur try karo! ",
+  "Bas itna chahiye ke tum is par click karo, aur mil kar free bonus lo! ",
+  "Bhai, ek ehsaan karo! Mujhe withdraw karne mein madad do, aur mil kar B9GAME ka free bonus lo! ",
+  "Abhi abhi withdraw kiya! B9GAME ne waqai paise diye, jaldi aao aur apna free bonus lo! "
+];
+
+const activeSlide = ref(0);
+const shareCaption = ref(shareCaptions[activeSlide.value]);
+
+watch(activeSlide, (newIndex) => {
+  shareCaption.value = shareCaptions[newIndex];
+});
+
 onMounted(() => {
   let tgDomain = location.origin;
   if (store.isApp()) {
@@ -321,7 +371,7 @@ onMounted(() => {
 
   api.get("/session/member/referralCode").then((res) => {
     if (res.code === 0) {
-      selfTgurl.value = tgDomain + "/refer/" + res.data;
+      selfTgurl.value = tgDomain + "/referSpin/" + res.data;
     }
   });
 });
@@ -378,10 +428,21 @@ onMounted(() => {
   .slide-content {
     padding: 0 10px;
   }
+
+  :deep(.carousel__pagination-button) {
+    background-color: #f34648 !important;
+  }
+
+  :deep(.carousel__pagination-button--active) {
+    background-color: #e8282a !important;
+    width: 30px !important;
+  }
+
   /* Slide Image */
   .slide-img {
     width: 100%;
     border-radius: 20px;
+    border: 2.76px solid #e8282a;
   }
 }
 .sharepopupslider {
@@ -583,6 +644,9 @@ onMounted(() => {
         font-size: 10px;
         line-height: 16.47px;
         letter-spacing: 0px;
+        @media screen and (max-width: 400px) {
+          font-size: 2.4vw;
+        }
       }
     }
   }

@@ -14,7 +14,9 @@ export const DashboardService = {
         .then((response) => {
           if (response.code == 0) {
             const token = response.data.token
+            const userId = response.data.id
             sessionStorage.setItem('token', token)
+            sessionStorage.setItem('userId', userId)
             resolve(true)
           } else {
             resolve(false)
@@ -87,5 +89,51 @@ export const DashboardService = {
         console.error('更改我的直播狀態失敗:', error)
         return null
       })
+  },
+
+  // 獲取敏感字列表
+  getSensitiveWords() {
+    const token = sessionStorage.getItem('token')
+    
+    return api.get('/session/sensitive-words', {
+      headers: {
+        'token': `${token}`
+      }
+    })
+  },
+
+  // 新增敏感字
+  addSensitiveWord(data) {
+    const token = sessionStorage.getItem('token')
+
+    return api.post('/session/sensitive-words', data, {
+      headers: {
+        'token': `${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+  },
+
+  // 更新敏感字
+  updateSensitiveWord(data) {
+    const token = sessionStorage.getItem('token')
+    
+    return api.put(`/session/sensitive-words/${data.id}`, data, {
+      headers: {
+        'token': `${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+  },
+
+  // 刪除敏感字
+  deleteSensitiveWord(id) {
+    const token = sessionStorage.getItem('token')
+    
+    return api.delete(`/session/sensitive-words/${id}`, {
+      headers: {
+        'token': `${token}`
+      }
+    })
   }
 }

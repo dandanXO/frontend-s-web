@@ -17,7 +17,7 @@
 
   <div class="promo-container">
     <div class="promo">
-      <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
+      <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify" active-color="green">
         <q-tab
           v-for="(tab, i) in tabItems"
           :key="i"
@@ -45,6 +45,9 @@
                       </div>
                       <div class="promo-info">
                         <span class="viewdetail">{{ promo.title }}</span>
+                        <span class="date">
+                          {{ $t("hotPromo.promoEndsOn") }}: {{ moment(promo.displayEndTime).format("YYYY-MM-DD") }}
+                        </span>
                       </div>
                     </a>
                   </div>
@@ -104,7 +107,7 @@
                   to="/earn-money"
                 >
                   <img src="../assets/images/bonus/share-icon.png" />
-                  <span>Earn Money</span>
+                  <span>{{ $t("hotPromo.earnMoney.earnMoney") }}</span>
                 </RouterLink>
                 <div class="content-title" v-if="selectedPromo.redirectUrl !== 'pak-deposit-spinner-rewards'">
                   {{ selectedPromo.title }}
@@ -132,7 +135,8 @@
                     <div>asdasd</div>
                   </template>
                   <template v-else><HotPromotion :list="selectedPromo" /></template> -->
-                  <HotPromotion :list="selectedPromo" />
+                  <!-- <HotPromotion :list="selectedPromo" /> -->
+                  <component v-if="HotPromotion" :is="HotPromotion" :list="selectedPromo" />
                   <!-- promo.redirectUrl -->
                 </div>
                 <div
@@ -145,7 +149,8 @@
                     fish: selectedPromo.promoType.toLowerCase() === 'fish',
                     liveCasino: selectedPromo.promoType.toLowerCase() === 'live casino',
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game',
-                    isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel'
+                    isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel',
+                    isGoldenEgg: selectedPromo.redirectUrl === 'pak-aviator-golden-egg'
                   }"
                 >
                   <!-- <div class="top-float">
@@ -202,7 +207,7 @@
   </q-dialog>
 
   <q-dialog v-model="isMoneyRainModal" width="100%">
-    <MoneyRainModal />
+    <MoneyRainModal @closeModal="isMoneyRainModal = false" />
     <q-btn icon="close" round dense v-close-popup @click="backToPromoList()" class="money-rain-close" />
   </q-dialog>
 
@@ -212,12 +217,12 @@
   </q-dialog>
 
   <q-dialog width="100%" v-if="isOpenExtension" v-model="isOpenExtension" class="dark-grey-dialog">
-    <div class="dialog-mid-text">Loading...</div>
+    <div class="dialog-mid-text">{{ $t("btn.loading") }}...</div>
   </q-dialog>
 </template>
 
 <script lang="js">
-import { ref, computed, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated } from "vue";
+import { ref, computed, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated, defineAsyncComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached } from "src/boot/cache";
@@ -227,13 +232,12 @@ import { userStore } from "stores/index";
 import { i18nStore } from "src/router/language";
 import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
+import moment from "moment";
 // import { loadPromo } from "src/api/index/promo.js";
 // import { loadPromoBanner } from "src/api/index/promo";
 import ProfileSummary from "components/ProfileSummary.vue";
-import HotPromotion from "components/HotPromotion";
 import GameModal from "components/modal/GameModal.vue";
 import { t } from "src/boot/lang";
-// import HotPromotion from 'components/HotPromotion'
 import MoneyRainModal from "components/modal/MoneyRainModal.vue";
 import MegaSharingWheelModal from "src/components/hotpromo/megaSharingWheel/MegaSharingWheelModal.vue";
 import { Directory, Filesystem } from "@capacitor/filesystem";
@@ -243,10 +247,9 @@ export default defineComponent({
   name: "PromoView",
   components: {
     GameModal,
-    HotPromotion,
     ProfileSummary,
     MoneyRainModal,
-    MegaSharingWheelModal
+    MegaSharingWheelModal,
     // MediaSettingsComponent
   },
   setup() {
@@ -285,6 +288,11 @@ export default defineComponent({
     const isFetchingPromo = ref(false);
     const extensionState = ref(false);
     const extensionToken = ref("");
+
+    const HotPromotion = computed(() => process.env.MODE === 'spa' ?
+      defineAsyncComponent(() => import('components/HotPromotion.vue')) :
+      null
+    );
 
     const checkExtension = () => {
       if (route.path === "/promotion") {
@@ -392,12 +400,16 @@ export default defineComponent({
     };
 
     const loadBanner = () => {
+      const params = {
+        category: "PROMO",
+        language: langVal.value
+      }
       // loadPromoBanner("PROMO").then((res) => {
       //   if (res.code === 0) {
       //       banner.value = res.data[0]
       //   }
       // })
-      api.get("/opt-session/promo/banner?category=PROMO").then((response) => {
+      api.get("/opt-session/promo/banner", {params}).then((response) => {
         if (response.code === 0) {
           banner.value = response.data[0];
           // console.log(banner.value)
@@ -449,7 +461,7 @@ export default defineComponent({
             } else if (isAndroid()) {
               // store.evip = "192.168.68.93:9090";
               const tgDomain = "https://" + store.evip;
-              var preUrl = tgDomain + `/promotion?name=${promo.redirectUrl}&token=${store.token}`;
+              var preUrl = tgDomain + `/promotion?name=${promo.redirectUrl}&token=${store.token}&lang=${langVal.value}`;
               // alert(preUrl);
               console.log(preUrl);
               // promoSrc.value= preUrl;
@@ -547,7 +559,7 @@ export default defineComponent({
         }
       })
 
-      const platformApiUrl = "/opt-session/promo/page";
+      const platformApiUrl = `/opt-session/promo/page?language=${langVal.value}`;
 
       // isFetchingPromo.value = window.location.pathname === "/promotion";
       isFetchingPromo.value = true;
@@ -775,7 +787,9 @@ export default defineComponent({
       isOpenExtension,
       parsedParam,
       isMegaSharingWheelModal,
-      popupPromo
+      popupPromo,
+      HotPromotion,
+      moment
       // MediaSettingsComponent
     };
   }
@@ -800,15 +814,16 @@ export default defineComponent({
   margin: 0 auto;
 
   .q-tab {
-    min-height: 45px;
+    min-height: 44px;
     border-radius: 8px;
-    color: #5f6061;
+    color: #ffffff80;
     font-weight: 400;
     width: 50%;
   }
 
   .vip-promo-tab-toggle {
-    background: url(../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
+    // background: url(../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
+    background: #323738;
     background-size: 100% 100%;
     border-radius: 8px;
     margin-bottom: 4px;
@@ -816,32 +831,34 @@ export default defineComponent({
     padding: 1px;
 
     :deep(.q-tab__label) {
-      font-weight: 400;
+      font-weight: 700;
+      // color: #FFFFFF80;
     }
 
     :deep(.q-tab--active) {
       color: white;
       // background: url(../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
       // background-size: 100% 100%;
-      background: linear-gradient(
-        180deg,
-        rgba(97, 255, 0, 0) 0%,
-        rgba(97, 255, 0, 0.25) 50.5%,
-        rgba(97, 255, 0, 0) 100%
-      );
-      box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+      // background: linear-gradient(
+      //   180deg,
+      //   rgba(97, 255, 0, 0) 0%,
+      //   rgba(97, 255, 0, 0.25) 50.5%,
+      //   rgba(97, 255, 0, 0) 100%
+      // );
+      // box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
 
-      &:before {
-        content: "";
-        background-color: #70bc62;
-        height: 3px;
-        border-radius: 4px;
-        width: 30%;
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-      }
+      // &:before {
+      //   content: "";
+      //   background-color: #21EF89;
+      //   height: 3px;
+      //   border-radius: 4px;
+      //   width: 30%;
+      //   position: absolute;
+      //   bottom: 0;
+      //   left: 50%;
+      //   transform: translateX(-50%);
+      // }
+      background: #394142;
     }
 
     :deep(.q-tab--active .q-tab__label) {
@@ -914,7 +931,7 @@ export default defineComponent({
   min-height: calc(100vh - 160px);
 
   .all-promotions {
-    padding-bottom: 20px;
+    // padding-bottom: 20px;
     @keyframes fadein {
       100% {
         opacity: 1;
@@ -1021,6 +1038,7 @@ export default defineComponent({
 
           .promo-img-wrapper {
             position: relative;
+            max-height: 145px;
             overflow: hidden;
             // border-radius: 10px 10px 0 0;
 
@@ -1062,9 +1080,12 @@ export default defineComponent({
           .promo-info {
             display: flex;
             justify-content: flex-start;
-            align-items: center;
-            background: #2b2b2b;
+            align-items: flex-start;
+            background: #292d2e;
 
+            padding: 10px 20px;
+            gap: 0px;
+            flex-direction: column;
             .viewdetail {
               // background: #002a35;
               color: #ffffff;
@@ -1073,17 +1094,19 @@ export default defineComponent({
               position: relative;
               width: 100%;
               z-index: 2;
-              bottom: 0px;
-              height: 40px;
+              height: 30px;
               overflow: hidden;
-              line-height: 40px;
-              padding: 0 100px 0 16px;
-
-              // background: linear-gradient(356.25deg, rgba(0, 0, 0, 0.6) -0.21%, rgba(0, 0, 0, 0.6) 93.65%);
-              background: #2b2b2b;
+              line-height: 30px;
               font-family: Poppins;
               font-size: 15.3px;
               font-weight: 700;
+              text-transform: uppercase;
+            }
+            .date {
+              color: #b2bdbf;
+              font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+              font-weight: 400;
+              font-size: 12px;
             }
 
             .detail-arrow {
@@ -1191,6 +1214,41 @@ export default defineComponent({
           &.isSpinLuckyWheel {
             display: none;
           }
+          &.isGoldenEgg {
+            table {
+              p {
+                margin: 0;
+              }
+              border: none;
+              td {
+                border: 0;
+                padding: 15px 0;
+              }
+              td:first-child {
+                border-right: 1px solid #ffffff1a;
+              }
+              tr:first-of-type td {
+                background: #323738;
+                color: #ffffff80;
+                border: 0;
+                &:first-child {
+                  border-radius: 10px 0 0 0;
+                }
+                &:last-child {
+                  border-radius: 0 10px 0 0;
+                }
+              }
+              tr:nth-child(even) td {
+                background: #394142;
+              }
+              tr:nth-child(odd) td {
+                background: #323738;
+              }
+              tr:not(:first-of-type) td:last-child {
+                color: #ffd400;
+              }
+            }
+          }
         }
 
         p {
@@ -1226,7 +1284,7 @@ export default defineComponent({
             padding: 5px;
             text-align: center;
 
-            background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
+            background: linear-gradient(180deg, #21ef89 0%, #33562d 100%);
 
             &:first-child {
               border-top-left-radius: 8px;
@@ -1326,7 +1384,7 @@ export default defineComponent({
   .q-tab--active .q-tab__indicator {
     width: 100%;
     height: 2px;
-    background: #70bc62;
+    background: #21ef89;
   }
 
   .q-tab__label {
@@ -1398,7 +1456,6 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
     margin: 4px 0;
     border-radius: 5px;
     background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
@@ -1414,6 +1471,7 @@ export default defineComponent({
       margin: 0px;
       display: inline-block;
       height: auto;
+      margin-right: 10px;
     }
 
     span {

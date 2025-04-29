@@ -75,22 +75,14 @@
             />
             <img class="spintop" :src="require(`./img/spin-top-${index + 1}.png`)" />
             <template v-if="index === 3">
-              <img
-                class="spingo"
-                :src="require(`./img/spingo-${index + 1}.png`)"
-              />
+              <img class="spingo" :src="require(`./img/spingo-${index + 1}.png`)" />
               <span class="spinnum">
                 {{ $t("hotPromo.depositSpinWheel.spin") }} {{ "* " + (tab.times1 + tab.times2) }}
               </span>
             </template>
             <template v-else>
-              <img
-                class="spingo"
-                @click="onClickRotate"
-                @touchstart="onClickRotate"
-                :src="require(`./img/spingo-${index + 1}.png`)"
-              />
-              <span class="spinnum" @click="onClickRotate" @touchstart="onClickRotate">
+              <img class="spingo" @click="onClickRotate" :src="require(`./img/spingo-${index + 1}.png`)" />
+              <span class="spinnum" @click="onClickRotate">
                 {{ $t("hotPromo.depositSpinWheel.spin") }} {{ "* " + (tab.times1 + tab.times2) }}
               </span>
             </template>
@@ -106,12 +98,12 @@
       <div class="prize-popup">
         <!-- <q-btn icon="close" flat round dense v-close-popup class="q-ml-auto" /> -->
         <div class="prize-gold">
-          <!--          <div class="prize-get">You get the reward</div>-->
+          <div class="prize-get">You get {{ prizePopupBonusAmt }} PRK</div>
 
           <div class="prize-amount">{{ prizePopupBonusAmt }} PRK</div>
-        </div>
 
-        <q-btn no-caps unelevated class="btn-primary" @click="closeDialog">{{ $t("btn.claim") }}</q-btn>
+          <q-btn no-caps rounded unelevated class="purple-bg" @click="closeDialog">{{ $t("btn.recharge") }}</q-btn>
+        </div>
       </div>
     </q-dialog>
   </div>
@@ -121,9 +113,11 @@ import { onMounted, onUnmounted, ref, reactive, nextTick, computed } from "vue";
 import { useSwipe } from "@vueuse/core";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
+import { useI18n } from "vue-i18n";
 
 const rolling = ref(false);
 const activeTab = ref(0);
+const { t } = useI18n();
 const $q = useQuasar();
 const tabs = reactive([
   {
@@ -262,22 +256,24 @@ const prizePopupBonusAmt = ref(0);
 const sliderRef = ref(null);
 const showDialog = ref(false);
 const prizeResult = ref("");
-const { lengthX } = useSwipe(sliderRef, {
-  passive: false,
+const { lengthX, lengthY } = useSwipe(sliderRef, {
+  passive: true,
   onSwipeEnd() {
     const screenWidth = window.innerWidth;
     const tabWidth = screenWidth > 500 ? 80 : screenWidth * 0.8; // Ensure proper calculation
 
-    if (lengthX.value > tabWidth * 0.2) {
-      // 20% of tab width
-      // Swipe right → Move to next tab
-      if (activeTab.value < tabs.length - 1) {
-        setTab(activeTab.value + 1);
-      }
-    } else if (lengthX.value < -tabWidth * 0.2) {
-      // Swipe left → Move to previous tab
-      if (activeTab.value > 0) {
-        setTab(activeTab.value - 1);
+    // Only trigger swipe logic if horizontal swipe is more significant than vertical swipe
+    if (Math.abs(lengthX.value) > Math.abs(lengthY.value)) {
+      if (lengthX.value > tabWidth * 0.2) {
+        // Swipe right → Move to next tab
+        if (activeTab.value < tabs.length - 1) {
+          setTab(activeTab.value + 1);
+        }
+      } else if (lengthX.value < -tabWidth * 0.2) {
+        // Swipe left → Move to previous tab
+        if (activeTab.value > 0) {
+          setTab(activeTab.value - 1);
+        }
       }
     }
   }
@@ -316,7 +312,7 @@ const onClickRotate = () => {
     $q.notify({
       color: "warning",
       position: "top",
-      message: "No spins left",
+      message: t("content.nospinleft"),
       icon: "report_problem"
     });
     return;
@@ -337,7 +333,7 @@ const onClickRotate = () => {
     $q.notify({
       color: "warning",
       position: "top",
-      message: "No spins left",
+      message: t("content.nospinleft"),
       icon: "report_problem"
     });
     return;
@@ -475,7 +471,6 @@ const transformStyle = computed(() => {
   background: url(img/bg-img.png) no-repeat center top;
   .top {
     display: flex;
-    gap: 10px;
     margin: 20px 0px;
     .side-buttons {
       font-weight: 600;
@@ -484,9 +479,10 @@ const transformStyle = computed(() => {
       display: flex;
       flex-direction: column;
       gap: 15px;
+      margin-right: 10px;
 
       .individual-btn {
-        background: #30af88;
+        background: #3f30af;
         padding: 5px;
         color: #ffffff;
         text-align: center;
@@ -502,22 +498,19 @@ const transformStyle = computed(() => {
       font-size: 16px;
       font-weight: 700;
       line-height: 24px;
-      background: linear-gradient(92.28deg, #28ae90 0.45%, #70bf56 65.68%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #f9f9f9;
       span.orange {
-        background: linear-gradient(180deg, #ff7527 0%, #ffa011 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: #f9d649;
       }
     }
   }
   .deposit-now {
     text-decoration: none;
-    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-    width: 148px;
-    height: 40px;
-    color: #000a01;
+    background: url("img/deposit-now-btn-bg.png") center center no-repeat;
+    background-size: 100% 100%;
+    width: 197px;
+    height: 56px;
+    color: #fff;
     font-family: Poppins;
     font-size: 16px;
     font-weight: 700;
@@ -538,7 +531,6 @@ const transformStyle = computed(() => {
 
     border-top: 1px solid #ffe667;
     background: #032519;
-    // background-image: url(img/spinner-bg.png);
     background-position: center center;
     background-size: cover;
     @media screen and (min-width: 500px) {
@@ -604,13 +596,28 @@ const transformStyle = computed(() => {
         width: 85vw;
         max-width: 100%;
         height: 17px;
-        background: linear-gradient(180deg, #0b4400 0%, #1c751c 100%);
-        border: 1px solid #5ea361;
+        background: linear-gradient(180deg, #131321 0%, #060339 50.1%, #131321 97.1%);
+        border: 1px solid #0055ff;
         border-radius: 10px;
         .innerbar {
           height: 15px;
-          background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+          background: linear-gradient(90deg, #05078a 0%, #7d5cf2 100%);
           border-radius: 10px;
+          position: relative;
+          overflow: hidden;
+
+          &:before {
+            content: "";
+            background: url(img/bar-sparkle.png) no-repeat center center;
+            position: absolute;
+            top: 0px;
+            left: 0;
+            right: 0;
+            width: 40px;
+            height: 15px;
+            margin-left: auto;
+            background-size: contain;
+          }
         }
       }
       .barnumbers {
@@ -701,9 +708,7 @@ const transformStyle = computed(() => {
       font-size: 12px;
       font-weight: 700;
       line-height: 18px;
-      background: linear-gradient(92.28deg, #28ae90 0.45%, #70bf56 65.68%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #f9f9f9;
     }
     .remainingamt {
       color: #ffee56;
@@ -735,7 +740,7 @@ const transformStyle = computed(() => {
     height: 84px;
     color: white;
     border-radius: 10px 10px 0 0;
-    background: radial-gradient(50% 40.87% at 50% 59.13%, #001501 0%, #002417 100%);
+    background: radial-gradient(50% 40.87% at 50% 59.13%, #2b2b2b 0%, #090024 100%);
     border: 1.5px solid #8c7b32;
     min-height: 22.5vw;
 
@@ -782,6 +787,8 @@ const transformStyle = computed(() => {
       align-items: center;
     }
     &:after {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
       content: "";
       background: linear-gradient(
         135.38deg,
@@ -821,6 +828,9 @@ const transformStyle = computed(() => {
 .prize-popup {
   width: 100%;
   margin-bottom: 120px;
+  .purple-bg {
+    background: linear-gradient(90deg, #5856ff 0%, #262e99 100%);
+  }
 }
 .prize-gold {
   width: 95%;
@@ -832,29 +842,44 @@ const transformStyle = computed(() => {
 
   .prize-get {
     position: absolute;
-    bottom: 20%;
+    bottom: 28%;
     font-family: Manrope;
     font-size: 13px;
     font-weight: 700;
     line-height: 22.1px;
     text-align: center;
-    color: #ffffff;
+    color: #5254ad;
   }
   .prize-amount {
     position: absolute;
-    bottom: 5%;
+    bottom: 15%;
     font-family: Poppins;
     font-size: 30px;
     font-weight: 900;
     line-height: 45px;
     margin-bottom: 0px;
     text-align: center;
-    color: #fff96f;
-    text-shadow: 1px 1px #0000008a;
+    letter-spacing: -2px;
+    // color: #fff96f;
+    // text-shadow: 1px 1px #0000008a;
+    background: linear-gradient(270deg, #394ae2 0%, #6b89ff 52.5%, #394ae2 100%);
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 0.7px white; /* Creates the border */
 
     @media (max-width: 380px) {
       bottom: 3.5%;
     }
+  }
+  .q-btn.purple-bg {
+    position: absolute;
+    bottom: 5%;
+    width: 50%;
+    color: #ede7ff;
+    font-weight: 700;
+    font-family: "Poppins";
   }
 }
 </style>

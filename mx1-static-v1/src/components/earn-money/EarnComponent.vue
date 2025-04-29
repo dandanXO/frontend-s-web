@@ -33,12 +33,13 @@
       <q-btn :label="$t('earnMoney.earn.save')" :size="'150'" class="save-btn" @click="downloadQRImg()" />
     </div>
   </div>
+  <q-input style="width: 100%; opacity: 0" filled color="white" ref="copyinput" v-model="text_copied" />
 </template>
 
 <script setup>
 import { onMounted, ref } from "vue";
 import VueQRCodeComponent from "vue-qrcode-component";
-import { copyToClipboard, Platform, useQuasar } from "quasar";
+import { Platform, useQuasar } from "quasar";
 
 import { api } from "@/boot/axios";
 import { t } from "@/boot/lang";
@@ -49,24 +50,23 @@ import html2canvas from "html2canvas";
 const $q = useQuasar();
 const store = userStore();
 const selfTgurl = ref("");
-const copyShareLink = (selfTgurl) => {
-  copyToClipboard(selfTgurl)
-    .then(() => {
-      $q.notify({
-        color: "position",
-        position: "top",
-        message: `${selfTgurl} ${t("earnMoney.earn.copiedtoClipboard")}`,
-        icon: "check_circle_outline"
-      });
-    })
-    .catch(() => {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: "Failed",
-        icon: "report_problem"
-      });
+const copyinput = ref(null);
+const text_copied = ref("");
+const copyShareLink = (text) => {
+  text_copied.value = text;
+  setTimeout(() => {
+    const copyText = copyinput.value;
+
+    copyText.select();
+    document.execCommand("copy");
+
+    $q.notify({
+      color: "positive",
+      position: "top",
+      message: `${selfTgurl.value} ${t("earnMoney.earn.copiedtoClipboard")}`,
+      icon: "check_circle_outline"
     });
+  }, 100);
 };
 
 const downloadQRImg = async () => {
@@ -100,13 +100,27 @@ const downloadQRImg = async () => {
       console.error("Error saving QR Code image:", error);
     }
   } else {
-    const link = window.document.createElement("a");
-    const imgElement = document.querySelector('img[alt="Scan me!"]');
-    link.href = imgElement.src;
-    link.download = "myreferral";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      html2canvas(document.querySelector("#the-qrcode")).then(async function (canvas) {
+        document.body.appendChild(canvas);
+        const dataUrl = canvas.toDataURL("image/jpeg");
+        // console.log(dataUrl);
+
+        const link = window.document.createElement("a");
+        link.href = dataUrl;
+        link.download = "myreferral";
+
+        document.body.appendChild(link);
+
+        link.click();
+        document.body.removeChild(link);
+
+        canvas.style.display = "none";
+        document.body.removeChild(canvas);
+      });
+    } catch (error) {
+      console.error("Error saving QR Code image:", error);
+    }
   }
 };
 
@@ -140,7 +154,6 @@ onMounted(() => {
   .desc-title-wrapper {
     display: flex;
     align-items: center;
-    gap: 5px;
 
     .number {
       background: red;
@@ -150,6 +163,7 @@ onMounted(() => {
       text-align: center;
       border-radius: 6.25rem;
       background: rgba(252, 245, 104, 0.2);
+      margin-right: 5px;
     }
 
     .desc-title {
@@ -272,7 +286,6 @@ onMounted(() => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
     padding: 25px;
 
     .qr-code {
@@ -282,6 +295,7 @@ onMounted(() => {
     }
 
     .save-btn {
+      margin-top: 10px;
       width: 50%;
       color: #5c46e7;
       font-weight: 700;

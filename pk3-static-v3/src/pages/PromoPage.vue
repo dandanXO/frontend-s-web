@@ -1,6 +1,7 @@
 <template>
   <!-- <q-card-section class="page-title">优惠活动</q-card-section> -->
-  <ProfileSummary v-if="!extensionState" :homeProfile="true" />
+
+  <ProfileSummary v-if="!extensionState && !isWebview" :homeProfile="true" />
   <div class="vip-promo-tab-wrapper" v-if="!isPromoDetail">
     <q-tabs
       v-model="vipPromoTab"
@@ -20,6 +21,7 @@
     style="background: #090b19"
     v-touch-swipe.left="swipeLeft"
     v-touch-swipe.right="swipeRight"
+    :class="{ wv: extensionState || isWebview }"
   >
     <div class="promo">
       <!-- <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify"> -->
@@ -35,9 +37,9 @@
                 <div
                   v-for="(promo, i) in filteredArray"
                   :key="i"
-                  data-aos="zoom-in"
-                  data-aos-easing="ease-out"
-                  data-aos-duration="1000"
+                  v-bind:data-aos="!isWebview ? 'zoom-in' : null"
+                  v-bind:data-aos-easing="!isWebview ? 'ease-out' : null"
+                  v-bind:data-aos-duration="!isWebview ? '1000' : null"
                 >
                   <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
@@ -109,7 +111,7 @@
                     class="join-container"
                     v-if="!selectedParam || (selectedParam && !selectedParam.hidebottom)"
                     :style="{
-                      bottom: extensionState ? '0' : `calc(72px + ${ui.bottomInsetHeight}px)`
+                      bottom: extensionState || isWebview ? '0' : `calc(72px + ${ui.bottomInsetHeight}px)`
                     }"
                   >
                     <div class="promo-date">
@@ -161,6 +163,7 @@ import { t } from "@/boot/lang";
 import { useUI } from "@/stores/ui";
 import {useQuasar,SessionStorage} from "quasar";
 import {isAndroid} from "boot/utils";
+import { i18nStore } from "src/router/language";
 export default defineComponent({
   name: "PromoView",
   components: {
@@ -193,11 +196,15 @@ export default defineComponent({
     const router = useRouter();
     const $q = useQuasar();
     const ui = useUI();
+    const i18nStoreLanguage = i18nStore();
 
     const isFetchingPromo = ref(false);
     const extensionState = ref(false);
+    const isWebview = ref(false)
     const extensionToken = ref("");
     const isOpenExtension = ref(false);
+
+    const langVal = computed(() => i18nStoreLanguage.languageVal)
 
     const checkExtension = () => {
       if (route.path === "/promotion") {
@@ -206,6 +213,12 @@ export default defineComponent({
         extensionState.value = true;
       }
     };
+
+    const checkWebview = () => {
+      if (route.path === "/wv-promotion") {
+        isWebview.value = true
+      }
+    }
 
     const tab = ref("all");
     const tabItems = [
@@ -264,7 +277,10 @@ export default defineComponent({
     watch(
       () => vipPromoTab.value,
       () => {
-        if (vipPromoTab.value === "vip") {
+        if (isWebview.value) {
+          router.push(`/wv-vip?token=${SessionStorage.getItem("TOKEN")}`)
+        }
+        else if (vipPromoTab.value === "vip") {
           router.push("/vip");
         }
       }
@@ -273,7 +289,7 @@ export default defineComponent({
     watch(
       () => route.path,
       () => {
-        if (route.path === "/promo") {
+        if (route.path === "/promo" || route.path === "/wv-promotion") {
           vipPromoTab.value = "promo";
         }
       }
@@ -282,7 +298,11 @@ export default defineComponent({
     const isPromoDetailPage = ref(false);
 
     const backToPromoList = () => {
-      if (window.location.pathname === "/promotion") {
+      if (isWebview.value) {
+        router.replace(`/wv-promotion?token=${SessionStorage.getItem("TOKEN")}`)
+        isPromoDetail.value = false
+      }
+      else if (window.location.pathname === "/promotion") {
         window.location.href = "xfapp:/promo";
       } else {
         router.push("/promo");
@@ -329,6 +349,8 @@ export default defineComponent({
         });
         router.push(`/login`);
       } else {
+        scrollToTop();
+
         if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
           router.push({ path: "/account/vip" });
         } else if (promo.redirectUrl && promo.redirectUrl.includes("SigninBonus")) {
@@ -354,7 +376,7 @@ export default defineComponent({
             store.token = extensionToken.value;
           } else if (isAndroid()) {
             // store.h5Url = "http://192.168.68.86:9090/";
-            var preUrl = store.h5Url + `promotion?name=${promo.redirectUrl}&token=${store.token}`;
+            var preUrl = store.h5Url + `promotion?name=${promo.redirectUrl}&token=${store.token}&lang=${langVal.value}`;
             // alert(preUrl);
             console.log(preUrl);
             // promoSrc.value= preUrl;
@@ -399,7 +421,11 @@ export default defineComponent({
               isOpenExtension.value = false;
             });
         } else {
-          if (route.query.fromAccount) {
+          if (isWebview.value) {
+            isPromoDetail.value = true;
+            selectedPromo.value = promo;
+          }
+          else if (route.query.fromAccount) {
             router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
           } else {
             router.push({ path: "/promo", query: { name: promo.redirectUrl } });
@@ -485,7 +511,15 @@ export default defineComponent({
           const paramJson = JSON.parse(selectedPromo.value.param);
           console.log(paramJson);
           if (paramJson && paramJson.page) {
-            router.push(paramJson.page);
+            if (isWebview.value) {
+              if(paramJson.page.includes("vip")){
+                document.location.href = "app://vip"
+              }else if(paramJson.page.includes("earn-money")){
+                document.location.href = "app://earn-money"
+              }
+            }else{
+              router.push(paramJson.page);
+            }
           } else if (paramJson && paramJson.html) {
             window.open(paramJson.html, "_blank");
           } else if (paramJson && paramJson.game) {
@@ -520,11 +554,24 @@ export default defineComponent({
           console.log("PArse Error");
         }
       } else if (selectedPromo.value.redirectUrl === "EarnMoney") {
-        router.push("/earn-money");
+        if (isWebview.value) {
+          document.location.href = "app://earn-money"
+        }else{
+          router.push("/earn-money");
+        }
       } else if (selectedPromo.value.redirectUrl === "VIPrewards") {
-        router.push("/vip");
+        if (isWebview.value) {
+          router.push(`/wv-vip?token=${SessionStorage.getItem("TOKEN")}`)
+        }else{
+          router.push("/vip");
+        }
       } else if (selectedPromo.value.redirectUrl === "Deposit") {
-        router.push("/deposit?from=/promo");
+        if (isWebview.value) {
+          document.location.href = "app://deposit"
+        }else{
+          router.push("/deposit?from=/promo");
+        }
+
       } else if (selectedPromo.value.redirectUrl === "Withdraw") {
         router.push("/withdraw?from=/promo");
       } else if (
@@ -540,6 +587,10 @@ export default defineComponent({
     const allGames = ref(null);
     const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
       allGames.value.open(gameName, platformCode, gameCode, gameType);
+    };
+
+    const scrollToTop = () => {
+      window.scroll({ behavior: "smooth", left: 0, top: 0 });
     };
 
     const goToVip = () => {
@@ -585,6 +636,7 @@ export default defineComponent({
 
     onMounted(() => {
       checkExtension();
+      checkWebview();
     });
 
     const swipeLeft = () => {
@@ -632,6 +684,7 @@ export default defineComponent({
       isFtdPromoEnded,
       isFetchingPromo,
       extensionState,
+      isWebview,
       isOpenExtension
     };
   }
@@ -736,6 +789,10 @@ export default defineComponent({
 .promo-container {
   color: #ffffff;
   min-height: calc(100vh - 160px);
+
+  &.wv {
+    min-height: 100vh;
+  }
 
   .all-promotions {
     padding-bottom: 20px;

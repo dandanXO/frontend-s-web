@@ -57,12 +57,14 @@ export const userStore = defineStore("userStore", {
       ftd: "CLOSE",
       isTkPixel: false,
       hasUpdatedOneSignal: false,
-      isReferralReady: false
+      isReferralReady: false,
+      isFromGooglePackage: false,
+      isCheckGaid: false
     };
   },
   actions: {
     hasToken() {
-      if (isAndroid() || isInPwa()) {
+      if (isAndroid() || isInPwa() || this.isFromGooglePackage) {
         // console.log("android");
         if (LocalStorage.getItem("TOKEN", "") !== "") {
           return true;
@@ -110,7 +112,7 @@ export const userStore = defineStore("userStore", {
         regDevice = "IOS";
       } else {
         regDevice = Platform.is.mobile ? "H5" : "WEB";
-        if (Platform.is.capacitor && Platform.is.android) {
+        if ((Platform.is.capacitor && Platform.is.android) || this.isFromGooglePackage) {
           regDevice = "ANDROID";
         }
       }
@@ -118,7 +120,7 @@ export const userStore = defineStore("userStore", {
       var string = qs.stringify(loginInfo);
       return api.post("/member/pakLogin", string).then((ret) => {
         if (ret.code === 0) {
-          if (isAndroid() || isInPwa()) {
+          if (isAndroid() || isInPwa() || this.isFromGooglePackage) {
             LocalStorage.set("TOKEN", ret.data, 86400);
           } else {
             SessionStorage.set("TOKEN", ret.data);
@@ -140,7 +142,7 @@ export const userStore = defineStore("userStore", {
         regDevice = "IOS";
       } else {
         regDevice = Platform.is.mobile ? "H5" : "WEB";
-        if (Platform.is.capacitor && Platform.is.android) {
+        if ((Platform.is.capacitor && Platform.is.android) || this.isFromGooglePackage) {
           regDevice = "ANDROID";
         }
       }
@@ -148,7 +150,7 @@ export const userStore = defineStore("userStore", {
       var string = qs.stringify(loginInfo);
       return api.post("/member/mobileLogin", string).then((ret) => {
         if (ret.code === 0) {
-          if (isAndroid() || isInPwa()) {
+          if (isAndroid() || isInPwa() || this.isFromGooglePackage) {
             LocalStorage.set("TOKEN", ret.data, 86400);
           } else {
             SessionStorage.set("TOKEN", ret.data);
@@ -176,7 +178,10 @@ export const userStore = defineStore("userStore", {
       this.readMsgLists = SessionStorage.getItem("READ_MAIL_IDS") || [];
     },
     getMemberInfo() {
-      this.token = isAndroid() || isInPwa() ? LocalStorage.getItem("TOKEN") : SessionStorage.getItem("TOKEN");
+      this.token =
+        isAndroid() || isInPwa() || this.isFromGooglePackage
+          ? LocalStorage.getItem("TOKEN")
+          : SessionStorage.getItem("TOKEN");
       return api.get("/session/member").then((response) => {
         if (response.code === 0) {
           const {
@@ -272,7 +277,7 @@ export const userStore = defineStore("userStore", {
     },
     autoLogin(token) {
       const ui = useUI();
-      if (isAndroid() || isInPwa()) {
+      if (isAndroid() || isInPwa() || this.isFromGooglePackage) {
         LocalStorage.set("TOKEN", token, 86400);
         ui.showLoggedIn();
       } else {

@@ -206,8 +206,9 @@ body.body--dark .q-footer {
   .q-panel > div {
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: cover;
+    background-size: 100% 100%;
     aspect-ratio: 335/150;
+    min-height: 150px;
   }
 }
 

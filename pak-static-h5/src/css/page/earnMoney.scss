@@ -7,7 +7,11 @@
   .search-field__date-range {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    > * {
+      &:not(:nth-child(1)) {
+        margin-left: 1rem;
+      }
+    }
     .q-field--filled {
       background-color: #ffffff0d;
       :deep(input) {
@@ -23,8 +27,8 @@
 
   .search-field__input-with-btn {
     display: flex;
-    background-color: #0b0e0d;
-    border: 1px solid #072a19;
+    border: 1px solid #FFFFFF14;
+    background: #292D2E;
     border-radius: 4px;
     padding-left: 1rem;
 
@@ -36,9 +40,12 @@
     }
 
     .q-btn {
-      height: 56px;
       max-width: 106px;
       position: relative;
+    }
+
+    :deep(.q-field__control) {
+      height: unset;
     }
   }
 
@@ -53,6 +60,7 @@
 
     :deep(.q-field__control) {
       background-color: #ffffff0d;
+      height: unset;
     }
 
     :deep(.q-field__native),
@@ -61,16 +69,18 @@
     }
   }
 }
-
 .span-username {
-  color: lightblue;
-  font-weight: bold;
-  text-decoration: underline;
+  color: #21EF89;
 }
 
 .result-table {
-  .q-table__container {
-    background-color: transparent;
+  :deep(.q-table__container) {
+    .q-table__middle {
+      border-radius: unset !important;
+    }
+  }
+  :deep(.q-table__container) {
+    // background-color: transparent;
 
     :deep(table) {
       .top-header {
@@ -88,19 +98,23 @@
           line-height: 1;
           text-align: left;
           border-width: 0px !important;
-          background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
+          // background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
+          background: #323738;
         }
       }
 
       tbody {
         > :nth-child(odd) {
-          background: rgba(112, 188, 98, 0.1);
+          background: #FFFFFF0F;
+        }
+        > :nth-child(even) {
+          background: #373C3D;
         }
 
         td {
           border: none;
           .win {
-            color: #70bc62;
+            color: #21EF89;
           }
           .loss {
             color: #dc1a00;
@@ -149,10 +163,9 @@
       span {
         font-size: 16px;
         font-weight: bold;
-        color: #70bc62;
+        color: #21EF89;
       }
     }
-
     .item-title {
       font-size: 12px;
       color: #8c968f;

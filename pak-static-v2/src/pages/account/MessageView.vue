@@ -105,8 +105,12 @@ onActivated(() => {
 .account-message-page {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+  >div:not(:last-child) {
+    margin-bottom: 20px;
+  }
 }
 .msg-container {
   padding: 1rem;

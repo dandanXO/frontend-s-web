@@ -77,6 +77,8 @@
     <Cct2025 v-else-if="list.redirectUrl === 'lh1-cct-global-finals-2025'" :promo-code="list.promoCode" />
     <FpSlotPromo v-else-if="list.redirectUrl === 'lh1-fp-slot'" :promo-code="list.promoCode" />
     <elsOne2025 v-else-if="list.redirectUrl === 'lh1-esl-one-raleigh-2025'" :promo-code="list.promoCode" />
+    <YuEBaoPromo v-else-if="list.redirectUrl === 'lh1-yu-e-bao'" :promo-code="list.promoCode" />
+    <BlastRival2025 v-else-if="list.redirectUrl === 'lh1-blast-rivals-2025-s1'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -117,6 +119,7 @@ import YaLLa2025 from "./hotpromo/YaLLa2025/YaLLa2025.vue";
 
 import IemMelbourne2025 from "./hotpromo/iem-melbourne-2025/IemMelbourne2025.vue";
 import PglWallachiaS4 from "./hotpromo/pgl-wallachia-s4/PglWallachiaS4.vue";
+import BlastRival2025 from "./hotpromo/BlastRival2025/BlastRival2025.vue";
 import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
 const DragonCardPromo = defineAsyncComponent(() => import("../components/hotpromo/dragoncard/dragonCardPromo.vue"));
@@ -186,6 +189,7 @@ const PGLBucharest2025 = defineAsyncComponent(() => import("./hotpromo/pgl-bucha
 const Blast2025S3 = defineAsyncComponent(() => import("./hotpromo/Blast2025-s3/Blast2025S3.vue"));
 const FpSlotPromo = defineAsyncComponent(() => import("./hotpromo/fp-slot-promo/FpSlotPromo.vue"));
 const elsOne2025 = defineAsyncComponent(() => import("./hotpromo/elsOne2025/elsOne2025.vue"));
+const YuEBaoPromo = defineAsyncComponent(() => import("./hotpromo/yu-e-bao/YuEBaoPromo.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -248,7 +252,9 @@ export default defineComponent({
     FissureUniverseS4,
     IemMelbourne2025,
     PglWallachiaS4,
-    FpSlotPromo
+    FpSlotPromo,
+    YuEBaoPromo,
+    BlastRival2025
   },
   props: {
     list: {

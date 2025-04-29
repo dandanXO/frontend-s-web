@@ -57,8 +57,10 @@
                     style="font-size: 14px"
                     color="#0089ED"
                   />
-                  <q-chip size="sm" :label="$t('lang.mail_read')" v-if="det.readTime && det.sendTime" />
-                  {{ det.title }}
+                  <div style="display: flex; gap: 16px">
+                    <q-chip size="sm" :label="$t('lang.mail_read')" v-if="det.readTime && det.sendTime" />
+                    <div v-html="det.title"></div>
+                  </div>
                 </div>
 
                 <div class="right-title">
@@ -67,7 +69,7 @@
                 </div>
               </div>
               <div class="mailcontents" v-if="isSelectedMail === det.id">
-                {{ det.content }}
+                <div v-html="det.content"></div>
               </div>
               <div v-if="mailType === 'outbox'" class="buttons">
                 <q-btn outline label="催单" size="sm" color="bright" class="q-mr-sm" />
@@ -77,7 +79,7 @@
 
             <template v-slot:loading>
               <div v-if="comList.length > 0">
-                <div class="row justify-center q-my-md">
+                <div class="justify-center row q-my-md">
                   <q-spinner-dots color="primary" size="40px" />
                 </div>
               </div>
@@ -99,7 +101,7 @@
 
     <q-dialog width="100%" v-model="isDeleteMailModal">
       <q-card style="width: 100%; padding: 20px" class="text-black">
-        <q-card-section class="q-mb-md text-center" style="flex-direction: column">
+        <q-card-section class="text-center q-mb-md" style="flex-direction: column">
           <strong>{{ $t("lang.system_hint") }}</strong>
           <br />
           <br />
@@ -127,8 +129,7 @@ import qs from "qs";
 import { useI18n } from "vue-i18n";
 
 export default defineComponent({
-  components: {
-  },
+  components: {},
   props: {
     list: {
       type: Array,
@@ -216,7 +217,7 @@ export default defineComponent({
         const formattedIds = messagesIdArr.join(",");
         api
           .post(
-            "/session/inbox/readMultiple",
+            "/session/pm/inbox/readMultiple",
             qs.stringify({
               ids: formattedIds
             })
@@ -247,7 +248,7 @@ export default defineComponent({
       } else if (type !== "ALL") {
         api
           .post(
-            "/session/inbox/readAll",
+            "/session/pm/inbox/readAll",
             qs.stringify({
               type: type
             })
@@ -280,7 +281,7 @@ export default defineComponent({
           });
       } else {
         api
-          .post("/session/inbox/readAll")
+          .post("/session/pm/inbox/readAll")
           .then((res) => {
             if (res.code === 0) {
               $q.notify({
@@ -327,7 +328,7 @@ export default defineComponent({
       if (!readTime) {
         api
           .post(
-            "/session/inbox/read",
+            "/session/pm/inbox/read",
             qs.stringify({
               id: id
             })
@@ -365,7 +366,7 @@ export default defineComponent({
         const formattedIds = mailIdArr.join(",");
         api
           .post(
-            "/session/inbox/deleteMultiple",
+            "/session/pm/inbox/deleteMultiple",
             qs.stringify({
               ids: formattedIds
             })
@@ -394,7 +395,7 @@ export default defineComponent({
       } else if (msgType.value !== null) {
         api
           .post(
-            "/session/inbox/deleteAll",
+            "/session/pm/inbox/deleteAll",
             qs.stringify({
               type: msgType.value
             })
@@ -421,7 +422,7 @@ export default defineComponent({
           });
       } else {
         api
-          .post("/session/inbox/deleteAll")
+          .post("/session/pm/inbox/deleteAll")
           .then((res) => {
             isDeleteMailModal.value = false;
 
@@ -557,6 +558,7 @@ export default defineComponent({
   display: flex;
   align-items: center;
 }
+
 .red-dot-icon {
   height: 10px;
   width: 10px;

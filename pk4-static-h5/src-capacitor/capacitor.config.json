@@ -1,0 +1,19 @@
+{
+  "appId": "com.ind.appb9mega1",
+  "appName": "B9.GAME",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https",
+    "hostname": "7rzyd3kui.b9mega1.com"
+  },
+  "plugins": {
+    "GoogleAuth": {
+      "scopes": [
+        "profile",
+        "email"
+      ],
+      "serverClientId": "224522131575-tao52ramaq70tl8eclgcqe6pdotdd7gg.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
+    }
+  }
+}

@@ -1,0 +1,148 @@
+<template>
+  <q-page class="account-table-page">
+    <LoadingComponent v-if="isLoading"></LoadingComponent>
+    <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('notify.noRecord')"></NoInfoComponent>
+    <div v-else v-for="(e, i) in discountData" :key="`${e}-${i}`" class="discount-table">
+      <div class="discount-row discount-row--title">
+        <div class="discount-col">
+          <span class="txt-gray">{{ convertToGMT55(e.recordTime) }}</span>
+        </div>
+      </div>
+      <div class="discount-row discount-row--content">
+        <div class="discount-col">{{ e.privilegeName }}</div>
+        <div class="discount-col">
+          <!-- {{ $t("records.amount") }}: -->
+          <span class="text-primary">{{ convertToTwoDecimalAmount(e.amount) }}</span>
+        </div>
+      </div>
+    </div>
+  </q-page>
+</template>
+
+<script setup>
+import { onActivated, onMounted, reactive, ref } from "vue";
+import { api } from "boot/axios";
+import { useRouter } from "vue-router";
+import { updateDate, convertToGMT8, convertToGMT55 } from "src/boot/utils";
+import SwiperNav from "../../components/SwiperNav.vue";
+import ProfileSummary from "../../components/ProfileSummary.vue";
+import LoadingComponent from "../../components/LoadingComponent.vue";
+import NoInfoComponent from "../../components/NoInfoComponent.vue";
+import { convertToCommaAmount } from "src/boot/utils";
+
+const router = useRouter();
+
+let slideList = ref(["Discount", "Record", "Order", "Bank", "Message", "Personal Center"]);
+let slideListPath = ref([
+  "/account/discount",
+  "/account/record",
+  "/account/order",
+  "/account/bank",
+  "/account/message",
+  "/account"
+]);
+let currentSlide = ref(slideList.value[0]);
+
+const isActiveSlide = (e) => {
+  if (e === currentSlide.value) return true;
+  return false;
+};
+
+const isLoading = ref(true);
+const isNoInfo = ref(true);
+
+const searchForm = reactive({ startDate: "", endDate: "" });
+const setTime = () => {
+  searchForm.startDate = updateDate(6);
+  searchForm.endDate = updateDate(-1);
+};
+
+const discountData = ref([]);
+const searchDiscountRecord = () => {
+  isLoading.value = true;
+  discountData.value = [];
+
+  const { startDate, endDate } = searchForm;
+
+  const gmtStartDate = convertToGMT8(startDate);
+  const gmtEndDate = convertToGMT8(endDate);
+  api
+    .get("/session/member/privilege", {
+      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: 10 }
+    })
+    .then((response) => {
+      if (response.code === 0) {
+        const data = response.data.records;
+        discountData.value.push(...data);
+
+        if (data.length === 0) isNoInfo.value = true;
+        else isNoInfo.value = false;
+      }
+    })
+    .catch((error) => {})
+    .then(() => {
+      isLoading.value = false;
+    });
+};
+
+const convertToTwoDecimalAmount = (amount) => {
+  let formattedAmount = parseFloat(amount).toFixed(2);
+  return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
+onActivated(() => {
+  setTime();
+  searchDiscountRecord();
+});
+</script>
+
+<style lang="scss" scoped>
+.discount-table {
+  // background: #171e2b80;
+  background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+
+  border-radius: 10px;
+  padding: 6px 4px;
+  margin: 10px;
+
+  .discount-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    flex-wrap: wrap;
+
+    &--title {
+      border-top-right-radius: 16px;
+      border-top-left-radius: 16px;
+    }
+
+    &--content {
+      flex-wrap: wrap;
+    }
+  }
+
+  .discount-col {
+    width: 50%;
+    font-weight: bold;
+    &:nth-child(even) {
+      text-align: right;
+    }
+
+    span.txt-gray {
+      color: #888888;
+    }
+
+    span.txt-green {
+      color: #5bf25c;
+    }
+
+    span.txt-red {
+      color: #f24c5a;
+    }
+
+    span.txt-yellow {
+      color: #fae576;
+    }
+  }
+}
+</style>

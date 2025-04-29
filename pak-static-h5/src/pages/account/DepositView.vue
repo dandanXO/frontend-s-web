@@ -105,7 +105,7 @@
             clearable
           >
             <template v-slot:prepend>
-              <span style="font-size: 26px" class="currency">
+              <span style="font-size: 16px" class="currency">
                 <template v-if="isUSDT">USDT</template>
                 <template v-else>{{ store.currency.value }}</template>
               </span>
@@ -209,8 +209,8 @@
     </div>
 
     <div class="q-mt-lg" style="color: #576373" v-if="activeMethod.privilegeId || isFtdPrivilegePayType">
-      <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
-      <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
+      <div class="q-mt-sm">{{ $t('deposit.wagerRequirement') }}</div>
+      <div class="q-mt-sm">{{ $t('deposit.wagerRequirementEg') }}</div>
     </div>
 
     <div class="q-mt-lg step-desc-div q-mb-lg">
@@ -219,40 +219,39 @@
       </template>
       <template v-else-if="isUSDT">
         <p>
-          1. Recharge tutorial:
-          <span class="tutorial-link" @click="openDepositPage">Picture</span>
+          1. {{ $t('deposit.rechargeTutorial') }}:
+          <span class="tutorial-link" @click="openDepositPage">{{ $t('deposit.picture') }}</span>
           /
-          <span class="tutorial-link" @click="openDepositVideo">Video</span>
+          <span class="tutorial-link" @click="openDepositVideo">{{ $t('deposit.video') }}</span>
         </p>
-        <p>2. Minimum deposit: 10USDT, deposits less than 10USDT will not be credited.</p>
-        <p>3. Do not deposit any non-currency assets to the above address, or the assets will not be recovered.</p>
+        <p>2. {{ $t('deposit.mindepositnotcredit') }}</p>
+        <p>3. {{ $t('deposit.depositnotrecovered') }}</p>
         <p>
-          4. Please confirm that the operating environment is safe to avoid information being tampered with or leaked.
+          4. {{ $t('deposit.operatingSafe') }}
         </p>
         <p>
-          5. The transfer amount must match the order you created, otherwise the money cannot be credited successfully.
+          5. {{ $t('deposit.transferAmountMatch') }}
         </p>
-        <p>6. Note: do not cancel the deposit order after the money has been transferred.</p>
+        <p>6. {{ $t('deposit.donotcanceldeposit') }}</p>
       </template>
       <template v-else>
         <p>
-          1. Recharge tutorial:
-          <span class="tutorial-link" @click="openDepositPage">Picture</span>
+          1. {{ $t('deposit.rechargeTutorial') }}:
+          <span class="tutorial-link" @click="openDepositPage">{{ $t('deposit.picture') }}</span>
           /
-          <span class="tutorial-link" @click="openDepositVideo">Video</span>
+          <span class="tutorial-link" @click="openDepositVideo">{{ $t('deposit.video') }}</span>
         </p>
-        <p>2. Fill in the correct wallet account number</p>
-        <p>3. Fill in the correct CNIC number</p>
+        <p>2. {{ $t('deposit.fillinwallet') }}</p>
+        <p>3. {{ $t('deposit.fillincnic') }}</p>
         <p>
-          4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically
-          credited.
+          4. {{ $t('deposit.submittedAmtConsistent') }}
         </p>
 
         <!--        <p>-->
         <!--          1. Recharge tutorial:-->
         <!--          <a-->
         <!--            class="tutorial-link"-->
-        <!--            style="color: #70bc62; text-decoration: underline"-->
+        <!--            style="color: #21EF89; text-decoration: underline"-->
         <!--            href="https://drive.google.com/file/d/1UCBOIAxRfBZoq56zv5Md-XO-6eAzunWJ/view?usp=drivesdk"-->
         <!--            target="_blank"-->
         <!--          >-->
@@ -261,7 +260,7 @@
         <!--          /-->
         <!--          <a-->
         <!--            class="tutorial-link"-->
-        <!--            style="color: #70bc62; text-decoration: underline"-->
+        <!--            style="color: #21EF89; text-decoration: underline"-->
         <!--            href="https://drive.google.com/file/d/1fCCJPAHm2frmzBk05jc4v-c19-Bn3vvx/view"-->
         <!--            target="_blank"-->
         <!--          >-->
@@ -326,7 +325,7 @@
     </div>
   </q-dialog>-->
 
-  <q-dialog width="100%" v-model="userKYCDialog" persistent>
+  <q-dialog  width="100%" v-model="userKYCDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="goBackPage" v-close-popup />
       <KYCUserForm @closeUserKYCDialog="checkCloseUserKYCDialog" />
@@ -1139,9 +1138,12 @@ onMounted(() => {
 }
 
 :deep(.q-field--filled.q-field--dark .q-field__control) {
+  // border-radius: 0.5rem;
+  // background: #0b0e0d !important;
+  // border: 1px solid #072a19;
   border-radius: 0.5rem;
-  background: #0b0e0d !important;
-  border: 1px solid #072a19;
+  border: 1px solid #ffffff14;
+  background: #292d2f !important;
 }
 
 :deep(.q-tab__label) {
@@ -1161,21 +1163,34 @@ onMounted(() => {
 
     .deposit-amt {
       border-radius: 4px;
-      background: #0b0e0d;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
       line-height: 1;
-      padding: 3px 16px;
+      // padding: 3px 16px;
       width: 100%;
       height: 4rem;
       font-weight: 600;
       aspect-ratio: 106/64;
+      box-shadow: 0px 2px 0px 0px #2a3637;
+      background: #394142;
+      color: #ffffff80;
+
+      font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 100%;
+      letter-spacing: 0.3px;
+      text-align: center;
+      vertical-align: middle;
 
       &.active {
         // background: #00b900;
         color: #000a01;
-        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        box-shadow: 0px 2px 0px 0px #1cca6a;
+        background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+        color: #333333;
       }
     }
 
@@ -1186,6 +1201,7 @@ onMounted(() => {
       display: none;
 
       svg {
+        display: none;
         // background: #30bb1a;
         border-radius: 3px;
       }
@@ -1211,7 +1227,7 @@ onMounted(() => {
       margin: 20px auto 0px auto;
 
       .deposit-input {
-        background-color: #0b0e0d;
+        // background-color: #0b0e0d;
         border-radius: 5px;
         width: 100%;
         height: 46px;
@@ -1233,8 +1249,8 @@ onMounted(() => {
       }
 
       .currency {
-        color: #5f6061;
-        font-weight: 400;
+        color: #b2bdbf;
+        font-weight: 700;
       }
     }
   }
@@ -1367,24 +1383,24 @@ onMounted(() => {
 
 .bottom-btn {
   margin-top: auto;
-  padding: 20px 0 40px;
+  padding: 20px 15px 40px;
   position: fixed;
   bottom: 0;
-  width: calc(100% - 32px);
+  width: 100%;
   max-width: 468px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #0e1412;
+  background-color: #24262b;
   // margin: 16px;
 }
 
 .tutorial-link {
-  color: #70bc62;
+  color: #21ef89;
   text-decoration: underline;
 }
 
 .step-desc-div {
-  color: #bacef1;
+  color: #B2BDBF;
 
   p {
     margin: 5px 0px;
@@ -1410,7 +1426,7 @@ onMounted(() => {
 </style>
 <style scoped>
 .description-text {
-  color: #bacef1;
+  color: #B2BDBF;
 }
 :deep(.description-text p) {
   margin: 5px 0px !important;
