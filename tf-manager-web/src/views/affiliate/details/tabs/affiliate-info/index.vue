@@ -2160,7 +2160,7 @@ function showDialog(type) {
     uiControl.dialogTitle = t('fields.updateAffiliateLevel')
   } else if (type === "UPDATE_AFFILIATE_ALIAS") {
     aliasForm.alias = affiliateDetails.alias
-    uiControl.dialogTitle = t('fields.editAlias')
+    uiControl.dialogTitle = t('fields.updateAlias')
   }
   uiControl.dialogVisible = true
 }
@@ -2407,7 +2407,7 @@ function updateAlias() {
       uiControl.dialogVisible = false
       await loadAffiliateRecord()
       ElMessage({
-        message: t('message.updateAliasSuccess'),
+        message: t('message.updateSuccess'),
         type: 'success',
       })
     }
