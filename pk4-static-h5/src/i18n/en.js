@@ -66,7 +66,8 @@ export default {
     wallet: "Wallet",
     me: "Me",
     account: "Account",
-    more: "More"
+    more: "More",
+    dividend: "Dividend"
   },
   modal: {
     addToHomeScreen: {

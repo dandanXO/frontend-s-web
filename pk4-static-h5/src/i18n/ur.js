@@ -64,7 +64,8 @@ export default {
     wallet: "پرس",
     me: "میں",
     account: "اکاؤنٹ",
-    more: "مزید"
+    more: "مزید",
+    dividend: "حصہ"
   },
   modal: {
     addToHomeScreen: {

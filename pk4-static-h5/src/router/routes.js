@@ -347,6 +347,12 @@ const routes = [
     ],
     meta: { requiresAuth: true }
   },
+  {
+    path: "/account/dividend",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/WithdrawBankView.vue") }],
+    meta: { requiresAuth: true }
+  },
   // {
   //   path: "/account/promotion",
   //   component: () => import("layouts/MainLayout.vue"),
