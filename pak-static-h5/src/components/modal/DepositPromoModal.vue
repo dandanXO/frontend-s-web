@@ -57,6 +57,7 @@ const statusFromApi = ref({
   isAppLogin: false
 });
 const isActivated = ref(true);
+const shouldCheckAppAgain = ref(false);
 
 const combinedStatus = computed(() => ({
   ...statusFromApi.value,
@@ -88,6 +89,7 @@ const handleAppLoginPromoClaim = async () => {
         icon: "error"
       });
       router.push("/account/profile");
+      shouldCheckAppAgain.value = true;
     } else {
       try {
         const res = await eventapi.post("/session/app-login-bonus/claimBonus?promoCode=pak-app-login-phone-bonus");
@@ -132,7 +134,7 @@ const checkAppLogin = async () => {
   try {
     if (isAndroid() || store.isFromGooglePackage) {
       const res = await eventapi.get("/session/app-login-bonus/popUp?promoCode=pak-app-login-phone-bonus");
-      if (res.code === 0 && !res.data) {
+      if (res.code === 0 && res.data) {
         modalType.value = "APP_LOGIN_APK";
       }
     } else if (!combinedStatus.value.isAppLogin) {
@@ -142,6 +144,8 @@ const checkAppLogin = async () => {
     }
   } catch (e) {
     console.error(e);
+  } finally {
+    shouldCheckAppAgain.value = false;
   }
 };
 
@@ -195,8 +199,11 @@ const checkModalType = async () => {
   }
 };
 
-const recheckBalance = () => {
-  if (store.depositCount === 1 && store.balance <= 50 && shouldShowModalAgain(3)) {
+const recheckModalType = async () => {
+  if (shouldCheckAppAgain.value && shouldShowModalAgain(1)) {
+    await getData();
+    checkAppLogin();
+  } else if (store.depositCount === 1 && store.balance <= 50 && shouldShowModalAgain(3)) {
     modalIndex.value = 3;
     modalType.value = "FIRST_DEPOSIT_AMOUNT";
   } else if (store.depositCount === 2 && store.balance <= 10 && shouldShowModalAgain(4)) {
@@ -221,12 +228,12 @@ const shouldShowModalAgain = (index) => {
   return true;
 };
 
-const getData = async () => {
+const getData = async (isFirst = true) => {
   try {
     const initRes = await eventapi.get("/session/app-login-bonus/init?promoCode=pak-app-login-phone-bonus");
     if (initRes.code === 0) {
       statusFromApi.value = initRes.data;
-      checkModalType();
+      isFirst && checkModalType();
     }
   } catch (e) {
     console.error(e);
@@ -245,7 +252,7 @@ const unwatchBalance = watch(
   () => store.balance,
   () => {
     if (isDuringInitial.value) return;
-    store.getMemberInfo().then(recheckBalance);
+    store.getMemberInfo().then(recheckModalType);
     if (store.depositCount > 2) unwatchBalance();
   }
 );
@@ -253,7 +260,7 @@ const unwatchBalance = watch(
 onActivated(() => {
   isActivated.value = true;
   if (isDuringInitial.value) return;
-  recheckBalance();
+  recheckModalType();
 });
 
 onDeactivated(() => {
