@@ -227,7 +227,7 @@ const checkModalType = async () => {
       }
       break;
     case 4:
-      if (combinedStatus.value.depositCount === 2 && store.balance <= 10 && shouldShowModalAgain(modalIndex.value)) {
+      if (combinedStatus.value.depositCount === 1 && store.balance <= 10 && shouldShowModalAgain(modalIndex.value)) {
         modalType.value = "SECONDARY_DEPOSIT_AMOUNT";
       } else {
         showNextModal();
@@ -248,7 +248,7 @@ const recheckModalType = async () => {
   } else if (store.depositCount === 1 && store.balance <= 50 && shouldShowModalAgain(3)) {
     modalIndex.value = 3;
     modalType.value = "FIRST_DEPOSIT_AMOUNT";
-  } else if (store.depositCount === 2 && store.balance <= 10 && shouldShowModalAgain(4)) {
+  } else if (store.depositCount === 1 && store.balance <= 10 && shouldShowModalAgain(4)) {
     modalIndex.value = 4;
     modalType.value = "SECONDARY_DEPOSIT_AMOUNT";
   }
