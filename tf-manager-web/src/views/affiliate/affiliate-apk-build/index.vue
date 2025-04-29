@@ -77,6 +77,15 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="alias"
+          :label="t('fields.alias')"
+          width="250"
+        >
+          <template #default="scope">
+            {{ scope.row.alias !== null ? scope.row.alias : scope.row.loginName }}
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="affiliateCode"
           :label="t('fields.affiliateCode')"
           width="150"
