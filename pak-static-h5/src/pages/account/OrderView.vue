@@ -23,108 +23,112 @@
       transition-next="fade"
     >
       <q-tab-panel name="withdrawal">
-        <div v-for="(e, i) in withdrawalData" :key="`${e}-${i}`" class="order-table">
-          <div class="order-row order-row--content">
-            <div class="order-subrow">
-              <div class="order-col">
-                <span class="txt-gray">{{ convertToGMT55(e.withdrawDate) }}</span>
-              </div>
-              <!-- <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
+        <q-infinite-scroll @load="loadMore" :initial-index="0" :offset="10" :disable="isEnded.withdrawal">
+          <div v-for="(e, i) in withdrawalData" :key="`${e}-${i}`" class="order-table">
+            <div class="order-row order-row--content">
+              <div class="order-subrow">
+                <div class="order-col">
+                  <span class="txt-gray">{{ convertToGMT55(e.withdrawDate) }}</span>
+                </div>
+                <!-- <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
                   {{ getWithdrawStatus(e.status) }}
                 </span> -->
 
-              <div class="order-col orange">- {{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
-            </div>
-            <div class="order-subrow">
-              <div class="order-col">{{ e.currencyName }}</div>
-              <div class="order-col">
-                <q-btn
-                  flat
-                  :class="{
-                    'btn--green': ['SUCCESS'].includes(e.status),
-                    'btn--red': ['FAIL', 'STEP_5', 'FAIL_REVIEW'].includes(e.status),
-                    'btn--orange': [
-                      'APPLY',
-                      'STEP_1',
-                      'STEP_2',
-                      'STEP_3',
-                      'STEP_4',
-                      'AUTOPAY',
-                      'PENDING',
-                      'SENDING',
-                      'WAITING_CALLBACK',
-                      'PAYING',
-                      'WAITING_AUTO_PAY',
-                      'WAITING_RETRY'
-                    ].includes(e.status)
-                  }"
-                  :label="`${getWithdrawStatus(e.status)}`"
-                ></q-btn>
+                <div class="order-col orange">- {{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
+              </div>
+              <div class="order-subrow">
+                <div class="order-col">{{ e.currencyName }}</div>
+                <div class="order-col">
+                  <q-btn
+                    flat
+                    :class="{
+                      'btn--green': ['SUCCESS'].includes(e.status),
+                      'btn--red': ['FAIL', 'STEP_5', 'FAIL_REVIEW'].includes(e.status),
+                      'btn--orange': [
+                        'APPLY',
+                        'STEP_1',
+                        'STEP_2',
+                        'STEP_3',
+                        'STEP_4',
+                        'AUTOPAY',
+                        'PENDING',
+                        'SENDING',
+                        'WAITING_CALLBACK',
+                        'PAYING',
+                        'WAITING_AUTO_PAY',
+                        'WAITING_RETRY'
+                      ].includes(e.status)
+                    }"
+                    :label="`${getWithdrawStatus(e.status)}`"
+                  ></q-btn>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="order-row order-row--title">
-            <div class="order-col">{{ $t("records.orderNo") }}</div>
-            <div class="order-col flex-c-end gap-8">
-              {{ e.serialNumber }}
+            <div class="order-row order-row--title">
+              <div class="order-col">{{ $t("records.orderNo") }}</div>
+              <div class="order-col flex-c-end gap-8">
+                {{ e.serialNumber }}
 
-              <div @click="copyText(e.serialNumber)">
-                <img
-                  class="copy-btn btn-pointer"
-                  src="../../assets/images/account/content-copy.svg"
-                  size="24px"
-                  fill="#fff"
-                />
+                <div @click="copyText(e.serialNumber)">
+                  <img
+                    class="copy-btn btn-pointer"
+                    src="../../assets/images/account/content-copy.svg"
+                    size="24px"
+                    fill="#fff"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </q-infinite-scroll>
       </q-tab-panel>
 
       <q-tab-panel name="recharge">
-        <div v-for="(e, i) in depositData" :key="`${e}-${i}`" class="order-table">
-          <div class="order-row order-row--content">
-            <div class="order-subrow">
-              <div class="order-col">
-                <span class="txt-gray">{{ convertToGMT55(e.depositDate) }}</span>
+        <q-infinite-scroll @load="loadMore" :initial-index="0" :offset="10" :disable="isEnded.recharge">
+          <div v-for="(e, i) in depositData" :key="`${e}-${i}`" class="order-table">
+            <div class="order-row order-row--content">
+              <div class="order-subrow">
+                <div class="order-col">
+                  <span class="txt-gray">{{ convertToGMT55(e.depositDate) }}</span>
+                </div>
+                <div class="order-col">+{{ convertToCommaAmount(e.depositAmount, true) }}</div>
               </div>
-              <div class="order-col">+{{ convertToCommaAmount(e.depositAmount, true) }}</div>
-            </div>
-            <div class="order-subrow">
-              <div class="order-col">{{ e.paymentType }}</div>
-              <div class="order-col">
-                <!-- <span :class="`${['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(e.status) ? 'txt-green' : 'txt-red'}`">
+              <div class="order-subrow">
+                <div class="order-col">{{ e.paymentType }}</div>
+                <div class="order-col">
+                  <!-- <span :class="`${['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(e.status) ? 'txt-green' : 'txt-red'}`">
                   {{ getDepositStatus(e.status) }}
                 </span> -->
 
-                <q-btn
-                  flat
-                  :class="{
-                    'btn--green': ['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(e.status),
-                    'btn--red': ['CLOSED'].includes(e.status),
-                    'btn--orange': e.status === 'PENDING'
-                  }"
-                  :label="`${getDepositStatus(e.status)}`"
-                ></q-btn>
+                  <q-btn
+                    flat
+                    :class="{
+                      'btn--green': ['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(e.status),
+                      'btn--red': ['CLOSED'].includes(e.status),
+                      'btn--orange': e.status === 'PENDING'
+                    }"
+                    :label="`${getDepositStatus(e.status)}`"
+                  ></q-btn>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="order-row order-row--title">
-            <div class="order-col">{{ $t("records.orderNo") }}</div>
-            <div class="order-col flex-c-end gap-8">
-              {{ e.serialNumber }}
+            <div class="order-row order-row--title">
+              <div class="order-col">{{ $t("records.orderNo") }}</div>
+              <div class="order-col flex-c-end gap-8">
+                {{ e.serialNumber }}
 
-              <div @click="copyText(e.serialNumber)">
-                <img
-                  class="copy-btn btn-pointer"
-                  src="../../assets/images/account/content-copy.svg"
-                  size="24px"
-                  fill="#fff"
-                />
+                <div @click="copyText(e.serialNumber)">
+                  <img
+                    class="copy-btn btn-pointer"
+                    src="../../assets/images/account/content-copy.svg"
+                    size="24px"
+                    fill="#fff"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </q-infinite-scroll>
       </q-tab-panel>
     </q-tab-panels>
 
@@ -164,8 +168,13 @@ const isActiveSlide = (e) => {
   return false;
 };
 
+const currentDep = ref(1);
+const currentWith = ref(1);
+
 const isLoading = reactive({ withdrawal: true, recharge: true });
 const isNoInfo = reactive({ withdrawal: true, recharge: true });
+
+const isEnded = reactive({ withdrawal: false, recharge: false });
 
 const orderOptionTab = ref("withdrawal");
 
@@ -186,18 +195,29 @@ const searchWithdrawalRecord = () => {
   const gmtEndDate = convertToGMT8(endDate);
   api
     .get("/session/member/withdraw", {
-      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: 10 }
+      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: currentWith.value, size: 10 }
     })
     .then((response) => {
       if (response.code === 0) {
         const data = response.data.records;
+
+        currentWith.value++;
         withdrawalData.value.push(...data);
 
-        if (data.length === 0) isNoInfo.withdrawal = true;
-        else isNoInfo.withdrawal = false;
+        if (data.length === 0) {
+          isNoInfo.withdrawal = true;
+        } else {
+          isNoInfo.withdrawal = false;
+        }
+
+        if (response.data.records.length === 0) {
+          isEnded.withdrawal = true;
+        }
       }
     })
-    .catch((error) => {})
+    .catch((error) => {
+      isEnded.withdrawal = true;
+    })
     .then(() => {
       isLoading.withdrawal = false;
     });
@@ -236,21 +256,37 @@ const searchDepositRecord = () => {
   const gmtEndDate = convertToGMT8(endDate);
   api
     .get("/session/member/deposit", {
-      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: 10 }
+      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: currentDep.value, size: 10 }
     })
     .then((response) => {
       if (response.code === 0) {
         const data = response.data.records;
         depositData.value.push(...data);
 
-        if (data.length === 0) isNoInfo.recharge = true;
-        else isNoInfo.recharge = false;
+        currentDep.value++;
+
+        if (data.length === 0) {
+          isNoInfo.recharge = true;
+        } else {
+          isNoInfo.recharge = false;
+        }
+
+        if (response.data.records.length === 0) {
+          isEnded.recharge = true;
+        }
       }
     })
-    .catch((error) => {})
+    .catch((error) => {
+      isEnded.recharge = true;
+    })
     .then(() => {
       isLoading.recharge = false;
     });
+};
+
+const infiniteDone = ref(false);
+const loadMore = () => {
+  console.log("LOAD MORe");
 };
 
 const getWithdrawStatus = (withdrawStatus) => {
