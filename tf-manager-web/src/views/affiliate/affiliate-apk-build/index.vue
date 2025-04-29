@@ -227,7 +227,7 @@
       v-model="uiControl.dialogVisible"
     >
       <el-form ref="paramForm" :model="form" :rules="formRules" @submit.prevent>
-        <el-form-item :label="t('fields.param')" prop="extraParams">
+        <el-form-item prop="extraParams">
           <el-switch
             v-model="uiControl.showParamFormat"
             class="mb-2"
@@ -238,34 +238,35 @@
             @change="syncParam"
           />
           <div v-if="uiControl.showParamFormat === 'key-value'">
-            <div v-for="(item, index) in param" :key="index">
+            <div v-for="(item, index) in param" :key="index" style="display: flex; align-items: center; margin-top: 5px; gap: 5px;">
               <el-input
-                style="width: 170px; margin-top: 5px;"
+                style="flex: 3;"
                 v-model="item.key"
               />
-              :
-              <el-input style="width: 550px " v-model="item.value" />
-              <el-button
-                v-if="index === param.length - 1"
-                icon="el-icon-plus"
-                size="mini"
-                type="primary"
-                style="margin-left: 20px"
-                @click="addParam()"
-                plain
-              >
-                {{ t('fields.add') }}
-              </el-button>
-              <el-button
-                icon="el-icon-remove"
-                size="mini"
-                type="danger"
-                style="margin-left: 20px"
-                @click="delParam(index)"
-                plain
-              >
-                {{ t('fields.delete') }}
-              </el-button>
+              <span style="margin: 0 5px;">:</span>
+              <el-input style="flex: 6;" v-model="item.value" />
+              <div style="flex: 1; display: flex; justify-content: flex-end; gap: 5px;">
+                <el-button
+                  v-if="index === param.length - 1"
+                  icon="el-icon-plus"
+                  size="mini"
+                  type="primary"
+                  @click="addParam()"
+                  plain
+                >
+                  {{ t('fields.add') }}
+                </el-button>
+                <el-button
+                  icon="el-icon-remove"
+                  size="mini"
+                  type="danger"
+                  @click="delParam(index)"
+                  plain
+                >
+                  {{ t('fields.delete') }}
+                </el-button>
+              </div>
+
             </div>
           </div>
           <div v-else>
