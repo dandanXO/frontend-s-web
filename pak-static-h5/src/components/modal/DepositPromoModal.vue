@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="showModal" persistent @hide="handleDialogClose">
+  <q-dialog v-model="showModal" ref="dialogRef" persistent @hide="handleDialogClose">
     <div class="deposit-promo-modal">
       <div class="modal-img">
         <img :src="require(`../../assets/images/index/deposit-modal/deposit-promo-${modalImageIndex}.png`)" />
@@ -9,6 +9,12 @@
       </div>
       <div class="modal-checkbox">
         <q-checkbox v-model="hideModalForAWeek">Don't remind me again within a week</q-checkbox>
+      </div>
+      <div v-if="[2, 3].includes(modalImageIndex)" class="modal-countdown">
+        <img :src="require(`../../assets/images/index/deposit-modal/deposit-promo-${modalImageIndex}-countdown.png`)" />
+        <span class="modal-countdown__number" :class="{ 'is-ftd': modalImageIndex === 2 }" :data-stroke="countdown">
+          {{ countdown }}
+        </span>
       </div>
       <div v-close-popup class="modal-close">
         <q-icon name="highlight_off"></q-icon>
@@ -58,6 +64,9 @@ const statusFromApi = ref({
 });
 const isActivated = ref(true);
 const shouldCheckAppAgain = ref(false);
+const countdown = ref("");
+const countdownTimer = ref(null);
+const dialogRef = ref(null);
 
 const combinedStatus = computed(() => ({
   ...statusFromApi.value,
@@ -70,6 +79,25 @@ const modalImageIndex = computed(() => {
   if (modalIndex.value === 1 && (isAndroid() || store.isFromGooglePackage)) return 6;
   return modalIndex.value;
 });
+
+const startCountdown = () => {
+  if (countdownTimer.value) {
+    clearInterval(countdownTimer.value);
+  }
+  const duration = moment.duration(10, "minutes");
+  let remaining = duration.clone();
+  countdownTimer.value = setInterval(() => {
+    remaining.subtract(100, "milliseconds");
+    if (remaining.asMilliseconds() <= 0) {
+      clearInterval(countdownTimer.value);
+      dialogRef.value?.hide();
+    }
+    const minutes = String(remaining.minutes()).padStart(2, "0");
+    const seconds = String(remaining.seconds()).padStart(2, "0");
+    const decimalSeconds = String(Math.floor(remaining.milliseconds() / 100)).padStart(2, "0");
+    countdown.value = `${minutes}:${seconds}:${decimalSeconds}`;
+  }, 100);
+};
 
 const handleDialogClose = () => {
   if (hideModalForAWeek.value) {
@@ -121,9 +149,21 @@ const btnAction = () => {
       handleAppLoginPromoClaim();
       break;
     case 2:
+      router.push({ path: "/deposit", query: { privilegeCode: "pak-new-user-ftd-bonus" } });
+      break;
     case 3:
+      router.push({ path: "/deposit", query: { privilegeCode: "pak-second-time-deposit-bonus" } });
+      break;
     case 4:
-      router.push("/deposit");
+      $q.dialog({
+        message: t("modal.appLoginBonus.loginTomorrow"),
+        persistent: true,
+        ok: {
+          label: t("btn.close"),
+          color: "primary"
+        },
+        class: "deposit-promo-modal-notification-dialog"
+      }).onOk(() => dialogRef.value?.hide());
       break;
     case 5:
       router.push("/promo?name=pak-lucky-10-day-bonus");
@@ -248,6 +288,9 @@ watch(modalType, (val) => {
   if (val) {
     showModal.value = true;
   }
+  if ([2, 3].includes(modalIndex.value)) {
+    startCountdown();
+  }
 });
 
 const unwatchBalance = watch(
@@ -304,6 +347,48 @@ onMounted(() => {
     }
   }
 
+  .modal-checkbox {
+    margin-bottom: 12px;
+  }
+
+  .modal-countdown {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    img {
+      max-width: 249px;
+    }
+    .modal-countdown__number {
+      position: relative;
+      font-family: PaytoneOne;
+      font-size: 56px;
+      color: #de7919;
+      --countdown-text-shadow-color: #71090b;
+
+      &.is-ftd {
+        &::after {
+          --countdown-text-shadow-color: #097109;
+        }
+      }
+
+      &::before {
+        position: absolute;
+        z-index: -1;
+        content: attr(data-stroke);
+        -webkit-text-stroke: 6px #fff;
+        text-stroke: 6px #fff;
+      }
+
+      &::after {
+        position: absolute;
+        z-index: -2;
+        content: attr(data-stroke);
+        text-shadow: 0px 10px 1.42px var(--countdown-text-shadow-color);
+        inset: 0;
+      }
+    }
+  }
+
   .modal-close {
     display: flex;
     justify-content: center;
@@ -311,5 +396,10 @@ onMounted(() => {
     font-weight: lighter;
     margin-top: 16px;
   }
+}
+</style>
+<style lang="scss">
+.deposit-promo-modal-notification-dialog {
+  padding: 8px;
 }
 </style>

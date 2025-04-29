@@ -209,8 +209,8 @@
     </div>
 
     <div class="q-mt-lg" style="color: #576373" v-if="activeMethod.privilegeId || isFtdPrivilegePayType">
-      <div class="q-mt-sm">{{ $t('deposit.wagerRequirement') }}</div>
-      <div class="q-mt-sm">{{ $t('deposit.wagerRequirementEg') }}</div>
+      <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
+      <div class="q-mt-sm">{{ $t("deposit.wagerRequirementEg") }}</div>
     </div>
 
     <div class="q-mt-lg step-desc-div q-mb-lg">
@@ -219,33 +219,27 @@
       </template>
       <template v-else-if="isUSDT">
         <p>
-          1. {{ $t('deposit.rechargeTutorial') }}:
-          <span class="tutorial-link" @click="openDepositPage">{{ $t('deposit.picture') }}</span>
+          1. {{ $t("deposit.rechargeTutorial") }}:
+          <span class="tutorial-link" @click="openDepositPage">{{ $t("deposit.picture") }}</span>
           /
-          <span class="tutorial-link" @click="openDepositVideo">{{ $t('deposit.video') }}</span>
+          <span class="tutorial-link" @click="openDepositVideo">{{ $t("deposit.video") }}</span>
         </p>
-        <p>2. {{ $t('deposit.mindepositnotcredit') }}</p>
-        <p>3. {{ $t('deposit.depositnotrecovered') }}</p>
-        <p>
-          4. {{ $t('deposit.operatingSafe') }}
-        </p>
-        <p>
-          5. {{ $t('deposit.transferAmountMatch') }}
-        </p>
-        <p>6. {{ $t('deposit.donotcanceldeposit') }}</p>
+        <p>2. {{ $t("deposit.mindepositnotcredit") }}</p>
+        <p>3. {{ $t("deposit.depositnotrecovered") }}</p>
+        <p>4. {{ $t("deposit.operatingSafe") }}</p>
+        <p>5. {{ $t("deposit.transferAmountMatch") }}</p>
+        <p>6. {{ $t("deposit.donotcanceldeposit") }}</p>
       </template>
       <template v-else>
         <p>
-          1. {{ $t('deposit.rechargeTutorial') }}:
-          <span class="tutorial-link" @click="openDepositPage">{{ $t('deposit.picture') }}</span>
+          1. {{ $t("deposit.rechargeTutorial") }}:
+          <span class="tutorial-link" @click="openDepositPage">{{ $t("deposit.picture") }}</span>
           /
-          <span class="tutorial-link" @click="openDepositVideo">{{ $t('deposit.video') }}</span>
+          <span class="tutorial-link" @click="openDepositVideo">{{ $t("deposit.video") }}</span>
         </p>
-        <p>2. {{ $t('deposit.fillinwallet') }}</p>
-        <p>3. {{ $t('deposit.fillincnic') }}</p>
-        <p>
-          4. {{ $t('deposit.submittedAmtConsistent') }}
-        </p>
+        <p>2. {{ $t("deposit.fillinwallet") }}</p>
+        <p>3. {{ $t("deposit.fillincnic") }}</p>
+        <p>4. {{ $t("deposit.submittedAmtConsistent") }}</p>
 
         <!--        <p>-->
         <!--          1. Recharge tutorial:-->
@@ -325,7 +319,7 @@
     </div>
   </q-dialog>-->
 
-  <q-dialog  width="100%" v-model="userKYCDialog" persistent>
+  <q-dialog width="100%" v-model="userKYCDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="goBackPage" v-close-popup />
       <KYCUserForm @closeUserKYCDialog="checkCloseUserKYCDialog" />
@@ -699,6 +693,9 @@ async function loadPrivilege(val) {
             freePrivilege.value.push(p);
           } else {
             unselectedPrivileges.value.push(p);
+            if (route.query.privilegeCode === p.code) {
+              selectedPrivilege.value = p;
+            }
           }
         }
       });
@@ -1400,7 +1397,7 @@ onMounted(() => {
 }
 
 .step-desc-div {
-  color: #B2BDBF;
+  color: #b2bdbf;
 
   p {
     margin: 5px 0px;
@@ -1426,7 +1423,7 @@ onMounted(() => {
 </style>
 <style scoped>
 .description-text {
-  color: #B2BDBF;
+  color: #b2bdbf;
 }
 :deep(.description-text p) {
   margin: 5px 0px !important;
