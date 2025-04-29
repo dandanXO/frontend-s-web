@@ -80,7 +80,7 @@ export default {
       enterCodeToClaim: "Please enter the cash redemption code to claim it."
     },
     appLoginBonus: {
-      validatePhoneAndEmail: "Please bind your email/phone first"
+      validatePhoneAndEmail: "Please bind your phone first"
     }
   },
   form: {

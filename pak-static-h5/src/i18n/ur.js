@@ -78,7 +78,7 @@ export default {
       enterCodeToClaim: "اسے دعوی کرنے کے لیے نقدی کا کوڈ درج کریں۔"
     },
     appLoginBonus: {
-      validatePhoneAndEmail: "براہ کرم پہلے اپنا ای میل یا فون نمبر باندھیں۔"
+      validatePhoneAndEmail: "براہ کرم پہلے اپنا فون منسلک کریں"
     }
   },
   form: {
