@@ -26,7 +26,7 @@ const store = userStore();
 const isClaimable = ref(false);
 const claimPrizeAmt = ref(0);
 const onClickReceive = () => {
-  const endpoint = "/session/app-login-bonus/claimBonus?promoCode=pak-lucky-10-day-bonus";
+  const endpoint = "/session/lucky-day/claim?promoCode=pak-lucky-10-day-bonus";
 
   eventapi.post(endpoint).then((res) => {
     if (res.code == 0) {
