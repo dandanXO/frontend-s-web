@@ -597,6 +597,12 @@ export default {
     Referer: 'Referer',
     IP: "IP"
   },
+  fastAccessButtonMode: {
+    DETAILS: 'DETAILS',
+    CLAIM_REDIRECT: 'CLAIM REDIRECT',
+    API_REDIRECT: 'API & REDIRECT',
+    API_CLAIM: 'API & CLAIM',
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',

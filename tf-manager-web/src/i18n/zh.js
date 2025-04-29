@@ -601,6 +601,12 @@ export default {
     IP: "IP地址"
 
   },
+  fastAccessButtonMode: {
+    DETAILS: '详情',
+    CLAIM_REDIRECT: '显示领取跳转',
+    API_REDIRECT: 'API&跳转',
+    API_CLAIM: 'API&领取',
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
