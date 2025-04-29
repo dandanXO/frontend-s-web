@@ -134,7 +134,7 @@ const handleSendChatMessage = (message) => {
       }
     } else {
       notify({
-        message: "讯息发送失败",
+        message: res.message || "讯息发送失败",
         type: "error",
         duration: 2000
       });
@@ -164,12 +164,12 @@ const getData = () => {
   getLivestreamList(livestreamListMeta.value.current)
     .then((res) => {
       if (res.code === 0) {
-        const parsedData = res.data.records.map(parseLivestreamData);
+        const parsedData = res.data.streamList.map(parseLivestreamData);
         list.value.push(...parsedData);
         if (parsedData.length && livestreamListMeta.value.current === 1) {
           const { earliestLivestreamIndex, latestWatchLivestreamIndex } = parsedData.reduce(
             (result, livestream, index) => {
-              if (!livestream.liveStatus) return;
+              if (!livestream.liveStatus) return result;
               if (result.earliestLivestreamIndex === -1) {
                 result.earliestLivestreamIndex = index;
               }
@@ -188,7 +188,7 @@ const getData = () => {
           }
         }
         livestreamListMeta.value.current++;
-        livestreamListMeta.value.max = res.data.pages;
+        // livestreamListMeta.value.max = res.data.pages;
       }
     })
     .finally(() => {

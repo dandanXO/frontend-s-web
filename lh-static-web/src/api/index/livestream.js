@@ -2,11 +2,11 @@ import { userStore } from "@/store";
 import { server } from "@/utils/request";
 
 export const getLivestreamList = (page) => {
-  return server.REST.post(`/live/list?current=${page}`);
+  return server.REST.post(`/opt-session/live/list?current=${page}`);
 };
 
 export const getLivestreamDetail = (livestreamId, abortController) => {
-  return server.REST.get(`/live/${livestreamId}`, { abortController });
+  return server.REST.get(`/opt-session/live/${livestreamId}`, { abortController });
 };
 
 export const getChatHistory = (payload, current) => {
