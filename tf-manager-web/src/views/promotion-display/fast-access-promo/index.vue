@@ -321,8 +321,9 @@ const uiControl = reactive({
   ],
   buttonMode: [
     { key: 1, displayName: t('fastAccessButtonMode.DETAILS'), value: 'DETAILS' },
-    { key: 2, displayName: t('fastAccessButtonMode.API_REDIRECT'), value: 'API_REDIRECT' },
-    { key: 3, displayName: t('fastAccessButtonMode.API_CLAIM'), value: 'API_CLAIM' }
+    { key: 2, displayName: t('fastAccessButtonMode.CLAIM_REDIRECT'), value: 'CLAIM_REDIRECT' },
+    { key: 3, displayName: t('fastAccessButtonMode.API_REDIRECT'), value: 'API_REDIRECT' },
+    { key: 4, displayName: t('fastAccessButtonMode.API_CLAIM'), value: 'API_CLAIM' }
   ],
   fastAccessState: [
     { key: 1, displayName: t('common.status.OPEN'), value: 1 },
