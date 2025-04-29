@@ -52,7 +52,11 @@
         <table class="livepoker-rebate-game-info-table section-table">
           <thead>
             <tr>
-              <th>等级/负盈利</th>
+              <th>
+                等级/
+                <br />
+                负盈利
+              </th>
               <th>≥500</th>
               <th>≥3,000</th>
               <th>≥5,000</th>
@@ -383,9 +387,24 @@ onMounted(() => {
   border-spacing: 0;
   text-align: center;
   vertical-align: middle;
+  table-layout: auto;
+  th,
+  td {
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+    font-size: 0.75rem;
+  }
+  @media (max-width: 420px) {
+    th,
+    td {
+      font-size: 0.65rem;
+      padding: 2px !important;
+    }
+  }
   th {
     height: 36px;
-    font-size: 12px;
+    // font-size: 12px;
     font-weight: 400;
     line-height: 28px;
     color: #fff;
@@ -417,7 +436,7 @@ onMounted(() => {
     background: transparent;
     border: 1px solid #acd4f6;
     height: 36px;
-    font-size: 12px;
+    // font-size: 12px;
     font-weight: 400;
     line-height: 28px;
     color: #000000;
