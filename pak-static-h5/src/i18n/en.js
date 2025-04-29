@@ -342,7 +342,13 @@ export default {
     appDownload: "APP download",
     experienceOneStopGaming: "Experience one-stop gaming!",
     customerServiceVerifier: "Customer Service Verifier",
-    recoverPwd: "Recover your password"
+    recoverPwd: "Recover your password",
+    license: {
+      curacao: {
+        title: "Regulated & Licensed",
+        description: "by the Government of Curacao"
+      }
+    }
   },
   home: {
     menu_all: "ALL",

@@ -116,6 +116,14 @@
       {{ $t("sideNav.language") }}
     </RouterLink>
 
+    <div v-if="ui.siteType !== 'CURACAO'" class="side-menu-item license">
+      <img class="license-img" src="../assets/images/license/curacao-license.png" />
+      <div class="license-text-wrapper">
+        <span class="license-text__title">{{ $t("sideNav.license.curacao.title") }}</span>
+        <span class="license-text__description">{{ $t("sideNav.license.curacao.description") }}</span>
+      </div>
+    </div>
+
     <!--    <a class="side-menu-item side-menu-item__download" :href="ui.downloadAppUrl" v-if="!ui.hideDownload">-->
     <!--      <div class="item-icon">-->
     <!--        <img src="../assets/images/auth/download-icon.png" />-->
@@ -361,6 +369,34 @@ const openCSInNewTab = (url) => {
         .item-icon {
           margin-left: auto;
           margin-top: -8px;
+        }
+      }
+
+      &.license {
+        background: none;
+        padding: 0;
+        &::after {
+          content: unset;
+        }
+        .license-img {
+          max-width: 47px;
+          margin-right: 4px;
+          margin-bottom: 0;
+        }
+        .license-text-wrapper {
+          display: flex;
+          flex-direction: column;
+          span {
+            margin-bottom: 0;
+            font-weight: 600;
+            color: #ffffff99;
+          }
+          .license-text__title {
+            font-size: 12px;
+          }
+          .license-text__description {
+            font-size: 10px;
+          }
         }
       }
 

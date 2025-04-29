@@ -338,7 +338,13 @@ export default {
     appDownload: "ایپ ڈاؤن لوڈ",
     experienceOneStopGaming: "ایک جگہ پر مکمل گیمنگ کا تجربہ کریں!",
     customerServiceVerifier: "کسٹمر سروس تصدیق کنندہ",
-    recoverPwd: "اپنا پاس ورڈ بازیافت کریں"
+    recoverPwd: "اپنا پاس ورڈ بازیافت کریں",
+    license: {
+      curacao: {
+        title: "ریگولیٹڈ اور لائسنس یافتہ",
+        description: "حکومت کیوراکاؤ کے ذریعہ"
+      }
+    }
   },
   home: {
     menu_all: "سب",
