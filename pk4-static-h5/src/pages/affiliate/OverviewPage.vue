@@ -53,8 +53,14 @@
           @click="selectMetric(item)"
         >
           <div class="text-h6">{{ item.count }}</div>
-          <div class="text-caption" v-html="formatLabel(item.label)" />
+          <div class="text-caption">{{ item.label }}</div>
         </q-card>
+      </q-card-section>
+      <q-card-section class="statistics row">
+        <div class="stats-row" v-for="(stat, index) in stats" :key="(index)">
+          <div class="stats-label">{{ stat.label }}</div>
+          <div class="stats-value"  :class="['text-' + stat.label.toLowerCase(),'text-' + stat.textColor]">{{ stat.value }}</div>
+        </div>
       </q-card-section>
     </q-card>
     
@@ -183,6 +189,15 @@ import ProfitLossChart from 'components/ProfitLossChart.vue'
     selectedMetric.value = item
     tab.value = 'activity'
   }
+  const stats = [
+    { label: 'Deposit', value: (83515).toFixed(2), textColor: 'grey-6' },
+    { label: 'Withdrawal amount', value: (62488).toFixed(2), textColor: 'grey-6' },
+    { label: 'Bonus', value: (2652.82).toFixed(2), textColor: 'blue-8' },
+    { label: 'Valid bet', value: (83,515.00).toFixed(2), textColor: 'blue-8' },
+    { label: 'Win/Loss', value: (83,515.00).toFixed(2), textColor: 'negative' },
+    { label: 'Team P&L', value: (83,515.00).toFixed(2), textColor: 'negative' },
+    { label: 'Team Rebate', value: (83,515.00).toFixed(2), textColor: 'positive' },
+  ]
   const isDaySelectionDialog = ref(false)
   const daysSelection = {label: '7 days', value: 7}
   const openDaySelectionDialog = () => {
@@ -192,7 +207,7 @@ import ProfitLossChart from 'components/ProfitLossChart.vue'
   const openPageInfoDialog = () => {
     isPageInfoDialog.value = true
   }
-  const formatLabel = (label) => label.replace('\n', '<br>')
+  
   </script>
   
   <style scoped lang="scss">
@@ -218,6 +233,31 @@ import ProfitLossChart from 'components/ProfitLossChart.vue'
     margin: 0 auto;
     column-gap: 10px;
     row-gap: 20px;
+  }
+  .statistics {
+    background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+    padding: 10px;
+    margin: 15px auto;
+    border-radius: 8px;
+    .stats-row {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      font-size: 14px;
+      border-bottom: 0.97px solid #FFFFFF1A;
+      padding: 10px;
+      &:last-child {
+        border: 0;
+      }
+      .stats-label {
+        color: #B2BDBF;
+      }
+          .stats-value {
+            &:not(.text-deposit, .text-withdrawal) {
+              font-weight: bold;
+            }
+        }
+    }
   }
   .chart-item {
     display: flex;
