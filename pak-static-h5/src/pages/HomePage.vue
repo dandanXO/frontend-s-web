@@ -1608,6 +1608,7 @@
 
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
 
+  <SpinLuckyWheelPromoSticky v-show="isShownSpinLuckyWheel" />
   <!-- <SpinLuckyWheelPromoHomePopup v-if="isShownSpinLuckyWheel || popupPromo === 'spin-lucky-wheel'" ref="spinLuckyWheelPromoHomePopupRef" /> -->
 </template>
 
@@ -5707,7 +5708,7 @@ const checkGoogleLoginSetPwd = () => {
     .platform-game-title {
       text-align: left;
       margin-top: 6px;
-      color: #ffffff; 
+      color: #ffffff;
       font-weight: bold;
       font-size: 14px;
       white-space: nowrap;
