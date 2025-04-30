@@ -50,17 +50,7 @@
       label="Duration"
     >
       <template #append>
-        <svg width="20" height="20" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-          <rect width="40" height="40" rx="10" fill="#1b1d2a" />
-          <path
-            d="M13 16l7 7 7-7"
-            stroke="white"
-            stroke-width="2"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+        <img alt="forum" src="@/assets/images/agent/arrow-down.png" width="20" height="20" />
       </template>
     </q-select>
 
@@ -76,17 +66,7 @@
       label="Forum"
     >
       <template #append>
-        <svg width="20" height="20" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-          <rect width="40" height="40" rx="10" fill="#1b1d2a" />
-          <path
-            d="M13 16l7 7 7-7"
-            stroke="white"
-            stroke-width="2"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+        <img alt="forum" src="@/assets/images/agent/arrow-down.png" width="20" height="20" />
       </template>
     </q-select>
 
@@ -102,17 +82,7 @@
       label="PromotionForum"
     >
       <template #append>
-        <svg width="20" height="20" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-          <rect width="40" height="40" rx="10" fill="#1b1d2a" />
-          <path
-            d="M13 16l7 7 7-7"
-            stroke="white"
-            stroke-width="2"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+        <img alt="forum" src="@/assets/images/agent/arrow-down.png" width="20" height="20" />
       </template>
     </q-select>
 

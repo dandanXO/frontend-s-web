@@ -17,14 +17,18 @@ import DownlineReg from "src/components/agent/DownlineReg.vue";
 import LinkReg from "src/components/agent/LinkReg.vue";
 import LinkMgmt from "src/components/agent/LinkMgmt.vue";
 
-const activeTab = ref("downline-reg");
+const activeTab = ref("link-mgmt");
 </script>
 <style lang="scss" scoped>
+.q-page-container {
+  overflow: hidden;
+}
 .agent-view {
   padding: 15px;
   font-size: 0.9rem;
   height: calc(100vh - 75px);
   position: relative;
+  overflow-y: auto;
 }
 .agent-tab {
   width: 100%;

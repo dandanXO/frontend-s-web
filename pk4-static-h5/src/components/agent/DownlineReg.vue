@@ -9,7 +9,7 @@
               <img
                 v-if="accTypeDownline === 'player'"
                 src="@/assets/images/agent/check.png"
-                alt="Checked"
+                alt="checked"
                 width="24"
                 height="24"
               />
@@ -26,7 +26,7 @@
               <img
                 v-if="accTypeDownline === 'agent'"
                 src="@/assets/images/agent/check.png"
-                alt="Checked"
+                alt="checked"
                 width="24"
                 height="24"
               />
