@@ -71,6 +71,10 @@ const options2 = ref(['Not Signed']);
 .filters {
     display: flex;
     justify-content: space-between;
+
+    :deep(.landing-input) {
+        width: 100%;
+    }
 }
 
 .dropdown,
