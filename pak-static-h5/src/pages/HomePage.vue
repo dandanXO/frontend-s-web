@@ -1616,7 +1616,8 @@ import {
   watchEffect,
   onActivated,
   provide,
-  nextTick
+  nextTick,
+  onDeactivated
 } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
@@ -1688,6 +1689,10 @@ const handleScroll = () => {
 
   lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
 };
+
+onDeactivated(() => {
+  popupPromo.value = "";
+});
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
 });

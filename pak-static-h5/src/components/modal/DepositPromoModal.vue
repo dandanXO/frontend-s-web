@@ -73,7 +73,7 @@ const combinedStatus = computed(() => ({
   depositCount: store.depositCount
 }));
 
-const isLuckyDay = computed(() => moment().date() % 10 === 9);
+const isLuckyDay = computed(() => moment().date() % 10 === 1);
 
 const modalImageIndex = computed(() => {
   if (modalIndex.value === 1 && (isAndroid() || store.isFromGooglePackage)) return 6;
@@ -119,6 +119,24 @@ const handleAppLoginPromoClaim = async () => {
       showModal.value = false;
       router.push("/account/profile");
       shouldCheckAppAgain.value = true;
+    } else if (!combinedStatus.value.hadClaim) {
+      try {
+        const res = await eventapi.post("/session/app-login-bonus/claimBonus?promoCode=pak-app-login-phone-bonus");
+        if (res.code === 0) {
+          $q.notify({
+            type: "positive",
+            position: "top",
+            message: t("modal.appLoginBonus.claimBonus", { amount: res.data }),
+            icon: "check_circle_outline"
+          });
+          store.getBalance();
+          showModal.value = false;
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      showModal.value = false;
     }
   } else if (!combinedStatus.value.isAppLogin) {
     const downloadTag = document.createElement("a");
@@ -156,7 +174,10 @@ const btnAction = () => {
 };
 
 const checkAppLogin = async () => {
-  if (combinedStatus.value.hadClaim) return;
+  if (combinedStatus.value.hadClaim) {
+    showNextModal();
+    return;
+  }
   try {
     if (isAndroid() || store.isFromGooglePackage) {
       const res = await eventapi.get("/session/app-login-bonus/popUp?promoCode=pak-app-login-phone-bonus");
