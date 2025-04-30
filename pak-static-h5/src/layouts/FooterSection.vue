@@ -28,7 +28,7 @@
         </div> -->
         <!-- <span class="footer-label" style="padding-top: 0">{{ $t("bottomNav.earnMoney") }}</span> -->
       </q-route-tab>
-      <q-route-tab :to="`/deposit?from=${route.path}&noPreSelectPrivilege=1`" name="deposit" :ripple="false">
+      <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" :ripple="false">
         <div class="footer-img">
           <img class="inactive" src="../assets/images/index/menu/icon-wallet.png" />
           <img class="hover" src="../assets/images/index/menu/icon-wallet-hover.png" />

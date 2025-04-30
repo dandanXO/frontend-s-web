@@ -739,7 +739,7 @@ async function loadPrivilege(val) {
             freePrivilege.value.push(p);
           } else {
             unselectedPrivileges.value.push(p);
-            if (!preSelectPrivilege && !route.query.noPreSelectPrivilege) {
+            if (!preSelectPrivilege) {
               if (p.code === "pak-new-user-ftd-bonus") preSelectPrivilege = p;
               if (p.code === "pak-second-time-deposit-bonus") preSelectPrivilege = p;
             }
