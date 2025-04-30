@@ -122,6 +122,7 @@
                       </div>
                     </div>
                     <q-btn
+                      v-if="!selectedParam.hide_join_now"
                       class="btn-join-now"
                       :class="isFtdPromoEnded ? 'btn-disabled' : ''"
                       :disable="isFtdPromoEnded"
