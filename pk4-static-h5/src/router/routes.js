@@ -371,6 +371,12 @@ const routes = [
     children: [{ path: "", component: () => import("pages/account/DividendView.vue") }],
     meta: { requiresAuth: true }
   },
+  {
+    path: "/account/agent",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/AgentView.vue") }],
+    meta: { requiresAuth: true }
+  },
   // {
   //   path: "/account/promotion",
   //   component: () => import("layouts/MainLayout.vue"),
