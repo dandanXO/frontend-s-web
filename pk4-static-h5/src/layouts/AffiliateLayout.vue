@@ -170,6 +170,11 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = t("header.teamManagement");
         }
+        else if (route.path === "/affiliate/account-record") {
+          prevPage.value = "/affiliate/agent";
+          hasPage.value = true;
+          pageName.value = t("affiliateSettings.accountRecord");
+        }
       }
     };
     const pageName = ref("");

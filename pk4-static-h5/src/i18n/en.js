@@ -395,7 +395,12 @@ export default {
     "editRebate": "Edit Rebate",
     "securityCenter": "Security Center",
     "internalMessage": "Internal Message",
-    "customerService": "Customer Service"
+    "customerService": "Customer Service",
+  },
+  accountRecord: {
+    myDividend: 'My Dividend',
+    contractManagement: 'Contract Management',
+    dividendRecord: 'Dividend Record',
   },
   dividend: {
     myDividend: 'My Dividend',
