@@ -8,9 +8,15 @@
       <div class="forum-card__icons">
         <img alt="forum" src="@/assets/images/agent/add-user-icon.png" width="16" height="16" />
         <div class="icon-divider"></div>
-        <img alt="forum" src="@/assets/images/agent/scan-qr-icon.png" width="16" height="16" />
+        <img
+          alt="scan-qr"
+          src="@/assets/images/agent/scan-qr-icon.png"
+          width="16"
+          height="16"
+          @click="isScanQrDialog = true"
+        />
         <div class="icon-divider"></div>
-        <img alt="forum" src="@/assets/images/agent/delete-icon.png" width="16" height="16" />
+        <img alt="delete" src="@/assets/images/agent/delete-icon.png" width="16" height="16" />
         <div class="icon-divider"></div>
 
         <img
@@ -52,6 +58,38 @@
       <div class="footer-item green">Normal</div>
     </div>
   </div>
+
+  <q-dialog class="scan-qr-dialog" v-model="isScanQrDialog">
+    <div class="popout-dialog">
+      <q-btn dense icon="close" class="text-white top-right" flat v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="qr-header">
+          <div class="qr-header-left">
+            <img alt="forum" src="@/assets/images/agent/forum-icon.png" width="24" height="24" />
+            <span class="qr-title">gi6qq</span>
+          </div>
+          <span class="qr-subtitle">QR code</span>
+        </div>
+
+        <div class="qr-subtext">
+          <img alt="scan-qr" src="@/assets/images/agent/scan-qr-icon-2.png" width="18" height="18" />
+          <span>Scan the QR code to register</span>
+        </div>
+
+        <div class="qr-code-container">
+          <img class="qr-code" alt="qr-code" src="@/assets/images/agent/qr-img-example.png" />
+          <div class="qr-caption">press and hold to save QR code to album</div>
+        </div>
+
+        <div class="qr-link-row">
+          <img alt="qr-code" src="@/assets/images/agent/copy-link-icon.png" width="20" height="20" />
+          <span class="qr-url">https://Gi6qq.Link/.../Register.html</span>
+        </div>
+
+        <q-btn label="Copy Link" class="copy-btn" unelevated />
+      </div>
+    </div>
+  </q-dialog>
 </template>
 <script setup>
 import { ref } from "vue";
@@ -68,6 +106,8 @@ const toggleCard = (index) => {
     cards.value[index].expanded = !cards.value[index].expanded;
   }
 };
+
+const isScanQrDialog = ref(false);
 </script>
 <style lang="scss" scoped>
 .forum-card {
@@ -195,5 +235,81 @@ const toggleCard = (index) => {
 .collapse-leave-from {
   max-height: 200px;
   opacity: 1;
+}
+
+.scan-qr-dialog {
+  .popout-dialog .popout-dialog-container {
+    color: #b2bdbf;
+    font-size: 1rem;
+  }
+
+  .qr-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    width: 100%;
+    position: relative;
+    color: #090f1e;
+    font-weight: 700;
+    font-size: 1.25rem;
+
+    .qr-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .qr-subtitle {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 0.275rem;
+    }
+  }
+
+  .qr-subtext {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .qr-code-container {
+    text-align: center;
+    background-color: #eaeff9;
+    padding: 10px 12px;
+    border-radius: 5px;
+    width: 80%;
+    .qr-caption {
+      color: #999;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+    .qr-code {
+      width: 80%;
+      max-width: 200px;
+    }
+  }
+
+  .qr-link-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: center;
+    color: #007bff;
+    font-size: 14px;
+    margin-top: 22px;
+    margin-bottom: 20px;
+  }
+
+  .copy-btn {
+    width: 100%;
+    font-weight: bold;
+    font-size: 14px;
+    background: linear-gradient(90deg, #0287f2 0%, #0664d2 100%);
+    color: #fff;
+    border-radius: 12px;
+  }
 }
 </style>

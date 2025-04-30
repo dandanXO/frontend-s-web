@@ -17,7 +17,7 @@ import DownlineReg from "src/components/agent/DownlineReg.vue";
 import LinkReg from "src/components/agent/LinkReg.vue";
 import LinkMgmt from "src/components/agent/LinkMgmt.vue";
 
-const activeTab = ref("link-mgmt");
+const activeTab = ref("downline-reg");
 </script>
 <style lang="scss" scoped>
 .q-page-container {
