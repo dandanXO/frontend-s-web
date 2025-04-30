@@ -354,6 +354,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/affiliate/team-management",
+    component: () => import("layouts/AffiliateLayout.vue"),
+    children: [{ path: "", component: () => import("pages/affiliate/TeamManagementView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
     path: "/account/agent",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/account/AgentView.vue") }],

@@ -54,7 +54,8 @@ export default {
     referralRecord: "ریفرل کا ریکارڈ",
     interestProfit: "سود کا منافع",
     spinnerRules: "قواعد",
-    effectiveRevenueFAQ: "مؤثر آمدنی کے عمومی سوالات"
+    effectiveRevenueFAQ: "مؤثر آمدنی کے عمومی سوالات",
+    teamManagement: "ٹیم مینجمنٹ"
   },
   bottomNav: {
     home: "گھر/ہوم",

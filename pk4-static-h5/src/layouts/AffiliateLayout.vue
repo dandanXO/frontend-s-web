@@ -165,6 +165,10 @@ export default defineComponent({
           prevPage.value = "/promo?name=pak-deposit-spinner-rewards";
           hasPage.value = true;
           pageName.value = t("affiliateSettings.overview");
+        } else if (route.path === "/affiliate/team-management") {
+          prevPage.value = "/affiliate/agent";
+          hasPage.value = true;
+          pageName.value = t("header.teamManagement");
         }
       }
     };
