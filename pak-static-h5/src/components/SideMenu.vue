@@ -223,7 +223,7 @@ const openCSInNewTab = (url) => {
       flex-direction: column;
       // gap: 10px;
       padding: 10px 0;
-      min-height: 424px;
+      // height: 100%;
     }
     .side-menu-item {
       height: 50px;
