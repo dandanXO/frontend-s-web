@@ -31,17 +31,17 @@
                 <tbody>
                     <tr>
                         <td><img src="../../../assets/images/account/dividend/avatar-icon.png" /></td>
-                        <td>may2288</td>
+                        <td class="user">May2288</td>
                         <td class="create-contract-btn">create contract</td>
                     </tr>
                     <tr>
                         <td><img src="../../../assets/images/account/dividend/avatar-icon.png" /></td>
-                        <td>sihai</td>
+                        <td class="user">Sihai</td>
                         <td class="create-contract-btn">create contract</td>
                     </tr>
                     <tr>
                         <td><img src="../../../assets/images/account/dividend/avatar-icon.png" /></td>
-                        <td>may2288</td>
+                        <td class="user">May2288</td>
                         <td class="create-contract-btn">create contract</td>
                     </tr>
                 </tbody>
@@ -197,8 +197,15 @@ const options2 = ref(['Not Signed']);
                 padding: 10px 4px;
                 font-size: 12px;
 
+                &.user {
+                    text-align: left;
+                }
+
                 &.create-contract-btn {
                     color: #FF9500;
+                    font-weight: 700;
+                    text-align: right;
+                    padding-right: 10px;
                 }
             }
 
