@@ -11,7 +11,7 @@
           <MyDividend />
         </q-tab-panel>
         <q-tab-panel name="contract-management">
-          <h1>contract-management</h1>
+          <ContractManagement />
         </q-tab-panel>
         <q-tab-panel name="dividend-record">
           <h1>dividend-record</h1>
@@ -24,6 +24,7 @@
   import { ref, watch } from "vue";
   import { useRoute } from "vue-router";
   import MyDividend from "../account/dividend/MyDividend.vue";
+  import ContractManagement from "../account/dividend/ContractManagement.vue";
   
   const route = useRoute();
   const activeKey = ref("my-dividend");
