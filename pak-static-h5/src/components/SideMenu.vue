@@ -99,7 +99,11 @@
         <div class="item-icon"><img src="../assets/images/auth/menu-cs-verifier.png" /></div>
         {{ $t("sideNav.customerServiceVerifier") }}
       </router-link>
-      <router-link class="side-menu-item side-menu-item__transparent" to="/terms-and-conditions">
+      <router-link
+        v-if="ui.siteType === 'CURACAO'"
+        class="side-menu-item side-menu-item__transparent"
+        to="/terms-and-conditions"
+      >
         <div class="item-icon"><img src="../assets/images/auth/tac.png" /></div>
         {{ $t("sideNav.termsAndConditions") }}
       </router-link>
