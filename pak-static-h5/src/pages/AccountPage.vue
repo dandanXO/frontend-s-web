@@ -169,7 +169,7 @@
     </q-card>
   </q-dialog> -->
 
-  <q-dialog  v-model="showCaptchaDialog" width="100%">
+  <q-dialog v-model="showCaptchaDialog" width="100%">
     <q-card width="100%">
       <q-card-section style="padding: 10px 20px" class="q-pa-md bg-dark text-white">OTP</q-card-section>
       <div style="padding: 20px">
@@ -190,7 +190,7 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog  width="100%" v-model="personalCenterDialog" persistent>
+  <q-dialog width="100%" v-model="personalCenterDialog" persistent>
     <div class="popout-dialog">
       <q-btn
         dense
@@ -296,7 +296,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog  width="100%" v-model="bindEmailDialog" persistent>
+  <q-dialog width="100%" v-model="bindEmailDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="text-white popout-close" @click="openBindEmailDialog()" v-close-popup />
       <div class="popout-dialog-container">
@@ -550,7 +550,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog  width="100%" v-model="changeNewPasswordDialog" persistent>
+  <q-dialog width="100%" v-model="changeNewPasswordDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">
@@ -646,21 +646,21 @@
     </div>
   </q-dialog>
 
-  <q-dialog  width="100%" v-model="guestKYCDialog" persistent>
+  <q-dialog width="100%" v-model="guestKYCDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="closeGuestKYCDialog" />
       <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
     </div>
   </q-dialog>
 
-  <q-dialog  width="100%" v-model="userKYCDialog" persistent>
+  <q-dialog width="100%" v-model="userKYCDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="closeUserKYCDialog" />
       <KYCUserForm ref="kycUserFormRef" @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
 
-  <q-dialog  width="100%" v-model="verificationCodeDialog" persistent>
+  <q-dialog width="100%" v-model="verificationCodeDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
       <div class="popout-dialog-container">
@@ -739,7 +739,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog  width="100%" v-model="confirmSignOutDialog" presistent>
+  <q-dialog width="100%" v-model="confirmSignOutDialog" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">
@@ -765,7 +765,7 @@ import moment from "moment";
 import { api } from "boot/axios";
 import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "src/stores";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { App } from "@capacitor/app";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
@@ -789,6 +789,7 @@ let currentSlide = ref(slideList.value[0]);
 const kycUserFormRef = ref(null);
 
 const { userKYCDialog, guestKYCDialog, loadInfo: loadKYCInfo } = useCheckKYC([], kycUserFormRef);
+const route = useRoute();
 
 const isActiveSlide = (e) => {
   if (e === currentSlide.value) return true;
@@ -799,7 +800,7 @@ const logout = () => {
   loadingLogout.value = true;
 
   $q.loading.show({
-    message: t('notify.loggingOut')
+    message: t("notify.loggingOut")
   });
 
   store.memberLogout().then(() => {
@@ -918,7 +919,7 @@ const openVerificationCodeDialog = () => {
           $q.notify({
             color: "negative",
             position: "top",
-            message: t('notify.emailAlreadyUsed'),
+            message: t("notify.emailAlreadyUsed"),
             icon: "report_problem"
           });
         } else {
@@ -1496,7 +1497,7 @@ const submitUpdatePwd = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: t('notify.newpasswordupdated'),
+            message: t("notify.newpasswordupdated"),
             icon: "check_circle_outline"
           });
           // router.go("/account");
@@ -1584,9 +1585,17 @@ const sendPhoneDetails = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: t('notify.phoneVerifySuccessful'),
+            message: t("notify.phoneVerifySuccessful"),
             icon: "check_circle_outline"
           });
+          if (response.data) {
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: t("modal.appLoginBonus.claimBonus", { amount: response.data }),
+              icon: "check_circle_outline"
+            });
+          }
           verifyPhoneDialog.value = false;
           formDetail.phoneVerified = true;
           store.phoneVerified = true;
@@ -1626,7 +1635,7 @@ const submitUpdateNewPwd = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: t('notify.newpasswordupdated'),
+            message: t("notify.newpasswordupdated"),
             icon: "check_circle_outline"
           });
           // router.go("/account");
@@ -1806,7 +1815,7 @@ const openConfirmSignOutDialog = () => {
 }
 
 .pc-tip-chg-pwd {
-  color: #1CCA6A;
+  color: #1cca6a;
 }
 
 .pc-tip {
@@ -1832,11 +1841,10 @@ const openConfirmSignOutDialog = () => {
   margin-top: auto;
   // color: #00ae00;
   padding: 10px 20px;
-    background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
-    color: #333333;
-    font-weight: 700;
-    box-shadow: 0px 2px 0px 0px #1CCA6A;
-
+  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+  color: #333333;
+  font-weight: 700;
+  box-shadow: 0px 2px 0px 0px #1cca6a;
 
   :deep(.q-icon) {
     color: #333333;
@@ -1859,7 +1867,7 @@ const openConfirmSignOutDialog = () => {
   background: #455152;
   color: #ffffff;
 
-  box-shadow: 0px 2px 0px 0px #2A3637;
+  box-shadow: 0px 2px 0px 0px #2a3637;
 }
 .btn-confirm {
   // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
@@ -1874,9 +1882,9 @@ const openConfirmSignOutDialog = () => {
   width: 100%;
   padding: 10px 40px;
   font-size: 16px;
-  background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
   color: #000000;
-  box-shadow: 0px 2px 0px 0px #1CCA6A;
+  box-shadow: 0px 2px 0px 0px #1cca6a;
   border-radius: 4px;
   height: unset;
 }

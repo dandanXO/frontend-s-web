@@ -116,24 +116,9 @@ const handleAppLoginPromoClaim = async () => {
         message: t("modal.appLoginBonus.validatePhoneAndEmail"),
         icon: "error"
       });
+      showModal.value = false;
       router.push("/account/profile");
       shouldCheckAppAgain.value = true;
-    } else {
-      try {
-        const res = await eventapi.post("/session/app-login-bonus/claimBonus?promoCode=pak-app-login-phone-bonus");
-        if (res.code === 0) {
-          $q.notify({
-            type: "positive",
-            position: "top",
-            message: `Claim successfully`,
-            icon: "check_circle_outline"
-          });
-          store.getBalance();
-          showModal.value = false;
-        }
-      } catch (e) {
-        console.error(e);
-      }
     }
   } else if (!combinedStatus.value.isAppLogin) {
     const downloadTag = document.createElement("a");
@@ -171,6 +156,7 @@ const btnAction = () => {
 };
 
 const checkAppLogin = async () => {
+  if (combinedStatus.value.hadClaim) return;
   try {
     if (isAndroid() || store.isFromGooglePackage) {
       const res = await eventapi.get("/session/app-login-bonus/popUp?promoCode=pak-app-login-phone-bonus");
@@ -227,7 +213,7 @@ const checkModalType = async () => {
       }
       break;
     case 4:
-      if (combinedStatus.value.depositCount === 1 && store.balance <= 10 && shouldShowModalAgain(modalIndex.value)) {
+      if ([1, 2].includes(store.depositCount) && store.balance <= 10 && shouldShowModalAgain(modalIndex.value)) {
         modalType.value = "SECONDARY_DEPOSIT_AMOUNT";
       } else {
         showNextModal();
@@ -248,7 +234,7 @@ const recheckModalType = async () => {
   } else if (store.depositCount === 1 && store.balance <= 50 && shouldShowModalAgain(3)) {
     modalIndex.value = 3;
     modalType.value = "FIRST_DEPOSIT_AMOUNT";
-  } else if (store.depositCount === 1 && store.balance <= 10 && shouldShowModalAgain(4)) {
+  } else if ([1, 2].includes(store.depositCount) && store.balance <= 10 && shouldShowModalAgain(4)) {
     modalIndex.value = 4;
     modalType.value = "SECONDARY_DEPOSIT_AMOUNT";
   }

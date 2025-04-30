@@ -14,7 +14,7 @@
         </a>
       </div> -->
 
-      <div class="download-text">{{ $t("header.getFreeSpins") }}</div>
+      <div class="download-text">{{ $t("header.getFreeCash") }}</div>
       <div class="download-btn-yel">
         <a :href="ui.downloadAppUrl">{{ $t("header.download") }}</a>
       </div>
@@ -67,8 +67,17 @@
                 <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
                   {{ isLoadingBalance ? `${$t("btn.loading")}...` : convertToCommaAmount(store.balance, false) }}
                 </span>
-                <div v-if="promoPercentage" class="promo-percentage">{{ promoPercentage }} {{ $t('records.bonus') }}</div>
-                <q-btn square class="style-blue-btn" :style="promoPercentage !== '' ? 'margin-right: 14px; margin-top: 10px;': ''" icon="wallet" dense @click="handleBackBtn()" />
+                <div v-if="promoPercentage" class="promo-percentage">
+                  {{ promoPercentage }} {{ $t("records.bonus") }}
+                </div>
+                <q-btn
+                  square
+                  class="style-blue-btn"
+                  :style="promoPercentage !== '' ? 'margin-right: 14px; margin-top: 10px;' : ''"
+                  icon="wallet"
+                  dense
+                  @click="handleBackBtn()"
+                />
                 <!-- <div class="btn-refresh">
                   <q-icon name="sync" size="16px" color="white-7"></q-icon>
                 </div> -->
@@ -220,11 +229,11 @@ const ui = useUI();
 const i18nStoreLanguage = i18nStore();
 const promoPercentage = computed(() => {
   if (store.depositCount === 0) {
-    return '53%';
+    return "53%";
   } else if (store.depositCount === 1) {
-    return '35%';
+    return "35%";
   }
-  return ''; // Optional: for other cases if needed
+  return ""; // Optional: for other cases if needed
 });
 const isScrolled = ref(false);
 
@@ -356,7 +365,7 @@ const topDownloadcloseBtn = ref(true);
 
 const topDownloadCount = ref(6);
 
-provide('topDownload', topDownload);
+provide("topDownload", topDownload);
 
 const closeTopdownload = () => {
   topDownload.value = false;
@@ -412,7 +421,16 @@ const handleBackBtn = () => {
   if (props.homeProfile) {
     emits("closeslot");
   }
-  router.push("/deposit?from=" + route.path);
+  const redirectQuery = {
+    from: route.path
+  };
+  if (store.depositCount === 0) {
+    redirectQuery.privilegeCode = "pak-new-user-ftd-bonus";
+  }
+  if (store.depositCount === 1) {
+    redirectQuery.privilegeCode = "pak-second-time-deposit-bonus";
+  }
+  router.push({ path: "/deposit", query: redirectQuery });
 };
 
 const isSideDownload = ref(false);
@@ -939,7 +957,7 @@ onUnmounted(() => {
         right: 0;
         top: 0;
         z-index: 2000;
-        background: url(../assets/images/index/redpromo-bg.png)no-repeat center center;
+        background: url(../assets/images/index/redpromo-bg.png) no-repeat center center;
         background-size: contain;
         width: 70px;
         text-align: center;

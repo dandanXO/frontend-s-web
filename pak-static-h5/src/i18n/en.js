@@ -8,6 +8,7 @@ export default {
     register: "Register",
     download: "Download",
     getFreeSpins: "Get free spins on the APP",
+    getFreeCash: "Free Rs 100 Better Experience!",
     withdraw: "Withdraw",
     personalCenter: "Personal Center",
     deposit: "Deposit",
@@ -81,7 +82,8 @@ export default {
     },
     appLoginBonus: {
       validatePhoneAndEmail: "Please bind your phone first",
-      loginTomorrow: "Please log in tomorrow to claim your mystery reward."
+      loginTomorrow: "Please log in tomorrow to claim your mystery reward.",
+      claimBonus: "You’ve received {amount}rs bonus!"
     }
   },
   form: {

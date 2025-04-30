@@ -8,6 +8,7 @@ export default {
     register: "رجسٹر",
     download: "ڈاؤن لوڈ کریں",
     getFreeSpins: "ایپ پر مفت اسپنز حاصل کریں",
+    getFreeCash: "مفت 100 روپے حاصل کریں، مزید شاندار تجربہ لیں!",
     withdraw: "واپسی",
     personalCenter: "شخصی مرکز",
     deposit: "جمع کروائیں",
@@ -79,7 +80,8 @@ export default {
     },
     appLoginBonus: {
       validatePhoneAndEmail: "براہ کرم پہلے اپنا فون منسلک کریں",
-      loginTomorrow: "براہ کرم کل لاگ اِن کریں تاکہ آپ اپنا پراسرار انعام حاصل کر سکیں۔"
+      loginTomorrow: "براہ کرم کل لاگ اِن کریں تاکہ آپ اپنا پراسرار انعام حاصل کر سکیں۔",
+      claimBonus: "آپ کو 100 روپے کا بونس موصول ہوا ہے!"
     }
   },
   form: {

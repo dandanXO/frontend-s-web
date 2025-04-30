@@ -26,6 +26,12 @@
           <q-badge v-if="isFtdPrivilegePayType" color="green" floating rounded>
             +{{ getFtdCommaAmount(item.amount) }}
           </q-badge>
+          <q-badge v-if="isNewUserFtdPrivilege" color="green" floating rounded>
+            {{ getNewUserFtdAmount(item.amount) }}
+          </q-badge>
+          <q-badge v-if="isSecondTimeDepositPrivilege" color="green" floating rounded>
+            {{ getSecondTimeDepositAmount(item.amount) }}
+          </q-badge>
           <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
           <div :class="['deposit-svg', item.isActive && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -451,6 +457,7 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
+const isInitialized = ref(false);
 
 const copybtntxt0 = ref("复制");
 const copybtntxt1 = ref("复制");
@@ -467,6 +474,13 @@ const isFtdPrivilege = computed(
 
 const isFtdPrivilegePayType = computed(
   () => isFtdPrivilege.value && paytypeWithPrivilege.value.indexOf(activeMethod.value.payType) > -1
+);
+
+const isNewUserFtdPrivilege = computed(
+  () => selectedPayType.value !== "USDTTRC" && selectedPrivilege.value?.code === "pak-new-user-ftd-bonus"
+);
+const isSecondTimeDepositPrivilege = computed(
+  () => selectedPayType.value !== "USDTTRC" && selectedPrivilege.value?.code === "pak-second-time-deposit-bonus"
 );
 
 const copyMessage = (position) => {
@@ -548,6 +562,36 @@ const getFtdCommaAmount = (amount) => {
   } else {
     return "999Pkr";
   }
+};
+
+const getNewUserFtdAmount = (amount) => {
+  const rewardMap = {
+    300: 159,
+    500: 249,
+    1000: 399,
+    3000: 999,
+    5000: 1599,
+    10000: 2999,
+    20000: 4999,
+    30000: 5999,
+    50000: 7999
+  };
+  return rewardMap[amount] || 0;
+};
+
+const getSecondTimeDepositAmount = (amount) => {
+  const rewardMap = {
+    300: 107,
+    500: 177,
+    1000: 277,
+    3000: 577,
+    5000: 777,
+    10000: 1377,
+    20000: 2777,
+    30000: 3777,
+    50000: 5777
+  };
+  return rewardMap[amount] || 0;
 };
 
 const handleDepositNodeClick = (item) => {
@@ -1043,6 +1087,7 @@ watch(
   },
   { immediate: true }
 );
+
 const isAdditionalDepositSteps = ref(false);
 
 const goBackPage = () => {
@@ -1057,6 +1102,13 @@ const goBackPage = () => {
   // }
 };
 
+onActivated(() => {
+  if (!isInitialized.value) return;
+  initPay();
+  refreshNode();
+  loadAppTabs();
+});
+
 onMounted(() => {
   initPay();
   refreshNode();
@@ -1066,6 +1118,7 @@ onMounted(() => {
   if (route.query.isNewPlayer && completedGuide !== "true" && userKYCDialog.value === false) {
     isAdditionalDepositSteps.value = true;
   }
+  isInitialized.value = true;
 });
 </script>
 
