@@ -727,6 +727,8 @@ async function loadPrivilege(val) {
   hasPrivilege.value = false;
   await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
     if (res.code === 0) {
+      let preSelectPrivilege = null;
+
       privilegeList.value = res.data.privileges;
       hasPrivilege.value = true;
       unselectedPrivileges.value = [];
@@ -737,12 +739,16 @@ async function loadPrivilege(val) {
             freePrivilege.value.push(p);
           } else {
             unselectedPrivileges.value.push(p);
-            if (route.query.privilegeCode === p.code) {
-              selectedPrivilege.value = p;
+            if (!preSelectPrivilege && !route.query.noPreSelectPrivilege) {
+              if (p.code === "pak-new-user-ftd-bonus") preSelectPrivilege = p;
+              if (p.code === "pak-second-time-deposit-bonus") preSelectPrivilege = p;
             }
           }
         }
       });
+      if (preSelectPrivilege) {
+        selectedPrivilege.value = preSelectPrivilege;
+      }
     } else {
       hasPrivilege.value = false;
       privilegeList.value = [];

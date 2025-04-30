@@ -70,7 +70,9 @@ const dialogRef = ref(null);
 
 const combinedStatus = computed(() => ({
   ...statusFromApi.value,
-  depositCount: store.depositCount
+  claimedFtdPrivilege: store.claimedFtdPrivilege,
+  claimedSecondPrivilege: store.claimedSecondPrivilege,
+  eligibleThirdPrivilege: store.eligibleThirdPrivilege
 }));
 
 const isLuckyDay = computed(() => moment().date() % 10 === 1);
@@ -152,10 +154,8 @@ const btnAction = () => {
       handleAppLoginPromoClaim();
       break;
     case 2:
-      router.push({ path: "/deposit", query: { privilegeCode: "pak-new-user-ftd-bonus" } });
-      break;
     case 3:
-      router.push({ path: "/deposit", query: { privilegeCode: "pak-second-time-deposit-bonus" } });
+      router.push("/deposit");
       break;
     case 4:
       $q.dialog({
@@ -220,21 +220,30 @@ const checkModalType = async () => {
       }
       break;
     case 2:
-      if (combinedStatus.value.depositCount === 0 && shouldShowModalAgain(modalIndex.value)) {
+      if (!combinedStatus.value.claimedFtdPrivilege && shouldShowModalAgain(modalIndex.value)) {
         modalType.value = "FIRST_DEPOSIT";
       } else {
         showNextModal();
       }
       break;
     case 3:
-      if (combinedStatus.value.depositCount === 1 && store.balance <= 50 && shouldShowModalAgain(modalIndex.value)) {
+      if (
+        combinedStatus.value.claimedFtdPrivilege &&
+        !combinedStatus.value.claimedSecondPrivilege &&
+        store.balance <= 50 &&
+        shouldShowModalAgain(modalIndex.value)
+      ) {
         modalType.value = "FIRST_DEPOSIT_AMOUNT";
       } else {
         showNextModal();
       }
       break;
     case 4:
-      if ([1, 2].includes(store.depositCount) && store.balance <= 10 && shouldShowModalAgain(modalIndex.value)) {
+      if (
+        combinedStatus.value.eligibleThirdPrivilege &&
+        store.balance <= 10 &&
+        shouldShowModalAgain(modalIndex.value)
+      ) {
         modalType.value = "SECONDARY_DEPOSIT_AMOUNT";
       } else {
         showNextModal();
@@ -252,10 +261,15 @@ const recheckModalType = async () => {
   if (shouldCheckAppAgain.value && shouldShowModalAgain(1)) {
     await getData();
     checkAppLogin();
-  } else if (store.depositCount === 1 && store.balance <= 50 && shouldShowModalAgain(3)) {
+  } else if (
+    combinedStatus.value.claimedFtdPrivilege &&
+    !store.claimedSecondPrivilege &&
+    store.balance <= 50 &&
+    shouldShowModalAgain(3)
+  ) {
     modalIndex.value = 3;
     modalType.value = "FIRST_DEPOSIT_AMOUNT";
-  } else if ([1, 2].includes(store.depositCount) && store.balance <= 10 && shouldShowModalAgain(4)) {
+  } else if (combinedStatus.value.eligibleThirdPrivilege && store.balance <= 10 && shouldShowModalAgain(4)) {
     modalIndex.value = 4;
     modalType.value = "SECONDARY_DEPOSIT_AMOUNT";
   }
@@ -300,19 +314,18 @@ watch(modalType, (val) => {
   }
 });
 
-const unwatchBalance = watch(
+watch(
   () => store.balance,
   () => {
     if (isDuringInitial.value) return;
     store.getMemberInfo().then(recheckModalType);
-    if (store.depositCount > 2) unwatchBalance();
   }
 );
 
 onActivated(() => {
   isActivated.value = true;
   if (isDuringInitial.value) return;
-  recheckModalType();
+  store.getMemberInfo().then(recheckModalType);
 });
 
 onDeactivated(() => {

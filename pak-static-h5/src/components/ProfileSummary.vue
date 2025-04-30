@@ -228,11 +228,8 @@ const store = userStore();
 const ui = useUI();
 const i18nStoreLanguage = i18nStore();
 const promoPercentage = computed(() => {
-  if (store.depositCount === 0) {
-    return "53%";
-  } else if (store.depositCount === 1) {
-    return "35%";
-  }
+  if (!store.claimedFtdPrivilege) return "53%";
+  if (!store.claimedSecondPrivilege) return "35%";
   return ""; // Optional: for other cases if needed
 });
 const isScrolled = ref(false);
@@ -424,12 +421,7 @@ const handleBackBtn = () => {
   const redirectQuery = {
     from: route.path
   };
-  if (store.depositCount === 0) {
-    redirectQuery.privilegeCode = "pak-new-user-ftd-bonus";
-  }
-  if (store.depositCount === 1) {
-    redirectQuery.privilegeCode = "pak-second-time-deposit-bonus";
-  }
+
   router.push({ path: "/deposit", query: redirectQuery });
 };
 
