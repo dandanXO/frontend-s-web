@@ -165,10 +165,10 @@
               style="padding: 0;"
             >
               <!-- <img style="width: 100px" :src="`${imgURL}/promo/${promo.icon}`" /> -->
-              <template v-if="promo.code === 'spin-lucky-wheel' && isShownSpinLuckyWheel">
+              <template v-if="promo.code === 'spin-lucky-wheel' && isShowSmallTimerLabel">
                 <SpinLuckyWheelPromoSticky style="width: 100%;" />
               </template>
-              <template v-else-if="promo.code === 'spin-lucky-wheel' && !isShownSpinLuckyWheel">
+              <template v-else-if="promo.code === 'spin-lucky-wheel' && !isShowSmallTimerLabel">
                 <img :src="promo.icon">
               </template>
               <template v-else>
@@ -4167,9 +4167,14 @@ const afterActivated = useCustomerTrigger(() => {
 });
 
 const downloadAppRef = ref();
+const isShowSmallTimerLabel = ref(false)
 const checkSpinLuckyWheelPromoHomePopupCanShow = () => {
   if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP") && spinLuckyWheelPromoHomePopupRef.value) {
     spinLuckyWheelPromoHomePopupRef.value.checkIsCanShowPopup();
+    isShowSmallTimerLabel.value = false
+  }
+  if (sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
+    isShowSmallTimerLabel.value = true
   }
 };
 
