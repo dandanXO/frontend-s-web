@@ -1,9 +1,9 @@
 <template>
     <div class="dividend-container">
       <q-tabs v-model="activeKey" class="dividend-tabs" color="black" no-caps indicator-color="transparent">
-        <q-route-tab  to="/account/dividend/my-dividend" name="my-dividend" :label="$t('dividend.myDividend')"></q-route-tab>
-        <q-route-tab  to="/account/dividend/contract-management" name="contract-management" :label="$t('dividend.contractManagement')"></q-route-tab>
-        <q-route-tab  to="/account/dividend/dividend-record" name="dividend-record" :label="$t('dividend.dividendRecord')"></q-route-tab>
+        <q-tab name="my-dividend" :label="$t('dividend.myDividend')"></q-tab>
+        <q-tab name="contract-management" :label="$t('dividend.contractManagement')"></q-tab>
+        <q-tab name="dividend-record" :label="$t('dividend.dividendRecord')"></q-tab>
       </q-tabs>
   
       <q-tab-panels v-model="activeKey" class="deposit-panels">
@@ -28,20 +28,6 @@
   
   const route = useRoute();
   const activeKey = ref("my-dividend");
-  
-  watch(
-    () => route.path,
-    () => {
-        console.log('here', route)
-      if (route.path === "/account/dividend/my-dividend") {
-        activeKey.value = "my-dividend";
-      } else if (route.path === "/account/dividend/contract-management") {
-        activeKey.value = "contract-management";
-      } else if (route.path === "/account/dividend/dividend-record") {
-        activeKey.value = "dividend-record";
-      }
-    }
-  );
   </script>
   
   <style scoped lang="scss">
