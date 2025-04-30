@@ -55,7 +55,8 @@ export default {
     spinnerRules: "Rules",
     spinnerHistory: "History",
     effectiveRevenueFAQ: "Effective Revenue FAQ",
-    customerServiceVerifer: "Customer Service Verifier"
+    customerServiceVerifer: "Customer Service Verifier",
+    termsAndConditions: "Terms and Conditions"
   },
   bottomNav: {
     home: "Home",
@@ -348,7 +349,8 @@ export default {
         title: "Regulated & Licensed",
         description: "by the Government of Curacao"
       }
-    }
+    },
+    termsAndConditions: "Terms and Conditions"
   },
   home: {
     menu_all: "ALL",

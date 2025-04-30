@@ -99,6 +99,10 @@
         <div class="item-icon"><img src="../assets/images/auth/menu-cs-verifier.png" /></div>
         {{ $t("sideNav.customerServiceVerifier") }}
       </router-link>
+      <router-link class="side-menu-item side-menu-item__transparent" to="/terms-and-conditions">
+        <div class="item-icon"><img src="../assets/images/auth/tac.png" /></div>
+        {{ $t("sideNav.termsAndConditions") }}
+      </router-link>
     </div>
     <a v-if="!isAndroid()" :href="ui.downloadAppUrl" class="side-menu-item side-menu-item__appdownload">
       <div>
@@ -115,6 +119,13 @@
       </div>
       {{ $t("sideNav.language") }}
     </RouterLink>
+    <div class="gcb-container">
+      <img :src="require(`../assets/images/common/gcb-logo-rounded.png`)" />
+      <div>
+        <div>Regulated & Licensed</div>
+        <div class="bottom-txt">by the Government of Couracao</div>
+      </div>
+    </div>
 
     <div v-if="ui.siteType === 'CURACAO'" class="side-menu-item license">
       <img class="license-img" src="../assets/images/license/curacao-license.png" />
@@ -208,7 +219,7 @@ const openCSInNewTab = (url) => {
       flex-direction: column;
       // gap: 10px;
       padding: 10px 0;
-      min-height: 372px;
+      min-height: 424px;
     }
     .side-menu-item {
       height: 50px;
@@ -414,6 +425,29 @@ const openCSInNewTab = (url) => {
             width: 26px;
           }
         }
+      }
+    }
+
+    .gcb-container {
+      display: flex;
+      color: #ffffff99;
+      font-weight: 600;
+      line-height: 12.93px;
+      letter-spacing: 0px;
+      align-items: center;
+      font-size: 12px;
+      margin-top: 4px;
+      img {
+        width: 64px;
+        margin: 0;
+        margin-right: 8px;
+      }
+      div {
+        margin: 0;
+      }
+      .bottom-txt {
+        font-size: 10px;
+        margin-top: 4px;
       }
     }
   }
