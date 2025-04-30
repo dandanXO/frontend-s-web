@@ -67,6 +67,15 @@ const shouldCheckAppAgain = ref(false);
 const countdown = ref("");
 const countdownTimer = ref(null);
 const dialogRef = ref(null);
+const currentTriggerType = ref("LOGIN");
+const modalTriggerList = ref([
+  null,
+  "LOGIN,REDIRECT_TO_HOME",
+  "LOGIN",
+  "LOGIN,REDIRECT_TO_HOME",
+  "LOGIN,REDIRECT_TO_HOME",
+  "LOGIN"
+]);
 
 const combinedStatus = computed(() => ({
   ...statusFromApi.value,
@@ -211,6 +220,12 @@ const checkLucky10DayPromo = async () => {
 };
 
 const checkModalType = async () => {
+  if (modalIndex.value >= modalTriggerList.value.length) return;
+  if (!modalTriggerList.value[modalIndex.value].includes(currentTriggerType.value)) {
+    showNextModal();
+    return;
+  }
+
   switch (modalIndex.value) {
     case 1:
       if (shouldShowModalAgain(modalIndex.value)) {
@@ -319,6 +334,7 @@ watch(
   () => {
     if (isDuringInitial.value) return;
     store.getMemberInfo().then(recheckModalType);
+    currentTriggerType.value = "REDIRECT_TO_HOME";
   }
 );
 
@@ -326,6 +342,7 @@ onActivated(() => {
   isActivated.value = true;
   if (isDuringInitial.value) return;
   store.getMemberInfo().then(recheckModalType);
+  currentTriggerType.value = "REDIRECT_TO_HOME";
 });
 
 onDeactivated(() => {
