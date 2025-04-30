@@ -9,6 +9,11 @@ export const usePromoStore = defineStore("promo", {
   actions: {
     addShownFloatingOrDialogList(promoCode) {
       this.shownFloatingOrDialogList.push(promoCode);
+    },
+    removeShownFloatingOrDialogList(promoCode) {
+      this.shownFloatingOrDialogList = this.shownFloatingOrDialogList.filter(
+        code => code !== promoCode
+      );
     }
   },
   getters: {

@@ -106,9 +106,11 @@ const loadData = async () => {
       };
 
       updateCountdownTime();
-      promoStore.addShownFloatingOrDialogList("spin-lucky-wheel");
       if (info.value.wheelStartTime) {
         isShowSticky.value = true;
+        promoStore.addShownFloatingOrDialogList("spin-lucky-wheel");
+      } else {
+        promoStore.removeShownFloatingOrDialogList("spin-lucky-wheel");
       }
     }
   }
