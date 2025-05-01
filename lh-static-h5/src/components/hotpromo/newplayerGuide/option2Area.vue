@@ -69,7 +69,7 @@
           <div style="width: 2px; height: 24px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
           <h3>奖励说明</h3>
         </div>
-        <p>自注册日起 30 天内，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
+        <p>自注册日起 90 天内，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
       </div>
     </div>
 
