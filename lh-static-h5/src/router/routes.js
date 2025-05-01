@@ -353,8 +353,7 @@ const routes = [
         name: "accountvip",
         component: () => import("pages/games/VIPView.vue")
       }
-    ],
-    meta: { requiresAuth: true }
+    ]
   },
   {
     path: "/account/outbox",
