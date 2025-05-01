@@ -26,6 +26,12 @@ const qrcode = new QRCode(qrcodeCanvas, {
 });
 qrcode.makeCode(window.location.href);
 
+const hostname = getDomainWithoutSubdomain();
+
+if (hostname.indexOf("gz9kykd3.kr") === -1) {
+  header.style.display = "block";
+}
+
 function objectToQueryString(obj) {
   return Object.keys(obj)
     .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]))
@@ -227,7 +233,6 @@ function getDomainWithoutSubdomain() {
 
 window.addEventListener("load", () => {
   sessionStorage.setItem("IS_PWA", "1");
-  const hostname = getDomainWithoutSubdomain();
 
   const fbqId = fbqLists[hostname]?.id;
   if (fbqId) {
