@@ -1,19 +1,20 @@
 <template>
   <!-- <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn" v-if="remainingTime && isShowSticky"> -->
-    <div
-      v-touch-pan.prevent.mouse="moveCsIcon"
-      @click="router.push('promo?name=spin-lucky-wheel')"
-      class="countdown-sticky"
-    >
-      <picture class="gift-img">
-          <img src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/sticky/gift-1000.gif" />
-      </picture>
-      <span class="remaining-time">{{ remainingTime }}</span>
-      <!-- <img @click.stop="closeSticky()" class="close-btn" src="../../../assets/images/index/close-btn.png" /> -->
-    </div>
+  <div
+    v-touch-pan.prevent.mouse="moveCsIcon"
+    @click="router.push('promo?name=spin-lucky-wheel')"
+    class="countdown-sticky"
+  >
+    <picture class="gift-img">
+      <img src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/sticky/gift-1000.gif" />
+    </picture>
+    <span class="remaining-time">{{ remainingTime }}</span>
+    <!-- <img @click.stop="closeSticky()" class="close-btn" src="../../../assets/images/index/close-btn.png" /> -->
+  </div>
   <!-- </q-page-sticky> -->
 </template>
 <script setup>
+import { storeToRefs } from "pinia";
 import { userStore } from "src/stores";
 import { onMounted, onUnmounted, ref, onActivated } from "vue";
 import { eventapi } from "src/boot/axios";
@@ -26,7 +27,7 @@ const promoStore = usePromoStore();
 
 const timer = ref();
 const remainingTime = ref("");
-const isShowSticky = ref(false);
+// const { isShowSticky } = storeToRefs(promoStore);
 const nextFreeSpinRemainingTime = ref("");
 const moveCsIcon = (ev) => {
   isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -36,7 +37,8 @@ const moveCsIcon = (ev) => {
 const store = userStore();
 
 const closeSticky = () => {
-  isShowSticky.value = false;
+  // isShowSticky.value = false;
+  promoStore.setIsShowSticky(false);
   sessionStorage.setItem("SPIN_LUCKY_WHEEL_STICKY", "1");
 };
 
@@ -74,7 +76,6 @@ const getRemainingTime = (endTime) => {
 };
 
 const updateCountdownTime = () => {
-  // console.log("updateCountdownTime")
   const wheelEndTime = moment.tz(info.value.wheelEndTime, "Asia/Karachi");
   const wheelResetTime = moment.tz(info.value.wheelResetTime, "Asia/Karachi");
   const now = moment();
@@ -84,9 +85,14 @@ const updateCountdownTime = () => {
     : moment.min(wheelEndTime, wheelResetTime);
 
   const nextFreeSpinEndTime = moment().add(1, "days").startOf("day");
+
   if (timer.value) {
     clearInterval(timer.value);
   }
+
+  remainingTime.value = getRemainingTime(endTime);
+  // nextFreeSpinRemainingTime.value = getRemainingTime(nextFreeSpinEndTime);
+
   timer.value = setInterval(() => {
     remainingTime.value = getRemainingTime(endTime);
     // nextFreeSpinRemainingTime.value = getRemainingTime(nextFreeSpinEndTime);
@@ -106,11 +112,10 @@ const loadData = async () => {
       };
 
       updateCountdownTime();
+      promoStore.addShownFloatingOrDialogList("spin-lucky-wheel");
       if (info.value.wheelStartTime) {
-        isShowSticky.value = true;
-        promoStore.addShownFloatingOrDialogList("spin-lucky-wheel");
-      } else {
-        promoStore.removeShownFloatingOrDialogList("spin-lucky-wheel");
+        promoStore.setIsShowSticky(true);
+        // isShowSticky.value = true;
       }
     }
   }

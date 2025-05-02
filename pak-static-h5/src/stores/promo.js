@@ -3,7 +3,8 @@ import { defineStore } from "pinia";
 export const usePromoStore = defineStore("promo", {
   state: () => {
     return {
-      shownFloatingOrDialogList: []
+      shownFloatingOrDialogList: [],
+      isShowSticky: false
     };
   },
   actions: {
@@ -11,9 +12,10 @@ export const usePromoStore = defineStore("promo", {
       this.shownFloatingOrDialogList.push(promoCode);
     },
     removeShownFloatingOrDialogList(promoCode) {
-      this.shownFloatingOrDialogList = this.shownFloatingOrDialogList.filter(
-        code => code !== promoCode
-      );
+      this.shownFloatingOrDialogList = this.shownFloatingOrDialogList.filter((code) => code !== promoCode);
+    },
+    setIsShowSticky(value) {
+      this.isShowSticky = value;
     }
   },
   getters: {

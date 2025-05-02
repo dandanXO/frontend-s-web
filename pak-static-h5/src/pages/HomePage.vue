@@ -162,17 +162,17 @@
               :key="i"
               :name="i"
               @click="gotoFloatPromo(promo)"
-              style="padding: 0;"
+              style="padding: 0"
             >
               <!-- <img style="width: 100px" :src="`${imgURL}/promo/${promo.icon}`" /> -->
-              <template v-if="promo.code === 'spin-lucky-wheel' && isShownSpinLuckyWheel">
-                <SpinLuckyWheelPromoSticky style="width: 100%;" />
+              <template v-if="promo.code === 'spin-lucky-wheel' && isShowSticky">
+                <SpinLuckyWheelPromoSticky style="width: 100%" />
               </template>
-              <template v-else-if="promo.code === 'spin-lucky-wheel' && !isShownSpinLuckyWheel">
-                <img :src="promo.icon">
+              <template v-else-if="promo.code === 'spin-lucky-wheel' && !isShowSticky">
+                <img :src="promo.icon" />
               </template>
               <template v-else>
-                <img :src="promo.icon">
+                <img :src="promo.icon" />
               </template>
             </q-carousel-slide>
           </q-carousel>
@@ -1707,7 +1707,7 @@ const gameModules = ref([Navigation, Pagination]);
 
 const { t } = useI18n();
 const promoStore = usePromoStore();
-const { isShownSpinLuckyWheel } = storeToRefs(promoStore);
+const { isShownSpinLuckyWheel, isShowSticky } = storeToRefs(promoStore);
 // const isLuckyDrawModal = ref(false);
 // const isCongratsModal = ref(true);
 const isShowPrizeModal = ref(false);
