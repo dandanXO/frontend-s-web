@@ -709,9 +709,6 @@ export default defineComponent({
 
               return promo;
             });
-            if (btm_banners.value.length === 1) {
-              btm_banners.value.push(res.data[0]);
-            }
           }
         })
         .catch(() => {});
