@@ -1522,6 +1522,19 @@
       </CongratsModal>
     </q-dialog>
   </template>
+  <div class="tac-footer" v-if="ui.siteType === 'CURACAO'">
+    <img class="b9game-logo" alt="b9game-logo" src="../assets/images/common/b9game-logo.png" />
+    <div class="footer-content">
+      b9.game aims to become the global leader in online gaming and betting using the latest blockchain technologies,
+      always putting our customers first. Trust, integrity and fairness are just three of our key values.
+    </div>
+    <img class="gcb-logo" alt="gcb-logo" src="../assets/images/common/gcb-logo.png" />
+    <div class="footer-content">
+      b9.game aims to become the global leader in online gaming and betting using the latest blockchain technologies,
+      always putting our customers first. Trust, integrity and fairness are just three of our key values.
+    </div>
+    <div class="copyright-txt">© 2024 b9.game ALL RIGHTS RESERVED</div>
+  </div>
 
   <CongratsReuseableModal
     :isShowDialog="isShowCodeBonusModal"
@@ -4658,44 +4671,6 @@ const checkGoogleLoginSetPwd = () => {
       text-align: center;
     }
   }
-  /* Top row spans 2 columns each */
-  // .category:nth-child(1), .category:nth-child(2) {
-  //     grid-column: span 2;
-  //     .cat-label {
-  //       position: absolute;
-  //       font-weight: bold;
-  //       top: 10px;
-  //       right: unset;
-  //       left: 10px;
-  //       display: flex;
-  //       gap: 5px;
-
-  //     }
-  // }
-  // .category:nth-child(1) {
-  //   .cat-label {
-  //     &:before {
-  //       content: "";
-  //       background: url(../assets/images/index/category/green-dice.png)no-repeat center center;
-  //       width: 30px;
-  //       background-size: contain;
-  //       height: 30px;
-  //     }
-  //   }
-  // }
-
-  // .category:nth-child(2) {
-  //   .cat-label {
-
-  //     &:before {
-  //     content: "";
-  //     background: url(../assets/images/index/category/green-slot.png)no-repeat center center;
-  //     width: 30px;
-  //     background-size: contain;
-  //     height: 30px;
-  //   }
-  //   }
-  // }
 }
 
 .midd {
@@ -5233,6 +5208,36 @@ const checkGoogleLoginSetPwd = () => {
     display: block;
     height: 100%;
     width: auto;
+  }
+}
+.tac-footer {
+  padding: 0 12px;
+  justify-content:center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .b9game-logo {
+    width: 50%;
+    min-width: 150px;
+  }
+  .gcb-logo {
+    width: 25%;
+    min-width: 100px;
+  }
+  .footer-content {
+    margin-top: 24px;
+    font-family: Poppins;
+    font-weight: 400;
+    line-height: 160%;
+    letter-spacing: 0px;
+    color: #ffffff80;
+  }
+  .copyright-txt {
+    font-family: Poppins;
+    font-weight: 700;
+    font-size: 16px;
+    color: #ffffff80;
+    margin-top: 28px;
   }
 }
 </style>
