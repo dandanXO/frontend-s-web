@@ -126,6 +126,15 @@ export const updatePlatformFeeRate = (id, fee) => {
   )
 }
 
+export const updateAffiliateAlias = (id, alias) => {
+  return https().request(
+    `/affiliate/${id}/alias?_method=PUT`,
+    Method.POST,
+    { alias: alias },
+    ContentType.form
+  )
+}
+
 export const updateAffiliatePassword = (id, password, site) => {
   return https().request(
     `/affiliate/${id}/password?_method=PUT`,

@@ -53,7 +53,8 @@ export default {
     referralRecord: "ریفرل کا ریکارڈ",
     interestProfit: "سود کا منافع",
     spinnerRules: "قواعد",
-    effectiveRevenueFAQ: "مؤثر آمدنی کے عمومی سوالات"
+    effectiveRevenueFAQ: "مؤثر آمدنی کے عمومی سوالات",
+    termsAndConditions: "شرائط و ضوابط"
   },
   bottomNav: {
     home: "گھر/ہوم",
@@ -344,7 +345,8 @@ export default {
         title: "ریگولیٹڈ اور لائسنس یافتہ",
         description: "حکومت کیوراکاؤ کے ذریعہ"
       }
-    }
+    },
+    termsAndConditions: "شرائط و ضوابط"
   },
   home: {
     menu_all: "سب",
