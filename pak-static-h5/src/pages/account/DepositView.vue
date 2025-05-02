@@ -29,8 +29,8 @@
           <q-badge v-if="isNewUserFtdPrivilege" color="green" floating rounded>
             {{ getNewUserFtdAmount(item.amount) }}
           </q-badge>
-          <q-badge v-if="isSecondTimeDepositPrivilege" color="green" floating rounded>
-            {{ getSecondTimeDepositAmount(item.amount) }}
+          <q-badge v-if="is2ndPrivilege" color="green" floating rounded>
+            {{ get2ndAmount(item.amount) }}
           </q-badge>
           <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
           <div :class="['deposit-svg', item.isActive && 'active']">
@@ -87,6 +87,15 @@
               v-if="store.ftd === 'OPEN' && paytypeWithPrivilege.indexOf(activeMethod.payType) > -1"
             >
               {{ $t("deposit.useFtdPrivilege") }}
+            </q-checkbox>
+            <q-checkbox v-model="ftdBonusConfig.selected" v-else-if="ftdBonusConfig.hasBonus">
+              {{ $t("deposit.useFtdBonus") }}
+            </q-checkbox>
+            <q-checkbox
+              v-model="secondTimeDepositBonusConfig.selected"
+              v-else-if="secondTimeDepositBonusConfig.hasBonus"
+            >
+              {{ $t("deposit.use2ndBonus") }}
             </q-checkbox>
             <div v-else>&nbsp;</div>
             <!--            {{ $t("form.depositAmount") }}-->
@@ -466,6 +475,16 @@ const copybtntxt3 = ref("复制");
 const extraPrivilegeId = ref();
 const paytypeWithPrivilege = ref("");
 const isFtdPrivilegeEnable = ref(false);
+const ftdBonusConfig = ref({
+  selected: false,
+  hasBonus: false,
+  privilegeId: null
+});
+const secondTimeDepositBonusConfig = ref({
+  selected: false,
+  hasBonus: false,
+  privilegeId: null
+});
 
 const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
 const isFtdPrivilege = computed(
@@ -477,10 +496,13 @@ const isFtdPrivilegePayType = computed(
 );
 
 const isNewUserFtdPrivilege = computed(
-  () => selectedPayType.value !== "USDTTRC" && selectedPrivilege.value?.code === "pak-new-user-ftd-bonus"
+  () => selectedPayType.value !== "USDTTRC" && ftdBonusConfig.value.selected && ftdBonusConfig.value.hasBonus
 );
-const isSecondTimeDepositPrivilege = computed(
-  () => selectedPayType.value !== "USDTTRC" && selectedPrivilege.value?.code === "pak-second-time-deposit-bonus"
+const is2ndPrivilege = computed(
+  () =>
+    selectedPayType.value !== "USDTTRC" &&
+    secondTimeDepositBonusConfig.value.selected &&
+    secondTimeDepositBonusConfig.value.hasBonus
 );
 
 const copyMessage = (position) => {
@@ -579,7 +601,7 @@ const getNewUserFtdAmount = (amount) => {
   return rewardMap[amount] || 0;
 };
 
-const getSecondTimeDepositAmount = (amount) => {
+const get2ndAmount = (amount) => {
   const rewardMap = {
     300: 107,
     500: 177,
@@ -727,8 +749,6 @@ async function loadPrivilege(val) {
   hasPrivilege.value = false;
   await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
     if (res.code === 0) {
-      let preSelectPrivilege = null;
-
       privilegeList.value = res.data.privileges;
       hasPrivilege.value = true;
       unselectedPrivileges.value = [];
@@ -738,17 +758,24 @@ async function loadPrivilege(val) {
           if (p.triggerType == "FREE") {
             freePrivilege.value.push(p);
           } else {
-            unselectedPrivileges.value.push(p);
-            if (!preSelectPrivilege) {
-              if (p.code === "pak-new-user-ftd-bonus") preSelectPrivilege = p;
-              if (p.code === "pak-second-time-deposit-bonus") preSelectPrivilege = p;
+            if (p.code === "pak-new-user-ftd-bonus") {
+              ftdBonusConfig.value = {
+                selected: true,
+                hasBonus: true,
+                privilegeId: p.id
+              };
+            } else if (p.code === "pak-second-time-deposit-bonus") {
+              secondTimeDepositBonusConfig.value = {
+                selected: true,
+                hasBonus: true,
+                privilegeId: p.id
+              };
+            } else {
+              unselectedPrivileges.value.push(p);
             }
           }
         }
       });
-      if (preSelectPrivilege) {
-        selectedPrivilege.value = preSelectPrivilege;
-      }
     } else {
       hasPrivilege.value = false;
       privilegeList.value = [];
@@ -832,6 +859,14 @@ async function confirmDeposit() {
 
           if (isFtdPrivilegePayType.value && extraPrivilegeId.value && isFtdPrivilegeEnable.value) {
             form.privilegeId = extraPrivilegeId.value;
+          }
+
+          if (ftdBonusConfig.value.selected && ftdBonusConfig.value.hasBonus) {
+            form.privilegeId = ftdBonusConfig.value.privilegeId;
+          }
+
+          if (secondTimeDepositBonusConfig.value.selected && secondTimeDepositBonusConfig.value.hasBonus) {
+            form.privilegeId = secondTimeDepositBonusConfig.value.privilegeId;
           }
 
           const copy = { ...form };

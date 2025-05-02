@@ -365,6 +365,8 @@ onMounted(() => {
 <style scoped lang="scss">
 .deposit-promo-modal {
   .modal-img {
+    display: flex;
+    justify-content: center;
     img {
       display: block;
       width: 100%;
@@ -432,6 +434,21 @@ onMounted(() => {
     font-size: 30px;
     font-weight: lighter;
     margin-top: 16px;
+  }
+}
+
+@media (max-height: 650px) {
+  .deposit-promo-modal {
+    .modal-img {
+      img {
+        max-width: 240px;
+      }
+    }
+    .modal-countdown {
+      .modal-countdown__number {
+        font-size: 38px;
+      }
+    }
   }
 }
 </style>
