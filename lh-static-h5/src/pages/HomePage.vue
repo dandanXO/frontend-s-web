@@ -19,8 +19,9 @@
     <div class="header-left">
       <img alt="logo" src="../assets/logo-1.png" />
     </div>
-    <div class="header-right" @click="() => (hasDrawer = !hasDrawer)">
-      <span class="memorable-url">易记网址：leihuo18.com 🔍</span>
+    <div class="header-right">
+      <span class="memorable-url">易记网址：{{ memorableUrl }}</span>
+      <button class="copy-btn" @click="handleCopyMemorableUrlClick">🔍</button>
       <img
         class="btn-pointer"
         :src="
@@ -28,6 +29,7 @@
             ? require('../assets/images/home/home-hamburger-menu-dark.png')
             : require('../assets/images/home/home-hamburger-menu.png')
         "
+        @click="() => (hasDrawer = !hasDrawer)"
       />
       <div class="red-dot" v-if="unreadInboxMail > 0" />
     </div>
@@ -782,6 +784,7 @@ import LinkGroup from "components/home/drawer/LinkGroup.vue";
 import SystemConfig from "components/home/drawer/SystemConfig.vue";
 import { onMounted } from "vue";
 import { convertToCommaAmount } from "src/boot/utils";
+import { useNotify } from "src/hooks/notify";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
@@ -800,6 +803,8 @@ export default defineComponent({
     AnnouncementModal
   },
   setup() {
+    const notify = useNotify();
+
     const isFirstView = ref(false);
     const thumbsSwiper = ref(null);
     const firstSwiper = ref(null);
@@ -1823,6 +1828,25 @@ export default defineComponent({
       promoPos.value = [newX, newY];
     };
 
+    const memorableUrl = ref("leihuo18.com");
+    const handleCopyMemorableUrlClick = () => {
+      // Create a temporary textarea element
+      const tempTextarea = document.createElement("textarea");
+      tempTextarea.value = memorableUrl.value;
+      document.body.appendChild(tempTextarea);
+
+      // Select the text and copy it
+      tempTextarea.select();
+      document.execCommand("copy");
+
+      // Remove the temporary textarea element
+      document.body.removeChild(tempTextarea);
+      notify({
+        type: "success",
+        message: "易记网址复制成功"
+      });
+    };
+
     onActivated(() => {
       getPlatList();
       loadData();
@@ -1973,7 +1997,9 @@ export default defineComponent({
       convertToCommaAmount,
       formatHomePopupImg,
       bannersWithImage,
-      showPopupDialog
+      showPopupDialog,
+      memorableUrl,
+      handleCopyMemorableUrlClick
     };
   }
 });
@@ -2163,10 +2189,14 @@ export default defineComponent({
     }
 
     .memorable-url {
-      margin-right: 10px;
       font-size: 0.8rem;
       font-weight: 600;
       color: #47537f;
+    }
+    .copy-btn {
+      background: transparent;
+      border: none;
+      margin-right: 10px;
     }
   }
 }
