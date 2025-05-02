@@ -69,7 +69,7 @@
     <IemMelbourne2025 v-if="list.redirectUrl === 'dy2-iem-melbourne-2025'" :promo-code="list.promoCode" />
     <BlastRival2025 v-else-if="list.redirectUrl === 'dy2-blast-rivals-2025-s1'" :promo-code="list.promoCode" />
     <PglWallachiaS4 v-else-if="list.redirectUrl === 'dy2-pgl-wallachia-s4'" :promo-code="list.promoCode" />
-
+    <newVip2025 v-if="list.redirectUrl === 'dy2-2025-new-vip'" :promo-code="list.promoCode" />
     <Cct2025 v-else-if="list.redirectUrl === 'dy2-cct-global-finals-2025'" :promo-code="list.promoCode" />
     <NewFootball v-if="list.redirectUrl === 'dy2-football'" :promo-code="list.promoCode" />
   </div>
@@ -147,6 +147,7 @@ const NewFootball = defineAsyncComponent(() => import("../components/hotpromo/Ne
 const VctBangkok = defineAsyncComponent(() => import("./hotpromo/vct-bangkok/VctBangkok.vue"));
 const elsOne2025 = defineAsyncComponent(() => import("./hotpromo/elsOne2025/elsOne2025.vue"));
 import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
+import newVip2025 from "./hotpromo/2025-new-vip/2025-new-vip.vue";
 const BlastRival2025 = defineAsyncComponent(() => import("./hotpromo/BlastRival2025/BlastRival2025.vue"));
 
 export default defineComponent({
@@ -154,6 +155,7 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    newVip2025,
     Cct2025,
     YaLLa2025,
     elsOne2025,
