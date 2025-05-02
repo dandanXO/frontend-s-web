@@ -1851,10 +1851,10 @@ export default defineComponent({
 
       if (store.token) {
         checkShowImgTop();
-        setTimeout(() => {
-          initFloating();
-        }, 750);
       }
+      setTimeout(() => {
+        initFloating();
+      }, 750);
     });
     // Clear interval on unmounted
     onUnmounted(() => {
