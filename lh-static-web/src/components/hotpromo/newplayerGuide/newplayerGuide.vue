@@ -14,7 +14,13 @@
       <div class="container">
         <div class="left-panel">
           <div style="display: flex; align-items: center">
-            <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/gift.png" alt="Gift" />
+            <template v-if="isDark">
+              <img class="big-icon" src="../../../assets/images/promotion/hotpromo/common/claim-title-icon.svg" alt="Gift" /> 
+            </template>
+            <template v-else>
+              <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/gift.png" alt="Gift" />   
+            </template>
+
             <div class="title">
               新手礼包
               <span v-if="store.token" style="font-size: 16px; font-weight: 400">
@@ -31,22 +37,37 @@
             </span>
           </div>
           <div v-else style="font-size: 12px; font-weight: 400; color: #00000099">您还未登录，请登录后参与活动</div>
+          
           <div class="section">
-            <div style="display: flex">
-              <div style="width: 2px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
-              <div class="subtitle">奖励说明</div>
+            <div class="little-title" v-if="isDark">
+              <div class="ribbon">奖励说明</div>
+              <div class="right">注册后，绑定手机号码、银行账户或 USDT 地址，并完成任意一笔存款即可立即领取新手礼包。
+                每绑定一项新的信息，均可获得额外奖励！</div>
             </div>
-            <p>
-              注册后，绑定手机号码、银行账户或 USDT 地址，并完成任意一笔存款即可立即领取新手礼包。
-              每绑定一项新的信息，均可获得额外奖励！
-            </p>
+            <template v-else>
+              <div style="display: flex">
+                <div style="width: 2px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
+                <div class="subtitle">奖励说明</div>
+              </div>
+              <p>
+                注册后，绑定手机号码、银行账户或 USDT 地址，并完成任意一笔存款即可立即领取新手礼包。
+                每绑定一项新的信息，均可获得额外奖励！
+              </p>
+            </template> 
+            
           </div>
           <div class="section2">
-            <div style="display: flex">
-              <div style="width: 2px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
-              <div class="subtitle">领奖期限</div>
+            <div class="little-title" v-if="isDark">
+              <div class="ribbon">领奖期限</div>
+              <div class="right">自注册日起，限时第 30 日 23:59:59 前领取完毕</div>
             </div>
-            <p>自注册日起，限时第 30 日 23:59:59 前领取完毕</p>
+            <template v-else>
+              <div style="display: flex">
+                <div style="width: 2px; margin-right: 5px; background-color: rgba(65, 185, 255, 1)"></div>
+                <div class="subtitle">领奖期限</div>
+              </div>
+              <p>自注册日起，限时第 30 日 23:59:59 前领取完毕</p>
+            </template>
           </div>
           <div class="steps">
             <div class="step" :class="{ incomplete: telephoneBindState === 'NO' }">
@@ -55,7 +76,7 @@
                 绑定手机号
                 <span
                   class="status"
-                  :class="getStatus(telephoneBindState).class"
+                  :class="[getStatus(telephoneBindState).class, { 'step-is-dark': isDark }]"
                   @click="handleClickStatusButton(telephoneBindState, '-new-user-setup-bonus-telephone')"
                 >
                   <img
@@ -73,7 +94,7 @@
                 绑定银行卡
                 <span
                   class="status"
-                  :class="getStatus(bankCardBindState).class"
+                  :class="[getStatus(bankCardBindState).class, { 'step-is-dark': isDark }]"
                   @click="handleClickStatusButton(bankCardBindState, '-new-user-setup-bonus-bankcard')"
                 >
                   <img
@@ -91,7 +112,7 @@
                 绑定 USDT 地址
                 <span
                   class="status"
-                  :class="getStatus(usdtAddrBindState).class"
+                  :class="[getStatus(usdtAddrBindState).class,, { 'step-is-dark': isDark }]"
                   @click="handleClickStatusButton(usdtAddrBindState, '-new-user-setup-bonus-usdt-addr')"
                 >
                   <img
@@ -116,8 +137,8 @@
               <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/vector.png" alt="Gift" />
               <div class="title">首次提款</div>
             </div>
-            <div v-if="isValidUser" class="go-btn status" :class="{ complete: firstWithdrawalState === 'CLAIMED' }">
-              <div @click="handleClickStatusButton(firstWithdrawalState, '-new-user-setup-bonus-first-withdrawal')">
+            <div v-if="isValidUser" class="go-btn status" :class="[{ complete: firstWithdrawalState === 'CLAIMED' },{ 'step-is-dark': isDark }]">
+              <div @click="[handleClickStatusButton(firstWithdrawalState, '-new-user-setup-bonus-first-withdrawal')]">
                 <img
                   v-if="firstWithdrawalState === 'CLAIMED'"
                   style="width: 16px; height: 16px; vertical-align: sub; margin-right: 4px"
@@ -273,12 +294,13 @@ import moment from "moment";
 import { useNotify } from "@/hooks/notify";
 import { useLocalStorage } from "@vueuse/core";
 import { ResponseCode } from "@/api/response";
+import { useDark } from "@vueuse/core";
 
 const notify = useNotify();
 
 const store = userStore();
 const router = useRouter();
-
+const isDark = useDark();
 const selected = ref("option1");
 const bankCardBindState = ref("NO");
 const firstWithdrawalState = ref("NO");
@@ -444,6 +466,55 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .dark {
+  .little-title {
+    display: flex;
+    gap: 14px;
+    //flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 5px;
+
+    .left {
+      background-image: url("@/assets/promo/lh-livepoker-rebate/info-little-title-bg.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      width: 120px;
+      height: 36px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 23.33px;
+      color: #ffffff;
+      margin-right: 16px;
+    }
+    .right {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 34px;
+    }
+  }
+  .ribbon {
+    clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
+    background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%);
+    padding-right: 10px;
+    font-family: "PingFang SC";
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    width: fit-content;
+    padding: 0px 20px 0px 10px;
+    aspect-ratio: 94/30;
+    white-space: nowrap;
+
+    &.cny {
+      background: linear-gradient(180deg, #ffe190 0%, #ff9f40 100%);
+      color: #894800;
+    }
+  }
   .switch-wrapper {
     display: flex;
     justify-content: center;
@@ -596,7 +667,11 @@ onMounted(async () => {
   .steps {
     margin-top: 20px;
   }
-
+  .step-is-dark{
+    background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) !important;
+    color: white;
+    box-shadow: 0px 8px 9px 0px #ffffff40 inset, 0px 4px 4px 0px #ffffff40 inset, 0px -4px 4px 0px #ffffff40 inset;
+  }
   .step {
     border: 1px solid rgba(215, 235, 255, 1);
     padding: 8px;

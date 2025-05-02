@@ -565,6 +565,9 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .dark {
+  .title {
+    color: #fff;
+  }
   .promotion-container {
     display: flex;
     flex-direction: column;
@@ -639,7 +642,7 @@ onMounted(async () => {
     }
     .title {
       margin-top: 4px;
-      color: #000;
+      color: #fff;
       font-weight: 600;
       font-size: 24px;
     }
