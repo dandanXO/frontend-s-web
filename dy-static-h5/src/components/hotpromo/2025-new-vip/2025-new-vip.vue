@@ -746,7 +746,7 @@ onMounted(() => {
     font-weight: 400;
     line-height: 28px;
     color: #fff;
-    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%) !important;
     &:first-child {
       border-top-left-radius: 12px;
     }
