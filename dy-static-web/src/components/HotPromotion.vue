@@ -85,6 +85,7 @@
     <YaLLa2025 v-if="list.redirectUrl === 'dy2-yalla-compass-qatar-2025'" :promo-code="list.promoCode" />
     <IemMelbourne2025 v-if="list.redirectUrl === 'dy2-iem-melbourne-2025'" :promo-code="list.promoCode" />
     <PglWallachiaS4 v-if="list.redirectUrl === 'dy2-pgl-wallachia-s4'" :promo-code="list.promoCode" />
+    <BlastSlam32025 v-else-if="list.redirectUrl === 'dy2-blast-slam-3-2025'" :promo-code="list.promoCode" />
     <BlastRival2025 v-if="list.redirectUrl === 'dy2-blast-rivals-2025-s1'" :promo-code="list.promoCode" />
     <Cct2025 v-if="list.redirectUrl === 'dy2-cct-global-finals-2025'" :promo-code="list.promoCode" />
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
@@ -163,6 +164,7 @@ import FissureUniverseS4 from "./hotpromo/fissure-universe-s4/FissureUniverseS4.
 import YaLLa2025 from "./hotpromo/YaLLa2025/YaLLa2025.vue";
 import IemMelbourne2025 from "./hotpromo/iem-melbourne-2025/IemMelbourne2025.vue";
 import PglWallachiaS4 from "./hotpromo/pgl-wallachia-s4/PglWallachiaS4.vue";
+import BlastSlam32025 from "./hotpromo/blast-slam-3-2025/BlastSlam32025.vue";
 import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
 import BlastRival2025 from "./hotpromo/BlastRival2025/BlastRival2025.vue";
 
@@ -214,6 +216,7 @@ export default defineComponent({
     FissureUniverseS4,
     IemMelbourne2025,
     PglWallachiaS4,
+    BlastSlam32025,
     BlastRival2025
   },
   props: {
