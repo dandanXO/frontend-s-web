@@ -385,9 +385,7 @@ export default defineComponent({
 
     onMounted(() => {
       getAppDownloadUrl();
-      if (store.token) {
-        initFloating();
-      }
+      initFloating();
       document.addEventListener("mouseup", stopDragging);
     });
 

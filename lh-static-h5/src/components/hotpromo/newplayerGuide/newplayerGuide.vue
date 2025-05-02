@@ -609,7 +609,8 @@ onMounted(async () => {
     margin-bottom: 10px;
 
     &.incomplete {
-      background: #d7ebff;
+      background: transparent;
+      border: 1px solid rgba(215, 235, 255, 1);
     }
   }
 
