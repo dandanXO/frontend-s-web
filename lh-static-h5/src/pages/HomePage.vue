@@ -1717,7 +1717,6 @@ export default defineComponent({
         let result = "00:00:00";
 
         if (promo?.showTime) {
-          console.log(promo.title);
           const now = moment(Date.now());
           const endTime = moment(promo?.endTime);
           const totalSeconds = endTime.diff(now, "seconds");
@@ -1728,7 +1727,6 @@ export default defineComponent({
             result = `${`${hours}`.padStart(2, 0)}:${`${minutes}`.padStart(2, 0)}:${`${seconds}`.padStart(2, 0)}`;
           }
         }
-        console.log(result, "time");
         return result;
       });
     };
@@ -2010,6 +2008,7 @@ export default defineComponent({
 }
 
 .rocket-wrapper {
+  position: relative;
   transition: all 0.3s;
   // cursor: pointer;
 
@@ -2023,14 +2022,14 @@ export default defineComponent({
   }
   .promo-remaining-time {
     position: absolute;
-    bottom: 2.41rem;
+    bottom: 17px;
     left: 50%;
     transform: translateX(-50%);
     font-weight: bold;
     font-family: Arial;
     color: #444;
     // text-shadow: 2px 2px 0px #00000040;
-    font-size: 1.02rem;
+    font-size: 14px;
   }
 }
 
