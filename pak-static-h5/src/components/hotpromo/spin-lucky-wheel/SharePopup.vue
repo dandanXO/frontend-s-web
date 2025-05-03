@@ -254,20 +254,23 @@ const handleDialogShow = () => {
 };
 
 const handleShareToTikTok = (url) => {
-  const shareText = t("earnMoney.reward.shareText", { url });
+  // const shareText = t("earnMoney.reward.shareText", { url });
+  const shareText = shareCaption.value + " " + url;
   copyToClipboard(shareText);
   tiktokRef.value.click();
 };
 
 const handleShareToYoutube = (url) => {
-  const shareText = t("earnMoney.reward.shareText", { url });
+  // const shareText = t("earnMoney.reward.shareText", { url });
+  const shareText = shareCaption.value + " " + url;
   copyToClipboard(shareText);
   const youtubeShareUrl = ui.youtubeUrl;
   window.open(youtubeShareUrl, "_self");
 };
 
 const handleShareToFacebookPost = (url) => {
-  const shareText = t("earnMoney.reward.shareText");
+  // const shareText = t("earnMoney.reward.shareText");
+  const shareText = shareCaption.value + " " + url;
   const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
     url
   )}&quote=${encodeURIComponent(shareText)}`;
@@ -276,14 +279,16 @@ const handleShareToFacebookPost = (url) => {
 };
 
 const handleShareToSMS = (url) => {
-  const shareText = t("earnMoney.reward.shareText", { url });
+  // const shareText = t("earnMoney.reward.shareText", { url });
+  const shareText = shareCaption.value + " " + url;
   const smsBody = `${shareText}`;
   const smsShareUrl = `sms:?body=${encodeURIComponent(smsBody)}`;
   window.location.href = smsShareUrl;
 };
 
 const handleShareToEmail = (url) => {
-  const shareText = t("earnMoney.reward.shareText", { url });
+  const shareText = shareCaption.value + " " + url;
+  // const shareText = t("earnMoney.reward.shareText", { url });
   const shareTitle = t("earnMoney.reward.shareTitle");
   const emailSubject = encodeURIComponent(`${shareTitle}`);
   const emailBody = encodeURIComponent(`${shareText}`);
@@ -318,7 +323,7 @@ const copyHrefLink = async () => {
     try {
       await navigator.share({
         title: "b9.game",
-        text: `Pakistan real money games ${textToCopy}`,
+        text: shareCaption.value + " " + textToCopy,
         url: textToCopy
       });
     } catch (err) {
