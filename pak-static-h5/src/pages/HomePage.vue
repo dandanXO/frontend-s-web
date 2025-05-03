@@ -1539,7 +1539,10 @@
     </div>
     <img class="gcb-logo" alt="gcb-logo" src="../assets/images/common/gcb-logo.png" />
     <div class="footer-content">
-      b9.game is operated by Bridge Technologies B.V., company registration number 160264(0), with registered address at Dr. M.J. Hugenholtzweg 25, Willemstad, Curaçao. Bridge Technologies B.V. is licensed and authorized by the Government of Curaçao, operating under licence number OGL/2024/431/0231 issued by the Curaçao Gaming Control Board (GCB).
+      b9.game is operated by Bridge Technologies B.V., company registration number 160264(0), with registered address at
+      Dr. M.J. Hugenholtzweg 25, Willemstad, Curaçao. Bridge Technologies B.V. is licensed and authorized by the
+      Government of Curaçao, operating under licence number OGL/2024/431/0231 issued by the Curaçao Gaming Control Board
+      (GCB).
     </div>
     <div class="copyright-txt">© 2024 b9.game ALL RIGHTS RESERVED</div>
   </div>
@@ -1620,7 +1623,7 @@
 
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
 
-  <SpinLuckyWheelPromoSticky v-show="isShownSpinLuckyWheel" />
+  <!--  <SpinLuckyWheelPromoSticky v-show="isShownSpinLuckyWheel" />-->
   <!-- <SpinLuckyWheelPromoHomePopup v-if="isShownSpinLuckyWheel || popupPromo === 'spin-lucky-wheel'" ref="spinLuckyWheelPromoHomePopupRef" /> -->
 
   <DepositPromoModal />
@@ -5228,7 +5231,7 @@ const checkGoogleLoginSetPwd = () => {
 }
 .tac-footer {
   padding: 0 12px;
-  justify-content:center;
+  justify-content: center;
   display: flex;
   flex-direction: column;
   align-items: center;
