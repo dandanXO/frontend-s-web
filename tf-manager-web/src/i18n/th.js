@@ -935,6 +935,7 @@ export default {
     reasonType: 'ประเภทเหตุผล',
     reasonTemplate: 'แม่แบบเหตุผล',
     rebate: 'ส่วนลด',
+    rebateBase: 'ฐานการคืนเงิน',
     rebateDistributeTime: 'ระยะเวลาการกระจายส่วนลด',
     rebatePercentage: 'ส่วนลด เป็นเปอร์เซ็น',
     regEndDate: 'เวลาสิ้นสุดการลงทะเบียน',

@@ -8,6 +8,7 @@ export default {
     register: "Register",
     download: "Download",
     getFreeSpins: "Get free spins on the APP",
+    getFreeCash: "Free Rs 100 Better Experience!",
     withdraw: "Withdraw",
     personalCenter: "Personal Center",
     deposit: "Deposit",
@@ -55,7 +56,8 @@ export default {
     spinnerRules: "Rules",
     spinnerHistory: "History",
     effectiveRevenueFAQ: "Effective Revenue FAQ",
-    customerServiceVerifer: "Customer Service Verifier"
+    customerServiceVerifer: "Customer Service Verifier",
+    termsAndConditions: "Terms and Conditions"
   },
   bottomNav: {
     home: "Home",
@@ -78,6 +80,11 @@ export default {
     homeCodeBonus: {
       congratsWonFreeCash: "Congratulations, you've won free cash!",
       enterCodeToClaim: "Please enter the cash redemption code to claim it."
+    },
+    appLoginBonus: {
+      validatePhoneAndEmail: "Please bind your phone first",
+      loginTomorrow: "Please log in tomorrow to claim your mystery reward.",
+      claimBonus: "You’ve received {amount}rs bonus!"
     }
   },
   form: {
@@ -342,7 +349,14 @@ export default {
     appDownload: "APP download",
     experienceOneStopGaming: "Experience one-stop gaming!",
     customerServiceVerifier: "Customer Service Verifier",
-    recoverPwd: "Recover your password"
+    recoverPwd: "Recover your password",
+    license: {
+      curacao: {
+        title: "Regulated & Licensed",
+        description: "by the Government of Curacao"
+      }
+    },
+    termsAndConditions: "Terms and Conditions"
   },
   home: {
     menu_all: "ALL",
@@ -393,6 +407,8 @@ export default {
     select_privilege: "Select Privilege",
     incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again.",
     useFtdPrivilege: "Use Slot First Deposit Privilege",
+    useFtdBonus: "First Deposit Bonus",
+    use2ndBonus: "2nd Deposit Bonus",
     unlimited: "Unlimited",
     wagerRequirement: "Wager requirement (to withdrawal): 10 times of your deposit amount",
     wagerRequirementEg: "Eg. Deposit 100 Rs, require 1,000 Rs wager",
@@ -492,6 +508,11 @@ export default {
   earnMoney: {
     title: "Bonus Pot Arrived",
     noDataAvailable: "No Data available",
+    person: "person",
+    youSuccessfullyInvited: "You successfully invited",
+    level: "Level",
+    only: "Only",
+    awayFrom: "away from",
     tabs: {
       reward: "Reward",
       teamManagement: "Team management",
@@ -1076,6 +1097,7 @@ export default {
     30005: "Turnover has not reached the requirements",
     30006: "Members listed as account holders are prohibited from receiving this privilege",
     30007: "Member deposit does not meet the requirements",
+    30008: "The user’s client does not meet the requirements.",
     30009: "Deposit/Betting requirements not met.",
     30101: "Existing users cannot participate in this promotion.",
     31000: "Promotion not found",

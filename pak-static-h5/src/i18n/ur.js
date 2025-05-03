@@ -8,6 +8,7 @@ export default {
     register: "رجسٹر",
     download: "ڈاؤن لوڈ کریں",
     getFreeSpins: "ایپ پر مفت اسپنز حاصل کریں",
+    getFreeCash: "مفت 100 روپے حاصل کریں، مزید شاندار تجربہ لیں!",
     withdraw: "واپسی",
     personalCenter: "شخصی مرکز",
     deposit: "جمع کروائیں",
@@ -53,7 +54,8 @@ export default {
     referralRecord: "ریفرل کا ریکارڈ",
     interestProfit: "سود کا منافع",
     spinnerRules: "قواعد",
-    effectiveRevenueFAQ: "مؤثر آمدنی کے عمومی سوالات"
+    effectiveRevenueFAQ: "مؤثر آمدنی کے عمومی سوالات",
+    termsAndConditions: "شرائط و ضوابط"
   },
   bottomNav: {
     home: "گھر/ہوم",
@@ -76,6 +78,11 @@ export default {
     homeCodeBonus: {
       congratsWonFreeCash: "مبارک ہو، آپ نے مفت نقدی جیت لی ہے!",
       enterCodeToClaim: "اسے دعوی کرنے کے لیے نقدی کا کوڈ درج کریں۔"
+    },
+    appLoginBonus: {
+      validatePhoneAndEmail: "براہ کرم پہلے اپنا فون منسلک کریں",
+      loginTomorrow: "براہ کرم کل لاگ اِن کریں تاکہ آپ اپنا پراسرار انعام حاصل کر سکیں۔",
+      claimBonus: "آپ کو 100 روپے کا بونس موصول ہوا ہے!"
     }
   },
   form: {
@@ -338,7 +345,14 @@ export default {
     appDownload: "ایپ ڈاؤن لوڈ",
     experienceOneStopGaming: "ایک جگہ پر مکمل گیمنگ کا تجربہ کریں!",
     customerServiceVerifier: "کسٹمر سروس تصدیق کنندہ",
-    recoverPwd: "اپنا پاس ورڈ بازیافت کریں"
+    recoverPwd: "اپنا پاس ورڈ بازیافت کریں",
+    license: {
+      curacao: {
+        title: "ریگولیٹڈ اور لائسنس یافتہ",
+        description: "حکومت کیوراکاؤ کے ذریعہ"
+      }
+    },
+    termsAndConditions: "شرائط و ضوابط"
   },
   home: {
     menu_all: "سب",
@@ -389,6 +403,8 @@ export default {
     select_privilege: "خصوصی اختیار منتخب کریں",
     incorrectPrivilege: "آپ کی جمع کروائی گئی ڈپازٹ پروموشن غلط ہے۔ براہ کرم دوبارہ ڈپازٹ جمع کرنے کی کوشش کریں۔",
     useFtdPrivilege: "سلاٹ پہلی جمع کی مراعات کا استعمال کریں",
+    useFtdBonus: "پہلی جمع بونس",
+    use2ndBonus: "دوسری جمع بونس",
     unlimited: "لامحدود",
     wagerRequirement: "واجر کی شرط (نکالنے کے لیے): آپ کی جمع رقم کا 10 گنا",
     wagerRequirementEg: "مثال کے طور پر: 100 روپے جمع کروائیں، 1,000 روپے واجرت درکار ہوگی",
@@ -485,6 +501,11 @@ export default {
   earnMoney: {
     title: "بونس پوٹ آ گیا",
     noDataAvailable: "کوئی ڈیٹا دستیاب نہیں ہے",
+    person: "شخص",
+    youSuccessfullyInvited: "آپ نے کامیابی سے مدعو کیا",
+    level: "لیول",
+    only: "صرف",
+    awayFrom: "دور",
     tabs: {
       reward: "انعام",
       teamManagement: "ٹیم کا انتظام",
@@ -1067,6 +1088,7 @@ export default {
     30005: "ٹرن اوور شرائط کو پورا نہیں کرتا",
     30006: "اکاؤنٹ ہولڈر کے طور پر درج کردہ افراد کو یہ امتیاز نہیں ملتا",
     30007: "ممبر کا جمع نہیں ہوتا",
+    30008: "صارف کا کلائنٹ تقاضوں پر پورا نہیں اترتا۔",
     30009: "ڈپازٹ/بیٹنگ کی شرائط پوری نہیں ہوئیں",
     30101: "پرانے صارفین اس پیشکش میں حصہ نہیں لے سکتے۔",
     31000: "پروموشن نہیں مل سکا",

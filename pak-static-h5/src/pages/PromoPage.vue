@@ -69,7 +69,8 @@
                 v-if="
                   selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
                   selectedPromo.redirectUrl !== 'new-player-acc-deposit' &&
-                  selectedPromo.redirectUrl !== 'spin-lucky-wheel'
+                  selectedPromo.redirectUrl !== 'spin-lucky-wheel' &&
+                  selectedPromo.redirectUrl !== 'pak-lucky-10-day-bonus'
                 "
               >
                 <!-- <div
@@ -93,11 +94,15 @@
                 <!-- </div> -->
               </div>
 
+              <div class="banner-container" v-if="selectedPromo.redirectUrl === 'pak-lucky-10-day-bonus'">
+                <img style="width: 100%;" src="../components/hotpromo/lucky9day/img/top-banner.png">
+              </div>
               <div
                 class="promo-content-inner"
                 v-if="
                   selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
-                  selectedPromo.redirectUrl !== 'spin-lucky-wheel'
+                  selectedPromo.redirectUrl !== 'spin-lucky-wheel' &&
+                  selectedPromo.redirectUrl !== 'pak-lucky-10-day-bonus'
                 "
                 :style="selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards' ? 'border:0; padding: 0;' : ''"
               >

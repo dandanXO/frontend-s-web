@@ -1309,6 +1309,7 @@ export default {
     reasonType: 'Loại lý do',
     reasonTemplate: 'Mẫu lý do',
     rebate: 'Hoàn tiền',
+    rebateBase: 'Cơ sở hoàn lại tiền',
     rebateDistributeTime: 'Thời gian phân phối hoàn tiền',
     rebateLevel: 'Cấp độ hoàn tiền',
     rebatePercentage: 'Tỷ lệ hoàn tiền',

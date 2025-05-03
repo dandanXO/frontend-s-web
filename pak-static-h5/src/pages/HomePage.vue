@@ -162,9 +162,18 @@
               :key="i"
               :name="i"
               @click="gotoFloatPromo(promo)"
-              :img-src="promo.icon"
+              style="padding: 0"
             >
               <!-- <img style="width: 100px" :src="`${imgURL}/promo/${promo.icon}`" /> -->
+              <template v-if="promo.code === 'spin-lucky-wheel' && isShowSticky">
+                <SpinLuckyWheelPromoSticky style="width: 100%" />
+              </template>
+              <template v-else-if="promo.code === 'spin-lucky-wheel' && !isShowSticky">
+                <img :src="promo.icon" />
+              </template>
+              <template v-else>
+                <img :src="promo.icon" />
+              </template>
             </q-carousel-slide>
           </q-carousel>
         </div>
@@ -1522,6 +1531,19 @@
       </CongratsModal>
     </q-dialog>
   </template>
+  <div class="tac-footer" v-if="ui.siteType === 'CURACAO'">
+    <img class="b9game-logo" alt="b9game-logo" src="../assets/images/common/b9game-logo.png" />
+    <div class="footer-content">
+      b9.game aims to become the global leader in online gaming and betting using the latest blockchain technologies,
+      always putting our customers first. Trust, integrity and fairness are just three of our key values.
+    </div>
+    <img class="gcb-logo" alt="gcb-logo" src="../assets/images/common/gcb-logo.png" />
+    <div class="footer-content">
+      b9.game aims to become the global leader in online gaming and betting using the latest blockchain technologies,
+      always putting our customers first. Trust, integrity and fairness are just three of our key values.
+    </div>
+    <div class="copyright-txt">© 2024 b9.game ALL RIGHTS RESERVED</div>
+  </div>
 
   <CongratsReuseableModal
     :isShowDialog="isShowCodeBonusModal"
@@ -1582,9 +1604,9 @@
   >
     <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
     <SpinLuckyWheelPromoHomePopup @close-dialog="closeDialog" ref="spinLuckyWheelPromoHomePopupRef">
-      <template #controller>
+      <!-- <template #controller>
         <PopupController v-model="popupPromo" :hasSpin="true" />
-      </template>
+      </template> -->
     </SpinLuckyWheelPromoHomePopup>
   </q-dialog>
   <q-dialog v-model="isMediaSettingsModal">
@@ -1601,6 +1623,8 @@
 
   <SpinLuckyWheelPromoSticky v-show="isShownSpinLuckyWheel" />
   <!-- <SpinLuckyWheelPromoHomePopup v-if="isShownSpinLuckyWheel || popupPromo === 'spin-lucky-wheel'" ref="spinLuckyWheelPromoHomePopupRef" /> -->
+
+  <DepositPromoModal />
 </template>
 
 <script setup>
@@ -1614,7 +1638,8 @@ import {
   watchEffect,
   onActivated,
   provide,
-  nextTick
+  nextTick,
+  onDeactivated
 } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
@@ -1659,6 +1684,7 @@ import SetFirstPasswordModal from "src/components/modal/SetFirstPasswordModal.vu
 import AddToHomeScreenModal from "src/components/modal/AddToHomeScreenModal.vue";
 import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
 import SpinLuckyWheelPromoHomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
+import DepositPromoModal from "src/components/modal/DepositPromoModal.vue";
 import { usePromoStore } from "src/stores/promo";
 import { storeToRefs } from "pinia";
 
@@ -1685,6 +1711,10 @@ const handleScroll = () => {
 
   lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
 };
+
+onDeactivated(() => {
+  popupPromo.value = "";
+});
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
 });
@@ -1698,7 +1728,7 @@ const gameModules = ref([Navigation, Pagination]);
 
 const { t } = useI18n();
 const promoStore = usePromoStore();
-const { isShownSpinLuckyWheel } = storeToRefs(promoStore);
+const { isShownSpinLuckyWheel, isShowSticky } = storeToRefs(promoStore);
 // const isLuckyDrawModal = ref(false);
 // const isCongratsModal = ref(true);
 const isShowPrizeModal = ref(false);
@@ -1954,7 +1984,7 @@ const liveDragPos = ref([16, 0]);
 const isDraggingLiveIcon = ref(false);
 const isLiveUrlShow = ref(false);
 
-const hbDragPos = ref([10, 180]);
+const hbDragPos = ref([10, 300]);
 const isDraggingHbIcon = ref(false);
 const isHbShow = ref(true);
 const hbSlide = ref(0);
@@ -4658,44 +4688,6 @@ const checkGoogleLoginSetPwd = () => {
       text-align: center;
     }
   }
-  /* Top row spans 2 columns each */
-  // .category:nth-child(1), .category:nth-child(2) {
-  //     grid-column: span 2;
-  //     .cat-label {
-  //       position: absolute;
-  //       font-weight: bold;
-  //       top: 10px;
-  //       right: unset;
-  //       left: 10px;
-  //       display: flex;
-  //       gap: 5px;
-
-  //     }
-  // }
-  // .category:nth-child(1) {
-  //   .cat-label {
-  //     &:before {
-  //       content: "";
-  //       background: url(../assets/images/index/category/green-dice.png)no-repeat center center;
-  //       width: 30px;
-  //       background-size: contain;
-  //       height: 30px;
-  //     }
-  //   }
-  // }
-
-  // .category:nth-child(2) {
-  //   .cat-label {
-
-  //     &:before {
-  //     content: "";
-  //     background: url(../assets/images/index/category/green-slot.png)no-repeat center center;
-  //     width: 30px;
-  //     background-size: contain;
-  //     height: 30px;
-  //   }
-  //   }
-  // }
 }
 
 .midd {
@@ -5233,6 +5225,36 @@ const checkGoogleLoginSetPwd = () => {
     display: block;
     height: 100%;
     width: auto;
+  }
+}
+.tac-footer {
+  padding: 0 12px;
+  justify-content:center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .b9game-logo {
+    width: 50%;
+    min-width: 150px;
+  }
+  .gcb-logo {
+    width: 25%;
+    min-width: 100px;
+  }
+  .footer-content {
+    margin-top: 24px;
+    font-family: Poppins;
+    font-weight: 400;
+    line-height: 160%;
+    letter-spacing: 0px;
+    color: #ffffff80;
+  }
+  .copyright-txt {
+    font-family: Poppins;
+    font-weight: 700;
+    font-size: 16px;
+    color: #ffffff80;
+    margin-top: 28px;
   }
 }
 </style>

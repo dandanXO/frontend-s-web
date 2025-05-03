@@ -22,7 +22,7 @@
       </div>
       <div class="right">
         <div class="custom-service" @click="handleClickCustomService">
-          <img src="../assets/images/account/custom-service.png" alt="">
+          <img src="../assets/images/account/custom-service.png" alt="" />
           <span>专属客服</span>
         </div>
       </div>
@@ -702,16 +702,13 @@ export default defineComponent({
         .get("/opt-session/promo/banner?category=CENTERPROMO")
         .then((res) => {
           if (res.code === 0) {
-            btm_banners.value = res.data.filter(promo => {
-              if($q.dark.isActive) {
-                return promo.mobileImageUrlDark
+            btm_banners.value = res.data.filter((promo) => {
+              if ($q.dark.isActive) {
+                return promo.mobileImageUrlDark;
               }
 
               return promo;
             });
-            if (btm_banners.value.length === 1) {
-              btm_banners.value.push(res.data[0]);
-            }
           }
         })
         .catch(() => {});
@@ -939,10 +936,10 @@ export default defineComponent({
       });
     };
 
-    const customService = useSessionStorage("CUSTOM_SERVICE", '');
+    const customService = useSessionStorage("CUSTOM_SERVICE", "");
     const handleClickCustomService = () => {
-      window.open(customService.value, '_blank')
-    }
+      router.push("/promo?name=lh-official-gift");
+    };
     return {
       header: "Account",
       logout,
@@ -1032,7 +1029,7 @@ export default defineComponent({
       width: 84px;
       height: 24px;
       border-radius: 8px;
-      background: linear-gradient(106.6deg, #5DB5FF 35.17%, #4B0FFF 101.26%);
+      background: linear-gradient(106.6deg, #5db5ff 35.17%, #4b0fff 101.26%);
       display: flex;
       justify-content: center;
       align-items: center;

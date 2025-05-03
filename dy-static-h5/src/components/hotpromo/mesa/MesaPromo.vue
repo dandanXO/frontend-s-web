@@ -10,7 +10,7 @@
             <div class="reward-info">
               <div class="reward-info-icon claim-coin-icon"></div>
               <div class="reward-info-content">
-                昨日总有效投注：
+                昨日累计有效投注：
                 <span class="amount">{{ totalValidBet }}元</span>
               </div>
             </div>
