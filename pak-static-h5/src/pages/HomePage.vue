@@ -1623,7 +1623,8 @@
 
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
 
-  <!--  <SpinLuckyWheelPromoSticky v-show="isShownSpinLuckyWheel" />-->
+  <!-- DONT REMOVE THIS GOT USE DE-->
+  <SpinLuckyWheelPromoSticky v-show="false" />
   <!-- <SpinLuckyWheelPromoHomePopup v-if="isShownSpinLuckyWheel || popupPromo === 'spin-lucky-wheel'" ref="spinLuckyWheelPromoHomePopupRef" /> -->
 
   <DepositPromoModal />
