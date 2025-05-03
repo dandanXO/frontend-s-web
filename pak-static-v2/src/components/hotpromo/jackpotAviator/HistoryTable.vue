@@ -6,7 +6,7 @@
             <div class="header">{{ $t('hotPromo.jackpotAviator.betVolume') }}</div>
         </div>
 
-        <div class="scrollable">
+        <div class="scrollable" v-if="props?.historyList?.length > 0">
             <div class="item" v-for="historyListItem, historyListItemIndex in props?.historyList" :key="historyListItemIndex" :class="{ isOwn: historyListItem?.currentMember }">
                 <div class="rank">
                     <img class="crown-icon" v-if="historyListItemIndex + 1 === 1" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/1st-place-crown.png" />
@@ -17,6 +17,9 @@
                 <div>{{ historyListItem.loginName }}</div>
                 <div class="betVolume">{{ historyListItem.amount?.toFixed(2) }}</div>
             </div>
+        </div>
+        <div v-else>
+            <div class="q-pa-lg text-center">{{ $t("interestProfit.noData") }}</div>
         </div>
     </div>
 </template>

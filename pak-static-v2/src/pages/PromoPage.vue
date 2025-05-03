@@ -67,7 +67,8 @@
             <div class="selected-promo-wrapper">
               <q-btn dense rounded icon="close" class="back-btn" size="16px" @click="backToPromoList()" />
               <div class="banner-container" v-if="
-                  selectedPromo.redirectUrl !== 'pk2-jackpot-aviator' && selectedPromo.redirectUrl !== 'new-player-acc-deposit'
+                  selectedPromo.redirectUrl !== 'pk2-jackpot-aviator' && selectedPromo.redirectUrl !== 'new-player-acc-deposit' &&
+                  selectedPromo.redirectUrl !== 'spin-lucky-wheel'
                 ">
                 <!-- <div
                     class="promo-bg"
@@ -88,12 +89,12 @@
               </div>
 
               <div class="promo-content-inner"
-                   :style="selectedPromo.redirectUrl === 'pk2-deposit-wheel' ? 'border:0; padding: 0;' : ''"
               v-if="
                   selectedPromo.redirectUrl !== 'pk2-jackpot-aviator' &&
-                  selectedPromo.redirectUrl !== 'new-player-acc-deposit'
+                  selectedPromo.redirectUrl !== 'new-player-acc-deposit' &&
+                  selectedPromo.redirectUrl !== 'spin-lucky-wheel'
                 ">
-                <div class="content-title" v-if="selectedPromo.redirectUrl !== 'pk2-deposit-wheel'">{{ selectedPromo.title }}</div>
+                <div class="content-title">{{ selectedPromo.title }}</div>
                 <div class="content-para" v-if="parsedParamSub">{{ parsedParamSub }}</div>
                 <div class="content-date" v-if="parsedParamDate">
                   <div><img src="../assets/images/promotion/calendar-icon.png" /></div>
@@ -101,11 +102,14 @@
                 </div>
               </div>
 
-              <div class="inner"
+              <div class="inner" 
               :class="{
                   isJackpotAviator: selectedPromo.redirectUrl === 'pk2-jackpot-aviator',
                   isNewPlayerAccDeposit: selectedPromo.redirectUrl === 'new-player-acc-deposit',
-                  isDepositSpinnerRewards: selectedPromo.redirectUrl === 'pk2-deposit-wheel'
+                  isDepositWheel: selectedPromo.redirectUrl === 'pk2-deposit-wheel',
+                  isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel',
+                  isEnvelopeStage: selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel-envelope',
+                  isWheelStage: selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel'
                 }">
                 <div v-if="selectedPromo.hasPromo">
                   <!-- <pre>selectedPromo{{ selectedPromo }}</pre>
@@ -1162,11 +1166,27 @@ export default defineComponent({
           }
 
         }
+        &.isSpinLuckyWheel {
+          width: 100%;
+          margin-top: 0;
+          padding-bottom: 0;
 
+          &.isEnvelopeStage {
+            background: url("../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/bg.jpg") no-repeat top
+            center;
+            background-size: cover;
+          }
+
+          &.isWheelStage {
+            background: url("../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/wheel-stage-bg.jpg") no-repeat top
+            center;
+            background-size: cover;
+          }
+        }
         &.isJackpotAviator {
             width: 100%;
         }
-        &.isNewPlayerAccDeposit {
+        &.isNewPlayerAccDeposit, &.isDepositWheel {
           width: 100%;
           padding: 0;
 
@@ -1194,6 +1214,12 @@ export default defineComponent({
         }
       }
       .online-content {
+        &.spin-lucky-wheel {
+          display: none;
+        }
+        &.pk2-deposit-wheel {
+          display: none;
+        }
         &.new-player-acc-deposit {
           width: 90%;
           margin: 0 auto;

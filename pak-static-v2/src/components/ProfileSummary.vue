@@ -1,6 +1,6 @@
 <template>
   <div style="height: 56px" v-if="topDownload && !ui.hideDownload"></div>
-  <div style="height: 70px"></div>
+  <div style="height: 60px"></div>
 
   <div class="shadow-pseudo" :class="{ 'with-top-download': topDownload && !ui.hideDownload }"></div>
 
