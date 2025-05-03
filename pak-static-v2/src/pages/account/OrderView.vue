@@ -12,7 +12,7 @@
       <q-tab class="right" name="recharge" :label="$t('order.recharge')" />
     </q-tabs>
 
-    <LoadingComponent v-if="isLoading[orderOptionTab]&& !withdrawalData && !depositData"></LoadingComponent>
+    <LoadingComponent v-if="isLoading[orderOptionTab]"></LoadingComponent>
     <NoInfoComponent v-else-if="isNoInfo[orderOptionTab]" noInfoTitle="No Record"></NoInfoComponent>
     <q-tab-panels
       v-else
@@ -23,111 +23,95 @@
       transition-next="fade"
     >
       <q-tab-panel name="withdrawal">
-        <q-infinite-scroll @load="loadMore" :initial-index="0" :offset="50" :disable="isEnded.withdrawal">
-          <div v-for="(e, i) in withdrawalData" :key="`${e}-${i}`" class="order-table">
-            <div class="order-row order-row--title">
-              <div class="order-col">{{ $t("records.orderNo") }}</div>
-              <div class="order-col flex-c-end gap-8 serial-number">
-                {{ e.serialNumber }}
+        <div v-for="(e, i) in withdrawalData" :key="`${e}-${i}`" class="order-table">
+          <div class="order-row order-row--title">
+            <div class="order-col">{{ $t("records.orderNo") }}</div>
+            <div class="order-col flex-c-end gap-8 serial-number">
+              {{ e.serialNumber }}
 
-                <div @click="copyText(e.serialNumber)">
-                  <img
-                    class="copy-btn btn-pointer"
-                    src="../../assets/images/account/content-copy.svg"
-                    size="24px"
-                    fill="#fff"
-                  />
-                </div>
+              <div @click="copyText(e.serialNumber)">
+                <img
+                  class="copy-btn btn-pointer"
+                  src="../../assets/images/account/content-copy.svg"
+                  size="24px"
+                  fill="#fff"
+                />
               </div>
             </div>
-            <div class="order-row order-row--content">
-              <div class="order-subrow">
-                <div class="order-col withdraw-amount">{{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
-                <div class="order-col">{{ e.currencyName }}</div>
+          </div>
+          <div class="order-row order-row--content">
+            <div class="order-subrow">
+              <div class="order-col withdraw-amount">{{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
+              <div class="order-col">{{ e.currencyName }}</div>
+            </div>
+            <div class="order-subrow">
+              <div class="order-col">
+                <span class="txt-gray">{{ convertToGMT55(e.withdrawDate) }}</span>
               </div>
-              <div class="order-subrow">
-                <div class="order-col">
-                  <span class="txt-gray">{{ convertToGMT55(e.withdrawDate) }}</span>
-                </div>
-                <div class="order-col q-mt-sm">
-                  <!-- <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
-                    {{ getWithdrawStatus(e.status) }}
-                  </span> -->
+              <div class="order-col q-mt-sm">
+                <!-- <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
+                  {{ getWithdrawStatus(e.status) }}
+                </span> -->
 
-                  <q-btn
-                    unelevated
-                    :class="{
+                <q-btn
+                  unelevated
+                  :class="{
                     'btn--green': ['SUCCESS'].includes(e.status),
                     'btn--red': ['FAIL', 'STEP_5'].includes(e.status),
                     'btn--orange': ['APPLY', 'STEP_1', 'STEP_2', 'STEP_3', 'STEP_4'].includes(e.status)
                   }"
-                    :label="`${getWithdrawStatus(e.status)}`"
-                  ></q-btn>
-                </div>
+                  :label="`${getWithdrawStatus(e.status)}`"
+                ></q-btn>
               </div>
             </div>
           </div>
-
-          <template v-slot:loading>
-            <div class="row justify-center q-my-md">
-              <q-spinner-dots color="primary" size="40px" />
-            </div>
-          </template>
-        </q-infinite-scroll>
+        </div>
       </q-tab-panel>
 
       <q-tab-panel name="recharge">
-        <q-infinite-scroll @load="loadMore" :initial-index="0" :offset="50" :disable="isEnded.recharge">
-          <div v-for="(e, i) in depositData" :key="`${e}-${i}`" class="order-table">
-            <div class="order-row order-row--title">
-              <div class="order-col">{{ $t("records.orderNo") }}</div>
-              <div class="order-col flex-c-end gap-8 serial-number">
-                {{ e.serialNumber }}
+        <div v-for="(e, i) in depositData" :key="`${e}-${i}`" class="order-table">
+          <div class="order-row order-row--title">
+            <div class="order-col">{{ $t("records.orderNo") }}</div>
+            <div class="order-col flex-c-end gap-8 serial-number">
+              {{ e.serialNumber }}
 
-                <div @click="copyText(e.serialNumber)">
-                  <img
-                    class="copy-btn btn-pointer"
-                    src="../../assets/images/account/content-copy.svg"
-                    size="24px"
-                    fill="#fff"
-                  />
-                </div>
+              <div @click="copyText(e.serialNumber)">
+                <img
+                  class="copy-btn btn-pointer"
+                  src="../../assets/images/account/content-copy.svg"
+                  size="24px"
+                  fill="#fff"
+                />
               </div>
             </div>
-            <div class="order-row order-row--content">
-              <div class="order-subrow">
-                <div class="order-col">{{ e.paymentType }}</div>
-                <div class="order-col">
-                  <!-- <span :class="`${['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(e.status) ? 'txt-green' : 'txt-red'}`">
-                    {{ getDepositStatus(e.status) }}
-                  </span> -->
+          </div>
+          <div class="order-row order-row--content">
+            <div class="order-subrow">
+              <div class="order-col">{{ e.paymentType }}</div>
+              <div class="order-col">
+                <!-- <span :class="`${['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(e.status) ? 'txt-green' : 'txt-red'}`">
+                  {{ getDepositStatus(e.status) }}
+                </span> -->
 
-                  <q-btn
-                    unelevated
-                    :class="{
+                <q-btn
+                  unelevated
+                  :class="{
                     'btn--green': ['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(e.status),
                     'btn--red': ['CLOSED'].includes(e.status),
                     'btn--orange': e.status === 'PENDING'
                   }"
-                    :label="`${getDepositStatus(e.status)}`"
-                  ></q-btn>
-                </div>
+                  :label="`${getDepositStatus(e.status)}`"
+                ></q-btn>
               </div>
-              <div class="order-subrow">
-                <div class="order-col">
-                  <span class="txt-gray">{{ convertToGMT55(e.depositDate) }}</span>
-                </div>
-                <div class="order-col deposit-amount">{{ convertToCommaAmount(e.depositAmount, true) }}</div>
+            </div>
+            <div class="order-subrow">
+              <div class="order-col">
+                <span class="txt-gray">{{ convertToGMT55(e.depositDate) }}</span>
               </div>
+              <div class="order-col deposit-amount">{{ convertToCommaAmount(e.depositAmount, true) }}</div>
             </div>
           </div>
-
-          <template v-slot:loading>
-            <div class="row justify-center q-my-md">
-              <q-spinner-dots color="primary" size="40px" />
-            </div>
-          </template>
-        </q-infinite-scroll>
+        </div>
       </q-tab-panel>
     </q-tab-panels>
 
@@ -167,13 +151,8 @@ const isActiveSlide = (e) => {
   return false;
 };
 
-const currentDep = ref(1);
-const currentWith = ref(1);
-
 const isLoading = reactive({ withdrawal: true, recharge: true });
 const isNoInfo = reactive({ withdrawal: true, recharge: true });
-
-const isEnded = reactive({ withdrawal: false, recharge: false });
 
 const orderOptionTab = ref("withdrawal");
 
@@ -185,42 +164,30 @@ const setTime = () => {
 
 const withdrawalData = ref([]);
 const searchWithdrawalRecord = () => {
-  return new Promise((resolve, reject) => {
-    isLoading.withdrawal = true;
+  isLoading.withdrawal = true;
+  withdrawalData.value = [];
 
-    const { startDate, endDate } = searchForm;
+  const { startDate, endDate } = searchForm;
 
-    const gmtStartDate = convertToGMT8(startDate);
-    const gmtEndDate = convertToGMT8(endDate);
-    api
-      .get("/session/member/withdraw", {
-        params: { startDate: gmtStartDate, endDate: gmtEndDate, current: currentWith.value, size: 10 }
-      })
-      .then((response) => {
-        if (response.code === 0) {
-          const data = response.data.records;
+  const gmtStartDate = convertToGMT8(startDate);
+  const gmtEndDate = convertToGMT8(endDate);
+  api
+    .get("/session/member/withdraw", {
+      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: 10 }
+    })
+    .then((response) => {
+      if (response.code === 0) {
+        const data = response.data.records;
+        withdrawalData.value.push(...data);
 
-          currentWith.value++;
-          withdrawalData.value.push(...data);
-
-          if (data.length === 0) {
-            isNoInfo.withdrawal = true;
-          } else {
-            isNoInfo.withdrawal = false;
-          }
-
-          if (response.data.records.length < 10) {
-            isEnded.withdrawal = true;
-          }
-        }
-      })
-      .catch((error) => {
-        isEnded.withdrawal = true;
-      })
-      .then(() => {
-        isLoading.withdrawal = false;
-      });
-  });
+        if (data.length === 0) isNoInfo.withdrawal = true;
+        else isNoInfo.withdrawal = false;
+      }
+    })
+    .catch((error) => {})
+    .then(() => {
+      isLoading.withdrawal = false;
+    });
 };
 
 const copyinput = ref(null);
@@ -248,95 +215,44 @@ const copyText = (text) => {
 
 const depositData = ref([]);
 const searchDepositRecord = () => {
-  return new Promise((resolve, reject) => {
-    isLoading.recharge = true;
+  isLoading.recharge = true;
+  depositData.value = [];
 
-    const { startDate, endDate } = searchForm;
-    const gmtStartDate = convertToGMT8(startDate);
-    const gmtEndDate = convertToGMT8(endDate);
-    api
-      .get("/session/member/deposit", {
-        params: { startDate: gmtStartDate, endDate: gmtEndDate, current: currentDep.value, size: 10 }
-      })
-      .then((response) => {
-        if (response.code === 0) {
-          const data = response.data.records;
-          depositData.value.push(...data);
+  const { startDate, endDate } = searchForm;
+  const gmtStartDate = convertToGMT8(startDate);
+  const gmtEndDate = convertToGMT8(endDate);
+  api
+    .get("/session/member/deposit", {
+      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: 10 }
+    })
+    .then((response) => {
+      if (response.code === 0) {
+        const data = response.data.records;
+        depositData.value.push(...data);
 
-          currentDep.value++;
-
-          if (data.length === 0) {
-            isNoInfo.recharge = true;
-          } else {
-            isNoInfo.recharge = false;
-          }
-
-          if (response.data.records.length < 10) {
-            isEnded.recharge = true;
-          }
-        }
-      })
-      .catch((error) => {
-        isEnded.recharge = true;
-      })
-      .then(() => {
-        isLoading.recharge = false;
-      });
-  });
-};
-
-const loadMore = (index, done) => {
-  console.log("LOAD MORe");
-
-  if (orderOptionTab.value === "withdrawal") {
-    setTimeout(() => {
-      searchWithdrawalRecord().then((afterr) => {
-        done();
-      });
-    }, 2000);
-  } else {
-    setTimeout(() => {
-      searchDepositRecord().then((afterr) => {
-        done();
-      });
-    }, 2000);
-  }
+        if (data.length === 0) isNoInfo.recharge = true;
+        else isNoInfo.recharge = false;
+      }
+    })
+    .catch((error) => {})
+    .then(() => {
+      isLoading.recharge = false;
+    });
 };
 
 const getWithdrawStatus = (withdrawStatus) => {
   switch (withdrawStatus) {
-    case "SUCCESS":
-      return t("records.success");
-    case "FAIL":
-      return t("records.failed");
     case "APPLY":
-      return t("records.applying");
     case "STEP_1":
-      return t("records.underReview");
     case "STEP_2":
-      return t("records.toBePaid");
     case "STEP_3":
-      return t("records.paymentOnGoing");
-    case "AUTOPAY":
-      return t("records.automaticPayment");
-    case "PENDING":
+    case "STEP_4":
       return t("records.pending");
-    case "SENDING":
-      return t("records.sending");
-    case "WAITING_CALLBACK":
-      return t("records.waitCallback");
-    case "PAYING":
-      return t("records.paying");
-    case "WAITING_AUTO_PAY":
-      return t("records.waitingAutoPay");
-    case "FAIL_REVIEW":
-      return t("records.failReview");
-    case "WAITING_RETRY":
-      return t("records.waitingRetry");
+    case "FAIL":
     case "STEP_5":
       return t("records.failed");
-    case "CLOSED":
-      return t("records.closed");
+    case "SUCCESS":
+      return t("records.success");
     default:
       return withdrawStatus;
   }
@@ -350,7 +266,8 @@ const getDepositStatus = (depositStatus) => {
       return t("records.success");
     case "SUPPLEMENT_SUCCESS":
       return t("records.success");
-
+    case "CLOSED":
+      return t("records.closed");
     default:
       return depositStatus;
   }

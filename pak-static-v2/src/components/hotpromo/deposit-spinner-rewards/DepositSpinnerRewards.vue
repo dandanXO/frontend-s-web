@@ -106,9 +106,9 @@
       <div class="prize-popup">
         <!-- <q-btn icon="close" flat round dense v-close-popup class="q-ml-auto" /> -->
         <div class="prize-gold">
-                   <div class="prize-get">You get {{ prizePopupBonusAmt }} PRK</div>
+                   <div class="prize-get">You get Rs {{ prizePopupBonusAmt }}</div>
 
-          <div class="prize-amount">{{ prizePopupBonusAmt }} PRK</div>
+          <div class="prize-amount">Rs {{ prizePopupBonusAmt }}</div>
 
 <q-btn no-caps rounded unelevated class="purple-bg" @click="closeDialog">{{ $t("btn.recharge") }}</q-btn>
         </div>
@@ -262,22 +262,24 @@ const prizePopupBonusAmt = ref(0);
 const sliderRef = ref(null);
 const showDialog = ref(false);
 const prizeResult = ref("");
-const { lengthX } = useSwipe(sliderRef, {
-  passive: false,
+const { lengthX, lengthY } = useSwipe(sliderRef, {
+  passive: true,
   onSwipeEnd() {
     const screenWidth = window.innerWidth;
     const tabWidth = screenWidth > 500 ? 80 : screenWidth * 0.8; // Ensure proper calculation
 
-    if (lengthX.value > tabWidth * 0.2) {
-      // 20% of tab width
-      // Swipe right → Move to next tab
-      if (activeTab.value < tabs.length - 1) {
-        setTab(activeTab.value + 1);
-      }
-    } else if (lengthX.value < -tabWidth * 0.2) {
-      // Swipe left → Move to previous tab
-      if (activeTab.value > 0) {
-        setTab(activeTab.value - 1);
+    // Only trigger swipe logic if horizontal swipe is more significant than vertical swipe
+    if (Math.abs(lengthX.value) > Math.abs(lengthY.value)) {
+      if (lengthX.value > tabWidth * 0.2) {
+        // Swipe right → Move to next tab
+        if (activeTab.value < tabs.length - 1) {
+          setTab(activeTab.value + 1);
+        }
+      } else if (lengthX.value < -tabWidth * 0.2) {
+        // Swipe left → Move to previous tab
+        if (activeTab.value > 0) {
+          setTab(activeTab.value - 1);
+        }
       }
     }
   }
@@ -605,6 +607,7 @@ const transformStyle = computed(() => {
       line-height: 18px;
       text-align: center;
       margin: 5px auto;
+      color: #05f;
     }
     .bar {
       width: 100%;
@@ -728,7 +731,8 @@ const transformStyle = computed(() => {
       font-size: 12px;
       font-weight: 700;
       line-height: 18px;
-      color: rgba(83, 149, 254, 1);
+      // color: rgba(83, 149, 254, 1);
+      color: #ffffff;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     }
     .remainingamt {
@@ -854,7 +858,9 @@ const transformStyle = computed(() => {
   width: 100%;
   margin-bottom: 120px;
   .purple-bg {
-    background: linear-gradient(90deg, #5856FF 0%, #262E99 100%);
+    // background: linear-gradient(90deg, #5856FF 0%, #262E99 100%);
+    background: linear-gradient(270deg, #3080F4 0%, #70B1FF 100%);
+
   }
 }
 .prize-gold {
@@ -906,6 +912,7 @@ const transformStyle = computed(() => {
     color:#EDE7FF;
     font-weight: 700;
     font-family: 'Poppins';
+    border-radius: 5px;
   }
 }
 </style>

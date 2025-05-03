@@ -12,7 +12,7 @@
 
     <div class="congrats-button" @click="props?.onClickClose">
       <q-btn no-caps unelevated class="button-bg" :loading="false">
-        {{ $t("btn.recharge") }}
+        {{ $t("btn.confirm") }}
       </q-btn>
     </div>
   </div>
