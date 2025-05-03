@@ -86,8 +86,7 @@
             <br />
             Each round freely distributes cashback.
             <br />
-            Maintain a historical deposit of ≥300 PKR and complete daily bets of ≥100+ PKR to claim your reward for
-            free.
+            Deposit ≥ PKR 300 on the same day and complete daily bets totaling ≥ PKR 350 to claim your free bonus.
             <br />
             The received money can be directly used for playing games or withdrawing.
             <br />

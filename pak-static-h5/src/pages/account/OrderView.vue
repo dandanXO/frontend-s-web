@@ -211,6 +211,7 @@ const searchWithdrawalRecord = () => {
       })
       .then((response) => {
         if (response.code === 0) {
+          withdrawalData.value = []
           const data = response.data.records;
 
           currentWith.value++;
@@ -273,6 +274,7 @@ const searchDepositRecord = () => {
       })
       .then((response) => {
         if (response.code === 0) {
+          depositData.value = []
           const data = response.data.records;
           depositData.value.push(...data);
 
