@@ -1,7 +1,11 @@
 <template>
-  <div class="terms-and-conditions-container">
+  <div class="terms-and-conditions-container" ref="cardContent" id="card-content">
     <div class="tac-card">TERMS AND CONDITIONS</div>
     <div class="tac-card card-content">
+      <div class="additional-buttons no-print">
+        <q-btn flat @click="downloadPDF()"><img src="../assets/images/tnc/download.png"></q-btn>
+        <q-btn flat @click="printDiv('card-content')"><img src="../assets/images/tnc/print.png"></q-btn>
+      </div>
       <div class="content-points">1. INTRODUCTION</div>
       <div class="content-subpoints">
         <p>
@@ -559,22 +563,82 @@
     <div class="tac-footer">
       <img class="b9game-logo" alt="b9game-logo" src="../assets/images/common/b9game-logo.png" />
       <div class="footer-content">
-        b9.game aims to become the global leader in online gaming and betting using the latest blockchain technologies,
-        always putting our customers first. Trust, integrity and fairness are just three of our key values.
+        b9.game aims to become the global leader in online gaming and betting using the latest blockchain technologies, always putting our customers first. Trust, integrity and fairness are just three of our key values.
       </div>
       <img class="gcb-logo" alt="gcb-logo" src="../assets/images/common/gcb-logo.png" />
       <div class="footer-content">
-        b9.game aims to become the global leader in online gaming and betting using the latest blockchain technologies,
-        always putting our customers first. Trust, integrity and fairness are just three of our key values.
+        b9.game is operated by Bridge Technologies B.V., company registration number 160264(0), with registered address at Dr. M.J. Hugenholtzweg 25, Willemstad, Curaçao. Bridge Technologies B.V. is licensed and authorized by the Government of Curaçao, operating under licence number OGL/2024/431/0231 issued by the Curaçao Gaming Control Board (GCB).
       </div>
       <div class="copyright-txt">© 2024 b9.game ALL RIGHTS RESERVED</div>
     </div>
   </div>
 </template>
+<script setup>
+
+import html2pdf from 'html2pdf.js'
+
+import { ref } from 'vue'
+
+const cardContent = ref(null)
+function downloadPDF() {
+  const opt = {
+    margin: 0,
+    filename: 'card-content.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: {
+      scale: 2,
+      backgroundColor: null // allows CSS to show bg color
+    },
+    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+  }
+
+  // Clone node to avoid side-effects and remove .no-print manually
+  const clone = cardContent.value.cloneNode(true)
+  clone.querySelectorAll('.no-print').forEach(el => el.remove())
+
+  html2pdf().set(opt).from(clone).save()
+}
+function printDiv(divId) {
+  const content = document.getElementById(divId).innerHTML;
+  const myWindow = window.open('', '', 'width=600,height=600');
+  myWindow.document.write('<html><head><title>Print</title></head><body>');
+  myWindow.document.write(content);
+  myWindow.document.write('</body></html>');
+  myWindow.document.close();
+  myWindow.focus();
+  myWindow.print();
+  myWindow.close();
+}
+</script>
 <style lang="scss" scoped>
 .terms-and-conditions-container {
   padding: 9px 15px;
   font-family: Microsoft YaHei UI;
+  background: #24262b;
+}
+.additional-buttons {
+  margin: 5px 0 0 auto;
+  .q-btn {
+    width: 40px;
+    padding: 0 5px;
+    &:first-child {
+      &:after {
+        height: 80%;
+        width: 1px;
+        background-color: #FFFFFF33;
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+      }
+      // border-right: 1px solid border: 1px solid #FFFFFF33;
+    }
+  img {
+    width: 100%;
+  }
+  }
 }
 .tac-card {
   // height: 50px;
@@ -674,6 +738,7 @@
   .gcb-logo {
     width: 25%;
     min-width: 100px;
+    margin-top: 20px;
   }
   .footer-content {
     margin-top: 24px;

@@ -123,13 +123,7 @@
       </div>
       {{ $t("sideNav.language") }}
     </RouterLink>
-    <div class="gcb-container">
-      <img :src="require(`../assets/images/common/gcb-logo-rounded.png`)" />
-      <div>
-        <div>Regulated & Licensed</div>
-        <div class="bottom-txt">by the Government of Couracao</div>
-      </div>
-    </div>
+    
 
     <div v-if="ui.siteType === 'CURACAO'" class="side-menu-item license">
       <img class="license-img" src="../assets/images/license/curacao-license.png" />
