@@ -1172,7 +1172,7 @@ export default {
     cashRainMaxPerRound: "Maximum cashback amount per round: 66,666 PKR.",
     cashRainFreeDistribution: "Each round freely distributes cashback.",
     cashRainClaimCondition:
-      "Maintain a historical deposit of ≥300 PKR and complete daily bets of ≥100+ PKR to claim your reward for free.",
+      "Deposit ≥ PKR 300 on the same day and complete daily bets totaling ≥ PKR 350 to claim your free bonus.",
     cashRainUsage: "The received money can be directly used for playing games or withdrawing.",
     cashRainVIP: "The higher the VIP membership level, the greater the amount received."
   }
