@@ -799,6 +799,34 @@
             {{ t('fields.update') }}
           </el-button>
         </el-descriptions-item>
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              <svg-icon
+                icon-class="user"
+                style="height: 16px;width: 16px;"
+              />
+              {{ t('fields.alias') }}
+            </div>
+          </template>
+          <span v-if="affiliateDetails.alias !== null">
+            {{ affiliateDetails.alias }}
+          </span>
+          <span v-if="affiliateDetails.alias === null">-</span>
+          <el-button
+            type="info"
+            size="mini"
+            style="float: right;"
+            v-permission="['sys:affiliate:update:alias']"
+            @click="showDialog('UPDATE_AFFILIATE_ALIAS')"
+          >
+            {{ t('fields.update') }}
+          </el-button>
+        </el-descriptions-item>
         <el-descriptions-item />
       </el-descriptions>
     </el-card>
@@ -1324,6 +1352,30 @@
         </div>
       </el-form>
       <el-form
+        v-if="uiControl.dialogType === 'UPDATE_AFFILIATE_ALIAS'"
+        ref="updateAliasForm"
+        :model="aliasForm"
+        :inline="true"
+        size="small"
+        label-width="150px"
+      >
+        <el-form-item :label="t('fields.alias')" prop="alias">
+          <el-input
+            v-model="aliasForm.alias"
+            style="width: 350px;"
+            maxlength="50"
+          />
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="updateAlias">
+            {{ t('fields.confirm') }}
+          </el-button>
+        </div>
+      </el-form>
+      <el-form
         v-if="uiControl.dialogType === 'ADD_REMARK'"
         ref="addRemarkForm"
         :model="remarkForm"
@@ -1580,7 +1632,8 @@ import {
   getDownlineShareRatio,
   reactivateAffiliate,
   updateAffiliateWithdrawPassword,
-  syncAffiliateParentChildren
+  syncAffiliateParentChildren,
+  updateAffiliateAlias
   // updateIgnoreSettlement
 } from '../../../../../api/member-affiliate'
 import { useStore } from '../../../../../store'
@@ -1687,6 +1740,7 @@ const updateModelForm = ref(null)
 const addRemarkForm = ref(null)
 const editRemarkForm = ref(null)
 const commissionForm = ref(null)
+const updateAliasForm = ref(null)
 const updateTimeTypeModel = ref(null)
 const updateBelongTypeModel = ref(null)
 const changeAffForm = ref(null)
@@ -1828,6 +1882,10 @@ const affForm = reactive({
 
 const levelForm = reactive({
   level: null,
+})
+
+const aliasForm = reactive({
+  alias: null
 })
 
 const validatePassword = (rule, value, callback) => {
@@ -2100,6 +2158,9 @@ function showDialog(type) {
   } else if (type === 'UPDATE_AFFILIATE_LEVEL') {
     levelForm.level = affiliateDetails.affiliateLevel
     uiControl.dialogTitle = t('fields.updateAffiliateLevel')
+  } else if (type === "UPDATE_AFFILIATE_ALIAS") {
+    aliasForm.alias = affiliateDetails.alias
+    uiControl.dialogTitle = t('fields.updateAlias')
   }
   uiControl.dialogVisible = true
 }
@@ -2339,6 +2400,20 @@ function updateMemberBelongType() {
   })
 }
 
+function updateAlias() {
+  updateAliasForm.value.validate(async valid => {
+    if (valid) {
+      await updateAffiliateAlias(props.affId, aliasForm.alias)
+      uiControl.dialogVisible = false
+      await loadAffiliateRecord()
+      ElMessage({
+        message: t('message.updateSuccess'),
+        type: 'success',
+      })
+    }
+  })
+}
+
 const addRemark = () => {
   addRemarkForm.value.validate(async valid => {
     if (valid) {
@@ -2411,7 +2486,8 @@ async function loadAffiliateRecord() {
   affiliateDetails.commission = record.commission * 100
   affiliateDetails.paymentFee = record.paymentFee === null ? null : record.paymentFee * 100
   affiliateDetails.platformFee = record.platformFee === null ? null : record.platformFee * 100
-  affiliateDetails.viewLoginName = record.viewLoginName;
+  affiliateDetails.viewLoginName = record.viewLoginName
+  affiliateDetails.alias = record.alias
 }
 
 function restrictCommissionDecimalInput(event) {

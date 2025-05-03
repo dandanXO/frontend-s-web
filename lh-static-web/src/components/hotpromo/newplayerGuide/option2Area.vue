@@ -79,7 +79,7 @@
           ></div>
           <h3>奖励说明</h3>
         </div>
-        <p>自注册日起 30 天内，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
+        <p>自注册日起 90 天内，仅需完善个人资料、绑定手机号及银行卡即可参与</p>
       </div>
     </div>
 
@@ -565,6 +565,9 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .dark {
+  .title {
+    color: #fff;
+  }
   .promotion-container {
     display: flex;
     flex-direction: column;
@@ -639,7 +642,7 @@ onMounted(async () => {
     }
     .title {
       margin-top: 4px;
-      color: #000;
+      color: #fff;
       font-weight: 600;
       font-size: 24px;
     }
