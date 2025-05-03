@@ -1539,8 +1539,7 @@
     </div>
     <img class="gcb-logo" alt="gcb-logo" src="../assets/images/common/gcb-logo.png" />
     <div class="footer-content">
-      b9.game aims to become the global leader in online gaming and betting using the latest blockchain technologies,
-      always putting our customers first. Trust, integrity and fairness are just three of our key values.
+      b9.game is operated by Bridge Technologies B.V., company registration number 160264(0), with registered address at Dr. M.J. Hugenholtzweg 25, Willemstad, Curaçao. Bridge Technologies B.V. is licensed and authorized by the Government of Curaçao, operating under licence number OGL/2024/431/0231 issued by the Curaçao Gaming Control Board (GCB).
     </div>
     <div class="copyright-txt">© 2024 b9.game ALL RIGHTS RESERVED</div>
   </div>
@@ -5240,6 +5239,7 @@ const checkGoogleLoginSetPwd = () => {
   .gcb-logo {
     width: 25%;
     min-width: 100px;
+    margin-top: 20px;
   }
   .footer-content {
     margin-top: 24px;
@@ -5255,6 +5255,7 @@ const checkGoogleLoginSetPwd = () => {
     font-size: 16px;
     color: #ffffff80;
     margin-top: 28px;
+    margin-bottom: 28px;
   }
 }
 </style>
