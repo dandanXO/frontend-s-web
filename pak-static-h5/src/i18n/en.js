@@ -974,6 +974,15 @@ export default {
       ranking: "Ranking",
       userName: "Username",
       betVolume: "Bet Volume"
+    },
+    spinReferWheel: {
+      paymentRequestSubmitted: "Payment request submitted",
+      stillNeedToMakeWithdrawal: "Still need to make withdrawal",
+      willBePaidToYourRsAccount: "will be paid to your RS account",
+      inviteFriendsToHelp: "Invite Friends To Help",
+      referFriendToRegister: "Refer a friend to register, deposit and verify your phone to win free spins",
+      only: "Only",
+      toGo: "to go"
     }
   },
   maintenance: {

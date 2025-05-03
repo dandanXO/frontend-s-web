@@ -69,6 +69,7 @@
                 v-if="
                   selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
                   selectedPromo.redirectUrl !== 'new-player-acc-deposit' &&
+                  selectedPromo.redirectUrl !== 'spin-lucky-wheel' &&
                   selectedPromo.redirectUrl !== 'pak-lucky-10-day-bonus'
                 "
               >
@@ -131,7 +132,11 @@
                   isNewPlayerAccDeposit: selectedPromo.redirectUrl === 'new-player-acc-deposit',
                   isDepositSpinnerRewards: selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards',
                   isSpinLuckyWheel:
-                    selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel-envelope'
+                    selectedPromo.redirectUrl === 'spin-lucky-wheel',
+                  envelope:
+                    selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel-envelope',
+                  wheel:
+                    selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel'
                 }"
               >
                 <div v-if="selectedPromo.hasPromo">
@@ -1188,12 +1193,20 @@ export default defineComponent({
         padding-bottom: 40px;
 
         &.isSpinLuckyWheel {
-          background: url("../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/bg.png") no-repeat top
-            center;
-          background-size: cover;
           width: 100%;
           margin-top: 0;
           padding-bottom: 0;
+
+          &.envelope {
+            background: url("../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/bg.png") no-repeat top
+            center;
+            background-size: cover;
+          }
+
+          &.wheel {
+            background: url("../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/promo-bg.png") no-repeat;
+            background-size: 100% auto;
+          }
         }
         &.isJackpotAviator {
           width: 100%;
