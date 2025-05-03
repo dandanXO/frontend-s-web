@@ -508,6 +508,11 @@ export default {
   earnMoney: {
     title: "Bonus Pot Arrived",
     noDataAvailable: "No Data available",
+    person: "person",
+    youSuccessfullyInvited: "You successfully invited",
+    level: "Level",
+    only: "Only",
+    awayFrom: "away from",
     tabs: {
       reward: "Reward",
       teamManagement: "Team management",

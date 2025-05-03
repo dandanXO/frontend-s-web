@@ -162,9 +162,18 @@
               :key="i"
               :name="i"
               @click="gotoFloatPromo(promo)"
-              :img-src="promo.icon"
+              style="padding: 0"
             >
               <!-- <img style="width: 100px" :src="`${imgURL}/promo/${promo.icon}`" /> -->
+              <template v-if="promo.code === 'spin-lucky-wheel' && isShowSticky">
+                <SpinLuckyWheelPromoSticky style="width: 100%" />
+              </template>
+              <template v-else-if="promo.code === 'spin-lucky-wheel' && !isShowSticky">
+                <img :src="promo.icon" />
+              </template>
+              <template v-else>
+                <img :src="promo.icon" />
+              </template>
             </q-carousel-slide>
           </q-carousel>
         </div>
@@ -1595,9 +1604,9 @@
   >
     <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
     <SpinLuckyWheelPromoHomePopup @close-dialog="closeDialog" ref="spinLuckyWheelPromoHomePopupRef">
-      <template #controller>
+      <!-- <template #controller>
         <PopupController v-model="popupPromo" :hasSpin="true" />
-      </template>
+      </template> -->
     </SpinLuckyWheelPromoHomePopup>
   </q-dialog>
   <q-dialog v-model="isMediaSettingsModal">
@@ -1719,7 +1728,7 @@ const gameModules = ref([Navigation, Pagination]);
 
 const { t } = useI18n();
 const promoStore = usePromoStore();
-const { isShownSpinLuckyWheel } = storeToRefs(promoStore);
+const { isShownSpinLuckyWheel, isShowSticky } = storeToRefs(promoStore);
 // const isLuckyDrawModal = ref(false);
 // const isCongratsModal = ref(true);
 const isShowPrizeModal = ref(false);
@@ -1975,7 +1984,7 @@ const liveDragPos = ref([16, 0]);
 const isDraggingLiveIcon = ref(false);
 const isLiveUrlShow = ref(false);
 
-const hbDragPos = ref([10, 180]);
+const hbDragPos = ref([10, 300]);
 const isDraggingHbIcon = ref(false);
 const isHbShow = ref(true);
 const hbSlide = ref(0);
