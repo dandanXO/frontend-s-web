@@ -237,7 +237,7 @@
                       dense
                       class="bg-yellow text-black"
                       :label="!startCountdownPhoneResendOTP && 'Get Code'"
-                      :disable="!formDetail.phone || startCountdownPhoneResendOTP"
+                      :disable="!formDetail.phone || startCountdownPhoneResendOTP || isValidPhone() !== true"
                       @click="openVerificationCodeDialog"
                     />
                   </div>
@@ -1310,6 +1310,10 @@ const isValidPhone = () => {
 
   if (!phone) {
     return "Please Enter Phone Number";
+  }
+
+  if(!phone.startsWith('03')) {
+    return t('form.phone_rules_03');
   }
 
   const phoneRegex = /^\d{11,20}$/;
