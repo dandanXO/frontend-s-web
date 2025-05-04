@@ -87,6 +87,12 @@ const routes = [
     children: [{ path: "", component: () => import("pages/CsVerifierPage.vue") }],
     meta: { requiresAuth: false }
   },
+  {
+    path: "/terms-and-conditions",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/TermsAndConditionsPage.vue") }],
+    meta: { requiresAuth: false }
+  },
 
   // {
   //   path: "/bonus",

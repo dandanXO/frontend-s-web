@@ -647,4 +647,10 @@ body.body--dark .q-footer {
   }
 }
 
+.q-notification__message{
+  word-break: break-all;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
 .input:-webkit-autofill {transition: background-color 5000s ease-in-out 0s;}

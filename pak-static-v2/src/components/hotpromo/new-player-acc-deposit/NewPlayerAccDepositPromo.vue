@@ -15,6 +15,7 @@
               <div class="day-txt">{{ item.day }} {{ item.day === 1 ? $t("hotPromo.signIn7Days.day") : $t("hotPromo.signIn7Days.days") }}</div>
               <div class="tick-img">
                 <img
+                  class="tick-img-inner"
                   :src="
                     item.hasClaimed === 'YES'
                       ? require('./img/tick-icon-active.png')
@@ -182,7 +183,7 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     border-radius: 22px;
     padding: 8px 6px;
     border: 4px solid #ffffff;
@@ -224,9 +225,9 @@ onMounted(() => {
 
     .tick-img {
       margin-top: 12px;
-      img {
+      .tick-img-inner{
         display: block;
-        width: 17px;
+        width: 24px;
       }
     }
   }
@@ -323,6 +324,9 @@ onMounted(() => {
     margin-top: 24px;
     width: 100%;
     color: #ffffff;
+    &.disabled {
+      filter: grayscale(.8);
+    }
   }
 }
 

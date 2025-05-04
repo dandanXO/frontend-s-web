@@ -54,7 +54,8 @@ export default {
     referralRecord: "ریفرل کا ریکارڈ",
     interestProfit: "سود کا منافع",
     spinnerRules: "قواعد",
-    effectiveRevenueFAQ: "مؤثر آمدنی کے عمومی سوالات"
+    effectiveRevenueFAQ: "مؤثر آمدنی کے عمومی سوالات",
+    teamManagement: "ٹیم مینجمنٹ"
   },
   bottomNav: {
     home: "گھر/ہوم",
@@ -64,7 +65,9 @@ export default {
     wallet: "پرس",
     me: "میں",
     account: "اکاؤنٹ",
-    more: "مزید"
+    more: "مزید",
+    dividend: "حصہ",
+    announcement: "اعلان",
   },
   modal: {
     addToHomeScreen: {
@@ -376,7 +379,24 @@ export default {
     depositMonthlytoWinGifts: "انعامات جیتنے کے لئے ماہانہ جمع کریں",
     interestProfit: "سود کا منافع",
     exchange: "ایکسچینج",
-    transfer: "تبادلہ کرنا"
+    transfer: "تبادلہ کرنا",
+    "agentAccount": "ایجنٹ اکاؤنٹ",
+  },
+  affiliateSettings: {
+    "overview": "جائزہ",
+    "accountRecord": "اکاؤنٹ ریکارڈ",
+    "teamManagement": "ٹیم مینجمنٹ",
+    "teamPnl": "ٹیم کا منافع و نقصان",
+    "teamBetting": "ٹیم کی بیٹنگ",
+    "editRebate": "ریبیٹ میں ترمیم",
+    "securityCenter": "سیکیورٹی سینٹر",
+    "internalMessage": "اندرونی پیغام",
+    "customerService": "کسٹمر سروس"
+  },
+  dividend: {
+    myDividend: "میرا حصہ",
+    contractManagement: "معاہدہ انتظام",
+    dividendRecord: "حصہ ریکارڈ"
   },
   deposit: {
     selectAmount: "رقم منتخب کریں",

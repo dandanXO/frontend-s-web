@@ -24,7 +24,7 @@
             <div class="header">红包</div>
           </div>
           <div class="row">
-            <div class="content" style="width: 370px">{{ params.sub }}</div>
+            <div class="content" style="width: 370px">{{ params.audience }}</div>
             <div class="content" style="width: 285px">{{ params.gametime }}</div>
             <div class="content" style="width: 360px">{{ params.requirement }}</div>
             <div class="content" style="width: 290px">{{ params.hongbao }}</div>

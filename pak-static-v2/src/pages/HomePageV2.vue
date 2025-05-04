@@ -486,21 +486,51 @@
       </div>
     </div>
   </q-dialog>
-
+<!-- 
   <q-dialog v-model="isMoneyRainModal">
     <MoneyRainModal />
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
+  </q-dialog> -->
+  
+  <q-dialog style="
+    max-width: 500px;
+    margin: 0 auto;" class="isCentreDialog" v-if="popupPromo === 'money-rain'" :model-value="true" persistent>
+    <MoneyRainModal>
+      <template #controller>
+        <PopupController v-model="popupPromo" :hasSpin="isShownSpinLuckyWheel" />
+      </template>
+    </MoneyRainModal>
+    <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
   </q-dialog>
 
   <q-dialog v-model="isMediaSettingsModal">
     <MediaSettingsComponent :media="mediaCode" />
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
   </q-dialog>
+  
+  <q-dialog
+    v-if="popupPromo === 'spin-lucky-wheel' && isShownSpinLuckyWheel"
+    style="
+    max-width: 500px;
+    margin: 0 auto;"
+    :model-value="isShownSpinLuckyWheel"
+    class="isCentreDialog spin-lucky-wheel-dialog"
+    persistent
+  >
+    <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
+    <SpinLuckyWheelPromoHomePopup @close-dialog="closeDialog" ref="spinLuckyWheelPromoHomePopupRef">
+      <template #controller>
+        <PopupController v-model="popupPromo" :hasSpin="true" />
+      </template>
+    </SpinLuckyWheelPromoHomePopup>
+  </q-dialog>
+  
+  <SpinLuckyWheelPromoSticky v-show="isShownSpinLuckyWheel" />
   <a ref="downloadAppRef" :href="ui.downloadAppUrl" download style="display: none" />
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch, onActivated } from "vue";
+import { onMounted, ref, reactive, computed, watch, onActivated, nextTick } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -519,6 +549,11 @@ import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
 import CongratsModal from "../components/modal/CongratsModal.vue";
 import LuckySpinWheel from "../components/hotpromo/newPlayerWheel/LuckySpinWheel.vue";
+import PopupController from "src/components/PopupController.vue";
+import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
+import SpinLuckyWheelPromoHomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
+import { usePromoStore } from "src/stores/promo";
+import { storeToRefs } from "pinia";
 import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
 import MediaSettingsComponent from "../components/MediaSettingsComponent.vue";
 import AOS from "aos";
@@ -544,6 +579,25 @@ import GameList from "src/components/home/v2/GameList.vue";
 const modules = ref([Scrollbar, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
+const popupPromo = ref("");
+const closeDialog = () => {
+  popupPromo.value = "";
+};
+const promoStore = usePromoStore();
+const { isShownSpinLuckyWheel } = storeToRefs(promoStore);
+const spinLuckyWheelPromoHomePopupRef = ref();
+const checkSpinLuckyWheelPromoHomePopupCanShow = () => {
+  if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP") && spinLuckyWheelPromoHomePopupRef.value) {
+    spinLuckyWheelPromoHomePopupRef.value.checkIsCanShowPopup();
+  }
+};
+watch(
+  () => promoStore.isShownSpinLuckyWheel,
+  async (val) => {
+    await nextTick();
+    if (val) checkSpinLuckyWheelPromoHomePopupCanShow();
+  }
+);
 const { t } = useI18n();
 
 const isLuckyDrawModal = ref(false);
@@ -2326,7 +2380,11 @@ const gotoPromo = (banner) => {
       if (isH5.value && downloadAppRef.value) downloadAppRef.value.click();
     } else {
       if (banner.redirectUrl === "redpacketrain") {
-        isMoneyRainModal.value = true;
+        // isMoneyRainModal.value = true;
+        popupPromo.value = "money-rain";
+      }  else if (val.type === "PROMO" && val.code === "pk2-spin-lucky-wheel") {
+        popupPromo.value = "spin-lucky-wheel";
+        isShownSpinLuckyWheel.value = true;
       } else {
         router.push(`/promo?name=${banner.redirectUrl}`);
       }
@@ -2643,7 +2701,8 @@ const mediaCode = ref("");
 
 const gotoFloatPromo = (val) => {
   if (val.type === "PROMO" && val.code === "pk2-redpacketrain") {
-    isMoneyRainModal.value = true;
+    // isMoneyRainModal.value = true;
+    popupPromo.value = "money-rain";
   }
 
   if (val.type === "PROMO" && val.code === "pk2-interest-profit") {
@@ -2676,10 +2735,15 @@ onActivated(() => {
   checkHbPromo();
   // }
 
-  if (route.query.login === "true") {
-    isMoneyRainModal.value = true;
-  }
+  // if (route.query.login === "true") {
+  //   isMoneyRainModal.value = true;
+  // }
 
+  if (route.query.login === "true" || route.query.register === "true") {
+    //TODO: change back.
+    // popupPromo.value = "money-rain";
+    popupPromo.value = "spin-lucky-wheel";
+  }
   if (route.query.token) {
     store.autoLogin(route.query.token);
     checkSpinWheel();
@@ -3829,12 +3893,17 @@ const showCongratsModal = () => {
   }
 }
 
+.q-page-container {
+  :not(.home-wrapper) > .floating-btn.scalable:first-child {
+    border-radius: 10px 0 0 0;
+  }
+}
 .floating-btn {
   z-index: 2001;
 
   img {
     width: 100%;
-    max-width: 70px;
+    max-width: 100px;
   }
 }
 
@@ -4330,12 +4399,12 @@ const showCongratsModal = () => {
     margin-top: 16px;
   }
 }
-
 .money-rain-close {
   position: absolute;
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
+  pointer-events: all;
 }
 
 .hb-float {
