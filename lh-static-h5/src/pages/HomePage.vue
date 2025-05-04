@@ -19,14 +19,17 @@
     <div class="header-left">
       <img alt="logo" src="../assets/logo-1.png" />
     </div>
-    <div class="header-right" @click="() => (hasDrawer = !hasDrawer)">
+    <div class="header-right">
+      <span class="memorable-url">易记网址：{{ memorableUrl }}</span>
+      <button class="copy-btn" @click="handleCopyMemorableUrlClick">🔍</button>
       <img
         class="btn-pointer"
         :src="
           $q.dark.isActive
             ? require('../assets/images/home/home-hamburger-menu-dark.png')
-            : require('../assets/images/home/home-hamburge-menu2.png')
+            : require('../assets/images/home/home-hamburger-menu.png')
         "
+        @click="() => (hasDrawer = !hasDrawer)"
       />
       <div class="red-dot" v-if="unreadInboxMail > 0" />
     </div>
@@ -683,27 +686,41 @@
 
   <!-- <PopupDialog :clickHomePopupImg></PopupDialog> -->
   <q-dialog width="100%" v-model="showPopupDialog" @update:model-value="offPopupModal">
-      <q-card flat style="width: 70%; max-width: 500px; background-color: transparent; margin: 0 auto"
-          class="text-white">
-          <q-card-section style="background-color: transparent">
-              <div class="close-alert" v-close-popup>
-                  <q-icon size="24px" name="close"></q-icon>
+    <q-card flat style="width: 70%; max-width: 500px; background-color: transparent; margin: 0 auto" class="text-white">
+      <q-card-section style="background-color: transparent">
+        <div class="close-alert" v-close-popup>
+          <q-icon size="24px" name="close"></q-icon>
+        </div>
+        <q-carousel
+          animated
+          v-model="popupSlide"
+          navigation
+          infinite
+          swipeable
+          height="100%"
+          keep-alive
+          style="background: transparent"
+          autoplay
+          transition-next="slide-left"
+          transition-prev="slide-right"
+        >
+          <q-carousel-slide
+            v-for="(item, index) in popupList"
+            :key="index"
+            :name="index"
+            class="carousel-slide"
+            style="padding: 0"
+          >
+            <div class="promo-banner-container">
+              <div class="promo-banner-content" v-if="item.type === 'TEXT'" v-html="item.content"></div>
+              <div class="promo-banner-img" @click="clickHomePopupImg(item.path)" v-else>
+                <img :src="formatHomePopupImg(item.mobileImgUrl)" class="alert-img" draggable="false" />
               </div>
-              <q-carousel animated v-model="popupSlide" navigation infinite swipeable height="100%" keep-alive
-                  style="background: transparent" autoplay transition-next="slide-left"
-                  transition-prev="slide-right">
-                  <q-carousel-slide v-for="(item, index) in popupList" :key="index" :name="index"
-                      class="carousel-slide" style="padding: 0">
-                      <div class="promo-banner-container">
-                          <div class="promo-banner-content" v-if="item.type === 'TEXT'" v-html="item.content"></div>
-                          <div class="promo-banner-img" @click="clickHomePopupImg(item.path)" v-else>
-                              <img :src="formatHomePopupImg(item.mobileImgUrl)" class="alert-img" draggable="false" />
-                          </div>
-                      </div>
-                  </q-carousel-slide>
-              </q-carousel>
-          </q-card-section>
-      </q-card>
+            </div>
+          </q-carousel-slide>
+        </q-carousel>
+      </q-card-section>
+    </q-card>
   </q-dialog>
 
   <!-- <q-dialog width="100%" v-model="isImportantAnnoucementModal" @update:model-value="offPopupModal()">
@@ -767,6 +784,7 @@ import LinkGroup from "components/home/drawer/LinkGroup.vue";
 import SystemConfig from "components/home/drawer/SystemConfig.vue";
 import { onMounted } from "vue";
 import { convertToCommaAmount } from "src/boot/utils";
+import { useNotify } from "src/hooks/notify";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
@@ -785,6 +803,8 @@ export default defineComponent({
     AnnouncementModal
   },
   setup() {
+    const notify = useNotify();
+
     const isFirstView = ref(false);
     const thumbsSwiper = ref(null);
     const firstSwiper = ref(null);
@@ -1177,40 +1197,42 @@ export default defineComponent({
             // if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {
             //   res = apiMockData
             // }
-            if (res.code === 0 ) {
+            if (res.code === 0) {
               const popupListData = res.data.filter((popup) => {
-                  if(popupExpiryMap.value && Object.keys(popupExpiryMap.value).includes(popup.path)) {
+                if (popupExpiryMap.value && Object.keys(popupExpiryMap.value).includes(popup.path)) {
+                  const now = Date.now();
+                  const timestamp = now - popupExpiryMap.value[popup.path].lastSeen;
+                  const minutes = Math.floor(timestamp / (1000 * 60));
 
-                      const now = Date.now();
-                      const timestamp = now - popupExpiryMap.value[popup.path].lastSeen;
-                      const minutes = Math.floor(timestamp / (1000 * 60));
-
-                      if(popup.frequency === 'EVERYDAY' && minutes <= 1440) {
-                          return false;
-                      }
-
-                      if(popup.frequency === 'SESSION' && minutes <= 131107.2) {
-                          return false;
-                      }
+                  if (popup.frequency === "EVERYDAY" && minutes <= 1440) {
+                    return false;
                   }
 
-                  return true;
+                  if (popup.frequency === "SESSION" && minutes <= 131107.2) {
+                    return false;
+                  }
+                }
+
+                return true;
               });
 
-              popupList.value = sessionStorage.getItem('POPUP') === 'true' ? popupListData : [];
+              popupList.value = sessionStorage.getItem("POPUP") === "true" ? popupListData : [];
 
-              if(Object.keys(popupList.value).length > 0) {
-                  showPopupDialog.value = true;
+              if (Object.keys(popupList.value).length > 0) {
+                showPopupDialog.value = true;
 
-                  popupList.value.forEach((popup) => {
-                      popupExpiryMap.value = {...popupExpiryMap.value, [popup.path]: {
-                        lastSeen: Date.now(),
-                        frequency: popup.frequency
-                      } };
-                  });
+                popupList.value.forEach((popup) => {
+                  popupExpiryMap.value = {
+                    ...popupExpiryMap.value,
+                    [popup.path]: {
+                      lastSeen: Date.now(),
+                      frequency: popup.frequency
+                    }
+                  };
+                });
 
-                  sessionStorage.removeItem('POPUP');
-                  localStorage.setItem('POPUP', JSON.stringify(popupExpiryMap.value));
+                sessionStorage.removeItem("POPUP");
+                localStorage.setItem("POPUP", JSON.stringify(popupExpiryMap.value));
               }
 
               // popupList.value = res.data;
@@ -1251,9 +1273,9 @@ export default defineComponent({
         .get("/opt-session/promo/banner?category=HOME")
         .then((res) => {
           if (res.code === 0) {
-            banners.value = res.data.filter(promo => {
-              if($q.dark.isActive) {
-                return !['lh1-dark-mode'].includes(promo.redirectUrl) && promo.mobileImageUrlDark
+            banners.value = res.data.filter((promo) => {
+              if ($q.dark.isActive) {
+                return !["lh1-dark-mode"].includes(promo.redirectUrl) && promo.mobileImageUrlDark;
               }
 
               return promo;
@@ -1700,7 +1722,6 @@ export default defineComponent({
         let result = "00:00:00";
 
         if (promo?.showTime) {
-          console.log(promo.title)
           const now = moment(Date.now());
           const endTime = moment(promo?.endTime);
           const totalSeconds = endTime.diff(now, "seconds");
@@ -1719,7 +1740,7 @@ export default defineComponent({
     const currentPromoIndex = ref(0);
     const updatePromo = () => {
       currentPromo.value = floatPromo.value[currentPromoIndex.value];
-      currentPromoIndex.value = ((currentPromoIndex.value + 1) % floatPromo.value.length)+1-1;
+      currentPromoIndex.value = ((currentPromoIndex.value + 1) % floatPromo.value.length) + 1 - 1;
     };
 
     const currentRocket = ref(null);
@@ -1808,6 +1829,25 @@ export default defineComponent({
       promoPos.value = [newX, newY];
     };
 
+    const memorableUrl = ref("leihuo18.com");
+    const handleCopyMemorableUrlClick = () => {
+      // Create a temporary textarea element
+      const tempTextarea = document.createElement("textarea");
+      tempTextarea.value = memorableUrl.value;
+      document.body.appendChild(tempTextarea);
+
+      // Select the text and copy it
+      tempTextarea.select();
+      document.execCommand("copy");
+
+      // Remove the temporary textarea element
+      document.body.removeChild(tempTextarea);
+      notify({
+        type: "success",
+        message: "易记网址复制成功"
+      });
+    };
+
     onActivated(() => {
       getPlatList();
       loadData();
@@ -1824,7 +1864,7 @@ export default defineComponent({
 
     onMounted(() => {
       try {
-          popupExpiryMap.value = JSON.parse(localStorage.getItem('POPUP'));
+        popupExpiryMap.value = JSON.parse(localStorage.getItem("POPUP"));
       } catch {
 
       }
@@ -1836,10 +1876,10 @@ export default defineComponent({
 
       if (store.token) {
         checkShowImgTop();
-        setTimeout(() => {
-          initFloating();
-        }, 750);
       }
+      setTimeout(() => {
+        initFloating();
+      }, 750);
     });
     // Clear interval on unmounted
     onUnmounted(() => {
@@ -1960,7 +2000,9 @@ export default defineComponent({
       convertToCommaAmount,
       formatHomePopupImg,
       bannersWithImage,
-      showPopupDialog
+      showPopupDialog,
+      memorableUrl,
+      handleCopyMemorableUrlClick
     };
   }
 });
@@ -1995,6 +2037,7 @@ export default defineComponent({
 }
 
 .rocket-wrapper {
+  position: relative;
   transition: all 0.3s;
   // cursor: pointer;
 
@@ -2008,14 +2051,14 @@ export default defineComponent({
   }
   .promo-remaining-time {
     position: absolute;
-    bottom: 2.41rem;
+    bottom: 17px;
     left: 50%;
     transform: translateX(-50%);
     font-weight: bold;
     font-family: Arial;
     color: #444;
     // text-shadow: 2px 2px 0px #00000040;
-    font-size: 1.02rem;
+    font-size: 14px;
   }
 
 }
@@ -2129,6 +2172,8 @@ export default defineComponent({
   }
 
   .header-right {
+    display: flex;
+    align-items: center;
     height: 25px;
     position: relative;
 
@@ -2145,6 +2190,17 @@ export default defineComponent({
       position: absolute;
       top: -3px;
       right: -3px;
+    }
+
+    .memorable-url {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #47537f;
+    }
+    .copy-btn {
+      background: transparent;
+      border: none;
+      margin-right: 10px;
     }
   }
 }
@@ -2636,6 +2692,10 @@ export default defineComponent({
       .btn-pointer {
         width: 20px;
         height: auto;
+      }
+
+      .memorable-url {
+        color: #fff;
       }
     }
   }

@@ -184,6 +184,7 @@
         &.disabled {
           cursor: not-allowed;
           pointer-events: none;
+          filter: grayscale(1);
         }
       }
     }

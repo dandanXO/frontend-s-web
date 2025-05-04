@@ -59,7 +59,8 @@ export const userStore = defineStore("userStore", {
       hasUpdatedOneSignal: false,
       isReferralReady: false,
       isFromGooglePackage: false,
-      isCheckGaid: false
+      isCheckGaid: false,
+      isShowOtp: true
     };
   },
   actions: {

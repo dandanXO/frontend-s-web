@@ -54,6 +54,7 @@
 
     <PullbackTide v-if="list.redirectUrl === 'dy2-pullback-tide'" :promo-code="list.promoCode" />
     <Cba30Dream v-if="list.redirectUrl === 'dy2-cba30-dream'" :promo-code="list.promoCode" />
+    <newVip2025 v-if="list.redirectUrl === 'dy2-2025-new-vip'" :promo-code="list.promoCode" />
 
     <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
     <Dota2BlastSlam2025 v-if="list.redirectUrl === 'dy2-blast-slam-2025'" :promo-code="list.promoCode" />
@@ -84,6 +85,7 @@
     <YaLLa2025 v-if="list.redirectUrl === 'dy2-yalla-compass-qatar-2025'" :promo-code="list.promoCode" />
     <IemMelbourne2025 v-if="list.redirectUrl === 'dy2-iem-melbourne-2025'" :promo-code="list.promoCode" />
     <PglWallachiaS4 v-if="list.redirectUrl === 'dy2-pgl-wallachia-s4'" :promo-code="list.promoCode" />
+    <BlastSlam32025 v-else-if="list.redirectUrl === 'dy2-blast-slam-3-2025'" :promo-code="list.promoCode" />
     <BlastRival2025 v-if="list.redirectUrl === 'dy2-blast-rivals-2025-s1'" :promo-code="list.promoCode" />
     <Cct2025 v-if="list.redirectUrl === 'dy2-cct-global-finals-2025'" :promo-code="list.promoCode" />
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
@@ -130,6 +132,7 @@ import OuZuLianPromo from "../components/hotpromo/ouzulian/OuZuLianPromo.vue";
 import SubmitClaimPromo from "@/components/hotpromo/submitclaim/SubmitClaimPromo.vue";
 
 import Cba30Dream from "@/components/hotpromo/cba30-dream/Cba30Dream.vue";
+import newVip2025 from "@/components/hotpromo/2025-new-vip/2025-new-vip.vue";
 import ChallengeComebackPromo from "@/components/hotpromo/challenge-comeback/ChallengeComeback.vue";
 
 import Belgrade2025Promo from "./hotpromo/belgrade-2025-promo/Belgrade2025Promo.vue";
@@ -161,6 +164,7 @@ import FissureUniverseS4 from "./hotpromo/fissure-universe-s4/FissureUniverseS4.
 import YaLLa2025 from "./hotpromo/YaLLa2025/YaLLa2025.vue";
 import IemMelbourne2025 from "./hotpromo/iem-melbourne-2025/IemMelbourne2025.vue";
 import PglWallachiaS4 from "./hotpromo/pgl-wallachia-s4/PglWallachiaS4.vue";
+import BlastSlam32025 from "./hotpromo/blast-slam-3-2025/BlastSlam32025.vue";
 import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
 import BlastRival2025 from "./hotpromo/BlastRival2025/BlastRival2025.vue";
 
@@ -169,6 +173,7 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    newVip2025,
     Cct2025,
     YaLLa2025,
     FootballFight,
@@ -211,6 +216,7 @@ export default defineComponent({
     FissureUniverseS4,
     IemMelbourne2025,
     PglWallachiaS4,
+    BlastSlam32025,
     BlastRival2025
   },
   props: {

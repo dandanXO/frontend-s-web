@@ -1,0 +1,122 @@
+body {
+  margin: 0;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  font-family: PingFang SC;
+}
+
+.main-container {
+  max-width: 500px;
+  background-color: #101114;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
+  height: 44px;
+  display: grid;
+  align-content: center;
+  justify-content: center;
+}
+
+.header-logo {
+  width: 100px;
+  aspect-ratio: 104/19;
+}
+
+.top-info-container {
+  background: linear-gradient(180deg, #334ad6 0%, #8b36f8 100%);
+  border-radius: 4px;
+  margin: 0 20px;
+  padding: 8px 12px;
+}
+
+.top-info-container p {
+  font-family: Inter;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.info-highlight-txt {
+  font-family: Inter;
+  color: #fff848;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.banner-container {
+  padding: 20px;
+}
+
+.banner {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.download-info-container {
+  display: flex;
+}
+.download-promotional-img {
+  width: 30%;
+}
+
+.download-content {
+  width: 70%;
+  padding-right: 20px;
+  padding-bottom: 36px;
+}
+
+.download-txt-bg {
+  background: linear-gradient(270deg, #334ad6 0%, #8b36f8 100%);
+  border-radius: 4px;
+  padding: 6px;
+  font-size: 9px;
+  font-weight: 500;
+  color: #fff;
+  text-align: center;
+}
+
+.download-txt {
+  padding: 8px 6px;
+  font-size: 8px;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+}
+
+.download-btn-container {
+  position: sticky;
+  bottom: 0;
+}
+
+.download-btn-info {
+  width: 128px;
+  position: absolute;
+  bottom: 54px;
+  right: 50px;
+}
+
+.download-btn {
+  height: 48px;
+  width: calc(100% - 40px);
+  background: linear-gradient(180deg, #ffa600 0%, #ff3b00 100%);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 74px;
+  font-weight: 700;
+  margin: 4px 20px;
+}
+
+.download-btn:hover {
+  background: linear-gradient(180deg, #ffa600 0%, #ff3b00 100%);
+}

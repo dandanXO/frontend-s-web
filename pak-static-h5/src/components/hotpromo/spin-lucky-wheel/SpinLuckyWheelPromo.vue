@@ -63,6 +63,7 @@ const loadData = async () => {
         break;
       case "SPIN":
         stage.value = "wheel";
+        ui.promoBg = "spin-lucky-wheel";
         break;
     }
     info.value = {
