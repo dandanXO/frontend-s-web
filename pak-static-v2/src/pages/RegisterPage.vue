@@ -54,6 +54,10 @@
                     <q-icon name="smartphone" />
                     <div class="prepend-number">+92</div>
                   </template>
+
+                  <template v-if="regForm.referrer && spinRefCode" v-slot:append>
+                    <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">{{ otpCountdown > 0 ? `Get Code (${otpCountdown})` : 'Get Code' }}</q-btn>
+                  </template>
                 </q-input>
               </template>
             </InputField>
@@ -163,6 +167,32 @@
                 </q-input>
               </template>
             </InputField> -->
+            <InputField v-if="regForm.referrer && regForm.smsCodeId" :label="$t('form.otp_form')">
+              <template #input>
+                <q-input
+                  pattern="\d*"
+                  maxlength="6"
+                  ref="verificationRef"
+                  hide-bottom-space
+                  v-model="regForm.smsCode"
+                  :rules="[
+                      (val) => (val && val.length > 0) || $t('form.insert_otp_num'),
+                      (val) => (val && val.length === 6) || $t('form.otp_must_have_6')
+                    ]"
+                  color="white"
+                  class="landing-input"
+                  outlined
+                  :placeholder="$t('form.enter_otp_num')"
+                  label-color="brand"
+                  :disable="isOtpEnable"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="key" />
+                  </template>
+                </q-input>
+              </template>
+            </InputField>
+
             <div style="visibility: hidden; position: absolute">
               <InputField :label="'Invitation Code (Optional)'">
                 <template #input>
@@ -234,11 +264,41 @@
     <div class="bottom-img">
       <img src="../assets/images/auth/login-img3.png" />
     </div>
+
+    <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
+      <q-card class="captcha-form-wrapper" width="100%">
+        <q-card-section class="q-pa-md bg-brightbtn text-white">
+          <q-toolbar>
+            <q-toolbar-title>Verification Code</q-toolbar-title>
+            <q-btn flat v-close-popup round dense icon="close" />
+          </q-toolbar>
+        </q-card-section>
+        <div class="q-px-lg q-pt-sm q-pb-lg">
+          <q-card-section class="q-mb-md q-pa-md">
+            <q-input v-model="innerCaptchaRef" placeholder="Captcha Code">
+              <template v-slot:append>
+                <img
+                  v-show="showImageCode"
+                  :src="phoneVerificationImg"
+                  @load="imgOnLoad"
+                  @error="imgOnError"
+                  title="Refresh Verification Code"
+                  style="margin-top: 6px; cursor: pointer"
+                  @click="getInnerCode"
+                />
+              </template>
+            </q-input>
+          </q-card-section>
+          <q-btn class="get-code-btn" @click="onCaptchaSubmit" label="Send OTP" />
+        </div>
+      </q-card>
+    </q-dialog>
+
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "vue";
+import { defineComponent, ref, reactive, onUnmounted, watch, onActivated } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
@@ -250,6 +310,7 @@ import InputRowGrid from "../components/auth/InputRowGrid.vue";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { isAndroid, isInPwa, trackNewUserFtd } from "boot/utils";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -270,9 +331,22 @@ export default defineComponent({
     const showCaptchaDialog = ref(false);
     const phoneVerificationImg = ref("");
     const isAgreeReg = ref(true);
+    const showImageCode = ref(false);
+    const otpCountdown = ref();
+    const otpCountdownInterval = ref();
+    const { isShowOtp } = storeToRefs(store);
 
+    const isOtpEnable = ref(true);
+    const isSpinReferrer = ref(false);
+    const spinRefCode = ref("");
     const affCode = ref("");
     const isLoading = ref(false);
+
+
+    const thirdPartyLoginInfo = reactive({
+      sid: "",
+      way: "ANDROID"
+    });
 
     const regForm = reactive({
       loginName: "",
@@ -334,6 +408,13 @@ export default defineComponent({
       if (refCode) {
         // hasAffiliate.value = true;
         regForm.referrer = refCode;
+      }
+
+      spinRefCode.value = sessionStorage.getItem("REFERRAL_SPIN_CODE");
+      if (spinRefCode.value) {
+        isSpinReferrer.value = true;
+        regForm.referrer = spinRefCode.value;
+        thirdPartyLoginInfo.referrer = refCode;
       }
     };
 
@@ -429,6 +510,15 @@ export default defineComponent({
         // nricRef.value.hasError ||
         isAgreeReg.value === false
       ) {
+        $q.loading.hide();
+        isLoading.value = false;
+      } else if (regForm.referrer && isSpinReferrer.value === true && regForm.smsCodeId && isOtpEnable.value) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: t("form.fill_in_otp"),
+          icon: "report_problem"
+        });
         $q.loading.hide();
         isLoading.value = false;
       } else {
@@ -621,15 +711,16 @@ export default defineComponent({
     // );
 
     const openPhoneVeriDialog = () => {
-      telRef.value.validate();
-      if (!telRef.value.hasError) {
+      isOtpEnable.value = false;
+      loginNameRef.value.validate();
+      if (!loginNameRef.value.hasError) {
         showCaptchaDialog.value = true;
         getInnerCode();
       }
     };
 
     const onCaptchaSubmit = () => {
-      if (!regForm.telephone) {
+      if (!regForm.loginName) {
         $q.notify({
           color: "negative",
           position: "top",
@@ -643,7 +734,7 @@ export default defineComponent({
         .post(
           `/otp/sendSms`,
           qs.stringify({
-            telephone: regForm.telephone,
+            telephone: regForm.loginName,
             captchaCode: innerCaptchaRef.value,
             codeId: innerCodeId.value
           })
@@ -657,13 +748,34 @@ export default defineComponent({
             regForm.smsCode = "";
             regForm.smsCodeId = res.data.codeId;
             console.log(res.data.codeId);
+
+            // start otp countdown
+            otpCountdown.value = res.data.second || 60;
+            otpCountdownInterval.value = setInterval(() => {
+              if(otpCountdown.value > 0) {
+                otpCountdown.value = otpCountdown.value - 1;
+              }
+            },1000);
           } else {
             color = "negative";
+
+            if(res.code === 1402) {
+              message = `Please try again after ${res.data.second} seconds`;
+
+               // start otp countdown
+              otpCountdown.value = res.data.second || 60;
+              otpCountdownInterval.value = setInterval(() => {
+                if(otpCountdown.value > 0) {
+                  otpCountdown.value = otpCountdown.value - 1;
+                }
+              },1000);
+            }
+
             getInnerCode();
           }
 
           if (message) {
-            $q.notify({ message, color });
+            $q.notify({ message, color, position: 'top' });
           }
 
           console.log("onCaptchaSubmit", res);
@@ -754,6 +866,19 @@ export default defineComponent({
       }
     );
 
+    const imgOnLoad = () => (showImageCode.value = true);
+    const imgOnError = () => (showImageCode.value = false);
+
+    watch(() => otpCountdown.value, () => {
+      if(otpCountdown.value === 0) {
+        clearInterval(otpCountdownInterval.value);
+      }
+    })
+
+    onUnmounted(() => {
+      clearInterval(otpCountdownInterval.value);
+    })
+
     return {
       header: "Register Account",
       regForm,
@@ -799,7 +924,15 @@ export default defineComponent({
       openWhatsApp,
       openTiktok,
       openYoutube,
-      downloadApp
+      downloadApp,
+      showImageCode,
+      spinRefCode,
+      isOtpEnable,
+      imgOnLoad,
+      imgOnError,
+      otpCountdown,
+      otpCountdownInterval,
+      isShowOtp
     };
   }
 });

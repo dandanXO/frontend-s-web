@@ -957,6 +957,10 @@ body.body--dark .q-footer {
   background: linear-gradient(90deg, #1c273d 0%, #12192b 100%);
   color: #fff;
 
+  &.bordered {
+    border: 1px solid #FFFFFF14;
+  }
+
   &.highlighted {
     background: linear-gradient(90deg, #0287f2 0%, #0664d2 100%);
   }

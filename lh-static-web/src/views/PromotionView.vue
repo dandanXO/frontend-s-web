@@ -168,6 +168,9 @@
             }"
             v-if="selectedPromo.promoCode !== 'lh-eurocup-manual' && selectedPromo.pageContent"
           >
+            <div v-if="selectedPromo.redirectUrl === 'lh1-mesa-nomadic-masters-spring-2025'">
+              <MesaPromo :promoCode="selectedPromo.promoCode" />
+            </div>
             <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
               <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
             </div>
@@ -212,6 +215,7 @@ import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPr
 import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
 const YallaCompass = defineAsyncComponent(() => import("@/components/hotpromo/yalla-compass/YallaCompass.vue"));
+const MesaPromo = defineAsyncComponent(() => import("@/components/hotpromo/mesa/MesaPromo.vue"));
 
 export default defineComponent({
   name: "PromoView",
@@ -219,7 +223,8 @@ export default defineComponent({
     HotPromotion,
     BlastPremierMarquee,
     NBAWaterBattle,
-    YallaCompass
+    YallaCompass,
+    MesaPromo
   },
   setup() {
     const isDark = useDark();

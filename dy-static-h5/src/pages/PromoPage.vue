@@ -127,6 +127,9 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
+                  <div v-if="selectedPromo.redirectUrl === 'dy2-mesa-nomadic-masters-spring-2025'">
+                    <MesaPromo :promoCode="selectedPromo.promoCode" />
+                  </div>
                   <div v-if="selectedPromo.redirectUrl === 'dy2-nba-water-battle'">
                     <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
                   </div>
@@ -272,13 +275,16 @@ import HotPromotion from "components/HotPromotion";
 import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 import { useLocalStorage } from "@vueuse/core";
 import NBAWaterBattle from "src/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
+import MesaPromo from "src/components/hotpromo/mesa/MesaPromo.vue";
+
 
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
     BlastPremierMarquee,
-    NBAWaterBattle
+    NBAWaterBattle,
+    MesaPromo
   },
   setup() {
     const store = userStore();

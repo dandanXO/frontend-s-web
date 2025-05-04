@@ -26,6 +26,7 @@
       :promocode="list.promoCode"
     />
     <NewPlayerAccDepositPromo v-if="list.redirectUrl === 'new-player-acc-deposit'" :params="list.param" />
+    <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -63,6 +64,7 @@ import SlotFtdPromo from "../components/hotpromo/slotFtdPromo/SlotFtdPromo.vue";
 import DepositSpinnerRewards from "./hotpromo/deposit-spinner-rewards/DepositSpinnerRewards.vue";
 import JackpotAviator from "./hotpromo/jackpotAviator/JackpotAviator.vue";
 import NewPlayerAccDepositPromo from "./hotpromo/new-player-acc-deposit/NewPlayerAccDepositPromo.vue"
+import SpinLuckyWheelPromo from "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -80,7 +82,8 @@ export default defineComponent({
     NewPlayersPromo,
     SlotFtdPromo,
     JackpotAviator,
-    NewPlayerAccDepositPromo
+    NewPlayerAccDepositPromo,
+    SpinLuckyWheelPromo,
   },
   props: {
     list: {
@@ -141,6 +144,9 @@ export default defineComponent({
       this.list.redirectUrl === "pk2-new-players" ||
       this.list.redirectUrl === "pk2-slot-ftd" ||
       this.list.redirectUrl === "new-player-acc-deposit" ||
+      this.list.redirectUrl === "pk2-jackpot-aviator" ||
+      this.list.redirectUrl === "new-player-acc-deposit" ||
+      this.list.redirectUrl === "spin-lucky-wheel" ||
       this.list.redirectUrl === "pk2-jackpot-aviator" ||
       this.list.id === 40
     ) {

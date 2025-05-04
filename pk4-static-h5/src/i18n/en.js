@@ -56,7 +56,8 @@ export default {
     spinnerRules: "Rules",
     spinnerHistory: "History",
     effectiveRevenueFAQ: "Effective Revenue FAQ",
-    customerServiceVerifer: "Customer Service Verifier"
+    customerServiceVerifer: "Customer Service Verifier",
+    teamManagement: "Team Management"
   },
   bottomNav: {
     home: "Home",
@@ -66,7 +67,9 @@ export default {
     wallet: "Wallet",
     me: "Me",
     account: "Account",
-    more: "More"
+    more: "More",
+    announcement: "Announcement",
+    dividend: "Dividend"
   },
   modal: {
     addToHomeScreen: {
@@ -380,7 +383,31 @@ export default {
     depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
     interestProfit: "Interest Profit",
     exchange: "Exchange",
-    transfer: "Transfer"
+    transfer: "Transfer",
+    "agentAccount": "Agent Account",
+  },
+  affiliateSettings: {
+    "overview": "Overview",
+    "accountRecord": "Account Record",
+    "teamManagement": "Team Management",
+    "teamPnl": "Team P&L",
+    "teamBetting": "Team Betting",
+    "editRebate": "Edit Rebate",
+    "securityCenter": "Security Center",
+    "internalMessage": "Internal Message",
+    "customerService": "Customer Service",
+  },
+  accountRecord: {
+    myDividend: 'My Dividend',
+    contractManagement: 'Contract Management',
+    dividendRecord: 'Dividend Record',
+  },
+  dividend: {
+    myDividend: 'My Dividend',
+    contractManagement: 'Contract Management',
+    dividendRecord: 'Dividend Record',
+    activeMember: 'Active Member',
+    dividendRate: 'Dividend Rate'
   },
   deposit: {
     selectAmount: "Select Amount",

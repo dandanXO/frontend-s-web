@@ -9,8 +9,11 @@
   <div class="rain-money-title"><img src="../../assets/images/index/money-rain/money-rain-title.png" /></div>
 
   <div class="rain-money-tabs-wrapper">
-    <div class="rain-money-tabs-container">
-      <div class="logo-img"><img src="../../assets/images/auth/auth-logo-text-only.png" /></div>
+    <div class="rain-money-tabs-container" :class="{ 'has-controller': !!$slots.controller }">
+      <slot name="controller">
+        <div class="logo-img"><img src="../../assets/images/auth/auth-logo-text-only.png" /></div>
+      </slot>
+      <!-- <div class="logo-img"><img src="../../assets/images/auth/auth-logo-text-only.png" /></div> -->
       <div class="rain-money-header">
         <span class="orange">666,666PKR&nbsp;</span>
         <span class="green">every time maximum surplus</span>
@@ -83,8 +86,7 @@
             <br />
             Each round freely distributes cashback.
             <br />
-            Maintain a historical deposit of ≥300 PKR and complete daily bets of ≥100+ PKR to claim your reward for
-            free.
+            Deposit ≥ PKR 300 on the same day and complete daily bets totaling ≥ PKR 350 to claim your free bonus.
             <br />
             The received money can be directly used for playing games or withdrawing.
             <br />
@@ -616,6 +618,9 @@ onMounted(() => {
     // position: relative;
     // max-height: 325px;
 
+    &.has-controller {
+      padding-top: 40px;
+    }
     .logo-img {
       width: 100%;
       justify-content: center;

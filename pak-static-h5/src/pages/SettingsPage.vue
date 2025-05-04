@@ -58,6 +58,7 @@
               <img src="../assets/images/account/deposit-svg.svg" />
             </div>
             <div class="acct-nav-label">{{ $t("settings.deposit") }}</div>
+            <div v-if="promoPercentage" class="promo-percentage">{{ promoPercentage }} {{ $t("records.bonus") }}</div>
           </router-link>
           <router-link to="/withdraw">
             <div class="acct-nav-item">
@@ -332,6 +333,13 @@ const showExchangeModal = ref(false);
 const showTransferModal = ref(false);
 
 const confirmSignOutDialog = ref(false);
+
+const promoPercentage = computed(() => {
+  if (!store.claimedFtdPrivilege) return "53%";
+  if (!store.claimedSecondPrivilege) return "35%";
+  return ""; // Optional: for other cases if needed
+});
+
 const openConfirmSignOutDialog = () => {
   confirmSignOutDialog.value = !confirmSignOutDialog.value;
 };
@@ -810,6 +818,7 @@ const handleCopyClick = async () => {
       margin-right: 10px;
     }
     a {
+      position: relative;
       display: flex;
       width: 100%;
       text-decoration: none;
@@ -841,6 +850,23 @@ const handleCopyClick = async () => {
         img {
           filter: grayscale(1) brightness(100);
         }
+      }
+
+      .promo-percentage {
+        position: absolute;
+        // background: #ff0000;
+        padding: 2px 2px 7px;
+        border-radius: 5px;
+        font-size: 8px;
+        left: 50%;
+        top: 6px;
+        z-index: 2000;
+        background: url(../assets/images/index/redpromo-bg.png) no-repeat center center;
+        background-size: contain;
+        transform: translate(-50%, -100%);
+        width: 70px;
+        text-align: center;
+        color: #fff;
       }
     }
   }
