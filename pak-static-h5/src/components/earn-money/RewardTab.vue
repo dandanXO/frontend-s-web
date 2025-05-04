@@ -124,6 +124,94 @@
       <div class="invite-share-social">
         <ShareIcons :is-invite="true" :url="selfTgurl" />
       </div>
+      <!-- <div class="person-level-away">
+        <div class="person-level-title">
+          <img class="mini-icon" src="../../assets/images/earn-money/oneperson.png"> 
+          <div class="text" v-if="currentLevel < 10">
+            Only <span class="text-person">{{playersToNextLevel}} person</span> away from <span class="text-level">Level {{ currentLevel + 1}}</span>
+          </div>
+          <div class="text" v-else>
+            Congratulations! You successfully invited <span class="text-person">{{invitedPlayers}} person</span>
+          </div>
+        </div>
+        <div class="person-level-away-bar-container">
+          <div class="outer-bar-container">
+            <div class="outer-bar">
+              <div class="inner-bar" :style="{ width: currentPersonPercentage + '%' }"></div>
+              <div class="checkpoint check0">
+                <div class="noOfPerson">0</div>
+              </div>
+              <div class="checkpoint" style="left: 33%">
+              <div class="level">Level {{ currentLevel < 10 ? currentLevel : 8 }}</div>
+              <img v-if="currentPersonPercentage >= 33" src="../../assets/images/earn-money/level-active.png">
+              <img v-else src="../../assets/images/earn-money/level-inactive.png">
+              
+              <div class="noOfPerson">{{ currentLevel < 10 ? levels[currentLevel].minPlayers : 50001 }} person</div>
+            </div>
+            <div class="checkpoint" style="left: 66%">
+              <div class="level">Level {{ currentLevel < 10 ? currentLevel + 1 : 9 }}</div>
+              <img v-if="currentPersonPercentage >= 66" src="../../assets/images/earn-money/level-active.png">
+              <img v-else src="../../assets/images/earn-money/level-inactive.png">
+              
+              <div class="noOfPerson">{{ currentLevel < 10 ? levels[currentLevel].minPlayers : 100001 }} person</div>
+            </div>
+            <div class="checkpoint" style="left: 99%">
+              <div class="level">Level {{currentLevel < 10 ? currentLevel : 10 }}</div>
+              <img v-if="currentPersonPercentage >= 100" src="../../assets/images/earn-money/level-active.png">
+              <img v-else src="../../assets/images/earn-money/level-inactive.png">
+              
+              <div class="noOfPerson">{{ currentLevel < 10 ? levels[currentLevel].minPlayers : 150001 }} person</div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+       -->
+       <div class="person-level-away">
+        <div class="person-level-title">
+          <img class="mini-icon" src="../../assets/images/earn-money/oneperson.png">
+          <div class="text" v-if="currentLevel > 0 && currentLevel < 10">
+            {{ $t('earnMoney.only') }} <span class="text-person">{{ playersToNextLevel }} {{$t('earnMoney.person')}}</span> {{$t('earnMoney.awayFrom')}}
+            <span class="text-level">{{ $t('earnMoney.level') }} {{ currentLevel + 1 }}</span>
+          </div>
+          <div class="text" v-else-if="currentLevel > 0">{{ $t('earnMoney.youSuccessfullyInvited') }} <span class="text-person">{{ invitedPlayers }} {{$t('earnMoney.person')}}</span>
+          </div>
+          <div class="text" v-else>{{ $t('earnMoney.reward.deposit_table.row1.description') }} </div>
+        </div>
+
+        <div class="person-level-away-bar-container">
+          <div class="outer-bar-container">
+            <div class="outer-bar">
+              <!-- Inner progress bar based on percentage -->
+              <div class="inner-bar" :style="{ width: currentPersonPercentage + '%' }"></div>
+
+              <!-- First checkpoint (check0) -->
+              <div class="checkpoint check0" v-if="currentLevel === 1">
+                <div class="noOfPerson">0</div>
+              </div>
+
+              <!-- Dynamic checkpoints -->
+              <div 
+                class="checkpoint"
+                v-for="(checkpoint, index) in checkpoints" 
+                :key="index" 
+                :style="{ left: checkpoint.left - 5 + '%' }"
+              >
+                <div class="level">{{ checkpoint.label }}</div>
+                <img 
+                  v-if="currentPersonPercentage >= checkpoint.left" 
+                  src="../../assets/images/earn-money/level-active.png" 
+                />
+                <img 
+                  v-else 
+                  src="../../assets/images/earn-money/level-inactive.png" 
+                />
+                <div class="noOfPerson">{{ checkpoint.minPlayers }} {{$t('earnMoney.person')}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="earn-money-invitation-rewards earn-money-card">
@@ -338,7 +426,138 @@ const $q = useQuasar();
 const store = userStore();
 const { t } = useI18n();
 const ui = useUI();
+// const invitedPlayers = ref(1);
+// // const personsPerLevel = 1;
+// const playersToNextLevel = ref(0);
+// const currentLevel = ref(1)
+// const currentPersonPercentage = computed(() => {
+//   const remainder = playersToNextLevel.value - invitedPlayers.value; // how many persons into the current level
+//   const base = (() => {
+//     if (currentLevel.value <= 8) {
+//       return 0;
+//     } else if (currentLevel.value === 9) {
+//       return 33;
+//     } else if (currentLevel.value === 10) {
+//       return 66;
+//     } else {
+//       return 0;
+//     }
+//   })();
 
+//   const progressInsideLevel = (invitedPlayers.value / playersToNextLevel.value) * 33;
+//   if (currentLevel.value === 10) {
+//     return base
+//   } else {
+//     return base + progressInsideLevel;
+//   }
+// });
+// const currentPersonPercentage = computed(() => {
+//   const maxLevel = 10;
+//   if (currentLevel.value === 0) {
+//     return 0
+//   }
+//   if (currentLevel.value >= maxLevel) {
+//     return 100; // Level 10 is always 100%
+//   }
+
+//   const currentLevelThreshold = levels.find(l => l.level === currentLevel.value)?.minPlayers || 0;
+//   const nextLevelThreshold = levels.find(l => l.level === currentLevel.value + 1)?.minPlayers || 0;
+
+//   const playersProgressInThisLevel = invitedPlayers.value - currentLevelThreshold;
+//   const playersNeededInThisLevel = nextLevelThreshold - currentLevelThreshold;
+
+//   const base = ((currentLevel.value) % 3) * 33;
+
+//   const progressInsideLevel = playersToNextLevel.value / 100 * 33;
+
+//   return base + progressInsideLevel;
+// });
+
+const currentPersonPercentage = computed(() => {
+  const maxLevel = 10;
+  if (currentLevel.value >= maxLevel) {
+    return 100;
+  }
+  
+  const remainingPlayers = playersToNextLevel.value - invitedPlayers.value;
+  // Define base for the progress calculation based on level
+  const base = (() => {
+  if (currentLevel.value >= 1 && currentLevel.value <= 8) {
+    // For levels 1 to 8, the base is always 33%
+    return 33;
+  } else if (currentLevel.value === 9) {
+    return 66;  // For level 9, base is 66%
+  } else if (currentLevel.value === 10) {
+    return 100; // For level 10, base is 100%
+  } else {
+    return 0; // Default if somehow currentLevel is invalid
+  }
+})();
+
+  const progressInsideLevel = ((invitedPlayers.value - levelThresholds[currentLevel.value - 1]) / (levelThresholds[currentLevel.value] - levelThresholds[currentLevel.value - 1]) * 33) || 0;
+
+  console.log('base' + base)
+  console.log('ProgressInside' + progressInsideLevel)
+  if (currentLevel.value === 10 || currentLevel.value === 0) {
+    return base
+  } else {
+    return base + progressInsideLevel
+  }
+});
+const playersToNextLevel = ref(0);
+const currentLevel = ref(0);
+const invitedPlayers = ref(0);
+
+// Get progress data
+const getPersonPercentage = () => {
+  api.get("/session/refer-rebate/refer-progress").then(res => {
+    invitedPlayers.value = res.data.currentRefer;
+    playersToNextLevel.value = Number(res.data.nextLevelRefer) - Number(invitedPlayers.value);
+    currentLevel.value = res.data.currentRefer === 0 ? 0 : getCurrentLevel(invitedPlayers.value);
+  });
+};
+
+// Level thresholds
+const levelThresholds = [1, 2, 51, 151, 1001, 5001, 15001, 50001, 100001, 150001, 999999];
+
+const levels = levelThresholds.map((minPlayers, index) => ({
+  level: index + 1,
+  minPlayers
+}));
+
+// Function to get current level
+function getCurrentLevel(players) {
+  let level = 1;
+  for (let i = 0; i < levelThresholds.length; i++) {
+    if (players >= levelThresholds[i]) {
+      level = i + 1;
+    }
+  }
+  return level;
+}
+const checkpoints = computed(() => {
+  return [
+    // First checkpoint at 33%
+    {
+      left: 33,
+      label: `${t('earnMoney.level')} ${invitedPlayers.value === 0 ? 1 : currentLevel.value < 8 ? currentLevel.value : 8}`,  // If currentLevel is below 8, show it, else show Level 8
+      minPlayers: invitedPlayers.value === 0 ? levels[0]?.minPlayers : currentLevel.value < 8 ? levels[currentLevel.value - 1]?.minPlayers : levels[7]?.minPlayers  // Level 8 minPlayers
+    },
+    // Second checkpoint at 66%
+    {
+      left: 66,
+      label: `${t('earnMoney.level')} ${invitedPlayers.value === 0 ? 2 : currentLevel.value < 8 ? currentLevel.value + 1 : 9}`,  // If currentLevel is below 9, show the next level, else show Level 9
+      minPlayers: invitedPlayers.value === 0 ? levels[1]?.minPlayers : currentLevel.value < 8 ? levels[currentLevel.value]?.minPlayers : levels[8]?.minPlayers  // Level 8 minPlayers
+      // minPlayers: nextThreshold || levels[9]?.minPlayers // Level 9 minPlayers
+    },
+    // Final checkpoint at 99%
+    {
+      left: 99,
+      label: `${t('earnMoney.level')} ${invitedPlayers.value === 0 ? 3 : currentLevel.value < 8 ? currentLevel.value + 2 : 10}`,// Always show Level 10 at 99%
+      minPlayers: invitedPlayers.value === 0 ? levels[2]?.minPlayers : currentLevel.value < 8 ? levels[currentLevel.value + 1]?.minPlayers : levels[9]?.minPlayers  // Level 8 minPlayers
+    }
+  ];
+});
 const fallbackCopyTextToClipboard = (text) => {
   const textarea = document.createElement("textarea");
   textarea.value = text;
@@ -596,6 +815,7 @@ const handleShareToEmail = (url) => {
 const modalSocialShare = ref(false);
 
 onMounted(() => {
+  getPersonPercentage();
   getOneTimeBonusSetting();
   getMemberDetail();
   getLatestInvitees();
@@ -952,7 +1172,88 @@ watch(activeSetting, checkIsShowDetail);
     //   margin-right: 12px;
     // }
     }
-  }
+    .person-level-away {
+      margin-top: 30px;
+      .person-level-title {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        img {
+          width: 30px;
+          margin-right: 10px;
+        }
+        .text {
+          font-weight: bold;
+          .text-person {
+            background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
+          .text-level {
+              background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+          }
+        }
+      }
+      .person-level-away-bar-container {
+        margin: 10px 0 0;
+        border: 1px solid #FFFFFF14;
+        border-radius: 4px;
+        padding: 10px 15px 10px 5px;
+        position: relative;
+        .outer-bar-container {
+          position: relative;
+          height: 10px;
+          width: 90%;
+          margin: 50px auto;
+          .outer-bar {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          background: #E6E6E680; /* light gray background */
+          border-radius: 10px;
+        }
+
+        .inner-bar {
+          height: 100%;
+          background-color: #82ea77; /* green progress */
+          border-radius: 10px 0 0 10px;
+          transition: width 0.3s ease;
+        }
+
+        .checkpoint {
+          position: absolute;
+          top: -35px;
+          bottom: 0;
+          width: 50px;
+          height: 50px;
+          transform: translateX(-50%);
+          &.check0 {
+            left: 25px;
+            top: 22px;
+            height: unset;
+          }
+          img {
+            width: 100%;
+          }
+          .level {
+            position: absolute;
+            font-size: 11px;
+            text-align: center;
+            width: 100%;
+          }
+          .noOfPerson {
+            font-size: 10px;
+            font-weight: bold;
+            width: 80px;
+          }
+        }
+        }
+        
+      }
+    }
+   }
 
   .earn-money-friendcount {
     margin-top: 16px;

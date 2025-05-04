@@ -347,6 +347,24 @@ const routes = [
     ],
     meta: { requiresAuth: true }
   },
+  {
+    path: "/account/dividend",
+    component: () => import("layouts/AffiliateLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/DividendView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/affiliate/team-management",
+    component: () => import("layouts/AffiliateLayout.vue"),
+    children: [{ path: "", component: () => import("pages/affiliate/TeamManagementView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/agent",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/AgentView.vue") }],
+    meta: { requiresAuth: true }
+  },
   // {
   //   path: "/account/promotion",
   //   component: () => import("layouts/MainLayout.vue"),
@@ -588,6 +606,39 @@ const routes = [
       }
     ],
     meta: { requiresAuth: true }
+  },
+  {
+    path: "/affiliate/agent",
+    component: () => import("layouts/AffiliateLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/affiliate/AffiliateAccountPage.vue")
+      }
+    ],
+    meta: { requiresAuth: false }
+  },
+  {
+    path: "/affiliate/overview",
+    component: () => import("layouts/AffiliateLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/affiliate/OverviewPage.vue")
+      }
+    ],
+    meta: { requiresAuth: false }
+  },
+  {
+    path: "/affiliate/account-record",
+    component: () => import("layouts/AffiliateLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/affiliate/AccountRecordPage.vue")
+      }
+    ],
+    meta: { requiresAuth: false }
   },
   // {
   //   path: "/account/personal",

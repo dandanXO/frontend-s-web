@@ -1,8 +1,8 @@
 <template>
   <div class="link-group-wrapper">
-    <linkable-button v-for="link in links" :key="link.href" :to="link.href" :outerlink="link.outerlink">
+    <linkable-button v-for="link in links" :key="link.href" :to="link.href" :login-needed="link.loginNeeded">
       <div class="link-content-wrapper">
-        <img style="width: 20xp; height: 20px;" :src="$q.dark.isActive ? link.iconDark : link.icon" />
+        <img style="width: 20xp; height: 20px" :src="$q.dark.isActive ? link.iconDark : link.icon" />
         <span>{{ link.label }}</span>
       </div>
     </linkable-button>
@@ -22,10 +22,16 @@ import LinkCustomerDarkServiceImg from "assets/images/home/link-customer-service
 import LinkCustomerService2Img from "assets/images/home/link-customer-service2.svg";
 import LinkCustomerDarkService2Img from "assets/images/home/link-customer-service2-dark.svg";
 
-const customService = useSessionStorage("CUSTOM_SERVICE", '');
+const customService = useSessionStorage("CUSTOM_SERVICE", "");
 
 const links = ref([
-  { icon: LinkCustomerService2Img, label: "专属客服", href: "/account/inbox", outerlink: customService, iconDark: LinkCustomerDarkService2Img },
+  {
+    icon: LinkCustomerService2Img,
+    label: "专属客服",
+    href: "/promo?name=lh-official-gift",
+    iconDark: LinkCustomerDarkService2Img,
+    loginNeeded: true
+  },
   { icon: LinkCommunicationImg, label: "消息中心", href: "/account/inbox", iconDark: LinkCommunicationDarkImg },
   { icon: LinkVipImg, label: "VIP特权", href: "/account/vip", iconDark: LinkVipDarkImg },
   { icon: LinkCustomerServiceImg, label: "联系客服", href: "/liveChat", iconDark: LinkCustomerDarkServiceImg }

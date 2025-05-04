@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>55Ace</title>
+
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  </head>
+  <body id="mx1-download-v2">
+    <div class="main-container">
+      <div class="header">
+        <img class="header-logo" src="imgs/header-logo.png" />
+      </div>
+      <div class="top-info-container">
+        <p>55ACE - El mejor casino y apuestas en línea!</p>
+        <p>Únete y obtén un bono gratis.</p>
+        <p>
+          <span class="info-highlight-txt">10,000+</span>
+          Juegos, dinero gratis, retiros rápidos, todos los métodos de pago, soporte 24/7
+        </p>
+      </div>
+      <div class="banner-container">
+        <img class="banner" src="imgs/aviator-banner.png" />
+        <img class="banner" src="imgs/jili-banner.png" />
+        <img class="banner" src="imgs/100-plus-games-banner.png" />
+        <img class="banner" src="imgs/table-games-banner.png" />
+      </div>
+      <div class="download-info-container">
+        <img class="download-promotional-img" src="imgs/download-promotional-img.png" />
+        <div class="download-content">
+          <div class="download-content-item">
+            <div class="download-txt-bg">Descarga la aplicación y obtén un bono de invitación de 500 Rs</div>
+            <div class="download-txt">Cifrado seguro para proteger tu privacidad</div>
+          </div>
+          <div class="download-content-item">
+            <div class="download-txt-bg">Tamaño pequeño, instalación rápida</div>
+            <div class="download-txt">Experiencia de aplicación móvil de alta calidad</div>
+          </div>
+          <div class="download-content-item">
+            <div class="download-txt-bg">Atención al cliente en línea 24/7</div>
+            <div class="download-txt">Completamente gratis y disponible en todos los dispositivos</div>
+          </div>
+        </div>
+      </div>
+      <div class="download-btn-container">
+        <img class="download-btn-info" src="imgs/download-btn-info.png" />
+        <button class="download-btn" id="downloadBtn">Descarga la aplicación</button>
+      </div>
+    </div>
+    <script type="text/javascript">
+      console.log("MX1 Download V2");
+
+      const searchParams = new URLSearchParams(window.location.search);
+      let affidValue = searchParams.get("p0") || searchParams.get("id");
+      const campaignname = searchParams.get("p1") || searchParams.get("campaignname");
+      const campaignid = searchParams.get("p2") || searchParams.get("campaignid");
+      const adsetid = searchParams.get("p3") || searchParams.get("adsetid");
+      const adsetname = searchParams.get("p4") || searchParams.get("adsetname");
+      const adname = searchParams.get("p5") || searchParams.get("adname");
+      const adid = searchParams.get("p6") || searchParams.get("adid");
+      const fbclid = searchParams.get("fbclid");
+      const fbpid = searchParams.get("fbpid");
+      const autoDownload = searchParams.get("autoDownload");
+
+      affidValue = affidValue ?? "CD4949";
+
+      var apiUrl = "";
+      var adjustUrlCode = "";
+      getApiUrl();
+
+      async function getApiUrl() {
+        var button;
+
+        let affiliateLists = {
+      "CD4949": {
+        "adCode": "1ngr3bdc",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1917517130028748802/android/apk/1.0.4_20250430183800.apk"
+      },
+      "A13A81": {
+        "adCode": "1idcjk56",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1855784624512999426/android/apk/1.0.4_20250304150223.apk"
+      },
+      "BD41D9": {
+        "adCode": "1iw86wbx",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1855785082304503810/android/apk/1.0.4_20250304150424.apk"
+      },
+      "642A6A": {
+        "adCode": "1n8pwnoj",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1916107212211425281/android/apk/1.0.4_20250426204200.apk"
+      },
+      "022563": {
+        "adCode": "1nzkihe9",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1917517514998747138/android/apk/1.0.4_20250430184000.apk"
+      },
+      "969493": {
+        "adCode": "1i7iuanx",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1846084156810407938/android/apk/1.0.4_20250304145424.apk"
+      },
+      "2F6E77": {
+        "adCode": "1ihfvl6s",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1855784916449140737/android/apk/1.0.4_20250304150400.apk"
+      },
+      "F05D96": {
+        "adCode": "1iuzbp37",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1855783278569234434/android/apk/1.0.4_20250304145623.apk"
+      },
+      "17D89A": {
+        "adCode": "1ixf2fho",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1855783575303659522/android/apk/1.0.4_20250304145800.apk"
+      },
+      "FB104C": {
+        "adCode": "1n9ccypw",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1917516752218427394/android/apk/1.0.4_20250430183600.apk"
+      },
+      "7C66BB": {
+        "adCode": "1nfwt6ro",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1917518246086905858/android/apk/1.0.4_20250430184248.apk"
+      },
+      "2B3E68": {
+        "adCode": "1nmz0cpd",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1917518395592871937/android/apk/1.0.4_20250430184400.apk"
+      },
+      "871E5B": {
+        "adCode": "1ntnfnnr",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1912767399268896769/android/apk/1.0.4_20250417154000.apk"
+      },
+      "A6C815": {
+        "adCode": "1nj9oxwu",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1917516108673781761/android/apk/1.0.4_20250430183250.apk"
+      },
+      "7241AE": {
+        "adCode": "1negiso0",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1917515979992535041/android/apk/1.0.4_20250430183225.apk"
+      },
+      "1B619D": {
+        "adCode": "1n4ofl7j",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1917516525172363265/android/apk/1.0.4_20250430183449.apk"
+      },
+      "65D4F7": {
+        "adCode": "1nlkye77",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1917518545476325377/android/apk/1.0.4_20250430184424.apk"
+      },
+      "149BFA": {
+        "adCode": "1ixi3qv4",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1855783410933080065/android/apk/1.0.4_20250304145647.apk"
+      },
+      "77BDF7": {
+        "adCode": "1iw8ovqt",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1858732604359942145/android/apk/1.0.4_20250304150647.apk"
+      },
+      "E39729": {
+        "adCode": "1m1g3w24",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1896839635138486274/android/apk/1.0.4_20250304163200.apk"
+      },
+      "5E59F2": {
+        "adCode": "1i4vg4m1",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1855783908591443970/android/apk/1.0.4_20250304145848.apk"
+      },
+      "DA47AD": {
+        "adCode": "1n6l8658",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1917517392927723522/android/apk/1.0.4_20250430183849.apk"
+      },
+      "2ED538": {
+        "adCode": "",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1848300087804334081/android/apk/1.0.4_20250304145448.apk"
+      },
+      "DB082A": {
+        "adCode": "1i5vngm8",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1858732749055041537/android/apk/1.0.4_20250304150800.apk"
+      },
+      "F093EF": {
+        "adCode": "1nt1qnpo",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1917516235970908162/android/apk/1.0.4_20250430183400.apk"
+      },
+      "01C1C6": {
+        "adCode": "1i7iuanx",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1855783016513314817/android/apk/1.0.4_20250304145600.apk"
+      },
+      "F7D3CF": {
+        "adCode": "1nsu6hb6",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1917516998466015234/android/apk/1.0.4_20250430183649.apk"
+      },
+      "0E3335": {
+        "adCode": "1n1urisw",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1917516872125190145/android/apk/1.0.4_20250430183624.apk"
+      },
+      "A42B51": {
+        "adCode": "1igfmwg1",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1858732113576042497/android/apk/1.0.4_20250304150600.apk"
+      },
+      "18947B": {
+        "adCode": "1nio75ik",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1917518143636836354/android/apk/1.0.4_20250430184224.apk"
+      },
+      "706EA4": {
+        "adCode": "1iuafjh9",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1855784778020331521/android/apk/1.0.4_20250304150247.apk"
+      },
+      "E71624": {
+        "adCode": "1i7iuanx",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1846081491053391873/android/apk/1.0.4_20250304145400.apk"
+      },
+      "888297": {
+        "adCode": "1i3731pm",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1855784200796020738/android/apk/1.0.4_20250304150024.apk"
+      },
+      "4700B0": {
+        "adCode": "1nnx5ezi",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1917515864200384513/android/apk/1.0.4_20250430183200.apk"
+      },
+      "2ADFCA": {
+        "adCode": "1io5qoye",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1855784076237774850/android/apk/1.0.4_20250304150000.apk"
+      },
+      "4E9931": {
+        "adCode": "1ivqpetd",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1855784339543597058/android/apk/1.0.4_20250304150048.apk"
+      },
+      "E92D5D": {
+        "adCode": "1nwelxte",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1917517261457264641/android/apk/1.0.4_20250430183824.apk"
+      },
+      "5C95BC": {
+        "adCode": "1iug62mc",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1855783755092500482/android/apk/1.0.4_20250304145824.apk"
+      },
+      "D1DE40": {
+        "adCode": "1i4rfz3a",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1855785262764433409/android/apk/1.0.4_20250304150448.apk"
+      },
+      "7C44AE": {
+        "adCode": "1nja53oo",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1917517903164805121/android/apk/1.0.4_20250430184048.apk"
+      },
+      "ED46DC": {
+        "adCode": "1nuncig3",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1912767516566802434/android/apk/1.0.4_20250417154025.apk"
+      },
+      "6B1044": {
+        "adCode": "1nqtyp7z",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1917517646397902850/android/apk/1.0.4_20250430184025.apk"
+      },
+      "BAAFDD": {
+        "adCode": "1ik7qjf8",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1858732920149090305/android/apk/1.0.4_20250304150823.apk"
+      },
+      "F88DCC": {
+        "adCode": "1il35wzr",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1855784484419051521/android/apk/1.0.4_20250304150200.apk"
+      },
+      "9AFF30": {
+        "adCode": "1ilgv8v6",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1858732443697127425/android/apk/1.0.4_20250304150623.apk"
+      },
+      "F2E0B8": {
+        "adCode": "1ns48xvn",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1917516354887815169/android/apk/1.0.4_20250430183425.apk"
+      },
+      "688D73": {
+        "adCode": "1lcyijw3",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1888771949958475778/android/apk/1.0.4_20250304150847.apk"
+      },
+      "CC8EF9": {
+        "adCode": "1ne8g2bm",
+        "version": "1.0.4",
+        "url": "https://files.j9zwvu1ogrg.com/app/21/affiliate/1917518019955200001/android/apk/1.0.4_20250430184200.apk"
+      }
+    }
+
+        adjustUrlCode = affiliateLists[affidValue]["adCode"];
+        apiUrl = affiliateLists[affidValue]["url"];
+
+        button = document.getElementById("downloadBtn");
+        button.onclick = function () {
+          downloadApk(code, pp, fbclid, fbpid);
+          return false;
+        };
+
+        if (autoDownload == "1") {
+          downloadApk(code, pp, fbclid, fbpid);
+        }
+      }
+
+      function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+          var pair = vars[i].split("=");
+          if (pair[0] == variable) {
+            return pair[1];
+          }
+        }
+        return "";
+      }
+
+      var code = getQueryVariable("code");
+      var pp = new Array(7);
+      for (let i = 0; i < pp.length; i++) {
+        pp[i] = getQueryVariable("p" + i);
+        pp[i] = pp[i].replace(/{|}/g, "");
+      }
+
+      button = document.getElementById("downloadBtn");
+      button.onclick = function () {
+        downloadApk(code, pp, fbclid, fbpid);
+        return false;
+      };
+
+      function downloadApk(code, pp, fbvar, fbpid) {
+        console.log(apiUrl);
+        var date = Date.now();
+        var url =
+          `https://app.adjust.com/${adjustUrlCode}?campaign=${campaignname}%20%28${campaignid}%29&adgroup=${adsetname}%20%28${adsetid}%29&creative=${adname}%20%28${adid}%29&fbclid=${fbclid}&redirect=${apiUrl}?v=` +
+          date;
+        // alert(url)
+        const link = document.createElement("a");
+        link.style.display = "none";
+        link.href = url;
+        link.download = "mx1-app-1.0.4.apk";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    </script>
+  </body>
+</html>

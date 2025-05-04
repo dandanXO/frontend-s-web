@@ -1,5 +1,10 @@
 <template>
   <div class="wheel-stage-wrapper">
+    <div class="countdown">
+      {{ isWheelEnded ? $t("hotPromo.next_round") : $t("hotPromo.countdown") }}
+      : {{ remainingTime }}
+    </div>
+
     <div class="wheel-outer-wrapper">
       <!-- <span class="title">Countdown: {{ remainingTime }}</span> -->
       <div class="summary-wrapper">
@@ -12,7 +17,7 @@
 
         <template v-if="extractionDifference > 0 && !info.hasWithdrawn">
           <ProgressBar />
-          <div class="cash-out-btn" :class="{ disabled: isWheelEnded }" @click="isCashOutPopupVisible = true" />
+          <div class="cash-out-btn" :class="{ disabled: isWheelEnded }" @click="handleWithdrawClick" />
         </template>
 
         <button v-else-if="!info.hasWithdrawn" class="receive-btn" @click="handleReceiveClick">
@@ -25,24 +30,21 @@
           <span>{{ $t("hotPromo.received") }}</span>
         </button>
 
-        <div class="winning-record-outer-wrapper">
-          <div ref="winningRecordRef" class="winning-record-wrapper">
-            <template v-if="winningRecord.length">
-              <div v-for="(record, index) in winningRecord" :key="index" class="winning-record-item">
-                <span>{{ moment(record.recordTime).format("MM-DD HH:mm:ss") }}</span>
-                <span class="name">{{ record.loginName }}</span>
-                <span>
-                  {{ $t("hotPromo.receive") }}
-                  <span class="amount">{{ $t("hotPromo.rs") }}{{ record.bonus }}</span>
-                </span>
-              </div>
-            </template>
-            <div v-else class="no-record-text">{{ $t("hotPotmo.no_records") }}</div>
-          </div>
-        </div>
+
         <div class="foreground-wrapper">
-          <div class="wheel-wrapper">
-            <!-- <img
+
+        </div>
+      </div>
+
+      <button class="record-btn" @click="handleRecordClick">{{ $t("hotPromo.record") }}</button>
+    </div>
+
+    <CommonButton class="draw-btn" :class="{ disabled: isWheelEnded }" @click="handleInviteClick">
+      {{ $t("hotPromo.invite_to_earn_spin") }}
+    </CommonButton>
+
+    <div class="wheel-wrapper">
+      <!-- <img
               class="decoration penguin"
               src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-penguin.png"
             />
@@ -51,28 +53,20 @@
               src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-ox.png"
             /> -->
 
-            <div class="countdown">
-              {{ isWheelEnded ? $t("hotPromo.next_round") : $t("hotPromo.countdown") }}
-              : {{ remainingTime }}
-            </div>
-            <div class="wheel-inner-wrapper">
-              <img
-                ref="spinWheelRef"
-                class="wheel"
-                src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/wheel-bg.png"
-              />
-              <img
-                class="indicate"
-                src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/wheel-indicate.png"
-              />
-              <button class="btn" :class="{ disabled: !info.availableSpin }" @click="handleWheelClick">
-                {{ $t("hotPromo.rotate") }}
-                <br />
-                {{ info.availableSpin }} {{ $t("hotPromo.time") }}
-              </button>
-            </div>
 
-            <!-- <img
+      <div class="wheel-inner-wrapper">
+        <img ref="spinWheelRef" class="wheel"
+          src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/wheel-bg.png" />
+        <img class="indicate"
+          src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/wheel-indicate.png" />
+        <button class="btn" :class="{ disabled: !info.availableSpin }" @click="handleWheelClick">
+          {{ $t("hotPromo.rotate") }}
+          <br />
+          {{ info.availableSpin }} {{ $t("hotPromo.time") }}
+        </button>
+      </div>
+
+      <!-- <img
               class="decoration tiger"
               src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-tiger.png"
             />
@@ -80,21 +74,30 @@
               class="decoration rabbit"
               src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-rabbit.png"
             /> -->
-            <CommonButton class="draw-btn" :class="{ disabled: isWheelEnded }" @click="handleInviteClick">
-              {{ $t("hotPromo.invite_to_earn_spin") }}
-            </CommonButton>
-            <span v-if="isWheelEnded" class="next-spin-remaining-time">{{ $t("hotPromo.this_round_has_ended") }}</span>
-            <span v-if="!isWheelEnded" class="next-spin-remaining-time">{{ $t("hotPromo.countdown_to_next_free_spins") }}: {{ nextFreeSpinRemainingTime }}</span>
-          </div>
-        </div>
-      </div>
 
-      <button class="rules-btn" @click="handleRulesClick">{{ $t("hotPromo.rules") }}</button>
-      <button class="record-btn" @click="handleRecordClick">{{ $t("hotPromo.record") }}</button>
+      <span v-if="isWheelEnded" class="next-spin-remaining-time">{{ $t("hotPromo.this_round_has_ended") }}</span>
+      <span v-if="!isWheelEnded" class="next-spin-remaining-time">{{ $t("hotPromo.countdown_to_next_free_spins")
+      }}: {{
+          nextFreeSpinRemainingTime }}</span>
     </div>
 
-    <q-dialog v-model="showRulesDialog">
-      <div class="block-wrapper">
+    <div class="winning-record-outer-wrapper">
+      <div ref="winningRecordRef" class="winning-record-wrapper">
+        <template v-if="winningRecord.length">
+          <div v-for="(record, index) in winningRecord" :key="index" class="winning-record-item">
+            <span>{{ moment(record.recordTime).format("MM-DD HH:mm:ss") }}</span>
+            <span class="name">{{ record.loginName }}</span>
+            <span>
+              {{ $t("hotPromo.receive") }}
+              <span class="amount">{{ $t("hotPromo.rs") }}{{ record.bonus }}</span>
+            </span>
+          </div>
+        </template>
+        <div v-else class="no-record-text">{{ $t("hotPotmo.no_records") }}</div>
+      </div>
+    </div>
+
+    <div class="block-wrapper">
       <div class="title-wrapper">
         {{ $t("hotPromo.activityRules") }}
         <!-- <img
@@ -110,7 +113,53 @@
         <li>{{ $t("content.message5") }}</li>
       </ol>
     </div>
-    </q-dialog>
+
+    <q-dialog v-model="showWithdrawDialog">
+          <div class="withdraw-container">
+            <img v-if="languageVal === 'ur'" class="withdraw-header" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/withdraw-header-ur.png" />
+            <img v-else class="withdraw-header" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/withdraw-header.png" />
+            <div class="withdraw-amount">
+              <img class="cash" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/cash-icon.png" />
+              <RedGradientTextAmount :amountText="`${info.accumulatedBonus}`"  />
+              <img class="currency" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/rs-text.svg" />
+            </div>
+            <img v-if="languageVal === 'ur'" class="payment-method-header" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/payment-method-header-ur.svg" />
+            <img v-else class="payment-method-header" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/payment-method-header.svg" />
+            <div class="progress">
+              <div class="progress-item">
+                <img class="icon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/checked.svg" />
+                <div>{{ $t("hotPromo.spinReferWheel.paymentRequestSubmitted") }}</div>
+              </div>
+    
+              <div class="progress-item">
+                <img class="icon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/line.svg" /><div></div>
+              </div>
+    
+              <div class="progress-item">
+                <img class="icon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/checked.svg" />
+                <div>
+                  {{ $t("hotPromo.spinReferWheel.stillNeedToMakeWithdrawal") }} {{ extractionDifference }}
+                </div>
+              </div>
+    
+              <div class="progress-item">
+                <img class="icon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/line.svg" /><div></div>
+              </div>
+    
+              <div class="progress-item">
+                <img v-if="extractionDifference <= 0" class="icon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/checked.svg" />
+                <img v-else class="icon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/unchecked.svg" /><div>{{ info.claimBonus }} RS {{ $t("hotPromo.spinReferWheel.willBePaidToYourRsAccount") }}</div>
+              </div>
+            </div>
+    
+            <div class="desc">* {{ $t("hotPromo.spinReferWheel.referFriendToRegister") }}</div>
+    
+            <div class="invite-friends-btn" @click="handleInviteClick">
+              {{ $t("hotPromo.spinReferWheel.inviteFriendsToHelp") }}
+            </div>
+          </div>
+        </q-dialog>
+
     <WheelResultDialog v-model="showResultDialog" :prize="prize" @hide="$emit('reload')" />
     <RecordDialog v-model="showRecordDialog" />
     <CashOutPopup ref="cashOutPopupRef" v-model="isCashOutPopupVisible" />
@@ -132,6 +181,11 @@ import SharePopup from "./SharePopup.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
 import { userStore } from "src/stores";
 import { t } from "src/boot/lang";
+import RedGradientTextAmount from "./withdrawDialog/GradientTextAmount.vue";
+import { i18nStore } from "src/router/language";
+import { storeToRefs } from "pinia";
+
+const { languageVal } = storeToRefs(i18nStore());
 
 const store = userStore();
 const emit = defineEmits(["reload"]);
@@ -153,7 +207,7 @@ const $q = useQuasar();
 const remainingTime = ref("");
 const nextFreeSpinRemainingTime = ref("");
 const showRecordDialog = ref(false);
-const showRulesDialog = ref(false);
+const showWithdrawDialog = ref(false);
 const showResultDialog = ref(false);
 const spinWheelRef = ref();
 const spinButtonDisable = ref(false);
@@ -296,8 +350,9 @@ const handleReceiveClick = () => {
 const handleRecordClick = () => {
   showRecordDialog.value = true;
 };
-const handleRulesClick = () => {
-  showRulesDialog.value = true;
+
+const handleWithdrawClick = () => {
+  showWithdrawDialog.value = true;
 };
 
 const updateCountdownTime = () => {
@@ -363,27 +418,202 @@ onUnmounted(() => {
 </script>
 <style lang="scss" scoped>
 .wheel-stage-wrapper {
-  height: 710px;
-  max-width: 320px;
+  // height: 710px;
+  max-width: 350px;
   margin: 0 auto;
+
   img {
     margin-bottom: 0 !important;
+  }
+
+  .countdown {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/countdown-bg.png) no-repeat;
+    background-size: 100% 100%;
+    aspect-ratio: 295 / 24;
+    margin: 14px 24px 16px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .winning-record-outer-wrapper {
+    padding: 18px 20px;
+    width: 100%;
+    background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/records-bg.png) no-repeat;
+    background-size: 100% 100%;
+    border-radius: 8px;
+
+    .winning-record-wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 200px;
+      overflow: hidden;
+
+      .winning-record-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 4px;
+        min-height: 20px;
+
+        >span {
+          line-height: 20px;
+          flex: 1;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+
+          &:last-child {
+            text-align: right;
+            min-width: 100px;
+          }
+        }
+
+        .amount {
+          font-weight: 600;
+          color: #FEBA02;
+        }
+
+        .name {
+          text-align: center;
+        }
+      }
+
+      .no-record-text {
+        text-align: center;
+        font-weight: 700;
+      }
+    }
+  }
+
+  .draw-btn {
+    position: relative;
+    max-width: 70%;
+    margin: -5% auto 0;
+    min-height: 80px;
+    font-size: 16px;
+
+    &.common-btn {
+      background-size: 100% 100%;
+    }
+
+    &.disabled {
+      filter: grayscale(0.7);
+      pointer-events: none;
+    }
+  }
+
+  .wheel-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    .wheel-inner-wrapper {
+      position: relative;
+      top: 0;
+      padding: 0 20px;
+
+      .indicate {
+        -webkit-user-drag: none;
+        position: absolute;
+        top: 3px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 217px;
+        max-width: 47%;
+      }
+
+      .btn {
+        -webkit-user-drag: none;
+        height: 96px;
+        position: absolute;
+        top: 48%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/wheel-btn.png);
+        background-size: cover;
+        aspect-ratio: 250/300;
+        border: none;
+        width: 80px;
+        max-width: 35%;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 20px;
+        color: #f9f9f9;
+        padding-top: 10px;
+
+        &.disabled {
+          filter: grayscale(0.7);
+          opacity: 1 !important;
+        }
+      }
+    }
+
+    .decoration {
+      position: absolute;
+      -webkit-user-drag: none;
+
+      &.penguin {
+        top: 9%;
+        left: 0;
+        width: 105px;
+        max-width: 21%;
+        transform: rotate(-5.8deg);
+      }
+
+      &.ox {
+        top: 9%;
+        right: 0;
+        width: 150px;
+        max-width: 30%;
+        transform: rotate(13.85deg);
+      }
+
+      &.tiger {
+        bottom: 18%;
+        right: 0;
+        width: 145px;
+        max-width: 29%;
+      }
+
+      &.rabbit {
+        bottom: 18%;
+        left: 0;
+        width: 130px;
+        max-width: 26%;
+      }
+    }
+
+
+
+    .next-spin-remaining-time {
+      font-weight: 700;
+      color: #fff;
+      display: block;
+      text-align: center;
+      background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/next-spin-countdown-bg.png) no-repeat;
+      background-size: 100% 100%;
+      padding: 8px;
+      margin-top: 10px;
+    }
   }
 
   .wheel-outer-wrapper {
     background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/bg.png) no-repeat;
     background-size: 100% 100%;
     position: relative;
-    min-height: 650px;
+    min-height: 160px;
 
     .summary-wrapper {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 58px 34px 0;
+      padding: 38px 34px 0;
 
-      > * {
-        margin-top: 10px;
+      >* {
+        margin-bottom: 10px;
       }
 
       .prize {
@@ -392,8 +622,9 @@ onUnmounted(() => {
         font-size: 32px;
         font-weight: 900;
         color: #91ffab;
+
         .amount {
-          font-size: 40px;
+          font-size: 32px;
         }
       }
 
@@ -426,8 +657,7 @@ onUnmounted(() => {
           left: 0;
           height: 100%;
           background: linear-gradient(356.25deg, #3b156e -0.21%, #8100ae 93.65%);
-          background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/progress-bar-bg.png)
-            no-repeat;
+          background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/progress-bar-bg.png) no-repeat;
           background-size: 100% 100%;
           border-radius: 4px;
         }
@@ -463,186 +693,11 @@ onUnmounted(() => {
           max-width: 28px;
         }
       }
-
-      .winning-record-outer-wrapper {
-        padding: 12px 14px;
-        width: 100%;
-        background: linear-gradient(245.79deg, rgba(249, 0, 18, 0.6) 6.76%, rgba(255, 98, 66, 0.6) 102.95%);
-        border: 1px solid #c4ffd599;
-        border-radius: 8px;
-
-        .winning-record-wrapper {
-          display: flex;
-          flex-direction: column;
-          height: 200px;
-          overflow: hidden;
-
-          .winning-record-item {
-            display: flex;
-            justify-content: space-between;
-            gap: 4px;
-            min-height: 20px;
-
-            > span {
-              line-height: 20px;
-              flex: 1;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              overflow: hidden;
-              &:last-child {
-                text-align: right;
-                min-width: 100px;
-              }
-            }
-            .amount {
-              font-weight: 600;
-              color: #FEBA02;
-            }
-            .name {
-              text-align: center;
-            }
-          }
-
-          .no-record-text {
-            text-align: center;
-            font-weight: 700;
-          }
-        }
-      }
-
-      .foreground-wrapper {
-        position: absolute;
-        bottom: -60px;
-        left: -1px;
-        right: -1px;
-        background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/fg.png) no-repeat;
-        background-size: 100% 100%;
-        aspect-ratio: 343 / 470;
-        padding-top: 36px;
-        text-align: center;
-
-        .wheel-wrapper {
-          position: relative;
-          width: 100%;
-          height: 100%;
-
-          .countdown {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/countdown-bg.png)
-              no-repeat;
-            background-size: 100% 100%;
-            aspect-ratio: 295 / 24;
-            margin: 4px 24px 16px;
-            font-size: 16px;
-            font-weight: 700;
-            color: #fff;
-          }
-
-          .wheel-inner-wrapper {
-            position: relative;
-            top: 0;
-            padding: 0 20px;
-
-            .indicate {
-              -webkit-user-drag: none;
-              position: absolute;
-              top: 3px;
-              left: 50%;
-              transform: translateX(-50%);
-              width: 217px;
-              max-width: 47%;
-            }
-
-            .btn {
-              -webkit-user-drag: none;
-              height: 96px;
-              position: absolute;
-              top: 48%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/wheel-btn.png);
-              background-size: cover;
-              aspect-ratio: 250/300;
-              border: none;
-              width: 80px;
-              max-width: 35%;
-              font-size: 16px;
-              font-weight: 700;
-              line-height: 20px;
-              color: #f9f9f9;
-              padding-top: 10px;
-              &.disabled {
-                filter: grayscale(0.7);
-                opacity: 1 !important;
-              }
-            }
-          }
-
-          .decoration {
-            position: absolute;
-            -webkit-user-drag: none;
-
-            &.penguin {
-              top: 9%;
-              left: 0;
-              width: 105px;
-              max-width: 21%;
-              transform: rotate(-5.8deg);
-            }
-
-            &.ox {
-              top: 9%;
-              right: 0;
-              width: 150px;
-              max-width: 30%;
-              transform: rotate(13.85deg);
-            }
-
-            &.tiger {
-              bottom: 18%;
-              right: 0;
-              width: 145px;
-              max-width: 29%;
-            }
-
-            &.rabbit {
-              bottom: 18%;
-              left: 0;
-              width: 130px;
-              max-width: 26%;
-            }
-          }
-
-          .draw-btn {
-            position: relative;
-            max-width: 70%;
-            margin: -5% auto 0;
-            min-height: 100px;
-            &.common-btn {
-              background-size: 100% 100%;
-            }
-
-            &.disabled {
-              filter: grayscale(0.7);
-              pointer-events: none;
-            }
-          }
-
-          .next-spin-remaining-time {
-            font-weight: 700;
-            color: #fff;
-            display: block;
-            margin-top: -8px;
-          }
-        }
-      }
     }
 
     .record-btn {
       position: absolute;
-      top: 2%;
+      top: 8%;
       right: 7%;
       border: none;
       background-color: #C93F1E;
@@ -650,9 +705,10 @@ onUnmounted(() => {
       padding: 3px 6px;
       color: #EC9823;
     }
+
     .rules-btn {
       position: absolute;
-      top: 2%;
+      top: 8%;
       left: 9%;
       border: none;
       background-color: #C93F1E;
@@ -664,84 +720,77 @@ onUnmounted(() => {
 
 
 
-  > div:not(:last-child) {
+  >div:not(:last-child) {
     margin-bottom: 12px;
   }
 }
+
 .block-wrapper {
-    background-color: #2A2F3B;
-    border-radius: 12px;
-    padding: 16px 10px;
-    width: 90%;
+  background-color: #2A2F3B;
+  border-radius: 12px;
+  padding: 16px 10px;
+  width: 100%;
 
-    .title-wrapper {
+  .title-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    color: #f9f9f9;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 100%;
+    letter-spacing: 0px;
+    text-align: left;
+    text-transform: uppercase;
+    padding: 10px 5px 0px 10px;
+
+
+    .title-decoration {
       display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      color: #f9f9f9;
-      font-weight: 700;
-      font-size: 22px;
-      line-height: 100%;
-      letter-spacing: 0px;
-      text-align: left;
-      text-transform: uppercase;
-      padding: 10px 5px 0px 10px;
+      gap: 12px;
 
-
-      .title-decoration {
-        display: flex;
-        gap: 12px;
-        > div {
-          width: 8px;
-          height: 8px;
-          transform: rotate(45deg);
-          background-color: #cd91ff;
-        }
-      }
-    }
-    ol {
-      li {
-        margin-bottom: 5px !important;
+      >div {
+        width: 8px;
+        height: 8px;
+        transform: rotate(45deg);
+        background-color: #cd91ff;
       }
     }
   }
+
+  ol {
+    li {
+      margin-bottom: 5px !important;
+    }
+  }
+}
+
 @media screen and (max-width: 500px) {
   .wheel-stage-wrapper {
     .wheel-outer-wrapper {
-      .summary-wrapper {
-      }
+      .summary-wrapper {}
     }
   }
 }
 
 @media screen and (max-width: 450px) {
   .wheel-stage-wrapper {
-    .wheel-outer-wrapper {
-      .summary-wrapper {
-        padding: 11vw 7vw 0;
 
-        .winning-record-outer-wrapper {
-          padding: 8px 10px;
-          .winning-record-wrapper {
-            .winning-record-item > span {
-              font-size: 9px;
-            }
-          }
+    .winning-record-outer-wrapper {
+      .winning-record-wrapper {
+        .winning-record-item>span {
+          font-size: 9px;
         }
+      }
+    }
 
-        .foreground-wrapper {
-          padding-top: 7vw;
-
-          .wheel-wrapper {
-            .wheel-inner-wrapper {
-              .btn {
-                font-size: 14px;
-                line-height: 18px;
-              }
-            }
-          }
+    .wheel-wrapper {
+      .wheel-inner-wrapper {
+        .btn {
+          font-size: 14px;
+          line-height: 18px;
         }
       }
     }
@@ -750,20 +799,19 @@ onUnmounted(() => {
 
 @media screen and (max-width: 375px) {
   .wheel-stage-wrapper {
+
+    .wheel-wrapper {
+      .countdown {
+        font-size: 12px;
+      }
+    }
+
     .wheel-outer-wrapper {
       .summary-wrapper {
-        .foreground-wrapper {
-          padding-top: 7vw;
-
-          .wheel-wrapper {
-            .countdown {
-              font-size: 12px;
-            }
-          }
-        }
 
         .prize {
           font-size: 24px;
+
           .amount {
             font-size: 32px;
           }
@@ -787,6 +835,85 @@ onUnmounted(() => {
   &.disabled {
     filter: grayscale(0.7);
     pointer-events: none;
+  }
+}
+
+.withdraw-container {
+  background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw-bg.png) no-repeat;
+  background-size: 100% 100%;
+  width: 320px;
+  height: 450px;
+  padding: 10px 20px;
+
+  .withdraw-header {
+    width: 250px;
+    display: flex;
+    margin: 0 auto;
+  }
+
+  .withdraw-amount {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    margin: 0 auto;
+
+    .cash {
+      width: 35px;
+      height: 35px;
+    }
+
+    .currency {
+      width: 35px;
+      height: 35px;
+    }
+  }
+
+  .progress {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    background-color: #EC0105;
+    padding: 10px;
+    border-radius: 16px;
+    margin: 10px 0;
+
+    .progress-item {
+      display: flex;
+      align-items: center;
+      font-size: 10px;
+
+      .icon {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .desc {
+    color: #A42628;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0px;
+  }
+
+  .invite-friends-btn {
+    background: linear-gradient(270deg, #F43030 0%, #FF7070 100%);
+    font-weight: 700;
+    font-size: 12.76px;
+    line-height: 16.67px;
+    letter-spacing: 0px;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 10px;
+    color: #fff;
+    border-radius: 6px;
+    margin-top: 10px;
   }
 }
 </style>

@@ -1330,6 +1330,7 @@ export default {
     reasonType: '이유 유형',
     reasonTemplate: '이유 템플릿',
     rebate: '리베이트',
+    rebateBase: '리베이트 기준',
     rebateDistributeTime: '리베이트 분배 시간',
     rebateLevel: '리베이트 레벨',
     rebatePercentage: '리베이트 %',
