@@ -369,6 +369,13 @@ import { storeToRefs } from "pinia";
 // import MediaSettingsComponent from "../../components/MediaSettingsComponent.vue";
 
 import AdditionalSteps from "../../components/modal/AdditionalSteps.vue";
+
+const DEFAULT_BONUS_CONFIG = {
+  selected: false,
+  hasBonus: false,
+  privilegeId: null
+};
+
 const closePlayerGuide = () => {
   isAdditionalDepositSteps.value = false;
   if (currentDepStep.value === 4) {
@@ -475,16 +482,8 @@ const copybtntxt3 = ref("复制");
 const extraPrivilegeId = ref();
 const paytypeWithPrivilege = ref("");
 const isFtdPrivilegeEnable = ref(false);
-const ftdBonusConfig = ref({
-  selected: false,
-  hasBonus: false,
-  privilegeId: null
-});
-const secondTimeDepositBonusConfig = ref({
-  selected: false,
-  hasBonus: false,
-  privilegeId: null
-});
+const ftdBonusConfig = ref(DEFAULT_BONUS_CONFIG);
+const secondTimeDepositBonusConfig = ref(DEFAULT_BONUS_CONFIG);
 
 const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
 const isFtdPrivilege = computed(
@@ -747,6 +746,8 @@ function checkPrivilege(v) {
 async function loadPrivilege(val) {
   privilegeList.value = [];
   hasPrivilege.value = false;
+  ftdBonusConfig.value = DEFAULT_BONUS_CONFIG;
+  secondTimeDepositBonusConfig.value = DEFAULT_BONUS_CONFIG;
   await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
     if (res.code === 0) {
       privilegeList.value = res.data.privileges;

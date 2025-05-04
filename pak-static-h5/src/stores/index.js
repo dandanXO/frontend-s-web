@@ -218,11 +218,12 @@ export const userStore = defineStore("userStore", {
       //   req.headers.token = token;
       //   return req;
       // });
+      const timestamp = Date.now();
       this.token =
         isAndroid() || isInPwa() || this.isFromGooglePackage
           ? LocalStorage.getItem("TOKEN")
           : SessionStorage.getItem("TOKEN");
-      return api.get("/session/member").then((response) => {
+      return api.get(`/session/member?v=${timestamp}`).then((response) => {
         if (response.code === 0) {
           const {
             id,

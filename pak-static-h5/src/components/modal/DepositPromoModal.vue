@@ -202,6 +202,7 @@ const checkAppLogin = async () => {
     }
   } catch (e) {
     console.error(e);
+    showNextModal();
   } finally {
     shouldCheckAppAgain.value = false;
   }
@@ -274,7 +275,7 @@ const checkModalType = async () => {
 
 const recheckModalType = async () => {
   if (shouldCheckAppAgain.value && shouldShowModalAgain(1)) {
-    await getData();
+    await getData(false);
     checkAppLogin();
   } else if (
     combinedStatus.value.claimedFtdPrivilege &&
