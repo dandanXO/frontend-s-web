@@ -63,6 +63,7 @@ const statusFromApi = ref({
   isAppLogin: false
 });
 const isActivated = ref(true);
+const isDuringActivation = ref(false);
 const shouldCheckAppAgain = ref(false);
 const countdown = ref("");
 const countdownTimer = ref(null);
@@ -71,7 +72,7 @@ const currentTriggerType = ref("LOGIN");
 const modalTriggerList = ref([
   null,
   "LOGIN,REDIRECT_TO_HOME",
-  "LOGIN",
+  "LOGIN,REDIRECT_TO_HOME",
   "LOGIN,REDIRECT_TO_HOME",
   "LOGIN,REDIRECT_TO_HOME",
   "LOGIN"
@@ -221,7 +222,10 @@ const checkLucky10DayPromo = async () => {
 };
 
 const checkModalType = async () => {
-  if (modalIndex.value >= modalTriggerList.value.length) return;
+  if (modalIndex.value >= modalTriggerList.value.length) {
+    resetModal();
+    return;
+  }
   if (!modalTriggerList.value[modalIndex.value].includes(currentTriggerType.value)) {
     showNextModal();
     return;
@@ -321,6 +325,12 @@ const getData = async (isFirst = true) => {
   }
 };
 
+const resetModal = () => {
+  modalIndex.value = 1;
+  modalType.value = "";
+  showModal.value = false;
+};
+
 watch(modalType, (val) => {
   if (val) {
     showModal.value = true;
@@ -333,7 +343,7 @@ watch(modalType, (val) => {
 watch(
   () => store.balance,
   () => {
-    if (isDuringInitial.value) return;
+    if (isDuringInitial.value || isDuringActivation.value) return;
     store.getMemberInfo().then(recheckModalType);
     currentTriggerType.value = "REDIRECT_TO_HOME";
   }
@@ -341,17 +351,19 @@ watch(
 
 onActivated(() => {
   isActivated.value = true;
+  isDuringActivation.value = true;
   if (isDuringInitial.value) return;
-  store.getMemberInfo().then(recheckModalType);
+  store.getMemberInfo().then(() => {
+    recheckModalType();
+    isDuringActivation.value = false;
+  });
   currentTriggerType.value = "REDIRECT_TO_HOME";
 });
 
 onDeactivated(() => {
   handleDialogClose();
   isActivated.value = false;
-  modalIndex.value = 1;
-  modalType.value = "";
-  showModal.value = false;
+  resetModal();
 });
 
 onMounted(() => {
