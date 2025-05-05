@@ -32,7 +32,7 @@
     ></q-table>
 
     <ul>
-      <li class="dot-style">Active users: daily bet amount 20</li>
+      <li class="dot-style">Active users: daily bet amount 200</li>
       <li class="dot-style">
         Your reward will be calculated based on the total bet amount of your members. The reward gained can either be
         withdrawn or used for further betting.
@@ -156,25 +156,25 @@
           <tr>
             <td>You</td>
             <td>8(1.0%)</td>
-            <td>9,720</td>
+            <td>9,7020</td>
             <td>49</td>
           </tr>
           <tr>
             <td>A</td>
             <td>8(1.0%)</td>
-            <td>7,600</td>
+            <td>7,6000</td>
             <td>35</td>
           </tr>
           <tr>
             <td>B</td>
             <td>6(0.8%)</td>
-            <td>2,100</td>
+            <td>2,1000</td>
             <td>13</td>
           </tr>
           <tr>
             <td>C</td>
             <td>1(0.3%)</td>
-            <td>20</td>
+            <td>200</td>
             <td>1</td>
           </tr>
         </tbody>
@@ -305,79 +305,79 @@ const columns2 = [
 const rows2 = [
   {
     level: "v13",
-    betAmount: `${store.currency.value}${convertToCommaAmount(1600000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(16000000)}`,
     teamMember: "377",
     rebate: "1.5"
   },
   {
     level: "v12",
-    betAmount: `${store.currency.value}${convertToCommaAmount(850000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(8500000)}`,
     teamMember: "233",
     rebate: "1.4"
   },
   {
     level: "v11",
-    betAmount: `${store.currency.value}${convertToCommaAmount(500000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(5000000)}`,
     teamMember: "144",
     rebate: "1.3"
   },
   {
     level: "v10",
-    betAmount: `${store.currency.value}${convertToCommaAmount(260000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(2600000)}`,
     teamMember: "89",
     rebate: "1.2"
   },
   {
     level: "v9",
-    betAmount: `${store.currency.value}${convertToCommaAmount(140000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(1400000)}`,
     teamMember: "55",
     rebate: "1.1"
   },
   {
     level: "v8",
-    betAmount: `${store.currency.value}${convertToCommaAmount(75000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(750000)}`,
     teamMember: "34",
     rebate: "1.0"
   },
   {
     level: "v7",
-    betAmount: `${store.currency.value}${convertToCommaAmount(42000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(420000)}`,
     teamMember: "21",
     rebate: "0.9"
   },
   {
     level: "v6",
-    betAmount: `${store.currency.value}${convertToCommaAmount(20000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(200000)}`,
     teamMember: "13",
     rebate: "0.8"
   },
   {
     level: "v5",
-    betAmount: `${store.currency.value}${convertToCommaAmount(10000)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(100000)}`,
     teamMember: "8",
     rebate: "0.7"
   },
   {
     level: "v4",
-    betAmount: `${store.currency.value}${convertToCommaAmount(3500)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(35000)}`,
     teamMember: "5",
     rebate: "0.6"
   },
   {
     level: "v3",
-    betAmount: `${store.currency.value}${convertToCommaAmount(1400)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(14000)}`,
     teamMember: "3",
     rebate: "0.5"
   },
   {
     level: "v2",
-    betAmount: `${store.currency.value}${convertToCommaAmount(50)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(500)}`,
     teamMember: "2",
     rebate: "0.4"
   },
   {
     level: "v1",
-    betAmount: `${store.currency.value}${convertToCommaAmount(20)}`,
+    betAmount: `${store.currency.value}${convertToCommaAmount(200)}`,
     teamMember: "1",
     rebate: "0.3"
   }
