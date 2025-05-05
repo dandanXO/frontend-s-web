@@ -1989,7 +1989,13 @@ export default {
     tfCompetitionNameTh: '리그 이름 (태국어)',
     traceId: 'Trace ID',
     downloadQRCode: 'QR 코드 다운로드',
-    normalCreate: '정상'
+    normalCreate: '정상',
+    referFriendRebatePointRecord: '친구 초대 베팅 리베이트 포인트 기록',
+    referrerId: '',
+    sumPts: '총 포인트',
+    referFriendRebatePointStatus: '상태',
+    requirement: '요구 사항',
+    pts: '포인트'
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3 개월 이상일 수 없습니다',
@@ -2749,7 +2755,8 @@ export default {
     'Sport App Setting': '스포츠 앱 설정',
     Sport: '스포츠',
     'Game Jackpot Bonus Record': '게임 잭팟 보너스 기록',
-    'Member Privilege Record Pak Export': '회원 할인 기록 수출 - 파키스탄'
+    'Member Privilege Record Pak Export': '회원 할인 기록 수출 - 파키스탄',
+    'Refer Friend Rebate Point record': '친구 초대 베팅 거래량 리베이트 포인트 기록'
   },
   google: {
     google_auth_menu: 'Google 인증자',
@@ -2921,6 +2928,13 @@ export default {
     BONUS_FLUCTUATION: '보너스 변동',
     MQ_LAST_CONSUME_TIME_CHECK: 'MQ 주제 유휴 상태',
     JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: '작업 유휴 (베팅 기록 가져오기)',
+  },
+  referRebatePoint: {
+    NO_BET_AFTER_DEPOSIT: '입금 후 베팅 없음',
+    TOTAL_DEPOSIT_COUNT: '총 입금 횟수',
+    TOTAL_BET_COUNT: '총 베팅 횟수',
+    TOTAL_BET_AMOUNT: '총 베팅 금액',
+    FTD_AMOUNT: '첫 입금 금액'
   },
   error: {
     400: '잘못된 요청',

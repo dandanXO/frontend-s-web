@@ -2550,7 +2550,13 @@ export default {
     pointsDistribution: '积分分布',
     traceId: 'Trace ID',
     downloadQRCode: '二维码下载',
-    normalCreate: '普通'
+    normalCreate: '普通',
+    referFriendRebatePointRecord: '邀请好友投注返水分数记录',
+    referrerId: '推荐人 ID',
+    sumPts: '总分数',
+    referFriendRebatePointStatus: '状态',
+    requirement: '需求',
+    pts: '分数'
   },
   message: {
     adsStatusOpen: '开',
@@ -3359,7 +3365,8 @@ export default {
     'Refer Spin Record': '邀请转盘记录',
     'Official CS Account': '官方客服账号',
     'Site Note': '便签板',
-    'Fast Access Promo': '快速浏览优惠'
+    'Fast Access Promo': '快速浏览优惠',
+    'Refer Friend Rebate Point record': '邀请好友流水返点点数记录'
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -3590,6 +3597,13 @@ export default {
       MANAGER: '管理后台',
       AFFILIATE: '代理后台',
     }
+  },
+  referRebatePoint: {
+    NO_BET_AFTER_DEPOSIT: '存款后无投注',
+    TOTAL_DEPOSIT_COUNT: '总存款次数',
+    TOTAL_BET_COUNT: '总投注次数',
+    TOTAL_BET_AMOUNT: '总投注金额',
+    FTD_AMOUNT: '首存金额'
   },
   error: {
     400: '请求无效',

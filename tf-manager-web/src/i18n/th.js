@@ -1357,7 +1357,13 @@ export default {
     tfCompetitionNameTh: 'ชื่อการแข่งขัน (ไทย)',
     traceId: 'Trace ID',
     downloadQRCode: 'ดาวน์โหลดรหัส QR',
-    normalCreate: 'ปกติ'
+    normalCreate: 'ปกติ',
+    referFriendRebatePointRecord: 'บันทึกคะแนนคืนเงินจากการเดิมพันของเพื่อนที่แนะนำ',
+    referrerId: '',
+    sumPts: 'คะแนนรวม',
+    referFriendRebatePointStatus: 'สถานะ',
+    requirement: 'ข้อกำหนด',
+    pts: 'คะแนน'
   },
   message: {
     startenddatemore3months: 'เวลาเริ่มและเสร็จสิ้นต้องไม่เกิน 3 เดือน',
@@ -1904,7 +1910,8 @@ export default {
     'Bet type setting': 'การตั้งค่าสำหรับการเดิมพัน',
     'Sport App Setting': 'การตั้งค่าสำหรับแอปพลิเคชันกีฬา',
     Sport: 'กีฬา',
-    'Member Privilege Record Pak Export': 'บันทึกส่วนลดสมาชิกส่งออก - ปากีสถาน'
+    'Member Privilege Record Pak Export': 'บันทึกส่วนลดสมาชิกส่งออก - ปากีสถาน',
+    'Refer Friend Rebate Point record': 'บันทึกคะแนนคืนเงินจากการหมุนเวียนเดิมพันของเพื่อนที่แนะนำ'
   },
   google: {
     google_auth_menu: 'ตัวรับรองความถูกต้องของกูเกิ้ล',
@@ -1985,6 +1992,13 @@ export default {
     BONUS_FLUCTUATION: 'การเปลี่ยนแปลงโบนัส',
     MQ_LAST_CONSUME_TIME_CHECK: 'หัวข้อ MQ ไม่ถูกใช้งาน',
     JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: 'งานว่าง(ดึงข้อมูลการเดิมพัน)',
+  },
+  referRebatePoint: {
+    NO_BET_AFTER_DEPOSIT: 'ไม่มีการเดิมพันหลังจากฝากเงิน',
+    TOTAL_DEPOSIT_COUNT: 'จำนวนการฝากทั้งหมด',
+    TOTAL_BET_COUNT: 'จำนวนการเดิมพันทั้งหมด',
+    TOTAL_BET_AMOUNT: 'จำนวนเงินเดิมพันทั้งหมด',
+    FTD_AMOUNT: 'จำนวนเงินฝากครั้งแรก'
   },
   error: {
     400: 'คำขอไม่ถูกต้อง',
