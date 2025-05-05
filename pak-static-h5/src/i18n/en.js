@@ -303,7 +303,8 @@ export default {
     signinWithGoogle: "Google",
     goNow: "Go Now",
     playReal: "Play real",
-    freeTrial: "Free trial"
+    freeTrial: "Free trial",
+    sendOtp: "Send OTP",
   },
   notify: {
     loggingIn: "Logging in...",
@@ -752,7 +753,20 @@ export default {
     bankCardMust16NumberandAbove: "Bank account number must be 16 numbers and above",
     bankCardDisallowDecimal: "Bank account number cannot have decimal points",
     nameofCardAcc: "Card Account Name",
-    insertCardAccName: "Please insert card account name"
+    insertCardAccName: "Please insert card account name",
+    insertTelephone: "Please insert telephone number",
+    otp: "OTP",
+    insertVerificationCode: "Insert verifcation code",
+    pleaseEnterVerificationCode: "Please enter verifcation code.",
+    pleaseEnterOtp: "Please enter the OTP sent to your phone",
+    verificationCodeLengthError: "Length should be 4 characters",
+    otpLengthError: "OTP number should be 4 characters",
+    sendOtp: "Send OTP",
+    getOtp: "Get OTP",
+    telephone: "Mobile number",
+    captchaSuccess: "Operation successful, please check the verification code sent to your phone!",
+    captchaFailed: "Verification code check failed, please refresh the page",
+    clickAndEnterPhoneCode: "Please click to get the verification code and enter the code sent to your registered phone number",
   },
   promo: {
     all: "ALL",
