@@ -413,62 +413,62 @@ const columns = [
 const rows = [
   {
     name: "VIP 1",
-    ugprade: "5,000",
+    ugprade: "50",
     flow: "x10"
   },
   {
     name: "VIP 2",
-    ugprade: "10,000",
+    ugprade: "100",
     flow: "x10"
   },
   {
     name: "VIP 3",
-    ugprade: "20,000",
+    ugprade: "200",
     flow: "x10"
   },
   {
     name: "VIP 4",
-    ugprade: "50,000",
+    ugprade: "500",
     flow: "x10"
   },
   {
     name: "VIP 5",
-    ugprade: "100,000",
+    ugprade: "1000",
     flow: "x10"
   },
   {
     name: "VIP 6",
-    ugprade: "200,000",
+    ugprade: "2000",
     flow: "x10"
   },
   {
     name: "VIP 7",
-    ugprade: "500,000",
+    ugprade: "5000",
     flow: "x10"
   },
   {
     name: "VIP 8",
-    ugprade: "1,000,000",
+    ugprade: "10,000",
     flow: "x10"
   },
   {
     name: "VIP 9",
-    ugprade: "2,000,000",
+    ugprade: "20,000",
     flow: "x10"
   },
   {
     name: "VIP 10",
-    ugprade: "5,000,000",
+    ugprade: "50,000",
     flow: "x10"
   },
   {
     name: "VIP 11",
-    ugprade: "10,000,000",
+    ugprade: "100,000",
     flow: "x10"
   },
   {
     name: "VIP 12",
-    ugprade: "20,000,000",
+    ugprade: "200,000",
     flow: "x10"
   }
 ];
@@ -571,67 +571,67 @@ const columns2 = [
 const rows2 = [
   {
     name: "VIP 0",
-    ugprade: "2,500",
+    ugprade: "25",
     flow: "x10"
   },
   {
     name: "VIP 1",
-    ugprade: "5,000",
+    ugprade: "50",
     flow: "x10"
   },
   {
     name: "VIP 2",
-    ugprade: "10,000",
+    ugprade: "100",
     flow: "x10"
   },
   {
     name: "VIP 3",
-    ugprade: "20,000",
+    ugprade: "200",
     flow: "x10"
   },
   {
     name: "VIP 4",
-    ugprade: "50,000",
+    ugprade: "500",
     flow: "x10"
   },
   {
     name: "VIP 5",
-    ugprade: "100,000",
+    ugprade: "1000",
     flow: "x10"
   },
   {
     name: "VIP 6",
-    ugprade: "200,000",
+    ugprade: "2000",
     flow: "x10"
   },
   {
     name: "VIP 7",
-    ugprade: "500,000",
+    ugprade: "5000",
     flow: "x10"
   },
   {
     name: "VIP 8",
-    ugprade: "1,000,000",
+    ugprade: "10,000",
     flow: "x10"
   },
   {
     name: "VIP 9",
-    ugprade: "2,000,000",
+    ugprade: "20,000",
     flow: "x10"
   },
   {
     name: "VIP 10",
-    ugprade: "5,000,000",
+    ugprade: "50,000",
     flow: "x10"
   },
   {
     name: "VIP 11",
-    ugprade: "10,000,000",
+    ugprade: "100,000",
     flow: "x10"
   },
   {
     name: "VIP 12",
-    ugprade: "20,000,000",
+    ugprade: "200,000",
     flow: "x10"
   }
 ];
@@ -651,62 +651,62 @@ const columns3 = [
 const rows3 = [
   {
     name: "VIP 1",
-    ugprade: "20",
+    ugprade: "0.20",
     flow: "x10"
   },
   {
     name: "VIP 2",
-    ugprade: "25",
+    ugprade: "0.25",
     flow: "x10"
   },
   {
     name: "VIP 3",
-    ugprade: "50",
+    ugprade: "0.50",
     flow: "x10"
   },
   {
     name: "VIP 4",
-    ugprade: "100",
+    ugprade: "1",
     flow: "x10"
   },
   {
     name: "VIP 5",
-    ugprade: "200",
+    ugprade: "2",
     flow: "x10"
   },
   {
     name: "VIP 6",
-    ugprade: "300",
+    ugprade: "3",
     flow: "x10"
   },
   {
     name: "VIP 7",
-    ugprade: "1,000",
+    ugprade: "10",
     flow: "x10"
   },
   {
     name: "VIP 8",
-    ugprade: "2,000",
+    ugprade: "20",
     flow: "x10"
   },
   {
     name: "VIP 9",
-    ugprade: "3,000",
+    ugprade: "30",
     flow: "x10"
   },
   {
     name: "VIP 10",
-    ugprade: "10,000",
+    ugprade: "100",
     flow: "x10"
   },
   {
     name: "VIP 11",
-    ugprade: "20,000",
+    ugprade: "200",
     flow: "x10"
   },
   {
     name: "VIP 12",
-    ugprade: "30,000",
+    ugprade: "300",
     flow: "x10"
   }
 ];
@@ -725,62 +725,62 @@ const columns4 = [
 const rows4 = [
   {
     name: "VIP 1",
-    ugprade: "38",
+    ugprade: "0.38",
     flow: "x10"
   },
   {
     name: "VIP 2",
-    ugprade: "88",
+    ugprade: "0.88",
     flow: "x10"
   },
   {
     name: "VIP 3",
-    ugprade: "188",
+    ugprade: "1.88",
     flow: "x10"
   },
   {
     name: "VIP 4",
-    ugprade: "388",
+    ugprade: "3.88",
     flow: "x10"
   },
   {
     name: "VIP 5",
-    ugprade: "588",
+    ugprade: "5.88",
     flow: "x10"
   },
   {
     name: "VIP 6",
-    ugprade: "888",
+    ugprade: "8.88",
     flow: "x10"
   },
   {
     name: "VIP 7",
-    ugprade: "1,888",
+    ugprade: "18.88",
     flow: "x10"
   },
   {
     name: "VIP 8",
-    ugprade: "3,888",
+    ugprade: "38.88",
     flow: "x10"
   },
   {
     name: "VIP 9",
-    ugprade: "8,888",
+    ugprade: "88.88",
     flow: "x10"
   },
   {
     name: "VIP 10",
-    ugprade: "28,888",
+    ugprade: "288.88",
     flow: "x10"
   },
   {
     name: "VIP 11",
-    ugprade: "58,888",
+    ugprade: "588.88",
     flow: "x10"
   },
   {
     name: "VIP 12",
-    ugprade: "88,888",
+    ugprade: "888.88",
     flow: "x10"
   }
 ];
