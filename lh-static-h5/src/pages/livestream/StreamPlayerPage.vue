@@ -19,7 +19,7 @@
         </marquee-text>
       </div>
     </div>
-    <LiveStreamChatMessages class="livestream-chat" :messages @send-chat-message="handleSendChatMessage" />
+    <LiveStreamChatMessages class="livestream-chat" :messages :vip-status @send-chat-message="handleSendChatMessage" />
   </div>
 </template>
 
@@ -78,6 +78,8 @@ const messagesHistoryMeta = ref({
   current: 1,
   max: 1
 });
+const vipStatus = ref(false);
+
 const isLivestreaming = computed(() => !!currentLiveData.value?.liveStatus);
 const latestProcessedMessageId = ref(-1);
 
@@ -224,7 +226,8 @@ const getData = () => {
   // isLivestreamListLoading.value = true;
   getLivestreamList(livestreamListMeta.value.current).then((res) => {
     if (res.code === 0) {
-      const parsedData = res.data.records.map((record) => {
+      vipStatus.value = !!res.data.vipStatus;
+      const parsedData = res.data.streamList.map((record) => {
         let parsedSupplierUrl = {};
         let parsedStreamerUrl = {};
         try {

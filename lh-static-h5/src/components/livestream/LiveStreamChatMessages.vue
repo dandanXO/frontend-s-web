@@ -4,7 +4,9 @@
       <div v-for="(message, index) in messages" :key="index" class="livestream-chat-item">
         <img
           class="livestream-chat-item__vip-badge"
-          :src="require(`../../assets/images/livestream/chat/vip-badge-${message.vip}${isDark ? '-dark' : '-light'}.png`)"
+          :src="
+            require(`../../assets/images/livestream/chat/vip-badge-${message.vip}${isDark ? '-dark' : '-light'}.png`)
+          "
           loading="lazy"
           width="44"
         />
@@ -31,7 +33,8 @@
         <q-input
           v-model="messageToSend"
           class="livestream-chat-input"
-          placeholder="请输入聊天内容"
+          :placeholder="inputConfig.placeholder"
+          :disable="inputConfig.disabled"
           autocomplete="off"
           rounded
           dense
@@ -70,16 +73,31 @@ const store = userStore();
 const $q = useQuasar();
 const route = useRoute();
 const router = useRouter();
-const props = defineProps(["messages"]);
-const { messages } = toRefs(props);
+const props = defineProps(["messages", "vipStatus"]);
+const { messages, vipStatus } = toRefs(props);
 const emit = defineEmits(["sendChatMessage"]);
 
 const messageToSend = ref("");
 const chatListRef = ref(null);
 
 const isDark = computed(() => $q.dark.isActive);
-const profilePhotoDir = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/profile/"
-const isMessageSendable = computed(() => messageToSend.value.trim().length > 0);
+const profilePhotoDir = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/profile/";
+const isMessageSendable = computed(() => messageToSend.value.trim().length > 0 && vipStatus.value);
+
+const inputConfig = computed(() => {
+  let disabled = false;
+  let placeholder = "请输入聊天内容";
+  if (!store.token || !vipStatus.value) {
+    disabled = true;
+    if (!vipStatus.value) placeholder = "VIP特权不足，无法发言";
+    if (!store.token) placeholder = "请登录后发言";
+  }
+
+  return {
+    disabled,
+    placeholder
+  };
+});
 
 const handleSendChatMessage = () => {
   emit("sendChatMessage", messageToSend.value);
@@ -151,12 +169,12 @@ onBeforeUnmount(() => {
     // Firefox
     scrollbar-width: thin;
     scrollbar-color: #c4c4c4 #b8d1ff;
-    background-color: #E8F2FE;
+    background-color: #e8f2fe;
 
     // WebKit Browsers
     &::-webkit-scrollbar {
       width: 8px;
-      border-radius:40px;
+      border-radius: 40px;
     }
 
     &::-webkit-scrollbar-track {
@@ -207,7 +225,7 @@ onBeforeUnmount(() => {
     // padding: 6px 12px;
     position: fixed;
     bottom: 0;
-    box-shadow: 0px -6px 15px 0px #0000001A;
+    box-shadow: 0px -6px 15px 0px #0000001a;
     left: 0;
     width: 100%;
     z-index: 2001;
@@ -291,7 +309,7 @@ onBeforeUnmount(() => {
 .livestream-chat-wrapper.dark {
   // background: #0f182e;
   .livestream-chat-list {
-    background-color: #1A2338;
+    background-color: #1a2338;
     .livestream-chat-item {
       background-color: #2e406580;
 
@@ -305,7 +323,7 @@ onBeforeUnmount(() => {
   }
   .livestream-chat-input-wrapper {
     background: #0f182e;
-    box-shadow: 0px -1.4px 5.24px 0px #DADADA66;
+    box-shadow: 0px -1.4px 5.24px 0px #dadada66;
 
     .livestream-chat-input-btn {
       background: linear-gradient(180deg, rgba(72, 100, 181, 0.5) 0%, rgba(25, 39, 85, 0.5) 100%) !important;

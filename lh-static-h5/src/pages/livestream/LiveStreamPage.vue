@@ -161,10 +161,10 @@ const liveStreamStatusInfo = reactive({
 const getLiveUrlList = () => {
   isLivestreamListLoading.value = true;
   api
-    .post(`/live/list?current=${currentPage.value}`)
+    .post(`/opt-session/live/list?current=${currentPage.value}`)
     .then((res) => {
       if (res.code === 0) {
-        liveStreamList.value.push(...res.data.records);
+        liveStreamList.value.push(...res.data.streamList);
         maxPage.value = res.data.pages;
         currentPage.value++;
       }
@@ -219,7 +219,7 @@ const handleListScroll = () => {
 
 watch(selectionContainerRef, (val) => {
   if (!val) return;
-  selectionContainerRef.value.addEventListener("scroll", handleListScroll);
+  // selectionContainerRef.value.addEventListener("scroll", handleListScroll);
 });
 
 onMounted(() => {
@@ -239,9 +239,9 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  if (selectionContainerRef.value) {
-    selectionContainerRef.value.removeEventListener("scroll", handleListScroll);
-  }
+  // if (selectionContainerRef.value) {
+  //   selectionContainerRef.value.removeEventListener("scroll", handleListScroll);
+  // }
 });
 </script>
 

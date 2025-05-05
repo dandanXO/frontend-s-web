@@ -1,12 +1,12 @@
 import { userStore } from "../../stores";
 import { api } from "../../boot/axios";
 
-export const getLivestreamList = (page) => {
-  return api.post(`/live/list?current=${page}`);
+export const getLivestreamList = () => {
+  return api.post(`/opt-session/live/list`);
 };
 
 export const getLivestreamDetail = (livestreamId) => {
-  return api.get(`/live/${livestreamId}`);
+  return api.get(`/opt-session/live/${livestreamId}`);
 };
 
 export const getChatHistory = (payload, current) => {
