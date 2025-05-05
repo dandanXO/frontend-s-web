@@ -56,7 +56,8 @@ export default {
     spinnerRules: "قواعد",
     effectiveRevenueFAQ: "مؤثر آمدنی کے عمومی سوالات",
     teamManagement: "ٹیم مینجمنٹ",
-    teamPnL: "ٹیم منافع اور نقصان"
+    teamPnL: "ٹیم منافع اور نقصان",
+    teamBetting: "ٹیم شرط بندی"
   },
   bottomNav: {
     home: "گھر/ہوم",

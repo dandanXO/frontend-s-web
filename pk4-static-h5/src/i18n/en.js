@@ -58,7 +58,8 @@ export default {
     effectiveRevenueFAQ: "Effective Revenue FAQ",
     customerServiceVerifer: "Customer Service Verifier",
     teamManagement: "Team Management",
-    teamPnL: "Team P&L"
+    teamPnL: "Team P&L",
+    teamBetting: "Team Betting"
   },
   bottomNav: {
     home: "Home",
