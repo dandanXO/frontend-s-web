@@ -159,6 +159,7 @@ export default {
     virtualWallet_id_rule: "براہ کرم 13 ہندسوں کا شناختی ID درج کریں",
     virtualWallet_rules_02: "فون نمبر '03' سے شروع ہونا چاہیے",
     virtualWallet_rules_03: "ای والیٹ میں 11 ہندسے ہونے چاہئیں",
+    virtualWallet_rules_04: "ای-والٹ میں اعشاریہ (.) نہیں ہو سکتا",
     virtualWallet_warmReminder:
       "گرم یاد دہانی: اگر کارڈ ہولڈر کا نام میل نہیں کھاتا، تو آپ آن لائن کسٹمر سروس سے رابطہ کرکے معلومات کو درست کر سکتے ہیں۔ آپ کے تعاون اور سمجھنے کا شکریہ!",
     virtualWallet_warmReminder_02:
@@ -203,7 +204,12 @@ export default {
     ewallet_selectionTitle: "ای والیٹ",
     ewallet_select: "ای والیٹ منتخب کریں",
     ewallet_selectError: "ای والیٹ منتخب کریں",
-    ewallet_type: "ای والیٹ کارڈ نمبر"
+    ewallet_type: "ای والیٹ کارڈ نمبر",
+    identityid: "شناختی کارڈ نمبر",
+    identityid_placeholder: "شناختی کارڈ نمبر درج کریں",
+    identityid_rules_01: "براہ کرم شناختی کارڈ نمبر درج کریں",
+    identityid_rules_02: "براہ کرم 13 ہندسوں پر مشتمل شناختی کارڈ نمبر درج کریں",
+    identityid_rules_03: "ای-والٹ میں اعشاریہ (.) نہیں ہو سکتا"
   },
   btn: {
     confirm: "تصدیق کریں",

@@ -159,6 +159,7 @@ export default {
     virtualWallet_id_rule: "Please enter 13-digit Identity ID",
     virtualWallet_rules_02: "Phone number must start with '03'",
     virtualWallet_rules_03: "eWallet must have 11 digits",
+    virtualWallet_rules_04: "The eWallet cannot have decimal points",
     virtualWallet_warmReminder:
       "Warm reminder: If the cardholder’s name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
     virtualWallet_warmReminder_02:
@@ -203,7 +204,12 @@ export default {
     ewallet_selectionTitle: "eWallet",
     ewallet_select: "Select eWallet",
     ewallet_selectError: "Select eWallet",
-    ewallet_type: "eWallet Card Number"
+    ewallet_type: "eWallet Card Number",
+    identityid: "Identity ID",
+    identityid_placeholder: "Enter Identity ID",
+    identityid_rules_01: "Enter Identity ID",
+    identityid_rules_02: "Please insert 13 digits Identity ID",
+    identityid_rules_03: "The eWallet cannot have decimal points",
   },
   btn: {
     confirm: "Confirm",
