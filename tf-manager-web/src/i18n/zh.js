@@ -2556,7 +2556,9 @@ export default {
     sumPts: '总分数',
     referFriendRebatePointStatus: '状态',
     requirement: '需求',
-    pts: '分数'
+    pts: '分数',
+    ptsRebateAmount: '返水分数金额',
+    ftdRebateAmount: '返水首次存款金额',
   },
   message: {
     adsStatusOpen: '开',

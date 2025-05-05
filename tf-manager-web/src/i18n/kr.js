@@ -1995,7 +1995,9 @@ export default {
     sumPts: '총 포인트',
     referFriendRebatePointStatus: '상태',
     requirement: '요구 사항',
-    pts: '포인트'
+    pts: '포인트',
+    ptsRebateAmount: '리베이트 포인트 금액',
+    ftdRebateAmount: '첫 입금 리베이트 금액',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3 개월 이상일 수 없습니다',

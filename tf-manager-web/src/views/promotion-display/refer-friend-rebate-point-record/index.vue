@@ -55,7 +55,6 @@
         <el-table-column type="expand">
           <template #default="props">
             <el-table :data="props.row.children" size="small" border>
-              <el-table-column prop="rebateStatus" :label="t('fields.referFriendRebatePointStatus')" align="center" min-width="180" />
               <el-table-column prop="requirement" :label="t('fields.requirement')" align="center" min-width="180">
                 <template #default="scope">
                   <span v-if="scope.row.requirement === null">-</span>
@@ -84,6 +83,17 @@
               v-if="scope.row.registerTime !== null"
               v-formatter="{data: scope.row.registerTime, timeZone: timeZone, type: 'date'}"
             />
+          </template>
+        </el-table-column>
+        <el-table-column prop="rebateStatus" :label="t('fields.referFriendRebatePointStatus')" align="center" min-width="180" />
+        <el-table-column prop="ptsRebateAmount" :label="t('fields.ptsRebateAmount')" align="center" min-width="180">
+          <template #default="scope">
+            $ <span v-formatter="{data: scope.row.ptsRebateAmount,type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="ftdRebateAmount" :label="t('fields.ftdRebateAmount')" align="center" min-width="180">
+          <template #default="scope">
+            $ <span v-formatter="{data: scope.row.ftdRebateAmount,type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column prop="sumPts" :label="t('fields.sumPts')" align="center" min-width="180" />
@@ -188,6 +198,7 @@ async function loadReferFriendRebatePointRecords() {
   const { data: ret } = await getReferFriendRebatePointRecord(query);
   page.pages = ret.pages;
   page.records = ret.records;
+
   page.total = ret.total;
   page.loading = false;
   console.log("ret : ", page.records)
@@ -208,6 +219,9 @@ const groupedRecords = computed(() => {
         referrerId: record.referrerId,
         referrerName: record.referrerName,
         registerTime: record.registerTime,
+        rebateStatus: record.rebateStatus,
+        ptsRebateAmount: record.ptsRebateAmount,
+        ftdRebateAmount: record.ftdRebateAmount,
         sumPts: 0,
         children: []
       };
