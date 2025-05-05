@@ -2881,7 +2881,17 @@ export default {
     TOTAL_DEPOSIT_COUNT: 'Tổng số lần nạp tiền',
     TOTAL_BET_COUNT: 'Tổng số lần đặt cược',
     TOTAL_BET_AMOUNT: 'Tổng số tiền đặt cược',
-    FTD_AMOUNT: 'Số tiền nạp lần đầu'
+    FTD_AMOUNT: 'Số tiền nạp lần đầu',
+    TOTAL_DEPOSIT_AMOUNT: 'tổng số tiền gửi',
+    LAST_DEPOSIT_FTD_HOURS_APART: 'Giờ giữa lần nạp cuối và lần nạp đầu',
+    BALANCE_BET_AFTER_DEPOSIT: 'Số dư sau khi nạp và đặt cược',
+    BET_FREQUENCY: 'Tần suất đặt cược',
+    GAME_TYPE_COUNT: 'Số loại trò chơi',
+    WITHDRAW_AFTER_FAST_BET: 'Rút sau khi đặt cược nhanh',
+    SAME_BET_SHORT_PERIOD: 'Cùng một cược trong thời gian ngắn',
+    ACTIVE_DAYS: 'Ngày hoạt động',
+    SAME_DEVICE_LOGIN: 'Đăng nhập cùng thiết bị',
+    DEVICE_SWITCHING: 'Chuyển đổi thiết bị'
   },
   error: {
     400: 'Yêu cầu không hợp lệ',

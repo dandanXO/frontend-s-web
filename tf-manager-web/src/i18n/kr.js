@@ -2934,7 +2934,17 @@ export default {
     TOTAL_DEPOSIT_COUNT: '총 입금 횟수',
     TOTAL_BET_COUNT: '총 베팅 횟수',
     TOTAL_BET_AMOUNT: '총 베팅 금액',
-    FTD_AMOUNT: '첫 입금 금액'
+    FTD_AMOUNT: '첫 입금 금액',
+    TOTAL_DEPOSIT_AMOUNT: 'Total Deposit Amount',
+    LAST_DEPOSIT_FTD_HOURS_APART: '마지막 입금과 첫 입금 간 시간(시간)',
+    BALANCE_BET_AFTER_DEPOSIT: '입금 후 잔액 베팅',
+    BET_FREQUENCY: '베팅 빈도',
+    GAME_TYPE_COUNT: '게임 유형 수',
+    WITHDRAW_AFTER_FAST_BET: '빠른 베팅 후 출금',
+    SAME_BET_SHORT_PERIOD: '짧은 기간 내 동일 베팅',
+    ACTIVE_DAYS: '활동 일수',
+    SAME_DEVICE_LOGIN: '동일 기기 로그인',
+    DEVICE_SWITCHING: '기기 전환'
   },
   error: {
     400: '잘못된 요청',

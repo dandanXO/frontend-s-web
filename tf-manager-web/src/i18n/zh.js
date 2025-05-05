@@ -3603,7 +3603,17 @@ export default {
     TOTAL_DEPOSIT_COUNT: '总存款次数',
     TOTAL_BET_COUNT: '总投注次数',
     TOTAL_BET_AMOUNT: '总投注金额',
-    FTD_AMOUNT: '首存金额'
+    FTD_AMOUNT: '首存金额',
+    TOTAL_DEPOSIT_AMOUNT: '总存款金额',
+    LAST_DEPOSIT_FTD_HOURS_APART: '末次存款与首次存款间隔小时数',
+    BALANCE_BET_AFTER_DEPOSIT: '存款后余额投注',
+    BET_FREQUENCY: '投注频率',
+    GAME_TYPE_COUNT: '游戏类型数量',
+    WITHDRAW_AFTER_FAST_BET: '快速投注后提款',
+    SAME_BET_SHORT_PERIOD: '短期内相同投注',
+    ACTIVE_DAYS: '活跃天数',
+    SAME_DEVICE_LOGIN: '同设备登录',
+    DEVICE_SWITCHING: '设备切换'
   },
   error: {
     400: '请求无效',
