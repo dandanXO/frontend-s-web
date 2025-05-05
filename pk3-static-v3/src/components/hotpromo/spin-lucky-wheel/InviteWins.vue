@@ -59,9 +59,10 @@ const copyShareLink = () => {
 };
 
 const downloadQRImg = async () => {
-  if (route.path === "/promotion" || route.path === "/wv-promotion") {
+  if (route.path === "/wv-promotion") {
     if (window.flutter_inappwebview && window.flutter_inappwebview.callHandler) {
-      window.flutter_inappwebview.callHandler("downloadBase64Image", base64String);
+      const dataUrl = canvas.toDataURL("image/jpeg");
+      window.flutter_inappwebview.callHandler("downloadBase64Image", dataUrl);
     }
   } else if (Platform.is.capacitor && Platform.is.android) {
     try {
