@@ -46,9 +46,11 @@ import { t } from "@/boot/lang";
 import { userStore } from "@/stores/index";
 import { Directory, Filesystem } from "@capacitor/filesystem";
 import html2canvas from "html2canvas";
+import { useRoute } from "vue-router";
 
 const $q = useQuasar();
 const store = userStore();
+const route = useRoute();
 
 const selfTgurl = ref("");
 const copyinput = ref(null);
@@ -71,7 +73,11 @@ const copyShareLink = (text) => {
 };
 
 const downloadQRImg = async () => {
-  if (Platform.is.capacitor && Platform.is.android) {
+  if (route.path === "/wv-earn-money") {
+    if (window.flutter_inappwebview && window.flutter_inappwebview.callHandler) {
+      window.flutter_inappwebview.callHandler("downloadBase64Image", base64String);
+    }
+  } else if (Platform.is.capacitor && Platform.is.android) {
     try {
       html2canvas(document.querySelector("#the-qrcode")).then(async function (canvas) {
         document.body.appendChild(canvas);
