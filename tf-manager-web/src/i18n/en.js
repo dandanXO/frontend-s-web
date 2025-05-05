@@ -3651,7 +3651,17 @@ export default {
     TOTAL_DEPOSIT_COUNT: 'Total Deposit Count',
     TOTAL_BET_COUNT: 'Total Bet Count',
     TOTAL_BET_AMOUNT: 'Total Bet Amount',
-    FTD_AMOUNT: 'First Deposit Amount'
+    FTD_AMOUNT: 'First Deposit Amount',
+    TOTAL_DEPOSIT_AMOUNT: 'Total Deposit Amount',
+    LAST_DEPOSIT_FTD_HOURS_APART: 'Hours between last deposit and FTD',
+    BALANCE_BET_AFTER_DEPOSIT: 'Balance Bet After Deposit',
+    BET_FREQUENCY: 'Bet Frequency',
+    GAME_TYPE_COUNT: 'Game Type Count',
+    WITHDRAW_AFTER_FAST_BET: 'Withdraw After Fast Bet',
+    SAME_BET_SHORT_PERIOD: 'Same Bet In Short Period',
+    ACTIVE_DAYS: 'Active Days',
+    SAME_DEVICE_LOGIN: 'Same Device Login',
+    DEVICE_SWITCHING: 'Device Switching'
   },
   error: {
     400: 'Bad Request',

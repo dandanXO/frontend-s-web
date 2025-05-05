@@ -1998,7 +1998,17 @@ export default {
     TOTAL_DEPOSIT_COUNT: 'จำนวนการฝากทั้งหมด',
     TOTAL_BET_COUNT: 'จำนวนการเดิมพันทั้งหมด',
     TOTAL_BET_AMOUNT: 'จำนวนเงินเดิมพันทั้งหมด',
-    FTD_AMOUNT: 'จำนวนเงินฝากครั้งแรก'
+    FTD_AMOUNT: 'จำนวนเงินฝากครั้งแรก',
+    TOTAL_DEPOSIT_AMOUNT: 'จำนวนเงินฝากทั้งหมด',
+    LAST_DEPOSIT_FTD_HOURS_APART: 'ชั่วโมงระหว่างการฝากครั้งล่าสุดกับครั้งแรก',
+    BALANCE_BET_AFTER_DEPOSIT: 'ยอดคงเหลือหลังการฝากและการเดิมพัน',
+    BET_FREQUENCY: 'ความถี่ในการเดิมพัน',
+    GAME_TYPE_COUNT: 'จำนวนประเภทเกม',
+    WITHDRAW_AFTER_FAST_BET: 'ถอนหลังจากเดิมพันเร็ว',
+    SAME_BET_SHORT_PERIOD: 'เดิมพันเดียวกันในระยะเวลาสั้น',
+    ACTIVE_DAYS: 'วันที่มีกิจกรรม',
+    SAME_DEVICE_LOGIN: 'เข้าสู่ระบบด้วยอุปกรณ์เดียวกัน',
+    DEVICE_SWITCHING: 'การเปลี่ยนอุปกรณ์'
   },
   error: {
     400: 'คำขอไม่ถูกต้อง',
