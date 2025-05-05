@@ -16,3 +16,7 @@ export const adjustAmount = (id, adjust) => {
 export const distribute = (rebate) => {
   return https().request("/refer-rebate-record/rebate", Method.POST, rebate, ContentType.form);
 };
+
+export const getReferFriendRebatePointRecord = (query) => {
+  return https().request("/refer-rebate-record/point_record", Method.GET, query, ContentType.form);
+}

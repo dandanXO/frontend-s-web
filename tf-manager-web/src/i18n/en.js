@@ -2546,7 +2546,13 @@ export default {
     pointsDistribution: 'Points Distribution',
     traceId: 'Trace ID',
     downloadQRCode: 'Download QRCode',
-    normalCreate: 'Normal'
+    normalCreate: 'Normal',
+    referFriendRebatePointRecord: 'Referral friend betting rebate points record',
+    referrerId: 'Referrer ID',
+    sumPts: 'Total points',
+    referFriendRebatePointStatus: 'Status',
+    requirement: 'Requirement',
+    pts: 'Points'
   },
   message: {
     adsStatusOpen: 'Open',
@@ -3407,7 +3413,8 @@ export default {
     'Refer Spin Record': 'Refer Spin Record',
     'Official CS Account': 'Official CS Account',
     'Site Note': 'Notes',
-    'Fast Access Promo': 'Fast Access Promo'
+    'Fast Access Promo': 'Fast Access Promo',
+    'Refer Friend Rebate Point record': 'Referral friend betting turnover rebate points record'
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -3638,6 +3645,13 @@ export default {
       MANAGER: 'Manager',
       AFFILIATE: 'Affiliate',
     }
+  },
+  referRebatePoint: {
+    NO_BET_AFTER_DEPOSIT: 'No Bet After Deposit',
+    TOTAL_DEPOSIT_COUNT: 'Total Deposit Count',
+    TOTAL_BET_COUNT: 'Total Bet Count',
+    TOTAL_BET_AMOUNT: 'Total Bet Amount',
+    FTD_AMOUNT: 'First Deposit Amount'
   },
   error: {
     400: 'Bad Request',
