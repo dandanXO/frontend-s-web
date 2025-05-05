@@ -27,7 +27,6 @@ export const userStore = defineStore("userStore", {
       id: 0,
       profilePicture: "",
       displayName: "",
-      loginName: "",
       nickName: "",
       realName: "",
       birthday: "",
