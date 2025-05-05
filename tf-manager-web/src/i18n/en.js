@@ -2552,7 +2552,9 @@ export default {
     sumPts: 'Total points',
     referFriendRebatePointStatus: 'Status',
     requirement: 'Requirement',
-    pts: 'Points'
+    pts: 'Points',
+    ptsRebateAmount: 'Rebate points amount',
+    ftdRebateAmount: 'Rebate first deposit amount',
   },
   message: {
     adsStatusOpen: 'Open',
