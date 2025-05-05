@@ -61,8 +61,14 @@ const copyShareLink = () => {
 const downloadQRImg = async () => {
   if (route.path === "/wv-promotion") {
     if (window.flutter_inappwebview && window.flutter_inappwebview.callHandler) {
-      const dataUrl = canvas.toDataURL("image/jpeg");
-      window.flutter_inappwebview.callHandler("downloadBase64Image", dataUrl);
+      try {
+        html2canvas(document.querySelector("#the-qrcode")).then(async function (canvas) {
+          document.body.appendChild(canvas);
+          const dataUrl = canvas.toDataURL("image/jpeg");
+
+          window.flutter_inappwebview.callHandler("downloadBase64Image", dataUrl);
+        });
+      } catch (e) {}
     }
   } else if (Platform.is.capacitor && Platform.is.android) {
     try {
