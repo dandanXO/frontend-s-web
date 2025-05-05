@@ -388,16 +388,19 @@ onMounted(() => {
         gap: 10px;
 
         .hot-match-time {
-          width: 85px;
-
+          
           .bet-btn {
+            width: 88px;
+            height: 24px;
             position: absolute;
             left: 50%;
             bottom: 0%;
             transform: translate(-50%, -50%);
             padding: 3px 8px;
             background: linear-gradient(to bottom, #5d7dbf 0%, #242d6f 100%);
-            border-radius: 5px;
+            border: 0.5px solid #369EFF;
+            box-shadow: 0px 2px 4px 0px #2C70B294;
+            border-radius: 3px;
             cursor: pointer;
 
             &:hover {
