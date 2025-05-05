@@ -198,7 +198,6 @@
       <BonusModal
         :has-top-download="topDownload && !ui.hideDownload"
         :promo-list="fastAccessPromo"
-        :has-redemption-bonus="showRedemption"
         @openNewPlayer="showNewPlayer"
       />
     </q-dialog>
@@ -223,7 +222,7 @@ import { defineEmits } from "vue";
 import { useCustomerTrigger } from "src/hooks/trigger";
 import { i18nStore } from "src/router/language";
 
-const props = defineProps(["homeProfile", "showRedemption"]);
+const props = defineProps(["homeProfile"]);
 const emits = defineEmits(["closeslot", "activateSlide", "showNewPlayer"]);
 const route = useRoute();
 const router = useRouter();
@@ -263,7 +262,7 @@ const getFastAccessPromo = () => {
       fastAccessPromoAbortController.value?.abort();
       fastAccessPromoAbortController.value = new AbortController();
       _fastAccessPromo.forEach((promo) => {
-        if (promo.buttonMode === "API_REDIRECT" && promo.initApiUrl) {
+        if (promo.initApiUrl) {
           apiQueue.push(() =>
             eventapi
               .get(`${promo.initApiUrl}?promoCode=${promo.promoCode}`, {
@@ -284,9 +283,11 @@ const getFastAccessPromo = () => {
           if (_currentFastAccessPromo) {
             _currentFastAccessPromo.response = apiRes.code === 0 ? apiRes.data : null;
           }
-
-          if (initApiRes.value.apiRes.data.eligible) {
+          if (apiRes.data.eligible || (promoCode === "pak-refer-wheel-spin" && apiRes.data.promoEndTime)) {
             eligiblePromoCount.value++;
+          }
+          if (apiRes.data.hidePromo) {
+            _fastAccessPromo = _fastAccessPromo.filter((promo) => promo.promoCode !== "new-player-acc-deposit");
           }
         }
       }

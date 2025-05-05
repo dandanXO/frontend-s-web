@@ -2,7 +2,7 @@
   <div class="bonus-container" :class="{ 'has-top-download': hasTopDownload }">
     <q-btn icon="close" round dense flat v-close-popup class="bonus-close" />
     <div class="bonus-content-wrapper">
-      <div v-if="hasRedemptionBonus" class="mission-item">
+      <div class="mission-item">
         <img class="mission-icon" src="../../assets/images/earn-money/redemptionicon.png" />
         <div class="mission-title-wrapper">
           <div class="mission-title">
@@ -10,7 +10,7 @@
           </div>
         </div>
         <RouterLink to="/account?openCodeModal=true">
-          <q-btn flat class="details detail">{{ $t("btn.details") }}</q-btn>
+          <q-btn flat class="details redemption">{{ $t("btn.details") }}</q-btn>
         </RouterLink>
       </div>
       <div v-for="(mission, index) in promoList" :key="index" class="mission-item">
@@ -38,8 +38,7 @@
           :loading="mission.buttonMode === 'API_CLAIM' ? isClaimLoading : false"
           class="details"
           :class="{
-            'no-reward': mission.buttonMode === 'DETAILS',
-            detail: mission.buttonMode === 'API_REDIRECT'
+            claimable: ['API_CLAIM', 'CLAIM_REDIRECT'].includes(mission.buttonMode)
           }"
           flat
           @click="handleClick(mission)"
@@ -59,7 +58,7 @@
           </div>
         </div>
         <a @click="openNewPlayerGuide">
-          <q-btn flat class="details detail">
+          <q-btn flat class="details">
             {{ $t("btn.details") }}
           </q-btn>
         </a>
@@ -85,7 +84,6 @@ const emit = defineEmits(["open-new-player"]);
 const store = userStore();
 const router = useRouter();
 const props = defineProps({
-  hasRedemptionBonus: Boolean,
   hasTopDownload: Boolean,
   promoList: Array
 });
@@ -136,6 +134,7 @@ const promoCountdown = computed(() =>
     if (promo.countDown && promo.response && promo.response.eligible === true) {
       result[promo.promoCode].countDown = getCountdownWithDays(promo.response.promoEndTime);
     }
+
     switch (promo.buttonMode) {
       case "API_CLAIM":
         result[promo.promoCode].btnText = t("btn.claim");
@@ -151,6 +150,10 @@ const promoCountdown = computed(() =>
         break;
       default:
         result[promo.promoCode].btnText = t("btn.details");
+    }
+
+    if (promo.promoCode === "pak-refer-wheel-spin" && promo.response && promo.response.promoEndTime) {
+      result[promo.promoCode].btnText = t("btn.claim");
     }
 
     return result;
@@ -298,6 +301,7 @@ onMounted(() => {
       }
 
       .q-btn {
+        position: relative;
         min-width: 115px;
         width: 115px;
         border-radius: 4px;
@@ -305,12 +309,12 @@ onMounted(() => {
         text-transform: none;
         line-height: 19px;
         padding: 2px 16px;
-        min-height: 42px;
-        margin-right: 4px;
+        min-height: 48px;
 
         &.details {
-          background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
-          color: #000a01;
+          background: url(../../assets/images/index/modal/common-btn.png) no-repeat;
+          background-size: 100% 100%;
+          color: #fff;
         }
 
         :deep(.q-btn__content) {
@@ -321,37 +325,29 @@ onMounted(() => {
         }
 
         .countdown-span {
-          background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-          background-clip: text;
-          color: transparent;
+          color: #051809;
           font-size: 13px;
           text-transform: none;
           font-family: initial;
         }
 
-        &.no-reward {
-          background: transparent;
-          color: #81a285;
+        &.redemption {
+          background: url(../../assets/images/index/modal/promo-code-btn.png) no-repeat;
+          background-size: 100% 100%;
         }
 
-        &.detail {
-          background: transparent;
-          ::after {
+        &.claimable {
+          &::before {
             content: "";
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background-color: #f00;
             position: absolute;
-            inset: 0;
-            border: 1px solid transparent;
-            border-radius: 4px;
-            background-image: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-            background-origin: border-box;
-            mask-image: linear-gradient(white, white), linear-gradient(white, white);
-            mask-clip: padding-box, border-box;
-            mask-composite: exclude, add;
-          }
-          :deep(.q-btn__content) {
-            background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-            background-clip: text;
-            color: transparent;
+            top: 0;
+            right: 5px;
+            left: unset;
+            transform: translate(0, -50%);
           }
         }
       }
