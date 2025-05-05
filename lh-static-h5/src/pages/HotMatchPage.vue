@@ -10,6 +10,7 @@
             @click="selectedCompetitionType = competitionType"
             :key="competitionType"
           >
+          {{ competitionTypesNameMap[competitionType] }}
           <img
             class="competition-item-img"
             :src="
@@ -118,6 +119,12 @@ import GameModal from "../components/modal/GameModal.vue";
 
 const hotMatches = ref([]);
 const competitionTypes = ref([]);
+const competitionTypesNameMap = ref({
+  Football : "足球",
+  Basketball : "篮球",  
+  ESport : "电竞",
+});
+
 const selectedCompetitionType = ref();
 const imgUrl = process.env.IMAGE_CDN;
 
