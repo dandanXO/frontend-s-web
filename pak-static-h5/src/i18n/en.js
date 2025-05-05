@@ -259,7 +259,9 @@ export default {
     birthday_rules_01: "Please insert your birthday",
     address: "Address",
     address_placeholder: "Please enter your address",
-    address_rules_01: "Please insert your address"
+    address_rules_01: "Please insert your address",
+    country_code_placeholder: "Input country code to search",
+    country_code_rules_01: "Please select country code"
   },
   btn: {
     login: "Login",

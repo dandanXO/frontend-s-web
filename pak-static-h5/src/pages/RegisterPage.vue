@@ -157,6 +157,8 @@
               v-model:realName="regForm.realName"
               v-model:birthday="regForm.birthday"
               v-model:password="regForm.password"
+              v-model:telephone="regForm.telephone"
+              v-model:country-code="regForm.countryCode"
             />
           </template>
         </InputRowGrid>
@@ -409,7 +411,8 @@ export default defineComponent({
       smsCode: "",
       traceId: "",
       realName: "",
-      birthday: ""
+      birthday: "",
+      countryCode: ""
     });
 
     const registerApiParams = computed(() => {
@@ -417,12 +420,14 @@ export default defineComponent({
       switch (ui.siteType) {
         case "CURACAO":
           result.registerType = "email";
+          result.telephone = result.countryCode + result.telephone;
           break;
         default:
           delete result.email;
           delete result.realName;
           delete result.birthday;
       }
+      delete result.countryCode;
       return result;
     });
 
