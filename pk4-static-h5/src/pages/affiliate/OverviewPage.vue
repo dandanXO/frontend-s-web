@@ -117,7 +117,8 @@ import ProfitLossChart from 'components/ProfitLossChart.vue'
   } from 'chart.js'
   
   import { Line } from 'vue-chartjs'
-  import { ref } from 'vue'
+  import { ref, onMounted } from 'vue'
+  import { api } from 'boot/axios';
   
   ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Title)
   
@@ -172,18 +173,18 @@ import ProfitLossChart from 'components/ProfitLossChart.vue'
   })
   
   // Cards & metric chart selectors
-  const metrics = [
-    { key: 'logins', count: 84, label: 'Logins', color: 'chartlogins', textColor: 'white' },
-    { key: 'registers', count: 3, label: 'Registers', color: 'chartregisters', textColor: 'white' },
-    { key: 'bets', count: 48, label: 'Bet count', color: 'chartbetcount', textColor: 'white' },
-    { key: 'promotions', count: 24, label: 'Promotions', color: 'chartpromotions', textColor: 'white' },
-    { key: 'registersFirstDeposits', count: 2, label: 'Registers First deposits', color: 'chartregistersfirstdeposits', textColor: 'white' },
-    { key: 'firstDeposits', count: 2, label: 'First deposits', color: 'chartfirstdeposits', textColor: 'white' },
-    { key: 'deposits', count: 37, label: 'Deposits', color: 'chartdeposits', textColor: 'white' },
-    { key: 'withdrawals', count: 15, label: 'Withdrawals', color: 'chartwithdrawal', textColor: 'white' }
-  ]
+  const metrics = ref([
+    { key: 'logins', count: 0, label: 'Logins', color: 'chartlogins', textColor: 'white' },
+    { key: 'registers', count: 0, label: 'Registers', color: 'chartregisters', textColor: 'white' },
+    { key: 'bets', count: 0, label: 'Bet count', color: 'chartbetcount', textColor: 'white' },
+    { key: 'promotions', count: 0, label: 'Promotions', color: 'chartpromotions', textColor: 'white' },
+    { key: 'registersFirstDeposits', count: 0, label: 'Registers First deposits', color: 'chartregistersfirstdeposits', textColor: 'white' },
+    { key: 'firstDeposits', count: 0, label: 'First deposits', color: 'chartfirstdeposits', textColor: 'white' },
+    { key: 'deposits', count: 0, label: 'Deposits', color: 'chartdeposits', textColor: 'white' },
+    { key: 'withdrawals', count: 0, label: 'Withdrawals', color: 'chartwithdrawal', textColor: 'white' }
+  ]);
   
-  const selectedMetric = ref(metrics[0])
+  const selectedMetric = ref(metrics.value[0])
   
   const selectMetric = (item) => {
     selectedMetric.value = item
@@ -207,6 +208,26 @@ import ProfitLossChart from 'components/ProfitLossChart.vue'
   const openPageInfoDialog = () => {
     isPageInfoDialog.value = true
   }
+
+  onMounted(() => {
+    api.get('/session/affiliate/data-by-month?recordTime=2025-04-01,2025-05-30').then((res) => {
+      const data = res.data;
+
+      const sumByKey = (key) => data.reduce((sum, obj) => sum + (typeof obj[key] === "number" ? obj[key] : 0), 0);
+
+      metrics.value = metrics.value.map(metric => {
+        if(metric.key === 'logins') metric.count = sumByKey("loginCount");
+        else if(metric.key === 'registers') metric.count = sumByKey("newMemberCount");
+        else if(metric.key === 'bets') metric.count = sumByKey("bet");
+        else if(metric.key === 'promotions') metric.count = sumByKey("totalRegisterMemberCount");
+        else if(metric.key === 'registersFirstDeposits') metric.count = sumByKey("depositCount");
+        else if(metric.key === 'firstDeposits') metric.count = sumByKey("ftdCount");
+        else if(metric.key === 'deposits') metric.count = sumByKey("ftdAmount");
+
+        return metric;
+      });
+    })
+  })
   
   </script>
   
