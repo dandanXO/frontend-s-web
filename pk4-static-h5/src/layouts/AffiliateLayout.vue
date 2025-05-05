@@ -169,6 +169,14 @@ export default defineComponent({
           prevPage.value = "/affiliate/agent";
           hasPage.value = true;
           pageName.value = t("header.teamManagement");
+        } else if (route.path === "/affiliate/team-pnl") {
+          prevPage.value = "/affiliate/agent";
+          hasPage.value = true;
+          pageName.value = t("header.teamPnL");
+        } else if (route.path === "/affiliate/team-betting") {
+          prevPage.value = "/affiliate/agent";
+          hasPage.value = true;
+          pageName.value = t("header.teamBetting");
         }
         else if (route.path === "/affiliate/account-record") {
           prevPage.value = "/affiliate/agent";
