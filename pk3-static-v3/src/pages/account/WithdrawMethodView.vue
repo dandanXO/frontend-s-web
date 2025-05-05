@@ -15,7 +15,7 @@
         <span class="amount">
           <template v-if="isLoadingWithdrawalMethod"><q-skeleton style="height: 16px" /></template>
           <template v-else>
-            {{ convertToCommaAmount(withdrawableBalance, 2)  }}
+            {{ convertToCommaAmount(withdrawableBalance, 2) }}
           </template>
         </span>
         <div class="title">{{ $t("withdraw.withdrawable") }}</div>
@@ -191,6 +191,31 @@
                   :placeholder="$t('form.accountNumber_placeholder')"
                   v-model="bankCardField.cardNumber"
                   :rules="[(_) => isValidCardNumber()]"
+                  hide-bottom-space
+                  @focus="scrollToInput"
+                  @blur="isInputFocus = false"
+                ></q-input>
+              </div>
+            </div>
+
+            <div class="w-form-item w-form-item--bankcard" v-if="selectedMethodItem.code === 'JAZZCASH'">
+              <div class="top-wrapper">
+                <div class="title">{{ $t("form.identityid") }}</div>
+              </div>
+              <div class="mid-wrapper">
+                <q-input
+                  type="number"
+                  filled
+                  dense
+                  clearable
+                  ref="ifscRef"
+                  :placeholder="$t('form.identityid_placeholder')"
+                  v-model="bankCardField.cardAddress"
+                  :rules="[
+                    (val) => (val && val.length > 0) || $t('form.identityid_rules_01'),
+                    (val) => (val && val.length === 13) || $t('form.identityid_rules_02'),
+                    (val) => (val && !val.includes('.')) || $t('form.identityid_rules_03')
+                  ]"
                   hide-bottom-space
                   @focus="scrollToInput"
                   @blur="isInputFocus = false"
@@ -575,6 +600,7 @@ const cardRef = ref();
 const amountRef = ref();
 // const bankAddressRef = ref();
 const bankNumberRef = ref();
+const ifscRef = ref();
 const withdrawInfo = reactive({
   cardId: undefined,
   amount: "",
@@ -653,6 +679,10 @@ const submitWithdrawBank = () => {
   isSubmitDisable.value = true;
   amountRef.value.validate();
   bankNumberRef.value.validate();
+
+  if (selectedMethodItem.value.code === "JAZZCASH") {
+    ifscRef.value.validate();
+  }
 
   if (amountRef.value.hasError || bankNumberRef.value.hasError) {
     $q.loading.hide();
@@ -797,12 +827,40 @@ onActivated(() => {
 
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
-  const result = !cardNumber
-    ? t("form.accountNumber_rules_01")
-    : !cardNumber.includes(".")
-    ? true
-    : t("form.accountNumber_rules_03")
-  return result;
+
+  if (isBankType.value === "EWALLET") {
+    if (!cardNumber || cardNumber.length === 0) {
+      return t("form.virtualWallet_rules_01");
+    }
+
+    if (!cardNumber.startsWith("03")) {
+      return t("form.virtualWallet_rules_02");
+    }
+
+    if (cardNumber.length !== 11) {
+      return t("form.virtualWallet_rules_03");
+    }
+
+    if (cardNumber.includes(".")) {
+      return t("form.virtualWallet_rules_04");
+    }
+
+    return true;
+  } else {
+    if (!cardNumber || cardNumber.length === 0) {
+      return t("bankCard.pleaseEnterCardAccount");
+    }
+
+    if (cardNumber.length < 16) {
+      return t("bankCard.bankCardMust16NumberandAbove");
+    }
+
+    if (cardNumber.includes(".")) {
+      return t("bankCard.bankCardDisallowDecimal");
+    }
+
+    return true;
+  }
 };
 
 const isValidCardAddress = () => {
