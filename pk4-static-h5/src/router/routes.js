@@ -360,6 +360,18 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/affiliate/team-pnl",
+    component: () => import("layouts/AffiliateLayout.vue"),
+    children: [{ path: "", component: () => import("pages/affiliate/TeamProfitLossView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/affiliate/team-betting",
+    component: () => import("layouts/AffiliateLayout.vue"),
+    children: [{ path: "", component: () => import("pages/affiliate/TeamBettingView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
     path: "/account/agent",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/account/AgentView.vue") }],
