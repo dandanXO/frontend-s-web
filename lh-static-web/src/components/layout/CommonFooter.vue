@@ -180,10 +180,11 @@ export default defineComponent({
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        gap: 15px;
+        gap: 10px;
         .s1 {
           color: #ffffff;
           font-size: 16px;
+          min-width: 100px;
         }
         .footPayIcon {
           height: 40px;
