@@ -57,7 +57,8 @@ export default {
     spinnerHistory: "History",
     effectiveRevenueFAQ: "Effective Revenue FAQ",
     customerServiceVerifer: "Customer Service Verifier",
-    teamManagement: "Team Management"
+    teamManagement: "Team Management",
+    teamPnL: "Team P&L"
   },
   bottomNav: {
     home: "Home",
