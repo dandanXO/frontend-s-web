@@ -157,7 +157,10 @@ function checkQuery() {
   });
   if (request.createTime !== null) {
     if (request.createTime.length === 2) {
-      query.createTime = request.createTime.join(",");
+      query.createTime = [
+        getStartOfDay(request.createTime[0]),
+        getEndOfDay(request.createTime[1])
+      ].join(",");
     }
   }
   return query;
