@@ -15,6 +15,18 @@
           :editable="false"
           :clearable="false"
         />
+        <el-input
+          v-model="request.loginName"
+          style="margin-left: 5px; width: 200px;"
+          size="small"
+          :placeholder="t('fields.loginName')"
+        />
+        <el-input
+          v-model="request.referrerName"
+          style="margin-left: 5px; width: 200px;"
+          size="small"
+          :placeholder="t('fields.referrer')"
+        />
         <el-button
           style="margin-left: 10px"
           icon="el-icon-search"
@@ -116,11 +128,15 @@ const request = reactive({
   current: 1,
   createTime: [getStartOfDay(defaultDate), getEndOfDay(defaultDate)],
   siteId: null,
+  loginName: null,
+  referrerName: null
 });
 
 function resetQuery() {
   request.createTime = [getStartOfDay(defaultDate), getEndOfDay(defaultDate)];
-  request.siteId = store.state.user.siteId
+  request.siteId = store.state.user.siteId;
+  request.loginName = null;
+  request.referrerName = null;
 }
 
 const page = reactive({
