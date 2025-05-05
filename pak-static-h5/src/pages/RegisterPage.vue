@@ -419,7 +419,7 @@ export default defineComponent({
       const result = Object.assign({}, regForm);
       switch (ui.siteType) {
         case "CURACAO":
-          result.registerType = "email";
+          result.registerType = "curacao";
           result.telephone = result.countryCode + result.telephone;
           break;
         default:
