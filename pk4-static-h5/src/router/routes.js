@@ -377,6 +377,18 @@ const routes = [
     children: [{ path: "", component: () => import("pages/account/AgentView.vue") }],
     meta: { requiresAuth: true }
   },
+  {
+    path: "/affiliate/internal-message",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/InternalMessageView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/affiliate/internal-message-detail",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/InternalMessageDetailView.vue") }],
+    meta: { requiresAuth: true }
+  },
   // {
   //   path: "/account/promotion",
   //   component: () => import("layouts/MainLayout.vue"),
