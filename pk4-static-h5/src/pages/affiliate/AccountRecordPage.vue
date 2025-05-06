@@ -75,23 +75,53 @@
 
     <InputField :isDark="true">
       <template #input>
-        <q-input class="input" v-model="formDetail.realName" outlined clearable hide-bottom-space>
+        <q-input
+          class="input"
+          v-model="formDetail.loginName"
+          outlined
+          hide-bottom-space
+          @update:model-value="filterSuggestions"
+          :loading="loadingSuggestions"
+        >
           <template v-slot:append>
-            <q-btn class="get-code-btn" color="primary" :label="$t('btn.confirm')" @click="() => {}" />
+            <q-btn
+              class="get-code-btn"
+              color="primary"
+              :label="$t('btn.confirm')"
+              :disable="!formDetail.loginName"
+              @click="confirmSelection"
+            />
           </template>
         </q-input>
       </template>
     </InputField>
+
+    <div>
+      <div class="downline-list">
+        <template v-for="(item, index) in filteredDownLinesRecords" :key="index">
+          <div class="downline-item">
+            <div class="item-icon"><q-icon name="person" /></div>
+            <div class="item-name">{{ item.loginName }}</div>
+          </div>
+        </template>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
+import { ref, reactive, computed, onMounted } from "vue";
+import { api } from "src/boot/axios";
+import { userStore } from "stores/index";
 import InputField from "src/components/auth/InputField.vue";
-import { ref, reactive, computed } from "vue";
 
-const formDetail = reactive([]);
+const store = userStore();
+const qs = require("qs");
+const formDetail = reactive({ loginName: "" });
+const downLinesRecords = ref([]);
+const filteredDownLinesRecords = ref([]);
+const loadingSuggestions = ref(false);
 const model = ref("All");
-// const options = ref(["All", "Deposit", "Withdraw", "Betting", "Winning", "Bonus"]);
 const options = ref([
   {
     label: "All",
@@ -125,7 +155,19 @@ const options = ref([
   }
 ]);
 
-const searchForm = reactive({ startDate: { from: "2025-05-01", to: "2025-05-08" }, endDate: "", platform: "" });
+const today = new Date();
+const dayBefore = new Date();
+dayBefore.setDate(today.getDate() - 30); // 30days before
+const formatDate = (date) => date.toISOString().split("T")[0];
+
+const searchForm = reactive({
+  startDate: {
+    from: formatDate(dayBefore),
+    to: formatDate(today)
+  },
+  endDate: "",
+  platform: ""
+});
 
 const formattedDateRange = computed(() => {
   const range = searchForm.startDate;
@@ -140,6 +182,101 @@ const formatDateToSlash = (str) => {
   // return `${year}/${month.padStart(2, "0")}/${day.padStart(2, "0")}`;
   return `${month.padStart(2, "0")}/${day.padStart(2, "0")}`;
 };
+
+const getAllDownlines = () => {
+  api
+    .get(`/session/affiliate/getAllDownlines`)
+    .then((res) => {
+      if (res.code === 0) {
+        downLinesRecords.value = res.data;
+
+        // sample data --- start
+        // downLinesRecords.value = [
+        //   {
+        //     affiliateId: 1001,
+        //     loginName: "johndoe"
+        //   },
+        //   {
+        //     affiliateId: 1002,
+        //     loginName: "alice88"
+        //   },
+        //   {
+        //     affiliateId: 1003,
+        //     loginName: "marksmith"
+        //   },
+        //   {
+        //     affiliateId: 1004,
+        //     loginName: "bettywhite"
+        //   }
+        // ];
+        // sample data --- end
+
+        // filteredDownLinesRecords.value = downLinesRecords.value;
+      }
+    })
+    .catch((e) => {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: e.message,
+        icon: "report_problem"
+      });
+    });
+};
+
+const filterSuggestions = () => {
+  const query = formDetail.loginName.trim().toLowerCase();
+  if (!query) {
+    // filteredDownLinesRecords.value = downLinesRecords.value;
+    filteredDownLinesRecords.value = [];
+    return;
+  }
+
+  filteredDownLinesRecords.value = downLinesRecords.value.filter((item) =>
+    item.loginName.toLowerCase().includes(query)
+  );
+};
+const confirmSelection = () => {
+  if (!formDetail.loginName) return;
+
+  api.post("/session/affiliate/downline/info", { loginName: formDetail.loginName }).then((res) => {
+    console.log("Confirmed:", res);
+  });
+};
+
+const getDownlineMemberDetails = () => {
+  api
+    .get(`/session/affiliate/downline`, {
+      params: {
+        current: 1,
+        size: 2,
+        id: '1919668058885701633',
+        siteId: process.env.SITEID,
+        status: true,
+        regTime: dayBefore.value,
+        loginName: '03080808996',
+        memberTypes: "TEST"
+      }
+    })
+    .then((res) => {
+      if (res.code === 0) {
+        downLinesRecords.value = res.data;
+      }
+    })
+    .catch((e) => {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: e.message,
+        icon: "report_problem"
+      });
+    });
+};
+
+onMounted(() => {
+  getAllDownlines();
+  getDownlineMemberDetails();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -341,6 +478,34 @@ const formatDateToSlash = (str) => {
     background: #ffffff !important;
   }
   .q-item--active {
+  }
+}
+
+.downline-list {
+  border-radius: 8px;
+  overflow: hidden;
+  .downline-item {
+    display: flex;
+    padding: 12px;
+    background: #293348;
+    align-items: center;
+    gap: 8px;
+
+    .item-icon {
+      font-size: 20px;
+      border-radius: 50%;
+      background-color: #507ce8;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .item-name {
+      font-weight: bold;
+      color: #ffffff;
+    }
   }
 }
 </style>
