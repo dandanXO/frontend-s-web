@@ -103,6 +103,7 @@ watch(
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  overflow: visible;
 
   max-width: 430px;
   .add-to-homescreen-download {
