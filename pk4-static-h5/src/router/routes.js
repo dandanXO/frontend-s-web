@@ -379,7 +379,7 @@ const routes = [
   },
   {
     path: "/account/agent",
-    component: () => import("layouts/MainLayout.vue"),
+    component: () => import("layouts/AffiliateLayout.vue"),
     children: [{ path: "", component: () => import("pages/account/AgentView.vue") }],
     meta: { requiresAuth: true }
   },
