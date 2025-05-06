@@ -3859,6 +3859,7 @@ export default {
     45301: 'Member dummy record on the selected date does not exists',
     45302: 'Member does not belong to any affiliate',
     50002: 'The maximum amount for adjustment has been exceeded',
+    50003: 'Adjustment login name duplicate',
     53000: 'Login name cannot be empty',
     53001: 'Referrer cannot be empty',
   },
