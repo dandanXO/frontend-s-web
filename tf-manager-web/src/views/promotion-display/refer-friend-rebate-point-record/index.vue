@@ -15,6 +15,18 @@
           :editable="false"
           :clearable="false"
         />
+        <el-date-picker
+          v-model="request.registerTime"
+          format="DD/MM/YYYY"
+          value-format="YYYY-MM-DD"
+          size="small"
+          type="date"
+          range-separator=":"
+          style="margin-left: 5px; width: 180px"
+          :placeholder="t('fields.registerTime')"
+          :editable="false"
+          :clearable="false"
+        />
         <el-input
           v-model="request.loginName"
           style="margin-left: 5px; width: 200px;"
@@ -139,7 +151,8 @@ const request = reactive({
   createTime: [getStartOfDay(defaultDate), getEndOfDay(defaultDate)],
   siteId: null,
   loginName: null,
-  referrerName: null
+  referrerName: null,
+  registerTime: null
 });
 
 function resetQuery() {
@@ -147,6 +160,7 @@ function resetQuery() {
   request.siteId = store.state.user.siteId;
   request.loginName = null;
   request.referrerName = null;
+  request.registerTime = null;
 }
 
 const page = reactive({
@@ -188,6 +202,9 @@ function checkQuery() {
         getEndOfDay(request.createTime[1])
       ].join(",");
     }
+  }
+  if (request.registerTime !== null) {
+    query.registerTime = [getStartOfDay(request.registerTime), getEndOfDay(request.registerTime)].join(",")
   }
   return query;
 }
