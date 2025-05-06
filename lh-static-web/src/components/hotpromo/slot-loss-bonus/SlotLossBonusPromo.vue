@@ -27,15 +27,12 @@
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: expectedBonus <= 0 || !isClaimable }">
-            <img
-              v-if="expectedBonus <= 0"
-              src="@/assets/promo/lh-livepoker-rebate/reward-btn-3-disabled.png"
-              alt=""
-              width="100%"
-            />
-            <img v-else src="@/assets/promo/lh-livepoker-rebate/reward-btn-3.png" alt="" width="100%" />
-          </div>
+          <div class="bonus-image" @click="handleClaimBonus" >
+                <img src="../../../assets/promo/lh-livepoker-rebate/new-reward-btn-1.png" alt="" width="100%" />
+              </div>
+              <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: expectedBonus <= 0 }">
+                <img src="../../../assets/promo/lh-livepoker-rebate/new-reward-btn-2.png" alt="" width="100%" />
+              </div>
         </div>
       </div>
     </div>
