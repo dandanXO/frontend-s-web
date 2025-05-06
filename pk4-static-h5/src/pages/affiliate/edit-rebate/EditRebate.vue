@@ -1,70 +1,60 @@
 <template>
     <div class="my-dividend-container">
-
-        <div class="tabs">
-            <div class="tab-item" :class="{ active: selectedTab === 'All' }" @click="selectedTab = 'All'">All</div>
-            <div class="tab-item" :class="{ active: selectedTab === 'Slot' }" @click="selectedTab = 'Slot'">Slot</div>
-            <div class="tab-item" :class="{ active: selectedTab === 'Live' }" @click="selectedTab = 'Live'">Live</div>
-            <div class="tab-item" :class="{ active: selectedTab === 'Fish' }" @click="selectedTab = 'Fish'">Fish</div>
-            <div class="tab-item" :class="{ active: selectedTab === 'Poker' }" @click="selectedTab = 'Poker'">Poker
-            </div>
-        </div>
-
         <div class="filter">
             <InputField :isDark="true">
                 <template #input>
-                    <q-input class="input" v-model="formDetail.realName" outlined clearable hide-bottom-space>
+                    <q-input class="input" v-model="request.loginName" outlined clearable hide-bottom-space>
                         <template v-slot:append>
-                            <q-btn class="get-code-btn" color="primary" :label="$t('btn.confirm')" @click="() => { }" />
+                            <q-btn class="confirm-btn" color="primary" :label="$t('btn.confirm')" @click="loadBetRecords" />
                         </template>
                     </q-input>
                 </template>
             </InputField>
         </div>
 
-        <div class="date-filter filter">
-            <InputField :isDark="true">
-                <template #input>
-                    <q-select class="dropdown" outlined v-model="model" :options="options" dense
-                        :display-value="'Types'" />
-                </template>
-            </InputField>
-            <InputField :isDark="true">
-                <template #input>
-                    <q-select class="dropdown" outlined v-model="model" :options="options" dense
-                        :display-value="'Vendors'" />
-                </template>
-            </InputField>
-            <InputField :isDark="true">
-                <template #input>
-                    <q-select class="dropdown" outlined v-model="model" :options="options" dense
-                        :display-value="'Date'" />
-                </template>
-            </InputField>
+        <div class="header">
+            <div class="username">
+                <img src="../../../assets/images/affiliate/team-management/username-icon.png" />
+                <div>{{ store.nickName }}</div>
+            </div>
+            <div style="color: #21EF89;">Total: {{ page.total }}</div>
         </div>
 
         <div class="detailed-stats panel bordered" v-for="record, index in page.records" :key="index">
             <div class="header">
                 <div class="group">
-                    <span>{{ record.gameType }}</span>
+                    <span>{{ record.nickName }}</span>
                 </div>
-                <div class="link">{{ record.loginName }}</div>
+                <div class="link">{{ record.belongType }}</div>
             </div>
 
             <div class="stats">
                 <hr class="separator" />
+                <div class="row">
+                    <div class="label">Deposit</div>
+                    <div class="value">{{ record.totalDeposit }}</div>
+                </div>
+                <div class="row">
+                    <div class="label">Withdrawal</div>
+                    <div class="value">{{ record.totalWithdrawal }}</div>
+                </div>
+                <div class="row">
+                    <div class="label">Bonus</div>
+                    <div class="value">{{ record.totalBonus }}</div>
+                </div>
+                <hr class="separator" />
                 <div class="col">
                     <div class="col-item">
-                        <div class="label">{{ record.gameName }}</div>
-                        <div class="value green-text">{{ record.competitionName }}</div>
-                    </div>
-                    <div class="col-item">
                         <div class="label">Valid Bet</div>
-                        <div class="value red-text">{{ record.validBet }}</div>
+                        <div class="value valid-bet">{{ record.totalValidBet }}</div>
                     </div>
                     <div class="col-item">
                         <div class="label">Win/Loss</div>
-                        <div class="value blue-text">{{ record.payout }}</div>
+                        <div class="value win-loss">{{ record.totalPayout }}</div>
+                    </div>
+                    <div class="col-item">
+                        <div class="label">Profit and Loss</div>
+                        <div class="value profit-loss">{{ record.totalOayout - record.totalValidBet }}</div>
                     </div>
                 </div>
             </div>
@@ -73,125 +63,100 @@
 </template>
 
 <script setup>
+import { api } from 'src/boot/axios';
 import InputField from 'src/components/auth/InputField.vue';
 import { ref, reactive, onMounted } from 'vue';
-import { api } from 'boot/axios';
-import { userStore } from "src/stores";
 import moment from 'moment';
+import { userStore } from 'src/stores';
 
-
-const store = userStore();
 const formDetail = reactive([]);
-const model = ref('Consolidated Weekly');
-const options = ref(['Consolidated Weekly']);
-const selectedTab = ref('All');
+const store = userStore();
 
-const vendorsList = ref([]);
+const page = reactive({
+    pages: 0,
+    records: [],
+    loading: false,
+    total: 0,
+    sums: {
+        total: 0,
+        totalBet: 0.0000,
+        totalPayout: 0.0000,
+        totalValidBet: 0.0000
+    }
+});
 
 function convertStartDate(date) {
-  return moment(date).startOf('day').format('YYYY-MM-DD HH:mm:ss');
+    return moment(date).startOf('day').format('YYYY-MM-DD HH:mm:ss');
 }
 
 function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD HH:mm:ss');
+    return moment(date).format('YYYY-MM-DD HH:mm:ss');
 }
-
-const page = reactive({
-  pages: 0,
-  records: [],
-  loading: false,
-  total: 0,
-  sums: {
-    total: 0,
-    totalBet: 0.0000,
-    totalPayout: 0.0000,
-    totalValidBet: 0.0000
-}
-});
 
 const request = reactive({
-  size: 20,
-  current: 1,
-  betTime: [convertStartDate(new Date()), convertDate(new Date())],
-  loginName: null,
-  platform: null,
-  gameType: [],
-  status: ["SETTLED", "CANCEL"],
-  affiliateId: null,
+    size: 20,
+    current: 1,
+    regTime: [convertStartDate(new Date()), convertDate(new Date())],
+    loginName: null,
+    memberTypes: "AFFILIATE",
+    status: true
 });
 
 const loadBetRecords = async () => {
-  const requestCopy = { ...request };
-  const query = {};
-  Object.entries(requestCopy).forEach(([key, value]) => {
-    if (value) {
-      query[key] = value;
-    }
-  });
-  if (request.betTime !== null) {
-    if (request.betTime.length === 2) {
-      query.betTime = request.betTime.join(",");
-    }
-  }
-  if (request.status !== null) {
-    if (request.status.length === 1) {
-      query.status = request.status[0];
-    } else {
-      query.status = request.status.join(",");
-    }
-  }
-  query.siteId = 26;
-  if (query.gameType === 'SPORT') {
-    query.gameType = 'SPORT,ESPORT';
-  } else if (query.gameType === 'FISH') {
-    query.gameType = 'FISH,CASUAL';
-  } else if (query.gameType === 'LIVE') {
-    query.gameType = 'LIVE,POKER';
-  }
-  const { data: ret } = await api.get('/session/affiliate/bet-records', {
-    params: query
-  });
-  page.pages = ret.pages;
-  if (ret.sums !== null && ret.sums !== undefined) {
-    page.total = ret.total;
-    page.records = ret.records;
-    page.totalBet = ret.sums.totalBet;
-    page.totalPayout = ret.sums.totalPayout;
-    page.totalCompanyProfit = ret.sums.totalBet - ret.sums.totalPayout;
-  }    
-  page.loading = false;
-}
+    const requestCopy = { ...request };
+    const query = {};
+    Object.entries(requestCopy).forEach(([key, value]) => {
+        if (value) {
+            query[key] = value;
+        }
+    });
 
-const initData = () => {
-    loadBetRecords();
-}
-const initVendors = () => {
-    api.get('session/affiliate/platforms').then((res) => {
-        vendorsList.value = res.data;
-    })
+    if (request.regTime !== null) {
+        if (request.regTime.length === 2) {
+            query.regTime = JSON.parse(JSON.stringify(request.regTime))
+
+            query.regTime[0] = moment(query.regTime[0]).format('YYYY-MM-DD')
+            query.regTime[1] = moment(query.regTime[1]).format('YYYY-MM-DD')
+
+            query.regTime = query.regTime.join(',')
+        } else {
+            query.regTime = moment(request.regTime[0]).format(
+                'YYYY-MM-DD'
+            )
+        }
+    }
+
+    query.recordTime = query.regTime;
+    query.loginName = request.loginName;
+
+    if (request.status !== null) {
+        query.status = request.status = true;
+    }
+
+    query.siteId = 26;
+    query.id = store.memberId;
+    const { data: ret } = await api.get('/session/affiliate/downline', {
+        params: query
+    });
+    page.pages = ret.pages;
+    if (ret.sums !== null && ret.sums !== undefined) {
+        page.total = ret.total;
+        page.records = ret.records;
+        page.totalBet = ret.sums.totalBet;
+        page.totalPayout = ret.sums.totalPayout;
+        page.totalCompanyProfit = ret.sums.totalBet - ret.sums.totalPayout;
+    }
+    page.loading = false;
 }
 
 onMounted(() => {
-    initData();
-    initVendors();
+    loadBetRecords();
 })
 </script>
 
 <style lang="scss" scoped>
-.date-filter {
-    :deep(.landing-input) {
-        width: 33%;
-
-        .dropdown {
-            width: 95%;
-        }
-    }
-}
-
-.filter {
-    :deep(.landing-input) {
-        width: 100%;
-    }
+:deep(.landing-input) {
+    width: 100%;
 }
 
 .tabs {
@@ -279,7 +244,7 @@ onMounted(() => {
         align-items: center;
 
         >* {
-            margin-right: 10px;
+            margin-right: 18px;
         }
     }
 
@@ -289,8 +254,8 @@ onMounted(() => {
         justify-content: center;
         padding: 10px;
         border-radius: 8px;
-        background-color: #42392A;
-        color: #FBAB1B;
+        background-color: #252C46;
+        color: #fff;
     }
 }
 
@@ -321,21 +286,21 @@ onMounted(() => {
                 margin-bottom: 10px;
             }
 
-            .red-text {
+            .valid-bet {
                 color: #EF2121;
                 font-weight: 700;
                 font-size: 14px;
                 line-height: 14px;
             }
 
-            .blue-text {
+            .win-loss {
                 color: #218FEF;
                 font-weight: 700;
                 font-size: 14px;
                 line-height: 14px;
             }
 
-            .green-text {
+            .profit-loss {
                 color: #21EF89;
                 font-weight: 700;
                 font-size: 14px;
@@ -451,7 +416,7 @@ onMounted(() => {
     }
 }
 
-.get-code-btn {
+.confirm-btn {
     background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
     color: #fff;
     box-shadow: 0px 0.5px 2px 0px #0667D599;

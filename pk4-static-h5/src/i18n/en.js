@@ -59,7 +59,8 @@ export default {
     customerServiceVerifer: "Customer Service Verifier",
     teamManagement: "Team Management",
     teamPnL: "Team P&L",
-    teamBetting: "Team Betting"
+    teamBetting: "Team Betting",
+    editRebate: "Edit Rebate"
   },
   bottomNav: {
     home: "Home",
