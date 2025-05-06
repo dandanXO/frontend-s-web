@@ -8,7 +8,7 @@
         </div>
         <span class="footer-label">{{ $t("bottomNav.home") }}</span>
       </q-route-tab>
-      <q-route-tab class="cs-web-id" to="/affiliateaccount" id="cs-web-id" name="live" :ripple="false">
+      <q-route-tab to="/account/agent" name="link-register" :ripple="false">
         <div class="footer-img">
           <img class="inactive" src="../assets/images/index/menu/icon-affiliateaccount.png" />
           <img class="hover" src="../assets/images/index/menu/icon-affiliateaccount-hover.png" />

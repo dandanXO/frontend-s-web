@@ -225,12 +225,6 @@ function getDateRange(startDate = null, endDate = null) {
   return `${start},${end}`;
 }
 
-// Example usage:
-// console.log(getDateRange('Today'));        // "2025-05-06,2025-05-06"
-// console.log(getDateRange('Yesterday'));    // "2025-05-05,2025-05-05"
-// console.log(getDateRange('7 days'));       // "2025-04-29,2025-05-06"
-// console.log(getDateRange('Custom', '2025-04-01', '2025-05-30')); // "2025-04-01,2025-05-30"
-
 // Cards & metric chart selectors
 const metrics = ref([
   { key: 'logins', count: 0, label: 'Logins', color: 'chartlogins', textColor: 'white' },

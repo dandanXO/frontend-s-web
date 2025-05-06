@@ -1,9 +1,9 @@
 <template>
-    <div class="my-dividend-container">
+    <div class="team-management-container">
         <div class="header">
             <div class="username">
                 <img src="../../../assets/images/affiliate/team-management/username-icon.png" />
-                <div>Happy888</div>
+                <div>{{ store.nickName }}</div>
             </div>
             <div class="filter">
                 <div class="filter-value">All subordinates</div>
@@ -15,128 +15,38 @@
             <template #input>
                 <q-input class="input" v-model="formDetail.realName" outlined clearable hide-bottom-space>
                     <template v-slot:append>
-                        <q-btn class="get-code-btn" color="primary" :label="$t('btn.confirm')" @click="() => { }" />
+                        <q-btn class="confirm-btn" color="primary" :label="$t('btn.confirm')" @click="() => { }" />
                     </template>
                 </q-input>
             </template>
         </InputField>
 
-        <div class="detailed-stats panel bordered">
+        <div class="detailed-stats panel bordered" v-for="record, index in page.records" :key="index">
             <div class="header">
                 <div class="group">
                     <img src="../../../assets/images/affiliate/team-management/green-icon.png" />
                     <img src="../../../assets/images/affiliate/team-management/avatar-group-icon.png" />
-                    <span>Happy888(self)</span>
+                    <span>{{ record.nickName }}</span>
                 </div>
-                <div class="vip">VIP 0</div>
+                <div class="vip">{{ record.vip }}</div>
             </div>
 
             <div class="stats">
                 <div class="row">
                     <div class="icon">
-                        <div class="num">4362</div>
+                        <!-- <div class="num">4362</div> -->
                     </div>
                     <div class="label">Net amount receives</div>
-                    <div class="value">5,500.07</div>
+                    <div class="value">{{ record.myCommission }}</div>
                 </div>
                 <hr class="separator" />
                 <div class="row">
                     <div class="label">Last login time</div>
-                    <div class="value">2025-04-28 10:46:23</div>
+                    <div class="value">{{ record.lastLoginTime }}</div>
                 </div>
                 <div class="row">
                     <div class="label">Registration date</div>
-                    <div class="value">2023-01-15 05:44:28</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="detailed-stats panel bordered">
-            <div class="header">
-                <div class="group">
-                    <img src="../../../assets/images/affiliate/team-management/gray-icon.png" />
-                    <img src="../../../assets/images/affiliate/team-management/avatar-icon.png" />
-                    <span>Rhiana1234</span>
-                </div>
-                <div class="vip">VIP 0.5</div>
-            </div>
-
-            <div class="stats">
-                <div class="row">
-                    <div class="icon">
-                        <!-- <div class="num">4362</div> -->
-                    </div>
-                    <div class="label">banlance: 0.40</div>
-                    <div class="value"></div>
-                </div>
-                <hr class="separator" />
-                <div class="row">
-                    <div class="label">Last login time</div>
-                    <div class="value">2025-04-28 10:46:23</div>
-                </div>
-                <div class="row">
-                    <div class="label">Registration date</div>
-                    <div class="value">2023-01-15 05:44:28</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="detailed-stats panel bordered">
-            <div class="header">
-                <div class="group">
-                    <img src="../../../assets/images/affiliate/team-management/gray-icon.png" />
-                    <img src="../../../assets/images/affiliate/team-management/avatar-icon.png" />
-                    <span>Iriesdm</span>
-                </div>
-                <div class="vip">VIP 0.5</div>
-            </div>
-
-            <div class="stats">
-                <div class="row">
-                    <div class="icon">
-                        <!-- <div class="num">4362</div> -->
-                    </div>
-                    <div class="label">banlance: 0.00</div>
-                    <div class="value"></div>
-                </div>
-                <hr class="separator" />
-                <div class="row">
-                    <div class="label">Last login time</div>
-                    <div class="value">2025-04-28 10:46:23</div>
-                </div>
-                <div class="row">
-                    <div class="label">Registration date</div>
-                    <div class="value">2023-01-15 05:44:28</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="detailed-stats panel bordered">
-            <div class="header">
-                <div class="group">
-                    <img src="../../../assets/images/affiliate/team-management/gray-icon.png" />
-                    <img src="../../../assets/images/affiliate/team-management/avatar-icon.png" />
-                    <span>Joh1984</span>
-                </div>
-                <div class="vip">VIP 0</div>
-            </div>
-
-            <div class="stats">
-                <div class="row">
-                    <div class="icon">
-                        <!-- <div class="num">4362</div> -->
-                    </div>
-                    <div class="label">banlance: 0.95</div>
-                    <div class="value"></div>
-                </div>
-                <hr class="separator" />
-                <div class="row">
-                    <div class="label">Last login time</div>
-                    <div class="value">2025-04-28 10:46:23</div>
-                </div>
-                <div class="row">
-                    <div class="label">Registration date</div>
-                    <div class="value">2023-01-15 05:44:28</div>
+                    <div class="value">{{ record.regTime }}</div>
                 </div>
             </div>
         </div>
@@ -145,16 +55,35 @@
 
 <script setup>
 import InputField from 'src/components/auth/InputField.vue';
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
+import { api } from 'boot/axios';
+import { userStore } from 'src/stores';
+
+const store = userStore();
 
 const formDetail = reactive([]);
-const model = ref('Consolidated Weekly');
-const options = ref(['Consolidated Weekly']);
 
+const page = reactive({
+  pages: 0,
+  records: [],
+  loading: false,
+});
+
+onMounted(() => {
+    api.get('/session/affiliate/downline-simple-list', {
+        params: {
+            current: 1,
+            size: 50
+        }
+    }).then((res) => {
+        const data = res.data;
+        page.records = data.records;
+    })
+})
 </script>
 
 <style lang="scss" scoped>
-.my-dividend-container {
+.team-management-container {
     display: flex;
     flex-direction: column;
 }
@@ -342,7 +271,7 @@ const options = ref(['Consolidated Weekly']);
     }
 }
 
-.get-code-btn {
+.confirm-btn {
     background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
     color: #fff;
     box-shadow: 0px 0.5px 2px 0px #0667D599;
