@@ -11,7 +11,7 @@
           range-separator=":"
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
-          style="margin-left: 5px; width: 380px"
+          style="margin-left: 5px; width: 280px"
           :editable="false"
           :clearable="false"
         />
@@ -20,10 +20,11 @@
           format="DD/MM/YYYY"
           value-format="YYYY-MM-DD"
           size="small"
-          type="date"
+          type="daterange"
           range-separator=":"
-          style="margin-left: 5px; width: 180px"
-          :placeholder="t('fields.registerTime')"
+          style="margin-left: 5px; width: 280px"
+          :start-placeholder="t('fields.registerTime')"
+          :end-placeholder="t('fields.registerTime')"
           :editable="false"
           :clearable="false"
         />
@@ -204,7 +205,7 @@ function checkQuery() {
     }
   }
   if (request.registerTime !== null) {
-    query.registerTime = [getStartOfDay(request.registerTime), getEndOfDay(request.registerTime)].join(",")
+    query.registerTime = [getStartOfDay(request.registerTime[0]), getEndOfDay(request.registerTime[1])].join(",")
   }
   return query;
 }
