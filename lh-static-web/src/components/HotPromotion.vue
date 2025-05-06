@@ -24,6 +24,12 @@
 
     <div style="text-align: center" v-if="list.redirectUrl === 'lh1-feedback-award'">
       <img
+        v-if="isDark"
+        style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
+        src="../assets/images/promotion/hotpromo/lhfeedback/feedback-dark.png"
+      />
+      <img
+        v-else
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
         src="../assets/images/promotion/hotpromo/lhfeedback/feedback.png"
       />
@@ -161,6 +167,7 @@ import FpSlotPromo from "./hotpromo/fp-slot-promo/FpSlotPromo.vue";
 import elsOne2025 from "../components/hotpromo/elsOne2025/elsOne2025.vue";
 import YuEBaoPromo from "./hotpromo/yu-e-bao/YuEBaoPromo.vue";
 import BlastRival2025 from "./hotpromo/BlastRival2025/BlastRival2025.vue";
+import { useDark } from "@vueuse/core";
 
 export default defineComponent({
   name: "HotPromo",
@@ -223,6 +230,7 @@ export default defineComponent({
   },
   data() {
     return {
+      isDark: useDark(),
       emptyText: "今天没有获奖者。",
       privilegeClaimedModalVisible: false,
       dataSource: [],
