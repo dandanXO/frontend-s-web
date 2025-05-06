@@ -183,6 +183,11 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = t("affiliateSettings.accountRecord");
         }
+        else if (route.path === "/affiliate/edit-rebate") {
+          prevPage.value = "/affiliate/agent";
+          hasPage.value = true;
+          pageName.value = t("affiliateSettings.editRebate");
+        }
       }
     };
     const pageName = ref("");

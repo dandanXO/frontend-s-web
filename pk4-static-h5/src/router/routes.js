@@ -366,6 +366,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/affiliate/edit-rebate",
+    component: () => import("layouts/AffiliateLayout.vue"),
+    children: [{ path: "", component: () => import("pages/affiliate/EditRebateView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
     path: "/affiliate/team-betting",
     component: () => import("layouts/AffiliateLayout.vue"),
     children: [{ path: "", component: () => import("pages/affiliate/TeamBettingView.vue") }],

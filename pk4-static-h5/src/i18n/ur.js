@@ -57,7 +57,8 @@ export default {
     effectiveRevenueFAQ: "مؤثر آمدنی کے عمومی سوالات",
     teamManagement: "ٹیم مینجمنٹ",
     teamPnL: "ٹیم منافع اور نقصان",
-    teamBetting: "ٹیم شرط بندی"
+    teamBetting: "ٹیم شرط بندی",
+    editRebate: "رعایت میں ترمیم کریں"
   },
   bottomNav: {
     home: "گھر/ہوم",
