@@ -81,6 +81,10 @@ const downloadQRImg = async () => {
           const dataUrl = canvas.toDataURL("image/jpeg");
 
           window.flutter_inappwebview.callHandler("downloadBase64Image", dataUrl);
+
+          setTimeout(()=>{
+            canvas.style.display = "none";
+          },750)
         });
       } catch (e) {}
     }
