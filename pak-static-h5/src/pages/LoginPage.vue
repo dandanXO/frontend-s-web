@@ -164,18 +164,18 @@
         <img v-else style="width: 100%" src="../assets/images/index/logindirectly-ur.svg" />
         <template v-if="isAndroid()">
           <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onCapacitorGoogleSignin">
-            <img width="24px" src="../assets/images/index/google-icon.svg" />
-
-            &nbsp;
-            {{ $t("btn.signinWithGoogle") }}
+            <div class="google-btn">
+              <img width="24px" src="../assets/images/index/google-icon.svg" />
+              <div>{{ $t("btn.signinWithGoogle") }}</div>
+            </div>
           </q-btn>
         </template>
         <template v-else>
           <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onClickGoogleSignin">
-            <img width="24px" src="../assets/images/index/google-icon.svg" />
-
-            &nbsp;
-            {{ $t("btn.signinWithGoogle") }}
+            <div class="google-btn">
+              <img width="24px" src="../assets/images/index/google-icon.svg" />
+              <div>{{ $t("btn.signinWithGoogle") }}</div>
+            </div>
           </q-btn>
         </template>
       </div>
@@ -1307,6 +1307,17 @@ export default defineComponent({
   margin-top: 25px;
   img {
     margin-bottom: 10px;
+    margin-right: 6px;
+  }
+  .google-btn {
+    display: flex;
+  }
+  .google-login-wrapper {
+    height: 100%;
+  }
+  .btn-secondary {
+    height: 45px;
+    padding: 9px;
   }
 }
 </style>
