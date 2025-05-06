@@ -75,6 +75,7 @@
     <IemMelbourne2025 v-else-if="list.redirectUrl === 'lh1-iem-melbourne-2025'" :promo-code="list.promoCode" />
     <PglWallachiaS4 v-else-if="list.redirectUrl === 'lh1-pgl-wallachia-s4'" :promo-code="list.promoCode" />
     <BlastSlam32025 v-else-if="list.redirectUrl === 'lh1-blast-slam-3-2025'" :promo-code="list.promoCode" />
+    <PglastanaAc2025 v-else-if="list.redirectUrl === 'lh1-pgl-astana-2025'" :promo-code="list.promoCode" />
     <Cct2025 v-else-if="list.redirectUrl === 'lh1-cct-global-finals-2025'" :promo-code="list.promoCode" />
     <FpSlotPromo v-else-if="list.redirectUrl === 'lh1-fp-slot'" :promo-code="list.promoCode" />
     <elsOne2025 v-else-if="list.redirectUrl === 'lh1-esl-one-raleigh-2025'" :promo-code="list.promoCode" />
@@ -121,6 +122,7 @@ import YaLLa2025 from "./hotpromo/YaLLa2025/YaLLa2025.vue";
 import IemMelbourne2025 from "./hotpromo/iem-melbourne-2025/IemMelbourne2025.vue";
 import PglWallachiaS4 from "./hotpromo/pgl-wallachia-s4/PglWallachiaS4.vue";
 import BlastSlam32025 from "./hotpromo/blast-slam-3-2025/BlastSlam32025.vue";
+import PglastanaAc2025 from "./hotpromo/lh1-pgl-astana-2025/pglastanaAc2025.vue";
 import BlastRival2025 from "./hotpromo/BlastRival2025/BlastRival2025.vue";
 import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
@@ -255,6 +257,7 @@ export default defineComponent({
     IemMelbourne2025,
     PglWallachiaS4,
     BlastSlam32025,
+    PglastanaAc2025,
     FpSlotPromo,
     YuEBaoPromo,
     BlastRival2025
