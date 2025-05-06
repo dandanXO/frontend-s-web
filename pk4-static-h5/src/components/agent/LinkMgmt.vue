@@ -3,7 +3,9 @@
     <div class="forum-card__header">
       <div class="forum-card__title">
         <img alt="forum" src="@/assets/images/agent/forum-icon.png" width="24" height="24" />
-        <span>Forum</span>
+        <span v-if="index === 0">PC 端推广链接</span>
+        <span v-if="index === 1">H5 版推广链接（推荐使用）</span>
+        <span v-if="index === 2 || index === 3">短域名</span>
       </div>
       <div class="forum-card__icons">
         <img alt="forum" src="@/assets/images/agent/add-user-icon.png" width="16" height="16" />
@@ -13,7 +15,7 @@
           src="@/assets/images/agent/scan-qr-icon.png"
           width="16"
           height="16"
-          @click="isScanQrDialog = true"
+          @click="onClickQRCode"
         />
         <div class="icon-divider"></div>
         <img alt="delete" src="@/assets/images/agent/delete-icon.png" width="16" height="16" />
@@ -83,7 +85,7 @@
 
         <div class="qr-link-row">
           <img alt="qr-code" src="@/assets/images/agent/copy-link-icon.png" width="20" height="20" />
-          <span class="qr-url">https://Gi6qq.Link/.../Register.html</span>
+          <span class="qr-url">{{ referralLink }}</span>
         </div>
 
         <q-btn label="Copy Link" class="copy-btn" unelevated />
@@ -92,10 +94,19 @@
   </q-dialog>
 </template>
 <script setup>
-import { ref } from "vue";
+import { api } from "src/boot/axios";
+import { userStore } from "src/stores";
+import { ref, onMounted } from "vue";
+
+var qs = require('qs');
+
+const store = userStore();
+const referralLink = ref('');
+const webLink = ref('');
+const affCode = ref('');
 
 const cards = ref(
-  Array.from({ length: 5 }, (_, i) => ({
+  Array.from({ length: 4 }, (_, i) => ({
     id: i + 1,
     expanded: false
   }))
@@ -107,7 +118,37 @@ const toggleCard = (index) => {
   }
 };
 
+const onClickQRCode = () => {
+  isScanQrDialog.value = true;
+  const newReferralLink = `${webLink.value}agent/${affCode.value}`;
+  referralLink.value = newReferralLink
+
+  api.post('/session/affiliate/short-link', qs.stringify({
+    linkType: 'WEB',
+    urlType: 'WX',
+    longUrl: newReferralLink,
+    shortUrl: '',
+    affiliateId: store.memberId,
+    siteId: 26
+  })).then((res) => {
+    console.log('here', res)
+  })
+}
+
 const isScanQrDialog = ref(false);
+
+const getLinkList = () => {
+  api.get('/session/affiliate/web-link').then((res) => {
+    webLink.value = res.data;
+  })
+  api.get('/session/affiliate').then((res) => {
+    affCode.value = res.data.affiliateCode;
+  })
+}
+
+onMounted(() => {
+  getLinkList();
+})
 </script>
 <style lang="scss" scoped>
 .forum-card {

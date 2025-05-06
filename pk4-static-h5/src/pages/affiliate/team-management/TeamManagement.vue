@@ -24,25 +24,25 @@
         <div class="detailed-stats panel bordered" v-for="record, index in page.records" :key="index">
             <div class="header">
                 <div class="group">
-                    <img src="../../../assets/images/affiliate/team-management/green-icon.png" />
+                    <!-- <img src="../../../assets/images/affiliate/team-management/green-icon.png" /> -->
                     <img src="../../../assets/images/affiliate/team-management/avatar-group-icon.png" />
-                    <span>{{ record.nickName }}</span>
+                    <span>{{ record.loginName ?? '{Login Name}' }}</span>
                 </div>
                 <div class="vip">{{ record.vip }}</div>
             </div>
 
             <div class="stats">
                 <div class="row">
-                    <div class="icon">
-                        <!-- <div class="num">4362</div> -->
-                    </div>
+                    <!-- <div class="icon">
+                        <div class="num">4362</div>
+                    </div> -->
                     <div class="label">Net amount receives</div>
-                    <div class="value">{{ record.myCommission }}</div>
+                    <div class="value">{{ record.myCommission ?? '-' }}</div>
                 </div>
                 <hr class="separator" />
                 <div class="row">
                     <div class="label">Last login time</div>
-                    <div class="value">{{ record.lastLoginTime }}</div>
+                    <div class="value">{{ record.lastLoginTime ?? '-' }}</div>
                 </div>
                 <div class="row">
                     <div class="label">Registration date</div>
@@ -55,7 +55,7 @@
 
 <script setup>
 import InputField from 'src/components/auth/InputField.vue';
-import { ref, reactive, onMounted } from 'vue';
+import { reactive, onMounted } from 'vue';
 import { api } from 'boot/axios';
 import { userStore } from 'src/stores';
 

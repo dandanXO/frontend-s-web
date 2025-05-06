@@ -278,7 +278,7 @@ const initData = () => {
           firstDeposits: [...acc.allChartData.firstDeposits, curr.ftdAmount],
           deposits: [...acc.allChartData.deposits, curr.depositAmount],
           withdrawals: [...acc.allChartData.withdrawals, curr.withdrawAmount],
-          teamPnL: [...acc.allChartData.teamPnL, curr.payout - curr.validBet],
+          teamPnL: [...acc.allChartData.teamPnL, curr.payout - curr.validBet - curr.rebate],
         }
       }
     }, {
@@ -317,7 +317,7 @@ const initData = () => {
       else if (stat.key === 'bonus') stat.value = sumByKey("bonus");
       else if (stat.key === 'validBet') stat.value = sumByKey("validBet");
       else if (stat.key === 'winLoss') stat.value = sumByKey("payout") - sumByKey("validBet");
-      else if (stat.key === 'teamPnL') stat.value = sumByKey("payout") - sumByKey("validBet");
+      else if (stat.key === 'teamPnL') stat.value = sumByKey("payout") - sumByKey("validBet") - sumByKey("rebate");
       else if (stat.key === 'teamRebate') stat.value = sumByKey("rebate");
       return stat;
     });
