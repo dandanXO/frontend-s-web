@@ -3,35 +3,34 @@
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
-                 
         <div class="txt-title">{{ $t("bankCard.otp") }}</div>
-          <InputField>
-              <template #input>
-                <q-input
-                  ref="innerCaptchaRef"
-                  standout
-                  v-model="innerCaptchaCode"
-                  class="q-pb-xs"
-                  hide-bottom-space
-                  maxlength="4"
-                  :rules="[
-                    (val) => (val && val.length > 0) || $t('bankCard.pleaseEnterVerificationCode'),
-                    (val) => (val && val.length === 4) || $t('bankCard.verificationCodeLengthError')
-                  ]"
-                  :placeholder="$t('bankCard.insertVerificationCode')"
-                  clearable
-                >
-                  <template v-slot:append>
-                    <img
-                      :src="phoneVerificationImg"
-                      title="Click to Refresh OTP"
-                      style="margin-top: 6px; cursor: pointer"
-                      @click="getCode"
-                    />
-                  </template>
-                </q-input> 
+        <InputField>
+          <template #input>
+            <q-input
+              ref="innerCaptchaRef"
+              standout
+              v-model="innerCaptchaCode"
+              class="q-pb-xs"
+              hide-bottom-space
+              maxlength="4"
+              :rules="[
+                (val) => (val && val.length > 0) || $t('bankCard.pleaseEnterVerificationCode'),
+                (val) => (val && val.length === 4) || $t('bankCard.verificationCodeLengthError')
+              ]"
+              :placeholder="$t('bankCard.insertVerificationCode')"
+              clearable
+            >
+              <template v-slot:append>
+                <img
+                  :src="phoneVerificationImg"
+                  title="Click to Refresh OTP"
+                  style="margin-top: 6px; cursor: pointer"
+                  @click="getCode"
+                />
               </template>
-            </InputField>
+            </q-input>
+          </template>
+        </InputField>
 
         <div style="width: 100%" class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
           <q-btn class="btn-primary__full" :label="$t('btn.sendOtp')" no-caps @click="onCaptchaSubmit" />
@@ -44,15 +43,17 @@
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="flex justify-center">
-          <template v-if="showCaptchaSuccessDialog"><img src="../../assets/images/cs-verifier/correct-icon.png" alt="" /></template>
+          <template v-if="showCaptchaSuccessDialog">
+            <img src="../../assets/images/cs-verifier/correct-icon.png" alt="" />
+          </template>
           <template v-else><img src="../../assets/images/cs-verifier/wrong-icon.png" alt="" /></template>
         </div>
         <div class="text-center q-py-md">
           <span class="txt-green" v-if="showCaptchaSuccessDialog">
-            {{ $t('bankCard.captchaSuccess') }}
+            {{ $t("bankCard.captchaSuccess") }}
           </span>
           <span class="txt-red" v-else>
-            {{ $t('bankCard.captchaFailedMessage') }}
+            {{ $t("bankCard.captchaFailedMessage") }}
           </span>
         </div>
 
@@ -129,59 +130,59 @@
       <!--      </div>-->
 
       <InputRowGrid>
+        <template #fields>
+          <!-- <InputField :label="$t('form.virtualWallet')"> -->
+          <InputField :label="$t('bankCard.telephone')">
+            <template #input>
+              <q-input
+                standout
+                v-model="bankCardInfo.telephone"
+                class="q-pb-xs"
+                hide-bottom-space
+                :placeholder="$t('bankCard.pleaseEnterTelephone')"
+                clearable
+              >
+                <template v-slot:append>
+                  <q-btn
+                    @click="openPhoneVeriDialog()"
+                    type="submit"
+                    size="sm"
+                    :label="$t('bankCard.getOtp')"
+                    class="btn-primary__full"
+                    style="height: unset"
+                  />
+                </template>
+              </q-input>
+            </template>
+          </InputField>
+        </template>
+      </InputRowGrid>
+
+      <template v-if="isOtpSent">
+        <InputRowGrid>
           <template #fields>
             <!-- <InputField :label="$t('form.virtualWallet')"> -->
-            <InputField :label="$t('bankCard.telephone')">
+            <InputField :label="$t('bankCard.otp')">
               <template #input>
                 <q-input
+                  ref="phoneVerificationRef"
                   standout
-                  v-model="bankCardInfo.telephone"
+                  v-model="bankCardInfo.smsCode"
                   class="q-pb-xs"
                   hide-bottom-space
-                  :placeholder="$t('bankCard.pleaseEnterTelephone')"
                   clearable
-                >
-                  <template v-slot:append>
-                    <q-btn
-                      @click="openPhoneVeriDialog()"
-                      type="submit"
-                      size="sm"
-                      :label="$t('bankCard.getOtp')"
-                      class="btn-primary__full"
-                      style="height: unset;"
-                    />
-                  </template>
-                </q-input> 
+                  maxlength="6"
+                  :placeholder="$t('bankCard.pleaseEnterOtp')"
+                  :rules="[(val) => (val && val.length > 3) || $t('bankCard.otpLengthError')]"
+                  @keydown.enter.prevent="handleEnterKey"
+                  @keydown.enter="submitBankCard()"
+                ></q-input>
               </template>
             </InputField>
           </template>
         </InputRowGrid>
-
-        <template v-if="isOtpSent">
-          <InputRowGrid>
-            <template #fields>
-              <!-- <InputField :label="$t('form.virtualWallet')"> -->
-              <InputField :label="$t('bankCard.otp')">
-                <template #input>
-                  <q-input
-                    ref="phoneVerificationRef"
-                    standout
-                    v-model="bankCardInfo.smsCode"
-                    class="q-pb-xs"
-                    hide-bottom-space
-                    clearable
-                    maxlength="6"
-                    :placeholder="$t('bankCard.pleaseEnterOtp')"
-                    :rules="[(val) => (val && val.length > 3) ||  $t('bankCard.otpLengthError')]"
-                    @keydown.enter.prevent="handleEnterKey"
-                    @keydown.enter="submitBankCard()"
-                  ></q-input> 
-                </template>
-              </InputField>
-            </template>
-          </InputRowGrid>
-        </template>
-        <!-- <q-label>
+      </template>
+      <!-- <q-label>
           手机号
           <em>*</em>
         </q-label>
@@ -203,7 +204,7 @@
             />
           </template>
         </q-input>  -->
-          <!-- <q-label>
+      <!-- <q-label>
             验证码
             <em>*</em>
           </q-label>
@@ -364,7 +365,7 @@ const onCaptchaSubmit = () => {
 
   api
     .post(
-      `/session/sendSms`,
+      `/otp/sendSms`,
       qs.stringify({
         captchaCode: innerCaptchaCode.value,
         codeId: innerCodeId.value
@@ -417,9 +418,9 @@ const loadBankCards = () => {
             }
 
             onTypeToggleBtnClick(0, bankList.value[0].name);
-            
+
             if (isValidPhone) {
-              bankCardInfo.telephone = store.nickName
+              bankCardInfo.telephone = store.nickName;
             }
           }
         })
@@ -441,7 +442,7 @@ const submitBankCard = () => {
     $q.notify({
       color: "negative",
       position: "top",
-      message: t('bankCard.clickAndEnterPhoneCode'),
+      message: t("bankCard.clickAndEnterPhoneCode"),
       icon: "report_problem"
     });
   } else if (phoneVerificationRef.value) {

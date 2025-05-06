@@ -1,38 +1,36 @@
 <template>
-  
   <q-dialog class="flex-end" width="100%" v-model="showCaptchaDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
-                 
         <div class="txt-title">{{ $t("bankCard.otp") }}</div>
-          <InputField>
-              <template #input>
-                <q-input
-                  ref="innerCaptchaRef"
-                  standout
-                  v-model="innerCaptchaCode"
-                  class="q-pb-xs"
-                  hide-bottom-space
-                  maxlength="4"
-                  :rules="[
-                    (val) => (val && val.length > 0) || $t('bankCard.pleaseEnterVerificationCode'),
-                    (val) => (val && val.length === 4) || $t('bankCard.verificationCodeLengthError')
-                  ]"
-                  :placeholder="$t('bankCard.insertVerificationCode')"
-                  clearable
-                >
-                  <template v-slot:append>
-                    <img
-                      :src="phoneVerificationImg"
-                      title="Click to Refresh OTP"
-                      style="margin-top: 6px; cursor: pointer"
-                      @click="getCode"
-                    />
-                  </template>
-                </q-input> 
+        <InputField>
+          <template #input>
+            <q-input
+              ref="innerCaptchaRef"
+              standout
+              v-model="innerCaptchaCode"
+              class="q-pb-xs"
+              hide-bottom-space
+              maxlength="4"
+              :rules="[
+                (val) => (val && val.length > 0) || $t('bankCard.pleaseEnterVerificationCode'),
+                (val) => (val && val.length === 4) || $t('bankCard.verificationCodeLengthError')
+              ]"
+              :placeholder="$t('bankCard.insertVerificationCode')"
+              clearable
+            >
+              <template v-slot:append>
+                <img
+                  :src="phoneVerificationImg"
+                  title="Click to Refresh OTP"
+                  style="margin-top: 6px; cursor: pointer"
+                  @click="getCode"
+                />
               </template>
-            </InputField>
+            </q-input>
+          </template>
+        </InputField>
 
         <div style="width: 100%" class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
           <q-btn class="btn-primary__full" :label="$t('btn.sendOtp')" no-caps @click="onCaptchaSubmit" />
@@ -45,15 +43,17 @@
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="flex justify-center">
-          <template v-if="showCaptchaSuccessDialog"><img src="../../assets/images/cs-verifier/correct-icon.png" alt="" /></template>
+          <template v-if="showCaptchaSuccessDialog">
+            <img src="../../assets/images/cs-verifier/correct-icon.png" alt="" />
+          </template>
           <template v-else><img src="../../assets/images/cs-verifier/wrong-icon.png" alt="" /></template>
         </div>
         <div class="text-center q-py-md">
           <span class="txt-green" v-if="showCaptchaSuccessDialog">
-            {{ $t('bankCard.captchaSuccess') }}
+            {{ $t("bankCard.captchaSuccess") }}
           </span>
           <span class="txt-red" v-else>
-            {{ $t('bankCard.captchaFailedMessage') }}
+            {{ $t("bankCard.captchaFailedMessage") }}
           </span>
         </div>
 
@@ -181,7 +181,7 @@
                       size="sm"
                       :label="$t('bankCard.getOtp')"
                       class="btn-primary__full"
-                      style="height: unset;"
+                      style="height: unset"
                     />
                   </template>
                 </q-input>
@@ -250,7 +250,6 @@
           <q-btn class="common-sm-btn">{{ selectedTypeToggleName }}</q-btn>
         </div>
 
-        
         <template v-if="isOtpSent">
           <InputRowGrid>
             <template #fields>
@@ -266,10 +265,10 @@
                     clearable
                     maxlength="6"
                     :placeholder="$t('bankCard.pleaseEnterOtp')"
-                    :rules="[(val) => (val && val.length > 3) ||  $t('bankCard.otpLengthError')]"
+                    :rules="[(val) => (val && val.length > 3) || $t('bankCard.otpLengthError')]"
                     @keydown.enter.prevent="handleEnterKey"
                     @keydown.enter="submitBankCard()"
-                  ></q-input> 
+                  ></q-input>
                 </template>
               </InputField>
             </template>
@@ -463,7 +462,7 @@ const onCaptchaSubmit = () => {
 
   api
     .post(
-      `/session/sendSms`,
+      `/otp/sendSms`,
       qs.stringify({
         telephone: bankCardInfo.cardNumber,
         captchaCode: innerCaptchaCode.value,
@@ -483,7 +482,6 @@ const onCaptchaSubmit = () => {
         captchaFailedMessage.value = res.message;
         showCaptchaMessageDialog.value = true;
       }
-
 
       showCaptchaDialog.value = false;
     })
@@ -535,7 +533,7 @@ const submitBankCard = () => {
     cardNumberRef.value.validate();
   }
 
-  if (selectedTypeToggleName.value === 'JAZZCASH'){
+  if (selectedTypeToggleName.value === "JAZZCASH") {
     if (ifscRef.value) {
       ifscRef.value.validate();
     }
@@ -545,7 +543,7 @@ const submitBankCard = () => {
     $q.notify({
       color: "negative",
       position: "top",
-      message: t('bankCard.clickAndEnterPhoneCode'),
+      message: t("bankCard.clickAndEnterPhoneCode"),
       icon: "report_problem"
     });
   } else if (phoneVerificationRef.value) {
@@ -554,13 +552,13 @@ const submitBankCard = () => {
 
   if (
     !(
-      ((bankCardRef.value && bankCardRef.value.hasError) ||
+      (bankCardRef.value && bankCardRef.value.hasError) ||
       (cardNumberRef.value && cardNumberRef.value.hasError) ||
       (phoneVerificationRef.value && phoneVerificationRef.value.hasError) ||
-      (selectedTypeToggleName.value === 'JAZZCASH' && ifscRef.value && ifscRef.value.hasError))
+      (selectedTypeToggleName.value === "JAZZCASH" && ifscRef.value && ifscRef.value.hasError)
     )
   ) {
-    bankCardInfo.telephone = bankCardInfo.cardNumber
+    bankCardInfo.telephone = bankCardInfo.cardNumber;
     // API call
     api
       .post("/session/bankCard", qs.stringify(bankCardInfo))
@@ -569,11 +567,11 @@ const submitBankCard = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: t('notify.virtualWalletAddedSuccessfully'),
+            message: t("notify.virtualWalletAddedSuccessfully"),
             icon: "check_circle_outline"
           });
-          bankCardInfo.cardNumber = ""
-          bankCardInfo.telephone = ""
+          bankCardInfo.cardNumber = "";
+          bankCardInfo.telephone = "";
           bankFormRef.value.reset();
           router.push("/account/bank");
         }
@@ -592,7 +590,7 @@ const handleEnterKey = () => {
 
 onActivated(() => {
   bankCardInfo.cardAddress = "";
-  bankCardInfo.cardNumber = ""
+  bankCardInfo.cardNumber = "";
   bankFormRef.value.reset();
 
   loadBankCards();
@@ -605,15 +603,15 @@ onActivated(() => {
   display: flex;
   box-shadow: unset;
   border-radius: 6px;
-    background: #292D2E;
-      border: 1px solid #21EF89;
+  background: #292d2e;
+  border: 1px solid #21ef89;
 }
 
 .common-sm-white-btn {
   padding: 6px 12px;
   border-radius: 8px;
   box-shadow: unset;
-    background: #292D2E;
+  background: #292d2e;
   border: 1px solid rgb(98 98 98);
 }
 
