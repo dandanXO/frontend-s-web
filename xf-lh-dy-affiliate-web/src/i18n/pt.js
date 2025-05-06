@@ -32,6 +32,7 @@ export default {
     email: 'E-mail',
     qq: 'QQ',
     skype: 'Skype',
+    teams: 'Teams',
     paopao: 'Bubble',
     zalo: 'Zalo',
     telegram: 'Telegram',

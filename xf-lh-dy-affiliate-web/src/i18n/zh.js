@@ -31,6 +31,7 @@ export default {
     email: '合营部电邮',
     qq: '合营 QQ',
     skype: '合营部 Skype',
+    teams: '合营部 Teams',
     paopao: '泡泡',
     loofah: '丝瓜',
     zalo: 'Zalo',
