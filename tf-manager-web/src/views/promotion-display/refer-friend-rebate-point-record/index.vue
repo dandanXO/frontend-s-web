@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-date-picker
+        <!-- <el-date-picker
           v-model="request.createTime"
           format="DD/MM/YYYY"
           value-format="YYYY-MM-DD"
@@ -11,7 +11,20 @@
           range-separator=":"
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
+          style="margin-left: 5px; width: 280px"
+          :editable="false"
+          :clearable="false"
+        /> -->
+        <el-date-picker
+          v-model="request.registerTime"
+          format="DD/MM/YYYY"
+          value-format="YYYY-MM-DD"
+          size="small"
+          type="daterange"
+          range-separator=":"
           style="margin-left: 5px; width: 380px"
+          :start-placeholder="t('fields.registerTime')"
+          :end-placeholder="t('fields.registerTime')"
           :editable="false"
           :clearable="false"
         />
@@ -136,17 +149,19 @@ const defaultDate = convertDate(new Date());
 const request = reactive({
   size: 50,
   current: 1,
-  createTime: [getStartOfDay(defaultDate), getEndOfDay(defaultDate)],
+  // createTime: [getStartOfDay(defaultDate), getEndOfDay(defaultDate)],
   siteId: null,
   loginName: null,
-  referrerName: null
+  referrerName: null,
+  registerTime: [getStartOfDay(defaultDate), getEndOfDay(defaultDate)]
 });
 
 function resetQuery() {
-  request.createTime = [getStartOfDay(defaultDate), getEndOfDay(defaultDate)];
+  // request.createTime = [getStartOfDay(defaultDate), getEndOfDay(defaultDate)];
   request.siteId = store.state.user.siteId;
   request.loginName = null;
   request.referrerName = null;
+  request.registerTime = [getStartOfDay(defaultDate), getEndOfDay(defaultDate)];
 }
 
 const page = reactive({
@@ -181,11 +196,19 @@ function checkQuery() {
       query[key] = value;
     }
   });
-  if (request.createTime !== null) {
-    if (request.createTime.length === 2) {
-      query.createTime = [
-        getStartOfDay(request.createTime[0]),
-        getEndOfDay(request.createTime[1])
+  // if (request.createTime !== null) {
+  //   if (request.createTime.length === 2) {
+  //     query.createTime = [
+  //       getStartOfDay(request.createTime[0]),
+  //       getEndOfDay(request.createTime[1])
+  //     ].join(",");
+  //   }
+  // }
+  if (request.registerTime !== null) {
+    if (request.registerTime.length === 2) {
+      query.registerTime = [
+        getStartOfDay(request.registerTime[0]),
+        getEndOfDay(request.registerTime[1])
       ].join(",");
     }
   }
