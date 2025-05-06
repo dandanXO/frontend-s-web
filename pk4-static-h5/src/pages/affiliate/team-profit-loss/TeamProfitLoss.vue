@@ -1,174 +1,220 @@
 <template>
-    <div class="my-dividend-container">
+    <div class="team-profit-loss-container">
 
-        <div class="tabs">
+        <!-- <div class="tabs">
             <div class="tab-item" :class="{active: selectedTab === 'All'}" @click="selectedTab = 'All'">All</div>
             <div class="tab-item" :class="{active: selectedTab === 'Slot'}" @click="selectedTab = 'Slot'">Slot</div>
             <div class="tab-item" :class="{active: selectedTab === 'Live'}" @click="selectedTab = 'Live'">Live</div>
             <div class="tab-item" :class="{active: selectedTab === 'Fish'}" @click="selectedTab = 'Fish'">Fish</div>
             <div class="tab-item" :class="{active: selectedTab === 'Poker'}" @click="selectedTab = 'Poker'">Poker</div>
-        </div>
+        </div> -->
 
         <div class="filter">
-        <InputField :isDark="true">
-            <template #input>
-                <q-input class="input" v-model="formDetail.realName" outlined clearable hide-bottom-space>
-                    <template v-slot:append>
-                        <q-btn class="get-code-btn" color="primary" :label="$t('btn.confirm')" @click="() => { }" />
-                    </template>
-                </q-input>
-            </template>
-        </InputField>
+            <InputField :isDark="true">
+                <template #input>
+                    <q-input class="input" v-model="formDetail.realName" outlined clearable hide-bottom-space>
+                        <template v-slot:append>
+                            <q-btn class="get-code-btn" color="primary" :label="$t('btn.confirm')" @click="() => { }" />
+                        </template>
+                    </q-input>
+                </template>
+            </InputField>
 
-        <q-btn class="datetime-dropdown" @click="() => {}" flat unelevated>
-            Today&nbsp;
-            <q-icon class="forward-icon" name="keyboard_arrow_down" size="small" />
-          </q-btn>
+            <q-btn class="datetime-dropdown" @click="openDaySelectionDialog" flat unelevated>
+                {{ daysSelection.label }}&nbsp;
+                <q-icon class="forward-icon" name="keyboard_arrow_down" size="small" />
+            </q-btn>
         </div>
 
         <div class="header">
             <div class="username">
                 <img src="../../../assets/images/affiliate/team-management/username-icon.png" />
-                <div>Happy888</div>
+                <div>{{ store.nickName }}</div>
             </div>
-            <div style="color: #21EF89;">Total: 3</div>
+            <div style="color: #21EF89;">Total: {{ page.total }}</div>
         </div>
 
-        <div class="detailed-stats panel bordered">
-            <div class="header">
-                <div class="group">
-                    <span>Happy888</span>
-                </div>
-                <div class="link">direct player 0 ></div>
-            </div>
 
-            <div class="stats">
-                <hr class="separator" />
-                <div class="row">
-                    <div class="label">Deposit</div>
-                    <div class="value">0.00</div>
-                </div>
-                <div class="row">
-                    <div class="label">Withdrawal</div>
-                    <div class="value">0.00</div>
-                </div>
-                <div class="row">
-                    <div class="label">Bonus</div>
-                    <div class="value">-</div>
-                </div>
-                <hr class="separator" />
-                <div class="col">
-                    <div class="col-item">
-                        <div class="label">Valid Bet</div>
-                        <div class="value valid-bet">-1475.50</div>
+        <q-spinner style="display:flex;margin:20px auto;" v-if="page.loading" />
+        <template v-else>
+            <div class="detailed-stats panel bordered" v-for="record, index in page.records" :key="index">
+                <div class="header">
+                    <div class="group">
+                        <span>{{ record.loginName ?? '{Login Name}' }}</span>
                     </div>
-                    <div class="col-item">
-                        <div class="label">Win/Loss</div>
-                        <div class="value win-loss">-1418.17</div>
-                    </div>
-                    <div class="col-item">
-                        <div class="label">Profit and Loss</div>
-                        <div class="value profit-loss">57.33</div>
-                    </div>
+                    <!-- <div class="link">direct player 0 ></div> -->
                 </div>
-            </div>
-        </div>
 
-        <div class="detailed-stats panel bordered">
-            <div class="header">
-                <div class="group">
-                    <span>vip56567</span>
+                <div class="stats">
+                    <hr class="separator" />
+                    <div class="row">
+                        <div class="label">Deposit</div>
+                        <div class="value">{{ record.depositAmount }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Withdrawal</div>
+                        <div class="value">{{ record.withdrawalAmount }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Bonus</div>
+                        <div class="value">{{ record.bonus }}</div>
+                    </div>
+                    <hr class="separator" />
+                    <div class="col">
+                        <div class="col-item">
+                            <div class="label">Valid Bet</div>
+                            <div class="value valid-bet">{{ record.validBet }}</div>
+                        </div>
+                        <div class="col-item">
+                            <div class="label">Win/Loss</div>
+                            <div class="value win-loss">{{ record.payout - record.validBet }}</div>
+                        </div>
+                        <div class="col-item">
+                            <div class="label">Profit and Loss</div>
+                            <div class="value profit-loss">{{ record.payout - record.validBet }}</div>
+                        </div>
+                    </div>
                 </div>
-                <div style="visibility: hidden;" class="link">direct player 0 ></div>
             </div>
+        </template>
 
-            <div class="stats">
-                <hr class="separator" />
-                <div class="row">
-                    <div class="label">Deposit</div>
-                    <div class="value">0.00</div>
-                </div>
-                <div class="row">
-                    <div class="label">Withdrawal</div>
-                    <div class="value">0.00</div>
-                </div>
-                <div class="row">
-                    <div class="label">Bonus</div>
-                    <div class="value">-</div>
-                </div>
-                <hr class="separator" />
-                <div class="col">
-                    <div class="col-item">
-                        <div class="label">Valid Bet</div>
-                        <div class="value valid-bet">-1475.50</div>
-                    </div>
-                    <div class="col-item">
-                        <div class="label">Win/Loss</div>
-                        <div class="value win-loss">-1418.17</div>
-                    </div>
-                    <div class="col-item">
-                        <div class="label">Profit and Loss</div>
-                        <div class="value profit-loss">57.33</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <q-dialog width="100%" v-model="isDaySelectionDialog" persistent>
+            <div class="popout-dialog">
+                <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
+                <div class="popout-dialog-container">
 
-        <div class="detailed-stats panel bordered">
-            <div class="header">
-                <div class="group">
-                    <span>Happy888</span>
-                </div>
-                <div style="visibility: hidden;" class="link">direct player 0 ></div>
-            </div>
+                    <div style="width: 100%;" class="q-mt-lg q-pl-lg q-pr-lg x-n-container">
+                        <div class="filter-grid">
+                            <div class="filter-item" :class="{ active: daysSelection.label === 'Today' }"
+                                @click="changeDaySelection('Today')">Today</div>
+                            <div class="filter-item" :class="{ active: daysSelection.label === 'Yesterday' }"
+                                @click="changeDaySelection('Yesterday')">Yesterday</div>
+                            <div class="filter-item" :class="{ active: daysSelection.label === '7-days' }"
+                                @click="changeDaySelection('7-days')">7-days</div>
+                            <div class="filter-item" :class="{ active: daysSelection.label === 'This Month' }"
+                                @click="changeDaySelection('This Month')">This Month</div>
+                        </div>
 
-            <div class="stats">
-                <hr class="separator" />
-                <div class="row">
-                    <div class="label">Deposit</div>
-                    <div class="value">0.00</div>
-                </div>
-                <div class="row">
-                    <div class="label">Withdrawal</div>
-                    <div class="value">0.00</div>
-                </div>
-                <div class="row">
-                    <div class="label">Bonus</div>
-                    <div class="value">-</div>
-                </div>
-                <hr class="separator" />
-                <div class="col">
-                    <div class="col-item">
-                        <div class="label">Valid Bet</div>
-                        <div class="value valid-bet">-1475.50</div>
-                    </div>
-                    <div class="col-item">
-                        <div class="label">Win/Loss</div>
-                        <div class="value win-loss">-1418.17</div>
-                    </div>
-                    <div class="col-item">
-                        <div class="label">Profit and Loss</div>
-                        <div class="value profit-loss">57.33</div>
+                        <div style="display:flex;">
+                            <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
+                            <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm"
+                                @click="confirmDaySelection" />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </q-dialog>
     </div>
 </template>
 
 <script setup>
 import InputField from 'src/components/auth/InputField.vue';
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
+import { api } from 'boot/axios';
+import moment from 'moment';
+import { userStore } from 'src/stores';
 
 const formDetail = reactive([]);
-const model = ref('Consolidated Weekly');
-const options = ref(['Consolidated Weekly']);
 const selectedTab = ref('All');
+
+const isDaySelectionDialog = ref(false)
+const daysSelection = ref({ label: '7-days', value: 7 });
+const openDaySelectionDialog = () => {
+    isDaySelectionDialog.value = true
+}
+const isPageInfoDialog = ref(false);
+const openPageInfoDialog = () => {
+    isPageInfoDialog.value = true
+}
+
+const page = reactive({
+    pages: 0,
+    records: [],
+    loading: false,
+});
+
+const request = reactive({
+    size: 20,
+    current: 1
+});
+
+const store = userStore();
+
+const changeDaySelection = (type) => {
+    daysSelection.value = { label: type, value: type };
+}
+
+const confirmDaySelection = () => {
+    initData();
+    isDaySelectionDialog.value = false;
+}
+
+function getDateRange(startDate = null, endDate = null) {
+    const type = daysSelection.value.label;
+
+    let start, end;
+
+    switch (type) {
+        case 'Today':
+            start = moment().format('YYYY-MM-DD');
+            end = start;
+            break;
+        case 'Yesterday':
+            start = moment().subtract(1, 'days').format('YYYY-MM-DD');
+            end = start;
+            break;
+        case '7-days':
+            start = moment().subtract(7, 'days').format('YYYY-MM-DD');
+            end = moment().format('YYYY-MM-DD');
+            break;
+        case 'This Month':
+            start = moment().startOf('month').format('YYYY-MM-DD');
+            end = moment().endOf('month').format('YYYY-MM-DD');
+            break;
+        case 'Custom':
+            if (!startDate || !endDate) {
+                throw new Error("Custom range requires both startDate and endDate.");
+            }
+            start = moment(startDate).format('YYYY-MM-DD');
+            end = moment(endDate).format('YYYY-MM-DD');
+            break;
+        default:
+            throw new Error("Invalid date range type.");
+    }
+
+    return `${start},${end}`;
+}
+
+const initData = () => {
+    const recordTime = getDateRange()
+
+    page.loading = true;
+
+    api.get('/session/affiliate/daily-summary', {
+        params: {
+            current: request.current,
+            size: request.size,
+            recordTime
+        }
+    }).then((res) => {
+        const data = res.data;
+        page.records = data.records;
+        page.total = data.total;
+        page.loading = false;
+    }).catch(() => {
+        page.loading = false;
+    }).finally(() => {
+        page.loading = false;
+    })
+}
+
+onMounted(() => {
+    initData();
+})
 
 </script>
 
 <style lang="scss" scoped>
-
 .tabs {
     display: flex;
     justify-content: space-between;
@@ -195,7 +241,7 @@ const selectedTab = ref('All');
     }
 }
 
-.my-dividend-container {
+.team-profit-loss-container {
     display: flex;
     flex-direction: column;
 }
@@ -433,5 +479,27 @@ const selectedTab = ref('All');
     min-width: 100px;
     max-width: 120px;
     font-weight: bold;
+}
+
+
+.popout-dialog-container {
+    .filter-grid {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 10px 0;
+
+        .filter-item {
+            margin: 5px;
+            border-radius: 4px;
+            background: #EAEFF9;
+            padding: 8px 12px;
+            white-space: nowrap;
+
+            &.active {
+                background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+                color: #fff;
+            }
+        }
+    }
 }
 </style>
