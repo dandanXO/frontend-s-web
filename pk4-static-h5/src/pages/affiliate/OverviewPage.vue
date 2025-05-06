@@ -15,13 +15,13 @@
       <q-tab-panels class="bg-transparent" v-model="tab" animated>
         <!-- Dynamic Metric Chart Panel -->
         <q-tab-panel name="activity">
-          <Line :data="getChartData(selectedMetric.key)" :options="chartOptions(selectedMetric.label)" />
+          <Line v-if="allChartData && labels" :data="getChartData(selectedMetric.key)" :options="chartOptions(selectedMetric.label)" />
         </q-tab-panel>
 
         <!-- Static Team P&L Placeholder -->
         <q-tab-panel class="bg-transparent" name="team_pl">
-          <div class="text-center bg-transparent text-grey">
-            <ProfitLossChart />
+          <div class="text-center bg-transparent text-grey" >
+            <ProfitLossChart  v-if="allChartData && labels"/>
           </div>
         </q-tab-panel>
       </q-tab-panels>
@@ -123,7 +123,7 @@ import {
 } from 'chart.js'
 
 import { Line } from 'vue-chartjs'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, provide } from 'vue'
 import { api } from 'boot/axios';
 import moment from 'moment';
 
@@ -132,26 +132,20 @@ ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip,
 const tab = ref('activity')
 
 // Simulated chart data
-const allChartData = {
-  logins: [34, 42, 33, 29, 31, 36, 32],
-  registers: [3, 2, 1, 0, 2, 1, 3],
-  bets: [5, 6, 9, 7, 8, 6, 7],
-  promotions: [4, 3, 5, 2, 3, 3, 4],
-  registersFirstDeposits: [1, 1, 0, 1, 0, 2, 1],
-  firstDeposits: [1, 1, 0, 1, 0, 2, 1],
-  deposits: [4, 6, 5, 3, 7, 6, 6],
-  withdrawals: [2, 3, 1, 2, 2, 3, 2]
-}
+const allChartData = ref();
 
 // Chart labels
-const labels = ['04/23', '04/24', '04/25', '04/26', '04/27', '04/28', '04/29']
+const labels = ref()
+
+provide('labels', labels);
+provide('allChartData', allChartData);
 
 const getChartData = (key) => ({
-  labels,
+  labels: labels.value,
   datasets: [
     {
       label: key,
-      data: allChartData[key],
+      data: allChartData.value[key],
       borderColor: '#3b82f6',
       backgroundColor: '#3b82f6',
       tension: 0.4,
@@ -269,6 +263,41 @@ const initData = () => {
     const data = res.data;
 
     const sumByKey = (key) => data.reduce((sum, obj) => sum + (typeof obj[key] === "number" ? obj[key] : 0), 0);
+
+    const { labels: newLabels, allChartData: newAllChartData } = data.reduce((acc, curr) => {
+      return {
+        ...acc,
+        labels: [...acc.labels, curr.recordTime],
+        allChartData: {
+          ...acc.allChartData,
+          logins: [...acc.allChartData.logins, curr.loginCount],
+          registers: [...acc.allChartData.registers, curr.newMemberCount],
+          bets: [...acc.allChartData.bets, curr.bet],
+          promotions: [...acc.allChartData.promotions, curr.bonusCount],
+          registersFirstDeposits: [...acc.allChartData.registersFirstDeposits, curr.ftdCount],
+          firstDeposits: [...acc.allChartData.firstDeposits, curr.ftdAmount],
+          deposits: [...acc.allChartData.deposits, curr.depositAmount],
+          withdrawals: [...acc.allChartData.withdrawals, curr.withdrawAmount],
+          teamPnL: [...acc.allChartData.teamPnL, curr.payout - curr.validBet],
+        }
+      }
+    }, {
+      labels: [],
+      allChartData: {
+        logins: [],
+        registers: [],
+        bets: [],
+        promotions: [],
+        registersFirstDeposits: [],
+        firstDeposits: [],
+        deposits: [],
+        withdrawals: [],
+        teamPnL: []
+      }
+    });
+
+    allChartData.value = newAllChartData;
+    labels.value = newLabels;
 
     metrics.value = metrics.value.map(metric => {
       if (metric.key === 'logins') metric.count = sumByKey("loginCount");
