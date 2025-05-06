@@ -304,7 +304,7 @@ export default {
     goNow: "Go Now",
     playReal: "Play real",
     freeTrial: "Free trial",
-    sendOtp: "Send OTP",
+    sendOtp: "Send OTP"
   },
   notify: {
     loggingIn: "Logging in...",
@@ -755,6 +755,7 @@ export default {
     nameofCardAcc: "Card Account Name",
     insertCardAccName: "Please insert card account name",
     insertTelephone: "Please insert telephone number",
+    pleaseEnterTelephone: "Please enter your telephone number.",
     otp: "OTP",
     insertVerificationCode: "Insert verifcation code",
     pleaseEnterVerificationCode: "Please enter verifcation code.",
@@ -765,8 +766,9 @@ export default {
     getOtp: "Get OTP",
     telephone: "Mobile number",
     captchaSuccess: "Operation successful, please check the verification code sent to your phone!",
-    captchaFailed: "Verification code check failed, please refresh the page",
-    clickAndEnterPhoneCode: "Please click to get the verification code and enter the code sent to your registered phone number",
+    captchaFailedMessage: "Verification code check failed, please refresh the page",
+    clickAndEnterPhoneCode:
+      "Please click to get the verification code and enter the code sent to your registered phone number"
   },
   promo: {
     all: "ALL",

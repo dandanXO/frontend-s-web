@@ -367,6 +367,7 @@ const onCaptchaSubmit = () => {
     .post(
       `/otp/sendSms`,
       qs.stringify({
+        telephone: bankCardInfo.telephone,
         captchaCode: innerCaptchaCode.value,
         codeId: innerCodeId.value
       })
