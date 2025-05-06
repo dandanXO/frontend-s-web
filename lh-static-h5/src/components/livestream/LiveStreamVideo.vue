@@ -202,7 +202,7 @@ const playerConfig = ref({
 
 const videoSource = computed(() => {
   if (!livestreamData.value) return {};
-  return livestreamData.value.status
+  return livestreamData.value.streamerStatus
     ? livestreamData.value.streamerCdnPullUrl
     : livestreamData.value.supplierCdnPullUrl;
 });
