@@ -1784,6 +1784,7 @@ const isAdditionalReferSteps = ref(false);
 const isAdditionalWithdrawSteps = ref(false);
 const currentType = ref("deposit");
 const currentAdditionalStep = ref(1);
+const isFirstScreen = ref(true);
 
 const handleStepUpdate = (newStep) => {
   currentAdditionalStep.value = newStep;
@@ -4241,10 +4242,11 @@ onActivated(() => {
   // checkSpinWheel();
   checkGoogleLoginSetPwd();
 
-  if (route.query.login === "true" || route.query.register === "true") {
+  if (route.query.login === "true" || route.query.register === "true" || isFirstScreen.value) {
     //TODO: change back.
     // popupPromo.value = "money-rain";
     popupPromo.value = "spin-lucky-wheel";
+    isFirstScreen.value = false;
   }
 
   if (route.query.newPlayerGuide === "earn-money") {
