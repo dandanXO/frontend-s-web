@@ -45,6 +45,7 @@ import { useSessionStorage } from "@vueuse/core";
  * @property {string} name
  * @property {number} time
  * @property {number} vip
+ * @property {number|null} id
  * @property {string|null} profilePhoto
  */
 
@@ -234,8 +235,9 @@ const syncMessages = () => {
             }
             messagesFromApi.push(..._res.value);
           }
-
-          latestProcessedMessageId.value = messagesFromApi[messagesFromApi.length - 1]?.id;
+          if (messagesFromApi.length > 0) {
+            latestProcessedMessageId.value = messagesFromApi[messagesFromApi.length - 1]?.id;
+          }
 
           const combinedMessages = [...unsortMessages.value, ...messagesFromApi];
           combinedMessages.sort((a, b) => a.time - b.time);
@@ -278,6 +280,7 @@ const formatHistoryMessages = (messages) => {
   return messages.reduce((result, record) => {
     if (record.name !== processedUserName.value && record.id > latestProcessedMessageId.value) {
       result.push({
+        id: record.id,
         content: record.content,
         name: record.name,
         time: record.createTime,
