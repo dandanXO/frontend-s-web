@@ -102,7 +102,9 @@ var qs = require('qs');
 
 const store = userStore();
 const referralLink = ref('');
+const shortReferralLink = ref('');
 const webLink = ref('');
+const shortUrl = ref('');
 const affCode = ref('');
 
 const cards = ref(
@@ -121,13 +123,15 @@ const toggleCard = (index) => {
 const onClickQRCode = () => {
   isScanQrDialog.value = true;
   const newReferralLink = `${webLink.value}agent/${affCode.value}`;
+  const newShortReferralLink = `${shortUrl.value}agent/${affCode.value}`;
   referralLink.value = newReferralLink
+  shortReferralLink.value = newShortReferralLink
 
   api.post('/session/affiliate/short-link', qs.stringify({
     linkType: 'WEB',
     urlType: 'WX',
     longUrl: newReferralLink,
-    shortUrl: '',
+    shortUrl: newShortReferralLink,
     affiliateId: store.memberId,
     siteId: 26
   })).then((res) => {
@@ -138,9 +142,20 @@ const onClickQRCode = () => {
 const isScanQrDialog = ref(false);
 
 const getLinkList = () => {
-  api.get('/session/affiliate/web-link').then((res) => {
-    webLink.value = res.data;
-  })
+  api.get('/session/affiliate/referral-link').then((res) => {
+    const { webLink: newWebLink, shortUrl: newShortUrl } = res.data.reduce((acc, curr) => {
+      if(curr.code === 'affiliate_h5_link') {
+        return {...acc, webLink: curr.value}
+      }
+
+      if(curr.code === 'affiliate_short_url_platform') {
+        return {...acc, shortUrl: curr.value}
+      }
+    }, {webLink: '', shortUrl: ''});
+
+    webLink.value = newWebLink;
+    shortUrl.value = newShortUrl;
+  });
   api.get('/session/affiliate').then((res) => {
     affCode.value = res.data.affiliateCode;
   })
