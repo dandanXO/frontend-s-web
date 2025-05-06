@@ -189,7 +189,6 @@ const getDisplayDateTime = (date) => {
 };
 
 const handleLivestreamClick = (livestream) => {
-  console.log(livestream);
   if (!livestream.liveStatus) {
     notify({
       message: "直播未开始",

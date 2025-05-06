@@ -5,8 +5,12 @@ export const getLivestreamList = () => {
   return api.post(`/opt-session/live/list`);
 };
 
-export const getLivestreamDetail = (livestreamId) => {
-  return api.get(`/opt-session/live/${livestreamId}`);
+// export const getLivestreamDetail = (livestreamId) => {
+//   return api.get(`/opt-session/live/${livestreamId}`);
+// };
+
+export const getLivestreamDetail = (livestreamId, abortController) => {
+  return api.get(`/opt-session/live/${livestreamId}`, { abortController });
 };
 
 export const getChatHistory = (payload, current) => {

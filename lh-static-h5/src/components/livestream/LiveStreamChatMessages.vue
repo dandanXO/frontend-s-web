@@ -56,6 +56,12 @@
       </q-form>
     </div>
   </div>
+
+  <!-- <pre>
+    isMessageSendable--{{ isMessageSendable }}
+    messageToSend--{{ messageToSend }}
+  </pre> -->
+
   <GameModal ref="gameRef" />
 </template>
 
@@ -82,15 +88,15 @@ const chatListRef = ref(null);
 
 const isDark = computed(() => $q.dark.isActive);
 const profilePhotoDir = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/profile/";
-const isMessageSendable = computed(() => messageToSend.value.trim().length > 0 && vipStatus.value);
+const isMessageSendable = computed(() => messageToSend.value.trim().length > 0 );
 
 const inputConfig = computed(() => {
   let disabled = false;
   let placeholder = "请输入聊天内容";
-  if (!store.token || !vipStatus.value) {
+  if (store.token && !vipStatus.value) {
     disabled = true;
     if (!vipStatus.value) placeholder = "VIP特权不足，无法发言";
-    if (!store.token) placeholder = "请登录后发言";
+    // if (!store.token) placeholder = "请登录后发言";
   }
 
   return {

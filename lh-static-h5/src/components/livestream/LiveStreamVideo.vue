@@ -125,6 +125,9 @@
     <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
   playerConfig --{{ playerConfig }}
   </pre> -->
+  <pre style="color: grey; position: fixed; top: 0; left: 0; width: 100%">
+  currentVideoUrl -- {{ currentVideoUrl }}
+  </pre>
 </template>
 <script setup>
 import { onMounted, ref, toRefs, watch, onUnmounted, computed, onActivated, nextTick, onBeforeUnmount } from "vue";
@@ -214,7 +217,6 @@ const currentVideoUrl = computed(() => {
 
 const loadPlayer = async () => {
   getQualities();
-  // console.log("currentVideoUrl::", currentVideoUrl.value);
   player.value = new VideoPlayer(
     {
       mediaType: "hls",
@@ -286,7 +288,6 @@ const changePlayerConfig = (key, value) => {
 };
 
 const handleVolumeChange = (value) => {
-  console.log("value:: ", value);
   changePlayerConfig("volume", parseInt(value));
   if (videoRef.value) {
     videoRef.value.volume = value / 100;

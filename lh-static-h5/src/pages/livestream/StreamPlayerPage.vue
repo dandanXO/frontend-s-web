@@ -19,6 +19,7 @@
         </marquee-text>
       </div>
     </div>
+
     <LiveStreamChatMessages class="livestream-chat" :messages :vip-status @send-chat-message="handleSendChatMessage" />
   </div>
 </template>
@@ -35,15 +36,19 @@ import { api } from "boot/axios";
 import { useRoute, useRouter } from "vue-router";
 import { getChatHistory, getLivestreamList, sendChat, getLivestreamDetail } from "../../api/livestream";
 import { extractVipLevelFromVipStr } from "src/boot/utils";
+import { useNotify } from "src/hooks/notify";
 
 const MESSAGE_SYNC_INTERVAL = 1000 * 2; // 2 seconds
 const MESSAGE_HISTORY_DANMU_FIRE_GAP = 10;
 const MAXIMUM_MESSAGE_LENGTH = 2000;
 
+const LIVESTREAM_SYNC_INTERVAL = 1000 * 10; // 10 seconds
+
 // const DEFAULT_ANNOUNCEMENT = "";
 const DEFAULT_ANNOUNCEMENT = "禁止发表任何广告、低俗色情、辱骂平台等违规言论!";
 
 const $q = useQuasar();
+const notify = useNotify();
 const qs = require("qs");
 const route = useRoute();
 const router = useRouter();
@@ -55,6 +60,8 @@ const announcementList = ref(["禁止发表任何广告、低俗色情、辱骂�
 const chatContainer = ref(null);
 const pageContainer = ref(null);
 const store = userStore();
+const livestreamTimer = ref(null);
+const livestreamSyncAbortController = ref(null);
 
 let danmu = null;
 
@@ -86,12 +93,52 @@ const latestProcessedMessageId = ref(-1);
 const currentLiveData = computed(() => {
   const streamIdFromQuery = route.query.streamId;
   if (!streamIdFromQuery || !list.value.length) return {};
+
   return list.value.find((item) => item.streamId == streamIdFromQuery) || {};
 });
 
-const fullMessages = computed(() => {
-  return messages.value.concat(unsortMessages.value);
-});
+const syncLivestreamInfo = async () => {
+  if (!currentLiveData.value?.streamId) return;
+  livestreamSyncAbortController.value = new AbortController();
+  getLivestreamDetail(currentLiveData.value.streamId, livestreamSyncAbortController).then((res) => {
+    if (res.code === 0) {
+      vipStatus.value = !!res.data.vipStatus;
+      if (currentLiveData.value.streamerStatus === res.data.streamerStatus) return;
+      const notifyMessage = res.data.streamerStatus
+        ? "主播已开播，即将切换至主播直播"
+        : "主播已下播，即将切换至赛事直播";
+      notify({
+        message: notifyMessage,
+        type: "info",
+        duration: 2000
+      });
+      const parsedData = parseLivestreamData(res.data);
+      list.value[currentLive.value] = {
+        ...currentLiveData.value,
+        roomMessage: parsedData?.roomMessage,
+        streamerStatus: parsedData.streamerStatus,
+        streamerCdnPullUrl: parsedData.streamerCdnPullUrl,
+        supplierCdnPullUrl: parsedData.supplierCdnPullUrl
+      };
+    }
+  });
+};
+
+const resetSyncLivestreamInterval = (startNewInterval = false) => {
+  if (livestreamTimer.value) {
+    clearInterval(livestreamTimer.value);
+    livestreamTimer.value = null;
+  }
+  if (startNewInterval) {
+    livestreamTimer.value = setInterval(() => {
+      syncLivestreamInfo();
+    }, LIVESTREAM_SYNC_INTERVAL);
+  }
+};
+
+// const fullMessages = computed(() => {
+//   return messages.value.concat(unsortMessages.value);
+// });
 
 const displayAnnouncementList = computed(() => {
   const msg = currentLiveData.value.roomMessage?.trim();
@@ -358,11 +405,14 @@ watch(currentLiveData, () => {
   lastSyncMessageTime.value = currentLiveData.value?.eventStartTime || Date.now();
   liveStartTime.value = lastSyncMessageTime.value;
   syncMessages();
+  resetSyncLivestreamInterval(true);
 });
 
 onMounted(() => {
   getData();
   syncMessages();
+  syncLivestreamInfo();
+  resetSyncLivestreamInterval(true);
 });
 
 onUnmounted(() => {
@@ -370,6 +420,7 @@ onUnmounted(() => {
     clearTimeout(messageTimer.value);
     messageTimer.value = null;
   }
+  resetSyncLivestreamInterval();
 });
 </script>
 
