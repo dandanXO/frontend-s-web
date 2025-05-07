@@ -257,6 +257,7 @@ const goToDeposit = () => {
     color: #ffffff;
     text-shadow: 5px 5px 25px #5894ff;
     flex-direction: column;
+    gap: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
