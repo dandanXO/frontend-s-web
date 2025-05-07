@@ -81,6 +81,7 @@
     <elsOne2025 v-else-if="list.redirectUrl === 'lh1-esl-one-raleigh-2025'" :promo-code="list.promoCode" />
     <YuEBaoPromo v-else-if="list.redirectUrl === 'lh1-yu-e-bao'" :promo-code="list.promoCode" />
     <BlastRival2025 v-else-if="list.redirectUrl === 'lh1-blast-rivals-2025-s1'" :promo-code="list.promoCode" />
+    <DragonBoat v-else-if="list.redirectUrl === 'lh-duanwujie24'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -125,6 +126,7 @@ import BlastSlam32025 from "./hotpromo/blast-slam-3-2025/BlastSlam32025.vue";
 import PglastanaAc2025 from "./hotpromo/lh1-pgl-astana-2025/pglastanaAc2025.vue";
 import BlastRival2025 from "./hotpromo/BlastRival2025/BlastRival2025.vue";
 import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
+import DragonBoat from "components/hotpromo/dragonboat/DragonBoat.vue";
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
 const DragonCardPromo = defineAsyncComponent(() => import("../components/hotpromo/dragoncard/dragonCardPromo.vue"));
 const FeedbackAwardPromo = defineAsyncComponent(() =>
@@ -200,6 +202,7 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    DragonBoat,
     Cct2025,
     YaLLa2025,
     elsOne2025,
