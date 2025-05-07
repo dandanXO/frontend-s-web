@@ -512,6 +512,7 @@ export default {
       betAmount: "بیٹنگ کی رقم",
       rate: "شرح",
       yesterdayReportTotal: "کل کی رپورٹ (کل)",
+      todayReportTotal: "آج کی رپورٹ (کل)",
       level: "سطح",
       noOfDepositors: "جمع کنندگان کی تعداد",
       depositAmount: "جمع شدہ رقم",
