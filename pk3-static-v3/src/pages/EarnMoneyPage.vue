@@ -43,7 +43,7 @@
         </svg>
         <div>{{ $t("earnMoney.tabs.daily") }}</div>
       </q-tab>
-      <q-tab name="earn">
+      <!-- <q-tab name="earn">
         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
           <path d="M10.844 0.5V5.96895H16.3129V0.5H10.844ZM14.7504 4.40641H12.4066V2.06257H14.7504V4.40641Z" />
           <path d="M3.81236 7.53149H0.687256V9.09407H3.81236V7.53149Z" fill="white" fill-opacity="0.2" />
@@ -64,7 +64,7 @@
           />
         </svg>
         <div>{{ $t("earnMoney.tabs.earn") }}</div>
-      </q-tab>
+      </q-tab> -->
       <q-tab name="share">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
