@@ -55,7 +55,7 @@
     <PullbackTide v-if="list.redirectUrl === 'dy2-pullback-tide'" :promo-code="list.promoCode" />
     <Cba30Dream v-if="list.redirectUrl === 'dy2-cba30-dream'" :promo-code="list.promoCode" />
     <newVip2025 v-if="list.redirectUrl === 'dy2-2025-new-vip'" :promo-code="list.promoCode" />
-
+    <PglAstana2025 v-else-if="list.redirectUrl === 'dy2-pgl-astana-2025'" :promo-code="list.promoCode" />
     <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
     <Dota2BlastSlam2025 v-if="list.redirectUrl === 'dy2-blast-slam-2025'" :promo-code="list.promoCode" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'dy-official-gift'" :params="list.param" />
@@ -167,12 +167,14 @@ import PglWallachiaS4 from "./hotpromo/pgl-wallachia-s4/PglWallachiaS4.vue";
 import BlastSlam32025 from "./hotpromo/blast-slam-3-2025/BlastSlam32025.vue";
 import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
 import BlastRival2025 from "./hotpromo/BlastRival2025/BlastRival2025.vue";
+import PglAstana2025  from "./hotpromo/pgl-astana-2025/Pgl-astana-2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    PglAstana2025,
     newVip2025,
     Cct2025,
     YaLLa2025,
