@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import { defineEmits } from "vue";
+import { defineEmits, onMounted } from "vue";
 import VueQRCodeComponent from "vue-qrcode-component";
 import { useI18n } from "vue-i18n";
 import { uiStore } from "@/store/ui";
@@ -44,10 +44,14 @@ const ui = uiStore();
 
 const emits = defineEmits(["close-dialog, open-login-dialog"]);
 
+onMounted(() => {
+  ui.getAppDownloadUrl();
+});
+
 const goToDeposit = () => {
-  router.push('/center/personal');
+  router.push("/center/personal");
   emits("close-dialog");
-}
+};
 </script>
 
 <style lang="scss" scoped>
