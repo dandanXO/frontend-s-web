@@ -155,7 +155,7 @@ export default boot(({ app, router }) => {
       Loading.hide();
       const messageTranslated = errorMessages[res.code] || "Error";
 
-      if (res.code === ResponseCode.ERROR_SYSTEM) {
+      if (res.code === ResponseCode.ERROR_SYSTEM || res.code === ResponseCode.PROMOID_NOT_FOUND) {
         return res;
       }
       if (res.code === ResponseCode.TOO_OFTEN_REQUEST || res.code === ResponseCode.ERROR_AMOUNT_DEPOSIT) {
