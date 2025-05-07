@@ -209,7 +209,7 @@ export default {
     identityid_placeholder: "Enter Identity ID",
     identityid_rules_01: "Enter Identity ID",
     identityid_rules_02: "Please insert 13 digits Identity ID",
-    identityid_rules_03: "The eWallet cannot have decimal points",
+    identityid_rules_03: "The eWallet cannot have decimal points"
   },
   btn: {
     confirm: "Confirm",
@@ -240,7 +240,8 @@ export default {
     notAMember: "Not a member?",
     createAccount: "Create Account",
     copy: "Copying",
-    joinNow: "Join Now"
+    joinNow: "Join Now",
+    save: "Save"
   },
   notify: {
     noRecord: "No Records",
@@ -433,7 +434,8 @@ export default {
       about: "About",
       history: "History",
       daily: "Daily",
-      earn: "Earn"
+      earn: "Earn",
+      share: "Share"
     },
     about: {
       invitetoEarn: "Invite to Earn",
@@ -533,6 +535,29 @@ export default {
       myReferralLink: "My Referral Link",
       save: "SAVE",
       copiedtoClipboard: "copied to clipboard"
+    },
+    share: {
+      invited: "Invited",
+      validInvites: "Valid invites",
+      validInvitationsToday_01: "Valid invitations",
+      validInvitationsToday_02: "today",
+      todaysBonus: "Today's bonus",
+      currentLevel: "Current level",
+      currentBonusLevel_01: "Current bonus",
+      currentBonusLevel_02: "level",
+      bonusClaimed: "Bonus claimed",
+      fixedInvitationBonus: "Fixed Invitation Bonus",
+      remark: "Remark",
+      point_01_bonus: "Note: Fixed rewards are issued only after the invited users meet the rating criteria.",
+      point_01_remark:
+        "System evaluates each invited user based on their betting activity. Encourage your friends to place real bets and stay active — usually, total bets over Rs2000 have a higher chance of qualifying. Rewards will be issued automatically upon meeting the criteria.",
+      point_02_remark:
+        "In cases of malicious behavior such as fake accounts or reward farming, related rewards will be canceled and not issued.",
+      point_03_remark: "55ACE reserves all rights of final interpretation.",
+      table_col_invite: "Valid Invite Range",
+      table_col_reward: "Reward per User (Rs)",
+      inviteNewUsers:
+        "Invite new users to register using your exclusive referral link or QR code and receive three generous rewards:"
     }
   },
   records: {
@@ -617,7 +642,7 @@ export default {
       signedIn: "Signed in"
     },
     spinLuckyWheel: {
-      doNotShowAgain: 'Do not show again'
+      doNotShowAgain: "Do not show again"
     }
   },
   maintenance: {
