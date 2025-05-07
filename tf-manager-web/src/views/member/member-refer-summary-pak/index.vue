@@ -93,6 +93,18 @@
             <el-link type="primary" @click="reloadMembers(scope.row.loginName, scope.row.id)">{{ scope.row.subRegCount }}</el-link>
           </template>
         </el-table-column>
+        <el-table-column prop="riskLevel" :label="t('fields.riskLevel')" width="180">
+          <template #default="scope">
+            <span v-if="scope.row.riskLevel === null">-</span>
+            <span v-if="scope.row.riskLevel !== null">
+              {{ scope.row.riskLevel }}
+              <span
+                class="level-color"
+                :style="{backgroundColor: scope.row.riskColor}"
+              />
+            </span>
+          </template>
+        </el-table-column>
         <el-table-column prop="subDepositCount" :label="t('fields.subDepositCount')" width="120" />
         <el-table-column
           prop="loginName"
