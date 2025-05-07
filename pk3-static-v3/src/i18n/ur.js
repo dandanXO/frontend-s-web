@@ -513,6 +513,8 @@ export default {
       rate: "شرح",
       yesterdayReportTotal: "کل کی رپورٹ (کل)",
       level: "سطح",
+      totalDeposit: "کل جمع",
+      totalDepositAmount: "کل جمع شدہ رقم",
       myselfBettingAmount: "میری بیٹنگ کی رقم",
       myselfRebate: "میرا ریبیٹ",
       teamBettingamount: "ٹیم کی بیٹنگ کی رقم",

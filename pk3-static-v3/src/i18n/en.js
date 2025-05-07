@@ -514,6 +514,8 @@ export default {
       rate: "Rate",
       yesterdayReportTotal: "Yesterday Report (Total)",
       level: "Level",
+      totalDeposit: "Total Deposit",
+      totalDepositAmount: "Total Deposit Amount",
       myselfBettingAmount: "Myself betting amount",
       myselfRebate: "Myself rebate",
       teamBettingamount: "Team betting amount",
