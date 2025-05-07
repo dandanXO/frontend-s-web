@@ -124,8 +124,8 @@
       <div class="info-row">
         <div class="info-content-item line-side">
           <div class="info-title">
-            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-07.png" /></div>
-            <div class="info-txt">{{ $t("earnMoney.daily.totalDeposit") }}:</div>
+            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-08.png" /></div>
+            <div class="info-txt">{{ $t("earnMoney.daily.noOfDepositorsToday") }}:</div>
           </div>
           <div class="info-amount">
             {{ teamAmountData.noOfDepositMembers }}
@@ -133,8 +133,8 @@
         </div>
         <div class="info-content-item">
           <div class="info-title">
-            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-02.png" /></div>
-            <div class="info-txt">{{ $t("earnMoney.daily.totalDepositAmount") }}:</div>
+            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-09.png" /></div>
+            <div class="info-txt">{{ $t("earnMoney.daily.depositAmount") }}:</div>
           </div>
           <div
             class="info-amount"
