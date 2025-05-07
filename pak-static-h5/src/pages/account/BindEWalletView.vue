@@ -173,8 +173,9 @@
                     (val) => (val && val.length === 11) || $t('form.virtualWallet_rules_03'),
                     (val) => (val && !val.includes('.')) || $t('form.virtualWallet_rules_04')
                   ]"
+                  :disable="isPhoneVerified"
                 >
-                  <template v-slot:append>
+                  <template v-if="!isPhoneVerified" v-slot:append>
                     <q-btn
                       @click="openPhoneVeriDialog()"
                       type="submit"
@@ -382,6 +383,7 @@ const bankCardRef = ref();
 const cardNumberRef = ref();
 const ifscRef = ref();
 const phoneVerificationRef = ref();
+const isPhoneVerified = ref(false);
 
 const bankCardInfo = reactive({
   bankId: undefined,
@@ -444,6 +446,8 @@ const getInnerCode = () => {
 
 const showCaptchaDialog = ref(false);
 const openPhoneVeriDialog = () => {
+  cardNumberRef.value.validate()
+  if (cardNumberRef.value && cardNumberRef.value.hasError) return;
   getInnerCode();
   showCaptchaDialog.value = true;
 };
@@ -478,6 +482,7 @@ const onCaptchaSubmit = () => {
 
         showCaptchaMessageDialog.value = true;
         showCaptchaSuccessDialog.value = true;
+        isPhoneVerified.value = true;
       } else {
         captchaFailedMessage.value = res.message;
         showCaptchaMessageDialog.value = true;
@@ -538,18 +543,6 @@ const submitBankCard = () => {
       ifscRef.value.validate();
     }
   }
-
-  if (!isOtpSent.value) {
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: t("bankCard.clickAndEnterPhoneCode"),
-      icon: "report_problem"
-    });
-  } else if (phoneVerificationRef.value) {
-    phoneVerificationRef.value.validate();
-  }
-
   if (
     !(
       (bankCardRef.value && bankCardRef.value.hasError) ||
@@ -558,27 +551,37 @@ const submitBankCard = () => {
       (selectedTypeToggleName.value === "JAZZCASH" && ifscRef.value && ifscRef.value.hasError)
     )
   ) {
-    bankCardInfo.telephone = bankCardInfo.cardNumber;
-    // API call
-    api
-      .post("/session/bankCard", qs.stringify(bankCardInfo))
-      .then((response) => {
-        if (response.code === 0) {
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: t("notify.virtualWalletAddedSuccessfully"),
-            icon: "check_circle_outline"
-          });
-          bankCardInfo.cardNumber = "";
-          bankCardInfo.telephone = "";
-          bankFormRef.value.reset();
-          router.push("/account/bank");
-        }
-      })
-      .catch((error) => {
-        console.log("error", error);
+    if (!isOtpSent.value || !bankCardInfo.cardNumber || !isPhoneVerified.value) {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: t("bankCard.clickAndEnterPhoneCode"),
+        icon: "report_problem"
       });
+      return;
+    } else {
+      bankCardInfo.telephone = bankCardInfo.cardNumber;
+      // API call
+      api
+        .post("/session/bankCard", qs.stringify(bankCardInfo))
+        .then((response) => {
+          if (response.code === 0) {
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: t("notify.virtualWalletAddedSuccessfully"),
+              icon: "check_circle_outline"
+            });
+            bankCardInfo.cardNumber = "";
+            bankCardInfo.telephone = "";
+            bankFormRef.value.reset();
+            router.push("/account/bank");
+          }
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+      }
   }
 };
 
@@ -592,6 +595,8 @@ onActivated(() => {
   bankCardInfo.cardAddress = "";
   bankCardInfo.cardNumber = "";
   bankFormRef.value.reset();
+  isPhoneVerified.value = false;
+  isOtpSent.value = false;
 
   loadBankCards();
 });

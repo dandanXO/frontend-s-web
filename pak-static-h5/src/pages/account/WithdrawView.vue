@@ -12,7 +12,7 @@
                 ref="innerCaptchaRef"
                 standout
                 v-model="innerCaptchaCode"
-                class="q-pb-xs"
+                class="q-pb-xs q-mt-md"
                 hide-bottom-space
                 maxlength="4"
                 :rules="[
@@ -57,7 +57,7 @@
                     ></q-input>
                   </template>
                 </InputField>
-                <div style="width: 100%" class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+                <div style="width: 100%" class="q-mt-lg y-n-container">
                   <q-btn class="btn-primary__full" :label="$t('btn.submit')" no-caps @click="onOTPEnter" />
                 </div>
               </template>
@@ -697,6 +697,8 @@ onMounted(() => {
 onActivated(() => {
   checkNewUser();
   store.getBalance();
+  isOTPEntered.value = false;
+  isOtpSent.value = false
   // loadPlatform()
 });
 
@@ -889,7 +891,11 @@ const submitWithdraw = async () => {
           });
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+      }).finally(() => {
+        isOTPEntered.value = false;
+        isOtpSent.value = false
+      });
     $q.loading.hide();
   }
 };
@@ -1615,6 +1621,19 @@ watch(
 </style>
 
 <style lang="scss">
+.popout-dialog-container {
+  .form-fields {
+    width: 90%;
+    .landing-input { 
+      width: 100%;
+    }
+  }
+  .landing-input {
+    margin-bottom: 4px;
+    width: 90%;
+    margin: 0 auto 4px;
+  }
+}
 .q-field__control,
 .q-field__marginal {
   height: auto !important;

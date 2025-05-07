@@ -46,7 +46,7 @@
               ref="innerCaptchaRef"
               standout
               v-model="innerCaptchaCode"
-              class="q-pb-xs"
+              class="q-pb-xs q-mt-md"
               hide-bottom-space
               maxlength="4"
               :rules="[
@@ -368,7 +368,8 @@ const onTypeToggleBtnClick = (index, name) => {
   selectedTypeToggleName.value = name;
   bankCardInfo.bankId = bankList.value[index].id;
   bankCardInfo.currencyId = bankList.value[index].currencyIds;
-  isPhoneVerified.value = false;
+  // isPhoneVerified.value = false;
+  // isOtpSent.value = false;
 };
 
 const categoryToggleList = ref(["EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20"]);
@@ -453,6 +454,8 @@ const getInnerCode = () => {
 
 const showCaptchaDialog = ref(false);
 const openPhoneVeriDialog = () => {
+  telephoneNumberRef.value.validate()
+  if (telephoneNumberRef.value && telephoneNumberRef.value.hasError) return;
   getInnerCode();
   showCaptchaDialog.value = true;
 };
@@ -481,7 +484,6 @@ const onCaptchaSubmit = () => {
 
         bankCardInfo.smsCode = "";
         bankCardInfo.smsCodeId = res.data.codeId;
-        isPhoneVerified.value = true;
 
         showCaptchaMessageDialog.value = true;
         showCaptchaSuccessDialog.value = true;
@@ -600,7 +602,10 @@ const handleEnterKey = () => {
 onActivated(() => {
   loadBankCards();
   bankCardInfo.cardNumber = "";
+  bankCardInfo.smsCode = "";
   bankFormRef.value.reset();
+  isPhoneVerified.value = false;
+  isOtpSent.value = false;
 });
 </script>
 

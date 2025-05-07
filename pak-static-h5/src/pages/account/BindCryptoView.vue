@@ -10,7 +10,7 @@
               ref="innerCaptchaRef"
               standout
               v-model="innerCaptchaCode"
-              class="q-pb-xs"
+              class="q-pb-xs q-mt-md"
               hide-bottom-space
               maxlength="4"
               :rules="[
@@ -253,7 +253,6 @@ const onTypeToggleBtnClick = (index, name) => {
   selectedTypeToggleName.value = name;
   bankCardInfo.bankId = bankList.value[index].id;
   bankCardInfo.currencyId = bankList.value[index].currencyIds;
-  isPhoneVerified.value = false;
 };
 
 const categoryToggleList = ref(["EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20"]);
@@ -357,6 +356,8 @@ const getInnerCode = () => {
 
 const showCaptchaDialog = ref(false);
 const openPhoneVeriDialog = () => {
+  telephoneNumberRef.value.validate()
+  if (telephoneNumberRef.value && telephoneNumberRef.value.hasError) return;
   getInnerCode();
   showCaptchaDialog.value = true;
 };
@@ -366,7 +367,6 @@ const showCaptchaSuccessDialog = ref(false);
 const showCaptchaMessageDialog = ref(false);
 const captchaFailedMessage = ref("");
 const onCaptchaSubmit = () => {
-  telephoneNumberRef.value.validate()
   innerCaptchaRef.value.validate();
   if (innerCaptchaRef.value.hasError) return;
 
@@ -446,16 +446,12 @@ const submitBankCard = () => {
   if (cardNumberRef.value) {
     cardNumberRef.value.validate();
   }
-  if (telephoneNumberRef.value) {
-    telephoneNumberRef.value.validate()
-  }
 
   if (
     !(
       (bankCardRef.value && bankCardRef.value.hasError) ||
       (cardNumberRef.value && cardNumberRef.value.hasError) ||
-      (phoneVerificationRef.value && phoneVerificationRef.value.hasError) ||
-      (telephoneNumberRef.value && telephoneNumberRef.value.hasError)
+      (phoneVerificationRef.value && phoneVerificationRef.value.hasError)
     )
   ) {
     if (!isOtpSent.value || !bankCardInfo.telephone || !isPhoneVerified.value) {
@@ -499,11 +495,21 @@ const handleEnterKey = () => {
 onActivated(() => {
   loadBankCards();
   bankCardInfo.cardNumber = "";
+  bankCardInfo.smsCode = "";
   bankFormRef.value.reset();
+  isPhoneVerified.value = false;
+  isOtpSent.value = false;
 });
 </script>
 
 <style lang="scss">
+.popout-dialog-container {
+  .landing-input {
+    margin-bottom: 4px;
+    width: 90%;
+    margin: 0 auto 4px;
+  }
+}
 .common-sm-btn {
   padding: 6px 12px;
   display: flex;
