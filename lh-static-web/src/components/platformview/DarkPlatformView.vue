@@ -51,7 +51,12 @@
                   :class="{ active: selectedPlat === plat.code }"
                 >
                   <div class="list-item-btn" :id="`id-list-item-${plat.code}`">
-                    <img
+                    <img v-if="['live', 'slot'].includes(platformType) && isDark"  
+                      class="game-img"
+                      :src="require(`../../assets/${platformType}/${platformType}-logo-${plat.code.toLowerCase()}-dark.png`)"
+                      />
+                    <img    
+                      v-else
                       class="game-img"
                       :src="require(`../../assets/${platformType}/${platformType}-logo-${plat.code.toLowerCase()}.png`)"
                     />

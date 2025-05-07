@@ -127,7 +127,10 @@
               <p class="maintenance-p" v-else>&nbsp;</p>
             </div>
           </div>
-          <div class="right-container">
+          <div class="right-container oo">
+            <!-- <div>
+                {{ hotgame.section }}{{hotgame.content[hotgame.currentProvider]}}
+            </div> -->
             <Transition :key="transitionKey" appear>
               <img
                 v-if="
@@ -135,6 +138,7 @@
                   hotgame.content[hotgame.currentProvider] &&
                   hotgame.content[hotgame.currentProvider].charImgPath
                 "
+                :style="[`${hotgame.section==='esports'?'right:12rem;':''}`]"
                 :class="`character-${hotgame.subtitle.toLowerCase()}-${hotgame.currentProvider}`"
                 :src="
                   require(`../../../assets/home/hotgame/content/${hotgame.section}/${

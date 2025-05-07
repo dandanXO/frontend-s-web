@@ -105,7 +105,17 @@
                   class="game-provider"
                   @click="onEnterGameClick(hotgame, hotgame.type)"
                 >
+                
+                  <img v-if="['live', 'slot'].includes(hotgame.section) && isDark" 
+                    :class="`game-provider-img ${hotgame.currentPlat === provider ? 'active' : ''}`"
+                    :src="
+                      require(`../../../assets/${hotgame.section}/${
+                        hotgame.section
+                      }-logo-${provider.code.toLowerCase()}-dark.png`)
+                    "
+                  />
                   <img
+                    v-else
                     :class="`game-provider-img ${hotgame.currentPlat === provider ? 'active' : ''}`"
                     :src="
                       require(`../../../assets/${hotgame.section}/${
