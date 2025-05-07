@@ -88,7 +88,7 @@ const chatListRef = ref(null);
 
 const isDark = computed(() => $q.dark.isActive);
 const profilePhotoDir = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/profile/";
-const isMessageSendable = computed(() => messageToSend.value.trim().length > 0 );
+const isMessageSendable = computed(() => messageToSend.value.trim().length > 0);
 
 const inputConfig = computed(() => {
   let disabled = false;
@@ -154,9 +154,9 @@ const openGame = (gameName, code, gameCode) => {
 
 onMounted(() => {});
 
-onBeforeUnmount(() => {
-  clearInterval(messageInterval);
-});
+// onBeforeUnmount(() => {
+// clearInterval(messageInterval);
+// });
 </script>
 
 <style lang="scss" scoped>
@@ -170,8 +170,8 @@ onBeforeUnmount(() => {
     padding: 16px;
     overflow: auto;
     height: 100dvh;
-    margin-top: calc(56.25vw + 27px);
-    max-height: calc(100dvh - 56.25vw - 27px - 60px);
+    margin-top: calc(56.25vw + 27px + 68px + 16px);
+    max-height: calc(100dvh - 56.25vw - 27px - 60px - 68px - 16px);
     // Firefox
     scrollbar-width: thin;
     scrollbar-color: #c4c4c4 #b8d1ff;

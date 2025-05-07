@@ -1,5 +1,5 @@
 <template>
-  <div ref="pageContainer" class="page-style">
+  <div ref="pageContainer" class="page-style" :class="isDark ? 'dark' : 'white'">
     <LiveStreamVideo :danmuList :livestream-data="currentLiveData" />
 
     <div class="transfer-mid-div">
@@ -17,6 +17,23 @@
             {{ announcement }}
           </span>
         </marquee-text>
+      </div>
+    </div>
+
+    <div class="room-message-container">
+      <div class="container-box">
+        <div class="type-tags">
+          <template v-if="currentLiveData.name === 'SYSTEM'">
+            <div class="tag tag--live">官方直播间</div>
+          </template>
+          <template v-else>
+            <div class="tag tag--live">主播</div>
+          </template>
+
+          <div class="tag" :class="`tag--${sportType.val}`">{{ sportType.label }}</div>
+        </div>
+
+        <div class="room-message-txt" v-if="currentLiveData.roomMessage">{{ currentLiveData.roomMessage }}</div>
       </div>
     </div>
 
@@ -48,6 +65,7 @@ const LIVESTREAM_SYNC_INTERVAL = 1000 * 10; // 10 seconds
 const DEFAULT_ANNOUNCEMENT = "禁止发表任何广告、低俗色情、辱骂平台等违规言论!";
 
 const $q = useQuasar();
+const isDark = computed(() => $q.dark.isActive);
 const notify = useNotify();
 const qs = require("qs");
 const route = useRoute();
@@ -395,6 +413,23 @@ const formatHistoryMessages = (messages) => {
   }, []);
 };
 
+const sportType = computed(() => {
+  switch (currentLiveData.value.sportId) {
+    case 1:
+      return { val: "football", label: "足球" };
+    case 2:
+      return { val: "basketball", label: "篮球" };
+    case 3:
+      return { val: "lol", label: "LOL" };
+    case 4:
+      return { val: "csgo", label: "CSGO" };
+    case 5:
+      return { val: "dota2", label: "DOTA2" };
+    default:
+      return { val: "unknown", label: "未知" };
+  }
+});
+
 watch(currentLiveData, () => {
   messages.value = [];
   unsortMessages.value = [];
@@ -459,6 +494,77 @@ onUnmounted(() => {
   position: fixed;
   left: 0;
   top: calc(56.25vw);
+}
+
+.room-message-container {
+  position: fixed;
+  left: 0;
+  top: calc(56.25vw + 32px);
+  width: calc(100%);
+  height: 80px;
+  display: flex;
+  align-items: center;
+
+  .container-box {
+    padding: 8px 12px;
+    background: #fcfdfe;
+    color: #000000;
+    width: 100%;
+    margin: 12px;
+    box-shadow: 0px -2.78px 2.78px 0px #c3d4e6 inset;
+    border-radius: 12px;
+    font-size: 10px;
+
+    .type-tags {
+      display: flex;
+      gap: 8px;
+      .tag {
+        padding: 0px 12px;
+        font-size: 10px;
+        line-height: 1;
+        border-radius: 24px;
+        display: flex;
+        align-items: center;
+        height: 22px;
+        color: #000000;
+        box-shadow: 0px -2px 2px 0px #bbc1d6 inset;
+
+        &--live {
+          background-color: #bbaef9;
+          color: #8658fb;
+        }
+
+        &--football {
+          background-color: #fbcd74;
+          color: #c84e16;
+        }
+
+        &--basketball {
+          background-color: #a1e3d8;
+          color: #107361;
+        }
+
+        &--lol {
+          background-color: #f7a9a8;
+          color: #b30000;
+        }
+
+        &--csgo {
+          background-color: #ffd8a8;
+          color: #b65d00;
+        }
+
+        &--dota2 {
+          background-color: #c2f0fc;
+          color: #157a9d;
+        }
+      }
+    }
+
+    .room-message-txt {
+      margin-top: 8px;
+    }
+  }
 }
 
 /* Chat Messages */
@@ -534,5 +640,57 @@ onUnmounted(() => {
 
 .page-style {
   color: #e8f2fe;
+
+  &.dark {
+    .room-message-container {
+      position: fixed;
+      left: 0;
+      top: calc(56.25vw + 32px);
+      width: calc(100% - 24px);
+
+      .container-box {
+        background: #1c42a3;
+        color: #ffffff;
+        box-shadow: 0px -2.78px 2.78px 0px #6691ff inset;
+
+        .type-tags {
+          .tag {
+            color: #ffffff;
+            box-shadow: 0px 2px 2px 0px #16337e;
+
+            &--live {
+              background-color: #2d7b72;
+              color: #54ff00;
+            }
+
+            &--football {
+              background-color: #605c72;
+              color: #ff9900;
+            }
+
+            &--basketball {
+              background-color: #3b3a61;
+              color: #00e0ff;
+            }
+
+            &--lol {
+              bbackground-color: #4a2f45;
+              color: #ff5ec4;
+            }
+
+            &--csgo {
+              background-color: #374b3e;
+              color: #a6ff00;
+            }
+
+            &--dota2 {
+              background-color: #2f3e5c;
+              color: #ffde59;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 </style>
