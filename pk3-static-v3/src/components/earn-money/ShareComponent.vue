@@ -1,7 +1,8 @@
 <template>
   <div class="share-banner-img"><img src="@/assets/images/earn-money/share-banner.png" /></div>
   <div class="qr-code-container">
-    <VueQRCodeComponent id="the-qrcode" :size="150" :text="selfTgurl" class="qr-code" />
+    <div class="qr-code-bg"><VueQRCodeComponent id="the-qrcode" :size="150" :text="selfTgurl" class="qr-code" /></div>
+
     <div class="save-qr-btn" @click="downloadQRImg()">{{ $t("btn.save") }}</div>
     <div>
       {{ $t("earnMoney.share.inviteNewUsers") }}
@@ -472,14 +473,22 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   margin-top: 10px;
-  .share-qr {
-    width: 40%;
-    min-width: 120px;
+  .qr-code-bg {
+    border-radius: 0.625rem;
+    background-color: #fff;
+    padding: 10px;
+    margin-top: 4px;
+    > img {
+      width: 40%;
+      min-width: 120px;
+    }
   }
+
   .save-qr-btn {
     background-color: #5c46e7;
     border-radius: 6px;
-    width: 50%;
+    width: 40%;
+    min-width: 160px;
     height: 38px;
     display: flex;
     align-items: center;
@@ -570,10 +579,10 @@ ul {
     height: 27px;
     margin: 0 6px;
   }
-  > div {
+  .link-wrapper {
     background: linear-gradient(325.86deg, #1e1236 5.38%, #2f1661 98.11%);
-    border: 1px solid;
-    border-image-source: linear-gradient(148.87deg, #7753c2 -14.01%, #3f237a 51.97%, #7753c2 115.36%);
+    border: 2px solid #3f237a;
+    // border-image-source: linear-gradient(148.87deg, #7753c2 -14.01%, #3f237a 51.97%, #7753c2 115.36%);
     border-radius: 6px;
     box-shadow: 0px 0px 20px 0px #b479ff40 inset;
     width: calc(100% - 50px);
