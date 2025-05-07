@@ -23,14 +23,14 @@
             <div class="info-title f-wrap">
               <div class="info-icon"><img src="../../assets/images/earn-money/share-invited.png" /></div>
               <div class="info-txt">{{ $t("earnMoney.share.invited") }}:</div>
-              <div class="info-amount">{{ shareData?.total ?? 0 }}</div>
+              <div class="info-amount">{{ shareData.total }}</div>
             </div>
           </div>
           <div class="longer-group">
             <div class="info-title f-wrap">
               <div class="info-icon"><img src="../../assets/images/earn-money/share-valid-invites.png" /></div>
               <div class="info-txt">{{ $t("earnMoney.share.validInvites") }}:</div>
-              <div class="info-amount">{{ shareData?.valid ?? 0 }}</div>
+              <div class="info-amount">{{ shareData.valid }}</div>
             </div>
           </div>
         </div>
@@ -46,14 +46,14 @@
                 <br />
                 {{ $t("earnMoney.share.validInvitationsToday_02") }}:
               </div>
-              <div class="info-amount">{{ shareData?.todayValid ?? 0 }}</div>
+              <div class="info-amount">{{ shareData.todayValid }}</div>
             </div>
           </div>
           <div class="longer-group">
             <div class="info-title f-wrap">
               <div class="info-icon"><img src="../../assets/images/earn-money/share-today-bonus.png" /></div>
               <div class="info-txt">{{ $t("earnMoney.share.todaysBonus") }}:</div>
-              <div class="info-amount">{{ store.currency.value }} {{ shareData?.todayBonus ?? 0 }}</div>
+              <div class="info-amount">{{ store.currency.value }} {{ shareData.todayRebate }}</div>
             </div>
           </div>
         </div>
@@ -65,7 +65,7 @@
             <div class="info-title f-wrap">
               <div class="info-icon"><img src="../../assets/images/earn-money/share-current-lvl.png" /></div>
               <div class="info-txt">{{ $t("earnMoney.share.currentLevel") }}:</div>
-              <div class="info-amount">{{ shareData?.rebateLevel ?? 0 }}</div>
+              <div class="info-amount">{{ shareData.rebateLevel }}</div>
             </div>
           </div>
           <div class="longer-group">
@@ -76,7 +76,7 @@
                 <br />
                 {{ $t("earnMoney.share.currentBonusLevel_02") }}:
               </div>
-              <div class="info-amount">{{ store.currency.value }} {{ shareData?.rebateAmount ?? 0 }}</div>
+              <div class="info-amount">{{ store.currency.value }} {{ shareData.rebateAmount }}</div>
             </div>
           </div>
         </div>
@@ -88,7 +88,7 @@
             <div class="info-title f-wrap">
               <div class="info-icon"><img src="../../assets/images/earn-money/share-bonus-claimed.png" /></div>
               <div class="info-txt">{{ $t("earnMoney.share.bonusClaimed") }}:</div>
-              <div class="info-amount">{{ shareData?.totalRebate ?? 0 }}</div>
+              <div class="info-amount">{{ shareData.totalRebate }}</div>
             </div>
           </div>
         </div>
@@ -197,7 +197,15 @@ const rows2 = [
 ];
 
 const selfTgurl = ref("");
-const shareData = ref(null);
+const shareData = ref({
+  total: 0,
+  valid: 0,
+  todayValid: 0,
+  todayRebate: 0,
+  rebateLevel: 0,
+  rebateAmount: 0,
+  totalRebate: 0
+});
 const copyinput = ref(null);
 const text_copied = ref("");
 
