@@ -148,7 +148,7 @@ export default defineComponent({
       background-color: $footer-black;
       margin: 0 auto;
       display: flex;
-      gap: 50px;
+      gap: 25px;
       justify-content: center;
       padding: 10px 0;
       .top-ft-left {

@@ -163,7 +163,8 @@
                 <div v-for="(item, i) in quesTitleOptions" :key="i" class="question-title-container">
                   <template v-if="recordsPagination.current === item.sequence">
                     <div class="questions-title">
-                      {{ item.question }}<span class="singlemultiple">({{ item.isMultiple ? '多选项' : '单选' }})</span>
+                      
+                      {{ item.question }}<span class="singlemultiple" v-if="item.sequence != 10">({{ item.isMultiple ? '多选项' : '单选' }})</span>
                     </div>
                     <div class="answer-container">
                       <template v-if="item.isMultiple" v-for="(ans, index) in item.choices" :key="index">
