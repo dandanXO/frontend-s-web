@@ -36,7 +36,7 @@
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
-          <div class="right">活动期间在PGL 阿斯塔纳 2025当日总有效投注 ≥1,500 元即可获得最高1188元的投注金</div>
+          <div class="right">活动期间在PGL 阿斯塔纳 2025当日总有效投注 ≥1,500 元即可获得最高1188元的奖励金</div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
           <thead>
@@ -81,7 +81,7 @@
               <td>888元</td>
             </tr>
             <tr>
-              <td>1,000,000元</td>
+              <td>≥1,000,000元</td>
               <td>1,188元</td>
             </tr>
           </tbody>
@@ -109,7 +109,7 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              动期间，活动仅计算电竞场馆中PGL 阿斯塔纳 2025赛事，会员在PGL 阿斯塔纳
+              活动期间，活动仅计算电竞场馆中PGL 阿斯塔纳 2025赛事，会员在PGL 阿斯塔纳
               2025赛事期间当日累计有效投注≥1,500元即可获得对应彩金，有效投注过期清零；
               <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
             </div>
