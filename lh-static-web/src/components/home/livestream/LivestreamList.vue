@@ -35,7 +35,8 @@
       </div>
       <div class="livestream-list-item__badge-wrapper">
         <div class="livestream-list-item__badge">
-          <img :src="imgURL + live.avatar" loading="lazy" />
+          <img v-if="live.name === 'SYSTEM'" src="@/assets/home/livestream/system-avatar.png" loading="lazy" />
+          <img v-else :src="imgURL + live.avatar" loading="lazy" />
           {{ live.name }}
         </div>
       </div>
@@ -208,13 +209,14 @@ onUnmounted(() => {
       );
       border: 0.94px solid #d3aa69;
       border-radius: 8px;
+      border-top-left-radius: 12px;
+      border-bottom-left-radius: 12px;
 
       .livestream-list-item__badge {
         display: flex;
         align-items: center;
         gap: 8px;
         padding-right: 7px;
-        margin-left: -7px;
         font-size: 11px;
         line-height: 15px;
         color: #000000;

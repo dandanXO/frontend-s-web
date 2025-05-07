@@ -15,13 +15,9 @@
       </Vue3Marquee>
     </div>
     <div ref="chatListRef" class="livestream-chat-list">
+      <ChatFloatingPanel :is-system-livestream :livestream-data />
       <div v-for="(message, index) in messages" :key="index" class="livestream-chat-item">
-        <img
-          class="livestream-chat-item__vip-badge"
-          :src="require(`@/assets/home/livestream/chat/vip-badge-${message.vip}${isDark ? '-dark' : '-light'}.png`)"
-          loading="lazy"
-          width="44"
-        />
+        <BadgeChip :level="message.vip">V{{ message.vip }}</BadgeChip>
         <img
           v-if="message.profilePhoto && message.profilePhoto.includes('default')"
           class="livestream-chat-item__profile-photo"
@@ -47,6 +43,15 @@
           :disabled="inputConfig.disabled"
           autocomplete="off"
         />
+        <el-popover popper-class="livestream-chat-emoji-popper" trigger="click" placement="top">
+          <div ref="emojiPickerRef"></div>
+          <template #reference>
+            <button class="livestream-chat-input-emoji-btn" type="button">
+              <img :src="require(`@/assets/home/livestream/icon-emoji${isDark ? '-dark' : ''}.svg`)" />
+            </button>
+          </template>
+        </el-popover>
+
         <button
           class="livestream-chat-input-btn"
           type="submit"
@@ -62,22 +67,26 @@
 <script setup>
 import { userStore } from "@/store";
 import { useDark, useLocalStorage } from "@vueuse/core";
-import { computed, nextTick, ref, toRefs, watch } from "vue";
+import { computed, nextTick, onMounted, ref, toRefs, watch } from "vue";
 import { Vue3Marquee } from "vue3-marquee";
+import BadgeChip from "./BadgeChip.vue";
+import ChatFloatingPanel from "./ChatFloatingPanel.vue";
+import { Picker } from "emoji-mart";
 
 const now = Date.now();
 const DEFAULT_ANNOUNCEMENT = "禁止发表任何广告、低俗色情、辱骂平台等违规言论!";
 
-const props = defineProps(["messages", "livestreamData", "vipStatus"]);
+const props = defineProps(["messages", "livestreamData", "vipStatus", "isSystemLivestream"]);
 const { messages, livestreamData, vipStatus } = toRefs(props);
 const emit = defineEmits(["sendChatMessage"]);
 
-const isDark = useDark();
 const profilePhotoDir = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/profile/";
 const store = userStore();
+const isDark = useDark();
 
 const messageToSend = ref("");
 const chatListRef = ref(null);
+const emojiPickerRef = ref(null);
 
 const isLivestreamExisted = computed(() => typeof livestreamData.value?.id === "number");
 const isMessageSendable = computed(
@@ -119,6 +128,10 @@ const calculateMaxContentLength = () => {
   return maxLength;
 };
 
+const handleEmojiSelect = (emoji) => {
+  messageToSend.value += emoji.native;
+};
+
 watch(
   messages,
   async () => {
@@ -133,6 +146,20 @@ watch(
   },
   { deep: true }
 );
+
+onMounted(() => {
+  const picker = new Picker({
+    data: async () => {
+      const response = await fetch(`/emoji.json`);
+      return response.json();
+    },
+    locale: "zh",
+    theme: isDark.value ? "dark" : "light",
+    skinTonePosition: "none",
+    onEmojiSelect: handleEmojiSelect
+  });
+  emojiPickerRef.value.appendChild(picker);
+});
 </script>
 <style lang="scss" scoped>
 @import "@/scss/pages/livestream.scss";
@@ -167,6 +194,7 @@ watch(
     flex: 1;
     padding: 12px 11px 0;
     overflow: auto;
+    position: relative;
 
     .livestream-chat-item {
       background-color: #ffffff80;
@@ -220,6 +248,18 @@ watch(
           }
         }
       }
+      .livestream-chat-input-emoji-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        border: none;
+
+        img {
+          max-width: 20px;
+        }
+      }
+
       .livestream-chat-input-btn {
         background-color: transparent;
         border: 0.94px solid #4c88f8;
@@ -296,6 +336,15 @@ watch(
 .livestream-chat-input {
   .el-input__wrapper {
     box-shadow: none !important;
+  }
+}
+
+.el-popper.is-light.livestream-chat-emoji-popper {
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+  .el-popper__arrow {
+    display: none;
   }
 }
 </style>

@@ -13,12 +13,13 @@
         @scroll-reach-right="getData"
       />
       <div class="livestream-list__pseudo" />
-      <CurrentLivestream :livestream-data="currentLiveData" @click="handleBetClick" />
+      <CurrentLivestream :livestream-data="currentLiveData" :is-system-livestream @click="handleBetClick" />
       <LivestreamChat
         class="livestream-chat"
         :messages="fullMessages"
         :livestream-data="currentLiveData"
         :vip-status
+        :is-system-livestream
         @send-chat-message="handleSendChatMessage"
       />
       <LivestreamVideo ref="livestreamVideoRef" :danmuList :livestream-data="currentLiveData" :is-livestreaming />
@@ -112,6 +113,7 @@ const isLivestreaming = computed(() => !!currentLiveData.value?.liveStatus);
 const fullMessages = computed(() => {
   return messages.value.concat(unsortMessages.value);
 });
+const isSystemLivestream = computed(() => currentLiveData.value?.name === "SYSTEM");
 
 const handleSendChatMessage = (message) => {
   if (!store.hasToken()) {
