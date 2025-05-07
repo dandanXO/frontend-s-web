@@ -513,8 +513,9 @@ export default {
       betAmount: "Bet Amount",
       rate: "Rate",
       yesterdayReportTotal: "Yesterday Report (Total)",
+      todayReportTotal: "Today Report (Total)",
       level: "Level",
-      noOfDepositorsToday: "Number of depositors today",
+      noOfDepositors: "Number of depositors",
       depositAmount: "Deposit amount",
       myselfBettingAmount: "Myself betting amount",
       myselfRebate: "Myself rebate",
@@ -539,7 +540,7 @@ export default {
       copiedtoClipboard: "copied to clipboard"
     },
     share: {
-      invited: "Invited",
+      totalInvited: "Total invited",
       validInvites: "Valid invites",
       validInvitationsToday_01: "Valid invitations",
       validInvitationsToday_02: "today",

@@ -124,31 +124,6 @@
       <div class="info-row">
         <div class="info-content-item line-side">
           <div class="info-title">
-            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-08.png" /></div>
-            <div class="info-txt">{{ $t("earnMoney.daily.noOfDepositorsToday") }}:</div>
-          </div>
-          <div class="info-amount">
-            {{ teamAmountData.noOfDepositMembers }}
-          </div>
-        </div>
-        <div class="info-content-item">
-          <div class="info-title">
-            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-09.png" /></div>
-            <div class="info-txt">{{ $t("earnMoney.daily.depositAmount") }}:</div>
-          </div>
-          <div
-            class="info-amount"
-            :class="checkTeamAmountData(teamAmountData.totalDeposit) === 'Calculating' ? 'font-smaller' : ''"
-          >
-            <span>{{ store.currency.value }}&nbsp;</span>
-            {{ convertToCommaAmount(checkTeamAmountData(teamAmountData.totalDeposit), false) }}
-          </div>
-        </div>
-      </div>
-
-      <div class="info-row">
-        <div class="info-content-item line-side">
-          <div class="info-title">
             <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-07.png" /></div>
             <div class="info-txt">{{ $t("earnMoney.daily.myselfBettingAmount") }}:</div>
           </div>
@@ -212,6 +187,35 @@
               <span>{{ store.currency.value }}&nbsp;</span>
               {{ convertToCommaAmount(checkTeamAmountData(teamAmountData.totalRebate), false) }}
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="info-wrapper q-pt-lg">
+    <div class="title-txt">{{ $t("earnMoney.daily.todayReportTotal") }}</div>
+    <div class="info-container">
+      <div class="info-row">
+        <div class="info-content-item line-side">
+          <div class="info-title">
+            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-08.png" /></div>
+            <div class="info-txt">{{ $t("earnMoney.daily.noOfDepositors") }}:</div>
+          </div>
+          <div class="info-amount">
+            {{ teamAmountData.noOfDepositMembers }}
+          </div>
+        </div>
+        <div class="info-content-item">
+          <div class="info-title">
+            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-09.png" /></div>
+            <div class="info-txt">{{ $t("earnMoney.daily.depositAmount") }}:</div>
+          </div>
+          <div
+            class="info-amount"
+            :class="checkTeamAmountData(teamAmountData.totalDeposit) === 'Calculating' ? 'font-smaller' : ''"
+          >
+            <span>{{ store.currency.value }}&nbsp;</span>
+            {{ convertToCommaAmount(checkTeamAmountData(teamAmountData.totalDeposit), false) }}
           </div>
         </div>
       </div>

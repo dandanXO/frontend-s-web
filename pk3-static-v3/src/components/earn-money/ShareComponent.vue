@@ -23,7 +23,7 @@
           <div class="longer-group">
             <div class="info-title f-wrap">
               <div class="info-icon"><img src="../../assets/images/earn-money/share-invited.png" /></div>
-              <div class="info-txt">{{ $t("earnMoney.share.invited") }}:</div>
+              <div class="info-txt">{{ $t("earnMoney.share.totalInvited") }}:</div>
               <div class="info-amount">{{ shareData.total }}</div>
             </div>
           </div>

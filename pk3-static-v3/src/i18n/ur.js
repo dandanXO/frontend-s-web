@@ -513,7 +513,7 @@ export default {
       rate: "شرح",
       yesterdayReportTotal: "کل کی رپورٹ (کل)",
       level: "سطح",
-      noOfDepositorsToday: "آج کے جمع کنندگان کی تعداد",
+      noOfDepositors: "جمع کنندگان کی تعداد",
       depositAmount: "جمع شدہ رقم",
       myselfBettingAmount: "میری بیٹنگ کی رقم",
       myselfRebate: "میرا ریبیٹ",
@@ -538,7 +538,7 @@ export default {
       copiedtoClipboard: "کلپ بورڈ پر کاپی کر دیا گیا"
     },
     share: {
-      invited: "مدعو کیا گیا",
+      totalInvited: "کل مدعو کیے گئے",
       validInvites: "درست دعوتیں",
       validInvitationsToday_01: "درست دعوتیں",
       validInvitationsToday_02: "آج",
