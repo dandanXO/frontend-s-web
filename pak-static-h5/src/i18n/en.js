@@ -755,7 +755,7 @@ export default {
     nameofCardAcc: "Card Account Name",
     insertCardAccName: "Please insert card account name",
     insertTelephone: "Please insert telephone number",
-    pleaseEnterTelephone: "Please enter your telephone number.",
+    pleaseEnterTelephone: "Please enter a valid telephone number",
     otp: "OTP",
     insertVerificationCode: "Insert verifcation code",
     pleaseEnterVerificationCode: "Please enter verifcation code.",

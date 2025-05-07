@@ -135,14 +135,17 @@
           <InputField :label="$t('bankCard.telephone')">
             <template #input>
               <q-input
+                ref="telephoneNumberRef"
                 standout
+                :rules="[(val) => !!val || $t('bankCard.pleaseEnterTelephone'),  (val) => /^03\d{9}$/.test(val) || $t('bankCard.pleaseEnterTelephone')]"
                 v-model="bankCardInfo.telephone"
                 class="q-pb-xs"
                 hide-bottom-space
                 :placeholder="$t('bankCard.pleaseEnterTelephone')"
                 clearable
+                :disable="isPhoneVerified"
               >
-                <template v-slot:append>
+                <template v-if="!isPhoneVerified" v-slot:append>
                   <q-btn
                     @click="openPhoneVeriDialog()"
                     type="submit"
@@ -250,6 +253,7 @@ const onTypeToggleBtnClick = (index, name) => {
   selectedTypeToggleName.value = name;
   bankCardInfo.bankId = bankList.value[index].id;
   bankCardInfo.currencyId = bankList.value[index].currencyIds;
+  isPhoneVerified.value = false;
 };
 
 const categoryToggleList = ref(["EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20"]);
@@ -269,7 +273,9 @@ const bankFormRef = ref();
 const bankCardRef = ref();
 const cardNumberRef = ref();
 const ifscRef = ref();
+const telephoneNumberRef = ref();
 const phoneVerificationRef = ref();
+const isPhoneVerified = ref(false);
 
 const bankCardInfo = reactive({
   bankId: undefined,
@@ -360,6 +366,7 @@ const showCaptchaSuccessDialog = ref(false);
 const showCaptchaMessageDialog = ref(false);
 const captchaFailedMessage = ref("");
 const onCaptchaSubmit = () => {
+  telephoneNumberRef.value.validate()
   innerCaptchaRef.value.validate();
   if (innerCaptchaRef.value.hasError) return;
 
@@ -381,6 +388,7 @@ const onCaptchaSubmit = () => {
 
         showCaptchaMessageDialog.value = true;
         showCaptchaSuccessDialog.value = true;
+        isPhoneVerified.value = true;
       } else {
         captchaFailedMessage.value = res.message;
         showCaptchaMessageDialog.value = true;
@@ -438,44 +446,47 @@ const submitBankCard = () => {
   if (cardNumberRef.value) {
     cardNumberRef.value.validate();
   }
-
-  if (!isOtpSent.value) {
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: t("bankCard.clickAndEnterPhoneCode"),
-      icon: "report_problem"
-    });
-  } else if (phoneVerificationRef.value) {
-    phoneVerificationRef.value.validate();
+  if (telephoneNumberRef.value) {
+    telephoneNumberRef.value.validate()
   }
 
   if (
     !(
       (bankCardRef.value && bankCardRef.value.hasError) ||
       (cardNumberRef.value && cardNumberRef.value.hasError) ||
-      (phoneVerificationRef.value && phoneVerificationRef.value.hasError)
+      (phoneVerificationRef.value && phoneVerificationRef.value.hasError) ||
+      (telephoneNumberRef.value && telephoneNumberRef.value.hasError)
     )
   ) {
-    // API call
-    api
-      .post("/session/bankCard", qs.stringify(bankCardInfo))
-      .then((response) => {
-        if (response.code === 0) {
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: t("notify.cryptoAccountAddedSuccessfully"),
-            icon: "check_circle_outline"
-          });
-          bankCardInfo.cardNumber = "";
-          bankFormRef.value.reset();
-          router.push("/account/bank");
-        }
-      })
-      .catch((error) => {
-        console.log("error", error);
+    if (!isOtpSent.value || !bankCardInfo.telephone || !isPhoneVerified.value) {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: t("bankCard.clickAndEnterPhoneCode"),
+        icon: "report_problem"
       });
+      return;
+    } else {
+      // API call
+      api
+            .post("/session/bankCard", qs.stringify(bankCardInfo))
+            .then((response) => {
+              if (response.code === 0) {
+                $q.notify({
+                  color: "positive",
+                  position: "top",
+                  message: t("notify.cryptoAccountAddedSuccessfully"),
+                  icon: "check_circle_outline"
+                });
+                bankCardInfo.cardNumber = "";
+                bankFormRef.value.reset();
+                router.push("/account/bank");
+              }
+            })
+            .catch((error) => {
+              console.log("error", error);
+            });
+    }
   }
 };
 

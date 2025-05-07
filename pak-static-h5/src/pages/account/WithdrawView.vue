@@ -4,38 +4,65 @@
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">{{ $t("bankCard.otp") }}</div>
-        <div class="q-pa-md">{{ $t("bankCard.telephone") }} {{ selectedCardTelephone }}</div>
-        <InputField>
-          <template #input>
-            <q-input
-              ref="innerCaptchaRef"
-              standout
-              v-model="innerCaptchaCode"
-              class="q-pb-xs"
-              hide-bottom-space
-              maxlength="4"
-              :rules="[
-                (val) => (val && val.length > 0) || $t('bankCard.pleaseEnterVerificationCode'),
-                (val) => (val && val.length === 4) || $t('bankCard.verificationCodeLengthError')
-              ]"
-              :placeholder="$t('bankCard.insertVerificationCode')"
-              clearable
-            >
-              <template v-slot:append>
-                <img
-                  :src="phoneVerificationImg"
-                  title="Click to Refresh OTP"
-                  style="margin-top: 6px; cursor: pointer"
-                  @click="getCode"
-                />
-              </template>
-            </q-input>
-          </template>
-        </InputField>
+        <template v-if="!isOtpSent">
+          <InputField>
+            <div class="q-pa-md">{{ $t("bankCard.telephone") }} {{ selectedCardTelephone }}</div>
+            <template #input>
+              <q-input
+                ref="innerCaptchaRef"
+                standout
+                v-model="innerCaptchaCode"
+                class="q-pb-xs"
+                hide-bottom-space
+                maxlength="4"
+                :rules="[
+                  (val) => (val && val.length > 0) || $t('bankCard.pleaseEnterVerificationCode'),
+                  (val) => (val && val.length === 4) || $t('bankCard.verificationCodeLengthError')
+                ]"
+                :placeholder="$t('bankCard.insertVerificationCode')"
+                clearable
+              >
+                <template v-slot:append>
+                  <img
+                    :src="phoneVerificationImg"
+                    title="Click to Refresh OTP"
+                    style="margin-top: 6px; cursor: pointer"
+                    @click="getCode"
+                  />
+                </template>
+              </q-input>
+            </template>
+          </InputField>
+          <div style="width: 100%" class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+            <q-btn class="btn-primary__full" :label="$t('btn.sendOtp')" no-caps @click="onCaptchaSubmit" />
+          </div>
+        </template>
 
-        <div style="width: 100%" class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
-          <q-btn class="btn-primary__full" :label="$t('btn.sendOtp')" no-caps @click="onCaptchaSubmit" />
-        </div>
+        <template v-if="isOtpSent">
+            <InputRowGrid>
+              <template #fields>
+                <!-- <InputField :label="$t('form.virtualWallet')"> -->
+                <InputField :label="$t('bankCard.otp')">
+                  <template #input>
+                    <q-input
+                      ref="phoneVerificationRef"
+                      standout
+                      v-model="withdrawInfo.smsCode"
+                      class="q-pb-xs"
+                      hide-bottom-space
+                      clearable
+                      maxlength="6"
+                      :placeholder="$t('bankCard.pleaseEnterOtp')"
+                      :rules="[(val) => (val && val.length > 3) || $t('bankCard.otpLengthError')]"
+                    ></q-input>
+                  </template>
+                </InputField>
+                <div style="width: 100%" class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+                  <q-btn class="btn-primary__full" :label="$t('btn.submit')" no-caps @click="onOTPEnter" />
+                </div>
+              </template>
+            </InputRowGrid>
+          </template>
       </div>
     </div>
   </q-dialog>
@@ -277,28 +304,6 @@
               </InputField>
             </template>
           </InputRowGrid>
-          <template v-if="isOtpSent">
-            <InputRowGrid>
-              <template #fields>
-                <!-- <InputField :label="$t('form.virtualWallet')"> -->
-                <InputField :label="$t('bankCard.otp')">
-                  <template #input>
-                    <q-input
-                      ref="phoneVerificationRef"
-                      standout
-                      v-model="withdrawInfo.smsCode"
-                      class="q-pb-xs"
-                      hide-bottom-space
-                      clearable
-                      maxlength="6"
-                      :placeholder="$t('bankCard.pleaseEnterOtp')"
-                      :rules="[(val) => (val && val.length > 3) || $t('bankCard.otpLengthError')]"
-                    ></q-input>
-                  </template>
-                </InputField>
-              </template>
-            </InputRowGrid>
-          </template>
           <div class="bot-wrapper">
             <div class="info">
               <div class="desc-wrapper">
@@ -785,54 +790,64 @@ const onCaptchaSubmit = () => {
 
         showCaptchaMessageDialog.value = true;
         showCaptchaSuccessDialog.value = true;
+
       } else {
         captchaFailedMessage.value = res.message;
         showCaptchaMessageDialog.value = true;
       }
 
-      showCaptchaDialog.value = false;
+      // showCaptchaDialog.value = false;
     })
     .catch(() => {
       getInnerCode();
     });
 };
+const isOTPEntered = ref(false);
+const onOTPEnter = () => {
+    showCaptchaDialog.value = false;
+    isOTPEntered.value = true;
+    submitWithdraw();
+}
 const selectedCardTelephone = ref();
 const submitWithdraw = async () => {
-  if (withdrawInfo.cardId) {
-    const selectedCard = withdrawState.bankCardList.find((card) => card.id === withdrawInfo.cardId);
-
-    if (selectedCard) {
-      const bankCode = selectedCard.bankCode;
-
-      const method = withdrawalMethods.value.find((method) => method.code === bankCode);
-
-      if (method?.shouldVerifyOTP && selectedCard.telephone) {
-        selectedCardTelephone.value = selectedCard.telephone;
-
-        // Show OTP dialog and wait
-        openPhoneVeriDialog(() => {
-          proceedWithWithdrawal(); // Callback after OTP is verified
-        });
-
-        return;
-      }
-    }
-  }
-  proceedWithWithdrawal();
-};
-const proceedWithWithdrawal = async () => {
-  if (phoneVerificationRef.value) {
-    phoneVerificationRef.value.validate();
-  }
   cardRef.value.validate();
   amountRef.value.validate();
-  $q.loading.show({
-    message: "Withdrawing..."
-  });
   if (cardRef.value.hasError || amountRef.value.hasError) {
     $q.loading.hide();
   } else {
+      if (withdrawInfo.cardId && !isOTPEntered.value) {
+        $q.loading.show({
+          message: "Loading..."
+        });
+        const selectedCard = withdrawState.bankCardList.find(
+          card => card.id === withdrawInfo.cardId
+        );
+
+        if (selectedCard) { 
+          const bankCode = selectedCard.bankCode;
+
+          const method = withdrawalMethods.value.find(
+            method => method.code === bankCode
+          );
+
+          if (method?.shouldVerifyOTP && selectedCard.telephone) {
+            selectedCardTelephone.value = selectedCard.telephone;
+
+            // Show OTP dialog and wait
+            openPhoneVeriDialog();
+
+            $q.loading.hide({
+              message: "Loading..."
+            });
+          return;
+        }
+      }
+    }
     console.log("");
+    
+    $q.loading.show({
+      message: "Withdrawing..."
+    });
     api
       .post("/session/withdraw/", qs.stringify(withdrawInfo))
       .then((response) => {
