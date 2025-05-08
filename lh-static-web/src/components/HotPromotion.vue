@@ -86,6 +86,7 @@
     <IemMelbourne2025 v-if="list.redirectUrl === 'lh1-iem-melbourne-2025'" :promo-code="list.promoCode" />
     <PglWallachiaS4 v-if="list.redirectUrl === 'lh1-pgl-wallachia-s4'" :promo-code="list.promoCode" />
     <BlastSlam32025 v-else-if="list.redirectUrl === 'lh1-blast-slam-3-2025'" :promo-code="list.promoCode" />
+    <Lh1Enc2025 v-else-if="list.redirectUrl === 'lh1-enc-2025'" :promo-code="list.promoCode" />
     <PglAstana2025 v-else-if="list.redirectUrl === 'lh1-pgl-astana-2025'" :promo-code="list.promoCode" />
     <DragonBoat v-if="list.redirectUrl === 'lh-duanwujie24'" :promo-code="list.promoCode" :params="list.param" />
     <Cct2025 v-if="list.redirectUrl === 'lh1-cct-global-finals-2025'" :promo-code="list.promoCode" />
@@ -168,6 +169,7 @@ import YaLLa2025 from "./hotpromo/YaLLa2025/YaLLa2025.vue";
 import IemMelbourne2025 from "./hotpromo/iem-melbourne-2025/IemMelbourne2025.vue";
 import PglWallachiaS4 from "./hotpromo/pgl-wallachia-s4/PglWallachiaS4.vue";
 import BlastSlam32025 from "./hotpromo/blast-slam-3-2025/BlastSlam32025.vue";
+import Lh1Enc2025 from "./hotpromo/Lh1-enc-2025/Lh1-enc-2025.vue";
 import PglAstana2025 from "./hotpromo/pgl-astana-2025/Pgl-astana-2025.vue";
 
 import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
@@ -183,6 +185,7 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    Lh1Enc2025,
     DragonBoat,
     YaLLa2025,
     elsOne2025,

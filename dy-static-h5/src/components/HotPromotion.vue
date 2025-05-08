@@ -53,7 +53,7 @@
 
     <PullbackTide v-if="list.redirectUrl === 'dy2-pullback-tide'" :promo-code="list.promoCode" />
     <Cba30Dream v-if="list.redirectUrl === 'dy2-cba30-dream'" :promo-code="list.promoCode" />
-
+    <Lh1Enc2025 v-else-if="list.redirectUrl === 'dy2-enc-2025'" :promo-code="list.promoCode" />
     <Lh1LplLck2025loss v-else-if="list.redirectUrl === 'dy2-lpl-lck-2025'" :promo-param="listParam" />
     <Blast2025S3 v-else-if="list.redirectUrl === 'dy2-blast-open-lisbon-2025'" :promo-code="list.promoCode" />
 
@@ -157,12 +157,14 @@ import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
 import newVip2025 from "./hotpromo/2025-new-vip/2025-new-vip.vue";
 import IemDallas2025 from "./hotpromo/iem-dallas-2025/IemDallas2025.vue";
 const BlastRival2025 = defineAsyncComponent(() => import("./hotpromo/BlastRival2025/BlastRival2025.vue"));
+import Lh1Enc2025 from "./hotpromo/Lh1-enc-2025/Lh1-enc-2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    Lh1Enc2025,
     BlastPremierPromo,
     PglastanaAc2025,
     newVip2025,
