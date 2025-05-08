@@ -675,6 +675,8 @@ const onEnterGameClick = (plat, platType) => {
       currentPlat.gameCode = "bblive_lobby_pc";
     } else if (currentPlat.code === "GPS") {
       currentPlat.gameCode = 7202;
+    } else if (currentPlat.code === "GFLC") {
+      currentPlat.gameCode = "lobby";
     }
 
     const platItem = plat.content[currentPlat.code.toLowerCase()];
