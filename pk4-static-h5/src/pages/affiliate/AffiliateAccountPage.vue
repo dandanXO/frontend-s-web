@@ -6,13 +6,13 @@
       <div class="top-profile">
         <div class="user">
           <img src="../../assets/images/affiliate/user.png">
-          <span>Good morning happpy 888</span>
+          <span>Good morning {{ store.nickName }}</span>
         </div>
         <div class="cs"><img src="../../assets/images/affiliate/cs.png"></div>
       </div>
       <div class="total-section">
         <div class="total-txt">Total</div>
-        <div class="total-amt">0.00</div>
+        <div class="total-amt">{{ total }}</div>
       </div>
       <!-- <div class="top-section-inner">
       </div> -->
@@ -162,12 +162,13 @@ const $q = useQuasar();
 const ui = useUI();
 const showExchangeModal = ref(false);
 const showTransferModal = ref(false);
+const total = ref(0);
 
 const dataList = ref([
-  { name: 'Logins', number: "20" },
-  { name: 'No of player', number: "12" },
-  { name: 'Registers', number: "0" },
-  { name: 'Online users', number: "379" },
+  { key: 'logins', name: 'Logins', number: "-" },
+  { key: 'noOfPlayer', name: 'No of player', number: "-" },
+  { key: 'registers', name: 'Registers', number: "-" },
+  { key: 'onlineUsers', name: 'Online users', number: "-" }
 ])
 onActivated(() => {
   store.getUnreadTotal();
@@ -176,7 +177,21 @@ onActivated(() => {
     showExchangeModal.value = true;
   }
 });
+
+const initData = () => {
+  api.get('/session/affiliate').then((res) => {
+    const data = res.data;
+    total.value = data.commission;
+
+    dataList.value.map((item) => {
+      if(item.key === 'noOfPlayer') item.number = data.downlineMember
+      if(item.key === 'registers') item.number = data.downlineAffiliate
+    })
+  })
+}
+
 onMounted(() => {
+  initData();
 });
 
 </script>
@@ -315,6 +330,7 @@ onMounted(() => {
       .data-name {
         color: #B3BEC1;
         font-size: 14px;
+        letter-spacing: -1px;
       }
     }
   }
