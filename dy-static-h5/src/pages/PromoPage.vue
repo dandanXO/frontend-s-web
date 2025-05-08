@@ -92,11 +92,15 @@
                   style="display: block; width: 100%"
                 />
               </div>
-              <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'bounty-blast-premier'" />
+              <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'dy2-cs2-blast-2024' || selectedPromo?.redirectUrl === 'bounty-blast-premier'" />
               <div
                 class="inner"
                 :class="{
                   hongbaoyu: selectedPromo.promoCode === 'hongbaoyu',
+                   cs2:
+                    selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
+                    selectedPromo.promoCode === 'dy2-cs2-blast-2024' ||
+                    selectedPromo.promoCode === 'dy2-blast-premier-treasure',
                   msi: selectedPromo.promoCode === 'dy2-msi-promo',
                   dy12025pgls3: selectedPromo.promoCode === 'dy1-2025-pgl-s3',
                   dyftd: selectedPromo.promoCode === 'lh1-ftd-promo',
@@ -954,6 +958,12 @@ export default defineComponent({
 
         &.cny2024 {
           width: 100%;
+        }
+
+        &.cs2 {
+          margin: 0 !important;
+          padding: 10px;
+          width: 100% !important;
         }
 
         &.msi {

@@ -10,14 +10,14 @@
           <div class="reward-info">
             <div class="reward-info-icon claim-coin-icon"></div>
             <div class="reward-info-content">
-              昨日总有效投注：
+              活动期间累计投注：
               <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
           <div class="reward-info">
             <div class="reward-info-icon claim-gift-icon"></div>
             <div class="reward-info-content">
-              今日可领取彩金：
+              可领取投注金：
               <span class="amount">{{ bonus }}元</span>
             </div>
           </div>
@@ -38,32 +38,40 @@
         <div class="title-img">活动详情</div>
         <div class="little-title">
           <div class="ribbon">活动时间</div>
-          <div class="right">2025年5月10日至2025年5月18日</div>
+          <div class="right">2025年5月19日至2025年5月25日</div>
+        </div>
+        <div class="little-title">
+          <div class="ribbon">活动对象</div>
+          <div class="right">投注IEM达拉斯2025的会员</div>
+        </div>
+        <div class="little-title">
+          <div class="ribbon">活动平台</div>
+          <div class="right">电竞</div>
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
-          <div class="right">活动期间在PGL 阿斯塔纳 2025当日总有效投注 ≥1,500 元即可获得最高1188元的奖励金</div>
+          <div class="right">活动期间，IEM达拉斯2025累计有效投注≥3,000元即可获得最高1588元的奖励金</div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
           <thead>
             <tr>
-              <th>有效投注</th>
-              <th>奖励金</th>
+              <th>累计有效投注</th>
+              <th>投注金</th>
               <th>流水倍数</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>≥1,500元</td>
+              <td>≥3,000元</td>
               <td>18元</td>
-              <td rowspan="9">6倍流水</td>
+              <td rowspan="9">6 倍流水</td>
             </tr>
             <tr>
-              <td>≥3,000元</td>
+              <td>≥8,000元</td>
               <td>28元</td>
             </tr>
             <tr>
-              <td>≥10,000元</td>
+              <td>≥15,000元</td>
               <td>58元</td>
             </tr>
             <tr>
@@ -71,11 +79,11 @@
               <td>88元</td>
             </tr>
             <tr>
-              <td>≥50,000元</td>
-              <td>188元</td>
+              <td>≥80,000元</td>
+              <td>168元</td>
             </tr>
             <tr>
-              <td>≥100,000元</td>
+              <td>≥150,000元</td>
               <td>288元</td>
             </tr>
             <tr>
@@ -83,12 +91,12 @@
               <td>588元</td>
             </tr>
             <tr>
-              <td>≥500,000元</td>
+              <td>≥800,000元</td>
               <td>888元</td>
             </tr>
             <tr>
               <td>≥1,000,000元</td>
-              <td>1,188元</td>
+              <td>1,588元</td>
             </tr>
           </tbody>
         </table>
@@ -98,7 +106,7 @@
               <img src="@/assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
               <span>示例</span>
             </div>
-            会员 在PGL 阿斯塔纳 2025赛事期间当日总有效投注 50,000 元，在次日 24 小时内可获得彩金：188元
+            会员A在活动期间投注IEM达拉斯2025赛事，累计有效投注为 250,000元，在5月26日24 小时内可获得彩金：288元
           </div>
         </div>
       </div>
@@ -110,20 +118,18 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              活动期间，活动仅计算电竞场馆中PGL 阿斯塔纳 2025赛事，会员在PGL 阿斯塔纳
-              2025赛事期间当日累计有效投注≥1,500元即可获得对应彩金，有效投注过期清零；
-              <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
+              活动期间，活动仅计算电竞场馆中IEM达拉斯2025赛事，会员在活动期间内IEM达拉斯2025中累计有效投注≥3,000元即可获得对应彩金，有效投注次日清零；
+              <div class="hint">注：奖金不叠加派发，奖金按最高档位派发一次。</div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，活动仅计算PGL 阿斯塔纳 2025已结算的赛事当日总有效投注，次日 24
-            小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 6倍流水即可出款；
+            活动期间，活动仅计算活动期间内IEM达拉斯2025已结算的赛事总有效投注，5月26日 24
+            小时内在活动页面点击【立即领取】按钮领取。逾期未领取则视为放弃，彩金6倍流水即可出款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            任何低于欧洲盘 1.7 或亚洲盘 0.7
-            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为总有效投注额内；
+            任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
           </div>
           <div class="item">
             <div class="item-num">4</div>
@@ -148,7 +154,7 @@
 import { useNotify } from "@/hooks/notify";
 import { onMounted, ref, defineProps } from "vue";
 import { userStore } from "@/store";
-import { getCompetitionYesterday, claimCompetitionBonus } from "@/api/index/promo";
+import { getIemDallas2025Bonus, claimIemDallas2025Bonus } from "@/api/index/promo";
 
 const props = defineProps(["promoCode", "params"]);
 const promoCode = ref(props.promoCode);
@@ -162,7 +168,7 @@ const bonus = ref(0);
 
 const fetchData = async () => {
   loadingClaim.value = true;
-  getCompetitionYesterday(promoCode.value)
+  getIemDallas2025Bonus(promoCode.value)
     .then((res) => {
       totalValidBet.value = res.data.totalValidBet;
       bonus.value = res.data.bonus;
@@ -175,7 +181,7 @@ const fetchData = async () => {
 
 const handleClaimBonus = () => {
   loadingClaim.value = true;
-  claimCompetitionBonus(promoCode.value)
+  claimIemDallas2025Bonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
         notify({
@@ -253,6 +259,7 @@ onMounted(() => {
       }
 
       &.disabled {
+        filter: grayscale(1);
         cursor: not-allowed;
         pointer-events: none;
       }

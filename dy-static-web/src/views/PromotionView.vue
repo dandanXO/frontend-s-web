@@ -984,10 +984,10 @@ export default defineComponent({
         }
         &.isCS {
           padding: 30px 0;
-          margin: 0 auto;
-          max-width: 1920px;
+          margin: 0 auto !important;
+          max-width: 1920px !important;
           background: url(../assets/images/promotion/hotpromo/cs2/bg.png);
-          width: 100%;
+          width: 100% !important;
           background-size: cover;
           position: relative;
           //&:after {
