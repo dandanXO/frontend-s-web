@@ -684,9 +684,10 @@ const mailTabChange = (nk) => {
   mailboxState.active = nk.props.name;
   if (nk.props.name !== "write") {
     const mailList = mailboxState.mailboxList[nk.props.name].list;
-    if (mailList && mailList.length === 0) {
-      loadPersonalMailbox();
-    }
+    // if (mailList && mailList.length === 0) {
+    //   loadPersonalMailbox();
+    // }
+    loadPersonalMailbox();
   }
 };
 
@@ -746,10 +747,10 @@ const onSubmit = (e) => {
       submitFeedback(mailboxState.mailboxList.write)
         .then((response) => {
           if (response.code === 0) {
-            notify({
-              message: "提交成功",
-              type: "success"
-            });
+            // notify({
+            //   message: "提交成功",
+            //   type: "success"
+            // });
             loadPersonalMailbox();
 
             mailboxState.mailboxList.write.feedbackType = "";
@@ -816,7 +817,6 @@ onMounted(() => {
   if (store.token) {
     testAns();
     getReferral();
-
     loadFeedbackType();
   }
 
