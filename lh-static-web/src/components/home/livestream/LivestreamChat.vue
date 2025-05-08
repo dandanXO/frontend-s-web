@@ -47,7 +47,7 @@
           <div ref="emojiPickerRef"></div>
           <template #reference>
             <button class="livestream-chat-input-emoji-btn" type="button">
-              <img :src="require(`@/assets/home/livestream/icon-emoji${isDark ? '-dark' : ''}.svg`)" />
+              <img :src="require(`@/assets/home/livestream/icon-emoji${isDark ? '-dark' : ''}.png`)" />
             </button>
           </template>
         </el-popover>
