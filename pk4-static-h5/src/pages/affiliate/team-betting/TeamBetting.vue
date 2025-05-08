@@ -6,7 +6,8 @@
             <div class="tab-item" :class="{ active: selectedTab === 'Slot' }" @click="selectedTab = 'Slot'">Slot</div>
             <div class="tab-item" :class="{ active: selectedTab === 'Live' }" @click="selectedTab = 'Live'">Live</div>
             <div class="tab-item" :class="{ active: selectedTab === 'Fish' }" @click="selectedTab = 'Fish'">Fish</div>
-            <div class="tab-item" :class="{ active: selectedTab === 'Poker' }" @click="selectedTab = 'Poker'">Poker</div>
+            <div class="tab-item" :class="{ active: selectedTab === 'Poker' }" @click="selectedTab = 'Poker'">Poker
+            </div>
         </div>
 
         <div class="filter">
@@ -24,116 +25,231 @@
         <div class="date-filter filter">
             <InputField :isDark="true">
                 <template #input>
-                    <q-select class="dropdown" outlined v-model="model" :options="options" dense :display-value="'Types'" />
+                    <q-input readonly class="dropdown" outlined v-model="typesSelection.label" @click="openTypeSelectionDialog" dense
+                        :display-value="'Types'" />
                 </template>
             </InputField>
             <InputField :isDark="true">
                 <template #input>
-                    <q-select class="dropdown" outlined v-model="model" :options="options" dense :display-value="'Vendors'" />
+                    <q-select class="dropdown" outlined v-model="model" :options="vendorsList" dense
+                        :display-value="'Vendors'" />
                 </template>
             </InputField>
             <InputField :isDark="true">
                 <template #input>
-                    <q-select class="dropdown" outlined v-model="model" :options="options" dense  :display-value="'Date'"/>
+                    <q-input readonly class="dropdown" outlined v-model="daysSelection.label" @click="openDaySelectionDialog" dense placeholder="Date" />
                 </template>
             </InputField>
         </div>
 
-        <div class="detailed-stats panel bordered">
+        <div class="detailed-stats panel bordered" v-for="record, index in page.records" :key="index">
             <div class="header">
                 <div class="group">
-                    <img src="../../../assets/images/affiliate/team-betting/jili-logo.png" />
-                    <span>/solt</span>
+                    <span>{{ record.gameType }}</span>
                 </div>
-                <div class="link">zakkur2005</div>
+                <div class="link">{{ record.loginName }}</div>
             </div>
 
             <div class="stats">
                 <hr class="separator" />
                 <div class="col">
                     <div class="col-item">
-                        <div class="label">Super Ace</div>
-                        <div class="value green-text">6 Rounds</div>
+                        <div class="label">{{ record.gameName }}</div>
+                        <div class="value green-text">{{ record.competitionName }}</div>
                     </div>
                     <div class="col-item">
                         <div class="label">Valid Bet</div>
-                        <div class="value red-text">117</div>
+                        <div class="value red-text">{{ record.validBet }}</div>
                     </div>
                     <div class="col-item">
                         <div class="label">Win/Loss</div>
-                        <div class="value blue-text">-48.20</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="detailed-stats panel bordered">
-            <div class="header">
-                <div class="group">
-                    <img src="../../../assets/images/affiliate/team-betting/jili-logo.png" />
-                    <span>/solt</span>
-                </div>
-                <div class="link">zakkur2005</div>
-            </div>
-
-            <div class="stats">
-                <hr class="separator" />
-                <div class="col">
-                    <div class="col-item">
-                        <div class="label">Super Ace</div>
-                        <div class="value green-text">6 Rounds</div>
-                    </div>
-                    <div class="col-item">
-                        <div class="label">Valid Bet</div>
-                        <div class="value red-text">117</div>
-                    </div>
-                    <div class="col-item">
-                        <div class="label">Win/Loss</div>
-                        <div class="value blue-text">-48.20</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="detailed-stats panel bordered">
-            <div class="header">
-                <div class="group">
-                    <img src="../../../assets/images/affiliate/team-betting/jili-logo.png" />
-                    <span>/solt</span>
-                </div>
-                <div class="link">zakkur2005</div>
-            </div>
-
-            <div class="stats">
-                <hr class="separator" />
-                <div class="col">
-                    <div class="col-item">
-                        <div class="label">Super Ace</div>
-                        <div class="value green-text">6 Rounds</div>
-                    </div>
-                    <div class="col-item">
-                        <div class="label">Valid Bet</div>
-                        <div class="value red-text">117</div>
-                    </div>
-                    <div class="col-item">
-                        <div class="label">Win/Loss</div>
-                        <div class="value blue-text">-48.20</div>
+                        <div class="value blue-text">{{ record.payout }}</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <q-dialog width="100%" v-model="isDaySelectionDialog" persistent>
+        <div class="popout-dialog">
+        <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
+        <div class="popout-dialog-container">
+
+            <div style="width: 100%;" class="q-mt-lg q-pl-lg q-pr-lg x-n-container">
+            <div class="filter-grid">
+                <div class="filter-item" :class="{ active: daysSelection.label === 'Today' }"
+                @click="changeDaySelection('Today')">Today</div>
+                <div class="filter-item" :class="{ active: daysSelection.label === 'Yesterday' }"
+                @click="changeDaySelection('Yesterday')">Yesterday</div>
+                <div class="filter-item" :class="{ active: daysSelection.label === '7-days' }"
+                @click="changeDaySelection('7-days')">7-days</div>
+                <div class="filter-item" :class="{ active: daysSelection.label === 'This Month' }"
+                @click="changeDaySelection('This Month')">This Month</div>
+            </div>
+
+            <div style="display:flex;">
+                <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
+                <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="confirmDaySelection" />
+            </div>
+            </div>
+        </div>
+        </div>
+    </q-dialog>
+
+    <q-dialog width="100%" v-model="isTypeSelectionDialog" persistent>
+        <div class="popout-dialog">
+        <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
+        <div class="popout-dialog-container">
+
+            <div style="width: 100%;" class="q-mt-lg q-pl-lg q-pr-lg x-n-container">
+            <div class="filter-grid">
+                <div class="filter-item" :class="{ active: typesSelection.label === 'Slot' }"
+                @click="changeTypeSelection('Slot')">Slot</div>
+                <div class="filter-item" :class="{ active: typesSelection.label === 'Fish' }"
+                @click="changeTypeSelection('Fish')">Fish</div>
+                <div class="filter-item" :class="{ active: typesSelection.label === 'Live' }"
+                @click="changeTypeSelection('Live')">Live</div>
+            </div>
+
+            <div style="display:flex;">
+                <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
+                <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="confirmTypeSelection" />
+            </div>
+            </div>
+        </div>
+        </div>
+    </q-dialog>
 </template>
 
 <script setup>
 import InputField from 'src/components/auth/InputField.vue';
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
+import { api } from 'boot/axios';
+import { userStore } from "src/stores";
+import moment from 'moment';
 
+
+const store = userStore();
 const formDetail = reactive([]);
-const model = ref('Consolidated Weekly');
-const options = ref(['Consolidated Weekly']);
 const selectedTab = ref('All');
 
+const vendorsList = ref([]);
+
+function convertStartDate(date) {
+  return moment(date).startOf('day').format('YYYY-MM-DD HH:mm:ss');
+}
+
+function convertDate(date) {
+  return moment(date).format('YYYY-MM-DD HH:mm:ss');
+}
+
+const isDaySelectionDialog = ref(false)
+const daysSelection = ref({ label: '7-days', value: 7 });
+const openDaySelectionDialog = () => {
+  isDaySelectionDialog.value = true
+}
+
+const changeDaySelection = (type) => {
+  daysSelection.value = { label: type, value: type };
+}
+
+const confirmDaySelection = () => {
+  isDaySelectionDialog.value = false;
+}
+
+const isTypeSelectionDialog = ref(false)
+const typesSelection = ref({ label: 'Slot', value: 'Slot' });
+const openTypeSelectionDialog = () => {
+  isTypeSelectionDialog.value = true
+}
+
+const changeTypeSelection = (type) => {
+    typesSelection.value = { label: type, value: type };
+}
+
+const confirmTypeSelection = () => {
+  isTypeSelectionDialog.value = false;
+}
+
+const page = reactive({
+  pages: 0,
+  records: [],
+  loading: false,
+  total: 0,
+  sums: {
+    total: 0,
+    totalBet: 0.0000,
+    totalPayout: 0.0000,
+    totalValidBet: 0.0000
+}
+});
+
+const request = reactive({
+  size: 20,
+  current: 1,
+  betTime: [convertStartDate(new Date()), convertDate(new Date())],
+  loginName: null,
+  platform: null,
+  gameType: [],
+  status: ["SETTLED", "CANCEL"],
+  affiliateId: null,
+});
+
+const loadBetRecords = async () => {
+  const requestCopy = { ...request };
+  const query = {};
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value;
+    }
+  });
+  if (request.betTime !== null) {
+    if (request.betTime.length === 2) {
+      query.betTime = request.betTime.join(",");
+    }
+  }
+  if (request.status !== null) {
+    if (request.status.length === 1) {
+      query.status = request.status[0];
+    } else {
+      query.status = request.status.join(",");
+    }
+  }
+  query.siteId = 26;
+  if (query.gameType === 'SPORT') {
+    query.gameType = 'SPORT,ESPORT';
+  } else if (query.gameType === 'FISH') {
+    query.gameType = 'FISH,CASUAL';
+  } else if (query.gameType === 'LIVE') {
+    query.gameType = 'LIVE,POKER';
+  }
+  const { data: ret } = await api.get('/session/affiliate/bet-records', {
+    params: query
+  });
+  page.pages = ret.pages;
+  if (ret.sums !== null && ret.sums !== undefined) {
+    page.total = ret.total;
+    page.records = ret.records;
+    page.totalBet = ret.sums.totalBet;
+    page.totalPayout = ret.sums.totalPayout;
+    page.totalCompanyProfit = ret.sums.totalBet - ret.sums.totalPayout;
+  }    
+  page.loading = false;
+}
+
+const initData = () => {
+    loadBetRecords();
+}
+const initVendors = () => {
+    api.get('session/affiliate/platforms').then((res) => {
+        vendorsList.value = res.data;
+    })
+}
+
+onMounted(() => {
+    initData();
+    initVendors();
+})
 </script>
 
 <style lang="scss" scoped>
@@ -417,5 +533,26 @@ const selectedTab = ref('All');
     min-width: 100px;
     max-width: 120px;
     font-weight: bold;
+}
+
+.popout-dialog-container {
+  .filter-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px 0;
+
+    .filter-item {
+      margin: 5px;
+      border-radius: 4px;
+      background: #EAEFF9;
+      padding: 8px 12px;
+      white-space: nowrap;
+
+      &.active {
+        background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+        color: #fff;
+      }
+    }
+  }
 }
 </style>

@@ -1399,6 +1399,13 @@ export default defineComponent({
               font-style: normal;
             }
           }
+          .content-lh1-feedback-award {
+            color: #fff;
+            img {
+              filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(232deg) brightness(100%)
+                contrast(106%);
+            }
+          }
         }
 
         &.challenge-comeback1 {

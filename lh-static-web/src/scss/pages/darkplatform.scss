@@ -131,7 +131,7 @@
       .platform-list-box {
         display: flex;
         flex-wrap: wrap;
-        max-width: 610px;
+        max-width: 594px;
         //flex-wrap: nowrap;
       }
 
@@ -576,6 +576,7 @@
             padding: 0.5rem 1rem;
             color: $font-grey;
             position: relative;
+            color:#fff;
 
             img {
               width: 90px;

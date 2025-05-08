@@ -135,7 +135,6 @@
         </el-table-column>
         <el-table-column prop="gameName" :label="t('fields.gameName')" align="center" min-width="200" />
         <el-table-column prop="competitionName" :label="t('fields.competitionMatching')" align="center" min-width="200" />
-       
         <el-table-column prop="betTime" :label="t('fields.betTime')" align="center" min-width="180">
           <template #default="scope">
             <span v-if="scope.row.betTime === null">-</span>

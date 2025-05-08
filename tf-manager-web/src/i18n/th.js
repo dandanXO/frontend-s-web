@@ -1363,7 +1363,9 @@ export default {
     sumPts: 'คะแนนรวม',
     referFriendRebatePointStatus: 'สถานะ',
     requirement: 'ข้อกำหนด',
-    pts: 'คะแนน'
+    pts: 'คะแนน',
+    ptsRebateAmount: 'จำนวนเงินคืนคะแนน',
+    ftdRebateAmount: 'จำนวนเงินคืนการฝากครั้งแรก',
   },
   message: {
     startenddatemore3months: 'เวลาเริ่มและเสร็จสิ้นต้องไม่เกิน 3 เดือน',

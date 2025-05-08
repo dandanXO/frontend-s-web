@@ -1,9 +1,9 @@
 <template>
-  <div v-for="(card, index) in cards" :key="card.id" class="forum-card">
+  <div class="forum-card">
     <div class="forum-card__header">
       <div class="forum-card__title">
         <img alt="forum" src="@/assets/images/agent/forum-icon.png" width="24" height="24" />
-        <span>Forum</span>
+        <span>PC 端推广链接</span>
       </div>
       <div class="forum-card__icons">
         <img alt="forum" src="@/assets/images/agent/add-user-icon.png" width="16" height="16" />
@@ -13,26 +13,15 @@
           src="@/assets/images/agent/scan-qr-icon.png"
           width="16"
           height="16"
-          @click="isScanQrDialog = true"
+          @click="onClickQRCode('web')"
         />
         <div class="icon-divider"></div>
         <img alt="delete" src="@/assets/images/agent/delete-icon.png" width="16" height="16" />
         <div class="icon-divider"></div>
-
-        <img
-          class="arrow-icon"
-          :class="{ rotated: !card.expanded }"
-          alt="forum"
-          src="@/assets/images/agent/arrow-down.png"
-          width="20"
-          height="20"
-          @click="toggleCard(index)"
-        />
       </div>
     </div>
 
-    <transition name="collapse">
-      <div v-if="card.expanded" class="forum-card__info">
+      <div class="forum-card__info">
         <div class="row-info">
           <span>Creation Date</span>
           <span>2025-04-28</span>
@@ -42,7 +31,102 @@
           <span>2025-04-29</span>
         </div>
       </div>
-    </transition>
+
+    <q-separator class="forum-card__separator" />
+
+    <div class="forum-card__subtitles">
+      <span>RegisterTypes</span>
+      <span>Registers</span>
+      <span>Status</span>
+    </div>
+
+    <div class="forum-card__footer">
+      <div class="footer-item red">Member</div>
+      <div class="footer-item blue">0</div>
+      <div class="footer-item green">Normal</div>
+    </div>
+  </div>
+
+  <div class="forum-card">
+    <div class="forum-card__header">
+      <div class="forum-card__title">
+        <img alt="forum" src="@/assets/images/agent/forum-icon.png" width="24" height="24" />
+        <span>H5 版推广链接（推荐使用）</span>
+      </div>
+      <div class="forum-card__icons">
+        <img alt="forum" src="@/assets/images/agent/add-user-icon.png" width="16" height="16" />
+        <div class="icon-divider"></div>
+        <img
+          alt="scan-qr"
+          src="@/assets/images/agent/scan-qr-icon.png"
+          width="16"
+          height="16"
+          @click="onClickQRCode('h5')"
+        />
+        <div class="icon-divider"></div>
+        <img alt="delete" src="@/assets/images/agent/delete-icon.png" width="16" height="16" />
+        <div class="icon-divider"></div>
+      </div>
+    </div>
+
+      <div  class="forum-card__info">
+        <div class="row-info">
+          <span>Creation Date</span>
+          <span>2025-04-28</span>
+        </div>
+        <div class="row-info">
+          <span>Date Of Expiry</span>
+          <span>2025-04-29</span>
+        </div>
+      </div>
+
+    <q-separator class="forum-card__separator" />
+
+    <div class="forum-card__subtitles">
+      <span>RegisterTypes</span>
+      <span>Registers</span>
+      <span>Status</span>
+    </div>
+
+    <div class="forum-card__footer">
+      <div class="footer-item red">Member</div>
+      <div class="footer-item blue">0</div>
+      <div class="footer-item green">Normal</div>
+    </div>
+  </div>
+
+  <div class="forum-card">
+    <div class="forum-card__header">
+      <div class="forum-card__title">
+        <img alt="forum" src="@/assets/images/agent/forum-icon.png" width="24" height="24" />
+        <span>短域名</span>
+      </div>
+      <div class="forum-card__icons">
+        <img alt="forum" src="@/assets/images/agent/add-user-icon.png" width="16" height="16" />
+        <div class="icon-divider"></div>
+        <img
+          alt="scan-qr"
+          src="@/assets/images/agent/scan-qr-icon.png"
+          width="16"
+          height="16"
+          @click="onClickQRCode('short')"
+        />
+        <div class="icon-divider"></div>
+        <img alt="delete" src="@/assets/images/agent/delete-icon.png" width="16" height="16" />
+        <div class="icon-divider"></div>
+      </div>
+    </div>
+
+      <div  class="forum-card__info">
+        <div class="row-info">
+          <span>Creation Date</span>
+          <span>2025-04-28</span>
+        </div>
+        <div class="row-info">
+          <span>Date Of Expiry</span>
+          <span>2025-04-29</span>
+        </div>
+      </div>
 
     <q-separator class="forum-card__separator" />
 
@@ -66,7 +150,7 @@
         <div class="qr-header">
           <div class="qr-header-left">
             <img alt="forum" src="@/assets/images/agent/forum-icon.png" width="24" height="24" />
-            <span class="qr-title">gi6qq</span>
+            <span class="qr-title">{{ affCode }}</span>
           </div>
           <span class="qr-subtitle">QR code</span>
         </div>
@@ -77,37 +161,145 @@
         </div>
 
         <div class="qr-code-container">
-          <img class="qr-code" alt="qr-code" src="@/assets/images/agent/qr-img-example.png" />
+          <VueQRCodeComponent size="150" :text="referralLink" class="qr-code" alt="qr-code" />
           <div class="qr-caption">press and hold to save QR code to album</div>
         </div>
 
         <div class="qr-link-row">
           <img alt="qr-code" src="@/assets/images/agent/copy-link-icon.png" width="20" height="20" />
-          <span class="qr-url">https://Gi6qq.Link/.../Register.html</span>
+          <span class="qr-url">{{ referralLink }}</span>
         </div>
 
-        <q-btn label="Copy Link" class="copy-btn" unelevated />
+        <q-btn label="Copy Link" class="copy-btn" unelevated @click="copyText(referralLink)" />
       </div>
     </div>
   </q-dialog>
 </template>
 <script setup>
-import { ref } from "vue";
+import { api } from "src/boot/axios";
+import { userStore } from "src/stores";
+import { ref, onMounted } from "vue";
+import VueQRCodeComponent from "vue-qrcode-component";
+import { useQuasar, Platform } from "quasar";
+
+var qs = require('qs');
+const $q = useQuasar();
+const store = userStore();
+const referralLink = ref('');
+const webLink = ref('');
+const shortUrl = ref('');
+const affCode = ref('');
 
 const cards = ref(
-  Array.from({ length: 5 }, (_, i) => ({
+  Array.from({ length: 4 }, (_, i) => ({
     id: i + 1,
     expanded: false
   }))
 );
 
-const toggleCard = (index) => {
-  if (cards.value[index]) {
-    cards.value[index].expanded = !cards.value[index].expanded;
+
+const onClickQRCode = (type) => {
+  isScanQrDialog.value = true;
+  let newLongUrl = '';
+  let newShortUrl = '';
+  referralLink.value = '';
+
+  if(type === 'web') {
+    newLongUrl = `${webLink.value}agent/${affCode.value}`;
+    referralLink.value = newLongUrl;
+  } else if(type === 'h5') {
+    newLongUrl = `${webLink.value}agent/${affCode.value}`;
+    referralLink.value = newLongUrl;
+  } else if(type === 'short') {
+    newShortUrl = `${shortUrl.value}/agent/${affCode.value}`;
+    referralLink.value = newShortUrl;
   }
-};
+
+  api.post('/session/affiliate/short-link', qs.stringify({
+    linkType: 'WEB',
+    urlType: 'WX',
+    longUrl: newLongUrl,
+    shortUrl: newShortUrl,
+    affiliateId: store.memberId,
+    siteId: 26
+  })).then((res) => {
+    console.log('here', res)
+  })
+}
 
 const isScanQrDialog = ref(false);
+
+const getLinkList = () => {
+  api.get('/session/affiliate/referral-link').then((res) => {
+    const { webLink: newWebLink, shortUrl: newShortUrl } = res.data.reduce((acc, curr) => {
+      if(curr.code === 'affiliate_h5_link') {
+        return {...acc, webLink: curr.value}
+      }
+
+      if(curr.code === 'affiliate_short_url_platform') {
+        return {...acc, shortUrl: curr.value}
+      }
+    }, {webLink: '', shortUrl: ''});
+
+    webLink.value = newWebLink;
+    shortUrl.value = newShortUrl;
+  });
+  api.get('/session/affiliate').then((res) => {
+    affCode.value = res.data.affiliateCode;
+  })
+}
+
+const copyText = (text) => {
+      copyToClipboard(text);
+      setTimeout(() => {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "复制成功！",
+          icon: "check_circle_outline"
+        });
+      }, 100)
+
+    }
+
+    async function copyToClipboard(textToCopy) {
+      // alert(window.isSecureContext);
+      // alert(navigator.clipboard);
+      // alert(Platform.is.chrome);
+      // Navigator clipboard api needs a secure context (https)
+      if (store.getDeviceType() === 'ANDROID') {
+        await Clipboard.write({
+          string: textToCopy
+        });
+      } else if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
+        await navigator.clipboard.writeText(textToCopy);
+      } else {
+        // Use the 'out of viewport hidden text area' trick
+        const textArea = document.createElement("textarea");
+        textArea.value = textToCopy;
+
+        // Move textarea out of the viewport so it's not visible
+        textArea.style.position = "absolute";
+        textArea.style.left = "-999999px";
+
+        document.body.prepend(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+          document.execCommand("copy");
+        } catch (error) {
+          console.error(error);
+        } finally {
+          document.body.removeChild(textArea);
+          // textArea.remove();
+        }
+      }
+    }
+
+onMounted(() => {
+  getLinkList();
+})
 </script>
 <style lang="scss" scoped>
 .forum-card {
@@ -281,14 +473,16 @@ const isScanQrDialog = ref(false);
     padding: 10px 12px;
     border-radius: 5px;
     width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     .qr-caption {
       color: #999;
       font-size: 13px;
       margin-top: 8px;
     }
     .qr-code {
-      width: 80%;
-      max-width: 200px;
     }
   }
 
@@ -301,6 +495,12 @@ const isScanQrDialog = ref(false);
     font-size: 14px;
     margin-top: 22px;
     margin-bottom: 20px;
+
+    .qr-url {
+      white-space: nowrap;
+      overflow-x: scroll;
+      max-width: 270px;
+    }
   }
 
   .copy-btn {

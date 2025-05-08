@@ -1948,7 +1948,9 @@ export default {
     sumPts: 'Tổng điểm',
     referFriendRebatePointStatus: 'Trạng thái',
     requirement: 'Yêu cầu',
-    pts: 'Điểm'
+    pts: 'Điểm',
+    ptsRebateAmount: 'Số tiền hoàn điểm',
+    ftdRebateAmount: 'Số tiền hoàn tiền gửi lần đầu',
   },
   message: {
     startenddatemore3months:

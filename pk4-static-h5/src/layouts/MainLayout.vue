@@ -107,6 +107,7 @@ import { useI18n } from "vue-i18n";
 import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
 
+
 export default defineComponent({
   name: "MainLayout",
   components: {
@@ -170,6 +171,10 @@ export default defineComponent({
             var platformName = route.query.platform == "BBINDY" ? "BBIN" : translateRecord(route.query.platform);
             pageName.value = `${platformName} Game Lobby`;
           }
+        } else if (route.path === "/affiliate/internal-message-detail") {
+          hasPage.value = true;
+          prevPage.value = "/affiliate/internal-message";
+          pageName.value = t("header.message");
         } else if (route.path === "/account") {
           prevPage.value = "/";
           hasPage.value = true;

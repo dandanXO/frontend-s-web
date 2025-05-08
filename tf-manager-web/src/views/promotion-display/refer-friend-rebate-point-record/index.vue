@@ -2,7 +2,7 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-date-picker
+        <!-- <el-date-picker
           v-model="request.createTime"
           format="DD/MM/YYYY"
           value-format="YYYY-MM-DD"
@@ -11,7 +11,20 @@
           range-separator=":"
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
+          style="margin-left: 5px; width: 280px"
+          :editable="false"
+          :clearable="false"
+        /> -->
+        <el-date-picker
+          v-model="request.registerTime"
+          format="DD/MM/YYYY"
+          value-format="YYYY-MM-DD"
+          size="small"
+          type="daterange"
+          range-separator=":"
           style="margin-left: 5px; width: 380px"
+          :start-placeholder="t('fields.registerTime')"
+          :end-placeholder="t('fields.registerTime')"
           :editable="false"
           :clearable="false"
         />
@@ -55,7 +68,6 @@
         <el-table-column type="expand">
           <template #default="props">
             <el-table :data="props.row.children" size="small" border>
-              <el-table-column prop="rebateStatus" :label="t('fields.referFriendRebatePointStatus')" align="center" min-width="180" />
               <el-table-column prop="requirement" :label="t('fields.requirement')" align="center" min-width="180">
                 <template #default="scope">
                   <span v-if="scope.row.requirement === null">-</span>
@@ -84,6 +96,17 @@
               v-if="scope.row.registerTime !== null"
               v-formatter="{data: scope.row.registerTime, timeZone: timeZone, type: 'date'}"
             />
+          </template>
+        </el-table-column>
+        <el-table-column prop="rebateStatus" :label="t('fields.referFriendRebatePointStatus')" align="center" min-width="180" />
+        <el-table-column prop="ptsRebateAmount" :label="t('fields.ptsRebateAmount')" align="center" min-width="180">
+          <template #default="scope">
+            $ <span v-formatter="{data: scope.row.ptsRebateAmount,type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="ftdRebateAmount" :label="t('fields.ftdRebateAmount')" align="center" min-width="180">
+          <template #default="scope">
+            $ <span v-formatter="{data: scope.row.ftdRebateAmount,type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column prop="sumPts" :label="t('fields.sumPts')" align="center" min-width="180" />
@@ -126,17 +149,19 @@ const defaultDate = convertDate(new Date());
 const request = reactive({
   size: 50,
   current: 1,
-  createTime: [getStartOfDay(defaultDate), getEndOfDay(defaultDate)],
+  // createTime: [getStartOfDay(defaultDate), getEndOfDay(defaultDate)],
   siteId: null,
   loginName: null,
-  referrerName: null
+  referrerName: null,
+  registerTime: [getStartOfDay(defaultDate), getEndOfDay(defaultDate)]
 });
 
 function resetQuery() {
-  request.createTime = [getStartOfDay(defaultDate), getEndOfDay(defaultDate)];
+  // request.createTime = [getStartOfDay(defaultDate), getEndOfDay(defaultDate)];
   request.siteId = store.state.user.siteId;
   request.loginName = null;
   request.referrerName = null;
+  request.registerTime = [getStartOfDay(defaultDate), getEndOfDay(defaultDate)];
 }
 
 const page = reactive({
@@ -171,11 +196,19 @@ function checkQuery() {
       query[key] = value;
     }
   });
-  if (request.createTime !== null) {
-    if (request.createTime.length === 2) {
-      query.createTime = [
-        getStartOfDay(request.createTime[0]),
-        getEndOfDay(request.createTime[1])
+  // if (request.createTime !== null) {
+  //   if (request.createTime.length === 2) {
+  //     query.createTime = [
+  //       getStartOfDay(request.createTime[0]),
+  //       getEndOfDay(request.createTime[1])
+  //     ].join(",");
+  //   }
+  // }
+  if (request.registerTime !== null) {
+    if (request.registerTime.length === 2) {
+      query.registerTime = [
+        getStartOfDay(request.registerTime[0]),
+        getEndOfDay(request.registerTime[1])
       ].join(",");
     }
   }
@@ -188,6 +221,7 @@ async function loadReferFriendRebatePointRecords() {
   const { data: ret } = await getReferFriendRebatePointRecord(query);
   page.pages = ret.pages;
   page.records = ret.records;
+
   page.total = ret.total;
   page.loading = false;
   console.log("ret : ", page.records)
@@ -208,6 +242,9 @@ const groupedRecords = computed(() => {
         referrerId: record.referrerId,
         referrerName: record.referrerName,
         registerTime: record.registerTime,
+        rebateStatus: record.rebateStatus,
+        ptsRebateAmount: record.ptsRebateAmount,
+        ftdRebateAmount: record.ftdRebateAmount,
         sumPts: 0,
         children: []
       };

@@ -538,6 +538,9 @@ function doDeposit(data) {
         if (store.isOperaPixelB) {
           otag("event", "deposit");
         }
+        if (store.isAffiliateA) {
+          fbq("track", "Purchase");
+        }
 
         doIt(d).then((resp) => {
           const response = resp.data.result;
