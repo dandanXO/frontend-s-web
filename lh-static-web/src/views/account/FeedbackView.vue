@@ -681,6 +681,7 @@ const changePage = (key) => {
 };
 
 const mailTabChange = (nk) => {
+  mailboxState.mailboxList["sent"].pageNum = 1
   mailboxState.active = nk.props.name;
   if (nk.props.name !== "write") {
     const mailList = mailboxState.mailboxList[nk.props.name].list;
