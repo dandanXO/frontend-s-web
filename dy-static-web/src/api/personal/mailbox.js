@@ -96,7 +96,7 @@ export function getFeedbackType() {
 }
 
 export function getFeedbackReplies() {
-  return server.REST.get("/session/feedback/replies", {});
+  return server.REST.get("/session/feedback/messages", {});
 }
 
 export function readFeedback(param) {

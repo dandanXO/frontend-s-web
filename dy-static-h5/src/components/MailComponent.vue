@@ -188,6 +188,8 @@ export default defineComponent({
     const onLoad = (index, done) => {
       comList.value = props.list;
       setTimeout(() => {
+        console.log(props.list.length)
+        console.log(comList.value.length)
         if (comList.value.length) {
           var slicedArray = comList.value.splice(0, 6);
           slicedArray.forEach((element) => {

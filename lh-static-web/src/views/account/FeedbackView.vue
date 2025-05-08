@@ -659,7 +659,7 @@ const loadPersonalMailbox = () => {
           mailboxState.mailboxList["sent"].list.push(...response.data.records);
           mailboxState.mailboxList["sent"].total = response.data.total;
         } else {
-          notify.error(response.message);
+          // notify.error(response.message);
         }
       })
       .catch((error) => {
@@ -740,10 +740,10 @@ const onSubmit = (e) => {
       submitFeedback(mailboxState.mailboxList.write)
         .then((response) => {
           if (response.code === 0) {
-            notify({
-              message: "提交成功",
-              type: "success"
-            });
+            // notify({
+            //   message: "提交成功",
+            //   type: "success"
+            // });
             loadPersonalMailbox();
 
             mailboxState.mailboxList.write.feedbackType = "";

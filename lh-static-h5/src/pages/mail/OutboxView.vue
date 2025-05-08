@@ -136,7 +136,7 @@ const msgType = ref();
 
 const loadOutbox = () => {
   api
-    .get("/session/feedback/replies", {})
+    .get("/session/feedback/messages", {})
     .then((response) => {
       if (response.code === 0) {
         mailData.value = response.data.records;

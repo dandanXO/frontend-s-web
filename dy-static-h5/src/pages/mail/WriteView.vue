@@ -137,7 +137,7 @@ const onSubmit = () => {
           mailDetailList.value.title = "";
           mailDetailList.value.content = "";
 
-          router.push("/account/mail/outbox");
+          router.push("/account/mail");
         }
       })
       .catch((error) => {

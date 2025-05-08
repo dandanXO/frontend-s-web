@@ -21,7 +21,7 @@ export function popupMailBox() {
 }
 
 export function mailOutbox() {
-  return server.REST.get("/session/feedback/replies", {});
+  return server.REST.get("/session/feedback/messages", {});
 }
 
 export function wirteMail(mail) {
