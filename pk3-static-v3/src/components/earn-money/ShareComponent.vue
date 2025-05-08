@@ -135,6 +135,8 @@ import { userStore } from "@/stores/index";
 import { useRoute } from "vue-router";
 import { Platform, useQuasar } from "quasar";
 import VueQRCodeComponent from "vue-qrcode-component";
+import { Directory, Filesystem } from "@capacitor/filesystem";
+import html2canvas from "html2canvas";
 
 const store = userStore();
 const route = useRoute();
