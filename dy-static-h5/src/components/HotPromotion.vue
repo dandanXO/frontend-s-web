@@ -74,6 +74,7 @@
     <PglastanaAc2025 v-else-if="list.redirectUrl === 'dy2-pgl-astana-2025'" :promo-code="list.promoCode" />
     <Cct2025 v-else-if="list.redirectUrl === 'dy2-cct-global-finals-2025'" :promo-code="list.promoCode" />
     <NewFootball v-if="list.redirectUrl === 'dy2-football'" :promo-code="list.promoCode" />
+    <IemDallas2025 v-if="list.redirectUrl === 'dy2-iem-dallas-2025'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -152,6 +153,7 @@ const elsOne2025 = defineAsyncComponent(() => import("./hotpromo/elsOne2025/elsO
 import PglastanaAc2025 from "./hotpromo/lh1-pgl-astana-2025/pglastanaAc2025.vue";
 import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
 import newVip2025 from "./hotpromo/2025-new-vip/2025-new-vip.vue";
+import IemDallas2025 from "./hotpromo/iem-dallas-2025/IemDallas2025.vue";
 const BlastRival2025 = defineAsyncComponent(() => import("./hotpromo/BlastRival2025/BlastRival2025.vue"));
 
 export default defineComponent({
@@ -194,7 +196,8 @@ export default defineComponent({
     PglWallachiaS4,
     BlastSlam32025,
     BlastRival2025,
-    NewFootball
+    NewFootball,
+    IemDallas2025
   },
   props: {
     list: {
