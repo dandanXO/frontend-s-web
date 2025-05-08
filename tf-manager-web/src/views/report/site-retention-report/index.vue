@@ -49,22 +49,22 @@
       :row-style="{width: '100px'}"
     >
       <el-table-column prop="recordTime" :label="t('fields.recordTime')" width="120" />
-      <el-table-column :label="t('fields.ftdAmountAndMemberCount')" width="150">
+      <el-table-column :label="t('fields.ftdAmountAndMemberCount')" width="200">
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.ftdAmount, type: 'money'}" /> / {{ scope.row.ftdMemberCount }}
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.depositAmountAndMemberCount')" width="150">
+      <el-table-column :label="t('fields.depositAmountAndMemberCount')" width="200">
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.depositAmount, type: 'money'}" /> / {{ scope.row.depositMemberCount }}
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.withdrawAmountAndMemberCount')" width="150">
+      <el-table-column :label="t('fields.withdrawAmountAndMemberCount')" width="200">
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.withdrawAmount, type: 'money'}" /> / {{ scope.row.withdrawMemberCount }}
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.reloadAmountAndMemberCount')" width="150">
+      <el-table-column :label="t('fields.reloadAmountAndMemberCount')" width="200">
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.reloadAmount, type: 'money'}" /> / {{ scope.row.reloadMemberCount }}
         </template>
