@@ -6,7 +6,7 @@
           <q-select
             class="dropdown"
             outlined
-            v-model="model"
+            v-model="recordType"
             :options="options"
             option-value="value"
             option-label="label"
@@ -14,6 +14,7 @@
             emit-value
             map-options
             popup-content-class="custom-dropdown"
+            @update:model-value="onSelectChange"
           >
             <template v-slot:option="scope">
               <q-item v-bind="scope.itemProps">
@@ -35,7 +36,7 @@
                 <img
                   :src="
                     require(`../../assets/images/account/account-record/${
-                      options.find((o) => o.value === model)?.icon
+                      options.find((o) => o.value === recordType)?.icon
                     }.png`)
                   "
                   alt=""
@@ -44,7 +45,7 @@
                 />
 
                 <span>
-                  {{ options.find((o) => o.value === model)?.label }}
+                  {{ options.find((o) => o.value === recordType)?.label }}
                 </span>
               </div>
             </template>
@@ -59,8 +60,12 @@
               <template v-slot:append>
                 <img src="../../assets/images/earn-money/calendar-icon.svg" />
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <!-- @update:model-value="searchRecord(true)" -->
-                  <q-date v-model="searchForm.startDate" mask="YYYY-MM-DD" range>
+                  <q-date
+                    v-model="searchForm.startDate"
+                    mask="YYYY-MM-DD"
+                    range
+                    @update:model-value="onSelectChangeDate"
+                  >
                     <div class="row items-center justify-end">
                       <q-btn v-close-popup label="Close" color="white" flat />
                     </div>
@@ -77,7 +82,7 @@
       <template #input>
         <q-input
           class="input"
-          v-model="formDetail.loginName"
+          v-model="moneyChangeByType.loginName"
           outlined
           hide-bottom-space
           @update:model-value="filterSuggestions"
@@ -88,7 +93,7 @@
               class="get-code-btn"
               color="primary"
               :label="$t('btn.confirm')"
-              :disable="!formDetail.loginName"
+              :disable="!moneyChangeByType.loginName"
               @click="confirmSelection"
             />
           </template>
@@ -96,14 +101,36 @@
       </template>
     </InputField>
 
-    <div>
+    <div v-if="filteredShow">
       <div class="downline-list">
         <template v-for="(item, index) in filteredDownLinesRecords" :key="index">
-          <div class="downline-item">
+          <div class="downline-item" @click="setRecordItem(item)">
             <div class="item-icon"><q-icon name="person" /></div>
             <div class="item-name">{{ item.loginName }}</div>
           </div>
         </template>
+      </div>
+    </div>
+
+    <div>
+      <q-table flat bordered grid :rows="downLinesRecordsView" hide-pagination row-key="name" hide-header no-caps />
+
+      <div class="pagination">
+        <q-btn
+          @click="prevPage"
+          :disabled="moneyChangeByType.current === 1"
+          icon="chevron_left"
+          class="rounded-borders"
+          color="neonblue"
+        ></q-btn>
+        <span>{{ moneyChangeByType.current }} / {{ moneyChangeByType.pages }}</span>
+        <q-btn
+          @click="nextPage"
+          :disabled="moneyChangeByType.current === moneyChangeByType.pages || moneyChangeByType.pages === 0"
+          icon="chevron_right"
+          class="rounded-borders"
+          color="neonblue"
+        ></q-btn>
       </div>
     </div>
   </div>
@@ -120,38 +147,44 @@ const qs = require("qs");
 const formDetail = reactive({ loginName: "" });
 const downLinesRecords = ref([]);
 const filteredDownLinesRecords = ref([]);
+const downLinesRecordsView = ref([]);
 const loadingSuggestions = ref(false);
-const model = ref("All");
+const recordType = ref("ALL");
 const options = ref([
   {
     label: "All",
-    value: "All",
+    value: "ALL",
     icon: "icon-all"
   },
   {
     label: "Deposit",
-    value: "Deposit",
+    value: "DEPOSIT",
     icon: "icon-deposit"
   },
   {
-    label: "Withdraw",
-    value: "Withdraw",
+    label: "Withdrawal",
+    value: "WITHDRAW",
     icon: "icon-withdraw"
   },
   {
     label: "Betting",
-    value: "Betting",
+    value: "BET",
     icon: "icon-betting"
   },
   {
-    label: "Winning",
-    value: "Winning",
-    icon: "icon-winning"
+    label: "Bonus",
+    value: "PROMO",
+    icon: "icon-bonus"
   },
   {
-    label: "Bonus",
-    value: "Bonus",
-    icon: "icon-bonus"
+    label: "Rebate",
+    value: "VIP_REBATE",
+    icon: "icon-all"
+  },
+  {
+    label: "Dividend",
+    value: "TRANSFER",
+    icon: "icon-winning"
   }
 ]);
 
@@ -189,28 +222,6 @@ const getAllDownlines = () => {
     .then((res) => {
       if (res.code === 0) {
         downLinesRecords.value = res.data;
-
-        // sample data --- start
-        // downLinesRecords.value = [
-        //   {
-        //     affiliateId: 1001,
-        //     loginName: "johndoe"
-        //   },
-        //   {
-        //     affiliateId: 1002,
-        //     loginName: "alice88"
-        //   },
-        //   {
-        //     affiliateId: 1003,
-        //     loginName: "marksmith"
-        //   },
-        //   {
-        //     affiliateId: 1004,
-        //     loginName: "bettywhite"
-        //   }
-        // ];
-        // sample data --- end
-
         // filteredDownLinesRecords.value = downLinesRecords.value;
       }
     })
@@ -225,7 +236,7 @@ const getAllDownlines = () => {
 };
 
 const filterSuggestions = () => {
-  const query = formDetail.loginName.trim().toLowerCase();
+  const query = moneyChangeByType.loginName.trim().toLowerCase();
   if (!query) {
     // filteredDownLinesRecords.value = downLinesRecords.value;
     filteredDownLinesRecords.value = [];
@@ -235,32 +246,50 @@ const filterSuggestions = () => {
   filteredDownLinesRecords.value = downLinesRecords.value.filter((item) =>
     item.loginName.toLowerCase().includes(query)
   );
+  filteredShow.value = true;
 };
-const confirmSelection = () => {
-  if (!formDetail.loginName) return;
 
-  api.post("/session/affiliate/downline/info", { loginName: formDetail.loginName }).then((res) => {
-    console.log("Confirmed:", res);
-  });
+const confirmSelection = () => {
+  if (!moneyChangeByType.loginName) return;
+  getDownlineMemberDetails();
 };
+
+const moneyChangeByType = reactive({
+  current: 1,
+  size: 10,
+  // startDate: formatDate(dayBefore),
+  // endDate: formatDate(today),
+  startDate: searchForm.startDate.from,
+  endDate: searchForm.startDate.to,
+  type: "ALL",
+  loginName: "",
+  total: 0,
+  pages: 0
+});
 
 const getDownlineMemberDetails = () => {
+  const params = {
+    current: moneyChangeByType.current,
+    size: moneyChangeByType.size,
+    startDate: searchForm.startDate.from,
+    endDate: searchForm.startDate.to,
+    loginName: moneyChangeByType.loginName
+    // ...(moneyChangeByType.type !== null && { type: moneyChangeByType.type })
+  };
+
+  if (moneyChangeByType.type === "ALL") {
+    delete params.type;
+  } else {
+    params.type = moneyChangeByType.type;
+  }
+
   api
-    .get(`/session/affiliate/downline`, {
-      params: {
-        current: 1,
-        size: 2,
-        id: '1919668058885701633',
-        siteId: process.env.SITEID,
-        status: true,
-        regTime: dayBefore.value,
-        loginName: '03080808996',
-        memberTypes: "TEST"
-      }
-    })
+    .get(`/session/member/moneyChangeByType`, { params })
     .then((res) => {
       if (res.code === 0) {
-        downLinesRecords.value = res.data;
+        downLinesRecordsView.value = res.data.records;
+        moneyChangeByType.current = res.data.current;
+        moneyChangeByType.pages = res.data.pages;
       }
     })
     .catch((e) => {
@@ -273,7 +302,44 @@ const getDownlineMemberDetails = () => {
     });
 };
 
+const setPreLoginName = () => {
+  moneyChangeByType.loginName = store.nickName;
+};
+
+const filteredShow = ref(false);
+
+const setRecordItem = (item) => {
+  console.log(item);
+  moneyChangeByType.loginName = item.loginName;
+  getDownlineMemberDetails();
+  filteredShow.value = false;
+};
+
+const prevPage = () => {
+  if (moneyChangeByType.current > 1) {
+    moneyChangeByType.current--;
+    getDownlineMemberDetails();
+  }
+};
+
+const nextPage = () => {
+  if (moneyChangeByType.current < moneyChangeByType.pages) {
+    moneyChangeByType.current++;
+    getDownlineMemberDetails();
+  }
+};
+
+const onSelectChange = (value) => {
+  moneyChangeByType.type = value;
+  getDownlineMemberDetails();
+};
+
+const onSelectChangeDate = () => {
+  getDownlineMemberDetails();
+};
+
 onMounted(() => {
+  setPreLoginName();
   getAllDownlines();
   getDownlineMemberDetails();
 });
@@ -466,6 +532,13 @@ onMounted(() => {
   min-width: 100px;
   max-width: 120px;
   font-weight: bold;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  align-items: center;
 }
 </style>
 
