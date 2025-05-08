@@ -120,6 +120,7 @@
           </div>
         </div>
       </div>
+
       <div class="info-row">
         <div class="info-content-item line-side">
           <div class="info-title">
@@ -186,6 +187,35 @@
               <span>{{ store.currency.value }}&nbsp;</span>
               {{ convertToCommaAmount(checkTeamAmountData(teamAmountData.totalRebate), false) }}
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="info-wrapper q-pt-lg">
+    <div class="title-txt">{{ $t("earnMoney.daily.todayReportTotal") }}</div>
+    <div class="info-container">
+      <div class="info-row">
+        <div class="info-content-item line-side">
+          <div class="info-title">
+            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-08.png" /></div>
+            <div class="info-txt">{{ $t("earnMoney.daily.noOfDepositors") }}:</div>
+          </div>
+          <div class="info-amount">
+            {{ teamAmountData.noOfDepositMembers }}
+          </div>
+        </div>
+        <div class="info-content-item">
+          <div class="info-title">
+            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-09.png" /></div>
+            <div class="info-txt">{{ $t("earnMoney.daily.depositAmount") }}:</div>
+          </div>
+          <div
+            class="info-amount"
+            :class="checkTeamAmountData(teamAmountData.totalDeposit) === 'Calculating' ? 'font-smaller' : ''"
+          >
+            <span>{{ store.currency.value }}&nbsp;</span>
+            {{ convertToCommaAmount(checkTeamAmountData(teamAmountData.totalDeposit), false) }}
           </div>
         </div>
       </div>
@@ -343,7 +373,9 @@ const teamAmountData = reactive({
   teamRebate: 0,
   totalRebate: 0,
   agentLevel: 0,
-  agentRate: 0
+  agentRate: 0,
+  totalDeposit: 0,
+  noOfDepositMembers: 0
 });
 
 const getTeamAmountData = () => {
@@ -365,11 +397,25 @@ const checkTeamAmountData = (value) => {
   return value === -1 ? "Calculating" : value;
 };
 
+const getDailyDepositData = () => {
+  api
+    .get(`/session/member/depositDailyDetails`)
+    .then((res) => {
+      const { code, data } = res;
+      if (code === 0) {
+        teamAmountData.noOfDepositMembers = data.noOfDepositMembers;
+        teamAmountData.totalDeposit = data.totalDeposit;
+      }
+    })
+    .catch(() => {});
+};
+
 onMounted(() => {
   initializeSwiperNav();
   getReferredBetRebateRecord();
   getVIPApi();
   getTeamAmountData();
+  getDailyDepositData();
 });
 </script>
 
