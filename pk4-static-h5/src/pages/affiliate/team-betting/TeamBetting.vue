@@ -25,20 +25,19 @@
         <div class="date-filter filter">
             <InputField :isDark="true">
                 <template #input>
-                    <q-select class="dropdown" outlined v-model="model" :options="options" dense
+                    <q-input readonly class="dropdown" outlined v-model="typesSelection.label" @click="openTypeSelectionDialog" dense
                         :display-value="'Types'" />
                 </template>
             </InputField>
             <InputField :isDark="true">
                 <template #input>
-                    <q-select class="dropdown" outlined v-model="model" :options="options" dense
+                    <q-select class="dropdown" outlined v-model="model" :options="vendorsList" dense
                         :display-value="'Vendors'" />
                 </template>
             </InputField>
             <InputField :isDark="true">
                 <template #input>
-                    <q-select class="dropdown" outlined v-model="model" :options="options" dense
-                        :display-value="'Date'" />
+                    <q-input readonly class="dropdown" outlined v-model="daysSelection.label" @click="openDaySelectionDialog" dense placeholder="Date" />
                 </template>
             </InputField>
         </div>
@@ -70,6 +69,56 @@
             </div>
         </div>
     </div>
+
+    <q-dialog width="100%" v-model="isDaySelectionDialog" persistent>
+        <div class="popout-dialog">
+        <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
+        <div class="popout-dialog-container">
+
+            <div style="width: 100%;" class="q-mt-lg q-pl-lg q-pr-lg x-n-container">
+            <div class="filter-grid">
+                <div class="filter-item" :class="{ active: daysSelection.label === 'Today' }"
+                @click="changeDaySelection('Today')">Today</div>
+                <div class="filter-item" :class="{ active: daysSelection.label === 'Yesterday' }"
+                @click="changeDaySelection('Yesterday')">Yesterday</div>
+                <div class="filter-item" :class="{ active: daysSelection.label === '7-days' }"
+                @click="changeDaySelection('7-days')">7-days</div>
+                <div class="filter-item" :class="{ active: daysSelection.label === 'This Month' }"
+                @click="changeDaySelection('This Month')">This Month</div>
+            </div>
+
+            <div style="display:flex;">
+                <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
+                <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="confirmDaySelection" />
+            </div>
+            </div>
+        </div>
+        </div>
+    </q-dialog>
+
+    <q-dialog width="100%" v-model="isTypeSelectionDialog" persistent>
+        <div class="popout-dialog">
+        <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
+        <div class="popout-dialog-container">
+
+            <div style="width: 100%;" class="q-mt-lg q-pl-lg q-pr-lg x-n-container">
+            <div class="filter-grid">
+                <div class="filter-item" :class="{ active: typesSelection.label === 'Slot' }"
+                @click="changeTypeSelection('Slot')">Slot</div>
+                <div class="filter-item" :class="{ active: typesSelection.label === 'Fish' }"
+                @click="changeTypeSelection('Fish')">Fish</div>
+                <div class="filter-item" :class="{ active: typesSelection.label === 'Live' }"
+                @click="changeTypeSelection('Live')">Live</div>
+            </div>
+
+            <div style="display:flex;">
+                <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
+                <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="confirmTypeSelection" />
+            </div>
+            </div>
+        </div>
+        </div>
+    </q-dialog>
 </template>
 
 <script setup>
@@ -82,8 +131,6 @@ import moment from 'moment';
 
 const store = userStore();
 const formDetail = reactive([]);
-const model = ref('Consolidated Weekly');
-const options = ref(['Consolidated Weekly']);
 const selectedTab = ref('All');
 
 const vendorsList = ref([]);
@@ -94,6 +141,34 @@ function convertStartDate(date) {
 
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD HH:mm:ss');
+}
+
+const isDaySelectionDialog = ref(false)
+const daysSelection = ref({ label: '7-days', value: 7 });
+const openDaySelectionDialog = () => {
+  isDaySelectionDialog.value = true
+}
+
+const changeDaySelection = (type) => {
+  daysSelection.value = { label: type, value: type };
+}
+
+const confirmDaySelection = () => {
+  isDaySelectionDialog.value = false;
+}
+
+const isTypeSelectionDialog = ref(false)
+const typesSelection = ref({ label: 'Slot', value: 'Slot' });
+const openTypeSelectionDialog = () => {
+  isTypeSelectionDialog.value = true
+}
+
+const changeTypeSelection = (type) => {
+    typesSelection.value = { label: type, value: type };
+}
+
+const confirmTypeSelection = () => {
+  isTypeSelectionDialog.value = false;
 }
 
 const page = reactive({
@@ -458,5 +533,26 @@ onMounted(() => {
     min-width: 100px;
     max-width: 120px;
     font-weight: bold;
+}
+
+.popout-dialog-container {
+  .filter-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px 0;
+
+    .filter-item {
+      margin: 5px;
+      border-radius: 4px;
+      background: #EAEFF9;
+      padding: 8px 12px;
+      white-space: nowrap;
+
+      &.active {
+        background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+        color: #fff;
+      }
+    }
+  }
 }
 </style>
