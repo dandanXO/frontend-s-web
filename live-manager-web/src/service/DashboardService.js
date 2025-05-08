@@ -135,5 +135,42 @@ export const DashboardService = {
         'token': `${token}`
       }
     })
-  }
+  },
+  // 查询聊天室记录
+  getChatHistory(data) {
+    const token = sessionStorage.getItem('token')
+
+    return api.post('/session/live/history', data, {
+      headers: {
+        'token': `${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+  }, blockUserApi(data) {
+    const token = sessionStorage.getItem('token')
+
+    return api.put('/session/block', data, {
+      headers: {
+        'token': `${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+  }, unblockUserApi(data) {
+    const token = sessionStorage.getItem('token')
+
+    return api.put('/session/unblock', data, {
+      headers: {
+        'token': `${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+  }, getBlockList() {
+    const token = sessionStorage.getItem('token')
+
+    return api.get('/session/block/list', {
+      headers: {
+        'token': `${token}`
+      }
+    })
+  },
 }
