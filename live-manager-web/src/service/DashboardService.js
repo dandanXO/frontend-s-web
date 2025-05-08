@@ -146,8 +146,7 @@ export const DashboardService = {
         'Content-Type': 'application/json'
       }
     })
-  },
-  blockUserApi(data) {
+  }, blockUserApi(data) {
     const token = sessionStorage.getItem('token')
 
     return api.put('/session/block', data, {
@@ -156,8 +155,7 @@ export const DashboardService = {
         'Content-Type': 'application/json'
       }
     })
-  },
-  unblockUserApi(data) {
+  }, unblockUserApi(data) {
     const token = sessionStorage.getItem('token')
 
     return api.put('/session/unblock', data, {
@@ -166,8 +164,7 @@ export const DashboardService = {
         'Content-Type': 'application/json'
       }
     })
-  },
-  getBlockList() {
+  }, getBlockList() {
     const token = sessionStorage.getItem('token')
 
     return api.get('/session/block/list', {
@@ -176,40 +173,4 @@ export const DashboardService = {
       }
     })
   },
-  updateRoomInfo(streamId, title, message) {
-    const token = sessionStorage.getItem('token')
-    return api.put(`/session/info/${streamId}`, { title, message }, {
-      headers: {
-        'token': `${token}`
-      }
-    })
-        .then((response) => {
-          if (response.code === 0) {
-            return response.data
-          }
-          return null
-        })
-        .catch((error) => {
-          console.error('更新直播標題失敗:', error)
-          return null
-        })
-  },
-  getLiveMonitorScores(streamNames) {
-    const token = sessionStorage.getItem('token');
-    return api.get(`/session/monitor/score?streamNames=${streamNames.toString()}`, {
-      headers: {
-        'token': token
-      }
-    })
-        .then(response => {
-          if (response.code === 0) {
-            return response.data;
-          }
-          return null;
-        })
-        .catch(error => {
-          console.error('取得監控分數失敗:', error);
-          return null;
-        });
-  }
 }
