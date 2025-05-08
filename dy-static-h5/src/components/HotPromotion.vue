@@ -38,6 +38,7 @@
     <ChallengeComebackPromo v-if="list.redirectUrl === 'dy2-cycle-loss-refund'" :promo-code="list.promoCode" />
 
     <BountyBlastPremier v-if="list.redirectUrl === 'bounty-blast-premier'" :promo-code="list.promoCode" />
+    <BlastPremierPromo v-if="list.redirectUrl === 'dy2-cs2-blast-2024'" :promo-code="list.promoCode" />
 
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao'" />
 
@@ -94,6 +95,7 @@
 </template>
 
 <script>
+import BlastPremierPromo from "components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue";
 import { defineAsyncComponent, defineComponent, ref } from "vue";
 import { userStore } from "stores/index";
 import { eventapi } from "boot/axios";
@@ -161,6 +163,7 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    BlastPremierPromo,
     PglastanaAc2025,
     newVip2025,
     Cct2025,
