@@ -118,7 +118,7 @@
             <p class="empty-text">暂无记录</p>
           </template>
           <template v-else>
-            <p class="empty-text" style="color: #ffffff;">加载中...</p>
+            <p class="empty-text">加载中...</p>
           </template>
         </el-tab-pane>
 
@@ -597,7 +597,7 @@ const options = ["存款问题", "转账问题", "提款问题", "其他"];
 const onItemClick = (item) => {
   mailboxState.mailboxList.write.title = item;
 };
-const isLoading = ref(false);
+const isLoading = ref(true);
 const loadingBtn = ref(false);
 const mailboxData = ref([]);
 const mailboxState = reactive({
@@ -848,9 +848,13 @@ onUnmounted(() => {
 .upload-photo-board .el-input__wrapper{
   width: 875px;
 }
-
 </style>
 <style scoped lang="scss">
+
+.dark .mail-content .empty-text {
+   color: #a98f7c;
+}
+
 .quiz-container {
   //   background: salmon;
   margin-top: 40px;
@@ -1280,6 +1284,7 @@ onUnmounted(() => {
   .empty-text {
     text-align: center;
     margin-top: 50px;
+    color: #000000;
   }
 
   .title-p {
