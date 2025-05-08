@@ -20,8 +20,8 @@ export function popupMailBox() {
   return server.REST.get("/session/pm/inbox/popup", {});
 }
 
-export function mailOutbox() {
-  return server.REST.get("/session/feedback/messages", {});
+export function mailOutbox(params) {
+  return server.REST.get("/session/feedback/messages", params);
 }
 
 export function wirteMail(mail) {
