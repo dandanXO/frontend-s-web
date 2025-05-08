@@ -61,7 +61,11 @@
                     <img
                       v-else
                       class="game-img"
-                      :src="require(`../../assets/${platformType}/${platformType}-logo-${plat.code.toLowerCase()}.png`)"
+                      :src="
+                        require(`../../assets/${platformType}/${platformType}-logo-${plat.code.toLowerCase()}${
+                          plat.code.toLowerCase() === 'pinnacle' ? '-dark' : ''
+                        }.png`)
+                      "
                     />
                   </div>
                   <div class="list-item-txt">{{ plat.alias ? getAliasName(plat, platformType) : plat.cnname }}</div>
