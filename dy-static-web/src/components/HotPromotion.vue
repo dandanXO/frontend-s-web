@@ -59,7 +59,7 @@
     <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
     <Dota2BlastSlam2025 v-if="list.redirectUrl === 'dy2-blast-slam-2025'" :promo-code="list.promoCode" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'dy-official-gift'" :params="list.param" />
-
+    <Lh1Enc2025 v-else-if="list.redirectUrl === 'dy2-enc-2025'" :promo-code="list.promoCode" />
     <LanternFestival2025
       v-if="list.redirectUrl === 'dy1-lantern-festival-bonus'"
       :promo-param="listParam"
@@ -142,6 +142,7 @@ import { userStore } from "@/store";
 
 import PglS32025 from "./hotpromo/pgl-s3-2025/PglS32025.vue";
 import PullbackTide from "./hotpromo/pullback-tide/PullbackTide.vue";
+import Lh1Enc2025 from "./hotpromo/Lh1-enc-2025/Lh1-enc-2025.vue";
 
 import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
 import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue";
@@ -175,6 +176,7 @@ export default defineComponent({
   // setup: (props, { emit }) => {},
   components: {
     PglAstana2025,
+    Lh1Enc2025,
     newVip2025,
     Cct2025,
     YaLLa2025,
