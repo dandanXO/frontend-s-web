@@ -97,6 +97,11 @@
       :promo-code="list.promoCode"
       :params="list.param"
     />
+    <IemDallas2025
+      v-if="list.redirectUrl === 'lh1-iem-dallas-2025'"
+      :promo-code="list.promoCode"
+      :params="list.param"
+    />
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -171,6 +176,7 @@ import elsOne2025 from "../components/hotpromo/elsOne2025/elsOne2025.vue";
 import YuEBaoPromo from "./hotpromo/yu-e-bao/YuEBaoPromo.vue";
 import BlastRival2025 from "./hotpromo/BlastRival2025/BlastRival2025.vue";
 import { useDark } from "@vueuse/core";
+import IemDallas2025 from "./hotpromo/iem-dallas-2025/IemDallas2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -223,7 +229,8 @@ export default defineComponent({
     PglAstana2025,
     FpSlotPromo,
     YuEBaoPromo,
-    BlastRival2025
+    BlastRival2025,
+    IemDallas2025
   },
   props: {
     list: {
