@@ -20,8 +20,16 @@ export function popupMailBox() {
   return server.REST.get("/session/pm/inbox/popup", {});
 }
 
-export function mailOutbox(params) {
-  return server.REST.get("/session/feedback/messages", params);
+export function mailOutbox(mailQuery) {
+  return server.REST.get("/session/feedback/messages", {
+    params: {
+      type: mailQuery.type,
+      current: mailQuery.current,
+      size: mailQuery.size,
+      orderBy: mailQuery.orderBy,
+      messageType: mailQuery.messageType
+    }
+  });
 }
 
 export function wirteMail(mail) {

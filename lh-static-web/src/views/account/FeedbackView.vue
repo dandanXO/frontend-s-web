@@ -70,10 +70,7 @@
             </div>
 
             <div class="mail-input-item">
-              <div class="input-title">
-                内容
-                <span class="red-note">注:若您的建议和反馈被本平台使用采纳，我们将奉送38~888元奖金</span>
-              </div>
+              <div class="input-title">内容<span class="red-note">注:若您的建议和反馈被本平台使用采纳，我们将奉送38~888元奖金</span></div>
               <div class="input-fill">
                 <el-input
                   v-model="mailboxState.mailboxList.write.content"
@@ -93,7 +90,7 @@
         </el-tab-pane>
 
         <el-tab-pane key="sent" name="sent" :label="'我的反馈'">
-          <template v-if="mailboxState.mailboxList.sent.list.length > 0">
+          <template v-if="mailboxState.mailboxList.sent.list.length > 0 && !isLoading">
             <el-collapse v-model="activeNames" @change="handleChange">
               <el-collapse-item
                 v-for="item in mailboxState.mailboxList.sent.list"
@@ -117,8 +114,11 @@
               />
             </div>
           </template>
-          <template v-else>
+          <template v-else-if="!isLoading">
             <p class="empty-text">暂无记录</p>
+          </template>
+          <template v-else>
+            <p class="empty-text" style="color: #ffffff;">加载中...</p>
           </template>
         </el-tab-pane>
 
@@ -166,10 +166,7 @@
                 <div v-for="(item, i) in quesTitleOptions" :key="i" class="question-title-container">
                   <template v-if="recordsPagination.current === item.sequence">
                     <div class="questions-title">
-                      {{ item.question }}
-                      <span class="singlemultiple" v-if="item.sequence != 10">
-                        ({{ item.isMultiple ? "多选项" : "单选" }})
-                      </span>
+                      {{ item.question }}<span class="singlemultiple">({{ item.isMultiple ? '多选项' : '单选' }})</span>
                     </div>
                     <div class="answer-container">
                       <template v-if="item.isMultiple" v-for="(ans, index) in item.choices" :key="index">
@@ -252,13 +249,7 @@
                     </button>
                   </div>
                   <div>
-                    <button
-                      :disabled="!input && optionModal.length === 0"
-                      :class="!input && optionModal.length === 0 ? 'next-disabled' : ''"
-                      id="nextBtn"
-                      class="standard-button btn-color-blue"
-                      @click="btnClick('next')"
-                    >
+                    <button :disabled="!input && optionModal.length === 0" :class="!input && optionModal.length === 0 ? 'next-disabled': ''" id="nextBtn" class="standard-button btn-color-blue" @click="btnClick('next')">
                       下一题
                     </button>
                   </div>
@@ -481,21 +472,20 @@ const getSelected = (item, ans) => {
 };
 
 function removeEmojis(str) {
-  return str
-    .replace(/[\u{1F600}-\u{1F64F}]/gu, "") // 表情符号块
-    .replace(/[\u{1F300}-\u{1F5FF}]/gu, "") // 杂项符号和象形文字
-    .replace(/[\u{1F680}-\u{1F6FF}]/gu, "") // 交通和地图符号
-    .replace(/[\u{1F700}-\u{1F77F}]/gu, "") // 阿尔化学符号
-    .replace(/[\u{1F780}-\u{1F7FF}]/gu, "") // 地球和天气符号
-    .replace(/[\u{1F800}-\u{1F8FF}]/gu, "") // 装饰符号
-    .replace(/[\u{1F900}-\u{1F9FF}]/gu, "") // 衣物和配件符号
-    .replace(/[\u{1FA00}-\u{1FA6F}]/gu, "") // 动物、自然和家居符号
-    .replace(/[\u{1FA70}-\u{1FAFF}]/gu, "") // 手势和姿势
-    .replace(/[\u{2600}-\u{26FF}]/gu, "") // 杂项符号
-    .replace(/[\u{2700}-\u{27BF}]/gu, "") // Dingbats
-    .replace(/[\u{FE00}-\u{FE0F}]/gu, "") // 变化选择器
-    .replace(/[\u{1F900}-\u{1F9FF}]/gu, "") // 衣物和配件符号
-    .replace(/[\u{1F1E6}-\u{1F1FF}]/gu, ""); // 国旗符号
+  return str.replace(/[\u{1F600}-\u{1F64F}]/gu, '')  // 表情符号块
+    .replace(/[\u{1F300}-\u{1F5FF}]/gu, '')  // 杂项符号和象形文字
+    .replace(/[\u{1F680}-\u{1F6FF}]/gu, '')  // 交通和地图符号
+    .replace(/[\u{1F700}-\u{1F77F}]/gu, '')  // 阿尔化学符号
+    .replace(/[\u{1F780}-\u{1F7FF}]/gu, '')  // 地球和天气符号
+    .replace(/[\u{1F800}-\u{1F8FF}]/gu, '')  // 装饰符号
+    .replace(/[\u{1F900}-\u{1F9FF}]/gu, '')  // 衣物和配件符号
+    .replace(/[\u{1FA00}-\u{1FA6F}]/gu, '')  // 动物、自然和家居符号
+    .replace(/[\u{1FA70}-\u{1FAFF}]/gu, '')  // 手势和姿势
+    .replace(/[\u{2600}-\u{26FF}]/gu, '')    // 杂项符号
+    .replace(/[\u{2700}-\u{27BF}]/gu, '')    // Dingbats
+    .replace(/[\u{FE00}-\u{FE0F}]/gu, '')    // 变化选择器
+    .replace(/[\u{1F900}-\u{1F9FF}]/gu, '')  // 衣物和配件符号
+    .replace(/[\u{1F1E6}-\u{1F1FF}]/gu, ''); // 国旗符号
 }
 
 const toggleSelected = (item, ans, isChecked, needSpecify) => {
@@ -582,7 +572,7 @@ const btnClick = (btnType) => {
 
     choicesLockedIn.forEach((item) => {
       item.choice = removeEmojis(item.choice);
-    });
+    })
 
     // const questionDiv = document.getElementById("questionContainer");
     // const QRDiv = document.getElementById("QRContainer");
@@ -607,7 +597,7 @@ const options = ["存款问题", "转账问题", "提款问题", "其他"];
 const onItemClick = (item) => {
   mailboxState.mailboxList.write.title = item;
 };
-
+const isLoading = ref(false);
 const loadingBtn = ref(false);
 const mailboxData = ref([]);
 const mailboxState = reactive({
@@ -616,13 +606,13 @@ const mailboxState = reactive({
     inbox: {
       list: [],
       pageNum: 1,
-      pageSize: 20,
+      pageSize: 5,
       total: 0
     },
     sent: {
       list: [],
       pageNum: 1,
-      pageSize: 20,
+      pageSize: 5,
       total: 0
     },
     write: {
@@ -647,7 +637,8 @@ const loadPersonalMailbox = () => {
       .then((res) => {
         if (res.code === 0) {
           const response = res.data;
-          mailboxState.mailboxList[mailboxState.active].list.push(...response.records);
+          // mailboxState.mailboxList[mailboxState.active].list.push(...response.records);
+          mailboxState.mailboxList[mailboxState.active].list = response.records;
           mailboxState.mailboxList[mailboxState.active].total = response.total;
         } else {
           notify.error(res.message);
@@ -658,6 +649,7 @@ const loadPersonalMailbox = () => {
         // message.error(error.message, 4)
       });
   } else {
+    isLoading.value = true
     mailboxData.value = {
       type: null,
       current: mailboxState.mailboxList["sent"].pageNum,
@@ -667,11 +659,13 @@ const loadPersonalMailbox = () => {
     mailboxState.mailboxList["sent"].list = [];
     mailOutbox(mailboxData.value)
       .then((response) => {
+        isLoading.value = false
         if (response.code === 0) {
-          mailboxState.mailboxList["sent"].list.push(...response.data.records);
+          // mailboxState.mailboxList["sent"].list.push(...response.data.records);
+          mailboxState.mailboxList["sent"].list = response.data.records;
           mailboxState.mailboxList["sent"].total = response.data.total;
         } else {
-          // notify.error(response.message);
+          notify.error(response.message);
         }
       })
       .catch((error) => {
@@ -752,10 +746,10 @@ const onSubmit = (e) => {
       submitFeedback(mailboxState.mailboxList.write)
         .then((response) => {
           if (response.code === 0) {
-            // notify({
-            //   message: "提交成功",
-            //   type: "success"
-            // });
+            notify({
+              message: "提交成功",
+              type: "success"
+            });
             loadPersonalMailbox();
 
             mailboxState.mailboxList.write.feedbackType = "";
@@ -842,17 +836,19 @@ onUnmounted(() => {
 });
 </script>
 <style lang="scss">
+
 .standard-button.btn-color-blue {
   &.next-disabled {
     cursor: disabled;
-    background: #aaaaaa;
-    border-color: #aaaaaa;
+    background: #AAAAAA;
+    border-color: #AAAAAA;
   }
 }
 
-.upload-photo-board .el-input__wrapper {
+.upload-photo-board .el-input__wrapper{
   width: 875px;
 }
+
 </style>
 <style scoped lang="scss">
 .quiz-container {
@@ -1387,12 +1383,12 @@ onUnmounted(() => {
     .quiz-header {
       padding-bottom: 60px;
       margin-bottom: -44px;
-      background: linear-gradient(180deg, #a88d7c 0%, #a88d7c14 100%);
+      background: linear-gradient(180deg, #A88D7C 0%, #a88d7c14 100%);
     }
 
     .quiz-content {
       @include content-block-dark;
-      border-color: #e9cc94;
+      border-color: #E9CC94;
 
       .content-title,
       .content-desc {
@@ -1405,12 +1401,12 @@ onUnmounted(() => {
     .questions-header {
       padding-bottom: 60px;
       margin-bottom: -44px;
-      background: linear-gradient(180deg, #a88d7c 0%, #a88d7c14 100%);
+      background: linear-gradient(180deg, #A88D7C 0%, #a88d7c14 100%);
     }
 
     .questions-content {
       @include content-block-dark;
-      border-color: #e9cc94;
+      border-color: #E9CC94;
 
       .questions-title {
         color: $active-color-dark;
