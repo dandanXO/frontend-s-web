@@ -49,6 +49,19 @@
         </template>
       </Column>
 
+      <Column field="roomTitle" header="聊天室名称" sortable>
+        <template #body="slotProps">
+          {{ slotProps.data.roomTitle }}
+          <Button
+              v-if="route.path.includes('/my-streams')"
+              icon="pi pi-pencil"
+              class="p-button-text p-button-sm ml-2"
+              @click="openEditDialog(slotProps.data)"
+              v-tooltip="'修改名称'"
+          />
+        </template>
+      </Column>
+
       <Column field="streamStatus" header="源流狀態" sortable>
         <template #body="slotProps">
           <Tag :severity="getStatusSeverity(slotProps.data.streamStatus)" :value="getStatusLabel(slotProps.data.streamStatus)" />
@@ -103,6 +116,19 @@
     </DataTable>
   </div>
 
+  <Dialog v-model:visible="editDialogVisible" header="修改聊天室名称" :style="{ width: '400px' }" :modal="true">
+    <div class="p-fluid">
+      <div class="p-field">
+        <label for="title">新名称</label>
+        <InputText id="title" v-model="editedTitle" />
+      </div>
+    </div>
+    <template #footer>
+      <Button label="取消" icon="pi pi-times" class="p-button-text" @click="editDialogVisible = false" />
+      <Button label="確認" icon="pi pi-check" class="p-button-text" @click="submitRoomTitleEdit" />
+    </template>
+  </Dialog>
+
   <StreamPlayer
     :visible="showPlayer"
     :stream="selectedStream"
@@ -151,6 +177,8 @@ import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import Dialog from 'primevue/dialog';
 import Tag from 'primevue/tag';
+import { useToast } from 'primevue/usetoast'
+const toast = useToast()
 
 const route = useRoute();
 
@@ -160,6 +188,34 @@ const showPlayer = ref(false);
 const selectedStream = ref(null);
 const deleteDialog = ref(false);
 const streamToDelete = ref(null);
+const editDialogVisible = ref(false)
+const editedTitle = ref('')
+const editingStreamId = ref(null)
+
+const openEditDialog = (stream) => {
+  editingStreamId.value = stream.streamerStreamId
+  editedTitle.value = stream.roomTitle || ''
+  editDialogVisible.value = true
+}
+
+const submitRoomTitleEdit = async () => {
+  if (!editingStreamId.value || !editedTitle.value) return
+
+  try {
+    const res = await DashboardService.updateRoomTitle(editingStreamId.value, editedTitle.value)
+
+    if (res) {
+      toast.add({ severity: 'success', summary: '成功', detail: '标题已更新', life: 3000 })
+      editDialogVisible.value = false
+      await fetchStreams()
+    } else {
+      toast.add({ severity: 'error', summary: '错误', detail: response?.message || '更新失败', life: 3000 })
+    }
+  } catch (err) {
+    console.error('更新标题错误:', err)
+    toast.add({ severity: 'error', summary: '错误', detail: '无法更新标题', life: 3000 })
+  }
+}
 
 const filters = ref({
   global: { value: null, matchMode: 'contains' }
@@ -291,6 +347,23 @@ const viewStream = (stream) => {
     };
   }
   showPlayer.value = true;
+};
+
+const editRoomTitle = async (stream) => {
+  try {
+    const { value } = await ElMessageBox.prompt('請輸入新的房間標題', '修改房間標題', {
+      confirmButtonText: '確認',
+      cancelButtonText: '取消',
+      inputValue: stream.roomTitle,
+    });
+    const result = await DashboardService.updateRoomTitle(stream.streamerStreamId, value);
+    if (result) {
+      ElMessage.success('房間標題更新成功');
+      fetchStreams();
+    }
+  } catch (err) {
+    console.log('取消修改房間標題');
+  }
 };
 
 onMounted(() => {

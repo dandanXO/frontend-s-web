@@ -146,7 +146,8 @@ export const DashboardService = {
         'Content-Type': 'application/json'
       }
     })
-  }, blockUserApi(data) {
+  },
+  blockUserApi(data) {
     const token = sessionStorage.getItem('token')
 
     return api.put('/session/block', data, {
@@ -155,7 +156,8 @@ export const DashboardService = {
         'Content-Type': 'application/json'
       }
     })
-  }, unblockUserApi(data) {
+  },
+  unblockUserApi(data) {
     const token = sessionStorage.getItem('token')
 
     return api.put('/session/unblock', data, {
@@ -164,7 +166,8 @@ export const DashboardService = {
         'Content-Type': 'application/json'
       }
     })
-  }, getBlockList() {
+  },
+  getBlockList() {
     const token = sessionStorage.getItem('token')
 
     return api.get('/session/block/list', {
@@ -173,4 +176,22 @@ export const DashboardService = {
       }
     })
   },
+  updateRoomTitle(streamId, title) {
+    const token = sessionStorage.getItem('token')
+    return api.put(`/session/title/${streamId}`, { title }, {
+      headers: {
+        'token': `${token}`
+      }
+    })
+        .then((response) => {
+          if (response.code === 0) {
+            return response.data
+          }
+          return null
+        })
+        .catch((error) => {
+          console.error('更新直播標題失敗:', error)
+          return null
+        })
+  }
 }
