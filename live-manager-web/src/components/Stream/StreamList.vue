@@ -283,6 +283,7 @@ const viewStream = (stream) => {
     selectedStream.value = {
       ...stream,
       title: stream.eventTitle,
+      streamId: stream.streamerStreamId,
       playUrls: {
         hls: stream.cdnPlayUrlsHls,
         flv: stream.cdnPlayUrlsFlv
