@@ -51,11 +51,14 @@
                   :class="{ active: selectedPlat === plat.code }"
                 >
                   <div class="list-item-btn" :id="`id-list-item-${plat.code}`">
-                    <img v-if="['live', 'slot'].includes(platformType) && isDark"  
+                    <img
+                      v-if="['live', 'slot'].includes(platformType) && isDark"
                       class="game-img"
-                      :src="require(`../../assets/${platformType}/${platformType}-logo-${plat.code.toLowerCase()}-dark.png`)"
-                      />
-                    <img    
+                      :src="
+                        require(`../../assets/${platformType}/${platformType}-logo-${plat.code.toLowerCase()}-dark.png`)
+                      "
+                    />
+                    <img
                       v-else
                       class="game-img"
                       :src="require(`../../assets/${platformType}/${platformType}-logo-${plat.code.toLowerCase()}.png`)"
@@ -119,7 +122,7 @@
                   /> -->
                 <div class="text">
                   <span v-if="item.code === 'AG'">XIN</span>
-                  <span v-else-if="item.code === 'PPFP'">FP 电子</span>
+                  <span v-else-if="item.code === 'PPFP'">FP</span>
                   <span v-else>{{ item.code }}</span>
                 </div>
               </div>

@@ -138,7 +138,7 @@
                   hotgame.content[hotgame.currentProvider] &&
                   hotgame.content[hotgame.currentProvider].charImgPath
                 "
-                :style="[`${hotgame.section==='esports'?'right:12rem;':''}`]"
+                :style="[`${hotgame.section === 'esports' ? 'right:12rem;' : ''}`]"
                 :class="`character-${hotgame.subtitle.toLowerCase()}-${hotgame.currentProvider}`"
                 :src="
                   require(`../../../assets/home/hotgame/content/${hotgame.section}/${
@@ -1299,7 +1299,7 @@ $transition_timer: 0.5s;
 
           .character-casino-fblive {
             position: relative;
-            right: 9.5rem;
+            right: 4.5rem;
             height: 29rem;
           }
 
