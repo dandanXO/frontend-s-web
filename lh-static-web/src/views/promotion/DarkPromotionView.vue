@@ -468,6 +468,7 @@ export default defineComponent({
       overflow: hidden;
 
       img {
+        margin-top: 21px;
         height: 305px;
       }
     }
