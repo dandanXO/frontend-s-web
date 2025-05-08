@@ -188,6 +188,7 @@ const handleClaimBonus = () => {
           type: "success",
           message: `成功领取`
         });
+        fetchData();
         store.getBalance();
       }
       // else {
