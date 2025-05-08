@@ -1,8 +1,8 @@
 <template>
   <div class="agent-view">
     <q-tabs v-model="activeTab" dense no-caps class="agent-tab" indicator-color="transparent" align="justify">
-      <q-tab name="downline-reg" label="Downline Registration" />
-      <q-tab name="link-reg" label="Link Registration" />
+      <!-- <q-tab name="downline-reg" label="Downline Registration" /> -->
+      <!-- <q-tab name="link-reg" label="Link Registration" /> -->
       <q-tab name="link-mgmt" label="Link Management" />
     </q-tabs>
 
@@ -17,7 +17,7 @@ import DownlineReg from "src/components/agent/DownlineReg.vue";
 import LinkReg from "src/components/agent/LinkReg.vue";
 import LinkMgmt from "src/components/agent/LinkMgmt.vue";
 
-const activeTab = ref("downline-reg");
+const activeTab = ref("link-mgmt");
 </script>
 <style lang="scss" scoped>
 .q-page-container {
