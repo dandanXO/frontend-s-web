@@ -170,7 +170,13 @@ export default defineComponent({
     }
     const $q = useQuasar();
     const isDeleteMailModal = ref(false);
-    const truncatedList = ref([]);
+
+    const sliceOffset = ref(0)
+    const sliceLimit = 6
+    const truncatedList = computed(() => {
+      return props.list.slice(0, sliceOffset.value)
+    })
+
     const truncatedListAll = ref([])
     const truncatedListByType = computed(() => {
       return truncatedList.value.filter((listItem) => {
@@ -181,25 +187,19 @@ export default defineComponent({
       });
     });
 
-    const comList = ref({});
+    const comList = computed(() => props.list)
+
     const allowSelectMultiple = ref(false);
     const selectedMailIds = ref({});
     const hasMailSelected = computed(() => Object.values(selectedMailIds.value).includes(true));
     const onLoad = (index, done) => {
-      comList.value = props.list;
       setTimeout(() => {
-        console.log(props.list.length)
-        console.log(comList.value.length)
-        if (comList.value.length) {
-          var slicedArray = comList.value.splice(0, 6);
-          slicedArray.forEach((element) => {
-            truncatedList.value.push(element);
-            truncatedListAll.value.push(element);
-          });
-          done();
+        if (sliceOffset.value < props.list.length) {
+          sliceOffset.value += sliceLimit
         }
-      }, 200);
-    };
+        done()
+      }, 200)
+    }
     const isSelectedMail = ref(-1);
     const toggleMail = (mail) => {
       if (isSelectedMail.value !== mail.id) {
