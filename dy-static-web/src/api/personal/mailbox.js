@@ -95,8 +95,15 @@ export function getFeedbackType() {
   return server.REST.get("/session/feedback/types", {});
 }
 
-export function getFeedbackReplies() {
-  return server.REST.get("/session/feedback/messages", {});
+export function getFeedbackReplies(mailQuery) {
+  return server.REST.get("/session/feedback/messages", {
+    params: {
+      type: mailQuery.type,
+      current: mailQuery.current,
+      size: mailQuery.size,
+      orderBy: mailQuery.orderBy
+    }
+  });
 }
 
 export function readFeedback(param) {
