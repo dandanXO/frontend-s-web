@@ -173,14 +173,14 @@
                     (val) => (val && val.length === 11) || $t('form.virtualWallet_rules_03'),
                     (val) => (val && !val.includes('.')) || $t('form.virtualWallet_rules_04')
                   ]"
-                  :disable="isPhoneVerified"
+                  :disable="isOtpSent"
                 >
-                  <template v-if="!isPhoneVerified" v-slot:append>
+                  <template v-slot:append>
                     <q-btn
                       @click="openPhoneVeriDialog()"
                       type="submit"
                       size="sm"
-                      :label="$t('bankCard.getOtp')"
+                     :label="!isOtpSent ? $t('bankCard.getOtp') : showTimer()"
                       class="btn-primary__full"
                       style="height: unset"
                     />
@@ -343,7 +343,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted, onActivated } from "vue";
+import { reactive, ref, onMounted, onBeforeUnmount, onActivated } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
@@ -476,13 +476,15 @@ const onCaptchaSubmit = () => {
     .then((res) => {
       if (res.code === 0) {
         isOtpSent.value = true;
+        timer.value = 60;
+        startTimer();
 
         bankCardInfo.smsCode = "";
         bankCardInfo.smsCodeId = res.data.codeId;
 
         showCaptchaMessageDialog.value = true;
         showCaptchaSuccessDialog.value = true;
-        isPhoneVerified.value = true;
+        // isPhoneVerified.value = true;
       } else {
         captchaFailedMessage.value = res.message;
         showCaptchaMessageDialog.value = true;
@@ -494,7 +496,32 @@ const onCaptchaSubmit = () => {
       getInnerCode();
     });
 };
+const timer = ref(5); // Timer starts at 60 seconds
+  let intervalId = null;
+  // Method to start the countdown timer
+  function startTimer() {
+    intervalId = setInterval(() => {
+      if (timer.value > 0) {
+        timer.value--;
+      } else {
+        clearInterval(intervalId); // Stop the timer when it reaches 0
+        // isPhoneVerified.value = false;
+        isOtpSent.value = false;
+      }
+    }, 1000); // Update the timer every second
+  }
 
+  // Method to show the timer in the button label
+  function showTimer() {
+    return `${timer.value}s`;
+  }
+
+  // Cleanup the interval when the component is unmounted
+  onBeforeUnmount(() => {
+    if (intervalId) {
+      clearInterval(intervalId);
+    }
+  });
 const bankList = ref([]);
 const loadBankCards = () => {
   bankList.value = [];
@@ -551,7 +578,7 @@ const submitBankCard = () => {
       (selectedTypeToggleName.value === "JAZZCASH" && ifscRef.value && ifscRef.value.hasError)
     )
   ) {
-    if (!isOtpSent.value || !bankCardInfo.cardNumber || !isPhoneVerified.value) {
+    if (!isOtpSent.value || !bankCardInfo.cardNumber) {
       $q.notify({
         color: "negative",
         position: "top",
@@ -595,7 +622,7 @@ onActivated(() => {
   bankCardInfo.cardAddress = "";
   bankCardInfo.cardNumber = "";
   bankFormRef.value.reset();
-  isPhoneVerified.value = false;
+  // isPhoneVerified.value = false;
   isOtpSent.value = false;
 
   loadBankCards();
