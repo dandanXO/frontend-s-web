@@ -153,71 +153,106 @@
             <div class="title"></div>
             <div class="content">
               <div class="outitem">
-                <div class="item" >
+                <div class="item">
                   <div class="item-num">1</div>
-                    <span style="color:red;">会员晋级/保级/降级规则</span><br>
+                  <span style="color: red">会员晋级/保级/降级规则</span>
+                  <br />
                 </div>
                 <div class="item2">
-                  <div >1. 完成等级要求的累计有效流水后系统于次日北京时间早上10点自动更新，具体完成时间以系统为准，请耐心等待；</div>
-                  <div >2. VIP等级达到相应的要求可每天晋升一级，但VIP等级不可越级晋升；</div>
-                  <div >3. 会员在达到某VIP等级后，90天内投注需要完成保级要求。如果在此期间完成晋升，保级要求重新按照当前等级计算；</div>
-                  <div >4. 假设会员在一个季度（90天计算）内没有完成相应的保级要求流水，系统会自动降级一个等级，相应的返水及其它优惠也会随之调整至降级后的等级；</div>
-                  <div >5. 每个级别的升级礼金每位会员仅能获得1次（升级礼金1倍流水即可提款）；</div>
+                  <div>
+                    1.
+                    完成等级要求的累计有效流水后系统于次日北京时间早上10点自动更新，具体完成时间以系统为准，请耐心等待；
+                  </div>
+                  <div>2. VIP等级达到相应的要求可每天晋升一级，但VIP等级不可越级晋升；</div>
+                  <div>
+                    3.
+                    会员在达到某VIP等级后，90天内投注需要完成保级要求。如果在此期间完成晋升，保级要求重新按照当前等级计算；
+                  </div>
+                  <div>
+                    4.
+                    假设会员在一个季度（90天计算）内没有完成相应的保级要求流水，系统会自动降级一个等级，相应的返水及其它优惠也会随之调整至降级后的等级；
+                  </div>
+                  <div>5. 每个级别的升级礼金每位会员仅能获得1次（升级礼金1倍流水即可提款）；</div>
                 </div>
               </div>
               <div class="outitem">
-                <div class="item" >
+                <div class="item">
                   <div class="item-num">2</div>
-                    <span style="color:red;">生日礼金</span><br>
+                  <span style="color: red">生日礼金</span>
+                  <br />
                 </div>
                 <div class="item2">
-                  <div >1. 生日符合资格的会员，每年生日当天及当天后7日内到在线客服提供相关资料申请生日礼金，逾期不补，彩金1倍流水即可提款；</div>
+                  <div>
+                    1.
+                    生日符合资格的会员，每年生日当天及当天后7日内到在线客服提供相关资料申请生日礼金，逾期不补，彩金1倍流水即可提款；
+                  </div>
                 </div>
               </div>
               <div class="outitem">
-                <div class="item" >
+                <div class="item">
                   <div class="item-num">3</div>
-                    <span style="color:red;">首次保级彩金</span><br>
+                  <span style="color: red">首次保级彩金</span>
+                  <br />
                 </div>
                 <div class="item2">
-                  <div >1. 会员在90天保级期内达到保级要求时，第 91 天即可领取首次保级彩金，首次保级彩金1倍流水即可提款。</div>
+                  <div>
+                    1. 会员在90天保级期内达到保级要求时，第 91 天即可领取首次保级彩金，首次保级彩金1倍流水即可提款。
+                  </div>
                 </div>
               </div>
               <div class="outitem">
-                <div class="item" >
+                <div class="item">
                   <div class="item-num">4</div>
-                    <span style="color:red;">年度保级彩金</span><br>
+                  <span style="color: red">年度保级彩金</span>
+                  <br />
                 </div>
                 <div class="item2">
-                  <div >1. 首次保级成功后计算会员12个月内未降级（可晋级），彩金于第13个月首日进行派发；彩金1倍流水即可提款</div>
+                  <div>
+                    1. 首次保级成功后计算会员12个月内未降级（可晋级），彩金于第13个月首日进行派发；彩金1倍流水即可提款
+                  </div>
                 </div>
               </div>
               <div class="outitem">
-                <div class="item" >
+                <div class="item">
                   <div class="item-num">5</div>
-                    <span style="color:red;">每日额外返水红包</span><br>
+                  <span style="color: red">每日额外返水红包</span>
+                  <br />
                 </div>
                 <div class="item2">
-                  <div >1. 统计每日返水金额，对应VIP等级返水加赠比例派发。次日可领取每日额外返水红包彩金，返水红包积累至10元即可领取（不足10元则不可领取），彩金1倍流水即可提款。</div>
-                  <div><span style="color:red;">例：</span>VIP12会员当日的返水金额为1000元，则按照VIP12每日额外返水红包赠送比例2.0%计算：1000*2.0%=20元，返水红包为20元，会员可在页面上点击领取。</div>
+                  <div>
+                    1.
+                    统计每日返水金额，对应VIP等级返水加赠比例派发。次日可领取每日额外返水红包彩金，返水红包积累至10元即可领取（不足10元则不可领取），彩金1倍流水即可提款。
+                  </div>
+                  <div>
+                    <span style="color: red">例：</span>
+                    VIP12会员当日的返水金额为1000元，则按照VIP12每日额外返水红包赠送比例2.0%计算：1000*2.0%=20元，返水红包为20元，会员可在页面上点击领取。
+                  </div>
                 </div>
               </div>
               <div class="outitem">
-                <div class="item" >
+                <div class="item">
                   <div class="item-num">6</div>
-                    <span style="color:red;">每月15号红包</span><br>
+                  <span style="color: red">每月15号红包</span>
+                  <br />
                 </div>
                 <div class="item2">
-                  <div >1. 会员日为每月15号00:00起：雷火会员在上个月有任意一笔有效存款，即可在会员日15号00:00至21号23:59期间领取对应等级的会员日礼金（以领取时的等级为准）会员礼金仅需三倍流水即可出款，过期未领者则视为主动放弃：</div>
+                  <div>
+                    1.
+                    会员日为每月15号00:00起：东赢会员在上个月有任意一笔有效存款，即可在会员日15号00:00至21号23:59期间领取对应等级的会员日礼金（以领取时的等级为准）会员礼金仅需三倍流水即可出款，过期未领者则视为主动放弃：
+                  </div>
                 </div>
               </div>
               <div class="outitem">
-                <div class="item" >
+                <div class="item">
                   <div class="item-num">7</div>
-                    <span style="color:red;">充值赠送20%奖金</span><br>
+                  <span style="color: red">充值赠送20%奖金</span>
+                  <br />
                 </div>
                 <div class="item2">
-                  <div >1. VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在15日内在充值页面进行勾选优惠使用，成功使用后需要（本金+彩金）x8倍流水即可提款；</div>
+                  <div>
+                    1.
+                    VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在15日内在充值页面进行勾选优惠使用，成功使用后需要（本金+彩金）x8倍流水即可提款；
+                  </div>
                   <div>2. 加码券使用当日不可与其他存款优惠共享。</div>
                 </div>
               </div>
@@ -350,71 +385,106 @@
             <div class="title"></div>
             <div class="content">
               <div class="outitem">
-                <div class="item" >
+                <div class="item">
                   <div class="item-num">1</div>
-                    <span style="color:red;">会员晋级/保级/降级规则</span><br>
+                  <span style="color: red">会员晋级/保级/降级规则</span>
+                  <br />
                 </div>
                 <div class="item2">
-                  <div >1. 完成等级要求的累计有效流水后系统于次日北京时间早上10点自动更新，具体完成时间以系统为准，请耐心等待；</div>
-                  <div >2. VIP等级达到相应的要求可每天晋升一级，但VIP等级不可越级晋升；</div>
-                  <div >3. 会员在达到某VIP等级后，90天内投注需要完成保级要求。如果在此期间完成晋升，保级要求重新按照当前等级计算；</div>
-                  <div >4. 假设会员在一个季度（90天计算）内没有完成相应的保级要求流水，系统会自动降级一个等级，相应的返水及其它优惠也会随之调整至降级后的等级；</div>
-                  <div >5. 每个级别的升级礼金每位会员仅能获得1次（升级礼金1倍流水即可提款）；</div>
+                  <div>
+                    1.
+                    完成等级要求的累计有效流水后系统于次日北京时间早上10点自动更新，具体完成时间以系统为准，请耐心等待；
+                  </div>
+                  <div>2. VIP等级达到相应的要求可每天晋升一级，但VIP等级不可越级晋升；</div>
+                  <div>
+                    3.
+                    会员在达到某VIP等级后，90天内投注需要完成保级要求。如果在此期间完成晋升，保级要求重新按照当前等级计算；
+                  </div>
+                  <div>
+                    4.
+                    假设会员在一个季度（90天计算）内没有完成相应的保级要求流水，系统会自动降级一个等级，相应的返水及其它优惠也会随之调整至降级后的等级；
+                  </div>
+                  <div>5. 每个级别的升级礼金每位会员仅能获得1次（升级礼金1倍流水即可提款）；</div>
                 </div>
               </div>
               <div class="outitem">
-                <div class="item" >
+                <div class="item">
                   <div class="item-num">2</div>
-                    <span style="color:red;">生日礼金</span><br>
+                  <span style="color: red">生日礼金</span>
+                  <br />
                 </div>
                 <div class="item2">
-                  <div >1. 生日符合资格的会员，每年生日当天及当天后7日内到在线客服提供相关资料申请生日礼金，逾期不补，彩金1倍流水即可提款；</div>
+                  <div>
+                    1.
+                    生日符合资格的会员，每年生日当天及当天后7日内到在线客服提供相关资料申请生日礼金，逾期不补，彩金1倍流水即可提款；
+                  </div>
                 </div>
               </div>
               <div class="outitem">
-                <div class="item" >
+                <div class="item">
                   <div class="item-num">3</div>
-                    <span style="color:red;">首次保级彩金</span><br>
+                  <span style="color: red">首次保级彩金</span>
+                  <br />
                 </div>
                 <div class="item2">
-                  <div >1. 会员在90天保级期内达到保级要求时，第 91 天即可领取首次保级彩金，首次保级彩金1倍流水即可提款。</div>
+                  <div>
+                    1. 会员在90天保级期内达到保级要求时，第 91 天即可领取首次保级彩金，首次保级彩金1倍流水即可提款。
+                  </div>
                 </div>
               </div>
               <div class="outitem">
-                <div class="item" >
+                <div class="item">
                   <div class="item-num">4</div>
-                    <span style="color:red;">年度保级彩金</span><br>
+                  <span style="color: red">年度保级彩金</span>
+                  <br />
                 </div>
                 <div class="item2">
-                  <div >1. 首次保级成功后计算会员12个月内未降级（可晋级），彩金于第13个月首日进行派发；彩金1倍流水即可提款</div>
+                  <div>
+                    1. 首次保级成功后计算会员12个月内未降级（可晋级），彩金于第13个月首日进行派发；彩金1倍流水即可提款
+                  </div>
                 </div>
               </div>
               <div class="outitem">
-                <div class="item" >
+                <div class="item">
                   <div class="item-num">5</div>
-                    <span style="color:red;">每日额外返水红包</span><br>
+                  <span style="color: red">每日额外返水红包</span>
+                  <br />
                 </div>
                 <div class="item2">
-                  <div >1. 统计每日返水金额，对应VIP等级返水加赠比例派发。次日可领取每日额外返水红包彩金，返水红包积累至10元即可领取（不足10元则不可领取），彩金1倍流水即可提款。</div>
-                  <div><span style="color:red;">例：</span>VIP12会员当日的返水金额为1000元，则按照VIP12每日额外返水红包赠送比例2.0%计算：1000*2.0%=20元，返水红包为20元，会员可在页面上点击领取。</div>
+                  <div>
+                    1.
+                    统计每日返水金额，对应VIP等级返水加赠比例派发。次日可领取每日额外返水红包彩金，返水红包积累至10元即可领取（不足10元则不可领取），彩金1倍流水即可提款。
+                  </div>
+                  <div>
+                    <span style="color: red">例：</span>
+                    VIP12会员当日的返水金额为1000元，则按照VIP12每日额外返水红包赠送比例2.0%计算：1000*2.0%=20元，返水红包为20元，会员可在页面上点击领取。
+                  </div>
                 </div>
               </div>
               <div class="outitem">
-                <div class="item" >
+                <div class="item">
                   <div class="item-num">6</div>
-                    <span style="color:red;">每月15号红包</span><br>
+                  <span style="color: red">每月15号红包</span>
+                  <br />
                 </div>
                 <div class="item2">
-                  <div >1. 会员日为每月15号00:00起：雷火会员在上个月有任意一笔有效存款，即可在会员日15号00:00至21号23:59期间领取对应等级的会员日礼金（以领取时的等级为准）会员礼金仅需三倍流水即可出款，过期未领者则视为主动放弃：</div>
+                  <div>
+                    1.
+                    会员日为每月15号00:00起：东赢会员在上个月有任意一笔有效存款，即可在会员日15号00:00至21号23:59期间领取对应等级的会员日礼金（以领取时的等级为准）会员礼金仅需三倍流水即可出款，过期未领者则视为主动放弃：
+                  </div>
                 </div>
               </div>
               <div class="outitem">
-                <div class="item" >
+                <div class="item">
                   <div class="item-num">7</div>
-                    <span style="color:red;">充值赠送20%奖金</span><br>
+                  <span style="color: red">充值赠送20%奖金</span>
+                  <br />
                 </div>
                 <div class="item2">
-                  <div >1. VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在15日内在充值页面进行勾选优惠使用，成功使用后需要（本金+彩金）x8倍流水即可提款；</div>
+                  <div>
+                    1.
+                    VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在15日内在充值页面进行勾选优惠使用，成功使用后需要（本金+彩金）x8倍流水即可提款；
+                  </div>
                   <div>2. 加码券使用当日不可与其他存款优惠共享。</div>
                 </div>
               </div>
@@ -781,7 +851,7 @@ onMounted(() => {
     line-height: 36px;
     color: #000000;
     .item2 {
-      margin-left: 66px;;
+      margin-left: 66px;
     }
     .item {
       padding-left: 24px;

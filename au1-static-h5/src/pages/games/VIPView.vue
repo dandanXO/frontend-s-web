@@ -725,62 +725,62 @@ const columns4 = [
 const rows4 = [
   {
     name: "VIP 1",
-    ugprade: "3.88",
+    ugprade: "3.8",
     flow: "x10"
   },
   {
     name: "VIP 2",
-    ugprade: "8.88",
+    ugprade: "8.8",
     flow: "x10"
   },
   {
     name: "VIP 3",
-    ugprade: "18.88",
+    ugprade: "18.8",
     flow: "x10"
   },
   {
     name: "VIP 4",
-    ugprade: "38.88",
+    ugprade: "38.8",
     flow: "x10"
   },
   {
     name: "VIP 5",
-    ugprade: "58.88",
+    ugprade: "58.8",
     flow: "x10"
   },
   {
     name: "VIP 6",
-    ugprade: "88.88",
+    ugprade: "88.8",
     flow: "x10"
   },
   {
     name: "VIP 7",
-    ugprade: "188.88",
+    ugprade: "188.8",
     flow: "x10"
   },
   {
     name: "VIP 8",
-    ugprade: "388.88",
+    ugprade: "388.8",
     flow: "x10"
   },
   {
     name: "VIP 9",
-    ugprade: "888.88",
+    ugprade: "888.8",
     flow: "x10"
   },
   {
     name: "VIP 10",
-    ugprade: "2,888.88",
+    ugprade: "2,888.8",
     flow: "x10"
   },
   {
     name: "VIP 11",
-    ugprade: "5,888.88",
+    ugprade: "5,888.8",
     flow: "x10"
   },
   {
     name: "VIP 12",
-    ugprade: "8,888.88",
+    ugprade: "8,888.8",
     flow: "x10"
   }
 ];

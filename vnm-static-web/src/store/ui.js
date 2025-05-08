@@ -34,13 +34,16 @@ export const uiStore = defineStore("ui-store", {
     },
     getAppDownloadUrl() {
       this.isFetchingDownloadUrl = true;
-      this.downloadUrl = getAppDownloadUrlFromServer().then((res) => {
-        this.isFetchingDownloadUrl = false;
-        return res.downloadPageUrl
-      }).catch((err) => {
+      this.downloadUrl = getAppDownloadUrlFromServer()
+        .then((res) => {
+          this.isFetchingDownloadUrl = false;
+          return res.downloadPageUrl;
+        })
+        .catch((err) => {
           console.log(err);
           this.isFetchingDownloadUrl = false;
-        }).finally(() => {
+        })
+        .finally(() => {
           this.isFetchingDownloadUrl = false;
         });
     }
