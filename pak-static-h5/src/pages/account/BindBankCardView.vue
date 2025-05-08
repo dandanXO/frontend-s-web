@@ -503,7 +503,7 @@ const onCaptchaSubmit = () => {
 };
 
 
-const timer = ref(1); // Timer starts at 60 seconds
+const timer = ref(60); // Timer starts at 60 seconds
   let intervalId = null;
   // Method to start the countdown timer
   function startTimer() {
