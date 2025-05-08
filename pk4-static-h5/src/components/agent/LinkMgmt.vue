@@ -499,6 +499,7 @@ onMounted(() => {
     .qr-url {
       white-space: nowrap;
       overflow-x: scroll;
+      max-width: 270px;
     }
   }
 
