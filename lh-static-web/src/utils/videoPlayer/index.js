@@ -40,6 +40,7 @@ export class VideoPlayer {
       AUTO_PLAY_FAILED: "AUTO_PLAY_FAILED"
     };
     this._eventTarget = new EventTarget();
+    this._registeredEvents = [];
     /** @type {SupportPlayer} */
     this.SupportPlayer = "NONE";
 
@@ -61,6 +62,8 @@ export class VideoPlayer {
   }
 
   async init() {
+    if (this._player) this.destroy();
+
     if (this._mediaType === "hls") {
       this._player = await initHls(this._url, this._config, this.videoEl);
       if (!this._player) {
@@ -86,10 +89,6 @@ export class VideoPlayer {
 
   async load(startPlay = false) {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        reject(new Error("Media source load Timeout"));
-      }, 5000);
-
       if (this._mediaType === "hls") {
         this._player.on(this.Events.MANIFEST_PARSED, async () => {
           startPlay && (await this.play());
@@ -164,10 +163,26 @@ export class VideoPlayer {
   }
 
   on(event, handler) {
+    let type;
     if (Object.keys(this._customEvents).includes(event)) {
       this._eventTarget.addEventListener(event, handler);
+      type = "CUSTOM";
     } else {
       this._player.on(event, handler);
+      type = "PLAYER";
+    }
+    this._registeredEvents.push({ type, event, handler });
+  }
+
+  off() {
+    while (this._registeredEvents.length) {
+      const { type, event, handler } = this._registeredEvents.pop();
+
+      if (type === "CUSTOM") {
+        this._eventTarget.removeEventListener(event, handler);
+      } else {
+        this._player.off(event, handler);
+      }
     }
   }
 
@@ -181,6 +196,7 @@ export class VideoPlayer {
       this._player.detachMediaElement();
       this._player.destroy();
     }
+    this.off();
     this._player = null;
   }
 }

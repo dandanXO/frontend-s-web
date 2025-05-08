@@ -6,7 +6,7 @@
     @mouseenter="handleWrapperMouseEnter"
     @mouseleave="handleWrapperMouseLeave"
   >
-  current video url: {{ currentVideoUrl}}
+    current video url: {{ currentVideoUrl }}
     <template v-if="isPlayerSupported">
       <video
         ref="videoRef"
@@ -133,6 +133,22 @@
       <div v-if="!isLivestreaming" class="livestream-video-mask" @click.stop>
         <span>直播尚未开始</span>
       </div>
+      <div v-if="isVideoLoadFailed" class="livestream-video-mask" @click.stop>
+        <button class="btn" @click="loadData">
+          <img src="@/assets/home/livestream/icon-reload.png" />
+        </button>
+        <span>点击重新加载视频</span>
+        <p class="livestream-video-mask-text-content">
+          视频加载失败
+          <template v-if="env !== 'production'">
+            <span>错误讯息：{{ videoLoadFailedReason }}</span>
+          </template>
+        </p>
+      </div>
+      <div v-if="isVideoLoading" class="livestream-video-mask">
+        <div class="loader" />
+        <span>正在加载视频...</span>
+      </div>
     </template>
     <div v-else class="livestream-unsupported">不支援的浏览器</div>
   </div>
@@ -179,6 +195,7 @@ const DANMU_CONFIG = {
 };
 
 const DEFAULT_QUALITY = "original";
+const env = process.env.NODE_ENV;
 
 const props = defineProps(["danmuList", "channels", "livestreamData", "isLivestreaming"]);
 const { danmuList, channels, livestreamData, isLivestreaming } = toRefs(props);
@@ -195,6 +212,9 @@ const videoWrapperMouseLeaveTimer = ref(null);
 const showPlayerController = ref(false);
 const isPlayerSupported = ref(true);
 const isPlayerConfigLoaded = ref(false);
+const isVideoLoadFailed = ref(false);
+const isVideoLoading = ref(false);
+const videoLoadFailedReason = ref("");
 const showUnmuteMask = ref(false);
 /** @type {import("vue").Ref< VideoPlayer | null>}*/
 const player = ref(null);
@@ -233,6 +253,9 @@ const disableVideoController = computed(() => showUnmuteMask.value || !isLivestr
 
 const loadPlayer = async () => {
   getQualities();
+  if (player.value) {
+    player.value.destroy();
+  }
   player.value = new VideoPlayer(
     {
       mediaType: "hls",
@@ -253,7 +276,9 @@ const initPlayer = async (play = false) => {
   isPlayerSupported.value = player.value.SupportPlayer !== "NONE";
   player.value.on(player.value.Events.ERROR, handlePlayerError);
   player.value.on(player.value.Events.AUTO_PLAY_FAILED, handleAutoPlayFailed);
+  isVideoLoading.value = true;
   await player.value.load(play);
+  isVideoLoading.value = false;
 };
 
 const loadDanmu = async () => {
@@ -361,10 +386,13 @@ const handlePlayerProgress = () => {
 };
 
 const handlePlayerError = (event, data) => {
-  console.log(e);
+  console.error(data);
   if (!playerConfig.value.isPause) {
     changePlayerConfig("isPause", true);
   }
+  isVideoLoadFailed.value = true;
+  videoLoadFailedReason.value = JSON.stringify(data);
+  isVideoLoading.value = false;
 };
 
 const handleAutoPlayFailed = () => {
@@ -411,7 +439,12 @@ const pause = () => {
   handlePauseChange(true);
 };
 
-const loadData = () => Promise.all([loadPlayer(), loadDanmu()]).then(loadPlayerConfig);
+const loadData = () => {
+  if (!isLivestreaming.value) return;
+  isVideoLoadFailed.value = false;
+  videoLoadFailedReason.value = "";
+  Promise.all([loadPlayer(), loadDanmu()]).then(loadPlayerConfig);
+};
 
 watch(danmuList, () => {
   if (danmuList.value.length && danmu.value) {
@@ -424,10 +457,7 @@ watch(danmuList, () => {
   }
 });
 
-watch(livestreamData, () => {
-  if (!isLivestreaming.value) return;
-  loadData();
-});
+watch(livestreamData, loadData);
 
 onMounted(() => {
   // loadData();
@@ -537,6 +567,57 @@ defineExpose({
     width: 100%;
     height: 100%;
     color: #fff;
+
+    .livestream-video-mask-text-content {
+      max-width: 100%;
+    }
+  }
+
+  /* HTML: <div class="loader"></div> */
+  .loader {
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 8px solid #3981ff;
+    animation: l20-1 0.8s infinite linear alternate, l20-2 1.6s infinite linear;
+    margin-bottom: 10px;
+  }
+  @keyframes l20-1 {
+    0% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
+    }
+    12.5% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
+    }
+    25% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%);
+    }
+    50% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
+    }
+    62.5% {
+      clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
+    }
+    75% {
+      clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
+    }
+    100% {
+      clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
+    }
+  }
+  @keyframes l20-2 {
+    0% {
+      transform: scaleY(1) rotate(0deg);
+    }
+    49.99% {
+      transform: scaleY(1) rotate(135deg);
+    }
+    50% {
+      transform: scaleY(-1) rotate(0deg);
+    }
+    100% {
+      transform: scaleY(-1) rotate(-135deg);
+    }
   }
 }
 </style>
