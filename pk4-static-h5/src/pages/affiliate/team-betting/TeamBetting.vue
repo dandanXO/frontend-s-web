@@ -2,11 +2,11 @@
     <div class="my-dividend-container">
 
         <div class="tabs">
-            <div class="tab-item" :class="{ active: selectedTab === 'All' }" @click="selectedTab = 'All'">All</div>
-            <div class="tab-item" :class="{ active: selectedTab === 'Slot' }" @click="selectedTab = 'Slot'">Slot</div>
-            <div class="tab-item" :class="{ active: selectedTab === 'Live' }" @click="selectedTab = 'Live'">Live</div>
-            <div class="tab-item" :class="{ active: selectedTab === 'Fish' }" @click="selectedTab = 'Fish'">Fish</div>
-            <div class="tab-item" :class="{ active: selectedTab === 'Poker' }" @click="selectedTab = 'Poker'">Poker
+            <div class="tab-item" :class="{ active: typesSelection.label === 'All' }" @click="typesSelection.label = 'All'">All</div>
+            <div class="tab-item" :class="{ active: typesSelection.label === 'Slot' }" @click="typesSelection.label = 'Slot'">Slot</div>
+            <div class="tab-item" :class="{ active: typesSelection.label === 'Live' }" @click="typesSelection.label = 'Live'">Live</div>
+            <div class="tab-item" :class="{ active: typesSelection.label === 'Fish' }" @click="typesSelection.label = 'Fish'">Fish</div>
+            <div class="tab-item" :class="{ active: typesSelection.label === 'Poker' }" @click="typesSelection.label = 'Poker'">Poker
             </div>
         </div>
 
