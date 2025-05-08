@@ -26,6 +26,7 @@
         <span class="livestream-chat-item__message">{{ message.content }}</span>
       </div>
     </div>
+
     <div class="livestream-chat-input-wrapper" :style="chatBoxStyle">
       <q-form class="livestream-chat-input-inner-wrapper q-px-md" @submit.enter.prevent>
         <q-btn class="bet-btn" rounded label="投一注" @click="openGame('IM体育', 'IM', '', '')" />
@@ -41,6 +42,10 @@
           standout
         >
           <template v-slot:append>
+            <q-btn icon="emoji_emotions" round flat dense @click="togglePopover"></q-btn>
+            <template v-if="popoverRef">
+              <div class="emoji-picker" ref="emojiPickerRef"></div>
+            </template>
             <q-btn
               class="livestream-chat-input-btn"
               type="submit"
@@ -56,12 +61,6 @@
       </q-form>
     </div>
   </div>
-
-  <!-- <pre>
-    isMessageSendable--{{ isMessageSendable }}
-    messageToSend--{{ messageToSend }}
-  </pre> -->
-
   <GameModal ref="gameRef" />
 </template>
 
@@ -72,6 +71,7 @@ import { userStore } from "stores/index";
 import { useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { useLocalStorage } from "@vueuse/core";
+import { Picker } from "emoji-mart";
 
 const now = Date.now();
 
@@ -85,6 +85,8 @@ const emit = defineEmits(["sendChatMessage"]);
 
 const messageToSend = ref("");
 const chatListRef = ref(null);
+const emojiPickerRef = ref(null);
+const isPopoverVisible = ref(false);
 
 const isDark = computed(() => $q.dark.isActive);
 const profilePhotoDir = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/profile/";
@@ -107,6 +109,7 @@ const inputConfig = computed(() => {
 
 const handleSendChatMessage = () => {
   emit("sendChatMessage", messageToSend.value);
+  popoverRef.value = false;
   messageToSend.value = "";
 };
 
@@ -152,7 +155,40 @@ const openGame = (gameName, code, gameCode) => {
   }
 };
 
-onMounted(() => {});
+const handleEmojiSelect = (emoji) => {
+  messageToSend.value += emoji.native;
+};
+
+const popoverRef = ref(false);
+const togglePopover = () => {
+  popoverRef.value = !popoverRef.value;
+  emojiPick();
+};
+
+const emojiPick = () => {
+  nextTick(() => {
+    const picker = new Picker({
+      data: async () => {
+        const response = await fetch("/emoji.json");
+        return response.json();
+      },
+      locale: "zh",
+      theme: isDark.value ? "dark" : "light",
+      skinTonePosition: "none",
+      onEmojiSelect: handleEmojiSelect
+    });
+
+    if (emojiPickerRef.value) {
+      emojiPickerRef.value.appendChild(picker);
+    } else {
+      console.error("Emoji picker reference is not available.");
+    }
+  });
+};
+
+onMounted(() => {
+  // emojiPick();
+});
 
 // onBeforeUnmount(() => {
 // clearInterval(messageInterval);
@@ -382,5 +418,11 @@ onMounted(() => {});
       background: #0f182e !important;
     }
   }
+}
+
+.emoji-picker {
+  position: fixed;
+  bottom: 60px;
+  right: 0;
 }
 </style>
