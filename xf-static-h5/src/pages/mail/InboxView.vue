@@ -21,7 +21,7 @@ export default defineComponent({
       orderBy: "sendTime"
     })
     const loadInbox = () => {
-      api.get("/session/feedback/replies", {
+      api.get("/session/feedback/messages", {
         params: {
           type: mailboxData.value.type,
           orderBy: mailboxData.value.orderBy

@@ -18,7 +18,7 @@
               </el-button>
             </div>
 
-            <div class="mailbox-list">
+            <div v-if="!isLoading" class="mailbox-list">
               <template v-for="(m, mi) in mailboxState.mailboxList.sent.list" :key="m.id">
                 <div :class="`mailbox-item`" @click="openMsg(m)">
                   <div class="mailbox-preview">
@@ -39,6 +39,9 @@
                   </div>
                 </div>
               </template>
+            </div>
+            <div v-else class="mailbox-list">
+              <div class="empty-text">加载中...</div>
             </div>
             <div class="pagination-wrapper" :class="{ hidden: mailOpened }">
               <el-pagination
@@ -152,7 +155,7 @@ const mailboxState = reactive({
     sent: {
       list: [],
       pageNum: 1,
-      pageSize: 4,
+      pageSize: 8,
       total: 0
     },
     write: {
@@ -163,9 +166,19 @@ const mailboxState = reactive({
     }
   }
 });
+const isLoading = ref(false);
 const loadFeedbackReplies = () => {
-  getFeedbackReplies()
+  
+  isLoading.value = true
+  const query = { 
+    type: null,
+    current: mailboxState.mailboxList[mailboxState.active].pageNum,
+    size: mailboxState.mailboxList[mailboxState.active].pageSize,
+    orderBy: "sendTime"
+  }
+  getFeedbackReplies(query)
     .then((res) => {
+      isLoading.value = false
       const { code, data } = res;
       if (code === 0) {
         mailboxState.mailboxList[mailboxState.active].list = [];
@@ -185,12 +198,15 @@ const changePage = (key) => {
 };
 
 const mailTabChange = (nk) => {
+  mailboxState.mailboxList["sent"].pageNum = 1
   mailboxState.active = nk.props.name;
   if (nk.props.name !== "write") {
     const mailList = mailboxState.mailboxList[nk.props.name].list;
-    if (mailList.length === 0) {
-      loadFeedbackReplies();
-    }
+    // if (mailList.length === 0) {
+    //   loadFeedbackReplies();
+    // }
+    
+    loadFeedbackReplies();
   }
 };
 
@@ -317,6 +333,14 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+.empty-text {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+  color: #000000;
+}
 .account-container {
   .account-content-wrapper {
     .account-content.mail {
