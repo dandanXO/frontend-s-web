@@ -394,7 +394,8 @@ export default {
     "editRebate": "ریبیٹ میں ترمیم",
     "securityCenter": "سیکیورٹی سینٹر",
     "internalMessage": "اندرونی پیغام",
-    "customerService": "کسٹمر سروس"
+    "customerService": "کسٹمر سروس",
+    linkManagement: "لنک کا انتظام"
   },
   affiliate: {
     main: {

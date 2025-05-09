@@ -399,6 +399,7 @@ export default {
     "securityCenter": "Security Center",
     "internalMessage": "Internal Message",
     "customerService": "Customer Service",
+    linkManagement: "Link Management"
   },
   affiliate: {
     main: {
