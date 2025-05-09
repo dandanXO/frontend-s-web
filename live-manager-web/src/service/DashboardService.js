@@ -176,9 +176,9 @@ export const DashboardService = {
       }
     })
   },
-  updateRoomTitle(streamId, title) {
+  updateRoomInfo(streamId, title, message) {
     const token = sessionStorage.getItem('token')
-    return api.put(`/session/title/${streamId}`, { title }, {
+    return api.put(`/session/info/${streamId}`, { title, message }, {
       headers: {
         'token': `${token}`
       }

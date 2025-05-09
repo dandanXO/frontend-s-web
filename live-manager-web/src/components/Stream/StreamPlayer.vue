@@ -99,6 +99,27 @@
           </div>
         </div>
       </TabPanel>
+      <TabPanel header="聊天室訊息">
+        <div class="info-item">
+              <span class="label">聊天室標題</span>
+              <template v-if="isOwnStream">
+                <InputText v-model="roomTitle" placeholder="請輸入聊天室標題" style="width: 100%" />
+              </template>
+              <template v-else>
+                <span class="value">{{ stream.roomTitle || '-' }}</span>
+              </template>
+            </div>
+            <div class="info-item">
+              <span class="label">聊天室公告</span>
+              <template v-if="isOwnStream">
+                <Textarea v-model="roomMessage" placeholder="請輸入聊天室公告" autoResize rows="2" style="width: 100%" />
+              </template>
+              <template v-else>
+                <span class="value">{{ stream.roomMessage || '-' }}</span>
+              </template>
+            </div>
+            <Button v-if="isOwnStream" label="儲存聊天室資訊" :loading="isRoomInfoSaving" class="p-button-success" style="margin-bottom: 8px" @click="saveRoomInfo" />
+      </TabPanel>
       <TabPanel header="聊天紀錄">
         <DataTable
             :value="chatMessages"
@@ -136,6 +157,8 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import dayjs from 'dayjs';
 import ChatBlockControl from "@/views/chat-block/ChatBlockControl.vue";
+import InputText from 'primevue/inputtext'
+import Textarea from 'primevue/textarea'
 
 const route = useRoute()
 const props = defineProps({
@@ -147,6 +170,8 @@ const props = defineProps({
     type: Object,
     default: () => ({
       title: '',
+      roomTitle: '',
+      roomMessage: '',
       playUrls: {
         hls: '',
         flv: '',
@@ -795,6 +820,37 @@ watch(currentQuality, (newQuality) => {
     currentPlayerType.value = 'supplier'
   }
 })
+
+const roomTitle = ref(props.stream?.roomTitle || '')
+const roomMessage = ref(props.stream?.roomMessage || '')
+const isRoomInfoSaving = ref(false)
+
+watch(
+  () => props.stream,
+  (newStream) => {
+    roomTitle.value = newStream?.roomTitle || ''
+    roomMessage.value = newStream?.roomMessage || ''
+  },
+  { immediate: true, deep: true }
+)
+
+// 儲存聊天室資訊
+const saveRoomInfo = async () => {
+  isRoomInfoSaving.value = true
+  try {
+    const res = await DashboardService.updateRoomInfo(props.stream.streamerStreamId, roomTitle.value, roomMessage.value)
+    if (res) {
+      toast.add({ severity: 'success', summary: '成功', detail: '聊天室資訊已更新', life: 2000 })
+      emit('reload')
+    } else {
+      toast.add({ severity: 'error', summary: '錯誤', detail: '聊天室資訊更新失敗', life: 2000 })
+    }
+  } catch (e) {
+    toast.add({ severity: 'error', summary: '錯誤', detail: '聊天室資訊更新失敗', life: 2000 })
+  } finally {
+    isRoomInfoSaving.value = false
+  }
+}
 </script>
 
 <style scoped lang="scss">
