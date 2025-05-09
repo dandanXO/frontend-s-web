@@ -408,6 +408,11 @@ export default {
       onlineUsers: "Online Users",
       total: "Total",
       goodMorning: "Good morning"
+    },
+    account: {
+      memberReferralLink: "Member Referral Link",
+      agentReferralLink: "Agent Referral Link",
+      copiedToClipboard: "Copied to Clipboard"
     }
   },
   accountRecord: {

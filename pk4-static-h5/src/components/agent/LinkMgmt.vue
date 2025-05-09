@@ -3,34 +3,28 @@
     <div class="forum-card__header">
       <div class="forum-card__title">
         <img alt="forum" src="@/assets/images/agent/forum-icon.png" width="24" height="24" />
-        <span>PC 端推广链接</span>
+        <span>{{ $t('affiliate.account.memberReferralLink') }}</span>
       </div>
       <div class="forum-card__icons">
-        <img alt="forum" src="@/assets/images/agent/add-user-icon.png" width="16" height="16" />
+        <img alt="forum" src="@/assets/images/agent/link-icon.png" width="16" height="16"
+          @click="onClickQRCode('member', 'short')" />
         <div class="icon-divider"></div>
-        <img
-          alt="scan-qr"
-          src="@/assets/images/agent/scan-qr-icon.png"
-          width="16"
-          height="16"
-          @click="onClickQRCode('web')"
-        />
-        <div class="icon-divider"></div>
-        <img alt="delete" src="@/assets/images/agent/delete-icon.png" width="16" height="16" />
+        <img alt="scan-qr" src="@/assets/images/agent/scan-qr-icon.png" width="16" height="16"
+          @click="onClickQRCode('member')" />
         <div class="icon-divider"></div>
       </div>
     </div>
 
-      <div class="forum-card__info">
-        <div class="row-info">
-          <span>Creation Date</span>
-          <span>2025-04-28</span>
-        </div>
-        <div class="row-info">
-          <span>Date Of Expiry</span>
-          <span>2025-04-29</span>
-        </div>
+    <div class="forum-card__info">
+      <div class="row-info">
+        <span>Creation Date</span>
+        <span>-</span>
       </div>
+      <div class="row-info">
+        <span>Date Of Expiry</span>
+        <span>-</span>
+      </div>
+    </div>
 
     <q-separator class="forum-card__separator" />
 
@@ -51,34 +45,28 @@
     <div class="forum-card__header">
       <div class="forum-card__title">
         <img alt="forum" src="@/assets/images/agent/forum-icon.png" width="24" height="24" />
-        <span>H5 版推广链接（推荐使用）</span>
+        <span>{{ $t('affiliate.account.agentReferralLink') }}</span>
       </div>
       <div class="forum-card__icons">
-        <img alt="forum" src="@/assets/images/agent/add-user-icon.png" width="16" height="16" />
+        <img alt="forum" src="@/assets/images/agent/link-icon.png" width="16" height="16"
+          @click="onClickQRCode('agent', 'short')" />
         <div class="icon-divider"></div>
-        <img
-          alt="scan-qr"
-          src="@/assets/images/agent/scan-qr-icon.png"
-          width="16"
-          height="16"
-          @click="onClickQRCode('h5')"
-        />
-        <div class="icon-divider"></div>
-        <img alt="delete" src="@/assets/images/agent/delete-icon.png" width="16" height="16" />
+        <img alt="scan-qr" src="@/assets/images/agent/scan-qr-icon.png" width="16" height="16"
+          @click="onClickQRCode('agent')" />
         <div class="icon-divider"></div>
       </div>
     </div>
 
-      <div  class="forum-card__info">
-        <div class="row-info">
-          <span>Creation Date</span>
-          <span>2025-04-28</span>
-        </div>
-        <div class="row-info">
-          <span>Date Of Expiry</span>
-          <span>2025-04-29</span>
-        </div>
+    <div class="forum-card__info">
+      <div class="row-info">
+        <span>Creation Date</span>
+        <span>-</span>
       </div>
+      <div class="row-info">
+        <span>Date Of Expiry</span>
+        <span>-</span>
+      </div>
+    </div>
 
     <q-separator class="forum-card__separator" />
 
@@ -89,55 +77,7 @@
     </div>
 
     <div class="forum-card__footer">
-      <div class="footer-item red">Member</div>
-      <div class="footer-item blue">0</div>
-      <div class="footer-item green">Normal</div>
-    </div>
-  </div>
-
-  <div class="forum-card">
-    <div class="forum-card__header">
-      <div class="forum-card__title">
-        <img alt="forum" src="@/assets/images/agent/forum-icon.png" width="24" height="24" />
-        <span>短域名</span>
-      </div>
-      <div class="forum-card__icons">
-        <img alt="forum" src="@/assets/images/agent/add-user-icon.png" width="16" height="16" />
-        <div class="icon-divider"></div>
-        <img
-          alt="scan-qr"
-          src="@/assets/images/agent/scan-qr-icon.png"
-          width="16"
-          height="16"
-          @click="onClickQRCode('short')"
-        />
-        <div class="icon-divider"></div>
-        <img alt="delete" src="@/assets/images/agent/delete-icon.png" width="16" height="16" />
-        <div class="icon-divider"></div>
-      </div>
-    </div>
-
-      <div  class="forum-card__info">
-        <div class="row-info">
-          <span>Creation Date</span>
-          <span>2025-04-28</span>
-        </div>
-        <div class="row-info">
-          <span>Date Of Expiry</span>
-          <span>2025-04-29</span>
-        </div>
-      </div>
-
-    <q-separator class="forum-card__separator" />
-
-    <div class="forum-card__subtitles">
-      <span>RegisterTypes</span>
-      <span>Registers</span>
-      <span>Status</span>
-    </div>
-
-    <div class="forum-card__footer">
-      <div class="footer-item red">Member</div>
+      <div class="footer-item red">Agent</div>
       <div class="footer-item blue">0</div>
       <div class="footer-item green">Normal</div>
     </div>
@@ -150,7 +90,7 @@
         <div class="qr-header">
           <div class="qr-header-left">
             <img alt="forum" src="@/assets/images/agent/forum-icon.png" width="24" height="24" />
-            <span class="qr-title">{{ affCode }}</span>
+            <span class="qr-title">{{ '' }}</span>
           </div>
           <span class="qr-subtitle">QR code</span>
         </div>
@@ -181,121 +121,126 @@ import { userStore } from "src/stores";
 import { ref, onMounted } from "vue";
 import VueQRCodeComponent from "vue-qrcode-component";
 import { useQuasar, Platform } from "quasar";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 var qs = require('qs');
 const $q = useQuasar();
 const store = userStore();
 const referralLink = ref('');
-const webLink = ref('');
+const longUrl = ref('');
 const shortUrl = ref('');
 const affCode = ref('');
-
-const cards = ref(
-  Array.from({ length: 4 }, (_, i) => ({
-    id: i + 1,
-    expanded: false
-  }))
-);
+const isScanQrDialog = ref(false);
 
 
-const onClickQRCode = (type) => {
-  isScanQrDialog.value = true;
-  let newLongUrl = '';
-  let newShortUrl = '';
-  referralLink.value = '';
-
-  if(type === 'web') {
-    newLongUrl = `${webLink.value}agent/${affCode.value}`;
-    referralLink.value = newLongUrl;
-  } else if(type === 'h5') {
-    newLongUrl = `${webLink.value}agent/${affCode.value}`;
-    referralLink.value = newLongUrl;
-  } else if(type === 'short') {
-    newShortUrl = `${shortUrl.value}/agent/${affCode.value}`;
-    referralLink.value = newShortUrl;
-  }
-
-  api.post('/session/affiliate/short-link', qs.stringify({
-    linkType: 'WEB',
-    urlType: 'WX',
-    longUrl: newLongUrl,
-    shortUrl: newShortUrl,
-    affiliateId: store.memberId,
-    siteId: 26
-  })).then((res) => {
-    console.log('here', res)
-  })
+const generateShortCode = () => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let code = '';
+    
+    for (let i = 0; i < 3; i++) {
+        code += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    
+    const timestamp = Date.now().toString(36).slice(-3); // Convert time to a base-36 string & take last 3 chars
+    return code + timestamp;
 }
 
-const isScanQrDialog = ref(false);
+const onClickQRCode = (memberType, linkLengthType = 'long') => {
+  referralLink.value = '';
+  const baseUrl = linkLengthType === 'long' ? longUrl.value : shortUrl.value;
+  
+  if (linkLengthType === 'long') {
+    referralLink.value = baseUrl + memberType + `/${affCode.value}`;
+    isScanQrDialog.value = true;
+  } else if (linkLengthType === 'short') {
+    const shortCode = generateShortCode();
+    
+    api.post('/session/affiliate/short-link', qs.stringify({
+      linkType: 'WEB',
+      urlType: 'WX',
+      longUrl: shortUrl.value,
+      shortUrl: shortCode,
+      affiliateId: store.memberId,
+      siteId: 26
+    })).then((res) => {
+      referralLink.value = shortUrl.value + `/${shortCode}`;
+      isScanQrDialog.value = true;
+    })
+  }
+}
+
+
+
 
 const getLinkList = () => {
   api.get('/session/affiliate/referral-link').then((res) => {
-    const { webLink: newWebLink, shortUrl: newShortUrl } = res.data.reduce((acc, curr) => {
-      if(curr.code === 'affiliate_h5_link') {
-        return {...acc, webLink: curr.value}
+    const { longUrl: newLongUrl, shortUrl: newShortUrl } = res.data.reduce((acc, curr) => {
+      if (curr.code === 'affiliate_h5_link') {
+        return { ...acc, longUrl: curr.value }
       }
 
-      if(curr.code === 'affiliate_short_url_platform') {
-        return {...acc, shortUrl: curr.value}
+      if (curr.code === 'affiliate_short_url_platform') {
+        return { ...acc, shortUrl: curr.value }
       }
-    }, {webLink: '', shortUrl: ''});
+    }, { longUrl: '', shortUrl: '' });
 
-    webLink.value = newWebLink;
+    longUrl.value = newLongUrl;
     shortUrl.value = newShortUrl;
   });
+
   api.get('/session/affiliate').then((res) => {
     affCode.value = res.data.affiliateCode;
   })
 }
 
 const copyText = (text) => {
-      copyToClipboard(text);
-      setTimeout(() => {
-        $q.notify({
-          color: "positive",
-          position: "top",
-          message: "复制成功！",
-          icon: "check_circle_outline"
-        });
-      }, 100)
+  copyToClipboard(text);
+  setTimeout(() => {
+    $q.notify({
+      color: "positive",
+      position: "top",
+      message: t('affiliate.account.copiedToClipboard'),
+      icon: "check_circle_outline"
+    });
+  }, 100)
 
+}
+
+async function copyToClipboard(textToCopy) {
+  // alert(window.isSecureContext);
+  // alert(navigator.clipboard);
+  // alert(Platform.is.chrome);
+  // Navigator clipboard api needs a secure context (https)
+  if (store.getDeviceType() === 'ANDROID') {
+    await Clipboard.write({
+      string: textToCopy
+    });
+  } else if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
+    await navigator.clipboard.writeText(textToCopy);
+  } else {
+    // Use the 'out of viewport hidden text area' trick
+    const textArea = document.createElement("textarea");
+    textArea.value = textToCopy;
+
+    // Move textarea out of the viewport so it's not visible
+    textArea.style.position = "absolute";
+    textArea.style.left = "-999999px";
+
+    document.body.prepend(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      document.execCommand("copy");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      document.body.removeChild(textArea);
+      // textArea.remove();
     }
-
-    async function copyToClipboard(textToCopy) {
-      // alert(window.isSecureContext);
-      // alert(navigator.clipboard);
-      // alert(Platform.is.chrome);
-      // Navigator clipboard api needs a secure context (https)
-      if (store.getDeviceType() === 'ANDROID') {
-        await Clipboard.write({
-          string: textToCopy
-        });
-      } else if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
-        await navigator.clipboard.writeText(textToCopy);
-      } else {
-        // Use the 'out of viewport hidden text area' trick
-        const textArea = document.createElement("textarea");
-        textArea.value = textToCopy;
-
-        // Move textarea out of the viewport so it's not visible
-        textArea.style.position = "absolute";
-        textArea.style.left = "-999999px";
-
-        document.body.prepend(textArea);
-        textArea.focus();
-        textArea.select();
-
-        try {
-          document.execCommand("copy");
-        } catch (error) {
-          console.error(error);
-        } finally {
-          document.body.removeChild(textArea);
-          // textArea.remove();
-        }
-      }
-    }
+  }
+}
 
 onMounted(() => {
   getLinkList();
@@ -477,13 +422,14 @@ onMounted(() => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     .qr-caption {
       color: #999;
       font-size: 13px;
       margin-top: 8px;
     }
-    .qr-code {
-    }
+
+    .qr-code {}
   }
 
   .qr-link-row {

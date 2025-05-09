@@ -405,6 +405,11 @@ export default {
       total: "کل",
       goodMorning: "صبح بخیر"
     },
+    account: {
+      memberReferralLink: "رکن حوالہ لنک",
+      agentReferralLink: "ایجنٹ حوالہ لنک",
+      copiedToClipboard: "کاپی کیا گیا"
+    }
   },
   dividend: {
     myDividend: "میرا حصہ",
