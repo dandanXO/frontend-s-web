@@ -99,7 +99,7 @@ const onClickQRCode = (memberType, linkLengthType = 'long') => {
   const baseUrl = linkLengthType === 'long' ? longUrl.value : shortUrl.value;
   
   if (linkLengthType === 'long') {
-    referralLink.value = baseUrl + memberType + `/${affCode.value}`;
+    referralLink.value = baseUrl + memberType + `/${affCode.value}?reg=1`;
     isScanQrDialog.value = true;
   } else if (linkLengthType === 'short') {
     const shortCode = generateShortCode();
