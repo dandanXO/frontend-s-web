@@ -33,25 +33,12 @@
             <span>{{ mission.title }}</span>
             <!-- <div v-if="mission.name === 'wheel-reward'" class="mission-title-extra">$15 12d 14:42:44</div> -->
           </div>
-          <!-- <q-icon name="help_outline">
-            <q-tooltip>
-              {{ mission.description }}
-            </q-tooltip>
-          </q-icon> -->
         </div>
-        <!-- <RouterLink :to="{ path: '/promo', query: { name: mission.redirectUrl } }">
-          <q-btn :loading="!isLoaded"  class="details" flat>
-            {{ mission.buttonMode === "API_CLAIM" ? $t("btn.claim") : $t("btn.details") }}
-            <span class="countdown-span" v-if="mission.countDown === true && mission.response?.eligible === true">
-              {{ mission.getCountDownStr }}
-            </span>
-          </q-btn>
-        </RouterLink> -->
         <q-btn
           :loading="mission.buttonMode === 'API_CLAIM' ? isClaimLoading : false"
           class="details"
           :class="{
-            claimable: ['API_CLAIM', 'CLAIM_REDIRECT'].includes(mission.buttonMode)
+            claimable: mission.response?.eligible === true
           }"
           flat
           @click="handleClick(mission)"
@@ -101,7 +88,9 @@ const props = defineProps({
   promoList: Array
 });
 const handleClick = async (mission) => {
-  if (mission.buttonMode === "API_CLAIM") {
+  if (mission.fastAccessRedirectUrl) {
+    router.push(`/${mission.fastAccessRedirectUrl}`);
+  } else if (mission.buttonMode === "API_CLAIM") {
     await claimApi(mission.claimApiUrl, mission.promoCode);
   } else {
     router.push({ path: "/promo", query: { name: mission.redirectUrl } });
@@ -151,13 +140,19 @@ function updateCountdown() {
       result[promo.promoCode].countDown = getCountdownWithDays(promo.response.promoEndTime);
     }
 
-    switch (promo.buttonMode) {
-      case "API_CLAIM":
-      case "CLAIM_REDIRECT":
-        result[promo.promoCode].btnText = t("btn.claim");
-        break;
-      default:
-        result[promo.promoCode].btnText = t("btn.details");
+    // switch (promo.buttonMode) {
+    //   case "API_CLAIM":
+    //   case "CLAIM_REDIRECT":
+    //     result[promo.promoCode].btnText = t("btn.claim");
+    //     break;
+    //   default:
+    //     result[promo.promoCode].btnText = t("btn.details");
+    // }
+
+    if (promo.response && promo.response.eligible === true) {
+      result[promo.promoCode].btnText = t("btn.claim");
+    } else {
+      result[promo.promoCode].btnText = t("btn.details");
     }
 
     if (promo.promoCode === "pak-refer-wheel-spin" && promo.response?.promoEndTime) {

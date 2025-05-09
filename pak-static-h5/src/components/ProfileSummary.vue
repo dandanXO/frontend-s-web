@@ -251,6 +251,9 @@ const getFastAccessPromo = () => {
   if (!store.token) return;
   isFastAccessPromoCounting.value = true;
   eligiblePromoCount.value = 1;
+  if (store.claimedFtdPrivilege === false) {
+    eligiblePromoCount.value++;
+  }
   api.get(`/promo/fast-access-promo?language=${i18nStoreLanguage.languageVal}`).then(async (res) => {
     if (res.code === 0) {
       let _fastAccessPromo;
