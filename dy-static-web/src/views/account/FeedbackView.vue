@@ -31,11 +31,18 @@
                   </div>
                 </div>
                 <div :class="`mailbox-content-wrapper ${m.isOpen ? 'open' : ''}`">
-                  <div class="mailbox-content" v-html="m.content || '加载中...'"></div>
-                  <div class="mailbox-date">
-                    <el-icon><Calendar /></el-icon>
-                    <div>{{ new Date(m.sendTime).toLocaleString("zh-CN") }}</div>
-                    <el-icon class="delete-btn"><Delete @click="deleteMsg(m.id, mi)" /></el-icon>
+                  <div class="mailbox-content">
+                    <div class="content-p">正文：
+                      <div v-html="m.content || '加载中...'"></div>
+                    </div>
+                    <div v-if="m.replyMessageContent" style="margin-top: 10px;" class="content-p">回复:
+                    <div class="mailbox-content" v-html="m.replyMessageContent || '加载中...'"></div>
+                    </div>
+                    <div class="mailbox-date">
+                      <el-icon><Calendar /></el-icon>
+                      <div>{{ new Date(m.sendTime).toLocaleString("zh-CN") }}</div>
+                      <el-icon class="delete-btn"><Delete @click="deleteMsg(m.id, mi)" /></el-icon>
+                    </div>
                   </div>
                 </div>
               </template>
@@ -440,7 +447,7 @@ onMounted(() => {
         color: #7a80a1;
 
         &.open {
-          max-height: 100px;
+          max-height: 200px;
         }
 
         .mailbox-content {

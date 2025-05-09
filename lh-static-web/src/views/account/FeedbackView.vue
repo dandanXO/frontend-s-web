@@ -102,6 +102,7 @@
                 </template>
                 <div>
                   <div class="content-p">正文：{{ item.content }}</div>
+                  <div v-if="item.replyMessageContent" style="margin-top: 10px;" class="content-p">回复: {{ item.replyMessageContent }}</div>
                 </div>
               </el-collapse-item>
             </el-collapse>
