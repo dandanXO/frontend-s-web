@@ -743,6 +743,7 @@ export default {
     alias: 'Alias',
     all: 'All',
     allBonus: 'All Bonus',
+    allowRedirect: 'Allow Redirect',
     allvip: 'All VIP',
     allfinanciallevel: 'All Financial Status',
     allprofit: 'All Profit',
