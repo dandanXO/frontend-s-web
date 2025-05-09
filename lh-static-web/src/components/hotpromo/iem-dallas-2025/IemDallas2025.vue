@@ -259,7 +259,7 @@ onMounted(() => {
       }
 
       &.disabled {
-        filter: grayscale(1);
+        // filter: grayscale(1);
         cursor: not-allowed;
         pointer-events: none;
       }
