@@ -18,14 +18,14 @@ export default defineComponent({
     const mailData = ref([]);
     const mailboxData = ref({
       type: null,
-      orderBy: "sendTime"
+      orderBy: "sendTime",
+      current: 1,
+      size: 100,
+      messageType: null
     })
     const loadInbox = () => {
       api.get("/session/feedback/messages", {
-        params: {
-          type: mailboxData.value.type,
-          orderBy: mailboxData.value.orderBy
-        }
+        params: mailboxData.value
       }).then((response) => {
         if (response.code === 0) {
           mailData.value = response.data.records
