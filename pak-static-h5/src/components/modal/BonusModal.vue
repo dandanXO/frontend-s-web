@@ -43,9 +43,9 @@
           flat
           @click="handleClick(mission)"
         >
-          {{ promoCountdown[mission.promoCode].btnText }}
+          {{ promoCountdown[mission.promoCode] ? promoCountdown[mission.promoCode].btnText : "" }}
           <span class="countdown-span" v-if="mission.countDown === true && mission.response?.eligible === true">
-            {{ promoCountdown[mission.promoCode].countDown }}
+            {{ promoCountdown[mission.promoCode] ? promoCountdown[mission.promoCode].countDown : "--:--" }}
           </span>
         </q-btn>
       </div>
@@ -128,23 +128,18 @@ const isClaimLoading = ref(false);
 const countdownTimerList = ref();
 const now = ref(Date.now());
 
-const promoCountdown = computed(() =>
-  props.promoList.reduce((result, promo) => {
+const promoCountdown = ref({});
+function updateCountdown() {
+  const result = {};
+  for (const promo of props.promoList) {
     result[promo.promoCode] = {};
-    if (promo.countDown && promo.response && promo.response.eligible === true) {
+
+    if (promo.countDown && promo.response?.eligible === true) {
       result[promo.promoCode].countDown = getCountdownWithDays(promo.response.promoEndTime);
     }
 
     switch (promo.buttonMode) {
       case "API_CLAIM":
-        result[promo.promoCode].btnText = t("btn.claim");
-        break;
-      case "API_REDIRECT":
-        result[promo.promoCode].btnText = t("btn.details");
-        break;
-      case "DETAILS":
-        result[promo.promoCode].btnText = t("btn.details");
-        break;
       case "CLAIM_REDIRECT":
         result[promo.promoCode].btnText = t("btn.claim");
         break;
@@ -152,13 +147,45 @@ const promoCountdown = computed(() =>
         result[promo.promoCode].btnText = t("btn.details");
     }
 
-    if (promo.promoCode === "pak-refer-wheel-spin" && promo.response && promo.response.promoEndTime) {
+    if (promo.promoCode === "pak-refer-wheel-spin" && promo.response?.promoEndTime) {
       result[promo.promoCode].btnText = t("btn.claim");
     }
+  }
 
-    return result;
-  }, {})
-);
+  promoCountdown.value = result;
+}
+
+// const promoCountdown = computed(() =>
+//   props.promoList.reduce((result, promo) => {
+//     result[promo.promoCode] = {};
+//     if (promo.countDown && promo.response && promo.response.eligible === true) {
+//       result[promo.promoCode].countDown = getCountdownWithDays(promo.response.promoEndTime);
+//     }
+//
+//     switch (promo.buttonMode) {
+//       case "API_CLAIM":
+//         result[promo.promoCode].btnText = t("btn.claim");
+//         break;
+//       case "API_REDIRECT":
+//         result[promo.promoCode].btnText = t("btn.details");
+//         break;
+//       case "DETAILS":
+//         result[promo.promoCode].btnText = t("btn.details");
+//         break;
+//       case "CLAIM_REDIRECT":
+//         result[promo.promoCode].btnText = t("btn.claim");
+//         break;
+//       default:
+//         result[promo.promoCode].btnText = t("btn.details");
+//     }
+//
+//     if (promo.promoCode === "pak-refer-wheel-spin" && promo.response && promo.response.promoEndTime) {
+//       result[promo.promoCode].btnText = t("btn.claim");
+//     }
+//
+//     return result;
+//   }, {})
+// );
 
 const imgURL = process.env.IMAGE_CDN + "/promo/";
 const openNewPlayerGuide = () => {
@@ -194,8 +221,10 @@ onUnmounted(() => {
 });
 
 onMounted(() => {
+  updateCountdown();
   setInterval(() => {
     now.value = Date.now();
+    updateCountdown();
   }, 1000);
 });
 </script>
@@ -262,19 +291,17 @@ onMounted(() => {
     max-height: 60vh;
     overflow-y: auto;
     .mission-item {
-      a {
-        text-decoration: none;
-      }
       display: flex;
       align-items: center;
-      // padding: 8px 8px 8px 6px;
-      padding: 0 0 0 6px;
-      // background-color: #81ff9e1a;
+      padding: 0 6px 0 6px;
       border-radius: 8px;
       min-height: 50px;
       background: #ffffff0d;
       border: 1px solid #55c2530d;
       box-shadow: 0px 4px 4px 0px #0000000d;
+      a {
+        text-decoration: none;
+      }
       .mission-icon {
         width: 40px;
         max-width: 10vw;
@@ -345,9 +372,10 @@ onMounted(() => {
             background-color: #f00;
             position: absolute;
             top: 0;
-            right: 5px;
+            right: -4px;
+            overflow: visible;
             left: unset;
-            transform: translate(0, -50%);
+            transform: translate(0%, -50%);
           }
         }
       }
