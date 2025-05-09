@@ -9,10 +9,10 @@
     </div>
     <div class="copy-link-container">
       <img src="../../assets/images/earn-money/share-referral.png" />
-      <div class="link-wrapper">
-        <div class="link">{{ selfTgurl }}</div>
+      <div class="link-wrapper" @click="copyShareLink(selfTgurl)">
+        <div class="link" >{{ selfTgurl }}</div>
         <div class="vertical-separator"></div>
-        <img src="../../assets/images/earn-money/share-copy-link.png" @click="copyShareLink(selfTgurl)" />
+        <img src="../../assets/images/earn-money/share-copy-link.png" />
       </div>
     </div>
   </div>
