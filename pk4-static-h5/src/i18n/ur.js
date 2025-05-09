@@ -396,6 +396,15 @@ export default {
     "internalMessage": "اندرونی پیغام",
     "customerService": "کسٹمر سروس"
   },
+  affiliate: {
+    main: {
+      logins: "لاگ ان",
+      noOfPlayers: "کھلاڑیوں کی تعداد",
+      registers: "رجسٹرز",
+      onlineUsers: "آن لائن صارفین",
+      total: "کل"
+    },
+  },
   dividend: {
     myDividend: "میرا حصہ",
     contractManagement: "معاہدہ انتظام",

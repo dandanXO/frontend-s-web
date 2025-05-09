@@ -400,6 +400,15 @@ export default {
     "internalMessage": "Internal Message",
     "customerService": "Customer Service",
   },
+  affiliate: {
+    main: {
+      logins: "Logins",
+      noOfPlayers: "No. of Players",
+      registers: "Registers",
+      onlineUsers: "Online Users",
+      total: "Total"
+    }
+  },
   accountRecord: {
     myDividend: 'My Dividend',
     contractManagement: 'Contract Management',

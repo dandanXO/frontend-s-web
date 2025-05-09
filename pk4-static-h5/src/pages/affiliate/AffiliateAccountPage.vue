@@ -9,8 +9,9 @@
         <div class="cs"><img src="../../assets/images/affiliate/cs.png"></div>
       </div>
       <div class="total-section">
-        <div class="total-txt">Total</div>
-        <div class="total-amt">{{ total }}</div>
+        <div class="total-txt">{{ $t('affiliate.main.total') }}</div>
+        <q-spinner v-if="isLoading" class="total-amt"/>
+        <div v-else class="total-amt"> {{ stats.total }}</div>
       </div>
     </div>
       
@@ -24,10 +25,26 @@
           <img src="../../assets/images/affiliate/btn-dep.png" />
         </router-link>
     </div>
-    <div class="data-section">
-      <div class="row-section" v-for="(item, i) in dataList" :key="i">
-        <span class="data-number">{{ item.number }}</span>
-        <span class="data-name">{{ item.name }}</span>
+    <div class="data-section" @click="initData">
+      <div class="row-section" >
+        <q-spinner v-if="isLoading" class="data-number"/>
+        <span class="data-number" v-else @click="initData">{{ stats.logins }}</span>
+        <span class="data-name" >{{ $t('affiliate.main.logins') }}</span>
+      </div>
+      <div class="row-section">
+        <q-spinner v-if="isLoading" class="data-number"/>
+        <span class="data-number" v-else>{{ stats.noOfPlayers }}</span>
+        <span class="data-name">{{ $t('affiliate.main.noOfPlayers') }}</span>
+      </div>
+      <div class="row-section">
+        <q-spinner v-if="isLoading" class="data-number"/>
+        <span class="data-number" v-else>{{ stats.registers }}</span>
+        <span class="data-name">{{ $t('affiliate.main.registers') }}</span>
+      </div>
+      <div class="row-section">
+        <q-spinner v-if="isLoading" class="data-number"/>
+        <span class="data-number" v-else>{{ stats.onlineUsers }}</span>
+        <span class="data-name">{{ $t('affiliate.main.onlineUsers') }}</span>
       </div>
     </div>
 
@@ -141,14 +158,14 @@ const ui = useUI();
 const { CSAUrl } = storeToRefs(ui);
 const showExchangeModal = ref(false);
 const showTransferModal = ref(false);
-const total = ref(0);
-
-const dataList = ref([
-  { key: 'logins', name: 'Logins', number: "-" },
-  { key: 'noOfPlayer', name: 'No of player', number: "-" },
-  { key: 'registers', name: 'Registers', number: "-" },
-  { key: 'onlineUsers', name: 'Online users', number: "-" }
-])
+const isLoading = ref(false);
+const stats = ref({
+  total: '-',
+  logins: '-',
+  noOfPlayers: '-',
+  registers: '-',
+  onlineUsers: '-'
+});
 
 onActivated(() => {
   store.getUnreadTotal();
@@ -156,23 +173,29 @@ onActivated(() => {
   if (route.query.openCodeModal) {
     showExchangeModal.value = true;
   }
+
+  initData();
 });
 
 const initData = () => {
+  isLoading.value = true;
+
   api.get('/session/affiliate').then((res) => {
     const data = res.data;
-    total.value = data.commission;
-
-    dataList.value.map((item) => {
-      if(item.key === 'noOfPlayer') item.number = data.downlineMember
-      if(item.key === 'registers') item.number = data.downlineAffiliate
-    })
+    stats.value.total = data.commission;
+    stats.value.noOfPlayers = data.downlineMember;
+    stats.value.registers = data.downlineAffiliate;
+  }).finally(() => {
+    isLoading.value = false;
   })
 }
 
 onMounted(() => {
   initData();
-  ui.loadCustomerAddress();
+
+  if(!ui.CSAUrl) {
+    ui.loadCustomerAddress();
+  }
 });
 
 </script>
