@@ -151,7 +151,7 @@
 <!--          <div class="acct-nav-label">{{ $t("settings.transfer") }}</div>-->
 <!--        </a>-->
       </div>
-      <div class="bottom-setting-section invite-friends-section">
+      <div class="bottom-setting-section invite-friends-section" v-if="store.memberType !== 'AFFILIATE'">
         <div class="left-icon">
           <img src="../assets/images/earn-money/invite-gift.png" />
         </div>
