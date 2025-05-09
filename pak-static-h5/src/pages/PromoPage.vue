@@ -150,7 +150,7 @@
                   <!-- promo.redirectUrl -->
                 </div>
                 <div
-                  v-if="selectedPromo.promoType"
+                  v-if="selectedPromo.promoType && selectedPromo.redirectUrl !== 'pak-jackpot-aviator'"
                   class="select-promo-html"
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
