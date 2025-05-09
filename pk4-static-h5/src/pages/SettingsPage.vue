@@ -119,7 +119,7 @@
         </div>
       </div>
       <div class="bottom-setting-section">
-        <router-link to="/affiliate/agent">
+        <router-link to="/affiliate/agent" v-if="store.memberType === 'AFFILIATE'">
           <div class="acct-nav-item">
             <img src="../assets/images/account/agentaccount-svg.svg" />
           </div>
