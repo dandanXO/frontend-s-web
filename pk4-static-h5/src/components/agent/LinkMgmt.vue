@@ -6,9 +6,9 @@
         <span>{{ $t('affiliate.account.memberReferralLink') }}</span>
       </div>
       <div class="forum-card__icons">
-        <img alt="forum" src="@/assets/images/agent/link-icon.png" width="16" height="16"
+        <!-- <img alt="forum" src="@/assets/images/agent/link-icon.png" width="16" height="16"
           @click="onClickQRCode('member', 'short')" />
-        <div class="icon-divider"></div>
+        <div class="icon-divider"></div> -->
         <img alt="scan-qr" src="@/assets/images/agent/scan-qr-icon.png" width="16" height="16"
           @click="onClickQRCode('member')" />
       </div>
@@ -22,9 +22,9 @@
         <span>{{ $t('affiliate.account.agentReferralLink') }}</span>
       </div>
       <div class="forum-card__icons">
-        <img alt="forum" src="@/assets/images/agent/link-icon.png" width="16" height="16"
+        <!-- <img alt="forum" src="@/assets/images/agent/link-icon.png" width="16" height="16"
           @click="onClickQRCode('agent', 'short')" />
-        <div class="icon-divider"></div>
+        <div class="icon-divider"></div> -->
         <img alt="scan-qr" src="@/assets/images/agent/scan-qr-icon.png" width="16" height="16"
           @click="onClickQRCode('agent')" />
       </div>
