@@ -6,13 +6,26 @@
         <img class="mission-icon" src="../../assets/images/earn-money/redemptionicon.png" />
         <div class="mission-title-wrapper">
           <div class="mission-title">
-            <span>Redemption Code</span>
+            <span>{{ $t("hotPromo.redemptionCode") }}</span>
           </div>
         </div>
         <RouterLink to="/account?openCodeModal=true">
           <q-btn flat class="details redemption">{{ $t("btn.details") }}</q-btn>
         </RouterLink>
       </div>
+
+      <div class="mission-item" v-if="store.claimedFtdPrivilege === false">
+        <img class="mission-icon" src="../../assets/images/common/ftd-bonus.png" />
+        <div class="mission-title-wrapper">
+          <div class="mission-title">
+            <span>{{ $t("hotPromo.ftdDepositBonus") }}</span>
+          </div>
+        </div>
+        <RouterLink to="/deposit">
+          <q-btn flat class="details redemption">{{ $t("btn.details") }}</q-btn>
+        </RouterLink>
+      </div>
+
       <div v-for="(mission, index) in promoList" :key="index" class="mission-item">
         <img class="mission-icon" :src="imgURL + mission.mobileFastAccessIconImgUrl" />
         <div class="mission-title-wrapper">
@@ -54,7 +67,7 @@
         <img class="mission-icon" src="../../assets/images/earn-money/newplayericon.png" />
         <div class="mission-title-wrapper">
           <div class="mission-title">
-            <span>New Player Guide</span>
+            <span>{{ $t("hotPromo.newplayerGuide") }}</span>
           </div>
         </div>
         <a @click="openNewPlayerGuide">

@@ -893,6 +893,9 @@ export default {
       remainingDrawTimes: "Remaining draw times",
       congratulations: "Congratulations"
     },
+    ftdDepositBonus: "First Time Deposit Bonus",
+    redemptionCode: "Redemption Code",
+    newplayerGuide: "New Player Guide",
     depositSpinWheel: {
       instruction: "Complete the deposit task to participate in the wheel activity and get a bonus of up to ",
       depositNow: "Deposit Now",

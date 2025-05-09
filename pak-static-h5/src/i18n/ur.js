@@ -885,6 +885,9 @@ export default {
       remainingDrawTimes: "باقی قرعہ اندازی کے اوقات",
       congratulations: "مبارک ہو"
     },
+    ftdDepositBonus: "پہلی بار جمع کرانے کا بونس",
+    redemptionCode: "ریڈیمپشن کوڈ",
+    newplayerGuide: "نئے کھلاڑی کے لیے رہنما",
     depositSpinWheel: {
       instruction: "وہیل سرگرمی میں حصہ لینے اور بونس حاصل کرنے کے لیے ڈپازٹ کا کام مکمل کریں، زیادہ سے زیادہ",
       depositNow: "ابھی جمع کریں",
@@ -973,7 +976,8 @@ export default {
       stillNeedToMakeWithdrawal: "ابھی واپسی کرنی ہے",
       willBePaidToYourRsAccount: "آپ کے RS اکاؤنٹ میں ادائیگی کی جائے گی",
       inviteFriendsToHelp: "دوستوں کو مدد کے لئے مدعو کریں",
-      referFriendToRegister: "دوست کو رجسٹر کرنے، جمع کرنے اور اپنے فون کی تصدیق کرنے کے لئے بھیجیں تاکہ مفت اسپنز جیت سکیں",
+      referFriendToRegister:
+        "دوست کو رجسٹر کرنے، جمع کرنے اور اپنے فون کی تصدیق کرنے کے لئے بھیجیں تاکہ مفت اسپنز جیت سکیں",
       only: "صرف",
       toGo: "باقی ہے"
     }
