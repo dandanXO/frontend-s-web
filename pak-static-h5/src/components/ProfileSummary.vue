@@ -221,6 +221,7 @@ import SideMenu from "components/SideMenu.vue";
 import { defineEmits } from "vue";
 import { useCustomerTrigger } from "src/hooks/trigger";
 import { i18nStore } from "src/router/language";
+import { useThrottleFn } from "@vueuse/core";
 
 const props = defineProps(["homeProfile"]);
 const emits = defineEmits(["closeslot", "activateSlide", "showNewPlayer"]);
@@ -249,6 +250,7 @@ const fastAccessPromo = shallowRef([]);
 const getFastAccessPromo = () => {
   if (!store.token) return;
   isFastAccessPromoCounting.value = true;
+  eligiblePromoCount.value = 1;
   api.get(`/promo/fast-access-promo?language=${i18nStoreLanguage.languageVal}`).then(async (res) => {
     if (res.code === 0) {
       let _fastAccessPromo;
@@ -470,8 +472,20 @@ const isSideDownload = ref(false);
 
 const afterMounted = useCustomerTrigger(loadCustomerAddress);
 
+const throttledGetFastAccessPromo = useThrottleFn(() => {
+  getFastAccessPromo();
+}, 5000);
+
 watch(() => i18nStoreLanguage.languageVal, getFastAccessPromo);
 watch(() => store.token, getFastAccessPromo);
+watch(
+  () => isBonusModal.value,
+  (newVal) => {
+    if (newVal === true) {
+      throttledGetFastAccessPromo();
+    }
+  }
+);
 
 onMounted(() => {
   checkTopDownloadAppear();
