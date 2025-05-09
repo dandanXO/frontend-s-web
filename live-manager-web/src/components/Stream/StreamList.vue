@@ -49,19 +49,6 @@
         </template>
       </Column>
 
-      <Column field="roomTitle" header="聊天室名称" sortable>
-        <template #body="slotProps">
-          {{ slotProps.data.roomTitle }}
-          <Button
-              v-if="route.path.includes('/my-streams')"
-              icon="pi pi-pencil"
-              class="p-button-text p-button-sm ml-2"
-              @click="openEditDialog(slotProps.data)"
-              v-tooltip="'修改名称'"
-          />
-        </template>
-      </Column>
-
       <Column field="streamStatus" header="源流狀態" sortable>
         <template #body="slotProps">
           <Tag :severity="getStatusSeverity(slotProps.data.streamStatus)" :value="getStatusLabel(slotProps.data.streamStatus)" />
