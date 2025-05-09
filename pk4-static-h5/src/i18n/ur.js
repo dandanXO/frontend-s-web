@@ -402,14 +402,17 @@ export default {
       logins: "لاگ ان",
       noOfPlayers: "کھلاڑیوں کی تعداد",
       registers: "رجسٹرز",
-      onlineUsers: "آن لائن صارفین",
       total: "کل",
       goodMorning: "صبح بخیر"
     },
     account: {
       memberReferralLink: "رکن حوالہ لنک",
       agentReferralLink: "ایجنٹ حوالہ لنک",
-      copiedToClipboard: "کاپی کیا گیا"
+      copiedToClipboard: "کاپی کیا گیا",
+      copyLink: "لنک کو کاپی کریں",
+      qrCode: "کیو آر کوڈ",
+      scanTheCodeToRegister: "رجسٹر کرنے کے لیے کیو آر کوڈ اسکین کریں",
+      pressQRCode: "کیو آر کوڈ کو البم میں محفوظ کرنے کے لیے دبائیں اور پکڑیں"
     }
   },
   dividend: {

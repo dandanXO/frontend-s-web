@@ -41,11 +41,6 @@
         <span class="data-number" v-else>{{ stats.registers }}</span>
         <span class="data-name">{{ $t('affiliate.main.registers') }}</span>
       </div>
-      <div class="row-section">
-        <q-spinner v-if="isLoading" class="data-number"/>
-        <span class="data-number" v-else>{{ stats.onlineUsers }}</span>
-        <span class="data-name">{{ $t('affiliate.main.onlineUsers') }}</span>
-      </div>
     </div>
 
       <div class="bottom-affiliate-setting-section">
@@ -180,11 +175,12 @@ onActivated(() => {
 const initData = () => {
   isLoading.value = true;
 
-  api.get('/session/affiliate').then((res) => {
+  api.get('/session/affiliate/home-page').then((res) => {
     const data = res.data;
-    stats.value.total = data.commission;
-    stats.value.noOfPlayers = data.downlineMember;
-    stats.value.registers = data.downlineAffiliate;
+    stats.value.total = data.balance;
+    stats.value.logins = data.todayLogin;
+    stats.value.noOfPlayers = data.todayActive;
+    stats.value.registers = data.todayRegister;
   }).finally(() => {
     isLoading.value = false;
   })

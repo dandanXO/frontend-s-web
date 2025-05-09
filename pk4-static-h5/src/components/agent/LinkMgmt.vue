@@ -11,33 +11,7 @@
         <div class="icon-divider"></div>
         <img alt="scan-qr" src="@/assets/images/agent/scan-qr-icon.png" width="16" height="16"
           @click="onClickQRCode('member')" />
-        <div class="icon-divider"></div>
       </div>
-    </div>
-
-    <div class="forum-card__info">
-      <div class="row-info">
-        <span>Creation Date</span>
-        <span>-</span>
-      </div>
-      <div class="row-info">
-        <span>Date Of Expiry</span>
-        <span>-</span>
-      </div>
-    </div>
-
-    <q-separator class="forum-card__separator" />
-
-    <div class="forum-card__subtitles">
-      <span>RegisterTypes</span>
-      <span>Registers</span>
-      <span>Status</span>
-    </div>
-
-    <div class="forum-card__footer">
-      <div class="footer-item red">Member</div>
-      <div class="footer-item blue">0</div>
-      <div class="footer-item green">Normal</div>
     </div>
   </div>
 
@@ -53,33 +27,7 @@
         <div class="icon-divider"></div>
         <img alt="scan-qr" src="@/assets/images/agent/scan-qr-icon.png" width="16" height="16"
           @click="onClickQRCode('agent')" />
-        <div class="icon-divider"></div>
       </div>
-    </div>
-
-    <div class="forum-card__info">
-      <div class="row-info">
-        <span>Creation Date</span>
-        <span>-</span>
-      </div>
-      <div class="row-info">
-        <span>Date Of Expiry</span>
-        <span>-</span>
-      </div>
-    </div>
-
-    <q-separator class="forum-card__separator" />
-
-    <div class="forum-card__subtitles">
-      <span>RegisterTypes</span>
-      <span>Registers</span>
-      <span>Status</span>
-    </div>
-
-    <div class="forum-card__footer">
-      <div class="footer-item red">Agent</div>
-      <div class="footer-item blue">0</div>
-      <div class="footer-item green">Normal</div>
     </div>
   </div>
 
@@ -92,17 +40,17 @@
             <img alt="forum" src="@/assets/images/agent/forum-icon.png" width="24" height="24" />
             <span class="qr-title">{{ '' }}</span>
           </div>
-          <span class="qr-subtitle">QR code</span>
+          <span class="qr-subtitle">{{ $t('affiliate.account.qrCode') }}</span>
         </div>
 
         <div class="qr-subtext">
           <img alt="scan-qr" src="@/assets/images/agent/scan-qr-icon-2.png" width="18" height="18" />
-          <span>Scan the QR code to register</span>
+          <span>{{ $t('affiliate.account.scanTheCodeToRegister') }}</span>
         </div>
 
         <div class="qr-code-container">
           <VueQRCodeComponent size="150" :text="referralLink" class="qr-code" alt="qr-code" />
-          <div class="qr-caption">press and hold to save QR code to album</div>
+          <div class="qr-caption">{{ $t('affiliate.account.pressQRCode') }}</div>
         </div>
 
         <div class="qr-link-row">
@@ -110,7 +58,7 @@
           <span class="qr-url">{{ referralLink }}</span>
         </div>
 
-        <q-btn label="Copy Link" class="copy-btn" unelevated @click="copyText(referralLink)" />
+        <q-btn :label="$t('affiliate.account.copyLink')" class="copy-btn" unelevated @click="copyText(referralLink)" />
       </div>
     </div>
   </q-dialog>
