@@ -125,7 +125,7 @@
                   "
                   /> -->
                 <div class="text">
-                  <span v-if="item.code === 'AG'">XIN</span>
+                  <span v-if="item.code === 'AG'">PA</span>
                   <span v-else-if="item.code === 'PPFP'">FP</span>
                   <span v-else>{{ item.code }}</span>
                 </div>

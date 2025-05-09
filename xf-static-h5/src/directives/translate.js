@@ -1,6 +1,6 @@
 export const translateRecord = (rec, type = "") => {
-  if(rec === 'VIP_REBATE' || type=== 'VIP_REBATE') {
-    return 'VIP 返水';
+  if (rec === "VIP_REBATE" || type === "VIP_REBATE") {
+    return "VIP 返水";
   } else if (rec === "WITHDRAW_FAIL") {
     return "提款失败"; // Fail Withdrawal
   } else if (rec === "WITHDRAW") {
@@ -57,8 +57,8 @@ export const translateRecord = (rec, type = "") => {
     return "QQ 支付"; // QQ 支付
   } else if (rec === "KDPAY") {
     return "K 豆"; // K 豆
-  } else if (rec === 'BLBPAY') {
-    return '808 钱包' // 808 钱包
+  } else if (rec === "BLBPAY") {
+    return "808 钱包"; // 808 钱包
   } else if (rec === "DDPAY") {
     return "钉钉"; // 钉钉
   } else if (rec === "HBPAY") {
@@ -83,7 +83,7 @@ export const translateRecord = (rec, type = "") => {
     return "关闭"; // Closed
   } else if (rec === "WAITING_CALLBACK") {
     return "自动支付中"; // Waiting Callback
-  }else if (rec === "SETTLED") {
+  } else if (rec === "SETTLED") {
     return "已结算"; // Settled
   } else if (rec === 1) {
     if (type == "reminder") {
@@ -125,15 +125,15 @@ export const translateRecord = (rec, type = "") => {
     return "转账"; // TRANSFER
   } else if (rec === "ADJUST") {
     return "金额调整"; // ADJUST
-  }else if (rec === "MGP") {
+  } else if (rec === "MGP") {
     return "MG"; // AG
-  }else if (rec === "AGF") {
+  } else if (rec === "AGF") {
     return "AG 捕鱼"; // AGF
   } else if (rec === "AG") {
-    if(type==='SLOT'){
-      return "XIN 电子"
-    }else{
-      return "AG 真人"; // AG
+    if (type === "SLOT") {
+      return "PA 电子";
+    } else {
+      return "PA 真人"; // AG
     }
   } else if (rec === "BBINDY") {
     return "BBIN 真人"; // BBINDY
