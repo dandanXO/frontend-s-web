@@ -72,11 +72,13 @@
                   </div>
                 </div>
               </div>
-              <div
-                class="mailcontents"
-                v-if="isSelectedMail === det.id && det.content"
-                v-html="det.content.replace(/\n/g, '<br/>')"
-              ></div>
+              <div v-if="isSelectedMail === det.id && det.content" class="mailcontents">
+                <span style="color: #aaaaaa; font-size: 15px;">正文: </span>
+                <div class="q-pb-sm" v-html="det.content.replace(/\n/g, '<br/>')"></div>
+                <div class="q-pa-md" style="background: #ffffffa5; border-radius: 10px;"  v-if="isSelectedMail === det.id && det.replyMessageContent">
+                <span style="color: #aaaaaa; font-size: 15px;">回复: </span><div v-html="det.replyMessageContent.replace(/\n/g, '<br/>')"></div>
+                </div>
+              </div>
               <div v-if="mailType === 'outbox'" class="buttons">
                 <q-btn outline label="催单" size="sm" color="bright" class="q-mr-sm" />
                 <q-btn outline label="复制" size="sm" color="bright" />

@@ -14,11 +14,15 @@ const visible = ref(true);
 const mailData = ref([]);
 const mailboxData = ref({
   type: null,
-  orderBy: "createTime"
+  orderBy: "createTime",
+  current: 1,
+  size: 100,
 });
 const loadOutbox = () => {
   api
-    .get("/session/feedback/messages", {})
+    .get("/session/feedback/messages", {
+      params: mailboxData.value,
+    })
     .then((response) => {
       if (response.code === 0) {
         mailData.value = response.data.records;
