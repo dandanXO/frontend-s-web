@@ -1,6 +1,7 @@
 <template>
   <ProfileSummary v-if="route.path !== '/wv-earn-money'" :homeProfile="true" />
 
+
   <div class="earn-money">
     <q-tabs
       v-model="activeKey"
@@ -131,7 +132,7 @@ import EarnComponent from "@/components/earn-money/EarnComponent.vue";
 import ShareComponent from "src/components/earn-money/ShareComponent.vue";
 import MyMember from "@/components/earn-money/MyMember.vue";
 import ProfileSummary from "@/components/ProfileSummary.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 const route = useRoute();
 
@@ -149,6 +150,13 @@ const swipeRight = () => {
   const previousIndex = findPreviousIndex(currentIndex, tabsOrder.length);
   activeKey.value = tabsOrder[previousIndex];
 };
+
+onMounted(() => {
+  const tabFromQuery = route.query.tab;
+  if (tabsOrder.includes(tabFromQuery)) {
+    activeKey.value = tabFromQuery;
+  }
+});
 </script>
 
 <style scoped lang="scss">
