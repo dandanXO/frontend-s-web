@@ -399,15 +399,24 @@ export default {
     "securityCenter": "Security Center",
     "internalMessage": "Internal Message",
     "customerService": "Customer Service",
+    linkManagement: "Link Management"
   },
   affiliate: {
     main: {
       logins: "Logins",
       noOfPlayers: "No. of Players",
       registers: "Registers",
-      onlineUsers: "Online Users",
       total: "Total",
       goodMorning: "Good morning"
+    },
+    account: {
+      memberReferralLink: "Member Referral Link",
+      agentReferralLink: "Agent Referral Link",
+      copiedToClipboard: "Copied to Clipboard",
+      copyLink: "Copy Link",
+      qrCode: "QR Code",
+      scanTheCodeToRegister: "Scan the QR code to register",
+      pressQRCode: "press and hold to save QR code to album"
     }
   },
   accountRecord: {

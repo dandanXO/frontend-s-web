@@ -1,14 +1,16 @@
 <template>
   <div class="agent-view">
-    <q-tabs v-model="activeTab" dense no-caps class="agent-tab" indicator-color="transparent" align="justify">
-      <!-- <q-tab name="downline-reg" label="Downline Registration" /> -->
-      <!-- <q-tab name="link-reg" label="Link Registration" /> -->
+    <!-- <q-tabs v-model="activeTab" dense no-caps class="agent-tab" indicator-color="transparent" align="justify">
+      <q-tab name="downline-reg" label="Downline Registration" />
+      <q-tab name="link-reg" label="Link Registration" />
       <q-tab name="link-mgmt" label="Link Management" />
     </q-tabs>
 
     <DownlineReg v-if="activeTab === 'downline-reg'" />
     <LinkReg v-else-if="activeTab === 'link-reg'" />
-    <LinkMgmt v-else />
+    <LinkMgmt v-else /> -->
+
+    <LinkMgmt/>
   </div>
 </template>
 <script setup>
