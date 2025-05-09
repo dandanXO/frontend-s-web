@@ -402,7 +402,8 @@ export default {
       noOfPlayers: "کھلاڑیوں کی تعداد",
       registers: "رجسٹرز",
       onlineUsers: "آن لائن صارفین",
-      total: "کل"
+      total: "کل",
+      goodMorning: "صبح بخیر"
     },
   },
   dividend: {

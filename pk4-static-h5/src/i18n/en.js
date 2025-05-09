@@ -406,7 +406,8 @@ export default {
       noOfPlayers: "No. of Players",
       registers: "Registers",
       onlineUsers: "Online Users",
-      total: "Total"
+      total: "Total",
+      goodMorning: "Good morning"
     }
   },
   accountRecord: {

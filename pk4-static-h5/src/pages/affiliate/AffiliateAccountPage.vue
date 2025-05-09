@@ -4,7 +4,7 @@
       <div class="top-profile">
         <div class="user">
           <img src="../../assets/images/affiliate/user.png">
-          <span>Good morning {{ store.nickName }}</span>
+          <span>{{ $t('affiliate.main.goodMorning') }} {{ store.nickName }}</span>
         </div>
         <div class="cs"><img src="../../assets/images/affiliate/cs.png"></div>
       </div>
