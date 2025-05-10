@@ -570,6 +570,7 @@ defineExpose({
 
     .livestream-video-mask-text-content {
       max-width: 100%;
+      overflow: auto;
     }
   }
 
