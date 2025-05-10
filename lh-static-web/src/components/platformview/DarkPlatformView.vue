@@ -166,6 +166,10 @@
             >
               <a @click="openGame(game, selectedPlat, game.code)">
                 <div class="slot-img">
+                  <div class="slot-tag">
+                    <img v-if="game.gameLabel === 'HOT'" src="../../assets/images/games/hot-tag.png" />
+                    <img v-if="game.gameLabel === 'NEW'" src="../../assets/images/games/new-tag.png" />
+                  </div>
                   <el-image :src="game.icon" lazy>
                     <template #placeholder>
                       <img :src="game.default" />
