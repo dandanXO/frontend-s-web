@@ -591,7 +591,14 @@
             height: auto;
             aspect-ratio: 1/1;
             overflow: hidden;
-
+            border-radius: 18px;
+            .slot-tag{
+              position: absolute;
+              z-index: 1;
+              top: 0px;
+              right: 0px;
+              width: 90px;
+            }
             .el-image {
               height: 100%;
             }
