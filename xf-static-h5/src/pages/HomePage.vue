@@ -26,7 +26,7 @@
   </div>
 
   <div class="home-all-slider" v-scroll="onHomeScroll">
-    <div class="q-px-md">
+    <div class="q-px-md home-top-summary">
       <template v-if="bannerLoading">
         <q-skeleton style="height: 200px" />
       </template>
@@ -71,6 +71,13 @@
         </q-carousel>
       </template>
 
+      <div class="web-link-container">
+        <span>
+          易记网址
+          <br />
+          xfxf98.com
+        </span>
+      </div>
       <div class="midd">
         <div class="station-notice-wrapper">
           <div class="volume">
@@ -1391,10 +1398,35 @@ export default defineComponent({
   }
 }
 
+.home-top-summary {
+  position: relative;
+}
+
+.web-link-container {
+  border-radius: 4px;
+  box-shadow: 0px 0px 4px 0px #ffffff inset, 0px 4px 3.5px 0px #00000094;
+  background: linear-gradient(180deg, #00c7c0 0%, #0996c7 100%);
+  color: #160850;
+  width: fit-content;
+  padding: 4px 10px;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 14px;
+  text-align: center;
+  position: absolute;
+  right: 30px;
+  top: 48vw;
+  transform: translateY(-50%);
+  @media (min-width: 480px) {
+    top: 230px;
+  }
+}
+
 .midd {
   position: relative;
   border-radius: 15px 15px 0 0;
   overflow: hidden;
+  margin-top: 10px;
 
   .station-notice-wrapper {
     display: flex;

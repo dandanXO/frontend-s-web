@@ -52,7 +52,7 @@
       <div class="noticeboard">
         You Can Get
         <span>0.3%</span>
-        Of The Daily Wager As A Reward, Credited To Your Account Every Day At 0:00 Filipino Time
+        Of The Daily Wager As A Reward, Credited To Your Account Every Day At 0:00 Australian Time
       </div>
 
       <img class="character-blue" src="../assets/images/bonus/character-blue.png" alt="" style="display: none" />
@@ -71,7 +71,7 @@
         <div class="noticeboard">
           You Can Get
           <span>0.3%</span>
-          Of The Daily Wager As A Reward, Credited To Your Account Every Day At 0:00 Filipino Time
+          Of The Daily Wager As A Reward, Credited To Your Account Every Day At 0:00 Australian Time
         </div>
       </div>
     </div>

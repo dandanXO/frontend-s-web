@@ -67,7 +67,7 @@
                   <template v-if="scope.row.status === 'PENDING'">
                     <div style="display: flex; align-items: center">
                       <el-button size="small" class="common-btn" @click="openReminder(scope.row)">
-                        {{ $t("transit.remind") }}asd
+                        {{ $t("transit.remind") }}
                       </el-button>
                     </div>
                   </template>

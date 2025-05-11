@@ -24,6 +24,12 @@
 
     <div style="text-align: center" v-if="list.redirectUrl === 'lh1-feedback-award'">
       <img
+        v-if="isDark"
+        style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
+        src="../assets/images/promotion/hotpromo/lhfeedback/feedback-dark.png"
+      />
+      <img
+        v-else
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
         src="../assets/images/promotion/hotpromo/lhfeedback/feedback.png"
       />
@@ -80,12 +86,20 @@
     <IemMelbourne2025 v-if="list.redirectUrl === 'lh1-iem-melbourne-2025'" :promo-code="list.promoCode" />
     <PglWallachiaS4 v-if="list.redirectUrl === 'lh1-pgl-wallachia-s4'" :promo-code="list.promoCode" />
     <BlastSlam32025 v-else-if="list.redirectUrl === 'lh1-blast-slam-3-2025'" :promo-code="list.promoCode" />
+    <Lh1Enc2025 v-else-if="list.redirectUrl === 'lh1-enc-2025'" :promo-code="list.promoCode" />
+    <PglAstana2025 v-else-if="list.redirectUrl === 'lh1-pgl-astana-2025'" :promo-code="list.promoCode" />
+    <DragonBoat v-if="list.redirectUrl === 'lh-duanwujie24'" :promo-code="list.promoCode" :params="list.param" />
     <Cct2025 v-if="list.redirectUrl === 'lh1-cct-global-finals-2025'" :promo-code="list.promoCode" />
     <FpSlotPromo v-if="list.redirectUrl === 'lh1-fp-slot'" :promo-code="list.promoCode" />
     <elsOne2025 v-if="list.redirectUrl === 'lh1-esl-one-raleigh-2025'" :promo-code="list.promoCode" />
     <YuEBaoPromo v-if="list.redirectUrl === 'lh1-yu-e-bao'" :promo-code="list.promoCode" :params="list.param" />
     <BlastRival2025
       v-if="list.redirectUrl === 'lh1-blast-rivals-2025-s1'"
+      :promo-code="list.promoCode"
+      :params="list.param"
+    />
+    <IemDallas2025
+      v-if="list.redirectUrl === 'lh1-iem-dallas-2025'"
       :promo-code="list.promoCode"
       :params="list.param"
     />
@@ -143,7 +157,7 @@ import SubmitClaimPromo from "@/components/hotpromo/submitclaim/SubmitClaimPromo
 import DailiPromo from "@/components/hotpromo/daili/DailiPromo.vue";
 import SlotLossBonusPromo from "@/components/hotpromo/slot-loss-bonus/SlotLossBonusPromo.vue";
 import VctBangkok from "./hotpromo/vct-bangkok/VctBangkok.vue";
-
+import DragonBoat from "@/components/hotpromo/dragonboat/DragonBoat.vue";
 import Blast2025 from "../components/hotpromo/Blast2025/Blast2025.vue";
 import DarkModePromo from "../components/hotpromo/dark-mode/DarkModePromo.vue";
 import SkyesportsSouvenir2025 from "./hotpromo/skyesports-souvenir-2025/SkyesportsSouvenir2025.vue";
@@ -155,18 +169,24 @@ import YaLLa2025 from "./hotpromo/YaLLa2025/YaLLa2025.vue";
 import IemMelbourne2025 from "./hotpromo/iem-melbourne-2025/IemMelbourne2025.vue";
 import PglWallachiaS4 from "./hotpromo/pgl-wallachia-s4/PglWallachiaS4.vue";
 import BlastSlam32025 from "./hotpromo/blast-slam-3-2025/BlastSlam32025.vue";
+import Lh1Enc2025 from "./hotpromo/Lh1-enc-2025/Lh1-enc-2025.vue";
+import PglAstana2025 from "./hotpromo/pgl-astana-2025/Pgl-astana-2025.vue";
 
 import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
 import FpSlotPromo from "./hotpromo/fp-slot-promo/FpSlotPromo.vue";
 import elsOne2025 from "../components/hotpromo/elsOne2025/elsOne2025.vue";
 import YuEBaoPromo from "./hotpromo/yu-e-bao/YuEBaoPromo.vue";
 import BlastRival2025 from "./hotpromo/BlastRival2025/BlastRival2025.vue";
+import { useDark } from "@vueuse/core";
+import IemDallas2025 from "./hotpromo/iem-dallas-2025/IemDallas2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    Lh1Enc2025,
+    DragonBoat,
     YaLLa2025,
     elsOne2025,
     Cct2025,
@@ -209,9 +229,11 @@ export default defineComponent({
     IemMelbourne2025,
     PglWallachiaS4,
     BlastSlam32025,
+    PglAstana2025,
     FpSlotPromo,
     YuEBaoPromo,
-    BlastRival2025
+    BlastRival2025,
+    IemDallas2025
   },
   props: {
     list: {
@@ -223,6 +245,7 @@ export default defineComponent({
   },
   data() {
     return {
+      isDark: useDark(),
       emptyText: "今天没有获奖者。",
       privilegeClaimedModalVisible: false,
       dataSource: [],

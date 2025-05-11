@@ -30,29 +30,15 @@
               />
             </div>
 
-            <!-- <div class="q-my-sm">
-              <div class="input-title">{{ $t("form.holderName") }}</div>
-              <q-input
-                standout
-                class="q-pb-xs dialog-input"
-                hide-bottom-space
-                filled
-                v-model="bankCardField.cardAccount"
-                :label="$t('form.holderName_placeholder')"
-                :rules="[(_) => isValidCardAccount()]"
-                label-color="secondary"
-                disable
-              />
-            </div> -->
-
             <div class="q-my-sm">
               <div class="input-title">{{ accountTypeStr }}</div>
-              <q-input
-                :type="
+              <!-- :type="
                   currentCardType === 'Bank' || (selectedBankMethod && selectedBankMethod.code === 'GCASH')
                     ? 'number'
                     : 'text'
-                "
+                " -->
+              <q-input
+                type="number"
                 standout
                 ref="refBankCardNum"
                 class="q-pb-xs dialog-input"
@@ -61,6 +47,29 @@
                 v-model="bankCardField.cardNumber"
                 :label="$t('form.accountNumber_placeholder')"
                 :rules="[(_) => isValidCardNumber()]"
+                label-color="secondary"
+              />
+            </div>
+
+            <div
+              class="q-my-sm"
+              v-if="currentCardType === 'EWallet' && selectedBankMethod && selectedBankMethod.code === 'JAZZCASH'"
+            >
+              <div class="input-title">{{ $t("form.identityid") }}</div>
+              <q-input
+                type="number"
+                standout
+                ref="ifscRef"
+                class="q-pb-xs dialog-input"
+                hide-bottom-space
+                filled
+                v-model="bankCardField.cardAddress"
+                :label="$t('form.identityid_placeholder')"
+                :rules="[
+                  (val) => (val && val.length > 0) || $t('form.identityid_rules_01'),
+                  (val) => (val && val.length === 13) || $t('form.identityid_rules_02'),
+                  (val) => (val && !val.includes('.')) || $t('form.identityid_rules_03')
+                ]"
                 label-color="secondary"
               />
             </div>
@@ -105,6 +114,7 @@ const cardType = ["Bank" /*, "Crypto", "EWallet"*/];
 const currentCardType = ref("Bank");
 const accountTypeStr = ref("");
 const refBankCardNum = ref();
+const ifscRef = ref();
 
 // display
 const currBankList = ref([]);
@@ -129,7 +139,6 @@ const closeModal = () => {
 const selectedBankMethod = ref();
 const updateBankType = (val) => {
   selectedBankMethod.value = currBankList.value.find((item) => item.id === val);
-  console.log(selectedBankMethod.value);
   refBankCardNum.value.validate();
 };
 
@@ -170,7 +179,6 @@ const onAddCardClick = (type) => {
               selectBankType();
               bankCardField.bankId = currBankList.value[0].id;
               selectedBankMethod.value = currBankList.value[0];
-              console.log(selectedBankMethod.value);
             }
           })
           .catch((e) => {
@@ -180,6 +188,7 @@ const onAddCardClick = (type) => {
         clearField();
         selectBankType();
         bankCardField.bankId = currBankList.value[0].id;
+        selectedBankMethod.value = currBankList.value[0];
       }
     }
   });
@@ -255,35 +264,85 @@ const isValidCardAccount = () => {
 
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
-  const result = !cardNumber
-    ? t("form.accountNumber_rules_01")
-    : !cardNumber.includes(".")
+
+  if (currentCardType.value === "EWallet") {
+    if (!cardNumber || cardNumber.length === 0) {
+      return t("form.virtualWallet_rules_01");
+    }
+
+    if (!cardNumber.startsWith("03")) {
+      return t("form.virtualWallet_rules_02");
+    }
+
+    if (cardNumber.length !== 11) {
+      return t("form.virtualWallet_rules_03");
+    }
+
+    if (cardNumber.includes(".")) {
+      return t("form.virtualWallet_rules_04");
+    }
+
+    return true;
+  } else {
+    if (!cardNumber || cardNumber.length === 0) {
+      return t("bankCard.pleaseEnterCardAccount");
+    }
+
+    if (cardNumber.length < 16) {
+      return t("bankCard.bankCardMust16NumberandAbove");
+    }
+
+    if (cardNumber.includes(".")) {
+      return t("bankCard.bankCardDisallowDecimal");
+    }
+
+    return true;
+  }
+};
+
+const isValidIdentityId = () => {
+  const { cardAddress } = bankCardField;
+  const result = !cardAddress
+    ? t("form.identityid_rules_01")
+    : !cardAddress.includes(".")
     ? true
-    : t("form.accountNumber_rules_03")
+    : t("form.identityid_rules_03");
+
   return result;
 };
 
 const addCard = () => {
   isDisableBtn.value = true;
-  api
-    .post("/session/bankCard", qs.stringify(bankCardField))
-    .then((response) => {
-      if (response.code === 0) {
-        isAddCardDialogOpen.value = false;
-        $q.notify({
-          color: "positive",
-          position: "top",
-          message: t("notify.addSucceed"),
-          icon: "check_circle_outline"
-        });
-        props.loadCards();
+
+  if (selectedBankMethod.value.code === "JAZZCASH") {
+    if (ifscRef.value) {
+      ifscRef.value.validate();
+    }
+  }
+
+  if (!(selectedBankMethod.value.code === "JAZZCASH" && ifscRef.value && ifscRef.value.hasError)) {
+    api
+      .post("/session/bankCard", qs.stringify(bankCardField))
+      .then((response) => {
+        if (response.code === 0) {
+          isAddCardDialogOpen.value = false;
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: t("notify.addSucceed"),
+            icon: "check_circle_outline"
+          });
+          props.loadCards();
+          isDisableBtn.value = false;
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
         isDisableBtn.value = false;
-      }
-    })
-    .catch((error) => {
-      console.log("error", error);
-      isDisableBtn.value = false;
-    });
+      });
+  } else {
+    isDisableBtn.value = false;
+  }
 };
 
 defineExpose({

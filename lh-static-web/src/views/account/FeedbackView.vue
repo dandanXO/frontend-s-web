@@ -90,7 +90,7 @@
         </el-tab-pane>
 
         <el-tab-pane key="sent" name="sent" :label="'我的反馈'">
-          <template v-if="mailboxState.mailboxList.sent.list.length > 0">
+          <template v-if="mailboxState.mailboxList.sent.list.length > 0 && !isLoading">
             <el-collapse v-model="activeNames" @change="handleChange">
               <el-collapse-item
                 v-for="item in mailboxState.mailboxList.sent.list"
@@ -102,6 +102,7 @@
                 </template>
                 <div>
                   <div class="content-p">正文：{{ item.content }}</div>
+                  <div v-if="item.replyMessageContent" style="margin-top: 10px;" class="content-p">回复: {{ item.replyMessageContent }}</div>
                 </div>
               </el-collapse-item>
             </el-collapse>
@@ -114,8 +115,11 @@
               />
             </div>
           </template>
-          <template v-else>
+          <template v-else-if="!isLoading">
             <p class="empty-text">暂无记录</p>
+          </template>
+          <template v-else>
+            <p class="empty-text">加载中...</p>
           </template>
         </el-tab-pane>
 
@@ -594,7 +598,7 @@ const options = ["存款问题", "转账问题", "提款问题", "其他"];
 const onItemClick = (item) => {
   mailboxState.mailboxList.write.title = item;
 };
-
+const isLoading = ref(true);
 const loadingBtn = ref(false);
 const mailboxData = ref([]);
 const mailboxState = reactive({
@@ -634,7 +638,8 @@ const loadPersonalMailbox = () => {
       .then((res) => {
         if (res.code === 0) {
           const response = res.data;
-          mailboxState.mailboxList[mailboxState.active].list.push(...response.records);
+          // mailboxState.mailboxList[mailboxState.active].list.push(...response.records);
+          mailboxState.mailboxList[mailboxState.active].list = response.records;
           mailboxState.mailboxList[mailboxState.active].total = response.total;
         } else {
           notify.error(res.message);
@@ -645,6 +650,7 @@ const loadPersonalMailbox = () => {
         // message.error(error.message, 4)
       });
   } else {
+    isLoading.value = true
     mailboxData.value = {
       type: null,
       current: mailboxState.mailboxList["sent"].pageNum,
@@ -654,8 +660,10 @@ const loadPersonalMailbox = () => {
     mailboxState.mailboxList["sent"].list = [];
     mailOutbox(mailboxData.value)
       .then((response) => {
+        isLoading.value = false
         if (response.code === 0) {
-          mailboxState.mailboxList["sent"].list.push(...response.data.records);
+          // mailboxState.mailboxList["sent"].list.push(...response.data.records);
+          mailboxState.mailboxList["sent"].list = response.data.records;
           mailboxState.mailboxList["sent"].total = response.data.total;
         } else {
           notify.error(response.message);
@@ -674,12 +682,14 @@ const changePage = (key) => {
 };
 
 const mailTabChange = (nk) => {
+  mailboxState.mailboxList["sent"].pageNum = 1
   mailboxState.active = nk.props.name;
   if (nk.props.name !== "write") {
     const mailList = mailboxState.mailboxList[nk.props.name].list;
-    if (mailList && mailList.length === 0) {
-      loadPersonalMailbox();
-    }
+    // if (mailList && mailList.length === 0) {
+    //   loadPersonalMailbox();
+    // }
+    loadPersonalMailbox();
   }
 };
 
@@ -739,10 +749,10 @@ const onSubmit = (e) => {
       submitFeedback(mailboxState.mailboxList.write)
         .then((response) => {
           if (response.code === 0) {
-            notify({
-              message: "提交成功",
-              type: "success"
-            });
+            // notify({
+            //   message: "提交成功",
+            //   type: "success"
+            // });
             loadPersonalMailbox();
 
             mailboxState.mailboxList.write.feedbackType = "";
@@ -809,7 +819,6 @@ onMounted(() => {
   if (store.token) {
     testAns();
     getReferral();
-
     loadFeedbackType();
   }
 
@@ -841,9 +850,13 @@ onUnmounted(() => {
 .upload-photo-board .el-input__wrapper{
   width: 875px;
 }
-
 </style>
 <style scoped lang="scss">
+
+.dark .mail-content .empty-text {
+   color: #a98f7c;
+}
+
 .quiz-container {
   //   background: salmon;
   margin-top: 40px;
@@ -1273,6 +1286,7 @@ onUnmounted(() => {
   .empty-text {
     text-align: center;
     margin-top: 50px;
+    color: #000000;
   }
 
   .title-p {

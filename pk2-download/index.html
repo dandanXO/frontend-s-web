@@ -255,7 +255,7 @@ async function getApiUrl() {
             "url": "https://files.fbok59j8xi.com/app/19/affiliate/1910507833472364546/android/apk/1.0.7_20250411112213.apk"
         },
         "2C5C84": {
-            "adCode": "1nnxikyh",
+            "adCode": "",
             "version": "1.0.7",
             "url": "https://files.fbok59j8xi.com/app/19/affiliate/1907341892178096129/android/apk/1.0.7_20250410150426.apk"
         },
@@ -390,10 +390,13 @@ function copyUrl(_sTxt) {
 function downloadApk(code, pp, fbvar, fbpid) {
     console.log(apiUrl);
     var date = Date.now();
-    var url =
-        `https://app.adjust.com/${adjustUrlCode}?campaign=${campaignname}%20%28${campaignid}%29&adgroup=${adsetname}%20%28${adsetid}%29&creative=${adname}%20%28${adid}%29&fbclid=${fbclid}&redirect=${apiUrl}?v=` +
-        date;
-    // alert(url)
+    if(adjustUrlCode !== "" && apiUrl){
+        var url =
+            `https://app.adjust.com/${adjustUrlCode}?campaign=${campaignname}%20%28${campaignid}%29&adgroup=${adsetname}%20%28${adsetid}%29&creative=${adname}%20%28${adid}%29&fbclid=${fbclid}&redirect=${apiUrl}?v=` +
+            date;
+    }else{
+        var url = apiUrl;
+    }
     const link = document.createElement("a");
     link.style.display = "none";
     link.href = url;

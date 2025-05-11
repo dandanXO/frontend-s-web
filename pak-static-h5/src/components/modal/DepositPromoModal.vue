@@ -96,7 +96,7 @@ const startCountdown = () => {
   if (countdownTimer.value) {
     clearInterval(countdownTimer.value);
   }
-  const duration = moment.duration(10, "minutes");
+  const duration = moment.duration(60, "minutes");
   let remaining = duration.clone();
   countdownTimer.value = setInterval(() => {
     remaining.subtract(100, "milliseconds");
@@ -259,11 +259,7 @@ const checkModalType = async () => {
       }
       break;
     case 4:
-      if (
-        combinedStatus.value.eligibleThirdPrivilege &&
-        store.balance <= 10 &&
-        shouldShowModalAgain(modalIndex.value)
-      ) {
+      if (combinedStatus.value.eligibleThirdPrivilege && store.balance < 30 && shouldShowModalAgain(modalIndex.value)) {
         modalType.value = "SECONDARY_DEPOSIT_AMOUNT";
       } else {
         showNextModal();
@@ -289,7 +285,7 @@ const recheckModalType = async () => {
   ) {
     modalIndex.value = 3;
     modalType.value = "FIRST_DEPOSIT_AMOUNT";
-  } else if (combinedStatus.value.eligibleThirdPrivilege && store.balance <= 10 && shouldShowModalAgain(4)) {
+  } else if (combinedStatus.value.eligibleThirdPrivilege && store.balance < 30 && shouldShowModalAgain(4)) {
     modalIndex.value = 4;
     modalType.value = "SECONDARY_DEPOSIT_AMOUNT";
   }

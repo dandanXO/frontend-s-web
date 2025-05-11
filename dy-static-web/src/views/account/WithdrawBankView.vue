@@ -5,7 +5,7 @@
     </div>
     <div class="account-content">
       <div class="account-tip-text wbot"></div>
-      <div class="flex-box flex-wrap bank-card-list">
+      <div class="flex-wrap flex-box bank-card-list">
         <div
           class="bank-card-item"
           :class="{

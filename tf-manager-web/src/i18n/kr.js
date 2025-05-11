@@ -622,6 +622,7 @@ export default {
     alias: '별명',
     all: '전체',
     allBonus: '전체 보너스',
+    allowRedirect: '리디렉션 허용',
     allvip: '전체 VIP',
     allfinanciallevel: '전체 금융 상태',
     allprofit: '전체 이익',
@@ -1989,7 +1990,15 @@ export default {
     tfCompetitionNameTh: '리그 이름 (태국어)',
     traceId: 'Trace ID',
     downloadQRCode: 'QR 코드 다운로드',
-    normalCreate: '정상'
+    normalCreate: '정상',
+    referFriendRebatePointRecord: '친구 초대 베팅 리베이트 포인트 기록',
+    referrerId: '',
+    sumPts: '총 포인트',
+    referFriendRebatePointStatus: '상태',
+    requirement: '요구 사항',
+    pts: '포인트',
+    ptsRebateAmount: '리베이트 포인트 금액',
+    ftdRebateAmount: '첫 입금 리베이트 금액',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3 개월 이상일 수 없습니다',
@@ -2749,7 +2758,8 @@ export default {
     'Sport App Setting': '스포츠 앱 설정',
     Sport: '스포츠',
     'Game Jackpot Bonus Record': '게임 잭팟 보너스 기록',
-    'Member Privilege Record Pak Export': '회원 할인 기록 수출 - 파키스탄'
+    'Member Privilege Record Pak Export': '회원 할인 기록 수출 - 파키스탄',
+    'Refer Friend Rebate Point record': '친구 초대 베팅 거래량 리베이트 포인트 기록'
   },
   google: {
     google_auth_menu: 'Google 인증자',
@@ -2921,6 +2931,23 @@ export default {
     BONUS_FLUCTUATION: '보너스 변동',
     MQ_LAST_CONSUME_TIME_CHECK: 'MQ 주제 유휴 상태',
     JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: '작업 유휴 (베팅 기록 가져오기)',
+  },
+  referRebatePoint: {
+    NO_BET_AFTER_DEPOSIT: '입금 후 베팅 없음',
+    TOTAL_DEPOSIT_COUNT: '총 입금 횟수',
+    TOTAL_BET_COUNT: '총 베팅 횟수',
+    TOTAL_BET_AMOUNT: '총 베팅 금액',
+    FTD_AMOUNT: '첫 입금 금액',
+    TOTAL_DEPOSIT_AMOUNT: 'Total Deposit Amount',
+    LAST_DEPOSIT_FTD_HOURS_APART: '마지막 입금과 첫 입금 간 시간(시간)',
+    BALANCE_BET_AFTER_DEPOSIT: '입금 후 잔액 베팅',
+    BET_FREQUENCY: '베팅 빈도',
+    GAME_TYPE_COUNT: '게임 유형 수',
+    WITHDRAW_AFTER_FAST_BET: '빠른 베팅 후 출금',
+    SAME_BET_SHORT_PERIOD: '짧은 기간 내 동일 베팅',
+    ACTIVE_DAYS: '활동 일수',
+    SAME_DEVICE_LOGIN: '동일 기기 로그인',
+    DEVICE_SWITCHING: '기기 전환'
   },
   error: {
     400: '잘못된 요청',

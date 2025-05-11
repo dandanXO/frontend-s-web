@@ -196,10 +196,10 @@
             <div class="item-num">9</div>
             雷火保留对本次活动的修订、终止和最终解释权，超出本网站控制外的技术错误，雷火将不承担任何责任。
           </div>
-          <div class="item">
+          <!-- <div class="item">
             <div class="item-num">10</div>
             雷火有权延长，缩短，终止，或者修改此活动！此活动最终解释权归雷火所有。
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

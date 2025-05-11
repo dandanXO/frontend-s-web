@@ -32,7 +32,7 @@
         </div>
       </a>
 
-      <a href="https://files.fbok59j8xi.com/app/8/affiliate/1798286660569628674/android/apk/1.0.8_20240614191523.apk" target="_self" class="action-a action-btn download" >
+      <a id="apk-download" href="https://files.fbok59j8xi.com/app/8/affiliate/1798286660569628674/android/apk/1.0.8_20240614191523.apk" target="_self" class="action-a action-btn download" >
         <img src="img/download-icon.png" alt="TF88 Dpwnload" title="TF88 Download"/>
         <div class="action-btn__text-wrapper">
           <span class="action-btn__title">Tải APP</span>
@@ -119,16 +119,22 @@
 
     const host= window.location.hostname;
     var tf88Url= "https://6789tf.com"
+    var apkUrl = "https://files.fbok59j8xi.com/app/8/affiliate/1798286660569628674/android/apk/1.0.8_20240614191523.apk"
     if(redirectUrl){
       tf88Url= "https://t667788.com"
     }else if(host.includes("z888686")){
       tf88Url= "https://tf88568.com";
+    }else if(host.includes("t138f148.com")) {
+      tf88Url= "https://t138f455.com";
+      apkUrl = "https://files.fbok59j8xi.com/app/8/affiliate/1920057322657714177/android/apk/1.0.13_20250508160400.apk"
     }
 
     var elements = document.getElementsByClassName('hyperlink');
     for (var i = 0; i < elements.length; i++) {
       elements[i].href = tf88Url + "/register";
     }
+    var apkDownloadElement = document.getElementById('apk-download');
+    apkDownloadElement.href = apkUrl;
 
 
     popButtons.forEach((button) => {

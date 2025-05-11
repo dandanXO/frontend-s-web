@@ -1,41 +1,45 @@
 <template>
-  <!-- <ProfileSummary :homeProfile="true" /> -->
-
   <q-page>
     <div class="affiliate-setting-section">
       <div class="top-profile">
         <div class="user">
           <img src="../../assets/images/affiliate/user.png">
-          <span>Good morning happpy 888</span>
+          <span>{{ $t('affiliate.main.goodMorning') }} {{ store.nickName }}</span>
         </div>
         <div class="cs"><img src="../../assets/images/affiliate/cs.png"></div>
       </div>
       <div class="total-section">
-        <div class="total-txt">Total</div>
-        <div class="total-amt">0.00</div>
+        <div class="total-txt">{{ $t('affiliate.main.total') }}</div>
+        <q-spinner v-if="isLoading" class="total-amt"/>
+        <div v-else class="total-amt"> {{ stats.total }}</div>
       </div>
-      <!-- <div class="top-section-inner">
-      </div> -->
     </div>
       
     <div class="deposit-withdraw-section">
         <router-link to="/withdraw" class="wdw-btn">
-          <!-- <div class="acct-nav-item">
-          </div> -->
           <div class="acct-nav-label">{{ $t("settings.withdraw") }}</div>
           <img src="../../assets/images/affiliate/btn-wdw.png" />
         </router-link>
         <router-link to="/deposit" class="dep-btn">
-          <!-- <div class="acct-nav-item">
-          </div> -->
           <div class="acct-nav-label">{{ $t("settings.deposit") }}</div>
           <img src="../../assets/images/affiliate/btn-dep.png" />
         </router-link>
     </div>
-    <div class="data-section">
-      <div class="row-section" v-for="(item, i) in dataList" :key="i">
-        <span class="data-number">{{ item.number }}</span>
-        <span class="data-name">{{ item.name }}</span>
+    <div class="data-section" @click="initData">
+      <div class="row-section" >
+        <q-spinner v-if="isLoading" class="data-number"/>
+        <span class="data-number" v-else @click="initData">{{ stats.logins }}</span>
+        <span class="data-name" >{{ $t('affiliate.main.logins') }}</span>
+      </div>
+      <div class="row-section">
+        <q-spinner v-if="isLoading" class="data-number"/>
+        <span class="data-number" v-else>{{ stats.noOfPlayers }}</span>
+        <span class="data-name">{{ $t('affiliate.main.noOfPlayers') }}</span>
+      </div>
+      <div class="row-section">
+        <q-spinner v-if="isLoading" class="data-number"/>
+        <span class="data-number" v-else>{{ stats.registers }}</span>
+        <span class="data-name">{{ $t('affiliate.main.registers') }}</span>
       </div>
     </div>
 
@@ -105,20 +109,12 @@
 
         
         
-        <router-link to="/affiliate/customer-service">
+        <a :href="CSAUrl" target="_blank">
           <div class="acct-nav-item">
             <img src="../../assets/images/affiliate/menu/customer-service.png" />
           </div>
           <div class="acct-nav-label">{{ $t("affiliateSettings.customerService") }}</div>
-        </router-link>
-
-
-<!--        <a v-if="canTransfer" target="_blank" @click="handleTransferClick">-->
-<!--          <div class="acct-nav-item">-->
-<!--            <img src="src/assets/images/account/transfer-svg.svg" />-->
-<!--          </div>-->
-<!--          <div class="acct-nav-label">{{ $t("settings.transfer") }}</div>-->
-<!--        </a>-->
+        </a>
       </div>
   </q-page>
 
@@ -142,41 +138,60 @@
 </template>
 
 <script setup>
-import { onActivated, onMounted, ref, computed } from "vue";
+import { onActivated, onMounted, ref } from "vue";
 import { userStore } from "src/stores";
-import { useRoute, useRouter } from "vue-router";
-import { useQuasar } from "quasar";
+import { useRoute } from "vue-router";
 import ExchangeModal from "src/components/account/ExchangeModal.vue";
 import TransferModal from "src/components/account/TransferModal.vue";
 import { api } from "boot/axios";
 import { useUI } from "stores/ui";
-import { Platform } from "quasar";
-import { t } from "src/boot/lang";
+import { storeToRefs } from "pinia";
 
-const selfTgurl = ref("");
 const store = userStore();
-const router = useRouter();
 const route = useRoute();
-const qs = require("qs");
-const $q = useQuasar();
 const ui = useUI();
+const { CSAUrl } = storeToRefs(ui);
 const showExchangeModal = ref(false);
 const showTransferModal = ref(false);
+const isLoading = ref(false);
+const stats = ref({
+  total: '-',
+  logins: '-',
+  noOfPlayers: '-',
+  registers: '-',
+  onlineUsers: '-'
+});
 
-const dataList = ref([
-  { name: 'Logins', number: "20" },
-  { name: 'No of player', number: "12" },
-  { name: 'Registers', number: "0" },
-  { name: 'Online users', number: "379" },
-])
 onActivated(() => {
   store.getUnreadTotal();
 
   if (route.query.openCodeModal) {
     showExchangeModal.value = true;
   }
+
+  initData();
 });
+
+const initData = () => {
+  isLoading.value = true;
+
+  api.get('/session/affiliate/home-page').then((res) => {
+    const data = res.data;
+    stats.value.total = data.balance;
+    stats.value.logins = data.todayLogin;
+    stats.value.noOfPlayers = data.todayActive;
+    stats.value.registers = data.todayRegister;
+  }).finally(() => {
+    isLoading.value = false;
+  })
+}
+
 onMounted(() => {
+  initData();
+
+  if(!ui.CSAUrl) {
+    ui.loadCustomerAddress();
+  }
 });
 
 </script>
@@ -214,29 +229,11 @@ onMounted(() => {
   
 }
 
-.mid-setting-section {
-  position: relative;
-
-  h2 {
-    line-height: 26px;
-    color: #fff;
-    font-size: 20px;
-    // width: calc(330px + 100px);
-    text-transform: uppercase;
-
-    font-family: "Poppins";
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 16px;
-    letter-spacing: -0.0008em;
-  }
-}
-
 .total-section {
   display: flex;
   width: 100px;
-  height: 200px;
-  padding-bottom: 50px;
+  height: 140px;
+  padding-bottom: 45px;
   margin: 0 auto;
   align-items: center;
   justify-content: flex-end;
@@ -275,12 +272,6 @@ onMounted(() => {
         color: #ffffff;
         font-weight: bold;
         background: linear-gradient(90deg, #FF676B 0%, #F9D697 100%);
-        // background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-        // box-shadow: 0px 2.07px 0px 0px #1cca6a;
-
-        // img {
-        //   filter: grayscale(1) brightness(0);
-        // }
       }
       &:nth-child(2) {
         border-radius: 10px;
@@ -288,11 +279,6 @@ onMounted(() => {
         font-weight: bold;
         background: linear-gradient(90deg, #FEB94A 0%, #FFA54D 100%);
         background-size: contain;
-        // background: #455152;
-        // box-shadow: 0px 2.07px 0px 0px #2a3637;
-        // img {
-        //   filter: grayscale(1) brightness(100);
-        // }
       }
     }
   }
@@ -315,6 +301,7 @@ onMounted(() => {
       .data-name {
         color: #B3BEC1;
         font-size: 14px;
+        letter-spacing: -1px;
       }
     }
   }
@@ -360,64 +347,6 @@ onMounted(() => {
   }
 }
 
-.invite-friends-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: unset;
-  // gap: 10px;
-  :not(:last-child) {
-    margin-right: 10px;
-  }
-  .left-icon {
-    width: 60px;
-    img {
-      width: 100%;
-    }
-  }
-  .right-contents {
-    font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 700;
-    font-size: 14.32px;
-    line-height: 120%;
-    letter-spacing: 0px;
-    max-width: 75%;
-
-    width: 100%;
-  }
-}
-
-.invite-share-link {
-  margin-top: 8px;
-  // background-color: #292d2e;
-  background: #252C46;
-  padding: 4px;
-  border-radius: 8px;
-  display: flex;
-  justify-content: space-between;
-  min-height: 40px;
-  border: 1px solid #ffffff14;
-
-  .link-href {
-    padding: 10px 16px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 11px;
-  }
-  .link-copy {
-    color: #ffffff;
-    background: #ffffff0f;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 70px;
-    font-weight: bold;
-    border-radius: 5px;
-    letter-spacing: -1px;
-  }
-}
 .acct-nav {
   margin: 5px 20px 20px;
     background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
@@ -471,11 +400,6 @@ onMounted(() => {
       justify-content: flex-start;
       margin: 0 auto;
 
-      // &:active {
-      //   background-color: rgba(255, 255, 255, 0.1);
-      //   border-radius: 8px;
-      // }
-
       .acct-nav-label {
         color: #fff;
         font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -488,10 +412,7 @@ onMounted(() => {
       }
 
       .acct-nav-item {
-        // background-color: #b9c8ff26;
         border-radius: 50%;
-        // aspect-ratio: 1/1;
-        // padding: 5px;
         height: 22px;
         width: 22px;
         cursor: pointer;
@@ -527,18 +448,11 @@ onMounted(() => {
 }
 
 .acct-logout {
-  // height: 60px;
-  // background: #2e30344f;
-  // background-image: url("src/assets/images/account/logout-btn.png");
-  // background-repeat: no-repeat;
   width: calc(95% - 20px);
   margin: 20px auto;
-  // aspect-ratio: 335/40;
-  // background-size: 100% 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  // gap: 5px;
   :not(:last-child) {
     margin-right: 5px;
   }
@@ -546,7 +460,6 @@ onMounted(() => {
     width: 30px;
   }
   .acct-nav-label {
-    // color: rgba(206, 206, 206, 0.8);
     color: #ffffff;
     font-size: 12px;
     font-weight: 700;
@@ -558,49 +471,9 @@ onMounted(() => {
   }
 }
 
-// .btn-cancel {
-//   // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
-//   // border: 1px solid #5d8956;
-//   // font-weight: 700;
-//   // color: #fff;
-//   // border: 1px solid #ffffff80;
-//   // border-radius: 12px;
-//   // width: 140px;
-//   // height: 42px;
-//   font-weight: 700;
-//   width: 100%;
-//   padding: 10px 10px;
-//   font-size: 16px;
-//   background: #455152;
-//   color: #ffffff;
-
-//   box-shadow: 0px 2px 0px 0px #2a3637;
-// }
-// .btn-confirm {
-//   // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-//   // border: 1px solid #5d8956;
-//   // font-weight: 700;
-//   // width: 140px;
-//   // height: 42px;
-//   // color: #fff;
-//   // border-radius: 12px;
-
-//   font-weight: 700;
-//   width: 100%;
-//   padding: 10px 10px;
-//   font-size: 16px;
-//   background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-//   color: #000000;
-//   box-shadow: 0px 2px 0px 0px #1cca6a;
-//   border-radius: 4px;
-//   height: unset;
-// }
 </style>
 
 <style lang="scss">
-// .q-page-container {
-//   padding-bottom: 20px !important;
-// }
 
 $colors: (
   #6D98FC,

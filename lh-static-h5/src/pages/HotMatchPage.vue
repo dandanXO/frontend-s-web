@@ -10,14 +10,27 @@
             @click="selectedCompetitionType = competitionType"
             :key="competitionType"
           >
-          <img
+          
+          <div class="competition-item-continer" :class="{ 'competition-item-continer-active': competitionType === selectedCompetitionType }">
+            <div class="competition-item-continer-name">
+              <img style="width: 24px; height: 24px; margin-right: 4px;"  :src="require(`../assets/images/hotmatch/game-w-${competitionType.toLowerCase()}-icon${competitionType === selectedCompetitionType ? '-active':''}.png`)" />
+              {{ competitionTypesNameMap[competitionType] }}
+            </div>
+          </div>
+          <!-- <img
             class="competition-item-img"
+            :style="{
+              position:competitionType === selectedCompetitionType? 'relative' : '',
+              top: competitionType === selectedCompetitionType ? '-3px' : '',
+              height: competitionType === selectedCompetitionType ? '53px' : '44px',
+              width: competitionType === selectedCompetitionType ? '117px' : '107px',
+            }"
             :src="
               competitionType === selectedCompetitionType
                 ? require(`../assets/images/hotmatch/${competitionType.toLowerCase()}-w-active.png`)
                 : require(`../assets/images/hotmatch/${competitionType.toLowerCase()}-w.png`)
             "
-          />
+          /> -->
         </div>
       </div>
     </div>
@@ -63,14 +76,27 @@
           @click="selectedCompetitionType = competitionType"
           :key="competitionType"
         >
-          <img
+
+        <div class="competition-item-continer" :class="{ 'competition-item-continer-active': competitionType === selectedCompetitionType }">
+            <div class="competition-item-continer-name">
+              <img style="width: 24px; height: 24px; margin-right: 4px;"  :src="require(`../assets/images/hotmatch/game-${competitionType.toLowerCase()}-icon${competitionType === selectedCompetitionType ? '-active':''}.png`)" />
+              {{ competitionTypesNameMap[competitionType] }}
+            </div>
+          </div>
+          <!-- <img
             class="competition-item-img"
+            :style="{
+              position:competitionType === selectedCompetitionType? 'relative' : '',
+              top: competitionType === selectedCompetitionType ? '-3px' : '',
+              height: competitionType === selectedCompetitionType ? '53px' : '44px',
+              width: competitionType === selectedCompetitionType ? '117px' : '107px',
+            }"
             :src="
               competitionType === selectedCompetitionType
                 ? require(`../assets/images/hotmatch/${competitionType.toLowerCase()}-active-bg.png`)
                 : require(`../assets/images/hotmatch/${competitionType.toLowerCase()}-bg.png`)
             "
-          />
+          /> -->
         </div>
       </div>
     </div>
@@ -118,6 +144,12 @@ import GameModal from "../components/modal/GameModal.vue";
 
 const hotMatches = ref([]);
 const competitionTypes = ref([]);
+const competitionTypesNameMap = ref({
+  Football : "足球",
+  Basketball : "篮球",  
+  ESport : "电竞",
+});
+
 const selectedCompetitionType = ref();
 const imgUrl = process.env.IMAGE_CDN;
 
@@ -144,10 +176,12 @@ onMounted(() => {
   api.get("/platform-competition").then((res) => {
     if (res.code === 0) {
       const uniqueCompetitionTypes = Array.from(new Set(res.data.map(({ competitionType }) => competitionType)));
-      competitionTypes.value = uniqueCompetitionTypes;
-
+      competitionTypes.value = []
       if (uniqueCompetitionTypes.length > 0) {
-        selectedCompetitionType.value = uniqueCompetitionTypes[0];
+        competitionTypes.value.push(uniqueCompetitionTypes[2]);
+        competitionTypes.value.push(uniqueCompetitionTypes[0]);
+        competitionTypes.value.push(uniqueCompetitionTypes[1]);
+        selectedCompetitionType.value = uniqueCompetitionTypes[2];
         hotMatches.value = res.data;
       }
     }
@@ -157,6 +191,33 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .white{
+  .competition-item-continer-active{
+    background: url("../assets/images/hotmatch/game-w-active-bg.png") no-repeat center center !important;
+    color: #fff !important;
+    background-size: 100% 100%;
+    width: 107px;
+    height: 48px;
+  }
+  .competition-item-continer{
+    width: 107px;
+    height: 48px;
+    color: #424F72;
+    background: url("../assets/images/hotmatch/game-w-bg.png") no-repeat center center;
+    background-size: 100% 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .competition-item-continer-name{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 6px;
+    }
+  }
+  .competition-item-img{
+    width: 107px;
+    height: 48px;
+  }
   .hot-match-container{
     box-shadow: 0px -2.78px 2.78px 0px rgba(195, 212, 230, 1) inset, 0px 1.39px 0px 0px rgba(167, 194, 221, 1);
     margin: 8px 10px;
@@ -164,11 +225,11 @@ onMounted(() => {
   }
   .competition-items {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 100%;
   padding: 14px;
 
-  gap: 10px;
+  gap: 0px;
 
   .competition-item {
     display: flex;
@@ -200,7 +261,7 @@ onMounted(() => {
     align-items: center;
     gap: 10px;
     height: 100%;
-    padding: 0 20px 20px 20px;
+    padding: 0 10px 20px 10px;
 
     .hot-match-item {
       background: unset;
@@ -301,6 +362,31 @@ onMounted(() => {
     }
   }
 }
+
+.competition-item-continer-active{
+    background: url("../assets/images/hotmatch/game-active-bg.png") no-repeat center center !important;
+    color: #fff !important;
+    background-size: 100% 100%;
+    width: 107px;
+    height: 48px;
+  }
+  .competition-item-continer{
+    width: 107px;
+    height: 48px;
+    color: #fff;
+    background: url("../assets/images/hotmatch/game-bg.png") no-repeat center center;
+    background-size: 100% 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .competition-item-continer-name{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 6px;
+    }
+  }
+
 .competition-items {
   display: flex;
   justify-content: space-around;
@@ -314,9 +400,10 @@ onMounted(() => {
     text-align: center;
     cursor: pointer;
 
-    img {
-      width: 100%;
-    }
+    .competition-item-img{
+    width: 107px;
+    height: 48px;
+  }
 
     .competition-item-name {
       font-family: "PingFang SC";
@@ -388,16 +475,19 @@ onMounted(() => {
         gap: 10px;
 
         .hot-match-time {
-          width: 85px;
-
+          
           .bet-btn {
+            width: 88px;
+            height: 24px;
             position: absolute;
             left: 50%;
             bottom: 0%;
             transform: translate(-50%, -50%);
             padding: 3px 8px;
             background: linear-gradient(to bottom, #5d7dbf 0%, #242d6f 100%);
-            border-radius: 5px;
+            border: 0.5px solid #369EFF;
+            box-shadow: 0px 2px 4px 0px #2C70B294;
+            border-radius: 3px;
             cursor: pointer;
 
             &:hover {

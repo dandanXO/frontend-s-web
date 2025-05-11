@@ -82,7 +82,7 @@ const props = defineProps(["rankDetails", "isLoadingRanking"]);
 
   &.isNotInApp {
     // bottom: 95px;
-    bottom: 45px;
+    bottom: 70px;
   }
 
   .column {
@@ -93,7 +93,6 @@ const props = defineProps(["rankDetails", "isLoadingRanking"]);
     > * {
       margin-top: 8px;
     }
-
 
     &:last-child {
       align-items: flex-end;

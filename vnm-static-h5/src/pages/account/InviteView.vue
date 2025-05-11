@@ -39,80 +39,89 @@
           </template>
         </table>
       </div>
-      
+
       <div class="terms-wrapper">
-      <div class="qr-title">{{ $t('lang.share_para_title') }}</div>
+        <div class="qr-title">{{ $t("lang.share_para_title") }}</div>
 
-      <p/>
+        <p />
 
-      <div class="terms-subtitle"><b>{{ $t('lang.receiveReward') }}</b></div>
+        <div class="terms-subtitle">
+          <b>{{ $t("lang.receiveReward") }}</b>
+        </div>
 
-      <p/>
+        <p />
 
-      <div><b>{{ $t('lang.promotionStart') }}</b></div>
-      <div v-html="$t('lang.applicableTo')"></div>
+        <div>
+          <b>{{ $t("lang.promotionStart") }}</b>
+        </div>
+        <div v-html="$t('lang.applicableTo')"></div>
 
-      <p/>
+        <p />
 
-      <div><b>{{ $t('lang.promotionDetailsLabel') }}</b></div>
-      <div>{{ $t('lang.promotionDetails') }}</div>
+        <div>
+          <b>{{ $t("lang.promotionDetailsLabel") }}</b>
+        </div>
+        <div>{{ $t("lang.promotionDetails") }}</div>
 
-      <p/>
+        <p />
 
-      <div><b>{{ $t('lang.howToParticipateLabel') }}</b></div>
-      <div>
+        <div>
+          <b>{{ $t("lang.howToParticipateLabel") }}</b>
+        </div>
+        <div>
+          <ol>
+            <li>{{ $t("lang.howToParticipate1") }}</li>
+            <li>{{ $t("lang.howToParticipate2") }}</li>
+            <li>{{ $t("lang.howToParticipate3") }}</li>
+            <li>{{ $t("lang.howToParticipate4") }}</li>
+            <li>{{ $t("lang.howToParticipate5") }}</li>
+          </ol>
+        </div>
+
+        <table border class="terms-table">
+          <thead>
+            <th>{{ $t("lang.numOfReferredFriends") }}</th>
+            <th>{{ $t("lang.bonusPercentage") }}</th>
+            <th>{{ $t("lang.minimumBonusAmt") }}</th>
+            <th>{{ $t("lang.maximumBonusPerReferredPerson") }}</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>10%</td>
+              <td>100</td>
+              <td>800</td>
+            </tr>
+            <tr>
+              <td rowspan="2">≥2</td>
+              <td>20%</td>
+              <td>200</td>
+              <td>800</td>
+            </tr>
+            <tr>
+              <td colspan="3">{{ $t("lang.additionalCommissionHint") }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p />
+
+        <div>
+          <b>{{ $t("lang.termsCondition") }}</b>
+        </div>
         <ol>
-          <li>{{ $t('lang.howToParticipate1') }}</li>
-          <li>{{ $t('lang.howToParticipate2') }}</li>
-          <li>{{ $t('lang.howToParticipate3') }}</li>
-          <li>{{ $t('lang.howToParticipate4') }}</li>
-          <li>{{ $t('lang.howToParticipate5') }}</li>
+          <li>{{ $t("lang.termsCondition1") }}</li>
+          <li>{{ $t("lang.termsCondition2") }}</li>
+          <li>{{ $t("lang.termsCondition3") }}</li>
+          <li>{{ $t("lang.termsCondition4") }}</li>
+          <li>{{ $t("lang.termsCondition5") }}</li>
+          <li>{{ $t("lang.termsCondition6") }}</li>
+          <li>{{ $t("lang.termsCondition7") }}</li>
+          <li>{{ $t("lang.termsCondition8") }}</li>
+          <li>{{ $t("lang.termsCondition9") }}</li>
+          <li>{{ $t("lang.termsCondition10") }}</li>
         </ol>
       </div>
-
-      <table border class="terms-table">
-        <thead>
-          <th>{{ $t('lang.numOfReferredFriends') }}</th>
-          <th>{{ $t('lang.bonusPercentage') }}</th>
-          <th>{{ $t('lang.minimumBonusAmt') }}</th>
-          <th>{{ $t('lang.maximumBonusPerReferredPerson') }}</th>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>10%</td>
-            <td>100</td>
-            <td>800</td>
-          </tr>
-          <tr>
-            <td rowspan="2">≥2</td>
-            <td>20%</td>
-            <td>200</td>
-            <td>800</td>
-          </tr>
-          <tr>
-            <td colspan="3">{{ $t('lang.additionalCommissionHint') }}</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p/>
-      
-
-      <div><b>{{ $t('lang.termsCondition') }}</b></div>
-      <ol>
-        <li>{{ $t('lang.termsCondition1') }}</li>
-        <li>{{ $t('lang.termsCondition2') }}</li>
-        <li>{{ $t('lang.termsCondition3') }}</li>
-        <li>{{ $t('lang.termsCondition4') }}</li>
-        <li>{{ $t('lang.termsCondition5') }}</li>
-        <li>{{ $t('lang.termsCondition6') }}</li>
-        <li>{{ $t('lang.termsCondition7') }}</li>
-        <li>{{ $t('lang.termsCondition8') }}</li>
-        <li>{{ $t('lang.termsCondition9') }}</li>
-        <li>{{ $t('lang.termsCondition10') }}</li>
-      </ol>
-    </div>
     </div>
   </q-page>
 </template>
@@ -152,7 +161,6 @@ export default defineComponent({
 
 
     const copyText = (text) => {
-      console.log("asdasdasd",text)
       copyToClipboard(text);
       setTimeout(() => {
         $q.notify({
@@ -244,7 +252,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .terms-wrapper {
   line-height: 2em;
-  color: #9AA8CB;
+  color: #9aa8cb;
 
   .qr-title,
   .terms-subtitle {
@@ -252,10 +260,11 @@ export default defineComponent({
   }
 
   .terms-table {
-    th, td {
+    th,
+    td {
       text-align: center;
       padding: 2px 5px;
-      border: 1px solid #9AA8CB;
+      border: 1px solid #9aa8cb;
     }
   }
 }

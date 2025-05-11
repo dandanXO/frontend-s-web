@@ -267,6 +267,10 @@ router.beforeEach((to, from, next) => {
     fbq("init", "1329778304894127");
     fbq("track", "PageView");
     store.isAffiliateA = true;
+  } else if (window.location.href.indexOf("t138v143.com") > -1) {
+    fbq("init", "1233274318509669");
+    fbq("track", "PageView");
+    store.isAffiliateA = true;
   }
 });
 export default router;
