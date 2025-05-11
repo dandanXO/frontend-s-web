@@ -38,6 +38,7 @@
     <ChallengeComebackPromo v-if="list.redirectUrl === 'dy2-cycle-loss-refund'" :promo-code="list.promoCode" />
 
     <BountyBlastPremier v-if="list.redirectUrl === 'bounty-blast-premier'" :promo-code="list.promoCode" />
+    <BlastPremierPromo v-if="list.redirectUrl === 'dy2-cs2-blast-2024'" :promo-code="list.promoCode" />
 
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao'" />
 
@@ -52,7 +53,7 @@
 
     <PullbackTide v-if="list.redirectUrl === 'dy2-pullback-tide'" :promo-code="list.promoCode" />
     <Cba30Dream v-if="list.redirectUrl === 'dy2-cba30-dream'" :promo-code="list.promoCode" />
-
+    <Lh1Enc2025 v-else-if="list.redirectUrl === 'dy2-enc-2025'" :promo-code="list.promoCode" />
     <Lh1LplLck2025loss v-else-if="list.redirectUrl === 'dy2-lpl-lck-2025'" :promo-param="listParam" />
     <Blast2025S3 v-else-if="list.redirectUrl === 'dy2-blast-open-lisbon-2025'" :promo-code="list.promoCode" />
 
@@ -71,9 +72,10 @@
     <PglWallachiaS4 v-else-if="list.redirectUrl === 'dy2-pgl-wallachia-s4'" :promo-code="list.promoCode" />
     <newVip2025 v-if="list.redirectUrl === 'dy2-2025-new-vip'" :promo-code="list.promoCode" />
     <BlastSlam32025 v-else-if="list.redirectUrl === 'dy2-blast-slam-3-2025'" :promo-code="list.promoCode" />
-
+    <PglastanaAc2025 v-else-if="list.redirectUrl === 'dy2-pgl-astana-2025'" :promo-code="list.promoCode" />
     <Cct2025 v-else-if="list.redirectUrl === 'dy2-cct-global-finals-2025'" :promo-code="list.promoCode" />
     <NewFootball v-if="list.redirectUrl === 'dy2-football'" :promo-code="list.promoCode" />
+    <IemDallas2025 v-if="list.redirectUrl === 'dy2-iem-dallas-2025'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -93,6 +95,7 @@
 </template>
 
 <script>
+import BlastPremierPromo from "components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue";
 import { defineAsyncComponent, defineComponent, ref } from "vue";
 import { userStore } from "stores/index";
 import { eventapi } from "boot/axios";
@@ -149,15 +152,21 @@ const BlastSlam32025 = defineAsyncComponent(() => import("./hotpromo/blast-slam-
 const NewFootball = defineAsyncComponent(() => import("../components/hotpromo/NewFootball/NewFootball.vue"));
 const VctBangkok = defineAsyncComponent(() => import("./hotpromo/vct-bangkok/VctBangkok.vue"));
 const elsOne2025 = defineAsyncComponent(() => import("./hotpromo/elsOne2025/elsOne2025.vue"));
+import PglastanaAc2025 from "./hotpromo/lh1-pgl-astana-2025/pglastanaAc2025.vue";
 import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
 import newVip2025 from "./hotpromo/2025-new-vip/2025-new-vip.vue";
+import IemDallas2025 from "./hotpromo/iem-dallas-2025/IemDallas2025.vue";
 const BlastRival2025 = defineAsyncComponent(() => import("./hotpromo/BlastRival2025/BlastRival2025.vue"));
+import Lh1Enc2025 from "./hotpromo/Lh1-enc-2025/Lh1-enc-2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    Lh1Enc2025,
+    BlastPremierPromo,
+    PglastanaAc2025,
     newVip2025,
     Cct2025,
     YaLLa2025,
@@ -192,7 +201,8 @@ export default defineComponent({
     PglWallachiaS4,
     BlastSlam32025,
     BlastRival2025,
-    NewFootball
+    NewFootball,
+    IemDallas2025
   },
   props: {
     list: {

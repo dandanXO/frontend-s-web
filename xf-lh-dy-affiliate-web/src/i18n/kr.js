@@ -30,6 +30,7 @@ export default {
     email: '합영부 이메일',
     qq: '합영 QQ',
     skype: '합영부 Skype',
+    teams: 'Teams',
     paopao: '파오파오',
     zalo: '잘로',
     telegram: '텔레그램',

@@ -25,10 +25,10 @@
               全部删除
             </q-btn>
             <q-toggle v-if="truncatedListByType.length" v-model="allowSelectMultiple" :label="'选择多个'" left-label />
-            <q-btn v-if="hasMailSelected" class="common-md-white-btn" size="md" @click="readMails(item.type)">
+            <q-btn v-if="hasMailSelected && allowSelectMultiple" class="common-md-white-btn" size="md" @click="readMails(item.type)">
               已读
             </q-btn>
-            <q-btn v-if="hasMailSelected" class="common-md-white-btn" size="md" @click="deleteMails(item.type)">
+            <q-btn v-if="hasMailSelected && allowSelectMultiple" class="common-md-white-btn" size="md" @click="deleteMails(item.type)">
               删除
             </q-btn>
           </div>
@@ -72,11 +72,13 @@
                   </div>
                 </div>
               </div>
-              <div
-                class="mailcontents"
-                v-if="isSelectedMail === det.id && det.content"
-                v-html="det.content.replace(/\n/g, '<br/>')"
-              ></div>
+              <div v-if="isSelectedMail === det.id && det.content" class="mailcontents">
+                <span style="color: #aaaaaa; font-size: 15px;">正文: </span>
+                <div class="q-pb-sm" v-html="det.content.replace(/\n/g, '<br/>')"></div>
+                <div class="q-pa-md" style="background: #ffffffa5; border-radius: 10px;"  v-if="isSelectedMail === det.id && det.replyMessageContent">
+                <span style="color: #aaaaaa; font-size: 15px;">回复: </span><div v-html="det.replyMessageContent.replace(/\n/g, '<br/>')"></div>
+                </div>
+              </div>
               <div v-if="mailType === 'outbox'" class="buttons">
                 <q-btn outline label="催单" size="sm" color="bright" class="q-mr-sm" />
                 <q-btn outline label="复制" size="sm" color="bright" />
@@ -170,7 +172,13 @@ export default defineComponent({
     }
     const $q = useQuasar();
     const isDeleteMailModal = ref(false);
-    const truncatedList = ref([]);
+
+    const sliceOffset = ref(0)
+    const sliceLimit = 6
+    const truncatedList = computed(() => {
+      return props.list.slice(0, sliceOffset.value)
+    })
+
     const truncatedListAll = ref([])
     const truncatedListByType = computed(() => {
       return truncatedList.value.filter((listItem) => {
@@ -181,23 +189,19 @@ export default defineComponent({
       });
     });
 
-    const comList = ref({});
+    const comList = computed(() => props.list)
+
     const allowSelectMultiple = ref(false);
     const selectedMailIds = ref({});
     const hasMailSelected = computed(() => Object.values(selectedMailIds.value).includes(true));
     const onLoad = (index, done) => {
-      comList.value = props.list;
       setTimeout(() => {
-        if (comList.value.length) {
-          var slicedArray = comList.value.splice(0, 6);
-          slicedArray.forEach((element) => {
-            truncatedList.value.push(element);
-            truncatedListAll.value.push(element);
-          });
-          done();
+        if (sliceOffset.value < props.list.length) {
+          sliceOffset.value += sliceLimit
         }
-      }, 200);
-    };
+        done()
+      }, 200)
+    }
     const isSelectedMail = ref(-1);
     const toggleMail = (mail) => {
       if (isSelectedMail.value !== mail.id) {

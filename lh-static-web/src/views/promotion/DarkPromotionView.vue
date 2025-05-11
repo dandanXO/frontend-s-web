@@ -463,6 +463,7 @@ export default defineComponent({
       overflow: hidden;
 
       img {
+        margin-top: 21px;
         height: 305px;
       }
     }
@@ -550,6 +551,13 @@ export default defineComponent({
     }
     .content-LH-baccarat-win {
       padding: 0px 24px 30px;
+    }
+    .content-lh1-feedback-award {
+      color: #fff;
+      :deep(img) {
+        filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(232deg) brightness(100%)
+          contrast(106%);
+      }
     }
   }
 }

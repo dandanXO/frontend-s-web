@@ -17,17 +17,21 @@
     LinearScale
   } from 'chart.js'
   import { Bar } from 'vue-chartjs'
+  import { inject } from 'vue';
   
+
+const labels =   inject('labels');
+const allChartData =   inject('allChartData');
   // Register Chart.js components
   ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
   
   // Chart Data
   const chartData = {
-    labels: ['04/23', '04/24', '04/25', '04/26', '04/27', '04/28', '04/29'],
+    labels: labels.value,
     datasets: [
       {
         label: 'Profit and Loss',
-        data: [-4000, -8000, -6025.43, -11000, -15000, -7000, -8500],
+        data: allChartData.value.teamPnL,
         backgroundColor: '#3b82f6', // Tailwind "blue-500"
         borderRadius: 4,
         barThickness: 20

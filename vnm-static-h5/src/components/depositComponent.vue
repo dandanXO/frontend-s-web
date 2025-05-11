@@ -637,6 +637,10 @@ async function pDepo(deposit) {
           otag("event", "deposit");
         }
 
+        if (store.isAffiliateA) {
+          fbq("track", "Purchase");
+        }
+
         console.log(res);
         const response = res.data.result;
 

@@ -16,8 +16,8 @@
     </div>
     <div class="bottom" data-aos="fade-up">
       <div class="tabs">
-        <div :class="`tab tab-left ${activeTab === 0 ? 'active' : ''}`" @click="activeTab = 0">IOS教程</div>
-        <div :class="`tab tab-right ${activeTab === 1 ? 'active' : ''}`" @click="activeTab = 1">安卓教程</div>
+        <div :class="`tab tab-left ${isDark ? 'color-B':''} ${activeTab === 0 ? (isDark ? 'dark-active':'active') : ''}`" @click="activeTab = 0">IOS教程</div>
+        <div :class="`tab tab-right ${isDark ? 'color-B':''} ${activeTab === 1 ? (isDark ? 'dark-active':'active') : ''}`" @click="activeTab = 1">安卓教程</div>
       </div>
       <template v-if="isDark">
         <img
@@ -153,7 +153,9 @@ onMounted(() => {
     .tabs {
       display: flex;
       align-items: center;
-
+      .color-B {
+        color: #000;
+      }
       .tab {
         display: flex;
         align-items: center;
@@ -179,6 +181,11 @@ onMounted(() => {
           background-size: 100% 100%;
           color: #fff;
         }
+        &.dark-active {
+          background: url("../assets/images/app-tutorial/tab-left-active.png") no-repeat center center;
+          background-size: 100% 100%;
+          color: #fff;
+        }
       }
 
       .tab-right {
@@ -186,6 +193,11 @@ onMounted(() => {
         background-size: 100% 100%;
 
         &.active {
+          background: url("../assets/images/app-tutorial/tab-right-active.png") no-repeat center center;
+          background-size: 100% 100%;
+          color: #fff;
+        }
+        &.dark-active {
           background: url("../assets/images/app-tutorial/tab-right-active.png") no-repeat center center;
           background-size: 100% 100%;
           color: #fff;

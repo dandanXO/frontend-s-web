@@ -55,11 +55,7 @@
                           <div class="promo-ribbon" v-if="promo.labelType !== -1 && promo.labelType !== 2">
                             {{ getPromoLabel(promo.labelType) }}
                           </div>
-                          <div
-                            class="promo-item-date"
-                            v-if="parsedParam(promo.param).date && !$q.dark.isActive"
-                            v-html="parsedParam(promo.param).date"
-                          />
+
                         </div>
                         <div
                           style="padding-left: 0; font-weight: 400"
@@ -67,6 +63,11 @@
                           v-if="parsedParam(promo.param).date && $q.dark.isActive"
                           v-html="parsedParam(promo.param).date"
                         />
+                        <div
+                            class="promo-item-date"
+                            v-if="parsedParam(promo.param).date && !$q.dark.isActive"
+                            v-html="parsedParam(promo.param).date"
+                          />
                         <div class="promo-item-title">{{ promo.title }}</div>
                         <div
                           class="promo-item-deal"
@@ -763,10 +764,10 @@ export default defineComponent({
           }
 
           .promo-item-date {
-            color: #606479;
+            color: #A4AABB;
             font-size: 0.825rem;
-            font-weight: bold;
-            padding-left: 12px;
+            font-weight: lighter;
+            // padding-left: 12px;
             // position: absolute;
             // top: 5px;
             // left: 100px;
@@ -775,8 +776,13 @@ export default defineComponent({
           .promo-item-title {
             color: $primary;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 1.15rem;
+            line-height: 1.2;
             max-width: 160px;
+            margin-bottom: 2px;
+            margin-top: 2px;
+            letter-spacing: 0.5px;
+            font-family: 'PingFang SC', 'PingFang', sans-serif;
 
             @media (min-width: 500px) {
               max-width: calc(100% - 220px);
@@ -785,9 +791,11 @@ export default defineComponent({
 
           .promo-item-deal {
             color: $grey-color;
-            font-weight: bold;
+            font-weight: 600;
             font-size: 0.875rem;
             max-width: 160px;
+            letter-spacing: 0.5px;
+            font-family: 'PingFang SC', 'PingFang', sans-serif;
 
             @media (min-width: 500px) {
               max-width: calc(100% - 220px);
@@ -801,9 +809,11 @@ export default defineComponent({
           .promo-item-btn {
             padding-left: 16px;
             padding-right: 16px;
-            border-radius: 8px;
+            border-radius: 4px;
             font-size: 0.75rem;
             margin-top: 6px;
+            background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+            box-shadow: 0px -0.75px 0.75px 0px #275EC1 inset;
           }
 
           .promo-item-side-img {
@@ -818,7 +828,7 @@ export default defineComponent({
               // height: 100%;
               // width: auto;
               width: 100%;
-              max-width: calc(100% - 180px);
+              max-width: calc(100% - 170px);
               margin-left: auto;
             }
           }
@@ -1392,6 +1402,13 @@ export default defineComponent({
             em {
               color: #f04918;
               font-style: normal;
+            }
+          }
+          .content-lh1-feedback-award {
+            color: #fff;
+            img {
+              filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(232deg) brightness(100%)
+                contrast(106%);
             }
           }
         }

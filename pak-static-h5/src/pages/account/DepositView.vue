@@ -1076,11 +1076,16 @@ const openDepositPage = () => {
 };
 
 const openDepositVideo = () => {
-  if (langSelect === "ur") {
-    window.open("https://drive.google.com/file/d/1EQaqmujVTheOKvk0bczhqLa2cL30jKBu/view?usp=sharing", "_blank");
+  if (selectedPayType.value.includes("USDT")) {
+    window.open("https://drive.google.com/file/d/1EpB-wJCE71vbkcrdG6HQAe1SSZoF2k45/view?usp=sharing", "_blank");
   } else {
-    window.open("https://drive.google.com/file/d/1y-PJqF2C4MBEvtuPL3RDnfnl9teMs-zI/view?usp=drive_link", "_blank");
+    window.open("https://drive.google.com/file/d/17AVj95dJqS9cNhxAG310On3i9ex-rUd9/view?usp=drivesdk", "_blank");
   }
+  // if (langSelect === "ur") {
+  //   window.open("https://drive.google.com/file/d/1EQaqmujVTheOKvk0bczhqLa2cL30jKBu/view?usp=sharing", "_blank");
+  // } else {
+  //   window.open("https://drive.google.com/file/d/1y-PJqF2C4MBEvtuPL3RDnfnl9teMs-zI/view?usp=drive_link", "_blank");
+  // }
   // if (selectedPayType.value === "EASYPAISA") {
   //   window.open("https://drive.google.com/file/d/1xBIZuDG1yY6Zeo-RF8-M-3I3E6o9VddX/view", "_blank");
   // } else if (selectedPayType.value === "JAZZCASH") {

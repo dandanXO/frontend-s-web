@@ -1786,9 +1786,9 @@ function clearImport() {
 }
 
 async function confirmImport() {
+  importedPage.buttonLoading = true
   importRefForm.value.validate(async valid => {
     if (valid) {
-      importedPage.buttonLoading = true
       const recordCopy = { ...importedPage.records }
       const data = []
       Object.entries(recordCopy).forEach(([key, value]) => {
@@ -1820,13 +1820,13 @@ async function confirmImport() {
           records.splice(0, records.length)
         }
       } while (records.length > 0)
-      importedPage.buttonLoading = false
       ElMessage({ message: t('message.importSuccess'), type: 'success' })
       clearImport()
       loadMemberAmountAdjust()
       importForm.cause = null
       importForm.currency = null
     }
+    importedPage.buttonLoading = false
   })
 }
 

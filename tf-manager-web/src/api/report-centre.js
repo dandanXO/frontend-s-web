@@ -31,3 +31,11 @@ export const getKoreaStatsReport = () => {
 export const getVipReport = (data) => {
   return https().request("/report/vip-report/", Method.GET, data, ContentType.json);
 };
+
+export const getSiteRetentionReport = (data) => {
+  return https().request("/report/site-retention-report", Method.GET, data, ContentType.json)
+};
+
+export const getAffiliateRetentionReport = (data) => {
+  return https().request("/report/affiliate-retention-report", Method.GET, data, ContentType.json)
+};

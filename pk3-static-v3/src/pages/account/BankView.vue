@@ -525,6 +525,8 @@ onActivated(() => {
 
       .item-acc {
         font-size: 12px;
+        word-break: break-all;
+        padding-right: 12px;
       }
 
       .item-copy {

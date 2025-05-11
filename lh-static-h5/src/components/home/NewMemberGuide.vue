@@ -68,7 +68,7 @@
     </div>
     <div class="step5-container" v-else-if="step === 5">
       <div class="step5-img">
-        <img src="../../assets/images/home/guide/step5-img1.png" alt="" />
+        <img style="height:280px;" src="../../assets/images/home/guide/step5-img1.png" alt="" />
       </div>
       <img class="step-bg" src="../../assets/images/home/guide/step-bg.png" alt="" width="100%" />
       <div class="content">
@@ -131,7 +131,7 @@ const adjustGuide = () => {
       const { x, y } = document.querySelector('.deposit-btn').getBoundingClientRect();
       const step5img = document.querySelector('.step5-img');
       step5img.style.top = `calc(${y}px - 15px)`;
-      step5img.style.left = `calc(${x}px - 16px)`;
+      step5img.style.left = `calc(${x}px - 106px)`;
       step5img.style.visibility = 'visible';
     }, 1000);
   }

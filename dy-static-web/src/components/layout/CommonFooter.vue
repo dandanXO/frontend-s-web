@@ -17,9 +17,9 @@
           <span class="footPayIcon qq" title="QQ"></span>
         </div>
         <div class="top-ft-rgt">
-          <span class="s1">博彩责任：</span>
+          <!-- <span class="s1">博彩责任：</span>
           <span class="footPayIcon gameCore" title="GameCore"></span>
-          <span class="footPayIcon eighteenadd" title="18+"></span>
+          <span class="footPayIcon eighteenadd" title="18+"></span> -->
           <span class="s1">推荐浏览器：</span>
           <span class="recBrowser bchrome" title="Chrome"></span>
           <span class="recBrowser bfirefox" title="Firefox"></span>

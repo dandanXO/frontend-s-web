@@ -55,7 +55,10 @@ export default {
     interestProfit: "سود کا منافع",
     spinnerRules: "قواعد",
     effectiveRevenueFAQ: "مؤثر آمدنی کے عمومی سوالات",
-    teamManagement: "ٹیم مینجمنٹ"
+    teamManagement: "ٹیم مینجمنٹ",
+    teamPnL: "ٹیم منافع اور نقصان",
+    teamBetting: "ٹیم شرط بندی",
+    editRebate: "رعایت میں ترمیم کریں"
   },
   bottomNav: {
     home: "گھر/ہوم",
@@ -391,7 +394,26 @@ export default {
     "editRebate": "ریبیٹ میں ترمیم",
     "securityCenter": "سیکیورٹی سینٹر",
     "internalMessage": "اندرونی پیغام",
-    "customerService": "کسٹمر سروس"
+    "customerService": "کسٹمر سروس",
+    linkManagement: "لنک کا انتظام"
+  },
+  affiliate: {
+    main: {
+      logins: "لاگ ان",
+      noOfPlayers: "کھلاڑیوں کی تعداد",
+      registers: "رجسٹرز",
+      total: "کل",
+      goodMorning: "صبح بخیر"
+    },
+    account: {
+      memberReferralLink: "رکن حوالہ لنک",
+      agentReferralLink: "ایجنٹ حوالہ لنک",
+      copiedToClipboard: "کاپی کیا گیا",
+      copyLink: "لنک کو کاپی کریں",
+      qrCode: "کیو آر کوڈ",
+      scanTheCodeToRegister: "رجسٹر کرنے کے لیے کیو آر کوڈ اسکین کریں",
+      pressQRCode: "کیو آر کوڈ کو البم میں محفوظ کرنے کے لیے دبائیں اور پکڑیں"
+    }
   },
   dividend: {
     myDividend: "میرا حصہ",

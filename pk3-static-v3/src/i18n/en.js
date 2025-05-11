@@ -159,6 +159,7 @@ export default {
     virtualWallet_id_rule: "Please enter 13-digit Identity ID",
     virtualWallet_rules_02: "Phone number must start with '03'",
     virtualWallet_rules_03: "eWallet must have 11 digits",
+    virtualWallet_rules_04: "The eWallet cannot have decimal points",
     virtualWallet_warmReminder:
       "Warm reminder: If the cardholder’s name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
     virtualWallet_warmReminder_02:
@@ -203,7 +204,12 @@ export default {
     ewallet_selectionTitle: "eWallet",
     ewallet_select: "Select eWallet",
     ewallet_selectError: "Select eWallet",
-    ewallet_type: "eWallet Card Number"
+    ewallet_type: "eWallet Card Number",
+    identityid: "Identity ID",
+    identityid_placeholder: "Enter Identity ID",
+    identityid_rules_01: "Enter Identity ID",
+    identityid_rules_02: "Please insert 13 digits Identity ID",
+    identityid_rules_03: "The eWallet cannot have decimal points"
   },
   btn: {
     confirm: "Confirm",
@@ -234,7 +240,8 @@ export default {
     notAMember: "Not a member?",
     createAccount: "Create Account",
     copy: "Copying",
-    joinNow: "Join Now"
+    joinNow: "Join Now",
+    save: "Save"
   },
   notify: {
     noRecord: "No Records",
@@ -427,7 +434,8 @@ export default {
       about: "About",
       history: "History",
       daily: "Daily",
-      earn: "Earn"
+      earn: "Earn",
+      share: "Share"
     },
     about: {
       invitetoEarn: "Invite to Earn",
@@ -505,7 +513,10 @@ export default {
       betAmount: "Bet Amount",
       rate: "Rate",
       yesterdayReportTotal: "Yesterday Report (Total)",
+      todayReportTotal: "Today Report (Total)",
       level: "Level",
+      noOfDepositors: "Number of depositors",
+      depositAmount: "Deposit amount",
       myselfBettingAmount: "Myself betting amount",
       myselfRebate: "Myself rebate",
       teamBettingamount: "Team betting amount",
@@ -527,6 +538,29 @@ export default {
       myReferralLink: "My Referral Link",
       save: "SAVE",
       copiedtoClipboard: "copied to clipboard"
+    },
+    share: {
+      totalInvited: "Total invited",
+      validInvites: "Valid invites",
+      validInvitationsToday_01: "Valid invitations",
+      validInvitationsToday_02: "today",
+      todaysBonus: "Today's bonus",
+      currentLevel: "Current level",
+      currentBonusLevel_01: "Current bonus",
+      currentBonusLevel_02: "level",
+      bonusClaimed: "Bonus claimed",
+      fixedInvitationBonus: "Fixed Invitation Bonus",
+      remark: "Remark",
+      point_01_bonus: "Note: Fixed rewards are issued only after the invited users meet the rating criteria.",
+      point_01_remark:
+        "System evaluates each invited user based on their betting activity. Encourage your friends to place real bets and stay active — usually, total bets over Rs2000 have a higher chance of qualifying. Rewards will be issued automatically upon meeting the criteria.",
+      point_02_remark:
+        "In cases of malicious behavior such as fake accounts or reward farming, related rewards will be canceled and not issued.",
+      point_03_remark: "55ACE reserves all rights of final interpretation.",
+      table_col_invite: "Valid Invite Range",
+      table_col_reward: "Reward per User (Rs)",
+      inviteNewUsers:
+        "Invite new users to register using your exclusive referral link or QR code and receive three generous rewards:"
     }
   },
   records: {
@@ -611,7 +645,7 @@ export default {
       signedIn: "Signed in"
     },
     spinLuckyWheel: {
-      doNotShowAgain: 'Do not show again'
+      doNotShowAgain: "Do not show again"
     }
   },
   maintenance: {

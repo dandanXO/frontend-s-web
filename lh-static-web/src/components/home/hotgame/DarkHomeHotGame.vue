@@ -106,11 +106,23 @@
                   @click="onEnterGameClick(hotgame, hotgame.type)"
                 >
                   <img
+                    v-if="['live', 'slot'].includes(hotgame.section) && isDark"
                     :class="`game-provider-img ${hotgame.currentPlat === provider ? 'active' : ''}`"
                     :src="
                       require(`../../../assets/${hotgame.section}/${
                         hotgame.section
-                      }-logo-${provider.code.toLowerCase()}.png`)
+                      }-logo-${provider.code.toLowerCase()}-dark.png`)
+                    "
+                  />
+                  <img
+                    v-else
+                    :class="`game-provider-img ${hotgame.currentPlat === provider ? 'active' : ''}`"
+                    :src="
+                      require(`../../../assets/${hotgame.section}/${
+                        hotgame.section
+                      }-logo-${provider.code.toLowerCase()}${
+                        provider.code.toLowerCase() === 'pinnacle' ? '-dark' : ''
+                      }.png`)
                     "
                   />
                   <div :class="`game-provider-text ${hotgame.currentPlat === provider ? 'active' : ''}`">
@@ -1311,7 +1323,7 @@ $transition_timer: 0.5s;
 
             &.character-slots-pp {
               margin-bottom: 7%;
-              width: 91%
+              width: 91%;
             }
           }
         }

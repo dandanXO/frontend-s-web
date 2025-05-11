@@ -32,7 +32,7 @@
               <span class="name">{{ record.name }}</span>
               <span>
                 RECEIVE
-                <span class="amount">{{ `${store.currency.value} 500` }}</span>
+                <span class="amount">{{ `${store.currency.value} 50` }}</span>
               </span>
             </div>
           </div>
@@ -48,7 +48,7 @@
             <div class="countdown">Next Round: {{ remainingTime }}</div>
             <div class="wheel-inner-wrapper">
               <img
-                style="width:100%;"
+                style="width: 100%"
                 ref="spinWheelRef"
                 class="wheel"
                 src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/wheel-bg.png"
@@ -74,7 +74,9 @@
             />
             <CommonButton v-if="isClaimedStatus" class="draw-btn disabled">Invite To Earn Spin</CommonButton>
             <CommonButton v-else class="draw-btn" @click="handleInviteClick">Invite To Earn Spin</CommonButton>
-            <span class="next-spin-remaining-time" v-if="!isClaimedStatus">Countdown to next free spins: {{ nextFreeSpinRemainingTime }}</span>
+            <span class="next-spin-remaining-time" v-if="!isClaimedStatus">
+              Countdown to next free spins: {{ nextFreeSpinRemainingTime }}
+            </span>
           </div>
         </div>
       </div>
@@ -86,15 +88,15 @@
         <div class="title-decoration">
           <div v-for="index in 3" :key="index"></div>
         </div>
-        <span style="font-size: 12px;">Activity rules</span>
+        <span style="font-size: 12px">Activity rules</span>
         <div class="title-decoration">
           <div v-for="index in 3" :key="index"></div>
         </div>
       </div>
       <ol>
         <li>
-          When the accumulated amount reaches {{ `${store.currency.value} 500` }}, you can apply for withdrawal (Rewards will add to your wallet
-          directly).
+          When the accumulated amount reaches {{ `${store.currency.value} 50` }}, you can apply for withdrawal (Rewards
+          will add to your wallet directly).
         </li>
         <li>When there are no spin available, refer a new player to get a free spin.</li>
         <li>
@@ -111,7 +113,8 @@
           recommendation.
         </li>
         <li>
-          The more your invitees play on the website, the higher your next spin reward will be. Invite friends and win more rewards together!
+          The more your invitees play on the website, the higher your next spin reward will be. Invite friends and win
+          more rewards together!
         </li>
         <li>
           The right to interpret the event belongs to 55Ace. If you have any questions, please contact to customer
@@ -133,7 +136,7 @@ import RecordDialog from "./RecordDialog.vue";
 import { useRouter } from "vue-router";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
-import ProgressBar from './ProgressBar.vue';
+import ProgressBar from "./ProgressBar.vue";
 import CashOutPopup from "./CashOutPopup.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
 import { userStore } from "stores/index";
@@ -172,11 +175,11 @@ const prize = ref(0);
 const winningRecordRef = ref();
 const isCashOutPopupVisible = ref(false);
 const cashOutPopupRef = ref();
-const isClaimedStatus = computed(() => info.value.status === 'CLAIMED');
+const isClaimedStatus = computed(() => info.value.status === "CLAIMED");
 
-provide('nextFreeSpinRemainingTime', nextFreeSpinRemainingTime);
-provide('remainingTime', remainingTime);
-const extractionDifference = inject('extractionDifference');
+provide("nextFreeSpinRemainingTime", nextFreeSpinRemainingTime);
+provide("remainingTime", remainingTime);
+const extractionDifference = inject("extractionDifference");
 
 const winningRecord = computed(() => {
   const result = [];
@@ -299,9 +302,11 @@ const handleRecordClick = () => {
 
 const updateCountdownTime = () => {
   // console.log("updateCountdownTime")
-  const endTime = isClaimedStatus.value ? moment().tz("Asia/Manila").add(1, "days").startOf("day") : moment(info.value.startTime).tz("Asia/Manila").add(3, "days");
+  const endTime = isClaimedStatus.value
+    ? moment().tz("Asia/Manila").add(1, "days").startOf("day")
+    : moment(info.value.startTime).tz("Asia/Manila").add(3, "days");
   const nextFreeSpinEndTime = moment().tz("Asia/Manila").add(1, "days").startOf("day");
-  if(timer.value){
+  if (timer.value) {
     clearTimeout(timer.value);
   }
   timer.value = setInterval(() => {
@@ -315,7 +320,7 @@ const updateCountdownTime = () => {
       });
     }
   }, 1000);
-}
+};
 
 onMounted(() => {
   for (let i = 0; i < TOTAL_ITEMS; i++) {
@@ -325,7 +330,6 @@ onMounted(() => {
 
   updateCountdownTime();
 });
-
 
 defineExpose({
   updateCountdownTime
@@ -364,10 +368,11 @@ onUnmounted(() => {
           font-size: 40px;
         }
       }
-      
-      .extraction-require-amount, .extraction-require-percentage {
+
+      .extraction-require-amount,
+      .extraction-require-percentage {
         color: #fff;
-        font-family: 'Poppins';
+        font-family: "Poppins";
         font-weight: 400;
         font-size: 12px;
         line-height: 16px;
@@ -376,7 +381,7 @@ onUnmounted(() => {
 
         .amount {
           font-weight: 500;
-          color: #FEBA02;
+          color: #feba02;
         }
       }
 
@@ -433,7 +438,7 @@ onUnmounted(() => {
       .winning-record-outer-wrapper {
         padding: 12px 14px;
         width: 100%;
-        background-color: #1E1F24;
+        background-color: #1e1f24;
         border-radius: 8px;
 
         .winning-record-wrapper {
@@ -709,7 +714,7 @@ onUnmounted(() => {
   width: 100%;
 
   &:active {
-      transform: translateY(2px);
+    transform: translateY(2px);
   }
 }
 </style>
