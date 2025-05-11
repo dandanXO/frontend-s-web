@@ -13,6 +13,7 @@
     class="livestream-video-wrapper"
     @mouseenter="handleWrapperMouseEnter"
     @mouseleave="handleWrapperMouseLeave"
+    @canplay="handlePlayerCanPlay"
   >
     <template v-if="isPlayerSupported">
       <div v-if="isFirstPlay" class="first-play" @click="firstPlayVideo()">
@@ -27,6 +28,9 @@
         webkit-playsinline
         @progress="handlePlayerProgress"
       />
+
+      <canvas v-show="showLatestScreenCanvas" ref="canvasRef" class="livestream-video-latest-screen" />
+
       <div ref="danmuRef" class="livestream-video-danmu" />
 
       <div
@@ -116,6 +120,18 @@
           </q-btn>
         </div>
       </div>
+
+      <div v-if="isVideoLoading" class="livestream-video-mask" @click.stop>
+        <div class="loader" />
+        <span>正在加载视频...</span>
+      </div>
+
+      <div v-if="isVideoLoadFailed" class="livestream-video-mask" @click.stop>
+        <q-btn class="btn" @click="loadData">
+          <img src="../../assets/images/livestream/icon-reload.png" />
+        </q-btn>
+        <span>点击重新加载视频</span>
+      </div>
     </template>
 
     <div v-else class="livestream-unsupported">不支援的浏览器</div>
@@ -146,6 +162,7 @@ const DEFAULT_HLS_CONFIG = {
 };
 
 const PLAYER_CONFIG_KEY = "lh-livestream-player-config";
+const MAXIMUM_VIDEO_RELOAD_TIMEOUT = 30 * 1000; // 30 seconds
 
 const DEFAULT_DANMU_CONFIG = {
   area: {
@@ -183,9 +200,15 @@ const danmuRef = ref(null);
 const videoWrapperRef = ref(null);
 const channelPopperRef = ref(null);
 const qualityPopperRef = ref(null);
+const canvasRef = ref(null);
 const videoWrapperMouseLeaveTimer = ref(null);
 const showPlayerController = ref(false);
+const showLatestScreenCanvas = ref(false);
+const isLatestScreenRecorded = ref(false);
+const videoLoadErrorStartTime = ref(null);
 const isPlayerSupported = ref(true);
+const isVideoLoadFailed = ref(false);
+const isVideoLoading = ref(false);
 /** @type {import("vue").Ref< VideoPlayer | null>}*/
 const player = ref(null);
 const danmu = ref(null);
@@ -232,11 +255,16 @@ const loadPlayer = async () => {
 };
 
 const initPlayer = async (play = true) => {
+  console.log(player.value);
   if (!player.value) return;
   await player.value.init();
   isPlayerSupported.value = player.value.SupportPlayer !== "NONE";
-  player.value.on(player.value.Events.ERROR, handlePlayerError);
+  player.value.on(player.value.Events.CUSTOM_ERROR, handlePlayerError);
+  isVideoLoading.value = true;
   await player.value.load(play);
+  isVideoLoading.value = false;
+  showLatestScreenCanvas.value = false;
+  isLatestScreenRecorded.value = false;
 };
 
 const loadDanmu = async () => {
@@ -361,10 +389,52 @@ const handlePlayerProgress = () => {
   player.value.syncLive();
 };
 
-const handlePlayerError = (event, data) => {
-  console.log(e);
+const handlePlayerCanPlay = () => {
+  isLatestScreenRecorded.value = false;
+};
+
+const handlePlayerError = (data) => {
+  console.error(data.detail);
   if (!playerConfig.value.isPause) {
     changePlayerConfig("isPause", true);
+  }
+  if (!videoLoadErrorStartTime.value) {
+    videoLoadErrorStartTime.value = Date.now();
+  }
+  if (!isLatestScreenRecorded.value) {
+    const ctx = canvasRef.value.getContext("2d");
+    const videoWidth = videoRef.value.videoWidth;
+    const videoHeight = videoRef.value.videoHeight;
+    const clientWidth = videoRef.value.clientWidth;
+    const clientHeight = videoRef.value.clientHeight;
+    const scale = Math.min(clientWidth / videoWidth, clientHeight / videoHeight);
+    const drawWidth = videoWidth * scale;
+    const drawHeight = videoHeight * scale;
+    const offsetX = (clientWidth - drawWidth) / 2;
+    const offsetY = (clientHeight - drawHeight) / 2;
+    ctx.fillStyle = "#000000";
+    ctx.fillRect(0, 0, canvasRef.value.width, canvasRef.value.height);
+    ctx.drawImage(
+      videoRef.value,
+      0,
+      0,
+      canvasRef.value.width,
+      canvasRef.value.height,
+      offsetX,
+      offsetY,
+      drawWidth,
+      drawHeight
+    );
+    isLatestScreenRecorded.value = true;
+    showLatestScreenCanvas.value = true;
+  }
+  if (Date.now() - videoLoadErrorStartTime.value > MAXIMUM_VIDEO_RELOAD_TIMEOUT) {
+    videoLoadErrorStartTime.value = null;
+    isVideoLoadFailed.value = true;
+    isVideoLoading.value = false;
+  } else {
+    isVideoLoading.value = true;
+    initPlayer(true);
   }
 };
 
@@ -387,7 +457,10 @@ const getQualities = () => {
   qualities.value = result;
 };
 
-const loadData = () => Promise.all([loadPlayer(), loadDanmu()]).then(loadPlayerConfig);
+const loadData = () => {
+  isVideoLoadFailed.value = false;
+  Promise.all([loadPlayer(), loadDanmu()]).then(loadPlayerConfig);
+};
 
 watch(livestreamData, () => {
   loadData();
@@ -424,6 +497,8 @@ const handleOrientationChange = (e) => {
       handleFullScreenChange(false);
     }
   }
+  canvasRef.value.width = videoRef.value.clientWidth;
+  canvasRef.value.height = videoRef.value.clientHeight;
 };
 
 onActivated(() => {
@@ -534,6 +609,76 @@ onBeforeUnmount(() => {
     object-fit: contain;
     width: 100%;
     height: 100%;
+  }
+
+  .livestream-video-latest-screen {
+    position: absolute;
+    inset: 0;
+  }
+
+  .livestream-video-mask {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #0000004d;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+
+    .livestream-video-mask-text-content {
+      max-width: 100%;
+      overflow: auto;
+    }
+  }
+
+  /* HTML: <div class="loader"></div> */
+  .loader {
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 8px solid #3981ff;
+    animation: l20-1 0.8s infinite linear alternate, l20-2 1.6s infinite linear;
+    margin-bottom: 10px;
+  }
+  @keyframes l20-1 {
+    0% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
+    }
+    12.5% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
+    }
+    25% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%);
+    }
+    50% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
+    }
+    62.5% {
+      clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
+    }
+    75% {
+      clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
+    }
+    100% {
+      clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
+    }
+  }
+  @keyframes l20-2 {
+    0% {
+      transform: scaleY(1) rotate(0deg);
+    }
+    49.99% {
+      transform: scaleY(1) rotate(135deg);
+    }
+    50% {
+      transform: scaleY(-1) rotate(0deg);
+    }
+    100% {
+      transform: scaleY(-1) rotate(-135deg);
+    }
   }
 }
 

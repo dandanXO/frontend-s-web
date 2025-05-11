@@ -14,6 +14,12 @@ import { _hls, initHls } from "./hls";
  * @property {MediaType} mediaType - media source type
  */
 
+/**
+ * custom event names
+ * @typedef {Object} CustomEvents
+ * @type {{ AUTO_PLAY_FAILED: string, STREAM_AVAILABLE: string, STREAM_BUFFERING: string, CUSTOM_ERROR: string }}
+ */
+
 export class VideoPlayer {
   /**
    * @param {VideoPlayerConfig} config - video element
@@ -28,8 +34,16 @@ export class VideoPlayer {
     this._url = url;
     this.qualitySupported = false;
     this._maxLatency = maxLiveLatency || 10;
-    /** @type { typeof import('hls.js').Events | import('flv.js').default.Events} */
+    /** @type { typeof import('hls.js').Events | import('flv.js').default.Events | CustomEvents} */
     this.Events = {};
+    this._customEvents = {
+      AUTO_PLAY_FAILED: "CUSTOM_AUTO_PLAY_FAILED",
+      STREAM_AVAILABLE: "CUSTOM_STREAM_AVAILABLE",
+      STREAM_BUFFERING: "CUSTOM_STREAM_BUFFERING",
+      CUSTOM_ERROR: "CUSTOM_ERROR"
+    };
+    this._eventTarget = new EventTarget();
+    this._registeredEvents = [];
     /** @type {SupportPlayer} */
     this.SupportPlayer = "NONE";
 
@@ -51,6 +65,8 @@ export class VideoPlayer {
   }
 
   async init() {
+    if (this._player) this.destroy();
+
     if (this._mediaType === "hls") {
       this._player = await initHls(this._url, this._config, this.videoEl);
       if (!this._player) {
@@ -58,9 +74,10 @@ export class VideoPlayer {
         return;
       } else if (_hls.isSupported()) {
         this.qualitySupported = true;
-        this.Events = _hls.Events;
+        this.Events = Object.assign({}, _hls.Events, this._customEvents);
         this.SupportPlayer = "FULL";
       } else {
+        this.Events = Object.assign({}, _hls.Events, this._customEvents);
         this.SupportPlayer = "ORIGIN";
       }
     } else {
@@ -69,27 +86,25 @@ export class VideoPlayer {
         this.SupportPlayer = "NONE";
       } else {
         this.qualitySupported = false;
-        this.Events = this._player.Events;
+        this.Events = Object.assign({}, this._player.Events, this._customEvents);
       }
     }
+    this._bindEvents();
   }
 
   async load(startPlay = false) {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        reject(new Error("Media source load Timeout"));
-      }, 5000);
-
       if (this._mediaType === "hls") {
-        this._player.on(this.Events.MANIFEST_PARSED, () => {
-          startPlay && this.play();
+        this.on(this.Events.MANIFEST_PARSED, async () => {
+          startPlay && (await this.play());
           resolve();
         });
+        this._player.once(this.Events.ERROR, () => reject("Load error"));
         this._player.loadSource(this._url);
         this._player.attachMedia(this.videoEl);
       } else {
-        this._player.on(this.Events.LOADING_COMPLETE, () => {
-          startPlay && this.play();
+        this.on(this.Events.LOADING_COMPLETE, async () => {
+          startPlay && (await this.play());
           resolve();
         });
         this._player.attachMediaElement(this.videoEl);
@@ -98,11 +113,16 @@ export class VideoPlayer {
     });
   }
 
-  play() {
-    if (this._mediaType === "hls") {
-      this.videoEl.play();
-    } else {
-      this._player.play();
+  async play() {
+    try {
+      if (this._mediaType === "hls") {
+        await this.videoEl.play();
+      } else {
+        await this._player.play();
+      }
+    } catch (e) {
+      console.error(e);
+      this._eventTarget.dispatchEvent(new Event(this._customEvents.AUTO_PLAY_FAILED));
     }
   }
 
@@ -149,6 +169,57 @@ export class VideoPlayer {
     }
   }
 
+  _bindEvents() {
+    if (this._mediaType === "hls") {
+      const hlsVideoResumeEvents = [
+        this.Events.FRAG_BUFFERED,
+        this.Events.FRAG_LOADED,
+        this.Events.BUFFER_APPENDED,
+        this.Events.LEVELS_UPDATED
+      ];
+      this.on(this.Events.ERROR, (event, data) => {
+        this._eventTarget.dispatchEvent(new CustomEvent(this._customEvents.CUSTOM_ERROR, { detail: data }));
+        // if (data.fatal) {
+        //   this._eventTarget.dispatchEvent(new CustomEvent(this._customEvents.CUSTOM_ERROR, { detail: data }));
+        // } else {
+        //   console.log(data);
+        //   this._eventTarget.dispatchEvent(new Event(this._customEvents.STREAM_BUFFERING));
+        // }
+        // TODO: Do we need more nuanced error handling?
+      });
+      hlsVideoResumeEvents.forEach((event) => {
+        this.on(event, () => {
+          this._eventTarget.dispatchEvent(new Event(this._customEvents.STREAM_AVAILABLE));
+        });
+      });
+    } else {
+      // TODO: bind flv.js events
+    }
+  }
+
+  on(event, handler) {
+    let type;
+    if (Object.values(this._customEvents).includes(event)) {
+      this._eventTarget.addEventListener(event, handler);
+      type = "CUSTOM";
+    } else {
+      this._player.on(event, handler);
+      type = "PLAYER";
+    }
+    this._registeredEvents.push({ type, event, handler });
+  }
+
+  off() {
+    while (this._registeredEvents.length) {
+      const { type, event, handler } = this._registeredEvents.pop();
+      if (type === "CUSTOM") {
+        this._eventTarget.removeEventListener(event, handler);
+      } else {
+        this._player.off(event, handler);
+      }
+    }
+  }
+
   destroy() {
     if (this._mediaType === "hls") {
       this._player.detachMedia();
@@ -159,6 +230,7 @@ export class VideoPlayer {
       this._player.detachMediaElement();
       this._player.destroy();
     }
+    this.off();
     this._player = null;
   }
 }
