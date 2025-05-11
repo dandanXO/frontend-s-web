@@ -4,7 +4,7 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref } from "vue";
+import { onActivated, onBeforeMount, onMounted, ref } from "vue";
 import { api } from "boot/axios";
 import MailComponent from "../../components/MailComponent.vue";
 components: {
@@ -14,11 +14,15 @@ const visible = ref(true);
 const mailData = ref([]);
 const mailboxData = ref({
   type: null,
-  orderBy: "createTime"
+  orderBy: "createTime",
+  current: 1,
+  size: 100,
 });
 const loadOutbox = () => {
   api
-    .get("/session/feedback/replies", {})
+    .get("/session/feedback/messages", {
+      params: mailboxData.value,
+    })
     .then((response) => {
       if (response.code === 0) {
         mailData.value = response.data.records;
@@ -29,7 +33,7 @@ const loadOutbox = () => {
       console.log("error", error);
     });
 };
-onMounted(() => {
+onActivated(() => {
   loadOutbox();
 });
 </script>

@@ -602,6 +602,7 @@ export default {
     alias: 'Biệt danh',
     all: 'Tất cả',
     allBonus: 'Tất cả bonus',
+    allowRedirect: 'Chấp nhận chuyển hướng',
     allvip: 'Tất cả VIP',
     allfinanciallevel: 'Tất cả cấp độ tài chính',
     allprofit: 'Tất cả lợi nhuận',

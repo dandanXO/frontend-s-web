@@ -622,6 +622,7 @@ export default {
     alias: '별명',
     all: '전체',
     allBonus: '전체 보너스',
+    allowRedirect: '리디렉션 허용',
     allvip: '전체 VIP',
     allfinanciallevel: '전체 금융 상태',
     allprofit: '전체 이익',

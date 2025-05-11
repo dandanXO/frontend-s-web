@@ -131,9 +131,9 @@ import ProfileSummary from "../components/ProfileSummary.vue";
 </script>
 <style scoped lang="scss">
 .share-affiliate {
-  background: url(../assets/images/share/share-bg.png)no-repeat top center;
+  // background: url(../assets/images/share/share-bg.png)no-repeat top center;
 
-    background-size: contain;
+    // background-size: contain;
     // height: 400px;
   .top-box {
     // background: url(../assets/images/share/share-box.png)no-repeat center center;
@@ -155,6 +155,7 @@ import ProfileSummary from "../components/ProfileSummary.vue";
     display: flex;
     justify-content: center;
     align-items: center;
+    display: none;
     .login-btn {
       background: url(../assets/images/share/share-btn.png)no-repeat center center;
       background-size: contain;

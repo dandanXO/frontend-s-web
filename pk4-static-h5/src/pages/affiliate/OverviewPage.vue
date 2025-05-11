@@ -29,7 +29,7 @@
     <!-- Team Member Info -->
     <q-card-section class="team-members">
       <img src="../../assets/images/affiliate/team-icon.png">
-      <div>Team member 4362</div>
+      <div>{{ store.nickName }}</div>
     </q-card-section>
 
     <!-- Metric Cards -->
@@ -126,6 +126,9 @@ import { Line } from 'vue-chartjs'
 import { ref, onMounted, provide } from 'vue'
 import { api } from 'boot/axios';
 import moment from 'moment';
+import { userStore } from 'src/stores';
+
+const store = userStore();
 
 ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Title)
 

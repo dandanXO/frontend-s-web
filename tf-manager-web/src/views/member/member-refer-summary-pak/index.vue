@@ -90,7 +90,7 @@
             #default="scope"
             v-if="hasPermission(['sys:member-refer-pak:summary'])"
           >
-            <el-link type="primary" @click="reloadMembers(scope.row.loginName, scope.row.id)">{{ scope.row.subRegCount }}</el-link>
+            <el-link type="primary" @click="throttleReloadMembers(scope.row.loginName, scope.row.id)">{{ scope.row.subRegCount }}</el-link>
           </template>
         </el-table-column>
         <el-table-column prop="riskLevel" :label="t('fields.riskLevel')" width="180">
@@ -342,6 +342,8 @@ const request = reactive({
   referrerId: null,
 })
 
+const isSearchReferPathChanged = ref(false)
+
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD')
 }
@@ -358,6 +360,7 @@ function resetQuery() {
 }
 
 function goBackToPrevious() {
+  isSearchReferPathChanged.value = true
   if (uiControl.referrerPath.length > 1) {
     uiControl.referrerPath.pop()
     uiControl.referrerIdPath.pop()
@@ -409,12 +412,17 @@ function search() {
   loadMembers()
 }
 
+const throttleReloadMembers = useThrottleFn((...args) => {
+  reloadMembers(...args)
+}, 3000)
+
 async function reloadMembers(loginName, uplineId) {
   request.referrerId = uplineId
   request.loginName = null
   uiControl.referrer = loginName
   uiControl.referrerPath.push(loginName)
   uiControl.referrerIdPath.push(uplineId)
+  isSearchReferPathChanged.value = true
   loadMembers()
 }
 
@@ -425,9 +433,9 @@ async function loadMembers() {
   const query = checkQuery()
   const result = await getPakMemberReferSummary(query)
 
-  page.pages = result.data.pages
-  page.records = result.data.records
-  page.sums = result.data.sums
+  page.pages = result.data?.pages ?? 0
+  page.records = result.data?.records ?? []
+  page.sums = result.data?.sums ?? null
   page.loading = false
 }
 
@@ -453,7 +461,11 @@ function getSummaries(val) {
 function changePage(page) {
   if (request.current >= 1) {
     request.current = page
-    loadMembers()
+    if (isSearchReferPathChanged.value) {
+      isSearchReferPathChanged.value = false
+    } else {
+      loadMembers()
+    }
   }
 }
 

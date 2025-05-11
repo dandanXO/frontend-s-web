@@ -246,6 +246,12 @@ const routes = [
     // component: () => {},
   },
   {
+    path: "/member/:affiliateCode",
+    name: "memberCode",
+    component: () => {}
+    // component: () => {},
+  },
+  {
     path: "/refer/:referralCode",
     name: "referCode",
     component: () => {}

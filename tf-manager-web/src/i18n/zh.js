@@ -742,6 +742,7 @@ export default {
     alias: '别名',
     all: '全部',
     allBonus: '所有奖金显示',
+    allowRedirect: '允许跳转',
     allvip: '全部 VIP',
     allfinanciallevel: '全部组别',
     allprofit: '全部盈亏',

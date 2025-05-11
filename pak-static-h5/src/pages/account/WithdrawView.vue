@@ -825,7 +825,7 @@ const submitWithdraw = async () => {
           card => card.id === withdrawInfo.cardId
         );
 
-        if (selectedCard) { 
+        if (selectedCard) {
           const bankCode = selectedCard.bankCode;
 
           const method = withdrawalMethods.value.find(
@@ -846,7 +846,7 @@ const submitWithdraw = async () => {
       }
     }
     console.log("");
-    
+
     $q.loading.show({
       message: "Withdrawing..."
     });
@@ -1118,7 +1118,7 @@ const isWithdrawTutorial = ref(false);
 const langSelect = localStorage.getItem("languageLocale") ?? "";
 
 const openWithdrawTutorialVideo = () => {
-  window.open("https://drive.google.com/file/d/1yOJgpa4C9y7XFDacL52f4MoQ1lLw3Pm-/view?usp=drivesdk", "_blank");
+  window.open("https://drive.google.com/file/d/1788QQeJdn0GYzB17kk_qWuALZCsSyKuI/view?usp=drivesdk", "_blank");
   // if (langSelect === "ur") {
   //   window.open("https://drive.google.com/file/d/1l35uyEQNp798iYAfuLvKFf_O56fl5ZIb/view?usp=sharing", "_blank");
   // } else {
@@ -1624,7 +1624,7 @@ watch(
 .popout-dialog-container {
   .form-fields {
     width: 90%;
-    .landing-input { 
+    .landing-input {
       width: 100%;
     }
   }

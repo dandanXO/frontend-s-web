@@ -169,6 +169,24 @@
           </el-col>
         </el-row>
         <el-row>
+          <el-col>
+            <el-form-item :label="t('fields.allowRedirect')" prop="allowRedirect">
+              <el-switch
+                v-model="form.allowRedirect"
+                active-color="#409EFF"
+                inactive-color="#F56C6C"
+              />
+            </el-form-item>
+            <el-form-item v-if="form.allowRedirect" :label="t('fields.redirectUrl')" prop="redirectUrl">
+              <el-input
+                v-model="form.redirectUrl"
+                style="width: 350px"
+                :controls="false"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
           <el-form-item :label="t('fields.showFastAccess')" prop="showFastAccess">
             <el-switch
               v-model="form.showFastAccess"
@@ -229,6 +247,23 @@
             <el-radio-button label="1">{{ t('common.status.CLOSE') }}</el-radio-button>
             <el-radio-button label="2">{{ t('common.status.TEST') }}</el-radio-button>
           </el-radio-group>
+        </template>
+      </el-table-column>
+      <el-table-column prop="countDown" :label="t('fields.countDown')" min-width="150">
+        <template #default="scope">
+          <el-radio-group
+            v-model="scope.row.countDown"
+            size="mini"
+            :readony="true"
+          >
+            <el-radio-button label="0">{{ t('common.status.OPEN') }}</el-radio-button>
+            <el-radio-button label="1">{{ t('common.status.CLOSE') }}</el-radio-button>
+          </el-radio-group>
+        </template>
+      </el-table-column>
+      <el-table-column prop="buttonMode" :label="t('fields.buttonMode')" min-width="150">
+        <template #default="scope">
+          <span>{{ t('fastAccessButtonMode.' + scope.row.buttonMode) }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -349,6 +384,8 @@ const form = reactive({
   claimApiUrl: null,
   showFastAccess: false,
   fastAccessSeq: 99,
+  allowRedirect: false,
+  redirectUrl: null,
 })
 
 
@@ -476,7 +513,7 @@ function showButtonModeField() {
     case 'DETAILS': uiControl.initApiUrlVisible = false;
                 uiControl.claimApiUrlvisible = false;
                   break;
-    case 'API_REDIRECT': uiControl.initApiUrlVisible = true
+    case 'API_REDIRECT', 'CLAIM_REDIRECT': uiControl.initApiUrlVisible = true
                   uiControl.claimApiUrlvisible = false;
                   break;
     case 'API_CLAIM': uiControl.initApiUrlVisible = true;

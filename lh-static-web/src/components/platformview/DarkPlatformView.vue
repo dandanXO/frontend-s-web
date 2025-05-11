@@ -61,7 +61,11 @@
                     <img
                       v-else
                       class="game-img"
-                      :src="require(`../../assets/${platformType}/${platformType}-logo-${plat.code.toLowerCase()}.png`)"
+                      :src="
+                        require(`../../assets/${platformType}/${platformType}-logo-${plat.code.toLowerCase()}${
+                          plat.code.toLowerCase() === 'pinnacle' ? '-dark' : ''
+                        }.png`)
+                      "
                     />
                   </div>
                   <div class="list-item-txt">{{ plat.alias ? getAliasName(plat, platformType) : plat.cnname }}</div>
@@ -162,6 +166,10 @@
             >
               <a @click="openGame(game, selectedPlat, game.code)">
                 <div class="slot-img">
+                  <div class="slot-tag">
+                    <img v-if="game.gameLabel === 'HOT'" src="../../assets/images/games/hot-tag.png" />
+                    <img v-if="game.gameLabel === 'NEW'" src="../../assets/images/games/new-tag.png" />
+                  </div>
                   <el-image :src="game.icon" lazy>
                     <template #placeholder>
                       <img :src="game.default" />
