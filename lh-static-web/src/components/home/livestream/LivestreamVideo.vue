@@ -147,7 +147,7 @@
           </template>
         </p>
       </div>
-      <div v-if="isVideoLoading" class="livestream-video-mask">
+      <div v-if="isVideoLoading" class="livestream-video-mask" @click.stop>
         <div class="loader" />
         <span>正在加载视频...</span>
       </div>
