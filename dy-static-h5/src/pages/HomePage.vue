@@ -26,12 +26,14 @@
         <div class="header-left">
           <img class="top-logo" id="logo" src="../assets/index/logo.png" />
         </div>
-        <router-link class="header-right" to="/account/inbox?redirect=home">
-          <div class="notification-section">
+        <div class="header-right">
+          <span class="memorable-url">易记网址：{{ memorableUrl }}</span>
+          <button class="copy-btn" @click="handleCopyMemorableUrlClick">🔍</button>
+          <router-link class="notification-section" to="/account/inbox?redirect=home">
             <img src="../assets/index/home-notification-icon.svg" alt="" />
             <div class="notification-dot" v-if="store.unreadInboxMail > 0"></div>
-          </div>
-        </router-link>
+          </router-link>
+        </div>
       </div>
 
       <div v-if="isStickyGameType" class="home-header-section" style="height: 68px; width: 95%; margin: 0 auto">
@@ -1562,6 +1564,7 @@ import { isAndroid, isHuaweiPhone } from "boot/utils";
 import moment from "moment";
 import { useLocalStorage } from "@vueuse/core";
 import GameTypeSwiper from "src/components/home/GameTypeSwiper.vue";
+import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
   name: "IndexPage",
@@ -1574,6 +1577,8 @@ export default defineComponent({
     GameTypeSwiper
   },
   setup() {
+    const notify = useNotify();
+
     const isFirstView = ref(false);
     const isStickyGameType = ref(false);
     const thumbsSwiper = ref(null);
@@ -2394,6 +2399,25 @@ export default defineComponent({
       btmSwiper.classList.add("longer-swiper");
     };
 
+    const memorableUrl = ref("dydy18.com");
+    const handleCopyMemorableUrlClick = () => {
+      // Create a temporary textarea element
+      const tempTextarea = document.createElement("textarea");
+      tempTextarea.value = memorableUrl.value;
+      document.body.appendChild(tempTextarea);
+
+      // Select the text and copy it
+      tempTextarea.select();
+      document.execCommand("copy");
+
+      // Remove the temporary textarea element
+      document.body.removeChild(tempTextarea);
+      notify({
+        type: "success",
+        message: "易记网址复制成功"
+      });
+    };
+
     // const checkShowImgTop = () => {
     //   const lastTime = localStorage.getItem("indexImgTop");
     //   if (lastTime) {
@@ -2516,7 +2540,9 @@ export default defineComponent({
       isImpt,
       clickHomePopupImg,
       isStickyGameType,
-      swiperContainerRef
+      swiperContainerRef,
+      memorableUrl,
+      handleCopyMemorableUrlClick
     };
   }
 });
@@ -2626,6 +2652,17 @@ export default defineComponent({
         background: #ff0000;
         border-radius: 50%;
       }
+    }
+
+    .memorable-url {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #47537f;
+    }
+    .copy-btn {
+      background: transparent;
+      border: none;
+      margin-right: 10px;
     }
   }
 

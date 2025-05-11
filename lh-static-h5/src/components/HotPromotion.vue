@@ -75,11 +75,15 @@
     <IemMelbourne2025 v-else-if="list.redirectUrl === 'lh1-iem-melbourne-2025'" :promo-code="list.promoCode" />
     <PglWallachiaS4 v-else-if="list.redirectUrl === 'lh1-pgl-wallachia-s4'" :promo-code="list.promoCode" />
     <BlastSlam32025 v-else-if="list.redirectUrl === 'lh1-blast-slam-3-2025'" :promo-code="list.promoCode" />
+    <Lh1Enc2025 v-else-if="list.redirectUrl === 'lh1-enc-2025'" :promo-code="list.promoCode" />
+    <PglastanaAc2025 v-else-if="list.redirectUrl === 'lh1-pgl-astana-2025'" :promo-code="list.promoCode" />
     <Cct2025 v-else-if="list.redirectUrl === 'lh1-cct-global-finals-2025'" :promo-code="list.promoCode" />
     <FpSlotPromo v-else-if="list.redirectUrl === 'lh1-fp-slot'" :promo-code="list.promoCode" />
     <elsOne2025 v-else-if="list.redirectUrl === 'lh1-esl-one-raleigh-2025'" :promo-code="list.promoCode" />
     <YuEBaoPromo v-else-if="list.redirectUrl === 'lh1-yu-e-bao'" :promo-code="list.promoCode" />
     <BlastRival2025 v-else-if="list.redirectUrl === 'lh1-blast-rivals-2025-s1'" :promo-code="list.promoCode" />
+    <DragonBoat v-else-if="list.redirectUrl === 'lh-duanwujie24'" :promo-code="list.promoCode" />
+    <IemDallas2025 v-else-if="list.redirectUrl === 'lh1-iem-dallas-2025'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -121,8 +125,12 @@ import YaLLa2025 from "./hotpromo/YaLLa2025/YaLLa2025.vue";
 import IemMelbourne2025 from "./hotpromo/iem-melbourne-2025/IemMelbourne2025.vue";
 import PglWallachiaS4 from "./hotpromo/pgl-wallachia-s4/PglWallachiaS4.vue";
 import BlastSlam32025 from "./hotpromo/blast-slam-3-2025/BlastSlam32025.vue";
+import Lh1Enc2025 from "./hotpromo/Lh1-enc-2025/Lh1-enc-2025.vue";
+import PglastanaAc2025 from "./hotpromo/lh1-pgl-astana-2025/pglastanaAc2025.vue";
 import BlastRival2025 from "./hotpromo/BlastRival2025/BlastRival2025.vue";
 import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
+import DragonBoat from "components/hotpromo/dragonboat/DragonBoat.vue";
+import IemDallas2025 from "./hotpromo/iem-dallas-2025/IemDallas2025.vue";
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
 const DragonCardPromo = defineAsyncComponent(() => import("../components/hotpromo/dragoncard/dragonCardPromo.vue"));
 const FeedbackAwardPromo = defineAsyncComponent(() =>
@@ -198,6 +206,8 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    Lh1Enc2025,
+    DragonBoat,
     Cct2025,
     YaLLa2025,
     elsOne2025,
@@ -255,9 +265,11 @@ export default defineComponent({
     IemMelbourne2025,
     PglWallachiaS4,
     BlastSlam32025,
+    PglastanaAc2025,
     FpSlotPromo,
     YuEBaoPromo,
-    BlastRival2025
+    BlastRival2025,
+    IemDallas2025
   },
   props: {
     list: {

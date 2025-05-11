@@ -33,14 +33,14 @@
                       全部删除
                     </el-button>
                     <div style="margin-left: auto">
-                      <el-button v-if="isShowSelect" type="primary" @click="readMultipleMsg()">
+                      <el-button v-if="hasMailSelected && isShowSelect" type="primary" @click="readMultipleMsg()">
                         <el-icon>
                           <MessageBox />
                         </el-icon>
                         读取
                       </el-button>
 
-                      <el-button v-if="isShowSelect" color="grey" @click="deleteMultipleMsg()">
+                      <el-button v-if="hasMailSelected && isShowSelect" color="grey" @click="deleteMultipleMsg()">
                         <el-icon>
                           <Delete />
                         </el-icon>
@@ -190,7 +190,7 @@ const mailboxNotifyState = reactive({
   PAYMENT: [],
   ALL: []
 });
-
+const hasMailSelected = computed(() => Object.values(selectedIds.value).includes(true));
 const mailboxState = reactive({
   active: "inbox",
   mailboxList: {

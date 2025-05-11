@@ -255,6 +255,12 @@ watch(
       }
     }
 
+    .tab-label {
+      &.active {
+        color: #0075ff;
+      }
+    }
+
     .about-content {
       color: $font-3-dark;
 

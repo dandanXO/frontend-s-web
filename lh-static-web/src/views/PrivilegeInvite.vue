@@ -562,6 +562,19 @@ export default defineComponent({
         });
     };
     const copyText = async () => {
+      if (!store.hasToken()) {
+        ElMessageBox.alert("请登录后再操作", "系统提示", {
+          autofocus: false,
+          center: true,
+          confirmButtonText: "确认",
+          showClose: false,
+          buttonSize: "large",
+          closeOnClickModal: true
+        }).then(() => {
+          store.loginPageVisible = true;
+        });
+        return;
+      }
       try {
         await navigator.clipboard.writeText(referralLink.value);
         alert("已复制");

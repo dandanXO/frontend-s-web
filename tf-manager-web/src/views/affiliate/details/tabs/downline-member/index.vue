@@ -177,7 +177,7 @@ async function loadAffiliateMembers() {
 }
 
 onMounted(() => {
-  loadAffiliateMembers();
+  // loadAffiliateMembers();
 });
 </script>
 

@@ -159,6 +159,7 @@ export default {
     virtualWallet_id_rule: "براہ کرم 13 ہندسوں کا شناختی ID درج کریں",
     virtualWallet_rules_02: "فون نمبر '03' سے شروع ہونا چاہیے",
     virtualWallet_rules_03: "ای والیٹ میں 11 ہندسے ہونے چاہئیں",
+    virtualWallet_rules_04: "ای-والٹ میں اعشاریہ (.) نہیں ہو سکتا",
     virtualWallet_warmReminder:
       "گرم یاد دہانی: اگر کارڈ ہولڈر کا نام میل نہیں کھاتا، تو آپ آن لائن کسٹمر سروس سے رابطہ کرکے معلومات کو درست کر سکتے ہیں۔ آپ کے تعاون اور سمجھنے کا شکریہ!",
     virtualWallet_warmReminder_02:
@@ -203,7 +204,12 @@ export default {
     ewallet_selectionTitle: "ای والیٹ",
     ewallet_select: "ای والیٹ منتخب کریں",
     ewallet_selectError: "ای والیٹ منتخب کریں",
-    ewallet_type: "ای والیٹ کارڈ نمبر"
+    ewallet_type: "ای والیٹ کارڈ نمبر",
+    identityid: "شناختی کارڈ نمبر",
+    identityid_placeholder: "شناختی کارڈ نمبر درج کریں",
+    identityid_rules_01: "براہ کرم شناختی کارڈ نمبر درج کریں",
+    identityid_rules_02: "براہ کرم 13 ہندسوں پر مشتمل شناختی کارڈ نمبر درج کریں",
+    identityid_rules_03: "ای-والٹ میں اعشاریہ (.) نہیں ہو سکتا"
   },
   btn: {
     confirm: "تصدیق کریں",
@@ -234,7 +240,8 @@ export default {
     notAMember: "رکن نہیں ہیں؟",
     createAccount: "اکاؤنٹ بنائیں",
     copy: "کاپی کرنا",
-    joinNow: "ابھی شامل ہوں"
+    joinNow: "ابھی شامل ہوں",
+    save: "محفوظ کریں"
   },
   notify: {
     noRecord: "کوئی ریکارڈ نہیں",
@@ -427,7 +434,8 @@ export default {
       about: "کے بارے میں",
       history: "تاریخ",
       daily: "روزانہ",
-      earn: "کمانا"
+      earn: "کمانا",
+      share: "شئیر کرنا"
     },
     about: {
       invitetoEarn: "مدعو کریں اور کمائیں",
@@ -504,7 +512,10 @@ export default {
       betAmount: "بیٹنگ کی رقم",
       rate: "شرح",
       yesterdayReportTotal: "کل کی رپورٹ (کل)",
+      todayReportTotal: "آج کی رپورٹ (کل)",
       level: "سطح",
+      noOfDepositors: "جمع کنندگان کی تعداد",
+      depositAmount: "جمع شدہ رقم",
       myselfBettingAmount: "میری بیٹنگ کی رقم",
       myselfRebate: "میرا ریبیٹ",
       teamBettingamount: "ٹیم کی بیٹنگ کی رقم",
@@ -526,6 +537,30 @@ export default {
       myReferralLink: "میرا ریفرل لنک",
       save: "محفوظ کریں",
       copiedtoClipboard: "کلپ بورڈ پر کاپی کر دیا گیا"
+    },
+    share: {
+      totalInvited: "کل مدعو کیے گئے",
+      validInvites: "درست دعوتیں",
+      validInvitationsToday_01: "درست دعوتیں",
+      validInvitationsToday_02: "آج",
+      todaysBonus: "آج کا بونس",
+      currentLevel: "موجودہ سطح",
+      currentBonusLevel_01: "موجودہ بونس",
+      currentBonusLevel_02: "سطح",
+      bonusClaimed: "بونس حاصل کر لیا گیا",
+      fixedInvitationBonus: "مقررہ دعوتی بونس",
+      remark: "نوٹ",
+      point_01_bonus:
+        "نوٹ: مقررہ انعامات صرف اسی وقت جاری کیے جاتے ہیں جب مدعو کیے گئے صارفین درجہ بندی کے معیار پر پورا اتریں۔",
+      point_01_remark:
+        "سسٹم ہر مدعو صارف کی بیٹنگ سرگرمی کی بنیاد پر جائزہ لیتا ہے۔ اپنے دوستوں کو اصلی بیٹ لگانے اور فعال رہنے کی ترغیب دیں — عموماً کل بیٹ 2000 روپے سے زیادہ ہونے پر اہل ہونے کے امکانات بڑھ جاتے ہیں۔ انعامات خود بخود جاری کر دیے جائیں گے جب معیار پورا ہو جائے۔",
+      point_02_remark:
+        "جعلی اکاؤنٹس یا انعامات حاصل کرنے کے لیے بدنیتی پر مبنی سرگرمی کی صورت میں متعلقہ انعامات منسوخ کر دیے جائیں گے اور جاری نہیں کیے جائیں گے۔",
+      point_03_remark: "55ACE تمام حتمی وضاحت کے حقوق محفوظ رکھتا ہے۔",
+      table_col_invite: "درست دعوتوں کی حد",
+      table_col_reward: "فی صارف انعام (روپے)",
+      inviteNewUsers:
+        "اپنے منفرد ریفرل لنک یا QR کوڈ کے ذریعے نئے صارفین کو رجسٹر کرنے کی دعوت دیں اور تین شاندار انعامات حاصل کریں:"
     }
   },
   records: {

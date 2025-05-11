@@ -602,6 +602,7 @@ export default {
     alias: 'Biệt danh',
     all: 'Tất cả',
     allBonus: 'Tất cả bonus',
+    allowRedirect: 'Chấp nhận chuyển hướng',
     allvip: 'Tất cả VIP',
     allfinanciallevel: 'Tất cả cấp độ tài chính',
     allprofit: 'Tất cả lợi nhuận',
@@ -1942,7 +1943,15 @@ export default {
     tfCompetitionNameTh: 'Tên giải đấu (Tiếng Thái)',
     traceId: 'Trace ID',
     downloadQRCode: 'Tải xuống mã QR',
-    normalCreate: 'Bình thường'
+    normalCreate: 'Bình thường',
+    referFriendRebatePointRecord: 'Hồ sơ điểm hoàn trả cược của bạn bè được giới thiệu',
+    referrerId: '',
+    sumPts: 'Tổng điểm',
+    referFriendRebatePointStatus: 'Trạng thái',
+    requirement: 'Yêu cầu',
+    pts: 'Điểm',
+    ptsRebateAmount: 'Số tiền hoàn điểm',
+    ftdRebateAmount: 'Số tiền hoàn tiền gửi lần đầu',
   },
   message: {
     startenddatemore3months:
@@ -2721,7 +2730,8 @@ export default {
     'Sport App Setting': 'Cài đặt ứng dụng thể thao',
     Sport: 'Thể thao',
     'Game Jackpot Bonus Record': 'Hồ sơ thưởng Jackpot',
-    'Member Privilege Record Pak Export': 'Xuất khẩu kỷ lục giảm giá thành viên - Pakistan'
+    'Member Privilege Record Pak Export': 'Xuất khẩu kỷ lục giảm giá thành viên - Pakistan',
+    'Refer Friend Rebate Point record': 'Hồ sơ điểm hoàn trả doanh số cược của bạn bè được giới thiệu'
   },
   google: {
     google_auth_menu: 'Google Xác thực',
@@ -2868,6 +2878,23 @@ export default {
     BONUS_FLUCTUATION: 'Biến động tiền thưởng',
     MQ_LAST_CONSUME_TIME_CHECK: 'Chủ đề MQ không hoạt động',
     JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: 'Nhiệm vụ nhàn rỗi(Truy xuất dữ liệu cược)',
+  },
+  referRebatePoint: {
+    NO_BET_AFTER_DEPOSIT: 'Không đặt cược sau khi nạp tiền',
+    TOTAL_DEPOSIT_COUNT: 'Tổng số lần nạp tiền',
+    TOTAL_BET_COUNT: 'Tổng số lần đặt cược',
+    TOTAL_BET_AMOUNT: 'Tổng số tiền đặt cược',
+    FTD_AMOUNT: 'Số tiền nạp lần đầu',
+    TOTAL_DEPOSIT_AMOUNT: 'tổng số tiền gửi',
+    LAST_DEPOSIT_FTD_HOURS_APART: 'Giờ giữa lần nạp cuối và lần nạp đầu',
+    BALANCE_BET_AFTER_DEPOSIT: 'Số dư sau khi nạp và đặt cược',
+    BET_FREQUENCY: 'Tần suất đặt cược',
+    GAME_TYPE_COUNT: 'Số loại trò chơi',
+    WITHDRAW_AFTER_FAST_BET: 'Rút sau khi đặt cược nhanh',
+    SAME_BET_SHORT_PERIOD: 'Cùng một cược trong thời gian ngắn',
+    ACTIVE_DAYS: 'Ngày hoạt động',
+    SAME_DEVICE_LOGIN: 'Đăng nhập cùng thiết bị',
+    DEVICE_SWITCHING: 'Chuyển đổi thiết bị'
   },
   error: {
     400: 'Yêu cầu không hợp lệ',

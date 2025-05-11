@@ -96,7 +96,7 @@
       class="floating-btn scalable"
       :style="{ transform: `scale(${scaleValue})` }"
     >
-      <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef" @click="toggleCSTab">
+      <a v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef" :href="ui.CSAUrl" target="_blank">
         <div class="cs-icon-wrapper" :class="{ active: isCsTabVisible }">
           <a class="cs-icon youtube" :href="ui.youtubeUrl" target="_blank">
             <img src="../assets/images/index/youtube-icon.png" />
@@ -114,7 +114,7 @@
             <img src="../assets/images/index/cs-cs.png" />
           </a>
         </div>
-      </div>
+      </a>
     </q-page-sticky>
 
     <q-page-sticky

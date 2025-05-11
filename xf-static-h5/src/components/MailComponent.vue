@@ -25,7 +25,12 @@
             :style="`height: ${isSelectedMail === det.id ? 'auto' : '0px'}`"
             v-if="isSelectedMail === det.id"
           >
-            {{ det.content }}
+            <div class="p-content">
+           正文: {{ det.content }}
+            </div>
+            <div class="p-content" v-if="det.replyMessageContent">
+           回复: {{ det.replyMessageContent }}
+            </div>
           </div>
           <div v-if="mailType === 'outbox'" class="buttons">
             <q-btn outline label="催单" size="sm" color="bright" class="q-mr-sm" />

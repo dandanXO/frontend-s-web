@@ -259,7 +259,9 @@ export default {
     birthday_rules_01: "Please insert your birthday",
     address: "Address",
     address_placeholder: "Please enter your address",
-    address_rules_01: "Please insert your address"
+    address_rules_01: "Please insert your address",
+    country_code_placeholder: "Input country code to search",
+    country_code_rules_01: "Please select country code"
   },
   btn: {
     login: "Login",
@@ -322,7 +324,9 @@ export default {
     emailVerificationSent: "Email verification sent",
     messageSent: "Message Sent",
     feedbackSentSuccess: "Your feedback has been sent successfully!",
-    quitGameMessage: "Are you sure want to quit? Click Confirm to quit the game.",
+    quitGameMessage_01: "Are you sure want to quit? Click Confirm to quit the game.",
+    quitGameMessage_02: "Trial Complete! Want to Win Real Cash?",
+    quitGameMessage_03: "Make your first deposit now and start playing for real rewards!",
     signOutMessage: "Are you sure you want to sign out?",
     plsLoginToContinue: "Please login to continue",
     copiedSuccessfully: "Copied Successfully",

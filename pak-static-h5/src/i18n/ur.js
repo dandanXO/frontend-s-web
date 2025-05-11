@@ -255,7 +255,9 @@ export default {
     birthday_rules_01: "براہ کرم اپنی تاریخ پیدائش درج کریں",
     address: "پتہ",
     address_placeholder: "براہ کرم اپنا پتہ درج کریں",
-    address_rules_01: "براہ کرم اپنا پتہ درج کریں"
+    address_rules_01: "براہ کرم اپنا پتہ درج کریں",
+    country_code_placeholder: "ملک کا کوڈ تلاش کرنے کے لیے درج کریں",
+    country_code_rules_01: "براہ کرم ملک کا کوڈ منتخب کریں"
   },
   btn: {
     login: "لاگ ان",
@@ -318,7 +320,9 @@ export default {
     emailVerificationSent: "ای میل کی تصدیق بھیجی گئی ہے",
     messageSent: "پیغام بھیجا گیا ہے",
     feedbackSentSuccess: "آپ کا تبادلہ خیال کامیابی سے بھیجا گیا ہے!",
-    quitGameMessage: "کیا آپ واقعی خارج ہونا چاہتے ہیں؟ خود کو خارج کرنے کے لئے تصدیق کرنے کے لئے کلک کریں۔",
+    quitGameMessage_01: "کیا آپ واقعی خارج ہونا چاہتے ہیں؟ خود کو خارج کرنے کے لئے تصدیق کرنے کے لئے کلک کریں۔",
+    quitGameMessage_02: "ٹرائل مکمل ہو گیا! کیا آپ اصلی رقم جیتنا چاہتے ہیں؟",
+    quitGameMessage_03: "ابھی اپنی پہلی رقم جمع کروائیں اور اصلی انعامات کے لیے کھیلنا شروع کریں!",
     signOutMessage: "کیا آپ واقعی لاگ آوٹ ہونا چاہتے ہیں؟",
     plsLoginToContinue: "براہ کرم جاری رکھنے کے لئے لاگ ان کریں",
     copiedSuccessfully: "کامیابی سے کاپی کیا گیا",

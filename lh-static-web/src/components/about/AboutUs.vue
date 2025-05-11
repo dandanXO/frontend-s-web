@@ -10,7 +10,7 @@
   <div class="bot-container">
     <div class="content">
       <img
-        :src="require(`../../assets/about/aboutus/more${isDark ? '-dark' : ''}.png`)"
+        :src="require(`../../assets/about/aboutus/more${isDark ? '' : ''}.png`)"
         style="width: 33.87px; height: 34px"
       />
       <div class="title">更多产品</div>
@@ -25,7 +25,7 @@
     </div>
     <div class="content">
       <img
-        :src="require(`../../assets/about/aboutus/planet${isDark ? '-dark' : ''}.png`)"
+        :src="require(`../../assets/about/aboutus/planet${isDark ? '' : ''}.png`)"
         style="width: 33.87px; height: 34px"
       />
       <div class="title">多样产品</div>
@@ -38,7 +38,7 @@
     </div>
     <div class="content">
       <img
-        :src="require(`../../assets/about/aboutus/house${isDark ? '-dark' : ''}.png`)"
+        :src="require(`../../assets/about/aboutus/house${isDark ? '' : ''}.png`)"
         style="width: 34px; height: 34px"
       />
       <div class="title">公司资料</div>
