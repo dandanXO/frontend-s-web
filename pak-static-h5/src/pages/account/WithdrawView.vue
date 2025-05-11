@@ -59,9 +59,9 @@
             <template v-slot:no-option>
               <q-item>
                 <q-item-section class="text-grey isCentreDialog">
-                  {{ $t('withdraw.noAcctAvailable')}}
+                  {{ $t("withdraw.noAcctAvailable") }}
                   <router-link class="text-positive" to="/account/bank">
-                    {{ $t('withdraw.addAcct')}}
+                    {{ $t("withdraw.addAcct") }}
                     <!-- {{
                       isUSDT || isEWALLET
                         ? $t("lang.withdraw_add") + " " + chooseCard()
@@ -365,16 +365,14 @@
       <div class="q-mt-sm step-desc-div q-mb-lg">
         <p>
           {{ $t("withdraw.withdrawTutorial") }}
-          <span class="tutorial-link" @click="isWithdrawTutorial = true">{{ $t('withdraw.picture')}}</span>
+          <span class="tutorial-link" @click="isWithdrawTutorial = true">{{ $t("withdraw.picture") }}</span>
           /
-          <span class="tutorial-link" @click="openWithdrawTutorialVideo">{{ $t('withdraw.video')}}</span>
+          <span class="tutorial-link" @click="openWithdrawTutorialVideo">{{ $t("withdraw.video") }}</span>
         </p>
-        <p>1. {{ $t('withdraw.bindCardCorrectFormat') }}</p>
-        <p>2. {{ $t('withdraw.dailyWalletLimit') }}</p>
-        <p>
-          3. {{ $t('withdraw.donotexceeddaily') }}
-        </p>
-        <p>4.{{ $t('withdraw.blockchainwithdrawfast')}}</p>
+        <p>1. {{ $t("withdraw.bindCardCorrectFormat") }}</p>
+        <p>2. {{ $t("withdraw.dailyWalletLimit") }}</p>
+        <p>3. {{ $t("withdraw.donotexceeddaily") }}</p>
+        <p>4.{{ $t("withdraw.blockchainwithdrawfast") }}</p>
       </div>
     </template>
 
@@ -666,7 +664,7 @@ const submitWithdraw = async () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: t('notify.withdrewSuccessfully'),
+            message: t("notify.withdrewSuccessfully"),
             icon: "check_circle_outline"
           });
           getWithdrawalMethods();
@@ -922,7 +920,7 @@ const isWithdrawTutorial = ref(false);
 const langSelect = localStorage.getItem("languageLocale") ?? "";
 
 const openWithdrawTutorialVideo = () => {
-  window.open("https://drive.google.com/file/d/1yOJgpa4C9y7XFDacL52f4MoQ1lLw3Pm-/view?usp=drivesdk", "_blank");
+  window.open("https://drive.google.com/file/d/1788QQeJdn0GYzB17kk_qWuALZCsSyKuI/view?usp=drivesdk", "_blank");
   // if (langSelect === "ur") {
   //   window.open("https://drive.google.com/file/d/1l35uyEQNp798iYAfuLvKFf_O56fl5ZIb/view?usp=sharing", "_blank");
   // } else {
@@ -1115,7 +1113,7 @@ watch(
 }
 .step-desc-div {
   margin-bottom: 105px;
-  color: #B2BDBF;
+  color: #b2bdbf;
 
   p {
     margin: 5px 0px;
@@ -1227,7 +1225,7 @@ watch(
   background: #373c3d;
   padding: 10px;
   border-radius: 10px;
-  
+
   :not(:last-child) {
     margin-bottom: 5px;
   }
@@ -1378,7 +1376,7 @@ watch(
     // background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
     // box-shadow: 0px 2px 0px 0px #1cca6a;
     // text-transform: uppercase;
-    
+
     width: 100%;
     display: flex;
     align-items: center;
@@ -1413,8 +1411,9 @@ watch(
 }
 </style>
 
-<style lang="scss"> 
-.q-field__control, .q-field__marginal {
+<style lang="scss">
+.q-field__control,
+.q-field__marginal {
   height: auto !important;
 }
 </style>
