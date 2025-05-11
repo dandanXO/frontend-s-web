@@ -119,7 +119,7 @@
         </div>
       </div>
       <div class="bottom-setting-section">
-        <router-link to="/affiliate/agent">
+        <router-link to="/affiliate/agent" v-if="store.memberType === 'AFFILIATE'">
           <div class="acct-nav-item">
             <img src="../assets/images/account/agentaccount-svg.svg" />
           </div>
@@ -151,7 +151,7 @@
 <!--          <div class="acct-nav-label">{{ $t("settings.transfer") }}</div>-->
 <!--        </a>-->
       </div>
-      <div class="bottom-setting-section invite-friends-section">
+      <div class="bottom-setting-section invite-friends-section" v-if="store.memberType !== 'AFFILIATE'">
         <div class="left-icon">
           <img src="../assets/images/earn-money/invite-gift.png" />
         </div>

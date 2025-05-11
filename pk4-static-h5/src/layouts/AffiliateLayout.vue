@@ -162,18 +162,36 @@ export default defineComponent({
         hasPage.value = false;
         pageName.value = "";
         if (route.path === "/affiliate/overview") {
-          prevPage.value = "/promo?name=pak-deposit-spinner-rewards";
+          prevPage.value = "/affiliate/agent";
           hasPage.value = true;
           pageName.value = t("affiliateSettings.overview");
         } else if (route.path === "/affiliate/team-management") {
           prevPage.value = "/affiliate/agent";
           hasPage.value = true;
           pageName.value = t("header.teamManagement");
+        } else if (route.path === "/affiliate/team-pnl") {
+          prevPage.value = "/affiliate/agent";
+          hasPage.value = true;
+          pageName.value = t("header.teamPnL");
+        } else if (route.path === "/affiliate/team-betting") {
+          prevPage.value = "/affiliate/agent";
+          hasPage.value = true;
+          pageName.value = t("header.teamBetting");
         }
         else if (route.path === "/affiliate/account-record") {
           prevPage.value = "/affiliate/agent";
           hasPage.value = true;
           pageName.value = t("affiliateSettings.accountRecord");
+        }
+        else if (route.path === "/affiliate/edit-rebate") {
+          prevPage.value = "/affiliate/agent";
+          hasPage.value = true;
+          pageName.value = t("affiliateSettings.editRebate");
+        }
+        else if (route.path === "/account/agent") {
+          prevPage.value = "/affiliate/agent";
+          hasPage.value = true;
+          pageName.value = t("affiliateSettings.linkManagement");
         }
       }
     };

@@ -64,7 +64,7 @@
               clearable
               lazy-rules
               ref="ifscRef"
-              type="number"
+              type="text"
               maxlength="13"
               placeholder="Please Enter The Login Password"
               v-model="downlineRegForm.password"
@@ -110,13 +110,16 @@
       </div>
     </div>
 
-    <div class="custom-btn">SUBMIT</div>
+    <div class="custom-btn" @click="registerAffiliate">SUBMIT</div>
   </div>
 </template>
 <script setup>
 import { ref, reactive } from "vue";
 import InputField from "@/components/auth/InputField.vue";
 import InputRowGrid from "@/components/auth/InputRowGrid.vue";
+import { api } from "src/boot/axios";
+
+var qs = require("qs");
 
 const accTypeDownline = ref("player");
 const downlineRegForm = reactive({
@@ -125,4 +128,16 @@ const downlineRegForm = reactive({
   remarks: ""
 });
 const isHighestDownlineReg = ref(false);
+
+const registerAffiliate = () => {
+  api.post('/session/affiliate/register-affiliate', qs.stringify({
+    loginName: downlineRegForm.username,
+    password: downlineRegForm.password,
+    siteId: 26,
+    affiliateCode: sessionStorage.getItem("AFFILIATE_CODE"),
+    commission: null
+  })).then((res) => {
+    console.log('here', res)
+  })
+}
 </script>

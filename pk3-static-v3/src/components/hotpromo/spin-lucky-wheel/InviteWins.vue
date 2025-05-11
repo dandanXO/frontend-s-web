@@ -29,9 +29,11 @@ import { api } from "boot/axios";
 import VueQRCodeComponent from "vue-qrcode-component";
 import html2canvas from "html2canvas";
 import { Filesystem, Directory } from "@capacitor/filesystem";
+import { useRoute } from "vue-router";
 
 const $q = useQuasar();
 const store = userStore();
+const route = useRoute();
 const isLoading = ref(false);
 
 const selfTgurl = ref("");
@@ -57,7 +59,22 @@ const copyShareLink = () => {
 };
 
 const downloadQRImg = async () => {
-  if (Platform.is.capacitor && Platform.is.android) {
+  if (route.path === "/wv-promotion") {
+    if (window.flutter_inappwebview && window.flutter_inappwebview.callHandler) {
+      try {
+        html2canvas(document.querySelector("#the-qrcode")).then(async function (canvas) {
+          document.body.appendChild(canvas);
+          const dataUrl = canvas.toDataURL("image/jpeg");
+
+          window.flutter_inappwebview.callHandler("downloadBase64Image", dataUrl);
+
+          setTimeout(()=>{
+            canvas.style.display = "none";
+          },750)
+        });
+      } catch (e) {}
+    }
+  } else if (Platform.is.capacitor && Platform.is.android) {
     try {
       html2canvas(document.querySelector("#the-qrcode")).then(async function (canvas) {
         document.body.appendChild(canvas);

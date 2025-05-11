@@ -1877,7 +1877,7 @@ body {
       }
 
       .logo {
-        height: 70px;
+        height: 60px;
         //width: 102px;
 
         img {

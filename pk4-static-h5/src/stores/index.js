@@ -237,7 +237,8 @@ export const userStore = defineStore("userStore", {
             hasDeposit,
             currentDeposit,
             levelUpDeposit,
-            guest
+            guest,
+            memberId
           } = response.data;
 
           this.id = id;
@@ -256,6 +257,7 @@ export const userStore = defineStore("userStore", {
           this.levelUpDeposit = parseFloat(levelUpDeposit);
           this.hasDeposit = hasDeposit;
           this.guest = guest;
+          this.memberId = memberId;
 
           if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
             OneSignal.login(this.nickName);

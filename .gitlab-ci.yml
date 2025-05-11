@@ -1035,6 +1035,13 @@ deploy-pak-download:
 
 #===============================================================================================
 
+deploy-pak-download-v2:
+  extends: .s3-deploy
+  variables:
+    PROJECT: pak-download-v2
+
+#===============================================================================================
+
 deploy-pak-redirect-v2:
   extends: .s3-deploy
   variables:
@@ -1103,6 +1110,16 @@ deploy-mx1-download:
   extends: .s3-deploy
   variables:
     PROJECT: mx1-download
+    SITE_CODE: P8S1-BR1
+  tags:
+    - p8s1-br1-runners
+    
+#===============================================================================================
+
+deploy-mx1-download-v2:
+  extends: .s3-deploy
+  variables:
+    PROJECT: mx1-download-v2
     SITE_CODE: P8S1-BR1
   tags:
     - p8s1-br1-runners

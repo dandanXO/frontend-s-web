@@ -138,7 +138,7 @@
                 <div class="text">
                   <span v-if="item.code === 'AG'">XIN</span>
                   <span v-else-if="item.code === 'MGP'">MG</span>
-                  <span v-else-if="item.code === 'PPFP'">FP 电子</span>
+                  <span v-else-if="item.code === 'PPFP'">FP</span>
                   <span v-else>{{ item.code }}</span>
                 </div>
               </div>
@@ -178,6 +178,10 @@
             >
               <a @click="openGame(getAliasName(game, platformType), selectedPlat, game.code)">
                 <div class="slot-img">
+                  <div class="slot-tag">
+                    <img v-if="game.gameLabel === 'HOT'" src="../assets/images/games/hot-tag.png" />
+                    <img v-if="game.gameLabel === 'NEW'" src="../assets/images/games/new-tag.png" />
+                  </div>
                   <el-image :src="game.icon" lazy>
                     <template #placeholder>
                       <img :src="game.default" />

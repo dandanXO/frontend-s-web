@@ -75,6 +75,7 @@
                 </template>
                 <div>
                   <div class="content-p">正文：{{ item.content }}</div>
+                  <div v-if="item.replyMessageContent" style="margin-top: 10px;" class="content-p">回复: {{ item.replyMessageContent }}</div>
                 </div>
               </el-collapse-item>
             </el-collapse>
@@ -213,7 +214,8 @@ const store = userStore();
           isLoading["inbox"]=true;
           if (res.code === 0) {
             const response = res.data
-            mailboxState.mailboxList["inbox"].list.push(...response.records);
+            // mailboxState.mailboxList["inbox"].list.push(...response.records);
+            mailboxState.mailboxList["inbox"].list = response.records;
             mailboxState.mailboxList["inbox"].total = (response.total);
           }
         }).catch((error) => {
@@ -231,7 +233,8 @@ const store = userStore();
         mailOutbox(mailboxData.value).then((response) => {
           isLoading["outbox"]=true;
           if (response.code === 0) {
-            mailboxState.mailboxList["sent"].list.push(...response.data.records);
+            // mailboxState.mailboxList["sent"].list.push(...response.data.records);
+            mailboxState.mailboxList["sent"].list = response.data.records;
             mailboxState.mailboxList["sent"].total = response.data.total;
           }
         }).catch((error) => {
@@ -256,6 +259,26 @@ const store = userStore();
         }
       }
     };
+    
+    const openMsg = (m) => {
+      const { id } = m;
+
+      if (m.isOpen === undefined) m.isOpen = false;
+      m.isOpen = !m.isOpen;
+      m.readTime = true;
+
+      if (!m.content) {
+        readFeedback({ id })
+          .then((res) => {
+            const { code, data } = res;
+            if (code === 0) m.content = data.content;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    };
+
 
     const feedbackTypes = ref("");
     const loadFeedbackType = () => {
@@ -366,7 +389,8 @@ const store = userStore();
       feedbackTypes,
       FileUpload,
       uploadFileRef,
-      getImageLink
+      getImageLink,
+      openMsg
     }
   },
 });

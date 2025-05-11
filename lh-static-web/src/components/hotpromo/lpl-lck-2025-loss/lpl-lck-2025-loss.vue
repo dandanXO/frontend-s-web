@@ -30,8 +30,11 @@
               </div>
             </div>
             <div class="livepoker-rebate-section-right">
+              <div class="bonus-image" @click="handleClaimBonus1" >
+                <img src="../../../assets/promo/lh-livepoker-rebate/new-reward-btn-1.png" alt="" width="100%" />
+              </div>
               <div class="bonus-image" @click="handleClaimBonus1" :class="{ disabled: bonus1 <= 0 }">
-                <img src="../../../assets/promo/lh-livepoker-rebate/new-reward-btn.png" alt="" width="100%" />
+                <img src="../../../assets/promo/lh-livepoker-rebate/new-reward-btn-2.png" alt="" width="100%" />
               </div>
             </div>
           </div>
@@ -169,8 +172,12 @@
               </div>
             </div>
             <div class="livepoker-rebate-section-right">
+              
+              <div class="bonus-image" @click="handleClaimBonus2" >
+                <img src="../../../assets/promo/lh-livepoker-rebate/new-reward-btn-1.png" alt="" width="100%" />
+              </div>
               <div class="bonus-image" @click="handleClaimBonus2" :class="{ disabled: bonus2 <= 0 }">
-                <img src="../../../assets/promo/lh-livepoker-rebate/new-reward-btn.png" alt="" width="100%" />
+                <img src="../../../assets/promo/lh-livepoker-rebate/new-reward-btn-2.png" alt="" width="100%" />
               </div>
             </div>
           </div>

@@ -449,3 +449,10 @@ export function getBlastRival2025Bonus(promoCode) {
 export function claimBlastRival2025Bonus(promoCode) {
   return eventapi.post(`/session/competition-loss/claim?promoCode=${promoCode}`);
 }
+
+export function getIemDallas2025Bonus(promoCode) {
+  return eventapi.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimIemDallas2025Bonus(promoCode) {
+  return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}

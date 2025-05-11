@@ -15,18 +15,19 @@
         </div>
         <span class="footer-label">{{ $t("bottomNav.promo") }}</span>
       </q-route-tab>
-      <q-route-tab to="/share-affiliate" name="share-affiliate" :ripple="false">
-        <!-- <div class="footer-big-img share-affiliate">
-          <img
-            style="width: 100%"
-            :src="ui.footerIcon ? ui.footerIcon : require(`../assets/images/index/menu/icon-agent.png`)"
-          />
-        </div> -->
+      <q-route-tab v-if="store.memberType === 'AFFILIATE'" to="/share-affiliate" name="share-affiliate" :ripple="false">
         <div class="footer-img">
           <img class="inactive" src="../assets/images/index/menu/icon-agent.png" />
           <img class="hover" src="../assets/images/index/menu/icon-agent-hover.png" />
         </div>
         <span class="footer-label">{{ $t("bottomNav.agent") }}</span>
+      </q-route-tab>
+      <q-route-tab v-else to="/earn-money" name="share-affiliate" :ripple="false">
+        <div class="footer-img">
+          <img class="inactive" src="../assets/images/index/menu/icon-earn.png" />
+          <img class="hover" src="../assets/images/index/menu/icon-earn-hover.png" />
+        </div>
+        <span class="footer-label">{{ $t("bottomNav.earnMoney") }}</span>
       </q-route-tab>
       <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" :ripple="false">
         <div class="footer-img">
@@ -50,10 +51,12 @@
 import { ref } from "vue";
 import { useUI } from "stores/ui";
 import { useRoute } from "vue-router";
+import { userStore } from "src/stores";
 
 const ui = useUI();
 const route = useRoute();
 const tab = ref("home");
+const store = userStore();
 </script>
 
 <style lang="scss" scoped>

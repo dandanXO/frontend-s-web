@@ -33,13 +33,13 @@
               <div class="contact-box skype-buttons">
                 <div class="contact-icon">
 
-                  <img src="../assets/images/affiliate/icon-skype.png" />
+                  <img src="../assets/images/affiliate/icon-teams.png" />
                 </div>
-                <div class="contact-name">合营部 Skype</div>
+                <div class="contact-name">合营部 Teams</div>
                 <span ref="contact2" class="contact-text" style="font-size: 7px">live:.cid.8099acb97a5ea41</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('2')">{{ copybtntxt2 }}</button>
-                  <a target="_blank" class="download-btn" href="https://www.skype.com/zh-Hans/get-skype/">下载</a>
+                  <a target="_blank" class="download-btn" href="https://www.microsoft.com/en-us/microsoft-teams/group-chat-software/">下载</a>
                 </div>
               </div>
               <div class="contact-box telegram-buttons">
