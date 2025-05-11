@@ -17,7 +17,7 @@ import { _hls, initHls } from "./hls";
 /**
  * custom event names
  * @typedef {Object} CustomEvents
- * @type {{ AUTO_PLAY_FAILED: string }}
+ * @type {{ AUTO_PLAY_FAILED: string, STREAM_AVAILABLE: string, STREAM_BUFFERING: string, CUSTOM_ERROR: string }}
  */
 
 export class VideoPlayer {
@@ -37,7 +37,10 @@ export class VideoPlayer {
     /** @type { typeof import('hls.js').Events | import('flv.js').default.Events | CustomEvents} */
     this.Events = {};
     this._customEvents = {
-      AUTO_PLAY_FAILED: "AUTO_PLAY_FAILED"
+      AUTO_PLAY_FAILED: "CUSTOM_AUTO_PLAY_FAILED",
+      STREAM_AVAILABLE: "CUSTOM_STREAM_AVAILABLE",
+      STREAM_BUFFERING: "CUSTOM_STREAM_BUFFERING",
+      CUSTOM_ERROR: "CUSTOM_ERROR"
     };
     this._eventTarget = new EventTarget();
     this._registeredEvents = [];
@@ -71,9 +74,10 @@ export class VideoPlayer {
         return;
       } else if (_hls.isSupported()) {
         this.qualitySupported = true;
-        this.Events = Object.assign({}, this._customEvents, _hls.Events);
+        this.Events = Object.assign({}, _hls.Events, this._customEvents);
         this.SupportPlayer = "FULL";
       } else {
+        this.Events = Object.assign({}, _hls.Events, this._customEvents);
         this.SupportPlayer = "ORIGIN";
       }
     } else {
@@ -82,22 +86,24 @@ export class VideoPlayer {
         this.SupportPlayer = "NONE";
       } else {
         this.qualitySupported = false;
-        this.Events = Object.assign({}, this._customEvents, this._player.Events);
+        this.Events = Object.assign({}, this._player.Events, this._customEvents);
       }
     }
+    this._bindEvents();
   }
 
   async load(startPlay = false) {
     return new Promise((resolve, reject) => {
       if (this._mediaType === "hls") {
-        this._player.on(this.Events.MANIFEST_PARSED, async () => {
+        this.on(this.Events.MANIFEST_PARSED, async () => {
           startPlay && (await this.play());
           resolve();
         });
+        this._player.once(this.Events.ERROR, () => reject("Load error"));
         this._player.loadSource(this._url);
         this._player.attachMedia(this.videoEl);
       } else {
-        this._player.on(this.Events.LOADING_COMPLETE, async () => {
+        this.on(this.Events.LOADING_COMPLETE, async () => {
           startPlay && (await this.play());
           resolve();
         });
@@ -115,6 +121,7 @@ export class VideoPlayer {
         await this._player.play();
       }
     } catch (e) {
+      console.error(e);
       this._eventTarget.dispatchEvent(new Event(this._customEvents.AUTO_PLAY_FAILED));
     }
   }
@@ -162,9 +169,37 @@ export class VideoPlayer {
     }
   }
 
+  _bindEvents() {
+    if (this._mediaType === "hls") {
+      const hlsVideoResumeEvents = [
+        this.Events.FRAG_BUFFERED,
+        this.Events.FRAG_LOADED,
+        this.Events.BUFFER_APPENDED,
+        this.Events.LEVELS_UPDATED
+      ];
+      this.on(this.Events.ERROR, (event, data) => {
+        this._eventTarget.dispatchEvent(new CustomEvent(this._customEvents.CUSTOM_ERROR, { detail: data }));
+        // if (data.fatal) {
+        //   this._eventTarget.dispatchEvent(new CustomEvent(this._customEvents.CUSTOM_ERROR, { detail: data }));
+        // } else {
+        //   console.log(data);
+        //   this._eventTarget.dispatchEvent(new Event(this._customEvents.STREAM_BUFFERING));
+        // }
+        // TODO: Do we need more nuanced error handling?
+      });
+      hlsVideoResumeEvents.forEach((event) => {
+        this.on(event, () => {
+          this._eventTarget.dispatchEvent(new Event(this._customEvents.STREAM_AVAILABLE));
+        });
+      });
+    } else {
+      // TODO: bind flv.js events
+    }
+  }
+
   on(event, handler) {
     let type;
-    if (Object.keys(this._customEvents).includes(event)) {
+    if (Object.values(this._customEvents).includes(event)) {
       this._eventTarget.addEventListener(event, handler);
       type = "CUSTOM";
     } else {
@@ -177,7 +212,6 @@ export class VideoPlayer {
   off() {
     while (this._registeredEvents.length) {
       const { type, event, handler } = this._registeredEvents.pop();
-
       if (type === "CUSTOM") {
         this._eventTarget.removeEventListener(event, handler);
       } else {

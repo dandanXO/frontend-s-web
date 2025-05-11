@@ -15,7 +15,9 @@
         playsinline
         webkit-playsinline
         @progress="handlePlayerProgress"
+        @canplay="handlePlayerCanPlay"
       />
+      <canvas v-show="showLatestScreenCanvas" ref="canvasRef" class="livestream-video-latest-screen" />
       <div ref="danmuRef" class="livestream-video-danmu" />
       <div
         class="livestream-video-controller"
@@ -170,6 +172,7 @@ const DEFAULT_HLS_CONFIG = {
 };
 
 const PLAYER_CONFIG_KEY = "lh-livestream-player-config";
+const MAXIMUM_VIDEO_RELOAD_TIMEOUT = 30 * 1000; // 30 seconds
 
 const DEFAULT_DANMU_CONFIG = {
   area: {
@@ -208,6 +211,7 @@ const danmuRef = ref(null);
 const videoWrapperRef = ref(null);
 const channelPopperRef = ref(null);
 const qualityPopperRef = ref(null);
+const canvasRef = ref(null);
 const videoWrapperMouseLeaveTimer = ref(null);
 const showPlayerController = ref(false);
 const isPlayerSupported = ref(true);
@@ -216,6 +220,9 @@ const isVideoLoadFailed = ref(false);
 const isVideoLoading = ref(false);
 const videoLoadFailedReason = ref("");
 const showUnmuteMask = ref(false);
+const showLatestScreenCanvas = ref(false);
+const isLatestScreenRecorded = ref(false);
+const videoLoadErrorStartTime = ref(null);
 /** @type {import("vue").Ref< VideoPlayer | null>}*/
 const player = ref(null);
 const danmu = ref(null);
@@ -272,13 +279,17 @@ const loadPlayer = async () => {
 
 const initPlayer = async (play = false) => {
   if (!player.value) return;
-  await player.value.init();
-  isPlayerSupported.value = player.value.SupportPlayer !== "NONE";
-  player.value.on(player.value.Events.ERROR, handlePlayerError);
-  player.value.on(player.value.Events.AUTO_PLAY_FAILED, handleAutoPlayFailed);
-  isVideoLoading.value = true;
-  await player.value.load(play);
-  isVideoLoading.value = false;
+  try {
+    await player.value.init();
+    isPlayerSupported.value = player.value.SupportPlayer !== "NONE";
+    player.value.on(player.value.Events.CUSTOM_ERROR, handlePlayerError);
+    player.value.on(player.value.Events.AUTO_PLAY_FAILED, handleAutoPlayFailed);
+    isVideoLoading.value = true;
+    await player.value.load(play);
+    isVideoLoading.value = false;
+    showLatestScreenCanvas.value = false;
+    isLatestScreenRecorded.value = false;
+  } catch (e) {}
 };
 
 const loadDanmu = async () => {
@@ -385,14 +396,33 @@ const handlePlayerProgress = () => {
   player.value.syncLive();
 };
 
-const handlePlayerError = (event, data) => {
-  console.error(data);
+const handlePlayerCanPlay = () => {
+  isLatestScreenRecorded.value = false;
+};
+
+const handlePlayerError = (data) => {
+  console.error(data.detail);
   if (!playerConfig.value.isPause) {
     changePlayerConfig("isPause", true);
   }
-  isVideoLoadFailed.value = true;
-  videoLoadFailedReason.value = JSON.stringify(data);
-  isVideoLoading.value = false;
+  if (!videoLoadErrorStartTime.value) {
+    videoLoadErrorStartTime.value = Date.now();
+  }
+  if (!isLatestScreenRecorded.value) {
+    const ctx = canvasRef.value.getContext("2d");
+    ctx.drawImage(videoRef.value, 0, 0, canvasRef.value.width, canvasRef.value.height);
+    isLatestScreenRecorded.value = true;
+    showLatestScreenCanvas.value = true;
+  }
+  if (Date.now() - videoLoadErrorStartTime.value > MAXIMUM_VIDEO_RELOAD_TIMEOUT) {
+    videoLoadErrorStartTime.value = null;
+    isVideoLoadFailed.value = true;
+    videoLoadFailedReason.value = data.detail;
+    isVideoLoading.value = false;
+  } else {
+    isVideoLoading.value = true;
+    initPlayer(true);
+  }
 };
 
 const handleAutoPlayFailed = () => {
@@ -461,6 +491,8 @@ watch(livestreamData, loadData);
 
 onMounted(() => {
   // loadData();
+  canvasRef.value.width = videoRef.value.clientWidth;
+  canvasRef.value.height = videoRef.value.clientHeight;
 });
 
 onUnmounted(() => {
@@ -554,6 +586,11 @@ defineExpose({
     width: 100%;
     height: 100%;
     background: #000;
+  }
+
+  .livestream-video-latest-screen {
+    position: absolute;
+    inset: 0;
   }
 
   .livestream-video-mask {
