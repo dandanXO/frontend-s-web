@@ -95,7 +95,7 @@
             {{ $t("notify.quitGameMessage_03") }}
           </div>
           <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container popout-btns">
-            <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
+            <q-btn :label="$t('btn.exit')" no-caps class="btn-cancel" v-close-popup @click="closeDialog" />
             <q-btn :label="$t('btn.deposit')" no-caps class="btn-confirm" @click="goToDepositPage" v-close-popup />
           </div>
         </div>

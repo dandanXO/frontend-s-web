@@ -280,6 +280,7 @@ export default {
     loading: "لوڈ ہو رہا ہے",
     loading_plsWait: "لوڈ ہو رہا ہے... براہ کرم انتظار کریں...",
     cancel: "منسوخ کریں",
+    exit: "نکلنا",
     signOut: "لاگ آؤٹ",
     back: "واپس",
     moreGames: "مزید کھیل",
