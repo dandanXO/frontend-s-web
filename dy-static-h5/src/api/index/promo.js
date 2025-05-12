@@ -270,6 +270,17 @@ export function getCompetitionBetYesterday(promoCode) {
     }
   });
 }
+export function getGameTypeBonusInit(promoCode) {
+  return eventapi.get("/session/game-type-bonus/init", {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimGameTypeBonus(promoCode) {
+  return eventapi.post(`/session/game-type-bonus/claim`, qs.stringify({ promoCode }));
+}
 
 export function getNBAUpcomingMatch() {
   return eventapi.get("/session/nba-match-preseason/upcoming");
