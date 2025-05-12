@@ -50,7 +50,7 @@
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
-          <div class="right">活动期间，IEM达拉斯2025累计有效投注≥3,000元即可获得最高1588元的奖励金</div>
+          <div class="right">活动期间，会员在IEM达拉斯2025赛事期间总累计有效投注≥3,000元即可获得最高1,588元的奖励金！</div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
           <thead>
@@ -106,7 +106,7 @@
               <img src="@/assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
               <span>示例</span>
             </div>
-            会员A在活动期间投注IEM达拉斯2025赛事，累计有效投注为 250,000元，在5月26日24 小时内可获得彩金：288元
+            会员A在活动期间5月19日至5月25日投注IEM达拉斯2025赛事，总累计有效投注为 250,000元，在5月26日24 小时内可获得彩金：288元
           </div>
         </div>
       </div>
@@ -118,7 +118,7 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              活动期间，活动仅计算电竞场馆中IEM达拉斯2025赛事，会员在活动期间内IEM达拉斯2025中累计有效投注≥3,000元即可获得对应彩金，有效投注次日清零；
+              活动期间，仅计算电竞场馆中IEM达拉斯2025赛事，会员在活动期间内IEM达拉斯2025中总累计有效投注≥3,000元即可获得对应彩金；
               <div class="hint">注：奖金不叠加派发，奖金按最高档位派发一次。</div>
             </div>
           </div>
