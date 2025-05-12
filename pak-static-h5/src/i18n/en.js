@@ -284,6 +284,7 @@ export default {
     loading: "Loading",
     loading_plsWait: "Loading... Please wait...",
     cancel: "Cancel",
+    exit: "Exit",
     signOut: "Sign Out",
     back: "Back",
     moreGames: "More Games",
