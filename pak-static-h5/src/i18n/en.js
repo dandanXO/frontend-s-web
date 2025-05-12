@@ -447,6 +447,8 @@ export default {
     addAcct: "Add account",
     picture: "Picture",
     video: "Video",
+    checkReceivingLimit:
+      "Please ensure that your wallet has sufficient receiving limit before making a withdrawal to avoid transaction failure.",
     bindCardCorrectFormat: "Bind your wallet/bank card using the correct format.",
     dailyWalletLimit:
       "Daily wallet limit: PKR 50,000. Do not exceed this limit. You can add multiple wallets for withdrawals.",

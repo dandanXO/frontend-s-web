@@ -369,10 +369,11 @@
           /
           <span class="tutorial-link" @click="openWithdrawTutorialVideo">{{ $t("withdraw.video") }}</span>
         </p>
-        <p>1. {{ $t("withdraw.bindCardCorrectFormat") }}</p>
-        <p>2. {{ $t("withdraw.dailyWalletLimit") }}</p>
-        <p>3. {{ $t("withdraw.donotexceeddaily") }}</p>
-        <p>4.{{ $t("withdraw.blockchainwithdrawfast") }}</p>
+        <p>1. {{ $t("withdraw.checkReceivingLimit") }}</p>
+        <p>2. {{ $t("withdraw.bindCardCorrectFormat") }}</p>
+        <p>3. {{ $t("withdraw.dailyWalletLimit") }}</p>
+        <p>4. {{ $t("withdraw.donotexceeddaily") }}</p>
+        <p>5. {{ $t("withdraw.blockchainwithdrawfast") }}</p>
       </div>
     </template>
 
