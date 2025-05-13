@@ -1650,7 +1650,7 @@ export default defineComponent({
     const unreadInboxMail = ref(0);
     const getUnreadTotal = () => {
       if (store.token) {
-        return api.get("/session/inbox/getUnreadTotal").then((res) => {
+        return api.get("/session/pm/inbox/getUnreadTotal").then((res) => {
           // console.log(res);
           if (res.code === 0) {
             unreadInboxMail.value = res.data;
