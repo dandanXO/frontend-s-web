@@ -52,13 +52,24 @@
 
 <script setup>
 import InputField from 'src/components/auth/InputField.vue';
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
+import { api } from 'src/boot/axios';
 
 const formDetail = reactive([]);
 const model = ref('Consolidated Weekly');
 const options = ref(['Consolidated Weekly']);
 const model2 = ref('Not Signed');
 const options2 = ref(['Not Signed']);
+const isLoading = ref(false);
+
+onMounted(() => {
+    api.get('/session/affiliate/downline').then((res) => {
+        dividendInfo.value = res.data;
+        isLoading.value = false;
+    }).finally(() => {
+        isLoading.value = false;
+    });
+})
 
 </script>
 
