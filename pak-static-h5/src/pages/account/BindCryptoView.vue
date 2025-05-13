@@ -382,7 +382,7 @@ const onCaptchaSubmit = () => {
     .then((res) => {
       if (res.code === 0) {
         isOtpSent.value = true;
-        timer.value = 60;
+        timer.value = 300;
         startTimer(); // Start the timer
 
         bankCardInfo.smsCode = "";
@@ -402,7 +402,7 @@ const onCaptchaSubmit = () => {
       getInnerCode();
     });
 };
-  const timer = ref(60); // Timer starts at 60 seconds
+  const timer = ref(300); // Timer starts at 60 seconds
   let intervalId = null;
   // Method to start the countdown timer
   function startTimer() {
@@ -419,9 +419,10 @@ const onCaptchaSubmit = () => {
 
   // Method to show the timer in the button label
   function showTimer() {
-    return `${timer.value}s`;
+    const minutes = Math.floor(timer.value / 60);
+    const seconds = timer.value % 60;
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   }
-
   // Cleanup the interval when the component is unmounted
   onBeforeUnmount(() => {
     if (intervalId) {
