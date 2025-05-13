@@ -301,7 +301,7 @@ export default defineComponent({
         regForm.codeAffiliate = affCode.value;
         
         const affMemberType = sessionStorage.getItem("AFFILIATE_MEMBERTYPE");
-      if(affMemberType && ['AFFILIATE', 'MEMBER'].includes(affMemberType)) {
+      if(affMemberType && ['AFFILIATE', 'NORMAL'].includes(affMemberType)) {
         regForm.memberType = affMemberType;
       }
     };
