@@ -245,7 +245,8 @@
                 (val) => val <= selectedMethodItem.withdrawableBalance || `Withdraw Amount Insufficient`,
                 (val) =>
                   (val >= selectedMethodItem.withdrawMin && val <= selectedMethodItem.withdrawMax) ||
-                  `Withdraw Amount Must In Between ${selectedMethodItem.withdrawMin} - ${selectedMethodItem.withdrawMax}`
+                  `Withdraw Amount Must In Between ${selectedMethodItem.withdrawMin} - ${selectedMethodItem.withdrawMax}`,
+                (val) => Number.isInteger(+val) || 'Withdraw Amount Must Not Have Decimals'
               ]"
               hide-bottom-space
               @focus="scrollToInput"
