@@ -38,7 +38,7 @@
       <table cellpadding="0" cellspacing="0" border="0">
         <thead>
           <tr>
-            <th colspan="2">
+            <th colspan="3">
               <div>{{ $t('shareAffiliate.generalAgentTitle') }}</div>
             </th>
           </tr>
@@ -213,7 +213,7 @@ onBeforeMount(() => {
         left:0;
         right:0;
         width: 98%;
-        background-size: contain;
+        background-size: 100% 100%;
         }
       }
     }
@@ -278,7 +278,7 @@ onBeforeMount(() => {
         left:0;
         right:0;
         width: 98%;
-        background-size: contain;
+        background-size: 100% 100%;
         color: #ffffff;
     }
     ol {
