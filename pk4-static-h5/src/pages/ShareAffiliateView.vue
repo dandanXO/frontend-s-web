@@ -124,10 +124,23 @@
   </div>
 </template>
 <script setup>
+import { onBeforeMount } from "vue";
 import ProfileSummary from "../components/ProfileSummary.vue";
+import { useRouter } from "vue-router";
+import { userStore } from "src/stores";
+
+const router = useRouter();
+const store = userStore();
+
   const directToLink = () => {
     window.open("https://pak-affiliate-web.psna-staging.com/pak/login", "_blank");
   }
+
+onBeforeMount(() => {
+  if(store.memberType !== 'AFFILIATE') {
+    router.push('/earn-money');
+  }
+})
 </script>
 <style scoped lang="scss">
 .share-affiliate {
