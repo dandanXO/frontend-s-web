@@ -268,7 +268,7 @@
     </q-card>
   </q-dialog>
 
-  <!-- <q-dialog width="100%" v-model="guestKYCDialog" persistent>
+  <q-dialog width="100%" v-model="guestKYCDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
       <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
@@ -280,7 +280,7 @@
       <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
-  </q-dialog> -->
+  </q-dialog>
 </template>
 
 <script setup>
