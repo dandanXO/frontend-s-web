@@ -134,6 +134,9 @@
         </q-btn>
         <span>点击重新加载视频</span>
       </div>
+      <div v-if="isErrorCaptured" class="livestream-video-mask" @click.stop>
+        <q-btn color="primary" @click="copyMessage">已捕获错误，点击复制</q-btn>
+      </div>
     </template>
 
     <div v-else class="livestream-unsupported">不支援的浏览器</div>
@@ -151,6 +154,7 @@
 import { onMounted, ref, toRefs, watch, onUnmounted, computed, onActivated, nextTick, onBeforeUnmount } from "vue";
 import { VideoPlayer } from "boot/videoPlayer";
 import { useQuasar } from "quasar";
+import { useNotify } from "src/hooks/notify";
 
 const $q = useQuasar();
 
@@ -198,6 +202,8 @@ const QUALITY_ALIAS = {
   original: "原画"
 };
 
+const notify = useNotify();
+
 const props = defineProps(["danmuList", "channels", "livestreamData"]);
 const { danmuList, channels, livestreamData } = toRefs(props);
 
@@ -218,6 +224,8 @@ const videoLoadErrorStartTime = ref(null);
 const isPlayerSupported = ref(true);
 const isVideoLoadFailed = ref(false);
 const isVideoLoading = ref(false);
+const isErrorCaptured = ref(false);
+const errorMsg = ref("");
 /** @type {import("vue").Ref< VideoPlayer | null>}*/
 const player = ref(null);
 const danmu = ref(null);
@@ -266,7 +274,6 @@ const loadPlayer = async () => {
 };
 
 const initPlayer = async (play = true) => {
-  console.log(player.value);
   if (!player.value) return;
   await player.value.init();
   isPlayerSupported.value = player.value.SupportPlayer !== "NONE";
@@ -276,6 +283,8 @@ const initPlayer = async (play = true) => {
   isVideoLoading.value = false;
   showLatestScreenCanvas.value = false;
   isLatestScreenRecorded.value = false;
+  isErrorCaptured.value = false;
+  errorMsg.value = "";
 };
 
 const loadDanmu = async () => {
@@ -356,7 +365,7 @@ const showChannelChange = () => {
     actions: qualities.value.map((q) => ({
       label: q.name,
       id: q.value,
-      icon: q.name === currentQualityName.value ? 'check' : ''
+      icon: q.name === currentQualityName.value ? "check" : ""
     }))
   })
     .onOk((action) => {
@@ -425,6 +434,8 @@ const handlePlayerCanPlay = () => {
 
 const handlePlayerError = (data) => {
   console.error(data.detail);
+  errorMsg.value = JSON.stringify(data.detail);
+  isErrorCaptured.value = true;
   if (!playerConfig.value.isPause) {
     changePlayerConfig("isPause", true);
   }
@@ -444,17 +455,7 @@ const handlePlayerError = (data) => {
     const offsetY = (clientHeight - drawHeight) / 2;
     ctx.fillStyle = "#000000";
     ctx.fillRect(0, 0, canvasRef.value.width, canvasRef.value.height);
-    ctx.drawImage(
-      videoRef.value,
-      0,
-      0,
-      canvasRef.value.width,
-      canvasRef.value.height,
-      offsetX,
-      offsetY,
-      drawWidth,
-      drawHeight
-    );
+    ctx.drawImage(videoRef.value, 0, 0, videoWidth, videoHeight, offsetX, offsetY, drawWidth, drawHeight);
     isLatestScreenRecorded.value = true;
     showLatestScreenCanvas.value = true;
   }
@@ -488,6 +489,7 @@ const getQualities = () => {
 };
 
 const loadData = () => {
+  if (!livestreamData.value?.liveStatus) return;
   isVideoLoadFailed.value = false;
   Promise.all([loadPlayer(), loadDanmu()]).then(loadPlayerConfig);
 };
@@ -532,9 +534,9 @@ const handleOrientationChange = (e) => {
 };
 
 onActivated(() => {
-  Promise.all([loadPlayer(), loadDanmu()]).then(() => {
-    loadPlayerConfig();
-  });
+  // Promise.all([loadPlayer(), loadDanmu()]).then(() => {
+  //   loadPlayerConfig();
+  // });
   mediaQuery.addEventListener("change", handleOrientationChange);
   // Run it once on mount
   handleOrientationChange(mediaQuery);
@@ -544,6 +546,26 @@ onActivated(() => {
 onBeforeUnmount(() => {
   mediaQuery.removeEventListener("change", handleOrientationChange);
 });
+
+const copyMessage = () => {
+  let copyText = errorMsg.value;
+  // Create a temporary textarea element
+  const tempTextarea = document.createElement("textarea");
+  tempTextarea.value = copyText;
+  document.body.appendChild(tempTextarea);
+
+  // Select the text and copy it
+  tempTextarea.select();
+  document.execCommand("copy");
+
+  // Remove the temporary textarea element
+  document.body.removeChild(tempTextarea);
+
+  notify({
+    message: "错误讯息已复制，请联系技术",
+    type: "info"
+  });
+};
 </script>
 
 <style lang="scss" scoped>
