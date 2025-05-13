@@ -509,7 +509,17 @@ export function getCompetitionLossInit(promoCode) {
     }
   });
 }
+export function getGameTypeBonusInit(promoCode) {
+  return server.EVENT.get("/session/game-type-bonus/init", {
+    params: {
+      promoCode
+    }
+  });
+}
 
+export function claimGameTypeBonus(promoCode) {
+  return server.EVENT.post("/session/game-type-bonus/claim", { promoCode });
+}
 export function claimCompetitionLoss(promoCode) {
   return server.EVENT.post("/session/competition-loss/claim", { promoCode });
 }
