@@ -218,6 +218,7 @@ const qualityPopperRef = ref(null);
 const canvasRef = ref(null);
 const videoWrapperMouseLeaveTimer = ref(null);
 const showPlayerController = ref(false);
+const isPlayerConfigLoaded = ref(false);
 const showLatestScreenCanvas = ref(false);
 const isLatestScreenRecorded = ref(false);
 const videoLoadErrorStartTime = ref(null);
@@ -292,8 +293,11 @@ const initPlayer = async (play = false) => {
 };
 
 const loadDanmu = async () => {
-  const _danmu = (await import("danmu.js")).default;
-  danmuJs.value = _danmu;
+  if (danmu.value) return;
+  if (!danmuJs.value) {
+    const _danmu = (await import("danmu.js")).default;
+    danmuJs.value = _danmu;
+  }
   if (danmuRef.value) {
     danmu.value = new danmuJs.value({
       ...DEFAULT_DANMU_CONFIG,
@@ -303,6 +307,7 @@ const loadDanmu = async () => {
 };
 
 const loadPlayerConfig = () => {
+  if (isPlayerConfigLoaded.value) return;
   let finalPlayerConfig = playerConfig.value;
   try {
     const savedPlayerConfigStr = localStorage.getItem(PLAYER_CONFIG_KEY);
@@ -330,6 +335,7 @@ const loadPlayerConfig = () => {
           break;
       }
     });
+    isPlayerConfigLoaded.value = true;
   }
 };
 
@@ -438,9 +444,11 @@ const handlePlayerCanPlay = () => {
 };
 
 const handlePlayerError = (data) => {
+  // TODO: why only h5 trigger this error
+  if (data.detail.details === "bufferSeekOverHole") return;
   console.error(data.detail);
   errorMsg.value = JSON.stringify(data.detail);
-  isErrorCaptured.value = true;
+  data.detail.fetal && (isErrorCaptured.value = true);
   if (!playerConfig.value.isPause) {
     changePlayerConfig("isPause", true);
   }
@@ -476,6 +484,7 @@ const handlePlayerError = (data) => {
 
 const handleQualityChange = async (level) => {
   const _level = videoSource.value[level] ? level : DEFAULT_QUALITY;
+  if (_level === playerConfig.value.quality) return;
   changePlayerConfig("quality", _level);
   // player.value.setQualityLevel(index);
   player.value.changeSource(videoSource.value[_level].hls_url);
