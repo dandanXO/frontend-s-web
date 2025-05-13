@@ -58,8 +58,8 @@
 
         <q-card-section class="mid-wrapper">
           <div class="game-platform-val">
-            <img :src="require(`../../assets/images/index/logo/logo-${e.platform.toLowerCase()}.png`)">
-             / {{ e.platform }}
+            <!-- <img :src="require(`../../assets/images/index/logo/logo-${e.platform.toLowerCase()}.png`)">
+             / {{ e.platform }} -->
           </div>
           <q-btn flat
               :class="{
