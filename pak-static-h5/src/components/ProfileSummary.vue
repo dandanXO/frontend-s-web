@@ -250,7 +250,7 @@ const fastAccessPromo = shallowRef([]);
 const getFastAccessPromo = () => {
   if (!store.token) return;
   isFastAccessPromoCounting.value = true;
-  eligiblePromoCount.value = 1;
+  eligiblePromoCount.value = 0;
   if (store.claimedFtdPrivilege === false) {
     eligiblePromoCount.value++;
   }

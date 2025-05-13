@@ -22,7 +22,7 @@
           </div>
         </div>
         <RouterLink to="/deposit">
-          <q-btn flat class="details redemption">{{ $t("btn.details") }}</q-btn>
+          <q-btn flat class="details redemption claimable">{{ $t("btn.claim") }}</q-btn>
         </RouterLink>
       </div>
 
