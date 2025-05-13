@@ -39,6 +39,7 @@
               <span class="label">{{ $t('stream.supplierPlaybackLink') }}</span>
               <div class="url-container">
                 <span class="url-text">{{ getCurrentPlayUrl() }}</span>
+                <span v-if="streamScores[stream.supplierStreamId] !== undefined">(訊號強度：{{ streamScores[stream.supplierStreamId] }})</span>
                 <Button
                     icon="pi pi-copy"
                     severity="secondary"
@@ -57,6 +58,20 @@
                     severity="secondary"
                     text
                     @click="copyUrl(getAfterCdnUrl(stream.streamerCdnPushUrl))"
+                    v-tooltip.top="'複製鏈結'"
+                />
+              </div>
+            </div>
+            <div class="info-item">
+              <span class="label">{{ $t('stream.hostPlaybackLink') }}</span>
+              <div class="url-container">
+                <span class="url-text">{{ getStreamerPlayUrl() }}</span>
+                <span v-if="streamScores[stream.streamerStreamId] !== undefined">(訊號強度：{{ streamScores[stream.streamerStreamId] }})</span>
+                <Button
+                    icon="pi pi-copy"
+                    severity="secondary"
+                    text
+                    @click="copyUrl(getStreamerPlayUrl())"
                     v-tooltip.top="'複製鏈結'"
                 />
               </div>
@@ -210,23 +225,49 @@ const dialog = reactive({
   }
 });
 
-const unitMaxMap = {
-  minute: 60,
-  hour: 24,
-  day: 30,
-  week: 4,
-  month: 6
-};
-
 const playerLoadError = ref(null)
 const isOwnStream = ref(false)
 const isLiveStream = ref(false)
 const isStatusChanging = ref(false)
 const chatMessages = ref([])
 const chatLoading = ref(false)
+const streamScores = ref({});
+let scoreInterval = null;
 
-// 初始化 toast 服務
 const toast = useToast()
+
+const fetchScores = async () => {
+  const streamIds = [
+    props.stream?.supplierStreamId,
+    props.stream?.streamerStreamId,
+  ].filter(Boolean);
+  if (streamIds.length === 0) return;
+  try {
+    const data = await DashboardService.getLiveMonitorScores(streamIds);
+    console.log("data:", data); // ✅ 印出整體物件
+    const map = {};
+    (data || []).forEach(item => {
+      map[item.streamName] = item.score;
+    });
+    streamScores.value = map;
+    console.log("map:", streamScores.value);
+  } catch (e) {
+    console.error('取得監控分數失敗', e);
+  }
+};
+
+watch(() => props.visible, (visible) => {
+  if (visible) {
+    fetchScores();
+    scoreInterval = setInterval(fetchScores, 10000);
+  } else {
+    clearInterval(scoreInterval);
+  }
+});
+
+onBeforeUnmount(() => {
+  clearInterval(scoreInterval);
+});
 
 const streamerHasValidUrl = computed(() => {
   return !!props.stream?.streamerCdnPullUrl?.[currentQuality.value]?.hlsUrl
