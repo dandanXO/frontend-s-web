@@ -54,6 +54,7 @@
                   v-for="(item, index) in mailboxState.mailboxList.inbox.list"
                   :key="index"
                   @click="openMsg(item, index)"
+                  class="mail-collapse-item"
                 >
                   <template #title>
                     <div v-if="isShowSelect" class="mailbox-checkbox" @click.stop="">
@@ -828,6 +829,15 @@ onMounted(() => {
   p {
     margin-bottom: 0;
     margin-top: 0px;
+  }
+}
+</style>
+
+<style lang="scss">
+.mail-collapse-item {
+  .el-collapse-item__title {
+    display: flex;
+    align-items: center;
   }
 }
 </style>
