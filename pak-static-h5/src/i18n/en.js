@@ -763,7 +763,7 @@ export default {
     pleaseEnterVerificationCode: "Please enter verifcation code.",
     pleaseEnterOtp: "Please enter the OTP sent to your phone",
     verificationCodeLengthError: "Length should be 4 characters",
-    otpLengthError: "OTP number should be 4 characters",
+    otpLengthError: "OTP number should be 6 characters",
     sendOtp: "Send OTP",
     getOtp: "Get OTP",
     telephone: "Mobile number",

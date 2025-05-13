@@ -753,7 +753,7 @@ export default {
     pleaseEnterVerificationCode: "براہ کرم تصدیقی کوڈ درج کریں۔",
     pleaseEnterOtp: "براہ کرم اپنے فون پر بھیجا گیا او ٹی پی درج کریں",
     verificationCodeLengthError: "تصدیقی کوڈ کا نمبر 4 حروف پر مشتمل ہونا چاہیے",
-    otpLengthError: "او ٹی پی کا نمبر 4 حروف پر مشتمل ہونا چاہیے",
+    otpLengthError: "او ٹی پی کا نمبر6 حروف پر مشتمل ہونا چاہیے",
     sendOtp: "او ٹی پی بھیجیں",
     getOtp: "او ٹی پی حاصل کریں",
     telephone: "ٹیلیفون",

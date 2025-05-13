@@ -1,6 +1,6 @@
 <template>
-  <q-dialog class="flex-end" width="100%" v-model="showCaptchaDialog" persistent>
-    <div class="popout-dialog">
+  <q-dialog v-model="showCaptchaDialog" persistent>
+    <div class="popout-dialog" style="width: 90%; border-radius: 20px;">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">{{ $t("bankCard.otp") }}</div>
@@ -38,8 +38,8 @@
       </div>
     </div>
   </q-dialog>
-  <q-dialog class="flex-end" width="100%" v-model="showCaptchaMessageDialog" persistent>
-    <div class="popout-dialog">
+  <q-dialog v-model="showCaptchaMessageDialog" persistent>
+    <div class="popout-dialog" style="width: 90%; border-radius: 20px;">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="flex justify-center">
@@ -161,7 +161,7 @@
         </template>
       </InputRowGrid>
 
-      <template v-if="isOtpSent">
+      <template v-if="isPhoneVerified">
         <InputRowGrid>
           <template #fields>
             <!-- <InputField :label="$t('form.virtualWallet')"> -->
@@ -176,7 +176,7 @@
                   clearable
                   maxlength="6"
                   :placeholder="$t('bankCard.pleaseEnterOtp')"
-                  :rules="[(val) => (val && val.length > 3) || $t('bankCard.otpLengthError')]"
+                  :rules="[(val) => (val && val.length > 5) || $t('bankCard.otpLengthError')]"
                   @keydown.enter.prevent="handleEnterKey"
                   @keydown.enter="submitBankCard()"
                 ></q-input>
@@ -274,7 +274,7 @@ const cardNumberRef = ref();
 const ifscRef = ref();
 const telephoneNumberRef = ref();
 const phoneVerificationRef = ref();
-// const isPhoneVerified = ref(false);
+const isPhoneVerified = ref(false);
 
 const bankCardInfo = reactive({
   bankId: undefined,
@@ -390,7 +390,7 @@ const onCaptchaSubmit = () => {
 
         showCaptchaMessageDialog.value = true;
         showCaptchaSuccessDialog.value = true;
-        // isPhoneVerified.value = true;
+        isPhoneVerified.value = true;
       } else {
         captchaFailedMessage.value = res.message;
         showCaptchaMessageDialog.value = true;

@@ -1,6 +1,6 @@
 <template>
-  <q-dialog class="flex-end" width="100%" v-model="showCaptchaDialog" persistent>
-    <div class="popout-dialog">
+  <q-dialog width="100%" v-model="showCaptchaDialog" persistent>
+    <div class="popout-dialog" style="width: 90%; border-radius: 20px;">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">{{ $t("bankCard.otp") }}</div>
@@ -53,7 +53,7 @@
                       clearable
                       maxlength="6"
                       :placeholder="$t('bankCard.pleaseEnterOtp')"
-                      :rules="[(val) => (val && val.length > 3) || $t('bankCard.otpLengthError')]"
+                      :rules="[(val) => (val && val.length > 5) || $t('bankCard.otpLengthError')]"
                     ></q-input>
                   </template>
                 </InputField>
@@ -66,8 +66,8 @@
       </div>
     </div>
   </q-dialog>
-  <q-dialog class="flex-end" width="100%" v-model="showCaptchaMessageDialog" persistent>
-    <div class="popout-dialog">
+  <q-dialog v-model="showCaptchaMessageDialog" persistent>
+    <div class="popout-dialog" style="width: 90%; border-radius: 20px;">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="flex justify-center">
@@ -773,7 +773,6 @@ const captchaFailedMessage = ref("");
 const onCaptchaSubmit = () => {
   innerCaptchaRef.value.validate();
   if (innerCaptchaRef.value.hasError) return;
-
   api
     .post(
       `/otp/sendSms`,
@@ -801,11 +800,13 @@ const onCaptchaSubmit = () => {
       // showCaptchaDialog.value = false;
     })
     .catch(() => {
-      getInnerCode();
+      // getInnerCode();
     });
 };
 const isOTPEntered = ref(false);
 const onOTPEnter = () => {
+    phoneVerificationRef.value.validate();
+    if (phoneVerificationRef.value.hasError) return;
     showCaptchaDialog.value = false;
     isOTPEntered.value = true;
     submitWithdraw();
