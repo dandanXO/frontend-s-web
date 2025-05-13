@@ -99,7 +99,12 @@
             </template>
 
             <template v-else>
-              <div class="no-record-text" style="display: flex; justify-content: center; align-items: center; height: 300px">暂无记录</div>
+              <div
+                class="no-record-text"
+                style="display: flex; justify-content: center; align-items: center; height: 300px"
+              >
+                暂无记录
+              </div>
             </template>
           </el-tab-pane>
         </el-tabs>
@@ -804,7 +809,7 @@ onMounted(() => {
   .no-record-text {
     color: #fff;
   }
-  
+
   .menu-title {
     color: $color-white;
   }
@@ -818,11 +823,11 @@ onMounted(() => {
     }
   }
 }
-</style>
-<style lang="scss">
+
 .title-text {
   p {
     margin-bottom: 0;
+    margin-top: 0px;
   }
 }
 </style>
