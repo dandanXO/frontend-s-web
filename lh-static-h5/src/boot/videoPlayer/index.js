@@ -3,7 +3,7 @@
  */
 
 /**
- * @typedef {'FULL'|'ORIGIN'|'NONE'} SupportPlayer
+ * @typedef {'FULL'|'NATIVE'|'NONE'} SupportPlayer
  */
 
 import { initFlv } from "./flv";
@@ -17,7 +17,7 @@ import { _hls, initHls } from "./hls";
 /**
  * custom event names
  * @typedef {Object} CustomEvents
- * @type {{ AUTO_PLAY_FAILED: string, STREAM_AVAILABLE: string, STREAM_BUFFERING: string, CUSTOM_ERROR: string }}
+ * @type {{ AUTO_PLAY_FAILED: string, STREAM_AVAILABLE: string, STREAM_BUFFERING: string, CUSTOM_ERROR: string, NATIVE_STREAM_BUFFERING: string }}
  */
 
 export class VideoPlayer {
@@ -40,12 +40,13 @@ export class VideoPlayer {
       AUTO_PLAY_FAILED: "CUSTOM_AUTO_PLAY_FAILED",
       STREAM_AVAILABLE: "CUSTOM_STREAM_AVAILABLE",
       STREAM_BUFFERING: "CUSTOM_STREAM_BUFFERING",
+      NATIVE_STREAM_BUFFERING: "NATIVE_CUSTOM_STREAM_BUFFERING",
       CUSTOM_ERROR: "CUSTOM_ERROR"
     };
     this._eventTarget = new EventTarget();
     this._registeredEvents = [];
     /** @type {SupportPlayer} */
-    this.SupportPlayer = "NONE";
+    this.supportPlayer = "NONE";
 
     return new Proxy(this, {
       get(target, prop, receiver) {
@@ -75,20 +76,20 @@ export class VideoPlayer {
     if (this._mediaType === "hls") {
       this._player = await initHls(this._url, this._config, this.videoEl);
       if (!this._player) {
-        this.SupportPlayer = "NONE";
+        this.supportPlayer = "NONE";
         return;
       } else if (_hls.isSupported()) {
         this.qualitySupported = true;
         this.Events = Object.assign({}, _hls.Events, this._customEvents);
-        this.SupportPlayer = "FULL";
+        this.supportPlayer = "FULL";
       } else {
         this.Events = Object.assign({}, _hls.Events, this._customEvents);
-        this.SupportPlayer = "ORIGIN";
+        this.supportPlayer = "NATIVE";
       }
     } else {
       this._player = await initFlv(this._url, this._config);
       if (!this._player) {
-        this.SupportPlayer = "NONE";
+        this.supportPlayer = "NONE";
       } else {
         this.qualitySupported = false;
         this.Events = Object.assign({}, this._player.Events, this._customEvents);
@@ -100,13 +101,22 @@ export class VideoPlayer {
   async load(startPlay = false) {
     return new Promise((resolve, reject) => {
       if (this._mediaType === "hls") {
-        this.on(this.Events.MANIFEST_PARSED, async () => {
-          startPlay && (await this.play());
-          resolve();
-        });
-        this._player.once(this.Events.ERROR, () => reject("Load error"));
-        this._player.loadSource(this._url);
-        this._player.attachMedia(this.videoEl);
+        if (this.supportPlayer === "FULL") {
+          this.on(this.Events.MANIFEST_PARSED, async () => {
+            startPlay && (await this.play());
+            resolve();
+          });
+          this._player.once(this.Events.ERROR, () => reject("Load error"));
+          this._player.loadSource(this._url);
+          this._player.attachMedia(this.videoEl);
+        } else if (this.supportPlayer === "NATIVE") {
+          this.on("error", () => reject("Load error"), { once: true });
+          this.on("loadedmetadata", async () => {
+            startPlay && (await this.play());
+            resolve();
+          });
+          this.videoEl.src = this._url;
+        }
       } else {
         this.on(this.Events.LOADING_COMPLETE, async () => {
           startPlay && (await this.play());
@@ -161,7 +171,7 @@ export class VideoPlayer {
 
   syncLive() {
     let latestPosition;
-    if (this._mediaType === "hls") {
+    if (this._mediaType === "hls" && this.supportPlayer === "FULL") {
       latestPosition = this._player.liveSyncPosition;
     } else {
       latestPosition = this.videoEl.buffered.end(0);
@@ -176,40 +186,83 @@ export class VideoPlayer {
 
   _bindEvents() {
     if (this._mediaType === "hls") {
-      const hlsVideoResumeEvents = [
-        this.Events.FRAG_BUFFERED,
-        this.Events.FRAG_LOADED,
-        this.Events.BUFFER_APPENDED,
-        this.Events.LEVELS_UPDATED
-      ];
-      this.on(this.Events.ERROR, (event, data) => {
-        this._eventTarget.dispatchEvent(new CustomEvent(this._customEvents.CUSTOM_ERROR, { detail: data }));
-        // if (data.fatal) {
-        //   this._eventTarget.dispatchEvent(new CustomEvent(this._customEvents.CUSTOM_ERROR, { detail: data }));
-        // } else {
-        //   console.log(data);
-        //   this._eventTarget.dispatchEvent(new Event(this._customEvents.STREAM_BUFFERING));
-        // }
-        // TODO: Do we need more nuanced error handling?
-      });
-      hlsVideoResumeEvents.forEach((event) => {
-        this.on(event, () => {
-          this._eventTarget.dispatchEvent(new Event(this._customEvents.STREAM_AVAILABLE));
+      if (this.supportPlayer === "FULL") {
+        const hlsVideoResumeEvents = [
+          this.Events.FRAG_BUFFERED,
+          this.Events.FRAG_LOADED,
+          this.Events.BUFFER_APPENDED,
+          this.Events.LEVELS_UPDATED
+        ];
+        this.on(this.Events.ERROR, (event, data) => {
+          this._eventTarget.dispatchEvent(new CustomEvent(this._customEvents.CUSTOM_ERROR, { detail: data }));
+          // if (data.fatal) {
+          //   this._eventTarget.dispatchEvent(new CustomEvent(this._customEvents.CUSTOM_ERROR, { detail: data }));
+          // } else {
+          //   console.log(data);
+          //   this._eventTarget.dispatchEvent(new Event(this._customEvents.STREAM_BUFFERING));
+          // }
+          // TODO: Do we need more nuanced error handling?
         });
-      });
+        hlsVideoResumeEvents.forEach((event) => {
+          this.on(event, () => {
+            this._eventTarget.dispatchEvent(new Event(this._customEvents.STREAM_AVAILABLE));
+          });
+        });
+      } else if (this.supportPlayer === "NATIVE") {
+        let isStartup = true;
+        this.on("error", () => {
+          const error = this.videoEl.error;
+          if (!error) return;
+          let fetal = false;
+          switch (error.code) {
+            case MediaError.MEDIA_ERR_DECODE:
+            case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
+              fetal = true;
+              break;
+            case MediaError.MEDIA_ERR_ABORTED:
+            case MediaError.MEDIA_ERR_NETWORK:
+            default:
+              fetal = false;
+          }
+          const customError = {
+            type: "NATIVE",
+            code: error.code,
+            details: error.message,
+            message: error.message || "Unknown error",
+            fetal
+          };
+          this._eventTarget.dispatchEvent(new CustomEvent(this._customEvents.CUSTOM_ERROR, { detail: customError }));
+          // TODO: Add STREAM_AVAILABLE handling
+        });
+        this.on("waiting", () => {
+          if (isStartup) {
+            isStartup = false;
+            return;
+          }
+          this._eventTarget.dispatchEvent(new Event(this._customEvents.NATIVE_STREAM_BUFFERING));
+        });
+      }
     } else {
       // TODO: bind flv.js events
     }
   }
 
-  on(event, handler) {
+  on(event, handler, options) {
     let type;
     if (Object.values(this._customEvents).includes(event)) {
       this._eventTarget.addEventListener(event, handler);
       type = "CUSTOM";
     } else {
-      this._player.on(event, handler);
       type = "PLAYER";
+      if (this._mediaType === "hls") {
+        if (this.supportPlayer === "FULL") {
+          this._player.on(event, handler);
+        } else if (this.supportPlayer === "NATIVE") {
+          this.videoEl.addEventListener(event, handler, options);
+        }
+      } else if (this._mediaType === "flv") {
+        // TODO: bind flv.js events
+      }
     }
     this._registeredEvents.push({ type, event, handler });
   }
@@ -220,16 +273,29 @@ export class VideoPlayer {
       if (type === "CUSTOM") {
         this._eventTarget.removeEventListener(event, handler);
       } else {
-        this._player.off(event, handler);
+        if (this._mediaType === "hls") {
+          if (this.supportPlayer === "FULL") {
+            this._player.off(event, handler);
+          } else if (this.supportPlayer === "NATIVE") {
+            this.videoEl.removeEventListener(event, handler);
+          }
+        } else {
+          // TODO: remove flv.js events
+        }
       }
     }
   }
 
   destroy() {
     if (this._mediaType === "hls") {
-      this._player.detachMedia();
-      this._player.stopLoad();
-      this._player.destroy();
+      if (this.supportPlayer === "FULL") {
+        this._player.detachMedia();
+        this._player.stopLoad();
+        this._player.destroy();
+      } else if (this.supportPlayer === "NATIVE") {
+        this.videoEl.removeAttribute("src");
+        this.videoEl.load();
+      }
     } else {
       this._player.unload();
       this._player.detachMediaElement();

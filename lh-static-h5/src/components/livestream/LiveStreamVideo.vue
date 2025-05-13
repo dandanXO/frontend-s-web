@@ -13,7 +13,6 @@
     class="livestream-video-wrapper"
     @mouseenter="handleWrapperMouseEnter"
     @mouseleave="handleWrapperMouseLeave"
-    @canplay="handlePlayerCanPlay"
   >
     <template v-if="isPlayerSupported">
       <div v-if="isFirstPlay" class="first-play" @click="firstPlayVideo()">
@@ -27,6 +26,7 @@
         playsinline
         webkit-playsinline
         @progress="handlePlayerProgress"
+        @canplay="handlePlayerCanPlay"
       />
 
       <canvas v-show="showLatestScreenCanvas" ref="canvasRef" class="livestream-video-latest-screen" />
@@ -280,8 +280,10 @@ const loadPlayer = async () => {
 const initPlayer = async (play = false) => {
   if (!player.value) return;
   await player.value.init();
-  isPlayerSupported.value = player.value.SupportPlayer !== "NONE";
+  isPlayerSupported.value = player.value.supportPlayer !== "NONE";
   player.value.on(player.value.Events.CUSTOM_ERROR, handlePlayerError);
+  // emitting when hls.isSupported() is false
+  player.value.on(player.value.Events.NATIVE_STREAM_BUFFERING, handleNativeStreamBuffering);
   isVideoLoading.value = true;
   await player.value.load(play);
   isVideoLoading.value = false;
@@ -441,6 +443,7 @@ const handlePlayerProgress = () => {
 
 const handlePlayerCanPlay = () => {
   isLatestScreenRecorded.value = false;
+  isVideoLoading.value = false;
 };
 
 const handlePlayerError = (data) => {
@@ -480,6 +483,10 @@ const handlePlayerError = (data) => {
     isVideoLoading.value = true;
     initPlayer(true);
   }
+};
+
+const handleNativeStreamBuffering = () => {
+  isVideoLoading.value = true;
 };
 
 const handleQualityChange = async (level) => {

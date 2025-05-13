@@ -285,9 +285,11 @@ const initPlayer = async (play = false) => {
   if (!player.value) return;
   try {
     await player.value.init();
-    isPlayerSupported.value = player.value.SupportPlayer !== "NONE";
+    isPlayerSupported.value = player.value.supportPlayer !== "NONE";
     player.value.on(player.value.Events.CUSTOM_ERROR, handlePlayerError);
     player.value.on(player.value.Events.AUTO_PLAY_FAILED, handleAutoPlayFailed);
+    // emitting when hls.isSupported() is false
+    player.value.on(player.value.Events.NATIVE_STREAM_BUFFERING, handleNativeStreamBuffering);
     isVideoLoading.value = true;
     await player.value.load(play);
     isVideoLoading.value = false;
@@ -401,6 +403,9 @@ const handlePlayerProgress = () => {
 };
 
 const handlePlayerCanPlay = () => {
+  if (player.value.supportPlayer === "NATIVE") {
+    isVideoLoading.value = false;
+  }
   isLatestScreenRecorded.value = false;
 };
 
@@ -427,6 +432,10 @@ const handlePlayerError = (data) => {
     isVideoLoading.value = true;
     initPlayer(true);
   }
+};
+
+const handleNativeStreamBuffering = () => {
+  isVideoLoading.value = true;
 };
 
 const handleAutoPlayFailed = () => {
