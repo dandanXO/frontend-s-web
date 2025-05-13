@@ -232,7 +232,7 @@ module.exports = configure(function (ctx) {
       //   // Add other components you use here
       // ],
       // Quasar plugins
-      plugins: ["LocalStorage", "SessionStorage", "Notify", "Loading", "Dialog"]
+      plugins: ["LocalStorage", "SessionStorage", "Notify", "Loading", "Dialog", "BottomSheet"]
     },
 
     // animations: 'all', // --- includes all animations

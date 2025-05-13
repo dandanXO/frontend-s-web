@@ -79,9 +79,11 @@
           dense
           size="sm"
           title="线路选择"
+          @click="showChannelChange()"
         >
           &nbsp;{{ currentQualityName }}&nbsp;
-          <q-popup-proxy ref="channelPopperRef" transition-show="scale" transition-hide="scale">
+
+          <!-- <q-popup-proxy ref="channelPopperRef" transition-show="scale" transition-hide="scale">
             <q-card class="livestream-video-controller-popover channel">
               <q-list separator>
                 <q-item
@@ -96,7 +98,7 @@
                 </q-item>
               </q-list>
             </q-card>
-          </q-popup-proxy>
+          </q-popup-proxy> -->
         </q-btn>
 
         <div class="livestream-video-controller-group">
@@ -148,6 +150,9 @@
 <script setup>
 import { onMounted, ref, toRefs, watch, onUnmounted, computed, onActivated, nextTick, onBeforeUnmount } from "vue";
 import { VideoPlayer } from "boot/videoPlayer";
+import { useQuasar } from "quasar";
+
+const $q = useQuasar();
 
 /** @type {import("flv.js").default.Config} */
 const DEFAULT_FLV_CONFIG = {
@@ -243,7 +248,6 @@ const currentVideoUrl = computed(() => {
 });
 
 const currentQualityName = computed(() => QUALITY_ALIAS[playerConfig.value.quality] ?? playerConfig.value.quality);
-
 
 const loadPlayer = async () => {
   getQualities();
@@ -345,6 +349,25 @@ const handleDanmuChange = (value) => {
   } else {
     danmu.value.start();
   }
+};
+
+const showChannelChange = () => {
+  $q.bottomSheet({
+    actions: qualities.value.map((q) => ({
+      label: q.name,
+      id: q.value,
+      icon: q.name === currentQualityName.value ? 'check' : ''
+    }))
+  })
+    .onOk((action) => {
+      handleQualityChange(action.id);
+    })
+    .onCancel(() => {
+      console.log("Selection cancelled");
+    })
+    .onDismiss(() => {
+      console.log("Bottom sheet closed");
+    });
 };
 
 const isAppleDevice =
