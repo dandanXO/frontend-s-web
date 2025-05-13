@@ -50,8 +50,12 @@ export class VideoPlayer {
     return new Proxy(this, {
       get(target, prop, receiver) {
         const originMethod = target[prop];
-        console.log(target._player);
-        if (!(prop in target) && typeof target._player === "object" && prop in target._player) {
+        if (
+          !(prop in target) &&
+          typeof target._player === "object" &&
+          target._player !== null &&
+          prop in target._player
+        ) {
           return target._player[prop];
         }
         if (typeof originMethod !== "function" || ["checkInitialization", "destroy", "init"].includes(prop)) {

@@ -259,6 +259,9 @@ const currentQualityName = computed(() => QUALITY_ALIAS[playerConfig.value.quali
 
 const loadPlayer = async () => {
   getQualities();
+  if (player.value) {
+    player.value.destroy();
+  }
   player.value = new VideoPlayer(
     {
       mediaType: "hls",
@@ -273,7 +276,7 @@ const loadPlayer = async () => {
   await initPlayer();
 };
 
-const initPlayer = async (play = true) => {
+const initPlayer = async (play = false) => {
   if (!player.value) return;
   await player.value.init();
   isPlayerSupported.value = player.value.SupportPlayer !== "NONE";
@@ -344,6 +347,7 @@ const handleVolumeChange = (value) => {
 };
 
 const handlePauseChange = (value) => {
+  if (!player.value) return;
   changePlayerConfig("isPause", value);
   if (playerConfig.value.isPause) {
     player.value.pause();
