@@ -102,6 +102,11 @@
             <el-button size="mini" icon="el-icon-video-camera" @click="openPreview(scope.row.sourceStreamUrl)">
               {{ t('fields.browse') }}
             </el-button>
+            <div v-if="monitorScoreMap[scope.row.streamId] !== undefined" style="font-size: 12px; color: #999;">
+              <el-button size="mini">
+                {{ t('fields.streamScore') }}:{{ monitorScoreMap[scope.row.streamId] }}
+              </el-button>
+            </div>
           </div>
         </template>
       </el-table-column>
@@ -127,6 +132,11 @@
           >
             {{ t('fields.browse') }}
           </el-button>
+          <div v-if="monitorScoreMap[scope.row.streamId] !== undefined" style="font-size: 12px; color: #999;">
+            <el-button size="mini">
+              {{ t('fields.streamScore') }}:{{ monitorScoreMap[scope.row.streamId] }}
+            </el-button>
+          </div>
         </template>
       </el-table-column>
       <el-table-column
@@ -191,6 +201,11 @@
           >
             {{ t('fields.browse') }}
           </el-button>
+          <div v-if="monitorScoreMap[scope.row.streamId] !== undefined" style="font-size: 12px; color: #999;">
+            <el-button size="mini">
+              {{ t('fields.streamScore') }}:{{ monitorScoreMap[scope.row.streamId] }}
+            </el-button>
+          </div>
         </template>
       </el-table-column>
       <el-table-column prop="roomMessage" :label="t('fields.roomMessage')" />
@@ -225,7 +240,7 @@
 </template>
 <script setup>
 
-import { nextTick, onMounted, reactive, ref } from "vue";
+import { nextTick, onMounted, onUnmounted, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useStore } from "@/store";
 import { getSiteTimeZoneById } from "@/api/site";
@@ -240,6 +255,8 @@ import {
   updateSportLiveStream,
   updateSupplierStream
 } from "@/api/sport-live";
+
+import { getLiveMonitorScores } from "@/api/sport-live-monitor";
 import { required } from "@/utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { useRoute } from "vue-router";
@@ -263,11 +280,27 @@ const previewDialog = reactive({
 })
 
 let player = null;
+let scoreTimer = null;
 
 const timezone = ref(null);
 const formRef = ref(null);
 const supplierStreams = ref([]);
 const streamerStreams = ref([]);
+const monitorScoreMap = ref({});
+
+async function fetchMonitorScores() {
+  const allStreamIds = [
+    ...supplierStreams.value.map(s => s.streamId),
+    ...streamerStreams.value.map(s => s.streamId)
+  ].filter(Boolean);
+
+  if (allStreamIds.length > 0) {
+    const { data } = await getLiveMonitorScores(allStreamIds);
+    monitorScoreMap.value = Object.fromEntries(
+      (data || []).map(m => [m.streamName, m.score])
+    );
+  }
+}
 
 async function deleteStream(streamId) {
   ElMessageBox.confirm(t('message.confirmDelete'), {
@@ -494,6 +527,12 @@ onMounted(async () => {
   timezone.value = timeZone
   request.id = eventId
   await loadEvent();
+  await fetchMonitorScores();
+  scoreTimer = setInterval(fetchMonitorScores, 30000);
+});
+
+onUnmounted(() => {
+  clearInterval(scoreTimer);
 });
 </script>
 
