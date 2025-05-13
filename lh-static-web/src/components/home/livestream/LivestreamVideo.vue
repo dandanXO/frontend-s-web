@@ -200,6 +200,10 @@ const DANMU_CONFIG = {
 const DEFAULT_QUALITY = "original";
 const env = process.env.NODE_ENV;
 
+const QUALITY_ALIAS = {
+  original: "原画"
+};
+
 const props = defineProps(["danmuList", "channels", "livestreamData", "isLivestreaming"]);
 const { danmuList, channels, livestreamData, isLivestreaming } = toRefs(props);
 
@@ -450,9 +454,9 @@ const handleQualityChange = async (level) => {
 
 const getQualities = () => {
   if (!videoSource.value) return;
-  const result = Object.entries(videoSource.value).map(([level, value], index) => ({
+  const result = Object.entries(videoSource.value).map(([level, value]) => ({
     value: level,
-    name: level,
+    name: QUALITY_ALIAS[level] ?? level,
     url: value.hls_url
   }));
 

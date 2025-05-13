@@ -80,7 +80,7 @@
           size="sm"
           title="线路选择"
         >
-          &nbsp;{{ playerConfig.quality }}&nbsp;
+          &nbsp;{{ currentQualityName }}&nbsp;
           <q-popup-proxy ref="channelPopperRef" transition-show="scale" transition-hide="scale">
             <q-card class="livestream-video-controller-popover channel">
               <q-list separator>
@@ -189,6 +189,10 @@ const DANMU_CONFIG = {
 
 const DEFAULT_QUALITY = "original";
 
+const QUALITY_ALIAS = {
+  original: "原画"
+};
+
 const props = defineProps(["danmuList", "channels", "livestreamData"]);
 const { danmuList, channels, livestreamData } = toRefs(props);
 
@@ -237,6 +241,9 @@ const currentVideoUrl = computed(() => {
   });
   return result[1]?.hls_url ?? "";
 });
+
+const currentQualityName = computed(() => QUALITY_ALIAS[playerConfig.value.quality] ?? playerConfig.value.quality);
+
 
 const loadPlayer = async () => {
   getQualities();
@@ -448,9 +455,9 @@ const handleQualityChange = async (level) => {
 
 const getQualities = () => {
   if (!videoSource.value) return;
-  const result = Object.entries(videoSource.value).map(([level, value], index) => ({
+  const result = Object.entries(videoSource.value).map(([level, value]) => ({
     value: level,
-    name: level,
+    name: QUALITY_ALIAS[level] ?? level,
     url: value.hls_url
   }));
 
