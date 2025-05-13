@@ -20,6 +20,12 @@
         >
           <el-input v-model="form.sourceStreamUrl" />
         </el-form-item>
+        <el-form-item
+          v-if="uiControl.dialogType === 'SUPPLIER_CREATE'"
+          prop="isCdnPush"
+        >
+          <el-checkbox v-model="form.isCdnPush">{{ t('fields.isCdnPush') }}</el-checkbox>
+        </el-form-item>
 
         <el-form-item
           v-if="uiControl.dialogType === 'STREAMER_CREATE' || uiControl.dialogType === 'STREAMER_EDIT'"
@@ -209,7 +215,6 @@
         </template>
       </el-table-column>
       <el-table-column prop="roomMessage" :label="t('fields.roomMessage')" />
-      <el-table-column prop="roomTitle" :label="t('fields.roomTitle')" />
       <el-table-column
         fixed="right"
         :label="t('fields.operate')"
@@ -448,7 +453,7 @@ async function supplierCreate() {
 async function streamerSave() {
   formRef.value.validate(async (valid) => {
     if (!valid) return;
-    await createSportLiveStream({ eventId: eventId.value, liveStreamerId: form.streamerId, status: 0, roomMessage: form.roomMessage, roomTitle: form.roomTitle });
+    await createSportLiveStream({ eventId: eventId.value, liveStreamerId: form.streamerId, status: 0, roomMessage: form.roomMessage });
     ElMessage.success(t('message.updateSuccess'));
     uiControl.dialogVisible = false;
     await loadEvent();
@@ -505,7 +510,8 @@ const form = reactive({
   sourceStreamUrl: '',
   streamerId: null,
   roomMessage: '',
-  roomTitle: ''
+  roomTitle: '',
+  isCdnPush: false,
 });
 
 const streamerList = ref([]);

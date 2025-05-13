@@ -193,5 +193,23 @@ export const DashboardService = {
           console.error('更新直播標題失敗:', error)
           return null
         })
+  },
+  getLiveMonitorScores(streamNames) {
+    const token = sessionStorage.getItem('token');
+    return api.get(`/session/monitor/score?streamNames=${streamNames.toString()}`, {
+      headers: {
+        'token': token
+      }
+    })
+        .then(response => {
+          if (response.code === 0) {
+            return response.data;
+          }
+          return null;
+        })
+        .catch(error => {
+          console.error('取得監控分數失敗:', error);
+          return null;
+        });
   }
 }

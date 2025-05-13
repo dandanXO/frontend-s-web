@@ -2605,7 +2605,8 @@ export default {
     streamName: '流名称',
     streamScore: '讯号强度',
     screenShot: '截图',
-    streamTag: '流标签'
+    streamTag: '流标签',
+    isCdnPush: '推送 CDN'
   },
   message: {
     adsStatusOpen: '开',
