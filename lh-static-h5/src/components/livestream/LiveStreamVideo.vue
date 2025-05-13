@@ -285,6 +285,7 @@ const initPlayer = async (play = true) => {
   isLatestScreenRecorded.value = false;
   isErrorCaptured.value = false;
   errorMsg.value = "";
+  isVideoLoadFailed.value = false;
 };
 
 const loadDanmu = async () => {
