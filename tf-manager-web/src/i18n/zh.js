@@ -3385,7 +3385,8 @@ export default {
     'Official CS Account': '官方客服账号',
     'Site Note': '便签板',
     'Fast Access Promo': '快速浏览优惠',
-    'Refer Friend Rebate Point record': '邀请好友流水返点点数记录'
+    'Refer Friend Rebate Point record': '邀请好友流水返点点数记录',
+    'Member Summary Report': '会员汇总报表',
   },
   google: {
     google_auth_menu: '谷歌验证',
