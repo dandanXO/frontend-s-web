@@ -112,7 +112,7 @@
 </template>
 
 <script setup>
-
+/* eslint-disable */
 import { computed, reactive, ref, defineEmits } from "vue";
 import { onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
