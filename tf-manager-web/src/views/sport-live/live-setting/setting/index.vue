@@ -105,13 +105,21 @@
             <span @click="copyToClipboard(scope.row.sourceStreamUrl)" style="word-break: break-all; cursor: pointer">
               {{ scope.row.sourceStreamUrl }}
             </span>
-            <el-button size="mini" icon="el-icon-video-camera" @click="openPreview(scope.row.sourceStreamUrl)">
-              {{ t('fields.browse') }}
-            </el-button>
-            <div v-if="monitorScoreMap[scope.row.streamId] !== undefined" style="font-size: 12px; color: #999;">
-              <el-button size="mini">
-                {{ t('fields.streamScore') }}:{{ monitorScoreMap[scope.row.streamId] }}
-              </el-button>
+            <el-button
+              size="mini"
+              icon="el-icon-view"
+              @click="openPreview(scope.row.sourceStreamUrl)"
+              circle
+              type="primary"
+              :title="t('fields.browse')"
+            />
+            <div class="signal-bars" v-if="monitorScoreMap[scope.row.streamId] !== undefined">
+              <span
+                v-for="n in 5"
+                :key="n"
+                class="bar"
+                :class="{active: n <= monitorScoreMap[scope.row.streamId]}"
+              />
             </div>
           </div>
         </template>
@@ -133,15 +141,18 @@
           <el-button
             v-if="JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.hls_url"
             size="mini"
-            icon="el-icon-video-camera"
+            circle
+            type="primary"
+            icon="el-icon-view"
             @click="openPreview(JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.hls_url)"
-          >
-            {{ t('fields.browse') }}
-          </el-button>
-          <div v-if="monitorScoreMap[scope.row.streamId] !== undefined" style="font-size: 12px; color: #999;">
-            <el-button size="mini">
-              {{ t('fields.streamScore') }}:{{ monitorScoreMap[scope.row.streamId] }}
-            </el-button>
+          />
+          <div class="signal-bars" v-if="monitorScoreMap[scope.row.streamId] !== undefined">
+            <span
+              v-for="n in 5"
+              :key="n"
+              class="bar"
+              :class="{active: n <= monitorScoreMap[scope.row.streamId]}"
+            />
           </div>
         </template>
       </el-table-column>
@@ -202,15 +213,18 @@
           <el-button
             v-if="JSON.parse(scope.row.streamerCdnPullUrl || '{}')?.original?.hls_url"
             size="mini"
-            icon="el-icon-video-camera"
+            icon="el-icon-view"
+            circle
+            type="primary"
             @click="openPreview(JSON.parse(scope.row.streamerCdnPullUrl || '{}')?.original?.hls_url)"
-          >
-            {{ t('fields.browse') }}
-          </el-button>
-          <div v-if="monitorScoreMap[scope.row.streamId] !== undefined" style="font-size: 12px; color: #999;">
-            <el-button size="mini">
-              {{ t('fields.streamScore') }}:{{ monitorScoreMap[scope.row.streamId] }}
-            </el-button>
+          />
+          <div class="signal-bars" v-if="monitorScoreMap[scope.row.streamId] !== undefined">
+            <span
+              v-for="n in 5"
+              :key="n"
+              class="bar"
+              :class="{active: n <= monitorScoreMap[scope.row.streamId]}"
+            />
           </div>
         </template>
       </el-table-column>
@@ -572,5 +586,25 @@ onUnmounted(() => {
     width: 100% !important;
     height: 400px !important;
   }
+}
+
+ .signal-bars {
+   display: flex;
+   gap: 2px;
+   align-items: flex-end;
+   height: 14px;
+ }
+.bar {
+  width: 4px;
+  background: #ccc;
+  transition: 0.3s;
+}
+.bar:nth-child(1) { height: 4px; }
+.bar:nth-child(2) { height: 6px; }
+.bar:nth-child(3) { height: 8px; }
+.bar:nth-child(4) { height: 10px; }
+.bar:nth-child(5) { height: 12px; }
+.bar.active {
+  background: #67C23A;
 }
 </style>
