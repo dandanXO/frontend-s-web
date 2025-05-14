@@ -43,7 +43,7 @@ const activeKey = ref("my-dividend");
     vertical-align: middle;
 
     :deep(.q-tabs__content) {
-      height: 57px;
+      height: 45px;
     }
 
     :deep(.q-tab) {

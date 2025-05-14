@@ -76,7 +76,8 @@
                     <div class="value">
                         <q-spinner v-if="isLoading" />
                         <div v-else :class="dividendInfo.status?.toLowerCase()">{{ getStatusLabel(dividendInfo.status)
-                            }}</div>
+                            }}
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -230,7 +231,8 @@ onMounted(() => {
         }
 
         .primary-btn {
-            padding: 0 20px;
+            padding: 0 30px;
+            white-space: nowrap;
         }
     }
 }
@@ -369,7 +371,6 @@ onMounted(() => {
         background-size: 100% 100%;
         display: flex;
         justify-content: center;
-        font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
         font-weight: 700;
         font-size: 14px;
         line-height: 15px;
