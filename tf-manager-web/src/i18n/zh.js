@@ -3564,6 +3564,7 @@ export default {
     UNSENT: '未发送',
     SENDING: '发送中',
     SENT: '已发送',
+    FAIL: '发送失败',
   },
   telegram: {
     userStatus: {
@@ -3616,6 +3617,10 @@ export default {
       MANAGER: '管理后台',
       AFFILIATE: '代理后台',
     }
+  },
+  distributeFail: {
+    BLACKLIST: '优惠黑名单',
+    KEY_EXIST: '已领取',
   },
   referRebatePoint: {
     NO_BET_AFTER_DEPOSIT: '存款后无投注',

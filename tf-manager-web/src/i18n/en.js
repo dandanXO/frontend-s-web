@@ -3613,6 +3613,7 @@ export default {
     UNSENT: 'Unsent',
     SENDING: 'Sending',
     SENT: 'Sent',
+    FAIL: 'Failed',
   },
   telegram: {
     userStatus: {
@@ -3664,6 +3665,10 @@ export default {
       MANAGER: 'Manager',
       AFFILIATE: 'Affiliate',
     }
+  },
+  distributeFail: {
+    BLACKLIST: 'Blacklist',
+    KEY_EXIST: 'Key Exist',
   },
   referRebatePoint: {
     NO_BET_AFTER_DEPOSIT: 'No Bet After Deposit',
