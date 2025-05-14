@@ -296,6 +296,12 @@
               </div>
             </div>
           </el-form-item>
+          <el-form-item
+            :label="t('fields.remark')"
+            prop="remark"
+          >
+            <el-input v-model="form.remark" type="textarea" style="width: 350px;" />
+          </el-form-item>
         </el-row>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
@@ -382,6 +388,12 @@
         </el-table-column>
         <el-table-column prop="vipName" :label="t('fields.vipLevel')" width="150" />
         <el-table-column prop="financialName" :label="t('fields.financialLevel')" width="150" />
+        <el-table-column v-if="!uiControl.importDataOperatable" prop="failMsg" :label="t('fields.failReason')" width="150">
+          <template #default="scope">
+            <span v-if="uiControl.fails[scope.row.memberId] !== null"> {{ t('distributeFail.' + uiControl.fails[scope.row.id]) }} </span>
+            <span v-else>-</span>
+          </template>
+        </el-table-column>
         <el-table-column v-if="uiControl.importDataOperatable" :label="t('fields.operate')"  width="100" >
           <template #default="scope">
             <el-button
@@ -430,7 +442,7 @@
         <template #default="scope">
           <span v-if="scope.row.receiveType === 'ALL'"> {{ t('fields.allMembers') }} </span>
           <span v-else-if="scope.row.receiveType === 'VIP'"> {{ t('fields.selectedVIP') }} </span>
-          <span v-else><el-link @click="showMembersDialog(scope.row.siteId, scope.row.receiveRange)">{{ t('fields.selectedMembers') + "(" + scope.row.recipient + ")" }}</el-link></span>
+          <span v-else><el-link @click="showMembersDialog(scope.row.siteId, scope.row.receiveRange, scope.row.fails)">{{ t('fields.selectedMembers') + "(" + scope.row.recipient + ")" }}</el-link></span>
         </template>
       </el-table-column>
       <el-table-column prop="sendBy" :label="t('fields.sendFrom')" />
@@ -453,6 +465,7 @@
           {{ t('pmStatus.' + scope.row.status) }}
         </template>
       </el-table-column>
+      <el-table-column prop="remark" :label="t('fields.remark')" width="150" />
     </el-table>
   </div>
   <el-pagination
@@ -567,7 +580,8 @@ const uiControl = reactive({
     gameTypeRollover: null,
     gameLists: [],
     selectType: null
-  }
+  },
+  fails: [],
 })
 // const rollover = ref([])
 
@@ -623,6 +637,7 @@ const form = reactive({
   amount: null,
   rollover: null,
   gameTypeRollover: null,
+  remark: null
 })
 
 const selected = reactive({
@@ -815,6 +830,7 @@ function showDialog(type) {
   form.redirectType = "NONE"
   form.redirectUrl = null
   form.redirectButton = null
+  form.remark = null
   uiControl.selectedGameTypeRolloverType = null
   gameTypes.value = []
   addRollover()
@@ -849,12 +865,16 @@ function addRollover() {
   })
 }
 
-async function showMembersDialog(siteId, receiveRange) {
+async function showMembersDialog(siteId, receiveRange, fails) {
   uiControl.importDialogVisible = true
   uiControl.importDataOperatable = false;
   importForm.loginName = ""
   importedPage.loading = true;
-  await showMembers(siteId, receiveRange)
+  await showMembers(siteId, receiveRange, fails)
+  uiControl.fails = []
+  fails.forEach(fail => {
+    uiControl.fails['' + fail.memberId] = fail.failMsg
+  })
   importedPage.loading = false;
 }
 
@@ -1121,6 +1141,9 @@ async function loadSystemMessageTemplate() {
   const { data: ret } = await getDistributeRecord(query)
   page.pages = ret.pages
   ret.records.forEach(data => {
+    if (data.fails && data.fails.length > 0) {
+      data.status = 'FAIL'
+    }
     data.timeZone = store.state.user.sites.find(e => e.siteName === data.siteName) !== undefined
       ? store.state.user.sites.find(e => e.siteName === data.siteName).timeZone
       : null
@@ -1229,13 +1252,11 @@ function importToTable(file) {
       }
       const loginNames = data[0].receiveRange;
       const { data: ret } = await getMemberVipFin(selected.site, loginNames);
-      console.log(ret.length)
       importedPage.records = ret;
       importedPage.pages = Math.ceil(
         importedPage.records.length / importedPage.size
       );
       importForm.siteId = selected.site;
-      console.log(ret.length)
       importForm.receiveRange = ret.map(e => e.id).join(',');
     }
     fileReader.readAsBinaryString(files);
