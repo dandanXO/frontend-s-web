@@ -84,20 +84,20 @@
               />
             </div>
 
-            <!--            <div class="q-my-sm" v-if="currentCardType === 'Bank'">-->
-            <!--              <div class="input-title">IFSC Code</div>-->
-            <!--              <q-input-->
-            <!--                standout-->
-            <!--                class="q-pb-xs dialog-input"-->
-            <!--                hide-bottom-space-->
-            <!--                filled-->
-            <!--                v-model="bankCardField.cardAddress"-->
-            <!--                label="Enter Bank IFSC Code"-->
-            <!--                lazy-rules-->
-            <!--                :rules="[(_) => isValidCardAddress()]"-->
-            <!--                label-color="secondary"-->
-            <!--              />-->
-            <!--            </div>-->
+            <div class="q-my-sm" v-if="currentCardType === 'Bank'">
+              <div class="input-title">BSB (Bank State Branch)</div>
+              <q-input
+                type="number"
+                standout
+                class="q-pb-xs dialog-input"
+                hide-bottom-space
+                filled
+                v-model="bankCardField.cardAddress"
+                label="Enter BSB"
+                :rules="[(_) => isValidCardAddress()]"
+                label-color="secondary"
+              />
+            </div>
           </q-form>
         </q-card-section>
 
@@ -324,9 +324,9 @@ const isValidCardNumber = () => {
 const isValidCardAddress = () => {
   const { cardAddress } = bankCardField;
   const result = !cardAddress
-    ? "Please Enter Bank Ifsc Code"
-    : cardAddress.length < 3
-    ? "Bank IFSC Code Must Be More Than 3 Characters"
+    ? "Please Enter BSB (Bank State Branch)"
+    : cardAddress.length !== 6
+    ? "BSB (Bank State Branch) Must Be 6 Characters"
     : true;
   return result;
 };

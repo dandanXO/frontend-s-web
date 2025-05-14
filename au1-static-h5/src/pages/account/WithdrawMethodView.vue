@@ -200,23 +200,23 @@
                 ></q-input>
               </div>
             </div>
-            <!--            <div class="w-form-item w-form-item&#45;&#45;bankcard" v-if="isBankType === 'BANK'">-->
-            <!--              <div class="top-wrapper">-->
-            <!--                <div class="title">Bank IFSC Code</div>-->
-            <!--              </div>-->
-            <!--              <div class="mid-wrapper">-->
-            <!--                <q-input-->
-            <!--                  filled-->
-            <!--                  dense-->
-            <!--                  clearable-->
-            <!--                  ref="bankAddressRef"-->
-            <!--                  placeholder="Enter Bank IFSC Code"-->
-            <!--                  v-model="bankCardField.cardAddress"-->
-            <!--                  :rules="[(_) => isValidCardAddress()]"-->
-            <!--                  hide-bottom-space-->
-            <!--                ></q-input>-->
-            <!--              </div>-->
-            <!--            </div>-->
+            <div class="w-form-item w-form-item&#45;&#45;bankcard" v-if="isBankType === 'BANK'">
+              <div class="top-wrapper">
+                <div class="title">BSB (Bank State Branch)</div>
+              </div>
+              <div class="mid-wrapper">
+                <q-input
+                  filled
+                  dense
+                  clearable
+                  ref="bankAddressRef"
+                  placeholder="Enter BSB"
+                  v-model="bankCardField.cardAddress"
+                  :rules="[(_) => isValidCardAddress()]"
+                  hide-bottom-space
+                ></q-input>
+              </div>
+            </div>
           </template>
 
           <div class="top-wrapper">
@@ -879,9 +879,9 @@ const isValidCardNumber = () => {
 const isValidCardAddress = () => {
   const { cardAddress } = bankCardField;
   const result = !cardAddress
-    ? "Please Enter Bank Ifsc Code"
-    : cardAddress.length < 3
-    ? "Bank IFSC Code Must Be More Than 3 Characters"
+    ? "Please Enter BSB (Bank State Branch)"
+    : cardAddress.length !== 6
+    ? "BSB (Bank State Branch) Must Be 6 Characters"
     : true;
   return result;
 };
