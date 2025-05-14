@@ -37,21 +37,54 @@
             <img
               src="@/assets/promo/lh1-duan-wu-rewards/btn.png"
               alt=""
-              style="padding-top: 12px"
+              style="padding-top: 12px;cursor: pointer;"
               @click="postReceive"
             />
           </div>
         </div>
       </div>
 
-      <div class="content-bottom">
+      <div class="content-bottom" style="position: relative">
         <img src="@/assets/promo/lh1-duan-wu-rewards/BigZongzi.png" alt="" />
         <img
           src="@/assets/promo/lh1-duan-wu-rewards/openBtn.png"
           alt=""
-          style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%)"
+          style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);cursor: pointer;"
           @click="postBonus"
         />
+
+        <span
+          style="
+            z-index: 10;
+            position: absolute;
+            bottom: 212px;
+            color: #723d00;
+            right: 343px;
+            transform: rotate(-9deg);
+            font-size: 20px;
+            text-decoration: underline;
+            cursor: pointer;
+          "
+          @click="fetchRecordData(false)"
+        >
+          粽叶领取记录
+        </span>
+        <span
+          style="
+            z-index: 20;
+            position: absolute;
+            bottom: 165px;
+            color: #723d00;
+            right: 340px;
+            transform: rotate(1deg);
+            font-size: 20px;
+            text-decoration: underline;
+            cursor: pointer;
+          "
+          @click="fetchRecordData(true)"
+        >
+          开启粽子记录
+        </span>
       </div>
       <div style="margin-bottom: 48px">
         <span style="color: #014625; font-size: 20px">每开启一次粽子将</span>
@@ -164,7 +197,26 @@
           <img src="@/assets/promo/lh1-duan-wu-rewards/close-icon.png" alt="" />
         </div>
 
-        <div v-show="isTabLeft" style="flex: 1; width: 100%">
+        <div v-show="isTabLeft" style="flex: 1; width: 100%;margin: 20px 0px;">
+          <div class="table-container">
+            <table class="bet-table">
+              <thead>
+                <tr>
+                  <th>领取时间</th>
+                  <th>领取数量</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(row, index) in tokenRecord" :key="index">
+                  <td>{{ row.recordTime }}</td>
+                  <td>{{ row.token }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div v-show="!isTabLeft" style="flex: 1; width: 100%;margin: 20px 0px;">
           <div class="table-container">
             <table class="bet-table">
               <thead>
@@ -175,31 +227,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(row, index) in tableData" :key="index">
-                  <td>{{ row.bet }}</td>
-                  <td>{{ row.leaf }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div v-show="!isTabLeft" style="flex: 1">
-          <div class="table-container">
-            <table class="bet-table">
-              <thead>
-                <tr>
-                  <th>领取时间</th>
-                  <th>领取数量</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(row, index) in tableData" :key="index">
-                  <td>{{ row.bet }}</td>
-                  <td>{{ row.leaf }}</td>
-                  <td v-if="index === 0" :rowspan="tableData.length" class="flow-multiplier">
-                    {{ flowMultiplier }}
-                  </td>
+                <tr v-for="(row, index) in rewardRecord" :key="index">
+                  <td>{{ row.recordTime }}</td>
+                  <td>1个</td>
+                  <td>{{ row.bonus }}</td>
                 </tr>
               </tbody>
             </table>
@@ -221,14 +252,14 @@ import {
 } from "@/api/index/promo";
 import { useNotify } from "@/hooks/notify";
 
-const isOpenDialog = ref(true);
+const isOpenDialog = ref(false);
 
 const notify = useNotify();
 const todayToken = ref("");
 const currentTokenAmount = ref("");
 const rewardsCanClaim = ref("");
 const totalValidBet = ref("");
-const isTabLeft = ref(true);
+const isTabLeft = ref(false);
 const tokenRecord = ref([]);
 const rewardRecord = ref([]);
 const tableData = [
@@ -290,14 +321,16 @@ const postBonus = () => {
   });
 };
 
-const fetchRecordData = () => {
+const fetchRecordData = (action) => {
+  isOpenDialog.value = true
+  isTabLeft.value = action
   getDuanWuTokenRecords("lh1-duan-wu-rewards").then((res) => {
     if (res.code === 0) {
       tokenRecord.value = res.data;
     }
   });
 
-  getDuanWuRewardRecords().then((res) => {
+  getDuanWuRewardRecords("lh1-duan-wu-rewards").then((res) => {
     if (res.code === 0) {
       rewardRecord.value = res.data;
     }
@@ -496,6 +529,7 @@ strong {
   top: -25px;
   width: 10px;
   height: 10px;
+  cursor: pointer;
 }
 
 .closeBtn {
