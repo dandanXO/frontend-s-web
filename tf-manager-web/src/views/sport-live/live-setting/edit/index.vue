@@ -106,6 +106,7 @@ const uiControl = reactive({
     { name: 'LOL', display: 'LOL', id: 3 },
     { name: 'CSGO', display: 'CSGO', id: 4 },
     { name: 'DOTA2', display: 'DOTA2', id: 5 },
+    { name: 'KOG', display: '王者荣耀', id: 6 },
   ],
   liveStatus: [
     { id: 0, display: t('status.uefaMatch.PENDING') },
