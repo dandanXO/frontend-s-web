@@ -843,7 +843,7 @@ onMounted(() => {
 onActivated(() => {
   getWithdrawalMethods();
   checkNewUser();
-  // loadCards();
+  loadCards();
   loadInfo();
 });
 
