@@ -3,27 +3,14 @@
     <div class="acc-record-options">
       <InputField :isDark="true">
         <template #input>
-          <q-select
-            class="dropdown"
-            outlined
-            v-model="recordType"
-            :options="options"
-            option-value="value"
-            option-label="label"
-            dense
-            emit-value
-            map-options
-            popup-content-class="custom-dropdown"
-            @update:model-value="onSelectChange"
-          >
+          <q-select class="dropdown" outlined v-model="recordType" :options="options" option-value="value"
+            option-label="label" dense emit-value map-options popup-content-class="custom-dropdown"
+            @update:model-value="onSelectChange">
             <template v-slot:option="scope">
               <q-item v-bind="scope.itemProps">
                 <q-item-section avatar>
-                  <img
-                    :src="require(`../../assets/images/account/account-record/${scope.opt.icon}.png`)"
-                    alt=""
-                    width="20"
-                  />
+                  <img :src="require(`../../assets/images/account/account-record/${scope.opt.icon}.png`)" alt=""
+                    width="20" />
                 </q-item-section>
                 <q-item-section>
                   <q-item-label>{{ scope.opt.label }}</q-item-label>
@@ -33,19 +20,12 @@
 
             <template v-slot:selected>
               <div class="row items-center no-wrap">
-                <img
-                  :src="
-                    require(`../../assets/images/account/account-record/${
-                      options.find((o) => o.value === recordType)?.icon
-                    }.png`)
-                  "
-                  alt=""
-                  width="20"
-                  class="q-mr-sm"
-                />
+                <img :src="require(`../../assets/images/account/account-record/${options.find((o) => o.value === recordType)?.icon
+                  }.png`)
+                  " alt="" width="20" class="q-mr-sm" />
 
                 <span>
-                  {{ options.find((o) => o.value === recordType)?.label }}
+                  {{options.find((o) => o.value === recordType)?.label}}
                 </span>
               </div>
             </template>
@@ -60,12 +40,8 @@
               <template v-slot:append>
                 <img src="../../assets/images/earn-money/calendar-icon.svg" />
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date
-                    v-model="searchForm.startDate"
-                    mask="YYYY-MM-DD"
-                    range
-                    @update:model-value="onSelectChangeDate"
-                  >
+                  <q-date v-model="searchForm.startDate" mask="YYYY-MM-DD" range
+                    @update:model-value="onSelectChangeDate">
                     <div class="row items-center justify-end">
                       <q-btn v-close-popup label="Close" color="white" flat />
                     </div>
@@ -80,22 +56,11 @@
 
     <InputField :isDark="true">
       <template #input>
-        <q-input
-          class="input"
-          v-model="moneyChangeByType.loginName"
-          outlined
-          hide-bottom-space
-          @update:model-value="filterSuggestions"
-          :loading="loadingSuggestions"
-        >
+        <q-input class="input" v-model="moneyChangeByType.loginName" outlined hide-bottom-space
+          @update:model-value="filterSuggestions" :loading="loadingSuggestions">
           <template v-slot:append>
-            <q-btn
-              class="get-code-btn"
-              color="primary"
-              :label="$t('btn.confirm')"
-              :disable="!moneyChangeByType.loginName"
-              @click="confirmSelection"
-            />
+            <q-btn class="get-code-btn" color="primary" :label="$t('btn.confirm')"
+              :disable="!moneyChangeByType.loginName" @click="confirmSelection" />
           </template>
         </q-input>
       </template>
@@ -112,27 +77,69 @@
       </div>
     </div>
 
-    <div>
+    {{ console.log('here', downLinesRecordsView) }}
+
+    <q-card v-for="(e, i) in downLinesRecordsView" :key="`${e}-${i}`" class="record-container">
+      <q-card-section class="mid-wrapper">
+          <div class="game-platform-val">
+            <!-- <img :src="require(`../../assets/images/index/logo/logo-${e.platform.toLowerCase()}.png`)">
+             / {{ e.platform }} -->
+          </div>
+          <q-btn flat
+              :class="{
+                'btn--green': e.type === 'DEPOSIT',
+                'btn--orange': e.type === 'BET',
+                'btn--yellow': e.type === 'PROMO'
+              }"
+              :label="e.type"
+            ></q-btn>
+        </q-card-section>
+      <q-card-section class="bot-wrapper">
+        <div class="origin">
+          <div class="bet">Login Name</div><div class="bet">Record Date</div>
+        </div>
+        <div class="origin-val">
+          <div class="bet-val">{{ e.loginName || '-' }}</div><div class="bet-val">{{ e.recordTime }}</div>
+        </div>
+      </q-card-section>
+      <q-card-section class="bot-wrapper">
+        <div class="origin">
+          <div class="bet">Before Balance</div><div class="bet">After Balance</div>
+        </div>
+        <div class="origin-val">
+          <div class="bet-val">{{ e.beforeBalance ?? 0 }}</div><div class="bet-val">{{ e.afterBalance ?? 0 }}</div>
+        </div>
+      </q-card-section>
+      <q-card-section class="bot-wrapper">
+        <div class="origin">
+          <div class="bet">Amount</div><div class="bet">Currency</div>
+        </div>
+        <div class="origin-val">
+          <div class="bet-val">{{ e.amount ?? 0 }}</div><div class="bet-val">{{ e.currency || '-' }}</div>
+        </div>
+      </q-card-section>
+      <BetRefereceWithCopy :betId="e.serialNumber" />
+    </q-card>
+
+
+    <q-card class="pagination-container">
+        <q-btn class="pagination-btn" @click="prevPage" :disable="moneyChangeByType.current === 1">&lt;</q-btn>
+        <div>{{ moneyChangeByType.current }} / {{ moneyChangeByType.pages }}</div>
+        <q-btn class="pagination-btn" :disable="moneyChangeByType.current === moneyChangeByType.pages || moneyChangeByType.pages === 0" @click="nextPage">></q-btn>
+    </q-card>
+
+    <!-- <div>
       <q-table flat bordered grid :rows="downLinesRecordsView" hide-pagination row-key="name" hide-header no-caps />
 
       <div class="pagination">
-        <q-btn
-          @click="prevPage"
-          :disabled="moneyChangeByType.current === 1"
-          icon="chevron_left"
-          class="rounded-borders"
-          color="neonblue"
-        ></q-btn>
+        <q-btn @click="prevPage" :disabled="moneyChangeByType.current === 1" icon="chevron_left" class="rounded-borders"
+          color="neonblue"></q-btn>
         <span>{{ moneyChangeByType.current }} / {{ moneyChangeByType.pages }}</span>
-        <q-btn
-          @click="nextPage"
+        <q-btn @click="nextPage"
           :disabled="moneyChangeByType.current === moneyChangeByType.pages || moneyChangeByType.pages === 0"
-          icon="chevron_right"
-          class="rounded-borders"
-          color="neonblue"
-        ></q-btn>
+          icon="chevron_right" class="rounded-borders" color="neonblue"></q-btn>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -141,6 +148,7 @@ import { ref, reactive, computed, onMounted } from "vue";
 import { api } from "src/boot/axios";
 import { userStore } from "stores/index";
 import InputField from "src/components/auth/InputField.vue";
+import BetRefereceWithCopy from "../../components/account/BetReferenceWithCopy.vue";
 
 const store = userStore();
 const qs = require("qs");
@@ -540,6 +548,245 @@ onMounted(() => {
   margin-top: 12px;
   align-items: center;
 }
+
+.record-container {
+  // border-radius: 0;
+  // // background: rgba(21, 0, 37, 0.2);
+  // box-shadow: none;
+  // border-bottom: 1px solid #ffffff33;
+  // background: transparent;
+  // padding: 1rem;
+  // margin-top: 0;
+
+  // background: #292D2E;
+  background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+
+  border-radius: 6px;
+  box-shadow: none;
+  .top-wrapper {
+    display: grid;
+    padding: 1rem;
+    // grid-template-columns: 50% 50%;
+    align-items: center;
+
+    .date-status-wrapper {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .date {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.825rem;
+      font-weight: 700;
+    }
+    .amt {
+      
+      span {
+        color: #fff;
+      }
+
+      .win-amt {
+        color: $positive;
+      }
+
+      .loss-amt {
+        color: $negative;
+      }
+    }
+  }
+
+  .mid-wrapper {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 2.25rem;
+    // background: rgba(21, 0, 37, 0.5);
+    margin: 0 -1rem;
+
+    padding: 1rem 1rem .5rem;
+    display: flex;
+    margin: 0px;
+    width: 100%;
+    justify-content: space-between;
+
+    .bet-btn {
+      color: #5bf25c;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(250, 229, 118, 0.2);
+      min-height: unset;
+    }
+
+    .loss-btn {
+      color: #b81212;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(184, 18, 18, 0.2);
+      min-height: unset;
+    }
+
+    .btn--yellow {
+      color: #ffe500;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(255, 229, 0, 0.2);
+      min-height: unset;
+    }
+
+    .btn--blue {
+      color: #00f0ff;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(0, 240, 255, 0.2);
+      min-height: unset;
+    }
+
+    .btn--orange {
+      color: #FBAB1B;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(251, 171, 27, 0.2);
+      min-height: unset;
+    }
+
+    .btn--red {
+      color: #FF3434;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background:rgba(255, 52, 52, 0.2);
+      min-height: unset;
+    }
+
+    .btn--green {
+      color: #21EF89;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(33, 239, 137, .2);
+      min-height: unset;
+    }
+
+    .game-platform-val {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+      font-size: 16px;
+      img {
+        height: 20px;
+      }
+    }
+  }
+
+  .bot-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 10px;
+    &.last {
+      margin-bottom: 10px;
+    }
+
+    .win-amt {
+      color: $positive;
+    }
+
+    .origin {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: rgba(255, 255, 255, 0.5);
+      gap: 6px;
+
+      .bet {
+        font-size: 0.825rem;
+        font-weight: 700;
+      }
+
+      .game-platform {
+        font-size: 0.825rem;
+        font-weight: 700;
+      }
+    }
+
+    .origin-val {
+      gap: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: space-between;
+      .bet-val {
+        font-size: 0.825rem;
+        color:#B2BDBF;
+      }
+      
+      .game-platform-val {
+        font-size: 0.825rem;
+        font-weight: 700;
+      }
+    }
+  }
+  .order {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-size: 12px;
+    gap: 10px;
+    .bet-id {
+      font-size: smaller;
+      word-wrap: break-word;
+      color: #ffffff;
+      font-size: 13px;
+    }
+  }
+  .bet-id-wrapper {
+    display: flex;
+    background: #FFFFFF0F;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+
+}
+
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  border-bottom: 0;
+
+  .pagination-btn {
+    // background: #58b475;
+    background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+  }
+}
 </style>
 
 <style scoped>
@@ -550,13 +797,14 @@ onMounted(() => {
     color: #363c4a;
     background: #ffffff !important;
   }
-  .q-item--active {
-  }
+
+  .q-item--active {}
 }
 
 .downline-list {
   border-radius: 8px;
   overflow: hidden;
+
   .downline-item {
     display: flex;
     padding: 12px;
@@ -581,4 +829,5 @@ onMounted(() => {
     }
   }
 }
+
 </style>

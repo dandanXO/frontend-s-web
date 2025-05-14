@@ -3,7 +3,7 @@
       <q-tabs v-model="activeKey" class="dividend-tabs" color="black" no-caps indicator-color="transparent">
         <q-tab name="my-dividend" :label="$t('dividend.myDividend')"></q-tab>
         <q-tab name="contract-management" :label="$t('dividend.contractManagement')"></q-tab>
-        <q-tab name="dividend-record" :label="$t('dividend.dividendRecord')"></q-tab>
+        <!-- <q-tab name="dividend-record" :label="$t('dividend.dividendRecord')"></q-tab> -->
       </q-tabs>
   
       <q-tab-panels v-model="activeKey" class="deposit-panels">
@@ -13,9 +13,9 @@
         <q-tab-panel name="contract-management">
           <ContractManagement />
         </q-tab-panel>
-        <q-tab-panel name="dividend-record">
+        <!-- <q-tab-panel name="dividend-record">
           <h1>dividend-record</h1>
-        </q-tab-panel>
+        </q-tab-panel> -->
       </q-tab-panels>
     </div>
   </template>

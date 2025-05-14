@@ -87,6 +87,7 @@ import { useRouter } from "vue-router";
 import { SessionStorage } from "quasar";
 import LocalStorage from "boot/local-storage";
 import { isAndroid, isInPwa } from "boot/utils";
+import { t } from "src/boot/lang";
 
 const emits = defineEmits(["test"]);
 
@@ -149,7 +150,7 @@ const updateNewGuestState = () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "Updated successfully",
+          message: t("notify.updatedSuccessfully"),
           icon: "check_circle_outline"
         });
 
