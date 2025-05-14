@@ -413,62 +413,62 @@ const columns = [
 const rows = [
   {
     name: "VIP 1",
-    ugprade: "500",
+    ugprade: "50",
     flow: "x10"
   },
   {
     name: "VIP 2",
-    ugprade: "1,000",
+    ugprade: "100",
     flow: "x10"
   },
   {
     name: "VIP 3",
-    ugprade: "2,000",
+    ugprade: "200",
     flow: "x10"
   },
   {
     name: "VIP 4",
-    ugprade: "5,000",
+    ugprade: "500",
     flow: "x10"
   },
   {
     name: "VIP 5",
-    ugprade: "10,000",
+    ugprade: "1,000",
     flow: "x10"
   },
   {
     name: "VIP 6",
-    ugprade: "20,000",
+    ugprade: "2,000",
     flow: "x10"
   },
   {
     name: "VIP 7",
-    ugprade: "50,000",
+    ugprade: "5,000",
     flow: "x10"
   },
   {
     name: "VIP 8",
-    ugprade: "100,000",
+    ugprade: "10,000",
     flow: "x10"
   },
   {
     name: "VIP 9",
-    ugprade: "200,000",
+    ugprade: "20,000",
     flow: "x10"
   },
   {
     name: "VIP 10",
-    ugprade: "500,000",
+    ugprade: "50,000",
     flow: "x10"
   },
   {
     name: "VIP 11",
-    ugprade: "1,000,000",
+    ugprade: "100,000",
     flow: "x10"
   },
   {
     name: "VIP 12",
-    ugprade: "2,000,000",
+    ugprade: "200,000",
     flow: "x10"
   }
 ];
