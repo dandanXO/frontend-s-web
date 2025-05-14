@@ -73,8 +73,10 @@
             <div class="item-content">
               <div class="item-acc">
                 Account: {{ item.cardNumber }}
-                <!--                <br />-->
-                <!--                IFSC: {{ item.cardAddress }}-->
+                <template v-if="item.cardAddress">
+                  <br />
+                  BSB: {{ item.cardAddress }}
+                </template>
               </div>
               <div class="item-copy">
                 <div class="copy-update" @click.stop.prevent="onUpdateCardClick(item, item.bankType)">
