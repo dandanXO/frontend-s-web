@@ -442,3 +442,21 @@ a {
     font-size: 14px;
   }
 }
+
+.copy-icon {
+  display: flex; 
+  cursor: pointer; 
+  margin-left: 5px;
+  float: right;
+  justify-content: center;
+  align-items: center;
+  background: #5e7fe4;
+  border-radius: 10px;
+  font-size: 10px;
+  padding: 0 5px;
+  margin-top: 5px;
+  img {
+    width: 15px;
+    filter: invert(1)
+  }
+}
