@@ -43,7 +43,7 @@
         <img src="./imgs/contact-title.png" alt="" width="100%" style="padding: 10px 10px 5px 10px" />
         <div class="contact-content">
           <div class="contact-group" style="width: 100%">
-            <div class="contact-item w-50" style="height: 100%; justify-content: flex-start">
+            <div class="contact-item contact-item1 w-50" style="height: 100%; justify-content: flex-start">
               <div class="icon">
                 <img src="./imgs/qq-icon.png" alt="" />
               </div>
@@ -52,7 +52,7 @@
                 <span id="group1-number">850808398</span>
               </div>
             </div>
-            <div class="contact-item w-50" style="height: 100%; justify-content: flex-start">
+            <div class="contact-item contact-item2 w-50" style="height: 100%; justify-content: flex-start">
               <div class="icon">
                 <img src="./imgs/qq-icon.png" alt="" />
               </div>
@@ -72,7 +72,7 @@
             </div>
           </div>
 
-          <div class="contact-item w-100">
+          <div class="contact-item contact-item1agent w-100">
             <div class="contact-group">
               <div class="icon">
                 <img src="./imgs/service-icon.png" alt="" />
@@ -86,7 +86,7 @@
               <img src="./imgs/contact-btn.png" alt="" />
             </a>
           </div>
-          <div class="contact-item w-100">
+          <div class="contact-item contact-item2agent w-100">
             <div class="contact-group">
               <div class="icon">
                 <img src="./imgs/service-icon.png" alt="" />
@@ -234,6 +234,17 @@
           agent1ID: "baozi8795",
           agent2ID: "vip119"
         },
+        "16618.vip": {
+          group1Title: "",
+          group1Number: "",
+          group2Title: "",
+          group2Number: "",
+          landingPageLink: "https://www.am787.cc",
+          redirectUrl: "https://www.lh660.cc",
+          claimUrl: "https://www.lh660.cc",
+          agent1ID: "@lhliulian",
+          agent2ID: ""
+        },
       };
 
       // Default content if no hostname matches
@@ -265,6 +276,25 @@
       document.getElementById("agent1-id").textContent = selectedInfo.agent1ID;
       document.getElementById("agent2-id").textContent = selectedInfo.agent2ID;
       document.getElementById("agent3-id").textContent = selectedInfo.agent3ID;
+
+      const contact1Item = document.querySelector(".contact-item1");
+      const contact1ItemAgent = document.querySelector(".contact-item1agent");
+
+      if (!selectedInfo.group1Title) {
+        contact1Item.style.display = "none";
+      }
+      if (!selectedInfo.agent1ID) {
+        contact1ItemAgent.style.display = "none";
+      }
+
+      const contact2Item = document.querySelector(".contact-item2");
+      const contact2ItemAgent = document.querySelector(".contact-item2agent");
+
+      if (!selectedInfo.group2Title || !selectedInfo.agent2ID) {
+        contact2Item.style.display = "none";
+        contact2ItemAgent.style.display = "none";
+      }
+
       const contactItem = document.querySelector(".contact-item3");
       const contactItemAgent = document.querySelector(".contact-item3agent");
 
