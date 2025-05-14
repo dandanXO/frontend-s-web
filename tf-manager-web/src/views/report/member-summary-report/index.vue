@@ -19,7 +19,7 @@
           v-model="request.loginName"
           size="small"
           style="width: 200px; margin-left: 10px;"
-          :placeholder="t('fields.loginName')"
+          :placeholder="t('fields.referrer')"
         />
         <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadSummaryRecords()">
           {{ t('fields.search') }}
@@ -133,7 +133,7 @@ function convertDate(date) {
   return moment(date).endOf('day').format('YYYY-MM-DD');
 }
 
-const sortOrders = ['descending', 'ascending', null]
+const sortOrders = ['descending', 'ascending']
 
 const request = reactive({
   size: 20,
@@ -141,8 +141,8 @@ const request = reactive({
   siteId: null,
   loginName: null,
   recordTime: [convertDate(new Date()), convertDate(new Date())],
-  order: null,
-  sort: null,
+  order: 'balance',
+  sort: 'DESC',
 });
 
 const sites = reactive({
