@@ -74,11 +74,16 @@
 
           <div class="contact-item contact-item1agent w-100">
             <div class="contact-group">
+              
               <div class="icon">
                 <img src="./imgs/service-icon.png" alt="" />
               </div>
               <div style="display: flex; flex-direction: column">
-                <span class="title">Amico 专员 ID</span>
+                <span class="title">Amico 专员 ID
+                  <span style="display: none" id="group1-copy" class="copy-icon" onclick="copyAgentId()">
+                    <img style="" src="./imgs/copy.png" alt="复制">复制
+                  </span>
+                </span>
                 <span id="agent1-id">vip520</span>
               </div>
             </div>
@@ -140,6 +145,14 @@
       });
     });
 
+    function copyAgentId() {
+      const text = document.getElementById("agent1-id").innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("已复制: " + text);
+      }).catch(err => {
+        alert("复制失败: " + err);
+      });
+    }
 
     function updateContactInfoByHostname() {
       const hostname = window.location.host.replace("www.", "");
@@ -234,7 +247,7 @@
           agent1ID: "baozi8795",
           agent2ID: "vip119"
         },
-        "16618.vip": {
+        "16618.vip/": {
           group1Title: "",
           group1Number: "",
           group2Title: "",
@@ -243,7 +256,8 @@
           redirectUrl: "https://www.lh660.cc",
           claimUrl: "https://www.lh660.cc",
           agent1ID: "@lhliulian",
-          agent2ID: ""
+          agent2ID: "",
+          has1Copy: "true"
         },
       };
 
@@ -276,7 +290,11 @@
       document.getElementById("agent1-id").textContent = selectedInfo.agent1ID;
       document.getElementById("agent2-id").textContent = selectedInfo.agent2ID;
       document.getElementById("agent3-id").textContent = selectedInfo.agent3ID;
+      const copy1Item = document.querySelector(".copy-icon");
 
+      if (selectedInfo.has1Copy) {
+        copy1Item.style.display = "flex";
+      }
       const contact1Item = document.querySelector(".contact-item1");
       const contact1ItemAgent = document.querySelector(".contact-item1agent");
 
