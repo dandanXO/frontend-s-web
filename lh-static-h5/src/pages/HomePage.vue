@@ -669,7 +669,7 @@
                   >
                     <q-card style="background: transparent">
                       <q-card-section style="color: #9f9f9f">
-                        {{ ann.content }}
+                        <p v-html="ann.content"></p>
                       </q-card-section>
                     </q-card>
                   </q-expansion-item>
