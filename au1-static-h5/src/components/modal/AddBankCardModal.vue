@@ -78,7 +78,7 @@
                 hide-bottom-space
                 filled
                 v-model="bankCardField.cardNumber"
-                label="Enter Account Number"
+                :label="`Enter ${accountTypeStr}`"
                 :rules="[(_) => isValidCardNumber()]"
                 label-color="secondary"
               />
@@ -254,11 +254,11 @@ const selectBankStr = () => {
     dialogDisplays.selectionError = "Please Select A Crypto";
     accountTypeStr.value = "Crypto Card Number";
   } else if (currentCardType.value === "EWallet") {
-    dialogDisplays.title = "Add eWallet";
-    dialogDisplays.selectionTitle = "eWallet";
-    dialogDisplays.selectionPlaceholder = "Select eWallet";
-    dialogDisplays.selectionError = "Please Select A eWallet";
-    accountTypeStr.value = "eWallet Card Number";
+    dialogDisplays.title = "Add PayID";
+    dialogDisplays.selectionTitle = "PayID";
+    dialogDisplays.selectionPlaceholder = "Select PayID";
+    dialogDisplays.selectionError = "Please Select PayID";
+    accountTypeStr.value = "PayID";
   }
 };
 
@@ -294,31 +294,26 @@ const isValidCardAccount = () => {
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
 
-  const result = !cardNumber
-    ? "Please Enter Card Number"
-    : !cardNumber.includes(".")
-    ? true
-    : "Account number must not contain a decimal point";
+  if (!cardNumber) {
+    return `Please enter ${accountTypeStr.value}`;
+  }
 
-  if (
-    cardNumber &&
-    selectedBankMethod.value &&
-    (selectedBankMethod.value.code === "GCASH" ||
-      selectedBankMethod.value.code === "MAYAPAY" ||
-      selectedBankMethod.value.code === "GRABPAY")
-  ) {
-    const gCashCheck =
-      cardNumber.substring(0, 1) !== "0"
-        ? `The ${selectedBankMethod.value.code} card number must start with '0'`
-        : cardNumber.length !== 11
-        ? `The ${selectedBankMethod.value.code} card number length should be 11`
-        : true;
-    if (gCashCheck !== true) {
-      return gCashCheck;
+  if (currentCardType.value === "Bank") {
+    if (cardNumber.includes(".")) {
+      return "Account number must not contain a decimal point";
     }
   }
 
-  return result;
+  if (currentCardType.value === "EWallet") {
+    const isNumeric = /^\d+$/.test(cardNumber);
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cardNumber);
+
+    if (!isNumeric && !isEmail) {
+      return "PayID must be a valid phone number or email address";
+    }
+  }
+
+  return true;
 };
 
 const isValidCardAddress = () => {

@@ -7,7 +7,7 @@
       </div>
       <div class="bank-card-add" @click="onAddUSDTClick()">
         <q-icon name="add" size="20px" />
-        <div class="card-label">Add eWallet</div>
+        <div class="card-label">Add PayID</div>
       </div>
     </div>
 
@@ -123,7 +123,7 @@
 
       <!-- EWALLET Section -->
       <q-list class="list-cat-item" v-if="bankCardList.some((item) => item.bankType === 'EWALLET')">
-        <q-expansion-item expand-separator label="eWallet" default-opened>
+        <q-expansion-item expand-separator label="PayID" default-opened>
           <div
             v-for="(item, index) in bankCardList.filter((car) => car.bankType === 'EWALLET')"
             :key="index"
@@ -141,7 +141,7 @@
               </div>
             </div>
             <div class="item-content">
-              <div class="item-acc">Account: {{ item.cardNumber }}</div>
+              <div class="item-acc">PayID: {{ item.cardNumber }}</div>
               <div class="item-copy">
                 <div class="copy-update" @click.stop.prevent="onUpdateCardClick(item, item.bankType)">
                   <q-icon size="sm" name="settings" />
@@ -559,6 +559,7 @@ onActivated(() => {
 
       .item-acc {
         font-size: 12px;
+        word-break: break-all;
       }
 
       .item-copy {
