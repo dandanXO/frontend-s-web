@@ -36,8 +36,6 @@
       size="small"
       v-loading="page.loading"
       highlight-current-row
-      :summary-method="getSummaries"
-      show-summary
       :empty-text="t('fields.noData')"
       :default-sort="{prop: 'balance', order: 'descending'}"
       @sort-change="sort"
