@@ -1,36 +1,36 @@
 <template>
-<q-page>
-<!--    <iframe-->
-<!--    :src="'https://csweb01.v6kthwlug.com/?partnerCode=XFCS&lang=zh-CN&way=' + regDevice + '&token=' + store.token"-->
-<!--    title="description"-->
-<!--  ></iframe>-->
-  <!-- <div class="iFrameFull">
+  <q-page>
+    <!--    <iframe-->
+    <!--    :src="'https://csweb01.v6kthwlug.com/?partnerCode=XFCS&lang=zh-CN&way=' + regDevice + '&token=' + store.token"-->
+    <!--    title="description"-->
+    <!--  ></iframe>-->
+    <!-- <div class="iFrameFull">
   </div> -->
-</q-page>
+  </q-page>
 </template>
 
 <script>
 import { defineComponent, onActivated, onMounted, ref } from "vue";
-import { useQuasar, Platform } from "quasar"
-import { userStore } from "stores/index"
+import { useQuasar, Platform } from "quasar";
+import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
 
 export default defineComponent({
   setup() {
     const $q = useQuasar();
     const store = userStore();
-    const ui= useUI()
+    const ui = useUI();
     const regDevice = store.getDeviceType();
 
     onMounted(() => {
       if (isSafari12OrLower()) {
         // alert("TIS")
         const newWin = window.open(`/`, "_self");
-        if(newWin){
+        if (newWin) {
           newWin.location.href = `https://${ui.CSAUrl}?partnerCode=LHCS&lang=zh-CN`;
         }
       }
-    })
+    });
 
     function isSafari12OrLower() {
       var safariVersion = getSafariVersion();
@@ -39,21 +39,20 @@ export default defineComponent({
 
     function getSafariVersion() {
       var ua = navigator.userAgent.toLowerCase();
-      if (ua.indexOf('safari') !== -1) {
-        if (ua.indexOf('version') !== -1) {
-          return parseInt(ua.split('version/')[1].split(' ')[0]);
+      if (ua.indexOf("safari") !== -1) {
+        if (ua.indexOf("version") !== -1) {
+          return parseInt(ua.split("version/")[1].split(" ")[0]);
         } else {
-          return parseInt(ua.split('safari/')[1].split(' ')[0]);
+          return parseInt(ua.split("safari/")[1].split(" ")[0]);
         }
       }
       return -1; // 非 Safari 浏览器
     }
 
-
     return {
       regDevice,
       store
-    }
+    };
   }
 });
 </script>
@@ -64,7 +63,6 @@ export default defineComponent({
   padding-bottom: env(safe-area-inset-top, 59px); */
   /* height: calc(100vh - (env(safe-area-inset-top, 44px) + env(safe-area-inset-bottom, 59px) + 100px));
   padding-bottom: 44px + env(safe-area-inset-top, 44px); */
-
 }
 iframe {
   width: 100%;

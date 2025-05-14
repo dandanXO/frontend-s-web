@@ -79,7 +79,7 @@ export const getTimeout = (key) => {
     : 0; // No timeout found
 };
 
-export const getImageUrl = (srcPath) => require(`/src/assets/${srcPath}`);
+export const getImageUrl = (srcPath) => require(`src/cs-client-web/assets/${srcPath}`);
 
 export const getVisitorId = async () => {
   const { getData } = useVisitorData({ extendedResult: true }, { immediate: false });
@@ -175,13 +175,15 @@ export const customCloudWiseRecord = (userId, data = {}) => {
   if (!window.WEBVIEW_CLOUD_WISE) return;
 
   gtag("event", "PAGE_VIEW", {
-    "type": "PAGE_VIEW",
-    "data": JSON.stringify(addTimestamp({
-      ...data,
-      timestamp: Date.now(),
-      user_id: userId,
-    }))
-  })
+    type: "PAGE_VIEW",
+    data: JSON.stringify(
+      addTimestamp({
+        ...data,
+        timestamp: Date.now(),
+        user_id: userId
+      })
+    )
+  });
   if (window.CloudWiseUtil) {
     CloudWiseUtil.setCustomEventInfo(
       {
