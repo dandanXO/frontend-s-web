@@ -53,11 +53,11 @@
         </div>
 
         <div class="livestream-video-controller-volume-group">
-          <q-btn flat class="livestream-video-controller-volume-btn btn" title="音量">
+          <!-- <q-btn flat class="livestream-video-controller-volume-btn btn" title="音量">
             <img src="../../assets/images/livestream/icon-volume.png" />
-          </q-btn>
+          </q-btn> -->
 
-          <q-slider
+          <!-- <q-slider
             class="volume-slider"
             v-model="playerConfig.volume"
             @change="handleVolumeChange"
@@ -68,6 +68,14 @@
             track-color="grey-4"
             thumb-color="primary"
             style="width: 90px"
+          />  -->
+          <q-btn
+            flat
+            dense
+
+            @click="toggleMute"
+            :icon="playerConfig.volume ? 'volume_up' : 'volume_off'"
+            color="white"
           />
         </div>
 
@@ -234,7 +242,7 @@ const danmu = ref(null);
 const qualities = ref([]);
 const playerConfig = ref({
   isPause: false,
-  volume: 50,
+  volume: true,
   isFullScreen: false,
   isDanmuClose: false,
   quality: DEFAULT_QUALITY,
@@ -351,6 +359,13 @@ const handleVolumeChange = (value) => {
   changePlayerConfig("volume", parseInt(value));
   if (videoRef.value) {
     videoRef.value.volume = value / 100;
+  }
+};
+
+const toggleMute = () => {
+  playerConfig.value.volume = !playerConfig.value.volume;
+  if (videoRef.value) {
+    videoRef.value.volume = playerConfig.value.volume ? 1 : 0;
   }
 };
 
