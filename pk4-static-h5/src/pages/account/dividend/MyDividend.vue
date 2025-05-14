@@ -1,5 +1,5 @@
 <template>
-    <div class="my-dividend-container">
+    <div class="container">
         <div class="filters">
             <InputField :isDark="true">
                 <template #input>
@@ -8,10 +8,10 @@
                             <template v-slot:append>
                                 <img src="../../../assets/images/earn-money/calendar-icon.svg" />
                                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                    <q-date v-model="searchForm.startDate" mask="YYYY-MM-DD" range
+                                    <q-date v-model="searchForm.dateRange" mask="YYYY-MM-DD" range
                                         @update:model-value="onSelectChangeDate">
                                         <div class="row items-center justify-end">
-                                            <q-btn v-close-popup label="Close" color="white" flat />
+                                            <q-btn v-close-popup :label="$t('btn.close')" color="white" flat />
                                         </div>
                                     </q-date>
                                 </q-popup-proxy>
@@ -20,15 +20,14 @@
                     </div>
                 </template>
             </InputField>
-            <q-btn class="btn-primary search-btn" @click="getMyDividendsInfo" :disable="isLoading" :label="$t('btn.confirm')" />
+            <q-btn class="btn-primary primary-btn" @click="getMyDividendsInfo" :disable="isLoading"
+                :label="$t('btn.confirm')" />
         </div>
 
 
         <div class="info panel bordered">
             <div class="card-title">{{ $t('dividend.myDividend') }}</div>
-
             <div class="card-desc"></div>
-
             <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%"
                 style="text-align: center">
                 <thead>
@@ -57,7 +56,7 @@
 
         <div class="detailed-stats panel bordered">
             <div class="header">
-                <div>{{ searchForm.startDate.from }} - {{ searchForm.startDate.to }}</div>
+                <div>{{ searchForm.dateRange.from }} - {{ searchForm.dateRange.to }}</div>
                 <div class="collapse">
                     <span></span>
                     <img class="collapse-icon" src="../../../assets/images/account/dividend/collapse-icon.png" />
@@ -66,8 +65,6 @@
 
             <div class="stats">
                 <div class="row">
-                    <div class="icon">
-                    </div>
                     <div class="label">{{ $t('dividend.netAmountReceives') }}</div>
                     <div class="value">
                         <q-spinner v-if="isLoading" />
@@ -75,17 +72,14 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="icon">
-                    </div>
                     <div class="label">{{ $t('dividend.status') }}</div>
                     <div class="value">
                         <q-spinner v-if="isLoading" />
-                        <span v-else>{{ getStatusLabel(dividendInfo.status) }}</span>
+                        <div v-else :class="dividendInfo.status?.toLowerCase()">{{ getStatusLabel(dividendInfo.status)
+                            }}</div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="icon">
-                    </div>
                     <div class="label">{{ $t('dividend.activeMember') }}</div>
                     <div class="value">
                         <q-spinner v-if="isLoading" />
@@ -93,8 +87,6 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="icon">
-                    </div>
                     <div class="label">{{ $t('dividend.periodValidBet') }}</div>
                     <div class="value">
                         <q-spinner v-if="isLoading" />
@@ -103,8 +95,6 @@
                 </div>
                 <hr class="separator" />
                 <div class="row">
-                    <div class="icon">
-                    </div>
                     <div class="label">{{ $t('dividend.periodPnL') }}</div>
                     <div class="value">
                         <q-spinner v-if="isLoading" />
@@ -112,8 +102,6 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="icon">
-                    </div>
                     <div class="label">{{ $t('dividend.periodSettledPnL') }}</div>
                     <div class="value">
                         <q-spinner v-if="isLoading" />
@@ -121,8 +109,6 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="icon">
-                    </div>
                     <div class="label">{{ $t('dividend.dividendAmount') }}</div>
                     <div class="value">
                         <q-spinner v-if="isLoading" />
@@ -130,8 +116,6 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="icon">
-                    </div>
                     <div class="label">{{ $t('dividend.disbursementTime') }}</div>
                     <div class="value">
                         <q-spinner v-if="isLoading" />
@@ -157,7 +141,7 @@ dayBefore.setDate(today.getDate() - 30); // 30days before
 const formatDate = (date) => date.toISOString().split("T")[0];
 
 const formattedDateRange = computed(() => {
-    const range = searchForm.startDate;
+    const range = searchForm.dateRange;
     if (!range || typeof range === "string") return "";
     const { from, to } = range;
     return `${formatDateToSlash(from)} ~ ${formatDateToSlash(to)}`;
@@ -166,16 +150,14 @@ const formattedDateRange = computed(() => {
 const formatDateToSlash = (str) => {
     if (!str || typeof str !== "string" || !str.includes("-")) return "";
     const [year, month = "01", day = "01"] = str.split("-");
-    // return `${year}/${month.padStart(2, "0")}/${day.padStart(2, "0")}`;
     return `${month.padStart(2, "0")}/${day.padStart(2, "0")}`;
 };
 
 const searchForm = reactive({
-    startDate: {
+    dateRange: {
         from: formatDate(dayBefore),
         to: formatDate(today)
-    },
-    endDate: ""
+    }
 });
 
 const dividendInfo = ref({
@@ -212,8 +194,7 @@ const getStatusLabel = (statusStr) => {
 
 const getMyDividendsInfo = () => {
     isLoading.value = true;
-
-    const recordDate = searchForm.startDate.from + "," + searchForm.startDate.to;
+    const recordDate = searchForm.dateRange.from + "," + searchForm.dateRange.to;
 
     api.get('/session/affiliate/settlement?recordDates=' + recordDate).then((res) => {
         dividendInfo.value = res.data;
@@ -234,33 +215,24 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.my-dividend-container {
+.container {
     display: flex;
     flex-direction: column;
-}
 
-.filters {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    .filters {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-    :deep(.landing-input) {
-        width: 100%;
-        margin-right: 10px;
+        :deep(.landing-input) {
+            width: 100%;
+            margin-right: 10px;
+        }
+
+        .primary-btn {
+            padding: 0 20px;
+        }
     }
-
-    .search-btn {
-        padding: 0 20px;
-    }
-}
-
-.dropdown,
-.input {
-    margin-bottom: 10px;
-}
-
-.dropdown {
-    width: 70%;
 }
 
 .separator {
@@ -324,6 +296,60 @@ onMounted(() => {
             width: 33%;
             text-align: right;
             justify-content: flex-end;
+
+            .checking,
+            .pay,
+            .clear,
+            .cancelled {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 27px;
+            }
+
+            .checking {
+                color: #ffe500;
+                font-size: 0.825rem;
+                font-weight: 700;
+                text-transform: capitalize;
+                padding: 4px 10px;
+                border-radius: 4px;
+                background: rgba(255, 229, 0, 0.2);
+                min-height: unset;
+            }
+
+            .pay {
+                color: #FBAB1B;
+                font-size: 0.825rem;
+                font-weight: 700;
+                text-transform: capitalize;
+                padding: 4px 10px;
+                border-radius: 4px;
+                background: rgba(251, 171, 27, 0.2);
+                min-height: unset;
+            }
+
+            .clear {
+                color: #21EF89;
+                font-size: 0.825rem;
+                font-weight: 700;
+                text-transform: capitalize;
+                padding: 4px 10px;
+                border-radius: 4px;
+                background: rgba(33, 239, 137, .2);
+                min-height: unset;
+            }
+
+            .cancelled {
+                color: #FF3434;
+                font-size: 0.825rem;
+                font-weight: 700;
+                text-transform: capitalize;
+                padding: 4px 10px;
+                border-radius: 4px;
+                background: rgba(255, 52, 52, 0.2);
+                min-height: unset;
+            }
         }
     }
 }
@@ -392,12 +418,14 @@ onMounted(() => {
     }
 }
 
-.get-code-btn {
-    background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
-    color: #fff;
-    box-shadow: 0px 0.5px 2px 0px #0667D599;
-    min-width: 100px;
-    max-width: 120px;
-    font-weight: bold;
+.date-field {
+    :deep(.q-field__append) {
+        width: 100%;
+        justify-content: flex-end;
+        position: absolute;
+        right: 2%;
+        top: 50%;
+        transform: translate(0%, -50%);
+    }
 }
 </style>
