@@ -76,7 +76,7 @@
                     <div class="value">
                         <q-spinner v-if="isLoading" />
                         <div v-else :class="dividendInfo.status?.toLowerCase()">{{ getStatusLabel(dividendInfo.status)
-                            }}
+                        }}
                         </div>
                     </div>
                 </div>
@@ -131,7 +131,7 @@
 <script setup>
 import { api } from 'src/boot/axios';
 import InputField from 'src/components/auth/InputField.vue';
-import { ref, reactive, onMounted, computed, onActivated } from 'vue';
+import { ref, reactive, computed, onActivated } from 'vue';
 import { t } from "src/boot/lang";
 
 const isLoading = ref(false);
@@ -206,10 +206,6 @@ const getMyDividendsInfo = () => {
 }
 
 onActivated(() => {
-    getMyDividendsInfo();
-})
-
-onMounted(() => {
     getMyDividendsInfo();
 })
 
