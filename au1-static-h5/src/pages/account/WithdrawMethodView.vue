@@ -181,25 +181,49 @@
 
         <div class="withdrawal-amount-container">
           <template v-if="bankCardList.length === 0 || isAddNewAccount">
-            <div class="w-form-item w-form-item--bankcard">
-              <div class="top-wrapper">
-                <div class="title">Account Number</div>
+            <template v-if="isBankType === 'EWALLET'">
+              <div class="w-form-item w-form-item--bankcard">
+                <div class="top-wrapper">
+                  <div class="title">PayID</div>
+                </div>
+                <div class="mid-wrapper">
+                  <q-input
+                    filled
+                    dense
+                    clearable
+                    ref="bankNumberRef"
+                    placeholder="Enter PayID"
+                    v-model="bankCardField.cardNumber"
+                    :rules="[(_) => isValidCardNumber()]"
+                    hide-bottom-space
+                    @focus="scrollToInput"
+                    @blur="isInputFocus = false"
+                  ></q-input>
+                </div>
               </div>
-              <div class="mid-wrapper">
-                <q-input
-                  filled
-                  dense
-                  clearable
-                  ref="bankNumberRef"
-                  placeholder="Enter Account Number"
-                  v-model="bankCardField.cardNumber"
-                  :rules="[(_) => isValidCardNumber()]"
-                  hide-bottom-space
-                  @focus="scrollToInput"
-                  @blur="isInputFocus = false"
-                ></q-input>
+            </template>
+            <template v-else>
+              <div class="w-form-item w-form-item--bankcard">
+                <div class="top-wrapper">
+                  <div class="title">Account Number</div>
+                </div>
+                <div class="mid-wrapper">
+                  <q-input
+                    filled
+                    dense
+                    clearable
+                    ref="bankNumberRef"
+                    placeholder="Enter Account Number"
+                    v-model="bankCardField.cardNumber"
+                    :rules="[(_) => isValidCardNumber()]"
+                    hide-bottom-space
+                    @focus="scrollToInput"
+                    @blur="isInputFocus = false"
+                  ></q-input>
+                </div>
               </div>
-            </div>
+            </template>
+
             <div class="w-form-item w-form-item&#45;&#45;bankcard" v-if="isBankType === 'BANK'">
               <div class="top-wrapper">
                 <div class="title">BSB (Bank State Branch)</div>
@@ -850,30 +874,29 @@ onActivated(() => {
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
 
-  const result = !cardNumber
-    ? "Please Enter Card Number"
-    : !cardNumber.includes(".")
-    ? true
-    : "Account number must not contain a decimal point";
-
-  if (
-    cardNumber &&
-    (selectedMethodItem.value.code === "GCASH" ||
-      selectedMethodItem.value.code === "MAYAPAY" ||
-      selectedMethodItem.value.code === "GRABPAY")
-  ) {
-    const gCashCheck =
-      cardNumber.substring(0, 1) !== "0"
-        ? `The ${selectedMethodItem.value.code} card number must start with '0'`
-        : cardNumber.length !== 11
-        ? `The ${selectedMethodItem.value.code} card number length should be 11`
-        : true;
-    if (gCashCheck !== true) {
-      return gCashCheck;
+  if (isBankType.value === "BANK") {
+    if (!cardNumber) {
+      return `Please enter account number`;
+    }
+    if (cardNumber.includes(".")) {
+      return "Account number must not contain a decimal point";
     }
   }
 
-  return result;
+  if (isBankType.value === "EWALLET") {
+    const isNumeric = /^\d+$/.test(cardNumber);
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cardNumber);
+
+    if (!cardNumber) {
+      return `Please enter PayID`;
+    }
+
+    if (!isNumeric && !isEmail) {
+      return "PayID must be a valid phone number or email address";
+    }
+  }
+
+  return true;
 };
 
 const isValidCardAddress = () => {
