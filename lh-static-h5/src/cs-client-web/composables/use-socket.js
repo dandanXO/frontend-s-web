@@ -4,7 +4,7 @@ import strEncrypt from "src/cs-client-web/utils/str-encrypt";
 import strDecrypt from "src/cs-client-web/utils/str-decrypt";
 import { strToJSON } from "src/cs-client-web/utils/string";
 
-const ENCRYPT_ENABLE = process.env.ENCRYPT_ENABLE === "1";
+const ENCRYPT_ENABLE = process.env.ENCRYPT_ENABLE;
 const IS_PROD = process.env.NODE_ENV === "production";
 // const IS_PROD= true;
 
