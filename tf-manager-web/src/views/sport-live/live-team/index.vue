@@ -123,7 +123,12 @@
     </el-dialog>
     <el-table :data="page.records" v-loading="page.loading" ref="table" row-key="id" size="small" highlight-current-row>
       <el-table-column prop="id" label="ID" width="240" />
-      <el-table-column prop="sportId" :label="t('fields.sportType')" width="200" />
+      <el-table-column
+        prop="sportId"
+        :label="t('fields.sportType')"
+        width="200"
+        :formatter="(_, __, value) => getSportName(value)"
+      />
       <el-table-column prop="nameEn" :label="t('fields.teamNameEn')" width="350" />
       <el-table-column prop="nameZh" :label="t('fields.teamNameZh')" width="350" />
       <el-table-column prop="icon" :label="t('fields.teamIcon')" width="150">
@@ -232,6 +237,11 @@ function resetQuery() {
   request.sportType = null;
   request.nameEn = null;
   request.nameZh = null;
+}
+
+function getSportName(id) {
+  const sport = uiControl.sport.find(s => s.id === id);
+  return sport ? sport.display : '-';
 }
 
 async function attachImage(event) {
