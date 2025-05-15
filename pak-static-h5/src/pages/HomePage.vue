@@ -4774,7 +4774,7 @@ const checkGoogleLoginSetPwd = () => {
   margin-top: 10px;
   margin-bottom: 10px;
   position: relative;
-  border-radius: 40px 0 0 40px;
+  border-radius: 8px 0 0 8px;
   overflow: hidden;
 
   margin-right: -10px;
@@ -4791,8 +4791,10 @@ const checkGoogleLoginSetPwd = () => {
     );
     background: #ffffff0f;
 
-    gap: 10px;
-    padding: 5px 10px;
+    gap: 5px;
+    // padding: 5px 10px;
+    padding: 0px 5px;
+    margin-top: 2px;
     justify-content: center;
     align-items: center;
 
