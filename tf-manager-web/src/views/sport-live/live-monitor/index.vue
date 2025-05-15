@@ -28,10 +28,26 @@
                 {{ tagMap[row.tag] || row.tag || '-' }}
               </template>
             </el-table-column>
-            <el-table-column prop="streamName" :label="t('fields.streamName')" width="200" />
-            <el-table-column prop="score" :label="t('fields.streamScore')" width="100" />
+            <el-table-column :label="t('fields.streamScore')" width="120">
+              <template #default="{row}">
+                <div class="signal-bars">
+                  <span
+                    v-for="n in 5"
+                    :key="n"
+                    class="bar"
+                    :class="{active: n <= row.score}"
+                  />
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column :label="t('fields.mediaUrl')" width="350">
+              <template #default="{row}">
+                <span style="word-break: break-all;">
+                  {{ row.tag === 'streamer' ? row.streamerUrl : row.supplierUrl }}
+                </span>
+              </template>
+            </el-table-column>
             <el-table-column prop="name" :label="t('fields.name')" width="100" />
-            <el-table-column prop="roomTitle" :label="t('fields.roomTitle')" width="200" />
             <el-table-column :label="t('fields.createTime')" width="180">
               <template #default="{row}">
                 {{ formatTimestamp(row.createdAt) }}
@@ -52,16 +68,24 @@
           </el-table>
         </template>
       </el-table-column>
-
-      <el-table-column prop="eventId" :label="t('fields.eventId')" width="120" />
       <el-table-column prop="title" :label="t('fields.title')" />
+      <el-table-column :label="t('fields.matchTime')" width="180">
+        <template #default="{row}">
+          {{ formatTimestamp(row.eventStartTime) }}
+        </template>
+      </el-table-column>
       <el-table-column
         prop="sportId"
         :label="t('fields.sportType')"
         width="120"
         :formatter="(_, __, value) => sportMap[value] || '-'"
       />
-      <el-table-column prop="liveStatus" :label="t('fields.status')" width="100" />
+      <el-table-column
+        prop="liveStatus"
+        :label="t('fields.status')"
+        width="100"
+        :formatter="(_, __, value) => liveStatusMap[value] ?? '-'"
+      />
     </el-table>
   </div>
 </template>
@@ -88,6 +112,13 @@ const sportMap = {
   3: 'LOL',
   4: 'CSGO',
   5: 'DOTA2'
+};
+
+const liveStatusMap = {
+  0: '未開始',
+  1: '進行中',
+  2: '已結束',
+  3: '失敗'
 };
 
 const tagMap = {
@@ -159,5 +190,24 @@ onUnmounted(() => {
 
 .monitor-table {
   width: 100%;
+}
+.signal-bars {
+  display: flex;
+  gap: 2px;
+  align-items: flex-end;
+  height: 14px;
+}
+.bar {
+  width: 4px;
+  background: #ccc;
+  transition: 0.3s;
+}
+.bar:nth-child(1) { height: 4px; }
+.bar:nth-child(2) { height: 6px; }
+.bar:nth-child(3) { height: 8px; }
+.bar:nth-child(4) { height: 10px; }
+.bar:nth-child(5) { height: 12px; }
+.bar.active {
+  background: #67C23A;
 }
 </style>
