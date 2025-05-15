@@ -92,6 +92,7 @@
     <BlastRival2025 v-if="list.redirectUrl === 'dy2-blast-rivals-2025-s1'" :promo-code="list.promoCode" />
     <Cct2025 v-if="list.redirectUrl === 'dy2-cct-global-finals-2025'" :promo-code="list.promoCode" />
     <IemDallas2025 v-if="list.redirectUrl === 'dy2-iem-dallas-2025'" :promo-code="list.promoCode" />
+    <Lh1DuanWuRewards v-else-if="list.redirectUrl === 'dy2-duan-wu-rewards'" :promo-code="list.promoCode" />
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -165,7 +166,7 @@ import Blast2025 from "../components/hotpromo/Blast2025/Blast2025.vue";
 import elsOne2025 from "../components/hotpromo/elsOne2025/elsOne2025.vue";
 
 import sportReferBetBonus from "./hotpromo/sport-refer-bet-bonus/sport-refer-bet-bonus.vue";
-
+import Lh1DuanWuRewards from "./hotpromo/lh1-duan-wu-rewards/Lh1DuanWuRewards.vue"
 import FootballFight from "@/components/hotpromo/newFootballfight/FootballFight.vue";
 import FissureUniverseS4 from "./hotpromo/fissure-universe-s4/FissureUniverseS4.vue";
 import YaLLa2025 from "./hotpromo/YaLLa2025/YaLLa2025.vue";
@@ -184,6 +185,7 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    Lh1DuanWuRewards,
     sportReferBetBonus,
     BlastPremierPromo,
     CS2Sign,

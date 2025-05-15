@@ -77,6 +77,7 @@
     <NewFootball v-if="list.redirectUrl === 'dy2-football'" :promo-code="list.promoCode" />
     <IemDallas2025 v-if="list.redirectUrl === 'dy2-iem-dallas-2025'" :promo-code="list.promoCode" />
     <sport-refer-bet-bonus v-else-if="list.redirectUrl === 'dy2-sport-refer-bet-bonus'" :promo-code="list.promoCode" />
+    <DuanWuRewards v-else-if="list.redirectUrl === 'dy2-duan-wu-rewards'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -160,12 +161,14 @@ import IemDallas2025 from "./hotpromo/iem-dallas-2025/IemDallas2025.vue";
 const BlastRival2025 = defineAsyncComponent(() => import("./hotpromo/BlastRival2025/BlastRival2025.vue"));
 import Lh1Enc2025 from "./hotpromo/Lh1-enc-2025/Lh1-enc-2025.vue";
 import sportReferBetBonus from "./hotpromo/sport-refer-bet-bonus/sport-refer-bet-bonus.vue";
+import DuanWuRewards from "components/hotpromo/duan-wu-rewards/DuanWuRewards.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    DuanWuRewards,
     sportReferBetBonus,
     Lh1Enc2025,
     BlastPremierPromo,

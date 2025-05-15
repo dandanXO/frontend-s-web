@@ -129,6 +129,7 @@
             isMidAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
             dy2quiz: selectedPromo.promoCode === 'dy2-quiz',
             fullwidth:
+              selectedPromo?.promoCode === 'dy2-duan-wu-rewards'||
               selectedPromo.promoCode === 'dy2-cny2024-promo' ||
               selectedPromo.promoCode === 'dy2-cny-step-game' ||
               selectedPromo.promoCode === 'dy2-game-steps' ||
@@ -156,13 +157,13 @@
             backgroundImage: selectedPromo?.desktopImgBackgroundUrl
               ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
               : 'none',
-            margin: ['dy1-ag-yuanxiaohongbao', 'dy1-lantern-festival-bonus'].includes(selectedPromo.redirectUrl)
+            margin: ['dy1-ag-yuanxiaohongbao', 'dy1-lantern-festival-bonus', 'dy2-duan-wu-rewards'].includes(selectedPromo.redirectUrl)
               ? '0px auto'
               : '20px auto',
-            'max-width': ['dy1-ag-yuanxiaohongbao', 'dy1-lantern-festival-bonus'].includes(selectedPromo.redirectUrl)
+            'max-width': ['dy1-ag-yuanxiaohongbao', 'dy1-lantern-festival-bonus', 'dy2-duan-wu-rewards'].includes(selectedPromo.redirectUrl)
               ? 'unset'
               : '1400px',
-            width: ['dy1-ag-yuanxiaohongbao', 'dy1-lantern-festival-bonus'].includes(selectedPromo.redirectUrl)
+            width: ['dy1-ag-yuanxiaohongbao', 'dy1-lantern-festival-bonus','dy2-duan-wu-rewards'].includes(selectedPromo.redirectUrl)
               ? '100%'
               : '95%'
           }"
