@@ -268,8 +268,8 @@ const handleInviteClick = () => {
 const getRemainingTime = (endTime) => {
   let result = "00:00:00";
   if (endTime) {
-    const now = moment(Date.now()).tz("Asia/Manila");
-    const _endTime = moment(endTime).tz("Asia/Manila");
+    const now = moment(Date.now()).tz("Australia/Sydney");
+    const _endTime = moment(endTime).tz("Australia/Sydney");
     const totalSeconds = _endTime.diff(now, "seconds");
     if (totalSeconds > 0) {
       const hours = Math.floor(totalSeconds / 3600);

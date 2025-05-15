@@ -140,6 +140,7 @@
               v-model="form.localAmount"
               :rules="[
                 verifyDepositAmount,
+                (val) => Number.isInteger(+val) || 'Deposit Amount Must Not Have Decimals',
                 (val) =>
                   (val >= selectedChannel.depositMin && val <= selectedChannel.depositMax) ||
                   `Deposit Amount Must In Between ${convertToCommaAmount(
