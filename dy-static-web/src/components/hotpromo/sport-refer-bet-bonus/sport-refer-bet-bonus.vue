@@ -18,7 +18,7 @@
             <div class="reward-info-icon claim-gift-icon"></div>
             <div class="reward-info-content">
               邀请好友累计有效投注：
-              <span class="amount">{{ bonus }}元</span>
+              <span class="amount">{{ referValidBet }}元</span>
             </div>
           </div>
           <div class="reward-info">
