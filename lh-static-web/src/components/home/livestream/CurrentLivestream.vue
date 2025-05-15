@@ -5,7 +5,9 @@
         <div class="current-livestream__streamer-info__avatar">
           <img :src="avatarUrl" loading="lazy" />
         </div>
-        <span class="current-livestream__streamer-info__name">{{ livestreamData.name }}</span>
+        <span class="current-livestream__streamer-info__name">
+          {{ isSystemLivestream ? "雷火" : livestreamData.name }}
+        </span>
         <div v-if="livestreamData.liveStatus" class="current-livestream__streamer-info__on-air">正在直播</div>
       </div>
     </div>

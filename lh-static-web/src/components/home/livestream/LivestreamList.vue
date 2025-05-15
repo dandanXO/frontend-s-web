@@ -37,7 +37,7 @@
         <div class="livestream-list-item__badge">
           <img v-if="live.name === 'SYSTEM'" src="@/assets/home/livestream/system-avatar.png" loading="lazy" />
           <img v-else :src="imgURL + live.avatar" loading="lazy" />
-          {{ live.name }}
+          {{ live.name === "SYSTEM" ? "雷火" : live.name }}
         </div>
       </div>
     </div>
