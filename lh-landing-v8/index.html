@@ -22,7 +22,8 @@
             </a>
           </div>
           <div class="top-logo">
-            <img src="imgs/lh-logo3.png" alt="雷火 TFGAMING" title="雷火 TFGAMING" />
+            <img src="imgs/lh-logo4.png" alt="雷火 TFGAMING" title="雷火 TFGAMING" />
+            <div id="logo-url">leihuo16.com</div>
           </div>
           <div class="top-cs" style="display: none">
             <a href="https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN" target="_blank">
@@ -44,7 +45,7 @@
             <div class="contact-group" style="width: 100%">
               <div class="contact-item contact-item1 w-50" style="height: 100%; justify-content: flex-start">
                 <div class="icon">
-                  <img src="./imgs/qq-icon.png" alt="" />
+                  <img id="group1-img" src="./imgs/qq-icon.png" alt="" />
                 </div>
                 <div style="display: flex; flex-direction: column">
                   <span class="title" id="group1-title">浮力</span>
@@ -53,7 +54,7 @@
               </div>
               <div class="contact-item contact-item2 w-50" style="height: 100%; justify-content: flex-start">
                 <div class="icon">
-                  <img src="./imgs/qq-icon.png" alt="" />
+                  <img id="group2-img" src="./imgs/qq-icon.png" alt="" />
                 </div>
                 <div style="display: flex; flex-direction: column">
                   <span class="title" id="group2-title">福熙阁</span>
@@ -62,7 +63,7 @@
               </div>
               <div class="contact-item contact-item3 w-50" style="height: 100%; justify-content: flex-start">
                 <div class="icon">
-                  <img src="./imgs/qq-icon.png" alt="" />
+                  <img id="group3-img" src="./imgs/qq-icon.png" alt="" />
                 </div>
                 <div style="display: flex; flex-direction: column">
                   <span class="title" id="group3-title">福熙阁</span>
@@ -256,6 +257,7 @@
             group2Title: "",
             group2Number: "",
             landingPageLink: "https://www.am787.cc",
+            logoUrl: "lh660.cc",
             redirectUrl: "https://www.lh660.cc",
             claimUrl: "https://www.lh660.cc",
             agent1ID: "@lhliulian",
@@ -263,11 +265,13 @@
             has1Copy: "true"
           },
           "19618.vip": {
-            group1Title: "",
-            group1Number: "",
+            group1Title: "微信1",
+            group1Number: "lh62210",
+            group1Img: "imgs/wechat-icon.png",
             group2Title: "",
             group2Number: "",
             landingPageLink: "https://www.am787.cc",
+            logoUrl: "lh153.cc",
             redirectUrl: "https://www.lh153.cc",
             claimUrl: "https://www.lh153.cc",
             agent1ID: "@lhliulian",
@@ -306,6 +310,14 @@
         document.getElementById("agent2-id").textContent = selectedInfo.agent2ID;
         document.getElementById("agent3-id").textContent = selectedInfo.agent3ID;
         const copy1Item = document.querySelector(".copy-icon");
+
+        if (selectedInfo.group1Img) {
+          document.getElementById("group1-img").src = selectedInfo.group1Img;
+        }
+
+        if (selectedInfo.logoUrl) {
+          document.getElementById("logo-url").textContent = selectedInfo.logoUrl;
+        }
 
         if (selectedInfo.has1Copy) {
           copy1Item.style.display = "flex";
