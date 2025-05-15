@@ -866,7 +866,7 @@
                       </div>
                     </template>
                     <template v-else>
-                      <div class="game-board" @click="playGame(live.name, live.code, live.gameCode)">
+                      <div class="game-board" @click="playGame(live.title, live.code, live.gameCode)">
                         <div
                           class="game-bg"
                           :style="{
@@ -883,7 +883,7 @@
                         ></div>
 
                         <div class="game-title">
-                          <h3>{{ live.name }}</h3>
+                          <h3>{{ live.title }}</h3>
                           <span>真人娱乐</span>
                         </div>
 
