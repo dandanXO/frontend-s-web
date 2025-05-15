@@ -1641,7 +1641,7 @@ export default defineComponent({
       }
 
       var origin_url = window.location.origin;
-      var url = `${origin_url}?${partnerText}&way=${way}&lang=${lang}&type=${type}${deviceText}&referral=${referrer_url}${tokenUrl}`;
+      var url = `${origin_url}/liveChat?${partnerText}&way=${way}&lang=${lang}&type=${type}${deviceText}&referral=${referrer_url}${tokenUrl}`;
       console.log(url);
 
       window.location.href = url;
