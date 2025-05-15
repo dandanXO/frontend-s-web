@@ -78,6 +78,15 @@ export const useUI = defineStore("ui-store", {
         default:
           return "DEFAULT";
       }
+    },
+    annoyingType() {
+      const hostname = window.location.hostname;
+      switch (hostname) {
+        case "localhost":
+          return "NONE";
+        default:
+          return "DEFAULT";
+      }
     }
   }
 });
