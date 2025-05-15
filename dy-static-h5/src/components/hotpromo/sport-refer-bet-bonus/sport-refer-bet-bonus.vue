@@ -22,7 +22,7 @@
             </div>
             <div class="reward-info-content">
               邀请好友累计有效投注：
-              <span class="amount">{{ bonus }}元</span>
+              <span class="amount">{{ referValidBet }}元</span>
             </div>
           </div>
           <div class="reward-info">
@@ -31,7 +31,7 @@
             </div>
             <div class="reward-info-content">
               可领取加码金：
-              <span class="amount">{{ bonus2 }}元</span>
+              <span class="amount">{{ bonus + bonus2 }}元</span>
             </div>
           </div>
         </div>
@@ -131,7 +131,7 @@
               />
               <span>示例</span>
             </div>
-            会员A在体育场馆投注欧冠联赛,当日累计有效投注为30000元,当日邀请好友完成注册并好友投注体育赛事，当日累计有效投注金额为2000元，则次日会员A即可获得加码金68元+翻倍加码金54.4元，共计122.4元的彩金 
+            会员A在体育场馆投注欧冠联赛,当日累计有效投注为30000元,当日邀请好友完成注册并好友投注体育赛事，当日累计有效投注金额为2000元，则次日会员A即可获得加码金68元+翻倍加码金54.4元，共计122.4元的彩金
           </div>
         </div>
       </div>
@@ -188,6 +188,7 @@ const store = userStore();
 const totalValidBet = ref(0);
 const bonus = ref(0);
 const bonus2 = ref(0);
+const referValidBet = ref(0);
 const loadingClaim = ref(false);
 
 const handleClaimBonus = () => {
@@ -221,6 +222,7 @@ const fetchData = async () => {
         totalValidBet.value = res.data.totalValidBet;
         bonus.value = res.data.bonus;
         bonus2.value = res.data.referBonus;
+        referValidBet.value = res.data.referValidBet;
       }
     })
     .catch(() => {})
