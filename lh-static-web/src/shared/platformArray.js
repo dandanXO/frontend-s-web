@@ -2,7 +2,7 @@
 export const liveCasinoPlatforms = [
   {
     code: "AG",
-    cnname: "AG真人",
+    cnname: "PA真人",
     image: "ag",
     message: "真实赌场环境，美艳荷官与您互动，咪牌百家乐，体验包桌尊贵服务，给您亲临现场般的游戏体验。",
     caption: "",
@@ -267,7 +267,7 @@ export const slotPlatforms = [
   {
     code: "AG",
     name: "XIN",
-    cnname: "XIN电子",
+    cnname: "PA电子",
     image: "ag",
     message: "坚持创新、打造精品,最缤纷的电子游艺画面，最刺激的游戏体验，各类老虎机应有尽有，彩池大奖由您触发! ",
     caption: "",
@@ -390,10 +390,10 @@ export const fishingPlatforms = [
   },
   {
     code: "AGF",
-    cnname: "AG捕鱼王",
+    cnname: "PA捕鱼王",
     image: "ag",
     message:
-      "火爆AG捕鱼，畅享极致射击快感！高清画质打造沉浸式海底世界，丰富鱼种千变万化，超高爆率畅快收金，多人竞技欢乐无穷，尽享捕鱼巅峰体验！",
+      "火爆PA捕鱼，畅享极致射击快感！高清画质打造沉浸式海底世界，丰富鱼种千变万化，超高爆率畅快收金，多人竞技欢乐无穷，尽享捕鱼巅峰体验！",
     caption: "",
     gameCode: "HMPL"
   },

@@ -128,7 +128,7 @@ export const translateRecord = (rec, type = "") => {
   } else if (rec === "MGP") {
     return "MG"; // AG
   } else if (rec === "AGF") {
-    return "AG 捕鱼"; // AGF
+    return "PA 捕鱼"; // AGF
   } else if (rec === "AG") {
     if (type === "SLOT") {
       return "PA 电子";

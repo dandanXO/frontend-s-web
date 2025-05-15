@@ -173,7 +173,7 @@ export default defineComponent({
       amount: ""
     });
 
-    const platNames = {"KY": "开元棋牌", "DT": "大唐棋牌", "BBINDY": "BBIN", "SGWin": "双赢彩票", "AGF": "AG捕鱼" };
+    const platNames = {"KY": "开元棋牌", "DT": "大唐棋牌", "BBINDY": "BBIN", "SGWin": "双赢彩票", "AGF": "PA捕鱼" };
 
     const transferOutAllModal = () => {
       transferAllModalVisible.value = true
@@ -742,7 +742,9 @@ body .transferinout .el-dialog__header .el-dialog__title {
   font-size: 14px;
 }
 
-.charge-icon, .refresh-icon, .right-icon {
+.charge-icon,
+.refresh-icon,
+.right-icon {
   background: url("../../assets/images/account/charge-icons.png") no-repeat center center;
   background-size: auto 100%;
   width: 28px;
