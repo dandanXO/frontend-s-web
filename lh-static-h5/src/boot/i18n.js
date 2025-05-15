@@ -1,12 +1,12 @@
 import { boot } from "quasar/wrappers";
 import { createI18n } from "vue-i18n";
-import messages from "src/i18n";
+import messages from "src/cs-client-web/i18n";
 
 const i18n = createI18n({
-  locale: "en-US",
+  locale: "zh-CN",
   globalInjection: true,
   messages,
-  legacy: false,
+  legacy: false
 });
 
 export default boot(({ app }) => {

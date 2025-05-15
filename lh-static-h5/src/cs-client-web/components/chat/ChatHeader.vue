@@ -27,7 +27,7 @@
       </div>
 
       <q-btn v-if="isChatStarted" @click="handleOnModal" flat>
-        <img src="src/cs-client-web/assets/images/more-icon.png" />
+        <img :src="require('src/cs-client-web/assets/images/more-icon.png')" />
       </q-btn>
 
       <q-btn
@@ -40,7 +40,7 @@
         @click="minimizeChat"
         flat
       >
-        <img src="src/cs-client-web/assets/images/minimize-icon.png" />
+        <img :src="require('src/cs-client-web/assets/images/minimize-icon.png')" />
       </q-btn>
     </q-toolbar>
 

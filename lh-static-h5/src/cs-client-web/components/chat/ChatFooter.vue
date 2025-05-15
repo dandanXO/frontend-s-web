@@ -51,7 +51,7 @@
                   <div class="text-center" style="margin-right: 6px">
                     {{ $t("send") }}
                   </div>
-                  <img src="src/cs-client-web/assets/images/send-icon.png" />
+                  <img :src="require('src/cs-client-web/assets/images/send-icon.png')" />
                 </div>
               </q-btn>
             </template>

@@ -69,8 +69,10 @@ export default defineComponent({
     const $q = useQuasar();
 
     const chat_type = ref("");
-    let partnerCode = route.query?.partnerCode ?? "";
+    // let partnerCode = route.query?.partnerCode ?? "";
     let partnerId = route.query?.partnerId ?? "";
+    let partnerCode = "LHCS";
+
     let qChatGuid = route.query?.uid ?? "";
 
     // console.log("GET ID/Code: " + partnerCode + " " + partnerId + " " + qChatGuid);
@@ -139,8 +141,8 @@ export default defineComponent({
       } else {
         // console.log("Not NewCs");
 
-        partnerCode = LocalStorage.get("partnerCode") ?? "";
-        partnerId = LocalStorage.get("partnerId") ?? "";
+        // partnerCode = LocalStorage.get("partnerCode") ?? "";
+        // partnerId = LocalStorage.get("partnerId") ?? "";
         type = LocalStorage.get("type") ?? "";
         deviceId = LocalStorage.get("deviceId") ?? "";
 
@@ -181,7 +183,7 @@ export default defineComponent({
         way = "WEB";
       }
       if (!lang) {
-        lang = "en-US";
+        lang = "zh-CN";
       }
 
       let device = $q.platform.is.mobile ? getPlatformModel() : "pc";
@@ -189,88 +191,89 @@ export default defineComponent({
 
       locale.value = lang;
 
-      if (!isEmpty(partnerId) || !isEmpty(partnerCode)) {
-        // await sleep(1000);
+      // if (!isEmpty(partnerId) || !isEmpty(partnerCode)) {
+      // await sleep(1000);
 
-        if (!qChatGuid) {
-          LocalStorage.set("chatGuid", chatGuid);
-        } else {
-          chatGuid = qChatGuid;
-        }
-
-        let wsLoggedIn = LocalStorage.get("wsLoggedIn");
-        let pretoken = LocalStorage.get("pretoken");
-
-        if (wsLoggedIn) {
-          let lastActiveAt = LocalStorage.get("lastActiveAt");
-
-          if (lastActiveAt) {
-            let inActiveInSeconds = moment().diff(lastActiveAt, "seconds");
-
-            if (inActiveInSeconds > sessionConfig.TIMEOUT) {
-              userStore.logout();
-            }
-          }
-
-          // console.log("Token: " + token);
-          // console.log("PreToken: " + pretoken);
-          if (!LocalStorage.get("isChatStarted")) {
-            if (token && token != pretoken) {
-              is_start_new = true;
-              userStore.logout();
-            } else if (token == undefined && token != pretoken) {
-              userStore.logout();
-            }
-          }
-        }
-
-        LocalStorage.set("partnerId", partnerId);
-        LocalStorage.set("partnerCode", partnerCode);
-        LocalStorage.set("pretoken", token);
-        LocalStorage.set("lang", locale.value);
-        LocalStorage.set("way", way);
-        LocalStorage.set("type", type);
-        LocalStorage.set("deviceId", deviceId);
-
-        loginDetails = LocalStorage.get("loginDetails");
-        let isChatStarted = LocalStorage.get("isChatStarted");
-
-        if (isChatStarted && loginDetails) {
-          // console.log("Rc Here");
-          // console.log(loginDetails);
-
-          var respData = clone(loginDetails);
-          await repsLogin(respData);
-        } else {
-          // console.log("Do New");
-
-          // LocalStorage.remove('messageList');
-          // LocalStorage.remove('sendMessageList');
-          // LocalStorage.remove('wsLoggedIn');
-
-          // alert("Token: " + token);
-
-          authAPI
-            .login(partnerId, way, token, device, browser, referrer_url, is_start_new, partnerCode, deviceId)
-            .then(async (res) => {
-              isInternet.value = true;
-
-              if (res.data.code !== 0) {
-                return;
-              }
-
-              // console.log("set Token");
-              console.log(res.data.data);
-              // console.log(res.data.data.token.length);
-
-              LocalStorage.set("loginDetails", res.data.data);
-
-              await repsLogin(res.data.data);
-            });
-        }
+      if (!qChatGuid) {
+        LocalStorage.set("chatGuid", chatGuid);
       } else {
-        text.value = t("errors.partner_id_missing");
+        chatGuid = qChatGuid;
       }
+
+      let wsLoggedIn = LocalStorage.get("wsLoggedIn");
+      let pretoken = LocalStorage.get("pretoken");
+
+      if (wsLoggedIn) {
+        let lastActiveAt = LocalStorage.get("lastActiveAt");
+
+        if (lastActiveAt) {
+          let inActiveInSeconds = moment().diff(lastActiveAt, "seconds");
+
+          if (inActiveInSeconds > sessionConfig.TIMEOUT) {
+            userStore.logout();
+          }
+        }
+
+        // console.log("Token: " + token);
+        // console.log("PreToken: " + pretoken);
+        if (!LocalStorage.get("isChatStarted")) {
+          if (token && token != pretoken) {
+            is_start_new = true;
+            userStore.logout();
+          } else if (token == undefined && token != pretoken) {
+            userStore.logout();
+          }
+        }
+      }
+
+      LocalStorage.set("partnerId", partnerId);
+      LocalStorage.set("partnerCode", partnerCode);
+      LocalStorage.set("pretoken", token);
+      LocalStorage.set("lang", locale.value);
+      LocalStorage.set("way", way);
+      LocalStorage.set("type", type);
+      LocalStorage.set("deviceId", deviceId);
+
+      loginDetails = LocalStorage.get("loginDetails");
+      let isChatStarted = LocalStorage.get("isChatStarted");
+
+      if (isChatStarted && loginDetails) {
+        // console.log("Rc Here");
+        // console.log(loginDetails);
+
+        var respData = clone(loginDetails);
+        await repsLogin(respData);
+      } else {
+        // console.log("Do New");
+
+        // LocalStorage.remove('messageList');
+        // LocalStorage.remove('sendMessageList');
+        // LocalStorage.remove('wsLoggedIn');
+
+        // alert("Token: " + token);
+
+        authAPI
+          .login(partnerId, way, token, device, browser, referrer_url, is_start_new, partnerCode, deviceId)
+          .then(async (res) => {
+            isInternet.value = true;
+
+            if (res.data.code !== 0) {
+              return;
+            }
+
+            // console.log("set Token");
+            console.log(res.data.data);
+            // console.log(res.data.data.token.length);
+
+            LocalStorage.set("loginDetails", res.data.data);
+
+            await repsLogin(res.data.data);
+          });
+      }
+      // }
+      // else {
+      //   text.value = t("errors.partner_id_missing");
+      // }
 
       async function repsLogin(data) {
         const { guestId: userId, ip, token, to, partnerName: roomName, headIcon: avatarUrl, wsUrl } = data;
@@ -324,7 +327,7 @@ export default defineComponent({
 
               clearInterval(interval);
 
-              await router.push({ path: "/chat", query: { uid: chatGuid } });
+              await router.push({ path: "/liveChat/chat", query: { uid: chatGuid } });
             } catch (e) {
               console.log(e);
             }

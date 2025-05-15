@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { api } from "boot/axios";
+import { apiCs } from "boot/axios-cs";
 import qs from "qs";
 import isNull from "lodash/isNull";
 import isEmpty from "lodash/isEmpty";
@@ -72,10 +72,10 @@ const authAPI = {
     // console.log("Login Params");
     // console.log(params);
 
-    return api.post("/member/guest/login", qs.stringify(params));
+    return apiCs.post("/member/guest/login", qs.stringify(params));
   },
   ping() {
-    return api.get("/");
+    return apiCs.get("/");
   }
 };
 

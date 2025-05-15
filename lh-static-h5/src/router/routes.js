@@ -489,13 +489,13 @@ const routes = [
   {
     path: "/liveChat",
     component: () => import("src/cs-client-web/layouts/BlankLayout.vue"),
+    children: [{ path: "", component: () => import("src/cs-client-web/pages/LoginPage.vue") }]
+  },
+  {
+    path: "/liveChat/chat",
+    component: () => import("src/cs-client-web/layouts/BlankLayout.vue"),
     children: [{ path: "", component: () => import("src/cs-client-web/pages/ChatPage.vue") }]
   },
-  // {
-  //   path: "/cs-client-web/login",
-  //   component: () => import("src/cs-client-web/layouts/BlankLayout.vue"),
-  //   children: [{ path: "", component: () => import("src/cs-client-web/pages/ChatPage.vue") }]
-  // },
   {
     path: "/center/:path",
     redirect: (to) => {
