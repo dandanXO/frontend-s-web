@@ -82,7 +82,7 @@ export const useUI = defineStore("ui-store", {
     annoyingType() {
       const hostname = window.location.hostname;
       switch (hostname) {
-        case "localhost":
+        case "e3wuiq-test.b9game0.com":
           return "NONE";
         default:
           return "DEFAULT";
