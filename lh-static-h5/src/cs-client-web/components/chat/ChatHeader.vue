@@ -227,7 +227,6 @@ export default defineComponent({
     };
 
     const handleOnModal = () => {
-      // console.log("OPen Modal");
       is_show_modal.value = !is_show_modal.value;
     };
 
@@ -282,8 +281,8 @@ export default defineComponent({
     onMounted(() => {
       let container = document.getElementsByClassName("q-page-container");
       let footer = document.getElementsByClassName("q-footer");
-      if (container.length > 0) {
-        container[0].addEventListener("click", function (e) {
+      if (container.length > 1) {
+        container[1].addEventListener("click", function (e) {
           hideModal();
         });
       }

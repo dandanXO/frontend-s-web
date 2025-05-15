@@ -1213,7 +1213,7 @@ export default defineComponent({
       }
 
       var origin_url = window.location.origin;
-      var url = `${origin_url}?${partnerText}&way=${way}&lang=${lang}&type=${type}${deviceText}${startnew}&referral=${referrer_url}${tokenUrl}`;
+      var url = `${origin_url}/liveChat?${partnerText}&way=${way}&lang=${lang}&type=${type}${deviceText}${startnew}&referral=${referrer_url}${tokenUrl}`;
       // console.log(url);
 
       setTimeout(() => {
@@ -1852,8 +1852,8 @@ export default defineComponent({
   z-index: 99;
   font-size: 13px;
   color: #fff;
-  position: absolute;
-  bottom: 0px;
+  position: fixed;
+  bottom: 60px;
   left: 0px;
   right: 0px;
   padding: 4px 8px;
@@ -1904,11 +1904,16 @@ export default defineComponent({
   background: rgba(255, 255, 255, 0.9);
 }
 
+.WAL-start,
+.WAL__layout {
+  height: calc(100vh - 60px) !important;
+}
+
 .prechat-section {
   background: rgb(255, 255, 255);
   background: linear-gradient(180deg, rgba(255, 255, 255) 0%, rgba(222, 246, 246, 1) 65%, rgba(191, 238, 238, 1) 100%);
   width: 100%;
-  height: auto;
+  height: calc(100vh - 60px);
   min-height: 100vh;
   padding: 55px 15px 12px;
 
@@ -2007,7 +2012,7 @@ export default defineComponent({
 
 .start-chat-btn {
   position: fixed;
-  bottom: 0;
+  bottom: 60px;
   left: 50%;
   transform: translateX(-50%);
   width: calc(90% - 48px);

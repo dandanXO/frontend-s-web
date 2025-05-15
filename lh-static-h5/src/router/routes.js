@@ -488,12 +488,12 @@ const routes = [
   // },
   {
     path: "/liveChat",
-    component: () => import("src/cs-client-web/layouts/BlankLayout.vue"),
+    component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("src/cs-client-web/pages/LoginPage.vue") }]
   },
   {
     path: "/liveChat/chat",
-    component: () => import("src/cs-client-web/layouts/BlankLayout.vue"),
+    component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("src/cs-client-web/pages/ChatPage.vue") }]
   },
   {

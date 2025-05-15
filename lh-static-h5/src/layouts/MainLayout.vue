@@ -149,8 +149,9 @@
 </template>
 
 <script>
-import { computed, defineComponent, onMounted, ref, watch, defineAsyncComponent } from "vue";
-import { userStore } from "stores/index";
+import { computed, defineComponent, onMounted, ref, watch, defineAsyncComponent, onBeforeMount } from "vue";
+import { userStore } from "src/stores";
+import { useUserStore } from "src/cs-client-web/stores/user";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 
@@ -171,6 +172,7 @@ export default defineComponent({
     const route = useRoute();
     const router = useRouter();
     const store = userStore();
+    const csUserStore = useUserStore();
     const prevPage = ref(null);
     const ui = useUI();
     const scrollPageRef = ref(null);
@@ -489,6 +491,38 @@ export default defineComponent({
       }
       // console.log( ui.slotLists);
       return ui.slotLists;
+    });
+
+    function checkLocalStorage() {
+      // console.log("Check Storage Status");
+      let isLocalStorageEnabled = true;
+      try {
+        window.localStorage.setItem("lstest", "test");
+        var testitem = window.localStorage.getItem("lstest");
+        window.localStorage.removeItem("lstest");
+        // console.log("Can Use");
+        // alert(testitem);
+
+        if (!testitem) {
+          isLocalStorageEnabled = false;
+        }
+      } catch (e) {
+        // console.log("CANNOT USE STORAGE");
+        isLocalStorageEnabled = false;
+      }
+
+      // For Testing.
+      // isLocalStorageEnabled= false;
+
+      if (!isLocalStorageEnabled) {
+        // LocalStorage is disabled
+        // Handle the error or provide an alternative storage mechanism
+        csUserStore.is_storage_enabled = false;
+      }
+    }
+
+    onBeforeMount(() => {
+      checkLocalStorage();
     });
 
     onMounted(() => {

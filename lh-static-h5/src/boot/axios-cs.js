@@ -9,7 +9,6 @@ if (apiUrl && apiUrl.indexOf("http") > -1) {
 }
 
 let API_URL = "";
-console.log("API_URL", process.env.API_URL);
 const apiUrls = Object.values(process.env.API_URL).map((url) => url.trim());
 let isInitializingApiUrl = true;
 const pendingApiQueue = [];
