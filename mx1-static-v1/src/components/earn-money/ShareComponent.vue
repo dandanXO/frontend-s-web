@@ -248,32 +248,36 @@ const downloadQRImg = async () => {
   } else if (Platform.is.capacitor && Platform.is.android) {
     try {
       html2canvas(document.querySelector("#the-qrcode")).then(async function (canvas) {
-        document.body.appendChild(canvas);
-        const dataUrl = canvas.toDataURL("image/jpeg");
-        // console.log(dataUrl);
+        const dataUrl = canvas.toDataURL("image/jpeg").split(',')[1]; // 仅保留 base64
 
-        // Save the image to the photo gallery
         await Filesystem.writeFile({
-          path: `Pictures/myreferral.jpg`,
+          path: `myreferral.jpg`,
           data: dataUrl,
           directory: Directory.Documents,
           recursive: true
         });
 
-        console.log("QR Code image saved to gallery.");
+        console.log("QR Code image saved to file.");
 
         $q.notify({
           color: "positive",
           position: "top",
-          message: "QR Code image saved to photo gallery.",
+          message: t("notify.qrCodeImageSaved"),
           icon: "check_circle_outline"
         });
 
-        canvas.style.display = "none";
+        canvas.remove(); // 从 DOM 中移除
       });
     } catch (error) {
       console.error("Error saving QR Code image:", error);
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: "Failed to save image.",
+        icon: "error_outline"
+      });
     }
+
   } else {
     const link = window.document.createElement("a");
     const imgElement = document.querySelector('img[alt="Scan me!"]');

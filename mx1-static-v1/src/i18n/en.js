@@ -258,7 +258,8 @@ export default {
     failed: "Fallido",
     updateSucceed: "Actualizar con éxito",
     unbindSucceed: "Desvinculado con Éxito",
-    withdrawalSubmitSucceed: "Retiro Enviado con Éxito"
+    withdrawalSubmitSucceed: "Retiro Enviado con Éxito",
+    qrCodeImageSaved: "Imagen del código QR guardada en la galería de fotos."
   },
   sideNav: {
     inviteToEarn: "Invitar para obtener beneficios",

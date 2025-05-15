@@ -170,8 +170,10 @@ const swipeRight = () => {
       height: 55px;
       width: 25%;
       background: #4f26a6;
-      font-size: 12px;
+      padding: 0 8px;
+      font-size: 10px;
       font-weight: 500;
+      word-break: break-word;
       border: 2px solid #303030;
     }
 
