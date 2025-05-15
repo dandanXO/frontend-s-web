@@ -213,7 +213,7 @@
                           ></div>
 
                           <div class="game-title">
-                            <h3>{{ hot.name }}</h3>
+                            <h3>{{ hot.title }}</h3>
                             <span>真人娱乐</span>
                           </div>
 
@@ -287,7 +287,7 @@
                           ></div>
 
                           <div class="game-title">
-                            <h3>{{ hot.name }}</h3>
+                            <h3>{{ hot.title }}</h3>
                             <span>真人娱乐</span>
                           </div>
 
@@ -2014,7 +2014,12 @@ export default defineComponent({
               livecasino.value.push(liveObj);
 
               if (hotLives.value.indexOf(element.name) > -1) {
+                // debugger;
                 liveObj.order = 6;
+                if (liveObj.code === "AG") {
+                  liveObj.title = "PA";
+                }
+
                 hotgames.value.push(liveObj);
               }
             }

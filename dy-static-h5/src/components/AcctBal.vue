@@ -157,7 +157,7 @@ const showPlatform = () => {
 //     })
 // };
 const platformNames = {
-  AG: "AG",
+  AG: "PA",
   BBINDY: "BBIN",
   KY: "开元棋牌",
   LEG: "乐游棋牌",
@@ -166,7 +166,7 @@ const platformNames = {
   SGWin: "双赢彩票",
   PT: "PT电子",
   PG: "PG电子",
-  AGF: "AG捕鱼",
+  AGF: "PA捕鱼",
   PMFISH: "DB捕鱼"
 };
 const loadBalance = () => {

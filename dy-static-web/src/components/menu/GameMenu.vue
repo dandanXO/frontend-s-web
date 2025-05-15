@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="platform-menu games">
+    <div class="platform-menu games slots">
       <div
         class="platform-box"
         v-for="nav in filteredNavigations"

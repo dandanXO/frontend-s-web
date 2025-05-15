@@ -415,7 +415,7 @@
                 <div class="platform-logo">
                   <img loading="lazy" :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
                 </div>
-                <div class="platform-title">{{ item?.alias || item.title }}</div>
+                <div class="platform-title">{{ item.title }}</div>
                 <div class="platform-subtitle">{{ item.subtitle }}</div>
                 <div class="platform-rebate">
                   最高返水
@@ -1390,7 +1390,7 @@ export default defineComponent({
                 icon: slotObj.name,
                 title: slotObj.title
               };
-              // console.log(slotItem);
+              console.log(slotItem);
               ui.slotLists.push(slotItem);
               slot.value.push(slotObj);
             }
@@ -1455,6 +1455,10 @@ export default defineComponent({
         const aliass = plat.alias.split("、");
         const gameTypes = plat.gameType.split(",");
         const itemIndex = gameTypes.indexOf(platformType);
+        // console.log(platformType);
+        // console.log(aliass);
+        // console.log(aliass[itemIndex]);
+
         return itemIndex && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
       }
       return plat.alias;
