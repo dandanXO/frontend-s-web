@@ -14,8 +14,8 @@
         <span class="amount">
           {{
             selectedMethodItem.withdrawableBalance > 0
-              ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, false)
-              : "0.00"
+              ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, 0)
+              : "0"
           }}
         </span>
         <div class="title">Withdrawable</div>
@@ -359,7 +359,7 @@
                 <div class="remain-wager-wrapper" @click="refreshRemainWager">
                   <q-spinner v-if="isRefreshRemainWager" />
                   <span v-else>
-                    {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers, true) }}
+                    {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers, 0) }}
                   </span>
                   <img
                     class="refresh-btn-img"
