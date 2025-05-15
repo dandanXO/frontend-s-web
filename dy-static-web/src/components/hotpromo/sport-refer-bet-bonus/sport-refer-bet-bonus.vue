@@ -25,7 +25,7 @@
             <div class="reward-info-icon claim-gift-icon"></div>
             <div class="reward-info-content">
               可领取加码金：
-              <span class="amount">{{ bonus2 }}元</span>
+              <span class="amount">{{ bonus + bonus2 }}元</span>
             </div>
           </div>
         </div>
@@ -184,6 +184,7 @@ const loadingClaim = ref(false);
 const totalValidBet = ref(0);
 const bonus = ref(0);
 const bonus2 = ref(0);
+const referValidBet = ref(0);
 
 const fetchData = async () => {
   loadingClaim.value = true;
@@ -192,6 +193,7 @@ const fetchData = async () => {
       totalValidBet.value = res.data.totalValidBet;
       bonus.value = res.data.bonus;
       bonus2.value = res.data.referBonus;
+      referValidBet.value = res.data.referValidBet;
     })
     .catch(() => {})
     .finally(() => {
