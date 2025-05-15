@@ -1217,7 +1217,7 @@
     <div class="popout-dialog announcement-popout">
       <q-btn flat dense icon="close" class="text-black announcement-close" v-close-popup />
       <q-card style="width: calc(100% - 0px); margin: auto;" class="announcement-card">
-        <q-card-section class="q-mb-md" style="max-height: 360px; overflow: auto;">
+        <q-card-section class="q-mb-md" style="max-height: 98%; overflow: auto;">
           <!--     -->
           <q-card
             v-for="(item, index) in announcementList"
@@ -3748,13 +3748,15 @@ function checkTime(time) {
   const givenDate = new Date(time)
   const today = new Date()
 
+  console.log("Given:", givenDate)
+  console.log("Today:", today)
   return (
     givenDate.getFullYear() === today.getFullYear() &&
     givenDate.getMonth() === today.getMonth() &&
     givenDate.getDate() === today.getDate()
   )
 }
-function getPreview(content, length = 80) {
+function getPreview(content, length = 30) {
   const div = document.createElement('div')
   div.innerHTML = content
   const textOnly = div.textContent || div.innerText || ''
@@ -5089,7 +5091,7 @@ const checkGoogleLoginSetPwd = () => {
 .announcement-close {
   position: absolute;
   right: 20px;
-  bottom: 455px;
+  top: 20px;
   z-index: 3;
   background:linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
   
@@ -5101,8 +5103,11 @@ const checkGoogleLoginSetPwd = () => {
   height: calc(100vh - 108px);
 }
 .announcement-top-img {
-  margin-bottom: -120px;
-  width: 200px;
+  // margin-bottom: -120px;
+  // width: 200px;
+    width: 150px;
+    // margin: 0 auto -100px;
+    margin: -40px 0 -100px 12px;
   z-index: 1;
   img {
     width: 100%;
@@ -5110,7 +5115,7 @@ const checkGoogleLoginSetPwd = () => {
 }
 
 .announcement-popout {
-  height: 500px;
+  height: 580px;
   background: url(../assets/images/index/notfice-bg.png)no-repeat center top;
   border-radius: 30px 30px 0 0;
 }
@@ -5118,7 +5123,9 @@ const checkGoogleLoginSetPwd = () => {
   height: 100%;
   // background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
   background:transparent;
-  padding: 120px 20px 20px 20px;
+  // padding: 120px 20px 20px 20px;
+  
+  padding: 65px 20px 0px;
   // overflow-y: auto;
   // background: transparent;
   // background: linear-gradient(180deg, rgba(36, 36, 36, 1) 0%, rgba(35, 45, 31, 1) 100%);
@@ -5147,7 +5154,7 @@ const checkGoogleLoginSetPwd = () => {
     top: 0;
     left: 0;
     display: none;
-    .show {
+    &.show {
       display: block;
     }
   }
@@ -5169,7 +5176,7 @@ const checkGoogleLoginSetPwd = () => {
   .text-caption {
     color: #333333;
     font-size: 14px;
-    margin: 10px auto;
+    margin: 5px auto;
   }
   
 }
@@ -5417,7 +5424,7 @@ const checkGoogleLoginSetPwd = () => {
 
 .announcement-modal .q-dialog__inner {
   max-width: 500px;
-  max-height: 600px;
+  // max-height: 600px;
   margin: auto auto 0;
 }
 .q-dialog__inner--maximized > div {
