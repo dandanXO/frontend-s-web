@@ -6,7 +6,7 @@ body {
   font-size: 1rem;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #080a16;
-  position:relative;
+  position: relative;
 }
 
 * {
@@ -85,6 +85,19 @@ a {
   width: 100%;
 }
 
+.top-logo #logo-url {
+  position: absolute;
+  bottom: 0;
+  left: 33%;
+  background: linear-gradient(90deg, #d8c978 0%, #fadda0 50.5%, #ffc166 100%);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  font-family: "PingFang SC";
+  font-size: clamp(8px, 2.5vw, 14px);
+  color: transparent;
+}
+
 .top-cs {
   display: block;
   max-width: 190px;
@@ -110,14 +123,15 @@ a {
   height: calc(100% - 180px);
 }
 
-.gold-text{
-  text-align: center;width:100%;
-  margin-bottom:5px;
+.gold-text {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 5px;
   font-weight: bold;
   font-size: 20px;
-  margin-top:5px;
+  margin-top: 5px;
   background-clip: text;
-  background: linear-gradient(180deg, #FFF8BD 0%, #FFBE81 100%);
+  background: linear-gradient(180deg, #fff8bd 0%, #ffbe81 100%);
   -webkit-background-clip: text;
   color: transparent;
 }
@@ -147,7 +161,6 @@ a {
 
 .pop-btns-item .item-icon {
   min-width: 110px;
-
 }
 
 .pop-btns-item .item-icon img {
@@ -205,7 +218,6 @@ a {
 }
 
 @keyframes swing {
-
   0%,
   100% {
     transform: translateX(-5px);
@@ -228,8 +240,8 @@ a {
 }
 
 .contact-wrapper {
-  background: #0D193D;
-  border: 1px solid #8E7878;
+  background: #0d193d;
+  border: 1px solid #8e7878;
   border-radius: 8px;
   margin: 20px 20px 60px 20px;
   padding-top: 0px;
@@ -251,7 +263,7 @@ a {
 }
 
 .contact-item {
-  background: linear-gradient(180deg, #675E8C 0%, #353454 100%);
+  background: linear-gradient(180deg, #675e8c 0%, #353454 100%);
   padding: 4px 10px;
   border-radius: 8px;
   display: flex;
@@ -378,7 +390,6 @@ a {
   width: 90%;
 }
 
-
 .close-overlay {
   position: absolute;
   bottom: 20px;
@@ -396,7 +407,7 @@ a {
   display: none;
 }
 
-.qq-bg{
+.qq-bg {
   background-image: url("../imgs/qq-bg.png");
   background-size: 100% 100%;
   position: relative;
@@ -404,48 +415,47 @@ a {
   padding-left: 60px;
 }
 
-
-.voxis-bg{
+.voxis-bg {
   background-image: url("../imgs/voxis-bg.png");
   background-size: 100% 100%;
   position: relative;
   text-align: left;
   padding-left: 65px;
   padding-top: 3px;
-
 }
 
-@media(max-width: 400px){
-  .voxis-bg{
+@media (max-width: 400px) {
+  .voxis-bg {
     padding-left: 13vw;
   }
-  .qq-bg{
+  .qq-bg {
     padding-left: 13vw;
   }
-
 }
 
-.qq-bg span.title,.voxis-bg span.title{
+.qq-bg span.title,
+.voxis-bg span.title {
   font-size: 0.9em;
 
-  @media(max-width: 360px){
+  @media (max-width: 360px) {
     font-size: 12px;
   }
 }
 
-.qq-bg span,.voxis-bg span{
+.qq-bg span,
+.voxis-bg span {
   color: #fff;
   font-size: 1.1em;
   display: block;
   /*padding-right: 25px;*/
-  @media(max-width: 360px){
+  @media (max-width: 360px) {
     font-size: 14px;
   }
 }
 
 .copy-icon {
-  display: flex; 
-  cursor: pointer; 
+  display: flex;
+  cursor: pointer;
   margin-left: 5px;
   float: right;
   justify-content: center;
@@ -457,6 +467,6 @@ a {
   margin-top: 5px;
   img {
     width: 15px;
-    filter: invert(1)
+    filter: invert(1);
   }
 }
