@@ -47,7 +47,7 @@
               font-size: 13px;
               font-weight: 600;
               text-decoration: underline;
-              " 
+              "
               @click="handleOpenRecordDialog() ;isTabLeft=true">粽叶领取记录</div>
               <div style="
               position: absolute;
@@ -58,7 +58,7 @@
               font-size: 13px;
               font-weight: 600;
               text-decoration: underline;
-              " 
+              "
               @click="handleOpenRecordDialog() ;isTabLeft=false">开启粽子记录</div>
             <img src="./images/main-img.png" @click="handleOpenRecordDialog" />
             <img src="./images/main-img-reward.png" class="reward-button" @click="handleClaimBonus" />
@@ -185,7 +185,7 @@
           </div>
           <div class="item" style="color: #014625 !important">
             <div class="item-num">6</div>
-            为避免文字理解差异，雷火电竞保留此活动最终解释权；
+            为避免文字理解差异，东赢电竞保留此活动最终解释权；
           </div>
         </div>
       </div>
@@ -834,7 +834,7 @@ onMounted(() => {
   flex-direction: column;
   .inner-table{
     table {
-      
+
       border-collapse: separate; /* 關鍵！讓邊角能獨立呈現 */
       border-spacing: 0;
     }

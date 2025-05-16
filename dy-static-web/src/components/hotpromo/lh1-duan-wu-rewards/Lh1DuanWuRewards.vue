@@ -37,7 +37,7 @@
             <img
               src="@/assets/promo/lh1-duan-wu-rewards/btn.png"
               alt=""
-              style="padding-top: 12px;cursor: pointer;"
+              style="padding-top: 12px; cursor: pointer"
               @click="postReceive"
             />
           </div>
@@ -49,7 +49,7 @@
         <img
           src="@/assets/promo/lh1-duan-wu-rewards/openBtn.png"
           alt=""
-          style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);cursor: pointer;"
+          style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); cursor: pointer"
           @click="postBonus"
         />
 
@@ -172,7 +172,7 @@
           </li>
           <li>
             <span class="circle">6</span>
-            为避免文字理解差异，雷火电竞保留此活动最终解释权；
+            为避免文字理解差异，东赢电竞保留此活动最终解释权；
           </li>
         </ul>
       </div>
@@ -197,7 +197,7 @@
           <img src="@/assets/promo/lh1-duan-wu-rewards/close-icon.png" alt="" />
         </div>
 
-        <div v-show="isTabLeft" style="flex: 1; width: 100%;margin: 20px 0px;">
+        <div v-show="isTabLeft" style="flex: 1; width: 100%; margin: 20px 0px">
           <div class="table-container">
             <table class="bet-table">
               <thead>
@@ -216,7 +216,7 @@
           </div>
         </div>
 
-        <div v-show="!isTabLeft" style="flex: 1; width: 100%;margin: 20px 0px;">
+        <div v-show="!isTabLeft" style="flex: 1; width: 100%; margin: 20px 0px">
           <div class="table-container">
             <table class="bet-table">
               <thead>
@@ -322,8 +322,8 @@ const postBonus = () => {
 };
 
 const fetchRecordData = (action) => {
-  isOpenDialog.value = true
-  isTabLeft.value = action
+  isOpenDialog.value = true;
+  isTabLeft.value = action;
   getDuanWuTokenRecords("lh1-duan-wu-rewards").then((res) => {
     if (res.code === 0) {
       tokenRecord.value = res.data;
