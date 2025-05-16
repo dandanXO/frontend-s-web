@@ -17,7 +17,7 @@
           <div class="reward-info">
             <div class="reward-info-icon claim-gift-icon"></div>
             <div class="reward-info-content">
-              今日可领取投注金：
+              今日可领取投注彩金：
               <span class="amount">{{ bonus }}元</span>
             </div>
           </div>
@@ -46,7 +46,7 @@
           <thead>
             <tr>
               <th>有效投注</th>
-              <th>投注金</th>
+              <th>投注彩金</th>
               <th>流水倍数</th>
             </tr>
           </thead>
