@@ -52,10 +52,7 @@
                     v-if="item.name === 'SYSTEM'"
                     :src="require('../../assets/images/livestream/system-avatar.png')"
                   />
-                  <img
-                    v-else
-                    :src="`https://avatars.dicebear.com/api/bottts/${Math.random().toString(36).substring(7)}.svg`"
-                  />
+                  <img v-else :src="imgURL + item.avatar" />
                 </div>
                 <div>{{ item.name === "SYSTEM" ? "雷火" : item.name }}</div>
               </div>
@@ -90,7 +87,7 @@
                 </div>
                 <div class="hot-match-scores">
                   <div class="hot-match-team">
-                    <img class="hot-match-img" :src="`${imgUrl}/promo/${hotMatch.teamOneLogo}`" />
+                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamOneLogo}`" />
                     <span>{{ hotMatch.teamOneName }}</span>
                   </div>
                   <div class="hot-match-time">
@@ -103,7 +100,7 @@
                     </div>
                   </div>
                   <div class="hot-match-team">
-                    <img class="hot-match-img" :src="`${imgUrl}/promo/${hotMatch.teamTwoLogo}`" />
+                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
                     <span>{{ hotMatch.teamTwoName }}</span>
                   </div>
                 </div>
@@ -125,13 +122,15 @@ import { api } from "boot/axios";
 import GameModal from "components/modal/GameModal.vue";
 import { useRouter } from "vue-router";
 import { useNotify } from "src/hooks/notify";
+import { useLocalStorage, useSessionStorage } from "@vueuse/core";
 
 const qs = require("qs");
 const tabValue = ref("liveStream");
 const hotMatches = ref([]);
 const competitionTypes = ref([]);
 const selectedCompetitionType = ref();
-const imgUrl = process.env.IMAGE_CDN;
+// const imgUrl = process.env.IMAGE_CDN;
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 const router = useRouter();
 const notify = useNotify();
 

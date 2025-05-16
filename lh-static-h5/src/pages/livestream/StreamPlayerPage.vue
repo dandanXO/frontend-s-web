@@ -8,11 +8,7 @@
           <img v-if="$q.dark.isActive" src="../../assets/images/home/transfer-announce-icon-dark.svg" />
           <img v-else src="../../assets/images/home/announce-icon.png" />
         </div>
-        <marquee-text
-          :key="displayAnnouncementList.join('-')"
-          :repeat="5"
-          :duration="displayAnnouncementList.length * 10"
-        >
+        <marquee-text :key="displayAnnouncementList.join('-')" :repeat="5" :duration="marqueeDuration">
           <span v-for="(announcement, i) in displayAnnouncementList" :key="i">
             {{ announcement }}
           </span>
@@ -21,8 +17,11 @@
     </div>
 
     <div class="room-message-container">
-      <div class="container-box">
+      <div class="container-box" @click="expandRoomMsg">
         <div class="type-tags">
+          <div class="profile-tag">
+            <img :src="imgURL + currentLiveData.avatar" />
+          </div>
           <template v-if="currentLiveData.name === 'SYSTEM'">
             <div class="tag tag--live">官方直播间</div>
           </template>
@@ -33,7 +32,9 @@
           <div class="tag" :class="`tag--${sportType.val}`">{{ sportType.label }}</div>
         </div>
 
-        <div class="room-message-txt" v-if="currentLiveData.roomMessage">{{ currentLiveData.roomMessage }}</div>
+        <div class="room-message-txt" :class="{ expanded: isExpanded }" v-if="currentLiveData.roomMessage">
+          {{ currentLiveData.roomMessage }}
+        </div>
       </div>
     </div>
 
@@ -54,6 +55,7 @@ import { useRoute, useRouter } from "vue-router";
 import { getChatHistory, getLivestreamList, sendChat, getLivestreamDetail } from "../../api/livestream";
 import { extractVipLevelFromVipStr } from "src/boot/utils";
 import { useNotify } from "src/hooks/notify";
+import { useLocalStorage, useSessionStorage } from "@vueuse/core";
 
 const MESSAGE_SYNC_INTERVAL = 1000 * 2; // 2 seconds
 const MESSAGE_HISTORY_DANMU_FIRE_GAP = 10;
@@ -80,6 +82,13 @@ const pageContainer = ref(null);
 const store = userStore();
 const livestreamTimer = ref(null);
 const livestreamSyncAbortController = ref(null);
+const isExpanded = ref(false);
+const totalCharLength = computed(() => displayAnnouncementList.value.reduce((sum, msg) => sum + msg.length, 0));
+
+const marqueeDuration = computed(() => {
+  const baseSpeed = 50;
+  return Math.max(20, (totalCharLength.value * baseSpeed) / 100);
+});
 
 let danmu = null;
 
@@ -430,6 +439,26 @@ const sportType = computed(() => {
   }
 });
 
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
+
+let collapseTimeout = null;
+const expandRoomMsg = () => {
+  if (collapseTimeout) {
+    clearTimeout(collapseTimeout);
+    collapseTimeout = null;
+  }
+
+  if (!isExpanded.value) {
+    isExpanded.value = true;
+    collapseTimeout = setTimeout(() => {
+      isExpanded.value = false;
+      collapseTimeout = null;
+    }, 8000);
+  } else {
+    isExpanded.value = false;
+  }
+};
+
 watch(currentLiveData, () => {
   messages.value = [];
   unsortMessages.value = [];
@@ -442,6 +471,18 @@ watch(currentLiveData, () => {
   syncMessages();
   resetSyncLivestreamInterval(true);
 });
+
+// watch(
+//   () => currentLiveData.value.roomMessage,
+//   (newVal) => {
+//     if (newVal) {
+//       isExpanded.value = false;
+//       setTimeout(() => {
+//         isExpanded.value = true;
+//       }, 5000); // Expand after 5 seconds
+//     }
+//   }
+// );
 
 onMounted(() => {
   getData();
@@ -514,10 +555,30 @@ onUnmounted(() => {
     box-shadow: 0px -2.78px 2.78px 0px #c3d4e6 inset;
     border-radius: 12px;
     font-size: 10px;
+    overflow: hidden;
 
     .type-tags {
       display: flex;
+      align-items: center;
       gap: 8px;
+
+      .profile-tag {
+        // background: salmon;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+
+        img {
+          display: block;
+          width: 24px;
+          height: 24px;
+        }
+      }
+
       .tag {
         padding: 0px 12px;
         font-size: 10px;
@@ -563,6 +624,15 @@ onUnmounted(() => {
 
     .room-message-txt {
       margin-top: 8px;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: all 0.3s ease;
+
+      &.expanded {
+        white-space: normal;
+      }
     }
   }
 }
