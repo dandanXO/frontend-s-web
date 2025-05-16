@@ -211,7 +211,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in tokenRecord" :key="index">
+            <tr v-if="tokenRecord?.length <= 0">
+              <td colspan="2">暂无数据</td>
+            </tr>
+            <tr v-else v-for="(item, index) in tokenRecord" :key="index">
               <td>{{ item.recordTime }}</td>
               <td>{{ item.token }}</td>
             </tr>
@@ -228,7 +231,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in rewardRecord" :key="index">
+            <tr v-if="rewardRecord?.length <= 0">
+              <td colspan="3">暂无数据</td>
+            </tr>
+            <tr v-else v-for="(item, index) in rewardRecord" :key="index">
               <td>{{ item.recordTime }}</td>
               <td>1个</td>
               <td>{{ item.bonus }}</td>
@@ -613,7 +619,7 @@ onMounted(() => {
   }
   td {
     background: transparent !important;
-    border: 1px solid #acd4f6;
+    border: 1px solid #006948;
     height: 36px;
     font-size: 12px;
     font-weight: 400;
