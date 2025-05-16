@@ -77,6 +77,7 @@
     <NewFootball v-if="list.redirectUrl === 'dy2-football'" :promo-code="list.promoCode" />
     <IemDallas2025 v-if="list.redirectUrl === 'dy2-iem-dallas-2025'" :promo-code="list.promoCode" />
     <sport-refer-bet-bonus v-else-if="list.redirectUrl === 'dy2-sport-refer-bet-bonus'" :promo-code="list.promoCode" />
+    <DreamLeagueS26 v-else-if="list.redirectUrl === 'dy2-dream-league-s26'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -153,6 +154,7 @@ const BlastSlam32025 = defineAsyncComponent(() => import("./hotpromo/blast-slam-
 const NewFootball = defineAsyncComponent(() => import("../components/hotpromo/NewFootball/NewFootball.vue"));
 const VctBangkok = defineAsyncComponent(() => import("./hotpromo/vct-bangkok/VctBangkok.vue"));
 const elsOne2025 = defineAsyncComponent(() => import("./hotpromo/elsOne2025/elsOne2025.vue"));
+const DreamLeagueS26 = defineAsyncComponent(() => import("./hotpromo/dream-league-s26/DreamLeagueS26.vue"));
 import PglastanaAc2025 from "./hotpromo/lh1-pgl-astana-2025/pglastanaAc2025.vue";
 import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
 import newVip2025 from "./hotpromo/2025-new-vip/2025-new-vip.vue";
@@ -205,7 +207,8 @@ export default defineComponent({
     BlastSlam32025,
     BlastRival2025,
     NewFootball,
-    IemDallas2025
+    IemDallas2025,
+    DreamLeagueS26
   },
   props: {
     list: {
