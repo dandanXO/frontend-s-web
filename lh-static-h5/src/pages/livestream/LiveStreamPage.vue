@@ -52,7 +52,7 @@
                     :src="`https://avatars.dicebear.com/api/bottts/${Math.random().toString(36).substring(7)}.svg`"
                   />
                 </div>
-                <div>{{ item.name }}</div>
+                <div>{{ item.name === "SYSTEM" ? "雷火" : item.name }}</div>
               </div>
               <div class="content-float" :class="{ 'float-filled': item.liveStatus }">
                 <div v-if="item.liveStatus">正在直播</div>
