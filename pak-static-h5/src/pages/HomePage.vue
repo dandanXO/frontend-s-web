@@ -210,6 +210,9 @@
             </marquee-text>
           </div> -->
           <div class="marquee-container">
+            <div class="new-icon" :class="{show: hasNewAnnouncements}">
+              <img src="../assets/images/index/icon-new.png" />
+            </div>
             <div :key="currentAnnouncement?.title" class="marquee-text" @click="openPopup(currentAnnouncement)">
               {{ currentAnnouncement?.title }}
             </div>
@@ -1216,25 +1219,23 @@
     <div class="announcement-top-img"><img src="../assets/images/index/notice-icon.png"></div>
     <div class="popout-dialog announcement-popout">
       <q-btn flat dense icon="close" class="text-black announcement-close" v-close-popup />
-      <q-card style="width: calc(100% - 0px); margin: auto;" class="announcement-card">
-        <q-card-section class="q-mb-md" style="max-height: 98%; overflow: auto;">
+      <q-card :class="{wPage: maxPage > 1}" style="width: calc(100% - 0px); margin: auto;" class="announcement-card">
+        <q-card-section style="max-height: 100%; overflow: auto;">
           <!--     -->
           <q-card
-            v-for="(item, index) in announcementList"
+            v-for="(item, index) in paginatedAnnouncements"
             :key="index"
             class="q-mb-md announcement-item-card"
             flat
             bordered
           >
-            <div class="announcement-new" :class="{show: checkTime(item.createTime)}"><img src="../assets/images/index/notice-new.png"></div>
             <q-card-section class="row items-center justify-between q-pb-none">
               <div class="text-title" style="color: #15C55D;" v-html="item.title"></div>
-              <div class="text-date">{{ moment(item.createTime).format('DD/MM/YYYY') }}</div>
             </q-card-section>
 
             <q-card-section class="text-caption">
               <div v-if="!item.expanded">
-                <div v-html="getPreview(item.content)"></div>
+                <!-- <div v-html="getPreview(item.content)"></div> -->
               </div>
               <div v-else>
                 <div v-html="processedContent(item.content)"></div>
@@ -1249,7 +1250,9 @@
               </div>
             </q-card-section>
 
+            <div class="text-date">{{ moment(item.createTime).format('DD/MM/YYYY') }}</div>
             <q-card-actions style="margin: 0px 5px 0 0; padding: 0;" align="right">
+              <div class="announcement-new" :class="{show: checkTime(item.createTime) && !item.hasBeenExpanded}"></div>
               <q-btn
                 dense
                 size="sm"
@@ -1287,6 +1290,18 @@
           </q-tab-panels> -->
         </q-card-section>
       </q-card>
+      
+          
+      <q-separator />
+
+      <q-card-actions v-if="maxPage > 1" class="q-px-lg" align="right">
+        <q-pagination
+          v-model="page"
+          :max="maxPage"
+          :max-pages="7"
+          boundary-numbers
+        />
+      </q-card-actions>
     </div>
   </q-dialog>
 
@@ -3747,7 +3762,7 @@ const announcementTypes = ref([]);
 function checkTime(time) {
   const givenDate = new Date(time)
   const today = new Date()
-
+  today.setDate(today.getDate() - 1)
   console.log("Given:", givenDate)
   console.log("Today:", today)
   return (
@@ -3756,18 +3771,26 @@ function checkTime(time) {
     givenDate.getDate() === today.getDate()
   )
 }
-function getPreview(content, length = 30) {
+function getPreview(content, length = 0) {
   const div = document.createElement('div')
   div.innerHTML = content
   const textOnly = div.textContent || div.innerText || ''
   return textOnly.slice(0, length) + '...'
 }
+const hasNewAnnouncements = ref(false);
 const loadAnnouncement = () => {
   api.get("/announcement").then((res) => {
     if (res.code === 0) {
       if (res.data.announcements) {
         const d = res.data.announcements;
-        announcementList.value = d;
+        
+        const stored = localStorage.getItem('announcementList');
+        if (stored) {
+          announcementList.value = JSON.parse(stored)
+        } else {
+          announcementList.value = d;
+        }
+        checkForNewAnnouncements();
         currentAnnouncement.value = announcementList.value[0];
         startRotation()
       }
@@ -3778,9 +3801,30 @@ const loadAnnouncement = () => {
     }
   });
 };
+const checkForNewAnnouncements = () => {
+  hasNewAnnouncements.value = announcementList.value.some(
+    ann => checkTime(ann.createTime) && !ann.hasBeenExpanded
+  )
+}
+const page = ref(1)
+const pageSize = 5
 
+const paginatedAnnouncements = computed(() => {
+  const start = (page.value - 1) * pageSize
+  return announcementList.value.slice(start, start + pageSize)
+})
+
+const maxPage = computed(() =>
+  Math.ceil(announcementList.value.length / pageSize)
+)
 function toggleExpanded(index) {
+  announcementList.value[index].hasBeenExpanded = true
   announcementList.value[index].expanded = !announcementList.value[index].expanded
+  checkForNewAnnouncements();
+  saveToLocalStorage()
+}
+function saveToLocalStorage() {
+  localStorage.setItem('announcementList', JSON.stringify(announcementList.value))
 }
 const currentIndex = ref(0)
 const currentAnnouncement = ref(announcementList.value[0])
@@ -4809,6 +4853,18 @@ const checkGoogleLoginSetPwd = () => {
     }
 
     .marquee-container {
+      .new-icon {
+        position: absolute;
+        width: 20px;
+        top: -5px;
+        display: none;
+        &.show {
+          display: block;
+        }
+        img {
+          width: 100%;
+        }
+      }
       width: calc(100% - 28px);
       height: 25px;
       :deep(.marquee-text-content) {
@@ -5107,7 +5163,7 @@ const checkGoogleLoginSetPwd = () => {
   // width: 200px;
     width: 150px;
     // margin: 0 auto -100px;
-    margin: -40px 0 -100px 12px;
+    margin: 0px 0 -100px 12px;
   z-index: 1;
   img {
     width: 100%;
@@ -5115,12 +5171,15 @@ const checkGoogleLoginSetPwd = () => {
 }
 
 .announcement-popout {
-  height: 580px;
+  height: 500px;
   background: url(../assets/images/index/notfice-bg.png)no-repeat center top;
   border-radius: 30px 30px 0 0;
 }
 .announcement-card {
   height: 100%;
+  &.wPage {
+    height: 90%;
+  }
   // background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
   background:transparent;
   // padding: 120px 20px 20px 20px;
@@ -5150,10 +5209,14 @@ const checkGoogleLoginSetPwd = () => {
   padding: 10px 5px;
   margin: 0 0 10px;
   .announcement-new {
-    position: absolute;
-    top: 0;
-    left: 0;
+    // position: absolute;
+    // top: 0;
+    // left: 0;
     display: none;
+    padding: 5px;
+    background: #ff0000;
+    border-radius: 10px;
+    margin-right: 10px;
     &.show {
       display: block;
     }
@@ -5170,8 +5233,8 @@ const checkGoogleLoginSetPwd = () => {
     color: #33333399;
     font-weight: bold;
     position: absolute;
-    right: 5px;
-    top: 0px;
+    bottom: 10px;
+    left: 10px;
   }
   .text-caption {
     color: #333333;
