@@ -35,7 +35,7 @@
 
 <script>
 /* eslint-disable */
-import { defineComponent, onBeforeMount, onMounted, ref, nextTick, computed } from "vue";
+import { defineComponent, onBeforeMount, onActivated, ref, nextTick, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useChatStore } from "src/cs-client-web/stores/chat";
@@ -116,7 +116,7 @@ export default defineComponent({
       });
     };
 
-    onMounted(async () => {
+    onActivated(async () => {
       let way;
       let type;
       let deviceId;
