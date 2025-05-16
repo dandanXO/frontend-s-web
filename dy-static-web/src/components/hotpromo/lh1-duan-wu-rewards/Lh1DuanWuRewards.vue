@@ -111,7 +111,7 @@
             <thead>
               <tr>
                 <th>昨日有效投注</th>
-                <th>綠葉數量</th>
+                <th>粽叶數量</th>
                 <th>流水倍數</th>
               </tr>
             </thead>
@@ -402,8 +402,8 @@ onMounted(() => {
 }
 .title-img {
   width: 1102px;
-  margin-top: 38px;
-  margin-bottom: 32px;
+  margin: 38px auto 38px auto;
+  background: unset;
 }
 
 .first-content-title {
