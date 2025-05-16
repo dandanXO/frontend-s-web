@@ -978,7 +978,7 @@ export default defineComponent({
 
         &.duanwujie {
           background-size: 100% auto;
-          padding-bottom: 20px;
+          padding-bottom: 100px;
         }
         &.isCS {
           padding: 30px 0;

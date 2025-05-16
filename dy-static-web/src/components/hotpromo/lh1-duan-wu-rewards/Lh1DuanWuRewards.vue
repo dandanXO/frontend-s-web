@@ -4,21 +4,21 @@
       <img src="@/assets/promo/lh1-duan-wu-rewards/title-one.png" alt="" class="title-img" />
       <div class="content-top">
         <div class="first-content-title">
-          <img src="@/assets/promo/lh1-duan-wu-rewards/first-little-title-one.png" alt="" style="padding: 0px 20px" />
+          <img src="@/assets/promo/lh1-duan-wu-rewards/first-little-title-one.svg" alt="" style="padding: 0px 20px" />
           <div>
             <span style="color: #54783b; font-size: 36px">{{ totalValidBet }}</span>
             <span style="color: #54783b; font-size: 16px">元</span>
           </div>
         </div>
         <div class="first-content-title">
-          <img src="@/assets/promo/lh1-duan-wu-rewards/first-little-title-two.png" alt="" style="padding: 0px 20px" />
+          <img src="@/assets/promo/lh1-duan-wu-rewards/first-little-title-two.svg" alt="" style="padding: 0px 20px" />
           <div>
             <span style="color: #54783b; font-size: 36px">{{ currentTokenAmount }}</span>
             <span style="color: #54783b; font-size: 16px">片</span>
           </div>
         </div>
         <div class="first-content-title">
-          <img src="@/assets/promo/lh1-duan-wu-rewards/first-little-title-three.png" alt="" style="padding: 0px 20px" />
+          <img src="@/assets/promo/lh1-duan-wu-rewards/first-little-title-three.svg" alt="" style="padding: 0px 20px" />
           <div>
             <span style="color: #54783b; font-size: 36px">{{ rewardsCanClaim }}</span>
             <span style="color: #54783b; font-size: 16px">个</span>
@@ -362,7 +362,7 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-family: "Microsoft YaHei UI";
+  font-family: "PingFang SC";
 }
 
 .first-content {
@@ -435,7 +435,7 @@ onMounted(() => {
   width: 100%;
   border-collapse: collapse;
   text-align: center;
-  font-family: sans-serif;
+  font-family: "PingFang SC";
 }
 
 thead {
@@ -444,13 +444,13 @@ thead {
 }
 
 th {
-  border: 1px solid #acd4f6;
+  border: 1px solid #006948;
   padding: 12px;
   color: white;
 }
 
 td {
-  border: 1px solid #acd4f6;
+  border: 1px solid #006948;
   padding: 12px;
   color: #014625;
 }
