@@ -230,7 +230,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-if="tokenRecord?.length <= 0">
+                <tr v-if="rewardRecord?.length <= 0">
                   <td colspan="3" >暂无数据</td>
                 </tr>
                 <tr v-else v-for="(row, index) in rewardRecord" :key="index">
