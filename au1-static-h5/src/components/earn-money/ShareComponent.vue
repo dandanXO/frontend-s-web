@@ -157,7 +157,7 @@ const columns2 = [
   },
   {
     name: "betAmount",
-    label: "Reward per User (Aud)",
+    label: "Reward per User ($)",
     field: "betAmount",
     align: "center"
   }

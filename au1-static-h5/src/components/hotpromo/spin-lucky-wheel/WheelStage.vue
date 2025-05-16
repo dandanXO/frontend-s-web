@@ -303,9 +303,9 @@ const handleRecordClick = () => {
 const updateCountdownTime = () => {
   // console.log("updateCountdownTime")
   const endTime = isClaimedStatus.value
-    ? moment().tz("Asia/Manila").add(1, "days").startOf("day")
-    : moment(info.value.startTime).tz("Asia/Manila").add(3, "days");
-  const nextFreeSpinEndTime = moment().tz("Asia/Manila").add(1, "days").startOf("day");
+    ? moment().tz("Australia/Sydney").add(1, "days").startOf("day")
+    : moment(info.value.startTime).tz("Australia/Sydney").add(3, "days");
+  const nextFreeSpinEndTime = moment().tz("Australia/Sydney").add(1, "days").startOf("day");
   if (timer.value) {
     clearTimeout(timer.value);
   }
