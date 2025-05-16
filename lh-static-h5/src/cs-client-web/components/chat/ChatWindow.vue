@@ -412,7 +412,7 @@ export default defineComponent({
       // console.log("Scroll To Btm");
 
       if (scrollAreaRef.value) {
-        scrollAreaRef.value.setScrollPercentage("vertical", 1);
+        scrollUntilBtm();
 
         // 解决图像未能即时加载无法跳至底部
         if (latestMessage && latestMessage.files && latestMessage.files.length) {
@@ -440,7 +440,7 @@ export default defineComponent({
             // 等待全部图像加载完成,在跳至底部
             if (fileLoadableCount === fileLoadedCount) {
               clearInterval(toBottomTimer);
-              scrollAreaRef.value.setScrollPercentage("vertical", 1);
+              scrollUntilBtm();
             }
 
             toBottomTimerCount++;
@@ -450,7 +450,7 @@ export default defineComponent({
         }
 
         setTimeout(() => {
-          scrollAreaRef.value.setScrollPercentage("vertical", 1);
+          scrollUntilBtm();
         }, 0);
       }
     };
@@ -520,10 +520,13 @@ export default defineComponent({
     });
 
     const scrollUntilBtm = () => {
-      // console.log("scrollUntilBtm")
-      setTimeout(() => {
-        scrollAreaRef.value.setScrollPercentage("vertical", 1);
-      }, 0);
+      nextTick(() => {
+        const el = scrollAreaRef.value?.$el?.querySelector(".q-scrollarea__container");
+        if (el) {
+          el.scrollTop = el.scrollHeight;
+        }
+        // scrollAreaRef.value.setScrollPercentage("vertical", 1);
+      });
     };
 
     expose({ scrollUntilBtm });
