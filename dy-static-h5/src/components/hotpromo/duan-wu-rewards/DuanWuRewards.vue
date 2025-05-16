@@ -906,4 +906,20 @@ onMounted(() => {
     width: 120px !important;
   }
 }
+
+ .ribbon2 {
+  clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
+  background: linear-gradient(180deg, #00CC8C 0%, #006646 100%);
+  padding-right: 10px;
+  font-family: "PingFang";
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  width: fit-content;
+  padding: 0px 20px 0px 10px;
+  min-width: 80px;
+}
+
 </style>
