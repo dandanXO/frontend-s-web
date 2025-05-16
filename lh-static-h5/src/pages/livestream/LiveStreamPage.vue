@@ -49,6 +49,11 @@
               <div class="content-float float-user">
                 <div class="user-avatar">
                   <img
+                    v-if="item.name === 'SYSTEM'"
+                    :src="require('../../assets/images/livestream/system-avatar.png')"
+                  />
+                  <img
+                    v-else
                     :src="`https://avatars.dicebear.com/api/bottts/${Math.random().toString(36).substring(7)}.svg`"
                   />
                 </div>
