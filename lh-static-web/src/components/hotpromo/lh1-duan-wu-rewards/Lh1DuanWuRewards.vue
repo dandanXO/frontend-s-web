@@ -111,8 +111,8 @@
             <thead>
               <tr>
                 <th>昨日有效投注</th>
-                <th>粽叶數量</th>
-                <th>流水倍數</th>
+                <th>粽叶数量</th>
+                <th>流水倍数</th>
               </tr>
             </thead>
             <tbody>
