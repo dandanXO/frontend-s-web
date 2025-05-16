@@ -65,7 +65,7 @@
             text-decoration: underline;
             cursor: pointer;
           "
-          @click="fetchRecordData(false)"
+          @click="fetchRecordData(true)"
         >
           粽叶领取记录
         </span>
@@ -81,7 +81,7 @@
             text-decoration: underline;
             cursor: pointer;
           "
-          @click="fetchRecordData(true)"
+          @click="fetchRecordData(false)"
         >
           开启粽子记录
         </span>
@@ -189,8 +189,8 @@
       <div style="display: flex; justify-content: center; flex-direction: column; align-items: center">
         <img src="@/assets/promo/lh1-duan-wu-rewards/first-little-title-four.png" alt="" class="title-img" />
         <div class="tab-wrapper" @click="handleToggleTab" style="width: 560px; display: flex; justify-content: center">
-          <img v-if="isTabLeft" src="@/assets/promo/lh1-duan-wu-rewards/dialog-btn1.png" width="100%" />
-          <img v-else src="@/assets/promo/lh1-duan-wu-rewards/dialog-btn2.png" width="100%" />
+          <img v-if="isTabLeft" src="@/assets/promo/lh1-duan-wu-rewards/dialog-btn2.png" width="100%" />
+          <img v-else src="@/assets/promo/lh1-duan-wu-rewards/dialog-btn1.png" width="100%" />
         </div>
 
         <div class="close" @click="closeDialog">
@@ -207,7 +207,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(row, index) in tokenRecord" :key="index">
+                <tr v-if="tokenRecord?.length <= 0">
+                  <td colspan="2">暂无数据</td>
+                </tr>
+                <tr v-else v-for="(row, index) in tokenRecord" :key="index">
                   <td>{{ row.recordTime }}</td>
                   <td>{{ row.token }}</td>
                 </tr>
@@ -227,7 +230,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(row, index) in rewardRecord" :key="index">
+                <tr v-if="tokenRecord?.length <= 0">
+                  <td colspan="3">暂无数据</td>
+                </tr>
+                <tr v-else v-for="(row, index) in rewardRecord" :key="index">
                   <td>{{ row.recordTime }}</td>
                   <td>1个</td>
                   <td>{{ row.bonus }}</td>
