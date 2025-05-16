@@ -481,11 +481,6 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/AppTutorial.vue") }]
   },
-  // {
-  //   path: "/liveChat",
-  //   component: () => import("layouts/MainLayout.vue"),
-  //   children: [{ path: "", component: () => import("pages/LiveChatPage.vue") }]
-  // },
   {
     path: "/liveChat",
     component: () => import("layouts/MainLayout.vue"),

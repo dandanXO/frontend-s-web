@@ -582,7 +582,8 @@ export default defineComponent({
         "OutboxView",
         "BindBankCard",
         "BindCryptoView",
-        "BindEWalletView"
+        "BindEWalletView",
+        "CSLoginPage"
       ],
       isLowSafari
     };

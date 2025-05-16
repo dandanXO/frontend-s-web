@@ -35,7 +35,7 @@
 
 <script>
 /* eslint-disable */
-import { defineComponent, onBeforeMount, onActivated, ref, nextTick, computed } from "vue";
+import { defineComponent, onBeforeMount, onMounted, ref, nextTick, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useChatStore } from "src/cs-client-web/stores/chat";
@@ -54,7 +54,7 @@ import { useSocketStore } from "src/cs-client-web/stores/socket";
 import { storeToRefs } from "pinia";
 
 export default defineComponent({
-  name: "LoginPage",
+  name: "CSLoginPage",
   setup() {
     const { t, locale } = useI18n({ useScope: "global" });
     const router = useRouter();
@@ -116,7 +116,7 @@ export default defineComponent({
       });
     };
 
-    onActivated(async () => {
+    onMounted(async () => {
       let way;
       let type;
       let deviceId;
