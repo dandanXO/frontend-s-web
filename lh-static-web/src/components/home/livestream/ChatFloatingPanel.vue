@@ -3,7 +3,7 @@
     <div class="chat-floating-panel__avatar-wrapper">
       <img class="chat-floating-panel__avatar" :src="avatarUrl" loading="lazy" />
     </div>
-    <div class="chat-floating-panel__tag-wrapper">
+    <div v-if="livestreamData.id" class="chat-floating-panel__tag-wrapper">
       <div class="chat-floating-panel__tag streamer">
         {{ isSystemLivestream ? "官方直播间" : "主播" }}
       </div>

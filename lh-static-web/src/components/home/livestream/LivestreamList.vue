@@ -13,7 +13,7 @@
       <div class="livestream-list-item__match-info">
         <div class="livestream-list-item__match-info__team">
           <div class="livestream-list-item__match-info__team-emblem">
-            <img :src="imgURL + live.homeIcon" loading="lazy" />
+            <img :src="live.homeIcon" loading="lazy" />
           </div>
           <span class="livestream-list-item__match-info__team-name">{{ live.homeNameZh }}</span>
         </div>
@@ -28,7 +28,7 @@
 
         <div class="livestream-list-item__match-info__team">
           <div class="livestream-list-item__match-info__team-emblem">
-            <img :src="imgURL + live.awayIcon" loading="lazy" />
+            <img :src="live.awayIcon" loading="lazy" />
           </div>
           <span class="livestream-list-item__match-info__team-name">{{ live.awayNameZh }}</span>
         </div>

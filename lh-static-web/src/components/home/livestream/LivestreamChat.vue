@@ -93,9 +93,10 @@ const isMessageSendable = computed(
   () => messageToSend.value.trim().length > 0 && isLivestreamExisted.value && vipStatus.value
 );
 const displayAnnouncementList = computed(() => {
-  if (livestreamData.value?.roomMessage) {
-    return [livestreamData.value?.roomMessage];
-  }
+  // TODO: wait for the backend to return the site live message
+  // if (livestreamData.value?.roomMessage) {
+  //   return [livestreamData.value?.roomMessage];
+  // }
   return [DEFAULT_ANNOUNCEMENT];
 });
 const inputConfig = computed(() => {
