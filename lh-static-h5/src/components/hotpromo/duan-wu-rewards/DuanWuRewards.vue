@@ -40,8 +40,8 @@
           <div class="main-img-wrapper">
             <div style="
               position: absolute;
-              top: 6rem;
-              right: 3rem;
+              top: 31%;
+              right: 12%;
               transform: rotate(-7deg);
               color:#723D00;
               font-size: 13px;
@@ -894,6 +894,8 @@ onMounted(() => {
 
 .main-img-wrapper {
   position: relative;
+  width: 330px;
+  margin: 0 auto;
 
   .reward-button {
     position: absolute;
