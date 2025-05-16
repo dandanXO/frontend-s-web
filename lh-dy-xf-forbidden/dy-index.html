@@ -15,12 +15,24 @@
                 <img class="logo-bottom" width="100px" src="./images/logo-dy.svg" />
                 <img class="grid" width="500px" height="240px"  src="./images/grid.png" />
                 <div class="header">访问限制</div>
-                <div class="desc">ACCESS RESTRICTED</div>
+                <div class="desc" id="ip-text">ACCESS RESTRICTED</div>
                 <!-- <div class="ip-origin">您的IP来自于：192.168.1.1</div> -->
                 <div class="desc-2">您所在的地区已被禁止访问我们的网站，给您造成的不便敬请谅解，如有任何疑问，请通过在线客服联系全年无休的的在线客服团队。</div>
                 <a class="contact-btn" href="https://csweb.mh98q4u1yq.com/?partnerCode=DYCS&way=WEB&lang=zh-CN" target="_blank"></a>
                 <div class="desc-2">下载 <a class="link" href="https://am837.cc" target="_blank">am837.cc</a> 加 <span>vip000</span> 客服号协助处理</div>
             </div>
         </div>
+
+        <script>
+            fetch('https://whois.pconline.com.cn/ipJson.jsp?json=true')
+              .then(response => response.json())
+              .then(data => {
+                const ip = data.ip || '未知IP';
+                document.getElementById('ip-text').textContent = `你的IP: ${ip}`;
+              })
+              .catch(error => {
+                console.error('获取IP失败:', error);
+              });
+          </script>
     </body>
 </html>
