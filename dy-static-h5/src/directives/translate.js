@@ -133,11 +133,11 @@ export const translateRecord = (rec, type = "") => {
     return "PM 真人"; // BET
   } else if (rec === "AG") {
     if (type == "SLOT") {
-      return "XIN 电子";
+      return "PA 电子";
     }
-    return "AG 真人"; // AG
+    return "PA 真人"; // AG
   } else if (rec === "AGF") {
-    return "AG 捕鱼"; // AG
+    return "PA 捕鱼"; // AG
   } else if (rec === "PMFISH") {
     return "DB 捕鱼"; // PM
   } else if (rec === "BBINDY") {

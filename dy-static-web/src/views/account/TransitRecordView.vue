@@ -1335,7 +1335,7 @@ export default defineComponent({
         return ''
       }
       if (platformName === 'AG') {
-        return 'AG 真人' // AG
+        return 'PA 真人' // AG
       } else if (platformName === 'BBINDY') {
         return 'BBIN 真人' // BBINDY
       }  else if (platformName === 'KY') {

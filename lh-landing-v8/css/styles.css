@@ -323,3 +323,11 @@ body {
   width: 90%;
   object-fit: contain;
 }
+
+.copy-icon {
+  display: flex; 
+  cursor: pointer; 
+  margin-left: 5px;
+  float: right;
+
+}

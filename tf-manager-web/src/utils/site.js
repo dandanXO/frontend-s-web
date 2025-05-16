@@ -19,7 +19,7 @@ const MX1_SITE_ID = 21;
 const CO1_SITE_ID = 22;
 const TH2_SITE_ID = 23;
 const BPK_SITE_ID = 24;
-const PK4_SITE_ID = 26;
+// const PK4_SITE_ID = 26;
 const AU1_SITE_ID = 27;
 
 export const isIndiaSite = (siteId) => {

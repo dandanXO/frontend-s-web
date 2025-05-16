@@ -828,6 +828,13 @@ export function claimIemDallas2025Bonus(promoCode) {
   return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
 }
 
+export function getDreamLeagueS26Bonus(promoCode) {
+  return server.EVENT.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimDreamLeagueS26Bonus(promoCode) {
+  return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+
 export function getDuanWuRewardInit(promoCode) {
   return server.EVENT.get(`/session/token-rewards/init?promoCode=${promoCode}`);
 }

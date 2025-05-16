@@ -3433,7 +3433,8 @@ export default {
     'Official CS Account': 'Official CS Account',
     'Site Note': 'Notes',
     'Fast Access Promo': 'Fast Access Promo',
-    'Refer Friend Rebate Point record': 'Referral friend betting turnover rebate points record'
+    'Refer Friend Rebate Point record': 'Referral friend betting turnover rebate points record',
+    'Member Summary Report': 'Member Summary Report',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

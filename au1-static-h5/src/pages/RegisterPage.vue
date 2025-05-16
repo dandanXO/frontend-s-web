@@ -20,9 +20,9 @@
             (val) => (val && val.length > 0) || 'Please insert Phone number',
             (val) => {
               if (val.startsWith('0')) {
-                return val.length === 11 || 'Phone number must have 11 digits if starting with 0';
+                return val.length === 10 || 'Phone number must have 10 digits if starting with 0';
               } else {
-                return val.length === 10 || 'Phone number must have 10 digits';
+                return val.length === 9 || 'Phone number must have 9 digits';
               }
             }
           ]"

@@ -159,6 +159,18 @@
           <span v-if="scope.row.loginUrl === null">-</span>
         </template>
       </el-table-column>
+      <el-table-column
+        :label="t('fields.sid')"
+        prop="sid"
+        align="center"
+        min-width="120"
+      >
+        <template #default="scope">
+          <span v-if="!scope.row.sid">-</span>
+          <span v-else>{{ scope.row.sid }}</span>
+        </template>
+
+      </el-table-column>
     </el-table>
     <el-pagination
       :total="total"

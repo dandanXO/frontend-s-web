@@ -87,7 +87,7 @@
     <PglWallachiaS4 v-if="list.redirectUrl === 'lh1-pgl-wallachia-s4'" :promo-code="list.promoCode" />
     <BlastSlam32025 v-else-if="list.redirectUrl === 'lh1-blast-slam-3-2025'" :promo-code="list.promoCode" />
     <sport-refer-bet-bonus v-else-if="list.redirectUrl === 'lh1-sport-refer-bet-bonus'" :promo-code="list.promoCode" />
-    
+
     <Lh1Enc2025 v-else-if="list.redirectUrl === 'lh1-enc-2025'" :promo-code="list.promoCode" />
     <PglAstana2025 v-else-if="list.redirectUrl === 'lh1-pgl-astana-2025'" :promo-code="list.promoCode" />
     <DragonBoat v-if="list.redirectUrl === 'lh-duanwujie24'" :promo-code="list.promoCode" :params="list.param" />
@@ -102,6 +102,11 @@
     />
     <IemDallas2025
       v-if="list.redirectUrl === 'lh1-iem-dallas-2025'"
+      :promo-code="list.promoCode"
+      :params="list.param"
+    />
+    <DreamLeagueS26
+      v-if="list.redirectUrl === 'lh1-dream-league-s26'"
       :promo-code="list.promoCode"
       :params="list.param"
     />
@@ -187,6 +192,7 @@ import BlastRival2025 from "./hotpromo/BlastRival2025/BlastRival2025.vue";
 import { useDark } from "@vueuse/core";
 import IemDallas2025 from "./hotpromo/iem-dallas-2025/IemDallas2025.vue";
 import Lh1DuanWuRewards from "./hotpromo/lh1-duan-wu-rewards/Lh1DuanWuRewards.vue"
+import DreamLeagueS26 from "./hotpromo/dream-league-s26/DreamLeagueS26.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -243,6 +249,7 @@ export default defineComponent({
     YuEBaoPromo,
     BlastRival2025,
     IemDallas2025,
+    DreamLeagueS26,
     Lh1DuanWuRewards
   },
   props: {

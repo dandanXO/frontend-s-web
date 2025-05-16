@@ -390,7 +390,7 @@
         <el-table-column prop="financialName" :label="t('fields.financialLevel')" width="150" />
         <el-table-column v-if="!uiControl.importDataOperatable" prop="failMsg" :label="t('fields.failReason')" width="150">
           <template #default="scope">
-            <span v-if="uiControl.fails[scope.row.memberId] !== null"> {{ t('distributeFail.' + uiControl.fails[scope.row.id]) }} </span>
+            <span v-if="uiControl.fails[scope.row.memberId]"> {{ t('distributeFail.' + uiControl.fails[scope.row.id]) }} </span>
             <span v-else>-</span>
           </template>
         </el-table-column>

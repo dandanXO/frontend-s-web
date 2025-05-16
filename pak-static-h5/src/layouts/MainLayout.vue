@@ -595,6 +595,10 @@ export default defineComponent({
     });
 
     const checkFirstScreen = () => {
+      if (ui.annoyingType === "NONE") {
+        ui.firstScreenLoading = false;
+        return;
+      }
       if (ui.firstScreenLoading) {
         if (isPromoPage.value === true) {
           setTimeout(() => {

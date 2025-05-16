@@ -467,6 +467,13 @@ export function getIemDallas2025Bonus(promoCode) {
 export function claimIemDallas2025Bonus(promoCode) {
   return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
 }
+export function getDreamLeagueS26Bonus(promoCode) {
+  return eventapi.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimDreamLeagueS26Bonus(promoCode) {
+  return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+
 export function getTokenRewardsInit(promoCode) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.get(`/session/token-rewards/init?promoCode=${promoCode}&v=${randNum}`);

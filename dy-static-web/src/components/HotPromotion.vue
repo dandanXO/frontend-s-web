@@ -92,6 +92,7 @@
     <BlastRival2025 v-if="list.redirectUrl === 'dy2-blast-rivals-2025-s1'" :promo-code="list.promoCode" />
     <Cct2025 v-if="list.redirectUrl === 'dy2-cct-global-finals-2025'" :promo-code="list.promoCode" />
     <IemDallas2025 v-if="list.redirectUrl === 'dy2-iem-dallas-2025'" :promo-code="list.promoCode" />
+    <DreamLeagueS26 v-if="list.redirectUrl === 'dy2-dream-league-s26'" :promo-code="list.promoCode" />
     <Lh1DuanWuRewards v-else-if="list.redirectUrl === 'dy2-duan-wu-rewards'" :promo-code="list.promoCode" />
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
@@ -179,6 +180,7 @@ import PglAstana2025 from "./hotpromo/pgl-astana-2025/Pgl-astana-2025.vue";
 import IemDallas2025 from "./hotpromo/iem-dallas-2025/IemDallas2025.vue";
 import CS2Sign from "@/components/hotpromo/CS2Sign/CS2Sign.vue";
 import BlastPremierPromo from "@/components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue";
+import DreamLeagueS26 from "@/components/hotpromo/dream-league-s26/DreamLeagueS26.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -236,7 +238,8 @@ export default defineComponent({
     PglWallachiaS4,
     BlastSlam32025,
     BlastRival2025,
-    IemDallas2025
+    IemDallas2025,
+    DreamLeagueS26
   },
   props: {
     list: {
