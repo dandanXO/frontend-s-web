@@ -33,7 +33,7 @@
                 <p>粽叶领取 X {{ todayToken }}片</p>
               </div>
               <div class="right" style="width: 100px;">
-                <img src="./images/bonus-button.png" alt="" width="100%" @click="handleClaimToken" />
+                <img src="./images/bonus-button.svg" alt="" width="100%" @click="handleClaimToken" />
               </div>
             </div>
           </div>
@@ -61,7 +61,7 @@
               " 
               @click="handleOpenRecordDialog() ;isTabLeft=false">开启粽子记录</div>
             <img src="./images/main-img.png" @click="handleOpenRecordDialog" />
-            <img src="./images/main-img-reward.png" class="reward-button" @click="handleClaimBonus" />
+            <img src="./images/main-img-reward.svg" class="reward-button" @click="handleClaimBonus" />
             <div style="font-size: 13px;color:#027C5F; text-align:center;">每开启一次粽子将<span style="color:red;">消耗5片粽叶</span></div>
           </div>
         </div>
@@ -771,6 +771,7 @@ onMounted(() => {
         top: 0;
         width: 100%;
         height: 20px;
+        font-size: 11px;
       }
 
       .down {
