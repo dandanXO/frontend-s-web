@@ -5226,7 +5226,8 @@ const checkGoogleLoginSetPwd = () => {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 70%;
+    // width: 70%;
+    width: 100%;
     height: 20px;
   }
   .text-date {
