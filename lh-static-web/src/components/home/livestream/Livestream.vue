@@ -38,7 +38,7 @@ import { getChatHistory, getLivestreamDetail, getLivestreamList, sendChat } from
 import GameModal from "@/components/modal/GameModal.vue";
 import { useNotify } from "@/hooks/notify";
 import { extractVipLevelFromVipStr } from "@/utils/utils";
-import { useSessionStorage } from "@vueuse/core";
+import { useLocalStorage, useSessionStorage } from "@vueuse/core";
 
 /**
  * @typedef {Object} Message
@@ -61,6 +61,7 @@ const MAXIMUM_MESSAGE_PROCESS_DELAY_COUNT = 5;
 
 const store = userStore();
 const notify = useNotify();
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const latestWatchLivestreamId = useSessionStorage(LATEST_WATCH_LIVESTREAM_ID_KEY, null);
 
 /**
@@ -150,13 +151,23 @@ const handleSendChatMessage = (message) => {
 const parseLivestreamData = (data) => {
   let parsedSupplierUrl = {};
   let parsedStreamerUrl = {};
+  let homeIcon = data.homeIcon;
+  let awayIcon = data.awayIcon;
   try {
     parsedSupplierUrl = JSON.parse(data.supplierCdnPullUrl);
     parsedStreamerUrl = JSON.parse(data.streamerCdnPullUrl);
+    if (homeIcon && !homeIcon.startsWith("http")) {
+      homeIcon = imgURL + homeIcon;
+    }
+    if (awayIcon && !awayIcon.startsWith("http")) {
+      awayIcon = imgURL + awayIcon;
+    }
   } catch (e) {
   } finally {
     return {
       ...data,
+      homeIcon,
+      awayIcon,
       supplierCdnPullUrl: parsedSupplierUrl,
       streamerCdnPullUrl: parsedStreamerUrl
     };

@@ -1,8 +1,8 @@
 import { userStore } from "@/store";
 import { server } from "@/utils/request";
 
-export const getLivestreamList = (page) => {
-  return server.REST.post(`/opt-session/live/list?current=${page}`);
+export const getLivestreamList = () => {
+  return server.REST.post(`/opt-session/live/list`);
 };
 
 export const getLivestreamDetail = (livestreamId, abortController) => {
