@@ -1451,7 +1451,7 @@ export default defineComponent({
 
     const getAliasName = (plat, platformType) => {
       // console.log(plat);
-      if (plat.alias.includes("、")) {
+      if (plat.alias?.includes("、")) {
         const aliass = plat.alias.split("、");
         const gameTypes = plat.gameType.split(",");
         const itemIndex = gameTypes.indexOf(platformType);
