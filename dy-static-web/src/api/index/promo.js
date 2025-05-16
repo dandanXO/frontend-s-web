@@ -665,3 +665,23 @@ export function getDreamLeagueS26Bonus(promoCode) {
 export function claimDreamLeagueS26Bonus(promoCode) {
   return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
 }
+
+export function getDuanWuRewardInit(promoCode) {
+  return server.EVENT.get(`/session/token-rewards/init?promoCode=${promoCode}`);
+}
+
+export function getDuanWuTokenRecords(promoCode) {
+  return server.EVENT.get(`/session/token-rewards/tokenRecords?promoCode=${promoCode}`);
+}
+
+export function getDuanWuRewardRecords(promoCode) {
+  return server.EVENT.get(`/session/token-rewards/rewardRecords?promoCode=${promoCode}`);
+}
+
+export function postDuanWuReceiveToken(promoCode) {
+  return server.EVENT.post(`/session/token-rewards/receiveToken?promoCode=${promoCode}`);
+}
+
+export function getDuanWuclaimBonus(promoCode) {
+  return server.EVENT.post(`/session/token-rewards/claimBonus?promoCode=${promoCode}`);
+}

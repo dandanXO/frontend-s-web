@@ -111,6 +111,10 @@
       :params="list.param"
     />
 
+    <Lh1DuanWuRewards  v-if="list.redirectUrl === 'lh1-duan-wu-rewards'"
+      :promo-code="list.promoCode"
+      :params="list.param"/>
+
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -187,6 +191,7 @@ import YuEBaoPromo from "./hotpromo/yu-e-bao/YuEBaoPromo.vue";
 import BlastRival2025 from "./hotpromo/BlastRival2025/BlastRival2025.vue";
 import { useDark } from "@vueuse/core";
 import IemDallas2025 from "./hotpromo/iem-dallas-2025/IemDallas2025.vue";
+import Lh1DuanWuRewards from "./hotpromo/lh1-duan-wu-rewards/Lh1DuanWuRewards.vue"
 import DreamLeagueS26 from "./hotpromo/dream-league-s26/DreamLeagueS26.vue";
 
 export default defineComponent({
@@ -244,7 +249,8 @@ export default defineComponent({
     YuEBaoPromo,
     BlastRival2025,
     IemDallas2025,
-    DreamLeagueS26
+    DreamLeagueS26,
+    Lh1DuanWuRewards
   },
   props: {
     list: {

@@ -79,7 +79,8 @@
               selectedPromo.redirectUrl === 'dy2-football' ||
               selectedPromo.redirectUrl === 'dy2-blackmyth-wukong' ||
               selectedPromo.redirectUrl === 'dy1-ag-yuanxiaohongbao' ||
-              selectedPromo.promoCode === 'dy2-intel-esl',
+              selectedPromo.promoCode === 'dy2-intel-esl' ||
+              selectedPromo.promoCode === 'dy2-duan-wu-rewards',
             isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual',
             isDuanwuBanner: selectedPromo.promoCode === 'dy-duanwujie24',
             iseurocupBanner: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
@@ -129,6 +130,7 @@
             isMidAutumnWukong: selectedPromo.promoCode === 'dy2-midautumn-spinwheel',
             dy2quiz: selectedPromo.promoCode === 'dy2-quiz',
             fullwidth:
+              selectedPromo?.promoCode === 'dy2-duan-wu-rewards' ||
               selectedPromo.promoCode === 'dy2-cny2024-promo' ||
               selectedPromo.promoCode === 'dy2-cny-step-game' ||
               selectedPromo.promoCode === 'dy2-game-steps' ||
@@ -143,7 +145,7 @@
               selectedPromo.redirectUrl === 'dy2-christmas-gashapon' ||
               selectedPromo.redirectUrl === 'dy2-cny2025-red-envelope',
             duanwujie:
-              selectedPromo.promoCode === 'dy-duanwujie24' || selectedPromo.redirectUrl === 'lh-blackmyth-wukong',
+              selectedPromo.promoCode === 'dy2-duan-wu-rewards' || selectedPromo.redirectUrl === 'lh-blackmyth-wukong',
             dyworldcup: selectedPromo?.promoCode === 'dy2worldcup' || selectedPromo?.promoCode === 'dy2worldcupdota2',
             'livepoker-rebate-bg': selectedPromo?.promoCode === 'dy2-livepoker-rebate',
             dyfootball: selectedPromo?.promoCode === 'dy2-football',
@@ -156,13 +158,19 @@
             backgroundImage: selectedPromo?.desktopImgBackgroundUrl
               ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
               : 'none',
-            margin: ['dy1-ag-yuanxiaohongbao', 'dy1-lantern-festival-bonus'].includes(selectedPromo.redirectUrl)
+            margin: ['dy1-ag-yuanxiaohongbao', 'dy1-lantern-festival-bonus', 'dy2-duan-wu-rewards'].includes(
+              selectedPromo.redirectUrl
+            )
               ? '0px auto'
               : '20px auto',
-            'max-width': ['dy1-ag-yuanxiaohongbao', 'dy1-lantern-festival-bonus'].includes(selectedPromo.redirectUrl)
+            'max-width': ['dy1-ag-yuanxiaohongbao', 'dy1-lantern-festival-bonus', 'dy2-duan-wu-rewards'].includes(
+              selectedPromo.redirectUrl
+            )
               ? 'unset'
               : '1400px',
-            width: ['dy1-ag-yuanxiaohongbao', 'dy1-lantern-festival-bonus'].includes(selectedPromo.redirectUrl)
+            width: ['dy1-ag-yuanxiaohongbao', 'dy1-lantern-festival-bonus', 'dy2-duan-wu-rewards'].includes(
+              selectedPromo.redirectUrl
+            )
               ? '100%'
               : '95%'
           }"
@@ -969,18 +977,8 @@ export default defineComponent({
         }
 
         &.duanwujie {
-          width: 100%;
-          max-width: 1920px;
-          margin: 0 auto;
-          background-image: url(../assets/images/promotion/web-bg.jpg) !important;
-
-          .promo-view-container {
-            display: none;
-          }
-
-          .hot-promo {
-            border-radius: 0px;
-          }
+          background-size: 100% auto;
+          padding-bottom: 20px;
         }
         &.isCS {
           padding: 30px 0;
