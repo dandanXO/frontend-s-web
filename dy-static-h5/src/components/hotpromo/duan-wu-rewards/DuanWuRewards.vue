@@ -425,6 +425,7 @@ onMounted(() => {
 .livepoker-rebate-wrapper {
   display: flex;
   justify-content: center;
+  font-family: 'PingFang';
 }
 
 .livepoker-rebate-container {
