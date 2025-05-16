@@ -94,7 +94,7 @@
       />
       <dialog-paste-image />
 
-      <q-dialog class="modal-endchat" v-model="isRateDialogModel">
+      <q-dialog class="modal-rating" v-model="isRateDialogModel">
         <q-card width="330px">
           <q-card-section class="">
             <RatingBoard :rating_comment="rating_comment" @updateRatingModel="updateRatingModel" :t="t" />
@@ -2019,5 +2019,12 @@ export default defineComponent({
   background: rgba(210, 242, 242, 0.2);
   backdrop-filter: blur(4px);
   padding-bottom: 16px;
+}
+
+.modal-rating {
+  .q-card {
+    border-radius: 14px;
+    padding: 30px 10px 10px;
+  }
 }
 </style>

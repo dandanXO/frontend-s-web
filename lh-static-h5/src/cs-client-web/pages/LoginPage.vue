@@ -376,7 +376,7 @@ export default defineComponent({
 
 <style scoped>
 .server-indicator-div {
-  width: 60px;
+  width: 70px;
   padding: 10px;
   margin-left: auto;
 }
