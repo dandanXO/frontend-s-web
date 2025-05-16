@@ -24,15 +24,17 @@
         </div>
 
         <script>
-            fetch('https://sp0.baidu.com/8aQDcjqpAAV3otqbppnN2DJv/api.php?query=ip&resource_id=6006')
-              .then(response => response.json())
-              .then(data => {
-                const ip = data.ip || '未知IP';
+            async function getIP() {
+              try {
+                const response = await fetch('https://sumbtf.tebarncale.com/tool/myip');
+                const ip = await response.text();
+                console.log('Your IP is:', ip);
                 document.getElementById('ip-text').textContent = `你的IP: ${ip}`;
-              })
-              .catch(error => {
+              } catch (error) {
                 console.error('获取IP失败:', error);
-              });
-          </script>
+              }
+            }
+            getIP();
+        </script>
     </body>
 </html>
