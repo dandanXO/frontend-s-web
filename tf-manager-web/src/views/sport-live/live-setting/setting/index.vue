@@ -46,24 +46,50 @@
           :label="t('fields.roomMessage')"
           prop="roomMessage"
         >
-          <el-input
-            v-model="form.roomMessage"
-            type="textarea"
-            rows="3"
-            maxlength="200"
-          />
+          <div style="position: relative;">
+            <el-input
+              v-model="form.roomMessage"
+              type="textarea"
+              rows="3"
+              maxlength="200"
+            />
+            <el-button
+              icon="el-icon-smile"
+              size="mini"
+              style="margin-top: 5px;"
+              @click="showEmojiPickerForMessage = !showEmojiPickerForMessage"
+            >
+              Emoji
+            </el-button>
+            <div v-if="showEmojiPickerForMessage" style="position: absolute; z-index: 1000;">
+              <EmojiPicker @select="insertEmojiToMessage" />
+            </div>
+          </div>
         </el-form-item>
         <el-form-item
           v-if="uiControl.dialogType === 'STREAMER_CREATE' || uiControl.dialogType === 'STREAMER_EDIT'"
           :label="t('fields.roomTitle')"
           prop="roomTitle"
         >
-          <el-input
-            v-model="form.roomTitle"
-            type="textarea"
-            rows="3"
-            maxlength="200"
-          />
+          <div style="position: relative;">
+            <el-input
+              v-model="form.roomTitle"
+              type="textarea"
+              rows="3"
+              maxlength="200"
+            />
+            <el-button
+              icon="el-icon-smile"
+              size="mini"
+              style="margin-top: 5px;"
+              @click="showEmojiPicker = !showEmojiPicker"
+            >
+              Emoji
+            </el-button>
+            <div v-if="showEmojiPicker" style="position: absolute; z-index: 1000;">
+              <EmojiPicker @select="insertEmoji" />
+            </div>
+          </div>
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
@@ -281,7 +307,10 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import { useRoute } from "vue-router";
 import videojs from 'video.js'
 import 'video.js/dist/video-js.css'
+import EmojiPicker from 'vue3-emoji-picker'
+import 'vue3-emoji-picker/dist/style.css'
 
+const showEmojiPicker = ref(false)
 const { t } = useI18n();
 const uiControl = reactive({
   dialogVisible: false,
@@ -297,6 +326,11 @@ const previewDialog = reactive({
   visible: false,
   url: ''
 })
+const showEmojiPickerForMessage = ref(false)
+
+function insertEmojiToMessage(emoji) {
+  form.roomMessage += emoji.i
+}
 
 let player = null;
 let scoreTimer = null;
@@ -307,6 +341,9 @@ const supplierStreams = ref([]);
 const streamerStreams = ref([]);
 const monitorScoreMap = ref({});
 
+function insertEmoji(emoji) {
+  form.roomTitle += emoji.i
+}
 async function fetchMonitorScores() {
   const allStreamIds = [
     ...supplierStreams.value.map(s => s.streamId),
