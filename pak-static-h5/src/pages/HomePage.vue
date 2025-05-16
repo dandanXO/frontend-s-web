@@ -5161,10 +5161,17 @@ const checkGoogleLoginSetPwd = () => {
 .announcement-top-img {
   // margin-bottom: -120px;
   // width: 200px;
+  //   width: 150px;
+  //   // margin: 0 auto -100px;
+  //   margin: 0px 0 -100px 12px;
+  // z-index: 1;
+    z-index: 1;
     width: 150px;
-    // margin: 0 auto -100px;
-    margin: 0px 0 -100px 12px;
-  z-index: 1;
+    position: absolute;
+    bottom: 440px;
+    left: 0;
+    right: -10px;
+    margin: auto;
   img {
     width: 100%;
   }
