@@ -40,7 +40,7 @@
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
-          <div class="right">活动期间，当日梦幻联赛S26有效投注≥1,500元即可获得 最高1388元的奖励金</div>
+          <div class="right">活动期间，当日梦幻联赛S26有效投注≥1,300元即可获得 最高1,588元的奖励金</div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
           <thead>
@@ -52,7 +52,7 @@
           </thead>
           <tbody>
             <tr>
-              <td>≥1,500元</td>
+              <td>≥1,300元</td>
               <td>8元</td>
               <td rowspan="9">6倍流水</td>
             </tr>
@@ -113,7 +113,7 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              活动期间，活动仅计算电竞场馆中梦幻联赛S26赛事，会员在当日在梦幻联赛S26中累计有效投注≥1,500
+              活动期间，活动仅计算电竞场馆中梦幻联赛S26赛事，会员在当日在梦幻联赛S26中累计有效投注≥1,300
               元即可获得对应彩金，有效投注次日清零；
               <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
             </div>
