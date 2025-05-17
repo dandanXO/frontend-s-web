@@ -83,6 +83,7 @@ export const useUI = defineStore("ui-store", {
       const hostname = window.location.hostname;
       switch (hostname) {
         case "e3wuiq-test.b9game0.com":
+        case "xtjojmwz.nl":
           return "NONE";
         default:
           return "DEFAULT";
