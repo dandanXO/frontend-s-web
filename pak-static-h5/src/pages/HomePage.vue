@@ -1290,8 +1290,8 @@
           </q-tab-panels> -->
         </q-card-section>
       </q-card>
-      
-          
+
+
       <q-separator />
 
       <q-card-actions v-if="maxPage > 1" class="q-px-lg" align="right">
@@ -3783,7 +3783,7 @@ const loadAnnouncement = () => {
     if (res.code === 0) {
       if (res.data.announcements) {
         const d = res.data.announcements;
-        
+
         const stored = localStorage.getItem('announcementList');
         if (stored) {
           announcementList.value = JSON.parse(stored)
@@ -5150,7 +5150,7 @@ const checkGoogleLoginSetPwd = () => {
   top: 20px;
   z-index: 3;
   background:linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
-  
+
   padding: 5px;
     font-size: 10px;
 }
@@ -5168,7 +5168,7 @@ const checkGoogleLoginSetPwd = () => {
     z-index: 1;
     width: 150px;
     position: absolute;
-    bottom: 440px;
+    bottom: 390px;
     left: 0;
     right: -10px;
     margin: auto;
@@ -5178,7 +5178,7 @@ const checkGoogleLoginSetPwd = () => {
 }
 
 .announcement-popout {
-  height: 500px;
+  height: 450px;
   background: url(../assets/images/index/notfice-bg.png)no-repeat center top;
   border-radius: 30px 30px 0 0;
 }
@@ -5190,8 +5190,8 @@ const checkGoogleLoginSetPwd = () => {
   // background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
   background:transparent;
   // padding: 120px 20px 20px 20px;
-  
-  padding: 65px 20px 0px;
+
+  padding: 65px 10px 0px;
   // overflow-y: auto;
   // background: transparent;
   // background: linear-gradient(180deg, rgba(36, 36, 36, 1) 0%, rgba(35, 45, 31, 1) 100%);
@@ -5249,7 +5249,7 @@ const checkGoogleLoginSetPwd = () => {
     font-size: 14px;
     margin: 5px auto;
   }
-  
+
 }
 .popout-dialog {
   width: 100%;
