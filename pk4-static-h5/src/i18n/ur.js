@@ -418,7 +418,22 @@ export default {
   dividend: {
     myDividend: "میرا حصہ",
     contractManagement: "معاہدہ انتظام",
-    dividendRecord: "حصہ ریکارڈ"
+    dividendRecord: "حصہ ریکارڈ",
+    activeMember: 'فعال رکن',
+    dividendRate: 'منافع کی شرح',
+    netAmountReceives: 'خالص رقم وصول ہوئی',
+    status: 'حیثیت',
+    periodValidBet: 'مدت درست شرط',
+    periodPnL: 'مدت کا P&L',
+    periodSettledPnL: 'مدت میں طے شدہ P&L',
+    dividendAmount: 'منافع کی رقم',
+    downlineDividendsToPay: 'نیچے لائن منافع ادا کرنا',
+    disbursementTime: 'ادائیگی کا وقت',
+    statusChecking: 'چیکنگ',
+    statusPay: 'ادائیگی',
+    statusCleared: 'صاف کیا گیا',
+    statusCancelled: 'منسوخ کیا گیا'
+
   },
   deposit: {
     selectAmount: "رقم منتخب کریں",

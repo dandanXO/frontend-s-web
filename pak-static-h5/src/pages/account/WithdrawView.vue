@@ -369,10 +369,11 @@
           /
           <span class="tutorial-link" @click="openWithdrawTutorialVideo">{{ $t("withdraw.video") }}</span>
         </p>
-        <p>1. {{ $t("withdraw.bindCardCorrectFormat") }}</p>
-        <p>2. {{ $t("withdraw.dailyWalletLimit") }}</p>
-        <p>3. {{ $t("withdraw.donotexceeddaily") }}</p>
-        <p>4.{{ $t("withdraw.blockchainwithdrawfast") }}</p>
+        <p>1. {{ $t("withdraw.checkReceivingLimit") }}</p>
+        <p>2. {{ $t("withdraw.bindCardCorrectFormat") }}</p>
+        <p>3. {{ $t("withdraw.dailyWalletLimit") }}</p>
+        <p>4. {{ $t("withdraw.donotexceeddaily") }}</p>
+        <p>5. {{ $t("withdraw.blockchainwithdrawfast") }}</p>
       </div>
     </template>
 
@@ -920,7 +921,7 @@ const isWithdrawTutorial = ref(false);
 const langSelect = localStorage.getItem("languageLocale") ?? "";
 
 const openWithdrawTutorialVideo = () => {
-  window.open("https://drive.google.com/file/d/1788QQeJdn0GYzB17kk_qWuALZCsSyKuI/view?usp=drivesdk", "_blank");
+  window.open("https://drive.google.com/file/d/1_Mn99rY04un-EWtf-EZN5oSKoqTQN4iy/view?usp=sharing", "_blank");
   // if (langSelect === "ur") {
   //   window.open("https://drive.google.com/file/d/1l35uyEQNp798iYAfuLvKFf_O56fl5ZIb/view?usp=sharing", "_blank");
   // } else {

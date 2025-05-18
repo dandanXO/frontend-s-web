@@ -91,12 +91,12 @@
         </router-link>
         
         
-        <router-link to="/affiliate/security-center">
+        <!-- <router-link to="/affiliate/security-center">
           <div class="acct-nav-item">
             <img src="../../assets/images/affiliate/menu/security-center.png" />
           </div>
           <div class="acct-nav-label">{{ $t("affiliateSettings.securityCenter") }}</div>
-        </router-link>
+        </router-link> -->
 
         
         

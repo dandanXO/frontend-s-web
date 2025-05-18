@@ -106,15 +106,16 @@
                   dyftd: selectedPromo.promoCode === 'lh1-ftd-promo',
                   eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
                   lpllck: selectedPromo.promoCode === 'dy2-lpl-lck-bonus',
-                  'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus'
+                  'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus',
+                  'bbdacha-cs2': selectedPromo.promoCode ==='dy2-duan-wu-rewards'
                 }"
                 :style="{
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
                     ? `url(${imgURL + selectedPromo.mobileImgBackgroundUrl})`
                     : 'none',
-                  margin: '20px auto',
+                  margin: selectedPromo.promoCode ==='dy2-duan-wu-rewards' ? '' : '20px auto',
                   'max-width': '1400px',
-                  width: '95%'
+                  width:  selectedPromo.promoCode ==='dy2-duan-wu-rewards' ? '100%' :'95%'
                 }"
               >
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">

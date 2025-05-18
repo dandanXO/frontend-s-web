@@ -70,9 +70,7 @@
     <Monthly20HongBaoYu v-if="list.redirectUrl === 'dy2-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
     <Blast2025 v-if="list.redirectUrl === 'dy2-blast-open-lisbon-2025'" :promo-code="list.promoCode" />
     <CS2Sign v-if="list.redirectUrl === 'dy2-cs2-copenhagen-major-2024'" :promo-code="list.promoCode" />
-    />
     <BlastPremierPromo v-if="list.redirectUrl === 'dy2-cs2-blast-2024'" :promo-code="list.promoCode" />
-    />
     <elsOne2025 v-if="list.redirectUrl === 'dy2-esl-one-raleigh-2025'" :promo-code="list.promoCode" />
     <SkyesportsSouvenir2025 v-if="list.redirectUrl === 'dy2-skyesports-souvenir-2025'" :promo-code="list.promoCode" />
     <PGLOnFireBuenosAires2025
@@ -90,9 +88,12 @@
     <IemMelbourne2025 v-if="list.redirectUrl === 'dy2-iem-melbourne-2025'" :promo-code="list.promoCode" />
     <PglWallachiaS4 v-if="list.redirectUrl === 'dy2-pgl-wallachia-s4'" :promo-code="list.promoCode" />
     <BlastSlam32025 v-else-if="list.redirectUrl === 'dy2-blast-slam-3-2025'" :promo-code="list.promoCode" />
+    <sport-refer-bet-bonus v-else-if="list.redirectUrl === 'dy2-sport-refer-bet-bonus'" :promo-code="list.promoCode" />
     <BlastRival2025 v-if="list.redirectUrl === 'dy2-blast-rivals-2025-s1'" :promo-code="list.promoCode" />
     <Cct2025 v-if="list.redirectUrl === 'dy2-cct-global-finals-2025'" :promo-code="list.promoCode" />
     <IemDallas2025 v-if="list.redirectUrl === 'dy2-iem-dallas-2025'" :promo-code="list.promoCode" />
+    <DreamLeagueS26 v-if="list.redirectUrl === 'dy2-dream-league-s26'" :promo-code="list.promoCode" />
+    <Lh1DuanWuRewards v-else-if="list.redirectUrl === 'dy2-duan-wu-rewards'" :promo-code="list.promoCode" />
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -165,6 +166,8 @@ import PGLBucharest2025 from "./hotpromo/pgl-bucharest-2025/PGLBucharest2025.vue
 import Blast2025 from "../components/hotpromo/Blast2025/Blast2025.vue";
 import elsOne2025 from "../components/hotpromo/elsOne2025/elsOne2025.vue";
 
+import sportReferBetBonus from "./hotpromo/sport-refer-bet-bonus/sport-refer-bet-bonus.vue";
+import Lh1DuanWuRewards from "./hotpromo/lh1-duan-wu-rewards/Lh1DuanWuRewards.vue"
 import FootballFight from "@/components/hotpromo/newFootballfight/FootballFight.vue";
 import FissureUniverseS4 from "./hotpromo/fissure-universe-s4/FissureUniverseS4.vue";
 import YaLLa2025 from "./hotpromo/YaLLa2025/YaLLa2025.vue";
@@ -177,12 +180,15 @@ import PglAstana2025 from "./hotpromo/pgl-astana-2025/Pgl-astana-2025.vue";
 import IemDallas2025 from "./hotpromo/iem-dallas-2025/IemDallas2025.vue";
 import CS2Sign from "@/components/hotpromo/CS2Sign/CS2Sign.vue";
 import BlastPremierPromo from "@/components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue";
+import DreamLeagueS26 from "@/components/hotpromo/dream-league-s26/DreamLeagueS26.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    Lh1DuanWuRewards,
+    sportReferBetBonus,
     BlastPremierPromo,
     CS2Sign,
     PglAstana2025,
@@ -232,7 +238,8 @@ export default defineComponent({
     PglWallachiaS4,
     BlastSlam32025,
     BlastRival2025,
-    IemDallas2025
+    IemDallas2025,
+    DreamLeagueS26
   },
   props: {
     list: {

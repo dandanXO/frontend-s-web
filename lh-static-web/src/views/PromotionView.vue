@@ -132,6 +132,8 @@
               selectedPromo?.promoCode === 'lh-lpl-summer24' ||
               selectedPromo?.promoCode === 'lh1-s14-vote'
                 ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
+                : '' || selectedPromo?.promoCode === 'lh1-duan-wu-rewards'
+                ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
                 : ''
           }"
           :class="{

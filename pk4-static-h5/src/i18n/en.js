@@ -429,7 +429,20 @@ export default {
     contractManagement: 'Contract Management',
     dividendRecord: 'Dividend Record',
     activeMember: 'Active Member',
-    dividendRate: 'Dividend Rate'
+    dividendRate: 'Dividend Rate',
+    netAmountReceives: 'Net amount receives',
+    status: 'Status',
+    activeMember: 'Active member',
+    periodValidBet: 'Period valid bet',
+    periodPnL: 'Period P&L',
+    periodSettledPnL: 'Period settled P&L',
+    dividendAmount: 'Dividend amount',
+    downlineDividendsToPay: 'Downline dividends to pay',
+    disbursementTime: 'Disbursement time',
+    statusChecking: 'Checking',
+    statusPay: 'Pay',
+    statusCleared: 'Cleared',
+    statusCancelled: 'Cancelled'
   },
   deposit: {
     selectAmount: "Select Amount",

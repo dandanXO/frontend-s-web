@@ -25,24 +25,38 @@
               </div>
               <div class="platform-top">
                 <div class="platform-logo">
-                  <img :src="
-                    require('@/components/pages/img/' +
-                      props.platformType +
-                      '/' +
-                      props.platformType +
-                      '-logo-' +
-                      item.code.toLowerCase() +
-                      '.png')
-                  ">
+                  <img
+                    :src="
+                      require('@/components/pages/img/' +
+                        props.platformType +
+                        '/' +
+                        props.platformType +
+                        '-logo-' +
+                        item.code.toLowerCase() +
+                        '.png')
+                    "
+                  />
                 </div>
                 <div>
-                <div v-if="props.platformType !== 'slot'" class="platform-menu-title" v-html="item.cnname" />
-                <div v-if="props.platformType !== 'slot'" class="platform-menu-caption" v-html="item.caption" />
+                  <div v-if="props.platformType !== 'slot'" class="platform-menu-title" v-html="item.cnname" />
+                  <div v-if="props.platformType !== 'slot'" class="platform-menu-caption" v-html="item.caption" />
 
-                <div v-if="props.platformType === 'slot' && item?.alias" class="platform-menu-title" v-html="item?.alias" />
-                <div v-else-if="props.platformType === 'slot'" class="platform-menu-title" v-html="item.code + '电子'" />
-                
-                <div v-if="props.platformType === 'slot'" class="platform-menu-caption" v-html="'崭新玩法，感受精彩'" />
+                  <div
+                    v-if="props.platformType === 'slot' && item?.alias"
+                    class="platform-menu-title"
+                    v-html="item?.alias"
+                  />
+                  <div
+                    v-else-if="props.platformType === 'slot'"
+                    class="platform-menu-title"
+                    v-html="item.code + '电子'"
+                  />
+
+                  <div
+                    v-if="props.platformType === 'slot'"
+                    class="platform-menu-caption"
+                    v-html="'崭新玩法，感受精彩'"
+                  />
                 </div>
               </div>
               <div class="platform-menu-img" :class="props.platformType === 'slot' && 'slot-img'">
@@ -73,7 +87,7 @@ import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 import moment from "moment";
-import { platformsDetails } from '@/components/pages/platforms.js';
+import { platformsDetails } from "@/components/pages/platforms.js";
 
 const props = defineProps({
   platformName: String,
@@ -90,8 +104,8 @@ const getChunk = (list, size) =>
   [...Array(Math.ceil(list.length / size))].map((_, i) => list.slice(i * size, i * size + size));
 
 const platformsListDisplayByChunk = computed(() => {
-  if (props.platformType === 'slot') {
-    numberToShow.value = 6
+  if (props.platformType === "slot") {
+    numberToShow.value = 6;
   }
   if (platformsListDisplay.value.length > 0) {
     // console.log("here", numberToShow.value, getChunk(platformsListDisplay.value, numberToShow.value));
@@ -102,7 +116,7 @@ const platformsListDisplayByChunk = computed(() => {
 });
 
 const arrowStatus = computed(() => {
-  if (props.platformType === 'slot') {
+  if (props.platformType === "slot") {
     return "always";
   } else {
     return "never";
@@ -260,26 +274,26 @@ onMounted(() => {
   height: 100%;
 }
 .platform-menu-item {
-    padding: 20px;
-    gap: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 4px solid transparent;
-    height: calc(100% - 45px);
-    cursor: pointer;
-    &:hover {
-      background: linear-gradient(180deg, rgba(50, 206, 237, 0) 35.39%, rgba(50, 206, 237, 0.3) 100%);
-      border-bottom: 4px solid #32CEED;
-    }
+  padding: 20px;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 4px solid transparent;
+  height: calc(100% - 45px);
+  cursor: pointer;
+  &:hover {
+    background: linear-gradient(180deg, rgba(50, 206, 237, 0) 35.39%, rgba(50, 206, 237, 0.3) 100%);
+    border-bottom: 4px solid #32ceed;
+  }
 }
 .platform-top {
   display: flex;
   gap: 20px;
   .platform-logo {
-    border: 1px solid #5B5B5B;
-    background: #2D2D2E;
+    border: 1px solid #5b5b5b;
+    background: #2d2d2e;
     width: 40px;
     height: 40px;
     border-radius: 8px;
@@ -308,19 +322,19 @@ onMounted(() => {
     color: #b8b8b8;
   }
 }
-  .platform-menu-img {
-    width: 280px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: -30px 0 -50px;
+.platform-menu-img {
+  width: 280px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: -30px 0 -50px;
 
-    &.slot-img {
-      width: 220px;
-    } 
-
-    img {
-      width: 100%;
-    }
+  &.slot-img {
+    width: 220px;
   }
+
+  img {
+    width: 100%;
+  }
+}
 </style>

@@ -185,7 +185,7 @@ export default defineComponent({
           if (route.query.from) {
             prevPage.value = route.query.from;
           } else {
-            prevPage.value = "/account";
+            prevPage.value = "account";
           }
         } else if (route.path === "/account/message") {
           hasPage.value = true;
@@ -193,14 +193,14 @@ export default defineComponent({
           if (route.query.from) {
             prevPage.value = route.query.from;
           } else {
-            prevPage.value = "/account";
+            prevPage.value = "account";
           }
         } else if (route.path === "/account/message-detail") {
-          prevPage.value = "/account/message";
+          prevPage.value = "account/message";
           hasPage.value = true;
           pageName.value = t("header.message");
         } else if (route.path === "/account/record") {
-          prevPage.value = "/account";
+          prevPage.value = "account";
           hasPage.value = true;
           pageName.value = t("header.record");
         } else if (route.path === "/account/order") {
@@ -209,10 +209,10 @@ export default defineComponent({
           if (route.query.from) {
             prevPage.value = route.query.from;
           } else {
-            prevPage.value = "/account";
+            prevPage.value = "account";
           }
         } else if (route.path === "/account/discount") {
-          prevPage.value = "/account";
+          prevPage.value = "account";
           hasPage.value = true;
           pageName.value = t("header.discount");
         } else if (route.path === "/earn-money" || route.path === "/agency-policy") {
@@ -233,19 +233,19 @@ export default defineComponent({
           if (route.query.redirect) prevPage.value = route.query.redirect;
           else prevPage.value = "/";
         } else if (route.path === "/login") {
-          prevPage.value = "/home";
+          prevPage.value = "home";
           hasPage.value = true;
           pageName.value = t("header.login");
         } else if (route.path === "/register") {
-          prevPage.value = "/home";
+          prevPage.value = "home";
           hasPage.value = true;
           pageName.value = t("header.register");
         } else if (route.path === "/forgot-account") {
-          prevPage.value = "/login";
+          prevPage.value = "login";
           hasPage.value = true;
           pageName.value = t("header.forgotAccount");
         } else if (route.path === "/forgot-password") {
-          prevPage.value = "/login";
+          prevPage.value = "login";
           hasPage.value = true;
           pageName.value = t("header.forgotPassword");
         } else if (route.path === "/live-casino") {
@@ -269,10 +269,10 @@ export default defineComponent({
           prevPage.value = "/";
           if (route.query.name) {
             if (route.query.fromAccount) {
-              prevPage.value = "/account/promotion";
+              prevPage.value = "account/promotion";
             } else {
               hasPage.value = false;
-              prevPage.value = "/promo";
+              prevPage.value = "promo";
             }
           }
         } else if (route.path === "/promotion") {
@@ -281,7 +281,7 @@ export default defineComponent({
           pageName.value = "Promotion";
           prevPage.value = "";
         } else if (route.path === "/activities-details") {
-          prevPage.value = "/promo";
+          prevPage.value = "promo";
           hasPage.value = true;
           pageName.value = t("header.activitiesDetails");
         } else if (route.path === "/finance/deposit") {
@@ -290,7 +290,7 @@ export default defineComponent({
           if (route.query.from) {
             prevPage.value = route.query.from;
           } else {
-            prevPage.value = "/account";
+            prevPage.value = "account";
           }
         } else if (route.path === "/finance/withdraw") {
           hasPage.value = true;
@@ -298,143 +298,143 @@ export default defineComponent({
           if (route.query.from) {
             prevPage.value = route.query.from;
           } else {
-            prevPage.value = "/account";
+            prevPage.value = "account";
           }
         } else if (route.path === "/account/transfer") {
-          prevPage.value = "/account";
+          prevPage.value = "account";
           hasPage.value = true;
           pageName.value = t("header.transfer");
           if (route.query.redirect) {
             prevPage.value = route.query.redirect;
           }
         } else if (route.path === "/account/profile") {
-          prevPage.value = "/account";
+          prevPage.value = "account";
           hasPage.value = true;
           pageName.value = t("header.personalCenter");
         } else if (route.path === "/account/records") {
-          prevPage.value = "/account";
+          prevPage.value = "account";
           hasPage.value = true;
           pageName.value = t("header.records");
         } else if (route.path === "/account/transit") {
-          prevPage.value = "/account";
+          prevPage.value = "account";
           hasPage.value = true;
           pageName.value = t("header.transit");
         } else if (route.path === "/account/personal") {
-          prevPage.value = "/account";
+          prevPage.value = "account";
           hasPage.value = true;
           pageName.value = t("header.personalInformation");
         } else if (route.path === "/account/verifyTelephone") {
-          prevPage.value = "/account/personal";
+          prevPage.value = "account/personal";
           hasPage.value = true;
           pageName.value = t("header.verifyMobileNumber");
         } else if (route.path === "/account/verifyEmail") {
-          prevPage.value = "/account/personal";
+          prevPage.value = "account/personal";
           hasPage.value = true;
           pageName.value = t("header.email");
         } else if (route.path === "/account/changePwd") {
-          prevPage.value = "/account";
+          prevPage.value = "account";
           hasPage.value = true;
           pageName.value = t("header.changePassword");
         } else if (route.path === "/account/download") {
-          prevPage.value = "/account";
+          prevPage.value = "account";
           hasPage.value = true;
           pageName.value = t("header.download");
         } else if (route.path === "/account/invite") {
-          prevPage.value = "/account";
+          prevPage.value = "account";
           hasPage.value = true;
           pageName.value = t("header.referral");
         } else if (route.path === "/account/announcement") {
-          prevPage.value = "/account";
+          prevPage.value = "account";
           hasPage.value = true;
           pageName.value = t("header.announcement");
         } else if (route.path === "/account/mail") {
-          prevPage.value = "/account";
+          prevPage.value = "account";
           hasPage.value = true;
           pageName.value = t("header.mail");
         } else if (route.path === "/account/mail/inbox") {
-          prevPage.value = "/account/mail";
+          prevPage.value = "account/mail";
           hasPage.value = true;
           pageName.value = t("header.inbox");
         } else if (route.path === "/account/mail/outbox") {
-          prevPage.value = "/account/mail";
+          prevPage.value = "account/mail";
           hasPage.value = true;
           pageName.value = t("header.outbox");
         } else if (route.path === "/account/mail/write") {
-          prevPage.value = "/account/mail";
+          prevPage.value = "account/mail";
           hasPage.value = true;
           pageName.value = "写信";
         } else if (route.path === "/account/withdraw") {
-          prevPage.value = "/account";
+          prevPage.value = "account";
           hasPage.value = true;
           pageName.value = t("header.bankDetail");
         } else if (route.path === "/account/promotion") {
-          prevPage.value = "/account";
+          prevPage.value = "account";
           hasPage.value = true;
           pageName.value = t("header.promotionClaim");
         } else if (route.path === "/affiliate") {
-          prevPage.value = "/account";
+          prevPage.value = "account";
           hasPage.value = true;
           pageName.value = t("header.affiliate");
         } else if (route.path === "/insert-bankinfo") {
           hasPage.value = true;
           pageName.value = t("header.bankInformation");
         } else if (route.path === "/account/records/deposit") {
-          prevPage.value = "/account/records";
+          prevPage.value = "account/records";
           hasPage.value = true;
           pageName.value = t("header.depositRecord");
         } else if (route.path === "/account/records/withdraw") {
-          prevPage.value = "/account/records";
+          prevPage.value = "account/records";
           hasPage.value = true;
           pageName.value = t("header.withdrawalRecord");
         } else if (route.path === "/account/records/transfer") {
-          prevPage.value = "/account/records";
+          prevPage.value = "account/records";
           hasPage.value = true;
           pageName.value = t("header.transferRecord");
         } else if (route.path === "/account/records/moneyChange") {
-          prevPage.value = "/account/records";
+          prevPage.value = "account/records";
           hasPage.value = true;
           pageName.value = "账变记录";
         } else if (route.path === "/account/records/promo") {
-          prevPage.value = "/account/records";
+          prevPage.value = "account/records";
           hasPage.value = true;
           pageName.value = t("header.promotionRecord");
         } else if (route.path === "/account/records/bet") {
-          prevPage.value = "/account/records";
+          prevPage.value = "account/records";
           hasPage.value = true;
           pageName.value = t("header.betRecord");
         } else if (route.path === "/account/records/financeFeedback") {
-          prevPage.value = "/account/records";
+          prevPage.value = "account/records";
           hasPage.value = true;
           pageName.value = "催单记录";
         } else if (route.path === "/account/records/change") {
-          prevPage.value = "/account/records";
+          prevPage.value = "account/records";
           hasPage.value = true;
           pageName.value = "账变记录";
         } else if (route.path === "/account/records/betRecord") {
-          prevPage.value = "/account/records";
+          prevPage.value = "account/records";
           hasPage.value = true;
           pageName.value = t("header.betRecord");
         } else if (route.path === "/account/records/recommend") {
-          prevPage.value = "/account/records";
+          prevPage.value = "account/records";
           hasPage.value = true;
           pageName.value = t("header.referralRecord");
         } else if (route.path === "/account/records/help") {
-          prevPage.value = "/account/records";
+          prevPage.value = "account/records";
           hasPage.value = true;
           pageName.value = "救援金记录";
         } else if (route.path === "/account/records/bill") {
-          prevPage.value = "/account/records";
+          prevPage.value = "account/records";
           hasPage.value = true;
           pageName.value = "催单记录";
         } else if (route.path === "/deposit") {
-          prevPage.value = "/account";
+          prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "";
           if (route.query.from) {
             prevPage.value = route.query.from;
           }
         } else if (route.path === "/withdraw") {
-          prevPage.value = "/account";
+          prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "";
         }

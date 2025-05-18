@@ -446,7 +446,7 @@ onMounted(() => {
   }
 }
 
-@media (max-height: 650px) {
+@media (max-height: 700px) {
   .deposit-promo-modal {
     .modal-img {
       img {

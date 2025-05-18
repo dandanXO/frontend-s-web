@@ -1,314 +1,387 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>雷火电竞体育官网</title>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>雷火电竞体育官网</title>
+    <link rel="stylesheet" type="text/css" href="css/styles-v2.css" />
+    <link rel="icon" href="imgs/favicon.ico" type="image/x-icon" />
 
-  <link rel="stylesheet" type="text/css" href="css/styles-v2.css" />
-  <link rel="icon" href="imgs/favicon.ico" type="image/x-icon" />
+    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
+  </head>
 
-  <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
-</head>
+  <body id="lh-landing-v8">
+    <div class="main-wrapper">
+      <div class="full-container">
+        <div class="top-wrapper">
+          <div class="top-bg">
+            <img src="imgs/banner-2.png" alt="" />
+            <a id="click-to-claim-btn" href="#" target="_blank">
+              <img class="click-to-claim-btn" src="imgs/click-to-claim.png" alt="" />
+            </a>
+          </div>
+          <div class="top-logo">
+            <img src="imgs/lh-logo4.png" alt="雷火 TFGAMING" title="雷火 TFGAMING" />
+            <div id="logo-url">leihuo16.com</div>
+          </div>
+          <div class="top-cs" style="display: none">
+            <a href="https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN" target="_blank">
+              <img src="imgs/service.png" alt="" />
+            </a>
+          </div>
+        </div>
 
-<body id="lh-landing-v8">
-  <div class="main-wrapper">
-    <div class="full-container">
-      <div class="top-wrapper">
-        <div class="top-bg">
-          <img src="imgs/banner-1.png" alt="" />
-          <a id="click-to-claim-btn" href="#" target="_blank">
-            <img class="click-to-claim-btn" src="imgs/click-to-claim.png" alt="" />
+        <div class="banner-wrapper">
+          <div><img src="imgs/banner-title-2.png" alt="" width="100%" /></div>
+          <a id="tf88Url-btn" href="#" target="_blank">
+            <img src="imgs/banner-22222.png" alt="" width="100%" />
           </a>
         </div>
-        <div class="top-logo">
-          <img src="imgs/lh-logo3.png" alt="雷火 TFGAMING" title="雷火 TFGAMING" />
-        </div>
-        <div class="top-cs" style="display: none">
-          <a href="https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN" target="_blank">
-            <img src="imgs/service.png" alt="" />
-          </a>
+
+        <div class="contact-wrapper">
+          <img src="./imgs/contact-title.png" alt="" width="100%" style="padding: 10px 10px 5px 10px" />
+          <div class="contact-content">
+            <div class="contact-group" style="width: 100%">
+              <div class="contact-item contact-item1 w-50" style="height: 100%; justify-content: flex-start">
+                <div class="icon">
+                  <img id="group1-img" src="./imgs/qq-icon.png" alt="" />
+                </div>
+                <div style="display: flex; flex-direction: column">
+                  <span class="title" id="group1-title">浮力</span>
+                  <span id="group1-number">850808398</span>
+                </div>
+              </div>
+              <div class="contact-item contact-item2 w-50" style="height: 100%; justify-content: flex-start">
+                <div class="icon">
+                  <img id="group2-img" src="./imgs/qq-icon.png" alt="" />
+                </div>
+                <div style="display: flex; flex-direction: column">
+                  <span class="title" id="group2-title">福熙阁</span>
+                  <span id="group2-number">875981010</span>
+                </div>
+              </div>
+              <div class="contact-item contact-item3 w-50" style="height: 100%; justify-content: flex-start">
+                <div class="icon">
+                  <img id="group3-img" src="./imgs/qq-icon.png" alt="" />
+                </div>
+                <div style="display: flex; flex-direction: column">
+                  <span class="title" id="group3-title">福熙阁</span>
+                  <span id="group3-number">875981010</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-item contact-item1agent w-100">
+              <div class="contact-group">
+                <div class="icon">
+                  <img src="./imgs/service-icon.png" alt="" />
+                </div>
+                <div style="display: flex; flex-direction: column">
+                  <span class="title">
+                    Amico 专员 ID
+                    <span style="display: none" id="group1-copy" class="copy-icon" onclick="copyAgentId()">
+                      <img style="" src="./imgs/copy.png" alt="复制" />
+                      复制
+                    </span>
+                  </span>
+                  <span id="agent1-id">vip520</span>
+                </div>
+              </div>
+              <a href="https://am787.cc" id="landing-page-link3" target="_blank" class="service-icon">
+                <img src="./imgs/contact-btn.png" alt="" />
+              </a>
+            </div>
+            <div class="contact-item contact-item2agent w-100">
+              <div class="contact-group">
+                <div class="icon">
+                  <img src="./imgs/service-icon.png" alt="" />
+                </div>
+                <div style="display: flex; flex-direction: column">
+                  <span class="title">Amico 专员 ID</span>
+                  <span id="agent2-id">vip116</span>
+                </div>
+              </div>
+              <a href="https://www.am787.cc" id="landing-page-link1" target="_blank" class="service-icon">
+                <img src="./imgs/contact-btn.png" alt="" />
+              </a>
+            </div>
+
+            <div class="contact-item contact-item3agent w-100">
+              <div class="contact-group">
+                <div class="icon">
+                  <img src="./imgs/service-icon.png" alt="" />
+                </div>
+                <div style="display: flex; flex-direction: column">
+                  <span class="title">Amico 专员 ID</span>
+                  <span id="agent3-id">vip116</span>
+                </div>
+              </div>
+              <a href="https://www.am787.cc" id="landing-page-link1" target="_blank" class="service-icon">
+                <img src="./imgs/contact-btn.png" alt="" />
+              </a>
+            </div>
+            <a href="https://www.am787.cc" id="landing-page-link2" target="_blank">
+              <img src="./imgs/contact-download.png" width="100%" />
+            </a>
+          </div>
         </div>
       </div>
 
-      <div class="banner-wrapper">
-        <div><img src="imgs/banner-title-2.png" alt="" width="100%" /></div>
-        <a id="tf88Url-btn" href="#" target="_blank">
-          <img src="imgs/banner-22222.png" alt="" width="100%" />
-        </a>
-      </div>
-
-      <div class="contact-wrapper">
-        <img src="./imgs/contact-title.png" alt="" width="100%" style="padding: 10px 10px 5px 10px" />
-        <div class="contact-content">
-          <div class="contact-group" style="width: 100%">
-            <div class="contact-item w-50" style="height: 100%; justify-content: flex-start">
-              <div class="icon">
-                <img src="./imgs/qq-icon.png" alt="" />
-              </div>
-              <div style="display: flex; flex-direction: column">
-                <span class="title" id="group1-title">浮力</span>
-                <span id="group1-number">850808398</span>
-              </div>
-            </div>
-            <div class="contact-item w-50" style="height: 100%; justify-content: flex-start">
-              <div class="icon">
-                <img src="./imgs/qq-icon.png" alt="" />
-              </div>
-              <div style="display: flex; flex-direction: column">
-                <span class="title" id="group2-title">福熙阁</span>
-                <span id="group2-number">875981010</span>
-              </div>
-            </div>
-            <div class="contact-item contact-item3 w-50" style="height: 100%; justify-content: flex-start">
-              <div class="icon">
-                <img src="./imgs/qq-icon.png" alt="" />
-              </div>
-              <div style="display: flex; flex-direction: column">
-                <span class="title" id="group3-title">福熙阁</span>
-                <span id="group3-number">875981010</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="contact-item w-100">
-            <div class="contact-group">
-              <div class="icon">
-                <img src="./imgs/service-icon.png" alt="" />
-              </div>
-              <div style="display: flex; flex-direction: column">
-                <span class="title">Amico 专员 ID</span>
-                <span id="agent1-id">vip520</span>
-              </div>
-            </div>
-            <a href="https://am787.cc" id="landing-page-link3" target="_blank" class="service-icon">
-              <img src="./imgs/contact-btn.png" alt="" />
-            </a>
-          </div>
-          <div class="contact-item w-100">
-            <div class="contact-group">
-              <div class="icon">
-                <img src="./imgs/service-icon.png" alt="" />
-              </div>
-              <div style="display: flex; flex-direction: column">
-                <span class="title">Amico 专员 ID</span>
-                <span id="agent2-id">vip116</span>
-              </div>
-            </div>
-            <a href="https://www.am787.cc" id="landing-page-link1" target="_blank" class="service-icon">
-              <img src="./imgs/contact-btn.png" alt="" />
-            </a>
-          </div>
-
-          <div class="contact-item contact-item3agent w-100">
-            <div class="contact-group">
-              <div class="icon">
-                <img src="./imgs/service-icon.png" alt="" />
-              </div>
-              <div style="display: flex; flex-direction: column">
-                <span class="title">Amico 专员 ID</span>
-                <span id="agent3-id">vip116</span>
-              </div>
-            </div>
-            <a href="https://www.am787.cc" id="landing-page-link1" target="_blank" class="service-icon">
-              <img src="./imgs/contact-btn.png" alt="" />
-            </a>
-          </div>
-          <a href="https://www.am787.cc" id="landing-page-link2" target="_blank">
-            <img src="./imgs/contact-download.png" width="100%" />
-          </a>
-        </div>
+      <div class="main-sticky-btn" id="contact-btn">
+        <img src="./imgs/contact.png" alt="" width="100%" />
       </div>
     </div>
 
-    <div class="main-sticky-btn" id="contact-btn">
-      <img src="./imgs/contact.png" alt="" width="100%" />
-    </div>
-  </div>
+    <script type="text/javascript">
+      document.addEventListener("DOMContentLoaded", function () {
+        const contactBtn = document.getElementById("contact-btn");
+        const fullWindow = document.querySelector(".full-container");
 
-  <script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", function () {
-      const contactBtn = document.getElementById("contact-btn");
-      const fullWindow = document.querySelector(".full-container");
-
-      contactBtn.addEventListener("click", () => {
-        fullWindow.scrollTo({
-          top: document.body.scrollHeight,
-          behavior: "smooth"
+        contactBtn.addEventListener("click", () => {
+          fullWindow.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: "smooth"
+          });
         });
       });
-    });
 
+      function copyAgentId() {
+        const text = document.getElementById("agent1-id").innerText;
+        navigator.clipboard
+          .writeText(text)
+          .then(() => {
+            alert("已复制: " + text);
+          })
+          .catch((err) => {
+            alert("复制失败: " + err);
+          });
+      }
 
-    function updateContactInfoByHostname() {
-      const hostname = window.location.host.replace("www.", "");
-      // console.log(hostname, "dan");
+      function updateContactInfoByHostname() {
+        const hostname = window.location.host.replace("www.", "");
+        // console.log(hostname, "dan");
 
-      const contactInfo = {
-        "73290.co": {
-          group1Title: "超级活动群",
-          group1Number: "178572309",
-          group2Title: "回归群",
-          group2Number: "141317950",
-          landingPageLink: "https://www.am787.cc", // You can set a default link or leave it empty
-          redirectUrl: "https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN",
-          claimUrl: "https://www.lh57018.com",
-          agent1ID: "vip516",
-          agent2ID: "vip515"
-        },
-        "73639.cc": {
-          group1Title: "回归群",
-          group1Number: "948669296",
+        const contactInfo = {
+          "73290.co": {
+            group1Title: "超级活动群",
+            group1Number: "178572309",
+            group2Title: "回归群",
+            group2Number: "141317950",
+            landingPageLink: "https://www.am787.cc", // You can set a default link or leave it empty
+            redirectUrl: "https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN",
+            claimUrl: "https://www.lh57018.com",
+            agent1ID: "vip516",
+            agent2ID: "vip515"
+          },
+          "73639.cc": {
+            group1Title: "回归群",
+            group1Number: "948669296",
+            group2Title: "浮力",
+            group2Number: "812210954",
+            landingPageLink: "https://am787.cc",
+            redirectUrl: "https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN",
+            claimUrl: "https://www.lh57018.com",
+            agent1ID: "vip516",
+            agent2ID: "vip520"
+          },
+          "71657.cc": {
+            group1Title: "游溪群",
+            group1Number: "948669296",
+            group2Title: "浮力",
+            group2Number: "812210954",
+            landingPageLink: "https://am787.cc",
+            redirectUrl: "https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN",
+            claimUrl: "https://www.lh57018.com",
+            agent1ID: "vip516",
+            agent2ID: "vip520"
+          },
+          "78658.cc": {
+            group1Title: "回归群",
+            group1Number: "141317950",
+            group2Title: "浮力",
+            group2Number: "812210954",
+            landingPageLink: "https://am787.cc",
+            redirectUrl: "https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN",
+            claimUrl: "https://www.lh57018.com",
+            agent1ID: "vip516",
+            agent2ID: "vip520"
+          },
+          "02891.co": {
+            group1Title: "超级活动群",
+            group1Number: "178572309",
+            group2Title: "才云群",
+            group2Number: "699878262",
+            landingPageLink: "https://www.am787.cc",
+            redirectUrl: "https://www.lh57018.com",
+            claimUrl: "https://www.lh57018.com",
+            agent1ID: "baozi8795",
+            agent2ID: "vip119"
+          },
+          "guzqz.cc": {
+            group1Title: "富力",
+            group1Number: "992359773",
+            group2Title: "满满福利",
+            group2Number: "983092106",
+            landingPageLink: "https://www.am787.cc", // You can set a default link or leave it empty
+            redirectUrl: "https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN",
+            claimUrl: "https://www.lh01447.com",
+            agent1ID: "vip116",
+            agent2ID: "vip120"
+          },
+          "67401.co": {
+            group1Title: "超级活动群",
+            group1Number: "178572309",
+            group2Title: "回归群",
+            group2Number: "141317950",
+            landingPageLink: "https://www.am787.cc", // You can set a default link or leave it empty
+            redirectUrl: "https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN",
+            claimUrl: "https://www.lh01447.com",
+            agent1ID: "vip516",
+            agent2ID: "vip515"
+          },
+          "82017.biz": {
+            group1Title: "超级活动群",
+            group1Number: "178572309",
+            group2Title: "才云群",
+            group2Number: "699878262",
+            landingPageLink: "https://www.am787.cc",
+            redirectUrl: "https://www.lh57018.com",
+            claimUrl: "https://www.lh57018.com",
+            agent1ID: "baozi8795",
+            agent2ID: "vip119"
+          },
+          "16618.vip": {
+            group1Title: "",
+            group1Number: "",
+            group2Title: "",
+            group2Number: "",
+            landingPageLink: "https://www.am787.cc",
+            logoUrl: "lh660.cc",
+            redirectUrl: "https://www.lh660.cc",
+            claimUrl: "https://www.lh660.cc",
+            agent1ID: "@lhliulian",
+            agent2ID: "",
+            has1Copy: "true"
+          },
+          "19618.vip": {
+            group1Title: "微信1",
+            group1Number: "lh62210",
+            group1Img: "imgs/wechat-icon.png",
+            group2Title: "",
+            group2Number: "",
+            landingPageLink: "https://www.am787.cc",
+            logoUrl: "lh153.cc",
+            redirectUrl: "https://www.lh153.cc",
+            claimUrl: "https://www.lh153.cc",
+            agent1ID: "@lhliulian",
+            agent2ID: "",
+            has1Copy: "true"
+          }
+        };
+
+        // Default content if no hostname matches
+        const defaultInfo = {
+          group1Title: "服力群",
+          group1Number: "673169074",
           group2Title: "浮力",
           group2Number: "812210954",
-          landingPageLink: "https://am787.cc",
-          redirectUrl: "https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN",
-          claimUrl: "https://www.lh57018.com",
-          agent1ID: "vip516",
-          agent2ID: "vip520"
-        },
-        "71657.cc": {
-          group1Title: "游溪群",
-          group1Number: "948669296",
-          group2Title: "浮力",
-          group2Number: "812210954",
-          landingPageLink: "https://am787.cc",
-          redirectUrl: "https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN",
-          claimUrl: "https://www.lh57018.com",
-          agent1ID: "vip516",
-          agent2ID: "vip520"
-        },
-        "78658.cc": {
-          group1Title: "回归群",
-          group1Number: "141317950",
-          group2Title: "浮力",
-          group2Number: "812210954",
-          landingPageLink: "https://am787.cc",
-          redirectUrl: "https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN",
-          claimUrl: "https://www.lh57018.com",
-          agent1ID: "vip516",
-          agent2ID: "vip520"
-        },
-        "02891.co": {
-          group1Title: "超级活动群",
-          group1Number: "178572309",
-          group2Title: "才云群",
-          group2Number: "699878262",
-          landingPageLink: "https://www.am787.cc",
+          landingPageLink: "https://am787.cc", // You can set a default link or leave it empty
           redirectUrl: "https://www.lh57018.com",
           claimUrl: "https://www.lh57018.com",
-          agent1ID: "baozi8795",
-          agent2ID: "vip119"
-        },
-        "guzqz.cc": {
-          group1Title: "富力",
-          group1Number: "992359773",
-          group2Title: "满满福利",
-          group2Number: "983092106",
-          landingPageLink: "https://www.am787.cc", // You can set a default link or leave it empty
-          redirectUrl: "https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN",
-          claimUrl: "https://www.lh01447.com",
           agent1ID: "vip116",
-          agent2ID: "vip120"
-        },
-        "67401.co": {
-          group1Title: "超级活动群",
-          group1Number: "178572309",
-          group2Title: "回归群",
-          group2Number: "141317950",
-          landingPageLink: "https://www.am787.cc", // You can set a default link or leave it empty
-          redirectUrl: "https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN",
-          claimUrl: "https://www.lh01447.com",
-          agent1ID: "vip516",
-          agent2ID: "vip515",
-        },
-        "82017.biz": {
-          group1Title: "超级活动群",
-          group1Number: "178572309",
-          group2Title: "才云群",
-          group2Number: "699878262",
-          landingPageLink: "https://www.am787.cc",
-          redirectUrl: "https://www.lh57018.com",
-          claimUrl: "https://www.lh57018.com",
-          agent1ID: "baozi8795",
-          agent2ID: "vip119"
-        },
-      };
+          agent2ID: "vip520"
+        };
 
-      // Default content if no hostname matches
-      const defaultInfo = {
-        group1Title: "服力群",
-        group1Number: "673169074",
-        group2Title: "浮力",
-        group2Number: "812210954",
-        landingPageLink: "https://am787.cc", // You can set a default link or leave it empty
-        redirectUrl: "https://www.lh57018.com",
-        claimUrl: "https://www.lh57018.com",
-        agent1ID: "vip116",
-        agent2ID: "vip520"
-      };
+        const selectedInfo = contactInfo[hostname] || defaultInfo;
+        console.log("ENd Info");
+        console.log(selectedInfo);
 
-      const selectedInfo = contactInfo[hostname] || defaultInfo;
-      console.log("ENd Info");
-      console.log(selectedInfo);
+        document.getElementById("group1-title").textContent = selectedInfo.group1Title;
+        document.getElementById("group1-number").textContent = selectedInfo.group1Number;
+        document.getElementById("group2-title").textContent = selectedInfo.group2Title;
+        document.getElementById("group2-number").textContent = selectedInfo.group2Number;
+        document.getElementById("group3-title").textContent = selectedInfo.group3Title;
+        document.getElementById("group3-number").textContent = selectedInfo.group3Number;
+        document.getElementById("landing-page-link1").href = selectedInfo.landingPageLink;
+        document.getElementById("landing-page-link2").href = selectedInfo.landingPageLink;
+        document.getElementById("landing-page-link3").href = selectedInfo.landingPageLink;
+        document.getElementById("agent1-id").textContent = selectedInfo.agent1ID;
+        document.getElementById("agent2-id").textContent = selectedInfo.agent2ID;
+        document.getElementById("agent3-id").textContent = selectedInfo.agent3ID;
+        const copy1Item = document.querySelector(".copy-icon");
 
-      document.getElementById("group1-title").textContent = selectedInfo.group1Title;
-      document.getElementById("group1-number").textContent = selectedInfo.group1Number;
-      document.getElementById("group2-title").textContent = selectedInfo.group2Title;
-      document.getElementById("group2-number").textContent = selectedInfo.group2Number;
-      document.getElementById("group3-title").textContent = selectedInfo.group3Title;
-      document.getElementById("group3-number").textContent = selectedInfo.group3Number;
-      document.getElementById("landing-page-link1").href = selectedInfo.landingPageLink;
-      document.getElementById("landing-page-link2").href = selectedInfo.landingPageLink;
-      document.getElementById("landing-page-link3").href = selectedInfo.landingPageLink;
-      document.getElementById("agent1-id").textContent = selectedInfo.agent1ID;
-      document.getElementById("agent2-id").textContent = selectedInfo.agent2ID;
-      document.getElementById("agent3-id").textContent = selectedInfo.agent3ID;
-      const contactItem = document.querySelector(".contact-item3");
-      const contactItemAgent = document.querySelector(".contact-item3agent");
+        if (selectedInfo.group1Img) {
+          document.getElementById("group1-img").src = selectedInfo.group1Img;
+        }
 
-      if (!selectedInfo.group3Title || !selectedInfo.agent3ID) {
-        contactItem.style.display = "none";
-        contactItemAgent.style.display = "none";
+        if (selectedInfo.logoUrl) {
+          document.getElementById("logo-url").textContent = selectedInfo.logoUrl;
+        }
+
+        if (selectedInfo.has1Copy) {
+          copy1Item.style.display = "flex";
+        }
+        const contact1Item = document.querySelector(".contact-item1");
+        const contact1ItemAgent = document.querySelector(".contact-item1agent");
+
+        if (!selectedInfo.group1Title) {
+          contact1Item.style.display = "none";
+        }
+        if (!selectedInfo.agent1ID) {
+          contact1ItemAgent.style.display = "none";
+        }
+
+        const contact2Item = document.querySelector(".contact-item2");
+        const contact2ItemAgent = document.querySelector(".contact-item2agent");
+
+        if (!selectedInfo.group2Title || !selectedInfo.agent2ID) {
+          contact2Item.style.display = "none";
+          contact2ItemAgent.style.display = "none";
+        }
+
+        const contactItem = document.querySelector(".contact-item3");
+        const contactItemAgent = document.querySelector(".contact-item3agent");
+
+        if (!selectedInfo.group3Title || !selectedInfo.agent3ID) {
+          contactItem.style.display = "none";
+          contactItemAgent.style.display = "none";
+        }
+        var element = document.getElementById("tf88Url-btn");
+        var claimBtnElement = document.getElementById("click-to-claim-btn");
+
+        if (element) {
+          element.href = selectedInfo.redirectUrl;
+        }
+        if (claimBtnElement) {
+          claimBtnElement.href = selectedInfo.claimUrl;
+        }
       }
-      var element = document.getElementById("tf88Url-btn");
-      var claimBtnElement = document.getElementById("click-to-claim-btn");
 
-      if (element) {
-        element.href = selectedInfo.redirectUrl
+      // Call the function to update content based on the current hostname
+      updateContactInfoByHostname();
+    </script>
+
+    <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+    <script>
+      var hostname = window.location.hostname;
+      console.log(hostname);
+      if (hostname.indexOf("71657.cc") > -1) {
+        LA.init({ id: "Kc3jgw9ia1vTQh9Z", ck: "Kc3jgw9ia1vTQh9Z" });
+      } else if (hostname.indexOf("73639.cc") > -1) {
+        LA.init({ id: "Kc3iHR9l9ehSmh99", ck: "Kc3iHR9l9ehSmh99" });
+      } else if (hostname.indexOf("02891.co") > -1) {
+        LA.init({ id: "KdVhOmO4hUdgF0oR", ck: "KdVhOmO4hUdgF0oR" });
+      } else if (hostname.indexOf("guzqz.cc") > -1) {
+        LA.init({ id: "Kh1zSE2E4jH2xM8C", ck: "Kh1zSE2E4jH2xM8C" });
+      } else if (hostname.indexOf("73290.co") > -1) {
+        LA.init({ id: "KdTRuiUy6OFsLjmB", ck: "KdTRuiUy6OFsLjmB" });
+      } else if (hostname.indexOf("67401.co") > -1) {
+        LA.init({ id: "KdVhdl2av0peIq26", ck: "KdVhdl2av0peIq26" });
+      } else if (hostname.indexOf("82017.biz") > -1) {
+        LA.init({ id: "KdZwkbSrxfbGT9mU", ck: "KdZwkbSrxfbGT9mU" });
+      } else {
       }
-      if (claimBtnElement) {
-        claimBtnElement.href = selectedInfo.claimUrl
-      }
-    }
-
-    // Call the function to update content based on the current hostname
-    updateContactInfoByHostname();
-  </script>
-
-  <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
-  <script>
-    var hostname = window.location.hostname;
-    console.log(hostname);
-    if (hostname.indexOf("71657.cc") > -1) {
-      LA.init({ id: "Kc3jgw9ia1vTQh9Z", ck: "Kc3jgw9ia1vTQh9Z" })
-    } else if (hostname.indexOf("73639.cc") > -1) {
-      LA.init({ id: "Kc3iHR9l9ehSmh99", ck: "Kc3iHR9l9ehSmh99" })
-    } else if (hostname.indexOf("02891.co") > -1) {
-      LA.init({ id: "KdVhOmO4hUdgF0oR", ck: "KdVhOmO4hUdgF0oR" })
-    } else if (hostname.indexOf("guzqz.cc") > -1) {
-      LA.init({ id: "Kh1zSE2E4jH2xM8C", ck: "Kh1zSE2E4jH2xM8C" })
-    } else if (hostname.indexOf("73290.co") > -1) {
-      LA.init({ id: "KdTRuiUy6OFsLjmB", ck: "KdTRuiUy6OFsLjmB" })
-    } else if (hostname.indexOf("67401.co") > -1) {
-      LA.init({ id: "KdVhdl2av0peIq26", ck: "KdVhdl2av0peIq26" })
-    } else if (hostname.indexOf("82017.biz") > -1) {
-      LA.init({ id: "KdZwkbSrxfbGT9mU", ck: "KdZwkbSrxfbGT9mU" })
-    } else {
-
-    }
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>

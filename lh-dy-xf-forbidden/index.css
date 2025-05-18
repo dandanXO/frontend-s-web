@@ -93,6 +93,10 @@ body {
     color: #666666;
 }
 
+.desc-2 span {
+    color: #0080FF;
+}
+
 .contact-btn {
     background: url('./images/contact-btn.svg') center center no-repeat;
     background-size: 100% 100%;
@@ -140,6 +144,10 @@ body {
 
 .link.dark {
     color: #7284c9;
+}
+
+.ip-desc {
+    color: #0080FF
 }
 
 .contact-btn.dark {
@@ -229,11 +237,20 @@ body {
         height: auto;
     }
 
+    .globe.m-hide {
+        display: none;
+    }
+
     .logo-top {
         display: block;
         width: 100px;
         height: auto;
     }
+
+    .logo-top.lh {
+        margin-bottom: 16px;
+    }
+
     .logo-bottom {
         display: none;
     }
