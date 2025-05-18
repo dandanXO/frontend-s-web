@@ -3433,7 +3433,8 @@ export default {
     'Official CS Account': 'Official CS Account',
     'Site Note': 'Notes',
     'Fast Access Promo': 'Fast Access Promo',
-    'Refer Friend Rebate Point record': 'Referral friend betting turnover rebate points record'
+    'Refer Friend Rebate Point record': 'Referral friend betting turnover rebate points record',
+    'Member Summary Report': 'Member Summary Report',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -3613,6 +3614,7 @@ export default {
     UNSENT: 'Unsent',
     SENDING: 'Sending',
     SENT: 'Sent',
+    FAIL: 'Failed',
   },
   telegram: {
     userStatus: {
@@ -3664,6 +3666,10 @@ export default {
       MANAGER: 'Manager',
       AFFILIATE: 'Affiliate',
     }
+  },
+  distributeFail: {
+    BLACKLIST: 'Blacklist',
+    KEY_EXIST: 'Key Exist',
   },
   referRebatePoint: {
     NO_BET_AFTER_DEPOSIT: 'No Bet After Deposit',

@@ -80,7 +80,7 @@ export default defineComponent({
       {
         code: "AG",
         icon: "ag",
-        label: "AG",
+        label: "PA",
         slogan: "全球顶尖, 尊享娱乐",
         gameCode: ""
       },

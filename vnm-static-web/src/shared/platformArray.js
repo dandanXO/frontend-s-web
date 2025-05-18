@@ -82,9 +82,9 @@ export const liveCasinoPlatforms = [
     name: "AG",
     image: "ag",
     message:
-      "Live Casino AG introduces the world's first 6-card poker pre-deal, VIP tables, squeeze baccarat, smart control baccarat, and other interactive baccarat games. Compatible with multiple terminals allowing you to enjoy uninterrupted gaming.",
+      "Live Casino PA introduces the world's first 6-card poker pre-deal, VIP tables, squeeze baccarat, smart control baccarat, and other interactive baccarat games. Compatible with multiple terminals allowing you to enjoy uninterrupted gaming.",
     vimessage:
-      "Live Casino AG có thể lệ 6 lá Poker chia trước đầu tiên trên thế giới, bàn VIP, squeeze baccarat, baccarat điều khiển thông minh và các trò chơi baccarat tương tác khác. Tương thích với nhiều thiết bị đầu cuối cho phép Bạn tận hưởng không ngừng。",
+      "Live Casino PA có thể lệ 6 lá Poker chia trước đầu tiên trên thế giới, bàn VIP, squeeze baccarat, baccarat điều khiển thông minh và các trò chơi baccarat tương tác khác. Tương thích với nhiều thiết bị đầu cuối cho phép Bạn tận hưởng không ngừng。",
     caption: "",
     gameCode: ""
   }
@@ -377,7 +377,7 @@ export const cockfightPlatforms = [
     message: "World class cockfighting online",
     vimessage:
       "Sảnh Đá Gà sở hữu hơn 10 năm bề dày kinh nghiệm hoạt động trên thị trường với nhiều lựa chọn như: đá gà cựa, đá gà đòn, đá gà tre và đá gà Mỹ v.v….",
-    caption: "",
+    caption: ""
   }
 ];
 

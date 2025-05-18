@@ -1077,9 +1077,9 @@ const openDepositPage = () => {
 
 const openDepositVideo = () => {
   if (selectedPayType.value.includes("USDT")) {
-    window.open("https://drive.google.com/file/d/1EpB-wJCE71vbkcrdG6HQAe1SSZoF2k45/view?usp=sharing", "_blank");
+    window.open("https://drive.google.com/file/d/1oqAGfhQ5W6croWGUAdlY-PXPisFVkfZt/view?usp=sharing", "_blank");
   } else {
-    window.open("https://drive.google.com/file/d/17AVj95dJqS9cNhxAG310On3i9ex-rUd9/view?usp=drivesdk", "_blank");
+    window.open("https://drive.google.com/file/d/1NftkjDG0OW_X0SErP_pkLjjDwjMN83Ah/view?usp=sharing", "_blank");
   }
   // if (langSelect === "ur") {
   //   window.open("https://drive.google.com/file/d/1EQaqmujVTheOKvk0bczhqLa2cL30jKBu/view?usp=sharing", "_blank");

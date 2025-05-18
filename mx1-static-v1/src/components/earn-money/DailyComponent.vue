@@ -192,6 +192,36 @@
     </div>
   </div>
 
+  <div class="info-wrapper q-pt-lg">
+    <div class="title-txt">{{ $t("earnMoney.daily.todayReportTotal") }}</div>
+    <div class="info-container">
+      <div class="info-row">
+        <div class="info-content-item line-side">
+          <div class="info-title">
+            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-08.png" /></div>
+            <div class="info-txt">{{ $t("earnMoney.daily.noOfDepositors") }}:</div>
+          </div>
+          <div class="info-amount">
+            {{ teamAmountData.noOfDepositMembers }}
+          </div>
+        </div>
+        <div class="info-content-item">
+          <div class="info-title">
+            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-09.png" /></div>
+            <div class="info-txt">{{ $t("earnMoney.daily.depositAmount") }}:</div>
+          </div>
+          <div
+            class="info-amount"
+            :class="checkTeamAmountData(teamAmountData.totalDeposit) === 'Calculating' ? 'font-smaller' : ''"
+          >
+            <span>{{ store.currency.value }}&nbsp;</span>
+            {{ convertToCommaAmount(checkTeamAmountData(teamAmountData.totalDeposit), false) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <LoadingComponent v-if="isLoading.referredBetRebateRecord"></LoadingComponent>
   <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('records.noMember')" shortenContainer="true"></NoInfoComponent>
   <div v-else class="member-info-container">
@@ -252,7 +282,7 @@ import { t } from "boot/lang";
 const store = userStore();
 const isLoading = reactive({ referredBetRebateRecord: true });
 const isNoInfo = ref(true);
-const calculatingText = t("earnMoney.daily.calculating")
+const calculatingText = t("earnMoney.daily.calculating");
 
 const myMemberList = ref([]);
 const getReferredBetRebateRecord = () => {
@@ -345,7 +375,9 @@ const teamAmountData = reactive({
   teamRebate: 0,
   totalRebate: 0,
   agentLevel: 0,
-  agentRate: 0
+  agentRate: 0,
+  totalDeposit: 0,
+  noOfDepositMembers: 0
 });
 
 const getTeamAmountData = () => {
@@ -367,11 +399,25 @@ const checkTeamAmountData = (value) => {
   return value === -1 ? calculatingText : value;
 };
 
+const getDailyDepositData = () => {
+  api
+    .get(`/session/member/depositDailyDetails`)
+    .then((res) => {
+      const { code, data } = res;
+      if (code === 0) {
+        teamAmountData.noOfDepositMembers = data.noOfDepositMembers;
+        teamAmountData.totalDeposit = data.totalDeposit;
+      }
+    })
+    .catch(() => {});
+};
+
 onMounted(() => {
   initializeSwiperNav();
   getReferredBetRebateRecord();
   getVIPApi();
   getTeamAmountData();
+  getDailyDepositData();
 });
 </script>
 
@@ -477,12 +523,14 @@ onMounted(() => {
       background: linear-gradient(180deg, rgba(139, 54, 248, 0.4) 0%, rgba(51, 74, 214, 0.4) 100%);
       border-radius: 12px;
 
-      &:first-child {
-        margin-right: 7.5px;
-      }
+      > * {
+        &:first-child {
+          margin-right: 7.5px;
+        }
 
-      &:nth-child(2) {
-        margin-left: 7.5px;
+        &:nth-child(2) {
+          margin-left: 7.5px;
+        }
       }
     }
 
@@ -507,6 +555,16 @@ onMounted(() => {
       &.longer-item {
         flex-direction: row;
 
+        > * {
+          &:first-child {
+            margin-right: 18px;
+          }
+
+          &:nth-child(2) {
+            margin-left: 18px;
+          }
+        }
+
         .longer-group {
           flex: 1;
           position: relative;
@@ -519,14 +577,6 @@ onMounted(() => {
             background: rgba(255, 255, 255, 0.25);
             right: -20px;
             top: -10px;
-          }
-
-          &:first-child {
-            margin-right: 18px;
-          }
-
-          &:nth-child(2) {
-            margin-left: 18px;
           }
         }
 
@@ -548,7 +598,7 @@ onMounted(() => {
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        font-size: 19px;
+        font-size: 1.1rem;
         font-weight: 700;
         margin-left: auto;
         margin-top: auto;
@@ -584,6 +634,7 @@ onMounted(() => {
       .info-txt {
         margin-top: 4px;
         font-weight: 700;
+        font-size: 0.8rem;
         margin-right: 8px;
       }
     }
