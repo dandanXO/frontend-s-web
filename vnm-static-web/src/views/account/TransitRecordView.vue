@@ -1389,7 +1389,7 @@ export default defineComponent({
         return "";
       }
       if (platformName === "AG") {
-        return "AG " + t('account.livecasino') + ", XIN " + t('account.slot'); // AG
+        return "PA " + t('account.livecasino') + ", PA " + t('account.slot'); // AG
       }else if (platformName === "GPI") {
         return "GPI " + t('account.slot') + ", GPI " + t('account.lottery'); // AG
       }  else if (platformName === "BBINDY") {

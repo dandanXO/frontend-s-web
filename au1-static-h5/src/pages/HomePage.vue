@@ -1010,7 +1010,7 @@ const slide = ref(0);
 const isFirstView = ref(false);
 const closeAlert = () => {
   // Create a new date object in GMT+5.5
-  const currentTimeInGMT55 = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+  const currentTimeInGMT55 = new Date(new Date().toLocaleString("en-US", { timeZone: "Australia/Sydney" }));
 
   localStorage.setItem("indexImgTop", currentTimeInGMT55.getTime());
   isFirstView.value = false;
@@ -2373,7 +2373,7 @@ const setExpiryBanner = () => {
 
 const setWithExpiry = (key, value, interval) => {
   // Create a new date object in GMT+5.5
-  const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+  const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Australia/Sydney" }));
 
   const item = {
     value: value,

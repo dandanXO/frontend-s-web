@@ -39,8 +39,8 @@ const { spinWheelLuckyPromoInfo: info } = storeToRefs(store);
 const getRemainingTime = (endTime) => {
     let result = "00:00:00";
     if (endTime) {
-        const now = moment(Date.now()).tz("Asia/Manila");
-        const _endTime = moment(endTime).tz("Asia/Manila");
+        const now = moment(Date.now()).tz("Australia/Sydney");
+        const _endTime = moment(endTime).tz("Australia/Sydney");
         const totalSeconds = _endTime.diff(now, "seconds");
         if (totalSeconds > 0) {
             const hours = Math.floor(totalSeconds / 3600);
@@ -56,8 +56,8 @@ const getRemainingTime = (endTime) => {
 
 const updateCountdownTime = () => {
     // console.log("updateCountdownTime")
-    const endTime = moment(info.value.startTime).tz("Asia/Manila").add(3, "days");
-    const nextFreeSpinEndTime = moment().tz("Asia/Manila").add(1, "days").startOf("day");
+    const endTime = moment(info.value.startTime).tz("Australia/Sydney").add(3, "days");
+    const nextFreeSpinEndTime = moment().tz("Australia/Sydney").add(1, "days").startOf("day");
     if (timer.value) {
         clearTimeout(timer.value);
     }

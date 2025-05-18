@@ -89,7 +89,7 @@
           <img src="../assets/55-ace-logo.png" />
         </div>
         <span class="forgot-password-form-desc">
-          Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.
+          Please Provide Your Phone Number, We Will Send OTP To Your Registered Phone Number.
         </span>
       </div>
     </q-form>

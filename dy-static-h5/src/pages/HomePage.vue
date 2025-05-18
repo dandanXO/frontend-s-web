@@ -213,7 +213,7 @@
                           ></div>
 
                           <div class="game-title">
-                            <h3>{{ hot.name }}</h3>
+                            <h3>{{ hot.title }}</h3>
                             <span>真人娱乐</span>
                           </div>
 
@@ -287,7 +287,7 @@
                           ></div>
 
                           <div class="game-title">
-                            <h3>{{ hot.name }}</h3>
+                            <h3>{{ hot.title }}</h3>
                             <span>真人娱乐</span>
                           </div>
 
@@ -866,7 +866,7 @@
                       </div>
                     </template>
                     <template v-else>
-                      <div class="game-board" @click="playGame(live.name, live.code, live.gameCode)">
+                      <div class="game-board" @click="playGame(live.title, live.code, live.gameCode)">
                         <div
                           class="game-bg"
                           :style="{
@@ -883,7 +883,7 @@
                         ></div>
 
                         <div class="game-title">
-                          <h3>{{ live.name }}</h3>
+                          <h3>{{ live.title }}</h3>
                           <span>真人娱乐</span>
                         </div>
 
@@ -2014,7 +2014,12 @@ export default defineComponent({
               livecasino.value.push(liveObj);
 
               if (hotLives.value.indexOf(element.name) > -1) {
+                // debugger;
                 liveObj.order = 6;
+                if (liveObj.code === "AG") {
+                  liveObj.title = "PA";
+                }
+
                 hotgames.value.push(liveObj);
               }
             }
@@ -2065,7 +2070,7 @@ export default defineComponent({
               fishObj.subtitle = "捕鱼游戏";
 
               if (fishObj.code === "AGF") {
-                fishObj.title = "AG 捕鱼";
+                fishObj.title = "PA 捕鱼";
               } else if (fishObj.code === "PMFISH") {
                 fishObj.title = "DB 捕鱼";
               }

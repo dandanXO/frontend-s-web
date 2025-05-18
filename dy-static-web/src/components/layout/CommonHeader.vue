@@ -3131,6 +3131,14 @@ body {
     }
   }
 
+  &.slots {
+    .plat-icon {
+      min-height: 56px;
+      object-fit: contain;
+      object-position: center;
+    }
+  }
+
   &.games {
     .platform-box {
       .plat-icon {

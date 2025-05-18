@@ -9,36 +9,38 @@
           <div class="balance-wrapper">
             <span class="currency">主账户:</span>
             <span>
-            ￥{{ mainWallet }}
-              <el-icon @click="refreshAllModal"><Refresh style="color: #32CEED" /></el-icon>
+              ￥{{ mainWallet }}
+              <el-icon @click="refreshAllModal"><Refresh style="color: #32ceed" /></el-icon>
             </span>
           </div>
-          
+
           <!-- <div class="balance-refresh" @click="refreshBalance(MAIN)">
             <el-icon><Refresh style="color: #ffffff" /></el-icon>
           </div> -->
 
-          <el-button type="success" class="common-btn transfer-btn" @click="transferOutAllModal"><img src="@/assets/images/account/transfer.png">一键转出</el-button>
-          
-          </div>
+          <el-button type="success" class="common-btn transfer-btn" @click="transferOutAllModal">
+            <img src="@/assets/images/account/transfer.png" />
+            一键转出
+          </el-button>
         </div>
-        <div class="account-content">
-          <div class="common-title menulike">场馆明细</div>
-          <div class="account-tip-text" style="color: #FD574C; padding-bottom: 20px;">
-            除了以下平台需要转账，其它游戏平台都无需转账即可游戏
-          </div>
+      </div>
+      <div class="account-content">
+        <div class="common-title menulike">场馆明细</div>
+        <div class="account-tip-text" style="color: #fd574c; padding-bottom: 20px">
+          除了以下平台需要转账，其它游戏平台都无需转账即可游戏
         </div>
-          <div class="balance-transfer-button">
-            <span>自动平台转账:</span>
-            <el-switch
-              v-model="autoTransfer"
-              class="ml-2"
-              inline-prompt
-              style="--el-switch-on-color: #32CEED; --el-switch-off-color: #ff4949"
-              active-text="已开启"
-              inactive-text="已关闭"
-              @change="updateAutoTransfer($event)"
-            />
+      </div>
+      <div class="balance-transfer-button">
+        <span>自动平台转账:</span>
+        <el-switch
+          v-model="autoTransfer"
+          class="ml-2"
+          inline-prompt
+          style="--el-switch-on-color: #32ceed; --el-switch-off-color: #ff4949"
+          active-text="已开启"
+          inactive-text="已关闭"
+          @change="updateAutoTransfer($event)"
+        />
         <!--<div class="account-tip">
         E-Sports do not need to transfer, recharge and play
         </div>-->
@@ -169,7 +171,7 @@ export default defineComponent({
       amount: ""
     });
 
-    const platNames = {"KY": "开元棋牌", "DT": "大唐棋牌", "BBINDY": "BBIN", "EBET": "WE" ,"AGF" : "AG捕鱼"};
+    const platNames = {"KY": "开元棋牌", "DT": "大唐棋牌", "BBINDY": "BBIN", "EBET": "WE" ,"AGF" : "PA捕鱼"};
 
     const transferOutAllModal = () => {
       transferAllModalVisible.value = true
@@ -438,13 +440,13 @@ body .transferinout .el-dialog__header .el-dialog__title {
       align-items: center;
       padding: 10px 0;
       margin-bottom: 20px;
-      border-bottom: 1px solid #FFFFFF1A;
+      border-bottom: 1px solid #ffffff1a;
 
       .balance {
         display: flex;
         align-items: center;
         margin: 10px 0;
-        background:#242425;
+        background: #242425;
         padding: 10px;
         border-radius: 8px;
         width: 280px;
@@ -452,12 +454,15 @@ body .transferinout .el-dialog__header .el-dialog__title {
         .el-button {
           position: absolute;
           right: 10px;
-           top: 10px;
-          background: linear-gradient(180deg, #32CEED 0%, #1C7587 100%);
+          top: 10px;
+          background: linear-gradient(180deg, #32ceed 0%, #1c7587 100%);
           border-radius: 50px;
           padding: 5px;
-          
-          img { width: 16px; margin-right: 10px;}
+
+          img {
+            width: 16px;
+            margin-right: 10px;
+          }
         }
         .transfer-btn {
           padding: 5px;
@@ -573,7 +578,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
             position: relative;
             clear: both;
             font-size: 14px;
-            color:#B8B8B8;
+            color: #b8b8b8;
             // -webkit-box-shadow: 2px 5px 10px rgb(138 146 154 / 15%);
             // box-shadow: 2px 5px 10px rgb(138 146 154 / 15%);
             // color: #fff;
@@ -648,7 +653,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
   cursor: pointer;
 }
 
-.transfer-btn{
+.transfer-btn {
   font-size: 14px;
   padding: 8px 16px !important;
 }

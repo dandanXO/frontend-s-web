@@ -11,7 +11,7 @@
         @click="clickPlat(platform)"
       >
         <div class="slot-game-platform-btn__text">
-          <span class="slot-game-platform-btn__text-title">{{ platform.code === "AG" ? "XIN" : platform.code }}</span>
+          <span class="slot-game-platform-btn__text-title">{{ platform.code === "AG" ? "PA" : platform.code }}</span>
           <br />
           <span class="slot-game-platform-btn__text-description">{{ $t("home.slotEdition.description") }}</span>
         </div>

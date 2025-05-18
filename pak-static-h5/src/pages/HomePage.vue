@@ -1685,7 +1685,7 @@
   <SpinLuckyWheelPromoSticky v-show="false" />
   <!-- <SpinLuckyWheelPromoHomePopup v-if="isShownSpinLuckyWheel || popupPromo === 'spin-lucky-wheel'" ref="spinLuckyWheelPromoHomePopupRef" /> -->
 
-  <DepositPromoModal />
+  <DepositPromoModal v-if="ui.annoyingType !== 'NONE'" />
 </template>
 
 <script setup>
@@ -4363,7 +4363,7 @@ onActivated(() => {
   // checkSpinWheel();
   checkGoogleLoginSetPwd();
 
-  if (route.query.login === "true" || route.query.register === "true") {
+  if ((route.query.login === "true" || route.query.register === "true") && ui.annoyingType !== "NONE") {
     //TODO: change back.
     // popupPromo.value = "money-rain";
     popupPromo.value = "spin-lucky-wheel";
@@ -4374,7 +4374,7 @@ onActivated(() => {
     closePlayerGuide();
   }
 
-  if (store.hasToken() && ui.promo_megaspin === "1") {
+  if (store.hasToken() && ui.promo_megaspin === "1" && ui.annoyingType !== "NONE") {
     hasInviteWheelPromo.value = true;
   }
 
@@ -4382,13 +4382,13 @@ onActivated(() => {
     store.autoLogin(route.query.token);
     // checkSpinWheel();
 
-    if (store.hasToken() && ui.promo_megaspin === "1") {
+    if (store.hasToken() && ui.promo_megaspin === "1" && ui.annoyingType !== "NONE") {
       hasInviteWheelPromo.value = true;
     }
   }
   afterActivated();
 
-  if (!(Platform.is.android && Platform.is.capacitor) && !store.isFromGooglePackage) {
+  if (!(Platform.is.android && Platform.is.capacitor) && !store.isFromGooglePackage && ui.annoyingType !== "NONE") {
     if (!sessionStorage.getItem("add_to_homescreen")) {
       setTimeout(() => {
         isAddToHomeScreen.value = true;
@@ -4409,7 +4409,7 @@ onMounted(() => {
   loadJILIPokerhGameList();
   ui.shouldFetchDownloadAppUrl = true;
 
-  if (store.hasToken()) {
+  if (store.hasToken() && ui.annoyingType !== "NONE") {
     checkCodeBonusModal();
   }
 
