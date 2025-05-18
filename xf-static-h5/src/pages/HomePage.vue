@@ -939,6 +939,9 @@ export default defineComponent({
                 liveObj.title = "DB 真人";
               } else if (liveObj.code === "EBET") {
                 liveObj.title = "WE 真人";
+              } else if (liveObj.code === "AG") {
+                liveObj.alias = "PA 真人";
+                liveObj.title = "PA 真人";
               } else {
                 liveObj.title = liveObj.name + " 真人";
               }
@@ -954,7 +957,8 @@ export default defineComponent({
               slotObj.subtitle = "电子游戏";
               // console.log(slotObj);
               if (slotObj.code === "AG") {
-                slotObj.title = "XIN 电子";
+                slotObj.title = "PA 电子";
+                slotObj.alias = "PA电子";
                 slotObj.name = "xin";
                 let slotItem = {
                   id: slotObj.id,
@@ -980,6 +984,10 @@ export default defineComponent({
               fishObj.title = fishObj.name + " 捕鱼";
               fishObj.icon = "fish";
               fishObj.subtitle = "捕鱼游戏";
+              if (fishObj.code === "AGF") {
+                fishObj.alias = "PA 捕鱼";
+                fishObj.title = "PA 捕鱼";
+              }
               fishing.value.push(fishObj);
               // console.log(fishObj);
             }

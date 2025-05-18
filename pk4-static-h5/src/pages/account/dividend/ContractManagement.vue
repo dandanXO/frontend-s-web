@@ -1,29 +1,16 @@
 <template>
-    <div class="my-dividend-container">
-
+    <div class="container">
         <div class="filters">
             <InputField :isDark="true">
                 <template #input>
-                    <q-select class="dropdown" outlined v-model="model" :options="options" dense />
-                </template>
-            </InputField>
-            &nbsp;&nbsp;
-            <InputField :isDark="true">
-                <template #input>
-                    <q-select class="dropdown" outlined v-model="model2" :options="options2" dense />
+                    <q-input class="input" v-model="formDetail.realName" outlined clearable hide-bottom-space>
+                        <template v-slot:append>
+                            <q-btn class="primary-btn" color="primary" :label="$t('btn.confirm')" @click="() => { }" />
+                        </template>
+                    </q-input>
                 </template>
             </InputField>
         </div>
-
-        <InputField :isDark="true">
-            <template #input>
-                <q-input class="input" v-model="formDetail.realName" outlined clearable hide-bottom-space>
-                    <template v-slot:append>
-                        <q-btn class="get-code-btn" color="primary" :label="$t('btn.confirm')" @click="() => { }" />
-                    </template>
-                </q-input>
-            </template>
-        </InputField>
 
         <div class="info panel bordered">
             <table class="card-table" border="0" cellpadding="0" cellspacing="0" width="100%"
@@ -52,18 +39,80 @@
 
 <script setup>
 import InputField from 'src/components/auth/InputField.vue';
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
+import { api } from 'src/boot/axios';
+import { userStore } from 'src/stores';
+import moment from 'moment';
 
 const formDetail = reactive([]);
-const model = ref('Consolidated Weekly');
-const options = ref(['Consolidated Weekly']);
-const model2 = ref('Not Signed');
-const options2 = ref(['Not Signed']);
+const isLoading = ref(false);
+const store = userStore();
+
+function convertStartDate(date) {
+    return moment(date).startOf('day').format('YYYY-MM-DD HH:mm:ss');
+}
+
+function convertDate(date) {
+    return moment(date).format('YYYY-MM-DD HH:mm:ss');
+}
+
+const request = reactive({
+    size: 20,
+    current: 1,
+    regTime: [convertStartDate(new Date()), convertDate(new Date())],
+    loginName: null,
+    memberTypes: "AFFILIATE",
+    status: true
+});
+
+onMounted(() => {
+    const requestCopy = { ...request };
+    const query = {};
+    Object.entries(requestCopy).forEach(([key, value]) => {
+        if (value) {
+            query[key] = value;
+        }
+    });
+
+    if (request.regTime !== null) {
+        if (request.regTime.length === 2) {
+            query.regTime = JSON.parse(JSON.stringify(request.regTime))
+
+            query.regTime[0] = moment(query.regTime[0]).format('YYYY-MM-DD')
+            query.regTime[1] = moment(query.regTime[1]).format('YYYY-MM-DD')
+
+            query.regTime = query.regTime.join(',')
+        } else {
+            query.regTime = moment(request.regTime[0]).format(
+                'YYYY-MM-DD'
+            )
+        }
+    }
+
+    query.recordTime = query.regTime;
+    query.loginName = request.loginName;
+
+    if (request.status !== null) {
+        query.status = request.status = true;
+    }
+
+    query.siteId = 26;
+    query.id = store.memberId;
+
+    api.get('/session/affiliate/downline', {
+        params: query
+    }).then((res) => {
+        dividendInfo.value = res.data;
+        isLoading.value = false;
+    }).finally(() => {
+        isLoading.value = false;
+    });
+})
 
 </script>
 
 <style lang="scss" scoped>
-.my-dividend-container {
+.container {
     display: flex;
     flex-direction: column;
 }
@@ -75,11 +124,6 @@ const options2 = ref(['Not Signed']);
     :deep(.landing-input) {
         width: 100%;
     }
-}
-
-.dropdown,
-.input {
-    margin-bottom: 10px;
 }
 
 .separator {
@@ -219,14 +263,14 @@ const options2 = ref(['Not Signed']);
                 }
 
                 &:nth-child(even) {
-                    background:#0665D3;
+                    background: #0665D3;
                 }
             }
         }
     }
 }
 
-.get-code-btn {
+.primary-btn {
     background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
     color: #fff;
     box-shadow: 0px 0.5px 2px 0px #0667D599;

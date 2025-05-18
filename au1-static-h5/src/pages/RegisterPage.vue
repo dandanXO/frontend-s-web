@@ -12,20 +12,11 @@
         <q-input
           type="tel"
           pattern="\d*"
-          maxlength="11"
+          :maxlength="maxPhoneLength"
           ref="loginNameRef"
           hide-bottom-space
           v-model="regForm.loginName"
-          :rules="[
-            (val) => (val && val.length > 0) || 'Please insert Phone number',
-            (val) => {
-              if (val.startsWith('0')) {
-                return val.length === 11 || 'Phone number must have 11 digits if starting with 0';
-              } else {
-                return val.length === 10 || 'Phone number must have 10 digits';
-              }
-            }
-          ]"
+          :rules="[(val) => (val && val.length > 0) || 'Please insert Phone number']"
           color="white"
           class="landing-input"
           outlined
@@ -37,7 +28,9 @@
             <span class="prepend-number">+61</span>
           </template>
           <template v-if="regForm.referrer" v-slot:append>
-            <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">{{ otpCountdown > 0 ? `Get Code (${otpCountdown})` : 'Get Code' }}</q-btn>
+            <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">
+              {{ otpCountdown > 0 ? `Get Code (${otpCountdown})` : "Get Code" }}
+            </q-btn>
           </template>
         </q-input>
 
@@ -234,7 +227,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, onUnmounted, watch, onActivated } from "vue";
+import { defineComponent, ref, reactive, onMounted, onUnmounted, watch, onActivated, computed } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
@@ -312,8 +305,8 @@ export default defineComponent({
 
     const getAffiliateCode = () => {
       affCode.value = (() => {
-        if(location.hostname === 'www.fff2evkgkj.com') {
-          return '77CCEF';
+        if (location.hostname === "www.fff2evkgkj.com") {
+          return "77CCEF";
         }
 
         return sessionStorage.getItem("AFFILIATE_CODE");
@@ -395,6 +388,27 @@ export default defineComponent({
     };
 
     const onSubmit = () => {
+      if (!regForm.loginName) {
+        $q.notify({ type: "negative", position: "top", message: "Please insert Phone number" });
+        return;
+      }
+
+      if (regForm.loginName.startsWith("0")) {
+        if (regForm.loginName.length !== 10) {
+          $q.notify({
+            type: "negative",
+            position: "top",
+            message: "Phone number must have 10 digits if starting with 0"
+          });
+          return;
+        }
+      } else {
+        if (regForm.loginName.length !== 9) {
+          $q.notify({ type: "negative", position: "top", message: "Phone number must have 9 digits" });
+          return;
+        }
+      }
+
       loginNameRef.value.validate();
       pwdRef.value.validate();
       // confirmPwdRef.value.validate();
@@ -418,7 +432,7 @@ export default defineComponent({
         isAgreeReg.value === false
       ) {
         $q.loading.hide();
-      } else if (regForm.referrer && isOtpEnable.value){
+      } else if (regForm.referrer && isOtpEnable.value) {
         $q.notify({
           color: "negative",
           position: "top",
@@ -588,28 +602,28 @@ export default defineComponent({
             // start otp countdown
             otpCountdown.value = res.data.second || 60;
             otpCountdownInterval.value = setInterval(() => {
-              if(otpCountdown.value > 0) {
+              if (otpCountdown.value > 0) {
                 otpCountdown.value = otpCountdown.value - 1;
               }
-            },1000);
+            }, 1000);
           } else {
             color = "negative";
-            if(res.code === 1402) {
+            if (res.code === 1402) {
               message = `Please try again after ${res.data.second} seconds`;
 
-               // start otp countdown
+              // start otp countdown
               otpCountdown.value = res.data.second || 60;
               otpCountdownInterval.value = setInterval(() => {
-                if(otpCountdown.value > 0) {
+                if (otpCountdown.value > 0) {
                   otpCountdown.value = otpCountdown.value - 1;
                 }
-              },1000);
+              }, 1000);
             }
             getInnerCode();
           }
 
           if (message) {
-            $q.notify({ message, color, position: 'top' });
+            $q.notify({ message, color, position: "top" });
           }
 
           console.log("onCaptchaSubmit", res);
@@ -635,15 +649,22 @@ export default defineComponent({
     const imgOnLoad = () => (showImageCode.value = true);
     const imgOnError = () => (showImageCode.value = false);
 
-    watch(() => otpCountdown.value, () => {
-      if(otpCountdown.value === 0) {
-        clearInterval(otpCountdownInterval.value);
+    const maxPhoneLength = computed(() => {
+      return regForm.loginName?.startsWith("0") ? 10 : 9;
+    });
+
+    watch(
+      () => otpCountdown.value,
+      () => {
+        if (otpCountdown.value === 0) {
+          clearInterval(otpCountdownInterval.value);
+        }
       }
-    })
+    );
 
     onUnmounted(() => {
       clearInterval(otpCountdownInterval.value);
-    })
+    });
 
     return {
       header: "Register Account",
@@ -680,7 +701,8 @@ export default defineComponent({
       imgOnError,
       otpCountdown,
       otpCountdownInterval,
-      isOtpEnable
+      isOtpEnable,
+      maxPhoneLength
     };
   }
 });

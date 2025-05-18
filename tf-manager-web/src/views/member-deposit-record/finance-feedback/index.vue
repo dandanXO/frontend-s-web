@@ -126,13 +126,14 @@
     </div>
 
     <el-table
+      height="700"
       :data="page.records"
       ref="table"
       row-key="id"
       size="small"
       highlight-current-row
       v-loading="page.loading"
-      height="500"
+      style="height:calc(100vh - 220px);"
       :empty-text="t('fields.noData')"
     >
       <el-table-column

@@ -70,6 +70,7 @@ const goToMailDetail = (mail) => {
   margin-bottom: 12px;
   flex: 1;
   overflow: auto;
+  margin-bottom: 70px;
 }
 
 .announcement-footer {
@@ -77,6 +78,10 @@ const goToMailDetail = (mail) => {
   justify-content: space-between;
   gap: 12px;
   align-items: center;
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 50px;
 
   .footer-button {
     cursor: pointer;
@@ -105,5 +110,10 @@ const goToMailDetail = (mail) => {
       opacity: 0.9;
     }
   }
+}
+
+:deep(.el-carousel__container) {
+  height: 600px;
+  width: 100%;
 }
 </style>

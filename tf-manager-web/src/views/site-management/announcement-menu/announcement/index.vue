@@ -193,7 +193,7 @@
             :disabled-date="disabledDate"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.content')" prop="content">
+        <!-- <el-form-item :label="t('fields.content')" prop="content">
           <el-input
             type="textarea"
             v-model="form.content"
@@ -202,6 +202,10 @@
             maxlength="5000"
             show-word-limit
           />
+        </el-form-item> -->
+        <el-form-item :label="t('fields.content')" prop="content">
+          <!-- editor here -->
+          <Editor v-model:value="form.content" @input="getInput" />
         </el-form-item>
         <el-form-item :label="t('fields.sequence')" prop="sequence">
           <el-input-number
@@ -536,6 +540,7 @@
 <script setup>
 import { computed, nextTick, onMounted, reactive, ref } from 'vue'
 import { required } from '../../../../utils/validate'
+import Editor from '../../../../components/editor/index.vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
   createAnnouncement,
@@ -806,7 +811,9 @@ function showEdit(announcement) {
     }
   })
 }
-
+function getInput(value) {
+  form.content = value
+}
 /**
  * 新增公告
  */

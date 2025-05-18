@@ -30,7 +30,8 @@
         </div>
 
         <div class="content-desc">
-          <img src="img/board2.png" alt="" />
+          <img id="mainboard" src="img/board2.png" alt="" />
+          <img style="display: none;" id="subboard" src="img/board3.png" alt="" />
         </div>
 
         <div class="content-cat">
@@ -87,6 +88,34 @@
             </div>
             <div class="item-btns">
               <a href="#" class="btn-brown-light" id="click2-number" data-id="822752460" onclick="copyText2(this)">
+                复制
+              </a>
+            </div>
+          </div>
+          
+          <div class="content-item" id="group3-item">
+            <div class="item-icon"><img src="img/icon-sigua.png" /></div>
+            <div class="item-txt">
+              丝瓜群:
+              <span id="group3-number">lh5599</span>
+            </div>
+            <div class="item-btns">
+              <a id="sigua-download-1" target="_blank" class="btn-brown-dark">下载</a>
+              <a href="#" class="btn-brown-light" id="click3-number" data-id="lh5599" onclick="copyText2(this)">
+                复制
+              </a>
+            </div>
+          </div>
+          
+          <div class="content-item" id="group4-item">
+            <div class="item-icon"><img src="img/icon-sigua.png" /></div>
+            <div class="item-txt">
+              丝瓜群:
+              <span id="group4-number">leihuosix6</span>
+            </div>
+            <div class="item-btns">
+              <a id="sigua-download-2" target="_blank" class="btn-brown-dark">下载</a>
+              <a href="#" class="btn-brown-light" id="click4-number" data-id="leihuosix6" onclick="copyText2(this)">
                 复制
               </a>
             </div>
@@ -354,11 +383,15 @@
             linkUrl: "https://www.lh999.cc"
           },
           "774891.com": {
+          // "127.0.0.1:5500": {
             group1Number: "822752460",
             agent1: "vip0002",
             agent2: "vip0003",
+            group3Number: "lh5599",
+            group4Number: "leihuosix6",
             landingPageLink: "https://am35.cc/",
-            linkUrl: "https://www.lh999.cc"
+            linkUrl: "https://www.lh999.cc",
+            subBoard: "true"
           },
           "512105.com": {
             group1Number: "884663921",
@@ -400,11 +433,28 @@
           document.getElementById("group2-number").textContent = selectedInfo.group2Number;
           document.getElementById("click2-number").dataset.id = selectedInfo.group2Number;
         }
+        
+        if (selectedInfo.group3Number) {
+          document.getElementById("group3-item").style.display = "flex";
+          document.getElementById("group3-number").textContent = selectedInfo.group3Number;
+          document.getElementById("click3-number").dataset.id = selectedInfo.group3Number;
+        }
+        if (selectedInfo.group4Number) {
+          document.getElementById("group4-item").style.display = "flex";
+          document.getElementById("group4-number").textContent = selectedInfo.group4Number;
+          document.getElementById("click4-number").dataset.id = selectedInfo.group4Number;
+        }
+        if (selectedInfo.subBoard) {
+          document.getElementById("mainboard").style.display = "none";
+          document.getElementById("subboard").style.display = "block";
+        }
       }
 
       function checkPlatform() {
         $("#voxis-download-1").attr("href", "https://am35.cc/");
         $("#voxis-download-2").attr("href", "https://am35.cc/");
+        $("#sigua-download-1").attr("href", "https://ya.cn/index.html");
+        $("#sigua-download-2").attr("href", "https://ya.cn/index.html");
       }
 
       function copyText2(eve) {

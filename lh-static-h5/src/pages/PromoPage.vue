@@ -166,7 +166,8 @@
                   selectedPromo.redirectUrl === 'lh-blackmyth-wukong' ||
                   selectedPromo.redirectUrl === 'lh1-ag-yuanxiaohongbao' ||
                   selectedPromo.promoCode === 'lh1-daily-checkin' ||
-                  selectedPromo.promoCode === 'lh1-2025-pgl-s3'
+                  selectedPromo.promoCode === 'lh1-2025-pgl-s3' ||
+                  selectedPromo.promoCode === 'lh1-duan-wu-rewards'
                     ? 'background-image: url(' +
                       imgURL +
                       (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
