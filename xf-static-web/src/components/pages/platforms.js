@@ -70,7 +70,7 @@ export const platformsDetails = [
     message:
       "全球首家一体化娱乐原生APP，尽显流畅、完美操作。海量体育、电竞顶尖赛事，真人娱乐、彩票投注及电子游艺等，最新最全娱乐项目尽在掌中体验扫码下载，即刻拥有！",
     cnname: "IM体育",
-    caption: "赛事最多，玩法新颖",
+    caption: "高赔稳定 滚球首选",
     link: "/games/im-sport.html"
   },
   {
@@ -80,7 +80,7 @@ export const platformsDetails = [
     type: "SPORT", // Added type
     message: "最专业的盘口趋势分析，及时掌握最全面的热点赛事、体育资讯，多种投注型，让您乐享其中。",
     cnname: "熊猫体育",
-    caption: "赛事最多，玩法新颖",
+    caption: "玩法刺激 即刻结算",
     link: "/games/pm-sport.html"
   },
   {
@@ -102,7 +102,7 @@ export const platformsDetails = [
     message:
       "覆盖世界各地大小赛事，提供让球、大小、半全场、波胆、单双、总入球、连串过关等多元竞猜，SABA体育不会让您错过任何自己最喜爱的体育赛事。",
     cnname: "SABA体育",
-    caption: "赛事最多，玩法新颖",
+    caption: "赛事丰富 创新玩法",
     link: "/games/saba-sport.html"
   },
   // POKER
