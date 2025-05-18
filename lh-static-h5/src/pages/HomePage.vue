@@ -415,7 +415,7 @@
                 <div class="platform-logo">
                   <img loading="lazy" :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
                 </div>
-                <div class="platform-title">{{ item?.alias || item.title }}</div>
+                <div class="platform-title">{{ item.title }}</div>
                 <div class="platform-subtitle">{{ item.subtitle }}</div>
                 <div class="platform-rebate">
                   最高返水
@@ -669,7 +669,7 @@
                   >
                     <q-card style="background: transparent">
                       <q-card-section style="color: #9f9f9f">
-                        {{ ann.content }}
+                        <p v-html="ann.content"></p>
                       </q-card-section>
                     </q-card>
                   </q-expansion-item>
@@ -1390,7 +1390,7 @@ export default defineComponent({
                 icon: slotObj.name,
                 title: slotObj.title
               };
-              // console.log(slotItem);
+              console.log(slotItem);
               ui.slotLists.push(slotItem);
               slot.value.push(slotObj);
             }
@@ -1451,10 +1451,14 @@ export default defineComponent({
 
     const getAliasName = (plat, platformType) => {
       // console.log(plat);
-      if (plat.alias.includes("、")) {
+      if (plat.alias?.includes("、")) {
         const aliass = plat.alias.split("、");
         const gameTypes = plat.gameType.split(",");
         const itemIndex = gameTypes.indexOf(platformType);
+        // console.log(platformType);
+        // console.log(aliass);
+        // console.log(aliass[itemIndex]);
+
         return itemIndex && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
       }
       return plat.alias;
@@ -1650,7 +1654,7 @@ export default defineComponent({
     const unreadInboxMail = ref(0);
     const getUnreadTotal = () => {
       if (store.token) {
-        return api.get("/session/inbox/getUnreadTotal").then((res) => {
+        return api.get("/session/pm/inbox/getUnreadTotal").then((res) => {
           // console.log(res);
           if (res.code === 0) {
             unreadInboxMail.value = res.data;
@@ -1857,6 +1861,9 @@ export default defineComponent({
       setTimeout(() => {
         getUnreadTotal();
       }, 750);
+      setInterval(() => {
+        getUnreadTotal();
+      }, 60000);
 
       rightPlatformContainer.value.addEventListener("scroll", onHomeScroll);
     });

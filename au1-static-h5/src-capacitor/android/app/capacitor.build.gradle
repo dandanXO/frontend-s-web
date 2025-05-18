@@ -19,7 +19,8 @@ dependencies {
     implementation "com.adjust.sdk:adjust-android:4.38.3"
     implementation "com.google.android.gms:play-services-ads-identifier:18.0.1"
     implementation "com.android.installreferrer:installreferrer:2.2"
-    implementation "com.onesignal:OneSignal:5.1.24"
+    implementation "androidx.webkit:webkit:1.4.0"
+    implementation "com.onesignal:OneSignal:5.1.33"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.10"
 }
 apply from: "../../node_modules/onesignal-cordova-plugin/build-extras-onesignal.gradle"

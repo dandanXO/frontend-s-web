@@ -27,7 +27,7 @@
             <template v-for="(ann, idx) in announcementList" :key="idx">
               <template v-if="ann.typeId === tab.id">
                 <el-collapse-item :name="idx" :title="ann.title" class="announcement-content">
-                  <p class="announcement-p">{{ ann.content }}</p>
+                  <p class="announcement-p" v-html="ann.content"></p>
                 </el-collapse-item>
               </template>
             </template>

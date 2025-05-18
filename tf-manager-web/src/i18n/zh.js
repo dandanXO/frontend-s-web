@@ -3385,7 +3385,8 @@ export default {
     'Official CS Account': '官方客服账号',
     'Site Note': '便签板',
     'Fast Access Promo': '快速浏览优惠',
-    'Refer Friend Rebate Point record': '邀请好友流水返点点数记录'
+    'Refer Friend Rebate Point record': '邀请好友流水返点点数记录',
+    'Member Summary Report': '会员汇总报表',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -3564,6 +3565,7 @@ export default {
     UNSENT: '未发送',
     SENDING: '发送中',
     SENT: '已发送',
+    FAIL: '发送失败',
   },
   telegram: {
     userStatus: {
@@ -3616,6 +3618,10 @@ export default {
       MANAGER: '管理后台',
       AFFILIATE: '代理后台',
     }
+  },
+  distributeFail: {
+    BLACKLIST: '优惠黑名单',
+    KEY_EXIST: '已领取',
   },
   referRebatePoint: {
     NO_BET_AFTER_DEPOSIT: '存款后无投注',

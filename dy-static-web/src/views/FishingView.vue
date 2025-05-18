@@ -110,11 +110,11 @@ export default defineComponent({
       // },
       {
         gameCode: "HMPL",
-        name: "AG捕鱼王",
+        name: "PA捕鱼王",
         code: "AGF",
         image: "ag",
         message:
-            "最受欢迎的AG捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
+          "最受欢迎的PA捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。"
       },
       {
         gameCode: "",
@@ -122,7 +122,7 @@ export default defineComponent({
         code: "PMFISH",
         image: "db",
         message:
-            "最受欢迎的DB多宝捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
+          "最受欢迎的DB多宝捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。"
       }
       // {
       //   gameCode: "F-SF01",

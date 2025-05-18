@@ -1,72 +1,110 @@
 <template>
-  <div class="platform-section" :style="{
-    'background-size': 'cover',
-    'background-image':
-      platformType !== 'slot' && platformType !== 'fishing' && platformType !== 'casual'
-        ? 'url(' + require('../assets/' + platformType + '/' + platformType + '-bg.png') + ')'
-        : 'none'
-  }">
-    <div v-if="platformsListDisplay.length > 0" class="platform-container" :class="platformType === 'slot' || platformType === 'fishing' || platformType === 'casual'
-      ? `${platformType}-container`
-      : ''
-      ">
-      <div class="platform-container-slot" :class="platformType"
-        v-if="platformType === 'slot' || platformType === 'fishing' || platformType === 'casual'">
+  <div
+    class="platform-section"
+    :style="{
+      'background-size': 'cover',
+      'background-image':
+        platformType !== 'slot' && platformType !== 'fishing' && platformType !== 'casual'
+          ? 'url(' + require('../assets/' + platformType + '/' + platformType + '-bg.png') + ')'
+          : 'none'
+    }"
+  >
+    <div
+      v-if="platformsListDisplay.length > 0"
+      class="platform-container"
+      :class="
+        platformType === 'slot' || platformType === 'fishing' || platformType === 'casual'
+          ? `${platformType}-container`
+          : ''
+      "
+    >
+      <div
+        class="platform-container-slot"
+        :class="platformType"
+        v-if="platformType === 'slot' || platformType === 'fishing' || platformType === 'casual'"
+      >
         <img :src="require(`../assets/slot/${platformType}-top-bg-${languageVal}.png`)" />
       </div>
-      <div class="platform-container-inner"
-        v-if="platformType !== 'slot' && platformType !== 'fishing' && platformType !== 'casual'">
+      <div
+        class="platform-container-inner"
+        v-if="platformType !== 'slot' && platformType !== 'fishing' && platformType !== 'casual'"
+      >
         <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
         <template v-for="(item, index) in platformsListDisplay" :key="index">
           <template v-if="selectedPlat === item.code">
             <div class="platform-item platform-item--img" data-aos="fade-right" data-aos-duration="1000">
-              <img :src="require('../assets/' +
-                platformType +
-                '/' +
-                platformType +
-                '-itempg-' +
-                item.code.toLowerCase() +
-                '.png')
-                " />
+              <img
+                :src="
+                  require('../assets/' +
+                    platformType +
+                    '/' +
+                    platformType +
+                    '-itempg-' +
+                    item.code.toLowerCase() +
+                    '.png')
+                "
+              />
             </div>
 
             <div class="platform-item">
               <div class="platform-title">
-                <img style="height: 60px" :src="require('../assets/' +
-                  platformType +
-                  '/' +
-                  platformType +
-                  '-biglogo-' +
-                  item.code.toLowerCase() +
-                  '.png')
-                  " />
+                <img
+                  style="height: 60px"
+                  :src="
+                    require('../assets/' +
+                      platformType +
+                      '/' +
+                      platformType +
+                      '-biglogo-' +
+                      item.code.toLowerCase() +
+                      '.png')
+                  "
+                />
               </div>
               <div class="platform-title-wrap" data-aos="fade-left" data-aos-delay="100">
                 <div class="platform-subtitle">{{ $t(`menu.${platformName}`) }}</div>
               </div>
 
-              <div v-if="languageVal === 'en'" class="platform-txt-box" data-aos="fade-left" data-aos-delay="200"
-                v-html="item.message"></div>
-              <div v-if="languageVal === 'vi'" class="platform-txt-box" data-aos="fade-left" data-aos-delay="200"
-                v-html="item.vimessage"></div>
+              <div
+                v-if="languageVal === 'en'"
+                class="platform-txt-box"
+                data-aos="fade-left"
+                data-aos-delay="200"
+                v-html="item.message"
+              ></div>
+              <div
+                v-if="languageVal === 'vi'"
+                class="platform-txt-box"
+                data-aos="fade-left"
+                data-aos-delay="200"
+                v-html="item.vimessage"
+              ></div>
 
               <div class="platform-pattern-row" data-aos="fade-left" data-aos-delay="300" v-if="platformPattern">
                 <img :src="require('../assets/' + platformType + '/' + platformType + '-pattern.png')" />
               </div>
 
               <div class="platform-list-box">
-                <span class="platform-list-item" v-for="(plat, platIndex) in filteredPlatforms" :key="platIndex"
-                  @click="clickPlat(plat)" :class="{ active: selectedPlat === plat.code }">
+                <span
+                  class="platform-list-item"
+                  v-for="(plat, platIndex) in filteredPlatforms"
+                  :key="platIndex"
+                  @click="clickPlat(plat)"
+                  :class="{ active: selectedPlat === plat.code }"
+                >
                   <div class="list-item-btn">
                     <span>
-                      <img :src="require('../assets/' +
-                        platformType +
-                        '/' +
-                        platformType +
-                        '-logo-' +
-                        plat.code.toLowerCase() +
-                        '.png')
-                        " />
+                      <img
+                        :src="
+                          require('../assets/' +
+                            platformType +
+                            '/' +
+                            platformType +
+                            '-logo-' +
+                            plat.code.toLowerCase() +
+                            '.png')
+                        "
+                      />
                     </span>
                   </div>
                   <div class="list-item-txt">{{ plat.alias ?? plat.name }}</div>
@@ -77,8 +115,11 @@
               <!--            data-aos-delay="300"-->
               <!--            data-aos-duration="500"-->
               <div class="platform-play-btn" v-if="platformType !== 'slot' || platformType !== 'fishing'">
-                <div class="btn-blue" @click="openGame(item, item.code, item.gameCode)"
-                  :class="item.underMaintenance === true ? 'btn-maintenance' : ''">
+                <div
+                  class="btn-blue"
+                  @click="openGame(item, item.code, item.gameCode)"
+                  :class="item.underMaintenance === true ? 'btn-maintenance' : ''"
+                >
                   <span class="maintenance-state" v-if="item.underMaintenance === true">
                     <img src="../assets/svg/maintenance-icon.svg" />
                     {{ $t("common.maintenance") }}
@@ -86,8 +127,10 @@
                   <span v-else>{{ $t("common.playnow") }}</span>
                 </div>
 
-                <p v-if="item.underMaintenance === true && item.maintenanceStartTime && item.maintenanceEndTime"
-                  class="maintenance-p">
+                <p
+                  v-if="item.underMaintenance === true && item.maintenanceStartTime && item.maintenanceEndTime"
+                  class="maintenance-p"
+                >
                   {{ $t("common.maintenanceTime") }}:
                   <em>{{ toGMT7(item.maintenanceStartTime) }} - {{ toGMT7(item.maintenanceEndTime) }}</em>
                 </p>
@@ -109,8 +152,11 @@
           <div class="all-game-tab" @click="selectTab('fishing')" :class="selectedTab === 'fishing' ? 'active' : ''">
             {{ $t("menu.fishing") }}
           </div>
-          <div class="all-game-tab" @click="selectTab('cockfight')"
-            :class="selectedTab === 'cockfight' ? 'active' : ''">
+          <div
+            class="all-game-tab"
+            @click="selectTab('cockfight')"
+            :class="selectedTab === 'cockfight' ? 'active' : ''"
+          >
             {{ $t("menu.cockfight") }}
           </div>
         </div>
@@ -122,7 +168,7 @@
             <template v-for="(item, index) in platformsListDisplay" :key="index">
               <div class="plat-option" @click="clickPlat(item)" :class="{ active: selectedPlat === item.code }">
                 <div class="text">
-                  <span v-if="item.code === 'AG'">XIN</span>
+                  <span v-if="item.code === 'AG'">PA</span>
                   <span v-else>{{ item.code }}</span>
                 </div>
               </div>
@@ -142,8 +188,14 @@
 
         <div class="plat-games-container" v-if="selectedTab === 'fishing'">
           <div class="grid-items flex-box flex-align-center search-container web-only-box">
-            <el-input class="search-input" v-model="gamePage.searchKey" @input="searchList()"
-              :placeholder="$t('common.search')" clearable @clear="searchList()">
+            <el-input
+              class="search-input"
+              v-model="gamePage.searchKey"
+              @input="searchList()"
+              :placeholder="$t('common.search')"
+              clearable
+              @clear="searchList()"
+            >
               <template #suffix>
                 <el-icon :width="15" @click="searchList()">
                   <Search />
@@ -153,8 +205,11 @@
           </div>
 
           <div class="game-list-wrapper">
-            <div class="game-slot animate__animated animate__fadeInRight" v-for="game in gamePage.gameList"
-              :key="game.id">
+            <div
+              class="game-slot animate__animated animate__fadeInRight"
+              v-for="game in gamePage.gameList"
+              :key="game.id"
+            >
               <a @click="openGame(game, selectedPlat, game.code)">
                 <div class="slot-img">
                   <el-image :src="game.icon" lazy>
@@ -184,27 +239,39 @@
             </div>
           </div>
           <div class="pagination-wrapper">
-            <el-pagination background layout="prev, pager, next" :total="gamePage.total"
+            <el-pagination
+              background
+              layout="prev, pager, next"
+              :total="gamePage.total"
               @current-change="changePage(gamePage.currentPage, gamePage.pageSize)"
-              v-model:current-page="gamePage.currentPage" v-model:pageSize="gamePage.pageSize" default-page-size="30" />
+              v-model:current-page="gamePage.currentPage"
+              v-model:pageSize="gamePage.pageSize"
+              default-page-size="30"
+            />
           </div>
         </div>
 
         <div class="plat-games-container" v-if="selectedTab === 'cockfight'">
           <div class="game-list-wrapper cockfight-special">
-            <div class="game-slot animate__animated animate__fadeInRight" v-for="game in platformsListDisplay2"
-              :key="game.id">
+            <div
+              class="game-slot animate__animated animate__fadeInRight"
+              v-for="game in platformsListDisplay2"
+              :key="game.id"
+            >
               <a @click="openGame(game, game.code, game.gameCode)">
                 <div class="cockfight-img">
                   <div class="platform-menu-img">
-                    <img :src="require('../assets/' +
-                      game.gameType.toLowerCase() +
-                      '/' +
-                      game.gameType.toLowerCase() +
-                      '-item-' +
-                      game.code.toLowerCase() +
-                      '.png')
-                      " />
+                    <img
+                      :src="
+                        require('../assets/' +
+                          game.gameType.toLowerCase() +
+                          '/' +
+                          game.gameType.toLowerCase() +
+                          '-item-' +
+                          game.code.toLowerCase() +
+                          '.png')
+                      "
+                    />
                   </div>
                 </div>
 
@@ -241,7 +308,7 @@ import { storeToRefs } from "pinia";
 import { useLocalStorage } from "@vueuse/core";
 import { toGMT7 } from "@/utils/utils";
 
-const GameModal = defineAsyncComponent(() => import('@/components/modal/GameModal.vue'));
+const GameModal = defineAsyncComponent(() => import("@/components/modal/GameModal.vue"));
 const i18nStoreLanguage = i18nStore();
 const { languageVal } = storeToRefs(i18nStoreLanguage);
 const platformGame = ref(null);

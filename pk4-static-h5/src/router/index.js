@@ -152,7 +152,7 @@ export default route(function (/* { store, ssrContext } */) {
 
     if (to.name === "agentCode" || to.name === "memberCode") {
       if(to.name === "memberCode") {
-        sessionStorage.setItem("AFFILIATE_MEMBERTYPE", "MEMBER");
+        sessionStorage.setItem("AFFILIATE_MEMBERTYPE", "NORMAL");
       } else if(to.name === "agentCode") {
         sessionStorage.setItem("AFFILIATE_MEMBERTYPE", "AFFILIATE");
       }

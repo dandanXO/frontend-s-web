@@ -54,6 +54,7 @@
                   v-for="(item, index) in mailboxState.mailboxList.inbox.list"
                   :key="index"
                   @click="openMsg(item, index)"
+                  class="mail-collapse-item"
                 >
                   <template #title>
                     <div v-if="isShowSelect" class="mailbox-checkbox" @click.stop="">
@@ -99,7 +100,12 @@
             </template>
 
             <template v-else>
-              <div class="no-record-text" style="display: flex; justify-content: center; align-items: center; height: 300px">暂无记录</div>
+              <div
+                class="no-record-text"
+                style="display: flex; justify-content: center; align-items: center; height: 300px"
+              >
+                暂无记录
+              </div>
             </template>
           </el-tab-pane>
         </el-tabs>
@@ -804,7 +810,7 @@ onMounted(() => {
   .no-record-text {
     color: #fff;
   }
-  
+
   .menu-title {
     color: $color-white;
   }
@@ -818,11 +824,20 @@ onMounted(() => {
     }
   }
 }
-</style>
-<style lang="scss">
+
 .title-text {
   p {
     margin-bottom: 0;
+    margin-top: 0px;
+  }
+}
+</style>
+
+<style lang="scss">
+.mail-collapse-item {
+  .el-collapse-item__title {
+    display: flex;
+    align-items: center;
   }
 }
 </style>
