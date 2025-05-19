@@ -103,6 +103,8 @@ export default {
     'Personal Info': 'Personal Info',
     'Message': 'Message',
     'Contact Us': 'Contact Us',
+    downlineSummary: 'Downline Summary',
+    platformSummary: 'Platform Summary',
   },
   common: {
     title: 'Affiliate System',
@@ -721,7 +723,16 @@ export default {
     dashboardMemberBalance: 'Member Balance',
     totalWithdrawalAmount: 'Withdraw Amount',
     dismiss: 'Dismiss',
-    affiliateAnnouncement: 'Affiliate Announcement'
+    affiliateAnnouncement: 'Affiliate Announcement',
+    data: 'Data',
+    login: 'Login',
+    tomorrow: 'Tomorrow',
+    register: 'Register',
+    bonusCount: 'Bonus Count',
+    betCount: 'Bet Count',
+    vip: 'VIP',
+    registerAffiliate: 'Register Affiliate',
+    totalValidBet: 'Total Valid Bet',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

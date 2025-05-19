@@ -1,7 +1,5 @@
 <template>
   <div>
-    <StatsHeader />
-    <Breadcrumb />
     <section class="app-main">
       <Suspense>
         <router-view :key="key" />
@@ -53,7 +51,7 @@ elTables.forEach((elTable) => {
   width: 100%;
   position: relative;
   overflow: auto;
-  height: calc(100vh - 157px);
+  height: calc(100vh);
   background-color: #e4e5e6;
 
   &::-webkit-scrollbar-track {

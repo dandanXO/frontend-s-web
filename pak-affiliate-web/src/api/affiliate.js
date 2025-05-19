@@ -2,11 +2,11 @@ import { ContentType, Method } from "axios-mapper";
 import https from "../utils/https";
 
 export const getAffiliateDownline = (id, query) => {
-  return https().request(`/affiliate/${id}/kr-downline`, Method.GET, query, ContentType.form);
+  return https().request(`/affiliate/${id}/downline`, Method.GET, query, ContentType.form);
 };
 
 export const getAffiliateDownlineSums = (id, query) => {
-  return https().request(`/affiliate/${id}/kr-downline-total`, Method.GET, query, ContentType.form);
+  return https().request(`/affiliate/${id}/downline-total`, Method.GET, query, ContentType.form);
 };
 
 export const regsterAffiliate = (affiliate) => {
