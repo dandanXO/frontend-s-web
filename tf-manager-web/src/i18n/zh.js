@@ -2574,6 +2574,8 @@ export default {
     pts: '分数',
     ptsRebateAmount: '返水分数金额',
     ftdRebateAmount: '返水首次存款金额',
+    pk4_super_affiliate: '招商',
+    pk4_master_affiliate: '总代',
   },
   message: {
     adsStatusOpen: '开',
