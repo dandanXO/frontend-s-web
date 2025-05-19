@@ -241,9 +241,9 @@ const loginRules = {
             trigger: "blur"
         },
         {
-            min: 6,
+            min: 4,
             max: 12,
-            message: "长度要在 6-12 之间",
+            message: "长度要在 4-12 之间",
             trigger: "blur"
         }
     ],

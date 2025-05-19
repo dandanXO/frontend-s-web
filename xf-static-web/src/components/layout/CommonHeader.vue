@@ -1084,13 +1084,19 @@ export default defineComponent({
     };
 
     let validateName = async (r, v) => {
-      if (v === "") {
-        return Promise.reject("请输入登录名");
-      } else if (!checkName(v)) {
-        return Promise.reject("用户名必须包含英文字母与数字");
-      } else {
-        return Promise.resolve();
+      if (!v) {
+        return Promise.reject("请输入用户名");
       }
+
+      const namePattern = /^[a-zA-Z][a-zA-Z0-9]{3,10}$/; // Starts with a letter, length 4-11
+      const letterCount = (v.match(/[a-zA-Z]/g) || []).length >= 2; // At least 2 letters
+      const hasNumber = /\d/.test(v); // At least 1 number
+
+      if (!(namePattern.test(v) && letterCount && hasNumber)) {
+        return Promise.reject("用户名需符合格式：4-11位，首字母为字母，至少2个字母+数字组合");
+      }
+
+      return Promise.resolve();
     };
 
     let validateRealName = async (r, v) => {
@@ -1160,9 +1166,9 @@ export default defineComponent({
           trigger: "blur"
         },
         {
-          min: 6,
+          min: 4,
           max: 12,
-          message: "长度要在 6-12 之间",
+          message: "长度要在 4-12 之间",
           trigger: "blur"
         }
       ],
@@ -1280,15 +1286,19 @@ export default defineComponent({
       loginName: [
         {
           required: true,
-          min: 6,
+          message: "请输入用户名",
+          trigger: "blur"
+        },
+        {
+          min: 4,
           max: 11,
-          message: "长度应为 6 至 11",
-          trigger: "blur",
+          message: "长度要在 4-11 之间",
+          trigger: "blur"
         },
         {
           validator: validateName,
-          trigger: "change",
-        },
+          trigger: "change"
+        }
       ],
       password: [
         {
@@ -1422,9 +1432,9 @@ export default defineComponent({
           trigger: "blur"
         },
         {
-          min: 6,
+          min: 4,
           max: 12,
-          message: "长度要在 6-12 之间",
+          message: "长度要在 4-12 之间",
           trigger: "blur"
         }
       ],
@@ -1864,9 +1874,9 @@ export default defineComponent({
           trigger: "blur"
         },
         {
-          min: 6,
+          min: 4,
           max: 12,
-          message: "长度要在 6-12 之间",
+          message: "长度要在 4-12 之间",
           trigger: "blur"
         }
       ],
@@ -1909,9 +1919,9 @@ export default defineComponent({
           trigger: "blur"
         },
         {
-          min: 6,
+          min: 4,
           max: 12,
-          message: "长度要在 6-12 之间",
+          message: "长度要在 4-12 之间",
           trigger: "blur"
         }
       ],
