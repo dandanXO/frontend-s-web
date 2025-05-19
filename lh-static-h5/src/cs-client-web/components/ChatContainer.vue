@@ -283,6 +283,7 @@ import { useI18n } from "vue-i18n";
 import { useChatStore } from "src/cs-client-web/stores/chat";
 import { useUserStore } from "src/cs-client-web/stores/user";
 import { useSocketStore } from "src/cs-client-web/stores/socket";
+import { userStore as storeUser } from "src/stores";
 import { storeToRefs } from "pinia";
 import useSocket from "src/cs-client-web/composables/use-socket";
 import chatEnum from "src/cs-client-web/enum/chatEnum";
@@ -334,6 +335,7 @@ export default defineComponent({
     const chatStore = useChatStore();
     const userStore = useUserStore();
     const socketStore = useSocketStore();
+    const store = storeUser();
     const { roomList, isChatEnded, sendMessages, chatFreeze } = storeToRefs(chatStore);
     const { userId, nickname, token } = storeToRefs(userStore);
     const { isConnected } = storeToRefs(socketStore);
@@ -467,29 +469,45 @@ export default defineComponent({
 
       sessTimeoutDialogShown = true;
 
-      $q.dialog({
-        title: "",
-        message: t("sess_timeout"),
-        ok: t("start_new_chat"),
-        class: "modal-endchat",
-        cancel: null,
-        persistent: true,
-        noBackdropDismiss: true
-      }).onOk(() => {
-        if (reLogin) {
-          console.log("Dc2 HERE");
-          wsDisconnect();
+      store.chatGuid = "";
 
-          window.parent.postMessage("sess_timeout", "*");
+      if (reLogin) {
+        console.log("Dc2 HERE");
+        wsDisconnect();
 
-          LocalStorage.remove("loginDetails");
-          LocalStorage.remove("isChatStarted");
+        window.parent.postMessage("sess_timeout", "*");
 
-          startNewChat(true, true);
-        } else {
-          window.location.reload();
-        }
-      });
+        LocalStorage.remove("loginDetails");
+        LocalStorage.remove("isChatStarted");
+
+        // startNewChat(true, true);
+      } else {
+        window.location.reload();
+      }
+
+      // $q.dialog({
+      //   title: "",
+      //   message: t("sess_timeout"),
+      //   ok: t("start_new_chat"),
+      //   class: "modal-endchat",
+      //   cancel: null,
+      //   persistent: true,
+      //   noBackdropDismiss: true
+      // }).onOk(() => {
+      //   if (reLogin) {
+      //     console.log("Dc2 HERE");
+      //     wsDisconnect();
+
+      //     window.parent.postMessage("sess_timeout", "*");
+
+      //     LocalStorage.remove("loginDetails");
+      //     LocalStorage.remove("isChatStarted");
+
+      //     startNewChat(true, true);
+      //   } else {
+      //     window.location.reload();
+      //   }
+      // });
     }
 
     let checkResumeInterval;
