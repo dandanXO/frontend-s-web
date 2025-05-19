@@ -66,7 +66,8 @@ body {
   // padding-top: env(safe-area-inset-top);
 
   // padding-top: calc(50px + env(safe-area-inset-top)) !important;
-  // margin-bottom: calc(70px + env(safe-area-inset-top) + env(safe-area-inset-bottom)) !important;
+  margin-bottom: calc(env(safe-area-inset-top) + env(safe-area-inset-bottom)) !important;
+  // padding-bottom: env(safe-area-inset-bottom);
 }
 .q-scrollarea__content {
   width: 100%;
