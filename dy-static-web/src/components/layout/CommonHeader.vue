@@ -1152,6 +1152,7 @@ export default defineComponent({
       ],
       password: [
         {
+          required: true,
           validator: validatePass,
           trigger: "change"
         }
@@ -1182,6 +1183,7 @@ export default defineComponent({
         //   trigger: "blur",
         // },
         {
+          required: true,
           validator: validatePass2,
           trigger: "change"
         }

@@ -3,7 +3,7 @@
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
       <el-form-item label="用户名" prop="loginName">
-        <el-input v-model="forgotPwdForm.loginName" placeholder="请输入6-11位非汉字字符" clearable />
+        <el-input v-model="forgotPwdForm.loginName" placeholder="请输入4-12位非汉字字符" clearable />
       </el-form-item>
     </div>
 
