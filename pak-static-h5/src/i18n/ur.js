@@ -302,7 +302,8 @@ export default {
     signinWithGoogle: "Google",
     goNow: "اب جائیں",
     playReal: "حقیقی کھیلیں",
-    freeTrial: "مفت آزمائش"
+    freeTrial: "مفت آزمائش",
+    check: "چیک کریں"
   },
   notify: {
     loggingIn: "لاگ ان ہو رہا ہے",
@@ -326,6 +327,7 @@ export default {
     signOutMessage: "کیا آپ واقعی لاگ آوٹ ہونا چاہتے ہیں؟",
     plsLoginToContinue: "براہ کرم جاری رکھنے کے لئے لاگ ان کریں",
     copiedSuccessfully: "کامیابی سے کاپی کیا گیا",
+    claimedSuccessfully: "کامیابی سے کلیم کر لیا گیا",
     smsSent: "ایس ایم ایس او ٹی پی کامیابی سے بھیج دیا گیا ہے",
     tryagain: "براہ کرم {seconds} سیکنڈ بعد دوبارہ کوشش کریں",
     submitting: "جمع کر رہا ہے...",
@@ -904,6 +906,9 @@ export default {
       remainingDrawTimes: "باقی قرعہ اندازی کے اوقات",
       congratulations: "مبارک ہو"
     },
+    ftdDepositBonus: "پہلی بار جمع کرانے کا بونس",
+    redemptionCode: "ریڈیمپشن کوڈ",
+    newplayerGuide: "نئے کھلاڑی کے لیے رہنما",
     depositSpinWheel: {
       instruction: "وہیل سرگرمی میں حصہ لینے اور بونس حاصل کرنے کے لیے ڈپازٹ کا کام مکمل کریں، زیادہ سے زیادہ",
       depositNow: "ابھی جمع کریں",

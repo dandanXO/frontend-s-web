@@ -42,5 +42,18 @@ const items = ref([
       },
     ],
   },
+  {
+    label: '拉黑管理',
+    icon: 'pi pi-home',
+    items: [
+      {
+        label: '拉黑名单',
+        icon: 'pi pi-info-circle',
+        command: () => {
+          router.push('/chat-block/block-list')
+        },
+      },
+    ],
+  },
 ])
 </script>

@@ -95,7 +95,10 @@
           <q-btn class="gift-wrapper" flat @click="showBonusModal">
             <img src="../assets/images/auth/gift-icon.png" />
             <q-badge v-if="fastAccessPromo.length > 0" class="gift-badge" floating rounded>
-              {{ fastAccessPromo.length }}
+              <q-spinner v-if="isFastAccessPromoCounting" size="16px" color="white" />
+              <template v-else>
+                {{ eligiblePromoCount }}
+              </template>
             </q-badge>
           </q-btn>
         </div>
@@ -195,7 +198,6 @@
       <BonusModal
         :has-top-download="topDownload && !ui.hideDownload"
         :promo-list="fastAccessPromo"
-        :has-redemption-bonus="showRedemption"
         @openNewPlayer="showNewPlayer"
       />
     </q-dialog>
@@ -203,12 +205,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, onUnmounted, watch, provide } from "vue";
+import { ref, onMounted, computed, onUnmounted, watch, provide, shallowRef } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, isAndroid, isInPwa } from "src/boot/utils";
-import { api } from "boot/axios";
+import { api, eventapi } from "boot/axios";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { useI18n } from "vue-i18n";
@@ -219,8 +221,9 @@ import SideMenu from "components/SideMenu.vue";
 import { defineEmits } from "vue";
 import { useCustomerTrigger } from "src/hooks/trigger";
 import { i18nStore } from "src/router/language";
+import { useThrottleFn } from "@vueuse/core";
 
-const props = defineProps(["homeProfile", "showRedemption"]);
+const props = defineProps(["homeProfile"]);
 const emits = defineEmits(["closeslot", "activateSlide", "showNewPlayer"]);
 const route = useRoute();
 const router = useRouter();
@@ -233,26 +236,69 @@ const promoPercentage = computed(() => {
   return ""; // Optional: for other cases if needed
 });
 const isScrolled = ref(false);
+const eligiblePromoCount = ref(1);
+const isFastAccessPromoCounting = ref(false);
+const fastAccessPromoAbortController = ref(null);
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 0;
 };
 
 const isBonusModal = ref(false);
-const fastAccessPromo = ref([]);
+const fastAccessPromo = shallowRef([]);
 
 const getFastAccessPromo = () => {
-  const params = {
-    showFastAccess: 1,
-    language: i18nStoreLanguage.languageVal
-  };
-  api.get("/opt-session/promo/page", { params }).then((res) => {
+  if (!store.token) return;
+  isFastAccessPromoCounting.value = true;
+  eligiblePromoCount.value = 0;
+  if (store.claimedFtdPrivilege === false) {
+    eligiblePromoCount.value++;
+  }
+  api.get(`/promo/fast-access-promo?language=${i18nStoreLanguage.languageVal}`).then(async (res) => {
     if (res.code === 0) {
+      let _fastAccessPromo;
       if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
-        fastAccessPromo.value = res.data;
+        _fastAccessPromo = res.data;
       } else {
-        fastAccessPromo.value = res.data.filter((item) => item.privilegeStatus !== "TEST");
+        _fastAccessPromo = res.data.filter((item) => item.privilegeStatus !== "TEST");
       }
+
+      const apiQueue = [];
+      fastAccessPromoAbortController.value?.abort();
+      fastAccessPromoAbortController.value = new AbortController();
+      _fastAccessPromo.forEach((promo) => {
+        if (promo.initApiUrl) {
+          apiQueue.push(() =>
+            eventapi
+              .get(`${promo.initApiUrl}?promoCode=${promo.promoCode}`, {
+                signal: fastAccessPromoAbortController.value.signal
+              })
+              .then((res) => ({ apiRes: res, promoCode: promo.promoCode }))
+          );
+        } else if (promo.buttonMode === "CLAIM_REDIRECT") {
+          eligiblePromoCount.value++;
+        }
+      });
+
+      const initApiResList = await Promise.allSettled(apiQueue.map((apiCall) => apiCall()));
+      for (const initApiRes of initApiResList) {
+        if (initApiRes.status === "fulfilled") {
+          const { apiRes, promoCode } = initApiRes.value;
+          const _currentFastAccessPromo = _fastAccessPromo.find((promo) => promo.promoCode === promoCode);
+          if (_currentFastAccessPromo) {
+            _currentFastAccessPromo.response = apiRes.code === 0 ? apiRes.data : null;
+          }
+          if (apiRes.data.eligible || (promoCode === "pak-refer-wheel-spin" && apiRes.data.promoEndTime)) {
+            eligiblePromoCount.value++;
+          }
+          if (apiRes.data.hidePromo) {
+            _fastAccessPromo = _fastAccessPromo.filter((promo) => promo.promoCode !== "new-player-acc-deposit");
+          }
+        }
+      }
+      isFastAccessPromoCounting.value = false;
+
+      fastAccessPromo.value = _fastAccessPromo;
     }
   });
 };
@@ -429,7 +475,20 @@ const isSideDownload = ref(false);
 
 const afterMounted = useCustomerTrigger(loadCustomerAddress);
 
+const throttledGetFastAccessPromo = useThrottleFn(() => {
+  getFastAccessPromo();
+}, 5000);
+
 watch(() => i18nStoreLanguage.languageVal, getFastAccessPromo);
+watch(() => store.token, getFastAccessPromo);
+watch(
+  () => isBonusModal.value,
+  (newVal) => {
+    if (newVal === true) {
+      throttledGetFastAccessPromo();
+    }
+  }
+);
 
 onMounted(() => {
   checkTopDownloadAppear();
@@ -865,8 +924,17 @@ onUnmounted(() => {
         .gift-badge {
           background: #e30000;
           color: #fff;
-          display: none;
         }
+      }
+
+      .bell-badge,
+      .gift-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        padding: 0;
       }
     }
     // .gift-wrapper {
