@@ -70,8 +70,7 @@ export default defineComponent({
     const text = ref("");
     const $q = useQuasar();
 
-    var rstArray = Object.values(process.env.RST_API);
-    var rstApi = rstArray[getRndInteger(0, rstArray.length)];
+    var rstApi = localStorage.getItem("LH_H5_RST_URL");
 
     const chat_type = ref("");
     // let partnerCode = route.query?.partnerCode ?? "";
