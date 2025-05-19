@@ -53,6 +53,7 @@ import { SessionStorage, useQuasar } from "quasar";
 import { useSocketStore } from "src/cs-client-web/stores/socket";
 import { storeToRefs } from "pinia";
 import { getRndInteger } from "boot/utils";
+import { userStore as storeUser } from "src/stores";
 
 export default defineComponent({
   name: "CSLoginPage",
@@ -76,6 +77,7 @@ export default defineComponent({
     // let partnerCode = route.query?.partnerCode ?? "";
     let partnerId = route.query?.partnerId ?? "";
     let partnerCode = "LHCS";
+    const store = storeUser();
 
     let qChatGuid = route.query?.uid ?? "";
 
@@ -332,6 +334,8 @@ export default defineComponent({
               }
 
               clearInterval(interval);
+
+              store.chatGuid = chatGuid;
 
               await router.push({ path: "/liveChat/chat", query: { uid: chatGuid } });
             } catch (e) {

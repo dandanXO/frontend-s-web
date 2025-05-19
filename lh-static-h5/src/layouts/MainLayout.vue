@@ -128,7 +128,7 @@
           <span class="footer-icon-promotion">优惠</span>
         </q-route-tab>
 
-        <q-route-tab class="cs-web-id" to="/liveChat" id="cs-web-id" name="live">
+        <q-route-tab class="cs-web-id" :to="chatPage" id="cs-web-id" name="live">
           <div class="inactive footer-icon headphone" v-if="$q.dark.isActive" />
           <div class="inactive footer-icon headphone" v-else />
           <div class="hover footer-icon headphone" v-if="$q.dark.isActive" />
@@ -462,6 +462,13 @@ export default defineComponent({
       }
     };
 
+    const chatPage = computed(() => {
+      if (store.chatGuid) {
+        return `/liveChat/chat?uid=${store.chatGuid}`;
+      }
+      return "/liveChat";
+    });
+
     const platformsFixed = ref([
       {
         id: 21,
@@ -582,10 +589,10 @@ export default defineComponent({
         "OutboxView",
         "BindBankCard",
         "BindCryptoView",
-        "BindEWalletView",
-        "CSLoginPage"
+        "BindEWalletView"
       ],
-      isLowSafari
+      isLowSafari,
+      chatPage
     };
   }
 });
