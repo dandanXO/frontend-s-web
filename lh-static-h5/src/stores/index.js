@@ -48,7 +48,8 @@ export const userStore = defineStore("userStore", {
       profilePhoto: "",
       isDisplayLogin: false,
       withdrawType: "",
-      regSuccessGuideVisible: false
+      regSuccessGuideVisible: false,
+      chatGuid: ""
     };
   },
   actions: {
