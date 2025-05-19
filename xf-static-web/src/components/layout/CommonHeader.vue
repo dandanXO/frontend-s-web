@@ -1084,16 +1084,12 @@ export default defineComponent({
     };
 
     let validateName = async (r, v) => {
-      if (!v) {
-        return Promise.reject("请输入用户名");
-      }
-
-      const namePattern = /^[a-zA-Z][a-zA-Z0-9]{3,10}$/; // Starts with a letter, length 4-11
+      const namePattern = /^[a-zA-Z][a-zA-Z0-9]*$/; // Starts with a letter, allows letters & numbers
       const letterCount = (v.match(/[a-zA-Z]/g) || []).length >= 2; // At least 2 letters
       const hasNumber = /\d/.test(v); // At least 1 number
 
       if (!(namePattern.test(v) && letterCount && hasNumber)) {
-        return Promise.reject("用户名需符合格式：4-11位，首字母为字母，至少2个字母+数字组合");
+        return Promise.reject("须以字母开头，并包含至少2个字母和1个数字");
       }
 
       return Promise.resolve();
@@ -2803,6 +2799,13 @@ body {
         }
       }
     }
+  }
+}
+
+
+header {
+  :deep(.el-input__wrapper) {
+    margin-bottom: 5px;
   }
 }
 
