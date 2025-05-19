@@ -464,7 +464,11 @@ export default defineComponent({
 
     const chatPage = computed(() => {
       if (store.chatGuid) {
-        return `/liveChat/chat?uid=${store.chatGuid}`;
+        let url = `/liveChat/chat?uid=${store.chatGuid}`;
+        if (csUserStore.token) {
+          url += `&token=${csUserStore.token}`;
+        }
+        return url;
       }
       return "/liveChat";
     });
