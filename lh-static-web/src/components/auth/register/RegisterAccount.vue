@@ -25,7 +25,7 @@
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
       <el-form-item label="用户名" prop="loginName">
-        <el-input class="wTip" v-model="regForm.loginName" placeholder="6~12位包含字母和数字" clearable>
+        <el-input class="wTip" v-model="regForm.loginName" placeholder="4~11位包含字母和数字" clearable>
           <template #append></template>
         </el-input>
       </el-form-item>

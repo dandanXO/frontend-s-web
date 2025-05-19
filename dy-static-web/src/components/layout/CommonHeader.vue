@@ -333,7 +333,7 @@
             <el-form-item label="用户名" prop="loginName">
               <el-space>
                 <el-input class="wTip" v-model="regForm.loginName" placeholder="输入用户名">
-                  <template #append>范围在 6-11 位之间，由字母和数字组成</template>
+                  <template #append>范围在 4-11 位之间，由字母和数字组成</template>
                 </el-input>
               </el-space>
             </el-form-item>

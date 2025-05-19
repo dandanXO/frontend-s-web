@@ -336,7 +336,7 @@
             <el-form-item label="用户名" prop="loginName">
               <el-space>
                 <el-input v-model="regForm.loginName" placeholder="输入用户名" />
-                <el-tooltip content="范围在6-11位之间, 由字母和数字组成" placement="right">
+                <el-tooltip content="范围在4-11位之间, 由字母和数字组成" placement="right">
                   <el-icon :size="10">
                     <InfoFilled />
                   </el-icon>
