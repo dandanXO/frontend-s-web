@@ -52,6 +52,7 @@ import { uid } from "src/cs-client-web/utils/string";
 import { SessionStorage, useQuasar } from "quasar";
 import { useSocketStore } from "src/cs-client-web/stores/socket";
 import { storeToRefs } from "pinia";
+import { getRndInteger } from "boot/utils";
 
 export default defineComponent({
   name: "CSLoginPage",
@@ -67,6 +68,9 @@ export default defineComponent({
 
     const text = ref("");
     const $q = useQuasar();
+
+    var rstArray = Object.values(process.env.RST_API);
+    var rstApi = rstArray[getRndInteger(0, rstArray.length)];
 
     const chat_type = ref("");
     // let partnerCode = route.query?.partnerCode ?? "";
@@ -276,7 +280,7 @@ export default defineComponent({
       // }
 
       async function repsLogin(data) {
-        const { guestId: userId, ip, token, to, partnerName: roomName, headIcon: avatarUrl, wsUrl } = data;
+        const { guestId: userId, ip, token, to, partnerName: roomName, headIcon: avatarUrl } = data;
 
         userStore.userId = userId;
         userStore.nickname = ip;
@@ -287,6 +291,8 @@ export default defineComponent({
         chatStore.room.roomName = roomName;
         chatStore.room.avatar = avatarUrl;
         chatStore.mode_type = type;
+
+        const wsUrl = `${rstApi}/cs/ws`;
 
         LocalStorage.set("ws", wsUrl);
         document.title = t("doc_title", { name: roomName });

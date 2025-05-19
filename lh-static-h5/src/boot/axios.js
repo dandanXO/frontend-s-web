@@ -51,6 +51,8 @@ let crtApi;
 let api;
 let cashier;
 let eventapi;
+let csapi;
+let csws;
 
 async function init() {
   if (isGlobalLH) {
@@ -85,6 +87,8 @@ async function init() {
   api = axios.create({ baseURL: rstApi });
   cashier = axios.create({ baseURL: crtApi });
   eventapi = axios.create({ baseURL: evtApi });
+  csapi = axios.create({ baseURL: `${rstApi}/cs/api` });
+  csws = axios.create({ baseURL: `${rstApi}/cs/ws` });
 
   if (imgCDN.indexOf(REPLACEMENT_DOMAIN) > -1) {
     const successImgCdn = localStorage.getItem("IMAGE_CDN");
@@ -404,12 +408,27 @@ export default boot(async ({ app, router }) => {
   app.config.globalProperties.$api = api;
   app.config.globalProperties.$cashier = cashier;
   app.config.globalProperties.$eventapi = eventapi;
+  app.config.globalProperties.$csapi = csapi;
+  app.config.globalProperties.$csws = csws;
   api.interceptors.request.use(onRequest);
   api.interceptors.response.use(onResponse, onResponseError);
   cashier.interceptors.request.use(onRequest);
   cashier.interceptors.response.use(onResponse, onResponseError);
   eventapi.interceptors.request.use(onRequest);
   eventapi.interceptors.response.use(onResponse, onResponseError);
+
+  csapi.interceptors.request.use(async (config) => {
+    return config;
+  });
+
+  csapi.interceptors.response.use(function (response) {
+    const code = response.data?.code ?? -1;
+
+    response.data.code = code;
+    response.data.success = code === 0;
+
+    return response;
+  });
 });
 
-export { axios, api, cashier, eventapi };
+export { axios, api, cashier, eventapi, csapi, csws };

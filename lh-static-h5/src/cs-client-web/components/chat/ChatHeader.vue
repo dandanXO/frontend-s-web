@@ -370,4 +370,11 @@ export default defineComponent({
     margin-bottom: 0px !important;
   }
 }
+
+.modal-endchat {
+  .q-card {
+    border-radius: 10px;
+    padding: 25px 15px 10px;
+  }
+}
 </style>
