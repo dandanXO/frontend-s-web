@@ -9,7 +9,7 @@
           @click="clickPlat(plat)"
           :class="{ active: selectedPlat === plat.code }"
         >
-          {{ plat.name }}电竞
+          {{ getAliasName(plat, 'ESPORT') }}
         </span>
       </div>
       <div class="nav-pane">
@@ -62,6 +62,7 @@ import GameModal from "@/components/modal/GameModal";
 import { useRoute, useRouter } from "vue-router";
 import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
+import { getAliasName } from "@/utils/utils.js";
 
 export default defineComponent({
   components: {
@@ -126,15 +127,24 @@ export default defineComponent({
     };
 
     const setFilteredPlatforms = () => {
-      filteredPlatforms.value = platforms.value.filter((displayPlatform) =>
-        platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
-      );
+      filteredPlatforms.value = platforms.value
+        .filter((displayPlatform) =>
+          platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
+        )
+        .map((displayPlatform) => {
+          const match = platformsListDisplay.value.find(platform => platform.code === displayPlatform.code);
+          return {
+            ...displayPlatform,
+            alias: match?.alias || null  // Add alias from platformsListDisplay
+          };
+        });
 
       filteredPlatforms.value.forEach((element) => {
         if (element.code === route.query.plat) {
           clickPlat(element);
         }
       });
+
       setSelectedPlat();
     };
 
@@ -172,7 +182,6 @@ export default defineComponent({
         }
       }
     );
-
     return {
       platforms,
       selectedPlat,
@@ -182,7 +191,8 @@ export default defineComponent({
       filteredPlatforms,
       setSelectedPlat,
       getPlatList,
-      setFilteredPlatforms
+      setFilteredPlatforms,
+      getAliasName
     };
   }
 });

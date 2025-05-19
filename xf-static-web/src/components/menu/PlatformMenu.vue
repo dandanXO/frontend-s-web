@@ -38,19 +38,22 @@
                   />
                 </div>
                 <div>
-                  <div v-if="props.platformType !== 'slot'" class="platform-menu-title" v-html="item.cnname" />
+                  <div v-if="props.platformType !== 'slot'" class="platform-menu-title">
+                    {{ getAliasName(item, platformType) }}
+                  </div>
                   <div v-if="props.platformType !== 'slot'" class="platform-menu-caption" v-html="item.caption" />
 
                   <div
-                    v-if="props.platformType === 'slot' && item?.alias"
+                    v-if="props.platformType === 'slot'"
                     class="platform-menu-title"
-                    v-html="item?.alias"
-                  />
-                  <div
+                    >
+                    {{ getAliasName(item, platformType) }}
+                  </div>
+                  <!-- <div
                     v-else-if="props.platformType === 'slot'"
                     class="platform-menu-title"
                     v-html="item.code + '电子'"
-                  />
+                  /> -->
 
                   <div
                     v-if="props.platformType === 'slot'"
