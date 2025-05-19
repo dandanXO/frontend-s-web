@@ -306,7 +306,8 @@ export default {
     signinWithGoogle: "Google",
     goNow: "Go Now",
     playReal: "Play real",
-    freeTrial: "Free trial"
+    freeTrial: "Free trial",
+    check: "Check"
   },
   notify: {
     loggingIn: "Logging in...",
@@ -330,6 +331,7 @@ export default {
     signOutMessage: "Are you sure you want to sign out?",
     plsLoginToContinue: "Please login to continue",
     copiedSuccessfully: "Copied Successfully",
+    claimedSuccessfully: "Claimed Successfully",
     smsSent: "SMS OTP has been sent successfully",
     tryagain: "Please try again after {seconds} seconds",
     submitting: "Submitting...",
@@ -898,6 +900,9 @@ export default {
       remainingDrawTimes: "Remaining draw times",
       congratulations: "Congratulations"
     },
+    ftdDepositBonus: "First Time Deposit Bonus",
+    redemptionCode: "Redemption Code",
+    newplayerGuide: "New Player Guide",
     depositSpinWheel: {
       instruction: "Complete the deposit task to participate in the wheel activity and get a bonus of up to ",
       depositNow: "Deposit Now",

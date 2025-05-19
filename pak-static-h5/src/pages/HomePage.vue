@@ -4,12 +4,7 @@
     style="transition: background 0.5s ease-in-out"
     class="dynamic-bg"
   >
-    <ProfileSummary
-      :showRedemption="isShowRedemptionInPopup"
-      :homeProfile="true"
-      @activateSlide="handleActivateSlide"
-      @showNewPlayer="showNewPlayer"
-    />
+    <ProfileSummary :homeProfile="true" @activateSlide="handleActivateSlide" @showNewPlayer="showNewPlayer" />
 
     <!--    <pre>-->
     <!--      {{isNewPlayerModal}} <br/>-->
@@ -4456,12 +4451,11 @@ const hasInviteWheelPromo = ref(false);
 const handleReceiveCodeBonus = () => {
   router.push({ path: "/account", query: { openCodeModal: "true" } });
 };
-const isShowRedemptionInPopup = ref(false);
+
 const checkCodeBonusModal = () => {
   eventapi.get("/session/promo-code-bonus/checkBonus").then((res) => {
     if (res.data.hasUnclaimed) {
       isShowCodeBonusModal.value = true;
-      isShowRedemptionInPopup.value = true;
     }
   });
 };

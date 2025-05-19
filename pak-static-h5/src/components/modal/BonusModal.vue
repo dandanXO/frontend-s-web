@@ -2,30 +2,30 @@
   <div class="bonus-container" :class="{ 'has-top-download': hasTopDownload }">
     <q-btn icon="close" round dense flat v-close-popup class="bonus-close" />
     <div class="bonus-content-wrapper">
-      <div v-if="!store.hasDeposit" class="mission-item">
-        
-        <img class="mission-icon" src="../../assets/images/earn-money/newplayericon.png" />
-        <div class="mission-title-wrapper">
-          <div class="mission-title">
-            <span>New Player Guide</span>
-          </div>
-        </div>
-        <a @click="openNewPlayerGuide">
-          <q-btn flat class="details">{{ $t("btn.details") }}</q-btn>
-        </a>
-      </div>
-      <div v-if="hasRedemptionBonus" class="mission-item">
-        
+      <div class="mission-item">
         <img class="mission-icon" src="../../assets/images/earn-money/redemptionicon.png" />
         <div class="mission-title-wrapper">
           <div class="mission-title">
-            <span>Redemption Code</span>
+            <span>{{ $t("hotPromo.redemptionCode") }}</span>
           </div>
         </div>
         <RouterLink to="/account?openCodeModal=true">
-          <q-btn flat class="details">{{ $t("btn.details") }}</q-btn>
+          <q-btn flat class="details redemption">{{ $t("btn.details") }}</q-btn>
         </RouterLink>
       </div>
+
+      <div class="mission-item" v-if="store.claimedFtdPrivilege === false">
+        <img class="mission-icon" src="../../assets/images/common/ftd-bonus.png" />
+        <div class="mission-title-wrapper">
+          <div class="mission-title">
+            <span>{{ $t("hotPromo.ftdDepositBonus") }}</span>
+          </div>
+        </div>
+        <RouterLink to="/deposit">
+          <q-btn flat class="details redemption claimable">{{ $t("btn.claim") }}</q-btn>
+        </RouterLink>
+      </div>
+
       <div v-for="(mission, index) in promoList" :key="index" class="mission-item">
         <img class="mission-icon" :src="imgURL + mission.mobileFastAccessIconImgUrl" />
         <div class="mission-title-wrapper">
@@ -33,15 +33,35 @@
             <span>{{ mission.title }}</span>
             <!-- <div v-if="mission.name === 'wheel-reward'" class="mission-title-extra">$15 12d 14:42:44</div> -->
           </div>
-          <!-- <q-icon name="help_outline">
-            <q-tooltip>
-              {{ mission.description }}
-            </q-tooltip>
-          </q-icon> -->
         </div>
-        <RouterLink :to="{ path: '/promo', query: { name: mission.redirectUrl } }">
-          <q-btn flat class="details">{{ $t("btn.details") }}</q-btn>
-        </RouterLink>
+        <q-btn
+          :loading="mission.buttonMode === 'API_CLAIM' ? isClaimLoading : false"
+          class="details"
+          :class="{
+            claimable: mission.response?.eligible === true
+          }"
+          flat
+          @click="handleClick(mission)"
+        >
+          {{ promoCountdown[mission.promoCode] ? promoCountdown[mission.promoCode].btnText : "" }}
+          <span class="countdown-span" v-if="mission.countDown === true && mission.response?.eligible === true">
+            {{ promoCountdown[mission.promoCode] ? promoCountdown[mission.promoCode].countDown : "--:--" }}
+          </span>
+        </q-btn>
+      </div>
+
+      <div v-if="!store.hasDeposit" class="mission-item">
+        <img class="mission-icon" src="../../assets/images/earn-money/newplayericon.png" />
+        <div class="mission-title-wrapper">
+          <div class="mission-title">
+            <span>{{ $t("hotPromo.newplayerGuide") }}</span>
+          </div>
+        </div>
+        <a @click="openNewPlayerGuide">
+          <q-btn flat class="details">
+            {{ $t("btn.details") }}
+          </q-btn>
+        </a>
       </div>
     </div>
     <div class="bonus-header">
@@ -51,14 +71,129 @@
 </template>
 
 <script setup>
+import { api, eventapi } from "boot/axios";
 import { userStore } from "stores/index";
-const emit = defineEmits(["open-new-player"]); 
+import { computed, onMounted, onUnmounted, ref } from "vue";
+import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
+
+const $q = useQuasar();
+const emit = defineEmits(["open-new-player"]);
 const store = userStore();
+const router = useRouter();
 const props = defineProps({
-  hasRedemptionBonus: Boolean,
   hasTopDownload: Boolean,
-  promoList: Array,
+  promoList: Array
 });
+const handleClick = async (mission) => {
+  if (mission.fastAccessRedirectUrl) {
+    router.push(`/${mission.fastAccessRedirectUrl}`);
+  } else if (mission.buttonMode === "API_CLAIM") {
+    await claimApi(mission.claimApiUrl, mission.promoCode);
+  } else {
+    router.push({ path: "/promo", query: { name: mission.redirectUrl } });
+  }
+};
+async function claimApi(apiUrl, promoCode) {
+  if (!apiUrl) {
+    console.warn("Missing claimApiUrl");
+    return;
+  }
+
+  try {
+    isClaimLoading.value = true;
+    console.log("Calling claim API:", apiUrl);
+
+    const res = await eventapi.post(`${apiUrl}?promoCode=${promoCode}`);
+
+    if (res.code === 0) {
+      $q.notify({
+        type: "positive",
+        position: "top",
+        message: t("notify.claimedSuccessfully"),
+        icon: "check_circle_outline"
+      });
+    } else {
+    }
+  } catch (err) {
+    console.error("Claim API error:", err);
+  } finally {
+    isClaimLoading.value = false;
+  }
+}
+
+const isInit = ref(false);
+const isLoaded = ref(false);
+const isClaimLoading = ref(false);
+const countdownTimerList = ref();
+const now = ref(Date.now());
+
+const promoCountdown = ref({});
+function updateCountdown() {
+  const result = {};
+  for (const promo of props.promoList) {
+    result[promo.promoCode] = {};
+
+    if (promo.countDown && promo.response?.eligible === true) {
+      result[promo.promoCode].countDown = getCountdownWithDays(promo.response.promoEndTime);
+    }
+
+    // switch (promo.buttonMode) {
+    //   case "API_CLAIM":
+    //   case "CLAIM_REDIRECT":
+    //     result[promo.promoCode].btnText = t("btn.claim");
+    //     break;
+    //   default:
+    //     result[promo.promoCode].btnText = t("btn.details");
+    // }
+
+    if (promo.response && promo.response.eligible === true) {
+      result[promo.promoCode].btnText = t("btn.claim");
+    } else {
+      result[promo.promoCode].btnText = t("btn.details");
+    }
+
+    if (promo.promoCode === "pak-refer-wheel-spin" && promo.response?.promoEndTime) {
+      result[promo.promoCode].btnText = t("btn.claim");
+    }
+  }
+
+  promoCountdown.value = result;
+}
+
+// const promoCountdown = computed(() =>
+//   props.promoList.reduce((result, promo) => {
+//     result[promo.promoCode] = {};
+//     if (promo.countDown && promo.response && promo.response.eligible === true) {
+//       result[promo.promoCode].countDown = getCountdownWithDays(promo.response.promoEndTime);
+//     }
+//
+//     switch (promo.buttonMode) {
+//       case "API_CLAIM":
+//         result[promo.promoCode].btnText = t("btn.claim");
+//         break;
+//       case "API_REDIRECT":
+//         result[promo.promoCode].btnText = t("btn.details");
+//         break;
+//       case "DETAILS":
+//         result[promo.promoCode].btnText = t("btn.details");
+//         break;
+//       case "CLAIM_REDIRECT":
+//         result[promo.promoCode].btnText = t("btn.claim");
+//         break;
+//       default:
+//         result[promo.promoCode].btnText = t("btn.details");
+//     }
+//
+//     if (promo.promoCode === "pak-refer-wheel-spin" && promo.response && promo.response.promoEndTime) {
+//       result[promo.promoCode].btnText = t("btn.claim");
+//     }
+//
+//     return result;
+//   }, {})
+// );
 
 const imgURL = process.env.IMAGE_CDN + "/promo/";
 const openNewPlayerGuide = () => {
@@ -67,20 +202,53 @@ const openNewPlayerGuide = () => {
   localStorage.removeItem("completedreferguide");
   localStorage.removeItem("completedwithdrawguide");
   emit("open-new-player");
+};
+
+function getCountdownWithDays(endTime) {
+  const now = Date.now();
+  let diff = Math.max(0, endTime - now);
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  diff %= 1000 * 60 * 60 * 24;
+
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  diff %= 1000 * 60 * 60;
+
+  const minutes = Math.floor(diff / (1000 * 60));
+  diff %= 1000 * 60;
+
+  const seconds = Math.floor(diff / 1000);
+
+  const pad = (num) => String(num).padStart(2, "0");
+
+  return `${days}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 }
+
+onUnmounted(() => {
+  clearInterval(countdownTimerList.value);
+});
+
+onMounted(() => {
+  updateCountdown();
+  setInterval(() => {
+    now.value = Date.now();
+    updateCountdown();
+  }, 1000);
+});
 </script>
 
 <style lang="scss" scoped>
 .bonus-container {
-  background-color: #1e371f;
-  border: 1px solid #337e3a;
-  border-radius: 10px !important;
+  // background-color: #1e371f;
+  background: linear-gradient(325.86deg, #0e1e08 5.38%, #1b6026 98.11%);
+
+  border: 1px solid #9fe871;
+  border-radius: 16px !important;
   max-width: 400px;
   width: 100%;
   padding: 16px;
   position: relative;
   overflow: visible;
-  border-radius: 12px;
   margin-bottom: -100px;
   margin-top: 60px;
 
@@ -99,7 +267,7 @@ const openNewPlayerGuide = () => {
   }
 
   &.has-top-download {
-    margin-top: 116px;
+    margin-top: 130px;
   }
 
   .bonus-header {
@@ -108,7 +276,8 @@ const openNewPlayerGuide = () => {
     // margin-top: -18px;
     // z-index: 2;
     position: absolute;
-    bottom: 5px;
+    top: -20px;
+    // bottom: 5px;
     width: 100%;
 
     img {
@@ -122,22 +291,25 @@ const openNewPlayerGuide = () => {
   }
 
   .bonus-content-wrapper {
-    margin: 0 auto 29px;
+    // margin: 0 auto 29px;
+    margin: 30px auto 0;
     display: flex;
     flex-direction: column;
     gap: 10px;
     max-height: 60vh;
     overflow-y: auto;
     .mission-item {
+      display: flex;
+      align-items: center;
+      padding: 0 6px 0 6px;
+      border-radius: 8px;
+      min-height: 50px;
+      background: #ffffff0d;
+      border: 1px solid #55c2530d;
+      box-shadow: 0px 4px 4px 0px #0000000d;
       a {
         text-decoration: none;
       }
-      display: flex;
-      align-items: center;
-      padding: 8px 8px 8px 6px;
-      background-color: #81ff9e1a;
-      border-radius: 8px;
-
       .mission-icon {
         width: 40px;
         max-width: 10vw;
@@ -164,19 +336,55 @@ const openNewPlayerGuide = () => {
       }
 
       .q-btn {
+        position: relative;
+        min-width: 115px;
+        width: 115px;
         border-radius: 4px;
         font-weight: 700;
         text-transform: none;
+        line-height: 19px;
+        padding: 2px 16px;
+        min-height: 48px;
 
         &.details {
-          background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
-          color: #000a01;
+          background: url(../../assets/images/index/modal/common-btn.png) no-repeat;
+          background-size: 100% 100%;
+          color: #fff;
         }
 
-        &.no-reward {
-          background: linear-gradient(90deg, rgba(36, 238, 137, 0.156) 0%, rgba(36, 238, 137, 0.078) 100%);
-          box-shadow: 0px 0px 5px 0px #ffffff4a inset;
-          color: #ffffff99;
+        :deep(.q-btn__content) {
+          display: flex;
+          flex-direction: column;
+          text-transform: uppercase;
+          font-family: Poppins;
+        }
+
+        .countdown-span {
+          color: #051809;
+          font-size: 13px;
+          text-transform: none;
+          font-family: initial;
+        }
+
+        &.redemption {
+          background: url(../../assets/images/index/modal/promo-code-btn.png) no-repeat;
+          background-size: 100% 100%;
+        }
+
+        &.claimable {
+          &::before {
+            content: "";
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background-color: #f00;
+            position: absolute;
+            top: 0;
+            right: -4px;
+            overflow: visible;
+            left: unset;
+            transform: translate(0%, -50%);
+          }
         }
       }
     }
@@ -185,7 +393,7 @@ const openNewPlayerGuide = () => {
 
 .bonus-close {
   position: absolute;
-  bottom: 10px;
+  top: 5px;
   right: 10px;
   z-index: 99;
 }
