@@ -1122,7 +1122,7 @@ export default defineComponent({
 
       realName: [
         {
-          required: false,
+          required: true,
           min: 2,
           max: 12,
           message: "长度应为 2 至 12",
