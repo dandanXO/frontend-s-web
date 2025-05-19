@@ -15,6 +15,7 @@
       class="blue-bg primary-btn"
       @click="submitForm"
       v-if="!forgotPwdPostVerifyForm.codeId"
+      :disabled="!forgotPwdPostVerifyForm.codeId"
     >
       提交
     </el-button>
