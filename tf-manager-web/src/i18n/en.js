@@ -2570,6 +2570,8 @@ export default {
     pts: 'Points',
     ptsRebateAmount: 'Rebate points amount',
     ftdRebateAmount: 'Rebate first deposit amount',
+    pk4_super_affiliate: 'Super Affiliate',
+    pk4_master_affiliate: 'Master Affiliate',
     inProgress: 'in progress',
     notStarted: 'not started',
     liveSportEventRecord: 'Live Sport Event Info Setting',
