@@ -126,6 +126,7 @@
     </div>
 
     <el-table
+      height="700"
       :data="page.records"
       ref="table"
       row-key="id"

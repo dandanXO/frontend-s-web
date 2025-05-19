@@ -77,6 +77,19 @@
           <a target="_blank" class="download-button" href="https://am35.cc">下载</a>
         </div>
       </div>
+
+      <div class="contact-item">
+        <div class="contact-info">
+          <img src="../assets/images/affiliate/emaillogo.png" alt="Eamil Icon" class="contact-icon" />
+          <div class="contact-details">
+            <span class="contact-name">雷火投诉邮箱</span>
+            <span class="contact-id">leihuo188@gmail.com</span>
+          </div>
+        </div>
+        <div class="contact-actions">
+          <button class="copy-button" @click="copyText('leihuo188@gmail.com')">复制</button>
+        </div>
+      </div>
     </div>
     <div class="button-group">
       <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')"><button class="login-button">登陆</button></a>
@@ -593,7 +606,8 @@ const copyText = (text, msgTitle) => {
   color: rgba(48, 52, 66, 1);
   font-size: 0.9em;
   overflow: auto;
-  max-width: 120px;
+  max-width: 130px;
+  overflow: hidden;
 }
 
 .contact-actions {

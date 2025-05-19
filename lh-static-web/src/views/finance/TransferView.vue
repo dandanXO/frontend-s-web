@@ -184,7 +184,7 @@ export default defineComponent({
     "PT": "PT电子",
     "BBINDY": "BBIN真人",
     "RG": "RG电竞",
-    "AGF": "AG捕鱼"
+    "AGF": "PA捕鱼"
   };
 
     const transferOutAllModal = () => {

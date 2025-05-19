@@ -107,7 +107,11 @@
           :isDisabled="
             !(
               // isValidBank() === true &&
-              (isValidCardAccount() === true && isValidCardNumber() === true)
+              (
+                isValidCardAccount() === true &&
+                isValidCardNumber() === true &&
+                (currentCardType === 'Bank' ? isValidCardAddress() === true : true)
+              )
             ) || isDisableBtn
           "
         ></ConfirmButton>

@@ -79,8 +79,8 @@ const { t } = useI18n()
 const store = useUserStore()
 
 const loginForm = reactive({
-  loginName: 'paul001',
-  password: '111111',
+  loginName: '',
+  password: '',
 })
 
 const toast = useToast()
@@ -93,13 +93,16 @@ const onFormSubmit = () => {
       if (result) {
         router.push({ path: '/' })
         store.isAuthLoading = false
-        toast.add({ severity: 'success', summary: t('loggedInSuccessfully'), life: 3000 })
+        toast.add({ severity: 'success', summary: t('LOGIN_SUCCESS'), life: 3000 })
       } else {
         store.isAuthLoading = false
+        throw new Error(t('ERROR_LOGIN_NAME_OR_PASSWORD_ERROR'))
       }
     })
-    .catch(() => {
+    .catch((error) => {
       store.isAuthLoading = false
+      const errorMessage = error.response?.data?.message || error.message || t('LOGIN_FAIL')
+      toast.add({ severity: 'error', summary: errorMessage, life: 3000 })
     })
 }
 

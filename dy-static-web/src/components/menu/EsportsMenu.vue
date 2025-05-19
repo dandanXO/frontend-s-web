@@ -54,21 +54,21 @@ export default defineComponent({
         code: "TFGaming",
         icon: "dy",
         label: "东赢",
-        slogan: "亚洲第一 实时滚球",
+        slogan: "电竞先驱 实时滚球",
         percentage: "32.48%"
       },
       {
         code: "IMES",
         icon: "im",
         label: "IM",
-        slogan: "赛事齐全 玩法新颖",
+        slogan: "专业电竞 即时结算 ",
         percentage: "66.7%"
       },
       {
         code: "IA",
         icon: "ai",
         label: "小艾",
-        slogan: "崭新玩法 全新体验",
+        slogan: "崭新玩法 输赢即现",
         percentage: "99.4%"
       }
     ];

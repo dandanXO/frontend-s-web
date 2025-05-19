@@ -37,6 +37,18 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: '/chat-block',
+      name: '拉黑管理',
+      component: () => import('../views/chat-block/ChatBlockView.vue'),
+      children: [
+        {
+          path: 'block-list',
+          name: '拉黑名单',
+          component: () => import('../components/chat-block/BlockList.vue'),
+        },
+      ],
+    },
   ],
 })
 

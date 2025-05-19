@@ -1,4 +1,96 @@
 <template>
+  <q-dialog width="100%" v-model="showCaptchaDialog" persistent>
+    <div class="popout-dialog" style="width: 90%; border-radius: 20px;">
+      <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">{{ $t("bankCard.otp") }}</div>
+        <template v-if="!isOtpSent">
+          <InputField>
+            <div class="q-pa-md">{{ $t("bankCard.telephone") }} {{ selectedCardTelephone }}</div>
+            <template #input>
+              <q-input
+                ref="innerCaptchaRef"
+                standout
+                v-model="innerCaptchaCode"
+                class="q-pb-xs q-mt-md"
+                hide-bottom-space
+                maxlength="4"
+                :rules="[
+                  (val) => (val && val.length > 0) || $t('bankCard.pleaseEnterVerificationCode'),
+                  (val) => (val && val.length === 4) || $t('bankCard.verificationCodeLengthError')
+                ]"
+                :placeholder="$t('bankCard.insertVerificationCode')"
+                clearable
+              >
+                <template v-slot:append>
+                  <img
+                    :src="phoneVerificationImg"
+                    title="Click to Refresh OTP"
+                    style="margin-top: 6px; cursor: pointer"
+                    @click="getCode"
+                  />
+                </template>
+              </q-input>
+            </template>
+          </InputField>
+          <div style="width: 100%" class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+            <q-btn class="btn-primary__full" :label="$t('btn.sendOtp')" no-caps @click="onCaptchaSubmit" />
+          </div>
+        </template>
+
+        <template v-if="isOtpSent">
+            <InputRowGrid>
+              <template #fields>
+                <!-- <InputField :label="$t('form.virtualWallet')"> -->
+                <InputField :label="$t('bankCard.otp')">
+                  <template #input>
+                    <q-input
+                      ref="phoneVerificationRef"
+                      standout
+                      v-model="withdrawInfo.smsCode"
+                      class="q-pb-xs"
+                      hide-bottom-space
+                      clearable
+                      maxlength="6"
+                      :placeholder="$t('bankCard.pleaseEnterOtp')"
+                      :rules="[(val) => (val && val.length > 5) || $t('bankCard.otpLengthError')]"
+                    ></q-input>
+                  </template>
+                </InputField>
+                <div style="width: 100%" class="q-mt-lg y-n-container">
+                  <q-btn class="btn-primary__full" :label="$t('btn.submit')" no-caps @click="onOTPEnter" />
+                </div>
+              </template>
+            </InputRowGrid>
+          </template>
+      </div>
+    </div>
+  </q-dialog>
+  <q-dialog v-model="showCaptchaMessageDialog" persistent>
+    <div class="popout-dialog" style="width: 90%; border-radius: 20px;">
+      <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="flex justify-center">
+          <template v-if="showCaptchaSuccessDialog">
+            <img src="../../assets/images/cs-verifier/correct-icon.png" alt="" />
+          </template>
+          <template v-else><img src="../../assets/images/cs-verifier/wrong-icon.png" alt="" /></template>
+        </div>
+        <div class="text-center q-py-md">
+          <span class="txt-green" v-if="showCaptchaSuccessDialog">
+            {{ $t("bankCard.captchaSuccess") }}
+          </span>
+          <span class="txt-red" v-else>
+            {{ $t("bankCard.captchaFailedMessage") }}
+          </span>
+        </div>
+
+        <div class="bottom-btn-otp flex full-width">
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" v-close-popup>OK</q-btn>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
   <q-page>
     <div class="withdrawal-summary">
       <div class="balance">
@@ -212,7 +304,6 @@
               </InputField>
             </template>
           </InputRowGrid>
-
           <div class="bot-wrapper">
             <div class="info">
               <div class="desc-wrapper">
@@ -531,6 +622,7 @@ const withdrawState = reactive({
   bankCardList: []
 });
 const qs = require("qs");
+const phoneVerificationRef = ref();
 const withdrawInfo = reactive({
   cardId: undefined,
   amount: ""
@@ -606,6 +698,8 @@ onMounted(() => {
 onActivated(() => {
   checkNewUser();
   store.getBalance();
+  isOTPEntered.value = false;
+  isOtpSent.value = false
   // loadPlatform()
 });
 
@@ -647,16 +741,117 @@ const refreshBalance = (plat) => {
 
 const errorDialog = ref(false);
 
+const phoneVerificationImg = ref("");
+const innerCodeId = ref("");
+const innerCaptchaCode = ref("");
+const innerCaptchaRef = ref();
+const getInnerCode = () => {
+  isOtpSent.value = false;
+  innerCaptchaCode.value = "";
+
+  api
+    .get("/member/verificationCode")
+    .then((response) => {
+      if (response.code === 0) {
+        phoneVerificationImg.value = "data:image/png;base64," + response.data.img;
+        innerCodeId.value = response.data.id;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+const showCaptchaDialog = ref(false);
+const openPhoneVeriDialog = () => {
+  getInnerCode();
+  showCaptchaDialog.value = true;
+};
+
+const isOtpSent = ref(false);
+const showCaptchaSuccessDialog = ref(false);
+const showCaptchaMessageDialog = ref(false);
+const captchaFailedMessage = ref("");
+const onCaptchaSubmit = () => {
+  innerCaptchaRef.value.validate();
+  if (innerCaptchaRef.value.hasError) return;
+  api
+    .post(
+      `/otp/sendSms`,
+      qs.stringify({
+        telephone: selectedCardTelephone.value,
+        captchaCode: innerCaptchaCode.value,
+        codeId: innerCodeId.value
+      })
+    )
+    .then((res) => {
+      if (res.code === 0) {
+        isOtpSent.value = true;
+        withdrawInfo.telephone = selectedCardTelephone.value;
+        withdrawInfo.smsCode = "";
+        withdrawInfo.smsCodeId = res.data.codeId;
+
+        showCaptchaMessageDialog.value = true;
+        showCaptchaSuccessDialog.value = true;
+
+      } else {
+        captchaFailedMessage.value = res.message;
+        showCaptchaMessageDialog.value = true;
+      }
+
+      // showCaptchaDialog.value = false;
+    })
+    .catch(() => {
+      // getInnerCode();
+    });
+};
+const isOTPEntered = ref(false);
+const onOTPEnter = () => {
+    phoneVerificationRef.value.validate();
+    if (phoneVerificationRef.value.hasError) return;
+    showCaptchaDialog.value = false;
+    isOTPEntered.value = true;
+    submitWithdraw();
+}
+const selectedCardTelephone = ref();
 const submitWithdraw = async () => {
   cardRef.value.validate();
   amountRef.value.validate();
-  $q.loading.show({
-    message: "Withdrawing..."
-  });
   if (cardRef.value.hasError || amountRef.value.hasError) {
     $q.loading.hide();
   } else {
+      if (withdrawInfo.cardId && !isOTPEntered.value) {
+        $q.loading.show({
+          message: "Loading..."
+        });
+        const selectedCard = withdrawState.bankCardList.find(
+          card => card.id === withdrawInfo.cardId
+        );
+
+        if (selectedCard) {
+          const bankCode = selectedCard.bankCode;
+
+          const method = withdrawalMethods.value.find(
+            method => method.code === bankCode
+          );
+
+          if (method?.shouldVerifyOTP && selectedCard.telephone) {
+            selectedCardTelephone.value = selectedCard.telephone;
+
+            // Show OTP dialog and wait
+            openPhoneVeriDialog();
+
+            $q.loading.hide({
+              message: "Loading..."
+            });
+          return;
+        }
+      }
+    }
     console.log("");
+
+    $q.loading.show({
+      message: "Withdrawing..."
+    });
     api
       .post("/session/withdraw/", qs.stringify(withdrawInfo))
       .then((response) => {
@@ -698,7 +893,11 @@ const submitWithdraw = async () => {
           });
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+      }).finally(() => {
+        isOTPEntered.value = false;
+        isOtpSent.value = false
+      });
     $q.loading.hide();
   }
 };
@@ -1410,9 +1609,33 @@ watch(
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(12px);
 }
+
+.bottom-btn-otp {
+  display: flex;
+  width: 100%;
+}
+.txt-red {
+  color: #ff3434;
+}
+.txt-green {
+  color: #21ef89;
+}
 </style>
 
 <style lang="scss">
+.popout-dialog-container {
+  .form-fields {
+    width: 90%;
+    .landing-input {
+      width: 100%;
+    }
+  }
+  .landing-input {
+    margin-bottom: 4px;
+    width: 90%;
+    margin: 0 auto 4px;
+  }
+}
 .q-field__control,
 .q-field__marginal {
   height: auto !important;

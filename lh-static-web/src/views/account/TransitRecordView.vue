@@ -1419,9 +1419,9 @@ export default defineComponent({
         return "";
       }
       if (platformName === "AG") {
-        return "AG 真人、XIN 电子"; // AG
+        return "PA 真人、PA 电子"; // AG
       } else if (platformName === "AGF") {
-        return "AG 捕鱼"; // AGF
+        return "PA 捕鱼"; // AGF
       } else if (platformName === "BBINDY") {
         return "BBIN 真人"; // BBINDY
       } else if (platformName === "KY") {

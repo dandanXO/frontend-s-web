@@ -82,7 +82,10 @@ const platformsListDisplayByChunk = computed(() => {
 });
 
 const arrowStatus = computed(() => {
-  if (props.platformType === "live") {
+  if (
+    (props.platformType === "esports" && props.platforms.length - 2 > 5) ||
+    (props.platformType !== "esports" && props.platforms.length > 5)
+  ) {
     return "always";
   } else {
     return "never";
