@@ -15,13 +15,14 @@
       <q-tab-panels class="bg-transparent" v-model="tab" animated>
         <!-- Dynamic Metric Chart Panel -->
         <q-tab-panel name="activity">
-          <Line v-if="allChartData && labels" :data="getChartData(selectedMetric.key)" :options="chartOptions(selectedMetric.label)" />
+          <Line v-if="allChartData && labels" :data="getChartData(selectedMetric.key)"
+            :options="chartOptions(selectedMetric.label)" />
         </q-tab-panel>
 
         <!-- Static Team P&L Placeholder -->
         <q-tab-panel class="bg-transparent" name="team_pl">
-          <div class="text-center bg-transparent text-grey" >
-            <ProfitLossChart  v-if="allChartData && labels"/>
+          <div class="text-center bg-transparent text-grey">
+            <ProfitLossChart v-if="allChartData && labels" />
           </div>
         </q-tab-panel>
       </q-tab-panels>
@@ -33,7 +34,21 @@
     </q-card-section>
 
     <!-- Metric Cards -->
-    <q-card-section class="q-gutter-sm row metrics">
+    <div v-if="isLoading">
+      <div class="container animate">
+        <div class="one animate splat delay-1"></div>
+        <div class="two animate splat delay-2"></div>
+        <div class="three animate splat delay-3"></div>
+        <div class="four animate splat delay-4"></div>
+      </div>
+      <div class="container animate">
+        <div class="five animate splat delay-1"></div>
+        <div class="six animate splat delay-2"></div>
+        <div class="seven animate splat delay-3"></div>
+        <div class="eight animate splat delay-4"></div>
+      </div>
+    </div>
+    <q-card-section class="q-gutter-sm row metrics" v-else>
       <q-card v-for="item in metrics" :key="item.key" class="col-12 q-pa-sm text-center cursor-pointer chart-item"
         :class="[
           'bg-' + item.color,
@@ -123,12 +138,14 @@ import {
 } from 'chart.js'
 
 import { Line } from 'vue-chartjs'
-import { ref, onMounted, provide } from 'vue'
+import { ref, onActivated, provide } from 'vue'
 import { api } from 'boot/axios';
 import moment from 'moment';
 import { userStore } from 'src/stores';
 
 const store = userStore();
+
+const isLoading = ref(false);
 
 ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Title)
 
@@ -261,6 +278,8 @@ const openPageInfoDialog = () => {
 
 
 const initData = () => {
+  isLoading.value = true;
+
   const recordTime = getDateRange()
   api.get(`/session/affiliate/data-by-month?recordTime=${recordTime}`).then((res) => {
     const data = res.data;
@@ -324,9 +343,17 @@ const initData = () => {
       else if (stat.key === 'teamRebate') stat.value = sumByKey("rebate");
       return stat;
     });
+
+    setTimeout(() => {
+      isLoading.value = false;
+    }, 1000);
+  }).finally(() => {
+    setTimeout(() => {
+      isLoading.value = false;
+    }, 1000);
   })
 }
-onMounted(() => {
+onActivated(() => {
   initData();
 })
 
@@ -550,6 +577,7 @@ onMounted(() => {
 .popout-dialog-container {
   .filter-grid {
     display: flex;
+    justify-content: space-between;
     flex-wrap: wrap;
     margin: 10px 0;
 
@@ -565,6 +593,160 @@ onMounted(() => {
         color: #fff;
       }
     }
+  }
+}
+
+body {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.container {
+  border-radius: 100px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.container div {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1/1;
+  margin: 10px;
+  border-radius: 5px;
+  border-color: #fff;
+  box-shadow: 2px 2px 2px #dadada;
+}
+
+.container .one {
+  background: linear-gradient(180deg, #0299fa, #4fc2fd);
+}
+
+.container .two {
+  background: linear-gradient(180deg, #ff4949, #ff8b8b);
+}
+
+.container .three {
+  background: linear-gradient(180deg, #fe1e78, #fe9dc3);
+}
+
+.container .four {
+  background: linear-gradient(180deg, #42aacc, #00f9ff);
+}
+
+.container .five {
+  background: linear-gradient(180deg, #fc9500, #ffbc1c)
+}
+
+.container .six {
+  background: linear-gradient(180deg, #fb501c, #fe8831)
+}
+
+.container .seven {
+  background: linear-gradient(180deg, #8543ff, #ba95ff)
+}
+
+.container .eight {
+  background: linear-gradient(180deg, #47c93b, #a6ea8a)
+}
+
+
+.animate {
+  animation-duration: 1s; //running slower to show effect
+  animation-delay: 0.5s;
+  animation-timing-function: cubic-bezier(.26, .53, .74, 1.48);
+  animation-fill-mode: backwards;
+  animation-iteration-count: infinite;
+}
+
+/* Splat In */
+.animate.splat {
+  animation-name: animate-splat;
+}
+
+@keyframes animate-splat {
+  0% {
+    opacity: 1;
+    transform: scale(1.1, 1.1) rotate(0deg);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.1, 1.1) rotate(15deg) translate(0, -10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1, 1) rotate(0) translate(0, 0);
+  }
+}
+
+/* Animation Delays */
+.delay-1 {
+  animation-delay: 0.6s;
+}
+
+.delay-2 {
+  animation-delay: 0.7s;
+}
+
+.delay-3 {
+  animation-delay: 0.8s;
+}
+
+.delay-4 {
+  animation-delay: 0.9s;
+}
+
+.delay-5 {
+  animation-delay: 1s;
+}
+
+.delay-6 {
+  animation-delay: 1.1s;
+}
+
+.delay-7 {
+  animation-delay: 1.2s;
+}
+
+.delay-8 {
+  animation-delay: 1.3s;
+}
+
+.delay-9 {
+  animation-delay: 1.4s;
+}
+
+.delay-10 {
+  animation-delay: 1.5s;
+}
+
+.delay-11 {
+  animation-delay: 1.6s;
+}
+
+.delay-12 {
+  animation-delay: 1.7s;
+}
+
+.delay-13 {
+  animation-delay: 1.8s;
+}
+
+.delay-14 {
+  animation-delay: 1.9s;
+}
+
+.delay-15 {
+  animation-delay: 2s;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .animate {
+    animation: none !important;
   }
 }
 </style>

@@ -154,7 +154,7 @@ export default defineComponent({
       } else if (gameLabel === 'MGP') {
         return 'MG 电子'
       } else if (gameLabel === 'AG') {
-        return 'XIN 电子'
+        return 'PA 电子'
       } else {
         return gameLabel + ' 电子'
       }

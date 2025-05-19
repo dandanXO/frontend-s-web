@@ -1,5 +1,5 @@
 <template>
-  <pre>info --- {{ info }}</pre>
+<!--  <pre>info -&#45;&#45; {{ info }}</pre>-->
   <div class="wheel-stage-wrapper">
     <div class="wheel-outer-wrapper">
       <!-- <span class="title">Countdown: {{ remainingTime }}</span> -->

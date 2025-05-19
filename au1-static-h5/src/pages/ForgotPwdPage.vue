@@ -11,7 +11,6 @@
     </div>
   -->
 
-
     <q-form v-if="!isRequestSent" class="q-gutter-y-md rounded-borders">
       <!-- <q-input
         hide-bottom-space
@@ -52,16 +51,17 @@
           ref="phoneRef"
           hide-bottom-space
           v-model="passwordForm.phone"
-          lazy-rules
-          :rules="[
-            (val) => (val && val.length > 0) || 'Please insert Phone number',
-            (val) => (val && val.length === 10) || 'The phone number must have 10 digits'
-          ]"
+          :rules="[(val) => (val && val.length > 0) || 'Please insert Phone number']"
           outlined
           label-color="brand"
           color="white"
           class="landing-input"
-        ></q-input>
+        >
+          <template v-slot:prepend>
+            <img class="white-svg" src="../assets/images/auth/phone.svg" />
+            <span class="prepend-number">+61</span>
+          </template>
+        </q-input>
 
         <span class="forgot-password-form-field-label">Verification Code</span>
         <q-input
@@ -85,11 +85,11 @@
           <q-btn @click.prevent="onSubmitForgotPwd" type="submit" class="submit-btn" label="Submit" rounded no-caps />
         </div>
 
-        <div class="forgot-password-form-logo-img" style="margin-top: 50px;">
+        <div class="forgot-password-form-logo-img" style="margin-top: 50px">
           <img src="../assets/55-ace-logo.png" />
         </div>
         <span class="forgot-password-form-desc">
-          Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.
+          Please Provide Your Phone Number, We Will Send OTP To Your Registered Phone Number.
         </span>
       </div>
     </q-form>
@@ -391,11 +391,7 @@ const onVerifyForgotPassword = () => {
     message: "Submitting..."
   });
 
-  if (
-    codeRef.value.hasError ||
-    newPwdRef.value.hasError ||
-    newConfirmPwdRef.value.hasError
-  ) {
+  if (codeRef.value.hasError || newPwdRef.value.hasError || newConfirmPwdRef.value.hasError) {
     $q.loading.hide();
   } else {
     verificationForm.codeId = SessionStorage.getItem("emailCodeId");
@@ -478,7 +474,7 @@ onMounted(() => {
 <style scoped lang="scss">
 .forgot-password-container {
   // min-height: 100vh;
-    padding: 16px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -577,5 +573,10 @@ onMounted(() => {
     background: var(--q-positive);
     font-weight: 600;
   }
+}
+
+.prepend-number {
+  z-index: 2;
+  margin-left: 6px;
 }
 </style>

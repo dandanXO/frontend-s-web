@@ -115,17 +115,6 @@
                       autocomplete="off"
                     />
                   </el-form-item>
-                  <el-form-item prop="realNameKr">
-                    <el-input
-                      ref="realNameRef"
-                      v-model="regForm.realName"
-                      :placeholder="$t('fields.realName')"
-                      name="realName"
-                      type="text"
-                      tabindex="1"
-                      autocomplete="off"
-                    />
-                  </el-form-item>
                   <el-tooltip
                     v-model="capsTooltip"
                     content="Caps lock is On"
@@ -168,35 +157,6 @@
                       />
                     </el-form-item>
                   </el-tooltip>
-                  <el-form-item
-                    prop="codeAffiliate"
-                    v-if="props.siteId === '10'"
-                  >
-                    <el-input
-                      ref="codeAffiliateRef"
-                      v-model="regForm.codeAffiliate"
-                      :placeholder="$t('fields.referralCode')"
-                      name="codeAffiliate"
-                      type="text"
-                      tabindex="8"
-                      autocomplete="on"
-                    />
-                  </el-form-item>
-                  <el-form-item
-                    prop="codePersonalAffiliate"
-                    v-if="props.siteId === '10'"
-                  >
-                    <el-input
-                      ref="codePersonalAffiliateRef"
-                      v-model="regForm.codePersonalAffiliate"
-                      :placeholder="$t('fields.affiliateCode') + ' (본인)'"
-                      name="codePersonalAffiliate"
-                      type="text"
-                      tabindex="8"
-                      autocomplete="on"
-                      @input="handleInput"
-                    />
-                  </el-form-item>
                   <el-form-item prop="captchaCode">
                     <el-input
                       ref="verificationRef"
@@ -626,7 +586,7 @@ export default defineComponent({
       loginForm: {
         userName: '',
         password: '',
-        site: 'KRW',
+        site: 'BPK',
         key: '',
         coordinates: '',
         captchaCode: '',
@@ -891,10 +851,7 @@ export default defineComponent({
         loginFormRef.value.validate(async valid => {
           if (valid) {
             if (
-              state.loginForm.site === 'IND' ||
-              state.loginForm.site === 'IW2' ||
-              state.loginForm.site === 'VNM' ||
-              state.loginForm.site === 'KRW'
+              state.loginForm.site === 'BPK'
             ) {
               methods.userLogin()
             } else {
@@ -957,11 +914,7 @@ export default defineComponent({
       },
       onSuccess: async () => {
         if (
-          state.loginForm.site === 'IND' ||
-          state.loginForm.site === 'IW2' ||
-          state.loginForm.site === 'VNM' ||
-          state.loginForm.site === 'KA1' ||
-          state.loginForm.site === 'KRW'
+          state.loginForm.site === 'BPK'
         ) {
           router
             .push({
@@ -1231,7 +1184,7 @@ export default defineComponent({
       var dialog = document.querySelector('.el-overlay-dialog')
       dialog.addEventListener('scroll', methods.onScrollEvent)
       window.addEventListener('resize', methods.onScrollEvent)
-      setLanguage('kr')
+      setLanguage('en')
     })
     return {
       userNameRef,

@@ -14,8 +14,8 @@
         <span class="amount">
           {{
             selectedMethodItem.withdrawableBalance > 0
-              ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, false)
-              : "0.00"
+              ? convertToCommaAmount(selectedMethodItem.withdrawableBalance, 0)
+              : "0"
           }}
         </span>
         <div class="title">Withdrawable</div>
@@ -181,42 +181,66 @@
 
         <div class="withdrawal-amount-container">
           <template v-if="bankCardList.length === 0 || isAddNewAccount">
-            <div class="w-form-item w-form-item--bankcard">
+            <template v-if="isBankType === 'EWALLET'">
+              <div class="w-form-item w-form-item--bankcard">
+                <div class="top-wrapper">
+                  <div class="title">PayID</div>
+                </div>
+                <div class="mid-wrapper">
+                  <q-input
+                    filled
+                    dense
+                    clearable
+                    ref="bankNumberRef"
+                    placeholder="Enter PayID"
+                    v-model="bankCardField.cardNumber"
+                    :rules="[(_) => isValidCardNumber()]"
+                    hide-bottom-space
+                    @focus="scrollToInput"
+                    @blur="isInputFocus = false"
+                  ></q-input>
+                </div>
+              </div>
+            </template>
+            <template v-else>
+              <div class="w-form-item w-form-item--bankcard">
+                <div class="top-wrapper">
+                  <div class="title">Account Number</div>
+                </div>
+                <div class="mid-wrapper">
+                  <q-input
+                    filled
+                    dense
+                    clearable
+                    ref="bankNumberRef"
+                    placeholder="Enter Account Number"
+                    v-model="bankCardField.cardNumber"
+                    :rules="[(_) => isValidCardNumber()]"
+                    hide-bottom-space
+                    @focus="scrollToInput"
+                    @blur="isInputFocus = false"
+                  ></q-input>
+                </div>
+              </div>
+            </template>
+
+            <div class="w-form-item w-form-item&#45;&#45;bankcard" v-if="isBankType === 'BANK'">
               <div class="top-wrapper">
-                <div class="title">Account Number</div>
+                <div class="title">BSB (Bank State Branch)</div>
               </div>
               <div class="mid-wrapper">
                 <q-input
                   filled
                   dense
                   clearable
-                  ref="bankNumberRef"
-                  placeholder="Enter Account Number"
-                  v-model="bankCardField.cardNumber"
-                  :rules="[(_) => isValidCardNumber()]"
+                  ref="bankAddressRef"
+                  placeholder="Enter BSB"
+                  v-model="bankCardField.cardAddress"
+                  :rules="[(_) => isValidCardAddress()]"
                   hide-bottom-space
-                  @focus="scrollToInput"
-                  @blur="isInputFocus = false"
                 ></q-input>
               </div>
             </div>
-            <!--            <div class="w-form-item w-form-item&#45;&#45;bankcard" v-if="isBankType === 'BANK'">-->
-            <!--              <div class="top-wrapper">-->
-            <!--                <div class="title">Bank IFSC Code</div>-->
-            <!--              </div>-->
-            <!--              <div class="mid-wrapper">-->
-            <!--                <q-input-->
-            <!--                  filled-->
-            <!--                  dense-->
-            <!--                  clearable-->
-            <!--                  ref="bankAddressRef"-->
-            <!--                  placeholder="Enter Bank IFSC Code"-->
-            <!--                  v-model="bankCardField.cardAddress"-->
-            <!--                  :rules="[(_) => isValidCardAddress()]"-->
-            <!--                  hide-bottom-space-->
-            <!--                ></q-input>-->
-            <!--              </div>-->
-            <!--            </div>-->
           </template>
 
           <div class="top-wrapper">
@@ -258,7 +282,7 @@
                     class="minmax-btn"
                     rounded
                     color="black"
-                    label="min"
+                    label="Min"
                     dense
                     no-caps
                     @click="toggleAmount('min')"
@@ -300,7 +324,7 @@
               <span class="fund-title">Available:</span>
               <q-spinner v-if="isRefreshRemainWager" />
               <span v-else>
-                {{ store.currency.label }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
+                {{ store.currency.value }} {{ convertToCommaAmount(selectedMethodItem.withdrawableBalance) }}
               </span>
             </div>
           </div>
@@ -312,7 +336,7 @@
               </div>
               <div class="desc desc_white">
                 <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }} -->
-                {{ store.currency.label }}: {{ selectedMethodItem.withdrawAmount }}
+                {{ store.currency.value }}: {{ selectedMethodItem.withdrawAmount }}
               </div>
             </div>
             <div class="info">
@@ -321,7 +345,7 @@
               </div>
               <div class="desc desc_white">
                 <!-- {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }} -->
-                {{ store.currency.label }}: {{ convertToCommaAmount(selectedMethodItem.withdrawMaxAmount) }}
+                {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.withdrawMaxAmount) }}
               </div>
             </div>
             <div class="info">
@@ -335,7 +359,7 @@
                 <div class="remain-wager-wrapper" @click="refreshRemainWager">
                   <q-spinner v-if="isRefreshRemainWager" />
                   <span v-else>
-                    {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers, true) }}
+                    {{ store.currency.value }}: {{ convertToCommaAmount(selectedMethodItem.remainWagers, 0) }}
                   </span>
                   <img
                     class="refresh-btn-img"
@@ -850,38 +874,37 @@ onActivated(() => {
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
 
-  const result = !cardNumber
-    ? "Please Enter Card Number"
-    : !cardNumber.includes(".")
-    ? true
-    : "Account number must not contain a decimal point";
-
-  if (
-    cardNumber &&
-    (selectedMethodItem.value.code === "GCASH" ||
-      selectedMethodItem.value.code === "MAYAPAY" ||
-      selectedMethodItem.value.code === "GRABPAY")
-  ) {
-    const gCashCheck =
-      cardNumber.substring(0, 1) !== "0"
-        ? `The ${selectedMethodItem.value.code} card number must start with '0'`
-        : cardNumber.length !== 11
-        ? `The ${selectedMethodItem.value.code} card number length should be 11`
-        : true;
-    if (gCashCheck !== true) {
-      return gCashCheck;
+  if (isBankType.value === "BANK") {
+    if (!cardNumber) {
+      return `Please enter account number`;
+    }
+    if (cardNumber.includes(".")) {
+      return "Account number must not contain a decimal point";
     }
   }
 
-  return result;
+  if (isBankType.value === "EWALLET") {
+    const isNumeric = /^\d+$/.test(cardNumber);
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cardNumber);
+
+    if (!cardNumber) {
+      return `Please enter PayID`;
+    }
+
+    if (!isNumeric && !isEmail) {
+      return "PayID must be a valid phone number or email address";
+    }
+  }
+
+  return true;
 };
 
 const isValidCardAddress = () => {
   const { cardAddress } = bankCardField;
   const result = !cardAddress
-    ? "Please Enter Bank Ifsc Code"
-    : cardAddress.length < 3
-    ? "Bank IFSC Code Must Be More Than 3 Characters"
+    ? "Please Enter BSB (Bank State Branch)"
+    : cardAddress.length !== 6
+    ? "BSB (Bank State Branch) Must Be 6 Characters"
     : true;
   return result;
 };

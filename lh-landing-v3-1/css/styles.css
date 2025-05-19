@@ -335,6 +335,9 @@ a:hover {
 .item-icon {
   margin-left: 12px;
   margin-right: 12px;
+  img {
+    max-width: 50px;
+  }
 }
 
 .item-txt {
@@ -680,6 +683,6 @@ a:hover {
   }
 }
 
-#group2-item {
+#group2-item, #group3-item, #group4-item {
   display: none;
 }

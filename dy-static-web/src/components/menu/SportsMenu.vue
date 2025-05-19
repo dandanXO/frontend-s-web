@@ -56,22 +56,22 @@ export default defineComponent({
         code: "FB",
         icon: "fb",
         label: "FB体育",
-        slogan: "崭新玩法 感受精彩",
+        slogan: "极速结算 高水体验",
         percentage: "-485px;"
       },
-      { code: "SABA", icon: "saba", label: "沙巴体育", slogan: "最佳水位 最强赛事", percentage: "-235px;" },
+      { code: "SABA", icon: "saba", label: "沙巴体育", slogan: "赛事丰富 创新玩法", percentage: "-235px;" },
       {
         code: "IM",
         icon: "im",
         label: "IM体育",
-        slogan: "赛事最多 玩法新颖",
+        slogan: "高赔稳定 滚球首选",
         percentage: "5px;"
       },
       {
         code: "PM",
         icon: "db",
         label: "熊猫体育",
-        slogan: "最强滚球 超高水位",
+        slogan: "玩法刺激 即刻结算",
         percentage: "-745px;"
       }
     ];

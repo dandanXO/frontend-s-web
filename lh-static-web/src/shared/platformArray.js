@@ -2,7 +2,7 @@
 export const liveCasinoPlatforms = [
   {
     code: "AG",
-    cnname: "AG真人",
+    cnname: "PA真人",
     image: "ag",
     message: "真实赌场环境，美艳荷官与您互动，咪牌百家乐，体验包桌尊贵服务，给您亲临现场般的游戏体验。",
     caption: "",
@@ -95,7 +95,7 @@ export const sportsPlatforms = [
     image: "im",
     message:
       "盘口趋势、热点赛事、体育资讯及时掌握，多种投注类型，让您乐享其中 创新功能提前兑现，无需等待即可提前结算，止损机制让您百无禁忌",
-    caption: "创新玩法，极致体验",
+    caption: "高赔稳定 滚球首选",
     gameCode: ""
   },
   {
@@ -103,7 +103,7 @@ export const sportsPlatforms = [
     cnname: "熊猫体育",
     image: "db",
     message: "最专业的盘口趋势分析，及时掌握最全面的热点赛事、 体育资讯，多种投注型，让您乐享其中。",
-    caption: "专业品牌，尽享满贯",
+    caption: "玩法刺激 即刻结算",
     gameCode: ""
   },
   {
@@ -112,7 +112,7 @@ export const sportsPlatforms = [
     image: "saba",
     message:
       "覆盖世界各地大小赛事，提供让球、大小、半全场、 波胆、单双、总入球、连串过关等多元竞猜， 沙巴体育不会让您错过任何自己最喜爱的体育赛事",
-    caption: "专业品牌，尽享满贯",
+    caption: "赛事丰富 创新玩法",
     gameCode: ""
   },
   {
@@ -120,7 +120,7 @@ export const sportsPlatforms = [
     cnname: "AP体育",
     image: "pinnacle",
     message: "25年专业体育品牌，行业标杆，提供最优质赔率水位，业界超高限额，畅享独一无二投注体验",
-    caption: "专业品牌，尽享满贯",
+    caption: "水位顶尖 盘口齐全",
     gameCode: ""
   },
   {
@@ -128,7 +128,7 @@ export const sportsPlatforms = [
     cnname: "FB体育",
     image: "fb",
     message: "奇幻赛事，特别投注，各种趣味玩法，最全赛事覆盖助你花式收米赢到人生巅峰",
-    caption: "奇幻赛事，特别投注",
+    caption: "极速结算 高水体验",
     gameCode: ""
   }
   // {
@@ -267,7 +267,7 @@ export const slotPlatforms = [
   {
     code: "AG",
     name: "XIN",
-    cnname: "XIN电子",
+    cnname: "PA电子",
     image: "ag",
     message: "坚持创新、打造精品,最缤纷的电子游艺画面，最刺激的游戏体验，各类老虎机应有尽有，彩池大奖由您触发! ",
     caption: "",
@@ -390,10 +390,10 @@ export const fishingPlatforms = [
   },
   {
     code: "AGF",
-    cnname: "AG捕鱼王",
+    cnname: "PA捕鱼王",
     image: "ag",
     message:
-      "火爆AG捕鱼，畅享极致射击快感！高清画质打造沉浸式海底世界，丰富鱼种千变万化，超高爆率畅快收金，多人竞技欢乐无穷，尽享捕鱼巅峰体验！",
+      "火爆PA捕鱼，畅享极致射击快感！高清画质打造沉浸式海底世界，丰富鱼种千变万化，超高爆率畅快收金，多人竞技欢乐无穷，尽享捕鱼巅峰体验！",
     caption: "",
     gameCode: "HMPL"
   },

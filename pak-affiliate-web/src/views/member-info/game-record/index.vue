@@ -23,17 +23,17 @@
               <el-option v-for="item in downlineMemberList.list" :key="item.loginName" :label="item.loginName" :value="item.loginName" />
             </el-select>
           </el-col>
-          <!-- <el-col :xl="3" :lg="6" :md="12">
-            <el-select v-model="request.gameType" size="normal" :placeholder="t('fields.gameType')" class="filter-item"
-              style="width: 100%">
-              <el-option v-for="item in list.gameType" :key="item.key" :label="item.displayName" :value="item.value" />
-            </el-select>
-          </el-col> -->
           <el-col :xl="6" :lg="10" :md="12">
             <el-select multiple v-model="request.status" size="normal" :placeholder="t('fields.status')"
               class="filter-item" style="width: 100%;">
               <el-option v-for="item in uiControl.status" :key="item.key" :label="item.displayName"
                 :value="item.value" />
+            </el-select>
+          </el-col>
+          <el-col :xl="3" :lg="6" :md="12">
+            <el-select v-model="request.gameType" size="normal" :placeholder="t('fields.gameType')" class="filter-item"
+              style="width: 100%">
+              <el-option v-for="item in list.gameType" :key="item.key" :label="item.displayName" :value="item.value" />
             </el-select>
           </el-col>
           <el-col :xl="3" :lg="6" :md="12">
@@ -514,22 +514,11 @@ async function getVip(memberId) {
   details.vipName = vip;
 }
 
-const initGameType = () => {
-  if (route.meta?.gameType) {
-    request.gameType = route.meta.gameType.toUpperCase();
-  }
-}
-
-watch(() => route.meta?.gameType, () => {
-  initGameType();
-})
-
 onMounted(() => {
   if (route.query.user) {
     request.loginName = route.query.user
   }
 
-  initGameType();
   loadPlatform();
   loadBetRecords();
   populateGameType();

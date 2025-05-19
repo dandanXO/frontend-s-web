@@ -102,6 +102,10 @@ export const isId1 = (siteId) => {
   return parseInt(siteId) === ID1_SITE_ID;
 }
 
+export const isPK4 = (siteId) => {
+  return parseInt(siteId) === PK4_SITE_ID;
+}
+
 export const getSiteTitle = (siteId) => {
   let siteTitle;
   switch (parseInt(siteId)) {

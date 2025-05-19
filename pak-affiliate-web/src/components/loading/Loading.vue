@@ -1,3 +1,3 @@
 <template>
-    <h1 style="text-align:center;">로드 중...</h1>
+    <h1 style="text-align:center;">Loading ...</h1>
 </template>

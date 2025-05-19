@@ -173,23 +173,6 @@
         <img class="absolute-hot" src="../assets/images/index/hot.gif" />
       </a> -->
     </div>
-    <!-- <div class="top-action" v-if="store.hasToken()">
-      <q-btn class="action-btn action-btn--withdrawal" @click="onWithdrawalClick()" no-caps label="Withdrawal"></q-btn>
-      <q-btn class="action-btn action-btn--deposit" @click="openDepositDialog()" no-caps label="Deposit" />
-    </div>
-    <div v-else class="top-action">
-      <q-btn class="action-btn action-btn--withdrawal" @click="gotoSignIn()" no-caps label="Sign In"></q-btn>
-      <q-btn class="action-btn action-btn--deposit" @click="gotoSignUp()" no-caps label="Sign Up" />
-    </div> -->
-    <!-- <div class="hometop-categories">
-      <template v-for="(item, index) in translatedCategoriesList" :key="index">
-        <div v-if="item.icon !== 'lobby'" class="category" @click="activateSlide(item)" :style="{ backgroundImage: `url(${getImageUrl(item.icon)})` }">
-          <div class="cat-label">
-          {{ item.label }}
-        </div>
-        </div>
-      </template>
-    </div> -->
     <swiper
       :slidesPerView="4"
       :slidesPerGroup="4"
@@ -460,8 +443,6 @@
       >
         <div class="games-selection-wrapper" id="Live">
           <div class="title-game">
-            <!-- <img src="../assets/images/index/menu-label-livecasino.png" class="label-img" /> -->
-            <!-- <span class="txt-style">Live Casino</span> -->
             <div class="left-label">
             <img src="../assets/images/index/menu-label-icon-livecasino.png" class="label-img" />
             <div class="txt-style">{{ $t("home.cat_livecasino") }}</div>
@@ -570,9 +551,6 @@
       >
         <div class="games-selection-wrapper" id="Slot">
           <div class="title-game">
-            <!-- <img src="../assets/images/index/menu-label-slotgame.png" class="label-img" /> -->
-            <!-- <img src="../assets/images/index/slots-games-icon-label.png" /> -->
-            <!-- <span class="txt-style">Slots Games</span> -->
              <div class="left-label">
               <img src="../assets/images/index/menu-label-icon-slotsgame.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_slotsgame") }}</div>
@@ -702,9 +680,6 @@
       >
         <div class="games-selection-wrapper" id="Fish" v-if="category.title === 'Lobby' && category.active">
           <div class="title-game">
-            <!-- <img src="../assets/images/index/menu-label-fishing.png" class="label-img" /> -->
-            <!-- <img src="../assets/images/index/fishing-icon-label.png" /> -->
-            <!-- <span class="txt-style">Fishing</span> -->
              <div class="left-label">
               <img src="../assets/images/index/menu-label-icon-fishing.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_fishing") }}</div>
@@ -992,7 +967,6 @@
       >
         <div class="games-selection-wrapper" id="Poker">
           <div class="title-game">
-            <!-- <img src="../assets/images/index/menu-label-poker.png" class="label-img" /> -->
              <div class="left-label">
               <img src="../assets/images/index/menu-label-icon-poker.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_poker") }}</div>
@@ -1116,9 +1090,6 @@
       >
         <div class="games-selection-wrapper" id="Sport">
           <div class="title-game">
-            <!-- <img src="../assets/images/index/menu-label-sport.png" class="label-img" /> -->
-            <!-- <img src="../assets/images/index/sport-icon-label.png" /> -->
-            <!-- <span class="txt-style">Sports</span> -->
              <div class="left-label">
               <img src="../assets/images/index/menu-label-icon-sport.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_sport") }}</div>
@@ -5517,51 +5488,6 @@ const checkGoogleLoginSetPwd = () => {
   height: 1px;
   width: 100%;
   // margin: 0 -2.5%;
-}
-
-.top-action {
-  display: flex;
-  justify-content: space-around;
-  gap: 16px;
-  margin-top: 5px;
-
-  .action-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    line-height: 1;
-    background-size: contain;
-    background-position: center center;
-    background-repeat: no-repeat;
-    font-weight: 600;
-    width: 50%;
-    height: 55px;
-    text-shadow: 2px 2px 2px #882f00;
-    transition: 0.3s all;
-
-    &--withdrawal {
-      background-image: url(../assets/images/index/action-btn-withdrawal.png);
-      color: #ffffff;
-
-      &:before {
-        box-shadow: none;
-      }
-    }
-
-    &--deposit {
-      background-image: url(../assets/images/index/action-btn-deposit.png);
-      color: #fae576;
-
-      &:before {
-        box-shadow: none;
-      }
-    }
-
-    &:hover {
-      filter: opacity(0.8);
-    }
-  }
 }
 
 .games-selection-wrapper {
