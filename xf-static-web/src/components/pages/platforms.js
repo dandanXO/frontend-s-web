@@ -210,7 +210,7 @@ export const platformsDetails = [
         message:
           "专注于彩票游戏行业多年，拥有经典彩种、玩法。还有超多独家创新玩法，足够新颖，极易操作的游戏界面，更是在您游戏过程中增光添彩！",
               cnname: "兴发电竞",
-        caption: "亚洲先驱，实时滚球",
+        caption: "电竞先驱 实时滚球",
         gameCode: ""
       },
       {

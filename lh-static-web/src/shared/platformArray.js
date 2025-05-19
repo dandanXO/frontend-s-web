@@ -149,7 +149,7 @@ export const eSportsPlatforms = [
     image: "lh",
     message:
       "提供所有大型赛事，超过百场比赛及上万盘口。拥有令人惊叹的视觉界面及高效的用户体验，所以能让您轻松上手，一目了然，轻松投注。",
-    caption: "亚洲先驱 实时滚球",
+    caption: "电竞先驱 实时滚球",
     gameCode: ""
   },
   {
@@ -157,7 +157,7 @@ export const eSportsPlatforms = [
     cnname: "IM电竞",
     image: "im",
     message: "一款关于电竞游戏直播平台，这里提供了丰富的赛事信息，覆盖了众多热门游戏，游戏爱好者的首选投注平台。",
-    caption: "策略为王，胜者为尊",
+    caption: "专业电竞 即时结算",
     gameCode: ""
   },
   {
@@ -182,7 +182,7 @@ export const eSportsPlatforms = [
     image: "ai",
     message:
       "最新颖的电子竞技玩法,走在前沿的电子竞技赛事盘口，英雄联盟、刀塔、反恐、星际等多样竞技赛事,享受电子竞技的快感。",
-    caption: "王者之路，决战沙场",
+    caption: "崭新玩法 输赢即现",
     gameCode: ""
   },
   {
@@ -191,7 +191,7 @@ export const eSportsPlatforms = [
     image: "pm",
     message:
       "体验最前沿的电子竞技玩法，涵盖英雄联盟、DOTA、反恐精英、星际争霸等多种赛事，让你尽享电竞赛事的激情与快感，走在电竞潮流的尖端。",
-    caption: "风云对决，谁与争锋",
+    caption: "赛事齐全 秒结高赔",
     gameCode: ""
   }
   // {

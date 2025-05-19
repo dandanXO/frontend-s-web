@@ -1380,7 +1380,7 @@ export default defineComponent({
         return "转出"; // 转出
       } else if (type === "DEPOSIT") {
         return "转进"; // 转出
-      }else if (type === "VIP_REBATE"){
+      }else if (type === "VIP_REBATE" || subType === "VIP_REBATE"){
         return "VIP 返水"; // VIP 返水
       } else {
         return subType;
