@@ -18,6 +18,7 @@ import isEqual from "lodash/isEqual";
 import LocalStorage from "src/cs-client-web/utils/local-storage";
 import useSocket from "src/cs-client-web/composables/use-socket";
 import toast from "src/cs-client-web/utils/toast";
+import { userStore } from "src/stores";
 
 export default defineComponent({
   name: "ChatPage",
@@ -27,8 +28,9 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const route = useRoute();
+    const store = userStore();
     const chatStore = useChatStore();
-    const userStore = useUserStore();
+    const cSuserStore = useUserStore();
     const { wsDisconnect } = useSocket();
     const { room } = storeToRefs(chatStore);
     const isDragActive = ref(false);
@@ -38,10 +40,13 @@ export default defineComponent({
 
     let qChatGuid = route.query?.uid ?? "";
 
-    if (isEmpty(userStore.token)) {
+    if (isEmpty(cSuserStore.token)) {
       // console.log("TOken Empty");
-      router.push({ path: "/", query: { uid: qChatGuid } });
-      return;
+      if (store.chatGuid) {
+        router.push({ path: `/liveChat/chat?uid=${store.chatGuid}` });
+      } else {
+        router.push({ path: "/liveChat" });
+      }
     }
 
     const checkAloneTimer = () => {
