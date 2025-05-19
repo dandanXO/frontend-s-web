@@ -25,6 +25,9 @@ export default {
       SUPER_AFFILIATE: 'Super Affiliate',
       MASTER_AFFILIATE: 'Master Affiliate',
       CHIEF_AFFILIATE: 'Chief Affiliate',
+      PK4_MASTER_AFFILIATE: 'Master Affiliate',
+      PK4_SUPER_AFFILIATE: 'Super Affiliate',
+      PK4_JUNIOR_AFFILIATE: 'Junior Affiliate',
     },
     timeType: {
       MONTHLY: 'Monthly',
