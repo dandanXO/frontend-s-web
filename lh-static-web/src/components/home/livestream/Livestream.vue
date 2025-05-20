@@ -1,5 +1,5 @@
 <template>
-  <div class="livestream-container">
+  <div v-if="!hideComponent" class="livestream-container">
     <img
       src="@/assets/home/livestream/livestream-title-light.png"
       style="display: flex; margin: 38px auto 50px; width: 100%"
@@ -32,7 +32,7 @@ import LivestreamList from "@/components/home/livestream/LivestreamList.vue";
 import CurrentLivestream from "@/components/home/livestream/CurrentLivestream.vue";
 import LivestreamChat from "@/components/home/livestream/LivestreamChat.vue";
 import LivestreamVideo from "@/components/home/livestream/LivestreamVideo.vue";
-import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import { userStore } from "@/store";
 import { getChatHistory, getLivestreamDetail, getLivestreamList, sendChat } from "@/api/index/livestream";
 import GameModal from "@/components/modal/GameModal.vue";
@@ -94,6 +94,7 @@ const messagesHistoryMeta = ref({
 });
 const latestProcessedMessageId = ref(-1);
 const vipStatus = ref(false);
+const hideComponent = ref(true);
 // const channels = ref([
 //   {
 //     name: "线路1",
@@ -178,9 +179,13 @@ const getData = () => {
   if (livestreamListMeta.value.current > livestreamListMeta.value.max) return;
   isLivestreamListLoading.value = true;
   getLivestreamList(livestreamListMeta.value.current)
-    .then((res) => {
+    .then(async (res) => {
       if (res.code === 0) {
         const parsedData = res.data.streamList.map(parseLivestreamData);
+        if (parsedData.length) {
+          hideComponent.value = false;
+          await nextTick();
+        }
         vipStatus.value = !!res.data.vipStatus;
         list.value.push(...parsedData);
         if (parsedData.length && livestreamListMeta.value.current === 1) {

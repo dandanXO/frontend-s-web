@@ -68,6 +68,7 @@
         <div v-if="isLivestreamListLoading" class="selection-container__loading-wrapper">
           <q-spinner size="3em" />
         </div>
+        <div v-else-if="!liveStreamList.length" class="no-data">目前没有直播</div>
       </div>
     </template>
 
@@ -741,5 +742,11 @@ onUnmounted(() => {
       color: #4c88f8;
     }
   }
+}
+
+.no-data {
+  display: flex;
+  justify-content: center;
+  grid-column: 1 / span 2;
 }
 </style>

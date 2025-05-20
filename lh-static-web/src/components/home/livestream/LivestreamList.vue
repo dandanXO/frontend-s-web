@@ -13,7 +13,7 @@
       <div class="livestream-list-item__match-info">
         <div class="livestream-list-item__match-info__team">
           <div class="livestream-list-item__match-info__team-emblem">
-            <img :src="live.homeIcon" loading="lazy" />
+            <img :src="live.homeIcon ?? systemAvatarImg" loading="lazy" />
           </div>
           <span class="livestream-list-item__match-info__team-name">{{ live.homeNameZh }}</span>
         </div>
@@ -28,7 +28,7 @@
 
         <div class="livestream-list-item__match-info__team">
           <div class="livestream-list-item__match-info__team-emblem">
-            <img :src="live.awayIcon" loading="lazy" />
+            <img :src="live.awayIcon ?? systemAvatarImg" loading="lazy" />
           </div>
           <span class="livestream-list-item__match-info__team-name">{{ live.awayNameZh }}</span>
         </div>
@@ -54,6 +54,7 @@ import { useNotify } from "@/hooks/notify";
 import { useLocalStorage } from "@vueuse/core";
 import moment from "moment";
 import { onMounted, onUnmounted, ref } from "vue";
+import systemAvatarImg from "@/assets/home/livestream/system-avatar.png";
 
 const props = defineProps({
   list: Array,

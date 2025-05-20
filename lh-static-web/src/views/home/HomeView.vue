@@ -4,8 +4,8 @@
     <div class="home-mid-section">
       <HomeAnnouncement></HomeAnnouncement>
       <!-- <EurocupHomePageBanner /> -->
-       <Livestream/>
-      <HomeHotMatch :openGame="openGame"/>
+      <Livestream />
+      <HomeHotMatch :openGame="openGame" />
       <HomeDownload></HomeDownload>
       <HomeHotGame></HomeHotGame>
       <HomeService></HomeService>
