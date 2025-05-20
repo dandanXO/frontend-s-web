@@ -6,7 +6,7 @@
                 :src="isDark ? require('@/assets/home/auth/username-icon-dark.png') : require('@/assets/home/auth/username-icon.png')" />
 
             <el-form-item label="用户名" prop="loginName">
-                <el-input v-model="loginForm.loginName" placeholder="请输入6-12位非汉字字符" clearable :disabled="isLoading" />
+                <el-input v-model="loginForm.loginName" placeholder="请输入4-12位非汉字字符" clearable :disabled="isLoading" />
             </el-form-item>
         </div>
 
@@ -241,9 +241,9 @@ const loginRules = {
             trigger: "blur"
         },
         {
-            min: 6,
+            min: 4,
             max: 12,
-            message: "长度要在 6-12 之间",
+            message: "长度要在 4-12 之间",
             trigger: "blur"
         }
     ],

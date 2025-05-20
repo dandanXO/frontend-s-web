@@ -3,7 +3,7 @@
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
       <el-form-item label="用户名" prop="loginName">
-        <el-input v-model="forgotPwdForm.loginName" placeholder="请输入6-11位非汉字字符" clearable />
+        <el-input v-model="forgotPwdForm.loginName" placeholder="请输入4-12位非汉字字符" clearable />
       </el-form-item>
     </div>
 
@@ -15,6 +15,7 @@
       class="blue-bg primary-btn"
       @click="submitForm"
       v-if="!forgotPwdPostVerifyForm.codeId"
+      :disabled="!forgotPwdPostVerifyForm.codeId"
     >
       提交
     </el-button>
@@ -109,9 +110,9 @@ const forgotPwdFormRules = {
       trigger: "blur"
     },
     {
-      min: 6,
+      min: 4,
       max: 12,
-      message: "长度要在 6-12 之间",
+      message: "长度要在 4-12 之间",
       trigger: "blur"
     }
   ],

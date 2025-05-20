@@ -15,7 +15,7 @@
             style="width: 100%; min-height: 30px; font-size: 12px"
             :class="`blue-bg ${!props.form.phone || loginCountdown !== 0 ? 'disabled' : ''}`"
           >
-            {{ loginCountdown === 0 ? "获取验证码" : `已发送（倒数${loginCountdown}秒）` }}
+            {{ loginCountdown === 0 ? "获取验证码" : `已发送(${loginCountdown}秒)` }}
           </el-button>
         </el-col>
       </el-row>
@@ -37,7 +37,7 @@
             style="width: 100%; min-height: 30px; font-size: 12px"
             :class="`blue-bg ${!props.form.email || loginCountdown !== 0 ? 'disabled' : ''}`"
           >
-            {{ loginCountdown === 0 ? "获取验证码" : `已发送（倒数${loginCountdown}秒）` }}
+            {{ loginCountdown === 0 ? "获取验证码" : `已发送(${loginCountdown}秒)` }}
           </el-button>
         </el-col>
       </el-row>
@@ -49,7 +49,7 @@
     title="验证码"
     width="50%"
     align-center
-    style="max-width: 500px"
+    style="max-width: 500px;padding:20px;"
     :close-on-click-modal="false"
     @keydown.enter.prevent
   >
