@@ -248,7 +248,7 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref } from "vue";
+import { defineProps, onMounted, ref } from "vue";
 import {
   getDuanWuRewardInit,
   getDuanWuTokenRecords,
@@ -259,7 +259,7 @@ import {
 import { useNotify } from "@/hooks/notify";
 
 const isOpenDialog = ref(false);
-
+const props = defineProps(["promoCode"]);
 const notify = useNotify();
 const todayToken = ref("");
 const currentTokenAmount = ref("");
@@ -287,7 +287,7 @@ const handleToggleTab = () => {
 };
 
 const init = () => {
-  getDuanWuRewardInit("lh1-duan-wu-rewards").then((res) => {
+  getDuanWuRewardInit(props.promoCode).then((res) => {
     console.log(res);
 
     if (res.code === 0) {
@@ -302,7 +302,7 @@ const init = () => {
 };
 
 const postReceive = () => {
-  postDuanWuReceiveToken("lh1-duan-wu-rewards").then((res) => {
+  postDuanWuReceiveToken(props.promoCode).then((res) => {
     if (res.code === 0) {
       notify.success({
         type: "success",
@@ -315,7 +315,7 @@ const postReceive = () => {
 };
 
 const postBonus = () => {
-  getDuanWuclaimBonus("lh1-duan-wu-rewards").then((res) => {
+  getDuanWuclaimBonus(props.promoCode).then((res) => {
     if (res.code === 0) {
       notify.success({
         type: "success",
@@ -330,13 +330,13 @@ const postBonus = () => {
 const fetchRecordData = (action) => {
   isOpenDialog.value = true;
   isTabLeft.value = action;
-  getDuanWuTokenRecords("lh1-duan-wu-rewards").then((res) => {
+  getDuanWuTokenRecords(props.promoCode).then((res) => {
     if (res.code === 0) {
       tokenRecord.value = res.data;
     }
   });
 
-  getDuanWuRewardRecords("lh1-duan-wu-rewards").then((res) => {
+  getDuanWuRewardRecords(props.promoCode).then((res) => {
     if (res.code === 0) {
       rewardRecord.value = res.data;
     }
