@@ -23,7 +23,7 @@
         </div>
 
         <img class="plat-icon" :src="require('../../assets/live/live_logo_' + nav.icon + '.png')" />
-        <p class="platform-title">{{ nav.label }} 真人</p>
+        <p class="platform-title">{{ getAliasName(nav, 'LIVE') }}</p>
         <div class="platform-img" :class="'live-' + nav.icon"></div>
       </div>
       <div class="header-fs-box">
@@ -44,6 +44,7 @@
 import { defineComponent, ref, onMounted, computed } from "vue";
 import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
+import { getAliasName } from '@/utils/utils';
 import moment from "moment";
 
 export default defineComponent({
@@ -121,11 +122,11 @@ export default defineComponent({
     onMounted(() => {
       getPlatList();
     });
-
     return {
       filteredNavigations,
       getPlatList,
-      moment
+      moment,
+      getAliasName
     };
   }
 });

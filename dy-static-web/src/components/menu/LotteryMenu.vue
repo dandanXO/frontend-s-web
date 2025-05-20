@@ -24,8 +24,8 @@
 
         <img class="plat-icon" :src="require('../../assets/lottery/logo_' + nav.icon + '.png')" />
 
-        <p class="platform-title">{{ nav.label }}</p>
-
+        <!-- <p class="platform-title">{{ nav.label }}</p> -->
+        <p class="platform-title">{{ getAliasName(nav, 'LOTTERY') }}</p>
         <div class="platform-img" :class="'lottery-' + nav.icon"></div>
       </div>
     </div>
@@ -38,6 +38,7 @@ import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 import moment from "moment";
+import { getAliasName } from '@/utils/utils';
 
 export default defineComponent({
   setup() {
@@ -102,7 +103,8 @@ export default defineComponent({
       filteredNavigations,
       getPlatList,
       router,
-      moment
+      moment,
+      getAliasName
     };
   }
 });

@@ -31,7 +31,8 @@
       <div class="decal">场馆分类</div>
       <template v-for="p in sideBarPlatforms" :key="p">
         <div class="plat-item" :class="{ active: p === activePlat }" @click="switchPlat(p)">
-          {{ getGameLabel(p.name) }}
+          <!-- {{ getGameLabel(p.name) }} -->
+          {{ getAliasName(p, 'SLOT') }}
         </div>
       </template>
     </div>
@@ -81,7 +82,10 @@
                       require(`./img/${pageType.toLowerCase()}/${pageType.toLowerCase()}-logo-${plat.code.toLowerCase()}.png`)
                     "
                   />
-                  {{ getGameLabel2(plat.name) }}{{ commonName }}
+                  <!-- {{ getGameLabel2(plat.name) }}{{ commonName }} -->
+                  {{ getAliasName(plat, pageType) }}
+                  <!-- {{  plat }}
+                  {{ pageType }} -->
                 </div>
                 <div class="start-btn">立即开始</div>
               </div>
@@ -116,6 +120,7 @@ import { useLocalStorage } from "@vueuse/core";
 import aos from "aos";
 import { getPlatformGames, getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { platformsDetails } from "./platforms.js";
+import { getAliasName } from "@/utils/utils.js";
 const props = defineProps({
   pageType: {
     type: String,
@@ -198,15 +203,27 @@ const getPlatList = () => {
 };
 
 const setFilteredPlatforms = () => {
-  filteredPlatforms.value = platformsDetails.filter((displayPlatform) =>
-    platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
-  );
+  filteredPlatforms.value = platformsDetails
+    .filter((displayPlatform) =>
+      platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
+    )
+    .map((displayPlatform) => {
+      const match = platformsListDisplay.value.find(
+        (platform) => platform.code === displayPlatform.code
+      );
+      return {
+        ...displayPlatform,
+        alias: match?.alias || null, // Add alias from platformsListDisplay
+        gameType: match?.gameType || null,
+      };
+    });
 
   filteredPlatforms.value.forEach((element) => {
     if (element.code === route.query.plat) {
       clickPlat(element);
     }
   });
+
   setSelectedPlat();
 };
 const setSideBarPlatforms = () => {
