@@ -32,37 +32,54 @@
                 <img src="./images/bonus-img.png" />
                 <p>粽叶领取 X {{ todayToken }}片</p>
               </div>
-              <div class="right" style="width: 100px;">
+              <div class="right" style="width: 100px">
                 <img src="./images/bonus-button.svg" alt="" width="100%" @click="handleClaimToken" />
               </div>
             </div>
           </div>
           <div class="main-img-wrapper">
-            <div style="
-              position: absolute;
-              top: 31%;
-              right: 12%;
-              transform: rotate(-7deg);
-              color:#723D00;
-              font-size: 13px;
-              font-weight: 600;
-              text-decoration: underline;
-              " 
-              @click="handleOpenRecordDialog() ;isTabLeft=true">粽叶领取记录</div>
-              <div style="
-              position: absolute;
-              top: 45%;
-              right: 12%;
-              transform: rotate(-1deg);
-              color: rgb(114, 61, 0);
-              font-size: 13px;
-              font-weight: 600;
-              text-decoration: underline;
-              " 
-              @click="handleOpenRecordDialog() ;isTabLeft=false">开启粽子记录</div>
+            <div
+              style="
+                position: absolute;
+                top: 31%;
+                right: 12%;
+                transform: rotate(-7deg);
+                color: #723d00;
+                font-size: 13px;
+                font-weight: 600;
+                text-decoration: underline;
+              "
+              @click="
+                handleOpenRecordDialog();
+                isTabLeft = true;
+              "
+            >
+              粽叶领取记录
+            </div>
+            <div
+              style="
+                position: absolute;
+                top: 45%;
+                right: 12%;
+                transform: rotate(-1deg);
+                color: rgb(114, 61, 0);
+                font-size: 13px;
+                font-weight: 600;
+                text-decoration: underline;
+              "
+              @click="
+                handleOpenRecordDialog();
+                isTabLeft = false;
+              "
+            >
+              开启粽子记录
+            </div>
             <img src="./images/main-img.png" @click="handleOpenRecordDialog" />
             <img src="./images/main-img-reward.svg" class="reward-button" @click="handleClaimBonus" />
-            <div style="font-size: 13px;color:#027C5F; text-align:center;">每开启一次粽子将<span style="color:red;">消耗5片粽叶</span></div>
+            <div style="font-size: 13px; color: #027c5f; text-align: center">
+              每开启一次粽子将
+              <span style="color: red">消耗5片粽叶</span>
+            </div>
           </div>
         </div>
       </div>
@@ -202,7 +219,7 @@
         <img v-if="isTabLeft" src="./images/tab-active-left.png" width="100%" />
         <img v-else src="./images/tab-active-right.png" width="100%" />
       </div>
-      <div v-show="isTabLeft" style="flex: 1;" class="inner-table">
+      <div v-show="isTabLeft" style="flex: 1" class="inner-table">
         <table>
           <thead>
             <tr>
@@ -221,7 +238,7 @@
           </tbody>
         </table>
       </div>
-      <div v-show="!isTabLeft" style="flex: 1;" class="inner-table">
+      <div v-show="!isTabLeft" style="flex: 1" class="inner-table">
         <table>
           <thead>
             <tr>
@@ -242,7 +259,7 @@
           </tbody>
         </table>
       </div>
-      <div style="display: flex; justify-content: center;">
+      <div style="display: flex; justify-content: center">
         <button @click="isRecordDialogShow = false">关闭</button>
       </div>
     </div>
@@ -251,7 +268,13 @@
 
 <script setup>
 import { onMounted, ref, toRefs } from "vue";
-import { getTokenRewardsInit, receiveTokenRewards, claimTokenRewardsBonus, getTokenRecords, getRewardsRecords } from "../../../api/index/promo";
+import {
+  getTokenRewardsInit,
+  receiveTokenRewards,
+  claimTokenRewardsBonus,
+  getTokenRecords,
+  getRewardsRecords
+} from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
@@ -272,31 +295,31 @@ const isClaiming = ref(false);
 const isClaimingToken = ref(false);
 const isRecordDialogShow = ref(false);
 const isTabLeft = ref(true);
-const tokenRecord = ref([])
-const rewardRecord = ref([])
+const tokenRecord = ref([]);
+const rewardRecord = ref([]);
 
 const handleToggleTab = () => {
-  isTabLeft.value = !isTabLeft.value
-}
+  isTabLeft.value = !isTabLeft.value;
+};
 
 const handleOpenRecordDialog = () => {
   fetchRecordData();
-  isRecordDialogShow.value = true
-}
+  isRecordDialogShow.value = true;
+};
 
 const fetchRecordData = () => {
   getTokenRecords(props.promoCode).then((res) => {
     if (res.code === 0) {
-      res.data = tokenRecord.value
+      res.data = tokenRecord.value;
     }
-  })
+  });
 
   getRewardsRecords(props.promoCode).then((res) => {
     if (res.code === 0) {
-      res.data = rewardRecord.value
+      res.data = rewardRecord.value;
     }
-  })
-}
+  });
+};
 
 const handleClaimBonus = () => {
   if (isClaiming.value === true) {
@@ -384,11 +407,8 @@ const handleClaimToken = () => {
     .then((res) => {
       if (res.code === 0) {
         notify({
-          message: "成功领取",
-          type: "red-packet",
-          params: {
-            redPacket: res.data
-          }
+          type: "success",
+          message: "领取成功"
         });
         fetchData();
       } else {
@@ -839,13 +859,12 @@ onMounted(() => {
   padding: 12px;
   display: flex;
   flex-direction: column;
-  .inner-table{
+  .inner-table {
     table {
-      
       border-collapse: separate; /* 關鍵！讓邊角能獨立呈現 */
       border-spacing: 0;
     }
-    td{
+    td {
       border: 1px solid #027c5f;
       padding: 0px !important;
       text-align: center;
@@ -874,7 +893,7 @@ onMounted(() => {
     width: 100%;
 
     th {
-      background: linear-gradient(180deg, #00CC8C 0%, #006646 100%);
+      background: linear-gradient(180deg, #00cc8c 0%, #006646 100%);
       font-size: 14px;
       color: white;
       border-radius: 4px 4px 0 0;
@@ -888,7 +907,7 @@ onMounted(() => {
 
   button {
     font-size: 16px;
-    background: linear-gradient(180deg, #00CC8C 0%, #006646 100%);
+    background: linear-gradient(180deg, #00cc8c 0%, #006646 100%);
     color: white;
     border: none;
     border-radius: 4px;
