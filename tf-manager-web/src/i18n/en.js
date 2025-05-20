@@ -3791,6 +3791,7 @@ export default {
     10051: 'System ip label does not exist',
     10110: 'Platform retrieve pending transaction error',
     10111: 'Platform update pending transaction error',
+    10113: 'Query time cannot exceed 3 months',
     11000: 'affiliate does not exist',
     11006: 'Site affiliate commission already exist',
     11007: 'Site affiliate commission does not exist',
