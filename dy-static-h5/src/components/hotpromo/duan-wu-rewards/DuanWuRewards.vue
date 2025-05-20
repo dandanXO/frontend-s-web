@@ -384,11 +384,8 @@ const handleClaimToken = () => {
     .then((res) => {
       if (res.code === 0) {
         notify({
-          message: "成功领取",
-          type: "red-packet",
-          params: {
-            redPacket: res.data
-          }
+          type: "success",
+          message: "领取成功"
         });
         fetchData();
       } else {
