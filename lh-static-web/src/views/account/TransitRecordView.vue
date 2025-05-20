@@ -143,13 +143,13 @@
                 </template>
               </el-table-column>
             </el-table>
-            <!-- <el-divider />
+            <el-divider />
             <el-pagination
               @current-change="recordPage"
               :total="pagination.total"
               :current-page="searchForm[recordActive].current"
               :page-size="searchForm[recordActive].size"
-            /> -->
+            />
           </div>
         </el-tab-pane>
         <el-tab-pane name="withdraw" label="提款记录">
