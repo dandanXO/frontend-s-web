@@ -1,5 +1,10 @@
 <template>
-  <div class="WAL position-relative" :style="style" :class="isChatStarted ? 'WAL-start' : ''" v-show="isPageLoaded">
+  <div
+    class="WAL position-relative"
+    :style="style"
+    :class="[{ 'no-footer': chatBaseUrl === 'live-chat' }, isChatStarted ? 'WAL-start' : '']"
+    v-show="isPageLoaded"
+  >
     <q-layout
       view="lHh Lpr lFf"
       class="prechat-section"
@@ -21,7 +26,13 @@
       </div>
     </q-layout>
 
-    <q-layout v-if="isChatStarted && !isNoticeClicked" view="lHh Lpr lFf" class="WAL__layout shadow-3" container>
+    <q-layout
+      v-if="isChatStarted && !isNoticeClicked"
+      view="lHh Lpr lFf"
+      class="WAL__layout shadow-3"
+      :class="{ 'no-footer': chatBaseUrl === 'live-chat' }"
+      container
+    >
       <chat-header
         ref="refChatHeader"
         :room="room"
@@ -186,7 +197,7 @@
         </q-item>
 
         <q-item v-ripple>
-          <q-item-section class="start-chat-btn">
+          <q-item-section class="start-chat-btn" :class="{ 'no-footer': chatBaseUrl === 'live-chat' }">
             <q-item-label>
               <q-btn
                 color="primary"
@@ -204,13 +215,17 @@
         </q-item>
       </div>
 
-      <div class="duplicate-box" v-if="isDuplicateTab">
+      <div class="duplicate-box" :class="{ 'no-footer': chatBaseUrl === 'live-chat' }" v-if="isDuplicateTab">
         <span class="duplicate-span">{{ t("duplicated_tab_detected") }}</span>
         <q-btn color="primary" size="md" class="duplicate-span" @click="useThisChatBoard">
           {{ t("recover_chat") }}
         </q-btn>
       </div>
-      <div class="duplicate-box" v-if="footerDisabled && isPreStateStatus && isPreChat">
+      <div
+        class="duplicate-box"
+        :class="{ 'no-footer': chatBaseUrl === 'live-chat' }"
+        v-if="footerDisabled && isPreStateStatus && isPreChat"
+      >
         <span class="duplicate-span">{{ t("sess_timeout") }}</span>
         <q-btn color="primary" size="md" class="duplicate-span" @click="useThisChatBoard">
           {{ t("start_new_conversation") }}
@@ -373,6 +388,8 @@ export default defineComponent({
     const preIntro = ref("");
 
     const notice_timestamp = ref("");
+
+    const chatBaseUrl = route?.path?.split?.("/")?.[1] || "live-chat";
 
     const partnerCode = computed(() => {
       return LocalStorage.get("partnerCode");
@@ -1231,7 +1248,6 @@ export default defineComponent({
       }
 
       var origin_url = window.location.origin;
-      const chatBaseUrl = route.path.split("/")[1];
       var url = `${origin_url}/${chatBaseUrl}?${partnerText}&way=${way}&lang=${lang}&type=${type}${deviceText}${startnew}&referral=${referrer_url}${tokenUrl}`;
       // console.log(url);
 
@@ -1660,7 +1676,6 @@ export default defineComponent({
       }
 
       var origin_url = window.location.origin;
-      const chatBaseUrl = route.path.split("/")[1];
       var url = `${origin_url}/${chatBaseUrl}?${partnerText}&way=${way}&lang=${lang}&type=${type}${deviceText}&referral=${referrer_url}${tokenUrl}`;
       console.log(url);
 
@@ -1726,7 +1741,8 @@ export default defineComponent({
       chatLabel,
       isDuplicateTab,
       useThisChatBoard,
-      isPageLoaded
+      isPageLoaded,
+      chatBaseUrl
     };
   }
 });
@@ -1886,6 +1902,10 @@ export default defineComponent({
     padding-right: 0px;
     width: auto;
   }
+
+  &.no-footer {
+    bottom: 0;
+  }
 }
 
 .pointer-none {
@@ -1927,6 +1947,9 @@ export default defineComponent({
 .WAL-start,
 .WAL__layout {
   height: calc(100vh - 60px) !important;
+  &.no-footer {
+    height: 100vh !important;
+  }
 }
 
 .prechat-section {
@@ -2039,6 +2062,9 @@ export default defineComponent({
   background: rgba(210, 242, 242, 0.2);
   backdrop-filter: blur(4px);
   padding-bottom: 16px;
+  &.no-footer {
+    bottom: 0;
+  }
 }
 
 .modal-rating {
