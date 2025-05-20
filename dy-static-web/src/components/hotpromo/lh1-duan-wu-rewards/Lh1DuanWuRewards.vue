@@ -134,7 +134,7 @@
           </div>
         </div>
         <div style="font-size: 20px; font-weight: 400; color: #ff0000; text-align: left; margin-bottom: 40px">
-          会员A 在当日累计有效投注400,000元，次日即可领取12片粽叶，兑换2个好粽，获的对应安康金。
+          会员A 在当日累计有效投注400,000元，次日即可领取12片粽叶，兑换2个好粽，获得对应安康金。 
         </div>
       </div>
     </div>
