@@ -341,7 +341,7 @@ export default defineComponent({
 
               await router.push({
                 path: "/liveChat/chat",
-                query: { uid: chatGuid, ...(userStore.token && { token: userStore.token }) }
+                query: { uid: chatGuid, ...(store.token && { token: store.token }) }
               });
             } catch (e) {
               console.log(e);
