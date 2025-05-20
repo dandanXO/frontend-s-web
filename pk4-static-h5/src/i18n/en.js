@@ -56,7 +56,11 @@ export default {
     spinnerRules: "Rules",
     spinnerHistory: "History",
     effectiveRevenueFAQ: "Effective Revenue FAQ",
-    customerServiceVerifer: "Customer Service Verifier"
+    customerServiceVerifer: "Customer Service Verifier",
+    teamManagement: "Team Management",
+    teamPnL: "Team P&L",
+    teamBetting: "Team Betting",
+    editRebate: "Edit Rebate"
   },
   bottomNav: {
     home: "Home",
@@ -66,7 +70,9 @@ export default {
     wallet: "Wallet",
     me: "Me",
     account: "Account",
-    more: "More"
+    more: "More",
+    announcement: "Announcement",
+    dividend: "Dividend"
   },
   modal: {
     addToHomeScreen: {
@@ -380,7 +386,63 @@ export default {
     depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
     interestProfit: "Interest Profit",
     exchange: "Exchange",
-    transfer: "Transfer"
+    transfer: "Transfer",
+    "agentAccount": "Agent Account",
+  },
+  affiliateSettings: {
+    "overview": "Overview",
+    "accountRecord": "Account Record",
+    "teamManagement": "Team Management",
+    "teamPnl": "Team P&L",
+    "teamBetting": "Team Betting",
+    "editRebate": "Edit Rebate",
+    "securityCenter": "Security Center",
+    "internalMessage": "Internal Message",
+    "customerService": "Customer Service",
+    linkManagement: "Link Management"
+  },
+  affiliate: {
+    main: {
+      logins: "Logins",
+      noOfPlayers: "No. of Players",
+      registers: "Registers",
+      total: "Total",
+      goodMorning: "Good morning"
+    },
+    account: {
+      memberReferralLink: "Member Referral Link",
+      agentReferralLink: "Agent Referral Link",
+      copiedToClipboard: "Copied to Clipboard",
+      copyLink: "Copy Link",
+      qrCode: "QR Code",
+      scanTheCodeToRegister: "Scan the QR code to register",
+      pressQRCode: "press and hold to save QR code to album"
+    }
+  },
+  accountRecord: {
+    myDividend: 'My Dividend',
+    contractManagement: 'Contract Management',
+    dividendRecord: 'Dividend Record',
+  },
+  dividend: {
+    myDividend: 'My Dividend',
+    contractManagement: 'Contract Management',
+    dividendRecord: 'Dividend Record',
+    activeMember: 'Active Member',
+    dividendRate: 'Dividend Rate',
+    netAmountReceives: 'Net amount receives',
+    status: 'Status',
+    activeMember: 'Active member',
+    periodValidBet: 'Period valid bet',
+    periodPnL: 'Period P&L',
+    periodSettledPnL: 'Period settled P&L',
+    dividendAmount: 'Dividend amount',
+    downlineDividendsToPay: 'Downline dividends to pay',
+    disbursementTime: 'Disbursement time',
+    statusChecking: 'Checking',
+    statusPay: 'Pay',
+    statusCleared: 'Cleared',
+    statusCancelled: 'Cancelled'
   },
   deposit: {
     selectAmount: "Select Amount",

@@ -26,6 +26,12 @@
           <q-badge v-if="isFtdPrivilegePayType" color="green" floating rounded>
             +{{ getFtdCommaAmount(item.amount) }}
           </q-badge>
+          <q-badge v-if="isNewUserFtdPrivilege" color="green" floating rounded>
+            {{ getNewUserFtdAmount(item.amount) }}
+          </q-badge>
+          <q-badge v-if="is2ndPrivilege" color="green" floating rounded>
+            {{ get2ndAmount(item.amount) }}
+          </q-badge>
           <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
           <div :class="['deposit-svg', item.isActive && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -81,6 +87,15 @@
               v-if="store.ftd === 'OPEN' && paytypeWithPrivilege.indexOf(activeMethod.payType) > -1"
             >
               {{ $t("deposit.useFtdPrivilege") }}
+            </q-checkbox>
+            <q-checkbox v-model="ftdBonusConfig.selected" v-else-if="ftdBonusConfig.hasBonus">
+              {{ $t("deposit.useFtdBonus") }}
+            </q-checkbox>
+            <q-checkbox
+              v-model="secondTimeDepositBonusConfig.selected"
+              v-else-if="secondTimeDepositBonusConfig.hasBonus"
+            >
+              {{ $t("deposit.use2ndBonus") }}
             </q-checkbox>
             <div v-else>&nbsp;</div>
             <!--            {{ $t("form.depositAmount") }}-->
@@ -209,8 +224,8 @@
     </div>
 
     <div class="q-mt-lg" style="color: #576373" v-if="activeMethod.privilegeId || isFtdPrivilegePayType">
-      <div class="q-mt-sm">{{ $t('deposit.wagerRequirement') }}</div>
-      <div class="q-mt-sm">{{ $t('deposit.wagerRequirementEg') }}</div>
+      <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
+      <div class="q-mt-sm">{{ $t("deposit.wagerRequirementEg") }}</div>
     </div>
 
     <div class="q-mt-lg step-desc-div q-mb-lg">
@@ -219,33 +234,27 @@
       </template>
       <template v-else-if="isUSDT">
         <p>
-          1. {{ $t('deposit.rechargeTutorial') }}:
-          <span class="tutorial-link" @click="openDepositPage">{{ $t('deposit.picture') }}</span>
+          1. {{ $t("deposit.rechargeTutorial") }}:
+          <span class="tutorial-link" @click="openDepositPage">{{ $t("deposit.picture") }}</span>
           /
-          <span class="tutorial-link" @click="openDepositVideo">{{ $t('deposit.video') }}</span>
+          <span class="tutorial-link" @click="openDepositVideo">{{ $t("deposit.video") }}</span>
         </p>
-        <p>2. {{ $t('deposit.mindepositnotcredit') }}</p>
-        <p>3. {{ $t('deposit.depositnotrecovered') }}</p>
-        <p>
-          4. {{ $t('deposit.operatingSafe') }}
-        </p>
-        <p>
-          5. {{ $t('deposit.transferAmountMatch') }}
-        </p>
-        <p>6. {{ $t('deposit.donotcanceldeposit') }}</p>
+        <p>2. {{ $t("deposit.mindepositnotcredit") }}</p>
+        <p>3. {{ $t("deposit.depositnotrecovered") }}</p>
+        <p>4. {{ $t("deposit.operatingSafe") }}</p>
+        <p>5. {{ $t("deposit.transferAmountMatch") }}</p>
+        <p>6. {{ $t("deposit.donotcanceldeposit") }}</p>
       </template>
       <template v-else>
         <p>
-          1. {{ $t('deposit.rechargeTutorial') }}:
-          <span class="tutorial-link" @click="openDepositPage">{{ $t('deposit.picture') }}</span>
+          1. {{ $t("deposit.rechargeTutorial") }}:
+          <span class="tutorial-link" @click="openDepositPage">{{ $t("deposit.picture") }}</span>
           /
-          <span class="tutorial-link" @click="openDepositVideo">{{ $t('deposit.video') }}</span>
+          <span class="tutorial-link" @click="openDepositVideo">{{ $t("deposit.video") }}</span>
         </p>
-        <p>2. {{ $t('deposit.fillinwallet') }}</p>
-        <p>3. {{ $t('deposit.fillincnic') }}</p>
-        <p>
-          4. {{ $t('deposit.submittedAmtConsistent') }}
-        </p>
+        <p>2. {{ $t("deposit.fillinwallet") }}</p>
+        <p>3. {{ $t("deposit.fillincnic") }}</p>
+        <p>4. {{ $t("deposit.submittedAmtConsistent") }}</p>
 
         <!--        <p>-->
         <!--          1. Recharge tutorial:-->
@@ -325,7 +334,7 @@
     </div>
   </q-dialog>-->
 
-  <q-dialog  width="100%" v-model="userKYCDialog" persistent>
+  <q-dialog width="100%" v-model="userKYCDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="goBackPage" v-close-popup />
       <KYCUserForm @closeUserKYCDialog="checkCloseUserKYCDialog" />
@@ -360,6 +369,13 @@ import { storeToRefs } from "pinia";
 // import MediaSettingsComponent from "../../components/MediaSettingsComponent.vue";
 
 import AdditionalSteps from "../../components/modal/AdditionalSteps.vue";
+
+const DEFAULT_BONUS_CONFIG = {
+  selected: false,
+  hasBonus: false,
+  privilegeId: null
+};
+
 const closePlayerGuide = () => {
   isAdditionalDepositSteps.value = false;
   if (currentDepStep.value === 4) {
@@ -457,6 +473,7 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
+const isInitialized = ref(false);
 
 const copybtntxt0 = ref("复制");
 const copybtntxt1 = ref("复制");
@@ -465,6 +482,8 @@ const copybtntxt3 = ref("复制");
 const extraPrivilegeId = ref();
 const paytypeWithPrivilege = ref("");
 const isFtdPrivilegeEnable = ref(false);
+const ftdBonusConfig = ref(DEFAULT_BONUS_CONFIG);
+const secondTimeDepositBonusConfig = ref(DEFAULT_BONUS_CONFIG);
 
 const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
 const isFtdPrivilege = computed(
@@ -473,6 +492,16 @@ const isFtdPrivilege = computed(
 
 const isFtdPrivilegePayType = computed(
   () => isFtdPrivilege.value && paytypeWithPrivilege.value.indexOf(activeMethod.value.payType) > -1
+);
+
+const isNewUserFtdPrivilege = computed(
+  () => selectedPayType.value !== "USDTTRC" && ftdBonusConfig.value.selected && ftdBonusConfig.value.hasBonus
+);
+const is2ndPrivilege = computed(
+  () =>
+    selectedPayType.value !== "USDTTRC" &&
+    secondTimeDepositBonusConfig.value.selected &&
+    secondTimeDepositBonusConfig.value.hasBonus
 );
 
 const copyMessage = (position) => {
@@ -554,6 +583,36 @@ const getFtdCommaAmount = (amount) => {
   } else {
     return "999Pkr";
   }
+};
+
+const getNewUserFtdAmount = (amount) => {
+  const rewardMap = {
+    300: 159,
+    500: 249,
+    1000: 399,
+    3000: 999,
+    5000: 1599,
+    10000: 2999,
+    20000: 4999,
+    30000: 5999,
+    50000: 7999
+  };
+  return rewardMap[amount] || 0;
+};
+
+const get2ndAmount = (amount) => {
+  const rewardMap = {
+    300: 107,
+    500: 177,
+    1000: 277,
+    3000: 577,
+    5000: 777,
+    10000: 1377,
+    20000: 2777,
+    30000: 3777,
+    50000: 5777
+  };
+  return rewardMap[amount] || 0;
 };
 
 const handleDepositNodeClick = (item) => {
@@ -687,6 +746,8 @@ function checkPrivilege(v) {
 async function loadPrivilege(val) {
   privilegeList.value = [];
   hasPrivilege.value = false;
+  ftdBonusConfig.value = DEFAULT_BONUS_CONFIG;
+  secondTimeDepositBonusConfig.value = DEFAULT_BONUS_CONFIG;
   await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
     if (res.code === 0) {
       privilegeList.value = res.data.privileges;
@@ -698,7 +759,21 @@ async function loadPrivilege(val) {
           if (p.triggerType == "FREE") {
             freePrivilege.value.push(p);
           } else {
-            unselectedPrivileges.value.push(p);
+            if (p.code === "pak-new-user-ftd-bonus") {
+              ftdBonusConfig.value = {
+                selected: true,
+                hasBonus: true,
+                privilegeId: p.id
+              };
+            } else if (p.code === "pak-second-time-deposit-bonus") {
+              secondTimeDepositBonusConfig.value = {
+                selected: true,
+                hasBonus: true,
+                privilegeId: p.id
+              };
+            } else {
+              unselectedPrivileges.value.push(p);
+            }
           }
         }
       });
@@ -785,6 +860,14 @@ async function confirmDeposit() {
 
           if (isFtdPrivilegePayType.value && extraPrivilegeId.value && isFtdPrivilegeEnable.value) {
             form.privilegeId = extraPrivilegeId.value;
+          }
+
+          if (ftdBonusConfig.value.selected && ftdBonusConfig.value.hasBonus) {
+            form.privilegeId = ftdBonusConfig.value.privilegeId;
+          }
+
+          if (secondTimeDepositBonusConfig.value.selected && secondTimeDepositBonusConfig.value.hasBonus) {
+            form.privilegeId = secondTimeDepositBonusConfig.value.privilegeId;
           }
 
           const copy = { ...form };
@@ -993,11 +1076,16 @@ const openDepositPage = () => {
 };
 
 const openDepositVideo = () => {
-  if (langSelect === "ur") {
-    window.open("https://drive.google.com/file/d/1EQaqmujVTheOKvk0bczhqLa2cL30jKBu/view?usp=sharing", "_blank");
+  if (selectedPayType.value.includes("USDT")) {
+    window.open("https://drive.google.com/file/d/1oqAGfhQ5W6croWGUAdlY-PXPisFVkfZt/view?usp=sharing", "_blank");
   } else {
-    window.open("https://drive.google.com/file/d/1y-PJqF2C4MBEvtuPL3RDnfnl9teMs-zI/view?usp=drive_link", "_blank");
+    window.open("https://drive.google.com/file/d/1NftkjDG0OW_X0SErP_pkLjjDwjMN83Ah/view?usp=sharing", "_blank");
   }
+  // if (langSelect === "ur") {
+  //   window.open("https://drive.google.com/file/d/1EQaqmujVTheOKvk0bczhqLa2cL30jKBu/view?usp=sharing", "_blank");
+  // } else {
+  //   window.open("https://drive.google.com/file/d/1y-PJqF2C4MBEvtuPL3RDnfnl9teMs-zI/view?usp=drive_link", "_blank");
+  // }
   // if (selectedPayType.value === "EASYPAISA") {
   //   window.open("https://drive.google.com/file/d/1xBIZuDG1yY6Zeo-RF8-M-3I3E6o9VddX/view", "_blank");
   // } else if (selectedPayType.value === "JAZZCASH") {
@@ -1046,6 +1134,7 @@ watch(
   },
   { immediate: true }
 );
+
 const isAdditionalDepositSteps = ref(false);
 
 const goBackPage = () => {
@@ -1060,6 +1149,13 @@ const goBackPage = () => {
   // }
 };
 
+onActivated(() => {
+  if (!isInitialized.value) return;
+  initPay();
+  refreshNode();
+  loadAppTabs();
+});
+
 onMounted(() => {
   initPay();
   refreshNode();
@@ -1069,6 +1165,7 @@ onMounted(() => {
   if (route.query.isNewPlayer && completedGuide !== "true" && userKYCDialog.value === false) {
     isAdditionalDepositSteps.value = true;
   }
+  isInitialized.value = true;
 });
 </script>
 
@@ -1400,7 +1497,7 @@ onMounted(() => {
 }
 
 .step-desc-div {
-  color: #B2BDBF;
+  color: #b2bdbf;
 
   p {
     margin: 5px 0px;
@@ -1426,7 +1523,7 @@ onMounted(() => {
 </style>
 <style scoped>
 .description-text {
-  color: #B2BDBF;
+  color: #b2bdbf;
 }
 :deep(.description-text p) {
   margin: 5px 0px !important;

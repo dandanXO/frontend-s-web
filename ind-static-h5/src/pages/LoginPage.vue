@@ -329,7 +329,7 @@ export default defineComponent({
         excludes.value.forEach((element) => {
           delete allComponents[element];
         });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+        const sidParam = "fp-" + FingerprintJS.hashComponents(allComponents);
 
         if (loginType.value === false) {
           loginNameRef.value.validate();

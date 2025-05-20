@@ -1,7 +1,7 @@
 <template>
   <div class="service-section">
     <!-- <HomeTitle title="优质服务" subtitle="EXCELLENT SERVICE"></HomeTitle> -->
-    <HomeTitleV2 title="优质服务" subtitle="EXCELLENT SERVICE"/>
+    <HomeTitleV2 title="优质服务?" subtitle="EXCELLENT SERVICE"/>
     <div class="service-container">
       <div class="top-container" data-aos="fade-down">
         <div class="counter">
@@ -100,7 +100,7 @@
             <div class="left-container">
               <div class="circle-wrapper">
                 <img class="circle" :src="loadCircleBg()" />
-                <img class="icon" src="../../../assets/home/service/deposit.png" />
+                <img class="icon" src="../../../assets/home/service/category.png" />
               </div>
             </div>
             <div class="right-container">
@@ -116,7 +116,7 @@
             <div class="left-container">
               <div class="circle-wrapper">
                 <img class="circle" :src="loadCircleBg()" />
-                <img class="icon" src="../../../assets/home/service/deposit.png" />
+                <img class="icon" src="../../../assets/home/service/security.png" />
               </div>
             </div>
             <div class="right-container">
@@ -133,7 +133,7 @@
             <div class="left-container">
               <div class="circle-wrapper">
                 <img class="circle" :src="loadCircleBg()" />
-                <img class="icon" src="../../../assets/home/service/deposit.png" />
+                <img class="icon" src="../../../assets/home/service/mobile.png" />
               </div>
             </div>
             <div class="right-container">
@@ -299,6 +299,8 @@ onMounted(() => {});
               }
 
               .icon {
+                height: 80px;
+                width: 80px;
                 position: absolute;
               }
             }

@@ -3,6 +3,7 @@ import { api } from "src/boot/axios";
 import { useRoute } from "vue-router";
 import { userStore } from ".";
 import { isInPwa } from "src/boot/utils";
+import { cached } from "boot/cache";
 
 export const useUI = defineStore("ui-store", {
   state: () => {
@@ -60,6 +61,18 @@ export const useUI = defineStore("ui-store", {
           this.downloadAppUrl = res.data.url;
         }
       });
+    },
+    loadCustomerAddress() {
+      cached
+        .get("customerAddress", () =>
+          api.get("/config/customerAddress/v2").then((res) => {
+            return res;
+          })
+        )
+        .then((data) => {
+          // console.log(data);
+          this.CSAUrl = data.liveUrl1;
+        });
     }
   },
   getters: {

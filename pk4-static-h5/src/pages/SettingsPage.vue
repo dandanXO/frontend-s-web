@@ -119,6 +119,12 @@
         </div>
       </div>
       <div class="bottom-setting-section">
+        <router-link to="/affiliate/agent" v-if="store.memberType === 'AFFILIATE'">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/agentaccount-svg.svg" />
+          </div>
+          <div class="acct-nav-label">{{ $t("settings.agentAccount") }}</div>
+        </router-link>
         <router-link to="/account/message">
           <div class="acct-nav-item">
             <img src="../assets/images/account/message-svg.svg" />
@@ -145,7 +151,7 @@
 <!--          <div class="acct-nav-label">{{ $t("settings.transfer") }}</div>-->
 <!--        </a>-->
       </div>
-      <div class="bottom-setting-section invite-friends-section">
+      <div class="bottom-setting-section invite-friends-section" v-if="store.memberType !== 'AFFILIATE'">
         <div class="left-icon">
           <img src="../assets/images/earn-money/invite-gift.png" />
         </div>
@@ -798,7 +804,8 @@ const handleCopyClick = async () => {
   }
 
   .top-section {
-    width: 100%;
+    width: 95%;
+    margin: 0 auto;
     display: flex;
     // gap: 10px;
     :not(:last-child) {
@@ -812,6 +819,7 @@ const handleCopyClick = async () => {
       align-items: center;
       padding: 10px;
       gap: 5px;
+      min-height: 80px;
       img {
         width: 16px;
         display: block;

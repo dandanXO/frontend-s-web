@@ -52,6 +52,8 @@
 </template>
 <script setup>
 import { computed, ref, defineProps } from "vue";
+
+import { ElMessageBox } from "element-plus";
 import { writeClipboard } from "@/utils/clipboard";
 
 import BeautySvg from "@/components/hotpromo/officialGift/img/beauty.svg";
@@ -99,7 +101,23 @@ const currentVoxisId = computed(() => {
   }
 });
 
-const handleCopyClick = () => writeClipboard(currentVoxisId.value);
+const handleCopyClick = () => {
+  
+  if (!store.hasToken()) {
+    ElMessageBox.alert("请登录后再操作", "系统提示", {
+      autofocus: false,
+      center: true,
+      confirmButtonText: "确认",
+      showClose: false,
+      buttonSize: "large",
+      closeOnClickModal: true
+    }).then(() => {
+      store.loginPageVisible = true;
+    });
+    return;
+  }
+  writeClipboard(currentVoxisId.value);
+}
 </script>
 <style lang="scss" scoped>
 .dark {

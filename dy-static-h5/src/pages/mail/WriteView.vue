@@ -4,20 +4,23 @@
       <div class="q-pa-md bg-white q-ma-sm">
         <div class="top row justify-between items-center">
           <div class="title">标题</div>
-          <q-btn-dropdown
-            class="text-blue-6"
-            border
-            :label="`${mailDetailList.feedbackType || '快捷输入'}`"
-            menu-anchor="bottom end"
-          >
-            <q-list>
-              <q-item v-for="(item, i) in feedbackTypes" :key="i" clickable v-close-popup @click="onItemClick(item)">
-                <q-item-section>
-                  <q-item-label>{{ item }}</q-item-label>
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-btn-dropdown>
+          <div class="selector-wrapper">
+            <q-btn-dropdown
+              class="text-blue-6"
+              border
+              :label="`${mailDetailList.feedbackType || '快捷输入'}`"
+              menu-anchor="bottom end"
+            >
+              <q-list>
+                <q-item v-for="(item, i) in feedbackTypes" :key="i" clickable v-close-popup @click="onItemClick(item)">
+                  <q-item-section>
+                    <q-item-label>{{ item }}</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-btn-dropdown>
+            <span class="selector-error-msg">{{ feedbackTypesErrorMsg }}</span>
+          </div>
         </div>
         <q-input
           :rules="[
@@ -104,15 +107,20 @@ const mailDetailList = ref({
 });
 const onItemClick = (item) => {
   mailDetailList.value.feedbackType = item;
+  feedbackTypesErrorMsg.value = "";
 };
 
 const titleRef = ref();
 const contentRef = ref();
+const feedbackTypesErrorMsg = ref("");
 const onSubmit = () => {
   titleRef.value.validate();
   contentRef.value.validate();
-  if (titleRef.value.hasError || contentRef.value.hasError) {
+  if (titleRef.value.hasError || contentRef.value.hasError || !mailDetailList.value.feedbackType) {
     $q.loading.hide();
+    if(!mailDetailList.value.feedbackType) {
+      feedbackTypesErrorMsg.value = "请选择反馈类型";
+    }
   } else {
     api
       .post("/session/feedback", qs.stringify(mailDetailList.value))
@@ -129,7 +137,7 @@ const onSubmit = () => {
           mailDetailList.value.title = "";
           mailDetailList.value.content = "";
 
-          router.push("/account/mail/outbox");
+          router.push("/account/mail");
         }
       })
       .catch((error) => {
@@ -148,11 +156,24 @@ onMounted(() => {
   .top {
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
   }
 
   .title {
     font-weight: 600;
     font-size: 16px;
+  }
+
+  .selector-wrapper {
+    display: flex;
+    flex-direction: column;
+    .selector-error-msg {
+      color: var(--q-negative);
+      padding: 8px 12px 0;
+      font-size: 12px;
+      line-height: 1;
+      min-height: 26px;
+    }
   }
 
   .q-field--filled .q-field__control {

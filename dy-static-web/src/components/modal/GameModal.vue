@@ -211,7 +211,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   logoShow.value = true;
   src.value = "";
   if (gameName === "AGF") {
-    title.value = "AG 捕鱼";
+    title.value = "PA 捕鱼";
   } else {
     title.value = gameName;
   }

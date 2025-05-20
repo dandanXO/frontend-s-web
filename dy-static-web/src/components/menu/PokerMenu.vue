@@ -24,7 +24,8 @@
 
         <div class="imgbox" :style="`background-position-x: ${nav.percentage}`"></div>
         <div class="contents">
-          <p class="platform-title">{{ nav.label }}棋牌</p>
+          <!-- <p class="platform-title">{{ nav.label }}棋牌</p> -->
+          <p class="platform-title">{{ getAliasName(nav, 'POKER') }}</p>
           <p class="platform-slogan">{{ nav.slogan }}</p>
           <div class="platform">CHESS GAME</div>
         </div>
@@ -48,6 +49,7 @@ import { defineComponent, ref, onMounted, computed } from "vue";
 import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 import moment from "moment";
+import { getAliasName } from '@/utils/utils';
 
 export default defineComponent({
   setup() {
@@ -110,7 +112,8 @@ export default defineComponent({
     return {
       filteredNavigations,
       getPlatList,
-      moment
+      moment,
+      getAliasName
     };
   }
 });

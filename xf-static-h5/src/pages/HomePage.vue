@@ -26,7 +26,7 @@
   </div>
 
   <div class="home-all-slider" v-scroll="onHomeScroll">
-    <div class="q-px-md">
+    <div class="q-px-md home-top-summary">
       <template v-if="bannerLoading">
         <q-skeleton style="height: 200px" />
       </template>
@@ -71,6 +71,13 @@
         </q-carousel>
       </template>
 
+      <div class="web-link-container">
+        <span>
+          易记网址
+          <br />
+          xfxf98.com
+        </span>
+      </div>
       <div class="midd">
         <div class="station-notice-wrapper">
           <div class="volume">
@@ -164,7 +171,7 @@
                     <GameBoard
                       v-for="(item, i) in slot"
                       :key="i"
-                      :title="item?.alias || item.title"
+                      :title="item.title"
                       :name="item.name"
                       :code="item.code"
                       :icon="item.icon"
@@ -882,13 +889,15 @@ export default defineComponent({
               }
               if (espObj.code === "IA") {
                 espObj.title = "小艾电竞";
+              } else {
+                espObj.title = getAliasName(element, "ESPORT");
               }
-              if (espObj.code === "IMES") {
-                espObj.title = "IM电竞";
-              }
-              if (!espObj.title) {
-                espObj.title = espObj.code + "电竞";
-              }
+              // if (espObj.code === "IMES") {
+              //   espObj.title = "IM电竞";
+              // }
+              // if (!espObj.title) {
+              //   espObj.title = espObj.code + "电竞";
+              // }
               espObj.icon = "esport";
               espObj.subtitle = "电竞赛事";
               esport.value.push(espObj);
@@ -899,7 +908,8 @@ export default defineComponent({
               if (casualObj.code === "TFGaming") {
                 casualObj.title = casualObj.alias.split("、")[1];
               } else {
-                casualObj.title = casualObj.name + " 小游戏";
+                // casualObj.title = casualObj.name + " 小游戏";
+                casualObj.title = getAliasName(element, "CASUAL");
               }
               casualObj.icon = "casual";
               casualObj.subtitle = "小游戏";
@@ -907,34 +917,39 @@ export default defineComponent({
             }
             if (platTypes.indexOf("SPORT") > -1) {
               var spObj = Object.assign({}, element);
-              if (spObj.code === "IM") {
-                spObj.title = "IM体育";
-              }
-              if (spObj.code === "IA") {
-                spObj.title = "小艾体育";
-              }
-              if (spObj.code === "PM") {
-                spObj.title = "熊猫体育";
-              }
-              if (spObj.code === "CR") {
-                spObj.title = "CR体育";
-              }
-              if (spObj.code === "SABA") {
-                spObj.title = spObj.code + "体育";
-              }
+              // if (spObj.code === "IM") {
+              //   spObj.title = "IM体育";
+              // }
+              // if (spObj.code === "IA") {
+              //   spObj.title = "小艾体育";
+              // }
+              // if (spObj.code === "PM") {
+              //   spObj.title = "熊猫体育";
+              // }
+              // if (spObj.code === "CR") {
+              //   spObj.title = "CR体育";
+              // }
+              // if (spObj.code === "SABA") {
+              //   spObj.title = spObj.code + "体育";
+              // }
+              spObj.title = getAliasName(element, "SPORT");
               spObj.icon = "sport";
               spObj.subtitle = "体育赛事";
               sport.value.push(spObj);
             }
             if (platTypes.indexOf("LIVE") > -1) {
               var liveObj = Object.assign({}, element);
-              if (liveObj.code === "PMLIVE") {
-                liveObj.title = "DB 真人";
-              } else if (liveObj.code === "EBET") {
-                liveObj.title = "WE 真人";
-              } else {
-                liveObj.title = liveObj.name + " 真人";
-              }
+              // if (liveObj.code === "PMLIVE") {
+              //   liveObj.title = "DB 真人";
+              // } else if (liveObj.code === "EBET") {
+              //   liveObj.title = "WE 真人";
+              // } else if (liveObj.code === "AG") {
+              //   liveObj.alias = "PA 真人";
+              //   liveObj.title = "PA 真人";
+              // } else {
+              //   liveObj.title = liveObj.name + " 真人";
+              // }
+              liveObj.title = getAliasName(element, "LIVE");
               liveObj.icon = "live";
               liveObj.subtitle = "真人娱乐";
               livecasino.value.push(liveObj);
@@ -942,12 +957,14 @@ export default defineComponent({
             if (platTypes.indexOf("SLOT") > -1) {
               // console.log(element)
               var slotObj = Object.assign({}, element);
-              slotObj.title = translateRecord(slotObj.name) + " 电子";
+              // slotObj.title = translateRecord(slotObj.name) + " 电子";
+              slotObj.title = getAliasName(element, "SLOT");
               slotObj.icon = "slot";
               slotObj.subtitle = "电子游戏";
               // console.log(slotObj);
               if (slotObj.code === "AG") {
-                slotObj.title = "XIN 电子";
+                // slotObj.title = "PA 电子";
+                // slotObj.alias = "PA电子";
                 slotObj.name = "xin";
                 let slotItem = {
                   id: slotObj.id,
@@ -970,22 +987,30 @@ export default defineComponent({
             }
             if (platTypes.indexOf("FISH") > -1) {
               var fishObj = Object.assign({}, element);
-              fishObj.title = fishObj.name + " 捕鱼";
+              // fishObj.title = fishObj.name + " 捕鱼";
+              fishObj.title = getAliasName(element, "FISH");
               fishObj.icon = "fish";
               fishObj.subtitle = "捕鱼游戏";
+              // if (fishObj.code === "AGF") {
+              //   fishObj.alias = "PA 捕鱼";
+              //   fishObj.title = "PA 捕鱼";
+              // }
               fishing.value.push(fishObj);
               // console.log(fishObj);
             }
             if (platTypes.indexOf("POKER") > -1) {
               var pokerObj = Object.assign({}, element);
-              pokerObj.title = translateRecord(pokerObj.name);
+              // pokerObj.title = translateRecord(pokerObj.name);
+              
+              pokerObj.title = getAliasName(element, "POKER");
               pokerObj.icon = "poker";
               pokerObj.subtitle = "棋牌娱乐";
               poker.value.push(pokerObj);
             }
             if (platTypes.indexOf("LOTTERY") > -1) {
               var lottObj = Object.assign({}, element);
-              lottObj.title = lottObj.name + " 彩票";
+              // lottObj.title = lottObj.name + " 彩票";
+              lottObj.title = getAliasName(element, "LOTTERY");
               lottObj.icon = "lottery";
               lottObj.subtitle = "彩票游戏";
               //HArdCode hid BBIN
@@ -1001,6 +1026,17 @@ export default defineComponent({
             platListLoading.value = false;
           }, 500);
         });
+    };
+    
+    const getAliasName = (plat, platformType) => {
+      if (plat.alias?.includes("、")) {
+        const aliass = plat.alias.split("、");
+        const gameTypes = plat.gameType.split(",");
+        const itemIndex = gameTypes.indexOf(platformType);
+
+        return itemIndex && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
+      }
+      return plat.alias;
     };
 
     const liveTabs = ref("");
@@ -1391,10 +1427,35 @@ export default defineComponent({
   }
 }
 
+.home-top-summary {
+  position: relative;
+}
+
+.web-link-container {
+  border-radius: 4px;
+  box-shadow: 0px 0px 4px 0px #ffffff inset, 0px 4px 3.5px 0px #00000094;
+  background: linear-gradient(180deg, #00c7c0 0%, #0996c7 100%);
+  color: #160850;
+  width: fit-content;
+  padding: 4px 10px;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 14px;
+  text-align: center;
+  position: absolute;
+  right: 30px;
+  top: 48vw;
+  transform: translateY(-50%);
+  @media (min-width: 480px) {
+    top: 230px;
+  }
+}
+
 .midd {
   position: relative;
   border-radius: 15px 15px 0 0;
   overflow: hidden;
+  margin-top: 10px;
 
   .station-notice-wrapper {
     display: flex;

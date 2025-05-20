@@ -33,13 +33,13 @@
               <div class="contact-box skype-buttons">
                 <div class="contact-icon">
 
-                  <img src="../assets/images/affiliate/icon-skype.png" />
+                  <img src="../assets/images/affiliate/icon-teams.png" />
                 </div>
-                <div class="contact-name">合营部 Skype</div>
+                <div class="contact-name">合营部 Teams</div>
                 <span ref="contact2" class="contact-text" style="font-size: 7px">live:.cid.8099acb97a5ea41</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('2')">{{ copybtntxt2 }}</button>
-                  <a target="_blank" class="download-btn" href="https://www.skype.com/zh-Hans/get-skype/">下载</a>
+                  <a target="_blank" class="download-btn" href="https://www.microsoft.com/en-us/microsoft-teams/group-chat-software/">下载</a>
                 </div>
               </div>
               <div class="contact-box telegram-buttons">
@@ -66,6 +66,17 @@
                 </div>
               </div>
             </div>
+
+            <div class="contact-box contact-box--long bubble-buttons">
+              <div class="contact-icon-email">
+                <img src="../assets/images/affiliate/email-icon.png" />
+              </div>
+              <span  class="contact-text contact-text-email">雷火投诉邮箱：<span ref="contact5">leihuo188@gmail.com</span></span>
+              <div class="contact-buttons">
+                <button class="copy-btn" @click="copyMessage('5')">{{ copybtntxt5 }}</button>
+              </div>
+            </div>
+
             <div class="buttons">
               <a class="outline" :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">登录</a>
               <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">加入我们</a>
@@ -224,11 +235,13 @@ export default defineComponent({
     const contact2 = ref();
     const contact3 = ref();
     const contact4 = ref();
+    const contact5 = ref();
     const copybtntxt0 = ref("复制");
     const copybtntxt1 = ref("复制");
     const copybtntxt2 = ref("复制");
     const copybtntxt3 = ref("复制");
     const copybtntxt4 = ref("复制");
+    const copybtntxt5 = ref("复制");
     const copyMessage = (position) => {
       let copyText = null;
       copyText = eval(`contact${position}.value.innerText`);
@@ -243,7 +256,7 @@ export default defineComponent({
 
       // Remove the temporary textarea element
       document.body.removeChild(tempTextarea);
-      const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
+      const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4, copybtntxt5];
       copybtntxt[position].value = "已复制";
     };
     const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
@@ -300,12 +313,14 @@ export default defineComponent({
       contact2,
       contact3,
       contact4,
+      contact5,
       copyMessage,
       copybtntxt0,
       copybtntxt1,
       copybtntxt2,
       copybtntxt3,
-      copybtntxt4
+      copybtntxt4,
+      copybtntxt5
     };
   }
 });
@@ -348,7 +363,7 @@ export default defineComponent({
       justify-content: center;
       align-items: center;
       font-family: "PingFang SC";
-      margin-top: 40px;
+      margin-top: 20px;
       a {
         text-decoration: none;
         display: block;
@@ -396,6 +411,16 @@ export default defineComponent({
   font-size: 12px;
   box-shadow: 0px 0px 9.81px 0px #08224a21 inset;
   border: 0.76px solid #ffffff;
+
+  &--long {
+    flex-direction: row;
+    width: 330px;
+    height: 25px;
+    justify-content: center;
+    margin: 16px auto 0;
+    // color: #303442;
+    font-weight: bold;
+  }
 }
 
 .contact-name {
@@ -417,6 +442,16 @@ export default defineComponent({
     width: 24px;
   }
 }
+
+.contact-icon-email {
+  margin-top: 2px
+}
+
+.contact-text-email {
+  margin-left: 12px;
+  margin-right: 8px;
+}
+
 .contact-buttons {
   display: flex;
   gap: 10px;

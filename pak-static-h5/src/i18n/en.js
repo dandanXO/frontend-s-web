@@ -8,6 +8,7 @@ export default {
     register: "Register",
     download: "Download",
     getFreeSpins: "Get free spins on the APP",
+    getFreeCash: "Free Rs 100 Better Experience!",
     withdraw: "Withdraw",
     personalCenter: "Personal Center",
     deposit: "Deposit",
@@ -55,7 +56,8 @@ export default {
     spinnerRules: "Rules",
     spinnerHistory: "History",
     effectiveRevenueFAQ: "Effective Revenue FAQ",
-    customerServiceVerifer: "Customer Service Verifier"
+    customerServiceVerifer: "Customer Service Verifier",
+    termsAndConditions: "Terms and Conditions"
   },
   bottomNav: {
     home: "Home",
@@ -78,6 +80,11 @@ export default {
     homeCodeBonus: {
       congratsWonFreeCash: "Congratulations, you've won free cash!",
       enterCodeToClaim: "Please enter the cash redemption code to claim it."
+    },
+    appLoginBonus: {
+      validatePhoneAndEmail: "Please bind your phone first",
+      loginTomorrow: "Please log in tomorrow to claim your mystery reward.",
+      claimBonus: "You’ve received {amount}rs bonus!"
     }
   },
   form: {
@@ -252,7 +259,9 @@ export default {
     birthday_rules_01: "Please insert your birthday",
     address: "Address",
     address_placeholder: "Please enter your address",
-    address_rules_01: "Please insert your address"
+    address_rules_01: "Please insert your address",
+    country_code_placeholder: "Input country code to search",
+    country_code_rules_01: "Please select country code"
   },
   btn: {
     login: "Login",
@@ -275,6 +284,7 @@ export default {
     loading: "Loading",
     loading_plsWait: "Loading... Please wait...",
     cancel: "Cancel",
+    exit: "Exit",
     signOut: "Sign Out",
     back: "Back",
     moreGames: "More Games",
@@ -296,7 +306,9 @@ export default {
     signinWithGoogle: "Google",
     goNow: "Go Now",
     playReal: "Play real",
-    freeTrial: "Free trial"
+    freeTrial: "Free trial",
+    sendOtp: "Send OTP",
+    check: "Check"
   },
   notify: {
     loggingIn: "Logging in...",
@@ -314,10 +326,13 @@ export default {
     emailVerificationSent: "Email verification sent",
     messageSent: "Message Sent",
     feedbackSentSuccess: "Your feedback has been sent successfully!",
-    quitGameMessage: "Are you sure want to quit? Click Confirm to quit the game.",
+    quitGameMessage_01: "Are you sure want to quit? Click Confirm to quit the game.",
+    quitGameMessage_02: "Trial Complete! Want to Win Real Cash?",
+    quitGameMessage_03: "Make your first deposit now and start playing for real rewards!",
     signOutMessage: "Are you sure you want to sign out?",
     plsLoginToContinue: "Please login to continue",
     copiedSuccessfully: "Copied Successfully",
+    claimedSuccessfully: "Claimed Successfully",
     smsSent: "SMS OTP has been sent successfully",
     tryagain: "Please try again after {seconds} seconds",
     submitting: "Submitting...",
@@ -342,7 +357,14 @@ export default {
     appDownload: "APP download",
     experienceOneStopGaming: "Experience one-stop gaming!",
     customerServiceVerifier: "Customer Service Verifier",
-    recoverPwd: "Recover your password"
+    recoverPwd: "Recover your password",
+    license: {
+      curacao: {
+        title: "Regulated & Licensed",
+        description: "by the Government of Curacao"
+      }
+    },
+    termsAndConditions: "Terms and Conditions"
   },
   home: {
     menu_all: "ALL",
@@ -393,6 +415,8 @@ export default {
     select_privilege: "Select Privilege",
     incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again.",
     useFtdPrivilege: "Use Slot First Deposit Privilege",
+    useFtdBonus: "First Deposit Bonus",
+    use2ndBonus: "2nd Deposit Bonus",
     unlimited: "Unlimited",
     wagerRequirement: "Wager requirement (to withdrawal): 10 times of your deposit amount",
     wagerRequirementEg: "Eg. Deposit 100 Rs, require 1,000 Rs wager",
@@ -426,6 +450,8 @@ export default {
     addAcct: "Add account",
     picture: "Picture",
     video: "Video",
+    checkReceivingLimit:
+      "Please ensure that your wallet has sufficient receiving limit before making a withdrawal to avoid transaction failure.",
     bindCardCorrectFormat: "Bind your wallet/bank card using the correct format.",
     dailyWalletLimit:
       "Daily wallet limit: PKR 50,000. Do not exceed this limit. You can add multiple wallets for withdrawals.",
@@ -492,6 +518,11 @@ export default {
   earnMoney: {
     title: "Bonus Pot Arrived",
     noDataAvailable: "No Data available",
+    person: "person",
+    youSuccessfullyInvited: "You successfully invited",
+    level: "Level",
+    only: "Only",
+    awayFrom: "away from",
     tabs: {
       reward: "Reward",
       teamManagement: "Team management",
@@ -729,7 +760,22 @@ export default {
     bankCardMust16NumberandAbove: "Bank account number must be 16 numbers and above",
     bankCardDisallowDecimal: "Bank account number cannot have decimal points",
     nameofCardAcc: "Card Account Name",
-    insertCardAccName: "Please insert card account name"
+    insertCardAccName: "Please insert card account name",
+    insertTelephone: "Please insert telephone number",
+    pleaseEnterTelephone: "Please enter a valid telephone number",
+    otp: "OTP",
+    insertVerificationCode: "Insert verifcation code",
+    pleaseEnterVerificationCode: "Please enter verifcation code.",
+    pleaseEnterOtp: "Please enter the OTP sent to your phone",
+    verificationCodeLengthError: "Length should be 4 characters",
+    otpLengthError: "OTP number should be 6 characters",
+    sendOtp: "Send OTP",
+    getOtp: "Get OTP",
+    telephone: "Mobile number",
+    captchaSuccess: "Operation successful, please check the verification code sent to your phone! (Valid for 5 minutes.)",
+    captchaFailedMessage: "Verification code check failed, please refresh the page",
+    clickAndEnterPhoneCode:
+      "Please click to get the verification code and enter the code sent to your registered phone number"
   },
   promo: {
     all: "ALL",
@@ -870,6 +916,9 @@ export default {
       remainingDrawTimes: "Remaining draw times",
       congratulations: "Congratulations"
     },
+    ftdDepositBonus: "First Time Deposit Bonus",
+    redemptionCode: "Redemption Code",
+    newplayerGuide: "New Player Guide",
     depositSpinWheel: {
       instruction: "Complete the deposit task to participate in the wheel activity and get a bonus of up to ",
       depositNow: "Deposit Now",
@@ -953,6 +1002,15 @@ export default {
       ranking: "Ranking",
       userName: "Username",
       betVolume: "Bet Volume"
+    },
+    spinReferWheel: {
+      paymentRequestSubmitted: "Payment request submitted",
+      stillNeedToMakeWithdrawal: "Still need to make withdrawal",
+      willBePaidToYourRsAccount: "will be paid to your RS account",
+      inviteFriendsToHelp: "Invite Friends To Help",
+      referFriendToRegister: "Refer a friend to register, deposit and verify your phone to win free spins",
+      only: "Only",
+      toGo: "to go"
     }
   },
   maintenance: {
@@ -1067,6 +1125,7 @@ export default {
     30005: "Turnover has not reached the requirements",
     30006: "Members listed as account holders are prohibited from receiving this privilege",
     30007: "Member deposit does not meet the requirements",
+    30008: "The user’s client does not meet the requirements.",
     30009: "Deposit/Betting requirements not met.",
     30101: "Existing users cannot participate in this promotion.",
     31000: "Promotion not found",
@@ -1141,7 +1200,7 @@ export default {
     cashRainMaxPerRound: "Maximum cashback amount per round: 66,666 PKR.",
     cashRainFreeDistribution: "Each round freely distributes cashback.",
     cashRainClaimCondition:
-      "Maintain a historical deposit of ≥300 PKR and complete daily bets of ≥100+ PKR to claim your reward for free.",
+      "Deposit ≥ PKR 300 on the same day and complete daily bets totaling ≥ PKR 350 to claim your free bonus.",
     cashRainUsage: "The received money can be directly used for playing games or withdrawing.",
     cashRainVIP: "The higher the VIP membership level, the greater the amount received."
   }

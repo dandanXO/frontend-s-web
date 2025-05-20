@@ -30,8 +30,11 @@
               </div>
             </div>
             <div class="livepoker-rebate-section-right">
+              <div class="bonus-image" @click="handleClaimBonus1" >
+                <img src="../../../assets/promo/lh-livepoker-rebate/new-reward-btn-1.png" alt="" width="100%" />
+              </div>
               <div class="bonus-image" @click="handleClaimBonus1" :class="{ disabled: bonus1 <= 0 }">
-                <img src="../../../assets/promo/lh-livepoker-rebate/new-reward-btn.png" alt="" width="100%" />
+                <img src="../../../assets/promo/lh-livepoker-rebate/new-reward-btn-2.png" alt="" width="100%" />
               </div>
             </div>
           </div>
@@ -125,8 +128,7 @@
               </div>
               <div class="item">
                 <div class="item-num">3</div>
-                任何低于欧洲盘 1.7 或亚洲盘 0.7
-                水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+                任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为累计负盈利内；
               </div>
               <div class="item">
                 <div class="item-num">4</div>
@@ -170,8 +172,12 @@
               </div>
             </div>
             <div class="livepoker-rebate-section-right">
+              
+              <div class="bonus-image" @click="handleClaimBonus2" >
+                <img src="../../../assets/promo/lh-livepoker-rebate/new-reward-btn-1.png" alt="" width="100%" />
+              </div>
               <div class="bonus-image" @click="handleClaimBonus2" :class="{ disabled: bonus2 <= 0 }">
-                <img src="../../../assets/promo/lh-livepoker-rebate/new-reward-btn.png" alt="" width="100%" />
+                <img src="../../../assets/promo/lh-livepoker-rebate/new-reward-btn-2.png" alt="" width="100%" />
               </div>
             </div>
           </div>

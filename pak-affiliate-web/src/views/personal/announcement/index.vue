@@ -337,6 +337,11 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+
+.roles-main {
+  height: inherit;
+}
+
 .header-container {
   margin: 40px 0 20px;
   display: flex;

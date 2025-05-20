@@ -136,6 +136,7 @@ body.body--dark .q-header {
 }
 body.body--dark .q-footer {
   padding-bottom: calc(1px + env(safe-area-inset-bottom, 0));
+  background-color: #0F182E;
   border-radius: 15px 15px 0 0;
   overflow: hidden;
 }

@@ -127,7 +127,10 @@
               <p class="maintenance-p" v-else>&nbsp;</p>
             </div>
           </div>
-          <div class="right-container">
+          <div class="right-container oo">
+            <!-- <div>
+                {{ hotgame.section }}{{hotgame.content[hotgame.currentProvider]}}
+            </div> -->
             <Transition :key="transitionKey" appear>
               <img
                 v-if="
@@ -135,6 +138,7 @@
                   hotgame.content[hotgame.currentProvider] &&
                   hotgame.content[hotgame.currentProvider].charImgPath
                 "
+                :style="[`${hotgame.section === 'esports' ? 'right:12rem;' : ''}`]"
                 :class="`character-${hotgame.subtitle.toLowerCase()}-${hotgame.currentProvider}`"
                 :src="
                   require(`../../../assets/home/hotgame/content/${hotgame.section}/${
@@ -671,6 +675,8 @@ const onEnterGameClick = (plat, platType) => {
       currentPlat.gameCode = "bblive_lobby_pc";
     } else if (currentPlat.code === "GPS") {
       currentPlat.gameCode = 7202;
+    } else if (currentPlat.code === "GFLC") {
+      currentPlat.gameCode = "lobby";
     }
 
     const platItem = plat.content[currentPlat.code.toLowerCase()];
@@ -721,7 +727,7 @@ const checkPlatforms = () => {
         const additem = _.clone(plat);
         if (item.type === "slot" && additem.code === "AG") {
           additem.name = "XIN";
-          additem.alias = "XIN电子";
+          additem.alias = "PA电子";
         }
         item.content.providerList.push(additem);
       }
@@ -1295,7 +1301,7 @@ $transition_timer: 0.5s;
 
           .character-casino-fblive {
             position: relative;
-            right: 9.5rem;
+            right: 4.5rem;
             height: 29rem;
           }
 

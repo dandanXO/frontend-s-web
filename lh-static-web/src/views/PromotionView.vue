@@ -2,7 +2,7 @@
   <div class="promo-container">
     <div class="promo-banner" v-if="!isPromoDetail">
       <div class="promo-banner-image">
-        <img v-if="!isDark" src="../assets/promo/top-promo-banner.jpg" />
+        <img v-if="!isDark" src="../assets/promo/top-banner-light.png" />
         <img v-else src="../assets/promo/promo-banner-dark.png" />
       </div>
     </div>
@@ -132,6 +132,8 @@
               selectedPromo?.promoCode === 'lh-lpl-summer24' ||
               selectedPromo?.promoCode === 'lh1-s14-vote'
                 ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
+                : '' || selectedPromo?.promoCode === 'lh1-duan-wu-rewards'
+                ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
                 : ''
           }"
           :class="{
@@ -168,6 +170,9 @@
             }"
             v-if="selectedPromo.promoCode !== 'lh-eurocup-manual' && selectedPromo.pageContent"
           >
+            <div v-if="selectedPromo.redirectUrl === 'lh1-mesa-nomadic-masters-spring-2025'">
+              <MesaPromo :promoCode="selectedPromo.promoCode" />
+            </div>
             <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
               <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
             </div>
@@ -212,6 +217,7 @@ import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPr
 import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
 const YallaCompass = defineAsyncComponent(() => import("@/components/hotpromo/yalla-compass/YallaCompass.vue"));
+const MesaPromo = defineAsyncComponent(() => import("@/components/hotpromo/mesa/MesaPromo.vue"));
 
 export default defineComponent({
   name: "PromoView",
@@ -219,7 +225,8 @@ export default defineComponent({
     HotPromotion,
     BlastPremierMarquee,
     NBAWaterBattle,
-    YallaCompass
+    YallaCompass,
+    MesaPromo
   },
   setup() {
     const isDark = useDark();
@@ -435,11 +442,15 @@ export default defineComponent({
 
 <style lang="scss">
 .promo-container {
-  //overflow-x: hidden;
   min-height: 600px;
+  background-image: url("../assets/promo/bgbglight.jpg");
+  background-position: top center;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-color: #e7f1fd;
 
   .promo-banner {
-    background: #e7f1fd;
+    //background: #e7f1fd;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -447,6 +458,11 @@ export default defineComponent({
     .promo-banner-image {
       position: relative;
       overflow: hidden;
+
+      img {
+        margin-top: 16px;
+        height: 305px;
+      }
     }
   }
 
@@ -457,7 +473,7 @@ export default defineComponent({
     width: 100%;
     padding: 30px 50px 50px;
     position: relative;
-    background-color: #e7f1fd;
+    //background-color: #e7f1fd;
   }
   .promo-view-container {
     line-height: 30px;

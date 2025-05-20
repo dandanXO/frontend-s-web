@@ -509,7 +509,17 @@ export function getCompetitionLossInit(promoCode) {
     }
   });
 }
+export function getGameTypeBonusInit(promoCode) {
+  return server.EVENT.get("/session/game-type-bonus/init", {
+    params: {
+      promoCode
+    }
+  });
+}
 
+export function claimGameTypeBonus(promoCode) {
+  return server.EVENT.post("/session/game-type-bonus/claim", { promoCode });
+}
 export function claimCompetitionLoss(promoCode) {
   return server.EVENT.post("/session/competition-loss/claim", { promoCode });
 }
@@ -622,4 +632,56 @@ export function getPglWallachiaS4Bonus(promoCode) {
 }
 export function claimPglWallachiaS4Bonus(promoCode) {
   return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+
+export function getMesaInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/session/competition/yesterday?promoCode=dy2-mesa-nomadic-masters-spring-2025&v=${randNum}`);
+}
+export function claimMesaBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.post(
+    `/session/competition/claimBonus?promoCode=dy2-mesa-nomadic-masters-spring-2025&v=${randNum}`
+  );
+}
+
+export function getBlastRival2025Bonus(promoCode) {
+  return server.EVENT.get(`/session/competition-loss/init?promoCode=${promoCode}`);
+}
+export function claimBlastRival2025Bonus(promoCode) {
+  return server.EVENT.post(`/session/competition-loss/claim?promoCode=${promoCode}`);
+}
+
+export function getIemDallas2025Bonus(promoCode) {
+  return server.EVENT.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimIemDallas2025Bonus(promoCode) {
+  return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+
+export function getDreamLeagueS26Bonus(promoCode) {
+  return server.EVENT.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimDreamLeagueS26Bonus(promoCode) {
+  return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+
+export function getDuanWuRewardInit(promoCode) {
+  return server.EVENT.get(`/session/token-rewards/init?promoCode=${promoCode}`);
+}
+
+export function getDuanWuTokenRecords(promoCode) {
+  return server.EVENT.get(`/session/token-rewards/tokenRecords?promoCode=${promoCode}`);
+}
+
+export function getDuanWuRewardRecords(promoCode) {
+  return server.EVENT.get(`/session/token-rewards/rewardRecords?promoCode=${promoCode}`);
+}
+
+export function postDuanWuReceiveToken(promoCode) {
+  return server.EVENT.post(`/session/token-rewards/receiveToken?promoCode=${promoCode}`);
+}
+
+export function getDuanWuclaimBonus(promoCode) {
+  return server.EVENT.post(`/session/token-rewards/claimBonus?promoCode=${promoCode}`);
 }

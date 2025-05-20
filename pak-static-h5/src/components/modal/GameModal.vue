@@ -81,11 +81,22 @@
     <q-dialog class="flex-end" width="100%" v-model="isExitDialogOpen" presistent>
       <div class="popout-dialog">
         <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
-        <div class="popout-dialog-container">
-          <div class="txt-content q-mt-md text-center">{{ $t("notify.quitGameMessage") }}</div>
+        <div v-if="!isDemoMode" class="popout-dialog-container">
+          <div class="txt-content q-mt-md text-center">{{ $t("notify.quitGameMessage_01") }}</div>
           <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container popout-btns">
             <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
             <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="closeDialog()" v-close-popup />
+          </div>
+        </div>
+        <div v-else class="popout-dialog-container">
+          <div class="txt-content q-mt-md text-center">
+            {{ $t("notify.quitGameMessage_02") }}
+            <br />
+            {{ $t("notify.quitGameMessage_03") }}
+          </div>
+          <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container popout-btns">
+            <q-btn :label="$t('btn.exit')" no-caps class="btn-cancel" v-close-popup @click="closeDialog" />
+            <q-btn :label="$t('btn.deposit')" no-caps class="btn-confirm" @click="goToDepositPage" v-close-popup />
           </div>
         </div>
       </div>
@@ -275,6 +286,11 @@ const closeDialog = () => {
   }
 };
 
+const goToDepositPage = () => {
+  closeDialog();
+  router.push("/deposit");
+};
+
 const goToDeposit = () => {
   fullDepositDialog.value = true;
   // closeDialog();
@@ -461,7 +477,10 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
     }
   }
 };
+
+const isDemoMode = ref(false);
 const handleChooseGame = (runDemo) => {
+  isDemoMode.value = runDemo;
   if (!pendingGameParams.value) return;
 
   const { gameName, platformCode, gameCode, gameType, demo } = pendingGameParams.value;

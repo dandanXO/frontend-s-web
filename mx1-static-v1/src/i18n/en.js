@@ -184,6 +184,7 @@ export default {
     accountNumber_rules_01: "Introduzca el número de cuenta",
     accountNumber_rules_02: "Introduzca un número de cuenta válido",
     accountNumber_rules_03: "El número de cuenta no debe contener un punto decimal",
+    accountNumber_rules_04: "El número de tarjeta debe contener solo 16 o 18 dígitos sin caracteres adicionales",
     holderName: "Nombre del Titular",
     holderName_placeholder: "Introduzca el Nombre del Titular",
     holderName_rules_01: "Introduzca el Nombre del Titular",
@@ -234,6 +235,7 @@ export default {
     createAccount: "Crear una Cuenta",
     copy: "Copiando",
     joinNow: "Únete Ahora",
+    save: "Guardar"
   },
   notify: {
     noRecord: "No hay registros",
@@ -257,7 +259,8 @@ export default {
     failed: "Fallido",
     updateSucceed: "Actualizar con éxito",
     unbindSucceed: "Desvinculado con Éxito",
-    withdrawalSubmitSucceed: "Retiro Enviado con Éxito"
+    withdrawalSubmitSucceed: "Retiro Enviado con Éxito",
+    qrCodeImageSaved: "Imagen del código QR guardada en la galería de fotos."
   },
   sideNav: {
     inviteToEarn: "Invitar para obtener beneficios",
@@ -423,7 +426,8 @@ export default {
       about: "Acerca de",
       history: "Historial",
       daily: "Diario",
-      earn: "Ganar"
+      earn: "Ganar",
+      share: "Compartir"
     },
     about: {
       invitetoEarn: "Invitar para Ganar",
@@ -488,7 +492,10 @@ export default {
       betAmount: "Monto de Apuesta",
       rate: "Porcentaje",
       yesterdayReportTotal: "Informe de Ayer (Total)",
+      todayReportTotal: "Informe de hoy (Total)",
       level: "Nivel",
+      noOfDepositors: "Número de depositantes",
+      depositAmount: "Monto del depósito",
       myselfBettingAmount: "Importe apostado por mí mismo",
       myselfRebate: "Abono correspondiente a mí mismo",
       teamBettingamount: "Importe de las apuestas efectuadas por el equipo",
@@ -510,6 +517,30 @@ export default {
       myReferralLink: "Mi enlace de recomendación",
       save: "GUARDAR",
       copiedtoClipboard: "copiado al portapapeles"
+    },
+    share: {
+      totalInvited: "Total de invitados",
+      validInvites: "Invitaciones válidas",
+      validInvitationsToday_01: "Invitaciones válidas",
+      validInvitationsToday_02: "hoy",
+      todaysBonus: "Bono de hoy",
+      currentLevel: "Nivel actual",
+      currentBonusLevel_01: "Bono actual",
+      currentBonusLevel_02: "nivel",
+      bonusClaimed: "Bono reclamado",
+      fixedInvitationBonus: "Bono fijo por invitación",
+      remark: "Observación",
+      point_01_bonus:
+        "Nota: Las recompensas fijas se emiten solo después de que los usuarios invitados cumplan con los criterios de calificación.",
+      point_01_remark:
+        "El sistema evalúa a cada usuario invitado en función de su actividad de apuestas. Anima a tus amigos a realizar apuestas reales y mantenerse activos — normalmente, apuestas totales superiores a Mx$200 tienen más posibilidades de calificar. Las recompensas se emitirán automáticamente al cumplir con los criterios.",
+      point_02_remark:
+        "En casos de comportamiento malicioso, como cuentas falsas o manipulación de recompensas, las recompensas relacionadas serán canceladas y no se emitirán.",
+      point_03_remark: "55ACE se reserva todos los derechos de interpretación final.",
+      table_col_invite: "Rango de Invitaciones Válidas",
+      table_col_reward: "Recompensa por Usuario (Mx$)",
+      inviteNewUsers:
+        "Invita a nuevos usuarios a registrarse usando tu enlace de referencia exclusivo o código QR y recibe tres generosas recompensas:"
     },
     reward: {
       myTotalIncome: "Mis Ingresos Totales",

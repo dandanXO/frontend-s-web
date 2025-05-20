@@ -140,10 +140,11 @@
       }"
       :modules="modules"
       class="cat-selection-wrapper"
+      @swiper="handleCatSwiper"
     >
       <template v-for="(item, index) in categoriesList" :key="index">
         <swiper-slide>
-          <div class="cat-selection-item" :class="item.active && 'active'" @click="activateSlide(item)">
+          <div class="cat-selection-item" :class="item.active && 'active'" @click="activateSlide(item, index)">
             <div class="cat-icon">
               <img :src="require(`../assets/images/index/category/cat-${item.icon.toLowerCase()}.png`)" alt="" />
             </div>
@@ -538,94 +539,94 @@
         </div>
       </template>
 
-      <template
-        v-if="
-          (category.title === 'Fishing' && category.active) ||
-          (category.title === 'Minigames' && category.active) ||
-          (category.title === 'Lobby' && category.active)
-        "
-      >
-        <div class="games-selection-wrapper" id="fishing">
-          <div class="title-game">
-            <span class="txt-style">Minigames</span>
-          </div>
+      <!--      <template-->
+      <!--        v-if="-->
+      <!--          (category.title === 'Fishing' && category.active) ||-->
+      <!--          (category.title === 'Minigames' && category.active) ||-->
+      <!--          (category.title === 'Lobby' && category.active)-->
+      <!--        "-->
+      <!--      >-->
+      <!--        <div class="games-selection-wrapper" id="fishing">-->
+      <!--          <div class="title-game">-->
+      <!--            <span class="txt-style">Minigames</span>-->
+      <!--          </div>-->
 
-          <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
-            <swiper
-              :slidesPerView="3.5"
-              :spaceBetween="10"
-              :scrollbar="{
-                hide: true
-              }"
-              :modules="gameModules"
-              class="platform-game-container"
-            >
-              <template v-for="(item, index) in recommendList" :key="index">
-                <swiper-slide
-                  class="platform-game-item btn-effect"
-                  @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
-                >
-                  <div>
-                    <div class="platform-game-img">
-                      <div
-                        class="game--bg"
-                        :style="{
-                          backgroundImage: (() => {
-                            try {
-                              return `url(${require(`../assets/images/games/recommend/item-game-${item.code.toLowerCase()}.png`)})`;
-                            } catch (e) {
-                              try {
-                                return `url(${imgURLGame}${item.icon})`;
-                              } catch (e) {
-                                return `url(${
-                                  store.h5Url
-                                }static/images/index/recommend/item-game-${item.name.toLowerCase()}.png)`;
-                              }
-                            }
-                          })()
-                        }"
-                      ></div>
-                    </div>
+      <!--          <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">-->
+      <!--            <swiper-->
+      <!--              :slidesPerView="3.5"-->
+      <!--              :spaceBetween="10"-->
+      <!--              :scrollbar="{-->
+      <!--                hide: true-->
+      <!--              }"-->
+      <!--              :modules="gameModules"-->
+      <!--              class="platform-game-container"-->
+      <!--            >-->
+      <!--              <template v-for="(item, index) in recommendList" :key="index">-->
+      <!--                <swiper-slide-->
+      <!--                  class="platform-game-item btn-effect"-->
+      <!--                  @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"-->
+      <!--                >-->
+      <!--                  <div>-->
+      <!--                    <div class="platform-game-img">-->
+      <!--                      <div-->
+      <!--                        class="game&#45;&#45;bg"-->
+      <!--                        :style="{-->
+      <!--                          backgroundImage: (() => {-->
+      <!--                            try {-->
+      <!--                              return `url(${require(`../assets/images/games/recommend/item-game-${item.code.toLowerCase()}.png`)})`;-->
+      <!--                            } catch (e) {-->
+      <!--                              try {-->
+      <!--                                return `url(${imgURLGame}${item.icon})`;-->
+      <!--                              } catch (e) {-->
+      <!--                                return `url(${-->
+      <!--                                  store.h5Url-->
+      <!--                                }static/images/index/recommend/item-game-${item.name.toLowerCase()}.png)`;-->
+      <!--                              }-->
+      <!--                            }-->
+      <!--                          })()-->
+      <!--                        }"-->
+      <!--                      ></div>-->
+      <!--                    </div>-->
 
-                    <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-                  </div>
-                </swiper-slide>
-              </template>
-            </swiper>
-          </div>
+      <!--                    <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>-->
+      <!--                  </div>-->
+      <!--                </swiper-slide>-->
+      <!--              </template>-->
+      <!--            </swiper>-->
+      <!--          </div>-->
 
-          <div class="platform-game-container grid-view" v-else>
-            <template v-for="(item, index) in recommendList" :key="index">
-              <div
-                class="platform-game-item btn-effect"
-                @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
-              >
-                <div class="platform-game-img">
-                  <div
-                    class="game--bg"
-                    :style="{
-                      backgroundImage: (() => {
-                        try {
-                          return `url(${require(`../assets/images/games/recommend/item-game-${item.code.toLowerCase()}.png`)})`;
-                        } catch (e) {
-                          try {
-                            return `url(${imgURLGame}${item.icon})`;
-                          } catch (e) {
-                            return `url(${
-                              store.h5Url
-                            }static/images/index/recommend/item-game-${item.name.toLowerCase()}.png)`;
-                          }
-                        }
-                      })()
-                    }"
-                  ></div>
-                </div>
-                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-              </div>
-            </template>
-          </div>
-        </div>
-      </template>
+      <!--          <div class="platform-game-container grid-view" v-else>-->
+      <!--            <template v-for="(item, index) in recommendList" :key="index">-->
+      <!--              <div-->
+      <!--                class="platform-game-item btn-effect"-->
+      <!--                @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"-->
+      <!--              >-->
+      <!--                <div class="platform-game-img">-->
+      <!--                  <div-->
+      <!--                    class="game&#45;&#45;bg"-->
+      <!--                    :style="{-->
+      <!--                      backgroundImage: (() => {-->
+      <!--                        try {-->
+      <!--                          return `url(${require(`../assets/images/games/recommend/item-game-${item.code.toLowerCase()}.png`)})`;-->
+      <!--                        } catch (e) {-->
+      <!--                          try {-->
+      <!--                            return `url(${imgURLGame}${item.icon})`;-->
+      <!--                          } catch (e) {-->
+      <!--                            return `url(${-->
+      <!--                              store.h5Url-->
+      <!--                            }static/images/index/recommend/item-game-${item.name.toLowerCase()}.png)`;-->
+      <!--                          }-->
+      <!--                        }-->
+      <!--                      })()-->
+      <!--                    }"-->
+      <!--                  ></div>-->
+      <!--                </div>-->
+      <!--                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>-->
+      <!--              </div>-->
+      <!--            </template>-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--      </template>-->
 
       <template
         v-if="(category.title === 'Sport' && category.active) || (category.title === 'Lobby' && category.active)"
@@ -988,11 +989,17 @@ const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const categoriesList = ref([]);
+const catSwiper = ref(null);
 
-const activateSlide = (clickedItem) => {
+const handleCatSwiper = (swiper) => (catSwiper.value = swiper);
+
+const activateSlide = (clickedItem, index) => {
   categoriesList.value.forEach((item) => {
     item.active = item === clickedItem;
   });
+  if (catSwiper.value) {
+    catSwiper.value.slideTo(index);
+  }
 };
 
 const csDragPos = ref([10, 0]);
@@ -1003,7 +1010,7 @@ const slide = ref(0);
 const isFirstView = ref(false);
 const closeAlert = () => {
   // Create a new date object in GMT+5.5
-  const currentTimeInGMT55 = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+  const currentTimeInGMT55 = new Date(new Date().toLocaleString("en-US", { timeZone: "Australia/Sydney" }));
 
   localStorage.setItem("indexImgTop", currentTimeInGMT55.getTime());
   isFirstView.value = false;
@@ -2089,7 +2096,9 @@ const loadHotGameList = () => {
           gameLists = res;
 
           hotlists = hotlists.map((item1) => {
-            const matchingItem = gameLists.find((item2) => item1.type === "game" && item1.code === item2.code && item1.platform === item2.platformCode);
+            const matchingItem = gameLists.find(
+              (item2) => item1.type === "game" && item1.code === item2.code && item1.platform === item2.platformCode
+            );
             return { ...matchingItem, ...item1 };
           });
 
@@ -2364,7 +2373,7 @@ const setExpiryBanner = () => {
 
 const setWithExpiry = (key, value, interval) => {
   // Create a new date object in GMT+5.5
-  const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+  const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Australia/Sydney" }));
 
   const item = {
     value: value,
@@ -2708,7 +2717,7 @@ const populatePushNotificationData = (data) => {
 };
 
 const initOneSignal = () => {
-  OneSignal.initialize("eb9ab187-5d06-46f1-9405-ef1b3124c5cf");
+  OneSignal.initialize("4366d12e-fccb-490d-b83d-d6aa019230f1");
 
   let myClickListener = async function (event) {
     console.log("CLICK PUSH");
@@ -2755,7 +2764,7 @@ const loadAppTabs = () => {
       { title: "Lobby", icon: "lobby", active: false },
       { title: "Slot", icon: "slot", active: false },
       { title: "Casino", icon: "casino", active: false },
-      { title: "Fishing", icon: "fishing", active: false },
+      // { title: "Fishing", icon: "fishing", active: false },
       { title: "Sport", icon: "sport", active: false }
     ];
   }
@@ -2796,20 +2805,23 @@ const hbSlide = ref(0);
 const hbPromo = ref([]);
 
 const checkSpinLuckyWheelPromo = async () => {
-  if(store.token) {
+  if (store.token) {
     const res = await eventapi.post("/refer-spin/check");
-    store.spinWheelLuckyPromoInfo = { ...store.spinWheelLuckyPromoInfo, ...res.data };
+    if(res.code === 0){
+      store.spinWheelLuckyPromoInfo = { ...store.spinWheelLuckyPromoInfo, ...res.data };
+    }
+
   }
 
   if (sessionStorage.getItem("isReload")) {
     sessionStorage.removeItem("isReload");
-    sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
+    sessionStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
   }
 
-  if (!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+  if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
     spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
   }
-}
+};
 
 const checkHbPromo = () => {
   api

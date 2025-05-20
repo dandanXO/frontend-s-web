@@ -48,7 +48,8 @@ export const userStore = defineStore("userStore", {
       profilePhoto: "",
       isDisplayLogin: false,
       withdrawType: "",
-      regSuccessGuideVisible: false
+      regSuccessGuideVisible: false,
+      chatGuid: ""
     };
   },
   actions: {
@@ -252,8 +253,9 @@ export const userStore = defineStore("userStore", {
     },
     handleVIPData(res) {
       this.currentBetAmt = res.data.currentBetAmount;
-      const vipLevel = this.vip.replace("VIP", "");
-      const currentVip = parseInt(this.vip.match(/\d+/)[0]);
+      const _vip = this.vip || "VIP0";
+      const vipLevel = _vip.replace("VIP", "");
+      const currentVip = parseInt(_vip.match(/\d+/)[0]);
       if (res.data.vipBonusVOList && res.data.vipBonusVOList[vipLevel]) {
         this.currentUpgradeBetAmt = res.data.vipBonusVOList[vipLevel].upgradeBetAmount;
       }
@@ -289,7 +291,7 @@ export const userStore = defineStore("userStore", {
     },
     getUnreadTotal() {
       if (this.token) {
-        return api.get("/session/inbox/getUnreadTotal").then((total) => {
+        return api.get("/session/pm/inbox/getUnreadTotal").then((total) => {
           console.log(total);
           if (total.code === 0) {
             this.unreadInboxMail = total.data;

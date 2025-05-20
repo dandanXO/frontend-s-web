@@ -115,7 +115,7 @@ const updateNewUserState = () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "Updated successfully",
+          message: t("notify.updatedSuccessfully"),
           icon: "check_circle_outline"
         });
         emits("closeUserKYCDialog", updateInfo);

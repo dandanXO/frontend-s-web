@@ -95,3 +95,39 @@ export const convertToCommaAmount = (amount, isForceDecimal) => {
 function isNonNumericString(value) {
   return typeof value === "string" && isNaN(value);
 }
+
+// export function getAliasName(plat, platformType) {
+//   // console.log(plat);
+//   if (plat.alias?.includes("、") && (plat.gameType.split(",").length > 1)) {
+//     const aliass = plat.alias.split("、");
+//     const gameTypes = plat.gameType.split(",");
+//     const itemIndex = gameTypes.indexOf(platformType);
+//     // console.log(platformType);
+//     // console.log(aliass);
+//     // console.log(aliass[itemIndex]);
+
+//     return itemIndex !== -1 && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
+//   }
+//   return plat.alias;
+// };
+export function getAliasName(plat, platformType) {
+  if (
+    !plat ||
+    typeof plat.alias !== 'string' ||
+    typeof plat.gameType !== 'string' ||
+    !platformType
+  ) {
+    return '';
+  }
+
+  const aliass = plat.alias.split('、');
+  const gameTypes = plat.gameType.split(',');
+
+  if (aliass.length > 1 && gameTypes.length > 1) {
+    const itemIndex = gameTypes.indexOf(platformType);
+    return itemIndex !== -1 && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
+  }
+
+  // Fallback: return single alias
+  return plat.alias;
+}

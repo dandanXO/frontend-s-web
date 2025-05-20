@@ -1,6 +1,6 @@
 {
   "name": "pak-project",
-  "version": "1.0.37",
+  "version": "1.0.40",
   "description": "B9.GAME",
   "productName": "B9.GAME",
   "author": "KengHong <kenghongho@eagrp.net>",
@@ -54,6 +54,7 @@
     "firebase": "^11.0.2",
     "fs-extra": "^11.2.0",
     "html2canvas": "^1.4.1",
+    "html2pdf.js": "^0.10.3",
     "image-webpack-loader": "^8.1.0",
     "imagemin": "^8.0.1",
     "imagemin-mozjpeg": "^10.0.0",

@@ -17,7 +17,14 @@
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" :class="pageName === '' && 'page-title__empty'" v-if="hasPage">
-        <a @click="route.path === '/deposit' || route.path === '/withdraw' || route.path === '/account' ? goToPrevPage('/') : goToPrevPage(prevPage)" class="q-mt-sm">
+        <a
+          @click="
+            route.path === '/deposit' || route.path === '/withdraw' || route.path === '/account'
+              ? goToPrevPage('/')
+              : goToPrevPage(prevPage)
+          "
+          class="q-mt-sm"
+        >
           <img
             class="house-icon"
             v-if="route.path === '/deposit' || route.path === '/withdraw' || route.path === '/account'"
@@ -338,6 +345,14 @@ export default defineComponent({
           } else {
             prevPage.value = "/account";
           }
+        } else if (route.path === "/terms-and-conditions") {
+          hasPage.value = true;
+          pageName.value = t("header.termsAndConditions");
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "/account";
+          }
         } else if (route.path === "/finance/deposit") {
           hasPage.value = true;
           pageName.value = t("header.deposit");
@@ -580,6 +595,10 @@ export default defineComponent({
     });
 
     const checkFirstScreen = () => {
+      if (ui.annoyingType === "NONE") {
+        ui.firstScreenLoading = false;
+        return;
+      }
       if (ui.firstScreenLoading) {
         if (isPromoPage.value === true) {
           setTimeout(() => {

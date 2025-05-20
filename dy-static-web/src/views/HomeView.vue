@@ -92,14 +92,14 @@
               <div
                 class="game-platform"
                 @click="openGame('DB真人', 'PMLIVE', '')"
-                 style="margin-top: 48px; margin-left: 46px"
+                style="margin-top: 48px; margin-left: 46px"
               >
                 <img src="../assets/home/db.png" style="width: 75px" />
                 <div>DB真人</div>
               </div>
-              <div class="game-platform" @click="openGame('AG真人', 'AG', '')" style="margin-left: 30px">
+              <div class="game-platform" @click="openGame('PAs真人', 'AG', '')" style="margin-left: 30px">
                 <img src="../assets/home/ag.png" style="width: 75px" />
-                <div>AG真人</div>
+                <div>PA真人</div>
               </div>
               <!-- <div class="game-platform" @click="openGame('欧博真人', 'ALLBET', '')" style="margin-left: 30px">
                 <img src="../assets/home/allbet.png" />

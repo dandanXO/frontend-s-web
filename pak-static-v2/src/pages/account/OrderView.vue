@@ -42,7 +42,7 @@
           <div class="order-row order-row--content">
             <div class="order-subrow">
               <div class="order-col withdraw-amount">{{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
-              <div class="order-col">{{ $t("records.bank") }}</div>
+              <div class="order-col">{{ e.currencyName }}</div>
             </div>
             <div class="order-subrow">
               <div class="order-col">
@@ -177,6 +177,7 @@ const searchWithdrawalRecord = () => {
     })
     .then((response) => {
       if (response.code === 0) {
+        withdrawalData.value = []
         const data = response.data.records;
         withdrawalData.value.push(...data);
 
@@ -227,6 +228,7 @@ const searchDepositRecord = () => {
     })
     .then((response) => {
       if (response.code === 0) {
+        depositData.value = []
         const data = response.data.records;
         depositData.value.push(...data);
 

@@ -35,7 +35,8 @@
           </li>
           <li>
             <a
-              href="http://download.microsoft.com/download/A/C/9/AC924EA1-9F39-4DFD-99DF-2C1DEB922174/EIE11/WOL/EIE11_EN-US_WOL_WIN764.EXE">
+              href="http://download.microsoft.com/download/A/C/9/AC924EA1-9F39-4DFD-99DF-2C1DEB922174/EIE11/WOL/EIE11_EN-US_WOL_WIN764.EXE"
+            >
               IE9浏览器
             </a>
           </li>
@@ -87,7 +88,7 @@
         <div style="display: flex; flex-direction: column; gap: 10px">
           <div class="title">{{ $t("about.partner") }}</div>
           <div class="top-ft-rgt">
-            <img src="../../assets/footer/games/AG.png" alt="AG logo" />
+            <img src="../../assets/footer/games/AG.png" alt="PA logo" />
             <img src="../../assets/footer/games/CMD368.png" alt="CMD368 logo" />
             <img src="../../assets/footer/games/DG.png" alt="DG logo" />
             <img src="../../assets/footer/games/WE.png" alt="WE logo" />

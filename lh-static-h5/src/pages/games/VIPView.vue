@@ -334,7 +334,9 @@
             <!--            <th>节日礼金</th>-->
             <th>每日额外返水红包</th>
             <th>
-              每月15号
+              每月
+              <br />
+              15号
               <br />
               红包
             </th>
@@ -686,7 +688,7 @@
         <li class="numbered">
           VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在15日内在充值页面进行勾选优惠使用，成功使用后需要（本金+彩金）x8倍流水即可提款；
         </li>
-        <li class="numbered">加码券使用不支持USDT存款方式，加码券使用当日不可与其他存款优惠共享。</li>
+        <li class="numbered">加码券使用当日不可与其他存款优惠共享。</li>
       </ol>
 
       <!--      <h2>八.节日礼金</h2>-->
@@ -909,7 +911,7 @@ import { useCloudWiseHelper } from "src/hooks/cloudWiseHelper";
 
 useCloudWiseHelper({
   pageName: "vip"
-})
+});
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 const isShowTable = ref(false);
@@ -1205,7 +1207,7 @@ const initVIPTable = async (wLoad) => {
   runVipAPI(res);
 };
 const runVipAPI = (res) => {
-  let _maxVipLevel = 0
+  let _maxVipLevel = 0;
   if (res.code === 0) {
     const { vipBonusVOList } = res.data;
 
@@ -1246,7 +1248,7 @@ const runVipAPI = (res) => {
         });
       }
       if (vipBonusItem.vipLevel > _maxVipLevel) {
-        _maxVipLevel = vipBonusItem.vipLevel
+        _maxVipLevel = vipBonusItem.vipLevel;
       }
     });
     currentDepAmt.value = res.data.currentDepositAmount;
@@ -1260,7 +1262,7 @@ const runVipAPI = (res) => {
     currentRedPacketAmount.value = res.data.currentRedPacketAmount;
     getVipLevelProgress(vipLevel.value, "bet");
     isDataLoaded.value = true;
-    maxVipLevel.value = _maxVipLevel
+    maxVipLevel.value = _maxVipLevel;
   } else {
     notify({ type: "error", message: res.message });
   }
@@ -1382,9 +1384,9 @@ const slideTo = (vipIndex) => {
     currentSlide.value = 0;
     return;
   }
-  if(vipLevel === maxVipLevel.value) {
-    currentSlide.value = maxVipLevel.value -1;
-  }else {
+  if (vipLevel === maxVipLevel.value) {
+    currentSlide.value = maxVipLevel.value - 1;
+  } else {
     currentSlide.value = vipLevel;
   }
 };

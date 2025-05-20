@@ -272,7 +272,7 @@ const getGameName = (gameName) => {
     case "PG":
       return "PG";
     case "AG":
-      return "AG";
+      return "PA";
     case "ALLBET":
       return "ALLBET";
     case "JiliGames":

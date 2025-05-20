@@ -9,22 +9,26 @@
   </a>
 </template>
 <script setup>
-import { useRouter } from 'vue-router'
+import { useRouter } from "vue-router";
 import ArrowRightImg from "assets/images/home/arrow-right.png";
 import ArrowRightDarkImg from "assets/images/home/arrow-right-dark.png";
+import { userStore } from "src/stores";
 const props = defineProps({
   to: String,
-  outerlink: String
+  loginNeeded: {
+    type: Boolean,
+    default: false
+  }
 });
 
-const router = useRouter()
+const router = useRouter();
+const store = userStore();
 
 const handleRouter = () => {
-  console.log(props.outerlink)
-  if (props.outerlink) {
-    window.open(props.outerlink, '_blank')
+  if (props.loginNeeded && !store.token) {
+    router.push("/login");
   } else {
-    router.push({ path: props.to })
+    router.push(props.to);
   }
 };
 </script>

@@ -76,7 +76,7 @@ const skypeLink = () => {
 }
 const loofahLink = () => {
   if (props.siteId === '7') {
-    return 'Lh080688'
+    return 'Lh16816808'
   } else if (props.siteId === '1') {
     return 'xfdlk001'
   }
@@ -87,7 +87,7 @@ const bubbleLink = () => {
   } else if (props.siteId === '1') {
     return 'xfdlkf001'
   } else {
-    return 'LH080688'
+    return 'Lh16816808'
   }
 }
 
@@ -133,7 +133,7 @@ const telegramLink = () => {
   } else if (props.siteId === '1') {
     return '@xf100200'
   } else if (props.siteId === '6') {
-    return '@dyhykf001'
+    return '@dyghs_01'
   } else {
     return '@leihuo123'
   }
@@ -165,8 +165,8 @@ const initContactList = () => {
       }]
     },
     {
-      icon: 'cskype',
-      type: t('common.skype'),
+      icon: 'cteams',
+      type: t('common.teams'),
       link: skypeLink(),
       btns: [{
         text: t('common.copy'),
@@ -174,7 +174,7 @@ const initContactList = () => {
       },
       {
         text: t('common.download'),
-        action: 'https://www.skype.com/zh-Hans/get-skype/'
+        action: 'https://www.microsoft.com/en-sg/microsoft-teams/download-app'
       }]
     },
     {
@@ -229,8 +229,8 @@ const initContactList = () => {
         }]
       },
       {
-        icon: 'cskype',
-        type: t('common.skype'),
+        icon: 'cteams',
+        type: t('common.teams'),
         link: 'live:.cid.f284aa8f5c120ae5',
         btns: [{
           text: t('common.copy'),
@@ -238,7 +238,7 @@ const initContactList = () => {
         },
         {
           text: t('common.download'),
-          action: 'https://www.skype.com/get-skype/'
+          action: 'https://www.microsoft.com/en-sg/microsoft-teams/download-app'
         }]
       },
       {
@@ -298,8 +298,8 @@ const initContactList = () => {
         }]
       },
       {
-        icon: 'cskype',
-        type: t('common.skype'),
+        icon: 'cteams',
+        type: t('common.teams'),
         link: skypeLink(),
         btns: [{
           text: t('common.copy'),
@@ -307,7 +307,7 @@ const initContactList = () => {
         },
         {
           text: t('common.download'),
-          action: 'https://www.skype.com/zh-Hans/get-skype/'
+          action: 'https://www.microsoft.com/en-sg/microsoft-teams/download-app'
         }]
       },
       {
@@ -363,8 +363,8 @@ const initContactList = () => {
         }]
       },
       {
-        icon: 'cskype',
-        type: t('common.skype'),
+        icon: 'cteams',
+        type: t('common.teams'),
         link: skypeLink(),
         btns: [{
           text: t('common.copy'),
@@ -372,7 +372,7 @@ const initContactList = () => {
         },
         {
           text: t('common.download'),
-          action: 'https://www.skype.com/zh-Hans/get-skype/'
+          action: 'https://www.microsoft.com/en-sg/microsoft-teams/download-app'
         }]
       },
       {

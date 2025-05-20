@@ -26,7 +26,7 @@
                   <img src="../assets/images/affiliate/icon-telegram.png" />
                 </div>
                 <div class="contact-name">Telegram</div>
-                <span ref="contact1" class="contact-text">@dyhykf001</span>
+                <span ref="contact1" class="contact-text">@dyghs_01</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('1')">{{ copybtntxt1 }}</button>
                   <a target="_blank" href="https://telegram.org/download" class="download-btn" rel="noopener">下载</a>

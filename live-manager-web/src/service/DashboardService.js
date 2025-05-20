@@ -135,5 +135,81 @@ export const DashboardService = {
         'token': `${token}`
       }
     })
+  },
+  // 查询聊天室记录
+  getChatHistory(data) {
+    const token = sessionStorage.getItem('token')
+
+    return api.post('/session/live/history', data, {
+      headers: {
+        'token': `${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+  },
+  blockUserApi(data) {
+    const token = sessionStorage.getItem('token')
+
+    return api.put('/session/block', data, {
+      headers: {
+        'token': `${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+  },
+  unblockUserApi(data) {
+    const token = sessionStorage.getItem('token')
+
+    return api.put('/session/unblock', data, {
+      headers: {
+        'token': `${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+  },
+  getBlockList() {
+    const token = sessionStorage.getItem('token')
+
+    return api.get('/session/block/list', {
+      headers: {
+        'token': `${token}`
+      }
+    })
+  },
+  updateRoomInfo(streamId, title, message) {
+    const token = sessionStorage.getItem('token')
+    return api.put(`/session/info/${streamId}`, { title, message }, {
+      headers: {
+        'token': `${token}`
+      }
+    })
+        .then((response) => {
+          if (response.code === 0) {
+            return response.data
+          }
+          return null
+        })
+        .catch((error) => {
+          console.error('更新直播標題失敗:', error)
+          return null
+        })
+  },
+  getLiveMonitorScores(streamNames) {
+    const token = sessionStorage.getItem('token');
+    return api.get(`/session/monitor/score?streamNames=${streamNames.toString()}`, {
+      headers: {
+        'token': token
+      }
+    })
+        .then(response => {
+          if (response.code === 0) {
+            return response.data;
+          }
+          return null;
+        })
+        .catch(error => {
+          console.error('取得監控分數失敗:', error);
+          return null;
+        });
   }
 }

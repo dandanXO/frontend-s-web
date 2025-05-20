@@ -92,25 +92,30 @@
                   style="display: block; width: 100%"
                 />
               </div>
-              <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'bounty-blast-premier'" />
+              <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'dy2-cs2-blast-2024' || selectedPromo?.redirectUrl === 'bounty-blast-premier'" />
               <div
                 class="inner"
                 :class="{
                   hongbaoyu: selectedPromo.promoCode === 'hongbaoyu',
+                   cs2:
+                    selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
+                    selectedPromo.promoCode === 'dy2-cs2-blast-2024' ||
+                    selectedPromo.promoCode === 'dy2-blast-premier-treasure',
                   msi: selectedPromo.promoCode === 'dy2-msi-promo',
                   dy12025pgls3: selectedPromo.promoCode === 'dy1-2025-pgl-s3',
                   dyftd: selectedPromo.promoCode === 'lh1-ftd-promo',
                   eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
                   lpllck: selectedPromo.promoCode === 'dy2-lpl-lck-bonus',
-                  'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus'
+                  'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus',
+                  'bbdacha-cs2': selectedPromo.promoCode ==='dy2-duan-wu-rewards'
                 }"
                 :style="{
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
                     ? `url(${imgURL + selectedPromo.mobileImgBackgroundUrl})`
                     : 'none',
-                  margin: '20px auto',
+                  margin: selectedPromo.promoCode ==='dy2-duan-wu-rewards' ? '' : '20px auto',
                   'max-width': '1400px',
-                  width: '95%'
+                  width:  selectedPromo.promoCode ==='dy2-duan-wu-rewards' ? '100%' :'95%'
                 }"
               >
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
@@ -127,6 +132,9 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
+                  <div v-if="selectedPromo.redirectUrl === 'dy2-mesa-nomadic-masters-spring-2025'">
+                    <MesaPromo :promoCode="selectedPromo.promoCode" />
+                  </div>
                   <div v-if="selectedPromo.redirectUrl === 'dy2-nba-water-battle'">
                     <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
                   </div>
@@ -272,13 +280,16 @@ import HotPromotion from "components/HotPromotion";
 import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 import { useLocalStorage } from "@vueuse/core";
 import NBAWaterBattle from "src/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
+import MesaPromo from "src/components/hotpromo/mesa/MesaPromo.vue";
+
 
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
     BlastPremierMarquee,
-    NBAWaterBattle
+    NBAWaterBattle,
+    MesaPromo
   },
   setup() {
     const store = userStore();
@@ -948,6 +959,12 @@ export default defineComponent({
 
         &.cny2024 {
           width: 100%;
+        }
+
+        &.cs2 {
+          margin: 0 !important;
+          padding: 10px;
+          width: 100% !important;
         }
 
         &.msi {

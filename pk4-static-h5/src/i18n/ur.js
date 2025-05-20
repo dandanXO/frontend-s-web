@@ -54,7 +54,11 @@ export default {
     referralRecord: "ریفرل کا ریکارڈ",
     interestProfit: "سود کا منافع",
     spinnerRules: "قواعد",
-    effectiveRevenueFAQ: "مؤثر آمدنی کے عمومی سوالات"
+    effectiveRevenueFAQ: "مؤثر آمدنی کے عمومی سوالات",
+    teamManagement: "ٹیم مینجمنٹ",
+    teamPnL: "ٹیم منافع اور نقصان",
+    teamBetting: "ٹیم شرط بندی",
+    editRebate: "رعایت میں ترمیم کریں"
   },
   bottomNav: {
     home: "گھر/ہوم",
@@ -64,7 +68,9 @@ export default {
     wallet: "پرس",
     me: "میں",
     account: "اکاؤنٹ",
-    more: "مزید"
+    more: "مزید",
+    dividend: "حصہ",
+    announcement: "اعلان",
   },
   modal: {
     addToHomeScreen: {
@@ -376,7 +382,58 @@ export default {
     depositMonthlytoWinGifts: "انعامات جیتنے کے لئے ماہانہ جمع کریں",
     interestProfit: "سود کا منافع",
     exchange: "ایکسچینج",
-    transfer: "تبادلہ کرنا"
+    transfer: "تبادلہ کرنا",
+    "agentAccount": "ایجنٹ اکاؤنٹ",
+  },
+  affiliateSettings: {
+    "overview": "جائزہ",
+    "accountRecord": "اکاؤنٹ ریکارڈ",
+    "teamManagement": "ٹیم مینجمنٹ",
+    "teamPnl": "ٹیم کا منافع و نقصان",
+    "teamBetting": "ٹیم کی بیٹنگ",
+    "editRebate": "ریبیٹ میں ترمیم",
+    "securityCenter": "سیکیورٹی سینٹر",
+    "internalMessage": "اندرونی پیغام",
+    "customerService": "کسٹمر سروس",
+    linkManagement: "لنک کا انتظام"
+  },
+  affiliate: {
+    main: {
+      logins: "لاگ ان",
+      noOfPlayers: "کھلاڑیوں کی تعداد",
+      registers: "رجسٹرز",
+      total: "کل",
+      goodMorning: "صبح بخیر"
+    },
+    account: {
+      memberReferralLink: "رکن حوالہ لنک",
+      agentReferralLink: "ایجنٹ حوالہ لنک",
+      copiedToClipboard: "کاپی کیا گیا",
+      copyLink: "لنک کو کاپی کریں",
+      qrCode: "کیو آر کوڈ",
+      scanTheCodeToRegister: "رجسٹر کرنے کے لیے کیو آر کوڈ اسکین کریں",
+      pressQRCode: "کیو آر کوڈ کو البم میں محفوظ کرنے کے لیے دبائیں اور پکڑیں"
+    }
+  },
+  dividend: {
+    myDividend: "میرا حصہ",
+    contractManagement: "معاہدہ انتظام",
+    dividendRecord: "حصہ ریکارڈ",
+    activeMember: 'فعال رکن',
+    dividendRate: 'منافع کی شرح',
+    netAmountReceives: 'خالص رقم وصول ہوئی',
+    status: 'حیثیت',
+    periodValidBet: 'مدت درست شرط',
+    periodPnL: 'مدت کا P&L',
+    periodSettledPnL: 'مدت میں طے شدہ P&L',
+    dividendAmount: 'منافع کی رقم',
+    downlineDividendsToPay: 'نیچے لائن منافع ادا کرنا',
+    disbursementTime: 'ادائیگی کا وقت',
+    statusChecking: 'چیکنگ',
+    statusPay: 'ادائیگی',
+    statusCleared: 'صاف کیا گیا',
+    statusCancelled: 'منسوخ کیا گیا'
+
   },
   deposit: {
     selectAmount: "رقم منتخب کریں",

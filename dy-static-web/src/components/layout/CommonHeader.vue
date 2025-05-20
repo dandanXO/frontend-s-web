@@ -333,7 +333,7 @@
             <el-form-item label="用户名" prop="loginName">
               <el-space>
                 <el-input class="wTip" v-model="regForm.loginName" placeholder="输入用户名">
-                  <template #append>范围在 6-11 位之间，由字母和数字组成</template>
+                  <template #append>范围在 4-11 位之间，由字母和数字组成</template>
                 </el-input>
               </el-space>
             </el-form-item>
@@ -956,14 +956,17 @@ export default defineComponent({
     };
 
     let validateName = async (r, v) => {
-      if (v === "") {
-        return Promise.reject("请输入登录名");
-      } else if (!checkName(v)) {
-        return Promise.reject("用户名必须包含英文字母与数字");
-      } else {
-        return Promise.resolve();
+      const namePattern = /^[a-zA-Z][a-zA-Z0-9]*$/; // Starts with a letter, allows letters & numbers
+      const letterCount = (v.match(/[a-zA-Z]/g) || []).length >= 2; // At least 2 letters
+      const hasNumber = /\d/.test(v); // At least 1 number
+
+      if (!(namePattern.test(v) && letterCount && hasNumber)) {
+        return Promise.reject("须以字母开头，并包含至少2个字母和1个数字");
       }
+
+      return Promise.resolve();
     };
+
     let validateRealName = async (r, v) => {
       if (v === "") {
         return Promise.reject("请输入登姓名");
@@ -1029,9 +1032,9 @@ export default defineComponent({
           trigger: "blur"
         },
         {
-          min: 6,
+          min: 4,
           max: 12,
-          message: "长度要在 6-12 之间",
+          message: "长度要在 4-12 之间",
           trigger: "blur"
         }
       ],
@@ -1119,7 +1122,7 @@ export default defineComponent({
 
       realName: [
         {
-          required: false,
+          required: true,
           min: 2,
           max: 12,
           message: "长度应为 2 至 12",
@@ -1132,9 +1135,14 @@ export default defineComponent({
       ],
       loginName: [
         {
-          min: 6,
+          required: true,
+          message: "请输入用户名",
+          trigger: "blur"
+        },
+        {
+          min: 4,
           max: 11,
-          message: "长度应为 6 至 11",
+          message: "长度要在 4-11 之间",
           trigger: "blur"
         },
         {
@@ -1144,6 +1152,7 @@ export default defineComponent({
       ],
       password: [
         {
+          required: true,
           validator: validatePass,
           trigger: "change"
         }
@@ -1174,6 +1183,7 @@ export default defineComponent({
         //   trigger: "blur",
         // },
         {
+          required: true,
           validator: validatePass2,
           trigger: "change"
         }
@@ -1283,9 +1293,9 @@ export default defineComponent({
           trigger: "blur"
         },
         {
-          min: 6,
+          min: 4,
           max: 12,
-          message: "长度要在 6-12 之间",
+          message: "长度要在 4-12 之间",
           trigger: "blur"
         }
       ],
@@ -1714,9 +1724,9 @@ export default defineComponent({
           trigger: "blur"
         },
         {
-          min: 6,
+          min: 4,
           max: 12,
-          message: "长度要在 6-12 之间",
+          message: "长度要在 4-12 之间",
           trigger: "blur"
         }
       ],
@@ -1759,9 +1769,9 @@ export default defineComponent({
           trigger: "blur"
         },
         {
-          min: 6,
+          min: 4,
           max: 12,
-          message: "长度要在 6-12 之间",
+          message: "长度要在 4-12 之间",
           trigger: "blur"
         }
       ],
@@ -3128,6 +3138,14 @@ body {
         width: unset;
         margin-bottom: 5px;
       }
+    }
+  }
+
+  &.slots {
+    .plat-icon {
+      min-height: 56px;
+      object-fit: contain;
+      object-position: center;
     }
   }
 

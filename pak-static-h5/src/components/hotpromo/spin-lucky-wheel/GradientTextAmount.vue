@@ -7,15 +7,8 @@
           <stop offset="100%" stop-color="#F75F00" />
         </linearGradient>
       </defs>
-      <text
-        id="test"
-        class="amount"
-        :class="{ longText: isLongText }"
-        x="50%"
-        y="60%"
-        dominant-baseline="middle"
-        text-anchor="middle"
-      >
+      <text id="test" class="amount" :class="{ longText: isLongText }" x="50%" y="60%" dominant-baseline="middle"
+        text-anchor="middle">
         {{ props?.amountText }}
       </text>
     </svg>
@@ -31,7 +24,7 @@ const isLongText = computed(() => props?.amountText?.length > 10);
 <style lang="scss" scoped>
 .gradient-amount-wrapper {
   width: 100%;
-  height: 70px;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,7 +34,7 @@ const isLongText = computed(() => props?.amountText?.length > 10);
   }
 
   .amount {
-    font-size: 50px;
+    font-size: 32px;
     font-weight: 900;
     font-style: italic;
     fill: url(#gradientAmount);
@@ -57,7 +50,7 @@ const isLongText = computed(() => props?.amountText?.length > 10);
 @media screen and (max-width: 400px) {
   .gradient-amount-wrapper {
     .amount {
-      font-size: 40px;
+      font-size: 32px;
 
       &.longText {
         font-size: 22px;

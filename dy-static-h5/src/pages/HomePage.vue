@@ -26,12 +26,14 @@
         <div class="header-left">
           <img class="top-logo" id="logo" src="../assets/index/logo.png" />
         </div>
-        <router-link class="header-right" to="/account/inbox?redirect=home">
-          <div class="notification-section">
+        <div class="header-right">
+          <span class="memorable-url">易记网址：{{ memorableUrl }}</span>
+          <button class="copy-btn" @click="handleCopyMemorableUrlClick">🔍</button>
+          <router-link class="notification-section" to="/account/inbox?redirect=home">
             <img src="../assets/index/home-notification-icon.svg" alt="" />
             <div class="notification-dot" v-if="store.unreadInboxMail > 0"></div>
-          </div>
-        </router-link>
+          </router-link>
+        </div>
       </div>
 
       <div v-if="isStickyGameType" class="home-header-section" style="height: 68px; width: 95%; margin: 0 auto">
@@ -211,7 +213,7 @@
                           ></div>
 
                           <div class="game-title">
-                            <h3>{{ hot.name }}</h3>
+                            <h3>{{ hot.title }}</h3>
                             <span>真人娱乐</span>
                           </div>
 
@@ -285,7 +287,7 @@
                           ></div>
 
                           <div class="game-title">
-                            <h3>{{ hot.name }}</h3>
+                            <h3>{{ hot.title }}</h3>
                             <span>真人娱乐</span>
                           </div>
 
@@ -770,7 +772,7 @@
                         ></div>
 
                         <div class="game-title">
-                          <h3>{{ live.name }}</h3>
+                          <h3>{{ live.title }}</h3>
                           <span>真人娱乐</span>
                         </div>
 
@@ -864,7 +866,7 @@
                       </div>
                     </template>
                     <template v-else>
-                      <div class="game-board" @click="playGame(live.name, live.code, live.gameCode)">
+                      <div class="game-board" @click="playGame(live.title, live.code, live.gameCode)">
                         <div
                           class="game-bg"
                           :style="{
@@ -881,7 +883,7 @@
                         ></div>
 
                         <div class="game-title">
-                          <h3>{{ live.name }}</h3>
+                          <h3>{{ live.title }}</h3>
                           <span>真人娱乐</span>
                         </div>
 
@@ -1562,6 +1564,7 @@ import { isAndroid, isHuaweiPhone } from "boot/utils";
 import moment from "moment";
 import { useLocalStorage } from "@vueuse/core";
 import GameTypeSwiper from "src/components/home/GameTypeSwiper.vue";
+import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
   name: "IndexPage",
@@ -1574,6 +1577,8 @@ export default defineComponent({
     GameTypeSwiper
   },
   setup() {
+    const notify = useNotify();
+
     const isFirstView = ref(false);
     const isStickyGameType = ref(false);
     const thumbsSwiper = ref(null);
@@ -1950,17 +1955,19 @@ export default defineComponent({
 
               if (espObj.code === "TFGaming") {
                 espObj.title = "东赢电竞";
+              } else {
+                espObj.title = getAliasName(element, "ESPORT");
               }
-              if (espObj.code === "IA") {
-                espObj.title = "小艾电竞";
-              }
-              if (espObj.code === "IMES") {
-                espObj.title = "IM 电竞";
-                esportOrder = 2;
-              }
-              if (!espObj.title) {
-                espObj.title = espObj.code + "电竞";
-              }
+              // if (espObj.code === "IA") {
+              //   espObj.title = "小艾电竞";
+              // }
+              // if (espObj.code === "IMES") {
+              //   espObj.title = "IM 电竞";
+              //   esportOrder = 2;
+              // }
+              // if (!espObj.title) {
+              //   espObj.title = espObj.code + "电竞";
+              // }
               espObj.icon = "esport";
               espObj.subtitle = "电竞赛事";
               esport.value.push(espObj);
@@ -1973,25 +1980,26 @@ export default defineComponent({
             if (platTypes.indexOf("SPORT") > -1) {
               var spObj = Object.assign({}, element);
               var sportOrder = 3;
-              if (spObj.code === "IM") {
-                spObj.title = "IM 体育";
-              }
-              if (spObj.code === "PM") {
-                spObj.title = "熊猫体育";
-                sportOrder = 4;
-              }
-              if (spObj.code === "IA") {
-                spObj.title = "小艾体育";
-              }
-              if (spObj.code === "CR") {
-                spObj.title = "CR 体育";
-              }
-              if (spObj.code === "SABA") {
-                spObj.title = spObj.code + "体育";
-              }
-              if (spObj.code === "FB") {
-                spObj.title = "FB 体育";
-              }
+              spObj.title = getAliasName(element, "SPORT");
+              // if (spObj.code === "IM") {
+              //   spObj.title = "IM 体育";
+              // }
+              // if (spObj.code === "PM") {
+              //   spObj.title = "熊猫体育";
+              //   sportOrder = 4;
+              // }
+              // if (spObj.code === "IA") {
+              //   spObj.title = "小艾体育";
+              // }
+              // if (spObj.code === "CR") {
+              //   spObj.title = "CR 体育";
+              // }
+              // if (spObj.code === "SABA") {
+              //   spObj.title = spObj.code + "体育";
+              // }
+              // if (spObj.code === "FB") {
+              //   spObj.title = "FB 体育";
+              // }
               spObj.icon = "sport";
               spObj.subtitle = "体育赛事";
               sport.value.push(spObj);
@@ -2003,19 +2011,28 @@ export default defineComponent({
             }
             if (platTypes.indexOf("LIVE") > -1) {
               var liveObj = Object.assign({}, element);
-              liveObj.title = translateRecord(liveObj.name);
+              liveObj.title = getAliasName(element, "LIVE");
+              // liveObj.title = translateRecord(liveObj.name);
               liveObj.icon = "live";
               liveObj.subtitle = "真人娱乐";
               livecasino.value.push(liveObj);
 
               if (hotLives.value.indexOf(element.name) > -1) {
+                // debugger;
                 liveObj.order = 6;
+                // if (liveObj.code === "AG") {
+                //   liveObj.title = "PA";
+                // }
+                
+
                 hotgames.value.push(liveObj);
               }
             }
             if (platTypes.indexOf("SLOT") > -1) {
               var slotObj = Object.assign({}, element);
-              slotObj.title = translateRecord(slotObj.name, "SLOT");
+              // slotObj.title = translateRecord(slotObj.name, "SLOT");
+              slotObj.title = getAliasName(element, "SLOT");
+              
               slotObj.icon = "slot";
               slotObj.subtitle = "电子游戏";
 
@@ -2055,15 +2072,16 @@ export default defineComponent({
             if (platTypes.indexOf("FISH") > -1) {
               var fishObj = Object.assign({}, element);
               // fishObj.title = fishObj.name + " 捕鱼";
-              fishObj.title = fishObj.name;
+              // fishObj.title = fishObj.name;
+              fishObj.title = getAliasName(element, "FISH");
               fishObj.icon = "fish";
               fishObj.subtitle = "捕鱼游戏";
 
-              if (fishObj.code === "AGF") {
-                fishObj.title = "AG 捕鱼";
-              } else if (fishObj.code === "PMFISH") {
-                fishObj.title = "DB 捕鱼";
-              }
+              // if (fishObj.code === "AGF") {
+              //   fishObj.title = "PA 捕鱼";
+              // } else if (fishObj.code === "PMFISH") {
+              //   fishObj.title = "DB 捕鱼";
+              // }
 
               if (fishObj.code !== "AG") {
                 fishing.value.push(fishObj);
@@ -2071,7 +2089,8 @@ export default defineComponent({
             }
             if (platTypes.indexOf("POKER") > -1) {
               var pokerObj = Object.assign({}, element);
-              pokerObj.title = translateRecord(pokerObj.name);
+              // pokerObj.title = translateRecord(pokerObj.name);
+              pokerObj.title = getAliasName(element, "POKER");
               pokerObj.icon = "poker";
               pokerObj.subtitle = "棋牌娱乐";
               poker.value.push(pokerObj);
@@ -2083,7 +2102,8 @@ export default defineComponent({
             }
             if (platTypes.indexOf("LOTTERY") > -1) {
               var lottObj = Object.assign({}, element);
-              lottObj.title = translateRecord(lottObj.name);
+              // lottObj.title = translateRecord(lottObj.name);
+              lottObj.title = getAliasName(element, "LOTTERY");
               lottObj.icon = "lottery";
               lottObj.subtitle = "彩票游戏";
               lottery.value.push(lottObj);
@@ -2101,6 +2121,22 @@ export default defineComponent({
           // console.log(hotgames.value);
         })
         .catch((err) => {});
+    };
+    
+
+    const getAliasName = (plat, platformType) => {
+      // console.log(plat);
+      if (plat.alias?.includes("、")) {
+        const aliass = plat.alias.split("、");
+        const gameTypes = plat.gameType.split(",");
+        const itemIndex = gameTypes.indexOf(platformType);
+        // console.log(platformType);
+        // console.log(aliass);
+        // console.log(aliass[itemIndex]);
+
+        return itemIndex && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
+      }
+      return plat.alias;
     };
     const liveTabs = ref("");
     const searchList = () => {
@@ -2394,6 +2430,25 @@ export default defineComponent({
       btmSwiper.classList.add("longer-swiper");
     };
 
+    const memorableUrl = ref("dydy18.com");
+    const handleCopyMemorableUrlClick = () => {
+      // Create a temporary textarea element
+      const tempTextarea = document.createElement("textarea");
+      tempTextarea.value = memorableUrl.value;
+      document.body.appendChild(tempTextarea);
+
+      // Select the text and copy it
+      tempTextarea.select();
+      document.execCommand("copy");
+
+      // Remove the temporary textarea element
+      document.body.removeChild(tempTextarea);
+      notify({
+        type: "success",
+        message: "易记网址复制成功"
+      });
+    };
+
     // const checkShowImgTop = () => {
     //   const lastTime = localStorage.getItem("indexImgTop");
     //   if (lastTime) {
@@ -2516,7 +2571,9 @@ export default defineComponent({
       isImpt,
       clickHomePopupImg,
       isStickyGameType,
-      swiperContainerRef
+      swiperContainerRef,
+      memorableUrl,
+      handleCopyMemorableUrlClick
     };
   }
 });
@@ -2626,6 +2683,17 @@ export default defineComponent({
         background: #ff0000;
         border-radius: 50%;
       }
+    }
+
+    .memorable-url {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #47537f;
+    }
+    .copy-btn {
+      background: transparent;
+      border: none;
+      margin-right: 10px;
     }
   }
 

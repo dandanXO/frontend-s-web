@@ -27,7 +27,8 @@
                   @click="clickPlat(plat)"
                   :class="{ active: selectedPlat === plat.code }"
                 >
-                  {{ plat.name }}
+                  <!-- {{ plat.name }} -->
+                  {{ getAliasName(plat, 'SPORTS') }}
                 </span>
               </div>
               <div class="" data-aos="fade-left" data-aos-duration="4000">
@@ -55,6 +56,7 @@ import GameModal from "@/components/modal/GameModal";
 import { useRoute, useRouter } from "vue-router";
 import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
+import { getAliasName } from "@/utils/utils.js";
 
 export default defineComponent({
   components: {
@@ -187,7 +189,8 @@ export default defineComponent({
       filteredPlatforms,
       setSelectedPlat,
       getPlatList,
-      setFilteredPlatforms
+      setFilteredPlatforms,
+      getAliasName
     };
   }
 });

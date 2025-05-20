@@ -29,7 +29,7 @@
               <template v-for="p in platforms" :key="p">
                 <div class="plat-item" :class="{ active: p === activePlat }" @click="switchPlat(p)">
                   <img :src="require(`../assets/game/${p.code.toLowerCase()}.png`)" />
-                  {{ getGameLabel(p.name) }}
+                  {{ getAliasName(p, 'SLOT') }}
                 </div>
               </template>
             </div>
@@ -145,20 +145,34 @@ export default defineComponent({
       gamePage.currentPage = 1;
       loadGameList();
     };
+    const getAliasName = (plat, platformType) => {
+      // console.log(plat);
+      if (plat.alias?.includes("、")) {
+        const aliass = plat.alias.split("、");
+        const gameTypes = plat.gameType.split(",");
+        const itemIndex = gameTypes.indexOf(platformType);
+        // console.log(platformType);
+        // console.log(aliass);
+        // console.log(aliass[itemIndex]);
 
-    const getGameLabel = (gameLabel) => {
-      if (gameLabel === 'BBINDY') {
-        return 'BBIN 电子'
-      } else if (gameLabel === 'AMEBA') {
-        return 'AE 电子'
-      } else if (gameLabel === 'MGP') {
-        return 'MG 电子'
-      } else if (gameLabel === 'AG') {
-        return 'XIN 电子'
-      } else {
-        return gameLabel + ' 电子'
+        return itemIndex && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
       }
-    }
+      return plat.alias;
+    };
+
+    // const getGameLabel = (gameLabel) => {
+    //   if (gameLabel === 'BBINDY') {
+    //     return 'BBIN 电子'
+    //   } else if (gameLabel === 'AMEBA') {
+    //     return 'AE 电子'
+    //   } else if (gameLabel === 'MGP') {
+    //     return 'MG 电子'
+    //   } else if (gameLabel === 'AG') {
+    //     return 'PA 电子'
+    //   } else {
+    //     return gameLabel + ' 电子'
+    //   }
+    // }
 
     const getPlatList = () => {
       if (store.token) {
@@ -331,7 +345,7 @@ export default defineComponent({
       slotsGame,
       banner,
       imgURL,
-      getGameLabel
+      getAliasName
     };
   }
 });

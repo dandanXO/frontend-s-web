@@ -1,7 +1,7 @@
 <template>
   <div class="platform-menu-container">
     <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
-    <el-carousel arrow="always" :autoplay="false">
+    <el-carousel :arrow="arrowStatus" :autoplay="false">
       <el-carousel-item v-for="(platformsListDisplay, index) in platformsListDisplayByChunk" :key="index">
         <div style="display: flex; justify-content: center">
           <template v-for="(item, index) in platformsListDisplay" :key="index">
@@ -96,6 +96,17 @@ const platformsListDisplayByChunk = computed(() => {
   }
 
   return [];
+});
+
+const arrowStatus = computed(() => {
+  if (
+    (props.platformType === "esports" && props.platforms.length - 2 > 4) ||
+    (props.platformType !== "esports" && props.platforms.length > 4)
+  ) {
+    return "always";
+  } else {
+    return "never";
+  }
 });
 
 const getPlatformList = () => {
