@@ -38,7 +38,13 @@
       </div>
     </div>
 
-    <LiveStreamChatMessages class="livestream-chat" :messages :vip-status @send-chat-message="handleSendChatMessage" />
+    <LiveStreamChatMessages
+      class="livestream-chat"
+      :messages
+      :vip-status
+      :livestream-data="currentLiveData"
+      @send-chat-message="handleSendChatMessage"
+    />
   </div>
 </template>
 

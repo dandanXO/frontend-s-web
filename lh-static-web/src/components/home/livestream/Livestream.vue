@@ -312,9 +312,18 @@ const formatHistoryMessages = (messages) => {
 };
 
 const handleBetClick = () => {
-  if (!gameModalRef.value) return;
+  if (!gameModalRef.value || !currentLiveData.value) return;
   livestreamVideoRef.value?.pause();
-  gameModalRef.value.open("IM体育", "IM");
+  switch (currentLiveData.value.sportId) {
+    case 1:
+    case 2:
+      gameModalRef.value.open("IM体育", "IM");
+      break;
+    case 3:
+    case 4:
+    case 5:
+      gameModalRef.value.open("雷火电竞", "TFGaming");
+  }
 };
 
 const syncLivestreamInfo = async () => {

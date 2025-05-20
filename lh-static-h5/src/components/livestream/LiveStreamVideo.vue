@@ -456,6 +456,7 @@ const handlePlayerProgress = () => {
 const handlePlayerCanPlay = () => {
   isLatestScreenRecorded.value = false;
   isVideoLoading.value = false;
+  isVideoLoadFailed.value = false;
 };
 
 const handlePlayerError = (data) => {

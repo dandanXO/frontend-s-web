@@ -405,6 +405,7 @@ const handlePlayerCanPlay = () => {
   if (player.value.supportPlayer === "NATIVE") {
     isVideoLoading.value = false;
   }
+  isVideoLoadFailed.value = false;
   isLatestScreenRecorded.value = false;
 };
 

@@ -29,7 +29,7 @@
 
     <div class="livestream-chat-input-wrapper" :style="chatBoxStyle">
       <q-form class="livestream-chat-input-inner-wrapper q-px-md" @submit.enter.prevent>
-        <q-btn class="bet-btn" rounded label="投一注" @click="openGame('IM体育', 'IM', '', '')" />
+        <q-btn class="bet-btn" rounded label="投一注" @click="handleBetClick" />
 
         <q-input
           v-model="messageToSend"
@@ -79,8 +79,8 @@ const store = userStore();
 const $q = useQuasar();
 const route = useRoute();
 const router = useRouter();
-const props = defineProps(["messages", "vipStatus"]);
-const { messages, vipStatus } = toRefs(props);
+const props = defineProps(["messages", "vipStatus", "livestreamData"]);
+const { messages, vipStatus, livestreamData } = toRefs(props);
 const emit = defineEmits(["sendChatMessage"]);
 
 const messageToSend = ref("");
@@ -184,6 +184,20 @@ const emojiPick = () => {
       console.error("Emoji picker reference is not available.");
     }
   });
+};
+
+const handleBetClick = () => {
+  switch (livestreamData.value.sportId) {
+    case 1:
+    case 2:
+      openGame("IM体育", "IM", "", "");
+      break;
+    case 3:
+    case 4:
+    case 5:
+      openGame("雷火电竞", "TFGaming", "", "");
+      break;
+  }
 };
 
 onMounted(() => {
