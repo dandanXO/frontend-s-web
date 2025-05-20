@@ -310,13 +310,13 @@ const handleOpenRecordDialog = () => {
 const fetchRecordData = () => {
   getTokenRecords(props.promoCode).then((res) => {
     if (res.code === 0) {
-      res.data = tokenRecord.value;
+      tokenRecord.value = res.data;
     }
   });
 
   getRewardsRecords(props.promoCode).then((res) => {
     if (res.code === 0) {
-      res.data = rewardRecord.value;
+      rewardRecord.value = res.data;
     }
   });
 };
