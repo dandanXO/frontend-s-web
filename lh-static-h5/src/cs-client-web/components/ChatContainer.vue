@@ -1231,7 +1231,8 @@ export default defineComponent({
       }
 
       var origin_url = window.location.origin;
-      var url = `${origin_url}/liveChat?${partnerText}&way=${way}&lang=${lang}&type=${type}${deviceText}${startnew}&referral=${referrer_url}${tokenUrl}`;
+      const chatBaseUrl = route.path.split("/")[1];
+      var url = `${origin_url}/${chatBaseUrl}?${partnerText}&way=${way}&lang=${lang}&type=${type}${deviceText}${startnew}&referral=${referrer_url}${tokenUrl}`;
       // console.log(url);
 
       setTimeout(() => {
@@ -1659,7 +1660,8 @@ export default defineComponent({
       }
 
       var origin_url = window.location.origin;
-      var url = `${origin_url}/liveChat?${partnerText}&way=${way}&lang=${lang}&type=${type}${deviceText}&referral=${referrer_url}${tokenUrl}`;
+      const chatBaseUrl = route.path.split("/")[1];
+      var url = `${origin_url}/${chatBaseUrl}?${partnerText}&way=${way}&lang=${lang}&type=${type}${deviceText}&referral=${referrer_url}${tokenUrl}`;
       console.log(url);
 
       window.location.href = url;
