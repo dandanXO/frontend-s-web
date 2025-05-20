@@ -37,7 +37,7 @@
             <img
               src="@/assets/promo/lh1-duan-wu-rewards/btn.png"
               alt=""
-              style="padding-top: 12px;cursor: pointer;"
+              style="padding-top: 12px; cursor: pointer"
               @click="postReceive"
             />
           </div>
@@ -49,7 +49,7 @@
         <img
           src="@/assets/promo/lh1-duan-wu-rewards/openBtn.png"
           alt=""
-          style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);cursor: pointer;"
+          style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); cursor: pointer"
           @click="postBonus"
         />
 
@@ -197,7 +197,7 @@
           <img src="@/assets/promo/lh1-duan-wu-rewards/close-icon.png" alt="" />
         </div>
 
-        <div v-show="isTabLeft" style="flex: 1; width: 100%;margin: 20px 0px;">
+        <div v-show="isTabLeft" style="flex: 1; width: 100%; margin: 20px 0px">
           <div class="table-container">
             <table class="bet-table">
               <thead>
@@ -208,7 +208,7 @@
               </thead>
               <tbody>
                 <tr v-if="tokenRecord?.length <= 0">
-                  <td colspan="2" >暂无数据</td>
+                  <td colspan="2">暂无数据</td>
                 </tr>
                 <tr v-else v-for="(row, index) in tokenRecord" :key="index">
                   <td>{{ row.recordTime }}</td>
@@ -219,7 +219,7 @@
           </div>
         </div>
 
-        <div v-show="!isTabLeft" style="flex: 1; width: 100%;margin: 20px 0px;">
+        <div v-show="!isTabLeft" style="flex: 1; width: 100%; margin: 20px 0px">
           <div class="table-container">
             <table class="bet-table">
               <thead>
@@ -231,7 +231,7 @@
               </thead>
               <tbody>
                 <tr v-if="rewardRecord?.length <= 0">
-                  <td colspan="3" >暂无数据</td>
+                  <td colspan="3">暂无数据</td>
                 </tr>
                 <tr v-else v-for="(row, index) in rewardRecord" :key="index">
                   <td>{{ row.recordTime }}</td>
@@ -259,7 +259,7 @@ import {
 import { useNotify } from "@/hooks/notify";
 
 const isOpenDialog = ref(false);
-
+const props = defineProps(["promoCode"]);
 const notify = useNotify();
 const todayToken = ref("");
 const currentTokenAmount = ref("");
@@ -287,7 +287,7 @@ const handleToggleTab = () => {
 };
 
 const init = () => {
-  getDuanWuRewardInit("lh1-duan-wu-rewards").then((res) => {
+  getDuanWuRewardInit(props.promoCode).then((res) => {
     console.log(res);
 
     if (res.code === 0) {
@@ -302,12 +302,13 @@ const init = () => {
 };
 
 const postReceive = () => {
-  postDuanWuReceiveToken("lh1-duan-wu-rewards").then((res) => {
+  postDuanWuReceiveToken(props.promoCode).then((res) => {
     if (res.code === 0) {
       notify.success({
         type: "success",
         message: "领取成功"
       });
+      init();
     } else {
       notify.error(res.message);
     }
@@ -315,12 +316,13 @@ const postReceive = () => {
 };
 
 const postBonus = () => {
-  getDuanWuclaimBonus("lh1-duan-wu-rewards").then((res) => {
+  getDuanWuclaimBonus(props.promoCode).then((res) => {
     if (res.code === 0) {
       notify.success({
         type: "success",
         message: "领取成功"
       });
+      init();
     } else {
       notify.error(res.message);
     }
@@ -328,15 +330,15 @@ const postBonus = () => {
 };
 
 const fetchRecordData = (action) => {
-  isOpenDialog.value = true
-  isTabLeft.value = action
-  getDuanWuTokenRecords("lh1-duan-wu-rewards").then((res) => {
+  isOpenDialog.value = true;
+  isTabLeft.value = action;
+  getDuanWuTokenRecords(props.promoCode).then((res) => {
     if (res.code === 0) {
       tokenRecord.value = res.data;
     }
   });
 
-  getDuanWuRewardRecords("lh1-duan-wu-rewards").then((res) => {
+  getDuanWuRewardRecords(props.promoCode).then((res) => {
     if (res.code === 0) {
       rewardRecord.value = res.data;
     }

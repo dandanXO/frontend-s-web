@@ -308,6 +308,7 @@ const postReceive = () => {
         type: "success",
         message: "领取成功"
       });
+      init();
     } else {
       notify.error(res.message);
     }
@@ -321,6 +322,7 @@ const postBonus = () => {
         type: "success",
         message: "领取成功"
       });
+      init();
     } else {
       notify.error(res.message);
     }
