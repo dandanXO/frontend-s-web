@@ -154,9 +154,6 @@
     <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
   playerConfig --{{ playerConfig }}
   </pre> -->
-  <pre style="color: grey; position: fixed; top: 0; left: 0; width: 100%">
-  currentVideoUrl -- {{ currentVideoUrl }}
-  </pre>
 </template>
 <script setup>
 import { onMounted, ref, toRefs, watch, onUnmounted, computed, onActivated, nextTick, onBeforeUnmount } from "vue";

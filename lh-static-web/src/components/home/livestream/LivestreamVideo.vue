@@ -6,7 +6,6 @@
     @mouseenter="handleWrapperMouseEnter"
     @mouseleave="handleWrapperMouseLeave"
   >
-    current video url: {{ currentVideoUrl }}
     <template v-if="isPlayerSupported">
       <video
         ref="videoRef"
