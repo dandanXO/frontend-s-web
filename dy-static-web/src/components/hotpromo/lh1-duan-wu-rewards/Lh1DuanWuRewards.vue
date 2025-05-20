@@ -6,21 +6,21 @@
         <div class="first-content-title">
           <img src="@/assets/promo/lh1-duan-wu-rewards/first-little-title-one.svg" alt="" style="padding: 0px 20px" />
           <div>
-            <span style="color: #54783b; font-size: 36px">{{ totalValidBet }}</span>
+            <span style="color: #54783b; font-size: 36px">{{ totalValidBet || 0 }}</span>
             <span style="color: #54783b; font-size: 16px">元</span>
           </div>
         </div>
         <div class="first-content-title">
           <img src="@/assets/promo/lh1-duan-wu-rewards/first-little-title-two.svg" alt="" style="padding: 0px 20px" />
           <div>
-            <span style="color: #54783b; font-size: 36px">{{ currentTokenAmount }}</span>
+            <span style="color: #54783b; font-size: 36px">{{ currentTokenAmount || 0 }}</span>
             <span style="color: #54783b; font-size: 16px">片</span>
           </div>
         </div>
         <div class="first-content-title">
           <img src="@/assets/promo/lh1-duan-wu-rewards/first-little-title-three.svg" alt="" style="padding: 0px 20px" />
           <div>
-            <span style="color: #54783b; font-size: 36px">{{ rewardsCanClaim }}</span>
+            <span style="color: #54783b; font-size: 36px">{{ rewardsCanClaim || 0 }}</span>
             <span style="color: #54783b; font-size: 16px">个</span>
           </div>
         </div>
