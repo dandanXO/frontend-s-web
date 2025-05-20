@@ -24,8 +24,8 @@ export default {
       AFFILIATE: '三级代理',
       SUPER_AFFILIATE: '二级代理',
       MASTER_AFFILIATE: '一级代理',
-      PK4_MASTER_AFFILIATE: '总代',
-      PK4_SUPER_AFFILIATE: '招商',
+      PK4_MASTER_AFFILIATE: '招商',
+      PK4_SUPER_AFFILIATE: '总代',
       PK4_JUNIOR_AFFILIATE: '普通代理',
     },
     timeType: {
