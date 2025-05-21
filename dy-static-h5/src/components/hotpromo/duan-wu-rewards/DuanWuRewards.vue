@@ -141,7 +141,7 @@
               />
               <span>示例</span>
             </div>
-            会员A 在当日累计有效投注400,000元，次日即可领取12片粽叶，兑换2个好粽，获的对应安康金。
+            会员A 在当日累计有效投注400,000元，次日即可领取12片粽叶，兑换2个好粽，获得对应安康金。 
           </div>
         </div>
       </div>
@@ -829,6 +829,7 @@ onMounted(() => {
 }
 
 .dialog {
+  max-height: 400px !important;
   background-color: #fbfbe3;
   width: 80%;
   min-height: 504px;
@@ -838,8 +839,9 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   .inner-table{
+    overflow-y: scroll;
+    height: 300px;
     table {
-
       border-collapse: separate; /* 關鍵！讓邊角能獨立呈現 */
       border-spacing: 0;
     }

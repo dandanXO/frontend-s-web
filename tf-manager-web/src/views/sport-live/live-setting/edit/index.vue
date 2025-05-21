@@ -29,7 +29,7 @@
               :value="team.id"
             >
               <div style="display: flex; align-items: center">
-                <img :src="promoDir + team.icon" style="width: 20px; height: 20px; margin-right: 10px">
+                <img :src="(team.icon?.startsWith('http://') || team.icon?.startsWith('https://')) ? team.icon : promoDir + team.icon" style="width: 20px; height: 20px; margin-right: 10px">
                 {{ team.nameZh }}
               </div>
             </el-option>
@@ -40,7 +40,7 @@
           <el-select v-model="form.awayId" style="width: 300px" @focus="loadTeams">
             <el-option v-for="team in teams" :key="team.id" :label="team.nameZh" :value="team.id">
               <div style="display: flex; align-items: center">
-                <img :src="promoDir + team.icon" style="width: 20px; height: 20px; margin-right: 8px" alt="">
+                <img :src="(team.icon?.startsWith('http://') || team.icon?.startsWith('https://')) ? team.icon : promoDir + team.icon" style="width: 20px; height: 20px; margin-right: 10px">
                 {{ team.nameZh }}
               </div>
             </el-option>

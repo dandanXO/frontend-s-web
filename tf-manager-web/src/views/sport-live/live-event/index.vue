@@ -109,11 +109,16 @@
           <el-select
             v-model="form.homeId"
             size="small"
+            allow-create
             filterable
             :placeholder="t('fields.homeTeam')"
             class="filter-item"
             style="width: 350px;"
             default-first-option
+            @change="val => {
+              if (typeof val === 'string') form.homeName = val;
+              else form.homeName = '';
+            }"
             @focus="loadEventWithSite(form.sportId)"
           >
             <el-option
@@ -123,7 +128,7 @@
               :value="item.id"
             >
               <div style="display: flex; align-items: center">
-                <img :src="promoDir + item.icon" style="width: 20px; height: 20px; margin-right: 10px">
+                <img :src="(item.icon?.startsWith('http://') || item.icon?.startsWith('https://')) ? item.icon : promoDir + item.icon" style="width: 20px; height: 20px; margin-right: 10px">
                 <span>{{ item.nameZh }}</span>
               </div>
             </el-option>
@@ -134,11 +139,16 @@
             v-model="form.awayId"
             size="small"
             :placeholder="t('fields.awayTeam')"
+            allow-create
             filterable
             class="filter-item"
             style="width: 350px;"
             default-first-option
             @focus="loadEventWithSite(form.sportId)"
+            @change="val => {
+              if (typeof val === 'string') form.awayName = val;
+              else form.awayName = '';
+            }"
           >
             <el-option
               v-for="item in teams.list"
@@ -147,7 +157,7 @@
               :value="item.id"
             >
               <div style="display: flex; align-items: center">
-                <img :src="promoDir + item.icon" style="width: 20px; height: 20px; margin-right: 10px">
+                <img :src="(item.icon?.startsWith('http://') || item.icon?.startsWith('https://')) ? item.icon : promoDir + item.icon" style="width: 20px; height: 20px; margin-right: 10px">
                 <span>{{ item.nameZh }}</span>
               </div>
             </el-option>
@@ -201,16 +211,29 @@
       <el-table-column prop="homeNameZh" :label="t('fields.homeTeam')" width="120">
         <template #default="scope">
           <div style="display: flex; align-items: center">
-            <img :src="promoDir + scope.row.homeIcon" style="width: 20px; height: 20px; margin-right: 10px">
-            <span>{{ scope.row.homeNameZh }}</span>
+            <img
+              v-if="scope.row.homeIcon"
+              :src="scope.row.homeIcon.startsWith('http:') || scope.row.homeIcon.startsWith('https:')
+                ? scope.row.homeIcon
+                : promoDir + scope.row.homeIcon"
+              style="width: 20px; height: 20px; margin-right: 10px"
+            >
+            <span>{{ scope.row.homeNameZh || scope.row.homeName }}</span>
           </div>
         </template>
       </el-table-column>
+
       <el-table-column prop="awayNameZh" :label="t('fields.awayTeam')" width="120">
         <template #default="scope">
           <div style="display: flex; align-items: center">
-            <img :src="promoDir + scope.row.awayIcon" style="width: 20px; height: 20px; margin-right: 10px">
-            <span>{{ scope.row.awayNameZh }}</span>
+            <img
+              v-if="scope.row.awayIcon"
+              :src="scope.row.awayIcon.startsWith('http:') || scope.row.awayIcon.startsWith('https:')
+                ? scope.row.awayIcon
+                : promoDir + scope.row.awayIcon"
+              style="width: 20px; height: 20px; margin-right: 10px"
+            >
+            <span>{{ scope.row.awayNameZh || scope.row.awayName }}</span>
           </div>
         </template>
       </el-table-column>
@@ -390,6 +413,10 @@ function resetQuery() {
   request.title = null;
 }
 
+function isInTeamList(value) {
+  return teams.list.some(t => t.id === value);
+}
+
 function restrictInput(event) {
   var charCode = event.which ? event.which : event.keyCode
   if (charCode < 48 || charCode > 57) {
@@ -444,6 +471,15 @@ function submit() {
 function create() {
   formRef.value.validate(async (valid) => {
     if (valid) {
+      if (!isInTeamList(form.homeId)) {
+        form.homeName = form.homeId;
+        form.homeId = null;
+      }
+      if (!isInTeamList(form.awayId)) {
+        form.awayName = form.awayId;
+        form.awayId = null;
+      }
+
       form.icon = form.icon?.startsWith("http") ? store.state.user.siteId + "/" + form.icon.split('/').pop() : form.icon;
       await createSportLiveEvent(form);
       uiControl.dialogVisible = false;
@@ -485,7 +521,9 @@ const form = reactive({
   liveStatus: null,
   sort: null,
   title: null,
-  eventStartTime: null
+  eventStartTime: null,
+  homeName: '',
+  awayName: ''
 });
 
 const formRules = reactive({
