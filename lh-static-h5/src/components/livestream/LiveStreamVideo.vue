@@ -144,7 +144,7 @@
         </q-btn>
         <span>点击重新加载视频</span>
       </div>
-      <div v-if="isErrorCaptured" class="livestream-video-mask" @click.stop>
+      <div v-if="isErrorCaptured && env !== 'production'" class="livestream-video-mask" @click.stop>
         <q-btn color="primary" @click="copyMessage">已捕获错误，点击复制</q-btn>
       </div>
     </template>
@@ -204,6 +204,7 @@ const DANMU_CONFIG = {
 };
 
 const DEFAULT_QUALITY = "original";
+const env = process.env.NODE_ENV;
 
 const QUALITY_ALIAS = {
   original: "原画"
