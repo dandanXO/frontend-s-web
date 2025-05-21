@@ -1,26 +1,33 @@
 <template>
-    <div class="my-dividend-container">
-        <InputField :isDark="true">
-            <template #input>
-                <q-select class="dropdown" outlined v-model="model" :options="options" dense />
-            </template>
-        </InputField>
+    <div class="container">
+        <div class="filters">
+            <InputField :isDark="true">
+                <template #input>
+                    <div class="date-field">
+                        <q-input filled :model-value="formattedDateRange" readonly>
+                            <template v-slot:append>
+                                <img src="../../../assets/images/earn-money/calendar-icon.svg" />
+                                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                                    <q-date v-model="searchForm.dateRange" mask="YYYY-MM-DD" range
+                                        @update:model-value="onSelectChangeDate">
+                                        <div class="row items-center justify-end">
+                                            <q-btn v-close-popup :label="$t('btn.close')" color="white" flat />
+                                        </div>
+                                    </q-date>
+                                </q-popup-proxy>
+                            </template>
+                        </q-input>
+                    </div>
+                </template>
+            </InputField>
+            <q-btn class="btn-primary primary-btn" @click="getMyDividendsInfo" :disable="isLoading"
+                :label="$t('btn.confirm')" />
+        </div>
 
-        <InputField :isDark="true" >
-            <template #input>
-                <q-input class="input" v-model="formDetail.realName" outlined clearable hide-bottom-space>
-                    <template v-slot:append>
-                        <q-btn class="get-code-btn" color="primary" :label="$t('btn.confirm')" @click="() => { }" />
-                    </template>
-                </q-input>
-            </template>
-        </InputField>
 
         <div class="info panel bordered">
-            <div class="card-title">Weekly</div>
-
-            <div class="card-desc">Poker,slot,sports,live,fish,e-lottery - weekly</div>
-
+            <div class="card-title">{{ $t('dividend.myDividend') }}</div>
+            <div class="card-desc"></div>
             <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%"
                 style="text-align: center">
                 <thead>
@@ -31,11 +38,17 @@
                 </thead>
                 <tbody>
                     <tr style="background:#0665D3">
-                        <td>3</td>
-                        <td>45%</td>
+                        <td>
+                            <q-spinner v-if="isLoading" />
+                            <span v-else>{{ dividendInfo?.activePlayer }}</span>
+                        </td>
+                        <td>
+                            <q-spinner v-if="isLoading" />
+                            <span v-else>{{ dividendInfo?.commissionRate }}%</span>
+                        </td>
                     </tr>
                     <tr>
-                        <td colspan="2">excluded vendors：DS88，Lottery</td>
+                        <td colspan="2"></td>
                     </tr>
                 </tbody>
             </table>
@@ -43,84 +56,72 @@
 
         <div class="detailed-stats panel bordered">
             <div class="header">
-                <div>2025/04/27-2025/05/03</div>
+                <div>{{ searchForm.dateRange.from }} - {{ searchForm.dateRange.to }}</div>
                 <div class="collapse">
-                    <span>Current</span>
+                    <span></span>
                     <img class="collapse-icon" src="../../../assets/images/account/dividend/collapse-icon.png" />
                 </div>
             </div>
 
             <div class="stats">
                 <div class="row">
-                    <div class="icon">
-                        <!-- <img src="../../../assets/images/account/dividend/expand-icon.png" /> -->
+                    <div class="label">{{ $t('dividend.netAmountReceives') }}</div>
+                    <div class="value">
+                        <q-spinner v-if="isLoading" />
+                        <span v-else>{{ dividendInfo.finalCommission }}</span>
                     </div>
-                    <div class="label">Net amount receives</div>
-                    <div class="value">5,500.07</div>
                 </div>
                 <div class="row">
-                    <div class="icon">
-                        <!-- <img src="../../../assets/images/account/dividend/expand-icon.png" /> -->
+                    <div class="label">{{ $t('dividend.status') }}</div>
+                    <div class="value">
+                        <q-spinner v-if="isLoading" />
+                        <div v-else :class="dividendInfo.status?.toLowerCase()">{{ getStatusLabel(dividendInfo.status)
+                        }}
+                        </div>
                     </div>
-                    <div class="label">Status</div>
-                    <div class="value">-</div>
                 </div>
                 <div class="row">
-                    <div class="icon">
-                        <!-- <img src="../../../assets/images/account/dividend/expand-icon.png" /> -->
+                    <div class="label">{{ $t('dividend.activeMember') }}</div>
+                    <div class="value">
+                        <q-spinner v-if="isLoading" />
+                        <span v-else>{{ dividendInfo.activePlayer }}</span>
                     </div>
-                    <div class="label">Active member</div>
-                    <div class="value">26</div>
                 </div>
                 <div class="row">
-                    <div class="icon">
-                        <!-- <img src="../../../assets/images/account/dividend/expand-icon.png" /> -->
+                    <div class="label">{{ $t('dividend.periodValidBet') }}</div>
+                    <div class="value">
+                        <q-spinner v-if="isLoading" />
+                        <span v-else>{{ dividendInfo.bet }}</span>
                     </div>
-                    <div class="label">Period valid bet</div>
-                    <div class="value">269,284.42</div>
                 </div>
-                <hr class="separator"/>
+                <hr class="separator" />
                 <div class="row">
-                    <div class="icon">
-                        <img src="../../../assets/images/account/dividend/expand-icon.png" />
+                    <div class="label">{{ $t('dividend.periodPnL') }}</div>
+                    <div class="value">
+                        <q-spinner v-if="isLoading" />
+                        <span v-else>{{ dividendInfo.commissionAmount }}</span>
                     </div>
-                    <div class="label">Period P&L</div>
-                    <div class="value">17,263.54</div>
-                </div>
-                <div class="row">
-                    <div class="icon">
-                        <img src="../../../assets/images/account/dividend/expand-icon.png" />
-                    </div>
-                    <div class="label">Period settled P&L</div>
-                    <div class="value">17,263.54</div>
                 </div>
                 <div class="row">
-                    <div class="icon">
-                        <img src="../../../assets/images/account/dividend/expand-icon.png" />
+                    <div class="label">{{ $t('dividend.periodSettledPnL') }}</div>
+                    <div class="value">
+                        <q-spinner v-if="isLoading" />
+                        <span v-else>{{ dividendInfo.commissionAmount }}</span>
                     </div>
-                    <div class="label">Dividend amount</div>
-                    <div class="value">7,768.59</div>
                 </div>
                 <div class="row">
-                    <div class="icon">
-                        <!-- <img src="../../../assets/images/account/dividend/expand-icon.png" /> -->
+                    <div class="label">{{ $t('dividend.dividendAmount') }}</div>
+                    <div class="value">
+                        <q-spinner v-if="isLoading" />
+                        <span v-else>{{ dividendInfo.commissionAmount * dividendInfo.commissionRate }}</span>
                     </div>
-                    <div class="label">Downline dividends to pay</div>
-                    <div class="value">2,268.52</div>
                 </div>
                 <div class="row">
-                    <div class="icon">
-                        <!-- <img src="../../../assets/images/account/dividend/expand-icon.png" /> -->
+                    <div class="label">{{ $t('dividend.disbursementTime') }}</div>
+                    <div class="value">
+                        <q-spinner v-if="isLoading" />
+                        <span v-else>{{ dividendInfo.payTime }}</span>
                     </div>
-                    <div class="label">Net amount receives</div>
-                    <div class="value">5,500.07</div>
-                </div>
-                <div class="row">
-                    <div class="icon">
-                        <!-- <img src="../../../assets/images/account/dividend/expand-icon.png" /> -->
-                    </div>
-                    <div class="label">Disbursement time</div>
-                    <div class="value">-</div>
                 </div>
             </div>
         </div>
@@ -128,27 +129,108 @@
 </template>
 
 <script setup>
+import { api } from 'src/boot/axios';
 import InputField from 'src/components/auth/InputField.vue';
-import { ref, reactive } from 'vue';
+import { ref, reactive, computed, onActivated } from 'vue';
+import { t } from "src/boot/lang";
 
-const formDetail = reactive([]);
-const model = ref('Consolidated Weekly');
-const options = ref(['Consolidated Weekly']);
+const isLoading = ref(false);
+const today = new Date();
+const dayBefore = new Date();
+dayBefore.setDate(today.getDate() - 30); // 30days before
+
+const formatDate = (date) => date.toISOString().split("T")[0];
+
+const formattedDateRange = computed(() => {
+    const range = searchForm.dateRange;
+    if (!range || typeof range === "string") return "";
+    const { from, to } = range;
+    return `${formatDateToSlash(from)} ~ ${formatDateToSlash(to)}`;
+});
+
+const formatDateToSlash = (str) => {
+    if (!str || typeof str !== "string" || !str.includes("-")) return "";
+    const [year, month = "01", day = "01"] = str.split("-");
+    return `${month.padStart(2, "0")}/${day.padStart(2, "0")}`;
+};
+
+const searchForm = reactive({
+    dateRange: {
+        from: formatDate(dayBefore),
+        to: formatDate(today)
+    }
+});
+
+const dividendInfo = ref({
+    activePlayer: 0,
+    totalWinLoss: 0,
+    platformFeeAmount: 0,
+    bonusAmount: 0,
+    accountAdjustment: 0,
+    paymentFeeAmount: 0,
+    commissionAmount: 0,
+    commissionRate: 0,
+    commissionAdjustment: 0,
+    finalCommission: 0,
+    status: "CHECKING",
+    payTime: "-",
+    payout: 0,
+    bet: 0
+});
+
+const getStatusLabel = (statusStr) => {
+    switch (statusStr) {
+        case 'CHECKING':
+            return t('dividend.statusChecking');
+        case 'PAY':
+            return t('dividend.statusPay');
+        case 'CLEARED':
+            return t('dividend.statusCleared');
+        case 'CANCEL':
+            return t('dividend.statusCancelled');
+        default:
+            return statusStr;
+    }
+}
+
+const getMyDividendsInfo = () => {
+    isLoading.value = true;
+    const recordDate = searchForm.dateRange.from + "," + searchForm.dateRange.to;
+
+    api.get('/session/affiliate/settlement?recordDates=' + recordDate).then((res) => {
+        dividendInfo.value = res.data;
+        isLoading.value = false;
+    }).finally(() => {
+        isLoading.value = false;
+    })
+}
+
+onActivated(() => {
+    getMyDividendsInfo();
+})
 
 </script>
 
 <style lang="scss" scoped>
-.my-dividend-container {
+.container {
     display: flex;
     flex-direction: column;
-}
 
-.dropdown, .input {
-    margin-bottom: 10px;
-}
+    .filters {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-.dropdown {
-    width: 70%;
+        :deep(.landing-input) {
+            width: 100%;
+            margin-right: 10px;
+        }
+
+        .primary-btn {
+            padding: 0 30px;
+            white-space: nowrap;
+        }
+    }
 }
 
 .separator {
@@ -191,7 +273,9 @@ const options = ref(['Consolidated Weekly']);
         width: 100%;
         margin-bottom: 10px;
 
-        .icon, .label, .value {
+        .icon,
+        .label,
+        .value {
             display: flex;
             align-items: center;
         }
@@ -210,6 +294,60 @@ const options = ref(['Consolidated Weekly']);
             width: 33%;
             text-align: right;
             justify-content: flex-end;
+
+            .checking,
+            .pay,
+            .clear,
+            .cancelled {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 27px;
+            }
+
+            .checking {
+                color: #ffe500;
+                font-size: 0.825rem;
+                font-weight: 700;
+                text-transform: capitalize;
+                padding: 4px 10px;
+                border-radius: 4px;
+                background: rgba(255, 229, 0, 0.2);
+                min-height: unset;
+            }
+
+            .pay {
+                color: #FBAB1B;
+                font-size: 0.825rem;
+                font-weight: 700;
+                text-transform: capitalize;
+                padding: 4px 10px;
+                border-radius: 4px;
+                background: rgba(251, 171, 27, 0.2);
+                min-height: unset;
+            }
+
+            .clear {
+                color: #21EF89;
+                font-size: 0.825rem;
+                font-weight: 700;
+                text-transform: capitalize;
+                padding: 4px 10px;
+                border-radius: 4px;
+                background: rgba(33, 239, 137, .2);
+                min-height: unset;
+            }
+
+            .cancelled {
+                color: #FF3434;
+                font-size: 0.825rem;
+                font-weight: 700;
+                text-transform: capitalize;
+                padding: 4px 10px;
+                border-radius: 4px;
+                background: rgba(255, 52, 52, 0.2);
+                min-height: unset;
+            }
         }
     }
 }
@@ -229,7 +367,6 @@ const options = ref(['Consolidated Weekly']);
         background-size: 100% 100%;
         display: flex;
         justify-content: center;
-        font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
         font-weight: 700;
         font-size: 14px;
         line-height: 15px;
@@ -278,12 +415,14 @@ const options = ref(['Consolidated Weekly']);
     }
 }
 
-.get-code-btn {
-    background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
-    color: #fff;
-    box-shadow: 0px 0.5px 2px 0px #0667D599;
-    min-width: 100px;
-    max-width: 120px;
-    font-weight: bold;
+.date-field {
+    :deep(.q-field__append) {
+        width: 100%;
+        justify-content: flex-end;
+        position: absolute;
+        right: 2%;
+        top: 50%;
+        transform: translate(0%, -50%);
+    }
 }
 </style>

@@ -34,7 +34,7 @@
 
 <script setup>
 import { useRoute, useRouter } from "vue-router";
-import { computed, ref, watch, nextTick } from "vue";
+import { computed, ref, watch, nextTick, onBeforeMount } from "vue";
 
 import ProfileSummary from "components/ProfileSummary.vue";
 import RewardTab from "components/earn-money/RewardTab.vue";
@@ -43,7 +43,9 @@ import TeamBettingTab from "components/earn-money/TeamBettingTab.vue";
 import ProfitAndLossTab from "components/earn-money/ProfitAndLossTab.vue";
 import { useI18n } from "vue-i18n";
 import AdditionalSteps from "components/modal/AdditionalSteps.vue";
+import { userStore } from "src/stores";
 
+const store = userStore();
 const { t } = useI18n();
 
 const currentTab = ref("reward");
@@ -112,6 +114,12 @@ watch(
   },
   { immediate: true }
 );
+
+onBeforeMount(() => {
+  if(store.memberType === 'AFFILIATE') {
+    router.push('/share-affiliate');
+  }
+})
 </script>
 
 <style scoped lang="scss">

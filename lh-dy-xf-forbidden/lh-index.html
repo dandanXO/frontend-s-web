@@ -9,18 +9,32 @@
     </head>
     <body id="lh-dy-xf-forbidden---lh-index">
         <div class="container">
-            <img class="logo-top" width="124px" height="60px" src="./images/logo-lh.svg" />
-            <img class="globe" src="./images/globe-lh.png" />
+            <img class="logo-top lh" width="124px" height="60px" src="./images/logo-lh.svg" />
+            <img class="globe m-hide" src="./images/globe-lh.png" />
             <div class="section">
                 <img class="logo-bottom" width="100px" src="./images/logo-lh.svg" />
                 <img class="grid" width="352px" height="261px"  src="./images/kv-lh.png" />
                 <div class="header">访问限制</div>
-                <div class="desc">ACCESS RESTRICTED</div>
+                <div class="desc ip-desc" id="ip-text">ACCESS RESTRICTED</div>
                 <!-- <div class="ip-origin">您的IP来自于：192.168.1.1</div> -->
                 <div class="desc-2">您所在的地区已被禁止访问我们的网站，给您造成的不便敬请谅解，如有任何疑问，请通过在线客服联系全年无休的的在线客服团队。</div>
-                <div class="contact-btn"></div>
-                <div class="desc-2">下载 <a class="link" href="https://am35.cc" target="_blank">am35.cc</a> 加 <span>LH6888</span> 客服号协助处理</div>
+                <a class="contact-btn" href="https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN" target="_blank"></a>
+                <div class="desc-2">下载 <a class="link" href="https://am837.cc" target="_blank">am837.cc</a> 加 <span>vip880</span> 客服号协助处理</div>
             </div>
         </div>
+
+        <script>
+            async function getIP() {
+              try {
+                const response = await fetch('https://sumbtf.tebarncale.com/tool/myip');
+                const ip = await response.text();
+                console.log('Your IP is:', ip);
+                document.getElementById('ip-text').textContent = `你的IP: ${ip}`;
+              } catch (error) {
+                console.error('获取IP失败:', error);
+              }
+            }
+            getIP();
+        </script>
     </body>
 </html>

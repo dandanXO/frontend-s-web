@@ -149,7 +149,14 @@ export default route(function (/* { store, ssrContext } */) {
     //   sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
     //   next(`/register`);
     // }
-    if (to.name === "agentCode") {
+
+    if (to.name === "agentCode" || to.name === "memberCode") {
+      if(to.name === "memberCode") {
+        sessionStorage.setItem("AFFILIATE_MEMBERTYPE", "NORMAL");
+      } else if(to.name === "agentCode") {
+        sessionStorage.setItem("AFFILIATE_MEMBERTYPE", "AFFILIATE");
+      }
+
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
       user.isReferralReady = true;
       isRedirected = true;
@@ -160,6 +167,7 @@ export default route(function (/* { store, ssrContext } */) {
         next("/");
       }
     }
+
     if (to.name === "referCodeSpin") {
       sessionStorage.setItem("REFERRAL_SPIN_CODE", to.params.referralSpinCode);
       localStorage.removeItem("REG_REFERRAL_CODE");

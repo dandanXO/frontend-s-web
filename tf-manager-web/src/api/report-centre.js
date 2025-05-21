@@ -39,3 +39,7 @@ export const getSiteRetentionReport = (data) => {
 export const getAffiliateRetentionReport = (data) => {
   return https().request("/report/affiliate-retention-report", Method.GET, data, ContentType.json)
 };
+
+export const getMemberSummaryReport = (data) => {
+  return https().request("/report/member-summary-report", Method.GET, data, ContentType.json)
+};

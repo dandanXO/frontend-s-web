@@ -213,7 +213,7 @@
                           ></div>
 
                           <div class="game-title">
-                            <h3>{{ hot.name }}</h3>
+                            <h3>{{ hot.title }}</h3>
                             <span>真人娱乐</span>
                           </div>
 
@@ -287,7 +287,7 @@
                           ></div>
 
                           <div class="game-title">
-                            <h3>{{ hot.name }}</h3>
+                            <h3>{{ hot.title }}</h3>
                             <span>真人娱乐</span>
                           </div>
 
@@ -772,7 +772,7 @@
                         ></div>
 
                         <div class="game-title">
-                          <h3>{{ live.name }}</h3>
+                          <h3>{{ live.title }}</h3>
                           <span>真人娱乐</span>
                         </div>
 
@@ -866,7 +866,7 @@
                       </div>
                     </template>
                     <template v-else>
-                      <div class="game-board" @click="playGame(live.name, live.code, live.gameCode)">
+                      <div class="game-board" @click="playGame(live.title, live.code, live.gameCode)">
                         <div
                           class="game-bg"
                           :style="{
@@ -883,7 +883,7 @@
                         ></div>
 
                         <div class="game-title">
-                          <h3>{{ live.name }}</h3>
+                          <h3>{{ live.title }}</h3>
                           <span>真人娱乐</span>
                         </div>
 
@@ -1955,17 +1955,19 @@ export default defineComponent({
 
               if (espObj.code === "TFGaming") {
                 espObj.title = "东赢电竞";
+              } else {
+                espObj.title = getAliasName(element, "ESPORT");
               }
-              if (espObj.code === "IA") {
-                espObj.title = "小艾电竞";
-              }
-              if (espObj.code === "IMES") {
-                espObj.title = "IM 电竞";
-                esportOrder = 2;
-              }
-              if (!espObj.title) {
-                espObj.title = espObj.code + "电竞";
-              }
+              // if (espObj.code === "IA") {
+              //   espObj.title = "小艾电竞";
+              // }
+              // if (espObj.code === "IMES") {
+              //   espObj.title = "IM 电竞";
+              //   esportOrder = 2;
+              // }
+              // if (!espObj.title) {
+              //   espObj.title = espObj.code + "电竞";
+              // }
               espObj.icon = "esport";
               espObj.subtitle = "电竞赛事";
               esport.value.push(espObj);
@@ -1978,25 +1980,26 @@ export default defineComponent({
             if (platTypes.indexOf("SPORT") > -1) {
               var spObj = Object.assign({}, element);
               var sportOrder = 3;
-              if (spObj.code === "IM") {
-                spObj.title = "IM 体育";
-              }
-              if (spObj.code === "PM") {
-                spObj.title = "熊猫体育";
-                sportOrder = 4;
-              }
-              if (spObj.code === "IA") {
-                spObj.title = "小艾体育";
-              }
-              if (spObj.code === "CR") {
-                spObj.title = "CR 体育";
-              }
-              if (spObj.code === "SABA") {
-                spObj.title = spObj.code + "体育";
-              }
-              if (spObj.code === "FB") {
-                spObj.title = "FB 体育";
-              }
+              spObj.title = getAliasName(element, "SPORT");
+              // if (spObj.code === "IM") {
+              //   spObj.title = "IM 体育";
+              // }
+              // if (spObj.code === "PM") {
+              //   spObj.title = "熊猫体育";
+              //   sportOrder = 4;
+              // }
+              // if (spObj.code === "IA") {
+              //   spObj.title = "小艾体育";
+              // }
+              // if (spObj.code === "CR") {
+              //   spObj.title = "CR 体育";
+              // }
+              // if (spObj.code === "SABA") {
+              //   spObj.title = spObj.code + "体育";
+              // }
+              // if (spObj.code === "FB") {
+              //   spObj.title = "FB 体育";
+              // }
               spObj.icon = "sport";
               spObj.subtitle = "体育赛事";
               sport.value.push(spObj);
@@ -2008,19 +2011,28 @@ export default defineComponent({
             }
             if (platTypes.indexOf("LIVE") > -1) {
               var liveObj = Object.assign({}, element);
-              liveObj.title = translateRecord(liveObj.name);
+              liveObj.title = getAliasName(element, "LIVE");
+              // liveObj.title = translateRecord(liveObj.name);
               liveObj.icon = "live";
               liveObj.subtitle = "真人娱乐";
               livecasino.value.push(liveObj);
 
               if (hotLives.value.indexOf(element.name) > -1) {
+                // debugger;
                 liveObj.order = 6;
+                // if (liveObj.code === "AG") {
+                //   liveObj.title = "PA";
+                // }
+                
+
                 hotgames.value.push(liveObj);
               }
             }
             if (platTypes.indexOf("SLOT") > -1) {
               var slotObj = Object.assign({}, element);
-              slotObj.title = translateRecord(slotObj.name, "SLOT");
+              // slotObj.title = translateRecord(slotObj.name, "SLOT");
+              slotObj.title = getAliasName(element, "SLOT");
+              
               slotObj.icon = "slot";
               slotObj.subtitle = "电子游戏";
 
@@ -2060,15 +2072,16 @@ export default defineComponent({
             if (platTypes.indexOf("FISH") > -1) {
               var fishObj = Object.assign({}, element);
               // fishObj.title = fishObj.name + " 捕鱼";
-              fishObj.title = fishObj.name;
+              // fishObj.title = fishObj.name;
+              fishObj.title = getAliasName(element, "FISH");
               fishObj.icon = "fish";
               fishObj.subtitle = "捕鱼游戏";
 
-              if (fishObj.code === "AGF") {
-                fishObj.title = "AG 捕鱼";
-              } else if (fishObj.code === "PMFISH") {
-                fishObj.title = "DB 捕鱼";
-              }
+              // if (fishObj.code === "AGF") {
+              //   fishObj.title = "PA 捕鱼";
+              // } else if (fishObj.code === "PMFISH") {
+              //   fishObj.title = "DB 捕鱼";
+              // }
 
               if (fishObj.code !== "AG") {
                 fishing.value.push(fishObj);
@@ -2076,7 +2089,8 @@ export default defineComponent({
             }
             if (platTypes.indexOf("POKER") > -1) {
               var pokerObj = Object.assign({}, element);
-              pokerObj.title = translateRecord(pokerObj.name);
+              // pokerObj.title = translateRecord(pokerObj.name);
+              pokerObj.title = getAliasName(element, "POKER");
               pokerObj.icon = "poker";
               pokerObj.subtitle = "棋牌娱乐";
               poker.value.push(pokerObj);
@@ -2088,7 +2102,8 @@ export default defineComponent({
             }
             if (platTypes.indexOf("LOTTERY") > -1) {
               var lottObj = Object.assign({}, element);
-              lottObj.title = translateRecord(lottObj.name);
+              // lottObj.title = translateRecord(lottObj.name);
+              lottObj.title = getAliasName(element, "LOTTERY");
               lottObj.icon = "lottery";
               lottObj.subtitle = "彩票游戏";
               lottery.value.push(lottObj);
@@ -2106,6 +2121,22 @@ export default defineComponent({
           // console.log(hotgames.value);
         })
         .catch((err) => {});
+    };
+    
+
+    const getAliasName = (plat, platformType) => {
+      // console.log(plat);
+      if (plat.alias?.includes("、")) {
+        const aliass = plat.alias.split("、");
+        const gameTypes = plat.gameType.split(",");
+        const itemIndex = gameTypes.indexOf(platformType);
+        // console.log(platformType);
+        // console.log(aliass);
+        // console.log(aliass[itemIndex]);
+
+        return itemIndex && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
+      }
+      return plat.alias;
     };
     const liveTabs = ref("");
     const searchList = () => {

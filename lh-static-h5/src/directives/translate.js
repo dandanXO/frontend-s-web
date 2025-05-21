@@ -1,6 +1,6 @@
 export const translateRecord = (rec, type = "") => {
-  if(rec === 'VIP_REBATE' || type=== 'VIP_REBATE') {
-    return 'VIP 返水';
+  if (rec === "VIP_REBATE" || type === "VIP_REBATE") {
+    return "VIP 返水";
   } else if (rec === "WITHDRAW_FAIL") {
     if (type === "moneyChange") {
       return "转账失败";
@@ -147,7 +147,7 @@ export const translateRecord = (rec, type = "") => {
   } else if (rec === "AG") {
     return "AG"; // AG
   } else if (rec === "AGF") {
-    return "AG 捕鱼王"; // AG Fishing
+    return "PA 捕鱼王"; // AG Fishing
   } else if (rec === "PMFISH") {
     return "DB 捕鱼"; // DB Fishing
   } else if (rec === "BBINDY" || rec === "BBIN") {

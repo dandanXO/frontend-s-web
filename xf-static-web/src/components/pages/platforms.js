@@ -16,7 +16,7 @@ export const platformsDetails = [
       type: "LIVE", // Added type
       message:
         "全球首创6张牌先发、VIP包桌、咪牌百家乐、智控模式百家乐及竞咪互动百家乐等游戏，多终端兼容，让您享受不停。",
-        cnname: "AG真人",
+        cnname: "PA真人",
         caption: "全球顶尖，尊享娱乐",
         gameCode: ""
     },
@@ -73,7 +73,7 @@ export const platformsDetails = [
         message:
           "全球首家一体化娱乐原生APP，尽显流畅、完美操作。海量体育、电竞顶尖赛事，真人娱乐、彩票投注及电子游艺等，最新最全娱乐项目尽在掌中体验扫码下载，即刻拥有！",
           cnname: "IM体育",
-          caption: "赛事最多，玩法新颖",
+          caption: "高赔稳定 滚球首选",
           link: "/games/im-sport.html"
       },
       {
@@ -84,7 +84,7 @@ export const platformsDetails = [
         message:
           "最专业的盘口趋势分析，及时掌握最全面的热点赛事、体育资讯，多种投注型，让您乐享其中。",
           cnname: "熊猫体育",
-          caption: "赛事最多，玩法新颖",
+          caption: "玩法刺激 即刻结算",
           link: "/games/pm-sport.html"
       },
       {
@@ -104,7 +104,7 @@ export const platformsDetails = [
         type: "SPORT", // Added type
         message: '覆盖世界各地大小赛事，提供让球、大小、半全场、波胆、单双、总入球、连串过关等多元竞猜，SABA体育不会让您错过任何自己最喜爱的体育赛事。',
         cnname: "SABA体育",
-        caption: "赛事最多，玩法新颖",
+        caption: "赛事丰富 创新玩法",
         link: '/games/saba-sport.html'
       },
       // POKER
@@ -128,7 +128,7 @@ export const platformsDetails = [
         caption: "崭新玩法，感受精彩",
       },
       // GAME
-      //FISHING 
+      //FISHING
       {
         gameCode: "7202",
         name: "决战中途岛",
@@ -149,13 +149,13 @@ export const platformsDetails = [
       // },
       {
         gameCode: "6",
-        name: "AG捕鱼王",
+        name: "PA捕鱼王",
         code: "AGF",
         image: "ag",
         type: "FISH",
         message:
-          "最受欢迎的AG捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
-          cnname: "AG 捕鱼",
+          "最受欢迎的PA捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
+          cnname: "PA 捕鱼",
           caption: "崭新玩法，感受精彩",
       },
       {
@@ -210,7 +210,7 @@ export const platformsDetails = [
         message:
           "专注于彩票游戏行业多年，拥有经典彩种、玩法。还有超多独家创新玩法，足够新颖，极易操作的游戏界面，更是在您游戏过程中增光添彩！",
               cnname: "兴发电竞",
-        caption: "亚洲先驱，实时滚球",
+        caption: "电竞先驱 实时滚球",
         gameCode: ""
       },
       {

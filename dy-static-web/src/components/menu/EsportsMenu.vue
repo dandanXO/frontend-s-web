@@ -22,7 +22,8 @@
           </div>
           <div class="imgbox" :style="`background-position-x: ${nav.percentage}`"></div>
           <div class="contents">
-            <p class="platform-title">{{ nav.label }}电竞</p>
+            <!-- <p class="platform-title">{{ nav.label }}电竞</p> -->
+            <p class="platform-title">{{ getAliasName(nav, 'ESPORT') }}</p>
             <p class="platform-slogan">{{ nav.slogan }}</p>
           </div>
         </div>
@@ -46,6 +47,7 @@ import { defineComponent, ref, onMounted, computed } from "vue";
 import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 import moment from "moment";
+import { getAliasName } from '@/utils/utils';
 
 export default defineComponent({
   setup() {
@@ -54,21 +56,21 @@ export default defineComponent({
         code: "TFGaming",
         icon: "dy",
         label: "东赢",
-        slogan: "亚洲第一 实时滚球",
+        slogan: "电竞先驱 实时滚球",
         percentage: "32.48%"
       },
       {
         code: "IMES",
         icon: "im",
         label: "IM",
-        slogan: "赛事齐全 玩法新颖",
+        slogan: "专业电竞 即时结算 ",
         percentage: "66.7%"
       },
       {
         code: "IA",
         icon: "ai",
         label: "小艾",
-        slogan: "崭新玩法 全新体验",
+        slogan: "崭新玩法 输赢即现",
         percentage: "99.4%"
       }
     ];
@@ -104,7 +106,8 @@ export default defineComponent({
 
     return {
       filteredNavigations,
-      getPlatList
+      getPlatList,
+      getAliasName
     };
   }
 });

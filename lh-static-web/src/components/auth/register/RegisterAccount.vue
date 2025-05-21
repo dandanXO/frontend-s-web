@@ -25,7 +25,7 @@
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
       <el-form-item label="用户名" prop="loginName">
-        <el-input class="wTip" v-model="regForm.loginName" placeholder="6~12位包含字母和数字" clearable>
+        <el-input class="wTip" v-model="regForm.loginName" placeholder="4~11位包含字母和数字" clearable>
           <template #append></template>
         </el-input>
       </el-form-item>
@@ -180,13 +180,15 @@ const checkRealName = (v) => {
 };
 
 let validateName = async (r, v) => {
-  if (v === "") {
-    return Promise.reject("请输入登录名");
-  } else if (!checkName2(v)) {
-    return Promise.reject("用户名必须包含英文字母与数字");
-  } else {
-    return Promise.resolve();
+  const namePattern = /^[a-zA-Z][a-zA-Z0-9]*$/; // Starts with a letter, allows letters & numbers
+  const letterCount = (v.match(/[a-zA-Z]/g) || []).length >= 2; // At least 2 letters
+  const hasNumber = /\d/.test(v); // At least 1 number
+
+  if (!(namePattern.test(v) && letterCount && hasNumber)) {
+    return Promise.reject("须以字母开头，并包含至少2个字母和1个数字");
   }
+
+  return Promise.resolve();
 };
 
 let validatePhoneNumber = async (r, v) => {
@@ -275,9 +277,9 @@ const regRules = {
       trigger: "blur"
     },
     {
-      min: 6,
-      max: 12,
-      message: "长度应为 6 至 12",
+      min: 4,
+      max: 11,
+      message: "长度应为 4 至 11",
       trigger: "blur"
     },
     {

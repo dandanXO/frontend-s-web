@@ -786,6 +786,7 @@ onMounted(() => {
   text-align: center;
   vertical-align: middle;
   th {
+    border: 1px solid #fff;
     height: 56px;
     font-size: 20px;
     font-weight: 400;

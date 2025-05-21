@@ -8,13 +8,12 @@
       hide-bottom-space
       ref="loginNameRef"
       v-model="regForm.loginName"
-      placeholder="6-11个字符，包含大小写字母"
+      placeholder="4-11个字符，最少2个字母+数字组合，首位为字母"
       lazy-rules
       :rules="[
-        (val) => (val && val.length > 0) || '请输入用户名',
-        (val) => (val && val.length >= 6 && val.length <= 11) || '用户名个数必须在6和11之间',
-        (val) => (val && /[a-zA-Z]/.test(val) && /[0-9]/.test(val)) || '用户名必须包含英文字母与数字',
-        validLoginName
+        (val) => /^[a-zA-Z][a-zA-Z0-9]{3,10}$/.test(val) || '用户名个数必须在4和11之间，且首字符必须为字母',
+        (val) => (val.match(/[a-zA-Z]/g) || []).length >= 2 || '用户名必须包含至少2个英文字母',
+        (val) => /\d/.test(val) || '用户名必须包含至少1个数字'
       ]"
     >
       <template v-slot:prepend>

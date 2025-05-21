@@ -19,6 +19,8 @@ const MX1_SITE_ID = 21;
 const CO1_SITE_ID = 22;
 const TH2_SITE_ID = 23;
 const BPK_SITE_ID = 24;
+const PK4_SITE_ID = 26;
+const AU1_SITE_ID = 27;
 
 export const isIndiaSite = (siteId) => {
   return parseInt(siteId) === IND_SITE_ID || parseInt(siteId) === IND2_SITE_ID;
@@ -84,6 +86,10 @@ export const isPh1 = (siteId) => {
   return parseInt(siteId) === PH1_SITE_ID;
 }
 
+export const isAu1 = (siteId) => {
+  return parseInt(siteId) === AU1_SITE_ID;
+}
+
 export const isBr1 = (siteId) => {
   return parseInt(siteId) === BR1_SITE_ID;
 }
@@ -94,6 +100,10 @@ export const isMx1 = (siteId) => {
 
 export const isId1 = (siteId) => {
   return parseInt(siteId) === ID1_SITE_ID;
+}
+
+export const isPK4 = (siteId) => {
+  return parseInt(siteId) === PK4_SITE_ID;
 }
 
 export const getSiteTitle = (siteId) => {
@@ -137,6 +147,9 @@ export const getSiteTitle = (siteId) => {
       break;
     case PH1_SITE_ID :
       siteTitle = "Philippines "
+      break;
+    case AU1_SITE_ID :
+      siteTitle = "Australia "
       break;
     case ID1_SITE_ID :
       siteTitle = "Indonesia "

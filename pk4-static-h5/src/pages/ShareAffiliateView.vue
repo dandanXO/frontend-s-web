@@ -38,7 +38,7 @@
       <table cellpadding="0" cellspacing="0" border="0">
         <thead>
           <tr>
-            <th colspan="2">
+            <th colspan="3">
               <div>{{ $t('shareAffiliate.generalAgentTitle') }}</div>
             </th>
           </tr>
@@ -124,10 +124,23 @@
   </div>
 </template>
 <script setup>
+import { onBeforeMount } from "vue";
 import ProfileSummary from "../components/ProfileSummary.vue";
+import { useRouter } from "vue-router";
+import { userStore } from "src/stores";
+
+const router = useRouter();
+const store = userStore();
+
   const directToLink = () => {
     window.open("https://pak-affiliate-web.psna-staging.com/pak/login", "_blank");
   }
+
+onBeforeMount(() => {
+  if(store.memberType !== 'AFFILIATE') {
+    router.push('/earn-money');
+  }
+})
 </script>
 <style scoped lang="scss">
 .share-affiliate {
@@ -200,7 +213,7 @@ import ProfileSummary from "../components/ProfileSummary.vue";
         left:0;
         right:0;
         width: 98%;
-        background-size: contain;
+        background-size: 100% 100%;
         }
       }
     }
@@ -265,7 +278,7 @@ import ProfileSummary from "../components/ProfileSummary.vue";
         left:0;
         right:0;
         width: 98%;
-        background-size: contain;
+        background-size: 100% 100%;
         color: #ffffff;
     }
     ol {

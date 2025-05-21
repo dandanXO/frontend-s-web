@@ -280,6 +280,7 @@ export default {
     loading: "لوڈ ہو رہا ہے",
     loading_plsWait: "لوڈ ہو رہا ہے... براہ کرم انتظار کریں...",
     cancel: "منسوخ کریں",
+    exit: "نکلنا",
     signOut: "لاگ آؤٹ",
     back: "واپس",
     moreGames: "مزید کھیل",
@@ -301,7 +302,8 @@ export default {
     signinWithGoogle: "Google",
     goNow: "اب جائیں",
     playReal: "حقیقی کھیلیں",
-    freeTrial: "مفت آزمائش"
+    freeTrial: "مفت آزمائش",
+    check: "چیک کریں"
   },
   notify: {
     loggingIn: "لاگ ان ہو رہا ہے",
@@ -325,6 +327,7 @@ export default {
     signOutMessage: "کیا آپ واقعی لاگ آوٹ ہونا چاہتے ہیں؟",
     plsLoginToContinue: "براہ کرم جاری رکھنے کے لئے لاگ ان کریں",
     copiedSuccessfully: "کامیابی سے کاپی کیا گیا",
+    claimedSuccessfully: "کامیابی سے کلیم کر لیا گیا",
     smsSent: "ایس ایم ایس او ٹی پی کامیابی سے بھیج دیا گیا ہے",
     tryagain: "براہ کرم {seconds} سیکنڈ بعد دوبارہ کوشش کریں",
     submitting: "جمع کر رہا ہے...",
@@ -440,6 +443,8 @@ export default {
     addAcct: "اکاؤنٹ شامل کریں",
     picture: "تصویر",
     video: "ویڈیو",
+    checkReceivingLimit:
+      "براہ کرم نکاسی کرنے سے پہلے یقینی بنائیں کہ آپ کے والیٹ کی وصولی کی حد کافی ہے تاکہ لین دین کی ناکامی سے بچا جا سکے۔",
     bindCardCorrectFormat: "اپنے والیٹ/بینک کارڈ کو درست فارمیٹ میں لنک کریں۔",
     dailyWalletLimit:
       "روزانہ والیٹ کی حد: PKR 50,000۔ اس حد سے تجاوز نہ کریں۔ آپ نکالنے کے لیے متعدد والیٹس شامل کر سکتے ہیں۔",
@@ -746,7 +751,21 @@ export default {
     bankCardMust16NumberandAbove: "بینک اکاؤنٹ نمبر 16 ہندسوں یا اس سے زیادہ ہونا چاہیے",
     bankCardDisallowDecimal: "بینک اکاؤنٹ نمبر میں اعشاری نمبر نہیں ہو سکتے",
     nameofCardAcc: "کارڈ اکاؤنٹ کا نام",
-    insertCardAccName: "براہ کرم کارڈ اکاؤنٹ کا نام درج کریں"
+    insertCardAccName: "براہ کرم کارڈ اکاؤنٹ کا نام درج کریں",
+    pleaseEnterTelephone: "براہ کرم اپنا ٹیلیفون نمبر درج کریں",
+    otp: "ایس ایم ایس کوڈ",
+    insertVerificationCode: "تصدیقی کوڈ درج کریں",
+    pleaseEnterVerificationCode: "براہ کرم تصدیقی کوڈ درج کریں۔",
+    pleaseEnterOtp: "براہ کرم اپنے فون پر بھیجا گیا او ٹی پی درج کریں",
+    verificationCodeLengthError: "تصدیقی کوڈ کا نمبر 4 حروف پر مشتمل ہونا چاہیے",
+    otpLengthError: "او ٹی پی کا نمبر6 حروف پر مشتمل ہونا چاہیے",
+    sendOtp: "او ٹی پی بھیجیں",
+    getOtp: "او ٹی پی حاصل کریں",
+    telephone: "ٹیلیفون",
+    captchaSuccess: "عمل کامیاب ہوگیا، براہ کرم اپنے فون پر بھیجا گیا تصدیقی کوڈ چیک کریں! (5 منٹ کے لیے مؤثر ہے۔)",
+    captchaFailedMessage: "تصدیقی کوڈ کی جانچ ناکام، براہ کرم صفحہ دوبارہ لوڈ کریں",
+    clickAndEnterPhoneCode:
+      "براہ کرم تصدیقی کوڈ حاصل کرنے کے لیے کلک کریں اور اپنے رجسٹرڈ فون نمبر پر بھیجا گیا کوڈ درج کریں"
   },
   promo: {
     all: "سب",
@@ -887,6 +906,9 @@ export default {
       remainingDrawTimes: "باقی قرعہ اندازی کے اوقات",
       congratulations: "مبارک ہو"
     },
+    ftdDepositBonus: "پہلی بار جمع کرانے کا بونس",
+    redemptionCode: "ریڈیمپشن کوڈ",
+    newplayerGuide: "نئے کھلاڑی کے لیے رہنما",
     depositSpinWheel: {
       instruction: "وہیل سرگرمی میں حصہ لینے اور بونس حاصل کرنے کے لیے ڈپازٹ کا کام مکمل کریں، زیادہ سے زیادہ",
       depositNow: "ابھی جمع کریں",

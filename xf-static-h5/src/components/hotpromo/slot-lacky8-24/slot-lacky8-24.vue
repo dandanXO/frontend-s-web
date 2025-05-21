@@ -69,7 +69,7 @@
         <!--        </div>-->
         <div class="little-title">
           <div class="left">活动场馆</div>
-          <div class="right" style="margin-top: 4px">PG电子、PT电子、XIN电子</div>
+          <div class="right" style="margin-top: 4px">PG电子、PT电子、PA电子</div>
         </div>
         <div class="little-title" style="flex-direction: column; align-items: unset">
           <div class="left">活动内容</div>

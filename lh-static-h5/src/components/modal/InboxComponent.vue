@@ -83,7 +83,7 @@ const handleDetail = (mail) => {
   padding: 10px 12px 16px;
   background: white;
   height: 100%;
-  overflow: auto;
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -101,6 +101,7 @@ const handleDetail = (mail) => {
   color: #666666;
   margin-bottom: 12px;
   flex: 1;
+  overflow: auto;
 }
 
 .announcement-footer {

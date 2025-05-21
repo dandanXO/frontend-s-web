@@ -318,6 +318,17 @@ body {
 .el-button > span {
   color: #ffffff;
 }
+.el-button.cancel-btn{
+  
+    background-color: #bd4646;
+    &:hover,
+    &:focus {
+      border-color: #dc6666;
+      background-color: #d86d6d;
+    
+  }
+  
+}
 .common-btn + .common-btn {
   margin-left: 10px;
 }

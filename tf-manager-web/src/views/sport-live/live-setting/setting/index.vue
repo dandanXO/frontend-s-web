@@ -255,6 +255,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="roomMessage" :label="t('fields.roomMessage')" />
+      <el-table-column prop="roomTitle" :label="t('fields.roomTitle')" />
       <el-table-column
         fixed="right"
         :label="t('fields.operate')"
@@ -492,7 +493,8 @@ async function supplierCreate() {
     if (!valid) return;
     const payload = {
       eventId: eventId.value,
-      sourceStreamUrl: form.sourceStreamUrl
+      sourceStreamUrl: form.sourceStreamUrl,
+      isCdnPush: form.isCdnPush
     };
     await createSportLiveSupplierStream(payload);
     ElMessage.success(t('message.addSuccess'));
@@ -504,7 +506,7 @@ async function supplierCreate() {
 async function streamerSave() {
   formRef.value.validate(async (valid) => {
     if (!valid) return;
-    await createSportLiveStream({ eventId: eventId.value, liveStreamerId: form.streamerId, status: 0, roomMessage: form.roomMessage });
+    await createSportLiveStream({ eventId: eventId.value, liveStreamerId: form.streamerId, status: 0, roomMessage: form.roomMessage, roomTitle: form.roomTitle });
     ElMessage.success(t('message.updateSuccess'));
     uiControl.dialogVisible = false;
     await loadEvent();

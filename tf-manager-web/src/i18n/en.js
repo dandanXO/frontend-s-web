@@ -2570,6 +2570,8 @@ export default {
     pts: 'Points',
     ptsRebateAmount: 'Rebate points amount',
     ftdRebateAmount: 'Rebate first deposit amount',
+    pk4_super_affiliate: 'Super Affiliate',
+    pk4_master_affiliate: 'Master Affiliate',
     inProgress: 'in progress',
     notStarted: 'not started',
     liveSportEventRecord: 'Live Sport Event Info Setting',
@@ -3466,6 +3468,7 @@ export default {
     'Site Note': 'Notes',
     'Fast Access Promo': 'Fast Access Promo',
     'Refer Friend Rebate Point record': 'Referral friend betting turnover rebate points record',
+    'Member Summary Report': 'Member Summary Report',
     'Live Sport': 'Sport Live',
     'Sport Live Team': 'Live Team Manage',
     'Sport Live Streamer': 'Live Streamer Manage',
@@ -3655,6 +3658,7 @@ export default {
     UNSENT: 'Unsent',
     SENDING: 'Sending',
     SENT: 'Sent',
+    FAIL: 'Failed',
   },
   telegram: {
     userStatus: {
@@ -3706,6 +3710,10 @@ export default {
       MANAGER: 'Manager',
       AFFILIATE: 'Affiliate',
     }
+  },
+  distributeFail: {
+    BLACKLIST: 'Blacklist',
+    KEY_EXIST: 'Key Exist',
   },
   referRebatePoint: {
     NO_BET_AFTER_DEPOSIT: 'No Bet After Deposit',
@@ -3783,6 +3791,7 @@ export default {
     10051: 'System ip label does not exist',
     10110: 'Platform retrieve pending transaction error',
     10111: 'Platform update pending transaction error',
+    10113: 'Query time cannot exceed 3 months',
     11000: 'affiliate does not exist',
     11006: 'Site affiliate commission already exist',
     11007: 'Site affiliate commission does not exist',

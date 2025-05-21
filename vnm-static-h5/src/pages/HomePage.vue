@@ -1199,6 +1199,9 @@ export default defineComponent({
               if (liveObj.name === "AE") {
                 liveObj.name = "Sexy";
               }
+              if (liveObj.name === "AG") {
+                liveObj.name = "PA";
+              }
               liveObj.title_vn = liveObj.name + " Live Casino";
               liveObj.title_en = liveObj.name + " Live Casino";
               liveObj.icon = "live";
@@ -1217,7 +1220,7 @@ export default defineComponent({
                 slotObj.name = "Jili";
               }
               if (slotObj.name === "AG") {
-                slotObj.name = "XIN";
+                slotObj.name = "PA";
               }
               slotObj.title_vn = slotObj.name + " Slots";
               slotObj.title_en = slotObj.name + " Slot";

@@ -270,6 +270,17 @@ export function getCompetitionBetYesterday(promoCode) {
     }
   });
 }
+export function getGameTypeBonusInit(promoCode) {
+  return eventapi.get("/session/game-type-bonus/init", {
+    params: {
+      promoCode
+    }
+  });
+}
+
+export function claimGameTypeBonus(promoCode) {
+  return eventapi.post(`/session/game-type-bonus/claim`, qs.stringify({ promoCode }));
+}
 
 export function getNBAUpcomingMatch() {
   return eventapi.get("/session/nba-match-preseason/upcoming");
@@ -455,4 +466,35 @@ export function getIemDallas2025Bonus(promoCode) {
 }
 export function claimIemDallas2025Bonus(promoCode) {
   return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+export function getDreamLeagueS26Bonus(promoCode) {
+  return eventapi.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimDreamLeagueS26Bonus(promoCode) {
+  return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+
+export function getTokenRewardsInit(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/token-rewards/init?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function receiveTokenRewards(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/token-rewards/receiveToken?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function claimTokenRewardsBonus(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/token-rewards/claimBonus?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function getTokenRecords(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/token-rewards/tokenRecords?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function getRewardsRecords(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/token-rewards/rewardRecords?promoCode=${promoCode}&v=${randNum}`);
 }

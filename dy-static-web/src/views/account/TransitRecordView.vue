@@ -124,14 +124,14 @@
               </el-table-column>
             </el-table>
             <el-divider />
-            <!--            <el-pagination-->
-            <!--              :current-page="searchForm[recordActive].current"-->
-            <!--              @current-change="recordPage"-->
-            <!--              :total="pagination.total"-->
-            <!--              layout="prev, next"-->
-            <!--              :page-size="searchForm[recordActive].size"-->
-            <!--              hide-on-single-page-->
-            <!--            />-->
+            <el-pagination
+              :current-page="searchForm[recordActive].current"
+              @current-change="recordPage"
+              :total="pagination.total"
+              layout="prev, next"
+              :page-size="searchForm[recordActive].size"
+              hide-on-single-page
+            />
           </div>
         </el-tab-pane>
         <el-tab-pane name="withdraw" label="提款记录">
@@ -1335,7 +1335,7 @@ export default defineComponent({
         return ''
       }
       if (platformName === 'AG') {
-        return 'AG 真人' // AG
+        return 'PA 真人' // AG
       } else if (platformName === 'BBINDY') {
         return 'BBIN 真人' // BBINDY
       }  else if (platformName === 'KY') {

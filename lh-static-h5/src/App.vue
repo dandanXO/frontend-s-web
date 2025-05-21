@@ -38,12 +38,12 @@ export default defineComponent({
     if (darkModeFromStorage.value) {
       $q.dark.set(true);
     }
-    const customService = useSessionStorage("CUSTOM_SERVICE", '');
+    const customService = useSessionStorage("CUSTOM_SERVICE", "");
     const getCustomService = () => {
-      api.get('/config/uiconfigs').then((res) => {
-        customService.value = res.data.specialCS
-      })
-    }
+      api.get("/config/uiconfigs").then((res) => {
+        customService.value = res.data.specialCS;
+      });
+    };
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
       (async () => {
@@ -88,7 +88,7 @@ export default defineComponent({
           CSAUrl = urlData.hostname;
           ui.CSAUrl = urlData.hostname;
 
-          initCsWeb();
+          // initCsWeb();
           console.log(CSAUrl);
         })
         .catch((err) => {
@@ -97,48 +97,48 @@ export default defineComponent({
         });
     };
 
-    const initCsWeb = async () => {
-      if (!CsClient) {
-        CsClient = (await import("csweb-client")).default;
-      }
-      var regDevice = store.getDeviceType();
-      // console.log("Footer OnMounted");
+    // const initCsWeb = async () => {
+    //   if (!CsClient) {
+    //     CsClient = (await import("csweb-client")).default;
+    //   }
+    //   var regDevice = store.getDeviceType();
+    //   // console.log("Footer OnMounted");
 
-      // 'XFCS' / 2
-      // csclient = new CsClient('LHCS', regDevice, 'zh-CN', '2', 'prod', 'https://csweb01.v6kthwlug.com/');
-      csclient = new CsClient("LHCS", regDevice, "zh-CN", "2", "prod", `https://${CSAUrl}`);
+    //   // 'XFCS' / 2
+    //   // csclient = new CsClient('LHCS', regDevice, 'zh-CN', '2', 'prod', 'https://csweb01.v6kthwlug.com/');
+    //   csclient = new CsClient("LHCS", regDevice, "zh-CN", "2", "prod", `https://${CSAUrl}`);
 
-      csclient.set("bottom", "77");
-      csclient.set("pageurl", "/liveChat");
-      csclient.set("btnid", "cs-web-id");
-      csclient.set("openanimation", false);
+    //   csclient.set("bottom", "77");
+    //   csclient.set("pageurl", "/liveChat");
+    //   csclient.set("btnid", "cs-web-id");
+    //   csclient.set("openanimation", false);
 
-      csclient.set("notification-type", {
-        type: "none"
-      });
+    //   csclient.set("notification-type", {
+    //     type: "none"
+    //   });
 
-      if (store.token) {
-        csclient.set("token", store.token);
-      }
+    //   if (store.token) {
+    //     csclient.set("token", store.token);
+    //   }
 
-      //客服初始化。
-      csclient.init();
+    //   //客服初始化。
+    //   csclient.init();
 
-      csclient.receiveListener("message", function (callback) {
-        //收到新消息。
-        // alert(callback);
-      });
+    //   csclient.receiveListener("message", function (callback) {
+    //     //收到新消息。
+    //     // alert(callback);
+    //   });
 
-      //CsClient Event Listener.
-      window.addEventListener("message", function (event) {
-        // console.log("HEre Message received from the iframe: " + event.data); // Message received from child
-        // if (typeof event.data === "string") {
-        // if (event.data == 'sess_timeout') {
-        //   router.push({ path: "/" });
-        // }
-        // }
-      });
-    };
+    //   //CsClient Event Listener.
+    //   window.addEventListener("message", function (event) {
+    //     // console.log("HEre Message received from the iframe: " + event.data); // Message received from child
+    //     // if (typeof event.data === "string") {
+    //     // if (event.data == 'sess_timeout') {
+    //     //   router.push({ path: "/" });
+    //     // }
+    //     // }
+    //   });
+    // };
 
     const getOnlineStatApi = async () => {
       const sidParam = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());

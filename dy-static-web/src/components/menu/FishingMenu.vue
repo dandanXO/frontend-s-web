@@ -22,9 +22,10 @@
           </p>
         </div>
         <img :src="require('../../assets/fishing/header_fish_' + nav.image + '.png')" style="height: 40px" />
-        <p v-if="nav.code === 'AGF'" class="platform-title">AG捕鱼</p>
+        <!-- <p v-if="nav.code === 'AGF'" class="platform-title">PA捕鱼</p>
         <p v-else-if="nav.code === 'PMFISH'" class="platform-title">DB捕鱼</p>
-        <p v-else class="platform-title">{{ nav.code }}捕鱼</p>
+        <p v-else class="platform-title">{{ nav.code }}捕鱼</p> -->
+        <p class="platform-title">{{ getAliasName(nav, 'FISH') }}</p>
         <div class="platform-img" :class="'fish-' + nav.image"></div>
       </div>
     </div>
@@ -57,11 +58,11 @@ export default defineComponent({
       // },
       {
         gameCode: "HMPL",
-        name: "AG捕鱼王",
+        name: "PA捕鱼王",
         code: "AGF",
         image: "ag",
         message:
-          "最受欢迎的AG捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。"
+          "最受欢迎的PA捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。"
       },
       {
         gameCode: "",
@@ -69,7 +70,7 @@ export default defineComponent({
         code: "PMFISH",
         image: "db",
         message:
-            "最受欢迎的DB多宝捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。"
+          "最受欢迎的DB多宝捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。"
       }
       // {
       //     gameCode: 'F-SF01',
@@ -105,14 +106,29 @@ export default defineComponent({
         }));
     });
 
+
+    const getAliasName = (plat, platformType) => {
+      // console.log(plat);
+      if (plat.alias?.includes("、")) {
+        const aliass = plat.alias.split("、");
+        const gameTypes = plat.gameType.split(",");
+        const itemIndex = gameTypes.indexOf(platformType);
+        // console.log(platformType);
+        // console.log(aliass);
+        // console.log(aliass[itemIndex]);
+
+        return itemIndex && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
+      }
+      return plat.alias;
+    };
     onMounted(() => {
       getPlatList();
     });
-
     return {
       filteredNavigations,
       getPlatList,
-      moment
+      moment,
+      getAliasName
     };
   }
 });

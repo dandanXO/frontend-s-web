@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="platform-menu games">
+    <div class="platform-menu games slots">
       <div
         class="platform-box"
         v-for="nav in filteredNavigations"
@@ -23,7 +23,7 @@
 
         <router-link :to="`/game?plat=${nav.code}`">
           <img class="plat-icon" :src="require('../../assets/game/header_slot_logo_' + nav.icon + '.png')" />
-          <p class="platform-title">{{ getGameLabel(nav.code) }}</p>
+          <p class="platform-title">{{ getAliasName(nav, 'SLOT') }}</p>
           <div class="platform-img" :class="'slot-' + nav.icon"></div>
         </router-link>
       </div>
@@ -45,6 +45,7 @@
 import { defineComponent, ref, onMounted, computed } from "vue";
 import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
+import { getAliasName } from '@/utils/utils';
 import moment from "moment/moment";
 
 export default defineComponent({
@@ -68,7 +69,7 @@ export default defineComponent({
       } else if (gameLabel === "MGP") {
         return "MG 电子";
       } else if (gameLabel === "AG") {
-        return "XIN 电子";
+        return "PA 电子";
       } else {
         return gameLabel + " 电子";
       }
@@ -114,6 +115,7 @@ export default defineComponent({
       filteredNavigations,
       getPlatList,
       getGameLabel,
+      getAliasName,
       moment
     };
   }
