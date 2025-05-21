@@ -21,18 +21,7 @@
         </el-form-item>
 
         <el-form-item v-if="teams.length > 0" :label="t('fields.homeTeam')" prop="homeId">
-          <el-select
-            v-model="form.homeId"
-            filterable
-            allow-create
-            default-first-option
-            :placeholder="form.homeName || form.homeNameZh || '请输入或选择队伍'"
-            style="width: 300px"
-            @change="val => {
-              const match = teams.find(t => t.id === val);
-              form.homeName = match ? match.nameZh : val;
-            }"
-          >
+          <el-select v-model="form.homeId" style="width: 300px">
             <el-option
               v-for="team in teams"
               :key="team.id"
@@ -40,38 +29,18 @@
               :value="team.id"
             >
               <div style="display: flex; align-items: center">
-                <img :src="(team.icon?.startsWith('http://') || team.icon?.startsWith('https://')) ? team.icon : promoDir + team.icon"
-                     style="width: 20px; height: 20px; margin-right: 10px"
-                >
+                <img :src="(team.icon?.startsWith('http://') || team.icon?.startsWith('https://')) ? team.icon : promoDir + team.icon" style="width: 20px; height: 20px; margin-right: 10px">
                 {{ team.nameZh }}
               </div>
             </el-option>
           </el-select>
         </el-form-item>
 
-        <el-form-item :label="t('fields.awayTeam')" prop="awayId">
-          <el-select
-            v-model="form.awayId"
-            filterable
-            allow-create
-            default-first-option
-            :placeholder="form.awayName || form.awayNameZh"
-            style="width: 300px"
-            @change="val => {
-              const match = teams.find(t => t.id === val);
-              form.awayName = match ? match.nameZh : val;
-            }"
-          >
-            <el-option
-              v-for="team in teams"
-              :key="team.id"
-              :label="team.nameZh"
-              :value="team.id"
-            >
+        <el-form-item v-if="teams.length > 0" :label="t('fields.awayTeam')" prop="awayId">
+          <el-select v-model="form.awayId" style="width: 300px" @focus="loadTeams">
+            <el-option v-for="team in teams" :key="team.id" :label="team.nameZh" :value="team.id">
               <div style="display: flex; align-items: center">
-                <img :src="(team.icon?.startsWith('http://') || team.icon?.startsWith('https://')) ? team.icon : promoDir + team.icon"
-                     style="width: 20px; height: 20px; margin-right: 10px"
-                >
+                <img :src="(team.icon?.startsWith('http://') || team.icon?.startsWith('https://')) ? team.icon : promoDir + team.icon" style="width: 20px; height: 20px; margin-right: 10px">
                 {{ team.nameZh }}
               </div>
             </el-option>
@@ -172,10 +141,6 @@ const request = reactive({
   id: null,
 });
 
-function isInTeamList(id) {
-  return teams.value.some(t => t.id === id);
-}
-
 async function loadEventDetail() {
   request.id = eventId;
   const { data } = await getEvents(request);
@@ -194,14 +159,6 @@ async function loadTeams() {
 async function submit() {
   await formRef.value.validate(async (valid) => {
     if (!valid) return;
-    if (!isInTeamList(form.homeId)) {
-      form.homeName = form.homeId;
-      form.homeId = null;
-    }
-    if (!isInTeamList(form.awayId)) {
-      form.awayName = form.awayId;
-      form.awayId = null;
-    }
     await updateSportLiveEvent(form);
     ElMessage.success(t('message.updateSuccess'));
   });
