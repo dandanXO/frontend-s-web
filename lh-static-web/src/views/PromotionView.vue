@@ -409,6 +409,10 @@ export default defineComponent({
     onMounted(() => {
       //COMMENT: I GUESS We not Using This So I Remove it.
       // loadBanner();
+      if(route.query.name === 'page-vip'){
+        router.push('/vip');
+        return
+      }
       loadAll();
     });
 

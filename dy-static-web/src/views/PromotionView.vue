@@ -406,6 +406,10 @@ export default defineComponent({
       });
     };
     onMounted(() => {
+      if(route.query.name === 'page-vip'){
+        router.push('/vip');
+        return
+      }
       loadBanner();
       loadAll();
     });
