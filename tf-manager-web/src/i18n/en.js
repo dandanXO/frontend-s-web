@@ -248,6 +248,16 @@ export default {
       ENDED: 'Ended',
       SETTLED: 'Settled',
     },
+    namiMatch: {
+      GAME_EXCEPTION: 'Game Exception',
+      ONGOING: 'Ongoing',
+      ENDED: 'Ended',
+      CANCEL: 'Cancel',
+      INTERRUPTED: 'Interrupted',
+      DELAYED: 'Delayed',
+      ABANDONED: 'Abandoned',
+      PENDING: 'Pending',
+    },
   },
   betStatus: {
     BET: 'BET',
@@ -775,6 +785,7 @@ export default {
     awayTeam: 'Away Team',
     awayTeamIcon: 'Away Team Icon',
     awayTeamResult: 'Away Team Result',
+    awayScore: 'Away Score',
     back: 'Back',
     balance: 'Balance',
     balanceUrl: 'Balance URL',
@@ -1208,6 +1219,7 @@ export default {
     homeTeam: 'Home Team',
     homeTeamIcon: 'Home Team Icon',
     homeTeamResult: 'Home Team Result',
+    homeScore: 'Home Score',
     icon: 'Icon',
     pIcon: 'Privilege Icon',
     id: 'ID',
@@ -2091,6 +2103,8 @@ export default {
     competitionMatching: 'Competition Matching',
     competitionType: 'Competition Type',
     competitionName: 'Competition Name',
+    competitionNameZh: 'Competition Name(Chinese)',
+    competitionNameEn: 'Competition Name(English)',
     competitionTime: 'Competition Time',
     addCompetition: 'Add Competition',
     editCompetition: 'Edit Competition',
@@ -2604,7 +2618,9 @@ export default {
     streamName: 'Stream Name',
     streamScore: 'Stream Score',
     screenShot: 'Screen Shot',
-    streamTag: 'Stream Tag'
+    streamTag: 'Stream Tag',
+    isCdnPush: 'Push CDN',
+    box: 'Box',
   },
   message: {
     adsStatusOpen: 'Open',
@@ -3475,6 +3491,7 @@ export default {
     'Sport Live Team': 'Live Team Manage',
     'Sport Live Streamer': 'Live Streamer Manage',
     'Sport Live Event': 'Sport Live Event',
+    'Sport Live Match': 'Sport Live Match',
     'Sport Live Event Setting': 'Sport Live Event Setting',
     'Sport Live Sensitive Word': 'Sport Live Sensitive Word',
     'Sport Live Block Member': 'Sport Live Block Member Setting',
@@ -3648,6 +3665,7 @@ export default {
     excludeTypes: 'Exclude Game Types',
     specifyTypesAmount: 'Specify Game Types Amount',
     specifyGameType: 'Specific Game Types and Amount',
+    FAIL: 'Failed',
   },
   domainType: {
     LANDING: 'Landing',
@@ -3707,15 +3725,15 @@ export default {
       HOME: 'Home',
       MANAGER: 'Manager',
     },
+    distributeFail: {
+      BLACKLIST: 'Blacklist',
+      KEY_EXIST: 'Key Exist',
+    },
     domainBackendType: {
       API: 'API',
       MANAGER: 'Manager',
       AFFILIATE: 'Affiliate',
     }
-  },
-  distributeFail: {
-    BLACKLIST: 'Blacklist',
-    KEY_EXIST: 'Key Exist',
   },
   referRebatePoint: {
     NO_BET_AFTER_DEPOSIT: 'No Bet After Deposit',

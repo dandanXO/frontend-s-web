@@ -113,17 +113,17 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-import { useI18n } from 'vue-i18n';
-import { getTeamById, getEvents, updateSportLiveEvent } from '@/api/sport-live';
-import { required } from '@/utils/validate';
-import { ElMessage } from 'element-plus';
-import { useSessionStorage } from "@vueuse/core";
+import {ref, reactive, onMounted} from 'vue';
+import {useRoute} from 'vue-router';
+import {useI18n} from 'vue-i18n';
+import {getTeamById, getEvents, updateSportLiveEvent} from '@/api/sport-live';
+import {required} from '@/utils/validate';
+import {ElMessage} from 'element-plus';
+import {useSessionStorage} from "@vueuse/core";
 import dayjs from "dayjs";
 
 const route = useRoute();
-const { t } = useI18n();
+const {t} = useI18n();
 
 const eventId = Number(route.query.id);
 const formRef = ref(null);
@@ -132,18 +132,18 @@ const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value
 
 const uiControl = reactive({
   sport: [
-    { id: 1, name: 'FOOTBALL', display: '足球' },
-    { id: 2, name: 'BASKETBALL', display: '篮球' },
-    { name: 'LOL', display: 'LOL', id: 3 },
-    { name: 'CSGO', display: 'CSGO', id: 4 },
-    { name: 'DOTA2', display: 'DOTA2', id: 5 },
-    { name: 'KOG', display: '王者荣耀', id: 6 },
+    {id: 1, name: 'FOOTBALL', display: '足球'},
+    {id: 2, name: 'BASKETBALL', display: '篮球'},
+    {name: 'LOL', display: 'LOL', id: 3},
+    {name: 'CSGO', display: 'CSGO', id: 4},
+    {name: 'DOTA2', display: 'DOTA2', id: 5},
+    {name: 'KOG', display: '王者荣耀', id: 6},
   ],
   liveStatus: [
-    { id: 0, display: t('status.uefaMatch.PENDING') },
-    { id: 1, display: t('status.uefaMatch.ONGOING') },
-    { id: 2, display: t('status.uefaMatch.ENDED') },
-    { id: 3, display: t('status.uefaMatch.CANCEL') },
+    {id: 0, display: t('status.uefaMatch.PENDING')},
+    {id: 1, display: t('status.uefaMatch.ONGOING')},
+    {id: 2, display: t('status.uefaMatch.ENDED')},
+    {id: 3, display: t('status.uefaMatch.CANCEL')},
   ],
 });
 
@@ -178,7 +178,7 @@ function isInTeamList(id) {
 
 async function loadEventDetail() {
   request.id = eventId;
-  const { data } = await getEvents(request);
+  const {data} = await getEvents(request);
   const record = data.records?.[0];
   if (record) {
     record.eventStartTime = dayjs(record.eventStartTime).format('YYYY-MM-DD HH:mm:ss');
@@ -187,7 +187,7 @@ async function loadEventDetail() {
 }
 
 async function loadTeams() {
-  const { data } = await getTeamById(form.sportId);
+  const {data} = await getTeamById(form.sportId);
   teams.value = data;
 }
 
