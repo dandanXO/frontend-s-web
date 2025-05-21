@@ -21,7 +21,18 @@
         </el-form-item>
 
         <el-form-item v-if="teams.length > 0" :label="t('fields.homeTeam')" prop="homeId">
-          <el-select v-model="form.homeId" style="width: 300px">
+          <el-select
+            v-model="form.homeId"
+            filterable
+            allow-create
+            default-first-option
+            :placeholder="form.homeName || form.homeNameZh || '请输入或选择队伍'"
+            style="width: 300px"
+            @change="val => {
+              const match = teams.find(t => t.id === val);
+              form.homeName = match ? match.nameZh : val;
+            }"
+          >
             <el-option
               v-for="team in teams"
               :key="team.id"
@@ -29,18 +40,38 @@
               :value="team.id"
             >
               <div style="display: flex; align-items: center">
-                <img :src="(team.icon?.startsWith('http://') || team.icon?.startsWith('https://')) ? team.icon : promoDir + team.icon" style="width: 20px; height: 20px; margin-right: 10px">
+                <img :src="(team.icon?.startsWith('http://') || team.icon?.startsWith('https://')) ? team.icon : promoDir + team.icon"
+                     style="width: 20px; height: 20px; margin-right: 10px"
+                >
                 {{ team.nameZh }}
               </div>
             </el-option>
           </el-select>
         </el-form-item>
 
-        <el-form-item v-if="teams.length > 0" :label="t('fields.awayTeam')" prop="awayId">
-          <el-select v-model="form.awayId" style="width: 300px" @focus="loadTeams">
-            <el-option v-for="team in teams" :key="team.id" :label="team.nameZh" :value="team.id">
+        <el-form-item :label="t('fields.awayTeam')" prop="awayId">
+          <el-select
+            v-model="form.awayId"
+            filterable
+            allow-create
+            default-first-option
+            :placeholder="form.awayName || form.awayNameZh"
+            style="width: 300px"
+            @change="val => {
+              const match = teams.find(t => t.id === val);
+              form.awayName = match ? match.nameZh : val;
+            }"
+          >
+            <el-option
+              v-for="team in teams"
+              :key="team.id"
+              :label="team.nameZh"
+              :value="team.id"
+            >
               <div style="display: flex; align-items: center">
-                <img :src="(team.icon?.startsWith('http://') || team.icon?.startsWith('https://')) ? team.icon : promoDir + team.icon" style="width: 20px; height: 20px; margin-right: 10px">
+                <img :src="(team.icon?.startsWith('http://') || team.icon?.startsWith('https://')) ? team.icon : promoDir + team.icon"
+                     style="width: 20px; height: 20px; margin-right: 10px"
+                >
                 {{ team.nameZh }}
               </div>
             </el-option>
@@ -82,17 +113,17 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-import { useI18n } from 'vue-i18n';
-import { getTeamById, getEvents, updateSportLiveEvent } from '@/api/sport-live';
-import { required } from '@/utils/validate';
-import { ElMessage } from 'element-plus';
-import { useSessionStorage } from "@vueuse/core";
+import {ref, reactive, onMounted} from 'vue';
+import {useRoute} from 'vue-router';
+import {useI18n} from 'vue-i18n';
+import {getTeamById, getEvents, updateSportLiveEvent} from '@/api/sport-live';
+import {required} from '@/utils/validate';
+import {ElMessage} from 'element-plus';
+import {useSessionStorage} from "@vueuse/core";
 import dayjs from "dayjs";
 
 const route = useRoute();
-const { t } = useI18n();
+const {t} = useI18n();
 
 const eventId = Number(route.query.id);
 const formRef = ref(null);
@@ -101,18 +132,18 @@ const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value
 
 const uiControl = reactive({
   sport: [
-    { id: 1, name: 'FOOTBALL', display: '足球' },
-    { id: 2, name: 'BASKETBALL', display: '篮球' },
-    { name: 'LOL', display: 'LOL', id: 3 },
-    { name: 'CSGO', display: 'CSGO', id: 4 },
-    { name: 'DOTA2', display: 'DOTA2', id: 5 },
-    { name: 'KOG', display: '王者荣耀', id: 6 },
+    {id: 1, name: 'FOOTBALL', display: '足球'},
+    {id: 2, name: 'BASKETBALL', display: '篮球'},
+    {name: 'LOL', display: 'LOL', id: 3},
+    {name: 'CSGO', display: 'CSGO', id: 4},
+    {name: 'DOTA2', display: 'DOTA2', id: 5},
+    {name: 'KOG', display: '王者荣耀', id: 6},
   ],
   liveStatus: [
-    { id: 0, display: t('status.uefaMatch.PENDING') },
-    { id: 1, display: t('status.uefaMatch.ONGOING') },
-    { id: 2, display: t('status.uefaMatch.ENDED') },
-    { id: 3, display: t('status.uefaMatch.CANCEL') },
+    {id: 0, display: t('status.uefaMatch.PENDING')},
+    {id: 1, display: t('status.uefaMatch.ONGOING')},
+    {id: 2, display: t('status.uefaMatch.ENDED')},
+    {id: 3, display: t('status.uefaMatch.CANCEL')},
   ],
 });
 
@@ -141,9 +172,13 @@ const request = reactive({
   id: null,
 });
 
+function isInTeamList(id) {
+  return teams.value.some(t => t.id === id);
+}
+
 async function loadEventDetail() {
   request.id = eventId;
-  const { data } = await getEvents(request);
+  const {data} = await getEvents(request);
   const record = data.records?.[0];
   if (record) {
     record.eventStartTime = dayjs(record.eventStartTime).format('YYYY-MM-DD HH:mm:ss');
@@ -152,13 +187,21 @@ async function loadEventDetail() {
 }
 
 async function loadTeams() {
-  const { data } = await getTeamById(form.sportId);
+  const {data} = await getTeamById(form.sportId);
   teams.value = data;
 }
 
 async function submit() {
   await formRef.value.validate(async (valid) => {
     if (!valid) return;
+    if (!isInTeamList(form.homeId)) {
+      form.homeName = form.homeId;
+      form.homeId = null;
+    }
+    if (!isInTeamList(form.awayId)) {
+      form.awayName = form.awayId;
+      form.awayId = null;
+    }
     await updateSportLiveEvent(form);
     ElMessage.success(t('message.updateSuccess'));
   });
