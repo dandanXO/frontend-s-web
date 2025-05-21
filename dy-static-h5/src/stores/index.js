@@ -43,6 +43,7 @@ export const userStore = defineStore("userStore", {
       appDownloadUrl: "",
       visitorId: "",
       withdrawType: "",
+      chatGuid: ""
     };
   },
   actions: {
