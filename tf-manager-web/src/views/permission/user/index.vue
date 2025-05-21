@@ -631,7 +631,13 @@ async function loadRoles(siteId) {
     }
   }
   const { data: roles } = await getSimpleRoles(siteId)
-  options.value = roles
+
+  // 拼接 name
+  const newRoles = roles.map(role => ({
+    ...role,
+    name: `${role.name} ${getSiteName(role.siteId)}`
+  }))
+  options.value = newRoles
 }
 
 function changePage(page) {
@@ -862,6 +868,18 @@ function toSiteName(row, column, cellValue, index) {
   }
 }
 
+function getSiteName(siteId) {
+  if (siteId) {
+    if (siteId === 0) {
+      return ''
+    } else {
+      return "(" + store.state.user.sites.find(site => site.id === siteId).siteName + ")" //  siteList.list.find(site => site.id === siteId).siteName
+    }
+  } else {
+    return ''
+  }
+}
+
 function getRolesTxt(roleIds) {
   return roleIds.map(rid => roleTxt(rid)).join(',')
 }
@@ -888,12 +906,21 @@ function selectable(row) {
 // }
 
 async function onSiteChange() {
+  // 先保存当前已选的 role id
+  const oldRoles = Array.isArray(form.roles) ? [...form.roles] : []
+
   await loadRoles(
     form.siteIdArray && form.siteIdArray !== null
       ? form.siteIdArray
       : form.siteId
   )
-  form.roles = null
+
+  // 取出新 options 里的所有 id
+  const validRoleIds = options.value.map(r => r.id)
+  // 只保留还在 options 里的 role
+  form.roles = oldRoles.filter(id => validRoleIds.includes(id))
+
+  // form.roles = null
   uiControl.rolesSelect = false
 }
 
