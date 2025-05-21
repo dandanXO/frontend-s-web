@@ -4,7 +4,10 @@
       <q-icon name="chevron_left" color="white" size="lg" />
       <div class="item-content">
         <div class="content-title">{{ livestreamData.title }}</div>
-        <div class="content-desc">{{ livestreamData.homeNameZh }} VS {{ livestreamData.awayNameZh }}</div>
+        <div class="content-desc">
+          {{ livestreamData.homeNameZh ?? livestreamData.homeNameEn ?? livestreamData.homeName }} VS
+          {{ livestreamData.awayNameZh ?? livestreamData.awayNameEn ?? livestreamData.awayName }}
+        </div>
       </div>
     </q-btn>
   </div>
@@ -72,7 +75,6 @@
           <q-btn
             flat
             dense
-
             @click="toggleMute"
             :icon="playerConfig.volume ? 'volume_up' : 'volume_off'"
             color="white"

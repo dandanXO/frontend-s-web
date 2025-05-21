@@ -43,7 +43,11 @@
                 <!-- 德国甲级联赛 -->
                 {{ item.title }}
               </div>
-              <div class="content-desc">{{ item.homeNameZh }} VS {{ item.awayNameZh }}</div>
+              <div class="content-desc">
+                {{ item.homeNameZh ?? item.homeNameEn ?? item.homeName }}
+                VS
+                {{ item.awayNameZh ?? item.awayNameEn ?? item.awayName }}
+              </div>
             </div>
             <div class="item-float-content">
               <div class="content-float float-user">
