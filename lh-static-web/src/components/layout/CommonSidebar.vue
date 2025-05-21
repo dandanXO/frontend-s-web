@@ -401,7 +401,7 @@ export default defineComponent({
     watch(
       () => route.query.name,
       (newName) => {
-        if (newName && newName.includes('vip')) {
+        if (newName && newName.includes('page-vip')) {
           router.push('/vip');
         }
       }
