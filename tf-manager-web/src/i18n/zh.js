@@ -916,6 +916,7 @@ export default {
     companyProfit: '公司盈利',
     configGroup: '设置组',
     confirm: '确认',
+    confirmAndExport: '确认并导出',
     confirmAndImport: '确认并导入',
     confirmAndSend: '确认并发送',
     confirmNewPassword: '确认新密码',
@@ -2588,6 +2589,8 @@ export default {
     pts: '分数',
     ptsRebateAmount: '返水分数金额',
     ftdRebateAmount: '返水首次存款金额',
+    pk4_super_affiliate: '招商',
+    pk4_master_affiliate: '总代',
     inProgress: '进行中',
     notStarted: '未开始',
     liveSportEventRecord: '体育直播赛事信息管理',
@@ -3150,6 +3153,7 @@ export default {
     'Member Group Send SMS': '会员群发消息',
     'Member Vip Upgrade': '会员 VIP 升级记录',
     'Sync Member Tree': '同步邀请关系',
+    'Member Parent': '会员上级记录',
     Sport: '体育',
     'Member Privilege Claim Status': '会员优惠领取状态',
     Affiliate: '代理',
@@ -3434,6 +3438,7 @@ export default {
     'Site Note': '便签板',
     'Fast Access Promo': '快速浏览优惠',
     'Refer Friend Rebate Point record': '邀请好友流水返点点数记录',
+    'Member Summary Report': '会员汇总报表',
     'Live Sport': '体育直播',
     'Sport Live Team': '队伍管理',
     'Sport Live Streamer': '主播管理',
@@ -3623,6 +3628,7 @@ export default {
     UNSENT: '未发送',
     SENDING: '发送中',
     SENT: '已发送',
+    FAIL: '发送失败',
   },
   telegram: {
     userStatus: {
@@ -3675,6 +3681,10 @@ export default {
       MANAGER: '管理后台',
       AFFILIATE: '代理后台',
     }
+  },
+  distributeFail: {
+    BLACKLIST: '优惠黑名单',
+    KEY_EXIST: '已领取',
   },
   referRebatePoint: {
     NO_BET_AFTER_DEPOSIT: '存款后无投注',
@@ -3752,6 +3762,7 @@ export default {
     10051: 'IP 标签不存在',
     10110: '平台获取待处理注单异常',
     10111: '平台更新待处理注单异常',
+    10113: '查询时间不可超过3个月',
     11000: '代理不存在',
     11006: '站点代理分红已存在',
     11007: '站点代理分红不存在',
