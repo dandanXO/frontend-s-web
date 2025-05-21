@@ -73,8 +73,47 @@
     </template>
 
     <template v-if="tabValue === 'sport'">
+      <div v-if="!hotMatchesByType.length" class="no-data">目前没有赛程</div>
       <template v-if="!$q.dark.isActive">
         <div class="white">
+          <div class="hot-match-items">
+            <div
+              :class="selectedCompetitionType"
+              class="hot-match-item"
+              v-for="hotMatch in hotMatchesByType"
+              :key="hotMatch.id"
+            >
+              <div class="hot-match-info">
+                <div class="hot-match-name">
+                  {{ hotMatch.competitionName }}
+                </div>
+                <div class="hot-match-scores">
+                  <div class="hot-match-team">
+                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamOneLogo}`" />
+                    <span>{{ hotMatch.teamOneName }}</span>
+                  </div>
+                  <div class="hot-match-time">
+                    {{ hotMatch.competitionTime }}
+                    <div
+                      class="bet-btn"
+                      @click="openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)"
+                    >
+                      立即投注
+                    </div>
+                  </div>
+                  <div class="hot-match-team">
+                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
+                    <span>{{ hotMatch.teamTwoName }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <template v-else>
+        <div class="dark">
           <div class="hot-match-items">
             <div
               :class="selectedCompetitionType"
@@ -129,6 +168,11 @@ const qs = require("qs");
 const tabValue = ref("liveStream");
 const hotMatches = ref([]);
 const competitionTypes = ref([]);
+const competitionTypesNameMap = ref({
+  Football: "足球",
+  Basketball: "篮球",
+  ESport: "电竞"
+});
 const selectedCompetitionType = ref();
 // const imgUrl = process.env.IMAGE_CDN;
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
@@ -300,7 +344,7 @@ onUnmounted(() => {
     align-items: center;
     gap: 10px;
     height: 100%;
-    padding: 0 20px 20px 20px;
+    padding: 0 20px 80px 20px;
 
     .hot-match-item {
       background: unset;
@@ -426,6 +470,7 @@ onUnmounted(() => {
 
 .dark {
   background: url("../../assets/images/livestream/livestream-bg-dark.png") no-repeat top center;
+  background-color: #1a2338;
   .top-toggle-menu {
     width: 100%;
     padding: 6px;
@@ -531,7 +576,7 @@ onUnmounted(() => {
   align-items: center;
   gap: 10px;
   height: 100%;
-  padding: 0 20px 20px 20px;
+  padding: 0 20px 80px 20px;
 
   .hot-match-item {
     background: url("../../assets/images/hotmatch/hotmatch-item-bg-dark.png") no-repeat center center;
