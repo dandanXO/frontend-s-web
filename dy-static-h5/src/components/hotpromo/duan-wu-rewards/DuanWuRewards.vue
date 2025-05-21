@@ -61,7 +61,7 @@
               "
               @click="handleOpenRecordDialog() ;isTabLeft=false">开启粽子记录</div>
             <img src="./images/main-img.png" @click="handleOpenRecordDialog" />
-            <img src="./images/main-img-reward.svg" class="reward-button" @click="handleClaimBonus" />
+            <img src="./images/main-img-reward.png" class="reward-button" @click="handleClaimBonus" />
             <div style="font-size: 13px;color:#027C5F; text-align:center;">每开启一次粽子将<span style="color:red;">消耗5片粽叶</span></div>
           </div>
         </div>
