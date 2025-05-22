@@ -570,7 +570,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 p {
   font-family: "Open Sans", sans-serif;
   line-height: 20px;
