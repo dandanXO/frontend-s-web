@@ -45,6 +45,7 @@
           :placeholder="t('fields.role')"
           class="filter-item"
           style="width: 120px; margin-left: 5px"
+          @focus="loadRoles(request.defaultSiteIds)"
         >
           <el-option
             v-for="item in options"
@@ -516,7 +517,8 @@ const request = reactive({
   name: null,
   enable: null,
   siteId: null,
-  role: null
+  role: null,
+  defaultSiteIds: null
 })
 const options = ref([])
 
@@ -586,6 +588,7 @@ function resetQuery() {
   request.enable = null
   request.siteId = store.state.user.siteId
   request.role = null
+  request.defaultSiteIds = LOGIN_USER_TYPE.value !== TENANT.value ? `0,${store.state.user.sites.map(site => site.id).join(',')}` : store.state.user.sites.map(site => site.id).join(',')
 }
 
 function handleSelectionChange(val) {
@@ -873,7 +876,9 @@ function getSiteName(siteId) {
     if (siteId === 0) {
       return ''
     } else {
-      return "(" + store.state.user.sites.find(site => site.id === siteId).siteName + ")" //  siteList.list.find(site => site.id === siteId).siteName
+      const site = store.state.user.sites.find(site => site.id === siteId)
+      return site ? `(${site.siteName})` : ''
+      // return "(" + store.state.user.sites.find(site => site.id === siteId).siteName + ")" //  siteList.list.find(site => site.id === siteId).siteName
     }
   } else {
     return ''
@@ -998,7 +1003,15 @@ onMounted(async () => {
     )
     // request.siteId = site.value.id
   }
-  await loadRoles()
+
+  const defaultSiteIds = store.state.user.sites.map(site => site.id)
+  if (LOGIN_USER_TYPE.value !== TENANT.value) {
+    request.defaultSiteIds = `0,${defaultSiteIds.join(',')}`
+  } else {
+    request.defaultSiteIds = defaultSiteIds.join(',')
+  }
+
+  await loadRoles(request.defaultSiteIds)
   await loadUser()
   await loadNetPhone()
 })
