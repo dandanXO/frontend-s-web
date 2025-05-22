@@ -191,6 +191,37 @@
       </div>
     </div>
   </div>
+
+    <q-dialog align-center centered v-model="isOpenResultDialog">
+    <div class="dialog" style="position: relative;display: flex;flex-direction: column;align-items: center;">
+      <div
+        style="
+          background: linear-gradient(180deg, #00cc8c 0%, #006646 100%);
+          text-align: center;
+          color: #fff;
+          font-size: 20px;
+          font-weight: 600;
+          height: 36px;
+          width: 100%;
+        "
+      >
+        兑换粽子获得安康金
+      </div>
+      <img src="./images/closeButton.png" alt="" style="position: absolute; top: 5px; right: 5px; cursor: pointer" @click="isOpenResultDialog = false"/>
+
+      <img src="./images/BigZoneZi.png" alt="" width="70%" />
+      <div>
+        <div style="color: #ff8400;font-weight: 600;">
+          <span style="font-size: 56px">{{ bonusClaims }}</span>
+          <span style="font-size: 16px">元</span>
+        </div>
+      </div>
+      <div style="color: #014625;font-size: 16px;">恭喜您获得安康金</div>
+      <div style="display: flex; justify-content: center;margin-top: 16px;">
+        <button @click="isOpenResultDialog = false">关闭</button>
+      </div>
+    </div>
+  </q-dialog>
   <q-dialog align-center centered v-model="isRecordDialogShow">
     <div class="dialog">
       <div class="title">
@@ -274,6 +305,8 @@ const isRecordDialogShow = ref(false);
 const isTabLeft = ref(true);
 const tokenRecord = ref([])
 const rewardRecord = ref([])
+const isOpenResultDialog = ref(false);
+const bonusClaims = ref(0);
 
 const handleToggleTab = () => {
   isTabLeft.value = !isTabLeft.value
@@ -299,6 +332,7 @@ const fetchRecordData = () => {
 }
 
 const handleClaimBonus = () => {
+  isOpenResultDialog.value = true;
   if (isClaiming.value === true) {
     return;
   }
@@ -336,6 +370,7 @@ const handleClaimBonus = () => {
             redPacket: res.data
           }
         });
+           bonusClaims.value = res.data
         fetchData();
       } else {
         notify({
