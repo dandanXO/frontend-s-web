@@ -73,7 +73,13 @@ export default route(function (/* { store, ssrContext } */) {
       ui.showFooter();
     }
 
-    if (to.path === "/promotion" || to.path === "/invitefriend" || to.path === "/vip" || to.path === "/affiliatepage" || to.path === "/deposit") {
+    if (
+      to.path === "/promotion" ||
+      to.path === "/invitefriend" ||
+      to.path === "/vip" ||
+      to.path === "/affiliatepage" ||
+      to.path === "/deposit"
+    ) {
       if (isAndroid()) {
         localStorage.setItem("TOKEN", to.query.token);
       } else {

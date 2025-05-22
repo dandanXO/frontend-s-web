@@ -12,10 +12,9 @@ const ESLintPlugin = require("eslint-webpack-plugin");
 
 const { configure } = require("quasar/wrappers");
 
-const fs = require('fs');
-const path = require('path');
-const fse = require('fs-extra');  // 推荐使用 fs-extra，更方便复制整个文件夹
-
+const fs = require("fs");
+const path = require("path");
+const fse = require("fs-extra"); // 推荐使用 fs-extra，更方便复制整个文件夹
 
 /**
  * NOTE:
@@ -37,7 +36,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-webpack/boot-files
-    boot: ["axios", "cache" , "fingerprint"],
+    boot: ["axios", "cache", "fingerprint", "i18n", "vue-native-websocket", "vue-shortkey"],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
     css: ["app.scss"],
@@ -63,20 +62,20 @@ module.exports = configure(function (ctx) {
         ...buildEnv
       },
       beforeBuild() {
-        const srcDir = path.resolve(__dirname, 'src/assets/images');
-        const destDir = path.resolve(__dirname, 'public/static/images');
+        const srcDir = path.resolve(__dirname, "src/assets/images");
+        const destDir = path.resolve(__dirname, "public/static/images");
 
-        console.log('开始复制文件...');
+        console.log("开始复制文件...");
 
         try {
           if (fs.existsSync(srcDir)) {
             fse.copySync(srcDir, destDir);
-            console.log('文件复制成功！');
+            console.log("文件复制成功！");
           } else {
-            console.log('源目录不存在，跳过复制');
+            console.log("源目录不存在，跳过复制");
           }
         } catch (error) {
-          console.error('复制文件失败：', error);
+          console.error("复制文件失败：", error);
         }
       },
       // transpile: false,
@@ -100,9 +99,7 @@ module.exports = configure(function (ctx) {
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
 
       chainWebpack(chain) {
-        chain
-          .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
+        chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
       }
     },
 
@@ -153,9 +150,7 @@ module.exports = configure(function (ctx) {
       // Tell browser when a file from the server should expire from cache (in ms)
 
       chainWebpackWebserver(chain) {
-        chain
-          .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js"] }]);
+        chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js"] }]);
       },
 
       middlewares: [
@@ -173,9 +168,7 @@ module.exports = configure(function (ctx) {
       // if using workbox in InjectManifest mode
 
       chainWebpackCustomSW(chain) {
-        chain
-          .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js"] }]);
+        chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js"] }]);
       },
 
       manifest: {
@@ -253,15 +246,11 @@ module.exports = configure(function (ctx) {
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
 
       chainWebpackMain(chain) {
-        chain
-          .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js"] }]);
+        chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js"] }]);
       },
 
       chainWebpackPreload(chain) {
-        chain
-          .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js"] }]);
+        chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js"] }]);
       }
     }
   };
