@@ -255,8 +255,9 @@ export default {
       SETTLED: '已结算',
     },
     namiMatch: {
+      NOT_STARTED: '未开赛',
       GAME_EXCEPTION: '比赛异常',
-      ONGOING: '未开赛',
+      ONGOING: '进行中',
       ENDED: '完场',
       CANCEL: '已取消',
       INTERRUPTED: '中断',
@@ -2624,6 +2625,8 @@ export default {
     streamTag: '流标签',
     isCdnPush: '推送 CDN',
     box: '回合',
+    copyToLive: '复制到直播',
+    confirmCopy: '请确认是否复制到直播？',
   },
   message: {
     adsStatusOpen: '开',
