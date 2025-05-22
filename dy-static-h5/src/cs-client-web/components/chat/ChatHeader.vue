@@ -376,6 +376,10 @@ export default defineComponent({
     border-radius: 10px;
     padding: 25px 15px 10px;
   }
+  .text-h6 {
+    padding-bottom: 14px;
+    font-weight: 600;
+  }
 }
 
 .q-toolbar {

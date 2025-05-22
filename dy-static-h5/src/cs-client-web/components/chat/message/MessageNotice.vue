@@ -7,16 +7,16 @@
 </template>
 
 <script>
-import {computed, defineComponent} from "vue";
+import { computed, defineComponent } from "vue";
 
 export default defineComponent({
   name: "MessageNotice",
   props: {
-    message: { type: Object, required: true },
+    message: { type: Object, required: true }
   },
   setup(props) {
-    const isIntro= computed(()=>{
-      if(props.message && props.message.content){
+    const isIntro = computed(() => {
+      if (props.message && props.message.content) {
         return true;
       }
       return false;
@@ -24,12 +24,12 @@ export default defineComponent({
 
     return {
       isIntro
-    }
-  },
+    };
+  }
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .message {
   &-notice {
     font-size: small;
