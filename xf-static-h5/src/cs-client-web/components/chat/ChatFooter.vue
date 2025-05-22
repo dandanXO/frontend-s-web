@@ -294,7 +294,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style lang="scss" scoped>
 .footer-board {
   background: #f7f7f7;
 }
@@ -323,7 +323,7 @@ export default defineComponent({
   border-radius: 20px;
 }
 
-.q-icon {
-  color: #fff;
+:deep(.q-field__append .q-icon) {
+  color: #fff !important;
 }
 </style>

@@ -2118,7 +2118,7 @@ export default defineComponent({
 }
 
 :deep(.q-textarea .q-field__native.q-placeholder) {
-  color: #fff;
+  color: #fff !important;
 }
 
 .modal-rating .q-card {
