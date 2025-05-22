@@ -32,6 +32,12 @@
               const match = teams.find(t => t.id === val);
               form.homeName = match ? match.nameZh : val;
             }"
+            @blur="e => {
+              if (typeof form.homeId === 'string' && !isInTeamList(form.homeId)) {
+                form.homeName = form.homeId;
+                form.homeId = null;
+              }
+            }"
           >
             <el-option
               v-for="team in teams"
@@ -55,11 +61,17 @@
             filterable
             allow-create
             default-first-option
-            :placeholder="form.awayName || form.awayNameZh"
+            :placeholder="form.awayName || form.awayNameZh || '请输入或选择队伍'"
             style="width: 300px"
             @change="val => {
               const match = teams.find(t => t.id === val);
               form.awayName = match ? match.nameZh : val;
+            }"
+            @blur="e => {
+              if (typeof form.awayId === 'string' && !isInTeamList(form.awayId)) {
+                form.awayName = form.awayId;
+                form.awayId = null;
+              }
             }"
           >
             <el-option
@@ -113,17 +125,17 @@
 </template>
 
 <script setup>
-import {ref, reactive, onMounted} from 'vue';
-import {useRoute} from 'vue-router';
-import {useI18n} from 'vue-i18n';
-import {getTeamById, getEvents, updateSportLiveEvent} from '@/api/sport-live';
-import {required} from '@/utils/validate';
-import {ElMessage} from 'element-plus';
-import {useSessionStorage} from "@vueuse/core";
+import { ref, reactive, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+import { getTeamById, getEvents, updateSportLiveEvent } from '@/api/sport-live';
+import { required } from '@/utils/validate';
+import { ElMessage } from 'element-plus';
+import { useSessionStorage } from "@vueuse/core";
 import dayjs from "dayjs";
 
 const route = useRoute();
-const {t} = useI18n();
+const { t } = useI18n();
 
 const eventId = Number(route.query.id);
 const formRef = ref(null);
@@ -132,18 +144,18 @@ const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value
 
 const uiControl = reactive({
   sport: [
-    {id: 1, name: 'FOOTBALL', display: '足球'},
-    {id: 2, name: 'BASKETBALL', display: '篮球'},
-    {name: 'LOL', display: 'LOL', id: 3},
-    {name: 'CSGO', display: 'CSGO', id: 4},
-    {name: 'DOTA2', display: 'DOTA2', id: 5},
-    {name: 'KOG', display: '王者荣耀', id: 6},
+    { id: 1, name: 'FOOTBALL', display: '足球' },
+    { id: 2, name: 'BASKETBALL', display: '篮球' },
+    { name: 'LOL', display: 'LOL', id: 3 },
+    { name: 'CSGO', display: 'CSGO', id: 4 },
+    { name: 'DOTA2', display: 'DOTA2', id: 5 },
+    { name: 'KOG', display: '王者荣耀', id: 6 },
   ],
   liveStatus: [
-    {id: 0, display: t('status.uefaMatch.PENDING')},
-    {id: 1, display: t('status.uefaMatch.ONGOING')},
-    {id: 2, display: t('status.uefaMatch.ENDED')},
-    {id: 3, display: t('status.uefaMatch.CANCEL')},
+    { id: 0, display: t('status.uefaMatch.PENDING') },
+    { id: 1, display: t('status.uefaMatch.ONGOING') },
+    { id: 2, display: t('status.uefaMatch.ENDED') },
+    { id: 3, display: t('status.uefaMatch.CANCEL') },
   ],
 });
 
@@ -160,10 +172,32 @@ const form = reactive({
 
 const formRules = reactive({
   sportId: [required(t('fields.sportTypeRequired'))],
-  title: [required(t('fields.matchTitleRequired'))],
-  homeId: [required(t('fields.homeTeamRequired'))],
-  awayId: [required(t('fields.awayTeamRequired'))],
-  eventStartTime: [required(t('fields.matchTimeRequired'))],
+  title: [required(t('fields.validateMatchTitleRequired'))],
+  homeId: [
+    {
+      validator: (_, value, callback) => {
+        if (!value && !form.homeName) {
+          callback(new Error(t('fields.validateHomeTeamRequired')));
+        } else {
+          callback();
+        }
+      },
+      trigger: 'blur'
+    }
+  ],
+  awayId: [
+    {
+      validator: (_, value, callback) => {
+        if (!value && !form.awayName) {
+          callback(new Error(t('fields.validateAwayTeamRequired')));
+        } else {
+          callback();
+        }
+      },
+      trigger: 'blur'
+    }
+  ],
+  eventStartTime: [required(t('fields.validateMatchTimeRequired'))],
 });
 
 const request = reactive({
@@ -178,7 +212,7 @@ function isInTeamList(id) {
 
 async function loadEventDetail() {
   request.id = eventId;
-  const {data} = await getEvents(request);
+  const { data } = await getEvents(request);
   const record = data.records?.[0];
   if (record) {
     record.eventStartTime = dayjs(record.eventStartTime).format('YYYY-MM-DD HH:mm:ss');
@@ -187,22 +221,36 @@ async function loadEventDetail() {
 }
 
 async function loadTeams() {
-  const {data} = await getTeamById(form.sportId);
+  const { data } = await getTeamById(form.sportId);
   teams.value = data;
 }
 
 async function submit() {
   await formRef.value.validate(async (valid) => {
     if (!valid) return;
-    if (!isInTeamList(form.homeId)) {
-      form.homeName = form.homeId;
-      form.homeId = null;
+
+    const payload = {
+      id: form.id,
+      sportId: form.sportId,
+      title: form.title,
+      eventStartTime: form.eventStartTime,
+      liveStatus: form.liveStatus,
+      sort: form.sort
+    };
+
+    if (isInTeamList(form.homeId)) {
+      payload.homeId = form.homeId;
+    } else if (form.homeName) {
+      payload.homeName = form.homeName;
     }
-    if (!isInTeamList(form.awayId)) {
-      form.awayName = form.awayId;
-      form.awayId = null;
+
+    if (isInTeamList(form.awayId)) {
+      payload.awayId = form.awayId;
+    } else if (form.awayName) {
+      payload.awayName = form.awayName;
     }
-    await updateSportLiveEvent(form);
+
+    await updateSportLiveEvent(payload);
     ElMessage.success(t('message.updateSuccess'));
   });
 }
