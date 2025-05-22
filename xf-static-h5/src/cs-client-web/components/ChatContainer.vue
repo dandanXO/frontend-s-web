@@ -1754,6 +1754,7 @@ export default defineComponent({
   height: 100%;
   padding-top: 20px;
   padding-bottom: 20px;
+  color: #000;
 
   &__layout {
     margin: 0 auto;
@@ -1889,7 +1890,7 @@ export default defineComponent({
   font-size: 13px;
   color: #fff;
   position: fixed;
-  bottom: 60px;
+  bottom: 90px;
   left: 0px;
   right: 0px;
   padding: 4px 8px;
@@ -1899,7 +1900,7 @@ export default defineComponent({
   align-items: center;
 
   .duplicate-span {
-    padding-right: 0px;
+    // padding-right: 0px;
     width: auto;
   }
 
@@ -1927,7 +1928,7 @@ export default defineComponent({
   align-items: center;
 
   .duplicate-span {
-    padding-right: 0px;
+    // padding-right: 0px;
     width: calc(100%);
   }
 }
@@ -1946,7 +1947,7 @@ export default defineComponent({
 
 .WAL-start,
 .WAL__layout {
-  height: calc(100vh - 60px) !important;
+  height: calc(100vh - 90px) !important;
   &.no-footer {
     height: 100vh !important;
   }
@@ -1956,7 +1957,7 @@ export default defineComponent({
   background: rgb(255, 255, 255);
   background: linear-gradient(180deg, rgba(255, 255, 255) 0%, rgba(222, 246, 246, 1) 65%, rgba(191, 238, 238, 1) 100%);
   width: 100%;
-  height: calc(100vh - 60px);
+  height: calc(100vh - 90px);
   min-height: 100vh;
   padding: 55px 15px 12px;
 
@@ -2055,7 +2056,7 @@ export default defineComponent({
 
 .start-chat-btn {
   position: fixed;
-  bottom: 60px;
+  bottom: 90px;
   left: 50%;
   transform: translateX(-50%);
   width: calc(90% - 48px);
@@ -2071,6 +2072,56 @@ export default defineComponent({
   .q-card {
     border-radius: 14px;
     padding: 30px 10px 10px;
+  }
+}
+
+.q-item__label {
+  color: #000;
+}
+
+.q-field__control:hover:before,
+.q-field--outlined .q-field__control:before {
+  border: 1px solid rgba(0, 0, 0, 0.24) !important;
+}
+
+.q-field .q-field__native.q-placeholder {
+  color: rgba(0, 0, 0, 0.87) !important;
+}
+
+.q-select {
+  .q-field__label {
+    color: rgba(0, 0, 0, 0.6) !important;
+  }
+}
+.select-input {
+  .q-field__native {
+    color: #000;
+  }
+}
+
+.q-select__dialog {
+  .q-item__label {
+    color: #fff;
+  }
+
+  .q-field__label {
+    color: #ccc !important;
+  }
+}
+
+.q-textarea .q-field__native.q-placeholder {
+  color: #fff !important;
+}
+
+.q-icon {
+  color: #fff;
+}
+
+.modal-endchat .q-card,
+.modal-rating .q-card {
+  background-color: #fff;
+  .text-h6 {
+    color: #000;
   }
 }
 </style>
