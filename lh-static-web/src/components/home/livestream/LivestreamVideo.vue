@@ -160,7 +160,7 @@ import { VideoPlayer } from "@/utils/videoPlayer";
 
 /** @type {import("flv.js").default.Config} */
 const DEFAULT_FLV_CONFIG = {
-  enableWorker: true
+  enableWorker: false
 };
 
 /** @type {import("hls.js").HlsConfig} */
@@ -251,7 +251,7 @@ const currentVideoUrl = computed(() => {
   const result = Object.entries(videoSource.value).find(([key, value]) => {
     return key === playerConfig.value.quality;
   });
-  return result[1]?.hls_url ?? "";
+  return result[1]?.flv_url ?? "";
 });
 
 const disableVideoController = computed(() => showUnmuteMask.value || !isLivestreaming.value);
@@ -262,18 +262,28 @@ const disableVideoController = computed(() => showUnmuteMask.value || !isLivestr
 // });
 
 const loadPlayer = async () => {
+  let _mediaType = "";
+  let _playerConfig;
   getQualities();
   if (player.value) {
     player.value.destroy();
   }
+
+  if (currentVideoUrl.value.includes(".flv")) {
+    _mediaType = "flv";
+    _playerConfig = DEFAULT_FLV_CONFIG;
+  } else if (currentVideoUrl.value.includes(".m3u8")) {
+    _mediaType = "hls";
+    _playerConfig = DEFAULT_HLS_CONFIG;
+  }
+
   player.value = new VideoPlayer(
     {
-      mediaType: "hls",
-      // url: currentChannel.value.url,
+      mediaType: _mediaType,
       url: currentVideoUrl.value,
+      // url: "http://localhost:8000/live/test.flv",
       maxLatency: 10,
-      // ...DEFAULT_FLV_CONFIG,
-      ...DEFAULT_HLS_CONFIG
+      ..._playerConfig
     },
     videoRef.value
   );
@@ -405,6 +415,9 @@ const handlePlayerCanPlay = () => {
   if (player.value.supportPlayer === "NATIVE") {
     isVideoLoading.value = false;
   }
+  if (playerConfig.value.isPause) {
+    changePlayerConfig("isPause", false);
+  }
   isVideoLoadFailed.value = false;
   isLatestScreenRecorded.value = false;
 };
@@ -457,7 +470,7 @@ const handleQualityChange = async (level) => {
   if (_level === playerConfig.value.quality) return;
   changePlayerConfig("quality", _level);
   // player.value.setQualityLevel(index);
-  player.value.changeSource(videoSource.value[_level].hls_url);
+  player.value.changeSource(videoSource.value[_level].flv_url);
   await initPlayer(true);
 };
 
@@ -466,7 +479,7 @@ const getQualities = () => {
   const result = Object.entries(videoSource.value).map(([level, value]) => ({
     value: level,
     name: QUALITY_ALIAS[level] ?? level,
-    url: value.hls_url
+    url: value.flv_url
   }));
 
   qualities.value = result;

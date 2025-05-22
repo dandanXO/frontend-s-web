@@ -6,7 +6,7 @@
  * @typedef {'FULL'|'NATIVE'|'NONE'} SupportPlayer
  */
 
-import { initFlv } from "./flv";
+import { _flv, initFlv } from "./flv";
 import { _hls, initHls } from "./hls";
 
 /**
@@ -91,15 +91,16 @@ export class VideoPlayer {
       if (!this._player) {
         this.supportPlayer = "NONE";
       } else {
+        this.supportPlayer = "FULL";
         this.qualitySupported = false;
-        this.Events = Object.assign({}, this._player.Events, this._customEvents);
+        this.Events = Object.assign({}, _flv.Events, this._customEvents);
       }
     }
     this._bindEvents();
   }
 
   async load(startPlay = false) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       if (this._mediaType === "hls") {
         if (this.supportPlayer === "FULL") {
           this.on(this.Events.MANIFEST_PARSED, async () => {
@@ -118,7 +119,7 @@ export class VideoPlayer {
           this.videoEl.src = this._url;
         }
       } else {
-        this.on(this.Events.LOADING_COMPLETE, async () => {
+        this.on(this.Events.SCRIPTDATA_ARRIVED, async () => {
           startPlay && (await this.play());
           resolve();
         });
@@ -243,7 +244,26 @@ export class VideoPlayer {
         });
       }
     } else {
-      // TODO: bind flv.js events
+      this.on(this.Events.ERROR, (error) => {
+        console.error(error);
+        const fetalErrors = [
+          _flv.ErrorDetails.NETWORK_STATUS_CODE_INVALID,
+          _flv.ErrorDetails.NETWORK_UNRECOVERABLE_EARLY_EOF,
+          _flv.ErrorDetails.MEDIA_MSE_ERROR,
+          _flv.ErrorDetails.MEDIA_ERROR,
+          _flv.ErrorDetails.NETWORK_UNSUPPORTED,
+          _flv.ErrorDetails.MEDIA_CODEC_UNSUPPORTED
+        ];
+        const fetal = fetalErrors.includes(error);
+        const customError = {
+          type: "NATIVE",
+          code: error,
+          details: error,
+          message: error || "Unknown error",
+          fetal
+        };
+        this._eventTarget.dispatchEvent(new CustomEvent(this._customEvents.CUSTOM_ERROR, { detail: customError }));
+      });
     }
   }
 
@@ -261,7 +281,7 @@ export class VideoPlayer {
           this.videoEl.addEventListener(event, handler, options);
         }
       } else if (this._mediaType === "flv") {
-        // TODO: bind flv.js events
+        this._player.on(event, handler);
       }
     }
     this._registeredEvents.push({ type, event, handler });
@@ -280,7 +300,7 @@ export class VideoPlayer {
             this.videoEl.removeEventListener(event, handler);
           }
         } else {
-          // TODO: remove flv.js events
+          this._player.off(event, handler);
         }
       }
     }
