@@ -322,4 +322,8 @@ export default defineComponent({
 .send-btn {
   border-radius: 20px;
 }
+
+.q-icon {
+  color: #fff;
+}
 </style>

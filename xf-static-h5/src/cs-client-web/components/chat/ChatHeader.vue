@@ -385,4 +385,11 @@ export default defineComponent({
 .text-h6 {
   padding-bottom: 14px;
 }
+
+.modal-endchat .q-card {
+  background-color: #fff;
+  .text-h6 {
+    color: #000;
+  }
+}
 </style>

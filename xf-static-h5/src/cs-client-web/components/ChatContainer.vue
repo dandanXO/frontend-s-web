@@ -187,6 +187,7 @@
                 :label-slot="true"
                 @popup-show="handleOpenPopup"
                 :standout="false"
+                color="white"
               >
                 <template v-slot:label>
                   {{ t("select_your_question") }}
@@ -1748,7 +1749,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .WAL {
   width: 100%;
   height: 100%;
@@ -1890,7 +1891,7 @@ export default defineComponent({
   font-size: 13px;
   color: #fff;
   position: fixed;
-  bottom: 90px;
+  bottom: 86px;
   left: 0px;
   right: 0px;
   padding: 4px 8px;
@@ -1947,7 +1948,7 @@ export default defineComponent({
 
 .WAL-start,
 .WAL__layout {
-  height: calc(100vh - 90px) !important;
+  height: calc(100vh - 86px) !important;
   &.no-footer {
     height: 100vh !important;
   }
@@ -1957,7 +1958,7 @@ export default defineComponent({
   background: rgb(255, 255, 255);
   background: linear-gradient(180deg, rgba(255, 255, 255) 0%, rgba(222, 246, 246, 1) 65%, rgba(191, 238, 238, 1) 100%);
   width: 100%;
-  height: calc(100vh - 90px);
+  height: calc(100vh - 86px);
   min-height: 100vh;
   padding: 55px 15px 12px;
 
@@ -2004,6 +2005,16 @@ export default defineComponent({
 
     &.q-field--float .q-field__label {
       display: none;
+    }
+
+    :deep(.q-field__native) {
+      color: #000;
+    }
+    :deep(q-field__append) {
+      color: rgba(0, 0, 0, 0.6);
+    }
+    :deep(.q-field--outlined .q-field__control:after) {
+      border-color: rgba(0, 0, 0, 0.6) !important;
     }
   }
 }
@@ -2056,7 +2067,7 @@ export default defineComponent({
 
 .start-chat-btn {
   position: fixed;
-  bottom: 90px;
+  bottom: 86px;
   left: 50%;
   transform: translateX(-50%);
   width: calc(90% - 48px);
@@ -2079,49 +2090,38 @@ export default defineComponent({
   color: #000;
 }
 
-.q-field__control:hover:before,
-.q-field--outlined .q-field__control:before {
-  border: 1px solid rgba(0, 0, 0, 0.24) !important;
+:deep(.q-field--outlined .q-field__control:after),
+:deep(.q-select.q-field--focused .q-field__control:after),
+:deep(.q-field__control:hover:before),
+:deep(.q-field__control:before) {
+  border: 1px solid rgba(0, 0, 0, 0.24);
 }
 
-.q-field .q-field__native.q-placeholder {
+:deep(.q-field--error.q-field--outlined .q-field__control:after),
+:deep(.q-field--error.q-field--focused .q-field__control:after) {
+  border: 1px solid red !important;
+}
+
+:deep(.q-field .q-field__native.q-placeholder) {
   color: rgba(0, 0, 0, 0.87) !important;
 }
-
-.q-select {
-  .q-field__label {
-    color: rgba(0, 0, 0, 0.6) !important;
-  }
-}
-.select-input {
-  .q-field__native {
-    color: #000;
-  }
+:deep(.q-field--error .q-field__native.q-placeholder) {
+  color: red !important;
 }
 
-.q-select__dialog {
-  .q-item__label {
-    color: #fff;
-  }
-
-  .q-field__label {
-    color: #ccc !important;
-  }
+:deep(.q-field__append .q-icon),
+:deep(.q-select .q-field__label) {
+  color: rgba(0, 0, 0, 0.6);
+}
+:deep(.q-select.q-field--error .q-field__label) {
+  color: red;
 }
 
-.q-textarea .q-field__native.q-placeholder {
-  color: #fff !important;
-}
-
-.q-icon {
+:deep(.q-textarea .q-field__native.q-placeholder) {
   color: #fff;
 }
 
-.modal-endchat .q-card,
 .modal-rating .q-card {
   background-color: #fff;
-  .text-h6 {
-    color: #000;
-  }
 }
 </style>
