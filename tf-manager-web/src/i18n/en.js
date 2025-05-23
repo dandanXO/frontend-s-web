@@ -1133,6 +1133,7 @@ export default {
     exclusiveUrlApp: 'Exclusive Url',
     exclusiveUrlCashier: 'Exclusive Url',
     exclusiveUrl: 'Exclusive Url',
+    expirationTime: 'Expiration Time',
     exportToExcel: 'Export to Excel',
     expressCompany: 'Express Company',
     externalUrl: 'External Url',
@@ -3201,6 +3202,7 @@ export default {
     'Member Vip Upgrade': 'Member VIP Upgrade',
     'Sync Member Tree': 'Sync Member Tree',
     'Member Parent': 'Member Parent Record',
+    'Register Blacklist': 'Register Blacklist',
     Sport: 'Sport',
     'Member Privilege Claim Status': 'Member Privilege Claim Status',
     Affiliate: 'Affiliate',
@@ -3950,5 +3952,7 @@ export default {
     50003: 'Adjustment login name duplicate',
     53000: 'Login name cannot be empty',
     53001: 'Referrer cannot be empty',
+    54000: 'Register blacklist record not exist',
+    54001: 'Register blacklist record already exist'
   },
 }

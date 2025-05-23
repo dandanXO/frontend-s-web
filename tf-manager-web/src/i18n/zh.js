@@ -1138,6 +1138,7 @@ export default {
     exclusiveUrlCashier: '专属后台网址',
     exclusiveUrl: '专属网址',
     exchangeRate: '兑换率',
+    expirationTime: '过期时间',
     exportToExcel: '导出至 Excel',
     expressCompany: '快递公司',
     externalUrl: '外部网址',
@@ -3154,6 +3155,7 @@ export default {
     'Member Vip Upgrade': '会员 VIP 升级记录',
     'Sync Member Tree': '同步邀请关系',
     'Member Parent': '会员上级记录',
+    'Register Blacklist': '注册黑名单',
     Sport: '体育',
     'Member Privilege Claim Status': '会员优惠领取状态',
     Affiliate: '代理',
@@ -3902,6 +3904,8 @@ export default {
     50002: '已超过平账最大金额',
     50003: '平账会员重复',
     53000: '请输入会员名',
-    53001: '推荐人或会员名其中一个必须要有'
+    53001: '推荐人或会员名其中一个必须要有',
+    54000: '注册黑名单记录不存在',
+    54001: '注册黑名单记录已存在'
   },
 }
