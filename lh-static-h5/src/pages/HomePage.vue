@@ -620,7 +620,7 @@
     :showCancelButton="false"
     :showConfirmButton="false"
   >
-    <q-card style="width: 100%" class="bg-bright text-black">
+    <q-card style="width: 100%" class="text-black bg-bright">
       <div class="modalcontent">
         <div class="headers">
           <div style="width: 16px">&nbsp;</div>
@@ -1612,9 +1612,10 @@ export default defineComponent({
     };
 
     const openDownloadAppLink = () => {
-      const affiliate = sessionStorage.getItem("AFFILIATE_CODE");
-      const theurl = `${downloadUrl.value}?agentCode=${affiliate}`;
-      window.open(theurl, "_blank");
+      router.push("/downloadApp");
+      // const affiliate = sessionStorage.getItem("AFFILIATE_CODE");
+      // const theurl = `${downloadUrl.value}?agentCode=${affiliate}`;
+      // window.open(theurl, "_blank");
     };
 
     const getImgPlatformLogo = (platform, code, alias) => {

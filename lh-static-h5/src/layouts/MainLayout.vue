@@ -454,6 +454,9 @@ export default defineComponent({
           prevPage.value = "account/invite";
           hasPage.value = true;
           pageName.value = "APP 安装教程";
+        } else if (route.path === '/downloadApp'){
+          hasPage.value = true;
+          pageName.value = "APP下载";
         }
 
         if (route.query.redirect) {
