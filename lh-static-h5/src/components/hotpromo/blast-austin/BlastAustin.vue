@@ -216,8 +216,7 @@
 ">
                     <th style="background-color:transparent" rowspan="2" width="70px">任务</th>
                     <th style="background-color:transparent" rowspan="2">当日有效投注</th>
-                    <th style="/* background-color:transparent; */background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 100%) !important;border-bottom: 1px solid #dcdce8;"
-                        colspan="5">冠冕金</th>
+                    <th style="background-color:transparent;border-bottom: 1px solid #dcdce8;" colspan="5">冠冕金</th>
                 </tr>
                 <tr style="
     height: 56px;
@@ -228,13 +227,12 @@
     background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     white-space: pre-wrap;
 ">
-                    <th
-                        style="border-radius: 0px;background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">
+                    <th style="border-radius: 0px;">
                         连续1天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续5天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续10天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续15天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续20天</th>
+                    <th style="">连续5天</th>
+                    <th style="">连续10天</th>
+                    <th style="">连续15天</th>
+                    <th style="">连续20天</th>
                 </tr>
                 <tr>
                     <td>任务一</td>
@@ -298,8 +296,7 @@
 ">
                     <th style="background-color:transparent" rowspan="2" width="70px">任务</th>
                     <th style="background-color:transparent" rowspan="2">当日存款金额</th>
-                    <th style="/* background-color:transparent; */background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 100%) !important;border-bottom: 1px solid #dcdce8;"
-                        colspan="5">冠冕金</th>
+                    <th style="background-color:transparent;border-bottom: 1px solid #dcdce8;" colspan="5">冠冕金</th>
                 </tr>
                 <tr style="
     height: 56px;
@@ -310,13 +307,12 @@
     background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     white-space: pre-wrap;
 ">
-                    <th
-                        style="border-radius: 0px;background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">
+                    <th style="border-radius: 0px;">
                         连续1天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续5天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续10天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续15天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续20天</th>
+                    <th style="">连续5天</th>
+                    <th style="">连续10天</th>
+                    <th style="">连续15天</th>
+                    <th style="">连续20天</th>
                 </tr>
                 <tr>
                     <td>任务一</td>
@@ -736,6 +732,41 @@ onMounted(() => {
     width: 130px !important;
     height: 104px !important;
 }
+
+.body--dark {
+    .container {
+        background: transparent !important;
+    }
+
+    .chest-item {
+        background: linear-gradient(178.46deg, #2d4065 2.36%, #2d4065 100%) !important;
+        border: 1px solid #be9457 !important;
+        border-radius: 12px;
+        color: #fff;
+    }
+
+    .section-title {
+        color: #fff;
+    }
+
+    .inner-section {
+        background: transparent;
+    }
+
+    .inner-sub-section {
+        background: #202C4A;
+    }
+}
+
+.section-table {
+    th {
+        font-size: 14px !important;
+    }
+
+    td {
+        font-size: 15px !important;
+    }
+}
 </style>
 
 <style lang="scss">
@@ -787,7 +818,7 @@ onMounted(() => {
     }
 
     .carousel__slide--prev {
-        opacity: var(--carousel-opacity-near);
+        opacity: 0.5;
         transform: rotateY(30deg) scale(0.95);
     }
 
@@ -797,7 +828,7 @@ onMounted(() => {
     }
 
     .carousel__slide--next {
-        opacity: var(--carousel-opacity-near);
+        opacity: 0.5;
         transform: rotateY(-30deg) scale(0.95);
     }
 

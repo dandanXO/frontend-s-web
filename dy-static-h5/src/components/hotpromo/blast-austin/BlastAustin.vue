@@ -733,6 +733,17 @@ onMounted(() => {
     width: 130px !important;
     height: 104px !important;
 }
+
+.section-table {
+    th {
+        line-height: 18px;
+        font-size: 14px !important;
+    }
+
+    td {
+        font-size: 15px !important;
+    }
+}
 </style>
 
 <style lang="scss">
@@ -784,7 +795,7 @@ onMounted(() => {
     }
 
     .carousel__slide--prev {
-        opacity: var(--carousel-opacity-near);
+        opacity: 0.5;
         transform: rotateY(30deg) scale(0.95);
     }
 
@@ -794,7 +805,7 @@ onMounted(() => {
     }
 
     .carousel__slide--next {
-        opacity: var(--carousel-opacity-near);
+        opacity: 0.5;
         transform: rotateY(-30deg) scale(0.95);
     }
 
