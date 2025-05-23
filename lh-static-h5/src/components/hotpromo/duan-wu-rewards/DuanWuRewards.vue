@@ -210,7 +210,17 @@
   </div>
 
   <q-dialog align-center centered v-model="isOpenResultDialog">
-    <div class="dialog" style="padding: 0px;border-radius:12px; position: relative;display: flex;flex-direction: column;align-items: center;">
+    <div
+      class="dialog"
+      style="
+        padding: 0px;
+        border-radius: 12px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      "
+    >
       <div
         style="
           background: linear-gradient(180deg, #00cc8c 0%, #006646 100%);
@@ -224,17 +234,22 @@
       >
         兑换粽子获得安康金
       </div>
-      <img src="./images/closeButton.png" alt="" style="position: absolute; top: 5px; right: 5px; cursor: pointer" @click="isOpenResultDialog = false"/>
+      <img
+        src="./images/closeButton.png"
+        alt=""
+        style="position: absolute; top: 5px; right: 5px; cursor: pointer"
+        @click="isOpenResultDialog = false"
+      />
 
       <img src="./images/BigZoneZi.png" alt="" width="70%" />
       <div>
-        <div style="color: #ff8400;font-weight: 600;">
+        <div style="color: #ff8400; font-weight: 600">
           <span style="font-size: 56px">{{ bonusClaims }}</span>
           <span style="font-size: 16px">元</span>
         </div>
       </div>
-      <div style="color: #014625;font-size: 16px;">恭喜您获得安康金</div>
-      <div style="display: flex; justify-content: center;margin-top: 16px;">
+      <div style="color: #014625; font-size: 16px">恭喜您获得安康金</div>
+      <div style="display: flex; justify-content: center; margin-top: 16px; margin-bottom: 20px">
         <button @click="isOpenResultDialog = false">关闭</button>
       </div>
     </div>
@@ -393,7 +408,7 @@ const handleClaimBonus = () => {
         //     redPacket: res.data
         //   }
         // });
-        bonusClaims.value = res.data
+        bonusClaims.value = res.data;
         fetchData();
       } else {
         notify({
@@ -864,10 +879,9 @@ onMounted(() => {
 }
 
 .dialog {
-  max-height: 400px !important;
+  max-height: 450px !important;
   background-color: #fbfbe3;
   width: 80%;
-  min-height: 504px;
   overflow: auto;
   border: 1px solid #027c5f;
   display: flex;
