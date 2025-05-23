@@ -192,9 +192,9 @@
     background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     white-space: pre-wrap;
 ">
-                    <th style="background-color:transparent" rowspan="2" width="70px">任务</th>
-                    <th style="background-color:transparent" rowspan="2">当日有效投注</th>
-                    <th style="/* background-color:transparent; */background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 100%) !important;border-bottom: 1px solid #dcdce8;"
+                    <th style="background-color:transparent;border-right:1px solid #d0d1d3;" rowspan="2" width="70px">任务</th>
+                    <th style="background-color:transparent;border-right:1px solid #d0d1d3;" rowspan="2">当日有效投注</th>
+                    <th style="background-color:transparent;border-bottom: 1px solid #dcdce8;border-right:1px solid #d0d1d3"
                         colspan="5">冠冕金</th>
                 </tr>
                 <tr style="
@@ -203,16 +203,15 @@
     font-weight: 400;
     line-height: 28px;
     color: #fff;
-    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     white-space: pre-wrap;
 ">
                     <th
-                        style="border-radius: 0px;background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">
+                        style="border-radius: 0px;border-right:1px solid #d0d1d3;">
                         连续1天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续5天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续10天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续15天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续20天</th>
+                    <th style="border-right:1px solid #d0d1d3">连续5天</th>
+                    <th  style="border-right:1px solid #d0d1d3">连续10天</th>
+                    <th  style="border-right:1px solid #d0d1d3">连续15天</th>
+                    <th style="border-right:1px solid #d0d1d3">连续20天</th>
                 </tr>
                 <tr>
                     <td>任务一</td>
@@ -271,12 +270,11 @@
     font-weight: 400;
     line-height: 12px;
     color: #fff;
-    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     white-space: pre-wrap;
 ">
-                    <th style="background-color:transparent" rowspan="2" width="70px">任务</th>
-                    <th style="background-color:transparent" rowspan="2">当日存款金额</th>
-                    <th style="/* background-color:transparent; */background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 100%) !important;border-bottom: 1px solid #dcdce8;"
+                    <th style="background-color:transparent;border-right:1px solid #d0d1d3;" rowspan="2" width="70px">任务</th>
+                    <th style="background-color:transparent;border-right:1px solid #d0d1d3;" rowspan="2">当日存款金额</th>
+                    <th style="background-color:transparent;border-bottom: 1px solid #dcdce8;border-right:1px solid #d0d1d3"
                         colspan="5">冠冕金</th>
                 </tr>
                 <tr style="
@@ -285,16 +283,15 @@
     font-weight: 400;
     line-height: 28px;
     color: #fff;
-    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     white-space: pre-wrap;
 ">
                     <th
-                        style="border-radius: 0px;background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">
+                        style="border-radius: 0px;border-right:1px solid #d0d1d3">
                         连续1天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续5天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续10天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续15天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续20天</th>
+                    <th  style="border-right:1px solid #d0d1d3">连续5天</th>
+                    <th  style="border-right:1px solid #d0d1d3">连续10天</th>
+                    <th  style="border-right:1px solid #d0d1d3">连续15天</th>
+                    <th style="border-right:1px solid #d0d1d3">连续20天</th>
                 </tr>
                 <tr>
                     <td>任务一</td>
@@ -707,6 +704,18 @@ onMounted(() => {
 
     &:active {
         transform: translateY(2px);
+    }
+}
+
+.section-table {
+    th {
+        font-family: 'PingFang SC';
+        font-size: 12px !important;
+    }
+
+    td {
+        font-family: 'PingFang SC';
+        font-size: 13px !important;
     }
 }
 </style>
