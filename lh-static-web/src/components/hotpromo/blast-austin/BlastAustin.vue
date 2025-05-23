@@ -19,11 +19,12 @@
                             :style="`filter:${claimedProgressData.mission === index + 1 || claimedProgressData.mission === null ? 'grayscale(0)' : 'grayscale(1)'}`">
                             <img class="icon-img" style="width:153px;height:119px;"
                                 src="@/assets/images/promotion/hotpromo/blast-austin/treasure-chest.png" />
+                            <div>任务{{ index + 1 }}</div>
                             <img v-if="claimedProgressData.mission === index + 1" class="icon-img"
                                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-claimed-btn.svg" />
                             <img v-else class="icon-img claim-chest-btn" style="width:143px;height:48px;"
                                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-unclaimed-btn.svg"
-                                @click="onClickSelectMission" />
+                                @click="onClickSelectMission(index + 1)" />
                         </div>
                     </div>
                 </template>
@@ -69,6 +70,7 @@
                     <div class="treasures">
                         <div v-for="item in [1, 5, 10, 15, 20]" class="chest-item"
                             :style="`filter:${claimedProgressData.bet.expiredDays.includes(item) ? 'grayscale(1)' : 'grayscale(0)'}`">
+                            <div>连续{{ item }}天</div>
                             <img v-if="item === 1" class="icon-img"
                                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-1.png" />
                             <img v-if="item === 5" class="icon-img"
@@ -118,6 +120,7 @@
                     <div class="treasures">
                         <div v-for="item in [1, 5, 10, 15, 20]" class="chest-item"
                             :style="`filter:${claimedProgressData.deposit.expiredDays.includes(item) ? 'grayscale(1)' : 'grayscale(0)'}`">
+                            <div>连续{{ item }}天</div>
                             <img v-if="item === 1" class="icon-img"
                                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-1.png" />
                             <img v-if="item === 5" class="icon-img"
@@ -159,8 +162,7 @@
         </div>
         <div style="display:flex;flex-direction:column;justify-content:flex-start;gap:5px;" bis_skin_checked="1">
             <div class="ribbon" bis_skin_checked="1">活动内容</div>
-            <span style="font-size: 1rem;">活动分为五个任务，当日BLAST 奥斯汀 Major
-                2025有效投注≥2,000元即可获得冠冕金，若当日存款金额≥500元，即可获得加冕金，连续冲关，连续加冕，最高可获5,330元~</span>
+            <span style="font-size: 1rem;">活动分为五个任务，当日BLAST 奥斯汀 Major 2025有效投注≥2,000元即可获得冠冕金，若当日存款金额≥500元，即可获得加冕金，连续冲关，连续加冕，最高可获2476元~</span>
         </div>
         <table class="section-table" style="
     width: 100%;
@@ -179,7 +181,7 @@
                     <th style="background-color:transparent" rowspan="2">当日有效投注</th>
                     <th style="background-color:transparent;border-bottom: 1px solid #dcdce8;" colspan="5">冠冕金</th>
                     <th style="background-color:transparent" rowspan="2">当日存款金额</th>
-                    <th style="background-color:transparent;border-bottom: 1px solid #dcdce8;" colspan="5">冠冕金</th>
+                    <th style="background-color:transparent;border-bottom: 1px solid #dcdce8;" colspan="5">加冕金</th>
                 </tr>
                 <tr style="
     height: 56px;
@@ -386,10 +388,16 @@ const claimedProgressData = ref({
     }
 })
 
-const onClickSelectMission = () => {
-    selectMissionBlastAustin(props.promoCode).then((res) => {
+const onClickSelectMission = (missionNum) => {
+    if(claimedProgressData.mission !== null) {
+        return;
+    }
+    
+    selectMissionBlastAustin(props.promoCode, missionNum).then((res) => {
         if (res.code === 0) {
             isOpenMissionDialogVisible.value = true;
+            initData()
+
         } else {
             notify({
                 message: res.message,
@@ -404,6 +412,7 @@ const onClickClaimChest = (type) => {
         if (res.code === 0) {
             claimDepositSuccessDialogBonus.value = res.data;
             isClaimDepositSuccessDialogVisible.value = true;
+            initData();
         } else {
             notify({
                 message: res.message,
@@ -413,7 +422,7 @@ const onClickClaimChest = (type) => {
     })
 }
 
-onMounted(() => {
+const initData = () => {
     isInitLoading.value = true;
 
     initBlastAustin(props.promoCode).then((res) => {
@@ -421,6 +430,10 @@ onMounted(() => {
     }).finally(() => {
         isInitLoading.value = false;
     })
+}
+
+onMounted(() => {
+    initData();
 })
 </script>
 
