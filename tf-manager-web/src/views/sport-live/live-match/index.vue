@@ -226,7 +226,7 @@ export default defineComponent({
     const currentRow = ref(null);
 
     const canCopy = computed(() => {
-      return currentRow.value && (currentRow.value.statusId === 1 || currentRow.value.statusId === 2);
+      return currentRow.value && (currentRow.value.streamId);
     });
 
     function formatTime(ts) {
