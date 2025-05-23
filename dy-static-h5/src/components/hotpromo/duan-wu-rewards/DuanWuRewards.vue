@@ -217,8 +217,8 @@
         </div>
       </div>
       <div style="color: #014625;font-size: 16px;">恭喜您获得安康金</div>
-      <div style="display: flex; justify-content: center;margin-top: 16px;margin-bottom: 20px;">
-        <button @click="isOpenResultDialog = false">关闭</button>
+      <div style="display: flex; justify-content: center;margin-top: 16px; margin-bottom: 20px">
+        <button @click="isOpenResultDialog = false">确定</button>
       </div>
     </div>
   </q-dialog>

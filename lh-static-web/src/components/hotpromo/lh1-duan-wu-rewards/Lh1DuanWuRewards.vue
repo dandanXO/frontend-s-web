@@ -224,7 +224,7 @@
             cursor: pointer;
           "
         >
-          <div @click="closeResultDialog">確定</div>
+          <div @click="closeResultDialog">确定</div>
         </div>
       </div>
       <div class="resultClose" @click="closeResultDialog">

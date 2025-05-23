@@ -185,55 +185,41 @@
       :show-close="false"
       style="background-color: #fbfbe3; border: #014625 solid 2px; min-width: 850px"
     >
-      <div style="display: flex; align-items: center; flex-direction: column; justify-content: center; padding: 0px">
-        <div
-          style="
-            display: flex;
-            color: #fff;
-            align-items: center;
-            justify-content: center;
-            font-size: 36px;
-            width: 100%;
-            height: 74px;
-            background: linear-gradient(180deg, #00cc8c 0%, #006646 100%);
-          "
-        >
-          <div>兑换粽子获得安康金</div>
-        </div>
-        <img
-          style="height: 380px"
-          src="@/assets/promo/lh1-duan-wu-rewards/resultDialogBg.png"
-          alt=""
-          class="title-img"
-        />
-        <div>
-          <span style="color: #ff8400; font-size: 60px; font-weight: 600">{{ rewardAmount }}</span>
-          <span style="color: #ff8400; font-size: 28px">元</span>
-        </div>
-        <div style="font-size: 32px; font-weight: 400; color: #014625; text-align: center; margin: 20px 0">
-          恭喜您获得安康金
-        </div>
-        <div
-          style="
-            background: linear-gradient(180deg, #00cc8c 0%, #006646 100%);
-            height: 60px;
-            width: 200px;
-            border-radius: 8px;
-            font-size: 24px;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-          "
-        >
-          <div @click="closeResultDialog">確定</div>
-        </div>
+    <div style=" display: flex;
+                  align-items: center;
+                  flex-direction: column;
+                  justify-content: center;
+                  padding: 0px;">
+      <div style=" display: flex; color: #fff; align-items: center; justify-content: center; font-size: 36px; width: 100%; height: 74px;background: linear-gradient(180deg, #00CC8C 0%, #006646 100%);">
+        <div>兑换粽子获得安康金</div>
+      </div>            
+      <img style="height: 300px; width: 703px;" src="@/assets/promo/lh1-duan-wu-rewards/resultDialogBg.png" alt="" class="title-img" />
+      <div>
+        <span style="color: #FF8400; font-size: 32px; font-weight: 600;">{{ rewardAmount }}</span>
+        <span style="color: #FF8400; font-size: 20px">元</span>
       </div>
       <div class="resultClose" @click="closeResultDialog">
         <img src="@/assets/promo/lh1-duan-wu-rewards/close-icon.png" alt="" />
       </div>
-    </el-dialog>
+      <div style="width: 234;
+                background: linear-gradient(180deg, #00CC8C 0%, #006646 100%);
+                  height: 60px;
+                  width: 200px;
+                  border-radius: 8px;
+                  font-size: 24px;
+                  color:#fff;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;">
+        <div @click="closeResultDialog">
+          确定
+        </div>            
+      </div>
+    </div>
+    <div class="resultClose" @click="closeResultDialog">
+      <img src="@/assets/promo/lh1-duan-wu-rewards/close-icon.png" alt="" />
+    </div>
+  </el-dialog>
 
     <el-dialog
       align-center
