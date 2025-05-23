@@ -226,10 +226,10 @@
           background: linear-gradient(180deg, #00cc8c 0%, #006646 100%);
           text-align: center;
           color: #fff;
-          font-size: 20px;
-          font-weight: 600;
+          font-size: 18px;
           height: 36px;
           width: 100%;
+          padding-top: 4px;
         "
       >
         兑换粽子获得安康金
