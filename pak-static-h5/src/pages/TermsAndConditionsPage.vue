@@ -596,7 +596,13 @@
         always putting our customers first. Trust, integrity and fairness are just three of our key values.
       </div>
       <div class="logo-wrapper">
-        <img class="gcb-logo" alt="gcb-logo" src="../assets/images/license/curacao-license.png" />
+        <a
+          href="https://cert.gcb.cw/certificate?id=ZXlKcGRpSTZJa2cxV1RWYVVVTm1USEZ5VDJRdlVVYzNLM2N4U25jOVBTSXNJblpoYkhWbElqb2llRFp4ZFhBcmMwYzBUSGh5TDFkRE5sRXJRbFJUUVQwOUlpd2liV0ZqSWpvaVlXUm1PREUxWkROaU1UWTJOV1F5WWpkak5XUTRNRGN4TVdZNU16Y3pZV0pqT1RrNU1ETmtNRGxpWVRjNE1UTmtZakl5WmpsaE4yVmxOamxpTkRSaVlTSXNJblJoWnlJNklpSjk="
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img class="gcb-logo" alt="gcb-logo" src="../assets/images/license/curacao-license.png" />
+        </a>
         <img class="eighteen-only-logo" alt="18+ only" src="../assets/images/common/18-only.png" />
       </div>
       <div class="footer-content">
@@ -775,6 +781,9 @@ function printDiv(divId) {
     justify-content: center;
     align-items: center;
     margin-top: 20px;
+    a {
+      width: min-content;
+    }
     .gcb-logo {
       width: 25%;
       min-width: 100px;
