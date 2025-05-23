@@ -28,6 +28,11 @@
       :promo-id="list.id"
       :promo-code="list.promoCode"
     />
+    <WeeklyDepositBonus
+      v-if="list.redirectUrl === 'vnm-weekly-deposit-bonus'"
+      :promo-id="list.id"
+      :promo-code="list.promoCode"
+    />
     <AseanM2024
       v-if="
         list.redirectUrl === 'dudoan-asean2024' ||
@@ -81,6 +86,7 @@ import CnyLuckyDraw from "@/components/hotpromo/2025-cny-lucky-draw/2025CnyLucky
 import AseanM2024 from "@/components/hotpromo/aseanM2024/AseanM2024.vue";
 import ChristmasNewYear from "@/components/hotpromo/christmas-new-year/ChristmasNewYear.vue";
 import xmasSpinWheel from "@/components/hotpromo/xmasSpinWheel/XmasSpinWheel.vue";
+import WeeklyDepositBonus from "@/components/hotpromo/weekly-deposit/WeeklyDepositBonus.vue";
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -101,7 +107,8 @@ export default defineComponent({
     NewPlayerPromo,
     CnyLuckyDraw,
     AseanM2024,
-    ChristmasNewYear
+    ChristmasNewYear,
+    WeeklyDepositBonus
     // CnyStepGame2024Promo
   },
   props: {

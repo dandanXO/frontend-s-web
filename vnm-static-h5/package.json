@@ -51,7 +51,7 @@
     "pinia": "^2.0.17",
     "process": "^0.11.10",
     "qs": "^6.11.0",
-    "quasar": "^2.14.3",
+    "quasar": "^2.18.1",
     "sitemap-webpack-plugin": "^1.1.1",
     "swiper": "^9.3.2",
     "vue": "^3.4.18",
