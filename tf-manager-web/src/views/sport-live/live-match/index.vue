@@ -56,27 +56,29 @@
           {{ getSportDisplayName(scope.row.sportId) }}
         </template>
       </el-table-column>
-      <el-table-column prop="competitionNameZh" :label="t('fields.competitionNameZh')" width="200" />
-      <el-table-column prop="competitionNameEn" :label="t('fields.competitionNameEn')" width="200" />
+      <el-table-column prop="competitionNameZh" :label="t('fields.competitionNameZh')" width="250" />
+      <el-table-column prop="competitionNameEn" :label="t('fields.competitionNameEn')" width="250" />
       <el-table-column :label="t('fields.homeTeam')" width="180">
         <template #default="scope">
           <img v-if="scope.row.home.icon" :src="scope.row.home.icon" style="width: 24px; height: 24px; margin-right: 8px;">
           <span>{{ scope.row.home.nameZh || scope.row.home.nameEn }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="homeScore" :label="t('fields.homeScore')" width="100" />
       <el-table-column :label="t('fields.awayTeam')" width="180">
         <template #default="scope">
           <img v-if="scope.row.away.icon" :src="scope.row.away.icon" style="width: 24px; height: 24px; margin-right: 8px;">
           <span>{{ scope.row.away.nameZh || scope.row.away.nameEn }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="awayScore" :label="t('fields.awayScore')" width="100" />
-      <el-table-column prop="box" :label="t('fields.box')" width="60" />
-
       <el-table-column prop="matchTime" :label="t('fields.matchTime')" width="180">
         <template #default="scope">
           {{ formatTime(scope.row.matchTime) }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="isCreateLiveUrl" :label="t('fields.isCreateLiveUrl')" width="100">
+        <template #default="scope">
+          <el-tag v-if="hasStreamId(scope.row)" type="success">{{ t('fields.yes') }}</el-tag>
+          <el-tag v-else type="danger">{{ t('fields.no') }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="statusId" :label="t('fields.status')" width="100">
@@ -278,6 +280,11 @@ export default defineComponent({
       return found ? found.display : statusId;
     }
 
+    function hasStreamId(row) {
+      // 判斷 streamId 是否有值且非空
+      return !!(row && row.streamId);
+    }
+
     onMounted(() => {
       loadMatch();
     });
@@ -298,6 +305,7 @@ export default defineComponent({
       getSportDisplayName,
       getLiveStatusDisplayName,
       canCopy,
+      hasStreamId,
     };
   }
 });

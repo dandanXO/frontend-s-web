@@ -2627,6 +2627,7 @@ export default {
     box: '回合',
     copyToLive: '复制到直播',
     confirmCopy: '请确认是否复制到直播？',
+    isCreateLiveUrl: '是否生产推流地址  (是/否)',
   },
   message: {
     adsStatusOpen: '开',

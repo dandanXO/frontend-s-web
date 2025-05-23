@@ -2623,6 +2623,7 @@ export default {
     box: 'Box',
     copyToLive: 'Copy to Live',
     confirmCopy: 'Confirm that you want to copy to live?',
+    isCreateLiveUrl: 'Is Create Live Url (Yes/No)',
   },
   message: {
     adsStatusOpen: 'Open',
