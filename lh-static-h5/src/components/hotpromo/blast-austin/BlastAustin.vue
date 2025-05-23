@@ -2,7 +2,7 @@
     <div class="blast-austin-wrapper">
         <div class="container">
 
-            <Carousel v-bind="carouselConfig">
+            <Carousel v-bind="carouselConfig" ref="missionCarousel">
                 <Slide v-for="item, index in Array.from(Array(5).keys())" :key="index">
                     <div class="chest-item"
                         :style="`filter:${claimedProgressData.mission === index + 1 || claimedProgressData.mission === null ? 'grayscale(0)' : 'grayscale(1)'}`">
@@ -381,6 +381,7 @@ import "vue3-carousel/dist/carousel.css";
 
 const betCarousel = ref(null);
 const depositCarousel = ref(null);
+const missionCarousel = ref(null);
 
 const carouselConfig = {
     height: 500,
@@ -476,6 +477,11 @@ onMounted(() => {
         const depositConsecutiveDays = res.data.deposit.consecutiveDays;
         if (depositConsecutiveDays) {
             goToDepositCarouselSlide(depositConsecutiveDays);
+        }
+
+        const mission = res.data.mission;
+        if(mission !== null) {
+            missionCarousel.value.slideTo(mission - 1);
         }
     })
 })
