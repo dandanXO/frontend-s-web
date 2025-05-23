@@ -1609,6 +1609,10 @@ $border-settings: 1px solid #e5e7eb;
         overflow: hidden;
         height: 96%;
         margin: 1%;
+
+        h3 {
+          margin: 0;
+        }
       }
     }
     .right {
