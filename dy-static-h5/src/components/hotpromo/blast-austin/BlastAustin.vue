@@ -297,7 +297,7 @@
                     <th style="background-color:transparent;border-right:1px solid #d0d1d3;" rowspan="2" width="70px">任务</th>
                     <th style="background-color:transparent;border-right:1px solid #d0d1d3;" rowspan="2">当日存款金额</th>
                     <th style="background-color:transparent;border-bottom: 1px solid #dcdce8;border-right:1px solid #d0d1d3"
-                        colspan="5">冠冕金</th>
+                        colspan="5">加冕金</th>
                 </tr>
                 <tr style="
     height: 56px;
