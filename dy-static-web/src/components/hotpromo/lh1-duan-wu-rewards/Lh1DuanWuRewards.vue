@@ -194,7 +194,7 @@
       <div style=" display: flex; color: #fff; align-items: center; justify-content: center; font-size: 36px; width: 100%; height: 74px;background: linear-gradient(180deg, #00CC8C 0%, #006646 100%);">
         <div>兑换粽子获得安康金</div>
       </div>            
-      <img style="height: 380px" src="@/assets/promo/lh1-duan-wu-rewards/resultDialogBg.png" alt="" class="title-img" />
+      <img style="height: 300px; width: 703px;" src="@/assets/promo/lh1-duan-wu-rewards/resultDialogBg.png" alt="" class="title-img" />
       <div>
         <span style="color: #FF8400; font-size: 32px; font-weight: 600;">{{ rewardAmount }}</span>
         <span style="color: #FF8400; font-size: 20px">元</span>
@@ -213,7 +213,7 @@
                   align-items: center;
                   justify-content: center;">
         <div @click="closeResultDialog">
-          確定
+          确定
         </div>            
       </div>
     </div>

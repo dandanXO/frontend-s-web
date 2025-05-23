@@ -212,7 +212,7 @@
                   align-items: center;
                   justify-content: center;">
         <div @click="closeResultDialog">
-          確定
+          确定
         </div>            
       </div>
     </div>
