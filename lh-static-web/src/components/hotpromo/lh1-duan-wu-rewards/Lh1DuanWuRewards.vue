@@ -134,7 +134,7 @@
           </div>
         </div>
         <div style="font-size: 20px; font-weight: 400; color: #ff0000; text-align: left; margin-bottom: 40px">
-          会员A 在当日累计有效投注400,000元，次日即可领取12片粽叶，兑换2个好粽，获得对应安康金。 
+          会员A 在当日累计有效投注400,000元，次日即可领取12片粽叶，兑换2个好粽，获得对应安康金。
         </div>
       </div>
     </div>
@@ -177,7 +177,60 @@
         </ul>
       </div>
     </div>
-
+    <el-dialog
+      align-center
+      centered
+      class="duanWuDialog"
+      v-model="isOpenResultDialog"
+      :show-close="false"
+      style="background-color: #fbfbe3; border: #014625 solid 2px; min-width: 850px"
+    >
+      <div style="display: flex; align-items: center; flex-direction: column; justify-content: center; padding: 0px">
+        <div
+          style="
+            border-top-left-radius: 9px;
+            border-top-right-radius: 9px;
+            display: flex;
+            color: #fff;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            width: 100%;
+            height: 74px;
+            background: linear-gradient(180deg, #00cc8c 0%, #006646 100%);
+          "
+        >
+          <div>兑换粽子获得安康金</div>
+        </div>
+        <img src="@/assets/promo/lh1-duan-wu-rewards/resultDialogBg.png" alt="" class="title-img" />
+        <div>
+          <span style="color: #ff8400; font-size: 60px; font-weight: 600">{{ rewardAmount }}</span>
+          <span style="color: #ff8400; font-size: 28px">元</span>
+        </div>
+        <div style="font-size: 32px; font-weight: 400; color: #014625; text-align: center; margin: 20px 0">
+          恭喜您获得安康金
+        </div>
+        <div
+          style="
+            background: linear-gradient(180deg, #00cc8c 0%, #006646 100%);
+            height: 60px;
+            width: 200px;
+            border-radius: 8px;
+            font-size: 24px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+          "
+        >
+          <div @click="closeResultDialog">確定</div>
+        </div>
+      </div>
+      <div class="resultClose" @click="closeResultDialog">
+        <img src="@/assets/promo/lh1-duan-wu-rewards/close-icon.png" alt="" />
+      </div>
+    </el-dialog>
     <el-dialog
       align-center
       centered
@@ -259,10 +312,12 @@ import {
 import { useNotify } from "@/hooks/notify";
 
 const isOpenDialog = ref(false);
+const isOpenResultDialog = ref(false);
 const props = defineProps(["promoCode"]);
 const notify = useNotify();
 const todayToken = ref("");
 const currentTokenAmount = ref("");
+const rewardAmount = ref(0);
 const rewardsCanClaim = ref("");
 const totalValidBet = ref("");
 const isTabLeft = ref(false);
@@ -318,10 +373,8 @@ const postReceive = () => {
 const postBonus = () => {
   getDuanWuclaimBonus(props.promoCode).then((res) => {
     if (res.code === 0) {
-      notify.success({
-        type: "success",
-        message: "领取成功"
-      });
+      isOpenResultDialog.value = true;
+      rewardAmount.value = res.data;
       init();
     } else {
       notify.error(res.message);
@@ -344,7 +397,9 @@ const fetchRecordData = (action) => {
     }
   });
 };
-
+const closeResultDialog = () => {
+  isOpenResultDialog.value = false;
+};
 const closeDialog = () => {
   isOpenDialog.value = false;
 };
@@ -409,9 +464,9 @@ onMounted(() => {
   position: relative;
 }
 .title-img {
-  width: 1102px;
-  margin-top: 38px;
-  margin-bottom: 32px;
+  width: 720px;
+  margin-top: 15px;
+  margin-bottom: 10px;
 }
 
 .first-content-title {
@@ -539,6 +594,14 @@ strong {
   height: 10px;
   cursor: pointer;
 }
+.resultClose {
+  position: absolute;
+  right: 60px;
+  top: 13px;
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
+}
 
 .closeBtn {
   background: linear-gradient(to bottom, #00cc8c, #006646);
@@ -550,5 +613,9 @@ strong {
   justify-content: center;
   border-radius: 8px;
   cursor: pointer;
+}
+:deep(.el-dialog .el-dialog__body) {
+  padding: 0px;
+  padding-bottom: 16px;
 }
 </style>
