@@ -4,21 +4,27 @@
 
             <Carousel v-bind="carouselConfig" ref="missionCarousel">
                 <Slide v-for="item, index in Array.from(Array(5).keys())" :key="index">
-                    <div class="chest-item"
+                    <template v-if="isInitLoading">
+                        <img style="display:flex;margin:0 auto !important;width:100px;height:auto;"
+                            src="../../../assets/images/promo/hotpromo/blast-austin/loader.gif" />
+                    </template>
+                    <div class="chest-item" v-else
                         :style="`filter:${claimedProgressData.mission === index + 1 || claimedProgressData.mission === null ? 'grayscale(0)' : 'grayscale(1)'}`">
                         <div class="section-title">
-                            <img class="icon-img" width="20px" height="20px"
+                            <img style="width:18px;height:18px;border-radius: 0px;"
                                 src="../../../assets/images/promo/hotpromo/blast-austin/gift-icon.svg" />
                             <span>
                                 任务选择
                             </span>
                         </div>
-                        <img class="icon-img" style="width:120px;"
+                        <img class="icon-img" style="width:120px !important;"
                             src="../../../assets/images/promo/hotpromo/blast-austin/treasure-chest.png" />
                         <div style="font-size: 15px;">任务{{ index + 1 }}</div>
-                        <img v-if="claimedProgressData.mission === index + 1" class="icon-img"
+                        <img v-if="claimedProgressData.mission === index + 1"
+                            style="width:105px !important;height: auto !important;"
                             src="../../../assets/images/promo/hotpromo/blast-austin/chest-claimed-btn.svg" />
                         <img v-else class="icon-img claim-chest-btn"
+                            style="width:105px !important;height: auto !important;"
                             src="../../../assets/images/promo/hotpromo/blast-austin/chest-unclaimed-btn.svg"
                             @click="onClickSelectMission" />
                     </div>
@@ -29,12 +35,17 @@
                 </template>
             </Carousel>
 
+
             <Carousel v-bind="carouselConfig" ref="betCarousel">
                 <Slide v-for="item, index in [1, 5, 10, 15, 20]" :key="index">
-                    <div class="chest-item"
+                    <template v-if="isInitLoading">
+                        <img style="display:flex;margin:0 auto !important;width:100px;height:auto;"
+                            src="../../../assets/images/promo/hotpromo/blast-austin/loader.gif" />
+                    </template>
+                    <div class="chest-item" v-else
                         :style="`filter:${claimedProgressData.bet.expiredDays.includes(item) ? 'grayscale(1)' : 'grayscale(0)'}`">
                         <div class="section-title">
-                            <img class="icon-img" width="20px" height="20px"
+                            <img style="width:18px;height:18px;border-radius: 0px;"
                                 src="../../../assets/images/promo/hotpromo/blast-austin/gift-icon.svg" />
                             <span>
                                 开启宝箱
@@ -66,26 +77,29 @@
                             </div>
                         </div>
 
-                        <img v-if="item === 1" class="icon-img"
+                        <img v-if="item === 1" class="claim-chest-img"
                             src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-1.png" />
-                        <img v-if="item === 5" class="icon-img"
+                        <img v-if="item === 5" class="claim-chest-img"
                             src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-5.png" />
-                        <img v-if="item === 10" class="icon-img"
+                        <img v-if="item === 10" class="claim-chest-img"
                             src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-10.png" />
-                        <img v-if="item === 15" class="icon-img"
+                        <img v-if="item === 15" class="claim-chest-img"
                             src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-15.png" />
-                        <img v-if="item === 20" class="icon-img"
+                        <img v-if="item === 20" class="claim-chest-img"
                             src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-20.png" />
                         <div style="font-size: 15px;">连续{{ item }}天</div>
                         <img v-if="claimedProgressData.bet.claimedDays.includes(item)" class="icon-img"
+                            style="width:105px !important;height: auto !important;"
                             src="../../../assets/images/promo/hotpromo/blast-austin/chest-claimed-btn.svg" />
                         <img v-else-if="claimedProgressData.bet.expiredDays.includes(item)" class="icon-img"
+                            style="width:105px !important;height: auto !important;"
                             src="../../../assets/images/promo/hotpromo/blast-austin/chest-expired-btn.svg" />
                         <img v-else-if="claimedProgressData.bet.consecutiveDays >= item && claimedProgressData.bet.bonus > 0"
-                            class="icon-img claim-chest-btn" style="width:143px;height:48px;"
+                            class="icon-img claim-chest-btn" style="width:105px !important;height: auto !important;"
                             src="../../../assets/images/promo/hotpromo/blast-austin/chest-claim-now-btn.png"
                             @click="onClickClaimChest('bet')" />
-                        <img style="filter:grayscale(1);width:143px;height:48px;" v-else class="icon-img"
+                        <img style="filter:grayscale(1);width:105px !important;height: auto !important;" v-else
+                            class="icon-img"
                             src="../../../assets/images/promo/hotpromo/blast-austin/chest-claim-now-btn.png" />
                     </div>
                 </Slide>
@@ -95,12 +109,17 @@
                 </template>
             </Carousel>
 
+
             <Carousel v-bind="carouselConfig" ref="depositCarousel">
                 <Slide v-for="item, index in [1, 5, 10, 15, 20]" :key="index">
-                    <div class="chest-item"
+                    <template v-if="isInitLoading">
+                        <img style="display:flex;margin:0 auto !important;width:100px;height:auto;"
+                            src="../../../assets/images/promo/hotpromo/blast-austin/loader.gif" />
+                    </template>
+                    <div class="chest-item" v-else
                         :style="`filter:${claimedProgressData.deposit.expiredDays.includes(item) ? 'grayscale(1)' : 'grayscale(0)'}`">
                         <div class="section-title">
-                            <img class="icon-img" width="20px" height="20px"
+                            <img style="width:18px;height:18px;border-radius: 0px;"
                                 src="../../../assets/images/promo/hotpromo/blast-austin/gift-icon.svg" />
                             <span>
                                 开启宝箱
@@ -132,26 +151,29 @@
                             </div>
                         </div>
 
-                        <img v-if="item === 1" class="icon-img"
+                        <img v-if="item === 1" class="claim-chest-img"
                             src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-1.png" />
-                        <img v-if="item === 5" class="icon-img"
+                        <img v-if="item === 5" class="claim-chest-img"
                             src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-5.png" />
-                        <img v-if="item === 10" class="icon-img"
+                        <img v-if="item === 10" class="claim-chest-img"
                             src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-10.png" />
-                        <img v-if="item === 15" class="icon-img"
+                        <img v-if="item === 15" class="claim-chest-img"
                             src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-15.png" />
-                        <img v-if="item === 20" class="icon-img"
+                        <img v-if="item === 20" class="claim-chest-img"
                             src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-20.png" />
                         <div style="font-size: 15px;">连续{{ item }}天</div>
                         <img v-if="claimedProgressData.deposit.claimedDays.includes(item)" class="icon-img"
+                            style="width:105px !important;height: auto !important;"
                             src="../../../assets/images/promo/hotpromo/blast-austin/chest-claimed-btn.svg" />
                         <img v-else-if="claimedProgressData.deposit.expiredDays.includes(item)" class="icon-img"
+                            style="width:105px !important;height: auto !important;"
                             src="../../../assets/images/promo/hotpromo/blast-austin/chest-expired-btn.svg" />
                         <img v-else-if="claimedProgressData.deposit.consecutiveDays >= item && claimedProgressData.deposit.bonus > 0"
-                            class="icon-img claim-chest-btn" style="width:143px;height:48px;"
+                            class="icon-img claim-chest-btn" style="width:105px !important;height: auto !important;"
                             src="../../../assets/images/promo/hotpromo/blast-austin/chest-claim-now-btn.png"
                             @click="onClickClaimChest('deposit')" />
-                        <img style="filter:grayscale(1);width:143px;height:48px;" v-else class="icon-img"
+                        <img style="filter:grayscale(1);width:105px !important;height: auto !important;" v-else
+                            class="icon-img"
                             src="../../../assets/images/promo/hotpromo/blast-austin/chest-claim-now-btn.png" />
                     </div>
                 </Slide>
@@ -194,8 +216,7 @@
 ">
                     <th style="background-color:transparent" rowspan="2" width="70px">任务</th>
                     <th style="background-color:transparent" rowspan="2">当日有效投注</th>
-                    <th style="/* background-color:transparent; */background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 100%) !important;border-bottom: 1px solid #dcdce8;"
-                        colspan="5">冠冕金</th>
+                    <th style="background-color:transparent;border-bottom: 1px solid #dcdce8;" colspan="5">冠冕金</th>
                 </tr>
                 <tr style="
     height: 56px;
@@ -206,13 +227,12 @@
     background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     white-space: pre-wrap;
 ">
-                    <th
-                        style="border-radius: 0px;background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">
+                    <th style="border-radius: 0px;">
                         连续1天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续5天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续10天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续15天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续20天</th>
+                    <th style="">连续5天</th>
+                    <th style="">连续10天</th>
+                    <th style="">连续15天</th>
+                    <th style="">连续20天</th>
                 </tr>
                 <tr>
                     <td>任务一</td>
@@ -276,8 +296,7 @@
 ">
                     <th style="background-color:transparent" rowspan="2" width="70px">任务</th>
                     <th style="background-color:transparent" rowspan="2">当日存款金额</th>
-                    <th style="/* background-color:transparent; */background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 100%) !important;border-bottom: 1px solid #dcdce8;"
-                        colspan="5">冠冕金</th>
+                    <th style="background-color:transparent;border-bottom: 1px solid #dcdce8;" colspan="5">冠冕金</th>
                 </tr>
                 <tr style="
     height: 56px;
@@ -288,13 +307,12 @@
     background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     white-space: pre-wrap;
 ">
-                    <th
-                        style="border-radius: 0px;background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">
+                    <th style="border-radius: 0px;">
                         连续1天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续5天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续10天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续15天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续20天</th>
+                    <th style="">连续5天</th>
+                    <th style="">连续10天</th>
+                    <th style="">连续15天</th>
+                    <th style="">连续20天</th>
                 </tr>
                 <tr>
                     <td>任务一</td>
@@ -442,8 +460,8 @@ const depositCarousel = ref(null);
 const missionCarousel = ref(null);
 
 const carouselConfig = {
-    height: 500,
-    itemsToShow: 1.75,
+    height: 450,
+    itemsToShow: 2.25,
     wrapAround: true,
 }
 
@@ -548,13 +566,13 @@ onMounted(() => {
 .chest-item {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 10px;
     justify-content: center;
     align-items: center;
     background: url("../../../assets/images/promo/hotpromo/blast-austin/chest-item-bg.png") no-repeat center center;
     background-size: 100% 100%;
     padding: 20px;
-    min-width: 300px;
+    min-width: 250px;
 
     .section-title {
         display: grid;
@@ -564,7 +582,7 @@ onMounted(() => {
         text-align: left;
         font-size: 20px;
         font-weight: 600;
-        font-size: 16px;
+        font-size: 14px;
         gap: 5px;
     }
 }
@@ -589,7 +607,7 @@ onMounted(() => {
         width: 100%;
         display: flex;
         align-items: center;
-        padding: 0 20px;
+        padding: 0 10px;
         border-radius: 8px;
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -600,13 +618,13 @@ onMounted(() => {
     .label {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 5px;
     }
 
     .status {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 5px;
         color: #00C224;
         font-weight: 600;
         justify-content: flex-end;
@@ -709,6 +727,46 @@ onMounted(() => {
         transform: translateY(2px);
     }
 }
+
+.claim-chest-img {
+    width: 130px !important;
+    height: 104px !important;
+}
+
+.body--dark {
+    .container {
+        background: transparent !important;
+    }
+
+    .chest-item {
+        background: linear-gradient(178.46deg, #2d4065 2.36%, #2d4065 100%) !important;
+        border: 1px solid #be9457 !important;
+        border-radius: 12px;
+        color: #fff;
+    }
+
+    .section-title {
+        color: #fff;
+    }
+
+    .inner-section {
+        background: transparent;
+    }
+
+    .inner-sub-section {
+        background: #202C4A;
+    }
+}
+
+.section-table {
+    th {
+        font-size: 14px !important;
+    }
+
+    td {
+        font-size: 15px !important;
+    }
+}
 </style>
 
 <style lang="scss">
@@ -760,7 +818,7 @@ onMounted(() => {
     }
 
     .carousel__slide--prev {
-        opacity: var(--carousel-opacity-near);
+        opacity: 0.5;
         transform: rotateY(30deg) scale(0.95);
     }
 
@@ -770,7 +828,7 @@ onMounted(() => {
     }
 
     .carousel__slide--next {
-        opacity: var(--carousel-opacity-near);
+        opacity: 0.5;
         transform: rotateY(-30deg) scale(0.95);
     }
 
