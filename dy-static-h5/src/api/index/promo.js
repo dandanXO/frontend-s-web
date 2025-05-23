@@ -498,3 +498,18 @@ export function getRewardsRecords(promoCode) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.get(`/session/token-rewards/rewardRecords?promoCode=${promoCode}&v=${randNum}`);
 }
+
+export function claimChestBlastAustin(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/mission/claim?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function selectMissionBlastAustin(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/mission/select?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function initBlastAustin(promoCode) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/mission/init?promoCode=${promoCode}&v=${randNum}`);
+}
