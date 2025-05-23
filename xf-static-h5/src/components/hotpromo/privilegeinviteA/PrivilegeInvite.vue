@@ -269,17 +269,17 @@
           <div class="info-box">
             <div class="info-item">
               <div class="info-top">昨日好友投注总额</div>
-              <div class="info-content yesterday-bet">{{ `${rebateInfo.yesterdayFriendBet || 0.0} 元` }}</div>
+              <div class="info-content yesterday-bet">{{ `${rebateInfo?.yesterdayFriendBet || 0.0} 元` }}</div>
             </div>
 
             <div class="info-item">
               <div class="info-top">累计待派返利</div>
-              <div class="info-content today-bonus">{{ `${rebateInfo.pendingRebate || 0.0} 元` }}</div>
+              <div class="info-content today-bonus">{{ `${rebateInfo?.pendingRebate || 0.0} 元` }}</div>
             </div>
 
             <div class="info-item">
               <div class="info-top">近15天累计返利</div>
-              <div class="info-content total-bouns">{{ `${rebateInfo.fifteenDaysRebate || 0.0} 元` }}</div>
+              <div class="info-content total-bouns">{{ `${rebateInfo?.fifteenDaysRebate || 0.0} 元` }}</div>
             </div>
           </div>
 
