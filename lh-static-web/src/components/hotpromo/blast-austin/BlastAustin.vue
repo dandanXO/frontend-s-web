@@ -641,7 +641,6 @@ onMounted(() => {
         background: url("@/assets/images/promotion/hotpromo/blast-austin/dialog-header.png");
         background-size: 100% 100%;
         width: 100%;
-        min-width: 600px;
         height: 70px;
         display: flex;
         justify-content: center;
