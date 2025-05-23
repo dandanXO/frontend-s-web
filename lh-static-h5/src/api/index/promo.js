@@ -701,9 +701,9 @@ export function claimChestBlastAustin(promoCode) {
   return eventapi.post(`/session/mission/claim?promoCode=${promoCode}&v=${randNum}`);
 }
 
-export function selectMissionBlastAustin(promoCode) {
+export function selectMissionBlastAustin(promoCode, missionNum) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
-  return eventapi.post(`/session/mission/select?promoCode=${promoCode}&v=${randNum}`);
+  return eventapi.post(`/session/mission/select?promoCode=${promoCode}&mission=${missionNum}&v=${randNum}`);
 }
 
 export function initBlastAustin(promoCode) {

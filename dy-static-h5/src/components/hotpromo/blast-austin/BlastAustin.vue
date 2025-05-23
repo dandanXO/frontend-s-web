@@ -26,7 +26,7 @@
                         <img v-else class="icon-img claim-chest-btn"
                             style="width:105px !important;height: auto !important;"
                             src="../../../assets/images/promo/hotpromo/blast-austin/chest-unclaimed-btn.svg"
-                            @click="onClickSelectMission" />
+                            @click="onClickSelectMission(index + 1)" />
                     </div>
                 </Slide>
 
@@ -510,10 +510,11 @@ const claimedProgressData = ref({
     }
 })
 
-const onClickSelectMission = () => {
-    selectMissionBlastAustin(props.promoCode).then((res) => {
+const onClickSelectMission = (missionNum) => {
+    selectMissionBlastAustin(props.promoCode, missionNum).then((res) => {
         if (res.code === 0) {
             isOpenMissionDialogVisible.value = true;
+            initData();
         } else {
             notify({
                 message: res.message,
@@ -528,6 +529,7 @@ const onClickClaimChest = (type) => {
         if (res.code === 0) {
             claimDepositSuccessDialogBonus.value = res.data;
             isClaimDepositSuccessDialogVisible.value = true;
+            initData();
         } else {
             notify({
                 message: res.message,
@@ -537,7 +539,7 @@ const onClickClaimChest = (type) => {
     })
 }
 
-onMounted(() => {
+const initData = () => {
     isInitLoading.value = true;
 
     initBlastAustin(props.promoCode).then((res) => {
@@ -560,6 +562,10 @@ onMounted(() => {
     }).finally(() => {
         isInitLoading.value = false;
     })
+}
+
+onMounted(() => {
+    initData();
 })
 </script>
 
