@@ -2,7 +2,7 @@
     <div class="blast-austin-wrapper">
         <div class="container">
 
-            <Carousel v-bind="carouselConfig">
+            <Carousel v-bind="carouselConfig" ref="missionCarousel">
                 <Slide v-for="item, index in Array.from(Array(5).keys())" :key="index">
                     <div class="chest-item"
                         :style="`filter:${claimedProgressData.mission === index + 1 || claimedProgressData.mission === null ? 'grayscale(0)' : 'grayscale(1)'}`">
@@ -192,9 +192,9 @@
     background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     white-space: pre-wrap;
 ">
-                    <th style="background-color:transparent" rowspan="2" width="70px">任务</th>
-                    <th style="background-color:transparent" rowspan="2">当日有效投注</th>
-                    <th style="/* background-color:transparent; */background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 100%) !important;border-bottom: 1px solid #dcdce8;"
+                    <th style="background-color:transparent;border-right:1px solid #d0d1d3;" rowspan="2" width="70px">任务</th>
+                    <th style="background-color:transparent;border-right:1px solid #d0d1d3;" rowspan="2">当日有效投注</th>
+                    <th style="background-color:transparent;border-bottom: 1px solid #dcdce8;border-right:1px solid #d0d1d3"
                         colspan="5">冠冕金</th>
                 </tr>
                 <tr style="
@@ -203,16 +203,15 @@
     font-weight: 400;
     line-height: 28px;
     color: #fff;
-    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     white-space: pre-wrap;
 ">
                     <th
-                        style="border-radius: 0px;background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">
+                        style="border-radius: 0px;border-right:1px solid #d0d1d3;">
                         连续1天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续5天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续10天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续15天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续20天</th>
+                    <th style="border-right:1px solid #d0d1d3">连续5天</th>
+                    <th  style="border-right:1px solid #d0d1d3">连续10天</th>
+                    <th  style="border-right:1px solid #d0d1d3">连续15天</th>
+                    <th style="border-right:1px solid #d0d1d3">连续20天</th>
                 </tr>
                 <tr>
                     <td>任务一</td>
@@ -271,12 +270,11 @@
     font-weight: 400;
     line-height: 12px;
     color: #fff;
-    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     white-space: pre-wrap;
 ">
-                    <th style="background-color:transparent" rowspan="2" width="70px">任务</th>
-                    <th style="background-color:transparent" rowspan="2">当日存款金额</th>
-                    <th style="/* background-color:transparent; */background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 100%) !important;border-bottom: 1px solid #dcdce8;"
+                    <th style="background-color:transparent;border-right:1px solid #d0d1d3;" rowspan="2" width="70px">任务</th>
+                    <th style="background-color:transparent;border-right:1px solid #d0d1d3;" rowspan="2">当日存款金额</th>
+                    <th style="background-color:transparent;border-bottom: 1px solid #dcdce8;border-right:1px solid #d0d1d3"
                         colspan="5">冠冕金</th>
                 </tr>
                 <tr style="
@@ -285,16 +283,15 @@
     font-weight: 400;
     line-height: 28px;
     color: #fff;
-    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     white-space: pre-wrap;
 ">
                     <th
-                        style="border-radius: 0px;background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">
+                        style="border-radius: 0px;border-right:1px solid #d0d1d3">
                         连续1天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续5天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续10天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续15天</th>
-                    <th style="background: linear-gradient(180deg, #4aa4ff 0%, #5db6fe 100%) !important;">连续20天</th>
+                    <th  style="border-right:1px solid #d0d1d3">连续5天</th>
+                    <th  style="border-right:1px solid #d0d1d3">连续10天</th>
+                    <th  style="border-right:1px solid #d0d1d3">连续15天</th>
+                    <th style="border-right:1px solid #d0d1d3">连续20天</th>
                 </tr>
                 <tr>
                     <td>任务一</td>
@@ -368,6 +365,58 @@
                 小时内可获得冠冕金88元和加冕金128元，若连续五天都达到任务四目标，在第六天即可领取128元冠冕金和188加冕金。</div>
         </div>
     </div>
+
+    <q-dialog v-model="isOpenMissionDialogVisible">
+        <div class="blast-austin-dialog">
+            <div class="dialog-header">开启宝箱</div>
+            <div class="dialog-body">
+                <img src="../../../assets/images/promo/hotpromo/blast-austin/open-mission-decor.png" width="300px"
+                    height="93px" />
+                <img src="../../../assets/images/promo/hotpromo/blast-austin/dialog-success-icon.png" width="48px"
+                    height="48px" />
+                <div class="title">恭喜您任务领取成功</div>
+                <div class="desc">任务一领取成功，请按照任务要求进行闯关，连续二十天完成当日有效投注≥2000元即可领取冠冕金128元，若连续二十天完成当日存款金额≥500元即可获得加冕金188元。
+                </div>
+                <div class="action-btn" @click="isOpenMissionDialogVisible = false">开始任务</div>
+            </div>
+        </div>
+    </q-dialog>
+
+    <q-dialog v-model="isClaimBetSuccessDialogVisible">
+        <div class="blast-austin-dialog">
+            <div class="dialog-header">冠冕任务</div>
+            <div class="dialog-body">
+                <img src="../../../assets/images/promo/hotpromo/blast-austin/claim-chest-decor.png" width="300px"
+                    height="110px" />
+                <img src="../../../assets/images/promo/hotpromo/blast-austin/dialog-success-icon.png" width="48px"
+                    height="48px" />
+                <div class="title">恭喜您开启冠冕任务宝箱成功</div>
+                <div class="desc" style="display:flex;align-items: center;color: #43B202;">
+                    获得加冕金{{ claimBetSuccessDialogBonus }}元<img
+                        src="../../../assets/images/promo/hotpromo/blast-austin/dialog-success-icon.png" width="20px"
+                        height="20px" /></div>
+                <div class="action-btn" @click="isClaimBetSuccessDialogVisible = false">继续任务</div>
+            </div>
+        </div>
+    </q-dialog>
+
+    <q-dialog v-model="isClaimDepositSuccessDialogVisible">
+        <div class="blast-austin-dialog">
+            <div class="dialog-header">加冕任务</div>
+            <div class="dialog-body">
+                <img src="../../../assets/images/promo/hotpromo/blast-austin/claim-chest-decor.png" width="300px"
+                    height="110px" />
+                <img src="../../../assets/images/promo/hotpromo/blast-austin/dialog-success-icon.png" width="48px"
+                    height="48px" />
+                <div class="title">恭喜您开启加冕任务宝箱成功</div>
+                <div class="desc" style="display:flex;align-items: center;color: #43B202;">
+                    获得加冕金{{ claimDepositSuccessDialogBonus }}元<img
+                        src="../../../assets/images/promo/hotpromo/blast-austin/dialog-success-icon.png" width="20px"
+                        height="20px" /></div>
+                <div class="action-btn" @click="isClaimDepositSuccessDialogVisible = false">继续任务</div>
+            </div>
+        </div>
+    </q-dialog>
 </template>
 
 <script setup>
@@ -379,8 +428,15 @@ import { useNotify } from "src/hooks/notify";
 import { Carousel, Navigation, Slide } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
 
+const isInitLoading = ref(false);
+const isOpenMissionDialogVisible = ref(false);
+const isClaimBetSuccessDialogVisible = ref(false);
+const claimBetSuccessDialogBonus = ref(0);
+const isClaimDepositSuccessDialogVisible = ref(false);
+const claimDepositSuccessDialogBonus = ref(0);
 const betCarousel = ref(null);
 const depositCarousel = ref(null);
+const missionCarousel = ref(null);
 
 const carouselConfig = {
     height: 500,
@@ -435,10 +491,7 @@ const claimedProgressData = ref({
 const onClickSelectMission = () => {
     selectMissionBlastAustin(props.promoCode).then((res) => {
         if (res.code === 0) {
-            notify({
-                message: "成功选择任务",
-                type: "success"
-            });
+            isOpenMissionDialogVisible.value = true;
         } else {
             notify({
                 message: res.message,
@@ -451,10 +504,8 @@ const onClickSelectMission = () => {
 const onClickClaimChest = (type) => {
     claimChestBlastAustin(props.promoCode, type).then((res) => {
         if (res.code === 0) {
-            notify({
-                message: "成功选择任务",
-                type: "success"
-            });
+            claimDepositSuccessDialogBonus.value = res.data;
+            isClaimDepositSuccessDialogVisible.value = true;
         } else {
             notify({
                 message: res.message,
@@ -465,6 +516,8 @@ const onClickClaimChest = (type) => {
 }
 
 onMounted(() => {
+    isInitLoading.value = true;
+
     initBlastAustin(props.promoCode).then((res) => {
         claimedProgressData.value = res.data;
 
@@ -477,6 +530,13 @@ onMounted(() => {
         if (depositConsecutiveDays) {
             goToDepositCarouselSlide(depositConsecutiveDays);
         }
+
+        const mission = res.data.mission;
+        if (mission !== null) {
+            missionCarousel.value.slideTo(mission - 1);
+        }
+    }).finally(() => {
+        isInitLoading.value = false;
     })
 })
 </script>
@@ -646,6 +706,18 @@ onMounted(() => {
         transform: translateY(2px);
     }
 }
+
+.section-table {
+    th {
+        font-family: 'PingFang SC';
+        font-size: 12px !important;
+    }
+
+    td {
+        font-family: 'PingFang SC';
+        font-size: 13px !important;
+    }
+}
 </style>
 
 <style lang="scss">
@@ -714,6 +786,89 @@ onMounted(() => {
     .carousel__slide--next~.carousel__slide {
         opacity: var(--carousel-opacity-inactive);
         transform: translateX(-10px) rotateY(12deg) scale(0.9);
+    }
+}
+
+.blast-austin-dialog {
+    &.el-dialog {
+        background: transparent;
+    }
+
+    .el-dialog__close {
+        background: #CECECE;
+        border-radius: 100px;
+        color: #7D7E80 !important;
+    }
+
+    .dialog-header {
+        background: url("../../../assets/images/promo/hotpromo/blast-austin/dialog-header.png");
+        background-size: 100% 100%;
+        width: 100%;
+        min-width: 350px;
+        max-width: 400px;
+        height: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 600;
+        font-size: 28px;
+        color: #fff;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+    }
+
+    .dialog-body {
+        background: url("../../../assets/images/promo/hotpromo/blast-austin/dialog-body.png");
+        background-size: 100% 100%;
+        width: 100%;
+        max-width: 400px;
+        min-height: 450px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        font-weight: 600;
+        font-size: 28px;
+        color: #fff;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        padding: 20px;
+
+        .title {
+            font-weight: 600;
+            font-size: 20px;
+            color: #43B202;
+        }
+
+        .desc {
+            font-weight: 500;
+            font-size: 16px;
+            text-align: center;
+            color: #7A8EB9;
+        }
+
+        .action-btn {
+            background: url("../../../assets/images/promo/hotpromo/blast-austin/action-btn.svg") center center;
+            background-size: 100% 100%;
+            width: 232px;
+            height: 48px;
+            border-radius: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 16px;
+            text-align: center;
+
+            &:hover {
+                filter: brightness(1.1);
+            }
+
+            &:active {
+                transform: translateY(2px);
+            }
+        }
     }
 }
 </style>
