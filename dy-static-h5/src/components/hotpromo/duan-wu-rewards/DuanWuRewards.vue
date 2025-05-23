@@ -141,7 +141,7 @@
               />
               <span>示例</span>
             </div>
-            会员A 在当日累计有效投注400,000元，次日即可领取12片粽叶，兑换2个好粽，获得对应安康金。 
+            会员A 在当日累计有效投注400,000元，次日即可领取12片粽叶，兑换2个好粽，获得对应安康金。
           </div>
         </div>
       </div>
@@ -217,7 +217,7 @@
         </div>
       </div>
       <div style="color: #014625;font-size: 16px;">恭喜您获得安康金</div>
-      <div style="display: flex; justify-content: center;margin-top: 16px;">
+      <div style="display: flex; justify-content: center;margin-top: 16px; margin-bottom: 20px">
         <button @click="isOpenResultDialog = false">确定</button>
       </div>
     </div>
@@ -320,13 +320,13 @@ const handleOpenRecordDialog = () => {
 const fetchRecordData = () => {
   getTokenRecords(props.promoCode).then((res) => {
     if (res.code === 0) {
-      tokenRecord.value = res.data 
+      tokenRecord.value = res.data
     }
   })
 
   getRewardsRecords(props.promoCode).then((res) => {
     if (res.code === 0) {
-       rewardRecord.value = res.data 
+       rewardRecord.value = res.data
     }
   })
 }
@@ -864,10 +864,9 @@ onMounted(() => {
 }
 
 .dialog {
-  max-height: 400px !important;
+  max-height: 450px !important;
   background-color: #fbfbe3;
   width: 80%;
-  min-height: 504px;
   overflow: auto;
   border: 1px solid #027c5f;
   padding: 12px;
