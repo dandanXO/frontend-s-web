@@ -285,8 +285,8 @@ const loadPlayer = async () => {
   player.value = new VideoPlayer(
     {
       mediaType: _mediaType,
-      // url: currentVideoUrl.value,
-      url: "http://localhost:8000/live/test.flv",
+      url: currentVideoUrl.value,
+      // url: "http://localhost:8000/live/test.flv",
       maxLatency: 10,
       ..._playerConfig
     },
