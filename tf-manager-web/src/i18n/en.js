@@ -249,6 +249,7 @@ export default {
       SETTLED: 'Settled',
     },
     namiMatch: {
+      NOT_STARTED: 'Not Started',
       GAME_EXCEPTION: 'Game Exception',
       ONGOING: 'Ongoing',
       ENDED: 'Ended',
@@ -2622,6 +2623,9 @@ export default {
     streamTag: 'Stream Tag',
     isCdnPush: 'Push CDN',
     box: 'Box',
+    copyToLive: 'Copy to Live',
+    confirmCopy: 'Confirm that you want to copy to live?',
+    isCreateLiveUrl: 'Is Create Live Url (Yes/No)',
   },
   message: {
     adsStatusOpen: 'Open',
