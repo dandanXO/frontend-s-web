@@ -201,6 +201,9 @@
       <div class="resultClose" @click="closeResultDialog">
         <img src="@/assets/promo/lh1-duan-wu-rewards/close-icon.png" alt="" />
       </div>
+      <div style="font-size: 32px; font-weight: 400; color: #014625; text-align: center; margin: 20px 0">
+          恭喜您获得安康金
+      </div>
       <div style="width: 234;
                 background: linear-gradient(180deg, #00CC8C 0%, #006646 100%);
                   height: 60px;
@@ -210,7 +213,7 @@
                   color:#fff;
                   display: flex;
                   align-items: center;
-                  justify-content: center;">
+                  justify-content: center;">      
         <div @click="closeResultDialog">
           确定
         </div>            
