@@ -511,6 +511,10 @@ const claimedProgressData = ref({
 })
 
 const onClickSelectMission = (missionNum) => {
+    if(claimedProgressData.value.mission !== null) {
+        return;
+    }
+    
     selectMissionBlastAustin(props.promoCode, missionNum).then((res) => {
         if (res.code === 0) {
             isOpenMissionDialogVisible.value = true;
