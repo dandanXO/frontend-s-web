@@ -567,8 +567,23 @@ const goToBank = () => {
 const isValidCardNumber = () => {
   const { cardNumber } = withdrawReadOnlyInfo;
 
-  const result = !cardNumber ? "Please Enter Card Number" : true;
-  return result;
+  // Check if cardNumber is missing
+  if (!cardNumber) {
+    return t("form.accountNumber_rules_01");
+  }
+
+  // Validate that cardNumber contains only 16 or 18 digits
+  const isValidLength = /^[0-9]{16}$|^[0-9]{18}$/.test(cardNumber);
+  if (!isValidLength) {
+    return t("form.accountNumber_rules_04"); // Assume this is the correct error message
+  }
+
+  // Ensure cardNumber does not contain a period
+  if (cardNumber.includes(".")) {
+    return t("form.accountNumber_rules_03");
+  }
+
+  return true;
 };
 
 const isValidCardAddress = () => {

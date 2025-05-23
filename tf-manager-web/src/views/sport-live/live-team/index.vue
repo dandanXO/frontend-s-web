@@ -94,14 +94,14 @@
             <el-col :span="10">
               <el-image
                 v-if="form.icon && uiControl.dialogType === 'EDIT'"
-                :src="form.icon.startsWith('http:') ? form.icon : promoDir + form.icon"
+                :src="form.icon.startsWith('http:') || form.icon.startsWith('https:') ? form.icon : promoDir + form.icon"
                 fit="contain"
                 style="aspect-ratio: 1/1"
                 class="preview"
               />
               <el-image
                 v-else-if="form.icon"
-                :src="promoDir + form.icon"
+                :src="form.icon.startsWith('http:') || form.icon.startsWith('https:') ? form.icon : promoDir + form.icon"
                 fit="contain"
                 style="aspect-ratio: 1/1"
                 class="preview"
@@ -133,7 +133,11 @@
       <el-table-column prop="nameZh" :label="t('fields.teamNameZh')" width="350" />
       <el-table-column prop="icon" :label="t('fields.teamIcon')" width="150">
         <template #default="scope">
-          <el-image v-if="scope.row.icon" :src="promoDir + scope.row.icon" class="preview" />
+          <el-image
+            v-if="scope.row.icon"
+            :src="scope.row.icon.startsWith('http://') || scope.row.icon.startsWith('https://') ? scope.row.icon : promoDir + scope.row.icon"
+            class="preview"
+          />
         </template>
       </el-table-column>
       <el-table-column :label="t('fields.operate')" align="right" fixed="right">
@@ -365,8 +369,9 @@ function submit() {
 function create() {
   formRef.value.validate(async (valid) => {
     if (valid) {
-      form.icon = form.icon?.startsWith("http") ? store.state.user.siteId + "/" + form.icon.split('/').pop() : form.icon;
-      console.log(form);
+      form.icon = form.icon?.startsWith("http://") || form.icon?.startsWith("https://")
+        ? store.state.user.siteId + "/" + form.icon.split('/').pop()
+        : form.icon;
       await createSportLiveTeam(form);
       uiControl.dialogVisible = false;
       await loadTeam();

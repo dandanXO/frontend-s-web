@@ -24,7 +24,10 @@
       <q-form v-if="!isEmailSent" class="q-mt-xs">
         <template v-if="fgtpwdTab === 'tabSms'">
           <q-input standout clearable v-model="passwordFormPhone.loginName" placeholder="请输入用户名"
-            :rules="[(val) => (val && val.length > 0) || '请输入用户名']" color="white" label-color="secondary"
+            :rules="[
+              (val) => (val && val.length > 0) || '请输入用户名',
+              (val) => (val && val.length >= 4 && val.length <= 12) || '长度要在 4-12 之间'
+            ]" color="white" label-color="secondary"
             autocomplete="username">
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
@@ -69,7 +72,10 @@
 
         <template v-if="fgtpwdTab === 'tabEmail'">
           <q-input standout clearable v-model="passwordFormEmail.loginName" placeholder="请输入用户名"
-            :rules="[(val) => (val && val.length > 0) || '请输入用户名']" color="white" label-color="secondary"
+            :rules="[
+              (val) => (val && val.length > 0) || '请输入用户名',
+              (val) => (val && val.length >= 4 && val.length <= 12) || '长度要在 4-12 之间'
+            ]" color="white" label-color="secondary"
             autocomplete="username">
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">

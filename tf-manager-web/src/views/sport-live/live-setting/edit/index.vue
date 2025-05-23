@@ -21,7 +21,24 @@
         </el-form-item>
 
         <el-form-item v-if="teams.length > 0" :label="t('fields.homeTeam')" prop="homeId">
-          <el-select v-model="form.homeId" style="width: 300px">
+          <el-select
+            v-model="form.homeId"
+            filterable
+            allow-create
+            default-first-option
+            :placeholder="form.homeName || form.homeNameZh || '请输入或选择队伍'"
+            style="width: 300px"
+            @change="val => {
+              const match = teams.find(t => t.id === val);
+              form.homeName = match ? match.nameZh : val;
+            }"
+            @blur="e => {
+              if (typeof form.homeId === 'string' && !isInTeamList(form.homeId)) {
+                form.homeName = form.homeId;
+                form.homeId = null;
+              }
+            }"
+          >
             <el-option
               v-for="team in teams"
               :key="team.id"
@@ -29,18 +46,44 @@
               :value="team.id"
             >
               <div style="display: flex; align-items: center">
-                <img :src="promoDir + team.icon" style="width: 20px; height: 20px; margin-right: 10px">
+                <img :src="(team.icon?.startsWith('http://') || team.icon?.startsWith('https://')) ? team.icon : promoDir + team.icon"
+                     style="width: 20px; height: 20px; margin-right: 10px"
+                >
                 {{ team.nameZh }}
               </div>
             </el-option>
           </el-select>
         </el-form-item>
 
-        <el-form-item v-if="teams.length > 0" :label="t('fields.awayTeam')" prop="awayId">
-          <el-select v-model="form.awayId" style="width: 300px" @focus="loadTeams">
-            <el-option v-for="team in teams" :key="team.id" :label="team.nameZh" :value="team.id">
+        <el-form-item :label="t('fields.awayTeam')" prop="awayId">
+          <el-select
+            v-model="form.awayId"
+            filterable
+            allow-create
+            default-first-option
+            :placeholder="form.awayName || form.awayNameZh || '请输入或选择队伍'"
+            style="width: 300px"
+            @change="val => {
+              const match = teams.find(t => t.id === val);
+              form.awayName = match ? match.nameZh : val;
+            }"
+            @blur="e => {
+              if (typeof form.awayId === 'string' && !isInTeamList(form.awayId)) {
+                form.awayName = form.awayId;
+                form.awayId = null;
+              }
+            }"
+          >
+            <el-option
+              v-for="team in teams"
+              :key="team.id"
+              :label="team.nameZh"
+              :value="team.id"
+            >
               <div style="display: flex; align-items: center">
-                <img :src="promoDir + team.icon" style="width: 20px; height: 20px; margin-right: 8px" alt="">
+                <img :src="(team.icon?.startsWith('http://') || team.icon?.startsWith('https://')) ? team.icon : promoDir + team.icon"
+                     style="width: 20px; height: 20px; margin-right: 10px"
+                >
                 {{ team.nameZh }}
               </div>
             </el-option>
@@ -129,10 +172,32 @@ const form = reactive({
 
 const formRules = reactive({
   sportId: [required(t('fields.sportTypeRequired'))],
-  title: [required(t('fields.matchTitleRequired'))],
-  homeId: [required(t('fields.homeTeamRequired'))],
-  awayId: [required(t('fields.awayTeamRequired'))],
-  eventStartTime: [required(t('fields.matchTimeRequired'))],
+  title: [required(t('fields.validateMatchTitleRequired'))],
+  homeId: [
+    {
+      validator: (_, value, callback) => {
+        if (!value && !form.homeName) {
+          callback(new Error(t('fields.validateHomeTeamRequired')));
+        } else {
+          callback();
+        }
+      },
+      trigger: 'blur'
+    }
+  ],
+  awayId: [
+    {
+      validator: (_, value, callback) => {
+        if (!value && !form.awayName) {
+          callback(new Error(t('fields.validateAwayTeamRequired')));
+        } else {
+          callback();
+        }
+      },
+      trigger: 'blur'
+    }
+  ],
+  eventStartTime: [required(t('fields.validateMatchTimeRequired'))],
 });
 
 const request = reactive({
@@ -140,6 +205,10 @@ const request = reactive({
   current: 1,
   id: null,
 });
+
+function isInTeamList(id) {
+  return teams.value.some(t => t.id === id);
+}
 
 async function loadEventDetail() {
   request.id = eventId;
@@ -159,7 +228,29 @@ async function loadTeams() {
 async function submit() {
   await formRef.value.validate(async (valid) => {
     if (!valid) return;
-    await updateSportLiveEvent(form);
+
+    const payload = {
+      id: form.id,
+      sportId: form.sportId,
+      title: form.title,
+      eventStartTime: form.eventStartTime,
+      liveStatus: form.liveStatus,
+      sort: form.sort
+    };
+
+    if (isInTeamList(form.homeId)) {
+      payload.homeId = form.homeId;
+    } else if (form.homeName) {
+      payload.homeName = form.homeName;
+    }
+
+    if (isInTeamList(form.awayId)) {
+      payload.awayId = form.awayId;
+    } else if (form.awayName) {
+      payload.awayName = form.awayName;
+    }
+
+    await updateSportLiveEvent(payload);
     ElMessage.success(t('message.updateSuccess'));
   });
 }

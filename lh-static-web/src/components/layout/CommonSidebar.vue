@@ -149,7 +149,7 @@ import { uiStore } from "@/store/ui";
 import { useDark, useLocalStorage } from "@vueuse/core";
 import GameModal from "@/components/modal/GameModal.vue";
 import { useNotify } from "@/hooks/notify";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { ElMessageBox } from "element-plus";
 import moment from "moment";
 
@@ -160,6 +160,7 @@ export default defineComponent({
   },
   setup() {
     const notify = useNotify();
+    const route = useRoute();
     const router = useRouter();
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value;
     const customerHovered = ref(false);
@@ -394,6 +395,14 @@ export default defineComponent({
       () => {
         if (store.token) {
           initFloating();
+        }
+      }
+    );
+    watch(
+      () => route.query.name,
+      (newName) => {
+        if (newName && newName.includes('page-vip')) {
+          router.push('/vip');
         }
       }
     );

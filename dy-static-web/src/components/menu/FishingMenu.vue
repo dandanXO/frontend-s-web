@@ -22,9 +22,10 @@
           </p>
         </div>
         <img :src="require('../../assets/fishing/header_fish_' + nav.image + '.png')" style="height: 40px" />
-        <p v-if="nav.code === 'AGF'" class="platform-title">PA捕鱼</p>
+        <!-- <p v-if="nav.code === 'AGF'" class="platform-title">PA捕鱼</p>
         <p v-else-if="nav.code === 'PMFISH'" class="platform-title">DB捕鱼</p>
-        <p v-else class="platform-title">{{ nav.code }}捕鱼</p>
+        <p v-else class="platform-title">{{ nav.code }}捕鱼</p> -->
+        <p class="platform-title">{{ getAliasName(nav, 'FISH') }}</p>
         <div class="platform-img" :class="'fish-' + nav.image"></div>
       </div>
     </div>
@@ -105,14 +106,29 @@ export default defineComponent({
         }));
     });
 
+
+    const getAliasName = (plat, platformType) => {
+      // console.log(plat);
+      if (plat.alias?.includes("、")) {
+        const aliass = plat.alias.split("、");
+        const gameTypes = plat.gameType.split(",");
+        const itemIndex = gameTypes.indexOf(platformType);
+        // console.log(platformType);
+        // console.log(aliass);
+        // console.log(aliass[itemIndex]);
+
+        return itemIndex && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
+      }
+      return plat.alias;
+    };
     onMounted(() => {
       getPlatList();
     });
-
     return {
       filteredNavigations,
       getPlatList,
-      moment
+      moment,
+      getAliasName
     };
   }
 });

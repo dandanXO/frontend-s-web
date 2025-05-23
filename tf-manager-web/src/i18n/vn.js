@@ -2952,6 +2952,7 @@ export default {
     10051: 'Nhãn IP hệ thống không tồn tại',
     10110: 'Lỗi giao dịch chờ xử lý trên nền tảng',
     10111: 'Lỗi giao dịch cập nhật chờ xử lý trên nền tảng',
+    10113: 'Thời gian truy vấn không thể vượt quá 3 tháng',
     11000: 'Đối tác không tồn tại',
     11006: 'Chi phí liên kết đối tác trang web đã tồn tại',
     11007: 'Chi phí liên kết đối tác trang web không tồn tại',
