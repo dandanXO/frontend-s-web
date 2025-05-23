@@ -389,7 +389,7 @@ const claimedProgressData = ref({
 })
 
 const onClickSelectMission = (missionNum) => {
-    if(claimedProgressData.mission !== null) {
+    if(claimedProgressData.value.mission !== null) {
         return;
     }
     
