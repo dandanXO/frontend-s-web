@@ -3121,7 +3121,12 @@ export default {
     validateFbUrlRequired: 'Facebook URL 为必填',
     validateFbTokenRequired: 'Facebook Token 为必填',
     qrCodeGenerateFailed: '生成二维码失败',
-    downloadUrlEmpty: '下载URL为空'
+    downloadUrlEmpty: '下载URL为空',
+    streamUrlNotM3U8OrFlv: '目前串流不是以 .m3u8 或 .flv 结尾，是否自动修正为 .m3u8？',
+    streamUrlMustBeM3U8OrFlv: '串流网址必须是 .m3u8 或 .flv 格式',
+    replacedWithM3U8: '已自动替换为 .m3u8 结尾',
+    validateSupplierStreamRequired: '厂商流为必填',
+    validateStreamerRequired: '主播必填'
   },
   menu: {
     'Add Promo': '新增优惠',
