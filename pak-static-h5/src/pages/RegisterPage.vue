@@ -1425,6 +1425,7 @@ function charType(num) {
 
   .license {
     display: flex;
+    padding: 15px 0px 15px;
     align-items: center;
     justify-content: center;
     text-decoration: none;
