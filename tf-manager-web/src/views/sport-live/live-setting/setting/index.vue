@@ -157,7 +157,9 @@
             {{
               (() => {
                 try {
-                  return JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.hls_url || '-'
+                  return JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.hls_url
+                    || JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.flv_url
+                    || '-'
                 } catch {
                   return '-'
                 }
@@ -165,12 +167,12 @@
             }}
           </span>
           <el-button
-            v-if="JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.hls_url"
+            v-if="JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.hls_url || JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.flv_url"
             size="mini"
             circle
             type="primary"
             icon="el-icon-view"
-            @click="openPreview(JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.hls_url)"
+            @click="openPreview(JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.hls_url || JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.flv_url)"
           />
           <div class="signal-bars" v-if="monitorScoreMap[scope.row.streamId] !== undefined">
             <span
