@@ -1,6 +1,6 @@
 {
   "lang": {
-    "get_price":"Congratulations, you have received",
+    "get_price": "Congratulations, you have received",
     "no_lottery_opportunities": "No lottery opportunities",
     "loginRequired": "Login required",
     "langVal": "en",
@@ -1247,7 +1247,7 @@
 
       "promotionPeriod": "Promotion starts from 00:00:00 on May 26, 2025, to 23:59:59 on June 29, 2025",
       "applicableFor": "Applicable to",
-      "applicableForText": "Members from VIP 1 and above", 
+      "applicableForText": "Members from VIP 1 and above",
       "applicableProducts": "Products",
       "applicableProductsText": "All products",
       "promotionDetails": "Promotion Details",
@@ -1273,7 +1273,12 @@
       "condition5": "Accounts with the same IP or similar data information are not eligible for this promotion.",
       "condition6": "TF88 reserves the right to modify, deny, or cancel this promotion at any time without prior notice.",
       "condition7": "This promotion cannot be combined with other promotions on TF88.",
-      "condition8": "General promotional terms and conditions apply."
+      "condition8": "General promotional terms and conditions apply.",
+      "rule1": "Members who deposit funds and reach a total deposit amount of 5,000 VNDP in a week will be eligible to receive a reward the following week.",
+      "rule2": "When the total weekly deposit reaches 5,000 VNDP or more, the Member will receive a reward according to Tier 1. If it reaches 8,888 VNDP or more, the Member will receive a reward according to Tier 2.",
+      "rule3": "Members must visit the promotion page to click and request the reward.",
+      "titlerule": "How to participate:",
+      "titlecondition": "Terms and Conditions:"
     },
     "about": {
       "affiliate": "Affiliates",

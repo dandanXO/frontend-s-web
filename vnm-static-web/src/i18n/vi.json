@@ -80,7 +80,7 @@
     "login_here": "Đăng nhập tại đây"
   },
   "common": {
-    "get_price":"Chúc mừng, bạn đã nhận được",
+    "get_price": "Chúc mừng, bạn đã nhận được",
     "no_lottery_opportunities": "Tài khoản Quý Khách không có hoặc đã sử dụng hết cơ hội quay thưởng.",
     "loginRequired": "Vui lòng đăng nhập tài khoản.",
     "login": "Đăng nhập",
@@ -743,7 +743,7 @@
       "claimNow": "NHẬN NGAY",
       "depositRegularly": "Nạp tiền đều tay",
       "receiveMassiveBonus": "Nhận thưởng siêu khủng 1,088 VNDP mỗi tuần",
-    
+
       "promotionPeriod": "Chương trình khuyến mãi bắt đầu từ 00:00:00 ngày 26.05.2025 đến 23:59:59 ngày 29.06.2025",
       "applicableFor": "Áp dụng",
       "applicableForText": "Cho Thành Viên từ VIP 1",
@@ -751,7 +751,7 @@
       "applicableProductsText": "Tất cả sản phẩm",
       "promotionDetails": "Chi tiết khuyến mãi",
       "promotionDetailsText": "",
-      
+
       "vipLevel": "Cấp độ VIP",
       "weeklyDepositTier1": "Tổng tiền gửi hàng tuần (Ngưỡng 1)",
       "bonusRateTier1": "Tỷ lệ thưởng (Ngưỡng 1)",
@@ -763,7 +763,7 @@
       "step1": "Thành Viên tham gia nạp tiền, vào mỗi tuần khi tổng số tiền gửi của Thành Viên đạt 5,000 VNDP, Thành Viên có thể nhận thưởng vào tuần tiếp theo.",
       "step2": "Khi tổng số tiền gửi trong tuần đạt từ 5,000 VNDP trở lên, Thành Viên sẽ nhận thưởng theo tỷ lệ ở Ngưỡng 1. Nếu đạt từ 8,888 VNDP trở lên, Thành Viên sẽ nhận thưởng theo tỷ lệ ở Ngưỡng 2.",
       "step3": "Thành Viên cần truy cập vào trang khuyến mãi để bấm yêu cầu nhận thưởng.",
-    
+
       "termsAndConditions": "Điều khoản và điều kiện",
       "condition1": "Mỗi Thành Viên chỉ được nhận thưởng một lần mỗi tuần.",
       "condition2": "Tiền thưởng chỉ có hiệu lực trong tuần, Thành Viên cần đăng nhập và tự nhận thưởng trong tuần hiện tại, quá hạn sẽ không còn hiệu lực.",
@@ -772,7 +772,12 @@
       "condition5": "Các tài khoản có cùng IP hoặc thông tin dữ liệu tương tự sẽ không được tham gia chương trình khuyến mãi này.",
       "condition6": "TF88 có quyền chỉnh sửa, từ chối hoặc hủy bỏ chương trình Khuyến mãi này bất cứ thời gian nào mà không cần báo trước.",
       "condition7": "Chương trình khuyến mãi không được áp dụng cùng các khuyến mãi khác tại TF88.",
-      "condition8": "Điều khoản & Điều kiện khuyến mãi chung được áp dụng."
+      "condition8": "Điều khoản & Điều kiện khuyến mãi chung được áp dụng.",
+      "rule1": "Thành Viên tham gia nạp tiền, vào mỗi tuần khi tổng số tiền gửi của Thành Viên đạt 5,000 VNDP, Thành Viên có thể nhận thưởng vào tuần tiếp theo.",
+      "rule2": "Khi tổng số tiền gửi trong tuần đạt từ 5,000 VNDP trở lên, Thành Viên sẽ nhận thưởng theo tỷ lệ ở Ngưỡng 1. Nếu đạt từ 8,888 VNDP trở lên, Thành Viên sẽ nhận thưởng theo tỷ lệ ở Ngưỡng 2.",
+      "rule3": "Thành Viên cần truy cập vào trang khuyến mãi để bấm yêu cầu nhận thưởng.",
+      "titlerule": "Cách thức tham gia:",
+      "titlecondition": "Điều khoản và điều kiện:"
     }
   },
   "status": {
