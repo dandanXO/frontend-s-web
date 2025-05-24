@@ -1240,6 +1240,41 @@
     "promo_available_draw": "Draw available",
     "promo_tnc": "Terms & Conditions",
     "promo_view_records": "View Records",
+    "weeklyDepositBonus": {
+      "claimNow": "CLAIM NOW",
+      "depositRegularly": "Deposit Regularly",
+      "receiveMassiveBonus": "Receive a Massive Bonus of 1,088 VNDP Every Week",
+
+      "promotionPeriod": "Promotion starts from 00:00:00 on May 26, 2025, to 23:59:59 on June 29, 2025",
+      "applicableFor": "Applicable to",
+      "applicableForText": "Members from VIP 1 and above", 
+      "applicableProducts": "Products",
+      "applicableProductsText": "All products",
+      "promotionDetails": "Promotion Details",
+      "promotionDetailsText": "",
+
+      "vipLevel": "VIP Level",
+      "weeklyDepositTier1": "Weekly Deposit Total (Tier 1)",
+      "bonusRateTier1": "Bonus Rate (Tier 1)",
+      "weeklyDepositTier2": "Weekly Deposit Total (Tier 2)",
+      "bonusRateTier2": "Bonus Rate (Tier 2)",
+      "maximumBonus": "Maximum Bonus",
+
+      "howToParticipate": "How to Participate",
+      "step1": "1. Members who deposit funds weekly with a total of 5,000 VNDP can receive a bonus the following week.",
+      "step2": "2. If the total weekly deposit is from 5,000 VNDP and above, members will receive a bonus based on Tier 1 rate. If it reaches 8,888 VNDP or more, they will receive a bonus based on Tier 2 rate.",
+      "step3": "3. Members must visit the promotion page to click and claim the bonus.",
+
+      "termsAndConditions": "Terms and Conditions",
+      "condition1": "Each member can only receive the bonus once per week.",
+      "condition2": "The bonus is valid only within the current week. Members must log in and claim it themselves during that week. Expired bonuses will not be valid.",
+      "condition3": "The bonus must be wagered 3 times before withdrawal is allowed.",
+      "condition4": "Draws, canceled bets, both sides betting, Europe Handicap with odds under 1.75, Asian Handicap under 0.75, virtual sports, horse racing, and number games are not applicable for this promotion.",
+      "condition5": "Accounts with the same IP or similar data information are not eligible for this promotion.",
+      "condition6": "TF88 reserves the right to modify, deny, or cancel this promotion at any time without prior notice.",
+      "condition7": "This promotion cannot be combined with other promotions on TF88.",
+      "condition8": "General promotional terms and conditions apply."
+    },
     "about": {
       "affiliate": "Affiliates",
       "aboutus": "About TFgaming",
