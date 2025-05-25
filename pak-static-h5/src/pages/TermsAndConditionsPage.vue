@@ -3,8 +3,8 @@
     <div class="tac-card">TERMS AND CONDITIONS</div>
     <div class="tac-card card-content">
       <div class="additional-buttons no-print">
-        <q-btn flat @click="downloadPDF()"><img src="../assets/images/tnc/download.png"></q-btn>
-        <q-btn flat @click="printDiv('card-content')"><img src="../assets/images/tnc/print.png"></q-btn>
+        <q-btn flat @click="downloadPDF()"><img src="../assets/images/tnc/download.png" /></q-btn>
+        <q-btn flat @click="printDiv('card-content')"><img src="../assets/images/tnc/print.png" /></q-btn>
       </div>
       <div class="content-points">1. INTRODUCTION</div>
       <div class="content-subpoints">
@@ -136,9 +136,9 @@
       <div class="content-subpoints">
         <p>
           3.12 You agree that any financial transactions (e.g. deposits, withdrawals) on your Account will be handled by
-          us directly or through a third party payment processing company (‟Payment Provider″). Financial transactions
+          us directly or through a third-party payment processing company (‟Payment Provider″). Financial transactions
           may appear on your card statement as ‟BRIDGETECH″. Payment agent company for some payments is Bridge
-          Technologies (Cyprus) Limited with registered address at Aigyptou 12, Nicosia, 1097 Cyprus, company
+          Technologies (Cyprus) Limited with registered address at Aigyptou 12, Nicosia, 1097 Cyprus, company
           registration number HE 440867.
         </p>
         <p>
@@ -420,6 +420,35 @@
           cooling-off period of a minimum of twenty-four (24) hours from receipt of the request has elapsed. For further
           information about our responsible gambling facilities, please read our Responsible Gaming Policy.
         </p>
+        <p>
+          5.3 Help Organizations
+          <br />
+          If you are worried about yourself, or if someone you know is having problems managing their gambling, there
+          are several external support agencies that can assist with providing advice.
+          <br />
+          Gamblers Anonymous
+          <br />
+          Website: https://gamblersanonymous.org/ga/
+          <br />
+          Gambling Therapy
+          <br />
+          Website: https://www.gamblingtherapy.org/
+          <br />
+          Contact: support@gamblingtherapy.org
+          <br />
+          The National Council on Problem Gambling
+          <br />
+          The National Council on Problem Gambling provides a range of resources, including answers to commonly asked
+          questions, a gambling behavior self-assessment, information about treatment and the National Problem Gambling
+          Helpline
+          <br />
+          Gamtalk
+          <br />
+          Gamtalk provides information on helplines, treatment and online resources from organizations around the world
+          dedicated to helping those struggling with problem gambling.
+          <br />
+          Website: https://www.gamtalk.org/treatment-support/
+        </p>
       </div>
 
       <div class="content-points">6. INTELLECTUAL PROPERTY RIGHTS</div>
@@ -563,47 +592,59 @@
     <div class="tac-footer">
       <img class="b9game-logo" alt="b9game-logo" src="../assets/images/common/b9game-logo.png" />
       <div class="footer-content">
-        b9.game aims to become the global leader in online gaming and betting using the latest blockchain technologies, always putting our customers first. Trust, integrity and fairness are just three of our key values.
+        b9.game aims to become the global leader in online gaming and betting using the latest blockchain technologies,
+        always putting our customers first. Trust, integrity and fairness are just three of our key values.
       </div>
-      <img class="gcb-logo" alt="gcb-logo" src="../assets/images/common/gcb-logo.png" />
+      <div class="logo-wrapper">
+        <a
+          href="https://cert.gcb.cw/certificate?id=ZXlKcGRpSTZJa2cxV1RWYVVVTm1USEZ5VDJRdlVVYzNLM2N4U25jOVBTSXNJblpoYkhWbElqb2llRFp4ZFhBcmMwYzBUSGh5TDFkRE5sRXJRbFJUUVQwOUlpd2liV0ZqSWpvaVlXUm1PREUxWkROaU1UWTJOV1F5WWpkak5XUTRNRGN4TVdZNU16Y3pZV0pqT1RrNU1ETmtNRGxpWVRjNE1UTmtZakl5WmpsaE4yVmxOamxpTkRSaVlTSXNJblJoWnlJNklpSjk="
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img class="gcb-logo" alt="gcb-logo" src="../assets/images/license/curacao-license.png" />
+        </a>
+        <img class="eighteen-only-logo" alt="18+ only" src="../assets/images/common/18-only.png" />
+      </div>
       <div class="footer-content">
-        b9.game is operated by Bridge Technologies B.V., company registration number 160264(0), with registered address at Dr. M.J. Hugenholtzweg 25, Willemstad, Curaçao. Bridge Technologies B.V. is licensed and authorized by the Government of Curaçao, operating under licence number OGL/2024/431/0231 issued by the Curaçao Gaming Control Board (GCB).
+        b9.game is operated by Bridge Technologies B.V., company registration number 160264(0), with registered address
+        at Dr. M.J. Hugenholtzweg 25, Willemstad, Curaçao. Bridge Technologies B.V. is licensed and authorized by the
+        Government of Curaçao, operating under licence number OGL/2024/431/0231 issued by the Curaçao Gaming Control
+        Board (GCB).
       </div>
       <div class="copyright-txt">© 2024 b9.game ALL RIGHTS RESERVED</div>
     </div>
   </div>
 </template>
 <script setup>
+import html2pdf from "html2pdf.js";
 
-import html2pdf from 'html2pdf.js'
+import { ref } from "vue";
 
-import { ref } from 'vue'
-
-const cardContent = ref(null)
+const cardContent = ref(null);
 function downloadPDF() {
   const opt = {
     margin: 0,
-    filename: 'card-content.pdf',
-    image: { type: 'jpeg', quality: 0.98 },
+    filename: "card-content.pdf",
+    image: { type: "jpeg", quality: 0.98 },
     html2canvas: {
       scale: 2,
       backgroundColor: null // allows CSS to show bg color
     },
-    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-  }
+    jsPDF: { unit: "in", format: "letter", orientation: "portrait" }
+  };
 
   // Clone node to avoid side-effects and remove .no-print manually
-  const clone = cardContent.value.cloneNode(true)
-  clone.querySelectorAll('.no-print').forEach(el => el.remove())
+  const clone = cardContent.value.cloneNode(true);
+  clone.querySelectorAll(".no-print").forEach((el) => el.remove());
 
-  html2pdf().set(opt).from(clone).save()
+  html2pdf().set(opt).from(clone).save();
 }
 function printDiv(divId) {
   const content = document.getElementById(divId).innerHTML;
-  const myWindow = window.open('', '', 'width=600,height=600');
-  myWindow.document.write('<html><head><title>Print</title></head><body>');
+  const myWindow = window.open("", "", "width=600,height=600");
+  myWindow.document.write("<html><head><title>Print</title></head><body>");
   myWindow.document.write(content);
-  myWindow.document.write('</body></html>');
+  myWindow.document.write("</body></html>");
   myWindow.document.close();
   myWindow.focus();
   myWindow.print();
@@ -625,7 +666,7 @@ function printDiv(divId) {
       &:after {
         height: 80%;
         width: 1px;
-        background-color: #FFFFFF33;
+        background-color: #ffffff33;
         content: "";
         position: absolute;
         right: 0;
@@ -635,9 +676,9 @@ function printDiv(divId) {
       }
       // border-right: 1px solid border: 1px solid #FFFFFF33;
     }
-  img {
-    width: 100%;
-  }
+    img {
+      width: 100%;
+    }
   }
 }
 .tac-card {
@@ -735,10 +776,22 @@ function printDiv(divId) {
     width: 50%;
     min-width: 150px;
   }
-  .gcb-logo {
-    width: 25%;
-    min-width: 100px;
+  .logo-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 20px;
+    a {
+      width: min-content;
+    }
+    .gcb-logo {
+      width: 25%;
+      min-width: 100px;
+      margin-right: 20px;
+    }
+    .eighteen-only-logo {
+      width: 57px;
+    }
   }
   .footer-content {
     margin-top: 24px;

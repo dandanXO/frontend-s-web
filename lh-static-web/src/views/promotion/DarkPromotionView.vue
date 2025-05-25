@@ -177,6 +177,9 @@
             <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
               <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
             </div>
+            <div v-if="selectedPromo.redirectUrl === 'lh1-blast-tv-austin-major-2025'">
+              <BlastAustin :promoCode="selectedPromo.promoCode" />
+            </div>
             <div
               v-if="selectedPromo.redirectUrl !== 'lh1-christmas-gashapon'"
               :class="`content-` + selectedPromo.redirectUrl"
@@ -205,7 +208,7 @@
 </template>
 
 <script lang="js">
-import { ref, defineComponent, onMounted, reactive, watch, computed } from "vue";
+import { ref, defineComponent, onMounted, reactive, watch, computed, defineAsyncComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { loadPromo } from "@/api/index/promo.js";
 import { userStore } from "@/store";
@@ -219,13 +222,16 @@ import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPr
 import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 import MesaPromo from "@/components/hotpromo/mesa/MesaPromo.vue";
 
+const BlastAustin = defineAsyncComponent(() => import("@/components/hotpromo/blast-austin/BlastAustin.vue"));
+
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
     NBAWaterBattle,
     BlastPremierMarquee,
-    MesaPromo
+    MesaPromo,
+    BlastAustin
   },
   setup() {
     const isDark = useDark();

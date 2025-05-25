@@ -685,3 +685,15 @@ export function postDuanWuReceiveToken(promoCode) {
 export function getDuanWuclaimBonus(promoCode) {
   return server.EVENT.post(`/session/token-rewards/claimBonus?promoCode=${promoCode}`);
 }
+
+export function initBlastAustin(promoCode) {
+  return server.EVENT.get(`/session/mission/init?promoCode=${promoCode}`);
+}
+
+export function selectMissionBlastAustin(promoCode, missionNum) {
+  return server.EVENT.post(`/session/mission/select?promoCode=${promoCode}&mission=${missionNum}`);
+}
+
+export function claimChestBlastAustin(promoCode, type) {
+  return server.EVENT.post(`/session/mission/claim?promoCode=${promoCode}&type=${type}`);
+}

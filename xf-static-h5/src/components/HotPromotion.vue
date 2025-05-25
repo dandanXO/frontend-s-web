@@ -10,7 +10,7 @@
     <GoldenEggPromo v-if="list.redirectUrl === 'goldenegg'" />
     <HongBaoYuPromo v-if="list.redirectUrl === 'hongbaoyu'" />
     <WelcomeTaskPromo v-if="list.redirectUrl === 'welcomenewuser'" />
-    <PrivilegeInvite v-if="store.token && list.redirectUrl === 'invitefriend'" />
+    <PrivilegeInvite v-if="list.redirectUrl === 'invitefriend'" />
     <HongBaoYu2025 v-if="list.redirectUrl === 'xf1-cny2025-red-envelope'" :promo-code="list.promoCode" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'xf-official-gift'" :params="list.param" />
     <SlotLacky8 v-if="list.redirectUrl === 'xf-lucky-slot' && store.token" :promo-code="list.promoCode" />
