@@ -248,6 +248,17 @@ export default {
       ENDED: 'Ended',
       SETTLED: 'Settled',
     },
+    namiMatch: {
+      NOT_STARTED: 'Not Started',
+      GAME_EXCEPTION: 'Game Exception',
+      ONGOING: 'Ongoing',
+      ENDED: 'Ended',
+      CANCEL: 'Cancel',
+      INTERRUPTED: 'Interrupted',
+      DELAYED: 'Delayed',
+      ABANDONED: 'Abandoned',
+      PENDING: 'Pending',
+    },
   },
   betStatus: {
     BET: 'BET',
@@ -775,6 +786,7 @@ export default {
     awayTeam: 'Away Team',
     awayTeamIcon: 'Away Team Icon',
     awayTeamResult: 'Away Team Result',
+    awayScore: 'Away Score',
     back: 'Back',
     balance: 'Balance',
     balanceUrl: 'Balance URL',
@@ -1122,6 +1134,7 @@ export default {
     exclusiveUrlApp: 'Exclusive Url',
     exclusiveUrlCashier: 'Exclusive Url',
     exclusiveUrl: 'Exclusive Url',
+    expirationTime: 'Expiration Time',
     exportToExcel: 'Export to Excel',
     expressCompany: 'Express Company',
     externalUrl: 'External Url',
@@ -1208,6 +1221,7 @@ export default {
     homeTeam: 'Home Team',
     homeTeamIcon: 'Home Team Icon',
     homeTeamResult: 'Home Team Result',
+    homeScore: 'Home Score',
     icon: 'Icon',
     pIcon: 'Privilege Icon',
     id: 'ID',
@@ -2091,6 +2105,8 @@ export default {
     competitionMatching: 'Competition Matching',
     competitionType: 'Competition Type',
     competitionName: 'Competition Name',
+    competitionNameZh: 'Competition Name(Chinese)',
+    competitionNameEn: 'Competition Name(English)',
     competitionTime: 'Competition Time',
     addCompetition: 'Add Competition',
     editCompetition: 'Edit Competition',
@@ -2604,7 +2620,12 @@ export default {
     streamName: 'Stream Name',
     streamScore: 'Stream Score',
     screenShot: 'Screen Shot',
-    streamTag: 'Stream Tag'
+    streamTag: 'Stream Tag',
+    isCdnPush: 'Push CDN',
+    box: 'Box',
+    copyToLive: 'Copy to Live',
+    confirmCopy: 'Confirm that you want to copy to live?',
+    isCreateLiveUrl: 'Is Create Live Url (Yes/No)',
   },
   message: {
     adsStatusOpen: 'Open',
@@ -3151,7 +3172,12 @@ export default {
     validateFbUrlRequired: 'Facebook URL is required',
     validateFbTokenRequired: 'Facebook Token is required',
     qrCodeGenerateFailed: 'QR Code Generate Fail',
-    downloadUrlEmpty: 'Download Url Empty'
+    downloadUrlEmpty: 'Download Url Empty',
+    streamUrlNotM3U8OrFlv: 'The current stream URL does not end with .m3u8 or .flv. Do you want to automatically correct it to .m3u8?',
+    streamUrlMustBeM3U8OrFlv: 'The stream URL must end with .m3u8 or .flv.',
+    replacedWithM3U8: 'Automatically replaced with .m3u8 extension.',
+    validateSupplierStreamRequired: 'Supplier stream URL is required.',
+    validateStreamerRequired: 'Streamer is required.'
   },
   menu: {
     'Add Promo': 'Add Promo',
@@ -3185,6 +3211,7 @@ export default {
     'Member Vip Upgrade': 'Member VIP Upgrade',
     'Sync Member Tree': 'Sync Member Tree',
     'Member Parent': 'Member Parent Record',
+    'Register Blacklist': 'Register Blacklist',
     Sport: 'Sport',
     'Member Privilege Claim Status': 'Member Privilege Claim Status',
     Affiliate: 'Affiliate',
@@ -3475,6 +3502,7 @@ export default {
     'Sport Live Team': 'Live Team Manage',
     'Sport Live Streamer': 'Live Streamer Manage',
     'Sport Live Event': 'Sport Live Event',
+    'Sport Live Match': 'Sport Live Match',
     'Sport Live Event Setting': 'Sport Live Event Setting',
     'Sport Live Sensitive Word': 'Sport Live Sensitive Word',
     'Sport Live Block Member': 'Sport Live Block Member Setting',
@@ -3648,6 +3676,7 @@ export default {
     excludeTypes: 'Exclude Game Types',
     specifyTypesAmount: 'Specify Game Types Amount',
     specifyGameType: 'Specific Game Types and Amount',
+    FAIL: 'Failed',
   },
   domainType: {
     LANDING: 'Landing',
@@ -3707,15 +3736,15 @@ export default {
       HOME: 'Home',
       MANAGER: 'Manager',
     },
+    distributeFail: {
+      BLACKLIST: 'Blacklist',
+      KEY_EXIST: 'Key Exist',
+    },
     domainBackendType: {
       API: 'API',
       MANAGER: 'Manager',
       AFFILIATE: 'Affiliate',
     }
-  },
-  distributeFail: {
-    BLACKLIST: 'Blacklist',
-    KEY_EXIST: 'Key Exist',
   },
   referRebatePoint: {
     NO_BET_AFTER_DEPOSIT: 'No Bet After Deposit',
@@ -3932,5 +3961,7 @@ export default {
     50003: 'Adjustment login name duplicate',
     53000: 'Login name cannot be empty',
     53001: 'Referrer cannot be empty',
+    54000: 'Register blacklist record not exist',
+    54001: 'Register blacklist record already exist'
   },
 }

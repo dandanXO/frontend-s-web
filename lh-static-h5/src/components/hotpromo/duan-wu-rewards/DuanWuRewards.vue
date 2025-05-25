@@ -158,7 +158,7 @@
               />
               <span>示例</span>
             </div>
-            会员A 在当日累计有效投注400,000元，次日即可领取12片粽叶，兑换2个好粽，获得对应安康金。 
+            会员A 在当日累计有效投注400,000元，次日即可领取12片粽叶，兑换2个好粽，获得对应安康金。
           </div>
         </div>
       </div>
@@ -208,6 +208,52 @@
       </div>
     </div>
   </div>
+
+  <q-dialog align-center centered v-model="isOpenResultDialog">
+    <div
+      class="dialog"
+      style="
+        padding: 0px;
+        border-radius: 12px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      "
+    >
+      <div
+        style="
+          background: linear-gradient(180deg, #00cc8c 0%, #006646 100%);
+          text-align: center;
+          color: #fff;
+          font-size: 18px;
+          height: 36px;
+          width: 100%;
+          padding-top: 4px;
+        "
+      >
+        兑换粽子获得安康金
+      </div>
+      <img
+        src="./images/closeButton.png"
+        alt=""
+        style="position: absolute; top: 5px; right: 5px; cursor: pointer"
+        @click="isOpenResultDialog = false"
+      />
+
+      <img src="./images/BigZoneZi.png" alt="" width="70%" />
+      <div>
+        <div style="color: #ff8400; font-weight: 600">
+          <span style="font-size: 56px">{{ bonusClaims }}</span>
+          <span style="font-size: 16px">元</span>
+        </div>
+      </div>
+      <div style="color: #014625;font-size: 16px;">恭喜您获得安康金</div>
+      <div style="display: flex; justify-content: center;margin-top: 16px; margin-bottom: 20px">
+        <button @click="isOpenResultDialog = false">确定</button>
+      </div>
+    </div>
+  </q-dialog>
   <q-dialog align-center centered v-model="isRecordDialogShow">
     <div class="dialog">
       <div class="title">
@@ -297,6 +343,8 @@ const isRecordDialogShow = ref(false);
 const isTabLeft = ref(true);
 const tokenRecord = ref([]);
 const rewardRecord = ref([]);
+const isOpenResultDialog = ref(false);
+const bonusClaims = ref(0);
 
 const handleToggleTab = () => {
   isTabLeft.value = !isTabLeft.value;
@@ -352,13 +400,15 @@ const handleClaimBonus = () => {
   claimTokenRewardsBonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
-        notify({
-          message: "成功领取",
-          type: "red-packet",
-          params: {
-            redPacket: res.data
-          }
-        });
+        isOpenResultDialog.value = true;
+        // notify({
+        //   message: "成功领取",
+        //   type: "red-packet",
+        //   params: {
+        //     redPacket: res.data
+        //   }
+        // });
+        bonusClaims.value = res.data;
         fetchData();
       } else {
         notify({
@@ -562,7 +612,6 @@ onMounted(() => {
   gap: 8px;
 
   .title {
-    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-title.png");
     background-repeat: no-repeat;
     background-size: 100%;
     width: 240px;
@@ -575,27 +624,6 @@ onMounted(() => {
     justify-content: flex-start;
     align-items: flex-start;
     gap: 10px;
-    .left {
-      background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-little-title-bg.png");
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      width: 64px;
-      height: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 12px;
-      font-weight: 600;
-      line-height: 23.33px;
-      color: #ffffff;
-      margin-right: 16px;
-    }
-    .right {
-      font-size: 12px;
-      font-weight: 400;
-      line-height: 20px;
-      color: #000000;
-    }
   }
 }
 
@@ -851,13 +879,11 @@ onMounted(() => {
 }
 
 .dialog {
-  max-height: 400px !important;
+  max-height: 450px !important;
   background-color: #fbfbe3;
   width: 80%;
-  min-height: 504px;
   overflow: auto;
   border: 1px solid #027c5f;
-  padding: 12px;
   display: flex;
   flex-direction: column;
   .inner-table {

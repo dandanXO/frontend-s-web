@@ -1748,7 +1748,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .WAL {
   width: 100%;
   height: 100%;
@@ -1899,7 +1899,7 @@ export default defineComponent({
   align-items: center;
 
   .duplicate-span {
-    padding-right: 0px;
+    // padding-right: 0px;
     width: auto;
   }
 
@@ -1927,7 +1927,7 @@ export default defineComponent({
   align-items: center;
 
   .duplicate-span {
-    padding-right: 0px;
+    // padding-right: 0px;
     width: calc(100%);
   }
 }

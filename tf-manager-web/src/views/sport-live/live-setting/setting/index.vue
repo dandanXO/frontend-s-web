@@ -157,7 +157,9 @@
             {{
               (() => {
                 try {
-                  return JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.hls_url || '-'
+                  return JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.hls_url
+                    || JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.flv_url
+                    || '-'
                 } catch {
                   return '-'
                 }
@@ -165,12 +167,12 @@
             }}
           </span>
           <el-button
-            v-if="JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.hls_url"
+            v-if="JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.hls_url || JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.flv_url"
             size="mini"
             circle
             type="primary"
             icon="el-icon-view"
-            @click="openPreview(JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.hls_url)"
+            @click="openPreview(JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.hls_url || JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.flv_url)"
           />
           <div class="signal-bars" v-if="monitorScoreMap[scope.row.streamId] !== undefined">
             <span
@@ -255,7 +257,6 @@
         </template>
       </el-table-column>
       <el-table-column prop="roomMessage" :label="t('fields.roomMessage')" />
-      <el-table-column prop="roomTitle" :label="t('fields.roomTitle')" />
       <el-table-column
         fixed="right"
         :label="t('fields.operate')"
@@ -310,6 +311,8 @@ import videojs from 'video.js'
 import 'video.js/dist/video-js.css'
 import EmojiPicker from 'vue3-emoji-picker'
 import 'vue3-emoji-picker/dist/style.css'
+import 'videojs-flvjs';
+import flvjs from 'flv.js';
 
 const showEmojiPicker = ref(false)
 const { t } = useI18n();
@@ -411,10 +414,10 @@ function submit() {
     const url = form.sourceStreamUrl || '';
     const baseUrl = url.split('?')[0];
 
-    if (!baseUrl.endsWith('.m3u8')) {
+    if (!baseUrl.endsWith('.m3u8') && !baseUrl.endsWith('.flv')) {
       const corrected = baseUrl.replace(/\.\w+$/, '') + '.m3u8';
       ElMessageBox.confirm(
-        t('message.streamUrlNotM3U8'),
+        t('message.streamUrlNotM3U8OrFlv'),
         t('fields.confirm'),
         {
           confirmButtonText: t('fields.confirm'),
@@ -427,7 +430,7 @@ function submit() {
         ElMessage.success(t('message.replacedWithM3U8'));
         supplierCreate();
       }).catch(() => {
-        ElMessage.warning(t('message.streamUrlMustBeM3U8'));
+        ElMessage.warning(t('message.streamUrlMustBeM3U8OrFlv'));
       });
       return;
     }
@@ -448,12 +451,14 @@ function openPreview(url) {
       player = null;
     }
 
+    const isFLV = url.toLowerCase().endsWith('.flv');
     const container = document.querySelector('.preview-video-container');
+
     if (container) {
       container.innerHTML = `
         <video
           id="preview-player"
-          class="video-js vjs-default-skin"
+          ${isFLV ? '' : 'class="video-js vjs-default-skin"'}
           controls
           preload="auto"
           width="100%"
@@ -463,19 +468,30 @@ function openPreview(url) {
     }
 
     nextTick(() => {
-      player = videojs('preview-player', {
-        autoplay: true,
-        controls: true,
-        preload: 'auto',
-        responsive: true,
-        fluid: true,
-      }, function () {
-        this.src({
+      const videoEl = document.getElementById('preview-player');
+
+      if (isFLV && flvjs.isSupported()) {
+        const flvPlayer = flvjs.createPlayer({
+          type: 'flv',
+          url: url
+        });
+        flvPlayer.attachMediaElement(videoEl);
+        flvPlayer.load();
+        flvPlayer.play();
+      } else {
+        player = videojs(videoEl, {
+          autoplay: true,
+          controls: true,
+          preload: 'auto',
+          responsive: true,
+          fluid: true,
+        });
+        player.src({
           src: url,
           type: 'application/x-mpegURL',
         });
-        this.play();
-      });
+        player.play();
+      }
     });
   });
 }
@@ -506,7 +522,7 @@ async function supplierCreate() {
 async function streamerSave() {
   formRef.value.validate(async (valid) => {
     if (!valid) return;
-    await createSportLiveStream({ eventId: eventId.value, liveStreamerId: form.streamerId, status: 0, roomMessage: form.roomMessage, roomTitle: form.roomTitle });
+    await createSportLiveStream({ eventId: eventId.value, liveStreamerId: form.streamerId, status: 0, roomMessage: form.roomMessage });
     ElMessage.success(t('message.updateSuccess'));
     uiControl.dialogVisible = false;
     await loadEvent();
