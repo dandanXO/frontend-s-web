@@ -199,10 +199,10 @@
           background: linear-gradient(180deg, #00cc8c 0%, #006646 100%);
           text-align: center;
           color: #fff;
-          font-size: 20px;
-          font-weight: 600;
+          font-size: 18px;
           height: 36px;
           width: 100%;
+          padding-top: 4px;
         "
       >
         兑换粽子获得安康金
@@ -217,8 +217,8 @@
         </div>
       </div>
       <div style="color: #014625;font-size: 16px;">恭喜您获得安康金</div>
-      <div style="display: flex; justify-content: center;margin-top: 16px;margin-bottom: 20px;">
-        <button @click="isOpenResultDialog = false">关闭</button>
+      <div style="display: flex; justify-content: center;margin-top: 16px; margin-bottom: 20px">
+        <button @click="isOpenResultDialog = false">确定</button>
       </div>
     </div>
   </q-dialog>

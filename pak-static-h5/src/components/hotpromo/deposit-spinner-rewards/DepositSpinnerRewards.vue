@@ -246,8 +246,8 @@ const setTab = (index) => {
   if (index === 2) {
     name = "diamond";
   }
-  if (index === 3) {
-    name = "supreme";
+  if (index >= 3) {
+    return;
   }
   selectedSpinWheel.value = name;
   activeTab.value = index;
