@@ -44,7 +44,7 @@
             placeholder="请输入用户名"
             :rules="[
               (val) => (val && val.length > 0) || '请输入用户名',
-              (val) => (val && val.length >= 6 && val.length <= 12) || '长度要在 6-12 之间'
+              (val) => (val && val.length >= 4 && val.length <= 12) || '长度要在 4-12 之间'
             ]"
             autocomplete="username"
           >

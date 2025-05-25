@@ -197,8 +197,14 @@
                     olympicCheckin: selectedPromo.promoCode === 'lh1-olympic-checkin'
                   }"
                 >
+                  <div v-if="selectedPromo.redirectUrl === 'lh1-mesa-nomadic-masters-spring-2025'">
+                    <MesaPromo :promoCode="selectedPromo.promoCode" />
+                  </div>
                   <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
                     <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
+                  </div>
+                  <div v-if="selectedPromo.redirectUrl === 'lh1-blast-tv-austin-major-2025'">
+                    <BlastAustin :promoCode="selectedPromo.promoCode" />
                   </div>
                   <div
                     v-if="selectedPromo.redirectUrl !== 'lh1-christmas-gashapon'"
@@ -312,6 +318,8 @@ import AijiasuPromo from "src/components/hotpromo/aijiasu/AijiasuPromo.vue";
 import { useNotify } from "src/hooks/notify";
 import { cached } from "src/boot/cache";
 import NBAWaterBattle from "src/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
+import BlastAustin from "src/components/hotpromo/blast-austin/BlastAustin.vue";
+import MesaPromo from "src/components/hotpromo/mesa/MesaPromo.vue";
 import { useCloudWiseHelper } from "src/hooks/cloudWiseHelper";
 
 
@@ -320,7 +328,9 @@ export default defineComponent({
   components: {
     HotPromotion,
     NBAWaterBattle,
-    BlastPremierMarquee
+    BlastPremierMarquee,
+    MesaPromo,
+    BlastAustin
   },
   setup() {
     const notify = useNotify();

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="promoId === 581">
+  <div v-if="promoId === 581 || promoId === 768">
     <ActivitiesDetails />
   </div>
   <div class="common-promo" v-else>
@@ -35,7 +35,7 @@ export default defineComponent({
     }
   },
   components: {
-    ActivitiesDetails,
+    ActivitiesDetails
   },
   emits: ["daily-slot"],
   setup() {

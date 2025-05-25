@@ -40,11 +40,6 @@ const routes = [
     children: [{ path: "", component: () => import("pages/livestream/StreamPlayerPage.vue") }]
   },
   {
-    path: "/liveChat",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/LiveChatPage.vue") }]
-  },
-  {
     path: "/maintenance",
     children: [
       {
@@ -495,6 +490,22 @@ const routes = [
     path: "/app-tutorial",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/AppTutorial.vue") }]
+  },
+  {
+    path: "/liveChat",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      { path: "", component: () => import("src/cs-client-web/pages/LoginPage.vue") },
+      { path: "chat", component: () => import("src/cs-client-web/pages/ChatPage.vue") }
+    ]
+  },
+  {
+    path: "/live-chat",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      { path: "", component: () => import("src/cs-client-web/pages/LoginPage.vue") },
+      { path: "chat", component: () => import("src/cs-client-web/pages/ChatPage.vue") }
+    ]
   },
   {
     path: "/center/:path",

@@ -796,9 +796,11 @@ export default defineComponent({
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 16px;
+    font-size: 14px;
     width: fit-content;
     padding: 0px 20px 0px 10px;
+    height: fit-content;
+    min-width: 100px;
 
     &.cny {
       background: linear-gradient(180deg, #ffe190 0%, #ff9f40 100%);

@@ -4,9 +4,13 @@
       <img class="hamburger-bars-img" src="@/assets/images/home/hamburger-bars.png" />
     </div> -->
     <div class="navigation">
-      <a :href="krwUrl" target="_blank">
-        <div class="logo-section" />
-      </a>
+      <!-- <a :href="krwUrl" target="_blank"> -->
+        <div class="logo-section">
+          <h1>
+            代理人
+          </h1>
+        </div>
+      <!-- </a> -->
       <div class="row-item">
         <el-select
           class="lang-container right-menu-item"
@@ -16,7 +20,6 @@
           size="small"
         >
           <el-option key="1" value="en">en</el-option>
-          <el-option key="5" value="kr">kr</el-option>
           <el-option key="6" value="ur">ur</el-option>
         </el-select>
       </div>
@@ -24,7 +27,7 @@
         <div class="name-and-logout">
           <div class="name-wrapper">
             <div class="name">{{ store.state.user.name }}</div>
-            <div class="nickname">{{ store.state.user.name }}</div>
+            <!-- <div class="nickname">{{ store.state.user.name }}</div> -->
             <div class="nickname">{{ affInfo.affiliateCode }}</div>
           </div>
           <div class="action-wrapper">
@@ -39,23 +42,7 @@
           </div>
         </div>
       </div>
-      <div class="row-item" style="cursor: auto">
-        <div class="balance-item">
-          <span>{{ t('statsHeader.myMoney') }}</span>
-          <span>{{ Math.floor(affInfo.balance) }}</span>
-        </div>
-        <div
-          class="balance-item"
-          style="margin-top: 10px"
-        >
-          <span>{{ t('statsHeader.myPoint') }}</span>
-          <span>
-            <button @click="redeemDialogVisible = true"> {{ t('fields.redeemConvert') }}</button>
-          </span>
-          <span>{{ Math.floor(affInfo.point) }}</span>
-        </div>
-      </div>
-      <div class="route-wrapper">
+      <!-- <div class="route-wrapper">
         <div :class="`route-container show-menu ${route.path.substring(route.path.lastIndexOf('/'))==='/announcement' ? 'active' : ''}`">
           <RouterLink to="/personal/announcement" class="route">
             <div class="route-content">
@@ -70,19 +57,7 @@
             </div>
           </RouterLink>
         </div>
-      </div>
-      <div class="row-item route-title">
-        <div class="icon-wrapper">
-          <a
-            :href="krwUrl"
-            target="_blank"
-            style="display:flex;align-items: center;gap:6px;"
-          >
-            <svg-icon :icon-class="'right'" />
-            <span>유저사이트</span>
-          </a>
-        </div>
-      </div>
+      </div> -->
       <div
         v-for="nav in navigationData"
         :key="nav.id"
@@ -113,8 +88,8 @@
               v-if="child.isMainNav"
             >
               <div class="route-content">
-                <!-- <svg-icon :icon-class="`${child.icon}`" :style="child.active ? 'color: #179cff' : ''"
-                  :className="child.active ? 'active-icon' : ''" /> -->
+                <svg-icon :icon-class="`${child.icon}`" :style="child.active ? 'color: #179cff' : ''"
+                  :className="child.active ? 'active-icon' : ''" />
                 <span class="route-label" :class="child.active ? 'active' : ''">
                   {{ child.title }}
                 </span>
@@ -251,7 +226,7 @@ const changePassword = async formObj => {
 
 const logout = async () => {
   await store.dispatch(UserActionTypes.ACTION_LOGOUT)
-  router.push('/kr/login')
+  router.push('/login')
 }
 
 const getNavigationData = () => {
@@ -263,6 +238,14 @@ const getNavigationData = () => {
       path: '',
       children: [
         {
+          path: '/personal/announcement',
+          title: t('fields.systemAnnouncement'),
+          label: 'systemAnnouncement',
+          active: false,
+          isMainNav: true,
+          icon: 'speaker',
+        },
+        {
           path: '/dashboard',
           title: t('menu.Dashboard'),
           label: 'Dashboard',
@@ -270,170 +253,42 @@ const getNavigationData = () => {
           isMainNav: true,
           icon: 'home',
         },
-      ],
-    },
-    {
-      title: t('menu.Downline Info'),
-      label: 'Downline',
-      display: true,
-      path: '/downline',
-      children: [
         {
-          path: '/member',
+          path: '/downline/member',
           title: t('menu.Member'),
           label: 'Member',
           active: false,
           isMainNav: true,
           icon: 'squares',
         },
-        // {
-        //   path: '/member-tree',
-        //   title: t('menu.MemberTree'),
-        //   label: 'Member Tree',
-        //   active: false,
-        //   isMainNav: true,
-        //   icon: 'branch',
-        // },
         {
-          path: '/affiliate',
+          path: '/downline/affiliate',
           title: t('menu.Affiliate'),
           label: 'Affiliate',
           active: false,
           isMainNav: true,
           icon: 'affiliate',
         },
-        // {
-        //   path: '/summary',
-        //   title: t('menu.AffiliateSummary'),
-        //   label: 'Affiliate Summary',
-        //   active: false,
-        //   isMainNav: true,
-        //   icon: 'report',
-        // }
-      ],
-    },
-    {
-      title: t('menu.BetManagement'),
-      label: 'Bet Management',
-      display: true,
-      path: '/bet-management',
-      children: [
         {
-          path: '/live-bet-history',
-          title: t('menu.LiveBetHistory'),
-          label: 'Bet History LIVE',
+          path: '/downline/game-record',
+          title: t('menu.gameRecord'),
+          label: 'Bet History',
           active: false,
           isMainNav: true,
           icon: 'clock',
         },
         {
-          path: '/slot-bet-history',
-          title: t('menu.SlotBetHistory'),
-          label: 'Bet History SLOT',
+          path: '/report/platform-summary',
+          title: t('menu.platformSummary'),
+          label: 'Platform Summary',
           active: false,
           isMainNav: true,
-          icon: 'clock',
+          icon: 'report',
         },
         {
-          path: '/sport-bet-history',
-          title: t('menu.SportBetHistory'),
-          label: 'Bet History SPORT',
-          active: false,
-          isMainNav: true,
-          icon: 'clock',
-        },
-        {
-          path: '/minigame-bet-history',
-          title: t('menu.MiniGameBetHistory'),
-          label: 'Bet History Mini Game',
-          active: false,
-          isMainNav: true,
-          icon: 'clock',
-        },
-      ],
-    },
-
-    // {
-    //   title: t('menu.SettlementManagement'),
-    //   label: 'Settlement Management',
-    //   display: true,
-    //   path: '',
-    //   children: [
-    //
-    //     // {
-    //     //   path: '/statistics-by-member',
-    //     //   title: t('menu.StatisticsByMember'),
-    //     //   active: false,
-    //     //   isMainNav: true,
-    //     //   icon: 'clock',
-    //     // },
-    //     // {
-    //     //   path: '/settlement-by-casino-slot-vendor',
-    //     //   title: t('menu.SettlementByCasinoSlotVendor'),
-    //     //   label: 'Settlement By Casino / Slot Vendor',
-    //     //   active: false,
-    //     //   isMainNav: true,
-    //     //   icon: 'clock',
-    //     // },
-    //   ],
-    // },
-    {
-      title: t('menu.financeCentre'),
-      display: true,
-      path: '',
-      children: [
-        {
-          path: '/settlement-management/monthly-step-by-step-settlement',
-          title: t('menu.MonthlyStepByStep'),
-          label: 'Monthly Step By Step',
-          active: false,
-          isMainNav: true,
-          icon: 'clock',
-        },
-        {
-          path: '/settlement-management/deposit-withdraw-management',
-          title: t('menu.DepositWithdrawManagement'),
-          label: 'DepositWithdrawManagement',
-          active: false,
-          isMainNav: true,
-          icon: 'clock',
-        },
-        {
-          path: '/affiliate/bank-card',
-          title: t('menu.Bind Bank Cards'),
-          label: 'Bind Bank Cards',
-          active: false,
-          isMainNav: true,
-          icon: 'money-bag',
-        },
-        {
-          path: '/affiliate/withdraw',
-          title: t('fields.affiliateWithdraw'),
-          label: 'withdrawRecord',
-          active: false,
-          isMainNav: true,
-          icon: 'form-w-pencil',
-        },
-        {
-          path: '/affiliate/transfer',
-          title: t('menu.Transfer'),
-          label: 'Transfer',
-          active: false,
-          isMainNav: true,
-          icon: 'users',
-        },
-        {
-          path: '/affiliate/deposit',
-          title: t('menu.Deposit'),
-          label: 'Deposit',
-          active: false,
-          isMainNav: true,
-          icon: 'wallet',
-        },
-        {
-          path: '/affiliate/finance',
-          title: t('menu.Finance Report'),
-          label: 'Finance Report',
+          path: '/report/downline-summary',
+          title: t('menu.downlineSummary'),
+          label: 'Downline Summary',
           active: false,
           isMainNav: true,
           icon: 'report',
@@ -446,124 +301,13 @@ const getNavigationData = () => {
           isMainNav: true,
           icon: 'money',
         },
-        // {
-        //   path: '/rebate',
-        //   title: t('menu.Rebate Report'),
-        //   label: 'Rebate Report',
-        //   active: false,
-        //   isMainNav: true,
-        //   icon: 'monitor',
-        // },
         {
-          path: '/settlement-management/commission-history-list',
-          title: t('menu.CommissionHistoryList'),
-          label: 'CommissionHistoryList',
-          active: false,
-          isMainNav: true,
-          icon: 'clock',
-        },
-        {
-          path: '/affiliate/credit-flow',
-          title: t('fields.creditFlow'),
-          label: 'creditFlow',
-          active: false,
-          isMainNav: true,
-          icon: 'ledger',
-        },
-        {
-          path: '/settlement-management/member-point-record-list',
-          title: t('menu.MemberPointRecord'),
-          label: 'MemberPointRecord',
-          active: false,
-          isMainNav: true,
-          icon: 'clock',
-        },
-      ],
-    },
-    {
-      title: t('menu.Referral Centre'),
-      display: true,
-      path: '/promotion',
-      children: [
-        {
-          path: '/referral-link',
-          title: t('menu.Referral Link'),
-          label: 'Referral Link',
-          active: false,
-          isMainNav: true,
-          icon: 'link',
-        },
-        // {
-        //   path: '/referral-material',
-        //   title: t('menu.Referral Material'),
-        //   label: 'Referral Material',
-        //   active: false,
-        //   isMainNav: true,
-        //   icon: 'photo',
-        // },
-        // {
-        //   path: '/channel-pack',
-        //   title: t('menu.Channel Pack'),
-        //   label: 'Channel Pack',
-        //   active: false,
-        //   isMainNav: true,
-        //   icon: 'folder',
-        // },
-      ],
-    },
-    {
-      title: t('menu.Personal Center'),
-      label: 'Personal Center',
-      display: true,
-      path: '/personal',
-      children: [
-        {
-          path: '/info',
+          path: '/personal/info',
           title: t('fields.personalInfo'),
           label: 'personalInfo',
           active: false,
           isMainNav: true,
           icon: 'user',
-        },
-        {
-          path: '/inquiry',
-          title: t('fields.inquiry'),
-          label: 'inquiry',
-          active: false,
-          isMainNav: true,
-          icon: 'email',
-        },
-        {
-          path: '/message',
-          title: t('fields.message'),
-          label: 'message',
-          active: false,
-          isMainNav: true,
-          icon: 'message',
-        },
-        {
-          path: '/announcement',
-          title: t('fields.systemAnnouncement'),
-          label: 'systemAnnouncement',
-          active: false,
-          isMainNav: false,
-          icon: 'speaker',
-        },
-        {
-          path: '/commission-info',
-          title: t('commissionInfo.commissionInfo'),
-          label: 'commissionInfo',
-          active: false,
-          isMainNav: true,
-          icon: 'commission',
-        },
-        {
-          path: '/contact-us',
-          title: t('menu.contactUs'),
-          label: 'contactUs',
-          active: false,
-          isMainNav: true,
-          icon: 'speech-bubbles',
         },
       ],
     },
@@ -638,7 +382,7 @@ watch(languageVal, newVal => {
 }
 
 .sidebar {
-  background: #344151;
+  background: #000000;
   display: flex;
   flex-direction: column;
   line-height: 1rem;
@@ -652,13 +396,12 @@ watch(languageVal, newVal => {
     width: 0px;
 
     .logo-section {
-      display: flex;
-      background: url('../../assets/logo-diamond.svg') no-repeat center center;
       background-size: 90% auto;
       width: 100%;
       height: 60px;
       padding: 6px 10px;
-      background-color: #192226;
+      background-color: #000000;
+      text-align: center;
     }
 
     &::-webkit-scrollbar-track {
@@ -685,9 +428,9 @@ watch(languageVal, newVal => {
       font-family: 'NanumNeo';
       color: #fff;
       font-size: 13px;
-      border-bottom: 1px solid #4d5a6a;
+      border-bottom: 1px solid #000000;
 
-      background-color: $primary-500;
+      background-color: #000000;
       padding: 12px 13px;
       box-sizing: border-box;
       cursor: pointer;
@@ -741,7 +484,7 @@ watch(languageVal, newVal => {
       .route-content {
         display: flex;
         gap: 0.5rem;
-        background-color: $primary-700;
+        background-color: #000000;
         padding: 10px 10px 10px 20px;
       }
 

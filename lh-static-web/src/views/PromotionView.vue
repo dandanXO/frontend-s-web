@@ -170,11 +170,17 @@
             }"
             v-if="selectedPromo.promoCode !== 'lh-eurocup-manual' && selectedPromo.pageContent"
           >
+            <div v-if="selectedPromo.redirectUrl === 'lh1-mesa-nomadic-masters-spring-2025'">
+              <MesaPromo :promoCode="selectedPromo.promoCode" />
+            </div>
             <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
               <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
             </div>
             <div v-if="selectedPromo.redirectUrl === 'lh1-yalla-compass'">
               <YallaCompass :promoCode="selectedPromo.promoCode" />
+            </div>
+            <div v-if="selectedPromo.redirectUrl === 'lh1-blast-tv-austin-major-2025'">
+              <BlastAustin :promoCode="selectedPromo.promoCode" />
             </div>
             <div v-if="selectedPromo.redirectUrl !== 'lh1-christmas-gashapon'" v-html="selectedPromo.pageContent"></div>
           </div>
@@ -214,6 +220,8 @@ import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPr
 import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
 const YallaCompass = defineAsyncComponent(() => import("@/components/hotpromo/yalla-compass/YallaCompass.vue"));
+const MesaPromo = defineAsyncComponent(() => import("@/components/hotpromo/mesa/MesaPromo.vue"));
+const BlastAustin = defineAsyncComponent(() => import("@/components/hotpromo/blast-austin/BlastAustin.vue"));
 
 export default defineComponent({
   name: "PromoView",
@@ -221,7 +229,9 @@ export default defineComponent({
     HotPromotion,
     BlastPremierMarquee,
     NBAWaterBattle,
-    YallaCompass
+    YallaCompass,
+    MesaPromo,
+    BlastAustin
   },
   setup() {
     const isDark = useDark();
@@ -404,6 +414,10 @@ export default defineComponent({
     onMounted(() => {
       //COMMENT: I GUESS We not Using This So I Remove it.
       // loadBanner();
+      if(route.query.name === 'page-vip'){
+        router.push('/vip');
+        return
+      }
       loadAll();
     });
 

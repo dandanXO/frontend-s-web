@@ -24,11 +24,7 @@ onMounted(() => {
   // debugger;
   if (window.location.pathname === '/login') {
     console.log("Nside Login.")
-    if (window.location.host.indexOf('xf') > -1) {
-      window.location.pathname = '/xf/login'
-    } else {
-      window.location.pathname = '/kr/login'
-    }
+    window.location.pathname = '/pak/login'
   }
 });
 </script>

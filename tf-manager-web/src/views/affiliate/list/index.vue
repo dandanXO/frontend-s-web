@@ -170,7 +170,7 @@
               @input="handleInput"
             />
           </el-form-item>
-          <!-- <el-form-item :label="t('fields.affiliateLevel')" prop="affiliateLevel">
+          <el-form-item :label="t('fields.affiliateLevel')" prop="affiliateLevel" v-if="isPK4(form.siteId)">
             <el-select
               v-model="form.affiliateLevel"
               size="small"
@@ -185,7 +185,7 @@
                 :value="item.value"
               />
             </el-select>
-          </el-form-item> -->
+          </el-form-item>
           <el-form-item
             :label="t('fields.commissionModel')"
             prop="commissionModel"
@@ -206,7 +206,7 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item :label="t('fields.timeType')" prop="timeType">
+          <el-form-item :label="t('fields.timeType')" prop="timeType" v-if="!isPK4(form.siteId)">
             <el-select
               v-model="form.timeType"
               size="small"
@@ -734,7 +734,7 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import moment from 'moment/moment'
-import { isKorea, isIndiaSite } from '@/utils/site'
+import { isKorea, isIndiaSite, isPK4 } from '@/utils/site'
 
 const { t } = useI18n()
 const store = useStore()
@@ -793,10 +793,10 @@ const uiControl = reactive({
     { color: '#5cb87a', percentage: 100 },
   ],
   affiliateLevel: [
-    { key: 1, displayName: 'AFFILIATE', value: 'AFFILIATE' },
-    { key: 2, displayName: 'SUPER AFFILIATE', value: 'SUPER_AFFILIATE' },
-    { key: 3, displayName: 'MASTER AFFILIATE', value: 'MASTER_AFFILIATE' },
-    { key: 4, displayName: 'CHIEF AFFILIATE', value: 'CHIEF_AFFILIATE' },
+    // { key: 1, displayName: 'AFFILIATE', value: 'AFFILIATE' },
+    { key: 2, displayName: t('fields.pk4_super_affiliate'), value: 'SUPER_AFFILIATE' },
+    { key: 3, displayName: t('fields.pk4_master_affiliate'), value: 'MASTER_AFFILIATE' },
+    // { key: 4, displayName: 'CHIEF AFFILIATE', value: 'CHIEF_AFFILIATE' },
   ],
   commissionModel: [
     { key: 1, displayName: 'NORMAL', value: 'NORMAL' },

@@ -26,11 +26,13 @@
       hide-bottom-space
       v-model="regForm.loginName"
       label="用户名"
+      placeholder="4~11位包含字母和数字"
       :rules="[
         (val) => (val && val.length > 0) || '请输入用户名',
-        (val) => (val && val.length >= 6 && val.length <= 11) || '用户名个数必须在6和11之间',
-        (val) => (val && /[a-zA-Z]/.test(val) && /[0-9]/.test(val)) || '用户名必须包含英文字母与数字',
-        validLoginName
+        (val) => (val && val.length >= 4 && val.length <= 11) || '用户名个数必须在4和11之间',
+        (val) => (val && /^[a-zA-Z][a-zA-Z0-9]{3,10}$/.test(val)) || '须以字母开头，并包含至少2个字母和1个数字',
+        (val) => (val && (val.match(/[a-zA-Z]/g) || []).length >= 2) || '须以字母开头，并包含至少2个字母和1个数字',
+        (val) => (val && /\d/.test(val)) || '须以字母开头，并包含至少2个字母和1个数字'
       ]"
       clearable
       rounded
@@ -214,7 +216,7 @@
       </template>
     </q-input>
 
-    <div class="row justify-between items-center">
+    <div class="items-center justify-between row">
       <q-btn
         @click.prevent="onSubmit"
         type="submit"
@@ -231,7 +233,7 @@
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss no-esc-dismiss>
     <q-card width="100%">
-      <q-card-section class="q-pa-md bg-brightbtn text-white">
+      <q-card-section class="text-white q-pa-md bg-brightbtn">
         <q-toolbar>
           <q-toolbar-title>验证码</q-toolbar-title>
           <q-btn flat v-close-popup round dense icon="close" />

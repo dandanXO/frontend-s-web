@@ -123,15 +123,19 @@
       </div>
       {{ $t("sideNav.language") }}
     </RouterLink>
-    
-
-    <div v-if="ui.siteType === 'CURACAO'" class="side-menu-item license">
+    <a
+      v-if="ui.siteType === 'CURACAO'"
+      class="side-menu-item license"
+      href="https://cert.gcb.cw/certificate?id=ZXlKcGRpSTZJa2cxV1RWYVVVTm1USEZ5VDJRdlVVYzNLM2N4U25jOVBTSXNJblpoYkhWbElqb2llRFp4ZFhBcmMwYzBUSGh5TDFkRE5sRXJRbFJUUVQwOUlpd2liV0ZqSWpvaVlXUm1PREUxWkROaU1UWTJOV1F5WWpkak5XUTRNRGN4TVdZNU16Y3pZV0pqT1RrNU1ETmtNRGxpWVRjNE1UTmtZakl5WmpsaE4yVmxOamxpTkRSaVlTSXNJblJoWnlJNklpSjk="
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       <img class="license-img" src="../assets/images/license/curacao-license.png" />
       <div class="license-text-wrapper">
         <span class="license-text__title">{{ $t("sideNav.license.curacao.title") }}</span>
         <span class="license-text__description">{{ $t("sideNav.license.curacao.description") }}</span>
       </div>
-    </div>
+    </a>
 
     <!--    <a class="side-menu-item side-menu-item__download" :href="ui.downloadAppUrl" v-if="!ui.hideDownload">-->
     <!--      <div class="item-icon">-->

@@ -4,12 +4,7 @@
     style="transition: background 0.5s ease-in-out"
     class="dynamic-bg"
   >
-    <ProfileSummary
-      :showRedemption="isShowRedemptionInPopup"
-      :homeProfile="true"
-      @activateSlide="handleActivateSlide"
-      @showNewPlayer="showNewPlayer"
-    />
+    <ProfileSummary :homeProfile="true" @activateSlide="handleActivateSlide" @showNewPlayer="showNewPlayer" />
 
     <!--    <pre>-->
     <!--      {{isNewPlayerModal}} <br/>-->
@@ -200,14 +195,22 @@
           <div class="volume">
             <img src="../assets/images/index/icon-volume.svg" />
           </div>
-          <div class="marquee-container">
-            <marquee-text :repeat="5" :duration="announcementList.length * 500">
+          <!-- <div class="marquee-container">
+            <marquee-text :repeat="5" :vertical="false" :duration="announcementList.length * 500">
               <div v-if="announcementList">
                 <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
                   {{ a.content }}
                 </span>
               </div>
             </marquee-text>
+          </div> -->
+          <div class="marquee-container">
+            <div class="new-icon" :class="{ show: hasNewAnnouncements }">
+              <img src="../assets/images/index/icon-new.png" />
+            </div>
+            <div :key="currentAnnouncement?.title" class="marquee-text" @click="openPopup(currentAnnouncement)">
+              {{ currentAnnouncement?.title }}
+            </div>
           </div>
         </div>
       </div>
@@ -1207,18 +1210,64 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" class="announcement-dialog" v-model="isStationNotice">
-    <div class="popout-dialog" style="padding-top: 16px">
-      <q-btn dense rounded icon="close" class="bg-white text-black announcement-close" v-close-popup />
-      <q-card style="width: calc(100% - 0px); margin: auto; padding-left: 10px" class="announcement-card">
-        <q-card-section class="q-mb-md">
-          <q-tabs v-model="activeKey" dense class="text-white" align="justify">
-            <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
-          </q-tabs>
+  <q-dialog width="100%" class="flex-end announcement-modal" v-model="isStationNotice">
+    <div class="announcement-top-img"><img src="../assets/images/index/notice-icon.png" /></div>
+    <div class="popout-dialog announcement-popout">
+      <q-btn flat dense icon="close" class="text-black announcement-close" v-close-popup />
+      <q-card :class="{ wPage: maxPage > 1 }" style="width: calc(100% - 0px); margin: auto" class="announcement-card">
+        <q-card-section style="max-height: 100%; overflow: auto">
+          <!--     -->
+          <q-card
+            v-for="(item, index) in paginatedAnnouncements"
+            :key="index"
+            class="q-mb-md announcement-item-card"
+            flat
+            bordered
+          >
+            <q-card-section class="row items-center justify-between q-pb-none">
+              <div class="text-title" style="color: #15c55d" v-html="item.title"></div>
+            </q-card-section>
 
-          <q-separator />
+            <q-card-section class="text-caption">
+              <div v-if="!item.expanded">
+                <!-- <div v-html="getPreview(item.content)"></div> -->
+              </div>
+              <div v-else>
+                <div v-html="processedContent(item.content)"></div>
+                <q-img
+                  v-if="item.image"
+                  :src="item.image"
+                  class="q-mt-sm"
+                  style="border: 1px solid #ccc; border-radius: 4px"
+                  height="150px"
+                  fit="contain"
+                />
+              </div>
+            </q-card-section>
 
-          <q-tab-panels v-model="activeKey" animated>
+            <div class="text-date">{{ moment(item.createTime).format("DD/MM/YYYY") }}</div>
+            <q-card-actions style="margin: 0px 5px 0 0; padding: 0" align="right">
+              <div
+                class="announcement-new"
+                :class="{ show: checkTime(item.createTime) && !item.hasBeenExpanded }"
+              ></div>
+              <q-btn
+                dense
+                size="sm"
+                flat
+                style="
+                  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+                  color: #ffffff;
+                  padding-right: 2px;
+                  border-radius: 6px;
+                "
+                :label="item.expanded ? 'close' : 'more'"
+                :icon-right="item.expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
+                @click="toggleExpanded(index)"
+              />
+            </q-card-actions>
+          </q-card>
+          <!-- <q-tab-panels v-model="activeKey" animated>
             <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
               <q-list style="min-height: auto">
                 <div v-for="(ann, idx) in announcementList" :key="idx" style="min-height: 50px">
@@ -1241,9 +1290,15 @@
                 </div>
               </q-list>
             </q-tab-panel>
-          </q-tab-panels>
+          </q-tab-panels> -->
         </q-card-section>
       </q-card>
+
+      <q-separator />
+
+      <q-card-actions v-if="maxPage > 1" class="q-px-lg" align="right">
+        <q-pagination v-model="page" :max="maxPage" :max-pages="7" boundary-numbers />
+      </q-card-actions>
     </div>
   </q-dialog>
 
@@ -1537,7 +1592,16 @@
       b9.game aims to become the global leader in online gaming and betting using the latest blockchain technologies,
       always putting our customers first. Trust, integrity and fairness are just three of our key values.
     </div>
-    <img class="gcb-logo" alt="gcb-logo" src="../assets/images/common/gcb-logo.png" />
+    <div class="logo-wrapper">
+      <a
+        href="https://cert.gcb.cw/certificate?id=ZXlKcGRpSTZJa2cxV1RWYVVVTm1USEZ5VDJRdlVVYzNLM2N4U25jOVBTSXNJblpoYkhWbElqb2llRFp4ZFhBcmMwYzBUSGh5TDFkRE5sRXJRbFJUUVQwOUlpd2liV0ZqSWpvaVlXUm1PREUxWkROaU1UWTJOV1F5WWpkak5XUTRNRGN4TVdZNU16Y3pZV0pqT1RrNU1ETmtNRGxpWVRjNE1UTmtZakl5WmpsaE4yVmxOamxpTkRSaVlTSXNJblJoWnlJNklpSjk="
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img class="gcb-logo" alt="gcb-logo" src="../assets/images/license/curacao-license.png" />
+      </a>
+      <img class="eighteen-only-logo" alt="18+ only" src="../assets/images/common/18-only.png" />
+    </div>
     <div class="footer-content">
       b9.game is operated by Bridge Technologies B.V., company registration number 160264(0), with registered address at
       Dr. M.J. Hugenholtzweg 25, Willemstad, Curaçao. Bridge Technologies B.V. is licensed and authorized by the
@@ -1668,6 +1732,7 @@ import "aos/dist/aos.css";
 import { isAndroid } from "boot/utils";
 import { useI18n } from "vue-i18n";
 import { eventapi } from "src/boot/axios";
+import moment from "moment";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
@@ -3700,12 +3765,40 @@ const getPlatList = () => {
 
 const announcementList = ref([]);
 const announcementTypes = ref([]);
+function checkTime(time) {
+  const givenDate = new Date(time);
+  const today = new Date();
+  today.setDate(today.getDate() - 1);
+  console.log("Given:", givenDate);
+  console.log("Today:", today);
+  return (
+    givenDate.getFullYear() === today.getFullYear() &&
+    givenDate.getMonth() === today.getMonth() &&
+    givenDate.getDate() === today.getDate()
+  );
+}
+function getPreview(content, length = 0) {
+  const div = document.createElement("div");
+  div.innerHTML = content;
+  const textOnly = div.textContent || div.innerText || "";
+  return textOnly.slice(0, length) + "...";
+}
+const hasNewAnnouncements = ref(false);
 const loadAnnouncement = () => {
   api.get("/announcement").then((res) => {
     if (res.code === 0) {
       if (res.data.announcements) {
         const d = res.data.announcements;
-        announcementList.value = d;
+
+        const stored = localStorage.getItem("announcementList");
+        if (stored) {
+          announcementList.value = JSON.parse(stored);
+        } else {
+          announcementList.value = d;
+        }
+        checkForNewAnnouncements();
+        currentAnnouncement.value = announcementList.value[0];
+        startRotation();
       }
       if (res.data.type) {
         announcementTypes.value = res.data.type;
@@ -3714,6 +3807,38 @@ const loadAnnouncement = () => {
     }
   });
 };
+const checkForNewAnnouncements = () => {
+  hasNewAnnouncements.value = announcementList.value.some((ann) => checkTime(ann.createTime) && !ann.hasBeenExpanded);
+};
+const page = ref(1);
+const pageSize = 5;
+
+const paginatedAnnouncements = computed(() => {
+  const start = (page.value - 1) * pageSize;
+  return announcementList.value.slice(start, start + pageSize);
+});
+
+const maxPage = computed(() => Math.ceil(announcementList.value.length / pageSize));
+function toggleExpanded(index) {
+  announcementList.value[index].hasBeenExpanded = true;
+  announcementList.value[index].expanded = !announcementList.value[index].expanded;
+  checkForNewAnnouncements();
+  saveToLocalStorage();
+}
+function saveToLocalStorage() {
+  localStorage.setItem("announcementList", JSON.stringify(announcementList.value));
+}
+const currentIndex = ref(0);
+const currentAnnouncement = ref(announcementList.value[0]);
+let interval = null;
+
+const startRotation = () => {
+  interval = setInterval(() => {
+    currentIndex.value = (currentIndex.value + 1) % announcementList.value.length;
+    currentAnnouncement.value = announcementList.value[currentIndex.value];
+  }, 2000); // 2 seconds
+};
+
 const isStationNotice = ref(false);
 const noticeTitle = ref("");
 const activeKey = ref(null);
@@ -4197,7 +4322,6 @@ const checkSpinLuckyWheelPromoHomePopupCanShow = () => {
     spinLuckyWheelPromoHomePopupRef.value.checkIsCanShowPopup();
   }
 };
-
 onActivated(() => {
   nextTick(() => {
     if (
@@ -4334,12 +4458,11 @@ const hasInviteWheelPromo = ref(false);
 const handleReceiveCodeBonus = () => {
   router.push({ path: "/account", query: { openCodeModal: "true" } });
 };
-const isShowRedemptionInPopup = ref(false);
+
 const checkCodeBonusModal = () => {
   eventapi.get("/session/promo-code-bonus/checkBonus").then((res) => {
     if (res.data.hasUnclaimed) {
       isShowCodeBonusModal.value = true;
-      isShowRedemptionInPopup.value = true;
     }
   });
 };
@@ -4698,7 +4821,7 @@ const checkGoogleLoginSetPwd = () => {
   margin-top: 10px;
   margin-bottom: 10px;
   position: relative;
-  border-radius: 40px 0 0 40px;
+  border-radius: 8px 0 0 8px;
   overflow: hidden;
 
   margin-right: -10px;
@@ -4715,8 +4838,10 @@ const checkGoogleLoginSetPwd = () => {
     );
     background: #ffffff0f;
 
-    gap: 10px;
-    padding: 5px 10px;
+    gap: 5px;
+    // padding: 5px 10px;
+    padding: 0px 5px;
+    margin-top: 2px;
     justify-content: center;
     align-items: center;
 
@@ -4729,11 +4854,42 @@ const checkGoogleLoginSetPwd = () => {
     }
 
     .marquee-container {
+      .new-icon {
+        position: absolute;
+        width: 20px;
+        top: -5px;
+        display: none;
+        &.show {
+          display: block;
+        }
+        img {
+          width: 100%;
+        }
+      }
       width: calc(100% - 28px);
+      height: 25px;
       :deep(.marquee-text-content) {
         width: max-content;
       }
     }
+    .marquee-text {
+      line-height: 25px;
+    }
+    // .marquee-text {
+    //   position: absolute;
+    //   top: 30%; /* Start above the container */
+    //   width: 100%;
+    //   // animation: scroll-down 5s linear infinite;
+    // }
+
+    // @keyframes scroll-down {
+    //   from {
+    //     top: 30%;
+    //   }
+    //   to {
+    //     top: -100%;
+    //   }
+    // }
 
     span {
       margin-right: 10px;
@@ -4989,24 +5145,57 @@ const checkGoogleLoginSetPwd = () => {
   font-size: 14px;
   font-weight: bold;
 }
-
 .announcement-close {
   position: absolute;
-  right: 0px;
-  top: 0px;
+  right: 20px;
+  top: 20px;
   z-index: 3;
+  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+
+  padding: 5px;
+  font-size: 10px;
 }
 
 .announcement-dialog {
   height: calc(100vh - 108px);
 }
+.announcement-top-img {
+  // margin-bottom: -120px;
+  // width: 200px;
+  //   width: 150px;
+  //   // margin: 0 auto -100px;
+  //   margin: 0px 0 -100px 12px;
+  // z-index: 1;
+  z-index: 1;
+  width: 150px;
+  position: absolute;
+  bottom: 390px;
+  left: 0;
+  right: -10px;
+  margin: auto;
+  img {
+    width: 100%;
+  }
+}
 
+.announcement-popout {
+  height: 450px;
+  background: url(../assets/images/index/notfice-bg.png) no-repeat center top;
+  border-radius: 30px 30px 0 0;
+}
 .announcement-card {
-  height: 400px;
+  height: 100%;
+  &.wPage {
+    height: 90%;
+  }
   // background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
-  border-radius: 10px;
-  overflow-y: auto;
-  background: linear-gradient(180deg, rgba(36, 36, 36, 1) 0%, rgba(35, 45, 31, 1) 100%);
+  background: transparent;
+  // padding: 120px 20px 20px 20px;
+
+  padding: 65px 10px 0px;
+  // overflow-y: auto;
+  // background: transparent;
+  // background: linear-gradient(180deg, rgba(36, 36, 36, 1) 0%, rgba(35, 45, 31, 1) 100%);
 
   .q-tab__label {
     font-size: 18px;
@@ -5022,12 +5211,50 @@ const checkGoogleLoginSetPwd = () => {
   }
 }
 
+.announcement-card .q-card.announcement-item-card {
+  background: linear-gradient(90deg, rgba(220, 241, 105, 0.7) 0%, rgba(156, 242, 39, 0.7) 100%);
+  border-radius: 6px;
+  padding: 10px 5px;
+  margin: 0 0 10px;
+  .announcement-new {
+    // position: absolute;
+    // top: 0;
+    // left: 0;
+    display: none;
+    padding: 5px;
+    background: #ff0000;
+    border-radius: 10px;
+    margin-right: 10px;
+    &.show {
+      display: block;
+    }
+  }
+  .text-title {
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    // width: 70%;
+    width: 100%;
+    height: 20px;
+  }
+  .text-date {
+    color: #33333399;
+    font-weight: bold;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+  }
+  .text-caption {
+    color: #333333;
+    font-size: 14px;
+    margin: 5px auto;
+  }
+}
 .popout-dialog {
-  width: 90%;
+  width: 100%;
   max-width: 500px;
   position: relative;
-  padding-top: 90px;
-  padding-right: 10px;
 
   .popout-close {
     position: absolute;
@@ -5240,10 +5467,22 @@ const checkGoogleLoginSetPwd = () => {
     width: 50%;
     min-width: 150px;
   }
-  .gcb-logo {
-    width: 25%;
-    min-width: 100px;
+  .logo-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 20px;
+    a {
+      width: min-content;
+    }
+    .gcb-logo {
+      width: 25%;
+      min-width: 100px;
+      margin-right: 20px;
+    }
+    .eighteen-only-logo {
+      width: 57px;
+    }
   }
   .footer-content {
     margin-top: 24px;
@@ -5265,6 +5504,11 @@ const checkGoogleLoginSetPwd = () => {
 </style>
 
 <style lang="scss">
+.announcement-modal .q-dialog__inner {
+  max-width: 500px;
+  // max-height: 600px;
+  margin: auto auto 0;
+}
 .q-dialog__inner--maximized > div {
   overflow-x: hidden;
 }
@@ -6115,7 +6359,7 @@ const checkGoogleLoginSetPwd = () => {
 }
 
 .announcement-card {
-  padding-top: 16px;
+  // padding-top: 16px;
 
   font-family: "Manrope", sans-serif;
 

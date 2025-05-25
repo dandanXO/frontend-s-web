@@ -171,8 +171,14 @@
             }"
             v-if="selectedPromo.promoCode !== 'lh-eurocup-manual' && selectedPromo.pageContent"
           >
+            <div v-if="selectedPromo.redirectUrl === 'lh1-mesa-nomadic-masters-spring-2025'">
+              <MesaPromo :promoCode="selectedPromo.promoCode" />
+            </div>
             <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
               <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
+            </div>
+            <div v-if="selectedPromo.redirectUrl === 'lh1-blast-tv-austin-major-2025'">
+              <BlastAustin :promoCode="selectedPromo.promoCode" />
             </div>
             <div
               v-if="selectedPromo.redirectUrl !== 'lh1-christmas-gashapon'"
@@ -202,7 +208,7 @@
 </template>
 
 <script lang="js">
-import { ref, defineComponent, onMounted, reactive, watch, computed } from "vue";
+import { ref, defineComponent, onMounted, reactive, watch, computed, defineAsyncComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { loadPromo } from "@/api/index/promo.js";
 import { userStore } from "@/store";
@@ -214,13 +220,18 @@ import HotPromotion from "@/components/HotPromotion";
 import { useLocalStorage } from "@vueuse/core";
 import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
+import MesaPromo from "@/components/hotpromo/mesa/MesaPromo.vue";
+
+const BlastAustin = defineAsyncComponent(() => import("@/components/hotpromo/blast-austin/BlastAustin.vue"));
 
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
     NBAWaterBattle,
-    BlastPremierMarquee
+    BlastPremierMarquee,
+    MesaPromo,
+    BlastAustin
   },
   setup() {
     const isDark = useDark();
@@ -416,6 +427,10 @@ export default defineComponent({
     onMounted(() => {
       //COMMENT: I GUESS We not Using This So I Remove it.
       // loadBanner();
+      if(route.query.name === 'page-vip'){
+        router.push('/vip');
+        return
+      }
       loadAll();
     });
 

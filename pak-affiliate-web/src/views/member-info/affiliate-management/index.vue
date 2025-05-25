@@ -4,23 +4,6 @@
       <div class="panel-header">{{ $t('fields.downlineAffiliate') }}</div>
       <div class="inputs-wrap">
         <el-form @submit.prevent inline="true">
-          <!--          <el-form-item :label="t('fields.registerTime') + ' :'">-->
-          <!--            <el-date-picker-->
-          <!--              v-model="request.regTime"-->
-          <!--              format="DD/MM/YYYY"-->
-          <!--              value-format="YYYY-MM-DD"-->
-          <!--              size="normal"-->
-          <!--              class="input-small"-->
-          <!--              type="daterange"-->
-          <!--              range-separator=":"-->
-          <!--              :start-placeholder="t('fields.startDate')"-->
-          <!--              :end-placeholder="t('fields.endDate')"-->
-          <!--              :shortcuts="shortcuts"-->
-          <!--              :disabled-date="disabledDate"-->
-          <!--              :editable="false"-->
-          <!--              :clearable="false"-->
-          <!--            />-->
-          <!--          </el-form-item>-->
           <el-form-item :label="t('fields.loginName') + ' :'">
             <el-input
               class="input-small"
@@ -30,9 +13,9 @@
               size="normal"
             />
           </el-form-item>
-          <el-form-item :label="t('fields.recordTime') + ' :'">
+          <el-form-item :label="t('fields.registerTime') + ' :'">
             <el-date-picker
-              v-model="request.recordTime"
+              v-model="request.regTime"
               format="DD/MM/YYYY"
               value-format="YYYY-MM-DD"
               size="normal"
@@ -42,7 +25,6 @@
               :start-placeholder="t('fields.startDate')"
               :end-placeholder="t('fields.endDate')"
               :shortcuts="shortcuts"
-              :disabled-date="disabledDate"
               :editable="false"
               :clearable="false"
             />
@@ -71,31 +53,15 @@
       </div>
       <div class="btn-group">
         <el-button
-          v-if="
-            parseInt(store.state.user.siteId) === 10
-              ? affiliateLevel === 'JUNIOR_AFFILIATE'
-                ? false
-                : true
-              : affiliateLevel === 'AFFILIATE'
-              ? false
-              : true
-          "
           icon="el-icon-plus"
           size="normal"
           type="primary"
           @click="showDialog('CREATE')"
         >
-          {{ $t('fields.add') }}
+          {{ $t('fields.registerAffiliate') }}
         </el-button>
       </div>
-      <!-- <el-breadcrumb separator=" > " class="breadcrumb">
-        <el-breadcrumb-item v-for="item in breadcrumbNameList" :key="item.id"
-          @click="breadcrumbSearch(item.id, item.name)">
-          {{ item.name }}
-        </el-breadcrumb-item>
-      </el-breadcrumb> -->
-      <!--
-      <table cellpadding="0" cellspacing="0" border class="custom-table">
+      <!-- <table cellpadding="0" cellspacing="0" border class="custom-table">
         <thead>
           <tr>
             <th>{{ t('fields.loginName') }}</th>
@@ -197,13 +163,13 @@
           prop="loginName"
           :label="t('fields.loginName')"
           align="left"
-          width="160"
+          width="130"
         />
         <el-table-column
           prop="affiliateCode"
           :label="t('fields.affiliateCode')"
           align="left"
-          width="160"
+          width="130"
         >
           <template #default="scope">
             <span v-if="scope.row.affiliateCode === null">-</span>
@@ -238,11 +204,11 @@
             </span>
           </template>
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           prop="totalDownlineMember"
           :label="t('fields.totalDownlineMember')"
           align="center"
-          width="160"
+          width="170"
         >
           <template #default="scope">
             <span v-if="scope.row.downlineMember === null">0 %</span>
@@ -255,7 +221,7 @@
           prop="totalDownlineAffiliate"
           :label="t('fields.totalDownlineAffiliate')"
           align="center"
-          width="160"
+          width="170"
         >
           <template #default="scope">
             <span v-if="scope.row.downlineAffiliate === null">0 %</span>
@@ -263,52 +229,8 @@
               {{ scope.row.downlineAffiliate }}
             </span>
           </template>
-        </el-table-column>
-        <el-table-column
-          prop="totalDeposit"
-          :label="t('fields.downlineTotalDeposit')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <span
-              v-formatter="{
-                data: scope.row.totalDeposit,
-                type: 'money',
-              }"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="totalWithdraw"
-          :label="t('fields.downlineTotalWithdraw')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <span
-              v-formatter="{
-                data: scope.row.totalWithdraw,
-                type: 'money',
-              }"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="totalDepositWithdraw"
-          :label="t('fields.downlineTotalDepositWithdraw')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <span
-              v-formatter="{
-                data: scope.row.totalDeposit - scope.row.totalWithdraw,
-                type: 'money',
-              }"
-            />
-          </template>
-        </el-table-column>
+        </el-table-column> -->
+        
         <el-table-column
           prop="affiliateStatus"
           :label="t('fields.affiliateStatus')"
@@ -361,182 +283,6 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="affiliateBalance"
-          :label="t('fields.affiliateBalance')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <div style="display:inline-block">
-              <span
-                v-formatter="{
-                  data: scope.row.affiliateBalance,
-                  type: 'money',
-                }"
-              />
-              <el-button
-                v-if="affInfo.recycleMoney"
-                :disabled="!scope.row.canEdit"
-                size="small"
-                style="float:right"
-                @click="showRecycle(scope.row)"
-              >
-                {{ t('fields.recycle') }}
-              </el-button>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="memberBalance"
-          :label="t('fields.memberBalance')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <span
-              v-formatter="{ data: scope.row.memberBalance, type: 'money' }"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="affiliatePoint"
-          :label="t('fields.affiliatePoint')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <span
-              v-formatter="{ data: scope.row.affiliatePoint, type: 'money' }"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="memberPoint"
-          :label="t('fields.memberPoint')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <span
-              v-formatter="{ data: scope.row.memberPoint, type: 'money' }"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="affiliateTransferAmount"
-          :label="t('fields.affiliateTransferAmount')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <span
-              v-formatter="{
-                data: scope.row.affiliateTransferAmount,
-                type: 'money',
-              }"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="affiliateWithdrawAmount"
-          :label="t('fields.affiliateWithdrawAmount')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <span
-              v-formatter="{
-                data: scope.row.affiliateWithdrawAmount,
-                type: 'money',
-              }"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="withdrawTransferDiff"
-          :label="t('fields.withdrawTransferDiff')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <span
-              v-formatter="{
-                data:
-                  scope.row.affiliateTransferAmount -
-                  scope.row.affiliateWithdrawAmount,
-                type: 'money',
-              }"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="liveRolling"
-          :label="t('fields.liveRolling')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <span
-              v-formatter="{ data: scope.row.liveRolling, type: 'money' }"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="slotRolling"
-          :label="t('fields.slotRolling')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <span
-              v-formatter="{ data: scope.row.slotRolling, type: 'money' }"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="sportRolling"
-          :label="t('fields.sportRolling')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <span
-              v-formatter="{ data: scope.row.sportRolling, type: 'money' }"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="miniGameRolling"
-          :label="t('fields.miniGameRolling')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <span
-              v-formatter="{ data: scope.row.miniGameRolling, type: 'money' }"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="profit"
-          :label="t('fields.profit')"
-          align="center"
-          width="160"
-        >
-          <template #default="scope">
-            <span
-              v-formatter="{
-                data:
-                  scope.row.sportRolling +
-                  scope.row.slotRolling +
-                  scope.row.sportRolling +
-                  scope.row.miniGameRolling,
-                type: 'money',
-              }"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
           prop="operate"
           :label="t('fields.operate')"
           align="center"
@@ -546,15 +292,11 @@
               icon="el-icon-edit"
               size="normal"
               type="success"
-              :disabled="!scope.row.canEdit"
               @click="showEdit(scope.row)"
             />
           </template>
         </el-table-column>
       </el-table>
-      <div v-if="page.records.length === 0">
-        <emptyComp />
-      </div>
       <el-pagination
         class="pagination"
         @current-change="changePage"
@@ -580,69 +322,11 @@
         size="normal"
         label-width="150px"
       >
-        <el-form-item :label="t('fields.site')" prop="siteId">
-          <el-select
-            v-model="cForm.siteId"
-            size="normal"
-            :placeholder="t('fields.site')"
-            class="filter-item"
-            style="width: 350px;"
-            default-first-option
-            :disabled="true"
-          >
-            <el-option :key="site.id" :label="site.siteCode" :value="site.id" />
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="t('fields.affiliateCode')" prop="affiliateCode">
-          <el-input
-            v-model="cForm.affiliateCode"
-            style="width: 350px;"
-            maxlength="11"
-            :disabled="true"
-          />
-        </el-form-item>
-        <el-form-item
-          v-if="parseInt(store.state.user.siteId) === 10"
-          :label="t('fields.affiliateLevel')"
-          prop="affiliateLevel"
-        >
-          <el-select
-            v-model="cForm.affiliateLevel"
-            size="normal"
-            :placeholder="t('fields.affiliateLevel')"
-            class="filter-item"
-            style="width: 350px"
-          >
-            <el-option
-              v-for="item in uiControl.affiliateLevel"
-              :key="item.key"
-              :label="t(`affiliate.level.${item.value}`)"
-              :value="item.value"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item
-          :label="t('fields.affiliateCode')"
-          prop="codePersonalAffiliate"
-        >
-          <el-input
-            v-model="cForm.codePersonalAffiliate"
-            style="width: 350px;"
-            maxlength="6"
-            @input="handleInput"
-          />
-        </el-form-item>
         <el-form-item :label="t('fields.loginName')" prop="loginName">
           <el-input
             v-model="cForm.loginName"
             style="width: 350px;"
             maxlength="11"
-          />
-        </el-form-item>
-        <el-form-item :label="t('fields.realName')" prop="realName">
-          <el-input
-            v-model="cForm.realName"
-            style="width: 350px;"
           />
         </el-form-item>
         <el-form-item :label="t('fields.password')" prop="password">
@@ -664,13 +348,6 @@
             maxlength="11"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.telephone')" prop="telephone">
-          <el-input
-            v-model="cForm.telephone"
-            style="width: 350px;"
-            maxlength="20"
-          />
-        </el-form-item>
         <el-form-item
           :label="t('fields.commission')"
           prop="commission"
@@ -683,7 +360,7 @@
             @keypress="restrictCommissionDecimalInput($event)"
           />
         </el-form-item>
-        <el-form-item
+        <!-- <el-form-item
           v-if="parseInt(store.state.user.siteId) === 10"
           :label="t('fields.shareRatio')"
           prop="shareRatio"
@@ -703,7 +380,7 @@
               {{ (getAffiliateRatio(item.code) * 100).toFixed(2) }}%)
             </span>
           </div>
-        </el-form-item>
+        </el-form-item> -->
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">
             {{ $t('fields.cancel') }}
@@ -739,26 +416,6 @@
             :disabled="true"
           />
         </el-form-item>
-        <el-form-item
-          v-if="parseInt(store.state.user.siteId) === 10"
-          :label="t('fields.affiliateLevel')"
-          prop="affiliateLevel"
-        >
-          <el-select
-            v-model="eForm.affiliateLevel"
-            size="normal"
-            :placeholder="t('fields.affiliateLevel')"
-            class="filter-item"
-            style="width: 350px"
-          >
-            <el-option
-              v-for="item in uiControl.affiliateLevel"
-              :key="item.key"
-              :label="t(`affiliate.level.${item.value}`)"
-              :value="item.value"
-            />
-          </el-select>
-        </el-form-item>
         <el-form-item :label="t('fields.commissionRate')" prop="commission">
           <el-input
             v-model="eForm.commission"
@@ -766,30 +423,6 @@
             :maxlength="uiControl.commissionMax"
             @keypress="restrictCommissionDecimalInput($event)"
           />
-        </el-form-item>
-        <el-form-item
-          v-if="
-            parseInt(store.state.user.siteId) === 10 &&
-              eForm.shareRatio !== null
-          "
-          :label="t('fields.shareRatio')"
-          prop="shareRatio"
-        >
-          <div
-            v-for="item in eForm.shareRatio"
-            :key="item.code"
-            style="width: 370px; display: flex; margin-bottom:5px;"
-          >
-            <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
-            <el-input
-              v-model="item.value"
-              style=" width:80px; margin-left: auto"
-            />
-            <span style="color:red">
-              &emsp; ( {{ (getDownlineRatio(item.code) * 100).toFixed(2) }}% -
-              {{ (getAffiliateRatio(item.code) * 100).toFixed(2) }}%)
-            </span>
-          </div>
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">
@@ -1001,7 +634,7 @@ const request = reactive({
   loginName: null,
   size: 20,
   current: 1,
-  recordTime: [convertStartDate(new Date()), convertDate(new Date())],
+  regTime: null,
 })
 
 const page = reactive({
@@ -1084,7 +717,6 @@ const validateShareRatio = (rule, value, callback) => {
 }
 
 const cFormRules = reactive({
-  affiliateLevel: [required(t('message.requiredAffiliateLevel'))],
   loginName: [
     required(t('message.requiredLoginName')),
     size(6, 12, t('message.length6To12')),
@@ -1104,25 +736,11 @@ const cFormRules = reactive({
     required(t('message.reenterPassword')),
     { validator: validateReEnterPassword, trigger: 'blur' },
   ],
-  telephone: [required(t('message.requiredTelephone'))],
   commission: [
     required(t('message.requiredCommission')),
     { validator: validateCommission, trigger: 'blur' },
   ],
-  shareRatio: [{ validator: validateShareRatio, trigger: 'blur' }],
-  codePersonalAffiliate: [
-    {
-      min: 6,
-      max: 6,
-      message: t('message.required_6_digits_code'),
-      trigger: 'change',
-    },
-    {
-      pattern: /^[a-zA-Z1-9][a-zA-Z0-9]*$/,
-      message: t('message.required_only_digits_and_alphabet'),
-      trigger: 'blur',
-    },
-  ],
+  // shareRatio: [{ validator: validateShareRatio, trigger: 'blur' }],
 })
 
 const eFormRules = reactive({
@@ -1158,7 +776,7 @@ function restrictCommissionDecimalInput(event) {
 
 function resetQuery() {
   request.loginName = null
-  request.recordTime = [convertStartDate(new Date()), convertDate(new Date())]
+  request.regTime = null
 }
 
 async function loadDownlineAffiliates() {
@@ -1172,12 +790,12 @@ async function loadDownlineAffiliates() {
       }
     })
   }
-  // if (request.regTime !== null) {
-  //   if (request.regTime.length === 2) {
-  //     query.regTime = request.regTime.join(',')
-  //   }
-  // }
-  query.recordTime = query.recordTime.join(',')
+  if (request.regTime !== null) {
+    if (request.regTime.length === 2) {
+      query.regTime = request.regTime.join(',')
+    }
+  }
+  // query.recordTime = query.recordTime.join(',')
   query.siteId = site.value.id
   query.memberTypes = 'AFFILIATE'
   const { data: ret } = await getAffiliateDownline(checkId.value, query)

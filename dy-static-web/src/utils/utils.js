@@ -96,3 +96,18 @@ export const convertToCommaAmount = (amount, isForceDecimal) => {
 function isNonNumericString(value) {
   return typeof value === "string" && isNaN(value);
 }
+
+export function getAliasName(plat, platformType) {
+  // console.log(plat);
+  if (plat.alias?.includes("、")) {
+    const aliass = plat.alias.split("、");
+    const gameTypes = plat.gameType.split(",");
+    const itemIndex = gameTypes.indexOf(platformType);
+    // console.log(platformType);
+    // console.log(aliass);
+    // console.log(aliass[itemIndex]);
+
+    return itemIndex && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
+  }
+  return plat.alias;
+};

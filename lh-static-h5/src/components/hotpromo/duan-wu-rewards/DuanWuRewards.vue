@@ -32,37 +32,54 @@
                 <img src="./images/bonus-img.png" />
                 <p>粽叶领取 X {{ todayToken }}片</p>
               </div>
-              <div class="right" style="width: 100px;">
+              <div class="right" style="width: 100px">
                 <img src="./images/bonus-button.svg" alt="" width="100%" @click="handleClaimToken" />
               </div>
             </div>
           </div>
           <div class="main-img-wrapper">
-            <div style="
-              position: absolute;
-              top: 31%;
-              right: 12%;
-              transform: rotate(-7deg);
-              color:#723D00;
-              font-size: 13px;
-              font-weight: 600;
-              text-decoration: underline;
-              " 
-              @click="handleOpenRecordDialog() ;isTabLeft=true">粽叶领取记录</div>
-              <div style="
-              position: absolute;
-              top: 45%;
-              right: 12%;
-              transform: rotate(-1deg);
-              color: rgb(114, 61, 0);
-              font-size: 13px;
-              font-weight: 600;
-              text-decoration: underline;
-              " 
-              @click="handleOpenRecordDialog() ;isTabLeft=false">开启粽子记录</div>
+            <div
+              style="
+                position: absolute;
+                top: 31%;
+                right: 12%;
+                transform: rotate(-7deg);
+                color: #723d00;
+                font-size: 13px;
+                font-weight: 600;
+                text-decoration: underline;
+              "
+              @click="
+                handleOpenRecordDialog();
+                isTabLeft = true;
+              "
+            >
+              粽叶领取记录
+            </div>
+            <div
+              style="
+                position: absolute;
+                top: 45%;
+                right: 12%;
+                transform: rotate(-1deg);
+                color: rgb(114, 61, 0);
+                font-size: 13px;
+                font-weight: 600;
+                text-decoration: underline;
+              "
+              @click="
+                handleOpenRecordDialog();
+                isTabLeft = false;
+              "
+            >
+              开启粽子记录
+            </div>
             <img src="./images/main-img.png" @click="handleOpenRecordDialog" />
-            <img src="./images/main-img-reward.svg" class="reward-button" @click="handleClaimBonus" />
-            <div style="font-size: 13px;color:#027C5F; text-align:center;">每开启一次粽子将<span style="color:red;">消耗5片粽叶</span></div>
+            <img src="./images/main-img-reward.png" class="reward-button" @click="handleClaimBonus" />
+            <div style="font-size: 13px; color: #027c5f; text-align: center">
+              每开启一次粽子将
+              <span style="color: red">消耗5片粽叶</span>
+            </div>
           </div>
         </div>
       </div>
@@ -141,7 +158,7 @@
               />
               <span>示例</span>
             </div>
-            会员A 在当日累计有效投注400,000元，次日即可领取12片粽叶，兑换2个好粽，获的对应安康金。
+            会员A 在当日累计有效投注400,000元，次日即可领取12片粽叶，兑换2个好粽，获得对应安康金。
           </div>
         </div>
       </div>
@@ -191,6 +208,52 @@
       </div>
     </div>
   </div>
+
+  <q-dialog align-center centered v-model="isOpenResultDialog">
+    <div
+      class="dialog"
+      style="
+        padding: 0px;
+        border-radius: 12px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      "
+    >
+      <div
+        style="
+          background: linear-gradient(180deg, #00cc8c 0%, #006646 100%);
+          text-align: center;
+          color: #fff;
+          font-size: 18px;
+          height: 36px;
+          width: 100%;
+          padding-top: 4px;
+        "
+      >
+        兑换粽子获得安康金
+      </div>
+      <img
+        src="./images/closeButton.png"
+        alt=""
+        style="position: absolute; top: 5px; right: 5px; cursor: pointer"
+        @click="isOpenResultDialog = false"
+      />
+
+      <img src="./images/BigZoneZi.png" alt="" width="70%" />
+      <div>
+        <div style="color: #ff8400; font-weight: 600">
+          <span style="font-size: 56px">{{ bonusClaims }}</span>
+          <span style="font-size: 16px">元</span>
+        </div>
+      </div>
+      <div style="color: #014625;font-size: 16px;">恭喜您获得安康金</div>
+      <div style="display: flex; justify-content: center;margin-top: 16px; margin-bottom: 20px">
+        <button @click="isOpenResultDialog = false">确定</button>
+      </div>
+    </div>
+  </q-dialog>
   <q-dialog align-center centered v-model="isRecordDialogShow">
     <div class="dialog">
       <div class="title">
@@ -202,7 +265,7 @@
         <img v-if="isTabLeft" src="./images/tab-active-left.png" width="100%" />
         <img v-else src="./images/tab-active-right.png" width="100%" />
       </div>
-      <div v-show="isTabLeft" style="flex: 1;" class="inner-table">
+      <div v-show="isTabLeft" style="flex: 1" class="inner-table">
         <table>
           <thead>
             <tr>
@@ -221,7 +284,7 @@
           </tbody>
         </table>
       </div>
-      <div v-show="!isTabLeft" style="flex: 1;" class="inner-table">
+      <div v-show="!isTabLeft" style="flex: 1" class="inner-table">
         <table>
           <thead>
             <tr>
@@ -242,7 +305,7 @@
           </tbody>
         </table>
       </div>
-      <div style="display: flex; justify-content: center;">
+      <div style="display: flex; justify-content: center">
         <button @click="isRecordDialogShow = false">关闭</button>
       </div>
     </div>
@@ -251,7 +314,13 @@
 
 <script setup>
 import { onMounted, ref, toRefs } from "vue";
-import { getTokenRewardsInit, receiveTokenRewards, claimTokenRewardsBonus, getTokenRecords, getRewardsRecords } from "../../../api/index/promo";
+import {
+  getTokenRewardsInit,
+  receiveTokenRewards,
+  claimTokenRewardsBonus,
+  getTokenRecords,
+  getRewardsRecords
+} from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
@@ -272,31 +341,33 @@ const isClaiming = ref(false);
 const isClaimingToken = ref(false);
 const isRecordDialogShow = ref(false);
 const isTabLeft = ref(true);
-const tokenRecord = ref([])
-const rewardRecord = ref([])
+const tokenRecord = ref([]);
+const rewardRecord = ref([]);
+const isOpenResultDialog = ref(false);
+const bonusClaims = ref(0);
 
 const handleToggleTab = () => {
-  isTabLeft.value = !isTabLeft.value
-}
+  isTabLeft.value = !isTabLeft.value;
+};
 
 const handleOpenRecordDialog = () => {
   fetchRecordData();
-  isRecordDialogShow.value = true
-}
+  isRecordDialogShow.value = true;
+};
 
 const fetchRecordData = () => {
   getTokenRecords(props.promoCode).then((res) => {
     if (res.code === 0) {
-      res.data = tokenRecord.value
+      tokenRecord.value = res.data;
     }
-  })
+  });
 
   getRewardsRecords(props.promoCode).then((res) => {
     if (res.code === 0) {
-      res.data = rewardRecord.value
+      rewardRecord.value = res.data;
     }
-  })
-}
+  });
+};
 
 const handleClaimBonus = () => {
   if (isClaiming.value === true) {
@@ -329,13 +400,15 @@ const handleClaimBonus = () => {
   claimTokenRewardsBonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
-        notify({
-          message: "成功领取",
-          type: "red-packet",
-          params: {
-            redPacket: res.data
-          }
-        });
+        isOpenResultDialog.value = true;
+        // notify({
+        //   message: "成功领取",
+        //   type: "red-packet",
+        //   params: {
+        //     redPacket: res.data
+        //   }
+        // });
+        bonusClaims.value = res.data;
         fetchData();
       } else {
         notify({
@@ -384,11 +457,8 @@ const handleClaimToken = () => {
     .then((res) => {
       if (res.code === 0) {
         notify({
-          message: "成功领取",
-          type: "red-packet",
-          params: {
-            redPacket: res.data
-          }
+          type: "success",
+          message: "领取成功"
         });
         fetchData();
       } else {
@@ -542,7 +612,6 @@ onMounted(() => {
   gap: 8px;
 
   .title {
-    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-title.png");
     background-repeat: no-repeat;
     background-size: 100%;
     width: 240px;
@@ -555,27 +624,6 @@ onMounted(() => {
     justify-content: flex-start;
     align-items: flex-start;
     gap: 10px;
-    .left {
-      background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/info-little-title-bg.png");
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      width: 64px;
-      height: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 12px;
-      font-weight: 600;
-      line-height: 23.33px;
-      color: #ffffff;
-      margin-right: 16px;
-    }
-    .right {
-      font-size: 12px;
-      font-weight: 400;
-      line-height: 20px;
-      color: #000000;
-    }
   }
 }
 
@@ -720,7 +768,7 @@ onMounted(() => {
   width: 100%;
   height: 28px;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
 
   background-position: center;
   &.img1 {
@@ -831,21 +879,21 @@ onMounted(() => {
 }
 
 .dialog {
+  max-height: 450px !important;
   background-color: #fbfbe3;
   width: 80%;
-  min-height: 504px;
   overflow: auto;
   border: 1px solid #027c5f;
-  padding: 12px;
   display: flex;
   flex-direction: column;
-  .inner-table{
+  .inner-table {
+    overflow-y: scroll;
+    height: 300px;
     table {
-      
       border-collapse: separate; /* 關鍵！讓邊角能獨立呈現 */
       border-spacing: 0;
     }
-    td{
+    td {
       border: 1px solid #027c5f;
       padding: 0px !important;
       text-align: center;
@@ -874,7 +922,7 @@ onMounted(() => {
     width: 100%;
 
     th {
-      background: linear-gradient(180deg, #00CC8C 0%, #006646 100%);
+      background: linear-gradient(180deg, #00cc8c 0%, #006646 100%);
       font-size: 14px;
       color: white;
       border-radius: 4px 4px 0 0;
@@ -888,7 +936,7 @@ onMounted(() => {
 
   button {
     font-size: 16px;
-    background: linear-gradient(180deg, #00CC8C 0%, #006646 100%);
+    background: linear-gradient(180deg, #00cc8c 0%, #006646 100%);
     color: white;
     border: none;
     border-radius: 4px;
