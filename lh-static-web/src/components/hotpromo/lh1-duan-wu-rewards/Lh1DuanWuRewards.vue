@@ -223,8 +223,9 @@
             justify-content: center;
             cursor: pointer;
           "
+          @click="closeResultDialog"
         >
-          <div @click="closeResultDialog">确定</div>
+          <div>确定</div>
         </div>
       </div>
       <div class="resultClose" @click="closeResultDialog">
