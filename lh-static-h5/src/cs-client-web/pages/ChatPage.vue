@@ -40,9 +40,17 @@ export default defineComponent({
 
     let qChatGuid = route.query?.uid ?? "";
 
+    const getChatBaseUrl = () => {
+      const url = route?.path?.split?.("/")?.[1] || "live-chat";
+      if (url === "live-chat") {
+        return `${url}/live-chat`;
+      }
+      return url;
+    };
+
     if (isEmpty(cSuserStore.token)) {
       // console.log("TOken Empty");
-      const chatBaseUrl = route?.path?.split?.("/")?.[1] || "live-chat";
+      const chatBaseUrl = getChatBaseUrl();
       if (store.chatGuid) {
         router.push({ path: `/${chatBaseUrl}/chat?uid=${store.chatGuid}` });
       } else {

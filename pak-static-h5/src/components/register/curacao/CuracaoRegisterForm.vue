@@ -168,7 +168,16 @@ const searchCountryCode = ref("");
 
 const displayCountryCodeList = computed(() =>
   COUNTRY_CODE_LIST.filter((item) => {
-    const isBlockCountry = ["Curaçao", "Netherlands", "United States"].includes(item.name);
+    const isBlockCountry = [
+      "Curaçao",
+      "Netherlands",
+      "United States",
+      "Cuba",
+      "Iran",
+      "North Korea",
+      "Russia",
+      "Syria"
+    ].includes(item.name);
     const isMatchedSearchStr =
       item.name.toLowerCase().includes(searchCountryCode.value?.toLowerCase()) ||
       item.code.includes(searchCountryCode.value);
