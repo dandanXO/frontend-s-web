@@ -2,7 +2,7 @@
   <div
     class="WAL position-relative"
     :style="style"
-    :class="[{ 'no-footer': chatBaseUrl === 'live-chat' }, isChatStarted ? 'WAL-start' : '']"
+    :class="[{ 'no-footer': chatBaseUrl === 'live-chat/live-chat' }, isChatStarted ? 'WAL-start' : '']"
     v-show="isPageLoaded"
   >
     <q-layout
@@ -30,7 +30,7 @@
       v-if="isChatStarted && !isNoticeClicked"
       view="lHh Lpr lFf"
       class="WAL__layout shadow-3"
-      :class="{ 'no-footer': chatBaseUrl === 'live-chat' }"
+      :class="{ 'no-footer': chatBaseUrl === 'live-chat/live-chat' }"
       container
     >
       <chat-header
@@ -197,7 +197,7 @@
         </q-item>
 
         <q-item v-ripple>
-          <q-item-section class="start-chat-btn" :class="{ 'no-footer': chatBaseUrl === 'live-chat' }">
+          <q-item-section class="start-chat-btn" :class="{ 'no-footer': chatBaseUrl === 'live-chat/live-chat' }">
             <q-item-label>
               <q-btn
                 color="primary"
@@ -215,7 +215,7 @@
         </q-item>
       </div>
 
-      <div class="duplicate-box" :class="{ 'no-footer': chatBaseUrl === 'live-chat' }" v-if="isDuplicateTab">
+      <div class="duplicate-box" :class="{ 'no-footer': chatBaseUrl === 'live-chat/live-chat' }" v-if="isDuplicateTab">
         <span class="duplicate-span">{{ t("duplicated_tab_detected") }}</span>
         <q-btn color="primary" size="md" class="duplicate-span" @click="useThisChatBoard">
           {{ t("recover_chat") }}
@@ -223,7 +223,7 @@
       </div>
       <div
         class="duplicate-box"
-        :class="{ 'no-footer': chatBaseUrl === 'live-chat' }"
+        :class="{ 'no-footer': chatBaseUrl === 'live-chat/live-chat' }"
         v-if="footerDisabled && isPreStateStatus && isPreChat"
       >
         <span class="duplicate-span">{{ t("sess_timeout") }}</span>
