@@ -501,6 +501,13 @@ html {
 }
 
 @media (max-width: 768px) {
+  .swiper-pagination-2 {
+      position: absolute;
+      text-align: center;
+      transition: .3s opacity;
+      transform: translate3d(0, 0, 0);
+      z-index: 10;
+  }
   .contact-us-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -662,7 +669,7 @@ html {
     max-width: none;
   }
 
-  .swiper-pagination {
+  .swiper-pagination,.swiper-pagination-2 {
     display: none;
   }
   
