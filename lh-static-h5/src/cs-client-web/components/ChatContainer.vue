@@ -389,7 +389,13 @@ export default defineComponent({
 
     const notice_timestamp = ref("");
 
-    const chatBaseUrl = route?.path?.split?.("/")?.[1] || "live-chat";
+    const getChatBaseUrl = () => {
+      const url = route?.path?.split?.("/")?.[1] || "live-chat";
+      if (url === "live-chat") {
+        return `${url}/live-chat`;
+      }
+    };
+    const chatBaseUrl = getChatBaseUrl();
 
     const partnerCode = computed(() => {
       return LocalStorage.get("partnerCode");
