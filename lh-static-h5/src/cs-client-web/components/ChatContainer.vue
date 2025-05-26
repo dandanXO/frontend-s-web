@@ -394,6 +394,7 @@ export default defineComponent({
       if (url === "live-chat") {
         return `${url}/live-chat`;
       }
+      return url;
     };
     const chatBaseUrl = getChatBaseUrl();
 
@@ -1758,8 +1759,8 @@ export default defineComponent({
 .WAL {
   width: 100%;
   height: 100%;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  // padding-top: 20px;
+  // padding-bottom: 20px;
 
   &__layout {
     margin: 0 auto;
@@ -1767,8 +1768,10 @@ export default defineComponent({
     height: 100%;
 
     max-width: 950px;
-    border-radius: 20px;
-    width: calc(90%);
+    // border-radius: 20px;
+    // width: calc(90%);
+    width: 100%;
+    border-radius: 0;
   }
 }
 
@@ -1784,7 +1787,7 @@ export default defineComponent({
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: #009688;
+    // background-color: #009688;
   }
 }
 
@@ -1903,6 +1906,7 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 550px;
 
   .duplicate-span {
     // padding-right: 0px;
@@ -1952,7 +1956,7 @@ export default defineComponent({
 
 .WAL-start,
 .WAL__layout {
-  height: calc(100vh - 60px) !important;
+  height: calc(100vh - 64px) !important;
   &.no-footer {
     height: 100vh !important;
   }
@@ -1962,7 +1966,7 @@ export default defineComponent({
   background: rgb(255, 255, 255);
   background: linear-gradient(180deg, rgba(255, 255, 255) 0%, rgba(222, 246, 246, 1) 65%, rgba(191, 238, 238, 1) 100%);
   width: 100%;
-  height: calc(100vh - 60px);
+  height: calc(100vh - 64px);
   min-height: 100vh;
   padding: 55px 15px 12px;
 
@@ -2032,16 +2036,16 @@ export default defineComponent({
   background: #555;
 }
 
-@media (max-width: 850px) {
-  .WAL {
-    padding: 0;
+// @media (max-width: 850px) {
+//   .WAL {
+//     padding: 0;
 
-    &__layout {
-      width: 100%;
-      border-radius: 0;
-    }
-  }
-}
+//     &__layout {
+//       width: 100%;
+//       border-radius: 0;
+//     }
+//   }
+// }
 
 .scroll::-webkit-scrollbar {
   width: 0;
@@ -2065,6 +2069,7 @@ export default defineComponent({
   left: 50%;
   transform: translateX(-50%);
   width: calc(90% - 48px);
+  max-width: 510px;
   background: rgba(210, 242, 242, 0.2);
   backdrop-filter: blur(4px);
   padding-bottom: 16px;

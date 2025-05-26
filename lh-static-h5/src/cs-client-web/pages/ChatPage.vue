@@ -45,6 +45,7 @@ export default defineComponent({
       if (url === "live-chat") {
         return `${url}/live-chat`;
       }
+      return url;
     };
 
     if (isEmpty(cSuserStore.token)) {
