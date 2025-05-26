@@ -696,9 +696,9 @@ export function getRewardsRecords(promoCode) {
   return eventapi.get(`/session/token-rewards/rewardRecords?promoCode=${promoCode}&v=${randNum}`);
 }
 
-export function claimChestBlastAustin(promoCode) {
+export function claimChestBlastAustin(promoCode, type) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
-  return eventapi.post(`/session/mission/claim?promoCode=${promoCode}&v=${randNum}`);
+  return eventapi.post(`/session/mission/claim?promoCode=${promoCode}&v=${randNum}&type=${type}`);
 }
 
 export function selectMissionBlastAustin(promoCode, missionNum) {
