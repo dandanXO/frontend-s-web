@@ -526,7 +526,7 @@
         />
         <div class="title">恭喜您开启冠冕任务宝箱成功</div>
         <div class="desc" style="display: flex; align-items: center; color: #43b202">
-          获得加冕金{{ claimBetSuccessDialogBonus }}元
+          获得冠冕金{{ claimBetSuccessDialogBonus }}元
           <img
             src="../../../assets/images/promo/hotpromo/blast-austin/dialog-success-icon.png"
             width="20px"
@@ -658,7 +658,11 @@ const onClickSelectMission = (missionNum) => {
 
 const onClickClaimChest = (type) => {
   claimChestBlastAustin(props.promoCode, type).then((res) => {
-    if (res.code === 0) {
+    if (res.code === 0 && type === 'BET') {
+      claimBetSuccessDialogBonus.value = res.data;
+      isClaimBetSuccessDialogVisible.value = true;
+      initData();
+    } else if (res.code === 0 && type === 'DEPOSIT') {
       claimDepositSuccessDialogBonus.value = res.data;
       isClaimDepositSuccessDialogVisible.value = true;
       initData();
