@@ -18,6 +18,9 @@
 
     <link rel="icon" type="image/ico" href="icons/favicon.ico" />
     <script>
+      window.__APP_PUBLIC_PATH__ = window.location.pathname.includes('live-chat') ? '/live-chat/' : '/';
+    </script>
+    <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());

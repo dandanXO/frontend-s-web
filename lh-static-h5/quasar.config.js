@@ -34,7 +34,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-webpack/boot-files
-    boot: ["axios", "cache", "fingerprint", "i18n", "vue-native-websocket", "vue-shortkey"],
+    boot: ["public-path", "axios", "cache", "fingerprint", "i18n", "vue-native-websocket", "vue-shortkey"],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
     css: ["app.scss", "responsive.scss"],
@@ -62,7 +62,7 @@ module.exports = configure(function (ctx) {
         configFile: true
       },
       // transpile: false,
-      // publicPath: '/',
+      publicPath: "",
       // Add dependencies for transpiling with Babel (Array of string/regex)
       // (from node_modules, which are by default not transpiled).
       // Applies only if "transpile" is set to true.
