@@ -138,7 +138,7 @@
                 width="143px"
                 height="48px"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-claim-now-btn.png"
-                @click="onClickClaimChest('bet')"
+                @click="onClickClaimChest('BET')"
               />
               <img
                 style="filter: grayscale(1)"
@@ -222,7 +222,7 @@
                 width="143px"
                 height="48px"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-claim-now-btn.png"
-                @click="onClickClaimChest('deposit')"
+                @click="onClickClaimChest('DEPOSIT')"
               />
               <img
                 style="filter: grayscale(1)"

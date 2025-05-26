@@ -153,7 +153,7 @@
               class="icon-img claim-chest-btn"
               style="width: 105px !important; height: auto !important"
               src="../../../assets/images/promo/hotpromo/blast-austin/chest-claim-now-btn.png"
-              @click="onClickClaimChest('bet')"
+              @click="onClickClaimChest('BET')"
             />
             <img
               style="filter: grayscale(1); width: 105px !important; height: auto !important"
@@ -273,7 +273,7 @@
               class="icon-img claim-chest-btn"
               style="width: 105px !important; height: auto !important"
               src="../../../assets/images/promo/hotpromo/blast-austin/chest-claim-now-btn.png"
-              @click="onClickClaimChest('deposit')"
+              @click="onClickClaimChest('DEPOSIT')"
             />
             <img
               style="filter: grayscale(1); width: 105px !important; height: auto !important"
