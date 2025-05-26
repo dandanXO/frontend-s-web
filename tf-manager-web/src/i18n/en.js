@@ -258,6 +258,7 @@ export default {
       DELAYED: 'Delayed',
       ABANDONED: 'Abandoned',
       PENDING: 'Pending',
+      OTHER: 'Other',
     },
   },
   betStatus: {
@@ -2623,9 +2624,9 @@ export default {
     streamTag: 'Stream Tag',
     isCdnPush: 'Push CDN',
     box: 'Box',
-    copyToLive: 'Copy to Live',
-    confirmCopy: 'Confirm that you want to copy to live?',
     isCreateLiveUrl: 'Is Create Live Url (Yes/No)',
+    addToLive: 'Add to Live',
+    initialSupplierStreamStatus: 'Initial Supplier Stream Status',
   },
   message: {
     adsStatusOpen: 'Open',
