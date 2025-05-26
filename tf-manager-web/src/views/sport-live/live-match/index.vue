@@ -92,7 +92,7 @@
           <el-tag v-else-if="scope.row.statusId === 13" type="danger">{{ t('status.namiMatch.DELAYED') }}</el-tag>
           <el-tag v-else-if="scope.row.statusId === 14" type="danger">{{ t('status.namiMatch.ABANDONED') }}</el-tag>
           <el-tag v-else-if="scope.row.statusId === 15" type="danger">{{ t('status.namiMatch.PENDING') }}</el-tag>
-          <el-tag v-else type="default">{{ getLiveStatusDisplayName(scope.row.statusId) }}</el-tag>
+          <el-tag v-else type="default">{{ t('status.namiMatch.OTHER') }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="t('fields.operate')" align="right" fixed="right">
@@ -156,15 +156,15 @@
         <div class="match-info-row">
           <span class="label">{{ t('fields.status') }}：</span>
           <el-tag v-if="currentRow.statusId === 0" type="danger">{{ t('status.namiMatch.GAME_EXCEPTION') }}</el-tag>
-          <el-tag v-else-if="currentRow.statusId === 1" type="warning">{{ t('status.namiMatch.ONGOING') }}</el-tag>
-          <el-tag v-else-if="currentRow.statusId === 2" type="success">{{ t('status.namiMatch.ENDED') }}</el-tag>
-          <el-tag v-else-if="currentRow.statusId === 3" type="danger">{{ t('status.namiMatch.CANCEL') }}</el-tag>
+          <el-tag v-else-if="currentRow.statusId === 1" type="warning">{{ t('status.namiMatch.NOT_STARTED') }}</el-tag>
+          <el-tag v-else-if="currentRow.statusId === 2" type="success">{{ t('status.namiMatch.ONGOING') }}</el-tag>
+          <el-tag v-else-if="currentRow.statusId === 3" type="danger">{{ t('status.namiMatch.ENDED') }}</el-tag>
           <el-tag v-else-if="currentRow.statusId === 11" type="danger">{{ t('status.namiMatch.INTERRUPTED') }}</el-tag>
           <el-tag v-else-if="currentRow.statusId === 12" type="warning">{{ t('status.namiMatch.CANCEL') }}</el-tag>
           <el-tag v-else-if="currentRow.statusId === 13" type="danger">{{ t('status.namiMatch.DELAYED') }}</el-tag>
           <el-tag v-else-if="currentRow.statusId === 14" type="danger">{{ t('status.namiMatch.ABANDONED') }}</el-tag>
           <el-tag v-else-if="currentRow.statusId === 15" type="danger">{{ t('status.namiMatch.PENDING') }}</el-tag>
-          <el-tag v-else type="default">{{ getLiveStatusDisplayName(currentRow.statusId) }}</el-tag>
+          <el-tag v-else type="default">{{ t('status.namiMatch.OTHER') }}</el-tag>
         </div>
       </div>
       <template #footer>
