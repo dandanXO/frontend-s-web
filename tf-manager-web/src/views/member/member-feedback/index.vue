@@ -110,11 +110,12 @@
         </el-form-item>
         <el-form-item v-if="form.photo" :label="t('fields.photo')" prop="photo">
           <el-image
-            v-if="form.photo.endsWith('.png') || form.photo.endsWith('.jpeg') || form.photo.endsWith('.jpg')"
+            v-for="p in uiControl.photos"
+            :key="p"
             hide-on-click-modal
-            style="width: 30px; height: 30px; border: 1px solid grey"
-            :src="form.photo"
-            :preview-src-list="[form.photo]"
+            style="width: 30px; height: 30px; margin-right:5px; border: 1px solid grey"
+            :src="p"
+            :preview-src-list="[p]"
             fit="cover"
           />
         </el-form-item>
@@ -271,6 +272,7 @@ const uiControl = reactive({
   editBtn: true,
   feedbackTypes: [],
   messageVisible: false,
+  photos: [],
 })
 const request = reactive({
   size: 30,
@@ -349,6 +351,11 @@ async function showReadFeedback(feedback) {
     for (const key in ret) {
       if (Object.keys(form).find(k => k === key)) {
         form[key] = ret[key];
+        if (key === 'photo' && ret[key]) {
+          uiControl.photos = ret[key].split(',').filter(
+            p => p.endsWith('.png') || p.endsWith('.jpeg') || p.endsWith('.jpg')
+          );
+        }
       }
     }
     if (form.replyTitle || form.replyContent) {
