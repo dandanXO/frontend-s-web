@@ -264,6 +264,7 @@ export default {
       DELAYED: '延期',
       ABANDONED: '腰斩',
       PENDING: '待定',
+      OTHER: '其他',
     },
   },
   betStatus: {
