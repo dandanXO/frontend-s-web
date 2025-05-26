@@ -1,6 +1,11 @@
 <template>
-  <div class="main-container">
+  <div class="main-container" :style="{background: $q.dark.isActive ? '' : `url(${require('../assets/images/download/app/main-bg.png')}) no-repeat`}">
+    <div class="flex">
+      <img style="width:60%; margin-top: -10px;" src="../assets/images/download/app/logo.png"/>
+    </div>
     <q-carousel
+     ref="carousel"
+      control-type="flat"
       class="carousel"
       v-model="slide"
       swipeable
@@ -9,7 +14,7 @@
       infinite
       transition-next="slide-left"
       transition-prev="slide-right"
-      height="85dvh"
+      style="margin-top: -20px; min-height: 76vh; height: 100%;"
     >
       <template v-slot:navigation-icon="{ active, onClick }">
         <q-btn
@@ -31,46 +36,40 @@
       </template>
       <q-carousel-slide :key="0" :name="0">
         <div class="custom-slide-content">
-          <div class="flex">
-            <img style="width:60%; margin-top: -40px;" src="../assets/images/download/app/logo.png"/>
+          <div class="flex" style="pointer-events: none;">
+            <img style="width: 90%; margin-top: -10px;" src="../assets/images/download/app/title-1.png"/>
           </div>
-          <div class="flex">
-            <img style="width: 90%; margin-top: -40px;" src="../assets/images/download/app/title-1.png"/>
-          </div>
-          <div class="flex">
+          <div class="flex" style="pointer-events: none;">
             <img style="width: 100%; margin-top: 10px;" src="../assets/images/download/app/bg-1.png"/>
           </div>
-          <div class="flex">
+          <div class="flex" style="pointer-events: none;">
             <img style="width: 90%;margin-top: 8%;" src="../assets/images/download/app/bottom-1.png"/>
           </div>
         </div>
       </q-carousel-slide>
       <q-carousel-slide :key="1" :name="1">
         <div class="custom-slide-content">
-          <div class="flex">
-            <img style="width:60%; margin-top: -40px;" src="../assets/images/download/app/logo.png"/>
+          <div class="flex" style="pointer-events: none;">
+            <img style="width: 80%; margin-top: -10px;" src="../assets/images/download/app/title2-1.png"/>
           </div>
-          <div class="flex">
-            <img style="width: 80%; margin-top: -40px;" src="../assets/images/download/app/title2-1.png"/>
-          </div>
-          <div class="flex">
+          <div class="flex" style="pointer-events: none;">
             <img style="width: 45%; margin-top: 0px;" src="../assets/images/download/app/title2-2.png"/>
           </div>
-          <div class="flex">
+          <div class="flex" style="pointer-events: none;">
             <img style="width: 90%; margin-top: 10px;" src="../assets/images/download/app/bg-2.png"/>
           </div>
-          <div class="flex">
+          <div class="flex" style="pointer-events: none;">
             <img style="width: 90%;margin-top: -10px;" src="../assets/images/download/app/bottom-2.png"/>
           </div>
         </div>
       </q-carousel-slide>
     </q-carousel>
     <div class="flex2">
-      <button class="btn1" @click="openSheet">
-        <div>APP下载</div>
+      <button class="btn1-1" @click="openSheet">
+        <div style="opacity: 0;">test</div>
       </button>
-      <button class="btn2">
-        <div>切换安卓 / 切换IOS</div>
+      <button class="btn2" :class="{'common-large-btn': $q.dark.isActive}" @click="isAndroid = !isAndroid">
+        <div>{{ isAndroid ? '切换IOS' : '切换安卓' }}</div>
       </button>
       <button class="btn3" @click="openTeachSheet">
         点击查看安装教程
@@ -99,33 +98,20 @@
           <img src="../assets/images/download/app/close.png" class="sheet-content-bg3" @click.self="closeSheet" />
         </div>
       </div>
-      <div class="flex" style="width: 100%; overflow-y: auto;">
-        <div class="sub1-download-card">
+      <div class="flex" style="width: 100%; height: 100%; overflow-y: auto; ">
+        <div @click.prevent="downloadFile(item.url,'app', index)" class="sub1-download-card" v-for="(item, index) in (isAndroid ? androidDownloadUrlList : isoDownloadUrlList)" :key="index">
           <img src="../assets/images/download/app/icon-super.png" alt="super version" class="sub1-icon" />
           <div class="sub1-content">
-            <div class="sub1-title">超级版</div>
-            <div class="sub1-subtitle"> 高效 快捷</div>
+            <div class="sub1-title">{{ item.name }}</div>
+            <div class="sub1-subtitle"> {{ item?.subtitle }}</div>
           </div>
-          <button class="sub1-btn-download sub1-active">下载</button>
+          <button class="sub1-btn-download " :class="item.isDownload ? 'sub1-inactive' : 'sub1-active' ">
+            {{ item.isDownload ? '已下载' : '下载' }}
+          </button>
         </div>
-        <div class="sub1-download-card sub1-disabled">
-          <img src="../assets/images/download/app/icon-super.png" alt="lite version" class="sub1-icon" />
-          <div class="sub1-content">
-            <div class="sub1-title">轻量版</div>
-            <div class="sub1-subtitle"> 防失联 不掉签</div>
-          </div>
-          <button class="sub1-btn-download sub1-inactive">已下载</button>
-        </div>
-        <div class="sub1-download-card">
-          <img src="../assets/images/download/app/icon-super.png" alt="super version" class="sub1-icon" />
-          <div class="sub1-content">
-            <div class="sub1-title">官方版</div>
-            <div class="sub1-subtitle"> 长期 稳定</div>
-          </div>
-          <button class="sub1-btn-download sub1-active">下载</button>
-        </div>
-        <button class="btn1" style="margin-bottom: 32px;">
-          <div>切换安卓/切换IOS</div>
+      
+        <button class="btn1" style="margin-bottom: 32px;" @click="isAndroid = !isAndroid">
+          <div>{{ isAndroid ? '切换IOS' : '切换安卓' }}</div>
         </button>
       </div>
     </div>
@@ -155,7 +141,8 @@
 </template>
 
 <script lang="js">
-import { ref, defineComponent } from "vue";
+import { ref, defineComponent, onMounted } from "vue";
+import axios from "axios";
 export default defineComponent({
   name: "downloadAppPage",
   setup() {
@@ -164,7 +151,9 @@ export default defineComponent({
     const showTeachSheet = ref(false);
     const teachSheetAnim = ref('show');
     const slide = ref(0);
-
+    const isAndroid = ref(true)
+    const carousel = ref(null);
+    const height = ref('590px'); // 初始 height
     // APP下載 bottom sheet
     function openSheet() {
       sheetAnim.value = 'show';
@@ -178,7 +167,8 @@ export default defineComponent({
         showSheet.value = false;
       }
     }
-
+    const androidDownloadUrlList = ref({})
+    const isoDownloadUrlList = ref({})
     // 教學 bottom sheet
     function openTeachSheet() {
       teachSheetAnim.value = 'show';
@@ -192,8 +182,50 @@ export default defineComponent({
         showTeachSheet.value = false;
       }
     }
+    onMounted(()=>{
+      axios.get('https://tfwkgol.076knee9cc.com/getDownData').then((res) => {
+        let subTitle = ['高效 快捷',' 防失联 不掉签','长期 稳定',]
+        if (res.data.code == 0 ) {
+          androidDownloadUrlList.value = (res.data.data.android).map(
+            item => {
+              const [name, url] = Object.entries(item)[0];
+              return { name, url, subtitle:subTitle[Math.floor(Math.random() * subTitle.length)], isDownload: false };
+            }
+          );
+          isoDownloadUrlList.value =  (res.data.data.ios).map(
+            item => {
+              const [name, url] = Object.entries(item)[0];
+              return { name, url, subtitle:subTitle[Math.floor(Math.random() * subTitle.length)], isDownload: false  };
+            }
+          );
+          
+        }else{
+          console.error("Error fetching app download data:", res.message);
+        }
+      }).catch((err) => {
+        console.error("Error fetching slide data:", err);
+      });
+    })
+    const downloadFile = (url, fileName, index) => {
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileName || '';
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
 
+      const list = isAndroid.value ? androidDownloadUrlList.value : isoDownloadUrlList.value;
+      if (list[index]) {
+        console.log("list[index]", list[index]);
+        list[index].isDownload = true;
+      }
+    };
     return {
+      downloadFile,
+      isAndroid,
+      androidDownloadUrlList,
+      isoDownloadUrlList,
       showSheet,
       sheetAnim,
       openSheet,
@@ -211,11 +243,15 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+
 .custom-slide-content {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   height: 100%;
+  width: 100%;
+  touch-action: pan-y pan-x;
+  // overflow: hidden;
 }
 .flex {
   display: flex;
@@ -230,7 +266,8 @@ export default defineComponent({
   gap: 10px;
 }
 .main-container{
-  background: url("../assets/images/download/app/main-bg.png") no-repeat;
+  overflow-x: hidden;
+  // background: url("../assets/images/download/app/main-bg.png") no-repeat;
   background-size: cover;
   background-position: center;
   min-height: 100vh;
@@ -240,6 +277,9 @@ export default defineComponent({
   background-size: cover;
   background-position: center;
 }
+:deep(.q-carousel__navigation--bottom){
+    bottom: 0px;
+  }
 .btn1{
   width: 90%;
   color: #FFFFFF;
@@ -250,6 +290,16 @@ export default defineComponent({
   box-shadow: 0px 3.21px 3.21px 0px #93C7FF inset;
   box-shadow: 0px -2.57px 2.57px 0px #275EC1 inset;
   border-radius: 12px;
+}
+.btn1-1{
+  width: 90%;
+  color: #FFFFFF;
+  font-size: 14px;
+  border: 0px;
+  padding: 1rem;
+  background: url("../assets/images/download/app/appDbutton.png") no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
 }
 .btn2{
   width: 90%;
@@ -298,7 +348,7 @@ export default defineComponent({
   transform: translateY(100%);
 }
 .sheet-content {
-  height: 45vh;
+  height: 60vh;
   transition: transform 0.35s cubic-bezier(.4,0,.2,1), opacity 0.25s;
 }
 .sheet-content2 {
@@ -365,13 +415,13 @@ export default defineComponent({
   flex: 1;
 }
 .sub1-title {
-  font-size: 22px;
+  font-size: 16px;
   font-weight: bold;
   color: #000;
   margin-bottom: 8px;
 }
 .sub1-subtitle {
-  font-size: 16px;
+  font-size: 14px;
   color: #888;
 }
 .sub1-btn-download {
@@ -424,8 +474,22 @@ export default defineComponent({
   margin: 0;
 }
 .teach1-step-gallery{
+  overflow: auto;
   margin-top: 4%;
 }
+
+.common-large-btn {
+    background: url("../assets/images/login/login-btn-bg-dark.svg") no-repeat center center;
+    background-size: cover;
+    box-shadow: none;
+    border-radius: 4px;
+    border: 1px solid #3a93ce;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+  }
+
 @keyframes sheetIn {
   from {
     transform: translateY(100%);

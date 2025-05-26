@@ -2,7 +2,7 @@
   <q-layout view="hHh Lpr fFf">
     <NewMemberGuide v-if="store.regSuccessGuideVisible" />
     <q-header v-if="hasPage" :class="hasShadow ? 'with-shadow' : ''">
-      <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
+      <q-card-section v-if="!hasPage" class="items-center justify-between top-section" horizontal>
         <div class="logo">
           <router-link to="/"><img src="../assets/logo-1.png" alt="logo" /></router-link>
         </div>
@@ -457,6 +457,7 @@ export default defineComponent({
         } else if (route.path === '/downloadApp'){
           hasPage.value = true;
           pageName.value = "APP下载";
+          prevPage.value = true;
         }
 
         if (route.query.redirect) {
