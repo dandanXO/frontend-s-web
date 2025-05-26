@@ -88,7 +88,7 @@
                             <img v-else-if="claimedProgressData.bet.consecutiveDays >= item && claimedProgressData.bet.bonus > 0"
                                 class="icon-img claim-chest-btn" width="143px" height="48px"
                                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-claim-now-btn.png"
-                                @click="onClickClaimChest('bet')" />
+                                @click="onClickClaimChest('BET')" />
                             <img style="filter:grayscale(1)" v-else class="icon-img" width="143px" height="48px"
                                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-claim-now-btn.png" />
                         </div>
@@ -138,7 +138,7 @@
                             <img v-else-if="claimedProgressData.deposit.consecutiveDays >= item && claimedProgressData.deposit.bonus > 0"
                                 class="icon-img claim-chest-btn" width="143px" height="48px"
                                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-claim-now-btn.png"
-                                @click="onClickClaimChest('deposit')" />
+                                @click="onClickClaimChest('DEPOSIT')" />
                             <img style="filter:grayscale(1)" v-else class="icon-img" width="143px" height="48px"
                                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-claim-now-btn.png" />
                         </div>
@@ -317,7 +317,7 @@
             <img src="@/assets/images/promotion/hotpromo/blast-austin/dialog-success-icon.png" width="48px"
                 height="48px" />
             <div class="title">恭喜您任务领取成功</div>
-            <div class="desc">任务一领取成功，请按照任务要求进行闯关，连续二十天完成当日有效投注≥2000元即可领取冠冕金128元，若连续二十天完成当日存款金额≥500元即可获得加冕金188元。</div>
+            <div class="desc">任务{{curMissionNum}}领取成功，请按照任务要求进行闯关，连续二十天完成当日有效投注≥2000元即可领取冠冕金128元，若连续二十天完成当日存款金额≥500元即可获得加冕金188元。</div>
             <div class="action-btn" @click="isOpenMissionDialogVisible = false">开始任务</div>
         </div>
     </el-dialog>
@@ -388,7 +388,12 @@ const claimedProgressData = ref({
     }
 })
 
+const curMissionNum = ref("");
+const missionArrays = ["一", "二", "三", "四", "五"];
+
 const onClickSelectMission = (missionNum) => {
+    curMissionNum.value = missionArrays[0];
+
     if(claimedProgressData.value.mission !== null) {
         return;
     }
@@ -396,6 +401,7 @@ const onClickSelectMission = (missionNum) => {
     selectMissionBlastAustin(props.promoCode, missionNum).then((res) => {
         if (res.code === 0) {
             isOpenMissionDialogVisible.value = true;
+            curMissionNum.value = missionArrays[missionNum - 1];
             initData()
 
         } else {
