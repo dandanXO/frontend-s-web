@@ -62,7 +62,7 @@ module.exports = configure(function (ctx) {
         configFile: true
       },
       // transpile: false,
-      publicPath: "",
+      publicPath: "./",
       // Add dependencies for transpiling with Babel (Array of string/regex)
       // (from node_modules, which are by default not transpiled).
       // Applies only if "transpile" is set to true.
@@ -158,6 +158,7 @@ module.exports = configure(function (ctx) {
         }
       },
       extendWebpack(cfg) {
+        cfg.output.publicPath = "./";
         cfg.optimization.minimizer = [
           new TerserPlugin({
             terserOptions: {
