@@ -684,7 +684,7 @@ const initData = () => {
 
       const betConsecutiveDays = res.data.bet.consecutiveDays;
       if (betConsecutiveDays) {
-        goToBetCarouselSlide(consecutiveDays);
+        goToBetCarouselSlide(betConsecutiveDays);
       }
 
       const depositConsecutiveDays = res.data.deposit.consecutiveDays;
