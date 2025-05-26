@@ -158,6 +158,7 @@ module.exports = configure(function (ctx) {
             // rewrite import path in index.html
             let html = await fse.readFile(tempIndexHtml, "utf-8");
             html = html.replace(/(src|href)=\/(js|css|img)/g, "$1=/live-chat/$2");
+            html = html.replace(/<base href=\/ >/, "<base href=/live-chat/ >");
             await fse.writeFile(tempIndexHtml, html);
             const gzipped = await new Promise((resolve, reject) => {
               gzip(html, (err, result) => {
