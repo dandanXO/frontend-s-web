@@ -23,8 +23,6 @@ const ImageminPlugin = require("imagemin-webpack-plugin").default;
 
 const ContextReplacementPlugin = require("webpack").ContextReplacementPlugin;
 
-const isLiveChat = process.env.BUILD_TARGET === "livechat";
-
 module.exports = configure(function (ctx) {
   return {
     // https://v2.quasar.dev/quasar-cli-webpack/supporting-ts
@@ -64,8 +62,7 @@ module.exports = configure(function (ctx) {
         configFile: true
       },
       // transpile: false,
-      publicPath: isLiveChat ? "/live-chat/" : "/",
-      distDir: isLiveChat ? "dist/spa/live-chat" : "dist/spa",
+      // publicPath: '/',
       // Add dependencies for transpiling with Babel (Array of string/regex)
       // (from node_modules, which are by default not transpiled).
       // Applies only if "transpile" is set to true.
@@ -136,12 +133,29 @@ module.exports = configure(function (ctx) {
         }
       },
       // Add a hook to copy assets after the build
-      afterBuild({ cfg }) {
+      async afterBuild({ cfg }) {
         const fs = require("fs-extra");
         const sourceDir = path.resolve(__dirname, "src/assets");
         const destinationDir = path.resolve(__dirname, "dist/spa/static");
 
         fs.copySync(sourceDir, destinationDir);
+      },
+      async onPublish({ arg, distDir }) {
+        if (arg === "live-chat") {
+          console.log("start copy files to /live-chat");
+          const sourceDir = path.resolve(distDir);
+          const targetDir = path.resolve(distDir, "live-chat");
+          const tempDir = path.resolve(distDir, "../temp");
+          try {
+            await fse.ensureDir(tempDir);
+            await fse.copy(sourceDir, tempDir);
+            await fse.move(tempDir, targetDir, { overwrite: true });
+            await fse.remove(tempDir);
+            console.log(`✅ Successfully copied contents from ${sourceDir} to ${targetDir}`);
+          } catch (err) {
+            console.error(`❌ Failed to copy files:`, err);
+          }
+        }
       },
       extendWebpack(cfg) {
         cfg.optimization.minimizer = [
