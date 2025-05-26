@@ -490,7 +490,7 @@ const routes = [
     ]
   },
   {
-    path: "/live-chat/live-chat",
+    path: "/live-chat",
     component: () => import("layouts/MainLayout.vue"),
     children: [
       { path: "", component: () => import("src/cs-client-web/pages/LoginPage.vue") },
