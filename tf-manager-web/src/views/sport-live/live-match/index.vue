@@ -84,9 +84,9 @@
       <el-table-column prop="statusId" :label="t('fields.status')" width="100">
         <template #default="scope">
           <el-tag v-if="scope.row.statusId === 0" type="danger">{{ t('status.namiMatch.GAME_EXCEPTION') }}</el-tag>
-          <el-tag v-else-if="scope.row.statusId === 1" type="warning">{{ t('status.namiMatch.ONGOING') }}</el-tag>
-          <el-tag v-else-if="scope.row.statusId === 2" type="success">{{ t('status.namiMatch.ENDED') }}</el-tag>
-          <el-tag v-else-if="scope.row.statusId === 3" type="danger">{{ t('status.namiMatch.CANCEL') }}</el-tag>
+          <el-tag v-else-if="scope.row.statusId === 1" type="warning">{{ t('status.namiMatch.NOT_STARTED') }}</el-tag>
+          <el-tag v-else-if="scope.row.statusId === 2" type="success">{{ t('status.namiMatch.ONGOING') }}</el-tag>
+          <el-tag v-else-if="scope.row.statusId === 3" type="danger">{{ t('status.namiMatch.ENDED') }}</el-tag>
           <el-tag v-else-if="scope.row.statusId === 11" type="danger">{{ t('status.namiMatch.INTERRUPTED') }}</el-tag>
           <el-tag v-else-if="scope.row.statusId === 12" type="warning">{{ t('status.namiMatch.CANCEL') }}</el-tag>
           <el-tag v-else-if="scope.row.statusId === 13" type="danger">{{ t('status.namiMatch.DELAYED') }}</el-tag>
