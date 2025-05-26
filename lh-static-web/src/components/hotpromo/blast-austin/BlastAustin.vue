@@ -242,19 +242,19 @@
   <div
     class="section-bg"
     style="border: 1px solid rgba(172, 212, 246, 1); background: #f2f8fe; border-radius: 12px; padding: 30px"
-    bis_skin_checked="1"
+    
   >
-    <div class="title-img" bis_skin_checked="1">活动内容</div>
+    <div class="title-img" >活动内容</div>
     <br />
-    <div style="display: flex; margin-bottom: 10px; justify-content: flex-start; gap: 5px" bis_skin_checked="1">
-      <div class="ribbon" bis_skin_checked="1">活动详情</div>
+    <div style="display: flex; margin-bottom: 10px; justify-content: flex-start; gap: 5px" >
+      <div class="ribbon" >活动详情</div>
       <span style="font-size: 1rem">2025年6月3日至2025年6月22日</span>
     </div>
-    <div style="display: flex; flex-direction: column; justify-content: flex-start; gap: 5px" bis_skin_checked="1">
-      <div class="ribbon" bis_skin_checked="1">活动内容</div>
+    <div style="display: flex; flex-direction: column; justify-content: flex-start; gap: 5px" >
+      <div class="ribbon" >活动内容</div>
       <span style="font-size: 1rem">
         活动分为五个任务，当日BLAST 奥斯汀 Major
-        2025有效投注≥2,000元即可获得冠冕金，若当日存款金额≥500元，即可获得加冕金，连续冲关，连续加冕，最高可获2476元~
+        2025有效投注≥2,000元即可获得冠冕金，若当日存款金额≥500元，即可获得加冕金，连续冲关，连续加冕，最高可获5,330元~
       </span>
     </div>
     <table class="section-table" style="width: 100%">
@@ -298,92 +298,32 @@
           <th>连续15天</th>
           <th style="border-radius: 0px">连续20天</th>
         </tr>
-        <tr>
-          <td>任务一</td>
-          <td>≥2,000</td>
-          <td>18</td>
-          <td>28</td>
-          <td>58</td>
-          <td>88</td>
-          <td>128</td>
-          <td>≥500</td>
-          <td>28</td>
-          <td>58</td>
-          <td>88</td>
-          <td>128</td>
-          <td>188</td>
-        </tr>
-        <tr>
-          <td>任务二</td>
-          <td>≥5,000</td>
-          <td>28</td>
-          <td>58</td>
-          <td>88</td>
-          <td>128</td>
-          <td>168</td>
-          <td>≥1,000</td>
-          <td>58</td>
-          <td>88</td>
-          <td>128</td>
-          <td>188</td>
-          <td>288</td>
-        </tr>
-        <tr>
-          <td>任务三</td>
-          <td>≥10,000</td>
-          <td>58</td>
-          <td>88</td>
-          <td>128</td>
-          <td>188</td>
-          <td>228</td>
-          <td>≥5,000</td>
-          <td>88</td>
-          <td>128</td>
-          <td>188</td>
-          <td>288</td>
-          <td>588</td>
-        </tr>
-        <tr>
-          <td>任务四</td>
-          <td>≥30,000</td>
-          <td>88</td>
-          <td>128</td>
-          <td>188</td>
-          <td>228</td>
-          <td>358</td>
-          <td>≥10,000</td>
-          <td>128</td>
-          <td>188</td>
-          <td>288</td>
-          <td>588</td>
-          <td>888</td>
-        </tr>
-        <tr>
-          <td>任务五</td>
-          <td>≥100,000</td>
-          <td>128</td>
-          <td>188</td>
-          <td>228</td>
-          <td>358</td>
-          <td>588</td>
-          <td>≥50,000</td>
-          <td>188</td>
-          <td>288</td>
-          <td>588</td>
-          <td>888</td>
-          <td>1888</td>
+        <tr v-for="[mission, {label, bet, deposit}] in Object.entries(missionArrays)">
+          <td>{{ label }}</td>
+          <td>≥{{ convertToCommaAmount(bet.bonus) }}</td>
+          <td>{{ bet.day1 }}</td>
+          <td>{{ bet.day5 }}</td>
+          <td>{{ bet.day10 }}</td>
+          <td>{{ bet.day15 }}</td>
+          <td>{{ bet.day20 }}</td>
+          <td>≥{{ convertToCommaAmount(deposit.bonus) }}</td>
+          <td>{{ deposit.day1 }}</td>
+          <td>{{ deposit.day5 }}</td>
+          <td>{{ deposit.day10 }}</td>
+          <td>{{ deposit.day15 }}</td>
+          <td>{{ deposit.day20 }}</td>
         </tr>
       </tbody>
     </table>
-    <div bis_skin_checked="1">
-      <div style="display: flex; align-items: center; gap: 5px; color: #ff3a3a" bis_skin_checked="1">
+    <div >
+      <div style="display: flex; align-items: center; gap: 5px; color: #ff3a3a" >
         <img
           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAUCAYAAACJfM0wAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAHsSURBVHgBrVRLTtxAEK1qEbFkbhDnJFF2CDbDHglLSEiwmBxhhhtMsmKHO0JCYsWSXcxFYnOCBAmB5LRdvO52m7Y1fAamJPe36tV7VS3T/8lkaiaTPVqxKaqqazLm1BwdFebwcGUJ2A71wcEfIfqCjRDzDYlkSinNJyclvdOUAzbmJ1iTGMOYE6rrWV1VRb2/fyppmtA7zDFG8KgRKbDZwMzu0I/BMsWsOctyeqN10fXu7gwlmD7rKCK4v0ZAxufnmt4KLOPxSNbXCyw3AGAZx5TFYT8FlEg044sL/SqwY72zM2elvrcXtpGOaAwe7mxqjKVVQE2j+fKyfBYYrBOxtWYX2vK28dJL1AW1dy1Qhv1xSMBDCbK9/RvTV/HtE8dNKW7LEzmKV8ExultneFV6bQgMWTeOp6PWIjWNL0PTDF8Lu7vg55MnNGQsm5sJ2BXx0SJVfYkO7C/mX/jmfHVV2uM+Y6WmUYC0Zz54WAqf9BZnP+j+fs55/q8vJXihcfhvFPQCt84frwHjnB4e9BAw2BPjqtpbIFOi92wbk+M7htycXrG1CCT14ZHcsF4CsAcsW1spps8hBXnJVqJG17uGLGOB8TRieQt2CxuyFLAZj1OUMmHbELCjuzv9EcAOmEejBP/jb5/OznJaoT0C29AKyUB7edEAAAAASUVORK5CYII="
           style="width: 22px; height: auto; margin: 0; padding: 0"
         />
-        <div style="font-size: 1rem" bis_skin_checked="1">示例</div>
+        <div style="font-size: 1rem" >示例</div>
       </div>
-      <div style="color: #ff3a3a; font-size: 1rem" bis_skin_checked="1">
+      <div style="color: #ff3a3a; font-size: 1rem" >
         例：会员A在6月3日投注BLAST 奥斯汀 Major 2025赛事，选择任务四，当日有效投注为 50,000 元，存款为30000元，在次日 24
         小时内可获得冠冕金88元和加冕金128元，若连续五天都达到任务四目标，在第六天即可领取128元冠冕金和188加冕金。
       </div>
@@ -402,9 +342,7 @@
       <img src="@/assets/images/promotion/hotpromo/blast-austin/dialog-success-icon.png" width="48px" height="48px" />
       <div class="title">恭喜您任务领取成功</div>
       <div class="desc">
-        任务{{
-          curMissionNum
-        }}领取成功，请按照任务要求进行闯关，连续二十天完成当日有效投注≥2000元即可领取冠冕金128元，若连续二十天完成当日存款金额≥500元即可获得加冕金188元。
+        任务{{curMission.missionNum}}领取成功，请按照任务要求进行闯关，连续二十天完成当日有效投注≥{{convertToCommaAmount(curMission.bet.bonus)}}元即可领取冠冕金{{calculateTotalBonus(curMission.bet)}}元，若连续二十天完成当日存款金额≥{{convertToCommaAmount(curMission.deposit.bonus)}}元即可获得加冕金{{calculateTotalBonus(curMission.bet)}}元。
       </div>
       <div class="action-btn" @click="isOpenMissionDialogVisible = false">开始任务</div>
     </div>
@@ -453,6 +391,7 @@
 import { onMounted, ref } from "vue";
 import { initBlastAustin, claimChestBlastAustin, selectMissionBlastAustin } from "@/api/index/promo";
 import { useNotify } from "@/hooks/notify";
+import { convertToCommaAmount } from "@/utils/utils";
 
 const isInitLoading = ref(false);
 const isOpenMissionDialogVisible = ref(false);
@@ -478,10 +417,76 @@ const claimedProgressData = ref({
   }
 });
 
-const curMissionNum = ref("");
-const missionArrays = ["一", "二", "三", "四", "五"];
+const calculateTotalBonus = ({day1, day5, day10, day15, day20}) => [day1, day5, day10, day15, day20].reduce((acc, curr) => acc + curr, 0);
+
+const curMission = ref({});
+const missionArrays = [
+  {
+    label: "任务一",
+    missionNum: 1,
+    bet: {
+      bonus: 2000,
+      "day1": 18, "day5": 28, "day10": 58, "day15": 88, "day20": 128,
+    },
+    deposit: {
+      bonus: 500,
+      "day1": 28, "day5": 58, "day10": 88, "day15": 128, "day20": 188,
+    }
+  },
+  {
+    label: "任务二",
+    missionNum: 2,
+    bet: {
+      bonus: 5000,
+      "day1": 28, "day5": 58, "day10": 88, "day15": 128, "day20": 168,
+    },
+    deposit: {
+      bonus: 1000,
+      "day1": 58, "day5": 88, "day10": 128, "day15": 188, "day20": 288,
+    }
+  },
+  {
+    label: "任务三",
+    missionNum: 3,
+    bet: {
+      bonus: 10000,
+      "day1": 58, "day5": 88, "day10": 128, "day15": 188, "day20": 228,
+    },
+    deposit: {
+      bonus: 5000,
+      "day1": 88, "day5": 128, "day10": 188, "day15": 288, "day20": 588,
+    }
+  },
+  {
+    label: "任务四",
+    missionNum: 4,
+    bet: {
+      bonus: 30000,
+      "day1": 88, "day5": 128, "day10": 188, "day15": 228, "day20": 358,
+    },
+    deposit: {
+      bonus: 10000,
+      "day1": 128, "day5": 188, "day10": 288, "day15": 588, "day20": 888,
+    }
+  },
+  {
+    label: "任务五",
+    missionNum: 5,
+    bet: {
+      bonus: 100000,
+      "day1": 128, "day5": 188, "day10": 228, "day15": 358, "day20": 588,
+    },
+    deposit: {
+      bonus: 500000,
+      "day1": 188, "day5": 288, "day10": 588, "day15": 888, "day20": 1888,
+    }
+  }
+];
+
+
+
 const onClickSelectMission = (missionNum) => {
-  curMissionNum.value = missionArrays[0];
+  curMission.value = missionArrays[0];
   if (claimedProgressData.value.mission !== null) {
     return;
   }
@@ -489,7 +494,7 @@ const onClickSelectMission = (missionNum) => {
   selectMissionBlastAustin(props.promoCode, missionNum).then((res) => {
     if (res.code === 0) {
       isOpenMissionDialogVisible.value = true;
-      curMissionNum.value = missionArrays[missionNum - 1];
+      curMission.value = missionArrays[missionNum - 1];
       initData();
     } else {
       notify({

@@ -342,50 +342,14 @@
           <th style="">连续15天</th>
           <th style="">连续20天</th>
         </tr>
-        <tr>
-          <td>任务一</td>
-          <td>≥2,000</td>
-          <td>18</td>
-          <td>28</td>
-          <td>58</td>
-          <td>88</td>
-          <td>128</td>
-        </tr>
-        <tr>
-          <td>任务二</td>
-          <td>≥5,000</td>
-          <td>28</td>
-          <td>58</td>
-          <td>88</td>
-          <td>128</td>
-          <td>168</td>
-        </tr>
-        <tr>
-          <td>任务三</td>
-          <td>≥10,000</td>
-          <td>58</td>
-          <td>88</td>
-          <td>128</td>
-          <td>188</td>
-          <td>228</td>
-        </tr>
-        <tr>
-          <td>任务四</td>
-          <td>≥30,000</td>
-          <td>88</td>
-          <td>128</td>
-          <td>188</td>
-          <td>228</td>
-          <td>358</td>
-        </tr>
-        <tr>
-          <td>任务五</td>
-          <td>≥100,000</td>
-          <td>128</td>
-          <td>188</td>
-          <td>228</td>
-          <td>358</td>
-          <td>588</td>
+        <tr v-for="[mission, {label, bet}] in Object.entries(missionArrays)" :key="mission">
+          <td>{{ label }}</td>
+          <td>≥{{ convertToCommaAmount(bet.bonus) }}</td>
+          <td>{{ bet.day1 }}</td>
+          <td>{{ bet.day5 }}</td>
+          <td>{{ bet.day10 }}</td>
+          <td>{{ bet.day15 }}</td>
+          <td>{{ bet.day20 }}</td>
         </tr>
       </tbody>
     </table>
@@ -423,50 +387,14 @@
           <th style="">连续15天</th>
           <th style="">连续20天</th>
         </tr>
-        <tr>
-          <td>任务一</td>
-          <td>≥500</td>
-          <td>28</td>
-          <td>58</td>
-          <td>88</td>
-          <td>128</td>
-          <td>188</td>
-        </tr>
-        <tr>
-          <td>任务二</td>
-          <td>≥1,000</td>
-          <td>58</td>
-          <td>88</td>
-          <td>128</td>
-          <td>188</td>
-          <td>288</td>
-        </tr>
-        <tr>
-          <td>任务三</td>
-          <td>≥5,000</td>
-          <td>88</td>
-          <td>128</td>
-          <td>188</td>
-          <td>288</td>
-          <td>588</td>
-        </tr>
-        <tr>
-          <td>任务四</td>
-          <td>≥10,000</td>
-          <td>128</td>
-          <td>188</td>
-          <td>288</td>
-          <td>588</td>
-          <td>888</td>
-        </tr>
-        <tr>
-          <td>任务五</td>
-          <td>≥50,000</td>
-          <td>188</td>
-          <td>288</td>
-          <td>588</td>
-          <td>888</td>
-          <td>1888</td>
+        <tr v-for="[mission, {label, deposit}] in Object.entries(missionArrays)" :key="mission">
+          <td>{{ label }}</td>
+          <td>≥{{ convertToCommaAmount(deposit.bonus) }}</td>
+          <td>{{ deposit.day1 }}</td>
+          <td>{{ deposit.day5 }}</td>
+          <td>{{ deposit.day10 }}</td>
+          <td>{{ deposit.day15 }}</td>
+          <td>{{ deposit.day20 }}</td>
         </tr>
       </tbody>
     </table>
@@ -501,9 +429,7 @@
         />
         <div class="title">恭喜您任务领取成功</div>
         <div class="desc">
-          任务{{
-            curMissionNum
-          }}领取成功，请按照任务要求进行闯关，连续二十天完成当日有效投注≥2000元即可领取冠冕金128元，若连续二十天完成当日存款金额≥500元即可获得加冕金188元。
+          任务{{curMission.missionNum}}领取成功，请按照任务要求进行闯关，连续二十天完成当日有效投注≥{{convertToCommaAmount(curMission.bet.bonus)}}元即可领取冠冕金{{calculateTotalBonus(curMission.bet)}}元，若连续二十天完成当日存款金额≥{{convertToCommaAmount(curMission.deposit.bonus)}}元即可获得加冕金{{calculateTotalBonus(curMission.bet)}}元。
         </div>
         <div class="action-btn" @click="isOpenMissionDialogVisible = false">开始任务</div>
       </div>
@@ -573,6 +499,7 @@ import { initBlastAustin, claimChestBlastAustin, selectMissionBlastAustin } from
 import { useNotify } from "src/hooks/notify";
 import { Carousel, Navigation, Slide } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const isInitLoading = ref(false);
 const isOpenMissionDialogVisible = ref(false);
@@ -634,10 +561,73 @@ const claimedProgressData = ref({
   }
 });
 
-const curMissionNum = ref("");
-const missionArrays = ["一", "二", "三", "四", "五"];
+const calculateTotalBonus = ({day1, day5, day10, day15, day20}) => [day1, day5, day10, day15, day20].reduce((acc, curr) => acc + curr, 0);
+const curMission = ref({});
+const missionArrays = [
+  {
+    label: "任务一",
+    missionNum: 1,
+    bet: {
+      bonus: 2000,
+      "day1": 18, "day5": 28, "day10": 58, "day15": 88, "day20": 128,
+    },
+    deposit: {
+      bonus: 500,
+      "day1": 28, "day5": 58, "day10": 88, "day15": 128, "day20": 188,
+    }
+  },
+  {
+    label: "任务二",
+    missionNum: 2,
+    bet: {
+      bonus: 5000,
+      "day1": 28, "day5": 58, "day10": 88, "day15": 128, "day20": 168,
+    },
+    deposit: {
+      bonus: 1000,
+      "day1": 58, "day5": 88, "day10": 128, "day15": 188, "day20": 288,
+    }
+  },
+  {
+    label: "任务三",
+    missionNum: 3,
+    bet: {
+      bonus: 10000,
+      "day1": 58, "day5": 88, "day10": 128, "day15": 188, "day20": 228,
+    },
+    deposit: {
+      bonus: 5000,
+      "day1": 88, "day5": 128, "day10": 188, "day15": 288, "day20": 588,
+    }
+  },
+  {
+    label: "任务四",
+    missionNum: 4,
+    bet: {
+      bonus: 30000,
+      "day1": 88, "day5": 128, "day10": 188, "day15": 228, "day20": 358,
+    },
+    deposit: {
+      bonus: 10000,
+      "day1": 128, "day5": 188, "day10": 288, "day15": 588, "day20": 888,
+    }
+  },
+  {
+    label: "任务五",
+    missionNum: 5,
+    bet: {
+      bonus: 100000,
+      "day1": 128, "day5": 188, "day10": 228, "day15": 358, "day20": 588,
+    },
+    deposit: {
+      bonus: 500000,
+      "day1": 188, "day5": 288, "day10": 588, "day15": 888, "day20": 1888,
+    }
+  }
+];
+
 const onClickSelectMission = (missionNum) => {
-  curMissionNum.value = missionArrays[0];
+  curMission.value = missionArrays[0];
   if (claimedProgressData.value.mission !== null) {
     return;
   }
@@ -645,7 +635,7 @@ const onClickSelectMission = (missionNum) => {
   selectMissionBlastAustin(props.promoCode, missionNum).then((res) => {
     if (res.code === 0) {
       isOpenMissionDialogVisible.value = true;
-      curMissionNum.value = missionArrays[missionNum - 1];
+      curMission.value = missionArrays[missionNum - 1];
       initData();
     } else {
       notify({
