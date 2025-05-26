@@ -124,6 +124,15 @@
     >
       {{ t('fields.add') }}
     </el-button>
+    <el-button
+      icon="el-icon-refresh"
+      size="mini"
+      type="primary"
+      style="margin-bottom: 10px"
+      @click="initialSupplierStreamStatus"
+    >
+      {{ t('fields.initialSupplierStreamStatus') }}
+    </el-button>
     <el-table :data="supplierStreams" size="small" border>
       <el-table-column :label="t('fields.sourceStreamUrl')" width="500">
         <template #default="scope">
@@ -530,6 +539,16 @@ async function loadEvent() {
   ]);
   supplierStreams.value = supplierRes.data.records || [];
   streamerStreams.value = streamerRes.data.records || [];
+}
+
+async function initialSupplierStreamStatus() {
+  const { data } = await getSportLiveSupplierStream({ eventId: eventId.value });
+
+  data.records.forEach(async (item) => {
+    await updateSupplierStream({ eventId: eventId.value, id: item.id, status: 4 });
+  });
+  ElMessage.success(t('message.updateSuccess'));
+  await loadEvent();
 }
 
 function showDialog(type, row) {

@@ -265,6 +265,7 @@ export default {
       ABANDONED: '腰斩',
       PENDING: '待定',
       OTHER: '其他',
+      ADD_TO_LIVE: '添加到直播',
     },
   },
   betStatus: {
@@ -2626,9 +2627,9 @@ export default {
     streamTag: '流标签',
     isCdnPush: '推送 CDN',
     box: '回合',
-    copyToLive: '复制到直播',
-    confirmCopy: '请确认是否复制到直播？',
     isCreateLiveUrl: '是否生产推流地址  (是/否)',
+    addToLive: '添加到直播',
+    initialSupplierStreamStatus: '初始厂商流状态',
   },
   message: {
     adsStatusOpen: '开',
