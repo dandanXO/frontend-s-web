@@ -406,55 +406,49 @@ function isHuaweiBrowser() {
 }
 
 const handleCopyClick = async () => {
-  if (window.location.pathname === "/account") {
-    const textToCopy = store.nickName;
-    // alert(textToCopy);
+  const textToCopy = store.nickName;
+  // alert(textToCopy);
 
-    if (isHuaweiBrowser()) {
-      writeClipboard(store.nickName);
-    } else if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
-      await navigator.clipboard.writeText(textToCopy);
+  if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
+    await navigator.clipboard.writeText(textToCopy);
 
-      setTimeout(() => {
-        $q.notify({
-          color: "positive",
-          position: "top",
-          message: t("notify.copiedSuccessfully"),
-          icon: "check_circle_outline"
-        });
-      }, 100);
-    } else {
-      // Use the 'out of viewport hidden text area' trick
-      const textArea = document.createElement("textarea");
-      textArea.value = textToCopy;
-
-      // Move textarea out of the viewport so it's not visible
-      textArea.style.position = "absolute";
-      textArea.style.left = "-999999px";
-
-      document.body.prepend(textArea);
-      textArea.focus();
-      textArea.select();
-
-      try {
-        document.execCommand("copy");
-      } catch (error) {
-        console.error(error);
-      } finally {
-        document.body.removeChild(textArea);
-      }
-
-      setTimeout(() => {
-        $q.notify({
-          color: "positive",
-          position: "top",
-          message: t("notify.copiedSuccessfully"),
-          icon: "check_circle_outline"
-        });
-      }, 100);
-    }
+    setTimeout(() => {
+      $q.notify({
+        color: "positive",
+        position: "top",
+        message: t("notify.copiedSuccessfully"),
+        icon: "check_circle_outline"
+      });
+    }, 100);
   } else {
-    writeClipboard(currentVoxisId.value);
+    // Use the 'out of viewport hidden text area' trick
+    const textArea = document.createElement("textarea");
+    textArea.value = textToCopy;
+
+    // Move textarea out of the viewport so it's not visible
+    textArea.style.position = "absolute";
+    textArea.style.left = "-999999px";
+
+    document.body.prepend(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      document.execCommand("copy");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      document.body.removeChild(textArea);
+    }
+
+    setTimeout(() => {
+      $q.notify({
+        color: "positive",
+        position: "top",
+        message: t("notify.copiedSuccessfully"),
+        icon: "check_circle_outline"
+      });
+    }, 100);
   }
 };
 </script>
