@@ -14,7 +14,7 @@
 
     <div v-if="livestreamData.id" class="current-livestream__livestream-info">
       <span class="current-livestream__livestream-info__title">
-        {{ livestreamData.roomTitle || livestreamData.name }}
+        {{ livestreamData.roomTitle }}
       </span>
       <BadgeChip class="current-livestream__livestream-info__badge-tag" :level="8">五星公会</BadgeChip>
       <div class="current-livestream__livestream-info__tag-wrapper">
