@@ -261,7 +261,7 @@ const currentVideoUrl = computed(() => {
   const result = Object.entries(videoSource.value).find(([key, value]) => {
     return key === playerConfig.value.quality;
   });
-  return result[1]?.flv_url ?? "";
+  return result[1]?.hls_url ?? result[1]?.flv_url ?? "";
 });
 
 const currentQualityName = computed(() => QUALITY_ALIAS[playerConfig.value.quality] ?? playerConfig.value.quality);
@@ -518,9 +518,10 @@ const handleNativeStreamBuffering = () => {
 const handleQualityChange = async (level) => {
   const _level = videoSource.value[level] ? level : DEFAULT_QUALITY;
   if (_level === playerConfig.value.quality) return;
+  const videoUrl = videoSource.value[_level]?.hls_url ?? videoSource.value[_level]?.flv_url;
   changePlayerConfig("quality", _level);
   // player.value.setQualityLevel(index);
-  player.value.changeSource(videoSource.value[_level].flv_url);
+  player.value.changeSource(videoUrl);
   await initPlayer(true);
 };
 
@@ -529,7 +530,7 @@ const getQualities = () => {
   const result = Object.entries(videoSource.value).map(([level, value]) => ({
     value: level,
     name: QUALITY_ALIAS[level] ?? level,
-    url: value.flv_url
+    url: value.hls_url ?? value.flv_url
   }));
 
   qualities.value = result;

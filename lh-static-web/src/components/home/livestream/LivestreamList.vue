@@ -168,6 +168,8 @@ onUnmounted(() => {
         flex-direction: column;
         align-items: center;
         gap: 7px;
+        flex-basis: 33%;
+        max-width: 33%;
         .livestream-list-item__match-info__team-emblem {
           @include livestream-team-emblem;
         }
@@ -175,6 +177,10 @@ onUnmounted(() => {
           font-size: 12px;
           line-height: 15px;
           color: #7a80a1;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          max-width: 100%;
         }
       }
     }
