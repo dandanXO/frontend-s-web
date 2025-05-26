@@ -277,7 +277,7 @@ export default defineComponent({
     const store = userStore();
     const verificationImg = ref("");
     const validRealName = () => {
-      const namePattern = /^([\u4e00-\u9fa5\.\。]*)$/;
+      const namePattern = /^([\u4e00-\u9fa5\.\。·]*)$/;
       // const namePattern = /^[\u4e00-\u9fa5]{2,4}$/;
       return namePattern.test(regForm.realName) || "请输入中文字符";
     };
