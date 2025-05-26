@@ -52,7 +52,7 @@ export const userStore = defineStore("userStore", {
             this.getMemberInfo();
             this.getUnreadMail();
           } else {
-            window.captchaObj.reset()
+            window.captchaObj.reset();
             uiStore().notify({
               type: "error",
               message: ret.message
@@ -62,7 +62,7 @@ export const userStore = defineStore("userStore", {
         })
         .catch((err) => {
           console.log(err);
-          window.captchaObj.reset()
+          window.captchaObj.reset();
           // message.error(err.message);
         });
     },
@@ -147,7 +147,7 @@ export const userStore = defineStore("userStore", {
         this.token = null;
         sessionStorage.removeItem("vipData");
         sessionStorage.removeItem("TOKEN");
-        if (this.frequency === 'EVERYTIME') {
+        if (this.frequency === "EVERYTIME") {
           localStorage.removeItem("isImpt");
         }
         // this.vip = 'VIP0'
@@ -170,7 +170,7 @@ export const userStore = defineStore("userStore", {
       //       lineUrl = res.data.liveUrl2;
       //     }
 
-      //     const token = this.token ?? "";
+      const token = this.token ?? "";
       //     window.open(
       //       // `https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=WEB&lang=zh-CN&token=${this.token}`,
       //       `${lineUrl}&token=${token}`,
@@ -187,8 +187,8 @@ export const userStore = defineStore("userStore", {
       const left = (screen.width - 350) * 2;
       const top = (screen.height - 650) / 4;
 
-      const url = `https://${window.location.host}/live-chat`;
-      window.open(url, "Chat Server", `resizable=yes, width=${width}, height=${height}, top=${top}, left=${left}`);
+      const url = `https://${window.location.host}/live-chat/live-chat?token=${token}`;
+      window.open(url, "_blank", `resizable=yes, width=${width}, height=${height}, top=${top}, left=${left}`);
     }
   }
 });
