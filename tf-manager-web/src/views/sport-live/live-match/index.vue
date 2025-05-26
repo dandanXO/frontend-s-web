@@ -103,7 +103,7 @@
             type="primary"
             @click="showDialog(scope.row)"
           >
-            {{ t('fields.edit') }}
+            {{ t('fields.addToLive') }}
           </el-button>
         </template>
       </el-table-column>
@@ -117,7 +117,7 @@
     />
     <el-dialog
       v-model="dialogVisible"
-      :title="t('fields.copyToLive')"
+      :title="t('fields.addToLive')"
       width="400px"
     >
       <div v-if="currentRow" class="match-info-list">
@@ -173,7 +173,7 @@
           type="primary"
           @click="handleCopy"
           :disabled="!canCopy"
-        >{{ t('fields.confirmCopy') }}</el-button>
+        >{{ t('fields.addToLive') }}</el-button>
       </template>
     </el-dialog>
   </div>
