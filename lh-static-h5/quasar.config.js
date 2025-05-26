@@ -23,6 +23,8 @@ const ImageminPlugin = require("imagemin-webpack-plugin").default;
 
 const ContextReplacementPlugin = require("webpack").ContextReplacementPlugin;
 
+const isLiveChat = process.env.BUILD_TARGET === "livechat";
+
 module.exports = configure(function (ctx) {
   return {
     // https://v2.quasar.dev/quasar-cli-webpack/supporting-ts
@@ -62,8 +64,8 @@ module.exports = configure(function (ctx) {
         configFile: true
       },
       // transpile: false,
-      // publicPath: '/',
-
+      publicPath: isLiveChat ? "/live-chat/" : "/",
+      distDir: isLiveChat ? "dist/spa/live-chat" : "dist/spa",
       // Add dependencies for transpiling with Babel (Array of string/regex)
       // (from node_modules, which are by default not transpiled).
       // Applies only if "transpile" is set to true.
@@ -73,9 +75,9 @@ module.exports = configure(function (ctx) {
       // preloadChunks: true,
       // showProgress: false,
       // gzip: true,
-      analyze: {
-        analyzerMode: "static"
-      },
+      // analyze: {
+      //   analyzerMode: "static"
+      // },
       beforeBuild() {
         const srcDir = path.resolve(__dirname, "src/assets/images");
         const destDir = path.resolve(__dirname, "public/static/images");
@@ -209,7 +211,6 @@ module.exports = configure(function (ctx) {
       lang: "zh-CN",
       config: {},
 
-
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
 
@@ -233,7 +234,7 @@ module.exports = configure(function (ctx) {
       //   // Add other components you use here
       // ],
       // Quasar plugins
-      plugins: ["LocalStorage", "SessionStorage", "Notify", "Loading", "Dialog", 'BottomSheet']
+      plugins: ["LocalStorage", "SessionStorage", "Notify", "Loading", "Dialog", "BottomSheet"]
     },
 
     // animations: 'all', // --- includes all animations

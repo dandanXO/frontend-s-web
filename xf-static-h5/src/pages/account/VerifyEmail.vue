@@ -282,7 +282,7 @@ export default defineComponent({
 
     const isValidName = () => {
       const namePattern =
-          /^([\u4e00-\u9fa5]*)$/;
+          /^([\u4e00-\u9fa5·]*)$/;
       return namePattern.test(formDetail.realName) || "请输入中文字符";
     };
 

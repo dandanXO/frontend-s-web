@@ -249,6 +249,7 @@ export default {
       SETTLED: 'Settled',
     },
     namiMatch: {
+      NOT_STARTED: 'Not Started',
       GAME_EXCEPTION: 'Game Exception',
       ONGOING: 'Ongoing',
       ENDED: 'Ended',
@@ -2622,6 +2623,9 @@ export default {
     streamTag: 'Stream Tag',
     isCdnPush: 'Push CDN',
     box: 'Box',
+    copyToLive: 'Copy to Live',
+    confirmCopy: 'Confirm that you want to copy to live?',
+    isCreateLiveUrl: 'Is Create Live Url (Yes/No)',
   },
   message: {
     adsStatusOpen: 'Open',
@@ -3168,7 +3172,12 @@ export default {
     validateFbUrlRequired: 'Facebook URL is required',
     validateFbTokenRequired: 'Facebook Token is required',
     qrCodeGenerateFailed: 'QR Code Generate Fail',
-    downloadUrlEmpty: 'Download Url Empty'
+    downloadUrlEmpty: 'Download Url Empty',
+    streamUrlNotM3U8OrFlv: 'The current stream URL does not end with .m3u8 or .flv. Do you want to automatically correct it to .m3u8?',
+    streamUrlMustBeM3U8OrFlv: 'The stream URL must end with .m3u8 or .flv.',
+    replacedWithM3U8: 'Automatically replaced with .m3u8 extension.',
+    validateSupplierStreamRequired: 'Supplier stream URL is required.',
+    validateStreamerRequired: 'Streamer is required.'
   },
   menu: {
     'Add Promo': 'Add Promo',

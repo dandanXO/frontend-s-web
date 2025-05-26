@@ -350,7 +350,7 @@ const sites = reactive({
 
 function resetQuery() {
   request.siteId = site.value ? site.value.id : sites.list[0].id;
-  request.objectType = uiControl.objectType[0].value
+  request.objectType = null
   request.objectValue = null
   request.isActive = null
   request.createTime = [defaultStartDate, defaultEndDate]

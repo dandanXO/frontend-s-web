@@ -122,7 +122,7 @@
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
-                  v-if="selectedPromo.promoType"
+                  v-if="selectedPromo.promoType && selectedPromo.redirectUrl !== 'Dongying-refer'"
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
