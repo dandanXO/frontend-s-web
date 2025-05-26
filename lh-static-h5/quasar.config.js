@@ -17,6 +17,7 @@ const path = require("path");
 const { configure } = require("quasar/wrappers");
 
 const fse = require("fs-extra");
+const { gzip } = require("zlib");
 const isImageCompress = true;
 
 const ImageminPlugin = require("imagemin-webpack-plugin").default;
@@ -62,7 +63,7 @@ module.exports = configure(function (ctx) {
         configFile: true
       },
       // transpile: false,
-      publicPath: "./",
+      // publicPath: "/",
       // Add dependencies for transpiling with Babel (Array of string/regex)
       // (from node_modules, which are by default not transpiled).
       // Applies only if "transpile" is set to true.
@@ -146,9 +147,30 @@ module.exports = configure(function (ctx) {
           const sourceDir = path.resolve(distDir);
           const targetDir = path.resolve(distDir, "live-chat");
           const tempDir = path.resolve(distDir, "../temp");
+          const tempIndexHtml = path.resolve(tempDir, "index.html");
+          const tempIndexHtmlGzipPath = path.resolve(tempDir, "index.html.gz");
+
           try {
+            // copy dist/spa to temp
             await fse.ensureDir(tempDir);
             await fse.copy(sourceDir, tempDir);
+
+            // rewrite import path in index.html
+            let html = await fse.readFile(tempIndexHtml, "utf-8");
+            html = html.replace(/(src|href)=\/(js|css|img)/g, "$1=/live-chat/$2");
+            await fse.writeFile(tempIndexHtml, html);
+            const gzipped = await new Promise((resolve, reject) => {
+              gzip(html, (err, result) => {
+                if (err) {
+                  reject(err);
+                  return;
+                }
+                resolve(result);
+              });
+            });
+            await fse.writeFile(tempIndexHtmlGzipPath, gzipped);
+
+            // copy temp to live-chat
             await fse.move(tempDir, targetDir, { overwrite: true });
             await fse.remove(tempDir);
             console.log(`✅ Successfully copied contents from ${sourceDir} to ${targetDir}`);
@@ -158,7 +180,6 @@ module.exports = configure(function (ctx) {
         }
       },
       extendWebpack(cfg) {
-        cfg.output.publicPath = "./";
         cfg.optimization.minimizer = [
           new TerserPlugin({
             terserOptions: {
