@@ -21,6 +21,7 @@
                         <td class="user">{{ downline.loginName }}</td>
                         <td class="user">{{ (downline.commission * 100).toFixed(0) }}%</td>
                         <td v-if="downline.commission === 0" class="create-contract-btn" @click="() => createContract(downline)">create contract</td>
+                        <td v-else class="create-contract-btn"><span style="visibility:hidden">create contract</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -344,7 +345,7 @@ onActivated(() => {
                 }
 
                 &:nth-child(even) {
-                    background: #0665D3;
+                    // background: #0665D3;
                 }
             }
         }
