@@ -20,7 +20,14 @@
       <div class="container-box" @click="expandRoomMsg">
         <div class="type-tags">
           <div class="profile-tag">
-            <img :src="imgURL + currentLiveData.avatar" />
+            <img
+              v-if="currentLiveData.name === 'SYSTEM'"
+              :src="require('../../assets/images/livestream/system-avatar.png')"
+            />
+            <img v-else-if="currentLiveData.avatar" :src="imgURL + currentLiveData.avatar" />
+            <img v-else :src="require('../../assets/images/profile/default-1.png')" />
+
+            <!-- <img :src="imgURL + currentLiveData.avatar" /> -->
           </div>
           <template v-if="currentLiveData.name === 'SYSTEM'">
             <div class="tag tag--live">官方直播间</div>

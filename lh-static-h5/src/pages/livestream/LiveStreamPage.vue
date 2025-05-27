@@ -56,7 +56,8 @@
                     v-if="item.name === 'SYSTEM'"
                     :src="require('../../assets/images/livestream/system-avatar.png')"
                   />
-                  <img v-else :src="imgURL + item.avatar" />
+                  <img v-else-if="item.avatar" :src="imgURL + item.avatar" />
+                  <img v-else :src="require('../../assets/images/profile/default-1.png')" />
                 </div>
                 <div>{{ item.name === "SYSTEM" ? "雷火" : item.name }}</div>
               </div>
@@ -717,6 +718,7 @@ onUnmounted(() => {
     position: relative;
     border: none;
     padding: 0;
+    margin-bottom: auto;
 
     .item-float-content {
       position: absolute;
