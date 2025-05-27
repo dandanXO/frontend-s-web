@@ -92,48 +92,48 @@
           </div>
           <div class="treasures">
             <div
-              v-for="item in [1, 5, 10, 15, 20]"
+              v-for="item in claimedProgressData.betRules"
               class="chest-item"
-              :style="`filter:${claimedProgressData.bet.expiredDays.includes(item) ? 'grayscale(1)' : 'grayscale(0)'}`"
+              :style="`filter:${claimedProgressData.bet.expiredBoxes.includes(item.boxNo) ? 'grayscale(1)' : 'grayscale(0)'}`"
             >
-              <div>连续{{ item }}天</div>
+              <div>连续{{ item.consecutiveDays }}天</div>
               <img
-                v-if="item === 1"
+                v-if="item.boxNo === 1"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-1.png"
               />
               <img
-                v-if="item === 5"
+                v-if="item.boxNo === 2"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-5.png"
               />
               <img
-                v-if="item === 10"
+                v-if="item.boxNo === 3"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-10.png"
               />
               <img
-                v-if="item === 15"
+                v-if="item.boxNo === 4"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-15.png"
               />
               <img
-                v-if="item === 20"
+                v-if="item.boxNo === 5"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-20.png"
               />
               <img
-                v-if="claimedProgressData.bet.claimedDays.includes(item)"
+                v-if="claimedProgressData.bet.claimedBoxes.includes(item.boxNo)"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-claimed-btn.svg"
               />
               <img
-                v-else-if="claimedProgressData.bet.expiredDays.includes(item)"
+                v-else-if="claimedProgressData.bet.expiredBoxes.includes(item.boxNo)"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-expired-btn.svg"
               />
               <img
-                v-else-if="claimedProgressData.bet.consecutiveDays >= item && claimedProgressData.bet.bonus > 0"
+                v-else-if="claimedProgressData.bet.boxNo === item.boxNo && item.bonus > 0"
                 class="icon-img claim-chest-btn"
                 width="143px"
                 height="48px"
@@ -174,50 +174,50 @@
           </div>
           <div class="treasures">
             <div
-              v-for="item in [1, 5, 10, 15, 20]"
+              v-for="item in claimedProgressData.depositRules"
               class="chest-item"
               :style="`filter:${
-                claimedProgressData.deposit.expiredDays.includes(item) ? 'grayscale(1)' : 'grayscale(0)'
+                claimedProgressData.deposit.expiredBoxes.includes(item.boxNo) ? 'grayscale(1)' : 'grayscale(0)'
               }`"
             >
-              <div>连续{{ item }}天</div>
+              <div>连续{{ item.consecutiveDays }}天</div>
               <img
-                v-if="item === 1"
+                v-if="item.boxNo === 1"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-1.png"
               />
               <img
-                v-if="item === 5"
+                v-if="item.boxNo === 2"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-5.png"
               />
               <img
-                v-if="item === 10"
+                v-if="item.boxNo === 3"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-10.png"
               />
               <img
-                v-if="item === 15"
+                v-if="item.boxNo === 4"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-15.png"
               />
               <img
-                v-if="item === 20"
+                v-if="item.boxNo === 5"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-20.png"
               />
               <img
-                v-if="claimedProgressData.deposit.claimedDays.includes(item)"
+                v-if="claimedProgressData.deposit.claimedBoxes.includes(item.boxNo)"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-claimed-btn.svg"
               />
               <img
-                v-else-if="claimedProgressData.deposit.expiredDays.includes(item)"
+                v-else-if="claimedProgressData.deposit.expiredBoxes.includes(item.boxNo)"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-expired-btn.svg"
               />
               <img
-                v-else-if="claimedProgressData.deposit.consecutiveDays >= item && claimedProgressData.deposit.bonus > 0"
+                v-else-if="claimedProgressData.deposit.boxNo === item.boxNo && item.bonus > 0"
                 class="icon-img claim-chest-btn"
                 width="143px"
                 height="48px"
@@ -402,20 +402,77 @@ const claimDepositSuccessDialogBonus = ref(0);
 const props = defineProps(["promoCode"]);
 const notify = useNotify();
 const claimedProgressData = ref({
-  mission: null,
-  bet: {
-    claimedDays: [],
-    expiredDays: [],
-    consecutiveDays: 0,
-    bonus: 0
-  },
-  deposit: {
-    claimedDays: [],
-    expiredDays: [],
-    consecutiveDays: 0,
-    bonus: 0
-  }
-});
+    mission: 0,
+    bet: {
+        claimedBoxes: [],
+        expiredBoxes: [],
+        consecutiveDays: 0,
+        bonus: 0,
+        boxNo: 0
+    },
+    deposit: {
+        claimedBoxes: [],
+        expiredBoxes: [],
+        consecutiveDays: 0,
+        bonus: 0,
+        boxNo: 0
+    },
+    betRules: [
+        {
+            boxNo: 1,
+            consecutiveDays: 1,
+            bonus: 0
+        },
+        {
+            boxNo: 2,
+            consecutiveDays: 5,
+            bonus: 0
+        },
+        {
+            boxNo: 3,
+            consecutiveDays: 10,
+            bonus: 0
+        },
+        {
+            boxNo: 4,
+            consecutiveDays: 15,
+            bonus: 0
+        },
+        {
+            boxNo: 5,
+            consecutiveDays: 20,
+            bonus: 0
+        }
+    ],
+    depositRules: [
+        {
+            boxNo: 1,
+            consecutiveDays: 1,
+            bonus: 0
+        },
+        {
+            boxNo: 2,
+            consecutiveDays: 5,
+            bonus: 0
+        },
+        {
+            boxNo: 3,
+            consecutiveDays: 10,
+            bonus: 0
+        },
+        {
+            boxNo: 4,
+            consecutiveDays: 15,
+            bonus: 0
+        },
+        {
+            boxNo: 5,
+            consecutiveDays: 20,
+            bonus: 0
+        }
+      ]
+    }
+  );
 
 const calculateTotalBonus = ({day1, day5, day10, day15, day20}) => [day1, day5, day10, day15, day20].reduce((acc, curr) => acc + curr, 0);
 
@@ -482,8 +539,6 @@ const missionArrays = [
     }
   }
 ];
-
-
 
 const onClickSelectMission = (missionNum) => {
   curMission.value = missionArrays[0];

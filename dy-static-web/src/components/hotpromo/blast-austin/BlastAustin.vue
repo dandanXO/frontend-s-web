@@ -92,48 +92,48 @@
           </div>
           <div class="treasures">
             <div
-              v-for="item in [1, 5, 10, 15, 20]"
+              v-for="item in claimedProgressData.betRules"
               class="chest-item"
-              :style="`filter:${claimedProgressData.bet.expiredDays.includes(item) ? 'grayscale(1)' : 'grayscale(0)'}`"
+              :style="`filter:${claimedProgressData.bet.expiredBoxes.includes(item.boxNo) ? 'grayscale(1)' : 'grayscale(0)'}`"
             >
-              <div>连续{{ item }}天</div>
+              <div>连续{{ item.consecutiveDays }}天</div>
               <img
-                v-if="item === 1"
+                v-if="item.boxNo === 1"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-1.png"
               />
               <img
-                v-if="item === 5"
+                v-if="item.boxNo === 2"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-5.png"
               />
               <img
-                v-if="item === 10"
+                v-if="item.boxNo === 3"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-10.png"
               />
               <img
-                v-if="item === 15"
+                v-if="item.boxNo === 4"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-15.png"
               />
               <img
-                v-if="item === 20"
+                v-if="item.boxNo === 5"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-20.png"
               />
               <img
-                v-if="claimedProgressData.bet.claimedDays.includes(item)"
+                v-if="claimedProgressData.bet.claimedBoxes.includes(item.boxNo)"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-claimed-btn.svg"
               />
               <img
-                v-else-if="claimedProgressData.bet.expiredDays.includes(item)"
+                v-else-if="claimedProgressData.bet.expiredBoxes.includes(item.boxNo)"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-expired-btn.svg"
               />
               <img
-                v-else-if="claimedProgressData.bet.consecutiveDays >= item && claimedProgressData.bet.bonus > 0"
+                v-else-if="claimedProgressData.bet.boxNo === item.boxNo && item.bonus > 0"
                 class="icon-img claim-chest-btn"
                 width="143px"
                 height="48px"
@@ -174,50 +174,50 @@
           </div>
           <div class="treasures">
             <div
-              v-for="item in [1, 5, 10, 15, 20]"
+              v-for="item in claimedProgressData.depositRules"
               class="chest-item"
               :style="`filter:${
-                claimedProgressData.deposit.expiredDays.includes(item) ? 'grayscale(1)' : 'grayscale(0)'
+                claimedProgressData.deposit.expiredBoxes.includes(item.boxNo) ? 'grayscale(1)' : 'grayscale(0)'
               }`"
             >
-              <div>连续{{ item }}天</div>
+              <div>连续{{ item.consecutiveDays }}天</div>
               <img
-                v-if="item === 1"
+                v-if="item.boxNo === 1"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-1.png"
               />
               <img
-                v-if="item === 5"
+                v-if="item.boxNo === 2"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-5.png"
               />
               <img
-                v-if="item === 10"
+                v-if="item.boxNo === 3"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-10.png"
               />
               <img
-                v-if="item === 15"
+                v-if="item.boxNo === 4"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-15.png"
               />
               <img
-                v-if="item === 20"
+                v-if="item.boxNo === 5"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-day-20.png"
               />
               <img
-                v-if="claimedProgressData.deposit.claimedDays.includes(item)"
+                v-if="claimedProgressData.deposit.claimedBoxes.includes(item.boxNo)"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-claimed-btn.svg"
               />
               <img
-                v-else-if="claimedProgressData.deposit.expiredDays.includes(item)"
+                v-else-if="claimedProgressData.deposit.expiredBoxes.includes(item.boxNo)"
                 class="icon-img"
                 src="@/assets/images/promotion/hotpromo/blast-austin/chest-expired-btn.svg"
               />
               <img
-                v-else-if="claimedProgressData.deposit.consecutiveDays >= item && claimedProgressData.deposit.bonus > 0"
+                v-else-if="claimedProgressData.deposit.boxNo === item.boxNo && item.bonus > 0"
                 class="icon-img claim-chest-btn"
                 width="143px"
                 height="48px"
@@ -402,20 +402,77 @@ const claimDepositSuccessDialogBonus = ref(0);
 const props = defineProps(["promoCode"]);
 const notify = useNotify();
 const claimedProgressData = ref({
-  mission: null,
-  bet: {
-    claimedDays: [],
-    expiredDays: [],
-    consecutiveDays: 0,
-    bonus: 0
-  },
-  deposit: {
-    claimedDays: [],
-    expiredDays: [],
-    consecutiveDays: 0,
-    bonus: 0
-  }
-});
+    mission: 0,
+    bet: {
+        claimedBoxes: [],
+        expiredBoxes: [],
+        consecutiveDays: 0,
+        bonus: 0,
+        boxNo: 0
+    },
+    deposit: {
+        claimedBoxes: [],
+        expiredBoxes: [],
+        consecutiveDays: 0,
+        bonus: 0,
+        boxNo: 0
+    },
+    betRules: [
+        {
+            boxNo: 1,
+            consecutiveDays: 1,
+            bonus: 0
+        },
+        {
+            boxNo: 2,
+            consecutiveDays: 5,
+            bonus: 0
+        },
+        {
+            boxNo: 3,
+            consecutiveDays: 10,
+            bonus: 0
+        },
+        {
+            boxNo: 4,
+            consecutiveDays: 15,
+            bonus: 0
+        },
+        {
+            boxNo: 5,
+            consecutiveDays: 20,
+            bonus: 0
+        }
+    ],
+    depositRules: [
+        {
+            boxNo: 1,
+            consecutiveDays: 1,
+            bonus: 0
+        },
+        {
+            boxNo: 2,
+            consecutiveDays: 5,
+            bonus: 0
+        },
+        {
+            boxNo: 3,
+            consecutiveDays: 10,
+            bonus: 0
+        },
+        {
+            boxNo: 4,
+            consecutiveDays: 15,
+            bonus: 0
+        },
+        {
+            boxNo: 5,
+            consecutiveDays: 20,
+            bonus: 0
+        }
+      ]
+    }
+  );
 
 const calculateTotalBonus = ({day1, day5, day10, day15, day20}) => [day1, day5, day10, day15, day20].reduce((acc, curr) => acc + curr, 0);
 
@@ -483,8 +540,6 @@ const missionArrays = [
   }
 ];
 
-
-
 const onClickSelectMission = (missionNum) => {
   curMission.value = missionArrays[0];
   if (claimedProgressData.value.mission !== null) {
@@ -543,272 +598,249 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .treasures {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 
-    .chest-item {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        justify-content: center;
-        align-items: center;
-    }
+  .chest-item {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .inner-section {
+  display: flex;
+  border: 1px solid #d7ebff;
+  background: #ffffff;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 12px;
+
+  .inner-section-title {
+    color: #0085e8;
+    width: 300px;
     display: flex;
-    border: 1px solid #D7EBFF;
-    background: #FFFFFF;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 20px;
-    border-radius: 12px;
-
-    .inner-section-title {
-        color: #0085E8;
-        width: 300px;
-        display: flex;
-        align-items: center;
-        padding: 10px 0;
-    }
-
-    .inner-sub-section {
-        border: 1px solid #D7EBFF;
-        background: #EEF7FF;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        padding: 0 20px;
-        border-radius: 12px;
-        display: grid;
-        grid-template-columns: 1fr 150px;
-    }
-
-    .label {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .status {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        color: #00C224;
-        font-weight: 600;
-        font-size: 20px;
-        line-height: 28px;
-        justify-content: flex-end;
-    }
-
-    .amt {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        gap: 10px;
-        color: #00A1FF;
-        font-weight: 600;
-        font-size: 20px;
-        line-height: 28px;
-
-    }
-}
-
-.wrapper {
-    display: flex;
-    justify-content: center;
-    font-family: 'PingFang SC';
-}
-
-.container {
-    width: 100%;
-    height: 100%;
-}
-
-.section {
-    box-shadow: 0px 0px 4px 0px #01497b0f;
-    padding: 30px 40px;
-    border-radius: 12px;
-    border: 1px solid #acd4f6;
-    margin-top: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background: url("@/assets/promo/lh-livepoker-rebate/section-bg.png");
-    background-size: 100% 100%;
-    margin-bottom: 30px;
-
-    .section-left {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-    .section-right {
-        margin-top: auto;
-        margin-bottom: auto;
-        width: 254px;
-
-        .bonus-image {
-            cursor: pointer;
-            width: 100%;
-
-            &:hover {
-                filter: brightness(0.9);
-            }
-
-            &:active {
-                transform: translate(0px, 1px);
-                opacity: 0.9;
-            }
-
-            &.disabled {
-                cursor: not-allowed;
-                pointer-events: none;
-            }
-        }
-    }
-
-    .section-title {
-        color: #000000;
-        font-size: 24px;
-        line-height: 1;
-        font-weight: 600;
-        display: flex;
-        gap: 8px;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-}
-
-.icon-img {
-    padding: 0 !important;
-    margin: 0 !important;
-}
-
-.claim-chest-btn {
-    cursor: pointer;
-
-    &:hover {
-        filter: brightness(1.1);
-    }
-
-    &:active {
-        transform: translateY(2px);
-    }
-}
-
-.section-table {
-    th {
-        font-family: 'PingFang SC';
-        font-size: 14px !important;
-    }
-
-    td {
-        font-size: 15px !important;
-        font-family: 'PingFang SC';
-    }
-}
-
-.dark {
-  .section {
-    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%) !important;
-    border: 1px solid #be9457 !important;
-    color: #fff;
-  }
-
-  .section-title {
-    color: #fff;
-  }
-
-  .inner-section {
-    background: #151F38;
+    align-items: center;
+    padding: 10px 0;
   }
 
   .inner-sub-section {
-    background: #202C4A;
+    border: 1px solid #d7ebff;
+    background: #eef7ff;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: 1fr 150px;
+  }
+
+  .label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #00c224;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+    justify-content: flex-end;
+  }
+
+  .amt {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    color: #00a1ff;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+  }
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  font-family: "PingFang SC";
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.section {
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  padding: 30px 40px;
+  border-radius: 12px;
+  border: 1px solid #acd4f6;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: url("@/assets/promo/lh-livepoker-rebate/section-bg.png");
+  background-size: 100% 100%;
+  margin-bottom: 30px;
+
+  .section-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .section-right {
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 254px;
+
+    .bonus-image {
+      cursor: pointer;
+      width: 100%;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+
+      &:active {
+        transform: translate(0px, 1px);
+        opacity: 0.9;
+      }
+
+      &.disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+    }
+  }
+
+  .section-title {
+    color: #000000;
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 600;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+}
+
+.icon-img {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.claim-chest-btn {
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+
+  &:active {
+    transform: translateY(2px);
+  }
+}
+
+.section-table {
+  th {
+    font-size: 14px !important;
+  }
+
+  td {
+    font-size: 15px !important;
   }
 }
 </style>
 
 <style lang="scss">
 .blast-austin-dialog {
-    &.el-dialog {
-        background: transparent;
+  &.el-dialog {
+    background: transparent;
+  }
+
+  .el-dialog__close {
+    background: #cecece;
+    border-radius: 100px;
+    color: #7d7e80 !important;
+  }
+
+  .dialog-header {
+    background: url("@/assets/images/promotion/hotpromo/blast-austin/dialog-header.png");
+    background-size: 100% 100%;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 28px;
+    color: #fff;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+
+  .dialog-body {
+    background: url("@/assets/images/promotion/hotpromo/blast-austin/dialog-body.png");
+    background-size: 100% 100%;
+    width: 100%;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    font-weight: 600;
+    font-size: 28px;
+    color: #fff;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding: 20px;
+
+    .title {
+      font-weight: 600;
+      font-size: 24px;
+      color: #43b202;
     }
 
-    .el-dialog__close {
-        background: #CECECE;
-        border-radius: 100px;
-        color: #7D7E80 !important;
+    .desc {
+      font-weight: 500;
+      font-size: 18px;
+      text-align: center;
+      color: #7a8eb9;
     }
 
-    .dialog-header {
-        background: url("@/assets/images/promotion/hotpromo/blast-austin/dialog-header.png");
-        background-size: 100% 100%;
-        width: 100%;
-        height: 70px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-weight: 600;
-        font-size: 28px;
-        color: #fff;
-        border-top-left-radius: 12px;
-        border-top-right-radius: 12px;
+    .action-btn {
+      background: url("@/assets/images/promotion/hotpromo/blast-austin/action-btn.svg") center center;
+      background-size: 100% 100%;
+      width: 232px;
+      height: 48px;
+      border-radius: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 20px;
+      text-align: center;
+
+      &:hover {
+        filter: brightness(1.1);
+      }
+
+      &:active {
+        transform: translateY(2px);
+      }
     }
-
-    .dialog-body {
-        background: url("@/assets/images/promotion/hotpromo/blast-austin/dialog-body.png");
-        background-size: 100% 100%;
-        width: 100%;
-        min-height: 500px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-        align-items: center;
-        font-weight: 600;
-        font-size: 28px;
-        color: #fff;
-        border-bottom-left-radius: 12px;
-        border-bottom-right-radius: 12px;
-        padding: 20px;
-
-        .title {
-            font-weight: 600;
-            font-size: 24px;
-            color: #43B202;
-        }
-
-        .desc {
-            font-weight: 500;
-            font-size: 18px;
-            text-align: center;
-            color: #7A8EB9;
-        }
-
-        .action-btn {
-            background: url("@/assets/images/promotion/hotpromo/blast-austin/action-btn.svg") center center;
-            background-size: 100% 100%;
-            width: 232px;
-            height: 48px;
-            border-radius: 100px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 20px;
-            text-align: center;
-
-            &:hover {
-                filter: brightness(1.1);
-            }
-
-            &:active {
-                transform: translateY(2px);
-            }
-        }
-    }
+  }
 }
 </style>
