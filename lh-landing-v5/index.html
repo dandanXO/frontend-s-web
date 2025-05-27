@@ -72,22 +72,32 @@
     </div>
 
     <div class="contact-group showxf" >
-      <div class="contact-item" style="height: 100%; ">
+      <div class="contact-item" id="contact-item-1"  style="height: 100%; ">
         <div class="icon">
           <img id="group1-img" src="./img/amico-icon.png" alt="">
         </div>
         <div style="display: flex; flex-direction: column">
           <span class="title" id="group1-title">AM客服</span>
-          <span class="thetext" id="group1-number">lh1717</span>
+          <span class="thetext" id="group1-number"></span>
         </div>
       </div>
-      <div class="contact-item" style="height: 100%; ">
+      <div class="contact-item" id="contact-item-2"  style="height: 100%; ">
         <div class="icon">
           <img id="group2-img" src="./img/sigua.png" alt="">
         </div>
         <div style="display: flex; flex-direction: column">
           <span class="title" id="group2-title">丝瓜客服</span>
-          <span class="thetext" id="group2-number">nba1239</span>
+          <span class="thetext" id="group2-number"></span>
+        </div>
+      </div>
+
+      <div class="contact-item" id="contact-item-3" style="height: 100%; ">
+        <div class="icon">
+          <img id="group3-img" src="./img/wangwang.png" alt="">
+        </div>
+        <div style="display: flex; flex-direction: column">
+          <span class="title" id="group3-title">旺旺客服</span>
+          <span class="thetext" id="group3-number"></span>
         </div>
       </div>
     </div>
@@ -167,18 +177,35 @@
     "8a1c.me": {
       lhLink1 : "https://lh256.cc",
       dyLink1: "https://www.dy54139.com",
-      xfLink1: "https://www.xf51160.com",
+      xfLink1: "",
       lhLink2 : "https://lh256.cc",
       dyLink2: "https://www.dy54139.com",
-      xfLink2: "https://www.xf51160.com"
+      xfLink2: "",
+      group1Number: "lh1717",
+      group2Number: "nba1239",
+      group3Number: "",
     },
-    // "localhost:63342": {
+    "6b8n.me": {
+      lhLink1 : "https://lh948.cc",
+      dyLink1: "https://www.dy48714.com",
+      xfLink1: "",
+      lhLink2 : "https://lh948.cc",
+      dyLink2: "https://www.dy48714.com",
+      xfLink2: "",
+      group1Number: "viplh5858",
+      group2Number: "ff700app",
+      group3Number: "7861765",
+    },
+    // "localhost:TEST": {
     //   lhLink1 : "https://lh256.cc",
     //   dyLink1: "https://www.dy54139.com",
     //   xfLink1: "https://www.xf51160.com",
     //   lhLink2 : "https://lh256.cc",
     //   dyLink2: "https://www.dy54139.com",
-    //   xfLink2: "https://www.xf51160.com"
+    //   xfLink2: "https://www.xf51160.com",
+    //   group1Number: "lh1717",
+    //   group2Number: "nba1239",
+    //   group3Number: "",
     // },
   }
 
@@ -189,7 +216,10 @@
     xfLink1: "https://www.xf51160.com",
     lhLink2 : "https://www.qual37n5.com",
     dyLink2: "https://www.dy35445.com",
-    xfLink2: "https://www.xf51160.com"
+    xfLink2: "https://www.xf51160.com",
+    group1Number: "",
+    group2Number: "",
+    group3Number: "",
   };
 
   const selectedInfo = contactInfo[hostname] || defaultInfo;
@@ -202,6 +232,22 @@
   document.getElementById("dy-link2").href = selectedInfo.dyLink2;
   document.getElementById("xf-link1").href = selectedInfo.xfLink1;
   document.getElementById("xf-link2").href = selectedInfo.xfLink2;
+
+  if(selectedInfo.group1Number){
+    document.getElementById("group1-number").textContent = selectedInfo.group1Number;
+  }else{
+    document.getElementById("contact-item-1").style.display = "none"
+  }
+  if(selectedInfo.group2Number){
+    document.getElementById("group2-number").textContent = selectedInfo.group2Number;
+  }else{
+    document.getElementById("contact-item-2").style.display = "none"
+  }
+  if(selectedInfo.group3Number){
+    document.getElementById("group3-number").textContent = selectedInfo.group3Number;
+  }else{
+    document.getElementById("contact-item-3").style.display = "none"
+  }
 
 
   const images = ["img/01.jpg", "img/02.jpg", "img/03.jpg", "img/04.jpg", "img/05.jpg"];
