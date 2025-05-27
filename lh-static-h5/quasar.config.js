@@ -17,12 +17,13 @@ const path = require("path");
 const { configure } = require("quasar/wrappers");
 
 const fse = require("fs-extra");
-const { gzip } = require("zlib");
 const isImageCompress = true;
 
 const ImageminPlugin = require("imagemin-webpack-plugin").default;
 
 const ContextReplacementPlugin = require("webpack").ContextReplacementPlugin;
+
+const isLiveChat = process.env.BUILD_TARGET === "livechat";
 
 module.exports = configure(function (ctx) {
   return {
@@ -35,7 +36,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-webpack/boot-files
-    boot: ["public-path", "axios", "cache", "fingerprint", "i18n", "vue-native-websocket", "vue-shortkey"],
+    boot: ["axios", "cache", "fingerprint", "i18n", "vue-native-websocket", "vue-shortkey"],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
     css: ["app.scss", "responsive.scss"],
@@ -63,7 +64,8 @@ module.exports = configure(function (ctx) {
         configFile: true
       },
       // transpile: false,
-      // publicPath: "/",
+      publicPath: isLiveChat ? "/live-chat/" : "/",
+      distDir: isLiveChat ? "dist/spa/live-chat" : "dist/spa",
       // Add dependencies for transpiling with Babel (Array of string/regex)
       // (from node_modules, which are by default not transpiled).
       // Applies only if "transpile" is set to true.
@@ -134,51 +136,12 @@ module.exports = configure(function (ctx) {
         }
       },
       // Add a hook to copy assets after the build
-      async afterBuild({ cfg }) {
+      afterBuild({ cfg }) {
         const fs = require("fs-extra");
         const sourceDir = path.resolve(__dirname, "src/assets");
         const destinationDir = path.resolve(__dirname, "dist/spa/static");
 
         fs.copySync(sourceDir, destinationDir);
-      },
-      async onPublish({ arg, distDir }) {
-        if (arg === "live-chat") {
-          console.log("start copy files to /live-chat");
-          const sourceDir = path.resolve(distDir);
-          const targetDir = path.resolve(distDir, "live-chat");
-          const tempDir = path.resolve(distDir, "../temp");
-          const tempIndexHtml = path.resolve(tempDir, "index.html");
-          const tempIndexHtmlGzipPath = path.resolve(tempDir, "index.html.gz");
-
-          try {
-            // copy dist/spa to temp
-            await fse.ensureDir(tempDir);
-            await fse.copy(sourceDir, tempDir);
-
-            // rewrite import path in index.html
-            let html = await fse.readFile(tempIndexHtml, "utf-8");
-            html = html.replace(/(src|href)=\/(js|css|img)/g, "$1=/live-chat/$2");
-            html = html.replace(/<base href=\/ >/, "<base href=/live-chat/ >");
-            await fse.writeFile(tempIndexHtml, html);
-            const gzipped = await new Promise((resolve, reject) => {
-              gzip(html, (err, result) => {
-                if (err) {
-                  reject(err);
-                  return;
-                }
-                resolve(result);
-              });
-            });
-            await fse.writeFile(tempIndexHtmlGzipPath, gzipped);
-
-            // copy temp to live-chat
-            await fse.move(tempDir, targetDir, { overwrite: true });
-            await fse.remove(tempDir);
-            console.log(`✅ Successfully copied contents from ${sourceDir} to ${targetDir}`);
-          } catch (err) {
-            console.error(`❌ Failed to copy files:`, err);
-          }
-        }
       },
       extendWebpack(cfg) {
         cfg.optimization.minimizer = [
