@@ -1199,6 +1199,7 @@ export default {
     upgradeToPaymentOnGoing: 'อัปเกรดเป็นการชำระเงิน',
     upLineLoginName: 'ชื่อล็อกอินอัพไลน์',
     upload: 'ที่อัพโหลด',
+    uploading: 'Uploading',
     upperName: 'ชื่อของระดับที่สูงกว่า',
     usdtDepositAmount: 'จำนวนเงินฝากสกุลเงินดิจิทัล',
     usdtDepositCount: 'จำนวนผู้ฝากสกุลเงินดิจิทัล',

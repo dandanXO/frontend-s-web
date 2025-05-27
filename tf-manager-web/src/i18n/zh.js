@@ -1948,6 +1948,7 @@ export default {
     upgradeToPaymentOnGoing: '升级至支付中',
     upLineLoginName: '上级用户名',
     upload: '上传',
+    uploading: '上传中',
     upperName: '所属上级',
     usdtControl: 'USDT 提款限制',
     usdtDepositAmount: '数字货币存款额',

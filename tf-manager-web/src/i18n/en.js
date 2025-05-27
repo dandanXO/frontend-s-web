@@ -1942,6 +1942,7 @@ export default {
     upgradeToPaymentOnGoing: 'UPGRADE_TO_PAYMENT_ON_GOING',
     upLineLoginName: 'Upline Login Name',
     upload: 'Upload',
+    uploading: 'Uploading',
     upperName: 'Upper Name',
     usdtControl: 'USDT Withdrawal Control',
     usdtDepositAmount: 'USDT Deposit Amount',
