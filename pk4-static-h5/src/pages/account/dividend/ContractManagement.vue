@@ -50,7 +50,7 @@
 
 <script setup>
 import InputField from 'src/components/auth/InputField.vue';
-import { ref, reactive, onMounted, computed } from 'vue';
+import { ref, reactive, onMounted, computed, onActivated } from 'vue';
 import { api } from 'src/boot/axios';
 import { userStore } from 'src/stores';
 import moment from 'moment';
@@ -153,6 +153,10 @@ const initData = () => {
 }
 
 onMounted(() => {
+    initData();
+})
+
+onActivated(() => {
     initData();
 })
 
