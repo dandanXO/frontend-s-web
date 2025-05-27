@@ -1,7 +1,7 @@
 <template>
   <div class="main-container" :style="{background: $q.dark.isActive ? '' : `url(${require('../assets/images/download/app/main-bg.png')}) no-repeat`}">
     <div class="flex">
-      <img style="width:60%; margin-top: -10px;" src="../assets/images/download/app/logo.png"/>
+      <img style="width:60%; margin-top: -30px;" src="../assets/images/download/app/logo.png"/>
     </div>
     <q-carousel
      ref="carousel"
@@ -14,7 +14,7 @@
       infinite
       transition-next="slide-left"
       transition-prev="slide-right"
-      style="margin-top: -20px; min-height: 76vh; height: 100%;"
+      style="margin-top: -40px; min-height: 70vh; height: 100%;"
     >
       <template v-slot:navigation-icon="{ active, onClick }">
         <q-btn
@@ -40,7 +40,7 @@
             <img style="width: 90%; margin-top: -10px;" src="../assets/images/download/app/title-1.png"/>
           </div>
           <div class="flex" style="pointer-events: none;">
-            <img style="width: 100%; margin-top: 10px;" src="../assets/images/download/app/bg-1.png"/>
+            <img style="width: 100%; margin-top: 10px; margin-right: 3rem;" src="../assets/images/download/app/bg-1.png"/>
           </div>
           <div class="flex" style="pointer-events: none;">
             <img style="width: 90%;margin-top: 8%;" src="../assets/images/download/app/bottom-1.png"/>
@@ -348,7 +348,7 @@ export default defineComponent({
   transform: translateY(100%);
 }
 .sheet-content {
-  height: 60vh;
+  height: 50vh;
   transition: transform 0.35s cubic-bezier(.4,0,.2,1), opacity 0.25s;
 }
 .sheet-content2 {
