@@ -953,6 +953,10 @@ function checkQuery() {
 }
 
 async function loadMembers() {
+  if (!request.siteId) {
+    console.warn('Site ID is null. Aborting loadMembers.')
+    return
+  }
   page.loading = true
   uiControl.searchDialogVisible = false
   const query = checkQuery()
