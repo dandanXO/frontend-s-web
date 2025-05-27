@@ -28,7 +28,7 @@
         <div class="info panel bordered">
             <div class="card-title">{{ $t('dividend.myDividend') }}</div>
             <div class="card-desc"></div>
-            <div v-if="isLoading" class="rolling-ball-loader" style="margin:0 auto;"></div>
+            <div v-if="isLoading" class="stacks-loader" style="margin:30px auto;"></div>
             <table v-else class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%"
                 style="text-align: center">
                 <thead>
