@@ -20,7 +20,7 @@
                         <td><img src="../../../assets/images/account/dividend/avatar-icon.png" /></td>
                         <td class="user">{{ downline.loginName }}</td>
                         <td class="user">{{ downline.commission }}</td>
-                        <td class="create-contract-btn" @click="() => createContract(downline)">create contract</td>
+                        <td v-if="downline.commission === 0" class="create-contract-btn" @click="() => createContract(downline)">create contract</td>
                     </tr>
                 </tbody>
             </table>
@@ -50,7 +50,7 @@
 
 <script setup>
 import InputField from 'src/components/auth/InputField.vue';
-import { ref, reactive, onMounted, computed } from 'vue';
+import { ref, reactive, onMounted, computed, onActivated } from 'vue';
 import { api } from 'src/boot/axios';
 import { userStore } from 'src/stores';
 import moment from 'moment';
@@ -153,6 +153,10 @@ const initData = () => {
 }
 
 onMounted(() => {
+    initData();
+})
+
+onActivated(() => {
     initData();
 })
 
