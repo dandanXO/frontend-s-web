@@ -1,0 +1,81 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #31030e;
+  font-family: PingFang SC;
+}
+
+.main-container {
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.header-container {
+  position: relative;
+  width: 100%;
+  background: url(../imgs/container-1-bg.png) no-repeat;
+  background-size: 100% 100%;
+  aspect-ratio: 440 / 571;
+  margin-bottom: -10%;
+}
+
+.header-container .header-logo {
+  width: 24.6vw;
+  max-width: 123px;
+  position: absolute;
+  top: 20px;
+  left: 15px;
+}
+
+.header-container .header-title {
+  width: 64vw;
+  max-width: 320px;
+  position: absolute;
+  top: 11%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.jackpot {
+  position: relative;
+  max-width: 100%;
+  margin-bottom: 42px;
+}
+
+.download-btn-container {
+  position: sticky;
+  bottom: 20px;
+}
+
+.download-btn-info {
+  width: 128px;
+  position: absolute;
+  bottom: 54px;
+  right: 50px;
+}
+
+.download-btn {
+  height: 48px;
+  width: calc(100% - 40px);
+  background: linear-gradient(180deg, #fffeee 0, #fff67f 42%, #fe9400 72%, #ffed39 100%);
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 6px;
+  margin: 4px 20px;
+}
+
+.download-btn:active {
+  opacity: 0.9;
+  transform: translateY(4px);
+}
+
+.download-btn-content {
+  font-weight: 700;
+  font-size: 20px;
+  background: linear-gradient(90deg, #71000a 0, #1c0806 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
