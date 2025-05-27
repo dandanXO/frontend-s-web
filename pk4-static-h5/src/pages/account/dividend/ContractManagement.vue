@@ -19,7 +19,7 @@
                     <tr v-for="downline, index in downlineInfo" :key="index">
                         <td><img src="../../../assets/images/account/dividend/avatar-icon.png" /></td>
                         <td class="user">{{ downline.loginName }}</td>
-                        <td class="user">{{ downline.commission }}</td>
+                        <td class="user">{{ (downline.commission * 100).toFixed(0) }}%</td>
                         <td v-if="downline.commission === 0" class="create-contract-btn" @click="() => createContract(downline)">create contract</td>
                     </tr>
                 </tbody>
@@ -34,7 +34,7 @@
                     <div>{{ $t('dividend.rate') }} ({{ parseFloat((selectedContract.commission * 100).toFixed(0)) }}%)</div>
                     <div>
                         <select v-model="selectedContract.commission" style="width:100%">
-                            <option v-for="rate in [0.05,0.1,0.15]" :key="rate">{{ rate }}</option>
+                            <option v-for="rate in availableCommissionRates" :key="rate" :value="rate">{{ (rate * 100).toFixed(0) }}%</option>
                         </select>
 
                     </div>
@@ -58,6 +58,7 @@ import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
 const qs = require('qs');
+const activeMemberDividendRateData = ref([]);
 const formDetail = reactive([]);
 const isLoading = ref(false);
 const store = userStore();
@@ -86,6 +87,28 @@ const request = reactive({
     loginName: null,
     memberTypes: "AFFILIATE",
     status: true
+});
+
+const availableCommissionRates = computed(() => {
+    const highestDividendRate = parseFloat((activeMemberDividendRateData.value.reduce((max, item) => item.commissionRate > max ? item.commissionRate : max, 0) * 100).toFixed(2));
+
+    if(highestDividendRate === 40) {
+        return [0.15, 0.10, 0.05];
+    }
+    
+    if(highestDividendRate === 35) {
+        return [0.10, 0.05];
+    }
+    
+    if(highestDividendRate === 30) {
+        return [0.05];
+    }
+    
+    if(25 <= highestDividendRate) {
+        return [];
+    }
+
+    return [];
 });
 
 const editCommission = (affId) => {
@@ -150,6 +173,13 @@ const initData = () => {
     }).finally(() => {
         isLoading.value = false;
     });
+
+    api.get('/session/affiliate/get-commission-tier').then((res) => {
+        activeMemberDividendRateData.value = res.data;
+        isLoading.value = false;
+    }).finally(() => {
+        isLoading.value = false;
+    })
 }
 
 onMounted(() => {
