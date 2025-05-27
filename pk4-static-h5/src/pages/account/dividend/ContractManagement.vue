@@ -32,7 +32,12 @@
 
                 <div class="row">
                     <div>{{ $t('dividend.rate') }} ({{ parseFloat((selectedContract.commission * 100).toFixed(0)) }}%)</div>
-                    <div><q-slider v-model="selectedContract.commission" :min="0" :max="1" :step="0.01" :color="'orange'" :track-color="'grey'"/></div>
+                    <div>
+                        <select v-model="selectedContract.commission" style="width:100%">
+                            <option v-for="rate in [0.05,0.1,0.15]" :key="rate">{{ rate }}</option>
+                        </select>
+
+                    </div>
                 </div>
 
                 <div class="action-btns">
@@ -49,6 +54,8 @@ import { ref, reactive, onMounted, computed } from 'vue';
 import { api } from 'src/boot/axios';
 import { userStore } from 'src/stores';
 import moment from 'moment';
+import { useQuasar } from 'quasar';
+import { useI18n } from 'vue-i18n';
 
 const qs = require('qs');
 const formDetail = reactive([]);
@@ -57,6 +64,8 @@ const store = userStore();
 const downlineInfo = ref([]);
 const selectedContract = ref(null);
 const isShowContractDialog = computed(() => selectedContract.value !== null)
+const $q = useQuasar();
+const { t } = useI18n();
 
 const createContract = (downline) => {
     selectedContract.value = downline;
@@ -87,12 +96,19 @@ const editCommission = (affId) => {
     }
     api.post('/session/affiliate/edit-commission?_method=PUT', qs.stringify(params)).then((res) => {
         if(res.code === 0) {
-
+            selectedContract.value = null;
+            $q.notify({
+              type: "positive",
+              position: "top",
+              message: t('notify.success'),
+              icon: "check_circle_outline"
+            });
+            initData();
         }
     })
 }
 
-onMounted(() => {
+const initData = () => {
     const requestCopy = { ...request };
     const query = {};
     Object.entries(requestCopy).forEach(([key, value]) => {
@@ -134,6 +150,10 @@ onMounted(() => {
     }).finally(() => {
         isLoading.value = false;
     });
+}
+
+onMounted(() => {
+    initData();
 })
 
 </script>
@@ -311,7 +331,7 @@ onMounted(() => {
 .contract-dialog {
     background-color: white;
     width: 300px;
-    height: 150px;
+    height: 180px;
     padding: 20px;
     color: #333;
     display: flex;
@@ -329,6 +349,7 @@ onMounted(() => {
     .row {
         display: grid;
         grid-template-columns: 100px 1fr;
+        align-items: center;
     }
 
     .action-btns {

@@ -320,7 +320,8 @@ export default {
     tryagain: "براہ کرم {seconds} سیکنڈ بعد دوبارہ کوشش کریں",
     submitting: "جمع کر رہا ہے...",
     sendingVerificationCode: "ویری فیکیشن کوڈ بھیجا جا رہا ہے...",
-    passwordResetCompleted: "پاسورڈ ری سیٹ مکمل ہو چکا ہے"
+    passwordResetCompleted: "پاسورڈ ری سیٹ مکمل ہو چکا ہے",
+    success: "کامیابی"
   },
   sideNav: {
     inviteToEarn: "دعوت دیں اور کمائیں",
