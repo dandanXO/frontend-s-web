@@ -351,6 +351,11 @@ body {
       width: 100%;
       border-radius: 12px;
     }
+
+    .close-btn{
+      left: 50%;
+      transform: translateX(-50%);
+    }
   }
 }
 .full-modal {
