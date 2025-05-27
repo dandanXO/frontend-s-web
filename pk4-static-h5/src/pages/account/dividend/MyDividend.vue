@@ -28,7 +28,8 @@
         <div class="info panel bordered">
             <div class="card-title">{{ $t('dividend.myDividend') }}</div>
             <div class="card-desc"></div>
-            <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%"
+            <div v-if="isLoading" class="rolling-ball-loader" style="margin:0 auto;"></div>
+            <table v-else class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%"
                 style="text-align: center">
                 <thead>
                     <tr>
@@ -37,14 +38,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr style="background:#0665D3">
+                    <tr v-for="data, index in activeMemberDividendRateData" :key="index">
                         <td>
-                            <q-spinner v-if="isLoading" />
-                            <span v-else>{{ dividendInfo?.activePlayer }}</span>
+                            <span>{{ data?.activePlayer }}</span>
                         </td>
                         <td>
-                            <q-spinner v-if="isLoading" />
-                            <span v-else>{{ dividendInfo?.commissionRate }}%</span>
+                            <span>{{ (data?.commissionRate).toFixed(2) }}%</span>
                         </td>
                     </tr>
                     <tr>
@@ -135,6 +134,7 @@ import { ref, reactive, computed, onActivated } from 'vue';
 import { t } from "src/boot/lang";
 
 const isLoading = ref(false);
+const activeMemberDividendRateData = ref([]);
 const today = new Date();
 const dayBefore = new Date();
 dayBefore.setDate(today.getDate() - 30); // 30days before
@@ -199,6 +199,13 @@ const getMyDividendsInfo = () => {
 
     api.get('/session/affiliate/settlement?recordDates=' + recordDate).then((res) => {
         dividendInfo.value = res.data;
+        isLoading.value = false;
+    }).finally(() => {
+        isLoading.value = false;
+    })
+
+    api.get('/session/affiliate/get-commission-tier').then((res) => {
+        activeMemberDividendRateData.value = res.data;
         isLoading.value = false;
     }).finally(() => {
         isLoading.value = false;

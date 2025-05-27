@@ -965,3 +965,36 @@ body.body--dark .q-footer {
     background: linear-gradient(90deg, #0287f2 0%, #0664d2 100%);
   }
 }
+
+
+.rolling-ball-loader {
+  width: 60px;
+  aspect-ratio: .5;
+  display: grid;
+}
+.rolling-ball-loader:before {
+  content: "";
+  width: 30%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  margin: auto auto 0;
+  background: #f3f3f3;
+  animation: l9-0 .5s cubic-bezier(0,800,1,800) infinite;
+}
+.rolling-ball-loader:after {
+  content: "";
+  width: 100%;
+  aspect-ratio: 1/cos(30deg);
+  margin: 0 auto auto;
+  clip-path: polygon(50% -50%,100% 50%,50% 150%,0 50%);
+  background: linear-gradient(270deg,#0d55c1,#1c8ee7);
+  animation: l9-1 .5s linear infinite;
+}
+@keyframes l9-0 {
+  0%,2%  {translate: 0   0%}
+  98%,to {translate: 0 -.2%}
+}
+@keyframes l9-1 {
+  0%,5%  {rotate:  0deg}
+  95%,to {rotate:-60deg}
+}
