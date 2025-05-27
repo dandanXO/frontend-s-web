@@ -130,7 +130,7 @@
 <script setup>
 import { api } from 'src/boot/axios';
 import InputField from 'src/components/auth/InputField.vue';
-import { ref, reactive, computed, onActivated } from 'vue';
+import { ref, reactive, computed, onActivated, onMounted } from 'vue';
 import { t } from "src/boot/lang";
 
 const isLoading = ref(false);
@@ -211,6 +211,10 @@ const getMyDividendsInfo = () => {
         isLoading.value = false;
     })
 }
+
+onMounted(() => {
+    getMyDividendsInfo();
+})
 
 onActivated(() => {
     getMyDividendsInfo();
