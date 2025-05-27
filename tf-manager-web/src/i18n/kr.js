@@ -1682,6 +1682,7 @@ export default {
     upgradeToPaymentOnGoing: '결제 진행 중으로 업그레이드',
     upLineLoginName: '상위 라인 로그인 이름',
     upload: '업로드',
+    uploading: 'Uploading',
     upperName: '상위 이름',
     usdtControl: 'USDT 출금 제어',
     usdtDepositAmount: '디지털 화폐 입금액',
