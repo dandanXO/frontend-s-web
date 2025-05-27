@@ -37,7 +37,8 @@ export default {
     24: {
       line1: 'liên hệ chúng tôi',
       line2: 'Đường dây nóng dịch vụ 7X24'
-    }
+    },
+    whatsapp: 'WhatsApp',
   },
   depositStatus: {
     SUCCESS: 'Thành công',
