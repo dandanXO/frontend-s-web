@@ -15,7 +15,7 @@
         </div>
         <span class="footer-label">{{ $t("bottomNav.promo") }}</span>
       </q-route-tab>
-      <q-route-tab v-if="store.memberType === 'AFFILIATE'" to="/share-affiliate" name="share-affiliate" :ripple="false">
+      <q-route-tab v-if="store.memberType === 'AFFILIATE'" to="/affiliate/agent" name="share-affiliate" :ripple="false">
         <div class="footer-img">
           <img class="inactive" src="../assets/images/index/menu/icon-agent.png" />
           <img class="hover" src="../assets/images/index/menu/icon-agent-hover.png" />
