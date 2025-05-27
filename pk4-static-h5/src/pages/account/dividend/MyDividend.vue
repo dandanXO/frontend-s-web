@@ -32,23 +32,36 @@
             <table v-else class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%"
                 style="text-align: center">
                 <thead>
-                    <tr>
-                        <th>{{ $t("dividend.activeMember") }}</th>
-                        <th>{{ $t("dividend.dividendRate") }}</th>
-                    </tr>
+                    <template v-if="activeMemberDividendRateData.length === 1">
+                        <tr>
+                            <th>{{ $t("dividend.dividendRate") }}</th>
+                        </tr>
+                    </template>
+                    <template v-else>
+                        <tr>
+                            <th>{{ $t("dividend.activeMember") }}</th>
+                            <th>{{ $t("dividend.dividendRate") }}</th>
+                        </tr>
+                    </template>
                 </thead>
                 <tbody>
-                    <tr v-for="data, index in activeMemberDividendRateData" :key="index">
-                        <td>
-                            <span>{{ data?.activePlayer }}</span>
-                        </td>
-                        <td>
-                            <span>{{ (data?.commissionRate).toFixed(2) }}%</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"></td>
-                    </tr>
+                    <template v-if="activeMemberDividendRateData.length === 1">
+                        <tr v-for="data, index in activeMemberDividendRateData" :key="index">
+                            <td>
+                                <span>{{ (data?.commissionRate * 100).toFixed(0) }}%</span>
+                            </td>
+                        </tr>
+                    </template>
+                    <template v-else>
+                        <tr v-for="data, index in activeMemberDividendRateData" :key="index">
+                            <td>
+                                <span>≥{{ data?.activePlayer }}</span>
+                            </td>
+                            <td>
+                                <span>{{ (data?.commissionRate * 100).toFixed(0) }}%</span>
+                            </td>
+                        </tr>
+                    </template>
                 </tbody>
             </table>
         </div>
