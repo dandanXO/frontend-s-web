@@ -442,7 +442,8 @@ export default {
     statusChecking: 'Checking',
     statusPay: 'Pay',
     statusCleared: 'Cleared',
-    statusCancelled: 'Cancelled'
+    statusCancelled: 'Cancelled',
+    rate: 'Rate'
   },
   deposit: {
     selectAmount: "Select Amount",

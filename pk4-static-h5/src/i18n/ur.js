@@ -432,7 +432,8 @@ export default {
     statusChecking: 'چیکنگ',
     statusPay: 'ادائیگی',
     statusCleared: 'صاف کیا گیا',
-    statusCancelled: 'منسوخ کیا گیا'
+    statusCancelled: 'منسوخ کیا گیا',
+    rate: 'شرح'
 
   },
   deposit: {
