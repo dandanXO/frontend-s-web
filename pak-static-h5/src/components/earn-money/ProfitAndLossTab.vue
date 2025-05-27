@@ -230,7 +230,7 @@ const form = ref({
   endDate: moment().format(DATE_FORMAT),
   username: "",
   referrerId: "",
-  withinThreeLevels: true
+  withinThreeLevels: false
 });
 const loading = ref(false);
 const referralName = ref("");
@@ -243,8 +243,8 @@ const downLineOptions = computed(() => [
   { label: t("earnMoney.profitAndLoss.searchField.date.7day"), value: "7days" }
 ]);
 const withinThreeLevelOptions = computed(() => [
-  { label: t("earnMoney.profitAndLoss.searchField.radio.allLevels"), value: true },
-  { label: t("earnMoney.profitAndLoss.searchField.radio.threeLevels"), value: false },
+  { label: t("earnMoney.profitAndLoss.searchField.radio.allLevels"), value: false },
+  { label: t("earnMoney.profitAndLoss.searchField.radio.threeLevels"), value: true },
 ]);
 
 const tableHeaders = computed(() => [
