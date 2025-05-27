@@ -28,7 +28,7 @@
 
         <q-dialog v-model="isShowContractDialog" width="100%">
             <div class="contract-dialog">
-                <div class="downline"><img src="../../../assets/images/account/dividend/avatar-icon.png" />{{ selectedContract.affiliateId }}</div>
+                <div class="downline"><img src="../../../assets/images/account/dividend/avatar-icon.png" />{{ selectedContract.loginName }}</div>
 
                 <div class="row">
                     <div>{{ $t('dividend.rate') }} ({{ parseFloat((selectedContract.commission * 100).toFixed(0)) }}%)</div>
