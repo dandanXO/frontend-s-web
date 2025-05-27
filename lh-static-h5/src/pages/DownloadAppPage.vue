@@ -1,7 +1,7 @@
 <template>
   <div class="main-container" :style="{background: $q.dark.isActive ? '' : `url(${require('../assets/images/download/app/main-bg.png')}) no-repeat`}">
     <div class="flex">
-      <img style="width:60%; margin-top: -30px;" src="../assets/images/download/app/logo.png"/>
+      <img style="width:50%; margin-top: -30px;" src="../assets/images/download/app/logo.png"/>
     </div>
     <q-carousel
      ref="carousel"
@@ -40,10 +40,10 @@
             <img style="width: 90%; margin-top: -10px;" src="../assets/images/download/app/title-1.png"/>
           </div>
           <div class="flex" style="pointer-events: none;">
-            <img style="width: 100%; margin-top: 10px; margin-right: 3rem;" src="../assets/images/download/app/bg-1.png"/>
+            <img style="width: 95%; margin-top: 10px; margin-right: 3rem;" src="../assets/images/download/app/bg-1.png"/>
           </div>
           <div class="flex" style="pointer-events: none;">
-            <img style="width: 90%;margin-top: 8%;" src="../assets/images/download/app/bottom-1.png"/>
+            <img style="width: 90%;" src="../assets/images/download/app/bottom-1.png"/>
           </div>
         </div>
       </q-carousel-slide>
@@ -56,10 +56,10 @@
             <img style="width: 45%; margin-top: 0px;" src="../assets/images/download/app/title2-2.png"/>
           </div>
           <div class="flex" style="pointer-events: none;">
-            <img style="width: 90%; margin-top: 10px;" src="../assets/images/download/app/bg-2.png"/>
+            <img style="width: 89%; margin-top: 10px;" src="../assets/images/download/app/bg-2.png"/>
           </div>
           <div class="flex" style="pointer-events: none;">
-            <img style="width: 90%;margin-top: -10px;" src="../assets/images/download/app/bottom-2.png"/>
+            <img style="width: 90%;" src="../assets/images/download/app/bottom-2.png"/>
           </div>
         </div>
       </q-carousel-slide>
