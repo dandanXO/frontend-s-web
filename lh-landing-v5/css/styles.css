@@ -293,7 +293,8 @@ a:hover {
 .contact-group{
   display:flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  flex-wrap: wrap;
   width: calc(100% - 16px);
   gap:10px;
   margin: 16px auto 16px;
@@ -305,7 +306,7 @@ a:hover {
   justify-content: flex-start;
   background: #e7e7e7;
   height: 60px;
-  width:100%;
+  width:calc(50vw - 16px);
   border-radius: 10px;
   padding: 12px 16px;
   gap: 10px;
