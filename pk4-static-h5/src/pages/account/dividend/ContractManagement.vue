@@ -20,7 +20,7 @@
                         <td><img src="../../../assets/images/account/dividend/avatar-icon.png" /></td>
                         <td class="user">{{ downline.loginName }}</td>
                         <td class="user">{{ downline.commission }}</td>
-                        <td class="create-contract-btn" @click="() => createContract(downline)">create contract</td>
+                        <td v-if="downline.commission === 0" class="create-contract-btn" @click="() => createContract(downline)">create contract</td>
                     </tr>
                 </tbody>
             </table>
