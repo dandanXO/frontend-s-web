@@ -55,8 +55,10 @@ const currentSportType = computed(() => {
 const avatarUrl = computed(() => {
   if (props.isSystemLivestream) {
     return require("@/assets/home/livestream/system-avatar.png");
-  } else {
+  } else if (props.livestreamData?.avatar) {
     return imgURL + props.livestreamData?.avatar;
+  } else {
+    return require("@/assets/images/profile/default-1.png");
   }
 });
 </script>

@@ -1,64 +1,69 @@
 <template>
-  <div ref="livestreamListWrapperRef" class="livestream-list-wrapper">
-    <div
-      v-for="(live, index) in list"
-      :key="live"
-      class="livestream-list-item"
-      :class="{
-        selected: model === index
-      }"
-      @click="handleLivestreamClick(index)"
-    >
-      <div class="livestream-list-item__title">{{ live.title }}</div>
-      <div class="livestream-list-item__match-info">
-        <div class="livestream-list-item__match-info__team">
-          <div class="livestream-list-item__match-info__team-emblem">
-            <img :src="live.homeIcon ?? systemAvatarImg" loading="lazy" />
+  <swiper class="livestream-list-wrapper" v-bind="swiperConfig">
+    <swiper-slide v-for="(live, index) in list" :key="live.id">
+      <div
+        class="livestream-list-item"
+        :class="{
+          selected: model === index
+        }"
+        @click="handleLivestreamClick(index)"
+      >
+        <div class="livestream-list-item__title">{{ live.title }}</div>
+        <div class="livestream-list-item__match-info">
+          <div class="livestream-list-item__match-info__team">
+            <div class="livestream-list-item__match-info__team-emblem">
+              <img :src="live.homeIcon ?? systemAvatarImg" loading="lazy" />
+            </div>
+            <span class="livestream-list-item__match-info__team-name">
+              {{ live.homeNameZh ?? live.homeNameEn ?? live.homeName }}
+            </span>
           </div>
-          <span class="livestream-list-item__match-info__team-name">
-            {{ live.homeNameZh ?? live.homeNameEn ?? live.homeName }}
-          </span>
-        </div>
 
-        <div class="livestream-list-item__match-info__date">
-          <div v-if="live.liveStatus" class="livestream-list-item__match-info__date__on-air">正在直播</div>
-          <div v-else class="livestream-list-item__match-info__date__date">
-            {{ getDisplayDateTime(live.eventStartTime) }}
+          <div class="livestream-list-item__match-info__date">
+            <div v-if="live.liveStatus" class="livestream-list-item__match-info__date__on-air">正在直播</div>
+            <div v-else class="livestream-list-item__match-info__date__date">
+              {{ getDisplayDateTime(live.eventStartTime) }}
+            </div>
+            <span class="livestream-list-item__match-info__date__vs">VS</span>
           </div>
-          <span class="livestream-list-item__match-info__date__vs">VS</span>
-        </div>
 
-        <div class="livestream-list-item__match-info__team">
-          <div class="livestream-list-item__match-info__team-emblem">
-            <img :src="live.awayIcon ?? systemAvatarImg" loading="lazy" />
+          <div class="livestream-list-item__match-info__team">
+            <div class="livestream-list-item__match-info__team-emblem">
+              <img :src="live.awayIcon ?? systemAvatarImg" loading="lazy" />
+            </div>
+            <span class="livestream-list-item__match-info__team-name">
+              {{ live.awayNameZh ?? live.awayNameEn ?? live.awayName }}
+            </span>
           </div>
-          <span class="livestream-list-item__match-info__team-name">
-            {{ live.awayNameZh ?? live.awayNameEn ?? live.awayName }}
-          </span>
+        </div>
+        <div class="livestream-list-item__badge-wrapper">
+          <div class="livestream-list-item__badge">
+            <img v-if="live.name === 'SYSTEM'" src="@/assets/home/livestream/system-avatar.png" loading="lazy" />
+            <img v-else-if="live.avatar" :src="imgURL + live.avatar" loading="lazy" />
+            <img v-else src="@/assets/images/profile/default-1.png" loading="lazy" />
+            {{ live.name === "SYSTEM" ? "雷火" : live.name }}
+          </div>
         </div>
       </div>
-      <div class="livestream-list-item__badge-wrapper">
-        <div class="livestream-list-item__badge">
-          <img v-if="live.name === 'SYSTEM'" src="@/assets/home/livestream/system-avatar.png" loading="lazy" />
-          <img v-else :src="imgURL + live.avatar" loading="lazy" />
-          {{ live.name === "SYSTEM" ? "雷火" : live.name }}
-        </div>
-      </div>
-    </div>
+    </swiper-slide>
     <div
       v-if="isLivestreamListLoading"
       v-loading="true"
       element-loading-background="transparent"
       class="livestream-list__pseudo"
     />
-  </div>
+  </swiper>
 </template>
 <script setup>
 import { useNotify } from "@/hooks/notify";
 import { useLocalStorage } from "@vueuse/core";
 import moment from "moment";
-import { onMounted, onUnmounted, ref } from "vue";
 import systemAvatarImg from "@/assets/home/livestream/system-avatar.png";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
+import { computed } from "vue";
 
 const props = defineProps({
   list: Array,
@@ -71,7 +76,16 @@ const emit = defineEmits(["scroll-reach-right"]);
 const notify = useNotify();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
-const livestreamListWrapperRef = ref(null);
+const swiperConfig = computed(() => {
+  const SLIDE_PER_VIEW = 4;
+  return {
+    slidesPerView: SLIDE_PER_VIEW,
+    spaceBetween: 20,
+    modules: [Navigation],
+    navigation: props.list.length > SLIDE_PER_VIEW,
+    allowTouchMove: false
+  };
+});
 
 const handleLivestreamClick = (index) => {
   if (!props.list[index].liveStatus) {
@@ -94,27 +108,6 @@ const getDisplayDateTime = (date) => {
     return eventDate.format("MM/DD");
   }
 };
-
-const handleLivestreamListScroll = () => {
-  const threshold = 50;
-  const isRight =
-    livestreamListWrapperRef.value.scrollLeft + livestreamListWrapperRef.value.clientWidth >=
-    livestreamListWrapperRef.value.scrollWidth - threshold;
-
-  if (isRight && !props.isLivestreamListLoading) {
-    emit("scroll-reach-right");
-  }
-};
-
-onMounted(() => {
-  if (!livestreamListWrapperRef.value) return;
-  livestreamListWrapperRef.value.addEventListener("scroll", handleLivestreamListScroll);
-});
-
-onUnmounted(() => {
-  if (!livestreamListWrapperRef.value) return;
-  livestreamListWrapperRef.value.removeEventListener("scroll", handleLivestreamListScroll);
-});
 </script>
 <style lang="scss" scoped>
 @import "@/scss/pages/livestream.scss";
@@ -126,11 +119,11 @@ onUnmounted(() => {
   align-items: center;
   overflow: auto;
   margin: 0 -14px -28px 0;
+  --swiper-navigation-color: #3981ff;
 
   .livestream-list-item {
     @include livestream-content-block;
     position: relative;
-    flex: 0 0 calc(25% - 12.87px);
     padding: 11px 0;
     margin: 18px 0 0;
     cursor: pointer;
@@ -252,6 +245,7 @@ onUnmounted(() => {
 
 .dark {
   .livestream-list-wrapper {
+    --swiper-navigation-color: #fff;
     .livestream-list-item {
       &.selected {
         background: url("@/assets/home/livestream/livestream-item-bg-dark.png") no-repeat center center;

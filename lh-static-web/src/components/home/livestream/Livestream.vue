@@ -5,13 +5,7 @@
       style="display: flex; margin: 38px auto 50px; width: 100%"
     />
     <div class="livestream-inner-wrapper">
-      <LivestreamList
-        v-model="currentLive"
-        class="livestream-list"
-        :list
-        :is-livestream-list-loading
-        @scroll-reach-right="getData"
-      />
+      <LivestreamList v-model="currentLive" class="livestream-list" :list :is-livestream-list-loading />
       <div class="livestream-list__pseudo" />
       <CurrentLivestream :livestream-data="currentLiveData" :is-system-livestream @click="handleBetClick" />
       <LivestreamChat
