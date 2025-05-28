@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="filters">
-            <InputField :isDark="true">
+            <InputField :isDark="true"> 
                 <template #input>
                     <div class="date-field">
                         <q-input filled :model-value="formattedDateRange" readonly>
