@@ -1,9 +1,9 @@
 <template>
   <div class="home">
-    <HomeBanner></HomeBanner>
+    <HomeBanner @scrollToView="handleScrollToView" />
     <div class="home-mid-section">
       <HomeAnnouncement></HomeAnnouncement>
-      <Livestream />
+      <Livestream ref="livestreamRef" />
       <HotMatch :openGame="openGame"></HotMatch>
       <HomeHotGame></HomeHotGame>
       <HomeDownload></HomeDownload>
@@ -24,9 +24,17 @@ import HomeService from "@/components/home/service/index.vue";
 import HotMatch from "@/components/home/hotmatch/DarkHotMatch.vue";
 import Livestream from "@/components/home/livestream/Livestream.vue";
 
+const livestreamRef = ref(null);
 const gameMenu = ref(null);
+
 const openGame = (gameName, platType, gameCode, scrollingState) => {
   gameMenu.value.open(gameName, platType, gameCode, scrollingState);
+};
+
+const handleScrollToView = (viewName) => {
+  if (viewName === "livestream") {
+    livestreamRef.value?.$el?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }
 };
 
 onMounted(() => {

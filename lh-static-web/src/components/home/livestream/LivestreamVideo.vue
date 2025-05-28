@@ -239,20 +239,9 @@ const playerConfig = ref({
   channel: 0
 });
 
-const videoSource = computed(() => {
-  if (!livestreamData.value) return {};
-  return livestreamData.value.streamerStatus
-    ? livestreamData.value.streamerCdnPullUrl
-    : livestreamData.value.supplierCdnPullUrl;
-});
+const videoSource = computed(() => getVideoSource(livestreamData.value));
 
-const currentVideoUrl = computed(() => {
-  if (!videoSource.value) return "";
-  const result = Object.entries(videoSource.value).find(([key, value]) => {
-    return key === playerConfig.value.quality;
-  });
-  return result[1]?.hls_url ?? result[1]?.flv_url ?? "";
-});
+const currentVideoUrl = computed(() => getVideoUrl(videoSource.value));
 
 const disableVideoController = computed(() => showUnmuteMask.value || !isLivestreaming.value);
 
@@ -260,6 +249,17 @@ const disableVideoController = computed(() => showUnmuteMask.value || !isLivestr
 //   if (!channels.value.length) return {};
 //   return channels.value[playerConfig.value.channel];
 // });
+
+const getVideoSource = (target) => {
+  if (!target) return {};
+  return target.streamerStatus ? target.streamerCdnPullUrl : target.supplierCdnPullUrl;
+};
+
+const getVideoUrl = (source) => {
+  if (!source) return "";
+  const [_, obj] = Object.entries(source).find(([key, value]) => key === playerConfig.value.quality);
+  return obj?.hls_url ?? obj?.flv_url ?? "";
+};
 
 const loadPlayer = async () => {
   let _mediaType = "";
@@ -514,7 +514,12 @@ watch(danmuList, () => {
   }
 });
 
-watch(livestreamData, loadData);
+watch(livestreamData, (val) => {
+  const newVideoSource = getVideoSource(val);
+  const newVideoUrl = getVideoUrl(newVideoSource);
+  if (newVideoUrl === currentVideoUrl.value && player.value) return;
+  loadData();
+});
 
 onMounted(() => {
   // loadData();
