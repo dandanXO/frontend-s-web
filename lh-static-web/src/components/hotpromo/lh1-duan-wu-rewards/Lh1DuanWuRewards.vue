@@ -317,11 +317,11 @@ const isOpenDialog = ref(false);
 const isOpenResultDialog = ref(false);
 const props = defineProps(["promoCode"]);
 const notify = useNotify();
-const todayToken = ref("");
-const currentTokenAmount = ref("");
+const todayToken = ref(0);
+const currentTokenAmount = ref(0);
 const rewardAmount = ref(0);
-const rewardsCanClaim = ref("");
-const totalValidBet = ref("");
+const rewardsCanClaim = ref(0);
+const totalValidBet = ref(0);
 const isTabLeft = ref(false);
 const tokenRecord = ref([]);
 const rewardRecord = ref([]);
@@ -363,6 +363,10 @@ const init = () => {
 };
 
 const postReceive = () => {
+  if(!store.token) {
+    notify.error("请先登录");
+    return;
+  }
   postDuanWuReceiveToken(props.promoCode).then((res) => {
     if (res.code === 0) {
       notify.success({
@@ -377,6 +381,10 @@ const postReceive = () => {
 };
 
 const postBonus = () => {
+  if(!store.token) {
+    notify.error("请先登录");
+    return;
+  }
   getDuanWuclaimBonus(props.promoCode).then((res) => {
     if (res.code === 0) {
       isOpenResultDialog.value = true;
@@ -389,6 +397,10 @@ const postBonus = () => {
 };
 
 const fetchRecordData = (action) => {
+  if(!store.token) {
+    notify.error("请先登录");
+    return;
+  }
   isOpenDialog.value = true;
   isTabLeft.value = action;
   getDuanWuTokenRecords(props.promoCode).then((res) => {
