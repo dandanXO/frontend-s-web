@@ -1,5 +1,5 @@
 <template>
-  <swiper class="livestream-list-wrapper" v-bind="swiperConfig">
+  <swiper class="livestream-list-wrapper" v-bind="swiperConfig" @swiper="handleSwiper">
     <swiper-slide v-for="(live, index) in list" :key="live.id">
       <div
         class="livestream-list-item"
@@ -63,7 +63,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 
 const props = defineProps({
   list: Array,
@@ -76,10 +76,13 @@ const emit = defineEmits(["scroll-reach-right"]);
 const notify = useNotify();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
+const swiperInstance = ref(null);
+
 const swiperConfig = computed(() => {
   const SLIDE_PER_VIEW = 4;
   return {
     slidesPerView: SLIDE_PER_VIEW,
+    slidesPerGroup: SLIDE_PER_VIEW,
     spaceBetween: 20,
     modules: [Navigation],
     navigation: props.list.length > SLIDE_PER_VIEW,
@@ -95,6 +98,10 @@ const handleLivestreamClick = (index) => {
   model.value = index;
 };
 
+const handleSwiper = (_swiperInstance) => {
+  swiperInstance.value = _swiperInstance;
+};
+
 const getDisplayDateTime = (date) => {
   const now = moment();
   const eventDate = moment(date);
@@ -108,6 +115,11 @@ const getDisplayDateTime = (date) => {
     return eventDate.format("MM/DD");
   }
 };
+
+watch(model, () => {
+  if (!swiperInstance.value) return;
+  swiperInstance.value.slideTo(model.value, 0);
+});
 </script>
 <style lang="scss" scoped>
 @import "@/scss/pages/livestream.scss";
@@ -117,7 +129,6 @@ const getDisplayDateTime = (date) => {
   gap: 18.87px;
   padding: 0 18px 18px 0;
   align-items: center;
-  overflow: auto;
   margin: 0 -14px -28px 0;
   --swiper-navigation-color: #3981ff;
 
