@@ -110,7 +110,7 @@
               >
                 下载
               </a>
-              <a href="#" class="btn-brown-light" onclick="copyText('lh1717')">复制</a>
+              <a href="#" class="btn-brown-light" onclick="copyText('group1-number')">复制</a>
             </div>
           </div>
 
@@ -126,7 +126,7 @@
               >
                 下载
               </a>
-              <a href="#" class="btn-brown-light" onclick="copyText('nba1239')">复制</a>
+              <a href="#" class="btn-brown-light" onclick="copyText('group2-number')">复制</a>
             </div>
           </div>
 
@@ -142,7 +142,7 @@
               >
                 下载
               </a>
-              <a href="#" class="btn-brown-light" onclick="copyText('nba1239')">复制</a>
+              <a href="#" class="btn-brown-light" onclick="copyText('group3-number')">复制</a>
             </div>
           </div>
         </div>
@@ -246,15 +246,15 @@
           group3Number: "7861765"
         },
         // "localhost:3000": {
-        //   lhLink1: "https://lh256.cc",
-        //   dyLink1: "https://www.dy54139.com",
+        //   lhLink1: "https://lh948.cc",
+        //   dyLink1: "https://www.dy48714.com",
         //   xfLink1: "",
-        //   lhLink2: "https://lh256.cc",
-        //   dyLink2: "https://www.dy54139.com",
+        //   lhLink2: "https://lh948.cc",
+        //   dyLink2: "https://www.dy48714.com",
         //   xfLink2: "",
-        //   group1Number: "lh1717",
-        //   group2Number: "nba1239",
-        //   group3Number: ""
+        //   group1Number: "viplh5858",
+        //   group2Number: "ff700app",
+        //   group3Number: "7861765"
         // },
       };
 
@@ -313,16 +313,14 @@
 
       setInterval(changeImage, 3000);
 
-      function copyText(text) {
-        navigator.clipboard
-          .writeText(text)
-          .then(() => {
-            alert("复制成功！");
-            console.log("Text copied to clipboard!");
-          })
-          .catch((err) => {
-            console.error("Failed to copy text:", err);
-          });
+      function copyText(id) {
+        const text = document.getElementById(id).innerText;
+        navigator.clipboard.writeText(text).then(() => {
+          alert('已复制: ' + text);
+        }).catch(err => {
+          alert('复制失败');
+          console.error(err);
+        });
       }
     </script>
   </body>
