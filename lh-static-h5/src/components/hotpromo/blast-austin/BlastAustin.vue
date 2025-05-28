@@ -928,7 +928,8 @@ onMounted(() => {
   }
 
   td {
-    font-size: 15px !important;
+    font-size: 13px !important;
+    padding: 5px 2px !important;
   }
 }
 </style>
@@ -1079,5 +1080,9 @@ onMounted(() => {
       }
     }
   }
+}
+
+.section-bg {
+  padding: 10px !important;
 }
 </style>
