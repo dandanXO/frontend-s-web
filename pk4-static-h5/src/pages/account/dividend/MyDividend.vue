@@ -143,9 +143,13 @@
 <script setup>
 import { api } from 'src/boot/axios';
 import InputField from 'src/components/auth/InputField.vue';
-import { ref, reactive, computed, onActivated, onMounted } from 'vue';
+import { ref, reactive, computed, onActivated, onMounted, onBeforeMount } from 'vue';
 import { t } from "src/boot/lang";
+import { useAffiliateStore } from "src/stores/affiliate";
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
+const affiliateStore = useAffiliateStore();
 const isLoading = ref(false);
 const activeMemberDividendRateData = ref([]);
 const today = new Date();
@@ -225,14 +229,21 @@ const getMyDividendsInfo = () => {
     })
 }
 
+onBeforeMount(async () => {
+    const showDividendPage = await affiliateStore.checkIsCanShowDividendPage();
+    if(!showDividendPage) {
+        router.push('/affiliate/agent');
+    }
+})
+
 onMounted(() => {
     getMyDividendsInfo();
+    
 })
 
 onActivated(() => {
     getMyDividendsInfo();
 })
-
 </script>
 
 <style lang="scss" scoped>
