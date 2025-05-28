@@ -1,10 +1,8 @@
 <template>
-  <div class="vip-container">
-    <div class="vip-tab-board">
-      <q-tabs v-model="tab" active-color="primary" align="justify" class="vip-tabs">
-        <q-tab name="special" label="VIP特权" />
-        <q-tab name="details" label="VIP详情" />
-      </q-tabs>
+  <div class="vip-container test-con2">
+    <img src="../../assets/logo.png" class="vip-logo" />
+    <div class="header-section">
+      <img src="../../assets/images/vip/vip-header.png" class="vip-header" />
     </div>
     <!--    <div class="banner-container" />-->
     <div class="outerContainer">
@@ -316,20 +314,23 @@
         <div class="vip-benefit-section-title">
           <div class="heading">
             <div class="headingtext">
-              VIP 特权说明
+              <!-- VIP 特权说明 -->
+              <img src="../../assets/images/vip/vip-tqsm.png">
             </div>
           </div>
         </div>
         <div class="tabs">
           <div class="tab" :class="{active: tabActive == 1}" @click="tabActive = 1">
             <div class="tabtext">
-              VIP权益
+              <!-- VIP权益 -->
+              <img :src="require(`../../assets/images/vip/vip-qy${tabActive == 1 ? '-active' : ''}.png`)" @click="tabActive = 1" />
             </div>
             <!-- <img :src="require(`../assets/vip/vip-benefit${tabActive == 1 ? '-active' : ''}.png`)" @click="tabActive = 1" /> -->
           </div>
           <div class="tab" :class="{active: tabActive == 2}" @click="tabActive = 2">
             <div class="tabtext">
-              VIP返水
+              <!-- VIP返水 -->
+              <img :src="require(`../../assets/images/vip/vip-fs${tabActive == 2 ? '-active' : ''}.png`)" @click="tabActive = 2" />
             </div>
             <!-- <img :src="require(`../assets/vip/vip-rebate${tabActive == 2 ? '-active' : ''}.png`)" @click="tabActive = 2" /> -->
           </div>
@@ -615,7 +616,8 @@
       <!-- <div class="section-title">规则与条款</div> -->
       <div class="heading">
         <div class="headingtext">
-          规则与条款
+          <!-- 规则与条款 -->
+          <img src="../../assets/images/vip/vip-gzytk.png">
         </div>
       </div>
       <!-- <img
@@ -627,7 +629,7 @@
           {{ term.text }}
         </li>
       </ol> -->
-      <h2>一。会员晋级/保级/降级规则</h2>
+      <!-- <h2>一。会员晋级/保级/降级规则</h2>
       <ol class="terms got-bullets">
         <li>完成等级要求的累计有效流水后系统于次日北京时间早上 10 点自动更新，具体完成时间以系统为准，请耐心等待；</li>
         <li>VIP 等级达到相应的要求可每天晋升一级，但 VIP 等级不可越级晋升；</li>
@@ -677,6 +679,48 @@
           VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在15日内在充值页面进行勾选优惠使用，成功使用后需要（本金+彩金）x8倍流水即可提款；
         </li>
         <li class="numbered">加码券使用当日不可与其他存款优惠共享。</li>
+      </ol> -->
+      <ol class="terms got-gold-bullets">
+        <li class="wbg"><h2>会员晋级/保级/降级规则</h2></li>
+        
+        <ol class="terms got-bullets">
+          <li>完成等级要求的累计有效流水后系统于次日北京时间早上 10 点自动更新，具体完成时间以系统为准，请耐心等待；</li>
+          <li>VIP 等级达到相应的要求可每天晋升一级，但 VIP 等级不可越级晋升；</li>
+          <li>会员在达到某 VIP 等级后，90 天内投注需要完成保级要求。如果在此期间完成晋升，保级要求重新按照当前等级计算；</li>
+          <li>假设会员在一个季度（90 天计算）内没有完成相应的保级要求流水，系统会自动降级一个等级，相应的返水及其它优惠也会随之调整至降级后的等级；</li>
+          <li>每个级别的升级礼金每位会员仅能获得 1 次（升级礼金 1 倍流水即可提款）；</li>
+        </ol>
+        <li class="wbg"><h2>生日礼金</h2></li>
+        <ol class="terms">
+          <li>生日符合资格的会员，每年生日当天及当天后 7 日内到在线客服提供相关资料申请生日礼金，逾期不补，彩金 1 倍流水即可提款；</li>
+        </ol>
+        
+        <li class="wbg"><h2>首次保级彩金</h2></li>
+        <ol class="terms">
+          <li>会员在 90 天保级期内达到保级要求时，第 91 天即可领取首次保级彩金，首次保级彩金 1 倍流水即可提款。</li>
+        </ol>
+
+        <li class="wbg"><h2>年度保级彩金</h2></li>
+        <ol class="terms">
+          <li>首次保级成功后计算会员 12 个月内未降级（可晋级），彩金于第 13 个月首日进行派发；彩金 1 倍流水即可提款</li>
+        </ol>
+
+        <li class="wbg"><h2>每日额外返水红包</h2></li>
+        <ol class="terms">
+          <li>统计每日返水金额，对应 VIP 等级返水加赠比例派发。次日可领取每日额外返水红包彩金，返水红包积累至 10 元即可领取（不足 10 元则不可领取），彩金 1 倍流水即可提款。<br>例：VIP12 会员当日的返水金额为 1000 元，则按照 VIP12 每日额外返水红包赠送比例 2.0% 计算：1000*2.0%=20 元，返水红包为 20 元，会员可在页面上点击领取。</li>
+        </ol>
+        
+        <li class="wbg"><h2>每月 15 号红包</h2></li>
+        <ol class="terms">
+          <li>会员日为每月 15 号 00:00 起：东赢会员在上个月有任意一笔有效存款，即可在会员日 15 号 00:00 至 21 号 23:59 期间领取对应等级的会员日礼金（以领取时的等级为准）会员礼金仅需三倍流水即可出款，过期未领者则视为主动放弃：</li>
+        </ol>
+        
+        <li class="wbg"><h2>充值加赠20%奖金</h2></li>
+        <ol class="terms got-bullets">
+        <li>VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在15日内在充值页面进行勾选优惠使用，成功使用后需要（本金+彩金）x8倍流水即可提款；</li>
+        <li>加码券使用当日不可与其他存款优惠共享。</li>
+      </ol>
+        
       </ol>
 
       <!--      <h2>八。节日礼金</h2>-->
@@ -690,7 +734,9 @@
        -->
       <div class="heading"  @click="toggleAccordion">
         <div class="headingtext">
-          一般规则
+          <!-- 一般规则 -->
+          
+          <img src="../../assets/images/vip/vip-ybgz.png">
         </div>
       </div>
       <button class="accordion" @click="toggleAccordion">
@@ -1691,9 +1737,17 @@ $border-settings: 1px solid #e5e7eb;
     text-align: center;
     overflow: hidden;
   }
+  .vip-logo {
+    margin: 0 auto;
+    padding-top: 10px;
+    display: flex
+;
+    justify-content: center;
+    align-items: center;
+  }
   .vip-header {
-    margin: 10px auto -25px;
-    width: 75%;
+    margin: 10px auto -30px;
+    width: 55%;
   }
 
   .banner-container {
@@ -2323,7 +2377,7 @@ $border-settings: 1px solid #e5e7eb;
     
     .tab {
       // max-width: 120px;
-      padding: 5px 50px;
+      padding: 8px 40px;
       font-weight: 900;
       img {
         width: 100%;
@@ -2363,6 +2417,11 @@ $border-settings: 1px solid #e5e7eb;
     background-clip: text;
     color: transparent;
     filter: drop-shadow(2px 3px 1px #996F37);
+    img {
+      max-width: 180px;
+      margin-bottom: -10px;
+      width: 38%;
+    }
     }
   }
   .vip-benefit-section-title {
@@ -2486,9 +2545,44 @@ $border-settings: 1px solid #e5e7eb;
       // background: linear-gradient(0deg, #2f3547, #2f3547ad);
       counter-reset: item;
       padding: 0;
+      color: #585858;
 
       &.got-bullets {
         li {
+          &::before {
+            content: counter(item) ".";
+            counter-increment: item;
+            // background: url("../../assets/images/vip/tnc-no-bg.png") no-repeat center center;
+            // font-weight: 600;
+            padding: 5px;
+            margin-top: 4px;
+            background-size: contain;
+            color: #585858;
+            text-align: center;
+            // min-width: 30px;
+            // min-height: 42px;
+            // max-width: 30px;
+            // max-height: 42px;
+            width: 5px;
+            height: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
+
+      
+      &.got-gold-bullets {
+        h2 {
+          color:#996F37;
+          margin:0;
+          font-weight: normal;
+        }
+        li.wbg {
+          margin-left: 0;
+          align-items: center;
           &::before {
             content: counter(item);
             counter-increment: item;
@@ -2521,6 +2615,7 @@ $border-settings: 1px solid #e5e7eb;
         list-style-type: none;
         position: relative;
         margin-bottom: 10px;
+        margin-left: 25px;
       }
 
       .common-btn {
@@ -2829,7 +2924,7 @@ $border-settings: 1px solid #e5e7eb;
   }
   .carousel__slide--active {
     opacity: 1;
-    transform: scale(0.65);
+    transform: scale(0.7);
     filter: grayscale(0);
     // margin-left: -40px;
     z-index: 1;
