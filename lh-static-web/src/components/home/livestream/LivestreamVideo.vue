@@ -517,10 +517,9 @@ watch(danmuList, () => {
 watch(livestreamData, (val, oldVal) => {
   const newVideoSource = getVideoSource(val);
   const newVideoUrl = getVideoUrl(newVideoSource);
-  const currentVideoSource = getVideoSource(oldVal);
-  const currentVideoUrl = getVideoUrl(currentVideoSource);
-
-  if (newVideoUrl === currentVideoUrl.value) return;
+  const _currentVideoSource = getVideoSource(oldVal);
+  const _currentVideoUrl = getVideoUrl(_currentVideoSource);
+  if (newVideoUrl === _currentVideoUrl) return;
   loadData();
 });
 
