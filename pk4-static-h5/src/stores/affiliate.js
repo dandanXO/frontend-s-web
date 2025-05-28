@@ -2,26 +2,30 @@ import { defineStore } from "pinia";
 import { api } from "src/boot/axios";
 
 export const useAffiliateStore = defineStore("affiliate", {
-  state: () => {
-    return {};
-  },
+  state: () => ({
+    affiliateInfo: {},
+  }),
   actions: {
-    async checkIsCanShowDividendPage () {
-      const res = await api.get("/session/affiliate");
-
-      const affiliateLevel = res.data.affiliateLevel;
-      const commission = res.data.commission;
-
-      if (affiliateLevel === "JUNIOR_AFFILIATE" && commission === 0) {
-        return false;
+    async fetchAffiliateInfo() {
+      // Only fetch if affiliateInfo is empty
+      if (Object.keys(this.affiliateInfo).length === 0) {
+        const res = await api.get("/session/affiliate");
+        this.affiliateInfo = res.data;
       }
+      return this.affiliateInfo;
+    },
 
-      return true;
-    }
+    async checkIsCanShowDividendPage() {
+      // Ensure affiliateInfo is loaded before checking
+      const affiliateInfo = await this.fetchAffiliateInfo();
+
+      return !(affiliateInfo.affiliateLevel === "JUNIOR_AFFILIATE" && affiliateInfo.commission === 0);
+    },
   },
   getters: {
     isShowDividendPage() {
-      return this.showDividendPage;
-    }
-  }
+      return !(this.affiliateInfo.affiliateLevel === "JUNIOR_AFFILIATE" && this.affiliateInfo.commission === 0);
+    },
+  },
 });
+
