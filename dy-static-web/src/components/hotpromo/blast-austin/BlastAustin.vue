@@ -270,11 +270,11 @@
             white-space: pre-wrap;
           "
         >
-          <th style="background-color: transparent" rowspan="2">任务</th>
-          <th style="background-color: transparent" rowspan="2">当日有效投注</th>
-          <th style="background-color: transparent; border-bottom: 1px solid #dcdce8" colspan="5">冠冕金</th>
-          <th style="background-color: transparent" rowspan="2">当日存款金额</th>
-          <th style="background-color: transparent; border-bottom: 1px solid #dcdce8" colspan="5">加冕金</th>
+          <th rowspan="2" style="border-top-left-radius: 20px;">任务</th>
+          <th rowspan="2">当日有效投注</th>
+          <th style="border-bottom: 1px solid #dcdce8" colspan="5">冠冕金</th>
+          <th rowspan="2">当日存款金额</th>
+          <th style="border-bottom: 1px solid #dcdce8;border-top-right-radius: 20px;" colspan="5">加冕金</th>
         </tr>
         <tr
           style="
@@ -287,7 +287,7 @@
             white-space: pre-wrap;
           "
         >
-          <th style="border-radius: 0px">连续1天</th>
+          <th>连续1天</th>
           <th>连续5天</th>
           <th>连续10天</th>
           <th>连续15天</th>
@@ -755,10 +755,14 @@ onMounted(() => {
 .section-table {
   th {
     font-size: 14px !important;
+    background-image: linear-gradient(rgb(112, 203, 251) 0%, rgb(74, 165, 255) 49%, rgb(74, 165, 255) 91.5%, rgb(110, 199, 253) 100%) !important;
+    border-right: 1px solid #dcdce8;
+    font-weight: 400;
   }
 
   td {
     font-size: 15px !important;
+    font-family: 'PingFang SC';
   }
 }
 </style>

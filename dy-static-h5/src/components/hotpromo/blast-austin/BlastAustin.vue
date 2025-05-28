@@ -925,10 +925,14 @@ onMounted(() => {
 .section-table {
   th {
     font-size: 14px !important;
+    background: linear-gradient(180deg,#70cbfb,#4aa5ff 49%,#4aa5ff 91.5%,#6ec7fd)!important;
+    border-right: 1px solid #dcdce8;
+    font-weight: 400;
   }
 
   td {
-    font-size: 15px !important;
+    font-size: 13px !important;
+    padding: 5px 2px !important;
   }
 }
 </style>
@@ -1079,5 +1083,9 @@ onMounted(() => {
       }
     }
   }
+}
+
+.section-bg {
+  padding: 10px !important;
 }
 </style>
