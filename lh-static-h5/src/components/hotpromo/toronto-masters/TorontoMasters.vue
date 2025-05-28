@@ -1,9 +1,9 @@
 <template>
-  <div class="livepoker-rebate-wrapper">
-    <div class="livepoker-rebate-container">
-      <div class="livepoker-rebate-section section-bg">
-        <div class="livepoker-rebate-section-left">
-          <div class="livepoker-rebate-section-title">
+  <div class="toronto-masters-wrapper">
+    <div class="toronto-masters-container">
+      <div class="toronto-masters-section section-bg">
+        <div class="toronto-masters-section-left">
+          <div class="toronto-masters-section-title">
             <div class="claim-title-icon">
             </div>
             每日礼金
@@ -25,7 +25,7 @@
             </div>
           </div>
         </div>
-        <div class="livepoker-rebate-section-right">
+        <div class="toronto-masters-section-right">
           <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
             <img src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn3.png" alt="" width="100%" />
           </div>
@@ -129,12 +129,12 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.livepoker-rebate-wrapper {
+.toronto-masters-wrapper {
   display: flex;
   justify-content: center;
 }
 
-.livepoker-rebate-container {
+.toronto-masters-container {
   width: 100%;
   height: 100%;
   max-width: 1200px;
@@ -143,7 +143,7 @@ onMounted(() => {
   align-items: center;
 }
 
-.livepoker-rebate-section {
+.toronto-masters-section {
   box-shadow: 0px 0px 4px 0px #01497b0f;
   padding: 20px 12px 40px;
   border-radius: 12px;
@@ -156,14 +156,14 @@ onMounted(() => {
   align-items: center;
   width: 100%;
 
-  .livepoker-rebate-section-left {
+  .toronto-masters-section-left {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
   }
 
-  .livepoker-rebate-section-right {
+  .toronto-masters-section-right {
     width: 180px;
     margin-top: 20px;
 
@@ -184,7 +184,7 @@ onMounted(() => {
     }
   }
 
-  .livepoker-rebate-section-title {
+  .toronto-masters-section-title {
     color: #000000;
     font-size: 16px;
     line-height: 1;
@@ -196,7 +196,7 @@ onMounted(() => {
   }
 }
 
-.livepoker-rebate-game {
+.toronto-masters-game {
   width: 100%;
   height: 302px;
   border-radius: 12px;
@@ -206,17 +206,17 @@ onMounted(() => {
   margin-bottom: 12px;
 }
 
-.livepoker-rebate-game-bottom {
+.toronto-masters-game-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  .livepoker-rebate-game-bottom-left-title {
+  .toronto-masters-game-bottom-left-title {
     font-size: 12px;
     font-weight: 600;
     line-height: 22.4px;
     color: #ff5d5d !important;
   }
-  .livepoker-rebate-game-bottom-left-btn {
+  .toronto-masters-game-bottom-left-btn {
     font-size: 12px;
     font-weight: 600;
     line-height: 22.4px;
@@ -229,7 +229,7 @@ onMounted(() => {
   }
 }
 
-.livepoker-rebate-game-info {
+.toronto-masters-game-info {
   width: 100%;
   height: 100%;
   margin-top: 40px;
@@ -276,114 +276,6 @@ onMounted(() => {
       font-weight: 400;
       line-height: 20px;
       color: #000000;
-    }
-  }
-}
-
-.livepoker-rebate-game-info-table {
-  width: 100%;
-  height: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  text-align: center;
-  vertical-align: middle;
-  th {
-    height: 36px;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 28px;
-    color: #fff;
-    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
-    &:first-child {
-      border-top-left-radius: 12px;
-    }
-    &:last-child {
-      border-top-right-radius: 12px;
-    }
-  }
-  tr {
-    &:last-child {
-      td {
-        &:first-child {
-          // border-bottom-left-radius: 12px;
-        }
-      }
-    }
-    &:nth-child(2) {
-      td {
-        &:last-child {
-          // border-bottom-right-radius: 12px;
-        }
-      }
-    }
-  }
-  td {
-    background: transparent;
-    border: 1px solid #acd4f6;
-    height: 36px;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 28px;
-    color: #000000;
-  }
-}
-
-.livepoker-rebate-game-bottom-rule {
-  width: 100%;
-  height: 100%;
-  margin-top: 40px;
-  background: #f2f8fe;
-  border-radius: 12px;
-  padding: 20px 12px 12px;
-  border: 1px solid #acd4f6;
-  box-shadow: 0px 0px 4px 0px #01497b0f;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  .title {
-    background-image: url("../../../assets/images/promotion/hotpromo/lh1-blast-premier/rule-title.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    width: 240px;
-    height: 20px;
-    margin-bottom: 20px;
-  }
-  .content {
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 20px;
-    color: #000000;
-    padding: 8px;
-    .item {
-      display: flex;
-      gap: 10px;
-      align-items: baseline;
-
-      .item-num {
-        color: #ffffff;
-        font-size: 12px;
-        line-height: 1;
-        border-radius: 50%;
-        height: 16px !important;
-        width: 16px !important;
-        min-width: 16px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 2px;
-        background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
-      }
-
-      .hint {
-        font-size: 12px;
-        font-weight: 400;
-        line-height: 22.4px;
-        color: #ff5d5d !important;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 4px;
-      }
     }
   }
 }
