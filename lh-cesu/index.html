@@ -34,6 +34,7 @@
             顺畅线路 <span>Extreme speed line</span>
           </div>
           <a
+            id="link-1"
             class="line-btn"
             href="https://www.lh99838.com"
             target="_blank"
@@ -48,6 +49,7 @@
             顺畅线路 <span>Extreme speed line</span>
           </div>
           <a
+            id="link-2"
             class="line-btn"
             href="https://www.lh78229.com"
             target="_blank"
@@ -62,8 +64,9 @@
             顺畅线路 <span>Extreme speed line</span>
           </div>
           <a
+            id="link-3"
             class="line-btn"
-            href="https://www.lh83669.com"
+            href="https://www.lh37951.com"
             target="_blank"
             title="立即访问"
             >立即访问</a
@@ -111,11 +114,34 @@
     src="//sdk.51.la/js-sdk-pro.min.js"
   ></script>
   <script type="text/javascript">
-    var hostname = window.location.hostname;
+    var hostname = window.location.hostname.replace("www.", "");
+    const domainConfig = {
+      "leihuo16.com": {
+      link1: "https://www.lh38953.com",
+      link2: "https://www.lh50313.com",
+      link3: "https://www.lh51567.com"
+    }
+    }
+    const defaultDomain = {
+      link1: "https://www.lh99838.com",
+      link2: "https://www.lh78229.com",
+      link3: "https://www.lh37951.com"
+    }
+    const currentDomain = domainConfig[hostname] || defaultDomain;
+    const link1 = document.getElementById("link-1");
+    const link2 = document.getElementById("link-2");
+    const link3 = document.getElementById("link-3");
+
+    link1.href = currentDomain.link1;
+    link2.href = currentDomain.link2;
+    link3.href = currentDomain.link3;
+
+
     if (hostname.indexOf("leihuo18.com") > -1) {
       LA.init({ id: "Kc6f6WLCDzDCVCol", ck: "Kc6f6WLCDzDCVCol" });
     } else if (hostname.indexOf("leihuo16.com") > -1) {
       LA.init({ id: "KdJtlxGYO7LA0zwt", ck: "KdJtlxGYO7LA0zwt" });
+
     }
 
     (function () {

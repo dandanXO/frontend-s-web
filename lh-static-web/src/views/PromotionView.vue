@@ -179,6 +179,9 @@
             <div v-if="selectedPromo.redirectUrl === 'lh1-yalla-compass'">
               <YallaCompass :promoCode="selectedPromo.promoCode" />
             </div>
+            <div v-if="selectedPromo.redirectUrl === 'lh1-blast-tv-austin-major-2025'">
+              <BlastAustin :promoCode="selectedPromo.promoCode" />
+            </div>
             <div v-if="selectedPromo.redirectUrl !== 'lh1-christmas-gashapon'" v-html="selectedPromo.pageContent"></div>
           </div>
           <div
@@ -218,6 +221,7 @@ import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattl
 
 const YallaCompass = defineAsyncComponent(() => import("@/components/hotpromo/yalla-compass/YallaCompass.vue"));
 const MesaPromo = defineAsyncComponent(() => import("@/components/hotpromo/mesa/MesaPromo.vue"));
+const BlastAustin = defineAsyncComponent(() => import("@/components/hotpromo/blast-austin/BlastAustin.vue"));
 
 export default defineComponent({
   name: "PromoView",
@@ -226,7 +230,8 @@ export default defineComponent({
     BlastPremierMarquee,
     NBAWaterBattle,
     YallaCompass,
-    MesaPromo
+    MesaPromo,
+    BlastAustin
   },
   setup() {
     const isDark = useDark();

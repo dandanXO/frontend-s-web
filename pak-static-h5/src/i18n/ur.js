@@ -662,7 +662,11 @@ export default {
         username: {
           placeholder: "صارف کا نام"
         },
-        searchButton: "تلاش"
+        searchButton: "تلاش",
+        radio: {
+          allLevels: "تمام سطحیں",
+          threeLevels: "3 سطحیں"
+        }
       },
       table: {
         username: "صارف کا نام",

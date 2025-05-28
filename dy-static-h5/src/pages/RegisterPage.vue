@@ -8,12 +8,14 @@
       hide-bottom-space
       ref="loginNameRef"
       v-model="regForm.loginName"
-      placeholder="4-11个字符，最少2个字母+数字组合，首位为字母"
+      placeholder="4~11位包含字母和数字"
       lazy-rules
       :rules="[
-        (val) => /^[a-zA-Z][a-zA-Z0-9]{3,10}$/.test(val) || '用户名个数必须在4和11之间，且首字符必须为字母',
-        (val) => (val.match(/[a-zA-Z]/g) || []).length >= 2 || '用户名必须包含至少2个英文字母',
-        (val) => /\d/.test(val) || '用户名必须包含至少1个数字'
+          (val) => (val && val.length > 0) || '请输入用户名',
+          (val) => (val && val.length >= 4 && val.length <= 11) || '用户名个数必须在4和11之间',
+          (val) => (val && /^[a-zA-Z][a-zA-Z0-9]{3,10}$/.test(val)) || '须以字母开头，并包含至少2个字母和1个数字',
+          (val) => (val && (val.match(/[a-zA-Z]/g) || []).length >= 2) || '须以字母开头，并包含至少2个字母和1个数字',
+          (val) => (val && /\d/.test(val)) || '须以字母开头，并包含至少2个字母和1个数字'
       ]"
     >
       <template v-slot:prepend>
@@ -242,7 +244,7 @@ export default defineComponent({
     });
     const verificationImg = ref("");
     const isValidName = () => {
-      const namePattern = /^([\u4e00-\u9fa5\.\。]*)$/;
+      const namePattern = /^([\u4e00-\u9fa5\.\。·]*)$/;
       return namePattern.test(regForm.realName) || "请输入中文字符";
     };
     const hasAffiliate = ref(false);

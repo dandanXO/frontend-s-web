@@ -23,6 +23,7 @@
           <div class="contact-box" v-for="(c, i) in contactlist" :key="i">
             <div class="contacticon">
               <img v-if="c.icon === 'czalo'" style="max-width: 67px;" :src="require(`../../assets/images/${c.icon}.png`)">
+              <img v-else-if="c.icon === 'whatsapp'" style="max-width: 67px;" :src="require(`../../assets/images/${c.icon}.png`)">
               <img v-else-if="c.icon === 'sigua'" style="max-width: 67px;" :src="require(`../../assets/images/${c.icon}.png`)">
               <img v-else style="max-width: 67px;" :src="require(`../../assets/images/${c.icon}.svg`)">
             </div>
@@ -216,16 +217,16 @@ const initContactList = () => {
         }]
       },
       {
-        icon: 'czalo',
-        type: t('common.zalo'),
-        link: '+639278280893',
+        icon: 'whatsapp',
+        type: t('common.whatsapp'),
+        link: '+855975762995',
         btns: [{
           text: t('common.copy'),
           action: ''
         },
         {
           text: t('common.download'),
-          action: 'http://zaloapp.com/qr/p/1j6eul1u6866m'
+          action: 'https://wa.me/qr/AZRPLDZZ23DWO1'
         }]
       },
       {

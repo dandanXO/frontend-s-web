@@ -304,6 +304,13 @@ deploy-id1-download-v2:
 
 #===============================================================================================
 
+deploy-au1-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: au1-download
+
+#===============================================================================================
+
 deploy-minifun-site:
   extends: .s3-deploy
   variables:
@@ -721,6 +728,13 @@ deploy-lh-landing-v4:
   extends: .s3-deploy
   variables:
     PROJECT: lh-landing-v4
+
+#===============================================================================================
+
+deploy-lh-landing-v5:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-landing-v5
 
 #===============================================================================================
 

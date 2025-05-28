@@ -7,14 +7,14 @@
           standout
           clearable
           v-model="regForm.loginName"
-          placeholder="4~11位，首字母为字母，至少2个字母+数字组合"
+          placeholder="4~11位包含字母和数字"
           lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || '请输入用户名',
             (val) => (val && val.length >= 4 && val.length <= 11) || '用户名个数必须在4和11之间',
-            (val) => (val && /^[a-zA-Z][a-zA-Z0-9]{3,10}$/.test(val)) || '用户名必须以字母开头',
-            (val) => (val && (val.match(/[a-zA-Z]/g) || []).length >= 2) || '用户名必须包含至少两个字母',
-            (val) => (val && /\d/.test(val)) || '用户名必须包含至少一个数字'
+            (val) => (val && /^[a-zA-Z][a-zA-Z0-9]{3,10}$/.test(val)) || '须以字母开头，并包含至少2个字母和1个数字',
+            (val) => (val && (val.match(/[a-zA-Z]/g) || []).length >= 2) || '须以字母开头，并包含至少2个字母和1个数字',
+            (val) => (val && /\d/.test(val)) || '须以字母开头，并包含至少2个字母和1个数字'
           ]"
           color="white"
         >
@@ -241,7 +241,7 @@
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss no-esc-dismiss>
     <q-card width="100%">
-      <q-card-section class="q-pa-md bg-brightbtn text-white">
+      <q-card-section class="text-white q-pa-md bg-brightbtn">
         <q-toolbar>
           <q-toolbar-title>验证码</q-toolbar-title>
           <q-btn flat v-close-popup round dense icon="close" />

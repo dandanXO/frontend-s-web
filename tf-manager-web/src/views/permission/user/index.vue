@@ -45,6 +45,7 @@
           :placeholder="t('fields.role')"
           class="filter-item"
           style="width: 120px; margin-left: 5px"
+          @focus="loadRoles(request.defaultSiteIds)"
         >
           <el-option
             v-for="item in options"
@@ -516,7 +517,8 @@ const request = reactive({
   name: null,
   enable: null,
   siteId: null,
-  role: null
+  role: null,
+  defaultSiteIds: null
 })
 const options = ref([])
 
@@ -586,6 +588,7 @@ function resetQuery() {
   request.enable = null
   request.siteId = store.state.user.siteId
   request.role = null
+  request.defaultSiteIds = LOGIN_USER_TYPE.value !== TENANT.value ? `0,${store.state.user.sites.map(site => site.id).join(',')}` : store.state.user.sites.map(site => site.id).join(',')
 }
 
 function handleSelectionChange(val) {
@@ -631,7 +634,13 @@ async function loadRoles(siteId) {
     }
   }
   const { data: roles } = await getSimpleRoles(siteId)
-  options.value = roles
+
+  // 拼接 name
+  const newRoles = roles.map(role => ({
+    ...role,
+    name: `${role.name} ${getSiteName(role.siteId)}`
+  }))
+  options.value = newRoles
 }
 
 function changePage(page) {
@@ -862,6 +871,20 @@ function toSiteName(row, column, cellValue, index) {
   }
 }
 
+function getSiteName(siteId) {
+  if (siteId) {
+    if (siteId === 0) {
+      return ''
+    } else {
+      const site = store.state.user.sites.find(site => site.id === siteId)
+      return site ? `(${site.siteName})` : ''
+      // return "(" + store.state.user.sites.find(site => site.id === siteId).siteName + ")" //  siteList.list.find(site => site.id === siteId).siteName
+    }
+  } else {
+    return ''
+  }
+}
+
 function getRolesTxt(roleIds) {
   return roleIds.map(rid => roleTxt(rid)).join(',')
 }
@@ -888,12 +911,21 @@ function selectable(row) {
 // }
 
 async function onSiteChange() {
+  // 先保存当前已选的 role id
+  const oldRoles = Array.isArray(form.roles) ? [...form.roles] : []
+
   await loadRoles(
     form.siteIdArray && form.siteIdArray !== null
       ? form.siteIdArray
       : form.siteId
   )
-  form.roles = null
+
+  // 取出新 options 里的所有 id
+  const validRoleIds = options.value.map(r => r.id)
+  // 只保留还在 options 里的 role
+  form.roles = oldRoles.filter(id => validRoleIds.includes(id))
+
+  // form.roles = null
   uiControl.rolesSelect = false
 }
 
@@ -971,7 +1003,15 @@ onMounted(async () => {
     )
     // request.siteId = site.value.id
   }
-  await loadRoles()
+
+  const defaultSiteIds = store.state.user.sites.map(site => site.id)
+  if (LOGIN_USER_TYPE.value !== TENANT.value) {
+    request.defaultSiteIds = `0,${defaultSiteIds.join(',')}`
+  } else {
+    request.defaultSiteIds = defaultSiteIds.join(',')
+  }
+
+  await loadRoles(request.defaultSiteIds)
   await loadUser()
   await loadNetPhone()
 })

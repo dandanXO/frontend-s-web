@@ -1659,6 +1659,7 @@ export default {
     upgradeToPaymentOnGoing: 'Nâng Cấp Lên Đang Thanh Toán',
     upLineLoginName: 'Tên Đăng Nhập Upline',
     upload: 'Tải Lên',
+    uploading: 'Uploading',
     upperName: 'Tên Upline',
     usdtControl: 'Kiểm Soát Rút USDT',
     usdtDepositAmount: 'Số tiền gửi tiền kỹ thuật số',

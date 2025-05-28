@@ -83,12 +83,12 @@
         </router-link>
         
         
-        <router-link to="/affiliate/edit-rebate">
+        <!-- <router-link to="/affiliate/edit-rebate">
           <div class="acct-nav-item">
             <img src="../../assets/images/affiliate/menu/edit-rebate.png" />
           </div>
           <div class="acct-nav-label">{{ $t("affiliateSettings.editRebate") }}</div>
-        </router-link>
+        </router-link> -->
         
         
         <!-- <router-link to="/affiliate/security-center">

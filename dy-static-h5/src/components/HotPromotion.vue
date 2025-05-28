@@ -631,9 +631,11 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 16px;
+  font-size: 14px;
   width: fit-content;
   padding: 0px 20px 0px 10px;
+  min-width: 100px;
+  height: fit-content;
 }
 
 .title-img {
