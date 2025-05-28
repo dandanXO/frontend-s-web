@@ -179,6 +179,9 @@
             <div v-if="selectedPromo.redirectUrl === 'lh1-yalla-compass'">
               <YallaCompass :promoCode="selectedPromo.promoCode" />
             </div>
+            <div v-if="selectedPromo.redirectUrl === 'lh1-valorant-masters-toronto-2025'">
+              <TorontoMasters :promoCode="selectedPromo.promoCode" />
+            </div>
             <div v-if="selectedPromo.redirectUrl === 'lh1-blast-tv-austin-major-2025'">
               <BlastAustin :promoCode="selectedPromo.promoCode" />
             </div>
@@ -219,6 +222,7 @@ import { useLocalStorage } from "@vueuse/core";
 import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
+const TorontoMasters = defineAsyncComponent(() => import("@/components/hotpromo/toronto-masters/TorontoMasters.vue"));
 const YallaCompass = defineAsyncComponent(() => import("@/components/hotpromo/yalla-compass/YallaCompass.vue"));
 const MesaPromo = defineAsyncComponent(() => import("@/components/hotpromo/mesa/MesaPromo.vue"));
 const BlastAustin = defineAsyncComponent(() => import("@/components/hotpromo/blast-austin/BlastAustin.vue"));
@@ -231,7 +235,8 @@ export default defineComponent({
     NBAWaterBattle,
     YallaCompass,
     MesaPromo,
-    BlastAustin
+    BlastAustin,
+    TorontoMasters
   },
   setup() {
     const isDark = useDark();
