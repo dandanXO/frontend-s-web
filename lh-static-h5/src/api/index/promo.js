@@ -710,3 +710,14 @@ export function initBlastAustin(promoCode) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.get(`/session/mission/init?promoCode=${promoCode}&v=${randNum}`);
 }
+
+
+export function getTorontoMastersInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition-loss/init?promoCode=lh1-valorant-masters-toronto-2025&v=${randNum}`);
+}
+
+export function claimTorontoMastersBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition-loss/claim?promoCode=lh1-valorant-masters-toronto-2025&v=${randNum}`);
+}
