@@ -1,8 +1,6 @@
 <template>
   <img width="20px" src="@/assets/images/agent/refresh-icon.svg" @click="getLinkList" style="display:flex;margin-left:auto;" />
   
-  
-
   <template v-if="isLoading">
     <div class="qr-loader" style="display:flex;margin:30px auto;">
       <div class="qr-loader-scan">
@@ -10,7 +8,7 @@
     </div>
   </template>
   <template v-else>
-    <div class="forum-card" v-if="affiliateStore.affiliateLevel !== 'MASTER_AFFILIATE'">
+    <div class="forum-card" v-if="affiliateStore.affiliateInfo.affiliateLevel !== 'MASTER_AFFILIATE'">
       <div class="forum-card__header">
         <div class="forum-card__title">
           <img alt="forum" src="@/assets/images/agent/forum-icon.png" width="24" height="24" />
