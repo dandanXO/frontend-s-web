@@ -615,7 +615,7 @@
     <div class="terms-conditions">
       <!-- <div class="section-title">规则与条款</div> -->
       <div class="heading">
-        <div class="headingtext">
+        <div class="headingtext gz">
           <!-- 规则与条款 -->
           <img src="../../assets/images/vip/vip-gzytk.png">
         </div>
@@ -733,7 +733,7 @@
       <!-- <div class="section-title" @click="toggleAccordion">一般规则</div>
        -->
       <div class="heading"  @click="toggleAccordion">
-        <div class="headingtext">
+        <div class="headingtext gz">
           <!-- 一般规则 -->
           
           <img src="../../assets/images/vip/vip-ybgz.png">
@@ -2417,11 +2417,18 @@ $border-settings: 1px solid #e5e7eb;
     background-clip: text;
     color: transparent;
     filter: drop-shadow(2px 3px 1px #996F37);
-    img {
-      max-width: 180px;
-      margin-bottom: -10px;
-      width: 38%;
-    }
+      img {
+        max-width: 180px;
+        margin-bottom: -10px;
+        width: 38%;
+      }
+      &.gz {
+        img {
+          max-width: 140px;
+          width: 100%;
+          margin-bottom: -10px;
+        }
+      }
     }
   }
   .vip-benefit-section-title {
