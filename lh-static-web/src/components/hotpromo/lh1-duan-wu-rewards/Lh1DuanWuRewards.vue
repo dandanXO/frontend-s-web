@@ -311,6 +311,7 @@ import {
   getDuanWuclaimBonus
 } from "@/api/index/promo";
 import { useNotify } from "@/hooks/notify";
+import { userStore } from "@/store";
 
 const isOpenDialog = ref(false);
 const isOpenResultDialog = ref(false);
@@ -342,9 +343,13 @@ const handleToggleTab = () => {
   isTabLeft.value = !isTabLeft.value;
 };
 
+const store = userStore();
+
 const init = () => {
+  if (!store.token) {
+    return;
+  }
   getDuanWuRewardInit(props.promoCode).then((res) => {
-    console.log(res);
 
     if (res.code === 0) {
       todayToken.value = res.data.todayToken;

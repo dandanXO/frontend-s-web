@@ -304,6 +304,7 @@ import {
   getDuanWuclaimBonus
 } from "@/api/index/promo";
 import { useNotify } from "@/hooks/notify";
+import { userStore } from "@/store";
 
 const isOpenDialog = ref(false);
 const props = defineProps(["promoCode"]);
@@ -334,8 +335,12 @@ const flowMultiplier = "6倍流水";
 const handleToggleTab = () => {
   isTabLeft.value = !isTabLeft.value;
 };
+const store = userStore();
 
 const init = () => {
+  if (!store.token) {
+    return;
+  }
   getDuanWuRewardInit(props.promoCode).then((res) => {
     console.log(res);
 
