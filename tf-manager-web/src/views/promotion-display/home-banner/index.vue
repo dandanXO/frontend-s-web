@@ -302,6 +302,23 @@
             </el-form-item>
           </div>
         </div>
+        <div style="display: flex; flex-direction: column; align-items: start">
+          <div style="display: flex;">
+            <el-form-item :label="t('fields.showOption')">
+              <el-form-item style="margin-right: 20px; margin-bottom: 0;" prop="showDesktop">
+                <el-checkbox v-model="form.showDesktop" label="PC" size="large" />
+              </el-form-item>
+
+              <el-form-item style="margin-right: 20px; margin-bottom: 0;" prop="showH5">
+                <el-checkbox v-model="form.showH5" label="H5" size="large" />
+              </el-form-item>
+
+              <el-form-item style="margin-right: 20px; margin-bottom: 0;" prop="showApp">
+                <el-checkbox v-model="form.showApp" label="APP" size="large" />
+              </el-form-item>
+            </el-form-item>
+          </div>
+        </div>
         <el-form-item :label="t('fields.redirect')" prop="redirectUrl">
           <el-input v-model="form.redirectUrl" style="width: 350px" />
         </el-form-item>
@@ -840,6 +857,9 @@ const form = reactive({
   category: null,
   siteId: null,
   remark: null,
+  showApp: null,
+  showH5: null,
+  showDesktop: null,
   state: true,
   displayStartTime: "2020-01-01 00:00:00",
   displayEndTime: "2030-01-01 23:59:59",

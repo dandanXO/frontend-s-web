@@ -1710,6 +1710,7 @@ export default {
     settleEdit: '调整',
     shareRatio: '佣金比例',
     show: '显示',
+    showOption: '展示选择',
     showAll: '显示所有',
     showFastAccess: '显示快速浏览',
     sid: 'SID',
