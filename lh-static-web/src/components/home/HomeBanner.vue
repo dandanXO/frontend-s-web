@@ -88,11 +88,11 @@ const loadBanners = () => {
 
       if (res.code === 0) {
         banners.value = res.data.filter(promo => {
+          if (!promo.showDesktop) return false;
           if(isDark.value) {
             return !['lh1-dark-mode'].includes(promo.redirectUrl) && promo.desktopImageUrlDark
           }
-
-          return promo;
+          return true;
         });
 
         //No Need liao.

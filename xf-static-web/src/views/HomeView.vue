@@ -136,7 +136,7 @@ export default defineComponent({
     const loadBanners = () => {
       loadPromoBanner("HOME").then((res) => {
         if (res.code === 0) {
-          banners.value = res.data;
+          banners.value = res.data.filter(item => item.showDesktop === true);
         }
       });
     };

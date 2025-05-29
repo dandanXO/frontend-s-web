@@ -891,7 +891,12 @@ export default defineComponent({
         .get("/opt-session/promo/banner?category=HOME")
         .then((res) => {
           if (res.code === 0) {
-            banners.value = res.data;
+            // banners.value = res.data;
+            banners.value = res.data.filter(item => {
+              if (isH5.value) return item.showH5;
+              if (!isH5.value) return item.showApp;
+              return item.showH5; // For WEB or fallback
+            });
             setTimeout(() => {
               bannerLoading.value = false;
             }, 500);
@@ -1341,9 +1346,9 @@ export default defineComponent({
 
     onMounted(() => {
       getPlatList();
-      loadData();
       loadAnnouncement();
       checkPlatform();
+      loadData();
       getVersionNo();
       if (store.token && store.memberType === "TEST") {
         checkShowImgTop();
