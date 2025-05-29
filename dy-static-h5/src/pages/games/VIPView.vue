@@ -753,7 +753,7 @@
           <li class="numbered">
             此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
           </li>
-          <li class="numbered">为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
+          <li class="numbered">为避免文字理解差异，东嬴电竞保留此活动最终解释权；</li>
         </ol>
       </div>
     </div>
@@ -912,755 +912,552 @@
 <script>
 import { ref, defineComponent, onMounted } from "vue";
 import { userStore } from "stores/index";
-import { useRoute, useRouter } from "vue-router";
-import { eventapi } from "boot/axios";
-import { useQuasar } from "quasar";
-import Swal from "sweetalert2";
+import { useRouter } from "vue-router";
+import { getVIPDetails, getVIPDetailsNotLoggedIn, claimItems, loadPromoBanner } from "src/api/index/promo";
+import { useNotify } from "src/hooks/notify";
+import { Carousel, Slide, Navigation, Pagination } from "vue3-carousel";
+import { useLocalStorage } from "@vueuse/core";
+import GameModal from "src/components/modal/GameModal.vue";
+import { useCloudWiseHelper } from "src/hooks/cloudWiseHelper";
 
-export default defineComponent({
-  name: "TransitRecordView",
-  setup() {
-    const $q = useQuasar();
-    const tab = ref("special");
+useCloudWiseHelper({
+  pageName: "vip"
+})
 
-    const slide = ref(0);
-    const showRebate = ref(false);
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
+const isShowTable = ref(false);
+const router = useRouter();
+const notify = useNotify();
+const store = userStore();
+const amount = ref("$0");
+const gameModalRef = ref();
+const privilegeClaimedModalVisible = ref(false);
+const vipLevel = computed(() => {
+  return +store.vip.replace("VIP", "");
+});
+const currentDepositAmt = computed(() => {
+  return store.getCurrentDeposit();
+});
+const isOpenTerms = ref(false);
 
-    const router = useRouter();
-    const store = userStore();
-    const vipLevel = ref("");
-    const loading = ref(false);
-    const loadingMClaim = ref(false);
-    const loadingBClaim = ref(false);
+const toggleAccordion = () => {
+  isOpenTerms.value = !isOpenTerms.value;
+};
+const currentDepAmt = ref(0);
+const currentBetAmt = ref(0);
+const currentRetainAmount = ref(0);
+const retainAmountRequired = ref(0);
+const currentRetainDay = ref(0);
+const retainDayRequired = ref(0);
+const retainPercentage = computed(() => {
+  if (retainAmountRequired.value === 0) return 0; // Prevent division by 0
+  return ((+currentRetainAmount.value / +retainAmountRequired.value) * 100).toFixed(2);
+});
+const balanceRetainDay = ref(0);
+const currentRedPacketAmount = ref(0);
+const currentUpgradeDepAmt = ref(0);
+const currentUpgradeBetAmt = ref(0);
+const currentClaimAllStatus = ref("CANT_CLAIM");
+const refCarousel = ref();
+const getVipLevelProgress = (lvl, status) => {
+  if (lvl === 0 || !lvl) {
+    currentUpgradeBetAmt.value = originalUpgradeBetAmounts.value[0];
+    if (currentBetAmt.value > 0) {
+      return (currentBetAmt.value / originalUpgradeBetAmounts.value[0]) * 100;
+    }
+    return 0;
+  }
+  if (vipItems.find((item) => item.claimAllStatus === "CAN_CLAIM")) {
+    currentClaimAllStatus.value = "CAN_CLAIM";
+  } else {
+    currentClaimAllStatus.value = "CANT_CLAIM";
+  }
+  const vipInfo = vipItems.find((item) => +item.vipLevel === lvl);
+  console.log(vipInfo);
+  const vipLevel = +store.vip.replace("VIP", "");
+  const currentDeposit = +store.getCurrentDeposit();
+  currentUpgradeDepAmt.value = vipInfo.upgradeDepositAmount;
+  currentUpgradeBetAmt.value = vipInfo.upgradeBetAmount;
+  if (status === "bet") {
+    if (currentBetAmt.value > currentUpgradeBetAmt.value) {
+      return 100;
+    }
+    if (currentUpgradeBetAmt.value === 0) {
+      return 0; // Avoid division by zero
+    }
+    return (currentBetAmt.value / currentUpgradeBetAmt.value) * 100;
+  }
 
-    const isBeforeCheckBonus = ref(true);
-    const isBeforeCheckBirthday = ref(true);
+  if (status === "deposit") {
+    // Ensure that currentDepAmt equals currentUpgradeDepAmt.value for 100%
+    if (currentDepAmt.value > currentUpgradeDepAmt.value) {
+      return 100;
+    }
+    if (currentUpgradeDepAmt.value === 0) {
+      return 0; // Avoid division by zero
+    }
+    return (currentDepAmt.value / currentUpgradeDepAmt.value) * 100;
+  }
 
-    const isClaimedBonus = ref(false);
-    const isClaimedBirthday = ref(false);
+  return 0; // Default return value if status doesn't match
+};
+// const loadingClaim = ref(false);
+// const loadingMClaim = ref(false);
+// const loadingBClaim = ref(false);
+// const dailySlot = (bonusItem, vipType) => {
+//   loadingClaim.value = true;
+//   if (vipType === "monthly") {
+//     loadingMClaim.value = true;
+//   } else if (vipType === "birthday") {
+//     loadingBClaim.value = true;
+//   }
+//   claimBonusItem(bonusItem)
+//     .then((res) => {
+//       if (res.code === 0) {
+//         amount.value = "$" + res.data;
+//         privilegeClaimedModalVisible.value = true;
+//         loadingClaim.value = false;
+//         loadingMClaim.value = false;
+//         loadingBClaim.value = false;
+//         store.getBalance();
+//       } else {
+//         notify.error(res.message);
+//         loadingClaim.value = false;
+//         loadingMClaim.value = false;
+//         loadingBClaim.value = false;
+//       }
+//     })
+//     .catch((err) => {
+//       console.log(err.message);
+//     });
+// };
 
-    const btnIsDisabled = ref(false);
+const terms = [
+  { text: "会员累计投注额达到相应级别的要求，即可在次日 24 点前晋级相应 VIP 等级；" },
+  { text: "VIP 等级达到相应的要求可每天晋升一级，但 VIP 等级不可越级晋升；" },
+  { text: "会员在达到某 VIP 等级后，90 天内投注需要完成保级要求。如果在此期间完成晋升，保级要求重新按照当前等级计算；" },
+  {
+    text: "如果会员在一个季度（90 天计算）内没有完成相应的保级要求流水，系统会自动降级一个等级，相应的返水及其它优惠也会随之调整至降级后的等级；"
+  },
+  { text: "每个级别的升级礼金每位会员仅能获得 1 次（升级礼金 1 倍流水即可提款）；" },
+  {
+    text: "会员在注册 90 天内过生日，本年度内将不能领取生日礼金。另注册时间大于 90 天的会员需在生日当天的 VIP 页面进行自助领取，每年可领取一次（生日彩金 1 倍流水即可提款）；"
+  },
+  { text: "当月晋级后未晋级且达到保级要求，次月 1 日可领取保级彩金；" },
+  { text: "首次保级成功后计算会员 12 个月内未降级（可晋级），彩金与第 13 个月首日进行派发；" },
+  {
+    text: "统计每日返水金额，对应 VIP 等级返水加赠比例派发。次日可领取每日反水加赠礼金，返水加赠礼金达到 10 元即可领取，礼金无流水限制；"
+  },
+  {
+    text: "从每月会员日 15 号 00:00:00 起，相应等级的玩家只要在上月有一笔及其以上的存款，即可在活动页面领取一次会员红包（以领取时的等级为准），领取时间截至 24 号 23:59:59，仅需完成一倍流水，过期未领取视为放弃；"
+  },
+  {
+    text: "非 0 级玩家从会员日 18 号 00:00:00 起均可在活动页面领取一张“10% 充值加码券”，领取时间截至 21 号 23:59:59，且领取后需在 7 日内使用充值加码券，成功使用后需在 15 日内完成相应流水要求；"
+  },
+  { text: "本加码券单日内不可与其他活动加码券同时使用；" },
+  {
+    text: "有效流水仅计算在游戏中产生输赢结果的注单，香港盘<0.75（中国盘<0.75）、欧洲盘<1.75、美洲盘<-133、马来盘<0.75 且>0，负赔率>-0.75 且＜0、走水、注单取消、对冲、未结算、连串过关、平半盘、提前结算不计算为有效流水；"
+  },
+  {
+    text: "根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；"
+  },
+  {
+    text: "此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；"
+  },
+  { text: "为避免文字理解差异，东嬴电竞保留此活动最终解释权；" }
+];
 
-    const errorCount = ref(0);
-    let countdownInterval;
+const vipTerms = [
+  {
+    text: `返水奖金根据北京时间每天 00:00:00-23:59:59 之间的有效投注额进行计算，所有游戏场馆投注额都是按照北京时间计算，返水彩金无需申请，系统会在次日下午 14:00 派发到您的主账户；`
+  },
+  {
+    text: `东嬴电竞夺宝、捕鱼和彩票 不参与返水优惠；`
+  },
+  {
+    text: `电竞/体育中的连串过关投注额返水将以注单结算时间为准。`
+  },
+  {
+    text: `返水根据有效投注进行计算，在所有产品中，任何注单取消或本金退还，任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注以及在同一游戏中同时投注对等盘口，将不计算在有效投注额内，赢半和输半只计算一半流水，体育提前注单按照实际输赢金额的绝对值作为有效投注；`
+  },
+  {
+    text: `返水奖金可投注于任何平台游戏，奖金只需 1 倍投注额即可申请提款，最低返水 1 元，低于 1 元不予派发。`
+  },
+  {
+    text: `此优惠促销只适用于拥有一个独立账户的玩家。住址、电子邮箱地址，电话号码，支付方式 (相同借记卡/信用卡/银行账户号码) IP 地址，同一网络环境等将可以作为判定是否独立玩家的条件。`
+  },
+  {
+    text: `对于发现任何有违背、欺骗、或利用规则和条款进行非法获利的会员，东嬴保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。`
+  },
+  {
+    text: `在某些未知因素超出可控范围的情况下，东嬴保留可单方面执行的决定权，并承诺会在这类紧急问题发生时解释给客户原因并听取客户反馈与客户沟通协商解决。`
+  },
+  {
+    text: `东嬴保留对本次活动的修订、终止和最终解释权，超出本网站控制外的技术错误，东嬴将不承担任何责任。`
+  }
+];
 
-    const onVIPButtonClick = (type) => {
-      // Check if the button is already disabled
-      if (localStorage.getItem("vipButtonDisabled") === "true") {
-        const currentTime = new Date().getTime();
-        const expirationTime = parseInt(localStorage.getItem("vipButtonExpirationTime"), 10);
+const showRebate = ref(true);
+const currentDisplayTerms = ref(terms);
+const onShowRebateClick = (flag) => {
+  showRebate.value = flag;
+  if (showRebate.value) currentDisplayTerms.value = terms;
+  else currentDisplayTerms.value = vipTerms;
+};
 
-        // Check if the expiration time has passed
-        if (currentTime < expirationTime) {
-          return; // Exit the function if the button is still disabled
-        } else {
-          localStorage.removeItem("vipButtonDisabled");
-          localStorage.removeItem("vipButtonExpirationTime");
-          clearInterval(countdownInterval);
-        }
+const badgeSrc = computed(() => {
+  const currentVIP = +store.vip.replace("VIP", "");
+  const matchedVIP = vipItems.find((vip) => +vip.vipLevel === currentVIP);
+  return require(`../../assets/images/vip/level/vip${matchedVIP ? currentVIP : "1"}.png`);
+});
+
+const vipItems = reactive([
+{
+    vipLevel: "1",
+    upgrade: "一笔存款",
+    vipTitle: "青铜 II",
+    imgName:"青铜 II"
+  },
+  {
+    vipLevel: "2",
+    upgrade: "3,000",
+    vipTitle: "青铜 I",
+    imgName:"青铜 I"
+  },
+  {
+    vipLevel: "3",
+    upgrade: "30,000",
+    vipTitle: "白银 III",
+    imgName:"白银 III"
+  },
+  {
+    vipLevel: "4",
+    upgrade: "80,000",
+    vipTitle: "白银 II",
+    imgName:"白银 II"
+  },
+  {
+    vipLevel: "5",
+    upgrade: "200,000",
+    vipTitle: "白银 I",
+    imgName:"白银 I"
+  },
+  {
+    vipLevel: "6",
+    upgrade: "400,000",
+    vipTitle: "黄金 II",
+    imgName:"黄金 III"
+  },
+  {
+    vipLevel: "7",
+    upgrade: "600,000",
+    vipTitle: "黄金 I",
+    imgName:"黄金 II"
+  },
+  {
+    vipLevel: "8",
+    upgrade: "1,000,000",
+    vipTitle: "铂金",
+    imgName:"黄金 I"
+  },
+  {
+    vipLevel: "9",
+    upgrade: "2,000,000",
+    vipTitle: "钻石",
+    imgName:"铂金 II"
+  },
+  {
+    vipLevel: "10",
+    upgrade: "4,000,000",
+    vipTitle: "王者",
+    imgName:"铂金 I"
+  }
+  // {
+  //   vipLevel: "11",
+  //   upgrade: "8,000,000",
+  //   vipTitle: "钻石"
+  // },
+  // {
+  //   vipLevel: "12",
+  //   upgrade: "12,000,000",
+  //   vipTitle: "最强王者"
+  // }
+]);
+const maxVipLevel = ref(0);
+const formatPercentageRange = (range) => {
+  const percentages = range.split(" - "); // Split the range into two percentages
+  const formattedPercentages = percentages.map(
+    (percentage) => parseFloat(percentage).toFixed(2) // Convert to float and fix to two decimal places
+  );
+  return formattedPercentages.join("% - ") + "%"; // Join the formatted percentages
+};
+const banners = ref([]);
+const getImages = () => {
+  loadPromoBanner("VIP").then((res) => {
+    if (res.code === 0) {
+      banners.value = res.data;
+    }
+  });
+};
+const originalUpgradeBetAmounts = ref([]);
+const isDataLoaded = ref(false);
+const initVIPTable = async (wLoad) => {
+  if (wLoad !== "noload") {
+    isDataLoaded.value = false;
+  }
+  getImages();
+  // const storedData = sessionStorage.getItem("vipData");
+
+  // if (storedData) {
+  //   var res = JSON.parse(storedData);
+  //   const statuses = [
+  //     "upgradeClaimStatus",
+  //     "monthlyClaimStatus",
+  //     "couponClaimStatus",
+  //     "rebateClaimStatus",
+  //     "retainClaimStatus",
+  //     "yearlyRetainClaimStatus"
+  //   ];
+
+  //   statuses.forEach((status) => {
+  //     res.data[status] = "CANT_CLAIM";
+  //   });
+  //   runVipAPI(res);
+  // }
+  var res = await store.getVIPInfo();
+
+  runVipAPI(res);
+};
+const runVipAPI = (res) => {
+  let _maxVipLevel = 0
+  if (res.code === 0) {
+    const { vipBonusVOList } = res.data;
+
+    // Step 1: Extract original upgradeBetAmount values into an array.
+    console.log('dan',vipBonusVOList)
+    originalUpgradeBetAmounts.value = vipBonusVOList.map((item) => item.upgradeBetAmount);
+
+    // Step 2: Shift values backward by one position.
+    // const shiftedUpgradeBetAmounts = [];
+    // for (let i = 0; i < originalUpgradeBetAmounts.length; i++) {
+    //   if (i === 0) {
+    //     shiftedUpgradeBetAmounts[i] = 0;  // The first value should be 0 or a base value
+    //   } else {
+    //     shiftedUpgradeBetAmounts[i] = originalUpgradeBetAmounts[i - 1]; // Shift backward
+    //   }
+    // }
+    vipBonusVOList.forEach((vipBonusItem, i) => {
+      // vipBonusItem.upgradeBetAmount = shiftedUpgradeBetAmounts[i];
+      if (vipLevel.value === vipBonusItem.vipLevel) {
+        vipBonusItem.holidayClaimStatus = "NO_STATUS";
+        // vipBonusItem.rebateClaimStatus = "NO_STATUS";
+      } else {
+        vipBonusItem.holidayClaimStatus = "CANT_CLAIM";
+        // vipBonusItem.rebateClaimStatus = "CANT_CLAIM";
       }
+      // vipBonusItem.rebatePrize = formatPercentageRange(vipBonusItem.rebateRange);
+      vipBonusItem.redPacketPrize = vipBonusItem.redPacketPrize + "%";
+      const index = vipItems.findIndex((item) => item.vipLevel.toString() === vipBonusItem.vipLevel.toString());
 
-      if (!store.token) {
-        Swal.fire({
-          title: "请登录后再操作",
-          text: "系统提示",
-          confirmButtonText: "登录"
-        }).then((dialog) => {
-          if (dialog.isConfirmed) {
-            router.push({ path: "/login" });
+      if (index !== -1) {
+        // vipItems[index] = {
+        //   ...vipItems[index],
+        //   ...vipBonusItem
+        // };
+
+        vipItems.splice(index, 1, {
+          ...vipItems[index],
+          ...vipBonusItem
+        });
+      }
+      if (vipBonusItem.vipLevel > _maxVipLevel) {
+        _maxVipLevel = vipBonusItem.vipLevel
+      }
+    });
+    currentDepAmt.value = res.data.currentDepositAmount;
+    currentBetAmt.value = res.data.currentBetAmount;
+    currentRetainAmount.value = res.data.currentRetainAmount;
+    retainAmountRequired.value = res.data.retainAmountRequired;
+    // balanceRetainAmount.value = +res.data.retainAmountRequired - +res.data.currentRetainAmount
+    currentRetainDay.value = res.data.currentRetainDay;
+    retainDayRequired.value = res.data.retainDayRequired;
+    balanceRetainDay.value = +res.data.retainDayRequired - +res.data.currentRetainDay;
+    currentRedPacketAmount.value = res.data.currentRedPacketAmount;
+    getVipLevelProgress(vipLevel.value, "bet");
+    isDataLoaded.value = true;
+    maxVipLevel.value = _maxVipLevel
+  } else {
+    notify({ type: "error", message: res.message });
+  }
+  slideTo();
+  changeSlideToIsFirstTime();
+};
+//TODO: 节日礼金去掉了
+const categories = [
+  { key: "upgrade", image: "upgrade", displayName: "晋级彩金" },
+  { key: "monthly", image: "monthly", displayName: "每月 15 号红包" },
+  { key: "coupon", image: "coupon", displayName: "充值加赠20% 奖金" },
+  { key: "redPacket", image: "rebate", displayName: "每日额外返水红包" },
+  { key: "retain", image: "retain", displayName: "保级彩金" },
+  { key: "yearlyRetain", image: "yearly", displayName: "年度保级彩金" },
+  { key: "birthday", image: "birthday", displayName: "生日礼金" }
+  // { key: "holiday", image: "holiday", displayName: "节日礼金" }
+];
+// Group categories into pairs
+const categoryPairs = computed(() => {
+  const pairs = [];
+  for (let i = 0; i < categories.length; i += 4) {
+    pairs.push(categories.slice(i, i + 4));
+  }
+  return pairs;
+});
+const isLoading = reactive({});
+const handleClick = async (key, item) => {
+  if (key === "all" && currentClaimAllStatus.value === "CANT_CLAIM") {
+    return notify({ type: "error", message: "当前没有可领取的内容" });
+  }
+  if (!isLoading[key]) {
+    isLoading[key] = true; // Set loading state for this specific key
+    const res = await claimItems(key, key === "all" ? item : item.vipLevel);
+
+    if (res.code === 0) {
+      if (key !== "all") {
+        item[`${key}ClaimStatus`] = "CLAIMED";
+      } else {
+        // Get item that has the same level
+        const vipInfo = vipItems.find((vip) => +vip.vipLevel === item);
+
+        const statuses = [
+          "upgradeClaimStatus",
+          "birthdayClaimStatus",
+          "monthlyClaimStatus",
+          "couponClaimStatus",
+          "redPacketClaimStatus",
+          "retainClaimStatus",
+          "yearlyRetainClaimStatus"
+        ];
+
+        statuses.forEach((status) => {
+          if (vipInfo[status] === "CAN_CLAIM") {
+            vipInfo[status] = "CLAIMED";
           }
         });
-      } else {
-        const bonusItem = `dy2-vip-${type}`;
-        eventapi
-          .put("/bonus/claim/" + bonusItem)
-          .then((res) => {
-            // console.log(res);
-            if (res.code === 0) {
-              Swal.fire({
-                title: "系统提示",
-                text: `您已成功领取 ${res.data}`,
-                confirmButtonText: "确认"
-              }).then((dialog) => {
-                // if (dialog.isConfirmed) {
-                //   router.push({path: "/finance/deposit"});
-                // }
-              });
-            }
-          })
-          .catch((err) => {
-            errorCount.value++;
-            if (errorCount.value >= 3) {
-              // Disable the button after 3 or more errors
-              btnIsDisabled.value = true;
-              const currentTime = new Date().getTime();
-              const expirationTime = currentTime + 10000; // 10 secs in milliseconds
-
-              localStorage.setItem("vipButtonDisabled", "true");
-              localStorage.setItem("vipButtonExpirationTime", expirationTime.toString());
-              // Start the countdown
-              startCountdown(expirationTime);
-              Swal.fire({
-                title: "系统提示",
-                text: `${err.message}`,
-                confirmButtonText: "确认"
-              });
-            }
-          });
       }
-    };
-
-    // Function to start the countdown
-    const startCountdown = (expirationTime) => {
-      countdownInterval = setInterval(() => {
-        const currentTime = new Date().getTime();
-        const remainingTime = expirationTime - currentTime;
-
-        if (remainingTime > 0) {
-          const seconds = Math.floor(remainingTime / 1000) % 60;
-          if (seconds === 0) {
-            btnIsDisabled.value = false;
-            errorCount.value = 0;
-          }
-        } else {
-          clearInterval(countdownInterval); // Clear the countdown interval
-          // Remove the stored disabled state and expiration time
-          localStorage.removeItem("vipButtonDisabled");
-          localStorage.removeItem("vipButtonExpirationTime");
-        }
-      }, 1000);
-    };
-
-    // Check if the button should be initially disabled after a page refresh
-    if (localStorage.getItem("vipButtonDisabled") === "true") {
-      const currentTime = new Date().getTime();
-      const expirationTime = parseInt(localStorage.getItem("vipButtonExpirationTime"), 10);
-
-      // Check if the expiration time has passed
-      if (currentTime < expirationTime) {
-        // Disable the button
-        btnIsDisabled.value = true;
-        // Start the countdown
-        startCountdown(expirationTime);
-      } else {
-        // Remove the stored disabled state and expiration time
-        localStorage.removeItem("vipButtonDisabled");
-        localStorage.removeItem("vipButtonExpirationTime");
-      }
+      notify({ type: "success", message: "领取成功！" });
+      store.getBalance();
+      initVIPTable("noload");
+      isLoading[key] = false;
+    } else {
+      notify({ type: "error", message: res.message });
+      isLoading[key] = false;
     }
 
-    const columns = [
-      {
-        title: "VIP Level",
-        dataIndex: "vipLevel",
-        key: "vipLevel"
-      },
-      {
-        title: "VIP 1",
-        dataIndex: "vip1",
-        key: "vip1"
-      },
-      {
-        title: "VIP 2",
-        dataIndex: "vip2",
-        key: "vip2"
-      },
-      {
-        title: "VIP 3",
-        dataIndex: "vip3",
-        key: "vip3"
-      },
-      {
-        title: "VIP 4",
-        dataIndex: "vip4",
-        key: "vip4"
-      },
-      {
-        title: "VIP 5",
-        dataIndex: "vip5",
-        key: "vip5"
-      },
-      {
-        title: "VIP 6",
-        dataIndex: "vip6",
-        key: "vip6"
-      },
-      {
-        title: "VIP 7",
-        dataIndex: "vip7",
-        key: "vip7"
-      },
-      {
-        title: "VIP 8",
-        dataIndex: "vip8",
-        key: "vip8"
-      },
-      {
-        title: "VIP 9",
-        dataIndex: "vip9",
-        key: "vip9"
-      },
-      {
-        title: "VIP 10",
-        dataIndex: "vip10",
-        key: "vip10"
-      },
-      {
-        title: "VIP 11",
-        dataIndex: "vip11",
-        key: "vip11"
-      },
-      {
-        title: "VIP 12",
-        dataIndex: "vip12",
-        key: "vip12"
-      }
-    ];
-    const data = [
-      {
-        key: "1",
-        vipLevel: "Slots Rebate",
-        vip1: "0.30%",
-        vip2: "0.35%",
-        vip3: "0.40%",
-        vip4: "0.50%",
-        vip5: "0.60%",
-        vip6: "0.80%",
-        vip7: "1.00%"
-      },
-      {
-        key: "2",
-        vipLevel: "Fishing Rebate",
-        vip1: "0.30%",
-        vip2: "0.35%",
-        vip3: "0.40%",
-        vip4: "0.45%",
-        vip5: "0.50%",
-        vip6: "0.60%",
-        vip7: "0.80%"
-      },
-      {
-        key: "3",
-        vipLevel: "Live Casino Rebate",
-        vip1: "0.30%",
-        vip2: "0.35%",
-        vip3: "0.40%",
-        vip4: "0.45%",
-        vip5: "0.50%",
-        vip6: "0.60%",
-        vip7: "0.80%"
-      },
-      {
-        key: "4",
-        vipLevel: "Poker Rebate",
-        vip1: "0.30%",
-        vip2: "0.35%",
-        vip3: "0.40%",
-        vip4: "0.45%",
-        vip5: "0.50%",
-        vip6: "0.60%",
-        vip7: "0.80%"
-      },
-      {
-        key: "5",
-        vipLevel: "Sports/Esports Rebate",
-        vip1: "0.20%",
-        vip2: "0.30%",
-        vip3: "0.35%",
-        vip4: "0.40%",
-        vip5: "0.45%",
-        vip6: "0.55%",
-        vip7: "0.65%"
-      },
-      {
-        key: "6",
-        vipLevel: "Lottery Rebate",
-        vip1: "0.30%",
-        vip2: "0.35%",
-        vip3: "0.40%",
-        vip4: "0.40%",
-        vip5: "0.50%",
-        vip6: "0.50%",
-        vip7: "0.60%"
-      }
-    ];
-    const promoExclusive = [
-      {
-        title: "VIP Level",
-        dataIndex: "vipLevel",
-        key: "vipLevel",
-        render: (text) => String(text)
-      },
-      {
-        title: "VIP 1",
-        dataIndex: "vip1",
-        key: "vip1"
-      },
-      {
-        title: "VIP 2",
-        dataIndex: "vip2",
-        key: "vip2"
-      },
-      {
-        title: "VIP 3",
-        dataIndex: "vip3",
-        key: "vip3"
-      },
-      {
-        title: "VIP 4",
-        dataIndex: "vip4",
-        key: "vip4"
-      },
-      {
-        title: "VIP 5",
-        dataIndex: "vip5",
-        key: "vip5"
-      },
-      {
-        title: "VIP 6",
-        dataIndex: "vip6",
-        key: "vip6"
-      },
-      {
-        title: "VIP 7",
-        dataIndex: "vip7",
-        key: "vip7",
-        render: (text) => String(text)
-      }
-    ];
-    const dataExclusive = [
-      {
-        key: "1",
-        vipLevel: "Withdrawal Funds",
-        vip1: "500,000/Day",
-        vip2: "500,000/Day",
-        vip3: "500,000/Day",
-        vip4: "1,000,000/Day",
-        vip5: "1,000,000/Day",
-        vip6: "1,000,000/Day",
-        vip7: "2,000,000.00/Day"
-      },
-      {
-        key: "2",
-        vipLevel: "Bet Limit",
-        vip1: "Standard",
-        vip2: "Standard",
-        vip3: "Standard",
-        vip4: "Standard",
-        vip5: "High Limit",
-        vip6: "High Limit",
-        vip7: "High Limit"
-      },
-      {
-        key: "3",
-        vipLevel: "Priority Payment Method",
-        vip1: "",
-        vip2: "",
-        vip3: "",
-        vip4: "",
-        vip5: "✔",
-        vip6: "✔",
-        vip7: "✔"
-      },
-      {
-        key: "4",
-        vipLevel: "24/7 VIP Customer Care Team",
-        vip1: "",
-        vip2: "",
-        vip3: "",
-        vip4: "",
-        vip5: "",
-        vip6: "✔",
-        vip7: "✔"
-      },
-      {
-        key: "5",
-        vipLevel: "Invitation to Exclusive Events",
-        vip1: "",
-        vip2: "",
-        vip3: "",
-        vip4: "",
-        vip5: "",
-        vip6: "",
-        vip7: "✔"
-      }
-    ];
-    const terms = [
-      {
-        text: `The program applies to VIP members with valid accounts. The VIP upgrade is based on the member's total accumulated deposit amount, the daily total successful deposit amount is calculate from 00:00:01 to 23:59:59  (GMT+8)`
-      },
-      {
-        text: `The system will automatically upgrade VIP level after 00:00:00 (GMT+8) of the next day, the VIP level only can upgrade one level a day if the member's  total
-deposit amount is eligible for the corresponding VIP level.`
-      },
-      {
-        text: `The Free bonus, rebates and promotins benefits level corresponding to the VIP level will be updated as soon as the member's account is updated in the
-next day.`
-      },
-      {
-        text: `Birthday bonus:the bonus need to be claim on VIP page by member self on the birthday day and overdue void, Members who celebrate their birthday less
-than 90 days from registration day will not receive this year's birthday bonus, Only members who have registered for more than 90 days can receive it, once
-a year. (Birthday bonus can be withdrawal after 1x turnover)`
-      },
-      {
-        text: `Monthly bonus:the bonus need to be claim on VIP page by member self after the member have upgraded to a new level in the next day, Each member can
-claim 1 monthly bonus in upgrade month.(Monthly bonus can be withdrawal after 3x turnover)`
-      },
-      {
-        text: `All draw bets, CANCEL bets, 2 sided bets, bets on Europe Handicap under 1.75, Asian Handicap under 0.75, Number Games, Fantasy Sports, Progressive RNG
-Jackpots, Progressive RNG Slot will not be counted in this promotion.`
-      },
-      {
-        text: `Jolly88 reserves the right to modify, refuse or cancel this VIP membership
-program at any time without prior notice.`
-      },
-      {
-        text: `Jolly88 reserves the right to modify, refuse or cancel this VIP membership program at any time without prior notice.`
-      }
-    ];
+    isLoading[key] = false; // Reset loading state after operation completes
+  }
+};
+const currentSlide = ref(11);
+const isFirstTime = ref(true);
+const currentCarousel = ref(0);
+const currentBoxes = ref(0);
+const handleSlideClick = (vipIndex) => {
+  // if (currentSlide.value >= 10 && vipIndex <= 1) {
+  //   refCarousel.value.next();
+  // }
+  // if (currentSlide.value <= 1 && vipIndex >= 10) {
+  //   refCarousel.value.prev();
+  // }
 
-    const vipList = ref([
-      {
-        level: 1,
-        description: "> 有一笔存款",
-        monthlyBonus: `无`,
-        birthdayBonus: `无`,
-        cunsong: `无`,
-        drawTimes: `无`,
-        perEsport: "0.40%",
-        perSport: "0.40%",
-        perLive: "0.40%",
-        perSlot: "0.50%",
-        perPoker: "0.50%"
-      },
-      {
-        level: 2,
-        description: `升级要求 &gt; 5000≤累积存款<br> 保级要求 &gt; 1888≤一个月内累积存款`,
-        monthlyBonus: "28",
-        birthdayBonus: "38",
-        cunsong: `存款至少100元可申请每月一次再存20% 最高奖金588元`,
-        drawTimes: "15",
-        perEsport: "0.40%",
-        perSport: "0.40%",
-        perLive: "0.40%",
-        perSlot: "0.60%",
-        perPoker: "0.60%"
-      },
-      {
-        level: 3,
-        description: `升级要求 &gt; 50000≤累积存款<br>
-							保级要求 &gt; 10888≤一个月内累积存款`,
-        monthlyBonus: "88",
-        birthdayBonus: "108",
-        cunsong: `存款至少100元可申请每月一次再存20% 最高奖金888元`,
-        drawTimes: "15",
-        perEsport: "0.45%",
-        perSport: "0.45%",
-        perLive: "0.45%",
-        perSlot: "0.70%",
-        perPoker: "0.70%"
-      },
-      {
-        level: 4,
-        description: `升级要求 &gt; 250000≤累积存款<br>
-							保级要求 &gt; 38888≤一个月内累积存款`,
-        monthlyBonus: "188",
-        birthdayBonus: "388",
-        cunsong: `存款至少100元可申请每周一次再存25% 最高奖金888元`,
-        drawTimes: "15",
-        perEsport: "0.45%",
-        perSport: "0.45%",
-        perLive: "0.45%",
-        perSlot: "0.80%",
-        perPoker: "0.75%"
-      },
-      {
-        level: 5,
-        description: `升级要求 &gt; 500000≤累积存款<br>
-							保级要求 &gt; 58888≤一个月内累积存款`,
-        monthlyBonus: "388",
-        birthdayBonus: "688",
-        cunsong: `存款至少500元可申请每月一次再存50% 最高奖金1888元`,
-        drawTimes: "15",
-        perEsport: "0.50%",
-        perSport: "0.50%",
-        perLive: "0.50%",
-        perSlot: "0.90%",
-        perPoker: "0.80%"
-      },
-      {
-        level: 6,
-        description: `升级要求 &gt; 2500000≤累积存款<br>
-							保级要求 &gt; 88888≤一个月内累积存款`,
-        monthlyBonus: "888",
-        birthdayBonus: "1088",
-        cunsong: `存款至少500元可申请每周一次再存30% 最高奖金2888元`,
-        drawTimes: "15",
-        perEsport: "0.55%",
-        perSport: "0.55%",
-        perLive: "0.55%",
-        perSlot: "1.20%",
-        perPoker: "0.85%"
-      },
-      {
-        level: 7,
-        description: `升级要求 &gt; 5000000≤累积存款<br>
-							保级要求 &gt; 188888≤一个月内累积存款`,
-        monthlyBonus: "2888",
-        birthdayBonus: "6888",
-        cunsong: `存款至少500元可申请每周一次再存35% 最高奖金3888元`,
-        drawTimes: "15",
-        perEsport: "0.65%",
-        perSport: "0.65%",
-        perLive: "0.65%",
-        perSlot: "1.50%",
-        perPoker: "0.90%"
-      },
-      {
-        level: 8,
-        description: `升级要求 &gt; 8000000≤累积存款<br>
-							保级要求 &gt; 288888≤一个月内累积存款`,
-        monthlyBonus: "5888",
-        birthdayBonus: "8888",
-        cunsong: `存款至少500元可申请每周一次再存40% 最高奖金5888元`,
-        drawTimes: "15",
-        perEsport: "0.80%",
-        perSport: "0.80%",
-        perLive: "0.80%",
-        perSlot: "1.80%",
-        perPoker: "0.95%"
-      },
-      {
-        level: 9,
-        description: `升级要求 &gt; 12000000≤累积存款<br>
-							保级要求 &gt; 588888≤一个月内累积存款`,
-        monthlyBonus: "6888",
-        birthdayBonus: "10888",
-        cunsong: `存款至少500元可申请每周一次再存45% 最高奖金8888元`,
-        drawTimes: "15",
-        perEsport: "0.90%",
-        perSport: "0.90%",
-        perLive: "0.90%",
-        perSlot: "1.90%",
-        perPoker: "1.00%"
-      },
-      {
-        level: 10,
-        description: `升级要求 &gt; 20000000≤累积存款<br>
-							保级要求 &gt; 888888≤一个月内累积存款`,
-        monthlyBonus: "8888",
-        birthdayBonus: "18888",
-        cunsong: `存款至少500元可申请每周一次再存50% 最高奖金12888元`,
-        drawTimes: "15",
-        perEsport: "1.00%",
-        perSport: "1.00%",
-        perLive: "1.00%",
-        perSlot: "2.00%",
-        perPoker: "1.20%"
-      }
-    ]);
+  if (vipIndex === currentSlide.value) {
+    slideTo(vipLevel.value);
+  } else {
+    slideTo(vipIndex); // If you still want to slide to the clicked item
+  }
+};
+const changeSlideToIsFirstTime = () => {
+  isFirstTime.value = true;
+};
+const next = () => {
+  refCarousel.value.next();
+  isFirstTime.value = false;
+};
+const prev = () => {
+  refCarousel.value.prev();
+  isFirstTime.value = false;
+};
+const slideTo = (vipIndex) => {
+  isFirstTime.value = false;
+  if (vipIndex || vipIndex === 0) {
+    if (store.token && currentBetAmt.value >= currentUpgradeBetAmt.value) {
+      currentSlide.value = vipIndex;
+      return;
+    }
+    currentSlide.value = vipIndex;
+    return;
+  }
+  const vipLevel = +store.vip.replace("VIP", "");
+  if (store.vip && currentBetAmt.value >= currentUpgradeBetAmt.value) {
+    currentSlide.value = vipLevel;
+    return;
+  }
+  if (!store.vip) {
+    currentSlide.value = 11;
+    return;
+  }
+  if (vipLevel === 0) {
+    currentSlide.value = 0;
+    return;
+  }
+  if(vipLevel === maxVipLevel.value) {
+    currentSlide.value = maxVipLevel.value -1;
+  }else {
+    currentSlide.value = vipLevel;
+  }
+};
+function formatNumber(value, type) {
+  if (value === undefined) {
+    return "-";
+  }
+  // Convert the string to a float
+  const number = parseFloat(value);
 
-    const vipItems = [
-      {
-        vipLevel: "1",
-        monthly: "",
-        birthday: "",
-        saving: "有一笔",
-        monthlySaving: "",
-        oneMonthSaving: "无保级要求"
-      },
-      {
-        vipLevel: "2",
-        upgrade: "70,000",
-        monthly: "188",
-        birthday: "",
-        saving: "5000≤累积",
-        monthlySaving: "1888≤",
-        oneMonthSaving: "一个月内累积存款"
-      },
-      {
-        vipLevel: "3",
-        upgrade: "500,000",
-        monthly: "688",
-        birthday: "888",
-        saving: "50000≤累积",
-        monthlySaving: "10888≤",
-        oneMonthSaving: "一个月内累积存款"
-      },
-      {
-        vipLevel: "4",
-        upgrade: "2,000,000",
-        monthly: "1,588",
-        birthday: "2,888",
-        saving: "250000≤累积",
-        monthlySaving: "38888≤",
-        oneMonthSaving: "一个月内累积存款"
-      },
-      {
-        vipLevel: "5",
-        upgrade: "7,000,000",
-        monthly: "2,888",
-        birthday: "5,888",
-        saving: "500000≤累积",
-        monthlySaving: "58888≤",
-        oneMonthSaving: "一个月内累积存款"
-      },
-      {
-        vipLevel: "6",
-        upgrade: "20,000,000",
-        monthly: "6,888",
-        birthday: "8,888",
-        saving: "2500000≤累积",
-        monthlySaving: "88888≤",
-        oneMonthSaving: "一个月内累积存款"
-      },
-      {
-        vipLevel: "7",
-        upgrade: "60,000,000",
-        monthly: "18,888",
-        birthday: "48,888",
-        saving: "5000000≤累积",
-        monthlySaving: "188888≤",
-        oneMonthSaving: "一个月内累积存款"
-      },
-      {
-        vipLevel: "8",
-        upgrade: "60,000,000",
-        monthly: "18,888",
-        birthday: "48,888",
-        saving: "8000000≤累积",
-        monthlySaving: "288888≤",
-        oneMonthSaving: "一个月内累积存款"
-      },
-      {
-        vipLevel: "9",
-        upgrade: "60,000,000",
-        monthly: "18,888",
-        birthday: "48,888",
-        saving: "12000000≤累积",
-        monthlySaving: "588888≤",
-        oneMonthSaving: "一个月内累积存款"
-      },
-      {
-        vipLevel: "10",
-        upgrade: "60,000,000",
-        monthly: "18,888",
-        birthday: "48,888",
-        saving: "20000000≤累积",
-        monthlySaving: "888888≤",
-        oneMonthSaving: "一个月内累积存款"
-      }
-    ];
+  // Check if there are any decimal places
+  if (number % 1 !== 0 || type === "redPacket") {
+    // Return with two decimal places
+    return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  } else {
+    // Return without decimal places
+    return number.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+}
+const tabActive = ref(1); // Bind this to the active tab
 
-    const isClaimModal = ref(false);
-    const claimMsg = ref("");
+// Conditional logic for active states
+const benefitActive = computed(() => tabActive.value === 1);
+const rebateActive = computed(() => tabActive.value === 2);
+// watch(
+//   () => store.token,
+//   () => {
+//     initVIPTable();
+//   },
+//   { immediate: true }
+// );
 
-    onMounted(() => {
-      if (!store.token) {
-        return;
-      }
-      vipLevel.value = store.vip.replace("VIP", "");
-      if (vipLevel.value >= 1) {
-        slide.value = vipLevel.value ? parseInt(vipLevel.value) - 1 : 0;
-      }
+const openGame = (gameName, code, gameCode) => {
+  gameModalRef.value.open(gameName, code, gameCode);
+};
 
-      eventapi
-        .get("/privi/vip/canRedeem?promoCode=dy2-vip-monthly")
-        .then((res) => {
-          console.log(res);
-          isBeforeCheckBonus.value = true;
-          if (res.data === false) {
-            isClaimedBonus.value = true;
-          }
-        })
-        .catch((e) => {
-          isBeforeCheckBonus.value = true;
-        });
-      eventapi
-        .get("/privi/vip/canRedeem?promoCode=dy2-vip-birthday")
-        .then((res) => {
-          console.log(res);
-          isBeforeCheckBirthday.value = true;
-          if (res.data === false) {
-            isClaimedBirthday.value = true;
-          }
-        })
-        .catch((e) => {
-          isBeforeCheckBirthday.value = true;
-        });
-    });
-
-    const claimRebate = (type, vipType) => {
-      loading.value = true;
-      if (vipType === "monthly") {
-        loadingMClaim.value = true;
-      } else if (vipType === "birthday") {
-        loadingBClaim.value = true;
-      }
-      const eventUrl = "/bonus/claim/" + type;
-      // console.log(eventUrl);
-      eventapi
-        .put(eventUrl)
-        .then((res) => {
-          loading.value = false;
-          loadingMClaim.value = false;
-          loadingBClaim.value = false;
-          var responseCode = res.data;
-          if (responseCode.code === 0) {
-            var rebatePoint = responseCode.data;
-
-            claimMsg.value = "$" + rebatePoint;
-            isClaimModal.value = true;
-          } else {
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: responseCode.message,
-            //   icon: "report_problem"
-            // });
-          }
-        })
-        .catch((error) => {
-          loading.value = false;
-          loadingMClaim.value = false;
-          loadingBClaim.value = false;
-
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: error.message,
-          //   icon: "report_problem"
-          // });
-        });
-    };
-
-    return {
-      columns,
-      data,
-      showRebate,
-      promoExclusive,
-      dataExclusive,
-      terms,
-      vipItems,
-      vipList,
-      loading,
-      vipLevel,
-      slide,
-      claimRebate,
-      store,
-      isClaimModal,
-      claimMsg,
-      loadingMClaim,
-      loadingBClaim,
-      tab,
-      onVIPButtonClick,
-      btnIsDisabled,
-      startCountdown,
-      isBeforeCheckBonus,
-      isBeforeCheckBirthday,
-      isClaimedBirthday,
-      isClaimedBonus
-    };
+const handleBannerClick = (url) => {
+  const openPattern = /^open\/(.*)/;
+  if (url.match(openPattern)) {
+    const extractedUrl = url.match(openPattern)[1];
+    const [gameName, platformCode, gameCode] = extractedUrl.split("/");
+    openGame(gameName, platformCode, gameCode);
+  } else if (url === "0") {
+    return;
+  } else if (url.startsWith("/")) {
+    router.push(url);
+  } else {
+    router.push({ path: "/promo", query: { name: url } });
   }
 });
 </script>
