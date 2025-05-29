@@ -258,6 +258,7 @@ export default {
       DELAYED: 'Delayed',
       ABANDONED: 'Abandoned',
       PENDING: 'Pending',
+      OTHER: 'Other',
     },
   },
   betStatus: {
@@ -1941,6 +1942,7 @@ export default {
     upgradeToPaymentOnGoing: 'UPGRADE_TO_PAYMENT_ON_GOING',
     upLineLoginName: 'Upline Login Name',
     upload: 'Upload',
+    uploading: 'Uploading',
     upperName: 'Upper Name',
     usdtControl: 'USDT Withdrawal Control',
     usdtDepositAmount: 'USDT Deposit Amount',
@@ -2623,9 +2625,10 @@ export default {
     streamTag: 'Stream Tag',
     isCdnPush: 'Push CDN',
     box: 'Box',
-    copyToLive: 'Copy to Live',
-    confirmCopy: 'Confirm that you want to copy to live?',
     isCreateLiveUrl: 'Is Create Live Url (Yes/No)',
+    addToLive: 'Add to Live',
+    initialSupplierStreamStatus: 'Initial Supplier Stream Status',
+    isTestEvent: 'Test Event'
   },
   message: {
     adsStatusOpen: 'Open',

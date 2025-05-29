@@ -264,6 +264,8 @@ export default {
       DELAYED: '延期',
       ABANDONED: '腰斩',
       PENDING: '待定',
+      OTHER: '其他',
+      ADD_TO_LIVE: '添加到直播',
     },
   },
   betStatus: {
@@ -1946,6 +1948,7 @@ export default {
     upgradeToPaymentOnGoing: '升级至支付中',
     upLineLoginName: '上级用户名',
     upload: '上传',
+    uploading: '上传中',
     upperName: '所属上级',
     usdtControl: 'USDT 提款限制',
     usdtDepositAmount: '数字货币存款额',
@@ -2627,9 +2630,10 @@ export default {
     streamTag: '流标签',
     isCdnPush: '推送 CDN',
     box: '回合',
-    copyToLive: '复制到直播',
-    confirmCopy: '请确认是否复制到直播？',
     isCreateLiveUrl: '是否生产推流地址  (是/否)',
+    addToLive: '添加到直播',
+    initialSupplierStreamStatus: '初始厂商流状态',
+    isTestEvent: '是否为测试赛事'
   },
   message: {
     adsStatusOpen: '开',

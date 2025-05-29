@@ -499,9 +499,9 @@ export function getRewardsRecords(promoCode) {
   return eventapi.get(`/session/token-rewards/rewardRecords?promoCode=${promoCode}&v=${randNum}`);
 }
 
-export function claimChestBlastAustin(promoCode) {
+export function claimChestBlastAustin(promoCode, type) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
-  return eventapi.post(`/session/mission/claim?promoCode=${promoCode}&v=${randNum}`);
+  return eventapi.post(`/session/mission/claim?promoCode=${promoCode}&v=${randNum}&type=${type}`);
 }
 
 export function selectMissionBlastAustin(promoCode, missionNum) {
@@ -512,4 +512,14 @@ export function selectMissionBlastAustin(promoCode, missionNum) {
 export function initBlastAustin(promoCode) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.get(`/session/mission/init?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function getTorontoMastersInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition-loss/init?promoCode=dy2-valorant-masters-toronto-2025&v=${randNum}`);
+}
+
+export function claimTorontoMastersBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition-loss/claim?promoCode=dy2-valorant-masters-toronto-2025&v=${randNum}`);
 }

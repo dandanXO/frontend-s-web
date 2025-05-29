@@ -38,6 +38,16 @@
           @update:model-value="handleDateSelect"
         />
       </div>
+      <div class="search-field__radio-row">
+        <q-radio
+          v-for="(option, index) in withinThreeLevelOptions"
+          v-model="form.withinThreeLevels"
+          :key="index"
+          :val="option.value"
+          :label="option.label"
+          @update:model-value="handleWithinThreeLevelsSelect"
+        />
+      </div>
       <div class="search-field__input-with-btn" style="justify-content: space-between; align-items: center">
         <q-input
           v-model="form.username"
@@ -219,7 +229,8 @@ const form = ref({
   startDate: moment().format(DATE_FORMAT),
   endDate: moment().format(DATE_FORMAT),
   username: "",
-  referrerId: ""
+  referrerId: "",
+  withinThreeLevels: false
 });
 const loading = ref(false);
 const referralName = ref("");
@@ -230,6 +241,10 @@ const downLineOptions = computed(() => [
   { label: t("earnMoney.profitAndLoss.searchField.date.today"), value: "today" },
   { label: t("earnMoney.profitAndLoss.searchField.date.yesterday"), value: "yesterday" },
   { label: t("earnMoney.profitAndLoss.searchField.date.7day"), value: "7days" }
+]);
+const withinThreeLevelOptions = computed(() => [
+  { label: t("earnMoney.profitAndLoss.searchField.radio.allLevels"), value: false },
+  { label: t("earnMoney.profitAndLoss.searchField.radio.threeLevels"), value: true },
 ]);
 
 const tableHeaders = computed(() => [
@@ -282,6 +297,11 @@ const handleDateSelect = (value) => {
   }
 };
 
+const handleWithinThreeLevelsSelect = (value) => {
+  form.value.withinThreeLevels = value;
+  getDownlineProfitSummary();
+}
+
 const getTimeDiff = (val) => {
   const gapDate = new Date().getTime() - val * 24 * 60 * 60 * 1000;
   const oldDate = new Date(gapDate);
@@ -306,7 +326,7 @@ const totalPages = ref(1);
 const itemsPerPage = 10;
 
 const fetchDownlineProfitSummary = () => {
-  const { username, startDate, endDate, referrerId } = form.value;
+  const { username, startDate, endDate, referrerId, withinThreeLevels } = form.value;
   loading.value = true;
 
   let url = `/session/downline-profit-summary?siteId=11&recordTime=${startDate}&recordTime=${endDate}&`;
@@ -321,6 +341,7 @@ const fetchDownlineProfitSummary = () => {
 
   queryParams.push(`size=${itemsPerPage}`);
   queryParams.push(`current=${currentPage.value}`);
+  queryParams.push(`withinThreeLevels=${withinThreeLevels}`);
 
   url += queryParams.join("&");
 

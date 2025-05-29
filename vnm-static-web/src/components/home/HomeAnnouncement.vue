@@ -182,3 +182,11 @@ onMounted(() => {
   }
 }
 </style>
+
+<style lang="scss">
+.station-notice {
+  p {
+    margin: 0;
+  }
+}
+</style>

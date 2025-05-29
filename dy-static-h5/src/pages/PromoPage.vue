@@ -138,6 +138,9 @@
                   <div v-if="selectedPromo.redirectUrl === 'dy2-nba-water-battle'">
                     <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
                   </div>
+                  <div v-if="selectedPromo.redirectUrl === 'dy2-valorant-masters-toronto-2025'">
+                    <TorontoMasters :promoCode="selectedPromo.promoCode" />
+                  </div>
                   <div v-if="selectedPromo.redirectUrl === 'dy2-blast-tv-austin-major-2025'">
                     <BlastAustin :promoCode="selectedPromo.promoCode" />
                   </div>
@@ -285,6 +288,7 @@ import { useLocalStorage } from "@vueuse/core";
 import NBAWaterBattle from "src/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 import MesaPromo from "src/components/hotpromo/mesa/MesaPromo.vue";
 import BlastAustin from "src/components/hotpromo/blast-austin/BlastAustin.vue";
+import TorontoMasters from "src/components/hotpromo/toronto-masters/TorontoMasters.vue";
 
 export default defineComponent({
   name: "PromoView",
@@ -293,7 +297,8 @@ export default defineComponent({
     BlastPremierMarquee,
     NBAWaterBattle,
     MesaPromo,
-    BlastAustin
+    BlastAustin,
+    TorontoMasters
   },
   setup() {
     const store = userStore();

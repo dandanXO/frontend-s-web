@@ -15,7 +15,7 @@
       <div class="full-container">
         <div class="top-wrapper">
           <img src="img/lh-dy-logo.png" alt="雷火 logo" title="雷火 logo" />
-          <img class="xf-logo" src="img/xf-logo.png" alt="兴发 logo" title="兴发 logo" />
+          <img class="xf-logo hidexf" src="img/xf-logo.png" alt="兴发 logo" title="兴发 logo" />
         </div>
 
         <div id="image-container" class="banner-wrapper">
@@ -29,45 +29,121 @@
         <!-- </a> -->
 
         <div class="action-wrapper">
-
-
-
           <div>
-            <a href="https://www.qual37n5.com" target="_blank">
+            <a href="#" id="lh-link1" target="_blank">
               <div class="action-btn lh-register"></div>
             </a>
           </div>
 
           <div>
-            <a href="https://www.qual37n5.com" target="_blank">
-              <div class="action-btn download"></div>
+            <a href="#" id="lh-link2" target="_blank">
+              <div class="action-btn download-lh"></div>
             </a>
           </div>
 
           <div>
-            <a href="https://www.dy35445.com" target="_blank">
+            <a href="#" id="dy-link1" target="_blank">
               <div class="action-btn dy-register"></div>
             </a>
           </div>
 
           <div>
-            <a href="https://www.dy35445.com" target="_blank">
-              <div class="action-btn download"></div>
+            <a href="#" id="dy-link2" target="_blank">
+              <div class="action-btn download-dy"></div>
             </a>
           </div>
 
-
-
-          <div>
-            <a href="https://www.xf51160.com/" target="_blank">
+          <div class="hidexf">
+            <a href="#" id="xf-link1" target="_blank">
               <div class="action-btn xf-register"></div>
             </a>
           </div>
 
-          <div>
-            <a href="https://www.xf51160.com/" target="_blank">
+          <div class="hidexf">
+            <a href="#" id="xf-link2" target="_blank">
               <div class="action-btn download"></div>
             </a>
+          </div>
+        </div>
+
+        <!-- <div class="contact-group showxf">
+          <div class="contact-item" id="contact-item-1" style="height: 100%">
+            <div class="icon">
+              <img id="group1-img" src="./img/amico-icon.png" alt="" />
+            </div>
+            <div style="display: flex; flex-direction: column">
+              <span class="title" id="group1-title">AM客服</span>
+              <span class="thetext" id="group1-number"></span>
+            </div>
+          </div>
+          <div class="contact-item" id="contact-item-2" style="height: 100%">
+            <div class="icon">
+              <img id="group2-img" src="./img/sigua.png" alt="" />
+            </div>
+            <div style="display: flex; flex-direction: column">
+              <span class="title" id="group2-title">丝瓜客服</span>
+              <span class="thetext" id="group2-number"></span>
+            </div>
+          </div>
+
+          <div class="contact-item" id="contact-item-3" style="height: 100%">
+            <div class="icon">
+              <img id="group3-img" src="./img/wangwang.png" alt="" />
+            </div>
+            <div style="display: flex; flex-direction: column">
+              <span class="title" id="group3-title">旺旺客服</span>
+              <span class="thetext" id="group3-number"></span>
+            </div>
+          </div>
+        </div> -->
+
+        <div class="content-container showxf">
+          <div class="content-item" id="contact-item-1">
+            <div class="item-icon"><img src="img/cs-logo-1.png" /></div>
+            <div class="item-txt">Amico客服 <span class="thetext" id="group1-number"></span></div>
+            <div class="item-btns">
+              <a
+                id="voxis-download-1"
+                target="_blank"
+                class="btn-brown-dark"
+                href="https://www.am787.cc"
+              >
+                下载
+              </a>
+              <a href="#" class="btn-brown-light" onclick="copyText('group1-number')">复制</a>
+            </div>
+          </div>
+
+          <div class="content-item" id="contact-item-2">
+            <div class="item-icon"><img src="img/cs-logo-2.png" /></div>
+            <div class="item-txt">丝瓜客服 <span class="thetext" id="group2-number"></span></div>
+            <div class="item-btns">
+              <a
+                id="voxis-download-2"
+                target="_blank"
+                class="btn-brown-dark"
+                href="https://siguaapp.net/index.html?"
+              >
+                下载
+              </a>
+              <a href="#" class="btn-brown-light" onclick="copyText('group2-number')">复制</a>
+            </div>
+          </div>
+
+          <div class="content-item" id="contact-item-3">
+            <div class="item-icon"><img src="img/wangwang.png" /></div>
+            <div class="item-txt">旺旺客服 <span class="thetext" id="group3-number"></span></div>
+            <div class="item-btns">
+              <a
+                id="voxis-download-2"
+                target="_blank"
+                class="btn-brown-dark"
+                href="https://www.wwtalk.com/"
+              >
+                下载
+              </a>
+              <a href="#" class="btn-brown-light" onclick="copyText('group3-number')">复制</a>
+            </div>
           </div>
         </div>
 
@@ -96,35 +172,27 @@
         </div>
       </div>
 
-      <div class="main-sticky-wrapper" id="scrolldown-tbn">
-        <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&amp;k=QOfrYaC_LWnbU9DAaDyhqK5XIyV_KMAh&amp;authKey=kx2JZxcgUQDqO7hI5QoMQg8XYhMtWINsKpdAEMWy6AE%2FjYuTuiCl%2BwEKBN84ZpHf&amp;noverify=0&amp;group_code=7299559" target="_blank">
-          <div class="main-sticky-btn benefit">
-          </div>
+      <!-- <div class="main-sticky-wrapper" id="scrolldown-tbn">
+        <a
+          href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&amp;k=QOfrYaC_LWnbU9DAaDyhqK5XIyV_KMAh&amp;authKey=kx2JZxcgUQDqO7hI5QoMQg8XYhMtWINsKpdAEMWy6AE%2FjYuTuiCl%2BwEKBN84ZpHf&amp;noverify=0&amp;group_code=7299559"
+          target="_blank"
+        >
+          <div class="main-sticky-btn benefit"></div>
         </a>
 
-        <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&amp;k=QOfrYaC_LWnbU9DAaDyhqK5XIyV_KMAh&amp;authKey=kx2JZxcgUQDqO7hI5QoMQg8XYhMtWINsKpdAEMWy6AE%2FjYuTuiCl%2BwEKBN84ZpHf&amp;noverify=0&amp;group_code=7299559" target="_blank">
-          <div class="main-sticky-btn customer-service">
-          </div>
+        <a
+          href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&amp;k=QOfrYaC_LWnbU9DAaDyhqK5XIyV_KMAh&amp;authKey=kx2JZxcgUQDqO7hI5QoMQg8XYhMtWINsKpdAEMWy6AE%2FjYuTuiCl%2BwEKBN84ZpHf&amp;noverify=0&amp;group_code=7299559"
+          target="_blank"
+        >
+          <div class="main-sticky-btn customer-service"></div>
         </a>
-      </div>
+      </div> -->
     </div>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // const overlay = document.querySelector(".overlay");
-        // const closeOverlay = document.querySelector(".close-overlay");
         const popButtons = document.querySelectorAll(".pop-btn");
         const overlayContents = document.querySelectorAll(".overlay-content > div");
-
-        // const scrolLDown = document.getElementById("scrolldown-tbn");
-        //
-        // scrolLDown.addEventListener("click", function (e) {
-        //   window.scrollTo({
-        //     top: document.body.scrollHeight,
-        //     behavior: "smooth" // This makes the scroll smooth
-        //   });
-        // });
-
         popButtons.forEach((button) => {
           button.addEventListener("click", function () {
             const attr = button.getAttribute("attr");
@@ -138,17 +206,97 @@
             overlay.style.display = "block";
           });
         });
-
-        // closeOverlay.addEventListener("click", function () {
-        //   overlay.style.display = "none";
-        // });
-
-        // overlay.addEventListener("click", function (event) {
-        //   if (event.target === overlay) {
-        //     overlay.style.display = "none";
-        //   }
-        // });
       });
+
+      const hostname = window.location.host.replace("www.", "");
+      console.log(hostname);
+      if (hostname.includes("localhost") || hostname.includes("8a1c.me") || hostname.includes("6b8n.me")) {
+        const elements = document.querySelectorAll(".hidexf");
+        for (let i = 0; i < elements.length; i++) {
+          elements[i].classList.add("hide");
+        }
+
+        const elements2 = document.querySelectorAll(".showxf");
+        for (let i = 0; i < elements2.length; i++) {
+          elements2[i].classList.add("show");
+        }
+      }
+
+      const contactInfo = {
+        "8a1c.me": {
+          lhLink1: "https://lh256.cc",
+          dyLink1: "https://www.dy54139.com",
+          xfLink1: "",
+          lhLink2: "https://lh256.cc",
+          dyLink2: "https://www.dy54139.com",
+          xfLink2: "",
+          group1Number: "lh1717",
+          group2Number: "nba1239",
+          group3Number: ""
+        },
+        "6b8n.me": {
+          lhLink1: "https://lh948.cc",
+          dyLink1: "https://www.dy48714.com",
+          xfLink1: "",
+          lhLink2: "https://lh948.cc",
+          dyLink2: "https://www.dy48714.com",
+          xfLink2: "",
+          group1Number: "viplh5858",
+          group2Number: "ff700app",
+          group3Number: "7861765"
+        },
+        // "localhost:3000": {
+        //   lhLink1: "https://lh948.cc",
+        //   dyLink1: "https://www.dy48714.com",
+        //   xfLink1: "",
+        //   lhLink2: "https://lh948.cc",
+        //   dyLink2: "https://www.dy48714.com",
+        //   xfLink2: "",
+        //   group1Number: "viplh5858",
+        //   group2Number: "ff700app",
+        //   group3Number: "7861765"
+        // },
+      };
+
+      // Default content if no hostname matches
+      const defaultInfo = {
+        lhLink1: "https://www.qual37n5.com",
+        dyLink1: "https://www.dy35445.com",
+        xfLink1: "https://www.xf51160.com",
+        lhLink2: "https://www.qual37n5.com",
+        dyLink2: "https://www.dy35445.com",
+        xfLink2: "https://www.xf51160.com",
+        group1Number: "",
+        group2Number: "",
+        group3Number: ""
+      };
+
+      const selectedInfo = contactInfo[hostname] || defaultInfo;
+      console.log("ENd Info");
+      console.log(selectedInfo);
+
+      document.getElementById("lh-link1").href = selectedInfo.lhLink1;
+      document.getElementById("lh-link2").href = selectedInfo.lhLink2;
+      document.getElementById("dy-link1").href = selectedInfo.dyLink1;
+      document.getElementById("dy-link2").href = selectedInfo.dyLink2;
+      document.getElementById("xf-link1").href = selectedInfo.xfLink1;
+      document.getElementById("xf-link2").href = selectedInfo.xfLink2;
+
+      if (selectedInfo.group1Number) {
+        document.getElementById("group1-number").textContent = selectedInfo.group1Number;
+      } else {
+        document.getElementById("contact-item-1").style.display = "none";
+      }
+      if (selectedInfo.group2Number) {
+        document.getElementById("group2-number").textContent = selectedInfo.group2Number;
+      } else {
+        document.getElementById("contact-item-2").style.display = "none";
+      }
+      if (selectedInfo.group3Number) {
+        document.getElementById("group3-number").textContent = selectedInfo.group3Number;
+      } else {
+        document.getElementById("contact-item-3").style.display = "none";
+      }
 
       const images = ["img/01.jpg", "img/02.jpg", "img/03.jpg", "img/04.jpg", "img/05.jpg"];
       let currentIndex = 0;
@@ -164,6 +312,16 @@
       }
 
       setInterval(changeImage, 3000);
+
+      function copyText(id) {
+        const text = document.getElementById(id).innerText;
+        navigator.clipboard.writeText(text).then(() => {
+          alert('已复制: ' + text);
+        }).catch(err => {
+          alert('复制失败');
+          console.error(err);
+        });
+      }
     </script>
   </body>
 </html>

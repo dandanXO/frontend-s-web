@@ -5,8 +5,9 @@
       <div class="contact-boxes" :style="siteId === '8' || siteId === 8 ? 'gap: 90px;': ''">
         <div class="contact-box" :style="siteId ==='8' || siteId === 8 ? 'max-width: 400px;' : ''" v-for="(c, i) in contactlist" :key="i">
           <div class="contacticon">
-            <img v-if="c.icon !== 'czalo'" style="max-width: 67px;" :src="require(`../../../assets/images/${c.icon}.svg`)">
             <img v-if="c.icon === 'czalo'" style="max-width: 67px;" :src="require(`../../../assets/images/${c.icon}.png`)">
+            <img v-else-if="c.icon === 'whatsapp'" style="max-width: 67px;" :src="require(`../../../assets/images/${c.icon}.png`)">
+            <img v-else style="max-width: 67px;" :src="require(`../../../assets/images/${c.icon}.svg`)">
           </div>
           <div class="type">{{ c.type }}</div>
           <div class="link">{{ c.link }}</div>
@@ -15,6 +16,7 @@
           </div>
         </div>
       </div>
+      <LhFeedback v-if="siteId === '7'" />
     </el-card>
   </div>
 </template>
@@ -27,6 +29,7 @@ import { useStore } from "@/store"
 import { useRoute } from 'vue-router'
 
 import { i18nStore } from "@/store/language";
+import LhFeedback from '../../../components/customer-service/lh-feedback.vue';
 
 const store = useStore();
 const route = useRoute()
@@ -178,16 +181,16 @@ const initContactList = () => {
         }]
       },
       {
-        icon: 'czalo',
-        type: t('common.zalo'),
-        link: '+639278280893',
+        icon: 'whatsapp',
+        type: t('common.whatsapp'),
+        link: '+855975762995',
         btns: [{
           text: t('common.copy'),
           action: ''
         },
         {
           text: t('common.download'),
-          action: 'http://zaloapp.com/qr/p/1j6eul1u6866m'
+          action: 'https://wa.me/qr/AZRPLDZZ23DWO1'
         }]
       },
       {

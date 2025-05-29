@@ -953,6 +953,11 @@ function checkQuery() {
 }
 
 async function loadMembers() {
+  if (!request.siteId) {
+    console.warn('Site ID is null. Aborting loadMembers.')
+    ElMessage.error('Site ID is null')
+    return
+  }
   page.loading = true
   uiControl.searchDialogVisible = false
   const query = checkQuery()

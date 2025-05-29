@@ -295,7 +295,7 @@ const showVerificationTokenInput = ref(false);
 const refInnerCaptchaCode = ref();
 
 const isValidName = () => {
-  const namePattern = /^([\u4e00-\u9fa5]*)$/;
+  const namePattern = /^([\u4e00-\u9fa5·]*)$/;
   return namePattern.test(formDetail.realName) || "请输入中文字符";
 };
 

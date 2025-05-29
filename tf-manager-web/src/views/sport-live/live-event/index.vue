@@ -198,6 +198,13 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.isTestEvent')" prop="isTest">
+          <el-switch
+            v-model="form.isTest"
+            :active-text="t('fields.yes')"
+            :inactive-text="t('fields.no')"
+          />
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -523,7 +530,8 @@ const form = reactive({
   title: null,
   eventStartTime: null,
   homeName: '',
-  awayName: ''
+  awayName: '',
+  isTest: false
 });
 
 const formRules = reactive({

@@ -37,7 +37,7 @@
                       :rules="[
                         { required: true, message: '请输入姓名' },
                         {
-                          pattern: '^([\u4e00-\u9fa5]*)$',
+                          pattern: '^([\u4e00-\u9fa5·]*)$',
                           message: '请输入中文字符',
                           trigger: 'change'
                         }

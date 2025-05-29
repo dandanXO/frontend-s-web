@@ -23,6 +23,8 @@ const ImageminPlugin = require("imagemin-webpack-plugin").default;
 
 const ContextReplacementPlugin = require("webpack").ContextReplacementPlugin;
 
+const isLiveChat = process.env.BUILD_TARGET === "livechat";
+
 module.exports = configure(function (ctx) {
   return {
     // https://v2.quasar.dev/quasar-cli-webpack/supporting-ts
@@ -62,8 +64,8 @@ module.exports = configure(function (ctx) {
         configFile: true
       },
       // transpile: false,
-      // publicPath: '/',
-
+      publicPath: isLiveChat ? "/live-chat/" : "/",
+      distDir: isLiveChat ? "dist/spa/live-chat" : "dist/spa",
       // Add dependencies for transpiling with Babel (Array of string/regex)
       // (from node_modules, which are by default not transpiled).
       // Applies only if "transpile" is set to true.
@@ -73,9 +75,9 @@ module.exports = configure(function (ctx) {
       // preloadChunks: true,
       // showProgress: false,
       // gzip: true,
-      analyze: {
-        analyzerMode: "static"
-      },
+      // analyze: {
+      //   analyzerMode: "static"
+      // },
       beforeBuild() {
         const srcDir = path.resolve(__dirname, "src/assets/images");
         const destDir = path.resolve(__dirname, "public/static/images");
