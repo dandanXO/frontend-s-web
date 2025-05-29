@@ -236,7 +236,7 @@
       <img src="@/assets/images/promotion/hotpromo/blast-austin/dialog-success-icon.png" width="48px" height="48px" />
       <div class="title">恭喜您任务领取成功</div>
       <div class="desc">
-        任务{{ curMission.missionNum }}领取成功，请按照任务要求进行闯关，连续二十天完成当日有效投注≥{{ convertToCommaAmount(curMission.bet.bonus) }}元即可领取冠冕金{{ calculateTotalBonus(curMission.bet) }}元，若连续二十天完成当日存款金额≥{{ convertToCommaAmount(curMission.deposit.bonus) }}元即可获得加冕金{{ calculateTotalBonus(curMission.deposit) }}元。
+        任务{{ curMission.missionNum }}领取成功，请按照任务要求进行闯关，连续二十天完成当日有效投注≥{{ convertToCommaAmount(curMission.bet.bonus) }}元总计可领取冠冕金{{ calculateTotalBonus(curMission.bet) }}元，若连续二十天完成当日存款金额≥{{ convertToCommaAmount(curMission.deposit.bonus) }}元总计可获得加冕金{{ calculateTotalBonus(curMission.deposit) }}元。
       </div>
       <div class="action-btn" @click="isOpenMissionDialogVisible = false">开始任务</div>
     </div>
