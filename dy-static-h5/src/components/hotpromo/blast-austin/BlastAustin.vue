@@ -160,6 +160,8 @@
               v-if="claimedProgressData.mission === index + 1"
               style="width: 105px !important; height: auto !important"
               src="../../../assets/images/promo/hotpromo/blast-austin/chest-claimed-btn.svg"
+              class="icon-img claim-chest-btn"
+              @click="onClickSelectMission(index + 1)"
             />
             <img
               v-else
@@ -661,22 +663,31 @@ const missionArrays = [
 
 const onClickSelectMission = (missionNum) => {
   curMission.value = missionArrays[0];
-  if (claimedProgressData.value.mission !== null) {
+
+  if(claimedProgressData.value.mission === null) {
+    selectMissionBlastAustin(props.promoCode, missionNum).then((res) => {
+      if (res.code === 0) {
+        isOpenMissionDialogVisible.value = true;
+        curMission.value = missionArrays[missionNum - 1];
+        initData();
+      } else {
+        notify({
+          message: res.message,
+          type: "error"
+        });
+      }
+    });
+  } else if(missionNum === claimedProgressData.value.mission) {
+    isOpenMissionDialogVisible.value = true;
+    curMission.value = missionArrays[missionNum - 1];
+    return;
+  } else if(missionNum !== claimedProgressData.value.mission) {
+    notify({
+      message: '您已有任务未完成',
+      type: "error"
+    });
     return;
   }
-
-  selectMissionBlastAustin(props.promoCode, missionNum).then((res) => {
-    if (res.code === 0) {
-      isOpenMissionDialogVisible.value = true;
-      curMission.value = missionArrays[missionNum - 1];
-      initData();
-    } else {
-      notify({
-        message: res.message,
-        type: "error"
-      });
-    }
-  });
 };
 
 const onClickClaimChest = (type) => {
