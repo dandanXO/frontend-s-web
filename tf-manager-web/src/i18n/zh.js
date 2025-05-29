@@ -2633,6 +2633,7 @@ export default {
     isCreateLiveUrl: '是否生产推流地址  (是/否)',
     addToLive: '添加到直播',
     initialSupplierStreamStatus: '初始厂商流状态',
+    isTestEvent: '是否为测试赛事'
   },
   message: {
     adsStatusOpen: '开',
