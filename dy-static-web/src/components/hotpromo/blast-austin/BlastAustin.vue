@@ -449,7 +449,7 @@ const onClickSelectMission = (missionNum) => {
     return;
   } else if(missionNum !== claimedProgressData.value.mission) {
     notify({
-      message: '提示：您已有任务未完成',
+      message: '您已有任务未完成',
       type: "error"
     });
     return;
