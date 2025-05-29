@@ -133,7 +133,7 @@
               src="../../../assets/images/promo/hotpromo/blast-austin/treasure-chest.png" />
             <div style="font-size: 15px">任务{{ index + 1 }}</div>
             <img v-if="claimedProgressData.mission === index + 1"
-              style="width: 105px !important; height: auto !important"
+              style="width: 105px !important; height: auto !important" @click="onClickSelectMission(index + 1)" class="icon-img claim-chest-btn"
               src="../../../assets/images/promo/hotpromo/blast-austin/chest-claimed-btn.svg" />
             <img v-else class="icon-img claim-chest-btn" style="width: 105px !important; height: auto !important"
               src="../../../assets/images/promo/hotpromo/blast-austin/chest-unclaimed-btn.svg"
@@ -512,22 +512,31 @@ const missionArrays = [
 
 const onClickSelectMission = (missionNum) => {
   curMission.value = missionArrays[0];
-  if (claimedProgressData.value.mission !== null) {
+
+  if(claimedProgressData.value.mission === null) {
+    selectMissionBlastAustin(props.promoCode, missionNum).then((res) => {
+      if (res.code === 0) {
+        isOpenMissionDialogVisible.value = true;
+        curMission.value = missionArrays[missionNum - 1];
+        initData();
+      } else {
+        notify({
+          message: res.message,
+          type: "error"
+        });
+      }
+    });
+  } else if(missionNum === claimedProgressData.value.mission) {
+    isOpenMissionDialogVisible.value = true;
+    curMission.value = missionArrays[missionNum - 1];
+    return;
+  } else if(missionNum !== claimedProgressData.value.mission) {
+    notify({
+      message: '提示：您已有任务未完成',
+      type: "error"
+    });
     return;
   }
-
-  selectMissionBlastAustin(props.promoCode, missionNum).then((res) => {
-    if (res.code === 0) {
-      isOpenMissionDialogVisible.value = true;
-      curMission.value = missionArrays[missionNum - 1];
-      initData();
-    } else {
-      notify({
-        message: res.message,
-        type: "error"
-      });
-    }
-  });
 };
 
 const onClickClaimChest = (type) => {
