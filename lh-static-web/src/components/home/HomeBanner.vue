@@ -94,7 +94,6 @@ const loadBanners = () => {
           }
           return true;
         });
-
         //No Need liao.
         // if (store.token && (store.memberType === "TEST" || store.memberType === "PROMO_TEST")) {
         //   banners.value.unshift({

@@ -1707,7 +1707,7 @@ export default {
     settleEdit: 'Edit',
     shareRatio: 'Share Ratio',
     show: 'Show',
-    showOptions: 'Show Options',
+    showOption: 'Show Option',
     showAll: 'Show All',
     showFastAccess: 'Show Fast Access',
     sid: 'SID',

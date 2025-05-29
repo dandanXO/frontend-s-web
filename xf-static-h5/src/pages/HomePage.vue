@@ -895,7 +895,7 @@ export default defineComponent({
             banners.value = res.data.filter(item => {
               if (isH5.value) return item.showH5;
               if (!isH5.value) return item.showApp;
-              return item.showH5; // For WEB or fallback
+              return item.showH5;
             });
             setTimeout(() => {
               bannerLoading.value = false;

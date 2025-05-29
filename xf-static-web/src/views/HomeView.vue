@@ -117,7 +117,6 @@ export default defineComponent({
     HomeServiceSection
   },
   setup() {
-
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
     const gameMenu = ref(null);
     const banners = ref([

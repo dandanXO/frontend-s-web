@@ -36,7 +36,6 @@ const loadBanners = () => {
     isLoadingBanners.value = false;
 
     if (res.code === 0) {
-      // banners.value = res.data;
       banners.value = res.data.filter(item => item.showDesktop === true);
     }
   }).catch(() => {

@@ -304,7 +304,7 @@
         </div>
         <div style="display: flex; flex-direction: column; align-items: start">
           <div style="display: flex;">
-            <el-form-item :label="t('fields.showOptions')">
+            <el-form-item :label="t('fields.showOption')">
               <el-form-item style="margin-right: 20px; margin-bottom: 0;" prop="showDesktop">
                 <el-checkbox v-model="form.showDesktop" label="PC" size="large" />
               </el-form-item>

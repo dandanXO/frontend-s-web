@@ -2637,7 +2637,6 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      console.log("Home Page");
       getPlatList();
       store.getUnreadTotal();
       loadAnnouncement();

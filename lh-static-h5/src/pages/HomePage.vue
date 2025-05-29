@@ -1274,21 +1274,17 @@ export default defineComponent({
         .then((res) => {
           if (res.code === 0) {
             banners.value = res.data.filter((promo) => {
-              // ✅ 1. Platform filtering
               const isVisible = (() => {
                 if (isH5.value) return promo.showH5;
                 if (!isH5.value) return promo.showApp;
-                return promo.showH5; // fallback for WEB or others
+                return promo.showH5;
               })();
 
               if (!isVisible) return false;
-
-              // ✅ 2. Dark mode filtering
               if ($q.dark.isActive) {
                 return !["lh1-dark-mode"].includes(promo.redirectUrl) && promo.mobileImageUrlDark;
               }
 
-              // ✅ Default case: platform matched, and dark mode not enabled
               return true;
             });
           } else {
