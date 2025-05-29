@@ -185,7 +185,6 @@ onMounted(() => {
   }
 
   .toronto-masters-section-title {
-    color: #000000;
     font-size: 16px;
     line-height: 1;
     font-weight: 600;

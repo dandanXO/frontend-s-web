@@ -177,6 +177,9 @@
             <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
               <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
             </div>
+            <div v-if="selectedPromo.redirectUrl === 'lh1-valorant-masters-toronto-2025'">
+              <TorontoMasters :promoCode="selectedPromo.promoCode" />
+            </div>
             <div v-if="selectedPromo.redirectUrl === 'lh1-blast-tv-austin-major-2025'">
               <BlastAustin :promoCode="selectedPromo.promoCode" />
             </div>
@@ -223,6 +226,7 @@ import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattl
 import MesaPromo from "@/components/hotpromo/mesa/MesaPromo.vue";
 
 const BlastAustin = defineAsyncComponent(() => import("@/components/hotpromo/blast-austin/BlastAustin.vue"));
+const TorontoMasters = defineAsyncComponent(() => import("@/components/hotpromo/toronto-masters/TorontoMasters.vue"));
 
 export default defineComponent({
   name: "PromoView",
@@ -231,7 +235,8 @@ export default defineComponent({
     NBAWaterBattle,
     BlastPremierMarquee,
     MesaPromo,
-    BlastAustin
+    BlastAustin,
+    TorontoMasters
   },
   setup() {
     const isDark = useDark();
