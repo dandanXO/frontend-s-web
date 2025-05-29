@@ -732,7 +732,7 @@ export default defineComponent({
           }
 
           .promo-info {
-            text-align: right;
+            text-align: left;
             padding: 8px 16px;
             left: 0;
             bottom: 0;
