@@ -100,6 +100,7 @@
         {{ $t("sideNav.customerServiceVerifier") }}
       </router-link>
       <router-link
+        v-if="ui.siteType === 'CURACAO'"
         class="side-menu-item side-menu-item__transparent"
         to="/terms-and-conditions"
       >
@@ -123,6 +124,7 @@
       {{ $t("sideNav.language") }}
     </RouterLink>
     <a
+      v-if="ui.siteType === 'CURACAO'"
       class="side-menu-item license"
       href="https://cert.gcb.cw/certificate?id=ZXlKcGRpSTZJa2cxV1RWYVVVTm1USEZ5VDJRdlVVYzNLM2N4U25jOVBTSXNJblpoYkhWbElqb2llRFp4ZFhBcmMwYzBUSGh5TDFkRE5sRXJRbFJUUVQwOUlpd2liV0ZqSWpvaVlXUm1PREUxWkROaU1UWTJOV1F5WWpkak5XUTRNRGN4TVdZNU16Y3pZV0pqT1RrNU1ETmtNRGxpWVRjNE1UTmtZakl5WmpsaE4yVmxOamxpTkRSaVlTSXNJblJoWnlJNklpSjk="
       target="_blank"
