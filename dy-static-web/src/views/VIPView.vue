@@ -4,7 +4,7 @@
       <img src="../assets/vip/vip-header.png" class="vip-header" />
     </div>
     <!--    <div class="banner-container" />-->
-    <div class="outerContainer" style="position: relative;">
+    <div class="outerContainer" style="position: relative; ">
       <div class="innerContainer">
       
         <div class="top">
@@ -463,317 +463,6 @@
         <div class="vip-benefit-section-title">
           <div class="heading">
             <div class="headingtext">
-              VIP 特权说明
-            </div>
-          </div>
-          <!-- <img src="../assets/vip/instruction.png" /> -->
-        </div>
-        <div class="tabs">
-          <div class="tab" :class="{active: tabActive == 1}" @click="tabActive = 1">
-            <div class="tabtext">
-              VIP权益
-            </div>
-            <!-- <img :src="require(`../assets/vip/vip-benefit${tabActive == 1 ? '-active' : ''}.png`)" @click="tabActive = 1" /> -->
-          </div>
-          <div class="tab" :class="{active: tabActive == 2}" @click="tabActive = 2">
-            <div class="tabtext">
-              VIP返水
-            </div>
-            <!-- <img :src="require(`../assets/vip/vip-rebate${tabActive == 2 ? '-active' : ''}.png`)" @click="tabActive = 2" /> -->
-          </div>
-        </div>
-        <div v-if="benefitActive" class="instructions">
-          <table border="0" cellspacing="0" cellpadding="5">
-            <thead>
-              <tr class="instructions-table-header">
-                <th style="width: 75px;">VIP 等级</th>
-                <th>升级要求/流水</th>
-                <th style="width: 150px;">保级要求90天/流水</th>
-                <th style="width: 80px;">晋级礼金</th>
-                <th>首次保级彩金</th>
-                <th>年度保级彩金</th>
-                <th>生日彩金</th>
-                <th style="width: 150px;">每日额外返水红包</th>
-                <th>每月 15 号红包</th>
-                <th style="width: 155px;">充值加赠20%奖金</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>VIP1</td>
-                <td>3,000</td>
-                <td>500</td>
-                <td>18</td>
-                <td>58 元</td>
-                <td>588</td>
-                <td>-</td>
-                <td>0.30%</td>
-                <td>8</td>
-                <td>58</td>
-              </tr>
-              <tr>
-                <td>VIP2</td>
-                <td>10,000</td>
-                <td>2,000</td>
-                <td>28</td>
-                <td>58 元</td>
-                <td>588</td>
-                <td>38</td>
-                <td>0.50%</td>
-                <td>18</td>
-                <td>88</td>
-              </tr>
-              <tr>
-                <td>VIP3</td>
-                <td>50,000</td>
-                <td>10,000</td>
-                <td>38</td>
-                <td>58 元</td>
-                <td>588</td>
-                <td>58</td>
-                <td>0.60%</td>
-                <td>28</td>
-                <td>158</td>
-              </tr>
-              <tr>
-                <td>VIP4</td>
-                <td>240,000</td>
-                <td>30,000</td>
-                <td>58</td>
-                <td>288 元</td>
-                <td>1,088</td>
-                <td>88</td>
-                <td>0.80%</td>
-                <td>58</td>
-                <td>268</td>
-              </tr>
-              <tr>
-                <td>VIP5</td>
-                <td>1,000,000</td>
-                <td>50,000</td>
-                <td>88</td>
-                <td>288 元</td>
-                <td>1,088</td>
-                <td>188</td>
-                <td>1.00%</td>
-                <td>88</td>
-                <td>288</td>
-              </tr>
-              <tr>
-                <td>VIP6</td>
-                <td>5,000,000</td>
-                <td>100,000</td>
-                <td>188</td>
-                <td>288 元</td>
-                <td>1,088</td>
-                <td>288</td>
-                <td>1.20%</td>
-                <td>128</td>
-                <td>588</td>
-              </tr>
-              <tr>
-                <td>VIP7</td>
-                <td>7,500,000</td>
-                <td>300,000</td>
-                <td>288</td>
-                <td>588 元</td>
-                <td>1,888</td>
-                <td>388</td>
-                <td>1.30%</td>
-                <td>208</td>
-                <td>788</td>
-              </tr>
-              <tr>
-                <td>VIP8</td>
-                <td>10,000,000</td>
-                <td>1,000,000</td>
-                <td>588</td>
-                <td>588 元</td>
-                <td>1,888</td>
-                <td>588</td>
-                <td>1.50%</td>
-                <td>388</td>
-                <td>888</td>
-              </tr>
-              <tr>
-                <td>VIP9</td>
-                <td>15,000,000</td>
-                <td>3,000,000</td>
-                <td>888</td>
-                <td>888 元</td>
-                <td>2,888</td>
-                <td>888</td>
-                <td>1.80%</td>
-                <td>588</td>
-                <td>1,288</td>
-              </tr>
-              <tr>
-                <td>VIP10</td>
-                <td>25,000,000</td>
-                <td>10,000,000</td>
-                <td>1,888</td>
-                <td>1,888 元</td>
-                <td>8,888</td>
-                <td>1,888</td>
-                <td>2.00%</td>
-                <td>888</td>
-                <td>2,888</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div v-if="rebateActive" class="instructions">
-          <table border="0" cellspacing="0" cellpadding="5">
-            <thead>
-              <tr>
-                <th>VIP 等级</th>
-                <th>电竞</th>
-                <th>体育</th>
-                <th>真人</th>
-                <th>棋牌</th>
-                <th>电子</th>
-                <!--            <th>捕鱼</th>-->
-                <th>返水上限</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>VIP1</td>
-                <td>0.45%</td>
-                <td>0.40%</td>
-                <td>0.45%</td>
-                <td>0.45%</td>
-                <td>0.60%</td>
-                <td>8,888</td>
-              </tr>
-              <tr>
-                <td>VIP2</td>
-                <td>0.48%</td>
-                <td>0.45%</td>
-                <td>0.45%</td>
-                <td>0.45%</td>
-                <td>0.60%</td>
-                <td>12,888</td>
-              </tr>
-              <tr>
-                <td>VIP3</td>
-                <td>0.48%</td>
-                <td>0.45%</td>
-                <td>0.45%</td>
-                <td>0.50%</td>
-                <td>0.80%</td>
-                <td>18,888</td>
-              </tr>
-              <tr>
-                <td>VIP4</td>
-                <td>0.48%</td>
-                <td>0.50%</td>
-                <td>0.48%</td>
-                <td>0.55%</td>
-                <td>0.80%</td>
-                <td>18,888</td>
-              </tr>
-              <tr>
-                <td>VIP5</td>
-                <td>0.50%</td>
-                <td>0.50%</td>
-                <td>0.50%</td>
-                <td>0.60%</td>
-                <td>0.80%</td>
-                <td>28,888</td>
-              </tr>
-              <tr>
-                <td>VIP6</td>
-                <td>0.50%</td>
-                <td>0.55%</td>
-                <td>0.55%</td>
-                <td>0.70%</td>
-                <td>0.85%</td>
-                <td>28,888</td>
-              </tr>
-              <tr>
-                <td>VIP7</td>
-                <td>0.55%</td>
-                <td>0.65%</td>
-                <td>0.68%</td>
-                <td>0.90%</td>
-                <td>1.00%</td>
-                <td>58,888</td>
-              </tr>
-              <tr>
-                <td>VIP8</td>
-                <td>0.60%</td>
-                <td>0.70%</td>
-                <td>0.70%</td>
-                <td>1.00%</td>
-                <td>1.05%</td>
-                <td>88,888</td>
-              </tr>
-              <tr>
-                <td>VIP9</td>
-                <td>0.70%</td>
-                <td>0.75%</td>
-                <td>0.75%</td>
-                <td>1.10%</td>
-                <td>1.10%</td>
-                <td>88,888</td>
-              </tr>
-              <tr>
-                <td>VIP10</td>
-                <td>0.80%</td>
-                <td>0.80%</td>
-                <td>0.80%</td>
-                <td>1.20%</td>
-                <td>1.20%</td>
-                <td>128,888</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <div class="outerContainer">
-      <div class="innerContainer terms-conditions">
-        <!-- <div class="section-title">规则与条款</div> -->
-        <div class="heading">
-          <div class="headingtext">
-            规则与条款
-          </div>
-        </div>
-        <!-- <img
-          class="terms-conditions-title-separator"
-          :src="require('../assets/vip/terms-condition-title-separator.png')"
-        /> -->
-        <!-- <ol class="terms">
-          <li v-for="(term, i) in currentDisplayTerms" :key="i" class="term">
-            {{ term.text }}
-          </li>
-        </ol> -->
-        <h2>一。会员晋级/保级/降级规则</h2>
-        <ol class="terms got-bullets">
-          <li>完成等级要求的累计有效流水后系统于次日北京时间早上 10 点自动更新，具体完成时间以系统为准，请耐心等待；</li>
-          <li>VIP 等级达到相应的要求可每天晋升一级，但 VIP 等级不可越级晋升；</li>
-          <li>会员在达到某 VIP 等级后，90 天内投注需要完成保级要求。如果在此期间完成晋升，保级要求重新按照当前等级计算；</li>
-          <li>假设会员在一个季度（90 天计算）内没有完成相应的保级要求流水，系统会自动降级一个等级，相应的返水及其它优惠也会随之调整至降级后的等级；</li>
-          <li>每个级别的升级礼金每位会员仅能获得 1 次（升级礼金 1 倍流水即可提款）；</li>
-        </ol>
-
-        <h2>二。生日礼金</h2>
-        <ol class="terms">
-          <li>生日符合资格的会员，每年生日当天及当天后 7 日内到在线客服提供相关资料申请生日礼金，逾期不补，彩金 1 倍流水即可提款；</li>
-        </ol>
-
-        <h2>三。首次保级彩金</h2>
-        <ol class="terms">
-          <li>会员在 90 天保级期内达到保级要求时，第 91 天即可领取首次保级彩金，首次保级彩金 1 倍流水即可提款。</li>
-        </ol>
-      </div>
-    </div>
-    <div class="outerContainer">
-      <div class="innerContainer">
-        <div class="vip-benefit-section-title">
-          <div class="heading">
-            <div class="headingtext">
               <!-- VIP 特权说明 -->
               
               <img src="../assets/vip/vip-tqsm.png">
@@ -1069,6 +758,7 @@
         
         <ol class="terms got-gold-bullets">
           <li class="wbg"><h2>会员晋级/保级/降级规则</h2></li>
+          
           <ol class="terms got-bullets">
             <li>完成等级要求的累计有效流水后系统于次日北京时间早上 10 点自动更新，具体完成时间以系统为准，请耐心等待；</li>
             <li>VIP 等级达到相应的要求可每天晋升一级，但 VIP 等级不可越级晋升；</li>
@@ -1103,13 +793,55 @@
           
           <li class="wbg"><h2>充值加赠20%奖金</h2></li>
           <ol class="terms got-bullets">
-            <li>VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在15日内在充值页面进行勾选优惠使用，成功使用后需要（本金+彩金）x8倍流水即可提款；</li>
-            <li>加码券使用当日不可与其他存款优惠共享。</li>
-          </ol>
+          <li>VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在15日内在充值页面进行勾选优惠使用，成功使用后需要（本金+彩金）x8倍流水即可提款；</li>
+          <li>加码券使用当日不可与其他存款优惠共享。</li>
         </ol>
+          
+        </ol>
+        <!-- <h2>一。会员晋级/保级/降级规则</h2> -->
+
+        <!-- <h2>二。生日礼金</h2> -->
+        
+<!-- 
+        <h2>三。首次保级彩金</h2>
+        <ol class="terms">
+          <li>会员在 90 天保级期内达到保级要求时，第 91 天即可领取首次保级彩金，首次保级彩金 1 倍流水即可提款。</li>
+        </ol>
+
+        <h2>四。年度保级彩金</h2>
+        <ol class="terms">
+          <li>首次保级成功后计算会员 12 个月内未降级（可晋级），彩金于第 13 个月首日进行派发；彩金 1 倍流水即可提款</li>
+        </ol>
+
+        <h2>五。每日额外返水红包</h2>
+        <ol class="terms">
+          <li>统计每日返水金额，对应 VIP 等级返水加赠比例派发。次日可领取每日额外返水红包彩金，返水红包积累至 10 元即可领取（不足 10 元则不可领取），彩金 1 倍流水即可提款。<br>例：VIP12 会员当日的返水金额为 1000 元，则按照 VIP12 每日额外返水红包赠送比例 2.0% 计算：1000*2.0%=20 元，返水红包为 20 元，会员可在页面上点击领取。</li>
+        </ol>
+
+        <h2>六。每月 15 号红包</h2>
+        <ol class="terms">
+          <li>会员日为每月 15 号 00:00 起：东赢会员在上个月有任意一笔有效存款，即可在会员日 15 号 00:00 至 21 号 23:59 期间领取对应等级的会员日礼金（以领取时的等级为准）会员礼金仅需三倍流水即可出款，过期未领者则视为主动放弃：</li>
+        </ol>
+
+        <h2>七。充值加赠20%奖金</h2>
+        <ol class="terms got-bullets">
+          <li>VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在15日内在充值页面进行勾选优惠使用，成功使用后需要（本金+彩金）x8倍流水即可提款；</li>
+          <li>加码券使用当日不可与其他存款优惠共享。</li>
+        </ol> -->
+
+        <!--      <h2>八。节日礼金</h2>-->
+        <!--      <ol class="terms">-->
+        <!--        <li class="numbered">-->
+        <!--          每年特殊重大节日，等级≥VIP8 的会员可在节日当天通过在线客服申请礼金，逾期不补；礼金 1 倍流水即可提款，具体节日礼金派发时间，请以客服站内信通知为准；-->
+        <!--        </li>-->
+        <!--      </ol>-->
+
+        <!-- <div class="section-title" @click="toggleAccordion">一般规则</div> -->
+        
         <div class="heading"  @click="toggleAccordion">
           <div class="headingtext gz">
             <!-- 一般规则 -->
+             
             <img src="../assets/vip/vip-ybgz.png">
           </div>
         </div>
@@ -1686,7 +1418,7 @@ $border-settings: 1px solid #e5e7eb;
 }
 .carousel__slide--active {
   .vipLevelButton {
-    background: url("../assets/vip/button.png") no-repeat center center;
+    // background: url("../assets/vip/button.png") no-repeat center center;
     background-size: contain;
     padding: 15px;
     color: #000000;
@@ -1770,7 +1502,7 @@ $border-settings: 1px solid #e5e7eb;
   }
 
   .banner-container {
-    background: url("../assets/vip/banner.png") no-repeat center center;
+    // background: url("../assets/vip/banner.png") no-repeat center center;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -2065,13 +1797,9 @@ $border-settings: 1px solid #e5e7eb;
   }
   .tips {
     color: #585858;
-    color: #585858;
     font-size: 20px;
     font-weight: 400;
     line-height: 22.8px;
-    display: flex;
-    justify-content: space-between;
-    margin: 20px auto;
     display: flex;
     justify-content: space-between;
     margin: 20px auto;
@@ -2587,7 +2315,7 @@ $border-settings: 1px solid #e5e7eb;
       font-size: 48px;
       &:before {
         content: "";
-        background: url(../assets/vip/decal.png);
+        // background: url(../assets/vip/decal.png);
         width: 70px;
         height: 70px;
         display: block;
@@ -2595,7 +2323,7 @@ $border-settings: 1px solid #e5e7eb;
       }
       &:after {
         content: "";
-        background: url(../assets/vip/decal.png);
+        // background: url(../assets/vip/decal.png);
         width: 70px;
         height: 70px;
         display: block;
@@ -2726,7 +2454,7 @@ $border-settings: 1px solid #e5e7eb;
 
 .dark {
   .vip-container {
-    background-image: url("../assets/vip/vip-bg-dark.png");
+    //background-image: url("../assets/vip/vip-bg-dark.png");
     background-color: #f3f7fd;
     background-repeat: no-repeat;
 
@@ -2759,7 +2487,6 @@ $border-settings: 1px solid #e5e7eb;
       }
       .terms {
         // @include content-block-dark;
-        color: $font-3-dark;
         margin-top: 39px;
         .term {
           &:first-child {
