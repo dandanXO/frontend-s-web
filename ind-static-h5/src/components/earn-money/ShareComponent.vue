@@ -617,6 +617,7 @@ ul {
       width: calc(100% - 40px);
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 }
