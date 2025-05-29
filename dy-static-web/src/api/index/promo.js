@@ -697,3 +697,13 @@ export function selectMissionBlastAustin(promoCode, missionNum) {
 export function claimChestBlastAustin(promoCode, type) {
   return server.EVENT.post(`/session/mission/claim?promoCode=${promoCode}&type=${type}`);
 }
+
+
+export function getTorontoMastersInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/session/competition-loss/init?promoCode=dy2-valorant-masters-toronto-2025&v=${randNum}`);
+}
+export function claimTorontoMastersBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.post(`/session/competition-loss/claim?promoCode=dy2-valorant-masters-toronto-2025&v=${randNum}`);
+}
