@@ -300,7 +300,8 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .livestream-page-container {
-  height: calc(100vh - 64px);
+  min-height: calc(100vh - 64px);
+  padding-bottom: 20px;
 }
 .white {
   background: url("../../assets/images/livestream/livestream-bg-light.png") no-repeat center center;

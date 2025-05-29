@@ -143,23 +143,24 @@ const syncLivestreamInfo = async () => {
   getLivestreamDetail(currentLiveData.value.streamId, livestreamSyncAbortController).then((res) => {
     if (res.code === 0) {
       vipStatus.value = !!res.data.vipStatus;
-      if (currentLiveData.value.streamerStatus === res.data.streamerStatus) return;
-      const notifyMessage = res.data.streamerStatus
-        ? "主播已开播，即将切换至主播直播"
-        : "主播已下播，即将切换至赛事直播";
-      notify({
-        message: notifyMessage,
-        type: "info",
-        duration: 2000
-      });
-      const parsedData = parseLivestreamData(res.data);
-      list.value[currentLive.value] = {
-        ...currentLiveData.value,
-        roomMessage: parsedData?.roomMessage,
-        streamerStatus: parsedData.streamerStatus,
-        streamerCdnPullUrl: parsedData.streamerCdnPullUrl,
-        supplierCdnPullUrl: parsedData.supplierCdnPullUrl
-      };
+      if (currentLiveData.value.streamerStatus !== res.data.streamerStatus) {
+        const notifyMessage = res.data.streamerStatus
+          ? "主播已开播，即将切换至主播直播"
+          : "主播已下播，即将切换至赛事直播";
+        notify({
+          message: notifyMessage,
+          type: "info",
+          duration: 2000
+        });
+      }
+      // const parsedData = parseLivestreamData(res.data);
+      // list.value[currentLive.value] = {
+      //   ...currentLiveData.value,
+      //   roomMessage: parsedData?.roomMessage,
+      //   streamerStatus: parsedData.streamerStatus,
+      //   streamerCdnPullUrl: parsedData.streamerCdnPullUrl,
+      //   supplierCdnPullUrl: parsedData.supplierCdnPullUrl
+      // };
     }
   });
 };
@@ -482,6 +483,7 @@ watch(currentLiveData, () => {
   seenMessageIds.clear();
   latestProcessedMessageId.value = -1;
   lastSyncMessageTime.value = currentLiveData.value?.eventStartTime || Date.now();
+  latestProcessedMessageId.value = -1;
   liveStartTime.value = lastSyncMessageTime.value;
   syncMessages();
   resetSyncLivestreamInterval(true);
@@ -502,7 +504,7 @@ watch(currentLiveData, () => {
 onMounted(() => {
   getData();
   syncMessages();
-  syncLivestreamInfo();
+  // syncLivestreamInfo();
   resetSyncLivestreamInterval(true);
 });
 

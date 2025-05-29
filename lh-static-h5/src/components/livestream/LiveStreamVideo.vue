@@ -249,22 +249,22 @@ const playerConfig = ref({
   channel: 0
 });
 
-const videoSource = computed(() => {
-  if (!livestreamData.value) return {};
-  return livestreamData.value.streamerStatus
-    ? livestreamData.value.streamerCdnPullUrl
-    : livestreamData.value.supplierCdnPullUrl;
-});
+const videoSource = computed(() => getVideoSource(livestreamData.value));
 
-const currentVideoUrl = computed(() => {
-  if (!videoSource.value) return "";
-  const result = Object.entries(videoSource.value).find(([key, value]) => {
-    return key === playerConfig.value.quality;
-  });
-  return result[1]?.hls_url ?? result[1]?.flv_url ?? "";
-});
+const currentVideoUrl = computed(() => getVideoUrl(videoSource.value));
 
 const currentQualityName = computed(() => QUALITY_ALIAS[playerConfig.value.quality] ?? playerConfig.value.quality);
+
+const getVideoSource = (target) => {
+  if (!target) return {};
+  return target.streamerStatus ? target.streamerCdnPullUrl : target.supplierCdnPullUrl;
+};
+
+const getVideoUrl = (source) => {
+  if (!source) return "";
+  const [_, obj] = Object.entries(source).find(([key, value]) => key === playerConfig.value.quality);
+  return obj?.hls_url ?? obj?.flv_url ?? "";
+};
 
 const loadPlayer = async () => {
   let _mediaType = "";
@@ -542,7 +542,12 @@ const loadData = () => {
   Promise.all([loadPlayer(), loadDanmu()]).then(loadPlayerConfig);
 };
 
-watch(livestreamData, () => {
+watch(livestreamData, (val, oldVal) => {
+  const newVideoSource = getVideoSource(val);
+  const newVideoUrl = getVideoUrl(newVideoSource);
+  const _currentVideoSource = getVideoSource(oldVal);
+  const _currentVideoUrl = getVideoUrl(_currentVideoSource);
+  if (newVideoUrl === _currentVideoUrl) return;
   loadData();
 });
 

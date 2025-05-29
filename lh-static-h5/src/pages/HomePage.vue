@@ -1545,6 +1545,8 @@ export default defineComponent({
         return;
       } else if (banner.redirectUrl == "app://deposit") {
         router.push("/finance/deposit");
+      } else if (banner.redirectUrl === "livestream") {
+        router.push("/livestream");
       } else {
         const redirectU = "/promo?name=" + banner.redirectUrl;
         router.push(`${redirectU}`);
