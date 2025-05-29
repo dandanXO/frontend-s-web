@@ -2628,6 +2628,7 @@ export default {
     isCreateLiveUrl: 'Is Create Live Url (Yes/No)',
     addToLive: 'Add to Live',
     initialSupplierStreamStatus: 'Initial Supplier Stream Status',
+    isTestEvent: 'Test Event'
   },
   message: {
     adsStatusOpen: 'Open',
