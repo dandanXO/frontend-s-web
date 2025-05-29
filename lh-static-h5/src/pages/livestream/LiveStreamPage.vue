@@ -13,8 +13,9 @@
         :options="[
           { value: 'liveStream', slot: 'liveStream' },
           { value: 'ESport', slot: 'esport' },
+          { value: 'Football', slot: 'sport' },
           { value: 'Basketball', slot: 'basketball' },
-          { value: 'Football', slot: 'sport' }
+
         ]"
       >
         <template v-slot:liveStream>
@@ -31,16 +32,17 @@
             <div class="text-center">电竞</div>
           </div>
         </template>
-        <template v-slot:basketball>
-          <div class="row items-center no-wrap">
-            <q-icon left name="sports_soccer" />
-            <div class="text-center">篮球</div>
-          </div>
-        </template>
+
         <template v-slot:sport>
           <div class="row items-center no-wrap">
             <q-icon left name="sports_soccer" />
             <div class="text-center">足球</div>
+          </div>
+        </template>
+        <template v-slot:basketball>
+          <div class="row items-center no-wrap">
+            <q-icon left name="sports_soccer" />
+            <div class="text-center">篮球</div>
           </div>
         </template>
       </q-btn-toggle>
