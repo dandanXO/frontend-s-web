@@ -84,7 +84,7 @@
         row-key="name"
         :loading="loading"
         :rows-per-page-options="[0]"
-        style="overflow-x: auto; border-radius: 10px;"
+        style="overflow-x: auto; border-radius: 10px"
         class="monthly-deposit-table q-mt-md"
         :loading-label="$t('btn.loading')"
         :no-data-label="$t('earnMoney.noDataAvailable')"
@@ -110,7 +110,8 @@
                     'downlineDepositAmount',
                     'downlineWithdrawAmount',
                     'downlineBetAmount',
-                    'downlinePayoutAmount'
+                    'downlinePayoutAmount',
+                    'downlineFtdCount'
                   ].includes(col.field)
                 "
                 :class="col.field === 'balance' ? props.row.type : ''"
@@ -129,9 +130,13 @@
       </q-table>
 
       <div class="pagination">
-        <q-btn @click="prevPage" :disabled="currentPage === 1" icon="chevron_left" 
+        <q-btn
+          @click="prevPage"
+          :disabled="currentPage === 1"
+          icon="chevron_left"
           class="rounded-borders"
-          color="neontb"></q-btn>
+          color="neontb"
+        ></q-btn>
         <span>{{ currentPage }} / {{ totalPages }}</span>
         <q-btn
           @click="nextPage"
@@ -244,7 +249,7 @@ const downLineOptions = computed(() => [
 ]);
 const withinThreeLevelOptions = computed(() => [
   { label: t("earnMoney.profitAndLoss.searchField.radio.allLevels"), value: false },
-  { label: t("earnMoney.profitAndLoss.searchField.radio.threeLevels"), value: true },
+  { label: t("earnMoney.profitAndLoss.searchField.radio.threeLevels"), value: true }
 ]);
 
 const tableHeaders = computed(() => [
@@ -300,7 +305,7 @@ const handleDateSelect = (value) => {
 const handleWithinThreeLevelsSelect = (value) => {
   form.value.withinThreeLevels = value;
   getDownlineProfitSummary();
-}
+};
 
 const getTimeDiff = (val) => {
   const gapDate = new Date().getTime() - val * 24 * 60 * 60 * 1000;
@@ -441,28 +446,25 @@ onMounted(() => {
 </script>
 <style scoped lang="scss" src="../../css/page/earnMoney.scss"></style>
 <style lang="scss">
-
 thead {
   .q-tr.top-header {
-  background-color: #323738;
-  color: #B2BDBF;
-
+    background-color: #323738;
+    color: #b2bdbf;
   }
 }
 tbody {
-
   .q-tr {
-  td {
-    border-bottom: 0 !important;
+    td {
+      border-bottom: 0 !important;
+    }
+    &:nth-child(even) {
+      background-color: #373c3d;
+      color: #ffffff;
+    }
+    &:nth-child(odd) {
+      background-color: #ffffff0f;
+      color: #ffffff;
+    }
   }
-  &:nth-child(even){
-    background-color: #373C3D;
-    color: #ffffff;
-  }
-  &:nth-child(odd){
-  background-color: #FFFFFF0F;
-  color: #ffffff;
-  }
-}
 }
 </style>
