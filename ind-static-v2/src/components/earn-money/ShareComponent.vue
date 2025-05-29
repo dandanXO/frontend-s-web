@@ -255,9 +255,10 @@ const downloadQRImg = async () => {
     try {
       html2canvas(document.querySelector("#the-qrcode")).then(async function (canvas) {
         const dataUrl = canvas.toDataURL("image/jpeg").split(",")[1]; // 仅保留 base64
+        const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 
         await Filesystem.writeFile({
-          path: `myreferral.jpg`,
+          path: `myreferral-${timestamp}.jpg`,
           data: dataUrl,
           directory: Directory.Documents,
           recursive: true
