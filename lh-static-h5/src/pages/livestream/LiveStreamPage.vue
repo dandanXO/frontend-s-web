@@ -12,15 +12,29 @@
         text-color="primary"
         :options="[
           { value: 'liveStream', slot: 'liveStream' },
-          { value: 'sport', slot: 'sport' }
+          { value: 'ESport', slot: 'esport' },
+          { value: 'Basketball', slot: 'basketball' },
+          { value: 'Football', slot: 'sport' }
         ]"
       >
         <template v-slot:liveStream>
           <div class="row items-center no-wrap">
             <q-icon left name="mic" />
-            <div class="text-center">主播</div>
+            <div class="text-center">直播</div>
             <!-- <div class="float-stream">直播中</div> -->
             <q-badge color="red" rounded floating>直播中</q-badge>
+          </div>
+        </template>
+        <template v-slot:esport>
+          <div class="row items-center no-wrap">
+            <q-icon left name="sports_soccer" />
+            <div class="text-center">电竞</div>
+          </div>
+        </template>
+        <template v-slot:basketball>
+          <div class="row items-center no-wrap">
+            <q-icon left name="sports_soccer" />
+            <div class="text-center">篮球</div>
           </div>
         </template>
         <template v-slot:sport>
@@ -77,7 +91,165 @@
       </div>
     </template>
 
-    <template v-if="tabValue === 'sport'">
+    <template v-if="tabValue === 'ESport'">
+      <div v-if="!hotMatchesByType.length" class="no-data">目前没有赛程</div>
+      <template v-if="!$q.dark.isActive">
+        <div class="white">
+          <div class="hot-match-items">
+            <div
+              :class="selectedCompetitionType"
+              class="hot-match-item"
+              v-for="hotMatch in hotMatchesByType"
+              :key="hotMatch.id"
+            >
+              <div class="hot-match-info">
+                <div class="hot-match-name">
+                  {{ hotMatch.competitionName }}
+                </div>
+                <div class="hot-match-scores">
+                  <div class="hot-match-team">
+                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamOneLogo}`" />
+                    <span>{{ hotMatch.teamOneName }}</span>
+                  </div>
+                  <div class="hot-match-time">
+                    {{ hotMatch.competitionTime }}
+                    <div
+                      class="bet-btn"
+                      @click="openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)"
+                    >
+                      立即投注
+                    </div>
+                  </div>
+                  <div class="hot-match-team">
+                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
+                    <span>{{ hotMatch.teamTwoName }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <template v-else>
+        <div class="dark">
+          <div class="hot-match-items">
+            <div
+              :class="selectedCompetitionType"
+              class="hot-match-item"
+              v-for="hotMatch in hotMatchesByType"
+              :key="hotMatch.id"
+            >
+              <div class="hot-match-info">
+                <div class="hot-match-name">
+                  {{ hotMatch.competitionName }}
+                </div>
+                <div class="hot-match-scores">
+                  <div class="hot-match-team">
+                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamOneLogo}`" />
+                    <span>{{ hotMatch.teamOneName }}</span>
+                  </div>
+                  <div class="hot-match-time">
+                    {{ hotMatch.competitionTime }}
+                    <div
+                      class="bet-btn"
+                      @click="openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)"
+                    >
+                      立即投注
+                    </div>
+                  </div>
+                  <div class="hot-match-team">
+                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
+                    <span>{{ hotMatch.teamTwoName }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </template>
+
+    <template v-if="tabValue === 'Basketball'">
+      <div v-if="!hotMatchesByType.length" class="no-data">目前没有赛程</div>
+      <template v-if="!$q.dark.isActive">
+        <div class="white">
+          <div class="hot-match-items">
+            <div
+              :class="selectedCompetitionType"
+              class="hot-match-item"
+              v-for="hotMatch in hotMatchesByType"
+              :key="hotMatch.id"
+            >
+              <div class="hot-match-info">
+                <div class="hot-match-name">
+                  {{ hotMatch.competitionName }}
+                </div>
+                <div class="hot-match-scores">
+                  <div class="hot-match-team">
+                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamOneLogo}`" />
+                    <span>{{ hotMatch.teamOneName }}</span>
+                  </div>
+                  <div class="hot-match-time">
+                    {{ hotMatch.competitionTime }}
+                    <div
+                      class="bet-btn"
+                      @click="openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)"
+                    >
+                      立即投注
+                    </div>
+                  </div>
+                  <div class="hot-match-team">
+                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
+                    <span>{{ hotMatch.teamTwoName }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <template v-else>
+        <div class="dark">
+          <div class="hot-match-items">
+            <div
+              :class="selectedCompetitionType"
+              class="hot-match-item"
+              v-for="hotMatch in hotMatchesByType"
+              :key="hotMatch.id"
+            >
+              <div class="hot-match-info">
+                <div class="hot-match-name">
+                  {{ hotMatch.competitionName }}
+                </div>
+                <div class="hot-match-scores">
+                  <div class="hot-match-team">
+                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamOneLogo}`" />
+                    <span>{{ hotMatch.teamOneName }}</span>
+                  </div>
+                  <div class="hot-match-time">
+                    {{ hotMatch.competitionTime }}
+                    <div
+                      class="bet-btn"
+                      @click="openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)"
+                    >
+                      立即投注
+                    </div>
+                  </div>
+                  <div class="hot-match-team">
+                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
+                    <span>{{ hotMatch.teamTwoName }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </template>
+
+    <template v-if="tabValue === 'Football'">
       <div v-if="!hotMatchesByType.length" class="no-data">目前没有赛程</div>
       <template v-if="!$q.dark.isActive">
         <div class="white">
@@ -190,7 +362,7 @@ const hotMatchesByType = computed(() => {
   if (hotMatches.value.length > 0 && selectedCompetitionType.value) {
     return hotMatches.value.filter(
       ({ competitionType, displayStartTime, displayEndTime }) =>
-        competitionType === selectedCompetitionType.value && now >= displayStartTime && now <= displayEndTime
+        competitionType === tabValue.value && now >= displayStartTime && now <= displayEndTime
     );
   }
 
@@ -282,7 +454,8 @@ onMounted(() => {
       competitionTypes.value = uniqueCompetitionTypes.reverse();
 
       if (uniqueCompetitionTypes.length > 0) {
-        selectedCompetitionType.value = uniqueCompetitionTypes[2];
+        selectedCompetitionType.value = uniqueCompetitionTypes[1];
+        // selectedCompetitionType.value = tabValue.value;
         hotMatches.value = res.data;
       }
     }
@@ -456,9 +629,13 @@ onUnmounted(() => {
     padding: 6px;
     background: #ffffff;
     box-shadow: 0px -1px 3.66px 0px #a2bff4 inset;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 
     :deep(.q-btn-item) {
       width: 100%;
+      // white-space: nowrap;
 
       &.bg-primary {
         border-radius: 50px;
@@ -482,6 +659,8 @@ onUnmounted(() => {
     padding: 6px;
     background: transparent !important;
     box-shadow: none !important;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     // box-shadow: 0px -1px 3.66px 0px #a2bff4 inset;
 
     :deep(.q-btn-item) {
