@@ -32,34 +32,6 @@
             :value="item.code"
           />
         </el-select>
-        <el-select
-          v-model="request.orderBy"
-          size="small"
-          :placeholder="t('fields.orderBy')"
-          class="filter-item"
-          style="margin-left: 5px; width: 200px;"
-        >
-          <el-option
-            v-for="item in uiControl.orderBy"
-            :key="item.key"
-            :label="item.displayName"
-            :value="item.value"
-          />
-        </el-select>
-        <el-select
-          v-model="request.sortType"
-          size="small"
-          :placeholder="t('fields.sortType')"
-          class="filter-item"
-          style="margin-left: 5px; width: 200px;"
-        >
-          <el-option
-            v-for="item in uiControl.sortType"
-            :key="item.key"
-            :label="item.displayName"
-            :value="item.value"
-          />
-        </el-select>
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
