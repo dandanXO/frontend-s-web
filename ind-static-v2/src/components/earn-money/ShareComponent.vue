@@ -1,5 +1,5 @@
 <template>
-  <div class="share-banner-img"><img src="../../assets/images/earn-money/share-banner.png" /></div>
+  <div class="share-banner-img q-pt-md"><img src="../../assets/images/earn-money/share-banner.png" /></div>
   <div class="qr-code-container">
     <div class="qr-code-bg"><VueQRCodeComponent id="the-qrcode" :size="150" :text="selfTgurl" class="qr-code" /></div>
 
@@ -129,7 +129,7 @@
       In cases of malicious behavior such as fake accounts or reward farming, related rewards will be canceled and not
       issued.
     </li>
-    <li class="dot-style">55ACE reserves all rights of final interpretation.</li>
+    <li class="dot-style">IndWin7 reserves all rights of final interpretation.</li>
   </ul>
 
   <q-input style="width: 100%; opacity: 0" filled color="white" ref="copyinput" v-model="text_copied" />
@@ -285,13 +285,52 @@ const downloadQRImg = async () => {
       });
     }
   } else {
-    const link = window.document.createElement("a");
-    const imgElement = document.querySelector('img[alt="Scan me!"]');
-    link.href = imgElement.src;
-    link.download = "myreferral";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // const link = window.document.createElement("a");
+    // const imgElement = document.querySelector('img[alt="Scan me!"]');
+    // link.href = imgElement.src;
+    // link.download = "myreferral";
+    // document.body.appendChild(link);
+    // link.click();
+    // document.body.removeChild(link);
+
+    const qrCanvas = document.querySelector('#the-qrcode canvas');
+
+    if (!qrCanvas) {
+      console.warn('QR code canvas not found.');
+      return;
+    }
+
+    qrCanvas.toBlob(async (blob) => {
+      if (!blob) {
+        console.error("Failed to convert QR code to blob.");
+        return;
+      }
+
+      const file = new File([blob], "myreferral.jpg", { type: "image/jpeg" });
+
+      // ✅ Try native sharing (mobile)
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({
+            title: "QR Code",
+            text: "Here’s your referral QR code!",
+            files: [file],
+          });
+        } catch (err) {
+          console.error("Sharing failed:", err);
+        }
+      } else {
+        // ✅ Fallback to download
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "myreferral.jpg";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+      }
+    }, "image/jpeg");
+
   }
 };
 
