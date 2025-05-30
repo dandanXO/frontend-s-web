@@ -1,7 +1,7 @@
 <template>
   <div class="main-container" :style="{background: $q.dark.isActive ? '' : `url(${require('../assets/images/download/app/main-bg.png')}) no-repeat`}">
     <div class="flex">
-      <img style="width:50%; margin-top: -30px;" src="../assets/images/download/app/logo.png"/>
+      <img style="width:130px;" src="../assets/images/download/app/logo.png"/>
     </div>
     <q-carousel
      ref="carousel"
@@ -14,7 +14,7 @@
       infinite
       transition-next="slide-left"
       transition-prev="slide-right"
-      style="margin-top: -40px; min-height: 70vh; height: 100%;"
+      style="min-height: 70vh; height: 100%;"
     >
       <template v-slot:navigation-icon="{ active, onClick }">
         <q-btn
@@ -37,10 +37,10 @@
       <q-carousel-slide :key="0" :name="0">
         <div class="custom-slide-content">
           <div class="flex" style="pointer-events: none;">
-            <img style="width: 90%; margin-top: -10px;" src="../assets/images/download/app/title-1.png"/>
+            <img style="width: 90%;" src="../assets/images/download/app/title-1.png"/>
           </div>
           <div class="flex" style="pointer-events: none;">
-            <img style="width: 95%; margin-top: 10px; margin-right: 3rem;" src="../assets/images/download/app/bg-1.png"/>
+            <img style="width: 95%;margin-right: 3rem;" src="../assets/images/download/app/bg-1.png"/>
           </div>
           <div class="flex" style="pointer-events: none;">
             <img style="width: 90%;" src="../assets/images/download/app/bottom-1.png"/>
@@ -50,13 +50,13 @@
       <q-carousel-slide :key="1" :name="1">
         <div class="custom-slide-content">
           <div class="flex" style="pointer-events: none;">
-            <img style="width: 80%; margin-top: -10px;" src="../assets/images/download/app/title2-1.png"/>
+            <img style="width: 80%;" src="../assets/images/download/app/title2-1.png"/>
           </div>
           <div class="flex" style="pointer-events: none;">
-            <img style="width: 45%; margin-top: 0px;" src="../assets/images/download/app/title2-2.png"/>
+            <img style="width: 35%;" src="../assets/images/download/app/title2-2.png"/>
           </div>
           <div class="flex" style="pointer-events: none;">
-            <img style="width: 89%; margin-top: 10px;" src="../assets/images/download/app/bg-2.png"/>
+            <img style="width: 80%;" src="../assets/images/download/app/bg-2.png"/>
           </div>
           <div class="flex" style="pointer-events: none;">
             <img style="width: 90%;" src="../assets/images/download/app/bottom-2.png"/>
@@ -66,7 +66,7 @@
     </q-carousel>
     <div class="flex2">
       <button class="btn1-1" @click="openSheet">
-        <div style="opacity: 0;">test</div>
+        <div>APP下载</div>
       </button>
       <button class="btn2" :class="{'common-large-btn': $q.dark.isActive}" @click="isAndroid = !isAndroid">
         <div>{{ isAndroid ? '切换IOS' : '切换安卓' }}</div>
@@ -263,7 +263,7 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
 }
 .main-container{
   overflow-x: hidden;
@@ -285,7 +285,7 @@ export default defineComponent({
   color: #FFFFFF;
   font-size: 14px;
   border: 0px;
-  padding: 1rem;
+  padding: 0.8rem;
   background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
   box-shadow: 0px 3.21px 3.21px 0px #93C7FF inset;
   box-shadow: 0px -2.57px 2.57px 0px #275EC1 inset;
@@ -296,7 +296,7 @@ export default defineComponent({
   color: #FFFFFF;
   font-size: 14px;
   border: 0px;
-  padding: 1rem;
+  padding: 0.8rem;
   background: url("../assets/images/download/app/appDbutton.png") no-repeat;
   background-position: center;
   background-size: 100% 100%;
@@ -306,7 +306,7 @@ export default defineComponent({
   color: #7A80A1;
   font-size: 14px;
   border: 0px;
-  padding: 1rem;
+  padding: 0.8rem;
   background: linear-gradient(180deg, #F8FBFF 0%, #FDFEFF 100%);
   box-shadow: 0px 3.82px 3.82px 0px #BBDCFF inset;
   box-shadow: 0px -3.05px 3.05px 0px #A2BFF4 inset;
@@ -466,7 +466,6 @@ export default defineComponent({
   font-size: 20px;
   font-weight: bold;
   margin: 0px 0 8px;
-  margin-top: 6%;
 }
 .teach1-subtitle {
   font-size: 14px;
@@ -475,7 +474,6 @@ export default defineComponent({
 }
 .teach1-step-gallery{
   overflow: auto;
-  margin-top: 4%;
 }
 
 .common-large-btn {
@@ -509,5 +507,10 @@ export default defineComponent({
     transform: translateY(100%);
     opacity: 0;
   }
+}
+
+.q-carousel__slide {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 </style>
