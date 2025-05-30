@@ -7,6 +7,7 @@
     <div>
       Invite new users to register using your exclusive referral link or QR code and receive three generous rewards:
     </div>
+
     <div class="copy-link-container">
       <img src="../../assets/images/earn-money/share-referral.png" />
       <div class="link-wrapper" @click="copyShareLink(selfTgurl)">
