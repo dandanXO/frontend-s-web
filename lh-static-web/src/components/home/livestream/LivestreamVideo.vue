@@ -125,31 +125,35 @@
           </button>
         </div>
       </div>
-      <div v-if="showUnmuteMask" class="livestream-video-mask" @click.stop="handleUnmuteClick">
-        <button class="btn">
-          <img src="@/assets/home/livestream/icon-volume-off.png" />
-        </button>
-        <span>点击取消静音</span>
-      </div>
-      <div v-if="!isLivestreaming" class="livestream-video-mask" @click.stop>
-        <span>直播尚未开始</span>
-      </div>
-      <div v-if="isVideoLoadFailed" class="livestream-video-mask" @click.stop>
-        <button class="btn" @click="loadData">
-          <img src="@/assets/home/livestream/icon-reload.png" />
-        </button>
-        <span>点击重新加载视频</span>
-        <p class="livestream-video-mask-text-content">
-          视频加载失败
-          <template v-if="env !== 'production'">
-            <span>错误讯息：{{ videoLoadFailedReason }}</span>
-          </template>
-        </p>
-      </div>
-      <div v-if="isVideoLoading" class="livestream-video-mask" @click.stop>
-        <div class="loader" />
-        <span>正在加载视频...</span>
-      </div>
+      <template v-if="isVideoStuck">
+        <div v-if="isVideoLoadFailed" class="livestream-video-mask" @click.stop>
+          <button class="btn" @click="loadData">
+            <img src="@/assets/home/livestream/icon-reload.png" />
+          </button>
+          <span>点击重新加载视频</span>
+          <p class="livestream-video-mask-text-content">
+            视频加载失败
+            <template v-if="env !== 'production'">
+              <span>错误讯息：{{ videoLoadFailedReason }}</span>
+            </template>
+          </p>
+        </div>
+        <div v-if="isVideoLoading" class="livestream-video-mask" @click.stop>
+          <div class="loader" />
+          <span>正在加载视频...</span>
+        </div>
+      </template>
+      <template v-else>
+        <div v-if="showUnmuteMask" class="livestream-video-mask" @click.stop="handleUnmuteClick">
+          <button class="btn">
+            <img src="@/assets/home/livestream/icon-volume-off.png" />
+          </button>
+          <span>点击取消静音</span>
+        </div>
+        <div v-if="!isLivestreaming" class="livestream-video-mask" @click.stop>
+          <span>直播尚未开始</span>
+        </div>
+      </template>
     </template>
     <div v-else class="livestream-unsupported">不支援的浏览器</div>
   </div>
@@ -245,6 +249,8 @@ const currentVideoUrl = computed(() => getVideoUrl(videoSource.value));
 
 const disableVideoController = computed(() => showUnmuteMask.value || !isLivestreaming.value);
 
+const isVideoStuck = computed(() => isVideoLoadFailed.value || isVideoLoading.value);
+
 // const currentChannel = computed(() => {
 //   if (!channels.value.length) return {};
 //   return channels.value[playerConfig.value.channel];
@@ -308,11 +314,6 @@ const initPlayer = async (play = false) => {
 };
 
 const loadDanmu = async () => {
-  if (danmu.value) {
-    danmu.value.stop();
-    danmu.value.start();
-    return;
-  }
   if (!danmuJs.value) {
     const _danmu = (await import("danmu.js")).default;
     danmuJs.value = _danmu;
@@ -524,6 +525,9 @@ watch(livestreamData, (val, oldVal) => {
   const _currentVideoSource = getVideoSource(oldVal);
   const _currentVideoUrl = getVideoUrl(_currentVideoSource);
   if (newVideoUrl === _currentVideoUrl) return;
+  if (danmu.value) {
+    danmu.value.stop();
+  }
   loadData();
 });
 
@@ -531,11 +535,13 @@ onMounted(() => {
   // loadData();
   canvasRef.value.width = videoRef.value.clientWidth;
   canvasRef.value.height = videoRef.value.clientHeight;
+  document.addEventListener("click", handleUnmuteClick);
 });
 
 onUnmounted(() => {
   player.value && player.value.destroy();
   danmu.value && danmu.value.stop();
+  document.removeEventListener("click", handleUnmuteClick);
 });
 
 defineExpose({

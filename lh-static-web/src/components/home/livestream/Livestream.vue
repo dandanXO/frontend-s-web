@@ -74,6 +74,7 @@ const unsortMessages = ref([]);
 const gameModalRef = ref(null);
 const livestreamVideoRef = ref(null);
 const livestreamSyncAbortController = ref(null);
+const chatHistoryAbortController = ref(null);
 const livestreamListMeta = ref({
   current: 1,
   max: 1
@@ -89,6 +90,7 @@ const messagesHistoryMeta = ref({
 const latestProcessedMessageId = ref(-1);
 const vipStatus = ref(false);
 const hideComponent = ref(true);
+
 // const channels = ref([
 //   {
 //     name: "线路1",
@@ -222,14 +224,14 @@ const syncMessages = () => {
     streamId: currentLiveData.value.id,
     recordTime: [liveStartTime.value, now]
   };
-
+  chatHistoryAbortController.value = new AbortController();
   if (pastTime > MESSAGE_SYNC_INTERVAL && !isProcessingMessageHistory.value) {
     lastSyncMessageTime.value = now;
     if (!isLivestreaming.value) return;
     isProcessingMessageHistory.value = true;
-    getChatHistory(params, messagesHistoryMeta.value.current)
+    getChatHistory(params, messagesHistoryMeta.value.current, chatHistoryAbortController.value)
       .then(async (res) => {
-        if (res.code === 0) {
+        if (res.code === 0 && params.streamId === currentLiveData.value.id) {
           const requestQueue = [];
           const messagesFromApi = formatHistoryMessages(res.data.records);
           const remainingPage = res.data.pages - messagesHistoryMeta.value.current;
@@ -268,6 +270,9 @@ const syncMessages = () => {
             danmuList.value = messagesFromApi.map((item) => item.content);
           }
         }
+      })
+      .catch((e) => {
+        console.error(e);
       })
       .finally(() => {
         isProcessingMessageHistory.value = false;
@@ -326,7 +331,10 @@ const syncLivestreamInfo = async () => {
   getLivestreamDetail(currentLiveData.value.streamId, livestreamSyncAbortController).then((res) => {
     if (res.code === 0) {
       vipStatus.value = !!res.data.vipStatus;
-      if (currentLiveData.value.streamerStatus !== res.data.streamerStatus) {
+      if (
+        currentLiveData.value.streamerStatus !== res.data.streamerStatus &&
+        currentLiveData.value.id === res.data.id
+      ) {
         const notifyMessage = res.data.streamerStatus
           ? "主播已开播，即将切换至主播直播"
           : "主播已下播，即将切换至赛事直播";
@@ -367,8 +375,10 @@ watch(currentLive, () => {
   lastSyncMessageTime.value = currentLiveData.value?.eventStartTime || Date.now();
   liveStartTime.value = lastSyncMessageTime.value;
   latestProcessedMessageId.value = -1;
-  syncMessages();
   livestreamSyncAbortController.value && livestreamSyncAbortController.value.abort();
+  chatHistoryAbortController.value && chatHistoryAbortController.value.abort();
+  isProcessingMessageHistory.value = false;
+  syncMessages();
   resetSyncLivestreamInterval(true);
 });
 
