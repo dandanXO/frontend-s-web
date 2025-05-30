@@ -1937,8 +1937,9 @@ export default defineComponent({
     };
 
     function loadData() {
+      const randNum = Math.floor(Math.random() * 1000) + 1;
       api
-        .get("/opt-session/promo/banner?category=HOME")
+        .get(`/opt-session/promo/banner?category=HOME&v=${randNum}`)
         .then((res) => {
           if (res.code === 0) {
             // banners.value = res.data;
