@@ -308,7 +308,11 @@ const initPlayer = async (play = false) => {
 };
 
 const loadDanmu = async () => {
-  if (danmu.value) return;
+  if (danmu.value) {
+    danmu.value.stop();
+    danmu.value.start();
+    return;
+  }
   if (!danmuJs.value) {
     const _danmu = (await import("danmu.js")).default;
     danmuJs.value = _danmu;
