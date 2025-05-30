@@ -160,7 +160,8 @@ const formatDate = (date) => date.toISOString().split("T")[0];
 
 const formattedDateRange = computed(() => {
     const range = searchForm.dateRange;
-    if (!range || typeof range === "string") return "";
+    if (!range) return "";
+    if(typeof range === "string") return range;
     const { from, to } = range;
     return `${formatDateToSlash(from)} ~ ${formatDateToSlash(to)}`;
 });
@@ -212,7 +213,13 @@ const getStatusLabel = (statusStr) => {
 
 const getMyDividendsInfo = () => {
     isLoading.value = true;
-    const recordDate = searchForm.dateRange.from + "," + searchForm.dateRange.to;
+    const recordDate = (() => {
+        if(searchForm.dateRange?.from) {
+            return searchForm.dateRange.from + "," + searchForm.dateRange.to;
+        } else {
+            return searchForm.dateRange + "," + searchForm.dateRange;
+        }
+    })();
 
     api.get('/session/affiliate/settlement?recordDates=' + recordDate).then((res) => {
         dividendInfo.value = res.data;
