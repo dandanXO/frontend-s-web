@@ -421,7 +421,7 @@ const missionArrays = [
       "day1": 128, "day5": 188, "day10": 228, "day15": 358, "day20": 588,
     },
     deposit: {
-      bonus: 500000,
+      bonus: 50000,
       "day1": 188, "day5": 288, "day10": 588, "day15": 888, "day20": 1888,
     }
   }
