@@ -30,7 +30,7 @@ function postSubmit(resp) {
   //   location.href = `display?${resp.data}&payResultType=${resp.payResultType}&requestUrl=${resp.requestUrl}`;
   // } else {
   //   location.href = `display?paramKey=${resp.paramKey}&payResultType=${resp.payResultType}&requestUrl=${resp.requestUrl}`;
-  // }
+  // }123
   return resp
 }
 
