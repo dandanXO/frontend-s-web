@@ -1551,7 +1551,7 @@ $border-settings: 1px solid #e5e7eb;
   .loading-blue-icon {
     width: 10px;
     height: 10px;
-    border: 2px solid #799df8; /* Light gold color */
+    border: 2px solid #624215;  /* Light gold color */
     border-top: 2px solid transparent;
     border-radius: 50%;
     animation: spin 1s linear infinite;
