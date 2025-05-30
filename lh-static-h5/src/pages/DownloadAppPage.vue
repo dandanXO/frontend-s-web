@@ -14,7 +14,7 @@
       infinite
       transition-next="slide-left"
       transition-prev="slide-right"
-      style="min-height: 70vh; height: 100%;"
+      style="height: 430px"
     >
       <template v-slot:navigation-icon="{ active, onClick }">
         <q-btn
@@ -37,29 +37,29 @@
       <q-carousel-slide :key="0" :name="0">
         <div class="custom-slide-content">
           <div class="flex" style="pointer-events: none;">
-            <img style="width: 90%;" src="../assets/images/download/app/title-1.png"/>
+            <img style="width:auto;max-width: 100%;height:45px;" src="../assets/images/download/app/title-1.png"/>
           </div>
           <div class="flex" style="pointer-events: none;">
-            <img style="width: 95%;margin-right: 3rem;" src="../assets/images/download/app/bg-1.png"/>
+            <img style="width:auto;max-width: 100%;height: 320px;margin-right: 3rem;" src="../assets/images/download/app/bg-1.png"/>
           </div>
           <div class="flex" style="pointer-events: none;">
-            <img style="width: 90%;" src="../assets/images/download/app/bottom-1.png"/>
+            <img style="width:auto;max-width: 100%;height: 46px;" src="../assets/images/download/app/bottom-1.png"/>
           </div>
         </div>
       </q-carousel-slide>
       <q-carousel-slide :key="1" :name="1">
         <div class="custom-slide-content">
           <div class="flex" style="pointer-events: none;">
-            <img style="width: 80%;" src="../assets/images/download/app/title2-1.png"/>
+            <img style="width:auto;max-width: 100%;height:30px;" src="../assets/images/download/app/title2-1.png"/>
           </div>
           <div class="flex" style="pointer-events: none;">
-            <img style="width: 35%;" src="../assets/images/download/app/title2-2.png"/>
+            <img style="width:auto;max-width: 100%;height:35px;" src="../assets/images/download/app/title2-2.png"/>
           </div>
           <div class="flex" style="pointer-events: none;">
-            <img style="width: 80%;" src="../assets/images/download/app/bg-2.png"/>
+            <img style="width:auto;max-width: 100%;height:240px;" src="../assets/images/download/app/bg-2.png"/>
           </div>
           <div class="flex" style="pointer-events: none;">
-            <img style="width: 90%;" src="../assets/images/download/app/bottom-2.png"/>
+            <img style="width:auto;max-width: 100%;height:110px;" src="../assets/images/download/app/bottom-2.png"/>
           </div>
         </div>
       </q-carousel-slide>
