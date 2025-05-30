@@ -36,7 +36,7 @@
                     </div>
                     <div class="viplevel">
                       <div class="title">
-                        <span class="type">{{ vip.vipTitle }} V {{ vip.vipLevel }}</span>
+                        <span class="type">{{ vip.vipTitle }} V{{ vip.vipLevel }}</span>
                       </div>
                     </div>
                   </div>
@@ -366,22 +366,22 @@
               <tr>
                 <td>VIP1</td>
                 <!-- <td>青铜 II</td> -->
-                <td>18 元</td>
-                <td>208</td>
+                <td>58 元</td>
+                <td>588</td>
                 <td>-</td>
                 <!--            <td>-</td>-->
-                <td>0.1%</td>
+                <td>0.30%</td>
                 <td>8</td>
-                <td>38</td>
+                <td>58</td>
               </tr>
               <tr>
                 <td>VIP2</td>
                 <!-- <td>青铜 I</td> -->
-                <td>18 元</td>
-                <td>208</td>
-                <td>-</td>
+                <td>58 元</td>
+                <td>588</td>
+                <td>38</td>
                 <!--            <td>-</td>-->
-                <td>0.2%</td>
+                <td>0.50%</td>
                 <td>18</td>
                 <td>88</td>
               </tr>
@@ -390,88 +390,88 @@
                 <!-- <td>白银 III</td> -->
                 <td>58 元</td>
                 <td>588</td>
-                <td>-</td>
+                <td>58</td>
                 <!--            <td>-</td>-->
-                <td>0.3%</td>
-                <td>28</td>
+                <td>0.60%</td>
+                <td>58</td>
                 <td>158</td>
               </tr>
               <tr>
                 <td>VIP4</td>
                 <!-- <td>白银 II</td> -->
-                <td>58 元</td>
-                <td>588</td>
-                <td>38</td>
-                <!--            <td>-</td>-->
-                <td>0.5%</td>
+                <td>288 元</td>
+                <td>1,088</td>
                 <td>58</td>
-                <td>288</td>
+                <!--            <td>-</td>-->
+                <td>0.80%</td>
+                <td>88</td>
+                <td>268</td>
               </tr>
               <tr>
                 <td>VIP5</td>
                 <!-- <td>白银 I</td> -->
-                <td>58 元</td>
-                <td>588</td>
-                <td>58</td>
-                <!--            <td>-</td>-->
-                <td>0.6%</td>
+                <td>288 元</td>
+                <td>1,088</td>
                 <td>88</td>
-                <td>388</td>
+                <!--            <td>-</td>-->
+                <td>1.00%</td>
+                <td>188</td>
+                <td>288</td>
               </tr>
               <tr>
                 <td>VIP6</td>
                 <!-- <td>黄金 III</td> -->
                 <td>288 元</td>
                 <td>1,088</td>
-                <td>88</td>
+                <td>288</td>
                 <!--            <td>-</td>-->
-                <td>0.8%</td>
-                <td>128</td>
-                <td>488</td>
+                <td>1.20%</td>
+                <td>288</td>
+                <td>588</td>
               </tr>
               <tr>
                 <td>VIP7</td>
                 <!-- <td>黄金 II</td> -->
                 <td>288 元</td>
-                <td>1,088</td>
-                <td>188</td>
+                <td>1,888</td>
+                <td>388</td>
                 <!--            <td>-</td>-->
-                <td>1.0%</td>
-                <td>208</td>
+                <td>1.30%</td>
                 <td>588</td>
+                <td>788</td>
               </tr>
               <tr>
                 <td>VIP8</td>
                 <!-- <td>黄金 I</td> -->
                 <td>288 元</td>
-                <td>1,088</td>
-                <td>288</td>
+                <td>1,888</td>
+                <td>588</td>
                 <!--            <td>188</td>-->
-                <td>1.2%</td>
-                <td>388</td>
-                <td>688</td>
+                <td>1.50%</td>
+                <td>888</td>
+                <td>888</td>
               </tr>
               <tr>
                 <td>VIP9</td>
                 <!-- <td>铂金 II</td> -->
                 <td>588 元</td>
-                <td>1,888</td>
-                <td>388</td>
+                <td>2,888</td>
+                <td>888</td>
                 <!--            <td>288</td>-->
-                <td>1.3%</td>
-                <td>588</td>
-                <td>788</td>
+                <td>1.80%</td>
+                <td>1,588</td>
+                <td>1,288</td>
               </tr>
               <tr>
                 <td>VIP10</td>
                 <!-- <td>铂金 I</td> -->
-                <td>588 元</td>
+                <td>1,888 元</td>
+                <td>8,888</td>
                 <td>1,888</td>
-                <td>588</td>
                 <!--            <td>388</td>-->
-                <td>1.5%</td>
-                <td>888</td>
-                <td>888</td>
+                <td>2.00%</td>
+                <td>3,888</td>
+                <td>2,888</td>
               </tr>
 
             </tbody>
@@ -492,16 +492,15 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <!-- <tr>
                 <td>VIP0</td>
                 <td>0.45%</td>
                 <td>0.40%</td>
                 <td>0.40%</td>
                 <td>0.40%</td>
                 <td>0.60%</td>
-                <!-- <td>0.15%</td> -->
                 <td>8,888</td>
-              </tr>
+              </tr> -->
               <tr>
                 <td>VIP1</td>
                 <td>0.45%</td>
@@ -514,36 +513,26 @@
               </tr>
               <tr>
                 <td>VIP2</td>
+                <td>0.48%</td>
                 <td>0.45%</td>
-                <td>0.40%</td>
                 <td>0.45%</td>
                 <td>0.45%</td>
                 <td>0.60%</td>
                 <!--            <td>0.2%</td>-->
-                <td>8,888</td>
+                <td>12,888</td>
               </tr>
               <tr>
                 <td>VIP3</td>
                 <td>0.48%</td>
                 <td>0.45%</td>
                 <td>0.45%</td>
-                <td>0.45%</td>
-                <td>0.60%</td>
-                <!--            <td>0.25%</td>-->
-                <td>12,888</td>
-              </tr>
-              <tr>
-                <td>VIP4</td>
-                <td>0.48%</td>
-                <td>0.45%</td>
-                <td>0.45%</td>
                 <td>0.50%</td>
                 <td>0.80%</td>
-                <!--            <td>0.30%</td>-->
+                <!--            <td>0.25%</td>-->
                 <td>18,888</td>
               </tr>
               <tr>
-                <td>VIP5</td>
+                <td>VIP4</td>
                 <td>0.48%</td>
                 <td>0.50%</td>
                 <td>0.48%</td>
@@ -553,17 +542,17 @@
                 <td>18,888</td>
               </tr>
               <tr>
-                <td>VIP6</td>
+                <td>VIP5</td>
                 <td>0.50%</td>
                 <td>0.50%</td>
                 <td>0.50%</td>
                 <td>0.60%</td>
                 <td>0.80%</td>
-                <!--            <td>0.35%</td>-->
+                <!--            <td>0.30%</td>-->
                 <td>28,888</td>
               </tr>
               <tr>
-                <td>VIP7</td>
+                <td>VIP6</td>
                 <td>0.50%</td>
                 <td>0.55%</td>
                 <td>0.55%</td>
@@ -573,34 +562,44 @@
                 <td>28,888</td>
               </tr>
               <tr>
-                <td>VIP8</td>
-                <td>0.55%</td>
-                <td>0.60%</td>
-                <td>0.65%</td>
-                <td>0.80%</td>
-                <td>0.90%</td>
-                <!--            <td>0.35%</td>-->
-                <td>38,888</td>
-              </tr>
-              <tr>
-                <td>VIP9</td>
+                <td>VIP7</td>
                 <td>0.55%</td>
                 <td>0.65%</td>
                 <td>0.68%</td>
                 <td>0.90%</td>
                 <td>1.00%</td>
-                <!--            <td>0.40%</td>-->
+                <!--            <td>0.35%</td>-->
                 <td>58,888</td>
               </tr>
               <tr>
-                <td>VIP10</td>
+                <td>VIP8</td>
                 <td>0.60%</td>
                 <td>0.70%</td>
                 <td>0.70%</td>
                 <td>1.00%</td>
                 <td>1.05%</td>
+                <!--            <td>0.35%</td>-->
+                <td>88,888</td>
+              </tr>
+              <tr>
+                <td>VIP9</td>
+                <td>0.70%</td>
+                <td>0.75%</td>
+                <td>0.75%</td>
+                <td>1.10%</td>
+                <td>1.10%</td>
                 <!--            <td>0.40%</td>-->
                 <td>88,888</td>
+              </tr>
+              <tr>
+                <td>VIP10</td>
+                <td>0.80%</td>
+                <td>0.80%</td>
+                <td>0.80%</td>
+                <td>1.20%</td>
+                <td>1.20%</td>
+                <!--            <td>0.40%</td>-->
+                <td>128,888</td>
               </tr>
 
             </tbody>
@@ -766,71 +765,89 @@
     <!-- <table border="0" cellspacing="0" cellpadding="0">
           <thead>
             <tr>
-              <th class="dy-vip-th">等级</th>
-              <th class="dy-vip-th">VIP1</th>
-              <th class="dy-vip-th">VIP2</th>
-              <th class="dy-vip-th">VIP3</th>
-              <th class="dy-vip-th">VIP4</th>
-              <th class="dy-vip-th">VIP5</th>
-              <th class="dy-vip-th">VIP6</th>
-              <th class="dy-vip-th">VIP7</th>
-              <th class="dy-vip-th">VIP8</th>
-              <th class="dy-vip-th">VIP9</th>
-              <th class="dy-vip-th">VIP10</th>
+              <th style="background: #ad9870">等级</th>
+              <th style="background: #f1dda0; color: #766442">VIP 1</th>
+              <th style="background: #f1dda0; color: #766442">VIP 2</th>
+              <th style="background: #f1dda0; color: #766442">VIP 3</th>
+              <th style="background: #f1dda0; color: #766442">VIP 4</th>
+              <th style="background: #f1dda0; color: #766442">VIP 5</th>
+              <th style="background: #f1dda0; color: #766442">VIP 6</th>
+              <th style="background: #f1dda0; color: #766442">VIP 7</th>
+              <th style="background: #f1dda0; color: #766442">VIP 8</th>
+              <th style="background: #f1dda0; color: #766442">VIP 9</th>
+              <th style="background: #f1dda0; color: #766442">VIP 10</th>
+              <th style="background: #f1dda0; color: #766442">VIP 11</th>
+              <th style="background: #f1dda0; color: #766442">VIP 12</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>电竞返水</td>
-              <td>0.4%</td>
-              <td>0.4%</td>
-              <td>0.45%</td>
-              <td>0.45%</td>
-              <td>0.5%</td>
-              <td>0.55%</td>
-              <td>0.65%</td>
-              <td>0.8%</td>
-              <td>0.9%</td>
-              <td>1%</td>
+              <td>会员勋章</td>
+              <td>青铜 I</td>
+              <td>青铜 II</td>
+              <td>白银 I</td>
+              <td>白银 II</td>
+              <td>白银 III</td>
+              <td>黄金 I</td>
+              <td>黄金 II</td>
+              <td>黄金 III</td>
+              <td>铂金 I</td>
+              <td>铂金 II</td>
+              <td>钻石</td>
+              <td>王者</td>
             </tr>
             <tr>
-              <td>体育返水</td>
-              <td>0.4%</td>
-              <td>0.4%</td>
-              <td>0.45%</td>
-              <td>0.45%</td>
-              <td>0.5%</td>
-              <td>0.55%</td>
-              <td>0.65%</td>
-              <td>0.8%</td>
-              <td>0.9%</td>
-              <td>1%</td>
+              <td>
+                升级条件
+                <br />
+                （流水）
+              </td>
+              <td>3,000</td>
+              <td>17,500</td>
+              <td>50,000</td>
+              <td>150,000</td>
+              <td>600,000</td>
+              <td>1,200,000</td>
+              <td>2,400,000</td>
+              <td>6,400,000</td>
+              <td>24,000,000</td>
+              <td>64,000,000</td>
+              <td>150,000,000</td>
+              <td>250,000,000</td>
             </tr>
             <tr>
-              <td>真人返水</td>
-              <td>0.4%</td>
-              <td>0.4%</td>
-              <td>0.45%</td>
-              <td>0.45%</td>
-              <td>0.5%</td>
-              <td>0.55%</td>
-              <td>0.65%</td>
-              <td>0.8%</td>
-              <td>0.9%</td>
-              <td>1%</td>
+              <td>
+                保级条件
+                <br />
+                （90 天）
+              </td>
+              <td>1,500</td>
+              <td>7,500</td>
+              <td>19,000</td>
+              <td>32,500</td>
+              <td>75,000</td>
+              <td>200,000</td>
+              <td>620,000</td>
+              <td>1,900,000</td>
+              <td>6,250,000</td>
+              <td>12,500,000</td>
+              <td>21,000,000</td>
+              <td>50,000,000</td>
             </tr>
             <tr>
-              <td>电子返水</td>
-              <td>0.5%</td>
-              <td>0.6%</td>
-              <td>0.7%</td>
-              <td>0.8%</td>
-              <td>0.9%</td>
-              <td>1.2%</td>
-              <td>1.5%</td>
-              <td>1.8%</td>
-              <td>1.9%</td>
-              <td>2%</td>
+              <td>晋级彩金</td>
+              <td>8</td>
+              <td>18</td>
+              <td>28</td>
+              <td>38</td>
+              <td>58</td>
+              <td>88</td>
+              <td>188</td>
+              <td>288</td>
+              <td>388</td>
+              <td>588</td>
+              <td>888</td>
+              <td>1,888</td>
             </tr>
           </tbody>
         </table> -->
@@ -909,8 +926,10 @@
   </q-dialog>
 </template>
 
-<script>
-import { ref, defineComponent, onMounted } from "vue";
+<script setup>
+import "vue3-carousel/dist/carousel.css";
+import { ref, onActivated, computed, reactive, watch, h } from "vue";
+import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import { getVIPDetails, getVIPDetailsNotLoggedIn, claimItems, loadPromoBanner } from "src/api/index/promo";
@@ -918,11 +937,11 @@ import { useNotify } from "src/hooks/notify";
 import { Carousel, Slide, Navigation, Pagination } from "vue3-carousel";
 import { useLocalStorage } from "@vueuse/core";
 import GameModal from "src/components/modal/GameModal.vue";
-import { useCloudWiseHelper } from "src/hooks/cloudWiseHelper";
+// import { useCloudWiseHelper } from "src/hooks/cloudWiseHelper";
 
-useCloudWiseHelper({
-  pageName: "vip"
-})
+// useCloudWiseHelper({
+//   pageName: "vip"
+// })
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 const isShowTable = ref(false);
@@ -1459,6 +1478,10 @@ const handleBannerClick = (url) => {
   } else {
     router.push({ path: "/promo", query: { name: url } });
   }
+};
+
+onActivated(() => {
+  initVIPTable();
 });
 </script>
 <style scoped lang="scss">
@@ -1471,7 +1494,7 @@ $border-settings: 1px solid #e5e7eb;
 }
 .carousel__slide--active {
   .vipLevelButton {
-    background: url("../../assets/images/vip/button.png") no-repeat center center;
+    // background: url("../../assets/images/vip/button.png") no-repeat center center;
     background-size: contain;
     padding: 15px;
     color: #000000;
@@ -1504,7 +1527,17 @@ $border-settings: 1px solid #e5e7eb;
   }
 }
 .vip-container {
+  z-index: 0;
+  position: relative;
+  background-image: url("../../assets/images/vip/vip-bg.jpg");
+  background-color: #f3f7fd;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+  background-attachment: fixed;
+  color: #8d8d8d;
   min-height: 100vh;
+  padding: 0 0 80px;
 
   .loading-icon {
     width: 10px;
@@ -1525,10 +1558,16 @@ $border-settings: 1px solid #e5e7eb;
     margin: 4px auto;
   }
 
-  .q-tabs {
-    background: #fff;
-    border-radius: 30px;
-    width: 90%;
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .header-section {
     margin: 0 auto;
     width: 100%;
     text-align: center;
@@ -1548,14 +1587,8 @@ $border-settings: 1px solid #e5e7eb;
   }
 
   .banner-container {
-    //background: url("../../assets/vip/banner.png") no-repeat center center;
+    // background: url("../../assets/images/vip/banner.png") no-repeat center center;
     background-size: cover;
-    margin-bottom: -200px;
-    padding-top: 100px;
-    padding-bottom: 200px;
-    // width: 1920px;
-    // height: 450px;
-    font-size: 30px;
     background-repeat: no-repeat;
     background-position: center center;
     min-height: 600px;
@@ -1838,17 +1871,19 @@ $border-settings: 1px solid #e5e7eb;
               pointer-events: none;
               // background: linear-gradient(90deg, #6e6e6e 0%, #858585 100%);
               // color: #434343;
-              color: #434343;
+              color: #ffffff;
               background: url(../../assets/images/vip/claim-btn-disabled.png)no-repeat center center;
               background-size: contain;
+              width: 95%;
             }
           }
           .claimed,
           .expired {
-            background: url(../../assets/images/vip/claim-btn-claimed.png)no-repeat center center;
-            background-size: contain;
+            // background: url(../../assets/images/vip/claim-btn-claimed.png)no-repeat center center;
+            // background-size: contain;
             // background: linear-gradient(90deg, #F1DDA0 0%, #FFCC80 100%);
-            color: #ffffff;
+            // color: #ffffff;
+            color: #9b6f35;
             font-size: 9px;
             line-height: 18px;
             text-align: center;
@@ -1860,9 +1895,10 @@ $border-settings: 1px solid #e5e7eb;
           }
           .expired {
             // color: #596589;
-            background: url(../../assets/images/vip/claim-btn-disabled.png)no-repeat center center;
-            background-size: contain;
-            color: #FFFFFF;
+            // background: url(../../assets/images/vip/claim-btn-disabled.png)no-repeat center center;
+            // background-size: contain;
+            // color: #FFFFFF;
+            color: #999999;
           }
         }
       }
@@ -1983,6 +2019,9 @@ $border-settings: 1px solid #e5e7eb;
   }
 
   .vipitem {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
     position: relative;
     width: 400px;
     height: 520px;
@@ -1990,19 +2029,74 @@ $border-settings: 1px solid #e5e7eb;
     max-height: 350px;
     background: url("../../assets/images/vip/cardbg.png") no-repeat top center;
     background-size: contain;
-    width: 320px;
-    padding: 40px 0;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-
-    .viplevelcard {
-      // padding: 10px;
-      width: 70%;
-      height: 150px;
-      background: url("../../assets/vip/vip_logo_bg.png") no-repeat center center;
+    &9,
+    &10,
+    &11,
+    &12 {
+      background: url("../../assets/images/vip/cardbg-shiny.png") no-repeat top center;
       background-size: contain;
-      position: relative;
+    }
+
+    // &2 {
+    //   background: url("../../assets/images/vip/badge/banner-2.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+
+    // &3 {
+    //   background: url("../../assets/images/vip/badge/banner-3.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+
+    // &4 {
+    //   background: url("../../assets/images/vip/badge/banner-4.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+
+    // &5 {
+    //   background: url("../../assets/images/vip/badge/banner-5.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+
+    // &6 {
+    //   background: url("../../assets/images/vip/badge/banner-6.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+
+    // &7 {
+    //   background: url("../../assets/images/vip/badge/banner-7.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+
+    // &8 {
+    //   background: url("../../assets/images/vip/badge/banner-8.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+
+    // &9 {
+    //   background: url("../../assets/images/vip/badge/banner-9.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+
+    // &10 {
+    //   background: url("../../assets/images/vip/badge/banner-10.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+
+    // &11 {
+    //   background: url("../../assets/images/vip/badge/banner-11.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+
+    // &12 {
+    //   background: url("../../assets/images/vip/badge/banner-12.png") no-repeat top center;
+    //   background-size: contain;
+    // }
+    .vipLevelReachStatus {
+      // background: url("../../assets/images/vip/badge/vip-level-banner-status-ribbon-unachieved.png") no-repeat left center;
+      background-size: contain;
+      margin-top: 15px;
+      margin-left: 2px;
+      z-index: 1;
       text-align: left;
       height: 47px;
 
@@ -2109,53 +2203,76 @@ $border-settings: 1px solid #e5e7eb;
         line-height: 53px;
         font-family: "Arial";
       }
-
-      .second-vip {
-        // background: #2b2b4b;
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-        font-size: 45px;
-        line-height: 53px;
-
-        div {
-          flex: 1;
-        }
-
-        .common-btn {
-          padding: 5px 10px;
-          font-size: 12px;
-          line-height: 20px;
-          margin: 0 30px 30px;
-        }
-      }
     }
   }
 
-  .vip-benefits {
-    padding: 10px;
-    font-size: 0.75rem;
-    background: #eaeef2;
+  .vip-program {
+    margin: 50px auto;
+    max-width: 1300px;
+    width: 95%;
 
-    .bft-title {
+    table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      border: $border-settings;
+
+      th {
+        border-bottom: $border-settings;
+        background-color: #f9fafb;
+        color: #6b7280;
+      }
+
+      td {
+        color: #111827;
+        border-right: $border-settings;
+
+        &:has(.disable) {
+          background-color: #e7e7e74f;
+        }
+      }
+
+      th,
+      td {
+        padding: 16px 24px 16px 24px;
+        border-bottom: $border-settings;
+      }
+    }
+
+    .buttons {
       display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      color: #0a3255;
-      font-size: 18px;
-      font-weight: bold;
-      padding: 2px 0px 4px;
-      height: 24px;
-      border-bottom: 1px solid #baa57f;
-      gap: 10px;
+      justify-content: center;
+      align-items: stretch;
+      border: 1px solid #fce9c5;
+      border-radius: 58.321px;
+      width: fit-content;
+      margin: 0px auto 20px auto;
 
-      //&:before {
-      //  content: "";
-      //  width: 10px;
-      //  height: 19px;
-      //  display: inline-block;
+      .common-btn {
+        display: block;
+        text-align: center;
+        color: #858585;
+        background: #f9fcff;
+        border: 0px;
+        border-radius: 58.321px;
+        padding: 8px 30px;
+        font-size: 18px;
+        font-weight: 700;
+        transition: all 0.3s;
+        filter: brightness(1);
+        margin: 5px;
 
-      //}
+        &:hover {
+          filter: brightness(0.9);
+        }
+
+        &.active {
+          background: linear-gradient(90deg, #e5cda5 0.87%, #b48f57 100%);
+          box-shadow: 0px 4px 4px 0px #ffffff40 inset;
+          box-shadow: 0px -4px 4px 0px #89520040 inset;
+          color: #fff;
+        }
+      }
     }
 
     .separator {
@@ -2291,7 +2408,7 @@ $border-settings: 1px solid #e5e7eb;
 
       &:before {
         content: "";
-        background: url(../../assets/images/vip/decal.png);
+        // background: url(../../assets/images/vip/decal.png);
         // width: 70px;
         // height: 70px;
         height: 30px;
@@ -2301,7 +2418,7 @@ $border-settings: 1px solid #e5e7eb;
       }
       &:after {
         content: "";
-        background: url(../../assets/images/vip/decal.png);
+        // background: url(../../assets/images/vip/decal.png);
         // width: 70px;
         // height: 70px;
         height: 30px;
@@ -2422,8 +2539,8 @@ $border-settings: 1px solid #e5e7eb;
         margin-left: 25px;
       }
 
-      .common-btn {
-        display: block;
+      .term {
+        max-width: 1300px;
         width: 100%;
         margin-top: 10px;
         list-style-type: decimal;
@@ -2538,14 +2655,24 @@ $border-settings: 1px solid #e5e7eb;
     //   padding-left: 8px;
     // }
   }
-}
-</style>
-<!-- Carousel CSS only -->
-<style lang="scss">
-.vip-container {
-  .q-tabs {
-    background: url(../../assets/vip/top_bg.png) no-repeat top right;
-    background-attachment: fixed;
+  :deep(.carousel__track) {
+    transform-style: preserve-3d;
+    margin: 0;
+  }
+  .carousel__pagination {
+    padding: 0;
+    margin: 10px;
+    gap: 5px;
+  }
+  :deep(.carousel__pagination-button:after) {
+    background: #ffffff80;
+    border-radius: 10px;
+    padding: 0;
+    width: 8px;
+    height: 8px;
+  }
+  :deep(.carousel__pagination-button--active:after) {
+    background: #f1dda0;
   }
 }
 .vip-cards {
@@ -2707,7 +2834,7 @@ $border-settings: 1px solid #e5e7eb;
 
   :deep(.carousel__prev) {
     // z-index: 2001 !important;
-    background: url("../../assets/images/vip/nextprev.png");
+    // background: url("../../assets/images/vip/nextprev.png");
     background-size: contain;
     // padding: 5px;
     margin: 0px;
@@ -2716,7 +2843,7 @@ $border-settings: 1px solid #e5e7eb;
   }
   :deep(.carousel__next) {
     // z-index: 2001 !important;
-    background: url("../../assets/images/vip/nextprev.png");
+    // background: url("../../assets/images/vip/nextprev.png");
     background-size: contain;
     // padding: 5px;
     margin: 0px;
