@@ -5,45 +5,85 @@
         v-model="tabValue"
         class="top-toggle-menu"
         no-caps
-        rounded
-        unelevated
-        toggle-color="primary"
-        color="white"
-        text-color="primary"
         :options="[
           { value: 'liveStream', slot: 'liveStream' },
           { value: 'ESport', slot: 'esport' },
           { value: 'Football', slot: 'sport' },
-          { value: 'Basketball', slot: 'basketball' },
-
+          { value: 'Basketball', slot: 'basketball' }
         ]"
       >
         <template v-slot:liveStream>
-          <div class="row items-center no-wrap">
-            <q-icon left name="mic" />
-            <div class="text-center">直播</div>
-            <!-- <div class="float-stream">直播中</div> -->
-            <q-badge color="red" rounded floating>直播中</q-badge>
-          </div>
+          <img
+            v-if="tabValue === 'liveStream'"
+            :src="
+              require(`../../assets/images/livestream/btn-toggle-livestream-${
+                $q.dark.isActive ? 'dark' : 'white'
+              }-active.png`)
+            "
+            alt=""
+          />
+          <img
+            v-else
+            :src="
+              require(`../../assets/images/livestream/btn-toggle-livestream-${$q.dark.isActive ? 'dark' : 'white'}.png`)
+            "
+            alt=""
+          />
         </template>
         <template v-slot:esport>
-          <div class="row items-center no-wrap">
-            <q-icon left name="sports_soccer" />
-            <div class="text-center">电竞</div>
-          </div>
+          <img
+            v-if="tabValue === 'ESport'"
+            :src="
+              require(`../../assets/images/livestream/btn-toggle-esport-${
+                $q.dark.isActive ? 'dark' : 'white'
+              }-active.png`)
+            "
+            alt=""
+          />
+          <img
+            v-else
+            :src="
+              require(`../../assets/images/livestream/btn-toggle-esport-${$q.dark.isActive ? 'dark' : 'white'}.png`)
+            "
+            alt=""
+          />
         </template>
 
         <template v-slot:sport>
-          <div class="row items-center no-wrap">
-            <q-icon left name="sports_soccer" />
-            <div class="text-center">足球</div>
-          </div>
+          <img
+            v-if="tabValue === 'Football'"
+            :src="
+              require(`../../assets/images/livestream/btn-toggle-football-${
+                $q.dark.isActive ? 'dark' : 'white'
+              }-active.png`)
+            "
+            alt=""
+          />
+          <img
+            v-else
+            :src="
+              require(`../../assets/images/livestream/btn-toggle-football-${$q.dark.isActive ? 'dark' : 'white'}.png`)
+            "
+            alt=""
+          />
         </template>
         <template v-slot:basketball>
-          <div class="row items-center no-wrap">
-            <q-icon left name="sports_soccer" />
-            <div class="text-center">篮球</div>
-          </div>
+          <img
+            v-if="tabValue === 'Basketball'"
+            :src="
+              require(`../../assets/images/livestream/btn-toggle-basketball-${
+                $q.dark.isActive ? 'dark' : 'white'
+              }-active.png`)
+            "
+            alt=""
+          />
+          <img
+            v-else
+            :src="
+              require(`../../assets/images/livestream/btn-toggle-basketball-${$q.dark.isActive ? 'dark' : 'white'}.png`)
+            "
+            alt=""
+          />
         </template>
       </q-btn-toggle>
     </div>
@@ -53,7 +93,14 @@
         <template v-for="(item, index) in liveStreamList" :key="index">
           <button class="selection-item" @click="handleLivestreamClick(item)">
             <!-- // put item.supplierCdnPullUrl + item.streamerCdnPushUrl + streanerCdnPullUrl to the next page. -->
-            <div class="item-img"><img src="../../assets/images/livestream/img-placeholder-stream.png" alt="" /></div>
+            <div class="item-img">
+              <img
+                v-if="item.sportId === 1 || item.sportId === 2"
+                src="../../assets/images/livestream/img-placeholder-stream-sport.png"
+                alt=""
+              />
+              <img v-else src="../../assets/images/livestream/img-placeholder-stream-esport.png" alt="" />
+            </div>
             <div class="item-content">
               <div class="content-title">
                 <!-- 德国甲级联赛 -->
@@ -629,20 +676,32 @@ onUnmounted(() => {
   .top-toggle-menu {
     width: 100%;
     padding: 6px;
-    background: #ffffff;
-    box-shadow: 0px -1px 3.66px 0px #a2bff4 inset;
+    // background: #ffffff;
+    background: transparent;
+    gap: 12px;
+    // box-shadow: 0px -1px 3.66px 0px #a2bff4 inset;
+    box-shadow: none;
     overflow: hidden;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 
     :deep(.q-btn-item) {
       width: 100%;
+      padding: 0;
+      border-radius: 8px;
+      background: transparent !important;
+
+      img {
+        display: block;
+        width: 100%;
+      }
+
       // white-space: nowrap;
 
-      &.bg-primary {
-        border-radius: 50px;
-        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%) !important;
-      }
+      // &.bg-primary {
+      //   border-radius: 50px;
+      //   background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%) !important;
+      // }
     }
 
     .float-stream {
@@ -658,32 +717,34 @@ onUnmounted(() => {
   background-color: #1a2338;
   .top-toggle-menu {
     width: 100%;
-    padding: 6px;
-    background: transparent !important;
-    box-shadow: none !important;
+    padding: 0;
+    // padding: 6px;
+    // background: #ffffff;
+    background: transparent;
+    gap: 12px;
+    // box-shadow: 0px -1px 3.66px 0px #a2bff4 inset;
+    box-shadow: none;
+    overflow: hidden;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     // box-shadow: 0px -1px 3.66px 0px #a2bff4 inset;
 
     :deep(.q-btn-item) {
       width: 100%;
-      // color: grey !important;
-      border-radius: 32px;
+      padding: 0;
+      border-radius: 8px;
       background: transparent !important;
-      color: #98a7b5 !important;
-      border: 2px solid #98a7b5 !important;
-      padding-top: 8px;
-      padding-bottom: 8px;
 
-      &.bg-primary {
-        color: #fff !important;
-        border-radius: 50px;
-        // background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%) !important;
-        border-color: #369eff !important;
-        background-image: url(../../assets/images/livestream/button-active.png) !important;
-        background-size: 100% 100% !important;
-        background-position: center center;
+      img {
+        display: block;
+        width: 100%;
       }
+      // white-space: nowrap;
+
+      // &.bg-primary {
+      //   border-radius: 50px;
+      //   background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%) !important;
+      // }
     }
 
     .float-stream {
@@ -860,31 +921,32 @@ onUnmounted(() => {
 </style>
 
 <style lang="scss" scoped>
-.top-toggle-menu {
-  width: 100%;
-  padding: 6px;
-  background: #ffffff;
-  box-shadow: 0px -1px 3.66px 0px #a2bff4 inset;
-  display: flex;
-  gap: 12px;
+// .top-toggle-menu {
+//   width: 100%;
+//   padding: 6px;
+//   background: transparent;
+//   // background: #ffffff;
+//   // box-shadow: 0px -1px 3.66px 0px #a2bff4 inset;
+//   display: flex;
+//   gap: 12px;
 
-  :deep(.q-btn-item) {
-    width: 100%;
-    padding-top: 8px;
-    padding-bottom: 8px;
+//   :deep(.q-btn-item) {
+//     width: 100%;
+//     padding-top: 8px;
+//     padding-bottom: 8px;
 
-    &.bg-primary {
-      border-radius: 50px;
-      background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%) !important;
-    }
-  }
+//     &.bg-primary {
+//       border-radius: 50px;
+//       background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%) !important;
+//     }
+//   }
 
-  .float-stream {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-}
+//   .float-stream {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//   }
+// }
 
 .selection-container {
   display: grid;
