@@ -642,6 +642,15 @@
             </thead>
             <tbody>
               <tr>
+                <td>VIP0</td>
+                <td>0.45%</td>
+                <td>0.40%</td>
+                <td>0.40%</td>
+                <td>0.40%</td>
+                <td>0.60%</td>
+                <td>8,888</td>
+              </tr>
+              <tr>
                 <td>VIP1</td>
                 <td>0.45%</td>
                 <td>0.40%</td>
@@ -1834,6 +1843,7 @@ $border-settings: 1px solid #e5e7eb;
       padding: 10px;
       border-radius: 10px;
       .overflow-table {
+        text-align: center;
         overflow-x: auto;
         width: 100%; /* Make the scrollbar thin */
         &::-webkit-scrollbar {
