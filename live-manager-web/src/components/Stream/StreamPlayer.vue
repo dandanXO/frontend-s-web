@@ -455,7 +455,7 @@ const initializePlayers = async () => {
     }
   }
 
-  const supplierUrl = props.stream?.supplierCdnPullUrl?.[currentQuality.value]?.hlsUrl
+  const supplierUrl = props.stream?.supplierCdnPullUrl?.[currentQuality.value]?.hlsUrl || props.stream?.supplierCdnPullUrl?.[currentQuality.value]?.flvUrl
   const streamerUrl = props.stream?.streamerCdnPullUrl?.[currentQuality.value]?.hlsUrl
   let displayUrl, logType, shouldInitialize
   if (currentPlayerType.value === 'host') {
@@ -742,12 +742,13 @@ onBeforeUnmount(() => {
 
 const getCurrentPlayUrl = () => {
   if (!props.stream) return ''
-  return props.stream.supplierCdnPullUrl?.[currentQuality.value]?.hlsUrl || ''
+  debugger;
+  return props.stream.supplierCdnPullUrl?.[currentQuality.value]?.hlsUrl || props.stream.supplierCdnPullUrl?.[currentQuality.value]?.flvUrl || ''
 }
 
 const getStreamerPlayUrl = () => {
   if (!props.stream) return ''
-  return props.stream.streamerCdnPullUrl?.[currentQuality.value]?.hlsUrl || ''
+  return props.stream.streamerCdnPullUrl?.[currentQuality.value]?.hlsUrl || props.stream.supplierCdnPullUrl?.[currentQuality.value]?.flvUrl || ''
 }
 
 const getAfterCdnUrl = (url) => {
