@@ -274,6 +274,9 @@ export const userStore = defineStore("userStore", {
           });
       }
     },
+    getCurrentDeposit() {
+      return this.currentDeposit;
+    },
     getUnreadTotal() {
       if (this.token) {
         return api.get("/session/inbox/getUnreadTotal").then((total) => {
