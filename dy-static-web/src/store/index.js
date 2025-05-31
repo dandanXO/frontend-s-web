@@ -52,6 +52,9 @@ export const userStore = defineStore("userStore", {
           // message.error(err.message);
         });
     },
+    getCurrentDeposit() {
+      return this.currentDeposit;
+    },
     autoLogin(token) {
       this.token = token;
       this.getBalance();
