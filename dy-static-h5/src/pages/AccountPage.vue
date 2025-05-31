@@ -108,7 +108,15 @@
             <div class="middle">
               <div class="row items-center justify-between">
                 <div class="left">晋级流水（元）</div>
-                <div class="right">{{ store.currentDeposit }}/{{ store.levelUpDeposit }}</div>
+                <div v-if="store.currentBetAmt !== ''">
+                  <div v-if="store.currentBetAmt <= store.currentUpgradeBetAmt">
+                    {{ formatNumber(store.currentBetAmt) }}/{{ formatNumber(store.currentUpgradeBetAmt) }}
+                  </div>
+                  <div v-else>
+                    {{ formatNumber(store.currentUpgradeBetAmt) }}/{{ formatNumber(store.currentUpgradeBetAmt) }}
+                  </div>
+                </div>
+                <div v-else>计算中...</div>
               </div>
 
               <q-linear-progress :value="vip_progress" rounded class="q-mt-xs" color="white" />
@@ -359,7 +367,16 @@ export default defineComponent({
       }
       return store.vip;
     });
-    const vip_progress = ref(store.currentDeposit / store.levelUpDeposit);
+    
+    const vip_progress = computed(() => {
+      const bet = Number(store.currentBetAmt);
+      const upgrade = Number(store.currentUpgradeBetAmt);
+
+      if (isNaN(bet) || isNaN(upgrade) || upgrade <= 0) {
+        return 0;
+      }
+      return Math.min(bet / upgrade, 1);
+    });
     const goToVip = () => {
       router.push("/account/vip?redirect=account");
     };
@@ -385,6 +402,7 @@ export default defineComponent({
     onMounted(() => {
       getBalance();
       store.getBalance();
+      store.getVIPInfo();
       // store.getUnreadTotal();
       // getVersionNo();
       getPromoImage();
@@ -394,6 +412,13 @@ export default defineComponent({
       }
     });
 
+    const formatNumber = (numberString) => {
+      const number = parseFloat(numberString);
+      if (!isNaN(number)) {
+        return number.toLocaleString("en-US");
+      }
+      return "";
+    };
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const btm_banners = ref([]);
     const getPromoImage = () => {
@@ -449,7 +474,8 @@ export default defineComponent({
       btm_banners,
       imgURL,
       gotoPromo,
-      slide: ref(0)
+      slide: ref(0),
+      formatNumber
     };
   }
 });
