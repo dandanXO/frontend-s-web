@@ -1195,7 +1195,7 @@
               </div>
             </div>
           </el-descriptions-item>
-          <el-descriptions-item :label="t('fields.validBet')" v-if="parseInt(memberDetail.siteId) === 7">
+          <el-descriptions-item :label="t('fields.validBet')" v-if="parseInt(memberDetail.siteId) === 7 || parseInt(memberDetail.siteId) === 6">
             <div style="display: inline-block;" v-loading="loading.total">
               <div class="balance">
                 $
