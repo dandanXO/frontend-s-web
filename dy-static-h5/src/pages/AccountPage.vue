@@ -107,7 +107,7 @@
             </div>
             <div class="middle">
               <div class="row items-center justify-between">
-                <div class="left">成长值</div>
+                <div class="left">晋级流水（元）</div>
                 <div class="right">{{ store.currentDeposit }}/{{ store.levelUpDeposit }}</div>
               </div>
 
@@ -123,7 +123,7 @@
             <div class="vip-getpromo-div">
               <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
               <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" />
-              <span>晋级礼包</span>
+              <span>晋级礼金</span>
             </div>
             <div class="vip-getpromo-div">
               <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
@@ -135,7 +135,7 @@
               <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
 
               <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" />
-              <span>每月活动</span>
+              <span>会员日红包</span>
             </div>
             <div class="vip-getpromo-div">
               <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>

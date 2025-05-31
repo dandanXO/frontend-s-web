@@ -492,7 +492,7 @@
               </tr>
             </thead>
             <tbody>
-              <!-- <tr>
+              <tr>
                 <td>VIP0</td>
                 <td>0.45%</td>
                 <td>0.40%</td>
@@ -500,7 +500,7 @@
                 <td>0.40%</td>
                 <td>0.60%</td>
                 <td>8,888</td>
-              </tr> -->
+              </tr>
               <tr>
                 <td>VIP1</td>
                 <td>0.45%</td>
@@ -1944,6 +1944,7 @@ $border-settings: 1px solid #e5e7eb;
       .overflow-table {
         overflow-x: auto;
         width: 100%;
+        text-align: center;
         &::-webkit-scrollbar {
           width: 8px; /* Change this value to your desired width */
           height: 8px; /* Change this value for horizontal scrollbars */
