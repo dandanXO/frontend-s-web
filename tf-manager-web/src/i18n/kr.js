@@ -2057,6 +2057,7 @@ export default {
     confirmUpdate: '업데이트하시겠습니까?',
     confirmUpdatePayment: '결제를 업데이트하시겠습니까?',
     confirmUnbind: '은행 카드를 언바인드하시겠습니까?',
+    confirmToAction: '이 작업을 진행하시겠습니까?',
     copyToClipboard: '이 (가) 클립보드로 복사되었습니다.',
     copySuccess: '복사 성공',
     deleteSuccess: '삭제 성공',

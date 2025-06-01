@@ -2699,6 +2699,7 @@ export default {
     confirmUpdate: 'Do you want to update?',
     confirmUpdatePayment: 'Do you want to update payment?',
     confirmUnbind: 'Confirm that you want unbind bank card?',
+    confirmToAction: 'Confirm that you want to proceed with this operation?',
     copyToClipboard: ' has been copied to clipboard.',
     copySuccess: 'Copy Success',
     deleteSuccess: 'Delete Success',
