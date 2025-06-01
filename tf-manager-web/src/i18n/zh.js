@@ -2685,6 +2685,7 @@ export default {
     confirmUpdate: '请确认是否更新？',
     confirmUpdatePayment: '请确认是否更新支付？',
     confirmUnbind: '请确认是否解绑会员银行卡？',
+    confirmToAction: '请确认是否执行此操作？',
     copyToClipboard: '已复制到剪贴板中',
     copySuccess: '成功复制',
     deleteSuccess: '删除成功',

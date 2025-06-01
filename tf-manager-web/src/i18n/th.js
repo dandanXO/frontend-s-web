@@ -1402,6 +1402,7 @@ export default {
     confirmToCheck: 'คุณต้องการอัปเดตหรือไม่?',
     confirmUpdate: 'คุณต้องการอัปเดตหรือไม่?',
     confirmUpdatePayment: 'คุณต้องการอัปเดตการชำระเงินหรือไม่?',
+    confirmToAction: 'คุณต้องการดำเนินการนี้หรือไม่?',
     copyToClipboard: ' ถูกคัดลอกไปยังคลิปบอร์ดแล้ว',
     copySuccess: 'คัดลอกสำเร็จ',
     deleteSuccess: 'ลบสำเร็จ',
