@@ -176,7 +176,7 @@
         <img :src="badgeSrc" />
       </div>
       <div class="badge" v-show="!isDataLoaded" style="width: 50px; height: 50px;"></div>
-      
+
       <!-- <div
         class="claim-btn"
         :class="{ disabled: isLoading['all'] || !isDataLoaded }"
@@ -607,10 +607,10 @@
         </div>
       </div>
     </div>
-    
+
     <div class="outerContainer">
       <div class="innerContainer">
-        
+
     <div class="terms-conditions">
       <!-- <div class="section-title">规则与条款</div> -->
       <div class="heading">
@@ -681,7 +681,7 @@
       </ol> -->
       <ol class="terms got-gold-bullets">
         <li class="wbg"><h2>会员晋级/保级/降级规则</h2></li>
-        
+
         <ol class="terms got-bullets">
           <li>完成等级要求的累计有效流水后系统于次日北京时间早上 10 点自动更新，具体完成时间以系统为准，请耐心等待；</li>
           <li>VIP 等级达到相应的要求可每天晋升一级，但 VIP 等级不可越级晋升；</li>
@@ -693,7 +693,7 @@
         <ol class="terms">
           <li>生日符合资格的会员，每年生日当天及当天后 7 日内到在线客服提供相关资料申请生日礼金，逾期不补，彩金 1 倍流水即可提款；</li>
         </ol>
-        
+
         <li class="wbg"><h2>首次保级彩金</h2></li>
         <ol class="terms">
           <li>会员在 90 天保级期内达到保级要求时，第 91 天即可领取首次保级彩金，首次保级彩金 1 倍流水即可提款。</li>
@@ -708,18 +708,18 @@
         <ol class="terms">
           <li>统计每日返水金额，对应 VIP 等级返水加赠比例派发。次日可领取每日额外返水红包彩金，返水红包积累至 10 元即可领取（不足 10 元则不可领取），彩金 1 倍流水即可提款。<br>例：VIP12 会员当日的返水金额为 1000 元，则按照 VIP12 每日额外返水红包赠送比例 2.0% 计算：1000*2.0%=20 元，返水红包为 20 元，会员可在页面上点击领取。</li>
         </ol>
-        
+
         <li class="wbg"><h2>每月 15 号红包</h2></li>
         <ol class="terms">
           <li>会员日为每月 15 号 00:00 起：东赢会员在上个月有任意一笔有效存款，即可在会员日 15 号 00:00 至 21 号 23:59 期间领取对应等级的会员日礼金（以领取时的等级为准）会员礼金仅需三倍流水即可出款，过期未领者则视为主动放弃：</li>
         </ol>
-        
+
         <li class="wbg"><h2>充值加赠20%奖金</h2></li>
         <ol class="terms got-bullets">
         <li>VIP1及以上会员在会员日当天至21号23:59可登录VIP活动页面领取专属充值加码券且加码券需在15日内在充值页面进行勾选优惠使用，成功使用后需要（本金+彩金）x8倍流水即可提款；</li>
         <li>加码券使用当日不可与其他存款优惠共享。</li>
       </ol>
-        
+
       </ol>
 
       <!--      <h2>八。节日礼金</h2>-->
@@ -734,7 +734,7 @@
       <div class="heading"  @click="toggleAccordion">
         <div class="headingtext gz">
           <!-- 一般规则 -->
-          
+
           <img src="../../assets/images/vip/vip-ybgz.png">
         </div>
       </div>
@@ -1521,7 +1521,7 @@ $border-settings: 1px solid #e5e7eb;
     background: #F3E5D1;
     padding: 5px;
   .innerContainer {
-    
+
     border: 1px solid #996F37;
     border-radius: 6px;
   }
@@ -1610,7 +1610,7 @@ $border-settings: 1px solid #e5e7eb;
       // width: 80px;
       // position: absolute;
       // left: 15px;
-      
+
       width: 80px;
       img {
         width: 100%;
@@ -2132,7 +2132,7 @@ $border-settings: 1px solid #e5e7eb;
         font-style: italic;
         font-weight: 700;
         line-height: normal;
-        
+
         margin-top: 10px;
         // position: absolute;
         .type {
@@ -2289,7 +2289,7 @@ $border-settings: 1px solid #e5e7eb;
     background: url(../../assets/images/vip/tab-bg.png)no-repeat center center;
     background-size: contain;
     padding: 1px;
-    
+
     .tab {
       // max-width: 120px;
       padding: 8px 40px;
@@ -2495,7 +2495,7 @@ $border-settings: 1px solid #e5e7eb;
         }
       }
 
-      
+
       &.got-gold-bullets {
         h2 {
           color:#996F37;
@@ -2647,14 +2647,14 @@ $border-settings: 1px solid #e5e7eb;
     grid-template-columns: repeat(2, 1fr);
     justify-content: center;
     align-items: flex-start;
-    // &:first-child {
-    //   margin-right: 4px;
-    //   // padding-right: 4px;
-    // }
-    // &:last-child {
-    //   margin-left: -4px;
-    //   padding-left: 8px;
-    // }
+    &:first-child {
+      margin-right: 4px;
+      padding-right: 4px;
+    }
+    &:last-child {
+      margin-left: -4px;
+      padding-left: 8px;
+    }
   }
   :deep(.carousel__track) {
     transform-style: preserve-3d;
@@ -2748,7 +2748,7 @@ $border-settings: 1px solid #e5e7eb;
     .vipitem {
       // margin-left: 50px;
     }
-    
+
     .vipitem {
       margin-right: 10px;
     }
@@ -2890,7 +2890,7 @@ $border-settings: 1px solid #e5e7eb;
     tbody {
       background: #F3E5D1;
       // color: #ffffff;
-      
+
       color: #585858;
     }
     th,
