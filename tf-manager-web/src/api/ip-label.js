@@ -21,6 +21,6 @@ export const selectIpLabelList = (query) => {
   return https().request("/ipLabel/list", Method.GET, query, ContentType.form);
 };
 
-export const selectIpLabelAll = () => {
-  return https().request("/ipLabel/list", Method.GET);
+export const selectIpLabelAll = (siteId) => {
+  return https().request("/ipLabel/list", Method.GET, { siteId: siteId }, ContentType.form);
 };

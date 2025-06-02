@@ -652,4 +652,36 @@ export default defineComponent({
   font-weight: bold;
   letter-spacing: 1px;
 }
+
+.claim-title-icon,
+  .claim-coin-icon,
+  .claim-gift-icon,
+  .claim-stacked-coins-icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .claim-title-icon {
+    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/section-title-img.png") no-repeat center
+      center;
+    background-size: 100% 100%;
+  }
+
+  .claim-coin-icon {
+    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon1.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
+
+  .claim-gift-icon {
+    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon2.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
+
+  .claim-stacked-coins-icon {
+    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon3.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
 </style>

@@ -117,7 +117,7 @@ watch(
 
 onBeforeMount(() => {
   if(store.memberType === 'AFFILIATE') {
-    router.push('/share-affiliate');
+    router.push('/affiliate/agent');
   }
 })
 </script>

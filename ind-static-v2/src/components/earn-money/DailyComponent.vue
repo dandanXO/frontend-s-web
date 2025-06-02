@@ -245,6 +245,36 @@
     </div>
   </div>
 
+  <div class="info-wrapper q-pt-lg">
+    <div class="title-txt">Today Report (Total)</div>
+    <div class="info-container">
+      <div class="info-row">
+        <div class="info-content-item line-side">
+          <div class="info-title">
+            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-08.png" /></div>
+            <div class="info-txt">Number of depositors:</div>
+          </div>
+          <div class="info-amount">
+            {{ teamAmountData.noOfDepositMembers }}
+          </div>
+        </div>
+        <div class="info-content-item">
+          <div class="info-title">
+            <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-09.png" /></div>
+            <div class="info-txt">Deposit amount:</div>
+          </div>
+          <div
+            class="info-amount"
+            :class="checkTeamAmountData(teamAmountData.totalDeposit) === 'Calculating' ? 'font-smaller' : ''"
+          >
+            <span>{{ store.currency.value }}&nbsp;</span>
+            {{ convertToCommaAmount(checkTeamAmountData(teamAmountData.totalDeposit), false) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <LoadingComponent v-if="isLoading.referredBetRebateRecord"></LoadingComponent>
   <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Member" shortenContainer="true"></NoInfoComponent>
   <div v-else class="member-info-container">
@@ -549,6 +579,19 @@ const checkTeamAmountData = (value) => {
   return value === -1 ? "Calculating" : value;
 };
 
+const getDailyDepositData = () => {
+  api
+    .get(`/session/member/depositDailyDetails`)
+    .then((res) => {
+      const { code, data } = res;
+      if (code === 0) {
+        teamAmountData.noOfDepositMembers = data.noOfDepositMembers;
+        teamAmountData.totalDeposit = data.totalDeposit;
+      }
+    })
+    .catch(() => {});
+};
+
 onMounted(() => {
   initializeSwiperNav();
 
@@ -556,6 +599,7 @@ onMounted(() => {
 
   getVIPApi();
   getTeamAmountData();
+  getDailyDepositData();
   // getChartAPI();
 });
 </script>

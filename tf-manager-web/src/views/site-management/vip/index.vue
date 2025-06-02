@@ -55,7 +55,7 @@
           />
         </el-form-item>
 
-        <el-form-item :label="t('fields.category')" prop="category">
+        <el-form-item :label="t('fields.category')" prop="category" v-if="form.siteId === 6 || form.siteId === 7">
           <el-select
             v-model="form.category"
             size="small"
@@ -303,6 +303,16 @@ const uiControl = reactive({
     { key: 4, value: "PLATINUM" },
     { key: 5, value: "DIAMOND" },
     { key: 6, value: "WANGZE" },
+    { key: 7, value: "VIP1" },
+    { key: 8, value: "VIP2" },
+    { key: 9, value: "VIP3" },
+    { key: 10, value: "VIP4" },
+    { key: 11, value: "VIP5" },
+    { key: 12, value: "VIP6" },
+    { key: 13, value: "VIP7" },
+    { key: 14, value: "VIP8" },
+    { key: 15, value: "VIP9" },
+    { key: 16, value: "VIP10" },
   ]
 });
 const page = reactive({

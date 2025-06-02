@@ -43,33 +43,33 @@
           <tr>
             <td>VIP 1</td>
             <td>5,000 VNDP</td>
+            <td>0.3%</td>
+            <td>8,888 VNDP</td>
+            <td>0.4%</td>
+            <td>1,088 VNDP</td>
+          </tr>
+          <tr>
+            <td>VIP 2</td>
+            <td>5,000 VNDP</td>
+            <td>0.4%</td>
+            <td>8,888 VNDP</td>
+            <td>0.5%</td>
+            <td>1,088 VNDP</td>
+          </tr>
+          <tr>
+            <td>VIP 3</td>
+            <td>5,000 VNDP</td>
             <td>0.5%</td>
             <td>8,888 VNDP</td>
             <td>0.6%</td>
             <td>1,088 VNDP</td>
           </tr>
           <tr>
-            <td>VIP 2</td>
-            <td>5,000 VNDP</td>
-            <td>0.6%</td>
-            <td>8,888 VNDP</td>
-            <td>0.7%</td>
-            <td>1,088 VNDP</td>
-          </tr>
-          <tr>
-            <td>VIP 3</td>
-            <td>5,000 VNDP</td>
-            <td>0.6%</td>
-            <td>8,888 VNDP</td>
-            <td>0.7%</td>
-            <td>1,088 VNDP</td>
-          </tr>
-          <tr>
             <td>VIP 4</td>
             <td>5,000 VNDP</td>
-            <td>0.7%</td>
+            <td>0.6%</td>
             <td>8,888 VNDP</td>
-            <td>0.8%</td>
+            <td>0.7%</td>
             <td>1,088 VNDP</td>
           </tr>
           <tr>

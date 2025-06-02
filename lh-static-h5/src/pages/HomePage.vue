@@ -1269,16 +1269,24 @@ export default defineComponent({
     };
 
     function loadData() {
+      const randNum = Math.floor(Math.random() * 1000) + 1;
       api
-        .get("/opt-session/promo/banner?category=HOME")
+        .get(`/opt-session/promo/banner?category=HOME&v=${randNum}`)
         .then((res) => {
           if (res.code === 0) {
             banners.value = res.data.filter((promo) => {
+              const isVisible = (() => {
+                if (isH5.value) return promo.showH5;
+                if (!isH5.value) return promo.showApp;
+                return promo.showH5;
+              })();
+
+              if (!isVisible) return false;
               if ($q.dark.isActive) {
                 return !["lh1-dark-mode"].includes(promo.redirectUrl) && promo.mobileImageUrlDark;
               }
 
-              return promo;
+              return true;
             });
           } else {
           }
@@ -1545,6 +1553,8 @@ export default defineComponent({
         return;
       } else if (banner.redirectUrl == "app://deposit") {
         router.push("/finance/deposit");
+      } else if (banner.redirectUrl === "livestream") {
+        router.push("/livestream");
       } else {
         const redirectU = "/promo?name=" + banner.redirectUrl;
         router.push(`${redirectU}`);
@@ -1736,6 +1746,7 @@ export default defineComponent({
             result = `${`${hours}`.padStart(2, 0)}:${`${minutes}`.padStart(2, 0)}:${`${seconds}`.padStart(2, 0)}`;
           }
         }
+        // console.log(result,'time');
         return result;
       });
     };
@@ -1853,9 +1864,9 @@ export default defineComponent({
 
     onActivated(() => {
       getPlatList();
-      loadData();
       loadAnnouncement();
       checkPlatform();
+      loadData();
       // getVersionNo();
       getAppDownloadUrl();
       setTimeout(() => {
@@ -1871,7 +1882,9 @@ export default defineComponent({
     onMounted(() => {
       try {
         popupExpiryMap.value = JSON.parse(localStorage.getItem("POPUP"));
-      } catch {}
+      } catch {
+
+      }
 
       if (sessionStorage.getItem("regSuccessGuideVisible")) {
         store.regSuccessGuideVisible = true;
@@ -2064,6 +2077,7 @@ export default defineComponent({
     // text-shadow: 2px 2px 0px #00000040;
     font-size: 14px;
   }
+
 }
 
 .q-page-container {

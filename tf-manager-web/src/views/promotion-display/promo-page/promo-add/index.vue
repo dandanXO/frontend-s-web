@@ -1236,7 +1236,7 @@
     >
       <div id="preview">
         <el-image
-          v-if="uploadedImage.url"
+          v-if="uploadedImage.url && !isAttaching"
           :src="uploadedImage.url"
           :fit="contain"
           :preview-src-list="[uploadedImage.url]"
@@ -1259,8 +1259,11 @@
               size="mini"
               type="success"
               @click="$refs.inputImage.click()"
+              :disabled="isAttaching"
             >
-              {{ t('fields.upload') }}
+              <!-- {{ t('fields.upload') }} -->
+              
+              {{ isAttaching ? t('fields.uploading') : t('fields.upload') }}
             </el-button>
           </el-col>
           <el-col :span="1" />
@@ -2095,13 +2098,15 @@ function showDialog(type, isDark = false) {
   uiControl.dialogVisible = true
   uiControl.selectDarkImage = isDark;
 }
-
+const isAttaching = ref(false);
 async function attachImage(event) {
+  isAttaching.value = true;
   imageForm.name = generateRandomString(8);
   const data = await attachPhoto(event)
   if (data.code === 0) {
     imageForm.path = data.data
     inputImage.value.value = ''
+    isAttaching.value = false;
   } else {
     ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
   }
@@ -2147,7 +2152,10 @@ async function attachPhoto(event) {
 
 function submitImageUpload() {
   imageFormRef.value.validate(async valid => {
+    console.log(imageForm);
     if (valid) {
+      console.log('valid!');
+      console.log(imageForm);
       await createSiteImage(imageForm)
       uiControl.dialogVisible = false
       ElMessage({ message: t('message.addSuccess'), type: 'success' })

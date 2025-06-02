@@ -130,6 +130,7 @@
                     {{ $t('common.contact_us') }}
                   </div>
                 </div>
+                <LhFeedback v-if="props.siteId === '7'" />
               </el-form>
               <el-form
                 v-if="isReg"
@@ -625,6 +626,7 @@ import {
 } from '@/api/user'
 import { useI18n } from 'vue-i18n'
 import { i18nStore } from '@/store/language'
+import LhFeedback from '../customer-service/lh-feedback.vue'
 
 export default defineComponent({
   props: {
@@ -632,6 +634,9 @@ export default defineComponent({
       type: [String, Number], // Specify the allowed types for the prop
       required: true,
     },
+  },
+  components: {
+    LhFeedback
   },
   setup(props) {
     const validatePass2 = async (r, v) => {
@@ -1452,6 +1457,7 @@ export default defineComponent({
         setLanguage('pt')
       }
     }
+
     onMounted(() => {
       // const swiper = new Swiper('.swiper-container', swiperOptions);
       if (route.query.agent) {

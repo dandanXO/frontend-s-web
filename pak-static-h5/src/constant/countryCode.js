@@ -49,11 +49,11 @@ export const COUNTRY_CODE_LIST = [
     code: "297",
     emoji: "🇦🇼"
   },
-  {
-    name: "Australia",
-    code: "61",
-    emoji: "🇦🇺"
-  },
+  // {
+  //   name: "Australia",
+  //   code: "61",
+  //   emoji: "🇦🇺"
+  // },
   {
     name: "Austria",
     code: "43",
@@ -249,16 +249,16 @@ export const COUNTRY_CODE_LIST = [
     code: "385",
     emoji: "🇭🇷"
   },
-  {
-    name: "Cuba",
-    code: "53",
-    emoji: "🇨🇺"
-  },
-  {
-    name: "Curaçao",
-    code: "599",
-    emoji: "🇨🇼"
-  },
+  // {
+  //   name: "Cuba",
+  //   code: "53",
+  //   emoji: "🇨🇺"
+  // },
+  // {
+  //   name: "Curaçao",
+  //   code: "599",
+  //   emoji: "🇨🇼"
+  // },
   {
     name: "Cyprus",
     code: "357",
@@ -354,11 +354,11 @@ export const COUNTRY_CODE_LIST = [
     code: "358",
     emoji: "🇫🇮"
   },
-  {
-    name: "France",
-    code: "33",
-    emoji: "🇫🇷"
-  },
+  // {
+  //   name: "France",
+  //   code: "33",
+  //   emoji: "🇫🇷"
+  // },
   {
     name: "French Guiana",
     code: "594",
@@ -384,11 +384,11 @@ export const COUNTRY_CODE_LIST = [
     code: "995",
     emoji: "🇬🇪"
   },
-  {
-    name: "Germany",
-    code: "49",
-    emoji: "🇩🇪"
-  },
+  // {
+  //   name: "Germany",
+  //   code: "49",
+  //   emoji: "🇩🇪"
+  // },
   {
     name: "Ghana",
     code: "233",
@@ -459,11 +459,11 @@ export const COUNTRY_CODE_LIST = [
     code: "504",
     emoji: "🇭🇳"
   },
-  {
-    name: "Hong Kong SAR China",
-    code: "852",
-    emoji: "🇭🇰"
-  },
+  // {
+  //   name: "Hong Kong SAR China",
+  //   code: "852",
+  //   emoji: "🇭🇰"
+  // },
   {
     name: "Hungary",
     code: "36",
@@ -484,11 +484,11 @@ export const COUNTRY_CODE_LIST = [
     code: "62",
     emoji: "🇮🇩"
   },
-  {
-    name: "Iran",
-    code: "98",
-    emoji: "🇮🇷"
-  },
+  // {
+  //   name: "Iran",
+  //   code: "98",
+  //   emoji: "🇮🇷"
+  // },
   {
     name: "Iraq",
     code: "964",
@@ -734,11 +734,11 @@ export const COUNTRY_CODE_LIST = [
     code: "977",
     emoji: "🇳🇵"
   },
-  {
-    name: "Netherlands",
-    code: "31",
-    emoji: "🇳🇱"
-  },
+  // {
+  //   name: "Netherlands",
+  //   code: "31",
+  //   emoji: "🇳🇱"
+  // },
   {
     name: "New Caledonia",
     code: "687",
@@ -774,11 +774,11 @@ export const COUNTRY_CODE_LIST = [
     code: "672",
     emoji: "🇳🇫"
   },
-  {
-    name: "North Korea",
-    code: "850",
-    emoji: "🇰🇵"
-  },
+  // {
+  //   name: "North Korea",
+  //   code: "850",
+  //   emoji: "🇰🇵"
+  // },
   {
     name: "Northern Mariana Islands",
     code: "1",
@@ -869,11 +869,11 @@ export const COUNTRY_CODE_LIST = [
     code: "40",
     emoji: "🇷🇴"
   },
-  {
-    name: "Russia",
-    code: "7",
-    emoji: "🇷🇺"
-  },
+  // {
+  //   name: "Russia",
+  //   code: "7",
+  //   emoji: "🇷🇺"
+  // },
   {
     name: "Rwanda",
     code: "250",
@@ -949,11 +949,11 @@ export const COUNTRY_CODE_LIST = [
     code: "232",
     emoji: "🇸🇱"
   },
-  {
-    name: "Singapore",
-    code: "65",
-    emoji: "🇸🇬"
-  },
+  // {
+  //   name: "Singapore",
+  //   code: "65",
+  //   emoji: "🇸🇬"
+  // },
   {
     name: "Sint Maarten",
     code: "1",
@@ -1034,11 +1034,11 @@ export const COUNTRY_CODE_LIST = [
     code: "41",
     emoji: "🇨🇭"
   },
-  {
-    name: "Syria",
-    code: "963",
-    emoji: "🇸🇾"
-  },
+  // {
+  //   name: "Syria",
+  //   code: "963",
+  //   emoji: "🇸🇾"
+  // },
   {
     name: "Taiwan",
     code: "886",
@@ -1114,26 +1114,26 @@ export const COUNTRY_CODE_LIST = [
     code: "256",
     emoji: "🇺🇬"
   },
-  {
-    name: "Ukraine",
-    code: "380",
-    emoji: "🇺🇦"
-  },
+  // {
+  //   name: "Ukraine",
+  //   code: "380",
+  //   emoji: "🇺🇦"
+  // },
   {
     name: "United Arab Emirates",
     code: "971",
     emoji: "🇦🇪"
   },
-  {
-    name: "United Kingdom",
-    code: "44",
-    emoji: "🇬🇧"
-  },
-  {
-    name: "United States",
-    code: "1",
-    emoji: "🇺🇸"
-  },
+  // {
+  //   name: "United Kingdom",
+  //   code: "44",
+  //   emoji: "🇬🇧"
+  // },
+  // {
+  //   name: "United States",
+  //   code: "1",
+  //   emoji: "🇺🇸"
+  // },
   {
     name: "Uruguay",
     code: "598",

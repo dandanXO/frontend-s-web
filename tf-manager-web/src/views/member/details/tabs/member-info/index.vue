@@ -1195,7 +1195,7 @@
               </div>
             </div>
           </el-descriptions-item>
-          <el-descriptions-item :label="t('fields.validBet')" v-if="parseInt(memberDetail.siteId) === 7">
+          <el-descriptions-item :label="t('fields.validBet')" v-if="parseInt(memberDetail.siteId) === 7 || parseInt(memberDetail.siteId) === 6">
             <div style="display: inline-block;" v-loading="loading.total">
               <div class="balance">
                 $
@@ -2652,7 +2652,7 @@ export default defineComponent({
         store.state.app.ipLabels.length < 1 ||
         store.state.app.ipLabels === undefined
       ) {
-        const { data: labels } = await selectIpLabelAll()
+        const { data: labels } = await selectIpLabelAll(route.query.site)
         store.dispatch(AppActionTypes.ACTION_SET_IP_LABELS, labels)
       }
     }

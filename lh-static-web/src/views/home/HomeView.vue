@@ -1,10 +1,11 @@
 <template>
   <div class="home">
-    <HomeBanner></HomeBanner>
+    <HomeBanner @scrollToView="handleScrollToView" />
     <div class="home-mid-section">
       <HomeAnnouncement></HomeAnnouncement>
       <!-- <EurocupHomePageBanner /> -->
-      <HomeHotMatch :openGame="openGame"/>
+      <Livestream ref="livestreamRef" />
+      <HomeHotMatch :openGame="openGame" />
       <HomeDownload></HomeDownload>
       <HomeHotGame></HomeHotGame>
       <HomeService></HomeService>
@@ -26,13 +27,21 @@ import HomeHotMatch from "@/components/home/hotmatch/HotMatch.vue";
 import HomeHotGame from "@/components/home/hotgame/index.vue";
 import HomeService from "@/components/home/service/index.vue";
 import { userStore } from "@/store";
+import Livestream from "@/components/home/livestream/Livestream.vue";
 // import EurocupHomePageBanner from "@/components/home/EurocupHomePageBanner.vue";
 // import NewMemberGuide from '@/components/home/NewMemberGuide.vue'
 
-const store = userStore();
+const livestreamRef = ref(null);
 const gameMenu = ref(null);
+
 const openGame = (gameName, platType, gameCode, scrollingState) => {
   gameMenu.value.open(gameName, platType, gameCode, scrollingState);
+};
+
+const handleScrollToView = (viewName) => {
+  if (viewName === "livestream") {
+    livestreamRef.value?.$el?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }
 };
 
 onMounted(() => {});
