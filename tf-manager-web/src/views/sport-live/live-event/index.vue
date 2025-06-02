@@ -198,6 +198,13 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.isTestEvent')" prop="isTest">
+          <el-switch
+            v-model="form.isTest"
+            :active-text="t('fields.yes')"
+            :inactive-text="t('fields.no')"
+          />
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -237,7 +244,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="sort" :label="t('fields.sequence')" width="120" />
+      <el-table-column prop="sort" :label="t('fields.sequence')" width="50" />
       <el-table-column prop="liveStatus" :label="t('fields.status')" width="120">
         <template #default="scope">
           <el-tag v-if="scope.row.liveStatus === 2" type="success">{{ t('status.uefaMatch.ENDED') }}</el-tag>
@@ -256,6 +263,13 @@
               type: 'date',
             }"
           />
+        </template>
+      </el-table-column>
+      <el-table-column prop="isTest" :label="t('fields.isTestEvent')" width="120">
+        <template #default="scope">
+          <el-tag :type="scope.row.isTest ? 'success' : 'info'">
+            {{ scope.row.isTest ? t('fields.yes') : t('fields.no') }}
+          </el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="createTime" :label="t('fields.createTime')" width="180">
@@ -523,7 +537,8 @@ const form = reactive({
   title: null,
   eventStartTime: null,
   homeName: '',
-  awayName: ''
+  awayName: '',
+  isTest: false
 });
 
 const formRules = reactive({

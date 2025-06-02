@@ -40,10 +40,8 @@ default:
   script: 
     - sonar-scanner
   allow_failure: true
-  only:
-    - test
-    - staging
-    - production
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "production"'
 
 .build-projects:
   stage: code-check-and-build
@@ -728,6 +726,13 @@ deploy-lh-landing-v4:
   extends: .s3-deploy
   variables:
     PROJECT: lh-landing-v4
+
+#===============================================================================================
+
+deploy-lh-landing-v5:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-landing-v5
 
 #===============================================================================================
 

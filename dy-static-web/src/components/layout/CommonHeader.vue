@@ -319,7 +319,7 @@
                   :rules="[
                     { required: true, message: '请输入姓名' },
                     {
-                      pattern: '^([\u4e00-\u9fa5]*)$',
+                      pattern: '^([\u4e00-\u9fa5·]*)$',
                       message: '请输入中文字符',
                       trigger: 'change'
                     }
@@ -982,7 +982,7 @@ export default defineComponent({
     };
     const checkRealName = (v) => {
       // const alphanumeric = /^[\p{L}\p{N}]*$/u;
-      const chineseCharOnly = /^([\u4e00-\u9fa5]*)$/u;
+      const chineseCharOnly = /^([\u4e00-\u9fa5·]*)$/u;
       return v.match(chineseCharOnly);
     };
     let validatePass2 = async (r, v) => {

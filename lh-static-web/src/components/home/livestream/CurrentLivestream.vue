@@ -3,36 +3,64 @@
     <div class="current-livestream__streamer-info-wrapper">
       <div class="current-livestream__streamer-info">
         <div class="current-livestream__streamer-info__avatar">
-          <img :src="livestreamData.avatar" loading="lazy" />
+          <img :src="avatarUrl" loading="lazy" />
         </div>
-        <span class="current-livestream__streamer-info__name">{{ livestreamData.name }}</span>
-        <div class="current-livestream__streamer-info__on-air">正在直播</div>
+        <span class="current-livestream__streamer-info__name">
+          {{ isSystemLivestream ? "雷火" : livestreamData.name }}
+        </span>
+        <div v-if="livestreamData.liveStatus" class="current-livestream__streamer-info__on-air">正在直播</div>
       </div>
     </div>
 
-    <div class="current-livestream__match-info">
-      <span class="current-livestream__match-info__team-name">{{ livestreamData.homeNameZh }}</span>
-      <div class="current-livestream__match-info__team-emblem">
-        <img :src="livestreamData.homeIcon" loading="lazy" />
+    <div v-if="livestreamData.id" class="current-livestream__livestream-info">
+      <span class="current-livestream__livestream-info__title">
+        {{ livestreamData.roomTitle }}
+      </span>
+      <BadgeChip class="current-livestream__livestream-info__badge-tag" :level="8">五星公会</BadgeChip>
+      <div class="current-livestream__livestream-info__tag-wrapper">
+        <div class="current-livestream__livestream-info__tag">
+          {{ isSystemLivestream ? "官方直播间" : "主播" }}
+        </div>
+        <div class="current-livestream__livestream-info__tag">
+          {{ currentSportType }}
+        </div>
       </div>
-      <div class="current-livestream__match-info__team-vs">VS</div>
-      <div class="current-livestream__match-info__team-emblem">
-        <img :src="livestreamData.awayIcon" loading="lazy" />
-      </div>
-      <span class="current-livestream__match-info__team-name">{{ livestreamData.awayNameZh }}</span>
     </div>
 
     <button class="current-livestream__bet-btn" @click="$emit('click')">投一注</button>
   </div>
 </template>
 <script setup>
-defineProps({
+import { useLocalStorage } from "@vueuse/core";
+import BadgeChip from "./BadgeChip.vue";
+import { computed } from "vue";
+import { SPORT_TYPE_LIST } from "../../../constant/sportType";
+
+const props = defineProps({
   livestreamData: {
     type: Object,
     default: () => ({})
-  }
+  },
+  isSystemLivestream: Boolean
 });
 defineEmits(["click"]);
+
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
+
+const currentSportType = computed(() => {
+  const target = SPORT_TYPE_LIST.find((item) => item.value === props.livestreamData?.sportId);
+  return target ? target.text : "";
+});
+
+const avatarUrl = computed(() => {
+  if (props.isSystemLivestream) {
+    return require("@/assets/home/livestream/system-avatar.png");
+  } else if (props.livestreamData?.avatar) {
+    return imgURL + props.livestreamData?.avatar;
+  } else {
+    return require("@/assets/images/profile/default-1.png");
+  }
+});
 </script>
 <style lang="scss" scoped>
 @import "@/scss/pages/livestream.scss";
@@ -88,24 +116,43 @@ defineEmits(["click"]);
     }
   }
 
-  .current-livestream__match-info {
+  .current-livestream__livestream-info {
     display: flex;
     align-items: center;
-    gap: 18px;
-    .current-livestream__match-info__team-name {
-      font-size: 15px;
-      line-height: 21px;
+    gap: 16px;
+    flex: 1;
+    padding-left: 16px;
+
+    .current-livestream__livestream-info__title {
+      font-size: 20px;
+      line-height: 28px;
       font-weight: 500;
-      color: #7a80a1;
     }
-    .current-livestream__match-info__team-emblem {
-      @include livestream-team-emblem;
+
+    .current-livestream__livestream-info__badge-tag {
+      :deep(.badge-chip__badge) {
+        max-width: 30px;
+      }
+      :deep(.badge-chip__text) {
+        font-size: 12px;
+        line-height: 22px;
+      }
     }
-    .current-livestream__match-info__team-vs {
-      padding: 0 8px;
-      font-size: 16px;
-      line-height: 23px;
-      color: #3981ff;
+
+    .current-livestream__livestream-info__tag-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      .current-livestream__livestream-info__tag {
+        border: 1px solid #7a80a1;
+        border-radius: 12px;
+        padding: 2px 14px;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 18px;
+        color: #7a80a1;
+        text-align: center;
+      }
     }
   }
 
@@ -133,10 +180,14 @@ defineEmits(["click"]);
         }
       }
     }
-    .current-livestream__match-info {
-      .current-livestream__match-info__team-name,
-      .current-livestream__match-info__team-vs {
-        color: #fff;
+
+    .current-livestream__livestream-info {
+      color: #fff;
+      .current-livestream__livestream-info__tag-wrapper {
+        .current-livestream__livestream-info__tag {
+          border-color: #fff;
+          color: #fff;
+        }
       }
     }
 

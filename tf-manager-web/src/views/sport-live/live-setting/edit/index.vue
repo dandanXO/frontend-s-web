@@ -114,6 +114,13 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.isTestEvent')" prop="isTest">
+          <el-switch
+            v-model="form.isTest"
+            :active-text="t('fields.yes')"
+            :inactive-text="t('fields.no')"
+          />
+        </el-form-item>
 
         <el-form-item>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -168,6 +175,7 @@ const form = reactive({
   sort: 0,
   eventStartTime: '',
   liveStatus: null,
+  isTest: false
 });
 
 const formRules = reactive({
@@ -216,6 +224,7 @@ async function loadEventDetail() {
   const record = data.records?.[0];
   if (record) {
     record.eventStartTime = dayjs(record.eventStartTime).format('YYYY-MM-DD HH:mm:ss');
+    record.isTest = !!record.isTest;
     Object.assign(form, record);
   }
 }
@@ -235,7 +244,8 @@ async function submit() {
       title: form.title,
       eventStartTime: form.eventStartTime,
       liveStatus: form.liveStatus,
-      sort: form.sort
+      sort: form.sort,
+      isTest: form.isTest
     };
 
     if (isInTeamList(form.homeId)) {

@@ -24,6 +24,7 @@ export const userStore = defineStore("userStore", {
       currency: { value: "￥", label: "RMB" },
       loginPageVisible: false,
       regPageVisible: false,
+      currentDeposit: "0.0000",
       unreadTotal: 0,
       siteId: 6,
       visitorId: "",
@@ -51,6 +52,9 @@ export const userStore = defineStore("userStore", {
           window.captchaObj.reset();
           // message.error(err.message);
         });
+    },
+    getCurrentDeposit() {
+      return this.currentDeposit;
     },
     autoLogin(token) {
       this.token = token;
@@ -87,6 +91,7 @@ export const userStore = defineStore("userStore", {
             this.vip = ret.data.vip;
             this.evip = ret.data.evip;
             this.withdrawType = ret.data.withdrawType;
+            this.currentDeposit = ret.data.currentDeposit;
           } else {
             throw new Error(ret.message);
           }

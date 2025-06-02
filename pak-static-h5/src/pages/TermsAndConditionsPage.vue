@@ -619,6 +619,8 @@
 import html2pdf from "html2pdf.js";
 
 import { ref } from "vue";
+import { useUI } from "stores/ui";
+const ui = useUI();
 
 const cardContent = ref(null);
 function downloadPDF() {
