@@ -83,10 +83,10 @@
         </template> -->
 
         <div class="amount">
-          <div v-show="isDataLoaded" v-if="currentBetAmt <= currentUpgradeBetAmt || vipLevel === 12">
+          <div v-show="isDataLoaded" v-if="currentBetAmt <= currentUpgradeBetAmt || vipLevel === 10">
             <div
               class="text"
-              v-if="vipLevel + 1 && currentUpgradeBetAmt && currentUpgradeBetAmt >= currentBetAmt && vipLevel != 12"
+              v-if="vipLevel + 1 && currentUpgradeBetAmt && currentUpgradeBetAmt >= currentBetAmt && vipLevel != 10"
             >
               还需
               <div class="required-amount">{{ formatNumber(currentUpgradeBetAmt - currentBetAmt) || 0 }}</div>
@@ -105,7 +105,7 @@
                 有效投注晋升到 VIP 1
               </div> -->
 
-            <div class="text" v-else-if="vipLevel === 12">您已达到或超越最高 VIP 等级所需的有效流水</div>
+            <div class="text" v-else-if="vipLevel === 10">您已达到或超越最高 VIP 等级所需的有效流水</div>
             <div class="text" v-else>
               已到达
               <div class="required-amount">{{ currentUpgradeBetAmt }}</div>
@@ -116,7 +116,7 @@
           <div class="text" v-show="isDataLoaded" v-else>已到达有效流水 VIP {{ vipLevel + 1 }}</div>
           <div class="text" v-show="!isDataLoaded">正在为您计算有效投注</div>
 
-          <div v-show="isDataLoaded" class="progressBarContainer" v-if="vipLevel != 0 && vipLevel != 12">
+          <div v-show="isDataLoaded" class="progressBarContainer" v-if="vipLevel != 0 && vipLevel != 10">
             <div class="progressBarOuterBar">
               <div class="progressBarInnerBar" :style="{ width: getVipLevelProgress(vipLevel, 'bet') + '%' }"></div>
             </div>
@@ -129,12 +129,12 @@
             </div>
           </div>
 
-          <div v-show="isDataLoaded" class="progressBarContainer" v-if="vipLevel === 0 || vipLevel === 12">
+          <div v-show="isDataLoaded" class="progressBarContainer" v-if="vipLevel === 0 || vipLevel === 10">
             <div class="progressBarOuterBar">
               <div
                 class="progressBarInnerBar"
                 :style="{
-                  width: vipLevel === 12 ? '100%' : vipLevel === 0 ? getVipLevelProgress(vipLevel, 'bet') + '%' : null
+                  width: vipLevel === 10 ? '100%' : vipLevel === 0 ? getVipLevelProgress(vipLevel, 'bet') + '%' : null
                 }"
               ></div>
             </div>
@@ -145,8 +145,8 @@
                   : `${originalUpgradeBetAmounts[0]}/${originalUpgradeBetAmounts[0]}`
               }}
             </div>
-            <div class="progressBarDescription" v-if="vipLevel == 12">
-              {{ originalUpgradeBetAmounts[11] + "/" + originalUpgradeBetAmounts[11] }}
+            <div class="progressBarDescription" v-if="vipLevel == 10">
+              {{ originalUpgradeBetAmounts[9] + "/" + originalUpgradeBetAmounts[9] }}
             </div>
           </div>
           <div class="progressBarContainer" v-show="!isDataLoaded">
@@ -683,30 +683,30 @@
         <li class="wbg"><h2>会员晋级/保级/降级规则</h2></li>
         
         <ol class="terms got-bullets">
-          <li>完成等级要求的累计有效流水后系统于次日北京时间早上 10 点自动更新，具体完成时间以系统为准，请耐心等待；</li>
-          <li>VIP 等级达到相应的要求可每天晋升一级，但 VIP 等级不可越级晋升；</li>
-          <li>会员在达到某 VIP 等级后，90 天内投注需要完成保级要求。如果在此期间完成晋升，保级要求重新按照当前等级计算；</li>
-          <li>假设会员在一个季度（90 天计算）内没有完成相应的保级要求流水，系统会自动降级一个等级，相应的返水及其它优惠也会随之调整至降级后的等级；</li>
-          <li>每个级别的升级礼金每位会员仅能获得 1 次（升级礼金 1 倍流水即可提款）；</li>
+          <li>完成等级要求的累计有效流水后系统于次日北京时间早上10点自动更新，具体完成时间以系统为准，请耐心等待；</li>
+          <li>VIP等级达到相应的要求可每天晋升一级，但VIP等级不可越级晋升；</li>
+          <li>会员在达到某VIP等级后，90天内投注需要完成保级要求。如果在此期间完成晋升，保级要求重新按照当前等级计算；</li>
+          <li>假设会员在一个季度（90天计算）内没有完成相应的保级要求流水，系统会自动降级一个等级，相应的返水及其它优惠也会随之调整至降级后的等级；</li>
+          <li>每个级别的升级礼金每位会员仅能获得1次（升级礼金1倍流水即可提款）；</li>
         </ol>
         <li class="wbg"><h2>生日礼金</h2></li>
         <ol class="terms">
-          <li>生日符合资格的会员，每年生日当天及当天后 7 日内到在线客服提供相关资料申请生日礼金，逾期不补，彩金 1 倍流水即可提款；</li>
+          <li>生日符合资格的会员，每年生日当天及当天后7日内到在线客服提供相关资料申请生日礼金，逾期不补，彩金1倍流水即可提款；</li>
         </ol>
         
         <li class="wbg"><h2>首次保级彩金</h2></li>
         <ol class="terms">
-          <li>会员在 90 天保级期内达到保级要求时，第 91 天即可领取首次保级彩金，首次保级彩金 1 倍流水即可提款。</li>
+          <li>会员在90天保级期内达到保级要求时，第 91 天即可领取首次保级彩金，首次保级彩金1倍流水即可提款。</li>
         </ol>
 
         <li class="wbg"><h2>年度保级彩金</h2></li>
         <ol class="terms">
-          <li>首次保级成功后计算会员 12 个月内未降级（可晋级），彩金于第 13 个月首日进行派发；彩金 1 倍流水即可提款</li>
+          <li>首次保级成功后计算会员12个月内未降级（可晋级），彩金于第13个月首日进行派发；彩金1倍流水即可提款</li>
         </ol>
 
         <li class="wbg"><h2>每日额外返水红包</h2></li>
         <ol class="terms">
-          <li>统计每日返水金额，对应 VIP 等级返水加赠比例派发。次日可领取每日额外返水红包彩金，返水红包积累至 10 元即可领取（不足 10 元则不可领取），彩金 1 倍流水即可提款。<br>例：VIP12 会员当日的返水金额为 1000 元，则按照 VIP12 每日额外返水红包赠送比例 2.0% 计算：1000*2.0%=20 元，返水红包为 20 元，会员可在页面上点击领取。</li>
+          <li>统计每日返水金额，对应 VIP 等级返水加赠比例派发。次日可领取每日额外返水红包彩金，返水红包积累至 10 元即可领取（不足 10 元则不可领取），彩金 1 倍流水即可提款。<br>例：VIP10会员当日的返水金额为1000元，则按照VIP10每日额外返水红包赠送比例2.0%计算：1000*2.0%=20元，返水红包为20元，会员可在页面上点击领取。</li>
         </ol>
         
         <li class="wbg"><h2>每月 15 号红包</h2></li>
