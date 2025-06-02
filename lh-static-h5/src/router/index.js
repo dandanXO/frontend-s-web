@@ -66,6 +66,7 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/privilege/invite" ||
       to.path === "/maintenance" ||
       to.path === "/affiliatepage" ||
+      to.path ==="/livestream/streamplayer" ||
       to.path === "/live-chat" ||
       to.path === "/live-chat/chat"
     ) {

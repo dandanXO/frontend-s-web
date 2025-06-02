@@ -1553,6 +1553,8 @@ export default defineComponent({
         return;
       } else if (banner.redirectUrl == "app://deposit") {
         router.push("/finance/deposit");
+      } else if (banner.redirectUrl === "livestream") {
+        router.push("/livestream");
       } else {
         const redirectU = "/promo?name=" + banner.redirectUrl;
         router.push(`${redirectU}`);
@@ -1744,6 +1746,7 @@ export default defineComponent({
             result = `${`${hours}`.padStart(2, 0)}:${`${minutes}`.padStart(2, 0)}:${`${seconds}`.padStart(2, 0)}`;
           }
         }
+        // console.log(result,'time');
         return result;
       });
     };
@@ -1879,7 +1882,9 @@ export default defineComponent({
     onMounted(() => {
       try {
         popupExpiryMap.value = JSON.parse(localStorage.getItem("POPUP"));
-      } catch {}
+      } catch {
+
+      }
 
       if (sessionStorage.getItem("regSuccessGuideVisible")) {
         store.regSuccessGuideVisible = true;
@@ -2072,6 +2077,7 @@ export default defineComponent({
     // text-shadow: 2px 2px 0px #00000040;
     font-size: 14px;
   }
+
 }
 
 .q-page-container {
