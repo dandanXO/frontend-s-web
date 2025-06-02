@@ -21,6 +21,9 @@ const ImageminPlugin = require("imagemin-webpack-plugin").default;
 
 const ContextReplacementPlugin = require("webpack").ContextReplacementPlugin;
 
+const isLiveChat = process.env.BUILD_TARGET === "livechat";
+
+
 module.exports = configure(function (ctx) {
   return {
     // https://v2.quasar.dev/quasar-cli-webpack/supporting-ts
@@ -61,6 +64,8 @@ module.exports = configure(function (ctx) {
       analyze: {
         analyzerMode: "static"
       },
+      publicPath: isLiveChat ? "/live-chat/" : "/",
+      distDir: isLiveChat ? "dist/spa/live-chat" : "dist/spa",
       // transpile: false,
       // publicPath: '/',
 
