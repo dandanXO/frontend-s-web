@@ -402,6 +402,9 @@ export default defineComponent({
     const showPromoDetails = (promo) => {
       if (promo.promoCode === "lh1-game-steps") {
         isSpecialPromo.value = true;
+      } else if (promo.promoCode === "lh1-livestream") {
+        router.push({ path: '/livestream' });
+        return;
       } else {
         isSpecialPromo.value = false;
       }
