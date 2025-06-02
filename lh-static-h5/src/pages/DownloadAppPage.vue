@@ -14,7 +14,7 @@
       infinite
       transition-next="slide-left"
       transition-prev="slide-right"
-      style="height: 430px"
+      style="height: 440px"
     >
       <template v-slot:navigation-icon="{ active, onClick }">
         <q-btn
@@ -64,7 +64,7 @@
         </div>
       </q-carousel-slide>
     </q-carousel>
-    <div class="flex2">
+    <div class="flex2" style="margin-top: 4px;">
       <button class="btn1-1" @click="openSheet">
         <div>APP下载</div>
       </button>
@@ -263,7 +263,7 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 5px;
+  gap: 7px;
 }
 .main-container{
   overflow-x: hidden;
@@ -292,7 +292,7 @@ export default defineComponent({
   border-radius: 12px;
 }
 .btn1-1{
-  width: 90%;
+  width: 84%;
   color: #FFFFFF;
   font-size: 14px;
   border: 0px;
@@ -302,7 +302,7 @@ export default defineComponent({
   background-size: 100% 100%;
 }
 .btn2{
-  width: 90%;
+  width: 84%;
   color: #7A80A1;
   font-size: 14px;
   border: 0px;
@@ -320,6 +320,7 @@ export default defineComponent({
   margin-bottom: 1rem;
   background: transparent;
   text-decoration: underline;
+  margin-top: -6px;
 }
 .custom-bottom-sheet {
   position: fixed;
