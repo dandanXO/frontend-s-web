@@ -1,6 +1,14 @@
 // live casino
 export const liveCasinoPlatforms = [
   {
+    code: "AR",
+    cnname: "AR真人",
+    image: "ar",
+    message: "真实赌场环境，美艳荷官与您互动，咪牌百家乐，体验包桌尊贵服务，给您亲临现场般的游戏体验。",
+    caption: "",
+    gameCode: ""
+  },
+  {
     code: "AG",
     cnname: "PA真人",
     image: "ag",
