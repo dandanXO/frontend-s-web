@@ -429,6 +429,9 @@ const openGame = (gameName, code, gameCode) => {
 };
 
 const liveStreamList = ref([]);
+const sortedLiveStreamList = computed(() => {
+  return [...liveStreamList.value].sort((a, b) => a.sort - b.sort);
+});
 const liveStreamStatusInfo = reactive({
   status: 1
 });
