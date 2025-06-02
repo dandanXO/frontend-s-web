@@ -4,7 +4,7 @@
     <div class="home-mid-section">
       <HomeAnnouncement></HomeAnnouncement>
       <!-- <EurocupHomePageBanner /> -->
-      <Livestream ref="livestreamRef" />
+      <Livestream ref="livestreamRef" @livestreamVisible="onLivestreamVisible" />
       <HomeHotMatch :openGame="openGame" />
       <HomeDownload></HomeDownload>
       <HomeHotGame></HomeHotGame>
@@ -30,9 +30,13 @@ import { userStore } from "@/store";
 import Livestream from "@/components/home/livestream/Livestream.vue";
 // import EurocupHomePageBanner from "@/components/home/EurocupHomePageBanner.vue";
 // import NewMemberGuide from '@/components/home/NewMemberGuide.vue'
+import { useRoute } from 'vue-router';
 
 const livestreamRef = ref(null);
 const gameMenu = ref(null);
+const hasRedirectToLivestream = ref(false);
+
+const route = useRoute();
 
 const openGame = (gameName, platType, gameCode, scrollingState) => {
   gameMenu.value.open(gameName, platType, gameCode, scrollingState);
@@ -44,7 +48,17 @@ const handleScrollToView = (viewName) => {
   }
 };
 
-onMounted(() => {});
+const onLivestreamVisible = () => {
+  if(route.hash === '#livestream' && hasRedirectToLivestream.value === false) {
+    const element = document.querySelector(".livestream-container");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+      hasRedirectToLivestream.value = true;
+    }
+  }
+}
+
+onMounted(() => { });
 </script>
 
 <style scoped lang="scss">
