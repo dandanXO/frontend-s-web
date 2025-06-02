@@ -887,11 +887,17 @@ export default defineComponent({
 
     function loadData() {
       bannerLoading.value = true;
+      const randNum = Math.floor(Math.random() * 1000) + 1;
       api
-        .get("/opt-session/promo/banner?category=HOME")
+        .get(`/opt-session/promo/banner?category=HOME&v=${randNum}`)
         .then((res) => {
           if (res.code === 0) {
-            banners.value = res.data;
+            // banners.value = res.data;
+            banners.value = res.data.filter(item => {
+              if (isH5.value) return item.showH5;
+              if (!isH5.value) return item.showApp;
+              return item.showH5;
+            });
             setTimeout(() => {
               bannerLoading.value = false;
             }, 500);
@@ -1341,9 +1347,9 @@ export default defineComponent({
 
     onMounted(() => {
       getPlatList();
-      loadData();
       loadAnnouncement();
       checkPlatform();
+      loadData();
       getVersionNo();
       if (store.token && store.memberType === "TEST") {
         checkShowImgTop();

@@ -133,7 +133,7 @@
               src="../../../assets/images/promo/hotpromo/blast-austin/treasure-chest.png" />
             <div style="font-size: 15px">任务{{ index + 1 }}</div>
             <img v-if="claimedProgressData.mission === index + 1"
-              style="width: 105px !important; height: auto !important"
+              style="width: 105px !important; height: auto !important" @click="onClickSelectMission(index + 1)" class="icon-img claim-chest-btn"
               src="../../../assets/images/promo/hotpromo/blast-austin/chest-claimed-btn.svg" />
             <img v-else class="icon-img claim-chest-btn" style="width: 105px !important; height: auto !important"
               src="../../../assets/images/promo/hotpromo/blast-austin/chest-unclaimed-btn.svg"
@@ -301,7 +301,7 @@
           height="48px" />
         <div class="title">恭喜您任务领取成功</div>
         <div class="desc">
-          任务{{ curMission.missionNum }}领取成功，请按照任务要求进行闯关，连续二十天完成当日有效投注≥{{ convertToCommaAmount(curMission.bet.bonus) }}元即可领取冠冕金{{ calculateTotalBonus(curMission.bet) }}元，若连续二十天完成当日存款金额≥{{ convertToCommaAmount(curMission.deposit.bonus) }}元即可获得加冕金{{ calculateTotalBonus(curMission.deposit) }}元。
+          任务{{ curMission.missionNum }}领取成功，请按照任务要求进行闯关，连续二十天完成当日有效投注≥{{ convertToCommaAmount(curMission.bet.bonus) }}元总计可领取冠冕金{{ calculateTotalBonus(curMission.bet) }}元，若连续二十天完成当日存款金额≥{{ convertToCommaAmount(curMission.deposit.bonus) }}元总计可获得加冕金{{ calculateTotalBonus(curMission.deposit) }}元。
         </div>
         <div class="action-btn" @click="isOpenMissionDialogVisible = false">开始任务</div>
       </div>
@@ -504,7 +504,7 @@ const missionArrays = [
       "day1": 128, "day5": 188, "day10": 228, "day15": 358, "day20": 588,
     },
     deposit: {
-      bonus: 500000,
+      bonus: 50000,
       "day1": 188, "day5": 288, "day10": 588, "day15": 888, "day20": 1888,
     }
   }
@@ -512,22 +512,31 @@ const missionArrays = [
 
 const onClickSelectMission = (missionNum) => {
   curMission.value = missionArrays[0];
-  if (claimedProgressData.value.mission !== null) {
+
+  if(claimedProgressData.value.mission === null) {
+    selectMissionBlastAustin(props.promoCode, missionNum).then((res) => {
+      if (res.code === 0) {
+        isOpenMissionDialogVisible.value = true;
+        curMission.value = missionArrays[missionNum - 1];
+        initData();
+      } else {
+        notify({
+          message: res.message,
+          type: "error"
+        });
+      }
+    });
+  } else if(missionNum === claimedProgressData.value.mission) {
+    isOpenMissionDialogVisible.value = true;
+    curMission.value = missionArrays[missionNum - 1];
+    return;
+  } else if(missionNum !== claimedProgressData.value.mission) {
+    notify({
+      message: '您已有任务未完成',
+      type: "error"
+    });
     return;
   }
-
-  selectMissionBlastAustin(props.promoCode, missionNum).then((res) => {
-    if (res.code === 0) {
-      isOpenMissionDialogVisible.value = true;
-      curMission.value = missionArrays[missionNum - 1];
-      initData();
-    } else {
-      notify({
-        message: res.message,
-        type: "error"
-      });
-    }
-  });
 };
 
 const onClickClaimChest = (type) => {
