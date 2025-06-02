@@ -25,6 +25,8 @@ const buildEnv = require("dotenv").config({
   path: `.${process.env.ENV_FILE}.env`
 }).parsed;
 
+const isLiveChat = process.env.BUILD_TARGET === "livechat";
+
 module.exports = configure(function (ctx) {
   return {
     // https://v2.quasar.dev/quasar-cli-webpack/supporting-ts
@@ -78,6 +80,8 @@ module.exports = configure(function (ctx) {
           console.error("复制文件失败：", error);
         }
       },
+      publicPath: isLiveChat ? "/live-chat/" : "/",
+      distDir: isLiveChat ? "dist/spa/live-chat" : "dist/spa",
       // transpile: false,
       // publicPath: '/',
 
