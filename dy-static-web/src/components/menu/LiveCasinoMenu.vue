@@ -91,7 +91,14 @@ export default defineComponent({
         label: "Sexy",
         slogan: "全球顶尖, 尊享娱乐",
         gameCode: ""
-      }
+      },
+      {
+        code: "AR",
+        icon: "ar",
+        label: "AR",
+        slogan: "全球顶尖, 尊享娱乐",
+        gameCode: ""
+      },
     ];
 
     const store = userStore();
