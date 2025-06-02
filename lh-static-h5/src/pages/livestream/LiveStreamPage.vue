@@ -90,7 +90,7 @@
 
     <template v-if="tabValue === 'liveStream'">
       <div ref="selectionContainerRef" class="selection-container q-px-md">
-        <template v-for="(item, index) in liveStreamList" :key="index">
+        <template v-for="(item, index) in sortedLiveStreamList" :key="index">
           <button class="selection-item" @click="handleLivestreamClick(item)">
             <!-- // put item.supplierCdnPullUrl + item.streamerCdnPushUrl + streanerCdnPullUrl to the next page. -->
             <div class="item-img">
