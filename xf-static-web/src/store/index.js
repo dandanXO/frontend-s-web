@@ -105,22 +105,32 @@ export const userStore = defineStore("userStore", {
       return logout().then(() => (this.token = null));
     },
     openLiveChat() {
+      // const left = (screen.width - 350) * 2;
+      // const top = (screen.height - 650) / 4;
+
+      // return getCSAFromServer()
+      //   .then((res) => {
+      //     console.log(res.data);
+      //     window.open(
+      //       // `https://csweb01.v6kthwlug.com/?partnerCode=XFCS&lang=zh-CN&token=${this.token}`,
+      //       `${res.data}${this.token}`,
+      //       "Chat Server",
+      //       "resizable=yes, width=" + 800 + ", height=" + 880 + ", top=" + top + ", left=" + left
+      //     );
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+
+      const token = this.token ?? "";
+
+      const width = 500;
+      const height = 880;
       const left = (screen.width - 350) * 2;
       const top = (screen.height - 650) / 4;
 
-      return getCSAFromServer()
-        .then((res) => {
-          console.log(res.data);
-          window.open(
-            // `https://csweb01.v6kthwlug.com/?partnerCode=XFCS&lang=zh-CN&token=${this.token}`,
-            `${res.data}${this.token}`,
-            "Chat Server",
-            "resizable=yes, width=" + 800 + ", height=" + 880 + ", top=" + top + ", left=" + left
-          );
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      const url = `https://${window.location.host}/live-chat/live-chat?token=${token}`;
+      window.open(url, "_blank", `resizable=yes, width=${width}, height=${height}, top=${top}, left=${left}`);
     }
   }
 });
