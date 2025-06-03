@@ -242,7 +242,7 @@ export default defineComponent({
 
     async function loadMatch() {
       page.loading = true;
-      const res = await getSportLiveMatch({ sportId: request.sportId, status: request.liveStatus, title: request.title });
+      const res = await getSportLiveMatch({ sportId: request.sportId, status: request.liveStatus, title: request.title, page: request.current, limit: request.size });
       page.records = res.data || [];
       page.loading = false;
     }
