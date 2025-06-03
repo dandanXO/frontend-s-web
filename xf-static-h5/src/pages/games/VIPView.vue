@@ -286,7 +286,7 @@ export default defineComponent({
     }, options);
 
     const vipCardData = computed(() => {
-      return vipList.value[scrollVipCardIndex.value];
+        return vipList.value[scrollVipCardIndex.value];
     });
 
     watch(tab, () => {
@@ -931,7 +931,7 @@ program at any time without prior notice.`
     });
 
     const initVipCardScroll = () => {
-      vipLevel.value = store.vip.replace("VIP", "");
+      vipLevel.value = store.vip.replace("VIP", ""); 
       scrollVipCardIndex.value = vipLevel.value >= 1 && vipLevel.value ? parseInt(vipLevel.value) - 1 : 0;
 
       setTimeout(() => {
