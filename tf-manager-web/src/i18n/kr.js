@@ -2761,7 +2761,9 @@ export default {
     Sport: '스포츠',
     'Game Jackpot Bonus Record': '게임 잭팟 보너스 기록',
     'Member Privilege Record Pak Export': '회원 할인 기록 수출 - 파키스탄',
-    'Refer Friend Rebate Point record': '친구 초대 베팅 거래량 리베이트 포인트 기록'
+    'Refer Friend Rebate Point record': '친구 초대 베팅 거래량 리베이트 포인트 기록',
+    'Member Refer Stat Analysis': '- 회원 추천 리베이트 분석',
+    'Member Refer Relation': '- 회원 추천 관계 조회'
   },
   google: {
     google_auth_menu: 'Google 인증자',
