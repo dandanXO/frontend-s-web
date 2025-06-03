@@ -22,7 +22,9 @@
 		}
     </style>
 </head>
-<header class="q-header with-shadow">
+<body>
+<div class="modal-overlay hidden"></div>
+<div class="q-header with-shadow">
     <div class="page-title"
          style="display: flex; align-items: center; position: relative; font-size: 18px; font-weight: bold; padding: 8px 0;">
         <a href="/" style="display: flex; align-items: center;">
@@ -31,8 +33,7 @@
         </a>
         <span>APP下载</span>
     </div>
-</header>
-<body>
+</div>
 <div class="main-container">
     <img src="images/logo.png" alt="Logo" style="width:130px;"/>
     <div class="carousel swiper">
@@ -159,7 +160,10 @@
     $('.modal-inner').click(function (e) {
         e.stopPropagation()
     })
-
+    $('.modal-overlay').on('click', function() {
+        hideSheet($('#downloadSheet'));
+        hideSheet($('#teachSheet'));
+    });
 
     async function getApiUrl() {
         try {
@@ -411,10 +415,12 @@
 
 
     function showSheet($sheet) {
+        $('.modal-overlay').removeClass('hidden');
         $sheet.removeClass('hiding').addClass('active').css('display', 'flex')
     }
 
     function hideSheet($sheet) {
+        $('.modal-overlay').addClass('hidden');
         $sheet.removeClass('active').addClass('hiding')
     }
 

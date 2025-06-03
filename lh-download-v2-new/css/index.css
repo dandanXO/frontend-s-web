@@ -39,7 +39,7 @@ body {
     padding-top: calc(3px + env(safe-area-inset-top, 0));
     background: #f5f7fa;
     position: fixed;
-    z-index: 999;
+    z-index: 888;
     width: 100%;
     top: 0;
 }
