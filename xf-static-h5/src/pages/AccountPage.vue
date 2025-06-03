@@ -50,18 +50,23 @@
               VIP {{ vipLevel }}
             </div>
             <div class="progress-bar-container">
-              <div class="progress-bar" :style="{ width: progessPercentage(vipItems[vipLevel].upgrade) + '%' }"></div>
+              <div class="progress-bar" :style="{ width: vipLevel < 10 && vipItems[vipLevel] ? progessPercentage(vipItems[vipLevel].upgrade) + '%' : '100%' }"></div>
             </div>
-            <div class="progress-vip-stat">
-              VIP {{ vipLevel + 1 }}
-              <img :src="getVipImage(vipLevel + 1)" />
-            </div>
+            <template v-if="vipLevel < 10">
+              <div class="progress-vip-stat">
+                VIP {{ vipLevel + 1 }}
+                <img :src="getVipImage(vipLevel + 1)" />
+              </div>
+            </template>
           </div>
 
           <div class="amt-info">
-            <span>
+            <span v-if="vipLevel < 10 && vipItems[vipLevel]">
               晋级存款（元）{{ convertToCommaAmount(currentDepositAmount) }} /
               {{ convertToCommaAmount(vipItems[vipLevel].upgrade) }}
+            </span>
+            <span v-else>
+              您已达到最高晋级存款
             </span>
           </div>
         </div>
