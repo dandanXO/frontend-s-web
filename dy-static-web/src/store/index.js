@@ -116,30 +116,40 @@ export const userStore = defineStore("userStore", {
         }
       });
     },
-    openLiveChat(line) {
+    openLiveChat() {
+      // const left = (screen.width - 350) * 2;
+      // const top = (screen.height - 650) / 4;
+
+      // return getCSAFromServer()
+      //   .then((res) => {
+      //     console.log(res.data);
+      //     var lineUrl = "";
+      //     if (line === 1) {
+      //       lineUrl = res.data.liveUrl1;
+      //     } else {
+      //       lineUrl = res.data.liveUrl2;
+      //     }
+      //     const token = this.token ?? "";
+      //     window.open(
+      //       // `https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=WEB&lang=zh-CN&token=${this.token}`,
+      //       `${lineUrl}&token=${token}`,
+      //       "Chat Server",
+      //       "resizable=yes, width=" + 800 + ", height=" + 880 + ", top=" + top + ", left=" + left
+      //     );
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+
+      const token = this.token ?? "";
+
+      const width = 500;
+      const height = 880;
       const left = (screen.width - 350) * 2;
       const top = (screen.height - 650) / 4;
 
-      return getCSAFromServer()
-        .then((res) => {
-          console.log(res.data);
-          var lineUrl = "";
-          if (line === 1) {
-            lineUrl = res.data.liveUrl1;
-          } else {
-            lineUrl = res.data.liveUrl2;
-          }
-          const token = this.token ?? "";
-          window.open(
-            // `https://csweb01.c8nhwrqx4.com/?partnerCode=DYCS&way=WEB&lang=zh-CN&token=${this.token}`,
-            `${lineUrl}&token=${token}`,
-            "Chat Server",
-            "resizable=yes, width=" + 800 + ", height=" + 880 + ", top=" + top + ", left=" + left
-          );
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      const url = `https://${window.location.host}/live-chat/live-chat?token=${token}`;
+      window.open(url, "_blank", `resizable=yes, width=${width}, height=${height}, top=${top}, left=${left}`);
     }
   }
 });
