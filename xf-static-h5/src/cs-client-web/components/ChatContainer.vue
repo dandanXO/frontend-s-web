@@ -2,7 +2,7 @@
   <div
     class="WAL position-relative"
     :style="style"
-    :class="[{ 'no-footer': chatBaseUrl === 'live-chat' }, isChatStarted ? 'WAL-start' : '']"
+    :class="[{ 'no-footer': chatBaseUrl === 'live-chat/live-chat' }, isChatStarted ? 'WAL-start' : '']"
     v-show="isPageLoaded"
   >
     <q-layout
@@ -30,7 +30,7 @@
       v-if="isChatStarted && !isNoticeClicked"
       view="lHh Lpr lFf"
       class="WAL__layout shadow-3"
-      :class="{ 'no-footer': chatBaseUrl === 'live-chat' }"
+      :class="{ 'no-footer': chatBaseUrl === 'live-chat/live-chat' }"
       container
     >
       <chat-header
@@ -198,7 +198,7 @@
         </q-item>
 
         <q-item v-ripple>
-          <q-item-section class="start-chat-btn" :class="{ 'no-footer': chatBaseUrl === 'live-chat' }">
+          <q-item-section class="start-chat-btn" :class="{ 'no-footer': chatBaseUrl === 'live-chat/live-chat' }">
             <q-item-label>
               <q-btn
                 color="primary"
@@ -216,7 +216,7 @@
         </q-item>
       </div>
 
-      <div class="duplicate-box" :class="{ 'no-footer': chatBaseUrl === 'live-chat' }" v-if="isDuplicateTab">
+      <div class="duplicate-box" :class="{ 'no-footer': chatBaseUrl === 'live-chat/live-chat' }" v-if="isDuplicateTab">
         <span class="duplicate-span">{{ t("duplicated_tab_detected") }}</span>
         <q-btn color="primary" size="md" class="duplicate-span" @click="useThisChatBoard">
           {{ t("recover_chat") }}
@@ -224,7 +224,7 @@
       </div>
       <div
         class="duplicate-box"
-        :class="{ 'no-footer': chatBaseUrl === 'live-chat' }"
+        :class="{ 'no-footer': chatBaseUrl === 'live-chat/live-chat' }"
         v-if="footerDisabled && isPreStateStatus && isPreChat"
       >
         <span class="duplicate-span">{{ t("sess_timeout") }}</span>
@@ -390,7 +390,14 @@ export default defineComponent({
 
     const notice_timestamp = ref("");
 
-    const chatBaseUrl = route?.path?.split?.("/")?.[1] || "live-chat";
+    const getChatBaseUrl = () => {
+      const url = route?.path?.split?.("/")?.[1] || "live-chat";
+      if (url === "live-chat") {
+        return `${url}/live-chat`;
+      }
+      return url;
+    };
+    const chatBaseUrl = getChatBaseUrl();
 
     const partnerCode = computed(() => {
       return LocalStorage.get("partnerCode");
@@ -1899,6 +1906,9 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 500px;
+  width: 100%;
+  place-self: center;
 
   .duplicate-span {
     // padding-right: 0px;
@@ -2071,6 +2081,7 @@ export default defineComponent({
   left: 50%;
   transform: translateX(-50%);
   width: calc(90% - 48px);
+  max-width: 460px;
   background: rgba(210, 242, 242, 0.2);
   backdrop-filter: blur(4px);
   padding-bottom: 16px;

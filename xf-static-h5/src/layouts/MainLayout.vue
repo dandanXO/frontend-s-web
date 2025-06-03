@@ -363,7 +363,7 @@ export default defineComponent({
       }
     };
 
-    const isLiveChat = computed(() => route.path === "/liveChat");
+    const isLiveChat = computed(() => route.path === "/liveChat" || route.path === "/live-chat");
 
     const chatPage = computed(() => {
       if (store.chatGuid) {

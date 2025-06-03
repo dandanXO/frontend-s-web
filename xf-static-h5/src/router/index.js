@@ -66,7 +66,9 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/deposit" ||
       to.path === "/invitefriend" ||
       to.path === "/vip" ||
-      to.path === "/affiliatepage"
+      to.path === "/affiliatepage" ||
+      to.path === "/live-chat" ||
+      to.path === "/live-chat/chat"
     ) {
       ui.hiddenFooter();
     } else {
