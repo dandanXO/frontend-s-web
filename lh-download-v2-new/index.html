@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>App下载</title>
+
+    <link rel="stylesheet" type="text/css" href="css/download_index.css">
+    <link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="js/swiper-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/clipboard.min.js"></script>
+
+    <style type="text/css">
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0%;
+        }
+    </style>
+</head>
+
+<body id="lh-download-v2">
+    <div class="download" style="display: block;">
+
+        <div class="download_bg" style="height: auto">
+            <img src="./assets/images/logo-gold.png" style="width: 73%;max-width:280px;margin-top: 50px;" />
+            <!--        <div class="host_address" id="web_show">leihuo6.com</div>-->
+            <img class="customer_icon" id="dy_customer" src="img/download_customer.png" />
+            <!--<img src="img/download_pic.png" style="width: 90%;margin-top: 10px;"/> -->
+            <img src="img/download_text.png" style="width: 90%;max-width:650px;margin-top: 15px;" />
+            <img src="img/download-icons_2.png" style="width: 80%;max-width:500px;margin-top: 25px;" />
+            <div id="desc" style="display:none;color:#fff;font-weight:700;font-size:22px;">安装新APP，必须先卸载旧版本</div>
+            <div class="games_title_container"></div>
+            <div style="width:100%; text-align: center;padding:20px 0px 10px;font-size:18px;font-weight: bold;color:#fff;"
+                id="before-load">加载中。。。
+            </div>
+            <div id="android-lists"
+                style="width:100%;margin:10px auto 0px;display:flex;flex-direction: column;align-items: center;gap:4px;">
+            </div>
+
+            <div id="ios-lists"
+                style="width:100%;margin:10px auto 0px;display:flex;flex-direction: column;align-items: center;gap:4px;">
+
+            </div>
+
+            <div class="download_des">下载安装过程中请勿切换网络，推荐使用手机自带浏览器打开本页面下滑查看安装教程。</div>
+            <div class="download_btn">
+                <a id="switch-btn"></a>
+            </div>
+            <div class="download_install_des">下滑查看安装教程</div>
+        </div>
+
+        <div class="swiper_parent">
+            <div class="swiper-container swiper-container-horizontal swiper-container-android">
+                <div class="swiper-wrapper" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">
+
+                </div>
+                <div class="swiper-pagination swiper-pagination-bullets"><span
+                        class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span
+                        class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span
+                        class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="weixin_tip" style="display: none;">
+        <img id="tips" src="img/wxtips_android.png" alt="" style="width:100%;height:auto;">
+    </div>
+
+    <div class="modal-open" style="display:none;">
+        <div class="modal-div">
+            <div class="modal-inner">
+                <div class="modal-header">
+                    <img src="assets/images/safari-logo.svg" style="width: 50px;height: 50px;" />
+                    <div>
+                        <span>该链接只能使用<span class="color-rose">Safari</span>打开<br />请使用<span
+                                class="color-rose">Safari</span>游览器打开</span>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-input">
+                        <div id="id-url-input" class="url-input"></div>
+                        <div class="copy-btn" id="id-copy-btn">复制</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        var dateTime = "2024-01-10 7.30pm";
+        var andList = [
+            { imgurl: 'img/android/01.png' },
+            { imgurl: 'img/android/02.png' },
+            { imgurl: 'img/android/03.png' },
+            { imgurl: 'img/android/04.png' },
+            { imgurl: 'img/android/05.png' }
+        ];
+        var iosList = [
+            { imgurl: 'img/ios/01.png' },
+            { imgurl: 'img/ios/03.png' },
+            { imgurl: 'img/ios/04.png' },
+            { imgurl: 'img/ios/05.png' },
+            { imgurl: 'img/ios/06.png' }
+        ];
+
+        var iosDownload = [];
+        var androidDownload = [];
+
+        var realUrl = getQueryString("url");
+        var agentCode = getQueryString("agentCode");
+        var from = getQueryString("from");
+        if (agentCode === null || agentCode === 'null') {
+            agentCode = "";
+        }
+        if (realUrl === null || realUrl === 'null') {
+            realUrl = "";
+        }
+        if (agentCode === null || agentCode === 'null') {
+            agentCode = "";
+        }
+
+        var host = window.location.host;
+        var vv = { agentCode: agentCode, regFrom: realUrl, downloadUrl: host };
+        // console.log(vv);
+
+        const apiUrl = 'https://apti7i0607tl.hz3wk041.com';
+        const dataUrl = 'https://tfwkgol.076knee9cc.com'
+        var liveUrl1 = "";
+        var liveUrl2 = "";
+
+        let currentPlatform = "";
+
+        getApiUrl();
+        getCustomerUrl();
+
+        var type = "ALL_AND";
+        $('#dy_customer').click(() => {
+            window.open(liveUrl1)
+        })
+
+        $("#switch-btn").click(function () {
+            if(currentPlatform === "ios") {
+                showAndroid();
+            } else {
+                showIOS();
+            }
+        });
+
+        $(".modal-div").click(function (e) {
+            $(".modal-open").hide();
+        });
+
+        $(".modal-inner").click(function (e) {
+            e.stopPropagation();
+        });
+
+        async function getCustomerUrl() {
+            try {
+                const response = await fetch(dataUrl + `/getCustomerService`);
+                const data = await response.json();
+                if (data && data.code === 0) {
+                    liveUrl1 = data.data.liveUrl1;
+                    liveUrl2 = data.data.liveUrl2;
+                }
+
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        async function getApiUrl() {
+            try {
+                // const response = await fetch(apiUrl + `/app/download/affiliate/url?siteCode=LH1&affiliateCode=${agentCode}`);
+                const response = await fetch(dataUrl + `/getDownData`);
+                const data = await response.json();
+
+                $("#before-load").hide();
+                if (data) {
+                    // console.log("data", data);
+                    iosDownload = data.data.ios;
+                    androidDownload = data.data.android;
+                    console.log(iosDownload);
+                    console.log(androidDownload);
+
+                    checkPlatform();
+                }
+                setTimeout(() => {
+                    if (iosDownload.length === 0 && androidDownload.length === 0) {
+                        $("#before-load").text("加载失败，请重连页面")
+                    }
+                }, 5000);
+            } catch (error) {
+                $("#before-load").text("加载失败，请重连页面")
+                console.log(error)
+            }
+        }
+
+        function checkPlatform() {
+            var isWeixin = is_weixin();
+            if (isWeixin) {
+                $(".weixin_tip").show();
+                if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                    $("#tips").attr("src", "/style/images/wxtips_ios.png");
+                } else if (/(Android)/i.test(navigator.userAgent)) {
+                    $("#tips").attr("src", "/style/images/wxtips_android.png");
+                }
+            } else {
+                $(".download").show();
+                if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                    showIOS();
+                } else if (/(Android)/i.test(navigator.userAgent)) {
+                    showAndroid();
+                } else {
+                    //window.location.href="downloadty_com.html";
+                    showAndroid();
+                }
+            }
+            console.log(host);
+        }
+
+        function is_weixin() {
+            var ua = navigator.userAgent.toLowerCase();
+            if (ua.match(/MicroMessenger/i) == "micromessenger") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function showAndroid() {
+            currentPlatform = "android";
+            $("#switch-btn").html("切换 IOS");
+            $("#android-lists").show();
+            $("#ios-lists").hide();
+
+            for (var i = 0; i < andList.length; i++) {
+                $(".swiper-wrapper").append(
+                    '<div class="swiper-slide"><img src="' +
+                    andList[i].imgurl +
+                    '" alt=""/></div>'
+                );
+            }
+
+
+            var androidHtml = '';
+            var websiteHtmlAnd = '';
+            androidDownload.forEach((list, index) => {
+                for (const key in list) {
+                    if (list.hasOwnProperty(key)) {
+                        const value = list[key];
+                        console.log(`Key: ${key}, Value: ${value}`);
+                        if (key !== '网站入口') {
+                            androidHtml += `
+            <div class="download_btn" id="btn_${index}">
+            <a
+            class="click-btn"
+                id="download_${index}"
+                href="${value}"
+            >${key}</a
+            >
+        </div>
+`;
+                        } else {
+                            websiteHtmlAnd = `
+                        <div class="download_btn" id="btn_${index}">
+            <a
+            class="click-btn"
+                id="download_${index}"
+                href="${value}"
+            >${key}</a
+            >
+        </div>
+`;
+                        }
+                    }
+                }
+
+                $("#android-lists").html(androidHtml + websiteHtmlAnd);
+            })
+            androidDownload.forEach((list, index) => {
+                $(`#download_${index}`).attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
+
+                new ClipboardJS(`#download_${index}`);
+
+                $(`#download_${index}`).click(function () {
+                    postDownloadExtra(type, host);
+                });
+            });
+
+        }
+
+        function detectIfSafari() {
+            // console.log(navigator.userAgent)
+            if (isSafari()) {
+                // Safari detected
+                console.log("You are using Safari.");
+            } else {
+                // Not Safari
+                console.log("You are not using Safari.");
+                $("#id-url-input").text(window.location.href);
+
+                $(".modal-open").show();
+
+
+                $("#id-copy-btn").click(function (e) {
+                    var textToCopy = $("#id-url-input").text();
+
+                    copyTextToClipboard(textToCopy);
+                    alert("复制成功。")
+                })
+            }
+        }
+
+        function isSafari() {
+            return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        }
+
+        function copyTextToClipboard(text) {
+            var textarea = document.createElement("textarea");
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textarea);
+        }
+
+
+        function showIOS() {
+            currentPlatform = "ios";
+            $("#switch-btn").html("切换安卓");
+            $("#android-lists").hide();
+            $("#ios-lists").show();
+
+            detectIfSafari();
+
+            $('#desc').show();
+            for (var i = 0; i < iosList.length; i++) {
+                $(".swiper-wrapper").append(
+                    '<div class="swiper-slide"><img src="' +
+                    iosList[i].imgurl +
+                    '" alt=""/></div>'
+                );
+            }
+
+            var iosHTMl = '';
+            var websiteHtml = '';
+            var mobileConfigHTml = '';
+
+            mobileConfigHTml += `
+            <div class="download_btn" id="btn_${iosDownload.length}">
+            <a
+                id="download_kuaijie"
+                href="ios_kuaijie.mobileconfig"
+                data-clipboard-text='UIO{"agentCode":${agentCode},"regFrom":null,"downloadUrl":"${host}"}'
+            >全站APP 快捷版</a
+            >
+        </div>
+`;;
+
+            iosDownload.forEach((list, index) => {
+                for (const key in list) {
+                    if (list.hasOwnProperty(key)) {
+                        const value = list[key];
+                        console.log(`Key: ${key}, Value: ${value}`);
+
+                        if (key !== '网站入口') {
+                            iosHTMl = iosHTMl + `
+            <div class="download_btn" id="btn_${index}">
+            <a
+                id="download_${index}"
+                href="${value}"
+            >${key}</a
+            >
+        </div>
+`;
+                        } else {
+                            websiteHtml = `
+                        <div class="download_btn" id="btn_${index}">
+            <a
+                id="download_${index}"
+                href="${value}"
+            >${key}</a
+            >
+        </div>
+`;
+                        }
+                    }
+                }
+
+                $("#ios-lists").html(iosHTMl + websiteHtml + mobileConfigHTml)
+            })
+
+            iosDownload.forEach((list, index) => {
+                $(`#download_${index}`).attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
+
+                new ClipboardJS(`#download_${index}`);
+
+                $(`#download_${index}`).click(function () {
+                    postDownloadExtra(type, host);
+                });
+            });
+
+            $(`#download_kuaijie`).attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
+            new ClipboardJS(`#download_kuaijie`);
+            $(`#download_kuaijie`).click(function () {
+                postDownloadExtra(type, host);
+            });
+
+        }
+
+        function getQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;
+        }
+
+        function postDownloadExtra() {
+            $.ajax({
+                url: dataUrl + "/extra",
+                type: "GET",
+                data: { "agentCode": agentCode, siteCode: "lh1" },
+                success: function (d) { }
+            });
+        }
+
+
+        var mySwiper = new Swiper(".swiper-container", {
+            effect: "slide",
+            pagination: ".swiper-pagination",
+            initialSlide: 0,
+            observer: true,
+            observeParents: true,
+        });
+
+    </script>
+
+
+</body>
+
+</html>
