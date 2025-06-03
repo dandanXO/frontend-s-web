@@ -697,14 +697,7 @@ async function downloadTemplate() {
   exportMapping.push([], [], EXPORT_MAPPING_FROM_PLATFORM_HEADER)
   const paltformGameList = [];
   configList.list.forEach(data => {
-    const code = data.code;
-    const gameCode = data.gameName;
-    if (code.includes("aviator")) {
-      paltformGameList.push({ platform: 'spribe', gamecode: 'aviator', gamename: 'Aviator' })
-    } else {
-      const parts = code.split("_");
-      paltformGameList.push({ platform: parts[0], gamecode: parts[1], gamename: gameCode })
-    }
+    paltformGameList.push({ platform: data.platform, gamecode: data.gameCode, gamename: data.gameName })
   });
   pushRecordToData(paltformGameList, exportMapping)
 
