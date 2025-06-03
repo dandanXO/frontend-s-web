@@ -520,6 +520,14 @@ const routes = [
     path: "/promotion",
     redirect: "/promo"
   },
+  {
+    path: "/livestreampage",
+    redirect: "/livestream"
+  },
+  {
+    path: "/livestreampage/streamplayer",
+    redirect: "/livestream"
+  },
   // {
   //   path: "/vip",
   //   redirect: "/account/vip"

@@ -1,6 +1,6 @@
 <template>
   <div ref="pageContainer" class="page-style" :class="isDark ? 'dark' : 'white'">
-    <LiveStreamVideo :danmuList :livestream-data="currentLiveData" />
+    <LiveStreamVideo :danmuList :livestream-data="currentLiveData" :extensionState :extensionToken />
 
     <div class="transfer-mid-div">
       <div class="station-notice-wrapper" @click="showAnnouncementDialog">
@@ -475,6 +475,20 @@ const expandRoomMsg = () => {
   }
 };
 
+// extension
+const currentPath = ref(route.path);
+const extensionState = ref(false);
+const extensionToken = ref("");
+
+const checkExtension = () => {
+  if (currentPath.value === "/livestreampage/streamplayer") {
+    extensionToken.value = route.query.token;
+    extensionState.value = true;
+  } else {
+    extensionState.value = false;
+  }
+};
+
 watch(currentLiveData, () => {
   messages.value = [];
   unsortMessages.value = [];
@@ -506,6 +520,7 @@ onMounted(() => {
   syncMessages();
   // syncLivestreamInfo();
   resetSyncLivestreamInterval(true);
+  checkExtension();
 });
 
 onUnmounted(() => {

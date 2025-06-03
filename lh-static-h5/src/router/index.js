@@ -13,6 +13,8 @@ function isInApp() {
     (window.location.pathname === "/vip" && hasToken) ||
     window.location.pathname === "/viptest" ||
     (window.location.pathname === "/promotion" && hasToken) ||
+    (window.location.pathname === "/livestreampage" && hasToken) ||
+    (window.location.pathname === "/livestreampage/streamplayer" && hasToken) ||
     window.location.pathname === "/deposit" ||
     window.location.pathname === "/deposittest" ||
     window.location.pathname === "/invitefriend" ||
@@ -66,7 +68,8 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/privilege/invite" ||
       to.path === "/maintenance" ||
       to.path === "/affiliatepage" ||
-      to.path ==="/livestream/streamplayer" ||
+      to.path === "/livestream/streamplayer" ||
+      to.path === "/livestreampage" ||
       to.path === "/live-chat" ||
       to.path === "/live-chat/chat"
     ) {
@@ -91,6 +94,7 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/vip" ||
       to.path === "/viptest" ||
       to.path === "/privilege/invite" ||
+      to.path === "/livestreampage" ||
       to.path === "/affiliatepage"
     ) {
       if (isAndroid()) {

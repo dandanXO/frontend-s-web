@@ -131,6 +131,16 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/AppTutorial.vue") }]
   },
+  {
+    path: "/livestreampage",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/livestream/LiveStreamPage.vue") }]
+  },
+  {
+    path: "/livestreampage/streamplayer",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/livestream/StreamPlayerPage.vue") }]
+  },
   // Always leave this as last one,
   // but you can also remove it
   {
