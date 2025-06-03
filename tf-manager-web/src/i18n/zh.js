@@ -2634,7 +2634,8 @@ export default {
     isCreateLiveUrl: '是否生产推流地址  (是/否)',
     addToLive: '添加到直播',
     initialSupplierStreamStatus: '初始厂商流状态',
-    isTestEvent: '是否为测试赛事'
+    isTestEvent: '是否为测试赛事',
+    claimableRedPacketRebate: '可领取返水红包金额',
   },
   message: {
     adsStatusOpen: '开',

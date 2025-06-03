@@ -410,6 +410,15 @@ export const getClaimableRebate = (id, site) => {
   )
 }
 
+export const getClaimableRedPacketRebate = (id, site) => {
+  return https().request(
+    `/member/claimableRedPacketRebate/${id}/${site}`,
+    Method.GET,
+    {},
+    ContentType.form
+  )
+}
+
 export const forceLogout = (id, siteId) => {
   return https().request(
     `/member/logoutPLayer/${id}`,
