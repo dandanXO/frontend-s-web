@@ -182,6 +182,15 @@
             style="width: 350px;"
           />
         </el-form-item>
+        <el-form-item :label="t('fields.endTime')" prop="endTime">
+          <el-date-picker
+            type="datetime"
+            format="YYYY-MM-DD HH:mm:ss"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            v-model="form.eventEndTime"
+            style="width: 350px;"
+          />
+        </el-form-item>
         <el-form-item :label="t('fields.status')" prop="liveStatus">
           <el-select
             v-model="form.liveStatus"
@@ -260,6 +269,18 @@
             v-if="scope.row.eventStartTime !== null"
             v-formatter="{
               data: scope.row.eventStartTime,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="eventEndTime" :label="t('fields.endTime')" width="180">
+        <template #default="scope">
+          <span v-if="scope.row.eventEndTime === null">-</span>
+          <span
+            v-if="scope.row.eventEndTime !== null"
+            v-formatter="{
+              data: scope.row.eventEndTime,
               type: 'date',
             }"
           />
@@ -520,6 +541,7 @@ function showDialog(type, row) {
     awayNameZh: null,
     sort: null,
     eventStartTime: null,
+    eventEndTime: null,
     liveStatus: null,
     title: null
   });
@@ -536,6 +558,7 @@ const form = reactive({
   sort: null,
   title: null,
   eventStartTime: null,
+  eventEndTime: null,
   homeName: '',
   awayName: '',
   isTest: false
