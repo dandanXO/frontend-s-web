@@ -316,6 +316,7 @@ export default defineComponent({
   box-shadow: 0px 3.82px 3.82px 0px #BBDCFF inset;
   box-shadow: 0px -3.05px 3.05px 0px #A2BFF4 inset;
   border-radius: 12px;
+  touch-action: none;
 }
 .btn3{
   font-size: 14px;
