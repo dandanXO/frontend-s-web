@@ -2631,7 +2631,8 @@ export default {
     isCreateLiveUrl: 'Is Create Live Url (Yes/No)',
     addToLive: 'Add to Live',
     initialSupplierStreamStatus: 'Initial Supplier Stream Status',
-    isTestEvent: 'Test Event'
+    isTestEvent: 'Test Event',
+    claimableRedPacketRebate: 'Claimable Red Packet Rebate',
   },
   message: {
     adsStatusOpen: 'Open',
