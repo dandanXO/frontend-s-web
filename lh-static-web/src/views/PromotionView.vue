@@ -316,6 +316,11 @@ export default defineComponent({
           router.push("/vip");
         } else if (promo.redirectUrl.includes("lh1-invite")) {
           router.push("/privilege/invite");
+        } else if (promo.redirectUrl.includes("lh1-livestream")) {
+          router.push({
+            path: '/home',
+            hash: '#livestream'
+          });
         } else {
           router.push({ name: "promotion", query: { name: promo.redirectUrl } });
           // if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3' || route.query.name === 'lh1-football-fight-2' || route.query.name === 'lh1-football-fight-3') {

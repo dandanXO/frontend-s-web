@@ -2652,7 +2652,7 @@ export default defineComponent({
         store.state.app.ipLabels.length < 1 ||
         store.state.app.ipLabels === undefined
       ) {
-        const { data: labels } = await selectIpLabelAll()
+        const { data: labels } = await selectIpLabelAll(route.query.site)
         store.dispatch(AppActionTypes.ACTION_SET_IP_LABELS, labels)
       }
     }

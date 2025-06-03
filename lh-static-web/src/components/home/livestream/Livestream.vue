@@ -91,6 +91,7 @@ const latestProcessedMessageId = ref(-1);
 const vipStatus = ref(false);
 const hideComponent = ref(true);
 
+const emit = defineEmits(["livestreamVisible"]);
 // const channels = ref([
 //   {
 //     name: "线路1",
@@ -178,9 +179,11 @@ const getData = () => {
     .then(async (res) => {
       if (res.code === 0) {
         const parsedData = res.data.streamList.map(parseLivestreamData);
+        parsedData.sort((a, b) => a.sort - b.sort);
         if (parsedData.length) {
           hideComponent.value = false;
           await nextTick();
+          emit('livestreamVisible', true);
         }
         vipStatus.value = !!res.data.vipStatus;
         list.value.push(...parsedData);

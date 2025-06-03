@@ -3090,6 +3090,10 @@ body {
       background-image: url("../../assets/live/live_sexy.png");
     }
 
+    &.live-ar {
+      background-image: url("../../assets/live/live_ar.png");
+    }
+
     &.lottery-tcg {
       background-image: url("../../assets/lottery/lottery_tcg.webp");
     }

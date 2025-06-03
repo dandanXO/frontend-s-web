@@ -172,7 +172,6 @@
         <el-button
           type="primary"
           @click="handleCopy"
-          :disabled="!canCopy"
         >{{ t('fields.addToLive') }}</el-button>
       </template>
     </el-dialog>

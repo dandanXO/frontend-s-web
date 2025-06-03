@@ -53,7 +53,9 @@
         <div class="current-vip-status" v-if="store.token">
             <div class="badge" v-show="isDataLoaded">
               <img :src="badgeSrc" />
-              <div class="badgetext"><span class="type">{{ vipItems[+store.vip.replace("VIP", "")].vipTitle }} V{{ vipItems[+store.vip.replace("VIP", "")].vipLevel }}</span></div>
+              <div v-if="displayVipInfo.title && displayVipInfo.level" class="badgetext">
+                <span class="type">{{ displayVipInfo.title }} V{{ displayVipInfo.level }}</span>
+              </div>
             </div>
             <div class="badge" v-show="!isDataLoaded" style="height: 200px"></div>
             <div class="vip-progress">
@@ -792,7 +794,7 @@
 
           <li class="wbg"><h2>每日额外返水红包</h2></li>
           <ol class="terms">
-            <li>统计每日返水金额，对应 VIP 等级返水加赠比例派发。次日可领取每日额外返水红包彩金，返水红包积累至 10 元即可领取（不足 10 元则不可领取），彩金 1 倍流水即可提款。<br>例：VIP12 会员当日的返水金额为 1000 元，则按照 VIP12 每日额外返水红包赠送比例 2.0% 计算：1000*2.0%=20 元，返水红包为 20 元，会员可在页面上点击领取。</li>
+            <li>统计每日返水金额，对应 VIP 等级返水加赠比例派发。次日可领取每日额外返水红包彩金，返水红包积累至 10 元即可领取（不足 10 元则不可领取），彩金 1 倍流水即可提款。<br>例：VIP10会员当日的返水金额为1000元，则按照VIP10每日额外返水红包赠送比例2.0%计算：1000*2.0%=20元，返水红包为20元，会员可在页面上点击领取。</li>
           </ol>
           
           <li class="wbg"><h2>每月 15 号红包</h2></li>
@@ -1092,6 +1094,24 @@ const badgeSrc = computed(() => {
   const currentVIP = +store.vip.replace("VIP", "");
   const matchedVIP = vipItems.value.find((vip) => +vip.vipLevel === currentVIP);
   return require(`../assets/vip/level/vip${matchedVIP ? currentVIP : "1"}.png`);
+});
+const displayVipInfo = computed(() => {
+  const rawVipLevel = +store.vip.replace("VIP", "");
+
+  const getSafeIndex = (level) => {
+    if (isNaN(level) || !vipItems.value.length) return 0;
+    if (level <= 0) return 0;
+    if (level >= vipItems.value.length) return vipItems.value.length - 1;
+    return level;
+  };
+
+  const safeIndex = getSafeIndex(rawVipLevel);
+  const vip = vipItems.value[safeIndex];
+
+  return {
+    title: vip.vipTitle,
+    level: vip.vipLevel
+  };
 });
 
 const vipItems = ref([

@@ -447,6 +447,7 @@ const getLiveUrlList = () => {
     .post(`/opt-session/live/list?current=${currentPage.value}`)
     .then((res) => {
       if (res.code === 0) {
+        res.data.streamList.sort((a,b) => a.sort - b.sort)
         liveStreamList.value.push(...res.data.streamList);
         maxPage.value = res.data.pages;
         currentPage.value++;

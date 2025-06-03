@@ -34,7 +34,7 @@ const loadInbox = (tab) => {
   tab = tab === "ALL" ? "" : tab;
 
   api
-    .get("/session/inbox", {
+    .get("/session/pm/inbox", {
       params: {
         type: mailboxData.type,
         orderBy: mailboxData.orderBy,

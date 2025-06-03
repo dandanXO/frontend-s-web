@@ -39,13 +39,15 @@
               <span class="label">{{ $t('stream.supplierPlaybackLink') }}</span>
               <div class="url-container">
                 <span class="url-text">{{ getCurrentPlayUrl() }}</span>
-                <span v-if="streamScores[stream.supplierStreamId] !== undefined">(訊號強度：{{ streamScores[stream.supplierStreamId] }})</span>
+                <span v-if="streamScores[stream.supplierStreamId] !== undefined"
+                  >(訊號強度：{{ streamScores[stream.supplierStreamId] }})</span
+                >
                 <Button
-                    icon="pi pi-copy"
-                    severity="secondary"
-                    text
-                    @click="copyUrl(getCurrentPlayUrl())"
-                    v-tooltip.top="'複製鏈結'"
+                  icon="pi pi-copy"
+                  severity="secondary"
+                  text
+                  @click="copyUrl(getCurrentPlayUrl())"
+                  v-tooltip.top="'複製鏈結'"
                 />
               </div>
             </div>
@@ -54,11 +56,11 @@
               <div class="url-container">
                 <span class="url-text">{{ getAfterCdnUrl(stream.streamerCdnPushUrl) }}</span>
                 <Button
-                    icon="pi pi-copy"
-                    severity="secondary"
-                    text
-                    @click="copyUrl(getAfterCdnUrl(stream.streamerCdnPushUrl))"
-                    v-tooltip.top="'複製鏈結'"
+                  icon="pi pi-copy"
+                  severity="secondary"
+                  text
+                  @click="copyUrl(getAfterCdnUrl(stream.streamerCdnPushUrl))"
+                  v-tooltip.top="'複製鏈結'"
                 />
               </div>
             </div>
@@ -66,22 +68,24 @@
               <span class="label">{{ $t('stream.hostPlaybackLink') }}</span>
               <div class="url-container">
                 <span class="url-text">{{ getStreamerPlayUrl() }}</span>
-                <span v-if="streamScores[stream.streamerStreamId] !== undefined">(訊號強度：{{ streamScores[stream.streamerStreamId] }})</span>
+                <span v-if="streamScores[stream.streamerStreamId] !== undefined"
+                  >(訊號強度：{{ streamScores[stream.streamerStreamId] }})</span
+                >
                 <Button
-                    icon="pi pi-copy"
-                    severity="secondary"
-                    text
-                    @click="copyUrl(getStreamerPlayUrl())"
-                    v-tooltip.top="'複製鏈結'"
+                  icon="pi pi-copy"
+                  severity="secondary"
+                  text
+                  @click="copyUrl(getStreamerPlayUrl())"
+                  v-tooltip.top="'複製鏈結'"
                 />
               </div>
             </div>
             <Button
-                v-if="isOwnStream"
-                :label="isLiveStream ? '關閉直播' : '開始直播'"
-                :severity="isLiveStream ? 'danger' : 'success'"
-                :loading="isStatusChanging"
-                @click="toggleStreamStatus"
+              v-if="isOwnStream"
+              :label="isLiveStream ? '關閉直播' : '開始直播'"
+              :severity="isLiveStream ? 'danger' : 'success'"
+              :loading="isStatusChanging"
+              @click="toggleStreamStatus"
             />
           </div>
 
@@ -90,24 +94,31 @@
               <template v-if="currentPlayerType === 'host' || streamerHasValidUrl">
                 <div class="video-container">
                   <div v-if="playerLoadError" class="error-overlay">
-                    <i class="pi pi-exclamation-triangle" style="font-size: 2rem; margin-bottom: 1rem"></i>
+                    <i
+                      class="pi pi-exclamation-triangle"
+                      style="font-size: 2rem; margin-bottom: 1rem"
+                    ></i>
                     <p>{{ playerLoadError }}</p>
                   </div>
                   <video
-                      :key="`${currentQuality}-${currentPlayerType}`"
-                      ref="videoPlayer"
-                      id="videoPlayer"
-                      class="video-js vjs-big-play-centered"
-                      controls
-                      preload="auto"
-                      width="100%"
-                      height="auto"
-                      data-setup="{}"
+                    :key="`${currentQuality}-${currentPlayerType}`"
+                    ref="videoPlayer"
+                    id="videoPlayer"
+                    class="video-js vjs-big-play-centered"
+                    controls
+                    preload="auto"
+                    width="100%"
+                    height="auto"
+                    data-setup="{}"
+                    crossorigin="anonymous"
                   ></video>
                 </div>
               </template>
               <div v-else class="error-overlay">
-                <i class="pi pi-exclamation-triangle" style="font-size: 2rem; margin-bottom: 1rem"></i>
+                <i
+                  class="pi pi-exclamation-triangle"
+                  style="font-size: 2rem; margin-bottom: 1rem"
+                ></i>
                 <p>流地址無效或不可用</p>
               </div>
             </div>
@@ -116,33 +127,46 @@
       </TabPanel>
       <TabPanel header="聊天室訊息">
         <div class="info-item">
-              <span class="label">聊天室標題</span>
-              <template v-if="isOwnStream">
-                <InputText v-model="roomTitle" placeholder="請輸入聊天室標題" style="width: 100%" />
-              </template>
-              <template v-else>
-                <span class="value">{{ stream.roomTitle || '-' }}</span>
-              </template>
-            </div>
-            <div class="info-item">
-              <span class="label">聊天室公告</span>
-              <template v-if="isOwnStream">
-                <Textarea v-model="roomMessage" placeholder="請輸入聊天室公告" autoResize rows="2" style="width: 100%" />
-              </template>
-              <template v-else>
-                <span class="value">{{ stream.roomMessage || '-' }}</span>
-              </template>
-            </div>
-            <Button v-if="isOwnStream" label="儲存聊天室資訊" :loading="isRoomInfoSaving" class="p-button-success" style="margin-bottom: 8px" @click="saveRoomInfo" />
+          <span class="label">聊天室標題</span>
+          <template v-if="isOwnStream">
+            <InputText v-model="roomTitle" placeholder="請輸入聊天室標題" style="width: 100%" />
+          </template>
+          <template v-else>
+            <span class="value">{{ stream.roomTitle || '-' }}</span>
+          </template>
+        </div>
+        <div class="info-item">
+          <span class="label">聊天室公告</span>
+          <template v-if="isOwnStream">
+            <Textarea
+              v-model="roomMessage"
+              placeholder="請輸入聊天室公告"
+              autoResize
+              rows="2"
+              style="width: 100%"
+            />
+          </template>
+          <template v-else>
+            <span class="value">{{ stream.roomMessage || '-' }}</span>
+          </template>
+        </div>
+        <Button
+          v-if="isOwnStream"
+          label="儲存聊天室資訊"
+          :loading="isRoomInfoSaving"
+          class="p-button-success"
+          style="margin-bottom: 8px"
+          @click="saveRoomInfo"
+        />
       </TabPanel>
       <TabPanel header="聊天紀錄">
         <DataTable
-            :value="chatMessages"
-            :paginator="true"
-            :rows="10"
-            :loading="chatLoading"
-            dataKey="id"
-            responsiveLayout="scroll"
+          :value="chatMessages"
+          :paginator="true"
+          :rows="10"
+          :loading="chatLoading"
+          dataKey="id"
+          responsiveLayout="scroll"
         >
           <Column field="name" header="用戶" />
           <Column field="content" header="內容" />
@@ -158,7 +182,7 @@
 </template>
 
 <script setup>
-import {ref, onBeforeUnmount, watch, nextTick, computed, reactive} from 'vue'
+import { ref, onBeforeUnmount, watch, nextTick, computed, reactive } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { DashboardService } from '@/service/DashboardService'
 import videojs from 'video.js'
@@ -170,10 +194,11 @@ import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
-import dayjs from 'dayjs';
-import ChatBlockControl from "@/views/chat-block/ChatBlockControl.vue";
+import dayjs from 'dayjs'
+import ChatBlockControl from '@/views/chat-block/ChatBlockControl.vue'
 import InputText from 'primevue/inputtext'
 import Textarea from 'primevue/textarea'
+import 'videojs-flvjs-es6'
 
 const route = useRoute()
 const props = defineProps({
@@ -221,9 +246,9 @@ const dialog = reactive({
   form: {
     loginName: '',
     duration: 10,
-    unit: 'minute'
-  }
-});
+    unit: 'minute',
+  },
+})
 
 const playerLoadError = ref(null)
 const isOwnStream = ref(false)
@@ -231,43 +256,43 @@ const isLiveStream = ref(false)
 const isStatusChanging = ref(false)
 const chatMessages = ref([])
 const chatLoading = ref(false)
-const streamScores = ref({});
-let scoreInterval = null;
+const streamScores = ref({})
+let scoreInterval = null
 
 const toast = useToast()
 
 const fetchScores = async () => {
-  const streamIds = [
-    props.stream?.supplierStreamId,
-    props.stream?.streamerStreamId,
-  ].filter(Boolean);
-  if (streamIds.length === 0) return;
+  const streamIds = [props.stream?.supplierStreamId, props.stream?.streamerStreamId].filter(Boolean)
+  if (streamIds.length === 0) return
   try {
-    const data = await DashboardService.getLiveMonitorScores(streamIds);
-    console.log("data:", data); // ✅ 印出整體物件
-    const map = {};
-    (data || []).forEach(item => {
-      map[item.streamName] = item.score;
-    });
-    streamScores.value = map;
-    console.log("map:", streamScores.value);
+    const data = await DashboardService.getLiveMonitorScores(streamIds)
+    console.log('data:', data) // ✅ 印出整體物件
+    const map = {}
+    ;(data || []).forEach((item) => {
+      map[item.streamName] = item.score
+    })
+    streamScores.value = map
+    console.log('map:', streamScores.value)
   } catch (e) {
-    console.error('取得監控分數失敗', e);
+    console.error('取得監控分數失敗', e)
   }
-};
+}
 
-watch(() => props.visible, (visible) => {
-  if (visible) {
-    fetchScores();
-    scoreInterval = setInterval(fetchScores, 10000);
-  } else {
-    clearInterval(scoreInterval);
-  }
-});
+watch(
+  () => props.visible,
+  (visible) => {
+    if (visible) {
+      fetchScores()
+      scoreInterval = setInterval(fetchScores, 10000)
+    } else {
+      clearInterval(scoreInterval)
+    }
+  },
+)
 
 onBeforeUnmount(() => {
-  clearInterval(scoreInterval);
-});
+  clearInterval(scoreInterval)
+})
 
 const streamerHasValidUrl = computed(() => {
   return !!props.stream?.streamerCdnPullUrl?.[currentQuality.value]?.hlsUrl
@@ -295,21 +320,24 @@ const generateVideoSourceController = () => {
 
     createEl() {
       const el = super.createEl('div')
+      if (!el) return
       el.classList.add('text-controller')
       return el
     }
 
     dispose() {
       this.menuItems?.forEach((item) => {
-        console.log('off')
         item.off?.('click')
+        item.dispose?.()
       })
+      this.menuItems = []
       super.dispose()
     }
 
-    handleItemSelect(item, selectable) {
+    async handleItemSelect(item, selectable) {
       if (!selectable) return
       this.el_.querySelector('.vjs-menu-button').textContent = item.label
+      await nextTick()
       handlePlayerTypeChange(item.value)
     }
 
@@ -321,7 +349,6 @@ const generateVideoSourceController = () => {
         })
         item.on('click', () => {
           this.handleItemSelect(type, item.selectable)
-          console.log(222)
         })
         if (type.value === 'host' && !streamerHasValidUrl.value) {
           item.selectable = false
@@ -338,7 +365,9 @@ const generateVideoSourceController = () => {
       })
     }
   }
-  videojs.registerComponent('VideoSourceController', VideoSourceController)
+  if (!videojs.getComponent('VideoSourceController')) {
+    videojs.registerComponent('VideoSourceController', VideoSourceController)
+  }
 }
 
 const generateVideoQualityController = () => {
@@ -354,6 +383,7 @@ const generateVideoQualityController = () => {
 
     createEl() {
       const el = super.createEl('div')
+      if (!el) return
       el.classList.add('text-controller')
       return el
     }
@@ -361,7 +391,9 @@ const generateVideoQualityController = () => {
     dispose() {
       this.menuItems?.forEach((item) => {
         item.off?.('click')
+        item.dispose?.()
       })
+      this.menuItems = []
       super.dispose()
     }
 
@@ -388,7 +420,9 @@ const generateVideoQualityController = () => {
       })
     }
   }
-  videojs.registerComponent('VideoQualityController', VideoQualityController)
+  if (!videojs.getComponent('VideoQualityController')) {
+    videojs.registerComponent('VideoQualityController', VideoQualityController)
+  }
 }
 
 // 初始化播放器
@@ -404,19 +438,22 @@ const initializePlayers = async () => {
 
       try {
         errorRef.value = null
-        const options = {
-          autoplay: false,
-          controls: true,
-          preload: 'auto',
-          fluid: true,
-          aspectRatio: '16:9',
-          techOrder: ['html5'],
+        const flvOptions = {
+          techOrder: ['flvjs'],
+          flvjs: {
+            mediaDataSource: {
+              isLive: true,
+            },
+          },
           sources: [
             {
               src: url,
-              type: 'application/x-mpegURL',
+              type: 'video/x-flv',
             },
           ],
+        }
+        const hlsOptions = {
+          techOrder: ['html5'],
           html5: {
             nativeVideoTracks: false,
             nativeAudioTracks: false,
@@ -425,10 +462,25 @@ const initializePlayers = async () => {
               overrideNative: true,
             },
           },
+          sources: [
+            {
+              src: url,
+              type: 'application/x-mpegURL',
+            },
+          ],
         }
-        instanceRef.value = videojs(playerRef.value, options)
+        const options = {
+          autoplay: false,
+          controls: true,
+          preload: 'auto',
+          fluid: true,
+          aspectRatio: '16:9',
+        }
+        const finalOptions = url.includes('.m3u8')
+          ? { ...options, ...hlsOptions }
+          : { ...options, ...flvOptions }
+        instanceRef.value = videojs(playerRef.value, finalOptions)
         instanceRef.value.ready(() => {
-          console.log(111)
           instanceRef.value
             .getChild('controlBar')
             ?.addChild('VideoSourceController', {}, instanceRef.value.children_.length - 1)
@@ -455,7 +507,9 @@ const initializePlayers = async () => {
     }
   }
 
-  const supplierUrl = props.stream?.supplierCdnPullUrl?.[currentQuality.value]?.hlsUrl || props.stream?.supplierCdnPullUrl?.[currentQuality.value]?.flvUrl
+  const supplierUrl =
+    props.stream?.supplierCdnPullUrl?.[currentQuality.value]?.hlsUrl ||
+    props.stream?.supplierCdnPullUrl?.[currentQuality.value]?.flvUrl
   const streamerUrl = props.stream?.streamerCdnPullUrl?.[currentQuality.value]?.hlsUrl
   let displayUrl, logType, shouldInitialize
   if (currentPlayerType.value === 'host') {
@@ -742,22 +796,29 @@ onBeforeUnmount(() => {
 
 const getCurrentPlayUrl = () => {
   if (!props.stream) return ''
-  debugger;
-  return props.stream.supplierCdnPullUrl?.[currentQuality.value]?.hlsUrl || props.stream.supplierCdnPullUrl?.[currentQuality.value]?.flvUrl || ''
+  return (
+    props.stream.supplierCdnPullUrl?.[currentQuality.value]?.hlsUrl ||
+    props.stream.supplierCdnPullUrl?.[currentQuality.value]?.flvUrl ||
+    ''
+  )
 }
 
 const getStreamerPlayUrl = () => {
   if (!props.stream) return ''
-  return props.stream.streamerCdnPullUrl?.[currentQuality.value]?.hlsUrl || props.stream.supplierCdnPullUrl?.[currentQuality.value]?.flvUrl || ''
+  return (
+    props.stream.streamerCdnPullUrl?.[currentQuality.value]?.hlsUrl ||
+    props.stream.supplierCdnPullUrl?.[currentQuality.value]?.flvUrl ||
+    ''
+  )
 }
 
 const getAfterCdnUrl = (url) => {
-  const [path, query] = url.split('?');
+  const [path, query] = url.split('?')
 
-  const newPath = path.substring(0, path.lastIndexOf('/'));
+  const newPath = path.substring(0, path.lastIndexOf('/'))
 
-  const result = newPath + '?' + query;
-  return result;
+  const result = newPath + '?' + query
+  return result
 }
 
 const copyUrl = async (url) => {
@@ -834,26 +895,28 @@ const loadChatMessages = async () => {
 }
 
 function showBlockDialog(name) {
-  dialog.form.loginName = name;
-  dialog.form.duration = 10;
-  dialog.form.unit = 'minute';
-  dialog.visible = true;
+  dialog.form.loginName = name
+  dialog.form.duration = 10
+  dialog.form.unit = 'minute'
+  dialog.visible = true
 }
 
 function submitBlock() {
-  const blockTime = dayjs().add(dialog.form.duration, dialog.form.unit).format('YYYY-MM-DD HH:mm:ss');
+  const blockTime = dayjs()
+    .add(dialog.form.duration, dialog.form.unit)
+    .format('YYYY-MM-DD HH:mm:ss')
   DashboardService.blockUserApi({ loginName: dialog.form.loginName, blockTime }).then(() => {
-    toast.add({ severity: 'success', summary: '成功', detail: '已禁言', life: 3000 });
-    dialog.visible = false;
-    loadChatMessages();
-  });
+    toast.add({ severity: 'success', summary: '成功', detail: '已禁言', life: 3000 })
+    dialog.visible = false
+    loadChatMessages()
+  })
 }
 
 function unblockUser(loginName) {
   DashboardService.unblockUserApi({ loginName }).then(() => {
-    toast.add({ severity: 'success', summary: '成功', detail: '已解除禁言', life: 3000 });
-    loadChatMessages();
-  });
+    toast.add({ severity: 'success', summary: '成功', detail: '已解除禁言', life: 3000 })
+    loadChatMessages()
+  })
 }
 
 watch(currentQuality, (newQuality) => {
@@ -873,14 +936,18 @@ watch(
     roomTitle.value = newStream?.roomTitle || ''
     roomMessage.value = newStream?.roomMessage || ''
   },
-  { immediate: true, deep: true }
+  { immediate: true, deep: true },
 )
 
 // 儲存聊天室資訊
 const saveRoomInfo = async () => {
   isRoomInfoSaving.value = true
   try {
-    const res = await DashboardService.updateRoomInfo(props.stream.streamerStreamId, roomTitle.value, roomMessage.value)
+    const res = await DashboardService.updateRoomInfo(
+      props.stream.streamerStreamId,
+      roomTitle.value,
+      roomMessage.value,
+    )
     if (res) {
       toast.add({ severity: 'success', summary: '成功', detail: '聊天室資訊已更新', life: 2000 })
       emit('reload')

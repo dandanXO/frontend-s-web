@@ -1082,7 +1082,7 @@ async function changeSite(siteId) {
 }
 
 async function setIpLabels() {
-  const { data: labels } = await selectIpLabelAll()
+  const { data: labels } = await selectIpLabelAll(request.siteId)
   store.dispatch(AppActionTypes.ACTION_SET_IP_LABELS, labels)
 }
 
