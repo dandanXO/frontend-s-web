@@ -1,7 +1,7 @@
 <template>
   <div class="main-container" :style="{background: $q.dark.isActive ? '' : `url(${require('../assets/images/download/app/main-bg.png')}) no-repeat`}">
     <div class="flex">
-      <img style="width:130px;" src="../assets/images/download/app/logo.png"/>
+      <img class="logo-img" src="../assets/images/download/app/logo.png"/>
     </div>
     <q-carousel
      ref="carousel"
@@ -65,13 +65,13 @@
         </div>
       </q-carousel-slide>
     </q-carousel>
-    <div class="flex2" style="margin-top: 4px;">
+    <div class="flex2 action-buttons" style="margin-top: 4px;">
       <button class="btn1-1" @click="openSheet">
-        <div>APP下载</div>
+        APP下载
       </button>
-      <button class="btn2" :class="{'common-large-btn': $q.dark.isActive}" @click="isAndroid = !isAndroid">
-        <div>{{ isAndroid ? '切换IOS' : '切换安卓' }}</div>
-      </button>
+      <q-btn class="btn2" :class="{'common-large-btn': $q.dark.isActive}" @click="isAndroid = !isAndroid">
+        {{ isAndroid ? '切换IOS' : '切换安卓' }}
+      </q-btn>
       <button class="btn3" @click="openTeachSheet">
         点击查看安装教程
       </button>
@@ -276,6 +276,9 @@ export default defineComponent({
   background-size: cover;
   background-position: center;
   min-height: 100vh;
+}
+.logo-img {
+  width: 130px;
 }
 .carousel {
   background: transparent;
@@ -519,5 +522,26 @@ export default defineComponent({
 .q-carousel__slide {
   padding-top: 0;
   padding-bottom: 0;
+}
+
+@media (min-height: 768px) {
+  .logo-img {
+    padding: 20px 0;
+    width: 150px;
+  }
+
+  .action-buttons {
+    margin-top: 15px;
+    gap: 15px;
+
+    .btn1-1, .btn2 {
+      padding: 1rem;
+      font-size: 16px;
+    }
+
+    .btn3 {
+      font-size: 15px;
+    }
+  }
 }
 </style>
