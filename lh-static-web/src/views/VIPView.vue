@@ -1345,17 +1345,21 @@ const slideTo = (vipIndex) => {
   }
 };
 function formatNumber(value, type) {
-  if (value === undefined) {
+  if (value === undefined || value === null) {
     return "-";
   }
-  value = value.toString().replace(/,/g, "");
 
-  const number = parseFloat(value);
+  value = value.toString().replace(/,/g, "");
+  let number = parseFloat(value);
+
+  if (isNaN(number)) return "-";
 
   if (number % 1 !== 0 || type === "redPacket") {
-    return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    number = Math.floor(number * 100) / 100;
+    return number
+      .toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   } else {
-    return number.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return number.toLocaleString(undefined, { maximumFractionDigits: 0 });
   }
 }
 const tabActive = ref(1);
