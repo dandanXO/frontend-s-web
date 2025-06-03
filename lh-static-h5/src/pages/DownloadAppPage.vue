@@ -14,7 +14,8 @@
       infinite
       transition-next="slide-left"
       transition-prev="slide-right"
-      style="height: 440px"
+      style="height: 430px"
+      autoplay="5000"
     >
       <template v-slot:navigation-icon="{ active, onClick }">
         <q-btn
@@ -143,6 +144,8 @@
 <script lang="js">
 import { ref, defineComponent, onMounted } from "vue";
 import axios from "axios";
+import { isAndroid as checkIsAndroid } from "boot/utils";
+
 export default defineComponent({
   name: "downloadAppPage",
   setup() {
@@ -183,6 +186,8 @@ export default defineComponent({
       }
     }
     onMounted(()=>{
+      isAndroid.value = checkIsAndroid();
+
       axios.get('https://tfwkgol.076knee9cc.com/getDownData').then((res) => {
         let subTitle = ['高效 快捷',' 防失联 不掉签','长期 稳定',]
         if (res.data.code == 0 ) {
