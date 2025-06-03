@@ -386,9 +386,12 @@ import { onMounted, ref, computed, reactive, watch, onUnmounted } from "vue";
 import moment from "moment";
 import { api } from "boot/axios";
 import GameModal from "components/modal/GameModal.vue";
-import { useRouter } from "vue-router";
+import { userStore } from "stores/index";
+import { isAndroid } from "boot/utils";
+import { useRoute, useRouter } from "vue-router";
 import { useNotify } from "src/hooks/notify";
 import { useLocalStorage, useSessionStorage } from "@vueuse/core";
+import { SessionStorage } from "quasar";
 
 const qs = require("qs");
 const tabValue = ref("liveStream");
@@ -402,6 +405,8 @@ const competitionTypesNameMap = ref({
 const selectedCompetitionType = ref();
 // const imgUrl = process.env.IMAGE_CDN;
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
+const store = userStore();
+const route = useRoute();
 const router = useRouter();
 const notify = useNotify();
 
@@ -475,12 +480,20 @@ const handleLivestreamClick = (livestream) => {
     });
     return;
   }
-  router.push({
-    path: "/livestream/streamplayer",
-    query: {
-      streamId: livestream.streamId
-    }
-  });
+
+  if (extensionState.value) {
+    router.push({
+      path: `${currentPath.value}/streamplayer`,
+      query: { streamId: livestream.streamId, token: extensionToken.value }
+    });
+  } else {
+    router.push({
+      path: "/livestream/streamplayer",
+      query: {
+        streamId: livestream.streamId
+      }
+    });
+  }
 };
 
 const handleListScroll = () => {
@@ -499,6 +512,33 @@ watch(selectionContainerRef, (val) => {
   // selectionContainerRef.value.addEventListener("scroll", handleListScroll);
 });
 
+// extension
+const currentPath = ref(route.path);
+const extensionState = ref(false);
+const extensionToken = ref("");
+
+const checkExtension = () => {
+  if (currentPath.value === "/livestreampage") {
+    extensionToken.value = route.query.token;
+    extensionState.value = true;
+  }
+};
+
+const showLivestreamDetails = () => {
+  // extension
+  if (extensionState.value) {
+    router.push({ path: currentPath.value, query: { token: extensionToken.value } });
+    if (isAndroid()) {
+      LocalStorage.set("TOKEN", extensionToken.value, 86400);
+    } else {
+      SessionStorage.set("TOKEN", extensionToken.value);
+    }
+    store.token = extensionToken.value;
+  } else {
+    // console.log("no extension");
+  }
+};
+
 onMounted(() => {
   api.get("/platform-competition").then((res) => {
     if (res.code === 0) {
@@ -514,6 +554,8 @@ onMounted(() => {
   });
 
   getLiveUrlList();
+  checkExtension();
+  showLivestreamDetails();
 });
 
 onUnmounted(() => {

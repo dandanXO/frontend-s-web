@@ -1,6 +1,6 @@
 <template>
   <div class="back-section" style="z-index: 4900" v-if="showPlayerController">
-    <q-btn flat to="/livestream">
+    <q-btn flat @click="backToPrev()">
       <q-icon name="chevron_left" color="white" size="lg" />
       <div class="item-content">
         <div class="content-title">{{ livestreamData.title }}</div>
@@ -157,13 +157,18 @@
   playerConfig --{{ playerConfig }}
   </pre> -->
 </template>
+
 <script setup>
 import { onMounted, ref, toRefs, watch, onUnmounted, computed, onActivated, nextTick, onBeforeUnmount } from "vue";
 import { VideoPlayer } from "boot/videoPlayer";
+import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
 import { useNotify } from "src/hooks/notify";
+import { useLocalStorage, useSessionStorage } from "@vueuse/core";
+import { isAndroid } from "boot/utils";
 
 const $q = useQuasar();
+const router = useRouter();
 
 /** @type {import("flv.js").default.Config} */
 const DEFAULT_FLV_CONFIG = {
@@ -212,8 +217,8 @@ const QUALITY_ALIAS = {
 
 const notify = useNotify();
 
-const props = defineProps(["danmuList", "channels", "livestreamData"]);
-const { danmuList, channels, livestreamData } = toRefs(props);
+const props = defineProps(["danmuList", "channels", "livestreamData", "extensionState", "extensionToken"]);
+const { danmuList, channels, livestreamData, extensionState, extensionToken } = toRefs(props);
 
 const danmuJs = ref(null);
 
@@ -618,6 +623,19 @@ const copyMessage = () => {
     message: "错误讯息已复制，请联系技术",
     type: "info"
   });
+};
+
+const backToPrev = () => {
+  if (extensionState.value) {
+    // extensionToken = localStorage.getItem("TOKEN");
+    router.push({
+      path: `/livestreampage`,
+      query: { token: extensionToken.value }
+    });
+    // router.go(-1);
+  } else {
+    router.push(`/livestream`);
+  }
 };
 </script>
 
