@@ -268,8 +268,8 @@ async function submit() {
       id: form.id,
       sportId: form.sportId,
       title: form.title,
-      eventStartTime: form.eventStartTime,
-      eventEndTime: form.eventEndTime,
+      eventStartTime: form.eventStartTime && form.eventStartTime.trim() !== '' ? form.eventStartTime : null,
+      eventEndTime: form.eventEndTime && form.eventEndTime.trim() !== '' ? form.eventEndTime : null,
       liveStatus: form.liveStatus,
       sort: form.sort,
       isTest: form.isTest
