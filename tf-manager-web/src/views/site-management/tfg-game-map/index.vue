@@ -699,7 +699,7 @@ async function downloadTemplate() {
   configList.list.forEach(data => {
     const code = data.code;
     const gameCode = data.gameName;
-    if (code.include("aviator")) {
+    if (code.includes("aviator")) {
       paltformGameList.push({ platform: 'spribe', gamecode: 'aviator', gamename: 'Aviator' })
     } else {
       const parts = code.split("_");
