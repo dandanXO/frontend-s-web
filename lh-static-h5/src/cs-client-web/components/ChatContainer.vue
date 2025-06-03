@@ -1907,6 +1907,8 @@ export default defineComponent({
   justify-content: space-between;
   align-items: center;
   max-width: 550px;
+  width: 100%;
+  place-self: center;
 
   .duplicate-span {
     // padding-right: 0px;
