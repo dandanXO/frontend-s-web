@@ -33,283 +33,53 @@ body {
     align-items: center;
 }
 
-.logo {
-    aspect-ratio: 822/375;
-    max-width: 320px;
-    width: 50%;
-    margin: 10px auto;
-}
 
-.step-1 {
-    position: relative;
-    background: url(../assets/images/step-1.png) no-repeat center center;
-    aspect-ratio: 1009/691;
-    background-size: 100% 100%;
-    width: calc(100% - 20px);
-    margin: 0 auto;
-}
-
-.step-2 {
-    position: relative;
-    background: url(../assets/images/step-2.png) no-repeat center center;
-    aspect-ratio: 1009/820;
-    background-size: 100% 100%;
-    width: calc(100% - 20px);
-    margin: 0 auto;
-}
-
-.step-1-action-wrapper, .step-2-action-wrapper {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    bottom: 5%;
-    left: 50%;
-    width: 80%;
-    transform: translate(-50%, -40%);
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-}
-
-.step-2-action-wrapper {
-    transform: translate(-50%, -10%);
-    gap: 30px;
-}
-
-.row {
-    width:100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-}
-
-button {
-    border: none;
-}
-
-.step-1-btn {
-    aspect-ratio: 606/179;
-    flex: 3;
-    background: url(../assets/images/step-1-btn.png);
-    background-size: 100% 100%;
-    width: 200px;
-}
-
-.step-2-btn {
-    aspect-ratio: 603/179;
-    flex: 3;
-    background: url(../assets/images/step-2-btn.png);
-    background-size: 100% 100%;
-    width: 200px;
-}
-
-.step-2-btn.is-active{
-    top:0;
-    left:0px;
-    bottom: 0px;
-    text-align:center;
-    right:0px;
-    font-size: 24px;
-    letter-spacing: 2px;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    border-radius:12px;
-    background: #71ADFF;
-}
-
-.step-2-btn.is-active::before{
-    content:"加载中...";
-}
-
-.step-2-hint {
-    aspect-ratio: 928/156;
-    width: calc(100% - 0px);
-    margin: 0 auto;
-}
-
-.step-1-btn:hover, .step-2-btn:hover {
-    opacity: 0.9;
-}
-
-.step-1-btn:active, .step-2-btn:active {
-    filter: brightness(0.85);
-    transform: translate(0px, 2px);
-}
-
-.step-1-btn-decor {
-    aspect-ratio: 270/270;
-    flex: 1;
-    max-width: 80px;
-    width: 15%;
-}
-
-.step-2-btn-decor {
-    aspect-ratio: 279/279;
-    flex: 1;
-    max-width: 80px;
-    width: 15%;
-}
-
-.modal-open {
+.q-header {
+    padding: 3px 10px 8px;
+    padding-top: calc(3px + env(safe-area-inset-top, 0));
+    background: #f5f7fa;
     position: fixed;
-    background: rgba(0, 0, 0, 0.5);
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    width: 100vw;
-    height: 100vh;
-    z-index: 99;
-}
-
-.modal-div {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-}
-
-.modal-inner {
-    width: calc(100% - 80px);
-    min-width: 330px;
-    height: 200px;
-    background: #fff;
-    border-radius: 10px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.modal-header {
-    border-radius: 10px 10px 0px 0px;
-    background: #40B6FC;
-    height: 80px;
-    display: flex;
+    z-index: 999;
     width: 100%;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    color: #fff;
-    font-weight: bold;
-    font-size: 19px;
-}
-
-.modal-input {
-    background: #b3b3b3;
-    height: 38px;
-    border-radius: 20px;
-    width: calc(100% - 20px);
-    margin: 25px auto 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-}
-
-.url-input {
-    padding: 4px 10px;
-    box-sizing: border-box;
-    font-size: 17px;
-    white-space: nowrap;
-    overflow: hidden;
-    width: calc(100% - 60px);
-    text-overflow: ellipsis;
-}
-
-.copy-btn {
-    background: #40B6FC;
-    height: 100%;
-    border-radius: 0px 24px 24px 0px;
-    width: 60px;
-    padding: 4px 8px;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.copy-btn:active {
-    filter: brightness(0.86);
-    transform: translate(0.5px, 1px);
-}
-
-
-
-
-/** Modal CSS **/
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: #000000CC /* Black w/ opacity */
 }
-
-/* Modal Content */
-.modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 0px;
-    width: 80%;
+.q-header.with-shadow {
+    box-shadow: 0px -6px 6px 0px #c3d4e6 inset;
 }
-
-.step-1-modal-action-wrapper {
+.logo img {
+    width: 12px;
+}
+.header-actions {
     display: flex;
-    flex-direction: column;
-    position: absolute;
-    bottom: 2%;
-    left: 50%;
-    transform: translate(-50%, -30%);
-    gap: 10px;
+}
+.page-title {
     align-items: center;
+    color: #424f72;
+    display: flex;
+    font-size: 1.3rem;
     justify-content: center;
+    position: relative;
+    text-align: center;
+    a {
+        
+        position: absolute;
+        left: 0;
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
 }
-
-/* The Close Button */
-.close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 60px;
-    font-weight: bold;
-    padding-right: 15px;
-}
-
-.close:hover, .close:focus {
-    color: #000;
-    text-decoration: none;
+.back-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
     cursor: pointer;
 }
-
-#step-1-modal .modal-content {
-    background: url(../assets/images/modal-bg.png) no-repeat center center;
-    aspect-ratio: 928/814;
-    width: 700px;
-    background-size: 100% 100%;
-    position: relative;
-    max-height: 400px;
-    box-sizing: border-box;
-}
-
-#step-1-modal .modal-content .step-1-modal-btn {
-    aspect-ratio: 429/144;
-    width: 200px;
-    background: url(../assets/images/step-1-modal-btn.png);
-    background-size: 100% 100%;
-}
-
-#step-1-modal .modal-content .step-1-modal-btn:active{
-    filter: brightness(0.85);
-    transform: translate(0px,1px);
+.menu-btn {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
 }
