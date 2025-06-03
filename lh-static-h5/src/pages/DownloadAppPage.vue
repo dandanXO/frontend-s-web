@@ -275,7 +275,7 @@ export default defineComponent({
   // background: url("../assets/images/download/app/main-bg.png") no-repeat;
   background-size: cover;
   background-position: center;
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 .logo-img {
   width: 130px;
