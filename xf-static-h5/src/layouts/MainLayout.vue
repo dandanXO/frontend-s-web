@@ -49,13 +49,13 @@
     </q-drawer>
 
     <q-page-container>
-      <keep-alive v-if="isLiveChat">
-        <router-view v-slot="{ Component }">
+      <router-view v-slot="{ Component }">
+        <keep-alive :max="8" :exclude="excludeAliveComponents">
           <component :is="Component" />
-        </router-view>
-      </keep-alive>
+        </keep-alive>
+      </router-view>
 
-      <router-view v-else />
+      <!--      <router-view v-else />-->
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
       <div class="bottom-nav">
@@ -363,7 +363,9 @@ export default defineComponent({
       }
     };
 
-    const isLiveChat = computed(() => route.path === "/liveChat" || route.path === "/live-chat");
+    const isLiveChat = computed(
+      () => route.path === "/liveChat" || route.path === "/liveChat/chat" || route.path === "/live-chat"
+    );
 
     const chatPage = computed(() => {
       if (store.chatGuid) {
@@ -477,7 +479,22 @@ export default defineComponent({
       changePlatform,
       isPlatformActive,
       isLiveChat,
-      chatPage
+      chatPage,
+      excludeAliveComponents: [
+        "DepositRecordView",
+        "WithdrawRecordView",
+        "TransferRecordView",
+        "FeedbackRecordView",
+        "PromoRecordView",
+        "BetHistoryRecordView",
+        "MoneyChangeRecordView",
+        "WithdrawView",
+        "DepositView",
+        "OutboxView",
+        "BindBankCard",
+        "BindCryptoView",
+        "BindEWalletView"
+      ]
     };
   }
 });

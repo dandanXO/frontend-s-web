@@ -369,10 +369,7 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss">
-// .q-page-container {
-//   background-color: #090b18;
-// }
+<style scoped lang="scss">
 .promo-container {
   min-height: calc(100vh - 120px);
   .promo-view-container {
@@ -422,7 +419,7 @@ onMounted(() => {
   }
 }
 </style>
-<style lang="scss">
+<style scoped lang="scss">
 .promo-container {
   color: #ffffff;
   // background-color: #090b18;
