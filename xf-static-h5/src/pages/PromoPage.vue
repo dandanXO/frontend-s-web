@@ -3,7 +3,7 @@
     <div class="promo">
       <template v-if="allLoading">
         <div class="q-pa-md q-gutter-y-md">
-          <template v-for="index in 9" :key="index"><q-skeleton height="100px" /></template>
+          <div class="loader" />
         </div>
       </template>
 
@@ -52,8 +52,6 @@
               </div>
             </div>
             <div v-else class="selected-promo">
-              <div class="loader" v-if="isFetchingPromo" />
-
               <div class="selected-promo-wrapper" :class="`bg__${selectedPromo.promoCode}`">
                 <div class="banner-container" v-if="!isSpecialPromo">
                   <img
@@ -369,10 +367,7 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss">
-// .q-page-container {
-//   background-color: #090b18;
-// }
+<style scoped lang="scss">
 .promo-container {
   min-height: calc(100vh - 120px);
   .promo-view-container {
@@ -422,7 +417,7 @@ onMounted(() => {
   }
 }
 </style>
-<style lang="scss">
+<style scoped lang="scss">
 .promo-container {
   color: #ffffff;
   // background-color: #090b18;
@@ -894,6 +889,35 @@ onMounted(() => {
     height: calc(100% - 26px);
 
     top: 26px;
+  }
+}
+
+.loader {
+  margin: auto;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>

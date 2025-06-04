@@ -25,6 +25,11 @@ const routes = [
     children: [{ path: "", component: () => import("pages/PromoPage.vue") }]
   },
   {
+    path: "/downloadApp",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/DownloadAppPage.vue") }]
+  },
+  {
     path: "/hotmatch",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/HotMatchPage.vue") }]

@@ -12,10 +12,10 @@
         <div class="livestream-list-item__match-info">
           <div class="livestream-list-item__match-info__team">
             <div class="livestream-list-item__match-info__team-emblem">
-              <img :src="live.homeIcon ?? systemAvatarImg" loading="lazy" />
+              <img :src="live.homeIcon || systemAvatarImg" loading="lazy" />
             </div>
             <span class="livestream-list-item__match-info__team-name">
-              {{ live.homeNameZh ?? live.homeNameEn ?? live.homeName }}
+              {{ live.homeNameZh || live.homeNameEn || live.homeName }}
             </span>
           </div>
 
@@ -29,10 +29,10 @@
 
           <div class="livestream-list-item__match-info__team">
             <div class="livestream-list-item__match-info__team-emblem">
-              <img :src="live.awayIcon ?? systemAvatarImg" loading="lazy" />
+              <img :src="live.awayIcon || systemAvatarImg" loading="lazy" />
             </div>
             <span class="livestream-list-item__match-info__team-name">
-              {{ live.awayNameZh ?? live.awayNameEn ?? live.awayName }}
+              {{ live.awayNameZh || live.awayNameEn || live.awayName }}
             </span>
           </div>
         </div>
@@ -55,7 +55,6 @@
   </swiper>
 </template>
 <script setup>
-import { useNotify } from "@/hooks/notify";
 import { useLocalStorage } from "@vueuse/core";
 import moment from "moment";
 import systemAvatarImg from "@/assets/home/livestream/system-avatar.png";
@@ -73,7 +72,6 @@ const props = defineProps({
 const model = defineModel({ type: Number });
 const emit = defineEmits(["scroll-reach-right"]);
 
-const notify = useNotify();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
 const swiperInstance = ref(null);
@@ -91,10 +89,6 @@ const swiperConfig = computed(() => {
 });
 
 const handleLivestreamClick = (index) => {
-  if (!props.list[index].liveStatus) {
-    notify.info("该赛事未开始");
-    return;
-  }
   model.value = index;
 };
 
@@ -131,6 +125,10 @@ watch(model, () => {
   align-items: center;
   margin: 0 -14px -28px 0;
   --swiper-navigation-color: #3981ff;
+
+  :deep(.swiper-button-next) {
+    right: 28px;
+  }
 
   .livestream-list-item {
     @include livestream-content-block;

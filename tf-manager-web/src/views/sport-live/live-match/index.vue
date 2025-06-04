@@ -60,14 +60,14 @@
       <el-table-column prop="competitionNameEn" :label="t('fields.competitionNameEn')" width="250" />
       <el-table-column :label="t('fields.homeTeam')" width="180">
         <template #default="scope">
-          <img v-if="scope.row.home.icon" :src="scope.row.home.icon" style="width: 24px; height: 24px; margin-right: 8px;">
-          <span>{{ scope.row.home.nameZh || scope.row.home.nameEn }}</span>
+          <img v-if="scope.row.home && scope.row.home.icon" :src="scope.row.home.icon" style="width: 24px; height: 24px; margin-right: 8px;">
+          <span>{{ scope.row.home?.nameZh || scope.row.home?.nameEn }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="t('fields.awayTeam')" width="180">
         <template #default="scope">
-          <img v-if="scope.row.away.icon" :src="scope.row.away.icon" style="width: 24px; height: 24px; margin-right: 8px;">
-          <span>{{ scope.row.away.nameZh || scope.row.away.nameEn }}</span>
+          <img v-if="scope.row.away && scope.row.away.icon" :src="scope.row.away.icon" style="width: 24px; height: 24px; margin-right: 8px;">
+          <span>{{ scope.row.away?.nameZh || scope.row.away?.nameEn }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="matchTime" :label="t('fields.matchTime')" width="180">
@@ -212,6 +212,8 @@ export default defineComponent({
     const page = reactive({
       pages: 0,
       records: [],
+      total: 0,
+      current: 1,
       loading: false
     });
     const request = reactive({
@@ -243,7 +245,12 @@ export default defineComponent({
     async function loadMatch() {
       page.loading = true;
       const res = await getSportLiveMatch({ sportId: request.sportId, status: request.liveStatus, title: request.title, page: request.current, limit: request.size });
-      page.records = res.data || [];
+      console.log(res.data.records);
+
+      page.records = res.data.records || [];
+      page.total = res.data.total || 0;
+      page.pages = res.data.pages || 0;
+      page.current = res.data.current || 1;
       page.loading = false;
     }
 

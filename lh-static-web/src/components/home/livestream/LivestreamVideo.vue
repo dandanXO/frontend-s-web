@@ -35,8 +35,13 @@
             <img v-else src="@/assets/home/livestream/icon-pause.png" />
           </button>
           <div class="livestream-video-controller-volume-group">
-            <button class="livestream-video-controller-volume-btn btn" title="音量">
-              <img src="@/assets/home/livestream/icon-volume.png" />
+            <button
+              class="livestream-video-controller-volume-btn btn"
+              title="音量"
+              @click="handleVolumeChange(playerConfig.volume > 0 ? 0 : playerConfig.latestVolume)"
+            >
+              <img v-if="playerConfig.volume === 0" src="@/assets/home/livestream/icon-volume-off.png" />
+              <img v-else src="@/assets/home/livestream/icon-volume.png" />
             </button>
             <el-slider
               class="livestream-video-controller-volume-slider"
@@ -159,7 +164,7 @@
   </div>
 </template>
 <script setup>
-import { computed, onMounted, onUnmounted, ref, toRefs, watch } from "vue";
+import { computed, nextTick, onMounted, onUnmounted, ref, toRefs, watch } from "vue";
 import { VideoPlayer } from "@/utils/videoPlayer";
 
 /** @type {import("flv.js").default.Config} */
@@ -240,7 +245,8 @@ const playerConfig = ref({
   isFullScreen: false,
   isDanmuClose: false,
   quality: DEFAULT_QUALITY,
-  channel: 0
+  channel: 0,
+  latestVolume: 50
 });
 
 const videoSource = computed(() => getVideoSource(livestreamData.value));
@@ -344,6 +350,9 @@ const loadPlayerConfig = () => {
           videoRef.value.volume = value / 100;
           playerConfig.value[key] = value;
           break;
+        case "latestVolume":
+          playerConfig.value[key] = value;
+          break;
         case "isDanmuClose":
           handleDanmuChange(value);
           break;
@@ -392,6 +401,9 @@ const handleFullScreenChange = (value) => {
 };
 
 const handleVolumeChange = (value) => {
+  if (value > 0) {
+    changePlayerConfig("latestVolume", value);
+  }
   changePlayerConfig("volume", parseInt(value));
   videoRef.value.volume = value / 100;
 };
@@ -519,17 +531,24 @@ watch(danmuList, () => {
   }
 });
 
-watch(livestreamData, (val, oldVal) => {
-  const newVideoSource = getVideoSource(val);
-  const newVideoUrl = getVideoUrl(newVideoSource);
-  const _currentVideoSource = getVideoSource(oldVal);
-  const _currentVideoUrl = getVideoUrl(_currentVideoSource);
-  if (newVideoUrl === _currentVideoUrl) return;
-  if (danmu.value) {
-    danmu.value.stop();
-  }
-  loadData();
-});
+watch(
+  livestreamData,
+  async (val, oldVal) => {
+    if (oldVal) {
+      const newVideoSource = getVideoSource(val);
+      const newVideoUrl = getVideoUrl(newVideoSource);
+      const _currentVideoSource = getVideoSource(oldVal);
+      const _currentVideoUrl = getVideoUrl(_currentVideoSource);
+      if (newVideoUrl === _currentVideoUrl) return;
+      if (danmu.value) {
+        danmu.value.stop();
+      }
+    }
+    await nextTick();
+    loadData();
+  },
+  { immediate: true }
+);
 
 onMounted(() => {
   // loadData();
