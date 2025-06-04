@@ -198,7 +198,9 @@ html,body {
 }
 .btn1{
 	width: 84%;
-	margin-top: 23px;
+	margin: 23px auto 0;
+	display: flex;
+	justify-content: center;
 	color: #FFFFFF;
 	font-size: 14px;
 	border: 0px;
@@ -229,6 +231,8 @@ html,body {
 	box-shadow: 0px 3.82px 3.82px 0px #BBDCFF inset;
 	box-shadow: 0px -3.05px 3.05px 0px #A2BFF4 inset;
 	border-radius: 12px;
+	display: flex;
+	justify-content: center;
 }
 .btn3{
 	font-size: 14px;
@@ -239,6 +243,8 @@ html,body {
 	background: transparent;
 	text-decoration: underline;
 	margin-top: -6px;
+	display: flex;
+	justify-content: center;
 }
 .custom-bottom-sheet {
 	position: fixed;
