@@ -66,6 +66,7 @@ const isFetchingBanners = ref(false);
 
 const allGames = ref(null);
 const goBannerPage = (redirectUrl) => {
+  console.log("goBannerPage", redirectUrl);
   const openPattern = /^\/open\/(.*)/;
   if (redirectUrl.match(openPattern)) {
     const extractedUrl = redirectUrl.match(openPattern)[1];
