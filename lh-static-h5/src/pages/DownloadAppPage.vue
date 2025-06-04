@@ -144,7 +144,6 @@
 <script lang="js">
 import { ref, defineComponent, onMounted } from "vue";
 import axios from "axios";
-import { isAndroid as checkIsAndroid } from "boot/utils";
 
 export default defineComponent({
   name: "downloadAppPage",
