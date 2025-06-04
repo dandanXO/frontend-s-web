@@ -101,9 +101,24 @@
                 <img src="../../assets/images/livestream/placeholder-vs.png" />
 
                 <div class="vs-timer" v-if="!item.liveStatus">
-                  <span>22</span>
+                  <span
+                    v-for="(char, cIndex) in countdowns[index].hours"
+                    class="vs-timer__time"
+                    :key="`hour-${cIndex}`"
+                  >
+                    {{ char }}
+                  </span>
                   :
-                  <span>22</span>
+                  <span
+                    v-for="(char, cIndex) in countdowns[index].minutes"
+                    class="vs-timer__time"
+                    :key="`minute-${cIndex}`"
+                  >
+                    {{ char }}
+                  </span>
+                  <span class="vs-timer__time-desc">小时</span>
+                  <div />
+                  <span class="vs-timer__time-desc">分钟</span>
                 </div>
               </div>
 
@@ -482,7 +497,7 @@ const liveStreamStatusInfo = reactive({
 const getLiveUrlList = () => {
   isLivestreamListLoading.value = true;
   api
-    .post(`/opt-session/live/list?current=${currentPage.value}`)
+    .post(`/opt-session/live/list`)
     .then((res) => {
       if (res.code === 0) {
         res.data.streamList.sort((a, b) => a.sort - b.sort);
@@ -515,8 +530,8 @@ const countdowns = ref({});
 const updateCountdowns = () => {
   const now = moment();
   sortedLiveStreamList.value.forEach((item, index) => {
-    if (!item.liveStatus && item.startTime) {
-      const eventTime = moment(item.startTime);
+    if (!item.liveStatus && item.eventStartTime) {
+      const eventTime = moment(item.eventStartTime);
       const diffInMs = eventTime.diff(now);
       const duration = moment.duration(diffInMs > 0 ? diffInMs : 0);
       const hours = String(Math.floor(duration.asHours())).padStart(2, "0");
@@ -1148,23 +1163,31 @@ onUnmounted(() => {
         }
 
         .vs-timer {
-          display: flex;
-          justify-content: center;
-          align-items: center;
+          display: grid;
+          grid-template-columns: repeat(5, max-content);
+          justify-self: center;
           color: #ffffff;
           font-size: 10px;
-          gap: 2px;
+          gap: 4px 2px;
           line-height: 1;
           margin-top: 10%;
+          font-size: 0.85rem;
+          font-weight: 600;
 
-          span {
+          .vs-timer__time {
             background-image: url("../../assets/images/livestream/placeholder-timer.png");
             background-size: 100% 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 16px;
-            width: 20px;
+            width: max-content;
+            padding: 0 2px;
+          }
+
+          .vs-timer__time-desc {
+            grid-column: span 2;
+            font-size: 0.4rem;
           }
         }
       }
@@ -1181,7 +1204,8 @@ onUnmounted(() => {
         left: 5%;
         width: 30%;
         height: 10%;
-        font-size: 6px;
+        font-size: 0.5rem;
+        padding: 2px 0;
         line-height: 1;
         flex-direction: column;
 
@@ -1229,7 +1253,8 @@ onUnmounted(() => {
         right: 5%;
         width: 30%;
         height: 10%;
-        font-size: 6px;
+        font-size: 0.5rem;
+        padding: 2px 0;
         line-height: 1;
         flex-direction: column;
 
