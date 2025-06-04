@@ -33,8 +33,6 @@ a:hover {
 }
 
 .full-container {
-  height: 95vh;
-  margin-bottom: 15px;
 }
 
 .main-wrapper {
@@ -57,13 +55,11 @@ a:hover {
 .top-logo img {
   display: block;
   width: 100%;
-  max-width: 140px;
 }
 
 .top-cs img {
   display: block;
   width: 100%;
-  max-width: 130px;
 }
 
 .header-txt {
@@ -90,21 +86,36 @@ a:hover {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  justify-content: space-evenly;
-  height: 100%;
-  max-width: 410px;
   margin: auto;
 }
 
 .pop-btns-item {
   display: flex;
   align-items: center;
-  background: rgba(27, 29, 38, 0.6);
-  padding: 2px 12px;
-  border-radius: 10px;
-  margin-left: 5%;
-  box-shadow: 0px 1px 8px 1px rgba(0, 240, 255, 0.2);
-  border: 1px solid rgba(0, 240, 255, 1);
+}
+
+.pop-btns-item-1 {
+  background: url('../imgs/banner-1.png') center center no-repeat;
+  background-size: 100% 100%;
+  aspect-ratio: 408/88;
+}
+
+.pop-btns-item-2 {
+  background: url('../imgs/banner-2.png') center center no-repeat;
+  background-size: 100% 100%;
+  aspect-ratio: 408/91;
+}
+
+.pop-btns-item-3 {
+  background: url('../imgs/banner-3.png') center center no-repeat;
+  background-size: 100% 100%;
+  aspect-ratio: 408/92;
+}
+
+.pop-btns-item-4 {
+  background: url('../imgs/banner-4.png') center center no-repeat;
+  background-size: 100% 100%;
+  aspect-ratio: 408/87;
 }
 
 .pop-btns-item .item-icon {
@@ -145,13 +156,15 @@ a:hover {
 
 .pop-btns-item .item-arrow {
   margin-left: auto;
-  min-width: 42px;
+  min-width: 92px;
 }
 
 .pop-btns-item .item-arrow img {
   display: block;
   width: 100%;
-  max-width: 42px;
+  max-width: 92px;
+  margin-top: 20px;
+  margin-right: 15px;
 }
 
 .swing {
@@ -170,10 +183,6 @@ a:hover {
   }
 }
 
-.sub-title-img {
-  padding: 30px 16px 20px;
-}
-
 .sub-title-img img {
   display: block;
   width: 100%;
@@ -183,6 +192,10 @@ a:hover {
 
 .contact-btns-wrapper {
   padding: 0 16px 30px;
+  background: url('../imgs/contact-section-bg.png') center center no-repeat;
+  background-size: 100% 100%;
+  padding: 5px 30px 30px 30px;
+  margin-top: 20px;
 }
 
 .contact-btns-container {
@@ -220,6 +233,7 @@ a:hover {
   font-weight: bold;
   color: #ffffff;
   letter-spacing: 2px;
+  display: none;
 }
 
 /* Overlay Styles */
@@ -294,12 +308,9 @@ a:hover {
 }
 
 .voxis-bg {
-  background-color: rgba(255,255,255,0.1);
-  background-image: url("../imgs/amico.png");
-  background-size: 36px auto;
-  background-position: 16px 12px;
+  background: url("../imgs/voxis-bg.png") center center no-repeat;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
-  border-radius:25px;
   position: relative;
   text-align: left;
   padding-left: 65px;
@@ -327,7 +338,7 @@ a:hover {
 .qq-bg span,
 .voxis-bg span {
   color: #fff;
-  font-size: 1.1em;
+  font-size: 14px;
   display: block;
   /*padding-right: 25px;*/
   @media (max-width: 360px) {
