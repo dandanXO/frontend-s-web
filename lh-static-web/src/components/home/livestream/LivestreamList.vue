@@ -55,7 +55,6 @@
   </swiper>
 </template>
 <script setup>
-import { useNotify } from "@/hooks/notify";
 import { useLocalStorage } from "@vueuse/core";
 import moment from "moment";
 import systemAvatarImg from "@/assets/home/livestream/system-avatar.png";
@@ -73,7 +72,6 @@ const props = defineProps({
 const model = defineModel({ type: Number });
 const emit = defineEmits(["scroll-reach-right"]);
 
-const notify = useNotify();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
 const swiperInstance = ref(null);
@@ -127,6 +125,10 @@ watch(model, () => {
   align-items: center;
   margin: 0 -14px -28px 0;
   --swiper-navigation-color: #3981ff;
+
+  :deep(.swiper-button-next) {
+    right: 28px;
+  }
 
   .livestream-list-item {
     @include livestream-content-block;
