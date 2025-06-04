@@ -19,11 +19,19 @@
     <div class="coming-match-info__countdown">
       <span class="coming-match-info__countdown-title">直播倒计时</span>
       <div class="coming-match-info__countdown__time">
-        <div v-for="char in countdown.hours" :key="`hour-${char}`" class="coming-match-info__countdown-time-item">
+        <div
+          v-for="(char, index) in countdown.hours"
+          :key="`hour-${index}`"
+          class="coming-match-info__countdown-time-item"
+        >
           {{ char }}
         </div>
         <span class="coming-match-info__countdown-time-colon">:</span>
-        <div v-for="char in countdown.minutes" :key="`minute-${char}`" class="coming-match-info__countdown-time-item">
+        <div
+          v-for="(char, index) in countdown.minutes"
+          :key="`minute-${index}`"
+          class="coming-match-info__countdown-time-item"
+        >
           {{ char }}
         </div>
         <div class="coming-match-info__countdown-time-item-desc">小时</div>
@@ -50,7 +58,7 @@
 <script setup>
 import systemAvatarImg from "@/assets/home/livestream/system-avatar.png";
 import moment from "moment";
-import { toRefs, watch, ref } from "vue";
+import { toRefs, watch, ref, onUnmounted } from "vue";
 
 const DEFAULT_COUNTDOWN = {
   hours: "00",
@@ -92,6 +100,12 @@ const startCountdown = () => {
 
 watch(livestreamData, () => {
   startCountdown();
+});
+
+onUnmounted(() => {
+  if (timer.value) {
+    clearInterval(timer.value);
+  }
 });
 </script>
 <style lang="scss" scoped>
