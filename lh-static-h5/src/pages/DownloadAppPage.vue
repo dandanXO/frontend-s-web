@@ -186,7 +186,9 @@ export default defineComponent({
       }
     }
     onMounted(()=>{
-      isAndroid.value = checkIsAndroid();
+      const userAgent = navigator.userAgent.toLowerCase();
+      const isAndroidUserAgent = userAgent.includes("android");
+      isAndroid.value = isAndroidUserAgent;
 
       axios.get('https://tfwkgol.076knee9cc.com/getDownData').then((res) => {
         let subTitle = ['高效 快捷',' 防失联 不掉签','长期 稳定',]
@@ -475,7 +477,7 @@ export default defineComponent({
   color: #1677ff;
   font-size: 20px;
   font-weight: bold;
-  margin: 0px 0 8px;
+  margin: 20px 0 2px;
 }
 .teach1-subtitle {
   font-size: 14px;
