@@ -52,16 +52,18 @@
     >
       <el-table-column prop="referrerName" :label="t('fields.referrer')">
         <template #default="scope">
-          <el-link type="primary" @click="redirectToReferPane(scope.row.referrerName)">
+          <el-link type="primary" v-if="hasPermission(['sys:privi:member-refer-relation:list'])" @click="redirectToReferPane(scope.row.referrerName)">
             {{ scope.row.referrerName }}
           </el-link>
+          <span v-else>{{ scope.row.referrerName }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="referCount" :label="t('fields.referCount')" sortable :sort-orders="sortOrders">
         <template #default="scope">
-          <el-link type="primary" @click="redirectToReferPane(scope.row.referrerName)">
+          <el-link type="primary" v-if="hasPermission(['sys:privi:member-refer-relation:list'])" @click="redirectToReferPane(scope.row.referrerName)">
             {{ scope.row.referCount }}
           </el-link>
+          <span v-else>{{ scope.row.referCount }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="referBonus" :label="t('fields.referBonus')" sortable :sort-orders="sortOrders">
@@ -197,6 +199,7 @@ import { getSiteListSimple } from "@/api/site";
 import { ElMessage } from "element-plus";
 import * as XLSX from 'xlsx'
 import { useRouter } from "vue-router";
+import { hasPermission } from '@/utils/util'
 
 const { t } = useI18n();
 const store = useStore();
