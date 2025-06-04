@@ -2,14 +2,11 @@
   <div class="coming-match-wrapper">
     <div class="coming-match-info home">
       <div class="coming-match-info__team-emblem">
-        <img :src="livestreamData.homeIcon ?? systemAvatarImg" loading="lazy" />
+        <img :src="livestreamData.homeIcon || systemAvatarImg" loading="lazy" />
       </div>
       <div class="coming-match-info__team-name">
-        <span class="coming-match-info__team-name-placeholder">
-          {{ livestreamData.homeNameZh ?? livestreamData.homeNameEn ?? livestreamData.homeName }}
-        </span>
         <div class="coming-match-info__team-name-inner">
-          {{ livestreamData.homeNameZh ?? livestreamData.homeNameEn ?? livestreamData.homeName }}
+          {{ livestreamData.homeNameZh || livestreamData.homeNameEn || livestreamData.homeName }}
         </div>
         <div class="coming-match-info__team-name-stripe light left" />
         <div class="coming-match-info__team-name-stripe light right" />
@@ -43,11 +40,11 @@
 
     <div class="coming-match-info away">
       <div class="coming-match-info__team-emblem">
-        <img :src="livestreamData.awayIcon ?? systemAvatarImg" loading="lazy" />
+        <img :src="livestreamData.awayIcon || systemAvatarImg" loading="lazy" />
       </div>
       <div class="coming-match-info__team-name">
         <div class="coming-match-info__team-name-inner">
-          {{ livestreamData.awayNameZh ?? livestreamData.awayNameEn ?? livestreamData.awayName }}
+          {{ livestreamData.awayNameZh || livestreamData.awayNameEn || livestreamData.awayName }}
         </div>
         <div class="coming-match-info__team-name-stripe light left" />
         <div class="coming-match-info__team-name-stripe light right" />
@@ -110,12 +107,12 @@ onUnmounted(() => {
 </script>
 <style lang="scss" scoped>
 .coming-match-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 305px 1fr;
   background: url("@/assets/home/livestream/coming-match-bg.png") no-repeat center center;
   background-size: 100% 100%;
   border-radius: 15.1px;
+  color: #fff;
 
   .coming-match-info {
     display: flex;
@@ -141,11 +138,6 @@ onUnmounted(() => {
       }
     }
 
-    .coming-match-info__team-name-placeholder {
-      color: transparent;
-      pointer-events: none;
-    }
-
     .coming-match-info__team-emblem {
       background: url("@/assets/home/livestream/hexagon-mask.png") no-repeat, var(--team-emblem-bg);
       background-position: bottom 30px left 50%, center;
@@ -166,6 +158,10 @@ onUnmounted(() => {
       min-width: 226px;
       height: 48px;
       padding: 0 53px;
+      width: -moz-available;
+      width: -webkit-fill-available;
+      width: fill-available;
+
       .coming-match-info__team-name-inner {
         position: absolute;
         inset: 0 16%;
@@ -175,6 +171,7 @@ onUnmounted(() => {
         background-color: var(--bg-color);
         clip-path: polygon(20px 0%, calc(100% - 20px) 0%, 100% 100%, 0% 100%);
         padding: 0 20px;
+        text-align: center;
       }
       .coming-match-info__team-name-stripe {
         position: absolute;

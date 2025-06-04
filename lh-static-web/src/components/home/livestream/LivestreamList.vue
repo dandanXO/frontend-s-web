@@ -12,10 +12,10 @@
         <div class="livestream-list-item__match-info">
           <div class="livestream-list-item__match-info__team">
             <div class="livestream-list-item__match-info__team-emblem">
-              <img :src="live.homeIcon ?? systemAvatarImg" loading="lazy" />
+              <img :src="live.homeIcon || systemAvatarImg" loading="lazy" />
             </div>
             <span class="livestream-list-item__match-info__team-name">
-              {{ live.homeNameZh ?? live.homeNameEn ?? live.homeName }}
+              {{ live.homeNameZh || live.homeNameEn || live.homeName }}
             </span>
           </div>
 
@@ -29,10 +29,10 @@
 
           <div class="livestream-list-item__match-info__team">
             <div class="livestream-list-item__match-info__team-emblem">
-              <img :src="live.awayIcon ?? systemAvatarImg" loading="lazy" />
+              <img :src="live.awayIcon || systemAvatarImg" loading="lazy" />
             </div>
             <span class="livestream-list-item__match-info__team-name">
-              {{ live.awayNameZh ?? live.awayNameEn ?? live.awayName }}
+              {{ live.awayNameZh || live.awayNameEn || live.awayName }}
             </span>
           </div>
         </div>
