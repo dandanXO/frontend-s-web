@@ -49,7 +49,13 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <keep-alive v-if="isLiveChat">
+        <router-view v-slot="{ Component }">
+          <component :is="Component" />
+        </router-view>
+      </keep-alive>
+
+      <router-view v-else />
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
       <div class="bottom-nav">
@@ -72,7 +78,7 @@
             <div class="menu-icon hover"><img src="../assets/images/index/menu/menu-affiliate-hover.png" /></div>
             加盟
           </q-route-tab>
-          <q-route-tab class="cs-web-id" to="/liveChat" id="cs-web-id" name="live" :ripple="false">
+          <q-route-tab class="cs-web-id" :to="chatPage" id="cs-web-id" name="live" :ripple="false">
             <div class="menu-icon inactive"><img src="../assets/images/index/menu/menu-livechat.png" /></div>
             <div class="menu-icon hover"><img src="../assets/images/index/menu/menu-livechat-hover.png" /></div>
             客服
@@ -356,6 +362,20 @@ export default defineComponent({
         }
       }
     };
+
+    const isLiveChat = computed(() => route.path === "/liveChat" || route.path === "/live-chat");
+
+    const chatPage = computed(() => {
+      if (store.chatGuid) {
+        let url = `/liveChat/chat?uid=${store.chatGuid}`;
+        if (store.token) {
+          url += `&token=${store.token}`;
+        }
+        return url;
+      }
+      return "/liveChat";
+    });
+
     const pageName = ref("");
     const hasPage = ref(false);
     const hasDrawer = ref(false);
@@ -455,7 +475,9 @@ export default defineComponent({
       hasDrawer,
       platformsList,
       changePlatform,
-      isPlatformActive
+      isPlatformActive,
+      isLiveChat,
+      chatPage
     };
   }
 });

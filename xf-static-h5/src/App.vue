@@ -50,7 +50,7 @@ export default defineComponent({
           // console.log(res);
           const url = new URL(res.data);
           CSAUrl = url.hostname;
-          initCsWeb();
+          // initCsWeb();
           console.log(CSAUrl);
         })
         .catch((err) => {
@@ -59,45 +59,45 @@ export default defineComponent({
         });
     };
 
-    const initCsWeb = () => {
-      var regDevice = store.getDeviceType();
-      // console.log("Footer OnMounted");
+    // const initCsWeb = () => {
+    //   var regDevice = store.getDeviceType();
+    //   // console.log("Footer OnMounted");
 
-      // 'XFCS' / 2
-      // csclient = new CsClient('XFCS', regDevice, 'zh-CN', '2', 'prod', 'https://csweb01.v6kthwlug.com/');
-      csclient = new CsClient("XFCS", regDevice, "zh-CN", "2", "prod", `https://${CSAUrl}`);
+    //   // 'XFCS' / 2
+    //   // csclient = new CsClient('XFCS', regDevice, 'zh-CN', '2', 'prod', 'https://csweb01.v6kthwlug.com/');
+    //   csclient = new CsClient("XFCS", regDevice, "zh-CN", "2", "prod", `https://${CSAUrl}`);
 
-      csclient.set("pageurl", "/liveChat");
-      csclient.set("btnid", "cs-web-id");
-      csclient.set("bottom", "81px");
-      csclient.set("openanimation", false);
+    //   csclient.set("pageurl", "/liveChat");
+    //   csclient.set("btnid", "cs-web-id");
+    //   csclient.set("bottom", "81px");
+    //   csclient.set("openanimation", false);
 
-      csclient.set("notification-type", {
-        type: "none"
-      });
+    //   csclient.set("notification-type", {
+    //     type: "none"
+    //   });
 
-      if (store.token) {
-        csclient.set("token", store.token);
-      }
+    //   if (store.token) {
+    //     csclient.set("token", store.token);
+    //   }
 
-      //客服初始化。
-      csclient.init();
+    //   //客服初始化。
+    //   csclient.init();
 
-      csclient.receiveListener("message", function (callback) {
-        //收到新消息。
-        // alert(callback);
-      });
+    //   csclient.receiveListener("message", function (callback) {
+    //     //收到新消息。
+    //     // alert(callback);
+    //   });
 
-      //CsClient Event Listener.
-      window.addEventListener("message", function (event) {
-        // console.log("HEre Message received from the iframe: " + event.data); // Message received from child
-        if (_.isString(event.data)) {
-          // if (event.data == 'sess_timeout') {
-          //   router.push({ path: "/" });
-          // }
-        }
-      });
-    };
+    //   //CsClient Event Listener.
+    //   window.addEventListener("message", function (event) {
+    //     // console.log("HEre Message received from the iframe: " + event.data); // Message received from child
+    //     if (_.isString(event.data)) {
+    //       // if (event.data == 'sess_timeout') {
+    //       //   router.push({ path: "/" });
+    //       // }
+    //     }
+    //   });
+    // };
 
     const checkServerStatus = () => {
       axios.get(`https://sumbtf.tebarncale.com/server/status/${process.env.SITEID}`).then((response) => {
@@ -163,7 +163,7 @@ export default defineComponent({
       // initCsWeb();
       getCSA();
       checkSessStorageItem();
-      getAffiliateByDomain()
+      getAffiliateByDomain();
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);
