@@ -638,7 +638,7 @@ onMounted(() => {
   showLivestreamDetails();
 
   updateCountdowns();
-  intervalId = setInterval(updateCountdowns, 1000);
+  intervalId = setInterval(updateCountdowns, 1000 * 60);
 });
 
 onBeforeUnmount(() => {
