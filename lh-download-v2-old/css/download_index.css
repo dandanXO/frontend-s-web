@@ -1,0 +1,108 @@
+.download {
+    width: 100%;
+    height: auto;
+    display: none;
+    overflow: hidden;
+}
+
+.download_bg {
+	background-image: url("../img/download_bg.jpg");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	width: 100%;
+	height: auto;
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+	flex-direction: column;
+	align-items: center;
+	overflow: hidden;
+	position: relative;
+	min-height: 100vh;
+	margin-bottom: 40px;
+}
+
+.host_address {
+	color: #F8D675;
+	font-size: 42px;
+	margin-top: 10px;
+	font-weight: bold;
+}
+
+.customer_icon{
+	position: absolute;
+	right: 0;
+	/* width: 115px; */
+	/* margin-top: 40%; */
+    width: 100px;
+	top: 0;
+    margin-top: 10px;
+}
+
+.games_title_container {
+	width: 80%;
+	height: auto;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.games_title_item {
+	font-weight: bold;
+	color: #FFFFFF;
+	font-size: 18px;
+}
+
+.download_btn{
+	background-image: url("../img/download_btns_bg.png");
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	width: 85%;
+	height: 50px;
+	margin-top: 5px;
+	max-width: 450px;
+}
+
+.download_btn a{
+	display: block;
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	text-decoration: none;
+	color: #000000;
+	font-weight: bold;
+	font-size: 100%;
+	text-align: center;
+}
+
+.download_des {
+	font-size: 12px;
+	width: 90%;
+	/*margin-top: 10px;*/
+	text-align: center;
+	color: #FFFFFF;
+	margin: 10px auto;
+}
+
+.download_install_des {
+	font-size: 13px;
+	width: 90%;
+	margin-top: 8px;
+	color: #3882CB;
+	text-align: center;
+}
+
+.swiper_parent{
+	width: 100%;
+	padding-bottom: 0;
+	background: linear-gradient(#33b9ff,#33a7ff);
+}
+
+.swiper-slide img {
+	display: block;
+	border: none;
+	width: 80%;
+	height: auto;
+	margin: 0 auto;
+}
