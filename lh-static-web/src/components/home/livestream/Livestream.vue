@@ -16,7 +16,14 @@
         :is-system-livestream
         @send-chat-message="handleSendChatMessage"
       />
-      <LivestreamVideo ref="livestreamVideoRef" :danmuList :livestream-data="currentLiveData" :is-livestreaming />
+      <LivestreamVideo
+        v-if="isLivestreaming"
+        ref="livestreamVideoRef"
+        :danmuList
+        :livestream-data="currentLiveData"
+        :is-livestreaming
+      />
+      <ComingMatch v-else :livestream-data="currentLiveData" @click="handleBetClick" />
     </div>
     <GameModal ref="gameModalRef"></GameModal>
   </div>
@@ -33,6 +40,7 @@ import GameModal from "@/components/modal/GameModal.vue";
 import { useNotify } from "@/hooks/notify";
 import { extractVipLevelFromVipStr } from "@/utils/utils";
 import { useLocalStorage, useSessionStorage } from "@vueuse/core";
+import ComingMatch from "@/components/home/livestream/ComingMatch.vue";
 
 /**
  * @typedef {Object} Message
@@ -183,14 +191,13 @@ const getData = () => {
         if (parsedData.length) {
           hideComponent.value = false;
           await nextTick();
-          emit('livestreamVisible', true);
+          emit("livestreamVisible", true);
         }
         vipStatus.value = !!res.data.vipStatus;
         list.value.push(...parsedData);
         if (parsedData.length && livestreamListMeta.value.current === 1) {
           const { earliestLivestreamIndex, latestWatchLivestreamIndex } = parsedData.reduce(
             (result, livestream, index) => {
-              if (!livestream.liveStatus) return result;
               if (result.earliestLivestreamIndex === -1) {
                 result.earliestLivestreamIndex = index;
               }
@@ -230,7 +237,6 @@ const syncMessages = () => {
   chatHistoryAbortController.value = new AbortController();
   if (pastTime > MESSAGE_SYNC_INTERVAL && !isProcessingMessageHistory.value) {
     lastSyncMessageTime.value = now;
-    if (!isLivestreaming.value) return;
     isProcessingMessageHistory.value = true;
     getChatHistory(params, messagesHistoryMeta.value.current, chatHistoryAbortController.value)
       .then(async (res) => {
@@ -375,12 +381,13 @@ watch(currentLive, () => {
   messages.value = [];
   unsortMessages.value = [];
   danmuList.value = [];
-  lastSyncMessageTime.value = currentLiveData.value?.eventStartTime || Date.now();
+  lastSyncMessageTime.value = currentLiveData.value?.createTime || currentLiveData.value?.eventStartTime || Date.now();
   liveStartTime.value = lastSyncMessageTime.value;
   latestProcessedMessageId.value = -1;
   livestreamSyncAbortController.value && livestreamSyncAbortController.value.abort();
   chatHistoryAbortController.value && chatHistoryAbortController.value.abort();
   isProcessingMessageHistory.value = false;
+  processedUserName.value = null;
   syncMessages();
   resetSyncLivestreamInterval(true);
 });

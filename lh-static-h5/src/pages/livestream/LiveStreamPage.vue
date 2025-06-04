@@ -89,17 +89,70 @@
     </div>
 
     <template v-if="tabValue === 'liveStream'">
+      <!-- <pre>countdowns--{{ countdowns }}</pre> -->
+      <!-- <pre>sortedLiveStreamList--{{ sortedLiveStreamList }}</pre> -->
       <div ref="selectionContainerRef" class="selection-container q-px-md">
         <template v-for="(item, index) in sortedLiveStreamList" :key="index">
           <button class="selection-item" @click="handleLivestreamClick(item)">
             <!-- // put item.supplierCdnPullUrl + item.streamerCdnPushUrl + streanerCdnPullUrl to the next page. -->
             <div class="item-img">
-              <img
+              <img src="../../assets/images/livestream/img-placeholder-bg.jpg" />
+              <div class="placeholder-vs">
+                <img src="../../assets/images/livestream/placeholder-vs.png" />
+
+                <div class="vs-timer" v-if="!item.liveStatus">
+                  <span
+                    v-for="(char, cIndex) in countdowns[index].hours"
+                    class="vs-timer__time"
+                    :key="`hour-${cIndex}`"
+                  >
+                    {{ char }}
+                  </span>
+                  :
+                  <span
+                    v-for="(char, cIndex) in countdowns[index].minutes"
+                    class="vs-timer__time"
+                    :key="`minute-${cIndex}`"
+                  >
+                    {{ char }}
+                  </span>
+                  <span class="vs-timer__time-desc">小时</span>
+                  <div />
+                  <span class="vs-timer__time-desc">分钟</span>
+                </div>
+              </div>
+
+              <div class="placeholder-left">
+                <div class="left-logo">
+                  <template v-if="item.homeIcon">
+                    <img :src="item.homeIcon" />
+                  </template>
+                  <template v-else>
+                    <img src="../../assets/images/livestream/system-avatar.png" />
+                  </template>
+                  <!-- <img :src="imgURL + item.homeIcon" /> -->
+                </div>
+                <div class="left-title">{{ item.homeNameZh ?? item.homeNameEn ?? item.homeName }}</div>
+              </div>
+              <div class="placeholder-right">
+                <div class="right-logo">
+                  <template v-if="item.awayIcon">
+                    <img :src="item.awayIcon" />
+                  </template>
+                  <template v-else>
+                    <img src="../../assets/images/livestream/system-avatar.png" />
+                  </template>
+                  <!-- <img :src="imgURL + item.awayIcon" /> -->
+                </div>
+                <div class="right-title">{{ item.awayNameZh ?? item.awayNameEn ?? item.awayName }}</div>
+              </div>
+
+              <!-- <img
                 v-if="item.sportId === 1 || item.sportId === 2"
                 src="../../assets/images/livestream/img-placeholder-stream-sport.png"
                 alt=""
               />
-              <img v-else src="../../assets/images/livestream/img-placeholder-stream-esport.png" alt="" />
+              <img v-else src="../../assets/images/livestream/img-placeholder-stream-esport.png" alt="" /> -->
             </div>
             <div class="item-content">
               <div class="content-title">
@@ -382,7 +435,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed, reactive, watch, onUnmounted } from "vue";
+import { onMounted, ref, computed, reactive, watch, onUnmounted, onBeforeUnmount } from "vue";
 import moment from "moment";
 import { api } from "boot/axios";
 import GameModal from "components/modal/GameModal.vue";
@@ -444,10 +497,10 @@ const liveStreamStatusInfo = reactive({
 const getLiveUrlList = () => {
   isLivestreamListLoading.value = true;
   api
-    .post(`/opt-session/live/list?current=${currentPage.value}`)
+    .post(`/opt-session/live/list`)
     .then((res) => {
       if (res.code === 0) {
-        res.data.streamList.sort((a,b) => a.sort - b.sort)
+        res.data.streamList.sort((a, b) => a.sort - b.sort);
         liveStreamList.value.push(...res.data.streamList);
         maxPage.value = res.data.pages;
         currentPage.value++;
@@ -470,6 +523,26 @@ const getDisplayDateTime = (date) => {
   } else {
     return eventDate.format("MM/DD");
   }
+};
+
+const countdowns = ref({});
+
+const updateCountdowns = () => {
+  const now = moment();
+  sortedLiveStreamList.value.forEach((item, index) => {
+    if (!item.liveStatus && item.eventStartTime) {
+      const eventTime = moment(item.eventStartTime);
+      const diffInMs = eventTime.diff(now);
+      const duration = moment.duration(diffInMs > 0 ? diffInMs : 0);
+      const hours = String(Math.floor(duration.asHours())).padStart(2, "0");
+      const minutes = String(duration.minutes()).padStart(2, "0");
+
+      countdowns.value[index] = {
+        hours,
+        minutes
+      };
+    }
+  });
 };
 
 const handleLivestreamClick = (livestream) => {
@@ -540,6 +613,12 @@ const showLivestreamDetails = () => {
   }
 };
 
+watch(sortedLiveStreamList, () => {
+  updateCountdowns();
+});
+
+let intervalId;
+
 onMounted(() => {
   api.get("/platform-competition").then((res) => {
     if (res.code === 0) {
@@ -557,6 +636,13 @@ onMounted(() => {
   getLiveUrlList();
   checkExtension();
   showLivestreamDetails();
+
+  updateCountdowns();
+  intervalId = setInterval(updateCountdowns, 1000);
+});
+
+onBeforeUnmount(() => {
+  clearInterval(intervalId);
 });
 
 onUnmounted(() => {
@@ -1028,7 +1114,7 @@ onUnmounted(() => {
         display: flex;
         align-items: center;
         gap: 6px;
-        padding: 4px 8px;
+        padding: 2px 4px;
         border-radius: 24px;
         font-size: 10px;
         min-height: 16px;
@@ -1056,11 +1142,191 @@ onUnmounted(() => {
     }
 
     .item-img {
-      img {
+      position: relative;
+
+      > img {
         display: block;
         width: 100%;
         opacity: 0.9;
       }
+
+      .placeholder-vs {
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40%;
+
+        img {
+          display: block;
+          width: 100%;
+        }
+
+        .vs-timer {
+          display: grid;
+          grid-template-columns: repeat(5, max-content);
+          justify-self: center;
+          color: #ffffff;
+          font-size: 10px;
+          gap: 4px 2px;
+          line-height: 1;
+          margin-top: 10%;
+          font-size: 0.85rem;
+          font-weight: 600;
+
+          .vs-timer__time {
+            background-image: url("../../assets/images/livestream/placeholder-timer.png");
+            background-size: 100% 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 16px;
+            width: max-content;
+            padding: 0 2px;
+          }
+
+          .vs-timer__time-desc {
+            grid-column: span 2;
+            font-size: 0.4rem;
+          }
+        }
+      }
+
+      .placeholder-left {
+        // background-image: url("../../assets/images/livestream/placeholder-left-title.png");
+        background-size: 100% 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #ffffff;
+        position: absolute;
+        top: 40%;
+        left: 5%;
+        width: 30%;
+        height: 10%;
+        font-size: 0.5rem;
+        padding: 2px 0;
+        line-height: 1;
+        flex-direction: column;
+
+        img {
+          display: block;
+          width: 100%;
+          aspect-ratio: 1/1;
+          border-radius: 50%;
+          background: #ffffff;
+        }
+
+        .left-logo {
+          background-image: url("../../assets/images/livestream/placeholder-left-logo.png");
+          // background-color: salmon;
+          background-size: 100% 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 4px;
+          border-radius: 50%;
+          width: 50%;
+        }
+
+        .left-title {
+          background-image: url("../../assets/images/livestream/placeholder-left-title.png");
+          background-size: 100% 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          min-height: 12px;
+          margin-top: 20%;
+        }
+      }
+
+      .placeholder-right {
+        // background-image: url("../../assets/images/livestream/placeholder-left-title.png");
+        background-size: 100% 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #ffffff;
+        position: absolute;
+        top: 40%;
+        right: 5%;
+        width: 30%;
+        height: 10%;
+        font-size: 0.5rem;
+        padding: 2px 0;
+        line-height: 1;
+        flex-direction: column;
+
+        img {
+          display: block;
+          width: 100%;
+          aspect-ratio: 1/1;
+          border-radius: 50%;
+          background: #ffffff;
+        }
+
+        .right-logo {
+          background-image: url("../../assets/images/livestream/placeholder-right-logo.png");
+          // background-color: salmon;
+          background-size: 100% 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 4px;
+          border-radius: 50%;
+          width: 50%;
+        }
+
+        .right-title {
+          background-image: url("../../assets/images/livestream/placeholder-right-title.png");
+          background-size: 100% 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          min-height: 12px;
+          margin-top: 20%;
+        }
+      }
+
+      // .placeholder-left-logo {
+      //   // background-image: url("../../assets/images/livestream/placeholder-left-title.png");
+      //   background-color: salmon;
+      //   background-size: 100% 100%;
+      //   display: flex;
+      //   justify-content: center;
+      //   align-items: center;
+      //   color: #ffffff;
+      //   position: absolute;
+      //   top: 65%;
+      //   left: 5%;
+      //   width: 30%;
+      //   height: 10%;
+      //   font-size: 6px;
+      //   line-height: 1;
+
+      //   img {
+      //     display: block;
+      //     width: 100%;
+      //   }
+      // }
+
+      // .placeholder-right-title {
+      //   background-image: url("../../assets/images/livestream/placeholder-right-title.png");
+      //   background-size: 100% 100%;
+      //   display: flex;
+      //   justify-content: center;
+      //   align-items: center;
+      //   color: #ffffff;
+      //   position: absolute;
+      //   top: 65%;
+      //   right: 5%;
+      //   width: 30%;
+      //   height: 10%;
+      //   font-size: 6px;
+      //   line-height: 1;
+      // }
     }
     .item-content {
       padding: 3px 6px;

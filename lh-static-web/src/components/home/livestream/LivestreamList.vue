@@ -91,10 +91,6 @@ const swiperConfig = computed(() => {
 });
 
 const handleLivestreamClick = (index) => {
-  if (!props.list[index].liveStatus) {
-    notify.info("该赛事未开始");
-    return;
-  }
   model.value = index;
 };
 
