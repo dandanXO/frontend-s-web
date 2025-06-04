@@ -138,7 +138,7 @@
           优惠
         </q-route-tab>
 
-        <q-route-tab to="/liveChat" name="chat">
+        <q-route-tab :to="chatPage" name="chat">
           <img class="inactive" src="../assets/images/index/menu/ft-livechat.svg" />
           <img class="hover filtericon" src="../assets/images/index/menu/ft-livechat.svg" />
           客服
@@ -652,6 +652,18 @@ export default defineComponent({
         }
       }
     };
+
+    const chatPage = computed(() => {
+      if (store.chatGuid) {
+        let url = `/liveChat/chat?uid=${store.chatGuid}`;
+        if (store.token) {
+          url += `&token=${store.token}`;
+        }
+        return url;
+      }
+      return "/liveChat";
+    });
+
     const pageName = ref("");
     const hasPage = ref(false);
     const hasDrawer = ref(false);
@@ -734,6 +746,7 @@ export default defineComponent({
       changePlatform,
       checkPlatform,
       isH5,
+      chatPage,
       excludeAliveComponents: [
         "DepositRecordView",
         "WithdrawRecordView",
