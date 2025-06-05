@@ -24,7 +24,7 @@
         </div>
         <div class="toronto-masters-section-right">
           <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 || loadingClaim }">
-            <img style="padding:0;margin:0;" v-if="bonus <= 0 || loadingClaim" src="@/assets/promo/lh-livepoker-rebate/reward-btn-3-disabled.png"
+            <img style="padding:0;margin:0;" v-if="bonus <= 0 || loadingClaim||isClaimed" src="@/assets/promo/lh-livepoker-rebate/reward-btn-3-disabled.png"
               alt="" width="100%" />
             <img v-else style="padding:0;margin:0;" src="@/assets/promo/lh-livepoker-rebate/reward-btn-3.png" alt="" width="100%" />
           </div>
@@ -51,7 +51,7 @@ const store = userStore();
 const totalLoss = ref(0);
 const bonus = ref(0);
 const isClaiming = ref(false);
-
+const isClaimed = ref(false)
 const formatNumber = (value, type) => {
   if (value === undefined) {
     return "-";
@@ -88,6 +88,7 @@ const handleClaimBonus = () => {
     .then((res) => {
       if (res.code === 0) {
         notify.redPacket("成功领取", res.data);
+        isClaimed.value = true
         fetchData();
       } else if (
         !(
