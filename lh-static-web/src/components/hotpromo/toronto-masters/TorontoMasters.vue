@@ -88,7 +88,7 @@ const handleClaimBonus = () => {
     .then((res) => {
       if (res.code === 0) {
         notify.redPacket("成功领取", res.data);
-        isClaimed.value = true
+        isClaimed.value = true;
         fetchData();
       } else if (
         !(

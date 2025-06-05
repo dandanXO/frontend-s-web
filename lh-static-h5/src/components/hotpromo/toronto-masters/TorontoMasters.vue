@@ -94,7 +94,7 @@ const handleClaimBonus = () => {
             redPacket: res.data
           }
         });
-        isClaimed.value = true
+        isClaimed.value = true;
         fetchData();
       } else {
         notify({
