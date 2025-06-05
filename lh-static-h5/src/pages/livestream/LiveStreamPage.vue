@@ -96,63 +96,70 @@
           <button class="selection-item" @click="handleLivestreamClick(item)">
             <!-- // put item.supplierCdnPullUrl + item.streamerCdnPushUrl + streanerCdnPullUrl to the next page. -->
             <div class="item-img">
-              <img src="../../assets/images/livestream/img-placeholder-bg.jpg" />
-              <div class="placeholder-vs">
-                <img src="../../assets/images/livestream/placeholder-vs.png" />
+              <img
+                v-if="item.liveStatus"
+                :src="`${imgURLLivePreview}${item.streamerStatus ? item.streamerPreviewUrl : item.supplierPreviewUrl}`"
+              />
 
-                <div class="vs-timer" v-if="!item.liveStatus">
-                  <span
-                    v-for="(char, cIndex) in countdowns[index].hours"
-                    class="vs-timer__time"
-                    :key="`hour-${cIndex}`"
-                  >
-                    {{ char }}
-                  </span>
-                  :
-                  <span
-                    v-for="(char, cIndex) in countdowns[index].minutes"
-                    class="vs-timer__time"
-                    :key="`minute-${cIndex}`"
-                  >
-                    {{ char }}
-                  </span>
-                  <span class="vs-timer__time-desc">小时</span>
-                  <div />
-                  <span class="vs-timer__time-desc">分钟</span>
-                </div>
-              </div>
+              <template v-else>
+                <img src="../../assets/images/livestream/img-placeholder-bg.jpg" />
+                <div class="placeholder-vs">
+                  <img src="../../assets/images/livestream/placeholder-vs.png" />
 
-              <div class="placeholder-left">
-                <div class="left-logo">
-                  <template v-if="item.homeIcon">
-                    <img :src="item.homeIcon" />
-                  </template>
-                  <template v-else>
-                    <img src="../../assets/images/livestream/system-avatar.png" />
-                  </template>
-                  <!-- <img :src="imgURL + item.homeIcon" /> -->
+                  <div class="vs-timer" v-if="!item.liveStatus">
+                    <span
+                      v-for="(char, cIndex) in countdowns[index].hours"
+                      class="vs-timer__time"
+                      :key="`hour-${cIndex}`"
+                    >
+                      {{ char }}
+                    </span>
+                    :
+                    <span
+                      v-for="(char, cIndex) in countdowns[index].minutes"
+                      class="vs-timer__time"
+                      :key="`minute-${cIndex}`"
+                    >
+                      {{ char }}
+                    </span>
+                    <span class="vs-timer__time-desc">小时</span>
+                    <div />
+                    <span class="vs-timer__time-desc">分钟</span>
+                  </div>
                 </div>
-                <div class="left-title">{{ item.homeNameZh ?? item.homeNameEn ?? item.homeName }}</div>
-              </div>
-              <div class="placeholder-right">
-                <div class="right-logo">
-                  <template v-if="item.awayIcon">
-                    <img :src="item.awayIcon" />
-                  </template>
-                  <template v-else>
-                    <img src="../../assets/images/livestream/system-avatar.png" />
-                  </template>
-                  <!-- <img :src="imgURL + item.awayIcon" /> -->
-                </div>
-                <div class="right-title">{{ item.awayNameZh ?? item.awayNameEn ?? item.awayName }}</div>
-              </div>
 
-              <!-- <img
+                <div class="placeholder-left">
+                  <div class="left-logo">
+                    <template v-if="item.homeIcon">
+                      <img :src="item.homeIcon" />
+                    </template>
+                    <template v-else>
+                      <img src="../../assets/images/livestream/system-avatar.png" />
+                    </template>
+                    <!-- <img :src="imgURL + item.homeIcon" /> -->
+                  </div>
+                  <div class="left-title">{{ item.homeNameZh ?? item.homeNameEn ?? item.homeName }}</div>
+                </div>
+                <div class="placeholder-right">
+                  <div class="right-logo">
+                    <template v-if="item.awayIcon">
+                      <img :src="item.awayIcon" />
+                    </template>
+                    <template v-else>
+                      <img src="../../assets/images/livestream/system-avatar.png" />
+                    </template>
+                    <!-- <img :src="imgURL + item.awayIcon" /> -->
+                  </div>
+                  <div class="right-title">{{ item.awayNameZh ?? item.awayNameEn ?? item.awayName }}</div>
+                </div>
+
+                <!-- <img
                 v-if="item.sportId === 1 || item.sportId === 2"
                 src="../../assets/images/livestream/img-placeholder-stream-sport.png"
                 alt=""
               />
               <img v-else src="../../assets/images/livestream/img-placeholder-stream-esport.png" alt="" /> -->
+              </template>
             </div>
             <div class="item-content">
               <div class="content-title">
@@ -458,6 +465,7 @@ const competitionTypesNameMap = ref({
 const selectedCompetitionType = ref();
 // const imgUrl = process.env.IMAGE_CDN;
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
+const imgURLLivePreview = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
 const store = userStore();
 const route = useRoute();
 const router = useRouter();
@@ -1143,10 +1151,12 @@ onUnmounted(() => {
 
     .item-img {
       position: relative;
+      aspect-ratio: 16/9;
 
       > img {
         display: block;
         width: 100%;
+        height: 100%;
         opacity: 0.9;
       }
 
