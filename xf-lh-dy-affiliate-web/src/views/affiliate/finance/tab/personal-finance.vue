@@ -47,17 +47,13 @@
             {{ t('fields.viewDetails') }}
           </el-link>
         </div>
-        <div class="grid-item-value">
-          {{ data.depositAmount }}
-        </div>
+        <div class="grid-item-value" v-formatter="{data: data.depositAmount, type: 'money'}" />
       </div>
       <div class="grid-item">
         <div class="grid-item-label">
           <span>{{ t('fields.withdraw') }}</span>
         </div>
-        <div class="grid-item-value">
-          {{ data.withdrawAmount }}
-        </div>
+        <div class="grid-item-value" v-formatter="{data: data.withdrawAmount, type: 'money'}" />
       </div>
       <div class="grid-item">
         <div class="grid-item-label">
@@ -66,17 +62,13 @@
             {{ t('fields.viewDetails') }}
           </el-link>
         </div>
-        <div class="grid-item-value">
-          {{ data.bonusAmount }}
-        </div>
+        <div class="grid-item-value" v-formatter="{data: data.bonusAmount, type: 'money'}" />
       </div>
       <div class="grid-item">
         <div class="grid-item-label">
           <span>{{ t('fields.rebate') }}</span>
         </div>
-        <div class="grid-item-value">
-          {{ data.rebateAmount }}
-        </div>
+        <div class="grid-item-value" v-formatter="{data: data.rebateAmount, type: 'money'}" />
       </div>
       <div class="grid-item">
         <div class="grid-item-label">
@@ -85,9 +77,7 @@
             {{ t('fields.viewDetails') }}
           </el-link>
         </div>
-        <div class="grid-item-value">
-          {{ data.platformFeeAmount }}
-        </div>
+        <div class="grid-item-value" v-formatter="{data: data.platformFeeAmount, type: 'money'}" />
       </div>
       <div class="grid-item">
         <div class="grid-item-label">
@@ -96,33 +86,25 @@
             {{ t('fields.viewDetails') }}
           </el-link>
         </div>
-        <div class="grid-item-value">
-          {{ data.totalWinLoss }}
-        </div>
+        <div class="grid-item-value" v-formatter="{data: data.totalWinLoss, type: 'money'}" />
       </div>
       <div class="grid-item">
         <div class="grid-item-label">
           <span>{{ t('fields.paymentFee') }}</span>
         </div>
-        <div class="grid-item-value">
-          {{ data.paymentFeeAmount }}
-        </div>
+        <div class="grid-item-value" v-formatter="{data: data.paymentFeeAmount, type: 'money'}" />
       </div>
       <div class="grid-item">
         <div class="grid-item-label">
           <span>{{ t('fields.netProfit') }}</span>
         </div>
-        <div class="grid-item-value">
-          {{ data.netWinLoss }}
-        </div>
+        <div class="grid-item-value" v-formatter="{data: data.netWinLoss, type: 'money'}" />
       </div>
       <div class="grid-item">
         <div class="grid-item-label">
           <span>{{ t('fields.adjustment') }}</span>
         </div>
-        <div class="grid-item-value">
-          {{ data.adjustmentAmount }}
-        </div>
+        <div class="grid-item-value" v-formatter="{data: data.adjustmentAmount, type: 'money'}" />
       </div>
     </div>
   </div>
