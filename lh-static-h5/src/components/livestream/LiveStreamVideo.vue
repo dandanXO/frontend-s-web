@@ -18,10 +18,6 @@
     @mouseleave="handleWrapperMouseLeave"
   >
     <template v-if="isPlayerSupported">
-      <div v-if="isFirstPlay" class="first-play" @click="firstPlayVideo()">
-        <q-icon name="play_arrow" color="white" size="80px" />
-      </div>
-
       <video
         ref="videoRef"
         class="livestream-video"
@@ -133,19 +129,27 @@
         </div>
       </div>
 
-      <div v-if="isVideoLoading" class="livestream-video-mask" @click.stop>
-        <div class="loader" />
-        <span>正在加载视频...</span>
-      </div>
+      <template v-if="isVideoStuck">
+        <div v-if="isVideoLoading" class="livestream-video-mask" @click.stop>
+          <div class="loader" />
+          <span>正在加载视频...</span>
+        </div>
 
-      <div v-if="isVideoLoadFailed" class="livestream-video-mask" @click.stop>
-        <q-btn class="btn" @click="loadData">
-          <img src="../../assets/images/livestream/icon-reload.png" />
-        </q-btn>
-        <span>点击重新加载视频</span>
-      </div>
-      <div v-if="isErrorCaptured && env !== 'production'" class="livestream-video-mask" @click.stop>
-        <q-btn color="primary" @click="copyMessage">已捕获错误，点击复制</q-btn>
+        <div v-if="isVideoLoadFailed" class="livestream-video-mask" @click.stop>
+          <q-btn class="btn" @click="loadData">
+            <img src="../../assets/images/livestream/icon-reload.png" />
+          </q-btn>
+          <span>点击重新加载视频</span>
+        </div>
+        <div v-if="isErrorCaptured && env !== 'production'" class="livestream-video-mask" @click.stop>
+          <q-btn color="primary" @click="copyMessage">已捕获错误，点击复制</q-btn>
+        </div>
+      </template>
+      <div v-else-if="showUnmuteMask" class="livestream-video-mask" @click.stop="handleUnmuteClick">
+        <button class="btn">
+          <img src="../../assets/images/livestream/icon-volume-off.png" />
+        </button>
+        <span>点击取消静音</span>
       </div>
     </template>
 
@@ -240,6 +244,7 @@ const isVideoLoadFailed = ref(false);
 const isVideoLoading = ref(false);
 const isErrorCaptured = ref(false);
 const errorMsg = ref("");
+const showUnmuteMask = ref(false);
 /** @type {import("vue").Ref< VideoPlayer | null>}*/
 const player = ref(null);
 const danmu = ref(null);
@@ -259,6 +264,8 @@ const videoSource = computed(() => getVideoSource(livestreamData.value));
 const currentVideoUrl = computed(() => getVideoUrl(videoSource.value));
 
 const currentQualityName = computed(() => QUALITY_ALIAS[playerConfig.value.quality] ?? playerConfig.value.quality);
+
+const isVideoStuck = computed(() => isVideoLoadFailed.value || isVideoLoading.value);
 
 const getVideoSource = (target) => {
   if (!target) return {};
@@ -297,7 +304,7 @@ const loadPlayer = async () => {
     },
     videoRef.value
   );
-  await initPlayer();
+  await initPlayer(true);
 };
 
 const initPlayer = async (play = false) => {
@@ -305,6 +312,7 @@ const initPlayer = async (play = false) => {
   await player.value.init();
   isPlayerSupported.value = player.value.supportPlayer !== "NONE";
   player.value.on(player.value.Events.CUSTOM_ERROR, handlePlayerError);
+  player.value.on(player.value.Events.AUTO_PLAY_FAILED, handleAutoPlayFailed);
   // emitting when hls.isSupported() is false
   player.value.on(player.value.Events.NATIVE_STREAM_BUFFERING, handleNativeStreamBuffering);
   isVideoLoading.value = true;
@@ -520,6 +528,12 @@ const handleNativeStreamBuffering = () => {
   isVideoLoading.value = true;
 };
 
+const handleAutoPlayFailed = () => {
+  showUnmuteMask.value = true;
+  videoRef.value.muted = true;
+  player.value.play();
+};
+
 const handleQualityChange = async (level) => {
   const _level = videoSource.value[level] ? level : DEFAULT_QUALITY;
   if (_level === playerConfig.value.quality) return;
@@ -539,6 +553,12 @@ const getQualities = () => {
   }));
 
   qualities.value = result;
+};
+
+const handleUnmuteClick = () => {
+  if (!videoRef.value) return;
+  videoRef.value.muted = false;
+  showUnmuteMask.value = false;
 };
 
 const loadData = () => {
@@ -566,12 +586,6 @@ watch(danmuList, () => {
     danmu.value.updateComments(_danmuList);
   }
 });
-
-const isFirstPlay = ref(true);
-const firstPlayVideo = () => {
-  isFirstPlay.value = false;
-  player.value.play();
-};
 
 const mediaQuery = window.matchMedia("(orientation: landscape)");
 
@@ -699,10 +713,6 @@ const backToPrev = () => {
       }
     }
 
-    .btn {
-      background-color: transparent;
-    }
-
     img {
       max-width: 24px;
     }
@@ -726,6 +736,11 @@ const backToPrev = () => {
         }
       }
     }
+  }
+
+  .btn {
+    background-color: transparent;
+    border: none;
   }
 
   .livestream-video {
@@ -848,19 +863,6 @@ const backToPrev = () => {
   :deep(.q-slider__thumb) {
     top: 0;
   }
-}
-
-.first-play {
-  background: #000000;
-  opacity: 0.7;
-  width: 100%;
-  height: 100%;
-  z-index: 8;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
 }
 </style>
 
