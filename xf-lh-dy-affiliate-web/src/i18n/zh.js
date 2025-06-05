@@ -458,7 +458,7 @@ export default {
     personalCommission: '个人佣金',
     payTime: '发放时间',
     payStatus: '发放状态',
-    accountAdjustment: '账户调整',
+    accountAdjustment: '佣金报表',
     commissionAdjustment: '佣金调整',
     image: '图片',
     imageTitle: '图片标题',
