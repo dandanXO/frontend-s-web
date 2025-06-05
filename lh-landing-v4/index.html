@@ -20,37 +20,37 @@
           <img src="imgs/lh-logo2.png" alt="雷火 TFGAMING" title="雷火 TFGAMING" />
         </div>
         <div class="top-cs">
-          <a href="https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN" target="_blank"><img
-              src="imgs/cs-contact-btn.png" alt="" /></a>
+          <a href="https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN" target="_blank"><img style="width:116px;height:31px;"
+              src="imgs/cs-contact-btn.svg" alt="" /></a>
         </div>
       </div>
 
-      <img style="width:95%;margin:0 auto;" src="imgs/bind-phone-banner.png" />
+      <img style="width: 90%;margin: 0px auto;" src="imgs/bind-phone-banner.svg" />
 
       <div class="pop-btns-wrapper">
         <div class="pop-btns-container">
           <div class="pop-btns-item pop-btns-item-1 pop-btn" attr="pop-1">
             <div class="item-details">
             </div>
-            <div class="item-arrow"><img src="imgs/pop-arrow.png" class="swing" /></div>
+            <img src="imgs/pop-arrow.svg" class="swing" />
           </div>
 
           <div class="pop-btns-item pop-btns-item-2 pop-btn" attr="pop-2">
             <div class="item-details">
             </div>
-            <div class="item-arrow"><img src="imgs/pop-arrow.png" class="swing" /></div>
+            <img src="imgs/pop-arrow.svg" class="swing" />
           </div>
 
           <div class="pop-btns-item pop-btns-item-3 pop-btn" attr="pop-3">
             <div class="item-details">
             </div>
-            <div class="item-arrow"><img src="imgs/pop-arrow.png" class="swing" /></div>
+            <img src="imgs/pop-arrow.svg" class="swing" />
           </div>
 
           <div class="pop-btns-item pop-btns-item-4 pop-btn" attr="pop-4">
             <div class="item-details">
             </div>
-            <div class="item-arrow"><img src="imgs/pop-arrow.png" class="swing" /></div>
+            <img src="imgs/pop-arrow.svg" class="swing" />
           </div>
         </div>
       </div>
@@ -58,31 +58,37 @@
 
     <div class="contact-btns-wrapper">
       <div class="sub-title-img">
-        <img src="imgs/subtitle-contact.png" />
+        <img src="imgs/subtitle-contact.svg" />
       </div>
 
       <div class="contact-btns-container">
         <div class="contact-btn w-50 qq-bg">
           <span class="title" id="group1-title"></span>
-          <span id="group1-number"></span>
+          <span id="group1-number" style="color:#FFFFFFCC"></span>
         </div>
         <div class="contact-btn w-50 qq-bg">
           <span class="title" id="group2-title"></span>
-          <span id="group2-number"></span>
+          <span id="group2-number" style="color:#FFFFFFCC"></span>
         </div>
         <div class="contact-btn w-100 voxis-bg">
           <span class="title">专员ID</span>
-          <span id="agent1-id"></span>
+          <span id="agent1-id" style="color:#FFFFFF80;"></span>
+          <a href="https://www.am787.cc" id="landing-page-link2" target="_blank" class="amico-btn" >
+            <img style="width:70px;" src="imgs/amico-btn.svg" />
+          </a>
         </div>
         <div class="contact-btn w-100 voxis-bg">
           <span class="title">专员ID</span>
-          <span id="agent2-id"></span>
+          <span id="agent2-id" style="color:#FFFFFF80;"></span>
+          <a href="https://www.am787.cc" id="landing-page-link3" target="_blank"  class="amico-btn">
+            <img style="width:70px;" src="imgs/amico-btn.svg" />
+          </a>
         </div>
         <div class="contact-btn w-100"><a id="landing-page-link" href="#" target="_blank"><img
-              src="imgs/contact-btn-03.png" /></a>
+              src="imgs/contact-btn-03.svg" /></a>
         </div>
 
-        <img src="imgs/categories-decor.png" />
+        <img src="imgs/categories-decor.svg" />
       </div>
     </div>
     <div class="main-sticky-btn" id="scrolldown-tbn">点击查看联系方式</div>
@@ -380,6 +386,8 @@
       document.getElementById("group2-title").textContent = selectedInfo.group2Title;
       document.getElementById("group2-number").textContent = selectedInfo.group2Number;
       document.getElementById("landing-page-link").href = selectedInfo.landingPageLink;
+      document.getElementById("landing-page-link2").href = selectedInfo.landingPageLink;
+      document.getElementById("landing-page-link3").href = selectedInfo.landingPageLink;
       document.getElementById("agent1-id").textContent = selectedInfo.agent1ID;
       document.getElementById("agent2-id").textContent = selectedInfo.agent2ID;
     }

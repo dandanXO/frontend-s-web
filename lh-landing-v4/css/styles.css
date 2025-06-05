@@ -46,7 +46,7 @@ a:hover {
 }
 
 .top-wrapper {
-  padding: 16px 16px 10px;
+  padding: 10px 16px 0px;
   display: flex;
   position: relative;
   justify-content: space-between;
@@ -85,7 +85,7 @@ a:hover {
 .pop-btns-container {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 5px;
   margin: auto;
 }
 
@@ -170,6 +170,11 @@ a:hover {
 .swing {
   animation: swing 1.2s linear infinite;
   transform: all 0.5s;
+  width: 30%;
+  aspect-ratio: 204 / 64;
+  margin-left: auto;
+  margin-top: 7%;
+  margin-right: 4%;
 }
 
 @keyframes swing {
@@ -217,6 +222,13 @@ a:hover {
 .contact-btn img {
   display: block;
   width: 100%;
+}
+
+.amico-btn {
+  position: absolute;
+  right: 2%;
+  top: 50%;
+  transform: translate(0%, -50%);
 }
 
 .main-sticky-btn {
@@ -299,22 +311,24 @@ a:hover {
 }
 
 .qq-bg {
-  background-image: url("../imgs/qq-bg.png");
+  background-image: url("../imgs/qq-bg.svg");
   background-size: 100% 100%;
   position: relative;
   text-align: left;
   padding-left: 65px;
   padding-top: 3px;
+  aspect-ratio: 151/43;
 }
 
 .voxis-bg {
-  background: url("../imgs/voxis-bg.png") center center no-repeat;
+  background: url("../imgs/voxis-bg.svg") center center no-repeat;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   position: relative;
   text-align: left;
   padding-left: 65px;
   padding-top: 3px;
+  aspect-ratio: 315/43;
 }
 
 @media (max-width: 400px) {
