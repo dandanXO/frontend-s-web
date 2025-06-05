@@ -255,7 +255,7 @@ export const userStore = defineStore("userStore", {
         this.currentUpgradeBetAmt = res.data.vipBonusVOList[vipLevel].upgradeBetAmount;
       }
 
-      if (currentVip === 12) {
+      if (currentVip === 10) {
         this.vipProgress = parseFloat(this.currentUpgradeBetAmt) / parseFloat(this.currentUpgradeBetAmt);
       } else {
         this.vipProgress = parseFloat(this.currentBetAmt) / parseFloat(this.currentUpgradeBetAmt);
