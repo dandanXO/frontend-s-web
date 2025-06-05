@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="toronto-masters-section-right">
-          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
+          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 || isClaimed }">
             <img src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn3.png" alt="" width="100%" />
           </div>
         </div>
@@ -55,7 +55,7 @@ const router = useRouter();
 const totalLoss = ref(0);
 const bonus = ref(0);
 const isClaiming = ref(false);
-
+const isClaimed = ref(false)
 const handleClaimBonus = () => {
   if (isClaiming.value === true) {
     return;
@@ -94,6 +94,7 @@ const handleClaimBonus = () => {
             redPacket: res.data
           }
         });
+        isClaimed.value = true;
         fetchData();
       } else {
         notify({
