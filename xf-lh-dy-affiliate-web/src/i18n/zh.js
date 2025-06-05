@@ -156,7 +156,7 @@ export default {
     activeMemberRequirement: '活跃人数：当月存款>=100 或有效投注>=500；',
     activeMemberRequirementDescription: '（需：新增活跃 同时满足条件，方可按比例派发佣金）',
     level: '级别',
-    companyMonthlyProfit: '公司本月总输赢',
+    companyMonthlyProfit: '公司本月净输赢',
     activeNumberRequirement: '新增/ 活跃数量最低要求',
     commissionRate: '佣金比例',
     commissionCalculateFormula: '佣金计算方式',
