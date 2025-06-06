@@ -11,7 +11,7 @@ body {
     width: 100vw;
     height: 100vh;
     padding: 0;
-    
+
 }
 
 .container {
@@ -61,7 +61,7 @@ body {
     position: relative;
     text-align: center;
     a {
-        
+
         position: absolute;
         left: 0;
         display: flex;
@@ -81,5 +81,145 @@ body {
     background: none;
     border: none;
     font-size: 22px;
+    cursor: pointer;
+}
+
+
+.modal-open {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.5);
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99;
+}
+
+.modal-div {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.modal-inner {
+    width: calc(100% - 80px);
+    min-width: 330px;
+    height: 200px;
+    background: #fff;
+    border-radius: 10px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal-header {
+    border-radius: 10px 10px 0px 0px;
+    background: #40B6FC;
+    height: 80px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 19px;
+}
+
+.modal-input {
+    background: #b3b3b3;
+    height: 38px;
+    border-radius: 20px;
+    width: calc(100% - 20px);
+    margin: 25px auto 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.url-input {
+    padding: 4px 10px;
+    box-sizing: border-box;
+    font-size: 17px;
+    white-space: nowrap;
+    overflow: hidden;
+    width: calc(100% - 60px);
+    text-overflow: ellipsis;
+}
+
+.copy-btn {
+    background: #40B6FC;
+    height: 100%;
+    border-radius: 0px 24px 24px 0px;
+    width: 60px;
+    padding: 4px 8px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.copy-btn:active {
+    filter: brightness(0.86);
+    transform: translate(0.5px, 1px);
+}
+
+
+
+
+/** Modal CSS **/
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: #000000CC /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0px;
+    width: 80%;
+}
+
+.step-1-modal-action-wrapper {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 60px;
+    font-weight: bold;
+    padding-right: 15px;
+}
+
+.close:hover, .close:focus {
+    color: #000;
+    text-decoration: none;
     cursor: pointer;
 }
