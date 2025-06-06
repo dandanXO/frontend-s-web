@@ -11,17 +11,17 @@
     <script src="js/swiper-3.4.1.min.js"></script>
     <script src="js/clipboard.min.js"></script>
     <style>
-		.hidden {
-			display: none !important;
-		}
+        .hidden {
+            display: none !important;
+        }
 
-		
+
     </style>
 </head>
 <!-- <header class="q-header with-shadow">
     <div class="page-title"
          style="display: flex; align-items: center; position: relative; font-size: 18px; font-weight: bold; padding: 8px 0;">
-        
+
         <span>APP下载</span>
     </div>
 </header> -->
@@ -105,6 +105,26 @@
     </div>
     <div class="teach1-step-gallery">
         <img style="width:100%;" src="images/teach.png" alt="teach"/>
+    </div>
+</div>
+
+<div class="modal-open" style="display:none;">
+    <div class="modal-div">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <img src="images/safari-logo.svg" style="width: 50px;height: 50px;" />
+                <div>
+                        <span>该链接只能使用<span class="color-rose">Safari</span>打开<br />请使用<span
+                                class="color-rose">Safari</span>游览器打开</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-input">
+                    <div id="id-url-input" class="url-input"></div>
+                    <div class="copy-btn" id="id-copy-btn">复制</div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script>
@@ -206,18 +226,18 @@
         }
     }
     async function getCustomerUrl() {
-            try {
-                const response = await fetch(dataUrl + `/getCustomerService`);
-                const data = await response.json();
-                if (data && data.code === 0) {
-                    liveUrl1 = data.data.liveUrl1;
-                    liveUrl2 = data.data.liveUrl2;
-                }
-
-            } catch (error) {
-                console.log(error)
+        try {
+            const response = await fetch(dataUrl + `/getCustomerService`);
+            const data = await response.json();
+            if (data && data.code === 0) {
+                liveUrl1 = data.data.liveUrl1;
+                liveUrl2 = data.data.liveUrl2;
             }
+
+        } catch (error) {
+            console.log(error)
         }
+    }
 
     function checkPlatform() {
         var isWeixin = is_weixin()
@@ -253,14 +273,14 @@
 
 
     function showAndroid() {
-    currentPlatform = 'android'
-    $('.switch-btn').html('切换 IOS')
-    $('#android-lists').removeClass('hidden')
-    $('#ios-lists').addClass('hidden')
+        currentPlatform = 'android'
+        $('.switch-btn').html('切换 IOS')
+        $('#android-lists').removeClass('hidden')
+        $('#ios-lists').addClass('hidden')
 
-    var androidHtml = ''
-    androidDownload.forEach((item, index) => {
-        androidHtml += `
+        var androidHtml = ''
+        androidDownload.forEach((item, index) => {
+            androidHtml += `
         <div class="sub1-download-card" data-url="${item.url}" id="download_${index}">
             <img src="images/icon-super.png" alt="super version" class="sub1-icon" />
             <div class="sub1-content">
@@ -274,24 +294,31 @@
             </button>
         </div>
         `
-    })
-    $('#android-lists').html(androidHtml)
-
-    androidDownload.forEach((list, index) => {
-        $(`#download_${index} .sub1-btn-download`).on('click', function () {
-            if (!list.isDownload) {
-                downloadFile(list.url, list.name, index)
-                list.isDownload = true
-                $(this)
-                    .addClass('sub1-inactive')
-                    .removeClass('sub1-active')
-                    .attr('disabled', true)
-                    .text('已下载')
-            }
         })
-        new ClipboardJS(`#download_${index} .sub1-btn-download`)
-    })
-}
+        $('#android-lists').html(androidHtml)
+
+        androidDownload.forEach((list, index) => {
+            $(`#download_${index}`).attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
+
+            new ClipboardJS(`#download_${index} .sub1-btn-download`)
+
+            $(`#download_${index} .sub1-btn-download`).on('click', function () {
+                if (!list.isDownload) {
+                    downloadFile(list.url, list.name, index)
+                    list.isDownload = true
+                    $(this)
+                        .addClass('sub1-inactive')
+                        .removeClass('sub1-active')
+                        .attr('disabled', true)
+                        .text('已下载')
+
+                    postDownloadExtra(type, host);
+                }
+            })
+
+        })
+
+    }
 
     function detectIfSafari() {
         // console.log(navigator.userAgent)
@@ -330,18 +357,19 @@
 
 
     function showIOS() {
-    currentPlatform = 'ios'
-    $('.switch-btn').html('切换安卓')
-    $('#android-lists').addClass('hidden')
-    $('#ios-lists').removeClass('hidden')
+        currentPlatform = 'ios'
+        $('.switch-btn').html('切换安卓')
+        $('#android-lists').addClass('hidden')
+        $('#ios-lists').removeClass('hidden')
 
-    detectIfSafari()
 
-    $('#desc').removeClass('hidden')
+        detectIfSafari()
 
-    var iosHtml = ''
-    iosDownload.forEach((item, index) => {
-        iosHtml += `
+        $('#desc').removeClass('hidden')
+
+        var iosHtml = ''
+        iosDownload.forEach((item, index) => {
+            iosHtml += `
         <div class="sub1-download-card" data-url="${item.url}" id="download_ios_${index}">
             <img src="images/icon-super.png" alt="super version" class="sub1-icon" />
             <div class="sub1-content">
@@ -355,24 +383,37 @@
             </button>
         </div>
         `
-    })
-    $('#ios-lists').html(iosHtml)
-
-    iosDownload.forEach((list, index) => {
-        $(`#download_ios_${index} .sub1-btn-download`).on('click', function () {
-            if (!list.isDownload) {
-                downloadFile(list.url, list.name, index)
-                list.isDownload = true
-                $(this)
-                    .addClass('sub1-inactive')
-                    .removeClass('sub1-active')
-                    .attr('disabled', true)
-                    .text('已下载')
-            }
         })
-        new ClipboardJS(`#download_ios_${index} .sub1-btn-download`)
-    })
-}
+        $('#ios-lists').html(iosHtml)
+
+        iosDownload.forEach((list, index) => {
+
+            $(`#download_${index}`).attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
+
+            new ClipboardJS(`#download_${index}`);
+
+            $(`#download_ios_${index} .sub1-btn-download`).on('click', function () {
+                if (!list.isDownload) {
+                    downloadFile(list.url, list.name, index)
+                    list.isDownload = true
+                    $(this)
+                        .addClass('sub1-inactive')
+                        .removeClass('sub1-active')
+                        .attr('disabled', true)
+                        .text('已下载')
+
+                    postDownloadExtra(type, host);
+                }
+            })
+            new ClipboardJS(`#download_ios_${index} .sub1-btn-download`)
+        })
+
+        // $(`#download_kuaijie`).attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
+        // new ClipboardJS(`#download_kuaijie`);
+        // $(`#download_kuaijie`).click(function () {
+        //     postDownloadExtra(type, host);
+        // });
+    }
 
 
     function getQueryString(name) {
@@ -380,6 +421,16 @@
         var r = window.location.search.substr(1).match(reg)
         if (r != null) return unescape(r[2])
         return null
+    }
+
+
+    function postDownloadExtra() {
+        $.ajax({
+            url: dataUrl + "/extra",
+            type: "GET",
+            data: { "agentCode": agentCode, siteCode: "lh1" },
+            success: function (d) { }
+        });
     }
 
     function downloadFile(url, fileName, index) {
