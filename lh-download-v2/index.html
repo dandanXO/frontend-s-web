@@ -281,13 +281,13 @@
         var androidHtml = ''
         androidDownload.forEach((item, index) => {
             androidHtml += `
-        <div class="sub1-download-card" data-url="${item.url}" id="download_${index}">
+        <div class="sub1-download-card" data-url="${item.url}" id="download_and_${index}">
             <img src="images/icon-super.png" alt="super version" class="sub1-icon" />
             <div class="sub1-content">
                 <div class="sub1-title">${item.name || ''}</div>
                 <div class="sub1-subtitle">${item.subtitle || ''}</div>
             </div>
-            <button class="sub1-btn-download ${item.isDownload ? 'sub1-inactive' : 'sub1-active'}"
+            <button class="sub1-btn-download ${item.isDownload ? 'sub1-inactive' : 'sub1-active'}" id="download_${index}"
                 data-clipboard-text='UIO${JSON.stringify(vv)}'
                 ${item.isDownload ? 'disabled' : ''}>
                 ${item.isDownload ? '已下载' : '下载'}
@@ -300,9 +300,9 @@
         androidDownload.forEach((list, index) => {
             $(`#download_${index}`).attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
 
-            new ClipboardJS(`#download_${index} .sub1-btn-download`)
+            new ClipboardJS(`#download_${index}`)
 
-            $(`#download_${index} .sub1-btn-download`).on('click', function () {
+            $(`#download_and_${index} .sub1-btn-download`).on('click', function () {
                 if (!list.isDownload) {
                     downloadFile(list.url, list.name, index)
                     list.isDownload = true
@@ -376,7 +376,7 @@
                 <div class="sub1-title">${item.name || ''}</div>
                 <div class="sub1-subtitle">${item.subtitle || ''}</div>
             </div>
-            <button class="sub1-btn-download ${item.isDownload ? 'sub1-inactive' : 'sub1-active'}"
+            <button class="sub1-btn-download ${item.isDownload ? 'sub1-inactive' : 'sub1-active'}" id="download_${index}"
                 data-clipboard-text='UIO${JSON.stringify(vv)}'
                 ${item.isDownload ? 'disabled' : ''}>
                 ${item.isDownload ? '已下载' : '下载'}
@@ -387,7 +387,6 @@
         $('#ios-lists').html(iosHtml)
 
         iosDownload.forEach((list, index) => {
-
             $(`#download_${index}`).attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
 
             new ClipboardJS(`#download_${index}`);
@@ -405,7 +404,6 @@
                     postDownloadExtra(type, host);
                 }
             })
-            new ClipboardJS(`#download_ios_${index} .sub1-btn-download`)
         })
 
         // $(`#download_kuaijie`).attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
