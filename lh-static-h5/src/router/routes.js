@@ -37,12 +37,14 @@ const routes = [
   {
     path: "/livestream",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/livestream/LiveStreamPage.vue") }]
+    children: [{ path: "", component: () => import("pages/livestream/LiveStreamPage.vue") }],
+    meta: { requiresAuth: true }
   },
   {
     path: "/livestream/streamplayer",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/livestream/StreamPlayerPage.vue") }]
+    children: [{ path: "", component: () => import("pages/livestream/StreamPlayerPage.vue") }],
+    meta: { requiresAuth: true }
   },
   {
     path: "/maintenance",
