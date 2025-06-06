@@ -202,7 +202,7 @@
             @click.prevent="onSubmit"
             type="submit"
             class="common-large-btn bottom-btn"
-            label="登录?"
+            label="登录"
             color="brightbtn"
             flat
           />
