@@ -216,7 +216,7 @@
                 <Slide v-for="(categoryPair, slideIndex) in categoryPairs" :key="slideIndex" class="px-2">
                   <template v-for="category in categoryPair" :key="category.key">
                     <template v-for="(item, index) in vipItems" :key="index">
-                      <template v-if="category.key !== 'birthday' || (index !== 0 && index !== 1 && index !== 2)">
+                      <template v-if="category.key !== 'birthday' || (index !== 0)">
                         <template
                           v-if="
                             store.token && isFirstTime && vipLevel !== 0 && vipLevel !== 10
@@ -1328,6 +1328,7 @@ const categoryPairs = computed(() => {
   for (let i = 0; i < categories.length; i += 4) {
     pairs.push(categories.slice(i, i + 4));
   }
+  console.log('dan', categories)
   return pairs;
 });
 const isLoading = reactive({});
