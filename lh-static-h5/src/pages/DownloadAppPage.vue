@@ -100,7 +100,7 @@
         </div>
       </div>
       <div class="flex" style="width: 100%; height: 100%; overflow-y: auto; ">
-        <div @click.prevent="downloadFile(item.url,'app', index)" class="sub1-download-card" v-for="(item, index) in (isAndroid ? androidDownloadUrlList : isoDownloadUrlList)" :key="index">
+        <div :data-clipboard-text="`'UIO${JSON.stringify(vv)}'`"  @click.prevent="downloadFile(item.url,'app', index)" class="sub1-download-card" v-for="(item, index) in (isAndroid ? androidDownloadUrlList : isoDownloadUrlList)" :key="index">
           <img src="../assets/images/download/app/icon-super.png" alt="super version" class="sub1-icon" />
           <div class="sub1-content">
             <div class="sub1-title">{{ item.name }}</div>
@@ -145,9 +145,12 @@
 import { ref, defineComponent, onMounted } from "vue";
 import axios from "axios";
 
+var host = window.location.host
+    
 export default defineComponent({
   name: "downloadAppPage",
   setup() {
+    const vv = ref({ agentCode: sessionStorage.getItem("AFFILIATE_CODE") || '', regFrom: null, downloadUrl: host })
     const showSheet = ref(false);
     const sheetAnim = ref('show');
     const showTeachSheet = ref(false);
@@ -168,6 +171,16 @@ export default defineComponent({
       if (sheetAnim.value === 'hide') {
         showSheet.value = false;
       }
+    }
+    const dataUrl = 'https://tfwkgol.076knee9cc.com'
+    function postDownloadExtra() {
+        axios.get(dataUrl + "/extra", {
+          params: { agentCode: sessionStorage.agentCode || '', siteCode: "lh1" }
+        }).then(res => {
+          // 可根据需要处理返回数据
+        }).catch(err => {
+          console.error("extra接口请求失败", err);
+        });
     }
     const androidDownloadUrlList = ref({})
     const isoDownloadUrlList = ref({})
@@ -213,6 +226,7 @@ export default defineComponent({
       });
     })
     const downloadFile = (url, fileName, index) => {
+      postDownloadExtra()
       const link = document.createElement('a');
       link.href = url;
       link.download = fileName || '';
@@ -228,6 +242,8 @@ export default defineComponent({
       }
     };
     return {
+      vv,
+      postDownloadExtra,
       downloadFile,
       isAndroid,
       androidDownloadUrlList,
