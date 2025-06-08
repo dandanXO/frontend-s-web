@@ -185,7 +185,7 @@
           </q-input>
         </div>
 
-        <div class="row items-center justify-between">
+        <div class="items-center justify-between row">
           <div class="login-via-phone-div">
             <span @click="loginType = !loginType">
               {{ loginType ? "用户名登录" : "手机号登录" }}
@@ -225,7 +225,7 @@
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
     <q-card width="100%">
-      <q-card-section class="q-pa-md bg-brightbtn text-white">
+      <q-card-section class="text-white q-pa-md bg-brightbtn">
         <q-toolbar>
           <q-toolbar-title>验证码</q-toolbar-title>
           <q-btn flat v-close-popup round dense icon="close" />

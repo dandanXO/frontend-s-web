@@ -71,7 +71,8 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/livestream/streamplayer" ||
       to.path === "/livestreampage" ||
       to.path === "/live-chat" ||
-      to.path === "/live-chat/chat"
+      to.path === "/live-chat/chat"||
+      to.path === "/downloadApp"
     ) {
       ui.hiddenFooter();
       ui.currentRuntime = "IN_APP_BROWSER";

@@ -11,7 +11,7 @@ body {
     width: 100vw;
     height: 100vh;
     padding: 0;
-    margin: 0;
+
 }
 
 .container {
@@ -33,125 +33,57 @@ body {
     align-items: center;
 }
 
-.logo {
-    aspect-ratio: 822/375;
-    max-width: 320px;
-    width: 50%;
-    margin: 10px auto;
-}
 
-.step-1 {
-    position: relative;
-    background: url(../assets/images/step-1.png) no-repeat center center;
-    aspect-ratio: 1009/691;
-    background-size: 100% 100%;
-    width: calc(100% - 20px);
-    margin: 0 auto;
+.q-header {
+    padding: 3px 10px 8px;
+    padding-top: calc(3px + env(safe-area-inset-top, 0));
+    background: #f5f7fa;
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    top: 0;
 }
-
-.step-2 {
-    position: relative;
-    background: url(../assets/images/step-2.png) no-repeat center center;
-    aspect-ratio: 1009/820;
-    background-size: 100% 100%;
-    width: calc(100% - 20px);
-    margin: 0 auto;
+.q-header.with-shadow {
+    box-shadow: 0px -6px 6px 0px #c3d4e6 inset;
 }
-
-.step-1-action-wrapper, .step-2-action-wrapper {
+.logo img {
+    width: 12px;
+}
+.header-actions {
     display: flex;
-    flex-direction: column;
+}
+.page-title {
+    align-items: center;
+    color: #424f72;
+    display: flex;
+    font-size: 1.3rem;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    a {
+
+        position: absolute;
+        left: 0;
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+}
+.back-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+.menu-btn {
     position: absolute;
-    bottom: 5%;
-    left: 50%;
-    width: 80%;
-    transform: translate(-50%, -40%);
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-}
-
-.step-2-action-wrapper {
-    transform: translate(-50%, -10%);
-    gap: 30px;
-}
-
-.row {
-    width:100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-}
-
-button {
+    right: 10px;
+    background: none;
     border: none;
+    font-size: 22px;
+    cursor: pointer;
 }
 
-.step-1-btn {
-    aspect-ratio: 606/179;
-    flex: 3;
-    background: url(../assets/images/step-1-btn.png);
-    background-size: 100% 100%;
-    width: 200px;
-}
-
-.step-2-btn {
-    aspect-ratio: 603/179;
-    flex: 3;
-    background: url(../assets/images/step-2-btn.png);
-    background-size: 100% 100%;
-    width: 200px;
-}
-
-.step-2-btn.is-active{
-    top:0;
-    left:0px;
-    bottom: 0px;
-    text-align:center;
-    right:0px;
-    font-size: 24px;
-    letter-spacing: 2px;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    border-radius:12px;
-    background: #71ADFF;
-}
-
-.step-2-btn.is-active::before{
-    content:"加载中...";
-}
-
-.step-2-hint {
-    aspect-ratio: 928/156;
-    width: calc(100% - 0px);
-    margin: 0 auto;
-}
-
-.step-1-btn:hover, .step-2-btn:hover {
-    opacity: 0.9;
-}
-
-.step-1-btn:active, .step-2-btn:active {
-    filter: brightness(0.85);
-    transform: translate(0px, 2px);
-}
-
-.step-1-btn-decor {
-    aspect-ratio: 270/270;
-    flex: 1;
-    max-width: 80px;
-    width: 15%;
-}
-
-.step-2-btn-decor {
-    aspect-ratio: 279/279;
-    flex: 1;
-    max-width: 80px;
-    width: 15%;
-}
 
 .modal-open {
     position: fixed;
@@ -290,26 +222,4 @@ button {
     color: #000;
     text-decoration: none;
     cursor: pointer;
-}
-
-#step-1-modal .modal-content {
-    background: url(../assets/images/modal-bg.png) no-repeat center center;
-    aspect-ratio: 928/814;
-    width: 700px;
-    background-size: 100% 100%;
-    position: relative;
-    max-height: 400px;
-    box-sizing: border-box;
-}
-
-#step-1-modal .modal-content .step-1-modal-btn {
-    aspect-ratio: 429/144;
-    width: 200px;
-    background: url(../assets/images/step-1-modal-btn.png);
-    background-size: 100% 100%;
-}
-
-#step-1-modal .modal-content .step-1-modal-btn:active{
-    filter: brightness(0.85);
-    transform: translate(0px,1px);
 }

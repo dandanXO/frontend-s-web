@@ -255,7 +255,7 @@ export const userStore = defineStore("userStore", {
         this.currentUpgradeBetAmt = res.data.vipBonusVOList[vipLevel].upgradeBetAmount;
       }
 
-      if (currentVip === 12) {
+      if (currentVip === 10) {
         this.vipProgress = parseFloat(this.currentUpgradeBetAmt) / parseFloat(this.currentUpgradeBetAmt);
       } else {
         this.vipProgress = parseFloat(this.currentBetAmt) / parseFloat(this.currentUpgradeBetAmt);
@@ -283,7 +283,7 @@ export const userStore = defineStore("userStore", {
     },
     getUnreadTotal() {
       if (this.token) {
-        return api.get("/session/pm/inbox/getUnreadTotal").then((total) => {
+        return api.get("/session/inbox/getUnreadTotal").then((total) => {
           console.log(total);
           if (total.code === 0) {
             this.unreadInboxMail = total.data;

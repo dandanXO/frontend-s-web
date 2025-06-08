@@ -271,6 +271,10 @@ router.beforeEach((to, from, next) => {
     fbq("init", "1233274318509669");
     fbq("track", "PageView");
     store.isAffiliateA = true;
+  } else if (window.location.href.indexOf("t138131f.com") > -1) {
+    fbq("init", "889874849981322");
+    fbq("track", "PageView");
+    store.isAffiliateA = true;
   }
 });
 export default router;

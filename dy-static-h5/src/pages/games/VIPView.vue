@@ -216,10 +216,10 @@
                 <Slide v-for="(categoryPair, slideIndex) in categoryPairs" :key="slideIndex" class="px-2">
                   <template v-for="category in categoryPair" :key="category.key">
                     <template v-for="(item, index) in vipItems" :key="index">
-                      <template v-if="category.key !== 'birthday' || (index !== 0 && index !== 1 && index !== 2)">
+                      <template v-if="category.key !== 'birthday' || (index !== 0)">
                         <template
                           v-if="
-                            store.token && isFirstTime && vipLevel !== 0
+                            store.token && isFirstTime && vipLevel !== 0 && vipLevel !== 10
                               ? +item.vipLevel === currentSlide
                               : +item.vipLevel === currentSlide + 1
                           "
@@ -393,7 +393,7 @@
                 <td>58</td>
                 <!--            <td>-</td>-->
                 <td>0.60%</td>
-                <td>58</td>
+                <td>28</td>
                 <td>158</td>
               </tr>
               <tr>
@@ -401,10 +401,10 @@
                 <!-- <td>白银 II</td> -->
                 <td>288 元</td>
                 <td>1,088</td>
-                <td>58</td>
+                <td>88</td>
                 <!--            <td>-</td>-->
                 <td>0.80%</td>
-                <td>88</td>
+                <td>58</td>
                 <td>268</td>
               </tr>
               <tr>
@@ -412,10 +412,10 @@
                 <!-- <td>白银 I</td> -->
                 <td>288 元</td>
                 <td>1,088</td>
-                <td>88</td>
+                <td>188</td>
                 <!--            <td>-</td>-->
                 <td>1.00%</td>
-                <td>188</td>
+                <td>88</td>
                 <td>288</td>
               </tr>
               <tr>
@@ -426,7 +426,7 @@
                 <td>288</td>
                 <!--            <td>-</td>-->
                 <td>1.20%</td>
-                <td>288</td>
+                <td>128</td>
                 <td>588</td>
               </tr>
               <tr>
@@ -437,7 +437,7 @@
                 <td>388</td>
                 <!--            <td>-</td>-->
                 <td>1.30%</td>
-                <td>588</td>
+                <td>208</td>
                 <td>788</td>
               </tr>
               <tr>
@@ -448,7 +448,7 @@
                 <td>588</td>
                 <!--            <td>188</td>-->
                 <td>1.50%</td>
-                <td>888</td>
+                <td>388</td>
                 <td>888</td>
               </tr>
               <tr>
@@ -459,7 +459,7 @@
                 <td>888</td>
                 <!--            <td>288</td>-->
                 <td>1.80%</td>
-                <td>1,588</td>
+                <td>588</td>
                 <td>1,288</td>
               </tr>
               <tr>
@@ -470,7 +470,7 @@
                 <td>1,888</td>
                 <!--            <td>388</td>-->
                 <td>2.00%</td>
-                <td>3,888</td>
+                <td>888</td>
                 <td>2,888</td>
               </tr>
 
@@ -1328,6 +1328,7 @@ const categoryPairs = computed(() => {
   for (let i = 0; i < categories.length; i += 4) {
     pairs.push(categories.slice(i, i + 4));
   }
+  console.log('dan', categories)
   return pairs;
 });
 const isLoading = reactive({});
@@ -1374,7 +1375,7 @@ const handleClick = async (key, item) => {
     isLoading[key] = false; // Reset loading state after operation completes
   }
 };
-const currentSlide = ref(11);
+const currentSlide = ref(9);
 const isFirstTime = ref(true);
 const currentCarousel = ref(0);
 const currentBoxes = ref(0);
@@ -1385,7 +1386,6 @@ const handleSlideClick = (vipIndex) => {
   // if (currentSlide.value <= 1 && vipIndex >= 10) {
   //   refCarousel.value.prev();
   // }
-
   if (vipIndex === currentSlide.value) {
     slideTo(vipLevel.value);
   } else {
@@ -1419,7 +1419,7 @@ const slideTo = (vipIndex) => {
     return;
   }
   if (!store.vip) {
-    currentSlide.value = 11;
+    currentSlide.value = 9;
     return;
   }
   if (vipLevel === 0) {

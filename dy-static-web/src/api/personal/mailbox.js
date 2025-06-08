@@ -24,7 +24,7 @@ export function mailInbox(mailQuery) {
   const key = `${SESSION_STORAGE_PREFIX_KEY}_${mailQuery.current}_${mailQuery.size}_${mailQuery.orderBy}_${mailQuery.messageType}`;
 
   return cached.get(key, () =>
-    server.REST.get("/session/pm/inbox", {
+    server.REST.get("/session/inbox", {
       params: {
         type: mailQuery.type,
         current: mailQuery.current,
@@ -37,41 +37,41 @@ export function mailInbox(mailQuery) {
 }
 
 export function getUnreadMailTotal() {
-  return server.REST.get("/session/pm/inbox/getUnreadTotal");
+  return server.REST.get("/session/inbox/getUnreadTotal");
 }
 
 export function readMail(mailQuery) {
-  return server.REST.post("/session/pm/inbox/read", {
+  return server.REST.post("/session/inbox/read", {
     id: mailQuery.id
   });
 }
 
 export function readMultipleMail(mailQuery) {
-  return server.REST.post("/session/pm/inbox/readMultiple", {
+  return server.REST.post("/session/inbox/readMultiple", {
     ids: mailQuery
   });
 }
 
 export function readAllMail(mailQuery) {
-  return server.REST.post("/session/pm/inbox/readAll", {
+  return server.REST.post("/session/inbox/readAll", {
     type: mailQuery !== null ? mailQuery : undefined
   });
 }
 
 export function deleteMail(mailQuery) {
-  return server.REST.post("/session/pm/inbox/delete", {
+  return server.REST.post("/session/inbox/delete", {
     id: mailQuery.id
   });
 }
 
 export function deleteMultipleMail(mailQuery) {
-  return server.REST.post("/session/pm/inbox/deleteMultiple", {
+  return server.REST.post("/session/inbox/deleteMultiple", {
     ids: mailQuery
   });
 }
 
 export function deleteAllMail(mailQuery) {
-  return server.REST.post("/session/pm/inbox/deleteAll", {
+  return server.REST.post("/session/inbox/deleteAll", {
     type: mailQuery !== null ? mailQuery : undefined
   });
 }
