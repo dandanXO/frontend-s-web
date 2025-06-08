@@ -43,33 +43,33 @@
           <tr>
             <td>VIP 1</td>
             <td>5,000 VNDP</td>
+            <td>0.3%</td>
+            <td>8,888 VNDP</td>
+            <td>0.4%</td>
+            <td>1,088 VNDP</td>
+          </tr>
+          <tr>
+            <td>VIP 2</td>
+            <td>5,000 VNDP</td>
+            <td>0.4%</td>
+            <td>8,888 VNDP</td>
+            <td>0.5%</td>
+            <td>1,088 VNDP</td>
+          </tr>
+          <tr>
+            <td>VIP 3</td>
+            <td>5,000 VNDP</td>
             <td>0.5%</td>
             <td>8,888 VNDP</td>
             <td>0.6%</td>
             <td>1,088 VNDP</td>
           </tr>
           <tr>
-            <td>VIP 2</td>
-            <td>5,000 VNDP</td>
-            <td>0.6%</td>
-            <td>8,888 VNDP</td>
-            <td>0.7%</td>
-            <td>1,088 VNDP</td>
-          </tr>
-          <tr>
-            <td>VIP 3</td>
-            <td>5,000 VNDP</td>
-            <td>0.6%</td>
-            <td>8,888 VNDP</td>
-            <td>0.7%</td>
-            <td>1,088 VNDP</td>
-          </tr>
-          <tr>
             <td>VIP 4</td>
             <td>5,000 VNDP</td>
-            <td>0.7%</td>
+            <td>0.6%</td>
             <td>8,888 VNDP</td>
-            <td>0.8%</td>
+            <td>0.7%</td>
             <td>1,088 VNDP</td>
           </tr>
           <tr>
@@ -195,7 +195,7 @@
         </div> -->
   </div>
 
-  <el-dialog v-model="showPrizePopup" class="prizePopupContainer">
+  <el-dialog v-model="showPrizePopup" class="prizePopupContainer-weekly" @click="showPrizePopup = false">
     <div class="wrapper">
       <!-- <div class="popup-header bold-text golden-text">恭喜!</div> -->
       <div class="content">
@@ -237,6 +237,9 @@ const initPage = () => {
   });
 };
 const claimBonus = () => {
+  if (!store.token) {
+    return
+  }
   claimWeeklyBonus(props.promoCode).then((res) => {
     if (res.code === 0) {
       prizePopupBonusAmt.value = res.data;
@@ -247,6 +250,9 @@ const claimBonus = () => {
   });
 };
 onMounted(() => {
+  if (!store.token) {
+    return
+  }
   initPage();
 });
 </script>
@@ -441,5 +447,59 @@ onMounted(() => {
       color: #000000;
     }
   }
+}
+
+.prizePopupContainer-weekly {
+    width: 480px;
+    height: 620px;
+    background: url("../../../assets/images/promotion/hotpromo/weekly-deposit-bonus/popupp.png");
+    background-size: 100% 100%;
+    box-shadow: none;
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        height: 585px;
+        gap: 55px;
+        .content {
+          position: absolute;
+          top: 60%;
+          width: 200px;
+          text-align: center;
+          margin: 0 auto;
+          left: 0;
+          right: 0;
+        }
+
+        .bold-text {
+            font-family: sans-serif;
+            font-size: 46px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-align: center;
+            color: #FFFFFF;
+        }
+
+        .golden-text {
+            font-size: 55px;
+            letter-spacing: 2px;
+            background: linear-gradient(94.81deg, #F6FF8C 7.45%, #FFBA88 95.9%),
+                linear-gradient(360deg, #FF932F 9.54%, #FFFCA9 86.08%);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .popup-header {
+            letter-spacing: normal;
+            font-size: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+    }
 }
 </style>

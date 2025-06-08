@@ -66,14 +66,22 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/deposit" ||
       to.path === "/invitefriend" ||
       to.path === "/vip" ||
-      to.path === "/affiliatepage"
+      to.path === "/affiliatepage" ||
+      to.path === "/live-chat" ||
+      to.path === "/live-chat/chat"
     ) {
       ui.hiddenFooter();
     } else {
       ui.showFooter();
     }
 
-    if (to.path === "/promotion" || to.path === "/invitefriend" || to.path === "/vip" || to.path === "/affiliatepage" || to.path === "/deposit") {
+    if (
+      to.path === "/promotion" ||
+      to.path === "/invitefriend" ||
+      to.path === "/vip" ||
+      to.path === "/affiliatepage" ||
+      to.path === "/deposit"
+    ) {
       if (isAndroid()) {
         localStorage.setItem("TOKEN", to.query.token);
       } else {

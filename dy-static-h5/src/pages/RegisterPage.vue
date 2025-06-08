@@ -244,7 +244,7 @@ export default defineComponent({
     });
     const verificationImg = ref("");
     const isValidName = () => {
-      const namePattern = /^([\u4e00-\u9fa5\.\。]*)$/;
+      const namePattern = /^([\u4e00-\u9fa5\.\。·]*)$/;
       return namePattern.test(regForm.realName) || "请输入中文字符";
     };
     const hasAffiliate = ref(false);

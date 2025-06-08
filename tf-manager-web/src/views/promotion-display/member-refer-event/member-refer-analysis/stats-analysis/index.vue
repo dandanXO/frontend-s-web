@@ -52,16 +52,18 @@
     >
       <el-table-column prop="referrerName" :label="t('fields.referrer')">
         <template #default="scope">
-          <el-link type="primary" @click="redirectToReferPane(scope.row.referrerName)">
+          <el-link type="primary" v-if="hasPermission(['sys:privi:member-refer-relation:list'])" @click="redirectToReferPane(scope.row.referrerName)">
             {{ scope.row.referrerName }}
           </el-link>
+          <span v-else>{{ scope.row.referrerName }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="referCount" :label="t('fields.referCount')" sortable :sort-orders="sortOrders">
         <template #default="scope">
-          <el-link type="primary" @click="redirectToReferPane(scope.row.referrerName)">
+          <el-link type="primary" v-if="hasPermission(['sys:privi:member-refer-relation:list'])" @click="redirectToReferPane(scope.row.referrerName)">
             {{ scope.row.referCount }}
           </el-link>
+          <span v-else>{{ scope.row.referCount }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="referBonus" :label="t('fields.referBonus')" sortable :sort-orders="sortOrders">
@@ -185,7 +187,7 @@
 
 <script setup>
 
-import { computed, reactive, ref, defineEmits } from "vue";
+import { computed, reactive, ref } from "vue"; // defineEmits
 import { onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
@@ -196,13 +198,15 @@ import { getAnalysisRecord, getAnalysisRecordExport } from "@/api/member-refer-f
 import { getSiteListSimple } from "@/api/site";
 import { ElMessage } from "element-plus";
 import * as XLSX from 'xlsx'
+import { useRouter } from "vue-router";
+import { hasPermission } from '@/utils/util'
 
 const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
 const shortcuts = getShortcuts(t);
-const emits = defineEmits(["switch-to-relation-tab"]);
+// const emits = defineEmits(["switch-to-relation-tab"]);
 
 function convertDate(date) {
   return moment(date).endOf('day').format('YYYY-MM-DD');
@@ -295,12 +299,19 @@ function getSummaries(param) {
   return sums
 }
 
+const router = useRouter();
+
 function redirectToReferPane(referrerName) {
   const query = {
     referrerName,
     recordTime: request.recordTime
   }
-  emits('switch-to-relation-tab', query)
+
+  router.push({
+    path: '/promo-activity/member-refer/member-refer-relation',
+    query: query
+  });
+  // emits('switch-to-relation-tab', query)
 }
 
 const sort = (column) => {

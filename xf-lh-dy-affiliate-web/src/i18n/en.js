@@ -36,6 +36,7 @@ export default {
     loofah: 'loofah',
     zalo: 'Zalo',
     telegram: 'Telegram',
+    whatsapp: 'WhatsApp',
   },
   depositStatus: {
     SUCCESS: 'Success',

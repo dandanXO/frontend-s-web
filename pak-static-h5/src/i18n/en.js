@@ -671,7 +671,11 @@ export default {
         username: {
           placeholder: "User name"
         },
-        searchButton: "SEARCH"
+        searchButton: "SEARCH",
+        radio: {
+          allLevels: "All Levels",
+          threeLevels: "3 levels"
+        }
       },
       table: {
         username: "Username",

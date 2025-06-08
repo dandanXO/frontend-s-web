@@ -110,7 +110,7 @@
           <!-- eslint-disable -->
           <span
             v-if="scope.row.recordTime !== null"
-            v-formatter="{ data: scope.row.recordTime, timeZone: timeZone, formatter: 'YYYY-MM-DD HH:mm:ss', type: 'date' }"
+            v-formatter="{ data: scope.row.recordTime, timeZone: timeZone, type: 'date' }"
           />
         </template>
       </el-table-column>
@@ -140,6 +140,7 @@ import { useI18n } from "vue-i18n";
 import { getmemberPrivilegeClaimStatusRecord } from "@/api/member-privilege-claim-status";
 import { getAllPrivilegeInfoBySiteId } from '@/api/privilege-info'
 import moment from "moment";
+import { formatInputTimeZone } from '@/utils/format-timeZone'
 
 const { t } = useI18n();
 const store = useStore();
@@ -149,6 +150,7 @@ const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
   new Date(2000, 1, 1, 23, 59, 59),
 ];
+let timeZone = null
 const uiControl = reactive({
   privilegeList: [],
   status: [
@@ -186,6 +188,23 @@ const page = reactive({
 async function loadMemberPrivilegeClaimStatusRecords() {
   page.loading = true;
   const query = checkQuery();
+  timeZone = sites.list.find(e => e.id === request.siteId).timeZone
+  if (request.recordTime !== null) {
+    if (request.recordTime.length === 2) {
+      query.recordTime = JSON.parse(JSON.stringify(request.recordTime))
+      query.recordTime[0] = formatInputTimeZone(
+        query.recordTime[0],
+        timeZone,
+        'start'
+      )
+      query.recordTime[1] = formatInputTimeZone(
+        query.recordTime[1],
+        timeZone,
+        'end'
+      )
+      query.recordTime = query.recordTime.join(',')
+    }
+  }
   const { data: ret } = await getmemberPrivilegeClaimStatusRecord(query);
   page.pages = ret.pages;
   page.records = ret.records;

@@ -39,7 +39,8 @@ export const userStore = defineStore("userStore", {
       emailVerified: false,
       visitorId: "",
       withdrawType: "",
-      regSuccessGuideVisible: false
+      regSuccessGuideVisible: false,
+      chatGuid: ""
     };
   },
   actions: {

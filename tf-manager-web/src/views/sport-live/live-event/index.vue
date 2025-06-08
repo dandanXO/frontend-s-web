@@ -182,6 +182,15 @@
             style="width: 350px;"
           />
         </el-form-item>
+        <el-form-item :label="t('fields.endTime')" prop="endTime">
+          <el-date-picker
+            type="datetime"
+            format="YYYY-MM-DD HH:mm:ss"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            v-model="form.eventEndTime"
+            style="width: 350px;"
+          />
+        </el-form-item>
         <el-form-item :label="t('fields.status')" prop="liveStatus">
           <el-select
             v-model="form.liveStatus"
@@ -197,6 +206,13 @@
               :value="item.id"
             />
           </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.isTestEvent')" prop="isTest">
+          <el-switch
+            v-model="form.isTest"
+            :active-text="t('fields.yes')"
+            :inactive-text="t('fields.no')"
+          />
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
@@ -237,7 +253,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="sort" :label="t('fields.sequence')" width="120" />
+      <el-table-column prop="sort" :label="t('fields.sequence')" width="50" />
       <el-table-column prop="liveStatus" :label="t('fields.status')" width="120">
         <template #default="scope">
           <el-tag v-if="scope.row.liveStatus === 2" type="success">{{ t('status.uefaMatch.ENDED') }}</el-tag>
@@ -256,6 +272,25 @@
               type: 'date',
             }"
           />
+        </template>
+      </el-table-column>
+      <el-table-column prop="eventEndTime" :label="t('fields.endTime')" width="180">
+        <template #default="scope">
+          <span v-if="scope.row.eventEndTime === null">-</span>
+          <span
+            v-if="scope.row.eventEndTime !== null"
+            v-formatter="{
+              data: scope.row.eventEndTime,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="isTest" :label="t('fields.isTestEvent')" width="120">
+        <template #default="scope">
+          <el-tag :type="scope.row.isTest ? 'success' : 'info'">
+            {{ scope.row.isTest ? t('fields.yes') : t('fields.no') }}
+          </el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="createTime" :label="t('fields.createTime')" width="180">
@@ -506,6 +541,7 @@ function showDialog(type, row) {
     awayNameZh: null,
     sort: null,
     eventStartTime: null,
+    eventEndTime: null,
     liveStatus: null,
     title: null
   });
@@ -522,8 +558,10 @@ const form = reactive({
   sort: null,
   title: null,
   eventStartTime: null,
+  eventEndTime: null,
   homeName: '',
-  awayName: ''
+  awayName: '',
+  isTest: false
 });
 
 const formRules = reactive({

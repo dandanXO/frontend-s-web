@@ -117,7 +117,6 @@ export default defineComponent({
     HomeServiceSection
   },
   setup() {
-
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
     const gameMenu = ref(null);
     const banners = ref([
@@ -136,7 +135,7 @@ export default defineComponent({
     const loadBanners = () => {
       loadPromoBanner("HOME").then((res) => {
         if (res.code === 0) {
-          banners.value = res.data;
+          banners.value = res.data.filter(item => item.showDesktop === true);
         }
       });
     };

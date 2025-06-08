@@ -43,33 +43,33 @@
           <tr>
             <td>VIP 1</td>
             <td>5,000 VNDP</td>
+            <td>0.3%</td>
+            <td>8,888 VNDP</td>
+            <td>0.4%</td>
+            <td>1,088 VNDP</td>
+          </tr>
+          <tr>
+            <td>VIP 2</td>
+            <td>5,000 VNDP</td>
+            <td>0.4%</td>
+            <td>8,888 VNDP</td>
+            <td>0.5%</td>
+            <td>1,088 VNDP</td>
+          </tr>
+          <tr>
+            <td>VIP 3</td>
+            <td>5,000 VNDP</td>
             <td>0.5%</td>
             <td>8,888 VNDP</td>
             <td>0.6%</td>
             <td>1,088 VNDP</td>
           </tr>
           <tr>
-            <td>VIP 2</td>
-            <td>5,000 VNDP</td>
-            <td>0.6%</td>
-            <td>8,888 VNDP</td>
-            <td>0.7%</td>
-            <td>1,088 VNDP</td>
-          </tr>
-          <tr>
-            <td>VIP 3</td>
-            <td>5,000 VNDP</td>
-            <td>0.6%</td>
-            <td>8,888 VNDP</td>
-            <td>0.7%</td>
-            <td>1,088 VNDP</td>
-          </tr>
-          <tr>
             <td>VIP 4</td>
             <td>5,000 VNDP</td>
-            <td>0.7%</td>
+            <td>0.6%</td>
             <td>8,888 VNDP</td>
-            <td>0.8%</td>
+            <td>0.7%</td>
             <td>1,088 VNDP</td>
           </tr>
           <tr>
@@ -196,7 +196,7 @@
   </div>
 
   <q-dialog v-model="showPrizePopup">
-    <div class="prizePopupContainer">
+    <div class="prizePopupContainer-weekly" @click="showPrizePopup = false">
       <div class="wrapper">
         <!-- <div class="popup-header bold-text golden-text">恭喜!</div> -->
         <div class="content">
@@ -454,4 +454,78 @@ onMounted(() => {
     }
   }
 }
+
+.prizePopupContainer-weekly {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 80px;
+    align-items: center;
+    width: 300px;
+    height: 240px;
+    gap: 45px;
+    background: url("./../../../assets/images/promotion/hotpromo/weekly-deposit-bonus/popupp.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    .bold-text {
+      font-family: sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-align: center;
+      color: #ffffff;
+    }
+
+    .golden-text {
+      font-size: 25px;
+      letter-spacing: 2px;
+      background: linear-gradient(94.81deg, #f6ff8c 7.45%, #ffba88 95.9%),
+        linear-gradient(360deg, #ff932f 9.54%, #fffca9 86.08%);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .popup-header {
+      letter-spacing: normal;
+      font-size: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .content {
+      height: auto;
+      margin-bottom: 0px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+
+      .action-btn {
+        //background: url("./../../../assets/images/promotion/hotpromo/xmas-spinwheel/prize-popup-action-btn.png");
+        background-size: 100% 100%;
+        width: 80%;
+        height: 100%;
+        max-height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #c12c1e;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
 </style>

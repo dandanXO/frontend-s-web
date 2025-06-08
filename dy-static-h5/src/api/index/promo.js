@@ -1,10 +1,14 @@
 import { cached } from "boot/cache";
-import { eventapi } from "boot/axios";
+import { api, eventapi } from "boot/axios";
 
 const qs = require("qs");
 
 export function claimBonusItem(item) {
   return cached.put(`/bonus/claim/${item}`);
+}
+
+export function loadPromoBanner(category) {
+  return api.get(`/promo/banner?category=${category}`);
 }
 
 export function claimBonusItem2(item) {
@@ -195,6 +199,44 @@ export function getEurocupManualSchedule() {
 export function getSportMatch() {
   return eventapi.get("/sport-match/today");
 }
+
+export function claimItems(status, level) {
+  if (status === "upgrade") {
+    return eventapi.post("/vip-bonus/claim-upgrade-bonus?_method=PUT", qs.stringify({ vipLevel: level }));
+  }
+  if (status === "birthday") {
+    return eventapi.put("/vip-bonus/claim-birthday-bonus");
+  }
+  if (status === "retain") {
+    return eventapi.post("/vip-bonus/claim-first-retain?_method=PUT", qs.stringify({ vipLevel: level }));
+  }
+  if (status === "monthly") {
+    return eventapi.put("/vip-bonus/claim-monthly-bonus");
+  }
+  if (status === "yearlyRetain") {
+    return eventapi.post("/vip-bonus/claim-yearly-retain?_method=PUT", qs.stringify({ vipLevel: level }));
+  }
+  if (status === "coupon") {
+    return eventapi.put("/vip-bonus/claim-coupon");
+  }
+  if (status === "redPacket") {
+    return eventapi.put("/vip-bonus/claim-red-packet");
+  }
+  if (status === "all") {
+    return eventapi.put("/vip-bonus/claim-all");
+  }
+}
+
+export function getVIPDetails() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/vip-bonus/get-detail?v=${randNum}`);
+}
+
+export function getVIPDetailsNotLoggedIn() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/get-vip-bonus-detail?siteId=6&v=${randNum}`);
+}
+
 
 export function getLivePoker() {
   return eventapi.get("/live-poker");
@@ -499,9 +541,9 @@ export function getRewardsRecords(promoCode) {
   return eventapi.get(`/session/token-rewards/rewardRecords?promoCode=${promoCode}&v=${randNum}`);
 }
 
-export function claimChestBlastAustin(promoCode) {
+export function claimChestBlastAustin(promoCode, type) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
-  return eventapi.post(`/session/mission/claim?promoCode=${promoCode}&v=${randNum}`);
+  return eventapi.post(`/session/mission/claim?promoCode=${promoCode}&v=${randNum}&type=${type}`);
 }
 
 export function selectMissionBlastAustin(promoCode, missionNum) {
@@ -512,4 +554,14 @@ export function selectMissionBlastAustin(promoCode, missionNum) {
 export function initBlastAustin(promoCode) {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.get(`/session/mission/init?promoCode=${promoCode}&v=${randNum}`);
+}
+
+export function getTorontoMastersInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition-loss/init?promoCode=dy2-valorant-masters-toronto-2025&v=${randNum}`);
+}
+
+export function claimTorontoMastersBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition-loss/claim?promoCode=dy2-valorant-masters-toronto-2025&v=${randNum}`);
 }

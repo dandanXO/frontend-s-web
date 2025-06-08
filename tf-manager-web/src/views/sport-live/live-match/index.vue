@@ -60,14 +60,14 @@
       <el-table-column prop="competitionNameEn" :label="t('fields.competitionNameEn')" width="250" />
       <el-table-column :label="t('fields.homeTeam')" width="180">
         <template #default="scope">
-          <img v-if="scope.row.home.icon" :src="scope.row.home.icon" style="width: 24px; height: 24px; margin-right: 8px;">
-          <span>{{ scope.row.home.nameZh || scope.row.home.nameEn }}</span>
+          <img v-if="scope.row.home && scope.row.home.icon" :src="scope.row.home.icon" style="width: 24px; height: 24px; margin-right: 8px;">
+          <span>{{ scope.row.home?.nameZh || scope.row.home?.nameEn }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="t('fields.awayTeam')" width="180">
         <template #default="scope">
-          <img v-if="scope.row.away.icon" :src="scope.row.away.icon" style="width: 24px; height: 24px; margin-right: 8px;">
-          <span>{{ scope.row.away.nameZh || scope.row.away.nameEn }}</span>
+          <img v-if="scope.row.away && scope.row.away.icon" :src="scope.row.away.icon" style="width: 24px; height: 24px; margin-right: 8px;">
+          <span>{{ scope.row.away?.nameZh || scope.row.away?.nameEn }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="matchTime" :label="t('fields.matchTime')" width="180">
@@ -84,15 +84,15 @@
       <el-table-column prop="statusId" :label="t('fields.status')" width="100">
         <template #default="scope">
           <el-tag v-if="scope.row.statusId === 0" type="danger">{{ t('status.namiMatch.GAME_EXCEPTION') }}</el-tag>
-          <el-tag v-else-if="scope.row.statusId === 1" type="warning">{{ t('status.namiMatch.ONGOING') }}</el-tag>
-          <el-tag v-else-if="scope.row.statusId === 2" type="success">{{ t('status.namiMatch.ENDED') }}</el-tag>
-          <el-tag v-else-if="scope.row.statusId === 3" type="danger">{{ t('status.namiMatch.CANCEL') }}</el-tag>
+          <el-tag v-else-if="scope.row.statusId === 1" type="warning">{{ t('status.namiMatch.NOT_STARTED') }}</el-tag>
+          <el-tag v-else-if="scope.row.statusId === 2" type="success">{{ t('status.namiMatch.ONGOING') }}</el-tag>
+          <el-tag v-else-if="scope.row.statusId === 3" type="danger">{{ t('status.namiMatch.ENDED') }}</el-tag>
           <el-tag v-else-if="scope.row.statusId === 11" type="danger">{{ t('status.namiMatch.INTERRUPTED') }}</el-tag>
           <el-tag v-else-if="scope.row.statusId === 12" type="warning">{{ t('status.namiMatch.CANCEL') }}</el-tag>
           <el-tag v-else-if="scope.row.statusId === 13" type="danger">{{ t('status.namiMatch.DELAYED') }}</el-tag>
           <el-tag v-else-if="scope.row.statusId === 14" type="danger">{{ t('status.namiMatch.ABANDONED') }}</el-tag>
           <el-tag v-else-if="scope.row.statusId === 15" type="danger">{{ t('status.namiMatch.PENDING') }}</el-tag>
-          <el-tag v-else type="default">{{ getLiveStatusDisplayName(scope.row.statusId) }}</el-tag>
+          <el-tag v-else type="default">{{ t('status.namiMatch.OTHER') }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="t('fields.operate')" align="right" fixed="right">
@@ -103,7 +103,7 @@
             type="primary"
             @click="showDialog(scope.row)"
           >
-            {{ t('fields.edit') }}
+            {{ t('fields.addToLive') }}
           </el-button>
         </template>
       </el-table-column>
@@ -117,7 +117,7 @@
     />
     <el-dialog
       v-model="dialogVisible"
-      :title="t('fields.copyToLive')"
+      :title="t('fields.addToLive')"
       width="400px"
     >
       <div v-if="currentRow" class="match-info-list">
@@ -156,15 +156,15 @@
         <div class="match-info-row">
           <span class="label">{{ t('fields.status') }}：</span>
           <el-tag v-if="currentRow.statusId === 0" type="danger">{{ t('status.namiMatch.GAME_EXCEPTION') }}</el-tag>
-          <el-tag v-else-if="currentRow.statusId === 1" type="warning">{{ t('status.namiMatch.ONGOING') }}</el-tag>
-          <el-tag v-else-if="currentRow.statusId === 2" type="success">{{ t('status.namiMatch.ENDED') }}</el-tag>
-          <el-tag v-else-if="currentRow.statusId === 3" type="danger">{{ t('status.namiMatch.CANCEL') }}</el-tag>
+          <el-tag v-else-if="currentRow.statusId === 1" type="warning">{{ t('status.namiMatch.NOT_STARTED') }}</el-tag>
+          <el-tag v-else-if="currentRow.statusId === 2" type="success">{{ t('status.namiMatch.ONGOING') }}</el-tag>
+          <el-tag v-else-if="currentRow.statusId === 3" type="danger">{{ t('status.namiMatch.ENDED') }}</el-tag>
           <el-tag v-else-if="currentRow.statusId === 11" type="danger">{{ t('status.namiMatch.INTERRUPTED') }}</el-tag>
           <el-tag v-else-if="currentRow.statusId === 12" type="warning">{{ t('status.namiMatch.CANCEL') }}</el-tag>
           <el-tag v-else-if="currentRow.statusId === 13" type="danger">{{ t('status.namiMatch.DELAYED') }}</el-tag>
           <el-tag v-else-if="currentRow.statusId === 14" type="danger">{{ t('status.namiMatch.ABANDONED') }}</el-tag>
           <el-tag v-else-if="currentRow.statusId === 15" type="danger">{{ t('status.namiMatch.PENDING') }}</el-tag>
-          <el-tag v-else type="default">{{ getLiveStatusDisplayName(currentRow.statusId) }}</el-tag>
+          <el-tag v-else type="default">{{ t('status.namiMatch.OTHER') }}</el-tag>
         </div>
       </div>
       <template #footer>
@@ -172,8 +172,7 @@
         <el-button
           type="primary"
           @click="handleCopy"
-          :disabled="!canCopy"
-        >{{ t('fields.confirmCopy') }}</el-button>
+        >{{ t('fields.addToLive') }}</el-button>
       </template>
     </el-dialog>
   </div>
@@ -213,6 +212,8 @@ export default defineComponent({
     const page = reactive({
       pages: 0,
       records: [],
+      total: 0,
+      current: 1,
       loading: false
     });
     const request = reactive({
@@ -243,8 +244,13 @@ export default defineComponent({
 
     async function loadMatch() {
       page.loading = true;
-      const res = await getSportLiveMatch({ sportId: request.sportId, status: request.liveStatus, title: request.title });
-      page.records = res.data || [];
+      const res = await getSportLiveMatch({ sportId: request.sportId, status: request.liveStatus, title: request.title, page: request.current, limit: request.size });
+      console.log(res.data.records);
+
+      page.records = res.data.records || [];
+      page.total = res.data.total || 0;
+      page.pages = res.data.pages || 0;
+      page.current = res.data.current || 1;
       page.loading = false;
     }
 

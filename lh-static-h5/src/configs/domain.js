@@ -80,6 +80,7 @@ export const globalLinks = [
   "lh178.cc"
 ];
 
+// category 3
 export const globalAndCNLinks = [
   "lh99196.com",
   "fhh138.cc",
@@ -315,5 +316,13 @@ export const globalAndCNLinks = [
   "lh33897.com",
   "lh37733.com",
   "lh51776.com",
-  "lh55093.com"
+  "lh55093.com",
+  "lh38953.com",
+  "lh50313.com",
+  "lh51567.com",
+  "lh151.cc",
+  "lh390.cc",
+  "lh506.cc",
+  "lh785.cc",
+  "lh903.cc"
 ];

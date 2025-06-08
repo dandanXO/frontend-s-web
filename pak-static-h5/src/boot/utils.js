@@ -108,7 +108,7 @@ export const normalDateTime = (dateTime) => {
 };
 
 export const convertToCommaAmount = (amount, isForceDecimal, minimumFractionDigits = 2) => {
-  if (amount === null) {
+  if (amount === null || amount === undefined) {
     return 0;
   }
   if (isNonNumericString(amount)) {

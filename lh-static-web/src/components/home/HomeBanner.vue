@@ -6,9 +6,9 @@
     v-if="!isImpt"
     align-center
   >
-    <div style="position: relative;">
-      <SitePopout @popup-click="clickHomePopupImg" :onShow="() => setWithExpiry('isImpt', true, 43200000)"/>
-      <img class="close-btn" src="../../assets/images/home/site-popout/close-btn.png" alt="" @click="handleClose">
+    <div style="position: relative">
+      <SitePopout @popup-click="clickHomePopupImg" :onShow="() => setWithExpiry('isImpt', true, 43200000)" />
+      <img class="close-btn" src="../../assets/images/home/site-popout/close-btn.png" alt="" @click="handleClose" />
     </div>
   </el-dialog>
 
@@ -28,7 +28,10 @@
           <div
             class="promo-bg isDesktop"
             :style="
-              'background-image: url(' + imgURL + (isDark ? (banner.desktopImageUrlDark || banner.desktopImageUrl) : banner.desktopImageUrl) + ')'
+              'background-image: url(' +
+              imgURL +
+              (isDark ? banner.desktopImageUrlDark || banner.desktopImageUrl : banner.desktopImageUrl) +
+              ')'
             "
           ></div>
           <!--          <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"></div>-->
@@ -49,6 +52,8 @@ import GameModal from "@/components/modal/GameModal.vue";
 import { useNotify } from "@/hooks/notify";
 import SitePopout from "@/components/modal/SitePopout.vue";
 
+const emit = defineEmits(["scrollToView"]);
+
 const notify = useNotify();
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
@@ -61,6 +66,7 @@ const isFetchingBanners = ref(false);
 
 const allGames = ref(null);
 const goBannerPage = (redirectUrl) => {
+  console.log("goBannerPage", redirectUrl);
   const openPattern = /^\/open\/(.*)/;
   if (redirectUrl.match(openPattern)) {
     const extractedUrl = redirectUrl.match(openPattern)[1];
@@ -70,14 +76,16 @@ const goBannerPage = (redirectUrl) => {
     return;
   } else if (redirectUrl == "app://deposit") {
     router.push("/center/deposit");
+  } else if (redirectUrl === "livestream") {
+    emit("scrollToView", "livestream");
   } else {
     router.push(`/promotion?name=${redirectUrl}`);
   }
 };
 
 const handleClose = () => {
-  isImportantAnnoucementModal.value = false
-}
+  isImportantAnnoucementModal.value = false;
+};
 
 const loadBanners = () => {
   isFetchingBanners.value = true;
@@ -87,14 +95,13 @@ const loadBanners = () => {
       isFetchingBanners.value = false;
 
       if (res.code === 0) {
-        banners.value = res.data.filter(promo => {
-          if(isDark.value) {
-            return !['lh1-dark-mode'].includes(promo.redirectUrl) && promo.desktopImageUrlDark
+        banners.value = res.data.filter((promo) => {
+          if (!promo.showDesktop) return false;
+          if (isDark.value) {
+            return !["lh1-dark-mode"].includes(promo.redirectUrl) && promo.desktopImageUrlDark;
           }
-
-          return promo;
+          return true;
         });
-
         //No Need liao.
         // if (store.token && (store.memberType === "TEST" || store.memberType === "PROMO_TEST")) {
         //   banners.value.unshift({

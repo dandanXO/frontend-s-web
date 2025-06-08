@@ -1391,19 +1391,23 @@ const slideTo = (vipIndex) => {
   }
 };
 function formatNumber(value, type) {
-  if (value === undefined) {
+  if (value === undefined || value === null) {
     return "-";
   }
-  // Convert the string to a float
-  const number = parseFloat(value);
 
-  // Check if there are any decimal places
+  value = value.toString().replace(/,/g, "");
+  let number = parseFloat(value);
+
+  if (isNaN(number)) return "-";
+
   if (number % 1 !== 0 || type === "redPacket") {
-    // Return with two decimal places
-    return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    // 不四舍五入，保留两位小数
+    number = Math.floor(number * 100) / 100;
+    // 补零并加千分位
+    return number
+      .toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   } else {
-    // Return without decimal places
-    return number.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return number.toLocaleString(undefined, { maximumFractionDigits: 0 });
   }
 }
 const tabActive = ref(1); // Bind this to the active tab

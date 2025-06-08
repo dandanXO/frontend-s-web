@@ -8,7 +8,6 @@
         label-width="120px"
         size="small"
         class="event-form"
-        v-if="teams.length > 0"
       >
         <el-form-item :label="t('fields.sportType')" prop="sportId">
           <el-select v-model="form.sportId" style="width: 300px">
@@ -20,7 +19,7 @@
           <el-input v-model="form.title" style="width: 300px" maxlength="100" />
         </el-form-item>
 
-        <el-form-item v-if="teams.length > 0" :label="t('fields.homeTeam')" prop="homeId">
+        <el-form-item :label="t('fields.homeTeam')" prop="homeId">
           <el-select
             v-model="form.homeId"
             filterable
@@ -103,6 +102,15 @@
             style="width: 350px;"
           />
         </el-form-item>
+        <el-form-item :label="t('fields.endTime')" prop="endTime">
+          <el-date-picker
+            type="datetime"
+            format="YYYY-MM-DD HH:mm:ss"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            v-model="form.eventEndTime"
+            style="width: 350px;"
+          />
+        </el-form-item>
 
         <el-form-item :label="t('fields.status')" prop="liveStatus">
           <el-select v-model="form.liveStatus" style="width: 300px">
@@ -113,6 +121,13 @@
               :value="item.id"
             />
           </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.isTestEvent')" prop="isTest">
+          <el-switch
+            v-model="form.isTest"
+            :active-text="t('fields.yes')"
+            :inactive-text="t('fields.no')"
+          />
         </el-form-item>
 
         <el-form-item>
@@ -167,7 +182,9 @@ const form = reactive({
   awayId: null,
   sort: 0,
   eventStartTime: '',
+  eventEndTime: '',
   liveStatus: null,
+  isTest: false
 });
 
 const formRules = reactive({
@@ -198,6 +215,7 @@ const formRules = reactive({
     }
   ],
   eventStartTime: [required(t('fields.validateMatchTimeRequired'))],
+  eventEndTime: [required(t('fields.validateMatchTimeRequired'))],
 });
 
 const request = reactive({
@@ -210,19 +228,36 @@ function isInTeamList(id) {
   return teams.value.some(t => t.id === id);
 }
 
-async function loadEventDetail() {
-  request.id = eventId;
-  const { data } = await getEvents(request);
-  const record = data.records?.[0];
-  if (record) {
-    record.eventStartTime = dayjs(record.eventStartTime).format('YYYY-MM-DD HH:mm:ss');
-    Object.assign(form, record);
+function fallbackTeamName(fieldId, nameZhField) {
+  if (!isInTeamList(form[fieldId]) && form[nameZhField]) {
+    form[fieldId.replace('Id', 'Name')] = form[nameZhField];
+    form[fieldId] = null;
   }
 }
 
 async function loadTeams() {
   const { data } = await getTeamById(form.sportId);
   teams.value = data;
+}
+
+async function loadEventDetail() {
+  request.id = eventId;
+  const { data } = await getEvents(request);
+  const record = data.records?.[0];
+  if (record) {
+    record.eventStartTime = dayjs(record.eventStartTime).format('YYYY-MM-DD HH:mm:ss');
+    if (record.eventEndTime) {
+      record.eventEndTime = dayjs(record.eventEndTime).format('YYYY-MM-DD HH:mm:ss');
+    } else {
+      record.eventEndTime = '';
+    }
+    record.isTest = !!record.isTest;
+    Object.assign(form, record);
+
+    // fallback team names if not in list
+    fallbackTeamName('homeId', 'homeNameZh');
+    fallbackTeamName('awayId', 'awayNameZh');
+  }
 }
 
 async function submit() {
@@ -233,9 +268,11 @@ async function submit() {
       id: form.id,
       sportId: form.sportId,
       title: form.title,
-      eventStartTime: form.eventStartTime,
+      eventStartTime: form.eventStartTime && form.eventStartTime.trim() !== '' ? form.eventStartTime : null,
+      eventEndTime: form.eventEndTime && form.eventEndTime.trim() !== '' ? form.eventEndTime : null,
       liveStatus: form.liveStatus,
-      sort: form.sort
+      sort: form.sort,
+      isTest: form.isTest
     };
 
     if (isInTeamList(form.homeId)) {
