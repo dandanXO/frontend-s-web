@@ -338,8 +338,8 @@ export default defineComponent({
           min = 16;
           max = 16;
         } else if(selectedCode === 'BLBPAY') {
-          min = 32;
-          max = 32;
+          min = 33;
+          max = 33;
         } else if(selectedCode === 'JDPAY') {
           min = 34;
           max = 34;
@@ -1066,9 +1066,9 @@ body {
 <style scoped lang="scss">
 .account-title {
   font-family: PingFang SC;
-font-size: 18px;
-font-weight: 600;
-color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
 }
 :deep(.ant-form-item.half .ant-form-item-control-input-content) {
   display: flex;
