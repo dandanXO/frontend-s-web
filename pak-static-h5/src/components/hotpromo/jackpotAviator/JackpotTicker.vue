@@ -104,7 +104,7 @@ onMounted(() => {
         text {
             font-family: 'Poppins';
             font-weight: 900;
-            font-size: 20px;
+            font-size: 18px;
             line-height: 22px;
             letter-spacing: 0px;
             text-align: center;

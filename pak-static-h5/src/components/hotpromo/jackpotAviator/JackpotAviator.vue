@@ -241,8 +241,8 @@ onMounted(() => {
 .receive-btn {
   background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/receive-btn.png') center center no-repeat;
   background-size: 100% 100%;
-  width: 100px;
-  height: 30px;
+  width: 90px;
+  height: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -251,7 +251,7 @@ onMounted(() => {
   color: #582B00;
   font-family: Poppins;
   font-weight: 900;
-  font-size: 17.88px;
+  font-size: 14.88px;
   line-height: 20.27px;
   letter-spacing: 0px;
   text-align: center;
