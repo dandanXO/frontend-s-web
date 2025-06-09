@@ -2633,6 +2633,8 @@ export default {
     initialSupplierStreamStatus: 'Initial Supplier Stream Status',
     isTestEvent: 'Test Event',
     claimableRedPacketRebate: 'Claimable Red Packet Rebate',
+    cover: 'Cover',
+    isPopularEvent: 'Popular Event'
   },
   message: {
     adsStatusOpen: 'Open',

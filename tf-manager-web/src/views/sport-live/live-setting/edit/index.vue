@@ -129,7 +129,33 @@
             :inactive-text="t('fields.no')"
           />
         </el-form-item>
-
+        <el-form-item :label="t('fields.isPopularEvent')" prop="isPopular">
+          <el-switch
+            v-model="form.isPopular"
+            :active-text="t('fields.yes')"
+            :inactive-text="t('fields.no')"
+          />
+        </el-form-item>
+        <el-form-item :label="t('fields.cover')" prop="cover">
+          <div style="display: flex; flex-direction: column;">
+            <el-image
+              v-if="form.cover"
+              :src="`${promoDir2}${form.cover}`"
+              style="width: 120px; height: 68px; border: 1px solid #ccc; margin-bottom: 8px;"
+              class="preview"
+            />
+            <el-button
+              v-if="form.cover"
+              type="danger"
+              size="small"
+              style="margin-bottom: 8px; width: fit-content;"
+              @click="form.cover = ''"
+            >
+              {{ t('fields.remove') }}
+            </el-button>
+            <input type="file" accept="image/*" @change="attachImage">
+          </div>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
           <el-button @click="$router.back()">{{ t('fields.cancel') }}</el-button>
@@ -141,12 +167,14 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
+import { useStore } from "@/store";
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { getTeamById, getEvents, updateSportLiveEvent } from '@/api/sport-live';
 import { required } from '@/utils/validate';
 import { ElMessage } from 'element-plus';
 import { useSessionStorage } from "@vueuse/core";
+import { uploadImage } from "@/api/image";
 import dayjs from "dayjs";
 
 const route = useRoute();
@@ -156,7 +184,8 @@ const eventId = Number(route.query.id);
 const formRef = ref(null);
 const teams = ref([]);
 const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
-
+const promoDir2 = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value
+const store = useStore();
 const uiControl = reactive({
   sport: [
     { id: 1, name: 'FOOTBALL', display: '足球' },
@@ -184,7 +213,9 @@ const form = reactive({
   eventStartTime: '',
   eventEndTime: '',
   liveStatus: null,
-  isTest: false
+  isTest: false,
+  isPopular: false,
+  cover: ''
 });
 
 const formRules = reactive({
@@ -224,6 +255,52 @@ const request = reactive({
   id: null,
 });
 
+async function attachImage(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const data = await attachPhoto(event);
+  console.log(data);
+  if (data) {
+    form.cover = data;
+  } else {
+    ElMessage({ message: t('message.failedToUploadImage'), type: 'error' });
+  }
+}
+
+async function attachPhoto(event) {
+  const files = event.target.files[0];
+  if (!files) return;
+
+  const fr = new FileReader();
+  fr.onload = function () {
+    const img = new Image();
+    img.onload = function () {
+    };
+    img.src = fr.result;
+  };
+  fr.readAsDataURL(files);
+
+  const allowFileType = ['image/jpeg', 'image/png', 'image/gif'];
+  if (!allowFileType.includes(files.type)) {
+    ElMessage({ message: t('message.invalidFileType'), type: 'error' });
+    return null;
+  }
+
+  const formData = new FormData();
+  formData.append('files', files);
+  formData.append('dir', `live/event/${store.state.user.siteId}`);
+  formData.append('overwrite', false);
+
+  try {
+    const response = await uploadImage(formData);
+    return response.code === 0 ? response.data : null;
+  } catch (error) {
+    ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
+    return null;
+  }
+}
+
 function isInTeamList(id) {
   return teams.value.some(t => t.id === id);
 }
@@ -252,6 +329,7 @@ async function loadEventDetail() {
       record.eventEndTime = '';
     }
     record.isTest = !!record.isTest;
+    record.isPopular = !!record.isPopular;
     Object.assign(form, record);
 
     // fallback team names if not in list
@@ -272,7 +350,9 @@ async function submit() {
       eventEndTime: form.eventEndTime && form.eventEndTime.trim() !== '' ? form.eventEndTime : null,
       liveStatus: form.liveStatus,
       sort: form.sort,
-      isTest: form.isTest
+      isTest: form.isTest,
+      isPopular: form.isPopular,
+      cover: form.cover
     };
 
     if (isInTeamList(form.homeId)) {
