@@ -106,6 +106,7 @@ const handleClick = () => {
     line-height: 18px;
     grid-column: 1 / span 2;
     text-overflow: ellipsis;
+    overflow: hidden;
     white-space: nowrap;
     transition: all 0.3s ease-in-out;
 
