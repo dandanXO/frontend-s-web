@@ -13,3 +13,13 @@ export function copySportLiveMatch(query) {
     ContentType.json
   )
 }
+
+export const batchDeleteSportLiveMatch = ({ matchIds }) => {
+  // 批量刪除比賽
+  return https().request(
+    `/live-sport/match/batch-delete`,
+    Method.DELETE,
+    { matchIds },
+    ContentType.json
+  );
+};
