@@ -359,7 +359,8 @@ export default {
         description: "حکومت کیوراکاؤ کے ذریعہ"
       }
     },
-    termsAndConditions: "شرائط و ضوابط"
+    termsAndConditions: "شرائط و ضوابط",
+    legalLicense: "قانونی لائسنس"
   },
   home: {
     menu_all: "سب",
