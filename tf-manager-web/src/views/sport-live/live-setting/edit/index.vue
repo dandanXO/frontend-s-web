@@ -31,15 +31,17 @@
               const match = teams.find(t => t.id === val);
               form.homeName = match ? match.nameZh : val;
             }"
+            @focus="handleTeamSelectorFocus('home')"
             @blur="e => {
               if (typeof form.homeId === 'string' && !isInTeamList(form.homeId)) {
                 form.homeName = form.homeId;
                 form.homeId = null;
               }
+              handleTeamSelectorBlur()
             }"
           >
             <el-option
-              v-for="team in teams"
+              v-for="team in displayTeams"
               :key="team.id"
               :label="team.nameZh"
               :value="team.id"
@@ -51,6 +53,7 @@
                 {{ team.nameZh }}
               </div>
             </el-option>
+            <div v-if="teamSelectorStatus === 'home'" ref="teamSelectorBottomRef" />
           </el-select>
         </el-form-item>
 
@@ -66,15 +69,17 @@
               const match = teams.find(t => t.id === val);
               form.awayName = match ? match.nameZh : val;
             }"
+            @focus="handleTeamSelectorFocus('away')"
             @blur="e => {
               if (typeof form.awayId === 'string' && !isInTeamList(form.awayId)) {
                 form.awayName = form.awayId;
                 form.awayId = null;
               }
+              handleTeamSelectorBlur()
             }"
           >
             <el-option
-              v-for="team in teams"
+              v-for="team in displayTeams"
               :key="team.id"
               :label="team.nameZh"
               :value="team.id"
@@ -86,6 +91,7 @@
                 {{ team.nameZh }}
               </div>
             </el-option>
+            <div v-if="teamSelectorStatus === 'away'" ref="teamSelectorBottomRef" />
           </el-select>
         </el-form-item>
 
@@ -166,7 +172,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, nextTick, onUnmounted } from 'vue';
 import { useStore } from "@/store";
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
@@ -177,12 +183,18 @@ import { useSessionStorage } from "@vueuse/core";
 import { uploadImage } from "@/api/image";
 import dayjs from "dayjs";
 
+const TEAMS_PER_VIEW = 20
+
 const route = useRoute();
 const { t } = useI18n();
 
 const eventId = Number(route.query.id);
 const formRef = ref(null);
 const teams = ref([]);
+const displayTeams = ref([]);
+const teamSelectorStatus = ref(null)
+const teamSelectorBottomRef = ref(null);
+const teamSelectorScrollObserver = ref(null);
 const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
 const promoDir2 = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value
 const store = useStore();
@@ -337,6 +349,21 @@ async function loadEventDetail() {
   }
 }
 
+const handleTeamSelectorFocus = (target) => {
+  displayTeams.value = teams.value.slice(0, TEAMS_PER_VIEW);
+  teamSelectorStatus.value = target;
+  nextTick(() => {
+    if (!teamSelectorBottomRef.value) return;
+    teamSelectorScrollObserver.value.observe(teamSelectorBottomRef.value);
+  })
+}
+
+const handleTeamSelectorBlur = () => {
+  displayTeams.value = []
+  teamSelectorStatus.value = null;
+  teamSelectorScrollObserver.value.unobserve(teamSelectorBottomRef.value);
+}
+
 async function submit() {
   await formRef.value.validate(async (valid) => {
     if (!valid) return;
@@ -371,10 +398,27 @@ async function submit() {
   });
 }
 
+const registerTeamSelectorScrollObserver = () => {
+  teamSelectorScrollObserver.value = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        displayTeams.value = teams.value.slice(0, displayTeams.value.length + TEAMS_PER_VIEW);
+      }
+    })
+  })
+}
+
 onMounted(async () => {
   await loadEventDetail();
   await loadTeams();
+  registerTeamSelectorScrollObserver();
 });
+
+onUnmounted(() => {
+  if (teamSelectorScrollObserver.value) {
+    teamSelectorScrollObserver.value.disconnect();
+  }
+})
 </script>
 
 <style scoped>
