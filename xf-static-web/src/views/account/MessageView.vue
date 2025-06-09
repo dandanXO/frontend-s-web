@@ -598,7 +598,13 @@ import { ElMessage } from "element-plus";
     overflow: unset;
   }
   .mail-content {
+    :deep(.el-collapse) {
+      border-top: none;
+    }
+
     .mail-collapse-item {
+      width: 100%;
+
       :deep(.el-collapse-item__title) {
         display: flex;
         align-items: center;
