@@ -260,9 +260,8 @@ async function attachImage(event) {
   if (!file) return;
 
   const data = await attachPhoto(event);
-  console.log(data);
   if (data) {
-    form.cover = data;
+    form.cover = `/live/event/${store.state.user.siteId}/${data}`;
   } else {
     ElMessage({ message: t('message.failedToUploadImage'), type: 'error' });
   }
