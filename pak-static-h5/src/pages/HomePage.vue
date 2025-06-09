@@ -1211,8 +1211,8 @@
   </q-dialog>
 
   <q-dialog width="100%" class="announcement-modal" v-model="isStationNotice">
-    <div class="popout-dialog announcement-popout">
-      <div class="announcement-top-img"><img src="../assets/images/index/notice-icon.png" /></div>
+    <div class="popout-dialog announcement-popout" style="width:375px;height:559px;">
+      <!-- <div class="announcement-top-img"><img src="../assets/images/index/notice-icon.png" /></div> -->
 
       <q-btn flat dense icon="close" class="text-black announcement-close" v-close-popup />
       <q-card :class="{ wPage: maxPage > 1 }" style="width: 90%; margin: auto" class="announcement-card">
@@ -1315,7 +1315,7 @@
         </q-card-section>
       </q-card>
 
-      <q-card-actions v-if="maxPage > 1" class="q-px-lg" align="center">
+      <q-card-actions v-if="maxPage > 1" class="q-px-lg" align="center" style="padding:0;">
         <q-pagination class="pagiantion" v-model="page" :max="maxPage" :max-pages="7" boundary-numbers />
       </q-card-actions>
     </div>
@@ -5192,23 +5192,12 @@ const checkGoogleLoginSetPwd = () => {
   height: calc(100vh - 108px);
 }
 .announcement-top-img {
-  // margin-bottom: -120px;
-  // width: 200px;
-  //   width: 150px;
-  //   // margin: 0 auto -100px;
-  //   margin: 0px 0 -100px 12px;
-  // z-index: 1;
-  // z-index: 1;
   width: 210px;
   top: -18px;
   left: 0;
   right: 0;
   margin: auto;
-  // top: 30px;
   position: absolute;
-  // left: 0;
-  // right: -10px;
-  // margin: auto;
   img {
     width: 100%;
   }
@@ -5218,11 +5207,9 @@ const checkGoogleLoginSetPwd = () => {
   // height: 470px;
   background: url(../assets/images/index/notice-bg.png) no-repeat center bottom;
   border-radius: 30px 30px 0 0;
-
   height: 580px;
   background-size: 100% 95%;
   padding-top: 50px;
-  margin-bottom: -45px;
 }
 .announcement-card {
   height: 100%;
@@ -5233,7 +5220,7 @@ const checkGoogleLoginSetPwd = () => {
   background: transparent;
   // padding: 120px 20px 20px 20px;
 
-  padding: 90px 10px 0px;
+  padding: 32% 10px 0px;
   // overflow-y: auto;
   // background: transparent;
   // background: linear-gradient(180deg, rgba(36, 36, 36, 1) 0%, rgba(35, 45, 31, 1) 100%);
@@ -5257,8 +5244,8 @@ const checkGoogleLoginSetPwd = () => {
   background: #a7e0b8;
 
   border-radius: 24px;
-  padding: 8px 12px;
-  margin: 0 0 3px;
+  padding: 4px 12px;
+  margin: 0 0 4px;
   display: flex;
   gap: 5px;
   &:last-child {
