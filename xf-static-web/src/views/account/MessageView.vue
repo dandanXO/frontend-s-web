@@ -598,6 +598,10 @@ import { ElMessage } from "element-plus";
     overflow: unset;
   }
   .mail-content {
+    :deep(.el-collapse) {
+      border-top: none;
+    }
+
     .mail-collapse-item {
       :deep(.el-collapse-item__title) {
         display: flex;
@@ -637,6 +641,7 @@ import { ElMessage } from "element-plus";
       font-weight: 600;
       color: #7a80a1;
       font-size: 1rem;
+      width: inherit;
     }
   
     :deep(.el-collapse-item__content) {
