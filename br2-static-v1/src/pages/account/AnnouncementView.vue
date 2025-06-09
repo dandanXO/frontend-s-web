@@ -106,7 +106,7 @@ export default defineComponent({
   }
 
   .q-tab--active {
-    color: #3e5cc0 !important;;
+    color: #0089a1 !important;
   }
 
   .q-tab__content {

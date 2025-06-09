@@ -47,7 +47,7 @@ const onBtnClick = () => {
     position: absolute;
     font-size: 1.25rem;
     font-weight: bold;
-    color: #5c46e7;
+    color: #00B9A1;
   }
 
   .q-spinner {

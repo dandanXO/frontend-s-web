@@ -55,7 +55,7 @@
           />
         </div>
         <div class="forgot-password-form-logo-img" style="margin-top: 50px">
-          <img src="../assets/55-ace-logo.png" />
+          <img src="../assets/akb188-logo.png" />
         </div>
         <span class="forgot-password-form-desc">
           {{ $t("form.forgotPassword_desc") }}
@@ -368,7 +368,7 @@ onMounted(() => {
 }
 
 .submit-btn {
-  background-color: #8b00ff;
+  background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
   width: 100%;
   height: 56px;
   border-radius: 4px;

@@ -241,11 +241,11 @@ const redeem = () => {};
     }
     tbody > :nth-child(odd) {
       background: rgba(21, 0, 37, 0.2);
-      background: #652c93;
+      background: #005348;
     }
     tbody > :nth-child(even) {
       background: rgba(21, 0, 37, 0.5);
-      background: #502175;
+      background: #016d5e;
     }
     tbody > td {
       border-width: 1px;

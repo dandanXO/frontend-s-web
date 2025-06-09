@@ -1,6 +1,6 @@
 <template>
   <div style="height: 56px" v-if="topDownload"></div>
-  <div style="height: 80px"></div>
+  <div style="height: 60px"></div>
 
   <div class="top-download" v-if="topDownload">
     <div class="download-container">
@@ -123,7 +123,7 @@
         </q-btn-dropdown>
       </div>
       <div class="profile-wrapper" v-else>
-        <q-btn no-caps @click="goLogin()">{{ $t("header.login") }}</q-btn>
+        <q-btn class="btn-style-light" no-caps @click="goLogin()">{{ $t("header.login") }}</q-btn>
         <q-btn class="btn-style-crimson" no-caps @click="router.push('/register')">{{ $t("header.register") }}</q-btn>
       </div>
     </div>
@@ -286,7 +286,8 @@ onMounted(() => {
   width: 100%;
   height: 86px; /* adjust the height as needed */
   padding: 8px 16px 28px;
-  background: linear-gradient(180deg, #0c2962 0%, #01030d 100%);
+  // background: linear-gradient(180deg, #0c2962 0%, #01030d 100%);
+  background: linear-gradient(180deg, #00b9a1 0%, rgba(0, 185, 111, 0) 96.35%);
   z-index: 98;
 
   .download-container {
@@ -350,8 +351,11 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   position: relative;
-  background: linear-gradient(180deg, #2d0f54 0%, #101114 100%);
-  box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
+  // background: linear-gradient(180deg, #2d0f54 0%, #101114 100%);
+  // background: linear-gradient(180deg, #00B9A1 0%, rgba(0, 185, 111, 0) 96.35%);
+  // background: linear-gradient(180deg, rgba(0, 185, 161, 0.46) 0%, rgba(0, 185, 111, 0) 96.35%);
+  background: linear-gradient(180deg, #095e54 0%, #0d362d 100%);
+  // box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
   overflow-x: hidden;
   position: fixed;
   top: 0;
@@ -394,6 +398,11 @@ onMounted(() => {
 
   .profile-dropdown {
     margin-top: 15px;
+    box-shadow: none;
+
+    &:before {
+      box-shadow: none;
+    }
   }
   .profile-wrapper {
     display: flex;
@@ -473,7 +482,7 @@ onMounted(() => {
     .profile-balance {
       position: relative;
       // background: rgba(255, 255, 255, 0.24);
-      background: rgba(103, 38, 154, 0.9);
+      background: #286866e5;
       border-radius: 24px;
       display: flex;
       align-items: center;
@@ -524,10 +533,10 @@ onMounted(() => {
 
   .logo-img {
     width: 100%;
-    margin: 0 auto;
+    margin: 12px auto;
 
     img {
-      max-width: 100px;
+      max-width: 106px;
       width: 100%;
       text-align: center;
     }
@@ -581,7 +590,8 @@ onMounted(() => {
 }
 
 .style-blue-btn {
-  background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+  // background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
   border-radius: 5px;
 }
 

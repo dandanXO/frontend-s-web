@@ -123,7 +123,7 @@ export const convertToCommaAmount = (amount, isForceDecimal) => {
 
 export const displayPlatform = (platform) => {
   if (platform === "BTI") {
-    return "55Ace";
+    return "AKB188";
   }
   return platform;
 };

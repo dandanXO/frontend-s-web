@@ -1322,11 +1322,11 @@ const openConfirmSignOutDialog = () => {
   height: 42px;
 }
 .btn-confirm {
-  background: linear-gradient(187.94deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
+  background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
   font-weight: 700;
   width: 140px;
   height: 42px;
-  color: #5c46e7;
+  color: #ffffff;
   border-radius: 8px;
 }
 </style>

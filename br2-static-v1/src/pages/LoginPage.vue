@@ -63,11 +63,11 @@
     <div class="create-account">
       <span class="form-text">{{ $t("btn.notAMember") }}</span>
       &nbsp;
-      <router-link class="form-text" to="/register" style="color: #ae6def">{{ $t("btn.createAccount") }}</router-link>
+      <router-link class="form-text" to="/register" style="color: #00B9A1">{{ $t("btn.createAccount") }}</router-link>
     </div>
 
     <div class="register-form-logo-img">
-      <img src="../assets/55-ace-logo.png" />
+      <img src="../assets/akb188-logo.png" />
     </div>
   </div>
 </template>
@@ -505,7 +505,7 @@ export default defineComponent({
   }
 }
 .login-btn {
-  background-color: #8b00ff;
+  background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
   width: 100%;
   height: 56px;
   border-radius: 4px;

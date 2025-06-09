@@ -91,7 +91,7 @@ const handleConfirmClick = (route) => {
   // margin-top: 20px;
   justify-content: center;
 
-  background-color: #8b00ff;
+  background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
   width: 100%;
   height: 56px;
   font-size: 16px;

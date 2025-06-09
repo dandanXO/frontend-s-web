@@ -477,7 +477,7 @@ export default {
         "Se você tiver habilidades extraordinárias de promoção de canais, entre em contato com nosso centro de atendimento ao cliente para verificação.",
       faq_05: "5. Como transformar seus amigos em membros?",
       faq_05_01:
-        "Faça login no 55Ace, compartilhe seu link de recomendação com seus amigos na página de recomendações e oriente-os a se registrarem no link para se tornarem seus membros diretos.",
+        "Faça login no AKB188, compartilhe seu link de recomendação com seus amigos na página de recomendações e oriente-os a se registrarem no link para se tornarem seus membros diretos.",
       faq_05_02:
         "Incentive seus membros a convidar seus amigos para jogar, e os amigos que eles convidarem se tornarão seus membros indiretos.",
       faq_05_03:

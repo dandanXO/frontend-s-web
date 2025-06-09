@@ -802,7 +802,7 @@ const swipeRight = () => {
       }
 
       .title {
-        color: #5c46e7;
+        color: #00b9a1;
         font-size: 10px;
         height: 35px;
         line-height: 12px;
@@ -820,7 +820,7 @@ const swipeRight = () => {
           line-height: 12px;
           word-wrap: break-word;
           color: #8b36f8;
-          background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%), linear-gradient(0deg, #ffffff, #ffffff);
+          background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%), linear-gradient(0deg, #ffffff, #ffffff);
           background-clip: text;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -842,7 +842,7 @@ const swipeRight = () => {
 
 .vip-promo-tab-wrapper {
   width: 90%;
-  margin: 0 auto;
+  margin: 30px auto 0;
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
@@ -863,9 +863,9 @@ const swipeRight = () => {
 
     :deep(.q-tab--active) {
       color: #fff;
-      background: linear-gradient(0deg, #5c46e7, #5c46e7), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+      background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
       box-shadow: 0px 1px 2px 0px #0000000d;
-      border: 1px solid #5c46e7;
+      border: 1px solid #00b9a1;
     }
 
     :deep(.q-tab--active .q-tab__label) {
@@ -1038,7 +1038,7 @@ const swipeRight = () => {
       .progress-bar-inner-bar {
         color: #fff;
         border-radius: 16px;
-        background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+        background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
         height: 12px;
       }
     }
@@ -1100,7 +1100,9 @@ const swipeRight = () => {
 
   .top-header {
     color: #f1f1f1;
-    background: linear-gradient(180deg, #41206f 0%, #1f2862 100%);
+    // background: linear-gradient(180deg, #41206f 0%, #1f2862 100%);
+    background: linear-gradient(180deg, #005348 0%, rgba(0, 83, 72, 0.2) 96.35%);
+
 
     td {
       padding-left: 0.5rem;
@@ -1135,15 +1137,16 @@ const swipeRight = () => {
     }
   }
   thead > :first-child {
-    background: linear-gradient(270deg, #5d01b9 -0.1%, #b11bff 50.22%, #6a069c 97.6%);
+    // background: linear-gradient(270deg, #5d01b9 -0.1%, #b11bff 50.22%, #6a069c 97.6%);
+    background: linear-gradient(180deg, #005348 0%, rgba(0, 83, 72, 0.2) 96.35%);
   }
   tbody > :nth-child(odd) {
     background: rgba(21, 0, 37, 0.2);
-    background: #652c93;
+    background: #005348;
   }
   tbody > :nth-child(even) {
     background: rgba(21, 0, 37, 0.5);
-    background: #502175;
+    background: #016d5e;
   }
 
   span.amt-text {
@@ -1177,7 +1180,9 @@ const swipeRight = () => {
 
   .hint-msg {
     border-radius: 8px;
-    background: linear-gradient(180deg, #2f1b4d 0%, #1a2045 100%);
+    // background: linear-gradient(180deg, #2f1b4d 0%, #1a2045 100%);
+    background: linear-gradient(180deg, #005348 0%, rgba(0, 83, 72, 0.2) 96.35%);
+
     padding: 10px;
     margin: 0 0 1.25rem 0;
     color: rgba(255, 255, 255, 0.7);

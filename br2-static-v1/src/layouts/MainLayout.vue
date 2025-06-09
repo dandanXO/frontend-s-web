@@ -92,7 +92,7 @@
   </q-layout>
 
   <div class="first-screen-loading" v-show="ui.firstScreenLoading">
-    <img src="../assets/55-ace-logo.png" alt="" />
+    <img src="../assets/akb188-logo.png" alt="" />
   </div>
 </template>
 

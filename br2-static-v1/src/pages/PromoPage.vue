@@ -690,7 +690,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .vip-promo-tab-wrapper {
   width: 90%;
-  margin: 0 auto;
+  margin: 30px auto 0;
 
   .q-tab {
     min-height: 45px;
@@ -713,7 +713,7 @@ export default defineComponent({
 
     :deep(.q-tab--active) {
       color: #fff;
-      background: linear-gradient(0deg, #5c46e7, #5c46e7), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+      background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
       box-shadow: 0px 1px 2px 0px #0000000d;
     }
 
@@ -894,7 +894,8 @@ export default defineComponent({
           overflow: hidden;
           padding-top: 40px;
           border-radius: 17px;
-          background: #4f366c;
+          // background: #4f366c;
+          background: #0097b9;
           box-shadow: 0px 7.5px 20px 0px #1411321a;
 
           img {

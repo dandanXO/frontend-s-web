@@ -62,7 +62,7 @@ export default defineComponent({
 .dialog-container {
   border: 0;
   border-radius: 6px;
-  background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+  background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
   color: #ffffff;
   text-align: center;
   width: 100%;

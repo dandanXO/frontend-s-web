@@ -111,7 +111,7 @@
           Quanto mais seus convidados jogarem no site, maior será a recompensa do seu próximo giro. Convide amigos e ganhem mais recompensas juntos!
         </li>
         <li>
-          O direito de interpretar o evento pertence à 55Ace. Se tiver dúvidas, entre em contato com o atendimento ao cliente.
+          O direito de interpretar o evento pertence à AKB188. Se tiver dúvidas, entre em contato com o atendimento ao cliente.
         </li>
       </ol>
     </div>
@@ -361,7 +361,7 @@ onUnmounted(() => {
           font-size: 40px;
         }
       }
-      
+
       .extraction-require-amount, .extraction-require-percentage {
         color: #fff;
         font-family: 'Poppins';

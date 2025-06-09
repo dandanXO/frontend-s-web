@@ -267,7 +267,7 @@ onActivated(() => {
   width: calc(100% - 20px);
   //margin-bottom: 10px;
   margin: 0px auto 10px;
-  border: 1px solid #5c46e7;
+  border: 1px solid #00B9A1;
   aspect-ratio: 335/32;
 
   :deep(.q-tab__label) {
@@ -278,8 +278,8 @@ onActivated(() => {
     border-radius: 6px;
     color: #fff;
     margin: 1px;
-    background: linear-gradient(0deg, #5c46e7, #5c46e7), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-      linear-gradient(0deg, #5c46e7, #5c46e7);
+    background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+
   }
 }
 
