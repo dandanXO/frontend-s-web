@@ -4,7 +4,8 @@
   <div class="controller-wrapper">
     <slot name="controller" />
   </div>
-  <NewPlayerWheel :hasUnusedCoupons="props.hasUnusedCoupons"  />
+  <img class="myhand hover-bounce" src="./img/myhand.png" style="position: absolute;">
+  <NewPlayerWheel :isHomePopup="true" :hasUnusedCoupons="props.hasUnusedCoupons"  />
   </div>
 </template>
 <script setup>
@@ -85,6 +86,33 @@ defineExpose({
 });
 </script>
 <style lang="scss" scoped>
+.myhand {
+  
+    position: absolute;
+    z-index: 99999;
+    width: 70px;
+    left: 53%;
+    top: 74%;
+    pointer-events: none;
+}
+  .hover-bounce {
+    animation: bounce 1.5s infinite;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .hover-bounce:hover {
+    transform: scale(1.05);
+  }
+
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
 .spin-lucky-wheel-promo-popup-wrapper {
   position: relative;
   display: flex;
@@ -169,6 +197,7 @@ defineExpose({
   overflow: visible;
   border-radius: 12px;
   min-height: 640px;
+  margin-top: -75px;
   .controller-wrapper { 
     width: fit-content;   
     margin: 190px auto 100px;

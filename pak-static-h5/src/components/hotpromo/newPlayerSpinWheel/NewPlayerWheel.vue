@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" :style="props.isHomePopup ? 'padding: 0;' : 'padding-top: 30px;'">
     <div class="spin-wheel-container">
       <div :class="`draw-btn click-pointer ${spinButtonDisable ? 'disabled' : ''}`" @click="spinWheel">
         <img src="../../../assets/images/promotion/hotpromo/newplayer-spinwheel/new-click-spin-btn.png" />
@@ -41,20 +41,36 @@
     @handleBtnClick="handleReceiveCodeBonus"
     @handleBtnClose="showPrizePopup = false"
   />
-  <CongratsReuseableModal
+  <!-- <CongratsReuseableModal
     :isShowDialog="showHasUnusedPopup"
     :btnTxt="$t('btn.goNow')"
     :bonusTitle="$t('hotPromo.unusedCoupons')"
     :contentImg="require('../../../assets/images/index/modal/congrats-coupons.png')"
     :headerImg="require(`../../../assets/images/index/modal/congrats-header-${langVal}.png`)"
-    @handleBtnClick="handleReceiveCodeBonus"
+    @handleBtnClick="router.push('/deposit?from=/home')"
     @handleBtnClose="showHasUnusedPopup = false"
-  />
+  /> -->
+  <q-dialog class="isCentreDialog" v-model="showHasUnusedPopup" @hide="showHasUnusedPopup = false">
+    <div class="congrats-container">
+      <q-btn icon="close" round dense v-close-popup class="congrats-close" />
+      <div class="congrats-heading">COUPON</div>
+      <div class="congrats-coupons">
+        <img :src="require('../../../assets/images/index/modal/congrats-coupons.png')" />
+      </div>
+      <div class="congrats-title">{{ $t('hotPromo.unusedCoupons') }}</div>
+
+      <div class="congrats-button-container">
+        <q-btn no-caps unelevated class="congrats-btn" @click="handleBtnClick">
+          {{ $t('btn.goNow') }}
+        </q-btn>
+      </div>
+    </div>
+  </q-dialog>
   
 </template>
 
 <script setup>
-import { ref, onMounted, toRefs, computed } from "vue";
+import { ref, onMounted, toRefs, computed, defineProps } from "vue";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import { i18nStore } from "src/router/language";
@@ -70,7 +86,9 @@ import CongratsReuseableModal from "src/components/modal/CongratsReuseableModal.
 const { t } = useI18n();
 const $q = useQuasar();
 const router = useRouter();
-
+const props = defineProps([
+  "isHomePopup"
+])
 // spin wheel constants
 const TOTAL_ITEMS = 7;
 const DEFAUL_SPEED = 1;
@@ -245,6 +263,7 @@ const initSpinWheel = () => {
   eventapi.get("/new-user-roulette/init").then((res) => {
     if (res.code == 0) {
       remainingDraws.value = res.data.spinChance;
+      showHasUnusedPopup.value = res.data.hasUnusedCoupon === 'YES' ? true : false
     }
   });
 
@@ -367,7 +386,7 @@ onMounted(() => {
   height: 100%;
 }
 .wheel-top-btn {
-  width: 155px;
+  width: 140px;
   height: 115px;
   position: absolute;
   top: -11%;
@@ -607,7 +626,7 @@ onMounted(() => {
     // margin: 0px auto 15px;
     margin: auto;
     text-align: center;
-    width: 300px;
+    width: 250px;
     position: relative;
     z-index: 23;
     margin: 0 auto;
@@ -701,7 +720,7 @@ onMounted(() => {
 </style>
 
 <style lang="scss">
-.pak-newplayer-welcome-spin-table {
+.pak-newplayer-welcome-spin-greentable {
   p {
     margin: 0;
     padding: 8px;
@@ -721,17 +740,135 @@ onMounted(() => {
       }
     }
   }
-  th {
-    background: linear-gradient(rgba(122,1,288, 100%), rgba(122,1,288, 85%)) !important;
+  // th {
+  //   background: linear-gradient(rgba(122,1,288, 100%), rgba(122,1,288, 85%)) !important;
+  // }
+
+  // td {
+  //   background-color: transparent !important;
+  //   border-color: rgba(255, 255, 255, 0.1) !important;
+  // }
+
+  // tbody {
+  //   background: linear-gradient(180deg, rgba(184, 83, 255, 0.63) 0%, rgba(122, 1, 228, 0.63) 100%) !important;
+  // }
+}
+</style>
+
+<style lang="scss" scoped>
+.congrats-container {
+  background-image: unset;
+  background-color: #1e371f;
+  border: 1px solid #337e3a;
+  border-radius: 10px !important;
+  max-width: 350px;
+  width: 100%;
+  padding: 16px;
+  position: relative;
+  overflow: visible;
+  border-radius: 12px;
+  height: unset;
+  aspect-ratio: unset;
+
+  &:before {
+    content: "";
+    background-image: url(../../../assets/images/index/modal/congrats-container-light.png);
+    background-size: 100% 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 150px;
+    position: absolute;
+    left: 0;
+    top: -158px;
   }
 
-  td {
-    background-color: transparent !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
+  // .congrats-header {
+  //   display: flex;
+  //   justify-content: center;
+  //   margin-top: -26px;
+  //   z-index: 2;
+
+  //   img {
+  //     display: block;
+  //     width: 100%;
+  //     max-width: 320px;
+  //   }
+  // }
+
+  .congrats-heading {
+    font-family: Poppins;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    text-transform: uppercase;
   }
 
-  tbody {
-    background: linear-gradient(180deg, rgba(184, 83, 255, 0.63) 0%, rgba(122, 1, 228, 0.63) 100%) !important;
+  .congrats-coupons {
+    img {
+      display: block;
+      width: 100%;
+      margin: auto;
+      max-width: 240px;
+    }
+  }
+
+  .congrats-title {
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .congrats-highlight-txt,
+  .congrats-highlight {
+    color: #fff96f;
+    font-size: 45px;
+    text-align: center;
+    // background: linear-gradient(90deg, transparent, #fff96f29, transparent);
+    background-image: url(../../../assets/images/index/modal/green-congrats-highlight-bg.png);
+    padding: 0 12px;
+    background-repeat: no-repeat;
+    background-size: 70% 100%;
+    background-position: center;
+    margin-top: 16px;
+    position: relative;
+    text-align: center;
+    top: unset;
+    left: 0;
+    transform: unset;
+    bottom: unset;
+    margin: 16px auto;
+  }
+
+  .congrats-highlight-txt {
+    font-size: 14px;
+  }
+}
+
+.congrats-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.congrats-button-container {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  .congrats-btn {
+    background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: #000a01;
   }
 }
 </style>
