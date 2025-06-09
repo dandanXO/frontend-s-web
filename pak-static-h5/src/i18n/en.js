@@ -364,7 +364,8 @@ export default {
         description: "by the Government of Curacao"
       }
     },
-    termsAndConditions: "Terms and Conditions"
+    termsAndConditions: "Terms and Conditions",
+    legalLicense: "Legal License"
   },
   home: {
     menu_all: "ALL",
@@ -776,7 +777,8 @@ export default {
     sendOtp: "Send OTP",
     getOtp: "Get OTP",
     telephone: "Mobile number",
-    captchaSuccess: "Operation successful, please check the verification code sent to your phone! (Valid for 5 minutes.)",
+    captchaSuccess:
+      "Operation successful, please check the verification code sent to your phone! (Valid for 5 minutes.)",
     captchaFailedMessage: "Verification code check failed, please refresh the page",
     clickAndEnterPhoneCode:
       "Please click to get the verification code and enter the code sent to your registered phone number"
