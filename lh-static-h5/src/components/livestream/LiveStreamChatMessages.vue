@@ -187,17 +187,22 @@ const emojiPick = () => {
 };
 
 const handleBetClick = () => {
+  const handler = route.path === "/livestreampage/streamplayer" ? handleAppBetClick : openGame;
   switch (livestreamData.value.sportId) {
     case 1:
     case 2:
-      openGame("IM体育", "IM", "", "");
+      handler("IM体育", "IM", "", "");
       break;
     case 3:
     case 4:
     case 5:
-      openGame("雷火电竞", "TFGaming", "", "");
+      handler("雷火电竞", "TFGaming", "", "");
       break;
   }
+};
+
+const handleAppBetClick = (platformName, platformId, platformCode) => {
+  document.location.href = `app://to_platform?platformName=${platformName}&platformId=${platformId}&platformCode=${platformCode}`;
 };
 
 onMounted(() => {

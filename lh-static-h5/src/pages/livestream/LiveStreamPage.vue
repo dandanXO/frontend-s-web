@@ -222,12 +222,7 @@
                   </div>
                   <div class="hot-match-time">
                     {{ hotMatch.competitionTime }}
-                    <div
-                      class="bet-btn"
-                      @click="openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)"
-                    >
-                      立即投注
-                    </div>
+                    <div class="bet-btn" @click="handleBetClick(hotMatch)">立即投注</div>
                   </div>
                   <div class="hot-match-team">
                     <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
@@ -260,12 +255,7 @@
                   </div>
                   <div class="hot-match-time">
                     {{ hotMatch.competitionTime }}
-                    <div
-                      class="bet-btn"
-                      @click="openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)"
-                    >
-                      立即投注
-                    </div>
+                    <div class="bet-btn" @click="handleBetClick(hotMatch)">立即投注</div>
                   </div>
                   <div class="hot-match-team">
                     <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
@@ -301,12 +291,7 @@
                   </div>
                   <div class="hot-match-time">
                     {{ hotMatch.competitionTime }}
-                    <div
-                      class="bet-btn"
-                      @click="openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)"
-                    >
-                      立即投注
-                    </div>
+                    <div class="bet-btn" @click="handleBetClick(hotMatch)">立即投注</div>
                   </div>
                   <div class="hot-match-team">
                     <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
@@ -339,12 +324,7 @@
                   </div>
                   <div class="hot-match-time">
                     {{ hotMatch.competitionTime }}
-                    <div
-                      class="bet-btn"
-                      @click="openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)"
-                    >
-                      立即投注
-                    </div>
+                    <div class="bet-btn" @click="handleBetClick(hotMatch)">立即投注</div>
                   </div>
                   <div class="hot-match-team">
                     <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
@@ -380,12 +360,7 @@
                   </div>
                   <div class="hot-match-time">
                     {{ hotMatch.competitionTime }}
-                    <div
-                      class="bet-btn"
-                      @click="openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)"
-                    >
-                      立即投注
-                    </div>
+                    <div class="bet-btn" @click="handleBetClick(hotMatch)">立即投注</div>
                   </div>
                   <div class="hot-match-team">
                     <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
@@ -418,12 +393,7 @@
                   </div>
                   <div class="hot-match-time">
                     {{ hotMatch.competitionTime }}
-                    <div
-                      class="bet-btn"
-                      @click="openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)"
-                    >
-                      立即投注
-                    </div>
+                    <div class="bet-btn" @click="handleBetClick(hotMatch)">立即投注</div>
                   </div>
                   <div class="hot-match-team">
                     <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
@@ -587,6 +557,18 @@ const handleListScroll = () => {
   if (isBottom && currentPage.value < maxPage.value && !isLivestreamListLoading.value) {
     getLiveUrlList();
   }
+};
+
+const handleBetClick = (match) => {
+  if (route.path === "/livestreampage") {
+    handleAppBetClick(match.platformName, match.platformId, match.platformCode);
+  } else {
+    openGame(match.platformName, match.platformCode, match.gameCode);
+  }
+};
+
+const handleAppBetClick = (platformName, platformId, platformCode) => {
+  document.location.href = `app://to_platform?platformName=${platformName}&platformId=${platformId}&platformCode=${platformCode}`;
 };
 
 watch(selectionContainerRef, (val) => {
