@@ -44,17 +44,17 @@
     <lh1Vip v-else-if="list.redirectUrl === 'lh1-vip'" />
     <SlotLossBonusPromo v-else-if="list.redirectUrl === 'lh1-weekly-slot-loss-bonus'" />
     <ChristmasGachapon
-      v-if="list.redirectUrl === 'lh1-christmas-gashapon'"
+      v-else-if="list.redirectUrl === 'lh1-christmas-gashapon'"
       :promo-code="list.promoCode"
       :promo-rules="list.pageContent"
     />
-    <BountyBlastPremier v-if="list.redirectUrl === 'bounty-blast-premier'" :promo-code="list.promoCode" />
-    <VctcnMatchPromo v-if="list.redirectUrl === 'lh1-vctcn'" :promo-code="list.promoCode" />
-    <HongBaoYu2025 v-if="list.redirectUrl === 'hongbaoyu-2025'" :promo-code="list.promoCode" />
-    <Monthly20HongBaoYu v-if="list.redirectUrl === 'lh1-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
-    <PGLBucharest2025 v-if="list.redirectUrl === 'lh1-pgl-bucharest-2025'" :promo-code="list.promoCode" />
-    <Belgrade2025Promo v-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
-    <VctBangkok v-if="list.redirectUrl === 'lh1-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
+    <BountyBlastPremier v-else-if="list.redirectUrl === 'bounty-blast-premier'" :promo-code="list.promoCode" />
+    <VctcnMatchPromo v-else-if="list.redirectUrl === 'lh1-vctcn'" :promo-code="list.promoCode" />
+    <HongBaoYu2025 v-else-if="list.redirectUrl === 'hongbaoyu-2025'" :promo-code="list.promoCode" />
+    <Monthly20HongBaoYu v-else-if="list.redirectUrl === 'lh1-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
+    <PGLBucharest2025 v-else-if="list.redirectUrl === 'lh1-pgl-bucharest-2025'" :promo-code="list.promoCode" />
+    <Belgrade2025Promo v-else-if="list.redirectUrl === 'belgrade-2025'" :promo-code="list.promoCode" />
+    <VctBangkok v-else-if="list.redirectUrl === 'lh1-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
     <DreamLeagueS25 v-else-if="list.redirectUrl === 'lh1-dream-league-s25'" :promo-code="list.promoCode" />
     <KatowiceS25 v-else-if="list.redirectUrl === 'lh1-iem-katowice-2025'" :promo-code="list.promoCode" />
     <Dota2BlastSlam2025 v-else-if="list.redirectUrl === 'lh1-blast-slam-2025'" :promo-code="list.promoCode" />
@@ -107,36 +107,53 @@
 
 <script>
 /* eslint-disable */
-import { defineAsyncComponent, defineComponent, onMounted, ref } from "vue";
+import { defineAsyncComponent, defineComponent, ref } from "vue";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import moment from "moment";
-import EslOneBkk2024 from "./hotpromo/eslone-bkk-2024/EslOneBkk2024.vue";
-import AgYuanxiaohongbao from "./hotpromo/ag-yuanxiaohongbao/AgYuanxiaohongbao.vue";
-import HongBaoYu2025 from "./hotpromo/hongbaoyu2025/HongBaoYu2025.vue";
-import Monthly20HongBaoYu from "./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue";
-import VctBangkok from "components/hotpromo/vct-bangkok/VctBangkok.vue";
-import PGLOnFireBuenosAires2025 from "./hotpromo/pgl-on-fire-buenos-aires-2025/PGLOnFireBuenosAires2025.vue";
-import SkyesportsSouvenir2025 from "./hotpromo/skyesports-souvenir-2025/SkyesportsSouvenir2025.vue";
-import Dota2Pgl from "components/hotpromo/dota2-pgl/Dota2Pgl.vue";
-import PglS32025 from "components/hotpromo/pgl-s3-2025/PglS32025.vue";
-import FissureUniverseS4 from "./hotpromo/fissure-universe-s4/FissureUniverseS4.vue";
-import YaLLa2025 from "./hotpromo/YaLLa2025/YaLLa2025.vue";
+const EslOneBkk2024 = defineAsyncComponent(() => import("../components/hotpromo/eslone-bkk-2024/EslOneBkk2024.vue"));
+const AgYuanxiaohongbao = defineAsyncComponent(() =>
+  import("../components/hotpromo/ag-yuanxiaohongbao/AgYuanxiaohongbao.vue")
+);
+const HongBaoYu2025 = defineAsyncComponent(() => import("../components/hotpromo/hongbaoyu2025/HongBaoYu2025.vue"));
+const Monthly20HongBaoYu = defineAsyncComponent(() =>
+  import("../components/hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue")
+);
+const VctBangkok = defineAsyncComponent(() => import("../components/hotpromo/vct-bangkok/VctBangkok.vue"));
+const PGLOnFireBuenosAires2025 = defineAsyncComponent(() =>
+  import("../components/hotpromo/pgl-on-fire-buenos-aires-2025/PGLOnFireBuenosAires2025.vue")
+);
+const SkyesportsSouvenir2025 = defineAsyncComponent(() =>
+  import("../components/hotpromo/skyesports-souvenir-2025/SkyesportsSouvenir2025.vue")
+);
+const PglS32025 = defineAsyncComponent(() => import("../components/hotpromo/pgl-s3-2025/PglS32025.vue"));
+const FissureUniverseS4 = defineAsyncComponent(() =>
+  import("../components/hotpromo/fissure-universe-s4/FissureUniverseS4.vue")
+);
+const YaLLa2025 = defineAsyncComponent(() => import("../components/hotpromo/YaLLa2025/YaLLa2025.vue"));
 
-import IemMelbourne2025 from "./hotpromo/iem-melbourne-2025/IemMelbourne2025.vue";
-import PglWallachiaS4 from "./hotpromo/pgl-wallachia-s4/PglWallachiaS4.vue";
-import BlastSlam32025 from "./hotpromo/blast-slam-3-2025/BlastSlam32025.vue";
-import sportReferBetBonus from "./hotpromo/sport-refer-bet-bonus/sport-refer-bet-bonus.vue";
+const IemMelbourne2025 = defineAsyncComponent(() =>
+  import("../components/hotpromo/iem-melbourne-2025/IemMelbourne2025.vue")
+);
+const PglWallachiaS4 = defineAsyncComponent(() => import("../components/hotpromo/pgl-wallachia-s4/PglWallachiaS4.vue"));
+const BlastSlam32025 = defineAsyncComponent(() =>
+  import("../components/hotpromo/blast-slam-3-2025/BlastSlam32025.vue")
+);
+const sportReferBetBonus = defineAsyncComponent(() =>
+  import("../components/hotpromo/sport-refer-bet-bonus/sport-refer-bet-bonus.vue")
+);
 
-import Lh1Enc2025 from "./hotpromo/Lh1-enc-2025/Lh1-enc-2025.vue";
-import PglastanaAc2025 from "./hotpromo/lh1-pgl-astana-2025/pglastanaAc2025.vue";
-import BlastRival2025 from "./hotpromo/BlastRival2025/BlastRival2025.vue";
-import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
-import DragonBoat from "components/hotpromo/dragonboat/DragonBoat.vue";
-import DuanWuRewards from "components/hotpromo/duan-wu-rewards/DuanWuRewards.vue";
-import IemDallas2025 from "./hotpromo/iem-dallas-2025/IemDallas2025.vue";
+const Lh1Enc2025 = defineAsyncComponent(() => import("../components/hotpromo/Lh1-enc-2025/Lh1-enc-2025.vue"));
+const PglastanaAc2025 = defineAsyncComponent(() =>
+  import("../components/hotpromo/lh1-pgl-astana-2025/pglastanaAc2025.vue")
+);
+const BlastRival2025 = defineAsyncComponent(() => import("../components/hotpromo/BlastRival2025/BlastRival2025.vue"));
+const Cct2025 = defineAsyncComponent(() => import("../components/hotpromo/Cct-2025/Cct-2025.vue"));
+const DragonBoat = defineAsyncComponent(() => import("../components/hotpromo/dragonboat/DragonBoat.vue"));
+const DuanWuRewards = defineAsyncComponent(() => import("../components/hotpromo/duan-wu-rewards/DuanWuRewards.vue"));
+const IemDallas2025 = defineAsyncComponent(() => import("../components/hotpromo/iem-dallas-2025/IemDallas2025.vue"));
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
 const DragonCardPromo = defineAsyncComponent(() => import("../components/hotpromo/dragoncard/dragonCardPromo.vue"));
 const FeedbackAwardPromo = defineAsyncComponent(() =>
@@ -220,7 +237,6 @@ export default defineComponent({
     YaLLa2025,
     elsOne2025,
     Blast2025S3,
-    Dota2Pgl,
     PglS32025,
     KatowiceS25,
     VctBangkok,
@@ -762,7 +778,7 @@ export default defineComponent({
       font-weight: 400;
       line-height: 28px;
       color: #fff !important;
-      background: linear-gradient(180deg, #00CC8C 0%, #006646 100%) !important;
+      background: linear-gradient(180deg, #00cc8c 0%, #006646 100%) !important;
       white-space: pre-wrap;
     }
 
@@ -810,7 +826,7 @@ export default defineComponent({
 
   .ribbon2 {
     clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
-    background: linear-gradient(180deg, #00CC8C 0%, #006646 100%);
+    background: linear-gradient(180deg, #00cc8c 0%, #006646 100%);
     padding-right: 10px;
     font-family: "PingFang";
     color: #fff;
@@ -873,13 +889,13 @@ export default defineComponent({
     color: #fff;
   }
   .section-bg2 {
-    background: #FBFBE3 !important;
-    border: 1px solid #027C5F !important;
+    background: #fbfbe3 !important;
+    border: 1px solid #027c5f !important;
     color: #000000;
   }
 
-  .section-bg, .section-bg2 {
-
+  .section-bg,
+  .section-bg2 {
     .claim-title-icon,
     .claim-coin-icon,
     .claim-gift-icon {
