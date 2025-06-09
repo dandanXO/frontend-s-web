@@ -742,7 +742,9 @@ onUnmounted(() => {
 
         .hot-match-name,
         .hot-match-time {
-          font-family: "PingFang";
+          font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+            sans-serif;
+
           font-size: 14px;
           font-weight: 400;
           line-height: 15px;
@@ -780,8 +782,9 @@ onUnmounted(() => {
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
-            font-family: "PingFang";
+            font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+              sans-serif;
+
             font-size: 14px;
             font-weight: 400;
             line-height: 15px;
@@ -937,11 +940,12 @@ onUnmounted(() => {
     }
 
     .competition-item-name {
-      font-family: "PingFang SC";
+      font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+        sans-serif;
+
       font-size: 18px;
       font-weight: 500;
       line-height: 25.2px;
-      text-align: left;
       color: #b7c1ff;
       margin-top: -30px;
       text-align: center;
@@ -992,7 +996,9 @@ onUnmounted(() => {
 
       .hot-match-name,
       .hot-match-time {
-        font-family: "PingFang";
+        font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+          sans-serif;
+
         font-size: 14px;
         font-weight: 400;
         line-height: 15px;
@@ -1029,7 +1035,9 @@ onUnmounted(() => {
           flex-direction: column;
           align-items: center;
           text-align: center;
-          font-family: "PingFang";
+          font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+            sans-serif;
+
           font-size: 14px;
           font-weight: 400;
           line-height: 15px;
