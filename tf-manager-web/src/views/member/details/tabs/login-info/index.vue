@@ -171,6 +171,19 @@
         </template>
 
       </el-table-column>
+      <el-table-column
+        :label="t('fields.loginType')"
+        prop="device"
+        align="center"
+        min-width="120"
+        v-if="isCnySite(LOGIN_USER_SITEID)"
+      >
+        <template #default="scope">
+          <span v-if="scope.row.loginType === 'PASSWORD'">{{ t("fields.password") }}</span>
+          <span v-else-if="scope.row.loginType === 'OTP'">{{ t("fields.otp") }}</span>
+          <span v-else>-</span>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       :total="total"
@@ -195,7 +208,7 @@ import { useI18n } from 'vue-i18n'
 import { getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
 import { ElMessage } from "element-plus";
-import { isKorea } from "@/utils/site"
+import { isKorea, isCnySite } from "@/utils/site"
 
 const store = useStore()
 export default defineComponent({
@@ -306,6 +319,7 @@ export default defineComponent({
       ...toRefs(memberData),
       resetQuery,
       isKorea,
+      isCnySite,
       LOGIN_USER_SITEID
     }
   },

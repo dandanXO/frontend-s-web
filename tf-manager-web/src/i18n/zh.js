@@ -2637,7 +2637,9 @@ export default {
     isTestEvent: '是否为测试赛事',
     claimableRedPacketRebate: '可领取返水红包金额',
     cover: '封面',
-    isPopularEvent: '是否为热门赛事'
+    isPopularEvent: '是否为热门赛事',
+    loginType: '登陆方法',
+    otp: 'OTP',
   },
   message: {
     adsStatusOpen: '开',

@@ -2634,7 +2634,9 @@ export default {
     isTestEvent: 'Test Event',
     claimableRedPacketRebate: 'Claimable Red Packet Rebate',
     cover: 'Cover',
-    isPopularEvent: 'Popular Event'
+    isPopularEvent: 'Popular Event',
+    loginType: 'Login Type',
+    otp: 'OTP',
   },
   message: {
     adsStatusOpen: 'Open',
