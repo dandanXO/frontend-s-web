@@ -15,7 +15,7 @@
       </Vue3Marquee>
     </div>
     <div ref="chatListRef" class="livestream-chat-list">
-      <ChatFloatingPanel :is-system-livestream :livestream-data />
+      <ChatFloatingPanel class="livestream-chat__chat-panel" :is-system-livestream :livestream-data />
       <div v-for="(message, index) in messages" :key="index" class="livestream-chat-item">
         <BadgeChip :level="message.vip">V{{ message.vip }}</BadgeChip>
         <img
@@ -196,6 +196,11 @@ onMounted(() => {
     padding: 12px 11px 0;
     overflow: auto;
     position: relative;
+    --chat-item-gap: 8px;
+
+    .livestream-chat__chat-panel {
+      margin-bottom: var(--chat-item-gap);
+    }
 
     .livestream-chat-item {
       background-color: #ffffff80;
@@ -203,7 +208,7 @@ onMounted(() => {
       width: max-content;
       max-width: 100%;
       padding: 6px 8px 0.5px;
-      margin-bottom: 8px;
+      margin-bottom: var(--chat-item-gap);
       word-wrap: break-word;
       font-size: 12px;
 

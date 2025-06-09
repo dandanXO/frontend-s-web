@@ -96,8 +96,10 @@
           <button class="selection-item" @click="handleLivestreamClick(item)">
             <!-- // put item.supplierCdnPullUrl + item.streamerCdnPushUrl + streanerCdnPullUrl to the next page. -->
             <div class="item-img">
+              <img v-if="item.cover" class="cover" :src="`${imgURLLivePreview}${item.cover}`" />
               <img
-                v-if="item.liveStatus"
+                v-else-if="item.liveStatus"
+                class="cover"
                 :src="`${imgURLLivePreview}${item.streamerStatus ? item.streamerPreviewUrl : item.supplierPreviewUrl}`"
               />
 
@@ -162,11 +164,11 @@
               </template>
             </div>
             <div class="item-content">
-              <div class="content-title">
+              <div class="content-title ellipsis">
                 <!-- 德国甲级联赛 -->
                 {{ item.title }}
               </div>
-              <div class="content-desc">
+              <div class="content-desc ellipsis">
                 {{ item.homeNameZh ?? item.homeNameEn ?? item.homeName }}
                 VS
                 {{ item.awayNameZh ?? item.awayNameEn ?? item.awayName }}
@@ -894,7 +896,6 @@ onUnmounted(() => {
       .item-content {
         padding: 3px 6px;
         .content-title {
-          font-size: 18px;
           font-weight: bold;
           color: #ffffff;
         }
@@ -1148,6 +1149,9 @@ onUnmounted(() => {
         width: 100%;
         height: 100%;
         opacity: 0.9;
+        &.cover {
+          object-fit: cover;
+        }
       }
 
       .placeholder-vs {
@@ -1330,12 +1334,15 @@ onUnmounted(() => {
     }
     .item-content {
       padding: 3px 6px;
+      text-align: left;
+
       .content-title {
-        font-size: 18px;
+        font-size: 0.9rem;
         font-weight: bold;
         color: #000000;
       }
       .content-desc {
+        font-size: 0.8rem;
         color: #7a80a1;
       }
     }
