@@ -34,6 +34,7 @@
             @change="val => {
               const match = teams.find(t => t.id === val);
               form.homeName = match ? match.nameZh : val;
+              afterTeamSelectorChanged()
             }"
             @focus="handleTeamSelectorFocus('home')"
             @blur="e => {
@@ -41,12 +42,11 @@
                 form.homeName = form.homeId;
                 form.homeId = null;
               }
-              handleTeamSelectorBlur()
             }"
           >
             <el-option
               v-for="team in displayTeams"
-              :key="team.id"
+              :key="team._sid"
               :label="team.nameZh"
               :value="team.id"
             >
@@ -76,6 +76,7 @@
             @change="val => {
               const match = teams.find(t => t.id === val);
               form.awayName = match ? match.nameZh : val;
+              afterTeamSelectorChanged()
             }"
             @focus="handleTeamSelectorFocus('away')"
             @blur="e => {
@@ -83,12 +84,11 @@
                 form.awayName = form.awayId;
                 form.awayId = null;
               }
-              handleTeamSelectorBlur()
             }"
           >
             <el-option
               v-for="team in displayTeams"
-              :key="team.id"
+              :key="team._sid"
               :label="team.nameZh"
               :value="team.id"
             >
@@ -277,8 +277,15 @@ const request = reactive({
 });
 
 const displayTeams = computed(() => {
-  const allTeams = searchedTeams.value.concat(loadedTeams.value);
-  return [...new Set(allTeams)]
+  const _searchedTeams = searchedTeams.value.map(team => ({ ...team, _sid: `search-${team.id}` }))
+  const _loadedTeams = loadedTeams.value.map(team => ({ ...team, _sid: `loaded-${team.id}` }));
+  const allTeams = _searchedTeams.concat(_loadedTeams);
+  const result = new Map()
+  allTeams.forEach(team => {
+    if (result.has(team.id)) return;
+    result.set(team.id, team);
+  })
+  return Array.from(result.values());
 })
 
 async function attachImage(event) {
@@ -372,10 +379,12 @@ const handleTeamSelectorFocus = (target) => {
   })
 }
 
-const handleTeamSelectorBlur = () => {
-  loadedTeams.value = []
-  teamSelectorStatus.value = null;
-  teamSelectorScrollObserver.value.unobserve(teamSelectorBottomRef.value);
+const afterTeamSelectorChanged = () => {
+  nextTick(() => {
+    loadedTeams.value = []
+    teamSelectorStatus.value = null;
+    teamSelectorScrollObserver.value.unobserve(teamSelectorBottomRef.value);
+  })
 }
 
 const searchTeams = (query) => {
