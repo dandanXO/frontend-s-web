@@ -1009,7 +1009,7 @@ onMounted(() => {
             font-size: 18px;
             font-style: italic;
             font-weight: 700;
-            color: #5c46e7;
+            color: #00B9A1;
             text-shadow: 1px 1px 2px #180b3bcc;
           }
         }
@@ -1047,7 +1047,7 @@ onMounted(() => {
     // aspect-ratio: 77/38;
 
     &.active {
-      background: #5c46e7;
+      background: #00B9A1;
       box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
     }
 
@@ -1075,7 +1075,7 @@ onMounted(() => {
     display: none;
 
     svg {
-      background: #5c46e7;
+      background: #00B9A1;
       border-radius: 3px;
     }
 
@@ -1101,7 +1101,7 @@ onMounted(() => {
   color: #ffffff;
   margin: auto;
   border-radius: 6px;
-  background: #5c46e7;
+  background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
   width: 100%;
   aspect-ratio: 335/46;
 
@@ -1164,7 +1164,7 @@ onMounted(() => {
   align-items: center;
 
   &.active {
-    background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+    background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
   }
 
   &.disabled {
@@ -1266,7 +1266,7 @@ onMounted(() => {
     }
 
     &.active {
-      border: 2px solid #5c46e7;
+      border: 2px solid #00B9A1;
       .item-title {
         color: rgba(255, 255, 255, 1);
       }
@@ -1315,7 +1315,7 @@ onMounted(() => {
       text-align: center;
 
       &.active {
-        border: 2px solid #5c46e7;
+        border: 2px solid #00B9A1;
         color: rgba(255, 255, 255, 1);
 
         &:before {

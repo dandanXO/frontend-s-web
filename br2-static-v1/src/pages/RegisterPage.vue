@@ -103,7 +103,7 @@
       </div>
     </q-form>
     <div class="register-form-logo-img">
-      <img src="../assets/55-ace-logo.png" />
+      <img src="../assets/akb188-logo.png" />
     </div>
 
     <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
@@ -626,7 +626,7 @@ function charType(num) {
   }
 }
 .register-btn {
-  background-color: #8b00ff;
+  background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
   width: 100%;
   height: 56px;
   border-radius: 4px;
@@ -719,7 +719,7 @@ function charType(num) {
     border-radius: 50%;
   }
   :deep(.q-checkbox__inner--truthy .q-checkbox__bg) {
-    background: #8b00ff;
+    background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
 
     svg {
       color: #fff;

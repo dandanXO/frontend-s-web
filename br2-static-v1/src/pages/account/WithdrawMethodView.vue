@@ -1261,7 +1261,7 @@ const refreshRemainWager = () => {
       position: relative;
 
       &.active {
-        border: 2px solid #5c46e7;
+        border: 2px solid #00B9A1;
         .item-title {
           color: rgba(255, 255, 255, 1);
         }
@@ -1340,7 +1340,7 @@ const refreshRemainWager = () => {
     }
 
     &.active {
-      border: 2px solid #5c46e7;
+      border: 2px solid #00B9A1;
       .item-title {
         color: rgba(255, 255, 255, 1);
       }
@@ -1478,7 +1478,7 @@ const refreshRemainWager = () => {
         // border-radius: 1.25rem;
         border-radius: 6px;
         // background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
-        background-color: #5c46e7;
+        background-color: #00B9A1;
         position: relative;
         transition: 0.3s all;
         width: 100%;
@@ -1641,7 +1641,7 @@ const refreshRemainWager = () => {
     color: #ffffff;
     margin: auto;
     border-radius: 6px;
-    background: #5c46e7;
+    background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
     aspect-ratio: 335/46;
 
     &:before {

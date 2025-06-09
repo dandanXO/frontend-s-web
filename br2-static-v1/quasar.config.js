@@ -180,8 +180,8 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: `55Ace`,
-        short_name: `55Ace`,
+        name: `AKB188`,
+        short_name: `AKB188`,
         description: `APP`,
         display: "standalone",
         orientation: "portrait",
@@ -226,7 +226,7 @@ module.exports = configure(function (ctx) {
     capacitor: {
       hideSplashscreen: false,
       // (Optional) If not present, will look for package.json > name
-      appName: "55Ace", // string
+      appName: "AKB188", // string
       backButtonExit: "*"
     },
 

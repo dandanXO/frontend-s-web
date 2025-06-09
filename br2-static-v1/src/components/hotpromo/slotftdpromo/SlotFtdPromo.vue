@@ -64,13 +64,13 @@ const gotoDepositPage = () => {
 .go-deposit-btn {
   width: 100%;
   height: 48px;
-  background-color: #5c46e7;
+  background-color: #00B9A1;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   border-radius: 5px;
-  background: linear-gradient(180deg, #8575e9 0%, #5c46e7 100%);
+  background: linear-gradient(180deg, #8575e9 0%, #00B9A1 100%);
   border: 1px solid #8d83cd;
 
   &.is-disabled {

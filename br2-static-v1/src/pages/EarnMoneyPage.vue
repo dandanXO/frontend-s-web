@@ -131,7 +131,7 @@ const swipeRight = () => {
     padding-top: 12px;
 
     :deep(.q-tabs__content) {
-      background: #422171;
+      background: #47b2b229;
       border-radius: 12px;
       padding: 4px;
     }
@@ -143,7 +143,7 @@ const swipeRight = () => {
       border-radius: 8px;
       height: 55px;
       width: 25%;
-      background: #4f26a6;
+      background: #101114;
       font-size: 12px;
       font-weight: 500;
       border: 2px solid #303030;
@@ -155,7 +155,7 @@ const swipeRight = () => {
 
     :deep(.q-tab--active) {
       color: white;
-      background: #5c46e7;
+      background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
       border: 2px solid #422171;
 
       svg {
@@ -166,11 +166,13 @@ const swipeRight = () => {
 
   .earn-money-panels {
     // background: radial-gradient(25% 50% at 50% 50%, #e01b84 0%, rgba(27, 28, 36, 0) 100%);
-    background-image: url("../assets/images/earn-money/earn-money-bg.jpg");
+    // background-image: url("../assets/images/earn-money/earn-money-bg.jpg");
+    background: #101114;
     min-height: 80vh;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
+    padding-top: 30px;
   }
 
   svg {

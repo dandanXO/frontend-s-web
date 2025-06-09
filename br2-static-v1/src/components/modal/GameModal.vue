@@ -893,7 +893,7 @@ defineExpose({
   }
 
   .btn-confirm {
-    background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+    background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
     font-weight: 700;
     color: #150025;
     border-radius: 8px;
@@ -910,7 +910,7 @@ defineExpose({
 }
 
 .full-deposit-card {
-  background: #11131f;
+  background: #101114;
   margin: 0px;
   padding: 0 16px;
 }

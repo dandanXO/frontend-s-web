@@ -242,7 +242,7 @@ const updateNewUserState = () => {
   border-radius: 8px;
 }
 .btn-confirm {
-  background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+  background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
   font-weight: 700;
   color: #150025;
   border-radius: 8px;
