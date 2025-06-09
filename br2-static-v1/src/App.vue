@@ -19,6 +19,7 @@ import { useRouter } from "vue-router";
 import "aos/dist/aos.css";
 import { domainLists } from "./constant";
 
+
 export default defineComponent({
   name: "App",
   setup() {
