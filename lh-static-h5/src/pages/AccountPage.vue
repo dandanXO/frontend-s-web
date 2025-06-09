@@ -1559,7 +1559,8 @@ export default defineComponent({
     .left-sect {
       .label {
         color: #fff;
-        font-family: "PingFang";
+        font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+          sans-serif;
       }
 
       .amt {

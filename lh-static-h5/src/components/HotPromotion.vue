@@ -694,7 +694,7 @@ export default defineComponent({
   background: #f2f8fe;
   border-radius: 12px;
   padding: 30px;
-  font-family: "PingFang";
+  font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial, sans-serif;
 
   &.cny {
     background: url("../assets/images/promotion/hotpromo/hongbaoyu2025/section-bg.png");
@@ -807,7 +807,9 @@ export default defineComponent({
     clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
     background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     padding-right: 10px;
-    font-family: "PingFang";
+    font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+      sans-serif;
+
     color: #fff;
     display: flex;
     justify-content: center;
@@ -828,7 +830,9 @@ export default defineComponent({
     clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
     background: linear-gradient(180deg, #00cc8c 0%, #006646 100%);
     padding-right: 10px;
-    font-family: "PingFang";
+    font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+      sans-serif;
+
     color: #fff;
     display: flex;
     justify-content: center;
