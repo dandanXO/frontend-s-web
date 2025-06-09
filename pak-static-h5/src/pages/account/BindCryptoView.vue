@@ -129,7 +129,7 @@
       <!--        {{ $t("form.virtualWallet_warmReminder") }}-->
       <!--      </div>-->
 
-      <InputRowGrid>
+      <InputRowGrid v-if="store.isEnableBankCardOTP">
         <template #fields>
           <!-- <InputField :label="$t('form.virtualWallet')"> -->
           <InputField :label="$t('bankCard.telephone')">
@@ -479,10 +479,10 @@ const submitBankCard = () => {
     !(
       (bankCardRef.value && bankCardRef.value.hasError) ||
       (cardNumberRef.value && cardNumberRef.value.hasError) ||
-      (phoneVerificationRef.value && phoneVerificationRef.value.hasError)
+      (store.isEnableBankCardOTP && phoneVerificationRef.value && phoneVerificationRef.value.hasError)
     )
   ) {
-    if (!isOtpSent.value || !bankCardInfo.telephone) {
+    if (store.isEnableBankCardOTP && (!isOtpSent.value || !bankCardInfo.telephone)) {
       $q.notify({
         color: "negative",
         position: "top",
@@ -491,6 +491,12 @@ const submitBankCard = () => {
       });
       return;
     } else {
+      if(store.isEnableBankCardOTP === false) {
+        bankCardInfo.telephone = undefined;
+        bankCardInfo.smsCode = undefined;
+        bankCardInfo.smsCodeId = undefined;
+      }
+
       // API call
       api
             .post("/session/bankCard", qs.stringify(bankCardInfo))
