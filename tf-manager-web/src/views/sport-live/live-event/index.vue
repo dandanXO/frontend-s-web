@@ -111,18 +111,22 @@
             size="small"
             allow-create
             filterable
+            remote
             :placeholder="t('fields.homeTeam')"
-            class="filter-item"
+            :remote-method="searchTeams"
+            remote-show-suffix
+            class="filter-item team-selector"
             style="width: 350px;"
             default-first-option
             @change="val => {
               if (typeof val === 'string') form.homeName = val;
               else form.homeName = '';
             }"
-            @focus="loadEventWithSite(form.sportId)"
+            @focus="loadEventWithSite(form.sportId, 'home')"
+            @blur="handleTeamSelectorBlur"
           >
             <el-option
-              v-for="item in teams.list"
+              v-for="item in displayTeams"
               :key="item.nameZh"
               :label="item.nameZh"
               :value="item.id"
@@ -132,26 +136,31 @@
                 <span>{{ item.nameZh }}</span>
               </div>
             </el-option>
+            <div v-if="teamSelectorStatus === 'home'" ref="teamSelectorBottomRef" />
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.awayTeam')" prop="awayTeam">
           <el-select
             v-model="form.awayId"
             size="small"
+            remote
             :placeholder="t('fields.awayTeam')"
+            :remote-method="searchTeams"
             allow-create
             filterable
-            class="filter-item"
+            remote-show-suffix
+            class="filter-item team-selector"
             style="width: 350px;"
             default-first-option
-            @focus="loadEventWithSite(form.sportId)"
+            @focus="loadEventWithSite(form.sportId, 'away')"
             @change="val => {
               if (typeof val === 'string') form.awayName = val;
               else form.awayName = '';
             }"
+            @blur="handleTeamSelectorBlur"
           >
             <el-option
-              v-for="item in teams.list"
+              v-for="item in displayTeams"
               :key="item.nameZh"
               :label="item.nameZh"
               :value="item.id"
@@ -161,6 +170,7 @@
                 <span>{{ item.nameZh }}</span>
               </div>
             </el-option>
+            <div v-if="teamSelectorStatus === 'away'" ref="teamSelectorBottomRef" />
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.sequence')" prop="sequence">
@@ -392,7 +402,7 @@
 
 <script setup>
 
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, computed, nextTick, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useStore } from "@/store";
 import { getSiteTimeZoneById } from "@/api/site";
@@ -403,6 +413,8 @@ import { useSessionStorage } from "@vueuse/core";
 import { getShortcuts } from "@/utils/datetime";
 import moment from "moment/moment";
 import { uploadImage } from "@/api/image";
+
+const TEAMS_PER_VIEW = 20
 
 const { t } = useI18n();
 const shortcuts = getShortcuts(t);
@@ -480,6 +492,17 @@ const defaultTime = [
   new Date(2000, 1, 1, 23, 59, 59),
 ];
 
+const loadedTeams = ref([]);
+const searchedTeams = ref([]);
+const teamSelectorStatus = ref(null)
+const teamSelectorBottomRef = ref(null);
+const teamSelectorScrollObserver = ref(null);
+
+const displayTeams = computed(() => {
+  const allTeams = searchedTeams.value.concat(loadedTeams.value);
+  return [...new Set(allTeams)]
+})
+
 function resetQuery() {
   request.sportId = null;
   request.nameEn = null;
@@ -497,7 +520,7 @@ function restrictInput(event) {
   }
 }
 
-async function loadEventWithSite(sportId) {
+async function loadEventWithSite(sportId, target) {
   console.log(sportId)
   if (sportId) {
     console.log(sportId)
@@ -507,6 +530,7 @@ async function loadEventWithSite(sportId) {
     const { data: team } = await getTeamById(request.sportId);
     teams.list = team;
   }
+  handleTeamSelectorFocus(target)
 }
 
 async function loadEvent() {
@@ -661,6 +685,41 @@ const formRules = reactive({
   icon: [required(t('message.validateTeamIconRequired'))]
 });
 
+const handleTeamSelectorFocus = (target) => {
+  loadedTeams.value = teams.list.slice(0, TEAMS_PER_VIEW);
+  teamSelectorStatus.value = target;
+  nextTick(() => {
+    if (!teamSelectorBottomRef.value) return;
+    teamSelectorScrollObserver.value.observe(teamSelectorBottomRef.value);
+  })
+}
+
+const handleTeamSelectorBlur = () => {
+  loadedTeams.value = []
+  teamSelectorStatus.value = null;
+  teamSelectorScrollObserver.value.unobserve(teamSelectorBottomRef.value);
+}
+
+const searchTeams = (query) => {
+  if (!query) {
+    searchedTeams.value = [];
+  } else {
+    searchedTeams.value = teams.list.filter(team => {
+      return team.nameZh?.toLowerCase().includes(query.toLowerCase()) || team.nameEn?.toLowerCase().includes(query.toLowerCase())
+    })
+  }
+}
+
+const registerTeamSelectorScrollObserver = () => {
+  teamSelectorScrollObserver.value = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        loadedTeams.value = teams.list.slice(0, loadedTeams.value.length + TEAMS_PER_VIEW);
+      }
+    })
+  })
+}
+
 onMounted(async () => {
   const store = useStore()
   const { data: timeZone } = getSiteTimeZoneById(
@@ -669,8 +728,14 @@ onMounted(async () => {
   timezone.value = timeZone
 
   await loadEvent();
+  registerTeamSelectorScrollObserver();
 });
 
+onUnmounted(() => {
+  if (teamSelectorScrollObserver.value) {
+    teamSelectorScrollObserver.value.disconnect();
+  }
+});
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
@@ -694,5 +759,18 @@ onMounted(async () => {
 
 .el-table--enable-row-transition .el-table__body td.el-table__cell {
   padding: 4px 0;
+}
+
+.team-selector {
+  :deep(.el-select__caret) {
+    &::before {
+      content: "\e6e1";
+    }
+  }
+  :deep(.is-focus) {
+    .el-select__caret {
+      transform: rotateZ(0deg)
+    }
+  }
 }
 </style>
