@@ -672,7 +672,7 @@ onUnmounted(() => {
       transition: all 0.3s ease;
 
       &.expanded {
-        white-space: pre;
+        white-space: break-spaces;
       }
     }
   }

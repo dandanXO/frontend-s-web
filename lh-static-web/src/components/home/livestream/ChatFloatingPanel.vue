@@ -111,7 +111,7 @@ const handleClick = () => {
     transition: all 0.3s ease-in-out;
 
     &.expanded {
-      white-space: pre;
+      white-space: break-spaces;
     }
   }
 }
