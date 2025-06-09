@@ -40,7 +40,7 @@
         </div>
 
         <div class="room-message-txt" :class="{ expanded: isExpanded }" v-if="currentLiveData.roomMessage">
-          {{ currentLiveData.roomMessage }}
+          {{ roomMessage }}
         </div>
       </div>
     </div>
@@ -137,6 +137,14 @@ const currentLiveData = computed(() => {
   return list.value.find((item) => item.streamId == streamIdFromQuery) || {};
 });
 
+const roomMessage = computed(() => {
+  if (isExpanded.value) {
+    return currentLiveData.value?.roomMessage;
+  } else {
+    return currentLiveData.value?.roomMessage?.split("\n")[0];
+  }
+});
+
 const syncLivestreamInfo = async () => {
   if (!currentLiveData.value?.streamId) return;
   livestreamSyncAbortController.value = new AbortController();
@@ -182,6 +190,7 @@ const resetSyncLivestreamInterval = (startNewInterval = false) => {
 // });
 
 const displayAnnouncementList = computed(() => {
+  return [DEFAULT_ANNOUNCEMENT];
   const msg = currentLiveData.value.roomMessage?.trim();
   const validMsg = msg ? [msg] : [DEFAULT_ANNOUNCEMENT];
   return validMsg.filter(Boolean);
@@ -573,10 +582,10 @@ onUnmounted(() => {
   position: fixed;
   left: 0;
   top: calc(56.25vw + 32px);
-  width: calc(100%);
-  height: 80px;
+  width: 100%;
   display: flex;
   align-items: center;
+  background: #e8f2fe;
 
   .container-box {
     padding: 8px 12px;
@@ -663,7 +672,7 @@ onUnmounted(() => {
       transition: all 0.3s ease;
 
       &.expanded {
-        white-space: normal;
+        white-space: pre;
       }
     }
   }
@@ -748,7 +757,7 @@ onUnmounted(() => {
       position: fixed;
       left: 0;
       top: calc(56.25vw + 32px);
-      width: calc(100% - 24px);
+      background: unset;
 
       .container-box {
         background: #1c42a3;
