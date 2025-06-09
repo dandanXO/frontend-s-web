@@ -12,7 +12,7 @@
     </RouterLink>
 
     <router-link class="side-menu-item" to="/terms-and-conditions">
-      <div class="item-icon"><img src="../assets/images/auth/tac.png" /></div>
+      <div class="item-icon"><img class="flag" src="../assets/images/license/curacao-license.png" /></div>
       {{ $t("sideNav.legalLicense") }}
     </router-link>
 
@@ -420,6 +420,7 @@ const openCSInNewTab = (url) => {
           width: 100%;
 
           &.flag {
+            display: block;
             width: 26px;
           }
         }
