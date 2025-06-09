@@ -1670,10 +1670,25 @@
   >
     <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
     <SpinLuckyWheelPromoHomePopup @close-dialog="closeDialog" ref="spinLuckyWheelPromoHomePopupRef">
-      <!-- <template #controller>
+      <template #controller>
         <PopupController v-model="popupPromo" :hasSpin="true" />
-      </template> -->
+      </template>
     </SpinLuckyWheelPromoHomePopup>
+  </q-dialog>
+  
+  <q-dialog
+    v-if="popupPromo === 'newplayer-spin-wheel'"
+    full-width
+    :model-value="isShownSpinLuckyWheel"
+    class="isCentreDialog spin-lucky-wheel-dialog"
+    persistent
+  >
+    <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
+    <NewPlayerPromoHomePopup :hasUnusedCoupons="isShowPrizeModal" @close-dialog="closeDialog" ref="newPlayerPromoHomePopupRef">
+      <template #controller>
+        <PopupController v-model="popupPromo" :hasSpin="true" />
+      </template>
+    </NewPlayerPromoHomePopup>
   </q-dialog>
   <q-dialog v-model="isMediaSettingsModal">
     <MediaSettingsComponent :media="mediaCode" />
@@ -1752,6 +1767,8 @@ import SetFirstPasswordModal from "src/components/modal/SetFirstPasswordModal.vu
 import AddToHomeScreenModal from "src/components/modal/AddToHomeScreenModal.vue";
 import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
 import SpinLuckyWheelPromoHomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
+import NewPlayerPromoHomePopup from "src/components/hotpromo/newPlayerSpinWheel/NewPlayerPopup.vue";
+
 import DepositPromoModal from "src/components/modal/DepositPromoModal.vue";
 import { usePromoStore } from "src/stores/promo";
 import { storeToRefs } from "pinia";
@@ -1973,6 +1990,7 @@ const isLiveTabVisible = ref(false);
 const liveTabRef = ref();
 
 const spinLuckyWheelPromoHomePopupRef = ref();
+const newPlayerPromoHomePopupRef = ref();
 
 const translatedCategoriesList = computed(() => {
   return categoriesList.value.map((category) => ({
@@ -4489,7 +4507,7 @@ const showSpinWheel = () => {
         } else if (res.data.showRoulette === "YES") {
           // isLuckyDrawModal.value = true;
           if (!promoStore.isShownSpinLuckyWheel) {
-            popupPromo.value = "lucky-spin-wheel";
+            popupPromo.value = "newplayer-spin-wheel";
           }
         }
       }
@@ -4504,8 +4522,9 @@ const showCongratsModal = () => {
     if (res.code === 0) {
       if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
         // isCongratsModal.value = true;
+        isShowPrizeModal.value = true;
         if (!promoStore.isShownSpinLuckyWheel) {
-          popupPromo.value = "lucky-spin-wheel";
+          popupPromo.value = "newplayer-spin-wheel";
         }
       }
     }

@@ -853,6 +853,7 @@ export default {
     digitalCurrencyWithdrawal: "ڈیجیٹل کرنسی سے نکاسی"
   },
   hotPromo: {
+    unusedCoupons: "آپ کے پاس پچھلی بار کے کچھ غیر استعمال شدہ کوپن ابھی بھی موجود ہیں، کیا آپ ان کا استعمال جاری رکھنا چاہتے ہیں؟",
     name: "نام",
     date: "تاریخ",
     amount: "رقم",
