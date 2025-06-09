@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title><%= productName %></title>
+
+    <meta charset="utf-8" />
+    <meta name="description" content="<%= productDescription %>" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta
+      name="viewport"
+      content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width<% if (ctx.mode.cordova || ctx.mode.capacitor) { %>, viewport-fit=cover<% } %>"
+    />
+    <meta property="og:title" content="Brazilian real money games" />
+    <meta property="og:description" content="Brazilian real money games" />
+    <meta property="og:image" content="https://bra.55ace.com/static/images/index/logo.png" />
+    <meta property="og:image:secure_url" content="https://bra.55ace.com/static/images/index/logo.png" />
+    <meta property="og:url" content="https://bra.55ace.com/" />
+
+    <link rel="apple-touch-icon" sizes="64x64" href="favicon.ico" />
+    <link rel="shortcut icon" type="image/png" href="favicon.ico" />
+    <link rel="icon" type="image/ico" href="favicon.ico" />
+
+    <!-- PolyFill Script To Support Lower Version of Browser/Device -->
+    <script type="text/javascript">
+      // Polyfill for globalThis
+      if (typeof globalThis === "undefined") {
+        if (typeof window !== "undefined") {
+          // Browser environment
+          window.globalThis = window;
+        } else if (typeof global !== "undefined") {
+          // Node.js environment
+          global.globalThis = global;
+        } else if (typeof self !== "undefined") {
+          // Web workers
+          self.globalThis = self;
+        }
+      }
+      // Now you can use globalThis safely
+      // console.log(globalThis);
+    </script>
+
+    <script>
+      (function () {
+        var s = document.createElement('script');
+        s.src = 'static/pwa/js/webpush/webPushSdk.produce.min.2.2.1.js';
+        s.async = true;
+        var s0 = document.getElementsByTagName('script')[0];
+        s0.parentNode.insertBefore(s, s0);
+      })();
+    </script>
+  </head>
+  <body id="br1-static-v1">
+    <!-- DO NOT touch the following DIV -->
+    <div id="q-app"></div>
+  </body>
+</html>
