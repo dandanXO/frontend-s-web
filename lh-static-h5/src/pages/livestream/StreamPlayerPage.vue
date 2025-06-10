@@ -150,6 +150,8 @@ const syncLivestreamInfo = async () => {
   livestreamSyncAbortController.value = new AbortController();
   getLivestreamDetail(currentLiveData.value.streamId, livestreamSyncAbortController).then((res) => {
     if (res.code === 0) {
+      if (currentLiveData.value.id !== res.data.id) return;
+
       vipStatus.value = !!res.data.vipStatus;
       if (currentLiveData.value.streamerStatus !== res.data.streamerStatus) {
         const notifyMessage = res.data.streamerStatus
