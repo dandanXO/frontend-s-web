@@ -108,12 +108,16 @@
           <img style="width: 24px; height: 24px" class="filter-green" src="../assets/images/index/volume-up-line.svg" />
         </div>
         <div class="marquee-container">
-          <marquee-text :repeat="5" :duration="announcementList.length * 120">
-            <div v-if="announcementList">
+          <marquee-text :repeat="2" :duration="10">
+            <div>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to
+              AKB188&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <!-- <div v-if="announcementList">
               <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
                 {{ a.content }}
               </span>
-            </div>
+            </div> -->
           </marquee-text>
         </div>
       </div>
@@ -2341,7 +2345,31 @@ function loadData() {
     .get("/opt-session/promo/banner?category=HOME")
     .then((res) => {
       if (res.code === 0) {
-        banners.value = res.data;
+        // banners.value = res.data;
+        banners.value = [
+          {
+            promoPageId: null,
+            desktopImageUrl: "promo-1.png",
+            desktopImageUrlDark: null,
+            mobileImageUrl: "promo-1.png",
+            mobileImageUrlDark: null,
+            redirectUrl: "/url/promo?name=EarnMoney",
+            category: "HOME",
+            displayStartTime: 1577847600000,
+            displayEndTime: 1893553199000
+          },
+          {
+            promoPageId: null,
+            desktopImageUrl: "promo-2.png",
+            desktopImageUrlDark: null,
+            mobileImageUrl: "promo-2.png",
+            mobileImageUrlDark: null,
+            redirectUrl: "/url/promo?name=slot-weekly-loss",
+            category: "HOME",
+            displayStartTime: 1577836800000,
+            displayEndTime: 1893542399000
+          }
+        ];
 
         setTimeout(() => {
           bannerLoading.value = false;
@@ -2519,7 +2547,8 @@ const returnBannerUrl = (banner) => {
     } else {
       bannerImg = bannerSplit[0];
     }
-    return require(`../assets/images/banners/${bannerImg}`);
+    // return require(`../assets/images/banners/${bannerImg}`);
+    return require(`../assets/images/promotion/tempo/${bannerImg}`);
   } catch (e) {
     return imgURLPromo + banner.mobileImageUrl;
   }
