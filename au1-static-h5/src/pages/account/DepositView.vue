@@ -644,11 +644,8 @@ async function confirmDeposit() {
             .then((res) => {
               if (res.data.url) {
                 // redirect to KYC verification
-                if (store.guest) {
-                  openGuestKYCDialog();
-                } else {
-                  openUserKYCDialog();
-                }
+                window.open(res.data.url, `_blank`);
+                btnLoading.value = false;
               } else {
                 pDepo(data);
               }
