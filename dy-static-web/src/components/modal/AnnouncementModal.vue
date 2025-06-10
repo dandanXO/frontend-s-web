@@ -17,8 +17,7 @@
         <label :for="`toggle-${index}`" class="content-title">
           <div class="title-label" v-html="inboxItem.title" />
           <div class="read-status" v-if="inboxItem.readTime">已读</div>
-          <div class="read-status" @click.stop="goToMailDetail(inboxItem)">详情</div>
-          <span class="collapse-arrow">&#9660;</span>
+          <img class="collapse-arrow" src="../../assets/home/announcement/right-arrow.svg" @click.stop="goToMailDetail(inboxItem)" />
         </label>
         <div class="content-desc" v-html="inboxItem.content" />
       </div>
@@ -27,7 +26,6 @@
     <div class="actions">
       <div class="cs-btn"  @click="store.openLiveChat()">
         <img src="../../assets/home/announcement/cs-icon.svg" />联系客服</div>
-        <div class="redirect-btn">查看详情</div>
     </div>
   </el-dialog>
 </template>
@@ -172,7 +170,7 @@ watch(checked, (val) => {
     }
 
     input:checked ~ .content-title .collapse-arrow {
-      transform: rotate(180deg);
+      transform: rotate(90deg);
     }
 
     .read-status {
@@ -192,6 +190,7 @@ watch(checked, (val) => {
       .content-title {
         .title-label {
           color: #000000;
+          font-weight: 700;
 
           &:after {
             content: "";
@@ -209,7 +208,7 @@ watch(checked, (val) => {
 }
 .actions {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   background-color: #f2f2f2;
   padding: 20px;
 

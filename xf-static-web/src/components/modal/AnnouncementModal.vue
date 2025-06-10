@@ -17,8 +17,7 @@
         <label :for="`toggle-${index}`" class="content-title">
           <div class="title-label" v-html="inboxItem.title" />
           <div class="read-status" v-if="inboxItem.readTime">已读</div>
-          <div class="read-status" @click.stop="goToMailDetail(inboxItem)">详情</div>
-          <span class="collapse-arrow">&#9660;</span>
+          <img class="collapse-arrow" src="../../assets/home/announcement/right-arrow.svg" @click.stop="goToMailDetail(inboxItem)" />
         </label>
         <div class="content-desc" v-html="inboxItem.content" />
       </div>
@@ -27,7 +26,6 @@
     <div class="actions">
       <div class="cs-btn"  @click="store.openLiveChat()">
         <img src="../../assets/home/announcement/cs-icon.svg" />联系客服</div>
-        <div class="redirect-btn">查看详情</div>
     </div>
   </el-dialog>
 </template>
@@ -44,11 +42,11 @@ const router = useRouter();
 const isAnnouncementModalVisible = ref(false);
 const inboxData = ref([]);
 const store = userStore();
-const lastAnnouncementDateStr = useLocalStorage("DY_LAST_ANNOUNCEMENT_DATE", null);
+const lastAnnouncementDateStr = useLocalStorage("XF_LAST_ANNOUNCEMENT_DATE", null);
 const checked = ref(false);
 
 const goToMailDetail = (mail) => {
-  router.push(`/center/mailbox?mailid=${mail.id}&type=${mail.type}`);
+  router.push(`/center/message?mailid=${mail.id}&type=${mail.type}`);
 };
 
 watch(
@@ -90,7 +88,7 @@ watch(checked, (val) => {
 
 <style lang="scss" scoped>
 .header {
-  background: linear-gradient(90deg, #32B8FD 0%, #DB70FF 100%);
+  background: linear-gradient(180deg, #00C7C0 0%, #0996C7 100%);
   color: #f8f8f8;
   display: flex;
   align-items: center;
@@ -109,7 +107,7 @@ watch(checked, (val) => {
 }
 
 .content {
-  background-color: #f2f2f2;
+  background-color: #1E212D;
   height: 500px;
   display: flex;
   flex-direction: column;
@@ -134,7 +132,7 @@ watch(checked, (val) => {
       .title-label {
         display: flex;
         align-items: center;
-        color: #000;
+        color: #fff;
         
         :deep(p) {
           margin: 0 !important;
@@ -151,7 +149,7 @@ watch(checked, (val) => {
       overflow: hidden;
       opacity: 0;
       padding: 0 10px;
-      color: #000;
+      color: #fff;
     }
 
     input {
@@ -172,12 +170,12 @@ watch(checked, (val) => {
     }
 
     input:checked ~ .content-title .collapse-arrow {
-      transform: rotate(180deg);
+      transform: rotate(90deg);
     }
 
     .read-status {
       background: #D9D9D9;
-      color: #fff;
+      color: #808080;
       width: 40px;
       height: 20px;
       border-radius: 4px;
@@ -191,7 +189,8 @@ watch(checked, (val) => {
     &.unread-status {
       .content-title {
         .title-label {
-          color: #000000;
+          color: #fff;
+          font-weight: 700;
 
           &:after {
             content: "";
@@ -209,8 +208,8 @@ watch(checked, (val) => {
 }
 .actions {
   display: flex;
-  justify-content: space-between;
-  background-color: #f2f2f2;
+  justify-content: center;
+  background-color: #1E212D;
   padding: 20px;
 
   .cs-btn, .redirect-btn {
@@ -226,20 +225,17 @@ watch(checked, (val) => {
   }
 
   .cs-btn {
-    border: 1px solid #D1D5DB;
-    box-shadow: 0px 1px 2px 0px #0000000D;
+    background: linear-gradient(180deg, #00C7C0 0%, #0996C7 100%);
+    box-shadow: 0px 1px 2px 0px #FFFFFF inset;
     width: 230px;
     height: 40px;
     border-radius: 100px;
-    border-width: 1px;
-    padding-top: 9px;
-    padding-right: 17px;
-    padding-bottom: 9px;
-    padding-left: 17px;
+    gap: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
+    color: #fff;
   }
 
   .redirect-btn {
