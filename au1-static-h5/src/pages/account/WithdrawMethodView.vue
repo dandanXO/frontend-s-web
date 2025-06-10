@@ -843,6 +843,9 @@ const goSelectedMethod = (item) => {
   bankCardField.cardNumber = "";
   bankCardField.cardAddress = "";
   withdrawInfo.amount = "";
+
+  const selectedBank = filteredBankList.value.find((bank) => bank.id === bankCardField.bankId);
+  filterCards(selectedBank);
 };
 
 const unbindBankAcc = (cardId) => {
@@ -910,7 +913,6 @@ const isValidCardNumber = () => {
     if (!cardNumber) {
       return `Please enter account number`;
     } else if (!isNumeric) {
-      2;
       return "Account number must contain only digits";
     } else if (cardNumber.length < 6 || cardNumber.length > 10) {
       return "Card number must be between 6 and 10 digits";
