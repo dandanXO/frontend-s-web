@@ -210,7 +210,7 @@ const updateNewGuestState = () => {
     position: relative;
 
     :deep(.q-field__control) {
-      background: rgba(255, 255, 255, 0.15) !important;
+      background: rgba(71, 178, 178, 0.16) !important;
     }
 
     :deep(.q-field__native) {

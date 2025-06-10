@@ -276,7 +276,7 @@
                 >
                   <template v-slot:prepend>
                     <!-- <template v-if="typeVal === 'phone'"> -->
-                    <img class="white-svg" src="../../assets/images/account/input-icon-phone.png" />
+                    <img class="white-svg" src="../../assets/images/account/input-icon-phone-white.png" />
                     <span class="prepend-number q-ml-sm">{{ $t("form.prependNumber") }}</span>
                     <!-- </template> -->
                     <!-- <template v-if="typeVal === 'email'">
@@ -315,7 +315,7 @@
                   @blur="isInputFocus = false"
                 >
                   <template v-slot:prepend>
-                    <img class="white-svg" src="../../assets/images/account/input-icon-cpf.png" />
+                    <img class="white-svg" src="../../assets/images/account/input-icon-cpf-white.png" />
                   </template>
                 </q-input>
               </div>
@@ -340,7 +340,7 @@
                   @blur="isInputFocus = false"
                 >
                   <template v-slot:prepend>
-                    <img class="white-svg" src="../../assets/images/account/input-icon-email.png" />
+                    <img class="white-svg" src="../../assets/images/account/input-icon-email-white.png" />
                   </template>
                 </q-input>
               </div>

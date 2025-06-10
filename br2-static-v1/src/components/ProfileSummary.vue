@@ -354,7 +354,8 @@ onMounted(() => {
   // background: linear-gradient(180deg, #2d0f54 0%, #101114 100%);
   // background: linear-gradient(180deg, #00B9A1 0%, rgba(0, 185, 111, 0) 96.35%);
   // background: linear-gradient(180deg, rgba(0, 185, 161, 0.46) 0%, rgba(0, 185, 111, 0) 96.35%);
-  background: linear-gradient(180deg, #095e54 0%, #0d362d 100%);
+  // background: linear-gradient(180deg, #095e54 0%, #0d362d 100%);
+  background: linear-gradient(180deg, #095e54 0%, rgba(13, 54, 45, 0.2) 100%);
   // box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
   overflow-x: hidden;
   position: fixed;

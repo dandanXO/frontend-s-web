@@ -350,6 +350,9 @@ const rows3 = [
 
 <style scoped lang="scss">
 .agency-policy {
+  background-size: cover;
+  background-image: url("../../assets/images/account/shadow2-bg.png");
+
   img {
     width: 100%;
   }
@@ -456,17 +459,17 @@ const rows3 = [
   }
   .table-container {
     :deep(thead) {
-      background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
+      background: linear-gradient(180deg, #0a534c 0%, #0a4855 100%);
     }
 
     :deep(tbody) {
-      background: #005348;
+      background: #016d5e;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
       tr {
         &:nth-child(2n) {
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-          background: #016d5e;
+          background: #005348;
         }
       }
     }

@@ -36,17 +36,17 @@ body {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #2b2b4b;
+  background: #005348;
   border-radius: 2px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #2b2b4b;
+  background: #005348;
 }
 .q-toolbar {
   //padding-top: env(safe-area-inset-top, 0);
-  background: #2b2b4b;
+  background: #005348;
   &__title {
     font-size: 16px;
   }
@@ -240,8 +240,10 @@ body.body--dark .q-footer {
     left: 50%;
     margin-top: -50px;
     transform: translate(-50%, -50%);
-    background-size: contain;
-    background-image: url("../assets/images/account/shadow1-bg.png");
+    // background-size: contain;
+    // background-image: url("../assets/images/account/shadow2-bg.png");
+    // background-repeat: no-repeat;
+    // background-position: center center;
   }
 }
 .account-message-page {
@@ -437,7 +439,7 @@ body.body--dark .q-footer {
   color: rgba(255, 255, 255, 0.5);
 
   .wallet-btn {
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.8);
     padding: 8px;
 
     img {
@@ -574,7 +576,7 @@ body.body--dark .q-footer {
 
   .popout-dialog-container {
     // background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
-    background: linear-gradient(180deg, #1B7473 0%, #163C3D 100%);
+    background: linear-gradient(180deg, #1b7473 0%, #163c3d 100%);
 
     background-position: top center;
     background-size: cover;

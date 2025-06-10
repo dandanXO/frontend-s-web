@@ -1232,7 +1232,7 @@ const openConfirmSignOutDialog = () => {
     position: relative;
 
     :deep(.q-field__control) {
-      background: rgba(255, 255, 255, 0.15) !important;
+      background: rgba(71, 178, 178, 0.16) !important;
       border-radius: 4px;
     }
 
@@ -1271,8 +1271,7 @@ const openConfirmSignOutDialog = () => {
   color: #ffffff;
   margin: auto;
   border-radius: 6px;
-  border: 1px solid #5e388b;
-  background: rgba(88, 23, 170, 0.6);
+  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
 
   &:active {
     filter: brightness(0.85);
@@ -1281,7 +1280,7 @@ const openConfirmSignOutDialog = () => {
 }
 
 .pc-tip-chg-pwd {
-  color: #a73dff;
+  color: #0097b9;
 }
 
 .pc-tip {
@@ -1300,15 +1299,17 @@ const openConfirmSignOutDialog = () => {
 }
 
 .btn-refresh {
-  background: #48325a;
+  // background: #48325a;
+  // background: linear-gradient(180deg, #1cccb4 0%, #21b5d6 100%);
+  background: rgba(71, 178, 178, 0.5);
   border-radius: 8px;
   font-weight: 400;
   margin-top: auto;
-  color: #ae6def;
+  color: #00b9a1;
   padding: 10px 20px;
 
   :deep(.q-icon) {
-    color: #ae6def;
+    color: #00b9a1;
   }
 }
 
@@ -1322,7 +1323,7 @@ const openConfirmSignOutDialog = () => {
   height: 42px;
 }
 .btn-confirm {
-  background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
   font-weight: 700;
   width: 140px;
   height: 42px;

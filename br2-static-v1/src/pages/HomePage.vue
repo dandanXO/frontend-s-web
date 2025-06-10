@@ -40,7 +40,7 @@
             min-height: 3px;
             width: 33px;
             padding: 0;
-            background-color: #00B9A1;
+            background-color: #00b9a1;
           "
         />
         <q-btn
@@ -158,6 +158,7 @@
       >
         <div class="games-selection-wrapper" id="hotgames">
           <div class="title-game">
+            <div><img src="../assets/images/index/title-icon-hot.png" width="22" /></div>
             <span class="txt-style">{{ $t("home.cat_hotgames") }}</span>
           </div>
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -305,6 +306,7 @@
       >
         <div class="games-selection-wrapper" id="slotsgames">
           <div class="title-game">
+            <div><img src="../assets/images/index/title-icon-slot.png" width="22" /></div>
             <span class="txt-style">{{ $t("home.cat_slotsgame") }}</span>
           </div>
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -414,6 +416,7 @@
       >
         <div class="games-selection-wrapper" id="live">
           <div class="title-game">
+            <div><img src="../assets/images/index/title-icon-live.png" width="22" /></div>
             <span class="txt-style">{{ $t("home.cat_livecasino") }}</span>
           </div>
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -514,6 +517,7 @@
       >
         <div class="games-selection-wrapper" id="fishing" v-if="category.title === 'Lobby' && category.active">
           <div class="title-game">
+            <div><img src="../assets/images/index/title-icon-fish.png" width="34" /></div>
             <span class="txt-style">{{ $t("home.cat_fishing") }}</span>
           </div>
           <div class="platform-game-wrapper">
@@ -714,6 +718,7 @@
       >
         <div class="games-selection-wrapper" id="sport">
           <div class="title-game">
+            <div><img src="../assets/images/index/title-icon-sport.png" width="22" /></div>
             <span class="txt-style">{{ $t("home.cat_sport") }}</span>
           </div>
           <div class="platform-game-container sport-platform">
@@ -3293,7 +3298,7 @@ onBeforeUnmount(() => {
 
 .announcement-card {
   height: 400px;
-  background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
   border-radius: 10px;
   overflow-y: auto;
 
@@ -3635,10 +3640,6 @@ onBeforeUnmount(() => {
     display: flex;
     gap: 8px;
     align-items: center;
-    background-image: url("../assets/images/index/title-bg.png");
-    background-repeat: no-repeat;
-    background-size: 100% 24px;
-    background-position: center center;
 
     .txt-style {
       font-family: "Dongle", sans-serif;
@@ -3648,6 +3649,12 @@ onBeforeUnmount(() => {
       line-height: 1;
       text-transform: uppercase;
       color: #ffffff;
+      background-image: url("../assets/images/index/title-bg.png");
+      background-repeat: no-repeat;
+      background-size: 100% 24px;
+      background-position: center center;
+      width: 100%;
+      border-radius: 40px;
     }
   }
 }
@@ -4050,7 +4057,7 @@ onBeforeUnmount(() => {
 }
 
 .cat-selection-item {
-  background: #171F22;
+  background: #171f22;
   // min-width: 80px;
   width: 80px;
   height: 50px;
@@ -4064,7 +4071,7 @@ onBeforeUnmount(() => {
   width: 100%;
 
   &.active {
-    background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+    background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
 
     .cat-title {
       color: #ffffff;
@@ -4129,7 +4136,7 @@ onBeforeUnmount(() => {
   display: flex;
   justify-content: center;
   margin: auto;
-  border: 2px solid #8b36f8;
+  border: 2px solid rgba(0, 151, 185, 1);
   padding: 12px 16px;
   width: 160px;
   border-radius: 8px;

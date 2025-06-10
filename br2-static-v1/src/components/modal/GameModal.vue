@@ -453,7 +453,7 @@ defineExpose({
 
 <style lang="scss">
 .gameDialog {
-  background-color: #4b027c;
+  background-color: #181A20D9;
 }
 
 #iphone-tips-close-button {
@@ -522,7 +522,8 @@ defineExpose({
   background: #1d1d27;
 
   .topActions {
-    background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
+    // background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
+    background: linear-gradient(180deg, rgba(0, 185, 161, 0.46) 0%, rgba(0, 185, 111, 0) 96.35%);
     box-shadow: 0px 3 7px 0px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
@@ -531,9 +532,9 @@ defineExpose({
     align-items: center;
 
     .game-logo-img {
-      height: 50px;
+      // height: 50px;
       position: absolute;
-      top: 10px;
+      top: 16px;
       left: 45px;
       .game-logo {
         width: 30vw;
@@ -916,7 +917,8 @@ defineExpose({
 }
 
 .back-bar {
-  background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
+  // background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
+  background: linear-gradient(180deg, rgba(0, 185, 161, 0.46) 0%, rgba(0, 185, 111, 0) 96.35%);
   min-height: 60px;
   width: calc(100% + 32px);
   font-size: 18px;

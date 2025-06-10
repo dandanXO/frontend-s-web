@@ -1,5 +1,5 @@
 <template>
-  <div class="wheel-stage-wrapper">
+  <div class="wheel-stage-wrapper" style="display: none">
     <div class="wheel-outer-wrapper">
       <!-- <span class="title">Countdown: {{ remainingTime }}</span> -->
       <div class="summary-wrapper">
@@ -48,7 +48,7 @@
             <div class="countdown">Próxima Rodada: {{ remainingTime }}</div>
             <div class="wheel-inner-wrapper">
               <img
-                style="width:100%;"
+                style="width: 100%"
                 ref="spinWheelRef"
                 class="wheel"
                 src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/wheel-bg.png"
@@ -74,7 +74,9 @@
             />
             <CommonButton v-if="isClaimedStatus" class="draw-btn disabled">Convide para Ganhar um Giro</CommonButton>
             <CommonButton v-else class="draw-btn" @click="handleInviteClick">Convide para Ganhar um Giro</CommonButton>
-            <span class="next-spin-remaining-time" v-if="!isClaimedStatus">Próximo Giro Grátis: {{ nextFreeSpinRemainingTime }}</span>
+            <span class="next-spin-remaining-time" v-if="!isClaimedStatus">
+              Próximo Giro Grátis: {{ nextFreeSpinRemainingTime }}
+            </span>
           </div>
         </div>
       </div>
@@ -93,25 +95,28 @@
       </div>
       <ol>
         <li>
-          Quando o montante acumulado atingir {{ `${store.currency.value} 50` }}, você pode solicitar o saque (As recompensas serão adicionadas diretamente à sua carteira).
+          Quando o montante acumulado atingir {{ `${store.currency.value} 50` }}, você pode solicitar o saque (As
+          recompensas serão adicionadas diretamente à sua carteira).
         </li>
         <li>Quando não houver giros disponíveis, indique um novo jogador para ganhar um giro grátis.</li>
+        <li>O evento dura 3 dias. Após o evento, o bônus acumulado será resetado, e o evento começará novamente.</li>
         <li>
-          O evento dura 3 dias. Após o evento, o bônus acumulado será resetado, e o evento começará novamente.
-        </li>
-        <li>
-          Cada usuário pode aproveitar uma oportunidade de giro grátis por dia. Os giros grátis serão adicionados às 12:00 a.m. todos os dias.
+          Cada usuário pode aproveitar uma oportunidade de giro grátis por dia. Os giros grátis serão adicionados às
+          12:00 a.m. todos os dias.
         </li>
         <li>Após a aprovação da solicitação, o bônus é depositado diretamente na sua carteira.</li>
         <li>O bônus precisa ser apostado uma vez antes de poder ser sacado.</li>
         <li>
-          O convidado deve vincular o número de telefone e se registrar pelo link de convite do convidador para ser considerado na recomendação.
+          O convidado deve vincular o número de telefone e se registrar pelo link de convite do convidador para ser
+          considerado na recomendação.
         </li>
         <li>
-          Quanto mais seus convidados jogarem no site, maior será a recompensa do seu próximo giro. Convide amigos e ganhem mais recompensas juntos!
+          Quanto mais seus convidados jogarem no site, maior será a recompensa do seu próximo giro. Convide amigos e
+          ganhem mais recompensas juntos!
         </li>
         <li>
-          O direito de interpretar o evento pertence à AKB188. Se tiver dúvidas, entre em contato com o atendimento ao cliente.
+          O direito de interpretar o evento pertence à AKB188. Se tiver dúvidas, entre em contato com o atendimento ao
+          cliente.
         </li>
       </ol>
     </div>
@@ -129,7 +134,7 @@ import RecordDialog from "./RecordDialog.vue";
 import { useRouter } from "vue-router";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
-import ProgressBar from './ProgressBar.vue';
+import ProgressBar from "./ProgressBar.vue";
 import CashOutPopup from "./CashOutPopup.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
 import { userStore } from "stores/index";
@@ -138,7 +143,6 @@ const store = userStore();
 const emit = defineEmits(["reload"]);
 const props = defineProps(["info"]);
 const { info } = toRefs(props);
-
 
 const TOTAL_ITEMS = 6;
 const DEFAULT_SPEED = 1;
@@ -169,11 +173,11 @@ const prize = ref(0);
 const winningRecordRef = ref();
 const isCashOutPopupVisible = ref(false);
 const cashOutPopupRef = ref();
-const isClaimedStatus = computed(() => info.value.status === 'CLAIMED');
+const isClaimedStatus = computed(() => info.value.status === "CLAIMED");
 
-provide('nextFreeSpinRemainingTime', nextFreeSpinRemainingTime);
-provide('remainingTime', remainingTime);
-const extractionDifference = inject('extractionDifference');
+provide("nextFreeSpinRemainingTime", nextFreeSpinRemainingTime);
+provide("remainingTime", remainingTime);
+const extractionDifference = inject("extractionDifference");
 
 const winningRecord = computed(() => {
   const result = [];
@@ -296,9 +300,11 @@ const handleRecordClick = () => {
 
 const updateCountdownTime = () => {
   // console.log("updateCountdownTime")
-  const endTime = isClaimedStatus.value ? moment().tz("America/Sao_Paulo").add(1, "days").startOf("day") : moment(info.value.startTime).tz("America/Sao_Paulo").add(3, "days");
+  const endTime = isClaimedStatus.value
+    ? moment().tz("America/Sao_Paulo").add(1, "days").startOf("day")
+    : moment(info.value.startTime).tz("America/Sao_Paulo").add(3, "days");
   const nextFreeSpinEndTime = moment().tz("America/Sao_Paulo").add(1, "days").startOf("day");
-  if(timer.value){
+  if (timer.value) {
     clearTimeout(timer.value);
   }
   timer.value = setInterval(() => {
@@ -312,7 +318,7 @@ const updateCountdownTime = () => {
       });
     }
   }, 1000);
-}
+};
 
 onMounted(() => {
   for (let i = 0; i < TOTAL_ITEMS; i++) {
@@ -322,7 +328,6 @@ onMounted(() => {
 
   updateCountdownTime();
 });
-
 
 defineExpose({
   updateCountdownTime
@@ -362,9 +367,10 @@ onUnmounted(() => {
         }
       }
 
-      .extraction-require-amount, .extraction-require-percentage {
+      .extraction-require-amount,
+      .extraction-require-percentage {
         color: #fff;
-        font-family: 'Poppins';
+        font-family: "Poppins";
         font-weight: 400;
         font-size: 12px;
         line-height: 16px;
@@ -373,7 +379,7 @@ onUnmounted(() => {
 
         .amount {
           font-weight: 500;
-          color: #FEBA02;
+          color: #feba02;
         }
       }
 
@@ -430,7 +436,7 @@ onUnmounted(() => {
       .winning-record-outer-wrapper {
         padding: 12px 14px;
         width: 100%;
-        background-color: #1E1F24;
+        background-color: #1e1f24;
         border-radius: 8px;
 
         .winning-record-wrapper {
@@ -704,7 +710,7 @@ onUnmounted(() => {
   width: 100%;
 
   &:active {
-      transform: translateY(2px);
+    transform: translateY(2px);
   }
 }
 </style>
