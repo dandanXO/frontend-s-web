@@ -170,9 +170,6 @@ export default boot(({ app, router }) => {
       if (res.code === ResponseCode.ERROR_GUEST_LOGGED) {
         return res;
       }
-      if (res.code === ResponseCode.ERROR_BIND_CARD) {
-        return res;
-      }
       if (res.code === ResponseCode.ERROR_UNAUTHORIZED || res.code === ResponseCode.ERROR_TOKEN_REVOKED) {
         SessionStorage.remove("TOKEN");
         LocalStorage.remove("TOKEN");
