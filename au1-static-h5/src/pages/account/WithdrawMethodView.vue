@@ -843,6 +843,9 @@ const goSelectedMethod = (item) => {
   bankCardField.cardNumber = "";
   bankCardField.cardAddress = "";
   withdrawInfo.amount = "";
+
+  const selectedBank = filteredBankList.value.find((bank) => bank.id === bankCardField.bankId);
+  filterCards(selectedBank);
 };
 
 const unbindBankAcc = (cardId) => {
