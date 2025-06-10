@@ -10,6 +10,7 @@
     <div class="header">
       <img class="header-icon" src="../../assets/home/announcement/mail-icon.svg" />
       <span class="header-title">站内信</span>
+      <img class="close-icon" src="../../assets/home/announcement/close-icon.svg" @click="isAnnouncementModalVisible = false" />
     </div>
     <div class="content">
       <div class="item" :class="{'unread-status': !inboxItem.readTime}" v-for="inboxItem, index in inboxData">
@@ -33,7 +34,7 @@
 <script setup>
 import { popupMailBox } from "@/api/personal/mailbox";
 import { userStore } from "@/store";
-import { ref, watch, onMounted } from "vue";
+import { ref, watch } from "vue";
 import { useLocalStorage } from "@vueuse/core";
 import moment from "moment";
 import { useRouter } from "vue-router";
@@ -95,7 +96,16 @@ watch(checked, (val) => {
   gap: 10px;
   width: 520px;
   height: 48px;
-  padding: 10px 20px;
+
+  .header-icon {
+    margin-left: 20px;
+  }
+
+  .close-icon {
+    margin-left: auto;
+    margin-right: 20px;
+    cursor: pointer;
+  }
 
   .header-title {
     font-family: Inter;
@@ -113,6 +123,7 @@ watch(checked, (val) => {
   flex-direction: column;
   gap: 10px;
   padding: 20px;
+  overflow-y: scroll;
 
   .item {
     display: flex;
