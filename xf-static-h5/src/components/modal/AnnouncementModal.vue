@@ -135,7 +135,7 @@ watch(checked, (val) => {
 
 .content {
   background-color: #1E212D;
-  height: 400px;
+  height: 350px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -154,7 +154,7 @@ watch(checked, (val) => {
       gap: 10px;
       font-family: 'PingFang SC';
       font-weight: 400;
-      font-size: 18px;
+      font-size: 16px;
       line-height: 20px;
 
       .title-label {
@@ -286,13 +286,15 @@ watch(checked, (val) => {
 
 .do-not-remind {
   position: absolute;
-  right: 3%;
+  right: 50%;
+  bottom: 8%;
+  transform: translate(50%, 0%);
 }
 
 .close-icon-outlined {
   position: absolute;
   right: 50%;
-  bottom: 4%;
+  bottom: 3%;
   transform: translate(50%, 0%);
   cursor: pointer;
 }
@@ -302,12 +304,10 @@ watch(checked, (val) => {
 .announcement-modal {
   width: 320px;
   background: transparent !important;
+  border-radius: 10px !important;
 
-  .el-dialog__body {
-    padding: 0;
-    border-radius: 10px;
-    overflow: hidden;
-
+  .q-checkbox__inner {
+    color: #fff;
   }
 }
 </style>
