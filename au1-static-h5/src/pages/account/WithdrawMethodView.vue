@@ -753,13 +753,6 @@ const submitWithdrawBank = () => {
         bankCardField.cardNumber = "";
         bankCardField.amount = "";
         withdrawInfo.amount = "";
-      } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: response.message,
-          icon: "report_problem"
-        });
       }
     })
     .catch((error) => {
@@ -872,13 +865,6 @@ const unbindBankAcc = (cardId) => {
     .then((res) => {
       if (res.code === 0) {
         loadCards();
-      } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: res.message,
-          icon: "report_problem"
-        });
       }
     })
     .catch(() => {});
