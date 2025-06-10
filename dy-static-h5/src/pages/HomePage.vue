@@ -1435,6 +1435,7 @@
   </q-page-sticky>
 
   <GameModal ref="allGames"></GameModal>
+  <AnnouncementModal />
 
   <q-dialog class="station-notice-dialog" width="100%" v-model="isStationNotice">
     <q-card
@@ -1599,6 +1600,7 @@ import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
+import AnnouncementModal from "components/modal/AnnouncementModal";
 
 import { useUI } from "stores/ui";
 import { Scrollbar } from "swiper";
@@ -1629,7 +1631,8 @@ export default defineComponent({
     GameModal,
     MarqueeText,
     PlatformBlock,
-    GameTypeSwiper
+    GameTypeSwiper,
+    AnnouncementModal
   },
   setup() {
     const notify = useNotify();

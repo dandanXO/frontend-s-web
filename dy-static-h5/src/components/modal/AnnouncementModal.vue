@@ -41,7 +41,7 @@ const router = useRouter();
 const isAnnouncementModalVisible = ref(false);
 const inboxData = ref([]);
 const store = userStore();
-const lastAnnouncementDateStr = useLocalStorage("XF_LAST_ANNOUNCEMENT_DATE", null);
+const lastAnnouncementDateStr = useLocalStorage("DY_LAST_ANNOUNCEMENT_DATE", null);
 const checked = ref(false);
 
 const goToLiveChat = () => {
@@ -106,7 +106,7 @@ watch(checked, (val) => {
 
 <style lang="scss" scoped>
 .header {
-  background: linear-gradient(180deg, #00C7C0 0%, #0996C7 100%);
+  background: linear-gradient(90deg, #32B8FD 0%, #DB70FF 100%);
   color: #f8f8f8;
   display: flex;
   align-items: center;
@@ -134,7 +134,7 @@ watch(checked, (val) => {
 }
 
 .content {
-  background-color: #1E212D;
+  background-color:#f2f2f2;
   height: 400px;
   display: flex;
   flex-direction: column;
@@ -160,7 +160,7 @@ watch(checked, (val) => {
       .title-label {
         display: flex;
         align-items: center;
-        color: #fff;
+        color: #1c1c1c;
         
         :deep(p) {
           margin: 0 !important;
@@ -177,7 +177,7 @@ watch(checked, (val) => {
       overflow: hidden;
       opacity: 0;
       padding: 0 10px;
-      color: #fff;
+      color: #1c1c1c;
     }
 
     input {
@@ -217,7 +217,7 @@ watch(checked, (val) => {
     &.unread-status {
       .content-title {
         .title-label {
-          color: #fff;
+          color: #1c1c1c;
           font-weight: 700;
 
           &:after {
@@ -238,7 +238,7 @@ watch(checked, (val) => {
 .actions {
   display: flex;
   justify-content: center;
-  background-color: #1E212D;
+  background-color:#f2f2f2;
   padding: 20px;
 
   .cs-btn, .redirect-btn {
@@ -254,8 +254,9 @@ watch(checked, (val) => {
   }
 
   .cs-btn {
-    background: linear-gradient(180deg, #00C7C0 0%, #0996C7 100%);
-    box-shadow: 0px 1px 2px 0px #FFFFFF inset;
+    background: linear-gradient(180deg, #52ACFF 0%, #3559DA 100%);
+    border: 1px solid #D1D5DB;
+    box-shadow: 0px 1px 2px 0px #0000000D;
     width: 230px;
     height: 40px;
     border-radius: 100px;
