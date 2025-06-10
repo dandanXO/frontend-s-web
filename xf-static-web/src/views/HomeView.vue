@@ -87,6 +87,8 @@
       </div>
     </div>
   </el-dialog>
+
+  <AnnouncementModal />
 </template>
 
 <script>
@@ -103,6 +105,7 @@ import HomeServiceSection from "@/components/home/HomeService.vue";
 import { ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
 import { userStore } from "@/store";
+import AnnouncementModal from "@/components/modal/AnnouncementModal.vue";
 
 export default defineComponent({
   // directives: {
@@ -114,7 +117,8 @@ export default defineComponent({
     HotGamesCarousel,
     HotPlatforms,
     AppDownload,
-    HomeServiceSection
+    HomeServiceSection,
+    AnnouncementModal
   },
   setup() {
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
