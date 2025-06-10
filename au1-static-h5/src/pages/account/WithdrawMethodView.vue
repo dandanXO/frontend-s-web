@@ -585,11 +585,9 @@ const filterCards = (type) => {
   isLoadingBankCard.value = true;
 
   if (selectedWithdraw.value) {
-    const activeItem = selectedWithdraw.value.find((item) => item.active === true);
-
     bankCardList.value = [];
     api
-      .get(`/session/ausBankCard?withdrawPlatformId=${activeItem.withdrawId}`)
+      .get(`/session/ausBankCard?withdrawPlatformId=${selectedMethodItem.value.withdrawId}`)
       .then((res) => {
         isLoadingBankCard.value = false;
 
@@ -622,10 +620,9 @@ const filterCards = (type) => {
 
 const loadCards = () => {
   isLoadingBankCard.value = true;
-  const activeItem = selectedWithdraw.value.find((item) => item.active === true);
 
   api
-    .get(`/session/ausBankCard?withdrawPlatformId=${activeItem.withdrawId}`)
+    .get(`/session/ausBankCard?withdrawPlatformId=${selectedMethodItem.value.withdrawId}`)
     .then((res) => {
       isLoadingBankCard.value = false;
       if (res.code === 0) {
@@ -846,6 +843,20 @@ const goSelectedMethod = (item) => {
 
   const selectedBank = filteredBankList.value.find((bank) => bank.id === bankCardField.bankId);
   filterCards(selectedBank);
+
+  if (selectedMethodItem.value.withdrawId === 613) {
+    // TOPPAY
+    api
+      .get(`/session/verifyAUTopPayKYC`)
+      .then((res) => {
+        if (res.data.url) {
+          window.open(res.data.url, `_blank`);
+        }
+      })
+      .catch((e) => {
+        console.error("KYC verification failed:", e);
+      });
+  }
 };
 
 const unbindBankAcc = (cardId) => {
