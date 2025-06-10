@@ -126,7 +126,7 @@ const profileImagePath = computed(() => {
           padding-top: 2px;
           padding-bottom: 4px;
           z-index: 3;
-          color: #334ad6;
+          color: #101616;
           font-weight: bold;
         }
       }

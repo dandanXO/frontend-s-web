@@ -1013,6 +1013,7 @@ export default defineComponent({
 
   .selected-promo {
     width: 100%;
+    padding-top:30px;
 
     .selected-promo-wrapper {
       .banner-container {

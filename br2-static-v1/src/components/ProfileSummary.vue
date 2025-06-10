@@ -580,7 +580,7 @@ onMounted(() => {
     padding-top: 3px;
     padding-bottom: 4px;
     z-index: 3;
-    color: #334ad6;
+    color: #101616;
     font-weight: 700;
     font-style: italic;
   }
