@@ -28,6 +28,9 @@
       <div class="cs-btn"  @click="store.openLiveChat()">
         <img src="../../assets/home/announcement/cs-icon.svg" />联系客服</div>
     </div>
+
+    <img class="close-icon-outlined" src="../../assets/home/announcement/close-icon-outlined.svg" @click="isAnnouncementModalVisible = false" />
+    <el-checkbox class="do-not-remind" v-model="checked" style="color: white" text-color="white">今天不再提醒</el-checkbox>
   </el-dialog>
 </template>
 
@@ -118,7 +121,7 @@ watch(checked, (val) => {
 
 .content {
   background-color: #1E212D;
-  height: 500px;
+  height: 400px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -217,6 +220,7 @@ watch(checked, (val) => {
     }
   }
 }
+
 .actions {
   display: flex;
   justify-content: center;
@@ -264,6 +268,19 @@ watch(checked, (val) => {
     gap: 10px;
     color: #fff;
   }
+}
+
+.do-not-remind {
+  position: absolute;
+  right: 0;
+}
+
+.close-icon-outlined {
+  position: absolute;
+  right: 50%;
+  bottom: -7%;
+  transform: translate(50%, 0%);
+  cursor: pointer;
 }
 
 </style>
