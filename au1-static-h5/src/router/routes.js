@@ -225,12 +225,12 @@ const routes = [
     children: [{ path: "", component: () => import("pages/AccountPage.vue") }],
     meta: { requiresAuth: true }
   },
-  {
-    path: "/account/bank",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/account/BankView.vue") }],
-    meta: { requiresAuth: true }
-  },
+  // {
+  //   path: "/account/bank",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [{ path: "", component: () => import("pages/account/BankView.vue") }],
+  //   meta: { requiresAuth: true }
+  // },
   {
     path: "/account/message",
     component: () => import("layouts/MainLayout.vue"),

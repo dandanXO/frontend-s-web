@@ -191,18 +191,18 @@ const handleBetClick = () => {
   switch (livestreamData.value.sportId) {
     case 1:
     case 2:
-      handler("IM体育", "IM", "", "");
+      handler("IM体育", "IM", "", "SPORTS");
       break;
     case 3:
     case 4:
     case 5:
-      handler("雷火电竞", "TFGaming", "", "");
+      handler("雷火电竞", "TFGaming", "", "ESPORTS");
       break;
   }
 };
 
-const handleAppBetClick = (platformName, platformId, platformCode) => {
-  document.location.href = `app://to_platform?platformName=${platformName}&platformId=${platformId}&platformCode=${platformCode}`;
+const handleAppBetClick = (platformName, platformId, platformCode, gameType) => {
+  document.location.href = `app://to_platform?platformName=${platformName}&platformId=${platformId}&platformCode=${platformCode}&gameType=${gameType}`;
 };
 
 onMounted(() => {

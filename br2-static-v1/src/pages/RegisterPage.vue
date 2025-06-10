@@ -757,7 +757,8 @@ function charType(num) {
   background: #000;
 
   .q-toolbar {
-    background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
+    // background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
+    background: linear-gradient(180deg, rgba(0, 185, 161, 0.46) 0%, rgba(0, 185, 111, 0) 96.35%);
   }
 }
 </style>

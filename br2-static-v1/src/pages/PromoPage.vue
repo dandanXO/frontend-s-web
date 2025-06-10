@@ -894,8 +894,7 @@ export default defineComponent({
           overflow: hidden;
           padding-top: 40px;
           border-radius: 17px;
-          // background: #4f366c;
-          background: #0097b9;
+          background: #123d26;
           box-shadow: 0px 7.5px 20px 0px #1411321a;
 
           img {
@@ -1289,7 +1288,7 @@ export default defineComponent({
 
 // join now
 .join-container {
-  background: #3b2e95;
+  background: #005348;
   padding: 12px 12px;
   position: fixed;
   //top: calc(100vh - 127px);
@@ -1339,7 +1338,8 @@ export default defineComponent({
 }
 
 .dark-grey-dialog {
-  background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
+  // background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
+  background: linear-gradient(180deg, rgba(0, 185, 161, 0.46) 0%, rgba(0, 185, 111, 0) 96.35%);
   // background: #3e1474;
   background-size: contain;
 

@@ -38,6 +38,7 @@
           </div>
         </template>
       </div>
+      <div class="deposit-method-msg">{{ selectedChannel.msg }}</div>
 
       <template v-if="selectedChanelExtra.length > 0">
         <div class="method-title q-mt-md q-mb-sm">Bank</div>
@@ -459,6 +460,7 @@ const goSelectedChannel = (item) => {
 };
 
 const isLoadingInitPay = ref(true);
+
 function initPay() {
   isLoadingInitPay.value = true;
   $q.loading.show({
@@ -638,13 +640,30 @@ async function confirmDeposit() {
           });
           data.bankCardId = 0;
 
-          pDepo(data);
+          verifyAUTopPayKYC()
+            .then((res) => {
+              if (res.data.url) {
+                // redirect to KYC verification
+                window.open(res.data.url, `_blank`);
+                btnLoading.value = false;
+              } else {
+                pDepo(data);
+              }
+            })
+            .catch((e) => {
+              console.error("KYC verification failed:", e);
+              btnLoading.value = false;
+            });
         }
       })
       .catch((e) => {
         btnLoading.value = false;
       });
   }
+}
+
+async function verifyAUTopPayKYC() {
+  return api.get(`/session/verifyAUTopPayKYC`);
 }
 
 async function pDepo(deposit) {
@@ -1335,6 +1354,10 @@ onMounted(() => {
       }
     }
   }
+}
+
+.deposit-method-msg {
+  margin-top: 10px;
 }
 
 .input-btm {

@@ -127,7 +127,6 @@
                   :loading="isLoadingBankCard"
                   filled
                   dense
-                  clearable
                   v-model="withdrawInfo.cardId"
                   @update:model-value="onCardChanged"
                   :options="bankCardList"
@@ -136,6 +135,8 @@
                   map-options
                   :rules="[(val) => !!val || validateBankCardError()]"
                   hide-bottom-space
+                  @popup-show="isSelectBankOpen = true"
+                  @popup-hide="isSelectBankOpen = false"
                 >
                   <template v-slot:option="scope">
                     <q-item v-bind="scope.itemProps">
@@ -148,6 +149,9 @@
                             scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
                           }}
                         </q-item-label>
+                      </q-item-section>
+                      <q-item-section>
+                        <div class="unbind-bank-btn" @click.stop.prevent="unbindBankAcc(scope.opt.id)">Unbind</div>
                       </q-item-section>
                     </q-item>
                   </template>
@@ -162,6 +166,9 @@
                       <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
                         Acc No. {{ scope.opt.cardNumber }}
                       </q-item-label>
+                    </q-item-section>
+                    <q-item-section v-if="!isSelectBankOpen">
+                      <div class="unbind-bank-btn" @click.stop.prevent="unbindBankAcc(scope.opt.id)">Unbind</div>
                     </q-item-section>
                   </template>
                 </q-select>
@@ -445,6 +452,8 @@ const withdrawalMethods = reactive({
   UPI: {}
 });
 
+const isSelectBankOpen = ref(false);
+
 const paymentMethodsItems = ref([]);
 const selectedMethodsItems = ref([]);
 const listItems = ref([]);
@@ -575,43 +584,48 @@ const isNoBankCard = ref(false);
 const filterCards = (type) => {
   isLoadingBankCard.value = true;
 
-  bankCardList.value = [];
-  api
-    .get("/session/bankCard")
-    .then((res) => {
-      isLoadingBankCard.value = false;
+  if (selectedWithdraw.value) {
+    const activeItem = selectedWithdraw.value.find((item) => item.active === true);
 
-      if (res.code === 0) {
-        let filteredData = [];
-        if (isBankType.value === "BANK") {
-          const bankType = type.bankType;
-          filteredData = res.data.filter((item) => item.bankType === bankType);
-          const bankCodes = filteredBankList.value.map((bank) => bank.code);
-          filteredData = filteredData.filter((item) => bankCodes.includes(item.bankCode));
-        } else {
-          const typeCode = type.code;
-          filteredData = res.data.filter((item) => item.bankCode === typeCode);
-        }
+    bankCardList.value = [];
+    api
+      .get(`/session/ausBankCard?withdrawPlatformId=${activeItem.withdrawId}`)
+      .then((res) => {
+        isLoadingBankCard.value = false;
 
-        bankCardList.value = [...filteredData];
-        if (bankCardList.value.length > 0) {
-          withdrawInfo.cardId = bankCardList.value[0].id;
+        if (res.code === 0) {
+          let filteredData = [];
+          if (isBankType.value === "BANK") {
+            const bankType = type.bankType;
+            filteredData = res.data.filter((item) => item.bankType === bankType);
+            const bankCodes = filteredBankList.value.map((bank) => bank.code);
+            filteredData = filteredData.filter((item) => bankCodes.includes(item.bankCode));
+          } else {
+            const typeCode = type.code;
+            filteredData = res.data.filter((item) => item.bankCode === typeCode);
+          }
+
+          bankCardList.value = [...filteredData];
+          if (bankCardList.value.length > 0) {
+            withdrawInfo.cardId = bankCardList.value[0].id;
+          }
         }
-      }
-    })
-    .catch((error) => {
-      console.log("error", error);
-    })
-    .finally(() => {
-      isLoadingBankCard.value = false;
-    });
+      })
+      .catch((error) => {
+        console.log("error", error);
+      })
+      .finally(() => {
+        isLoadingBankCard.value = false;
+      });
+  }
 };
 
 const loadCards = () => {
   isLoadingBankCard.value = true;
+  const activeItem = selectedWithdraw.value.find((item) => item.active === true);
 
   api
-    .get("/session/bankCard")
+    .get(`/session/ausBankCard?withdrawPlatformId=${activeItem.withdrawId}`)
     .then((res) => {
       isLoadingBankCard.value = false;
       if (res.code === 0) {
@@ -725,7 +739,7 @@ const submitWithdrawBank = () => {
   bankCardField.withdrawPlatformId = selectedMethodItem.value.withdrawId;
 
   api
-    .post("/session/withdrawAndBankCard", qs.stringify(bankCardField))
+    .post("/session/ausWithdrawAndBankCard", qs.stringify(bankCardField))
     .then((response) => {
       isSubmitDisable.value = false;
       if (response.code === 0) {
@@ -829,6 +843,27 @@ const goSelectedMethod = (item) => {
   bankCardField.cardNumber = "";
   bankCardField.cardAddress = "";
   withdrawInfo.amount = "";
+
+  const selectedBank = filteredBankList.value.find((bank) => bank.id === bankCardField.bankId);
+  filterCards(selectedBank);
+};
+
+const unbindBankAcc = (cardId) => {
+  api
+    .post(`/session/bankCard/${cardId}?_method=delete`)
+    .then((res) => {
+      if (res.code === 0) {
+        loadCards();
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: res.message,
+          icon: "report_problem"
+        });
+      }
+    })
+    .catch(() => {});
 };
 
 const onAddNewAccount = () => {
@@ -873,14 +908,18 @@ onActivated(() => {
 
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
-
+  const isNumeric = /^\d+$/.test(cardNumber);
   if (isBankType.value === "BANK") {
     if (!cardNumber) {
       return `Please enter account number`;
+    } else if (!isNumeric) {
+      return "Account number must contain only digits";
+    } else if (cardNumber.length < 6 || cardNumber.length > 10) {
+      return "Card number must be between 6 and 10 digits";
     }
-    if (cardNumber.includes(".")) {
-      return "Account number must not contain a decimal point";
-    }
+    // if (cardNumber.includes(".")) {
+    //   return "Account number must not contain a decimal point";
+    // }
   }
 
   if (isBankType.value === "EWALLET") {
@@ -1461,5 +1500,17 @@ const loadInfo = () => {
 
 .input-btm {
   padding-bottom: 270px;
+}
+
+.unbind-bank-btn {
+  border-radius: 8px;
+  background-color: #263349;
+  border: 2px solid #ff0000;
+  color: #ff0000;
+  padding: 4px 8px;
+  font-size: 11px;
+  margin-right: 4px;
+  width: fit-content;
+  place-self: end;
 }
 </style>
