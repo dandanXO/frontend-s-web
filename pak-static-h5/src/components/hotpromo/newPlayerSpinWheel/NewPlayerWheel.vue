@@ -60,7 +60,7 @@
       <div class="congrats-title">{{ $t('hotPromo.unusedCoupons') }}</div>
 
       <div class="congrats-button-container">
-        <q-btn no-caps unelevated class="congrats-btn" @click="handleBtnClick">
+        <q-btn no-caps unelevated class="congrats-btn" @click="handleReceiveCodeBonus">
           {{ $t('btn.goNow') }}
         </q-btn>
       </div>
@@ -94,7 +94,7 @@ const TOTAL_ITEMS = 7;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
-const SPIN_WHEEL_PRIZES = [28, 999999, 188, 888, 999998, 388, 488, 588];
+const SPIN_WHEEL_PRIZES = [38, 999999, 188, 888, 999998, 388, 488];
 
 // spin wheel element refs
 const spinBoardRef = ref();
@@ -200,12 +200,14 @@ const reset = () => {
   spinBoardRef.value.style.transition = "";
   spinNumRef.value.style.transition = "";
 };
-
+const handleReceiveCodeBonus = () => {
+  router.push('/deposit?from=/home')
+};
 const spinWheel = () => {
   //FOr TesTING START
   // const res = {
   //   data: {
-  //     bonusAmount: 999999,
+  //     bonusAmount: 38,
   //     availableSpin: 0
   //   }
   // }
@@ -214,7 +216,7 @@ const spinWheel = () => {
   //   bonusIndex = -1;
   // }
   // const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
-  //
+  
   // spin(prizeIndex, () => {
   //   showPrizePopup.value = true;
   //   prizePopupBonusAmt.value = res.data.bonusAmount;
@@ -226,7 +228,6 @@ const spinWheel = () => {
   if (spinButtonDisable.value === true) {
     return;
   }
-
   if (remainingDraws.value <= 0) {
     $q.notify({
       color: "negative",
