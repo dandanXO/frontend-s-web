@@ -121,3 +121,7 @@ export function submitFeedback(param) {
   const { feedbackType, title, content, photo } = param;
   return server.REST.post("/session/feedback", { feedbackType, title, content, photo });
 }
+
+export function popupMailBox() {
+  return server.REST.get("/session/pm/inbox/popup", {});
+}

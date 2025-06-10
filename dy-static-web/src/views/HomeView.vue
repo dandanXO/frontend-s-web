@@ -415,6 +415,8 @@
     </el-dialog>
   </div>
   <GameModal ref="gameMenu" />
+
+  <AnnouncementModal />
 </template>
 
 <script setup>
@@ -427,6 +429,7 @@ import { useRouter } from "vue-router";
 import { userStore } from "@/store";
 import { useLocalStorage } from "@vueuse/core";
 import HomeBanner from "@/components/home/HomeBanner.vue";
+import AnnouncementModal from "@/components/modal/AnnouncementModal.vue";
 
 const store = userStore();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";

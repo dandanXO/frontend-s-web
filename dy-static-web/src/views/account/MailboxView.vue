@@ -1,113 +1,120 @@
 <template>
   <div>
+    <Mail
+      v-if="showMailId || showMailId === 0"
+      :mail="showMailId ? mailboxState.mailboxList.inbox.list[showMailId] : mailboxState.mailboxList.inbox.list[0]"
+      :closeMail="closeTheMail"
+    />
     <!-- <div class="menu-title-container">
       <span class="menu-title">收发信息</span>
     </div> -->
-    <div class="account-content mail">
-      <el-tabs v-model="mailboxState.active" @tab-click="mailTabChange" type="card">
-        <el-tab-pane key="inbox" name="inbox" :label="'消息中心'">
-          <div>
-            <el-tabs v-model="mailboxMessageTab" type="card" @tab-click="changeMailboxType">
-              <el-tab-pane v-for="(item, index) in mailboxMessageTypeData" :key="index" :name="item.type">
-                <template #label>
-                  <span class="mailTab-label">
-                    <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" />
-                    <span>
-                      {{ item.name }}
+    <template v-else>
+      <div class="account-content mail">
+        <el-tabs v-model="mailboxState.active" @tab-click="mailTabChange" type="card">
+          <el-tab-pane key="inbox" name="inbox" :label="'消息中心'">
+            <div>
+              <el-tabs v-model="mailboxMessageTab" type="card" @tab-click="changeMailboxType">
+                <el-tab-pane v-for="(item, index) in mailboxMessageTypeData" :key="index" :name="item.type">
+                  <template #label>
+                    <span class="mailTab-label">
+                      <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" />
+                      <span>
+                        {{ item.name }}
+                      </span>
                     </span>
-                  </span>
-                </template>
+                  </template>
 
-                <template v-if="mailboxState.mailboxList.inbox.list.length > 0">
-                  <div class="quick-btn">
-                    <el-button type="primary" @click="readAllMsg(mailboxMessageType)">
-                      <el-icon>
-                        <MessageBox />
-                      </el-icon>
-                      全部已读
-                    </el-button>
-                    <el-button color="grey" @click="deleteAllMsg(mailboxMessageType)">
-                      <el-icon>
-                        <Delete />
-                      </el-icon>
-                      全部删除
-                    </el-button>
-                    <div style="margin-left: auto">
-                      <el-button v-if="hasMailSelected && isShowSelect" type="primary" @click="readMultipleMsg()">
+                  <template v-if="mailboxState.mailboxList.inbox.list.length > 0">
+                    <div class="quick-btn">
+                      <el-button type="primary" @click="readAllMsg(mailboxMessageType)">
                         <el-icon>
                           <MessageBox />
                         </el-icon>
-                        读取
+                        全部已读
                       </el-button>
-
-                      <el-button v-if="hasMailSelected && isShowSelect" color="grey" @click="deleteMultipleMsg()">
+                      <el-button color="grey" @click="deleteAllMsg(mailboxMessageType)">
                         <el-icon>
                           <Delete />
                         </el-icon>
-                        删除
+                        全部删除
                       </el-button>
+                      <div style="margin-left: auto">
+                        <el-button v-if="hasMailSelected && isShowSelect" type="primary" @click="readMultipleMsg()">
+                          <el-icon>
+                            <MessageBox />
+                          </el-icon>
+                          读取
+                        </el-button>
 
-                      <el-switch
-                        v-model="isShowSelect"
-                        inline-prompt
-                        active-text="选择多个"
-                        inactive-text="选择多个"
-                        style="margin-left: 16px"
+                        <el-button v-if="hasMailSelected && isShowSelect" color="grey" @click="deleteMultipleMsg()">
+                          <el-icon>
+                            <Delete />
+                          </el-icon>
+                          删除
+                        </el-button>
+
+                        <el-switch
+                          v-model="isShowSelect"
+                          inline-prompt
+                          active-text="选择多个"
+                          inactive-text="选择多个"
+                          style="margin-left: 16px"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="mailbox-list" :class="isShowSelect && 'select-state'">
+                      <template v-for="(m, mi) in mailboxState.mailboxList.inbox.list" :key="m.id">
+                        <div :class="`mailbox-item`" @click="openMsg(m, mi)">
+                          <div class="mailbox-preview">
+                            <div :class="`mailbox-title ${m.readTime ? 'read' : 'unread'}`">
+                              <img src="../../assets/images/mail/read-mail.png" v-if="m.readTime" />
+                              <img src="../../assets/images/mail/unread-mail.png" v-else />
+                              <div v-html="m.title" />
+                            </div>
+                            <ArrowDown :class="`mailbox-accordion ${m.isOpen ? 'open' : ''}`"></ArrowDown>
+                          </div>
+
+                          <div v-if="isShowSelect" class="mailbox-checkbox">
+                            <el-checkbox v-model="selectedIds[m.id]" size="large" />
+                          </div>
+                        </div>
+
+                        <div :class="`mailbox-content-wrapper ${m.isOpen ? 'open' : ''}`">
+                          <div class="mailbox-content" v-html="m.content.replace(/\n/g, '<br/>') || '加载中...'"></div>
+                          <div class="mailbox-date">
+                            <el-icon>
+                              <Calendar />
+                            </el-icon>
+                            <div>{{ new Date(m.sendTime).toLocaleString("zh-CN") }}</div>
+                            <el-icon class="delete-btn">
+                              <Delete @click="deleteMsg(m.id, mi)" />
+                            </el-icon>
+                          </div>
+                        </div>
+                      </template>
+                    </div>
+
+                    <div class="pagination-wrapper">
+                      <el-pagination
+                        @current-change="changePage"
+                        :total="mailboxState.mailboxList.inbox.total"
+                        :current-page="mailboxState.mailboxList.inbox.pageNum"
+                        :page-size="mailboxState.mailboxList.inbox.pageSize"
                       />
                     </div>
-                  </div>
+                  </template>
 
-                  <div class="mailbox-list" :class="isShowSelect && 'select-state'">
-                    <template v-for="(m, mi) in mailboxState.mailboxList.inbox.list" :key="m.id">
-                      <div :class="`mailbox-item`" @click="openMsg(m)">
-                        <div class="mailbox-preview">
-                          <div :class="`mailbox-title ${m.readTime ? 'read' : 'unread'}`">
-                            <el-tag type="info" v-if="m.readTime">已读</el-tag>
-                            <el-tag type="danger" v-else>未读</el-tag>
-                            {{ m.title }}
-                          </div>
-                          <ArrowDown :class="`mailbox-accordion ${m.isOpen ? 'open' : ''}`"></ArrowDown>
-                        </div>
-
-                        <div v-if="isShowSelect" class="mailbox-checkbox">
-                          <el-checkbox v-model="selectedIds[m.id]" size="large" />
-                        </div>
-                      </div>
-
-                      <div :class="`mailbox-content-wrapper ${m.isOpen ? 'open' : ''}`">
-                        <div class="mailbox-content" v-html="m.content.replace(/\n/g, '<br/>') || '加载中...'"></div>
-                        <div class="mailbox-date">
-                          <el-icon>
-                            <Calendar />
-                          </el-icon>
-                          <div>{{ new Date(m.sendTime).toLocaleString("zh-CN") }}</div>
-                          <el-icon class="delete-btn">
-                            <Delete @click="deleteMsg(m.id, mi)" />
-                          </el-icon>
-                        </div>
-                      </div>
-                    </template>
-                  </div>
-
-                  <div class="pagination-wrapper">
-                    <el-pagination
-                      @current-change="changePage"
-                      :total="mailboxState.mailboxList.inbox.total"
-                      :current-page="mailboxState.mailboxList.inbox.pageNum"
-                      :page-size="mailboxState.mailboxList.inbox.pageSize"
-                    />
-                  </div>
-                </template>
-
-                <template v-else>
-                  <div style="display: flex; justify-content: center; align-items: center; height: 300px">暂无记录</div>
-                </template>
-              </el-tab-pane>
-            </el-tabs>
-          </div>
-        </el-tab-pane>
-      </el-tabs>
-    </div>
+                  <template v-else>
+                    <div style="display: flex; justify-content: center; align-items: center; height: 300px">暂无记录</div>
+                  </template>
+                </el-tab-pane>
+              </el-tabs>
+            </div>
+          </el-tab-pane>
+        </el-tabs>
+      </div>
+    </template>
   </div>
 
   <el-dialog
@@ -157,6 +164,7 @@ import { ElMessage } from "element-plus";
 import { Calendar, Delete, MessageBox, ArrowDown, Check } from "@element-plus/icons-vue";
 import moment from "moment";
 import { userStore } from "@/store";
+import Mail from "@/components/mailbox/Mail.vue";
 
 const loadingBtn = ref(false);
 const mailboxData = ref([]);
@@ -181,6 +189,10 @@ const changeMailboxType = (nk) => {
   }
 
   loadPersonalMailbox();
+};
+
+const closeTheMail = () => {
+  showMailId.value = undefined;
 };
 
 const mailboxNotifyState = reactive({
@@ -316,9 +328,12 @@ const msgModalVisible = ref(false);
 const msgTitleTxt = ref();
 const msgContentTxt = ref();
 const msgDateTxt = ref();
+const showMailId = ref();
 
-const openMsg = (m) => {
+const openMsg = (m, idx) => {
   const { id, readTime } = m;
+
+  showMailId.value = idx;
 
   mailboxNotifyState[mailboxMessageTab.value].forEach((mail) => {
     if (mail.id === id) {
@@ -326,8 +341,8 @@ const openMsg = (m) => {
     }
   });
 
-  if (m.isOpen === undefined) m.isOpen = false;
-  m.isOpen = !m.isOpen;
+  // if (m.isOpen === undefined) m.isOpen = false;
+  // m.isOpen = !m.isOpen;
   m.readTime = true;
 
   // if (!m.content) {
@@ -594,7 +609,7 @@ onMounted(() => {
 
       .mailbox-item,
       .mailbox-content-wrapper {
-        margin-bottom: 10px;
+        margin-bottom: 8px;
         padding: 0 15px;
       }
 
@@ -607,7 +622,7 @@ onMounted(() => {
       .mailbox-item {
         position: relative;
         overflow: visible;
-        padding: 10px 15px;
+        padding: 15px;
         text-align: left;
         transition: all 0.3s;
         background: #f7f8fb;
@@ -627,6 +642,14 @@ onMounted(() => {
             font-size: 14px;
             line-height: 14px;
             color: #7a80a1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'PingFang SC';
+
+            :deep(p) {
+              margin: 0 !important;
+            }
 
             &.read {
             }
