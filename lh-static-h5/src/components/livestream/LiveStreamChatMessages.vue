@@ -79,8 +79,8 @@ const store = userStore();
 const $q = useQuasar();
 const route = useRoute();
 const router = useRouter();
-const props = defineProps(["messages", "vipStatus", "livestreamData"]);
-const { messages, vipStatus, livestreamData } = toRefs(props);
+const props = defineProps(["messages", "vipStatus", "livestreamData", "extensionState", "extensionToken"]);
+const { messages, vipStatus, livestreamData, extensionState, extensionToken } = toRefs(props);
 const emit = defineEmits(["sendChatMessage"]);
 
 const messageToSend = ref("");
@@ -95,7 +95,7 @@ const isMessageSendable = computed(() => messageToSend.value.trim().length > 0);
 const inputConfig = computed(() => {
   let disabled = false;
   let placeholder = "请输入聊天内容";
-  if (store.token && !vipStatus.value) {
+  if ((store.token && !extensionState.value) || !vipStatus.value) {
     disabled = true;
     if (!vipStatus.value) placeholder = "VIP特权不足，无法发言";
     // if (!store.token) placeholder = "请登录后发言";

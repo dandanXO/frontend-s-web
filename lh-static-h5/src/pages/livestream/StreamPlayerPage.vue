@@ -51,6 +51,8 @@
       :vip-status
       :livestream-data="currentLiveData"
       @send-chat-message="handleSendChatMessage"
+      :extensionState
+      :extensionToken
     />
   </div>
 </template>
