@@ -245,7 +245,8 @@ onMounted(() => {
     margin: 10px 0 0 0;
     border-radius: 0.75rem 0.75rem 0rem 0rem;
     // background: #392e7b;
-    background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
+    // background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
+    background: #00b9a175;
     height: 50px;
     padding: 10px;
     justify-content: space-between;
@@ -267,7 +268,7 @@ onMounted(() => {
 
   .qr-wrapper {
     border-radius: 0rem 0rem 0.75rem 0.75rem;
-    background: #00b9a175;
+    background: #131B1D;
     display: flex;
     flex-direction: column;
     align-items: center;
