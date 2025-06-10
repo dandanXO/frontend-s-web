@@ -72,6 +72,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="firstDepositCount" :label="t('fields.ftdCount')" sortable :sort-orders="sortOrders" />
+      <el-table-column prop="depositMemberCount" :label="t('fields.depositMemberCount')" sortable :sort-orders="sortOrders" />
       <el-table-column prop="successCount" :label="t('fields.successCount')" sortable :sort-orders="sortOrders" />
       <el-table-column prop="depositCount" :label="t('fields.depositCount')" sortable :sort-orders="sortOrders" />
       <el-table-column prop="depositBonus" :label="t('fields.depositBonus')" sortable :sort-orders="sortOrders">
@@ -282,7 +283,8 @@ function getSummaries(param) {
           index === 1 ||
           index === 3 ||
           index === 4 ||
-          index === 5
+          index === 5 ||
+          index === 6
         ) {
           sums[index] = page.sums[prop]
         } else {
