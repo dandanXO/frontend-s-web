@@ -71,10 +71,10 @@
           Home
         </q-route-tab>
         <q-route-tab class="cs-web-id" to="/promo" id="cs-web-id" name="live" :ripple="false">
-          <img class="inactive" src="../assets/images/index/menu/bonus-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.png" />
+          <img class="inactive" src="../assets/images/index/menu/earn-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/earn-icon-hover.png" />
           <!-- {{ $t("bottomNav.promo") }} -->
-          Earn Money
+          Bonus
         </q-route-tab>
         <!-- <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" class="center-menu" :ripple="false">
           <img src="../assets/images/index/menu/deposit-icon.png" />
@@ -86,10 +86,10 @@
           Deposit
         </q-route-tab>
         <q-route-tab to="/earn-money" name="earn-money" :ripple="false">
-          <img class="inactive" src="../assets/images/index/menu/earn-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/earn-icon-hover.png" />
+          <img class="inactive" src="../assets/images/index/menu/bonus-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.png" />
           <!-- {{ $t("bottomNav.earnMoney") }} -->
-          Bonus
+          Earn Money
         </q-route-tab>
         <q-route-tab to="/account" name="account" :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/account-icon.png" />
