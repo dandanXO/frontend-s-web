@@ -300,9 +300,10 @@ const updateNewGuestState = () => {
 }
 
 .style-btn-confirm {
-  color: #4a38b9;
+  color: #ffffff;
   border-radius: 8px;
-  background: linear-gradient(188deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
+  background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+  // background: linear-gradient(188deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
   font-size: 16px;
   font-weight: 600;
   width: 100%;

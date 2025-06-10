@@ -74,7 +74,15 @@
               </div>
             </div>
           </template>
-          <q-list style="background: #303954" dense unelevated flat class="dropdown-list">
+          <q-list dense unelevated flat class="dropdown-list">
+            <q-item clickable v-close-popup @click="router.push('/account/profile')">
+              <q-item-section avatar>
+                <q-avatar icon="phone_iphone" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>{{ $t("header.information") }}</q-item-label>
+              </q-item-section>
+            </q-item>
             <q-item clickable v-close-popup @click="onVipClick">
               <q-item-section avatar>
                 <q-avatar icon="diamond" />
@@ -666,6 +674,9 @@ onMounted(() => {
 
 .dropdown-list {
   // box-shadow: 14px 14px 14px rgba(0, 0, 0, 0.4) !important;
+  // border-radius: 18px;
+  background: #0f2021;
+  // overflow: hidden;
 }
 
 .btn-lang {
