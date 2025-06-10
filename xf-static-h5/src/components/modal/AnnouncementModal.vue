@@ -19,7 +19,7 @@
       </div>
 
       <div class="actions">
-        <div class="cs-btn"  @click="store.openLiveChat()">
+        <div class="cs-btn"  @click="goToLiveChat">
           <img src="../../assets/images/home/announcement/cs-icon.svg" />联系客服</div>
       </div>
 
@@ -43,6 +43,10 @@ const inboxData = ref([]);
 const store = userStore();
 const lastAnnouncementDateStr = useLocalStorage("XF_LAST_ANNOUNCEMENT_DATE", null);
 const checked = ref(false);
+
+const goToLiveChat = () => {
+  router.push('/liveChat');
+}
 
 const goToMailDetail = (mail) => {
   router.push(`/account/message?id=${mail.id}&type=${mail.type}`);
