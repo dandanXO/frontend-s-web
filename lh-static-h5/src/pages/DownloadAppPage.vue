@@ -1,10 +1,15 @@
 <template>
-  <div class="main-container" :style="{background: $q.dark.isActive ? '' : `url(${require('../assets/images/download/app/main-bg.png')}) no-repeat`}">
+  <div
+    class="main-container"
+    :style="{
+      background: $q.dark.isActive ? '' : `url(${require('../assets/images/download/app/main-bg.png')}) no-repeat`
+    }"
+  >
     <div class="flex">
-      <img class="logo-img" src="../assets/images/download/app/logo.png"/>
+      <img class="logo-img" src="../assets/images/download/app/logo.png" />
     </div>
     <q-carousel
-     ref="carousel"
+      ref="carousel"
       control-type="flat"
       class="carousel"
       v-model="slide"
@@ -24,7 +29,7 @@
           size="xs"
           color="white"
           @click="onClick"
-          style="border: 1px solid #4A8FFF; border-radius: 50%; margin: 6px 8px"
+          style="border: 1px solid #4a8fff; border-radius: 50%; margin: 6px 8px"
         />
         <q-btn
           padding="5px"
@@ -37,105 +42,92 @@
       </template>
       <q-carousel-slide :key="0" :name="0">
         <div class="custom-slide-content">
-          <div class="flex" style="pointer-events: none;">
-            <img style="width:auto;max-width: 100%;height:45px;" src="../assets/images/download/app/title-1.png"/>
+          <div class="flex" style="pointer-events: none">
+            <img style="width: auto; max-width: 100%; height: 45px" src="../assets/images/download/app/title-1.png" />
           </div>
-          <div class="flex" style="pointer-events: none;">
-            <img style="width:auto;max-width: 100%;height: 320px;margin-right: 3rem;" src="../assets/images/download/app/bg-1.png"/>
+          <div class="flex" style="pointer-events: none">
+            <img
+              style="width: auto; max-width: 100%; height: 320px; margin-right: 3rem"
+              src="../assets/images/download/app/bg-1.png"
+            />
           </div>
-          <div class="flex" style="pointer-events: none;">
-            <img style="width:auto;max-width: 100%;height: 46px;" src="../assets/images/download/app/bottom-1.png"/>
+          <div class="flex" style="pointer-events: none">
+            <img style="width: auto; max-width: 100%; height: 46px" src="../assets/images/download/app/bottom-1.png" />
           </div>
         </div>
       </q-carousel-slide>
       <q-carousel-slide :key="1" :name="1">
         <div class="custom-slide-content">
-          <div class="flex" style="pointer-events: none;">
-            <img style="width:auto;max-width: 100%;height:30px;" src="../assets/images/download/app/title2-1.png"/>
+          <div class="flex" style="pointer-events: none">
+            <img style="width: auto; max-width: 100%; height: 30px" src="../assets/images/download/app/title2-1.png" />
           </div>
-          <div class="flex" style="pointer-events: none;">
-            <img style="width:auto;max-width: 100%;height:35px;" src="../assets/images/download/app/title2-2.png"/>
+          <div class="flex" style="pointer-events: none">
+            <img style="width: auto; max-width: 100%; height: 35px" src="../assets/images/download/app/title2-2.png" />
           </div>
-          <div class="flex" style="pointer-events: none;">
-            <img style="width:auto;max-width: 100%;height:240px;" src="../assets/images/download/app/bg-2.png"/>
+          <div class="flex" style="pointer-events: none">
+            <img style="width: auto; max-width: 100%; height: 240px" src="../assets/images/download/app/bg-2.png" />
           </div>
-          <div class="flex" style="pointer-events: none;">
-            <img style="width:auto;max-width: 100%;height:110px;" src="../assets/images/download/app/bottom-2.png"/>
+          <div class="flex" style="pointer-events: none">
+            <img style="width: auto; max-width: 100%; height: 110px" src="../assets/images/download/app/bottom-2.png" />
           </div>
         </div>
       </q-carousel-slide>
     </q-carousel>
-    <div class="flex2 action-buttons" style="margin-top: 4px;">
-      <button class="btn1-1" @click="openSheet">
-        APP下载
-      </button>
-      <q-btn class="btn2" :class="{'common-large-btn': $q.dark.isActive}" @click="isAndroid = !isAndroid">
-        {{ isAndroid ? '切换IOS' : '切换安卓' }}
+    <div class="flex2 action-buttons" style="margin-top: 4px">
+      <button class="btn1-1" @click="openSheet">APP下载</button>
+      <q-btn class="btn2" :class="{ 'common-large-btn': $q.dark.isActive }" @click="isAndroid = !isAndroid">
+        {{ isAndroid ? "切换IOS" : "切换安卓" }}
       </q-btn>
-      <button class="btn3" @click="openTeachSheet">
-        点击查看安装教程
-      </button>
+      <button class="btn3" @click="openTeachSheet">点击查看安装教程</button>
     </div>
   </div>
 
   <!-- 自訂 bottom-sheet -->
-  <div
-    v-if="showSheet"
-    class="custom-bottom-sheet"
-    @click.self="closeSheet"
-  >
-    <div
-      class="sheet-content"
-      :class="sheetAnim"
-      @animationend="onSheetAnimEnd"
-    >
+  <div v-if="showSheet" class="custom-bottom-sheet" @click.self="closeSheet">
+    <div class="sheet-content" :class="sheetAnim" @animationend="onSheetAnimEnd">
       <div>
         <div class="inner-sheet">
           <img src="../assets/images/download/app/ibg-1.png" class="sheet-content-bg" />
-          <div class="sheet-content-1">
-            APP下载
-          </div>
+          <div class="sheet-content-1">APP下载</div>
           <img src="../assets/images/download/app/ibg-2.png" class="sheet-content-bg2" />
           <img src="../assets/images/download/app/close.png" class="sheet-content-bg3" @click.self="closeSheet" />
         </div>
       </div>
-      <div class="flex" style="width: 100%; height: 100%; overflow-y: auto; ">
-        <div :data-clipboard-text="`'UIO${JSON.stringify(vv)}'`"  @click.prevent="downloadFile(item.url,'app', index)" class="sub1-download-card" v-for="(item, index) in (isAndroid ? androidDownloadUrlList : isoDownloadUrlList)" :key="index">
+      <div class="flex" style="width: 100%; height: 100%; overflow-y: auto">
+        <div
+          :data-clipboard-text="`'UIO${JSON.stringify(vv)}'`"
+          @click.prevent="downloadFile(item.url, 'app', index)"
+          class="sub1-download-card"
+          v-for="(item, index) in isAndroid ? androidDownloadUrlList : isoDownloadUrlList"
+          :key="index"
+        >
           <img src="../assets/images/download/app/icon-super.png" alt="super version" class="sub1-icon" />
           <div class="sub1-content">
             <div class="sub1-title">{{ item.name }}</div>
-            <div class="sub1-subtitle"> {{ item?.subtitle }}</div>
+            <div class="sub1-subtitle">{{ item?.subtitle }}</div>
           </div>
-          <button class="sub1-btn-download " :class="item.isDownload ? 'sub1-inactive' : 'sub1-active' ">
-            {{ item.isDownload ? '已下载' : '下载' }}
+          <button class="sub1-btn-download" :class="item.isDownload ? 'sub1-inactive' : 'sub1-active'">
+            {{ item.isDownload ? "已下载" : "下载" }}
           </button>
         </div>
-      
-        <button class="btn1" style="margin-bottom: 32px;" @click="isAndroid = !isAndroid">
-          <div>{{ isAndroid ? '切换IOS' : '切换安卓' }}</div>
+
+        <button class="btn1" style="margin-bottom: 32px" @click="isAndroid = !isAndroid">
+          <div>{{ isAndroid ? "切换IOS" : "切换安卓" }}</div>
         </button>
       </div>
     </div>
   </div>
 
   <!-- 自訂teach sheet -->
-  <div
-    v-if="showTeachSheet"
-    class="custom-bottom-sheet"
-    @click.self="closeTeachSheet"
-  >
-    <div
-      class="sheet-content2"
-      :class="teachSheetAnim"
-      @animationend="onTeachSheetAnimEnd"
-    >
+  <div v-if="showTeachSheet" class="custom-bottom-sheet" @click.self="closeTeachSheet">
+    <div class="sheet-content2" :class="teachSheetAnim" @animationend="onTeachSheetAnimEnd">
       <div class="teach1-header-tip">
         <div class="teach1-notch" @click.prevent="closeTeachSheet"></div>
         <div class="teach1-title">IOS企业应用添加信任</div>
         <p class="teach1-subtitle">安装APP后，请按照以下步骤操作，否则将无法正常运行</p>
       </div>
       <div class="teach1-step-gallery">
-        <img style="width:100%;" src="../assets/images/download/app/teach.png" alt="teach" />
+        <img style="width: 100%" src="../assets/images/download/app/teach.png" alt="teach" />
       </div>
     </div>
   </div>
@@ -144,9 +136,10 @@
 <script lang="js">
 import { ref, defineComponent, onMounted } from "vue";
 import axios from "axios";
+import { api } from "boot/axios";
 
 var host = window.location.host
-    
+
 export default defineComponent({
   name: "downloadAppPage",
   setup() {
@@ -175,7 +168,7 @@ export default defineComponent({
     const dataUrl = 'https://tfwkgol.076knee9cc.com'
     function postDownloadExtra() {
         axios.get(dataUrl + "/extra", {
-          params: { agentCode: sessionStorage.agentCode || '', siteCode: "lh1" }
+          params: { agentCode: sessionStorage.getItem("AFFILIATE_CODE") || '', siteCode: "lh1" }
         }).then(res => {
           // 可根据需要处理返回数据
         }).catch(err => {
@@ -197,10 +190,27 @@ export default defineComponent({
         showTeachSheet.value = false;
       }
     }
+
+    const getAffiliateByDomain = () => {
+      var host = window.location.host;
+      // host = "www.lh56917.com";
+      api.get(`/app/getAffiliateCode?siteCode=lh1&domain=${host}`).then((res) => {
+        console.log(res);
+        if (res.code === 0 && res.data !== "") {
+          // alert(res.data)
+          var agentCode = res.data;
+          sessionStorage.setItem("AFFILIATE_CODE", agentCode);
+        }
+      });
+    };
+
     onMounted(()=>{
+
       const userAgent = navigator.userAgent.toLowerCase();
       const isAndroidUserAgent = userAgent.includes("android");
       isAndroid.value = isAndroidUserAgent;
+
+      getAffiliateByDomain();
 
       axios.get('https://tfwkgol.076knee9cc.com/getDownData').then((res) => {
         let subTitle = ['高效 快捷',' 防失联 不掉签','长期 稳定',]
@@ -217,7 +227,7 @@ export default defineComponent({
               return { name, url, subtitle:subTitle[Math.floor(Math.random() * subTitle.length)], isDownload: false  };
             }
           );
-          
+
         }else{
           console.error("Error fetching app download data:", res.message);
         }
@@ -265,7 +275,6 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-
 .custom-slide-content {
   flex-direction: column;
   align-items: flex-start;
@@ -280,14 +289,14 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
 }
-.flex2{
+.flex2 {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   gap: 7px;
 }
-.main-container{
+.main-container {
   overflow-x: hidden;
   // background: url("../assets/images/download/app/main-bg.png") no-repeat;
   background-size: cover;
@@ -302,23 +311,23 @@ export default defineComponent({
   background-size: cover;
   background-position: center;
 }
-:deep(.q-carousel__navigation--bottom){
-    bottom: 0px;
-  }
-.btn1{
+:deep(.q-carousel__navigation--bottom) {
+  bottom: 0px;
+}
+.btn1 {
   width: 90%;
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 14px;
   border: 0px;
   padding: 0.8rem;
-  background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
-  box-shadow: 0px 3.21px 3.21px 0px #93C7FF inset;
-  box-shadow: 0px -2.57px 2.57px 0px #275EC1 inset;
+  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+  box-shadow: 0px 3.21px 3.21px 0px #93c7ff inset;
+  box-shadow: 0px -2.57px 2.57px 0px #275ec1 inset;
   border-radius: 12px;
 }
-.btn1-1{
+.btn1-1 {
   width: 84%;
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 14px;
   border: 0px;
   padding: 0.8rem;
@@ -326,21 +335,21 @@ export default defineComponent({
   background-position: center;
   background-size: 100% 100%;
 }
-.btn2{
+.btn2 {
   width: 84%;
-  color: #7A80A1;
+  color: #7a80a1;
   font-size: 14px;
   border: 0px;
   padding: 0.8rem;
-  background: linear-gradient(180deg, #F8FBFF 0%, #FDFEFF 100%);
-  box-shadow: 0px 3.82px 3.82px 0px #BBDCFF inset;
-  box-shadow: 0px -3.05px 3.05px 0px #A2BFF4 inset;
+  background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
+  box-shadow: 0px 3.82px 3.82px 0px #bbdcff inset;
+  box-shadow: 0px -3.05px 3.05px 0px #a2bff4 inset;
   border-radius: 12px;
   touch-action: none;
 }
-.btn3{
+.btn3 {
   font-size: 14px;
-  color:#4A8FFF;
+  color: #4a8fff;
   border: 0px;
   padding: 0.5rem;
   margin-bottom: 1rem;
@@ -354,7 +363,7 @@ export default defineComponent({
   right: 0;
   bottom: 0;
   top: 0;
-  background: rgba(0,0,0,0.3);
+  background: rgba(0, 0, 0, 0.3);
   z-index: 9999;
   display: flex;
   align-items: flex-end;
@@ -365,7 +374,7 @@ export default defineComponent({
   width: 100%;
   background: #fff;
   border-radius: 16px 16px 0 0;
-  box-shadow: 0 -2px 16px rgba(0,0,0,0.08);
+  box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.08);
   position: relative;
   display: flex;
   align-items: center;
@@ -376,43 +385,43 @@ export default defineComponent({
 }
 .sheet-content {
   height: 50vh;
-  transition: transform 0.35s cubic-bezier(.4,0,.2,1), opacity 0.25s;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s;
 }
 .sheet-content2 {
   height: 73vh;
-  transition: transform 0.35s cubic-bezier(.4,0,.2,1), opacity 0.25s;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s;
 }
 .sheet-content.show,
 .sheet-content2.show {
-  animation: sheetIn 0.35s cubic-bezier(.4,0,.2,1) forwards;
+  animation: sheetIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 .sheet-content.hide,
 .sheet-content2.hide {
-  animation: sheetOut 0.25s cubic-bezier(.4,0,.2,1) forwards;
+  animation: sheetOut 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 .inner-sheet {
   height: 100%;
   position: relative;
 }
-.sheet-content-bg{
+.sheet-content-bg {
   width: 100%;
   position: relative;
 }
-.sheet-content-bg2{
+.sheet-content-bg2 {
   right: 0;
   position: absolute;
   bottom: 6px;
   width: 200px;
 }
-.sheet-content-bg3{
+.sheet-content-bg3 {
   right: 10px;
   position: absolute;
   bottom: 50%;
   width: 30px;
   transform: translateY(50%);
 }
-.sheet-content-1{
-  color:#fff;
+.sheet-content-1 {
+  color: #fff;
   position: absolute;
   left: 10%;
   top: 16%;
@@ -499,21 +508,21 @@ export default defineComponent({
   color: #666;
   margin: 0;
 }
-.teach1-step-gallery{
+.teach1-step-gallery {
   overflow: auto;
 }
 
 .common-large-btn {
-    background: url("../assets/images/login/login-btn-bg-dark.svg") no-repeat center center;
-    background-size: cover;
-    box-shadow: none;
-    border-radius: 4px;
-    border: 1px solid #3a93ce;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-  }
+  background: url("../assets/images/login/login-btn-bg-dark.svg") no-repeat center center;
+  background-size: cover;
+  box-shadow: none;
+  border-radius: 4px;
+  border: 1px solid #3a93ce;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
 
 @keyframes sheetIn {
   from {
@@ -551,7 +560,8 @@ export default defineComponent({
     margin-top: 15px;
     gap: 15px;
 
-    .btn1-1, .btn2 {
+    .btn1-1,
+    .btn2 {
       padding: 1rem;
       font-size: 16px;
     }
