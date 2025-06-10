@@ -207,10 +207,11 @@ const logout = () => {
 .top-setting-section {
   width: 100%;
   position: relative;
-  background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
   border-radius: 20px 20px 0px 0px;
   padding: 25px 0px 40px;
   margin-bottom: -30px;
+  margin-top: 18px;
 
   .top-section-inner {
     width: 95%;
@@ -432,7 +433,7 @@ const logout = () => {
   height: 42px;
 }
 .btn-confirm {
-  background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
   font-weight: 700;
   width: 140px;
   height: 42px;

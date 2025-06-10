@@ -695,8 +695,8 @@ export default defineComponent({
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    background: #101114;
-    color: #5c6c86;
+    background: rgba(43, 71, 74, 0.27);
+    color: #01A1B2;
     font-weight: 400;
   }
 

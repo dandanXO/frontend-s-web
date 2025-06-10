@@ -157,7 +157,7 @@ const swipeRight = () => {
     :deep(.q-tab--active) {
       color: white;
       background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
-      border: 2px solid #422171;
+      // border: 2px solid #422171;
 
       svg {
         fill: white;
