@@ -58,7 +58,7 @@
 </template>
 
 <script setup>
-import { ref, onActivated, onUnmounted, onMounted, nextTick, reactive, watch, computed } from "vue";
+import { ref, onActivated, onUnmounted, onMounted, nextTick, reactive, watch, computed, onDeactivated } from "vue";
 import Danmu from "danmu.js";
 import MarqueeText from "vue-marquee-text-component";
 import { userStore } from "stores/index";
@@ -147,6 +147,22 @@ const roomMessage = computed(() => {
   }
 });
 
+const parseLivestreamData = (data) => {
+  let parsedSupplierUrl = {};
+  let parsedStreamerUrl = {};
+  try {
+    parsedSupplierUrl = JSON.parse(data.supplierCdnPullUrl);
+    parsedStreamerUrl = JSON.parse(data.streamerCdnPullUrl);
+  } catch (e) {
+  } finally {
+    return {
+      ...data,
+      supplierCdnPullUrl: parsedSupplierUrl,
+      streamerCdnPullUrl: parsedStreamerUrl
+    };
+  }
+};
+
 const syncLivestreamInfo = async () => {
   if (!currentLiveData.value?.streamId) return;
   livestreamSyncAbortController.value = new AbortController();
@@ -165,14 +181,15 @@ const syncLivestreamInfo = async () => {
           duration: 2000
         });
       }
-      // const parsedData = parseLivestreamData(res.data);
-      // list.value[currentLive.value] = {
-      //   ...currentLiveData.value,
-      //   roomMessage: parsedData?.roomMessage,
-      //   streamerStatus: parsedData.streamerStatus,
-      //   streamerCdnPullUrl: parsedData.streamerCdnPullUrl,
-      //   supplierCdnPullUrl: parsedData.supplierCdnPullUrl
-      // };
+      const parsedData = parseLivestreamData(res.data);
+      const index = list.value.findIndex((item) => item.streamId === currentLiveData.value.streamId);
+      list.value[index] = {
+        ...currentLiveData.value,
+        roomMessage: parsedData?.roomMessage,
+        streamerStatus: parsedData.streamerStatus,
+        streamerCdnPullUrl: parsedData.streamerCdnPullUrl,
+        supplierCdnPullUrl: parsedData.supplierCdnPullUrl
+      };
     }
   });
 };
@@ -273,7 +290,6 @@ const messages = ref([]);
 const danmuList = ref([]);
 
 const handleSendChatMessage = (message) => {
-
   if (!store.hasToken() && !extensionState.value) {
     // store.loginPageVisible = true;
     const currentPath = router.currentRoute.value.fullPath;
@@ -529,15 +545,15 @@ watch(currentLiveData, () => {
 //   }
 // );
 
-onMounted(() => {
+onActivated(() => {
   getData();
   syncMessages();
   // syncLivestreamInfo();
-  resetSyncLivestreamInterval(true);
+  // resetSyncLivestreamInterval(true);
   checkExtension();
 });
 
-onUnmounted(() => {
+onDeactivated(() => {
   if (messageTimer.value) {
     clearTimeout(messageTimer.value);
     messageTimer.value = null;

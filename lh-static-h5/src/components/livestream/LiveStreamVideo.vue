@@ -323,7 +323,6 @@ const loadPlayer = async () => {
 
 const initPlayer = async (play = false) => {
   if (!player.value) return;
-  if (!isActive.value) return;
   await player.value.init();
   isPlayerSupported.value = player.value.supportPlayer !== "NONE";
   player.value.on(player.value.Events.CUSTOM_ERROR, handlePlayerErrorDebounce);
@@ -585,11 +584,12 @@ const loadData = () => {
 };
 
 watch(livestreamData, (val, oldVal) => {
+  if (!isActive.value) return;
   const newVideoSource = getVideoSource(val);
   const newVideoUrl = getVideoUrl(newVideoSource);
   const _currentVideoSource = getVideoSource(oldVal);
   const _currentVideoUrl = getVideoUrl(_currentVideoSource);
-  if (newVideoUrl === _currentVideoUrl || !newVideoUrl) return;
+  if ((newVideoUrl === _currentVideoUrl && player.value) || !newVideoUrl) return;
   loadData();
 });
 
