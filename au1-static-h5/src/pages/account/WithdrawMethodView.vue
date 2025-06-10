@@ -736,6 +736,7 @@ const submitWithdrawBank = () => {
 
   bankCardField.amount = withdrawInfo.amount;
   bankCardField.withdrawCode = selectedMethodItem.value.code;
+  bankCardField.withdrawPlatformId = selectedMethodItem.value.withdrawId;
 
   api
     .post("/session/ausWithdrawAndBankCard", qs.stringify(bankCardField))
