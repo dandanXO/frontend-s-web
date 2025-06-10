@@ -24,15 +24,16 @@
       <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
-            <div :class="`vip-badge vip${vip.vipLevel}`"></div>
+            <!-- <div :class="`vip-badge vip${vip.vipLevel}`"></div> -->
+            <div :class="`vip-badge vip0`"></div>
 
             <div class="vip-level-header">
               <svg viewBox="0 0 450 70">
                 <defs>
                   <!-- Linear Gradient -->
                   <linearGradient id="myGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" style="stop-color: #8b36f8; stop-opacity: 1" />
-                    <stop offset="100%" style="stop-color: #334ad6; stop-opacity: 1" />
+                    <stop offset="0%" style="stop-color: #00b9a1; stop-opacity: 1" />
+                    <stop offset="100%" style="stop-color: #0097b9; stop-opacity: 1" />
                   </linearGradient>
                 </defs>
                 <text class="svgText" x="10" y="45" fill="url(#myGradient)">
@@ -75,7 +76,7 @@
         <div class="vip-reward-item">
           <div class="reward-desc">
             <div class="icon">
-              <img src="../../assets/images/vip/level-upgrade-reward-icon.svg" />
+              <img src="../../assets/images/vip/level-upgrade-reward-icon.png" />
             </div>
             <div class="title">
               <span class="bold">{{ $t("vip.levelUpgrade") }}</span>
@@ -97,7 +98,7 @@
         <div class="vip-reward-item">
           <div class="reward-desc">
             <div class="icon">
-              <img src="../../assets/images/vip/monthly-reward-icon.svg" />
+              <img src="../../assets/images/vip/monthly-reward-icon.png" />
             </div>
             <div class="title">
               <span class="bold">{{ $t("vip.monthly") }}</span>
@@ -119,7 +120,7 @@
         <div class="vip-reward-item">
           <div class="reward-desc">
             <div class="icon">
-              <img src="../../assets/images/vip/daily-withdrawal-limit-icon.svg" />
+              <img src="../../assets/images/vip/daily-withdrawal-limit-icon.png" />
             </div>
             <div class="title">
               <span class="bold">{{ $t("vip.dailyWithdrawal") }}</span>
@@ -799,6 +800,11 @@ const swipeRight = () => {
         border-radius: 100px;
         height: 35px;
         width: 35px;
+
+        img {
+          display: block;
+          width: 35px;
+        }
       }
 
       .title {
@@ -809,7 +815,7 @@ const swipeRight = () => {
       }
 
       .reward-amt-wrapper {
-        background-color: #c9c8ff;
+        background-color: #d0f3ec;
         padding: 5px 15px;
         max-width: 100px;
         border-radius: 4px;
@@ -903,6 +909,12 @@ const swipeRight = () => {
     background: url("../../assets/images/vip/badge/vip1.png") no-repeat top center;
     background-size: 100% 100%;
 
+    &.vip0 {
+      background: url("../../assets/images/vip/badge/vip0.png") no-repeat top center;
+      background-size: auto 100%;
+      margin-top: -5px;
+    }
+
     &.vip2 {
       background: url("../../assets/images/vip/badge/vip2.png") no-repeat top center;
       background-size: 100% 100%;
@@ -968,7 +980,8 @@ const swipeRight = () => {
     right: 2%;
     z-index: 1;
     position: absolute;
-    color: #8b36f8;
+    // color: #8b36f8;
+    color: rgba(0, 151, 185, 1);
 
     svg {
       font-family: Arial;
@@ -1101,8 +1114,8 @@ const swipeRight = () => {
   .top-header {
     color: #f1f1f1;
     // background: linear-gradient(180deg, #41206f 0%, #1f2862 100%);
-    background: linear-gradient(180deg, #005348 0%, rgba(0, 83, 72, 0.2) 96.35%);
-
+    // background: linear-gradient(180deg, #005348 0%, rgba(0, 83, 72, 0.2) 96.35%);
+    background: linear-gradient(180deg, #0a544c 0%, #0a4855 100%);
 
     td {
       padding-left: 0.5rem;
@@ -1142,11 +1155,11 @@ const swipeRight = () => {
   }
   tbody > :nth-child(odd) {
     background: rgba(21, 0, 37, 0.2);
-    background: #005348;
+    background: #016d5e;
   }
   tbody > :nth-child(even) {
     background: rgba(21, 0, 37, 0.5);
-    background: #016d5e;
+    background: #005348;
   }
 
   span.amt-text {

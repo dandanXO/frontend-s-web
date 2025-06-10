@@ -1,10 +1,9 @@
 <template>
   <q-dialog
     width="100%"
-    v-model="isShowSpinLuckyWheelPromoPopup"
+    v-model="isShowSpinLuckyWheelPromoPopupz"
     class="spin-lucky-wheel-promo-popup"
     @update:model-value="onCloseSpinLuckyWheelPromoPopup"
-    style="display: none"
   >
     <div class="">
       <div class="spin-lucky-wheel-promo-popup-wrapper">
@@ -106,6 +105,8 @@ const goToPromo = () => {
     router.push("/promo?name=spin-lucky-wheel");
   }
 };
+
+const isShowSpinLuckyWheelPromoPopupz = ref(false);
 
 defineExpose({
   isDoNotShowAgain,

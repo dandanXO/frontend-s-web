@@ -166,12 +166,12 @@ onMounted(() => {
   }
 
   .earn-separator {
-    background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #00B9A1 0.01%, rgba(92, 70, 231, 0) 100%);
+    background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #00b9a1 0.01%, rgba(92, 70, 231, 0) 100%);
     height: 2px;
   }
 
   .earn-title {
-    background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #00B9A1 0.01%, rgba(92, 70, 231, 0) 100%);
+    background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #00b9a1 0.01%, rgba(92, 70, 231, 0) 100%);
     font-size: 2rem;
     font-weight: 700;
     text-align: center;
@@ -212,17 +212,17 @@ onMounted(() => {
 
   .table-container {
     :deep(thead) {
-      background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+      background: linear-gradient(180deg, #0a534c 0%, #0a4855 100%);
     }
 
     :deep(tbody) {
-      background: #005348;
+      background: #016d5e;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
       tr {
         &:nth-child(2n) {
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-          background: #016d5e;
+          background: #005348;
         }
       }
     }
@@ -245,7 +245,7 @@ onMounted(() => {
     margin: 10px 0 0 0;
     border-radius: 0.75rem 0.75rem 0rem 0rem;
     // background: #392e7b;
-    background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+    background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
     height: 50px;
     padding: 10px;
     justify-content: space-between;
@@ -267,7 +267,7 @@ onMounted(() => {
 
   .qr-wrapper {
     border-radius: 0rem 0rem 0.75rem 0.75rem;
-    background: #00B9A175;
+    background: #00b9a175;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -286,7 +286,7 @@ onMounted(() => {
       color: #ffffff;
       font-weight: 700;
       border-radius: 0.5rem;
-      background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+      background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
 
       // background: linear-gradient(188deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
     }

@@ -552,7 +552,7 @@ onMounted(() => {
       display: flex;
       gap: 15px;
       // background: linear-gradient(180deg, rgba(139, 54, 248, 0.4) 0%, rgba(51, 74, 214, 0.4) 100%);
-      background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+      background: linear-gradient(180deg, #0a534c 0%, #0a4855 100%);
       border-radius: 12px;
     }
 
