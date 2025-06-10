@@ -4107,7 +4107,7 @@ onBeforeUnmount(() => {
   background-size: cover;
   background-position: center center;
   position: relative;
-  background-image: url("../assets/images/index/mini-game-bg.png");
+  // background-image: url("../assets/images/index/mini-game-bg.png");
   // background-image: url("../assets/images/index/item-game-maintenance.png");
   border-radius: 8px;
 

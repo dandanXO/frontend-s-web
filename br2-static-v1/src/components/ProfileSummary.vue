@@ -20,7 +20,7 @@
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-wrapper-extra">
         <div class="logo-img">
-          <img src="../assets/logo.png" @click="onClickLogo" />
+          <img src="../assets/logo.svg" @click="onClickLogo" />
         </div>
       </div>
       <div class="profile-wrapper" v-if="store.token">
@@ -649,13 +649,13 @@ onMounted(() => {
 }
 
 .q-item__label {
-  color: #c5c7ff;
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 500;
 }
 
 .q-avatar {
   i.q-icon {
-    color: #7b80a9;
+    color: rgba(255, 255, 255, 0.6);
   }
 }
 

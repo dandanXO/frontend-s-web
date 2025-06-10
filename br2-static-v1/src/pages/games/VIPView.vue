@@ -763,7 +763,7 @@ const swipeRight = () => {
 </script>
 <style lang="scss" scoped>
 .separator-line {
-  border: 1px solid #49148f70;
+  border: 1px solid #0D333D;
   padding: 0 10px;
 }
 
@@ -852,8 +852,8 @@ const swipeRight = () => {
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    background: #101114;
-    color: #5c6c86;
+    background: rgba(43, 71, 74, 0.27);
+    color: #01A1B2;
   }
 
   .vip-promo-tab-toggle {

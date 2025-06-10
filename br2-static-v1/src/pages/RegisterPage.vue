@@ -25,7 +25,9 @@
             <span class="prepend-number">{{ $t("form.prependNumber") }}</span>
           </template>
           <template v-if="regForm.referrer" v-slot:append>
-            <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">{{ otpCountdown > 0 ? `Obter Código (${otpCountdown})` : 'Obter Código' }}</q-btn>
+            <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">
+              {{ otpCountdown > 0 ? `Obter Código (${otpCountdown})` : "Obter Código" }}
+            </q-btn>
           </template>
         </q-input>
         <q-input
@@ -297,7 +299,6 @@ export default defineComponent({
         message: "Registering in progress"
       });
 
-
       if (
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
@@ -309,7 +310,7 @@ export default defineComponent({
         isAgreeReg.value === false
       ) {
         $q.loading.hide();
-      } else if (regForm.referrer && isOtpEnable.value){
+      } else if (regForm.referrer && isOtpEnable.value) {
         $q.notify({
           color: "negative",
           position: "top",
@@ -479,28 +480,28 @@ export default defineComponent({
             // start otp countdown
             otpCountdown.value = res.data.second || 60;
             otpCountdownInterval.value = setInterval(() => {
-              if(otpCountdown.value > 0) {
+              if (otpCountdown.value > 0) {
                 otpCountdown.value = otpCountdown.value - 1;
               }
-            },1000);
+            }, 1000);
           } else {
             color = "negative";
-            if(res.code === 1402) {
+            if (res.code === 1402) {
               message = `Por favor, tente novamente após ${res.data.second} segundos`;
 
-               // start otp countdown
+              // start otp countdown
               otpCountdown.value = res.data.second || 60;
               otpCountdownInterval.value = setInterval(() => {
-                if(otpCountdown.value > 0) {
+                if (otpCountdown.value > 0) {
                   otpCountdown.value = otpCountdown.value - 1;
                 }
-              },1000);
+              }, 1000);
             }
             getInnerCode();
           }
 
           if (message) {
-            $q.notify({ message, color, position: 'top' });
+            $q.notify({ message, color, position: "top" });
           }
 
           console.log("onCaptchaSubmit", res);
@@ -526,15 +527,18 @@ export default defineComponent({
     const imgOnLoad = () => (showImageCode.value = true);
     const imgOnError = () => (showImageCode.value = false);
 
-    watch(() => otpCountdown.value, () => {
-      if(otpCountdown.value === 0) {
-        clearInterval(otpCountdownInterval.value);
+    watch(
+      () => otpCountdown.value,
+      () => {
+        if (otpCountdown.value === 0) {
+          clearInterval(otpCountdownInterval.value);
+        }
       }
-    })
+    );
 
     onUnmounted(() => {
       clearInterval(otpCountdownInterval.value);
-    })
+    });
 
     return {
       header: "Register Account",
@@ -626,7 +630,7 @@ function charType(num) {
   }
 }
 .register-btn {
-  background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
   width: 100%;
   height: 56px;
   border-radius: 4px;
@@ -701,8 +705,8 @@ function charType(num) {
     padding-right: 20px;
   }
   :deep(.q-field__control):before {
-    border-color: #1e1f24;
-    background-color: #1e1f24;
+    border-color: rgba(71, 178, 178, 0.16);
+    background-color: rgba(71, 178, 178, 0.16);
     border-width: 2px;
   }
 
@@ -719,7 +723,7 @@ function charType(num) {
     border-radius: 50%;
   }
   :deep(.q-checkbox__inner--truthy .q-checkbox__bg) {
-    background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+    background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
 
     svg {
       color: #fff;
