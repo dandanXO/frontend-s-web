@@ -753,6 +753,13 @@ const submitWithdrawBank = () => {
         bankCardField.cardNumber = "";
         bankCardField.amount = "";
         withdrawInfo.amount = "";
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: response.message,
+          icon: "report_problem"
+        });
       }
     })
     .catch((error) => {
