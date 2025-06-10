@@ -458,7 +458,7 @@ const paymentMethodsItems = ref([]);
 const selectedMethodsItems = ref([]);
 const listItems = ref([]);
 
-const getWithdrawalMethods = () => {
+const getWithdrawalMethods = async () => {
   isLoadingWithdrawalMethod.value = true;
   let cbCount = 0;
 
@@ -466,7 +466,10 @@ const getWithdrawalMethods = () => {
     if (cbCount === 2) isLoadingWithdrawalMethod.value = false;
   };
 
-  api.get("/session/nga/withdraw/entrance").then((res) => {
+
+  try {
+    const res = await api.get("/session/nga/withdraw/entrance")
+
     if (res.code === 0) {
       let bankWithdraws = res.data.withdraws
         .map((withdraw) => {
@@ -515,13 +518,13 @@ const getWithdrawalMethods = () => {
     }
     cbCount++;
     checkCb();
-  });
+  } catch(e) {}
 
   if (bankCardList.value.length === 0) {
-    api
+    try {
+      api
       .get("/session/withdraw/card")
-      .then((res) => {
-        if (res.code === 0) {
+      if (res.code === 0) {
           res.data.forEach((e) => {
             bankCardField.bankId = e.id;
             bankCardField.withdrawPlatformId = e.code;
@@ -534,19 +537,17 @@ const getWithdrawalMethods = () => {
 
           selectBankType();
         }
-      })
-      .catch((e) => {
-        console.log("error", e);
-      })
-      .then(() => {
-        cbCount++;
-        checkCb();
-      });
+    } catch(e) {
+      console.log("error", e);
+    } finally {
+      cbCount++;
+      checkCb();
+    }
   } else {
     cbCount++;
     checkCb();
   }
-};
+}
 
 const selectedWithdraw = ref();
 const selectWithdrawCurrency = (item) => {
@@ -903,11 +904,11 @@ onMounted(() => {
   loadInfo();
 });
 
-onActivated(() => {
-  getWithdrawalMethods();
+onActivated(async () => {
   checkNewUser();
-  loadCards();
   loadInfo();
+  await getWithdrawalMethods();
+  loadCards();
 });
 
 const isValidCardNumber = () => {
