@@ -164,12 +164,23 @@
 </template>
 
 <script setup>
-import { onMounted, ref, toRefs, watch, onUnmounted, computed, onActivated, nextTick, onBeforeUnmount } from "vue";
+import {
+  onMounted,
+  ref,
+  toRefs,
+  watch,
+  onUnmounted,
+  computed,
+  onActivated,
+  nextTick,
+  onBeforeUnmount,
+  onDeactivated
+} from "vue";
 import { VideoPlayer } from "boot/videoPlayer";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
 import { useNotify } from "src/hooks/notify";
-import { useLocalStorage, useSessionStorage } from "@vueuse/core";
+import { useLocalStorage, useSessionStorage, useDebounceFn } from "@vueuse/core";
 import { isAndroid } from "boot/utils";
 
 const $q = useQuasar();
@@ -189,6 +200,7 @@ const DEFAULT_HLS_CONFIG = {
 
 const PLAYER_CONFIG_KEY = "lh-livestream-player-config";
 const MAXIMUM_VIDEO_RELOAD_TIMEOUT = 30 * 1000; // 30 seconds
+const ERROR_HANDLER_DEBOUNCE_TIME = 5 * 1000; // 5 seconds
 
 const DEFAULT_DANMU_CONFIG = {
   area: {
@@ -245,6 +257,7 @@ const isVideoLoadFailed = ref(false);
 const isVideoLoading = ref(false);
 const isErrorCaptured = ref(false);
 const errorMsg = ref("");
+const isActive = ref(false);
 const showUnmuteMask = ref(true);
 /** @type {import("vue").Ref< VideoPlayer | null>}*/
 const player = ref(null);
@@ -310,9 +323,10 @@ const loadPlayer = async () => {
 
 const initPlayer = async (play = false) => {
   if (!player.value) return;
+  if (!isActive.value) return;
   await player.value.init();
   isPlayerSupported.value = player.value.supportPlayer !== "NONE";
-  player.value.on(player.value.Events.CUSTOM_ERROR, handlePlayerError);
+  player.value.on(player.value.Events.CUSTOM_ERROR, handlePlayerErrorDebounce);
   // player.value.on(player.value.Events.AUTO_PLAY_FAILED, handleAutoPlayFailed);
   // emitting when hls.isSupported() is false
   player.value.on(player.value.Events.NATIVE_STREAM_BUFFERING, handleNativeStreamBuffering);
@@ -525,6 +539,8 @@ const handlePlayerError = (data) => {
   }
 };
 
+const handlePlayerErrorDebounce = useDebounceFn(handlePlayerError, ERROR_HANDLER_DEBOUNCE_TIME);
+
 const handleNativeStreamBuffering = () => {
   isVideoLoading.value = true;
 };
@@ -573,7 +589,7 @@ watch(livestreamData, (val, oldVal) => {
   const newVideoUrl = getVideoUrl(newVideoSource);
   const _currentVideoSource = getVideoSource(oldVal);
   const _currentVideoUrl = getVideoUrl(_currentVideoSource);
-  if (newVideoUrl === _currentVideoUrl) return;
+  if (newVideoUrl === _currentVideoUrl || !newVideoUrl) return;
   loadData();
 });
 
@@ -614,10 +630,21 @@ onActivated(() => {
   // Run it once on mount
   handleOrientationChange(mediaQuery);
   // player.value.play();
+  isActive.value = true;
 });
 
 onBeforeUnmount(() => {
   mediaQuery.removeEventListener("change", handleOrientationChange);
+  player.value?.destroy();
+});
+
+onDeactivated(() => {
+  mediaQuery.removeEventListener("change", handleOrientationChange);
+  player.value?.destroy();
+  player.value = null;
+  isPlayerSupported.value = true;
+  showUnmuteMask.value = true;
+  isActive.value = false;
 });
 
 const copyMessage = () => {
