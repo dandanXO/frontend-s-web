@@ -70,7 +70,8 @@ export default {
     sports: "Sports",
     fishing: "Fishing",
     activitiesDetails: "Activities Details",
-    addCard: "Add Card"
+    addCard: "Add Card",
+    information: "Information",
   },
   bottomNav: {
     home: "Home",
