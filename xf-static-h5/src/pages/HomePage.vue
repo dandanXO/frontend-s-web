@@ -345,7 +345,7 @@
   </div>
 
   <GameModal ref="allGames"></GameModal>
-
+  <AnnouncementModal />
   <q-dialog
     width="100%"
     class="modal-update-div"
@@ -457,6 +457,7 @@ import { cached } from "boot/cache";
 import GameBoard from "components/home/GameBoard.vue";
 import GameTypeSwiper from "components/home/GameTypeSwiper.vue";
 import GameModal from "components/modal/GameModal";
+import AnnouncementModal from "components/modal/AnnouncementModal";
 import moment from "moment";
 import AnnouncementView from "pages/account/AnnouncementView.vue";
 import { Platform, useQuasar } from "quasar";
@@ -479,7 +480,8 @@ export default defineComponent({
     GameModal,
     MarqueeText,
     GameTypeSwiper,
-    AnnouncementView
+    AnnouncementView,
+    AnnouncementModal
   },
   setup() {
     const isFirstView = ref(false);
