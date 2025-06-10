@@ -23,8 +23,10 @@
           <img src="../../assets/images/home/announcement/cs-icon.svg" />联系客服</div>
       </div>
 
-      <img class="close-icon-outlined" src="../../assets/images/home/announcement/close-icon-outlined.svg" @click="isAnnouncementModalVisible = false" />
-      <q-checkbox class="do-not-remind" v-model="checked" style="color: white" text-color="white">今天不再提醒</q-checkbox>
+      <div class="dialog-actions">
+        <q-checkbox class="do-not-remind" v-model="checked" style="color: white" text-color="white">今天不再提醒</q-checkbox>
+        <img class="close-icon-outlined" src="../../assets/images/home/announcement/close-icon-outlined.svg" @click="isAnnouncementModalVisible = false" />
+      </div>
     </div>
   </q-dialog>
 </template>
@@ -235,6 +237,14 @@ watch(checked, (val) => {
   }
 }
 
+
+.dialog-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .actions {
   display: flex;
   justify-content: center;
@@ -284,18 +294,7 @@ watch(checked, (val) => {
   }
 }
 
-.do-not-remind {
-  position: absolute;
-  right: 50%;
-  bottom: 8%;
-  transform: translate(50%, 0%);
-}
-
 .close-icon-outlined {
-  position: absolute;
-  right: 50%;
-  bottom: 3%;
-  transform: translate(50%, 0%);
   cursor: pointer;
 }
 
