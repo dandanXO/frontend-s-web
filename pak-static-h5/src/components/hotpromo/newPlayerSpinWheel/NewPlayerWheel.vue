@@ -619,6 +619,7 @@ onMounted(() => {
   background: linear-gradient(90deg, rgba(75, 125, 65, 0) 0%, rgba(75, 125, 65, 0.4) 52.5%, rgba(75, 125, 65, 0) 93.5%);
   padding: 5px 0;
   width: 80%;
+    max-width: 240px;
 
   .remaining-draw-text {
     color: #ffffff;
