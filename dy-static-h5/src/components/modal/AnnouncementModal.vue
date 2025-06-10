@@ -49,7 +49,7 @@ const goToLiveChat = () => {
 }
 
 const goToMailDetail = (mail) => {
-  router.push(`/account/message?id=${mail.id}&type=${mail.type}`);
+  router.push(`/account/inbox?id=${mail.id}&type=${mail.type}`);
 };
 
 const getInbox = () => {

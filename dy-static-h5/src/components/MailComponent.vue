@@ -1,126 +1,129 @@
 <template>
   <q-page>
-    <template v-if="props.type !== 'outbox'">
-      <q-tabs indicator-color="bright" align="justify" v-model="mailboxMessageTab">
-        <q-tab :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
-          <div class="tab-flex">
-            <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" />
-            <div>{{ item.name }}</div>
-          </div>
-        </q-tab>
-      </q-tabs>
-    </template>
+    <MailDetail v-if="route.query.id && selectedMail" :mail="selectedMail" />
+      <template v-else>
+      <template v-if="props.type !== 'outbox'">
+        <q-tabs indicator-color="bright" align="justify" v-model="mailboxMessageTab">
+          <q-tab :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
+            <div class="tab-flex">
+              <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" />
+              <div>{{ item.name }}</div>
+            </div>
+          </q-tab>
+        </q-tabs>
+      </template>
 
-    <q-tab-panels v-model="mailboxMessageTab" animated>
-      <q-tab-panel :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
-        <div v-if="!loading">
-          <div
-            class="action-buttons"
-            v-if="props.type !== 'outbox' && truncatedListByType && truncatedListByType.length"
-          >
-            <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md" @click="readMails(item.type)">
-              全部已读
-            </q-btn>
-            <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md" @click="deleteMails(item.type)">
-              全部删除
-            </q-btn>
-            <q-toggle v-if="truncatedListByType.length" v-model="allowSelectMultiple" :label="'选择多个'" left-label />
-            <q-btn v-if="hasMailSelected && allowSelectMultiple" class="common-md-white-btn" size="md" @click="readMails(item.type)">
-              已读
-            </q-btn>
-            <q-btn v-if="hasMailSelected && allowSelectMultiple" class="common-md-white-btn" size="md" @click="deleteMails(item.type)">
-              删除
-            </q-btn>
-          </div>
-          <q-infinite-scroll @load="onLoad" :offset="150">
-            <q-card
-              v-for="(det, n) in truncatedListByType"
-              :key="n"
-              class="mail-inbox-list"
-              :class="{ active: isSelectedMail === det.id }"
-              style=""
-              @click="toggleMail(det)"
+      <q-tab-panels v-model="mailboxMessageTab" animated>
+        <q-tab-panel :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
+          <div v-if="!loading">
+            <div
+              class="action-buttons"
+              v-if="props.type !== 'outbox' && truncatedListByType && truncatedListByType.length"
             >
-              <div class="title-div" :class="`${det.readTime && det.sendTime ? '' : 'unread'}`">
-                <div class="title-wrapper">
-                  <q-checkbox
-                    v-if="allowSelectMultiple"
-                    rounded
-                    :model-value="selectedMailIds[det.id] ?? false"
-                    @update:model-value="(newValue) => (selectedMailIds[det.id] = newValue ?? false)"
-                    size="sm"
-                    style="font-size: 14px"
-                    color="#0089ED"
-                  />
-
-                  <div class="read-label" v-if="det.readTime && det.sendTime">
-                    <img src="../assets/images/inbox/read-mail.png" />
-                  </div>
-                  <div class="read-label" v-else>
-                    <img src="../assets/images/inbox/unread-mail.png" />
-                  </div>
-
-                  <div class="title-text" :title="det.title">{{ det.title }}</div>
-                  <div v-if="det.sendTime" class="send-time" :title="`发送时间: ${formatSendTime(det.sendTime)}`">
-                    <i>{{ formatSendTime(det.sendTime) }}</i>
-                  </div>
-                  <div class="right-title">
-                    <img
-                      src="../assets/images/inbox/arrow-down-icon.svg"
-                      :class="isSelectedMail === det.id && 'arrow-rotate'"
+              <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md" @click="readMails(item.type)">
+                全部已读
+              </q-btn>
+              <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md" @click="deleteMails(item.type)">
+                全部删除
+              </q-btn>
+              <q-toggle v-if="truncatedListByType.length" v-model="allowSelectMultiple" :label="'选择多个'" left-label />
+              <q-btn v-if="hasMailSelected && allowSelectMultiple" class="common-md-white-btn" size="md" @click="readMails(item.type)">
+                已读
+              </q-btn>
+              <q-btn v-if="hasMailSelected && allowSelectMultiple" class="common-md-white-btn" size="md" @click="deleteMails(item.type)">
+                删除
+              </q-btn>
+            </div>
+            <q-infinite-scroll @load="onLoad" :offset="150">
+              <q-card
+                v-for="(det, n) in truncatedListByType"
+                :key="n"
+                class="mail-inbox-list"
+                :class="{ active: isSelectedMail === det.id }"
+                style=""
+                @click="toggleMail(det)"
+              >
+                <div class="title-div" :class="`${det.readTime && det.sendTime ? '' : 'unread'}`">
+                  <div class="title-wrapper">
+                    <q-checkbox
+                      v-if="allowSelectMultiple"
+                      rounded
+                      :model-value="selectedMailIds[det.id] ?? false"
+                      @update:model-value="(newValue) => (selectedMailIds[det.id] = newValue ?? false)"
+                      size="sm"
+                      style="font-size: 14px"
+                      color="#0089ED"
                     />
+
+                    <div class="read-label" v-if="det.readTime && det.sendTime">
+                      <img src="../assets/images/inbox/read-mail.png" />
+                    </div>
+                    <div class="read-label" v-else>
+                      <img src="../assets/images/inbox/unread-mail.png" />
+                    </div>
+
+                    <div class="title-text" :title="det.title">{{ det.title }}</div>
+                    <div v-if="det.sendTime" class="send-time" :title="`发送时间: ${formatSendTime(det.sendTime)}`">
+                      <i>{{ formatSendTime(det.sendTime) }}</i>
+                    </div>
+                    <div class="right-title">
+                      <img
+                        src="../assets/images/inbox/arrow-down-icon.svg"
+                        :class="isSelectedMail === det.id && 'arrow-rotate'"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div v-if="isSelectedMail === det.id && det.content" class="mailcontents">
-                <span style="color: #aaaaaa; font-size: 15px;">正文: </span>
-                <div class="q-pb-sm" v-html="det.content.replace(/\n/g, '<br/>')"></div>
-                <div class="q-pa-md" style="background: #ffffffa5; border-radius: 10px;"  v-if="isSelectedMail === det.id && det.replyMessageContent">
-                <span style="color: #aaaaaa; font-size: 15px;">回复: </span><div v-html="det.replyMessageContent.replace(/\n/g, '<br/>')"></div>
+                <div v-if="isSelectedMail === det.id && det.content" class="mailcontents">
+                  <span style="color: #aaaaaa; font-size: 15px;">正文: </span>
+                  <div class="q-pb-sm" v-html="det.content.replace(/\n/g, '<br/>')"></div>
+                  <div class="q-pa-md" style="background: #ffffffa5; border-radius: 10px;"  v-if="isSelectedMail === det.id && det.replyMessageContent">
+                  <span style="color: #aaaaaa; font-size: 15px;">回复: </span><div v-html="det.replyMessageContent.replace(/\n/g, '<br/>')"></div>
+                  </div>
                 </div>
-              </div>
-              <div v-if="mailType === 'outbox'" class="buttons">
-                <q-btn outline label="催单" size="sm" color="bright" class="q-mr-sm" />
-                <q-btn outline label="复制" size="sm" color="bright" />
-              </div>
-            </q-card>
-
-            <template v-slot:loading>
-              <div v-if="comList.length > 0">
-                <div class="row justify-center q-my-md">
-                  <q-spinner-dots color="primary" size="40px" />
+                <div v-if="mailType === 'outbox'" class="buttons">
+                  <q-btn outline label="催单" size="sm" color="bright" class="q-mr-sm" />
+                  <q-btn outline label="复制" size="sm" color="bright" />
                 </div>
-              </div>
-              <div v-else class="q-pa-md" style="text-align: center">
-                {{ truncatedList.length === 0 ? "暂无数据" : "暂无更多数据了" }}
-              </div>
-            </template>
-          </q-infinite-scroll>
-        </div>
+              </q-card>
 
-        <div class="loading-container" v-else>
-          <q-inner-loading :showing="loading">
-            <q-spinner-gears size="50px" color="brand" />
-            <div class="label">加载中</div>
-          </q-inner-loading>
-        </div>
-      </q-tab-panel>
-    </q-tab-panels>
+              <template v-slot:loading>
+                <div v-if="comList.length > 0">
+                  <div class="row justify-center q-my-md">
+                    <q-spinner-dots color="primary" size="40px" />
+                  </div>
+                </div>
+                <div v-else class="q-pa-md" style="text-align: center">
+                  {{ truncatedList.length === 0 ? "暂无数据" : "暂无更多数据了" }}
+                </div>
+              </template>
+            </q-infinite-scroll>
+          </div>
 
-    <q-dialog width="100%" v-model="isDeleteMailModal">
-      <q-card style="width: 100%; padding: 20px" class="text-black">
-        <q-card-section class="q-mb-md text-center" style="flex-direction: column">
-          <strong>温馨提示</strong>
-          <br />
-          <br />
-          确认删除信息？
-        </q-card-section>
-        <q-card-actions align="center">
-          <q-btn class="common-md-btn" size="md" @click="confirmDeleteMails(type)" label="确认" />
-          <q-btn class="common-md-white-btn" size="md" @click="isDeleteMailModal = false" label="取消" />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
+          <div class="loading-container" v-else>
+            <q-inner-loading :showing="loading">
+              <q-spinner-gears size="50px" color="brand" />
+              <div class="label">加载中</div>
+            </q-inner-loading>
+          </div>
+        </q-tab-panel>
+      </q-tab-panels>
+
+      <q-dialog width="100%" v-model="isDeleteMailModal">
+        <q-card style="width: 100%; padding: 20px" class="text-black">
+          <q-card-section class="q-mb-md text-center" style="flex-direction: column">
+            <strong>温馨提示</strong>
+            <br />
+            <br />
+            确认删除信息？
+          </q-card-section>
+          <q-card-actions align="center">
+            <q-btn class="common-md-btn" size="md" @click="confirmDeleteMails(type)" label="确认" />
+            <q-btn class="common-md-white-btn" size="md" @click="isDeleteMailModal = false" label="取消" />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+      </template>
   </q-page>
 </template>
 <script>
@@ -129,8 +132,13 @@ import moment from "moment";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import qs from "qs";
+import { useRoute, useRouter } from "vue-router";
+import MailDetail from "./mail/MailDetail.vue";
 
 export default defineComponent({
+  components: {
+    MailDetail
+  },
   props: {
     list: {
       type: Array,
@@ -159,6 +167,11 @@ export default defineComponent({
   },
   emits: ["readMsg"],
   setup(props, context) {
+    const route = useRoute();
+    const router = useRouter();
+
+    const selectedMail = ref(null);
+
     const mailboxMessageTypeData = ref([
       { num: 2, type: "ACTIVITY", name: "活动" },
       { num: 3, type: "ANNOUNCEMENT", name: "公告" },
@@ -195,21 +208,29 @@ export default defineComponent({
     const selectedMailIds = ref({});
     const hasMailSelected = computed(() => Object.values(selectedMailIds.value).includes(true));
     const onLoad = (index, done) => {
+      comList.value = props.list;
+      if (route.query.id && !selectedMail.value) {
+        selectedMail.value = props.list.find((mail) => mail.id === Number(route.query.id));
+      }
       setTimeout(() => {
-        if (sliceOffset.value < props.list.length) {
-          sliceOffset.value += sliceLimit
+        if (comList.value.length) {
+          var slicedArray = comList.value.splice(0, 6);
+          slicedArray.forEach((element) => {
+            truncatedList.value.push(element);
+          });
+          done();
         }
-        done()
-      }, 200)
-    }
+      }, 200);
+    };
     const isSelectedMail = ref(-1);
     const toggleMail = (mail) => {
-      if (isSelectedMail.value !== mail.id) {
-        isSelectedMail.value = mail.id;
-        openMsg(mail);
-      } else {
-        isSelectedMail.value = -1;
-      }
+      openMsg(mail);
+      router.push({ query: { id: mail.id, type: mailboxMessageTab.value } });
+      // if (isSelectedMail.value !== mail.id) {
+      //   isSelectedMail.value = mail.id;
+      // } else {
+      //   isSelectedMail.value = -1;
+      // }
     };
     const msgType = ref();
 
@@ -499,7 +520,9 @@ export default defineComponent({
       msgType,
       showMailId,
       openMsg,
-      hasUnreadMessages
+      hasUnreadMessages,
+      route,
+      selectedMail
     };
   }
 });

@@ -37,8 +37,7 @@ const loadInbox = (tab) => {
     .get("/session/pm/inbox", {
       params: {
         type: mailboxData.type,
-        orderBy: mailboxData.orderBy,
-        messageType: mailboxData.messageType
+        orderBy: mailboxData.orderBy
       }
     })
     .then((response) => {

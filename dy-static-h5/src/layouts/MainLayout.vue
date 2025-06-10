@@ -161,6 +161,7 @@ import { Platform } from "quasar";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 import { translateRecord } from "src/directives/translate";
+import { MAILBOX_TYPES } from "src/constant/mailbox";
 
 export default defineComponent({
   name: "MainLayout",
@@ -569,6 +570,12 @@ export default defineComponent({
           if (route.query.redirect) {
             var redirectPage = route.query.redirect;
             prevPage.value = redirectPage;
+          }
+
+          if (route.query.type && route.query.id) {
+            const currentTab = MAILBOX_TYPES.find((type) => type.type === route.query.type);
+            prevPage.value = "account/inbox";
+            if (currentTab) pageName.value = `${currentTab.name}详情`;
           }
         } else if (route.path === "/account/mail/outbox") {
           prevPage.value = "account/mail";
