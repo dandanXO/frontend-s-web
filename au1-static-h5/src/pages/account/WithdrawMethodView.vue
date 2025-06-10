@@ -905,14 +905,19 @@ onActivated(() => {
 
 const isValidCardNumber = () => {
   const { cardNumber } = bankCardField;
-
+  const isNumeric = /^\d+$/.test(cardNumber);
   if (isBankType.value === "BANK") {
     if (!cardNumber) {
       return `Please enter account number`;
+    } else if (!isNumeric) {
+      2;
+      return "Account number must contain only digits";
+    } else if (cardNumber.length < 6 || cardNumber.length > 10) {
+      return "Card number must be between 6 and 10 digits";
     }
-    if (cardNumber.includes(".")) {
-      return "Account number must not contain a decimal point";
-    }
+    // if (cardNumber.includes(".")) {
+    //   return "Account number must not contain a decimal point";
+    // }
   }
 
   if (isBankType.value === "EWALLET") {
