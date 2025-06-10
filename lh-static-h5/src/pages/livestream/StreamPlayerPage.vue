@@ -51,6 +51,8 @@
       :vip-status
       :livestream-data="currentLiveData"
       @send-chat-message="handleSendChatMessage"
+      :extensionState
+      :extensionToken
     />
   </div>
 </template>
@@ -271,7 +273,8 @@ const messages = ref([]);
 const danmuList = ref([]);
 
 const handleSendChatMessage = (message) => {
-  if (!store.hasToken()) {
+
+  if (!store.hasToken() && !extensionState.value) {
     // store.loginPageVisible = true;
     const currentPath = router.currentRoute.value.fullPath;
     $q.dialog({
