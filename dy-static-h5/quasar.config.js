@@ -61,8 +61,8 @@ module.exports = configure(function (ctx) {
       postcss: {
         configFile: true
       },
-      publicPath: isLiveChat ? "/live-chat/" : "/",
-      distDir: isLiveChat ? "dist/spa/live-chat" : "dist/spa",
+      publicPath: "/",
+      distDir: "dist/spa",
       // transpile: false,
       // publicPath: '/',
 

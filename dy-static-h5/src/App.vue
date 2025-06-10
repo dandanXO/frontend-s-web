@@ -177,6 +177,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      console.log("0610-03")
       checkServerStatus();
       checkSID();
       // initCsWeb();
