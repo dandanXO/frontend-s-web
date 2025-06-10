@@ -17,6 +17,7 @@
         <label :for="`toggle-${index}`" class="content-title">
           <div class="title-label" v-html="inboxItem.title" />
           <div class="read-status" v-if="inboxItem.readTime">已读</div>
+          <div class="read-status" @click.stop="goToMailDetail(inboxItem)">详情</div>
           <span class="collapse-arrow">&#9660;</span>
         </label>
         <div class="content-desc" v-html="inboxItem.content" />
@@ -37,12 +38,18 @@ import { userStore } from "@/store";
 import { ref, watch, onMounted } from "vue";
 import { useLocalStorage } from "@vueuse/core";
 import moment from "moment";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const isAnnouncementModalVisible = ref(false);
 const inboxData = ref([]);
 const store = userStore();
 const lastAnnouncementDateStr = useLocalStorage("DY_LAST_ANNOUNCEMENT_DATE", null);
 const checked = ref(false);
+
+const goToMailDetail = (mail) => {
+  router.push(`/center/mailbox?mailid=${mail.id}&type=${mail.type}`);
+};
 
 watch(
   () => store.token,
