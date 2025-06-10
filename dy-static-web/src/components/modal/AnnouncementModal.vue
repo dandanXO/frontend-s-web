@@ -17,7 +17,7 @@
         <label :for="`toggle-${index}`" class="content-title">
           <div class="title-label" v-html="inboxItem.title" />
           <div class="read-status" v-if="inboxItem.readTime">已读</div>
-          <span class="arrow">&#9660;</span>
+          <span class="collapse-arrow">&#9660;</span>
         </label>
         <div class="content-desc" v-html="inboxItem.content" />
       </div>
@@ -34,17 +34,51 @@
 <script setup>
 import { popupMailBox } from "@/api/personal/mailbox";
 import { userStore } from "@/store";
-import { ref, onMounted } from "vue";
+import { ref, watch, onMounted } from "vue";
+import { useLocalStorage } from "@vueuse/core";
+import moment from "moment";
 
-const isAnnouncementModalVisible = ref(true);
+const isAnnouncementModalVisible = ref(false);
 const inboxData = ref([]);
 const store = userStore();
+const lastAnnouncementDateStr = useLocalStorage("DY_LAST_ANNOUNCEMENT_DATE", null);
+const checked = ref(false);
 
-onMounted(() => {
-  popupMailBox().then((res) => {
-    inboxData.value = res.data;
-  })
-})
+watch(
+  () => store.token,
+  () => {
+    if (store.token) {
+      if (lastAnnouncementDateStr.value) {
+        const today = moment();
+        const lastAnnouncementDate = moment(lastAnnouncementDateStr.value);
+        const diff = today.diff(lastAnnouncementDate, "days");
+        if (!diff) return;
+      }
+
+      popupMailBox()
+        .then((res) => {
+          if (res.code === 0) {
+            inboxData.value = res.data;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          if (inboxData.value.length > 0) {
+            isAnnouncementModalVisible.value = true;
+          }
+        });
+    }
+  }
+);
+watch(checked, (val) => {
+  if (val) {
+    lastAnnouncementDateStr.value = moment().format("YYYY-MM-DD");
+  } else {
+    lastAnnouncementDateStr.value = null;
+  }
+});
 </script>
 
 <style lang="scss" scoped>
@@ -121,14 +155,14 @@ onMounted(() => {
       padding: 10px;
     }
 
-    .arrow {
+    .collapse-arrow {
       transition: transform 0.3s ease-in-out;
       color: #d9d9d9;
       font-size: 14px;
       margin-left: auto;
     }
 
-    input:checked ~ .content-title .arrow {
+    input:checked ~ .content-title .collapse-arrow {
       transform: rotate(180deg);
     }
 

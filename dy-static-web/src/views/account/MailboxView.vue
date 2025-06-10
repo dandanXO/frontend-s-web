@@ -147,7 +147,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed } from "vue";
+import { ref, reactive, onMounted, computed, watch } from "vue";
 import {
   mailInbox,
   clearMailInboxCache,
@@ -165,6 +165,7 @@ import { Calendar, Delete, MessageBox, ArrowDown, Check } from "@element-plus/ic
 import moment from "moment";
 import { userStore } from "@/store";
 import Mail from "@/components/mailbox/Mail.vue";
+import { useRoute, useRouter } from "vue-router";
 
 const loadingBtn = ref(false);
 const mailboxData = ref([]);
@@ -193,6 +194,17 @@ const changeMailboxType = (nk) => {
 
 const closeTheMail = () => {
   showMailId.value = undefined;
+
+  removeQueryParam();
+};
+
+const removeQueryParam = (queryParam) => {
+  const { params, name } = router.currentRoute.value;
+
+  // Create a new query object without the query parameter you want to remove
+  const newQuery = {};
+
+  router.replace({ name, params, query: newQuery });
 };
 
 const mailboxNotifyState = reactive({
@@ -225,6 +237,9 @@ const mailboxState = reactive({
   }
 });
 
+const route = useRoute();
+const router = useRouter();
+
 const loadNotifyMailbox = () => {
   mailboxNotifyData.value = {
     type: null,
@@ -245,6 +260,19 @@ const loadNotifyMailbox = () => {
       });
 
       console.log(mailboxNotifyState);
+      if (isMailDetail.value) {
+        // debugger;
+        const mailIndex = mailboxNotifyState[mailboxMessageTab.value].findIndex(
+          (mail) => mail.id === parseInt(route.query.mailid)
+        );
+        if (mailIndex > -1) {
+          console.log(mailIndex);
+          const mailItem = mailboxNotifyState[mailboxMessageTab.value].find(
+            (mail) => mail.id === parseInt(route.query.mailid)
+          );
+          openMsg(mailItem, mailIndex);
+        }
+      }
     })
     .catch((error) => {
       console.log(error);
@@ -460,6 +488,21 @@ const selectedIds = ref({});
 // });
 
 const isShowSelect = ref(false);
+
+const isMailDetail = ref(false);
+watch(
+  () => route.query,
+  () => {
+    if (route.query && route.query.mailid) {
+      isMailDetail.value = true;
+    }
+    if (route.query && route.query.type) {
+      mailboxMessageType.value = route.query.type;
+      mailboxMessageTab.value = route.query.type;
+    }
+  },
+  { immediate: true }
+);
 
 const readMultipleMsg = () => {
   const selectedMessages = mailboxState.mailboxList.inbox.list.filter((m) => selectedIds.value[m.id]);
