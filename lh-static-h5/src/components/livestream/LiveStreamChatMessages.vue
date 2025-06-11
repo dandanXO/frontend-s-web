@@ -95,7 +95,7 @@ const isMessageSendable = computed(() => messageToSend.value.trim().length > 0);
 const inputConfig = computed(() => {
   let disabled = false;
   let placeholder = "请输入聊天内容";
-  if ((store.token && !extensionState.value) || !vipStatus.value) {
+  if ((!store.token && !extensionState.value) || !vipStatus.value) {
     disabled = true;
     if (!vipStatus.value) placeholder = "VIP特权不足，无法发言";
     // if (!store.token) placeholder = "请登录后发言";
@@ -191,18 +191,18 @@ const handleBetClick = () => {
   switch (livestreamData.value.sportId) {
     case 1:
     case 2:
-      handler("IM体育", "IM", "", "");
+      handler("IM体育", "IM", "", "SPORTS");
       break;
     case 3:
     case 4:
     case 5:
-      handler("雷火电竞", "TFGaming", "", "");
+      handler("雷火电竞", "TFGaming", "", "ESPORTS");
       break;
   }
 };
 
-const handleAppBetClick = (platformName, platformId, platformCode) => {
-  document.location.href = `app://to_platform?platformName=${platformName}&platformId=${platformId}&platformCode=${platformCode}`;
+const handleAppBetClick = (platformName, platformId, platformCode, gameType) => {
+  document.location.href = `app://to_platform?platformName=${platformName}&platformId=${platformId}&platformCode=${platformCode}&gameType=${gameType}`;
 };
 
 onMounted(() => {

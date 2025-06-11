@@ -111,18 +111,22 @@
             size="small"
             allow-create
             filterable
+            remote
             :placeholder="t('fields.homeTeam')"
-            class="filter-item"
+            :remote-method="searchTeams"
+            remote-show-suffix
+            class="filter-item team-selector"
             style="width: 350px;"
             default-first-option
             @change="val => {
               if (typeof val === 'string') form.homeName = val;
               else form.homeName = '';
+              afterTeamSelectorChanged()
             }"
-            @focus="loadEventWithSite(form.sportId)"
+            @focus="loadEventWithSite(form.sportId, 'home')"
           >
             <el-option
-              v-for="item in teams.list"
+              v-for="item in displayTeams"
               :key="item.nameZh"
               :label="item.nameZh"
               :value="item.id"
@@ -132,26 +136,31 @@
                 <span>{{ item.nameZh }}</span>
               </div>
             </el-option>
+            <div v-if="teamSelectorStatus === 'home'" ref="teamSelectorBottomRef" />
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.awayTeam')" prop="awayTeam">
           <el-select
             v-model="form.awayId"
             size="small"
+            remote
             :placeholder="t('fields.awayTeam')"
+            :remote-method="searchTeams"
             allow-create
             filterable
-            class="filter-item"
+            remote-show-suffix
+            class="filter-item team-selector"
             style="width: 350px;"
             default-first-option
-            @focus="loadEventWithSite(form.sportId)"
             @change="val => {
               if (typeof val === 'string') form.awayName = val;
               else form.awayName = '';
+              afterTeamSelectorChanged()
             }"
+            @focus="loadEventWithSite(form.sportId, 'away')"
           >
             <el-option
-              v-for="item in teams.list"
+              v-for="item in displayTeams"
               :key="item.nameZh"
               :label="item.nameZh"
               :value="item.id"
@@ -161,6 +170,7 @@
                 <span>{{ item.nameZh }}</span>
               </div>
             </el-option>
+            <div v-if="teamSelectorStatus === 'away'" ref="teamSelectorBottomRef" />
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.sequence')" prop="sequence">
@@ -214,6 +224,24 @@
             :inactive-text="t('fields.no')"
           />
         </el-form-item>
+        <el-form-item :label="t('fields.isPopularEvent')" prop="isPopular">
+          <el-switch
+            v-model="form.isPopular"
+            :active-text="t('fields.yes')"
+            :inactive-text="t('fields.no')"
+          />
+        </el-form-item>
+        <el-form-item :label="t('fields.cover')" prop="cover">
+          <div style="display: flex; flex-direction: column;">
+            <el-image
+              v-if="form.cover"
+              :src="`${promoDir2}/live/event/${store.state.user.siteId}/` + form.cover"
+              style="width: 150px; height: 100px; border: 1px solid #ccc;"
+              class="preview"
+            />
+            <input type="file" accept="image/*" @change="attachImage" style="margin-top: 10px;">
+          </div>
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -221,8 +249,8 @@
       </el-form>
     </el-dialog>
     <el-table :data="page.records" v-loading="page.loading" ref="table" row-key="id" size="small" highlight-current-row :empty-text="t('fields.noData')">
-      <el-table-column prop="id" :label="t('fields.platformMatchId')" width="140" />
-      <el-table-column prop="sportId" :label="t('fields.sportType')" width="140" :formatter="formatSportType" />
+      <el-table-column prop="id" :label="t('fields.platformMatchId')" width="50" />
+      <el-table-column prop="sportId" :label="t('fields.sportType')" width="50" :formatter="formatSportType" />
       <el-table-column prop="title" :label="t('fields.title')" width="250" />
       <el-table-column prop="homeNameZh" :label="t('fields.homeTeam')" width="120">
         <template #default="scope">
@@ -253,6 +281,17 @@
           </div>
         </template>
       </el-table-column>
+      <el-table-column prop="cover" :label="t('fields.cover')" width="120">
+        <template #default="scope">
+          <div style="display: flex; align-items: center">
+            <img
+              v-if="scope.row.cover"
+              :src="promoDir2 + scope.row.cover"
+              style="width: 20px; height: 20px; margin-right: 10px"
+            >
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column prop="sort" :label="t('fields.sequence')" width="50" />
       <el-table-column prop="liveStatus" :label="t('fields.status')" width="120">
         <template #default="scope">
@@ -262,7 +301,7 @@
           <el-tag v-else-if="scope.row.liveStatus === 0" type="info">{{ t('status.uefaMatch.PENDING') }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="eventStartTime" :label="t('fields.matchTime')" width="180">
+      <el-table-column prop="eventStartTime" :label="t('fields.matchTime')" width="150">
         <template #default="scope">
           <span v-if="scope.row.eventStartTime === null">-</span>
           <span
@@ -274,7 +313,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="eventEndTime" :label="t('fields.endTime')" width="180">
+      <el-table-column prop="eventEndTime" :label="t('fields.endTime')" width="150">
         <template #default="scope">
           <span v-if="scope.row.eventEndTime === null">-</span>
           <span
@@ -290,6 +329,13 @@
         <template #default="scope">
           <el-tag :type="scope.row.isTest ? 'success' : 'info'">
             {{ scope.row.isTest ? t('fields.yes') : t('fields.no') }}
+          </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="isPopular" :label="t('fields.isPopularEvent')" width="120">
+        <template #default="scope">
+          <el-tag :type="scope.row.isPopular ? 'success' : 'info'">
+            {{ scope.row.isPopular ? t('fields.yes') : t('fields.no') }}
           </el-tag>
         </template>
       </el-table-column>
@@ -356,7 +402,7 @@
 
 <script setup>
 
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, computed, nextTick, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useStore } from "@/store";
 import { getSiteTimeZoneById } from "@/api/site";
@@ -366,10 +412,14 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import { useSessionStorage } from "@vueuse/core";
 import { getShortcuts } from "@/utils/datetime";
 import moment from "moment/moment";
+import { uploadImage } from "@/api/image";
+
+const TEAMS_PER_VIEW = 20
 
 const { t } = useI18n();
 const shortcuts = getShortcuts(t);
 const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
+const promoDir2 = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: "",
@@ -442,6 +492,24 @@ const defaultTime = [
   new Date(2000, 1, 1, 23, 59, 59),
 ];
 
+const loadedTeams = ref([]);
+const searchedTeams = ref([]);
+const teamSelectorStatus = ref(null)
+const teamSelectorBottomRef = ref(null);
+const teamSelectorScrollObserver = ref(null);
+
+const displayTeams = computed(() => {
+  const _searchedTeams = searchedTeams.value.map(team => ({ ...team, _sid: `search-${team.id}` }))
+  const _loadedTeams = loadedTeams.value.map(team => ({ ...team, _sid: `loaded-${team.id}` }));
+  const allTeams = _searchedTeams.concat(_loadedTeams);
+  const result = new Map()
+  allTeams.forEach(team => {
+    if (result.has(team.id)) return;
+    result.set(team.id, team);
+  })
+  return Array.from(result.values());
+})
+
 function resetQuery() {
   request.sportId = null;
   request.nameEn = null;
@@ -459,7 +527,7 @@ function restrictInput(event) {
   }
 }
 
-async function loadEventWithSite(sportId) {
+async function loadEventWithSite(sportId, target) {
   console.log(sportId)
   if (sportId) {
     console.log(sportId)
@@ -469,6 +537,7 @@ async function loadEventWithSite(sportId) {
     const { data: team } = await getTeamById(request.sportId);
     teams.list = team;
   }
+  handleTeamSelectorFocus(target)
 }
 
 async function loadEvent() {
@@ -497,10 +566,54 @@ async function deleteTeam(eventId) {
   });
 }
 
-function submit() {
-  if (uiControl.dialogType === 'CREATE') {
-    create();
+async function attachImage(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const data = await attachPhoto(event);
+  console.log(data);
+  if (data) {
+    form.cover = data;
+  } else {
+    ElMessage({ message: t('message.failedToUploadImage'), type: 'error' });
   }
+}
+
+async function attachPhoto(event) {
+  const files = event.target.files[0];
+  if (!files) return;
+
+  const fr = new FileReader();
+  fr.onload = function () {
+    const img = new Image();
+    img.onload = function () {
+    };
+    img.src = fr.result;
+  };
+  fr.readAsDataURL(files);
+
+  const allowFileType = ['image/jpeg', 'image/png', 'image/gif'];
+  if (!allowFileType.includes(files.type)) {
+    ElMessage({ message: t('message.invalidFileType'), type: 'error' });
+    return null;
+  }
+
+  const formData = new FormData();
+  formData.append('files', files);
+  formData.append('dir', `live/event/${store.state.user.siteId}`);
+  formData.append('overwrite', false);
+
+  try {
+    const response = await uploadImage(formData);
+    return response.code === 0 ? response.data : null;
+  } catch (error) {
+    ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
+    return null;
+  }
+}
+
+function submit() {
+  create();
 }
 
 function create() {
@@ -516,6 +629,11 @@ function create() {
       }
 
       form.icon = form.icon?.startsWith("http") ? store.state.user.siteId + "/" + form.icon.split('/').pop() : form.icon;
+      if (form.cover) {
+        form.cover = form.cover.startsWith('/live/event/')
+          ? form.cover
+          : `/live/event/${store.state.user.siteId}/${form.cover}`;
+      }
       await createSportLiveEvent(form);
       uiControl.dialogVisible = false;
       await loadEvent();
@@ -543,7 +661,9 @@ function showDialog(type, row) {
     eventStartTime: null,
     eventEndTime: null,
     liveStatus: null,
-    title: null
+    title: null,
+    isTest: null,
+    isPopular: null
   });
 }
 
@@ -561,7 +681,9 @@ const form = reactive({
   eventEndTime: null,
   homeName: '',
   awayName: '',
-  isTest: false
+  isTest: false,
+  cover: '',
+  isPopular: false
 });
 
 const formRules = reactive({
@@ -569,6 +691,43 @@ const formRules = reactive({
   nameEn: [required(t('message.validateTeamNameRequired'))],
   icon: [required(t('message.validateTeamIconRequired'))]
 });
+
+const handleTeamSelectorFocus = (target) => {
+  loadedTeams.value = teams.list.slice(0, TEAMS_PER_VIEW);
+  teamSelectorStatus.value = target;
+  nextTick(() => {
+    if (!teamSelectorBottomRef.value) return;
+    teamSelectorScrollObserver.value.observe(teamSelectorBottomRef.value);
+  })
+}
+
+const afterTeamSelectorChanged = () => {
+  nextTick(() => {
+    loadedTeams.value = []
+    teamSelectorStatus.value = null;
+    teamSelectorScrollObserver.value.unobserve(teamSelectorBottomRef.value);
+  })
+}
+
+const searchTeams = (query) => {
+  if (!query) {
+    searchedTeams.value = [];
+  } else {
+    searchedTeams.value = teams.list.filter(team => {
+      return team.nameZh?.toLowerCase().includes(query.toLowerCase()) || team.nameEn?.toLowerCase().includes(query.toLowerCase())
+    })
+  }
+}
+
+const registerTeamSelectorScrollObserver = () => {
+  teamSelectorScrollObserver.value = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        loadedTeams.value = teams.list.slice(0, loadedTeams.value.length + TEAMS_PER_VIEW);
+      }
+    })
+  })
+}
 
 onMounted(async () => {
   const store = useStore()
@@ -578,8 +737,14 @@ onMounted(async () => {
   timezone.value = timeZone
 
   await loadEvent();
+  registerTeamSelectorScrollObserver();
 });
 
+onUnmounted(() => {
+  if (teamSelectorScrollObserver.value) {
+    teamSelectorScrollObserver.value.disconnect();
+  }
+});
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
@@ -603,5 +768,18 @@ onMounted(async () => {
 
 .el-table--enable-row-transition .el-table__body td.el-table__cell {
   padding: 4px 0;
+}
+
+.team-selector {
+  :deep(.el-select__caret) {
+    &::before {
+      content: "\e6e1";
+    }
+  }
+  :deep(.is-focus) {
+    .el-select__caret {
+      transform: rotateZ(0deg)
+    }
+  }
 }
 </style>

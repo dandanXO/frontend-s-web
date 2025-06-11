@@ -2,12 +2,21 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
-        <el-input
+        <el-select
           v-model="request.privilegeName"
           size="small"
-          style="width: 200px"
           :placeholder="t('fields.privilegeName')"
-        />
+          class="filter-item"
+          style="margin-left: 5px; width: 200px;"
+          clearable
+        >
+          <el-option
+            v-for="item in privilege.list"
+            :key="item"
+            :label="item"
+            :value="item"
+          />
+        </el-select>
         <el-date-picker
           v-model="request.recordTime"
           format="DD/MM/YYYY"
@@ -108,7 +117,7 @@
 <script setup>
 import { onMounted, defineProps, reactive } from 'vue';
 import moment from 'moment';
-import { getMemberPrivilegeRecord, getMemberPrivilegeRecordTotal } from '../../../../../api/member';
+import { getMemberPrivilegeRecord, getMemberPrivilegeRecordTotal, getMemberPrivilegeRecordNameList } from '../../../../../api/member';
 import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
@@ -124,6 +133,10 @@ const props = defineProps({
     required: true,
   }
 })
+
+const privilege = reactive({
+  list: []
+});
 
 const { t } = useI18n();
 const shortcuts = getShortcuts(t);
@@ -204,6 +217,10 @@ async function loadMemberPrivilegeRecord() {
   const { data: ttl } = await getMemberPrivilegeRecordTotal(props.mbrId, query);
   // Calculate the total amount
   page.totalPrivilegeAmount = ttl;
+
+  const { data: nameList } = await getMemberPrivilegeRecordNameList(props.mbrId, query);
+  console.log()
+  privilege.list = nameList;
 }
 
 function patchRecord(records) {

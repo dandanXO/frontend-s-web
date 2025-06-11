@@ -1404,8 +1404,7 @@ function formatNumber(value, type) {
     // 不四舍五入，保留两位小数
     number = Math.floor(number * 100) / 100;
     // 补零并加千分位
-    return number
-      .toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return number.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   } else {
     return number.toLocaleString(undefined, { maximumFractionDigits: 0 });
   }
@@ -2031,7 +2030,9 @@ $border-settings: 1px solid #e5e7eb;
       .title {
         color: #333;
         text-align: center;
-        font-family: "PingFang";
+        font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+          sans-serif;
+
         font-size: 24.319px;
         font-style: italic;
         font-weight: 700;

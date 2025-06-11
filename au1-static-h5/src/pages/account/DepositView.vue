@@ -38,6 +38,7 @@
           </div>
         </template>
       </div>
+      <div class="deposit-method-msg">{{ selectedChannel.msg }}</div>
 
       <template v-if="selectedChanelExtra.length > 0">
         <div class="method-title q-mt-md q-mb-sm">Bank</div>
@@ -456,9 +457,24 @@ const goSelectedChannel = (item) => {
   if (selectedChanelExtra.value.length > 0) {
     selectedChannelBank.value = item.extra.banks[0].id;
   }
+
+  if (selectedChannel.value.paymentId === 1320) {
+    // TOPPAY
+    api
+      .get(`/session/verifyAUTopPayKYC`)
+      .then((res) => {
+        if (res.data.url) {
+          window.open(res.data.url, `_blank`);
+        }
+      })
+      .catch((e) => {
+        console.error("KYC verification failed:", e);
+      });
+  }
 };
 
 const isLoadingInitPay = ref(true);
+
 function initPay() {
   isLoadingInitPay.value = true;
   $q.loading.show({
@@ -1335,6 +1351,10 @@ onMounted(() => {
       }
     }
   }
+}
+
+.deposit-method-msg {
+  margin-top: 10px;
 }
 
 .input-btm {

@@ -236,7 +236,7 @@
 
         <!-- since onMount API forced update name & phone, hence no validation needed. -->
 
-        <InputRowGrid>
+        <InputRowGrid v-if="store.isEnableBankCardOTP">
           <template #fields>
             <!-- <InputField :label="$t('form.virtualWallet')"> -->
             <InputField :label="$t('bankCard.telephone')">
@@ -577,10 +577,10 @@ const submitBankCard = () => {
   if (cardNumberRef.value) {
     cardNumberRef.value.validate();
   }
-  if (phoneVerificationRef.value) {
+  if (store.isEnableBankCardOTP && phoneVerificationRef.value) {
     phoneVerificationRef.value.validate()
   }
-  if (telephoneNumberRef.value) {
+  if (store.isEnableBankCardOTP && telephoneNumberRef.value) {
     telephoneNumberRef.value.validate()
   }
 
@@ -589,11 +589,11 @@ const submitBankCard = () => {
     !(
       (bankCardRef.value && bankCardRef.value.hasError) ||
       (cardNumberRef.value && cardNumberRef.value.hasError) ||
-      (phoneVerificationRef.value && phoneVerificationRef.value.hasError)
+      (store.isEnableBankCardOTP && phoneVerificationRef.value && phoneVerificationRef.value.hasError)
     )
   ) {
 
-    if (!isOtpSent.value || !bankCardInfo.telephone) {
+    if (store.isEnableBankCardOTP && (!isOtpSent.value || !bankCardInfo.telephone)) {
       $q.notify({
         color: "negative",
         position: "top",
@@ -602,6 +602,12 @@ const submitBankCard = () => {
       });
       return;
     } else {
+      if(store.isEnableBankCardOTP === false) {
+        bankCardInfo.telephone = undefined;
+        bankCardInfo.smsCode = undefined;
+        bankCardInfo.smsCodeId = undefined;
+      }
+      
       // API call
       api
         .post("/session/bankCard", qs.stringify(bankCardInfo))

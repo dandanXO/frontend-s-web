@@ -221,7 +221,9 @@
   <!--  </div>-->
 
   <div class="btn-go" @click="submitWithdraw">Go</div>
-  <div class="bottom-tnc">2% + 50{{ store.currency.label }} of the withdrawal amount would be deducted as bank commission</div>
+  <div class="bottom-tnc">
+    2% + 50{{ store.currency.label }} of the withdrawal amount would be deducted as bank commission
+  </div>
 </template>
 
 <script setup>
@@ -385,7 +387,7 @@ const submitWithdraw = async () => {
     bankCardField.withdrawCode = withdrawalMethods[withdrawalDialogTab.value].code;
 
     api
-      .post("/session/withdrawAndBankCard", qs.stringify(bankCardField))
+      .post("/session/ausWithdrawAndBankCard", qs.stringify(bankCardField))
       .then((response) => {
         if (response.code === 0) {
           $q.notify({
