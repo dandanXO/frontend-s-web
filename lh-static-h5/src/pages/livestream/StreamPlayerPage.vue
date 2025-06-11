@@ -83,6 +83,12 @@ import ShareModal from "../../components/livestream/ShareModal.vue";
 const MESSAGE_SYNC_INTERVAL = 1000 * 2; // 2 seconds
 const MESSAGE_HISTORY_DANMU_FIRE_GAP = 10;
 const MAXIMUM_MESSAGE_LENGTH = 2000;
+const MESSAGE_HISTORY_START_TIME = 1000 * 60 * 5; // 5 minutes
+
+const DEFAULT_MESSAGES_HISTORY_META = {
+  current: 1,
+  max: 1
+};
 
 const LIVESTREAM_SYNC_INTERVAL = 1000 * 10; // 10 seconds
 
@@ -124,11 +130,8 @@ const unsortMessages = ref([]);
 const userVipLevel = computed(() => extractVipLevelFromVipStr(store.vip));
 
 const current = ref(1);
-const liveStartTime = ref();
-const livestreamListMeta = ref({
-  current: 1,
-  max: 1
-});
+const messageHistoryStartTime = ref();
+const livestreamListMeta = ref(DEFAULT_MESSAGES_HISTORY_META);
 const processedUserName = ref();
 const isFirstMessageSync = ref(true);
 const isProcessingMessageHistory = ref(false);
@@ -382,7 +385,7 @@ const syncMessages = () => {
   const params = {
     siteId: process.env.SITEID,
     streamId: currentLiveData.value.id,
-    recordTime: [liveStartTime.value, now]
+    recordTime: [messageHistoryStartTime.value, now]
   };
 
   if (pastTime > MESSAGE_SYNC_INTERVAL && !isProcessingMessageHistory.value) {
@@ -540,8 +543,8 @@ watch(currentLiveData, (newVal, oldVal) => {
   processedUserName.value = "";
   seenMessageIds.clear();
   latestProcessedMessageId.value = -1;
-  lastSyncMessageTime.value = currentLiveData.value?.eventStartTime || Date.now();
-  liveStartTime.value = lastSyncMessageTime.value;
+  lastSyncMessageTime.value = Date.now() - MESSAGE_HISTORY_START_TIME;
+  messageHistoryStartTime.value = lastSyncMessageTime.value;
   syncMessages();
   resetSyncLivestreamInterval(true);
 });
@@ -586,10 +589,7 @@ onDeactivated(() => {
     messageTimer.value = null;
   }
   resetSyncLivestreamInterval();
-  messagesHistoryMeta.value = {
-    current: 1,
-    max: 1
-  };
+  messagesHistoryMeta.value = DEFAULT_MESSAGES_HISTORY_META;
 });
 </script>
 
