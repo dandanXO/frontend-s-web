@@ -180,7 +180,6 @@ const isWithdrawLastPage = ref(false);
 const scrollWithdrawRef = ref(null);
 
 const onLoadWithdraw = (index, done) => {
-  isWithdrawLastPage.value = true;
   const { startDate, endDate } = searchForm;
   const gmtStartDate = convertToGMT8(startDate);
   const gmtEndDate = convertToGMT8(endDate);
@@ -201,7 +200,7 @@ const onLoadWithdraw = (index, done) => {
         withdrawalData.value.push(...data);
 
         if (withdrawCurrentPage.value * withdrawPageSize >= response.data.total) {
-          isWithdrawLastPage.value = false;
+          isWithdrawLastPage.value = true;
         }
       }
 
