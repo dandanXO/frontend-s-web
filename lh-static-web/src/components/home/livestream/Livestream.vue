@@ -4,8 +4,16 @@
       src="@/assets/home/livestream/livestream-title-light.png"
       style="display: flex; margin: 38px auto 50px; width: 100%"
     />
+    <div class="livestream-tabs">
+      <LivestreamCategories @change="handleCategoryChange" />
+    </div>
     <div class="livestream-inner-wrapper">
-      <LivestreamList v-model="currentLive" class="livestream-list" :list :is-livestream-list-loading />
+      <LivestreamList
+        v-model="currentLive"
+        class="livestream-list"
+        :list="filteredLivestreamList"
+        :is-livestream-list-loading
+      />
       <div class="livestream-list__pseudo" />
       <CurrentLivestream :livestream-data="currentLiveData" :is-system-livestream @click="handleBetClick" />
       <LivestreamChat
@@ -29,6 +37,7 @@
   </div>
 </template>
 <script setup>
+import LivestreamCategories from "@/components/home/livestream/LivestreamCategories.vue";
 import LivestreamList from "@/components/home/livestream/LivestreamList.vue";
 import CurrentLivestream from "@/components/home/livestream/CurrentLivestream.vue";
 import LivestreamChat from "@/components/home/livestream/LivestreamChat.vue";
@@ -375,6 +384,27 @@ const resetSyncLivestreamInterval = (startNewInterval = false) => {
       syncLivestreamInfo();
     }, LIVESTREAM_SYNC_INTERVAL);
   }
+};
+
+// livestream categories
+const activeTab = ref("popular");
+const filteredLivestreamList = computed(() => {
+  switch (activeTab.value) {
+    case "popular":
+      return list.value.filter((item) => !item.isPopular);
+    case "football":
+      return list.value.filter((item) => [1].includes(item.sportId));
+    case "basketball":
+      return list.value.filter((item) => [2].includes(item.sportId));
+    case "esports":
+      return list.value.filter((item) => [3, 4, 5, 6].includes(item.sportId));
+    default:
+      return list.value;
+  }
+});
+
+const handleCategoryChange = (tabKey) => {
+  activeTab.value = tabKey;
 };
 
 watch(currentLive, () => {
