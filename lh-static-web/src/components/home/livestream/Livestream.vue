@@ -66,9 +66,15 @@ const LATEST_WATCH_LIVESTREAM_ID_KEY = "LH_WEB_LATEST_WATCH_LIVESTREAM";
 const MESSAGE_SYNC_INTERVAL = 1000 * 2; // 2 seconds
 const MESSAGE_HISTORY_DANMU_FIRE_GAP = 10;
 const MAXIMUM_MESSAGE_LENGTH = 5000;
+const MESSAGE_HISTORY_START_TIME = 1000 * 60 * 5; // 5 minutes
 
 const LIVESTREAM_SYNC_INTERVAL = 1000 * 10; // 10 seconds
 const MAXIMUM_MESSAGE_PROCESS_DELAY_COUNT = 5;
+
+const DEFAULT_MESSAGES_HISTORY_META = {
+  current: 1,
+  max: 1
+};
 
 const store = userStore();
 const notify = useNotify();
@@ -86,7 +92,7 @@ const currentLiveId = ref(null);
 const messageTimer = ref(null);
 const livestreamTimer = ref(null);
 const lastSyncMessageTime = ref(Date.now());
-const liveStartTime = ref();
+const messageHistoryStartTime = ref();
 const unsortMessages = ref([]);
 const gameModalRef = ref(null);
 const livestreamVideoRef = ref(null);
@@ -100,10 +106,7 @@ const isLivestreamListLoading = ref(false);
 const isFirstMessageSync = ref(true);
 const processedUserName = ref();
 const isProcessingMessageHistory = ref(false);
-const messagesHistoryMeta = ref({
-  current: 1,
-  max: 1
-});
+const messagesHistoryMeta = ref(DEFAULT_MESSAGES_HISTORY_META);
 const latestProcessedMessageId = ref(-1);
 const vipStatus = ref(false);
 const hideComponent = ref(true);
@@ -242,7 +245,7 @@ const syncMessages = () => {
   const params = {
     siteId: process.env.VUE_APP_SITEID,
     streamId: currentLiveData.value.id,
-    recordTime: [liveStartTime.value, now]
+    recordTime: [messageHistoryStartTime.value, now]
   };
   chatHistoryAbortController.value = new AbortController();
   if (pastTime > MESSAGE_SYNC_INTERVAL && !isProcessingMessageHistory.value) {
@@ -413,8 +416,8 @@ watch(currentLiveId, (newVal, oldVal) => {
   messages.value = [];
   unsortMessages.value = [];
   danmuList.value = [];
-  lastSyncMessageTime.value = currentLiveData.value?.createTime || currentLiveData.value?.eventStartTime || Date.now();
-  liveStartTime.value = lastSyncMessageTime.value;
+  lastSyncMessageTime.value = Date.now() - MESSAGE_HISTORY_START_TIME;
+  messageHistoryStartTime.value = lastSyncMessageTime.value;
   latestProcessedMessageId.value = -1;
   livestreamSyncAbortController.value && livestreamSyncAbortController.value.abort();
   chatHistoryAbortController.value && chatHistoryAbortController.value.abort();
@@ -440,6 +443,7 @@ onUnmounted(() => {
     messageTimer.value = null;
   }
   resetSyncLivestreamInterval();
+  messagesHistoryMeta.value = DEFAULT_MESSAGES_HISTORY_META;
 });
 </script>
 <style lang="scss" scoped>
