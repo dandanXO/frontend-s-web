@@ -89,8 +89,6 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 .jackpot-plate {
-    background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/jackpot-plate.png') no-repeat center center;
-    background-size: contain;
     width: 100%;
     height: 80px;
     position: absolute;
@@ -103,18 +101,13 @@ onMounted(() => {
     font-family: "Poppins";
 
     .jackpot-number {
-        transform: rotateX(45deg);
-        margin-top: -5px;
-
         text {
-            font-family: Poppins;
+            font-family: 'Poppins';
             font-weight: 900;
-            font-size: 23.52px;
-            line-height: 19.86px;
+            font-size: 18px;
+            line-height: 22px;
             letter-spacing: 0px;
             text-align: center;
-            text-transform: uppercase;
-
         }
     }
 }

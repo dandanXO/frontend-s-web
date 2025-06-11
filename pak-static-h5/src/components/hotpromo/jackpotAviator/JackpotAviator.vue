@@ -17,10 +17,10 @@
 
       <div class="rules-ribbon" @click="mode = 'RULES'">{{ $t("hotPromo.jackpotAviator.rules") }}</div>
       <div class="history-ribbon" @click="isShowHistoryPopup = true">{{ $t("hotPromo.jackpotAviator.history") }}</div>
-    </div>
 
-    <div class="receive-btn" @click="onClickReceive">
-      {{ $t("hotPromo.jackpotAviator.receive") }}
+      <div class="receive-btn" @click="onClickReceive">
+        {{ $t("hotPromo.jackpotAviator.receive") }}
+      </div>
     </div>
 
     <template v-if="isLoadingRanking">
@@ -173,10 +173,11 @@ onMounted(() => {
 .jackpot {
   background: url("../../../assets/images/promotion/hotpromo/jackpot-aviator/jackpot-bg.png") no-repeat center center;
   // aspect-ratio: 1125/500;
-  aspect-ratio: 750 / 550;
+  aspect-ratio: 510 / 374;
   background-size: 100% 100%;
   position: relative;
   min-height: 275px;
+  position: relative;
 
   .rules-ribbon {
     // background-color: #30af88;
@@ -238,21 +239,28 @@ onMounted(() => {
 }
 
 .receive-btn {
-  background: linear-gradient(180deg, #fb4f77 0%, #da093a 100%);
-  padding: 20px;
-  border-radius: 4px;
-  width: 202px;
-  height: 46px;
+  background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/receive-btn.png') center center no-repeat;
+  background-size: 100% 100%;
+  width: 90px;
+  height: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
+  text-transform: uppercase;
+  color: #582B00;
   font-family: Poppins;
-  font-size: 16.9px;
   font-weight: 900;
-  line-height: 19.16px;
+  font-size: 14.88px;
+  line-height: 20.27px;
+  letter-spacing: 0px;
   text-align: center;
   text-transform: uppercase;
+  position: absolute;
+  left: 50%;
+  top: 82%;
+  transform: translate(-50%, -50%);
+
 }
 
 .history-container {
@@ -302,14 +310,6 @@ onMounted(() => {
   }
   :deep(.q-tab--active .q-tab__indicator) {
     background: #fff900;
-  }
-}
-
-@media (max-width: 350px) {
-  .receive-btn {
-    padding: 10px;
-    width: 150px;
-    height: 30px;
   }
 }
 </style>
