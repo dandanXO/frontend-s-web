@@ -36,10 +36,12 @@
           class="livestream-chat-input"
           :placeholder="inputConfig.placeholder"
           :disable="inputConfig.disabled"
+          type="textarea"
           autocomplete="off"
           rounded
           dense
           standout
+          autogrow
         >
           <template v-slot:append>
             <q-btn icon="emoji_emotions" round flat dense @click="togglePopover"></q-btn>
@@ -290,14 +292,15 @@ onMounted(() => {
     left: 0;
     width: 100%;
     z-index: 2001;
-    height: 70px;
+    min-height: 70px;
+    padding: 6px 0;
     display: flex;
     align-items: center;
     transition: 0.3s all;
 
     .livestream-chat-input-inner-wrapper {
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: space-between;
       // padding: 7.55px;
       // box-shadow: 0px 0px 7.55px 0px #a9c9ea inset;
@@ -309,10 +312,27 @@ onMounted(() => {
         // background: #f7f8fb;
         box-shadow: 0px 0px 8px 0px #a9c9ea inset;
         width: 100%;
-        overflow: hidden;
-        border-radius: 50px;
+        border-radius: 20px;
+        overflow-y: auto;
+        white-space: nowrap;
+
+        :deep(textarea) {
+          max-height: 90px;
+          overflow-y: auto;
+        }
+
+        :deep(textarea::placeholder) {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
         :deep(.q-field__control) {
           padding-right: 2px;
+        }
+
+        :deep(.q-field__control .q-field__append) {
+          margin-top: auto;
         }
       }
       .livestream-chat-input-btn {
@@ -365,6 +385,7 @@ onMounted(() => {
   color: #fff;
   white-space: nowrap;
   border: 2px solid transparent;
+  height: 40px;
 }
 
 .livestream-chat-wrapper.dark {
