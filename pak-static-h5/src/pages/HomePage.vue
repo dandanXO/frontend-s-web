@@ -5180,7 +5180,7 @@ const checkGoogleLoginSetPwd = () => {
   // right: 20px;
   // top: 20px;
   right: 40px;
-  top: 75px;
+    top: 110px;
   z-index: 3;
   background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
 
@@ -5208,8 +5208,8 @@ const checkGoogleLoginSetPwd = () => {
   background: url(../assets/images/index/notice-bg.png) no-repeat center bottom;
   border-radius: 30px 30px 0 0;
   height: 580px;
-  background-size: 100% 95%;
-  padding-top: 50px;
+  background-size: 100% 100%;
+  padding-top: 40px;
 }
 .announcement-card {
   height: 100%;
@@ -5220,7 +5220,9 @@ const checkGoogleLoginSetPwd = () => {
   background: transparent;
   // padding: 120px 20px 20px 20px;
 
-  padding: 32% 10px 0px;
+  // padding: 32% 10px 0px;
+  
+    padding: 33% 10px 5px;
   // overflow-y: auto;
   // background: transparent;
   // background: linear-gradient(180deg, rgba(36, 36, 36, 1) 0%, rgba(35, 45, 31, 1) 100%);
