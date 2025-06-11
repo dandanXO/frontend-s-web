@@ -152,7 +152,7 @@ const searchWithdrawalRecord = () => {
   const gmtEndDate = convertToGMT8(endDate);
   api
     .get("/session/member/withdraw", {
-      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: 10 }
+      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: withdrawPageSize }
     })
     .then((response) => {
       if (response.code === 0) {
@@ -187,7 +187,12 @@ const onLoadWithdraw = (index, done) => {
 
   api
     .get("/session/member/withdraw", {
-      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: 10 }
+      params: {
+        startDate: gmtStartDate,
+        endDate: gmtEndDate,
+        current: withdrawCurrentPage.value,
+        size: withdrawPageSize
+      }
     })
     .then((response) => {
       if (response.code === 0) {
@@ -241,7 +246,7 @@ const searchDepositRecord = () => {
   const gmtEndDate = convertToGMT8(endDate);
   api
     .get("/session/member/deposit", {
-      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: 10 }
+      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: depositPageSize }
     })
     .then((response) => {
       if (response.code === 0) {
