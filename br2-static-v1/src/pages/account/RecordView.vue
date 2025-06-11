@@ -5,7 +5,7 @@
         <div class="date-field">
           <q-input filled v-model="searchForm.startDate" readonly>
             <template v-slot:prepend>
-              <q-icon name="calendar_today" class="cursor-pointer text-purple-7">
+              <q-icon name="calendar_today" class="cursor-pointer text-teal">
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                   <q-date v-model="searchForm.startDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
                     <div class="row items-center justify-end">
@@ -19,7 +19,7 @@
           <span>to</span>
           <q-input filled v-model="searchForm.endDate" readonly>
             <template v-slot:prepend>
-              <q-icon name="calendar_today" class="cursor-pointer text-purple-7">
+              <q-icon name="calendar_today" class="cursor-pointer text-teal">
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                   <q-date v-model="searchForm.endDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
                     <div class="row items-center justify-end">
@@ -273,7 +273,7 @@ onActivated(() => {
     }
 
     .q-field {
-      border: 1px solid #b478ff4d;
+      border: 1px solid #164533;
       background: #28292b;
       padding: 4px 3px;
       border-radius: 8px;
@@ -311,10 +311,11 @@ onActivated(() => {
 }
 .record-container {
   border-radius: 0.5rem;
-  background: rgba(21, 0, 37, 0.2);
+  // background: rgba(21, 0, 37, 0.2);
+  background: linear-gradient(90deg, rgba(10, 91, 81, 0.2) 0%, rgba(18, 61, 38, 0.2) 100%);
   padding: 1rem;
   margin-top: 0;
-
+  margin-bottom: 1rem;
   .top-wrapper {
     display: flex;
     align-items: center;
@@ -331,19 +332,19 @@ onActivated(() => {
       font-size: 0.825rem;
       font-weight: 700;
       text-transform: capitalize;
-      border-radius: 12.5rem;
+      border-radius: 4px;
       background: rgba(250, 229, 118, 0.2);
       padding: 0 1rem;
       min-height: unset;
     }
 
     .loss-btn {
-      color: #bc66ff;
+      color: rgba(0, 177, 167, 1);
       font-size: 0.825rem;
       font-weight: 700;
       text-transform: capitalize;
-      border-radius: 12.5rem;
-      background: rgba(188, 102, 255, 0.2);
+      border-radius: 4px;
+      background: rgba(0, 177, 167, 0.2);
       padding: 0 1rem;
       min-height: unset;
     }
@@ -361,7 +362,8 @@ onActivated(() => {
     font-size: 1rem;
     font-weight: 700;
     line-height: 2.25rem;
-    background: rgba(21, 0, 37, 0.5);
+    // background: rgba(21, 0, 37, 0.5);
+    // background: rgba(255, 255, 255, 0.06)
     margin: 0 -1rem;
     padding: 0 1rem;
 
@@ -377,7 +379,12 @@ onActivated(() => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0.5rem 0 0 0;
+    margin: 0.5rem -1rem -1rem -1rem;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 0.5rem 1rem;
+    width: calc(100% + 2rem);
+    border-left: 0;
+    border-right: 0;
 
     .origin {
       display: flex;
@@ -422,7 +429,7 @@ onActivated(() => {
   border-bottom: 0;
 
   .pagination-btn {
-    background: #7c28bd;
+    background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
     font-size: 20px;
     width: 40px;
     height: 40px;

@@ -119,6 +119,8 @@ export default defineComponent({
       this.list.redirectUrl === "fucaiiphone" ||
       this.list.redirectUrl === "br1-slot-ftd" ||
       this.list.redirectUrl === "spin-lucky-wheel" ||
+      this.list.redirectUrl === "promo1" ||
+      this.list.redirectUrl === "promo2" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

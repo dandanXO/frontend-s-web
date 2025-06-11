@@ -753,7 +753,7 @@ function charType(num) {
 }
 
 .get-code-btn {
-  background-color: #3b156e;
+  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
   color: #fff;
 }
 

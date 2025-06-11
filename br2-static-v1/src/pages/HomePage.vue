@@ -109,15 +109,15 @@
         </div>
         <div class="marquee-container">
           <marquee-text :repeat="2" :duration="10">
-            <div>
+            <!-- <div>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to
               AKB188&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </div>
-            <!-- <div v-if="announcementList">
+            </div> -->
+            <div v-if="announcementList">
               <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
                 {{ a.content }}
               </span>
-            </div> -->
+            </div>
           </marquee-text>
         </div>
       </div>
@@ -2353,7 +2353,7 @@ function loadData() {
             desktopImageUrlDark: null,
             mobileImageUrl: "promo-1.png",
             mobileImageUrlDark: null,
-            redirectUrl: "/url/promo?name=spin-lucky-wheel",
+            redirectUrl: "/url/promo?name=promo1",
             category: "HOME",
             displayStartTime: 1577847600000,
             displayEndTime: 1893553199000
@@ -2364,7 +2364,7 @@ function loadData() {
             desktopImageUrlDark: null,
             mobileImageUrl: "promo-2.png",
             mobileImageUrlDark: null,
-            redirectUrl: "/url/promo?name=slot-weekly-loss",
+            redirectUrl: "/url/promo?name=promo2",
             category: "HOME",
             displayStartTime: 1577836800000,
             displayEndTime: 1893542399000
@@ -2468,7 +2468,16 @@ const loadAnnouncement = () => {
     if (res.code === 0) {
       if (res.data.announcements) {
         const d = res.data.announcements;
-        announcementList.value = d;
+        // announcementList.value = d;
+        announcementList.value = [
+          {
+            title: "Bem-vindo ao AKB148",
+            content: "Bem-vindo ao AKB148",
+            typeId: 72,
+            createTime: 1729150088000,
+            attachment: null
+          }
+        ];
       }
       if (res.data.type) {
         announcementTypes.value = res.data.type;
