@@ -3993,6 +3993,7 @@ export default {
     53000: 'Login name cannot be empty',
     53001: 'Referrer cannot be empty',
     54000: 'Register blacklist record not exist',
-    54001: 'Register blacklist record already exist'
+    54001: 'Register blacklist record already exist',
+    55000: 'The member already exist in the top ranking list'
   },
 }
