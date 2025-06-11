@@ -207,8 +207,9 @@ const spinWheel = () => {
   //FOr TesTING START
   // const res = {
   //   data: {
-  //     bonusAmount: 38,
-  //     availableSpin: 0
+  //     bonusAmount: null,
+  //     bonusName: null,
+  //     privilegeId: 552
   //   }
   // }
   // var bonusIndex = res.data.bonusAmount;
@@ -217,9 +218,9 @@ const spinWheel = () => {
   // }
   // const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
   
-  // spin(prizeIndex, () => {
+  // spin(0, () => {
   //   showPrizePopup.value = true;
-  //   prizePopupBonusAmt.value = res.data.bonusAmount;
+  //   prizePopupBonusAmt.value = 38;
   //   remainingDraws.value = res.data.availableSpin;
   // });
   // return;
@@ -237,7 +238,6 @@ const spinWheel = () => {
     });
     return;
   }
-
   eventapi
     .post("/new-user-roulette/spin")
     .then((res) => {
@@ -248,9 +248,9 @@ const spinWheel = () => {
         }
         const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
 
-        spin(3, () => {
+        spin(0, () => {
           showPrizePopup.value = true;
-          prizePopupBonusAmt.value = res.data.bonusAmount;
+          prizePopupBonusAmt.value = 38;
           remainingDraws.value = 0;
         });
       }
