@@ -185,7 +185,6 @@ const onLoadWithdraw = (index, done) => {
   const gmtEndDate = convertToGMT8(endDate);
   withdrawCurrentPage.value++;
 
-  api;
   api
     .get("/session/member/withdraw", {
       params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: 10 }
