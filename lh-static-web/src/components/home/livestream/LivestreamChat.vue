@@ -42,24 +42,28 @@
           :placeholder="inputConfig.placeholder"
           :disabled="inputConfig.disabled"
           autocomplete="off"
+          type="textarea"
+          :autosize="{ minRows: 1, maxRows: 6 }"
         />
-        <el-popover popper-class="livestream-chat-emoji-popper" trigger="click" placement="top">
-          <div ref="emojiPickerRef"></div>
-          <template #reference>
-            <button class="livestream-chat-input-emoji-btn" type="button" :disabled="inputConfig.disabled">
-              <img :src="require(`@/assets/home/livestream/icon-emoji${isDark ? '-dark' : ''}.png`)" />
-            </button>
-          </template>
-        </el-popover>
+        <div class="livestream-chat-prefix-wrapper">
+          <el-popover popper-class="livestream-chat-emoji-popper" trigger="click" placement="top">
+            <div ref="emojiPickerRef"></div>
+            <template #reference>
+              <button class="livestream-chat-input-emoji-btn" type="button" :disabled="inputConfig.disabled">
+                <img :src="require(`@/assets/home/livestream/icon-emoji${isDark ? '-dark' : ''}.png`)" />
+              </button>
+            </template>
+          </el-popover>
 
-        <button
-          class="livestream-chat-input-btn"
-          type="submit"
-          :disabled="!isMessageSendable"
-          @click="handleSendChatMessage"
-        >
-          发弹幕
-        </button>
+          <button
+            class="livestream-chat-input-btn"
+            type="submit"
+            :disabled="!isMessageSendable"
+            @click="handleSendChatMessage"
+          >
+            发弹幕
+          </button>
+        </div>
       </el-form>
     </div>
   </div>
@@ -249,11 +253,22 @@ onMounted(() => {
         background: #f7f8fb;
         &.is-disabled {
           background-color: transparent;
-          :deep(.el-input__wrapper) {
+          :deep(.el-textarea__inner) {
             background-color: transparent;
           }
         }
+        :deep(.el-textarea__inner) {
+          resize: none;
+          box-shadow: none;
+        }
       }
+
+      .livestream-chat-prefix-wrapper {
+        display: flex;
+        align-items: center;
+        align-self: flex-end;
+      }
+
       .livestream-chat-input-emoji-btn {
         display: flex;
         align-items: center;
