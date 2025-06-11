@@ -123,7 +123,7 @@
 </template>
 
 <script setup>
-import { onActivated, reactive, ref, onMounted, onUnmounted } from "vue";
+import { onActivated, reactive, ref, onDeactivated, onMounted, onUnmounted } from "vue";
 import { useQuasar } from "quasar";
 
 import { api } from "@/boot/axios";
@@ -336,6 +336,11 @@ onActivated(() => {
   setTime();
   searchWithdrawalRecord();
   searchDepositRecord();
+});
+
+onDeactivated(() => {
+  depositCurrentPage.value = 1;
+  withdrawCurrentPage.value = 1;
 });
 
 onMounted(() => {
