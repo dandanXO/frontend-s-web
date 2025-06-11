@@ -8,9 +8,9 @@
       <div v-html="mail.content.replace(/\n/g, '<br/>')" />
     </div>
     <div class="mail-detail-action-wrapper">
-      <!--        <q-btn v-if="mail.redirectType !== 'NONE'" class="common-large-btn" @click="handleRedirectClick">-->
-      <!--          {{ mail?.redirectButton ?? "立即前往" }}-->
-      <!--        </q-btn>-->
+             <q-btn v-if="mail.redirectType !== 'NONE'" class="common-large-btn redirect-btn" @click="handleRedirectClick">
+               {{ mail?.redirectButton ?? "立即前往" }}
+             </q-btn>
     </div>
     <GameModal ref="gameRef" />
   </div>
@@ -81,5 +81,11 @@ const handleRedirectClick = () => {
       width: 100%;
     }
   }
+}
+
+.redirect-btn {
+  background: linear-gradient(180deg, #00c7c0 0%, #0996c7 100%);
+  box-shadow: 0px 1px 4px 0px #ffffff inset;
+  color: #ffffff;
 }
 </style>

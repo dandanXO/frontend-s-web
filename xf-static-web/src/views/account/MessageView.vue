@@ -148,8 +148,6 @@ import { ElMessage } from "element-plus";
     { num: 2, type: "ACTIVITY", name: "活动" },
     { num: 3, type: "ANNOUNCEMENT", name: "公告" },
     { num: 4, type: "PAYMENT", name: "充提" }
-    // { num: 6, type: "ALL", name: "全部" }
-    // { num: 5, type: "ALL", name: "全部" }
   ]);
   const mailboxMessageType = ref(mailboxMessageTypeData.value[0].type);
   const mailboxMessageTab = ref(mailboxMessageTypeData.value[0].type);

@@ -134,6 +134,7 @@ import { useQuasar } from "quasar";
 import qs from "qs";
 import { useRoute, useRouter } from "vue-router";
 import MailDetail from "./mail/MailDetail.vue";
+import { MAILBOX_TYPES } from "src/constant/mailbox";
 
 export default defineComponent({
   components: {
@@ -172,13 +173,7 @@ export default defineComponent({
 
     const selectedMail = ref(null);
 
-    const mailboxMessageTypeData = ref([
-      { num: 2, type: "ACTIVITY", name: "活动" },
-      { num: 3, type: "ANNOUNCEMENT", name: "公告" },
-      { num: 4, type: "PAYMENT", name: "充提" },
-      { num: 1, type: "NOTIFICATION", name: "通知" },
-      { num: 5, type: "ALL", name: "全部" }
-    ]);
+    const mailboxMessageTypeData = ref(MAILBOX_TYPES);
     const mailboxMessageTab = ref(mailboxMessageTypeData.value[0].type);
     if (props.type === "outbox") {
       mailboxMessageTab.value = mailboxMessageTypeData.value[4].type;
@@ -212,6 +207,7 @@ export default defineComponent({
       if (route.query.id && !selectedMail.value) {
         selectedMail.value = props.list.find((mail) => mail.id === Number(route.query.id));
       }
+
       setTimeout(() => {
         if (comList.value.length) {
           var slicedArray = comList.value.splice(0, 6);
@@ -224,6 +220,7 @@ export default defineComponent({
     };
     const isSelectedMail = ref(-1);
     const toggleMail = (mail) => {
+      selectedMail.value = mail;
       openMsg(mail);
       router.push({ query: { id: mail.id, type: mailboxMessageTab.value } });
       // if (isSelectedMail.value !== mail.id) {

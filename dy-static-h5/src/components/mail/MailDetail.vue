@@ -8,9 +8,9 @@
       <div v-html="mail.content.replace(/\n/g, '<br/>')" />
     </div>
     <div class="mail-detail-action-wrapper">
-      <q-btn v-if="mail?.redirectType && mail.redirectType !== 'NONE'"  class="common-large-btn" @click="handleRedirectClick">
+      <div v-if="mail?.redirectType && mail.redirectType !== 'NONE'"  class="common-large-btn redirect-btn" @click="handleRedirectClick">
         {{ mail?.redirectButton || "立即前往" }}
-      </q-btn>
+      </div>
     </div>
     <GameModal ref="gameRef" />
   </div>
@@ -18,7 +18,7 @@
 <script setup>
 import { useRouter } from "vue-router";
 import GameModal from "../modal/GameModal.vue";
-import { ref } from "vue";
+import { ref, onUnmounted } from "vue";
 
 const props = defineProps({
   mail: Object
@@ -83,19 +83,22 @@ const handleRedirectClick = () => {
   }
 }
 
-.body--dark {
-  .mail-detail-wrapper {
-    .mail-detail-title-wrapper {
-      .mail-detail-title__title {
-        font-size: 1.6rem;
-      }
-      .mail-detail-title__send-time {
-        font-size: 0.9rem;
-      }
-    }
-    .mail-detail-content-wrapper {
-      font-size: 0.9rem;
-    }
-  }
+.redirect-btn {
+  border: 1px solid #D1D5DB;
+  box-shadow: 0px 1px 2px 0px #0000000D;
+  width: 230px;
+  height: 40px;
+  gap: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #fff;
+  background: linear-gradient(270deg, #3080f4, #70b1ff);
+  border-radius: 8px;
+  font-size: .75rem;
+  margin-top: 6px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 </style>

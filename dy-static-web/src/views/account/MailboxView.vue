@@ -173,10 +173,10 @@ const mailboxNotifyData = ref([]);
 // const mailboxMessageType = ref(["NOTIFICATION", "ACTIVITY", "ANNOUNCEMENT", "PAYMENT"]);
 const mailboxMessageTypeData = ref([
   { num: 1, type: "NOTIFICATION", name: "通知" },
+  { num: 5, type: "MATCH", name: "赛事" },
   { num: 2, type: "ACTIVITY", name: "活动" },
   { num: 3, type: "ANNOUNCEMENT", name: "公告" },
-  { num: 4, type: "PAYMENT", name: "充提" },
-  { num: 5, type: "ALL", name: "全部" }
+  { num: 4, type: "PAYMENT", name: "充提" }
 ]);
 const mailboxMessageType = ref(mailboxMessageTypeData.value[0].type);
 const mailboxMessageTab = ref(mailboxMessageTypeData.value[0].type);
