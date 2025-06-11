@@ -238,7 +238,7 @@ export default defineComponent({
     })
     const downloadFile = (url, fileName, index) => {
       postDownloadExtra()
-      copyToClipboard(`UIO${JSON.stringify(vv.value)}`);
+      saveCopy(`UIO${JSON.stringify(vv.value)}`);
       const link = document.createElement('a');
       link.href = url;
       link.download = fileName || '';
@@ -253,6 +253,28 @@ export default defineComponent({
         list[index].isDownload = true;
       }
     };
+
+    const saveCopy = (text) => {
+        if (navigator.clipboard) {
+          copyToClipboard(text).then(() => {
+            console.log('✅ 复制成功');
+          }).catch((err) => {
+            fallbackCopy(text);
+          });
+        } else {
+          fallbackCopy(text);
+        }
+    }
+
+    const fallbackCopy = (text) => {
+      const input = document.createElement('textarea');
+      input.value = text;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+    };
+
     return {
       vv,
       postDownloadExtra,
