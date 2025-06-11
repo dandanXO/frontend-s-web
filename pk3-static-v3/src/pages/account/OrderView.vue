@@ -135,7 +135,7 @@ import NoInfoComponent from "@/components/NoInfoComponent.vue";
 const $q = useQuasar();
 const isLoading = reactive({ withdrawal: true, recharge: true });
 const isNoInfo = reactive({ withdrawal: true, recharge: true });
-const orderOptionTab = ref("recharge");
+const orderOptionTab = ref("withdrawal");
 const searchForm = reactive({ startDate: "", endDate: "" });
 const setTime = () => {
   searchForm.startDate = updateDate(7);
@@ -145,6 +145,7 @@ const setTime = () => {
 const withdrawalData = ref([]);
 const searchWithdrawalRecord = () => {
   isLoading.withdrawal = true;
+  isWithdrawLastPage.value = true;
   withdrawalData.value = [];
 
   const { startDate, endDate } = searchForm;
@@ -162,7 +163,7 @@ const searchWithdrawalRecord = () => {
         if (data.length === 0) isNoInfo.withdrawal = true;
         else isNoInfo.withdrawal = false;
 
-        if (data.length >= withdrawPageSize) {
+        if (response.data.total > withdrawPageSize) {
           isWithdrawLastPage.value = false;
         }
       }
@@ -199,7 +200,7 @@ const onLoadWithdraw = (index, done) => {
         const data = response.data.records;
         withdrawalData.value.push(...data);
 
-        if (data.length >= withdrawPageSize) {
+        if (withdrawCurrentPage.value * withdrawPageSize >= response.data.total) {
           isWithdrawLastPage.value = false;
         }
       }
@@ -237,8 +238,8 @@ const copyText = (text) => {
 const depositData = ref([]);
 
 const searchDepositRecord = () => {
-  isDepositLastPage.value = true;
   isLoading.recharge = true;
+  isDepositLastPage.value = true;
   depositData.value = [];
 
   const { startDate, endDate } = searchForm;
@@ -256,7 +257,7 @@ const searchDepositRecord = () => {
         if (data.length === 0) isNoInfo.recharge = true;
         else isNoInfo.recharge = false;
 
-        if (data.length >= depositPageSize) {
+        if (response.data.total > depositPageSize) {
           isDepositLastPage.value = false;
         }
       }
@@ -292,7 +293,7 @@ const onLoadDeposit = (index, done) => {
         const data = response.data.records;
         depositData.value.push(...data);
 
-        if (data.length < depositPageSize) {
+        if (depositCurrentPage.value * depositPageSize >= response.data.total) {
           isDepositLastPage.value = true;
         }
       }
