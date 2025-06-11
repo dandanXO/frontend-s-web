@@ -159,7 +159,8 @@ const updateNewUserState = () => {
     position: relative;
 
     :deep(.q-field__control) {
-      background: rgba(71, 178, 178, 0.16) !important;
+      // background: rgba(71, 178, 178, 0.16) !important;
+      background: #192B2D !important;
     }
 
     :deep(.q-field__native) {

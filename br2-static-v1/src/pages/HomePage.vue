@@ -3579,8 +3579,8 @@ onBeforeUnmount(() => {
 
 .cs-icon-wrapper {
   display: flex;
-  width: 70px;
-  height: 76px;
+  width: 60px;
+  height: 60px;
   background: url("../assets/images/index/icon-cs.png") no-repeat center center;
   background-size: contain;
 }
@@ -3828,8 +3828,8 @@ onBeforeUnmount(() => {
   .swiper-scrollbar.swiper-scrollbar-horizontal {
     bottom: 0px;
     background: rgba(43, 55, 74, 0.6);
-    padding: 2px;
-    height: 10px;
+    padding: 1px;
+    height: 5px;
   }
 
   .swiper-scrollbar-drag {
@@ -4013,8 +4013,8 @@ onBeforeUnmount(() => {
   .swiper-scrollbar.swiper-scrollbar-horizontal {
     bottom: 0px;
     background: rgba(43, 55, 74, 0.6);
-    padding: 2px;
-    height: 10px;
+    padding: 1px;
+    height: 5px;
   }
 
   .swiper-scrollbar-drag {

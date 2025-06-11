@@ -960,7 +960,7 @@ onMounted(() => {
 
 :deep(.q-field--filled.q-field--dark .q-field__control) {
   border-radius: 0.5rem;
-  background: #263349 !important;
+  background: #192B2D !important;
 }
 
 :deep(.q-tab__label) {
