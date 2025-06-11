@@ -2353,7 +2353,7 @@ function loadData() {
             desktopImageUrlDark: null,
             mobileImageUrl: "promo-1.png",
             mobileImageUrlDark: null,
-            redirectUrl: "/url/promo?name=promo1",
+            redirectUrl: "/url/promo",
             category: "HOME",
             displayStartTime: 1577847600000,
             displayEndTime: 1893553199000
@@ -2364,7 +2364,7 @@ function loadData() {
             desktopImageUrlDark: null,
             mobileImageUrl: "promo-2.png",
             mobileImageUrlDark: null,
-            redirectUrl: "/url/promo?name=promo2",
+            redirectUrl: "/url/promo",
             category: "HOME",
             displayStartTime: 1577836800000,
             displayEndTime: 1893542399000
