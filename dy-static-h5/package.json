@@ -12,10 +12,10 @@
     "android": "quasar build -m capacitor -T android",
     "dev:test": "dotenv -e .test.env quasar dev",
     "dev:staging": "dotenv -e .staging.env quasar dev",
-    "build:prod": "dotenv -e .prod.env quasar build && node scripts/prepare-livechat.js",
-    "build:staging": "dotenv -e .staging.env quasar build && node scripts/prepare-livechat.js",
-    "build:dev": "dotenv -e .dev.env quasar build && node scripts/prepare-livechat.js",
-    "build:test": "dotenv -e .test.env quasar build && node scripts/prepare-livechat.js",
+    "build:prod": "dotenv -e .prod.env quasar build && dotenv -e .prod.env cross-env BUILD_TARGET=livechat quasar build",
+    "build:staging": "dotenv -e .staging.env quasar build && dotenv -e .staging.env cross-env BUILD_TARGET=livechat quasar build",
+    "build:dev": "dotenv -e .dev.env quasar build && dotenv -e .dev.env cross-env BUILD_TARGET=livechat quasar build",
+    "build:test": "dotenv -e .test.env quasar build && dotenv -e .test.env cross-env BUILD_TARGET=livechat quasar build",
     "dev": "quasar dev"
   },
   "dependencies": {
