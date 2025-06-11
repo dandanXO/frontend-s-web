@@ -1,6 +1,6 @@
 <template>
   <div style="height: 56px" v-if="topDownload"></div>
-  <div style="height: 60px"></div>
+  <div style="height: 78px"></div>
 
   <div class="top-download" v-if="topDownload">
     <div class="download-container">
@@ -130,7 +130,7 @@
           </q-list>
         </q-btn-dropdown>
       </div>
-      <div class="profile-wrapper" v-else>
+      <div class="profile-wrapper non-login" v-else>
         <q-btn class="btn-style-light" no-caps @click="goLogin()">{{ $t("header.login") }}</q-btn>
         <q-btn class="btn-style-crimson" no-caps @click="router.push('/register')">{{ $t("header.register") }}</q-btn>
       </div>
@@ -278,8 +278,8 @@ onMounted(() => {
     sessionStorage.setItem("PROFILE_IMG", imgPath);
   }
 
-  getTopDownloadUrl();
-  checkTopDownloadAppear();
+  // getTopDownloadUrl();
+  // checkTopDownloadAppear();
 });
 </script>
 
@@ -397,6 +397,7 @@ onMounted(() => {
       justify-content: space-between;
       padding: 0 12px;
       // overflow-y: hidden;
+      height: 78px;
 
       .profile-pic {
         margin-top: -20px;
@@ -424,6 +425,10 @@ onMounted(() => {
     width: 100%;
     padding-right: 10px;
     position: relative;
+
+    &.non-login{
+      padding-bottom: 15px;
+    }
 
     .unread-total {
       position: absolute;
