@@ -268,7 +268,7 @@ export default defineComponent({
     "redirectUrl": "promo2",
     "labelType": 0,
     "promoType": "VIP",
-    "pageContent": "<p>Ganhe Dinheiro</p><p>Cashback de até 1.5% do valor apostado</p><p>Convide mais amigos e você ganhará mais dinheiro. Cada membro que ingressa no 55 AC é tanto jogador quanto agente.</p><p>- Defendemos benefícios e bônus para todos.</p><p>- Membros Ativos: O valor da aposta diária atinge 200.<br/></p><p>- Seu cashback será calculado com base no valor total apostado pelos seus membros ativos. O cashback pode ser retirado ou usado para mais apostas.</p><p>- Ganhe receita vitalícia com seus jogadores indicados.</p><p>-<br/></p><p>- Indique o maior número possível de amigos para obter um desconto maior.</p><p>Para mais detalhes e regras, clique Aqui</p>",
+    "pageContent": "<p>Ganhe Dinheiro</p><p>Cashback de até 1.5% do valor apostado</p><p>Convide mais amigos e você ganhará mais dinheiro. Cada membro que ingressa no AKB188 tanto jogador quanto agente.</p><p>- Defendemos benefícios e bônus para todos.</p><p>- Membros Ativos: O valor da aposta diária atinge 200.<br/></p><p>- Seu cashback será calculado com base no valor total apostado pelos seus membros ativos. O cashback pode ser retirado ou usado para mais apostas.</p><p>- Ganhe receita vitalícia com seus jogadores indicados.</p><p>-<br/></p><p>- Indique o maior número possível de amigos para obter um desconto maior.</p><p>Para mais detalhes e regras, clique Aqui</p>",
     "promoCode": "promo2",
     "hasPromo": false,
     "privilegeStatus": null,
